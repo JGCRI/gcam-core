@@ -9,28 +9,21 @@
 
 #include "util/base/include/definitions.h"
 
-#include <iostream>
-#include <algorithm>
-#include <fstream>
 #include <vector>
 #include <map>
 
 #include "marketplace/include/marketplace.h"
-#include "containers/include/scenario.h"
 #include "marketplace/include/market.h"
-#include "solution/util/include/solver_library.h"
+#include "marketplace/include/imarket_type.h"
+#include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
-#include "containers/include/world.h"
-#include "util/logger/include/logger_factory.h"
-#include "util/logger/include/logger.h"
-#include "util/base/include/supply_demand_curve.h"
+#include "util/logger/include/ilogger.h"
 #include "marketplace/include/price_market.h"
 
 using namespace std;
 
-extern ofstream logfile;
 extern Scenario* scenario;
 
 /*! \brief Default constructor 
@@ -39,12 +32,11 @@ extern Scenario* scenario;
 * creates an instance of the selected solver.
 *
 * \todo Improve error checking and handling. 
-* \todo Make a static method which returns a new BisectionNRSolver for further encapsulation.
 * \todo Marketplace might be better as a singleton.
 */
-Marketplace::Marketplace() {
-    uniqueNo = 0;
-    numMarkets = 0;
+Marketplace::Marketplace():
+uniqueNo( 0 ),
+numMarkets( 0 ){
 }
 
 /*! \brief Destructor
@@ -53,8 +45,8 @@ Marketplace::Marketplace() {
 */
 Marketplace::~Marketplace() {
     // Clean up the markets.
-    for ( vector< vector< Market* > >::iterator outerIter = markets.begin(); outerIter != markets.end(); outerIter++ ) {
-        for( vector< Market* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
+    for ( vector<vector<Market*> >::iterator outerIter = markets.begin(); outerIter != markets.end(); outerIter++ ) {
+        for( vector<Market*>::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
             delete *innerIter;
         }
     }
@@ -117,7 +109,7 @@ string Marketplace::createMarketKey( const string& marketName, const string& goo
 * \param aTy[e The type of market to create.
 * \return Whether a market was created.
 */
-bool Marketplace::createMarket( const string& regionName, const string& marketName, const string& goodName, const Market::MarketType aType ) {
+bool Marketplace::createMarket( const string& regionName, const string& marketName, const string& goodName, const IMarketType::Type aType ) {
     int marketsNo;
     bool retValue;
 
@@ -193,41 +185,39 @@ int Marketplace::getMarketNumber( const string& goodName, const string& regionNa
 * \param regionName The region of the market to be restructured.
 */
 void Marketplace::resetToPriceMarket( const string& goodName, const string& regionName ) {
-
-    Configuration* conf = Configuration::getInstance();
-    Market* newPriceMarket = 0;
-    Market* newDemandMarket = 0;
-    const int marketNumber = getMarketNumber( goodName, regionName );
-    int demandMarketNumber = 0;
-    string marketName;
-    string demandGoodName;
-    const bool setNewMarkets = conf->getBool( "simulActive" ); // for debugging, set this to false to turn this off
-
-    if( marketNumber == -1 ) {
-        cerr << "ERROR: Market "<< goodName << " does not exist"  << endl;
-    }
-
-    else if( !setNewMarkets ) {
+    // If simuls are off, return immediately. 
+    if( !Configuration::getInstance()->getBool( "simulActive" ) ){
         return;
     }
 
-    else if ( markets[ marketNumber ][ 0 ]->getType() == "NormalMarket" ) {
+    const int marketNumber = getMarketNumber( goodName, regionName );
 
+    if( marketNumber == -1 ) {
+        ILogger& mainLog = ILogger::getLogger( "mainLog" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Cannot reset Market "<< goodName << " to a price market because it does not exist."  << endl;
+    }
+    else if( markets[ marketNumber][ 0 ]->getType() != "NormalMarket" ){
+        ILogger& mainLog = ILogger::getLogger( "mainLog" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Cannot reset market type other than normal to a price market.";
+    }
+    else {
         // Setup the coresponding demand markets
-        marketName = markets[ marketNumber ][ 0 ]->getRegionName();
-        demandGoodName = goodName + "Demand_int";
-        createMarket( regionName, marketName, demandGoodName, Market::DEMAND );
-        demandMarketNumber = getMarketNumber( demandGoodName, regionName );
+        string marketName = markets[ marketNumber ][ 0 ]->getRegionName();
+        string demandGoodName = goodName + "Demand_int";
+        createMarket( regionName, marketName, demandGoodName, IMarketType::DEMAND );
+        int demandMarketNumber = getMarketNumber( demandGoodName, regionName );
 
         // loop through time periods            
-        for( int per = 1; per < static_cast<int>( markets[ marketNumber ].size() ); per++ ){
+        for( unsigned int per = 1; per < markets[ marketNumber ].size(); per++ ){
 
             // Get the pointer of the new demand market.
-            newDemandMarket = markets[ demandMarketNumber ][ per ];
+            Market* newDemandMarket = markets[ demandMarketNumber ][ per ];
             assert( newDemandMarket );
 
             // Create a new price market from the old market.
-            newPriceMarket = new PriceMarket( *markets[ marketNumber ][ per ], newDemandMarket );
+            Market* newPriceMarket = new PriceMarket( *markets[ marketNumber ][ per ], newDemandMarket );
 
             // Delete the old market.
             delete markets[ marketNumber ][ per ];
@@ -299,7 +289,9 @@ void Marketplace::setMarketToSolve ( const string& goodName, const string& regio
         markets[ marketNumber ][ per ]->setSolveMarket( true );
     }
     else {
-        cout << "Error: Market cannot be set to solve as it does not exist: " << goodName << " " << regionName << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Market cannot be set to solve as it does not exist: " << goodName << " " << regionName << endl;
     }
 }
 
@@ -324,7 +316,9 @@ void Marketplace::unsetMarketToSolve ( const string& goodName, const string& reg
         markets[ marketNumber ][ per ]->nullDemand();
     }
     else {
-        cout << "Error: Market cannot be set not to solve as it does not exist: " << goodName << " " << regionName << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Market cannot be unset not to solve as it does not exist: " << goodName << " " << regionName << endl;
     }
 }
 
@@ -336,7 +330,7 @@ void Marketplace::unsetMarketToSolve ( const string& goodName, const string& reg
 * \param period Period in which to null the supplies and demands. 
 */
 void Marketplace::nullSuppliesAndDemands( const int period ) {
-    for ( int i = 0; i < numMarkets; i++ ) {
+    for ( unsigned int i = 0; i < numMarkets; i++ ) {
         markets[ i ][ period ]->nullDemand();
         markets[ i ][ period ]->nullSupply();
     }
@@ -391,7 +385,7 @@ void Marketplace::addToSupply( const string& goodName, const string& regionName,
 void Marketplace::addToDemand( const string& goodName, const string& regionName, const double value, const int per ){
     const int marketNumber = getMarketNumber( goodName, regionName );
 
-    if (value < 0 && goodName != "CO2" ) {
+    if ( value < 0 && goodName != "CO2" ) {
         cerr << "ERROR in addToDemand: Demand value < 0 for market " << goodName << " in region " << regionName << endl;
     }
 
@@ -422,8 +416,9 @@ double Marketplace::getPrice( const string& goodName, const string& regionName, 
             return 0;
         } 
 		else {
-            logfile << "Market not found for " << goodName << " in region " << regionName << endl;
-            cerr << "Market not found for " << goodName << " in region " << regionName << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::NOTICE );
+            mainLog << "Called for price of non-existant market " << goodName << " in region " << regionName << endl;
             return 1e12;
         }
     }
@@ -449,7 +444,9 @@ double Marketplace::getSupply( const string& goodName, const string& regionName,
         return markets[ marketNumber ][ per ]->getSupply();
     }
     else {
-        cerr << "ERROR: Called for supply of non-existant market "<< goodName << " in " << regionName << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Called for supply of non-existant market " << goodName << " in " << regionName << endl;
         return 0;
     }
 }
@@ -471,7 +468,9 @@ double Marketplace::getDemand(  const string& goodName, const string& regionName
         return markets[ marketNumber ][ per ]->getDemand();
     }
     else {
-        cerr << "ERROR: Called for demand of non-existant market "<< goodName << " in " << regionName << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        cerr << "Called for demand of non-existant market " << goodName << " in " << regionName << endl;
         return 0;
     }
 }
@@ -498,7 +497,7 @@ vector<Market*> Marketplace::getMarketsToSolve( const int period ) const {
 void Marketplace::init_to_last( const int period ) { 
     // only after the starting period
     if ( period > 0 ) {
-        for ( int i = 0; i < numMarkets; i++ ) {
+        for ( unsigned int i = 0; i < numMarkets; i++ ) {
             markets[ i ][ period ]->setPriceFromLast( markets[ i ][ period - 1 ]->getRawPrice() );
         }
     }
@@ -512,7 +511,7 @@ void Marketplace::init_to_last( const int period ) {
 void Marketplace::storeto_last( const int period ) {
     // only after the starting period
     if ( period > 0 ) {
-        for ( int i = 0; i < numMarkets; i++ ) {
+        for ( unsigned int i = 0; i < numMarkets; i++ ) {
             markets[ i ][ period ]->storeInfoFromLast( markets[ i ][ period - 1 ]->getRawDemand(), markets[ i ][ period - 1 ]->getRawSupply(), markets[ i ][ period - 1 ]->getRawPrice() );
         }
     }
@@ -528,7 +527,7 @@ void Marketplace::storeto_last( const int period ) {
 * \param period Period for which to store demands, supplies and prices.
 */
 void Marketplace::storeinfo( const int period ) {
-    for ( int i = 0; i  < numMarkets; i++ ) {
+    for ( unsigned int i = 0; i  < numMarkets; i++ ) {
         markets[ i ][ period ]->storeInfo();
     }
 }
@@ -542,7 +541,7 @@ void Marketplace::storeinfo( const int period ) {
 * \param period Period for which to restore demands, supplies, and prices.
 */
 void Marketplace::restoreinfo( const int period) {
-    for ( int i = 0; i < numMarkets; i++ ) {
+    for ( unsigned int i = 0; i < numMarkets; i++ ) {
         markets[ i ][ period ]->restoreInfo();
     }
 }
@@ -566,7 +565,9 @@ void Marketplace::setMarketInfo( const string& goodName, const string& regionNam
         markets[ marketNumber ][ period ]->setMarketInfo( itemName, itemValue );
     }
     else {
-        cerr << "ERROR: Called setMarketInfo for non-existant market " << goodName << " in " << regionName << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Called setMarketInfo for non-existant market " << goodName << " in " << regionName << endl;
     }
 }
 
@@ -588,7 +589,9 @@ double Marketplace::getMarketInfo( const string& goodName, const string& regionN
         return markets[ marketNumber ][ period ]->getMarketInfo( itemName );
     }
     else {
-        cerr << "ERROR: Called getMarketInfo for non-existant market "<< goodName << " in " << regionName << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Called getMarketInfo for non-existant market " << goodName << " in " << regionName << endl;
         return 0;
     }
 }
@@ -601,14 +604,10 @@ double Marketplace::getMarketInfo( const string& goodName, const string& regionN
 * \return Whether the market exists.
 */
 bool Marketplace::doesMarketExist( const std::string& goodName, const std::string& regionName, const int period ) const {
-    bool retValue;
     if( getMarketNumber( goodName, regionName ) == -1 ) {
-        retValue = false;
+        return false;
     }
-    else {
-        retValue = true;
-    }
-    return retValue;
+    return true;
 }
 
 /*! \brief Write out the market information to the database.
@@ -671,7 +670,7 @@ void Marketplace::csvOutputFile() const {
     // The function writes all years.
 
     // write market prices and supply (or demand)
-    for (int i=0;i<numMarkets;i++) {
+    for ( unsigned int i=0;i<numMarkets;i++) {
         for (j=0;j<maxPeriod;j++) {
             temp[j] = markets[i][j]->getRawPrice();
         }
