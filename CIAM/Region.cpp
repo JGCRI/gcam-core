@@ -44,10 +44,6 @@ extern ofstream outfile, sdfile;
 map<string, double> co2coefpri;
 //! map of CO2 emissions coefficient for all fossil fuels
 map<string, double> co2coefall;
-//! vector of objects containing indirect emissions coefficients
-vector<Emcoef_ind> emcoef_ind;
-//! indirect emissions coefficients for secondary energy
-map<string, double> co2coefind;
 
 //! Default constructor
 Region::Region() {

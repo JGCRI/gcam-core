@@ -64,6 +64,7 @@ private:
    map<string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector. 
    map<string,int> demandSectorNameMap; //!< Map of demandsector name to integer position in vector. 
    map<string,int> ghgMarketNameMap; //!< Map of ghgmarket name to integer position in vector. 
+   vector<Emcoef_ind> emcoef_ind; //!< vector of objects containing indirect emissions coefficients
 public:
 	
 	Region(); // default construtor
