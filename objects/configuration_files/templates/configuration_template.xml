@@ -31,6 +31,8 @@
 		<!--END User Modifiable variables-->
 		<!--START Developer Only Modifiable Variables-->
 		<Value name="AbatedGasForCostCurves">CO2</Value>
+		<Value name="monitorMktName">China</Value>
+		<Value name="monitorMktGood"></Value>
 		<!--END Developer Only Modifiable Variables-->
 	</Strings>
 	<Bools>
