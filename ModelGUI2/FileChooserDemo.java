@@ -891,8 +891,8 @@ public class FileChooserDemo extends JFrame
 		}
 		mod = ((NewDataTableModel)e.getSource()).getNodeAt(e.getFirstRow(), e.getColumn());
 		TreePath a = new TreePath(temp.toArray());
-		TreePath b = jtree.getNextMatch("populationMiniCAM year = 1990", 20, javax.swing.text.Position.Bias.Forward).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod.getParentNode())).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod));
-		System.out.println("a = b: "+a.equals(b)+" b = a: "+b.equals(a));
+		//TreePath b = jtree.getNextMatch("populationMiniCAM year = 1990", 20, javax.swing.text.Position.Bias.Forward).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod.getParentNode())).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod));
+		//System.out.println("a = b: "+a.equals(b)+" b = a: "+b.equals(a));
 		//((DOMmodel)jtree.getModel()).fireTreeNodesChanged(new TreeModelEvent(e.getSource(), temp.toArray()));
 		//jtree.updateUI();
 		//System.out.println(new TreePath(temp.toArray()));
@@ -986,7 +986,7 @@ public class FileChooserDemo extends JFrame
 	while(it.hasNext()) {
 		Map.Entry me = (Map.Entry)it.next();
 		if(me.getValue() instanceof Node) {
-	  		NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), title+'/'+(String)parent.getKey(), (TreeMap)parent.getValue(),doc); 
+	  		NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), title+'/'+(String)parent.getKey(), (TreeMap)parent.getValue(), doc); 
 	  		jTable = new JTable(tM);
 	  		jTable.getModel().addTableModelListener(this);
 

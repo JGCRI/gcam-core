@@ -75,19 +75,17 @@ public class NewDataTableModel extends AbstractTableModel {
 
 	private String getKey (int row, int col) {
 		if(flipped) {
-			return (String)indRow.get(row)+(String)indCol.get(col);
+			return (String)indRow.get(row)+";"+(String)indCol.get(col);
 		}
 		return (String)indCol.get(col)+";"+(String)indRow.get(row);
 	}
 
 	public void setValueAt(Object val, int row, int col) {
 		Node n = (Node)data.get(getKey(row,col));
-		//if( n != null ){
+		if( n != null ){
 			n.setNodeValue(val.toString());
-			fireTableCellUpdated(row, col);
-		/*}else{
-			n = doc.createElement( val.toString() );
-			//n.setNodeValue(val.toString());
+		}else{
+			n = doc.createTextNode( val.toString() );
 			Node updown = null;
 			Node side = null;
 			if( row > 0 ){
@@ -106,39 +104,157 @@ public class NewDataTableModel extends AbstractTableModel {
 				}
 			}
 			ArrayList nodepath = new ArrayList();
-			Node parent = updown.getParentNode();
+			Node parent = ((Node)updown.getParentNode());
+			
+			System.out.println("side.getnodee name is " + side.getNodeName());
+			System.out.println("updown is " + updown.getNodeName());
+			
+			String headerone = ind1Name; // ex. region
+			String headertwo = ind2Name; // ex. populationSGM
+			
+			System.out.println("headerone is " + headerone);
+			System.out.println("header2 is " + headertwo);
+			
+			
+			String attributesLine = getKey( row, col );
+			String[] attributesLineArray = attributesLine.split(";", 2);
+
+			StringTokenizer st = new StringTokenizer( attributesLineArray[ 0 ], "=", false);
+			
+			String attrFrom1 = st.nextToken();
+			String attrTo1 = st.nextToken();
+			
+			st = new StringTokenizer( attributesLineArray[1], "=", false);
+			String attrFrom2 = st.nextToken();
+			String attrTo2 = st.nextToken();
+			
+			System.out.println("attrfrom is " + attrFrom1);
+			System.out.println("attrto is " + attrTo1);
+			
+			System.out.println("attrfrom2 is " + attrFrom2);
+			System.out.println("attto2 is " + attrTo2);
+			
 			int index = 0;
-			boolean splitonside = false;
 			boolean stoplooking = false;
 			while( parent != null ){
 				nodepath.add( parent );
-				if ( !stoplooking && (parent.getNodeName() == side.getNodeName() || parent.getNodeName() == updown.getNodeName())){
-					index = nodepath.indexOf( parent );
-					if ( parent.getNodeName() == side.getNodeName() ){
-						splitonside = true;
-					}else{
-						splitonside = false;
-					}
-					System.out.println("inedex is .. " + index);
-					stoplooking = true;
-				}
-				parent = parent.getParentNode();
-			}
-			if( splitonside ){
-				Node curr = (Node)nodepath.get( index );
-				if ( index == nodepath.size()-1 ){
+				if ( !stoplooking && (parent.getNodeName().equals( headerone ) )){ // or headertwo
+					System.out.println("found headtwo! parent is " + parent.getNodeName());
+					index = nodepath.indexOf( parent ); // gives me '5'
+					System.out.println("index is ... " + index + " found it!");
 						
-				}else{
-					Nodelist children = curr.getChildNodes();
-					
 				}
-				
-			}else{ // split on updown
-				
+				parent = ((Node)parent.getParentNode());
+				System.out.println("looking for parent");
 			}
 			
+			// index is 5, i want to split on 5+1 = 6
+			
+			Node parentOfSplit = ((Node)nodepath.get( index + 1 ));
+			Node curr = parentOfSplit; // set to default for now..
+			
+			// locate precise child... of 'world', looking for region name = USA
+			
+			NodeList splitlist = parentOfSplit.getChildNodes();
+			int splitcount = 0;
+			boolean stopsplitcount = false;
+			while( splitcount < splitlist.getLength() && !stopsplitcount ){
+				Node onechild = ((Node)splitlist.item( splitcount ));
+				if (onechild.getNodeName().equals( headerone )){
+						
+					Element elemChild = (Element)onechild;
+					NamedNodeMap attrSplit = elemChild.getAttributes();
+					String temporary;
+
+					for (int i = 0; i < attrSplit.getLength(); i++) {
+						if( attrSplit.item(i).getNodeName().equals( attrFrom2 )){
+							if( attrSplit.item(i).getNodeValue().equals( attrTo2 )){
+								curr = onechild; // move down the list
+								System.out.println("FOUND IT!");
+								System.out.println("curr is " + curr.getNodeName() );
+								stopsplitcount = true;
+							}	
+						}
+					}
+				}
+				splitcount++;
+			}
+			
+			System.out.println("node path is ");
+			for(int i=0; i< nodepath.size(); i++){
+				System.out.println(i + " " + ((Node)nodepath.get(i)).getNodeName());	
+			}
+			
+			index--;
+			System.out.println("index is " + index);
+			
+			//curr = (Node)nodepath.get( index );
+			System.out.println("curr is " + curr.getNodeName());
+			if ( index >= 0 ){
+				System.out.println("in loop, index it " + index);
+				for(int theRest = index; theRest >= 0; theRest-- ){
+					System.out.println("in for loop, theRest is " + theRest);
+					Node pathNext = ((Node)nodepath.get( theRest ));
+					System.out.println("pathnext's is " + pathNext.getNodeName() );
+					
+					NodeList children = curr.getChildNodes(); // either find it or create it
+					int counter = 0;					
+					boolean getOutOfLoop = false;
+					while( counter < children.getLength() && !getOutOfLoop ){
+						Node child = ((Node)children.item( counter ));
+						if( child.getNodeName().equals( pathNext.getNodeName() ) ){
+
+							Element eChild = (Element)child;
+							Element ePathNext = (Element)pathNext;
+							// go through all the attributes, make sure have the same ammount and the have the same values
+							NamedNodeMap attrs1 = eChild.getAttributes();
+							NamedNodeMap attrs2 = ePathNext.getAttributes();
+							String temp;
+							System.out.println("are they not the right size? " + attrs1.getLength() + " " + attrs2.getLength());
+							if (attrs1.getLength() == attrs2.getLength()) {
+								if ( attrs1.getLength() == 0 ){
+									curr = child;
+									System.out.println("found inside the node!");	
+									getOutOfLoop = true;
+								}else{
+
+									for (int i = 0; i < attrs1.getLength(); i++) {
+										temp = attrs1.item(i).getNodeName();
+										if (eChild.getAttribute(temp).equals(ePathNext.getAttribute(temp))) {
+											// found the node!
+											curr = child; // move down the list
+											System.out.println("inside found the node!");
+											System.out.println("curr is " + curr.getNodeName()+ " moving down the list!");
+											getOutOfLoop = true;
+										}
+									}
+								}
+							}
+						}					
+						counter++;	
+					}
+					if( getOutOfLoop == false ){ // didn't find it, create it
+						Node createdNode = pathNext.cloneNode( false ); // clone the node and add it
+						curr.appendChild( createdNode );
+						curr = createdNode;
+						System.out.println("didn't find it, moving curr");
+						System.out.println("createdNode's name is " + createdNode.getNodeName());
+					}
+				}
+			}// now index should == nodepath.size() - 1
+			
+			System.out.println("end, curr is ... " + curr.getNodeName());
+			
+			curr.appendChild( n );
+			data.put( getKey(row,col), n );
+			System.out.println("just appended the child");
+			System.out.println("curr is " + curr.getNodeName());
+			System.out.println(" n is " + n.getNodeName());
 		}
+		
+		fireTableCellUpdated(row, col);
+
 		// fireOffSomeListeners?
-*/
-		}
+
+	}
 }
