@@ -17,6 +17,7 @@
 #include "util/base/include/model_time.h" 
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/market.h"
+#include "marketplace/include/imarket_type.h"
 #include "marketplace/include/market_info.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/price_market.h"
@@ -42,19 +43,45 @@ const string Market::XML_NAME = "market";
 * \param regionNameIn The region which this market covers. It may include several model regions.
 * \param periodIn The period the market exists in.
 */
-Market::Market( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-good( goodNameIn ), region( regionNameIn ), period( periodIn ) {
-   price = 0;
-   storedPrice = 0;
-   demand = 0;
-   storedDemand = 0;
-   supply = 0;
-   storedSupply = 0;
-   solveMarket = false;
+Market::Market( const string& goodNameIn, const string& regionNameIn, const int periodIn )
+: good( goodNameIn ), 
+region( regionNameIn ), 
+period( periodIn ),
+price( 0 ),
+storedPrice( 0 ),
+demand( 0 ),
+storedDemand( 0 ),
+supply( 0 ),
+storedSupply( 0 ),
+solveMarket( false ){
 }
 
 //! Destructor
-Market::~Market() {
+Market::~Market(){
+}
+
+/*! \brief Protected copy constructor
+* \detailed This copy constructor is needed because auto_ptr held memory cannot be copied automatically.
+* The copy constructor is protected because it should only be accessed by the PriceMarket derived class.
+* \param aMarket The market to copy.
+* \author Josh Lurz
+*/
+Market::Market( const Market& aMarket ): 
+good( aMarket.good ),
+region( aMarket.region ),
+solveMarket( aMarket.solveMarket ),
+period( aMarket.period ),
+price( aMarket.price ),
+storedPrice( aMarket.storedPrice ),
+demand( aMarket.demand ),
+storedDemand( aMarket.storedDemand ),
+supply( aMarket.supply ),
+storedSupply( aMarket.storedSupply ),
+containedRegionNames( aMarket.containedRegionNames ){
+    // Only copy the MarketInfo if it has been allocated.
+    if( aMarket.mMarketInfo.get() ){
+        mMarketInfo.reset( new MarketInfo( *aMarket.mMarketInfo.get() ) );
+    }
 }
 
 /*! \brief Static factory method to create a market based on its type.
@@ -64,18 +91,18 @@ Market::~Market() {
 * \param aPeriod The period the market to create exists in.
 * \return A pointer to the newly allocated market, null if the type did not exist. 
 */
-auto_ptr<Market> Market::createMarket( const Market::MarketType aType, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod ) {
+auto_ptr<Market> Market::createMarket( const IMarketType::Type aType, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod ) {
     auto_ptr<Market> rNewMarket;
-    if ( aType == NORMAL ){
+    if ( aType == IMarketType::NORMAL ){
         rNewMarket.reset( new NormalMarket( aGoodName, aRegionName, aPeriod ) );
     }
-    else if ( aType == GHG ) {
+    else if ( aType == IMarketType::GHG ) {
         rNewMarket.reset( new GHGMarket( aGoodName, aRegionName, aPeriod ) );
     }
-    else if ( aType == CALIBRATION ) {
+    else if ( aType == IMarketType::CALIBRATION ) {
         rNewMarket.reset( new CalibrationMarket( aGoodName, aRegionName, aPeriod ) );
     }
-    else if ( aType == DEMAND ) {
+    else if ( aType == IMarketType::DEMAND ) {
         rNewMarket.reset( new DemandMarket( aGoodName, aRegionName, aPeriod ) );
     }
     else {
@@ -109,7 +136,9 @@ void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    for( vector<string>::const_iterator i = containedRegionNames.begin(); i != containedRegionNames.end(); i++ ) {
       XMLWriteElement( *i, "ContainedRegion", out, tabs );
    }
-   marketInfo.toDebugXML( out, tabs );
+   if( mMarketInfo.get() ){
+       mMarketInfo->toDebugXML( out, tabs );
+   }
    derivedToDebugXML( out, tabs );
    
    // finished writing xml for the class members.
@@ -457,7 +486,16 @@ string Market::getGoodName() const {
 * \param itemValue The value to be associated with this key. 
 */
 void Market::setMarketInfo( const std::string& itemName, const double itemValue ){
-    marketInfo.addItem( itemName, itemValue );
+    // Make sure we are not setting a zero.
+    if( itemValue < util::getVerySmallNumber() ){
+        return;
+    }
+    
+    // Lazily allocate the MarketInfo object.
+    if( !mMarketInfo.get() ){
+        mMarketInfo.reset( new MarketInfo() );
+    }
+    mMarketInfo->addItem( itemName, itemValue );
 }
 
 /*! \brief Get the value of the information stored with itemName as the key.
@@ -470,7 +508,10 @@ void Market::setMarketInfo( const std::string& itemName, const double itemValue 
 * \todo Is zero the best return value for a non-existant key?
 */
 double Market::getMarketInfo( const std::string& itemName ) const {
-    return marketInfo.getItemValue( itemName );
+    if( mMarketInfo.get() ){
+        return mMarketInfo->getItemValue( itemName );
+    }
+    return 0;
 }
 
 /*! \brief Store info from last period into the market's stored variables.
@@ -548,25 +589,10 @@ bool Market::shouldSolveNR() const {
    return ( solveMarket && demand > util::getSmallNumber() && supply > util::getSmallNumber() );
 }
 
-/*! \brief Get the relative excess demand.
-*
-* This function is used to determine a markets relative excess demand
-* so that a set of markets can be sorted based on that criteria. 
-* 
-* \todo Might not be the best place for this function.
-* \return The relative excess demand of the market.
+/*! \brief Return whether a market is solved according to market type specific conditions.
+* \return Whether the market meets special solution criteria.
+* \author Josh Lurz
 */
-double Market::getRelativeExcessDemand() const {
-   
-   if( demand < util::getSmallNumber() ) {
-      return 0;
-   }
-   else {
-      return ( demand - supply ) / demand;
-   }
-}
-
-//! COMMENT ME
 bool Market::meetsSpecialSolutionCriteria() const {
     return false;
 }
