@@ -760,7 +760,7 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
          for ( i = 0; i < sol.size(); i++ ) {
             if ( fabs( sol[ i ].ED ) > maxSolVal / 100 ) {
                if ( trackED ) {
-                  cout << "ED: (" << sol[ maxIntSol ].marketName + sol[ maxIntSol ].marketGood  << ") - " << sol[ i ].ED << endl;
+                  cout << "ED: (" << sol[ i ].marketName + sol[ i ].marketGood  << ") - " << sol[ i ].ED << endl;
                }
             logfile << ",,,Due to market " << sol[ i ].getName()<< " - ED: " << sol[ i ].ED << endl;
             }
