@@ -682,7 +682,7 @@ template<class T, class U>
 void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToVector, std::map<std::string,int>& corrMap, T* newNode ) {
     assert( node );
     // Have an auto_ptr keep the new memory.
-    auto_ptr<T> newNodePtr( newNode );
+    std::auto_ptr<T> newNodePtr( newNode );
 
     // First determine if the node exists. 
     const std::string objName = XMLHelper<std::string>::getAttrString( node, "name" );
