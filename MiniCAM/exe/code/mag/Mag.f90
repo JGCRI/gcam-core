@@ -880,7 +880,8 @@
 ! ******************************************************************
 ! ******************************************************************
 
-IF (1 .eq. 2) THEN ! ORIGINAL MAGICC CODE READS DATA FROM GAS.EMK  mrj 5/03
+! ORIGINAL MAGICC CODE READS DATA FROM GAS.EMK  mrj 5/03
+IF ( MagEM(1,1) .LE. 0 ) THEN
 ! toggled off ffor MiniCAM
 
 !
@@ -889,11 +890,13 @@ IF (1 .eq. 2) THEN ! ORIGINAL MAGICC CODE READS DATA FROM GAS.EMK  mrj 5/03
 !  Read in gas emissions from GAS.EMK
 !
       lun = 42   ! spare logical unit no.
+	  write(*,*) "Reading in gas.emk"
 !
       open(unit=lun,file='..\MagTAR\GAS.EMK',status='OLD')
 !
 !  READ HEADER AND NUMBER OR ROWS OF EMISIONS DATA FROM GAS.EMK
 !
+
       read(lun,4243)  NVAL
       read(lun,'(a)') mnem
       read(lun,*) !   skip description
@@ -905,20 +908,38 @@ IF (1 .eq. 2) THEN ! ORIGINAL MAGICC CODE READS DATA FROM GAS.EMK  mrj 5/03
 !   THE SO2 EMISSIONS (BY REGION) MUST BE INPUT AS CHANGES FROM 1990.
 !
       do i=1,NVAL
-        read(lun,4242) IY1(I),FOS(I),DEF(I),DCH4(I),DN2O(I), &
-       DNOX(I),DVOC(I),DCO(I), &
+        read(lun,*) IY1(I),FOS(I),DEF(I),DCH4(I),DN2O(I), &
        DSO21(I),DSO22(I),DSO23(I),DCF4(I),DC2F6(I),D125(I), &
-       D134A(I),D143A(I),D227(I),D245(I),DSF6(I)
+       D134A(I),D143A(I),D227(I),D245(I),DSF6(I), &
+       DNOX(I),DVOC(I),DCO(I)  ! Change to match order of writout -- this may be different than magicc default - sjs
+ 
+	IF(i.eq.1)THEN !collect our 1990 values since MAGICC wants differences from 1990
+	  ES1990 = DSO21(1) + DSO22(1) + DSO23(1) !global 1990 emissions
+	  DSO211990 = DSO21(1) !regional 1990 emissions
+	  DSO221990 = DSO22(1)
+	  DSO231990 = DSO23(1)
+	END IF
+
 !
 !  ADJUST SO2 EMISSIONS INPUT
 !
-        DSO21(I)= DSO21(I)+ES1990
-        DSO22(I)= DSO22(I)+ES1990
-        DSO23(I)= DSO23(I)+ES1990
-        DSO2(I) = DSO21(I)+DSO22(I)+DSO23(I)-2.0*ES1990
+
+	DSO21(I) = DSO21(I) - DSO211990 + ES1990 !where ES1990 is the MAGICC global 1990 emissions
+	DSO22(I) = DSO22(I) - DSO221990 + ES1990 !note it is added in to all three regions...
+	DSO23(I) = DSO23(I) - DSO231990 + ES1990
+
+    DSO2(I) = DSO21(I)+DSO22(I)+DSO23(I)-2.0*ES1990 !but here they correct for it in the global number
 !
+
+	!write statement for debugging
+	IF(1.eq.2) Write(*,854) "MAG: ",NVAL,IY1(i),FOS(i),DEF(i),DCH4(i), &
+		DN2O(i),DSO21(i),DSO22(i),DSO23(i),DCF4(i),DC2F6(i),D125(i), &
+        D134A(i),D143A(i),D227(i),D245(i),DSF6(i),DNOX(i),DVOC(i),DCO(i)
+ 
+
       end do
       close(lun)
+
 !
 
 END IF ! end toggle off original read in mrj 5/03
@@ -927,7 +948,9 @@ END IF ! end toggle off original read in mrj 5/03
 ! ******************************************************************
 ! new code to read from array mrj 5/03 (based on sjs code)
 
-IF (1 .eq. 1) THEN !toggle on new read in (from passed array)
+IF ( MagEM(1,1) .GT. 0 ) THEN !toggle on new read in (from passed array)
+	  	  write(*,*) "Using values from MagEM"
+
       NVAL = MagEM(1,1)
       mnem = "unknown"
 
@@ -994,6 +1017,7 @@ END IF	!end toggle for MiniCAM input
       KEND  = IYEND-1764
       KREF  = KYRREF-1764
       TEND  = FLOAT(KEND-1)
+
 !
 !  Offset IY1 entries from 1990 : i.e., make IY1(1)=0,
 !   IY1(2)=IY1(2)-1990, etc.

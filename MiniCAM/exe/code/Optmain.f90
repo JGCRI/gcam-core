@@ -22,7 +22,10 @@
       USE OPTICOM
 
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)   
-   
+   	  Real(8)  &
+		MagDmy(20,19),	&			! Dummy Arrary for MAGICC input
+		MAGICCCOutDmy(0:30,75)		! Dummy Arrary for MAGICC output
+
       Open(97,FILE="MCLog.txt")		!sjs -- MC log file
       Call InitLog
       
@@ -91,6 +94,17 @@
 	     CALL MCAMMAIN(2)
 
 	     IF (COSTCALC.EQ.1) CALL MITICOST
+
+!	  Else just call MAGICC and quit
+      ELSE IF (INDOPT.EQ.3) THEN
+         Write(97,*)
+         Write(97,*) "****Running MAGICC****"		! Write to log file. sjs
+      
+	     MagDmy(1,1) = 0		! Toggle direct read-in of MAGICC INPUT file
+         CALL CLIMAT(1,MAGICCCOutDmy,MagDmy)
+
+		 STOP
+
 
       END IF
 
