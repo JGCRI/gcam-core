@@ -3,10 +3,7 @@
 #pragma once
 
 #include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/XMLString.hpp>
 #include <string>
-#include <iostream>
-#include <fstream>
 #include <map>
 
 using namespace xercesc;
