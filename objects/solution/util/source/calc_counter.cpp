@@ -23,10 +23,6 @@ CalcCounter::CalcCounter() {
     periodCount = 0;
 }
 
-//! Destructor
-CalcCounter::~CalcCounter() {
-}
-
 /* \brief Return the total number of iterations of world.calc called so far for all periods.
 * \return Integer value of the number of calls of world.calc called so far for all periods.
 */
