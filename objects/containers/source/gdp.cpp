@@ -8,7 +8,6 @@
 */
 
 #include "util/base/include/definitions.h"
-#include <iostream>
 #include <cmath>
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
@@ -19,7 +18,9 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
+#include "marketplace/include/imarket_type.h"
 #include "util/base/include/xml_helper.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -62,29 +63,23 @@ GDP::~GDP(){
 
 //! parses Population xml object
 void GDP::XMLParse( const DOMNode* node ){
-
-	const Modeltime* modeltime = scenario->getModeltime();
-
-	DOMNode* curr = 0;
-	DOMNodeList* nodeList;
-	string nodeName;
-
 	// make sure we were passed a valid node.
 	assert( node );
 
-	nodeList = node->getChildNodes();
+	DOMNodeList* nodeList = node->getChildNodes();
+    const Modeltime* modeltime = scenario->getModeltime();
 
-	for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-		curr = nodeList->item( i );
+	for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
+		DOMNode* curr = nodeList->item( i );
 
 		// get the name of the node.
-		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+		string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
 		if( nodeName == "#text" ) {
 			continue;
 		}
 		// GDP to PPP conversion factor
-      // Note that variable conversion attribute defaults to true
+        // Note that variable conversion attribute defaults to true
 		else if ( nodeName == "PPPConvert" ){
 		    PPPConversionFact = XMLHelper<double>::getValue( curr );
             constRatio = XMLHelper<bool>::getAttr( curr, "constRatio" );
@@ -104,8 +99,11 @@ void GDP::XMLParse( const DOMNode* node ){
 		// labor force participation rate
 		else if( nodeName == "laborforce" ){
 			XMLHelper<double>::insertValueIntoVector( curr, laborForceParticipationPercent, modeltime, true );
-		} else {
-			cout << "Unrecognized text string: " << nodeName << " found while parsing GDP." << endl;
+		} 
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+			mainLog << "Unrecognized text string: " << nodeName << " found while parsing GDP." << endl;
 		}
 	}
 }
@@ -236,7 +234,7 @@ void GDP::setupCalibrationMarkets( const string& regionName, const vector<double
 	const Modeltime* modeltime = scenario->getModeltime();
 	Marketplace* marketplace = scenario->getMarketplace();
 
-	if ( marketplace->createMarket( regionName, regionName, goodName, Market::CALIBRATION ) ) {
+	if ( marketplace->createMarket( regionName, regionName, goodName, IMarketType::CALIBRATION ) ) {
 		vector<double> tempLFPs( modeltime->getmaxper() );
 		for( int i = 0; i < modeltime->getmaxper(); i++ ){
             tempLFPs[ i ] = pow( 1 + laborProdGrowthRate[ modeltime->getmod_to_pop( i ) ], modeltime->gettimestep( i ) );
