@@ -310,6 +310,8 @@ void World::emiss_ind( const int period ) {
 }
 
 //! Calculates the global emissions. Currently only CO2 exists.
+/* \todo This function needs to be generalized to work for all ghgs.
+*/
 void World::calculateEmissionsTotals() {
     for( vector<Region*>::iterator iter = regions.begin(); iter != regions.end(); iter++ ) {
         for( int i = 0; i < scenario->getModeltime()->getmaxper(); i++ ){
