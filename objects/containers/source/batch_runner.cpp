@@ -22,7 +22,7 @@
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
 #include "containers/include/scenario.h"
-
+#include "util/logger/include/ilogger.h"
 using namespace std;
 using namespace xercesc;
 
@@ -64,8 +64,10 @@ bool BatchRunner::setupScenario( Timer& aTimer, const string aName, const list<s
 */
 bool BatchRunner::runScenario( Timer& aTimer ){
     // Quick error checking for empty readin.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
     if( mComponentSet.empty() ){
-        cout << "Error: No scenario sets to run!" << endl;
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "No scenario sets to run!" << endl;
         return false;
     }
 
@@ -118,15 +120,15 @@ bool BatchRunner::runScenario( Timer& aTimer ){
 */
 void BatchRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
     // Print out any scenarios that did not solve.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::NOTICE );
     if( mUnsolvedNames.empty() ){
-        cout << "All model runs completed successfully." << endl;
-        logfile << "All model runs completed successfully." << endl;
+        mainLog << "All model runs completed successfully." << endl;
     }
     else {
-        cout << "Model runs that did not solve correctly: " << endl;
+        mainLog << "Model runs that did not solve correctly: " << endl;
         for( vector<string>::const_iterator name = mUnsolvedNames.begin(); name != mUnsolvedNames.end(); ++name ){
-            cout << *name << endl;
-            logfile << *name << endl;
+            mainLog << *name << endl;
         }
     }
 }
@@ -150,7 +152,9 @@ bool BatchRunner::runSingleScenario( const Component aComponents, Timer& aTimer 
             components.push_back( currFile->mPath );
         }
     }
-    cout << "Running scenario " << aComponents.mName << "..." << endl;
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Running scenario " << aComponents.mName << "..." << endl;
 
     // Check if cost curve creation is needed.
     const Configuration* conf = Configuration::getInstance();
@@ -172,8 +176,10 @@ bool BatchRunner::runSingleScenario( const Component aComponents, Timer& aTimer 
     // Print the output.
     mInternalRunner->printOutput( aTimer );
     
-    // If the run failed, add to the list of failed runs.
-    mUnsolvedNames.push_back( aComponents.mName );
+    // If the run failed, add to the list of failed runs. CHECK ME!
+    if( !success ){
+        mUnsolvedNames.push_back( aComponents.mName );
+    }
     return success;
 }
 
@@ -185,10 +191,10 @@ bool BatchRunner::runSingleScenario( const Component aComponents, Timer& aTimer 
 void BatchRunner::XMLParse( const DOMNode* aRoot ){
     // assume we were passed a valid node.
     assert( aRoot );
-
+    
     // get the children of the node.
     DOMNodeList* nodeList = aRoot->getChildNodes();
-
+    
     // loop through the children
     for ( unsigned int i = 0; i < nodeList->getLength(); i++ ){
         DOMNode* curr = nodeList->item( i );
@@ -202,7 +208,9 @@ void BatchRunner::XMLParse( const DOMNode* aRoot ){
             XMLParseComponentSet( curr );
         }
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing BatchScenarioRunner." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing BatchScenarioRunner." << endl;
         }
     }
 }
@@ -237,7 +245,9 @@ void BatchRunner::XMLParseComponentSet( const DOMNode* aNode ){
             XMLParseFileSet( curr, newComponent );
         }
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing ComponentSet." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing ComponentSet." << endl;
         }
     }
     // Add the new component
@@ -280,7 +290,9 @@ void BatchRunner::XMLParseFileSet( const DOMNode* aNode, Component& aCurrCompone
             newFileSet.mFiles.push_back( newFile );
         }
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing FileSet." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing FileSet." << endl;
         }
     }
     // Add the new file set to the current component.
