@@ -49,7 +49,7 @@ GDP::GDP() {
 
 	EnergyGDPElas = 0;
 	PPPConversionFact = 1;
-   PPPDelta = 0;
+    PPPDelta = 0;
 	constRatio = false;
 }
 
