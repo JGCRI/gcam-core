@@ -26,7 +26,7 @@
 
 	INTEGER gas, src
 
-	REAL*8 gdpcap, basegwp(1:NOGMax), enprdelta, base_ctrl, applytax
+	REAL*8 gdpcap, enprdelta, base_ctrl, applytax
 
 
 
