@@ -114,10 +114,66 @@ int Logger::receiveCharFromUnderStream( int ch ) {
 	if( ch == '\n' ) {
 		string buffer;
 		buf >> buffer;
+		printToScreenIfConfigured( currentLine, currentFile, currentWarningLevel, buffer );
 		logCompleteMessage( currentLine, currentFile, currentWarningLevel, buffer );
 	}
 	
 	return ch;
+}
+
+//! Print the message to the screen if the Logger is configured to.
+void Logger::printToScreenIfConfigured( const int line, const string& file, const WarningLevel warningLevelIn, const string& message ){
+	
+	// Decide whether to print the message
+	if ( warningLevelIn >= minToScreenWarningLevel ) {
+		
+		stringstream buffer;
+		bool printColon = false;
+		
+		// Print the date.
+		if ( printLogDateStamp ) {
+			buffer << getDateString() << " ";
+			printColon = true;
+		}
+		
+		// Print the timestamp.
+		if ( printLogTimeStamp ) {
+			buffer << getTimeString() << " ";
+			printColon = true;
+		}
+		
+		// Print the warning level
+		if ( printLogWarningLevel ) {
+			buffer << "Level " << warningLevelIn << " ";
+			printColon = true;
+		}
+		
+		// Print the file name.
+		if ( printLogFileName ) {
+			printColon = true;
+			if ( printLogFullPath ) {
+				buffer << file;
+			}
+			else {
+				buffer << getFileNameFromPath( file );
+			}
+		}
+		
+		// Print the line number
+		if ( printLogLineNumber ) {
+			printColon = true;
+			buffer << "(" << line << ")";
+		}
+		
+		if( printColon ){
+			buffer << ":";
+		}
+		
+		buffer << message;
+		
+		// Print the message
+		cerr << "Log Message: " << buffer.str() << endl;
+	}
 }
 
 //! Get the current date as a string

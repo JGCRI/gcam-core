@@ -184,6 +184,8 @@ protected:
 	//! Log a message with the given warning level.
 	virtual void logCompleteMessage( const int line, const string& file, const WarningLevel warningLevel, const string& message ) = 0;
 	
+	void printToScreenIfConfigured( const int line, const string& file, const WarningLevel warningLevel, const string& message );
+
 	void static parseHeader( string& headerIn );
 
 private:
