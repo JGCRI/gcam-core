@@ -62,6 +62,32 @@ public class AdapterNode {
         return node.getChildren().indexOf(n.node);
     }
     
+    public String toLefterString() {
+    	String name = node.getName();
+    	String retString = "";
+    	String tempString;
+    	String attrib = "";
+		List attributes = node.getAttributes();
+		Iterator attIter = attributes.iterator();
+		
+		// Stop moving up the tree at the regional level. 
+	    if( !name.equals( "region" ) && node.getParent() != null ){
+    		retString =  new AdapterNode( node.getParent() ).toLefterString();
+	    }
+	    
+    	if( ! node.getName().equals( "period" )) {
+			while ( attIter.hasNext()) {
+				Attribute tempAtt = (Attribute)attIter.next();
+				String attName = tempAtt.getName();
+				if( attName.equals( "name" ) ) {
+					attrib += tempAtt.getValue();
+				}
+			}
+        	retString += ("<" + name + "=" + attrib + ">");
+    	}
+    	return retString;
+    }
+    
     public String toString() {
         String name = node.getName();
         List attributes = node.getAttributes();
