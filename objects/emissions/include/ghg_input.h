@@ -23,7 +23,6 @@
 class GhgInput: public Ghg {
 public:
     virtual void calcEmission( const std::string& regionName, const std::string& fuelname, const double input, const std::string& prodname, const double output );
-protected:
 };
 
 #endif // _GHG_INPUT_H_
