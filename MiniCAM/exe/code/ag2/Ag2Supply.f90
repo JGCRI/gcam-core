@@ -48,7 +48,8 @@ p_past	   = price(10,i)
 
 vc_woodf   = GJ(2,i,t)
 vc_past    = GJ(3,i,t)
-vc_bio     = GJ(5,i,t)
+vc_bio     = GJ(5,i,t) + BioProdOffset(M)
+if (vc_bio .lt. 0) vc_bio = 0
 
 do k=1,ncrops
   vc_crop(k)  = GJ(5+k,i,t)

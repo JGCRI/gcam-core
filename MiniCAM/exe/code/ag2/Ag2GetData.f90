@@ -240,6 +240,13 @@ DO WHILE(INDIC.EQ.1)
 	  NZ(L) = 5 + NC(L)
     END DO
 
+! Offset to Ag biomass production cost
+  CASE (630)
+    DO M=1,NMP
+      READ(1,*) IDUM,BioProdOffset(M)
+    END DO
+
+
 ! Parameters of probability distributions
   CASE (638)
     DO L=1,NL

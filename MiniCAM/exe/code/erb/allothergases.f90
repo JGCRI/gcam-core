@@ -766,6 +766,7 @@
 				OGCTRLS(gas, src, 1, L, M) = OGGDPPARMS(gas,src,1,L) * &
 					(OGCTRLS(gas, src, 1, L, M) - base_ctrl) / &
 					(OGGDPPARMS(gas,src,1,L) - base_ctrl)
+
 			END IF
 
 			!if this is co2 only, do not run cost curves

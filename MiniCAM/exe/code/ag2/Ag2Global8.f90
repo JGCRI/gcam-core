@@ -25,6 +25,7 @@ DemCoef(NLP,7),             & ! Demand function coefficients
 IE(NLP,10),                  & ! Income elasticity of demand. Increased to include proccrops. sjs - 11/01
 PE(NLP,10),                  & ! Price elasticity of demand. Increased to include proccrops. sjs - 11/01
 BioPrice(NLP,NMP),          & ! Exogenous price of biomass
+BioProdOffset(NMP),          & ! Exogenous adder to production price of biomass
 BioTranCost(NLP,0:NMP),     & ! Cost per GJ to transform biomass to a liquid fuel
 Forest(3,NLP,NMP+1),        & ! Forest land in place in period 2
 CDensity(NLP,10),            & ! Land carbon density parameters

@@ -10,7 +10,7 @@
 	REAL*8 CO2Adj, DefAdj,AdjFact
 
 	Integer Nper
-    Integer, Save :: WriteFlag  = 0	! Flag to toggle writeout to MAGICC
+    Integer, Save :: WriteFlag  = 1	! Flag to toggle writeout to MAGICC
 
 ! sjs - 05/01 
 ! sjs - 02/02 Cement emissions moved to common block
