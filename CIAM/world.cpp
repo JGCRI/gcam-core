@@ -569,6 +569,8 @@ void World::createRegionMap(void) // create map of region names
 	for (int i=0;i<noreg;i++) {
 		regionMap[region[i]->getName()] = i+1; // start index from 1
 	}
+    // hardcode for now
+    regionMap["global"] = 0;
 }
 
 void World::setupCalibrationMarkets() {

@@ -214,11 +214,13 @@ void createMCvarid() {
 		RegionInfoRst.SetField(_T("RegionLabel"), COleVariant(regstr.c_str(), VT_BSTRT));
 		RegionInfoRst.SetField(_T("RegionID"), COleVariant(long(rmap->second), VT_I4));
 		RegionInfoRst.Update(); // save and write the record
+        if(rmap->second != 0) {
 		// add Global region to sum all regional outputs
 		RegionInfoRst.AddNew(); // now the current record is this empty new one
 		RegionInfoRst.SetField(_T("RegionLabel"), COleVariant("zGlobal", VT_BSTRT));
 		RegionInfoRst.SetField(_T("RegionID"), COleVariant(long(rmap->second), VT_I4));
 		RegionInfoRst.Update(); // save and write the record
+        }
 	}
 	// *** end RegionInfo table ***
 

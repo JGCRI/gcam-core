@@ -65,27 +65,31 @@ void dboutput4(string var1name,string var2name,string var3name,string var4name,
 #ifndef WIN32
 	fileoutput3( var1name,var2name,var3name,var4name,"",uname,dout);
 #else
-	int i=0,j;
-	// COleVariant does not take int, must be short or long
-	// now write to the database
-	// MUST Update before adding another
-	DBoutrst.AddNew(); // now the current record is this empty new one
-	tm* lt = localtime(&ltime); // struct for time components
-	// run id MiniCAM style
-	long int RunID = lt->tm_sec + lt->tm_min * 100 + lt->tm_hour * 10000
+    // only output regions already defined in regionMap
+    if(regionMap.find(var1name) != regionMap.end()) {
+	    int i=0,j;
+	    // COleVariant does not take int, must be short or long
+	    // now write to the database
+	    // MUST Update before adding another
+	    DBoutrst.AddNew(); // now the current record is this empty new one
+	    tm* lt = localtime(&ltime); // struct for time components
+	    // run id MiniCAM style
+	    long int RunID = lt->tm_sec + lt->tm_min * 100 + lt->tm_hour * 10000
                    + lt->tm_mday * 1000000 
 				   + (lt->tm_mon * 100000000 + 100000000); // 0 is january
-	DBoutrst.SetField(0L, COleVariant(RunID,VT_I4));
-	DBoutrst.SetField(1L, COleVariant(short int(regionMap[var1name])));
-	DBoutrst.SetField(3L, COleVariant(var2name.c_str(), VT_BSTRT));
-	DBoutrst.SetField(4L, COleVariant(var3name.c_str(), VT_BSTRT));
-	DBoutrst.SetField(5L, COleVariant(var4name.c_str(), VT_BSTRT));
-	DBoutrst.SetField(6L, COleVariant(uname.c_str(), VT_BSTRT));
-	for (i=0;i< static_cast<int>( dout.size() );i++) {
-		j = 7+i;
-		DBoutrst.SetField(j, COleVariant(dout[i]));
-	}
-	DBoutrst.Update(); // save and write the record
+	    DBoutrst.SetField(0L, COleVariant(RunID,VT_I4));
+	    DBoutrst.SetField(1L, COleVariant(short int(regionMap[var1name])));
+	    DBoutrst.SetField(3L, COleVariant(var2name.c_str(), VT_BSTRT));
+	    DBoutrst.SetField(4L, COleVariant(var3name.c_str(), VT_BSTRT));
+	    DBoutrst.SetField(5L, COleVariant(var4name.c_str(), VT_BSTRT));
+	    DBoutrst.SetField(6L, COleVariant(uname.c_str(), VT_BSTRT));
+	    for (i=0;i< static_cast<int>( dout.size() );i++) {
+		    j = 7+i;
+		    DBoutrst.SetField(j, COleVariant(dout[i]));
+	    }
+	    DBoutrst.Update(); // save and write the record
+    }
+    // if region not found in regionMap, do nothing
 #endif
 }
 
