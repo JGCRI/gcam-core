@@ -45,15 +45,12 @@ World::~World(){
     clear();
 }
 
-//! Helper member function for the destructor. Clears all clears all datastructures and deallocates memory. 
+//! Helper member function for the destructor. Performs memory deallocation. 
 void World::clear(){
 
-    ghgs.clear();
     for ( vector<Region*>::iterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
         delete *regionIter;
     }
-
-    regions.clear();
 }
 
 //! parses World xml object
