@@ -21,6 +21,7 @@
 class subsector;
 class Summary;
 class Emcoef_ind;
+class Region;
 
 /*! 
 * \ingroup CIAM
@@ -53,7 +54,7 @@ protected:
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
     std::vector<bool> capLimitsPresent; //!< Flag if any capacity limits are present 
     std::vector<std::string> simulList; //!< List of all sectors with simuls to this one. 
-    std::vector<std::string> inputList; //!< List of all inputs this sector uses. 
+    std::vector<std::string> dependsList; //!< List of all dependencies of this sector. 
     bool anyFixedCapacity; //!< flag set to true if any fixed capacity is present in this sector
     double fixedShareSavedVal; //!< debugging value
     double prevVal;
@@ -116,17 +117,17 @@ public:
     void addToDependencyGraph( std::ostream& outStream, const int period );
     void setRegionName(const std::string& regionNameIn );
     void addSimul( const std::string sectorName );
-    void setupForSort();
-    const std::vector<std::string> getSimulList() const;
-    const std::vector<std::string> getInputList() const;
+    void setupForSort( const Region* parentRegion );
+    std::vector<std::string> getInputDependencies( const Region* parentRegion ) const;
+    const std::vector<std::string> getDependsList() const;
 
      /*!
     * \brief Binary function used to order Sector* pointers by input dependency. 
     * \author Josh Lurz
     *
     * The DependencyOrdering struct is used by the region class in the stl sort to compare
-    * two sector pointers and order them by dependency. The algorithm checks if the rhs 
-    * sector depends on the lhs sector with a non-simul. If this is true, it returns true as the 
+    * two sector pointers and order them by dependency. It is a strict weak ordering.
+    * The algorithm checks if the rhs  sector depends on the lhs sector with a non-simul. If this is true, it returns true as the 
     * lhs is needed before the rhs, but when a simul market exists, the ordering between two sectors is trivial.
     * Otherwise, the operator returns false. This is done so that unrelated sectors are equivalent.
     */   
@@ -135,14 +136,11 @@ public:
         //! \brief The () operator, which is used for sorting two sector pointers. 
 
         bool operator()( const sector* lhs, const sector* rhs ) const {
-           
-            // First cache copies of the list.
-            std::vector<std::string> rhsSimulList = rhs->getSimulList();
-            std::vector<std::string> rhsInputList = rhs->getInputList();
+            // First cache a copy of the dependsList
+            std::vector<std::string> rhsDependsList = rhs->getDependsList();
             
-            // Check if the left sector depends on the right sector in a non-simul path.
-            if ( std::binary_search( rhsInputList.begin(), rhsInputList.end(), lhs->getName() ) && 
-                ! std::binary_search( rhsSimulList.begin(), rhsSimulList.end(), lhs->getName() ) ) {
+            // Check if the left sector depends on the right sector.
+            if ( std::binary_search( rhsDependsList.begin(), rhsDependsList.end(), lhs->getName() ) ) {
                 return true;
             }
             else {

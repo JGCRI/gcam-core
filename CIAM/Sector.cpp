@@ -30,6 +30,7 @@
 #include "Emcoef_ind.h"
 #include "World.h"
 #include "Util.h"
+#include "Region.h"
 
 using namespace std;
 using namespace xercesc;
@@ -1387,7 +1388,8 @@ map<string, double> sector::getemfuelmap( int per ) const
 
 /*! \brief update summaries for reporting
 *
-*  Updates summary information for the sector and all subsectors.*
+*  Updates summary information for the sector and all subsectors.
+*
 * \author Sonny Kim
 * \param per Model period
 * \return GHG emissions map
@@ -1409,7 +1411,7 @@ void sector::updateSummary( const int per )
     input[ per ] = summary[ per ].get_fmap_second("zTotal");
 }
 
-/*! A function to add the sectors fuel dependency information to an existing graph.
+/*! \brief A function to add the sectors fuel dependency information to an existing graph.
 *
 * This function prints the sectors fuel dependencies to an existing graph.
 *
@@ -1468,7 +1470,7 @@ void sector::addToDependencyGraph( ostream& outStream, const int period ) {
    }
 }
 
-/*! A function to add the name of a sector the current sector has a simul with. 
+/*! \brief A function to add the name of a sector the current sector has a simul with. 
 *
 * This function adds the name of the sector to the simulList vector, if the name
 * does not already exist within the vector. This vector is 
@@ -1484,45 +1486,68 @@ void sector::addSimul( const string sectorName ) {
     }
 }
 
-/*! This function performs several setup operations to optimize sorting. 
+/*! \brief This function sets up the sector for sorting. 
 *
-* This function uses the standard library to sort the list of simuls. 
-* This allows for the later use of binary search during comparisons of sectors
-* to speed that operation. It then creates a list of all inputs that the sector uses.
+* This function uses the recursive function getInputDependencies to 
+* find the full list of dependencies for the sector, including 
+* transative dependencies. It then sorts that list of dependencies
+* for rapid searching.
 *
-* \todo It might be better if this function didn't use the fuelmap.
 * \author Josh Lurz
+* \param parentRegion A pointer to the parent region.
 */
-void sector::setupForSort() {
-    // Sort the simul list for faster searching.
-    sort( simulList.begin(), simulList.end() );
+void sector::setupForSort( const Region* parentRegion ) {
     
-    // Setup an input vector.
-    map<string, double> tempMap = getfuelcons( 0 );
-
-    for( map<string, double>::const_iterator fuelIter = tempMap.begin(); fuelIter != tempMap.end(); fuelIter++ ) {
-        // Check for zTotal, which is not a sector name. 
-        if( fuelIter->first != "zTotal" ) {
-            inputList.push_back( fuelIter->first );
-        }
-    }
-    sort( inputList.begin(), inputList.end() );
+    // Setup the internal dependencies vector.
+    dependsList = getInputDependencies( parentRegion );
+    
+    // Now sort the list.
+    sort( dependsList.begin(), dependsList.end() );
 }
 
-/*! This function returns a copy of the list of simuls for the sector.
+/*! \brief This gets the full list of input dependencies including transative dependencies. 
 *
-* This function returns a vector of strings created during the search for simuls.
-* It lists the names of all sectors which have a simul with the sector. The list is
-* currently used when sorting the sectors by input dependency. 
+* This function recursively determines the input dependencies for the sector. To do this
+* correctly, it must also recursively find all the input dependencies for its direct inputs.
+* This can result in a long list of dependencies. Dependencies already accounted for by simuls
+* are not included in this list. 
 *
 * \author Josh Lurz
-* \return A vector of sector names with which the sector has simuls.
+* \param parentRegion A pointer to the parent region.
+* \return The full list of input dependencies including transative ones. 
 */
-const vector<string> sector::getSimulList() const {
-    return simulList;
+vector<string> sector::getInputDependencies( const Region* parentRegion ) const {
+    // Setup the vector we will return.
+    vector<string> depVector;
+
+    // Setup an input vector.
+    map<string,double> tempMap = getfuelcons( 0 );
+    
+    for( map<string, double>::const_iterator fuelIter = tempMap.begin(); fuelIter != tempMap.end(); fuelIter++ ) {
+        string depSectorName = fuelIter->first;
+        
+        // Check for zTotal, which is not a sector name and simuls which are not dependencies. 
+        if( depSectorName != "zTotal" && ( find( simulList.begin(), simulList.end(), depSectorName ) == simulList.end() ) ) {
+            // First add the dependency.
+            depVector.push_back( depSectorName );
+            
+            // Now get the sector's dependencies.
+            vector<string> tempDepVector = parentRegion->getSectorDependencies( depSectorName );
+            
+            // Add the dependencies if they are unique.
+            for( vector<string>::const_iterator tempVecIter = tempDepVector.begin(); tempVecIter != tempDepVector.end(); tempVecIter++ ) {
+                // If the sector is not already in the dep vector, add it. 
+                if( find( depVector.begin(), depVector.end(), *tempVecIter ) == depVector.end() ){
+                    depVector.push_back( *tempVecIter );
+                }
+            }
+        }
+    } // End input list loop
+    // Return the list of dependencies. 
+    return depVector;
 }
 
-/*! This function returns a copy of the list inputs the sector uses. 
+/*! This function returns a copy of the list of dependencies of the sector
 *
 * This function returns a vector of strings created during setupForSort.
 * It lists the names of all inputs the sector uses. These inputs are also sectors. 
@@ -1530,8 +1555,8 @@ const vector<string> sector::getSimulList() const {
 * \author Josh Lurz
 * \return A vector of sector names which are inputs the sector uses. 
 */
-const vector<string> sector::getInputList() const {
-    return inputList;
+const vector<string> sector::getDependsList() const {
+    return dependsList;
 }
 
 
