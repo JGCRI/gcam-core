@@ -6,7 +6,7 @@
 
 /*! 
 * \file xml_helper.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A set of helper function for reading xml data.
 * \todo This class needs an overall cleanup
 * \warning This class is hacked b/c of poor MSVC template support. This makes it much uglier. 
@@ -37,9 +37,10 @@
 #include "util/base/include/model_time.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
+#include "util/base/include/iparsable.h"
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A basic class which is a container for a variable containing the current level of indention in the xml being written.
 * \author Josh Lurz
 */
@@ -51,9 +52,6 @@ private:
 public:
     //! Constructor
     Tabs() { numTabs = 0; }
-    
-    //! Destructor
-    ~Tabs(){}
 
    //! Increase the current level of indentation.
    void increaseIndent(){ numTabs++; }
@@ -74,7 +72,7 @@ public:
 };
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A helper class of functions used to parse XML DOM trees.
 * \author Josh Lurz
 */
@@ -89,19 +87,19 @@ public:
    static std::string safeTranscode( const XMLCh* toTranscode );
    static void insertValueIntoVector( const xercesc::DOMNode* node, std::vector<T>& insertToVector, const Modeltime* modeltime, const bool isPopulationData = false );
    static int getNodePeriod ( const xercesc::DOMNode* node, const Modeltime* modeltime, const bool isPopulationData = false );
-   static xercesc::DOMNode* parseXML( const std::string& xmlFile, xercesc::XercesDOMParser* parser );
-   static xercesc::XercesDOMParser* getParser();
+   static bool parseXML( const std::string& aXMLFile, IParsable* aModelElement );
+   static const std::string& text();
+   static const std::string& name();
    static void cleanupParser();
 private:
     static std::auto_ptr<xercesc::XercesDOMParser> mParser;
     static std::auto_ptr<xercesc::ErrorHandler> mErrHandler;
     static void initParser();
+    static xercesc::XercesDOMParser* getParser();
 };
 
-//! Returns the data value associated with the element node.
-
-/*! 
-* This function first finds the child node of this element, a text node which contains the data value.
+/*! \brief Returns the data value associated with the element node.
+* \details This function first finds the child node of this element, a text node which contains the data value.
 * It then converts the data using the stringstream library into the requested data type and returns the value.
 * The function will throw an error if the input node is not an element, but will return the default value if the element has no data value. 
 * \warning Since this function has a templated type only for the return argument, it must be called as getXMLValue<type>.
@@ -112,41 +110,32 @@ private:
 * \sa getAttr
 * \sa getAttrString
 */
-
 template<class T>
 T XMLHelper<T>::getValue( const xercesc::DOMNode* node ){
-   
-   T retValue; // Variable of requested type which will hold the return value.
-   
-   xercesc::DOMNode* curr = 0; // Node pointer which will point to the node containing the value of the element passed.
-   
    // make sure we were passed a valid node reference which is an element.
    assert( node ); 
    assert( node->getNodeType() == xercesc::DOMNode::ELEMENT_NODE );
    
    // get the first child, which should contain the value.
-   curr = node->getFirstChild();
+   xercesc::DOMNode* curr = node->getFirstChild();
    
    // make sure that the above returned a TEXT_NODE, otherwise value will not be correct.
    if ( !curr || curr->getNodeType() != xercesc::DOMNode::TEXT_NODE ){
       return T();
    }
-   
    else {
       // convert the returned string to the return type.
       std::istringstream target( safeTranscode( curr->getNodeValue() ) );
-      target >> retValue;
+      T retValue;
+      target >> retValue; // Variable of requested type which will hold the return value.
       return retValue;
    }
 }
 
-//! Returns the string value associated with the element node.
-
-/*! 
-* This function first finds the child node of this element, a text node which contains the data value.
+/*! \brief Returns the string value associated with the element node.
+* \details This function first finds the child node of this element, a text node which contains the data value.
 * It then returns the string associated with the data value
 * The function will throw an error if the input node is not an element, but will return the default value if the element has no data value. 
-*
 * \warning This function must be used for strings which might contain a space instead of the templated version becuase of conversion problems.
 * \param node A pointer to a node for which to return the value.
 * \return string from child of node.
@@ -154,36 +143,29 @@ T XMLHelper<T>::getValue( const xercesc::DOMNode* node ){
 * \sa getAttr
 * \sa getAttrString
 */
-
 template<class T>
 std::string XMLHelper<T>::getValueString( const xercesc::DOMNode* node ) {
-   xercesc::DOMNode* curr = 0; // Node pointer which will point to the node containing the value of the element passed.
-   
    // make sure we were passed a valid node reference which is an element.
    assert( node ); 
    assert( node->getNodeType() == xercesc::DOMNode::ELEMENT_NODE );
    
    // get the first child, which should contain the value.
-   curr = node->getFirstChild();
+   xercesc::DOMNode* curr = node->getFirstChild();
    
    // make sure that the above returned a TEXT_NODE, otherwise value will not be correct.
    if ( !curr || curr->getNodeType() != xercesc::DOMNode::TEXT_NODE ){
       return "";
    }
-   
    else {
       return safeTranscode( curr->getNodeValue() );
    }
 }
 
-//! Returns the requested attribute of the element node passed to the function.
-
-/*!
-* This function searches for the attribute with name attrName of the argument node.
+/*! Returns the requested attribute of the element node passed to the function.
+* \details This function searches for the attribute with name attrName of the argument node.
 * It then converts it to type T and returns the value. If the function is not passed an element
 * it will throw an error. If the requested attribute is not present, the function will return the default
 * constructor for type T. (zero for doubles, or false for boolean)
-*
 * \warning It must be called as getXMLValue<type> because it is templated only on the return type.
 * \warning If the attribute is a string and there might be spaces in it getXMLAttrString must be used.
 * \param node A pointer to a node for which to fetch the attribute.
@@ -193,12 +175,8 @@ std::string XMLHelper<T>::getValueString( const xercesc::DOMNode* node ) {
 * \sa getValue
 * \sa getValueString
 */
-
 template<class T>
 T XMLHelper<T>::getAttr( const xercesc::DOMNode* node, const std::string attrName ) {
-   
-   T retValue; // Variable of requested type which will hold the return value.
-   
    /*! \pre Make sure we were passed a valid node reference. */
    assert( node );
    
@@ -210,28 +188,25 @@ T XMLHelper<T>::getAttr( const xercesc::DOMNode* node, const std::string attrNam
    
    // get the attribute with the name which was passed in.
    
-   XMLCh* nameChars =  xercesc::XMLString::transcode( attrName.c_str() );
+   XMLCh* nameChars = xercesc::XMLString::transcode( attrName.c_str() );
    xercesc::DOMAttr* nameAttr = element->getAttributeNode( nameChars );
    xercesc::XMLString::release( &nameChars );
    if( !nameAttr ){
       return T();
-   } 
-   
+   }
    else {
       // convert the returned string to the return type
       std::istringstream target( safeTranscode( nameAttr->getValue() ) );
+      T retValue; // Variable of requested type which will hold the return value.
       target >> retValue;
       return retValue;
    }
 }
 
-//! Returns the requested attribute of the element node passed to the function.
-
-/*!
-* This function searches for the attribute with name attrName of the argument node.
+/*! \brief Returns the requested attribute of the element node passed to the function.
+* \details This function searches for the attribute with name attrName of the argument node.
 * It will then return the string interpretation of the value. If the function is not passed an element
 * it will throw an error. If the requested attribute is not present, the function will return the empty string. 
-*
 * \warning This function must be used instead of getXMLAttr<string> if there are spaces in the string.
 * \param node A pointer to a node for which to fetch the attribute.
 * \param attrName The name of the attribute to fetch.
@@ -259,8 +234,7 @@ std::string XMLHelper<T>::getAttrString( const xercesc::DOMNode* node, const std
    
    if( !nameAttr ){
       return "";
-   } 
-   
+   }
    else {
       return safeTranscode( nameAttr->getValue() );
    }
@@ -317,9 +291,9 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
    
    if (fillout) {
       // Check that the max period is equal to the size of the vector.
-      assert( maxperiod == static_cast<int>(insertToVector.size()) );
+      assert( maxperiod == static_cast<int>( insertToVector.size()) );
       // will not do if period is already last period or maxperiod
-      for (int i = period+1; i < maxperiod; i++) {
+      for ( int i = period + 1; i < maxperiod; ++i ) {
          insertToVector[ i ] =  insertToVector[ period ];
       }
    }
@@ -327,11 +301,8 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
 }
 
 /*! 
-* \brief Return the period cooresponding to the year in the node 
-*
+* \brief Return the period cooresponding to the year in the node,
 * works analogous to insertValueIntoVector, returning the appropriate period
-*
-* \todo Make this work for the Populations object. 
 * \warning Make sure the node passed as an argument as a year attribute.
 * \param node A pointer to a node from which to extract the data.
 * \param modeltime A pointer to the modeltime object to use to determine the correct period.
@@ -346,11 +317,11 @@ int XMLHelper<T>::getNodePeriod ( const xercesc::DOMNode* node, const Modeltime*
    
    const int year = XMLHelper<int>::getAttr( node, "year" );
    
-   // Check to make sure the year attribute returned non-zero. 
+   // Check to make sure the year attribute returned non-zero.
+   // This should be a run time error, not an assert.
    assert( year != 0 );
    
    int period = 0;
-   
    if( isPopulationData == false ) {   
       period = modeltime->getyr_to_per( year );
       
@@ -364,31 +335,24 @@ int XMLHelper<T>::getNodePeriod ( const xercesc::DOMNode* node, const Modeltime*
       assert( ( period >= 0 ) && ( period <= modeltime->getmaxpopdata() ) );
       
    }
-   
    return period;
-   
 }
 
-//! Function which converts XMLCh* to a string without leaking memory.
-
-/*! 
-* This function when passed an XMLCh* string will call the XMLString::transcode method to
+/*! \brief Function which converts XMLCh* to a string without leaking memory.
+* \details This function when passed an XMLCh* string will call the XMLString::transcode method to
 * convert the string into a dynamically allocated char* buffer. The function will then
 * convert the buffer into a string and free the buffer. This function should always be used instead
 * of the XMLString::transcode( XMLCh* ).
-
-  * \warning Always use this function instead of XMLString::transcode( XMLCh* ) otherwise memory will leak.
-  * \warning This function replaces XMLString::transcode( XMLCh* ) but not XMLString::transcode( char* ). 
-  * The latter version is used to create an XMLCh* string. This must still be done with XMLString::transcode. 
-  * Be very careful to free memory when doing so.
-  
-    * \param toTranscode string to be converted to a standard string.
-    * \return An STL string equivalent to the XMLCh* string passed into the function.
+* \warning Always use this function instead of XMLString::transcode( XMLCh* ) otherwise memory will leak.
+* \warning This function replaces XMLString::transcode( XMLCh* ) but not XMLString::transcode( char* ). 
+* The latter version is used to create an XMLCh* string. This must still be done with XMLString::transcode. 
+* Be very careful to free memory when doing so.
+* \param toTranscode string to be converted to a standard string.
+* \return An STL string equivalent to the XMLCh* string passed into the function.
 */
 
 template<class T>
 std::string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
-   
    char* transcoded = xercesc::XMLString::transcode( toTranscode );
    std::string retString = transcoded;
    xercesc::XMLString::release( &transcoded );
@@ -578,38 +542,40 @@ void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elem
 * 
 * This is a very simple function which calls the parse function and handles the exceptions which it may throw.
 * It also takes care of fetching the document and its root element.
-* \param xmlFile The name of the file to parse.
-* \param parser A pointer to an already created xercesDOMParser.
-* \return The root element of the newly parsed DOM document.
+* \param aXMLFile The name of the file to parse.
+* \param aParser A pointer to an already created xercesDOMParser.
+* \param aModelElement Element to call XMLParse on.
+* \return Whether parsing was successful.
 */
 
 template <class T>
-xercesc::DOMNode* XMLHelper<T>::parseXML( const std::string& xmlFile, xercesc::XercesDOMParser* parser ) {
-   try {
-      // const unsigned long startMillis = xercesc::XMLPlatformUtils::getCurrentMillis();
-      mParser->parse( xmlFile.c_str() );
-      // const unsigned long endMillis = xercesc::XMLPlatformUtils::getCurrentMillis();
-      // long parseTime = endMillis - startMillis;
-      // std::cout << "Parsing took " << parseTime / 1000.0 << " seconds." << std::endl;
-   } catch ( const xercesc::XMLException& toCatch ) {
-      std::string message = XMLHelper<std::string>::safeTranscode( toCatch.getMessage() );
-      std::cout << "Exception message is:" << std::endl << message << std::endl;
-      return 0;
-   } catch ( const xercesc::DOMException& toCatch ) {
-      std::string message = XMLHelper<std::string>::safeTranscode( toCatch.msg );
-      std::cout << "Exception message is:" << std::endl << message << std::endl;
-      return 0;
-   } catch ( const xercesc::SAXException& toCatch ){
-      std::string message = XMLHelper<std::string>::safeTranscode( toCatch.getMessage() );
-      std::cout << "Exception message is:" << std::endl << message << std::endl;
-      return 0;
-   } catch (...) {
-      std::cout << "Unexpected Exception." << std::endl;
-      return 0;
-   }
-   
-   return mParser->getDocument()->getDocumentElement(); // Return the root element of the document. 
+bool XMLHelper<T>::parseXML( const std::string& xmlFile, IParsable* aModelElement ) {
+    XercesDOMParser* parser = XMLHelper<T>::getParser();
+    try {
+        parser->parse( xmlFile.c_str() );
+    } catch ( const xercesc::XMLException& toCatch ) {
+        std::string message = XMLHelper<std::string>::safeTranscode( toCatch.getMessage() );
+        std::cout << "Exception message is:" << std::endl << message << std::endl;
+        return false;
+    } catch ( const xercesc::DOMException& toCatch ) {
+        std::string message = XMLHelper<std::string>::safeTranscode( toCatch.msg );
+        std::cout << "Exception message is:" << std::endl << message << std::endl;
+        return false;
+    } catch ( const xercesc::SAXException& toCatch ){
+        std::string message = XMLHelper<std::string>::safeTranscode( toCatch.getMessage() );
+        std::cout << "Exception message is:" << std::endl << message << std::endl;
+        return false;
+    } catch (...) {
+        std::cout << "Unexpected Exception." << std::endl;
+        return false;
+    }
+
+    aModelElement->XMLParse( parser->getDocument()->getDocumentElement() );
+    parser->resetDocumentPool();
+    parser->resetCachedGrammarPool();
+    return true;
 }
+
 /*! \brief Function which initializes the XML Platform and creates an instance
 * of an error handler and parser. 
 * \note Logs are not initialized yet so they cannot be used.
@@ -636,6 +602,26 @@ void XMLHelper<T>::initParser() {
 
     mErrHandler.reset( (xercesc::ErrorHandler*)new xercesc::HandlerBase() );
     mParser->setErrorHandler( mErrHandler.get() );
+}
+
+/*! \brief Return the text string.
+* \author Josh Lurz
+* \return The #text string.
+*/
+template<class T>
+const std::string& XMLHelper<T>::text(){
+    const static std::string& TEXT = "#text";
+    return TEXT;
+}
+
+/*! \brief Return the name string.
+* \author Josh Lurz
+* \return The name string.
+*/
+template<class T>
+const std::string& XMLHelper<T>::name(){
+    const static std::string& NAME = "name";
+    return NAME;
 }
 
 /*! \brief Function which returns a pointer to a XercesDOMParser*.
@@ -687,7 +673,7 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
     std::auto_ptr<T> newNodePtr( newNode );
 
     // First determine if the node exists. 
-    const std::string objName = XMLHelper<std::string>::getAttrString( node, "name" );
+    const std::string objName = XMLHelper<std::string>::getAttrString( node, XMLHelper<void>::name() );
     typedef std::map<std::string,int> NameMap;
     NameMap::const_iterator iter = corrMap.find( objName );
    

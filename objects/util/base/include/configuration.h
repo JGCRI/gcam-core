@@ -6,7 +6,7 @@
 
 /*! 
 * \file configuration.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Configuration class header file.
 * \author Josh Lurz
 * \date $Date$
@@ -16,10 +16,12 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <map>
 #include <list>
+#include "util/base/include/iparsable.h"
+
 class Tabs;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This class is used as a container of configuration values which can be accessed throughout the program.
 *
 * The class is a singleton, so that only one can exist at any time during the program. It parses an XML file
@@ -33,12 +35,12 @@ class Tabs;
 * \warning The user must call delete on the object when they are finished with it.
 */
 
-class Configuration {
+class Configuration: public IParsable {
 
 public:
 	static Configuration* getInstance();
 	~Configuration();
-	void XMLParse( const xercesc::DOMNode* tempnode );
+	bool XMLParse( const xercesc::DOMNode* tempnode );
 	void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 	const std::string& getFile( const std::string& key, const std::string& defaultValue = "" ) const;
 	const std::string& getString( const std::string& key, const std::string& defaultValue = "" ) const;

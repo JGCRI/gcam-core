@@ -51,7 +51,7 @@ Configuration* Configuration::getInstance() {
 }
 
 //! Initialize Configuration object with xml data.
-void Configuration::XMLParse( const DOMNode* root ) {
+bool Configuration::XMLParse( const DOMNode* root ) {
 	/*! \pre Assume we are passed a valid node. */
 	assert( root );
 	
@@ -70,7 +70,7 @@ void Configuration::XMLParse( const DOMNode* root ) {
 				continue;
 			}
 
-			const string valueName = XMLHelper<string>::getAttrString( currValueNode, "name" );
+			const string valueName = XMLHelper<string>::getAttrString( currValueNode, XMLHelper<void>::name() );
 			
 			if( sectionName == "Files" ){
 				fileMap[ valueName ] = XMLHelper<string>::getValueString( currValueNode );
@@ -104,6 +104,7 @@ void Configuration::XMLParse( const DOMNode* root ) {
             }
 		} // for ( int j = 0;...
 	} // for ( int i = 0;...
+    return true;
 }
 
 //! Print the internal variables to XML output.
