@@ -79,7 +79,7 @@ void createDBout() {
 	DBoutTD.Fields.Append(tfield);
 	tfield = DBoutTD.CreateField("RunLabel",dbText);
 	DBoutTD.Fields.Append(tfield);
-	char buffer[4];
+	char buffer[ 8 * sizeof( int ) + 1 ];
 	string str;
 	// add years as fields
 	for (int t=0;t<scenario->getModeltime()->getmaxper();t++) { 
