@@ -1,7 +1,7 @@
 /*! 
 * \file Region.cpp
 * \ingroup CIAM
-* \brief Region class source file.
+* \brief The Region class source file.
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
@@ -40,33 +40,34 @@ extern ofstream outfile, sdfile;
 
 //! Default constructor
 Region::Region() {
-   agSector = 0;
-   population = 0;
-   initElementalMembers();
+   agSector = 0; // null pointer
+   population = 0; // null pointer
+   initElementalMembers(); //
    
-   // Resize all vectors of period information.
+   // Resize all vectors to maximum period
    const int maxper = scenario->getModeltime()->getmaxper();
-   gnp.resize( maxper ); // normalized regional gross national product
-   gnp_adj.resize( maxper ); // regional gross national product adjusted for energy
-   gnp_cap.resize( maxper ); // regional gross national product per capita
-   gnp_dol.resize( maxper ); 
+   gnp.resize( maxper ); // regional gross national product normalized
+   gnpAdj.resize( maxper ); // regional gross national product adjusted for energy and normalized
+   gnpCap.resize( maxper ); // regional gross national product per capita and normalized
+   gnpDol.resize( maxper ); // regional gross national product in dollar value
    input.resize( maxper ); // total fuel and energy consumption
-   TFEcalb.resize( maxper ); // TFE calibration value
-   price_ser.resize( maxper ); // aggregate price for demand services
-   carbontaxpaid.resize( maxper ); // total regional carbon taxes paid
-   summary.resize( maxper ); // summary for reporting
-   carbontax.resize( maxper );
-   calibrationGNPs.resize( maxper );
-   i_elas.resize( maxper );
+   TFEcalb.resize( maxper ); // Total Final Energy calibration value
+   priceSer.resize( maxper ); // aggregate price for demand services
+   carbonTaxPaid.resize( maxper ); // total regional carbon taxes paid
+   summary.resize( maxper ); // summary object for reporting
+   carbonTax.resize( maxper ); // fixed carbon tax
+   calibrationGNPs.resize( maxper ); // GNPs for calibration
+   iElasticity.resize( maxper ); // income elasticity for region
 }
 
+//! Default destructor destroys sector, demsector, Resource, agSector, and population objects.
 Region::~Region() {
    
-   for ( vector<sector*>::iterator secIter = supplysector.begin(); secIter != supplysector.end(); secIter++ ) {
+   for ( vector<sector*>::iterator secIter = supplySector.begin(); secIter != supplySector.end(); secIter++ ) {
       delete *secIter;
    }
    
-   for ( vector<demsector*>::iterator demIter = demandsector.begin(); demIter != demandsector.end(); demIter++ ) {
+   for ( vector<demsector*>::iterator demIter = demandSector.begin(); demIter != demandSector.end(); demIter++ ) {
       delete *demIter;
    }
    
@@ -81,7 +82,7 @@ Region::~Region() {
    delete population;
 }
 
-//! Clear member variables.
+//! Clear member variables and initialize elemental members.
 void Region::clear(){
    
    // initialize elemental data members.
@@ -92,30 +93,30 @@ void Region::clear(){
    population->clear();
    agSector->clear();
    resources.clear();
-   supplysector.clear();
-   demandsector.clear();
-   ghgmarket.clear();
-   i_elas.clear();
-   gnp_dol.clear();
+   supplySector.clear();
+   demandSector.clear();
+   ghgMarket.clear();
+   iElasticity.clear();
+   gnpDol.clear();
    gnp.clear();
-   gnp_adj.clear();
-   gnp_cap.clear();
+   gnpAdj.clear();
+   gnpCap.clear();
    calibrationGNPs.clear();
    input.clear();
-   price_ser.clear();
-   carbontax.clear();
-   carbontaxpaid.clear();
+   priceSer.clear();
+   carbonTax.clear();
+   carbonTaxPaid.clear();
    summary.clear();
-   emcoef_ind.clear();
+   emcoefInd.clear();
 }
 
 //! Initialize elemental data members.
 void Region::initElementalMembers(){
-   noghg = 0;
+   noGhg = 0;
    numResources = 0;
-   nossec = 0;
-   nodsec = 0;
-   noregmrks = 0;
+   noSSec = 0;
+   noDSec = 0;
+   noRegMrks = 0;
    EnergyGNPElas = 0;
 }
 
@@ -124,7 +125,11 @@ string Region::getName() const {
    return name;
 }
 
-//! Sets the data members from the XML input.
+/*! 
+* \brief Sets the data members from the XML input.  This function parses all XML data from Region down to the lowest set of objects.
+*
+* \param node XML DOM node of the region
+*/
 void Region::XMLParse( const DOMNode* node ){
    
    int i;
@@ -221,44 +226,44 @@ void Region::XMLParse( const DOMNode* node ){
             resourceNameMap[ tempResource->getName() ] = resources.size() - 1;
          }
       }
-      else if( nodeName == "supplysector" ){
+      else if( nodeName == "supplySector" ){
          map<string,int>::const_iterator supplySectorIter = supplySectorNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
          if( supplySectorIter != supplySectorNameMap.end() ) {
             // The supply sector already exists.
-            supplysector[ supplySectorIter->second ]->XMLParse( curr );
+            supplySector[ supplySectorIter->second ]->XMLParse( curr );
          }
          else {
             tempSupSector = new sector();
             tempSupSector->XMLParse( curr );
-            supplysector.push_back( tempSupSector );
-            supplySectorNameMap[ tempSupSector->getName() ] = supplysector.size() - 1;
+            supplySector.push_back( tempSupSector );
+            supplySectorNameMap[ tempSupSector->getName() ] = supplySector.size() - 1;
          }
       }
-      else if( nodeName == "demandsector" ){
+      else if( nodeName == "demandSector" ){
          map<string,int>::const_iterator demandSectorIter = demandSectorNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
          if( demandSectorIter != demandSectorNameMap.end() ) {
             // The demand sector already exists.
-            demandsector[ demandSectorIter->second ]->XMLParse( curr );
+            demandSector[ demandSectorIter->second ]->XMLParse( curr );
          }
          else {
             tempDemSector = new demsector();
             tempDemSector->XMLParse( curr );
-            demandsector.push_back( tempDemSector );
-            demandSectorNameMap[ tempDemSector->getName() ] = demandsector.size() - 1;
+            demandSector.push_back( tempDemSector );
+            demandSectorNameMap[ tempDemSector->getName() ] = demandSector.size() - 1;
          }
       }
-      // transportation sector is contained in demandsector
+      // transportation sector is contained in demandSector
       else if( nodeName == "tranSector" ){
          map<string,int>::const_iterator demandSectorIter = demandSectorNameMap.find( XMLHelper<string>::getAttrString( node, "name" ) );
          if( demandSectorIter != demandSectorNameMap.end() ) {
             // The demand sector already exists.
-            demandsector[ demandSectorIter->second ]->XMLParse( curr );
+            demandSector[ demandSectorIter->second ]->XMLParse( curr );
          }
          else {
             tempTranSector = new tranSector();
             tempTranSector->XMLParse( curr );
-            demandsector.push_back( tempTranSector );
-            demandSectorNameMap[ tempTranSector->getName() ] = demandsector.size() - 1;
+            demandSector.push_back( tempTranSector );
+            demandSectorNameMap[ tempTranSector->getName() ] = demandSector.size() - 1;
          }
       } 
       else if( nodeName == "agsector" ) {
@@ -269,17 +274,17 @@ void Region::XMLParse( const DOMNode* node ){
             }
          }
       }
-      else if( nodeName == "ghgmarket" ){
+      else if( nodeName == "ghgMarket" ){
          map<string,int>::const_iterator ghgMarketIter = ghgMarketNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
          if( ghgMarketIter != ghgMarketNameMap.end() ) {
             // ghg market already exists.
-            ghgmarket[ ghgMarketIter->second ]->XMLParse( curr );
+            ghgMarket[ ghgMarketIter->second ]->XMLParse( curr );
          }
          else {
             tempGhgMrk = new ghg_mrk();
             tempGhgMrk->XMLParse( curr );
-            ghgmarket.push_back( tempGhgMrk );
-            ghgMarketNameMap[ tempGhgMrk->getName() ] = ghgmarket.size() - 1;
+            ghgMarket.push_back( tempGhgMrk );
+            ghgMarketNameMap[ tempGhgMrk->getName() ] = ghgMarket.size() - 1;
          }
       }
       // regional taxes
@@ -294,8 +299,8 @@ void Region::XMLParse( const DOMNode* node ){
             if( nodeNameChild == "#text" ) {
                continue;
             }
-            else if( nodeNameChild == "carbontax" ) {
-               XMLHelper<double>::insertValueIntoVector( currChild, carbontax, modeltime );
+            else if( nodeNameChild == "carbonTax" ) {
+               XMLHelper<double>::insertValueIntoVector( currChild, carbonTax, modeltime );
             }
             else {
                cout << "Unrecognized text string: " << nodeNameChild << " found while parsing region->taxes." << endl;
@@ -318,7 +323,7 @@ void Region::XMLParse( const DOMNode* node ){
                XMLHelper<double>::insertValueIntoVector( currChild, calibrationGNPs, modeltime );
             }
             else if(nodeNameChild == "incomeelasticity") {
-               XMLHelper<double>::insertValueIntoVector( currChild, i_elas, modeltime );
+               XMLHelper<double>::insertValueIntoVector( currChild, iElasticity, modeltime );
             }
             
             else if(nodeNameChild == "TFEcalb") {
@@ -344,14 +349,14 @@ void Region::completeInit() {
    
    Configuration* conf = Configuration::getInstance();
    
-   gnp_dol[ 0 ] = calibrationGNPs[ 0 ];
+   gnpDol[ 0 ] = calibrationGNPs[ 0 ];
    
    numResources = resources.size();
-   nossec = supplysector.size();
-   nodsec = demandsector.size();
-   noghg = ghgmarket.size();
+   noSSec = supplySector.size();
+   noDSec = demandSector.size();
+   noGhg = ghgMarket.size();
    
-   emcoef_ind.resize( nossec ); // indirect GHG coef object for every supply sector
+   emcoefInd.resize( noSSec ); // indirect GHG coef object for every supply sector
    
    // Finish initializing agLu
    if( conf->getBool( "agSectorActive" ) ){
@@ -365,13 +370,13 @@ void Region::completeInit() {
    }
    
    // ghg markets, pass region name
-   for( i = 0; i < noghg; i++ ){
-      ghgmarket[i]->setMarket( name );
+   for( i = 0; i < noGhg; i++ ){
+      ghgMarket[i]->setMarket( name );
    }
 
    // supply sector markets, pass region name
-   for( i = 0;i < nossec; i++ ){
-      supplysector[ i ]->setMarket( name );
+   for( i = 0;i < noSSec; i++ ){
+      supplySector[ i ]->setMarket( name );
    }
    
    // Create AgLU markets
@@ -384,12 +389,12 @@ void Region::completeInit() {
       ( *resourceIter )->completeInit();
    }
    
-   for( vector<sector*>::iterator supplySectorIter = supplysector.begin(); supplySectorIter != supplysector.end(); supplySectorIter++ ) {
+   for( vector<sector*>::iterator supplySectorIter = supplySector.begin(); supplySectorIter != supplySector.end(); supplySectorIter++ ) {
       ( *supplySectorIter )->completeInit();
       
    }
    
-   for( vector<demsector*>::iterator demandSectorIter = demandsector.begin(); demandSectorIter != demandsector.end(); demandSectorIter++ ) {
+   for( vector<demsector*>::iterator demandSectorIter = demandSector.begin(); demandSectorIter != demandSector.end(); demandSectorIter++ ) {
       ( *demandSectorIter )->completeInit();
    }
    
@@ -398,7 +403,12 @@ void Region::completeInit() {
    findSimul( 0 );
 }
 
-/*! \brief Write datamembers to datastream in XML format. \note \ref faqitem1 */
+/*! 
+* \brief Write datamembers to datastream in XML format. 
+* \param out Output file in XML format.
+* \note 
+* \ref faqitem1 
+*/
 void Region::toXML( ostream& out ) const {
    
    const Modeltime* modeltime = scenario->getModeltime();
@@ -433,12 +443,12 @@ void Region::toXML( ostream& out ) const {
    }
    
    // write out supply sector objects.
-   for( vector<sector*>::const_iterator j = supplysector.begin(); j != supplysector.end(); j++ ){
+   for( vector<sector*>::const_iterator j = supplySector.begin(); j != supplySector.end(); j++ ){
       ( *j )->toXML( out );
    }
    
    // write out demand sector objects.
-   for( vector<demsector*>::const_iterator k = demandsector.begin(); k != demandsector.end(); k++ ){
+   for( vector<demsector*>::const_iterator k = demandSector.begin(); k != demandSector.end(); k++ ){
       ( *k )->toXML( out );
    }
    
@@ -449,8 +459,8 @@ void Region::toXML( ostream& out ) const {
    }
    // agSector->toXML( out );
    
-   // write out ghgmarket objects.
-   for( vector<ghg_mrk*>::const_iterator l = ghgmarket.begin(); l != ghgmarket.end(); l++ ){
+   // write out ghgMarket objects.
+   for( vector<ghg_mrk*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
       ( *l )->toXML( out );
    }
    
@@ -461,13 +471,13 @@ void Region::toXML( ostream& out ) const {
    Tabs::increaseIndent();
    
    // write out GNP
-   for( m = 0; m < static_cast<int>( gnp_dol.size() ); m++ ){
-      XMLWriteElementCheckDefault( gnp_dol[ m ], "GNP", out, 0, modeltime->getper_to_yr( m ) );
+   for( m = 0; m < static_cast<int>( gnpDol.size() ); m++ ){
+      XMLWriteElementCheckDefault( gnpDol[ m ], "GNP", out, 0, modeltime->getper_to_yr( m ) );
    }
    
    // write out income elasticity
-   for( m = 0; m < static_cast<int>( i_elas.size() ); m++ ) {
-      XMLWriteElementCheckDefault( i_elas[ m ],"incomeelasticity", out, 0, modeltime->getper_to_yr( m ) );
+   for( m = 0; m < static_cast<int>( iElasticity.size() ); m++ ) {
+      XMLWriteElementCheckDefault( iElasticity[ m ],"incomeelasticity", out, 0, modeltime->getper_to_yr( m ) );
    }
    
    // write out TFE calibration values
@@ -488,8 +498,8 @@ void Region::toXML( ostream& out ) const {
    Tabs::increaseIndent();
    
    // Write out regional fixed taxes
-   for( m = 0; m < static_cast<int>( carbontax.size() ); m++ ){
-      XMLWriteElementCheckDefault( carbontax[ m ],"carbontax", out, 0, modeltime->getper_to_yr( m ) );			
+   for( m = 0; m < static_cast<int>( carbonTax.size() ); m++ ){
+      XMLWriteElementCheckDefault( carbonTax[ m ],"carbonTax", out, 0, modeltime->getper_to_yr( m ) );			
    }
    
    Tabs::decreaseIndent();
@@ -518,19 +528,19 @@ void Region::toDebugXML( const int period, ostream& out ) const {
    Tabs::increaseIndent();
    
    // write out basic datamembers
-   XMLWriteElement( noghg, "noghg", out );
+   XMLWriteElement( noGhg, "noGhg", out );
    XMLWriteElement( numResources, "numResources", out );
-   XMLWriteElement( nossec, "nossec", out );
-   XMLWriteElement( nodsec, "nodsec", out );
-   XMLWriteElement( noregmrks, "noregmrks", out );
+   XMLWriteElement( noSSec, "noSSec", out );
+   XMLWriteElement( noDSec, "noDSec", out );
+   XMLWriteElement( noRegMrks, "noRegMrks", out );
    XMLWriteElement( gnp[ period ], "gnp", out );
-   XMLWriteElement( gnp_cap[ period ], "gnpPerCapita", out );
-   XMLWriteElement( gnp_dol[ period ], "gnpDollarValue", out);
+   XMLWriteElement( gnpCap[ period ], "gnpPerCapita", out );
+   XMLWriteElement( gnpDol[ period ], "gnpDollarValue", out);
    XMLWriteElement( calibrationGNPs[ period ], "calibrationGNPs", out );
-   XMLWriteElement( gnp_adj[ period ], "gnp_adj", out );
+   XMLWriteElement( gnpAdj[ period ], "gnpAdj", out );
    XMLWriteElement( input[ period ], "input", out );
-   XMLWriteElement( price_ser[ period ], "price_ser", out );
-   XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out );
+   XMLWriteElement( priceSer[ period ], "priceSer", out );
+   XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out );
    // Write out gnp energy elasticity.
    XMLWriteElement( EnergyGNPElas, "e_GNP_elas", out );
    
@@ -552,20 +562,20 @@ void Region::toDebugXML( const int period, ostream& out ) const {
    }
    
    // write out supply sector objects.
-   for( vector<sector*>::const_iterator j = supplysector.begin(); j != supplysector.end(); j++ ){
+   for( vector<sector*>::const_iterator j = supplySector.begin(); j != supplySector.end(); j++ ){
       ( *j )->toDebugXML( period, out );
    }
    
    // write out demand sector objects.
-   for( vector<demsector*>::const_iterator k = demandsector.begin(); k != demandsector.end(); k++ ){
+   for( vector<demsector*>::const_iterator k = demandSector.begin(); k != demandSector.end(); k++ ){
       ( *k )->toDebugXML( period, out );
    }
    
    // Write out the single agSector object.
    // agSector->toDebugXML( period, out );
    
-   // write out ghgmarket objects.
-   for( vector<ghg_mrk*>::const_iterator l = ghgmarket.begin(); l != ghgmarket.end(); l++ ){
+   // write out ghgMarket objects.
+   for( vector<ghg_mrk*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
       ( *l )->toDebugXML( period, out );
    }
    
@@ -578,10 +588,10 @@ void Region::toDebugXML( const int period, ostream& out ) const {
    Tabs::increaseIndent();
    
    // Write out GNP.
-   XMLWriteElement( gnp_dol[ period ], "gnp_dol", out );
+   XMLWriteElement( gnpDol[ period ], "gnpDol", out );
    
    // Write out income elasticity.
-   XMLWriteElement( i_elas[ period ],"i_elas", out );
+   XMLWriteElement( iElasticity[ period ],"iElasticity", out );
    
    Tabs::decreaseIndent();
    Tabs::writeTabs( out );
@@ -594,7 +604,7 @@ void Region::toDebugXML( const int period, ostream& out ) const {
    Tabs::increaseIndent();
    
    // Write out regional fixed taxes.
-   XMLWriteElement( carbontax[ period ], "carbontax", out );			
+   XMLWriteElement( carbonTax[ period ], "carbonTax", out );			
    
    Tabs::decreaseIndent();
    Tabs::writeTabs( out );
@@ -623,38 +633,38 @@ void Region::calcAgSector( const int period ) {
 }
 
 //! Set regional ghg constraint to market supply.
-void Region::setghgsupply( int per ) {
+void Region::setGhgSupply( int per ) {
    Marketplace* marketplace = scenario->getMarketplace();
    
    string ghgName;
    double ghgtarget;
    
-   for (int i=0;i<noghg;i++) {
-      ghgName = ghgmarket[i]->getName();
-      ghgtarget = ghgmarket[i]->getConstraint(per);
+   for (int i=0;i<noGhg;i++) {
+      ghgName = ghgMarket[i]->getName();
+      ghgtarget = ghgMarket[i]->getConstraint(per);
       marketplace->setsupply(ghgName,name,ghgtarget,per);		
    }
 }
 
 //! Set regional ghg tax to individual technologies.
-void Region::addghgtax( int per ) {
+void Region::addGhgTax( int per ) {
    string ghgname;
    int i,j,k;
    
-   for (i=0;i<noghg;i++) {
-      ghgname = ghgmarket[i]->getName();
-      for (j=0;j<nossec;j++) {
-         supplysector[j]->addghgtax(ghgname,name,per);
+   for (i=0;i<noGhg;i++) {
+      ghgname = ghgMarket[i]->getName();
+      for (j=0;j<noSSec;j++) {
+         supplySector[j]->addghgtax(ghgname,name,per);
       }
-      for (k=0;k<nodsec;k++) {
-         demandsector[k]->addghgtax(ghgname,name,per);
+      for (k=0;k<noDSec;k++) {
+         demandSector[k]->addghgtax(ghgname,name,per);
       }
    }
 }
 
 
 //! Calculates annual supply of primay resources.
-void Region::rscsupply(int per)  {
+void Region::rscSupply(int per)  {
    Marketplace* marketplace = scenario->getMarketplace();
    string goodName;
    string regionName = name; // name is Region attribute
@@ -683,17 +693,17 @@ void Region::rscsupply(int per)  {
 }
 
 //! Calculate prices of refined fuels and electricity.
-void Region::finalsupplyprc(int per) {
+void Region::finalSupplyPrc(int per) {
    Marketplace* marketplace = scenario->getMarketplace();
    string goodName;
    double goodPrice;
    
-   for (int i=0;i<nossec;i++) {
-      goodName = supplysector[i]->getName();
+   for (int i=0;i<noSSec;i++) {
+      goodName = supplySector[i]->getName();
       // name is region or country name
-      supplysector[i]->calc_share( name, per );
-      supplysector[i]->price( per );
-      goodPrice = supplysector[ i ]->showprice( per );
+      supplySector[i]->calc_share( name, per );
+      supplySector[i]->price( per );
+      goodPrice = supplySector[ i ]->showprice( per );
       // set market price of intermediate goods
       // name is region or country name
       marketplace->setprice( goodName, name, goodPrice, per );
@@ -701,7 +711,7 @@ void Region::finalsupplyprc(int per) {
 }
 
 //! Calculates supply of final energy and other goods.
-void Region::finalsupply(int per) {
+void Region::finalSupply(int per) {
    
    Marketplace* marketplace = scenario->getMarketplace();
    string goodName;
@@ -711,43 +721,43 @@ void Region::finalsupply(int per) {
    
    
    // loop through all sectors once to get total output
-   for (i=0;i<nossec;i++) {
+   for (i=0;i<noSSec;i++) {
       // start with last supply sector
       // need demand for all intermediate and final energy to
       // determine need for primary energy
-      j = nossec - (i+1);
+      j = noSSec - (i+1);
       
-      goodName = supplysector[j]->getName();		
+      goodName = supplySector[j]->getName();		
       
       // name is country/region name
-      supplysector[j]->supply( name, per );
-      supplysector[j]->sumoutput(per);
-      double sectorOutput = supplysector[j]->getoutput(per);
+      supplySector[j]->supply( name, per );
+      supplySector[j]->sumoutput(per);
+      double sectorOutput = supplySector[j]->getoutput(per);
       
-      carbontaxpaid[per] += supplysector[j]->showcarbontaxpaid(per);
+      carbonTaxPaid[per] += supplySector[j]->showcarbontaxpaid(per);
    }
    
    // loop through supply sectors and assign supplies to marketplace and update fuel consumption map
    // the supplies in the market sector are, at present, not used except to double check 
    // that the output of the supply sectors does equal supply
    
-   for (i=0;i<nossec;i++) {
+   for (i=0;i<noSSec;i++) {
       // name is country/region name
-      //supplysector[j].supply(name,no,per);
+      //supplySector[j].supply(name,no,per);
       // supply and demand for intermediate and final good are set equal
-      goodName = supplysector[i]->getName();
-      mrksupply = supplysector[i]->getoutput(per);
+      goodName = supplySector[i]->getName();
+      mrksupply = supplySector[i]->getoutput(per);
       
       // set market supply of intermediate goods
       marketplace->setsupply(goodName,name,mrksupply,per);
       
       // update sector input
-      supplysector[ i ]->sumInput( per );
+      supplySector[ i ]->sumInput( per );
    }
 }
 
 //! Calculate regional gnp.
-void Region::calc_gnp( int per ) {
+void Region::calcGnp( int per ) {
    
    const Modeltime* modeltime = scenario->getModeltime();
    const int baseYear = modeltime->getstartyr();
@@ -766,11 +776,11 @@ void Region::calc_gnp( int per ) {
             << "  lastLF: " << lastLF << "  lab: " << tlab << "\n";
       }
    }
-   
+    
    
    // gnp per capita normalized
    // correct using energy adjusted gnp*****
-   gnp_cap[ per ] = gnp[ per ] * population->total( basePer ) / population->total( per );
+   gnpCap[ per ] = gnp[ per ] * population->total( basePer ) / population->total( per );
 }
 
 //! Calculate a forward looking gnp.
@@ -837,30 +847,30 @@ void Region::calcGNPlfp(int per) {
    }
    // gnp per capita normalized
    // correct using energy adjusted gnp*****
-   gnp_cap[per] = gnp[per]*population->total(basePer)/population->total(per);
+   gnpCap[per] = gnp[per]*population->total(basePer)/population->total(per);
    
 }
 
 //! Calculate demand sector aggregate price.
 void Region::calcEndUsePrice( const int period ) {
    
-   price_ser[ period ] = 0;
+   priceSer[ period ] = 0;
    
-   for ( int i = 0; i < nodsec; i++ ) {
-      demandsector[ i ]->calc_share( name, period, gnp_cap[period] );		
+   for ( int i = 0; i < noDSec; i++ ) {
+      demandSector[ i ]->calc_share( name, period, gnpCap[period] );		
       
       // calculate service price for each demand sector
-      demandsector[ i ]->price( period );
+      demandSector[ i ]->price( period );
       
       // calculate aggregate service price for region
-      price_ser[ period ] += demandsector[ i ]->getoutput( 0 ) * demandsector[ i ]->showprice( period );
+      priceSer[ period ] += demandSector[ i ]->getoutput( 0 ) * demandSector[ i ]->showprice( period );
       
       // calculate service price elasticity for each demand sector
       // or use read in value, temporary code
       bool useReadinData = true;
       // do nothing if false
       if (!useReadinData) {
-         demandsector[ i ]->calc_pElasticity( period );
+         demandSector[ i ]->calc_pElasticity( period );
       }
       
       
@@ -868,28 +878,28 @@ void Region::calcEndUsePrice( const int period ) {
 }
 
 //! Adjust regional gnp for energy.
-void Region::adjust_gnp(int per) {
+void Region::adjustGnp(int per) {
    const Modeltime* modeltime = scenario->getModeltime();
    
    const int baseYear = modeltime->getstartyr();
    double tempratio;
    if (per<=modeltime->getyr_to_per(1990)) {
-      gnp_adj[per] = gnp[per];
+      gnpAdj[per] = gnp[per];
    }
    else {
       // adjust gnp using energy cost changes and 
       // energy to gnp feedback elasticity
-      tempratio = price_ser[per]/price_ser[per-1];
+      tempratio = priceSer[per]/priceSer[per-1];
       try {
-         gnp_adj[per] = gnp[per]*pow(tempratio,EnergyGNPElas);
+         gnpAdj[per] = gnp[per]*pow(tempratio,EnergyGNPElas);
       } catch(...) {
-         cerr << "Error calculating gnp_adj in region.adjust_gnp()\n";
+         cerr << "Error calculating gnpAdj in region.adjust_gnp()\n";
       }
    }
    
    // calculate dollar value gnp using base year dollar value GNP
    if ( per > modeltime->getyr_to_per( baseYear ) ){ 
-      gnp_dol[ per ] = gnp_adj[ per ] * gnp_dol[ modeltime->getyr_to_per( baseYear ) ];
+      gnpDol[ per ] = gnpAdj[ per ] * gnpDol[ modeltime->getyr_to_per( baseYear ) ];
    }
 }
 
@@ -913,13 +923,13 @@ void Region::calibrateRegion( const bool doCalibrations, const int per ) {
    // can only turn off calibrations that do not involve markets
    if ( doCalibrations ) {
       // Calibrate demand sectors
-      for ( i=0;i<nodsec;i++) {
-         demandsector[ i ]->calibrateSector( name, per );
+      for ( i=0;i<noDSec;i++) {
+         demandSector[ i ]->calibrateSector( name, per );
       }
       
       // Calibrate supply sectors
-      for ( i=0;i<nossec;i++) {
-         supplysector[ i ]->calibrateSector( name, per );
+      for ( i=0;i<noSSec;i++) {
+         supplySector[ i ]->calibrateSector( name, per );
       }
    }
    
@@ -939,7 +949,7 @@ void Region::calibrateRegion( const bool doCalibrations, const int per ) {
       const string goodName = "GDP";
       Marketplace* marketplace = scenario->getMarketplace();
       marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
-      marketplace->setsupply( goodName, name, gnp_dol[ per ], per );
+      marketplace->setsupply( goodName, name, gnpDol[ per ], per );
       marketplace->setMarketToSolve( goodName, name );
    }
 }
@@ -948,8 +958,8 @@ void Region::calibrateRegion( const bool doCalibrations, const int per ) {
 bool Region::demandAllCalibrated( const int per ) {
    bool allCalibrated = true;
    
-   for ( int i=0;i<nodsec;i++ && allCalibrated ) {
-      if ( !demandsector[ i ]->sectorAllCalibrated( per ) ) {
+   for ( int i=0;i<noDSec;i++ && allCalibrated ) {
+      if ( !demandSector[ i ]->sectorAllCalibrated( per ) ) {
           allCalibrated = false;
       }
    }
@@ -965,8 +975,8 @@ void Region::calibrateTFE( const int per ) {
    
    // Calculate total final energy demand for all demand sectors
    double totalFinalEnergy = 0;
-   for ( i=0;i<nodsec;i++) {
-      totalFinalEnergy += demandsector[ i ]->getInput( per );;
+   for ( i=0;i<noDSec;i++) {
+      totalFinalEnergy += demandSector[ i ]->getInput( per );;
    }
    
    // Don't calibrate unless non zero value of TFE
@@ -982,9 +992,9 @@ void Region::calibrateTFE( const int per ) {
       //   cout << name << ":  TFE Calib: " << TFEcalb[ per ] << "; TFE: " << totalFinalEnergy << endl;
       
       // Scale each sector's output to appraoch calibration value
-      for ( i=0;i<nodsec;i++) {
-         if ( !demandsector[ i ]->sectorAllCalibrated( per ) ) {
-            demandsector[ i ]->scaleOutput( per , scaleFactor );
+      for ( i=0;i<noDSec;i++) {
+         if ( !demandSector[ i ]->sectorAllCalibrated( per ) ) {
+            demandSector[ i ]->scaleOutput( per , scaleFactor );
          }
       }
    }
@@ -994,50 +1004,32 @@ void Region::calibrateTFE( const int per ) {
 void Region::initCalc( const int per ) 
 {
    int i;
-   for ( i=0;i<nodsec;i++) {
-      demandsector[ i ]->initCalc( name, per ); 
+   for ( i=0;i<noDSec;i++) {
+      demandSector[ i ]->initCalc( name, per ); 
    }
    
-   for ( i=0;i<nossec;i++) {
-      supplysector[ i ]->initCalc( name, per ); 
+   for ( i=0;i<noSSec;i++) {
+      supplySector[ i ]->initCalc( name, per ); 
    }
 }
 
 //! Calculate regional demand for energy and other goods for all sectors.
-void Region::endusedemand(int per) 
+void Region::enduseDemand(int per) 
 {
-   carbontaxpaid[per] = 0; // initialize total regional carbon taxes paid
+   carbonTaxPaid[per] = 0; // initialize total regional carbon taxes paid
    
-   // gnp_cap using energy adjusted gnp
-   gnp_cap[per] = gnp_adj[per]*population->total(0)/population->total(per);
+   // gnpCap using energy adjusted gnp
+   gnpCap[per] = gnpAdj[per]*population->total(0)/population->total(per);
    
-   for (int i=0;i<nodsec;i++) {
+   for (int i=0;i<noDSec;i++) {
       // calculate aggregate demand for end-use sector services
       // set fuel demand from aggregate demand for services
       // name is region or country name
-      demandsector[ i ]->aggdemand( name, gnp_cap[per], gnp_adj[per], per ); 
-      carbontaxpaid[ per ] += demandsector[ i ]->showcarbontaxpaid( per );
+      demandSector[ i ]->aggdemand( name, gnpCap[per], gnpAdj[per], per ); 
+      carbonTaxPaid[ per ] += demandSector[ i ]->showcarbontaxpaid( per );
       
       // update sector input
-      demandsector[ i ]->sumInput( per );
-   }
-}
-
-//! Print all supply sector information.
-void Region::showsupsector(int per, const char *ofile) 
-{
-   for (int i=0;i<nossec;i++) {
-      supplysector[i]->showlabel(ofile);
-      supplysector[i]->showsubsec(per,ofile);
-   }
-}
-
-// Print all demand sector information.
-void Region::showdemsector(int per, const char* ofile) 
-{
-   for (int i=0;i<nodsec;i++) {
-      demandsector[i]->showlabel(ofile);
-      demandsector[i]->showsubsec(per,ofile);
+      demandSector[ i ]->sumInput( per );
    }
 }
 
@@ -1046,20 +1038,20 @@ void Region::applycarbontax(int per)
 {
    int i=0;
    // apply carbon taxes by period to primary fossil fuel user only
-   for (i=0;i<nossec;i++)
-      supplysector[i]->applycarbontax( name, carbontax[per],per);
-   for (i=0;i<nodsec;i++)
-      demandsector[i]->applycarbontax( name, carbontax[per],per);
+   for (i=0;i<noSSec;i++)
+      supplySector[i]->applycarbontax( name, carbonTax[per],per);
+   for (i=0;i<noDSec;i++)
+      demandSector[i]->applycarbontax( name, carbonTax[per],per);
 }
 
-//! Return regional population->
-double Region::showpop(int per)
+//! Return regional population
+double Region::getPop(int per)
 {
    return population->total(per);
 }
 
 //! Return regional available Resource.
-double Region::showrsc( const string resourceName, const int per )
+double Region::getRsc( const string resourceName, const int per )
 {
    for (int i=0;i<numResources;i++) {
       if (resources[i]->getName() == resourceName )
@@ -1069,7 +1061,7 @@ double Region::showrsc( const string resourceName, const int per )
 }
 
 //! Return regional available subresource.
-double Region::showsubrsc( const string resourceName, const string& subResourceName, const int per ) 
+double Region::getSubRsc( const string resourceName, const string& subResourceName, const int per ) 
 {
    for (int i=0;i<numResources;i++) {
       if (resources[i]->getName() == resourceName )
@@ -1086,15 +1078,15 @@ void Region::emission(int per)
    summary[per].clearemiss(); // clear emissions map
    
    // need to call emissions function but sum is not needed
-   for (i=0;i<nossec;i++) {
-      supplysector[i]->emission(per);
-      summary[per].updateemiss(supplysector[i]->getemission(per));
-      emcoef_ind[i].setemcoef(supplysector[i]->getemfuelmap(per), 
-         supplysector[i]->getoutput(per));
+   for (i=0;i<noSSec;i++) {
+      supplySector[i]->emission(per);
+      summary[per].updateemiss(supplySector[i]->getemission(per));
+      emcoefInd[i].setemcoef(supplySector[i]->getemfuelmap(per), 
+         supplySector[i]->getoutput(per));
    }
-   for (i=0;i<nodsec;i++) {
-      demandsector[i]->emission(per);
-      summary[per].updateemiss(demandsector[i]->getemission(per));
+   for (i=0;i<noDSec;i++) {
+      demandSector[i]->emission(per);
+      summary[per].updateemiss(demandSector[i]->getemission(per));
    }
 }
 
@@ -1112,37 +1104,37 @@ void Region::calcEmissFuel(int per)
 }
 
 //! Calculate regional indirect emissions from intermediate and final demand sectors.
-void Region::emiss_ind(int per)
+void Region::emissionInd(int per)
 {
    int i;
    // calculate indirect GHG emissions
-   for (i=0;i<nossec;i++)
-      supplysector[i]->indemission( per, emcoef_ind );
-   for (i=0;i<nodsec;i++) 
-      demandsector[i]->indemission( per, emcoef_ind );
+   for (i=0;i<noSSec;i++)
+      supplySector[i]->indemission( per, emcoefInd );
+   for (i=0;i<noDSec;i++) 
+      demandSector[i]->indemission( per, emcoefInd );
 }
 
 //! Set regional GHG emissions as market demand.
-void Region::setghgdemand(int per)
+void Region::setGhgDemand(int per)
 {
    double ghgemiss;
    string ghgname;
    
-   for (int i=0;i<noghg;i++) {
-      ghgname = ghgmarket[i]->getName();
+   for (int i=0;i<noGhg;i++) {
+      ghgname = ghgMarket[i]->getName();
       if(ghgname == "CO2") {
          ghgemiss = summary[per].get_emissmap_second("CO2");
-         ghgmarket[i]->setEmission(ghgemiss,per);
+         ghgMarket[i]->setEmission(ghgemiss,per);
       }
       else if(ghgname == "CH4") {
          ghgemiss = summary[per].get_emissmap_second("CH4");
-         ghgmarket[i]->setEmission(ghgemiss,per);
+         ghgMarket[i]->setEmission(ghgemiss,per);
       }
    }
 }	
 
 //! Write all outputs to file.
-void Region::outputfile() {
+void Region::outputFile() {
    const Modeltime* modeltime = scenario->getModeltime();
    int i=0;
    const int maxper = modeltime->getmaxper();
@@ -1154,13 +1146,13 @@ void Region::outputfile() {
    // write population results to database
    population->outputfile( name );
    // write gnp and adjusted gnp for region
-   fileoutput3(name," "," "," ","GNP","Bil90US$",gnp_dol);
+   fileoutput3(name," "," "," ","GNP","Bil90US$",gnpDol);
    fileoutput3(name," "," "," ","GNP","norm",gnp);
-   fileoutput3(name," "," "," ","GNP","energy adj",gnp_adj);
+   fileoutput3(name," "," "," ","GNP","energy adj",gnpAdj);
    // regional carbon taxes
-   fileoutput3(name," "," "," ","C tax (fixed)","90$/TC",carbontax);
+   fileoutput3(name," "," "," ","C tax (fixed)","90$/TC",carbonTax);
    // regional total carbon taxes paid
-   fileoutput3(name," "," "," ","C tax revenue","Mil90$",carbontaxpaid);
+   fileoutput3(name," "," "," ","C tax revenue","Mil90$",carbonTaxPaid);
    
    // write total emissions for region
    for (int m=0;m<maxper;m++)
@@ -1170,14 +1162,14 @@ void Region::outputfile() {
    for (i=0;i<numResources;i++) 
       resources[i]->outputfile( name );
    // write supply sector results to file
-   for (i=0;i<nossec;i++) {
-      supplysector[i]->outputfile( name );
-      supplysector[i]->subsec_outfile( name );
+   for (i=0;i<noSSec;i++) {
+      supplySector[i]->outputfile( name );
+      supplySector[i]->subsec_outfile( name );
    }
    // write end-use sector demand results to file
-   for (i=0;i<nodsec;i++) {
-      demandsector[i]->outputfile( name );	
-      demandsector[i]->subsec_outfile( name );	
+   for (i=0;i<noDSec;i++) {
+      demandSector[i]->outputfile( name );	
+      demandSector[i]->subsec_outfile( name );	
    }
    
 }
@@ -1195,14 +1187,14 @@ void Region::MCoutput() {
    // write population results to database
    population->MCoutput( name.c_str() );
    // write gnp and adjusted gnp for region
-   dboutput4(name,"General","GDP 90$","GDP(90mer)","90US$",gnp_dol);
+   dboutput4(name,"General","GDP 90$","GDP(90mer)","90US$",gnpDol);
    dboutput4(name,"General","GDP","norm","unitless",gnp);
-   dboutput4(name,"General","GDP","energy adj","unitless",gnp_adj);
-   dboutput4(name,"General","GDP","per cap","unitless",gnp_cap);
+   dboutput4(name,"General","GDP","energy adj","unitless",gnpAdj);
+   dboutput4(name,"General","GDP","per cap","unitless",gnpCap);
    // regional carbon taxes
-   dboutput4(name,"General","CarbonTax","Fos Fuel","90US$",carbontax);
+   dboutput4(name,"General","CarbonTax","Fos Fuel","90US$",carbonTax);
    // regional total carbon taxes paid
-   dboutput4(name,"General","CarbonTax","revenue","90US$",carbontaxpaid);
+   dboutput4(name,"General","CarbonTax","revenue","90US$",carbonTaxPaid);
    
    
    // emissions by fuel
@@ -1234,8 +1226,8 @@ void Region::MCoutput() {
    // regional total end-use service demand for all demand sectors
    for (m=0;m<maxper;m++) {
       temp[m] = 0; // initialize temp to 0 for each period
-      for (i=0;i<nodsec;i++) { // sum for all period and demand sectors
-         temp[m] += demandsector[i]->getService( m );
+      for (i=0;i<noDSec;i++) { // sum for all period and demand sectors
+         temp[m] += demandSector[i]->getService( m );
       }
    }
    dboutput4(name,"End-Use Service","by Sector","zTotal","Ser Unit",temp);
@@ -1243,8 +1235,8 @@ void Region::MCoutput() {
    // regional total end-use service demand without Tech Change for all demand sectors
    for (m=0;m<maxper;m++) {
       temp[m] = 0; // initialize temp to 0 for each period
-      for (i=0;i<nodsec;i++) { // sum for all period and demand sectors
-         temp[m] += demandsector[i]->getServiceWoTC( m );
+      for (i=0;i<noDSec;i++) { // sum for all period and demand sectors
+         temp[m] += demandSector[i]->getServiceWoTC( m );
       }
    }
    dboutput4(name,"End-Use Service","by Sector w/o TC","zTotal","Ser Unit",temp);
@@ -1262,8 +1254,8 @@ void Region::MCoutput() {
    // regional total fuel consumption for all demand sectors
    for (m=0;m<maxper;m++) {
    temp[m] = 0; // initialize temp to 0 for each period
-   for (i=0;i<nodsec;i++) { // sum for all period and demand sectors
-   temp[m] += summary[m].get_fmap_second(demandsector[i]->getName());
+   for (i=0;i<noDSec;i++) { // sum for all period and demand sectors
+   temp[m] += summary[m].get_fmap_second(demandSector[i]->getName());
    }
    }
    dboutput4(name,"Fuel Consumption","by End-Use Sector","zTotal","EJ",temp);
@@ -1298,12 +1290,12 @@ void Region::MCoutput() {
       resources[i]->MCoutput( name );
    }
    // write supply sector results to database
-   for (i=0;i<nossec;i++) {
-      supplysector[i]->MCoutput( name );
+   for (i=0;i<noSSec;i++) {
+      supplySector[i]->MCoutput( name );
    }
    // write end-use sector demand results to database
-   for (i=0;i<nodsec;i++) {
-      demandsector[i]->MCoutput( name );
+   for (i=0;i<noDSec;i++) {
+      demandSector[i]->MCoutput( name );
    }
 }
 
@@ -1328,17 +1320,17 @@ void Region::findSimul(const int per) const {
    
    // Loop through all supply sectors
    if (WriteOut) { cout << "Region: " << name << endl; }
-   for ( isec=0; isec<nossec; isec++ ) {				
-      OuterSectorName = supplysector[isec]->getName();
+   for ( isec=0; isec<noSSec; isec++ ) {				
+      OuterSectorName = supplySector[isec]->getName();
       if (WriteOut) { cout << "Checking Sector: " << OuterSectorName << endl; }
-      fuelcons = supplysector[isec]->getfuelcons(per);	// Get fuel consumption map for outer sector
+      fuelcons = supplySector[isec]->getfuelcons(per);	// Get fuel consumption map for outer sector
       // Inner loop through all supply sectors
-      for ( jsec=0; jsec<nossec; jsec++ ) {
-         InnerSectorName = supplysector[jsec]->getName();
+      for ( jsec=0; jsec<noSSec; jsec++ ) {
+         InnerSectorName = supplySector[jsec]->getName();
          fuelIterOne=fuelcons.find(InnerSectorName);	// Search in outer sector for name of inner sector 
          // Check if the inner sector is a fuel used by the outer sector (and not same sector!)
          if ( ( jsec != isec ) && ( fuelIterOne!=fuelcons.end() ) ) {	
-            Innerfuelcons = supplysector[jsec]->getfuelcons(per);	// Get map of fuels used in inner sector
+            Innerfuelcons = supplySector[jsec]->getfuelcons(per);	// Get map of fuels used in inner sector
             if (WriteOut) {  cout << " Against Sector: " << InnerSectorName << endl; }
             
             // Now loop through inner sector, checking to see if it uses the outer sector as an input
@@ -1380,17 +1372,17 @@ void Region::updateSummary( const int per ) {
    for (i=0;i<numResources;i++) {
       summary[per].initpeprod(resources[i]->getName(),resources[i]->getAnnualProd(per));
    }
-   for (i=0;i<nodsec;i++) {
+   for (i=0;i<noDSec;i++) {
       // call update for demand sector
-      demandsector[i]->updateSummary( per );
+      demandSector[i]->updateSummary( per );
       // update regional fuel consumption (primary and secondary) for demand sector
-      summary[ per ].updatefuelcons( demandsector[ i ]->getfuelcons( per ) ); 
+      summary[ per ].updatefuelcons( demandSector[ i ]->getfuelcons( per ) ); 
    }
-   for (i=0;i<nossec;i++) {
+   for (i=0;i<noSSec;i++) {
       // call update for supply sector
-      supplysector[i]->updateSummary( per );
+      supplySector[i]->updateSummary( per );
       // update regional fuel consumption (primary and secondary) for supply sector
-      summary[per].updatefuelcons(supplysector[i]->getfuelcons(per)); 
+      summary[per].updatefuelcons(supplySector[i]->getfuelcons(per)); 
    }
    // update primary energy trade from consumption and production amounts
    summary[per].updatepetrade(); 
@@ -1423,13 +1415,13 @@ void Region::printGraphs( ostream& outStream, const int period ) const {
    // Now iterate through sectors.
 
    // Loop through all supply sectors
-   for ( int supplyIter = 0; supplyIter < nossec; supplyIter++ ) {				
-      supplysector[ supplyIter ]->addToDependencyGraph( outStream, period );
+   for ( int supplyIter = 0; supplyIter < noSSec; supplyIter++ ) {				
+      supplySector[ supplyIter ]->addToDependencyGraph( outStream, period );
    }
 
    // Loop through all demand sectors.
-   for ( int demandIter = 0; demandIter < nodsec; demandIter++ ) {				
-      demandsector[ demandIter ]->addToDependencyGraph( outStream, period );
+   for ( int demandIter = 0; demandIter < noDSec; demandIter++ ) {				
+      demandSector[ demandIter ]->addToDependencyGraph( outStream, period );
    }
 
    // Now close the graph

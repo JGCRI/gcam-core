@@ -35,8 +35,8 @@ demsector::demsector() {
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    sectorfuelprice.resize( maxper ); // total end-use sector service .
-    fe_cons.resize( maxper ); // end-use sector final energy consumption.
+    sectorFuelCost.resize( maxper ); // total end-use sector service .
+    finalEngyCons.resize( maxper ); // end-use sector final energy consumption.
     service.resize( maxper ); // total end-use sector service 
     iElasticity.resize( maxper );
     pElasticity.resize( maxper ); // price elasticity for each period
@@ -59,7 +59,7 @@ void demsector::clear(){
     perCapitaBased = 0;
     pElasticityBase = 0;
     priceRatio = 1;
-    fe_cons.clear();
+    finalEngyCons.clear();
     service.clear();
     iElasticity.clear();
     pElasticity.clear();
@@ -85,7 +85,7 @@ void demsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr
         XMLHelper<double>::insertValueIntoVector( curr, service, modeltime );
     }
     else if( nodeName == "energyconsumption" ){
-        XMLHelper<double>::insertValueIntoVector( curr, fe_cons, modeltime );
+        XMLHelper<double>::insertValueIntoVector( curr, finalEngyCons, modeltime );
     }
     else if( nodeName == "incomeelasticity" ){
         XMLHelper<double>::insertValueIntoVector( curr, iElasticity, modeltime );
@@ -131,8 +131,8 @@ void demsector::toXML( ostream& out ) const {
         XMLWriteElement( output[ i ], "output", out, modeltime->getper_to_yr( i ) );
     }
 
-    for( i = 0; i < static_cast<int>( fe_cons.size() ); i++ ){
-        XMLWriteElementCheckDefault( fe_cons[ i ], "energyconsumption", out, 0, modeltime->getper_to_yr( i ) );
+    for( i = 0; i < static_cast<int>( finalEngyCons.size() ); i++ ){
+        XMLWriteElementCheckDefault( finalEngyCons[ i ], "energyconsumption", out, 0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( iElasticity.size() ); i++ ){
@@ -198,8 +198,8 @@ void demsector::toOutputXML( ostream& out ) const {
         XMLWriteElement( servicePreTechChange[ i ], "servicePreTechChange", out, modeltime->getper_to_yr( i ) );
     }
 
-    for( i = 0; i < static_cast<int>( fe_cons.size() ); i++ ){
-        XMLWriteElement( fe_cons[ i ], "energyconsumption", out, modeltime->getper_to_yr( i ) );
+    for( i = 0; i < static_cast<int>( finalEngyCons.size() ); i++ ){
+        XMLWriteElement( finalEngyCons[ i ], "energyconsumption", out, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( iElasticity.size() ); i++ ){
@@ -258,12 +258,12 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
     XMLWriteElement( output[ period ], "output", out );
     XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out );
     
-    XMLWriteElement( sectorfuelprice[ period ], "sectorfuelprice", out );
+    XMLWriteElement( sectorFuelCost[ period ], "sectorFuelCost", out );
     XMLWriteElement( techChangeCumm[ period ], "techChangeCumm", out );
     
     
     // Now write out own members.
-    XMLWriteElement( fe_cons[ period ], "fe_cons", out );
+    XMLWriteElement( finalEngyCons[ period ], "finalEngyCons", out );
     XMLWriteElement( service[ period ], "service", out );
     XMLWriteElement( servicePreTechChange[ period ], "servicePreTechChange", out );
     XMLWriteElement( iElasticity[ period ], "iElasticity", out );
@@ -403,12 +403,12 @@ void demsector::scaleOutput( int per, double scaleFactor ) {
 void demsector::calc_pElasticity(int per) {
     pElasticityBase = pElasticity[ 0 ]; // base year read in value
     pElasticity[per]=0.0;
-    sectorfuelprice[per] = 0;
+    sectorFuelCost[per] = 0;
     double tmpPriceRatio = 0; // ratio of total price to fuel price
     for (int i=0;i<nosubsec;i++) {
-        sectorfuelprice[per] += subsec[i]->getwtfuelprice(per);
+        sectorFuelCost[per] += subsec[i]->getwtfuelprice(per);
     }
-    tmpPriceRatio = sectorprice[per]/sectorfuelprice[per];
+    tmpPriceRatio = sectorprice[per]/sectorFuelCost[per];
     pElasticity[per] = pElasticityBase*tmpPriceRatio;
 }
 

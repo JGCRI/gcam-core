@@ -43,8 +43,4 @@ The \ref faq is also a good place to look.
 \subsection psd Prices, Supplies and Demands in CIAM
 The accounting for supply and demand, and the accounting of prices are central to the partial- equilibrium MiniCAM-type calculation in the CIAM. <a href="PricesSandD.htm">These Notes</a> are a quick outline of how this process works in the CIAM code.
 
-\subsection doxygen Doxygen Usage
-Example of using a latex formula in doxygen.
-The distance between \f$(x_1,y_1)\f$ and \f$(x_2,y_2)\f$ is \f$\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}\f$. 
-<P></P> 
 */

@@ -286,27 +286,27 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
          region[ *i ]->writeBackCalibratedValues( per );
       }
 		// calculate regional GNP
-		region[ *i ]->calc_gnp( per );
+		region[ *i ]->calcGnp( per );
 		// apply carbon taxes to appropriate technologie
 		region[ *i ]->applycarbontax(per);
 		// set regional GHG constraint to market supply
-		region[ *i ]->setghgsupply(per);
+		region[ *i ]->setGhgSupply(per);
 		// set regional GHG tax to individual technologies
-		region[ *i ]->addghgtax(per);
+		region[ *i ]->addGhgTax(per);
 		// determine supply of primary resources
-		region[ *i ]->rscsupply(per);
+		region[ *i ]->rscSupply(per);
 		// determine prices of refined fuels and electricity
-		region[ *i ]->finalsupplyprc(per);
+		region[ *i ]->finalSupplyPrc(per);
 		// calculate enduse service price
 		region[ *i ]->calcEndUsePrice( per );
 		// adjust gnp for energy cost changes
-		region[ *i ]->adjust_gnp(per);
+		region[ *i ]->adjustGnp(per);
 
 		// determine end-use demand for energy and other goods
-		region[ *i ]->endusedemand(per);
+		region[ *i ]->enduseDemand(per);
 
 		// determine supply of final energy and other goods based on demand
-		region[ *i ]->finalsupply(per);
+		region[ *i ]->finalSupply(per);
 		
 		if( conf->getBool( "agSectorActive" ) ){
 			region[ *i ]->calcAgSector(per);
@@ -339,7 +339,7 @@ void World::sumpop( int per )
 	population[per] = 0.0;
 	// divide by 1000 to get millions
 	for ( int i = 0; i < noreg; i++ ) {
-		population[per] += region[i]->showpop(per)/1000;
+		population[per] += region[i]->getPop(per)/1000;
 	}
 }
 
@@ -353,11 +353,11 @@ void World::sumrsc( int per )
 	uranrsc[per] = 0.0;
 	
 	for ( int i = 0; i < noreg; i++ ) {
-		crudeoilrsc[per] += region[i]->showsubrsc( "crude oil", "crude oil", per );
-		unconvoilrsc[per] += region[i]->showsubrsc( "crude oil", "unconventional oil", per );
-		natgasrsc[per] += region[i]->showrsc( "natural gas",per );
-		coalrsc[per] += region[i]->showrsc( "coal" ,per );
-		uranrsc[per] += region[i]->showrsc( "uranium", per );
+		crudeoilrsc[per] += region[i]->getSubRsc( "crude oil", "crude oil", per );
+		unconvoilrsc[per] += region[i]->getSubRsc( "crude oil", "unconventional oil", per );
+		natgasrsc[per] += region[i]->getRsc( "natural gas",per );
+		coalrsc[per] += region[i]->getRsc( "coal" ,per );
+		uranrsc[per] += region[i]->getRsc( "uranium", per );
 	}
 }
 
@@ -365,7 +365,7 @@ void World::sumrsc( int per )
 void World::emiss_ind(int per)
 {
 	for (int i=0;i<noreg;i++) {
-		region[i]->emiss_ind(per); // calculate indirect emissions
+		region[i]->emissionInd(per); // calculate indirect emissions
 	}
 }
 
@@ -442,8 +442,9 @@ void World::outputfile() {
 	fileoutput3( "global"," "," "," ","n.gas resource","EJ",natgasrsc);
 	fileoutput3( "global"," "," "," ","coal resource","EJ",coalrsc);
 	fileoutput3( "global"," "," "," ","uran resource","EJ",uranrsc);
-	for (int i=0;i<noreg;i++)
-		region[i]->outputfile();
+    for (int i=0;i<noreg;i++) {
+		region[i]->outputFile();
+    }
 }
 
 //! MiniCAM style output to database
