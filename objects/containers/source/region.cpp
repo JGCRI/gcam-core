@@ -488,8 +488,8 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
     // Note: The count function is an STL algorithm that counts the number of times a value occurs
     // within the a range of a container. The first two arguments to the function are the range of the 
     // container to search, the third is the value to search for.
-    if( ( count( calibrationGDPs.begin(), calibrationGDPs.end(), 0 ) != calibrationGDPs.size() ) 
-        || ( count( TFEcalb.begin(), TFEcalb.end(), 0 ) != TFEcalb.size() ) ){ // makes sure tags aren't printed if no real data
+    if( ( count( calibrationGDPs.begin(), calibrationGDPs.end(), 0 ) != static_cast<int>( calibrationGDPs.size() ) ) 
+        || ( count( TFEcalb.begin(), TFEcalb.end(), 0 ) != static_cast<int>( TFEcalb.size() ) ) ){ // makes sure tags aren't printed if no real data
 
             // Write out regional economic data
             XMLWriteOpeningTag( "calibrationdata", out, tabs ); 
