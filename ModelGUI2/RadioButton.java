@@ -1,12 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.tree.TreePath;
+import org.w3c.dom.Document;
 
-public class RadioButton extends JDialog
-						implements ActionListener {
+/*
+ * ListDialog.java is a 1.4 class meant to be used by programs such as
+ * ListDialogRunner.  It requires no additional files.
+ */
+
+public class RadioButton extends JDialog implements ActionListener {
 	private static RadioButton dialog;
 	private static String value = "";
 	private JList list;
+	private static Frame parentFrame;
 
 	public static String showDialog(Component frameComp,
 									Component locationComp,
@@ -25,7 +32,7 @@ public class RadioButton extends JDialog
 		return value;
 	}
 
-	private RadioButton(Frame frame,
+	public RadioButton(Frame frame,
 					   Component locationComp,
 					   String labelText,
 					   String title,
@@ -33,6 +40,7 @@ public class RadioButton extends JDialog
 					   String initialValue) {
 		super(frame, title, true);
 
+		parentFrame = frame;
 		//Create and initialize the buttons.
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(this);
@@ -93,5 +101,49 @@ public class RadioButton extends JDialog
 		}
 		RadioButton.dialog.setVisible(false);
 	}
-}
+	public static JScrollPane createSelection(TreePath tp, Document doc, JFrame pf) {
+		if(RadioButton.value.equals("Single Table")) {
+			BaseTableModel bt = new NewDataTableModel(tp, doc, pf);
+	  		JTable jTable = new JTable(bt);
+			// Should the listener be set like so..
+	  		//jTable.getModel().addTableModelListener(pf);
 
+	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	 
+			jTable.setCellSelectionEnabled(true);
+
+	  		javax.swing.table.TableColumn col;
+	  		//Iterator i = regions.iterator();
+		  	col = jTable.getColumnModel().getColumn(0);
+		  	col.setPreferredWidth(75);
+	  		int j = 1;
+	  		while(j < jTable.getColumnCount()) {
+		  		col = jTable.getColumnModel().getColumn(j);
+		  		col.setPreferredWidth(jTable.getColumnName(j).length()*5+30);
+		  		j++;
+	  		}
+			CopyPaste copyPaste = new CopyPaste( jTable );
+			return new JScrollPane(jTable);
+		} else if(RadioButton.value.equals("Multi Tables")) {
+			BaseTableModel bt = new MultiTableModel(tp, doc, pf);
+			JTable jTable = new JTable(bt);
+			// Any Listeners?
+
+			//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
+
+			jTable.setCellSelectionEnabled(true);
+			jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
+			jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)bt).getCellEditor(0,0));
+			int j = 1;
+			while( j < jTable.getRowCount()) {
+				jTable.setRowHeight(j,200);
+				j += 2;
+			}
+			//jTable.setRowHeight(200);
+			CopyPaste copyPaste = new CopyPaste( jTable );
+			return new JScrollPane(jTable);
+		}
+
+		return null;
+	}
+}

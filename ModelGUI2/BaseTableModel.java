@@ -23,6 +23,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	protected int currFilter;
 	protected String[] currKeys;
 
+	public BaseTableModel() {}
 	public BaseTableModel(TreePath tp, Document doc, JFrame parentFrame) {
 		this.doc = doc;
 	}
@@ -97,12 +98,11 @@ public abstract class BaseTableModel extends AbstractTableModel {
   }
 
   public Vector getAttrsNoWild(Node node) {
-	  if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector")) || ((String)wild.get(2)).matches(".*[Ss]ector")) && node.getNodeName().equals("subsector") ) {
+	  if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && node.getNodeName().equals("subsector") ) {
 		  return new Vector();
 	  }
 
-	  if(node.getNodeName().equals((String)wild.get(0)) || node.getNodeName().equals((String)wild.get(1)) 
-			   || node.getNodeName().equals((String)wild.get(2)) ) {
+	  if(node.getNodeName().equals((String)wild.get(0)) || node.getNodeName().equals((String)wild.get(1)) ) { 
 		 return new Vector();
 	  }
 	  NamedNodeMap nodeMap = node.getAttributes();
@@ -110,9 +110,9 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	  Vector ret = new Vector();
 	  for(int i = 0; i < nodeMap.getLength(); i++) {
 		  tempNode = nodeMap.item(i);
-	  	  //if(!tempNode.getNodeName().equals("year")) {
-			  ret.add(tempNode);
-		  //}
+		  if(tempNode.getNodeName().indexOf(':') == -1) {
+		  	ret.add(tempNode);
+		  }
 	  }
 	  return ret;
   }
@@ -127,7 +127,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	  return "";
   }
   protected ArrayList chooseTableHeaders( TreePath path, JFrame parentFrame ){
-	final ArrayList selected = new ArrayList();
+	final ArrayList selected = new ArrayList(2);
 
 	final Object[] itemsObjs = path.getPath();
 	String[] items = new String[ itemsObjs.length ];

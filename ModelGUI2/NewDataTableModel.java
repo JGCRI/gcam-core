@@ -9,7 +9,7 @@ import javax.swing.tree.TreePath;
 import org.apache.xpath.domapi.*;
 import org.w3c.dom.xpath.*;
 
-public class NewDataTableModel extends AbstractTableModel{
+public class NewDataTableModel extends BaseTableModel{
 	Vector indCol;
 	Vector indRow;
 	String ind1Name;
@@ -17,21 +17,61 @@ public class NewDataTableModel extends AbstractTableModel{
 	TreeMap data;
 	boolean flipped;
 	String w3;
-	Document doc;
+	//Document doc;
 
-	/*
 	public NewDataTableModel(TreePath tp, Document doc, JFrame parentFrame) {
 		super(tp, doc, parentFrame);
+		indCol = new Vector();
+		indRow = new Vector();
+		data = new TreeMap();
+		w3 = "";
+		wild = chooseTableHeaders(tp, parentFrame);
+	        wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
+	        wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
+		buildTable(treePathtoXPath(tp, doc.getDocumentElement(), 1));
+		indCol.add(0,w3 /*set2Name*/);
+		ind1Name = (String)wild.get(0);
+		ind2Name = (String)wild.get(1);
+		flipped = false;
 	}
 	protected void buildTable(XPathExpression xpe) {
+	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+	  xpe = null;
+	  TreeSet col = new TreeSet();
+	  TreeSet row = new TreeSet();
+	  Node tempNode;
+	  Object[] regionAndYear;
+	  while ((tempNode = res.iterateNext()) != null) {
+		regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode());
+		col.add(regionAndYear[0]);
+		row.add(regionAndYear[1]);
+		data.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+	  }
+	  indCol = new Vector(col);
+	  indRow = new Vector(row);
 	}
+  	private Object[] getRegionAndYearFromNode(Node n) {
+	  Vector ret = new Vector(2,0);
+	  do {
+		  if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
+			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
+			  if(!getOneAttrVal(n).equals("fillout=1")) {
+			  	ret.add(getOneAttrVal(n));
+			  } else {
+			        ret.add(getOneAttrVal(n, 1));
+			  }
+
+		  }  
+		  n = n.getParentNode();
+	  } while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
+	  return ret.toArray();
+  	}
 	protected void filterData(JFrame ParentFrame) {
 		throw new UnsupportedOperationException();
 	}
 	protected void doFilter(Vector possibleFilters){
 		throw new UnsupportedOperationException();
 	}
-	*/
 	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, TreeMap dataIn, Document docIn) {
 		w3 = w3In;
 		indCol = new Vector(set1);
