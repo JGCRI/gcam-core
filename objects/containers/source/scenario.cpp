@@ -231,6 +231,12 @@ void Scenario::run( string filenameEnding ){
     cout << "Debugging information for this run in: " << debugFileName << endl;
 	xmlDebugStream.open( debugFileName.c_str(), ios::out );
     util::checkIsOpen( xmlDebugStream, debugFileName );
+    
+    // Print the sector dependencies. This may need a better spot 
+    // and name as it now prints sector ordering as well. 
+    if( conf->getBool( "PrintSectorDependencies", false ) ){
+        printSectorDependencies();
+    }
 
 	// Start Model run for the first period.
 	int per = 0;
@@ -257,10 +263,7 @@ void Scenario::run( string filenameEnding ){
     toDebugXMLOpen( per, xmlDebugStream, tabs );
 	// end of first period.
 	
-    // Print the sector dependencies.
-    if( conf->getBool( "PrintSectorDependencies", 0 ) ){
-        printSectorDependencies();
-    }
+
 
 	// Loop over time steps and operate model
 	for ( per = 1; per < modeltime->getmaxper(); per++ ) {	
@@ -344,7 +347,7 @@ void Scenario::printGraphs( const int period ) const {
 * \author Josh Lurz
 */
 void Scenario::printSectorDependencies() const {
-    Logger* logger = LoggerFactory::getLogger( "SectorDependenciesLogger" );
+    Logger* logger = LoggerFactory::getLogger( "SectorDependencies.csv" );
     world->printSectorDependencies( logger );
 }
 
