@@ -36,11 +36,11 @@ protected:
    double gdpSupplyElasticity;
    
 public: 
-	virtual string getType() const; 
-   virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* node );
-   virtual void toXMLforDerivedClass( ostream& out ) const;
-   virtual void initializeResource(); 
-	virtual void cumulsupply(double prc,int per); // calculate cummulative production
-	virtual void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
+    virtual string getType() const; 
+    virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* node );
+    virtual void toXMLforDerivedClass( ostream& out ) const;
+    virtual void initializeResource(); 
+    virtual void cumulsupply(double prc,int per); // calculate cummulative production
+    virtual void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
 };
 #endif // _SUBRENEW_H_
