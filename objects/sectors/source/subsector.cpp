@@ -1282,11 +1282,11 @@ void Subsector::outputfile() const {
 		if (numberOfGHGs > 1 ) {
 		   std::vector<std::string> ghgNames;
 			ghgNames = techs[i][ 2 ]->getGHGNames();
-			for ( int ghgN = 2; ghgN < numberOfGHGs; ghgN++ ) {
+			for ( int ghgN = 2; ghgN <= numberOfGHGs; ghgN++ ) {
 				for (m=0;m<maxper;m++) {
-					temp[m] = summary[m].get_emissmap_second( ghgNames[ ghgN ] );
+					temp[m] = summary[m].get_emissmap_second( ghgNames[ ghgN - 1 ] );
 				}
-				string ghgLabel = ghgNames[ ghgN ] + " emiss";
+				string ghgLabel = ghgNames[ ghgN - 1 ] + " emiss";
 				fileoutput3( regionName,sectorName,name," ",ghgLabel,"Tg",temp);
 			}
 		}
