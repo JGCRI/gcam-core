@@ -854,37 +854,49 @@ bool Region::isDemandAllCalibrated( const int period ) const {
 *
 * Compares the sum of calibrated + fixed values to output of each sector.
 *
+* If calibrations are not on then will only printout out diagnostics (if 
+*
 * \author Steve Smith
 * \param period Model period
+* \param calAccuracy value to which calibrations must match in order to pass calibration test
+* \param printWarnings flag to turn on logging of warnings if calibrations are not accurate
 * \return Boolean true if calibration is ok.
 */
 bool Region::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
+   const static bool calOn = Configuration::getInstance()->getBool( "CalibrationActive" );
+   bool returnVal = true;
    
-   for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-      if ( !demandSector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
-         return false;
-      }
-   }
-
-   for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-      if ( !supplySector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
-         return false;
-      }
-   }
-   
-   // Check Regional TFE calibration if exists
-   if ( !isDemandAllCalibrated( period ) && TFEcalb[ period ]  > 0 ) {
-      if ( fabs( calcTFEscaleFactor( period ) - 1.0 ) > calAccuracy ) {
-         if ( printWarnings ) {
-            cerr << "WARNING: " << " TFE Calibration is off by: ";
-            cerr << calcTFEscaleFactor( period ) << " in yr " <<  scenario->getModeltime()->getper_to_yr( period );
-            cerr << " in region: " << name << endl;
+   if ( calOn || printWarnings ) {
+      for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
+         if ( !demandSector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
+            returnVal = false;
          }
-         return false;
+      }
+
+      for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
+         if ( !supplySector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
+            returnVal = false;
+         }
+      }
+   
+      // Check Regional TFE calibration if exists
+      if ( ( !isDemandAllCalibrated( period ) && TFEcalb[ period ]  > 0 ) && calOn ) {
+         if ( fabs( calcTFEscaleFactor( period ) - 1.0 ) > calAccuracy ) {
+            if ( printWarnings ) {
+               cerr << "WARNING: " << " TFE Calibration is off by: ";
+               cerr << calcTFEscaleFactor( period ) << " in yr " <<  scenario->getModeltime()->getper_to_yr( period );
+               cerr << " in region: " << name << endl;
+            }
+            returnVal = false;
+         }
       }
    }
 
-   return true;
+   if ( calOn ) {
+      return returnVal;
+   } else {
+      return true;   // always return true if calibrations are not on.
+   }
 }
 
 //! Calibrate total final energy Demand for this region.
@@ -1010,11 +1022,10 @@ void Region::adjustCalibrations( const int period ) {
 
                 // if calibrated output and demand are not equal, then scale demand so that they match
                 if ( !util::isEqual( calSupply, calDemand ) && ( calDemand != 0 ) && supplySector[ i ]->outputsAllFixed( period ) ) {
-                    logfile << "Inputs and Outputs all fixed for " << goodName << endl;
-
-                    logfile << "Cal difference in region " << name << " sector: " << goodName;
+                    logfile << ",Cal difference in region " << name << " sector: " << goodName;
                     logfile << " Supply: " << calSupply << " S-D: " << calSupply-calDemand;
-                    logfile << " ("<<(calSupply-calDemand)*100/calSupply<<"%)"<<endl;
+                    logfile << " ("<<(calSupply-calDemand)*100/calSupply<<"%)";
+                    logfile << " -- demand values scaled."<<endl;
 
                     // Get calibrated inputs, only scale those, not fixed demands (if any)
                     double fixedCalInputs = 0;
@@ -1027,8 +1038,10 @@ void Region::adjustCalibrations( const int period ) {
                         demandSector[ j ]->scaleCalibratedValues( period, goodName, ScaleValue ); 
                     }
                 } else {
-                    if ( calDemand != 0 ) {
-                        logfile << ", ****Outputs are NOT all fixed." << endl;
+                    if ( supplySector[ i ]->outputsAllFixed( period ) && ( calDemand != 0 || calSupply != 0 ) ) {
+                        logfile << ", ****Supply is fixed at, "<< calSupply;
+                        logfile << ", and Demand is fixed at, "<< calDemand;
+                        logfile << ", for good " << goodName<< " in region "<< name << endl;
                     } else {
                       //  logfile << ", fixed demand is zero or indirect." << endl;
                     }
