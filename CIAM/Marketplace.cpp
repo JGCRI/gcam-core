@@ -37,7 +37,7 @@ using namespace std;
 using namespace mtl;
 
 extern ofstream bugoutfile, sdcurvefile, logfile;
-extern Scenario scenario;
+extern Scenario* scenario;
 
 //! Default constructor.
 Marketplace::Marketplace() {
@@ -95,7 +95,7 @@ The key to the market is the goodName + market name.
 The region_marketMap map, uses goodName + regionName to find that market.
 */
 bool Marketplace::setMarket( const string& regionName, const string& mrkname, const string& goodName, const Market::marketType typeIn ) {
-   const Modeltime* modeltime = scenario.getModeltime();
+   const Modeltime* modeltime = scenario->getModeltime();
    int mrkNo;
    bool retValue;
    
@@ -886,7 +886,7 @@ const vector<double> Marketplace::calcSupplyElas( const vector<int>& indices, co
 //! write out market info to database
 void Marketplace::MCoutput() const {
    
-   const Modeltime* modeltime = scenario.getModeltime();
+   const Modeltime* modeltime = scenario->getModeltime();
    
    void dboutput4(string var1name,string var2name,string var3name,string var4name,
       string uname,vector<double> dout);
@@ -914,7 +914,7 @@ void Marketplace::MCoutput() const {
 //! write out market info to file
 void Marketplace::outputfile() const {
    
-   const Modeltime* modeltime = scenario.getModeltime();
+   const Modeltime* modeltime = scenario->getModeltime();
    
    // function protocol
    void fileoutput2(string var1name,string var2name,string var3name,
@@ -972,7 +972,7 @@ void Marketplace::sdcurves( const int per, const int iteration ) const {
 //! Bracketing function only, does not find solution
 int Marketplace::Bracket( const double solutionTolerance, const double excessDemandSolutionFloor, vector<solinfo>& sol, bool& allbracketed, bool& firsttime,int& worldCalcCount, const int per ) {
    
-   World* world = scenario.getWorld();
+   World* world = scenario->getWorld();
    int i;
    const int nmrks = sol.size(); // number of markets to solve
    int numIterations = 0; // number of iterations
@@ -1304,7 +1304,7 @@ void Marketplace::CheckBracket( const double solutionTolerance, const double exc
 //! Bisection Solution Mechanism (all markets)
 int Marketplace::Bisection_all( const double solutionTolerance, const double excessDemandSolutionFloor, const int IterLimit, vector<solinfo>& sol, int& worldCalcCount, const int per ) {
    
-   World* world = scenario.getWorld();
+   World* world = scenario->getWorld();
    int i, j;
    int numIterations = 0; // number of iterations
    int code = 2; // code that reports success 1 or failure 0
@@ -1450,7 +1450,7 @@ int Marketplace::Bisection_all( const double solutionTolerance, const double exc
 
 //! Bisection Solution Mechanism (single market)
 int Marketplace::Bisection_i( const int worstMarket, const double solutionTolerance, vector<solinfo>& sol,int& worldCalcCount, const int per ){
-   World* world = scenario.getWorld();
+   World* world = scenario->getWorld();
    int numIterations = 0; // number of iterations
    int code = 2; // code that reports success 1 or failure 0
    double maxExcessDemand; // maximum equality value
@@ -1509,7 +1509,7 @@ int Marketplace::Bisection_i( const int worstMarket, const double solutionTolera
 
 //! False Position Solution Mechanism (all markets)
 int Marketplace::FalsePos_all( const double solutionTolerance,vector<solinfo>& sol,int& worldCalcCount, const int per ) {
-   World* world = scenario.getWorld();
+   World* world = scenario->getWorld();
    int i;
    int numIterations = 0; // number of iterations
    int code = 2; // code that reports success 1 or failure 0
@@ -1571,7 +1571,7 @@ int Marketplace::FalsePos_all( const double solutionTolerance,vector<solinfo>& s
 
 //! Secant Solution Mechanism (all markets)
 int Marketplace::Secant_all( const double solutionTolerance,vector<solinfo>& sol,int& worldCalcCount, const int per ) {
-   World* world = scenario.getWorld();
+   World* world = scenario->getWorld();
    int i;
    int iSec=0; 
    int numIterations = 0; // number of iterations
@@ -1645,7 +1645,7 @@ int Marketplace::Secant_all( const double solutionTolerance,vector<solinfo>& sol
 //! Function to calculate derivative
 //void JFunction(valarray<double> prices, Matrix& JFDM, int per)
 void Marketplace::JFunction( vector<double> prices, Matrix& JFDM, int& worldCalcCount, int const per ) {
-   World* world = scenario.getWorld();
+   World* world = scenario->getWorld();
    const int marketsToSolve = prices.size();
    const double DELTAP = 1e-4; // What is the proper value for delta?
    vector<double> tprices = prices; // define and initialize prices for storage
@@ -1676,7 +1676,7 @@ void Marketplace::JFunction( vector<double> prices, Matrix& JFDM, int& worldCalc
 //! Function to calculate derivative for Ron's version
 void Marketplace::Derivatives( vector<double> prices, Matrix& JFDM, Matrix& JFSM, int& worldCalcCount, const int per ) {
    
-   World* world = scenario.getWorld();
+   World* world = scenario->getWorld();
    const int marketsToSolve = prices.size();
    const double DELTAP = 1e-4; // Orginal, What is the proper value for delta?
    //const double DELTAP = 1e-5; // What is the proper value for delta?
@@ -1722,8 +1722,8 @@ void Marketplace::Derivatives( vector<double> prices, Matrix& JFDM, Matrix& JFSM
 //! Newton Raphson Solution Mechanism (all markets)
 int Marketplace::NewtRap( const double solutionTolerance, const double excessDemandSolutionFloor, vector<solinfo>& sol, int& worldCalcCount, const int per ){
    
-   World* world = scenario.getWorld();
-   const Modeltime* modeltime = scenario.getModeltime();
+   World* world = scenario->getWorld();
+   const Modeltime* modeltime = scenario->getModeltime();
    int i;
    int NRn = 0; // calls to calculate elasticities
    int numIterations = 0; // number of iterations
@@ -1809,8 +1809,8 @@ int Marketplace::NewtRap( const double solutionTolerance, const double excessDem
 //! Ron's version of the Newton Raphson Solution Mechanism (all markets)
 int Marketplace::NR_Ron( const double solutionTolerance, const double excessDemandSolutionFloor, vector<solinfo>& sol, int& worldCalcCount, const int per ) {
    
-   World* world = scenario.getWorld();
-   const Modeltime* modeltime = scenario.getModeltime();
+   World* world = scenario->getWorld();
+   const Modeltime* modeltime = scenario->getModeltime();
    int i;
    int numDerivativeCalcs = 0; // count number of times derivatives are calculated
    int iter = 0; // number of iterations through solution algorithm

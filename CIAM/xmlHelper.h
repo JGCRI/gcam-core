@@ -15,6 +15,7 @@
 * \version $Revision$
 */
 
+
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -25,6 +26,7 @@
 #include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
+#include "modeltime.h"
 
 using namespace std;
 using namespace xercesc;
@@ -73,6 +75,7 @@ public:
 	static T getAttr( const DOMNode* node, const string attrName );
 	static string getAttrString( const DOMNode* node, const string attrName );
 	static string safeTranscode( const XMLCh* toTranscode );
+   static void insertValueIntoVector( const DOMNode* node, vector<T>& insertToVector, const Modeltime* modeltime, const bool isPopulationData = false );
 	static DOMNode* parseXML( const string& xmlFile, XercesDOMParser* parser );
 };
 
@@ -242,6 +245,56 @@ string XMLHelper<T>::getAttrString( const DOMNode* node, const string attrName )
 	else {
 		return safeTranscode( nameAttr->getValue() );
 	}
+}
+
+/*! 
+* \brief Function which takes a node and inserts its value into the correct position 
+* in an argument vector based on the year attribute.
+*
+* This function when passed a node, vector and modeltime object will first extract the year attribute and lookup
+* the corresponding period from the modeltime object. It will then insert the item in that position in the vector.
+*
+* \todo Make this work for the demographics object. 
+* \warning Make sure the node passed as an argument as a year attribute.
+* \param node A pointer to a node from which to extract the data.
+* \param insertToVector A vector passed by reference in which to insert the value.
+* \param A pointer to the modeltime object to use to determine the correct period.
+*/
+
+template<class T>
+void XMLHelper<T>::insertValueIntoVector( const DOMNode* node, vector<T>& insertToVector, const Modeltime* modeltime, const bool isPopulationData ) {
+   
+   //! \pre Make sure we were passed a valid node reference.
+   assert( node );
+   
+   const int year = XMLHelper<int>::getAttr( node, "year" );
+   
+   // Check to make sure the year attribute returned non-zero. 
+   assert( year != 0 );
+   
+   int period = 0;
+   
+   if( isPopulationData == false ) {   
+      period = modeltime->getyr_to_per( year );
+      
+      
+      // Check that the period returned correctly.
+      assert( ( period >= 0 ) && ( period <= modeltime->getmaxper() ) );
+   }
+   else {
+      period = modeltime->convertYearToPopPeriod( year );
+      
+      // Check that the period returned correctly.
+      assert( ( period >= 0 ) && ( period <= modeltime->getmaxpopdata() ) );
+      
+   }
+   
+   // Check that the period is less than the size of the vector.
+   assert( period < static_cast<int>( insertToVector.size() ) );
+   
+   insertToVector[ period ] =  XMLHelper<double>::getValue( node );
+   
+   
 }
 
 //! Function which converts XMLCh* to a string without leaking memory.

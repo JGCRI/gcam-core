@@ -13,7 +13,6 @@
 
 #include <vector>
 #include <string>
-#include "grade.h"
 
 // xerces xml headers
 #include <xercesc/dom/DOM.hpp>
@@ -21,6 +20,9 @@
 
 using namespace std; // enables elimination of std::
 using namespace xercesc;
+
+// Forward declaration
+class grade;
 
 /*! 
 * \ingroup CIAM

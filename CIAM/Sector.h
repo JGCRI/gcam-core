@@ -13,10 +13,13 @@
 
 #include <vector>
 #include <xercesc/dom/DOM.hpp>
-#include "subsector.h"
 
 using namespace std;
 using namespace xercesc;
+
+// Forward declarations
+class subsector;
+class Summary;
 
 /*! 
 * \ingroup CIAM

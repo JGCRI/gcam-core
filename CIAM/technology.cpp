@@ -19,16 +19,16 @@
 #include <cassert>
 
 // User headers
+#include "technology.h"
+#include "GHG.H"
 #include "scenario.h"
 #include "xmlHelper.h"
-#include "market.h"
-#include "technology.h"
 #include "modeltime.h"
 #include "Marketplace.h"
 
 using namespace std;
 
-extern Scenario scenario;
+extern Scenario* scenario;
 
 // Technology class method definition
 
@@ -264,7 +264,7 @@ void technology::applycarbontax(double tax)
 //! sets ghg tax to technologies
 /*! does not get called if there are no markets for ghgs */
 void technology::addghgtax( const string ghgname, const string regionName, const int per ) {
-	Marketplace* marketplace = scenario.getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 	// returns coef for primary fuels only
 	// carbontax has value for primary fuels only
 	carbontaxgj = 0; // initialize
@@ -279,7 +279,7 @@ void technology::addghgtax( const string ghgname, const string regionName, const
 //! define technology fuel cost and total cost
 void technology::cost( const string regionName, const int per ) 
 {
-	Marketplace* marketplace = scenario.getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 	double fuelprice = marketplace->showprice(fuelname,regionName,per);
 	
 	//techcost = fprice/eff/pow(1+techchange,modeltime->gettimestep(per)) + necost;
@@ -310,7 +310,7 @@ void technology::norm_share(double sum)
 acccording to the MiniCAM formula. In the future, this will be superseeded by read-in values. */
 void technology::calcFixedSupply(int per)
 {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	string FixedTech = "hydro";
 	if(name == FixedTech) {
 		int T = per*modeltime->gettimestep(per);
@@ -384,7 +384,7 @@ void technology::adjShares(double subsecdmd, double totalFixedSupply, double var
 void technology::production(const string& regionName,const string& prodName,
 							double dmd,const int per) {
 	string hydro = "hydro";
-	Marketplace* marketplace = scenario.getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 	// dmd is total subsector demand
 	if(name != hydro) {
 		output = share * dmd; // use share to get output for each technology
@@ -641,7 +641,7 @@ void hydro_tech::clear(){
 //! calculates hydroelectricity output based on logit function
 void hydro_tech::production(double dmd,int per) 
 {
-	int T = per*scenario.getModeltime()->gettimestep(per);
+	int T = per*scenario->getModeltime()->gettimestep(per);
 	double tempOutput;
 	// resource and logit function 
 	double fact = exp(A+B*T);

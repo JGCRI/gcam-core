@@ -15,20 +15,21 @@
 #include <cmath>
 #include <cassert>
 
-#include "market.h"
-#include "modeltime.h"
-#include "DemandSector.h"
-#include "Marketplace.h"
-
 // xml headers
-#include "xmlHelper.h"
-#include "scenario.h"
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
+#include "xmlHelper.h"
+
+#include "DemandSector.h"
+#include "modeltime.h"
+#include "Marketplace.h"
+#include "summary.h"
+#include "subsector.h"
+#include "scenario.h"
 
 using namespace std;
 
-extern Scenario scenario;
+extern Scenario* scenario;
 extern ofstream outfile, bugoutfile;
 
 //! Default constructor
@@ -36,6 +37,17 @@ demsector::demsector() {
 	perCapitaBased = 0;
 	pElasticityBase = 0;
 	priceRatio = 1;
+
+	// resize vectors
+   const Modeltime* modeltime = scenario->getModeltime();
+	const int maxper = modeltime->getmaxper();
+	sectorfuelprice.resize( maxper ); // total end-use sector service .
+   fe_cons.resize( maxper ); // end-use sector final energy consumption.
+	service.resize( maxper ); // total end-use sector service 
+   iElasticity.resize( maxper );
+   pElasticity.resize( maxper ); // price elasticity for each period
+   aeei.resize( maxper );
+   techChangeCumm.resize( maxper ); // cummulative technical change
 }
 
 //! Clear member variables.
@@ -57,25 +69,11 @@ void demsector::clear(){
 
 //! Set data members from XML input.
 void demsector::XMLParse( const DOMNode* node ){
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	DOMNode* curr = 0;
 	DOMNodeList* nodeList = 0;
 	string nodeName;
 	subsector* tempSubSector = 0;
-	
-	// resize vectors not read in
-	int maxper = modeltime->getmaxper();
-	pe_cons.resize( maxper ); // sectoral primary energy consumption
-	input.resize( maxper ); // sector total energy consumption
-	// output.resize( maxper ); // total amount of final output from sector
-	pElasticity.resize( maxper ); // price elasticity for each period
-	carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
-	summary.resize( maxper ); // object containing summaries // memory leak
-	fe_cons.resize(maxper); // end-use sector final energy consumption
-	//service.resize(maxper); // total end-use sector service 
-	sectorfuelprice.resize(maxper); // total end-use sector service 
-	techChangeCumm.resize(maxper); // cummulative technical change
-		
 	
 	//! \pre Make sure we were passed a valid node.
 	assert( node );
@@ -84,7 +82,7 @@ void demsector::XMLParse( const DOMNode* node ){
 	name = XMLHelper<string>::getAttrString( node, "name" );
 
 	// get the perCapitaBased attribute.
-	perCapitaBased = XMLHelper<int>::getAttr( node, "perCapitaBased" );
+	perCapitaBased = XMLHelper<bool>::getAttr( node, "perCapitaBased" );
 
 	#if( _DEBUG )
 		cout << "\tSector name set as " << name << endl;
@@ -102,34 +100,28 @@ void demsector::XMLParse( const DOMNode* node ){
 			market = XMLHelper<string>::getValueString( curr ); // only one market element.
 		}
 		else if( nodeName == "priceelasticity" ) {
-			int year = XMLHelper<int>::getAttr( curr, "year" );
-			if (year == modeltime->getstartyr()) {
-				pElasticityBase = XMLHelper<double>::getValue( curr );
-			}
-			int period = modeltime->getyr_to_per(year);
-			pElasticity[period] =  XMLHelper<double>::getValue( curr );
-			//pElasticity.push_back( XMLHelper<double>::getValue( curr ) );
+         XMLHelper<double>::insertValueIntoVector( curr, pElasticity, modeltime );
 		}
 		else if( nodeName == "price" ){
-			sectorprice.push_back( XMLHelper<double>::getValue( curr ) );
+         XMLHelper<double>::insertValueIntoVector( curr, sectorprice, modeltime );
 		}
 		else if( nodeName == "serviceoutput" ){
-			service.push_back( XMLHelper<double>::getValue( curr ) );
+         XMLHelper<double>::insertValueIntoVector( curr, service, modeltime );
 		}
 		else if( nodeName == "energyconsumption" ){
-			fe_cons.push_back( XMLHelper<double>::getValue( curr ) );
+         XMLHelper<double>::insertValueIntoVector( curr, fe_cons, modeltime );
 		}
 		else if( nodeName == "incomeelasticity" ){
-			iElasticity.push_back( XMLHelper<double>::getValue( curr ) );
+         XMLHelper<double>::insertValueIntoVector( curr, iElasticity, modeltime );
 		}
 		else if( nodeName == "output" ) {
-			output.push_back( XMLHelper<double>::getValue( curr ) );
+         XMLHelper<double>::insertValueIntoVector( curr, output, modeltime );
 		}
 		else if( nodeName == "aeei" ) {
-			aeei.push_back( XMLHelper<double>::getValue( curr ) );
+         XMLHelper<double>::insertValueIntoVector( curr, aeei, modeltime );
 		}
 		else if( nodeName == "subsector" ){
-			tempSubSector = new subsector(); // memory leak.
+			tempSubSector = new subsector();
 			tempSubSector->XMLParse( curr );
 			subsec.push_back( tempSubSector );
 			
@@ -138,12 +130,12 @@ void demsector::XMLParse( const DOMNode* node ){
 	}
 	
 	nosubsec = subsec.size();
-	
+	pElasticityBase = pElasticity[ 0 ];
 }
 
 //! Write object to xml output stream.
 void demsector::toXML( ostream& out ) const {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	int i = 0;
 
 	// write the beginning tag.
@@ -290,7 +282,7 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
 
 //! Create a market for the sector.
 void demsector::setMarket( const string& regionName ) {
-	Marketplace* marketplace = scenario.getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 
 	if( marketplace->setMarket( regionName, market, name, Market::NORMAL ) ) {
 		marketplace->setPriceVector( name, regionName, sectorprice );
@@ -354,7 +346,7 @@ void demsector::calc_pElasticity(int per)
 
 //! Aggrgate sector energy service demand function.
 void demsector::aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per) {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	double ser_dmd, base, ser_dmd_adj;
 	// double pelasticity = -0.9;
 	double pelasticity = pElasticity[per];
@@ -403,7 +395,7 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
 
 //! Write sector output to database.
 void demsector::outputfile(const string& regionName ) {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	const int maxper = modeltime->getmaxper();
 	int m=0;
 	vector<double> temp(maxper);
@@ -434,7 +426,7 @@ void demsector::outputfile(const string& regionName ) {
 
 //! Write MiniCAM style demand sector output to database.
 void demsector::MCoutput( const string& regionName ) {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
     int m;
 	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);

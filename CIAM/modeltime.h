@@ -54,7 +54,8 @@ private:
 	vector<int> modelPeriodToPopPeriod; //!< Population period to year.
 	vector<int> popPeriodToYear; //!< Index of population timesteps.
 	map<int,int> yearToModelPeriod; //!< Year to model period map object.
-	
+	map<int,int> yearToPopPeriod; //!< Year to population period map object.
+
 	// member functions
 	void initElementalMembers();
 
@@ -76,7 +77,8 @@ public:
 	int getmaxpopdata() const { return maxPopData; } // number population data points
 	int getdataoffset( const int dataPeriod ) const { return dataOffset[ dataPeriod ]; }  // data to model timestep
 	int getyr_to_per( const int year ) const { return ( yearToModelPeriod.find( year ) )->second; }  // year to model period
-	int getper_to_yr( const int period ) const { return modelPeriodToYear[ period ]; }  // year to model period
+   int convertYearToPopPeriod( const int year ) const { return ( yearToPopPeriod.find( year ) )->second; }
+   int getper_to_yr( const int period ) const { return modelPeriodToYear[ period ]; }  // year to model period
 	int getPopPeriodToYear( const int period ) const { return popPeriodToYear[ period ]; }
 	int getdata_to_mod( const int dataPeriod ) const { return dataPeriodToModelPeriod[ dataPeriod ]; } // data per to model per 
 	int getmod_to_pop( const int period ) const { return modelPeriodToPopPeriod[ period ]; } // model per to pop per 

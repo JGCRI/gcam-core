@@ -14,6 +14,7 @@
 #include <fstream>
 #include <string>
 #include <ctime>
+#include <memory>
 
 // xerces xml headers
 #include <xercesc/dom/DOM.hpp>
@@ -23,7 +24,6 @@
 
 // include custom headers
 #include "Configuration.h"
-#include "market.h" 
 #include "world.h"
 #include "modeltime.h"
 #include "scenario.h"
@@ -43,19 +43,22 @@ using namespace std; // enables elimination of std::
 // define file (ofstream) objects for outputs, debugging and logs
 ofstream bugoutfile,outfile,outfile2,dbout,logfile,sdcurvefile,sdfile;	
 
-Scenario scenario; // model scenario info
+Scenario* scenario = 0; // model scenario info
 time_t ltime;
 int Tabs::numTabs = 0;
 
 //******* Start of Main Program ********
-int main() {	
+int main() {
+
 	clock_t start, afterinit, intermediate, finish;
-	Configuration* conf = Configuration::getInstance();	
+
+   // Use a smart pointer for configuration so that if the main is exited before the end the memory is freed.
+   auto_ptr<Configuration> confPtr( Configuration::getInstance() );
+	Configuration* conf = confPtr.get();
+
+
 	double duration = 0;
 	ofstream xmlOutStream;
-	const Modeltime* modeltime = scenario.getModeltime();
-	World* world = scenario.getWorld();
-	const Marketplace* marketplace = scenario.getMarketplace();
 
 	// For some reason, the mac xerces parser wasn't properly using the relative path
 #ifndef WIN32  
@@ -118,7 +121,12 @@ int main() {
 
 
 	root = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), parser );
-	scenario.XMLParse( root );
+
+   // Use a smart pointer for scenario so that if the main program exits before the end the memory is freed correctly. 
+   auto_ptr<Scenario> scenarioPtr( new Scenario() );
+   scenario = scenarioPtr.get();
+
+	scenario->XMLParse( root );
 	
 	cout << "XML parsing complete." << endl;
 	logfile << "XML parsing complete." << endl;
@@ -133,8 +141,12 @@ int main() {
 	duration = (double)(afterinit-start) / CLOCKS_PER_SEC;
 	cout << "XML Readin Time: " << duration << " Seconds" << endl;
 	logfile << "XML Readin Time: " << duration << " Seconds" << endl;
+   
+   const Modeltime* modeltime = scenario->getModeltime();
+	World* world = scenario->getWorld();
+	const Marketplace* marketplace = scenario->getMarketplace();
 
-    int t;
+   int t;
 	outfile <<"Region,RegionName,Sector,Subsector,Technology,Variable,Units,";
 
 	for (t=0;t<modeltime->getmaxper();t++) { 
@@ -150,8 +162,11 @@ int main() {
 	dbout << endl;
 	// ******* end MiniCAM stype output *******
 
-	scenario.run();
+	scenario->run();
 	
+   // Print output xml file.
+   scenario->toXML( xmlOutStream );
+
 	// compute data read in time
 	duration = (double)(afterinit-start) / CLOCKS_PER_SEC;
 	cout << endl << "Data Readin Time: "<<duration<<" Seconds" << endl;
@@ -200,8 +215,7 @@ int main() {
 	sdcurvefile.close();
 	sdfile.close();
 	dbout.close();
-    closeDB(); // close MS Access database
-	delete conf;
+   closeDB(); // close MS Access database
 	LoggerFactory::cleanUp();
 	
 	return 0;

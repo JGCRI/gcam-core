@@ -16,27 +16,37 @@
 #include <cmath>
 #include <ctime> 
 #include <cassert>
+
+#include "subrsrc.h"
+#include "Grade.h"
 #include "scenario.h"
 #include "modeltime.h"
-#include "subrsrc.h"
 #include "xmlHelper.h"
 
 using namespace std;
 
 extern ofstream bugoutfile, outfile;	
-extern Scenario scenario;
+extern Scenario* scenario;
 
 //! Default constructor.
 subrsrc::subrsrc() {
-	nograde = 0;
+	
+   const int maxper = scenario->getModeltime()->getmaxper();
+   nograde = 0;
 	minShortTermSLimit = 0;
 	priceElas = 1;	// default value if not read in
-        
-        const Modeltime* modeltime = scenario.getModeltime();
-	const int maxper = modeltime->getmaxper();
-        cumulativeTechChange.resize(maxper); // cumulative technical change
-        cumulativeTechChange[0] = 1.0;
-
+   
+   // Resize all vectors except grade, which is dynamically sized.
+   cumulativeTechChange.resize( maxper ); // cumulative technical change
+   cumulativeTechChange[0] = 1.0;
+	annualprod.resize( maxper ); // annual production of subresource
+	rscprc.resize( maxper ); // subresource price
+	techChange.resize( maxper ); // subresource tech change
+	environCost.resize( maxper ); // environmental extraction costs change
+	severanceTax.resize( maxper ); // subresource severance tax
+	available.resize( maxper ); // total available resource
+	cumulprod.resize( maxper ); // cumulative production of subrsrc
+	gdpExpans.resize( maxper, 1.0 ); // cumulative production of subrsrc
 }
 
 //! Destructor.
@@ -56,13 +66,15 @@ void subrsrc::clear(){
 	minShortTermSLimit = 0;
 	priceElas = 1;
 	depgrade.clear();
+   cumulativeTechChange.clear();
+	annualprod.clear();
 	rscprc.clear();
 	techChange.clear();
 	environCost.clear();
 	severanceTax.clear();
 	available.clear();
-	annualprod.clear();
 	cumulprod.clear();
+   gdpExpans.clear();
 }
 
 //! return subrsrc name
@@ -71,8 +83,8 @@ string subrsrc::getName() const {
 }
 
 //! Initialize member variables from xml data
-void subrsrc::XMLParse( const DOMNode* node )
-{	
+void subrsrc::XMLParse( const DOMNode* node ) {
+   
 	DOMNodeList* nodeList = 0;
 	DOMNodeList* childNodeList = 0;
 	DOMNode* curr = 0;
@@ -81,19 +93,9 @@ void subrsrc::XMLParse( const DOMNode* node )
 	string childNodeName;
 	vector<grade*> tempGradesVec;
 	grade* tempGrade = 0;
+	const Modeltime* modeltime = scenario->getModeltime();
 	
-	// resize vectors not read in
-	const Modeltime* modeltime = scenario.getModeltime();
-	const int maxper = modeltime->getmaxper();
-	annualprod.resize( maxper ); // annual production of subresource
-	rscprc.resize( maxper ); // subresource price
-	techChange.resize( maxper ); // subresource tech change
-	environCost.resize( maxper ); // environmental extraction costs change
-	severanceTax.resize( maxper ); // subresource severance tax
-	available.resize( maxper ); // total available resource
-	cumulprod.resize( maxper ); // cumulative production of subrsrc
-	gdpExpans.resize( maxper, 1.0 ); // cumulative production of subrsrc
-	updateAvailable( 0 ); 
+	updateAvailable( 0 ); // What is this doing?
 
  	// make sure we were passed a valid node.
 	assert( node );
@@ -101,15 +103,12 @@ void subrsrc::XMLParse( const DOMNode* node )
 	// get the name attribute.
 	name = XMLHelper<string>::getAttrString( node, "name" );
 	
-	#if ( _DEBUG )
-		// cout << "\t\tSubResource name set as " << name << endl;
-	#endif
-	
 	// get all child nodes.
 	nodeList = node->getChildNodes();
 	
 	// loop through the child nodes.
 	for( int i = 0; i < nodeList->getLength(); i++ ){
+
 		curr = nodeList->item( i );
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
@@ -132,9 +131,7 @@ void subrsrc::XMLParse( const DOMNode* node )
 			tempGradesVec.clear(); // clears vector, size is 0
 		}
 		else if( nodeName == "annualprod" ){
-			int year = XMLHelper<int>::getAttr( curr, "year" );
-			int period = modeltime->getyr_to_per(year);
-			annualprod[period] = XMLHelper<double>::getValue( curr );
+			XMLHelper<double>::insertValueIntoVector( curr, annualprod, modeltime );
 		}
 		else if( nodeName == "minShortTermSLimit" ){
 			minShortTermSLimit = XMLHelper<double>::getValue( curr );
@@ -143,24 +140,16 @@ void subrsrc::XMLParse( const DOMNode* node )
 			priceElas = XMLHelper<double>::getValue( curr );
 		}
 		else if( nodeName == "techChange" ){
-			int year = XMLHelper<int>::getAttr( curr, "year" );
-			int period = modeltime->getyr_to_per(year);
-			techChange[period] =  XMLHelper<double>::getValue( curr );
+         XMLHelper<double>::insertValueIntoVector( curr, techChange, modeltime );
 		}
 		else if( nodeName == "environCost" ){
-			int year = XMLHelper<int>::getAttr( curr, "year" );
-			int period = modeltime->getyr_to_per(year);
-			environCost[period] =  XMLHelper<double>::getValue( curr );
+         XMLHelper<double>::insertValueIntoVector( curr, environCost, modeltime );
 		}
 		else if( nodeName == "severanceTax" ){
-			int year = XMLHelper<int>::getAttr( curr, "year" );
-			int period = modeltime->getyr_to_per(year);
-			severanceTax[period] =  XMLHelper<double>::getValue( curr );
+         XMLHelper<double>::insertValueIntoVector( curr, severanceTax, modeltime );
 		}
 		else if( nodeName == "gdpExpans" ){
-			int year = XMLHelper<int>::getAttr( curr, "year" );
-			int period = modeltime->getyr_to_per(year);
-			gdpExpans[period] =  XMLHelper<double>::getValue( curr );
+         XMLHelper<double>::insertValueIntoVector( curr, gdpExpans, modeltime );
 		}
 		
 	}
@@ -171,7 +160,7 @@ void subrsrc::XMLParse( const DOMNode* node )
 }
 
 void subrsrc::toXML( ostream& out ) const {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	int m = 0;
 	// write the beginning tag.
 	Tabs::writeTabs( out );
@@ -279,7 +268,7 @@ int subrsrc::getMaxGrade() // returns total number of grades
 
 void subrsrc::cumulsupply(double prc,int per)
 {	
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	int i=0,maxgrd;
 	double slope=0;
 	cumulprod[per]=0.0;
@@ -357,7 +346,7 @@ void subrsrc::updateAvailable( const int period ){
 /*! Takes into account short-term capacity limits.
 Note that cumulsupply() must be called before calling this function. */
 void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,double prev_price) {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	// for per = 0 use initial annual supply
 	// cumulative production is 0 for per = 0
 	if (per >= 1) {
@@ -428,7 +417,7 @@ void subrsrc::MCoutput( const string &regname, const string& secname )
 		string uname,vector<double> dout);
 	
 	int i=0, m=0;
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	string tssname = name; // tempory subsector name
@@ -462,7 +451,7 @@ void subrsrc::MCoutput( const string &regname, const string& secname )
 
 //! write subrsrc output to file
 void subrsrc::outputfile( const string &regname, const string& sname) {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	// function protocol
 	void fileoutput3( string var1name,string var2name,string var3name,
 		string var4name,string var5name,string uname,vector<double> dout);

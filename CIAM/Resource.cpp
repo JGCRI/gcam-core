@@ -20,23 +20,31 @@
 // xml headers
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
+#include "xmlHelper.h"
 
 // class headers
-#include "xmlHelper.h"
+#include "resource.h"
+#include "subrsrc.h"
 #include "scenario.h"
 #include "modeltime.h"
-#include "resource.h"
-#include "market.h"
 #include "Marketplace.h"
 
 using namespace std;
 
 extern ofstream bugoutfile,outfile;	
-extern Scenario scenario;
+extern Scenario* scenario;
 
 //! Default constructor.
 Resource::Resource(){
 	nosubrsrc = 0;
+   
+   // Resize all vectors.
+	const Modeltime* modeltime = scenario->getModeltime();
+	const int maxper = modeltime->getmaxper();
+	available.resize( maxper ); // total resource available
+	annualprod.resize( maxper ); // annual production rate of resource
+	cummprod.resize( maxper ); // cummulative production of resource
+   rscprc.resize( maxper ); 
 }
 
 //! Destructor.
@@ -51,16 +59,17 @@ void Resource::clear(){
 	name = "";
 	market = "";
 	nosubrsrc = 0;
-	rscprc.clear();
 	depsubrsrc.clear();
 	available.clear();
 	annualprod.clear();
 	cummprod.clear();
+   rscprc.clear();
 }
 
 //! Set data members from XML input.
 void Resource::XMLParse( const DOMNode* node ){
 	
+   const Modeltime* modeltime = scenario->getModeltime();
 	string nodeName;
 	DOMNodeList* nodeList = 0;
 	DOMNode* curr = 0;
@@ -88,7 +97,7 @@ void Resource::XMLParse( const DOMNode* node ){
 			market = XMLHelper<string>::getValueString( curr ); // only one market element.
 		}
 		else if( nodeName == "price" ){
-			rscprc.push_back( XMLHelper<double>::getValue( curr ) );
+			XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );
 		}
 		else if( nodeName == "subresource" ){
 			tempSubResource = new subrsrc();
@@ -98,18 +107,11 @@ void Resource::XMLParse( const DOMNode* node ){
 	}
 
 	nosubrsrc = depsubrsrc.size();
-
-	// resize vectors not read in
-	const Modeltime* modeltime = scenario.getModeltime();
-	const int maxper = modeltime->getmaxper();
-	available.resize(maxper); // total resource availabl
-	annualprod.resize(maxper); // annual production rate of resource
-	cummprod.resize(maxper); // cummulative production of resource
 }
 
 //! Write datamembers to datastream in XML format.
 void Resource::toXML( ostream& out ) const {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	// write the beginning tag.
 	Tabs::writeTabs( out );
 	out << "<" << getType() << " name=\"" << name << "\">"<< endl;
@@ -190,7 +192,7 @@ void Resource::toDebugXML( const int period, ostream& out ) const {
 //! Create markets
 void Resource::setMarket( const string& regionName ) {
 	
-	Marketplace* marketplace = scenario.getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 	// name is resource name
 	if ( marketplace->setMarket( regionName, market, name, Market::NORMAL ) ) {
 		marketplace->setPriceVector( name, regionName, rscprc );
@@ -300,7 +302,7 @@ void Resource::outputfile( const string& regname )
 
 //! Write resource output to database.
 void Resource::MCoutput( const string& regname ) {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	// function protocol

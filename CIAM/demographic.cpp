@@ -19,7 +19,7 @@
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 
-#include "Scenario.h"
+#include "scenario.h"
 #include "demographic.h"
 #include "modeltime.h"
 #include "xmlHelper.h"
@@ -27,11 +27,20 @@
 #include "Marketplace.h"
 
 using namespace std;
-extern Scenario scenario;
+extern Scenario* scenario;
 
 //! Default constructor
 demographic::demographic(){
-
+   const Modeltime* modeltime = scenario->getModeltime();
+   
+   // Resize all vectors to the max population period. 
+   const int popmaxper = modeltime->getmaxpopdata();
+	malepop.resize( popmaxper ); 
+	femalepop.resize( popmaxper );
+   laborforce.resize( popmaxper );
+   totalpop.resize( popmaxper );
+   laborprod.resize( popmaxper );
+   laborforce_p.resize( popmaxper );
 }
 
 //! Clear data members.
@@ -47,7 +56,7 @@ void demographic::clear(){
 //! parses demographic xml object
 void demographic::XMLParse( const DOMNode* node ){
 	
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 
 	DOMNode* curr = 0;
 	DOMNodeList* nodeList;
@@ -65,30 +74,26 @@ void demographic::XMLParse( const DOMNode* node ){
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		// total population 
 		if( nodeName == "population" ){
-			totalpop.push_back( XMLHelper<double>::getValue( curr ) );
+         XMLHelper<double>::insertValueIntoVector( curr, totalpop, modeltime, true );
 		}
 		// labor productivity growth rate
 		else if ( nodeName == "laborproductivity" ){
-			laborprod.push_back( XMLHelper<double>::getValue( curr ) );
+         XMLHelper<double>::insertValueIntoVector( curr, laborprod, modeltime, true );
 		}
 		// labor force participation rate
 		else if( nodeName == "laborforce" ){
-			laborforce_p.push_back( XMLHelper<double>::getValue( curr ) );
+		   XMLHelper<double>::insertValueIntoVector( curr, laborforce_p, modeltime, true );
 		}
 	}
 	
 	initData();
-	// not read in so not sized by data
-	// pop has one more historical period
-	int popmaxper = modeltime->getmaxper() + modeltime->getdataoffset( 0 ); 
-	malepop.resize( popmaxper ); 
-	femalepop.resize( popmaxper );
+
 }
 
 //! Writes datamembers to datastream in XML format.
 void demographic::toXML( ostream& out ) const {
 	
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	int iter;
 
 	// write the beginning tag.
@@ -122,7 +127,7 @@ void demographic::toXML( ostream& out ) const {
 //! Writes datamembers to debugging datastream in XML format.
 void demographic::toDebugXML( const int period, ostream& out ) const {
 	
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 
 	// one additional period (base - 1) is read in for demographics data
 	// call modeltime for proper offset
@@ -159,16 +164,17 @@ void demographic::toDebugXML( const int period, ostream& out ) const {
 
 void demographic::initData(){
 	
-	laborforce.resize( totalpop.size() );
+   const Modeltime* modeltime = scenario->getModeltime();
+   const int popmaxper = modeltime->getmaxpopdata();
 
-	for ( int i = 0; i < totalpop.size(); i++ ) {
+	for ( int i = 0; i < popmaxper; i++ ) {
 		laborforce[ i ] = totalpop[ i ] * laborforce_p[ i ];
 	}
 }
 
 //! return labor productivity
 double demographic::labor( const int per ) const {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	return laborprod[modeltime->getmod_to_pop(per)];
 }
 
@@ -179,19 +185,19 @@ const vector<double>& demographic::getTotalPopVec() const {
 
 //! return total population
 double demographic::total( const int per ) const {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	return totalpop[ modeltime->getmod_to_pop( per ) ];
 }
 
 //! return labor force (actual working)
 double demographic::getlaborforce( const int per ) const {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	return laborforce[ modeltime->getmod_to_pop( per ) ];
 }
 
 //! show demographic information to screen
 void demographic::show(int per) {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	const int m = modeltime->getmod_to_pop(per);
 	cout << "Male Population: " << malepop[m] << endl;
 	cout << "Female Population: " << femalepop[m] << endl;
@@ -201,7 +207,7 @@ void demographic::show(int per) {
 //! outputing population info to file
 void demographic::outputfile( const string& regname ) {
 	int i=0;
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 
@@ -225,7 +231,7 @@ void demographic::outputfile( const string& regname ) {
 //! MiniCAM output to file
 void demographic::MCoutput( const string& regname ) {
 	int i=0;
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 
@@ -246,12 +252,25 @@ void demographic::MCoutput( const string& regname ) {
 	dboutput4(regname,"General","Labor Prod","GrowthRate","per yr",temp);	
 }
 
+//! Write back the calibrated values from the marketplace to the member variables.
+void demographic::writeBackCalibratedValues( const string& regionName, const int period ) {
+   
+   const Marketplace* marketplace = scenario->getMarketplace();
+   const Modeltime* modeltime = scenario->getModeltime();
+   const string goodName = "GDP";
+
+   // Only need to write back calibrated values for the current period.
+   double totalLaborProd = marketplace->showprice( goodName, regionName, period );
+   
+   laborprod[ modeltime->getmod_to_pop( period ) ] = pow( totalLaborProd, double( 1 ) / double( modeltime->gettimestep( period ) ) ) - 1;
+}
+
 //! Create calibration markets
 void demographic::setupCalibrationMarkets( const string& regionName ) {
 	
 	const string goodName = "GDP";
-	const Modeltime* modeltime = scenario.getModeltime();
-	Marketplace* marketplace = scenario.getMarketplace();
+	const Modeltime* modeltime = scenario->getModeltime();
+	Marketplace* marketplace = scenario->getMarketplace();
 
 	if ( marketplace->setMarket( regionName, regionName, goodName, Market::CALIBRATION ) ) {
 		vector<double> tempLFPs( modeltime->getmaxper() );
@@ -262,24 +281,9 @@ void demographic::setupCalibrationMarkets( const string& regionName ) {
 	}
 }
 
-double demographic::getTotalLaborProductivity( const int period, const string& regionName ) const {
+//! Return the correct total labor force productivity. 
+double demographic::getTotalLaborProductivity( const int period ) const {
 
-      const Configuration* conf = Configuration::getInstance();
-      const Marketplace* marketplace = scenario.getMarketplace();
-      const Modeltime* modeltime = scenario.getModeltime();
-
-      double totalLaborProd = 0;
-      const string goodName = "GDP";
-
-      // If calibration is active get the parameter from the marketplace.
-      if( conf->getBool( "CalibrationActive" ) ){
-	      totalLaborProd = marketplace->showprice( goodName, regionName, period );
-      }
-
-      // Otherwise determine it from the read-in vector.
-      else {
-         totalLaborProd = pow( 1 + laborprod[ modeltime->getmod_to_pop( period ) ], modeltime->gettimestep( period ) );
-      }
-
-      return totalLaborProd;
+      const Modeltime* modeltime = scenario->getModeltime();
+      return pow( 1 + laborprod[ modeltime->getmod_to_pop( period ) ], modeltime->gettimestep( period ) );
 }

@@ -18,7 +18,7 @@
 #include "Emcoef_ind.h" // indirect greenhouse gas emissions coefficient class
 #include "xmlHelper.h"
 
-using namespace std; // enables elimination of std::
+using namespace std;
 
 // map of CO2 emissions coefficient for primary fuel only
 extern map<string, double> co2coefpri;

@@ -21,13 +21,13 @@
 using namespace std;
 
 // global variables
-extern Scenario scenario;
+extern Scenario* scenario;
 extern ofstream gasfile;
 
 //! Write the input text file for the climate model.
 void climat_data() {
-	const Modeltime* modeltime = scenario.getModeltime();
-	World* world = scenario.getWorld();
+	const Modeltime* modeltime = scenario->getModeltime();
+	World* world = scenario->getWorld();
 
 	int maxper = modeltime->getmaxdataper();
         int per;

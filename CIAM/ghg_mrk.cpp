@@ -20,15 +20,17 @@
 #include "scenario.h"
 #include "modeltime.h"
 #include "ghg_mrk.h"
-#include "market.h"
 #include "Marketplace.h"
 
 using namespace std;
 
-extern Scenario scenario;
+extern Scenario* scenario;
 
 //! Default construtor.
 ghg_mrk::ghg_mrk(){
+   const Modeltime* modeltime = scenario->getModeltime();
+	const int maxper = modeltime->getmaxper();
+   constraint.resize( maxper );
 }
 
 //! Clear member variables.
@@ -43,7 +45,7 @@ void ghg_mrk::clear(){
 //! Create GHG markets
 void ghg_mrk::setMarket( const string& regionName ) {
 	
-	Marketplace* marketplace = scenario.getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 
 	// name is GHG name
 	marketplace->setMarket( regionName, market, name, Market::GHG );
@@ -56,7 +58,7 @@ void ghg_mrk::setMarket( const string& regionName ) {
 //! Initializes data members from XML.
 void ghg_mrk::XMLParse( const DOMNode* node ){
 	
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	DOMNodeList* nodeList;
 	DOMNodeList* childNodeList;
 	DOMNode* curr = 0;
@@ -65,7 +67,7 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
 	string childNodeName;
 	
 	// PRECONDITION
-	// assume we are passed a valid node.
+	//! \pre assume we are passed a valid node.
 	assert( node );
 
 	// get the name attribute.
@@ -96,7 +98,7 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
 				childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
 
 				if( childNodeName == "constraint" ){
-					constraint.push_back( XMLHelper<double>::getValue( currChild ) ); // only one constraint per period.
+               XMLHelper<double>::insertValueIntoVector( currChild, constraint, modeltime );
 				}
 			}
 		}

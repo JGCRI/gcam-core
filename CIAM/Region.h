@@ -11,18 +11,20 @@
 * \version $Revision$
 */
 
-#include "demographic.h"
-#include "resource.h"
-#include "sector.h"
-#include "DemandSector.h"
-#include "AgSector.h"
-#include "ghg_mrk.h"
-// #include "TransSector.h" // Transportation sector class class  maw
-
 #include <string>
 
 using namespace std;
 using namespace xercesc;
+
+// Forward declarations.
+class demographic;
+class Resource;
+class sector;
+class demsector;
+class AgSector;
+class ghg_mrk;
+// class TransSector;
+class Summary;
 
 /*! 
 * \ingroup CIAM
@@ -40,7 +42,7 @@ private:
 	int nodsec; //! number of demand sectors in each region
 	int noregmrks; //! number of markets in each region
 	double EnergyGNPElas; //! elasticity for energy price feedback on GNP
-	demographic population; //! demographic object
+	demographic* population; //! demographic object
 	vector<Resource*> resources; //! vector of resource objects
 	vector<sector*> supplysector; //! array of pointers to supply sector objects
 	vector<demsector*> demandsector; //! array of pointers to demand sector objects
@@ -67,9 +69,9 @@ public:
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
 	string getName() const;
+   void writeBackCalibratedValues( const int period );
    void setupCalibrationMarkets();
    void doCalibration( const int per );
-	void initperXML(void); // set array size to max period for variables not set by XMLParse
 	void setCO2coef(void); // set default CO2 emissions coefficients
 	void setghgsupply(int per); // sets ghg constraint to market supply
 	void setghgdemand(int per); // sets ghg emissions to market demand

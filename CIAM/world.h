@@ -11,11 +11,15 @@
 * \version $Revision$
 */
 
-#include "region.h"
-#include "str_ghgss.h"
+#include <map>
+#include <vector>
 #include <xercesc/dom/DOM.hpp>
 
 using namespace xercesc;
+
+// Forward declarations
+class Region;
+struct str_ghgss;
 
 /*! 
 * \ingroup CIAM
@@ -47,7 +51,6 @@ public:
 	void XMLParse( const DOMNode* node );
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
-	void initper(void); // sets number of periods in World
 	void calc( const int per, const vector<string>& regionsToSolve = vector<string>( 0 ) ); // model calculation for each region
 	void updateSummary(int per); // update summaries for reporting
 	void sumpop(int per); // sum global population

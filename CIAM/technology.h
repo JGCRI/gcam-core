@@ -20,10 +20,11 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/util/XMLString.hpp>
 
-// User headers.
-#include "ghg.h"
-
+using namespace std;
 using namespace xercesc;
+
+// Forward declaration
+class Ghg;
 
 /*! 
 * \ingroup CIAM

@@ -11,10 +11,12 @@
 * \version $Revision$
 */
 
-#include "subrsrc.h"
 #include <xercesc/dom/DOM.hpp>
 
 using namespace xercesc;
+
+// Forward declaration.
+class subrsrc;
 
 /*! 
 * \ingroup CIAM

@@ -21,7 +21,7 @@
 
 using namespace std;
 
-extern Scenario scenario;
+extern Scenario* scenario;
 
 //! Default constructor
 grade::grade() {
@@ -59,9 +59,6 @@ void grade::XMLParse( const DOMNode* tempNode ) {
 		
 		if( tNodeName == "name" ){
 			name = XMLHelper<string>::getValueString( tNode );
-			#if ( _DEBUG )
-				// cout << "\t\t\tGrade name set as " << name << endl;
-			#endif
 		}
 		else if( tNodeName == "year" ){
 			year = XMLHelper<int>::getValue( tNode );
@@ -72,15 +69,6 @@ void grade::XMLParse( const DOMNode* tempNode ) {
 		else if( tNodeName == "extractioncost" ){
 			extractCost = XMLHelper<double>::getValue( tNode );
 		}
-	/*	else if( tNodeName == "environmentalcost" ){
-			environCost = XMLHelper<double>::getValue( tNode );
-		}
-		else if( tNodeName == "severencetax" ){
-			tax = XMLHelper<double>::getValue( tNode );
-		}
-		else if( tNodeName == "techchange" ){
-			techChange = XMLHelper<double>::getValue( tNode );
-		} */
 	}
 }
 
@@ -96,10 +84,7 @@ void grade::toXML( ostream& out ) const {
 	XMLWriteElement( year, "year", out );
 	XMLWriteElement( available, "available", out );
 	XMLWriteElement( extractCost, "extractioncost", out );
-//	XMLWriteElement( environCost, "environmentalcost", out );
-//	XMLWriteElement( tax, "severencetax", out );
-//	XMLWriteElement( techChange, "techchange", out );
-	// XMLWriteElement( totalCost, "totalcost", out );
+	XMLWriteElement( totalCost, "totalcost", out );
 	
 	Tabs::decreaseIndent();
 
@@ -116,9 +101,6 @@ void grade::toDebugXML( const int period, ostream& out ) const {
 
 	XMLWriteElement( available, "available", out );
 	XMLWriteElement( extractCost, "extractioncost", out );
-//	XMLWriteElement( environCost, "environmentalcost", out );
-//	XMLWriteElement( techChange, "techchange", out );
-//	XMLWriteElement( tax, "severencetax", out );
 	XMLWriteElement( totalCost, "totalcost", out );
 	
 	Tabs::decreaseIndent();
@@ -138,7 +120,7 @@ void grade::printGrade() const
 
 //! Calculate cummulative technical change for each grade.
 void grade::calcTechChangeCumm( const double techChange, const int per ) {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
         if (per > 0) {
             techChangeCumm[per] = techChangeCumm[ per-1 ] * 
                                   pow( ( 1.0 + techChange ), modeltime->gettimestep(per) );

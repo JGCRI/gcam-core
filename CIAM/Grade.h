@@ -12,6 +12,7 @@
 */
 
 #include <string>
+#include <vector>
 
 // xerces xml headers
 #include <xercesc/dom/DOM.hpp>

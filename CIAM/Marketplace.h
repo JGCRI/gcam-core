@@ -26,6 +26,9 @@ using namespace mtl;
 
 typedef matrix<double, rectangle<>, dense<>, row_major>::type Matrix;
 
+// Forward declaration. Can't do this right now because of marketType enum. 
+// class Market
+
 /*! 
 * \ingroup CIAM
 * \brief A class which describes the single global marketplace.
@@ -40,7 +43,7 @@ private:
 	struct solinfo {
 		double X;		//!< unknown, prices
 		double ED;		//!< excess demand for X
-        double demand;  //!< demand for X.
+      double demand;  //!< demand for X.
 		double dX;		//!< change in excess demand
 		double XL;		//!< left bracket
 		double XR;		//!< right bracket
@@ -50,7 +53,7 @@ private:
 		double XR_org;	//!< original right bracket
 		double EDL_org; //!< original excess demand for left bracket
 		double EDR_org; //!< original excess demand for right bracket
-		bool bracketed;	//!< 1 or 0 for bracketed or unbrackted.
+		bool bracketed;	//!< Bracketed or unbrackted.
 	};
 	
 	private:

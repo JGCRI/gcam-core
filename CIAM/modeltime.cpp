@@ -254,6 +254,7 @@ void Modeltime::set(void) {
 	popPeriodToYear.resize( maxPopData );
 	int currYear = popStartYear;
 	for( i = 0; i < maxPopData; i++ ){
+      yearToPopPeriod[ currYear ] = i;
 		popPeriodToYear[ i ] = currYear;
 		currYear += dataTimeStep;
 	}

@@ -21,6 +21,11 @@
 
 using namespace xercesc;
 
+// Forward declarations
+class Summary;
+class technology;
+class hydro_tech;
+
 /*! 
 * \ingroup CIAM
 * \brief A class which defines a single Subsector of the model.

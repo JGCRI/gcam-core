@@ -31,7 +31,7 @@ CdbTableDef DBoutTD; // table definitions for creating tables in the database
 CdbField tfield; // tempory field for creating fields in tables
 CdbRecordset DBoutrst; // recordset for writing results
 
-extern Scenario scenario;
+extern Scenario* scenario;
 
 const char *DBout = "DBout"; // name of the table for outputs compatible with dataviewer
 
@@ -85,9 +85,9 @@ void createDBout() {
 	char buffer[4];
 	string str;
 	// add years as fields
-	for (int t=0;t<scenario.getModeltime()->getmaxper();t++) { 
+	for (int t=0;t<scenario->getModeltime()->getmaxper();t++) { 
 		str = "y";
-		str += itoa(scenario.getModeltime()->getper_to_yr(t),buffer,10); // convert int to char*
+		str += itoa(scenario->getModeltime()->getper_to_yr(t),buffer,10); // convert int to char*
 		tfield = DBoutTD.CreateField(str.c_str(),dbText);
 		DBoutTD.Fields.Append(tfield);
 	}

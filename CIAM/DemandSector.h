@@ -14,10 +14,12 @@
 #include <vector>
 #include <xercesc/dom/DOM.hpp>
 #include "sector.h"
-#include "subsector.h"
 
 using namespace std;
 using namespace xercesc;
+
+// Forward declaration
+class subsector;
 
 /*! 
 * \ingroup CIAM
@@ -28,7 +30,7 @@ using namespace xercesc;
 class demsector : public sector
 {
 protected:
-	int perCapitaBased; //!< demand equation based on per capita GNP, true or false
+	bool perCapitaBased; //!< demand equation based on per capita GNP, true or false.
 	double pElasticityBase; //!< base year energy price elasticity
 	double priceRatio; //!< temp price ratio
 	vector<double> sectorfuelprice; // temp vec

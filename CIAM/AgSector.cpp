@@ -13,7 +13,6 @@
 #include <fstream>
 #include "AgSector.h"
 #include "xmlHelper.h"
-#include "market.h"
 #include "Marketplace.h"
 #include "modeltime.h"
 #include "scenario.h"
@@ -29,7 +28,7 @@ extern "C" { void _stdcall AG2RUN( double[], int&, int&, double[], double[] ); }
 extern "C" { double _stdcall AG2CO2EMISSIONS( int&, int& ); };
 extern "C" { void _stdcall AG2LINKOUT( void ); };
 
-extern Scenario scenario;
+extern Scenario* scenario;
 
 using namespace std;
 
@@ -154,7 +153,7 @@ void AgSector::clear() {
 
 //! Initialize the object with XML data.
 void AgSector::XMLParse( const DOMNode* node ) {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 
 	CO2Emissions.resize( modeltime->getmaxper() );
 	prices.resize( modeltime->getmaxper() );
@@ -170,7 +169,7 @@ void AgSector::XMLParse( const DOMNode* node ) {
 
 //! Output the results in XML format.
 void AgSector::toXML( ostream& out ) const {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	int iter = 0;
 	int innerIter = 0;
 
@@ -210,7 +209,7 @@ void AgSector::toXML( ostream& out ) const {
 void AgSector::toDebugXML( const int period, ostream& out ) const {
 	int iter = 0;
 	int tempRegion = regionNumber; // Needed b/c function is constant.
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	
 	// write the beginning tag.
 	Tabs::writeTabs( out );
@@ -305,7 +304,7 @@ void AgSector::setBiomassPrice( const double bioPriceIn ) {
 
 //! Run the underlying AgLU model.
 void AgSector::runModel( const int period, const string& regionName ) {
-	Marketplace* marketplace = scenario.getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 
 	double* priceArray = new double[ numAgMarkets ];
 	double* demandArray = new double[ numAgMarkets ];
@@ -359,7 +358,7 @@ void AgSector::carbLand( const int period, const string& regionName ) {
 //! Create a market for the sector.
 void AgSector::setMarket( const string& regionName ) {
 	
-	Marketplace* marketplace = scenario.getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 
 	// Add all global markets.
 	for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end() - 1; i++ ) {
@@ -381,7 +380,7 @@ void AgSector::internalOutput() {
 //! Initialize the market prices for agricultural goods. 
 void AgSector::initMarketPrices( const string& regionName, const vector<double>& pricesIn ) {
 	
-	Marketplace* marketplace = scenario.getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 
 	// Initialize prices.
  	for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end(); i++ ) {

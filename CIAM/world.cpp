@@ -24,19 +24,21 @@
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 
-#include "scenario.h"
 #include "world.h"
+#include "Region.h"
+#include "AgSector.h"
+#include "scenario.h"
 #include "modeltime.h"
-#include "Market.h"
 #include "Marketplace.h"
 #include "Configuration.h"
+#include "str_ghgss.h"
 
 using namespace std;
 
 extern "C" { void _stdcall AG2INITC( double[14][12] ); };
 // global variables defined in main
 extern ofstream bugoutfile,outfile, sdfile;	
-extern Scenario scenario;
+extern Scenario* scenario;
 
 // global map of region names
 map<string,int> regionMap;
@@ -45,6 +47,16 @@ map<string,int> regionMap;
 World::World() {
 	// initialize elemental datamembers.
 	noreg = 0;
+
+   // We can resize all the arrays because we are garunteed by the schema that the modeltime object is parsed first.
+   const int maxper = scenario->getModeltime()->getmaxper();
+	population.resize(maxper); // total global population
+	crudeoilrsc.resize(maxper); // global crude oil resource
+	unconvoilrsc.resize(maxper); // global crude oil resource
+	natgasrsc.resize(maxper); // global natural gas resource
+	coalrsc.resize(maxper); // global coal resource
+	uranrsc.resize(maxper); // global uranium resource
+	ghgs.resize(maxper+2); // structure containing ghg emissions
 }
 
 World::~World(){
@@ -85,7 +97,6 @@ void World::XMLParse( const DOMNode* node ){
 		
 		if( nodeName == "region" ){
 			tempRegion = new Region();
-			tempRegion->initperXML(); // initialize size of arrays to max period
 			tempRegion->setCO2coef(); // sets default CO2 emissions coefficients
 			tempRegion->XMLParse( curr );
 			region.push_back( tempRegion ); // resizes vector of region objects
@@ -172,7 +183,7 @@ void World::toDebugXML( const int period, ostream& out ) const {
 	
 	// for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
 	// won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
-	scenario.getMarketplace()->toDebugXML( period, out );
+	scenario->getMarketplace()->toDebugXML( period, out );
 	
 	for( vector<Region*>::const_iterator i = region.begin(); i == region.begin(); i++ ) { 
 	//for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ) { 
@@ -190,19 +201,6 @@ void World::toDebugXML( const int period, ostream& out ) const {
 	// write the closing tag.
 	Tabs::writeTabs( out );
 	out << "</world>" << endl;
-}
-
-//! set size of global arrays depending on MaxPer 
-void World::initper()
-{
-	int maxper = scenario.getModeltime()->getmaxper();
-	population.resize(maxper); // total global population
-	crudeoilrsc.resize(maxper); // global crude oil resource
-	unconvoilrsc.resize(maxper); // global crude oil resource
-	natgasrsc.resize(maxper); // global natural gas resource
-	coalrsc.resize(maxper); // global coal resource
-	uranrsc.resize(maxper); // global uranium resource
-	ghgs.resize(maxper+2); // structure containing ghg emissions
 }
 
 //! calculate supply and demand and emissions for all regions
@@ -232,6 +230,11 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
 
 	for ( vector<int>::iterator i = regionNumbersToSolve.begin(); i != regionNumbersToSolve.end(); i++ ) {
 		
+      // Write back calibrated values to the member variables.
+      // These are still trial values.
+      if( conf->getBool( "CalibrationActive" ) ) {
+         region[ *i ]->writeBackCalibratedValues( per );
+      }
 		// calculate regional GNP
 		region[ *i ]->calc_gnp( per );
 		// apply carbon taxes to appropriate technologie
@@ -317,7 +320,7 @@ void World::emiss_ind(int per)
 
 //! set global emissions for all GHG for climat
 void World::emiss_all() {
-	const int maxper = scenario.getModeltime()->getmaxdataper();
+	const int maxper = scenario->getModeltime()->getmaxdataper();
 	int  per;
 	
 	ifstream gasfile2;
@@ -369,7 +372,7 @@ void World::emiss_all() {
 
 //! write results for all regions to file
 void World::outputfile() {
-	const int maxper = scenario.getModeltime()->getmaxper();
+	const int maxper = scenario->getModeltime()->getmaxper();
 	vector<double> temp(maxper);
 	// function protocol
 	void fileoutput3(string var1name,string var2name,string var3name,
@@ -393,7 +396,7 @@ void World::outputfile() {
 
 //! MiniCAM style output to database
 void World::MCoutput() {
-	const int maxper = scenario.getModeltime()->getmaxper();
+	const int maxper = scenario->getModeltime()->getmaxper();
 	vector<double> temp(maxper);
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,

@@ -34,7 +34,7 @@ extern time_t ltime;
 extern ofstream outfile;
 extern map<string,int> mapreg;
 extern map<string,int> regionMap;
-extern Scenario scenario;
+extern Scenario* scenario;
 
 /*! Output single records to file.
 *

@@ -22,6 +22,7 @@ using namespace xercesc;
 * \brief An object which contains the demographic information for a region.
 * \author Sonny Kim
 */
+
 class demographic
 {
 private:
@@ -52,7 +53,8 @@ public:
 	// MiniCAM outputs to file
 	void MCoutput( const string& regname ); 
 	void setupCalibrationMarkets( const string& regionName );
-   double getTotalLaborProductivity( const int period, const string& regionName ) const;
+   void writeBackCalibratedValues( const string& regionName, const int period );
+   double getTotalLaborProductivity( const int period ) const;
 };
 
 #endif // _DEMOGRAPHIC_H_

@@ -15,12 +15,13 @@
 #include <string>
 #include <iostream>
 
-#include "modeltime.h"
-#include "world.h"
-#include "Marketplace.h"
-
 using namespace std;
 using namespace xercesc;
+
+// Forward declarations
+class Modeltime;
+class Marketplace;
+class World;
 
 /*!
 * \ingroup CIAM
@@ -31,14 +32,15 @@ using namespace xercesc;
 class Scenario
 {
 private:
-	Modeltime modeltime; //!< The modeltime for the scenario
-	World world; //!< The world object
-	Marketplace marketplace; //!< The goods and services marketplace.
+	Modeltime* modeltime; //!< The modeltime for the scenario
+	World* world; //!< The world object
+	Marketplace* marketplace; //!< The goods and services marketplace.
 	string name; //!< Scenario name.
 	string scenarioSummary; //!< A summary of the purpose of the Scenario.
 
 public:
 	Scenario();
+   ~Scenario();
 	const Modeltime* getModeltime() const;
 	const Marketplace* getMarketplace() const;
 	Marketplace* getMarketplace();

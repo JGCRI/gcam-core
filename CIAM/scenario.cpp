@@ -15,8 +15,10 @@
 #include <ctime>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
+
 #include "scenario.h"
 #include "modeltime.h"
+#include "Marketplace.h"
 #include "world.h"
 #include "xmlHelper.h"
 #include "Configuration.h"
@@ -34,6 +36,16 @@ extern ofstream logfile, sdcurvefile;
 
 //! Default construtor
 Scenario::Scenario() {
+   world = 0;
+   modeltime = 0;
+   marketplace = new Marketplace();
+}
+
+//! Destructor
+Scenario::~Scenario() {
+   delete world;
+   delete modeltime;
+   delete marketplace;
 }
 
 //! Clear all datamembers.
@@ -42,29 +54,29 @@ void Scenario::clear() {
 	scenarioSummary = "";
 }
 
-//! Return a reference to the modeltime.
+//! Return a reference to the modeltime->
 const Modeltime* Scenario::getModeltime() const {
-	return &modeltime;
+	return modeltime;
 }
 
 //! Return a constant reference to the goods and services marketplace.
 const Marketplace* Scenario::getMarketplace() const {
-	return &marketplace;
+	return marketplace;
 }
 
 //! Return a mutable reference to the goods and services marketplace.
 Marketplace* Scenario::getMarketplace() {
-	return &marketplace;
+	return marketplace;
 }
 
 //! Return a constant reference to the world object.
 const World* Scenario::getWorld() const {
-	return &world;
+	return world;
 }
 
 //! Return a mutable reference to the world object.
 World* Scenario::getWorld() {
-	return &world;
+	return world;
 }
 
 //! Set data members from XML input.
@@ -93,11 +105,13 @@ void Scenario::XMLParse( const DOMNode* node ){
 		}
 		
 		else if ( nodeName == "modeltime" ){
-			modeltime.XMLParse( curr );
-			modeltime.set(); // calculate time parameters and conversions
+         modeltime = new Modeltime();
+			modeltime->XMLParse( curr );
+			modeltime->set(); // calculate time parameters and conversions
 		}
 		else if ( nodeName == "world" ){
-			world.XMLParse( curr );
+         world = new World();
+			world->XMLParse( curr );
 		}
 	}
 }
@@ -127,8 +141,8 @@ void Scenario::toXML( ostream& out ) const {
 	out << "<summary>\"SRES B2 Scenario is used for this Reference Scenario\"</summary>" << endl;
 	
 	// write the xml for the class members.
-	modeltime.toXML( out );
-	world.toXML( out );
+	modeltime->toXML( out );
+	world->toXML( out );
 	// finished writing xml for the class members.
 	
 	// decrease the indent.
@@ -151,8 +165,8 @@ void Scenario::toDebugXMLOpen( const int period, ostream& out ) const {
 	out << "<summary>\"Debugging output\"</summary>" << endl;
 	
 	// write the xml for the class members.
-	modeltime.toDebugXML( period, out );
-	world.toDebugXML( period, out );
+	modeltime->toDebugXML( period, out );
+	world->toDebugXML( period, out );
 	// finished writing xml for the class members.
 	
 }
@@ -184,40 +198,40 @@ void Scenario::run(){
 	
 	// set size of global arrays depending on MaxPer 
 	// works fine with XMLParse, only calls maxper
-	world.initper(); 
+	// world->initper(); 
 	
 	// Start Model run for the first period.
 	int per = 0;
    
    if ( conf->getBool( "CalibrationActive" ) ) {
-	   world.setupCalibrationMarkets();
+	   world->setupCalibrationMarkets();
    }
 
-	marketplace.initXMLPrices(); // initialize prices
-	marketplace.nulldem( per ); // null market demands
-	marketplace.nullsup( per ); // null market supply
+	marketplace->initXMLPrices(); // initialize prices
+	marketplace->nulldem( per ); // null market demands
+	marketplace->nullsup( per ); // null market supply
 	
 	// Write scenario root element for the debugging.
 	toDebugXMLOpen( per, xmlDebugStream );
 	
-	world.calc( per ); // Calculate supply and demand
-	world.updateSummary( per ); // Update summaries for reporting
-	world.sumpop( per ); // Calculate global population
-	world.emiss_ind( per ); // Calculate global emissions
-	world.sumrsc( per ); // Calculate global depletable resources
+	world->calc( per ); // Calculate supply and demand
+	world->updateSummary( per ); // Update summaries for reporting
+	world->sumpop( per ); // Calculate global population
+	world->emiss_ind( per ); // Calculate global emissions
+	world->sumrsc( per ); // Calculate global depletable resources
 	
-	cout << endl << "Period " << per <<": "<< modeltime.getper_to_yr(per) << endl;
+	cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr(per) << endl;
 	cout << "Period 0 not solved" << endl;
 	logfile << "Period:  " << per << endl;
 	// end of first period.
 	
 	// Loop over time steps and operate model
-	for ( per = 1; per < modeltime.getmaxper(); per++ ) {	
+	for ( per = 1; per < modeltime->getmaxper(); per++ ) {	
 		
 		// Write out some info.
-		cout << endl << "Period " << per <<": "<< modeltime.getper_to_yr( per ) << endl;
+		cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl;
 		logfile << "Period:  " << per << endl;
-		sdcurvefile << "Period " << per << ": "<< modeltime.getper_to_yr( per ) << endl;
+		sdcurvefile << "Period " << per << ": "<< modeltime->getper_to_yr( per ) << endl;
 		sdcurvefile << "Market,Name,Price,Supply,Demand,";
 		sdcurvefile << "Market,Name,Price,Supply,Demand,";
 		sdcurvefile << "Market,Name,Price,Supply,Demand,";
@@ -225,25 +239,25 @@ void Scenario::run(){
 		sdcurvefile << "Market,Name,Price,Supply,Demand," << endl;
 		
 		// Run the iteration of the model.
-		marketplace.nulldem( per ); // initialize market demand to null
-		marketplace.nullsup( per ); // initialize market supply to null
-		marketplace.storeto_last( per ); // save last period's info to stored variables
-		marketplace.init_to_last( per ); // initialize to last period's info
-		world.calc( per ); // call to calculate supply and demand
-		marketplace.solve( per ); // solution uses Bisect and NR routine to clear markets
-		world.updateSummary( per ); // call to update summaries for reporting
-		world.sumpop( per ); // call to calculate global population
-		world.emiss_ind( per ); // call to calculate global emissions
-		world.sumrsc( per ); // call to calculate global depletable resources
+		marketplace->nulldem( per ); // initialize market demand to null
+		marketplace->nullsup( per ); // initialize market supply to null
+		marketplace->storeto_last( per ); // save last period's info to stored variables
+		marketplace->init_to_last( per ); // initialize to last period's info
+		world->calc( per ); // call to calculate supply and demand
+		marketplace->solve( per ); // solution uses Bisect and NR routine to clear markets
+		world->updateSummary( per ); // call to update summaries for reporting
+		world->sumpop( per ); // call to calculate global population
+		world->emiss_ind( per ); // call to calculate global emissions
+		world->sumrsc( per ); // call to calculate global depletable resources
 		
 		// Write out the results for debugging.
-		world.toDebugXML( per, xmlDebugStream );
+		world->toDebugXML( per, xmlDebugStream );
 	}
 	
 	toDebugXMLClose( per, xmlDebugStream ); // Close the xml debugging tag.
 	
 	// calling fortran subroutine climat/magicc
-	world.emiss_all(); // read in all ghg gases except for CO2
+	world->emiss_all(); // read in all ghg gases except for CO2
 	// climat_data(); // writes the input text file
 	gasfile.close(); // close input file for climat
 #ifdef WIN32

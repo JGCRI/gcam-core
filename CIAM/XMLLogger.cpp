@@ -12,9 +12,12 @@
 #include <string>
 #include <sstream>
 #include <ctime>
-#include "scenario.h"
-#include "Logger.h"
+
 #include "XMLLogger.h"
+#include "Logger.h"
+#include "scenario.h"
+
+
 
 //! Constructor
 XMLLogger::XMLLogger( const string& loggerName ):Logger( loggerName ){

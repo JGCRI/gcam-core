@@ -15,29 +15,43 @@
 #include <cmath>
 #include <cassert>
 
-#include "market.h"
-#include "modeltime.h"
-#include "sector.h"
-#include "Marketplace.h"
-#include "Configuration.h"
-
 // xml headers
 #include "xmlHelper.h"
-#include "scenario.h"
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 
+#include "sector.h"
+#include "subsector.h"
+#include "scenario.h"
+#include "modeltime.h"
+#include "Marketplace.h"
+#include "Configuration.h"
+#include "Summary.h"
+
 using namespace std;
 
-extern Scenario scenario;
+extern Scenario* scenario;
 extern ofstream outfile, bugoutfile;
 
 //! Default constructor
 sector::sector() {
-	initElementalMembers();
-        // Note that this can be in the constructor of most objects -- except globals such as marketplace, modeltime, and scenario
-        Configuration* conf = Configuration::getInstance();
-        debugChecking = conf->getBool( "debugChecking" ); 
+   initElementalMembers();
+   Configuration* conf = Configuration::getInstance();
+   debugChecking = conf->getBool( "debugChecking" );
+   
+   // resize vectors
+	const Modeltime* modeltime = scenario->getModeltime();
+	const int maxper = modeltime->getmaxper();
+	
+   sectorprice.resize( maxper );
+   price_norm.resize( maxper ); // sector price normalized to base year
+	pe_cons.resize( maxper ); // sectoral primary energy consumption
+	input.resize( maxper ); // sector total energy consumption
+	output.resize( maxper ); // total amount of final output from sector
+	fixedOutput.resize( maxper );
+   carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
+	summary.resize( maxper ); // object containing summaries
+
 }
 
 //! Default destructor.
@@ -78,6 +92,7 @@ string sector::getName()
 //! Set data members from XML input.
 void sector::XMLParse( const DOMNode* node ){
 	
+   const Modeltime* modeltime = scenario->getModeltime();
 	DOMNode* curr = 0;
 	DOMNodeList* nodeList = 0;
 	string nodeName;
@@ -105,32 +120,23 @@ void sector::XMLParse( const DOMNode* node ){
 			market = XMLHelper<string>::getValueString( curr ); // only one market element.
 		}
 		else if( nodeName == "price" ){
-			sectorprice.push_back( XMLHelper<double>::getValue( curr ) );
+         XMLHelper<double>::insertValueIntoVector( curr, sectorprice, modeltime );
 		}
 		else if( nodeName == "output" ) {
-			output.push_back( XMLHelper<double>::getValue( curr ) );
+			XMLHelper<double>::insertValueIntoVector( curr, output, modeltime );
 		}
 		else if( nodeName == "subsector" ){
-			tempSubSector = new subsector(); // memory leak
+			tempSubSector = new subsector();
 			tempSubSector->XMLParse( curr );
 			subsec.push_back( tempSubSector );
 		}	
 	}
 	nosubsec = subsec.size();
-	// resize vectors not read in
-	const Modeltime* modeltime = scenario.getModeltime();
-	const int maxper = modeltime->getmaxper();
-	price_norm.resize( maxper ); // sector price normalized to base year
-	pe_cons.resize( maxper ); // sectoral primary energy consumption
-	input.resize( maxper ); // sector total energy consumption
-	// output.resize( maxper ); // total amount of final output from sector
-	carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
-	summary.resize( maxper ); // object containing summaries // memory leak
 }
 
 //! Write object to xml output stream.
 void sector::toXML( ostream& out ) const {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 
 	// write the beginning tag.
 	Tabs::writeTabs( out );
@@ -210,7 +216,7 @@ void sector::toDebugXML( const int period, ostream& out ) const {
 //! Create a market for the sector.
 void sector::setMarket( const string& regionName ) {
 	
-	Marketplace* marketplace = scenario.getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 	// name is resource name
     // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
 	
@@ -403,7 +409,7 @@ void sector::sumoutput(int per)
     where it is shared out (and subsequently passed to the technology level within each sub-sector
      to be shared out) */
 void sector::supply( const string regionName, const int per) {
-	Marketplace* marketplace = scenario.getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 
 	double mrkprice, mrkdmd;
     int i;
@@ -624,7 +630,7 @@ void sector::MCoutput_subsec( const string& regname )
 
 //! Write MiniCAM style sector output to database.
 void sector::MCoutput(const string& regname ) {
-	const Modeltime* modeltime = scenario.getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
 			   string uname,vector<double> dout);
