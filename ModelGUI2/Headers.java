@@ -43,9 +43,9 @@ public class Headers {
 		ArrayList parentTemp = new ArrayList();
 		for ( int i = 0; i < splitHeaders.length; i++ ) {
 			if(splitHeaders[0].equals("MAP")) {
-				System.out.println("Parsing map header "+splitHeaders[i]);
+			//	System.out.println("Parsing map header "+splitHeaders[i]);
 				if( i != 0) {
-					System.out.println("HERE");
+					//System.out.println("HERE");
 					parentArr.add(splitHeaders[i]);
 				}
 				else {
@@ -99,7 +99,6 @@ public class Headers {
 				//System.exit(0);
 			}
 			if ( child.startsWith( "+{" ) && (child.indexOf("=") == -1)){ // just attr
-				System.out.println("In headers, read attr");
 				child = child.substring( 2, child.length() );
 				stA = new StringTokenizer( child, "}", false);
 				firstArg = stA.nextToken(); // holds attr_name
@@ -187,7 +186,6 @@ public class Headers {
 	}
 
 	public int getNumCols() {
-		System.out.println("parentheadersize: "+parentArr.size());
 		return numCols;
 	}
 

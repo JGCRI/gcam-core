@@ -71,7 +71,6 @@ public class DOMTreeBuilder {
 	*/
 	public void setHeader(String headerIn) throws Exception {
 		if(headerIn.matches(".*MAP,.*")) {
-			System.out.println("Got a Map");
 			buildMap = true;
 		} else {
 			buildMap = false;
@@ -93,7 +92,7 @@ public class DOMTreeBuilder {
 		}
 		dataArr = data;
 		if (buildMap) {
-			System.out.println("Processing map");
+			//System.out.println("Processing map");
 			addToMap();
 		} else {
 			makeTree(rootElement, docName);
@@ -132,27 +131,34 @@ public class DOMTreeBuilder {
 
 	private void addToMap() {
 		HashMap tempMap;
-		System.out.println(head.getNumCols());
+		//System.out.println(head.getNumCols());
 		if(lookUpMap.containsKey(head.getParentHeader(0))) {
 			tempMap = (HashMap)lookUpMap.get(head.getParentHeader(0));
 		} else {
 			tempMap = new HashMap();
 		}
-		tempMap.put(dataArr.get(0),dataArr.get(1));
+		if (dataArr.size() == 3) {
+			tempMap.put((String)dataArr.get(0) + "&&" + (String)dataArr.get(1),dataArr.get(2));
+		} else {
+			tempMap.put(dataArr.get(0),dataArr.get(1));
+		}
 		for(int i = 0; i < head.getNumCols(); i++) {
-			System.out.println("Adding: "+head.getParentHeader(i)+" -> "+dataArr.get(0)+" -> "+dataArr.get(1));
+			//System.out.println("Adding: "+head.getParentHeader(i)+" -> "+dataArr.get(0)+" -> "+dataArr.get(1));
 			lookUpMap.put(head.getParentHeader(i),tempMap);
 		}
 	}
 
-	private String convertData(String elementName, String dataRead) {
+	private String convertData(String elementName, String dataRead, Element parent, String attrName) {
 		Object ret = lookUpMap.get(elementName);
 		if(ret == null) {
 			return dataRead;
 		}
-		ret = ((HashMap)ret).get(dataRead);
+		ret = ((HashMap)ret).get(attrName+dataRead);
 		if(ret == null) {
-			return dataRead;
+			ret = ((HashMap)lookUpMap.get(elementName)).get(parent.getAttribute(attrName)+"&&"+attrName+dataRead);
+			if (ret == null ) {
+				return dataRead;
+			}
 		}
 		return (String)ret;
 	}
@@ -307,7 +313,7 @@ public class DOMTreeBuilder {
 						retVal = head.getAttribute(head.getParentHeader(currPos)+"\\"+chName+"\\"+attrStr);
 					//}
 					if ( retVal instanceof Integer ) {
-                                		tempNode.setAttribute(attrStr,convertData(chName, (String)dataArr.get(((Integer)retVal).intValue())));
+                                		tempNode.setAttribute(attrStr,convertData(chName, (String)dataArr.get(((Integer)retVal).intValue()), (Element)parent, attrStr));
 					}
 					else if ( retVal instanceof String) {
 						tempNode.setAttribute(attrStr,(String)retVal);
@@ -331,7 +337,7 @@ public class DOMTreeBuilder {
 								if ( (retInt+1) > dataArr.size()) {
 									System.out.println("FAILED: dataArr.get(retInt), array bounds exceeded "+(retInt+1)+" > "+dataArr.size());
 								}
-								tempText = doc.createTextNode(convertData(chName, (String)dataArr.get(retInt)));
+								tempText = doc.createTextNode(convertData(chName, (String)dataArr.get(retInt), (Element)parent, ""));
 								tempNode.appendChild(tempText);
 							}
 							//System.out.println("About to use "+chName);
@@ -355,7 +361,7 @@ public class DOMTreeBuilder {
 					if ( (retInt+1) > dataArr.size()) {
 						System.out.println("FAILED: dataArr.get(retInt), array bounds exceeded "+(retInt+1)+" > "+dataArr.size());
 					}
-                               		tempText = doc.createTextNode(convertData(chName, (String)dataArr.get(retInt)));
+                               		tempText = doc.createTextNode(convertData(chName, (String)dataArr.get(retInt), (Element)parent, ""));
                                 	tempNode.appendChild(tempText);
                         	}
 				//System.out.println("About to use "+chName);
@@ -416,7 +422,7 @@ public class DOMTreeBuilder {
 				tempNode.setAttribute(attrStr.substring(0,retInt), attrStr.substring(retInt+1, attrStr.length()));
 			}
 			else {
-				System.out.println("How did i get here");
+				//System.out.println("How did i get here");
 				tempNode = doc.createElement(parentName);
 				if (isExt) {
 					parentName = '@' + parentName;
