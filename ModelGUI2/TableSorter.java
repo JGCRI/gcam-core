@@ -361,8 +361,10 @@ public class TableSorter extends AbstractTableModel {
                 fireTableChanged(new TableModelEvent(TableSorter.this, 
                                                      viewIndex, viewIndex, 
                                                      column, e.getType()));
+
                 return;
             }
+	    fireTableChanged(e); // add this so that i can know that the data has changed
 
             // Something has happened to the data that may have invalidated the row order. 
             clearSortingState();

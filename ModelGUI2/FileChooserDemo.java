@@ -605,11 +605,16 @@ public class FileChooserDemo extends JFrame
   // ********* newly added **************
   // for the tablechangedmodel listener
   public void tableChanged(TableModelEvent e) {
+	  System.out.println("Source: "+e.getSource());
+	  if(e.getSource().toString().matches("TableSorter.*")) { // Ignore table sorting events
+		  System.out.println("Ignoring table sorting");
+		  return;
+	  }
 	  int row = e.getFirstRow();
 	  int column = e.getColumn();
 	  //DataTableModel model = (DataTableModel)e.getSource();
 	  String columnName = tableModel.getColumnName(column);
-	  Object newValue = tableModel.getValueAtNew(row, column);
+	  Object newValue = tableModel.getValueAt(row, column);
 
 	  //System.out.println("printing out -- data: " + data);
 	  System.out.println("row is: " + row + " and col is: " + column);
@@ -626,9 +631,9 @@ public class FileChooserDemo extends JFrame
 	  NodeList children = parent.getChildNodes();
 	  for(int i=0; i < children.getLength(); i++){
 		if ( children.item(i).getNodeType() == Element.TEXT_NODE ){
-			children.item(i).setNodeValue( (String)newValue );
-			System.out.println("setting selection path!!!!");
-			jtree.expandPath(pathAltered.pathByAddingChild( ((DOMmodel)jtree.getModel()).getAdapterNode(children.item(i))) );
+			//children.item(i).setNodeValue( (String)newValue );
+			children.item(i).setNodeValue( newValue.toString() );
+			jtree.setSelectionPath(pathAltered.pathByAddingChild( ((DOMmodel)jtree.getModel()).getAdapterNode(children.item(i))) );
 		}
 	  }
   }

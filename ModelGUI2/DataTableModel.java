@@ -53,20 +53,19 @@ public class DataTableModel extends AbstractTableModel {
 
 	public Object getValueAt(int row, int column) {
 		Object ret = ((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).get(column);
-		return ret;
-		/*
+		//return ret;
 		if (checkClass(ret) == Double.class) {
 			return new Double((String)ret);
 		}
 		return ret;
-		*/
 		//return ((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).get(column);
 	}
 
-	// ** NEW!!! **
+	/*
 	public Object getValueAtNew(int row, int column){
 		return ((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).get(column);
 	}
+	*/
 
 	/*
 	public class DoubleType extends Double {
@@ -88,7 +87,7 @@ public class DataTableModel extends AbstractTableModel {
 
 	public static Class checkClass(Object obj) {
 		try {
-			new Double((String)obj);
+			new Double(obj.toString());
 		} catch (NumberFormatException e) {
 			return String.class;
 		}
@@ -96,8 +95,8 @@ public class DataTableModel extends AbstractTableModel {
 	}
 
 	public Class getColumnClass(int column) {
-		return String.class;
-		//return checkClass((((Vector)rows.get(0)).get(column)));
+		//return String.class;
+		return checkClass((((Vector)rows.get(0)).get(column)));
 	}
 
 	private int currFilter;
