@@ -357,25 +357,26 @@ void SolverInfoSet::printMarketInfo( const string& comment, const double worldCa
     const static string monitorMarketGoodName = conf->getString( "monitorMktGood" );
 
     if( monitorMarketGoodName != "" ){
-        const static string monitorMktGood = conf->getString( "monitorMktName" ) + monitorMarketGoodName;
-        for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
-            if ( iter->getName() == monitorMktGood ) {
-                cout << "Iter: " << worldCalcCount << ".  "; 
-                iter->printTrackED( false );
-                cout << "  << at " << comment << endl;
-                return;
-            }
-        } // end for loop
+      const static string monitorMktGood = conf->getString( "monitorMktName" ) + monitorMarketGoodName;
+      for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
+         if ( iter->getName() == monitorMktGood ) {
+            cout << "Iter: " << worldCalcCount << ".  "; 
+            iter->printTrackED( false );
+            cout << "  << at " << comment << endl;
+            return;
+         }
+      } // end for loop
 
-        for( ConstSetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
-            if ( iter->getName() == monitorMktGood ) {
-                cout << "Iter: " << worldCalcCount << ".  "; 
-                iter->printTrackED();
-                cout << "  << at " << comment << endl;
-                return;
-            }
-        } // end for loop
-    }
+      for( ConstSetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
+         if ( iter->getName() == monitorMktGood ) {
+            cout << "Iter: " << worldCalcCount << ".  "; 
+            iter->printTrackED( false );
+            cout << "  << at " << comment << endl;
+            return;
+         }
+      } // end for loop
+         
+   } // end monitorMktGood != "" check
 }
 
 /*! \brief Find and print supply-demand curves for unsolved markets.

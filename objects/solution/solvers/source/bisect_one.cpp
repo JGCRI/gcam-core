@@ -73,7 +73,7 @@ SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, co
     // addIteration( worstSol.getName(), worstSol.getRelativeED( edSolutionFloor ) );
     worstSol.expandBracket( 1.025 ); // I'm not sure about this.
     do {
-        solverSet.printMarketInfo( "Begin Bisect One", calcCounter->getPeriodCount() );
+        solverSet.printMarketInfo( "Bisect "+worstSol.getName(), calcCounter->getPeriodCount() );
         
         // Move the left bracket in if Supply > Demand
         if ( worstSol.getED() < 0 ) {

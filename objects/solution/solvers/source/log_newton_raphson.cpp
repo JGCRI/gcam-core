@@ -109,7 +109,6 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     // addIteration( worstSol.getName(), worstSol.getRelativeED( edSolutionFloor ) );
 
     do {
-        solverSet.printMarketInfo( "Begin logNR", calcCounter->getPeriodCount() );
 
         // Declare matrices here due to resize bug.
         Matrix JF( solverSet.getNumSolvable(), solverSet.getNumSolvable() );
@@ -191,7 +190,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
                 }
             }
         }
-
+        
         // Call world.calc and update supplies and demands. 
         solverSet.updateToMarkets();
         marketplace->nullSuppliesAndDemands( period );
@@ -202,6 +201,8 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
         // Add to the iteration list.
         SolverInfo& currWorstSol = solverSet.getWorstSolverInfo( edSolutionFloor );
         addIteration( currWorstSol.getName(), currWorstSol.getRelativeED( edSolutionFloor ) );
+
+        solverSet.printMarketInfo( "NR routine ", calcCounter->getPeriodCount() );
 
         // Debugging output.
         if ( trackED ) {

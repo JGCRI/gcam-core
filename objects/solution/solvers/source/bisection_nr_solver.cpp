@@ -120,7 +120,9 @@ bool BisectionNRSolver::solve( const int period ) {
 
         // Check if the solution is bracketed.
         if ( !sol.isAllBracketed() ) {
+            sol.printMarketInfo( "Begin Bracketing", calcCounter.getPeriodCount() );
             SolverLibrary::bracket( marketplace, world, BRACKET_INTERVAL, sol, period );
+            sol.printMarketInfo( "End Bracketing", calcCounter.getPeriodCount() );
             // If its not all bracketed, jump to the top of the loop.
             if ( !sol.isAllBracketed() ){
                 continue;

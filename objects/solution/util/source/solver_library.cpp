@@ -342,7 +342,7 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
 
     // sjs -- turn off calibration to let bracketing operate faster. Let calibrations happen in Bisection
     world->turnCalibrationsOff();    
-
+    
     // Loop is done at least once.
     do {        
         // Iterate through each market.
