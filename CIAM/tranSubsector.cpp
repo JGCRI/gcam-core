@@ -132,7 +132,7 @@ void tranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
                     if (fillout) {
                         // will not do if period is already last period or maxperiod
                         for (int i = thisPeriod+1; i < maxperiod; i++) {
-                            techVec[ i ] = techVec[ thisPeriod ];
+                            techVec[ i ] = new tranTechnology( *tempTech );
                             techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
                         }
                     }
