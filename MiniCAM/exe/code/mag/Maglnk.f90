@@ -290,7 +290,7 @@ Subroutine WriteMagExtra()
 	  
 	  OPEN (45,FILE='..\magTAR\QEXTRA.IN')
 	  WRITE(45,'(1X,I5)') 1
-	  WRITE(45,'(1X,2I5)') StartYr, EndYr
+	  WRITE(45,'(1X,2I5)') StartYr, 2250
 	  
 	  DO II = StartYr,EndYr
 	     IF ( II .LT. SO2Hist(1,1) ) THEN
@@ -342,6 +342,11 @@ Subroutine WriteMagExtra()
 
 		 END IF
       END DO
+ 
+ 	  DO II = EndYr+1,2250
+	     WRITE(45,'(1X,I5,F10.4)') II, BCOCFValue
+      END DO
+ 
       CLOSE(45)
 
 RETURN

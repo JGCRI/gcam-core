@@ -135,7 +135,7 @@
 	       ifPopRate = .false.                                       !      hmp
              DO L=1,NL
                 READ (IUNIT,*) IDUM, (ZLM(L,M),M=0,NM) 
-             END DO
+            END DO
          CASE(7)
 !      ---------------------------------------------
 !      --  READ IN BASE GNP                       --
@@ -884,7 +884,7 @@
 !     read in hydrogen production costs for "new" H2 technologies
 !     2) NON-energy input ($/GJ) 
       CASE(113)
-	   DO I=NNH2 + (NNH2-NH2)+1,NNH2 + (NNH2-NH2) +NH2_New	! sjs -- 08/02; add inputs for new H2 technologies
+	   DO I=NNH2+1,NNH2 +NH2_New	! sjs -- 08/02; add inputs for new H2 technologies
 	          READ(IUNIT,*)IDUM,(HHILM(I,M), M=1,NM)
 	   END DO
 

@@ -85,6 +85,7 @@
 
       IF (M.GE.2) THEN	! Makes GDP_ppp and GDP_mkt equal at $15,000 per cap ($1990)
         Crosspt = 0.015
+		
 		PPPDELTA = LOG(PPPCONV(L)) / LOG(((GNPFLM(L,2)/ZLM(L,2)) / Crosspt)) ! Corrected. Needs to be 1990 base GDP/cap, not 1975
 		PPPDCVRT = ((GNPFLM(L,M)/ZLM(L,M)) / Crosspt) ** PPPDELTA
 
