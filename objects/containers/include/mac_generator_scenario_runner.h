@@ -38,6 +38,7 @@ public:
 private:
     double mGlobalCost;
     double mGlobalDiscountedCost;
+    bool mRanCosts;
     unsigned int mNumPoints;
     std::string mGhgName;
     std::auto_ptr<ScenarioRunner> mSingleScenario;

@@ -49,6 +49,7 @@ MACGeneratorScenarioRunner::MACGeneratorScenarioRunner( const string aGhgName, c
     mGlobalDiscountedCost = 0;
     mNumPoints = aNumPoints;
     mSingleScenario.reset( new SingleScenarioRunner() );
+    mRanCosts = false;
 
     // Check to make sure calibration is off.
     if( Configuration::getInstance()->getBool( "debugChecking" ) && Configuration::getInstance()->getBool( "CalibrationActive" ) ){
@@ -126,6 +127,17 @@ bool MACGeneratorScenarioRunner::runScenario( Timer& aTimer ) {
 * \author Josh Lurz
 */
 bool MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
+    // TODO: Find a better way to do this taking into account different carbon policies in 
+    // different regions. 
+    // If there is no policy market, the model will not create cost curves and 
+    // will leave mRanCosts as false. This will prevent the cost curves from printing.
+    if( !scenario->getMarketplace()->doesMarketExist( mGhgName, "USA", 1 ) ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Skipping cost curve calculations for non-policy model run." << endl;
+        return true;
+    }
+
     // Set the size of the emissions curve vectors to the number of trials plus 1 for the base.
     mEmissionsQCurves.resize( mNumPoints + 1 );
     mEmissionsTCurves.resize( mNumPoints + 1 );
@@ -144,6 +156,7 @@ bool MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     createRegionalCostCurves();
 
     // Return whether all trials completed successfully.
+    mRanCosts = true;
     return success;
 }
 
@@ -281,6 +294,10 @@ void MACGeneratorScenarioRunner::createRegionalCostCurves() {
 
 //! Print the output.
 void MACGeneratorScenarioRunner::printOutput( Timer& timer, const bool aCloseDB ) const {
+    // Don't try to print output if the scenarios weren't ran.
+    if( !mRanCosts ){
+        return;
+    }
     // Database function definition. 
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
@@ -320,6 +337,8 @@ void MACGeneratorScenarioRunner::printOutput( Timer& timer, const bool aCloseDB 
 	
     XMLWriteOpeningTag( "RegionalUndiscountedCosts", *ccOut, &tabs );
     // Write out undiscounted costs by region.
+    tempOutVec.clear();
+    tempOutVec.resize( maxPeriod );
     for( CRegionalCostsIterator iter = mRegionalCosts.begin(); iter != mRegionalCosts.end(); iter++ ){
         XMLWriteElement( iter->second, "UndiscountedCost", *ccOut, &tabs, 0, iter->first );
 	    // regional total cost of policy
@@ -330,6 +349,8 @@ void MACGeneratorScenarioRunner::printOutput( Timer& timer, const bool aCloseDB 
     // End of writing undiscounted costs by region.
      
     // Write out discounted costs by region.
+    tempOutVec.clear();
+    tempOutVec.resize( maxPeriod );
 	XMLWriteOpeningTag( "RegionalDiscountedCosts", *ccOut, &tabs );
     typedef map<const string,double>::const_iterator constDoubleMapIter;
     for( constDoubleMapIter iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
