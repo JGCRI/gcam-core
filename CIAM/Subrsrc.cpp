@@ -75,7 +75,7 @@ void subrsrc::XMLParse( const DOMNode* node )
 	name = XMLHelper<string>::getAttrString( node, "name" );
 	
 	#if ( _DEBUG )
-		cout << "\t\tSubResource name set as " << name << endl;
+		// cout << "\t\tSubResource name set as " << name << endl;
 	#endif
 	
 	// get all child nodes.

@@ -100,7 +100,7 @@ void subsector::XMLParse( const DOMNode* node )
 	name = XMLHelper<string>::getAttrString( node, "name" );
 
 	#if( _DEBUG )
-		cout << "\t\tSubSector name set as " << name << endl;
+		// cout << "\t\tSubSector name set as " << name << endl;
 	#endif
 
 	// get all child nodes.
