@@ -20,6 +20,7 @@ using namespace xercesc;
 // Forward declarations
 class subsector;
 class Summary;
+class Emcoef_ind;
 
 /*! 
 * \ingroup CIAM
@@ -83,7 +84,7 @@ public:
     double getCalOutput(int per) const; // returns sector output 
     double showprice(int per); // returns sector aggregate price
     void emission(int per); // sum subsector emissions
-    void indemission(int per); // sum subsector indirect emissions
+    void indemission( const int per, const vector<Emcoef_ind>& emcoef_ind ); // sum subsector indirect emissions
     double showpe_cons(int per); // return sector primary energy consumption
     void suminput(int per); // sums subsector primary and final energy consumption
     double showinput(int per); // return sector energy consumption

@@ -1047,9 +1047,9 @@ void Region::emiss_ind(int per)
    int i;
    // calculate indirect GHG emissions
    for (i=0;i<nossec;i++)
-      supplysector[i]->indemission(per);
+      supplysector[i]->indemission(per, emcoef_ind );
    for (i=0;i<nodsec;i++) 
-      demandsector[i]->indemission(per);
+      demandsector[i]->indemission(per, emcoef_ind );
 }
 
 //! Set regional GHG emissions as market demand.

@@ -28,6 +28,7 @@
 #include "Marketplace.h"
 #include "Configuration.h"
 #include "Summary.h"
+#include "Emcoef_ind.h"
 
 using namespace std;
 
@@ -768,11 +769,11 @@ void sector::emission(int per)
 }
 
 //! Calculate indirect GHG emissions for each sector from subsectors.
-void sector::indemission(int per)
+void sector::indemission( const int per, const vector<Emcoef_ind>& emcoef_ind )
 {
     summary[per].clearemindmap(); // clear emissions map
     for (int i=0;i<nosubsec;i++) {
-        subsec[i]->indemission(per);
+        subsec[i]->indemission( per, emcoef_ind );
         summary[per].updateemindmap(subsec[i]->getemindmap(per));
     }
 }
