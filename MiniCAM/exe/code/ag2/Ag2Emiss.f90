@@ -215,6 +215,9 @@ END SUBROUTINE SoilDecay
 	
 	If (DeforBioUse .eq. 0) UseFract = 0
 
+    UseFract = UseFract + loggedFract(L)
+	UseFract = min(UseFract,maxUse)
+
 	deforBioUseFract = UseFract
 	
 	if (L .eq. 100) then

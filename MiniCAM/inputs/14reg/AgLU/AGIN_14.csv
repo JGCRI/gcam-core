@@ -975,5 +975,25 @@ mc14regid,gdppercap_point,mc14regname
 13,10,Korea
 14,10,India
 
+Fraction of usable biomass logged,,
+INPUT_TABLE,,
+Variable ID,,
+694,,
 
-EoF
+mc14regid,loggedFract,mc14regname
+1,0.15,USA
+2,0.15,Canada
+3,0.15,OECD90 Europe
+4,0.15,Japan
+5,0.15,Aus & NZ
+6,0.15,FSU
+7,0.15,China/CPA
+8,0.15,MiddleEast
+9,0.15,Africa
+10,0.15,Latin America
+11,0.15,S&E Asia
+12,0.15,EEU
+13,0.15,Korea
+14,0.15,India
+
+EoF,,
