@@ -27,6 +27,7 @@ using namespace xercesc;
 extern Scenario* scenario;
 // static initialize.
 const string GDP::XML_NAME = "GDP";
+const BASE_PPP_YEAR = 1990;   // Base year for PPP conversion. PPP values are not known before about this time.
 
 //! Default Constructor
 GDP::GDP() {
@@ -41,7 +42,6 @@ GDP::GDP() {
 	gdpValue.resize( maxper );
 	gdpPerCapita.resize( maxper );
 	gdpValueAdjusted.resize( maxper );
-	gdpValueAdjustedPPP.resize( maxper );
 	gdpPerCapitaAdjusted.resize( maxper );
 	gdpPerCapitaAdjustedPPP.resize( maxper );
 	gdpAdjustedFlag.resize( maxper, false );
@@ -49,7 +49,8 @@ GDP::GDP() {
 
 	EnergyGDPElas = 0;
 	PPPConversionFact = 1;
-	VariablePPPConvert = false;
+   PPPDelta = 0;
+	constRatio = false;
 }
 
 //! Destructor
@@ -80,8 +81,10 @@ void GDP::XMLParse( const DOMNode* node ){
 			continue;
 		}
 		// GDP to PPP conversion factor
+      // Note that variable conversion attribute defaults to true
 		else if ( nodeName == "PPPConvert" ){
 			PPPConversionFact = XMLHelper<double>::getValue( curr );
+         constRatio = XMLHelper<bool>::getAttr( curr, "constRatio" );
 		}
 		// base-year GDP
 		else if ( nodeName == "baseGDP" ){
@@ -113,7 +116,7 @@ void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag( getXMLName(), out, tabs );
 
 	// GDP to PPP conversion factor
-	XMLWriteElementCheckDefault( PPPConversionFact, "PPPConvert", out, tabs, 0.0 );
+	XMLWriteElementAndAttribute( PPPConversionFact, "PPPConvert", out, tabs, constRatio, "constRatio" );
 
 	// Write out base-year GDP
 	XMLWriteElement( baseGDP, "baseGDP", out, tabs);
@@ -170,11 +173,6 @@ void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	// write out MER-based GDP
 	for(int m = 0; m < static_cast<int>( gdpValueAdjusted.size() ); m++ ){
 		XMLWriteElementCheckDefault( gdpValueAdjusted[ m ], "GDP(MER)", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
-	}
-
-	// write out PPP-based GDP
-	for(int m = 0; m < static_cast<int>( gdpValueAdjusted.size() ); m++ ){
-		XMLWriteElementCheckDefault( gdpValueAdjustedPPP[ m ], "GDP(PPP)", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
 	}
 
 	XMLWriteClosingTag( getXMLName(), out, tabs );
@@ -251,25 +249,6 @@ void GDP::writeBackCalibratedValues( const string& regionName, const int period 
 	}
 }
 
-//! return labor productivity
-double GDP::getLaborProdGR( const int per ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
-	return laborProdGrowthRate[modeltime->getmod_to_pop(per)];
-}
-
-//! Return the  total labor force productivity. 
-double GDP::getTotalLaborProductivity( const int period ) const {
-
-	const Modeltime* modeltime = scenario->getModeltime();
-	return pow( 1 + laborProdGrowthRate[ modeltime->getmod_to_pop( period ) ], modeltime->gettimestep( period ) );
-}
-
-//! return the labor force (actual working)
-double GDP::getLaborForce( const int per ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
-	return laborForce[ modeltime->getmod_to_pop( per ) ];
-}
-
 //! Write GDP info to text file
 void GDP::csvOutputFile( const string& regionName ) const {
    const Modeltime* modeltime = scenario->getModeltime();
@@ -288,7 +267,8 @@ void GDP::csvOutputFile( const string& regionName ) const {
 	
 	// write gdp and adjusted gdp for region
 	fileoutput3(regionName," "," "," ","GDP","Mil90US$",gdpValueAdjusted);
-	fileoutput3(regionName," "," "," ","GDPperCap","thousand90US$",gdpPerCapita);
+	fileoutput3(regionName," "," "," ","GDPperCap","thousand90US$",gdpPerCapitaAdjusted);
+	fileoutput3(regionName," "," "," ","PPPperCap","thousand90US$",gdpPerCapitaAdjustedPPP);
 }
 
 //! MiniCAM output to file
@@ -309,9 +289,9 @@ void GDP::dbOutput( const string& regionName ) const {
 
 	// write gdp and adjusted gdp for region
 	dboutput4(regionName,"General","GDP90$","GDP(90mer)","Mil90US$", gdpValueAdjusted );
-	dboutput4(regionName,"General","GDP90$","GDP(90ppp)","Mil90US$", gdpValueAdjustedPPP );
 	dboutput4(regionName,"General","GDP90$","GDPAprox(90mer)","Mil90US$", gdpValue );
-	dboutput4(regionName,"General","GDP","perCap","thousand90US$", gdpPerCapita );
+	dboutput4(regionName,"General","GDP","perCap","thousand90US$", gdpPerCapitaAdjusted );
+	dboutput4(regionName,"General","GDP90$","perCAP_PPP","thousand90US$", gdpPerCapitaAdjustedPPP );
 }
 
 /*! Calculate innitial regional gdps.
@@ -353,12 +333,15 @@ void GDP::initialGDPcalc( const int period, const double population ) {
 
 	// gdp period capita 
 	// gdpValue is in millions, population in 1000's, so result is in 1000's of dollars per capita
-	gdpPerCapita[ period ] = gdpValue[ period ] / population;
-	gdpPerCapitaAdjusted[ period ] = gdpPerCapita[ period ]; // Temporary value so that if requested a real value is returned (with error warning)
-    gdpPerCapitaAdjustedPPP[ period ] = gdpValueAdjustedPPP[ period ] / population;
+	gdpPerCapita[ period ] = gdpValue[ period ] / population;   
+   
+   // Temporary values so that if requested a real value is returned (with error warning)
+	gdpPerCapitaAdjusted[ period ] = gdpPerCapita[ period ]; 
+   gdpPerCapitaAdjustedPPP[ period ] = gdpValue[ period ] / population;
 }
 
 /*! Adjust regional gdp for energy service price effect
+*  Also calculates PPP-based GDP per capita
 *  Note that GDP is only adjusted for periods after 1990. See notes for method initialGDPcalc().
 * 
 * \author Steve Smith, Sonny Kim, Josh Lurz(?),
@@ -373,55 +356,59 @@ void GDP::adjustGDP( const int period, const double priceRatio ) {
 		try {
 			gdpValueAdjusted[ period ] = gdpValue[ period ]*pow( priceRatio, EnergyGDPElas );
 			gdpPerCapitaAdjusted[ period ] = gdpPerCapita[ period ] * gdpValueAdjusted[ period ] / gdpValue[ period ];
-			calculatePPP( period, gdpPerCapitaAdjusted[ period ]);
 			gdpAdjustedFlag[ period ] = true;
 		} catch(...) {
 			cerr << "Error calculating gdpAdj in gdp.adjustGDP()"<<endl;
 		}
-	}
+   }
+   calculatePPP( period, gdpPerCapitaAdjusted[ period ]);
 }
 
 /*! Calculate GDP on a PPP basis
 * 
-* This routine performs a logarithmic conversion between exchange rate and PPP basis GDP. 
-* The values converge exponentially until the crossover point is reached, after which values are equal.  
+* This routine performs a logarithmic conversion between market exchange rate (MER) and PPP based GDP. 
+* This conversion simulates the process of a developing economy transforming to a market economy where
+* all sectors participate. This is, therefore, meant to account for the large MER/PPP differences between
+* developing and market economies, not the fairly small differences between OECD market economies.
+* In the base year (1990), values start at the PPP/MER ratio given as input data (taken from world bank or other
+* studies). PPP and MER GDP values then converge exponentially until the crossover point is reached, 
+* after which values are equal.  
 * See Smith et al. (2004), "Future SO2 Emissions" paper for a full description of the conversion.
 *
 * \author Steve Smith
 * \param period Model time period
-* \param marketGDPperCap GDP per capita (market basis)
+* \param marketGDPperCapAdj Adjusted GDP per capita (market basis)
 */
-void GDP::calculatePPP( const int period, const double marketGDPperCap ) {
+void GDP::calculatePPP( const int period, const double marketGDPperCapAdj ) {
 	const Modeltime* modeltime = scenario->getModeltime();
-	const double crossOverPoint = 15.0; // Point at which PPP and Market values are equal
-
-	// Don't do variable conversion if turned off for this region or if is before conversion data exist
-	if ( !VariablePPPConvert || ( period <= modeltime->getyr_to_per( 1990 ) ) ) {
-		gdpValueAdjustedPPP[ period ] = PPPConversionFact * gdpValueAdjusted[ period ] ;
+	const double CROSSOVER_POINT = 15.0; // Point at which PPP and Market values are equal ($15,000 per capita)
+ 
+	// Don't do variable conversion if turned off for this region or if is before conversion data exist (before 1990)
+   // Also don't do conversion is PPPConversionFact is < 1 since this is not defined!
+	if ( constRatio || ( period < modeltime->getyr_to_per( BASE_PPP_YEAR ) || ( PPPConversionFact < 1 ) ) ) {
+		gdpPerCapitaAdjustedPPP[ period ] = PPPConversionFact * marketGDPperCapAdj ;
 	} else {
 		// Only calculate this parameter in 1990 since won't change after that
-		if  ( period <= modeltime->getyr_to_per( 1990 ) )  {
+		if  ( period == modeltime->getyr_to_per( BASE_PPP_YEAR ) )  {
 			try { 
-				PPPDelta = log( PPPConversionFact ) / log( marketGDPperCap / crossOverPoint );
+				PPPDelta = log( PPPConversionFact ) / log( marketGDPperCapAdj / CROSSOVER_POINT );
 			} catch(...) {
 				cerr << "Error calculating PPPDelta. "<< "PPPConversionFact = "<< PPPConversionFact;
-				cerr << "; marketGDPperCap = "<< marketGDPperCap << endl;
+				cerr << "; marketGDPperCapAdj = "<< marketGDPperCapAdj << endl;
 			}
 		}
 
 		// Now do the conversion. 
-		// If GDP/cap is > crossover point then set equal.
-		if ( marketGDPperCap > crossOverPoint ) {
-			gdpValueAdjustedPPP[ period ] = gdpValueAdjusted[ period ] ;
-		}
-
-		double conversionFact;
-		try {
-			conversionFact =  pow( marketGDPperCap / crossOverPoint , PPPDelta );
-			gdpValueAdjustedPPP[ period ] = gdpValueAdjusted[ period ] * conversionFact;
-		} catch(...) {
-			cerr << "Error calculating PPP basis GDP in gdp.calculatePPP()" << endl;
-		}
+		if ( marketGDPperCapAdj > CROSSOVER_POINT ) { // If GDP/cap is > crossover point then set equal.
+			gdpPerCapitaAdjustedPPP[ period ] = marketGDPperCapAdj ;
+		} else {
+         try {
+            double conversionFact =  pow( marketGDPperCapAdj / CROSSOVER_POINT , PPPDelta );
+            gdpPerCapitaAdjustedPPP[ period ] = marketGDPperCapAdj * conversionFact;
+         } catch(...) {
+            cerr << "Error calculating PPP basis GDP in gdp.calculatePPP()" << endl;
+         }
+      }
 	}
 }
 
@@ -538,4 +525,22 @@ double GDP::getBestScaledGDPperCap( const int period ) const {
 	}
 }
 
+//! return labor productivity
+double GDP::getLaborProdGR( const int per ) const {
+	const Modeltime* modeltime = scenario->getModeltime();
+	return laborProdGrowthRate[modeltime->getmod_to_pop(per)];
+}
+
+//! Return the  total labor force productivity. 
+double GDP::getTotalLaborProductivity( const int period ) const {
+
+	const Modeltime* modeltime = scenario->getModeltime();
+	return pow( 1 + laborProdGrowthRate[ modeltime->getmod_to_pop( period ) ], modeltime->gettimestep( period ) );
+}
+
+//! return the labor force (actual working)
+double GDP::getLaborForce( const int per ) const {
+	const Modeltime* modeltime = scenario->getModeltime();
+	return laborForce[ modeltime->getmod_to_pop( per ) ];
+}
 
