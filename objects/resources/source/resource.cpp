@@ -425,14 +425,26 @@ const string DepletableResource::getXMLType() const {
     return "depresource";
     }
 
-//! Performs XML read-in that is specific to this derived class
+//! 
 /*! In this case, this read-in just substantiates the appropriate type of subResource */
+/*! \brief Performs XML read-in that is specific to this derived class
+*
+*  this case, this read-in just instantiates the appropriate type of subResource
+*
+* \author Steve Smith
+* \param node pointer to the current node in the XML input tree
+* \param nodeName name of the current node 
+* \todo better to change the error message to boolean that is returned so that the base class can parse more objects if necessary
+*/
 void DepletableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {   
     SubResource* tempSubResource = 0;
 
     if( nodeName == "subresource" ){
         parseContainerNode( node, subResource, subResourceNameMap, new SubDepletableResource() );
         }
+		else {
+			cout << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
+		}
     }
 
 // *******************************************************************
@@ -448,14 +460,27 @@ const string FixedResource::getXMLType() const {
     return "fixedresource";
     }
 
-//! Performs XML read-in that is specific to this derived class
+//! 
 /*! In this case, this read-in just substantiates the appropriate type of subResource */
+/*! \brief Performs XML read-in that is specific to this derived class
+*
+*  this case, this read-in just instantiates the appropriate type of subResource
+*
+* \author Steve Smith
+* \param node pointer to the current node in the XML input tree
+* \param nodeName name of the current node 
+* \todo better to change the error message to boolean that is returned so that the base class can parse more objects if necessary
+*/
 void FixedResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
     SubResource* tempSubResource = 0;
     if( nodeName == "subresource" ){
         parseContainerNode( node, subResource, subResourceNameMap, new SubFixedResource() );
-        }
-    }
+	  }
+		else {
+			cout << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
+		}
+	}
+	
 // *******************************************************************
 // RenewableResource Class
 // *******************************************************************
@@ -469,8 +494,17 @@ const string RenewableResource::getXMLType() const {
     return "renewresource";
     }
 
-//! Performs XML read-in that is specific to this derived class
+//! 
 /*! In this case, this read-in just substantiates the appropriate type of subResource */
+/*! \brief Performs XML read-in that is specific to this derived class
+*
+*  this case, this read-in just instantiates the appropriate type of subResource
+*
+* \author Steve Smith
+* \param node pointer to the current node in the XML input tree
+* \param nodeName name of the current node 
+* \todo better to change the error message to boolean that is returned so that the base class can parse more objects if necessary
+*/
 void RenewableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
     if( nodeName == "subresource" ){
         parseContainerNode( node, subResource, subResourceNameMap, new SubRenewableResource() );
