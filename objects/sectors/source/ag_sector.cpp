@@ -338,19 +338,24 @@ void AgSector::setMarket( const string& regionName ) {
 	bool setAgBioMarket = Configuration::getInstance()->getBool( "agBioMarketSet" );
 	 
    Marketplace* marketplace = scenario->getMarketplace();
-   
+   const Modeltime* modeltime = scenario->getModeltime();
    // Add all global markets.
    for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end() - 1; i++ ) {
 		// check if should set ag bio market
 		if ( ( *i != "biomass") || setAgBioMarket ) {
 			marketplace->createMarket( regionName, "global", *i, Marketplace::NORMAL );
-			marketplace->setMarketToSolve ( *i, regionName );
+            for( int per = 1; per < modeltime->getmaxper(); ++per ){
+                marketplace->setMarketToSolve ( *i, regionName, per );
+            }
 		}
    }
    
    // Add the regional markets.
    marketplace->createMarket( regionName, regionName, marketNameVector[ 6 ], Marketplace::NORMAL );
-   marketplace->setMarketToSolve ( marketNameVector[ 6 ], regionName );
+   for( int per = 1; per < modeltime->getmaxper(); ++per ){
+      marketplace->setMarketToSolve ( marketNameVector[ 6 ], regionName, per );           
+   }
+
    // Initialize prices at a later point.
 }
 
