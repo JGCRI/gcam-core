@@ -4,7 +4,7 @@
 	<summary>"WRE 550 Scenario"</summary>
 	<world>
 		<region name="USA">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975">0</constraint>
 				<constraint year="1990">0</constraint>
@@ -15,85 +15,85 @@
 				<constraint year="2065">8540</constraint>
 				<constraint year="2080">7560</constraint>
 				<constraint year="2095">6552</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="Canada">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="Western Europe">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="Japan">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="Australia_NZ">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="Former Soviet Union">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="China">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="Middle East">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="Africa">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="Latin America">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="Southeast Asia">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="Eastern Europe">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="Korea">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 		<region name="India">
-			<ghgMarket name="CO2">
+			<ghgpolicy name="CO2">
 				<market>global</market>
 				<constraint year="1975" fillout="1">0</constraint>
-			</ghgMarket>
+			</ghgpolicy>
 		</region>
 	</world>
 </scenario>

@@ -127,7 +127,7 @@ void Region::XMLParse( const DOMNode* node ){
     Sector* tempSupSector = 0;
     DemandSector* tempDemSector = 0;
     tranSector* tempTranSector = 0;
-    ghg_mrk* tempGhgMrk = 0;
+    GHGPolicy* tempGhgMrk = 0;
     map<string,int>::const_iterator resourceIter;
 
     const Modeltime* modeltime = scenario->getModeltime();
@@ -258,14 +258,14 @@ void Region::XMLParse( const DOMNode* node ){
                 }
             }
         }
-        else if( nodeName == "ghgMarket" ){
+        else if( nodeName == "ghgpolicy" ){
             map<string,int>::const_iterator ghgMarketIter = ghgMarketNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
             if( ghgMarketIter != ghgMarketNameMap.end() ) {
                 // ghg market already exists.
                 ghgMarket[ ghgMarketIter->second ]->XMLParse( curr );
             }
             else {
-                tempGhgMrk = new ghg_mrk();
+                tempGhgMrk = new GHGPolicy();
                 tempGhgMrk->XMLParse( curr );
                 ghgMarket.push_back( tempGhgMrk );
                 ghgMarketNameMap[ tempGhgMrk->getName() ] = static_cast<int>( ghgMarket.size() ) - 1;
@@ -460,7 +460,7 @@ void Region::toXML( ostream& out ) const {
         agSector->toXML( out );
     }
     // write out ghgMarket objects.
-    for( vector<ghg_mrk*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
+    for( vector<GHGPolicy*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
         ( *l )->toXML( out );
     }
 
@@ -582,7 +582,7 @@ void Region::toDebugXML( const int period, ostream& out ) const {
     // agSector->toDebugXML( period, out );
 
     // write out ghgMarket objects.
-    for( vector<ghg_mrk*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
+    for( vector<GHGPolicy*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
         ( *l )->toDebugXML( period, out );
     }
 

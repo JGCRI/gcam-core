@@ -21,7 +21,7 @@ class Resource;
 class Sector;
 class DemandSector;
 class AgSector;
-class ghg_mrk;
+class GHGPolicy;
 class Summary;
 class Emcoef_ind;
 class Logger;
@@ -58,7 +58,7 @@ private:
     std::vector<Sector*> supplySector; //!< vector of pointers to supply sector objects
     std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects
     AgSector* agSector; //!< Agricultural sector
-    std::vector<ghg_mrk*> ghgMarket; //!< vector of pointers to ghg market objects, container for constraints and emissions
+    std::vector<GHGPolicy*> ghgMarket; //!< vector of pointers to ghg market objects, container for constraints and emissions
     std::vector<double> iElasticity; //!< income elasticity
     std::vector<double> gnpDol; //!< regional gross national product in dollar value
     std::vector<double> calibrationGNPs; //!< GNPs to calibrate to

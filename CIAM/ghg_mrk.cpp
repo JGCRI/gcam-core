@@ -1,7 +1,7 @@
 /*! 
-* \file ghg_mrk.cpp
+* \file ghg_policy.cpp
 * \ingroup CIAM
-* \brief ghg_mrk class source file.
+* \brief GHGPolicy class source file.
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
@@ -27,7 +27,7 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default construtor.
-ghg_mrk::ghg_mrk(){
+GHGPolicy::GHGPolicy(){
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     constraint.resize( maxper );
@@ -35,7 +35,7 @@ ghg_mrk::ghg_mrk(){
 }
 
 //! Clear member variables.
-void ghg_mrk::clear(){
+void GHGPolicy::clear(){
     name = "";
     unit = "";
     market = "";
@@ -44,7 +44,7 @@ void ghg_mrk::clear(){
 }
 
 //! Create GHG markets
-void ghg_mrk::setMarket( const string& regionName ) {
+void GHGPolicy::setMarket( const string& regionName ) {
 
     Marketplace* marketplace = scenario->getMarketplace();
 
@@ -57,7 +57,7 @@ void ghg_mrk::setMarket( const string& regionName ) {
 
 
 //! Initializes data members from XML.
-void ghg_mrk::XMLParse( const DOMNode* node ){
+void GHGPolicy::XMLParse( const DOMNode* node ){
 
     const Modeltime* modeltime = scenario->getModeltime();
     DOMNodeList* nodeList;
@@ -72,7 +72,7 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
     name = XMLHelper<string>::getAttrString( node, "name" );
 
 #if( _DEBUG )
-    cout << "\t Greenhouse gas market name set as " << name << endl;
+    cout << "\t Greenhouse gas policy name set as " << name << endl;
 #endif
 
     // get all child nodes.
@@ -101,11 +101,11 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
 }
 
 //! Writes datamembers to datastream in XML format.
-void ghg_mrk::toXML( ostream& out ) const {
+void GHGPolicy::toXML( ostream& out ) const {
 
     // write the beginning tag.
     Tabs::writeTabs( out );
-    out << "<ghgmarket name=\"" << name << "\">" << endl;
+    out << "<ghgpolicy name=\"" << name << "\">" << endl;
 
     // increase the indent.
     Tabs::increaseIndent();
@@ -137,11 +137,11 @@ void ghg_mrk::toXML( ostream& out ) const {
 
     // write the closing tag.
     Tabs::writeTabs( out );
-    out << "</ghgmarket>" << endl;
+    out << "</ghgpolicy>" << endl;
 }
 
 //! Writes datamembers to datastream in XML format.
-void ghg_mrk::toDebugXML( const int period, ostream& out ) const {
+void GHGPolicy::toDebugXML( const int period, ostream& out ) const {
 
     // write the beginning tag.
     Tabs::writeTabs( out );
@@ -171,25 +171,25 @@ void ghg_mrk::toDebugXML( const int period, ostream& out ) const {
 }
 
 //! Set emissions.
-void ghg_mrk::setEmission( const double amount, const int per )
+void GHGPolicy::setEmission( const double amount, const int per )
 {
     emission[ per ] = amount; // emissions (tgC or MTC)
 }
 
 //! Show emission name.
-string ghg_mrk::getName() const
+string GHGPolicy::getName() const
 {
     return name;
 }
 
 //! Return emissions target.
-double ghg_mrk::getConstraint( const int per ) const
+double GHGPolicy::getConstraint( const int per ) const
 {
     return constraint[ per ]; // emissions constraint (tgC or MTC)
 }
 
 //! Return emissions.
-double ghg_mrk::getEmission( const int per ) const
+double GHGPolicy::getEmission( const int per ) const
 {
     return emission[ per ]; // emissions (tgC or MTC)
 
