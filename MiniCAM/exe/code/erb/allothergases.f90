@@ -784,7 +784,8 @@
 				END IF
 				OGCTRLS(gas, src, 2, L, M) = ABATECURVE_CTRL( &
 				  M,applytax, CCURV(gas,src,:,1,L), CCURV(gas,src,:,2,L),	 &
-				  NLEVCCURV(gas,src,L), IBZFIRST-1, IBZFIRST-1 + IBZSTEPS, 1, OGGWP(gas,M)/basegwp(gas), &
+				  NLEVCCURV(gas,src,L), &
+				  IBZFIRST-1, IBZFIRST-1 + IBZSTEPS, 1, OGGWP(gas,M)/basegwp(gas), &
 				  enprdelta, CCURVADJ(gas,src,1,L), CCURVADJ(gas,src,2,L) )
 			END IF
  

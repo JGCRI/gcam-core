@@ -51,7 +51,7 @@
 		IF (WHICHTARG(LG) .EQ. 2) TARGVAL = MAGICCCResults(2,MagInt)	! CO2 Concentration
 		IF (WHICHTARG(LG) .EQ. 3) TARGVAL = MAGICCCResults(1,MagInt)	! Gbl Mean temp
 		IF (WHICHTARG(LG) .EQ. 4) TARGVAL = MAXVAL(MAGICCCResults(2,1:MagInt))	! Max CO2 conc
-		IF (WHICHTARG(LG) .EQ. 5) TARGVAL = MAXVAL(MAGICCCResults(13,MagInt))	! Total Forcing
+		IF (WHICHTARG(LG) .EQ. 5) TARGVAL = MAGICCCResults(13,MagInt)	! Total Forcing
 
 		DIFF = (TARGVAL - CUMTARG(LG)) / CUMTARG(LG)
 		Write(*,'(a,2(f10.4,","),f10.4,"%")') &

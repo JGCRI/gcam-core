@@ -100,7 +100,7 @@
 
 
 	
-	REAL*8 FUNCTION ABATECURVE_CTRL (period,taxin,curvetaxin,curvereduxin,numpoints, &
+	REAL*8 FUNCTION ABATECURVE_CTRL (period,taxin,curvetaxin,curvereduxin, numpoints, &
 									 availpd,fullpd,phasein,gwpadjust,enprdelta,tc1,tc2)
 
 
@@ -118,10 +118,15 @@
 	Real*8 tempPeriod
 	REAL*8 curvetax(15), curveredux(15), shiftper, tax
 	REAL*8 curvetaxin(15), curvereduxin(15), gwpadjust, enprdelta, tc1, tc2, taxin
+	Real*8 maxredux
 
 	ABATECURVE_CTRL = 0.0d0  !initialize
 	curvetax = curvetaxin   ! avoid overwriting acutal curve data when doing tech change etc.
 	curveredux = curvereduxin
+    maxredux = 0
+	if (numpoints .gt. 0 ) THEN
+		maxredux = max(curvereduxin(numpoints-1), curvereduxin(numpoints-2))
+	end if
 
 	tax = taxin * gwpadjust  ! adjustment for alternate gwp's
 							 ! assumes cost curves always use 100 yr gwp
@@ -155,10 +160,13 @@
 
     ! new version, sjs 11/03. Make relative to 2005 and come in slower.
     ! The choice of 2.2 as the exponent makes a tc2 of 0.01 reduce the unmitagatable emissions by about 1/2 by 2095
+    ! Revised 4/09 so that tech change is applied propotionately along cost curve
     tempPeriod = 1d0*period
-    if (period .lt. 3) tempPeriod = 3d0    
-	curveredux = 1 - (1-tc2)**((tempPeriod**2.2-3**2.2)) * (1-curveredux)
-    
+    if (period .lt. 3) tempPeriod = 3d0 
+	if ( maxredux .gt. 0 ) THEN
+ 	   curveredux = 1 - (1-tc2 * ( curveredux / maxredux ))**&
+                   ((tempPeriod**2.2-3**2.2)) * (1-curveredux)
+	END IF
 	! the next part moves the curve up or down based on the "available" and "full"
 	! period.  In the available period the curve is moved up so that the 0 redux
 	! point coincides with the 0 tax point.  It moves linearly until the full period
