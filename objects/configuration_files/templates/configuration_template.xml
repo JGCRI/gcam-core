@@ -17,6 +17,7 @@
 		<Value name="supplyDemandOutputFileName">SDCurves.csv</Value>
 		<Value name="GHGInputFileName">../objects/magicc/inputs/gas.emk</Value>
 		<Value name="dependencyGraphName">DependencyGraph</Value>
+		<Value name="BatchFile">batch_file.xml</Value>
 	</Files>
 	<ScenarioComponents>
 		<Value name="WRE550">../objects/inputs/scenario_addons/wre/wre_550_addOn.xml</Value>
@@ -25,6 +26,7 @@
 		<!--Value name="scenarioName">B2WRE550New</Value-->
 	</Strings>
 	<Bools>
+		<Value name="BatchMode">1</Value>
 		<Value name="debugChecking">1</Value>
 		<!-- Turns on various internal checks -->
 		<Value name="timestamp">0</Value>
