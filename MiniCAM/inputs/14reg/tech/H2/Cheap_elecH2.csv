@@ -1,0 +1,45 @@
+,Cheeper electrolytic H2,,,,,,,,,,,,,,,,,,,,,
+
+
+"""GHILM"" is Total System Efficiency of Hydrogen Production -- THE RATIO OF TOTAL JOULES OF ENERGY IN TO JOULES OF HYDROGEN OUT.",,,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,,,
+Variable ID,,Data Source: See below,,,,,,,,,,,,,,,,,,,,
+103,,,,,,,,,,,,,,,,,,,,,,
+,,GHILM,,0.005,(efficiency improves at 0.5%/yr after 2005),,,,,,,,,,1/GHILM (% Efficiency),,,,,,,
+FuelNum,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,REG#,FUEL,Max Efficiency,,2005,2020,2035,2050,2065,2080,2095,
+1,10,10,1.67,1.547,1.435,1.333,1.333,1.333,1.333,ALL,na,OIL,75%,(resid),60%,65%,70%,75%,75%,75%,75%,
+2,10,10,1.43,1.326,1.25,1.25,1.25,1.25,1.25,ALL,na,GAS,80%,,70%,75%,80%,80%,80%,80%,80%,GAS
+3,10,10,1.61,1.515,1.515,1.515,1.515,1.515,1.515,ALL,na,COAL,66%,,62%,66%,66%,66%,66%,66%,66%,COAL
+4,10,10,1.663,1.543,1.432,1.329,1.25,1.25,1.25,ALL,na,BIOMASS,80%,,60%,65%,70%,75%,80%,80%,80%,BIOMASS
+5,10,10,1.15,1.067,1.064,1.064,1.064,1.064,1.064,ALL,na,ELECTRO,94%,,87%,94%,94%,94%,94%,94%,94%,
+6,10,10,2,1.83,1.68,1.55,1.53,1.52,1.5,ALL,na,OIL CO2 Cap,,,50%,55%,59%,65%,65%,66%,66%,
+7,10,10,1.71,1.57,1.47,1.45,1.44,1.42,1.41,ALL,na,GAS CO2 Cap,,,58%,64%,68%,69%,70%,70%,71%,
+8,10,10,1.94,1.8,1.78,1.76,1.74,1.72,1.71,ALL,na,COAL CO2 Cap,,,52%,56%,56%,57%,57%,58%,59%
+
+Penalty,0.2,0.2,0.2,0.186,0.172,0.16,0.148,0.138,0.128,,,,,,,,,,,,
+,,,(mulitply by 1 plus the penalty to get intensities for CO2 capture technologies),,,,,,,,,,,,,,,,,,
+"""HHILM"" is the non-energy cost in 1975$ FOR PRODUCING HYDROGEN",,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,,
+104,,,,,,,,,,,,,,,,,,,,,
+,,HHILM,,0.005,(efficiency improves at 0.5%/yr after 2005),,,,,,,,,,,,,,,,
+FUELNum,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,REG#,FUEL,,,,,,,,,
+1,10,10,6.7,6.217,5.769,5.353,4.967,4.609,4.277,ALL,na,OIL,,,,,,,,,
+2,10,10,1.1,1.021,0.947,0.879,0.816,0.757,0.702,ALL,na,GAS,,,,,,,,,
+3,10,10,3.1,2.877,2.669,2.477,2.298,2.133,1.979,ALL,na,COAL,,,,,,,,,
+4,10,10,2.5,2.32,2.153,1.997,1.853,1.72,1.596,ALL,na,BIOMASS,,,,,,,,,
+5,10,10,2.523,2.09,1.74,1.44,1.2,0.99,0.82,ALL,na,ELECTRO,,,,,,,,,
+6,13,13,8.71,7.95,7.26,6.64,6.07,5.56,5.1,ALL,na,OIL CO2 Cap,,,,,,,,,
+7,13,13,1.43,1.3,1.19,1.09,1,0.91,0.84,ALL,na,GAS CO2 Cap
+8,13,13,4.03,3.68,3.36,3.07,2.81,2.57,2.36,ALL,na,COAL CO2 Cap
+
+Penalty,0.3,0.3,0.3,0.278,0.258,0.24,0.222,0.206,0.192,,,
+
+
+
+
+Sources:,Max Efficiencies,,,,,,,,,,,
+,,"Technology Characterizations for the E3 (Energy, Economics, Environment) Pathway Analysis. DiPietro, J.P., Badin, J.S. (April, 1995)",,,,,,,,,,
+
+,Capital Costs (rough),,,,,,,,,,,
+,,Survey of the Economics of Hydrogen Technologies. C.E.G. Padr- and V. Putsche (September 1999.  NREL/TP-570-27079),,,,,,,,,,

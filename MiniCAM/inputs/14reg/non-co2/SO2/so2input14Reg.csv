@@ -1,0 +1,466 @@
+SULFUR EMISSIONS INPUT FILE,,,,,,,
+"For emissions in TgS, use: (Fuel Use in EJ) / (GJ/Tonne) * (S %/100) * 1000 * (1 - f_control%)",,,,,,,
+Biomass has fixed emission coefficient,,,,equal to that of wood,,,
+"For nat gas, the factor below is really the emissions rate, not S%",,,,,,,
+
+"To calibrate S emissions in dev regions, first check PPP/Cap and adjust GDP0 appropriately if changed",,,,,,,
+"If S emissions in region such as Japan (with maxed out controls) does not go down, adjust final S % of pet products",,,,,,,
+
+SO2SCT Sulfur content (percentage by weight),,,,,,,
+INPUT_TABLE,,,,"Note that in dev countries, the S% of pet products ",,,
+Variable ID,,,,"is the S% before controls (which include, reducing S%!)",,,
+521,,,,,,,
+SO2SCT,Generally identical for coal (adjusted in some instances to match sectoral inventories),(JKL),Gas production emissions taken account of in industrial sector here,,,,
+Region,FuelNum,RESCOM,INDUSTRY,TRANSPORT,E Power G,Reg,FuelName
+1,1,0.67,0.26,0.17,1.34,USA,OIL
+2,1,0.28,0.57,0.17,1,CANADA,OIL
+3,1,0.3,0.32,0.19,0.5,WEUR,OIL
+4,1,0.43,0.33,0.49,1.2,JAPAN,OIL
+5,1,0.4,1,0.2,1.4,AUSNZ,OIL
+6,1,0.4,1.3,0.4,1.3,FSU,OIL
+7,1,0.23,0.45,0.21,0.56,ACENP,OIL
+8,1,0.2,1,0.25,1.4,MIDEAST,OIL
+9,1,0.32,1.05,0.27,1.75,AFR,OIL
+10,1,0.4,2.43,0.55,2.7,LA,OIL
+11,1,0.3,1.73,0.54,1.66,SEASIA,OIL
+12,1,0.3,0.75,0.55,0.9,EEuro,OIL
+13,1,0.78,1.74,0.45,2.85,Korea,OIL
+14,1,0.5,3.17,0.56,1.6,India,OIL
+1,2,0.0063,0.4389,0.0063,0.0063,USA,GAS
+2,2,0.0063,1.254,0.0063,0.0063,CANADA,GAS
+3,2,0.0063,0.1568,0.0063,0.0063,WEUR,GAS
+4,2,0.0063,0.1568,0.0063,0.0063,JAPAN,GAS
+5,2,0.0063,0.1568,0.0063,0.0063,AUSNZ,GAS
+6,2,0.0063,0.35,0.0063,0.0627,FSU,GAS
+7,2,0.0063,0.5,0.0063,0.0063,ACENP,GAS
+8,2,0.0063,0.5,0.0063,0.0063,MIDEAST,GAS
+9,2,0.0063,0.5,0.0063,0.0063,AFR,GAS
+10,2,0.0063,0.5,0.0063,0.0063,LA,GAS
+11,2,0.0063,0.5,0.0063,0.0063,SEASIA,GAS
+12,2,0.0063,0.5,0.0063,0.0627,EEuro,GAS
+13,2,0.0063,0.5,0.0063,0.0063,Korea,GAS
+14,2,0.0063,0.5,0.0063,0.0063,India,GAS
+1,3,1.84,1,1.39,1.39,USA,COAL
+2,3,1,1,1,1,CANADA,COAL
+3,3,1.1,1.1,1.23,1.23,WEUR,COAL
+4,3,0.55,0.6,0.55,0.55,JAPAN,COAL
+5,3,0.34,0.34,0.34,0.34,AUSNZ,COAL
+6,3,1.04,1.15,1.04,1.04,FSU,COAL
+7,3,1.25,1.25,1.25,1.25,ACENP,COAL
+8,3,1.25,1.25,1.25,1.25,MIDEAST,COAL
+9,3,0.59,0.59,0.59,0.59,AFR,COAL
+10,3,1.23,1.23,1.23,1.23,LA,COAL
+11,3,1.23,1.23,1.23,1.23,SEASIA,COAL
+12,3,1.07,1.33,1.33,1.4,EEuro,COAL
+13,3,0.99,0.99,0.99,0.99,Korea,COAL
+14,3,0.55,0.55,0.55,0.55,India,COAL
+
+
+Org coal %'s (before control change),,,,,,,
+Region,FuelNum,RESCOM,INDUSTRY,TRANSPORT,E Power G,Reg,FuelName
+1,3,1.84,1.18,1.38,1.38,USA,COAL
+2,3,1.05,1.05,1.05,1.05,CANADA,COAL
+3,3,1.14,1.23,1.23,1.23,WEUR,COAL
+4,3,0.55,0.75,0.55,0.55,JAPAN,COAL
+5,3,0.34,0.34,0.34,0.34,AUSNZ,COAL
+6,3,1.04,1.15,1.04,1.04,FSU,COAL
+7,3,1.25,1.25,1.25,1.25,ACENP,COAL
+8,3,1.25,1.25,1.25,1.25,MIDEAST,COAL
+9,3,0.59,0.59,0.59,0.59,AFR,COAL
+10,3,1.23,1.23,1.23,1.23,LA,COAL
+11,3,1.23,1.23,1.23,1.23,SEASIA,COAL
+12,3,1.07,1.33,1.33,1.4,EEuro,COAL
+13,3,0.99,0.99,0.99,0.99,Korea,COAL
+14,3,0.55,0.55,0.55,0.55,India,COAL
+
+
+Base Year (1990) Ind Process Emissions,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+502,,,,,,,
+SO2IPBASE,,(L),Tg S,
+Region,Value,Reg,,
+1,0.78,USA,,
+2,0.88,CANADA,,
+3,0.39,WEUR,,
+4,0.06,JAPAN,,
+5,0.57,AUSNZ,,
+6,2.56,FSUEE,,
+7,0.59,ACENP,,
+8,0.01,MIDEAST,,
+9,0.76,AFR,,
+10,1.7,LA,,
+11,0.14,SEASIA,,
+12,0.16,EEuro,,
+13,0.37,Korea,,
+14,0.1,India,Total:,9.07
+
+
+Base Year (1990) Trad Biomass Emissions,,,
+INPUT_TABLE,,,
+Variable ID,,,
+503,,,
+SO2TRBIOB,,(L),Tg S
+Region,Value,Reg,
+1,0,USA,
+2,0,CANADA,
+3,0,WEUR,
+4,0,JAPAN,
+5,0.02,AUSNZ,
+6,0.01,FSUEE,
+7,0.18,ACENP,
+8,0.01,MIDEAST,
+9,0.07,AFR,,,
+10,0.02,LA,,,
+11,0.05,SEASIA,,,
+12,0,EEuro,,,
+13,0,Korea,,,
+14,0.41,India,Total:,0.76,
+
+
+Ash Retention percentage for Coal,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+522,,,,,
+SO2ASHR,(KL),,,,
+Region,RESCOM,INDUSTRY,TRANSPORT,E Power G,Reg
+1,10,7.3,5,5,USA
+2,18,7.3,5,20,CANADA
+3,15,11.3,5,13.3,WEUR
+4,10,58.1,5,5,JAPAN
+5,10,5,5,13.3,AUSNZ
+6,30,30,30,30,FSUEE
+7,29.7,19.5,30,8,ACENP
+8,10,5,5,5,MIDEAST
+9,10,5,5,5,AFR
+10,10,10,5,13.3,LA
+11,11,10.3,5,8.5,SEASIA
+12,15,30,15,5,EEuro
+13,10,5,5,5,Korea
+14,10,5,5,5.5,India
+
+Heat Content (GJTonne),,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+523,,Generally identical for coal,,,,,
+SO2ENDN,(JKL),,,,,,
+Region,FuelNum,RESCOM,INDUSTRY,TRANSPORT,E Power G,Reg,FuelName
+1,1,42.98,42,44.68,42,USA,OIL
+2,1,42.98,42,44.68,42,CANADA,OIL
+3,1,42.98,42,44.68,42,WEUR,OIL
+4,1,42.87,42.91,43.87,42.02,JAPAN,OIL
+5,1,42.01,42.56,44.46,43.03,AUSNZ,OIL
+6,1,42.98,42,44.68,42,FSUEE,OIL
+7,1,40.49,39.41,40.61,39.41,ACENP,OIL
+8,1,41.17,43.13,44.61,42.49,MIDEAST,OIL
+9,1,42.4,42.72,44.48,42.35,AFR,OIL
+10,1,40.86,42.89,40.86,42.17,LA,OIL
+11,1,43.28,40.1,41.89,39.58,SEASIA,OIL
+12,1,42.98,42,44.68,42,EEuro,OIL
+13,1,41.17,39.87,41.42,38.36,Korea,OIL
+14,1,41.52,40.01,40.96,39.83,India,OIL
+1,2,100,100,100,100,USA,GAS
+2,2,100,100,100,100,CANADA,GAS
+3,2,100,100,100,100,WEUR,GAS
+4,2,100,100,100,100,JAPAN,GAS
+5,2,100,100,100,100,AUSNZ,GAS
+6,2,100,100,100,100,FSU,GAS
+7,2,100,100,100,100,ACENP,GAS
+8,2,100,100,100,100,MIDEAST,GAS
+9,2,100,100,100,100,AFR,GAS
+10,2,100,100,100,100,LA,GAS
+11,2,100,100,100,100,SEASIA,GAS
+12,2,100,100,100,100,EEuro,GAS
+13,2,100,100,100,100,Korea,GAS
+14,2,100,100,100,100,India,GAS
+1,3,23.53,23.53,23.53,23.53,USA,COAL
+2,3,20.56,20.56,20.56,20.56,CANADA,COAL
+3,3,15.34,15.34,15.34,15.34,WEUR,COAL
+4,3,27.34,27.34,27.34,27.34,JAPAN,COAL
+5,3,15.46,15.46,15.46,15.46,AUSNZ,COAL
+6,3,18.54,18.54,18.54,18.54,FSU,COAL
+7,3,20.97,20.97,20.97,20.97,ACENP,COAL
+8,3,26.53,26.53,26.53,26.53,MIDEAST,COAL
+9,3,22.71,22.71,22.71,22.71,AFR,COAL
+10,3,25.86,25.86,25.86,25.86,LA,COAL
+11,3,21.46,21.46,21.46,21.46,SEASIA,COAL
+12,3,13.99,13.99,13.99,13.99,EEuro,COAL
+13,3,26.79,26.79,26.79,26.79,Korea,COAL
+14,3,20.22,20.22,20.22,20.22,India,COAL
+
+
+"S Emissions Control ""timescale"" Tau (ppp-based GDPcap)",,,,,,,
+INPUT_TABLE,,
+Variable ID,,
+506,,
+SO2TAU,,(L)
+Region,Value,Reg
+1,17.1,USA
+2,9.6,CANADA
+3,6.7,WEUR
+4,10,JAPAN
+5,15,AUSNZ
+6,10,FSUEE
+7,9.5,ACENP
+8,12,MIDEAST
+9,12,AFR
+10,12,LA
+11,12,SEASIA
+12,1.30,EEuro,,,,,
+13,12,Korea,,,,,
+14,12,India,,,,,
+
+
+S Emissions Control Mid-point GDP_0 (ppp-based GDPcap),,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+507,,,,,,,
+SO2GDP0,,(L),,Calibrated for,,,New vers
+Region,Value,Reg,,PPP/Cap,Vals,,10/01 model
+1,25.99,USA,,22.2,25.5,,27.2
+2,25.91,CANADA,,21.2,28.6,,32.3
+3,16.68,WEUR,,15.1,16.3,,16.8
+4,8.0,JAPAN,,13.1,8,,8
+5,16.9,AUSNZ,,15.2,16.9,,16.9
+6,12,FSUEE,,6.1,12,,12
+7,8.5,ACENP,,1.3,9.5,,8.5
+8,12,MIDEAST,,5.2,12,,12
+9,12,AFR,,1.6,12,,12
+10,12,LA,,4.3,12,,12
+11,12,SEASIA,,1.5,12,,12
+12,4.46,EEuro,,3.5,8,,10.3
+13,12,Korea,,,,,12
+14,12,India,,,,,12
+
+
+
+1,26.1943,USA,,22.2,25.5,,27.2
+2,31.184,CANADA,,21.2,28.6,,32.3
+3,16.3835,WEUR,,15.1,16.3,,16.8
+4,8,JAPAN,,13.1,8,,8
+5,16.9,AUSNZ,,15.2,16.9,,16.9
+6,12,FSUEE,,6.1,12,,12
+7,8.5,ACENP,,1.3,9.5,,8.5
+8,12,MIDEAST,,5.2,12,,12
+9,12,AFR,,1.6,12,,12
+10,12,LA,,4.3,12,,12
+11,12,SEASIA,,1.5,12,,12
+12,6.2034,EEuro,,3.5,8,,10.3
+13,12,Korea,,,,,12
+14,12,India,,,,,12
+
+
+Maximum Control Percentage,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+524,,,,,,,
+SO2MAXCTRL,,(JKL),"For oil, can use alternative formulation based on S% below",,,,
+Region,FuelNum,RESCOM,INDUSTRY,TRANSPORT,E Power G,Reg,FuelName
+1,1,45,81,45,81,USA,OIL
+2,1,45,81,45,81,CANADA,OIL
+3,1,45,81,45,81,WEUR,OIL
+4,1,45,81,45,81,JAPAN,OIL
+5,1,45,81,45,81,AUSNZ,OIL
+6,1,45,81,45,81,FSUEE,OIL
+7,1,90,81,72,90,ACENP,OIL
+8,1,90,81,72,90,MIDEAST,OIL
+9,1,90,81,72,90,AFR,OIL
+10,1,90,81,72,90,LA,OIL
+11,1,90,81,79.2,90,SEASIA,OIL
+12,1,45,81,45,81,EEuro,OIL
+13,1,90,81,79.2,90,Korea,OIL
+14,1,90,81,79.2,90,India,OIL
+1,2,45,99.9,45,90,USA,GAS
+2,2,45,99.9,45,90,CANADA,GAS
+3,2,45,99.9,45,90,WEUR,GAS
+4,2,45,99.9,45,90,JAPAN,GAS
+5,2,45,99.9,45,90,AUSNZ,GAS
+6,2,45,99.9,45,90,FSU,GAS
+7,2,45,99.9,45,90,ACENP,GAS
+8,2,45,99.9,45,90,MIDEAST,GAS
+9,2,45,99.9,45,90,AFR,GAS
+10,2,45,99.9,45,90,LA,GAS
+11,2,45,99.9,45,90,SEASIA,GAS
+12,2,45,99.9,45,90,EEuro,GAS
+13,2,45,99.9,45,90,Korea,GAS
+14,2,45,99.9,45,90,India,GAS
+1,3,25,45,81,90,USA,COAL
+2,3,25,45,81,90,CANADA,COAL
+3,3,25,45,81,90,WEUR,COAL
+4,3,25,45,81,90,JAPAN,COAL
+5,3,25,45,81,90,AUSNZ,COAL
+6,3,25,45,81,90,FSU,COAL
+7,3,25,45,81,90,ACENP,COAL
+8,3,25,45,81,90,MIDEAST,COAL
+9,3,25,45,81,90,AFR,COAL
+10,3,25,45,81,90,LA,COAL
+11,3,25,45,81,90,SEASIA,COAL
+12,3,25,45,81,90,EEuro,COAL
+13,3,25,45,81,90,Korea,COAL
+14,3,25,45,81,90,India,COAL
+
+
+Max Reduction % for Industrial (non-Energy) Emissions,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,
+509,,
+SO2IPMR,,(L)
+Region,Value,Reg
+1,90,USA
+2,90,CANADA
+3,90,WEUR
+4,90,JAPAN
+5,90,AUSNZ
+6,90,FSUEE
+7,90,ACENP
+8,90,MIDEAST
+9,90,AFR
+10,90,LA
+11,90,SEASIA
+12,45,EEuro
+13,90,Korea
+14,90,India
+
+
+Power-law growth in industrial emissions (as yr^r),,
+INPUT_TABLE,,
+Variable ID,,
+510,,
+SO2PLG,,(L)
+Region,Value,Reg
+1,0,USA
+2,0,CANADA
+3,0,WEUR
+4,0,JAPAN
+5,0,AUSNZ
+6,0,FSUEE
+7,0.25,ACENP,,,,,,,
+8,0.25,MIDEAST,,,,,,,
+9,0,AFR,,,,,,,
+10,0,LA,,,,,,,
+11,0.25,SEASIA,,,,,,,
+12,0,EEuro,,,,,,,
+13,0.25,Korea,,,,,,,
+14,0.25,India,,,,,,,
+
+
+Biomass burning,,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+511,,,,,,,,,
+SO2BIOBURN,,(L),,,,,,,
+Region,1990,2005,2020,2035,2050,2065,2080,2095,Reg
+1,0.054,0.054,0.054,0.054,0.054,0.054,0.054,0.054,USA
+2,0.012,0.012,0.012,0.012,0.012,0.012,0.012,0.012,CANADA
+3,0.074,0.074,0.074,0.074,0.074,0.074,0.074,0.074,WEUR
+4,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,JAPAN
+5,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,AUSNZ
+6,0.064,0.064,0.064,0.064,0.064,0.064,0.064,0.064,FSUEE
+7,0.097,0.097,0.097,0.097,0.097,0.097,0.097,0.097,ACENP
+8,0.019,0.019,0.019,0.019,0.019,0.019,0.019,0.019,MIDEAST
+9,0.871,0.871,0.871,0.871,0.871,0.871,0.871,0.871,AFR
+10,0.442,0.442,0.442,0.442,0.442,0.442,0.442,0.442,LA
+11,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,SEASIA
+12,0.013,0.013,0.013,0.013,0.013,0.013,0.013,0.013,EEuro
+13,0.002,0.002,0.002,0.002,0.002,0.002,0.002,0.002,Korea
+14,0.132,0.132,0.132,0.132,0.132,0.132,0.132,0.132,India
+,1.84,,,,,,,,
+
+International shipping emissions,,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+512,,,,,,,,,
+SO2SHIP,,(L),,,,,,,
+Region,1990,2005,2020,2035,2050,2065,2080,2095,Reg
+0,3,3,3,3,3,3,3,3,global
+
+
+Base year bunker fuel SO2 emissions,,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+513,,,,,,,,,
+SO2BUNKF,,,,,,,,,
+Region,1990 bunkf,,,,,,,,
+1,1.2,USA,,,,,,,
+2,0.03,Canada
+3,1.46,OECDEuro
+4,0.21,Japan
+5,0.04,Aus&NZ
+6,0.18,EE&FSU
+7,0,China
+8,0.49,MidEast
+9,0.26,Africa
+10,0.32,LatAmeri
+11,0.64,SEAsia
+12,0.05,EEuro
+13,0.07,Korea
+14,0.02,India
+,4.98,
+
+Alt Liquids Min Sulfur Content,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+525,,** Using this variable toggles alternative treatement for liquids,,,
+SO2PETSCLIM,,,,,
+Region,RESCOM,INDUSTRY,TRANSPORT,E Power G,Reg
+1,0.1,0.2,0.05,0.5,USA
+2,0.1,0.2,0.05,0.5,CANADA
+3,0.1,0.15,0.05,0.25,WEUR
+4,0.07,0.2,0.05,0.2,JAPAN
+5,0.1,0.5,0.05,0.5,AUS&NZ
+6,0.1,0.2,0.05,0.5,FSU/EE
+7,0.1,0.2,0.05,0.5,ACENP
+8,0.1,0.2,0.05,0.5,MIDEAST
+9,0.1,0.2,0.05,0.5,AFR
+10,0.1,0.2,0.05,0.5,LA
+11,0.1,0.2,0.05,0.5,S&E ASIA
+12,0.1,0.2,0.05,0.5,EEuro
+13,0.1,0.2,0.05,0.5,Korea
+14,0.1,0.2,0.05,0.5,India
+
+
+MAGICC input region conversion matrix,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+515,,,,,
+SO2MAGREG,,Split:,,,
+Region,Mag-1,Mag-2,Mag-3,,
+1,1,0,0,USA,
+2,1,0,0,Canada,
+3,1,0,0,OECDEuro,
+4,0,1,0,Japan,
+5,0,0,1,Aus&NZ,
+6,0.6,0.4,0,FSU
+7,0,1,0,China
+8,0,0,1,MidEast
+9,0,0,1,Africa
+10,0,0,1,LatAmeri
+11,0,1,0,SEAsia
+12,1,0,0,EEuro
+13,0,1,0,Korea
+14,0,1,0,India
+
+
+
+INPUT_TABLE,,,,
+Variable ID,,,,
+526,,,,
+SO2_Cntrl_TechChange,,(%),,
+Region,Value,Reg
+1,0,USA
+2,0,CANADA
+3,0,WEUR
+4,0,JAPAN
+5,0,AUSNZ
+6,0,FSUEE
+7,0.25,ACENP
+8,0.25,MIDEAST
+9,0.25,AFR
+10,0.25,LA
+11,0.25,SEASIA
+12,0,EEuro
+13,0.25,Korea
+14,0.25,India
+
+
+EOF

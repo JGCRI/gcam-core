@@ -1,0 +1,25 @@
+ECapLim(I) is the maximum share that an elec gen technology can supply,,
+INPUT_TABLE,,
+Variable ID,,
+98,,
+
+OIL,ECapLim(I),
+1,1,OIL
+2,1,GAS
+3,0.75,COAL
+4,0.75,NUCLEAR
+5,0.25,SOLAR
+6,1,HYDRO
+7,0.75,BMASS
+8,0.75,CSCRUB
+9,1,OSCRUB
+10,1,GSCRUB
+11,1,H2FCELL
+12,0.75,FUSION
+13,0.1,WIND
+14,1,SWStorage
+15,1,SatSolar
+
+
+
+EoF,,

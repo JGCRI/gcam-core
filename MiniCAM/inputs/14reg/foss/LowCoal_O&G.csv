@@ -1,0 +1,49 @@
+,"In this scenario, continued advances in oil & (particularly) gas extraction",,,,,,,,,,,
+,Nominal advances in coal extraction,,,,,,,,,,,
+
+
+STISM--RATE OF TECHNOLOGICAL CHANGE BY SUPPLY TYPE AND REGION,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+21,,,,,,,,,,,,
+,,"STISM(IS,M)",,,,,,cumulative changes in extraction cost,,,,
+PERIOD,CONV OIL,CONV GAS,COAL,UNCON OIL,NUCLEAR,,,conv oil,conv gas,coal,unconv oil,nuclear
+1,0.005,0.005,0.005,0.005,0.005,1975,,1.1,1.1,1.1,1.1,1.1
+2,0.005,0.005,0.005,0.005,0.005,1990,,1.2,1.2,1.2,1.2,1.2
+3,0.01,0.01,0.0025,0.0075,0.005,2005,,1.3,1.3,1.2,1.3,1.3
+4,0.01,0.0125,0.0025,0.01,0.005,2020,,1.6,1.5,1.3,1.3,1.3
+5,0.01,0.0175,0.0025,0.01,0.005,2035,,1.8,1.8,1.3,1.5,1.5
+6,0.01,0.0175,0.0025,0.01,0.005,2050,,2.1,2.2,1.3,1.6,1.6
+7,0.01,0.015,0.0025,0.01,0.005,2065,,2.4,2.7,1.4,1.7,1.7
+8,0.01,0.01,0.0025,0.01,0.005,2080,,2.8,3.4,1.5,1.8,1.8
+9,0.01,0.01,0.0025,0.01,0.005,2095,,3.3,4.2,1.5,2,2
+
+,,Higher tech change as moving into unconventional nat gas resources,,,,,,,,,,
+
+
+
+BESIL--MINIMUM LEVEL OF SHORT-TERM SUPPLY BY TYPE AND REGION,,,,,,,,,,,,
+allow coal industry to recover after market goes zero in any period,,,,,,,,,,,,
+INPUT_TABLE,,,"Now -- also allow other production to re-start - but limit slightly, which damps oscillations",,,,,,,,,
+Variable ID,,,Min short-term supply set larger for Uncon oil (or else doesn't come on),,,,,,,,,
+22,,,"For other fuels, set to 1 EJ except for coal, which is equal to production in 1990",,,,,,,,,
+,,"BESIL(IS,L)",,,,,,,,,,
+REGION,CONV OIL,CONV GAS,COAL,UNCON OIL,NUCLEAR,,,,,,,
+1,1,5,22,5,0.03,US,,,,,,
+2,1,1,2,1,0.03,CAN
+3,5,1,9,3,0.03,WEUR
+4,1,2,1,1,0.03,JAPAN
+5,1,1,4,1,0.03,AUS&NZ
+6,5,5,12,3,0.03,FSU
+7,1,1,23,2,0.03,ACENP
+8,5,1,1,1,0.03,MIDEAST
+9,1,1,4,1,0.03,AFR
+10,2,1,1,1,0.03,LA
+11,1,1,1,1,0.03,SEASIA
+12,1,1,7,1,0.03,EEUR
+13,1,1,1,1,0.03,KOR
+14,1,1,4,1,0.03,INDIA
+,,,, *** Make sure and let uncon oil start up,,
+
+
+xxxx

@@ -1,0 +1,3323 @@
+************************************************************************,
+** MCPRO00 ,
+** New model code with: (02/01 -- sjs),
+** Electric generation capacity limits,
+** Options for solar-wind storage, and satelite solar
+**,
+"** 14 Region Version With Eastern Europe, Korea and India Included   12/7/98  Sonny Kim",
+"Additional Technologies:  Natural gas to liquids, fusion, and wind included.  8/19/99 SHK",
+**,
+************************************************************************,
+
+CASE VARIABLE PROCEDURE BEGINS ON NEXT LINE:,
+
+TEST - Convergence Criteria,
+INPUT_TABLE,
+Variable ID,
+600,
+TEST,
+SOLUTION CRITERIA,
+0.0001,
+
+
+
+**************************************************************************************,
+IMPORTANT -- The following two parameters must be consistant with inputs below for,
+the model to work correctly.,
+**************************************************************************************,
+
+NNU - Number of technologies in the electricity sector ,
+,"excluding ""solar-type"" technologies with only huilm costs (i.e. SWStor, Sat solar, etc.)"
+INPUT_TABLE,
+Variable ID,
+604,
+NNU,
+Number of technologies in the electricity sector,
+13,
+
+"NStype - Number of ""solar-type"" electric generation technologies that have only non-fuel costs readin",
+INPUT_TABLE,
+Variable ID,
+601,
+NStype,
+"Number of ""solar-type"" elec gen technologies ",
+2, 1 = Only SWStorage
+,  2 = SWStorage & Sat Solar
+
+Region Names,
+INPUT_TABLE,
+Variable ID,
+99,
+REGNAMES(L),
+region,RegName
+1,USA
+2,Canada
+3,WEurope
+4,Japan
+5,Aus&NZ
+6,FSU
+7,China&RefA
+8,MiddleEast
+9,Africa
+10,LatinAmerica
+11,S&EAsia
+12,EEurope
+13,Korea,,,
+14,India,,,
+15,Global,,,
+
+
+NH2electPtype - Control for how electrolytic H2 input electric price is set,,,,
+,,"NOT ""solar-type"" technologies with only huilm costs (i.e.", SWStor, Sat solar)
+INPUT_TABLE,,,,
+Variable ID,,,,
+97,,,,
+NH2electPtype,,,,
+Electrolytic H2 price control,,,,
+2,,1,'=, market price before Elec Cap limitation
+,,2,'=, Weighted Solar & Wind electric price
+
+
+
+JUINDEX - Utility sector index of technologies,,
+INPUT_TABLE,,
+Variable ID,,
+605,,
+JUINDEX,,
+IDUM,JUINDEX,NAME
+1,1,JUOIL
+2,2,JUGAS
+3,3,JUCOAL
+4,4,JUNUC
+5,5,JUSOLPV
+6,6,JUHYDRO
+7,7,JUBMASS
+8,8,JUCSCRUB
+9,9,JUOSCRUB
+10,10,JUGSCRUB,,,,,,
+11,11,JUH2GEN,,,,,,
+12,12,JUFUSION,,,,,,
+13,13,JUWIND,,,,,,
+14,14,JUSWSTOR,,Shadow var. Not read in. Read in only for HUILM,,,,
+
+"ELECTRICITY GENERATION COEFFICIENTS (GUI, HUIL, AND RUI)",,,,,,,,
+"""GUI"" IS A GENERATION EFFICIENCY COEFFICIENT -- THE RATIO OF JOULES",,,,,,,,
+"OF ENERGY IN TO JOULES OF ELECTRICITY OUT.  BY DEFINITION, GUI=1 FOR",,,,,,,,
+"NUCLEAR, HYDRO, AND SOLAR.",,,,,,,,
+
+"""RUI"" IS A LOGIT SUBSTITUTION PARAMETER GOVERNING THE RESPONSE OF UTILITIES TO PRICE INCREASES FOR A GIVEN TECHNOLOGY -- HYDRO ENTERS AS A FIXED AMOUNT.",,,,,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+13,,,,,,,,
+,RUI(I),-2,-3,-4,-5,-6,-7,-8
+OIL,GAS,COAL,NUCLEAR,SOLAR,HYDRO*,H2FCELL,FUSION,WIND
+-3,-3,-3,-3,-3,-3,-3,-3,-3
+
+ECapLim(I) is the maximum share that an elec gen technology can supply,,,,,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+98,,,,,,,,
+
+OIL,ECapLim(I),,,,,,,
+1,1,OIL,,,,,,
+2,1,GAS,,,,,,
+3,0.75,COAL,,,,,,
+4,0.75,NUCLEAR,,,,,,
+5,0.1,SOLAR,,,,,,
+6,1,HYDRO,,,,,,
+7,0.75,BMASS,,,,,,
+8,0.75,CSCRUB
+9,1,OSCRUB
+10,1,GSCRUB
+11,1,H2FCELL
+12,0.75,FUSION
+13,0.1,WIND
+14,1,SWStorage
+15,1,SatSolar
+
+**************************************************************************************,,
+The following read-ins are not used anymore,,
+
+NIS - Number of sectors,,
+xxxxxx,,
+Variable ID,,
+601,,
+NIS
+Number of Sectors
+9
+
+Number of Subsectors
+xxxxxxxx
+Variable ID
+602
+
+Number of technologies in each subsector for each sector
+xxxxxxxx
+Variable ID
+603
+
+NU - Number of subsectors in electricity sector; competing utility types (orginal indexing-PUILM)
+xxxxxxxx
+Variable ID,,NOT USED ANYMORE. Now set in NSET relative to NNU read-in above,
+606,,,
+**************************************************************************************,,,
+
+
+TRI--TRANSPORTATION COSTS FOR TRADED FUELS (UNITS=1975 DOLLARS PER GJ (GIGAJOULE)),,,
+INPUT_TABLE,,,
+Variable ID,,,Costs for coal & gas taken from analysis of US cost figures
+1,,,
+TRI(I),Same as hard coded base year cost.,,
+OIL,GAS,COAL,BIOMASS
+0.1397,0.4,0.25,0.681
+
+Transportation costs adjusted to better match US costs,,,
+
+
+"P(in,l,1)",Initial starting market prices for all goods in 1975 $/GJ.,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+2,,,,,,,,,,,,,,
+,,"P(IN,L,M=1)",,"The wood, forward wood and ruminant animal prds prices are all done in the AgLU module",,,,,,,,,,
+region,OIL(1),GAS(2),COAL(3),BIOMASS(4),CARBON(5),WOOD(6),FWOOD(7),FOODGR(8),COARSEGR(9),OILCROPS(10),MISCCROPS(11),BEEF(12),LUCEm(13),RE Name
+1,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,USA
+2,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,CANADA
+3,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,WEUR
+4,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,JAPAN
+5,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,AUS&NZ
+6,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,FSU
+7,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,ACENP
+8,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,MIDEAST
+9,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,AFR
+10,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,LA
+11,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,S&E ASIA
+12,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,EEUR
+13,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,KOR
+14,1.8398,0.6256,0.5121,2.5,0,0,0,0,0,0,0,0,0,INDIA
+
+
+TXILM -- TRADE BARRIERS  (SCALE FACTOR APPLIED TO FOSSIL FUEL & BIOMASS PRICES),,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,Multiplier on global price plus transportation; only way to vary regional prices.,,,,,,,,,,,,
+3,,Good way to adjust near-term regional fuel demands,,,,,,,,,,,,
+,,,"TXILM(I,L,M)",,,,sjs-- extended read-in to 2095 to allow better control (needed for natural gas in particular -- see Japan),,,,,,,
+REGION,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,FUEL #,,
+1,1,1,1,1,1,1,1,1,1,USA,OIL,1,,
+2,1,1,1,1,1,1,1,1,1,CANADA,OIL,1,,
+3,1.8,1.5,1.3,1.1,1,1,1,1,1,WEUR,OIL,1,,
+4,1,1,1,1,1,1,1,1,1,JAPAN,OIL,1,,
+5,1,1,1,1,1,1,1,1,1,AUS&NZ,OIL,1,
+6,1,1,1,1,1,1,1,1,1,FSU,OIL,1,
+7,1,1,1,1,1,1,1,1,1,ACENP,OIL,1,
+8,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,MIDEAST,OIL,1,"As a producing region, prices are lower for oil"
+9,1,1,1,1,1,1,1,1,1,AFR,OIL,1,
+10,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,LA,OIL,1,"As a producing region, prices are lower for oil (makes for a more consistant B coefficient in end-uses)"
+11,1,1,1,1,1,1,1,1,1,S&E ASIA,OIL,1,
+12,1,1,1,1,1,1,1,1,1,EEUR,OIL,1,
+13,1,1,1,1,1,1,1,1,1,KOR,OIL,1,
+14,1,1,1,1,1,1,1,1,1,INDIA,OIL,1,
+1,1,1,1,1,1,1,1,1,1,USA,GAS,2,
+2,1,1,1,1,1,1,1,1,1,CANADA,GAS,2,
+3,1.8,1.5,1.3,1.1,1,1,1,1,1,WEUR,GAS,2,
+4,3,3,3,3,3,2,1.5,1,1,JAPAN,GAS,2,"Adjusted upward -- this is largely LNG (but by end of century, would be hydrates, so go to 1)"
+5,1,1,1,1,1,1,1,1,1,AUS&NZ,GAS,2,
+6,1,1,0.5,0.75,1,1,1,1,1,FSU,GAS,2,Adjusted downward -- model otherwise drops consumption too much. 
+7,1,1,2,2,1.5,1,1,1,1,ACENP,GAS,2,Adjusted upward to account for infrastructure issues limiting natural gas adoption
+8,1,1,1,1,1,1,1,1,1,MIDEAST,GAS,2,
+9,1,1,1.35,1.35,1.15,1,1,1,1,AFR,GAS,2,Adjusted to better match recent history
+10,1,1,1,1,1,1,1,1,1,LA,GAS,2,
+11,1,1,1,1,1,1,1,1,1,S&E ASIA,GAS,2,
+12,1,1,1,1,1,1,1,1,1,EEUR,GAS,2,
+13,1,1,1.15,1.1,1,1,1,1,1,KOR,GAS,2,Adjusted to better match recent history
+14,1,1,1.5,1.5,1.25,1,1,1,1,INDIA,GAS,2,Adjusted upward to account for infrastructure issues limiting natural gas adoption
+1,1,1,1,1,1,1,1,1,1,USA,COAL,3,
+2,1,1,1,1,1,1,1,1,1,CANADA,COAL,3,
+3,1.8,1.5,3,2.5,2,1.5,1,1,1,WEUR,COAL,3,Increased to account for re-structuring in Germany and UK. Result matches history to 2000
+4,1,1,1,1,1,1,1,1,1,JAPAN,COAL,3,
+5,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,AUS&NZ,COAL,3,
+6,1,1,1,1,1,1,1,1,1,FSU,COAL,3,
+7,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,ACENP,COAL,3,
+8,1,1,1,1,1,1,1,1,1,MIDEAST,COAL,3,
+9,1,1,1,1,1,1,1,1,1,AFR,COAL,3
+10,1,1,1,1,1,1,1,1,1,LA,COAL,3
+11,1,1,1,1,1,1,1,1,1,S&E ASIA,COAL,3
+12,1,1,1,1,1,1,1,1,1,EEUR,COAL,3
+13,1,1,1,1,1,1,1,1,1,KOR,COAL,3
+14,1,1,1,1,1,1,1,1,1,INDIA,COAL,3
+1,1,1,1,1,1,1,1,1,1,USA,BIOMASS,4
+2,1,1,1,1,1,1,1,1,1,CANADA,BIOMASS,4
+3,1,1,1,1,1,1,1,1,1,WEUR,BIOMASS,4
+4,1,1,1,1,1,1,1,1,1,JAPAN,BIOMASS,4
+5,1,1,1,1,1,1,1,1,1,AUS&NZ,BIOMASS,4
+6,1,1,1,1,1,1,1,1,1,FSU,BIOMASS,4
+7,1,1,1,1,1,1,1,1,1,ACENP,BIOMASS,4
+8,1,1,1,1,1,1,1,1,1,MIDEAST,BIOMASS,4
+9,1,1,1,1,1,1,1,1,1,AFR,BIOMASS,4
+10,1,1,1,1,1,1,1,1,1,LA,BIOMASS,4
+11,1,1,1,1,1,1,1,1,1,S&E ASIA,BIOMASS,4
+12,1,1,1,1,1,1,1,1,1,EEUR,BIOMASS,4
+13,1,1,1,1,1,1,1,1,1,KOR,BIOMASS,4
+14,1,1,1,1,1,1,1,1,1,INDIA,BIOMASS,4
+
+"TXJKLM - ENERGY TAXES ON FINAL CONSUMPTION BY FUEL, REGION AND PERIOD",,,,,,,,,,,,
+Now used to store conversion factors ,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+4,,,,,,,,,,,,
+,,,"TXJKLM(J,K,L,M)",,,,,,,,,
+REGION,1975,1990,2005,2020,2035,2050,,REG,SEC,,,
+0,0,0,0.896,0.896,0.896,0.896,OIL,ALL,ALL,,,
+0,0,0,0.617,0.617,0.617,0.617,GAS,ALL,ALL,,,
+0,0,0,1.084,1.084,1.084,1.084,COAL,ALL,ALL,,,
+0,0,0,0,0,0,0,ELECTRIC,ALL,ALL,,,
+
+
+POPULATION (ZLM) UNITS=THOUSANDS OF PERSONS,,,,,,,,,,,,,,,,,,,,,,,
+IS92a numbers,,,,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,,,,
+6,,,,,,,,,,,,,,,,,,,,,,,
+,"ZLM(L,M)",,,,,,,,,,,,,,,,,,,,,,
+Region,1960,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,,,,,,,,
+1,180738,216067,250058,276675,295964,300786,298375,297469,296564,295662,USA,,,,,,,,,,,,
+2,17909,23209,27791,29059,29665,29513,28983,28830,28679,28528,CANADA,,,,,,,,,,,,
+3,353779,401330,434163,454098,463570,461202,452914,450535,448164,445806,WEUR,,,,,,,,,,,,
+4,94096,111524,123537,131589,134546,133889,131424,130931,130437,129946,JAPAN,,,,,,,,,,,,
+5,12727,17116,20416,21804,22294,22185,21777,21695,21614,21532,AUS&NZ,,,,,,,,,,,,
+6,214652,254470,286923,305927,323026,334557,343306,342309,341314,340322,FSU,,EEFSU,329682,395000,428210,461600,487400,504800,518000,516496,514995,513499
+7,721340,992790,1239185,1485235,1678459,1798363,1881608,1901484,1921478,1941704,china,,,,,,,,,,,,
+8,48224,76878,134750,211452,305339,395520,483849,522369,562592,606224,MIDEAST,,,,,,,,,,
+9,280399,411311,623817,951972,1356095,1749321,2137098,2317951,2507308,2713668,AFR,,,,,,,,,,
+10,216846,319775,440533,560471,667048,745442,809746,825276,840971,856998,LA,Original SEAsia,,,,,,,,,
+11,319184,467024,640622,835099,1047448,1295065,1374264,1399487,1435697,1498462,SEASIA,843656,1130000,1567060,2039200,2486800,2852800,3178000,3283103,3390138,3501034
+12,99374,112191,122164,130655,137957,142883,146619,146193,145769,145345,EEUR,0.26,of EEFSU (from OECD 1990 values),,,,,,,,
+13,25003,35281,42869,48396,52071,54143,54961,55791,56634,57489,KOR,,,,,,,,,,
+14,442344,620701,844847,1082284,1286573,1368878,1603303,1679496,1745035,1784018,INDIA,,,,,,,,,,
+
+BASE GNP (UNITS=MILLIONS 1990 US DOLLARS),,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,,
+7,,,,,,,,,,,,,,,,,,,,,
+,GNPBL(L),,,,,,,,,,,,,,,,,,,,
+Region,,,,,,per cap,,,,,,,,,,,,,,,
+1,3470469,USA,,,,16.21714486,,,,,,,,,,,,,,,
+2,176449,CANADA,,2940822,2940822,7.26127572,,,,,,,,,,,,,,,
+3,2764373,WEUR,,0.170020491,,7.261289729,,,
+4,837541,JAPAN,,957190,957190,8.179111328,,,
+5,119649,AUS&NZ,,,,6.852749141,,,
+6,676081,FSU,,267917.5556,803752.6667,2.160615285,,EEFSU,803753
+7,1819740,ASENP,,9098700,1819740,1.99751921,,,
+8,378495,MIDEAST,,,,4.672777778,,,
+9,342086,AFR,,,,0.857358396,,,
+10,626285,LA,,,,2.000910543,,,
+11,293884,SEASIA,478884,,,0.42379115,,,
+12,120523,EEUR,,,,1.161268951,,,
+13,46478,KOR,,,,,,,
+14,185000,INDIA,,,,,,,
+
+Market-based GDP to PPP conversion factors,,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+87,,,,,,,
+,PPPCONV(L),,,,,,
+Region,,,,,,,
+1,1,USA,,,,,
+2,1,CANADA,,,,,
+3,1,WEUR,,,,,
+4,1,JAPAN,,,,,
+5,1,AUS&NZ,,,,,
+6,2.000571006,FSU,,,,EEFSU,2.359851989
+7,3.571428571,ASENP,,,,EE & FSU values from OECD database,
+8,1.354166667,MIDEAST,,,,,
+9,1.724137931,AFR,,,,,
+10,2,LA,,,,,
+11,3,SEASIA,,,,,
+12,2.10377112,EEUR,,,,,
+13,2.85,KOR,,,,,
+14,3,INDIA,,,,,,,,
+
+LABOR PRODUCTIVITY GROWTH RATE (UNITS=ANNUAL RATE),,,,,,,,,,
+Numbers below match IS92a,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,
+8,,,,,,,,,,
+,,"PROLM(L,M)",,,,,,,,
+Region,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+1,0.017,0.0206,0.019103027,0.019409562,0.013906962,0.013882104,0.011912151,0.011580245,0.009760013,US
+2,0.017,0.02,0.022766257,0.022591543,0.015346624,0.014564127,0.012063003,0.011730201,0.0099092,CANADA
+3,0.017,0.02,0.021765769,0.023590168,0.015888012,0.016314144,0.012258798,0.01173067,0.010355222,WEUR
+4,0.017,0.0468,0.022637267,0.025479582,0.015170304,0.015745156,0.012273363,0.011629628,0.009802557,JAPAN
+5,0.017,0.0468,0.020514348,0.023482543,0.015179166,0.01574451,0.01227314,0.015255218,0.015256184,AUS&NZ
+6,0.017,0.01,0.002,0.04121794,0.027594182,0.01824623,0.02019769,0.020197949,0.015196922,FSU
+7,0.025,0.02,0.067026376,0.070238084,0.045181028,0.031882481,0.024282198,0.01928897,0.0142917,ACENP
+8,0.025,0.025,0.005284875,0.014834662,0.017297402,0.019348655,0.022836959,0.034869411,0.044784478,MIDEAST,
+9,0.025,0.02,0.011827197,0.016731623,0.02264319,0.025921398,0.044328937,0.054465345,0.054425569,AFRICA,
+10,0.025,0.0026,0.020482212,0.027999929,0.029346562,0.02930649,0.028696359,0.033700873,0.038691967,L AMER,
+11,0.025,0.021,0.041551908,0.046069315,0.031578556,0.032542258,0.047724882,0.022810099,0.017813581,S&E ASIA,
+12,0.017,0.01,0.002,0.04121794,0.027594182,0.01824623,0.02019769,0.020197949,0.015196922,EEUR,set same as FSU (original EEFSU)
+13,0.017,0.0468,0.022637267,0.025479582,0.015170304,0.015745156,0.012273363,0.011629628,0.009802557,KOREA,
+14,0.02,0.0086,0.02,0.028999999,0.028999999,0.030999999,0.0272,0.028999999,0.0285,INDIA,
+
+"""GIJ"" IS A CONVERSION EFFICIENCY, THE RATIO OF JOULES OF PRIMARY ENERGY IN TO JOULES OF ENERGY PRODUCT OUT (EXCLUSIVE OF FUELS USED AS ENERGY BY THE REFINERY).  IT IS APPROXIMATED AS 1.",,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+9,,,,,,,,,,,
+,GIJ(I),,,,,,,,,,
+OIL,GAS,COAL,BIOMASS,,,,,,,,
+1,1,1,1,,,,,,,,
+
+
+"""HIJ"" IS A MARK-UP COST, ACCOUNTING FOR COST OF REFINING AND DISTRIBUTING ENERGY PRODUCTS.",,,
+INPUT_TABLE,,,
+Variable ID,,,
+10,,,
+,HIJ(I),,
+OIL,GAS,COAL,BIOMASS
+1.425,0.3487,0.14,0.14
+
+
+
+
+RUISS is the logit exponent for the electric subsector competition,,,
+INPUT_TABLE,,,
+Variable ID,,,
+77,,,
+,"RUISS(J,ISS)",,,
+NO SCRUB,SCRUB,BIOMASS,,
+-6,-6,,Oil,
+-6,-6,,Gas,
+-6,-6,-6,Coal,
+
+PAUIL -- ELECTRICITY GENERATION COEFFICIENTS (PAUIL IS A MULTIPLICATIVE FACTOR,,,,
+ WHICH ADJUSTS THE REFINED FOSSIL FUEL PRICE TO ACCOUNT FOR DIFFERENT FUEL,,,,
+ TYPE (E.G. RESIDUAL US GASOLINE) AND DISTRIBUTION COSTS.),,,,
+This is the only way to adjust the price of fossil fuels used for electricity,,,,
+"In part, this accounts for the fact that electric generators get lower rates than other sectors",,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+14,,,,
+,,"PAUIL(I,L)",,
+REGION,OIL,GAS,COAL,BIOMASS
+1,2,0.8,0.5,0.8,US,,Base-year coefficient for oil is very small. Increase price here to account for this.
+2,2,0.8,0.5,0.8,CANADA,,Base-year coefficient for oil is very small. Increase price here to account for this.
+3,2,0.8,0.5,0.8,WEUR,,Base-year coefficient for oil is very small. Increase price here to account for this.
+4,2,0.8,1.5,0.8,JAPAN,,Base-year coefficient for oil is very small. Increase price here to account for this.
+5,2,0.8,0.5,0.8,AUS&NZ,,Base-year coefficient for oil is very small. Increase price here to account for this.
+6,2,0.8,0.5,0.8,FSU,,Base-year coefficient for oil is very small. Increase price here to account for this.
+7,2,0.8,0.5,0.8,ACENP,,Base-year coefficient for oil is very small. Increase price here to account for this.
+8,1,0.8,0.8,0.8,MIDEAST,,
+9,1,0.8,0.8,0.8,AFRICA,,
+10,1,0.8,0.8,0.8,L AMER,,
+11,1,0.8,0.8,0.8,S&E ASIA,,
+12,2,0.8,0.5,0.8,EEUR,,Base-year coefficient for oil is very small. Increase price here to account for this.
+13,2,0.8,0.8,0.8,KOR,,Base-year coefficient for oil is very small. Increase price here to account for this.
+14,2,0.8,0.8,0.8,INDIA,,Base-year coefficient for oil is very small. Increase price here to account for this.
+
+Reduce elec coal costs more for coal exporting countries,,,,,,,
+"To get accurate current prices, then oil coefficient should be 0.5",,,,,,,,,,,,
+But this makes future oil electricity too cheap relative to gas,,,,,,,,,,,,
+
+
+
+"BSSUILM:  ELECTRIC SUBSECTOR SHARE WEIGHTS, BY PERIOD, FUEL AND REGION",,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,Biomass share weights can now be specified by region (necessary to include 1990 electric bio) via variable #88,,,,,,,,,,
+80,,NOTE: biomass shares between 1990 and 2050 are automatically overwitten by region,,,,,,,,,,
+,"BSSUILM(I,ISS,L,M)",,,,,,,,,,,
+ISS,1975,1990,2005,2020,2035,2050,2065,2080,2095,FUEL,REG,SEC
+1,1,1,1,1,1,1,1,1,1,OIL,1,OIL
+2,0,0,1,1,1,1,1,1,1,OIL SCRUB,1,OIL
+1,1,1,1,1,1,1,1,1,1,GAS,1,GAS
+2,0,0,1,1,1,1,1,1,1,GAS SCRUB,1,GAS
+1,1,1,1,1,1,1,1,1,1,COAL,1,SOLIDS
+2,0,0,1,1,1,1,1,1,1,COAL SCRUB,1,SOLIDS
+3,0,0,0.25,0.33,0.66,1,1,1,1,BIOMASS,1,SOLIDS
+
+
+Elasticity increased in general-- this reduces future price increases to more realistic level,,,,,,,,,,,,
+Elasticity decreased for Natural gas to account for supply constraints,,,,,,,,,,,,
+"RIL--PRICE ELASTICITY OF SUPPLY, EVALUATED PREVIOUS PRICE (BY SUPPLY TYPE AND REGION)",,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20,,,,,,,,,,,,
+,,"RIL(IS,L)",,,,,,,,,,
+REGION,CONV OIL,CONV GAS,COAL,UNCON OIL,,,,,,,,
+1,2,0.5,2,2,US,,,,,,,
+2,2,0.5,2,2,CANADA,,,,,,,
+3,2,0.5,2,2,WEUR,,,,,,,
+4,2,0.5,2,2,JAPAN,,,,,,,
+5,2,0.5,2,2,AUS&NZ
+6,2,0.5,2,2,FSU
+7,2,0.5,2,2,ACENP
+8,2,0.5,2,2,MIDEAST
+9,2,0.5,2,2,AFR
+10,2,0.5,2,2,LA
+11,2,0.5,2,2,SEASIA
+12,2,0.5,2,2,EEUR
+13,2,0.5,2,2,KOR
+14,2,0.5,2,2,INDIA
+
+RFosExpan -- Rate at which supply limit on fossil production can expand with GDP,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,RFosExpan is the exponent to GDP change that determines how fast the maximum supply limit expands with GDP,,,
+90,,,,,
+,,,"RFosExpan(I,L,M)",,
+REGION,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,FUEL #
+1,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,USA,OIL,1
+2,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,CANADA,OIL,1
+3,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,WEUR,OIL,1
+4,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,JAPAN,OIL,1
+5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,AUS&NZ,OIL,1
+6,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,FSU,OIL,1
+7,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,ACENP,OIL,1
+8,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,MIDEAST,OIL,1
+9,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,AFR,OIL,1
+10,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,LA,OIL,1
+11,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,S&E ASIA,OIL,1
+12,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,EEUR,OIL,1
+13,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,KOR,OIL,1
+14,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,INDIA,OIL,1
+1,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,USA,GAS,2
+2,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,CANADA,GAS,2
+3,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,WEUR,GAS,2
+4,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,JAPAN,GAS,2
+5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,AUS&NZ,GAS,2
+6,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,FSU,GAS,2
+7,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,ACENP,GAS,2
+8,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,MIDEAST,GAS,2
+9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,AFR,GAS,2
+10,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,LA,GAS,2
+11,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,S&E ASIA,GAS,2
+12,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,EEUR,GAS,2
+13,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,KOR,GAS,2
+14,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,INDIA,GAS,2
+1,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,USA,COAL,3
+2,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,CANADA,COAL,3
+3,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,WEUR,COAL,3
+4,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,JAPAN,COAL,3
+5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,AUS&NZ,COAL,3
+6,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,FSU,COAL,3
+7,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,ACENP,COAL,3
+8,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,MIDEAST,COAL,3
+9,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,AFR,COAL,3
+10,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,LA,COAL,3
+11,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,S&E ASIA,COAL,3
+12,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,EEUR,COAL,3
+13,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,KOR,COAL,3
+14,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,INDIA,COAL,3
+
+
+
+STISM--RATE OF TECHNOLOGICAL CHANGE BY SUPPLY TYPE AND REGION,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,
+21,,,,,,,,
+,,"STISM(IS,M)",,,,,,Original 
+PERIOD,CONV OIL,CONV GAS,COAL,UNCON OIL,NUCLEAR FUEL,,,Nuclear
+1,0.005,0.005,0.005,0.005,0.005,1975,,0.005
+2,0.005,0.005,0.005,0.005,0.005,1990,,0.005
+3,0.005,0.005,0.005,0.005,0.005,2005,,0.005
+4,0.005,0.005,0.005,0.005,0.005,2020,,0.0075
+5,0.005,0.005,0.005,0.005,0.005,2035,,0.01
+6,0.005,0.005,0.005,0.005,0.005,2050,,0.01
+7,0.005,0.005,0.005,0.005,0.005,2065,,0.01
+8,0.005,0.005,0.005,0.005,0.005,2080,,0.01
+9,0.005,0.005,0.005,0.005,0.005,2095,,0.01
+
+
+BESIL--MINIMUM LEVEL OF SHORT-TERM SUPPLY BY TYPE AND REGION,,,,,,,,
+allow coal industry to recover after market goes zero in any period,,,,,,
+INPUT_TABLE,,,"Now -- also allow other production to re-start - but limit slightly, which damps oscillations",,,
+Variable ID,,,Min short-term supply set larger for Uncon oil (or else doesn't come on),,,
+22,,,"For other fuels, set to 1 EJ except for coal, which is equal to production in 1990",,,
+,,"BESIL(IS,L)",,,,
+REGION,CONV OIL,CONV GAS,COAL,UNCON OIL,NUCLEAR,
+1,1,1,22,5,0.03,US
+2,1,1,2,3,0.03,CAN
+3,1,1,9,3,0.03,WEUR
+4,1,1,1,1,0.03,JAPAN
+5,1,1,4,1,0.03,AUS&NZ
+6,1,1,12,3,0.03,FSU
+7,1,1,23,2,0.03,ACENP
+8,1,1,1,1,0.03,MIDEAST
+9,1,1,4,1,0.03,AFR
+10,1,1,1,1,0.03,LA
+11,1,1,1,1,0.03,SEASIA
+12,1,1,7,1,0.03,EEUR
+13,1,1,1,1,0.03,KOR
+14,1,1,4,1,0.03,INDIA
+,,,, *** Make sure and let uncon oil start up,,
+
+
+
+
+
+"ESFIL--INITIAL ESTIMATE OF ENERGY SUPPLY BY FUEL, REGION, AND PERIOD (UNITS=EXAJOULES/YR)",,,,,,
+INPUT_TABLE,,This is the resources produced in 1975,,,,
+Variable ID,,Is used only in ss.for as 1975 data to calculate cumulative production,,,,
+23,,,,,,
+,,"ESFIL(IS,L) - YEAR 1975",,,,
+REGION,CONV OIL,CONV GAS,COAL,UNCON OIL,NUCLEAR,
+1,19.9,18.5,12.8,0,0.62,US,,,,,,,,
+2,3.6,2.5,0.5,0,0.06,CAN,,,,,,,,
+3,1.2,5.7,9,0,0.52,WEUR,,,,,,,,
+4,0,0.1,0.5,0,0.09,JAPAN,,,,,,,,
+5,0.9,0.2,1.6,0,0,AUS&NZ,,,,,,,,
+6,20.6,10,12.1,0,0.06,FSU,,,,,,,,
+7,3.3,0.3,9.3,0,0,ACENP,,,,,,,,
+8,41.8,1.3,0,0,0,MIDEAST,,,22.77,12.17,25.77,0,0.07,EEFSU
+9,10.4,0.4,1.5,0,0,AFR,,,,,,,,
+10,9.7,1.5,0.2,0,0.01,LA,,,,,,,,
+11,2.9,0.3,7.2,0,0.01,SEASIA,,,3.79,1.16,2.68,0,0.01,
+12,1,1.6,6.1,0,0.01,EEUR,,,0.024801865,0.046487971,0.352675686,shared out by 1990 production,,
+13,0,0,0.3,0,0.09,KOR,,,,,,,,
+14,0.4,0,1.8,0,0.01,INDIA,,,,,,,,
+
+GAS FLARING,,,,,,,,,,,,,,
+"""FLRL1"" IS THE FLARING RATE IN 1975, ""FLRL2"" IS THE ULTIMATE",,,,
+"FLARING RATE, AND ""FLRL3"" IS THE NUMBER OF YEARS TO REACH ""FLRL2.""",,,,
+THE MODEL EXPONENTIALLY INTERPOLATES BETWEEN THE RATES.,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+24,,,,
+,"FLRL(II,L)",,,
+REGION,FLRL1,FLRL2,FLRL3,
+1,0.08,0.025,25,US
+2,0.07,0.025,25,CAN
+3,0.07,0.025,25,WEUR
+4,0.03,0.025,25,JAPAN
+5,0.03,0.025,25,AUS&NZ
+6,0.02,0.015,25,FSU
+7,0.107,0.035,50,ACENP
+8,0.687,0.023,50,MIDEAST
+9,0.753,0.08,50,AFR,,,
+10,0.499,0.08,50,LA,,,
+11,0.38,0.045,50,SEASIA,0.38,0.045,50
+12,0.02,0.015,50,EEUR,same as FSU (orig. EEFSU value),,
+13,0.0001,0.0001,50,KOR,,,
+14,0.38,0.045,50,INDIA,,,
+
+SYNFUEL PARAMETERS,,,,,,,
+"(PARAMETERS INCLUDE A CONVERSION EFFICIENCY (GCI), ADD ON",,,,,,,
+COSTS (HCILT) AND AN ELASTICITY CONTROL PARAMETER (RCI).,,,,,,,
+"HCILT1 IS THE INITIAL COST, HCILT2 THE FINAL COST,",,,,,,,
+AND HCILT3 THE TIME WHEN FINAL COST IS REACHED.,,,,,,,
+THE MODEL EXPONENTIALLY INTERPOLATES FOR INTERMEDIATE,,,,,,,
+YEARS),COST IN 75 $/GJ,,,,,,
+
+INPUT_TABLE,,,,,,,
+Variable ID,,,,
+26,,,,
+,N. GAS,SYNCRUDE from Gas,,
+REGION,P FUEL,HCILT1,HCILT2,HCILT3
+1,2,100,5,25
+2,2,100,5,25
+3,2,100,5,25
+4,2,100,5,25
+5,2,100,5,25
+6,2,100,5,25
+7,2,100,5,25
+8,2,100,5,25
+9,2,100,5,25
+10,2,100,5,25
+11,2,100,5,25
+12,2,100,5,25
+13,2,100,5,25,,,,,,,,,,
+14,2,100,5,25,,,,,,,,,,
+
+INPUT_TABLE,,Non energy costs,,,,,,,,,,,,
+Variable ID,,See discription above,,,,,,,,,,,,
+27,,,,,,,,,,,,,,
+,COAL,SYNCRUDE from Coal,,,SYNGAS from Coal,,,SYNCRUDE from Biomass,,,SYNGAS from Biomass,,,
+REGION,P FUEL,HCILT1,HCILT2,HCILT3,HCILT1,HCILT2,HCILT3,HCILT1,HCILT2,HCILT3,HCILT1,HCILT2,HCILT3,
+1,3,100,5,25,100,3.63,25,100,5,25,100,3.63,25,US
+2,3,100,5,25,100,3.63,25,100,5,25,100,3.63,25,CAN
+3,3,100,5,25,100,3.63,25,100,5,25,100,3.63,25,WEUR
+4,3,100,5,25,100,3.63,25,100,5,25,100,3.63,25,JAPAN
+5,3,100,5,25,100,3.63,25,100,5,25,100,3.63,25,AUS&NZ
+6,3,100,5,25,100,3.63,25,100,5,25,100,3.63,25,FSU
+7,3,100,5,50,100,3.63,50,100,5,50,100,3.63,50,ACENP
+8,3,100,5,100,100,3.63,100,100,5,100,100,3.63,100,MIDEAST
+9,3,12.54,5,25,100,3.63,25,12.54,5,25,100,3.63,25,AFR
+10,3,12.54,5,25,100,3.63,25,12.54,5,25,100,3.63,25,LA
+11,3,100,5,50,100,3.63,50,100,5,50,100,3.63,50,SEASIA
+12,3,100,50,25,100,3.63,25,100,5,25,100,3.63,25,EEUR
+13,3,100,5,25,100,3.63,25,100,5,25,100,3.63,25,KOR
+14,3,100,5,50,100,3.63,50,100,5,50,100,3.63,50,INDIA
+
+GCI,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+28,,,,,,,,,,,,,,
+,GCI(I),,,,,,,,,,,,,
+SYNFUEL,N.Gas,Coal,Biomass,,,,,,,,,,,
+1,1.5,1.5,1.5,SYNCRUDE GCI,,,,,,,,,,
+2,1.5,1.5,1.5,SYNGAS GCI,,,,,,,,,,
+
+RCI,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+29,,,,,,,
+,RCI(I),,,,,,
+SYNFUEL,N.Gas,Coal,Biomass,,,,
+1,-6,-6,-8,SYNCRUDE RCI,,,
+2,-6,-6,-8,SYNGAS RCI,,,
+
+ENERGY SERVICE INPUT-OUTPUT COEFFICIENTS,,,,,,,
+ENERGY TRANSFORMATION BY SECTOR,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+30,,,,,,,
+,GJK,,,,,,
+SECTOR,OIL,GAS,COAL,ELECTRIC,BIOMASS,,VARIABLE
+1,1.67,1.54,2.5,0.86,2.5,RES/COM,"GJK,J=1,NJ",K=1
+2,1.92,1.9,2,1.05,2,INDUSTRY,"GJK,J=1,NJ",K=2
+3,3,3,3.33,1.05,3.33,TRANSPORT,"GJK,J=1,NJ",K=3
+
+
+Describe,(Not Used anymore),,,,,,,
+cINPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+31,,,,,,,,
+,,GJ,,,,,,
+AGGREGATE,OIL,GAS,COAL,ELECTRIC,BIOMASS,,,
+1,2,1.7,2.05,0.95,2.05,"J=1,NJ",,
+
+
+NON-ENERGY Costs BY SECTOR,,,,,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+32,,,,,,,,
+,,HJK,,,,,,
+SECTOR,OIL,GAS,COAL,ELECTRIC,BIOMASS,,VARIABLE,
+1,4.98,3.24,2.87,3.41,2.87,RES/COM,"HJK,J=1,NJ",K=1
+2,0.41,0.32,0.8,1.16,0.8,INDUSTRY,"HJK,J=1,NJ",K=2
+3,98.88,200,200,153.17,200,TRANSPORT,"HJK,J=1,NJ",K=3
+
+
+NON-ENERGY I-O COEFFICIENTS BY SECTOR,,,,,,,,
+cINPUT_TABLE,,,,,,,,
+Variable ID,(Not Used anymore),,,,,,,
+33,,,,,,,,
+,HJ,,,,,,,
+AGGREGATE,OIL,GAS,COAL,ELECTRIC,BIOMASS,,,
+1,2.1,2.03,1.18,1.15,1.18,"J=1,NJ",,
+
+Values below are used only to get model started.,,,,,,
+"These are overwritten in calibration routine,",,,,,,
+and subsequently (lagged by one period) by the actual service shares,,,,,,
+
+BASE ENERGY SERVICE CONSUMPTION WEIGHTS BY FUEL BY SECTOR BY REGION,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+34,,,,,,
+,,"SJKLP(J,K,L) (UNITS=UNDIMENTIONED)",,,,
+REGION,OIL,GAS,COAL,ELECTRIC,SECTOR,
+1,0.185,0.683,0.011,0.379,RES/COM,USA
+1,0.091,0.345,0.129,0.145,INDUSTRY,USA
+1,1.369,0,0,0.001,TRANSPORT,USA
+2,0.359,0.122,0.112,0.372,RES/COM,CANADA
+2,0.26,0.065,0.131,0.212,INDUSTRY,CANADA
+2,1.962,0,0.003,0.028,TRANSPORT,CANADA
+3,0.359,0.122,0.112,0.372,RES/COM,WEUR
+3,0.26,0.065,0.131,0.212,INDUSTRY,WEUR
+3,1.962,0,0.003,0.028,TRANSPORT,WEUR
+4,0.443,0.088,0.207,0.462,RES/COM,JAPAN
+4,0.224,0.032,0.267,0.263,INDUSTRY,JAPAN
+4,2.672,0,0.001,0.05,TRANSPORT,JAPAN
+5,0.443,0.088,0.207,0.462,RES/COM,AUS&NZ
+5,0.224,0.032,0.267,0.263,INDUSTRY,AUS&NZ
+5,2.672,0,0.001,0.05,TRANSPORT,AUS&NZ
+6,0.359,0.122,0.112,0.372,RES/COM,FSU
+6,0.26,0.065,0.131,0.212,INDUSTRY,FSU
+6,1.962,0,0.003,0.028,TRANSPORT,FSU
+7,0.443,0.088,0.207,0.462,RES/COM,CHINA
+7,0.224,0.032,0.267,0.263,INDUSTRY,CHINA
+7,2.672,0,0.001,0.05,TRANSPORT,CHINA
+8,0.443,0.088,0.207,0.462,RES/COM,MIDEAST,
+8,0.224,0.032,0.267,0.263,INDUSTRY,MIDEAST,
+8,2.672,0,0.001,0.05,TRANSPORT,MIDEAST,
+9,0.443,0.088,0.207,0.462,RES/COM,AFRICA,
+9,0.224,0.032,0.267,0.263,INDUSTRY,AFRICA,
+9,2.672,0,0.001,0.05,TRANSPORT,AFRICA,
+10,0.443,0.088,0.207,0.462,RES/COM,L.AMERICA,
+10,0.224,0.032,0.267,0.263,INDUSTRY,L.AMERICA,
+10,2.672,0,0.001,0.05,TRANSPORT,L.AMERICA,
+11,0.443,0.088,0.207,0.462,RES/COM,S&E ASIA,
+11,0.224,0.032,0.267,0.263,INDUSTRY,S&E ASIA,
+11,2.672,0,0.001,0.05,TRANSPORT,S&E ASIA,
+12,0.359,0.122,0.112,0.372,RES/COM,EEUR,same as FSU (orig. EEFSU value)
+12,0.26,0.065,0.131,0.212,INDUSTRY,EEUR,
+12,1.962,0,0.003,0.028,TRANSPORT,EEUR,
+13,0.443,0.088,0.207,0.462,RES/COM,KOR,
+13,0.224,0.032,0.267,0.263,INDUSTRY,KOR
+13,2.672,0,0.001,0.05,TRANSPORT,KOR
+14,0.443,0.088,0.207,0.462,RES/COM,INDIA
+14,0.224,0.032,0.267,0.263,INDUSTRY,INDIA
+14,2.672,0,0.001,0.05,TRANSPORT,INDIA
+
+
+BASE ENERGY SERVICE CONSUMPTION WEIGHTS BY FUEL BY SECTOR BY REGION,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+35,,,,,,
+,"BSKL(K,L) (UNITS=EXAJOULES)",,,,,
+REGION,BSKL,SECTOR,REGION,,,
+1,15.2377,RES/COM,USA,,,
+1,9.7881,INDUSTRY,USA,,,
+1,6.6411,TRANSPORT,USA,,,
+2,2.22952,RES/COM,CANADA
+2,1.88094,INDUSTRY,CANADA
+2,0.67948,TRANSPORT,CANADA
+3,10.255792,RES/COM,WEUR
+3,8.652324,INDUSTRY,WEUR
+3,3.125608,TRANSPORT,WEUR
+4,1.67008,RES/COM,JAPAN
+4,3.15128,INDUSTRY,JAPAN
+4,0.71528,TRANSPORT,JAPAN
+5,0.62628,RES/COM,AUS&NZ
+5,1.18173,INDUSTRY,AUS&NZ
+5,0.26823,TRANSPORT,AUS&NZ
+6,5.470250516,RES/COM,FSU
+6,14.52538712,INDUSTRY,FSU
+6,2.1262251,TRANSPORT,FSU
+7,1.7254,RES/COM,CHINA
+7,7.0613,INDUSTRY,CHINA,,
+7,0.3344,TRANSPORT,CHINA,,
+8,0.5171,RES/COM,MIDEAST,,
+8,0.9323,INDUSTRY,MIDEAST,,
+8,0.3659,TRANSPORT,MIDEAST,,
+9,0.4621,RES/COM,AFRICA,,
+9,1.4083,INDUSTRY,AFRICA,,
+9,0.413,TRANSPORT,AFRICA,,
+10,1.2285,RES/COM,L.AMERICA,,
+10,2.7492,INDUSTRY,L.AMERICA,,
+10,1.0636,TRANSPORT,L.AMERICA,,
+11,0.50765,RES/COM,S&E ASIA,1.0153,
+11,1.2696,INDUSTRY,S&E ASIA,2.5392,
+11,0.3854,TRANSPORT,S&E ASIA,0.6954,
+12,1.573452484,RES/COM,EEUR,,from calibration workbook
+12,4.085336879,INDUSTRY,EEUR,,
+12,0.4493719,TRANSPORT,EEUR,,,,,,,,,,
+13,0.695269,RES/COM,KOR,,,,,,,,,,
+13,0.710873,INDUSTRY,KOR,,,,,,,,,,
+13,0.251545,TRANSPORT,KOR,,,,,,,,,,
+14,0.50765,RES/COM,INDIA,,,,,,,,,,
+14,1.2696,INDUSTRY,INDIA,,,,,,,,,,
+14,0.31,TRANSPORT,INDIA,,,,,,,,,,
+
+
+BSSJKLM- COAL/BIOMASS SUBSECTOR END USE SHARE COEFFICIENTS,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,NOTE: shares between 1990 and 2050 are automatically overwitten,,,,,,,
+ Variable ID,,,,,,,,,,,,,
+82,,,,,,,Coal 1/4 of biomass in res/com after 2065,,,,,,
+ ,,BSSJKLM,,,,,,,,,,,
+ Sub sec,1975,1990,2005,2020,2035,2050,2065,2080,2095,Sector,Region,Sec,Region
+1,1,0.08556072,0.1283,0.1711,0.2139,0.2567,0.25,0.25,0.25,1,1,RES/COM,USA
+1,1,0.31111747,0.42,0.53,0.64,0.75,1,1,1,2,1,INDUSTRY,USA
+1,1,1,1,1,1,1,1,1,1,3,1,TRANSPORT,USA
+1,1,0.01150699,0.0173,0.023,0.0288,0.0345,0.25,0.25,0.25,1,2,RES/COM,CANADA
+1,1,0.12298448,0.22,0.31,0.41,0.5,1,1,1,2,2,INDUSTRY,CANADA
+1,1,1,1,1,1,1,1,1,1,3,2,TRANSPORT,CANADA
+1,1,0.50514182,0.5,0.5,0.5,0.5,0.25,0.25,0.25,1,3,RES/COM,WEUR
+1,1,0.76535782,0.82,0.88,0.94,1,1,1,1,2,3,INDUSTRY,WEUR
+1,1,1,1,1,1,1,1,1,1,3,3,TRANSPORT,WEUR
+1,1,0.77062279,0.7,0.64,0.57,0.5,0.25,0.25,0.25,1,4,RES/COM,JAPAN
+1,1,0.72033368,0.79,0.86,0.93,1,1,1,1,2,4,INDUSTRY,JAPAN
+1,1,1,1,1,1,1,1,1,1,3,4,TRANSPORT,JAPAN
+1,1,0.03752532,0.06,0.08,0.09,0.1126,0.25,0.25,0.25,1,5,RES/COM,AUS&NZ
+1,1,0.30729401,0.48,0.65,0.83,1,1,1,1,2,5,INDUSTRY,AUS&NZ
+1,1,1,1,1,1,1,1,1,1,3,5,TRANSPORT,AUS&NZ
+1,1,0.3867167,0.42,0.44,0.47,0.5,0.25,0.25,0.25,1,6,RES/COM,FSU
+1,1,1,1,1,1,1,1,1,1,2,6,INDUSTRY,FSU
+1,1,1,1,1,1,1,1,1,1,3,6,TRANSPORT,FSU
+1,1,0.12231221,0.18,0.24,0.31,0.3669,0.25,0.25,0.25,1,7,RES/COM,CHINA
+1,1,0.70650003,0.78,0.85,0.93,1,1,1,1,2,7,INDUSTRY,CHINA
+1,1,1,1,1,1,1,1,1,1,3,7,TRANSPORT,CHINA
+1,1,0,0,0,0,0,0.25,0.25,0.25,1,8,RES/COM,MIDEAST
+1,1,1,1,1,1,1,1,1,1,2,8,INDUSTRY,MIDEAST
+1,1,1,1,1,1,1,1,1,1,3,8,TRANSPORT,MIDEAST
+1,1,0.00705898,0.01,0.01,0.02,0.0212,0.25,0.25,0.25,1,9,RES/COM,AFRICA
+1,1,0.64861117,0.74,0.82,0.91,1,1,1,1,2,9,INDUSTRY,AFRICA
+1,1,1,1,1,1,1,1,1,1,3,9,TRANSPORT,AFRICA
+1,1,0.00089136,0,0,0,0.0027,0.25,0.25,0.25,1,10,RES/COM,L.AMERICA
+1,1,0.30382182,0.48,0.65,0.83,1,1,1,1,2,10,INDUSTRY,L.AMERICA
+1,1,1,1,1,1,1,1,1,1,3,10,TRANSPORT,L.AMERICA
+1,1,0.00115382,0,0,0,0.0035,0.25,0.25,0.25,1,11,RES/COM,S&E ASIA
+1,1,0.14867051,0.24,0.32,0.41,0.5,1,1,1,2,11,INDUSTRY,S&E ASIA
+1,1,1,1,1,1,1,1,1,1,3,11,TRANSPORT,S&E ASIA
+1,1,0.64750888,0.61,0.57,0.54,0.5,0.25,0.25,0.25,1,12,RES/COM,EEUR
+1,1,0.97127892,0.98,0.99,0.99,1,1,1,1,2,12,INDUSTRY,EEUR
+1,1,1,1,1,1,1,1,1,1,3,12,TRANSPORT,EEUR
+1,1,0.81258839,0.73,0.66,0.58,0.5,0.25,0.25,0.25,1,13,RES/COM,KOR
+1,1,1,1,1,1,1,1,1,1,2,13,INDUSTRY,KOR
+1,1,1,1,1,1,1,1,1,1,3,13,TRANSPORT,KOR
+1,1,0.00412234,0.01,0.01,0.01,0.0124,0.25,0.25,0.25,1,14,RES/COM,INDIA
+1,1,0.24060184,0.31,0.37,0.44,0.5,1,1,1,2,14,INDUSTRY,INDIA
+1,1,1,1,1,1,1,1,1,1,3,14,TRANSPORT,INDIA
+2,0,0.91443928,0.94,0.96,0.98,1,1,1,1,1,1,RES/COM,USA
+2,0,0.68888253,0.77,0.84,0.92,1,1,1,1,1,1,INDUSTRY,USA
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,1,TRANSPORT,USA
+2,0,0.98849301,0.99,0.99,1,1,1,1,1,1,2,RES/COM,CANADA
+2,0,0.87701552,0.91,0.94,0.97,1,1,1,1,1,2,INDUSTRY,CANADA
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,2,TRANSPORT,CANADA
+2,0,0.49485818,0.62,0.75,0.87,1,1,1,1,1,3,RES/COM,WEUR
+2,0,0.23464218,0.43,0.62,0.81,1,1,1,1,1,3,INDUSTRY,WEUR
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,3,TRANSPORT,WEUR
+2,0,0.22937721,0.42,0.61,0.81,1,1,1,1,1,4,RES/COM,JAPAN
+2,0,0.27966632,0.46,0.64,0.82,1,1,1,1,1,4,INDUSTRY,JAPAN
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,4,TRANSPORT,JAPAN
+2,0,0.96247468,0.97,0.98,0.99,1,1,1,1,1,5,RES/COM,AUS&NZ
+2,0,0.69270599,0.77,0.85,0.92,1,1,1,1,1,5,INDUSTRY,AUS&NZ
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,5,TRANSPORT,AUS&NZ
+2,0,0.6132833,0.71,0.81,0.9,1,1,1,1,1,6,RES/COM,FSU
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,6,INDUSTRY,FSU
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,6,TRANSPORT,FSU
+2,0,0.87768779,0.91,0.94,0.97,1,1,1,1,1,7,RES/COM,CHINA
+2,0,0.29349997,0.47,0.65,0.82,1,1,1,1,1,7,INDUSTRY,CHINA
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,7,TRANSPORT,CHINA
+2,0,1,1,1,1,1,1,1,1,1,8,RES/COM,MIDEAST
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,8,INDUSTRY,MIDEAST
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,8,TRANSPORT,MIDEAST
+2,0,0.99294102,0.99,1,1,1,1,1,1,1,9,RES/COM,AFRICA
+2,0,0.35138883,0.51,0.68,0.84,1,1,1,1,1,9,INDUSTRY,AFRICA
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,9,TRANSPORT,AFRICA
+2,0,0.99910864,1,1,1,1,1,1,1,1,10,RES/COM,L.AMERICA
+2,0,0.69617818,0.77,0.85,0.92,1,1,1,1,1,10,INDUSTRY,L.AMERICA
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,10,TRANSPORT,L.AMERICA
+2,0,0.99884618,1,1,1,1,1,1,1,1,11,RES/COM,S&E ASIA
+2,0,0.85132949,0.89,0.93,0.96,1,1,1,1,1,11,INDUSTRY,S&E ASIA
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,11,TRANSPORT,S&E ASIA
+2,0,0.35249112,0.51,0.68,0.84,1,1,1,1,1,12,RES/COM,EEUR
+2,0,0.02872108,0.27,0.51,0.76,1,1,1,1,1,12,INDUSTRY,EEUR
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,12,TRANSPORT,EEUR
+2,0,0.18741161,0.39,0.59,0.8,1,1,1,1,1,13,RES/COM,KOR
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,13,INDUSTRY,KOR
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,13,TRANSPORT,KOR
+2,0,0.99587766,1,1,1,1,1,1,1,1,14,RES/COM,INDIA
+2,0,0.75939816,0.82,0.88,0.94,1,1,1,1,1,14,INDUSTRY,INDIA
+2,0,0,0.25,0.5,0.75,1,1,1,1,1,14,TRANSPORT,INDIA
+
+
+
+PRICE ELASTICITY CONTROL PARAMETERS,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+37,,,,,,,,,,,,,
+,RPKK(K),,,,,,,,,,,,
+AGG,SECTOR,,,Changed: 11/01  sjs,,,,,,,,,
+-0.5,RES/COM,"RPKK,JK,K=1",,Values set so that envery service shares are all approximately -1,,,,,,,,,
+-0.8,INDUSTRY,"RPKK,JK,K=2",,Used to be -0.7 across the board,,,,,,,,,
+-0.07,TRANSPORT,"RPKK,JK,K=3",,,,,,,,,,,
+
+
+PRICE ELASTICITY CONTROL PARAMETERS,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+38,,,,,
+,RPJK,,,,
+OIL,GAS,COAL,ELECTRIC,SECTOR,
+-3,-3,-3,-3,RES/COM,"RPKK,JK,K=1"
+-3,-3,-3,-3,INDUSTRY,"RPKK,JK,K=2"
+-13,-13,-13,-13,TRANSPORT,"RPKK,JK,K=3"
+
+COAL/BIOMASS SUBSECTOR LEVEL,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+81,j=3,,,,
+,RSSPJK,,,,
+COAL,BIOMASS,SECTOR
+-6,-6,RES/COM
+-6,-6,INDUSTRY
+-13,-13,TRANSPORT
+
+
+RPK,,
+INPUT_TABLE,,Not used anymore
+Variable ID,,
+39,,
+,RPK,
+RPK,,
+-0.7,AGGREGATE,
+
+
+RPJ,,
+INPUT_TABLE,,Not used anymore,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+40,,,,,,,,,,,,,,
+,RPJ,,,,,,,,,,,,,
+RPJ,,,,,,,,,,,,,,
+-2.5,-2.5,-2.5,-2.5,AGGREGATE,,,,,,,,,,
+
+
+Electricity preference in developing countries reduced (otherwise demand grows too fast),,,,,,,,,,,,,,
+ INCOME ELASTICITY CONTROL PARAMETERS,,,,,,,,,,,,,,
+INPUT_TABLE,,,,Note: Dev country parameters have more effect since income change is greater,,,,,,,,,,
+Variable ID,,,,Increased preference away from building use of coal,,,,,,,,,,
+42,,,,Increased preference for building use of electricity,,,,,,,,,,
+,"RYJKLM(J,K,L,M)",,,,,,,,,,,,,
+FUEL,1975,1990,2005,2020,2035,2050,2065,2080,2095,,REGION,SECTOR,REG,SEC
+1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,USA,RES/COM,1,1
+1,0,0,0,0,0,0,0,0,0,OIL,USA,INDUSTRY,1,2,
+1,0,0,0,0,0,0,0,0,0,OIL,USA,TRANSPORT,1,3,
+2,0.3,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,USA,RES/COM,1,1,
+2,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,USA,INDUSTRY,1,2,
+2,0,0,0,0,0,0,0,0,0,GAS,USA,TRANSPORT,1,3,
+3,-1,-1,-1,-1,-1,-1,-1,-1,-1,COAL,USA,RES/COM,1,1,
+3,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,COAL,USA,INDUSTRY,1,2,Industry coal use should go down as economies expand and need for process heat expands
+3,0,0,0,0,0,0,0,0,0,COAL,USA,TRANSPORT,1,3,
+4,1,1,1,1,1,1,1,1,1,ELECTRIC,USA,RES/COM,1,1,
+4,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,ELECTRIC,USA,INDUSTRY,1,2,
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,USA,TRANSPORT,1,3,
+1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,CANADA,RES/COM,2,1,
+1,0,0,0,0,0,0,0,0,0,OIL,CANADA,INDUSTRY,2,2,
+1,0,0,0,0,0,0,0,0,0,OIL,CANADA,TRANSPORT,2,3,
+2,0.3,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,CANADA,RES/COM,2,1,
+2,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,CANADA,INDUSTRY,2,2,
+2,0,0,0,0,0,0,0,0,0,GAS,CANADA,TRANSPORT,2,3,
+3,-1,-1,-1,-1,-1,-1,-1,-1,-1,COAL,CANADA,RES/COM,2,1,
+3,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,COAL,CANADA,INDUSTRY,2,2,
+3,0,0,0,0,0,0,0,0,0,COAL,CANADA,TRANSPORT,2,3,
+4,1,1,1,1,1,1,1,1,1,ELECTRIC,CANADA,RES/COM,2,1,
+4,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,ELECTRIC,CANADA,INDUSTRY,2,2,
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,CANADA,TRANSPORT,2,3,
+1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,WEUR,RES/COM,3,1,
+1,0,0,0,0,0,0,0,0,0,OIL,WEUR,INDUSTRY,3,2,
+1,0,0,0,0,0,0,0,0,0,OIL,WEUR,TRANSPORT,3,3,
+2,0.3,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,WEUR,RES/COM,3,1,
+2,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,WEUR,INDUSTRY,3,2,
+2,0,0,0,0,0,0,0,0,0,GAS,WEUR,TRANSPORT,3,3,
+3,-1,-1,-2,-2,-2,-2,-2,-2,-2,COAL,WEUR,RES/COM,3,1,Increased to match decrease in Euro coal use
+3,-0.6,-0.6,-1,-1,-1,-1,-1,-1,-1,COAL,WEUR,INDUSTRY,3,2,Increase preference to better match euro decline
+3,0,0,0,0,0,0,0,0,0,COAL,WEUR,TRANSPORT,3,3,
+4,1,1,1,1,1,1,1,1,1,ELECTRIC,WEUR,RES/COM,3,1
+4,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,ELECTRIC,WEUR,INDUSTRY,3,2
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,WEUR,TRANSPORT,3,3
+1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,JAPAN,RES/COM,4,1
+1,0,0,0,0,0,0,0,0,0,OIL,JAPAN,INDUSTRY,4,2
+1,0,0,0,0,0,0,0,0,0,OIL,JAPAN,TRANSPORT,4,3
+2,0.3,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,JAPAN,RES/COM,4,1
+2,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,JAPAN,INDUSTRY,4,2
+2,0,0,0,0,0,0,0,0,0,GAS,JAPAN,TRANSPORT,4,3
+3,-1,-1,-1,-1,-1,-1,-1,-1,-1,COAL,JAPAN,RES/COM,4,1
+3,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,COAL,JAPAN,INDUSTRY,4,2
+3,0,0,0,0,0,0,0,0,0,COAL,JAPAN,TRANSPORT,4,3
+4,1,1,1,1,1,1,1,1,1,ELECTRIC,JAPAN,RES/COM,4,1
+4,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,ELECTRIC,JAPAN,INDUSTRY,4,2
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,JAPAN,TRANSPORT,4,3
+1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,AUS&NZ,RES/COM,5,1
+1,0,0,0,0,0,0,0,0,0,OIL,AUS&NZ,INDUSTRY,5,2
+1,0,0,0,0,0,0,0,0,0,OIL,AUS&NZ,TRANSPORT,5,3
+2,0.3,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,AUS&NZ,RES/COM,5,1
+2,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,AUS&NZ,INDUSTRY,5,2
+2,0,0,0,0,0,0,0,0,0,GAS,AUS&NZ,TRANSPORT,5,3
+3,-1,-1,-1,-1,-1,-1,-1,-1,-1,COAL,AUS&NZ,RES/COM,5,1
+3,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,-0.6,COAL,AUS&NZ,INDUSTRY,5,2
+3,0,0,0,0,0,0,0,0,0,COAL,AUS&NZ,TRANSPORT,5,3
+4,1,1,1,1,1,1,1,1,1,ELECTRIC,AUS&NZ,RES/COM,5,1
+4,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,ELECTRIC,AUS&NZ,INDUSTRY,5,2
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,AUS&NZ,TRANSPORT,5,3
+1,0,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,FSU,RES/COM,6,1
+1,0,0,0,0,0,0,0,0,0,OIL,FSU,INDUSTRY,6,2
+1,0,0,0,0,0,0,0,0,0,OIL,FSU,TRANSPORT,6,3
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,FSU,RES/COM,6,1
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,FSU,INDUSTRY,6,2
+2,0,0,0,0,0,0,0,0,0,GAS,FSU,TRANSPORT,6,3,
+3,-0.5,-0.5,-0.5,-0.5,-0.75,-0.75,-0.75,-0.75,-0.75,COAL,FSU,RES/COM,6,1,
+3,0,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,COAL,FSU,INDUSTRY,6,2,
+3,0,0,0,0,0,0,0,0,0,COAL,FSU,TRANSPORT,6,3,
+4,0.5,0.5,1.2,0.75,0.75,0.75,0.75,0.75,0.75,ELECTRIC,FSU,RES/COM,6,1,Near-term preferences adjusted to give better match to history given GDP decline
+4,0.1,0.3,1.1,0.6,0.3,0.3,0.3,0.3,0.3,ELECTRIC,FSU,INDUSTRY,6,2,Near-term preferences adjusted to give better match to history given GDP decline
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,FSU,TRANSPORT,6,3,
+1,0,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,CHINA,RES/COM,7,1,
+1,0,0,0,0,0,0,0,0,0,OIL,CHINA,INDUSTRY,7,2,
+1,0,0,0,0,0,0,0,0,0,OIL,CHINA,TRANSPORT,7,3,
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,CHINA,RES/COM,7,1,
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,CHINA,INDUSTRY,7,2,
+2,0,0,0,0,0,0,0,0,0,GAS,CHINA,TRANSPORT,7,3,
+3,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,COAL,CHINA,RES/COM,7,1,
+3,0,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,COAL,CHINA,INDUSTRY,7,2,
+3,0,0,0,0,0,0,0,0,0,COAL,CHINA,TRANSPORT,7,3,
+4,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,ELECTRIC,CHINA,RES/COM,7,1
+4,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,ELECTRIC,CHINA,INDUSTRY,7,2
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,CHINA,TRANSPORT,7,3
+1,0,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,MIDEAST,RES/COM,8,1
+1,0,0,0,0,0,0,0,0,0,OIL,MIDEAST,INDUSTRY,8,2
+1,0,0,0,0,0,0,0,0,0,OIL,MIDEAST,TRANSPORT,8,3
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,MIDEAST,RES/COM,8,1
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,MIDEAST,INDUSTRY,8,2
+2,0,0,0,0,0,0,0,0,0,GAS,MIDEAST,TRANSPORT,8,3
+3,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,COAL,MIDEAST,RES/COM,8,1
+3,0,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,COAL,MIDEAST,INDUSTRY,8,2
+3,0,0,0,0,0,0,0,0,0,COAL,MIDEAST,TRANSPORT,8,3
+4,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,ELECTRIC,MIDEAST,RES/COM,8,1
+4,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,ELECTRIC,MIDEAST,INDUSTRY,8,2
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,MIDEAST,TRANSPORT,8,3
+1,0,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,AFRICA,RES/COM,9,1
+1,0,0,0,0,0,0,0,0,0,OIL,AFRICA,INDUSTRY,9,2,
+1,0,0,0,0,0,0,0,0,0,OIL,AFRICA,TRANSPORT,9,3,
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,AFRICA,RES/COM,9,1,
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,AFRICA,INDUSTRY,9,2,
+2,0,0,0,0,0,0,0,0,0,GAS,AFRICA,TRANSPORT,9,3,
+3,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.75,-0.75,-0.75,COAL,AFRICA,RES/COM,9,1,Coefficient increased -- was sudden increase in building coal use
+3,0,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,COAL,AFRICA,INDUSTRY,9,2,
+3,0,0,0,0,0,0,0,0,0,COAL,AFRICA,TRANSPORT,9,3,
+4,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,ELECTRIC,AFRICA,RES/COM,9,1,
+4,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,ELECTRIC,AFRICA,INDUSTRY,9,2,
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,AFRICA,TRANSPORT,9,3,
+1,0,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,L.AMERICA,RES/COM,10,1,
+1,0,0,0,0,0,0,0,0,0,OIL,L.AMERICA,INDUSTRY,10,2,
+1,0,0,0,0,0,0,0,0,0,OIL,L.AMERICA,TRANSPORT,10,3,
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,L.AMERICA,RES/COM,10,1,
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,L.AMERICA,INDUSTRY,10,2,
+2,0,0,0,0,0,0,0,0,0,GAS,L.AMERICA,TRANSPORT,10,3,
+3,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.75,-0.75,-0.75,COAL,L.AMERICA,RES/COM,10,1,Coefficient increased -- was sudden increase in building coal use
+3,0,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,COAL,L.AMERICA,INDUSTRY,10,2,
+3,0,0,0,0,0,0,0,0,0,COAL,L.AMERICA,TRANSPORT,10,3,
+4,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,ELECTRIC,L.AMERICA,RES/COM,10,1,
+4,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,ELECTRIC,L.AMERICA,INDUSTRY,10,2,
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,L.AMERICA,TRANSPORT,10,3,
+1,0,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,S&E ASIA,RES/COM,11,1,
+1,0,0,0,0,0,0,0,0,0,OIL,S&E ASIA,INDUSTRY,11,2,
+1,0,0,0,0,0,0,0,0,0,OIL,S&E ASIA,TRANSPORT,11,3,
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,S&E ASIA,RES/COM,11,1,
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,S&E ASIA,INDUSTRY,11,2,
+2,0,0,0,0,0,0,0,0,0,GAS,S&E ASIA,TRANSPORT,11,3,
+3,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.75,-0.75,-0.75,COAL,S&E ASIA,RES/COM,11,1,Coefficient increased -- was sudden increase in building coal use
+3,0,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,COAL,S&E ASIA,INDUSTRY,11,2,
+3,0,0,0,0,0,0,0,0,0,COAL,S&E ASIA,TRANSPORT,11,3,
+4,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,ELECTRIC,S&E ASIA,RES/COM,11,1,
+4,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,ELECTRIC,S&E ASIA,INDUSTRY,11,2,
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,S&E ASIA,TRANSPORT,11,3,
+1,0,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,EEUR,RES/COM,12,1,
+1,0,0,0,0,0,0,0,0,0,OIL,EEUR,INDUSTRY,12,2,
+1,0,0,0,0,0,0,0,0,0,OIL,EEUR,TRANSPORT,12,3,
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,EEUR,RES/COM,12,1,
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,EEUR,INDUSTRY,12,2,
+2,0,0,0,0,0,0,0,0,0,GAS,EEUR,TRANSPORT,12,3,
+3,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,COAL,EEUR,RES/COM,12,1,
+3,0,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,COAL,EEUR,INDUSTRY,12,2,
+3,0,0,0,0,0,0,0,0,0,COAL,EEUR,TRANSPORT,12,3,
+4,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,ELECTRIC,EEUR,RES/COM,12,1,Near-term preferences adjusted to give better match to history given GDP decline
+4,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,ELECTRIC,EEUR,INDUSTRY,12,2,Near-term preferences adjusted to give better match to history given GDP decline
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,EEUR,TRANSPORT,12,3,
+1,0,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,KOR,RES/COM,13,1,
+1,0,0,0,0,0,0,0,0,0,OIL,KOR,INDUSTRY,13,2
+1,0,0,0,0,0,0,0,0,0,OIL,KOR,TRANSPORT,13,3
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,KOR,RES/COM,13,1
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,KOR,INDUSTRY,13,2
+2,0,0,0,0,0,0,0,0,0,GAS,KOR,TRANSPORT,13,3
+3,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,COAL,KOR,RES/COM,13,1
+3,0,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,COAL,KOR,INDUSTRY,13,2
+3,0,0,0,0,0,0,0,0,0,COAL,KOR,TRANSPORT,13,3
+4,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,ELECTRIC,KOR,RES/COM,13,1
+4,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,ELECTRIC,KOR,INDUSTRY,13,2
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,KOR,TRANSPORT,13,3
+1,0,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,OIL,INDIA,RES/COM,14,1
+1,0,0,0,0,0,0,0,0,0,OIL,INDIA,INDUSTRY,14,2
+1,0,0,0,0,0,0,0,0,0,OIL,INDIA,TRANSPORT,14,3
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,INDIA,RES/COM,14,1
+2,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,GAS,INDIA,INDUSTRY,14,2
+2,0,0,0,0,0,0,0,0,0,GAS,INDIA,TRANSPORT,14,3,
+3,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.75,-0.75,-0.75,COAL,INDIA,RES/COM,14,1,Coefficient increased -- was sudden increase in building coal use
+3,0,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,-0.3,COAL,INDIA,INDUSTRY,14,2,
+3,0,0,0,0,0,0,0,0,0,COAL,INDIA,TRANSPORT,14,3,
+4,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,ELECTRIC,INDIA,RES/COM,14,1,
+4,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,ELECTRIC,INDIA,INDUSTRY,14,2,
+4,0,0,0,0,0,0,0,0,0,ELECTRIC,INDIA,TRANSPORT,11,3,
+
+
+"RYL--ENERGY-GNP FEEDBACK ELASTICITY, BY REGION",,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,
+43,,,,,,,,,,,,,,,
+RYL(L),,,,,,,,,,,,,,,
+RYL(L),Region,,,,,,,,,,,,,,
+-0.15,1,US,,,,,,,,,,,,,
+-0.15,2,CAN
+-0.15,3,WEUR
+-0.15,4,JAPAN
+-0.15,5,AUS&NZ
+-0.15,6,FSU
+-0.2,7,ACENP
+0.05,8,MIDEAST
+-0.2,9,AFR
+-0.2,10,LA
+-0.2,11,SEASIA
+-0.15,12,EEUR
+-0.15,13,KOR
+-0.2,14,INDIA
+
+COI -- CARBON RELEASE BY SOURCE (IN TERAGRAMS OF CARBON PER EXAJOULE),,
+INPUT_TABLE,,
+Variable ID,,,,,,
+44,,,,,,
+,COI(I),,,,,
+OIL BURNUP,GAS BURNUP,COAL BURNUP,COAL LIQUIFICATION,GASIFICATION,SHALE OIL PRODUCTION,BIOMASS
+18.9,14.2,27.3,18.9,26.9,27.9,0
+New coefficients calib to EIA Inputs and Marland, et al. C emissions,,,,,
+
+PROPORTION OF FLARED GAS BURNED (SBURNLT T=1 IS INITIAL,,,,,,
+"(1975) SHARE, T=2 IS ULTIMATE SHARE, T=3 IS NUMBER OF YEARS",,,,,,
+TO SBURNL2.  PROPORTION OF BACKSTOP FUEL FROM CARBONATE ROCK,,,,,,
+"(SHALET, T=1,2,3) HAS IDENTICAL INTERPRETATION.",,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+45,,,,,,
+,"SBURNL(L,IT)",,,,,
+SBURNL1,SBURNL2,SBURNL3,,Region,,
+0.11,0.2,25,US,1
+0.25,0.2,25,CANADA,2
+0.25,0.2,25,WEUR,3
+0.8,0.2,25,JAPAN,4
+0.8,0.2,25,AUS&NZ,5
+0.8,0.28,25,FSU,6
+0.8,0.59,50,ACENP,7
+0.75,0.44,50,MIDEAST,8
+0.6,0.28,50,AFRICA,9
+0.29,0.28,50,L AMER,10
+0.71,0.47,50,S&E ASIA,11
+0.8,0.2,25,EEUR,12
+0.8,0.2,25,KOREA,13
+0.71,0.47,50,INDIA,14
+
+PROPORTION OF FLARED GAS BURNED (SBURNLT T=1 IS INITIAL,,,,
+INPUT_TABLE,,,,,"(1975) SHARE, T=2 IS ULTIMATE SHARE, T=3 IS NUMBER OF YEARS"
+Variable ID,,,,,TO SBURNL2.  PROPORTION OF BACKSTOP FUEL FROM CARBONATE ROCK
+46,,,,,"(SHALET, T=1,2,3) HAS IDENTICAL INTERPRETATION."
+,"SHALE(L,IT)",,,,
+SHALE1,SHALE2,SHALE3,,Region,
+0.01,0.99,70,US,1,
+0.01,0.45,70,CANADA,2,
+0.01,0.45,70,WEUR,3,
+0.01,0.99,70,JAPAN,4,
+0.01,0.99,70,AUS&NZ,5,
+0.01,0.9,70,FSU,6,
+0.01,0.25,70,ACENP,7,
+0.01,0.25,70,MIDEAST,8,
+0.01,0.25,70,AFRICA,9,
+0.01,0.25,70,L AMER,10,
+0.01,0.25,70,S&E ASIA,11,
+0.01,0.9,70,EEUR,12
+0.01,0.9,70,KOR,13
+0.01,0.25,70,INDIA,14
+
+FEEDSTOCK USES OF FOSSIL FUELS (SFEDIL) -- SHARE OF EACH FOSSIL FUEL USED AS A FEEDSTOCK.,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+47,,,,
+,"SFEDIL(I,L)",,,
+OIL,GAS,COAL,,Region
+0.045,0.029,0.007,US,1
+0.072,0.029,0.007,CANADA,2
+0.072,0.029,0.007,WEUR,3
+0.092,0.029,0.007,JAPAN,4
+0.092,0.029,0.007,AUS&NZ,5
+0.091,0.029,0.007,FSU,6
+0.07,0.029,0.007,ACENP,7,,,
+0.141,0.029,0.007,MIDEAST,8,,,
+0.03,0.029,0.007,AFRICA,9,,,
+0.068,0.029,0.007,L AMER,10,,,
+0.082,0.029,0.007,S&E ASIA,11,,,
+0.091,0.029,0.007,EEUR,12,,,
+0.091,0.029,0.007,KOR,13,,,
+0.082,0.029,0.007,INDIA,14,,,
+
+BIOMASS COEFFICIENTS:  THE SUPPLY FUNCTION FOR BIOMASS,,,,,,,"INCLUDES WASTE AND ""ENERGY FARMS"" AS SEPARATE TECHNOLOGIES."
+INPUT_TABLE,,,,,,,THE CODED FUNCTIONS ARE REPRESENTED BY LINEAR SEGMENTS.
+Variable ID,,,,,,,THE JPARAMETERS ARE CRITICAL POINTS FOR THE FUNCTION AND
+48,,,,,,,REGIONAL RESOURCES.  BIOPSM ARE CRITICAL PRICE/SHARE
+WASTE (BIOPSM),,,,,,,COMBINATIONS.  BIOLM ARE MAXIMUM RESOURCE AMOUNTS -- WASTE
+PRICE,SHARE,,,,,,IS DEPENDENT ON ECONOMIC ACTIVITY.  THE WASTE TOTAL IS
+0.1,0,,,,,,
+0.8,0.1,,,,,,"BASED ON 1975 ECONOMIC ACTIVITY (PRICE--1975 $/GJ, QUANTITY--EJ)"
+1.6,0.3,,,,,,
+4.6,0.8,,,,,,
+5.6,0.8,,,,,,
+
+
+WASTE   ENERGY FARMS,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+49,,,,,,,
+,"BIOLM(L,IM)",,,,,,
+WASTE,,Region,,,,,
+5.48,US,1,,,,,
+1,CANADA,2,,,,,
+6.95,WEUR,3,,,,,
+2.21,JAPAN,4,,,,,
+0.5,AUS&NZ,5,,
+7.86,FSU,6,8.73,EEFSU
+7.04,ACENP,7,,
+1,MIDEAST,8,,
+5.71,AFRICA,9,,
+7.81,L AMER,10,,
+10.4,S&E ASIA,11,,
+0.87,EEUR,12,,
+2.21,KOR,13,,
+5.2,INDIA,14,,
+
+INCOME ELASTICITY OF BIOMASS SUPPLY,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+50,,,,
+,RYSHT,,,
+RYSHT,,,,,,,,,
+0.5,,,0.5,,,,,,
+
+
+SDOCLM-SHARE OF LANDFILLED WASTE WHICH IS DEGRADABLE ORGANIC,,,,,,,,,
+cINPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+51,,,,,,,,,
+,"SDOCLM(L,M) - CARBON",,,,,,,,
+,1975,1990,2000,2025,2050,2075,2100,,Region
+1,0.22,0.22,0.22,0.22,0.22,0.22,0.22,US,1
+2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,CANADA,2
+3,0.2,0.2,0.2,0.2,0.2,0.2,0.2,WEUR,3
+4,0.19,0.19,0.19,0.19,0.19,0.19,0.19,JAPAN,4
+5,0.19,0.19,0.19,0.19,0.19,0.19,0.19,AUS&NZ,5
+6,0.175,0.175,0.175,0.175,0.175,0.175,0.175,FSU,6
+7,0.15,0.15,0.15,0.15,0.15,0.15,0.15,ACENP,7
+8,0.15,0.15,0.15,0.15,0.15,0.15,0.15,MIDEAST,8
+9,0.15,0.15,0.15,0.15,0.15,0.15,0.15,AFRICA,9
+10,0.15,0.15,0.15,0.15,0.15,0.15,0.15,L AMER,10
+11,0.15,0.15,0.15,0.15,0.15,0.15,0.15,S&E ASIA,11
+12,0.175,0.175,0.175,0.175,0.175,0.175,0.175,EEUR,12
+13,0.19,0.19,0.19,0.19,0.19,0.19,0.19,KOR,13
+14,0.15,0.15,0.15,0.15,0.15,0.15,0.15,INDIA,14
+
+CHI--METHANE EMISSION COEFFICIENTS; BY SOURCE,,,,,,,,,
+cINPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+52,,,,,,,,,
+,CHI(I),,,,,,,,
+GASP,GGASV,GAST,IBIO,ILDF,,,,,
+17.25,17.25,17.25,0.664,0.5,,,,,
+
+
+CHILM(1)--COAL,,,,,,,,
+cINPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+53,,,,,,,,
+,"CHILM(1,L,M)",,,,,,,
+,1975,1990,2005,2020,2035,2050,,Region
+1,0.222,0.222,0.222,0.222,0.222,0.222,US,1
+2,0.222,0.222,0.222,0.222,0.222,0.222,CANADA,2
+3,0.222,0.222,0.222,0.222,0.222,0.222,WEUR,3
+4,0.222,0.222,0.222,0.222,0.222,0.222,JAPAN,4
+5,0.222,0.222,0.222,0.222,0.222,0.222,AUS&NZ,5
+6,0.222,0.222,0.222,0.222,0.222,0.222,FSU,6
+7,0.222,0.222,0.222,0.222,0.222,0.222,ACENP,7
+8,0.222,0.222,0.222,0.222,0.222,0.222,MIDEAST,8
+9,0.222,0.222,0.222,0.222,0.222,0.222,AFRICA,9
+10,0.222,0.222,0.222,0.222,0.222,0.222,L AMER,10
+11,0.222,0.222,0.222,0.222,0.222,0.222,S&E ASIA,11
+12,0.222,0.222,0.222,0.222,0.222,0.222,EEUR,12
+13,0.222,0.222,0.222,0.222,0.222,0.222,KOR,13
+14,0.222,0.222,0.222,0.222,0.222,0.222,INDIA,14
+
+CHILM(2)--OIL (AUTOEXHAUST),,,,,,,,
+cINPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+54,,,,,,,,
+,CHILM(2)--OIL (AUTOEXHAUST),,,,,,,
+,1975,1990,2005,2020,2035,2050,,Region
+1,0.0329,0.0329,0.0329,0.0329,0.0329,0.0329,US,1
+2,0.0452,0.0452,0.0452,0.0452,0.0452,0.0452,CANADA,2
+3,0.0452,0.0452,0.0452,0.0452,0.0452,0.0452,WEUR,3
+4,0.0452,0.0452,0.0452,0.0452,0.0452,0.0452,JAPAN,4
+5,0.0452,0.0452,0.0452,0.0452,0.0452,0.0452,AUS&NZ,5
+6,0.0576,0.0576,0.0576,0.0576,0.0576,0.0576,FSU,6
+7,0.0576,0.0576,0.0576,0.0576,0.0576,0.0576,ACENP,7
+8,0.0576,0.0576,0.0576,0.0576,0.0576,0.0576,MIDEAST,8
+9,0.0576,0.0576,0.0576,0.0576,0.0576,0.0576,AFRICA,9
+10,0.0576,0.0576,0.0576,0.0576,0.0576,0.0576,L AMER,10
+11,0.0576,0.0576,0.0576,0.0576,0.0576,0.0576,S&E ASIA,11
+12,0.0576,0.0576,0.0576,0.0576,0.0576,0.0576,EEUR,12
+13,0.0452,0.0452,0.0452,0.0452,0.0452,0.0452,KOR,13
+14,0.0576,0.0576,0.0576,0.0576,0.0576,0.0576,INDIA,14
+
+SAXLM--SHARE OF ECONOMIC SECTOR CONTRIBUTING TO,,,,,,,,
+AUTOMOTIVE EXHAUST,,,,,,,,
+Describe,,,,,,,,
+cINPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+55,,,,,,,,
+,"SAXLM(L,M)",,,,,,,
+,1975,1990,2005,2020,2035,2050,,Region
+1,1,1,1,1,1,1,US,1
+2,1,1,1,1,1,1,CANADA,2
+3,1,1,1,1,1,1,WEUR,3
+4,1,1,1,1,1,1,JAPAN,4
+5,1,1,1,1,1,1,AUS&NZ,5
+6,0.4,0.4,0.4,0.4,0.4,0.4,FSU,6
+7,0.4,0.4,0.4,0.4,0.4,0.4,ACENP,7
+8,0.4,0.4,0.4,0.4,0.4,0.4,MIDEAST,8
+9,0.4,0.4,0.4,0.4,0.4,0.4,AFRICA,9
+10,0.4,0.4,0.4,0.4,0.4,0.4,L AMER,10
+11,0.4,0.4,0.4,0.4,0.4,0.4,S&E ASIA,11
+12,0.4,0.4,0.4,0.4,0.4,0.4,EEUR,12
+13,1,1,1,1,1,1,KOR,13
+14,0.4,0.4,0.4,0.4,0.4,0.4,INDIA,14
+
+SGAST--SHARE OF GAS LOST IN TRANSMISSION,,,,,,,,
+cINPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+56,,,,,,,,
+,"SGAST(L,M)",,,,,,,
+REGION,1975,1990,2005,2020,2035,2050,,Region
+1,0.015,0.015,0.015,0.015,0.015,0.015,US,1
+2,0.015,0.015,0.015,0.015,0.015,0.015,CANADA,2
+3,0.015,0.015,0.015,0.015,0.015,0.015,WEUR,3
+4,0.015,0.015,0.015,0.015,0.015,0.015,JAPAN,4
+5,0.015,0.015,0.015,0.015,0.015,0.015,AUS&NZ,5
+6,0.015,0.015,0.015,0.015,0.015,0.015,FSU,6
+7,0.015,0.015,0.015,0.015,0.015,0.015,ACENP,7
+8,0.015,0.015,0.015,0.015,0.015,0.015,MIDEAST,8
+9,0.015,0.015,0.015,0.015,0.015,0.015,AFRICA,9
+10,0.015,0.015,0.015,0.015,0.015,0.015,L AMER,10
+11,0.015,0.015,0.015,0.015,0.015,0.015,S&E ASIA,11
+12,0.015,0.015,0.015,0.015,0.015,0.015,EEUR,12
+13,0.015,0.015,0.015,0.015,0.015,0.015,KOR,13
+14,0.015,0.015,0.015,0.015,0.015,0.015,INDIA,14
+
+SGASP--SHARE OF GAS LOST IN PRODUCTION,,,,,,,,
+cINPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+57,,,,,,,,
+,"SGASP(L,M)",,,,,,,
+REGION,1975,1990,2005,2020,2035,2050,,Region
+1,0.005,0.005,0.005,0.005,0.005,0.005,US,1
+2,0.005,0.005,0.005,0.005,0.005,0.005,CANADA,2
+3,0.005,0.005,0.005,0.005,0.005,0.005,WEUR,3
+4,0.005,0.005,0.005,0.005,0.005,0.005,JAPAN,4
+5,0.005,0.005,0.005,0.005,0.005,0.005,AUS&NZ,5
+6,0.005,0.005,0.005,0.005,0.005,0.005,FSU,6
+7,0.005,0.005,0.005,0.005,0.005,0.005,ACENP,7
+8,0.005,0.005,0.005,0.005,0.005,0.005,MIDEAST,8
+9,0.005,0.005,0.005,0.005,0.005,0.005,AFRICA,9
+10,0.005,0.005,0.005,0.005,0.005,0.005,L AMER,10
+11,0.005,0.005,0.005,0.005,0.005,0.005,S&E ASIA,11
+12,0.005,0.005,0.005,0.005,0.005,0.005,EEUR,12
+13,0.005,0.005,0.005,0.005,0.005,0.005,KOR,13
+14,0.005,0.005,0.005,0.005,0.005,0.005,INDIA,14
+
+SLDFLM--SHARE OF WASTE RESIDUE TO LANDFILL,,,,,,,,
+cINPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+58,,,,,,,,
+,"SLDFLM(L,M)",,,,,,,
+REGION,1975,1990,2005,2020,2035,2050,,Region
+1,0.91,0.91,0.91,0.91,0.91,0.91,US,1
+2,0.75,0.75,0.75,0.75,0.75,0.75,CANADA,2
+3,0.75,0.75,0.75,0.75,0.75,0.75,WEUR,3
+4,0.71,0.71,0.71,0.71,0.71,0.71,JAPAN,4
+5,0.71,0.71,0.71,0.71,0.71,0.71,AUS&NZ,5
+6,0.85,0.85,0.85,0.85,0.85,0.85,FSU,6
+7,0.8,0.8,0.8,0.8,0.8,0.8,ACENP,7
+8,0.8,0.8,0.8,0.8,0.8,0.8,MIDEAST,8
+9,0.8,0.8,0.8,0.8,0.8,0.8,AFRICA,9
+10,0.8,0.8,0.8,0.8,0.8,0.8,L AMER,10
+11,0.8,0.8,0.8,0.8,0.8,0.8,S&E ASIA,11
+12,0.85,0.85,0.85,0.85,0.85,0.85,EEUR,12
+13,0.71,0.71,0.71,0.71,0.71,0.71,KOR,13
+14,0.8,0.8,0.8,0.8,0.8,0.8,INDIA,14
+
+RPBIOL--PRICE ELASTICITY OF TRADITIONAL BIOMASS,,,,,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+59,,,,,,,,
+RPBIOL(L),,,,,,,,
+RPBIOL(L),,Region,,,,,,
+0.25,US,1,,,,,,
+0.25,CANADA,2,,,,,,
+0.25,WEUR,3,,,,,,
+0.25,JAPAN,4,,,,,,
+0.25,AUS&NZ,5,,,,,,
+0.25,FSU,6,,,,,,
+0.25,ACENP,7,,,,,,
+0.25,MIDEAST,8,,,,,,
+0.25,AFRICA,9
+0.25,L AMER,10
+0.25,S&E ASIA,11
+0.25,EEUR,12
+0.25,KOR,13
+0.25,INDIA,14
+
+CLDF--CONVERSION COEFFICIENT FOR LANDFILL ENERGY TO MASS,,
+cINPUT_TABLE,,
+Variable ID,,
+60,,
+CLDF,,
+CLDF,,
+107.589,,
+
+
+RYBIOL--INCOME ELASTICITY OF TRADITIONAL BIOMASS,,
+INPUT_TABLE,,
+Variable ID,,
+61,,
+RYBIOL(L),,
+RYBIOL(L),,Region
+-0.25,US,1
+-0.25,CANADA,2
+-0.25,WEUR,3
+-0.25,JAPAN,4
+-0.25,AUS&NZ,5
+-0.25,FSU,6
+-0.25,ACENP,7
+-0.25,MIDEAST,8
+-0.25,AFRICA,9
+-0.25,L AMER,10
+-0.25,S&E ASIA,11
+-0.25,EEUR,12
+-0.25,KOR,13
+-0.25,INDIA,14
+
+EBIOL--INITIAL STOCK OF TRADITIONAL BIOMASS,,
+INPUT_TABLE,,
+Variable ID,,
+62,,
+EBIOL(L),,
+EBIOL(L),,Region
+0.117,US,1
+0.05,CANADA,2
+0.423,WEUR,3
+0.001,JAPAN,4
+0.02,AUS&NZ,5
+0.5382,FSU,6,0.598,EEFSU
+0.996,ACENP,7,,
+0.018,MIDEAST,8,,
+1.778,AFRICA,9,,
+1.32,L AMER,10,,
+2.298,S&E ASIA,11,,
+0.0598,EEUR,12,,
+0.001,KOR,13,,
+0.15,INDIA,14,,
+
+SWASL--SHARE OF WASTE TO LANDFILL,,,,
+cINPUT_TABLE,,,,
+Variable ID,,,,
+63,,,,
+SWASL(L),,,,
+SWASL(L),,Region,,
+0.335,US,1
+0.193,CANADA,2
+0.193,WEUR,3
+0.179,JAPAN,4
+0.179,AUS&NZ,5
+0.129,FSU,6
+0.049,ACENP,7
+0.03,MIDEAST,8
+0.026,AFRICA,9
+0.015,L AMER,10
+0.041,S&E ASIA,11
+0.129,EEUR,12
+0.179,KOR,13
+0.041,INDIA,14
+
+"SVENTL--SHARE OF NONMARKETED GAS VENTED:INITIAL,FINAL,TIME REQUIRED",,
+cINPUT_TABLE,,,,
+Variable ID,,,,
+64,,,,
+"SVENTL(L,IT)",,,,
+SVENTL(1),SVENTL(2),SVENTL(3),,Region
+0.03,0.02,25,US,1
+0.06,0.02,25,CANADA,2
+0.06,0.02,25,WEUR,3
+0.2,0.02,25,JAPAN,4
+0.2,0.02,25,AUS&NZ,5
+0.2,0.01,25,FSU,6
+0.2,0.18,50,ACENP,7
+0.19,0.11,50,MIDEAST,8
+0.15,0.14,50,AFRICA,9
+0.07,0.14,50,L AMER,10
+0.18,0.12,50,S&E ASIA,11
+0.2,0.01,50,EEUR,12,,,,
+0.2,0.02,25,KOR,13,,,,
+0.18,0.12,50,INDIA,14,,,,
+
+CNIKLM-- NITROUS OXIDE EMISSIONS COEFFICIENT--ELECTRICAL SECTOR,,,,,,,,
+cINPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+65,,,,,,,,
+,"CNIKLM(I,1,L,M)",,,,,,,
+,1975,1990,2005,2020,2035,2050,,
+1,0.28,0.28,0.28,0.28,0.28,0.28,ALL,"OIL --  CNIKLM(1,1,L,M)"
+2,0.35,0.35,0.35,0.35,0.35,0.35,ALL,"GAS -- CNIKLM(2,1,L,M)"
+3,2.09,2.09,2.09,2.09,2.09,2.09,ALL,"COAL--CNIKLM(3,1,L,M)"
+
+
+CNIKLM-- NITROUS OXIDE EMISSIONS COEFFICIENT--END USE SECTORS,,,,,,,,
+cINPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+66,,,,,,,,
+,"CNIKLM(I,K,L,M)",,,,,,,
+DUM,1975,1990,2005,2020,2035,2050,,
+1,0.07,0.07,0.07,0.07,0.07,0.07,"OIL --  CNIKLM(1,K,L,M)",R&C
+1,0.08,0.08,0.08,0.08,0.08,0.08,"OIL --  CNIKLM(1,K,L,M)",IND
+1,0.87,0.87,0.87,0.87,0.87,0.87,"OIL --  CNIKLM(1,K,L,M)",TRANS
+1,0.06,0.06,0.06,0.06,0.06,0.06,"GAS--CNIKLM(2,K,L,M)",R&C
+1,0.09,0.09,0.09,0.09,0.09,0.09,"GAS--CNIKLM(2,K,L,M)",IND
+1,0.21,0.21,0.21,0.21,0.21,0.21,"GAS--CNIKLM(2,K,L,M)",TRANS
+1,0.97,0.97,0.97,0.97,0.97,0.97,"COAL--CNIKLM(3,K,L,M)",R&C
+1,1.37,1.37,1.37,1.37,1.37,1.37,"COAL--CNIKLM(3,K,L,M)",IND
+1,1.37,1.37,1.37,1.37,1.37,1.37,"COAL--CNIKLM(3,K,L,M)",TRANS
+
+
+TXISLM (SEVERANCE TAX APPLIED TO PRODUCTION OF FUEL),,,,,,,,
+No longer used. sjs,,,,,,,,
+cINPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+67,,,,,,,,
+,"TXISLM(IS,L,M)",,,,,,,
+,1975,1990,2005,2020,2035,2050,,REGION
+1,0,0,0.896,0.896,0.896,0.896,CONV OIL,ALL
+2,0,0,0.617,0.617,0.617,0.617,CONV GAS,ALL
+3,0,0,1.081,1.081,1.081,1.081,COAL,ALL
+4,0,0,2.139,2.139,2.139,2.139,UNCONV OIL,ALL
+5,0,0,0,0,0,0,NUCLEAR,ALL
+
+
+TXUILM - UTILITY CONSUMPTION TAX APPLIES TO UTILITY FUEL PRICES,,,,,,,,
+No longer used. sjs,,,,,,,,
+cINPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+68,,,,,,,,,
+,"TXUILM(I,L,M) 1990 Carbon tax ($/ton) conversion to 1975 fuel prices ($/GJ)",,,,,,,2.212,75/90
+FUEL,1975,1990,2005,2020,2035,2050,REGION,,
+1,0,0,0.896,0.896,0.896,0.896,ALL,OIL,1.98
+2,0,0,0.617,0.617,0.617,0.617,ALL,GAS,1.36
+3,0,0,1.081,1.081,1.081,1.081,ALL,COAL,2.39
+4,0,0,0,0,0,0,ALL,NUKE,
+5,0,0,0,0,0,0,ALL,SOLAR,
+6,0,0,0,0,0,0,ALL,HYDRO,
+
+
+VISLM--ENVIRONMENTAL COST AMOUNTS BY REGION AND FUEL (UNITS=1975 DOLLARS/GIGAJOULE),,,,,,,,,
+INPUT_TABLE,,,,,,,Gas,No environmental cost,
+Variable ID,,,,,,,Coal,Twice that of oil,
+69,,,,,,,Unconv oil,Three times that of oil,,,,
+,,"VISLM(IS,L,M)",,,,,,,,,,
+fuel,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,,Region
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,USA,Oil,1
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,CANADA,Oil,2
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,WEUR,Oil,3
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,JAPAN,Oil,4
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,AUS&NZ,Oil,5
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,FSU,Oil,6
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,ACENP,Oil,7
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,MIDEAST,Oil,8
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,AFR,Oil,9
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,LA,Oil,10
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,S&E ASIA,Oil,11
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,EEUR,Oil,12
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,KOR,Oil,13
+1,0,0,0,0.1,0.2,0.4,0.5,0.6,0.7,INDIA,Oil,14
+2,0,0,0,0,0,0,0,0,0,USA,Gas,1
+2,0,0,0,0,0,0,0,0,0,CANADA,Gas,2
+2,0,0,0,0,0,0,0,0,0,WEUR,Gas,3
+2,0,0,0,0,0,0,0,0,0,JAPAN,Gas,4
+2,0,0,0,0,0,0,0,0,0,AUS&NZ,Gas,5
+2,0,0,0,0,0,0,0,0,0,FSU,Gas,6
+2,0,0,0,0,0,0,0,0,0,ACENP,Gas,7
+2,0,0,0,0,0,0,0,0,0,MIDEAST,Gas,8
+2,0,0,0,0,0,0,0,0,0,AFR,Gas,9
+2,0,0,0,0,0,0,0,0,0,LA,Gas,10
+2,0,0,0,0,0,0,0,0,0,S&E ASIA,Gas,11
+2,0,0,0,0,0,0,0,0,0,EEUR,Gas,12
+2,0,0,0,0,0,0,0,0,0,KOR,Gas,13
+2,0,0,0,0,0,0,0,0,0,INDIA,Gas,14
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,USA,Coal,1
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,CANADA,Coal,2
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,WEUR,Coal,3
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,JAPAN,Coal,4
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,AUS&NZ,Coal,5
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,FSU,Coal,6
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,ACENP,Coal,7
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,MIDEAST,Coal,8
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,AFR,Coal,9
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,LA,Coal,10
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,S&E ASIA,Coal,11
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,EEUR,Coal,12
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,KOR,Coal,13
+3,0,0,0.1,0.4,0.6,0.8,1,1.2,1.4,INDIA,Coal,14
+4,0,0.433,0.866,1.2,1.2,1.2,1.5,1.8,2.1,USA,Unconventional Oil,1
+4,0,0.433,0.866,1.2,1.2,1.2,1.5,1.8,2.1,CANADA,Unconventional Oil,2
+4,0,0.433,0.866,1.2,1.2,1.2,1.5,1.8,2.1,WEUR,Unconventional Oil,3
+4,0,0.433,0.866,1.2,1.2,1.2,1.5,1.8,2.1,JAPAN,Unconventional Oil,4
+4,0,0.433,0.866,1.2,1.2,1.2,1.5,1.8,2.1,AUS&NZ,Unconventional Oil,5
+4,0,0.3,0.1,1.2,1.2,1.2,1.5,1.8,2.1,FSU,Unconventional Oil,6
+4,0,0.3,0.1,1.2,1.2,1.2,1.5,1.8,2.1,ACENP,Unconventional Oil,7
+4,0,0.3,0.1,1.2,1.2,1.2,1.5,1.8,2.1,MIDEAST,Unconventional Oil,8
+4,0,0.3,0.1,1.2,1.2,1.2,1.5,1.8,2.1,AFR,Unconventional Oil,9
+4,0,0.3,0.1,1.2,1.2,1.2,1.5,1.8,2.1,LA,Unconventional Oil,10
+4,0,0.3,0.1,1.2,1.2,1.2,1.5,1.8,2.1,S&E ASIA,Unconventional Oil,11
+4,0,0.3,0.1,1.2,1.2,1.2,1.5,1.8,2.1,EEUR,Unconventional Oil,12
+4,0,0.3,0.1,1.2,1.2,1.2,1.5,1.8,2.1,KOR,Unconventional Oil,13
+4,0,0.3,0.1,1.2,1.2,1.2,1.5,1.8,2.1,INDIA,Unconventional Oil,14
+5,0,0,0,0,0,0,0,0,0,USA,Nuclear Fuel,1
+5,0,0,0,0,0,0,0,0,0,CANADA,Nuclear Fuel,2
+5,0,0,0,0,0,0,0,0,0,WEUR,Nuclear Fuel,3
+5,0,0,0,0,0,0,0,0,0,JAPAN,Nuclear Fuel,4
+5,0,0,0,0,0,0,0,0,0,AUS&NZ,Nuclear Fuel,5
+5,0,0,0,0,0,0,0,0,0,FSU,Nuclear Fuel,6
+5,0,0,0,0,0,0,0,0,0,ACENP,Nuclear Fuel,7
+5,0,0,0,0,0,0,0,0,0,MIDEAST,Nuclear Fuel,8
+5,0,0,0,0,0,0,0,0,0,AFR,Nuclear Fuel,9
+5,0,0,0,0,0,0,0,0,0,LA,Nuclear Fuel,10
+5,0,0,0,0,0,0,0,0,0,S&E ASIA,Nuclear Fuel,11
+5,0,0,0,0,0,0,0,0,0,EEUR,Nuclear Fuel,12
+5,0,0,0,0,0,0,0,0,0,KOR,Nuclear Fuel,13
+5,0,0,0,0,0,0,0,0,0,INDIA,Nuclear Fuel,14
+
+"""GUILM"" IS A GENERATION EFFICIENCY COEFFICIENT -- THE RATIO OF JOULES OF ENERGY IN TO JOULES OF ELECTRICITY OUT.",,,,,,,,,,,,
+,,"Note: Variable ID 70 - Reads in 1/efficiency for all periods, not just up to 2050.",,,,,,,,,,
+INPUT_TABLE,,Medium Efficiency Scenario for fossil,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+70,,1975 (some suspect - replaced) & 1990 #'s added.,,,,,,,,,,
+,,"GUILM(I,L,M)",,,,,,,,,,
+,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,REG#,
+1,3.277,2.7737,2.68,2.59,2.51,2.43,2.22,2.14,2.14,USA,1,OIL
+1,3.569,2.705,2.63,2.55,2.48,2.41,2.2,2.13,2.12,CANADA,2,OIL
+1,2.987,2.6489,2.58,2.51,2.45,2.39,2.18,2.11,2.1,WEUR,3,OIL
+1,2.738,2.2835,2.28,2.27,2.27,2.27,2.14,2.08,2.07,JAPAN,4,OIL
+1,3.034,2.5982,2.55,2.5,2.45,2.41,2.2,2.13,2.12,AUS&NZ,5,OIL
+1,3.604,2.7778,2.68,2.58,2.49,2.41,2.2,2.13,2.12,FSU,6,OIL
+1,4.394,3.3098,3.03,2.79,2.58,2.4,2.2,2.12,2.12,ACENP,7,OIL
+1,3.504,3.2588,3.01,2.79,2.6,2.44,2.21,2.13,2.1,MIDEAST,8,OIL
+1,3.873,3.125,2.92,2.74,2.58,2.43,2.22,2.15,2.14,AFR,9,OIL
+1,4.143,3.3482,3.09,2.87,2.67,2.5,2.26,2.16,2.14,LA,10,OIL
+1,3.505,3.3537,3.08,2.84,2.63,2.45,2.22,2.13,2.1,S&E ASIA,11,OIL
+1,3.207,2.5594,2.52,2.49,2.45,2.42,2.21,2.14,2.13,EEUR,12,OIL
+1,3.564,2.7813,2.67,2.56,2.46,2.37,2.16,2.1,2.09,Korea,13,OIL
+1,4.807,2.9114,2.38,2.72,2.58,2.46,2.18,2.11,2.1,India,14,OIL
+2,3.143,2.9453,2.77,2.61,2.47,2.34,2.12,1.7,1.69,USA,1,GAS
+2,3.608,2.142,2.13,2.13,2.12,2.11,2.1,1.68,1.68,CANADA,2,GAS
+2,2.934,2.5778,2.5,2.43,2.37,2.3,2.08,1.67,1.66,WEUR,3,GAS
+2,2.852,2.3298,2.31,2.29,2.28,2.26,2.05,1.64,1.64,JAPAN,4,GAS
+2,3.234,2.6722,2.58,2.49,2.4,2.32,2.1,1.68,1.68,AUS&NZ,5,GAS
+2,3.283,3.273,2.97,2.72,2.51,2.33,2.1,1.68,1.68,FSU,6,GAS
+2,3.03,2.4627,2.43,2.39,2.35,2.32,2.1,1.68,1.67,ACENP,7,GAS
+2,5.055,2.9803,2.8,2.63,2.48,2.35,2.11,1.68,1.66,MIDEAST,8,GAS
+2,3.837,3.7929,3.29,2.91,2.6,2.35,2.12,1.7,1.69,AFR,9,GAS
+2,5.181,3.9765,3.44,3.02,2.68,2.41,2.16,1.71,1.69,LA,10,GAS
+2,4.136,3.9867,3.42,2.98,2.64,2.36,2.12,1.68,1.66,S&E ASIA,11,GAS
+2,3.571,4.0597,3.43,2.97,2.62,2.34,2.11,1.69,1.68,EEUR,12,GAS
+2,3.03,2.8248,2.67,2.53,2.4,2.28,2.07,1.66,1.65,Korea,13,GAS
+2,4.136,4.7796,3.3,3.28,2.76,2.37,2.08,1.67,1.66,India,14,GAS
+3,3.502,2.9595,2.95,2.93,2.92,2.91,2.48,2.16,2.15,USA,1,COAL
+3,3.247,3.0221,2.99,2.96,2.93,2.9,2.46,2.14,2.13,CANADA,2,COAL
+3,3.217,2.6259,2.62,2.61,2.6,2.59,2.44,2.12,2.12,WEUR,3,COAL
+3,3.478,2.4447,2.44,2.44,2.43,2.43,2.4,2.09,2.09,JAPAN,4,COAL
+3,4.293,3.0159,2.99,2.96,2.93,2.9,2.46,2.14,2.13,AUS&NZ,5,COAL
+3,3.654,2.9675,2.95,2.94,2.92,2.91,2.47,2.14,2.14,FSU,6,COAL
+3,4.317,3.4679,3.31,3.16,3.02,2.9,2.46,2.14,2.13,ACENP,7,COAL
+3,3.03,3.0157,2.98,2.95,2.92,2.9,2.47,2.14,2.12,MIDEAST,8,COAL
+3,3.875,3.0249,3,2.98,2.96,2.93,2.49,2.16,2.15,AFR,9,COAL
+3,4.877,3.4671,3.34,3.23,3.11,3.01,2.53,2.18,2.15,LA,10,COAL
+3,4.903,2.7277,2.7,2.66,2.63,2.6,2.48,2.14,2.12,S&E ASIA,11,COAL
+3,3.654,2.706,2.69,2.68,2.67,2.66,2.48,2.15,2.14,EEUR,12,COAL
+3,4.903,2.7955,2.79,2.78,2.77,2.77,2.42,2.11,2.1,Korea,13,COAL
+3,4.903,4.2699,3.31,3.59,3.25,2.96,2.44,2.12,2.12,India,14,COAL
+4,1,1,1,1,1,1,1,1,1,USA,1,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,CANADA,2,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,WEUR,3,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,JAPAN,4,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,AUS&NZ,5,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,FSU,6,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,ACENP,7,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,MIDEAST,8,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,AFR,9,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,LA,10,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,S&E ASIA,11,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,EEUR,12,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,Korea,13,NUCLEAR
+4,1,1,1,1,1,1,1,1,1,India,14,NUCLEAR
+5,1,1,1,1,1,1,1,1,1,USA,1,SOLAR
+5,1,1,1,1,1,1,1,1,1,CANADA,2,SOLAR
+5,1,1,1,1,1,1,1,1,1,WEUR,3,SOLAR
+5,1,1,1,1,1,1,1,1,1,JAPAN,4,SOLAR
+5,1,1,1,1,1,1,1,1,1,AUS&NZ,5,SOLAR
+5,1,1,1,1,1,1,1,1,1,FSU,6,SOLAR
+5,1,1,1,1,1,1,1,1,1,ACENP,7,SOLAR
+5,1,1,1,1,1,1,1,1,1,MIDEAST,8,SOLAR
+5,1,1,1,1,1,1,1,1,1,AFR,9,SOLAR
+5,1,1,1,1,1,1,1,1,1,LA,10,SOLAR
+5,1,1,1,1,1,1,1,1,1,S&E ASIA,11,SOLAR
+5,1,1,1,1,1,1,1,1,1,EEUR,12,SOLAR
+5,1,1,1,1,1,1,1,1,1,Korea,13,SOLAR
+5,1,1,1,1,1,1,1,1,1,India,14,SOLAR
+6,1,1,1,1,1,1,1,1,1,USA,1,HYDRO
+6,1,1,1,1,1,1,1,1,1,CANADA,2,HYDRO
+6,1,1,1,1,1,1,1,1,1,WEUR,3,HYDRO
+6,1,1,1,1,1,1,1,1,1,JAPAN,4,HYDRO
+6,1,1,1,1,1,1,1,1,1,AUS&NZ,5,HYDRO
+6,1,1,1,1,1,1,1,1,1,FSU,6,HYDRO
+6,1,1,1,1,1,1,1,1,1,ACENP,7,HYDRO
+6,1,1,1,1,1,1,1,1,1,MIDEAST,8,HYDRO
+6,1,1,1,1,1,1,1,1,1,AFR,9,HYDRO
+6,1,1,1,1,1,1,1,1,1,LA,10,HYDRO
+6,1,1,1,1,1,1,1,1,1,S&E ASIA,11,HYDRO
+6,1,1,1,1,1,1,1,1,1,EEUR,12,HYDRO
+6,1,1,1,1,1,1,1,1,1,Korea,13,HYDRO
+6,1,1,1,1,1,1,1,1,1,India,14,HYDRO
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,USA,1,BIOMASS
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,CANADA,2,BIOMASS
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,WEUR,3,BIOMASS
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,JAPAN,4,BIOMASS
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,AUS&NZ,5,BIOMASS
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,FSU,6,BIOMASS
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,ACENP,7,BIOMASS
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,MIDEAST,8,BIOMASS
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,AFR,9,BIOMASS
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,LA,10,BIOMASS
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,S&E ASIA,11,BIOMASS
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,EEUR,12,BIOMASS,,,
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,Korea,13,BIOMASS,,,
+7,3.325,3.325,2.553,2.336,2.138,1.957,1.791,1.667,1.667,India,14,BIOMASS,,Max gen efficiency,
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,USA,1,COAL W/ CO2 CAPT,,52.25%,"This is estimated max *0.95 'real world"" operation factor"
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,CANADA,2,COAL W/ CO2 CAPT,,52.25%,"Figures read-in to the left also include distribution losses,"
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,WEUR,3,COAL W/ CO2 CAPT,,52.25%,so net delivery efficiency is smaller
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,JAPAN,4,COAL W/ CO2 CAPT,,52.25%,
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,AUS&NZ,5,COAL W/ CO2 CAPT,,52.25%,
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,FSU,6,COAL W/ CO2 CAPT,,52.25%,
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,ACENP,7,COAL W/ CO2 CAPT,,52.25%,
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,MIDEAST,8,COAL W/ CO2 CAPT,,52.25%,
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,AFR,9,COAL W/ CO2 CAPT,,52.25%,
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,LA,10,COAL W/ CO2 CAPT,,52.25%,
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,S&E ASIA,11,COAL W/ CO2 CAPT,,52.25%,
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,EEUR,12,COAL W/ CO2 CAPT,,52.25%,
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,Korea,13,COAL W/ CO2 CAPT,,52.25%,
+8,4.135572139,4.135572139,3.175373134,2.9826,2.7899,2.5972,2.4045,2.2117,2.019,India,14,COAL W/ CO2 CAPT,,52.25%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,USA,1,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,CANADA,2,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,WEUR,3,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,JAPAN,4,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,AUS&NZ,5,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,FSU,6,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,ACENP,7,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,MIDEAST,8,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,AFR,9,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,LA,10,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,S&E ASIA,11,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,EEUR,12,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,Korea,13,OIL W/ CO2 CAPT,,54.15%
+9,4.549751244,4.549751244,3.175373134,2.9708,2.7663,2.5618,2.3572,2.1527,1.948,India,14,OIL W/ CO2 CAPT,,54.15%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,USA,1,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,CANADA,2,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,WEUR,3,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,JAPAN,4,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,AUS&NZ,5,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,FSU,6,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,ACENP,7,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,MIDEAST,8,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,AFR,9,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,LA,10,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,S&E ASIA,11,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,EEUR,12,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,Korea,13,GAS W/ CO2 CAPT,,62.23%
+10,4.181610338,3.800944334,2.918439364,2.7146,2.5107,2.3069,2.103,1.8992,1.695,India,14,GAS W/ CO2 CAPT,,62.23%
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,USA,1,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,CANADA,2,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,WEUR,3,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,JAPAN,4,H2 FUEL CELL,***Note: These are overwritten by variable input # 101
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,AUS&NZ,5,H2 FUEL CELL,***Note: These are overwritten by variable input # 101
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,FSU,6,H2 FUEL CELL,***Note: These are overwritten by variable input # 101
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,ACENP,7,H2 FUEL CELL,***Note: These are overwritten by variable input # 101
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,MIDEAST,8,H2 FUEL CELL,***Note: These are overwritten by variable input # 101
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,AFR,9,H2 FUEL CELL,***Note: These are overwritten by variable input # 101
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,LA,10,H2 FUEL CELL,***Note: These are overwritten by variable input # 101
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,S&E ASIA,11,H2 FUEL CELL,***Note: These are overwritten by variable input # 101
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,EEUR,12,H2 FUEL CELL,***Note: These are overwritten by variable input # 101
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,Korea,13,H2 FUEL CELL,***Note: These are overwritten by variable input # 101
+11,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,India,14,H2 FUEL CELL,***Note: These are overwritten by variable input # 101
+12,1,1,1,1,1,1,1,1,1,USA,1,FUSION,
+12,1,1,1,1,1,1,1,1,1,CANADA,2,FUSION,
+12,1,1,1,1,1,1,1,1,1,WEUR,3,FUSION,
+12,1,1,1,1,1,1,1,1,1,JAPAN,4,FUSION,
+12,1,1,1,1,1,1,1,1,1,AUS&NZ,5,FUSION,
+12,1,1,1,1,1,1,1,1,1,FSU,6,FUSION
+12,1,1,1,1,1,1,1,1,1,ACENP,7,FUSION
+12,1,1,1,1,1,1,1,1,1,MIDEAST,8,FUSION
+12,1,1,1,1,1,1,1,1,1,AFR,9,FUSION
+12,1,1,1,1,1,1,1,1,1,LA,10,FUSION
+12,1,1,1,1,1,1,1,1,1,S&E ASIA,11,FUSION
+12,1,1,1,1,1,1,1,1,1,EEUR,12,FUSION
+12,1,1,1,1,1,1,1,1,1,Korea,13,FUSION
+12,1,1,1,1,1,1,1,1,1,India,14,FUSION
+13,1,1,1,1,1,1,1,1,1,USA,1,WIND
+13,1,1,1,1,1,1,1,1,1,CANADA,2,WIND
+13,1,1,1,1,1,1,1,1,1,WEUR,3,WIND
+13,1,1,1,1,1,1,1,1,1,JAPAN,4,WIND
+13,1,1,1,1,1,1,1,1,1,AUS&NZ,5,WIND
+13,1,1,1,1,1,1,1,1,1,FSU,6,WIND
+13,1,1,1,1,1,1,1,1,1,ACENP,7,WIND
+13,1,1,1,1,1,1,1,1,1,MIDEAST,8,WIND
+13,1,1,1,1,1,1,1,1,1,AFR,9,WIND
+13,1,1,1,1,1,1,1,1,1,LA,10,WIND
+13,1,1,1,1,1,1,1,1,1,S&E ASIA,11,WIND
+13,1,1,1,1,1,1,1,1,1,EEUR,12,WIND
+13,1,1,1,1,1,1,1,1,1,Korea,13,WIND
+13,1,1,1,1,1,1,1,1,1,India,14,WIND
+
+
+Distribution Losses (%),,,,,,,,,,,,
+These are not applied to all fuels, but are here so that fossil fuel generation can be,,,,,,,,,,,
+directly represented,,,,,,,,,,,,
+,Medium Scenario,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+301,,,,,,,,,,,,
+,,"DistLoss(L,M)",,,,,,,,
+REG#,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION
+1,0.0801127,0.0801127,0.076107,0.0721014,0.0680958,0.0640901,0.0600845,0.0560789,0.0520732,USA
+2,0.0703005,0.0703005,0.0667855,0.0632705,0.0597555,0.0562404,0.0527254,0.0492104,0.0456954,CANADA
+3,0.0588293,0.0588293,0.0558878,0.0529464,0.0500049,0.0470635,0.044122,0.0411805,0.0382391,WEUR
+4,0.0364281,0.0364281,0.0346067,0.0327853,0.0309639,0.0291425,0.0273211,0.0254997,0.0236783,JAPAN
+5,0.0689534,0.0689534,0.0655057,0.062058,0.0586104,0.0551627,0.051715,0.0482673,0.0448197,AUS&NZ
+6,0.0708123,0.0708123,0.0672717,0.0637311,0.0601905,0.0566499,0.0531093,0.0495686,0.046028,FSU
+7,0.06716,0.06716,0.063802,0.060444,0.057086,0.053728,0.05037,0.047012,0.043654,ACENP
+8,0.103183,0.103183,0.0939053,0.0846276,0.0753499,0.0660722,0.0567945,0.0475168,0.0382391,MIDEAST
+9,0.0818995,0.0818995,0.0778046,0.0737096,0.0696146,0.0655196,0.0614246,0.0573297,0.0532347,AFR
+10,0.1377846,0.1377846,0.1255402,0.1132957,0.1010512,0.0888067,0.0765622,0.0643177,0.0520732,LA
+11,0.1135164,0.1135164,0.1027625,0.0920086,0.0812547,0.0705008,0.0597469,0.048993,0.0382391,S&E ASIA
+12,0.0758288,0.0758288,0.0720373,0.0682459,0.0644544,0.060663,0.0568716,0.0530801,0.0492887,EEUR
+13,0.0483038,0.0483038,0.0458886,0.0434734,0.0410582,0.038643,0.0362278,0.0338127,0.0313975,Korea
+14,0.1684026,0.1684026,0.1498078,0.1373324,0.1062623,0.0751921,0.044122,0.0411805,0.0382391,India
+
+
+"""HUILM"" REFLECTS NONENERGY COSTS IN 1975 DOLLARS PER GJ (Does not include T&D).",,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+71,,,,,,,,,,,,,,
+,,"HUILM(I,L,M)",,,,,,,,,,,,"$1,990 "
+FuelNum,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,REG#,FuelName,,Cost per kw/hr
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,USA,1,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,CANADA,2,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,WEUR,3,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,JAPAN,4,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,AUS&NZ,5,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,FSU,6,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,ACENP,7,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,MIDEAST,8,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,AFR,9,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,LA,10,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,S&E ASIA,11,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,EEUR,12,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,Korea,13,OIL,,2.14
+1,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,India,14,OIL,,2.14
+2,2,2,2,2,2,2,2,2,2,USA,1,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,CANADA,2,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,WEUR,3,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,JAPAN,4,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,AUS&NZ,5,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,FSU,6,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,ACENP,7,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,MIDEAST,8,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,AFR,9,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,LA,10,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,S&E ASIA,11,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,EEUR,12,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,Korea,13,GAS,,1.58
+2,2,2,2,2,2,2,2,2,2,India,14,GAS,,1.58
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,USA,1,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,CANADA,2,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,WEUR,3,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,JAPAN,4,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,AUS&NZ,5,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,FSU,6,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,ACENP,7,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,MIDEAST,8,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,AFR,9,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,LA,10,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,S&E ASIA,11,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,EEUR,12,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,Korea,13,COAL,,3.09
+3,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,India,14,COAL,,3.09
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,USA,1,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,CANADA,2,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,WEUR,3,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,JAPAN,4,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,AUS&NZ,5,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,FSU,6,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,ACENP,7,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,MIDEAST,8,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,AFR,9,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,LA,10,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,S&E ASIA,11,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,EEUR,12,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,Korea,13,NUCLEAR,,4.99
+4,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,6.3,India,14,NUCLEAR,,4.99
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,USA,1,SOLAR,Less steep solar cost decrease then before,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,CANADA,2,SOLAR,Assumes constant multiplicitative decrease in cost per decade ,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,WEUR,3,SOLAR,,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,JAPAN,4,SOLAR,,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,AUS&NZ,5,SOLAR,,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,FSU,6,SOLAR,,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,ACENP,7,SOLAR,,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,MIDEAST,8,SOLAR,,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,AFR,9,SOLAR,,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,LA,10,SOLAR,,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,S&E ASIA,11,SOLAR,,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,EEUR,12,SOLAR,,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,Korea,13,SOLAR,,5.94
+5,201.7,92.4,53.3,30.8,17.7,10.2,8,7.7,7.5,India,14,SOLAR,,5.94
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,USA,1,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,CANADA,2,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,WEUR,3,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,JAPAN,4,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,AUS&NZ,5,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,FSU,6,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,ACENP,7,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,MIDEAST,8,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,AFR,9,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,LA,10,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,S&E ASIA,11,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,EEUR,12,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,Korea,13,HYDRO,,3.19
+6,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,4.03,India,14,HYDRO,,3.19
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,USA,1,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,CANADA,2,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,WEUR,3,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,JAPAN,4,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,AUS&NZ,5,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,FSU,6,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,ACENP,7,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,MIDEAST,8,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,AFR,9,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,LA,10,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,S&E ASIA,11,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,EEUR,12,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,Korea,13,BIOMASS,,3.09
+7,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,India,14,BIOMASS,,3.09
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,USA,1,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,CANADA,2,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,WEUR,3,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,JAPAN,4,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,AUS&NZ,5,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,FSU,6,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,ACENP,7,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,MIDEAST,8,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,AFR,9,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,LA,10,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,S&E ASIA,11,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,EEUR,12,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,Korea,13,COAL W/ CO2 CAPT,,3.79
+8,5.192777778,5.192777778,5.192777778,5.192777778,5.09914055,5.012285564,4.931721573,4.856992916,4.787676932,India,14,COAL W/ CO2 CAPT,,3.79
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,USA,1,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,CANADA,2,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,WEUR,3,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,JAPAN,4,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,AUS&NZ,5,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,FSU,6,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,ACENP,7,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,MIDEAST,8,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,AFR,9,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,LA,10,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,S&E ASIA,11,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,EEUR,12,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,Korea,13,OIL W/ CO2 CAPT,,2.63
+9,3.728148148,3.595,3.595,3.595,3.530174227,3.470043852,3.414268782,3.362533557,3.314545568,India,14,OIL W/ CO2 CAPT,,2.63
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,USA,1,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,CANADA,2,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,WEUR,3,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,JAPAN,4,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,AUS&NZ,5,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,FSU,6,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,ACENP,7,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,MIDEAST,8,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,AFR,9,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,LA,10,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,S&E ASIA,11,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,EEUR,12,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,Korea,13,GAS W/ CO2 CAPT,,2.08
+10,2.914893617,2.914893617,2.914893617,2.914893617,2.848626929,2.787160005,2.730145194,2.677260025,2.628205383,India,14,GAS W/ CO2 CAPT,,2.08
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,USA,1,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,3.23
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,CANADA,2,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,3.23
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,WEUR,3,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,3.23
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,JAPAN,4,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,3.23
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,AUS&NZ,5,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,3.23
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,FSU,6,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,3.23
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,ACENP,7,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,3.23
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,MIDEAST,8,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,3.23
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,AFR,9,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,LA,10,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,S&E ASIA,11,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,EEUR,12,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,Korea,13,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,,,,,,,,,
+11,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,India,14,H2 FUEL CELL,***Note: These are overwritten by variable input # 101,,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,USA,1,FUSION, prev ver:,100,100,100,100,100,18.2,8.8,8.4,8
+12,100,100,100,100,100,100,100,100,100,CANADA,2,FUSION,Default -- Fusion is off,,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,WEUR,3,FUSION,,79.2,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,JAPAN,4,FUSION,,79.2,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,AUS&NZ,5,FUSION,,79.2,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,FSU,6,FUSION,,79.2,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,ACENP,7,FUSION,,79.2,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,MIDEAST,8,FUSION,,79.2,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,AFR,9,FUSION,,79.2,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,LA,10,FUSION,,79.2,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,S&E ASIA,11,FUSION,,79.2,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,EEUR,12,FUSION,,79.2,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,Korea,13,FUSION,,79.2,,,,,,,,
+12,100,100,100,100,100,100,100,100,100,India,14,FUSION,,,,,,,,,,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,USA,1,WIND,4.5 c/kw-hr in 2050,,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,CANADA,2,WIND,0.25% per year after that,,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,WEUR,3,WIND,to,4.02,c/kw-hr
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,JAPAN,4,WIND,,,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,AUS&NZ,5,WIND,,4,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,FSU,6,WIND,,4,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,ACENP,7,WIND,,4,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,MIDEAST,8,WIND,,4,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,AFR,9,WIND,,4,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,LA,10,WIND,,4,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,S&E ASIA,11,WIND,,4,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,EEUR,12,WIND,,,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,Korea,13,WIND,,,
+13,10,10,7,6.1,5.75,5.65,5.44,5.24,5.05,India,14,WIND,,,
+14,1000,500,350,200,150,100,75,50,25,USA,1,SWSTOR,Battery storage -- very expensive,,
+14,1000,500,350,200,150,100,75,50,25,CANADA,2,SWSTOR,"Model does H2 ""storage"" automatically",,
+14,1000,500,350,200,150,100,75,50,25,WEUR,3,SWSTOR,,
+14,1000,500,350,200,150,100,75,50,25,JAPAN,4,SWSTOR,,19.8
+14,1000,500,350,200,150,100,75,50,25,AUS&NZ,5,SWSTOR,,19.8
+14,1000,500,350,200,150,100,75,50,25,FSU,6,SWSTOR,,19.8
+14,1000,500,350,200,150,100,75,50,25,ACENP,7,SWSTOR,,19.8
+14,1000,500,350,200,150,100,75,50,25,MIDEAST,8,SWSTOR,,19.8
+14,1000,500,350,200,150,100,75,50,25,AFR,9,SWSTOR,,19.8
+14,1000,500,350,200,150,100,75,50,25,LA,10,SWSTOR,,19.8
+14,1000,500,350,200,150,100,75,50,25,S&E ASIA,11,SWSTOR,,19.8
+14,1000,500,350,200,150,100,75,50,25,EEUR,12,SWSTOR,,19.8
+14,1000,500,350,200,150,100,75,50,25,Korea,13,SWSTOR,,
+14,1000,500,350,200,150,100,75,50,25,India,14,SWSTOR,,
+15,1000,100,79,63,50,40,32,32,32,USA,1,SatSolar,Mid-range costs: ,
+15,1000,100,79,63,50,40,32,32,32,CANADA,2,SatSolar,25c/kw-hr,
+15,1000,100,79,63,50,40,32,32,32,WEUR,3,SatSolar,By 2065,
+15,1000,100,79,63,50,40,32,32,32,JAPAN,4,SatSolar,,25.34
+15,1000,100,79,63,50,40,32,32,32,AUS&NZ,5,SatSolar,,25.34
+15,1000,100,79,63,50,40,32,32,32,FSU,6,SatSolar,,25.34
+15,1000,100,79,63,50,40,32,32,32,ACENP,7,SatSolar,,25.34
+15,1000,100,79,63,50,40,32,32,32,MIDEAST,8,SatSolar,,25.34
+15,1000,100,79,63,50,40,32,32,32,AFR,9,SatSolar,,25.34
+15,1000,100,79,63,50,40,32,32,32,LA,10,SatSolar,,25.34
+15,1000,100,79,63,50,40,32,32,32,S&E ASIA,11,SatSolar,,25.34
+15,1000,100,79,63,50,40,32,32,32,EEUR,12,SatSolar,,25.34
+15,1000,100,79,63,50,40,32,32,32,Korea,13,SatSolar,,25.34
+15,1000,100,79,63,50,40,32,32,32,India,14,SatSolar,,25.34
+
+
+GJKLM,for transport sector,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+72,,,,,,,,,,,,,,
+,,"GJKLM(J,K,L,M)",,,,,,,,,,
+,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,Reg#,
+1,3,3,3,3,3,3,3,3,3,USA,1,OIL
+1,3,3,3,3,3,3,3,3,3,CANADA,2,OIL
+1,3,3,3,3,3,3,3,3,3,WEUR,3,OIL
+1,3,3,3,3,3,3,3,3,3,JAPAN,4,OIL
+1,3,3,3,3,3,3,3,3,3,AUS&NZ,5,OIL
+1,3,3,3,3,3,3,3,3,3,FSU,6,OIL
+1,3,3,3,3,3,3,3,3,3,ACENP,7,OIL
+1,3,3,3,3,3,3,3,3,3,MIDEAST,8,OIL
+1,3,3,3,3,3,3,3,3,3,AFR,9,OIL
+1,3,3,3,3,3,3,3,3,3,LA,10,OIL
+1,3,3,3,3,3,3,3,3,3,S&E ASIA,11,OIL
+1,3,3,3,3,3,3,3,3,3,EEUR,12,OIL
+1,3,3,3,3,3,3,3,3,3,KOR,13,OIL
+1,3,3,3,3,3,3,3,3,3,INDIA,14,OIL
+2,3,3,3,3,3,3,3,3,3,USA,1,GAS
+2,3,3,3,3,3,3,3,3,3,CANADA,2,GAS
+2,3,3,3,3,3,3,3,3,3,WEUR,3,GAS
+2,3,3,3,3,3,3,3,3,3,JAPAN,4,GAS
+2,3,3,3,3,3,3,3,3,3,AUS&NZ,5,GAS
+2,3,3,3,3,3,3,3,3,3,FSU,6,GAS
+2,3,3,3,3,3,3,3,3,3,ACENP,7,GAS
+2,3,3,3,3,3,3,3,3,3,MIDEAST,8,GAS
+2,3,3,3,3,3,3,3,3,3,AFR,9,GAS
+2,3,3,3,3,3,3,3,3,3,LA,10,GAS
+2,3,3,3,3,3,3,3,3,3,S&E ASIA,11,GAS
+2,3,3,3,3,3,3,3,3,3,EEUR,12,GAS
+2,3,3,3,3,3,3,3,3,3,KOR,13,GAS
+2,3,3,3,3,3,3,3,3,3,INDIA,14,GAS
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,USA,1,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,CANADA,2,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,WEUR,3,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,JAPAN,4,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,AUS&NZ,5,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,FSU,6,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,ACENP,7,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,MIDEAST,8,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,AFR,9,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,LA,10,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,S&E ASIA,11,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,EEUR,12,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,KOR,13,COAL
+3,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,INDIA,14,COAL
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,USA,1,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,CANADA,2,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,WEUR,3,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,JAPAN,4,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,AUS&NZ,5,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,FSU,6,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,ACENP,7,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,MIDEAST,8,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,AFR,9,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,LA,10,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,S&E ASIA,11,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,EEUR,12,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,KOR,13,ELECTRIC
+4,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,1.05,INDIA,14,ELECTRIC
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,USA,1,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,CANADA,2,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,WEUR,3,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,JAPAN,4,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,AUS&NZ,5,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,FSU,6,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,ACENP,7,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,MIDEAST,8,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,AFR,9,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,LA,10,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,S&E ASIA,11,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,EEUR,12,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,KOR,13,BIOMASS
+5,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,3.33,INDIA,14,BIOMASS
+
+HJKLM,,More detailed transportation coefficients,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+73,,,,,,,,,,,,
+,,"HJKLM(J,K,L,M)",,,,,,,,,,
+,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,Reg#,
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,USA,1,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,CANADA,2,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,WEUR,3,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,JAPAN,4,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,AUS&NZ,5,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,FSU,6,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,ACENP,7,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,MIDEAST,8,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,AFR,9,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,LA,10,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,S&E ASIA,11,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,EEUR,12,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,KOR,13,OIL
+1,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,98.88,INDIA,14,OIL
+2,200,200,200,200,200,200,200,200,200,USA,1,GAS
+2,200,200,200,200,200,200,200,200,200,CANADA,2,GAS
+2,200,200,200,200,200,200,200,200,200,WEUR,3,GAS
+2,200,200,200,200,200,200,200,200,200,JAPAN,4,GAS
+2,200,200,200,200,200,200,200,200,200,AUS&NZ,5,GAS
+2,200,200,200,200,200,200,200,200,200,FSU,6,GAS
+2,200,200,200,200,200,200,200,200,200,ACENP,7,GAS
+2,200,200,200,200,200,200,200,200,200,MIDEAST,8,GAS
+2,200,200,200,200,200,200,200,200,200,AFR,9,GAS
+2,200,200,200,200,200,200,200,200,200,LA,10,GAS
+2,200,200,200,200,200,200,200,200,200,S&E ASIA,11,GAS
+2,200,200,200,200,200,200,200,200,200,EEUR,12,GAS
+2,200,200,200,200,200,200,200,200,200,KOR,13,GAS
+2,200,200,200,200,200,200,200,200,200,INDIA,14,GAS
+3,200,200,200,200,200,200,200,200,200,USA,1,COAL
+3,200,200,200,200,200,200,200,200,200,CANADA,2,COAL
+3,200,200,200,200,200,200,200,200,200,WEUR,3,COAL
+3,200,200,200,200,200,200,200,200,200,JAPAN,4,COAL
+3,200,200,200,200,200,200,200,200,200,AUS&NZ,5,COAL
+3,105,105,110,120,130,150,200,200,200,FSU,6,COAL,Costs adjusted so that energy service prices vary smoothly between periods
+3,105,105,110,120,130,150,200,200,200,ACENP,7,COAL,Costs adjusted so that energy service prices vary smoothly between periods
+3,200,200,200,200,200,200,200,200,200,MIDEAST,8,COAL,
+3,200,200,200,200,200,200,200,200,200,AFR,9,COAL,
+3,200,200,200,200,200,200,200,200,200,LA,10,COAL,
+3,200,200,200,200,200,200,200,200,200,S&E ASIA,11,COAL,
+3,200,200,200,200,200,200,200,200,200,EEUR,12,COAL,
+3,200,200,200,200,200,200,200,200,200,KOR,13,COAL,
+3,105,105,110,120,130,150,200,200,200,INDIA,14,COAL,Costs adjusted so that energy service prices vary smoothly between periods
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,USA,1,ELECTRIC,
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,CANADA,2,ELECTRIC,
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,WEUR,3,ELECTRIC,
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,JAPAN,4,ELECTRIC,
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,AUS&NZ,5,ELECTRIC,
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,FSU,6,ELECTRIC,
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,ACENP,7,ELECTRIC,
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,MIDEAST,8,ELECTRIC
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,AFR,9,ELECTRIC
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,LA,10,ELECTRIC
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,S&E ASIA,11,ELECTRIC
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,EEUR,12,ELECTRIC
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,KOR,13,ELECTRIC
+4,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,153.17,INDIA,14,ELECTRIC
+5,200,200,200,200,200,200,200,200,200,USA,1,BIOMASS
+5,200,200,200,200,200,200,200,200,200,CANADA,2,BIOMASS
+5,200,200,200,200,200,200,200,200,200,WEUR,3,BIOMASS
+5,200,200,200,200,200,200,200,200,200,JAPAN,4,BIOMASS
+5,200,200,200,200,200,200,200,200,200,AUS&NZ,5,BIOMASS
+5,200,200,200,200,200,200,200,200,200,FSU,6,BIOMASS
+5,200,200,200,200,200,200,200,200,200,ACENP,7,BIOMASS
+5,200,200,200,200,200,200,200,200,200,MIDEAST,8,BIOMASS
+5,200,200,200,200,200,200,200,200,200,AFR,9,BIOMASS
+5,200,200,200,200,200,200,200,200,200,LA,10,BIOMASS
+5,200,200,200,200,200,200,200,200,200,S&E ASIA,11,BIOMASS
+5,200,200,200,200,200,200,200,200,200,EEUR,12,BIOMASS
+5,200,200,200,200,200,200,200,200,200,KOR,13,BIOMASS
+5,200,200,200,200,200,200,200,200,200,INDIA,14,BIOMASS
+
+TAXRLM,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+74,,,,,,,,,,,,
+,,"TAXRLM(L,M)",,,,,,,,,,
+REGION,2005,2020,2035,2050,2065,2080,2095,,,,,
+1,0,0,0,0,0,0,0,USA,,,,
+2,0,0,0,0,0,0,0,CANADA,,,,
+3,0,0,0,0,0,0,0,WEUR,,,,
+4,0,0,0,0,0,0,0,JAPAN,,,,
+5,0,0,0,0,0,0,0,AUS&NZ
+6,0,0,0,0,0,0,0,FSU
+7,0,0,0,0,0,0,0,ACENP
+8,0,0,0,0,0,0,0,MIDEAST
+9,0,0,0,0,0,0,0,AFR
+10,0,0,0,0,0,0,0,LA
+11,0,0,0,0,0,0,0,S&E ASIA
+12,0,0,0,0,0,0,0,EEUR
+13,0,0,0,0,0,0,0,KOR
+14,0,0,0,0,0,0,0,INDIA
+
+NTAXMODE,,,,,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+75,,,,,,,,
+,,NTAXMODE(L),,,,,,
+REGION,NTAXMODE,
+1,1,USA
+2,1,CANADA
+3,1,WEUR
+4,1,JAPAN
+5,1,AUS&NZ
+6,1,FSU
+7,1,ACENP
+8,1,MIDEAST
+9,1,AFR
+10,1,LA
+11,1,S&E ASIA
+12,1,EEUR
+13,1,KOR
+14,1,INDIA
+
+CEMTARG,,,,,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+78,,,,,,,,
+,,"CEMTARGS(L,M)",,,,,,
+REGION,2005,2020,2035,2050,2065,2080,2095,
+1,0,0,0,0,0,0,0,USA
+2,0,0,0,0,0,0,0,CANADA
+3,0,0,0,0,0,0,0,WEUR
+4,0,0,0,0,0,0,0,JAPAN
+5,0,0,0,0,0,0,0,AUS&NZ
+6,0,0,0,0,0,0,0,FSU
+7,0,0,0,0,0,0,0,ACENP
+8,0,0,0,0,0,0,0,MIDEAST
+9,0,0,0,0,0,0,0,AFR
+10,0,0,0,0,0,0,0,LA
+11,0,0,0,0,0,0,0,S&E ASIA,,,,
+12,0,0,0,0,0,0,0,EEUR,,,,
+13,0,0,0,0,0,0,0,KOR,,,,
+14,0,0,0,0,0,0,0,INDIA,,,,
+
+ INCOME ELASTICITY CONTROL PARAMETERS,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+79,,,,,,,,,,,,
+,"RYKLM(K,L,M)",,,,,,,,,,,
+Sector,1975,1990,2005,2020,2035,2050,2065,2080,2095,,REGION,SECTOR
+1,1,1,1,1,1,1,1,1,1,AGG,USA,RES/COM
+2,1,1.1,1,1,1,1,1,1,1,AGG,USA,INDUSTRY
+3,1,1,1,1,1,1,1,1,1,AGG,USA,TRANSPORT
+1,1,1,1,1,1,1,1,1,1,AGG,CANADA,RES/COM
+2,1,1,1,1,1,1,1,1,1,AGG,CANADA,INDUSTRY
+3,1,1,1,1,1,1,1,1,1,AGG,CANADA,TRANSPORT
+1,1,1,1,1,1,1,1,1,1,AGG,WEUR,RES/COM
+2,1,1,1,1,1,1,1,1,1,AGG,WEUR,INDUSTRY
+3,1,1,1,1,1,1,1,1,1,AGG,WEUR,TRANSPORT
+1,1,1,1,1,1,1,1,1,1,AGG,JAPAN,RES/COM
+2,1,1,1,1,1,1,1,1,1,AGG,JAPAN,INDUSTRY
+3,1,1,1,1,1,1,1,1,1,AGG,JAPAN,TRANSPORT
+1,1,1,1,1,1,1,1,1,1,AGG,AUS&NZ,RES/COM
+2,1,1,1,1,1,1,1,1,1,AGG,AUS&NZ,INDUSTRY
+3,1,1,1,1,1,1,1,1,1,AGG,AUS&NZ,TRANSPORT
+1,1.25,1.209,1.169,1.131,1.11,1.05,1.05,1.05,1,AGG,FSU,RES/COM
+2,1.25,1.209,1.169,1.131,1.11,1.05,1.05,1.05,1,AGG,FSU,INDUSTRY
+3,1.25,1.209,1.169,1.131,1.11,1.05,1.05,1.05,1,AGG,FSU,TRANSPORT
+1,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,CHINA,RES/COM
+2,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,CHINA,INDUSTRY
+3,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,CHINA,TRANSPORT
+1,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,MIDEAST,RES/COM
+2,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,MIDEAST,INDUSTRY
+3,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,MIDEAST,TRANSPORT
+1,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,AFRICA,RES/COM
+2,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,AFRICA,INDUSTRY
+3,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,AFRICA,TRANSPORT
+1,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,L.AMERICA,RES/COM
+2,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,L.AMERICA,INDUSTRY
+3,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.06525,1.0435,AGG,L.AMERICA,TRANSPORT
+1,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.0815625,1.076125,AGG,S&E ASIA,RES/COM
+2,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.0815625,1.076125,AGG,S&E ASIA,INDUSTRY
+3,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.0815625,1.076125,AGG,S&E ASIA,TRANSPORT
+1,1.25,1.209,1.169,1.25,1.09,1.02,1,1,1,AGG,EEUR,RES/COM
+2,1.25,1.209,1.169,1.25,1.09,1.02,1,1,1,AGG,EEUR,INDUSTRY
+3,1.25,1.209,1.169,1.25,1.09,1.02,1,1,1,AGG,EEUR,TRANSPORT
+1,1.35,1.205,1.265,1.2,1.1,1,1,1,1,AGG,KOR,RES/COM
+2,1.35,1.205,1.265,1.2,1.1,1,1,1,1,AGG,KOR,INDUSTRY
+3,1.35,1.205,1.265,1.2,1.1,1,1,1,1,AGG,KOR,TRANSPORT
+1,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.0815625,1.076125,AGG,INDIA,RES/COM
+2,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.0815625,1.076125,AGG,INDIA,INDUSTRY
+3,1.4,1.331,1.265,1.203,1.144,1.087,1.087,1.0815625,1.076125,AGG,INDIA,TRANSPORT
+
+Exogenous carbon emissions from flaring,,,,,,,,,,,,
+EXOFLARE,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+5,,,,,,,,,,,,
+,,"EXOFLARE(L,M)",,,,,,,,,,
+Region,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
+1,0,0,0,0,0,0,0,0,0,US,,
+2,0,0,0,0,0,0,0,0,0,CAN,,
+3,0,0,0,0,0,0,0,0,0,WEUR,,
+4,0,0,0,0,0,0,0,0,0,JAPAN
+5,0,0,0,0,0,0,0,0,0,AUS&NZ
+6,0,0,0,0,0,0,0,0,0,FSU
+7,0,0,0,0,0,0,0,0,0,ACENP
+8,0,0,0,0,0,0,0,0,0,MIDEAST
+9,0,0,0,0,0,0,0,0,0,AFRICA
+10,0,0,0,0,0,0,0,0,0,L AMER
+11,0,0,0,0,0,0,0,0,0,S&E ASIA
+12,0,0,0,0,0,0,0,0,0,EEUR
+13,0,0,0,0,0,0,0,0,0,KOR
+14,0,0,0,0,0,0,0,0,0,INDIA
+
+NUMBER OF MARKETS,,,NMRK,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,
+11,,,,,,,,,,
+NMRK,,
+NMRK,,
+25,,
+
+
+Input #,Quantity,(This is just for documentaiton purposes)
+1,Oil,
+2,Gas,
+3,Coal,
+4,Biomass,
+5,Carbon,
+6,Wood,
+7,Forward Wood,
+8,Food Grains,
+9,Coarse Grains,
+10,Oil Crops,
+11,Misc Crops,,,,,,,,,,,,,,,
+12,Pasture,,,,,,,,,,,,,,,
+
+
+MARKET DEFINITION TABLE,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,
+12,,,,,,,,,,,,,,,,
+MRKDEF,,,,,,,,,,,,,,,,
+Market,Input,NL,Region,,,,,,,,,,,,,
+0,1,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+1,1,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+2,2,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+3,3,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+4,4,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+5,5,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+6,6,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+7,7,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+8,8,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+9,9,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+10,10,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+11,11,14,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+12,12,1,1,,,,,,,,,,,,,
+13,12,1,2,,,,,,,,,,,,,
+14,12,1,3,,,,,,,,,,,,,
+15,12,1,4,,,,,,,,,,,,,
+16,12,1,5,,,,,,,,,,,,,
+17,12,1,6,,,,,,,,,,,,,
+18,12,1,7,,,,,,,,,,,,,
+19,12,1,8,,,,,,,,,,,,,
+20,12,1,9,,,,,,,,,,,,,
+21,12,1,10,,,,,,,,,,,,,
+22,12,1,11
+23,12,1,12
+24,12,1,13
+25,12,1,14
+
+
+
+"Carbon removal fraction,by mode",,,
+Mode=1 for synfuel and 2 for coal electric,,,
+INPUT_TABLE,,,
+Variable ID,,,
+84,,,
+,"REMFRAC(I,L)",,
+REGION,"REMFRAC(1,L)","REMFRAC(2,L)",
+1,0.9,0.9,US
+2,0.9,0.9,CAN
+3,0.9,0.9,WEUR
+4,0.9,0.9,JAPAN
+5,0.9,0.9,AUS&NZ
+6,0.9,0.9,FSU
+7,0.9,0.9,ACENP
+8,0.9,0.9,MIDEAST
+9,0.9,0.9,AFRICA
+10,0.9,0.9,L AMER
+11,0.9,0.9,S&E ASIA
+12,0.9,0.9,EEUR
+13,0.9,0.9,KOR
+14,0.9,0.9,INDIA
+
+Price out carbon management,,,
+Carbon Disposal Costs,,,
+INPUT_TABLE,,,
+Variable ID,,,,,,,,
+83,,,,,,,,
+,"CARBDISP(L,M)",,,,,,,
+REGION,2005,2020,2035,2050,2065,2080,2095,
+1,5000,5000,5000,5000,5000,5000,5000,US
+2,5000,5000,5000,5000,5000,5000,5000,CAN
+3,5000,5000,5000,5000,5000,5000,5000,WEUR
+4,5000,5000,5000,5000,5000,5000,5000,JAPAN
+5,5000,5000,5000,5000,5000,5000,5000,AUS&NZ
+6,5000,5000,5000,5000,5000,5000,5000,FSU
+7,5000,5000,5000,5000,5000,5000,5000,ACENP
+8,5000,5000,5000,5000,5000,5000,5000,MIDEAST
+9,5000,5000,5000,5000,5000,5000,5000,AFRICA
+10,5000,5000,5000,5000,5000,5000,5000,L AMER
+11,5000,5000,5000,5000,5000,5000,5000,S&E ASIA
+12,5000,5000,5000,5000,5000,5000,5000,EEUR
+13,5000,5000,5000,5000,5000,5000,5000,KOR
+14,5000,5000,5000,5000,5000,5000,5000,INDIA
+
+Efficiency penalties for converting fossil fuel to H2,,,,,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+86,,,,,,,,
+,GIJH2(I),,,,,,,
+OIL,GAS,COAL,BIOMASS,,,,,
+0.2,0.2,0.2,0.2,,,,,
+
+
+Labor Force Participation Rates,,,,used in working age method of computing GNP,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+373,,,,,,,,
+,RLFP(l,m),,,,,,,,
+REGION,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+1,0.705,0.764,0.7691,0.7743,0.7794,0.7846,0.7897,0.7949,0.8,US
+2,0.677,0.777,0.7803,0.7836,0.7869,0.7901,0.7934,0.7967,0.8,CAN
+3,0.69,0.699,0.7134,0.7279,0.7423,0.7567,0.7711,0.7856,0.8,WEUR
+4,0.727,0.746,0.7537,0.7614,0.7691,0.7769,0.7846,0.7923,0.8,JAPAN
+5,0.672,0.751,0.758,0.765,0.772,0.779,0.786,0.793,0.8,AUS&NZ
+6,0.789,0.756,0.7623,0.7686,0.7749,0.7811,0.7874,0.7937,0.8,FSU
+7,0.942,0.886,0.8737,0.8614,0.8491,0.8369,0.8246,0.8123,0.8,ACENP
+8,0.568,0.58,0.6114,0.6429,0.6743,0.7057,0.7371,0.7686,0.8,MIDEAST
+9,0.9,0.859,0.8506,0.8421,0.8337,0.8253,0.8169,0.8084,0.8,AFRICA
+10,0.625,0.674,0.692,0.71,0.728,0.746,0.764,0.782,0.8,L AMER
+11,0.64,0.729,0.7391,0.7493,0.7594,0.7696,0.7797,0.7899,0.8,S&E ASIA
+12,0.789,0.756,0.7623,0.7686,0.7749,0.7811,0.7874,0.7937,0.8,EEUR
+13,0.727,0.746,0.7537,0.7614,0.7691,0.7769,0.7846,0.7923,0.8,KOR
+14,0.64,0.729,0.7391,0.7493,0.7594,0.7696,0.7797,0.7899,0.8,INDIA
+
+
+RIGISL--RESOURCES BY GRADE AND REGION (UNITS=EXAJOULES),,,,,,,
+Global fossil values based on Rogner (1997),,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+17,,,,,,,
+,,"RIGISL(IG,IS,L)",,,,,
+Grade,REGION,CONV OIL,CONV GAS,COAL,UNCON OIL,NUCLEAR,
+1,1,247,207,284,4397,105,US
+2,1,312,778,6851,8594,562,US
+3,1,356,575,9469,82637,87084,US
+4,1,226,1431,13456,247909,87084,US
+5,1,236,716,18440,0,0,US
+6,1,343,1339,18440,0,0,US
+1,2,55,44,20,803,77,CANADA
+2,2,115,279,293,1570,411,CANADA
+3,2,199,119,293,15095,34833,CANADA
+4,2,208,279,415,45285,34833,CANADA
+5,2,216,478,569,0,0,CANADA
+6,2,314,893,569,0,0,CANADA
+1,3,121,78,117,1204,116,WEUR
+2,3,49,496,2633,2355,617,WEUR
+3,3,85,278,2632,22643,52250,WEUR
+4,3,89,647,3740,67928,52250,WEUR
+5,3,92,382,5125,0,0,WEUR
+6,3,134,714,5125,0,0,WEUR
+1,4,0,1,2,146,10,JAPAN
+2,4,0,6,336,287,50,JAPAN
+3,4,0,23,496,2754,8708,JAPAN
+4,4,0,51,704,8263,8708,JAPAN
+5,4,0,239,965,0,0,JAPAN
+6,4,0,446,965,0,0,JAPAN
+1,5,18,10,57,1320,84,AUS&NZ
+2,5,5,67,1186,2578,449,AUS&NZ
+3,5,6,46,1753,24791,78375,AUS&NZ
+4,5,7,99,2491,74374,78375,AUS&NZ
+5,5,9,478,3414,0,0,AUS&NZ
+6,5,12,893,3414,0,0,AUS&NZ
+1,6,333,325,158,3874,205,FSU
+2,6,305,2074,8728,7575,1092,FSU
+3,6,569,1409,15404,72804,69271,FSU
+4,6,551,1389,21890,218412,69271,FSU
+5,6,572,478,29997,0,0,FSU
+6,6,556,893,29997,0,0,FSU
+1,7,83,6,295,2012,123,ACENP
+2,7,102,40,7032,3933,657,ACENP
+3,7,98,171,4820,37820,87084,ACENP
+4,7,137,379,6849,113461,87084,ACENP
+5,7,136,239,9387,0,0,ACENP
+6,7,187,446,9387,0,0,ACENP
+1,8,501,41,0,503,2,MIDEAST
+2,8,657,810,2,983,12,MIDEAST
+3,8,485,735,2,9455,87084,MIDEAST
+4,8,452,2252,3,28366,87084,MIDEAST
+5,8,1380,239,4,0,0,MIDEAST
+6,8,1820,446,4,0,0,MIDEAST
+1,9,188,30,56,6009,426,AFR
+2,9,296,194,1059,11745,2269,AFR
+3,9,56,335,723,112937,87084,AFR
+4,9,397,739,1026,338813,87084,AFR
+5,9,393,716,1406,0,0,AFR
+6,9,1298,1339,1406,0,0,AFR
+1,10,222,37,11,3004,973,LA
+2,10,261,236,116,5873,5188,LA
+3,10,119,372,144,56469,87084,LA
+4,10,348,783,205,169406,87084,LA
+5,10,346,716,280,0,0,LA
+6,10,475,1339,280,0,0,LA
+1,11,73,45,6,1509,20,SEASIA
+2,11,48,287,1018,2950,109,SEASIA
+3,11,110,301,434,28366,87084,SEASIA
+4,11,63,339,616,85096,87084,SEASIA
+5,11,63,478,845,0,0,SEASIA
+6,11,314,893,845,0,0,SEASIA
+1,12,8,16,86,151,53,EEUR
+2,12,7,101,390,295,281,EEUR
+3,12,13,25,689,2837,17813,EEUR
+4,12,12,24,979,8510,17813,EEUR
+5,12,13,48,1341,0,0,EEUR
+6,12,12,89,1341,0,0,EEUR
+1,13,0,0,4,0,10,KOREA
+2,13,0,0,17,0,50,KOREA
+3,13,0,0,0,0,8708,KOREA
+4,13,0,0,0,0,8708,KOREA
+5,13,0,191,0,0,0,KOREA
+6,13,0,357,0,0,0,KOREA
+1,14,21,5,55,1509,20,INDIA
+2,14,48,32,1018,2950,109,INDIA
+3,14,110,301,434,28366,87084,INDIA
+4,14,63,339,616,85096,87084,INDIA
+5,14,63,382,845,0,0,INDIA
+6,14,314,714,845,0,0,INDIA
+
+
+CIGIS--MINIMUM EXTRACTION COSTS BY GRADE AND FUEL  (UNITS=1975 DOLLARS/GIGAJOULE),,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+18,,,,,,
+,,"CIGIS(IG,IS)",,,,
+Grade,CONV OIL,CONV GAS,COAL,UNCON OIL,NUCLEAR,
+1,0.5,0.62,0.34,3.8,1.07,
+2,0.55,0.68,0.37,4.1,2,Arbitrary jump from grade 1-2 corresponds (con fuels) to 75-90 in model
+3,0.92,1.1,1.2,5.6,2.1,
+4,1.3,1.7,1.7,6.7,2.5,
+5,2.1,3.1,2,8,3,
+6,2.7,3.7,2.3,9,4,
+100,3.5,6.5,2.6,10,8,
+
+Grade 1 & 2 extraction costs adjusted to match current global prices,,,,,,
+Further values based on Rogner (1997),,,,,,
+
+
+Electricity shares in developing countries generally don't reach OECD levels,,,,,,,,,,,,,,,,,,
+until later -- otherwise electricity demand grows too fast,,,,,,,,,,,,,,,,,,
+ BSJKLM Logit function scale parameters for enduse sectors,,,,,NOTE: shares between 1990 and 2050 are automatically overwitten,,,,,,,,,,,,,
+INPUT_TABLE,,,,,Preference for coal in transport & res/com reduced,,,,,2050,2095,,,,,,,
+ Variable ID,,,,,"Otherwise, shares identical",,,,Res/Com Solids Min:,0.2,0.01,,,,,,,
+240,,(New readin -- all periods),,"Note, values from 1990 through 2035 are ignored (Extrapolated smoothly by code)",,,,,Ind Solids Min:,0.25,0.05,,"Order: sector, then region",,,,,
+ ,,BSJKLM,,,,,,,,,,,,,,,,
+ Fuel,1975,1990,2005,2020,2035,2050,2065,2080,2095,Sector,Region,Sec,,REGION,Asymtotic 2050 Value,,Sector,Region
+1,0.3585,0.0966959,0.0968,0.0968,0.0969,0.097,0.097,0.097,0.097,1,1,RES/COM,Liquids,USA,Region-specific values used,,1,1
+1,0.1871,0.19815482,0.1956,0.1931,0.1905,0.188,0.188,0.188,0.188,2,1,INDUSTRY,Liquids,USA,OECD90 Average,,2,1
+1,0.703,0.00540881,0.0866,0.1677,0.2489,0.33,0.33,0.33,0.33,3,1,TRANSPORT,Liquids,USA,,,3,1
+1,0.5492,0.14761823,0.1477,0.1478,0.1479,0.148,0.148,0.148,0.148,1,2,RES/COM,Liquids,CANADA,Region-specific values used,,1,2
+1,0.3184,0.16486752,0.1707,0.1764,0.1822,0.188,0.188,0.188,0.188,2,2,INDUSTRY,Liquids,CANADA,OECD90 Average,,2,2
+1,0.0736,0.00219712,0.0841,0.1661,0.248,0.33,0.33,0.33,0.33,3,2,TRANSPORT,Liquids,CANADA,,,3,2
+1,0.5492,0.28088789,0.2809,0.2809,0.281,0.281,0.281,0.281,0.281,1,3,RES/COM,Liquids,WEUR,Region-specific values used,,1,3
+1,0.3184,0.20770237,0.2028,0.1979,0.1929,0.188,0.188,0.188,0.188,2,3,INDUSTRY,Liquids,WEUR,OECD90 Average,,2,3
+1,0.0736,0.06504568,0.1313,0.1975,0.2638,0.33,0.33,0.33,0.33,3,3,TRANSPORT,Liquids,WEUR,,,,
+1,0.4533,0.24172968,0.2418,0.2419,0.2419,0.242,0.242,0.242,0.242,1,4,RES/COM,Liquids,JAPAN,Region-specific values used,,,
+1,0.1948,0.18818206,0.1881,0.1881,0.188,0.188,0.188,0.188,0.188,2,4,INDUSTRY,Liquids,JAPAN,OECD90 Average,,,
+1,0.0299,0.05531297,0.124,0.1927,0.2613,0.33,0.33,0.33,0.33,3,4,TRANSPORT,Liquids,JAPAN,,,,
+1,0.4533,0.06316037,0.0631,0.0631,0.063,0.063,0.063,0.063,0.063,1,5,RES/COM,Liquids,AUS&NZ,Region-specific values used,,,
+1,0.1948,0.18255584,0.1839,0.1853,0.1866,0.188,0.188,0.188,0.188,2,5,INDUSTRY,Liquids,AUS&NZ,OECD90 Average,,,
+1,0.0299,0.02625162,0.1022,0.1781,0.2541,0.33,0.33,0.33,0.33,3,5,TRANSPORT,Liquids,AUS&NZ,,,,
+1,0.4185,0.19373507,0.1868,0.1799,0.1729,0.166,0.166,0.166,0.166,1,6,RES/COM,Liquids,FSU,OECD90 Average,,,
+1,0.1341,0.25579626,0.2388,0.2219,0.2049,0.188,0.188,0.188,0.188,2,6,INDUSTRY,Liquids,FSU,OECD90 Average,,,
+1,0.0053,0.00313129,0.0848,0.1666,0.2483,0.33,0.33,0.33,0.33,3,6,TRANSPORT,Liquids,FSU,,,,
+1,0.1355,0.06053246,0.0869,0.1133,0.1396,0.166,0.166,0.166,0.166,1,7,RES/COM,Liquids,CHINA,OECD90 Average,,,
+1,0.412,0.18820861,0.1882,0.1881,0.1881,0.188,0.188,0.188,0.188,2,7,INDUSTRY,Liquids,CHINA,OECD90 Average,,,
+1,0.0004,0.02355725,0.1002,0.1768,0.2534,0.33,0.33,0.33,0.33,3,7,TRANSPORT,Liquids,CHINA,,,,
+1,0.2184,0.29452646,0.2624,0.2303,0.1981,0.166,0.166,0.166,0.166,1,8,RES/COM,Liquids,MIDEAST,OECD90 Average,,,
+1,0.3912,0.49483789,0.4181,0.3414,0.2647,0.188,0.188,0.188,0.188,2,8,INDUSTRY,Liquids,MIDEAST,OECD90 Average,,,
+1,1,0.62496743,0.5512,0.4775,0.4037,0.33,0.33,0.33,0.33,3,8,TRANSPORT,Liquids,MIDEAST,
+1,0.6365,0.07850623,0.0791,0.0798,0.0804,0.081,0.081,0.081,0.081,1,9,RES/COM,Liquids,AFRICA,Region-specific values used
+1,0.5366,0.1841257,0.1851,0.1861,0.187,0.188,0.188,0.188,0.188,2,9,INDUSTRY,Liquids,AFRICA,OECD90 Average
+1,0.0188,0.02626208,0.1022,0.1781,0.2541,0.33,0.33,0.33,0.33,3,9,TRANSPORT,Liquids,AFRICA,
+1,0.5185,0.21854564,0.2054,0.1923,0.1791,0.166,0.166,0.166,0.166,1,10,RES/COM,Liquids,L.AMERICA,OECD90 Average
+1,0.5581,0.26979562,0.2493,0.2289,0.2084,0.188,0.188,0.188,0.188,2,10,INDUSTRY,Liquids,L.AMERICA,OECD90 Average
+1,0.5667,0.07995654,0.1425,0.205,0.2675,0.33,0.33,0.33,0.33,3,10,TRANSPORT,Liquids,L.AMERICA,
+1,0.4242,0.18639169,0.1813,0.1762,0.1711,0.166,0.166,0.166,0.166,1,11,RES/COM,Liquids,S&E ASIA,OECD90 Average
+1,0.2227,0.26470006,0.2455,0.2264,0.2072,0.188,0.188,0.188,0.188,2,11,INDUSTRY,Liquids,S&E ASIA,OECD90 Average
+1,0.0053,0.57511704,0.5138,0.4526,0.3913,0.33,0.33,0.33,0.33,3,11,TRANSPORT,Liquids,S&E ASIA,
+1,0.4185,0.2071729,0.1969,0.1866,0.1763,0.166,0.166,0.166,0.166,1,12,RES/COM,Liquids,EEUR,OECD90 Average
+1,0.1341,0.1617711,0.1683,0.1749,0.1814,0.188,0.188,0.188,0.188,2,12,INDUSTRY,Liquids,EEUR,OECD90 Average
+1,0.0053,0.02334872,0.1,0.1767,0.2533,0.33,0.33,0.33,0.33,3,12,TRANSPORT,Liquids,EEUR,
+1,1,0.49603715,0.4135,0.331,0.2485,0.166,0.166,0.166,0.166,1,13,RES/COM,Liquids,KOREA,OECD90 Average
+1,1,0.30403538,0.275,0.246,0.217,0.188,0.188,0.188,0.188,2,13,INDUSTRY,Liquids,KOREA,OECD90 Average
+1,1,0.18540136,0.2216,0.2577,0.2939,0.33,0.33,0.33,0.33,3,13,TRANSPORT,Liquids,KOREA,
+1,0.4242,0.14855606,0.1529,0.1573,0.1616,0.166,0.166,0.166,0.166,1,14,RES/COM,Liquids,INDIA,OECD90 Average
+1,0.2227,0.10711931,0.1273,0.1476,0.1678,0.188,0.188,0.188,0.188,2,14,INDUSTRY,Liquids,INDIA,OECD90 Average
+1,0.0053,0.08452147,0.1459,0.2073,0.2686,0.33,0.33,0.33,0.33,3,14,TRANSPORT,Liquids,INDIA,
+2,0.0548,0.09416271,0.1171,0.1401,0.163,0.186,0.186,0.186,0.186,1,1,RES/COM,Gas,USA,OECD90 Average (plus 0.1)
+2,0.0124,0.05614118,0.0806,0.1051,0.1295,0.154,0.154,0.154,0.154,2,1,INDUSTRY,Gas,USA,OECD90 Average (plus 0.1)
+2,0,0.991758,0.8263,0.6609,0.4954,0.33,0.33,0.33,0.33,3,1,TRANSPORT,Gas,USA,
+2,0.0814,0.09815479,0.1201,0.1421,0.164,0.186,0.186,0.186,0.186,1,2,RES/COM,Gas,CANADA,OECD90 Average (plus 0.1)
+2,0.0831,0.05644673,0.0808,0.1052,0.1296,0.154,0.154,0.154,0.154,2,2,INDUSTRY,Gas,CANADA,OECD90 Average (plus 0.1)
+2,0,0.98732755,0.823,0.6587,0.4943,0.33,0.33,0.33,0.33,3,2,TRANSPORT,Gas,CANADA,
+2,0.0814,0.08721927,0.1119,0.1366,0.1613,0.186,0.186,0.186,0.186,1,3,RES/COM,Gas,WEUR,OECD90 Average (plus 0.1)
+2,0.0831,0.059857,0.0834,0.1069,0.1305,0.154,0.154,0.154,0.154,2,3,INDUSTRY,Gas,WEUR,OECD90 Average (plus 0.1)
+2,0,0.26695219,0.2827,0.2985,0.3142,0.33,0.33,0.33,0.33,3,3,TRANSPORT,Gas,WEUR,
+2,0.0622,0.07411259,0.1021,0.1301,0.158,0.186,0.186,0.186,0.186,1,4,RES/COM,Gas,JAPAN,OECD90 Average (plus 0.1)
+2,0.042,0.0362989,0.0657,0.0951,0.1246,0.154,0.154,0.154,0.154,2,4,INDUSTRY,Gas,JAPAN,OECD90 Average (plus 0.1)
+2,0,0,0.0825,0.165,0.2475,0.33,0.33,0.33,0.33,3,4,TRANSPORT,Gas,JAPAN,
+2,0.0622,0.07456172,0.1024,0.1303,0.1581,0.186,0.186,0.186,0.186,1,5,RES/COM,Gas,AUS&NZ,OECD90 Average (plus 0.1)
+2,0.042,0.06165825,0.0847,0.1078,0.1309,0.154,0.154,0.154,0.154,2,5,INDUSTRY,Gas,AUS&NZ,OECD90 Average (plus 0.1)
+2,0,0.51657323,0.4699,0.4233,0.3766,0.33,0.33,0.33,0.33,3,5,TRANSPORT,Gas,AUS&NZ,
+2,0.0573,0.24663592,0.2475,0.2483,0.2492,0.25,0.25,0.25,0.25,1,6,RES/COM,Gas,FSU,Region-specific values used
+2,0.003,0.0882959,0.1047,0.1211,0.1376,0.154,0.154,0.154,0.154,2,6,INDUSTRY,Gas,FSU,OECD90 Average (plus 0.1)
+2,0,0.86602471,0.732,0.598,0.464,0.33,0.33,0.33,0.33,3,6,TRANSPORT,Gas,FSU,
+2,0.0031,0.00373363,0.0493,0.0949,0.1404,0.186,0.186,0.186,0.186,1,7,RES/COM,Gas,CHINA,OECD90 Average (plus 0.1)
+2,0.0001,0.00753615,0.0442,0.0808,0.1174,0.154,0.154,0.154,0.154,2,7,INDUSTRY,Gas,CHINA,OECD90 Average (plus 0.1)
+2,0,0.56695619,0.5077,0.4485,0.3892,0.33,0.33,0.33,0.33,3,7,TRANSPORT,Gas,CHINA,
+2,0.0297,0.0424246,0.0783,0.1142,0.1501,0.186,0.186,0.186,0.186,1,8,RES/COM,Gas,MIDEAST,OECD90 Average (plus 0.1)
+2,0.0079,0.12008977,0.1286,0.137,0.1455,0.154,0.154,0.154,0.154,2,8,INDUSTRY,Gas,MIDEAST,OECD90 Average (plus 0.1)
+2,0,0,0.0825,0.165,0.2475,0.33,0.33,0.33,0.33,3,8,TRANSPORT,Gas,MIDEAST,
+2,0.0003,0.00600205,0.051,0.096,0.141,0.186,0.186,0.186,0.186,1,9,RES/COM,Gas,AFRICA,OECD90 Average (plus 0.1)
+2,0,0.03395204,0.064,0.094,0.124,0.154,0.154,0.154,0.154,2,9,INDUSTRY,Gas,AFRICA,OECD90 Average (plus 0.1)
+2,0,0,0.0825,0.165,0.2475,0.33,0.33,0.33,0.33,3,9,TRANSPORT,Gas,AFRICA,
+2,0.0219,0.02332547,0.064,0.1047,0.1453,0.186,0.186,0.186,0.186,1,10,RES/COM,Gas,L.AMERICA,OECD90 Average (plus 0.1)
+2,0.0027,0.06390759,0.0864,0.109,0.1315,0.154,0.154,0.154,0.154,2,10,INDUSTRY,Gas,L.AMERICA,OECD90 Average (plus 0.1)
+2,0,0.77762562,0.6657,0.5538,0.4419,0.33,0.33,0.33,0.33,3,10,TRANSPORT,Gas,L.AMERICA,
+2,0.0048,0.02036035,0.0618,0.1032,0.1446,0.186,0.186,0.186,0.186,1,11,RES/COM,Gas,S&E ASIA,OECD90 Average (plus 0.1)
+2,0.0008,0.05922121,0.0829,0.1066,0.1303,0.154,0.154,0.154,0.154,2,11,INDUSTRY,Gas,S&E ASIA,OECD90 Average (plus 0.1)
+2,0,0,0.0825,0.165,0.2475,0.33,0.33,0.33,0.33,3,11,TRANSPORT,Gas,S&E ASIA,
+2,0.0573,0.08185349,0.1079,0.1339,0.16,0.186,0.186,0.186,0.186,1,12,RES/COM,Gas,EEUR,OECD90 Average (plus 0.1)
+2,0.003,0.05434567,0.0793,0.1042,0.1291,0.154,0.154,0.154,0.154,2,12,INDUSTRY,Gas,EEUR,OECD90 Average (plus 0.1)
+2,0,0.01000176,0.09,0.17,0.25,0.33,0.33,0.33,0.33,3,12,TRANSPORT,Gas,EEUR,
+2,0.05763074,0.00548908,0.0506,0.0957,0.1409,0.186,0.186,0.186,0.186,1,13,RES/COM,Gas,KOREA,OECD90 Average (plus 0.1)
+2,0.01110491,0.00064306,0.039,0.0773,0.1157,0.154,0.154,0.154,0.154,2,13,INDUSTRY,Gas,KOREA,OECD90 Average (plus 0.1)
+2,0,0,0.0825,0.165,0.2475,0.33,0.33,0.33,0.33,3,13,TRANSPORT,Gas,KOREA,
+2,0.0048,0.00011915,0.0466,0.0931,0.1395,0.186,0.186,0.186,0.186,1,14,RES/COM,Gas,INDIA,OECD90 Average (plus 0.1)
+2,0.0008,0.01064786,0.0465,0.0823,0.1182,0.154,0.154,0.154,0.154,2,14,INDUSTRY,Gas,INDIA,OECD90 Average (plus 0.1)
+2,0,0,0.0825,0.165,0.2475,0.33,0.33,0.33,0.33,3,14,TRANSPORT,Gas,INDIA,
+3,0.0008,0.01360554,0.0136,0.0136,0.0136,0.0136,0.0124,0.0112,0.01,1,1,RES/COM,Solids (Coal+Biomass),USA,
+3,0.0047,0.02740503,0.023979401,0.020553773,0.017128144,0.013702515,0.013702515,0.013702515,0.013702515,2,1,INDUSTRY,Solids (Coal+Biomass),USA,"Reduce share by 50% -- as economies expand, coal share drops"
+3,0.0004,0,0.0025,0.005,0.0075,0.01,0.01,0.01,0.01,3,1,TRANSPORT,Solids (Coal+Biomass),USA,
+3,0.0118,0.01432493,0.0143,0.0143,0.0143,0.0143,0.0129,0.0114,0.01,1,2,RES/COM,Solids (Coal+Biomass),CANADA,
+3,0.0122,0.03368753,0.029476589,0.025265648,0.021054706,0.016843765,0.016843765,0.016843765,0.016843765,2,2,INDUSTRY,Solids (Coal+Biomass),CANADA,"Reduce share by 50% -- as economies expand, coal share drops"
+3,0.5008,0,0.0025,0.005,0.0075,0.01,0.01,0.01,0.01,3,2,TRANSPORT,Solids (Coal+Biomass),CANADA,
+3,0.0118,0.05011368,0.0426,0.0351,0.0275,0.020001,0.015,0.0125,0.01,1,3,RES/COM,Solids (Coal+Biomass),WEUR,Reduce Europe Coal share to reproduce very sharp drop in res coal use
+3,0.0122,0.03075881,0.026913959,0.023069108,0.019224256,0.01530001,0.015379405,0.015379405,0.015379405,2,3,INDUSTRY,Solids (Coal+Biomass),WEUR,"Reduce share by 50% -- as economies expand, coal share drops"
+3,0.5008,0.04805346,0.0385,0.029,0.0195,0.010001,0.01,0.01,0.01,3,3,TRANSPORT,Solids (Coal+Biomass),WEUR,
+3,0.0058,0.00132892,0.0014,0.0015,0.0015,0.0016,0.0016,0.0016,0.0016,1,4,RES/COM,Solids (Coal+Biomass),JAPAN,
+3,0.0091,0.01786346,0.015630528,0.013397595,0.011164663,0.00893173,0.00893173,0.00893173,0.00893173,2,4,INDUSTRY,Solids (Coal+Biomass),JAPAN,"Reduce share by 50% -- as economies expand, coal share drops"
+3,0.5779,0,0.0025,0.005,0.0075,0.01,0.01,0.01,0.01,3,4,TRANSPORT,Solids (Coal+Biomass),JAPAN,
+3,0.0058,0.09692458,0.0969,0.0969,0.0969,0.0969,0.068,0.039,0.01,1,5,RES/COM,Solids (Coal+Biomass),AUS&NZ,
+3,0.0091,0.03748536,0.03279969,0.02811402,0.02342835,0.01874268,0.01874268,0.01874268,0.01874268,2,5,INDUSTRY,Solids (Coal+Biomass),AUS&NZ,"Reduce share by 50% -- as economies expand, coal share drops"
+3,0.5779,0.34366099,0.2602,0.1768,0.0934,0.01,0.01,0.01,0.01,3,5,TRANSPORT,Solids (Coal+Biomass),AUS&NZ,
+3,0.116,0.21276183,0.2096,0.2064,0.2032,0.2,0.1367,0.0733,0.01,1,6,RES/COM,Solids (Coal+Biomass),FSU,
+3,0.0151,0.02491079,0.025,0.0251,0.0251,0.0252,0.0252,0.0252,0.0252,2,6,INDUSTRY,Solids (Coal+Biomass),FSU,
+3,0.8674,0.00011525,0.0026,0.0051,0.0075,0.01,0.01,0.01,0.01,3,6,TRANSPORT,Solids (Coal+Biomass),FSU,
+3,0.6008,0.85408706,0.6906,0.527,0.3635,0.2,0.1367,0.0733,0.01,1,7,RES/COM,Solids (Coal+Biomass),CHINA,
+3,0.066,0.14805613,0.1539,0.1597,0.1656,0.1714,0.1309,0.0905,0.05,2,7,INDUSTRY,Solids (Coal+Biomass),CHINA
+3,0.9952,0.00760256,0.0082,0.0088,0.0094,0.01,0.01,0.01,0.01,3,7,TRANSPORT,Solids (Coal+Biomass),CHINA
+3,0,0.03613812,0.0379,0.0396,0.0413,0.043,0.032,0.021,0.01,1,8,RES/COM,Solids (Coal+Biomass),MIDEAST
+3,0.0067,0.00210456,0.0021,0.0021,0.002,0.002,0.002,0.002,0.002,2,8,INDUSTRY,Solids (Coal+Biomass),MIDEAST
+3,0,0,0.0025,0.005,0.0075,0.01,0.01,0.01,0.01,3,8,TRANSPORT,Solids (Coal+Biomass),MIDEAST
+3,0.0159,0.78912559,0.6418,0.4946,0.3473,0.2,0.1367,0.0733,0.01,1,9,RES/COM,Solids (Coal+Biomass),AFRICA
+3,0.0192,0.05432146,0.0561,0.0579,0.0596,0.0614,0.0576,0.0538,0.05,2,9,INDUSTRY,Solids (Coal+Biomass),AFRICA
+3,0.9174,0.79929453,0.602,0.4046,0.2073,0.01,0.01,0.01,0.01,3,9,TRANSPORT,Solids (Coal+Biomass),AFRICA
+3,0.0003,0.34221514,0.3067,0.2711,0.2356,0.2,0.1367,0.0733,0.01,1,10,RES/COM,Solids (Coal+Biomass),L.AMERICA
+3,0.0088,0.02794452,0.0276,0.0273,0.0269,0.0266,0.0266,0.0266,0.0266,2,10,INDUSTRY,Solids (Coal+Biomass),L.AMERICA
+3,0,0.02141666,0.0186,0.0157,0.0129,0.01,0.01,0.01,0.01,3,10,TRANSPORT,Solids (Coal+Biomass),L.AMERICA
+3,0.0256,0.43519857,0.3764,0.3176,0.2588,0.2,0.1367,0.0733,0.01,1,11,RES/COM,Solids (Coal+Biomass),S&E ASIA
+3,0.0189,0.07084087,0.0721,0.0734,0.0747,0.076,0.0673,0.0587,0.05,2,11,INDUSTRY,Solids (Coal+Biomass),S&E ASIA
+3,0.9768,0.16676424,0.1276,0.0884,0.0492,0.01,0.01,0.01,0.01,3,11,TRANSPORT,Solids (Coal+Biomass),S&E ASIA
+3,0.116,0.18233121,0.1867,0.1912,0.1956,0.2,0.1367,0.0733,0.01,1,12,RES/COM,Solids (Coal+Biomass),EEUR
+3,0.0151,0.04143662,0.0424,0.0433,0.0442,0.0451,0.0451,0.0451,0.0451,2,12,INDUSTRY,Solids (Coal+Biomass),EEUR
+3,0.8674,0.11312204,0.0873,0.0616,0.0358,0.01,0.01,0.01,0.01,3,12,TRANSPORT,Solids (Coal+Biomass),EEUR,
+3,0.5799309,0.17476497,0.1811,0.1874,0.1937,0.2,0.1367,0.0733,0.01,1,13,RES/COM,Solids (Coal+Biomass),KOREA,
+3,0.636096,0.03577671,0.0378,0.0398,0.0419,0.0439,0.0439,0.0439,0.0439,2,13,INDUSTRY,Solids (Coal+Biomass),KOREA,
+3,0,0,0.0025,0.005,0.0075,0.01,0.01,0.01,0.01,3,13,TRANSPORT,Solids (Coal+Biomass),KOREA,
+3,0.0256,0.74038372,0.6053,0.4702,0.3351,0.2,0.1367,0.0733,0.01,1,14,RES/COM,Solids (Coal+Biomass),INDIA,
+3,0.0189,0.187426,0.1949,0.2024,0.2099,0.2174,0.1616,0.1058,0.05,2,14,INDUSTRY,Solids (Coal+Biomass),INDIA,
+3,0.9768,0.01018144,0.0101,0.0101,0.01,0.01,0.01,0.01,0.01,3,14,TRANSPORT,Solids (Coal+Biomass),INDIA,
+4,0.5858,0.79553584,0.7499,0.7043,0.6586,0.613,0.613,0.613,0.613,1,1,RES/COM,Electricity,USA,OECD90 Average (minus 0.1)
+4,0.7958,0.71829897,0.6957,0.6731,0.6506,0.628,0.628,0.628,0.628,2,1,INDUSTRY,Electricity,USA,OECD90 Average (minus 0.1)
+4,0.2966,0.00283319,0.0846,0.1664,0.2482,0.33,0.33,0.33,0.33,3,1,TRANSPORT,Electricity,USA,
+4,0.3577,0.73990205,0.7082,0.6765,0.6447,0.613,0.613,0.613,0.613,1,2,RES/COM,Electricity,CANADA,OECD90 Average (minus 0.1)
+4,0.5863,0.74499822,0.7157,0.6865,0.6572,0.628,0.628,0.628,0.628,2,2,INDUSTRY,Electricity,CANADA,OECD90 Average (minus 0.1)
+4,0.4256,0.01047533,0.0904,0.1702,0.2501,0.33,0.33,0.33,0.33,3,2,TRANSPORT,Electricity,CANADA,
+4,0.3577,0.58177917,0.5896,0.5974,0.6052,0.613,0.613,0.613,0.613,1,3,RES/COM,Electricity,WEUR,OECD90 Average (minus 0.1)
+4,0.5863,0.70168182,0.6833,0.6648,0.6464,0.628,0.628,0.628,0.628,2,3,INDUSTRY,Electricity,WEUR,OECD90 Average (minus 0.1)
+4,0.4256,0.61994867,0.5475,0.475,0.4025,0.33,0.33,0.33,0.33,3,3,TRANSPORT,Electricity,WEUR,
+4,0.4787,0.6828288,0.6654,0.6479,0.6305,0.613,0.613,0.613,0.613,1,4,RES/COM,Electricity,JAPAN,OECD90 Average (minus 0.1)
+4,0.7541,0.75765557,0.7252,0.6928,0.6604,0.628,0.628,0.628,0.628,2,4,INDUSTRY,Electricity,JAPAN,OECD90 Average (minus 0.1)
+4,0.3922,0.94468703,0.791,0.6373,0.4837,0.33,0.33,0.33,0.33,3,4,TRANSPORT,Electricity,JAPAN,
+4,0.4787,0.76535333,0.7273,0.6892,0.6511,0.613,0.613,0.613,0.613,1,5,RES/COM,Electricity,AUS&NZ,OECD90 Average (minus 0.1)
+4,0.7541,0.71830055,0.6957,0.6732,0.6506,0.628,0.628,0.628,0.628,2,5,INDUSTRY,Electricity,AUS&NZ,OECD90 Average (minus 0.1)
+4,0.3922,0.11351415,0.1676,0.2218,0.2759,0.33,0.33,0.33,0.33,3,5,TRANSPORT,Electricity,AUS&NZ,
+4,0.4082,0.34686718,0.3602,0.3734,0.3867,0.4,0.4,0.4,0.4,1,6,RES/COM,Electricity,FSU,Region-specific values used
+4,0.8478,0.63099705,0.6302,0.6295,0.6287,0.628,0.628,0.628,0.628,2,6,INDUSTRY,Electricity,FSU,OECD90 Average (minus 0.1)
+4,0.1273,0.13072876,0.1805,0.2304,0.2802,0.33,0.33,0.33,0.33,3,6,TRANSPORT,Electricity,FSU,
+4,0.2605,0.08164684,0.1379,0.1941,0.2503,0.3065,0.45975,0.613,0.613,1,7,RES/COM,Electricity,CHINA,OECD90 Average (minus 0.1) by 2080 {0.5 of ultimate share in 2050}
+4,0.5218,0.65619911,0.6491,0.6421,0.635,0.628,0.628,0.628,0.628,2,7,INDUSTRY,Electricity,CHINA,OECD90 Average (minus 0.1)
+4,0.0043,0.40188399,0.3839,0.3659,0.348,0.33,0.33,0.33,0.33,3,7,TRANSPORT,Electricity,CHINA,
+4,0.7519,0.62691082,0.6269,0.6269,0.6269,0.62691082,0.61995541,0.613,0.613,1,8,RES/COM,Electricity,MIDEAST,OECD90 Average (minus 0.1) by 2080 {1990 share in 2050}
+4,0.5943,0.38296778,0.3872,0.3915,0.3957,0.4,0.514,0.628,0.628,2,8,INDUSTRY,Electricity,MIDEAST,OECD90 Average (minus 0.1) by 2080
+4,0,0.37503257,0.3638,0.3525,0.3413,0.33,0.33,0.33,0.33,3,8,TRANSPORT,Electricity,MIDEAST,
+4,0.3473,0.12636613,0.1714,0.2164,0.2615,0.3065,0.45975,0.613,0.613,1,9,RES/COM,Electricity,AFRICA,OECD90 Average (minus 0.1) by 2080 {0.5 of ultimate share in 2050}
+4,0.4441,0.7276008,0.7027,0.6778,0.6529,0.628,0.628,0.628,0.628,2,9,INDUSTRY,Electricity,AFRICA,OECD90 Average (minus 0.1)
+4,0.0638,0.17444339,0.2133,0.2522,0.2911,0.33,0.33,0.33,0.33,3,9,TRANSPORT,Electricity,AFRICA,
+4,0.4593,0.41591374,0.4159,0.4159,0.4159,0.41591374,0.51445687,0.613,0.613,1,10,RES/COM,Electricity,L.AMERICA,OECD90 Average (minus 0.1) by 2080 {1990 share in 2050}
+4,0.4304,0.63835226,0.6358,0.6332,0.6306,0.628,0.628,0.628,0.628,2,10,INDUSTRY,Electricity,L.AMERICA,OECD90 Average (minus 0.1)
+4,0.4333,0.12100117,0.1733,0.2255,0.2778,0.33,0.33,0.33,0.33,3,10,TRANSPORT,Electricity,L.AMERICA,
+4,0.5454,0.35804939,0.358,0.358,0.358,0.35804939,0.485524695,0.613,0.613,1,11,RES/COM,Electricity,S&E ASIA,OECD90 Average (minus 0.1) by 2080 {1990 share in 2050}
+4,0.7576,0.60523786,0.6109,0.6166,0.6223,0.628,0.628,0.628,0.628,2,11,INDUSTRY,Electricity,S&E ASIA,OECD90 Average (minus 0.1)
+4,0.0179,0.25811872,0.2761,0.2941,0.312,0.33,0.33,0.33,0.33,3,11,TRANSPORT,Electricity,S&E ASIA,
+4,0.4082,0.5286424,0.5497,0.5708,0.5919,0.613,0.613,0.613,0.613,1,12,RES/COM,Electricity,EEUR,OECD90 Average (minus 0.1)
+4,0.8478,0.74244662,0.7138,0.6852,0.6566,0.628,0.628,0.628,0.628,2,12,INDUSTRY,Electricity,EEUR,OECD90 Average (minus 0.1)
+4,0.1273,0.85352748,0.7226,0.5918,0.4609,0.33,0.33,0.33,0.33,3,12,TRANSPORT,Electricity,EEUR,
+4,0.44634512,0.32370879,0.3237,0.3237,0.3237,0.32370879,0.468354395,0.613,0.613,1,13,RES/COM,Electricity,KOREA,OECD90 Average (minus 0.1) by 2080 {1990 share in 2050}
+4,0.38053933,0.65954486,0.6517,0.6438,0.6359,0.628,0.628,0.628,0.628,2,13,INDUSTRY,Electricity,KOREA,OECD90 Average (minus 0.1)
+4,0.01764233,0.81459864,0.6934,0.5723,0.4511,0.33,0.33,0.33,0.33,3,13,TRANSPORT,Electricity,KOREA,
+4,0.5454,0.11094107,0.1598,0.2087,0.2576,0.3065,0.45975,0.613,0.613,1,14,RES/COM,Electricity,INDIA,OECD90 Average (minus 0.1) by 2080 {0.5 of ultimate share in 2050}
+4,0.7576,0.69480683,0.6781,0.6614,0.6447,0.628,0.628,0.628,0.628,2,14,INDUSTRY,Electricity,INDIA,OECD90 Average (minus 0.1)
+4,0.0179,0.90529709,0.7615,0.6176,0.4738,0.33,0.33,0.33,0.33,3,14,TRANSPORT,Electricity,INDIA
+
+
+ BSUILM Logit function scale parameters for electricity,,,,NOTE: shares between 1990 and 2050 are automatically overwitten,,,,,,,,,,
+INPUT_TABLE,,,,Most techs have equal base shares in 2050,,,,,,,,,,
+ Variable ID,,,,Extrapolate between 1990 and 2050,,,,,,,,,,
+15,,,,"Coal is an exception -- deviates from price-derivied shares in many regions, so extrapolation is extended to 2065 and is non-linear",,,,,,,,,,
+ ,,BSUILM,,,,,,,,,,,,
+ Fuel,1975,1990,2005,2020,2035,2050,2065,2080,2095,Region,,,,
+1,0.0915,0.02199803,0.047749,0.073499,0.09925,0.125,0.125,0.125,0.125,1,OIL,USA     ,,
+1,0.168,0.02387467,0.049156,0.074437,0.099719,0.125,0.125,0.125,0.125,2,OIL,Canada  ,,
+1,0.168,0.06136927,0.077277,0.093185,0.109092,0.125,0.125,0.125,0.125,3,OIL,WEUR    ,,
+1,0.1937,0.12815609,0.127367,0.126578,0.125789,0.125,0.125,0.125,0.125,4,OIL,Japan   ,,
+1,0.1937,0.022781,0.048336,0.073891,0.099445,0.125,0.125,0.125,0.125,5,OIL,Aus&NZ  ,,
+1,0.1157,0.08613722,0.095853,0.105569,0.115284,0.125,0.125,0.125,0.125,6,OIL,FSU     ,,
+1,0.0547,0.08412135,0.094341,0.104561,0.11478,0.125,0.125,0.125,0.125,7,OIL,ACENP   ,,
+1,0.2,0.5087276,0.412796,0.316864,0.220932,0.125,0.125,0.125,0.125,8,OIL,MidEast 
+1,0.1851,0.11796863,0.119726,0.121484,0.123242,0.125,0.125,0.125,0.125,9,OIL,Africa  
+1,0.2,0.25842829,0.225071,0.191714,0.158357,0.125,0.125,0.125,0.125,10,OIL,LatAmer 
+1,0.1158,0.24217889,0.212884,0.183589,0.154295,0.125,0.125,0.125,0.125,11,OIL,SEAsia  
+1,0.1157,0.03963366,0.060975,0.082317,0.103658,0.125,0.125,0.125,0.125,12,OIL,EEUR    
+1,1,0.06897963,0.082985,0.09699,0.110995,0.125,0.125,0.125,0.125,13,OIL,Korea   
+1,1,0.02294763,0.048461,0.073974,0.099487,0.125,0.125,0.125,0.125,14,OIL,India   
+2,0.0274,0.04976666,0.068575,0.087383,0.106192,0.125,0.125,0.125,0.125,1,GAS,USA     
+2,0.0694,0.00974118,0.038556,0.067371,0.096185,0.125,0.125,0.125,0.125,2,GAS,Canada  
+2,0.0694,0.05077251,0.069329,0.087886,0.106443,0.125,0.125,0.125,0.125,3,GAS,WEUR    
+2,0.2,0.07008831,0.083816,0.097544,0.111272,0.125,0.125,0.125,0.125,4,GAS,Japan   
+2,0.2,0.10871976,0.11279,0.11686,0.12093,0.125,0.125,0.125,0.125,5,GAS,Aus&NZ  
+2,0.0565,0.32718791,0.276641,0.226094,0.175547,0.125,0.125,0.125,0.125,6,GAS,FSU     
+2,0.0074,0.00367431,0.034006,0.064337,0.094669,0.125,0.125,0.125,0.125,7,GAS,ACENP   
+2,0.0408,0.37182373,0.310118,0.248412,0.186706,0.125,0.125,0.125,0.125,8,GAS,MidEast 
+2,0.0128,0.11763324,0.119475,0.121317,0.123158,0.125,0.125,0.125,0.125,9,GAS,Africa  
+2,0.0453,0.16009291,0.15132,0.142546,0.133773,0.125,0.125,0.125,0.125,10,GAS,LatAmer 
+2,0.0007,0.14641956,0.141065,0.13571,0.130355,0.125,0.125,0.125,0.125,11,GAS,SEAsia  
+2,0.0565,0.06506385,0.080048,0.095032,0.110016,0.125,0.125,0.125,0.125,12,GAS,EEUR    
+2,0.50045025,0.03236648,0.055525,0.078683,0.101842,0.125,0.125,0.125,0.125,13,GAS,Korea   
+2,1,0.04105196,0.062039,0.083026,0.104013,0.125,0.125,0.125,0.125,14,GAS,India   
+3,0.2,0.35824566,0.2902,0.235,0.19,0.154,0.125,0.125,0.125,1,COAL,USA     
+3,0.2,0.15613692,0.1493,0.143,0.137,0.131,0.125,0.125,0.125,2,COAL,Canada  
+3,0.2,0.20929008,0.1888,0.17,0.154,0.1390001,0.125,0.125,0.125,3,COAL,WEUR    
+3,0.0458,0.21304214,0.1915,0.172,0.155,0.139,0.125,0.125,0.125,4,COAL,Japan   
+3,0.0458,0.69294719,0.492,0.349,0.248,0.176,0.125,0.125,0.125,5,COAL,Aus&NZ  
+3,0.2,0.20089362,0.1827,0.166,0.151,0.137,0.125,0.125,0.125,6,COAL,FSU     
+3,0.2,0.7211244,0.5079,0.358,0.252,0.177,0.125,0.125,0.125,7,COAL,ACENP   
+3,0,0.06067409,0.0701,0.081,0.094,0.108,0.125,0.125,0.125,8,COAL,MidEast 
+3,0.2,0.58455333,0.4294,0.315,0.232,0.17,0.125,0.125,0.125,9,COAL,Africa  
+3,0.0319,0.07691446,0.0848,0.093,0.103,0.113,0.125,0.125,0.125,10,COAL,LatAmer 
+3,0.2,0.22601646,0.2008,0.178,0.158,0.141,0.125,0.125,0.125,11,COAL,SEAsia  
+3,0.2,0.42388858,0.332,0.26,0.204,0.16,0.125,0.125,0.125,12,COAL,EEUR    ,
+3,4.0012188,0.10916621,0.1122,0.115,0.118,0.122,0.125,0.125,0.125,13,COAL,Korea   ,
+3,4.0012188,0.69644894,0.494,0.35,0.248,0.176,0.125,0.125,0.125,14,COAL,India   ,
+4,0.0346,0.47307388,0.386055,0.299037,0.212018,0.15,0.125,0.125,0.125,1,NUCLEAR,USA     ,Shares Adjusted to give more reasonable results
+4,0.0192,0.42930758,0.353231,0.277154,0.201077,0.15,0.15,0.125,0.125,2,NUCLEAR,Canada  ,Shares Adjusted to give more reasonable results
+4,0.0192,0.51912192,0.420591,0.322061,0.22353,0.125,0.125,0.125,0.125,3,NUCLEAR,WEUR    ,Shares Adjusted to give more reasonable results
+4,0.0082,0.49175995,0.40007,0.30838,0.21669,0.37,0.33,0.3,0.3,4,NUCLEAR,Japan   ,Shares Adjusted to give more reasonable results
+4,0.0082,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,5,NUCLEAR,Aus&NZ  ,Shares Adjusted to give more reasonable results
+4,0.006,0.27527586,0.237707,0.200138,0.162569,0.125,0.125,0.125,0.125,6,NUCLEAR,FSU     ,Shares Adjusted to give more reasonable results
+4,0,0,0.03125,0.0625,0.09375,0.095,0.095,0.09,0.08,7,NUCLEAR,ACENP   ,Shares Adjusted to give more reasonable results
+4,0.0001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,8,NUCLEAR,MidEast ,Shares Adjusted to give more reasonable results
+4,0,0.0572235,0.074168,0.091112,0.108056,0.05,0.05,0.05,0.05,9,NUCLEAR,Africa  ,Shares Adjusted to give more reasonable results
+4,0.008,0.10332493,0.108744,0.114162,0.119581,0.125,0.125,0.125,0.125,10,NUCLEAR,LatAmer ,Shares Adjusted to give more reasonable results
+4,0.0039,0.21528913,0.192717,0.170145,0.147572,0.1,0.1,0.1,0.1,11,NUCLEAR,SEAsia  ,Shares Adjusted to give more reasonable results
+4,0.006,0.36505722,0.305043,0.245029,0.185014,0.125,0.125,0.125,0.125,12,NUCLEAR,EEUR    ,Shares Adjusted to give more reasonable results
+4,31.33471489,0.73368698,0.581515,0.429343,0.277172,0.33,0.33,0.33,0.33,13,NUCLEAR,Korea   ,Shares Adjusted to give more reasonable results
+4,31.33471489,0.03805267,0.05979,0.081526,0.103263,0.07,0.07,0.07,0.07,14,NUCLEAR,India   ,Shares Adjusted to give more reasonable results
+5,0.0253,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,1,SOLAR PV,USA     ,
+5,0.0172,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,2,SOLAR PV,Canada  ,
+5,0.0172,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,3,SOLAR PV,WEUR    ,
+5,0.0056,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,4,SOLAR PV,Japan   ,
+5,0.0056,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,5,SOLAR PV,Aus&NZ  ,
+5,0.006,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,6,SOLAR PV,FSU     ,
+5,0.0011,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,7,SOLAR PV,ACENP   ,
+5,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,8,SOLAR PV,MidEast ,
+5,0.0009,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,9,SOLAR PV,Africa  ,
+5,0.0061,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,10,SOLAR PV,LatAmer ,
+5,0.0036,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,11,SOLAR PV,SEAsia  ,
+5,0.006,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,12,SOLAR PV,EEUR    ,
+5,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,13,SOLAR PV,Korea   ,
+5,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,14,SOLAR PV,India   ,
+6,0.1,0.09691578,0.103937,0.110958,0.117979,0.125,0.125,0.125,0.125,1,HYDRO,USA     ,
+6,0.63,0.38093966,0.316955,0.25297,0.188985,0.125,0.125,0.125,0.125,2,HYDRO,Canada  
+6,0.21,0.15944622,0.150835,0.142223,0.133612,0.125,0.125,0.125,0.125,3,HYDRO,WEUR    
+6,0.13,0.09695352,0.103965,0.110977,0.117988,0.125,0.125,0.125,0.125,4,HYDRO,Japan   
+6,0.23,0.17555205,0.162914,0.150276,0.137638,0.125,0.125,0.125,0.125,5,HYDRO,Aus&NZ  
+6,0.14,0.11050539,0.114129,0.117753,0.121376,0.125,0.125,0.125,0.125,6,HYDRO,FSU     
+6,0.22,0.19107995,0.17456,0.15804,0.14152,0.125,0.125,0.125,0.125,7,HYDRO,ACENP   
+6,0.06,0.05877457,0.075331,0.091887,0.108444,0.125,0.125,0.125,0.125,8,HYDRO,MidEast 
+6,0.17,0.12262129,0.123216,0.123811,0.124405,0.125,0.125,0.125,0.125,9,HYDRO,Africa  
+6,0.63,0.40123941,0.33218,0.26312,0.19406,0.125,0.125,0.125,0.125,10,HYDRO,LatAmer 
+6,0.19,0.17009595,0.158822,0.147548,0.136274,0.125,0.125,0.125,0.125,11,HYDRO,SEAsia  
+6,0.16,0.10635669,0.111018,0.115678,0.120339,0.125,0.125,0.125,0.125,12,HYDRO,EEUR    
+6,0.08,0.0558007,0.073101,0.0904,0.1077,0.125,0.125,0.125,0.125,13,HYDRO,Korea   
+6,0.19,0.20149881,0.182374,0.163249,0.144125,0.125,0.125,0.125,0.125,14,HYDRO,India   
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,1,H2 FUEL CELL,
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,2,H2 FUEL CELL,
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,3,H2 FUEL CELL,
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,4,H2 FUEL CELL
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,5,H2 FUEL CELL
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,6,H2 FUEL CELL
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,7,H2 FUEL CELL
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,8,H2 FUEL CELL
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,9,H2 FUEL CELL
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,10,H2 FUEL CELL
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,11,H2 FUEL CELL
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,12,H2 FUEL CELL
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,13,H2 FUEL CELL
+7,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,14,H2 FUEL CELL
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,1,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,2,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,3,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,4,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,5,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,6,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,7,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,8,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,9,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,10,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,11,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,12,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,13,FUSION
+8,0,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,14,FUSION
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,1,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,2,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,3,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,4,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,5,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,6,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,7,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,8,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,9,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,10,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,11,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,12,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,13,WIND
+9,0.001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,14,WIND
+
+"TKLM--RATE OF END-USE ENERGY EFFICIENCY IMPROVEMENT BY SECTOR, REGION, AND PERIOD.    (UNITS=NONE)",,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+16,,,,,,,,,,,
+,,"TKLM(K,L,M)",,,,,,,,,
+SECTOR,1975,1990,Region,Sector,Reg#,,,,,,
+1,0.01,0.019565002,US,Buildings,1,,,,,,
+1,0.01,0.039314611,CAN,Buildings,2,,,,,,
+1,0.01,0.025902283,WEUR,Buildings,3
+1,0.01,0.020001157,Japan,Buildings,4
+1,0.01,0.074481045,AUS&NZ,Buildings,5
+1,0.01,-0.004915641,FSU,Buildings,6
+1,0.01,0.002940944,ACENP,Buildings,7
+1,0.01,0.027642087,MIDEAST,Buildings,8
+1,0.01,0.003204492,AFRICA,Buildings,9
+1,0.01,-0.01118246,L AMER,Buildings,10
+1,0.01,-0.01479975,S&E ASIA,Buildings,11
+1,0.01,-0.004915641,EEUR,Buildings,12
+1,0.01,0.066001475,KOR,Buildings,13
+1,0.01,-0.01479975,INDIA,Buildings,14
+2,0.01,-0.00055752,US,Industry,1
+2,0.01,0.03315625,CAN,Industry,2
+2,0.01,0.007586558,WEUR,Industry,3
+2,0.01,0.029208471,Japan,Industry,4
+2,0.01,0.08247926,AUS&NZ,Industry,5
+2,0.01,0.008759634,FSU,Industry,6
+2,0.01,0.014158397,ACENP,Industry,7
+2,0.01,-0.01458988,MIDEAST,Industry,8
+2,0.01,0.018172418,AFRICA,Industry,9
+2,0.01,0.002468096,L AMER,Industry,10
+2,0.01,-0.00166734,S&E ASIA,Industry,11
+2,0.01,0.008759634,EEUR,Industry,12
+2,0.01,0.040868282,KOR,Industry,13
+2,0.01,-0.00166734,INDIA,Industry,14
+3,0.01,0.013114766,US,Transport,1
+3,0.01,0.021390631,CAN,Transport,2
+3,0.01,-0.012449952,WEUR,Transport,3
+3,0.01,0.010586518,Japan,Transport,4
+3,0.01,0.022877286,AUS&NZ,Transport,5
+3,0.01,0.006304157,FSU,Transport,6
+3,0.01,-0.023084772,ACENP,Transport,7,,,,,
+3,0.01,-0.002157322,MIDEAST,Transport,8,,,,,
+3,0.01,0.010918026,AFRICA,Transport,9,,,,,
+3,0.01,-0.019479369,L AMER,Transport,10,,,,,
+3,0.01,-0.025050403,S&E ASIA,Transport,11,,,,,
+3,0.01,0.006304157,EEUR,Transport,12,,,,,
+3,0.01,0.071238928,KOR,Transport,13,,,,,
+3,0.01,-0.025050403,INDIA,Transport,14,,,,,
+
+"TKLM--RATE OF END-USE ENERGY EFFICIENCY IMPROVEMENT BY SECTOR, REGION, AND PERIOD.    (UNITS=NONE)",,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,
+216,,,,,,,,,,
+,,"TKLM(K,L,M)",,,,,,,,
+SECTOR,2005,2020,2035,2050,2065,2080,2095,Region,Sector,Reg#
+1,0.005,0.005,0.005,0.005,0.005,0.005,0.005,US,all,1
+1,0.005,0.005,0.005,0.005,0.005,0.005,0.005,CAN,all,2
+1,0.015,0.005,0.005,0.005,0.005,0.005,0.005,WEUR,all,3
+1,0.025,0.005,0.005,0.005,0.005,0.005,0.005,Japan,all,4
+1,0.005,0.005,0.005,0.005,0.005,0.005,0.005,AUS&NZ,all,5
+1,0.02,0.025,0.02,0.015,0.0075,0.0075,0.005,FSU,all,6
+1,0.05,0.035,0.025,0.015,0.01,0.005,0.005,ACENP,all,7
+1,0.005,0.005,0.015,0.015,0.02,0.01,0.01,MIDEAST,all,8
+1,0.015,0.015,0.01,0.01,0.02,0.02,0.015,AFRICA,all,9
+1,0.01,0.01,0.01,0.02,0.02,0.02,0.01,L AMER,all,10
+1,0.015,0.02,0.01,0.01,0.01,0.01,0.01,S&E ASIA,all,11
+1,0.02,0.025,0.02,0.015,0.0075,0.0075,0.005,EEUR,all,12
+1,0.025,0.02,0.01,0.01,0.01,0.01,0.01,KOR,all,13
+1,0.015,0.02,0.01,0.01,0.01,0.01,0.01,INDIA,all,14
+
+RENEWABLE RESOURCE CONSTRAINED TECHNOLOGIES,,,,,,,,,,
+"PARAMETERS INCLUDE LOGISTICS FUNCTION PARAMETERS, COST, AND SHARE",,,,,,,,,,
+"DATA. ""HYDRO1L"" ORIENTS THE PRODUCTION PATH IN TIME; ""HYDRO2L""",,,,,,
+"DETERMINES ITS SHAPE; ""HYDRO3L"" IS THE RESOURCE AMOUNT IN EJ;",,,,,,
+"""HYDRO4L"" IS PRODUCTION PRICE IN 1975 DOLLARS PER GJ; AND",,,,,,
+"""HYDRO5L"" IS THE ELECTRICITY SHARE OF HYDRO.",,,,,,
+"""HYDRO4L"" is no longer used, the production price is located in the non-fuel cost (HUILM). shk 2/19/99",,,,,,
+"""HYDRO5L"" is no longer used, the share is located in BSUILM. shk 2/19/99",,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+25,,,,,,
+,,"HYDRO(I,L)",,,,
+REGION,HYDRO1L,HYDRO2L,HYDRO3L,HYDRO4L,HYDRO5L,
+1,0.4204,0.002,1.524805637,4.03,0.104016441,US
+2,0.3861,0.02669,1.388669386,4.03,0.630586959,CANADA
+3,0.3861,0.02669,2.076473442,4.03,0.212342656,WEUR
+4,0.2416,0.003,0.487197855,4.03,0.128223891,JAPAN
+5,0.2416,0.003,0.224505952,4.03,0.226433702,AUS&NZ
+6,-1.99788,0.02751,4.219178575,4.03,0.141267047,FSU
+7,-3.20686,0.03714,7.981624315,4.03,0.223237792,ACENP
+8,-3.6418,0.08887,0.491746476,4.03,0.060130083,MIDEAST
+9,-3.97006,0.035,5.498000432,4.03,0.171911863,AFR
+10,-2.52383,0.05796,7.363079361,4.03,0.630561698,LA
+11,-2.77226,0.0288,2.5,4.03,0.185479207,SEASIA
+12,-1.99788,0.02751,0.80334345,4.03,0.156814128,EEUR
+13,0.2416,0.003,0.03,4.03,0.08,KOR
+14,-2.77226,0.0288,2.5,4.03,0.185479207,INDIA
+
+
+MiniCAM input file for hydrgoen and fuel cells,,,,,,
+2/8/98,,,,,,
+
+
+
+"""GUILM"" IS A GENERATION EFFICIENCY COEFFICIENT -- THE RATIO OF JOULES OF ENERGY IN TO JOULES OF ELECTRICITY OUT.",,,,,,,,,,,,
+"""HUILM"" is the non-energy input/output coefficient in 1975$",,,,,,,,,,,,
+Inputs for hydrogen fuel cell for generating electricity ,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+101,,,,,,,,,,,,
+,,"GUILM(I,L,M),HUILM",,,,,,,,,,
+G/H,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,REG#,which?
+1,3.658,3.048333333,2.1275,1.724166667,1.449166667,1.25,1.25,1.25,1.25,all,NA,GUILM
+2,4.533,4.533,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,4.0797,all,NA,HUILM
+
+
+,gas turbines,,make fcells slightly cheaper due to environmental considereations,,,,,,,,,
+,4.533,4.533,4.533,4.533,4.533,4.533,4.533,4.533,4.533,,,
+,eff,3.658,2.553,2.069,1.739,1.5,1.5,1.5,1.5,,,
+
+"BSUILM:  ELECTRIC UTILITY FUEL SHARE WEIGHTS, BY PERIOD, FUEL AND REGION",,,,,,,,,,,,
+Inputs for hydrogen fuel cell for generating electricity ,,,,,,,,,,,,
+cINPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+102,,,,,,,,,,,,
+,"BSUILM(I,L,M)",,,,,,,,,,,
+hydrogen,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,Fuel,Reg#
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,US,H2,1
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,CANADA,H2,2
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,WEUR,H2,3
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,JAPAN,H2,4
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,AUS&NZ,H2,5
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,FSU,H2,6
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,ACENP,H2,7
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,MIDEAST,H2,8
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,AFRICA,H2,9
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,L AMER,H2,10,,,,,,,,,,
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,S&E ASIA,H2,11,,,,,,,,,,
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,EEUR,H2,12,,,,,,,,,,
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,KOR,H2,13,,,,,,,,,,
+0,0,0,0,0.05,0.2,0.2,0.2,0.2,0.2,INDIA,H2,14,,,,,,,,,,
+
+"""GHILM"" is Total System Efficiency of Hydrogen Production -- THE RATIO OF TOTAL JOULES OF ENERGY IN TO JOULES OF HYDROGEN OUT.",,,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,,,
+Variable ID,,Data Source: See below,,,,,,,,,,,,,,,,,,,,
+103,,,,,,,,,,,,,,,,,,,,,,
+,,GHILM,,0.005,(efficiency improves at 0.5%/yr after 2005),,,,,,,,,,1/GHILM (% Efficiency),,,,,,,
+FuelNum,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,REG#,FUEL,Max Efficiency,,2005,2020,2035,2050,2065,2080,2095,
+1,10,10,1.67,1.547,1.435,1.333,1.333,1.333,1.333,ALL,na,OIL,75%,(resid),60%,65%,70%,75%,75%,75%,75%,
+2,10,10,1.43,1.326,1.25,1.25,1.25,1.25,1.25,ALL,na,GAS,80%,,70%,75%,80%,80%,80%,80%,80%,GAS
+3,10,10,1.61,1.515,1.515,1.515,1.515,1.515,1.515,ALL,na,COAL,66%,,62%,66%,66%,66%,66%,66%,66%,COAL
+4,10,10,1.663,1.543,1.432,1.329,1.25,1.25,1.25,ALL,na,BIOMASS,80%,,60%,65%,70%,75%,80%,80%,80%,BIOMASS
+5,10,10,1.15,1.067,1.064,1.064,1.064,1.064,1.064,ALL,na,ELECTRO,94%,,87%,94%,94%,94%,94%,94%,94%
+6,10,10,2,1.83,1.68,1.55,1.53,1.52,1.5,ALL,na,OIL CO2 Cap,,,50%,55%,60%,65%,65%,66%,67%
+7,10,10,1.71,1.57,1.47,1.45,1.44,1.42,1.41,ALL,na,GAS CO2 Cap,,,58%,64%,68%,69%,69%,70%,71%
+8,10,10,1.94,1.8,1.78,1.76,1.74,1.72,1.71,ALL,na,COAL CO2 Cap,,,52%,56%,56%,57%,57%,58%,58%
+
+Penalty,0.2,0.2,0.2,0.186,0.172,0.16,0.148,0.138,0.128,,,,,,,,,,,,
+,,,(mulitply by 1 plus the penalty to get intensities for CO2 capture technologies),,,,,,,,,,,,,,,,,,
+"""HHILM"" is the non-energy cost in 1975$ FOR PRODUCING HYDROGEN",,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,,
+104,,,,,,,,,,,,,,,,,,,,,
+,,HHILM,,0.005,(efficiency improves at 0.5%/yr after 2005),,,,,,,,,,,,,,,,
+FUELNum,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,REG#,FUEL,,,,,,,,,
+1,10,10,6.7,6.217,5.769,5.353,4.967,4.609,4.277,ALL,na,OIL,,,,,,,,,
+2,10,10,1.1,1.021,0.947,0.879,0.816,0.757,0.702,ALL,na,GAS,,,,,,,,,
+3,10,10,3.1,2.877,2.669,2.477,2.298,2.133,1.979,ALL,na,COAL,,,,,,,,,
+4,10,10,2.5,2.32,2.153,1.997,1.853,1.72,1.596,ALL,na,BIOMASS
+5,10,10,2.523,2.341,2.172,2.016,1.87,1.736,1.611,ALL,na,ELECTRO
+6,13,13,8.71,7.95,7.26,6.64,6.07,5.56,5.1,ALL,na,OIL CO2 Cap
+7,13,13,1.43,1.3,1.19,1.09,1,0.91,0.84,ALL,na,GAS CO2 Cap
+8,13,13,4.03,3.68,3.36,3.07,2.81,2.57,2.36,ALL,na,COAL CO2 Cap
+
+Penalty,0.3,0.3,0.3,0.278,0.258,0.24,0.222,0.206,0.192,,,
+
+"""BSHILM"" is theSHARE COEFFICIENT FOR PRODUCING HYDROGEN",,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,Give electrolyosis equal weight,,,,,,,,,,
+105,,,,,,,,,,,,
+,,BSHILM,,,,,,,,,,
+FUELNum,1975,1990,2005,2020,2035,2050,2065,2080,2095,REGION,REG#,FUEL
+1,1,1,1,1,1,1,1,1,1,ALL,na,OIL
+2,1,1,1,1,1,1,1,1,1,ALL,na,GAS
+3,1,1,1,1,1,1,1,1,1,ALL,na,COAL
+4,1,1,1,1,1,1,1,1,1,ALL,na,BIOMASS
+5,1,1,1,1,1,1,1,1,1,ALL,na,ELECTRO
+
+Sources:,Max Efficiencies,,,,,,,,,,,
+,,"Technology Characterizations for the E3 (Energy, Economics, Environment) Pathway Analysis. DiPietro, J.P., Badin, J.S. (April, 1995)",,,,,,,,,,
+
+,Capital Costs,,,,,,,,,,,
+,,Survey of the Economics of Hydrogen Technologies. C.E.G. Padr— and V. Putsche (September 1999.  NREL/TP-570-27079),,,,,,,,,,
+
+
+"""RHI"" is the SHARE EXPONENT  FOR PRODUCING HYDROGEN",,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+106,,,,,,,,,,,,
+,,RHI,,,,,,,,,,
+FUELNum,RHI,,,,,,,,,,,
+1,-3,,,,,,,,,,,
+2,-3,,,,,,,,,,,
+3,-3,,,,,,,,,,,
+4,-3,,,,,,,,,,,
+5,-3,,,,,,,,,,,
+
+"BSSHILM:  HYDROGEN SUBSECTOR SHARE WEIGHTS, BY PERIOD, FUEL AND REGION",,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,," for this input, H2 is scrubbed even if no carbon policy",,,,,,,,
+107,,,,,,,,,,,,
+,"BSSHILM(I,ISS,L,M)",,"For ISS=1, 0 = off  1 = on",,,,,,,,,
+ISS,1975,1990,2005,2020,2035,2050,2065,2080,2095,FUEL,REG,SEC
+1,0,0,0,0,0,0,0,0,0,OIL,ALL,OIL
+2,1,1,1,1,1,1,1,1,1,OIL SCRUB,1,OIL
+1,0,0,0,0,0,0,0,0,0,GAS,1,GAS
+2,1,1,1,1,1,1,1,1,1,GAS sCRUB,1,GAS
+1,0,0,0,0,0,0,0,0,0,COAL,1,COAL
+2,1,1,1,1,1,1,1,1,1,Coal Scrub,1,COAL
+
+"BSSHILM:  HYDROGEN SUBSECTOR SHARE WEIGHTS, BY PERIOD, FUEL AND REGION",,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,"Make even, let sort out by PRICE under carbon policy",,,,,,,,
+107,,,,,,,,,,,,
+,"BSSHILM(I,ISS,L,M)",,"For ISS=1, 0 = off  1 = on",,,,,,,,,
+ISS,1975,1990,2005,2020,2035,2050,2065,2080,2095,FUEL,REG,SEC
+1,1,1,1,1,1,1,1,1,1,OIL,ALL,OIL
+2,1,1,1,1,1,1,1,1,1,OIL SCRUB,1,OIL
+1,1,1,1,1,1,1,1,1,1,GAS,1,GAS
+2,1,1,1,1,1,1,1,1,1,GAS sCRUB,1,GAS
+1,1,1,1,1,1,1,1,1,1,COAL,1,COAL
+2,1,1,1,1,1,1,1,1,1,Coal Scrub,1,COAL
+
+
+BSJKLM -- LOGIT FUNCTION SCALE PARAMETERS (UNITS BSJKLM=UNDIMENSIONED),,,,,,,,,,,,,,
+Numbers for hydrogen fuel cells,,,,,,,,,,,,,,
+cINPUT_TABLE,,,<-- default is turned off for end-use,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+108,,,,,,,,,,,,,,
+,,BSJKLM,,,,,,,,,,,,
+Fuel Num,1975,1990,2005,2020,2035,2050,2065,2080,2095,Fuel,REGION,SECTOR,sec#,reg#
+5,0,0,0.175975,0.35195,0.7039,0.7039,0.7039,0.7039,0.7039,H2,USA,RES/COM,1,1
+5,0,0,0.0817,0.1634,0.3268,0.3268,0.3268,0.3268,0.3268,H2,CANADA,RES/COM,1,2
+5,0,0,0.0817,0.1634,0.3268,0.3268,0.3268,0.3268,0.3268,H2,WEUR,RES/COM,1,3
+5,0,0,0.11235,0.2247,0.4494,0.4494,0.4494,0.4494,0.4494,H2,JAPAN,RES/COM,1,4
+5,0,0,0.11235,0.2247,0.4494,0.4494,0.4494,0.4494,0.4494,H2,AUS&NZ,RES/COM,1,5
+5,0,0,0.1713,0.3426,0.6852,0.6852,0.6852,0.6852,0.6852,H2,FSU,RES/COM,1,6
+5,0,0,0.0782,0.1564,0.3128,0.3128,0.3128,0.3128,0.3128,H2,ACENP,RES/COM,1,7
+5,0,0,0.1982,0.3964,0.7928,0.7928,0.7928,0.7928,0.7928,H2,MIDEAST,RES/COM,1,8
+5,0,0,0.0429,0.0858,0.1716,0.1716,0.1716,0.1716,0.1716,H2,AFRICA,RES/COM,1,9
+5,0,0,0.088125,0.17625,0.3525,0.3525,0.3525,0.3525,0.3525,H2,L AMER,RES/COM,1,10
+5,0,0,0.075025,0.15005,0.3001,0.3001,0.3001,0.3001,0.3001,H2,S&E ASIA,RES/COM,1,11
+5,0,0,0.1713,0.3426,0.6852,0.6852,0.6852,0.6852,0.6852,H2,EEUR,RES/COM,1,12
+5,0,0,0.11235,0.2247,0.4494,0.4494,0.4494,0.4494,0.4494,H2,KOR,RES/COM,1,4
+5,0,0,0.075025,0.15005,0.3001,0.3001,0.3001,0.3001,0.3001,H2,INDIA,RES/COM,1,11
+5,0,0,0.00405,0.0081,0.0162,0.0162,0.0162,0.0162,0.0162,H2,USA,INDUSTRY,2,1
+5,0,0,0.006275,0.01255,0.0251,0.0251,0.0251,0.0251,0.0251,H2,CANADA,INDUSTRY,2,2
+5,0,0,0.006275,0.01255,0.0251,0.0251,0.0251,0.0251,0.0251,H2,WEUR,INDUSTRY,2,3
+5,0,0,0.0016,0.0032,0.0064,0.0064,0.0064,0.0064,0.0064,H2,JAPAN,INDUSTRY,2,4
+5,0,0,0.0016,0.0032,0.0064,0.0064,0.0064,0.0064,0.0064,H2,AUS&NZ,INDUSTRY,2,5
+5,0,0,0.005775,0.01155,0.0231,0.0231,0.0231,0.0231,0.0231,H2,FSU,INDUSTRY,2,6
+5,0,0,0.000625,0.00125,0.0025,0.0025,0.0025,0.0025,0.0025,H2,ACENP,INDUSTRY,2,7
+5,0,0,0.0068,0.0136,0.0272,0.0272,0.0272,0.0272,0.0272,H2,MIDEAST,INDUSTRY,2,8
+5,0,0,0.0008,0.0016,0.0032,0.0032,0.0032,0.0032,0.0032,H2,AFRICA,INDUSTRY,2,9
+5,0,0,0.0036,0.0072,0.0144,0.0144,0.0144,0.0144,0.0144,H2,L AMER,INDUSTRY,2,10
+5,0,0,0.001875,0.00375,0.0075,0.0075,0.0075,0.0075,0.0075,H2,S&E ASIA,INDUSTRY,2,11
+5,0,0,0.005775,0.01155,0.0231,0.0231,0.0231,0.0231,0.0231,H2,EEUR,INDUSTRY,2,12
+5,0,0,0.0016,0.0032,0.0064,0.0064,0.0064,0.0064,0.0064,H2,KOR,INDUSTRY,2,4
+5,0,0,0.001875,0.00375,0.0075,0.0075,0.0075,0.0075,0.0075,H2,INDIA,INDUSTRY,2,11
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,USA,TRANSPORT,3,1
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,CANADA,TRANSPORT,3,2
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,WEUR,TRANSPORT,3,3
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,JAPAN,TRANSPORT,3,4
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,AUS&NZ,TRANSPORT,3,5
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,FSU,TRANSPORT,3,6
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,ACENP,TRANSPORT,3,7
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,MIDEAST,TRANSPORT,3,8
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,AFRICA,TRANSPORT,3,9
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,L AMER,TRANSPORT,3,10
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,S&E ASIA,TRANSPORT,3,11
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,EEUR,TRANSPORT,3,12
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,KOR,TRANSPORT,3,4
+5,0,0,0.0125,0.025,0.05,0.05,0.05,0.05,0.05,H2,INDIA,TRANSPORT,3,4
+
+ENERGY SERVICE INPUT-OUTPUT COEFFICIENTS,,,,,,,,,,,,,,
+"ENERGY TRANSFORMATION BY SECTOR, Hydrogen fuel cells",,,,,,,,,,,,,,
+Transport tnumbers from old Bob Williams inputs,,,,,,,,,,,,,,
+
+GJ Hydrogen per generic energy service,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+109,,,,,,,,,,,,,,
+,"GJK(JSH2,K,M)",,,,,,,,,,,,,
+SECTOR,1975,1990,2005,2020,2035,2050,2065,2080,2095,SecName,,,,
+1,5,5,3,1.482783333,1.246283333,1.075,1.075,1.075,1.075,RES/COM,,,,
+2,5,5,5,1.727272727,1.727272727,1.727272727,1.727272727,1.727272727,1.727272727,INDUSTRY,,,,
+3,5,5,2.22,1.2,1.2,1.2,1.2,1.2,1.2,TRANSPORT,
+
+
+energy service increase,,,,,,,,,,,
+,,,,0,0,0,0,0,0,RES/COM,elec
+,,,,0,0,0,0,0,0,INDUSTRY,gas
+,,,,1.5,1.5,1.5,1.5,1.5,1.5,TRANSPORT,oil
+
+
+
+ENERGY SERVICE non-energy  Cost,,,,,,,,,,,
+"ENERGY TRANSFORMATION BY SECTOR, Hydrogen fuel cells",,,,,,,,,,,
+$/GJ  energy service capital and O&M for hydrogen fuel cell,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+110,,,,,,,,,,,
+,"HJK(JSH2,K,M)",,,,,,,,,
+SECTOR,1975,1990,2005,2020,2035,2050,2065,2080,2095,SecName
+1,5,5,5,5,5,5,5,5,5,RES/COM
+2,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,INDUSTRY
+3,120,120,120,120,120,120,120,120,120,TRANSPORT
+,,,,,,Note: Transport non-energy cost is significantly higher than that for oil,,,,
+These need to be re-examined,,,,,,,,,,
+Should not be static throughout period,,,,,,,,,,
+
+SECTOR,OIL,GAS,COAL,ELECTRIC,BIOMASS,0,VARIABLE,,,
+1,4.98,3.24,2.87,3.41,2.87,RES/COM,"HJK,J=1,NJ",,,
+2,0.41,0.32,0.8,1.16,0.8,INDUSTRY,"HJK,J=1,NJ",,,
+3,98.88,200,200,153.17,200,TRANSPORT,"HJK,J=1,NJ",,,
+
+
+
+Transmission and Distribution Cost of Electricity.  SHK  3/1/99,,,,,,,,,,
+All regions have same average T&D costs for now,,,,,,,,,,
+1975 $/GJ,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Varible ID,,,,,,,,,,
+571,,,,,,,,,,
+,"PUTDKM(K,M)",,,,,,,,,
+SECTOR,1975,1990,2005,2020,2035,2050,2065,2080,2095,SecName
+1,3.03,3.03,2.81,2.61,2.42,2.25,2.08,1.93,1.79,RES/COM
+2,0.75,0.75,0.7,0.65,0.6,0.56,0.52,0.48,0.44,INDUSTRY
+3,3.03,3.03,2.81,2.61,2.42,2.25,2.08,1.93,1.79,TRANSPORT
+Assume costs decrease by 0.5%/yr,,,,,,,,,,
+,Cost Decrease Factor:,,0.9,0.9,0.8,0.7,0.7,0.6,0.6,
+
+Transmission and Distribution Costs for Hydrogen -- sjs,,,,,,,,,,
+All regions have same average T&D costs for now,,,,,,,,,,
+1975 $/GJ,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Varible ID,,,,,,,,,,
+572,,,,,,,,,,
+,"PH2TDKM(K,M)",,,,,,,,,
+SECTOR,1975,1990,2005,2020,2035,2050,2065,2080,2095,SecName
+1,1.5,1.5,1.2,0.94,0.75,0.7,0.65,0.6,0.56,RES/COM
+2,0.75,0.75,0.6,0.47,0.375,0.35,0.32,0.3,0.28,INDUSTRY
+3,1.5,1.5,1.2,0.94,0.75,0.7,0.65,0.6,0.56,TRANSPORT
+,,,,,,Assume costs decrease by 0.5%/yr after 2035,,,,
+
+Higher initial costs represenative of short pipelines or trucks,,,,,,,,,,
+2035 costs based on pipeline estimates reviewed in Padr— and Putsche (1999),,,,,,,,,,
+
+
+"Global industrial CO2 emissions (Cement, etc.)",,,,,,,,,,
+GtC,,The model does not calculate these explicitly,,,,,,
+INPUT_TABLE,,,,,,,,
+Varible ID,,,,,,,,
+172,,,,,,,,
+,Cement(M),,,,,,,
+,1990,2005,2020,2035,2050,2065,2080,2095
+1,0.16,0.26,0.32,0.39,0.47,0.52,0.62,0.55
+
+
+
+EoF,,,,,,,,

@@ -1,0 +1,25 @@
+ BSUILM Logit function scale parameters for electricity,,,,NOTE: shares between 1990 and 2050 are automatically overwitten,,,,,,,,,
+INPUT_TABLE,,,,Most techs have equal base shares in 2050,,,,,,,,,
+ Variable ID,,,,Extrapolate between 1990 and 2050,,,,,,,,,
+472,,,,"Coal is an exception -- deviates from price-derivied shares in many regions, so extrapolation is extended to 2065 and is non-linear",,,,,,,,,
+ ,,BSUILM,,,,,,,,,,,
+ Fuel,1975,1990,2005,2020,2035,2050,2065,2080,2095,Region,,,
+4,0.0346,0.47307388,0.386055,0.299037,0.212018,0.15,0.15,0.15,0.15,1,NUCLEAR,USA     ,Shares Adjusted to give more reasonable results
+4,0.0192,0.42930758,0.353231,0.277154,0.201077,0.15,0.15,0.15,0.15,2,NUCLEAR,Canada  ,Shares Adjusted to give more reasonable results
+4,0.0192,0.51912192,0.420591,0.322061,0.22353,0.125,0.125,0.125,0.125,3,NUCLEAR,WEUR    ,Shares Adjusted to give more reasonable results
+4,0.0082,0.49175995,0.40007,0.30838,0.21669,0.37,0.37,0.37,0.37,4,NUCLEAR,Japan   ,Shares Adjusted to give more reasonable results
+4,0.0082,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,5,NUCLEAR,Aus&NZ  ,Shares Adjusted to give more reasonable results
+4,0.006,0.27527586,0.237707,0.200138,0.162569,0.125,0.125,0.125,0.125,6,NUCLEAR,FSU     ,Shares Adjusted to give more reasonable results
+4,0,0,0.03125,0.0625,0.09375,0.095,0.125,0.125,0.125,7,NUCLEAR,ACENP   ,Shares Adjusted to give more reasonable results
+4,0.0001,0,0.03125,0.0625,0.09375,0.125,0.125,0.125,0.125,8,NUCLEAR,MidEast ,Shares Adjusted to give more reasonable results
+4,0,0.0572235,0.074168,0.091112,0.108056,0.1,0.125,0.125,0.125,9,NUCLEAR,Africa  ,Shares Adjusted to give more reasonable results
+4,0.008,0.10332493,0.108744,0.114162,0.119581,0.125,0.125,0.125,0.125,10,NUCLEAR,LatAmer ,Shares Adjusted to give more reasonable results
+4,0.0039,0.21528913,0.192717,0.170145,0.147572,0.1,0.125,0.125,0.125,11,NUCLEAR,SEAsia  ,Shares Adjusted to give more reasonable results
+4,0.006,0.36505722,0.305043,0.245029,0.185014,0.125,0.125,0.125,0.125,12,NUCLEAR,EEUR    ,Shares Adjusted to give more reasonable results
+4,31.33471489,0.73368698,0.581515,0.429343,0.277172,0.33,0.33,0.33,0.33,13,NUCLEAR,Korea   ,Shares Adjusted to give more reasonable results
+4,31.33471489,0.03805267,0.05979,0.081526,0.103263,0.1,0.125,0.125,0.125,14,NUCLEAR,India   ,Shares Adjusted to give more reasonable results
+
+,High Nuclear coefficients. BY 2065 = min(2050 coef or 0.125),,,,,,,,,,,,
+
+
+EoF,,,,,,,,,,,,,

@@ -1,0 +1,22 @@
+Optimization Input
+
+INDOPT
+INPUT_TABLE
+Variable ID
+1
+To Turn On (1) or Off (0) Hotelling Carbon Tax Path Optimization
+toggle
+0
+
+
+COSTCALC
+INPUT_TABLE
+Variable ID
+10
+To Turn On (1) or Off (0) Emissions Mitigation Cost Calculation
+toggle
+0
+
+
+EoF
+

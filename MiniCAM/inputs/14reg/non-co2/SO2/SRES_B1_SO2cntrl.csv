@@ -1,0 +1,25 @@
+
+
+"Sulfur emissions control ""timescale"" (tau) modification",,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+517,,,,,,
+TauAdj,,(L),,,,
+Region,Value,Reg,,,,Value
+1,1,USA,,,,1
+2,1,CANADA,,,,1
+3,1,WEUR,,,,1
+4,1,JAPAN,,,,1
+5,1,AUSNZ,,,,1
+6,1,FSUEE,,,,1
+7,1,ACENP,,,,1
+8,1,MIDEAST,,,,1
+9,1,AFR,,,,1
+10,1,LA,,,,1
+11,1,SEASIA,,,,1
+12,1,EEuro,,,,1
+13,1,Korea,,,,1
+14,1,India,,,,1
+
+
+EoF,,,,,,

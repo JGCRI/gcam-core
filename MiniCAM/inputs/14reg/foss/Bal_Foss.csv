@@ -1,0 +1,43 @@
+STISM--RATE OF TECHNOLOGICAL CHANGE BY SUPPLY TYPE AND REGION,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+21,,,,,,
+,,"STISM(IS,M)",,,,
+PERIOD,CONV OIL,CONV GAS,COAL,UNCON OIL,NUCLEAR,
+1,0.005,0.005,0.005,0.01,0.005,1975
+2,0.005,0.005,0.005,0.01,0.005,1990
+3,0.0075,0.0075,0.0075,0.01,0.005,2005
+4,0.0075,0.0075,0.0075,0.01,0.005,2020
+5,0.0075,0.0075,0.0075,0.01,0.005,2035
+6,0.0075,0.0075,0.0075,0.01,0.005,2050
+7,0.0075,0.0075,0.0075,0.01,0.005,2065
+8,0.0075,0.0075,0.0075,0.01,0.005,2080
+9,0.0075,0.0075,0.0075,0.01,0.005,2095
+
+
+
+BESIL--MINIMUM LEVEL OF SHORT-TERM SUPPLY BY TYPE AND REGION,,,,,,
+allow coal industry to recover after market goes zero in any period,,,,,,
+INPUT_TABLE,,,"Now -- also allow other production to re-start - but limit slightly, which damps oscillations",,,
+Variable ID,,,Min short-term supply set larger for Uncon oil (or else doesn't come on),,,
+22,,,"For other fuels, set to 1 EJ except for coal, which is equal to production in 1990",,,
+,,"BESIL(IS,L)",,,,
+REGION,CONV OIL,CONV GAS,COAL,UNCON OIL,NUCLEAR,
+1,9,9,22,5,0.03,US
+2,2,2,2,1,0.03,CAN
+3,5,3,9,3,0.03,WEUR
+4,1,1,1,1,0.03,JAPAN
+5,1,1,4,1,0.03,AUS&NZ
+6,12,14,12,3,0.03,FSU
+7,3,1,23,2,0.03,ACENP
+8,18,2,1,1,0.03,MIDEAST
+9,7,2,4,1,0.03,AFR
+10,8,2,1,1,0.03,LA
+11,3,2,1,1,0.03,SEASIA
+12,1,1,7,1,0.03,EEUR
+13,1,1,1,1,0.03,KOR
+14,1,1,4,1,0.03,INDIA
+,,,, *** Make sure and let uncon oil start up,,
+
+
+xxxx,,,,,,
