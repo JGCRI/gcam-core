@@ -30,19 +30,16 @@ class World;
 
 class BisectionNRSolver: public Solver {
 public:
-    BisectionNRSolver( Marketplace* marketplaceIn, World* worldIn );
+    BisectionNRSolver( Marketplace* aMarketplace, World* aWorld );
     virtual ~BisectionNRSolver();
+    static const std::string& getName();
     virtual void init();
     virtual bool solve( const int period );
 private:
-
-    std::auto_ptr<SolverComponent> logNewtonRaphsonSaveDeriv; //!< LogNewtonRaphsonSaveDerivatives solver component.
-    std::auto_ptr<SolverComponent> logNewtonRaphson; //!< LogNewtonRaphson solver component.
-    std::auto_ptr<SolverComponent> bisectAll; //!< BisectAll solver component.
-    std::auto_ptr<SolverComponent> bisectOne; //!< BisectOne solver component.
-    bool bugTracking; //!< Turn on to enable bugout tracking in various solution routines
-    bool bugMinimal; //!< Turn on minimal tracking of solution results
-    bool trackED; //!< Turn on solution mechanism tracking (to cout)
+    std::auto_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
+    std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
+    std::auto_ptr<SolverComponent> mBisectOne; //!< BisectOne solver component.
+    std::auto_ptr<SolverComponent> mLogNewtonRaphsonSaveDeriv; //!< LogNewtonRaphsonSaveDerivatives solver component.
 };
 
 #endif // _BISECTION_NR_SOLVER_

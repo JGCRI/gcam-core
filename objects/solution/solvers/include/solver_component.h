@@ -50,9 +50,6 @@ protected:
    Marketplace* marketplace; //<! The marketplace to solve. 
    World* world; //<! World to call calc on.
    CalcCounter* calcCounter; //<! Tracks the number of calls to world.calc
-   bool bugTracking; //!< Turn on to enable bugout tracking in various solution routines
-   bool bugMinimal; //!< Turn on minimal tracking of solution results
-   bool trackED; //!< Turn on solution mechanism tracking (to cout)
    
    struct IterationInfo {
    public:
