@@ -1,9 +1,3 @@
-/* ghg_mrk.h										*
- * This header contains the global				*
- * Greenhouse Gas Market class.						*
- * 										*
- * SHK  10/18/01								*/
-
 #ifndef _GHG_MRK_H_
 #define _GHG_MRK_H_
 #pragma once
@@ -14,15 +8,22 @@
 using namespace std;
 using namespace xercesc;
 
-// ghg_mrk class (Greenhouse gas)
+/*! 
+* \ingroup CIAM
+* \brief Class which defines a market for a single greenhouse gas.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
+
 class ghg_mrk
 {
 private:
-	string name; // ghg name
-	string unit; // ghg unit
-	string market; // added by jpl
-	vector<double> constraint; // emissions constraint by year(tgC or MTC)
-	vector<double> emission; // emissions by year(tgC or MTC)
+	string name; //!< GHG name
+	string unit; //!< GHG unit
+	string market; //!< Name of the market
+	vector<double> constraint; //!< Emissions constraint by year(tgC or MTC)
+	vector<double> emission; //!< Emissions by year(tgC or MTC)
 
 public:
 	ghg_mrk(); //default construtor

@@ -1,19 +1,3 @@
-/*! 
-* \ingroup CIAM
-* This class is used as a container of configuration values which can be accessed throughout the program.
-* The class is a singleton, so that only one can exist at any time during the program. It parses an XML file
-* in the executable directory to instantiate its values. The values can be in one of 5 categories: files, strings,
-* bools, ints, and doubles. To add a value it must only be added to the XML file in the appropriate section, the parser
-* does not need to be changed. Then to access the variable, use the get method appropriate for the value's type.
-* \author Josh Lurz
-* \date $Date$
-* \version $Revision$
-* \todo Print a warning to the log when a value does not exist in the map. 
-* \bug Bools are currently stored in XML as ints due to conversion problems.
-* \warning The class is a singleton, so it may not be created with the constructor. Instead call getInstance to return a pointer to the instance.
-* \warning The user must call delete on the object when they are finished with it.
-*/
-
 #ifndef _CONFIGURATION_H_
 #define _CONFIGURATION_H_
 #pragma once
@@ -27,6 +11,24 @@
 
 using namespace xercesc;
 using namespace std;
+
+/*! 
+* \ingroup CIAM
+* \brief This class is used as a container of configuration values which can be accessed throughout the program.
+*
+* The class is a singleton, so that only one can exist at any time during the program. It parses an XML file
+* in the executable directory to instantiate its values. The values can be in one of 5 categories: files, strings,
+* bools, ints, and doubles. To add a value it must only be added to the XML file in the appropriate section, the parser
+* does not need to be changed. Then to access the variable, use the get method appropriate for the value's type.
+*
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
+* \todo Print a warning to the log when a value does not exist in the map. 
+* \bug Bools are currently stored in XML as ints due to conversion problems.
+* \warning The class is a singleton, so it may not be created with the constructor. Instead call getInstance to return a pointer to the instance.
+* \warning The user must call delete on the object when they are finished with it.
+*/
 
 class Configuration {
 

@@ -1,10 +1,3 @@
-/*!
-* \ingroup CIAM
-* A class which defines a single market object.
-* \author Sonny Kim
-* \date $Date$
-* \version $Revision&
-*/
 #ifndef _MARKET_H_
 #define _MARKET_H_
 #pragma once
@@ -13,15 +6,23 @@
 
 using namespace std;
 
+/*!
+* \ingroup CIAM
+* \brief A class which defines a single market object.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision&
+*/
+
 class Market
 {
 public:
 	enum marketType	// RHS and LHS below may not be consistant
 	{ 
-		NORMAL, // RHS = Supply; LHS = Demand; Solution Value = Price;
-		PRICE, // RHS = Logit Price; LHS = Solution Price; Solution Value = Price;
-		DEMAND, // RHS = Demand; LHS = Solution Demand; Solution Value = Solution Demand;
-		GHG,	// RHS = Emissions ; LHS = Constraint; Solution Value = Price;
+		NORMAL, //!< RHS = Supply; LHS = Demand; Solution Value = Price;
+		PRICE, //!< RHS = Logit Price; LHS = Solution Price; Solution Value = Price;
+		DEMAND, //!< RHS = Demand; LHS = Solution Demand; Solution Value = Solution Demand;
+		GHG,	//!< RHS = Emissions ; LHS = Constraint; Solution Value = Price;
 		GDP 
 	};
 	

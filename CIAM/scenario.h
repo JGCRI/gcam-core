@@ -1,8 +1,3 @@
-/* scenario.h										*
- * This header contains the definition for	the 	*
- * the scenario class.								*
- * SHK  3/12/02										*/
-
 #ifndef _SCENARIO_H_
 #define _SCENARIO_H_
 #pragma once
@@ -14,12 +9,19 @@
 using namespace std;
 using namespace xercesc;
 
-// Scenario class
+/*!
+* \ingroup CIAM
+* \brief A class which defines a model scenario.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
+
 class Scenario
 {
 private:
-	string name; //! Scenario name.
-	string scenarioSummary;
+	string name; //!< Scenario name.
+	string scenarioSummary; //!< A summary of the purpose of the Scenario.
 
 public:
 	Scenario(); // default construtor

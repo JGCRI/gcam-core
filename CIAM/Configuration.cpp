@@ -18,7 +18,13 @@ Configuration::~Configuration() {
 	confExists = false;
 }
 
-//! Create the one instance of the singleton.
+//! Get a pointer to the instance of the Configuration object..
+/*! If the static instance of the Configuration class has not been created, get Instance() will create it.
+* Otherwise getInstance will return a pointer to the instance of the Configuration class.
+* \warning The user is responsible for deleting the instance when they are finished with it.
+* \return A pointer to the single instance of the Configuration class.
+*/
+
 Configuration* Configuration::getInstance() {
 
 	if ( !confExists ) {

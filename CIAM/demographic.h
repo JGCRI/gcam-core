@@ -1,9 +1,3 @@
-/* demographic.h							*
- * This header contains the					*
- * demographics class.						*
- *											*
- * SHK  8/21/00								*/
-
 #ifndef _DEMOGRAPHIC_H_
 #define _DEMOGRAPHIC_H_
 #pragma once
@@ -11,21 +5,27 @@
 #include <vector>
 #include <xercesc/dom/DOM.hpp>
 
-using namespace std; // enables elimination of std::
+using namespace std;
 using namespace xercesc;
 
-// demographic class
+/*! 
+* \ingroup CIAM
+* \brief An object which contains the demographic information for a region.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
 class demographic
 {
 private:
 	// vector of time period 
 	// population has 1 more historical period 
-	vector<double> malepop; 
-	vector<double> femalepop;
-	vector<double> totalpop;
-	vector<double> laborprod; // labor productivity growth rate
-	vector<double> laborforce_p; // labor force participation percent
-	vector<double> laborforce; // actual labor force
+	vector<double> malepop; //!< Total male population
+	vector<double> femalepop; //!< Total female population.
+	vector<double> totalpop; //!< Total population
+	vector<double> laborprod; //!< labor productivity growth rate
+	vector<double> laborforce_p; //!< labor force participation percent
+	vector<double> laborforce; //!< actual labor force
 public:
 	demographic(); //default construtor
 	demographic( int per, double mpop, double fpop ); //constructor

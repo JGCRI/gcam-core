@@ -1,12 +1,6 @@
-/* grade.h												*
- * technologies representing grade for each resource	*
- * grade is a class										*
- * that contains technologies that characterized each grade	*/
-
 #ifndef _GRADE_H_
 #define _GRADE_H_
 #pragma once
-
 #include <string>
 
 // xerces xml headers
@@ -16,17 +10,28 @@
 using namespace std;
 using namespace xercesc;
 
+/*! 
+* \ingroup CIAM
+* \brief Technologies representing a grade for each resource.
+*
+* grade is a that contains technologies that characterized each grade.
+*
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
+
 class grade
 {
 private:
-	string name; //! grade name
-	int year; //! year
-	double available; //! amount of grade for each grade
-	double extCost; //! extraction cost of each grade
-	double envCost; //! environmental cost of each grade
-	double techCh; //! technical change for all grades
-	double tax; //! severance tax
-	double tCost; //! total cost
+	string name; //!< grade name
+	int year; //!< year
+	double available; //!< amount of grade for each grade
+	double extCost; //!< extraction cost of each grade
+	double envCost; //!< environmental cost of each grade
+	double techCh; //!< technical change for all grades
+	double tax; //!< severance tax
+	double tCost; //!< total cost
 public:
 	grade(); //default construtor
 	grade( const string nameIn, const int noIn );//constructor

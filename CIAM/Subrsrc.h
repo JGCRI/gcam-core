@@ -1,8 +1,3 @@
-/* subrsrc.h							*
- * sub-resources for each region		*
- * subrsrc is a class					*
- * that contains grades 				*/
-
 #ifndef _SUBRSRC_H_
 #define _SUBRSRC_H_
 #pragma once
@@ -10,6 +5,7 @@
 #include <vector>
 #include <string>
 #include "grade.h"
+
 // xerces xml headers
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/util/XMLString.hpp>
@@ -17,18 +13,25 @@
 using namespace std; // enables elimination of std::
 using namespace xercesc;
 
-// class definition for sub-resources
+/*! 
+* \ingroup CIAM
+* \brief subrsrc is a class that contains grades.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
+
 class subrsrc
 {
 private:
-	string name; //! subrsrc name
-	int nograde; //! number of grades of each subrsrc
-	double min_annualprod; //! minimum annual production of subrsrc
-	vector< vector<grade*> > depgrade; //! amount of subrsrc for each grade
-	vector<double> rscprc; //! subresource price
-	vector<double> available; //! total available resource
-	vector<double> annualprod; //! annual production of subrsrc
-	vector<double> cummprod; //! cummulative production of subrsrc
+	string name; //!< subrsrc name
+	int nograde; //!< number of grades of each subrsrc
+	double min_annualprod; //!< minimum annual production of subrsrc
+	vector< vector<grade*> > depgrade; //!< amount of subrsrc for each grade
+	vector<double> rscprc; //!< subresource price
+	vector<double> available; //!< total available resource
+	vector<double> annualprod; //!< annual production of subrsrc
+	vector<double> cummprod; //!< cummulative production of subrsrc
 public:
 	subrsrc(); //default construtor
 	~subrsrc();

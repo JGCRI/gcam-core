@@ -1,9 +1,3 @@
-/* summary.h									*
- * This header contains the	summary class		*
- * which contains variables for reporting.		*
- *												*
- * SHK  7/25/02									*/
-
 #ifndef _SUMMARY_H_
 #define _SUMMARY_H_
 #pragma once
@@ -11,18 +5,26 @@
 #include <map>
 #include <string> 
 
-using namespace std; // enables elimination of std::
+using namespace std;
+
+/*! 
+* \ingroup CIAM
+* \brief An object which contains variables for reporting.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
 
 class Summary
 {
 private:
-	map<string, double> fuelcons;  // map of fuel name and amount consumed
-	map<string, double> pecons;  // map of primary energy consumption
-	map<string, double> peprod;  // map of primary energy production
-	map<string, double> petrade;  // map of primary energy trade
-	map<string, double> emission;  // map of ghg emissions
-	map<string, double> emissfuel;  // map of ghg emissions implicit in fuel
-	map<string, double> emissind;  // map of indirect ghg emissions
+	map<string, double> fuelcons;  //!< map of fuel name and amount consumed
+	map<string, double> pecons;  //!< map of primary energy consumption
+	map<string, double> peprod;  //!< map of primary energy production
+	map<string, double> petrade;  //!< map of primary energy trade
+	map<string, double> emission;  //!< map of ghg emissions
+	map<string, double> emissfuel;  //!< map of ghg emissions implicit in fuel
+	map<string, double> emissind;  //!< map of indirect ghg emissions
 public:
 	Summary(); // default construtor
 	void initfuelcons( const string& fname, const double value );

@@ -1,12 +1,14 @@
 /*! 
-\file xmlHelper.h
-\ingroup CIAM
-A set of helper function for reading xml data.
-This library contains a set of routines for reading xml data and attribute values.
-It is a templated library so that it should work with any data type.
-\author Josh Lurz
-\date $Date$
-\version $Revision$
+* \file xmlHelper.h
+* \ingroup CIAM
+* \brief A set of helper function for reading xml data.
+*
+* This library contains a set of routines for reading xml data and attribute values.
+* It is a templated library so that it should work with any data type.
+*
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
 */
 
 #ifndef _XML_HELPER_H_
@@ -26,7 +28,7 @@ using namespace xercesc;
 
 /*!
 * \ingroup CIAM
-*  A basic class which is a container for a static variable containing the current level of indention in the xml being written.
+* \brief A basic class which is a container for a static variable containing the current level of indention in the xml being written.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision&
@@ -57,7 +59,7 @@ public:
 
 /*! 
 * \ingroup CIAM
-* A helper class of functions used to parse XML DOM trees.
+* \brief A helper class of functions used to parse XML DOM trees.
 * \author Josh Lurz
 * \date $Date$
 * \version $Version$

@@ -6,80 +6,89 @@
 #include <vector>
 #include <map>
 
+/*! 
+* \ingroup CIAM
+* \brief A class which describes the single global marketplace.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
+
 class Marketplace
 {	
 	
 private:
-
-	struct solinfo {
-		double X;		// unknown, prices
-		double ED;		// excess demand for X
-		double dX;		// change in excess demand
-		double XL;		// left bracket
-		double XR;		// right bracket
-		double EDL;		// excess demand for left bracket
-		double EDR;		// excess demand for right bracket
-		double XL_org;	// original left bracket
-		double XR_org;	// original right bracket
-		double EDL_org;	// original excess demand for left bracket
-		double EDR_org;	// original excess demand for right bracket
-		int bracketed;	// 1 or 0 for bracketed or unbrackted
-	};
-
-	int uniqueNo; //! number for creating markets
-	int nomrks;  //! number of markets
-	int nomrks_t; //! number of markets that require solving
-	int nomrks_t_NR; //! number of markets for Newton-Rhapson
-	int nodrscmrks;  //! number of depletable resource markets
-	int nossecmrks;  //! number of supply sector markets
-	int noDemandMarkets; //! number of demand sector markets.
-	int noghgmrks;	//! number of GHG markets
-	vector< vector<Market> > mrk; //! no of market objects by period
-	vector<int> mrk_isol; //! index look up for markets that require solving
-	vector<int> mrk_isol_NR; //! index look up for markets for Newton-Rhapson
-	map<string,int> marketMap; //! map of unique market id from good and market-region names
-	map<string,int> region_marketMap; //! map of market lookup from good and region names
 	
-	// Private Functions
-	int NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, double** bb, int& n, const int per );
-	int NewtRap( const double Tol, vector<solinfo>& sol, double** JF, double** bb, int& n, const int per );
-	void Derivatives( vector<double> prices, double** JFDM, double** JFSM, int& n, const int per );
-	void JFunction( vector<double> prices, double** JFDM, int& n, int const per );
-	int Secant_all( const double Tol,vector<solinfo>& sol,int& n, const int per );
-	int FalsePos_all( const double Tol,vector<solinfo>& sol,int& n, const int per );
-	int Bisection_i( const int i, const double Tol, vector<solinfo>& sol,int& n, const int per );
-	int Bisection_all( const double Tol, const int IterLimit, vector<solinfo>& sol, int& n, const int per );
-	void CheckBracket( const double Tol, vector<solinfo>& sol, bool& allbracketed );
-	int Bracket( const double Tol, vector<solinfo>& sol, bool& allbracketed, bool& firsttime,int& n, const int per );
-	int sign( const int number ) const;
-	int getMarketNumber( const string& goodName, const string& regionName ) const; // get the market number
-	double marketDemand( const int mktNumber, const int period);
-	double checkSupply( const string& goodName, const string& regionName, const int period ) const;
-	double checkSupply( const int marketNumber, const int period ) const;
-	string getName( const int marketNumber ) const;
-	string getGoodName( const int marketNumber) const;
-	double getRawSupply( const int marketNumber, const int period ) const;
-	double getRawDemand( const int marketNumber, const int period ) const;
-	double getRawPrice( const int marketNumber, const int period ) const;
-	Market::marketType getType( const int marketNumber, const int period) const;
-	const vector<double> jacobian( const int marketNumber, const int period ) const; // calculate the derivative or Jacobian
-	const vector<double> dem_elas( const int marketNumber, const int period ) const; // calculate the demand elasticity
-	const vector<double> dem_elas_NR( const int marketNumber, const int period ) const; // calculate the demand elasticity
-	const vector<double> sup_elas( const int marketNumber, const int period ) const; // calculate the supply elasticity
-	const vector<double> sup_elas_NR( const int marketNumber, const int period ) const; // calculate the supply elasticity
-	int showmrk_sol( const int id ) const; // returns market index that requires solving
-	const vector<double> showPRC( const int period ) const; // returns vector of market prices
-	const vector<double> showPRC_NR( const int period ) const; // returns vector of market prices
-	const vector<double> showED( const int period ) const; // returns vector of market excess demands
-	const vector<double> showED_NR( const int period ) const; // returns vector of market excess demands
-	const vector<double> showlogED( const int period ) const; // returns vector of log of market excess demands
-	const vector<double> showlogED_NR( const int period ) const; // returns vector of log of market excess demands
-	const vector<double> showlogDem( const int period ) const; // returns vector of log of demand
-	const vector<double> showlogDem_NR( const int period ) const; // returns vector of log of demand
-	const vector<double> showlogSup( const int period ) const; // returns vector of log of supply
-	const vector<double> showlogSup_NR( const int period ) const; // returns vector of log of supply
-	void setPRC( const vector<double>& prices, const int period ); // sets solution prices for all markets
-	void setPRC_NR( const vector<double>& prices, const int period ); // sets solution prices for all markets
+	//! A structure containing information neccessary to obtain the solution of a single market.
+	struct solinfo {
+		double X;		//!< unknown, prices
+		double ED;		//!< excess demand for X
+		double dX;		//!< change in excess demand
+		double XL;		//!< left bracket
+		double XR;		//!< right bracket
+		double EDL;		//!< excess demand for left bracket
+		double EDR;		//!< excess demand for right bracket
+		double XL_org;	//!< original left bracket
+		double XR_org;	//!< original right bracket
+		double EDL_org;	//!< original excess demand for left bracket
+		double EDR_org;	//!< original excess demand for right bracket
+		int bracketed;	//!< 1 or 0 for bracketed or unbrackted. bool?
+	};
+	private:
+		int uniqueNo; //!< number for creating markets
+		int nomrks;  //!< number of markets
+		int nomrks_t; //!< number of markets that require solving
+		int nomrks_t_NR; //!< number of markets for Newton-Rhapson
+		int nodrscmrks;  //!< number of depletable resource markets
+		int nossecmrks;  //!< number of supply sector markets
+		int noDemandMarkets; //!< number of demand sector markets.
+		int noghgmrks;	//!< number of GHG markets
+		vector< vector<Market> > mrk; //!< no of market objects by period
+		vector<int> mrk_isol; //!< index look up for markets that require solving
+		vector<int> mrk_isol_NR; //!< index look up for markets for Newton-Rhapson
+		map<string,int> marketMap; //!< map of unique market id from good and market-region names
+		map<string,int> region_marketMap; //!< map of market lookup from good and region names
+		
+		// Private Functions
+		int NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, double** bb, int& n, const int per );
+		int NewtRap( const double Tol, vector<solinfo>& sol, double** JF, double** bb, int& n, const int per );
+		void Derivatives( vector<double> prices, double** JFDM, double** JFSM, int& n, const int per );
+		void JFunction( vector<double> prices, double** JFDM, int& n, int const per );
+		int Secant_all( const double Tol,vector<solinfo>& sol,int& n, const int per );
+		int FalsePos_all( const double Tol,vector<solinfo>& sol,int& n, const int per );
+		int Bisection_i( const int i, const double Tol, vector<solinfo>& sol,int& n, const int per );
+		int Bisection_all( const double Tol, const int IterLimit, vector<solinfo>& sol, int& n, const int per );
+		void CheckBracket( const double Tol, vector<solinfo>& sol, bool& allbracketed );
+		int Bracket( const double Tol, vector<solinfo>& sol, bool& allbracketed, bool& firsttime,int& n, const int per );
+		int sign( const int number ) const;
+		int getMarketNumber( const string& goodName, const string& regionName ) const; // get the market number
+		double marketDemand( const int mktNumber, const int period);
+		double checkSupply( const string& goodName, const string& regionName, const int period ) const;
+		double checkSupply( const int marketNumber, const int period ) const;
+		string getName( const int marketNumber ) const;
+		string getGoodName( const int marketNumber) const;
+		double getRawSupply( const int marketNumber, const int period ) const;
+		double getRawDemand( const int marketNumber, const int period ) const;
+		double getRawPrice( const int marketNumber, const int period ) const;
+		Market::marketType getType( const int marketNumber, const int period) const;
+		const vector<double> jacobian( const int marketNumber, const int period ) const; // calculate the derivative or Jacobian
+		const vector<double> dem_elas( const int marketNumber, const int period ) const; // calculate the demand elasticity
+		const vector<double> dem_elas_NR( const int marketNumber, const int period ) const; // calculate the demand elasticity
+		const vector<double> sup_elas( const int marketNumber, const int period ) const; // calculate the supply elasticity
+		const vector<double> sup_elas_NR( const int marketNumber, const int period ) const; // calculate the supply elasticity
+		int showmrk_sol( const int id ) const; // returns market index that requires solving
+		const vector<double> showPRC( const int period ) const; // returns vector of market prices
+		const vector<double> showPRC_NR( const int period ) const; // returns vector of market prices
+		const vector<double> showED( const int period ) const; // returns vector of market excess demands
+		const vector<double> showED_NR( const int period ) const; // returns vector of market excess demands
+		const vector<double> showlogED( const int period ) const; // returns vector of log of market excess demands
+		const vector<double> showlogED_NR( const int period ) const; // returns vector of log of market excess demands
+		const vector<double> showlogDem( const int period ) const; // returns vector of log of demand
+		const vector<double> showlogDem_NR( const int period ) const; // returns vector of log of demand
+		const vector<double> showlogSup( const int period ) const; // returns vector of log of supply
+		const vector<double> showlogSup_NR( const int period ) const; // returns vector of log of supply
+		void setPRC( const vector<double>& prices, const int period ); // sets solution prices for all markets
+		void setPRC_NR( const vector<double>& prices, const int period ); // sets solution prices for all markets
 	public:
 		Marketplace();
 		void solve( const int per );

@@ -1,45 +1,45 @@
-/* subsector.h									*
- * This header contains the Subsector class.	*
- * The Subsector object is contained within the	*
- * the Sector object.  The Subsector class		*
- * has as its private member the Technology		*
- * object.										*
- * SHK  10/24/00								*/
-
 #ifndef _SUBSECTOR_H_
 #define _SUBSECTOR_H_
 #pragma once
 
-// subsector class
 #include <vector>
 #include <string>
-#include "technology.h" // generic technology class
-#include "summary.h" // summary class for reporting
+#include "technology.h"
+#include "summary.h"
 // xerces xml headers
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/util/XMLString.hpp>
+
 using namespace xercesc;
+
+/*! 
+* \ingroup CIAM
+* \brief A class which defines a single Subsector of the model.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
 
 class subsector
 {
 private:
-	string name; //! subsector name
-	string unit; //! unit of final product from subsector
-	string fueltype; //! each subsector has one fueltype
-	int notech; //! number of technologies in each subsector
-	double tax; //! subsector tax or subsidy
-	vector<vector<technology*> > techs; //! array of pointers to technology objects for each period
-	vector<hydro_tech> hydro; //! array of hydroelectricity by period
-	vector<double> caplim; //! subsector capacity limit
-	vector<double> shrwts; //! subsector logit share weights
-	vector<double> lexp; //! subsector logit exponential
-	vector<double> share; //! subsector shares
-	vector<double> input; //! subsector energy input
-	vector<double> pe_cons; //! subsector primary energy consumption
-	vector<double> subsectorprice; //! subsector price for all periods
-	vector<double> output; //! total amount of final output from subsector
-	vector<double> carbontaxpaid; //! total subsector carbon taxes paid
-	vector<Summary> summary; //! summary for reporting
+	string name; //!< subsector name
+	string unit; //!< unit of final product from subsector
+	string fueltype; //!< each subsector has one fueltype
+	int notech; //!< number of technologies in each subsector
+	double tax; //!< subsector tax or subsidy
+	vector<vector<technology*> > techs; //!< array of pointers to technology objects for each period
+	vector<hydro_tech> hydro; //!< array of hydroelectricity by period
+	vector<double> caplim; //!< subsector capacity limit
+	vector<double> shrwts; //!< subsector logit share weights
+	vector<double> lexp; //!< subsector logit exponential
+	vector<double> share; //!< subsector shares
+	vector<double> input; //!< subsector energy input
+	vector<double> pe_cons; //!< subsector primary energy consumption
+	vector<double> subsectorprice; //!< subsector price for all periods
+	vector<double> output; //!< total amount of final output from subsector
+	vector<double> carbontaxpaid; //!< total subsector carbon taxes paid
+	vector<Summary> summary; //!< summary for reporting
 public:
 	subsector(); // default construtor
 	~subsector();

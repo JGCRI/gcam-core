@@ -1,32 +1,34 @@
-/* World.h									*
- * This header contains the	World class		*
- * which contains all region objects.		*
- *											*
- * SHK  2/20/01								*/
-
 #ifndef _WORLD_H_
 #define _WORLD_H_
 #pragma once
 
-#include "region.h" // generic region class
-#include "str_ghgss.h" // structure for ghgs
+#include "region.h"
+#include "str_ghgss.h"
 #include <xercesc/dom/DOM.hpp>
 
 using namespace xercesc;
 
+/*! 
+* \ingroup CIAM
+* \brief A class which contains all the model's regions.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
+
 class World
 {
 private:
-	int noreg; //! number of regions
-	vector<Region*> region; //! array of pointers to Region objects
+	int noreg; //!< number of regions
+	vector<Region*> region; //!< array of pointers to Region objects
 	// **** sum of regional values ****
-	vector<double> population; //! total global population
-	vector<double> crudeoilrsc; //! global conventional crude oil resource
-	vector<double> unconvoilrsc; //! global unconventional crude oil resource
-	vector<double> natgasrsc; //! global natural gas resource
-	vector<double> coalrsc; //! global coal resource
-	vector<double> uranrsc; //! global uranium resource
-	vector<str_ghgss> ghgs; //! structure containing ghg emissions
+	vector<double> population; //!< total global population
+	vector<double> crudeoilrsc; //!< global conventional crude oil resource
+	vector<double> unconvoilrsc; //!< global unconventional crude oil resource
+	vector<double> natgasrsc; //!< global natural gas resource
+	vector<double> coalrsc; //!< global coal resource
+	vector<double> uranrsc; //!< global uranium resource
+	vector<str_ghgss> ghgs; //!< structure containing ghg emissions
 	void initAgLu(); 
 
 public:

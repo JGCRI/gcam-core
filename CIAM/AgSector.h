@@ -1,18 +1,26 @@
-#ifndef _AGSECTOR_
-#define _AGSECTOR_
-#pragma once
-
 #include <xercesc/dom/DOM.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
 #include <map>
 
+#ifndef _AGSECTOR_
+#define _AGSECTOR_
+#pragma once
+
 using namespace std;
 using namespace xercesc;
 
-static int regionCount = 0; //! Tracks how many AgSectors have been instantiated.
+static int regionCount = 0; //!< Tracks how many AgSectors have been instantiated.
 static const int numAgMarkets = 12; //!<Number of internally solved ag markets.
+
+/*! 
+* \ingroup CIAM
+* \brief A class which defines the agricultural sector of a region. 
+* \author Josh Lurz
+* \date $ Date $
+* \version $ Revision $
+*/
 
 class AgSector {
 	

@@ -1,11 +1,3 @@
-/* technology.h										*
- * This header contains the definition for	the 	*
- * the technology class.  The technology object is	*
- * contained in the subsector object.  This			*
- * technology class is based on the MiniCAM			*
- * description of technology.						*
- * SHK  5/17/00										*/
-
 #ifndef _TECHNOLOGY_H_
 #define _TECHNOLOGY_H_
 #pragma once
@@ -20,41 +12,49 @@
 #include <xercesc/util/XMLString.hpp>
 
 // User headers.
-#include "ghg.h" // ghg object
+#include "ghg.h"
+
 using namespace xercesc;
 
-// technology class
+/*! 
+* \ingroup CIAM
+* \brief This technology class is based on the MiniCAM description of technology.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
+
 class technology
 {
 protected:
-	int fueltype; //! fuel number
-	int year; //! period year or vintage
-	double shrwts; //!logit share weight
-	double eff; //! energy intensity
-	double necost; //! all non-fuel costs (levelized)
-	double techcost; //! total cost of technology
-	double tax; //! utility tax
-	double carbontax; //! carbon tax in $/TC
-	double carbontaxgj; //! carbon tax in $/GJ
-	double carbontaxpaid; //! total carbon taxes paid
-	double lexp; //! logit exponential
-	double share; //! technology shares
-	double input; //! total fuel input (fossil and uranium)
-	double output; //! technology output
-	double techchange;  //! technical change in %/year
-	string name; //! technology name
-	string unit; //! unit of final product from technology
-	string fuelname; //! name of fuel used
-	vector<Ghg*> ghg; //! suite of greenhouse gases
-	map<string,double> emissmap; //! map of ghg emissions
-	map<string,double> emfuelmap; //! map of ghg emissions implicit in fuel
-	map<string,double> emindmap; //! map of indirect ghg emissions
-        double FixedOutputVal;
+	int fueltype; //!< fuel number
+	int year; //!< period year or vintage
+	double shrwts; //!< logit share weight
+	double eff; //!< energy intensity
+	double necost; //!< all non-fuel costs (levelized)
+	double techcost; //!< total cost of technology
+	double tax; //!< utility tax
+	double carbontax; //!< carbon tax in $/TC
+	double carbontaxgj; //!< carbon tax in $/GJ
+	double carbontaxpaid; //!< total carbon taxes paid
+	double lexp; //!< logit exponential
+	double share; //!< technology shares
+	double input; //!< total fuel input (fossil and uranium)
+	double output; //!< technology output
+	double techchange;  //!< technical change in %/year
+	string name; //!< technology name
+	string unit; //!< unit of final product from technology
+	string fuelname; //!< name of fuel used
+	vector<Ghg*> ghg; //!< suite of greenhouse gases
+	map<string,double> emissmap; //!< map of ghg emissions
+	map<string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
+	map<string,double> emindmap; //!< map of indirect ghg emissions
+    double FixedOutputVal; //!< A fixed amount of output.
         
-	//! attributes for hydroelectricity only!
-	double resource; //! available hydro resource in energy units
-	double A; //! logit function shape parameter
-	double B; //! logit function shape parameter
+	// attributes for hydroelectricity only!
+	double resource; //!< available hydro resource in energy units
+	double A; //!< logit function shape parameter
+	double B; //!< logit function shape parameter
 public:
 	technology(); // default construtor
 	virtual ~technology();
@@ -96,18 +96,24 @@ public:
 	double getlexp() const; // return logit exponential for the technology
 	void setinput( const double in ); // set input exogenously
 	void setoutput( const double out ); // set output exogenously
-        void adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per);
-        double getFixedSupply(int per);
+    void adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per);
+    double getFixedSupply(int per);
 
 };
 
-// hydroelectricity class inherited from technology class
+/*! 
+* \ingroup CIAM
+* \brief Hydroelectricity technology class derived from the technology class.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
 class hydro_tech : public technology
 {
 private:
-	double resource; // available hydro resource in energy units
-	double A; // logit function shape parameter
-	double B; // logit function shape parameter
+	double resource; //!< available hydro resource in energy units
+	double A; //!< logit function shape parameter
+	double B; //!< logit function shape parameter
 
 public:
 	hydro_tech();

@@ -1,11 +1,3 @@
-/*!ghg.h												*
-* This header contains the	Greenhouse Gas class.		*
-* The Ghg class describes a single gas with			*
-* attributes of gas name, unit, emissions coefficients,*
-* and the calculated emissions.  Emissions emitted		*
-* indirectly through use of technology is also calculated *
-* Coded by: Sonny Kim and Marshall Wise  10/09/02		*/
-
 #ifndef _GHG_H_
 #define _GHG_H_
 #pragma once
@@ -16,10 +8,21 @@
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/util/XMLString.hpp>
 
-using namespace std; // enables elimination of std::
+using namespace std;
 using namespace xercesc;
 
-// Ghg class (Greenhouse gas)
+/*! 
+* \ingroup CIAM
+* \brief The Ghg class describes a single gas with
+* attributes of gas name, unit, emissions coefficients,
+* and the calculated emissions.
+*
+* Emissions emitted indirectly through use of technology are also calculated.
+* \author Sonny Kim and Marshall Wise
+* \date $ Date $
+* \version $ Revision $
+*/
+
 class Ghg
 {
 private:

@@ -1,13 +1,14 @@
 /*! 
-\file Definitions.h	
-\ingroup CIAM
-A set of standard definitions which should be included in all files.
-This is a set of definitions, used mainly to work around platform
-and compiler specific bugs. The intention is to hide many of the hacks
-used to avoid compiler bugs.
-\author Josh Lurz
-\date $Date$
-\version $Revision$
+* \file Definitions.h	
+* \ingroup CIAM
+* \brief A set of standard definitions which should be included in all files.
+* 
+* This is a set of definitions, used mainly to work around platform
+* and compiler specific bugs. The intention is to hide many of the hacks
+* used to avoid compiler bugs.
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
 */
 
 #ifndef _DEFINITIONS_H_

@@ -1,11 +1,11 @@
 /** 
 * \namespace std 
-* The C++ std library namespace. Defining it avoids writing std:: prefixes.
+* \brief The C++ std library namespace. Defining it avoids writing std:: prefixes.
 */
 
 /**
 * \namespace xercesc
-* The namespace for the Xerces xml parser.
+* \brief The namespace for the Xerces xml parser.
 */
 
 /**

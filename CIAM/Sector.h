@@ -1,8 +1,4 @@
-/* sector.h									*
- * This header contains the global			*
- * sector class.							*
- *											*
- * SHK  7/7/00								*/
+
 
 #ifndef _SECTOR_H_
 #define _SECTOR_H_
@@ -15,22 +11,30 @@
 using namespace std; // enables elimination of std::
 using namespace xercesc;
 
+/*! 
+* \ingroup CIAM
+* \brief A class which defines a single supply sector.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
+
 class sector
 {
 protected:
-	string name; //! sector name
-	string unit; //! unit of final product from sector
-	string market; //! regional market
-	int nosubsec; //! number of subsectors in each sector
-	double tax; //! sector tax or subsidy
-	vector<subsector*> subsec; //! subsector objects
-	vector<double> sectorprice; //! sector price for all periods
-	vector<double> pe_cons; //! sectoral primary energy consumption
-	vector<double> input; //! sector total energy consumption
-	vector<double> output; //! total amount of final output from sector
-	vector<double> fixedOutput; //! total amount of fixed output from sector
-	vector<double> carbontaxpaid; //! total sector carbon taxes paid
-	vector<Summary> summary; //! summary for reporting
+	string name; //!< sector name
+	string unit; //!< unit of final product from sector
+	string market; //!< regional market
+	int nosubsec; //!< number of subsectors in each sector
+	double tax; //!< sector tax or subsidy
+	vector<subsector*> subsec; //!< subsector objects
+	vector<double> sectorprice; //!< sector price for all periods
+	vector<double> pe_cons; //!< sectoral primary energy consumption
+	vector<double> input; //!< sector total energy consumption
+	vector<double> output; //!< total amount of final output from sector
+	vector<double> fixedOutput; //!< total amount of fixed output from sector
+	vector<double> carbontaxpaid; //!< total sector carbon taxes paid
+	vector<Summary> summary; //!< summary for reporting
 	virtual void initElementalMembers();
 
 public:
@@ -77,16 +81,23 @@ public:
 };
 
 
-// demand sector class derived from base sector class
+/*! 
+* \ingroup CIAM
+* \brief A class which defines a single demand sector.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
+
 class demsector : public sector
 {
 private:
-	int perCapitaBased; // demand equation based on per capita GNP, true or false
-	vector<double> fe_cons; // end-use sector final energy consumption
-	vector<double> service; // total end-use sector service 
-	vector<double> iElasticity; // income elasticity 
-	vector<double> pElasticity; // price elasticity.
-	vector<double> aeei; // autonomous end-use energy intensity parameter
+	int perCapitaBased; //!< demand equation based on per capita GNP, true or false
+	vector<double> fe_cons; //!< end-use sector final energy consumption
+	vector<double> service; //!< total end-use sector service 
+	vector<double> iElasticity; //!< income elasticity 
+	vector<double> pElasticity; //!< price elasticity.
+	vector<double> aeei; //!< autonomous end-use energy intensity parameter
 public:
 	virtual void clear();
 	virtual void XMLParse(const DOMNode* node);

@@ -1,8 +1,3 @@
-/* Resource.h								*
- * Resources for each region				*
- * Resource is a class						*
- * that contains Resource subsectors 		*/
-
 #ifndef _RESOURCE_H_
 #define _RESOURCE_H_
 #pragma once
@@ -12,17 +7,25 @@
 
 using namespace xercesc;
 
+/*! 
+* \ingroup CIAM
+* \brief An abstract class which defines a Resource object, which is a container for multiple Subresource objects.
+* \author Sonny Kim
+* \date $ Date $
+* \version $ Revision $
+*/
+
 class Resource
 {
 protected:
-	string name; //! Resource name
-	string market; //! regional market
-	int nosubrsrc; //! number of subsectors for each Resource
-	vector<subrsrc*> depsubrsrc; //! subsector objects for each Resource
-	vector<double> rscprc; //! Resource price
-	vector<double> available; //! total Resource available
-	vector<double> annualprod; //! annual production rate of Resource
-	vector<double> cummprod; //! cummulative production of Resource
+	string name; //!< Resource name
+	string market; //!< regional market
+	int nosubrsrc; //!< number of subsectors for each Resource
+	vector<subrsrc*> depsubrsrc; //!< subsector objects for each Resource
+	vector<double> rscprc; //!< Resource price
+	vector<double> available; //!< total Resource available
+	vector<double> annualprod; //!< annual production rate of Resource
+	vector<double> cummprod; //!< cummulative production of Resource
 public:
 	Resource(); // default construtor
 	virtual ~Resource();
@@ -49,16 +52,37 @@ public:
 	void outputfile( const string& regname ); 
 };
 
+/*! 
+* \ingroup CIAM
+* \brief A class which defines a DepletableResource object, which is a container for multiple Subresource objects.
+* \author Josh Lurz
+* \date $ Date $
+* \version $ Revision $
+*/
 class DepletableResource: public Resource {
 public: 
 	virtual string getType() const;
 };
 
+/*! 
+* \ingroup CIAM
+* \brief A class which defines a FixedResource object, which is a container for multiple Subresource objects.
+* \author Josh Lurz
+* \date $ Date $
+* \version $ Revision $
+*/
 class FixedResource: public Resource {
 public: 
 	virtual string getType() const;
 };
 
+/*! 
+* \ingroup CIAM
+* \brief A class which defines a RenewableResource object, which is a container for multiple Subresource objects.
+* \author Josh Lurz
+* \date $ Date $
+* \version $ Revision $
+*/
 class RenewableResource: public Resource {
 public: 
 	virtual string getType() const;
