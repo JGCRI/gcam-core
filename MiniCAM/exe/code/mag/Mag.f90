@@ -265,7 +265,7 @@
      ednet(226:iTp+1),DUSER,FUSER,CORRUSER,CORRMHI,CORRMMID,CORRMLO
 !
       COMMON /FORCE/qco2(0:iTp),qm(0:iTp),qn(0:iTp),QCFC(0:iTp), &
-     QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp)
+     QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp) 
 !
       COMMON /METH2/LEVCH4,ch4bar90,QQQN2O
 !
@@ -281,7 +281,7 @@
      TW0NH,TW0SH,IVARW,KEYDW
       COMMON /QSPLIT/QNHO,QNHL,QSHO,QSHL,QGLOBE(0:iTp), &
      QQNHO(0:iTp),QQNHL(0:iTp),QQSHO(0:iTp),QQSHL(0:iTp), &
-     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp)
+     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), IConstForcing     ! sjs
 !
       COMMON /ICE/TAUI,DTSTAR,DTEND,BETAG,BETA1,BETA2,DB3,ZI0, &
      NVALUES,MANYTAU,TAUFACT,ZI0BIT(100),SIPBIT(100),SIBIT(100)
@@ -406,6 +406,8 @@
         READ(LUN,4241) OZCO
         READ(LUN,4241) OZVOC
         READ(LUN,4240) ICH4FEED
+        READ(LUN,4240) IConstForcing  
+
 !
       close(lun)
 !
@@ -2633,7 +2635,7 @@ IF(IWrite.eq.1)THEN
 		IF (IWrite .eq. 1)  &
           WRITE (9,100) K,TEMUSER(IYR)+TGAV(226),CO2(IYR),CH4(IYR),CN2O(IYR), &
           DELQCO2,DELQM,DELQN,DELQCFC,DELQOZ, &
-          DELQD,DELQIND,DELQBIO,DELQTOT,EF(IYR),EDNET(IYR),ECH4(IYR), &
+          DELQD,DELQIND,DELQBIO,QGLOBE(IYR),EF(IYR),EDNET(IYR),ECH4(IYR), &
           EN2O(IYR),ESO21(IYR)-ES1990,ESO22(IYR)-ES1990,ESO23(IYR)-ES1990,SLUSER(IYR)
 
 ! code to pass these items to MiniCAM in Results array
@@ -2651,7 +2653,7 @@ IF(IWrite.eq.1)THEN
 	 MAGICCCResults(10,(K-1990)/IIPRT+1) = DELQD
 	 MAGICCCResults(11,(K-1990)/IIPRT+1) = DELQIND
 	 MAGICCCResults(12,(K-1990)/IIPRT+1) = DELQBIO
-	 MAGICCCResults(13,(K-1990)/IIPRT+1) = DELQTOT
+	 MAGICCCResults(13,(K-1990)/IIPRT+1) = QGLOBE(IYR)	! sjs -- changed to reflect actual forcing including qextra & any other mods
 	 MAGICCCResults(14,(K-1990)/IIPRT+1) = EF(IYR)
 	 MAGICCCResults(15,(K-1990)/IIPRT+1) = EDNET(IYR)
 	 MAGICCCResults(16,(K-1990)/IIPRT+1) = ECH4(IYR)
@@ -2922,7 +2924,7 @@ IF(IWrite.eq.1)THEN
      QSO2(0:iTp+1),QDIR(0:iTp+1)
 !
       COMMON /FORCE/qco2(0:iTp),qm(0:iTp),qn(0:iTp),QCFC(0:iTp), &
-     QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp)
+     QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp) 
 !
       common /Sulph/S90DIR,S90IND,S90BIO,ENAT,ES1990,ECO90,FOC90,IFOC
       COMMON /VARW/Z(40),W(2),DW(2),TO0(2),TP0(2),WNH(iTp),WSH(iTp), &
@@ -3119,7 +3121,7 @@ IF(IWrite.eq.1)THEN
      TW0NH,TW0SH,IVARW,KEYDW
       COMMON /QSPLIT/QNHO,QNHL,QSHO,QSHL,QGLOBE(0:iTp), &
      QQNHO(0:iTp),QQNHL(0:iTp),QQSHO(0:iTp),QQSHL(0:iTp), &
-     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp)
+     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), IConstForcing     ! sjs
 !
       COMMON /ICE/TAUI,DTSTAR,DTEND,BETAG,BETA1,BETA2,DB3,ZI0, &
      NVALUES,MANYTAU,TAUFACT,ZI0BIT(100),SIPBIT(100),SIBIT(100)
@@ -3272,7 +3274,7 @@ IF(IWrite.eq.1)THEN
      TW0NH,TW0SH,IVARW,KEYDW
       COMMON /QSPLIT/QNHO,QNHL,QSHO,QSHL,QGLOBE(0:iTp), &
      QQNHO(0:iTp),QQNHL(0:iTp),QQSHO(0:iTp),QQSHL(0:iTp), &
-     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp)
+     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), IConstForcing     ! sjs, IConstForcing     ! sjs
       COMMON /AREAS/FNO,FNL,FSO,FSL
 !
       COMMON /QADD/IQREAD,JQFIRST,JQLAST,QEX(0:iTp),QEXNH(0:iTp), &
@@ -3530,6 +3532,15 @@ IF(IWrite.eq.1)THEN
       FSHL=QQQSHL(JC)*FSL
       FSHO=QQQSHO(JC)*FSO
       QGLOBE(JC)=FNHL+FNHO+FSHL+FSHO
+
+! sjs - added option to freeze forcing after specified year
+	  IF (IConstForcing .gt. 0) THEN
+		Iinc_temp = IConstForcing - 1990
+		IConstVal_temp = 226 + Iinc_temp
+		IF (JC .GT. IConstVal_temp) THEN
+			QGLOBE(JC) = QGLOBE(JC-1)
+		ENDIF
+	  ENDIF
       TEQU(JC)=TE*QGLOBE(JC)/Q2X
 !
 !  CALCULATE FORCING INCREMENTS OVER YEAR IN WHICH TIME STEP LIES.
