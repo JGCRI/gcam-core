@@ -75,13 +75,10 @@ public class ControlPanel extends javax.swing.JFrame {
     
     private Vector queryControls;
     private Vector attributeControls;
-    //private Vector rootPointers;
     private Vector mapPointers;
-    //private AdapterNode currRootPointer;
     private boolean tableExistsFlag;
     
     private final JFileChooser fc = new JFileChooser( "." );
-    //private PopupListener popupListener;
     
     private static int LIST = 0;
     private static int TABLE = 1;
@@ -161,15 +158,7 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-END:initComponents
     
     private void frameResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_frameResized
-        if (evt.getID() == ComponentEvent.COMPONENT_RESIZED) {
-           /* if (treePanel != null && treePanel.isShowing()) {
-                treePanel.setPreferredSize(treePanel.getSize());
-            }
-            //appears to be unnecessary
-            /*if (dataPanel != null && dataPanel.isShowing()) {
-                dataPanel.setPreferredSize(dataPanel.getSize());
-            }*/
-        }
+
     }//GEN-LAST:event_frameResized
     
     
@@ -922,7 +911,6 @@ public class ControlPanel extends javax.swing.JFrame {
                     int index1 = oldName.indexOf('<');
                     int index2 = oldName.indexOf('>');
                     if (oldName.substring(index1+1, index2).equals("period")) {
-System.out.println("inside period");
                         //remember the last index in values that contains confirmed entry
                         int lastValIndex = values.size();
                         
@@ -977,20 +965,14 @@ System.out.println("inside period");
                         if (!it.hasNext()) {
                             if (timeInterval) {
                                 int numPeriods = modelTime.getNumOfSteps();
-int ct4 = 0;
                                 for (int k = 0; k < numPeriods; k++) {
                                     values.addElement(new AdapterNode());
-ct4++;
                                 }
-System.out.println("added " + ct4 + " values (4)");
                             } else {
                                 values.addElement(new AdapterNode());
-System.out.println("added values (5)");
                             }
                         }
-                        
-                        //timeInterval = false;
-                        
+                                                
                         while (it.hasNext()) {
                             currNode = (AdapterNode)it.next();
                             if (showNames) {
@@ -1012,24 +994,16 @@ System.out.println("added values (5)");
                                         //  therefore, add blank values to put values in place
                                         int numVals = values.size();
                                         int targetVals = (rowCount-1) * modelTime.getNumOfSteps();  
-//System.out.println("rowCount = " + rowCount + " steps = " + modelTime.getNumOfSteps());
-System.out.println("numVals = " + numVals + " targetVals = " + targetVals);
-int ct1 = 0;
                                         for (int q = numVals; q < targetVals; q++) {
                                             values.addElement(new AdapterNode());
-ct1++;
                                         }
-System.out.println("added " + ct1 + "values (1)");
-int ct2 = 0;
                                         while (!attribYear.equals(currYear)) {
-ct2++;
                                             if (header.isEmpty()) header.addElement(currYear.toString());
                                             else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
                                             values.addElement(new AdapterNode());
                                             if (yearIt.hasNext())currYear = (Integer)yearIt.next();
                                             else break;
                                         }
-System.out.println("added " + ct2 + "values (2)");
                                         
                                         if (header.isEmpty()) header.addElement(currYear.toString());
                                         else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
@@ -1038,20 +1012,14 @@ System.out.println("added " + ct2 + "values (2)");
                                 }
                                 
                                 values.addElement(currNode);
-System.out.println("adding " + currNode);
-System.out.println("inserted into position " + values.size());
                             }
                         }
-int ct = 0;
                         while (timeInterval && !lastYear.equals(new Integer(modelTime.getEnd()))) {
-//System.out.println("adding filler");
-                            ct++;
                             lastYear = (Integer)yearIt.next();
                             if (header.isEmpty()) header.addElement(lastYear.toString());
                             else if (!header.contains(lastYear.toString())) header.addElement(lastYear.toString());
                             values.addElement(new AdapterNode());
                         }
-System.out.println("added " + ct + " fillers (3) to " + regionName + currNode);
                     }
                 } else {    //current node is an intermediate step along the tree
                     if(attribVal.equals(DEFAULT_PLURAL_STRING)) {
@@ -1075,7 +1043,7 @@ System.out.println("added " + ct + " fillers (3) to " + regionName + currNode);
             } //belongs to while (!queue.isEmpty())
         } //belongs to for each region
         
-System.out.println("values  = " + values.size() + " header = " + header.size() + " lefter = " + lefter.size());
+//System.out.println("values  = " + values.size() + " header = " + header.size() + " lefter = " + lefter.size());
         
         TableViewModel model = new TableViewModel(values, header, lefter, showNames);
         table = new JTable(model);
