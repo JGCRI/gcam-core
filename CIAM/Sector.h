@@ -125,40 +125,29 @@ public:
     * \author Josh Lurz
     *
     * The DependencyOrdering struct is used by the region class in the stl sort to compare
-    * two sector pointers and order them by dependency. The algorithm first checks if a simul
-    * exists between two sectors. If it does, the comparison between the two is performed alphabetically.
-    * This is because when a simul market exists, the ordering between two sectors is trivial.
-    * Next the comparison checks if the lhs sector has the rhs sector as an input. If it does, a dependency exists
-    * and the lhs sector must be after the rhs sector. Finally, if two sectors are unrelated, they are ordered alphabetically. 
+    * two sector pointers and order them by dependency. The algorithm first checks if the rhs 
+    * sector depends on the lhs sector with a non-simul. If this is true, it returns true as the 
+    * lhs is needed before the rhs, but when a simul market exists, the ordering between two sectors is trivial.
+    * Next the operator checks which sector has fewer dependencies, and orders that one first.
+    * Finally, the two sectors are ordered alphabetically. 
     */   
     struct DependencyOrdering : public std::binary_function<sector*, sector*, bool>
     {
         //! \brief The () operator, which is used for sorting two sector pointers. 
 
         bool operator()( const sector* lhs, const sector* rhs ) const {
- using namespace std;
            
             // First cache copies of the list.
-            std::vector<std::string> simulList = lhs->getSimulList();
-            std::vector<std::string> inputList = lhs->getInputList();
+            std::vector<std::string> rhsSimulList = rhs->getSimulList();
+            std::vector<std::string> rhsInputList = rhs->getInputList();
             
-            cout << "lhs: " << lhs->getName() << ", rhs: " << rhs->getName();
-            // Check for a simul.
-            if ( std::binary_search( simulList.begin(), simulList.end(), rhs->getName() ) ) {
-                // If a simul exists we want to order alphabetically. 
-                cout << "       --- alpha(simul)" << endl;
-                return( lhs->getName() < rhs->getName() );
+            // Check if the left sector depends on the right sector in a non-simul path.
+            if ( std::binary_search( rhsInputList.begin(), rhsInputList.end(), lhs->getName() ) && 
+                ! std::binary_search( rhsSimulList.begin(), rhsSimulList.end(), lhs->getName() ) ) {
+                return true;
             }
-
-            // Now check if sector uses another sector. If so the other sector needs to be first. 
-            else if( std::binary_search( inputList.begin(), inputList.end(), rhs->getName() ) ) {
-                cout << "       --- dependant" << endl;
-                return false;
-            }
-            // Finally order alphabetically if no dependency exists between the two sectors.
             else {
-                cout << "       --- alpha"<< endl;
-                return( lhs->getName() < rhs->getName() );
+                return false;
             }
         }
     };

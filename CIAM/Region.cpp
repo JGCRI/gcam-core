@@ -415,8 +415,7 @@ void Region::completeInit() {
    }
 
    // Now sort the sectors by dependency.
-   // Turn off for now
-   // std::sort( supplySector.begin(), supplySector.end(), sector::DependencyOrdering() );
+   std::sort( supplySector.begin(), supplySector.end(), sector::DependencyOrdering() );
 }
 
 /*! 
@@ -1010,7 +1009,7 @@ void Region::calibrateRegion( const bool doCalibrations, const int per ) {
 
 /*! Returns true if all demand sectors are calibrated (or fixed)
 *
-* \param period Model time per
+* \param per Model time per
 */
 bool Region::demandAllCalibrated( const int per ) {
    bool allCalibrated = true;
