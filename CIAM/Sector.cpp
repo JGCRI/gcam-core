@@ -194,10 +194,14 @@ void sector::toXML( ostream& out ) const {
     XMLWriteElement( market, "market", out );
     XMLWriteElement( unit, "unit", out );
     
-    for( int i = 0; modeltime->getper_to_yr( i ) < 1990; i++ ){
+    for( int i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
         XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, 0, modeltime->getper_to_yr( i ) );
     }
     
+    for( int j = 0; modeltime->getper_to_yr( j ) <= 1990; j++ ){
+        XMLWriteElement( output[ j ], "output", out, modeltime->getper_to_yr( j ) );
+    }
+
     // write out the subsector objects.
     for( vector<subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
         ( *k )->toXML( out );

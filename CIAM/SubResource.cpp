@@ -189,7 +189,7 @@ void SubResource::toXML( ostream& out ) const {
     
     // for base year only
     m = 0;
-    XMLWriteElement(annualprod[m],"annualprod",out,modeltime->getper_to_yr(m));
+    XMLWriteElementCheckDefault(annualprod[m],"annualprod",out, 0, modeltime->getper_to_yr(m));
         
     for(m = 0; m < static_cast<int>(techChange.size() ); m++ ) {
         XMLWriteElementCheckDefault(techChange[m],"techChange",out,0,modeltime->getper_to_yr(m));

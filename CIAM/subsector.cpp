@@ -247,7 +247,7 @@ void subsector::toXML( ostream& out ) const {
     }
     
     for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
-        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelprefElasticity", out, 0, modeltime->getper_to_yr( i ) );
     }
     
     XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, 0, modeltime->getstartyr( ) );

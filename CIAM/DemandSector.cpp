@@ -106,7 +106,7 @@ void demsector::toXML( ostream& out ) const {
     
     // write the beginning tag.
     Tabs::writeTabs( out );
-    out << "<demandsector name=\"" << name << "\">" << endl;
+    out << "<demandsector name=\"" << name << "\" perCapitaBased=\"" << perCapitaBased << "\">" << endl;
     
     // increase the indent.
     Tabs::increaseIndent();
@@ -117,7 +117,7 @@ void demsector::toXML( ostream& out ) const {
     XMLWriteElement( unit, "unit", out );
     XMLWriteElementCheckDefault( pElasticityBase, "pElasticityBase", out, 0 );
     
-    for( i = 0; modeltime->getper_to_yr( i ) < 1990; i++ ){
+    for( i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
         XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, 0, modeltime->getper_to_yr( i ) );
     }
     
@@ -125,10 +125,14 @@ void demsector::toXML( ostream& out ) const {
         XMLWriteElementCheckDefault( pElasticity[ i ], "priceelasticity", out, 0, modeltime->getper_to_yr( i ) );
     }
 
-    for( i = 0; i < static_cast<int>( service.size() ); i++ ){
+    for( i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
         XMLWriteElementCheckDefault( service[ i ], "serviceoutput", out, 0, modeltime->getper_to_yr( i ) );
     }
     
+    for( i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
+        XMLWriteElement( output[ i ], "output", out, modeltime->getper_to_yr( i ) );
+    }
+
     for( i = 0; i < static_cast<int>( fe_cons.size() ); i++ ){
         XMLWriteElementCheckDefault( fe_cons[ i ], "energyconsumption", out, 0, modeltime->getper_to_yr( i ) );
     }
