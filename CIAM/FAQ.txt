@@ -26,6 +26,17 @@ Make sure to do this before the class documentation so that doxygen is not confu
  
 list of criteria of when to use this method. 
 
+\subsection faqitem3 When should I pass an argument by reference?
+C++ supports two different methods of passing arguments, pass-by-value and pass-by-reference. Pass-by-value is the default, in this method
+the compiler generates a temporary copy of the argument which is available during the function and then discarded. Pass-by-reference passes
+the memory location of the variable, so the original variable can be used in the function. There are two reasons for using pass-by-reference.
+<ol>
+<li> The function needs to modify and return the original variable. This is often done when a function needs to return multiple values. 
+<li> To speed up the execution of the program, the argument can be passed by reference to avoid the copy constructor and destructor caused by
+passing by value. This is only effective if the object is non-elemental, or not an int, float, bool, etc. In this case, make sure to declare
+the argument const to prevent accidental modification.
+</ol>
+
 \section modelques Model Questions
 
 \subsection modelques1 How do the simultaneity markets work?
