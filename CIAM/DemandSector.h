@@ -35,7 +35,8 @@ protected:
 	double priceRatio; //!< temp price ratio
 	vector<double> sectorfuelprice; // temp vec
 	vector<double> fe_cons; //!< end-use sector final energy consumption
-	vector<double> service; //!< total end-use sector service 
+	vector<double> service; //!< total end-use sector service
+   vector<double> servicePreTechChange; //!< total end-use sector service before cummulative technical change is applied.
 	vector<double> iElasticity; //!< income elasticity 
 	vector<double> pElasticity; //!< price elasticity.
 	vector<double> aeei; //!< autonomous end-use energy intensity parameter

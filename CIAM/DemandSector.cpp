@@ -48,6 +48,7 @@ demsector::demsector() {
     pElasticity.resize( maxper ); // price elasticity for each period
     aeei.resize( maxper );
     techChangeCumm.resize( maxper ); // cummulative technical change
+    servicePreTechChange.resize( maxper );
 }
 
 //! Clear member variables.
@@ -65,6 +66,7 @@ void demsector::clear(){
     iElasticity.clear();
     pElasticity.clear();
     techChangeCumm.clear();
+    servicePreTechChange.clear();
 }
 
 //! Parses any attributes specific to derived classes
@@ -127,6 +129,10 @@ void demsector::toXML( ostream& out ) const {
         XMLWriteElement( service[ i ], "serviceoutput", out, modeltime->getper_to_yr( i ) );
     }
     
+    for( i = 0; i < static_cast<int>( servicePreTechChange.size() ); i++ ){
+        XMLWriteElement( servicePreTechChange[ i ], "servicePreTechChange", out, modeltime->getper_to_yr( i ) );
+    }
+
     for( i = 0; i < static_cast<int>( fe_cons.size() ); i++ ){
         XMLWriteElement( fe_cons[ i ], "energyconsumption", out, modeltime->getper_to_yr( i ) );
     }
@@ -200,6 +206,7 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
     // Now write out own members.
     XMLWriteElement( fe_cons[ period ], "fe_cons", out );
     XMLWriteElement( service[ period ], "service", out );
+    XMLWriteElement( servicePreTechChange[ period ], "servicePreTechChange", out );
     XMLWriteElement( iElasticity[ period ], "iElasticity", out );
     XMLWriteElement( pElasticity[ period ], "pElasticity", out );
     XMLWriteElement( aeei[ period ], "aeei", out );
@@ -343,6 +350,9 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
         techChangeCumm[per] = techChangeCumm[per-1]*pow(1+aeei[per],modeltime->gettimestep(per));
     }
     
+    // Save the service demand without technical change applied for comparison with miniCAM.
+    servicePreTechChange[ per ] = ser_dmd;
+    
     // demand sector output is total end-use sector demand for service
     // adjust demand using cummulative technical change
     service[ per ] = ser_dmd/techChangeCumm[per];
@@ -401,7 +411,10 @@ void demsector::MCoutput( const string& regionName ) {
     // total sector output
     dboutput4(regionName,"End-Use Service","by Sector",secname,"Ser Unit",service);
     dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",temp);
-    
+
+    dboutput4(regionName,"End-Use Service w/o Tech Change","by Sector",secname,"Ser Unit",servicePreTechChange);
+    dboutput4(regionName,"End-Use Service w/o Tech Change",secname,"zTotal","Ser Unit",temp);
+
     // End-use service price elasticity
     str = secname + "_price";
     dboutput4(regionName,"End-Use Service","Elasticity",str," ",pElasticity);
