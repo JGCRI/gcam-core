@@ -34,6 +34,8 @@
 		<Value name="debugFindSD">1</Value>
 		<Value name="PrintSectorDependencies">1</Value>
 		<Value name="PrintPrices">0</Value>
+		<Value name="createCostCurve">0</Value>
+		<Value name="ShowNullPaths">0</Value>
 	</Bools>
 	<Ints>
 		<Value name="NumberOfScenarioAddOnFiles">1</Value>
