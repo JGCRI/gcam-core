@@ -9,10 +9,7 @@
 
 #include "Definitions.h"
 #include <string>
-#include <cstdlib>
 #include <iostream>
-#include <fstream>
-#include <cmath>
 #include <cassert>
 #include "scenario.h"
 #include "Grade.h"
@@ -20,6 +17,7 @@
 #include "xmlHelper.h"
 
 using namespace std;
+using namespace xercesc;
 
 extern Scenario* scenario;
 

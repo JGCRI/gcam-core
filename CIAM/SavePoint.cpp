@@ -10,6 +10,7 @@
 #include "Definitions.h"
 #include "SavePoint.h"
 #include "XMLHelper.h"
+#include "Logger.h"
 
 using namespace std;
 
@@ -51,7 +52,7 @@ void SavePoint::toDebugXML( ostream& out ) const {
 }
 
 // Print the point in a csv format.
-void SavePoint::print( ostream& out ) const {
-   out << price << "," << demand << "," << supply << endl;
+void SavePoint::print( Logger* sdLog ) const {
+   LOG( sdLog, Logger::WARNING_LEVEL ) << price << "," << demand << "," << supply << endl;
 }
 

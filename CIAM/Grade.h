@@ -1,6 +1,8 @@
 #ifndef _GRADE_H_
 #define _GRADE_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file Grade.h
@@ -11,15 +13,8 @@
 * \version $Revision$
 */
 
-#include <string>
 #include <vector>
-
-// xerces xml headers
 #include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/XMLString.hpp>
-
-using namespace std;
-using namespace xercesc;
 
 /*! 
 * \ingroup CIAM
@@ -33,24 +28,24 @@ using namespace xercesc;
 class Grade
 {
 private:
-    string name; //!< Grade name
+    std::string name; //!< Grade name
     double available; //!< amount of Grade for each Grade
     double extractCost; //!< extraction cost of each Grade
-    vector<double> totalCost; //!< total cost
+    std::vector<double> totalCost; //!< total cost
 public:
     Grade();
-    Grade( const string nameIn, const int noIn );
+    Grade( const std::string nameIn, const int noIn );
     void clear();
     void initElementalMembers();
-    void XMLParse( const DOMNode* tempnode );
-    void toXML( ostream& out ) const;
-    void toOutputXML( ostream& out ) const;
-    void toDebugXML( const int period, ostream& out ) const;
+    void XMLParse( const xercesc::DOMNode* tempnode );
+    void toXML( std::ostream& out ) const;
+    void toOutputXML( std::ostream& out ) const;
+    void toDebugXML( const int period, std::ostream& out ) const;
     void calcCost( const double tax, const double cumTechChange, const double environCost, const int per );
     double getAvail() const;
     double getCost( const int per ) const;
     double getExtCost() const;
-    string getName() const;
+    std::string getName() const;
 };
 
 #endif // _GRADE_H_

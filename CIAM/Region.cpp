@@ -12,11 +12,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <cmath>
 #include <cassert>
-
-// xml headers
-#include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 
 #include "region.h"
@@ -37,6 +33,7 @@
 #include "Configuration.h"
 
 using namespace std;
+using namespace xercesc;
 
 extern Scenario* scenario;
 extern ofstream outfile, sdfile;	

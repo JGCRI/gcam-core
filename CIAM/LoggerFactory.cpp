@@ -28,6 +28,9 @@
 #include "PlainTextLogger.h"
 #include "XMLLogger.h"
 
+using namespace std;
+using namespace xercesc;
+
 map<string,Logger*> LoggerFactory::loggers;
 
 //! Parse the XML data.
@@ -118,5 +121,3 @@ void LoggerFactory::toDebugXML( ostream& out ) const {
 	out << "</LoggerFactory>" << endl;
 }
 
-
-	

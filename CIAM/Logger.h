@@ -1,6 +1,8 @@
 #ifndef _LOGGER_H_
 #define _LOGGER_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file Logger.h
@@ -11,14 +13,8 @@
 * \version $Revision$
 */
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <streambuf>
+#include <iosfwd>
 #include <xercesc/dom/DOM.hpp>
-
-using namespace std;
-using namespace xercesc;
 
 //! Macro used to insert the line and file into a logging command.
 #define LOG( logger, level ) logger->setLevel( level ); logger->setLine( __LINE__ ); logger->setFile( __FILE__ ); *logger
@@ -38,7 +34,7 @@ class Logger;
 * \warning This is a write-only streambuf.
 */
 
-class PassToParentStreamBuf: streambuf {
+class PassToParentStreamBuf: std::streambuf {
 	
 	friend class Logger;
 	
@@ -48,7 +44,7 @@ public:
 	int overflow( int ch );
 	int underflow( int ch );
 	void setParent( Logger* parentIn );
-	void toDebugXML( ostream& out ) const;
+   void toDebugXML( std::ostream& out ) const;
 	
 private:
 	
@@ -74,7 +70,7 @@ class LoggerFactory;
 * \warning Loggers can only be created by the LoggerFactory.
 */
 
-class Logger: public ostream {
+class Logger: public std::ostream {
 	
 	//! Friend declaration to allow LoggerFactory to create Loggers.
 	friend class LoggerFactory;
@@ -110,22 +106,22 @@ public:
 	
 	void setLine( const int lineIn );
 	
-	void setFile( const string& fileIn );
+   void setFile( const std::string& fileIn );
 	
-	void toDebugXML( ostream& out ) const;
+   void toDebugXML( std::ostream& out ) const;
 	
 protected:
 	//! Logger name
-	string name;
+	std::string name;
 	
 	//! Logger type
-	string type;
+	std::string type;
 	
 	//! File name of the file it uses.
-	string fileName;
+	std::string fileName;
 	
 	//! Header message to print at the beginning of the log.
-	string headerMessage;
+	std::string headerMessage;
 	
 	//! Defines the minimum level of warnings which should be omitted.
 	int minLogWarningLevel;
@@ -140,7 +136,7 @@ protected:
 	int currentLine;
 	
 	//! Defines the current file name.
-	string currentFile;
+	std::string currentFile;
 	
 	//! Defines the current level of nesting. May be ignored by subclass.
 	int currentNestLevel;
@@ -169,31 +165,31 @@ protected:
 	//! Defines whether to print the full path
 	bool printLogFullPath;
 	
-	Logger( const string& fileNameIn = "" );
+	Logger( const std::string& fileNameIn = "" );
 	
-	static const string getDateString();
+	static const std::string getDateString();
 	
-	static const string getTimeString();
+	static const std::string getTimeString();
 	
 	// make static
-	static const string getFileNameFromPath( const string& fullPath );
+	static const std::string getFileNameFromPath( const std::string& fullPath );
 	
 	//! Log a message with the given warning level.
-	virtual void logCompleteMessage( const int line, const string& file, const WarningLevel warningLevel, const string& message ) = 0;
+	virtual void logCompleteMessage( const int line, const std::string& file, const WarningLevel warningLevel, const std::string& message ) = 0;
 	
-	void printToScreenIfConfigured( const int line, const string& file, const WarningLevel warningLevel, const string& message );
+	void printToScreenIfConfigured( const int line, const std::string& file, const WarningLevel warningLevel, const std::string& message );
 	
-	static void parseHeader( string& headerIn );
+	static void parseHeader( std::string& headerIn );
 	
 private:
 	
 	//! Buffer which contains characters waiting to be printed.
-	stringstream buf;
+   std::stringstream buf;
 	
 	//! Underlying ofstream
 	PassToParentStreamBuf underStream;
 	
-	void XMLParse( const DOMNode* node );
+	void XMLParse( const xercesc::DOMNode* node );
 };
 
 #endif // _LOGGER_H_

@@ -1,6 +1,8 @@
 #ifndef _CONFIGURATION_H_
 #define _CONFIGURATION_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file Configuration.h
@@ -12,11 +14,7 @@
 */
 
 #include <xercesc/dom/DOM.hpp>
-#include <string>
 #include <map>
-
-using namespace xercesc;
-using namespace std;
 
 /*! 
 * \ingroup CIAM
@@ -38,11 +36,11 @@ class Configuration {
 private:
 	static bool confExists; //!< Flag which indicates if the instace has been created.
 	static Configuration* instance; //!< A pointer to the static singleton instance.
-	map<string, string> fileMap; //!< A map of the file names the program uses.
-	map<string, string> stringMap; //!< A map of the strings the program uses.
-	map<string, bool> boolMap; //!< A map of the bools the program uses.
-	map<string, int> intMap;  //!< A map of the ints the program uses.
-	map<string, double> doubleMap;  //!< A map of the doubles the program uses.
+	std::map<std::string, std::string> fileMap; //!< A map of the file names the program uses.
+	std::map<std::string, std::string> stringMap; //!< A map of the strings the program uses.
+	std::map<std::string, bool> boolMap; //!< A map of the bools the program uses.
+	std::map<std::string, int> intMap;  //!< A map of the ints the program uses.
+	std::map<std::string, double> doubleMap;  //!< A map of the doubles the program uses.
 	
 	//! Private constructor to prevent a programmer from creating a second object.
 	Configuration(){};
@@ -56,14 +54,15 @@ private:
 public:
 	static Configuration* getInstance();
 	~Configuration();
-	void XMLParse( const DOMNode* tempnode ); // initialize with xml data
-	void toDebugXML( ostream& out ) const;
-	string getFile( const string& key, const string& defaultValue = "" ) const;
-	string getString( const string& key, const string& defaultValue = "" ) const;
-	bool getBool( const string& key, const bool defaultValue = false ) const;
-	int getInt( const string& key, const int defaultValue = 0 ) const;
-	double getDouble( const string& key, const double defaultValue = 0 ) const;
+	void XMLParse( const xercesc::DOMNode* tempnode ); // initialize with xml data
+   void toDebugXML( std::ostream& out ) const;
+	std::string getFile( const std::string& key, const std::string& defaultValue = "" ) const;
+	std::string getString( const std::string& key, const std::string& defaultValue = "" ) const;
+	bool getBool( const std::string& key, const bool defaultValue = false ) const;
+	int getInt( const std::string& key, const int defaultValue = 0 ) const;
+	double getDouble( const std::string& key, const double defaultValue = 0 ) const;
 
 };
 
 #endif // _CONFIGURATION_H_
+

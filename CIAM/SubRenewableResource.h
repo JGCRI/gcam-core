@@ -1,6 +1,8 @@
 #ifndef _SUBRENEW_H_
 #define _SUBRENEW_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file subResource.h
@@ -10,16 +12,12 @@
 * \date $Date$
 * \version $Revision$
 */
-
-// Forward declaration.
-class Grade;
-class SubResource;
-
-// xerces xml headers
 #include <xercesc/dom/DOM.hpp>
 #include "SubResource.h"
-using namespace xercesc;
 
+// Forward declarations.
+class Grade;
+class SubResource;
 
 /*! 
 * \ingroup CIAM
@@ -36,12 +34,12 @@ protected:
    double gdpSupplyElasticity;
    
 public: 
-    virtual string getType() const; 
-    virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* node );
-    virtual void toXMLforDerivedClass( ostream& out ) const;
-    virtual void toOutputXMLforDerivedClass( ostream& out ) const;
+    virtual std::string getType() const; 
+    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
+    virtual void toXMLforDerivedClass( std::ostream& out ) const;
+    virtual void toOutputXMLforDerivedClass( std::ostream& out ) const;
     virtual void initializeResource(); 
-    virtual void cumulsupply(double prc,int per); // calculate cummulative production
+    virtual void cumulsupply(double prc,int per);
     virtual void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
 };
 #endif // _SUBRENEW_H_

@@ -18,6 +18,7 @@
 #include "XMLHelper.h"
 #include "Market.h"
 #include "SavePoint.h"
+#include "Logger.h"
 
 using namespace std;
 
@@ -616,18 +617,18 @@ void Market::clearSDPoints() {
 }
 
 //! Print supply and demand curved created for debugging.
-void Market::printSupplyDemandDebuggingCurves( ostream& out ) {
+void Market::printSupplyDemandDebuggingCurves( Logger* sdLog ) {
 
-   out << "Supply and Demand curves for: " << getName() << endl;
-   out << "Price,Demand,Supply," << endl;
+   LOG( sdLog, Logger::WARNING_LEVEL ) << "Supply and Demand curves for: " << getName() << endl;
+   LOG( sdLog, Logger::WARNING_LEVEL ) << "Price,Demand,Supply," << endl;
    
    // Sort the vector and print it.
    sort( sdPoints.begin(), sdPoints.end(), std::less<SavePoint*>() );
    for ( vector<SavePoint*>::const_iterator i = sdPoints.begin(); i != sdPoints.end(); i++ ) {
-      ( *i )->print( out );
+      ( *i )->print( sdLog );
    }
 
-   out << endl;
+   LOG( sdLog, Logger::WARNING_LEVEL ) << endl;
 }
 
 //! Get the relative excess demand, used for sorting markets.

@@ -17,12 +17,12 @@
 #include <cassert>
 
 // xml headers
-#include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 #include "xmlHelper.h"
 #include "Modeltime.h"
 
 using namespace std;
+using namespace xercesc;
 
 //! Default constructor.
 Modeltime::Modeltime(){

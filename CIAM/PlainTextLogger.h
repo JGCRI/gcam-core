@@ -1,6 +1,8 @@
 #ifndef _PLAIN_TEXT_LOGGER_H_
 #define _PLAIN_TEXT_LOGGER_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file PlainTextLogger.h
@@ -11,8 +13,7 @@
 * \version $Revision$
 */
 
-#include <string>
-#include <iostream>
+#include <fstream>
 #include "Logger.h"
 
 /*! 
@@ -31,14 +32,14 @@ class PlainTextLogger: public Logger {
 private:
 	
 	//! The filestream to which data is written.
-	ofstream logFile;
+   std::ofstream logFile;
 	
-	PlainTextLogger( const string& loggerName ="" );
+   PlainTextLogger( const std::string& loggerName ="" );
 
 public:
 	virtual void open( const char[] = 0 );
 	virtual void close();
-	virtual void logCompleteMessage( const int line, const string& file, const WarningLevel warningLevel, const string& message );	
+   virtual void logCompleteMessage( const int line, const std::string& file, const WarningLevel warningLevel, const std::string& message );	
 };
 
 #endif // _PLAIN_TEXT_LOGGER_H_

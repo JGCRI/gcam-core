@@ -13,7 +13,6 @@
 #include <fstream>
 #include <cassert>
 #include <ctime>
-#include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 
 #include "scenario.h"
@@ -24,9 +23,10 @@
 #include "Configuration.h"
 
 using namespace std;
+using namespace xercesc;
 
 void climat_data(void); // function to write data for climat
-#ifdef WIN32
+#if(__HAVE_FORTRAN__)
 extern "C" { void _stdcall CLIMAT(void); };
 #endif
 
@@ -282,9 +282,9 @@ void Scenario::run(){
 	
 	// calling fortran subroutine climat/magicc
 	world->emiss_all(); // read in all ghg gases except for CO2
-	// climat_data(); // writes the input text file
+	climat_data(); // writes the input text file
 	gasfile.close(); // close input file for climat
-#ifdef WIN32
+#if(__HAVE_FORTRAN__)
 	cout << endl << "Calling CLIMAT() "<< endl;
     //    CLIMAT();
 	cout << "Finished with CLIMAT()" << endl;
@@ -318,7 +318,7 @@ void Scenario::printGraphs( const int period ) const {
    fileNameBuffer >> fileName;
 
    graphStream.open( fileName.c_str() );
-   assert( graphStream );
+   util::checkIsOpen( graphStream );
 
    world->printGraphs( graphStream, period );
 

@@ -6,12 +6,10 @@
 * \date $Date$
 * \version $Revision$
 */
-
 // Standard Library headers
 #include "Definitions.h"
 #include <string>
 #include <iostream>
-#include <fstream>
 #include <cassert>
 
 // User headers
@@ -24,6 +22,7 @@
 #include "Emcoef_ind.h"
 
 using namespace std;
+using namespace xercesc;
 
 extern Scenario* scenario;
 

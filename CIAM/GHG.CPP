@@ -12,10 +12,9 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include <cmath>
 #include <cassert>
 #include "ghg.h"
-#include "Emcoef_ind.h" // indirect greenhouse gas emissions coefficient class
+#include "Emcoef_ind.h"
 #include "xmlHelper.h"
 #include "Scenario.h"
 #include "World.h"
@@ -23,6 +22,7 @@
 extern Scenario* scenario;
 
 using namespace std;
+using namespace xercesc;
 
 Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, const double gwpIn, const double emissionIn ){
 	name = nameIn;
@@ -213,11 +213,6 @@ void Ghg::calc_emiss( const string& regionName, const string& fuelname, const do
 		emiss_fuel = (1.0 - rmfrac) * input * emiss_coef;
 	}
 }
-
-//! Calculate emissions alternative.
-void Ghg::calc_emiss2( const double activity, const double gamma, const double* cntl ) {
-	emission = pow((emiss_coef*activity),gamma) * (1 - cntl[1]) * (1 - cntl[2]) * (1 - cntl[3]);
-}
 	
 //! calculates emissions associated with the use of secondary energy
 /*! get indirect emissions coefficient from map object */
@@ -264,3 +259,4 @@ double Ghg::getemiss_ind() const {
 double Ghg::getemiss_coef() const{
 	return emiss_coef;
 }
+

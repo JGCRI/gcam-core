@@ -1,6 +1,8 @@
 #ifndef _EMCOEF_IND_H_
 #define _EMCOEF_IND_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file Emcoef_ind.h
@@ -11,9 +13,8 @@
 * \version $Revision$
 */
 
-#include <string>
 #include <map>
-using namespace std;
+#include <string>
 
 /*! 
 * \ingroup CIAM
@@ -28,14 +29,15 @@ using namespace std;
 class Emcoef_ind
 {
 private:
-	string name; //!< name of secondary good or sector
-	map<string, double> emcoef; //!< contains all coefficients for all gases
+	std::string name; //!< name of secondary good or sector
+   std::map<std::string, double> emcoef; //!< contains all coefficients for all gases
 public:
 	Emcoef_ind();
-	void setName( const string& secname );
-	void setemcoef( const map<string,double>& eminfo, const double toutput );
-	const string& getName() const;
-	double getemcoef( const string& gasName ) const;
+	void setName( const std::string& secname );
+   void setemcoef( const std::map<std::string,double>& eminfo, const double toutput );
+	const std::string& getName() const;
+	double getemcoef( const std::string& gasName ) const;
 };
 
 #endif // _EMCOEF_IND_H_
+

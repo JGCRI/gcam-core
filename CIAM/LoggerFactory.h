@@ -1,6 +1,8 @@
 #ifndef _LOGGER_FACTORY_H_
 #define _LOGGER_FACTORY_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file LoggerFactory.h
@@ -12,10 +14,9 @@
 */
 
 #include <map>
-#include "Logger.h"
 
-using namespace std;
-using namespace xercesc;
+// Forward Declaration
+class Logger;
 
 /*! 
 * \ingroup CIAM
@@ -30,21 +31,20 @@ using namespace xercesc;
 
 class LoggerFactory {
 
-
 public:
 
 	//! Returns an instance of the Logger class selected in the Configuration file.
-	static Logger* getLogger( const string& loggerName );
+   static Logger* getLogger( const std::string& loggerName );
 	
 	//! Resets its state and deletes the logger.
 	static void cleanUp();
 	
-	void toDebugXML( ostream& out ) const;
+   void toDebugXML( std::ostream& out ) const;
 
-	static void XMLParse( const DOMNode* root );
+   static void XMLParse( const xercesc::DOMNode* root );
 
 private:
-	static map<string,Logger*> loggers; //!< Map of logger names to loggers.
+   static std::map<std::string,Logger*> loggers; //!< Map of logger names to loggers.
 
 	static bool loggerCreated; //!< Flag which tells whether the logger has already been created.
 
@@ -61,3 +61,4 @@ private:
 };
 
 #endif // _LOGGER_FACTORY_H_
+

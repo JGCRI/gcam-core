@@ -11,9 +11,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <cmath>
-#include <algorithm>
-#include <limits>
 #include <vector>
 #include <map>
 
@@ -42,8 +39,6 @@ Marketplace::Marketplace() {
    numMarkets = 0;
    SMALL_NUM = 1e-6;
    VERY_SMALL_NUM = 1e-8;
-   newSDCurvesStream.open( Configuration::getInstance()->getFile( "supplyDemandOutputFileName", "SDCurves.csv" ).c_str(), ios::out );
-   assert( newSDCurvesStream );
    solver = new BisectionNRSolver( this );
 }
 
@@ -57,7 +52,6 @@ Marketplace::~Marketplace() {
       }
    }
 
-   newSDCurvesStream.close();
    // Delete the solution mechanism.
    delete solver;
 }
@@ -734,7 +728,7 @@ bool Marketplace::checkMarketSolution( const double solTolerance, const double e
    const Configuration* conf = Configuration::getInstance();
    const bool debugChecking = conf->getBool( "debugChecking" );
    const bool debugFindSD = conf->getBool( "debugFindSD" );
-
+   
    bool solvedOK = true;
    vector<Market*> unsolved;
    
@@ -754,7 +748,9 @@ bool Marketplace::checkMarketSolution( const double solTolerance, const double e
    }
    
    if ( debugFindSD && !unsolved.empty() ) {
-      newSDCurvesStream << "Supply and demand curves for markets that did not solve in period: " << period << endl;
+      string logName = Configuration::getInstance()->getFile( "supplyDemandOutputFileName", "SDCurves.csv" );
+      Logger* sdLog = LoggerFactory::getLogger( logName );
+      LOG( sdLog, Logger::WARNING_LEVEL ) << "Supply and demand curves for markets that did not solve in period: " << period << endl;
       findAndPrintSD( unsolved, period );
    }
 
@@ -767,7 +763,9 @@ void Marketplace::findAndPrintSD( vector<Market*>& unsolved, const int period ) 
    const Configuration* conf = Configuration::getInstance();
    const int numMarketsToFindSD = conf->getInt( "numMarketsToFindSD", 5 );
    const int numPointsForSD = conf->getInt( "numPointsForSD", 5 );
-   
+   string logName = Configuration::getInstance()->getFile( "supplyDemandOutputFileName", "SDCurves.csv" );
+   Logger* sdLog = LoggerFactory::getLogger( logName );
+
    vector<double> priceMults;
    Marketplace* marketplace = scenario->getMarketplace();
    World* world = scenario->getWorld();
@@ -852,7 +850,7 @@ void Marketplace::findAndPrintSD( vector<Market*>& unsolved, const int period ) 
       ( *iter )->setRawPrice( basePrice );
 
       // print the results.
-      ( *iter )->printSupplyDemandDebuggingCurves( newSDCurvesStream );
+      ( *iter )->printSupplyDemandDebuggingCurves( sdLog );
       
       // Clear the internal vector of SD points.
       ( *iter )->clearSDPoints();

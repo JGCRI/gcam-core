@@ -352,3 +352,4 @@ double Configuration::getDouble( const string& key, const double defaultValue ) 
 		return defaultValue;
 	}
 }
+

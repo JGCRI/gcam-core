@@ -9,16 +9,12 @@
 
 #include "Definitions.h"
 #include <string>
-#include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include <cmath>
 #include <cassert>
-#include <limits>
 
 // xml headers
 #include "xmlHelper.h"
-#include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 #include <iostream>
 #include <iomanip>
@@ -34,6 +30,7 @@
 #include "Region.h"
 
 using namespace std;
+using namespace xercesc;
 
 extern Scenario* scenario;
 extern ofstream outfile, bugoutfile;
@@ -441,9 +438,7 @@ void sector::adjSharesCapLimit( const string regionName, const int per )
             double sumshares = 0;
             for ( i=0; i<nosubsec; i++ ) {
                 // Check the validity of shares.
-                double tempshare = subsec[i]->getShare(per);
-                assert( tempshare == tempshare ); // This checks for NaN since NaN != NaN.
-                assert( tempshare != std::numeric_limits<double>::infinity() ); // Checks for infinity. 
+               assert( util::isValidNumber( subsec[i]->getShare(per) ) );
                 
                 sumshares += subsec[i]->getShare(per) ;
             }
@@ -470,9 +465,7 @@ void sector::checkShareSum( const string regionName, int per ) {
     double sumshares = 0;
     for ( int i=0; i<nosubsec; i++ ) {
         // Check the validity of shares.
-        double tempshare = subsec[i]->getShare(per);
-        assert( tempshare == tempshare ); // This checks for NaN since NaN != NaN.
-        assert( tempshare != std::numeric_limits<double>::infinity() ); // Checks for infinity. 
+       assert( util::isValidNumber( subsec[i]->getShare( per ) ) );
         
         sumshares += subsec[i]->getShare(per) ;
     }

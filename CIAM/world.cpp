@@ -8,22 +8,14 @@
 */
 
 #include "Definitions.h"
-#include <ctime>
 #include <string>
-#include <cstdlib>
 #include <iostream>
-#include <fstream>
 #include <cassert>
 #include <vector>
 #include <map>
-#include <functional>
 #include <algorithm>
-
-// xml headers
-#include "xmlHelper.h"
-#include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
-
+#include "xmlHelper.h"
 #include "world.h"
 #include "Region.h"
 #include "AgSector.h"
@@ -31,13 +23,12 @@
 #include "modeltime.h"
 #include "Marketplace.h"
 #include "Configuration.h"
-#include "str_ghgss.h"
+#include "Util.h"
 
 using namespace std;
+using namespace xercesc;
 
 extern "C" { void _stdcall AG2INITC( double[14][12] ); };
-// global variables defined in main
-extern ofstream bugoutfile,outfile, sdfile;	
 extern Scenario* scenario;
 
 // global map of region names
@@ -156,7 +147,7 @@ void World::initAgLu() {
 	
 	vector<double> tempVec( 12 );
 	
-#ifdef WIN32		
+#if(__HAVE_FORTRAN__)		
 	AG2INITC( prices ); // not implimented for non-PC's at this time
 #endif
 	
@@ -233,7 +224,7 @@ void World::toDebugXML( const int period, ostream& out ) const {
       ( *i )->toDebugXML( period, out );
 	}
 	
-	for( vector<str_ghgss>::const_iterator j = ghgs.begin(); j != ghgs.end(); j++ ) {
+	for( vector<map<string,double> >::const_iterator j = ghgs.begin(); j != ghgs.end(); j++ ) {
 		// j->toDebugXML( out ); // not yet implemented.
 	}
 	// finished writing xml for the class members.
@@ -304,7 +295,6 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
 		region[ *i ]->addghgtax(per);
 		// determine supply of primary resources
 		region[ *i ]->rscsupply(per);
-		//sdfile<<"\n"; // supply & demand info.
 		// determine prices of refined fuels and electricity
 		region[ *i ]->finalsupplyprc(per);
 		// calculate enduse service price
@@ -383,10 +373,11 @@ void World::emiss_ind(int per)
 void World::emiss_all() {
 	const int maxper = scenario->getModeltime()->getmaxdataper();
 	int  per;
-	
+
 	ifstream gasfile2;
 	//gasfile2.open("gas2.emk",ios::in); // open input file for reading
 	gasfile2.open("gas2.emk"); // open input file for reading
+   util::checkIsOpen( gasfile2 );
 	// read in all other gases except CO2 from fossil fuels
 	// CO2 from fossil fuels comes from model
 	int skiplines = 5;
@@ -395,33 +386,33 @@ void World::emiss_all() {
 	for (per=1;per<maxper;per++) {
 		gasfile2.ignore(80,','); // skip year column
 		gasfile2.ignore(80,','); // skip CO2 column
-		gasfile2 >> ghgs[per].CO2ag;
+		gasfile2 >> ghgs[per][ "CO2ag" ];
+      gasfile2.ignore(80,','); // skip comma
+		gasfile2 >> ghgs[per][ "CH4" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2 >> ghgs[per].CH4;
+      gasfile2 >> ghgs[per][ "N2O" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2 >> ghgs[per].N2O;
+		gasfile2 >> ghgs[per][ "SOXreg1" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2 >> ghgs[per].SOXreg1;
+		gasfile2>> ghgs[per][ "SOXreg2" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per].SOXreg2;
+		gasfile2>> ghgs[per][ "SOXreg3" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per].SOXreg3;
+		gasfile2>> ghgs[per][ "CF4" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per].CF4;
+		gasfile2>> ghgs[per][ "C2F6" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per].C2F6;
+		gasfile2>> ghgs[per][ "HFC125" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per].HFC125;
+		gasfile2>> ghgs[per][ "HFC134a" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per].HFC134a;
+		gasfile2>> ghgs[per][ "HFC143a" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per].HFC143a;
+		gasfile2>> ghgs[per][ "HFC227ea" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per].HFC227ea;
+		gasfile2>> ghgs[per][ "HFC245ca" ];
 		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per].HFC245ca;
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per].SF6;
+		gasfile2>> ghgs[per][ "SF6" ];
 		gasfile2.ignore(80,'\n'); // next line
 	}
 	for (per=maxper;per<maxper+2;per++) {
@@ -444,7 +435,7 @@ void World::outputfile() {
 	
 	// write total emissions for World
 	for (int m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
+		temp[m] = ghgs[m][ "CO2" ];
 	fileoutput3( "global"," "," "," ","CO2 emiss","MTC",temp);
 	fileoutput3( "global"," "," "," ","c.oil resource(conv)","EJ",crudeoilrsc);
 	fileoutput3( "global"," "," "," ","c.oil resource(unconv)","EJ",unconvoilrsc);
@@ -490,79 +481,19 @@ bool World::getCalibrationSetting() const
 	return doCalibrations;
 }
 
-double World::showCO2(int per) // return global emissions for period
-{
-	return ghgs[per].CO2;
-}
+//! Return the amount of the given GHG in the given period.
+double World::getGHGEmissions( const std::string& ghgName, const int per ) const {
+   assert( per < static_cast<int>( ghgs.size() ) );
 
-double World::showCO2ag(int per) // return global emissions for period
-{
-	return ghgs[per].CO2ag;
-}
-
-double World::showCH4(int per) // return global emissions for period
-{
-	return ghgs[per].CH4;
-}
-
-double World::showN2O(int per) // return global emissions for period
-{
-	return ghgs[per].N2O;
-}
-
-double World::showSOXreg1(int per) // return global emissions for period
-{
-	return ghgs[per].SOXreg1;
-}
-
-double World::showSOXreg2(int per) // return global emissions for period
-{
-	return ghgs[per].SOXreg2;
-}
-
-double World::showSOXreg3(int per) // return global emissions for period
-{
-	return ghgs[per].SOXreg3;
-}
-
-double World::showCF4(int per) // return global emissions for period
-{
-	return ghgs[per].CF4;
-}
-
-double World::showC2F6(int per) // return global emissions for period
-{
-	return ghgs[per].C2F6;
-}
-
-double World::showHFC125(int per) // return global emissions for period
-{
-	return ghgs[per].HFC125;
-}
-
-double World::showHFC134a(int per) // return global emissions for period
-{
-	return ghgs[per].HFC134a;
-}
-
-double World::showHFC143a(int per) // return global emissions for period
-{
-	return ghgs[per].HFC143a;
-}
-
-double World::showHFC227ea(int per) // return global emissions for period
-{
-	return ghgs[per].HFC227ea;
-}
-
-double World::showHFC245ca(int per) // return global emissions for period
-{
-	return ghgs[per].HFC245ca;
-}
-
-double World::showSF6(int per) // return global emissions for period
-{
-	return ghgs[per].SF6;
+   map<string,double>::const_iterator iter = ghgs[ per ].find( ghgName );
+   
+   if( iter != ghgs[ per ].end() ) {
+      return iter->second;
+   }
+   else {
+      cout << "GHG: " << ghgName << " was not found for period " << per << "." << endl;
+      return 0;
+   }
 }
 
 void World::createRegionMap(void) // create map of region names

@@ -18,6 +18,7 @@
 #include "SolverLibrary.h"
 #include "Marketplace.h"
 #include "Configuration.h"
+#include "Util.h"
 
 using namespace std;
 
@@ -251,7 +252,7 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
             if ( !sol[ i ].bracketed ) {
                
                // If ED at X and L are the same sign.
-               if ( std::sign( sol[ i ].ED ) == std::sign( sol[ i ].EDL ) ) {
+               if ( util::sign( sol[ i ].ED ) == util::sign( sol[ i ].EDL ) ) {
                   
                   // If Supply > Demand at point X. Price needs to decrease.
                   if ( sol[ i ].ED < 0 ) { 
@@ -261,7 +262,7 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
                      sol[ i ].EDL = sol[ i ].ED;
                      
                      // If L and R do not span solution.
-                     if ( std::sign( sol[ i ].EDL ) == std::sign( sol[ i ].EDR ) ) {
+                     if ( util::sign( sol[ i ].EDL ) == util::sign( sol[ i ].EDR ) ) {
                         
                         // Decrease X.
                         
@@ -280,7 +281,7 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
                            assert( false );
                         }
                         
-                     } // if ( std::sign( sol[ i ].EDL ) == std::sign( sol[ i ].EDR ) )
+                     } // if ( util::sign( sol[ i ].EDL ) == util::sign( sol[ i ].EDR ) )
                      
                      // If L and R span solution.
                      else {
@@ -298,7 +299,7 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
                      sol[ i ].EDR = sol[ i ].ED;
                      
                      // If L and R do not span solution.
-                     if ( std::sign( sol[ i ].EDL ) == std::sign( sol[ i ].EDR ) ) {
+                     if ( util::sign( sol[ i ].EDL ) == util::sign( sol[ i ].EDR ) ) {
                         
                         // Increase X.
                         
@@ -338,7 +339,7 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
                      sol[ i ].EDL = sol[ i ].ED;
                      
                      // If L and R do not span solution.
-                     if ( std::sign( sol[ i ].EDL ) == std::sign( sol[ i ].EDR ) ) {
+                     if ( util::sign( sol[ i ].EDL ) == util::sign( sol[ i ].EDR ) ) {
                         
                         // Decrease X.
                         
@@ -371,7 +372,7 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
                      sol[ i ].EDR = sol[ i ].ED; 
                      
                      // If L and R do not span solution.
-                     if ( std::sign( sol[ i ].EDL ) == std::sign( sol[ i ].EDR ) ) {
+                     if ( util::sign( sol[ i ].EDL ) == util::sign( sol[ i ].EDR ) ) {
                         
                         // Increase X.
                         
@@ -678,7 +679,7 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
          for( i = 0; i < marketsToSolve; i++ ) {
             for( int j = 0; j < marketsToSolve; j++ ) {
                JF[ i ][ j ] = JFSM[ i ][ j ] - JFDM[ i ][ j ];
-               assert( isValidNumber( JF[ i ][ j ] ) );
+               assert( util::isValidNumber( JF[ i ][ j ] ) );
             }
          }
          
@@ -701,12 +702,12 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
             double tempValue = log( max( sol[ j ].X, SMALL_NUM ) );
             KD[ i ] -= tempValue * JFDM[ i ][ j ];
             KS[ i ] -= tempValue * JFSM[ i ][ j ];
-            assert( isValidNumber( KD[ i ] ) );
-            assert( isValidNumber( KS[ i ] ) );
+            assert( util::isValidNumber( KD[ i ] ) );
+            assert( util::isValidNumber( KS[ i ] ) );
          }
          
          KDS[ i ] = KD[ i ] - KS[ i ];
-         assert( isValidNumber( KDS[ i ] ) );
+         assert( util::isValidNumber( KDS[ i ] ) );
       }
       
       // Calculate new log price based on NR
@@ -715,15 +716,15 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
          NP[ i ] = 0;
          
          for ( int j = 0; j < marketsToSolve; j++ ) {
-            assert( isValidNumber( JF[ i ][ j ] ) );
+            assert( util::isValidNumber( JF[ i ][ j ] ) );
             NP[ i ] += JF[ i ][ j ] * KDS[ j ];
-            assert( isValidNumber( NP[ i ] ) );
+            assert( util::isValidNumber( NP[ i ] ) );
          }
          
          sol[ i ].X = exp( NP[ i ] ); // new price
          
          // Check the validity of the price.
-         assert( isValidNumber( sol[ i ].X ) );
+         assert( util::isValidNumber( sol[ i ].X ) );
       }
       
       SolverLibrary::setPricesToMarkets( marketplace, sol, per );

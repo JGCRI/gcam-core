@@ -10,11 +10,7 @@
 #include "Definitions.h"
 #include <vector>
 #include <string>
-#include <cstdlib>
 #include <iostream>
-#include <fstream>
-#include <cmath>
-#include <ctime> 
 #include <cassert>
 #include "scenario.h"
 #include "modeltime.h"
@@ -23,8 +19,8 @@
 #include "xmlHelper.h"
 
 using namespace std;
-
-extern ofstream bugoutfile, outfile;	
+using namespace xercesc;
+	
 extern Scenario* scenario;
 
 const double SCALE_FACTOR_DEFAULT = 1;

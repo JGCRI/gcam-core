@@ -1,7 +1,8 @@
 #ifndef _SOLVER_H_
 #define _SOLVER_H_
-
-class Marketplace;
+#if defined(_MSC_VER)
+#pragma once
+#endif
 
 /*! 
 * \file Solver.h
@@ -14,6 +15,8 @@ class Marketplace;
 * \date $Date$
 * \version $Revision$
 */
+
+class Marketplace;
 
 /*! 
 * \ingroup CIAM

@@ -10,15 +10,10 @@
 #include "Definitions.h"
 
 #include <string>
-#include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include <ctime>
 #include <vector>
 #include <cassert>
-
-// xml headers
-#include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 #include "xmlHelper.h"
 
@@ -27,12 +22,12 @@
 #include "SubResource.h"
 #include "scenario.h"
 #include "modeltime.h"
-#include "market.h"
 #include "Marketplace.h"
 #include "resource.h"
 #include "SubRenewableResource.h"
 
 using namespace std;
+using namespace xercesc;
 
 extern ofstream bugoutfile,outfile;	
 extern Scenario* scenario;

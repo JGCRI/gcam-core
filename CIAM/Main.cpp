@@ -18,7 +18,6 @@
 
 // xerces xml headers
 #include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 #include "xmlHelper.h"
 
@@ -39,6 +38,7 @@ extern void createMCvarid();
 extern void closeDB();
 
 using namespace std; // enables elimination of std::
+using namespace xercesc;
 
 // define file (ofstream) objects for outputs, debugging and logs
 ofstream bugoutfile,outfile,outfile2,dbout,logfile,sdcurvefile,sdfile;	
@@ -60,12 +60,7 @@ int main() {
 	double duration = 0;
 	ofstream xmlOutStream;
 
-	// For some reason, the mac xerces parser wasn't properly using the relative path
-#ifndef WIN32  
-	const string configurationFileName = "/Configuration.xml";
-#else
-	const string configurationFileName = "Configuration.xml";
-#endif
+	const string configurationFileName = string( __ROOT_PREFIX__ ) + string( "Configuration.xml");
 	start = clock(); // start of model run
 	time(&ltime); // get time and date before model run
 	
@@ -91,11 +86,7 @@ int main() {
 	// XML Parser initialized.
 
 	// Initialize the LoggerFactory
-#ifndef WIN32  
-	const string loggerFileName = "/LoggerFactory.xml";
-#else
-	const string loggerFileName = "LoggerFactory.xml";
-#endif
+	const string loggerFileName = string( __ROOT_PREFIX__ ) + string( "LoggerFactory.xml" );
 	root = XMLHelper<void>::parseXML( loggerFileName, parser );
 	LoggerFactory::XMLParse( root );
 	 
@@ -105,19 +96,19 @@ int main() {
 	
 	// Open various files.
 	logfile.open( conf->getFile( "logOutFileName" ).c_str(), ios::out );
-	assert( logfile );
+   util::checkIsOpen( logfile );
 
 	xmlOutStream.open( conf->getFile( "xmlOutputFileName" ).c_str(), ios::out );
-	assert( xmlOutStream );
+   util::checkIsOpen( xmlOutStream );
 
 	bugoutfile.open( conf->getFile( "bugOutFileName" ).c_str(), ios::out );
-	assert( bugoutfile );
+   util::checkIsOpen( bugoutfile );
 	
 	outfile.open( conf->getFile( "outFileName" ).c_str(), ios::out );
-	assert( outfile );
+   util::checkIsOpen( outfile );
 	
 	dbout.open( conf->getFile( "dbOutFileName" ).c_str(), ios::out );
-	assert( dbout );
+   util::checkIsOpen( dbout );
 
 
 	root = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), parser );

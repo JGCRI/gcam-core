@@ -1,6 +1,8 @@
 #ifndef _SCENARIO_H_
 #define _SCENARIO_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file scenario.h
@@ -12,11 +14,7 @@
 */
 
 #include <xercesc/dom/DOM.hpp>
-#include <string>
-#include <iostream>
-
-using namespace std;
-using namespace xercesc;
+#include <iosfwd>
 
 // Forward declarations
 class Modeltime;
@@ -35,8 +33,8 @@ private:
 	Modeltime* modeltime; //!< The modeltime for the scenario
 	World* world; //!< The world object
 	Marketplace* marketplace; //!< The goods and services marketplace.
-	string name; //!< Scenario name.
-	string scenarioSummary; //!< A summary of the purpose of the Scenario.
+   std::string name; //!< Scenario name.
+   std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
 
 public:
 	Scenario();
@@ -47,13 +45,13 @@ public:
 	const World* getWorld() const;
 	World* getWorld();
 	void clear();
-	void XMLParse( const DOMNode* node );
+	void XMLParse( const xercesc::DOMNode* node );
    void completeInit();
-	void toXML( ostream& out ) const;
-	void toDebugXMLOpen( const int period, ostream& out ) const;
-	void toDebugXMLClose( const int period, ostream& out ) const;
-	string getName() const;
-   static string XMLCreateDate( const time_t& time );
+   void toXML( std::ostream& out ) const;
+   void toDebugXMLOpen( const int period, std::ostream& out ) const;
+   void toDebugXMLClose( const int period, std::ostream& out ) const;
+   std::string getName() const;
+   static std::string XMLCreateDate( const time_t& time );
 	void run();
    void printGraphs( const int period ) const;
 };

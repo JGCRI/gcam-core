@@ -10,6 +10,8 @@
 #include "Definitions.h"
 #include "Emcoef_ind.h"
 
+using namespace std;
+
 //! Default destructor.
 Emcoef_ind::Emcoef_ind() {
 }

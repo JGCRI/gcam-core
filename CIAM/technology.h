@@ -1,6 +1,8 @@
 #ifndef _TECHNOLOGY_H_
 #define _TECHNOLOGY_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file technology.h
@@ -11,17 +13,9 @@
 * \version $Revision$
 */
 
-// Standard Library headers.
 #include <vector>
 #include <map>
-#include <string>
-
-// xerces xml headers
 #include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/XMLString.hpp>
-
-using namespace std;
-using namespace xercesc;
 
 // Forward declaration
 class Ghg;
@@ -55,23 +49,23 @@ protected:
     double techchange;  //!< technical change in %/year
     double fixedSupply; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
     double fixedOutputVal; //!< The actual fixed output value
-    string name; //!< technology name
-    string unit; //!< unit of final product from technology
-    string fuelname; //!< name of fuel used
+    std::string name; //!< technology name
+    std::string unit; //!< unit of final product from technology
+    std::string fuelname; //!< name of fuel used
     bool doCalibration; // Flag set if calibration value is read-in
     bool doCalOutput; // Flag set if calibration value is read-in
     double calInputValue; // Calibration value
     double calOutputValue; // Calibration value
-    vector<Ghg*> ghg; //!< suite of greenhouse gases
-    map<string,double> emissmap; //!< map of ghg emissions
-    map<string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
-    map<string,double> emindmap; //!< map of indirect ghg emissions
+    std::vector<Ghg*> ghg; //!< suite of greenhouse gases
+    std::map<std::string,double> emissmap; //!< map of ghg emissions
+    std::map<std::string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
+    std::map<std::string,double> emindmap; //!< map of indirect ghg emissions
     
     // attributes for hydroelectricity only!
     double resource; //!< available hydro resource in energy units
     double A; //!< logit function shape parameter
     double B; //!< logit function shape parameter
-    map<string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
+    std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
     
 public:
     technology(); // default construtor
@@ -81,32 +75,30 @@ public:
     virtual void clear();
     virtual void copy( const technology& techIn );
     void initElementalMembers();
-    virtual void XMLParse( const DOMNode* tempnode ); // initialize technology with xml data
-    virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* curr ); // for derived classes
+    virtual void XMLParse( const xercesc::DOMNode* tempnode ); // initialize technology with xml data
+    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
     void completeInit();
-    virtual void toXML( ostream& out ) const;
-    virtual void toDebugXML( const int period, ostream& out ) const;
+    virtual void toXML( std::ostream& out ) const;
+    virtual void toDebugXML( const int period, std::ostream& out ) const;
     void initCalc( );
-    void applycarbontax( const string& regionName, const double tax); // apply carbon tax to appropriate technology
+    void applycarbontax( const std::string& regionName, const double tax); // apply carbon tax to appropriate technology
     // sets ghg tax to technologies
-    void addghgtax( const string ghgname, const string regionName, const int per ); 
-    // calculates fuel and total cost of technology
-    virtual void calcCost( const string regionName, const int per); 
-    // uses logit function to calculate technology share
-    virtual void calcShare( const string regionName, const int per); 
+    void addghgtax( const std::string ghgname, const std::string regionName, const int per ); 
+    virtual void calcCost( const std::string regionName, const int per); 
+    virtual void calcShare( const std::string regionName, const int per); 
     void normShare(double sum); // normalize technology share
     void calcFixedSupply(int per); // calculate fixed supply
     void resetFixedSupply(int per); // reset fixed supply to max value
     void adjShares(double subsecdmd, double subsecFixedSupply, double varShareTot, int per);
     void scaleFixedSupply(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
-    virtual void production(const string& regionName,const string& prodName,double dmd,const int per);
-    void emission( const string prodname); // calculates GHG emissions from technology
-    void indemission( const vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
-    void printTech( const string& outFile = "" ) const; // write technology information to file or screen
+    virtual void production(const std::string& regionName,const std::string& prodName,double dmd,const int per);
+    void emission( const std::string prodname); // calculates GHG emissions from technology
+    void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
+    void printTech( const std::string& outFile = "" ) const; // write technology information to file or screen
     // ****** return names and values ******
-    string getName() const; // return technology name
-    string getFName() const; // return fuel name
+    std::string getName() const; // return technology name
+    std::string getFName() const; // return fuel name
     double getEff() const; // return fuel efficiency
     virtual double getIntensity(const int per) const; // return fuel intensity
     double getShare() const; // return normalized share
@@ -124,10 +116,10 @@ public:
     double getCarbontaxgj() const; // return carbon taxes in $/GJ
     double getCarbontaxpaid() const; // return carbon taxes paid
     double getCO2() const; // return actual CO2 emissions from technology
-    map<string,double> getemissmap() const; // return map of all ghg emissions
-    map<string,double> getemfuelmap() const; // return map of all ghg emissions
-    map<string,double> getemindmap() const; // return map of all ghg emissions
-    double get_emissmap_second( const string& str ) const; // return value for ghg
+    std::map<std::string,double> getemissmap() const; // return map of all ghg emissions
+    std::map<std::string,double> getemfuelmap() const; // return map of all ghg emissions
+    std::map<std::string,double> getemindmap() const; // return map of all ghg emissions
+    double get_emissmap_second( const std::string& str ) const; // return value for ghg
     double getlexp() const; // return logit exponential for the technology
     double getFixedSupply() const; // return fixed supply
     void setYear( const int yearIn );
@@ -154,3 +146,4 @@ public:
 };
 
 #endif // _TECHNOLOGY_H_
+

@@ -13,6 +13,8 @@
 #include "Scenario.h"
 #include <vector>
 
+using namespace std;
+
 extern Scenario* scenario;
 
 //! Default constructor

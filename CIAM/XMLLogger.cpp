@@ -17,7 +17,7 @@
 #include "Logger.h"
 #include "scenario.h"
 
-
+using namespace std;
 
 //! Constructor
 XMLLogger::XMLLogger( const string& loggerName ):Logger( loggerName ){

@@ -1,6 +1,8 @@
 #ifndef _SOLVER_LIBRARY_H_
 #define _SOLVER_LIBRARY_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file SolverLibrary.h
@@ -14,18 +16,13 @@
 * \version $Revision$
 */
 #if defined(_MSC_VER)
-#pragma once
 #pragma warning( disable: 4275 )
 #endif
 
 #include <mtl/matrix.h>
 #include <vector>
-#include <string>
 
-using namespace std;
-using namespace mtl;
-
-typedef matrix<double, rectangle<>, dense<>, row_major>::type Matrix;
+typedef mtl::matrix<double, mtl::rectangle<>, mtl::dense<>, mtl::row_major>::type Matrix;
 
 class Marketplace;
 class World;
@@ -33,8 +30,8 @@ class World;
 //! Class which contains the solution information for a single market.
 class SolutionInfo {
 public:
-      string marketName; //!< Market area name.
-      string marketGood; //< Market fuel or good name.
+      std::string marketName; //!< Market area name.
+      std::string marketGood; //< Market fuel or good name.
       double X;		//!< unknown, prices
       double ED;		//!< excess demand for X
       double demand;  //!< demand for X.
@@ -45,8 +42,8 @@ public:
       double EDL;		//!< excess demand for left bracket
       double EDR;		//!< excess demand for right bracket
       bool bracketed;	//!< Bracketed or unbrackted.
-      SolutionInfo( const string& marketNameIn, const string& marketGoodIn );
-      string getName() const;
+      SolutionInfo( const std::string& marketNameIn, const std::string& marketGoodIn );
+      std::string getName() const;
    };
 
 /*!
@@ -57,19 +54,19 @@ public:
 
 class SolverLibrary {
 public:
-   static vector<SolutionInfo> getMarketsToSolve( const Marketplace* marketplace, const int period, const bool isNR = false );
-   static void setPricesToMarkets( Marketplace* marketplace, const vector<SolutionInfo>& solutionVector, const int period );
-   static void update( Marketplace* marketplace, vector<SolutionInfo>& solutionVector, const int period );
-   static void adjustPriceAndDemandMarkets( const Marketplace* marketplace, vector<SolutionInfo>& solutionVector, const int period );
-   static double findMaxExcessDemand( const vector<SolutionInfo>& solutionVector, const double excessDemandSolutionFloor, int& worstMarketIndex, const int period );
+   static std::vector<SolutionInfo> getMarketsToSolve( const Marketplace* marketplace, const int period, const bool isNR = false );
+   static void setPricesToMarkets( Marketplace* marketplace, const std::vector<SolutionInfo>& solutionVector, const int period );
+   static void update( Marketplace* marketplace, std::vector<SolutionInfo>& solutionVector, const int period );
+   static void adjustPriceAndDemandMarkets( const Marketplace* marketplace, std::vector<SolutionInfo>& solutionVector, const int period );
+   static double findMaxExcessDemand( const std::vector<SolutionInfo>& solutionVector, const double excessDemandSolutionFloor, int& worstMarketIndex, const int period );
    static double getRelativeED( const double excessDemand, const double demand, const double excessDemandFloor );
    static bool isWithinTolerance( const double excessDemand, const double demand, const double solutionTolerance, const double excessDemandSolutionFloor );
-   static const vector<double> jacobian( const Marketplace* marketplace, const vector<SolutionInfo>& solutionVector, const int marketNumber, const int period );
-   static const vector<double> calcDemandElas( const Marketplace* marketplace, const vector<SolutionInfo>& solutionVector, const int marketSolutionNumber, const int period );
-   static const vector<double> calcSupplyElas( const Marketplace* marketplace, const vector<SolutionInfo>& solutionVector, const int marketSolutionNumber, const int period );
-   static void derivatives( Marketplace* marketplace, World* world, vector<SolutionInfo>& solutionVector, Matrix& JFDM, Matrix& JFSM,double& worldCalcCount, const int per );
+   static const std::vector<double> jacobian( const Marketplace* marketplace, const std::vector<SolutionInfo>& solutionVector, const int marketNumber, const int period );
+   static const std::vector<double> calcDemandElas( const Marketplace* marketplace, const std::vector<SolutionInfo>& solutionVector, const int marketSolutionNumber, const int period );
+   static const std::vector<double> calcSupplyElas( const Marketplace* marketplace, const std::vector<SolutionInfo>& solutionVector, const int marketSolutionNumber, const int period );
+   static void derivatives( Marketplace* marketplace, World* world, std::vector<SolutionInfo>& solutionVector, Matrix& JFDM, Matrix& JFSM,double& worldCalcCount, const int per );
    static void invertMatrix( Matrix& A );
-   static void checkBracket( const double solutionTolerance, const double excessDemandSolutionFloor, vector<SolutionInfo>& sol, bool& allbracketed );
+   static void checkBracket( const double solutionTolerance, const double excessDemandSolutionFloor, std::vector<SolutionInfo>& sol, bool& allbracketed );
 private:
    static const double SMALL_NUM;
 };

@@ -1,12 +1,14 @@
 #ifndef _BISECTION_NR_SOLVER_H_
 #define _BISECTION_NR_SOLVER_H_
+#if defined(_MSC_VER)
+#pragma once
+#endif
 
 #include <vector>
 #include "Solver.h"
 
-using namespace std;
-
 class SolutionInfo;
+
 /*! 
 * \file BisectionNRSolver.h
 * \ingroup CIAM
@@ -37,10 +39,10 @@ private:
    double totIter; //!< Cumulative number of interations
 
    int Bracket( const double solutionTolerance, const double excessDemandSolutionFloor, 
-                         const double bracketInterval, vector<SolutionInfo>& sol, bool& allbracketed, 
+                         const double bracketInterval, std::vector<SolutionInfo>& sol, bool& allbracketed, 
                          bool& firsttime, double& worldCalcCount, const int per );
-   int Bisection_all( const double solutionTolerance, const double excessDemandSolutionFloor, const int IterLimit, vector<SolutionInfo>& sol, double& worldCalcCount, const int per );
-   int NR_Ron( const double solutionTolerance, const double excessDemandSolutionFloor, vector<SolutionInfo>& sol, double& worldCalcCount, const int per );
+   int Bisection_all( const double solutionTolerance, const double excessDemandSolutionFloor, const int IterLimit, std::vector<SolutionInfo>& sol, double& worldCalcCount, const int per );
+   int NR_Ron( const double solutionTolerance, const double excessDemandSolutionFloor, std::vector<SolutionInfo>& sol, double& worldCalcCount, const int per );
 };
 
 #endif // _BISECTION_NR_SOLVER_

@@ -1,6 +1,8 @@
 #ifndef _GHG_H_
 #define _GHG_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file GHG.H
@@ -11,14 +13,7 @@
 * \version $Revision$
 */
 
-#include <string>
-
-// xerces xml headers
 #include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/XMLString.hpp>
-
-using namespace std;
-using namespace xercesc;
 
 // Forward declaration
 class Emcoef_ind;
@@ -36,8 +31,8 @@ class Emcoef_ind;
 class Ghg
 {
 private:
-	string name; //!< name of ghg gas
-	string unit; //!< unit for ghg gas
+	std::string name; //!< name of ghg gas
+	std::string unit; //!< unit for ghg gas
 	double rmfrac; //!< fraction of emissions removed
 	double gwp; //!< global warming poential
 	double emission; //!< emissions (calculated)
@@ -47,24 +42,24 @@ private:
 	double emiss_fuel; //!< implied emissions from total fuel consumption
 	double emiss_ind; //!< indirect emissions
 public:
-	Ghg( const string& nameIn = "", const string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 0, const double emissionIn = 0 );
+	Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 0, const double emissionIn = 0 );
 	void clear();
-	void setcoef( const double em_coef ); // set emissions coefficients from data
-	void XMLParse( const DOMNode* tempnode ); // initialize ghg object with xml data
-	void toXML( ostream& out ) const; // write out xml.
-	void toDebugXML( const int period, ostream& out ) const;
-	void setrmfrac( const double trmfrac ); // set remove fraction from data
-	double taxcnvrt( const string& regionName, const string& fuelname ) const; // conversion for carbon tax to energy equivalent
-	void calc_emiss( const string& regionName, const string& fuelname, const double input, const string& prodname, const double output ); // calculate emissions
-	void calc_emiss2( const double activity, const double gamma, const double* cntl); // calculate emissions alternative
-	void calc_emiss_ind( const double input, const string& fuelname, const vector<Emcoef_ind>& emcoef_ind  ); // calculate ind emissions
-	string getname() const; // return name of ghg
-	string getunit() const; // return unit for ghg
-	double getemission() const; // return ghg emissions
-	double getseq_emiss() const; // return sequestered emissions
-	double getemiss_fuel() const; // return ghg emissions implicit in fuel
-	double getemiss_ind() const; // return indirect ghg emissions
-	double getemiss_coef() const; // return ghg emissions coefficient
+	void setcoef( const double em_coef );
+	void XMLParse( const xercesc::DOMNode* tempnode );
+   void toXML( std::ostream& out ) const;
+   void toDebugXML( const int period, std::ostream& out ) const;
+	void setrmfrac( const double trmfrac );
+	double taxcnvrt( const std::string& regionName, const std::string& fuelname ) const;
+	void calc_emiss( const std::string& regionName, const std::string& fuelname, const double input, const std::string& prodname, const double output );
+   void calc_emiss_ind( const double input, const std::string& fuelname, const std::vector<Emcoef_ind>& emcoef_ind  );
+	std::string getname() const;
+	std::string getunit() const;
+	double getemission() const;
+	double getseq_emiss() const;
+	double getemiss_fuel() const;
+	double getemiss_ind() const;
+	double getemiss_coef() const;
 };
 
 #endif // _GHG_H_
+

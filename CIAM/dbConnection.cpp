@@ -8,16 +8,11 @@
 */
 
 #include "Definitions.h"
-#ifdef WIN32
-// standard libraries
-#include <cstdlib>
+#if(__HAVE_DB__)
 #include <afxdisp.h>
 #include <dbdao.h>
-#include <dbdaoerr.h>
-#include <direct.h>
 #include <iostream>
 #include <string>
-// custom header
 #include "scenario.h"
 #include "modeltime.h"
 #include "Configuration.h"

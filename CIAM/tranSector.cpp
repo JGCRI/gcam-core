@@ -7,10 +7,7 @@
 
 #include "Definitions.h"
 #include <string>
-#include <cstdlib>
 #include <iostream>
-#include <fstream>
-#include <cmath>
 #include <cassert>
 
 #include "marketplace.h"
@@ -21,10 +18,10 @@
 
 // xml headers
 #include "xmlHelper.h"
-#include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 
-using namespace std; // enables elimination of std::
+using namespace std;
+using namespace xercesc;
 
 extern Scenario* scenario;
 extern ofstream outfile;

@@ -1,6 +1,8 @@
 #ifndef _MODELTIME_H_
 #define _MODELTIME_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file modeltime.h
@@ -14,9 +16,6 @@
 #include <vector>
 #include <map>
 #include <xercesc/dom/DOM.hpp>
-
-using namespace std;
-using namespace xercesc;
 
 /*! 
 * \ingroup CIAM
@@ -46,15 +45,15 @@ private:
 	int numberOfPeriods2a; //!< One more in second time interval for remainder year.
 	int numberOfPeriods3;  //!< Number of periods in third time interval.
 	int numberOfPeriods3a; //!< One more in third time interval for remainder year.
-	vector<int> periodToTimeStep; //!< Index of timesteps.
-	vector<int> dataPeriodToModelPeriod; //!< Index of data to model period.
-	vector<int> popDataToVariable; //!< Index of population data to variable.
-	vector<int> dataOffset; //!< Index of timesteps.
-	vector<int> modelPeriodToYear; //!< Model period to year.
-	vector<int> modelPeriodToPopPeriod; //!< Population period to year.
-	vector<int> popPeriodToYear; //!< Index of population timesteps.
-	map<int,int> yearToModelPeriod; //!< Year to model period map object.
-	map<int,int> yearToPopPeriod; //!< Year to population period map object.
+	std::vector<int> periodToTimeStep; //!< Index of timesteps.
+	std::vector<int> dataPeriodToModelPeriod; //!< Index of data to model period.
+	std::vector<int> popDataToVariable; //!< Index of population data to variable.
+	std::vector<int> dataOffset; //!< Index of timesteps.
+	std::vector<int> modelPeriodToYear; //!< Model period to year.
+	std::vector<int> modelPeriodToPopPeriod; //!< Population period to year.
+	std::vector<int> popPeriodToYear; //!< Index of population timesteps.
+	std::map<int,int> yearToModelPeriod; //!< Year to model period map object.
+	std::map<int,int> yearToPopPeriod; //!< Year to population period map object.
 
 	// member functions
 	void initElementalMembers();
@@ -62,9 +61,9 @@ private:
 public:
 	Modeltime();
 	void clear();
-	void XMLParse( const DOMNode* node );
-	void toXML( ostream& out ) const;
-	void toDebugXML( const int period, ostream& out ) const;
+	void XMLParse( const xercesc::DOMNode* node );
+   void toXML( std::ostream& out ) const;
+   void toDebugXML( const int period, std::ostream& out ) const;
 	void set(); // calculates parameters
 	int getstartyr() const { return startYear; }
 	int getendyr() const { return endYear; }
@@ -86,3 +85,4 @@ public:
 };
 
 #endif // _MODELTIME_H_
+

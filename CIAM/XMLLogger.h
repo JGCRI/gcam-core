@@ -1,6 +1,8 @@
 #ifndef _XML_LOGGER_H_
 #define _XML_LOGGER_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file XMLLogger.h
@@ -11,8 +13,7 @@
 * \version $Revision$
 */
 
-#include <string>
-#include <iostream>
+#include <fstream>
 #include "Logger.h"
 
 /*! 
@@ -32,14 +33,14 @@ class XMLLogger: public Logger {
 private:
 	
 	//! The filestream to which data is written.
-	ofstream logFile;
+   std::ofstream logFile;
 	
-	XMLLogger( const string& loggerName ="" );
+   XMLLogger( const std::string& loggerName ="" );
 
 public:
 	virtual void open( const char[] = 0 );
 	virtual void close();
-	virtual void logCompleteMessage( const int line, const string& file, const WarningLevel warningLevel, const string& message );	
+   virtual void logCompleteMessage( const int line, const std::string& file, const WarningLevel warningLevel, const std::string& message );	
 };
 
 #endif // _XML_LOGGER_H_

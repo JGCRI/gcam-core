@@ -8,7 +8,6 @@
 */
 
 #include "Definitions.h"
-#include <cassert>
 #include <iostream>
 #include <fstream>
 #include "AgSector.h"
@@ -18,6 +17,7 @@
 #include "scenario.h"
 
 // Fortran calls.
+#if(__HAVE_FORTRAN__)
 extern "C" { void _stdcall SETGNP( int&, double[] ); };
 extern "C" { double _stdcall GETGNP( int&, int& ); };
 extern "C" { void _stdcall SETPOP( int&, double[] ); };
@@ -27,10 +27,12 @@ extern "C" { double _stdcall GETBIOMASSPRICE( ); };
 extern "C" { void _stdcall AG2RUN( double[], int&, int&, double[], double[] ); };
 extern "C" { double _stdcall AG2CO2EMISSIONS( int&, int& ); };
 extern "C" { void _stdcall AG2LINKOUT( void ); };
+#endif
 
 extern Scenario* scenario;
 
 using namespace std;
+using namespace xercesc;
 
 int AgSector::regionCount = 0;
 const int AgSector::numAgMarkets = 12;
@@ -184,21 +186,27 @@ void AgSector::toDebugXML( const int period, ostream& out ) const {
       XMLWriteElement( gnp[ iter ], "gnp", out, modeltime->getper_to_yr( iter ) );
    }
    
+   #if(__HAVE_FORTRAN__)
    for ( iter = 0; iter < modeltime->getmaxper(); iter++ ){
       XMLWriteElement( GETGNP( tempRegion, iter ), "gnpFromFortran", out, modeltime->getper_to_yr( iter ) );
    }
+   #endif
    
    for( iter = 0; iter < static_cast<int>( population.size() ); iter++ ) {
       XMLWriteElement( population[ iter ], "population", out, modeltime->getPopPeriodToYear( iter ) );
    }
    
+   #if(__HAVE_FORTRAN__)
    for ( iter = 1; iter < modeltime->getmaxpopdata(); iter++ ){
       XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, modeltime->getPopPeriodToYear( iter ) );
    }
+   #endif
    
    XMLWriteElement( biomassPrice, "biomassprice", out );
    
+   #if(__HAVE_FORTRAN__)
    XMLWriteElement( GETBIOMASSPRICE(), "biomasspriceFromFortran", out );
+   #endif
    
    for( iter = 0; iter < static_cast<int>( prices[ period ].size() ); iter++ ) {
       XMLWriteElement( prices[ period ][ iter ], "prices", out, modeltime->getper_to_yr( period ) );
@@ -222,6 +230,7 @@ void AgSector::toDebugXML( const int period, ostream& out ) const {
 
 //! Set the AgLU gnps from the regional gnp data.
 void AgSector::setGNP( const vector<double>& gnpsToFortran ) {
+   #if(__HAVE_FORTRAN__)
    gnp = gnpsToFortran;
    
    double* toFortran = new double[ gnpsToFortran.size() ];
@@ -233,10 +242,12 @@ void AgSector::setGNP( const vector<double>& gnpsToFortran ) {
    
    SETGNP( regionNumber, toFortran );
    delete[] toFortran;
+   #endif
 }
 
 //! Set the AgLU population data from the regional population data.
 void AgSector::setPop( const vector<double>& popsToFortran ) {
+    #if(__HAVE_FORTRAN__)
    population = popsToFortran;
    
    double* toFortran = new double[ popsToFortran.size() ];
@@ -247,16 +258,19 @@ void AgSector::setPop( const vector<double>& popsToFortran ) {
    
    SETPOP( regionNumber, toFortran );
    delete[] toFortran;
+   #endif
 }
 
 //! Set the AgLU biomass price from the market biomass price.
 void AgSector::setBiomassPrice( const double bioPriceIn ) {
+   #if(__HAVE_FORTRAN__)
    biomassPrice = bioPriceIn;
    
    double* biomassPriceArray = new double[ 1 ];
    biomassPriceArray[ 0 ] = bioPriceIn;
    
    // SETBIOMASSPRICE( biomassPriceArray ); // new
+   #endif
 }
 
 //! Run the underlying AgLU model.
@@ -276,8 +290,9 @@ void AgSector::runModel( const int period, const string& regionName ) {
    for( int i = 0; i < numAgMarkets; i++ ) {
       priceArray[ i ] = prices[ period ][ i ];
    }
-   
+   #if(__HAVE_FORTRAN__)
    AG2RUN( priceArray, tempRegionNumber, tempPeriod, demandArray, supplyArray );
+   #endif
    
    for( int j = 0; j < numAgMarkets; j++ ) {
       demands[ period ][ j ] = demandArray[ j ];
@@ -300,11 +315,12 @@ void AgSector::runModel( const int period, const string& regionName ) {
 
 //! Use the underlying model to calculate the amount of CO2 emitted.
 void AgSector::carbLand( const int period, const string& regionName ) {
-   
+   #if(__HAVE_FORTRAN__)
    int tempRegionNumber = regionNumber;
    int tempPeriod = period;
    
    CO2Emissions[ period ] = AG2CO2EMISSIONS( tempPeriod, tempRegionNumber );
+   #endif
 }
 
 //! Create a market for the sector.
@@ -326,7 +342,9 @@ void AgSector::setMarket( const string& regionName ) {
 
 //! Call the Ag modules internal output subroutine
 void AgSector::internalOutput() {
+#if(__HAVE_FORTRAN__)
    AG2LINKOUT();
+#endif
 }
 
 //! Initialize the market prices for agricultural goods. 

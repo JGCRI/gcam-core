@@ -14,6 +14,8 @@
 #include "Logger.h"
 #include "PlainTextLogger.h"
 
+using namespace std;
+
 //! Constructor
 PlainTextLogger::PlainTextLogger( const string& loggerName ):Logger( loggerName ){
 }

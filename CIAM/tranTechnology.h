@@ -1,6 +1,8 @@
 #ifndef _TRANTECHNOLOGY_H_
 #define _TRANTECHNOLOGY_H_
+#if defined(_MSC_VER)
 #pragma once
+#endif
 
 /*! 
 * \file tranTechnology.h
@@ -11,21 +13,8 @@
 * \version $Revision$
 */
 
-
-// Standard Library headers.
-#include <vector>
-#include <map>
-#include <string>
-
-// xerces xml headers
 #include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/XMLString.hpp>
-
 #include "technology.h"
-
-
-using namespace std;
-using namespace xercesc;
 
 /*! 
 * \ingroup CIAM
@@ -43,14 +32,15 @@ protected:
 	double baseScaler; // constant scaler to scale base output
     
 public:
-    tranTechnology(); // default construtor
+    tranTechnology();
     virtual void clear();
-    virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* curr ); // for derived classes
-    virtual void calcCost( const string regionName, const int per); 
-    virtual void calcShare( const string regionName, const int per); 
+    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
+    virtual void calcCost( const std::string regionName, const int per); 
+    virtual void calcShare( const std::string regionName, const int per); 
     // calculates fuel input and technology output
-    virtual void production(const string& regionName,const string& prodName,double dmd,const int per);    
+    virtual void production( const std::string& regionName, const std::string& prodName,double dmd,const int per);    
     virtual double getIntensity(const int per) const; // return fuel intensity
 };
 
 #endif // _TRANTECHNOLOGY_H_
+

@@ -1,6 +1,6 @@
 #ifndef _MARKET_H_
 #define _MARKET_H_
-#if( _MSC_VER_ )
+#if defined(_MSC_VER_)
 #pragma once
 #endif
 
@@ -13,13 +13,10 @@
 * \version $Revision$
 */
 
-#include <string>
 #include <vector>
-#include <functional>
-
-using namespace std;
 
 class SavePoint;
+class Logger;
 
 /*!
 * \ingroup CIAM
@@ -31,13 +28,13 @@ class Market
 {
 public:
 
-   Market( const string& goodNameIn, const string& regionNameIn, const int periodIn );
+   Market( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
    virtual ~Market();
 
-   void toDebugXML( const int period, ostream& out ) const;
-   virtual void derivedToDebugXML( ostream& out ) const;
-   void addRegion( const string& regionNameIn );
-   const vector<string>& getContainedRegions();
+   void toDebugXML( const int period, std::ostream& out ) const;
+   virtual void derivedToDebugXML( std::ostream& out ) const;
+   void addRegion( const std::string& regionNameIn );
+   const std::vector<std::string>& getContainedRegions();
    virtual void setCompanionMarketPointer( Market* pointerIn );
 
    virtual void initPrice();
@@ -80,9 +77,9 @@ public:
    double getLogExcessDemand() const;
    double getRelativeExcessDemand() const;
 
-   string getName() const;
-   string getRegionName() const;
-   string getGoodName() const;
+   std::string getName() const;
+   std::string getRegionName() const;
+   std::string getGoodName() const;
    void storeInfoFromLast( const double lastDemand, const double lastSupply, const double lastPrice );
    void storeInfo();
    void restoreInfo();
@@ -90,15 +87,15 @@ public:
    void setSolveMarket( const bool doSolve );
    virtual bool shouldSolve() const;
    virtual bool shouldSolveNR( const double SMALL_NUM ) const;
-   virtual string getType() const;
+   virtual std::string getType() const;
    void createSDPoint();
    void clearSDPoints();
-   void print( ostream& out ) const;
-   void printSupplyDemandDebuggingCurves( ostream& out );
+   void print( std::ostream& out ) const;
+   void printSupplyDemandDebuggingCurves( Logger* sdLog );
 protected:
 
-   string good;  //!< market good or fuel
-	string region;  //!< market region
+   std::string good;  //!< market good or fuel
+	std::string region;  //!< market region
 	bool solveMarket; //!< Toggle for markets that should be solved
 	int period; //!< Model period
 	double price;  //!< market price
@@ -113,8 +110,8 @@ protected:
 	double derivativeOfExcessDemand; //!< derivative of excess demand
 	double logOfDemand; //!< log of demand for each market
 	double logOfSupply; //!< log of supply for each market
-   vector <string> containedRegionNames; //! Vector of names of all regions within this vector.
-   vector< SavePoint* > sdPoints; //! Save SD points used for print Supply-Demand curves.
+   std::vector <std::string> containedRegionNames; //! Vector of names of all regions within this vector.
+   std::vector< SavePoint* > sdPoints; //! Save SD points used for print Supply-Demand curves.
 };
 
 class DemandMarket;
@@ -127,11 +124,11 @@ class DemandMarket;
 
 class PriceMarket: public Market {
 public:
-   PriceMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn );
+   PriceMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
    PriceMarket( const Market& marketIn );
    virtual void setCompanionMarketPointer( Market* pointerIn );
-   virtual void derivedToDebugXML( ostream& out ) const;
-   virtual string getType() const;
+   virtual void derivedToDebugXML( std::ostream& out ) const;
+   virtual std::string getType() const;
    virtual void setPrice( const double priceIn );
    virtual double getPrice() const;
    virtual void setSupply( const double supplyIn );
@@ -152,10 +149,10 @@ private:
 
 class DemandMarket: public Market {
 public:
-   DemandMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn );
+   DemandMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
    virtual void setCompanionMarketPointer( Market* pointerIn );
-   virtual void derivedToDebugXML( ostream& out ) const;
-   virtual string getType() const;
+   virtual void derivedToDebugXML( std::ostream& out ) const;
+   virtual std::string getType() const;
    virtual double getDemand() const;
    virtual double getSupplyForChecking() const;
    virtual void setSupply( const double supplyIn );
@@ -173,8 +170,8 @@ private:
 
 class GHGMarket: public Market {
 public:
-   GHGMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn );
-   virtual string getType() const;
+   GHGMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
+   virtual std::string getType() const;
    virtual void initPrice();
    virtual bool shouldSolve() const;
    virtual bool shouldSolveNR( const double SMALL_NUM ) const;
@@ -188,8 +185,8 @@ public:
 
 class CalibrationMarket: public Market {
 public:
-   CalibrationMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn );
-   virtual string getType() const;
+   CalibrationMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
+   virtual std::string getType() const;
    virtual void setPriceToLast( const double lastPriceIn );
 };
 

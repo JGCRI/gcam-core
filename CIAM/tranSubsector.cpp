@@ -8,10 +8,7 @@
 
 #include "Definitions.h"
 #include <string>
-#include <cstdlib>
 #include <iostream>
-#include <fstream>
-#include <cmath>
 #include <cassert>
 #include <vector>
 
@@ -25,6 +22,7 @@
 
 
 using namespace std;
+using namespace xercesc;
 
 extern ofstream outfile;	
 extern Scenario* scenario;

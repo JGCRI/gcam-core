@@ -9,10 +9,9 @@
 
 #include "Definitions.h"
 
-#ifdef WIN32
+#if(__HAVE_DB__)
 #include <afxdisp.h>
 #include <dbdao.h>
-#include <dbdaoerr.h>
 #endif
 
 #include <string>
@@ -25,14 +24,13 @@
 
 using namespace std;
 
-#ifdef WIN32
+#if(__HAVE_DB__)
 extern CdbDatabase db;
 extern CdbRecordset DBoutrst;
 #endif
 
 extern time_t ltime;
 extern ofstream outfile;
-extern map<string,int> mapreg;
 extern map<string,int> regionMap;
 extern Scenario* scenario;
 
@@ -62,7 +60,7 @@ void fileoutput3( string var1name,string var2name,string var3name,
 void dboutput4(string var1name,string var2name,string var3name,string var4name,
 			   string uname,vector<double> dout)
 {
-#ifndef WIN32
+#if(!__HAVE_DB__)
 	fileoutput3( var1name,var2name,var3name,var4name,"",uname,dout);
 #else
     // only output regions already defined in regionMap

@@ -13,7 +13,6 @@
 #include <iostream>
 #include <sstream>
 #include <cassert>
-#include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 
 #include "Logger.h"

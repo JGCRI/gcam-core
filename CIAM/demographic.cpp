@@ -9,14 +9,11 @@
 
 #include "Definitions.h"
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <map>
 #include <cassert>
 #include <vector>
-
-// xml headers
-#include <xercesc/util/XMLString.hpp>
+#include <cmath>
 #include <xercesc/dom/DOM.hpp>
 
 #include "scenario.h"
@@ -27,6 +24,8 @@
 #include "Marketplace.h"
 
 using namespace std;
+using namespace xercesc;
+
 extern Scenario* scenario;
 
 //! Default constructor

@@ -25,6 +25,7 @@
 #include "Marketplace.h"
 #include "World.h"
 #include "Configuration.h"
+#include "Util.h"
 
 using namespace std;
 using namespace mtl;
@@ -194,7 +195,7 @@ const vector<double> SolverLibrary::calcDemandElas( const Marketplace* marketpla
       }
       
       JFD[ i ] = ddemand / dprice;
-      assert( isValidNumber( JFD[ i ] ) );
+      assert( util::isValidNumber( JFD[ i ] ) );
    }
    
    return JFD;
@@ -218,7 +219,7 @@ const vector<double> SolverLibrary::calcSupplyElas( const Marketplace* marketpla
       }
       
       JFS[ i ] = dsupply / dprice;
-      assert( isValidNumber( JFS[ i ] ) );
+      assert( util::isValidNumber( JFS[ i ] ) );
    }
    return JFS;
 }
@@ -429,3 +430,4 @@ void SolverLibrary::checkBracket( const double solutionTolerance, const double e
       }
    }
 }
+

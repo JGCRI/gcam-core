@@ -11,7 +11,6 @@
 #include "Definitions.h"
 #include <string>
 #include <iostream>
-#include <fstream>
 #include <cassert>
 #include <cmath>
 
@@ -24,6 +23,7 @@
 #include "Marketplace.h"
 
 using namespace std;
+using namespace xercesc;
 
 extern Scenario* scenario;
 
