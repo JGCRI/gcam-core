@@ -39,6 +39,10 @@ tranTechnology::tranTechnology() {
     baseScaler = 0;
 }
 
+//! Clone function. Returns a deep copy of the current TranTechnology.
+tranTechnology* tranTechnology::clone() const {
+    return new tranTechnology( *this );
+}
 
 //! Clear member variables.
 void tranTechnology::clear(){
