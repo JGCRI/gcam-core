@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario name="WRE550">
+	<summary>"WRE 550 Scenario"</summary>
+	<world>
+		<region name="USA">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="Canada">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="Western Europe">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="Japan">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="Australia_NZ">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="Former Soviet Union">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="China">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="Middle East">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="Africa">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="Latin America">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="Southeast Asia">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="Eastern Europe">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="Korea">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+		<region name="India">
+			<ghgmarket name="CO2">
+				<market>global</market>
+				<constraint year="1975">0</constraint>
+				<constraint year="1990">0</constraint>
+				<constraint year="2005">522</constraint>
+				<constraint year="2020">631</constraint>
+				<constraint year="2035">667</constraint>
+				<constraint year="2050">518</constraint>
+				<constraint year="2065">429</constraint>
+				<constraint year="2080">343</constraint>
+				<constraint year="2095">286</constraint>
+			</ghgmarket>
+		</region>
+	</world>
+</scenario>
