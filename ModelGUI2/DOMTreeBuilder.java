@@ -55,7 +55,8 @@ public class DOMTreeBuilder {
 			}
 			// Create the document
 			DocumentType svgDOCTYPE = impl.createDocumentType(docName, "","");
-			doc = impl.createDocument("http://www.w3.org/2000/svg", docName, svgDOCTYPE);
+			//doc = impl.createDocument("http://www.w3.org/2000/svg", docName, svgDOCTYPE);
+			doc = impl.createDocument("", docName, svgDOCTYPE);
 			rootElement = doc.getDocumentElement();
 		} catch (Exception e) {
 			System.err.println(e);

@@ -34,6 +34,8 @@ public class FileChooserDemo extends JFrame
   JMenuItem menuClose = null;
   JMenuItem menuTableFilter = null;
   JMenuItem menuTableAdd = null;
+  JMenuItem menuTableBuildDemandComp = null;
+  JMenuItem menuTableBuildSAM = null;
   JSplitPane splitPane;
   JLabel infoLabel;
   JTextField nameField;
@@ -157,8 +159,12 @@ public class FileChooserDemo extends JFrame
 	JMenu tableMenu = new JMenu("Table");
 	tableMenu.add(menuTableFilter = makeMenuItem("Filter"));
 	tableMenu.add(menuTableAdd = makeMenuItem("Add Data"));
+	tableMenu.add(menuTableBuildDemandComp = makeMenuItem("Build Demand Components"));
+	tableMenu.add(menuTableBuildSAM = makeMenuItem("Build SAM"));
 	menuTableFilter.setEnabled(false);
 	menuTableAdd.setEnabled(false);
+	menuTableBuildDemandComp.setEnabled(false);
+	menuTableBuildSAM.setEnabled(false);
 
 	JMenuBar mb = new JMenuBar();
 	mb.add(m);
@@ -194,15 +200,28 @@ public class FileChooserDemo extends JFrame
 	  
   jtree.addTreeSelectionListener(new TreeSelectionListener() {
 	  public void valueChanged(TreeSelectionEvent e) {
+		  System.out.println("So it changed");
+		  jtree.makeVisible(e.getPath());
+		  if(jtree.isVisible(e.getPath())) {
+		  	System.out.println("is visible");
+		  }
+		  if(jtree.isPathSelected(e.getPath())) {
+			System.out.println("is same");
+		  }
+		  if(jtree.isExpanded(e.getPath())) {
+			System.out.println("is expanded");
+		  }
+		  /*
 		  TreePath[] paths = jtree.getSelectionPaths();
 		  if (paths != null) {
-				System.out.println("in valueChanged paths!");
+				System.out.println("in valueChanged paths! "+e+" --- "+e.getPath());
 			  //clearDisplay();
 			  //for (int j = 0; j < paths.length; j++) {
 				//  AdapterNode node = (AdapterNode)paths[j].getLastPathComponent();
 				 // displayValue(node.getText(), false);
 			  //}
 		  }
+		  */
 	  }
   });
 
@@ -217,6 +236,8 @@ public class FileChooserDemo extends JFrame
 		 private void maybeShowPopup(MouseEvent e) {
 			 if (e.isPopupTrigger()) {
 				 selectedPath = jtree.getClosestPathForLocation(e.getX(), e.getY());
+				 System.out.println("Path: "+selectedPath);
+				 System.out.println("Lead: "+jtree.getLeadSelectionPath());
 			   	jtree.setSelectionPath(selectedPath);
 				MenuElement[] me = treeMenu.getSubElements();
 			        for (int i = 0; i < me.length; i++) {
@@ -251,8 +272,8 @@ public class FileChooserDemo extends JFrame
 	  JScrollPane treeView = new JScrollPane(jtree);
 	  treeView.setPreferredSize(new Dimension( leftWidth, windowHeight ));
 
-	  jTable = new JTable();
-          JScrollPane tableView = new JScrollPane(jTable);
+	  //jTable = new JTable();
+          JScrollPane tableView = new JScrollPane(/*jTable*/);
           //tableView.setPreferredScrollableViewportSize( new Dimension ( rightWidth, windowHeight ));
 	  tableView.setPreferredSize( new Dimension (rightWidth, windowHeight));
 
@@ -268,6 +289,9 @@ public class FileChooserDemo extends JFrame
 	   
 	   //create the dialog for adding new node children, but leave invisible
 	   makeAddChildDialog();
+
+	   menuTableBuildDemandComp.setEnabled(true);
+	   menuTableBuildSAM.setEnabled(true);
 
 	   //this.show();
 	   //this.pack();
@@ -319,6 +343,12 @@ public class FileChooserDemo extends JFrame
 	}
 	else if (command.equals("Filter")) {
 		tableModel.updateDataFilter(this);
+	}
+	else if (command.equals("Build Demand Components")) {
+		buildDemandComponents();
+	}
+	else if (command.equals("Build SAM")) {
+		buildSAM();
 	}
 	else if(command.equals("Quit") ){
 		dispose();
@@ -605,8 +635,13 @@ public class FileChooserDemo extends JFrame
   // ********* newly added **************
   // for the tablechangedmodel listener
   public void tableChanged(TableModelEvent e) {
-	  System.out.println("Source: "+e.getSource());
-	  if(e.getSource().toString().matches("TableSorter.*")) { // Ignore table sorting events
+	  System.out.println("!!! "+e);
+	  System.out.println("Source: "+e.getSource()+" type: "+e.getType()+" update: "+TableModelEvent.UPDATE);
+	  if(e.getType() != TableModelEvent.UPDATE) {
+		  System.out.println("Ignoring changed table");
+		  return;
+	  }
+	  if(e.getSource().toString().matches("TableSorter.*") && e.getType() == TableModelEvent.UPDATE) { // Ignore table sorting events
 		  System.out.println("Ignoring table sorting");
 		  return;
 	  }
@@ -616,26 +651,44 @@ public class FileChooserDemo extends JFrame
 	  String columnName = tableModel.getColumnName(column);
 	  Object newValue = tableModel.getValueAt(row, column);
 
-	  //System.out.println("printing out -- data: " + data);
 	  System.out.println("row is: " + row + " and col is: " + column);
-		System.out.println("newValue is " + newValue + "!!! yay!!!!!!! :)");
+	  System.out.println("newValue is " + newValue + "!!! yay!!!!!!! :)");
 	  System.out.println("printing out columnName " + columnName);
 	  
 	  System.out.println("time to alter the tree.... dun dun dun");
 	  
 	  System.out.println("printing out 'treepath': " + tableModel.getValueAt(row, tableModel.getColumnCount()));
 	  TreePath pathAltered = ((TreePath)tableModel.getValueAt(row, tableModel.getColumnCount()));
+	  jtree.getModel().valueForPathChanged(pathAltered, newValue);
+	  /*
 	  //jtree.setSelectionPath(pathAltered);
 	  Node parent = ((DOMmodel.DOMNodeAdapter)pathAltered.getLastPathComponent()).getNode();
-	  //System.out.println(child.getParentNode());
+	  parent.setNodeValue( newValue.toString() );
+	  jtree.setExpandsSelectedPaths(true);
+	  jtree.setLeadSelectionPath(pathAltered);
+  	  jtree.scrollPathToVisible(pathAltered);
+	  jtree.setSelectionPath(pathAltered);
+			System.out.println(jtree.getSelectionPath());
+			System.out.println(jtree.getLeadSelectionPath());
+	  System.out.println("parent "+parent+" has "+parent.getChildNodes().getLength()+" children");
 	  NodeList children = parent.getChildNodes();
 	  for(int i=0; i < children.getLength(); i++){
+		  System.out.println("Searching for child");
 		if ( children.item(i).getNodeType() == Element.TEXT_NODE ){
+			System.out.println("Found Child");
 			//children.item(i).setNodeValue( (String)newValue );
 			children.item(i).setNodeValue( newValue.toString() );
+			jtree.clearSelection();
 			jtree.setSelectionPath(pathAltered.pathByAddingChild( ((DOMmodel)jtree.getModel()).getAdapterNode(children.item(i))) );
+			//jtree.setSelectionPath(pathAltered.pathByAddingChild( jtree.getModel().getChild(((DOMmodel)jtree.getModel()).getAdapterNode(parent), i)));
+			System.out.println(jtree.getSelectionPath());
+			System.out.println(jtree.getLeadSelectionPath());
+			if(jtree.getExpandsSelectedPaths()) {
+				System.out.println("Should make visible");
+			}
 		}
 	  }
+	  */
   }
   
 
@@ -664,7 +717,7 @@ public class FileChooserDemo extends JFrame
 		  tempVector = recBuildParentList(tempNode, tempVector, path);
 		  tempVector.addElement(new TreePath(path.toArray()));
 		  for (int i = 0; i < tempVector.size() -2; i++) {
-	           if (filterMaps.containsKey(cols.get(i))) {
+	           	  if (filterMaps.containsKey(cols.get(i))) {
 	                          tempMap = (HashMap)filterMaps.get(cols.get(i));
                           } else {
                                   tempMap = new HashMap();
@@ -673,10 +726,10 @@ public class FileChooserDemo extends JFrame
                           	tempMap.put(tempVector.get(i), new Boolean(true));
                           	filterMaps.put(cols.get(i), tempMap);
 			  }
-          }
+          	  }
 		  rows.addElement(tempVector);
 	  }
-	  tableModel = new DataTableModel(cols, rows, filterMaps, this);
+	  tableModel = new DataTableModel(cols, rows, filterMaps, DataTableModel.NORMAL_TABLE, this);
 	  TableSorter sorter = new TableSorter(tableModel);
 	  jTable = new JTable(sorter);
 
@@ -696,6 +749,472 @@ public class FileChooserDemo extends JFrame
 	  JScrollPane tableView = new JScrollPane(jTable);
 	  splitPane.setRightComponent(tableView);
 	  menuTableFilter.setEnabled(true);
+  }
+
+  private void buildDemandComponents() {
+  	XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(doc);
+	String pathStr = "/scenario/world/regionCGE";
+	String currRegionName;
+	String currYear;
+	String[][] dcTable;
+	int pos;
+        
+	XPathResult res = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+	Node tempNode;
+	Node tempNodeInner;
+	XPathResult resInner;
+	String[] colNames = {"year", "region", "Indusrty", "Intermediate Production", "Consumption", "Investment",
+		"Government", "Trade", "Total"};
+	Vector cols = new Vector();
+	Vector rows = new Vector();
+	Vector tempVector;
+	for(int i = 0; i < colNames.length; i++) {
+		cols.add(colNames[i]);
+	}
+	HashMap filterMaps; 
+	HashMap tempMap;
+	if (tableModel == null) {
+		filterMaps = new HashMap();
+	} else {
+		filterMaps = tableModel.getFilterMaps();
+	}
+	colNames = null;
+	while ((tempNode = res.iterateNext()) != null) {
+		currYear = ((Element)tempNode.getParentNode()).getAttribute("year");
+		currRegionName = ((Element)tempNode).getAttribute("name");
+		dcTable = new String[24][9];
+		initDCTable(dcTable, currYear, currRegionName);
+
+		// get info for production technologies
+		pathStr = "./productionSector/subsector/productionTechnology[(@year <= "+currYear+")]/productionInput/demandCurrency/text()";
+		int x = 0;
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null );
+		while ((tempNodeInner = resInner.iterateNext()) != null) {
+			pos = getPosForInputName(((Element)tempNodeInner.getParentNode().getParentNode()).getAttribute("name"));
+			dcTable[pos][3] = addString(dcTable[pos][3], tempNodeInner.getNodeValue());
+			dcTable[pos][8] = addString(dcTable[pos][8], tempNodeInner.getNodeValue());
+			x++;
+		}
+		System.out.println("this many: "+x);
+
+		// get info for consumers
+		pathStr = "./finalDemandSector/subsector/consumer[(@year = "+currYear+")]/demandInput/demandCurrency/text()";
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null );
+		while ((tempNodeInner = resInner.iterateNext()) != null) {
+			pos = getPosForInputName(((Element)tempNodeInner.getParentNode().getParentNode()).getAttribute("name"));
+			dcTable[pos][4] = addString(dcTable[pos][4], tempNodeInner.getNodeValue());
+			dcTable[pos][8] = addString(dcTable[pos][8], tempNodeInner.getNodeValue());
+		}
+
+		// get info for govt consumers
+		pathStr = "./finalDemandSector/subsector/govtConsumer[(@year = "+currYear+")]/productionInput/demandCurrency/text()";
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null );
+		while ((tempNodeInner = resInner.iterateNext()) != null) {
+			pos = getPosForInputName(((Element)tempNodeInner.getParentNode().getParentNode()).getAttribute("name"));
+			dcTable[pos][6] = addString(dcTable[pos][6], tempNodeInner.getNodeValue());
+			dcTable[pos][8] = addString(dcTable[pos][8], tempNodeInner.getNodeValue());
+		}
+
+		// get info for invest consumers
+		pathStr = "./finalDemandSector/subsector/investConsumer[(@year = "+currYear+")]/productionInput/demandCurrency/text()";
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null );
+		while ((tempNodeInner = resInner.iterateNext()) != null) {
+			pos = getPosForInputName(((Element)tempNodeInner.getParentNode().getParentNode()).getAttribute("name"));
+			dcTable[pos][5] = addString(dcTable[pos][5], tempNodeInner.getNodeValue());
+			dcTable[pos][8] = addString(dcTable[pos][8], tempNodeInner.getNodeValue());
+		}
+
+		// get info for trade consumers
+		pathStr = "./finalDemandSector/subsector/tradeConsumer[(@year = "+currYear+")]/productionInput/demandCurrency/text()";
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null );
+		while ((tempNodeInner = resInner.iterateNext()) != null) {
+			pos = getPosForInputName(((Element)tempNodeInner.getParentNode().getParentNode()).getAttribute("name"));
+			dcTable[pos][7] = addString(dcTable[pos][7], tempNodeInner.getNodeValue());
+			dcTable[pos][8] = addString(dcTable[pos][8], tempNodeInner.getNodeValue());
+		}
+
+		updateTable(dcTable, rows, cols, filterMaps);
+
+	}
+	tableModel = new DataTableModel(cols, rows, filterMaps, DataTableModel.DEMAND_COMPONENTS_TABLE, this);
+	TableSorter sorter = new TableSorter(tableModel);
+	jTable = new JTable(sorter);
+
+	jTable.getModel().addTableModelListener(this);
+
+	sorter.setTableHeader(jTable.getTableHeader());
+	//jTable = new JTable(tableModel);
+	jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	  
+	jTable.setCellSelectionEnabled(true);
+
+	javax.swing.table.TableColumn col;
+	for (int i = 0; i < cols.size(); i++) {
+		col = jTable.getColumnModel().getColumn(i);
+		col.setPreferredWidth(((String)cols.get(i)).length()*5+30);
+	}
+	JScrollPane tableView = new JScrollPane(jTable);
+	splitPane.setRightComponent(tableView);
+	menuTableFilter.setEnabled(true);
+  }
+
+  private void updateTable(String[][] table, Vector rows, Vector cols, HashMap filterMaps) {
+	  Vector tempVector;
+	  HashMap tempMap;
+	for(int i =0; i < table.length; i++) {
+		tempVector = new Vector();
+		for(int j = 0; j< table[i].length; j++) {
+			System.out.print(table[i][j]+"\t");
+			tempVector.add(table[i][j]);
+			if( j <= 2 ) {
+           	  		if (filterMaps.containsKey(cols.get(j))) {
+                   			tempMap = (HashMap)filterMaps.get(cols.get(j));
+                       		} else { 
+                       			tempMap = new HashMap();
+                       		}
+		  		if (!tempMap.containsKey(tempVector.get(j))) {
+                       			tempMap.put(tempVector.get(j), new Boolean(true));
+                       			filterMaps.put(cols.get(j), tempMap);
+		  		}
+			}
+		}
+		rows.add(tempVector);
+		System.out.println("");
+	}
+	System.out.println("");
+  }
+
+  private void initDCTable(String[][] dcTable, String currYear, String currRegionName) {
+	  for(int i =0; i < dcTable.length; i++) {
+		  dcTable[i][0] = currYear;
+		  dcTable[i][1] = currRegionName;
+		  switch(i) {
+			  case 0: dcTable[i][2] = "AgricultureOther"; break;
+			  case 18: dcTable[i][2] = "AnimalProducts"; break;
+			  case 23: dcTable[i][2] = "Capital"; break;
+			  case 11: dcTable[i][2] = "Cement"; break;
+			  case 10: dcTable[i][2] = "Chemicals"; break;
+			  case 4: dcTable[i][2] = "CoalProduction"; break;
+			  case 5: dcTable[i][2] = "CokeProduction"; break;
+			  case 2: dcTable[i][2] = "CrudeOilProduction"; break;
+			  case 1: dcTable[i][2] = "ETE"; break;
+			  case 6: dcTable[i][2] = "ElectricityGeneration"; break;
+			  case 20: dcTable[i][2] = "FoodProcessing"; break;
+			  case 19: dcTable[i][2] = "Forestry"; break;
+			  case 16: dcTable[i][2] = "FrghtTransport"; break;
+			  case 17: dcTable[i][2] = "GrainsOilSeeds"; break;
+			  case 14: dcTable[i][2] = "IndustriesOther"; break;
+			  case 21: dcTable[i][2] = "Labor"; break;
+			  case 3: dcTable[i][2] = "NaturalGasProduction"; break;
+			  case 8: dcTable[i][2] = "NaturalGasTD"; break;
+			  case 13: dcTable[i][2] = "NonFerrousMetals"; break;
+			  case 15: dcTable[i][2] = "PassTransport"; break;
+			  case 7: dcTable[i][2] = "RefinedOil"; break;
+			  case 12: dcTable[i][2] = "Steel"; break;
+			  case 9: dcTable[i][2] = "WoodProducts"; break;
+			  case 22: dcTable[i][2] = "Land"; break;
+		  }
+		  for(int j = 3; j < dcTable[i].length; j++) {
+			  dcTable[i][j] = "0";
+		  }
+	  }
+  }
+
+  private int getPosForInputName(String name) {
+	  if(name.equals("AgricultureOther")) {
+		  return 0;
+	  } else if (name.equals("AnimalProducts")) {
+		  return 18;
+	  } else if (name.equals("Capital")) {
+		  return 23;
+	  } else if (name.equals("Cement")) {
+		  return 11;
+	  } else if (name.equals("Chemicals")) {
+		  return 10;
+	  } else if (name.equals("CoalProduction")) {
+		  return 4;
+	  } else if (name.equals("CokeProduction")) {
+		  return 5;
+	  } else if (name.equals("CrudeOilProduction")) {
+		  return 2;
+	  } else if (name.equals("ETE")) {
+		  return 1;
+	  } else if (name.equals("ElectricityGeneration")) {
+		  return 6;
+	  } else if (name.equals("FoodProcessing")) {
+		  return 20;
+	  } else if (name.equals("Forestry")) {
+		  return 19;
+	  } else if (name.equals("FrghtTransport")) {
+		  return 16;
+	  } else if (name.equals("FrghtTranport")) { // because it is misspelled in the model's data, leave until fixed there
+		  return 16;
+	  } else if (name.equals("GrainsOilSeeds")) {
+		  return 17;
+	  } else if (name.equals("IndustriesOther")) {
+		  return 14;
+	  } else if (name.equals("Labor")) {
+		  return 21;
+	  } else if (name.equals("NaturalGasProduction")) {
+		  return 3;
+	  } else if (name.equals("NaturalGasTD")) {
+		  return 8;
+	  } else if (name.equals("NonFerrousMetals")) {
+		  return 13;
+	  } else if (name.equals("PassTransport")) {
+		  return 15;
+	  } else if (name.equals("RefinedOil")) {
+		  return 7;
+	  } else if (name.equals("Steel")) {
+		  return 12;
+	  } else if (name.equals("Land")) {
+		  return 22;
+	  } else if (name.equals("WoodProducts")) {
+		  return 9;
+	  }
+	  System.out.println("Couldn't find index for "+name);
+	  return -1;
+  }
+
+  private void buildSAM() {
+  	XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(doc);
+	String pathStr = "/scenario/world/regionCGE";
+	String currRegionName;
+	String currYear;
+	String[][] samTable;
+	int pos;
+
+	XPathResult res = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+	Node tempNode;
+	Node tempNodeInner;
+	XPathResult resInner;
+	String[] colNames = {"year", "region", "Receipts", "Activities", "Commodities", "Land",
+		"Labor", "Capital", "Household", "Enterprises", "Government", "Capital Account", "Rest Of World", "Total"};
+	Vector cols = new Vector();
+	Vector rows = new Vector();
+	Vector tempVector;
+	for(int i = 0; i < colNames.length; i++) {
+		cols.add(colNames[i]);
+	}
+	HashMap filterMaps; 
+	HashMap tempMap;
+	if (tableModel == null) {
+		filterMaps = new HashMap();
+	} else {
+		filterMaps = tableModel.getFilterMaps();
+	}
+	colNames = null;
+	while ((tempNode = res.iterateNext()) != null) {
+		currYear = ((Element)tempNode.getParentNode()).getAttribute("year");
+		currRegionName = ((Element)tempNode).getAttribute("name");
+		samTable = new String[11][14];
+		initSAMTable(samTable, currYear, currRegionName);
+		pathStr = "./finalDemandSector[@name=\"Household\"]/subsector/consumer[@year="+currYear+"]/Expenditure/node()";
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		while((tempNodeInner = resInner.iterateNext()) != null) {
+			if(tempNodeInner.getNodeName().equals("consumtion") || tempNodeInner.getNodeName().equals("consumption")) {
+				samTable[1][8] = addString(samTable[1][8], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][8] = addString(samTable[10][8], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[1][13] = addString(samTable[1][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("transfers")) {
+				samTable[5][8] = addString(samTable[5][8], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][8] = addString(samTable[10][8], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[5][13] = addString(samTable[5][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("directTaxes")) {
+				samTable[7][8] = addString(samTable[7][8], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][8] = addString(samTable[10][8], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[7][13] = addString(samTable[7][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("savings")) {
+				samTable[8][8] = addString(samTable[8][8], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][8] = addString(samTable[10][8], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[8][13] = addString(samTable[8][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+		}
+
+		pathStr = "./finalDemandSector[@name=\"Government\"]/subsector/govtConsumer[@year="+currYear+"]/Expenditure/node()";
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		while((tempNodeInner = resInner.iterateNext()) != null) {
+			if(tempNodeInner.getNodeName().equals("subsidy")) {
+				samTable[0][10] = addString(samTable[0][10], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][10] = addString(samTable[10][10], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[0][13] = addString(samTable[0][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("consumption")) {
+				samTable[1][10] = addString(samTable[1][10], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][10] = addString(samTable[10][10], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[1][13] = addString(samTable[1][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("transfers")) {
+				samTable[5][10] = addString(samTable[5][10], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][10] = addString(samTable[10][10], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[5][13] = addString(samTable[5][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("savings")) {
+				samTable[8][10] = addString(samTable[8][10], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][10] = addString(samTable[10][10], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[8][13] = addString(samTable[8][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+		}
+
+		pathStr = "./finalDemandSector[@name=\"Trade\"]/subsector/tradeConsumer[@year="+currYear+"]/Expenditure/node()";
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		while((tempNodeInner = resInner.iterateNext()) != null) {
+			if(tempNodeInner.getNodeName().equals("totalImports")) {
+				samTable[0][12] = addString(samTable[0][12], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][12] = addString(samTable[10][12], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[0][13] = addString(samTable[0][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+		}
+
+		pathStr = "./finalDemandSector[@name=\"Investment\"]/subsector/investConsumer[@year="+currYear+"]/Expenditure/node()";
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		while((tempNodeInner = resInner.iterateNext()) != null) {
+			if(tempNodeInner.getNodeName().equals("investment")) {
+				samTable[1][11] = addString(samTable[1][11], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][11] = addString(samTable[10][11], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[1][13] = addString(samTable[1][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+		}
+
+		pathStr = "./productionSector/subsector/productionTechnology[@year <= "+currYear+"]/Expenditure/node()";
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		while((tempNodeInner = resInner.iterateNext()) != null) {
+			System.out.println("Got results: "+tempNodeInner);
+			if(tempNodeInner.getNodeName().equals("intermediateInput")) {
+				samTable[1][3] = addString(samTable[1][3], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][3] = addString(samTable[10][3], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[1][13] = addString(samTable[1][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("wages")) {
+				samTable[3][3] = addString(samTable[3][3], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][3] = addString(samTable[10][3], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[3][13] = addString(samTable[3][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("landRents")) {
+				samTable[2][3] = addString(samTable[2][3], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][3] = addString(samTable[10][3], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[2][13] = addString(samTable[2][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("rentals")) {
+				samTable[4][3] = addString(samTable[4][3], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][3] = addString(samTable[10][3], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[4][13] = addString(samTable[4][13], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[6][7] = addString(samTable[6][7], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][7] = addString(samTable[10][7], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[6][13] = addString(samTable[6][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("indirectTaxes")) {
+				samTable[7][3] = addString(samTable[7][3], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][3] = addString(samTable[10][3], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[7][13] = addString(samTable[7][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("sales")) {
+				samTable[0][4] = addString(samTable[0][4], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][4] = addString(samTable[10][4], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[0][13] = addString(samTable[0][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("tariffs")) {
+				samTable[7][4] = addString(samTable[7][4], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][4] = addString(samTable[10][4], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[7][13] = addString(samTable[7][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("imports")) {
+				samTable[9][4] = addString(samTable[9][4], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][4] = addString(samTable[10][4], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[9][13] = addString(samTable[9][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("dividends")) {
+				samTable[5][9] = addString(samTable[5][9], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][9] = addString(samTable[10][9], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[5][13] = addString(samTable[5][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("directTaxes")) {
+				samTable[7][9] = addString(samTable[7][9], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][9] = addString(samTable[10][9], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[7][13] = addString(samTable[7][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+			else if(tempNodeInner.getNodeName().equals("retainedEarnings")) {
+				samTable[8][9] = addString(samTable[8][9], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[10][9] = addString(samTable[10][9], tempNodeInner.getFirstChild().getNodeValue());
+				samTable[8][13] = addString(samTable[8][13], tempNodeInner.getFirstChild().getNodeValue());
+			}
+		}
+
+		pathStr = "./factorSupply[@name=\"Land\"]/supply/node()";
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		while((tempNodeInner = resInner.iterateNext()) != null) {
+			System.out.println("Got results");
+			samTable[5][5] = addString(samTable[5][5], tempNodeInner.getNodeValue());
+			samTable[10][5] = addString(samTable[10][5], tempNodeInner.getNodeValue());
+			samTable[5][13] = addString(samTable[5][13], tempNodeInner.getNodeValue());
+		}
+
+		pathStr = "./factorSupply[@name=\"Labor\"]/supply/node()";
+		resInner = (XPathResult)xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(doc.getDocumentElement())).evaluate(tempNode, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		while((tempNodeInner = resInner.iterateNext()) != null) {
+			System.out.println("Got results");
+			samTable[5][6] = addString(samTable[5][6], tempNodeInner.getNodeValue());
+			samTable[10][6] = addString(samTable[10][6], tempNodeInner.getNodeValue());
+			samTable[5][13] = addString(samTable[5][13], tempNodeInner.getNodeValue());
+		}
+		updateTable(samTable, rows, cols, filterMaps);
+	}
+	tableModel = new DataTableModel(cols, rows, filterMaps, DataTableModel.SAM, this);
+	TableSorter sorter = new TableSorter(tableModel);
+	jTable = new JTable(sorter);
+
+	jTable.getModel().addTableModelListener(this);
+
+	sorter.setTableHeader(jTable.getTableHeader());
+	//jTable = new JTable(tableModel);
+	jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	  
+	jTable.setCellSelectionEnabled(true);
+
+	javax.swing.table.TableColumn col;
+	for (int i = 0; i < cols.size(); i++) {
+		col = jTable.getColumnModel().getColumn(i);
+		col.setPreferredWidth(((String)cols.get(i)).length()*5+30);
+	}
+	JScrollPane tableView = new JScrollPane(jTable);
+	splitPane.setRightComponent(tableView);
+	menuTableFilter.setEnabled(true);
+  }
+
+  private void initSAMTable(String[][] samTable, String currYear, String currRegionName) {
+	  for(int i =0; i < samTable.length; i++) {
+		  samTable[i][0] = currYear;
+		  samTable[i][1] = currRegionName;
+		  switch(i) {
+			  case 0: samTable[i][2] = "Activities"; break;
+			  case 1: samTable[i][2] = "Commodities"; break;
+			  case 2: samTable[i][2] = "Factors: Land"; break;
+			  case 3: samTable[i][2] = "Factors: Labor"; break;
+			  case 4: samTable[i][2] = "Factors: Capital"; break;
+			  case 5: samTable[i][2] = "Household"; break;
+			  case 6: samTable[i][2] = "Enterprises"; break;
+			  case 7: samTable[i][2] = "Government"; break;
+			  case 8: samTable[i][2] = "Capital Account"; break;
+			  case 9: samTable[i][2] = "Rest Of World"; break;
+			  case 10: samTable[i][2] = "Totals"; break;
+			  default: samTable[i][2] = ""; break;
+		  }
+		  for(int j = 3; j < samTable[i].length; j++) {
+			  samTable[i][j] = "0";
+		  }
+	  }
+  }
+
+  private String addString(String a, String b) {
+	  try {
+	  	return (new Double(Double.parseDouble(a) + Double.parseDouble(b))).toString();
+	  } catch (Exception e) {
+		  System.out.println("Got an exception a: "+a+" b: "+b);
+		  return "0";
+	  }
   }
 
   private Vector recBuildParentList(Node currNode, Vector currList, Vector path) {
@@ -745,7 +1264,13 @@ public class FileChooserDemo extends JFrame
 class MyTreeModelListener implements TreeModelListener {
 		public void treeNodesChanged(TreeModelEvent e) {
 			System.out.println("treenodes have changed!");
-			Node node = ((DOMmodel.DOMNodeAdapter)e.getTreePath().getLastPathComponent()).getNode();
+			//jtree.setSelectionPath(e.getTreePath());
+			//System.out.println(jtree.getSelectionPath());
+			//System.out.println(jtree.getLeadSelectionPath());
+			if(jTable != null) {
+				Node node = ((DOMmodel.DOMNodeAdapter)e.getTreePath().getLastPathComponent()).getNode();
+				((DataTableModel)((TableSorter)jTable.getModel()).getTableModel()).setValueAt(node.getNodeValue(), e.getTreePath());
+			}
 
 			 /*
 			try {

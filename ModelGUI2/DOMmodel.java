@@ -101,18 +101,20 @@ public class DOMmodel implements TreeModel {
         
         Node child = ((DOMmodel.DOMNodeAdapter)path.getLastPathComponent()).getNode();
         if( child.getNodeType() == Element.TEXT_NODE ){
-        	child.setNodeValue( (String)newValue );
+        	//child.setNodeValue( (String)newValue );
+		child.setNodeValue( newValue.toString() );
         }else{
         	System.out.println("ERROR: can only change text nodes!");
         }
         
-		TreeModelListener listener;
-		Iterator it = treeModelListeners.iterator();
-		while (it.hasNext()) {
-			listener = (TreeModelListener)it.next();
-			listener.treeNodesChanged(new TreeModelEvent(this, path.getParentPath()));
-		}
-		return; 
+	TreeModelListener listener;
+	Iterator it = treeModelListeners.iterator();
+	while (it.hasNext()) {
+		listener = (TreeModelListener)it.next();
+		//listener.treeNodesChanged(new TreeModelEvent(this, path.getParentPath()));
+		listener.treeNodesChanged(new TreeModelEvent(this, path));
+	}
+	return; 
   	//api says: Messaged when the user has altered the value for the item
   	//identified by path to newValue. If newValue signifies a truly new value
   	//the model should post a treeNodesChanged event.

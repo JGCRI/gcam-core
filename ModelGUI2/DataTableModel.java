@@ -2,6 +2,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.tree.TreePath;
 /*
 import javax.swing.JDialog;
 import javax.swing.JButton;
@@ -18,12 +19,24 @@ public class DataTableModel extends AbstractTableModel {
 	private Vector rows;
 	private Vector activeRows;
 	private HashMap tableFilterMaps;
+	private short tableType;
+	
+	public static final short NORMAL_TABLE = 0;
+	public static final short DEMAND_COMPONENTS_TABLE = 1;
+	public static final short SAM = 2;
 
-	public DataTableModel(Vector colHeaders, Vector rowData, HashMap filterMaps, JFrame parentFrame) {
+	public DataTableModel(Vector colHeaders, Vector rowData, HashMap filterMaps, short type, JFrame parentFrame) {
 		cols = colHeaders;
 		rows = rowData;
 		tableFilterMaps = filterMaps;
+		/*
+		activeRows = new Vector();
+		for (int i = 0; i < rows.size(); i++) {
+			activeRows.addElement(new Integer(i));
+		}
+		*/
 		filterData(parentFrame, true);
+		tableType = type;
 	}
 
 	public int getRowCount() {
@@ -35,7 +48,7 @@ public class DataTableModel extends AbstractTableModel {
 	}
 
 	public boolean isCellEditable(int row, int col) {
-		if(col == cols.size()-1 ){
+		if(col == cols.size()-1 && tableType == NORMAL_TABLE){
 			return true;
 		}else{
 			return false;
@@ -46,40 +59,44 @@ public class DataTableModel extends AbstractTableModel {
 		if (value instanceof Double) {
 			value = ((Double)value).toString();
 		}
+		if(value.toString().equals(getValueAt(row, col).toString())) {
+			System.out.println("Didn't Change");
+			return;
+		}
 		((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).set(col, value);
+		System.out.println("Trying to set a value");
 		fireTableCellUpdated(row, col);
 	}
 
+	public void setValueAt(Object value, TreePath tp) {
+		if( tableType == NORMAL_TABLE ) {
+			int col = getColumnCount();
+			for(int i = 0; i < rows.size(); i++) {
+				//System.out.println("in is "+tp.toString());
+				//System.out.println("row is "+((Vector)rows.get(i)).get(col).toString());
+				if(((Vector)rows.get(i)).get(col).toString().equals(tp.toString())) {
+					if(value.toString().equals(getValueAt(i, col-1).toString())) {
+						System.out.println("Didn't Change tp");
+						return;
+					}
+					((Vector)rows.get(i)).set(col-1, value);
+					System.out.println("Trying to set a value tp");
+					return;
+				}
+			}
+		}
+	}
 
 	public Object getValueAt(int row, int column) {
 		Object ret = ((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).get(column);
-		//return ret;
-		if (checkClass(ret) == Double.class) {
+		if(column == getColumnCount()) {
+			return ret;
+		}
+		if(getColumnClass(column) == Double.class) {
 			return new Double((String)ret);
 		}
 		return ret;
-		//return ((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).get(column);
 	}
-
-	/*
-	public Object getValueAtNew(int row, int column){
-		return ((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).get(column);
-	}
-	*/
-
-	/*
-	public class DoubleType extends Double {
-		String strNum;
-		DoubleType(String num) {
-			super(num);
-			strNum = num;
-		}
-
-		public String toString() {
-			return strNum;
-		}
-	}
-	*/
 
 	public String getColumnName(int column) {
 		return (String)cols.get(column);
@@ -95,7 +112,9 @@ public class DataTableModel extends AbstractTableModel {
 	}
 
 	public Class getColumnClass(int column) {
-		//return String.class;
+		if (((String)cols.get(column)).matches("^.*year$")) {
+			return String.class;
+		}
 		return checkClass((((Vector)rows.get(0)).get(column)));
 	}
 
@@ -107,10 +126,13 @@ public class DataTableModel extends AbstractTableModel {
 			activeRows = new Vector();
 		}
 		final int oldNumRows = activeRows.size();
+		/*
+		final Vector oldActiveRows = activeRows;
 		activeRows = new Vector();
 		for (int i = 0; i < rows.size(); i++) {
 			activeRows.addElement(new Integer(i));
 		}
+		*/
 		currKeys = new String[0];
 		final HashMap tempFilterMaps = (HashMap)tableFilterMaps.clone();
 		final Vector possibleKeys = new Vector();
@@ -128,7 +150,11 @@ public class DataTableModel extends AbstractTableModel {
 			title = "Filter Results";
 		} else {
 			title = "Filter Table";
-			possibleKeys.addAll(cols.subList(0,cols.size()-1));
+			if(tableType == NORMAL_TABLE) {
+				possibleKeys.addAll(cols.subList(0,cols.size()-1));
+			} else if (tableType == DEMAND_COMPONENTS_TABLE ) {
+				possibleKeys.addAll(cols.subList(0,cols.size()-6));
+			}
 		}
 		if (possibleKeys.isEmpty()) {
 			return;
@@ -158,11 +184,15 @@ public class DataTableModel extends AbstractTableModel {
 					tableFilterMaps = tempFilterMaps;
 					doFilter(possibleKeys, tempIsCondensed);
 					if (oldNumRows < activeRows.size()) {
+						System.out.println("%% 1 %%");
 						fireTableRowsInserted(oldNumRows, activeRows.size());
 					} else if (oldNumRows > activeRows.size()) {
+						System.out.println("%% 2 %%");
 						fireTableRowsDeleted(0, activeRows.size());
+					} else {
+						System.out.println("%% 3 %%");
+						fireTableRowsUpdated(0,activeRows.size());
 					}
-					fireTableRowsUpdated(0,activeRows.size());
 				}
 				//exit this dialog..
 				filterDialog.dispose();
@@ -275,6 +305,10 @@ public class DataTableModel extends AbstractTableModel {
 	}
 
 	private void doFilter(Vector possibleFilters, boolean isCondensed) {
+		activeRows = new Vector();
+		for (int i = 0; i < rows.size(); i++) {
+			activeRows.addElement(new Integer(i));
+		}
 		Integer rowPos = new Integer(-1);
 		if (isCondensed) {
 			Vector tempVector = new Vector();
