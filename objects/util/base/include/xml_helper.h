@@ -632,7 +632,8 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
             // Remove the pointer from the vector. 
             insertToVector.erase( delIter );
 
-            // Now reset the map. There is probably a more efficient way to do this. 
+            // Now reset the map. There is probably a more efficient way to do this.
+            corrMap.clear();
             for( int i = 0; i < static_cast<int>( insertToVector.size() ); i++ ){
                 corrMap[ insertToVector[ i ]->getName() ] = i;
                 }  
