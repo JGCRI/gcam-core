@@ -132,6 +132,11 @@ bool GHGMarket::shouldSolveNR() const {
    if ( ( supply < util::getSmallNumber() ) ||  ( price < util::getSmallNumber() && ( demand - supply ) < util::getSmallNumber() ) ) {
       doSolveMarket = false; 
    }
+    
+   // New
+   if( price < util::getSmallNumber() ){
+       doSolveMarket = false;
+   }
 
    return doSolveMarket;
 }
