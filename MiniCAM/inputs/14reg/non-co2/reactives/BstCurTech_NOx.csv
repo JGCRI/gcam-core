@@ -1,0 +1,50 @@
+Emission control parameters,,,,
+,Note - F_max will be ignored if coefficient convergence vai input 810 is used,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+805,,,,
+"OGGDPPARMS(igas,isrc,1:3,L)",,,,
+gas,src,,,
+4,16,,transportation_oil,
+Region,F_max,GDP_0,Tau,
+1,0.8,25,25,US
+2,0.8,25,25,CANADA
+3,0.8,25,25,WEUR
+4,0.8,25,25,JAPAN
+5,0.8,25,25,AUS&NZ
+6,0.8,25,25,FSU
+7,0.8,25,25,ACENP
+8,0.8,25,25,MIDEAST,,,,,,,,,,,
+9,0.8,25,25,AFRICA,,,,,,,,,,,
+10,0.8,25,25,L AMER,,,,,,,,,,,
+11,0.8,25,25,S&E ASIA,,,,,,,,,,,
+12,0.8,25,25,EEUR,,,,,,,,,,,
+13,0.8,25,25,KOR,,,,,,,,,,,
+14,0.8,25,25,INDIA,,,,,,,,,,,
+
+
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,CONVERGENCE TEST TABLE --  this makes the emissions coefficient converge for all regions (to the US coeff),,,,,,,,,,,,,
+810,,,,,,,,,,,,,,,
+Source Inputs,,"Enter the desired coefficient (check OG_COEFFS.CSV for the implied coefficients if base year emissions are entered), -1 turns off convergence for that cell",,,,,,,,,,,,,
+Gas,NumSources,Nregions,,,,,,,,,,,,,
+4,14,14,,,,,,,,,,,,,
+0,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E ASIA,EEUR,KOR,INDIA,,
+1,elec_coal,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,,Low Bioler Mission Systems
+3,elec_oil,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,,
+5,elec_gas,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,,
+7,inds_coal,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11,,Set to 50% of best current best performance
+8,inds_oil,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,,Set to .05 level
+9,inds_gas,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,,
+10,inds_biom,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,,
+11,boc_coal,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,,Set to 50% of best current best performance
+12,boc_oil,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,,Set to .05 level
+13,boc_gas,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,,
+14,boc_biom,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,,
+15,trans_coal,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,,Set to .05 level
+16,trans_oil,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,0.06,,Use of hybrid-electric cars
+17,trans_gas,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,,
+21,inds_proc,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,,
+
+EoF
