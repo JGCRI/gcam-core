@@ -394,6 +394,18 @@ void DemandSector::csvOutputFile() const {
     fileoutput3( regionName, getName(), " ", " ", "C tax paid", "Mil90$", carbonTaxPaid);
 }
 
+/*! \brief Sets output of Sector, used for demand sectors
+*
+* For demand sectors, the output of the Sector, which is the total service demand, is set directly, instead of summing up from subsectors.
+* \note If its for demand sectors why is it in Sector? -Josh
+* \author Sonny Kim
+* \param demand Total service demand
+* \param period Model period
+*/
+void DemandSector::setServiceDemand( const double demand, const int period ) {
+    output[ period ] = demand;
+}
+
 //! Write MiniCAM style demand sector output to database.
 void DemandSector::dbOutput() const {
     const Modeltime* modeltime = scenario->getModeltime();

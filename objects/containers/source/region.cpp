@@ -695,7 +695,7 @@ void Region::calc( const int period, const bool doCalibrations ) {
     calcGDP( period );
     // determine supply of primary resources
     calcResourceSupply( period );
-    // determine prices of refined fuels and electricity
+    // determine prices for all supply sectors (e.g., refined fuels, electricity, etc.)
     calcFinalSupplyPrice( period );
     // calculate enduse service price
     calcEndUsePrice( period );
@@ -899,6 +899,7 @@ or, at the level of total final energy demand (via calibrateTFE)
 void Region::calibrateRegion( const bool doCalibrations, const int period ) {
     // Do subsector and technology level energy calibration
     // can only turn off calibrations that do not involve markets
+
     if ( doCalibrations ) {
         // Calibrate demand sectors
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
@@ -1031,7 +1032,7 @@ double Region::getTotFinalEnergy( const int period ) const {
 
 /*! \brief Return ratio of TFE and calibrated value
 *
-* Returns 0 if TFE calib value is zero, which indicate there is no calibration
+* Returns 0 if TFE calib value is zero, which indicates there is no calibration
 *
 * \author Steve Smith
 * \param period Model period
@@ -1149,8 +1150,8 @@ void Region::adjustCalibrations( const int period ) {
                         demandSector[ j ]->scaleCalibratedValues( period, goodName, ScaleValue ); 
                     }
                 } else if ( calDemand != 0 ) {
-                    mainLog.setLevel( ILogger::DEBUG );
-                    mainLog << "Outputs are NOT all fixed." << endl;
+                   mainLog.setLevel( ILogger::DEBUG );
+                   mainLog << "Demands all fixed (but not supply) for " << goodName << endl;
                 } else {
                     if ( supplySector[ i ]->outputsAllFixed( period ) && ( calDemand != 0 || calSupply != 0 ) ) {
                         mainLog << ", Supply is fixed at, " << calSupply;
@@ -1323,16 +1324,33 @@ void Region::csvOutputFile() const {
     // regional total carbon taxes paid
     fileoutput3(name," "," "," ","C tax revenue","Mil90$",carbonTaxPaid);
 
+    // write total emissions for region
+    for (int m=0;m<maxper;m++) {
+        temp[m] = summary[m].get_emissmap_second("CO2"); }
+    fileoutput3(name," "," "," ","CO2 emiss","MTC",temp);
+
     // TFE for this region
     for (int m=0;m<maxper;m++) {
         temp[m] = getTotFinalEnergy(m);
     }
     fileoutput3(name," "," "," ","TFE","EJ",temp);
     
-    // write total emissions for region
-    for (int m=0;m<maxper;m++)
-        temp[m] = summary[m].get_emissmap_second("CO2");
-    fileoutput3(name," "," "," ","CO2 emiss","MTC",temp);
+    // region primary energy consumption by fuel type
+    typedef map<string,double>:: const_iterator CI;
+    map<string,double> tpemap = summary[0].getpecons();
+    for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
+        for (int m=0;m<maxper;m++) {
+            temp[m] = summary[m].get_pemap_second(pmap->first);
+        }
+        fileoutput3(name,"Pri Energy","Consumption","",pmap->first,"EJ",temp);
+    }
+
+    // regional Pri Energy Production Total
+    for (int m=0;m<maxper;m++) {
+        temp[m] = summary[m].get_peprodmap_second("zTotal");
+    }
+    fileoutput3(name,"Pri Energy","total","","zTotal","EJ",temp);
+
     // write resource results to file
     for ( unsigned int i = 0; i < resources.size(); i++ ) 
         resources[i]->csvOutputFile( name );
@@ -1341,6 +1359,7 @@ void Region::csvOutputFile() const {
         supplySector[i]->csvOutputFile();
         supplySector[i]->subsec_outfile();
     }
+    
     // write end-use sector demand results to file
     for ( unsigned int i = 0; i < demandSector.size(); i++ ){
         demandSector[i]->csvOutputFile();	
@@ -1465,8 +1484,7 @@ void Region::dbOutput() const {
     */	
     // region primary energy consumption by fuel type
     map<string,double> tpemap = summary[0].getpecons();
-    CI pmap;
-    for (pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
+    for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
         for (m=0;m<maxper;m++) {
             temp[m] = summary[m].get_pemap_second(pmap->first);
         }
@@ -1475,7 +1493,7 @@ void Region::dbOutput() const {
 
     // region primary energy trade by fuel type
     tpemap = summary[0].getpetrade();
-    for (pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
+    for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
         for (m=0;m<maxper;m++) {
             temp[m] = summary[m].get_petrmap_second(pmap->first);
         }

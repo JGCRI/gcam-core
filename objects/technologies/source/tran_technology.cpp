@@ -84,6 +84,7 @@ bool TranTechnology::XMLDerivedClassParse( const string nodeName, const DOMNode*
     }
     return true;
 }
+
 /*! \brief XML output stream for derived classes
 *
 * Function writes output due to any variables specific to derived classes to XML
@@ -116,6 +117,33 @@ void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* ta
     XMLWriteElement( baseScaler, "baseScaler", out, tabs );
 }	
 
+//! Perform initializations that only need to be done once per period.
+/*! Check to see if illegal values have been read in
+* This avoids serious errors that can be hard to trace
+*/
+//! 
+void TranTechnology::initCalc( ) {    
+    
+    technology::initCalc();
+
+    // Check if illegal values have been read in
+    if ( loadFactor == 0 ) {
+        loadFactor = 1;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "ERROR: loadFactor was zero in technology: " << name << ".  Reset to 1." << endl;
+    }
+    
+    if ( intensity == 0 ) {
+        intensity = 1;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "ERROR: intensity was zero in technology: " << name << ".  Reset to 1." << endl;
+    }
+    
+}
+
+
 //! define technology fuel cost and total cost
 void TranTechnology::calcCost( const string& regionName, const string& sectorName, const int per ) {
     if( per > 1 ){
@@ -134,18 +162,32 @@ void TranTechnology::calcCost( const string& regionName, const string& sectorNam
     fuelcost = ( (fuelprice * fMultiplier) + totalGHGCost ) * intensity/techChangeCumm
              * JPERBTU/(1.0E9)*CVRT90;
     techcost = ( fuelcost + necost ) * pMultiplier;
+    
+    // Convert cost to cost per service instead of cost per vehicle.
+    // For example,  convert $/vehicle-mi into $/pass-mi or $/ton-mi 
+
+    techcost = techcost/loadFactor;
 }
 
 //! Calculates fuel input and TranTechnology output.
 /*! Adds demands for fuels and ghg emissions to markets in the marketplace
+* NOTE, the demand passed in is the service demand, 
+* which is then converted to a per vehicle demand through the loadfactor
+* \param regionName name of the region
+* \param prodName name of the product for this sector
+* \param gdp pointer to gdp object
+* \param dmd total demand for this subsector
+* \param per Model period
 */
 void TranTechnology::production(const string& regionName,const string& prodName,
                                 double dmd, const GDP* gdp, const int per ) {
     output = share * dmd;
+
+    // Convert from service (pas-km) to vehicle demand (vehicle-km)
+    vehicleOutput = output/loadFactor;
         
     // for transportation technology use intensity instead of efficiency
     // convert from million Btu to EJ
-    vehicleOutput = output/loadFactor;
     const double ECONV = 1.055e-9;
 
     //intensity /= pow(1+techchange,timestep*per);

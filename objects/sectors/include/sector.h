@@ -71,7 +71,6 @@ protected:
     virtual void calcPrice( const int period );
     void production( const int period );
     void adjustForFixedSupply( const double marketDemand, const int period );
-    void setServiceDemand( const double demand, const int period );
     void setoutput( const double demand, const int period ); 
     void adjSharesCapLimit( const int period ); 
     void checkShareSum( const int period ) const;
@@ -94,7 +93,7 @@ public:
     virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void setMarket();
-    void initCalc( const int period );
+    virtual void initCalc( const int period );
     virtual void calibrateSector( const int period ); 
     virtual void checkSectorCalData( const int period );
     void setFinalSupply( const int period );

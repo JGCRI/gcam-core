@@ -108,6 +108,10 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
         // Calculate derivatives
         code = calculateDerivatives( solverSet, JFSM, JFDM, JF, period );        
         if ( code != SUCCESS ) {
+            // Restore calibration status to avoid superfluous errors in latter periods
+            if ( calibrationStatus ) { 
+                world->turnCalibrationsOn();
+            }  
             return code;
         }
         

@@ -338,6 +338,10 @@ void Sector::initCalc( const int period ) {
 * \param period Model period
 */
 void Sector::checkSectorCalData( const int period ) {
+
+    for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
+        ( *j )->checkSubSectorCalData( period );
+    }
 }
 
 /*! \brief Test to see if calibration worked for this sector
@@ -1300,18 +1304,6 @@ void Sector::subsec_outfile() const {
         // output or demand for each technology
         subsec[ i ]->csvOutputFile();
     }
-}
-
-/*! \brief Sets output of Sector, used for demand sectors
-*
-* For demand sectors, the output of the Sector, which is the total service demand, is set directly, instead of summing up from subsectors.
-* \note If its for demand sectors why is it in Sector? -Josh
-* \author Sonny Kim
-* \param demand Total service demand
-* \param period Model period
-*/
-void Sector::setServiceDemand( const double demand, const int period ) {
-    output[ period ] = demand;
 }
 
 /*! \brief Returns total carbon tax paid by Sector.

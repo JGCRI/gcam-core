@@ -75,7 +75,7 @@ protected:
     bool techHasInput( const technology* thisTech, const std::string& goodName ) const;
     virtual void MCDerivedClassOutput() const;
     virtual void csvDerivedClassOutput() const;
-    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const{};
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const{};
@@ -94,7 +94,8 @@ public:
     virtual void calcPrice( const int period );
     double getPrice( const int period ) const;
     double getCO2EmFactor(int period) const;
-    void initCalc( const int period );
+    virtual void initCalc( const int period );
+    virtual void checkSubSectorCalData( const int period );
     bool getCalibrationStatus( const int period ) const;
     void setCalibrationStatus( const int period );
     void scaleCalibrationInput( const int period, const double scaleFactor );

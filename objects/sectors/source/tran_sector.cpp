@@ -125,12 +125,12 @@ void TranSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs )
 * \param period Model period
 */
 void TranSector::checkSectorCalData( const int period ) {
-// Since period 1 is calibrated, must make sure that read-in calibration is equal to demand. 
+// For any periods where inputs are calibrated, must make sure that read-in calibration is equal to service demand. 
 
    // Adjust aggregate demand to match calibrated outputs of all inputs to this sector are calibrated
   if ( inputsAllFixed( period, "allInputs" ) ) {
+      service[0] = getCalOutput( period );
       double scaleFactor = getCalOutput( period ) / service[0];
-      service[0] = scaleFactor * service[0];
       ILogger& mainLog = ILogger::getLogger( "main_log" );
       mainLog << "Calibrated Demand Scaled by " << scaleFactor << " in region " << regionName << " sector " << name << endl;
    }

@@ -30,9 +30,10 @@ class TranSubsector: public Subsector
 {
 public:
     TranSubsector( std::string regionName, std::string sectorName );
-    virtual void calcShare( const int period, const GDP* gdp ); 
-    virtual void setoutput( const double demand, const int period, const GDP* gdp );
+    void calcShare( const int period, const GDP* gdp ); 
+    void setoutput( const double demand, const int period, const GDP* gdp );
     static const std::string& getXMLNameStatic();
+    void initCalc( const int period );
 protected:
     std::vector<double> speed; // Speed of Mode in Miles/hour
     std::vector<double> popDenseElasticity; // Population Density Elasticity of mode
@@ -42,12 +43,12 @@ protected:
     std::vector<double> loadFactor; //Load factor, persons or tons per vehicle (pass./freight)
     double popDensity; // population density per land area
     double baseScaler; // constant scaler to scale base output
-    virtual void MCDerivedClassOutput() const;
-    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual const std::string& getXMLName() const;
+    void MCDerivedClassOutput() const;
+    bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+    const std::string& getXMLName() const;
 private:
     static const std::string XML_NAME; //!< XML name of this object.
 };

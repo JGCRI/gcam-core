@@ -226,18 +226,20 @@ void Subsector::XMLParse( const DOMNode* node ) {
             }
         }
         // parsed derived classes
+        else if ( XMLDerivedClassParse( nodeName, curr ) ) {
+        } 
         else {
-            XMLDerivedClassParse( nodeName, curr );
+          cout << "Unrecognized text string: " << nodeName << " found while parsing "<< getXMLName() <<" "<<name<<"." << endl;        
         }
     }
 }
 
 //! Parses any input variables specific to derived classes
-void Subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+bool Subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
     // do nothing
     // defining method here even though it does nothing so that we do not
     // create an abstract class.
-    cout << "Unrecognized text string: " << nodeName << " found while parsing Subsector." << endl;
+    return false;
 }
 
 //! Complete the initialization.
@@ -501,6 +503,15 @@ void Subsector::initCalc( const int period ) {
 	} // End For
 }
 
+/*! \brief Perform any sub-sector level calibration data consistancy checks
+*
+* \author Steve Smith
+* \param period Model period
+*/
+void Subsector::checkSubSectorCalData( const int period ) {
+}
+
+
 /*! \brief Computes weighted cost of all technologies in Subsector.
 *
 * Called from calcShare after technology shares are determined. Calculates share-weighted total price (subsectorprice) and cost of fuel (fuelprice). 
@@ -700,7 +711,7 @@ void Subsector::calcTechShares( const GDP* gdp, const int period ) {
 * \author Sonny Kim, Josh Lurz
 * \param regionName region name
 * \param period model period
-* \param scaledGdpPerCapita GDP per capita, relative to base year
+* \param gdp gdp object
 * \warning technologies can not independently have fixed outputs
 * \warning there is no difference between demand and supply technologies. Control behavior with value of parameter fuelPrefElasticity
 */

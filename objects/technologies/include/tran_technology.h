@@ -35,6 +35,8 @@ public:
     void production( const std::string& regionName, const std::string& prodName,double dmd, const GDP* gdp, const int per);    
     double getIntensity(const int per) const;
     double getCalibrationOutput() const;
+    void initCalc( );
+
 protected:
     double techChangeCumm; //!< cummulative technical change
     double loadFactor; //!< vechile load factor

@@ -72,6 +72,7 @@ protected:
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
  	virtual const std::string& getXMLName() const; 
+    void setServiceDemand( const double demand, const int period );
 private:
 	static const std::string XML_NAME; //!< node name for toXML methods
 };

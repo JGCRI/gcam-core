@@ -681,6 +681,11 @@ void technology::adjShares(double subsecdmd, double subsecfixedOutput, double va
 
 //! Calculates fuel input and technology output.
 /*! Adds demands for fuels and ghg emissions to markets in the marketplace
+* \param regionName name of the region
+* \param prodName name of the product for this sector
+* \param gdp pointer to gdp object
+* \param dmd total demand for this subsector
+* \param per Model period
 */
 void technology::production(const string& regionName,const string& prodName,
                             double dmd, const GDP* gdp, const int per) {
@@ -723,7 +728,7 @@ void technology::production(const string& regionName,const string& prodName,
     }
 }
 
-/*! \brief Adjusts technooogy share weights to be consistent with calibration value.
+/*! \brief Adjusts technology share weights to be consistent with calibration value.
 * This is done only if there is more than one technology
 * Calibration is, therefore, performed as part of the iteration process. 
 * Since this can change derivatives, best to turn calibration off when using N-R solver.

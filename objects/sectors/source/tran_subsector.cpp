@@ -42,7 +42,6 @@ TranSubsector::TranSubsector( const string regionName, const string sectorName )
     servicePrice.resize( maxper ); // price converted by loadfactor
     timeValue.resize( maxper ); // time value of mode
     generalizedCost.resize( maxper ); // price adjusted by time value
-    loadFactor.resize( maxper ); // persons or tons per vehicle
     popDensity = 1; // initialize to 1 for now
     baseScaler = 0;
 }
@@ -73,7 +72,7 @@ const std::string& TranSubsector::getXMLNameStatic() {
 }
 
 //! Parses any input variables specific to derived classes
-void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {    
+bool TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {    
     // additional read in for transportation
     const Modeltime* modeltime = scenario->getModeltime();
     if( nodeName == "speed" ){
@@ -81,9 +80,6 @@ void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
     }
     else if( nodeName == "popDenseElasticity" ){
         XMLHelper<double>::insertValueIntoVector( curr, popDenseElasticity, modeltime );
-    }
-    else if( nodeName == "loadFactor" ){
-        XMLHelper<double>::insertValueIntoVector( curr, loadFactor, modeltime );
     }
     // Is this going to conflict with parsing output? 
     else if( nodeName == "serviceoutput" ){
@@ -152,8 +148,11 @@ void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
             techNameMap[ techVec[ 0 ]->getName() ] = static_cast<int>( techs.size() ) - 1;
             techVec.clear();
             techVec.resize( modeltime->getmaxper(), 0 );
-        }
+        } 
+    }  else {
+      return false;
     }
+    return true;
     // completed parsing.
 }
 
@@ -172,13 +171,10 @@ void TranSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     for( unsigned int i = 0; i < popDenseElasticity.size(); ++i ){
         XMLWriteElementCheckDefault( popDenseElasticity[ i ], "popDenseElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
-    for( unsigned int i = 0; i < loadFactor.size(); ++i ){
-        XMLWriteElementCheckDefault( loadFactor[ i ], "loadFactor", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
     for( unsigned int i = 0; i < output.size(); ++i ){
         XMLWriteElementCheckDefault( output[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
-}	
+    }	
+}
 
 //! XML output for viewing.
 void TranSubsector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
@@ -189,9 +185,6 @@ void TranSubsector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
     for( unsigned int i = 0; i < popDenseElasticity.size(); ++i ){
         XMLWriteElementCheckDefault( popDenseElasticity[ i ], "popDenseElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
-    for( unsigned int i = 0; i < loadFactor.size(); ++i ){
-        XMLWriteElementCheckDefault( loadFactor[ i ], "loadFactor", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
     for( unsigned int i = 0; i < output.size(); ++i ){
         XMLWriteElementCheckDefault( output[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
@@ -201,7 +194,6 @@ void TranSubsector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
 void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( speed[ period ], "speed", out, tabs );
     XMLWriteElement( popDenseElasticity[ period ], "popDenseElasticity", out, tabs );
-    XMLWriteElement( loadFactor[ period ], "loadFactor", out, tabs );
     XMLWriteElement( output[ period ], "serviceoutput", out, tabs );
     XMLWriteElement( servicePrice[ period ], "servicePrice", out, tabs );
     XMLWriteElement( timeValue[ period ], "timeValue", out, tabs );
@@ -209,6 +201,28 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
     XMLWriteElement( popDensity, "popDensity", out, tabs );
     XMLWriteElement( baseScaler, "baseScaler", out, tabs );
 }	
+
+
+/*! \brief Perform any initializations needed for each period.
+*
+* Set loadFactor in technology (see TranTechnology::setLoadFactor documentation)
+*
+* \author Steve Smith
+* \param period Model period
+*/
+void TranSubsector::initCalc( const int period ) {
+
+    // Check if illegal values have been read in
+    if ( speed[period] == 0 ) {
+        speed[period] = 1;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "ERROR: speed was zero in subsector: " << name << " in region " << regionName << "." << endl;
+    }
+
+    Subsector::initCalc( period );
+    
+}
 
 //! calculate subsector share numerator
 void TranSubsector::calcShare( const int period, const GDP* gdp )
@@ -231,11 +245,12 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
     const double weeksPerYear = 50.0;
     const double hoursPerWeek = 40.0;
     
-    // convert $/vehicle-mi into $/pass-mi or $/ton-mi 
+    // convert $/vehicle-mi into $/pass-mi or $/ton-mi NOW DONE IN TECHNOLOGY
+    servicePrice[period] = subsectorprice[period];
+    
     // add cost of time spent on travel by converting gdp/cap into
     // an hourly wage and multipling by average speed
-    servicePrice[period] = subsectorprice[period]/loadFactor[period] ;
-
+    
     // calculate time value based on hours worked per year
  	 // Convert GDPperCap into dollars (instead of 1000's of $'s)
     // GDP value at this point in the code does not include energy feedback calculation for this year, so is, therefore, approximate
@@ -268,7 +283,7 @@ void TranSubsector::setoutput( const double demand, const int period, const GDP*
     
     // output is in service unit when called from demand sectors
     double subsecdmd = share[period]* demand; // share is subsector level
-    //subsecdmd /= loadFactor[period]; // convert to per veh-mi
+    //subsecdmd /= loadFactor[period]; // convert to per veh-mi -- now DONE IN TECHNOLOGY
     
     for ( i=0; i<notech; i++ ) {
         // calculate technology output and fuel input from subsector output
@@ -303,7 +318,5 @@ void TranSubsector::MCDerivedClassOutput() const {
     dboutput4(regionName,"General","TimeValue",name," $/pass(ton)-mi",timeValue);
     // Subsector speed
     dboutput4(regionName,"General","Speed",name,"Miles/hr",speed);
-    // Subsector speed
-    dboutput4(regionName,"General","LoadFactor",name,"persons(tons) per vehicle",loadFactor);
 }
 
