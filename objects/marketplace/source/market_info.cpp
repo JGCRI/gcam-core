@@ -8,13 +8,13 @@
 */
 
 #include "util/base/include/definitions.h"
-#include <iostream>
 #include <cassert>
 #include <map>
 #include <string>
 
 #include "marketplace/include/market_info.h"
 #include "util/base/include/xml_helper.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
@@ -91,8 +91,9 @@ double MarketInfo::getItemValue( const string& itemName ) const {
     }
     else {
         // Set the return value to the default.
-        /* \todo Use a logger here. */
-        cout << "Error: " << itemName << " was not found in the market's information store." << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << itemName << " was not found in the market's information store." << endl;
         retValue = 0;
     }
     return retValue;

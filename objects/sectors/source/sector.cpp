@@ -27,20 +27,19 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
-#include "marketplace/include/market.h"
+#include "marketplace/include/imarket_type.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/summary.h"
 #include "emissions/include/indirect_emiss_coef.h"
 #include "containers/include/world.h"
 #include "util/base/include/util.h"
 #include "containers/include/region.h"
-#include "util/logger/include/logger.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-extern ofstream bugoutfile, logfile;
 
 /*! \brief Default constructor.
 *
@@ -48,8 +47,7 @@ extern ofstream bugoutfile, logfile;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-Sector::Sector( const string regionNameIn ) {
-    regionName = regionNameIn;
+Sector::Sector( const string regionNameIn ): regionName( regionNameIn ){
     initElementalMembers();
     Configuration* conf = Configuration::getInstance();
     debugChecking = conf->getBool( "debugChecking" );
@@ -74,25 +72,14 @@ Sector::Sector( const string regionNameIn ) {
 * \author Josh Lurz
 */
 Sector::~Sector() {
-    for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
-        delete *subSecIter;
-    }
+    clear();
 }
 
 //! Clear member variables
 void Sector::clear(){
-    initElementalMembers();
-    name = "";
-    unit = "";
-    market = "";
-    subsec.clear();
-    sectorprice.clear();
-    price_norm.clear();
-    pe_cons.clear();
-    input.clear();
-    output.clear();
-    carbonTaxPaid.clear();
-    summary.clear();
+    for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
+        delete *subSecIter;
+    }
 }
 
 //! Initialize elemental data members.
@@ -119,12 +106,6 @@ string Sector::getName() const {
 * \todo josh to add appropriate detailed comment here
 */
 void Sector::XMLParse( const DOMNode* node ){
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    DOMNode* curr = 0;
-    DOMNodeList* nodeList = 0;
-    string nodeName;
-
     /*! \pre make sure we were passed a valid node. */
     assert( node );
 
@@ -134,22 +115,18 @@ void Sector::XMLParse( const DOMNode* node ){
     // get additional attributes for derived classes
     XMLDerivedClassParseAttr( node );
 
-#if( _DEBUG )
-    cout << "\tSector name set as " << name << endl;
-#endif
-
     // get all child nodes.
-    nodeList = node->getChildNodes();
+    DOMNodeList* nodeList = node->getChildNodes();
+    const Modeltime* modeltime = scenario->getModeltime();
 
     // loop through the child nodes.
-    for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
+        DOMNode* curr = nodeList->item( i );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
         if( nodeName == "#text" ) {
             continue;
         }
-
         else if( nodeName == "market" ){
             market = XMLHelper<string>::getValueString( curr ); // only one market element.
         }
@@ -168,8 +145,12 @@ void Sector::XMLParse( const DOMNode* node ){
 		else if( nodeName == Cpricesubsector::getXMLNameStatic() ){
             parseContainerNode( curr, subsec, subSectorNameMap, new Cpricesubsector( regionName, name ) );
         }
+        else if( XMLDerivedClassParse( nodeName, curr ) ){
+        }
         else {
-            XMLDerivedClassParse( nodeName, curr );
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
         }
     }
 }
@@ -185,8 +166,9 @@ void Sector::completeInit() {
     
     // Check if the market string is blank, if so default to the region name.
     if( market == "" ){
-        logfile << "Warning: No marketname set in " << regionName << "->" << name << endl;
-        logfile << "Defaulting to regional market." << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "No marketname set in " << regionName << "->" << name << ". Defaulting to regional market." << endl;
         market = regionName;
     }
     
@@ -421,7 +403,7 @@ void Sector::setMarket() {
     Marketplace* marketplace = scenario->getMarketplace();
     // name is Sector name (name of good supplied or demanded)
     // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
-    if( marketplace->createMarket( regionName, market, name, Market::NORMAL ) ) {
+    if( marketplace->createMarket( regionName, market, name, IMarketType::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, sectorprice );
     }
 	/* The above initilaizes prices with any values that are read-in. 
@@ -1615,12 +1597,12 @@ const vector<string>& Sector::getDependsList() const {
 * \pre setupForSort function has been called to initialize the dependsList. 
 * \param logger The to which to print the dependencies. 
 */
-void Sector::printSectorDependencies( Logger* logger ) const {
-    LOG( logger, Logger::DEBUG_LEVEL ) << "," << name << ",";
+void Sector::printSectorDependencies( ILogger& aLog ) const {
+    aLog << "," << name << ",";
     for( vector<string>::const_iterator depIter = dependsList.begin(); depIter != dependsList.end(); depIter++ ) {
-        LOG( logger, Logger::DEBUG_LEVEL ) << *depIter << ",";
+        aLog << *depIter << ",";
     }
-    LOG( logger, Logger::DEBUG_LEVEL ) << endl;
+    aLog << endl;
 }
 
 
