@@ -34,6 +34,7 @@ class Ghg
 {
 public:
     Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 0, const double emissCoefIn = 0 );
+    virtual ~Ghg();
     void clear();
     void XMLParse( const xercesc::DOMNode* tempnode );
     void toXML( std::ostream& out, Tabs* tabs ) const;

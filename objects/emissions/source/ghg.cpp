@@ -46,6 +46,10 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
 	 emissionsWereInput = false;
 }
 
+//! Destructor
+Ghg::~Ghg(){
+}
+
 //! Clear member variables.
 void Ghg::clear(){
 
