@@ -37,7 +37,7 @@ using namespace std;
 extern ofstream logfile;
 extern Scenario* scenario;
 
-/*! \brief Default constructor
+/*! \brief Default constructor 
 *
 * The default constructor for the Marketplace which initializes several datamembers and
 * creates an instance of the selected solver.
@@ -820,9 +820,9 @@ double Marketplace::getSupply( const string& goodName, const string& regionName,
     }
 }
 
-/* UNUSED!
+/// UNUSED!
 //! return supply for use in checking solution, including Raw supply for demand market
-/*! Not used now, could be used for debugging at some point*/
+/* Not used now, could be used for debugging at some point*/
 double Marketplace::checkSupply( const string& goodName, const string& regionName, const int per ) const {
 
     const int marketNumber = getMarketNumber( goodName, regionName );
@@ -872,7 +872,6 @@ double Marketplace::getDemand(  const string& goodName, const string& regionName
 bool Marketplace::checkMarketSolution( const double solTolerance, const double excessDemandSolutionFloor, const int period, const bool notSolved ) {
 
     const Configuration* conf = Configuration::getInstance();
-    const bool debugChecking = conf->getBool( "debugChecking" );
     const bool debugFindSD = conf->getBool( "debugFindSD" );
 
     bool solvedOK = true;
