@@ -831,7 +831,7 @@ double sector::getFixedShare( const std::string& regionName, const int sectorNum
          if ( mktDmd > 0 && ( world->getCalibrationSetting() || 1==1 ) ) {
             fixedShare = subsec[ sectorNum ]->getFixedSupply( per )/mktDmd;
          }
-    //     fixedShare = 0.1;
+       //  fixedShare = 0.1;
       }
       return fixedShare;
    } else {
@@ -946,7 +946,7 @@ void sector::adjustForFixedSupply( const double mrkdmd, const string& regionName
     // sjs TEMP -- this check generally spits out a few inocuous warnings.
     // If simultunaeities are resolved then this should only happen a couple times per iteration.
     if ( debugChecking && world->getCalibrationSetting()) {
-         if ( abs(fixedShareSavedVal - totalFixedSupply/mrkdmd) > 1e-5 && fixedShareSavedVal != 0 ) {
+         if ( fabs(fixedShareSavedVal - totalFixedSupply/mrkdmd) > 1e-5 && fixedShareSavedVal != 0 ) {
             cerr << "Fixed share changed from " << fixedShareSavedVal << " to ";
             cerr << totalFixedSupply/mrkdmd << endl;
          }
