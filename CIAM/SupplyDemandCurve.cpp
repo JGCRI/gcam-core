@@ -50,7 +50,7 @@ SupplyDemandCurve::~SupplyDemandCurve() {
 */
 
 void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Marketplace* marketplace, const int period ) {
-    
+
     bool calibrationStatus = world->getCalibrationSetting();
     world->turnCalibrationsOff();
 
@@ -100,6 +100,11 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
     } // Completed iterating through all price points.
 
     marketplace->restoreinfo( period );
+    marketplace->nullDemands( period );
+    marketplace->nullSupplies( period );
+
+    // Call world.calc a final time to restore information for summary.
+    world->calc( period );
 
     if ( calibrationStatus ) { // turn end-use calibrations back on if were on originally
         world->turnCalibrationsOn();
