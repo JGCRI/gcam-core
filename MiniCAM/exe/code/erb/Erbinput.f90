@@ -1696,7 +1696,9 @@
 		DO I=1, inumlines
 			READ(IUNIT,*) II, OGSrcLabel(igas, II), (OGINPUT(igas,II,TempRegNumber(LL)),LL=1,NRegionstemp)
 		    OGREPORT(igas,II) = 1  ! switch this gas+source ON
-		    OGTYPE(igas,II,TempRegNumber(1):TempRegNumber(NRegionstemp)) = temptype	
+		    DO J=1,NRegionstemp
+			   OGTYPE(igas,II,TempRegNumber(J)) = temptype
+			END DO
 		END DO
 
 		IF (igas.eq.2) THEN   ! special case to convert Tg N inputs to Tg gas for consistency
