@@ -124,9 +124,9 @@ public class AdapterNode {
         return retString;
     }
     
-    /** Returns a String representation of an AdapterNode in the form:
-     * <name> attribute1Name=attribute1Value attribute2Name=attribute2Value ...
-     * his function is necessary for TreeModel and used by ControlPanel.
+    /** Returns a String representation of an AdapterNode.
+     * Takes the form: " < name > attribute1Name=attribute1Value attribute2Name=attribute2Value ..."
+     * This function is necessary for TreeModel and used by ControlPanel.
      *
      * @return  String representation of AdapterNode*/
     public String toString() {

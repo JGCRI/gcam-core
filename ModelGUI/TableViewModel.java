@@ -6,14 +6,15 @@
 
 package ModelGUI;
 
-/**
- *
- * @author  Yulia Eyman (yulia@wam.umd.edu)
- */
-
 import java.util.Vector;
-//import org.jdom.Element;
 
+/** This class is necessary to display contents of AdapterNodes in a table format.
+ * Along with {@link TableTransferHandler}, handles user interaction with JTable.
+ *
+ * In the ModelGUI package, TableViewModel is created inside ControlPanel.
+ *
+ * @author Yulia Eyman (yulia@umd.edu)
+ */
 public class TableViewModel extends javax.swing.table.AbstractTableModel {
     private AdapterNode[][] tableValues;
     private Vector tableHeader;
@@ -21,7 +22,17 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
     private int numRows;
     private int numCols;
     
-    /** Creates a new instance of TableViewModel */
+    /** Creates a new instance of TableViewModel.
+     *
+     * @param values Vector of either Strings or AdapterNodes (determined by 
+     *      <code> names</code>) that contain information to be displayed
+     *      in table cells
+     * @param lefter Vector of Strings that contain row headings for the 
+     *      table. Currently, these Strings are created using 
+     *       <code> AdapterNode.toLefterString() </code>
+     * @param names boolean specifying whether <code> values </code> contains
+     *      AdapterNode objects (if <code> names </code> = false) or text
+     */
     public TableViewModel(Vector values, Vector lefter, boolean names) {
         tableHeader = new Vector();
         tableLefter = (Vector)lefter.clone(); 
@@ -48,6 +59,19 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
         }
     }
     
+     /** Creates a new instance of TableViewModel.
+     *
+     * @param values Vector of either Strings or AdapterNodes (determined by 
+     *      <code> names</code>) that contain information to be displayed
+     *      in table cells
+     * @param header Vector of Strings that contains column headings for the
+     *      table. Currently, not every table will have a header.
+     * @param lefter Vector of Strings that contain row headings for the 
+     *      table. Currently, these Strings are created using 
+     *       <code> AdapterNode.toLefterString() </code>
+     * @param names boolean specifying whether <code> values </code> contains
+     *      AdapterNode objects (if <code> names </code> = false) or text
+     */     
     public TableViewModel(Vector values, Vector header, Vector lefter, boolean names) {
         tableLefter = (Vector)lefter.clone();
         
@@ -84,38 +108,72 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
         insertRegionBlanks();
     }
     
+    /** Returns whether the contents of a cell can be manipulated by the user.
+     *
+     * @param row index of target row, starting at 0
+     * @param col index of target column, starting at 0
+     * @return true if cell content can be modified */    
     public boolean isCellEditable(int row, int col) {
         return true;
     }
     
+    /** Returns the total number of columns in table.
+     *
+     * @return total colunms */    
     public int getColumnCount() {
         return numCols;
     }
     
+    /** Retrieves the value in a specified location in the table.
+     *
+     * @param row target node's row
+     * @param col target node's column 
+     * @return AdapterNode in desired position */    
     public AdapterNode getNodeAt(int row, int col) {
         return tableValues[row][col];
     }
     
+    /** Returns the total number of rows in table.
+     *
+     * @return total rows */    
     public int getRowCount() {
         return numRows;
     }
     
+    /** Retrieves the column header of table.
+     *
+     * @return Vector containing String names of columns or empty Vector */    
     public Vector getTableHeader() {
         return tableHeader;
     }
     
+    /** Retrieves the row header of table.
+     *
+     * @return Vector containing String names of rows or empty Vector */    
     public Vector getTableLefter() {
         return tableLefter;
     }
     
+    /** Retrieves the value stored in the specified table cell.
+     *
+     * @param row target cell's row
+     * @param col target cell's column
+     * @return String reperesentation of cell value */    
     public Object getValueAt(int row, int col) {
         return tableValues[row][col].getText();
     }
     
+    /** Retreives the header of a specific column.
+     *
+     * @param col target column
+     * @return column name */    
     public String getColumnName(int col) {
         return tableHeader.elementAt(col).toString();
     }
     
+    /** Inserts a row of blank cells into the table.
+     *
+     * @param newRowIndex index at which new row is to be added */    
     public void addBlankRow(int newRowIndex) {
         AdapterNode[][] newValues = new AdapterNode[numRows+1][numCols];
         
@@ -141,6 +199,8 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
         numRows = numRows+1;
     }
     
+    /** Inserts blank rows between different regions of the table and row header.
+     */
     public void insertRegionBlanks() {
         if (tableLefter == null || tableLefter.isEmpty()) return;
         
@@ -169,8 +229,8 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
             lefterName = tableLefter.elementAt(j).toString();
             index2 = lefterName.indexOf('<');
 
-            //if each region only has one entry in the table (e.g USA <period>, Canada <period>, ...)
-            //  than add only the region name to the lefter
+            //if each region only has one entry in the table (e.g USA <period>, 
+            //  Canada <period>, ...) than add only the region name to the lefter
             if (index1 > 0 && index2 > 0) {
                 if (lefterName.substring(index2).equals(prevName.substring(index1))) {
                     if (!modified) newLefter.addElement(prevName.substring(0, index1));
@@ -210,7 +270,13 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
         tableLefter = (Vector)newLefter.clone();
     }
     
+    /** Sets the value of a table cell.
+     *
+     * @param newValue String representation of cell's new value
+     * @param row row index of target cell
+     * @param col column index of target cell */    
     public void setValueAt(Object newValue, int row, int col) {
+        ControlPanel.nodeValueChangedFlag = true;
         tableValues[row][col].setText(newValue.toString());
         fireTableCellUpdated(row, col);
     }
