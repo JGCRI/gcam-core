@@ -348,7 +348,7 @@ void Sector::initCalc( const int period ) {
 	 // to make sure share weights have been adjusted to be consistant with final solution prices
 	 //
 	 // If debugchecking flag is on extra information is printed
-    const double CAL_CHECK_VAL = 0.01; // tollerance for calibration check (somewhat arbitrary)
+    const double CAL_CHECK_VAL = 0.001; // tollerance for calibration check (somewhat arbitrary)
     if ( period > 0 ) {
       double calOutputs = getCalOutput( period - 1 );
       double totalFixed = calOutputs + getFixedOutput( period - 1 );
@@ -356,7 +356,7 @@ void Sector::initCalc( const int period ) {
 		
 		// Two cases to check for. If outputs are all fixed, then calDiff should be small in either case.
 		// Even if outputs are not all fixed, then calDiff shouldn't be > CAL_CHECK_VAL (i.e., totalFixedOutputs > actual output)
- 		const bool printDetails = false;
+ 		const bool printDetails = false; // toggle for more detailed debugging output
       if ( calOutputs > 0 ) {
          double diffFraction = calDiff/calOutputs;
          if ( ( calDiff > CAL_CHECK_VAL ) || ( ( abs(diffFraction) > CAL_CHECK_VAL ) && outputsAllFixed( period - 1 ) ) ) {

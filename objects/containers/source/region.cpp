@@ -920,9 +920,8 @@ void Region::adjustCalibrations( const int period ) {
    Configuration* conf = Configuration::getInstance();
    bool debugChecking = conf->getBool( "debugChecking" );
 
-    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
+    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
       string goodName = supplySector[ i ]->getName();
-      
       if ( inputsAllFixed( period, goodName ) ) {
          logfile << "Inputs all fixed for " << goodName;
          
