@@ -29,8 +29,8 @@
 #include "containers/include/single_scenario_runner.h"
 #include "containers/include/merge_runner.h"
 #include "containers/include/batch_runner.h"
+#include "util/logger/include/ilogger.h"
 #include "util/logger/include/logger_factory.h"
-#include "util/logger/include/logger.h"
 #include "util/base/include/timer.h"
 
 using namespace std;
@@ -38,7 +38,7 @@ using namespace xercesc;
 
 // define file (ofstream) objects for outputs, debugging and logs
 /* \todo Finish removing globals-JPL */
-ofstream bugoutfile, outFile, logfile;	
+ofstream outFile;
 
 Scenario* scenario = 0; // model scenario info
 auto_ptr<ErrorHandler> XMLHelper<void>::mErrHandler;
@@ -49,7 +49,7 @@ void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFac
 int main( int argc, char *argv[] ) {
     // Use a smart pointer for configuration so that if the main is exited before the end the memory is freed.
     string configurationArg = "configuration.xml";
-    string loggerFactoryArg = "logger_factory.xml";
+    string loggerFactoryArg = "log_conf.xml";
 
     // Parse any command line arguments. 
     parseArgs( argc, argv, configurationArg, loggerFactoryArg );
@@ -69,14 +69,18 @@ int main( int argc, char *argv[] ) {
 
     // Create an auto_ptr to the scenario runner. This will automatically deallocate memory.
     auto_ptr<ScenarioRunner> runner;
+    // Get the main log file.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::NOTICE );
     
     // Parse configuration file.
-    cout << "Parsing input files..." << endl;
+    mainLog << "Parsing input files..." << endl;
     root = XMLHelper<void>::parseXML( configurationFileName, parser );
     auto_ptr<Configuration> conf( Configuration::getInstance() );
     conf->XMLParse( root );
     
     // Determine the correct type of ScenarioRunner to create.
+    // todo: Consider a factory method.
     if( conf->getBool( "BatchMode" ) ){
         // Create the batch runner.
         const string batchFile = conf->getFile( "BatchFileName" );
@@ -102,13 +106,12 @@ int main( int argc, char *argv[] ) {
 
     // Print the output.
     runner->printOutput( timer );
-
+    mainLog << "Model exiting successfully." << endl;
     // Cleanup Xerces. This should be encapsulated with an initializer object to ensure against leakage.
     XMLHelper<void>::cleanupParser();
     LoggerFactory::cleanUp();
-    cout << "Model exiting successfully." << endl;
     
-   // sleep(10000000); // Un-comment to use unix memory analysis tool. sjs
+    // sleep(10000000); // Un-comment to use OSX memory analysis tool. sjs
     
     // Return exit code based on whether the model succeeded(Non-zero is failure by convention).
     return 0 ? 1 : success; 
@@ -120,11 +123,9 @@ void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFac
         string temp( argv[ i ] );
         if( temp.compare(0,2,"-C" ) == 0 ){
             confArg = temp.substr( 2, temp.length() );
-            cout << "Configuration file name set to: " << confArg << endl;
         } 
         else if( temp.compare(0,2,"-L" ) == 0 ){
             logFacArg = temp.substr( 2, temp.length() );
-            cout << "Logger Configuration file name set to: " << logFacArg << endl;
         }
         else {
             cout << "Invalid argument: " << temp << endl;
