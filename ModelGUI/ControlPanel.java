@@ -34,7 +34,6 @@ public class ControlPanel extends javax.swing.JFrame {
     private JTextField jTFfileName;
     private JPanel browsePanel;
     private JPanel treePanel;
-    //private JTabbedPane dataPane;
     private JPanel dataPanel;
     private JPanel queryPanel;
     private JTextField valuePane;
@@ -412,6 +411,7 @@ public class ControlPanel extends javax.swing.JFrame {
         dataPanel.add(Box.createRigidArea(new Dimension(0,5)));
         dataPanel.add(showTableButton);
         dataPanel.add(Box.createVerticalGlue());
+        dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
         
         // Build split-pane view
         splitPane = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT, treeView, bigDataPane);
@@ -829,7 +829,7 @@ public class ControlPanel extends javax.swing.JFrame {
         Vector values = new Vector();
         Vector header = new Vector();
         Vector lefter = new Vector();
-        String varName = "";
+        //String varName = "";
         Vector queue = new Vector();
         int index;
         String nodeName;
@@ -842,7 +842,7 @@ public class ControlPanel extends javax.swing.JFrame {
             //remove the currely showing table, it's the last component
             dataPanel.remove(compCount-1);
             //remove the rigid area seporating table and show table button
-            dataPanel.remove(compCount-2);
+            //dataPanel.remove(compCount-2);
         }
         
         //get the name of the last element among the nodes to compaire and know when to stop
@@ -854,7 +854,8 @@ public class ControlPanel extends javax.swing.JFrame {
             Object[] regions = regionBox.getSelectedValues();
             currRootPointer = (AdapterNode)rootPointers.elementAt(0);
             
-            //get all regions
+            //get all regions, place the appropriate nodes in the queue
+            //  remove nodes from the begining of the queue and add all appropriate children to the end of the queue
             for (int j = 0; j < regions.length; j++) {
                 regionName = regions[j].toString();
                 AdapterNode currNode = currRootPointer.getChild("region", regionName);
@@ -879,7 +880,7 @@ public class ControlPanel extends javax.swing.JFrame {
                     }
                     
                     if(nodeName.equals(finalNodeName)) {
-                        String lefterName = regionName + " \t" + currNode.toString();
+                        String lefterName = regionName + " " + currNode.toString();
                         String prevName;
                         
                         if (attribVal.equals(DEFAULT_PLURAL_STRING)) attribVal = "";
@@ -938,12 +939,12 @@ public class ControlPanel extends javax.swing.JFrame {
             if (!lefter.isEmpty()) {
                 //JPanel lefterPanel = makeLefter(lefter, nodeName);
                 lefter = model.getTableLefter();
-                JPanel lefterPanel = makeLefter(lefter, varName);
+                JPanel lefterPanel = makeLefter(lefter, finalNodeName);
                 tempPanel2.add(lefterPanel, BorderLayout.WEST);
             }
             tempPanel2.add(tempPanel, BorderLayout.CENTER);
             
-            dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
+            //dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
             dataPanel.add(tempPanel2);
             
             tableExistsFlag = true;

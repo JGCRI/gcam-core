@@ -152,22 +152,58 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
         if (tableLefter == null || tableLefter.isEmpty()) return;
         
         Vector newLefter = new Vector();
-        String currRegion, prevRegion = "";
-        int index;
+        String currRegion, prevRegion = "", lefterName, prevName;
+        int index1, index2, size = tableLefter.size();
         int numBlanks = 0;
-        for (int j = 0; j < tableLefter.size(); j++) {
-            //get the name of current region
-            currRegion = tableLefter.elementAt(j).toString();
-            index = currRegion.indexOf('<');
-            currRegion = currRegion.substring(0, index);
+        boolean modified = false;
+        
+        //check that there are more than one entry per region
+        lefterName = tableLefter.elementAt(0).toString();
+        currRegion = tableLefter.elementAt(1).toString();
+        index1 = lefterName.indexOf('<');
+        
+        //get the name of current region
+        prevName = tableLefter.elementAt(0).toString();
+        index1 = lefterName.indexOf('<');
+        for (int j = 1; j < size; j++) {
+            lefterName = tableLefter.elementAt(j).toString();
+            index2 = lefterName.indexOf('<');
+
+            //if each region only has one entry in the table (e.g USA <period>, Canada <period>, ...)
+            //  than add only the region name to the lefter
+            if (index1 > 0 && index2 > 0) {
+                if (lefterName.substring(index2).equals(prevName.substring(index1))) {
+                    if (!modified) newLefter.addElement(prevName.substring(0, index1));
+                    newLefter.addElement(lefterName.substring(0, index2));
+                    modified = true;
+                }
+            }
             
+            prevName = lefterName;
+            index1 = index2;
+        }
+        if (modified) {
+            //save the new lefter
+            tableLefter = (Vector)newLefter.clone();
+            return;
+        }
+        
+        for (int j = 0; j < size; j++) {
+System.out.println("lefter name = " + lefterName);
+            //get the name of current region
+            lefterName = tableLefter.elementAt(j).toString();
+            index1 = lefterName.indexOf('<');
+            currRegion = lefterName.substring(0, index1);
+            
+            //otherwise, add the name of the region and insert a blank line
+            //  then add the names of the actual field (without the region name) to the lefter
             if (!currRegion.equals(prevRegion)) {
                 newLefter.addElement(currRegion);
                 addBlankRow(j + numBlanks++);
             }
             
             //save the lefter without region name
-            newLefter.addElement(tableLefter.elementAt(j).toString().substring(index));
+            newLefter.addElement(lefterName.substring(index1));
             
             prevRegion = currRegion;
         }
