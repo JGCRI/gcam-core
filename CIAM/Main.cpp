@@ -202,8 +202,6 @@ int main() {
     openDB(); // open MS Access database
     createDBout(); // create main database output table before calling output routines
 
-    world->createRegionMap(); // create map of region names
-
     // ***** Write to text file and database
     world->outputfile(); // write results to file
     world->MCoutput(); // MiniCAM style output to database
