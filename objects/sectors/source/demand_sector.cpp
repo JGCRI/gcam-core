@@ -292,8 +292,8 @@ void DemandSector::scaleOutput( int period, double scaleFactor ) {
     // So Afact = [( (1+AEII)^T /SF )^(1/T)-1]/AEII
     // TC_0 = techChangeCumm[period-1] & SF = scaleFactor
 
-   // If scale factor is significant then change AEEI
-   if ( fabs( 1 - scaleFactor ) > 1e-6 ) {   
+   // If scale factor is significant then change AEEI if there is one
+   if ( fabs( 1 - scaleFactor ) > 1e-6 && aeei[ period ] != 0 ) {   
       double timeStep = modeltime->gettimestep(period);
       double aeeiScale; // amount to change AEEI
       double temp = pow( 1+aeei[period] , timeStep );
