@@ -65,15 +65,20 @@ void BisectionNRSolver::init() {
 * \return Whether the markets all solved.
 */
 bool BisectionNRSolver::solve( const int period ) {
-    bool solved = false; // whether the model has solved.
     SolverComponent::ReturnCode code = SolverComponent::ORIGINAL_STATE;
 
     // Constants. Make these configuration variables.
-    static const double SOLUTION_TOLERANCE = 0.001; // relative tolerance for solution criteria
-    const double CALIBRATION_ACCURACY = SOLUTION_TOLERANCE * 4 ; // relative tolerance for calibrations
+    // relative tolerance for solution criteria
+    static const double SOLUTION_TOLERANCE = Configuration::getInstance()->getDouble( "SolutionTolerance", 0.001 );
+    
+    // relative tolerance for calibrations
+    const double CALIBRATION_ACCURACY = SOLUTION_TOLERANCE * 4 ;
     // Adds significant time if CALIBRATION_ACCURACY = SOLUTION_TOLERANCE. If CALIBRATION_ACCURACY > SOLUTION_TOLERANCE then speeds things up quite a bit.
     // The calibration numbers are generally not good to this accuracy in any event, so having a slightly higher CALIBRATION_ACCURACY should be ok.
-    static const double ED_SOLUTION_FLOOR = 0.01; // minimum value below which solution is assumed to be found.
+    
+    // minimum value below which solution is assumed to be found.
+    static const double ED_SOLUTION_FLOOR = Configuration::getInstance()->getDouble( "SolutionFloor", 0.01 );
+    
     static const double BRACKET_INTERVAL = 0.5;
     static const double MAX_REL_ED_FOR_NR = 10000;
     static const double MIN_ED_FOR_BISECT_ALL = 1;
@@ -147,7 +152,7 @@ bool BisectionNRSolver::solve( const int period ) {
         
         // If the solution is not near, use bisect all.
         if( sol.getMaxRelativeExcessDemand( ED_SOLUTION_FLOOR ) > MIN_ED_FOR_BISECT_ALL ) {
-            solved = mBisectAll->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_BISECT_ALL, sol, period ) == SolverComponent::SUCCESS ? true : false;
+            bool solved = mBisectAll->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_BISECT_ALL, sol, period ) == SolverComponent::SUCCESS ? true : false;
             if( solved ){
                 continue;
             }
@@ -192,22 +197,25 @@ bool BisectionNRSolver::solve( const int period ) {
         // Determine if the model has solved. 
     } while ( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) && mCalcCounter->getPeriodCount() < MAX_CALCS );
     
-   // Make sure calibration was achieved
-    unsigned int calCount = 0;
-    while( ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false ) || !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ) && calCount < CAL_REPEAT_LIMIT ){
-        solverLog.setLevel( ILogger::NOTICE );
-        solverLog << "Repeating to calibrate. N = " << mCalcCounter->getPeriodCount() <<  endl;
-        world->calc( period );
-        mLogNewtonRaphsonSaveDeriv->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_NR, sol, period );
-        ++calCount;
-    }
+    // Only calibrate if the model solved.
+    if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
+        // Make sure calibration was achieved
+        unsigned int calCount = 0;
+        while( ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false ) || !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ) && calCount < CAL_REPEAT_LIMIT ){
+            solverLog.setLevel( ILogger::NOTICE );
+            solverLog << "Repeating to calibrate. N = " << mCalcCounter->getPeriodCount() <<  endl;
+            world->calc( period );
+            mLogNewtonRaphsonSaveDeriv->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_NR, sol, period );
+            ++calCount;
+        }
 
-    mainLog.setLevel( ILogger::ERROR );
-    if ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, true ) ) {
-        mainLog << "Model did not calibrate sucesfully in period: " << period << endl;
-        return false;
+        mainLog.setLevel( ILogger::ERROR );
+        if ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, true ) ) {
+            mainLog << "Model did not calibrate sucesfully in period: " << period << endl;
+            return false;
+        }
     }
-
+    // Determine whether the model was successful.
     if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
         mainLog << "Model solved normally. Iterations this period: " << mCalcCounter->getPeriodCount() << ". Total iterations: "<< mCalcCounter->getTotalCount() << endl;
         return true;

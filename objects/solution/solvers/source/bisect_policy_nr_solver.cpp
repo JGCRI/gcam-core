@@ -70,9 +70,17 @@ bool BisectPolicyNRSolver::solve( const int period ) {
     bool solved = false; // whether the model has solved.
     SolverComponent::ReturnCode code = SolverComponent::ORIGINAL_STATE;
 
-    // Constants. Make these configuration variables.
-    static const double SOLUTION_TOLERANCE = 0.001; // tolerance for solution criteria
-    static const double ED_SOLUTION_FLOOR = 0.01; // minimum value below which solution is assumed to be found.
+       // Constants. Make these configuration variables.
+    // relative tolerance for solution criteria
+    static const double SOLUTION_TOLERANCE = Configuration::getInstance()->getDouble( "SolutionTolerance", 0.001 );
+    
+    // relative tolerance for calibrations
+    const double CALIBRATION_ACCURACY = SOLUTION_TOLERANCE * 4 ;
+    // Adds significant time if CALIBRATION_ACCURACY = SOLUTION_TOLERANCE. If CALIBRATION_ACCURACY > SOLUTION_TOLERANCE then speeds things up quite a bit.
+    // The calibration numbers are generally not good to this accuracy in any event, so having a slightly higher CALIBRATION_ACCURACY should be ok.
+    
+    // minimum value below which solution is assumed to be found.
+    static const double ED_SOLUTION_FLOOR = Configuration::getInstance()->getDouble( "SolutionFloor", 0.01 );
     static const double BRACKET_INTERVAL = 0.5;
     static const double MAX_REL_ED_FOR_NR = 10000000;
     static const double MIN_ED_FOR_BISECT_ALL = 1;
