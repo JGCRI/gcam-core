@@ -15,6 +15,7 @@
 #include <cmath>
 #include <cassert>
 #include <vector>
+#include <algorithm>
 
 #include "subsector.h"
 #include "technology.h"
@@ -24,6 +25,7 @@
 #include "marketplace.h"
 #include "summary.h"
 #include "Emcoef_ind.h"
+#include "World.h"
 
 using namespace std;
 
@@ -1168,16 +1170,11 @@ double subsector::showpe_cons( const int per ) {
 
     //! \pre per is less than or equal to max period.
     assert( per <= scenario->getModeltime()->getmaxper() );
+    const vector<string> primaryFuelList = scenario->getWorld()->getPrimaryFuelList();
     pe_cons[per] = 0;
     for ( int i=0 ;i<notech; i++ ) {
-        // depleatable resource indeces are less than 5
-        // how should this condition be made generic?
-        // shk 7/23/01
-        if (techs[i][per]->getFuelNo() < 5) {
-            // int num = techs[i][per].showfuelno() ;
+       if( std::find( primaryFuelList.begin(), primaryFuelList.end(), techs[i][per]->getFName() ) != primaryFuelList.end() ) {
             pe_cons[per] += techs[i][per]->getInput();
-            //double temp = techs[i][per]->getInput();
-            int stop = 1;
         }
     }
     return pe_cons[per];

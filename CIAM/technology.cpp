@@ -55,7 +55,6 @@ void technology::clear(){
 
 //! Initialize elemental data members.
 void technology::initElementalMembers(){
-    fueltype = 0;
     year = 0;
     shrwts = 1; // initialied to 1 
     eff = 1; // initialied to 1 
@@ -110,9 +109,6 @@ void technology::XMLParse( const DOMNode* node )
          // cout << "\t\t\tTechnology name set as " << name << endl;
 #endif
       } 
-      else if ( nodeName == "fueltype" ){
-         fueltype = XMLHelper<int>::getValue( curr );
-      }
       else if( nodeName == "year" ){
          year = XMLHelper<int>::getValue( curr );
       }
@@ -197,7 +193,6 @@ void technology::toXML( ostream& out ) const {
     XMLWriteElement( name, "name", out );
     XMLWriteElement( year, "year", out );
     
-    XMLWriteElementCheckDefault( fueltype, "fueltype", out, 0 );
     XMLWriteElementCheckDefault( shrwts, "sharewt", out, 1 );
     
     if (doCalibration) {
@@ -239,7 +234,6 @@ void technology::toDebugXML( const int period, ostream& out ) const {
     // write the xml for the class members.
     
     XMLWriteElement( unit, "unit", out );
-    XMLWriteElement( fueltype, "fueltype", out );
     XMLWriteElement( fuelname, "fuelname", out );
     XMLWriteElement( shrwts, "sharewt", out );
     if (doCalibration) {
@@ -526,12 +520,6 @@ void technology::printTech( const string& outFile ) const {
         outStream << "Year: "<< year << endl;
     }
     if( toScreen ) {
-        cout << "Fuel Type: "<< fueltype << endl;
-    }
-    else {
-        outStream << "Fuel Type: "<< fueltype << endl;
-    }
-    if( toScreen ) {
         cout << "Share Weights: "<< shrwts << endl;
     }
     else {
@@ -581,11 +569,6 @@ string technology::getName() const {
 //! return fuel name
 string technology::getFName() const {
     return fuelname;
-}
-
-//! return fuel type 
-int technology::getFuelNo() const {
-    return fueltype;
 }
 
 //! return fuel efficiency

@@ -35,7 +35,6 @@ class Emcoef_ind;
 class technology
 {
 protected:
-    int fueltype; //!< fuel number
     int year; //!< period year or vintage
     double shrwts; //!< logit share weight
     double eff; //!< energy intensity
@@ -100,7 +99,6 @@ public:
     // ****** return names and values ******
     string getName() const; // return technology name
     string getFName() const; // return fuel name
-    int getFuelNo() const; // return fuel number
     double getEff() const; // return fuel efficiency
     double getShare() const; // return normalized share
     bool getCalibrationStatus( ) const; // return true if technology has calibration value
