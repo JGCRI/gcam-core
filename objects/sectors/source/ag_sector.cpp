@@ -13,7 +13,7 @@
 #include "sectors/include/ag_sector.h"
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
-#include "marketplace/include/market.h"
+#include "marketplace/include/imarket_type.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/configuration.h"
@@ -342,7 +342,7 @@ void AgSector::setMarket( const string& regionName ) {
    for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end() - 1; i++ ) {
 		// check if should set ag bio market
 		if ( ( *i != "biomass") || setAgBioMarket ) {
-			marketplace->createMarket( regionName, "global", *i, Market::NORMAL );
+			marketplace->createMarket( regionName, "global", *i, IMarketType::NORMAL );
             for( int per = 1; per < modeltime->getmaxper(); ++per ){
                 marketplace->setMarketToSolve ( *i, regionName, per );
             }
@@ -350,7 +350,7 @@ void AgSector::setMarket( const string& regionName ) {
    }
    
    // Add the regional markets.
-   marketplace->createMarket( regionName, regionName, marketNameVector[ 6 ], Market::NORMAL );
+   marketplace->createMarket( regionName, regionName, marketNameVector[ 6 ], IMarketType::NORMAL );
    for( int per = 1; per < modeltime->getmaxper(); ++per ){
       marketplace->setMarketToSolve ( marketNameVector[ 6 ], regionName, per );           
    }
