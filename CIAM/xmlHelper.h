@@ -323,7 +323,7 @@ DOMNode* XMLHelper<T>::parseXML( const string& xmlFile, XercesDOMParser* parser 
 		parser->parse( xmlFile.c_str() );
 		const unsigned long endMillis = XMLPlatformUtils::getCurrentMillis();
 		long parseTime = endMillis - startMillis;
-		cout << "Parsing took " << parseTime / float( 1000 ) << " seconds." << endl;
+		cout << "Parsing took " << parseTime / 1000.0 << " seconds." << endl;
 	} catch ( const XMLException& toCatch ) {
 		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
 		cout << "Exception message is:" << endl << message << endl;
