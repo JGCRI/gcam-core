@@ -84,6 +84,7 @@ void World::XMLParse( const DOMNode* node ){
 			tempRegion->setCO2coef(); // sets default CO2 emissions coefficients
 			tempRegion->XMLParse( curr );
 			region.push_back( tempRegion ); // resizes vector of region objects
+			regionNamesToNumbers[ tempRegion->getName() ] = region.size() - 1;
 		}
 	}
 	noreg = region.size();
@@ -108,7 +109,7 @@ void World::initAgLu() {
 #endif
 	
 	for ( int j = 0; j < noreg; j++ ) {
-		for ( int k = 0; k < numAgMarkets; k++ ) {
+		for ( int k = 0; k < AgSector::getNumAgMarkets(); k++ ) {
 			tempVec[ k ] = prices[ j ][ k ];
 		}
 		region[ j ]->initializeAgMarketPrices( tempVec );
@@ -214,33 +215,52 @@ void World::gnp(int per)
 /*! This is the main action loop for the model. 
 Uses "MiniCAM" style logic where primary costs are calculated, 
 then prices of refined fuels, end-use costs, end-use, etc. */
-void World::calc(int per)
-{	
+void World::calc( const int per, const vector<string>& regionsToSolve ) {	
+	
+	vector<int> regionNumbersToSolve;
 	
 	Configuration* conf = Configuration::getInstance();
 	
-	for (int i=0;i<noreg;i++) {
+	if ( regionsToSolve.size() == 0 ) {
+		regionNumbersToSolve.resize( region.size() );
+		
+		for( int regionNumber = 0; regionNumber < static_cast<int> ( regionNumbersToSolve.size() ); regionNumber++ ) {
+			regionNumbersToSolve[ regionNumber ] = regionNumber;
+		}
+	}
+	else {
+		for( vector<string>::const_iterator regionName = regionsToSolve.begin(); regionName != regionsToSolve.end(); regionName++ ) {
+			const int regionNumber = ( regionNamesToNumbers.find( *regionName ) )->second; // error checking?
+			regionNumbersToSolve.push_back( regionNumber );
+		}
+		cout << endl;
+	}
+
+	for ( vector<int>::iterator i = regionNumbersToSolve.begin(); i != regionNumbersToSolve.end(); i++ ) {
+	
 		// apply carbon taxes to appropriate technologie
-		region[i]->applycarbontax(per);
+		region[ *i ]->applycarbontax(per);
 		// set regional GHG constraint to market supply
-		region[i]->setghgsupply(per);
+		region[ *i ]->setghgsupply(per);
 		// set regional GHG tax to individual technologies
-		region[i]->addghgtax(per);
+		region[ *i ]->addghgtax(per);
 		// determine supply of primary resources
-		region[i]->rscsupply(per);
+		region[ *i ]->rscsupply(per);
+		//sdfile<<"\n"; // supply & demand info.
 		// determine prices of refined fuels and electricity
-		region[i]->finalsupplyprc(per);
+		region[ *i ]->finalsupplyprc(per);
 		// calculate enduse service price
-		region[ i ]->calcEndUsePrice( per );
+		region[ *i ]->calcEndUsePrice( per );
 		// adjust gnp for energy cost changes
-		region[i]->adjust_gnp(per);
+		region[ *i ]->adjust_gnp(per);
 		// determine end-use demand for energy and other goods
-		region[i]->endusedemand(per);
+		region[ *i ]->endusedemand(per);
+		//sdfile<<"\n"; // supply & demand info.
 		// determine supply of final energy and other goods based on demand
-		region[i]->finalsupply(per);
+		region[ *i ]->finalsupply(per);
 		
 		if( conf->getBool( "agSectorActive" ) ){
-			region[i]->calcAgSector(per);
+			region[ *i ]->calcAgSector(per);
 		}
 	}	
 }
