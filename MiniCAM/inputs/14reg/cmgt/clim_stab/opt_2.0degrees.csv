@@ -38,7 +38,7 @@ Variable ID,,,,,,,
 8,,,,,,,
 Actual value for target (to be matched with number reported from MAGICC if whichtarg > 1),,,,,,,
 limit,,,,,,,
-1.92,,This value results in stable 2C temp chagne if forcing beyond 2100 declines by 0.002 W/m^2/yr,,,,,
+1.94,,This value results in stable 2C temp chagne if forcing beyond 2100 declines by 0.002 W/m^2/yr,,,,,
 
 BASEWREPATH,,,,,,,
 INPUT_TABLE,,,,,,,

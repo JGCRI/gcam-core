@@ -1,19 +1,19 @@
-Optimization Input
+Optimization Input,,Variant for cases
+,,high and very high clim sens
+INDOPT,,
+INPUT_TABLE,,
+Variable ID,,
+1,,
+Define the sort of optimization: 0-none  1-hotelling  2-WREpath,,
+INDOPT Value:,,
+2,,
 
-INDOPT
-INPUT_TABLE
-Variable ID
-1
-Define the sort of optimization: 0-none  1-hotelling  2-WREpath
-INDOPT Value:
-2
-
-NLG
-INPUT_TABLE
-Variable ID
-5
-number of mitigation groups
-NLG Value: (MUST be 1 for WRE-like path)
+NLG,,
+INPUT_TABLE,,
+Variable ID,,
+5,,
+number of mitigation groups,,
+NLG Value: (MUST be 1 for WRE-like path),,
 1,,,,,,,,,,,,,,
 
 LGMEMBC,,,,,,,,,,,,,,
@@ -38,7 +38,7 @@ Variable ID,,,,,,,
 8,,,,,,,
 Actual value for target (to be matched with number reported from MAGICC if whichtarg > 1),,,,,,,
 limit,,,,,,,
-1.94,,This value results in stable 2C temp chagne if forcing beyond 2100 declines by 0.002 W/m^2/yr,,,,,
+1.975,,This value results in stable 2C temp chagne if forcing beyond 2100 declines by 0.002 W/m^2/yr,,,,,
 
 BASEWREPATH,,,,,,,
 INPUT_TABLE,,,,,,,
@@ -46,22 +46,22 @@ Variable ID,,,,,,,
 20,,,,,,,
 Base WRE path (in global tons carbon) to try,,,,,,,
 1990,2005,2020,2035,2050,2065,2080,2095
--1,-1,8500,7977,7064,6337,5563,4917,,halfway between 550 and 450
+-1,-1,7625,6007,4669,4035,3556,3240
+5420,7681,,,,,,
+
+SECONDWREPATH,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+21,,,,,,,
+Second WRE path (in global tons carbon) to try -- difference in shapes defines family of paths,,,,,,,
+1990,2005,2020,2035,2050,2065,2080,2095
+-1,-1,100,100,100,100,100,100
 
 
-SECONDWREPATH,,,,,,,,,
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-21,,,,,,,,,
-Second WRE path (in global tons carbon) to try -- difference in shapes defines family of paths,,,,,,,,,
-1990,2005,2020,2035,2050,2065,2080,2095,,
--1,-1,7060,4607,2299,1398,1143,1188,,halfway between 450 and 350
+Source:,,,,,,,
+" Wigley, T.M.L., R. Richels & J. A. Edmonds. 1996. ""Economic and Environmental Choices in the Stabilization of Atmospheric CO2 Concentrations,"" Nature. 379(6562):240-243.",,,,,,,
 
-
-Source:,,,,,,,,,
-" Wigley, T.M.L., R. Richels & J. A. Edmonds. 1996. ""Economic and Environmental Choices in the Stabilization of Atmospheric CO2 Concentrations,"" Nature. 379(6562):240-243.",,,,,,,,,
-
-"(Verison ""A"")",,,,,,,,,
+"(Verison ""A"")",,,,,,,
 
 "Adjusted by subtracting cement emissions, assumed to be:",,
 2005,260,MMTC

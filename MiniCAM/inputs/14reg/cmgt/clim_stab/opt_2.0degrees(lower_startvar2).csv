@@ -1,19 +1,19 @@
-Optimization Input
+Optimization Input,,Variant for cases
+,,"mixed aerosol, & low ocean D"
+INDOPT,,
+INPUT_TABLE,,
+Variable ID,,
+1,,
+Define the sort of optimization: 0-none  1-hotelling  2-WREpath,,
+INDOPT Value:,,
+2,,
 
-INDOPT
-INPUT_TABLE
-Variable ID
-1
-Define the sort of optimization: 0-none  1-hotelling  2-WREpath
-INDOPT Value:
-2
-
-NLG
-INPUT_TABLE
-Variable ID
-5
-number of mitigation groups
-NLG Value: (MUST be 1 for WRE-like path)
+NLG,,
+INPUT_TABLE,,
+Variable ID,,
+5,,
+number of mitigation groups,,
+NLG Value: (MUST be 1 for WRE-like path),,
 1,,,,,,,,,,,,,,
 
 LGMEMBC,,,,,,,,,,,,,,
@@ -38,7 +38,7 @@ Variable ID,,,,,,,
 8,,,,,,,
 Actual value for target (to be matched with number reported from MAGICC if whichtarg > 1),,,,,,,
 limit,,,,,,,
-1.94,,This value results in stable 2C temp chagne if forcing beyond 2100 declines by 0.002 W/m^2/yr,,,,,
+1.99,,This value results in stable 2C temp chagne if forcing beyond 2100 declines by 0.002 W/m^2/yr,,,,,
 
 BASEWREPATH,,,,,,,
 INPUT_TABLE,,,,,,,
