@@ -16,6 +16,9 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/demand_sector.h"
 
+// Forward declarations
+class GDP;
+
 // transportation demand sector class derived from demsector class
 class TranSector : public DemandSector
 {
@@ -29,7 +32,7 @@ public:
     virtual ~TranSector();
     virtual void clear();
     virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
-    virtual void aggdemand( const double gnp_cap, const double gnp, const int period ); 
+    virtual void aggdemand(  const GDP* gdp, const int period  ); 
 };
 
 #endif // _TRANSSECTOR_H_

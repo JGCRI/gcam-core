@@ -15,6 +15,8 @@
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
 #include "subsector.h"
+// Forward declarations
+class GDP;
 
 // transportation demand subsector class derived from base subsector class
 // Modes of transportation are implemented as subsectors
@@ -34,7 +36,7 @@ public:
     TranSubsector( std::string regionName, std::string sectorName );
     virtual void clear();
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
-    virtual void calcShare(const int period, const double gnp_cap = 1 ); 
+    virtual void calcShare( const int period, const GDP* gdp ); 
     virtual void setoutput( const double demand, const int period );
     
 };

@@ -21,7 +21,7 @@
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/summary.h"
-
+#include "containers/include/gdp.h"
 
 using namespace std;
 using namespace xercesc;
@@ -149,9 +149,10 @@ void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
 
 
 //! calculate subsector share numerator
-void TranSubsector::calcShare( const int period, const double gdp_cap )
+void TranSubsector::calcShare( const int period, const GDP* gdp )
 {
-    
+    const double gdp_cap = gdp->getBestScaledGDPperCap(period);
+
     // call function to compute technology shares
     calcTechShares( period );
     
@@ -178,6 +179,8 @@ void TranSubsector::calcShare( const int period, const double gdp_cap )
     // gdp_cap is normalized, need GDP per capita in $/person, fix when available
     const double dollarGDP75 = 3.46985e+12;
     const double population75 = 2.16067e+8;
+	double tempGDP = gdp_cap*(dollarGDP75/population75);
+	double tempGDP2 = gdp->getApproxGDP(period);
     timeValue[period] = gdp_cap*(dollarGDP75/population75)/(hoursPerWeek*weeksPerYear)/speed[period] ;
 
     generalizedCost[period] = servicePrice[period] + timeValue[period] ;

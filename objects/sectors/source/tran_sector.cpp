@@ -15,6 +15,7 @@
 #include "containers/include/scenario.h"
 #include "sectors/include/tran_sector.h"
 #include "sectors/include/tran_subsector.h"
+#include "containers/include/gdp.h"
 
 // xml headers
 #include "util/base/include/xml_helper.h"
@@ -67,8 +68,12 @@ void TranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cu
 
 
 //! Aggrgate sector energy service demand function.
-void TranSector::aggdemand( const double gdp_cap, const double gdp, const int period) { 
-    
+void TranSector::aggdemand( const GDP* gdp, const int period ) { 
+      
+    double gdp_cap = gdp->getBestScaledGDPperCap(period); 
+			 
+	double gdp1 = gdp->getAproxScaledGDP(period); //gdp->getGDP(period); 
+	
     const Modeltime* modeltime = scenario->getModeltime();
     double ser_dmd;
     
@@ -90,9 +95,9 @@ void TranSector::aggdemand( const double gdp_cap, const double gdp, const int pe
         }
         else {
             baseScaler = service[0]* percentLicensed[period] * pow(priceRatio,-pElasticity[period])
-                * pow(gdp,-iElasticity[period]);
+                * pow(gdp1,-iElasticity[period]);
             baseScalerNotLic = service[0]* (1 - percentLicensed[period]) * pow(priceRatioNotLic,-pElasticity[period])
-                * pow(gdp,-iElasticity[period]);
+                * pow(gdp1,-iElasticity[period]);
         }
         // base output is initialized by data
         ser_dmd = service[0]; 
@@ -113,10 +118,10 @@ void TranSector::aggdemand( const double gdp_cap, const double gdp, const int pe
                 + baseScalerNotLic*pow(priceRatioNotLic,pElasticity[period])*pow(gdp_cap,iElasticity[period]);
             // need to multiply above by population ratio (current population/base year
             // population).  The gdp ratio provides the population ratio.
-            ser_dmd *= gdp/gdp_cap;
+            ser_dmd *= gdp1/gdp_cap;
         }
         else { // demand based on scale of GDP
-            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gdp,iElasticity[period]);
+            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gdp1,iElasticity[period]);
         }
         // Save the service demand without technical change applied for comparison with miniCAM.
         servicePreTechChange[ period ] = ser_dmd;
