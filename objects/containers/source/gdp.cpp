@@ -348,6 +348,7 @@ void GDP::initialGDPcalc( const int period, const double population ) {
 	// gdpValue is in millions, population in 1000's, so result is in 1000's of dollars per capita
 	gdpPerCapita[ period ] = gdpValue[ period ] / population;
 	gdpPerCapitaAdjusted[ period ] = gdpPerCapita[ period ]; // Temporary value so that if requested a real value is returned (with error warning)
+    gdpPerCapitaAdjustedPPP[ period ] = gdpValueAdjustedPPP[ period ] / population;
 }
 
 /*! Adjust regional gdp for energy service price effect
@@ -490,7 +491,7 @@ double GDP::getApproxGDP( const int period ) const {
 * \author Steve Smith
 * \param period Model time period
 */
-double GDP::getPPP_GDPperCap( const int period ) const {
+double GDP::getPPPGDPperCap( const int period ) const {
 
 	if ( !gdpAdjustedFlag[ period ] ) {
 		cerr << "ERROR - Request for adjusted GDP -- not calculated yet" << endl;
