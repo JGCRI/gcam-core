@@ -381,7 +381,8 @@ public class FileChooserDemo extends JFrame
 		//remember the cancel case if stuff is added here in the future
 	}
 	else if (command.equals("Filter")) {
-		tableModel.updateDataFilter(this);
+		//tableModel.updateDataFilter(this);
+		((MultiTableModel)jTable.getModel()).filterData(this);
 	}
 	else if (command.equals("Build Demand Components")) {
 		buildDemandComponents();
@@ -519,11 +520,12 @@ public class FileChooserDemo extends JFrame
 				}
 			   }
 			   */
-			   MultiTableModel multiTable = new MultiTableModel(tables);
+			   MultiTableModel multiTable = new MultiTableModel(tables, filterMaps);
 			   jTable = new JTable(multiTable);
 			   jTable.getColumnModel().getColumn(0).setCellRenderer(multiTable.getCellRenderer(0,0));
 			   jTable.getColumnModel().getColumn(0).setCellEditor(multiTable.getCellEditor(0,0));
 			   jTable.setRowHeight(200);
+	  		   menuTableFilter.setEnabled(true);
 			   //jTable.setPreferredScrollableViewportSize(jTable.getPreferredScrollableViewportSize());
 	  // putting flip code here
 	  
@@ -948,7 +950,7 @@ public class FileChooserDemo extends JFrame
 		  return tempMap;
 	  }
 	  if(currNode.hasAttributes() && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
-		String attr = getOneAttrVal(currNode);
+		String attr = currNode.getNodeName()+":"+getOneAttrVal(currNode);
 		if(!tempMap.containsKey(attr)) {
 			tempMap.put(attr, new TreeMap());
 		}
@@ -994,6 +996,7 @@ public class FileChooserDemo extends JFrame
 	}
   }
 
+  private HashMap filterMaps; // for now HERE
   private void buildRegionYearTable(XPathExpression xpe) {
 	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 	  xpe = null;
@@ -1001,15 +1004,16 @@ public class FileChooserDemo extends JFrame
 	  Object[] regionAndYear;
 	  TreeSet regions = new TreeSet();
 	  TreeSet years = new TreeSet();
+	  filterMaps = new HashMap();
 	  //TreeMap data = new TreeMap();
 	  //String old3DVar = null;
 	  TreeMap dataTree = new TreeMap();
 	  //try {
 	  	while ((tempNode = res.iterateNext()) != null) {
-			regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode());
+			regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), filterMaps);
 			regions.add(regionAndYear[0]);
 			years.add(regionAndYear[1]);
-			addToDataTree(tempNode, dataTree).put((String)regionAndYear[0]+(String)regionAndYear[1], tempNode);
+			addToDataTree(tempNode, dataTree).put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
 			//data.put((String)regionAndYear[0]+(String)regionAndYear[1], tempNode);
 			/*
 			if(!thrdDimToData.containsKey(regionAndYear[2])) {
@@ -1079,7 +1083,7 @@ public class FileChooserDemo extends JFrame
 	   
   }
 
-  private Object[] getRegionAndYearFromNode(Node n) {
+  private Object[] getRegionAndYearFromNode(Node n, HashMap filterMaps) {
 	  /*
 	  Node temp;
 	  String region = null;
@@ -1087,10 +1091,7 @@ public class FileChooserDemo extends JFrame
 	  */
 	  Vector ret = new Vector(2,0);
 	  do {
-		  /*
-		  if(n.getNodeName().equals((String)wild.get(2))) {
-			  ret.add(getOneAttrVal(n));
-		  } else*/ if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
+		  if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
 			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
 			  if(!getOneAttrVal(n).equals("fillout=1")) {
 			  	ret.add(getOneAttrVal(n));
@@ -1098,6 +1099,18 @@ public class FileChooserDemo extends JFrame
 			        ret.add(getOneAttrVal(n, 1));
 			  }
 
+		  } else if(n.hasAttributes()) {
+			  HashMap tempFilter;
+	           	  if (filterMaps.containsKey(n.getNodeName())) {
+	                          tempFilter = (HashMap)filterMaps.get(n.getNodeName());
+                          } else {
+                                  tempFilter = new HashMap();
+                          }
+			  String attr = getOneAttrVal(n);
+			  if (!tempFilter.containsKey(attr)) {
+                          	tempFilter.put(attr, new Boolean(true));
+                          	filterMaps.put(n.getNodeName(), tempFilter);
+			  }
 		  }
 		  n = n.getParentNode();
 	  } while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);

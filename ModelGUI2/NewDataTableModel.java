@@ -71,7 +71,7 @@ public class NewDataTableModel extends AbstractTableModel {
 		if(flipped) {
 			return (String)indRow.get(row)+(String)indCol.get(col);
 		}
-		return (String)indCol.get(col)+(String)indRow.get(row);
+		return (String)indCol.get(col)+";"+(String)indRow.get(row);
 	}
 
 	public void setValueAt(Object val, int row, int col) {
