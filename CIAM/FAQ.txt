@@ -4,9 +4,23 @@
 \section cplusplusques C++ Questions
 
 \subsection faqitem1 How does a STL container iterator work?
-Container iterators are declared as containerName<type>::iterator iteratorName. The iterator then behaves as a pointer
+Container iterators are declared as <code><i>containerName</i><type>::iterator <i>iteratorName</i></code>. The iterator then behaves as a pointer
 to the item within the container it points at, and pointer operations can be perfomed on it, such as dereferencing. If 
-the container held pointers to objects, the iterator must be dereferenced twice in order to access the object. Put example here.
+the container held pointers to objects, the iterator must be dereferenced twice in order to access the object.
+
+Example of using an iterator to iterate over a container of objects:<br>
+<code>
+for( vector<object>::iterator <i>i</i> = <i>objectVector</i>.begin(); i != <i>objectVector</i>.end(); i++ ) {
+	<i>i</i>-><i>doSomething()</i>;
+}
+</code>
+
+Example of using an iterator to iteratoe over a container of pointers to objects:<br>
+<code>
+for( vector<object*>::iterator <i>i</i> = <i>pointerVector</i>.begin(); i != <i>pointerVector</i>.end(); i++ ) {
+	<i>( *i )</i>-><i>doSomething()</i>;
+}
+</code>
 
 \subsection faqitem2 When should I forward declare a class?
 Forward declaration is a very useful technique for reducing compilation dependencies, but can be difficult to use correctly. Forward declaration
@@ -19,12 +33,9 @@ when you can use a forward declaration
 <li>The header file does not contain any inline functions which use the class or its functions. 
 </ul>
 
-If these criteria are met, you may forward declare the class with the line:
-class className;
-
+If these criteria are met, you may forward declare the class with the line: 
+<code>class className</code><br>
 Make sure to do this before the class documentation so that doxygen is not confused.
- 
-list of criteria of when to use this method. 
 
 \subsection faqitem3 When should I pass an argument by reference?
 C++ supports two different methods of passing arguments, pass-by-value and pass-by-reference. Pass-by-value is the default, in this method
