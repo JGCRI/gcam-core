@@ -46,10 +46,7 @@ public class ComboTableModel extends BaseTableModel{
 		ind2Name= tempStr;
 		indCol.add(0, "");
 		flipped = !flipped;
-		activeRows = new Vector( leftSideVector.size() * indRow.size() );
-		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
-			activeRows.add(new Integer(i));
-		}
+		doFilter( new Vector(tableFilterMaps.keySet()) );
 		fireTableStructureChanged();
 				//((NewDataTableModel)((JTable)((JScrollPane)getValueAt(row, col)).getViewport().getView()).getModel()).flip(row, col);
 	}
@@ -250,7 +247,7 @@ public class ComboTableModel extends BaseTableModel{
 
 	protected void doFilter(Vector possibleFilters) {
 			activeRows = new Vector();
-			for (int i = 0; i < getColumnCount(); i++) {
+			for (int i = 0; i < (leftSideVector.size() * indRow.size()); i++) {
 				activeRows.addElement(new Integer(i));
 			}
 			Integer rowPos = new Integer(-1);
@@ -263,17 +260,25 @@ public class ComboTableModel extends BaseTableModel{
 				currKeys = (String[])((Map)tableFilterMaps.get((String)possibleFilters.get(i))).keySet().toArray(new String[0]);
 				//for (Iterator it = activeRows.iterator(); it.hasNext(); rowPos = (Integer)it.next()) {
 				Iterator it = activeRows.iterator();
+				//int counterRow = 0;
 				while (it.hasNext()) {
 					rowPos = (Integer)it.next();
 					for (int j = 0; j < currKeys.length; j++) {
-						//System.out.println("At row: "+rowPos.intValue()+" with key: "+currKeys[j]);
-						if (!((Boolean)((Map)tableFilterMaps.get((String)possibleFilters.get(i))).get(currKeys[j])).booleanValue() && 
-							((String)((Vector)leftSideVector.get(rowPos.intValue() / (indRow.size()) )).get(i)).equals(currKeys[j])) {
-							//System.out.println("Going to Remove "+rowPos.intValue());
-							it.remove();
-							break;
+						System.out.println("At row: "+rowPos.intValue()+" with key: "+currKeys[j]);
+						if (!((Boolean)((Map)tableFilterMaps.get((String)possibleFilters.get(i))).get(currKeys[j])).booleanValue() ){
+							System.out.println("yay i = " + ( possibleFilters.size()-i-1));
+							System.out.println((String)((Vector)leftSideVector.get( rowPos.intValue() / (indRow.size()) )).get( possibleFilters.size()-i-1 ));
+							if (((String)((Vector)leftSideVector.get( rowPos.intValue() / (indRow.size()) )).get( possibleFilters.size()-i-1 )).equals(currKeys[j])){
+							//if(((String)getValueAt( rowPos.intValue(), j)).equals(currKeys[j])) {
+								System.out.println("Going to Remove "+rowPos.intValue());
+								it.remove();
+								//counterRow--;
+								break;
+	
+							}
 						}
 					}
+					//counterRow++;
 				}
 			}
 	}
