@@ -6939,8 +6939,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="Canada">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -13830,8 +13828,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="Western Europe">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -20740,8 +20736,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="Japan">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -27634,8 +27628,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="Australia_NZ">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -34534,8 +34526,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="Former Soviet Union">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -41423,8 +41413,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="China">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -48475,8 +48463,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="Middle East">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -55378,8 +55364,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="Africa">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -62272,8 +62256,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="Latin America">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -69179,8 +69161,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="Southeast Asia">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -76068,8 +76048,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="Eastern Europe">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -82955,8 +82933,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="Korea">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -89820,8 +89796,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 		<region name="India">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
@@ -96707,8 +96681,6 @@
 			<agsector/>
 			<calibrationdata>
 			</calibrationdata>
-			<taxes>
-			</taxes>
 		</region>
 	</world>
 </scenario>
