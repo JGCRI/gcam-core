@@ -41,7 +41,7 @@ good( goodNameIn ), region( regionNameIn ), period( periodIn ) {
    solveMarket = false;
 }
 
-//! Empty constructor defined for future use. 
+//! Empty destructor defined for future use. 
 Market::~Market() {
 }
 
@@ -241,6 +241,7 @@ void Market::addToDemand( const double demandIn ) {
 }
 
 /*! \brief Remove an amount of demand from the raw demand.
+*
 * This function is used by the solution mechanism to subtract out an amount of demand.
 * This method was needed because addToDemand is virtual, and this function needs to always change
 * the raw demand. 
@@ -252,6 +253,7 @@ void Market::removeFromRawDemand( const double demandIn ) {
 }
 
 /*! \brief Get the Raw demand.
+*
 * This method is used to get the true value of the demand variable in the Market. It is often used in the solution mechanism.
 * Note that all the functions with "Raw" in the name have this behavior.
 *
@@ -275,6 +277,7 @@ double Market::getStoredRawDemand() const {
 }
 
 /*! \brief Get the demand.
+*
 * Get the demand out of the market.
 * 
 * \return Market demand.
@@ -291,6 +294,7 @@ void Market::nullSupply() {
 }
 
 /*! \brief Get the raw supply.
+*
 * This method is used to get the true value of the supply variable in the Market. It is often used in the solution mechanism.
 * Note that all the functions with "Raw" in the name have this behavior.
 *
@@ -327,6 +331,7 @@ void Market::setRawSupply( const double supplyIn ) {
 }
 
 /*! \brief Get the supply.
+*
 * Get the supply out of the market.
 * 
 * \return Market supply
@@ -344,6 +349,7 @@ double Market::getSupplyForChecking() const {
 }
 
 /*! \brief Add to the the Market an amount of supply in a method based on the Market's type.
+*
 * This method is used throughout the model to add supply to a market. 
 *
 * \param supplyIn The new demand to add to the current demand.
@@ -354,6 +360,7 @@ void Market::addToSupply( const double supplyIn ) {
 }
 
 /*! \brief Remove an amount of supply from the raw supply.
+*
 * This function is used by the solution mechanism to subtract out an amount of supply.
 * This method was needed because addToSupply is virtual, and this function needs to always change
 * the raw supply. 
