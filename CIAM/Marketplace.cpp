@@ -1120,7 +1120,7 @@ int Marketplace::Bracket( const double solutionTolerance, const double excessDem
                         
                         // If X is 0
                         else if ( fabs( sol[ i ].X ) < SMALL_NUM ) {
-                           sol[ i ].X = 0;
+                           sol[ i ].X = 0.05;
                         }
                         
                         // X is negative.
@@ -1232,6 +1232,7 @@ int Marketplace::Bracket( const double solutionTolerance, const double excessDem
             // Check if the market is unbracketable. This check is needed for GHG markets. 
             if( ( sol[ i ].X < VERY_SMALL_NUM ) && ( sol[ i ].ED < SMALL_NUM ) ) {
                sol[ i ].bracketed = true;
+                sol[ i ].XR = sol[ i ].X = 0;
             }
             
          } // for 
