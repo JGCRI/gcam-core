@@ -234,53 +234,42 @@
 ! Possible Target Options
 !	-1 = Cumulative Emissions
 !	1 = Cumulative Emissions
-!	2 = Concentrations
-!	3 = Temp Change (since 1990)
-!	4 = Concentration Max (not coded yet)
+!	2 = CO2 Concentrations
+!	3 = Temp Change (since PIL?, whatever comes out of magicc is used)
+!	4 = CO2 Concentration Max
 
 
       FUNCTION CUMDIFF(IRUN)
 
       USE OPTICOM
 
+	  USE COMMON, ONLY: MAGICCCResults  ! pass in all the MAGICC results
+
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)  
 
-	REAL*8 ARX(28)
-	  ICType = 0
+	  ICType = 0  ! don't include carbon from land use
       IF(IRUN.GT.0) THEN
-         IF (WHICHTARG(LG) .eq. -1) ICType = 1	! Add cumcarbon to emissions total
-         CALL MCAMLINK(INDOPT,TAX,GNP,CARB,ICType)
+          IF (WHICHTARG(LG) .eq. -1) ICType = 1	! Add land use carbon to emissions total
+          CALL MCAMLINK(INDOPT,TAX,GNP,CARB,ICType) ! run the minicam model once
       END IF
       
-	IF (WHICHTARG(LG) .LE. 1) THEN
-      CUMDIFF = (CUMEMFNC(DUM) - CUMTARG(LG)) / CUMTARG(LG)
-	RETURN
-	END IF
+
+	  IF (WHICHTARG(LG) .LE. 1) THEN ! this is just the usual cumulative emissions target
+	      CUMDIFF = (CUMEMFNC(DUM) - CUMTARG(LG)) / CUMTARG(LG)
 	
-      IF (WHICHTARG(LG) .GE. 2) THEN
-	  OPEN (1, file='magout.csv')
-	  READ (1,*)
+      ELSE  ! these are targets from MAGICC
+	  ! the target below is set for 2095, which is time index _9_ in minicam
+ 	      
+		  IF (WHICHTARG(LG) .EQ. 2) TARGVAL = MAGICCCResults(2,8)
+	      IF (WHICHTARG(LG) .EQ. 3) TARGVAL = MAGICCCResults(1,8)
+	      IF (WHICHTARG(LG) .EQ. 4) TARGVAL = MAXVAL(MAGICCCResults(2,1:8))
 
-	  ReadYr = 2095	! Hard coded year -- can change
+		  CUMDIFF = (TARGVAL - CUMTARG(LG)) / CUMTARG(LG)	
+		  WRITE(*,*) "val, targ, diff",TARGVAL, CUMTARG(LG), CUMDIFF
 
-	  IYR = 0
-	  DO WHILE(IYR .LE. ReadYr)	! Error. This needed to be .LE. not .EQ. sjs 6/01
-		READ (1,*) IYR, (ARX(IX),IX=1,21)	! Only 21 columns. sjs 6/01
-	    IF (IYR .EQ. ReadYr) THEN
-!	hardcoded column entries for reading from magout.csv
- 
- 	      IF (WHICHTARG(LG) .EQ. 2) TARGVAL = ARX(2)	! Wrong columns. sjs 6/01
-	      IF (WHICHTARG(LG) .EQ. 3) TARGVAL = ARX(1)
- 	    END IF
-	  END DO
-
-	CUMDIFF = (TARGVAL - CUMTARG(LG)) / CUMTARG(LG)
-	CLOSE (1)
-	
-
-	RETURN
-	END IF
-
+	  END IF
+	  
+	  RETURN
       END
 
 !***********************************************************************

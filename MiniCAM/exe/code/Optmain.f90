@@ -64,7 +64,7 @@
       
       ELSE IF (INDOPT.EQ.1) THEN
          Write(97,*)
-         Write(97,*) "****Optimizing Run Begin****"		! Write to log file. sjs
+         Write(97,*) "****Optimizing (Hotelling) Run Begin****"		! Write to log file. sjs
 
          DO L=1,NLP
             TAX(L,1) = 0.d0
@@ -80,7 +80,20 @@
 		  CALL MITICOST
 	   END IF
 
+!	  Else call the WRE-like routine
+
+      ELSE IF (INDOPT.EQ.2) THEN
+         Write(97,*)
+         Write(97,*) "****Optimizing (WRE-like) Run Begin****"		! Write to log file. sjs
+      
+         CALL OPTWRE
+
+	     CALL MCAMMAIN(2)
+
+	     IF (COSTCALC.EQ.1) CALL MITICOST
+
       END IF
+
 
 
       Write(97,*)

@@ -97,6 +97,15 @@
 		   READ(1,*) txstart2(II)
 		END DO
 
+	! CASES below are for the WRE-like target routine
+	CASE(20)
+		READ(1,*) (BASEWREPATH(II),II=2,9)
+
+	CASE(21)
+		READ(1,*) (SECONDWREPATH(II),II=2,9)
+
+
+
 	CASE(74) 
           DO L=1,14
             READ (1,*) IDUM,(DefaultTax(L,MM), MM=1,NTaxes)	! Translate to Opt routine counting system

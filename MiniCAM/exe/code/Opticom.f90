@@ -34,8 +34,11 @@ REAL(8) &
 	EMISSSTEPS(0:ISTEPS,NLPMax,NMP), & ! Start of COSTVARS Common Block
 	TAXSTEPS(0:ISTEPS,NLPMax,NMP),			&
 	MCEMISS(NLPMax,NMP),&
-	MCTAX(NLPMax,NMP)
+	MCTAX(NLPMax,NMP), &
 
+	WREPATH(NMP), &		! Start of OptWRE Common Block
+	BASEWREPATH(NMP), &
+	SECONDWREPATH(NMP)
 
 INTEGER &
     txstart,			&
