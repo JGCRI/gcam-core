@@ -1227,7 +1227,7 @@ void Region::MCoutput() const {
 
     for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
         for (m=0;m<maxper;m++) {
-            temp[m] = summary[m].get_emissmap_second( *fuelIter );
+            temp[m] = summary[m].get_emissfuelmap_second( *fuelIter );
         }
         dboutput4(name,"CO2 Emiss","by Fuel",*fuelIter,"MTC",temp);
     }
@@ -1405,12 +1405,14 @@ void Region::updateSummary( const int period ) {
         demandSector[i]->updateSummary( period );
         // update regional fuel consumption (primary and secondary) for demand sector
         summary[ period ].updatefuelcons( demandSector[ i ]->getfuelcons( period ) ); 
+        summary[ period ].updateemfuelmap( demandSector[ i ]->getemfuelmap( period ) );
     }
     for (i=0;i<noSSec;i++) {
         // call update for supply sector
         supplySector[i]->updateSummary( period );
         // update regional fuel consumption (primary and secondary) for supply sector
         summary[period].updatefuelcons(supplySector[i]->getfuelcons(period)); 
+        summary[ period ].updateemfuelmap( supplySector[ i ]->getemfuelmap( period ) );
     }
     // update primary energy trade from consumption and production amounts
     summary[period].updatepetrade(); 
