@@ -30,4 +30,5 @@ protected:
    Marketplace* marketplace;
 };
 
-#endif
+#endif // _SOLVER_H_
+

@@ -39,7 +39,7 @@ class SolverLibrary;
 
 class Marketplace
 {	
-   friend SolverLibrary;
+   friend class SolverLibrary;
 private:
    
    int uniqueNo; //!< number for creating markets

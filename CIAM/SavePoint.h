@@ -35,6 +35,7 @@ private:
    double supply;
 };
 
+namespace std {
 template <>
 struct std::less<SavePoint*>
 {
@@ -43,5 +44,5 @@ struct std::less<SavePoint*>
        return lhs->getPrice() < rhs->getPrice();
   }
 };
-
+}
 #endif // _SAVE_POINT_H_

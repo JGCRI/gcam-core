@@ -20,6 +20,7 @@
 #include <vector>
 #include <map>
 #include <cmath>
+#include <string>
 #include "SolverLibrary.h"
 #include "Marketplace.h"
 #include "World.h"
@@ -44,7 +45,7 @@ SolutionInfo::SolutionInfo( const string& marketNameIn, const string& marketGood
 
 //! Return name for convenience.
 string SolutionInfo::getName() const {
-   return marketName + marketGood;
+   return ( marketName + marketGood );
 }
 
 const double SolverLibrary::SMALL_NUM = 1e-6;

@@ -1,8 +1,3 @@
-#if defined(_MSC_VER)
-#pragma warning( disable: 4275 )
-#pragma warning( disable: 4786 )
-#endif
-
 /*! 
 * \file Marketplace.cpp
 * \ingroup CIAM
@@ -11,11 +6,6 @@
 * \date $Date$
 * \version $Revision$
 */
-
-#include <mtl/matrix.h>
-#include <mtl/mtl.h>
-#include <mtl/utils.h>
-#include <mtl/lu.h>
 
 #include "Definitions.h"
 
@@ -809,18 +799,18 @@ void Marketplace::findAndPrintSD( vector<Market*>& unsolved, const int period ) 
    }
 
    // Determine price ratios.
-   const int middle = floor( double( numPointsForSD ) / double( 2 ) );
+   const int middle = static_cast<int>( floor( double( numPointsForSD ) / double( 2 ) ) );
 
    for( int pointNumber = 0; pointNumber < numPointsForSD; pointNumber++ ) {
       
       if( pointNumber < middle ) {
-         priceMults.push_back( 1 - double( 1 ) / double( middle - fabs( middle - pointNumber ) + 2 ) );
+         priceMults.push_back( 1 - double( 1 ) / double( middle - std::abs( middle - pointNumber ) + 2 ) );
       }
       else if( pointNumber == middle ) {
          priceMults.push_back( 1 );
       }
       else {
-         priceMults.push_back( 1 + double( 1 ) / double( middle - fabs( middle - pointNumber ) + 2 ) );
+         priceMults.push_back( 1 + double( 1 ) / double( middle - std::abs( middle - pointNumber ) + 2 ) );
       }
    }
       

@@ -44,3 +44,4 @@ private:
 };
 
 #endif // _BISECTION_NR_SOLVER_
+

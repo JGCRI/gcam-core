@@ -191,13 +191,14 @@ public:
    virtual void setPriceToLast( const double lastPriceIn );
 };
 
-template <>
-struct std::greater<Market*>
-{
-  bool operator()( const Market* lhs, const Market* rhs ) const
-  {   
-       return lhs->getRelativeExcessDemand() > rhs->getRelativeExcessDemand();
-  }
-};
-
+namespace std {
+    template <>
+    struct std::greater<Market*>
+    {
+      bool operator()( const Market* lhs, const Market* rhs ) const
+        {   
+               return lhs->getRelativeExcessDemand() > rhs->getRelativeExcessDemand();
+                 }
+        };
+}
 #endif // _MARKET_H_

@@ -20,7 +20,7 @@
 
 #include <mtl/matrix.h>
 #include <vector>
-
+#include <string>
 
 using namespace std;
 using namespace mtl;
@@ -71,7 +71,8 @@ public:
    static void invertMatrix( Matrix& A );
    static void checkBracket( const double solutionTolerance, const double excessDemandSolutionFloor, vector<SolutionInfo>& sol, bool& allbracketed );
 private:
-   const static double SMALL_NUM;
+   static const double SMALL_NUM;
 };
 
 #endif // _SOLVER_LIBRARY_H_
+

@@ -54,3 +54,4 @@ void SavePoint::toDebugXML( ostream& out ) const {
 void SavePoint::print( ostream& out ) const {
    out << price << "," << demand << "," << supply << endl;
 }
+
