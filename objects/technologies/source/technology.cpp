@@ -985,7 +985,7 @@ map<string,double> technology::getemindmap() const {
 
 //! return value for ghg
 double technology::get_emissmap_second( const string& str) const {
-    return util::searchForValue( emissMap, str );
+    return util::searchForValue( emissmap, str );
 }
 
 //! returns technology logit exponential
