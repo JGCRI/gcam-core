@@ -18,6 +18,11 @@
 * \brief The namespace for the Matrix Template Library.
 */
 
+/*! 
+* \namespace util
+* \brief The namespace for utility functions and classes used in the model.
+*/
+
 /*!
 * \mainpage CIAM API documentation
 *
@@ -33,6 +38,7 @@ The architecture, based on the natural hierarchy of the global economy, is a com
 <P></P> 
 \subsection start Where to Start
 There is no main calculation loop in this object structure. For the partial-equilibrium calculation, however, the world::calc() method is the principal calculation method used by the code.
+The \ref faq is also a good place to look.
 
 \subsection psd Prices, Supplies and Demands in CIAM
 The accounting for supply and demand, and the accounting of prices are central to the partial- equilibrium MiniCAM-type calculation in the CIAM. <a href="PricesSandD.htm">These Notes</a> are a quick outline of how this process works in the CIAM code.
