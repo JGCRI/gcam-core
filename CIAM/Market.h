@@ -76,6 +76,7 @@ public:
    double getExcessDemand() const;
    void calcLogExcessDemand( const double SMALL_NUM );
    double getLogExcessDemand() const;
+   double getRelativeExcessDemand() const;
 
    string getName() const;
    string getRegionName() const;
@@ -93,6 +94,7 @@ public:
    void print( ostream& out ) const;
    void printSupplyDemandDebuggingCurves( ostream& out );
 protected:
+
    string good;  //!< market good or fuel
 	string region;  //!< market region
 	bool solveMarket; //!< Toggle for markets that should be solved

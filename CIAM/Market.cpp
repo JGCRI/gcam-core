@@ -630,6 +630,20 @@ void Market::printSupplyDemandDebuggingCurves( ostream& out ) {
    out << endl;
 }
 
+//! Get the relative excess demand, used for sorting markets.
+double Market::getRelativeExcessDemand() const {
+   
+   const double SMALL_NUM = 1E-6;
+   
+   if( demand < SMALL_NUM ) {
+      return 0;
+   }
+
+   else {
+      return ( demand - supply ) / demand;
+   }
+}
+
 // Other markets here temp
 
 //! Constructor
