@@ -14,10 +14,10 @@
 */
 
 #include <vector>
-#include <functional>
 #include <memory>
-#include "marketplace/include/market_info.h"
+#include "marketplace/include/imarket_type.h"
 
+class MarketInfo;
 class Tabs;
 
 /*!
@@ -29,15 +29,9 @@ class Tabs;
 class Market
 {
 public:
-    enum MarketType { //!< Types of new markets which can be instantiated from other parts of the model.
-      NORMAL, //!< Normal Market
-      CALIBRATION, //!< Calibration Market
-      GHG, //!< Greenhouse Gas Market
-      DEMAND //!< Demand Market
-    };
     Market( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
     virtual ~Market();
-    static std::auto_ptr<Market> createMarket( const Market::MarketType aMarketType, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
+    static std::auto_ptr<Market> createMarket( const IMarketType::Type aMarketType, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
     /*! \brief Add additional information to the debug xml stream for derived classes.
@@ -77,8 +71,6 @@ public:
     virtual double getSupplyForChecking() const = 0;
     virtual void addToSupply( const double supplyIn );
 
-    double getRelativeExcessDemand() const;
-
     std::string getName() const;
     std::string getRegionName() const;
     std::string getGoodName() const;
@@ -94,6 +86,7 @@ public:
     virtual bool shouldSolveNR() const = 0;
     virtual std::string getType() const = 0;
 protected:
+    Market( const Market& aMarket );
     std::string good;  //!< The good the market represents
     std::string region;  //!< The region of the market.
     bool solveMarket; //!< Whether to solve the market given other constraints are satisfied.
@@ -105,7 +98,7 @@ protected:
     double supply; //!< The market supply.
     double storedSupply; //!< The stored supply.
     std::vector <std::string> containedRegionNames; //!< Vector of names of all regions contained within this market.
-    MarketInfo marketInfo; //!< Object containing information related to the market. 
+    std::auto_ptr<MarketInfo> mMarketInfo; //!< Object containing information related to the market. 
 
 private:
 	const static std::string XML_NAME; //!< node name for toXML methods
