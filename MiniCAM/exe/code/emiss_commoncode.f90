@@ -115,7 +115,7 @@
 	IMPLICIT NONE
 
 	INTEGER period, availpd, fullpd, ipoint, numpoints, phasein, zpoint
-	INTEGER tempPeriod
+	Real*8 tempPeriod
 	REAL*8 curvetax(15), curveredux(15), shiftper, tax
 	REAL*8 curvetaxin(15), curvereduxin(15), gwpadjust, enprdelta, tc1, tc2, taxin
 
@@ -142,7 +142,7 @@
 	curvetax = curvetax - 15*(period-2)*tc1
 
 	! alternate code for tc1, rotates curve around the 0 point proportionally
-	! curvetax = curvetax * (1-tc1)**(15*(period-2))
+	curvetax = curvetax * (1-tc1)**(15*(period-2))
 
 	! tc2 is the reduction in un-mitigatable emissions per year. This tends to affect
 	! higher tax rates more than low ones -- so if at the maximum tax level, 90% can be
@@ -151,13 +151,13 @@
 	! seemed better for now so low tax levels don't get moved too much)
 
     ! org version
-	!curveredux = 1 - (1-tc2)**(15*(period-2)) * (1-curveredux)
+	! curveredux = 1 - (1-tc2)**(15*(period-2)) * (1-curveredux)
 
     ! new version, sjs 11/03. Make relative to 2005 and come in slower.
     ! The choice of 2.2 as the exponent makes a tc2 of 0.01 reduce the unmitagatable emissions by about 1/2 by 2095
-    tempPeriod = period
-    if (period .lt. 3) tempPeriod = 3    
-	curveredux = 1 - (1-tc2)**((tempPeriod^2.2-3^2.2)) * (1-curveredux)
+    tempPeriod = 1d0*period
+    if (period .lt. 3) tempPeriod = 3d0    
+	curveredux = 1 - (1-tc2)**((tempPeriod**2.2-3**2.2)) * (1-curveredux)
     
 	! the next part moves the curve up or down based on the "available" and "full"
 	! period.  In the available period the curve is moved up so that the 0 redux
