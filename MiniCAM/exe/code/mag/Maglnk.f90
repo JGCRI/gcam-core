@@ -48,7 +48,7 @@ END IF
     NLoop = Min(Nper,NM)
 ! Write emissions loop	
 
-    if (1 .eq. 2) then	! HGWP's read in
+    if (SUM(HGWPREAD(3,:,:)) .gt. 0) then	! HGWP's read in directly via SRES
 	!	pick out the 8 high gwp emissions that magicc requires from the 
 	!	ones read into HGWPREAD
 		HGWPMAG(1,2:NM) = SUM(HGWPREAD(3,:,2:NM),DIM=1) !CF4
@@ -61,7 +61,7 @@ END IF
 		HGWPMAG(8,2:NM) = SUM(HGWPREAD(14,:,2:NM),DIM=1)!SF6
 	else	! Calculated by the model
 	
-	! Need to be the same as in Allothergases
+	! These indicies need to be the same as in Allothergases
 	
 	IH245 = 10	! HFC245fa equiv
 	IH134 = 11	! HFC134a equiv
@@ -125,6 +125,10 @@ END IF
 	  iyrfull = 1975 + (MM-1)*15
 	  finalch4 = SUM(OGEMISS(1,:,:,MM))             !sum the ch4's
 	  finaln2o = SUM(OGEMISS(2,:,:,MM)) * 1/NtoN2O  !sum the n20's and convert to N
+	  finalnox = SUM(OGEMISS(4,:,:,MM)) / 3.2857    !convert NO2 to N for MAGICC
+	  finalvoc = SUM(OGEMISS(6,:,:,MM))				!sum voc
+	  finalco  = SUM(OGEMISS(5,:,:,MM))				!sum co
+
 !	  convert sulfur emissions to magicc regions
 	  WMRSULF(1) = SUM(SO2MAGREG(:,1) * SO2EM(:,MM)) + SO2SHIP(MM)/3.0
 	  WMRSULF(2) = SUM(SO2MAGREG(:,2) * SO2EM(:,MM)) + SO2SHIP(MM)/3.0
@@ -132,7 +136,7 @@ END IF
 
 ! Write emissions
      Call SetMagEm(WriteFlag,iyrfull,CO2DM(MM)/1000+CO2Adj+Cement(MM),AGPCO2(MM)+DefAdj*AdjFact, &
-        finalch4,finaln2o,WMRSULF(:),HGWPMAG(:,MM))
+        finalch4,finaln2o,WMRSULF(:),HGWPMAG(:,MM),finalnox,finalvoc,finalco)
 
 	END DO	! Emissions loop
 
@@ -143,7 +147,7 @@ END IF
 	CO2_2 = CO2DM(NM)/1000+CO2Adj+Cement(NM)	! 2095 Emissions
 	CO2_exr = (CO2_2-CO2_1)*5/15
 	IF (Nper .gt. NM) &
-	    Call SetMagEm(WriteFlag,2100,CO2_2+CO2_exr,0.0,finalch4,finaln2o,WMRSULF(:),HGWPMAG(:,NM))
+	    Call SetMagEm(WriteFlag,2100,CO2_2+CO2_exr,0.0d0,finalch4,finaln2o,WMRSULF(:),HGWPMAG(:,NM),finalnox,finalvoc,finalco)
 	
 	! Arbitrary extrapolation of emissions. Mainly to get reasonable 2100 values
 	IF (CO2_2 .lt. CO2_1) THEN
@@ -153,7 +157,7 @@ END IF
     END IF
     
 	IF (Nper .gt. NM) &
-	Call SetMagEm(WriteFlag,2150,CO2_exr,0.0,finalch4,finaln2o,WMRSULF(:),HGWPMAG(:,NM))
+	Call SetMagEm(WriteFlag,2150,CO2_exr,0.0d0,finalch4,finaln2o,WMRSULF(:),HGWPMAG(:,NM),finalnox,finalvoc,finalco)
 ! Also assume land-use has come into balance
 
 !	extend emissions to 2290 for sustain program
@@ -162,7 +166,7 @@ END IF
 
 ! use same emissions for 2290 since don't generally use this
 	IF (Nper .gt. NM) &
-	Call SetMagEm(WriteFlag,2290,CO2_exr,0.0,finalch4,finaln2o,WMRSULF(:),HGWPMAG(:,NM))
+	Call SetMagEm(WriteFlag,2290,CO2_exr,0.0d0,finalch4,finaln2o,WMRSULF(:),HGWPMAG(:,NM),finalnox,finalvoc,finalco)
 
 !	*************************************************
 
@@ -173,17 +177,17 @@ END IF
 	END
 
 Subroutine SetMagEm(WriteFlag, iyr,xIndustCO2,xNetDefCO2, &
-        finalch4,finaln2o,SulfurEM,HGWPEm)
+        finalch4,finaln2o,SulfurEM,HGWPEm,finalnox,finalvoc,finalco)
 
       USE COMMON
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
 
     Integer iyr, WriteFlag
-    Real(8) xIndustCO2,xNetDefCO2,finalch4,finaln2o
+    Real(8) xIndustCO2,xNetDefCO2,finalch4,finaln2o,finalnox,finalvoc,finalco
     Real(8) SulfurEM(3),HGWPEm(8)   
 
 IF (WriteFlag .eq. 1) THEN 
-	  WRITE(45,854) iyr,xIndustCO2,xNetDefCO2,finalch4,finaln2o,SulfurEM(:),HGWPEm(:)
+	  WRITE(45,854) iyr,xIndustCO2,xNetDefCO2,finalch4,finaln2o,SulfurEM(:),HGWPEm(:),finalnox,finalvoc,finalco
 END IF
     MM = (iyr - 1990)/15 + 2
     IF (iyr .eq. 2100) MM = (2095 - 1990)/15 + 2 +1
@@ -197,9 +201,11 @@ END IF
 	MagEM(MM,5) = finaln2o
 	MagEM(MM,6:8) = SulfurEM(:)
 	MagEM(MM,9:16) = HGWPEm(:)
-	
-	IF ((xIndustCO2 .gt. 12 .or. M .gt. 8) .and. 1.eq.2) & 
- WRITE(*,855) " MC: ",MM,iyr,xIndustCO2,xNetDefCO2,finalch4,finaln2o,SulfurEM(:),HGWPEm(:)
+	MagEM(MM,17) = finalnox
+	MagEM(MM,18) = finalvoc
+	MagEM(MM,19) = finalco
+ IF (1.EQ.2) &	
+ WRITE(*,855) " MC: ",MM,iyr,xIndustCO2,xNetDefCO2,finalch4,finaln2o,SulfurEM(:),HGWPEm(:),finalnox,finalvoc,finalco
   855 FORMAT(a,2(I4,','),20(F7.2,','))
  
 
