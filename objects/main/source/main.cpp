@@ -41,9 +41,8 @@ using namespace xercesc;
 ofstream bugoutfile, outFile, logfile;	
 
 Scenario* scenario = 0; // model scenario info
-XercesDOMParser* XMLHelper<void>::parser;
-ErrorHandler* XMLHelper<void>::errHandler;
-
+auto_ptr<ErrorHandler> XMLHelper<void>::mErrHandler;
+auto_ptr<XercesDOMParser> XMLHelper<void>::mParser;
 void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFacArg );
 
 //! Main program. 

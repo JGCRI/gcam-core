@@ -25,6 +25,7 @@
 #include <cassert>
 #include <vector>
 #include <map>
+#include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMAttr.hpp>
 #include <xercesc/dom/DOMElement.hpp>
@@ -91,9 +92,9 @@ public:
    static xercesc::XercesDOMParser* getParser();
    static void cleanupParser();
 private:
-   static xercesc::XercesDOMParser* parser;
-   static xercesc::ErrorHandler* errHandler;
-   static void initParser();
+    static std::auto_ptr<xercesc::XercesDOMParser> mParser;
+    static std::auto_ptr<xercesc::ErrorHandler> mErrHandler;
+    static void initParser();
 };
 
 //! Returns the data value associated with the element node.
@@ -585,7 +586,7 @@ template <class T>
 xercesc::DOMNode* XMLHelper<T>::parseXML( const std::string& xmlFile, xercesc::XercesDOMParser* parser ) {
    try {
       // const unsigned long startMillis = xercesc::XMLPlatformUtils::getCurrentMillis();
-      parser->parse( xmlFile.c_str() );
+      mParser->parse( xmlFile.c_str() );
       // const unsigned long endMillis = xercesc::XMLPlatformUtils::getCurrentMillis();
       // long parseTime = endMillis - startMillis;
       // std::cout << "Parsing took " << parseTime / 1000.0 << " seconds." << std::endl;
@@ -606,7 +607,7 @@ xercesc::DOMNode* XMLHelper<T>::parseXML( const std::string& xmlFile, xercesc::X
       return 0;
    }
    
-   return parser->getDocument()->getDocumentElement(); // Return the root element of the document. 
+   return mParser->getDocument()->getDocumentElement(); // Return the root element of the document. 
 }
 /*! \brief Function which initializes the XML Platform and creates an instance
 * of an error handler and parser. 
@@ -625,15 +626,15 @@ void XMLHelper<T>::initParser() {
     }
     
     // Initialize the instances of the parser and error handler. 
-    parser = new xercesc::XercesDOMParser();
-    parser->setValidationScheme( xercesc::XercesDOMParser::Val_Always );
-    parser->setDoNamespaces( false );
-    parser->setDoSchema( true );
-    parser->setCreateCommentNodes( false ); // No comment nodes
-    parser->setIncludeIgnorableWhitespace( false ); // No text nodes
+    mParser.reset( new xercesc::XercesDOMParser() );
+    mParser->setValidationScheme( xercesc::XercesDOMParser::Val_Always );
+    mParser->setDoNamespaces( false );
+    mParser->setDoSchema( true );
+    mParser->setCreateCommentNodes( false ); // No comment nodes
+    mParser->setIncludeIgnorableWhitespace( false ); // No text nodes
 
-    errHandler = ( xercesc::ErrorHandler* ) new xercesc::HandlerBase();
-    parser->setErrorHandler( errHandler );
+    mErrHandler.reset( (xercesc::ErrorHandler*)new xercesc::HandlerBase() );
+    mParser->setErrorHandler( mErrHandler.get() );
 }
 
 /*! \brief Function which returns a pointer to a XercesDOMParser*.
@@ -647,12 +648,12 @@ void XMLHelper<T>::initParser() {
 template<class T>
 xercesc::XercesDOMParser* XMLHelper<T>::getParser() {
     // If the parser has not been initialized already, initialize it.
-    if( !parser ){
+    if( !mParser.get() ){
         initParser();
     }
     
     // Return a pointer to the already initialized parser. 
-    return parser;
+    return mParser.get();
 }
 
 /*! \brief Function which cleans up the memory used by the XML Parser.
@@ -664,8 +665,6 @@ xercesc::XercesDOMParser* XMLHelper<T>::getParser() {
 template<class T>
 void XMLHelper<T>::cleanupParser(){
     // Cleanup Xerces.
-    delete errHandler;
-    delete parser;
     xercesc::XMLPlatformUtils::Terminate();
 }
 
@@ -682,6 +681,8 @@ void XMLHelper<T>::cleanupParser(){
 template<class T, class U> 
 void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToVector, std::map<std::string,int>& corrMap, T* newNode ) {
     assert( node );
+    // Have an auto_ptr keep the new memory.
+    auto_ptr<T> newNodePtr( newNode );
 
     // First determine if the node exists. 
     const std::string objName = XMLHelper<std::string>::getAttrString( node, "name" );
@@ -692,11 +693,7 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
     bool shouldDelete = XMLHelper<bool>::getAttr( node, "delete" );
     
     // Check if the node already exists in the model tree. 
-    if( iter != corrMap.end() ){
-        // The object already exists.
-        // We do not need the new node passed in. 
-        delete newNode;
-        
+    if( iter != corrMap.end() ){     
         // Modify or delete the node based on the contents of the delete attribute.
         if( shouldDelete ) {
             // Perform deletion
@@ -721,17 +718,16 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
            insertToVector[ iter->second ]->XMLParse( node );
         }
     } 
-      // The node does not already exist.
-      else {
-          if( shouldDelete ) {
-              std::cout << "Error! Could not delete node " << objName << " as it does not exist." << endl;
-              // Delete the new object b/c we do not need it.
-              delete newNode;
-          } else {
+    // The node does not already exist.
+    else {
+        if( shouldDelete ) {
+            std::cout << "Error! Could not delete node " << objName << " as it does not exist." << endl;
+        } 
+        else {
             newNode->XMLParse( node );
-			insertToVector.push_back( newNode );
+            insertToVector.push_back( newNodePtr.release() );
             corrMap[ newNode->getName() ] = static_cast<int>( insertToVector.size() ) - 1;
-          }
+        }
     }
 }
 
