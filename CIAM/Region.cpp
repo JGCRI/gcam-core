@@ -185,7 +185,7 @@ void Region::XMLParse( const DOMNode* node ){
 			tempResource->XMLParse( curr );
 			resources.push_back( tempResource );
 		}
-		else if( nodeName == "renresource" ){
+		else if( nodeName == "renewresource" ){
 			tempResource = new RenewableResource();
 			tempResource->XMLParse( curr );
 			resources.push_back( tempResource );
@@ -565,8 +565,7 @@ void Region::rscsupply(int per)  {
 			prev_gdp = gnp[per-1];
 		}
 		
-		// calculate annual supply from cummulative production
-		resources[i]->cumulsupply(price,per);
+		// calculate annual supply
 		resources[i]->annualsupply(per,gnp[per],prev_gdp,price,prev_price);
 		
 		// set market supply of resources used for solution mechanism

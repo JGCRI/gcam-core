@@ -146,6 +146,10 @@ double Market::getPrice() const {
    
    double retValue;
 
+   if( name == "crude oil" ){ 
+      retValue = 0 * 1;
+   }
+
    if( name == "renewable" ){ // total guess
       retValue = 0;
    }

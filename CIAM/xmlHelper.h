@@ -76,6 +76,7 @@ public:
 	static string getAttrString( const DOMNode* node, const string attrName );
 	static string safeTranscode( const XMLCh* toTranscode );
    static void insertValueIntoVector( const DOMNode* node, vector<T>& insertToVector, const Modeltime* modeltime, const bool isPopulationData = false );
+   static int getNodePeriod ( const DOMNode* node, const Modeltime* modeltime, const bool isPopulationData = false );
 	static DOMNode* parseXML( const string& xmlFile, XercesDOMParser* parser );
 };
 
@@ -294,6 +295,48 @@ void XMLHelper<T>::insertValueIntoVector( const DOMNode* node, vector<T>& insert
    
    insertToVector[ period ] =  XMLHelper<double>::getValue( node );
    
+   
+}
+
+/*! 
+* \brief Return the period cooresponding to the year in the node 
+*
+* works analogous to insertValueIntoVector, returning the appropriate period
+*
+* \todo Make this work for the demographics object. 
+* \warning Make sure the node passed as an argument as a year attribute.
+* \param node A pointer to a node from which to extract the data.
+* \param modeltime A pointer to the modeltime object to use to determine the correct period.
+*/
+
+template<class T>
+int XMLHelper<T>::getNodePeriod ( const DOMNode* node, const Modeltime* modeltime, const bool isPopulationData ) {
+   
+   //! \pre Make sure we were passed a valid node reference.
+   assert( node );
+   
+   const int year = XMLHelper<int>::getAttr( node, "year" );
+   
+   // Check to make sure the year attribute returned non-zero. 
+   assert( year != 0 );
+   
+   int period = 0;
+   
+   if( isPopulationData == false ) {   
+      period = modeltime->getyr_to_per( year );
+      
+      // Check that the period returned correctly.
+      assert( ( period >= 0 ) && ( period <= modeltime->getmaxper() ) );
+   }
+   else {
+      period = modeltime->convertYearToPopPeriod( year );
+      
+      // Check that the period returned correctly.
+      assert( ( period >= 0 ) && ( period <= modeltime->getmaxpopdata() ) );
+      
+   }
+   
+   return period;
    
 }
 

@@ -11,12 +11,13 @@
 * \version $Revision$
 */
 
+#include "subResource.h"
 #include <xercesc/dom/DOM.hpp>
 
 using namespace xercesc;
 
 // Forward declaration.
-class subrsrc;
+class SubResource;
 
 /*! 
 * \ingroup CIAM
@@ -30,7 +31,7 @@ protected:
 	string name; //!< Resource name
 	string market; //!< regional market
 	int nosubrsrc; //!< number of subsectors for each Resource
-	vector<subrsrc*> depsubrsrc; //!< subsector objects for each Resource
+	vector<SubResource*> subResource; //!< subsector objects for each Resource
 	vector<double> rscprc; //!< Resource price
 	vector<double> available; //!< total Resource available
 	vector<double> annualprod; //!< annual production rate of Resource
@@ -39,9 +40,11 @@ protected:
 public:
 	Resource(); // default construtor
 	virtual ~Resource();
-	virtual string getType() const = 0;
+	virtual string getType() const = 0; // Any one = 0 anywhere makes this an abstract class
 	void clear();
-	void XMLParse( const DOMNode* node );
+	virtual void XMLParse( const DOMNode* node );
+   // Since this is not defined within the resource class, must declare this as abstract
+   virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* node ) = 0; // the = 0 makes this an abstract method
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream &out ) const;
 	string getName() const; // return resource name
@@ -72,6 +75,7 @@ public:
 class DepletableResource: public Resource {
 public: 
 	virtual string getType() const;
+   virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
 };
 
 /*! 
@@ -84,6 +88,7 @@ public:
 class FixedResource: public Resource {
 public: 
 	virtual string getType() const;
+   virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
 };
 
 /*! 
@@ -96,6 +101,7 @@ public:
 class RenewableResource: public Resource {
 public: 
 	virtual string getType() const;
+   virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
 };
 
 #endif // _RESOURCE_H_

@@ -88,7 +88,7 @@ private:
 		int Bisection_i( const int i, const double Tol, vector<solinfo>& sol,int& n, const int per );
 		int Bisection_all( const double Tol, const double excessDemandSolutionFloor, const int IterLimit, vector<solinfo>& sol, int& n, const int per );
 		void CheckBracket( const double Tol, const double excessDemandSolutionFloor, vector<solinfo>& sol, bool& allbracketed );
-		int Bracket( const double Tol, const double excessDemandSolutionFloor, vector<solinfo>& sol, bool& allbracketed, bool& firsttime,int& n, const int per );
+		int Bracket( const double Tol, const double excessDemandSolutionFloor, const double bracketInterval, vector<solinfo>& sol, bool& allbracketed, bool& firsttime,int& n, const int per );
 		int getMarketNumber( const string& goodName, const string& regionName ) const; // get the market number
 		double marketDemand( const int mktNumber, const int period);
 		double checkSupply( const string& goodName, const string& regionName, const int period ) const;

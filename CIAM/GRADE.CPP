@@ -1,7 +1,7 @@
 /*! 
-* \file GRADE.CPP
+* \file Grade.CPP
 * \ingroup CIAM
-* \brief grade class source file.
+* \brief Grade class source file.
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
@@ -15,7 +15,7 @@
 #include <cmath>
 #include <cassert>
 #include "scenario.h"
-#include "grade.h"
+#include "Grade.h"
 #include "modeltime.h"
 #include "xmlHelper.h"
 
@@ -24,18 +24,18 @@ using namespace std;
 extern Scenario* scenario;
 
 //! Default constructor
-grade::grade() {
+Grade::Grade() {
 	initElementalMembers();
 }
 
 //! Clear member variables
-void grade::clear() {
+void Grade::clear() {
 	initElementalMembers();
 	name = "";
 }
 
 //! Initialize elemental members
-void grade::initElementalMembers() {
+void Grade::initElementalMembers() {
 	year = 0;
 	available = 0;
 	extractCost = 0;
@@ -43,7 +43,7 @@ void grade::initElementalMembers() {
 }
 
 //! Initialize data members from XML.
-void grade::XMLParse( const DOMNode* tempNode ) {
+void Grade::XMLParse( const DOMNode* tempNode ) {
 	DOMNodeList* tempNodeLst;
 	DOMNode* tNode = 0;
 	string tNodeName;
@@ -73,7 +73,7 @@ void grade::XMLParse( const DOMNode* tempNode ) {
 }
 
 //! Write datamembers to datastream in XML format.
-void grade::toXML( ostream& out ) const {
+void Grade::toXML( ostream& out ) const {
 	
 	Tabs::writeTabs( out );
 	out << "<period>" << endl;
@@ -93,10 +93,10 @@ void grade::toXML( ostream& out ) const {
 }
 
 //! Write datamembers to debugging datastream in XML format.
-void grade::toDebugXML( const int period, ostream& out ) const {
+void Grade::toDebugXML( const int period, ostream& out ) const {
 	
 	Tabs::writeTabs( out );
-	out << "<grade name=\"" << name << "\" year=\"" << year << "\">" << endl;
+	out << "<Grade name=\"" << name << "\" year=\"" << year << "\">" << endl;
 	Tabs::increaseIndent();
 
 	XMLWriteElement( available, "available", out );
@@ -105,11 +105,11 @@ void grade::toDebugXML( const int period, ostream& out ) const {
 	
 	Tabs::decreaseIndent();
 	Tabs::writeTabs( out );
-	out << "</grade>" << endl;
+	out << "</Grade>" << endl;
 }
 
 //! Print technology info.
-void grade::printGrade() const
+void Grade::printGrade() const
 {
 	// write to file or database later
 	cout << name << endl;
@@ -118,42 +118,38 @@ void grade::printGrade() const
 	cout << "Extraction Cost: " << extractCost << endl;
 }
 
-//! Calculate cummulative technical change for each grade.
-void grade::calcTechChangeCumm( const double techChange, const int per ) {
-	const Modeltime* modeltime = scenario->getModeltime();
-        if (per > 0) {
-            techChangeCumm[per] = techChangeCumm[ per-1 ] * 
-                                  pow( ( 1.0 + techChange ), modeltime->gettimestep(per) );
-        }
-}
-
 //! Total cost of each grade.
-void grade::calcCost(  const double tax, const double cumTechChange, const double environCost, const int per ) {
+void Grade::calcCost(  const double tax, const double cumTechChange, const double environCost, const int per ) {
 	totalCost = ( extractCost + environCost ) / cumTechChange + tax;
 }
 
-//! Return available amount in each grade.
-double grade::getAvail() const {
+//! Return available amount in each Grade.
+double Grade::getAvail() const {
 	return available;
 }
 
+//! Return available amount in each Grade.
+void Grade::setAvail( double availableVal ) {
+   available = availableVal;
+}
+
 //! Return the total cost.
-double grade::getCost() const {
+double Grade::getCost() const {
 	return totalCost;
 }
 
 //! Return the extraction cost.
-double grade::getExtCost() const {
+double Grade::getExtCost() const {
 	return extractCost;
 }
 
 //! Set the extraction cost.
-void grade::setExtCost( const double eCost ) {
+void Grade::setExtCost( const double eCost ) {
 	extractCost = eCost;
 }
 
 //! Get the name.
-string grade::getName() const {
+string Grade::getName() const {
 	return name;
 }
 

@@ -54,6 +54,8 @@ protected:
 	vector<double> output; //!< total amount of final output from subsector
 	vector<double> carbontaxpaid; //!< total subsector carbon taxes paid
 	vector<double> fuelPrefElasticity; //!< Fuel preference elasticity
+   vector<bool> doCalibration; // Flag set if calibration value is read-in
+   vector<double> calValue; // Calibration value
 	vector<Summary> summary; //!< summary for reporting
 public:
 	subsector();

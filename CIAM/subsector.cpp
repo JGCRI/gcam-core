@@ -34,7 +34,7 @@ subsector::subsector(){
 	tax = 0;
 	basesharewt = 0;
 
-   // resize vectors.
+ // resize vectors.
 	const Modeltime* modeltime = scenario->getModeltime();
 	const int maxper = modeltime->getmaxper();
    capLimit.resize( maxper, 1.0 );
@@ -50,6 +50,8 @@ subsector::subsector(){
 	summary.resize(maxper); // object containing summaries
    fuelPrefElasticity.resize( maxper );
    summary.resize( maxper );
+   doCalibration.resize( maxper, false );
+   calValue.resize( maxper );
 }
 
 //! Destructor.
@@ -71,10 +73,10 @@ void subsector::clear(){
 	unit = "";
 	fueltype = "";
 
+
 	// clear the vectors.
 	techs.clear();
 	hydro.clear();
-	capLimit.clear();
    shrwts.clear();
 	lexp.clear();
 	fuelPrefElasticity.clear();
@@ -86,6 +88,7 @@ void subsector::clear(){
 	output.clear();
 	carbontaxpaid.clear();
 	summary.clear();
+
 }
 
 //! Return the sector name.
@@ -106,7 +109,7 @@ void subsector::XMLParse( const DOMNode* node ) {
 	string childNodeName;
 	vector<technology*> techVec;
 	technology* tempTech = 0;
-
+        
 	//! \pre Make sure we were passed a valid node.
 	assert( node );
 	
@@ -127,7 +130,11 @@ void subsector::XMLParse( const DOMNode* node ) {
 		else if( nodeName == "sharewt" ){
          XMLHelper<double>::insertValueIntoVector( curr, shrwts, modeltime );
 		}
-
+		else if( nodeName == "calValue" ){
+         XMLHelper<double>::insertValueIntoVector( curr, calValue, modeltime );
+         int thisPeriod = XMLHelper<double>::getNodePeriod( curr, modeltime );
+         doCalibration[ thisPeriod ] = true;
+		}
 		else if( nodeName == "logitexp" ){
          XMLHelper<double>::insertValueIntoVector( curr, lexp, modeltime );
 		}
@@ -184,6 +191,12 @@ void subsector::toXML( ostream& out ) const {
 	// write the xml for the class members.
 	for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
 		XMLWriteElement( capLimit[ i ], "capacitylimit", out, modeltime->getper_to_yr( i ) );
+	}
+
+	for( i = 0; i < static_cast<int>( calValue.size() ); i++ ){
+      if ( doCalibration[ i ] ) {
+		   XMLWriteElement( calValue[ i ], "calValue", out, modeltime->getper_to_yr( i ) );
+      }
 	}
 	
 	for( i = 0; i < static_cast<int>( shrwts.size() ); i++ ){
@@ -511,16 +524,33 @@ void subsector::adjShares( const double dmd, double shareRatio,
 
 //! sets demand to output and output
 /* Demand from the "dmd" parameter (could be energy or energy service) is passed to technologies.
-    This is then shared out at the technology level.
-    See explanation for sector::setoutput. */
+ *  This is then shared out at the technology level.
+ *  See explanation for sector::setoutput. 
+ *  The output of this subsector can also be calibrated. 
+ * \todo Need to change this to be able to set output as well (particularly for demand sectors).
+  */
 void subsector::setoutput( const string& regionName, const string& prodName, const double dmd, const int per) {
 	int i=0;
 	input[per] = 0; // initialize subsector total fuel input 
 	carbontaxpaid[per] = 0; // initialize subsector total carbon taxes paid 
 
-	// output is in service unit when called from demand sectors
-	double subsecdmd = share[per]*dmd; // share is subsector level
-	for (i=0;i<notech;i++) {
+   // output is in service unit when called from demand sectors
+   double subsecdmd = share[per]*dmd; // share is subsector level
+   if ( doCalibration[ per ] == true ) {
+      double shareScaleValue = 0;
+      if ( subsecdmd > 0 ) {
+         shareScaleValue = calValue[ per ] / subsecdmd;
+         if ( shrwts[ per ]  == 0 ) {
+            shrwts[ per ]  = 1;
+          }
+      }
+      
+      // Tests with only one cal value set indicate that setting the demand value 
+      // here has little effect
+      shrwts[ per ]  = shrwts[ per ]  * shareScaleValue;
+      subsecdmd = calValue[ per ];
+   }
+	for ( i=0; i<notech; i++ ) {
 		// calculate technology output and fuel input from subsector output
 		techs[i][per]->production(regionName,prodName,subsecdmd,per);
 

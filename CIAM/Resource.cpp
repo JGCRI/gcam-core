@@ -24,10 +24,13 @@
 
 // class headers
 #include "resource.h"
-#include "subrsrc.h"
+#include "SubResource.h"
 #include "scenario.h"
 #include "modeltime.h"
+#include "market.h"
 #include "Marketplace.h"
+#include "resource.h"
+#include "SubRenewableResource.h"
 
 using namespace std;
 
@@ -38,18 +41,11 @@ extern Scenario* scenario;
 Resource::Resource(){
 	nosubrsrc = 0;
    
-   // Resize all vectors.
-	const Modeltime* modeltime = scenario->getModeltime();
-	const int maxper = modeltime->getmaxper();
-	available.resize( maxper ); // total resource available
-	annualprod.resize( maxper ); // annual production rate of resource
-	cummprod.resize( maxper ); // cummulative production of resource
-   rscprc.resize( maxper ); 
 }
 
 //! Destructor.
 Resource::~Resource() {
-	for ( vector<subrsrc*>::iterator iter = depsubrsrc.begin(); iter != depsubrsrc.end(); iter++ ) {
+	for ( vector<SubResource*>::iterator iter = subResource.begin(); iter != subResource.end(); iter++ ) {
 		delete *iter;
 	}
 }
@@ -59,7 +55,8 @@ void Resource::clear(){
 	name = "";
 	market = "";
 	nosubrsrc = 0;
-	depsubrsrc.clear();
+	rscprc.clear();
+	subResource.clear();
 	available.clear();
 	annualprod.clear();
 	cummprod.clear();
@@ -73,7 +70,13 @@ void Resource::XMLParse( const DOMNode* node ){
 	string nodeName;
 	DOMNodeList* nodeList = 0;
 	DOMNode* curr = 0;
-	subrsrc* tempSubResource = 0;
+
+	// resize vectors not read in
+	const int maxper = modeltime->getmaxper();
+	available.resize(maxper); // total resource availabl
+	annualprod.resize(maxper); // annual production rate of resource
+	cummprod.resize(maxper); // cummulative production of resource
+   rscprc.resize( maxper ); 
 
 	// make sure we were passed a valid node.
 	assert( node );
@@ -99,14 +102,13 @@ void Resource::XMLParse( const DOMNode* node ){
 		else if( nodeName == "price" ){
 			XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );
 		}
-		else if( nodeName == "subresource" ){
-			tempSubResource = new subrsrc();
-			tempSubResource->XMLParse( curr );
-			depsubrsrc.push_back( tempSubResource );
-		}
+		else {
+         XMLDerivedClassParse( nodeName, curr );
+      }
 	}
 
-	nosubrsrc = depsubrsrc.size();
+	nosubrsrc = subResource.size();
+
 }
 
 //! Write datamembers to datastream in XML format.
@@ -129,7 +131,7 @@ void Resource::toXML( ostream& out ) const {
 	}
 		
 	// write out the depresource objects.
-	for( vector<subrsrc*>::const_iterator i = depsubrsrc.begin(); i != depsubrsrc.end(); i++ ){
+	for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
 		( *i )->toXML( out );
 	}
 
@@ -175,7 +177,7 @@ void Resource::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( nosubrsrc, "nosubrsrc", out );
 
 	// Write out the depresource objects.
-	for( vector<subrsrc*>::const_iterator i = depsubrsrc.begin(); i != depsubrsrc.end(); i++ ){
+	for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
 		( *i )->toDebugXML( period, out );
 	}
 
@@ -225,8 +227,8 @@ void Resource::cumulsupply(double prc,int per)
 	rscprc[per] = prc;
 	// sum cummulative production of each subsector
 	for (i=0;i<nosubrsrc;i++) {
-		depsubrsrc[i]->cumulsupply(prc,per);
-		cummprod[per] += depsubrsrc[i]->getCumulProd(per);
+		subResource[i]->cumulsupply(prc,per);
+		cummprod[per] += subResource[i]->getCumulProd(per);
 	}
 }
 
@@ -242,12 +244,15 @@ void Resource::annualsupply(int per,double gnp,double prev_gnp,double price,doub
 	int i=0;
 	annualprod[per]=0.0;
 	available[per]=0.0;
+
+   // calculate cummulative production
+   cumulsupply(price,per);
        
 	// sum annual production of each subsector
 	for (i=0;i<nosubrsrc;i++) {
-		depsubrsrc[i]->annualsupply(per,gnp,prev_gnp,price,prev_price);
-		annualprod[per] += depsubrsrc[i]->getAnnualProd(per);
-		available[per] += depsubrsrc[i]->getAvailable(per);
+		subResource[i]->annualsupply(per,gnp,prev_gnp,price,prev_price);
+		annualprod[per] += subResource[i]->getAnnualProd(per);
+		available[per] += subResource[i]->getAvailable(per);
 	}
 }
 
@@ -264,11 +269,11 @@ double Resource::getAvailable(int per)
 	return available[ per ];
 }
 
-//! Return resource available from each subsectors.
+//! Return resource available from each subsector.
 double Resource::getSubAvail( const string& subResourceName, const int per ) {
 	for (int i=0;i<nosubrsrc;i++) {
-		if (depsubrsrc[i]->getName() == subResourceName )
-			return depsubrsrc[i]->getAvailable(per);
+		if (subResource[i]->getName() == subResourceName )
+			return subResource[i]->getAvailable(per);
 	}
 	return 0;
 }
@@ -280,7 +285,7 @@ void Resource::show()
 	cout << name << endl;
 	cout << "Number of Subsectors: " << nosubrsrc <<"\n";
 	for (i=0;i<nosubrsrc;i++)
-		cout<<depsubrsrc[i]->getName()<<"\n";
+		cout<<subResource[i]->getName()<<"\n";
 }
 
 //! Write resource output to file.
@@ -297,7 +302,7 @@ void Resource::outputfile( const string& regname )
 
 	// do for all subsectors in the sector
 	for (int i=0;i<nosubrsrc;i++)
-		depsubrsrc[i]->outputfile(regname ,name);
+		subResource[i]->outputfile(regname ,name);
 }
 
 //! Write resource output to database.
@@ -318,21 +323,69 @@ void Resource::MCoutput( const string& regname ) {
 
 	// do for all subsectors in the sector
 	for (int i=0;i<nosubrsrc;i++)
-		depsubrsrc[i]->MCoutput(regname,name);
+		subResource[i]->MCoutput(regname,name);
 }
 
+// ************************************************************
+// Definitions for the derived classes below.
+// Since these are very small changes, keep in same file for simplicity
+// ************************************************************
+
+// *******************************************************************
+// DepletableResource Class
+// *******************************************************************
 //! Returns the type of the Resource.
 string DepletableResource::getType() const {
 	return "Depletable";
 }
 
+//! Performs XML read-in that is specific to this derived class
+/*! In this case, this read-in just substantiates the appropriate type of subResource */
+void DepletableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {   
+   SubResource* tempSubResource = 0;
+   
+   if( nodeName == "subresource" ){
+      tempSubResource = new SubDepletableResource();
+      tempSubResource->XMLParse( node );
+      subResource.push_back( tempSubResource );
+   }
+}
+
+// *******************************************************************
+// FixedResource Class
+// *******************************************************************
 //! Returns the type of the Resource.
 string FixedResource::getType() const {
 	return "Fixed";
 }
 
+//! Performs XML read-in that is specific to this derived class
+/*! In this case, this read-in just substantiates the appropriate type of subResource */
+void FixedResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
+   SubResource* tempSubResource = 0;
+   if( nodeName == "subresource" ){
+      tempSubResource = new SubFixedResource();
+      tempSubResource->XMLParse( node );
+      subResource.push_back( tempSubResource );
+   }
+}
+
+// *******************************************************************
+// RenewableResource Class
+// *******************************************************************
 //! Returns the type of the Resource.
 string RenewableResource::getType() const {
 	return "Renewable";
+}
+
+//! Performs XML read-in that is specific to this derived class
+/*! In this case, this read-in just substantiates the appropriate type of subResource */
+void RenewableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
+   SubResource* tempSubResource = 0;
+   if( nodeName == "subresource" ){	
+      tempSubResource = new SubRenewableResource();
+      tempSubResource->XMLParse( node );
+      subResource.push_back( tempSubResource );
+   }
 }
 

@@ -5,7 +5,7 @@
 /*! 
 * \file Grade.h
 * \ingroup CIAM
-* \brief The grade class header file.
+* \brief The Grade class header file.
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
@@ -23,34 +23,35 @@ using namespace xercesc;
 
 /*! 
 * \ingroup CIAM
-* \brief Technologies representing a grade for each resource.
+* \brief Technologies representing a Grade for each resource.
 *
+=======
 * grade is an object that contains technologies that characterize each grade.
 *
 * \author Sonny Kim
 */
 
-class grade
+class Grade
 {
 private:
-	string name; //!< grade name
+	string name; //!< Grade name
 	int year; //!< year
-	double available; //!< amount of grade for each grade
-	double extractCost; //!< extraction cost of each grade
+	double available; //!< amount of Grade for each Grade
+	double extractCost; //!< extraction cost of each Grade
 	vector<double> techChangeCumm; //!< cummulative technical change for all grades
 	double totalCost; //!< total cost
 public:
-	grade();
-	grade( const string nameIn, const int noIn );
+	Grade();
+	Grade( const string nameIn, const int noIn );
 	void clear();
 	void initElementalMembers();
 	void XMLParse( const DOMNode* tempnode );
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
 	void printGrade() const;
-	void calcTechChangeCumm( const double techChange, const int per );
 	void calcCost( const double tax, const double cumTechChange, const double environCost, const int per );
 	double getAvail() const;
+   void setAvail( double availableVal );
 	double getCost() const;
 	double getExtCost() const;
 	void setExtCost( const double ecost );
