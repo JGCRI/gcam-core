@@ -169,6 +169,7 @@ void sector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) 
     // do nothing
     // defining method here even though it does nothing so that we do not
     // create an abstract class.
+      cout << "Unrecognized text string: " << nodeName << " found while parsing Sector." << endl;
 }
 
 //! Parses any attributes specific to derived classes

@@ -204,6 +204,7 @@ void subsector::XMLParse( const DOMNode* node ) {
                         // will not do if period is already last period or maxperiod
                         for (int i = thisPeriod+1; i < maxperiod; i++) {
                             techVec[ i ] =  techVec[ thisPeriod ]->clone();
+                            techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
                         }
                     }
 

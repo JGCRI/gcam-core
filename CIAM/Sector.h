@@ -51,7 +51,7 @@ protected:
     
 public:
     sector();
-    ~sector();
+    virtual ~sector();
     virtual void clear();
     string getName(); // return name of sector
     virtual void XMLParse( const DOMNode* node );

@@ -725,6 +725,11 @@ double technology::getlexp()  const {
     return lexp;
 }
 
+//! Set the technology year.
+void technology::setYear( const int yearIn ) {
+   year = yearIn;
+}
+
 //  ******* method definition for hydro_tech
 
 //! Default constructor

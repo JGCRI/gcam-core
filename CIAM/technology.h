@@ -121,7 +121,7 @@ public:
     double get_emissmap_second( const string& str ) const; // return value for ghg
     double getlexp() const; // return logit exponential for the technology
     double getFixedSupply() const; // return fixed supply
-    
+    void setYear( const int yearIn );
 };
 
 /*! 
