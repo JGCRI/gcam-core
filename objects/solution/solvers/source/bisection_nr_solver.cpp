@@ -46,7 +46,6 @@ BisectionNRSolver::~BisectionNRSolver() {
 */
 bool BisectionNRSolver::solve( const int period ) {
    
-   World* world = scenario->getWorld();
    bool allbracketed = false;
    bool firsttime = true;
    int i = 0; // some index

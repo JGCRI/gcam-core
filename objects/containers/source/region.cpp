@@ -743,7 +743,6 @@ void Region::finalSupply( const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
     string goodName;
     int i = 0;
-    int j = 0;
     double mrksupply;
 
 
@@ -754,8 +753,6 @@ void Region::finalSupply( const int period ) {
 
         // name is country/region name
         ( *ri )->supply( period );
-        double sectorOutput = ( *ri )->getOutput(period);
-
         carbonTaxPaid[period] += ( *ri )->getTotalCarbonTaxPaid(period);
     }
 
@@ -1025,7 +1022,6 @@ void Region::calibrateTFE( const int period ) {
     // Don't calibrate unless non zero value of TFE
     if ( TFEcalb[ period ]  > 0 ) {
         // Ratio of TFE in sector to cal value
-        double TFEtemp = TFEcalb[ period ];
         double scaleFactor = TFEcalb[ period ] / totalFinalEnergy;
 
         if ( totalFinalEnergy == 0 ) {

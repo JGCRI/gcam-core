@@ -76,9 +76,7 @@ void SubResource::clear(){
 void SubResource::XMLParse( const DOMNode* node )
 {	
     DOMNodeList* nodeList = 0;
-    DOMNodeList* childNodeList = 0;
     DOMNode* curr = 0;
-    DOMNode* currChild = 0;
     string nodeName;
     string childNodeName;
     Grade* tempGrade = 0;

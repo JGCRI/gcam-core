@@ -77,7 +77,6 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
 
 //! Write datamembers to datastream in XML format for replicating input file.
 void Grade::toXML( ostream& out ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
     
     Tabs::writeTabs( out );
     out << "<grade name=\"" << name << "\">" << endl;

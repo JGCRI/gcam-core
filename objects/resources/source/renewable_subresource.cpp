@@ -103,7 +103,6 @@ void SubRenewableResource::cumulsupply( double prc, int per ) {
 */
 void SubRenewableResource::annualsupply( int period, double gnp, double prev_gnp, double price, double prev_price ) {
    
-   const Modeltime* modeltime = scenario->getModeltime();
    double gradeAvail;
    double gradeCost;
    double prevGradeCost = grade[ 0 ]->getCost(period - 1); // Minimum cost for any production
