@@ -482,8 +482,7 @@ void Sector::addghgtax( const string& ghgname, const int period ) {
 * \todo add warnings to sub-Sector and technology (?) that fixed capacity has to be >0
 * \warning model with fixed capacity in sectors where demand is not a solved market may not solve
 */
-void Sector::calcShare( const int period, const double gnpPerCap )
-{
+void Sector::calcShare( const int period, const double gnpPerCap ) {
     // Note that this solution for the fixed capacity share problem requires that 
     // simultaneity be turned on. This would seem to be because the fixed share is lagged one period
     // and can cause an oscillation. With the demand for this Sector in the marketplace, however, the
