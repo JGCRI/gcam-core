@@ -27,6 +27,7 @@ This documentation should occur in the same place as the detailed section.
 
 \subsection styleChecks3 All other style guidelines are followed.
 
+
 \section IncludeChecks Proper File Inclusion Checks
 The reviewer should perform these checks on all files. 
 
@@ -56,7 +57,7 @@ Example:
 std::string or std::vector
 
 \subsection headItem18 Forward declared classes are used whenever possible.
-link to FAQ here
+\ref faqitem2
 
 \subsection headItem3 Class has no unused member variables. 
 
@@ -79,7 +80,7 @@ link to FAQ here
 \subsection headItem12 Any variable who's value does not change during the course of a function is declared constant.
 
 \subsection headItem13 Any non-elemental variable who's value does not change through the course of a function is passed by constant reference.
-Make link to FAQ item here.
+\ref faqitem3
 
 \subsection headItem14 All functions not called from outside the class are declared private. 
 
