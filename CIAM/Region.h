@@ -81,7 +81,8 @@ public:
 	void adjust_gnp(int per); // adjust gnp for energy
 	void endusedemand(int per);  // calculates end use demand for energy and other goods
 	void finalsupply(int per); // calculates supply of final energy and other goods after getting demand
-	void emission(int per); // calculates GHG emissions by fuel and sector
+	void emission(int per); // calculates GHG emissions by sector
+	void calcEmissFuel(int per); // calculates GHG emissions by fuel
 	void emiss_ind(int per); // calculates indirect GHG emissions from demand sectors
 	void showsupsector(int per, const char* ofile); // write supply sector info to text file
 	void showdemsector(int per, const char* ofile); // write demand sector info to text file

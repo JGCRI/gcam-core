@@ -656,7 +656,7 @@ void demsector::XMLParse( const DOMNode* node ){
 	carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
 	summary.resize( maxper ); // object containing summaries // memory leak
 	fe_cons.resize(maxper); // end-use sector final energy consumption
-	service.resize(maxper); // total end-use sector service 
+	//service.resize(maxper); // total end-use sector service 
 	sectorfuelprice.resize(maxper); // total end-use sector service 
 	techChangeCumm.resize(maxper); // cummulative technical change
 		
@@ -1014,7 +1014,8 @@ void demsector::MCoutput( const string& regionName )
 	for (m=0;m<maxper;m++) {
 		temp[m] = sector::getoutput(m);
 	}
-	dboutput4(regionName,"End-Use Service","by Sector",secname,"Ser Unit",temp);
+//	dboutput4(regionName,"End-Use Service","by Sector",secname,"Ser Unit",temp);
+	dboutput4(regionName,"End-Use Service","by Sector",secname,"Ser Unit",service);
 	dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",temp);
 
 	// End-use service price elasticity
@@ -1027,11 +1028,19 @@ void demsector::MCoutput( const string& regionName )
 	// sector fuel consumption by fuel type
 	typedef map<string,double>:: const_iterator CI;
 	map<string,double> tfuelmap = sector::getfuelcons(m=0);
-	for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
+	CI fmap; // define fmap
+	for (fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
 		for (m=0;m<maxper;m++) {
 			temp[m] = sector::getfuelcons_second(m,fmap->first);
 		}
 		dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
+
+		// if last element which is zTotal
+		// note: end() returns one past the last so use --
+		// Total fuel consumption by end-use sector
+		if (fmap == --tfuelmap.end()) {
+			dboutput4(regionName,"Fuel Consumption","by End-Use Sector",secname,"EJ",temp);
+		}
 	}
 
 	// sector emissions for all greenhouse gases

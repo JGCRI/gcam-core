@@ -270,6 +270,7 @@ void World::updateSummary( int per )
 {
 	for (int i=0;i<noreg;i++) {
 		region[i]->updateSummary(per);
+		region[i]->calcEmissFuel(per);
 	}
 }
 

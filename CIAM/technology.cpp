@@ -387,7 +387,12 @@ void technology::emission( const string prodname ) {
 	emfuelmap.clear(); // clear emissions map
 	for (int i=0; i<ghg.size(); i++) {
 		ghg[i]->calc_emiss(fuelname,input,prodname,output);
+		// emissions by gas name only
 		emissmap[ghg[i]->getname()] = ghg[i]->getemission();
+		// emissions by gas and fuel names combined
+		// used to calculate emissions by fuel
+		//string str = ghg[i]->getname() + fuelname;
+		emissmap[ghg[i]->getname() + fuelname] = ghg[i]->getemission();
 		emfuelmap[ghg[i]->getname()] = ghg[i]->getemiss_fuel();
 	}
 }
