@@ -164,7 +164,10 @@ public class AdapterNode {
     }
     
     public AdapterNode getParent() {
-        return new AdapterNode(node.getParent());
+        Element parent = node.getParent();
+        
+        if (parent == null) return null;
+        else return new AdapterNode(parent);
     }
     
     public String getText() {
@@ -206,6 +209,22 @@ public class AdapterNode {
     }
     
     /***************** Modifier Functions ******************/
+    
+    public int removeChild(String childName) {
+        int ct = 0;
+        List children = node.getChildren();
+        Iterator it = children.iterator();
+        Element kid;
+        while(it.hasNext()) {
+            kid = (Element)it.next();
+            if (kid.getName().equals(childName)) break;
+            ct++;
+        }
+        
+        node.removeChild(childName);
+        
+        return ct;
+    }
     
     public void setIndex(int index) {
         levelIndex = index;

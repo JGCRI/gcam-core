@@ -98,13 +98,19 @@ public class JDomToTreeModelAdapter implements javax.swing.tree.TreeModel { //ex
     
     public void insertNodeInto(AdapterNode newChild, TreePath parentPath, int index) {
         AdapterNode parent = (AdapterNode)parentPath.getLastPathComponent();
-        //List kids = parent.getChildren();
-        //kids.clear();
-        
-        //parent.addChild(newChild, index);
+
         int[] arr1 = {parent.addChild(newChild)};
         AdapterNode[] arr2 = {newChild};
         fireTreeNodesInserted(new TreeModelEvent(this, parentPath, arr1, arr2));
+    }
+    
+    public void removeNodeFrom(TreePath nodePath) {
+        AdapterNode node = (AdapterNode)nodePath.getLastPathComponent();
+        AdapterNode parent = node.getParent();
+        
+        int[] arr1 = {parent.removeChild(node.getName())};
+        AdapterNode[] arr2 = {node};
+        fireTreeNodesRemoved(new TreeModelEvent(this, nodePath.getParentPath(), arr1, arr2));
     }
     
     public void fireTreeNodesChanged( TreeModelEvent e ) {
