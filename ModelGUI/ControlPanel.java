@@ -14,6 +14,7 @@ package ModelGUI;
  */
 
 import javax.swing.*;
+import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 import javax.swing.tree.*;
@@ -36,8 +37,10 @@ public class ControlPanel extends javax.swing.JFrame {
     private JTextField jTFfileName;
     private JPanel browsePanel;
     private JPanel treePanel;
-    private JTabbedPane dataPane;
-    private JEditorPane valuePane;
+    //private JTabbedPane dataPane;
+    private JPanel dataPanel;
+    private JPanel querryPanel;
+    private JTextField valuePane;
     private JSplitPane splitPane;
     private JPanel tableHeaderPanel;
     
@@ -46,7 +49,7 @@ public class ControlPanel extends javax.swing.JFrame {
     
     private JTree tree;
     private Document document;
-    private java.util.List nodes;
+    private java.util.List ansestorNodes;
     
     private JTable table;
     private int tableFlag;
@@ -56,7 +59,21 @@ public class ControlPanel extends javax.swing.JFrame {
     
     private boolean nodeValueChangedFlag;
     
+    private boolean showNames;
+    private JComboBox listTableBox;
+    private JList regionBox;
+    
+    private Vector querryControls;
+    private Vector attributeControls;
+    private Vector rootPointers;
+    private AdapterNode currRootPointer;
+    
     private final JFileChooser fc = new JFileChooser();
+    
+    private static int LIST = 0;
+    private static int TABLE = 1;
+    private static int DEFAULT_COMPONENT_HEIGHT = 20;
+    private static String DEFAULT_SELECTION_STRING = "--chose one--";
     
     /** Creates new form ControlPanel */
     public ControlPanel() {
@@ -67,8 +84,8 @@ public class ControlPanel extends javax.swing.JFrame {
         this.getContentPane().setLayout(layout);
         
         jTFfileName = new JTextField();
-        jTFfileName.setPreferredSize(new Dimension(300, 20));
-        jTFfileName.setMaximumSize(new Dimension(1200, 20));
+        jTFfileName.setPreferredSize(new Dimension(300, DEFAULT_COMPONENT_HEIGHT));
+        jTFfileName.setMaximumSize(new Dimension(1200, DEFAULT_COMPONENT_HEIGHT));
         
         JButton browseButton = new JButton("Browse...");
         browseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -141,7 +158,15 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-END:initComponents
     
     private void frameResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_frameResized
-        
+        if (evt.getID() == ComponentEvent.COMPONENT_RESIZED) {
+            if (treePanel != null && treePanel.isShowing()) {
+                treePanel.setPreferredSize(treePanel.getSize());
+            }
+            //appears to be unnecessary
+            /*if (dataPanel != null && dataPanel.isShowing()) {
+                dataPanel.setPreferredSize(dataPanel.getSize());
+            }*/
+        }
     }//GEN-LAST:event_frameResized
     
     /*
@@ -159,10 +184,10 @@ public class ControlPanel extends javax.swing.JFrame {
                 for (int j = 0; j < paths.length; j++) {
                     //get the tag name of each selected node
                     node = (AdapterNode)paths[j].getLastPathComponent();
-                    nodes = node.getTableHeadings();
+                    ansestorNodes = node.getAnsestors();
                     
                     //obtain the axis from user
-                    displayTableChoices();
+                    //displayTableChoices();
                 }
             }
         }
@@ -249,83 +274,85 @@ public class ControlPanel extends javax.swing.JFrame {
                 }
                 
             }
-            
-            System.exit(0);
         }
+        System.exit(0);
     }//GEN-LAST:event_exitForm
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) { }
         
-        /**
-         * @param args the command line arguments
-         */
-        public static void main(String args[]) {
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception e) { }
-            
-            new ControlPanel().show();
-        }
-        
+        new ControlPanel().show();
+    }
+    
     /*
      *readXMLFile takes the full name of an XML file
      *  attempts to read the XML into a DOM parser
      *  Returns boolean indicating whether the read was successful
      */
-        public boolean readXMLFile(String fileName) {
-            SAXBuilder parser = new SAXBuilder();
-            try {
-                document = parser.build(new File(fileName));
-                return true;
-            } catch (Exception e){
-                System.out.println("Exception " + e + " in function readXMLFile");
-                return false;
-            }
+    public boolean readXMLFile(String fileName) {
+        SAXBuilder parser = new SAXBuilder();
+        try {
+            document = parser.build(new File(fileName));
+            return true;
+        } catch (Exception e){
+            System.out.println("Exception " + e + " in function readXMLFile");
+            return false;
         }
-        
+    }
+    
     /*
      *displayTree creates a visual representation of the DOM created in readXMLFile
      *  The JTree appears in left panel of a split pane,
      *  the text panel on the right allows user to see and edit values of nodes
      */
-        public void displayTree() {
-            int leftWidth = 350;
-            int rightWidth = 350;
-            int windowHeight = 300;
-            int windowWidth = leftWidth + rightWidth;
-            
-            tree = new JTree(new JDomToTreeModelAdapter(document));
-            //allow multiple nodes to be selected simultaneously
-            tree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
-            
-            //Listen for when the selection changes.
-            tree.addTreeSelectionListener(new TreeSelectionListener() {
-                public void valueChanged(TreeSelectionEvent e) {
-                    TreePath[] paths = tree.getSelectionPaths();
-                    if (paths != null) {
-                        clearDisplay();
-                        for (int j = 0; j < paths.length; j++) {
-                            AdapterNode node = (AdapterNode)paths[j].getLastPathComponent();
-                            displayValue(node.getValue(), false);
-                        }
+    public void displayTree() {
+        int leftWidth = 350;
+        int rightWidth = 350;
+        int windowHeight = 500;
+        int windowWidth = leftWidth + rightWidth;
+        
+        tree = new JTree(new JDomToTreeModelAdapter(document));
+        //allow multiple nodes to be selected simultaneously
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
+        
+        //Listen for when the selection changes.
+        tree.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent e) {
+                TreePath[] paths = tree.getSelectionPaths();
+                if (paths != null) {
+                    clearDisplay();
+                    for (int j = 0; j < paths.length; j++) {
+                        AdapterNode node = (AdapterNode)paths[j].getLastPathComponent();
+                        displayValue(node.getText(), false);
                     }
                 }
-            });
-            
-            //set the icons of the tree to be blank
-            DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
-            Icon icon = null;
-            renderer.setLeafIcon(icon);
-            renderer.setClosedIcon(icon);
-            renderer.setOpenIcon(icon);
-            tree.setCellRenderer(renderer);
-            
-            // Build left-side view
-            JScrollPane treeView = new JScrollPane(tree);
-            treeView.setPreferredSize(new Dimension(leftWidth, windowHeight));
-            
-            // Build right-side view
-            valuePane = new JEditorPane("values","");
-            valuePane.setEditable(true);
-            valuePane.getDocument().addDocumentListener(new DocumentListener() {
+            }
+        });
+        
+        //set the icons of the tree to be blank
+        DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+        Icon icon = null;
+        renderer.setLeafIcon(icon);
+        renderer.setClosedIcon(icon);
+        renderer.setOpenIcon(icon);
+        tree.setCellRenderer(renderer);
+        
+        // Build left-side view
+        JScrollPane treeView = new JScrollPane(tree);
+        treeView.setPreferredSize(new Dimension(leftWidth, windowHeight));
+        
+        // Build right-side view
+        // start with text field to show values of nodes in tree
+        valuePane = new JTextField();
+        valuePane.setEditable(true);
+        valuePane.setPreferredSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
+        valuePane.setMaximumSize(new Dimension(2000, DEFAULT_COMPONENT_HEIGHT));
+            /*valuePane.getDocument().addDocumentListener(new DocumentListener() {
                 public void insertUpdate(DocumentEvent e) {
                     treeValueChanged((javax.swing.text.Document)e.getDocument());
                 }
@@ -335,352 +362,765 @@ public class ControlPanel extends javax.swing.JFrame {
                 public void changedUpdate(DocumentEvent e) {
                     treeValueChanged((javax.swing.text.Document)e.getDocument());
                 }
-            });
-            dataPane = new JTabbedPane();
-            dataPane.add("Values", valuePane);
-            JScrollPane dataView = new JScrollPane(dataPane);
-            dataView.setPreferredSize(new Dimension(rightWidth, windowHeight));
+            });*/
+        JPanel tempValPanel = new JPanel();
+        tempValPanel.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
+        tempValPanel.setLayout(new BoxLayout(tempValPanel, BoxLayout.X_AXIS));
+        tempValPanel.add(new JLabel("Node Value:"));
+        tempValPanel.add(Box.createRigidArea(new Dimension(5,0)));
+        tempValPanel.add(valuePane);
+        
+        //More right-side view
+        // build panel that'll house querry for the table view
+        makeQuerryPanel(true);
+        
+        JPanel bigDataPane = new JPanel();
+        bigDataPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        bigDataPane.setLayout(new BorderLayout());
+        bigDataPane.add(tempValPanel, BorderLayout.NORTH);
+        //bidDataPanel.add(Box.createRigidArea(new Dimension(0,10)));
+        
+        //Finish right-side view by putting the various panels together
+        /*dataPanel = new JPanel();
+        dataPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
+        dataPanel.add(tempValPanel);
+        dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
+         */
+        
+        dataPanel = new JPanel();
+        dataPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
+        dataPanel.add(querryPanel);
+        JScrollPane dataView = new JScrollPane(dataPanel);
+        //JScrollPane dataView = new JScrollPane
+        dataView.setPreferredSize(new Dimension(rightWidth, windowHeight));
+        
+        bigDataPane.add(dataView);
+        
+        //make button that will display the table
+        showTableButton = new JButton("Show Querry Result");
+        showTableButton.setAlignmentX(Box.CENTER_ALIGNMENT);
+        showTableButton.setAlignmentY(Box.TOP_ALIGNMENT);
+        showTableButton.setMaximumSize(new Dimension(150, DEFAULT_COMPONENT_HEIGHT));
+        showTableButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    showTable();
+                } catch (Exception ex) {
+                    System.out.println("I've failed miserably");
+                    System.out.println(ex);
+                }
+            }
+        });
+        showTableButton.setEnabled(false);
+        dataPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        dataPanel.add(showTableButton);
+        dataPanel.add(Box.createVerticalGlue());
+        
+        // Build split-pane view
+        splitPane = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT, treeView, bigDataPane);
+        splitPane.setContinuousLayout(true);
+        splitPane.setDividerLocation(leftWidth);
+        splitPane.setPreferredSize(new Dimension(windowWidth + 10, windowHeight+10));
+        splitPane.setMaximumSize(new Dimension(2000, 1500));
+        
+        //create the selection button
+        selectNodesButton = new JButton("Table View");
+        selectNodesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectNodesButtonActionPerformed(evt);
+            }
+        });
+        
+        //create the save button
+        JButton saveChangesButton = new JButton("Save");
+        saveChangesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveChangesButtonActionPerformed(evt);
+            }
+        });
+        
+        JButton saveAllButton = new JButton("Save All");
+        saveAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAllButtonActionPerformed(evt);
+            }
+        });
+        
+        treePanel.add(Box.createRigidArea(new Dimension(0,5)));
+        treePanel.add(splitPane);
+        treePanel.add(Box.createRigidArea(new Dimension(0,5)));
+        treePanel.add(selectNodesButton);
+        treePanel.add(Box.createRigidArea(new Dimension(0,5)));
+        treePanel.add(saveChangesButton);
+        treePanel.add(Box.createRigidArea(new Dimension(0,5)));
+        treePanel.add(saveAllButton);
+        pack();
+    }
+    
+    private void makeQuerryPanel(boolean firstAttempt) {
+        if (firstAttempt) {
+            firstAttempt = false;
             
-            // Build split-pane view
-            splitPane = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT, treeView, dataView );
-            splitPane.setContinuousLayout(true);
-            splitPane.setDividerLocation(leftWidth);
-            splitPane.setPreferredSize(new Dimension(windowWidth + 10, windowHeight+10));
-            splitPane.setMaximumSize(new Dimension(2000, 1500));
+            querryPanel = new JPanel();
+            querryPanel.setLayout(new BoxLayout(querryPanel, BoxLayout.X_AXIS));
             
-            //create the selection button
-            selectNodesButton = new JButton("Table View");
-            selectNodesButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    selectNodesButtonActionPerformed(evt);
+            querryPanel.add(new JLabel("View a  "));
+            String[] array = {"List ", "Table "};
+            listTableBox = new JComboBox(array);
+            listTableBox.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
+            querryPanel.add(listTableBox);
+            
+            querryPanel.add(new JLabel("  of  "));
+            String[] array2 = {DEFAULT_SELECTION_STRING, "Names", "Numeric Values"};
+            JComboBox box = new JComboBox(array2);
+            box.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
+            box.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    JComboBox temp = (JComboBox)e.getSource();
+                    if (temp.getSelectedIndex() == 1) showNames = true;
+                    else showNames = false;
+                    if (regionBox == null) displayRegionBox();
                 }
             });
+            querryPanel.add(box);
             
-            //create the save button
-            JButton saveChangesButton = new JButton("Save");
-            saveChangesButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    saveChangesButtonActionPerformed(evt);
-                }
-            });
-            
-            JButton saveAllButton = new JButton("Save All");
-            saveAllButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    saveAllButtonActionPerformed(evt);
-                }
-            });
-            
-            treePanel.add(Box.createRigidArea(new Dimension(0,5)));
-            treePanel.add(splitPane);
-            treePanel.add(Box.createRigidArea(new Dimension(0,5)));
-            treePanel.add(selectNodesButton);
-            treePanel.add(Box.createRigidArea(new Dimension(0,5)));
-            treePanel.add(saveChangesButton);
-            treePanel.add(Box.createRigidArea(new Dimension(0,5)));
-            treePanel.add(saveAllButton);
-            pack();
+        }
+        querryPanel.add(Box.createHorizontalGlue());
+    }
+    
+    private void displayRegionBox() {
+        //remove the horizontal glue to display components adjecently
+        querryPanel.remove(querryPanel.getComponents().length-1);
+        
+        //find the first mention of "World", Region nodes will be its children
+        currRootPointer = (AdapterNode)tree.getModel().getRoot();
+        if (!currRootPointer.hasChild("region")){
+            findRoot(currRootPointer, "region");
+        }
+        rootPointers = new Vector();
+        rootPointers.addElement(currRootPointer);
+        
+        Vector regionNames = new Vector();
+        AdapterNode kid;
+        java.util.List children = currRootPointer.getChildren();
+        Iterator it = children.iterator();
+        while (it.hasNext()) {
+            kid = (AdapterNode)it.next();
+            regionNames.addElement(kid.getAttributeValue("name"));
         }
         
-        public void clearDisplay() {
-            valuePane.setText("");
+        querryPanel.add(new JLabel("  for region(s)  "));
+        regionBox = new JList(regionNames.toArray());
+        regionBox.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED),
+        BorderFactory.createEmptyBorder(0,3,0,3)));
+        
+        //add listener - when user chooses region(s), display the next nodes in the hierarchy
+        regionBox.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting() == false) {
+                    showTableButton.setEnabled(true);
+                    
+                    JList temp = (JList)querryControls.elementAt(0);
+                    int index = temp.getMinSelectionIndex();
+                    String regionName = temp.getModel().getElementAt(index).toString();
+                    
+                    AdapterNode pointer = (AdapterNode)rootPointers.elementAt(0);
+                    rootPointers.addElement(pointer.getChild("region", regionName));
+                    addQuerryControl(1);
+                }
+            }
+        });
+        
+        attributeControls = new Vector();
+        querryControls = new Vector();
+        querryControls.addElement(regionBox);
+        
+        querryPanel.add(regionBox);
+        
+        //put back the horizontal glue to make sure componenets of querryPanel are left justified
+        querryPanel.add(Box.createHorizontalGlue());
+        
+        pack();
+    }
+    
+    private void addQuerryControl(int index) {
+        //remove the horizontal glue to display components adjecently
+        querryPanel.remove(querryPanel.getComponents().length-1);
+        
+        //get the parent of the nodes whose names will populate the new combo box
+        currRootPointer = (AdapterNode)rootPointers.elementAt(index);
+        
+        AdapterNode kid;
+        String name;
+        Vector names = new Vector();
+        names.addElement(DEFAULT_SELECTION_STRING);
+        java.util.List children = currRootPointer.getChildren();
+        Iterator it = children.iterator();
+        while (it.hasNext()) {
+            kid = (AdapterNode)it.next();
+            name = kid.getName();
+            if (names.isEmpty()) names.addElement(name);
+            else if (!names.contains(name)) names.addElement(name);
         }
         
+        JComboBox comboBox;
+        
+        //check if combo box already exists
+        if (!(querryControls.size() <= index)) {
+            //the combo box already exists - must change its elements, delete all components following it
+            int ct;
+            comboBox = (JComboBox)querryControls.elementAt(index);
+            Component[] comps = querryPanel.getComponents();
+            for (ct = 0; ct < comps.length; ct++) {
+                if (comboBox.equals(comps[ct])) break;
+            }
+            //remove combo box and its followers from the panel and both vectors
+            for (int j = ct; j < comps.length; j++) {
+                querryPanel.remove(j);
+            }
+            querryControls.setSize(ct);
+            attributeControls.setSize(ct);
+        }
+        
+        //create new component
+        comboBox = new JComboBox(names);
+        comboBox.setMaximumSize(new Dimension(1000, DEFAULT_COMPONENT_HEIGHT));
+        comboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JComboBox temp = (JComboBox)e.getSource();
+                String name = temp.getSelectedItem().toString();
+                int index = querryControls.indexOf(temp);
+                
+                //check in corresponding node has an attribute name
+                currRootPointer = (AdapterNode)rootPointers.elementAt(index);
+                if (currRootPointer.hasChildWithAttribute(name, "name")) {
+                    addAttributeControl(name, index);
+                } else {
+                    AdapterNode newPointer = currRootPointer.getChild(name, "");
+                    if (!newPointer.isLeaf()) {
+                        //create new component with the nodes's set of chilren
+                        rootPointers.addElement(newPointer);
+                        addQuerryControl(index+1);
+                    }
+                }
+            }
+        });
+        
+        querryControls.addElement(comboBox);
+        
+        querryPanel.add(new JLabel("  of  "));
+        querryPanel.add(comboBox);
+        querryPanel.add(Box.createHorizontalGlue());
+        pack();
+    }
+    
+    private void addAttributeControl(String nodeName, int index){
+        //remove the horizontal glue to display components adjecently
+        querryPanel.remove(querryPanel.getComponents().length-1);
+        
+        //get the parent of the nodes whose names will populate the new combo box
+        currRootPointer = (AdapterNode)rootPointers.elementAt(index);
+        
+        AdapterNode kid;
+        String name;
+        Vector names = new Vector();
+        names.addElement(DEFAULT_SELECTION_STRING);
+        java.util.List children = currRootPointer.getChildren();
+        Iterator it = children.iterator();
+        while (it.hasNext()) {
+            kid = (AdapterNode)it.next();
+            if (nodeName.equals(kid.getName())) {
+                names.addElement(kid.getAttributeValue("name"));
+            }
+        }
+        
+        JComboBox comboBox;
+        
+        //check if combo box already exists
+        if (!(attributeControls.size() <= index)) {
+            //the combo box already exists - must change its elements, delete all components following it
+            int ct;
+            comboBox = (JComboBox)attributeControls.elementAt(index);
+            Component[] comps = querryPanel.getComponents();
+            for (ct = 0; ct < comps.length; ct++) {
+                if (comboBox.equals(comps[ct])) break;
+            }
+            //remove combo box and its followers from the panel and both vectors
+            for (int j = ct; j < comps.length; j++) {
+                querryPanel.remove(j);
+            }
+            querryControls.setSize(ct);
+            attributeControls.setSize(ct);
+        }
+        
+        //create new component
+        comboBox = new JComboBox(names);
+        comboBox.setMaximumSize(new Dimension(1000, DEFAULT_COMPONENT_HEIGHT));
+        comboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //get the specific selection of a nodes's name attribute
+                JComboBox temp = (JComboBox)e.getSource();
+                String attribVal = temp.getSelectedItem().toString();
+                int index = attributeControls.indexOf(temp);
+                
+                //get the name of that node
+                temp = (JComboBox)querryControls.elementAt(index);
+                String nodeName = temp.getModel().getSelectedItem().toString();
+                
+                //find node with nodeName and "name" attribute = attribVal
+                currRootPointer = (AdapterNode)rootPointers.elementAt(index);
+                
+                AdapterNode newPointer = currRootPointer.getChild(nodeName, attribVal);
+                if (!newPointer.isLeaf()) {
+                    //create new component with the nodes's set of chilren
+                    rootPointers.addElement(newPointer);
+                    addQuerryControl(index+1);
+                }
+            }
+        });
+        
+        if (attributeControls.size() < index+1) {
+            attributeControls.setSize(index+1);
+        }
+        attributeControls.setElementAt(comboBox, index);
+        
+        querryPanel.add(Box.createRigidArea(new Dimension(5,0)));
+        querryPanel.add(comboBox);
+        querryPanel.add(Box.createHorizontalGlue());
+        pack();
+    }
+    
+    /*
+     * recursive function that searches for the first node that has at least one child with the name targetName
+     */
+    private void findRoot(AdapterNode currRoot, String targetName) {
+        if (currRoot.hasChild(targetName)) {
+            currRootPointer = currRoot;
+            return;
+        }
+        
+        java.util.List children = currRoot.getChildren();
+        Iterator it = children.iterator();
+        while (it.hasNext()) {
+            findRoot((AdapterNode)it.next(), targetName);
+        }
+    }
+    
+    public void clearDisplay() {
+        valuePane.setText("");
+    }
+    
     /*Prints out the value of a tree node in the adjecent pane
      *Parameters: val=the string to be displayed,
      *  if replace=true, content of the pane is overwritten, otherwise val is apended
      */
-        public void displayValue(String val, boolean replace) {
-            if (replace == true)
-                valuePane.setText(val);
-            else {
-                String temp = valuePane.getText().trim();
-                if (temp.length() != 0) valuePane.setText(temp + '\n' + val);
-                else valuePane.setText(val);
-            }
+    public void displayValue(String val, boolean replace) {
+        if (replace == true)
+            valuePane.setText(val);
+        else {
+            String temp = valuePane.getText().trim();
+            if (temp.length() != 0) valuePane.setText(temp + '\n' + val);
+            else valuePane.setText(val);
         }
-        
-        private void displayTableChoices() {
-            JRadioButton button1;
-            JRadioButton button2;
-            JPanel xAxisHeader = new JPanel();
-            JPanel yAxisHeader = new JPanel();
-            ButtonGroup xHeadings = new ButtonGroup();
-            ButtonGroup yHeadings = new ButtonGroup();
-            selection1 = "";
-            selection2 = "";
-            tableFlag = 0;
-            
-            //if necessary, replace the current Axis selection panel
-            if (tableHeaderPanel != null) {
-                this.getContentPane().remove(tableHeaderPanel);
-                this.repaint();
-            }
-            tableHeaderPanel = new JPanel();
-            
-            //if necessary, remove the previous table
-            int i = dataPane.indexOfTab("Table View");
+    }
+    
+/*    private void displayTableChoices() {
+        JRadioButton button1;
+        JRadioButton button2;
+        JPanel xAxisHeader = new JPanel();
+        JPanel yAxisHeader = new JPanel();
+        ButtonGroup xHeadings = new ButtonGroup();
+        ButtonGroup yHeadings = new ButtonGroup();
+        selection1 = "";
+        selection2 = "";
+        tableFlag = 0;
+ 
+        //if necessary, replace the current Axis selection panel
+        if (tableHeaderPanel != null) {
+            this.getContentPane().remove(tableHeaderPanel);
+            this.repaint();
+        }
+        tableHeaderPanel = new JPanel();
+ 
+        //if necessary, remove the previous table
+            /*int i = dataPane.indexOfTab("Table View");
             if (i > -1) {
                 dataPane.remove(i);
-            }
-            
-            xAxisHeader.setLayout(new BoxLayout(xAxisHeader, BoxLayout.Y_AXIS));
-            yAxisHeader.setLayout(new BoxLayout(yAxisHeader, BoxLayout.Y_AXIS));
-            
-            Iterator it = nodes.iterator();
-            while (it.hasNext()) {
-                Element e = (Element)it.next();
-                button1 = new JRadioButton(e.getName());
-                button2 = new JRadioButton(e.getName());
-                xHeadings.add(button1);
-                button1.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        tableFlag = tableFlag | 1;
-                        JRadioButton temp = (JRadioButton)e.getSource();
-                        selection1 = temp.getText();
-                        if (tableFlag == 3) showTableButton.setEnabled(true);
-                    }
-                });
-                yHeadings.add(button2);
-                button2.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        tableFlag = tableFlag | 2;
-                        JRadioButton temp = (JRadioButton)e.getSource();
-                        selection2 = temp.getText();
-                        if (tableFlag == 3) showTableButton.setEnabled(true);
-                    }
-                });
-                xAxisHeader.add(button1);
-                yAxisHeader.add(button2);
-            }
-            //add seporator borders around the button groups
-            xAxisHeader.setBorder(BorderFactory.createTitledBorder("X-Axis"));
-            yAxisHeader.setBorder(BorderFactory.createTitledBorder("Y-Axis"));
-            
-            tableHeaderPanel.setLayout(new BoxLayout(tableHeaderPanel, BoxLayout.Y_AXIS));
-            tableHeaderPanel.add(Box.createVerticalGlue());
-            xAxisHeader.setAlignmentX(Component.CENTER_ALIGNMENT);
-            yAxisHeader.setAlignmentX(Component.CENTER_ALIGNMENT);
-            tableHeaderPanel.add(xAxisHeader);
-            tableHeaderPanel.add(yAxisHeader);
-            tableHeaderPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-            
-            showTableButton = new JButton("Show Table");
-            showTableButton.setEnabled(false);
-            showTableButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            showTableButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    makeTable(tree.getLeadSelectionPath(), selection1, selection2);
+            } */
+    
+/*        xAxisHeader.setLayout(new BoxLayout(xAxisHeader, BoxLayout.Y_AXIS));
+        yAxisHeader.setLayout(new BoxLayout(yAxisHeader, BoxLayout.Y_AXIS));
+ 
+        Iterator it = ansestorNodes.iterator();
+        while (it.hasNext()) {
+            Element e = (Element)it.next();
+            button1 = new JRadioButton(e.getName());
+            button2 = new JRadioButton(e.getName());
+            xHeadings.add(button1);
+            button1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    tableFlag = tableFlag | 1;
+                    JRadioButton temp = (JRadioButton)e.getSource();
+                    selection1 = temp.getText();
+                    if (tableFlag == 3) showTableButton.setEnabled(true);
                 }
             });
-            tableHeaderPanel.add(showTableButton);
-            
-            layoutCon.gridx = 1;
-            layoutCon.gridy = 1;
-            layoutCon.weightx = .1;
-            layout.setConstraints(tableHeaderPanel, layoutCon);
-            this.getContentPane().add(tableHeaderPanel);
-            
-            selectNodesButton.setText("New Table View");
-            displayButton.setEnabled(false);
-            pack();
+            yHeadings.add(button2);
+            button2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    tableFlag = tableFlag | 2;
+                    JRadioButton temp = (JRadioButton)e.getSource();
+                    selection2 = temp.getText();
+                    if (tableFlag == 3) showTableButton.setEnabled(true);
+                }
+            });
+            xAxisHeader.add(button1);
+            yAxisHeader.add(button2);
         }
-        
+        //add seporator borders around the button groups
+        xAxisHeader.setBorder(BorderFactory.createTitledBorder("X-Axis"));
+        yAxisHeader.setBorder(BorderFactory.createTitledBorder("Y-Axis"));
+ 
+        tableHeaderPanel.setLayout(new BoxLayout(tableHeaderPanel, BoxLayout.Y_AXIS));
+        tableHeaderPanel.add(Box.createVerticalGlue());
+        xAxisHeader.setAlignmentX(Component.CENTER_ALIGNMENT);
+        yAxisHeader.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tableHeaderPanel.add(xAxisHeader);
+        tableHeaderPanel.add(yAxisHeader);
+        tableHeaderPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+ 
+        showTableButton = new JButton("Show Table");
+        showTableButton.setEnabled(false);
+        showTableButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        showTableButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                makeTable(tree.getLeadSelectionPath(), selection1, selection2);
+            }
+        });
+        tableHeaderPanel.add(showTableButton);
+ 
+        layoutCon.gridx = 1;
+        layoutCon.gridy = 1;
+        layoutCon.weightx = .1;
+        layout.setConstraints(tableHeaderPanel, layoutCon);
+        this.getContentPane().add(tableHeaderPanel);
+ 
+        selectNodesButton.setText("New Table View");
+        displayButton.setEnabled(false);
+        pack();
+    }
+ 
     /*
-     *Creates an internal representation of the JTree data in a tabular format.
-     *The axes are specified by the user and are created using the displayTableChoices() function
-     *Parameters: currNodePath - the tree path of the currently selected node
-     *          choice1 - the name of the parent chosen by user to be the x axis
-     *          choice2 - the name of the parent chosen by user to be the y axis
-     */
-        public void makeTable(TreePath currNodePath, String choice1, String choice2) {
-            int index1 = 0, index2 = 0;
-            int ct = 0, rootIndex = 0;
-            Vector tableHTitles = new Vector(), tableVTitles = new Vector();
-            Vector tableNodes, nodeNames, parents;
-            java.util.List children, childNodes = new Vector();
-            boolean searchNames = true, searchNames2 = true;
-            Element tableRoot;
-            
-            //find the indices of the two Elements in the tree that correspond
-            //  to the two selections made by user in displayTableChoices
-            Iterator it = nodes.iterator();
-            while (it.hasNext()) {
-                Element e = (Element)it.next();
-                if(choice1.equals(e.getName())) index1 = ct;
-                if(choice2.equals(e.getName())) index2 = ct;
+ *Creates an internal representation of the JTree data in a tabular format.
+ *The axes are specified by the user and are created using the displayTableChoices() function
+ *Parameters: currNodePath - the tree path of the currently selected node
+ *          choice1 - the name of the parent chosen by user to be the x axis
+ *          choice2 - the name of the parent chosen by user to be the y axis
+ */
+    public void makeTable(TreePath currNodePath, String choice1, String choice2) {
+        int index1 = 0, index2 = 0;
+        int ct = 0, rootIndex = 0;
+        Vector tableHTitles = new Vector(), tableVTitles = new Vector();
+        Vector tableNodes, nodeNames, parents;
+        java.util.List children, childNodes = new Vector();
+        boolean searchNames = true;
+        Element tableRoot;
+        
+        //find the indices of the two Elements in the tree that correspond
+        //  to the two selections made by user in displayTableChoices
+        Iterator it = ansestorNodes.iterator();
+        while (it.hasNext()) {
+            Element e = (Element)it.next();
+            if(choice1.equals(e.getName())) index1 = ct;
+            if(choice2.equals(e.getName())) index2 = ct;
+            ct++;
+        }
+        
+        //determine which is higher in the tree hierarchy and use it as the
+        //  root of the subtree that will define the table
+        if (index1 > index2) rootIndex = index1;
+        else rootIndex = index2;
+        tableRoot = (Element)ansestorNodes.get(rootIndex);
+        
+        //find the names of all nodes in the path of the currently selected node
+        nodeNames = new Vector();
+        String name = currNodePath.toString();
+        String str;
+        index1 = name.indexOf('<');
+        while (index1 > 0) {
+            index2 = name.indexOf('>', index1);
+            str = name.substring(index1+1, index2);
+            nodeNames.addElement(str);
+            if (str.equals(tableRoot.getName())) rootIndex = nodeNames.size();
+            index1 = name.indexOf('<', index2);
+        }
+        
+        TreePath parentPath = currNodePath.getParentPath();
+        parentPath = parentPath.getParentPath();
+        AdapterNode node = (AdapterNode)parentPath.getLastPathComponent();
+        String parent = node.getName();
+        
+        //find all children of the subtree that have the same name as innitial querry
+        tableNodes = new Vector();
+        children = tableRoot.getChildren();
+        Element kid;
+        ct = rootIndex;
+        it = children.iterator();
+        boolean unfinished = it.hasNext();
+        String n;
+        //parents.addElement(tableRoot);
+        
+        while(unfinished) {
+            kid = (Element)it.next();
+            if (nodeNames.elementAt(ct).equals(kid.getName())) {
+                tableNodes.addElement(kid);
+            }
+            if (searchNames && choice1.equals(kid.getName())){
+                n = findName(kid, choice1);
+                if (!tableHTitles.contains(n)) {
+                    tableHTitles.addElement(n);
+                } else searchNames = false;
+            }
+            if (parent.equals(kid.getName())){
+                n = findName(kid, choice2);
+                if (tableVTitles.size() <= 0) {
+                    tableVTitles.addElement(n);
+                } else if (!n.equals(tableVTitles.lastElement())) {
+                    tableVTitles.addElement(n);
+                }
+            }
+            if (!it.hasNext()) {
                 ct++;
-            }
-            
-            //determine which is higher in the tree hierarchy and use it as the
-            //  root of the subtree that will define the table
-            if (index1 > index2) rootIndex = index1;
-            else rootIndex = index2;
-            tableRoot = (Element)nodes.get(rootIndex);
-            
-            //find the names of all nodes in the path of the currently selected node
-            nodeNames = new Vector();
-            String name = currNodePath.toString();
-            String str;
-            index1 = name.indexOf('<');
-            while (index1 > 0) {
-                index2 = name.indexOf('>', index1);
-                str = name.substring(index1+1, index2);
-                nodeNames.addElement(str);
-                if (str.equals(tableRoot.getName())) rootIndex = nodeNames.size();
-                index1 = name.indexOf('<', index2);
-            }
-            
-            TreePath parentPath = currNodePath.getParentPath();
-            parentPath = parentPath.getParentPath();
-            AdapterNode node = (AdapterNode)parentPath.getLastPathComponent();
-            String parent = node.getName();
-            
-            //find all children of the subtree that have the same name as innitial querry
-            tableNodes = new Vector();
-            children = tableRoot.getChildren();
-            Element kid;
-            ct = rootIndex;
-            it = children.iterator();
-            boolean unfinished = it.hasNext();
-            String n;
-            //parents.addElement(tableRoot);
-            
-            while(unfinished) {
-                kid = (Element)it.next();
-                if (nodeNames.elementAt(ct).equals(kid.getName())) {
-                    tableNodes.addElement(kid);
-                }
-                if (searchNames && choice1.equals(kid.getName())){
-                    n = findName(kid, choice1);
-                    if (!tableHTitles.contains(n)) {
-                        tableHTitles.addElement(n);
-                    } else searchNames = false;
-                }
-                if (parent.equals(kid.getName())){
-                    n = findName(kid, choice2);
-                    if (tableVTitles.size() <= 0) {
-                        tableVTitles.addElement(n);
-                    } else if (!n.equals(tableVTitles.lastElement())) {
-                        tableVTitles.addElement(n);
-                    } else searchNames2 = false;
-                }
-                if (!it.hasNext()) {
-                    //searchNames2 = true;
-                    ct++;
-                    if (ct == nodeNames.size()) unfinished = false;
-                    else {
-                        children.clear();
-                        //add the children of each node
-                        Iterator tempIt = tableNodes.iterator();
-                        while(tempIt.hasNext()){
-                            Element t = (Element)tempIt.next();
-                            childNodes = t.getChildren();
-                            Iterator childIt = childNodes.iterator();
-                            while (childIt.hasNext()) {
-                                Element c = (Element)childIt.next();
-                                children.add(c.clone());
-                            }
+                if (ct == nodeNames.size()) unfinished = false;
+                else {
+                    children.clear();
+                    //add the children of each node
+                    Iterator tempIt = tableNodes.iterator();
+                    while(tempIt.hasNext()){
+                        Element t = (Element)tempIt.next();
+                        childNodes = t.getChildren();
+                        Iterator childIt = childNodes.iterator();
+                        while (childIt.hasNext()) {
+                            Element c = (Element)childIt.next();
+                            children.add(c.clone());
                         }
-                        tableNodes.clear();
-                        it = children.iterator();
+                    }
+                    tableNodes.clear();
+                    it = children.iterator();
+                }
+            }
+        }
+        
+        displayTable(tableNodes, tableHTitles, tableVTitles);
+    }
+    
+    private void displayTable(Vector tableNodes, Vector horTitles, Vector vertTitles) {
+/*        TableViewModel tableModel = new TableViewModel(tableNodes, horTitles);
+        tableModel.addTableModelListener(new TableModelListener() {
+            public void tableChanged(TableModelEvent e) {
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    saveTableValueOf((TableViewModel)e.getSource(), e.getFirstRow(), e.getColumn());
+                }
+            }
+        });
+ 
+        table = new JTable(tableModel);
+        table.setCellSelectionEnabled(true);
+ 
+        //create vertical table labels
+        JPanel temp2 = new JPanel();
+        Rectangle size = table.getCellRect(0, 0, true);
+        size = new Rectangle((int)size.getWidth()+50, (int)size.getHeight());
+        Rectangle blankSize = new Rectangle((int)size.getWidth(), (int)size.getHeight()+4);
+        temp2.setLayout(new BoxLayout(temp2, BoxLayout.Y_AXIS));
+        JButton[] lefters = new JButton[vertTitles.size()];
+        JButton b = new JButton();
+        b.setPreferredSize(blankSize.getSize());
+        b.setMinimumSize(blankSize.getSize());
+        b.setMaximumSize(blankSize.getSize());
+        temp2.add(b);
+        for (int j = 0; j < vertTitles.size(); j++) {
+            //create an array of non-editable buttons
+            lefters[j] = new JButton(vertTitles.elementAt(j).toString());
+            lefters[j].setPreferredSize(size.getSize());
+            lefters[j].setMaximumSize(size.getSize());
+            temp2.add(lefters[j]);
+        }
+ 
+        JPanel temp = new JPanel(new BorderLayout());
+        temp.add(table.getTableHeader(), BorderLayout.NORTH);
+        temp.add(table, BorderLayout.CENTER);
+        JPanel temp3 = new JPanel(new BorderLayout());
+        temp3.add(temp2, BorderLayout.WEST);
+        temp3.add(temp, BorderLayout.CENTER);
+        //dataPane.add("Table View", temp3);
+        //dataPane.setSelectedComponent(temp3);
+        pack(); */
+    }
+    
+    private String findName(Element node, String choice){
+        Element child = null;
+        Attribute attrib = null;
+        String name = "(" + node.getName() + ")";
+        
+        if (choice.equals("period")) {
+            child = node.getChild("year");
+        }
+        
+        attrib = node.getAttribute("name");
+        if (attrib == null) attrib = node.getAttribute("year");
+        //if the name is stored as a child rather than an attribute, such as for grade and technology
+        //boolean unfinished = true;
+        if (attrib == null && child == null) {
+            child = node.getChild("name");
+            if (child == null) {
+                java.util.List children = node.getChildren();
+                Iterator it = children.iterator();
+                while (it.hasNext()) {
+                    Element temp = (Element)it.next();
+                    //System.out.println("Looking at " + temp.getChildren());
+                    java.util.List kids = temp.getChildren();
+                    Iterator i = kids.iterator();
+                    while (i.hasNext()) {
+                        child = (Element)i.next();
+                        if (child.getName().equals("name")) break;
                     }
                 }
             }
-            
-            displayTable(tableNodes, tableHTitles, tableVTitles);
         }
         
-        private void displayTable(Vector tableNodes, Vector horTitles, Vector vertTitles) {
-            TableViewModel tableModel = new TableViewModel(tableNodes, horTitles);
-            
-            table = new JTable(tableModel);
-            
-            //create vertical table labels
-            JPanel temp2 = new JPanel();
-            Rectangle size = table.getCellRect(0, 0, true);
-            size = new Rectangle((int)size.getWidth()+50, (int)size.getHeight());
-            Rectangle blankSize = new Rectangle((int)size.getWidth(), (int)size.getHeight()+4);
-            temp2.setLayout(new BoxLayout(temp2, BoxLayout.Y_AXIS));
-            JButton[] lefters = new JButton[vertTitles.size()];
-            JButton b = new JButton();
-            b.setPreferredSize(blankSize.getSize());
-            b.setMinimumSize(blankSize.getSize());
-            b.setMaximumSize(blankSize.getSize());
-            temp2.add(b);
-            for (int j = 0; j < vertTitles.size(); j++) {
-                //create an array of non-editable buttons
-                lefters[j] = new JButton(vertTitles.elementAt(j).toString());
-                lefters[j].setPreferredSize(size.getSize());
-                lefters[j].setMaximumSize(size.getSize());
-                temp2.add(lefters[j]);
-            }
-            
-            JPanel temp = new JPanel(new BorderLayout());
-            temp.add(table.getTableHeader(), BorderLayout.NORTH);
-            temp.add(table, BorderLayout.CENTER);
-            JPanel temp3 = new JPanel(new BorderLayout());
-            temp3.add(temp2, BorderLayout.WEST);
-            temp3.add(temp, BorderLayout.CENTER);
-            dataPane.add("Table View", temp3);
-            dataPane.setSelectedComponent(temp3);
-            pack();
+        if (attrib != null) {
+            name = attrib.getValue() + " " + name;
+        } else if (child != null) {
+            name = child.getText() + " " + name;
+        } else {
+            System.out.println("Something went terribly wrong in findName()");
         }
         
-        private String findName(Element node, String choice){
-            Element child = null;
-            Attribute attrib = null;
-            String name = "(" + node.getName() + ")";
+        return name;
+    }
+    
+    public void treeValueChanged(javax.swing.text.Document doc) {
+        //nodeValueChangedFlag = true;
+    }
+    
+    public void saveTableValueOf(TableViewModel source, int row, int col) {
+        
+        //AdapterNode node = source.getNodeAt(row, col);
+        //System.out.println("Parent = " + node.getParent());
+    }
+    
+    private JPanel makeLefter(Vector headings) {
+        //create vertical table labels
+        JPanel temp = new JPanel();
+        
+        Rectangle buttonSize = table.getCellRect(0, 0, true);
+        //buttonSize = new Rectangle((int)size.getWidth()+50, (int)size.getHeight());
+        Rectangle blankSize = new Rectangle((int)buttonSize.getWidth(), (int)buttonSize.getHeight()+4);
+        temp.setLayout(new BoxLayout(temp, BoxLayout.Y_AXIS));
+        
+        JButton[] lefters = new JButton[headings.size()];
+        JButton b = new JButton();
+        b.setPreferredSize(blankSize.getSize());
+        b.setMinimumSize(blankSize.getSize());
+        b.setMaximumSize(blankSize.getSize());
+        temp.add(b);
+        
+        for (int j = 0; j < headings.size(); j++) {
+            //create an array of non-editable buttons
+            lefters[j] = new JButton(headings.elementAt(j).toString());
+            lefters[j].setPreferredSize(buttonSize.getSize());
+            lefters[j].setMaximumSize(buttonSize.getSize());
+            temp.add(lefters[j]);
+        }
+        
+        return temp;
+    }
+    
+    public void showTable() {
+        Vector values = new Vector();
+        Vector header = new Vector();
+        Vector lefter = new Vector();
+        
+        if (listTableBox.getSelectedIndex() == LIST){
+            String regionName;
+            Object[] regions = regionBox.getSelectedValues();
             
-            if (choice.equals("period")) {
-                child = node.getChild("year");
-            }
-            
-            attrib = node.getAttribute("name");
-            if (attrib == null) attrib = node.getAttribute("year");
-            //if the name is stored as a child rather than an attribute, such as for grade and technology
-            //boolean unfinished = true;
-            if (attrib == null && child == null) {
-                child = node.getChild("name");
-                if (child == null) {
-                    java.util.List children = node.getChildren();
-                    Iterator it = children.iterator();
+            //for each region
+            for (int j = 0; j < regions.length; j++) {
+                regionName = regions[j].toString();
+                currRootPointer = (AdapterNode)rootPointers.elementAt(0);
+                AdapterNode currNode = currRootPointer.getChild("region", regionName);
+                
+                header.addElement(regionName);
+                
+                String nodeName;
+                String attribVal = "";
+                JComboBox temp;
+                //System.out.println("Hello 1");
+                //get the path of the variable desired by user
+                int pathLength = querryControls.size() - 1;
+                temp = (JComboBox)querryControls.lastElement();
+                if (temp.getSelectedItem().toString().equals(DEFAULT_SELECTION_STRING)) pathLength--;
+                //System.out.println("Hello 2");
+                //start at one because zeroth control is regionBox, end before the very last component
+                for (int k = 1; k < pathLength; k++) {
+                    //System.out.println("Hello 5");
+                    temp = (JComboBox)querryControls.elementAt(pathLength);
+                    //System.out.println("Hello 5.1");
+                    nodeName = temp.getSelectedItem().toString();
+                    //System.out.println("Hello 5.2");
+                    if (!attributeControls.isEmpty() && attributeControls.elementAt(pathLength) != null) {
+                        //System.out.println("Hello 5.3");
+                        temp = (JComboBox)attributeControls.elementAt(pathLength);
+                        attribVal = temp.getSelectedItem().toString();
+                        if (attribVal.equals(DEFAULT_SELECTION_STRING)) attribVal = "";
+                    }
+                    System.out.println("Hello 6, NodeName = " + nodeName + "attribVal = " + attribVal);
+                    java.util.List nodes = currNode.getChildren(nodeName, attribVal);
+                    Iterator it = nodes.iterator();
                     while (it.hasNext()) {
-                        Element temp = (Element)it.next();
-                        //System.out.println("Looking at " + temp.getChildren());
-                        java.util.List kids = temp.getChildren();
-                        Iterator i = kids.iterator();
-                        while (i.hasNext()) {
-                            child = (Element)i.next();
-                            if (child.getName().equals("name")) break;
-                    /*child = node.getChild("name");
-System.out.println("child = " + child);
-                    if (child != null) break; */
+                        System.out.println("Hello 7");
+                        currNode = (AdapterNode)it.next();
+                        System.out.println("got currNode - " + currNode + ", " + currNode.getText());
+                        if (showNames) {
+                            values.addElement(currNode.getAttributeValue("name"));
+                        } else {
+                            values.addElement(currNode);
+                            System.out.println("really did add " + currNode);
+                            /*attribVal = currNode.getAttributeValue("year");
+                            if (attribVal != null) {
+                                if (lefter.isEmpty()) lefter.addElement(attribVal);
+                                else if (!lefter.contains(attribVal)) lefter.addElement(attribVal);
+                            }*/
                         }
                     }
                 }
+                //System.out.println("Hello 8");
+                TableViewModel model = new TableViewModel(values, header, showNames);
+                table = new JTable(model);
+                
+                //use panels to place the table appropriately
+                JPanel tempPanel = new JPanel();
+                tempPanel.setLayout(new BorderLayout());
+                tempPanel.add(table.getTableHeader(), BorderLayout.NORTH);
+                tempPanel.add(table, BorderLayout.CENTER);
+                if (!lefter.isEmpty()) {
+                    //JPanel lefterPanel = makeLefter(lefter);
+                    //tempPanel.add(lefterPanel, BorderLayout.WEST);
+                }
+                
+                dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
+                dataPanel.add(tempPanel);
+                
+                pack();
             }
-            
-            if (attrib != null) {
-                name = attrib.getValue() + " " + name;
-            } else if (child != null) {
-                name = child.getText() + " " + name;
-            } else {
-                System.out.println("Something went terribly wrong in findName()");
-            }
-            
-            return name;
         }
-        
-        public void changeNodeValue(AdapterNode node, String newVal) {
-            
-        }
-        
-        public void treeValueChanged(javax.swing.text.Document doc) {
-            nodeValueChangedFlag = true;
-        }
-        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-        
-    }
+    
+}
