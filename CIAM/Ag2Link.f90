@@ -6,7 +6,7 @@ subroutine SETGNP( regionNumber, gnps )
     real(8), intent( in ) :: gnps( 1:NMP )
 
     gdp( regionNumber + 1, 1:NMP ) = gnps( 1:NMP )
-    write(*, * ) gdp( regionNumber+1, : )
+    ! write(*, * ) gdp( regionNumber+1, : )
 
 end subroutine SETGNP
 
