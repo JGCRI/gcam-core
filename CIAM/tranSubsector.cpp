@@ -39,7 +39,7 @@ tranSubsector::tranSubsector() {
     popDenseElasticity.resize( maxper );
     servicePrice.resize( maxper ); // price converted by loadfactor
     timeValue.resize( maxper ); // time value of mode
-    adjPrice.resize( maxper ); // price adjusted by time value
+    generalizedCost.resize( maxper ); // price adjusted by time value
     loadFactor.resize( maxper ); // persons or tons per vehicle
     popDensity = 1; // initialize to 1 for now
     baseScaler = 0;
@@ -57,7 +57,7 @@ void tranSubsector::clear()
     popDenseElasticity.clear();
     servicePrice.clear(); 
     timeValue.clear(); 
-    adjPrice.clear(); 
+    generalizedCost.clear(); 
     loadFactor.clear(); 
 }
 
@@ -173,23 +173,24 @@ void tranSubsector::calcShare( const string& regionName, const int per, const do
     // add cost of time spent on travel by converting gnp/cap into
     // an hourly wage and multipling by average speed
     servicePrice[per] = subsectorprice[per]/loadFactor[per] ;
-    //timeValue[per] = 10*gnp_cap*1000.0/(hoursPerDay*daysPerYear)/speed[per] ;
-    //timeValue[per] = gnp_cap*1000.0/(hoursPerDay*daysPerYear)/speed[per] ;
     // calculate time value based on hours worked per year
-    timeValue[per] = gnp_cap*1000.0/(hoursPerWeek*weeksPerYear)/speed[per] ;
+    // gnp_cap is normalized, need GNP per capita in $/person, fix when available
+    const double dollarGNP75 = 3.46985e+12;
+    const double population75 = 2.16067e+8;
+    timeValue[per] = gnp_cap*(dollarGNP75/population75)/(hoursPerWeek*weeksPerYear)/speed[per] ;
 
-    adjPrice[per] = servicePrice[per] + timeValue[per] ;
+    generalizedCost[per] = servicePrice[per] + timeValue[per] ;
     
     /*!  Compute calibrating scaler if first period, otherwise use computed
     scaler in subsequent periods */
     
     if(per==0) {
-        baseScaler = output[0] / shrwts[per] * pow(adjPrice[per], -lexp[per])
+        baseScaler = output[0] / shrwts[per] * pow(generalizedCost[per], -lexp[per])
             * pow(gnp_cap, -fuelPrefElasticity[per])
             * pow(popDensity, -popDenseElasticity[per]);
     }
 
-    share[per]  = baseScaler * shrwts[per] * pow(adjPrice[per], lexp[per])
+    share[per]  = baseScaler * shrwts[per] * pow(generalizedCost[per], lexp[per])
         * pow(gnp_cap, fuelPrefElasticity[per])
         * pow(popDensity, popDenseElasticity[per]);
     
