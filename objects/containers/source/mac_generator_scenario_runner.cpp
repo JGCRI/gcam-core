@@ -31,11 +31,11 @@
 #include "util/base/include/xml_helper.h"
 #include "util/curves/include/explicit_point_set.h"
 #include "util/base/include/auto_file.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
 
-extern ofstream bugoutfile, logfile;
 extern Scenario* scenario;
 extern void closeDB();
 extern void createMCvarid();
@@ -52,7 +52,9 @@ MACGeneratorScenarioRunner::MACGeneratorScenarioRunner( const string aGhgName, c
 
     // Check to make sure calibration is off.
     if( Configuration::getInstance()->getBool( "debugChecking" ) && Configuration::getInstance()->getBool( "CalibrationActive" ) ){
-        cout << "Warning: Calibration is incompatable with the generation of marginal abatement curves." << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Calibration is incompatable with the generation of marginal abatement curves." << endl;
     }
 }
 
@@ -180,6 +182,9 @@ bool MACGeneratorScenarioRunner::runTrials(){
         }
 
         // Create an ending for the output files using the run number.
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Starting cost curve point run number " << currPoint << "." << endl;
         success &= scenario->run( util::toString( currPoint ) );
 
         // Save information.
@@ -276,18 +281,22 @@ void MACGeneratorScenarioRunner::createRegionalCostCurves() {
 
 //! Print the output.
 void MACGeneratorScenarioRunner::printOutput( Timer& timer, const bool aCloseDB ) const {
+    // Database function definition. 
+    void dboutput4(string var1name,string var2name,string var3name,string var4name,
+        string uname,vector<double> dout);
+    
     // Open the output file.
-    AutoOutputFile ccOut( "costCurvesOutputFileName", "cost_curves.xml" );
+    AutoOutputFile ccOut( "costCurvesOutputFileName", "cost_curves_" + scenario->getName() + ".xml" );
     // Create a root tag.
     Tabs tabs;
 	XMLWriteOpeningTag( "CostCurvesInfo", *ccOut, &tabs ); 
-    const double cvrt90 = 2.212; //  convert '75 price to '90 price
-	void dboutput4(string var1name,string var2name,string var3name,string var4name,
-			   string uname,vector<double> dout);
-    vector<double> tempOutVec( scenario->getModeltime()->getmaxper() );
+
     XMLWriteOpeningTag( "PeriodCostCurves", *ccOut, &tabs );
     const Modeltime* modeltime =  scenario->getModeltime();
     const int maxPeriod = modeltime->getmaxper();
+    const double CVRT_75_TO_90 = 2.212; //  convert '75 price to '90 price
+    vector<double> tempOutVec( maxPeriod );
+
     for( int per = 0; per < maxPeriod; per++ ){
         const int year = modeltime->getper_to_yr( per );
         XMLWriteOpeningTag( "CostCurves", *ccOut, &tabs, "", year );
@@ -301,6 +310,11 @@ void MACGeneratorScenarioRunner::printOutput( Timer& timer, const bool aCloseDB 
     XMLWriteOpeningTag( "RegionalCostCurvesByPeriod", *ccOut, &tabs );
     for( CRegionCurvesIterator rIter = mRegionalCostCurves.begin(); rIter != mRegionalCostCurves.end(); ++rIter ){
         rIter->second->toInputXML( *ccOut, &tabs );
+        // Write out to the database.
+        for( int per = 0; per < maxPeriod; ++per ){
+            tempOutVec[ per ] = rIter->second->getY( modeltime->getper_to_yr( per ) ) * CVRT_75_TO_90;
+        }
+		dboutput4(rIter->first,"General","PolicyCostUndisc","Period","(millions)90US$",tempOutVec);
     }
     XMLWriteClosingTag( "RegionalCostCurvesByPeriod", *ccOut, &tabs ); 
 	
@@ -309,8 +323,8 @@ void MACGeneratorScenarioRunner::printOutput( Timer& timer, const bool aCloseDB 
     for( CRegionalCostsIterator iter = mRegionalCosts.begin(); iter != mRegionalCosts.end(); iter++ ){
         XMLWriteElement( iter->second, "UndiscountedCost", *ccOut, &tabs, 0, iter->first );
 	    // regional total cost of policy
-		tempOutVec[maxPeriod-1] = iter->second * cvrt90;
-		dboutput4(iter->first,"General","PolicyCostUndisc","AllYears","(millions)90US$",tempOutVec);
+		tempOutVec[maxPeriod-1] = iter->second * CVRT_75_TO_90;
+		dboutput4(iter->first,"General","PolicyCostTotalUndisc","AllYears","(millions)90US$",tempOutVec);
     }
 	XMLWriteClosingTag( "RegionalUndiscountedCosts", *ccOut, &tabs );
     // End of writing undiscounted costs by region.
@@ -321,8 +335,8 @@ void MACGeneratorScenarioRunner::printOutput( Timer& timer, const bool aCloseDB 
     for( constDoubleMapIter iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
         XMLWriteElement( iter->second, "DiscountedCost", *ccOut, &tabs, 0, iter->first );
 	    // regional total cost of policy
-		tempOutVec[maxPeriod-1] = iter->second * cvrt90;
-		dboutput4(iter->first,"General","PolicyCostDisc","AllYears","(millions)90US$",tempOutVec);
+		tempOutVec[maxPeriod-1] = iter->second * CVRT_75_TO_90;
+		dboutput4(iter->first,"General","PolicyCostTotalDisc","AllYears","(millions)90US$",tempOutVec);
     }
 	XMLWriteClosingTag( "RegionalDiscountedCosts", *ccOut, &tabs );
     // End of writing undiscounted costs by region.
