@@ -976,11 +976,9 @@ Routine also calls adjustForFixedSupply which adjusts shares, if necessary, for 
 void Sector::supply( const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
 
-    double mrkdmd;
-
     carbonTaxPaid[ period ] = 0; // initialize carbon taxes paid
 
-    mrkdmd = marketplace->getDemand( name, regionName, period ); // demand for the good produced by this Sector
+    double mrkdmd = marketplace->getDemand( name, regionName, period ); // demand for the good produced by this Sector
 
     if ( mrkdmd < 0 ) {
         cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;
@@ -1014,7 +1012,7 @@ void Sector::supply( const int period ) {
 
             if ( 1 == 2 ) { // detailed debugging output
                 for (int i=0;i<nosubsec;i++) {
-                    cout << subsec[ i ]->getName( ) << " Share:";
+                    cout << subsec[ i ]->getName() << " Share:";
                     cout << subsec[ i ]->getShare( period ) << " Output:";
                     cout << subsec[ i ]->getOutput( period ) << endl;
                 }
