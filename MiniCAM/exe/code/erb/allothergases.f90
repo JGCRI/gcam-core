@@ -240,8 +240,9 @@
 
 	DO II = 1, 14
 		OGACT(10+II,1,L,M) = HGWPREAD(II,L,M)/1000  ! convert from thousand tons to million tons
-		OGINPUT(10+II,1,L) = 1 ! set coefficient to 1 since we are passing emissions directly
-		OGREPORT(10+II,1) = 1
+! sjs -- eliminate these now that emissions are read in
+!		OGINPUT(10+II,1,L) = 1 ! set coefficient to 1 since we are passing emissions directly
+!		OGREPORT(10+II,1) = 1
 	END DO
 
 ! ***************************************************
@@ -458,7 +459,7 @@
 
 ! src 18: deforestation
 	OGACT(IVOC,18,L,M) = DefroR(L,M)
-	write(1001,*) DefroR(L,M),L,M
+!	write(1001,*) DefroR(L,M),L,M
 
 ! src 19: agricultural waste
 	OGACT(IVOC,19,L,M) =  saveland(1,L,M) 	! total ag land
@@ -688,6 +689,15 @@
 ! 3: OGCTRLS(gas, src, 3, L, M) -- user input "controls", representing calibration factors, efficiency changes, etc.
 
 
+     if (L .eq. 111) THEN
+        src = 1
+		gas = IH134
+        write(*,'(a,15(f7.3,","))') "1: ",ZLM(L,M)/1e6,OGCOEF(gas,src,L), &
+		OGEMISS(gas,src,L,M), OGACT(gas,src,L,M), OGTYPE(gas,src,L), OGINPUT(gas,src,L),&
+		OGCTRLS(gas, src, 1, L, M),OGCTRLS(gas, src, 2, L, M),OGCTRLS(gas, src, 3, L, M)
+      end if
+
+
 	DO gas = 1, NOGMax
 		DO src = 1, NOGSrcMax
 
@@ -750,6 +760,12 @@
 		END DO
 	END DO
 
+     if (L .eq. 111) THEN
+        src = 1
+		gas = IH134
+        write(*,'(a,15(f7.3,","))') "2: ", ZLM(L,M)/1e6,OGCOEF(gas,src,L), &
+		OGEMISS(gas,src,L,M), OGACT(gas,src,L,M), OGTYPE(gas,src,L), OGINPUT(gas,src,L)
+      end if
 
 ! *** End do loop over regions ***
 	END DO
