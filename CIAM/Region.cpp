@@ -54,6 +54,7 @@ Region::Region() {
     gnp_cap.resize( maxper ); // regional gross national product per capita
     gnp_dol.resize( maxper ); 
     input.resize( maxper ); // total fuel and energy consumption
+   TFEcalb.resize( maxper ); // TFE calibration value
     price_ser.resize( maxper ); // aggregate price for demand services
     carbontaxpaid.resize( maxper ); // total regional carbon taxes paid
     summary.resize( maxper ); // summary for reporting
@@ -311,14 +312,16 @@ void Region::XMLParse( const DOMNode* node ){
                 else if(nodeNameChild == "incomeelasticity") {
                     XMLHelper<double>::insertValueIntoVector( currChild, i_elas, modeltime );
                 }
+
+            else if(nodeNameChild == "TFEcalb") {
+               XMLHelper<double>::insertValueIntoVector( currChild, TFEcalb, modeltime );
             }
-            
-        }
-        
-        else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing region." << endl;
-        }
-        
+         }
+      }
+         
+      else {
+         cout << "Unrecognized text string: " << nodeName << " found while parsing region." << endl;
+      }
    }
 }
 
@@ -455,6 +458,13 @@ void Region::toXML( ostream& out ) const {
         XMLWriteElementCheckDefault( i_elas[ m ],"incomeelasticity", out, 0, modeltime->getper_to_yr( m ) );
     }
     
+   // write out TFE calibration values
+   for( m = 0; m < static_cast<int>( TFEcalb.size() ); m++ ) {
+      if ( TFEcalb[ m ] != 0 ) {
+         XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, 0, modeltime->getper_to_yr( m ) );
+      }
+   }
+   
     Tabs::decreaseIndent();
     Tabs::writeTabs( out );
     out << "</economicdata>" << endl;
@@ -680,7 +690,7 @@ void Region::finalsupplyprc(int per) {
 
 //! Calculates supply of final energy and other goods.
 void Region::finalsupply(int per) {
-    
+   
     Marketplace* marketplace = scenario->getMarketplace();
     string goodName;
     int i = 0;
@@ -718,7 +728,10 @@ void Region::finalsupply(int per) {
         
         // set market supply of intermediate goods
         marketplace->setsupply(goodName,name,mrksupply,per);
-    }
+ 
+        // update sector input
+		  supplysector[ i ]->sumInput( per );
+   }
 }
 
 //! Calculate regional gnp.
@@ -874,34 +887,77 @@ void Region::writeBackCalibratedValues( const int period ) {
 }
 
 //! Do regional calibration
-/*! Must be done after demands are calculated
+/*! Must be done after demands are calculated. 
+    Two levels of calibration are possible. 
+    First at the sector or technology level (via. calibrateSector method),
+     or, 
+    at the level of total final energy demand (via
 */
-void Region::doCalibration( const bool doCalibrations, const int per ) {
-    int i;
-    
-    // Do subsector and technology level energy calibration
-    // can only turn off calibrations that do not involve markets
-    if ( doCalibrations ) {
-        // Calibrate demand sectors
-        for ( i=0;i<nodsec;i++) {
-            demandsector[ i ]->calibrateSector( name, per );
-        }
-        
-        // Calibrate supply sectors
-        for ( i=0;i<nossec;i++) {
-            supplysector[ i ]->calibrateSector( name, per );
-        }
-    }
-    
-    // Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.
-    // Insert the newly calculated values into the calibration markets. 
-    if( calibrationGNPs.size() > per && calibrationGNPs[ per ] > 0 ){ 
-        const string goodName = "GDP";
-        Marketplace* marketplace = scenario->getMarketplace();
-        marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
-        marketplace->setsupply( goodName, name, gnp_dol[ per ], per );
-        marketplace->setMarketToSolve( goodName, name );
-    }
+
+void Region::calibrateRegion( const bool doCalibrations, const int per ) {
+   int i;
+
+	// Do subsector and technology level energy calibration
+   // can only turn off calibrations that do not involve markets
+   if ( doCalibrations ) {
+      // Calibrate demand sectors
+	   for ( i=0;i<nodsec;i++) {
+		   demandsector[ i ]->calibrateSector( name, per );
+ 	   }
+
+      // Calibrate supply sectors
+	   for ( i=0;i<nossec;i++) {
+		   supplysector[ i ]->calibrateSector( name, per );
+	   }
+   }
+
+   // Calibrate Regional TFE
+   if ( doCalibrations ) {
+      calibrateTFE( per );
+   }
+      
+	// Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.
+   // Insert the newly calculated values into the calibration markets. 
+	if( calibrationGNPs.size() > per && calibrationGNPs[ per ] > 0 ){ 
+      const string goodName = "GDP";
+      Marketplace* marketplace = scenario->getMarketplace();
+		marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
+		marketplace->setsupply( goodName, name, gnp_dol[ per ], per );
+		marketplace->setMarketToSolve( goodName, name );
+	}
+}
+
+//! Calibrate total final energy Demand for this region.
+/*! Adjusts AEEI in each demand sector until TFE is equal to the calibration value.
+*/
+void Region::calibrateTFE( const int per ) {
+      int i;
+   
+   // Calculate total final energy demand for all demand sectors
+   double totalFinalEnergy = 0;
+	   for ( i=0;i<nodsec;i++) {
+		   totalFinalEnergy += demandsector[ i ]->getInput( per );;
+ 	   }
+   
+   // Don't calibrate unless non zero value of TFE
+   if ( TFEcalb[ per ]  > 0 ) {
+      // Ratio of TFE in sector to cal value
+      double TFEtemp = TFEcalb[ per ];
+      double scaleFactor = TFEcalb[ per ] / totalFinalEnergy;
+      
+      if ( totalFinalEnergy == 0 ) {
+          cout << "ERROR: totalFinalEnergy = 0 in region " << name << endl;
+      }
+      
+   //   cout << name << ":  TFE Calib: " << TFEcalb[ per ] << "; TFE: " << totalFinalEnergy << endl;
+      
+      // Scale each sector's output to appraoch calibration value
+      for ( i=0;i<nodsec;i++) {
+         if ( !demandsector[ i ]->sectorAllCalibrated( per ) ) {
+            demandsector[ i ]->scaleOutput( per , scaleFactor );
+         }
+      }
+   }
 }
 
 //! Call any initializations that are only done once per period
@@ -931,6 +987,9 @@ void Region::endusedemand(int per)
         // name is region or country name
         demandsector[ i ]->aggdemand( name, gnp_cap[per], gnp_adj[per], per ); 
         carbontaxpaid[ per ] += demandsector[ i ]->showcarbontaxpaid( per );
+
+        // update sector input
+		  demandsector[ i ]->sumInput( per );
     }
 }
 

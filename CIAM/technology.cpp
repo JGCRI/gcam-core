@@ -659,6 +659,18 @@ bool technology::getCalibrationStatus( ) const {
     return doCalibration;
 }
 
+//! returns true if all output is either fixed or calibrated
+bool technology::ouputFixed( ) const {
+    bool outputFixed = false;
+
+   if ( doCalibration || ( fixedSupply != 0 ) ) {
+      outputFixed = true;  // this sector has fixed output
+   } 
+   
+   return outputFixed;
+   
+}
+
 //! return fuel input for technology
 double technology::getInput() const {
     return input;

@@ -779,24 +779,25 @@ void subsector::setoutput( const string& regionName, const string& prodName, con
 //! Adjusts share weights and subsector demand to be consistant with calibration value
 /* Share weights are scaled to be consistant with the calibration value.
  * subector demand is also set equal to calibration value in order to pass down to technologies.
+ * Note that this routine doesn't notice if the calibration is at the technology or sub-sector level, this is taken care of by routine getTotalCalOutputs.
  * \warning If calvalue is larger than sector demand nothing is done
  * \warning The value of subsecdmd is changed (for sub-sector output calibration)
- * \todo add in pre-period run a check to see if everything was calibrated
  */
 void subsector::adjustForCalibration( double sectorDemand, double totalFixedSupply, double totalCalOutputs, const int period ) {
    double shareScaleValue = 0;
    double availableDemand;
    double subSectorDemand;
 
-   // total calibration outputs for this sector
+   // total calibrated outputs for this sector
    double calOutputSubsect = getTotalCalOutputs( period );
 
-   // Adjust calibration value if too large
+   // Determine available demand that can be shared out (subtract sub-sectors with fixed supply)
    availableDemand = sectorDemand - totalFixedSupply;
    if ( availableDemand < 0 ) {
       availableDemand = 0;
    }
    
+   // Adjust calibration value if larger than available demand
    if ( calOutputSubsect > availableDemand ) {
      // adjust cal value, but leave a slight bit of headroom, taking into account other cal outputs
       calOutputSubsect = (calOutputSubsect/totalCalOutputs) * availableDemand * 0.95;
@@ -831,6 +832,34 @@ double subsector::getTotalCalOutputs( const int per ) const {
    }
    
    return sumCalValues;
+}
+
+//! returns true if all output is either fixed or calibrated
+bool subsector::allOuputFixed( const int per ) const {
+   bool oneNotFixed = false;
+   bool outputFixed = false;
+
+   if ( doCalibration[ per ] ) {
+      outputFixed = true;  // this sector has fixed output
+   } 
+   else  if ( shrwts[ per ] == 0 ) {
+      outputFixed = true; // this sector has no output, so is also fixed
+   }
+   // if not fixed at sub-sector level, then check at the technology level
+   else {
+      for ( int i=0; i<notech; i++ ) {
+         if ( !( techs[ i ][ per ]->ouputFixed( ) ) ) {
+            oneNotFixed = true;
+        }
+      }
+   }
+   
+   if ( outputFixed ) {
+      return true;
+   } else {
+      return !oneNotFixed;
+   }
+   
 }
 
 //! scale calibration values
@@ -1208,7 +1237,7 @@ double subsector::showpe_cons( const int per ) {
 }
 
 //! returns primary or final energy input
-double subsector::showinput( const int per ) const {
+double subsector::getInput( const int per ) const {
     //! \pre per is less than or equal to max period.
     assert( per <= scenario->getModeltime()->getmaxper() );
     

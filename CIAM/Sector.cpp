@@ -495,6 +495,23 @@ double sector::showprice(int per)
     return sectorprice[per];
 }
 
+//! Returns true if all sub-sector outputs are fixed or calibrated
+bool sector::sectorAllCalibrated( int per ) {
+    bool allCalibrated = true;
+
+   if ( per < 0 ) {
+      allCalibrated = false;
+   } else {
+      for ( int i=0; i<nosubsec; i++ ) {
+         if ( !(subsec[ i ]->allOuputFixed( per )) ) {
+            allCalibrated = false;
+         }
+      }
+   }
+    
+   return allCalibrated;
+}
+
 //! Set output for sector (ONLY USED FOR energy service demand at present).
 /*! Demand from the "dmd" parameter (could be energy or energy service) is passed to subsectors.
 This is then shared out at the technology level.
@@ -525,6 +542,13 @@ void sector::initCalc( const string& regionName, const int per ) {
     // do any sub-sector initializations
     for ( int i=0; i<nosubsec; i++ ) {
         subsec[ i ]->initCalc( per );
+    }
+    
+    
+    if ( sectorAllCalibrated( per ) ) {
+       // printout for testing purposes
+     //  cout << "Sector: "<< regionName << ":" << name << " is completely calibrated"<<endl;
+       
     }
     
     // check to see if previous period's calibrations were set ok
@@ -562,7 +586,7 @@ double sector::getFixedSupply( int per ) const {
     return totalFixedSupply;
 }
 
-//! Return subsector fixed Supply.
+//! Return subsector total calibrated outputs
 double sector::getCalOutput( int per ) const {
     double totalCalOutput = 0;
     for ( int i=0; i<nosubsec; i++ ) {
@@ -572,7 +596,8 @@ double sector::getCalOutput( int per ) const {
 }
 
 //! Calibrate sector output
-/* This performes supply sector technology and sub-sector output/input calibration
+/* This performs supply sector technology and sub-sector output/input calibration. 
+   Determines total amount of calibrated and fixed output and passes that down to the subsectors.
 */
 void sector::calibrateSector( const string regionName, const int per )
 {
@@ -773,15 +798,17 @@ double sector::showpe_cons(int per)
 }
 
 //! Sums subsector primary and final energy consumption.
-void sector::suminput(int per)
+void sector::sumInput(int per)
 {
     input[per] = 0;
     for (int i=0;i<nosubsec;i++)
-        input[per] += subsec[i]->showinput(per);
+        input[per] += subsec[i]->getInput(per);
+   double tempval = input[ per ];
+   tempval = tempval * 1; 
 }
 
 //! Returns sectoral energy consumption.
-double sector::showinput(int per)
+double sector::getInput(int per)
 {
     return input[per];
 }

@@ -344,7 +344,16 @@ void demsector::price(int per)
 }
 
 //! Calibrate sector output
-/* This performes supply sector technology and sub-sector output/input calibration
+/* This performs supply sector technology and sub-sector output/input calibration. 
+   Determines total amount of calibrated and fixed output and passes that down to the subsectors.
+   
+   The first part of this code is identical to that for the supply sectors. 
+   The second portion is specific to demand sectors. 
+   (could be made for supply sectors too but that is not needed at present and 
+    would require a consistency check between demand and supply.)
+   
+   If all subsector demands are calibrated (or zero) then also adjusts AEEI in order to be 
+   consistent with calibrated values.
 */
 void demsector::calibrateSector( const string regionName, const int per )
 {
@@ -359,11 +368,45 @@ void demsector::calibrateSector( const string regionName, const int per )
             subsec[i]->adjustForCalibration( mrkdmd, totalFixedSupply, totalCalOutputs, per );
         }
     }
+
+    if ( sectorAllCalibrated( per ) ) {
+       scaleOutput( per , totalCalOutputs/service[ per ] );
+       if ( service[ per ] == 0 ) {
+          cout << "ERROR: service = 0 in " << regionName << ":" << name << endl;
+         }
+     //  cout << "scaled output for " << regionName << ":" << name <<" by " << totalCalOutputs/service[ per ] << endl;
+    }
+}
+
+//! scale output by changing value of some scale parameters (used for calibration)
+/*! The scaleFactor is the amount by which the output needs to change. 
+    The routine then calculates the necessary change in the AEEI. 
+    
+    \warning For derived demand sectors, some version of this routine needs to be included
+    in order for the output of that sector to be able to be calibrated.
+    sjs
+*/
+void demsector::scaleOutput( int per, double scaleFactor ) {
+   const Modeltime* modeltime = scenario->getModeltime();
+    
+    // The solution for the scaling factor for AEEI (Afact), is
+    // SF = TC_0 * (1+AEII)^T / [ TC_0 * (1+Afact*AEII)^T ] = (1+AEII)^T /[(1+Afact*AEII)^T]
+    // So Afact = [( (1+AEII)^T /SF )^(1/T)-1]/AEII
+    // TC_0 = techChangeCumm[per-1] & SF = scaleFactor
+
+   // If scale factor is significant then change AEEI
+   if ( abs( 1 - scaleFactor ) > 1e-6 ) {   
+      double timeStep = modeltime->gettimestep(per);
+      double aeeiScale; // amount to change AEEI
+      double temp = pow( 1+aeei[per] , timeStep );
+      aeeiScale = ( pow( temp/ scaleFactor ,1/timeStep ) - 1) / aeei[ per ]; 
+ 
+      aeei[ per ]  = aeei[ per ] * aeeiScale;
+   }
 }
 
 //! Calculate end-use service price elasticity
-void demsector::calc_pElasticity(int per)
-{
+void demsector::calc_pElasticity(int per) {
     pElasticityBase = pElasticity[ 0 ]; // base year read in value
     pElasticity[per]=0.0;
     sectorfuelprice[per] = 0;
@@ -374,8 +417,6 @@ void demsector::calc_pElasticity(int per)
     tmpPriceRatio = sectorprice[per]/sectorfuelprice[per];
     pElasticity[per] = pElasticityBase*tmpPriceRatio;
 }
-
-
 
 //! Aggrgate sector energy service demand function.
 void demsector::aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per) {
@@ -446,7 +487,7 @@ void demsector::outputfile(const string& regionName ) {
     fileoutput3(regionName,getName()," "," ","prodution","SerUnit",temp);
     // total sector eneryg input
     for (m=0;m<maxper;m++)
-        temp[m] = sector::showinput(m);
+        temp[m] = sector::getInput(m);
     fileoutput3(regionName,getName()," "," ","consumption","EJ",temp);
     // sector price
     for (m=0;m<maxper;m++)

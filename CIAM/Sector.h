@@ -82,13 +82,14 @@ public:
     int shownosubsec(void);
     double getoutput(int per); // returns sector output 
     double getFixedSupply(int per) const; // returns sector output 
+    bool sector::sectorAllCalibrated( int per );
     double getCalOutput(int per) const; // returns sector output 
     double showprice(int per); // returns sector aggregate price
     void emission(int per); // sum subsector emissions
     void indemission( const int per, const vector<Emcoef_ind>& emcoef_ind ); // sum subsector indirect emissions
     double showpe_cons(int per); // return sector primary energy consumption
-    void suminput(int per); // sums subsector primary and final energy consumption
-    double showinput(int per); // return sector energy consumption
+    void sumInput(int per); // sums subsector primary and final energy consumption
+    double getInput(int per); // return sector energy consumption
     virtual void outputfile(const string& regname ); // write out sector result to file
     void MCoutput_subsec(const string& regname ); // calls write for subsector 
     virtual void MCoutput(const string& regname ); // write out sector result to file

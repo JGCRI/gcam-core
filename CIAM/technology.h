@@ -109,6 +109,7 @@ public:
     void scaleCalibrationInput( const double scaleFactor ); // scale calibration value
     double getCalibrationInput() const; // return calibration input value
     double getCalibrationOutput() const; // return calibration output value
+    bool ouputFixed() const; // return calibration output value
     double getInput() const; // return fuel input amount
     double getOutput() const; // return technology output
     double getFuelcost() const; // return fuel cost only

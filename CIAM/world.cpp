@@ -322,9 +322,9 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
 			region[ *i ]->calcAgSector(per);
 		}
 
-      // Adjust the calibration values with the new gnps.
+      // Perform calibrations
       if( conf->getBool( "CalibrationActive" ) ) {
-         region[ *i ]->doCalibration( doCalibrations, per );
+         region[ *i ]->calibrateRegion( doCalibrations, per );
       }
 
 	}

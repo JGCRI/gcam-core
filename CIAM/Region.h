@@ -37,30 +37,31 @@ class Emcoef_ind;
 class Region
 {
 private:
-	string name; //! Region name
-	int noghg; //! number of ghg for market solution in each region
-	int numResources; //! number of depletable resources in each region
-	int nossec; //! number of supply sectors in each region
-	int nodsec; //! number of demand sectors in each region
-	int noregmrks; //! number of markets in each region
-	double EnergyGNPElas; //! elasticity for energy price feedback on GNP
-	demographic* population; //! demographic object
-	vector<Resource*> resources; //! vector of resource objects
-	vector<sector*> supplysector; //! array of pointers to supply sector objects
-	vector<demsector*> demandsector; //! array of pointers to demand sector objects
-	AgSector* agSector; //! Agricultural sector.
-	vector<ghg_mrk*> ghgmarket; //! array of pointers to ghg market objects, container for constraints and emissions
-	vector<double> i_elas; //! income elasticity
-	vector<double> gnp_dol; //! regional gross national product
-	vector<double> calibrationGNPs; //! GNPs to calibrate to.
-	vector<double> gnp; //! normalized regional gross national product
-	vector<double> gnp_adj; //! regional gross national product adjusted for energy
-	vector<double> gnp_cap; //! regional gross national product per capita
-	vector<double> input; //! total fuel and energy consumption
-	vector<double> price_ser; //! aggregate price for demand services
-	vector<double> carbontax; //! regional carbon tax
-	vector<double> carbontaxpaid; //! total regional carbon taxes paid
-	vector<Summary> summary; //! summary for reporting
+	string name; //!< Region name
+	int noghg; //!< number of ghg for market solution in each region
+	int numResources; //!< number of depletable resources in each region
+	int nossec; //!< number of supply sectors in each region
+	int nodsec; //!< number of demand sectors in each region
+	int noregmrks; //!< number of markets in each region
+	double EnergyGNPElas; //!< elasticity for energy price feedback on GNP
+	demographic* population; //!< demographic object
+	vector<Resource*> resources; //!< vector of resource objects
+	vector<sector*> supplysector; //!< array of pointers to supply sector objects
+	vector<demsector*> demandsector; //!< array of pointers to demand sector objects
+	AgSector* agSector; //!< Agricultural sector.
+	vector<ghg_mrk*> ghgmarket; //!< array of pointers to ghg market objects, container for constraints and emissions
+	vector<double> i_elas; //!< income elasticity
+	vector<double> gnp_dol; //!< regional gross national product
+	vector<double> calibrationGNPs; //!< GNPs to calibrate to.
+	vector<double> gnp; //!< normalized regional gross national product
+	vector<double> gnp_adj; //!< regional gross national product adjusted for energy
+	vector<double> gnp_cap; //!< regional gross national product per capita
+	vector<double> input; //!< total fuel and energy consumption
+	vector<double> price_ser; //!< aggregate price for demand services
+	vector<double> carbontax; //!< regional carbon tax
+	vector<double> carbontaxpaid; //!< total regional carbon taxes paid
+   vector<double> TFEcalb;  //!< TFE Calibration value (can't be set = 0)
+	vector<Summary> summary; //!< summary for reporting
    map<string,int> resourceNameMap; //!< Map of resource name to integer position in vector. 
    map<string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector. 
    map<string,int> demandSectorNameMap; //!< Map of demandsector name to integer position in vector. 
@@ -82,7 +83,8 @@ public:
 	string getName() const;
    void writeBackCalibratedValues( const int period );
    void setupCalibrationMarkets();
-   void doCalibration( const bool doCalibrations, const int per );
+   void calibrateRegion( const bool doCalibrations, const int per );
+   void calibrateTFE( const int per ); 
    void initCalc( const int per ); // Call sectors to consistantly adjust share weights
 	void setghgsupply(int per); // sets ghg constraint to market supply
 	void setghgdemand(int per); // sets ghg emissions to market demand

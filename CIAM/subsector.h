@@ -81,6 +81,7 @@ public:
     bool getCalibrationStatus( const int period ) const;
     void setCalibrationStatus( const int period );
     void scaleCalibrationInput( const int period, const double scaleFactor ); // scale calibration values
+    bool allOuputFixed( const int period ) const;
     double getfuelprice( const int period ) const; 
     double getwtfuelprice( const int period ) const;
     double getCapacityLimit( const int period ) const;
@@ -116,7 +117,7 @@ public:
     double showCO2ind( const int period ) const; // returns indirect CO2 emissions
     double showCO2fuel( const int period ) const; // returns equivalent CO2 emissions from fuel input
     double showpe_cons( const int period ); // returns subsector primary energy consumption
-    double showinput( const int period )  const; // returns subsector primary or final energy consumption
+    double getInput( const int period )  const; // returns subsector primary or final energy consumption
     double getoutput( const int period ) const; // returns subsector output
     double showcarbontaxpaid( const int period ) const; // returns subsector total carbon taxes paid
     map<string, double> getfuelcons( const int period ) const; 

@@ -62,6 +62,7 @@ public:
     virtual void calibrateSector( const string regionName, const int per ); // sets demand to totoutput and output
     double getService(const int per); // sector service with tech change
     double getServiceWoTC(const int per); // service without tech change
+    void scaleOutput( int per, double scaleFactor ); // set value of AEEI
 };
 
 #endif // _DEMAND_SECTOR_H_
