@@ -76,7 +76,7 @@ Subsector::Subsector( const string regionName, const string sectorName ){
     calibrationStatus.resize( maxper, false );
     fixedShare.resize( maxper );
     capLimited.resize( maxper, false );
-    scaleYear = modeltime->getper_to_yr( maxper ); // default year to scale share weight to after calibration
+    scaleYear = modeltime->getendyr(); // default year to scale share weight to after calibration
 }
 
 /*! \brief Default destructor.
