@@ -508,9 +508,6 @@ void Subsector::initCalc( const int period ) {
 		ghgNames = techs[i][period]->getGHGNames();
 		
 		int numberOfGHGs =  techs[ i ][ period ]->getNumbGHGs();
-		if (numberOfGHGs > 1 ) {
-			cout << "have extra GHGs" << endl;
-		}
 
 		if ( numberOfGHGs != techs[i][ period - 1 ]->getNumbGHGs() ) {
 			cerr << "WARNING: Number of GHG objects changed in period " << period << ", tech: ";
@@ -1280,9 +1277,19 @@ void Subsector::outputfile() const {
     fileoutput3( regionName,sectorName,name," ","C tax paid","Mil90$",carbontaxpaid);
     fileoutput3( regionName,sectorName,name," ","CO2 emiss","MTC",temp);
 
-    for (m=0;m<maxper;m++)
-        temp[m] = summary[m].get_emissmap_second("NOx");
-    fileoutput3( regionName,sectorName,name," ","NOx emiss","Tg",temp);
+// sjs -- bad coding here, hard-wired period. But is only for csv outputfile.
+		int numberOfGHGs =  techs[ i ][ 2 ]->getNumbGHGs();
+		if (numberOfGHGs > 1 ) {
+		   std::vector<std::string> ghgNames;
+			ghgNames = techs[i][ 2 ]->getGHGNames();
+			for ( int ghgN = 2; ghgN < numberOfGHGs; ghgN++ ) {
+				for (m=0;m<maxper;m++) {
+					temp[m] = summary[m].get_emissmap_second( ghgNames[ ghgN ] );
+				}
+				string ghgLabel = ghgNames[ ghgN ] + " emiss";
+				fileoutput3( regionName,sectorName,name," ",ghgLabel,"Tg",temp);
+			}
+		}
     
     // do for all technologies in the Subsector
     for (i=0;i<notech;i++) {
