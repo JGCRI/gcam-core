@@ -14,6 +14,7 @@
 #include <fstream>
 #include <cmath>
 #include <cassert>
+#include <limits>
 
 // xml headers
 #include "xmlHelper.h"
@@ -220,15 +221,9 @@ void sector::setMarket( const string& regionName ) {
 	// name is resource name
     // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
 	
-	if( marketplace->setMarket( regionName, market, name, Market::NORMAL ) ) {
+	if( marketplace->setMarket( regionName, market, name, Marketplace::NORMAL ) ) {
 		marketplace->setPriceVector( name, regionName, sectorprice );
 	}
-	/* The above is not quite right becuase there could be many sectors within the 
-           same market, this would result in the prices being reset each time. But little
-           practical effect -- see notes for demsector::setMarket.
-	*/
-
-	// This problem has actually been fixed, setMarket will only return true for a unique market.
 }
 
 //! Pass along carbon taxes.

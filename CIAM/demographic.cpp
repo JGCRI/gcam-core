@@ -272,7 +272,7 @@ void demographic::setupCalibrationMarkets( const string& regionName ) {
 	const Modeltime* modeltime = scenario->getModeltime();
 	Marketplace* marketplace = scenario->getMarketplace();
 
-	if ( marketplace->setMarket( regionName, regionName, goodName, Market::CALIBRATION ) ) {
+	if ( marketplace->setMarket( regionName, regionName, goodName, Marketplace::CALIBRATION ) ) {
 		vector<double> tempLFPs( modeltime->getmaxper() );
 		for( int i = 0; i < modeltime->getmaxper(); i++ ){
 			tempLFPs[ i ] = pow( 1 + laborprod[ modeltime->getmod_to_pop( i ) ], modeltime->gettimestep( i ) );

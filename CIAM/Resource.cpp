@@ -196,7 +196,7 @@ void Resource::setMarket( const string& regionName ) {
 	
 	Marketplace* marketplace = scenario->getMarketplace();
 	// name is resource name
-	if ( marketplace->setMarket( regionName, market, name, Market::NORMAL ) ) {
+	if ( marketplace->setMarket( regionName, market, name, Marketplace::NORMAL ) ) {
 		marketplace->setPriceVector( name, regionName, rscprc );
 		marketplace->setMarketToSolve (name, regionName);
 	}

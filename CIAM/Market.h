@@ -24,85 +24,159 @@ using namespace std;
 class Market
 {
 public:
-	enum marketType	// RHS and LHS below may not be consistant
-	{ 
-		NORMAL, //!< RHS = Supply; LHS = Demand; Solution Value = Price.
-		PRICE, //!< RHS = Logit Price; LHS = Solution Price; Solution Value = Price.
-		DEMAND, //!< RHS = Demand; LHS = Solution Demand; Solution Value = Solution Demand.
-		GHG,	//!< RHS = Emissions ; LHS = Constraint; Solution Value = Price.
-		CALIBRATION, //!< LHS = Constraint; RHS = Value; Solution Value = Calibration Parameter.
-	};
-	
-	Market( const string& goodNameIn = "", const string& regionNameIn = "", const marketType typeIn = NORMAL );
+
+   Market( const string& goodNameIn, const string& regionNameIn, const int periodIn );
 	
    void toDebugXML( const int period, ostream& out ) const;
+   virtual void derivedToDebugXML( ostream& out ) const;
    void addRegion( const string& regionNameIn );
-   
-   void initPrice();
+   virtual void setCompanionMarketPointer( Market* pointerIn );
+
+   virtual void initPrice();
    void nullPrice();
-   void setPrice( const double priceIn );
-   void setActualPrice( const double priceIn );
-   void setPriceToLast( const double lastPrice );
-   double getPrice() const;
-   double getActualPrice() const;
+   virtual void setPrice( const double priceIn );
+   void setRawPrice( const double priceIn );
+   virtual void setPriceToLast( const double lastPrice );
+   virtual double getPrice() const;
+   double getRawPrice() const;
    void restorePrice();
    double getChangeInPrice() const;
    double getLogChangeInPrice( const double SMALL_NUM ) const;
 
    void nullDemand();
-   void setDemand( const double value );
-   void incrementDemand( const double value );
-   double getDemand() const;
+   void setRawDemand( const double value );
+   virtual void setDemand( const double demandIn );
+   double getRawDemand() const;
+   virtual double getDemand() const;
    void calcLogDemand( const double SMALL_NUM );
    double getLogDemand() const;
    double getChangeInDemand() const;
    double getLogChangeInDemand( const double SMALL_NUM ) const;
 
-   void nullSupply();
-   double getSupply() const;
-   double getActualSupply() const;
+   virtual void nullSupply();
+   double getRawSupply() const;
+   void setRawSupply( const double supplyIn );
+   virtual double getSupply() const;
+   virtual double getSupplyForChecking() const;
+   virtual void setSupply( const double supplyIn );
    void calcLogSupply( const double SMALL_NUM );
    double getLogSupply() const;
    double getChangeInSupply() const;
    double getLogChangeInSupply( const double SMALL_NUM ) const;
+   
    void calcExcessDemand();
    double getExcessDemand() const;
-   
    void calcLogExcessDemand( const double SMALL_NUM );
    double getLogExcessDemand() const;
 
-   void setPeriod( const int periodIn );
    string getName() const;
    string getRegionName() const;
    string getGoodName() const;
-   marketType getType() const;
    void storeInfoFromLast( const double lastDemand, const double lastSupply, const double lastPrice );
    void storeInfo();
    void restoreInfo();
    
    void setSolveMarket( const bool doSolve );
+   virtual bool shouldSolve() const;
+   virtual bool shouldSolveNR( const double SMALL_NUM ) const;
+   virtual string getType() const;
    void print( ostream& out ) const;
 	
-   string name;  //! name of market (fuel or good) !not right
-	string region;  //! market region
-	bool solveMarket; //! Toggle for markets that should be solved
-	marketType type; //! market type: normal, price, demand, etc.
-	int period; //! Model period
-   int priceMult; //! Price Multiplier.
-	vector<string> containedRegionNames; //! Vector of names of all regions within this vector.
-	double price;  //! market price
-	double tprice;  //! store market price
-	double demand; //! demand for market solution
-	double tdemand; //! store previous demand
-	double supply; //! supply for market solution
-	double demMktSupply; //! actual supply for a demand market solution
-	double tsupply; //! store previous supply
-	double exdmd; //! excess demand for each market
-	double lexdmd; //! log of excess demand for each market
-	double texdmd; //! store excess demand
-	double dexdmd; //! derivative of excess demand
-	double ldem; //! log of demand for each market
-	double lsup; //! log of supply for each market
+protected:
+   string good;  //!< market good or fuel
+	string region;  //!< market region
+	bool solveMarket; //!< Toggle for markets that should be solved
+	int period; //!< Model period
+	double price;  //!< market price
+	double storedPrice;  //!< store market price
+	double demand; //!<demand for market solution
+	double storedDemand; //!< store previous demand
+	double supply; //!< supply for market solution
+	double storedSupply; //!< store previous supply
+	double excessDemand; //!< excess demand for each market
+	double logOfExcessDemand; //!< log of excess demand for each market
+	double storedExcessDemand; //!< store excess demand
+	double derivativeOfExcessDemand; //!< derivative of excess demand
+	double logOfDemand; //!< log of demand for each market
+	double logOfSupply; //!< log of supply for each market
+   vector <string> containedRegionNames; //! Vector of names of all regions within this vector.
 };
+
+class DemandMarket;
+
+/*!
+* \ingroup CIAM
+* \brief A derived class which defines a single PriceMarket object for use in solving simultinaity markets.
+* \author Steve Smith
+*/
+
+class PriceMarket: public Market {
+public:
+   PriceMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn );
+   PriceMarket( const Market& marketIn );
+   virtual void setCompanionMarketPointer( Market* pointerIn );
+   virtual void derivedToDebugXML( ostream& out ) const;
+   virtual string getType() const;
+   virtual void setPrice( const double priceIn );
+   virtual double getPrice() const;
+   virtual void setSupply( const double supplyIn );
+   virtual double getSupply() const;
+   virtual void setDemand( const double demandIn );
+   virtual double getDemand() const;
+
+private:
+   Market* demandMarketPointer; //!< A pointer to the companion DemandMarket
+   int priceMultiplier; //!< Price Multiplier.
+};
+
+/*!
+* \ingroup CIAM
+* \brief A class which defines a DemandMarket object for use in solving simultinaity markets.
+* \author Steve Smith
+*/
+
+class DemandMarket: public Market {
+public:
+   DemandMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn );
+   virtual void setCompanionMarketPointer( Market* pointerIn );
+   virtual void derivedToDebugXML( ostream& out ) const;
+   virtual string getType() const;
+   virtual double getDemand() const;
+   virtual double getSupplyForChecking() const;
+   virtual void setSupply( const double supplyIn );
+   virtual void nullSupply();
+private:
+   Market* priceMarketPointer; //!< A pointer to the companion PriceMarket.
+   double demMktSupply; //!< Raw supply
+};
+
+/*!
+* \ingroup CIAM
+* \brief A class which defines a GHGMarket object which is used for GHG constraint markets. 
+* \author Sonny Kim
+*/
+
+class GHGMarket: public Market {
+public:
+   GHGMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn );
+   virtual string getType() const;
+   virtual void initPrice();
+   virtual bool shouldSolve() const;
+   virtual bool shouldSolveNR( const double SMALL_NUM ) const;
+};
+
+/*!
+* \ingroup CIAM
+* \brief A class which defines a CalibrationMarket object for use in solving calibration markets.
+* \author Josh Lurz
+*/
+
+class CalibrationMarket: public Market {
+public:
+   CalibrationMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn );
+   virtual string getType() const;
+   virtual void setPriceToLast( const double lastPriceIn );
+};
+
 
 #endif // _MARKET_H_

@@ -48,7 +48,7 @@ void ghg_mrk::setMarket( const string& regionName ) {
 	Marketplace* marketplace = scenario->getMarketplace();
 
 	// name is GHG name
-	marketplace->setMarket( regionName, market, name, Market::GHG );
+	marketplace->setMarket( regionName, market, name, Marketplace::GHG );
     marketplace->setMarketToSolve (name, market);
 	/* no need to use market.setPriceVector here unless GHG markets need
         initial prices read-in for the base year */  
