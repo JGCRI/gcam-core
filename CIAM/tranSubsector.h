@@ -23,12 +23,14 @@ using namespace xercesc;
 class tranSubsector : public subsector
 {
 protected:
-	vector<double> techChange; // Energy Intensity decrease per year of mode
 	vector<double> speed; // Speed of Mode in Miles/hour
 	vector<double> popDenseElasticity; // Population Density Elasticity of mode
+	vector<double> servicePrice; // subsector price converted to $/pass-mi or $/ton-mi
+	vector<double> timeValue; // time value of average modal speed
 	vector<double> adjPrice; // subsector price adjusted for value of time, scaled by pd.
 	vector<double> loadFactor; //Load factor, persons or tons per vehicle (pass./freight)
 	double popDensity; // population density per land area
+	double baseScaler; // constant scaler to scale base output
 
 public:
     tranSubsector();

@@ -23,9 +23,9 @@ class tranSector : public demsector
 {
 protected:
 	vector<double> percentLicensed; // Percent of population licensed
-	double scaler; // term solved for in calibration equation, used to scale future
+	double baseScaler; // constant scaler to scale base output
     // for unlicensed percentage of population
-	double scalerNotLic; // term solved for in calibration equation, used to scale future
+	double baseScalerNotLic; // constant scaler to scale base unlicensed output
     double priceRatioNotLic;// price ratio for unlicensed population
 public:
     tranSector();

@@ -517,6 +517,7 @@ void demsector::MCoutput( const string& regionName ) {
     // total sector output
     dboutput4(regionName,"End-Use Service","by Sector",secname,"Ser Unit",service);
     dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",service);
+    dboutput4(regionName,"End-Use Service",secname+"_bySubsec","zTotal","Ser Unit",service);
 
     dboutput4(regionName,"End-Use Service","by Sector w/o TC",secname,"Ser Unit",servicePreTechChange);
     //dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",temp);

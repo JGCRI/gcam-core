@@ -13,6 +13,7 @@
 #include <iostream>
 #include <fstream>
 #include <cassert>
+#include <cmath>
 
 // User headers
 #include "tranTechnology.h"
@@ -31,6 +32,11 @@ extern Scenario* scenario;
 //! Default constructor.
 tranTechnology::tranTechnology() {
     intensity = 1;
+    techChangeCumm = 1;
+    loadFactor = 1;
+    vehicleOutput = 0;
+    serviceOutput = 0;
+    baseScaler = 0;
 }
 
 
@@ -38,6 +44,11 @@ tranTechnology::tranTechnology() {
 void tranTechnology::clear(){
     technology::clear();
     intensity = 1;
+    techChangeCumm = 1;
+    loadFactor = 1;
+    vehicleOutput = 0;
+    serviceOutput = 0;
+    baseScaler = 0;
 }
 
 
@@ -47,19 +58,64 @@ void tranTechnology::XMLDerivedClassParse( const string nodeName, const DOMNode*
     if( nodeName == "intensity" ){
         intensity = XMLHelper<double>::getValue( curr );
     }
+    else if( nodeName == "loadFactor" ){
+        loadFactor = XMLHelper<double>::getValue( curr );
+    }
+    else if( nodeName == "serviceoutput" ){
+        serviceOutput = XMLHelper<double>::getValue( curr );
+    }
     else {
         cout << "Unrecognized text string: " << nodeName << " found while parsing tranTechnology." << endl;
     }
 }
 
+//! define technology fuel cost and total cost
+void tranTechnology::calcCost( const string regionName, const int per ) 
+{
+    Marketplace* marketplace = scenario->getMarketplace();
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int timestep = modeltime->gettimestep(per);
+
+    double fuelprice = marketplace->showprice(fuelname,regionName,per);
+    
+    if(per>=2) {
+        techChangeCumm = pow(1+techchange,timestep*(per-1));
+    }
+    // fMultiplier and pMultiplier are initialized to 1 for those not read in
+    // 75$/GJ 
+    const double CVRT90 = 2.212; // 1975 $ to 1990 $
+    const double JperBTU = 1055.0; // 1055 Joules per BTU
+    
+    fuelcost = ( (fuelprice * fMultiplier) + carbontaxgj ) * intensity/techChangeCumm
+             * JperBTU/(1.0E9)*CVRT90;
+    techcost = ( fuelcost + necost ) * pMultiplier;
+}
+
+
+//! calculate technology shares
+void tranTechnology::calcShare( const string regionName, const int per)
+{
+    // original technology share calculation
+    share = shrwts * pow(techcost,lexp);
+
+    // problem with this code because baseScalar is recalculated every period
+/*    if(per==0 || per==1) {
+        baseScaler = serviceOutput / shrwts * pow(techcost, -lexp);
+    }
+    // for base period share = serviceOutput
+    share = baseScaler * shrwts * pow(techcost,lexp);
+*/
+}
 
 //! Calculates fuel input and tranTechnology output.
 /*! Adds demands for fuels and ghg emissions to markets in the marketplace
 */
 void tranTechnology::production(const string& regionName,const string& prodName,
-                                double dmd,const int per) {
+                                double dmd, const int per) {
     string hydro = "hydro";
     Marketplace* marketplace = scenario->getMarketplace();
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int timestep = modeltime->gettimestep(per);
     
     // dmd is total subsector demand
     if(name != hydro) {
@@ -71,13 +127,15 @@ void tranTechnology::production(const string& regionName,const string& prodName,
     }
     
     // eliminated renewable branch for input calc, since code was the same. sjs
-    // non renewable technologies previously had
-    //input = output/eff/pow(1+techchange,timestep);
     // for transportation technology use intensity instead of efficiency
     // convert from million Btu to EJ
+    vehicleOutput = output/loadFactor;
     const double ECONV = 1.055e-9;
-    input = output*intensity*ECONV;
-	   
+
+    //intensity /= pow(1+techchange,timestep*per);
+    input = vehicleOutput*intensity*ECONV/techChangeCumm;
+    //input = vehicleOutput*intensity*ECONV;
+   
     if (input < 0) {
         cerr << "ERROR: Output value < 0 for tranTechnology " << name << endl;
     }
@@ -96,5 +154,11 @@ void tranTechnology::production(const string& regionName,const string& prodName,
         // set emissions as demand side of gas market
         marketplace->setdemand(ghg[i]->getname(),regionName,ghg[i]->getemission(),per);		
     }
+}
+
+
+//! return fuel intensity
+double tranTechnology::getIntensity(const int per) const {
+    return intensity/techChangeCumm;
 }
 

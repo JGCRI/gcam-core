@@ -37,7 +37,8 @@ class technology
 protected:
     int year; //!< period year or vintage
     double shrwts; //!< logit share weight
-    double eff; //!< energy intensity
+    double eff; //!< energy efficiency
+    double intensity; //!< energy intensity (1/eff)
     double necost; //!< all non-fuel costs (levelized)
     double fuelcost; //!< fuel cost only
     double techcost; //!< total cost of technology
@@ -90,9 +91,9 @@ public:
     // sets ghg tax to technologies
     void addghgtax( const string ghgname, const string regionName, const int per ); 
     // calculates fuel and total cost of technology
-    void calcCost( const string regionName, const int per); 
+    virtual void calcCost( const string regionName, const int per); 
     // uses logit function to calculate technology share
-    void calcShare( const string regionName, const int per); 
+    virtual void calcShare( const string regionName, const int per); 
     void normShare(double sum); // normalize technology share
     void calcFixedSupply(int per); // calculate fixed supply
     void resetFixedSupply(int per); // reset fixed supply to max value
@@ -107,6 +108,7 @@ public:
     string getName() const; // return technology name
     string getFName() const; // return fuel name
     double getEff() const; // return fuel efficiency
+    virtual double getIntensity(const int per) const; // return fuel intensity
     double getShare() const; // return normalized share
     bool getCalibrationStatus( ) const; // return true if technology has calibration value
     void scaleCalibrationInput( const double scaleFactor ); // scale calibration value

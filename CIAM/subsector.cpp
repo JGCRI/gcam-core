@@ -132,7 +132,7 @@ void subsector::XMLParse( const DOMNode* node ) {
         nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         
         if( nodeName == "#text" ) {
-           continue;
+            continue;
         }
         else if( nodeName == "capacitylimit" ){
             XMLHelper<double>::insertValueIntoVector( curr, capLimit, modeltime );
@@ -162,59 +162,59 @@ void subsector::XMLParse( const DOMNode* node ) {
         else if( nodeName == "technology" ){
             map<string,int>::const_iterator techMapIter = techNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
             if( techMapIter != techNameMap.end() ) {
-               // technology already exists.
+                // technology already exists.
                 childNodeList = curr->getChildNodes();
-            
-               // loop through technologies children.
-               for( int j = 0; j < childNodeList->getLength(); j++ ){
                 
-                  currChild = childNodeList->item( j );
-                  childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-                  
-                  if( childNodeName == "#text" ){
-                     continue;
-                  }
-                  else if( childNodeName == "period" ){
-                     int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
-                     techs[ techMapIter->second ][ thisPeriod ]->XMLParse( currChild );
-                  }
-               }
+                // loop through technologies children.
+                for( int j = 0; j < childNodeList->getLength(); j++ ){
+                    
+                    currChild = childNodeList->item( j );
+                    childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+                    
+                    if( childNodeName == "#text" ){
+                        continue;
+                    }
+                    else if( childNodeName == "period" ){
+                        int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
+                        techs[ techMapIter->second ][ thisPeriod ]->XMLParse( currChild );
+                    }
+                }
             }
             
             else {
-               // create a new vector of techs.
-               childNodeList = curr->getChildNodes();
-            
-               // loop through technologies children.
-               for( int j = 0; j < childNodeList->getLength(); j++ ){
+                // create a new vector of techs.
+                childNodeList = curr->getChildNodes();
                 
-                  currChild = childNodeList->item( j );
-                  childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-                
-                  if( childNodeName == "period" ){
-                     tempTech = new technology();
-                     tempTech->XMLParse( currChild );
-                     int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
-                     techVec[ thisPeriod ] = tempTech;
+                // loop through technologies children.
+                for( int j = 0; j < childNodeList->getLength(); j++ ){
                     
-                    // boolean to fill out the readin value to all the periods
-                    const bool fillout = XMLHelper<bool>::getAttr( currChild, "fillout" );
-
-                    // copy technology object for one period to all the periods
-                    if (fillout) {
-                        // will not do if period is already last period or maxperiod
-                        for (int i = thisPeriod+1; i < maxperiod; i++) {
-                            techVec[ i ] = new technology( *techVec[ thisPeriod ] );
-                            techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
+                    currChild = childNodeList->item( j );
+                    childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+                    
+                    if( childNodeName == "period" ){
+                        tempTech = new technology();
+                        tempTech->XMLParse( currChild );
+                        int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
+                        techVec[ thisPeriod ] = tempTech;
+                        
+                        // boolean to fill out the readin value to all the periods
+                        const bool fillout = XMLHelper<bool>::getAttr( currChild, "fillout" );
+                        
+                        // copy technology object for one period to all the periods
+                        if (fillout) {
+                            // will not do if period is already last period or maxperiod
+                            for (int i = thisPeriod+1; i < maxperiod; i++) {
+                                techVec[ i ] = new technology( *techVec[ thisPeriod ] );
+                                techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
+                            }
                         }
+                        
                     }
-
-                  }
-               }
-               techs.push_back( techVec );
-               techNameMap[ techVec[ 0 ]->getName() ] = techs.size() - 1;
-               techVec.clear();
-               techVec.resize( modeltime->getmaxper(), 0 );
+                }
+                techs.push_back( techVec );
+                techNameMap[ techVec[ 0 ]->getName() ] = techs.size() - 1;
+                techVec.clear();
+                techVec.resize( modeltime->getmaxper(), 0 );
             }
         }
         // parsed derived classes
@@ -229,17 +229,17 @@ void subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr
     // do nothing
     // defining method here even though it does nothing so that we do not
     // create an abstract class.
-   cout << "Unrecognized text string: " << nodeName << " found while parsing Subsector." << endl;
+    cout << "Unrecognized text string: " << nodeName << " found while parsing Subsector." << endl;
 }
 
 //! Complete the initialization.
 void subsector::completeInit() {
-   // Initialize any arrays that have non-zero default value
+    // Initialize any arrays that have non-zero default value
     notech = techs.size();
-   
+    
     for ( vector< vector< technology* > >::iterator outerIter = techs.begin(); outerIter != techs.end(); outerIter++ ) {
         for( vector< technology* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
-           assert( *innerIter ); // Make sure the technology has been defined.
+            assert( *innerIter ); // Make sure the technology has been defined.
             ( *innerIter )->completeInit();
         }
     }
@@ -285,10 +285,10 @@ void subsector::toXML( ostream& out ) const {
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
         Tabs::writeTabs( out );
-
+        
         // If we have an empty vector this won't work, but that should never happen.
         assert( j->begin() != j->end() );
-
+        
         out << "<technology name=\"" << ( * ( j->begin() ) )->getName() << "\">" << endl;
         
         Tabs::increaseIndent();
@@ -315,7 +315,7 @@ void subsector::toXML( ostream& out ) const {
 
 //! XML output for viewing.
 void subsector::toOutputXML( ostream& out ) const {
-       const Modeltime* modeltime = scenario->getModeltime();
+    const Modeltime* modeltime = scenario->getModeltime();
     int i;
     
     // write the beginning tag.
@@ -353,10 +353,10 @@ void subsector::toOutputXML( ostream& out ) const {
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
         Tabs::writeTabs( out );
-
+        
         // If we have an empty vector this won't work, but that should never happen.
         assert( j->begin() != j->end() );
-
+        
         out << "<technology name=\"" << ( * ( j->begin() ) )->getName() << "\">" << endl;
         
         Tabs::increaseIndent();
@@ -563,24 +563,24 @@ void subsector::calcTechShares( const string& regionName, const int per ) {
 //! calculate subsector share numerator 
 void subsector::calcShare( const string& regionName, const int per, const double gnp_cap )
 {
-	
-     // call function to compute technology shares
-	subsector::calcTechShares(regionName, per);
-
-	// calculate and return subsector share; uses above price function
-	// calc_price() uses normalized technology shares calculated above
-	// Logit exponential should not be zero
-
-	// compute subsector weighted average price of technologies
-	subsector::calcPrice( regionName,per);
-	
-	// subsector logit exponential
-	if(lexp[per]==0) cerr << "SubSec Logit Exponential is 0." << endl;
-
-	if(subsectorprice[per]==0) {
-		share[per] = 0;
-	}
-       else {
+    
+    // call function to compute technology shares
+    subsector::calcTechShares(regionName, per);
+    
+    // calculate and return subsector share; uses above price function
+    // calc_price() uses normalized technology shares calculated above
+    // Logit exponential should not be zero
+    
+    // compute subsector weighted average price of technologies
+    subsector::calcPrice( regionName,per);
+    
+    // subsector logit exponential
+    if(lexp[per]==0) cerr << "SubSec Logit Exponential is 0." << endl;
+    
+    if(subsectorprice[per]==0) {
+        share[per] = 0;
+    }
+    else {
         // this logic doesn't work now, but does no harm
         if (fuelPrefElasticity.empty()) { // supply subsector
             share[per] = shrwts[per]*pow(subsectorprice[per],lexp[per]);
@@ -643,21 +643,21 @@ void subsector::limitShares( const double multiplier, const int per) {
 
 //! Return the total exogenously fixed technology output
 /*! Since the calls below set output, this call must be done before
-    \todo elimiate calcFixedSupply calls below
-    */
+\todo elimiate calcFixedSupply calls below
+*/
 double subsector::getFixedSupply( const int per ) const {
-	double fixedOutput = 0;
-	for ( int i=0 ;i<notech; i++ ) {
-		fixedOutput += techs[i][per]->getFixedSupply();
-	}
-	return fixedOutput;
+    double fixedOutput = 0;
+    for ( int i=0 ;i<notech; i++ ) {
+        fixedOutput += techs[i][per]->getFixedSupply();
+    }
+    return fixedOutput;
 }
 
 //! Reset fixed supply for each technology
 void subsector::resetFixedSupply( const int per ) {
-	for ( int i=0 ;i<notech; i++ ) {
-		techs[ i ][per]->resetFixedSupply(per); // eliminate any previous down-scaleing
- 	}
+    for ( int i=0 ;i<notech; i++ ) {
+        techs[ i ][per]->resetFixedSupply(per); // eliminate any previous down-scaleing
+    }
 }
 
 //! Scale down fixed supply if the total fixed production is greater than the actual demand 
@@ -680,7 +680,7 @@ void subsector::shareWeightScale( const int period ) {
     // I don't think we can arbitrarily set a year here without knowing what
     // the input data is.  You use 2050 because shareWeights are the same after that.
     // Also this does not allow flexibility in the time step.
-
+    
     // if previous period was calibrated, then adjust future shares
     if ( period > modeltime->getyr_to_per( 1990 ) ) {
         if ( calibrationStatus[ period - 1 ] ) {
@@ -732,26 +732,26 @@ void subsector::adjShares( const double dmd, double shareRatio,
                 share[per] = sumSubsectFixedSupply/dmd; 
             }
             else { // no fixed share if no demand
-				share[per] = 0; 
-			}
-		}
-		else {	// This subsector does not have fixed supply
-			if (dmd > 0) {
-				share[per] = share[per] * shareRatio; 
-			}
-			else {
-				share[per] = 0; // Maybe not correct
-			}  
-		} 
-	}
-	
-	// then adjust technology shares to be consistent
-	subsecdmd = share[per]*dmd; // share is subsector level
-	for (int j=0;j<notech;j++) {
-		// adjust tech shares 
-      // TEMP sjs -- see what happens if remove this
-		techs[j][per]->adjShares(subsecdmd, sumSubsectFixedSupply, varShareTot, per);
-	}
+                share[per] = 0; 
+            }
+        }
+        else {	// This subsector does not have fixed supply
+            if (dmd > 0) {
+                share[per] = share[per] * shareRatio; 
+            }
+            else {
+                share[per] = 0; // Maybe not correct
+            }  
+        } 
+    }
+    
+    // then adjust technology shares to be consistent
+    subsecdmd = share[per]*dmd; // share is subsector level
+    for (int j=0;j<notech;j++) {
+        // adjust tech shares 
+        // TEMP sjs -- see what happens if remove this
+        techs[j][per]->adjShares(subsecdmd, sumSubsectFixedSupply, varShareTot, per);
+    }
 }
 
 //! sets demand to output and output
@@ -760,23 +760,23 @@ void subsector::adjShares( const double dmd, double shareRatio,
 *  See explanation for sector::setoutput. 
 */
 void subsector::setoutput( const string& regionName, const string& prodName, const double dmd, const int per) {
-	int i=0;
-	input[per] = 0; // initialize subsector total fuel input 
-	carbontaxpaid[per] = 0; // initialize subsector total carbon taxes paid 
-   
-   // output is in service unit when called from demand sectors
-   double subsecdmd = share[per]*dmd; // share is subsector level
-
-   for ( i=0; i<notech; i++ ) {
-		// calculate technology output and fuel input from subsector output
-		techs[i][per]->production( regionName, prodName, subsecdmd, per );
-
-		// total energy input into subsector, must call after tech production
-		input[per] += techs[i][per]->getInput();
-		// sum total carbon tax paid for subsector
-		carbontaxpaid[per] += techs[i][per]->getCarbontaxpaid();
-	}
-   
+    int i=0;
+    input[per] = 0; // initialize subsector total fuel input 
+    carbontaxpaid[per] = 0; // initialize subsector total carbon taxes paid 
+    
+    // output is in service unit when called from demand sectors
+    double subsecdmd = share[per]*dmd; // share is subsector level
+    
+    for ( i=0; i<notech; i++ ) {
+        // calculate technology output and fuel input from subsector output
+        techs[i][per]->production( regionName, prodName, subsecdmd, per );
+        
+        // total energy input into subsector, must call after tech production
+        input[per] += techs[i][per]->getInput();
+        // sum total carbon tax paid for subsector
+        carbontaxpaid[per] += techs[i][per]->getCarbontaxpaid();
+    }
+    
 }
 
 //! Adjusts share weights and subsector demand to be consistant with calibration value
@@ -810,7 +810,7 @@ void subsector::adjustForCalibration( double sectorDemand, double totalFixedSupp
     if ( shrwts[ period ]  == 0 && ( calOutputSubsect > 0 ) ) {
         shrwts[ period ]  = 1;
     }
-
+    
    subSectorDemand = share[ period ] * sectorDemand;
    if ( subSectorDemand > 0 ) {
       shareScaleValue = calOutputSubsect / subSectorDemand;
@@ -823,11 +823,11 @@ void subsector::adjustForCalibration( double sectorDemand, double totalFixedSupp
      shrwts[ period ] = 1;
    }
 
- }
+}
   
 //! returns total calibrated output values
 double subsector::getTotalCalOutputs( const int per ) const {
-	double sumCalValues = 0;
+    double sumCalValues = 0;
    Configuration* conf = Configuration::getInstance();
    bool debugChecking = conf->getBool( "debugChecking" );
    debugChecking = true;
@@ -884,9 +884,9 @@ bool subsector::allOuputFixed( const int per ) const {
 
 //! scale calibration values
 void subsector::scaleCalibrationInput( const int per, const double scaleFactor ) {
-   for ( int i=0; i<notech; i++ ) {
-	   techs[ i ][ per ]->scaleCalibrationInput( scaleFactor );
-	}
+    for ( int i=0; i<notech; i++ ) {
+        techs[ i ][ per ]->scaleCalibrationInput( scaleFactor );
+    }
 }
 
 //! calculates fuel input and subsector output
@@ -1046,17 +1046,20 @@ void subsector::MCoutputA( const string& regname, const string& secname ) const 
         str1 += "_tech";
         str2 = techs[i][mm]->getName();
         // technology non-energy cost
-        for (m=0;m<maxper;m++)
+        for (m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getNecost();
+        }
         dboutput4(regname,"Price NE Cost",secname,str2,"75$/GJ",temp);
         // secondary energy and price output by tech
         // output or demand for each technology
-        for (m=0;m<maxper;m++)
+        for (m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getOutput();
+        }
         dboutput4(regname,"Secondary Energy Prod",str1,str2,"EJ",temp);
         // technology cost
-        for (m=0;m<maxper;m++)
+        for (m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getTechcost()*cvrt90;
+        }
         dboutput4(regname,"Price",str1,str2,"90$/GJ",temp);
     }
 }
@@ -1074,11 +1077,13 @@ void subsector::MCoutputB( const string& regname, const string& secname ) const 
     vector<double> temp(maxper);
     
     // total subsector output
-    dboutput4(regname,"End-Use Service",secname+"_bySubsec",name,"Ser Unit",output);
+    dboutput4(regname,"End-Use Service",secname+" by Subsec",name,"Ser Unit",output);
+    dboutput4(regname,"End-Use Service",secname+" "+name,"zTotal","Ser Unit",output);
     // subsector price
-    dboutput4(regname,"Price",secname,name,"75$/Ser",subsectorprice);
+    dboutput4(regname,"Price",secname,name+" Tot Cost","75$/Ser",subsectorprice);
     
-    string tssname = "tech_"; // tempory subsector name
+ 
+    string tssname = "tech "; // tempory subsector name
     string str; // tempory string
     // do for all technologies in the subsector
     for (i=0;i<notech;i++) {
@@ -1086,22 +1091,26 @@ void subsector::MCoutputB( const string& regname, const string& secname ) const 
         str = techs[i][mm]->getName();
         if(notech>1) {  // write out if more than one technology
             // output or demand for each technology
-            for (m=0;m<maxper;m++)
+            for (m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getOutput();
-            dboutput4(regname,"End-Use Service",secname+"_"+name,str,"Ser Unit",temp);
-            // technology cost
-            for (m=0;m<maxper;m++)
+            }
+            dboutput4(regname,"End-Use Service",secname+" "+name,str,"Ser Unit",temp);
+            // total technology cost
+            for (m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getTechcost();
-            dboutput4(regname,"Price",secname,str,"75$/Ser",temp);
+            }
+            dboutput4(regname,"Price",secname+" "+name,str,"75$/Ser",temp);
+           // technology fuel cost
+            for (m=0;m<maxper;m++) {
+                temp[m] = techs[i][m]->getFuelcost();
+            }
+            dboutput4(regname,"Price",secname+" "+name+" Fuel Cost",str,"75$/Ser",temp);
+            // technology non-energy cost
+            for (m=0;m<maxper;m++) {
+                temp[m] = techs[i][m]->getNecost();
+            }
+            dboutput4(regname,"Price",secname+" "+name+" NE Cost",str,"75$/Ser",temp);
         }
-        // technology fuel cost
-        for (m=0;m<maxper;m++)
-            temp[m] = techs[i][m]->getFuelcost();
-        dboutput4(regname,"Price",secname+" Fuel Cost",str,"75$/Ser",temp);
-        // technology non-energy cost
-        for (m=0;m<maxper;m++)
-            temp[m] = techs[i][m]->getNecost();
-        dboutput4(regname,"Price",secname+" NE Cost",str,"75$/Ser",temp);
     }
 }
 
@@ -1163,19 +1172,19 @@ void subsector::MCoutputC( const string& regname, const string& secname ) const 
             // technology ghg emissions, get gases for per 
             // all gases not just CO2
             map<string,double> temissmap = techs[i][0]->getemissmap();
-/*            for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
-                for (m=0;m<maxper;m++) {
-                    temp[m] = techs[i][m]->get_emissmap_second(gmap->first);
-                }
-                str = "Tech: "; // subsector heading
-                str += secname; // sector name
-                str += "_";
-                str += name; // subsector name
-                str += "_";
-                str += techs[i][mm]->getName(); // technology name
-                dboutput4(regname,"Emissions",str,gmap->first,"MTC",temp);
+            /*            for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
+            for (m=0;m<maxper;m++) {
+            temp[m] = techs[i][m]->get_emissmap_second(gmap->first);
             }
- */           // technology share
+            str = "Tech: "; // subsector heading
+            str += secname; // sector name
+            str += "_";
+            str += name; // subsector name
+            str += "_";
+            str += techs[i][mm]->getName(); // technology name
+            dboutput4(regname,"Emissions",str,gmap->first,"MTC",temp);
+            }
+            */           // technology share
             for (m=0;m<maxper;m++)
                 temp[m] = techs[i][m]->getShare();
             dboutput4(regname,"Tech Share",secname,str,"%",temp);
@@ -1203,13 +1212,19 @@ void subsector::MCoutputC( const string& regname, const string& secname ) const 
         dboutput4(regname,"Fuel Consumption",secname,fmap->first,"EJ",temp);
         }
         */		
-        
+        // fuel consumption by subsector
+        dboutput4(regname,"Fuel Consumption",secname+" by Subsec",name,"EJ",input);
         
         // for 1 or more technologies
         // technology efficiency
-        for (m=0;m<maxper;m++)
+        for (m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getEff();
-        dboutput4(regname,"Tech Efficiency",secname,str,"%",temp);
+        }
+        dboutput4(regname,"Tech Efficiency",secname+" "+name,str,"%",temp);
+        for (m=0;m<maxper;m++) {
+            temp[m] = techs[i][m]->getIntensity(m);
+        }
+        dboutput4(regname,"Tech Intensity",secname+" "+name,str,"In/Out",temp);
     }
 }
 
@@ -1243,13 +1258,13 @@ void subsector::indemission(const int per, const vector<Emcoef_ind>& emcoef_ind 
 
 //! returns subsector primary energy consumption
 double subsector::showpe_cons( const int per ) {
-
+    
     //! \pre per is less than or equal to max period.
     assert( per <= scenario->getModeltime()->getmaxper() );
     const vector<string> primaryFuelList = scenario->getWorld()->getPrimaryFuelList();
     pe_cons[per] = 0;
     for ( int i=0 ;i<notech; i++ ) {
-       if( std::find( primaryFuelList.begin(), primaryFuelList.end(), techs[i][per]->getFName() ) != primaryFuelList.end() ) {
+        if( std::find( primaryFuelList.begin(), primaryFuelList.end(), techs[i][per]->getFName() ) != primaryFuelList.end() ) {
             pe_cons[per] += techs[i][per]->getInput();
         }
     }

@@ -60,6 +60,7 @@ void technology::copy( const technology& techIn ) {
     year = techIn.year;
     shrwts = techIn.shrwts;
     eff = techIn.eff; 
+    intensity = techIn.intensity; 
     necost = techIn.necost;
     fuelcost = techIn.fuelcost;
     techcost = techIn.techcost;
@@ -119,6 +120,7 @@ void technology::initElementalMembers(){
     year = 0;
     shrwts = 1; // initialied to 1 
     eff = 1; // initialied to 1 
+    intensity = 1; // initialied to 1 
     fuelcost = 0;
     necost = 0;
     techcost = 0;
@@ -663,6 +665,11 @@ double technology::getEff() const {
     return eff;
 }
 
+//! return fuel intensity
+double technology::getIntensity(const int per) const {
+    return intensity;
+}
+
 //! return technology share
 double technology::getShare() const {
     return share;
@@ -778,6 +785,8 @@ double technology::getlexp()  const {
 void technology::setYear( const int yearIn ) {
     year = yearIn;
 }
+
+
 
 //  ******* method definition for hydro_tech
 
