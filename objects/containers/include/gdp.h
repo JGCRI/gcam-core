@@ -39,6 +39,8 @@ private:
 	std::vector<double> gdpValue; //!< approximate regional gross domestic product in constant dollars, not adjusted for energy price
 	std::vector<double> gdpPerCapita; //!< regional gross domestic product per capita in constant dollars ($)
 	std::vector<double> gdpValueAdjusted; //!< regional gross domestic product adjusted for energy price feedback
+	std::vector<double> gdpValueNotAdjusted; //!< regional gross domestic product without any adjustments for energy price feedback
+	std::vector<double> gdpPerCapitaNotAdjusted; //!< regional GDP per cap without any adjustments for energy price feedback
 	std::vector<double> gdpValueAdjustedPPP; //!< regional adjusted GDP in PPP terms
 	std::vector<double> gdpPerCapitaAdjusted; //!< regional gross domestic product per capita in constant dollars ($)
 	std::vector<double> gdpPerCapitaAdjustedPPP; //!< regional gross domestic product per capita in constant dollars ($)
@@ -80,7 +82,10 @@ public:
 	double getGDP( const int period ) const;
 	double getApproxGDP( const int period ) const;
 	double getBestScaledGDPperCap( const int period ) const;
-};
+   double getGDPNotAdjusted( const int period ) const;
+   double getGDPPerCapitaNotAdjusted( const int period ) const;
+
+ };
 
 #endif // _GDP_H_
 

@@ -46,6 +46,9 @@ GDP::GDP() {
 	gdpPerCapitaAdjustedPPP.resize( maxper );
 	gdpAdjustedFlag.resize( maxper, false );
 	calibrationGDPs.resize( maxper );
+   gdpValueNotAdjusted.resize( maxper );
+   gdpPerCapitaNotAdjusted.resize( maxper );
+
 
 	EnergyGDPElas = 0;
 	PPPConversionFact = 1;
@@ -203,7 +206,13 @@ const std::string& GDP::getXMLNameStatic() {
 	return XML_NAME;
 }
 
-//! Initialize the labor force.
+/*! \brief Initialize labor force and the GDP without adjustements (needed for AgLU)
+*
+* This initialization function sets the labor force values and the time series for
+* unadjusted GDP.
+
+* \author Josh Lurz, Steve Smith
+*/
 void GDP::initData( const Population* regionalPop ){
 	const Modeltime* modeltime = scenario->getModeltime();
 	const int popmaxper = modeltime->getmaxpopdata();
@@ -211,6 +220,13 @@ void GDP::initData( const Population* regionalPop ){
 	for ( int i = 0; i < popmaxper; i++ ) {
 		laborForce[ i ] = regionalPop->getTotal(  i, true ) * laborForceParticipationPercent[ i ];
 	}
+   
+   for( int period = 0; period < modeltime->getmaxper(); ++period ){
+      double population = regionalPop->getTotal( period );
+      initialGDPcalc( period, population );
+      gdpValueNotAdjusted[ period ] = getApproxGDP( period );
+      gdpPerCapitaNotAdjusted[ period ] = gdpValueNotAdjusted[ period ] / population;
+   }
 }
 
 //! Create calibration markets
@@ -298,6 +314,8 @@ void GDP::dbOutput( const string& regionName ) const {
 *
 *  Routine calcuates GDPs without current period energy adjustment.
 *  The gdpValue and gdpPerCapita variables have values that are approximations to the current GDP,
+*  these use the adjusted GDP value from the previous period, 
+*  without adjusting for energy feedbacks in the current period
 *  the "adjusted" values contain the values as adjusted for energy (and ultimate any other) feedbacks.
 *
 * \author Steve Smith, Sonny Kim, Josh Lurz(?),
@@ -487,8 +505,29 @@ double GDP::getGDPperCap( const int period ) const {
 * \param period Model time period
 */
 double GDP::getApproxGDP( const int period ) const {
-
 	return gdpValue[ period ];
+}
+
+/*! Return GDP without any energy price adjustments for any period (in $1000's of dollars)
+*
+* This function is meant to be used by AgLU and any other routine that needs a stable GDP for future periods
+*
+* \author Steve Smith
+* \param period Model time period
+*/
+double GDP::getGDPNotAdjusted( const int period ) const {
+	return gdpValueNotAdjusted[ period ];
+}
+
+/*! Return GDP per capita without any energy price adjustments for any period (in $1000's of dollars)
+*
+* This function is meant to be used by AgLU and any other routine that needs a stable GDP for future periods
+*
+* \author Steve Smith
+* \param period Model time period
+*/
+double GDP::getGDPPerCapitaNotAdjusted( const int period ) const {
+	return gdpPerCapitaNotAdjusted[ period ];
 }
 
 /*! Return PPP-based GDP per capita (in $1000's of dollars)
