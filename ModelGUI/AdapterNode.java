@@ -77,4 +77,8 @@ public class AdapterNode {
     public String getName() {
         return node.getName();
     }
+    
+    public void setText(String text) {
+        node.setText(text);
+    }
 }
