@@ -675,7 +675,7 @@ public class ControlPanel extends javax.swing.JFrame {
         MapNode currMapPointer = rootMapNode.getDescendant(tempBox.getSelectedItem().toString());
         
         Vector names = new Vector();
-        if (index > 0 && attributeControls.size() > index-1) {
+        if (index > 1 && attributeControls.size() > index-1) {
             tempBox = (JComboBox)attributeControls.elementAt(index-1);
             if (tempBox != null) {
                 //String parentName = tempBox.getSelectedItem().toString();
@@ -870,6 +870,7 @@ public class ControlPanel extends javax.swing.JFrame {
         String regionName;
         Object[] regions = regionBox.getSelectedValues();
         currRootPointer = (AdapterNode)rootPointers.elementAt(0);
+        boolean timeInterval = false;
 
         //perform a bredth-first traversal of the tree looking for nodes that fit a path 
         //  described by the array of query and attribute controls
@@ -904,6 +905,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 if(nodeName.equals(finalNodeName)) {
                     //remember the name of the parent of the node whose value 
                     //  will be displayed in the left-side header
+
                     String lefterName = regionName + " " + currNode.toString();
                     String prevName;
                     if (!lefter.isEmpty()) {
@@ -922,7 +924,6 @@ public class ControlPanel extends javax.swing.JFrame {
                         int numPeriods = modelTime.getNumOfSteps();
                         for (int k = 0; k < numPeriods; k++) {
                             values.addElement(new AdapterNode());
-System.out.println("adding blank node (" + k);
                             
                             attribVal = modelTime.getYear(k);
                             if (header.isEmpty()) header.addElement(attribVal);
@@ -951,20 +952,32 @@ System.out.println("adding blank node (" + k);
 
                     } else {        //if parent of desired node(s) isn't "period"
 
-                        boolean timeInterval = false;
                         Integer lastYear = new Integer(modelTime.getStart());
                         Vector years = modelTime.getTimeIntervals();
                         Iterator yearIt = years.iterator();
                         
                         if (attribVal.equals(DEFAULT_PLURAL_STRING)) attribVal = "";
                         childNodes = currNode.getChildren(nodeName, attribVal);
+System.out.println("childNodes: " + childNodes);
                         Iterator it = childNodes.iterator();
 
+                        if (!it.hasNext()) {
+System.out.println("timeInterval = " + timeInterval);
+                            if (timeInterval) {
+                                int numPeriods = modelTime.getNumOfSteps();
+                                for (int k = 0; k < numPeriods; k++) {
+                                    values.addElement(new AdapterNode());
+                                }
+                            } else
+                                values.addElement(new AdapterNode());
+                        }
+                        
+                        timeInterval = false;
+                        
                         while (it.hasNext()) {
                             //timeInterval = false;
                             currNode = (AdapterNode)it.next();
                             if (showNames) {
-System.out.println("adding " + currNode.getAttributeValue("name"));
                                 values.addElement(currNode.getAttributeValue("name"));
                             } else {
                                 attribVal = currNode.getAttributeValue("year");
@@ -977,7 +990,6 @@ System.out.println("adding " + currNode.getAttributeValue("name"));
                                         if (header.isEmpty()) header.addElement(currYear.toString());
                                         else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
                                         values.addElement(new AdapterNode());
-System.out.println("adding blank node");
                                         currYear = (Integer)yearIt.next();
                                     }
                                     if (header.isEmpty()) header.addElement(currYear.toString());
@@ -989,7 +1001,6 @@ System.out.println("adding blank node");
                                 }
                                 
                                 values.addElement(currNode);  
-System.out.println("adding node " + currNode);
                             }
                         }
                         while (timeInterval && !lastYear.equals(new Integer(modelTime.getEnd()))) {
@@ -997,9 +1008,8 @@ System.out.println("adding node " + currNode);
                             if (header.isEmpty()) header.addElement(lastYear.toString());
                             else if (!header.contains(lastYear.toString())) header.addElement(lastYear.toString());
                             values.addElement(new AdapterNode());
-System.out.println("adding end blank node");
-                        }                            
-                    }
+                        }                          
+                    }                    
                 } else {    //current node is an intermediate step along the tree
                     if(attribVal.equals(DEFAULT_PLURAL_STRING)) {
                         //get all chidren and add to the queue for examination
@@ -1020,7 +1030,7 @@ System.out.println("adding end blank node");
             } //belongs to while (!queue.isEmpty())
         } //belongs to for each region
        
-System.out.println("values  = " + values.size() + " header = " + header.size() + " lefter = " + lefter.size());
+//System.out.println("values  = " + values.size() + " header = " + header.size() + " lefter = " + lefter.size());
         
         TableViewModel model = new TableViewModel(values, header, lefter, showNames);
         table = new JTable(model);
@@ -1167,7 +1177,6 @@ System.out.println("values  = " + values.size() + " header = " + header.size() +
             newNode.setText(value);
         }
         
-        //AdapterNode parent = (AdapterNode)selectedPath.getLastPathComponent();
         JDomToTreeModelAdapter model = (JDomToTreeModelAdapter)tree.getModel();
         model.insertNodeInto(newNode, selectedPath, 0);
     }

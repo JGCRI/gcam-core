@@ -105,7 +105,6 @@ public class JDomToTreeModelAdapter implements javax.swing.tree.TreeModel { //ex
         int[] arr1 = {parent.addChild(newChild)};
         AdapterNode[] arr2 = {newChild};
         fireTreeNodesInserted(new TreeModelEvent(this, parentPath, arr1, arr2));
-        System.out.println("all done...?");
     }
     
     public void fireTreeNodesChanged( TreeModelEvent e ) {
