@@ -25,17 +25,7 @@
 ! Option added to use deforestation emissions as read-in instead of AgLU version (above).  sjs - 02/02
 	IF (UserDeforestEm .eq. 1) AGPCO2(2:NM) = DeForest(2:NM)
 
-!	pick out the 8 high gwp emissions that magicc requires from the 
-!	ones read into HGWPREAD
-	HGWPMAG(1,2:NM) = SUM(HGWPREAD(3,:,2:NM),DIM=1) !CF4
-	HGWPMAG(2,2:NM) = SUM(HGWPREAD(1,:,2:NM),DIM=1) !C2F6
-	HGWPMAG(3,2:NM) = SUM(HGWPREAD(4,:,2:NM),DIM=1) !HFC125
-	HGWPMAG(4,2:NM) = SUM(HGWPREAD(5,:,2:NM),DIM=1) !HFC134a
-	HGWPMAG(5,2:NM) = SUM(HGWPREAD(6,:,2:NM),DIM=1) !HFC143a
-	HGWPMAG(6,2:NM) = SUM(HGWPREAD(8,:,2:NM),DIM=1) !HFC227ea
-	HGWPMAG(7,2:NM) = SUM(HGWPREAD(11,:,2:NM),DIM=1)!HFC245ca
-	HGWPMAG(8,2:NM) = SUM(HGWPREAD(14,:,2:NM),DIM=1)!SF6
-
+	
     NPoints = NM-1+3	!	+3 for 2100, 2150, & 2290
     IF (Nper .le. NM) NPoints = NPer-1
 
@@ -57,6 +47,42 @@ END IF
 
     NLoop = Min(Nper,NM)
 ! Write emissions loop	
+
+    if (1=2) then	! HGWP's read in
+	!	pick out the 8 high gwp emissions that magicc requires from the 
+	!	ones read into HGWPREAD
+		HGWPMAG(1,2:NM) = SUM(HGWPREAD(3,:,2:NM),DIM=1) !CF4
+		HGWPMAG(2,2:NM) = SUM(HGWPREAD(1,:,2:NM),DIM=1) !C2F6
+		HGWPMAG(3,2:NM) = SUM(HGWPREAD(4,:,2:NM),DIM=1) !HFC125
+		HGWPMAG(4,2:NM) = SUM(HGWPREAD(5,:,2:NM),DIM=1) !HFC134a
+		HGWPMAG(5,2:NM) = SUM(HGWPREAD(6,:,2:NM),DIM=1) !HFC143a
+		HGWPMAG(6,2:NM) = SUM(HGWPREAD(8,:,2:NM),DIM=1) !HFC227ea
+		HGWPMAG(7,2:NM) = SUM(HGWPREAD(11,:,2:NM),DIM=1)!HFC245ca
+		HGWPMAG(8,2:NM) = SUM(HGWPREAD(14,:,2:NM),DIM=1)!SF6
+	else	! Calculated by the model
+	
+	! Need to be the same as in Allothergases
+	IH245 = 10	! HFC245fa equiv
+	IH134 = 11	! HFC134a equiv
+	IH125 = 12	! HFC125 equiv (including HFC227ea)
+	IH143 = 13	! HFC143a equiv
+	IHSF6 = 14	! SF6 equiv
+	IHC2F6 = 15	! C2F6 equiv
+	IHCF4 = 16	! CF4 equiv
+		for MM = 2, NLoop
+			HGWPMAG(1,MM) = SUM(OGEMISS(IHCF4,:,:,MM)) !CF4
+			HGWPMAG(2,MM) = SUM(OGEMISS(IHC2F6,:,:,MM)) !C2F6
+			HGWPMAG(3,MM) = SUM(OGEMISS(IH125,:,:,MM)) !HFC125
+			HGWPMAG(4,MM) = SUM(OGEMISS(IH134,:,:,MM)) !HFC134a
+			HGWPMAG(5,MM) = SUM(OGEMISS(IH143,:,:,MM)) !HFC143a
+			HGWPMAG(6,MM) = 0.0 !HFC227ea
+			! convert to HFC245ca since this is what MAGICC expects
+			HGWPMAG(7,MM) = SUM(OGEMISS(IH245,:,:,MM)) * 640/basegwp(IH245) !HFC245ca
+			HGWPMAG(8,MM) = SUM(OGEMISS(IHSF6,:,:,MM)) !SF6
+		end do
+	end if
+	
+
 	DO MM = 2, NLoop
 
 ! Calcuate adjustments due to standardization, if used.
