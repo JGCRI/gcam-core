@@ -37,6 +37,7 @@ public:
     *
     * This method is inherited from by derived class if they which to add any additional information to the printout of the class.
     * \param out Output stream to print to.
+    * \param tabs A tabs object responsible for printing the correct number of tabs. 
     */ 
     virtual void derivedToDebugXML( std::ostream& out, Tabs* tabs ) const = 0;
     void addRegion( const std::string& regionNameIn );

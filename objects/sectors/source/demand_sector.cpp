@@ -181,6 +181,7 @@ void DemandSector::toXML( ostream& out, Tabs* tabs ) const {
 *
 * \author Steve Smith, Josh Lurz
 * \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void DemandSector::toXMLDerivedClass( ostream& out, Tabs* tabs ) const {  
     
@@ -316,7 +317,6 @@ void DemandSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) cons
 * Sets up the appropriate market within the marketplace for this sector. Note that the type of market is NORMAL -- signifying that this market is a normal market that is solved (if necessary).
 *
 * \author Sonny Kim, Josh Lurz, Steve Smith
-* \param regionName region name
 */
 void DemandSector::setMarket() {
     Marketplace* marketplace = scenario->getMarketplace();
@@ -333,8 +333,6 @@ void DemandSector::setMarket() {
 * \brief  Calculate subsector shares, adjusting for capacity limits.
 
 * This routine calls subsector::calcShare for each subsector, which calculated an unnormalized share, and then calls normShare to normalize the shares for each subsector.
-
-* \param regionName Region name
 * \param period model period
 * \param gnp_cap GDP per capita (scaled to base year)
 
@@ -483,7 +481,6 @@ void DemandSector::calc_pElasticity(int period) {
 * \author Sonny Kim
 * \param gnp GNP (relative or absolute?)
 * \param gnp_cap GDP per capita, relative to base year
-* \param regionName region name
 * \param period Model period
 * \todo Sonny to add more to this description if necessary
 * \pre Sector price attribute must have been previously calculated and set (via calcPrice)

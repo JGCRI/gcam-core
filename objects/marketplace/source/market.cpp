@@ -54,6 +54,7 @@ Market::~Market() {
 *
 * \param period Model period for which to print information.
 * \param out Output stream to print to.
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    // write the beginning tag.

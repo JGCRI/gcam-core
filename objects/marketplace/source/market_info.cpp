@@ -32,6 +32,7 @@ MarketInfo::~MarketInfo(){
 * It prints the current state of all internal variables.
 *
 * \param out Output stream to print to.
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void MarketInfo::toDebugXML( ostream& out, Tabs* tabs ) const {
    // write the beginning tag.

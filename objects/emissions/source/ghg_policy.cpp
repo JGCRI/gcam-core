@@ -56,7 +56,7 @@ void GHGPolicy::setEmission( const double emission, const int period ) {
 }
 
 /*! \brief Create a market for this GHG policy.
-* \detailed This function initializes a ghg market for the policy.
+* \details This function initializes a ghg market for the policy.
 * GHG markets are created for both constraint and fixed tax policies.
 * In the fixed tax policy, market prices are set to the fixed taxes, but
 * the markets are not solved.  Also for the fixed tax policy, if the market name
@@ -84,7 +84,7 @@ void GHGPolicy::setMarket( const string& regionName ) {
 }
 
 /*! \brief Add the allowed amount of the GHG to the market created for it.
-* \detailed This function will add the amount specified in the read in constraint
+* \details This function will add the amount specified in the read in constraint
 * to the supply for the specific greenhouse gas within the market. If this policy
 * is a fixed tax, the market will not be solved the amount add here has no effect, 
 * although it should be zero. 
@@ -99,7 +99,7 @@ void GHGPolicy::addGHGSupply( const string& regionName, const int period ) const
 }
 
 /*! \brief Convert a policy from a constraint based policy to a fixed tax policy.
-* \detailed This function resets a market related to a ghg policy to a fixed tax 
+* \details This function resets a market related to a ghg policy to a fixed tax 
 * policy market. This means the market is no longer solved, and taxes must be passed
 * into it. The tax is initialized to zero for all periods. 
 * This function is primarily used to create a carbon mitigation cost curve. 
@@ -129,11 +129,11 @@ void GHGPolicy::changePolicyToFixedTax( const string& regionName ) {
 }
 
 /*! \brief Set the tax for a fixed tax policy.
-* \detailed This function resets the fixed taxes for all periods to a given value.
+* \details This function resets the fixed taxes for all periods to a given value.
 * \warning This will only work if the market has been set not to solve.
 * \author Josh Lurz
 * \param regionName The region name this policy applies to.
-* \param tax The fixed tax to set for all periods.
+* \param taxes A vector of taxes to set for each period.
 */
 void GHGPolicy::setFixedTaxes( const string& regionName, const vector<double>& taxes ){
     

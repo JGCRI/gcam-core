@@ -213,7 +213,8 @@ void Marketplace::setRawPrice( const string& marketName, const string& goodName,
 *
 * \warning marketName is not the same as regionName.
 * \param goodName The good for which a raw demand is needed.
-* \param regionName The region for which a raw demand is needed.
+* \param marketName The market for which a raw demand is needed.
+* \param period The period for which to return the raw demand.
 * \return The market's raw demand.
 */
 double Marketplace::getRawDemand( const string& marketName, const string& goodName, const int period ) const {
@@ -821,6 +822,7 @@ void Marketplace::addToDemand( const string& goodName, const string& regionName,
 * \todo do something else about "renewable"
 * \param goodName The good for which a price is needed.
 * \param regionName The region for which a price is needed.
+* \param per The period to return the market price for. 
 * \return The market price.
 */
 double Marketplace::getPrice( const string& goodName, const string& regionName, const int per ) const {
@@ -888,6 +890,7 @@ double Marketplace::checkSupply( const string& goodName, const string& regionNam
 *
 * \param goodName The good for which a demand is needed.
 * \param regionName The region for which a demand is needed.
+* \param per The period to return the market demand for.
 * \return The market demand.
 */
 double Marketplace::getDemand(  const string& goodName, const string& regionName, const int per ) const {

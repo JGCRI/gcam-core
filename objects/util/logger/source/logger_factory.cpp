@@ -105,7 +105,7 @@ void LoggerFactory::cleanUp() {
 /*! \brief Writes out the LoggerFactory to an XML file. 
 *
 * \param out Output stream to write to.
-* \return void
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
 * \warning This method is NOT constant, because static methods are not allowed to be declared const.
 */
 void LoggerFactory::toDebugXML( ostream& out, Tabs* tabs ) {

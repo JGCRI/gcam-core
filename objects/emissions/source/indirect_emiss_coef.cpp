@@ -13,7 +13,7 @@
 using namespace std;
 
 /*! \brief Constructor
-* \detailed This constructor is the sole available constructor for the Emcoef_ind object.
+* \details This constructor is the sole available constructor for the Emcoef_ind object.
 * It takes the name of the sector it is linked to as an argument.
 * This is to prevent a Emcoef_ind from being created without a name.
 * \param sectorName The name of the sector the object is linked to.

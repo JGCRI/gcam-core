@@ -401,7 +401,7 @@ std::string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
 * \param value Value to print to XML.
 * \param elementName Name of the element.
 * \param out Stream to print to.
-* \param Tabs The number of tabs to print before the element. 
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
 * \param year Optional year value to print as an attribute.
 * \param name Optional name value to print as an attribute.
 */
@@ -434,7 +434,7 @@ void XMLWriteElement( const T value, const std::string elementName, std::ostream
 * the indent level after writing the tag so that subsequent elements are correctly indented. 
 * \param elementName Name of the element.
 * \param out Stream to print to.
-* \param Tabs The number of tabs to print before the element. 
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
 * \param year Optional year value to print as an attribute.
 * \param name Optional name value to print as an attribute.
 */
@@ -462,6 +462,7 @@ inline void XMLWriteOpeningTag( const std::string& elementName, std::ostream& ou
 * Closing tags cannot have attributes. 
 * \param elementName Name of the element.
 * \param out Stream to print to.
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 inline void XMLWriteClosingTag( const std::string& elementName, std::ostream& out, Tabs* tabs ) {
     
@@ -478,7 +479,7 @@ inline void XMLWriteClosingTag( const std::string& elementName, std::ostream& ou
 * \param value Value to print to XML.
 * \param elementName Name of the element.
 * \param out Stream to print to.
-* \param Tabs The current number of tabs in the output stream.
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
 * \param defaultValue Default value to compare the value to. 
 * \param year Optional year value to print as an attribute.
 * \param name Optional name value to print as an attribute.
@@ -599,6 +600,7 @@ void XMLHelper<T>::cleanupParser(){
 * \param node The node pointing to the container node in the XML tree. 
 * \param insertToVector The vector of objects of the type pointed to by node.
 * \param corrMap The map of node name attributes to locations within insertToVector.
+* \param newNode An object to use if the xml node is unique. This node is deleted if it is not needed.
 * \return A pointer to the model-node modified by the function, 0 if the node was deleted. 
 */
 template<class T, class U> 

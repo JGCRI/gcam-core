@@ -175,9 +175,12 @@ void Ghg::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 *   coefficients.
 *  \param regionName Name of the region for GHG
 *  \param fuelName Name of the fuel
+*  \param prodName The name of the output product.
+*  \param efficiency The efficience of the technology this ghg emitted by.
+*  \param period The period in which this calculation is occurring. 
 *  \return Generalized cost or value of the GHG
 */
-double Ghg::getGHGValue( const string& regionName, const string& fuelName, const string& prodName, const double efficiency, const int period) const {
+double Ghg::getGHGValue( const string& regionName, const string& fuelName, const string& prodName, const double efficiency, const int period ) const {
 
     const World* world = scenario->getWorld();
     const Marketplace* marketplace = scenario->getMarketplace();
