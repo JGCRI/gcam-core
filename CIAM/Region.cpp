@@ -352,6 +352,7 @@ void Region::XMLParse( const DOMNode* node ){
 
 /*! Complete the initialization.  Get the size of vectors, initialize AGLU, create all markets, call complete initialization 
 *  functions for nested objects, update the fuel map, and find simultaneities.
+* \todo I think since there is one indirect ghg object for each sector, it might be better in sector. This may require deriving supply sector.
 */
 void Region::completeInit() {
 
@@ -365,9 +366,15 @@ void Region::completeInit() {
     noSSec = static_cast<int>( supplySector.size() );
     noDSec = static_cast<int>( demandSector.size() );
     noGhg = static_cast<int>( ghgMarket.size() );
-
-    emcoefInd.resize( noSSec ); // indirect GHG coef object for every supply sector
-
+    
+    // Need to perform the resize by iteratively adding each one so we can set the sector name. 
+    for( vector<Sector*>::const_iterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ){
+        Emcoef_ind temp( ( *sectorIter )->getName() );
+        emcoefInd.push_back( temp );
+    }
+    
+    // emcoefInd.resize( noSSec ); // indirect GHG coef object for every supply sector
+    
     // Finish initializing agLu
     if( conf->getBool( "agSectorActive" ) ){
         agSector->setGNP( calcFutureGNP() );
