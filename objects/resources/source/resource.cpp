@@ -226,6 +226,7 @@ void Resource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     out << "</" << getXMLType() << ">" << endl;
 }
 
+
 //! Create markets
 void Resource::setMarket( const string& regionName ) {
 
@@ -369,6 +370,41 @@ void Resource::MCoutput( const string& regname ) {
    for (int i=0;i<nosubrsrc;i++) {
       subResource[i]->MCoutput(regname,name);
    }
+}
+
+/*! \brief A function to add the resource sectors to an existing graph.
+*
+* For resource sectors only add style information.
+*
+* \author Josh Lurz, Steve Smith
+* \param outStream An output stream to write to which was previously created.
+* \param period The period to print graphs for.
+*/
+void Resource::addToDependencyGraph( ostream& outStream, const int period ) const {
+    
+    // Print out the style for the Sector.
+    printStyle( outStream );
+}
+
+
+/*! \brief A function to add the Sector coloring and style to the dependency graph.
+*
+* This function add the Sector specific coloring and style to the dependency graph.
+*
+* \author Josh Lurz
+* \param outStream An output stream to write to which was previously created.
+*/
+void Resource::printStyle( ostream& outStream ) const {
+
+    // Make sure the output stream is open.
+    assert( outStream );
+    
+    // Get the sector name.
+   string sectorName = getName();
+   util::replaceSpaces( sectorName );
+
+   // output sector coloring here.
+   outStream << "\t" << sectorName << " [shape=box, style=filled, color=indianred1 ];" << endl;
 }
 
 // ************************************************************

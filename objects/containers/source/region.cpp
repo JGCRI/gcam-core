@@ -1198,6 +1198,11 @@ void Region::printGraphs( ostream& outStream, const int period ) const {
 
     // Now iterate through sectors.
 
+    // Loop through all resource sectors
+    for ( int resourceIter = 0; resourceIter < numResources; resourceIter++ ) {				
+        resources[ resourceIter ]->addToDependencyGraph( outStream, period );
+    }
+
     // Loop through all supply sectors
     for ( int supplyIter = 0; supplyIter < noSSec; supplyIter++ ) {				
         supplySector[ supplyIter ]->addToDependencyGraph( outStream, period );

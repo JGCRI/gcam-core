@@ -96,7 +96,7 @@ public:
 private:
     std::string name; //!< Region name
     int noGhg; //!< number of ghg for market solution in each region
-    int numResources; //!< number of depletable resources in each region
+    int numResources; //!< number of resources in each region
     int noSSec; //!< number of supply sectors in each region
     int noDSec; //!< number of demand sectors in each region
     int noRegMrks; //!< number of markets in each region

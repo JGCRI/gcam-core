@@ -38,6 +38,7 @@ protected:
     std::vector<double> annualprod; //!< annual production rate of Resource
     std::vector<double> cummprod; //!< cummulative production of Resource
     std::map<std::string,int> subResourceNameMap; //!< Map of subResource name to integer position in vector. 
+	 void printStyle( std::ostream& outStream ) const;
     
 public:
     Resource(); // default construtor
@@ -64,6 +65,7 @@ public:
     void show();
     void MCoutput( const std::string& regname ); 
     void outputfile( const std::string& regname ); 
+	 void addToDependencyGraph( std::ostream& outStream, const int period ) const;
 };
 
 /*! 
