@@ -10,7 +10,7 @@
 */
 
 #include "util/base/include/definitions.h"
-
+#define DUPLICATE_CHECKING 0
 #if(__HAVE_DB__)
 #include <afxdisp.h>
 #include <dbdao.h>
@@ -28,11 +28,20 @@
 #include "util/base/include/model_time.h"
 #include "util/base/include/configuration.h"
 
+#if( DUPLICATE_CHECKING )
+#include "util/base/include/util.h"
+#include <algorithm>
+#endif
+
 using namespace std;
 
 extern time_t ltime;
 extern ofstream outFile;
 extern Scenario* scenario;
+
+#if( DUPLICATE_CHECKING )
+vector<string> gHashes;
+#endif
 
 #if(__HAVE_DB__)
 // define global DB engine and database
@@ -72,6 +81,21 @@ void fileoutput3( string var1name,string var2name,string var3name,
 void dboutput4(string var1name,string var2name,string var3name,string var4name,
 			   string uname,vector<double> dout)
 {
+#if( DUPLICATE_CHECKING )
+    // Create a hash of the values.
+    const string newHash = var1name + "," + var2name + "," + var3name + "," + var4name;
+    // See if its already been added to the map.
+    if( find( gHashes.begin(), gHashes.end(), newHash ) != gHashes.end() ){
+        // Print an error since we found a duplicate.
+        cout << "A value has already been added for: " << var1name << ", " << var2name
+            << ", " << var3name << ", " << var4name << endl;
+    }
+    // Otherwise add it.
+    else {
+        gHashes.push_back( newHash );
+    }
+#endif // DUPLICATE_CHECKING
+
 #if(!__HAVE_DB__)
 	fileoutput3( var1name,var2name,var3name,var4name,"",uname,dout);
 #else
