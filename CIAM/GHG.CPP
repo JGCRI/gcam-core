@@ -3,7 +3,7 @@
  * Greenhouse Gas class.							*
  *       											*
  * Coded by: Sonny Kim and Marshall Wise 10/09/02	*/
-
+// testing
 
 #include "ghg.h"
 #include <string>
