@@ -1039,7 +1039,7 @@ void subsector::MCoutputB( const string& regname, const string& secname ) const 
             // output or demand for each technology
             for (m=0;m<maxper;m++)
                 temp[m] = techs[i][m]->getOutput();
-            dboutput4(regname,"End-Use Service",secname+"_byTech",str,"Ser Unit",temp);
+            dboutput4(regname,"End-Use Service",secname+"_"+name,str,"Ser Unit",temp);
             // technology cost
             for (m=0;m<maxper;m++)
                 temp[m] = techs[i][m]->getTechcost();

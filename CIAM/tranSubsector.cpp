@@ -16,7 +16,7 @@
 #include <vector>
 
 #include "tranSubsector.h"
-#include "technology.h"
+#include "tranTechnology.h"
 #include "scenario.h"
 #include "modeltime.h"
 #include "xmlHelper.h"
@@ -64,6 +64,12 @@ void tranSubsector::clear()
 void tranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
     
     const Modeltime* modeltime = scenario->getModeltime();
+    const int maxperiod = modeltime->getmaxper();
+    DOMNodeList* childNodeList = 0;
+    DOMNode* currChild = 0;
+    string childNodeName;
+    vector<technology*> techVec( modeltime->getmaxper(), 0 );
+    tranTechnology* tempTech = 0;
     
     // additional read in for transportation
     if( nodeName == "techChange" ){
@@ -80,8 +86,65 @@ void tranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
     }
     else if( nodeName == "serviceoutput" ){
         XMLHelper<double>::insertValueIntoVector( curr, output, modeltime );
+    }    
+    else if( nodeName == "tranTechnology" ){
+        map<string,int>::const_iterator techMapIter = techNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+        if( techMapIter != techNameMap.end() ) {
+            // technology already exists.
+            childNodeList = curr->getChildNodes();
+            
+            // loop through technologies children.
+            for( int j = 0; j < childNodeList->getLength(); j++ ){
+                
+                currChild = childNodeList->item( j );
+                childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+                
+                if( childNodeName == "#text" ){
+                    continue;
+                }
+                else if( childNodeName == "period" ){
+                    int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
+                    techs[ techMapIter->second ][ thisPeriod ]->XMLParse( currChild );
+                }
+            }
+        }
+        
+        else {
+            // create a new vector of techs.
+            childNodeList = curr->getChildNodes();
+            
+            // loop through technologies children.
+            for( int j = 0; j < childNodeList->getLength(); j++ ){
+                
+                currChild = childNodeList->item( j );
+                childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+                
+                if( childNodeName == "period" ){
+                    tempTech = new tranTechnology();
+                    tempTech->XMLParse( currChild );
+                    int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
+                    techVec[ thisPeriod ] = tempTech;
+                    
+                    // boolean to fill out the readin value to all the periods
+                    const bool fillout = XMLHelper<bool>::getAttr( currChild, "fillout" );
+                    
+                    // copy technology object for one period to all the periods
+                    if (fillout) {
+                        // will not do if period is already last period or maxperiod
+                        for (int i = thisPeriod+1; i < maxperiod; i++) {
+                            techVec[ i ] = techVec[ thisPeriod ];
+                            techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
+                        }
+                    }
+                    
+                }
+            }
+            techs.push_back( techVec );
+            techNameMap[ techVec[ 0 ]->getName() ] = techs.size() - 1;
+            techVec.clear();
+            techVec.resize( modeltime->getmaxper(), 0 );
+        }
     }
-    
     // completed parsing.
 }
 
@@ -113,7 +176,7 @@ void tranSubsector::calcShare( const string& regionName, const int per, const do
     adjPrice[per] = subsectorprice[per]/loadFactor[per] 
         + gnp_cap*1000.0/(daysPerYear*hoursPerDay)/speed[per] ;
     
-    /*!  Compute calibrating scaler if first period, otherwise use computed
+        /*!  Compute calibrating scaler if first period, otherwise use computed
     scaler in subsecquent periods */
     
     if(per==0) {
@@ -127,5 +190,31 @@ void tranSubsector::calcShare( const string& regionName, const int per, const do
             * pow(popDensity, popDenseElasticity[per]);
     }
     
+}
+
+//! sets demand to output and output
+/* Demand from the "dmd" parameter (could be energy or energy service) is passed to technologies.
+*  This is then shared out at the technology level.
+*  See explanation for sector::setoutput. 
+*/
+void tranSubsector::setoutput( const string& regionName, const string& prodName, const double dmd, const int per) {
+	int i=0;
+	input[per] = 0; // initialize subsector total fuel input 
+	carbontaxpaid[per] = 0; // initialize subsector total carbon taxes paid 
+   
+   // output is in service unit when called from demand sectors
+   double subsecdmd = share[per]*dmd; // share is subsector level
+   subsecdmd /= loadFactor[per]; // convert to per veh-mi
+
+   for ( i=0; i<notech; i++ ) {
+		// calculate technology output and fuel input from subsector output
+		techs[i][per]->production( regionName, prodName, subsecdmd, per );
+
+		// total energy input into subsector, must call after tech production
+		input[per] += techs[i][per]->getInput();
+		// sum total carbon tax paid for subsector
+		carbontaxpaid[per] += techs[i][per]->getCarbontaxpaid();
+	}
+   
 }
 

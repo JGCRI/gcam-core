@@ -71,15 +71,15 @@ protected:
     map<string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
     
 public:
-   technology(); // default construtor
-   technology( const technology& techIn ); // copy constructor.
-   technology& operator=( const technology& techIn ); // assignment operator.
+    technology(); // default construtor
+    technology( const technology& techIn ); // copy constructor.
+    technology& operator=( const technology& techIn ); // assignment operator.
     virtual ~technology();
     virtual void clear();
     virtual void copy( const technology& techIn );
-
     void initElementalMembers();
     virtual void XMLParse( const DOMNode* tempnode ); // initialize technology with xml data
+    virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* curr ); // for derived classes
     void completeInit();
     virtual void toXML( ostream& out ) const;
     virtual void toDebugXML( const int period, ostream& out ) const;
@@ -93,7 +93,7 @@ public:
     void normShare(double sum); // normalize technology share
     void calcFixedSupply(int per); // calculate fixed supply
     void resetFixedSupply(int per); // reset fixed supply to max value
-   void adjShares(double subsecdmd, double subsecFixedSupply, double varShareTot, int per);
+    void adjShares(double subsecdmd, double subsecFixedSupply, double varShareTot, int per);
     void scaleFixedSupply(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
     virtual void production(const string& regionName,const string& prodName,double dmd,const int per);
@@ -107,8 +107,8 @@ public:
     double getShare() const; // return normalized share
     bool getCalibrationStatus( ) const; // return true if technology has calibration value
     void scaleCalibrationInput( const double scaleFactor ); // scale calibration value
-	 double getCalibrationInput() const; // return calibration input value
-	 double getCalibrationOutput() const; // return calibration output value
+    double getCalibrationInput() const; // return calibration input value
+    double getCalibrationOutput() const; // return calibration output value
     double getInput() const; // return fuel input amount
     double getOutput() const; // return technology output
     double getFuelcost() const; // return fuel cost only

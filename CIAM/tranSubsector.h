@@ -35,6 +35,7 @@ public:
 	virtual void clear();
     virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* curr ); // for derived classes
     virtual void calcShare( const string& regionName, const int period, const double gnp_cap = 1 ); 
+    virtual void setoutput( const string& regionName, const string& prodName, const double dmd, const int per);
 
 };
 

@@ -41,19 +41,18 @@ technology::~technology() {
     }
 }
 
-// ! Deep copy and return of technology object
 technology::technology( const technology& techIn ) {
-   copy( techIn );
+    copy( techIn );
 }
 
 //! Assignment operator.
 technology& technology::operator =( const technology& techIn ) {
-
-   if( this != &techIn ) { // check for self assignment 
-      clear();
-      copy( techIn );
-   }
-   return *this;
+    
+    if( this != &techIn ) { // check for self assignment 
+        clear();
+        copy( techIn );
+    }
+    return *this;
 }
 
 //! Helper copy function to avoid replicating code.
@@ -146,101 +145,112 @@ void technology::initElementalMembers(){
 //! initialize technology with xml data
 void technology::XMLParse( const DOMNode* node )
 {	
-   Ghg* tempGhg = 0;
-   DOMNode* curr = 0;
-   string nodeName;
-   DOMNodeList* nodeList;
-   
-   //! \pre Assume we are passed a valid node.
-   assert( node );
-   
-   nodeList = node->getChildNodes();
-   
-   for( int i = 0; i < nodeList->getLength(); i++ ) {
-      curr = nodeList->item( i );
-      nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
-      
-      if( nodeName == "#text" ) {
-         continue;
-      }
-
-      else if( nodeName == "name" ) {
-         name = XMLHelper<string>::getValueString( curr );
-         
+    Ghg* tempGhg = 0;
+    DOMNode* curr = 0;
+    string nodeName;
+    DOMNodeList* nodeList;
+    
+    //! \pre Assume we are passed a valid node.
+    assert( node );
+    
+    nodeList = node->getChildNodes();
+    
+    for( int i = 0; i < nodeList->getLength(); i++ ) {
+        curr = nodeList->item( i );
+        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
+        
+        if( nodeName == "#text" ) {
+            continue;
+        }
+        
+        else if( nodeName == "name" ) {
+            name = XMLHelper<string>::getValueString( curr );
+            
 #if( _DEBUG )
-         // cout << "\t\t\tTechnology name set as " << name << endl;
+            // cout << "\t\t\tTechnology name set as " << name << endl;
 #endif
-      } 
-      else if( nodeName == "year" ){
-         year = XMLHelper<int>::getValue( curr );
-      }
-      else if( nodeName == "fuelname" ){
-         fuelname = XMLHelper<string>::getValueString( curr );
-      }
-      else if( nodeName == "sharewt" ){
-         shrwts = XMLHelper<double>::getValue( curr );
-      }
-      else if( nodeName == "calInputValue" ){
-         calInputValue = XMLHelper<double>::getValue( curr );
-         doCalibration = true;
-         //doCalibration = false;
-      }
-      else if( nodeName == "efficiency" ){
-         eff = XMLHelper<double>::getValue( curr );
-      }
-      else if( nodeName == "nonenergycost" ){
-         necost = XMLHelper<double>::getValue( curr );
-      }
-      else if( nodeName == "tax" ){
-         tax = XMLHelper<double>::getValue( curr );
-      }
-      else if( nodeName == "pMultiplier" ){
-         pMultiplier = XMLHelper<double>::getValue( curr );
-      }
-      else if( nodeName == "fMultiplier" ){
-         fMultiplier = XMLHelper<double>::getValue( curr );
-      }
-      else if( nodeName == "logitexp" ){
-         lexp = XMLHelper<double>::getValue( curr );
-      }
-      else if( nodeName == "techchange" ){
-         techchange = XMLHelper<double>::getValue( curr );
-      }
-      else if( nodeName == "resource" ){
-         resource = XMLHelper<double>::getValue( curr );
-      }
-      else if( nodeName == "A" ){
-         A = XMLHelper<double>::getValue( curr );
-      }
-      else if( nodeName == "B" ){
-         B = XMLHelper<double>::getValue( curr );
-      }
-      else if( nodeName == "GHG" ){
-         map<string,int>::const_iterator ghgMapIter = ghgNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-         if( ghgMapIter != ghgNameMap.end() ) {
-            // ghg already exists.
-            ghg[ ghgMapIter->second ]->XMLParse( curr );
-         }
-         else {
-            tempGhg = new Ghg();
-            tempGhg->XMLParse( curr );
-            ghg.push_back( tempGhg );
-            ghgNameMap[ tempGhg->getname() ] = ghg.size() - 1;
-         }
-      }
-
-      else {
-         cout << "Unrecognized text string: " << nodeName << " found while parsing technology." << endl;
-      }
-   }
+        } 
+        else if( nodeName == "year" ){
+            year = XMLHelper<int>::getValue( curr );
+        }
+        else if( nodeName == "fuelname" ){
+            fuelname = XMLHelper<string>::getValueString( curr );
+        }
+        else if( nodeName == "sharewt" ){
+            shrwts = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "calInputValue" ){
+            calInputValue = XMLHelper<double>::getValue( curr );
+            doCalibration = true;
+            //doCalibration = false;
+        }
+        else if( nodeName == "efficiency" ){
+            eff = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "nonenergycost" ){
+            necost = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "tax" ){
+            tax = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "pMultiplier" ){
+            pMultiplier = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "fMultiplier" ){
+            fMultiplier = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "logitexp" ){
+            lexp = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "techchange" ){
+            techchange = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "resource" ){
+            resource = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "A" ){
+            A = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "B" ){
+            B = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "GHG" ){
+            map<string,int>::const_iterator ghgMapIter = ghgNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+            if( ghgMapIter != ghgNameMap.end() ) {
+                // ghg already exists.
+                ghg[ ghgMapIter->second ]->XMLParse( curr );
+            }
+            else {
+                tempGhg = new Ghg();
+                tempGhg->XMLParse( curr );
+                ghg.push_back( tempGhg );
+                ghgNameMap[ tempGhg->getname() ] = ghg.size() - 1;
+            }
+        }
+        // parse derived classes
+        else {
+            XMLDerivedClassParse( nodeName, curr );
+        }
+        
+    }
 }
+
+//! Parses any input variables specific to derived classes
+void technology::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+    // do nothing
+    // defining method here even though it does nothing so that we do not
+    // create an abstract class.
+    cout << "Unrecognized text string: " << nodeName << " found while parsing technology." << endl;
+}
+
+
 //! Complete initialization
 void technology::completeInit() {
-   if( ghg.empty() ) {
-      Ghg* CO2 = new Ghg( "CO2", "MTC", 0, 1, 0 ); // at least CO2 must be present
-      ghg.push_back( CO2 );
-      ghgNameMap[ "CO2" ] = 0;
-  }
+    if( ghg.empty() ) {
+        Ghg* CO2 = new Ghg( "CO2", "MTC", 0, 1, 0 ); // at least CO2 must be present
+        ghg.push_back( CO2 );
+        ghgNameMap[ "CO2" ] = 0;
+    }
 }
 
 //! write object to xml output stream
@@ -466,7 +476,7 @@ void technology::adjShares(double subsecdmd, double subsecFixedSupply, double va
                 // Set value of fixed supply
                 if (fixedSupply > subsecdmd) {
                     fixedOutputVal = subsecFixedSupply; // downgrade output if > fixedsupply
-				}  
+                }  
                 else {
                     fixedOutputVal = fixedSupply; 
                 }
@@ -491,23 +501,23 @@ void technology::adjShares(double subsecdmd, double subsecFixedSupply, double va
 /*! Adds demands for fuels and ghg emissions to markets in the marketplace
 */
 void technology::production(const string& regionName,const string& prodName,
-							double dmd,const int per) {
-	string hydro = "hydro";
-	Marketplace* marketplace = scenario->getMarketplace();
-   
-	// dmd is total subsector demand
-	if(name != hydro) {
-		output = share * dmd; // use share to get output for each technology
-	}
-	else { // do for hydroelectricity
-		//output = fixedOutputVal;
-		output = fixedOutputVal = dmd;
-	}
-	
-   // eliminated renewable branch for input calc, since code was the same. sjs
-   // non renewable technologies previously had
-   //input = output/eff/pow(1+techchange,timestep);
-	input = output/eff;
+                            double dmd,const int per) {
+    string hydro = "hydro";
+    Marketplace* marketplace = scenario->getMarketplace();
+    
+    // dmd is total subsector demand
+    if(name != hydro) {
+        output = share * dmd; // use share to get output for each technology
+    }
+    else { // do for hydroelectricity
+        //output = fixedOutputVal;
+        output = fixedOutputVal = dmd;
+    }
+    
+    // eliminated renewable branch for input calc, since code was the same. sjs
+    // non renewable technologies previously had
+    //input = output/eff/pow(1+techchange,timestep);
+    input = output/eff;
 	   
     if (input < 0) {
         cerr << "ERROR: Output value < 0 for technology " << name << endl;
@@ -666,19 +676,19 @@ double technology::getFuelcost( ) const {
 
 //! return technology calibration value
 double technology::getCalibrationInput( ) const {
-	return calInputValue;
+    return calInputValue;
 }
 
 //! return technology calibration value
 void technology::scaleCalibrationInput( const double scaleFactor ) {
-	if ( scaleFactor != 0 ) {
-      calInputValue = calInputValue / scaleFactor;
-   }
+    if ( scaleFactor != 0 ) {
+        calInputValue = calInputValue / scaleFactor;
+    }
 }
 
 //! return technology calibration value
 double technology::getCalibrationOutput( ) const {
-	return calInputValue * eff;
+    return calInputValue * eff;
 }
 
 //! return the cost of technology
@@ -740,7 +750,7 @@ double technology::getlexp()  const {
 
 //! Set the technology year.
 void technology::setYear( const int yearIn ) {
-   year = yearIn;
+    year = yearIn;
 }
 
 //  ******* method definition for hydro_tech
