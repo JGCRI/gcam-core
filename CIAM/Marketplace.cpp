@@ -286,6 +286,9 @@ void Marketplace::setMarketToSolve ( const string& goodName, const string& regio
          markets[ marketNumber ][ per ]->setSolveMarket( true );
       }
    }
+   else {
+      cout << "Error: Market cannot be set to solve as it does not exist: " << goodName << " " << regionName << endl;
+   }
 }
 
 //! initialize all market prices for the given period to 0.
@@ -998,13 +1001,8 @@ int Marketplace::Bracket( const double solutionTolerance, const double excessDem
    int code = 2; // code that reports success 1 or failure 0
    vector<double> tempPrices( numCurrMarkets ); // temporary prices
    vector<double> EDtemp( numCurrMarkets ); // temporary excess demand
-   
    bugoutfile << ",,Bracketing function called." << endl;
    logfile << ",,Bracketing function called." << endl;
-   
-   // bugoutfile << endl <<"Market,X-unknown,L-Brack,R-Brack,Ex Dem,EDL-Brac,EDR-Brac,Supply,Price,Demand,Tolerance" << endl;
-   // bugoutfile << 5 << "," << sol[ 5 ].X << "," << sol[ 5 ].XL << "," << sol[ 5 ].XR << ",";
-   // bugoutfile << sol[ 5 ].ED << "," << sol[ 5 ].EDL << "," << sol[ 5 ].EDR << "," << -1 << "," << -1 << "," << -1 << "," << solutionTolerance << "," << -1 << endl; 
    
    // Loop is done at least once.
    do {
@@ -1228,6 +1226,11 @@ int Marketplace::Bracket( const double solutionTolerance, const double excessDem
             
             // Check if the ED is below the solution tolerance.
             if( isWithinTolerance( sol[ i ].ED, markets[ markets_isol[ i ] ][ per ]->getRawDemand(), solutionTolerance, excessDemandSolutionFloor ) ) {
+               sol[ i ].bracketed = true;
+            }
+
+            // Check if the market is unbracketable. This check is needed for GHG markets. 
+            if( ( sol[ i ].X < VERY_SMALL_NUM ) && ( sol[ i ].ED < SMALL_NUM ) ) {
                sol[ i ].bracketed = true;
             }
             

@@ -50,7 +50,7 @@ void ghg_mrk::setMarket( const string& regionName ) {
 
 	// name is GHG name
 	marketplace->setMarket( regionName, market, name, Marketplace::GHG );
-    marketplace->setMarketToSolve (name, market);
+    marketplace->setMarketToSolve ( name, regionName );
 	/* no need to use market.setPriceVector here unless GHG markets need
         initial prices read-in for the base year */  
 }
@@ -61,11 +61,8 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
 	
 	const Modeltime* modeltime = scenario->getModeltime();
 	DOMNodeList* nodeList;
-	DOMNodeList* childNodeList;
 	DOMNode* curr = 0;
-	DOMNode* currChild = 0;
 	string nodeName;
-	string childNodeName;
 	
 	// PRECONDITION
 	//! \pre assume we are passed a valid node.
@@ -94,27 +91,12 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
 			market = XMLHelper<string>::getValueString( curr ); // should be only one market
 		}
 
-		else if( nodeName == "period" ){
-			childNodeList = curr->getChildNodes();
-			
-			// loop through the periods children.
-			for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
-				currChild = childNodeList->item( j );
-				childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-            
-            if( childNodeName == "#text" ) {
-               continue;
-            }
-
-				else if( childNodeName == "constraint" ){
-               XMLHelper<double>::insertValueIntoVector( currChild, constraint, modeltime );
-				}
-
-            else {
-               cout << "Unrecognized text string: " << nodeName << " found while parsing ghg market." << endl;
-            }
-			}
+		else if( nodeName == "constraint" ){
+         XMLHelper<double>::insertValueIntoVector( curr, constraint, modeltime );
 		}
+      else {
+            cout << "Unrecognized text string: " << nodeName << " found while parsing ghgmarket." << endl;
+         }
    }
 }
 

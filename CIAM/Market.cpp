@@ -157,7 +157,7 @@ void Market::setCompanionMarketPointer( Market* pointerIn ) {
 */
 void Market::initPrice() {
    // Generally want a non-zero value as starting value.
-   if ( price == 0 ) {	// don't set if already set by read-in
+   if ( price < 1E-6 ) {	// don't set if already set by read-in
       price = 1;	
    }
 }
@@ -705,13 +705,13 @@ string GHGMarket::getType() const {
 }
 
 void GHGMarket::initPrice() {
-   price = 0;
+   price = 1;
 }
 
 bool GHGMarket::shouldSolve() const {
-   
+
    // Don't solve if  there is no constraint
-   return ( solveMarket && supply > 0 );
+   return ( solveMarket && supply > 1E-6 );
 }
 
 bool GHGMarket::shouldSolveNR( const double SMALL_NUM ) const {
@@ -721,9 +721,10 @@ bool GHGMarket::shouldSolveNR( const double SMALL_NUM ) const {
       doSolveMarket = true;
    }
    
-   if ( ( supply < 0 ) ||  ( price < SMALL_NUM && excessDemand < 0 ) || ( price < SMALL_NUM ) ) { 	
+   if ( ( supply < SMALL_NUM ) ||  ( price < SMALL_NUM && excessDemand < SMALL_NUM ) || ( price < SMALL_NUM ) ) {
       doSolveMarket = false; 
    }
+
    return doSolveMarket;
 }
 

@@ -178,7 +178,7 @@ void technology::XMLParse( const DOMNode* node )
 //! Complete initialization
 void technology::completeInit() {
    if( ghg.empty() ) {
-      Ghg* CO2 = new Ghg( "CO2", "MTC", 0, 0, 1 ); // at least CO2 must be present
+      Ghg* CO2 = new Ghg( "CO2", "MTC", 0, 1, 0 ); // at least CO2 must be present
       ghg.push_back( CO2 );
   }
 }
