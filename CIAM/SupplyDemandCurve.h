@@ -19,6 +19,7 @@
 class Logger;
 class Market;
 class World;
+class Marketplace; 
 
 /*!
 * \ingroup CIAM
@@ -30,7 +31,7 @@ class SupplyDemandCurve {
 public:
    SupplyDemandCurve( Market* marketIn );
    ~SupplyDemandCurve();
-   void calculatePoints( const int numPoints, World* world, const int period );
+   void calculatePoints( const int numPoints, World* world, Marketplace* marketplace, const int period );
    void print( Logger* sdLog ) const;
 
 private:
