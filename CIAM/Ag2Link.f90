@@ -54,6 +54,7 @@ subroutine SETBIOMASSPRICE( biomassPrice )
     use Ag2Global8
     
     real(8), intent( in ) :: biomassPrice(:)
+    write( *,* ) "Setting biomass price."
 
     CALP( 1, 8 ) = biomassPrice( 1 ) * GJperGcal * CVRT90
 
@@ -186,7 +187,7 @@ subroutine AG2RUN( P, Region, Period, AGDEM, AGSUP )
 	  agPriceLocal( JCoarseGr, Region ) = P( INCOARSEGR )
 	  agPriceLocal( JOilCrops, Region ) = P( INOILCROPS )
 	  agPriceLocal( JMiscCrops, Region ) = P( INMISCCROPS )
-	  agPriceLocal( JBio, Region ) = P( INBMASS ) * CVRT90 * GJperGCAL
+	  agPriceLocal( JBio, Region ) = P( INBMASS ) ! * CVRT90 * GJperGCAL // new
        
       ! write( *, '("agPriceLocal: ",10F5.2)' )  agPriceLocal( 1:10, Region )
 
