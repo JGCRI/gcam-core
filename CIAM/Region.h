@@ -26,6 +26,7 @@ class AgSector;
 class ghg_mrk;
 // class TransSector;
 class Summary;
+class Emcoef_ind;
 
 /*! 
 * \ingroup CIAM
