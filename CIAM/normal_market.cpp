@@ -25,10 +25,6 @@ string NormalMarket::getType() const {
    return "NormalMarket";
 }
 
-void NormalMarket::setCompanionMarketPointer( Market* pointerIn ) {
-    Market::setCompanionMarketPointer( pointerIn );
-}
-
 void NormalMarket::initPrice() {
    Market::initPrice();
 }

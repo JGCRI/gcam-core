@@ -38,7 +38,6 @@ public:
     virtual void derivedToDebugXML( std::ostream& out ) const = 0;
     void addRegion( const std::string& regionNameIn );
     const std::vector<std::string> getContainedRegions() const;
-    virtual void setCompanionMarketPointer( Market* pointerIn ) = 0;
 
     virtual void initPrice() = 0;
     void nullPrice();

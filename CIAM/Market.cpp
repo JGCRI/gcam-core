@@ -114,18 +114,6 @@ const vector<string> Market::getContainedRegions() const {
    return containedRegionNames;
 }
 
-/*! \brief Set an internal pointer to the companion price or demand market.
-*
-* This function exists in the NormalMarket to avoid dynamic casting and the use of RTTI. 
-* In the base class, this function is a no-op. If it is called the program terminates as this is an error.
-* 
-* \warning When called on the base class this will throw an error.
-* \param pointerIn A pointer to the companion market. 
-*/
-void Market::setCompanionMarketPointer( Market* pointerIn ){
-    assert( false );
-}
-
 /*! \brief Set an initial price for the market.
 * 
 * This function checks if the price of the market is less than util::getSmallNumber
