@@ -47,59 +47,50 @@ public:
 	subsector();
 	~subsector();
 	virtual void clear();
-	string showname(void); // return name of subsector
-	void XMLParse( const DOMNode* tempNode ); // initialize subsector with xml data
+	const string getName() const;
+	void XMLParse( const DOMNode* tempNode );
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
-	void copytolast(int per); //set subsector info
-	void settech(int itech); // sets number of technology objects
-	void set_hydrotech(int itech); // sets number of exogenously driven tech
-	// calculates and returns subsector price
-	virtual void calc_price( const string regionName, const int per); // maw
-	double getprice(int per); // returns subsector price
-	double getfuelprice(int per); // returns subsector fuel price
-	double getwtfuelprice(int per); // returns subsector fuel price
-	void applycarbontax(double tax, int per); // passes along carbon tax
-	// applies ghg tax to technologies
-	void addghgtax( const string ghgname, const string regionName, const int per ); 
-	// calculate shares and sum of shares
-	virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 ); 
-	void norm_share(double sum, int per); // normalizes shares to 100%
+	void copytolast( const int period );
+	virtual void calc_price( const string regionName, const int period); // maw
+	double getprice( const int period ) const;
+	double getfuelprice( const int period ) const; 
+	double getwtfuelprice( const int period ) const;
+	void applycarbontax( const double tax, const int period );
+	void addghgtax( const string& ghgname, const string& regionName, const int period ); 
+	virtual void calc_share( const string& regionName, const int period, const double gnp_cap = 1 ); 
+	void norm_share( const double sum, const int period );
 	// maw compute tech shares within subsector in seperate method
-	void calc_tech_shares ( const string regionName, const int per );
+	void calc_tech_shares ( const string& regionName, const int period );
 	// sets demand to output and output
-	void setoutput( const string& regionName, const double dmd, const int per); 
-	void sumoutput(int per); // sums technology output
-	double supply( const string& regionName, const int per ); // calculates supply by technology
-	double exog_supply(int per); // calculates exogenous supply
-	void show_subsec(void); // write subsector info to screen
-	double showshare(int per); // returns share for each subsector
-	void showtechs(int per, const char* ofile); // shows all technologies in the subsector
-	void showlabel(const char* ofile); // show subsector label
-	// write out subsector result to file
-	void outputfile( const string& regname, const string& secname); 
-	// write MiniCAM subsector result to file
-	void MCoutputA( const string & regname, const string& secname ); 
-	void MCoutputB( const string & regname, const string& secname ); 
-	void MCoutputC( const string & regname, const string& secname ); 
-	int shownotech(void); // return number of technologies in subsector
-	string showtechname(int id); // return technology name
-	void emission(int per,string prodname); // calculate subsector emission
-	void indemission(int per); // calculate subsector indirect emission
-	double showCO2(int per); // returns CO2 emissions
-	double showCO2ind(int per); // returns indirect CO2 emissions
-	double showCO2fuel(int per); // returns equivalent CO2 emissions from fuel input
-	double showpe_cons(int per); // returns subsector primary energy consumption
-	double showinput(int per); // returns subsector primary or final energy consumption
-	double getoutput(int per); // returns subsector output
-	double showcarbontaxpaid(int per); // returns subsector total carbon taxes paid
-	map<string, double> getfuelcons(int per); 
-	void clearfuelcons(int per);  //  clears the fuelcons map in summary
-	map<string, double> getemission(int per);// get ghg emissions map in summary object 
-	map<string, double> getemfuelmap(int per);// get ghg emissions map in summary object 
-	map<string, double> getemindmap(int per);// get ghg emissions map in summary object 
-    void adjShares(double dmd, double varSectorSharesTot, double totalFixedSupply, int per);
-	void updateSummary(const int per);  // update summaries for reporting
+	void setoutput( const string& regionName, const double dmd, const int period ); 
+	void sumoutput( const int period );
+	double supply( const string& regionName, const int period ); // calculates supply by technology
+	double exog_supply( const int period ); // calculates exogenous supply
+	void show_subsec() const;
+	double showshare( const int period ) const;
+	void showtechs( const int period, const string ofile ) const;
+	void showlabel( const string& ofile ) const;
+	void outputfile( const string& regionName, const string& sectorName) const; 
+	void MCoutputA( const string& regionName, const string& sectorName ) const; 
+	void MCoutputB( const string& regionName, const string& sectorName ) const; 
+	void MCoutputC( const string& regionName, const string& sectorName ) const; 
+	int shownotech() const;
+	void emission( const int period, const string& productName );
+	void indemission( const int period);
+	double showCO2( const int period ) const;
+	double showCO2ind( const int period ) const; // returns indirect CO2 emissions
+	double showCO2fuel( const int period ) const; // returns equivalent CO2 emissions from fuel input
+	double showpe_cons( const int period ); // returns subsector primary energy consumption
+	double showinput( const int period )  const; // returns subsector primary or final energy consumption
+	double getoutput( const int period ) const; // returns subsector output
+	double showcarbontaxpaid( const int period ) const; // returns subsector total carbon taxes paid
+	map<string, double> getfuelcons( const int period ) const; 
+	void clearfuelcons( const int period);  //  clears the fuelcons map in summary
+	map<string, double> getemission( const int period) const;// get ghg emissions map in summary object 
+	map<string, double> getemfuelmap( const int period) const;// get ghg emissions map in summary object 
+	map<string, double> getemindmap( const int period ) const;// get ghg emissions map in summary object 
+    void adjShares( const double dmd, const double varSectorSharesTot, const double totalFixedSupply, const int period);
+	void updateSummary(const int per);
 };
-
 #endif // _SUBSECTOR_H_

@@ -65,8 +65,7 @@ void subsector::clear(){
 }
 
 //! Return the sector name.
-string subsector::showname()
-{
+const string subsector::getName() const {
 	return name;
 }
 
@@ -157,6 +156,7 @@ void subsector::XMLParse( const DOMNode* node )
 
 }
 
+//! Output the subsector member variables in XML format.
 void subsector::toXML( ostream& out ) const {
 	int i;
 
@@ -213,6 +213,7 @@ void subsector::toXML( ostream& out ) const {
 	out << "</subsector>" << endl;
 }
 
+//! Write out the state of all member variables to the debug xml output stream.
 void subsector::toDebugXML( const int period, ostream& out ) const {
 	
 	// write the beginning tag.
@@ -264,35 +265,17 @@ void subsector::toDebugXML( const int period, ostream& out ) const {
 	out << "</subsector>" << endl;
 }
 
-void subsector::copytolast(int per) //set subsector info
-{
-	shrwts[per] = shrwts[per-1];
-	lexp[per] = lexp[per-1];
-}
-
-//! set number of technologies
-void subsector::settech(int itech)
-{
-	notech = itech; // set private member
-	techs.resize(notech); // techs is 2-dim vector of technology obj
-	int maxper = modeltime.getmaxper();
-	for (int i=0;i<techs.size();i++) techs[i].resize(maxper);
-}
-
-//! set number of exogenously driven technologies
-void subsector::set_hydrotech(int itech)
-{
-	// one hydro for each region
-	int maxper = modeltime.getmaxper();
-	hydro.resize(maxper);
+//! Set the share weight and logit exponentional for the current period to the values from the last period.
+void subsector::copytolast( const int period ) {
+	shrwts[ period ] = shrwts[ period - 1 ];
+	lexp[ period ] = lexp[ period - 1 ];
 }
 
 //! Computes weighted cost of all technologies in subsector
 /*! price function called below in calc_share after technology shares are determined.
   price function separated to allow different weighting for subsector price
 	changed to void return maw */
-void subsector::calc_price( const string regionName, const int per )
-{
+void subsector::calc_price( const string regionName, const int per ) {
 	int i=0;
 	subsectorprice[per] = 0; // initialize to 0 for summing
 	fuelprice[per] = 0; // initialize to 0 for summing
@@ -309,34 +292,29 @@ void subsector::calc_price( const string regionName, const int per )
 }
 
 //! returns subsector price 
-double subsector::getprice(int per)
-{
-	return subsectorprice[per];
+double subsector::getprice( const int period ) const {
+	return subsectorprice[ period ];
 }
 
 //! returns subsector fuel price 
-double subsector::getfuelprice(int per)
-{
-	return fuelprice[per];
+double subsector::getfuelprice( const int period ) const {
+	return fuelprice[ period ];
 }
 
 //! returns subsector base share weighted fuel price 
-double subsector::getwtfuelprice(int per)
-{
-	return basesharewt*fuelprice[per];
+double subsector::getwtfuelprice( const int period ) const {
+	return basesharewt * fuelprice[ period ];
 }
 
 //! passes carbon tax to technology
-void subsector::applycarbontax(double tax,int per)
-{
+void subsector::applycarbontax( const double tax, const int period ) {
 	for (int i=0;i<notech;i++) {
-		techs[i][per]->applycarbontax(tax);
+		techs[i][ period ]->applycarbontax(tax);
 	}
 }
 
 //! sets ghg tax to technologies
-void subsector::addghgtax( const string ghgname, const string regionName, const int per )
-{
+void subsector::addghgtax( const string& ghgname, const string& regionName, const int per ) {
 	for (int i=0;i<notech;i++) {
 		techs[i][per]->addghgtax( ghgname, regionName, per );
 	}
@@ -344,8 +322,7 @@ void subsector::addghgtax( const string ghgname, const string regionName, const 
 
 
 // maw  calculate technology shares within subsector
-void subsector::calc_tech_shares( const string regionName, const int per )
-{
+void subsector::calc_tech_shares( const string& regionName, const int per ) {
 	int i=0;
 	double sum = 0;
 
@@ -367,7 +344,7 @@ void subsector::calc_tech_shares( const string regionName, const int per )
 	
 
 //! calculate subsector share numerator 
-void subsector::calc_share( const string regionName, const int per, const double gnp_cap )
+void subsector::calc_share( const string& regionName, const int per, const double gnp_cap )
 {
 	// call function to compute technology shares
 	calc_tech_shares(regionName, per);
@@ -395,20 +372,20 @@ void subsector::calc_share( const string regionName, const int per, const double
 	}
 }
 
-
-void subsector::norm_share(double sum, int per)
-{
-	if (sum==0)
+//! normalizes shares to 100%
+void subsector::norm_share( const double sum, const int per) {
+	if ( sum==0 ) {
 		share[per]=0;
-	else
+	}
+	else {
 		share[per] /= sum;
+	}
 }
 
 //! call technology production, only exogenously driven technology gives an output
 /*! Since the calls below set output, this call must be done before
     calls to technology production with non-zero demand . g*/
-double subsector::exog_supply(int per)
-{
+double subsector::exog_supply( const int per ) {
 	double subsecdmd = 0; // no subsector demand
 	double tprod=0;
 	for (int i=0;i<notech;i++) {
@@ -424,9 +401,7 @@ double subsector::exog_supply(int per)
 // sum of sector shares that have no fixed production
 // total fixed supply from all sectors
 // model period
-void subsector::adjShares( double dmd, double varSectorSharesTot, double totalFixedSupply,
-						  int per)	
-{
+void subsector::adjShares( const double dmd, double varSectorSharesTot, const double totalFixedSupply, const int per) {
 	double fixedSupply = 0; // no subsector demand
 	double temp;
 	double varShareTot = 0; // sum of shares without fixed supply
@@ -477,8 +452,7 @@ void subsector::adjShares( double dmd, double varSectorSharesTot, double totalFi
 /* Demand from the "dmd" parameter (could be energy or energy service) is passed to technologies.
     This is then shared out at the technology level.
     See explanation for sector::setoutput. */
-void subsector::setoutput( const string& regionName, const double dmd, const int per)
-{
+void subsector::setoutput( const string& regionName, const double dmd, const int per) {
 	string goodName;
 	int i=0;
 	string tname; // temporary string
@@ -506,8 +480,7 @@ void subsector::setoutput( const string& regionName, const double dmd, const int
 }
   
 //! calculates fuel input and subsector output
-void subsector::sumoutput(int per)
-{
+void subsector::sumoutput( const int per ) {
 	output[per] = 0;
 	for (int i=0;i<notech;i++) {
 		output[per] += techs[i][per]->showoutput();
@@ -529,8 +502,8 @@ double subsector::supply( const string& regionName, const int per ) {
 	return dmd;
 }
 
-void subsector::show_subsec(void)
-{
+//! write subsector info to screen
+void subsector::show_subsec() const {
 	int i=0;
 	int m=0; // temp period
 	//write to file or database later
@@ -540,15 +513,13 @@ void subsector::show_subsec(void)
 		cout<<"Share["<<i<<"] "<<techs[i][m]->showshare()<< endl;
 	cout <<"Total subsector Output: " << output[m] << endl;
 }
-
-double subsector::showshare(int per)
-{
+//! returns share for each subsector
+double subsector::showshare( const int per ) const {
 	return share[per];
 }
 
 //! prints to outputfile all technologies in subsector by period
-void subsector::showtechs(int per, const char *ofile)
-{
+void subsector::showtechs( const int per, const string ofile ) const {
 	int i=0;
 
 	for (i=0;i<notech;i++) {
@@ -558,11 +529,10 @@ void subsector::showtechs(int per, const char *ofile)
 }
 
 //! prints to outputfile all subsector labels (name and index)
-void subsector::showlabel(const char *ofile)
-{
+void subsector::showlabel( const string& ofile ) const {
 	ofstream outfile;
 
-	outfile.open(ofile, ios::app);
+	outfile.open(ofile.c_str(), ios::app);
 
 		if (!outfile) {
 			//open failed
@@ -576,8 +546,7 @@ void subsector::showlabel(const char *ofile)
 }
 
 //! write subsector output to database
-void subsector::outputfile( const string& regname, const string& secname)
-{
+void subsector::outputfile( const string& regname, const string& secname ) const {
 	// function protocol
 	void fileoutput3( string var1name,string var2name,string var3name,
 				  string var4name,string var5name,string uname,vector<double> dout);
@@ -648,7 +617,7 @@ void subsector::outputfile( const string& regname, const string& secname)
 
 //! write MiniCAM style subsector output to database
 /*! Part A for supply sector, titles and units are different for Part B */
-void subsector::MCoutputA( const string & regname, const string& secname ){
+void subsector::MCoutputA( const string& regname, const string& secname ) const {
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
 			   string uname,vector<double> dout);
@@ -688,8 +657,7 @@ void subsector::MCoutputA( const string & regname, const string& secname ){
 
 //! write MiniCAM style subsector output to database
 /*! Part B for demand sector, titles and units are different from Part A */
-void subsector::MCoutputB( const string & regname, const string& secname )
-{
+void subsector::MCoutputB( const string& regname, const string& secname ) const {
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
 			   string uname,vector<double> dout);
@@ -729,8 +697,7 @@ void subsector::MCoutputB( const string & regname, const string& secname )
 
 
 //! write MiniCAM style subsector output to database
-void subsector::MCoutputC( const string & regname, const string& secname )
-{
+void subsector::MCoutputC( const string& regname, const string& secname ) const {
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
 			   string uname,vector<double> dout);
@@ -817,19 +784,14 @@ void subsector::MCoutputC( const string & regname, const string& secname )
 	}
 }
 
-int subsector::shownotech(void)
-{
+int subsector::shownotech() const {
 	return notech;
 }
 
-string subsector::showtechname(int id)
-{
-	return techs[id][0]->showname();
-}
-
 //! calculate GHG emissions from annual production of subresource
-void subsector::emission(int per,string prodname)
-{
+void subsector::emission( const int per, const string& prodname ){
+	//! \pre per is less than or equal to max period.
+	assert( per <= modeltime.getmaxper() );
 	summary[per].clearemiss(); // clear emissions map
 	summary[per].clearemfuelmap(); // clear emissions map
 	for (int i=0;i<notech;i++) {
@@ -840,8 +802,9 @@ void subsector::emission(int per,string prodname)
 }
 
 //! calculate indirect GHG emissions from annual production of subresource
-void subsector::indemission(int per)
-{
+void subsector::indemission(const int per) {
+	//! \pre per is less than or equal to max period.
+	assert( per <= modeltime.getmaxper() );
 	summary[per].clearemindmap(); // clear emissions map
 	for (int i=0;i<notech;i++) {
 		techs[i][per]->indemission();
@@ -850,8 +813,9 @@ void subsector::indemission(int per)
 }
 
 //! returns subsector primary energy consumption
-double subsector::showpe_cons(int per) 
-{
+double subsector::showpe_cons( const int per ) {
+	//! \pre per is less than or equal to max period.
+	assert( per <= modeltime.getmaxper() );
 	pe_cons[per] = 0;
 	for (int i=0;i<notech;i++) {
 		// depleatable resource indeces are less than 5
@@ -868,56 +832,59 @@ double subsector::showpe_cons(int per)
 }
 
 //! returns primary or final energy input
-double subsector::showinput(int per) 
-{
+double subsector::showinput( const int per ) const {
+	//! \pre per is less than or equal to max period.
+	assert( per <= modeltime.getmaxper() );
+
 	return input[per];
 }
 
 //! returns subsector output
-double subsector::getoutput(int per) 
-{
+double subsector::getoutput( const int per ) const {
+	//! \pre per is less than or equal to max period.
+	assert( per <= modeltime.getmaxper() );
+	
 	return output[per];
 }
 
 //! returns total subsector carbon taxes paid
-double subsector::showcarbontaxpaid(int per) 
-{
+double subsector::showcarbontaxpaid( const int per ) const {
+	//! \pre per is less than or equal to max period.
+	assert( per <= modeltime.getmaxper() );
+	
 	return carbontaxpaid[per];
 }
 
-//!  gets fuel consumption map in summary object
-map<string, double> subsector::getfuelcons(int per) 
-{
+//!  gets fuel consumption map in summary object.
+map<string, double> subsector::getfuelcons(const int per) const {
+	//! \pre per is less than or equal to max period.
+	assert( per <= modeltime.getmaxper() );
+
 	return summary[per].getfuelcons();
 }
 
 //! clears fuel consumption map in summary object
-void subsector::clearfuelcons(int per) 
-{
+void subsector::clearfuelcons(const int per) {
 	summary[per].clearfuelcons();
 }
 
 //!  get ghg emissions map in summary object
-map<string, double> subsector::getemission(int per) 
-{
+map<string, double> subsector::getemission(const int per) const {
 	return summary[per].getemission();
 }
 
 //!  get ghg emissions map in summary object
-map<string, double> subsector::getemfuelmap(int per) 
-{
+map<string, double> subsector::getemfuelmap( const int per ) const {
 	return summary[per].getemfuelmap();
 }
 
 //!  get ghg emissions map in summary object
-map<string, double> subsector::getemindmap(int per) 
-{
+map<string, double> subsector::getemindmap(const int per) const {
 	return summary[per].getemindmap();
 }
 
 //! update summaries for reporting
-void subsector::updateSummary(const int per)
-{
+void subsector::updateSummary(const int per) {
 	int i = 0;
 	string goodName;
 
