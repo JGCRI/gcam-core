@@ -55,23 +55,21 @@ Market::Market( const string& goodNameIn, const string& regionNameIn, const int 
 * It prints the current state of all internal variables. It also calls a derived method which prints derived class 
 * specific information.
 *
-* \warning This function does not print exact values, it replaces numbers below a very small threshhold with zero.
-* This is done to simplify checking a new debugging file against a stored reference file.
 * \param period Model period for which to print information.
 * \param out Output stream to print to.
 * \return void
 */
 void Market::toDebugXML( const int period, ostream& out ) const {
    
-   const int SMALL_NUM = 1e-10;
    
    // write the beginning tag.
    Tabs::writeTabs( out );
-   out << "<Market name=\""<< good << "\" type=\"" << getType() << "\">" << endl;
+   out << "<Market name=\""<< getName() << "\" type=\"" << getType() << "\">" << endl;
    
    // increase the indent.
    Tabs::increaseIndent();
    
+   XMLWriteElement( good, "MarketGoodOrFuel", out );
    XMLWriteElement( region, "MarketRegion", out );
    XMLWriteElement( period, "period", out );
    XMLWriteElement( price, "price", out );
@@ -80,49 +78,12 @@ void Market::toDebugXML( const int period, ostream& out ) const {
    XMLWriteElement( storedDemand, "storedDemand", out );
    XMLWriteElement( supply, "supply", out );
    XMLWriteElement( storedSupply, "storedSupply", out );
-   
-   // Remove very small numbers. 
-   if( fabs( excessDemand ) > SMALL_NUM ) {
-      XMLWriteElement( excessDemand, "excessDemand", out );
-   } 
-   else {
-      XMLWriteElement( 0, "excessDemand", out );
-   }
-
-   if( fabs( logOfExcessDemand ) > SMALL_NUM ) {
-      XMLWriteElement( logOfExcessDemand, "logOfExcessDemand", out );
-   } 
-   else {
-      XMLWriteElement( 0, "logOfExcessDemand", out );
-   }
-   
-   if( fabs( storedExcessDemand ) > SMALL_NUM ) {
-      XMLWriteElement( storedExcessDemand, "storedExcessDemand", out );
-   } 
-   else {
-      XMLWriteElement( 0, "storedExcessDemand", out );
-   }
-   
-   if( fabs( derivativeOfExcessDemand ) > SMALL_NUM ) {
-      XMLWriteElement( derivativeOfExcessDemand, "derivativeOfExcessDemand", out );
-   } 
-   else {
-      XMLWriteElement( 0, "derivativeOfExcessDemand", out );
-   }
-   
-   if( fabs( logOfDemand ) > SMALL_NUM ) {
-      XMLWriteElement( logOfDemand, "logOfDemand", out );
-   } 
-   else {
-      XMLWriteElement( 0, "logOfDemand", out );
-   }
-   
-   if( fabs( logOfSupply ) > SMALL_NUM ) {
-      XMLWriteElement( logOfSupply, "logOfSupply", out );
-   } 
-   else {
-      XMLWriteElement( 0, "logOfSupply", out );
-   }
+   XMLWriteElement( excessDemand, "excessDemand", out );
+   XMLWriteElement( logOfExcessDemand, "logOfExcessDemand", out );
+   XMLWriteElement( storedExcessDemand, "storedExcessDemand", out );
+   XMLWriteElement( derivativeOfExcessDemand, "derivativeOfExcessDemand", out );
+   XMLWriteElement( logOfDemand, "logOfDemand", out );
+   XMLWriteElement( logOfSupply, "logOfSupply", out );
    
    for( vector<string>::const_iterator i = containedRegionNames.begin(); i != containedRegionNames.end(); i++ ) {
       XMLWriteElement( *i, "ContainedRegion", out );
@@ -173,8 +134,19 @@ void Market::addRegion( const string& regionNameIn ) {
 * \param pointerIn A pointer to the companion market. 
 * \return void
 */
-void Market::setCompanionMarketPointer( Market* pointerIn ) {
 
+/*! \brief Get the vector of contained regions.
+* This function when called returns the containedRegions vector. This vector consists of the names of all regions
+* within this market.
+*
+* \return The vector of contained regions.
+*/
+const vector<string>& Market::getContainedRegions() {
+   return containedRegionNames;
+}
+
+void Market::setCompanionMarketPointer( Market* pointerIn ) {
+   
    //! \pre This should never be called for the base Market class.
    assert( false );
 }
@@ -195,7 +167,7 @@ void Market::initPrice() {
 * \return void
 */
 void Market::nullPrice() {
-   price = 0;
+   price = 0.0;
 }
 
 /*! \brief Sets the price variable to the value specified.
@@ -322,6 +294,7 @@ double Market::getLogChangeInPrice( const double SMALL_NUM ) const {
    
    // Case 3: Price or Previous Price are negative. This should not occur.
    else {
+      change = 0; // This avoids a compiler warning.
       assert( false );
    }
    return change;
@@ -333,7 +306,7 @@ double Market::getLogChangeInPrice( const double SMALL_NUM ) const {
 * \return void
 */
 void Market::nullDemand() {
-   demand = 0;
+   demand = 0.0;
 }
 
 /*! \brief Set the Raw demand.
@@ -359,6 +332,17 @@ void Market::setRawDemand( const double value ) {
 */
 void Market::setDemand( const double demandIn ) {
    demand += demandIn;
+}
+
+/*! \brief Remove an amount of demand from the raw demand.
+* This function is used by the solution mechanism to subtract out an amount of demand.
+*
+* \warning This function is not virtual.
+* \param demandIn Amount of demand to remove.
+* \return void
+*/
+void Market::removeFromRawDemand( const double demandIn ) {
+   demand -= demandIn;
 }
 
 /*! \brief Get the Raw demand.
@@ -418,6 +402,7 @@ double Market::getLogChangeInDemand( const double SMALL_NUM ) const {
    
    // Case 3: Demand or Previous Demand is negative. This should not occur.
    else {
+      change = 0; // This avoids a compiler warning.
       assert( false );
    }
    
@@ -426,7 +411,7 @@ double Market::getLogChangeInDemand( const double SMALL_NUM ) const {
 
 //! Null the supply.
 void Market::nullSupply() {
-   supply = 0;
+   supply = 0.0;
 }
 
 //! Get the Raw supply.
@@ -452,6 +437,17 @@ double Market::getSupplyForChecking() const {
 //! Set the supply.
 void Market::setSupply( const double supplyIn ) {
    supply += supplyIn;
+}
+
+/*! \brief Remove an amount of supply from the raw supply.
+* This function is used by the solution mechanism to subtract out an amount of supply.
+*
+* \warning This function is not virtual.
+* \param supplyIn Amount of supply to remove.
+* \return void
+*/
+void Market::removeFromRawSupply( const double supplyIn ) {
+   supply -= supplyIn;
 }
 
 //! Calculate the natural log of the supply.
@@ -494,6 +490,7 @@ double Market::getLogChangeInSupply( const double SMALL_NUM ) const {
    
    // Case 3: Supply or Previous Supply is negative. This should not occur.
    else {
+      change = 0; // This avoids a compiler warning.
       assert( false );
    }
    

@@ -30,6 +30,7 @@ public:
    void toDebugXML( const int period, ostream& out ) const;
    virtual void derivedToDebugXML( ostream& out ) const;
    void addRegion( const string& regionNameIn );
+   const vector<string>& getContainedRegions();
    virtual void setCompanionMarketPointer( Market* pointerIn );
 
    virtual void initPrice();
@@ -46,6 +47,7 @@ public:
    void nullDemand();
    void setRawDemand( const double value );
    virtual void setDemand( const double demandIn );
+   void removeFromRawDemand( const double demandIn );
    double getRawDemand() const;
    virtual double getDemand() const;
    void calcLogDemand( const double SMALL_NUM );
@@ -56,6 +58,7 @@ public:
    virtual void nullSupply();
    double getRawSupply() const;
    void setRawSupply( const double supplyIn );
+   void removeFromRawSupply( const double supplyIn );
    virtual double getSupply() const;
    virtual double getSupplyForChecking() const;
    virtual void setSupply( const double supplyIn );
