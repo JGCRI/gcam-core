@@ -89,30 +89,6 @@ void Region::clear(){
     }
 
     delete population;
-
-    // initialize elemental data members.
-    initElementalMembers();
-
-    // now clear strings and vectors.
-    name = "";
-    population->clear();
-    agSector->clear();
-    resources.clear();
-    supplySector.clear();
-    demandSector.clear();
-    ghgMarket.clear();
-    iElasticity.clear();
-    gnpDol.clear();
-    gnp.clear();
-    gnpAdj.clear();
-    gnpCap.clear();
-    calibrationGNPs.clear();
-    input.clear();
-    priceSer.clear();
-    carbonTax.clear();
-    carbonTaxPaid.clear();
-    summary.clear();
-    emcoefInd.clear();
 }
 
 //! Initialize elemental data members.
