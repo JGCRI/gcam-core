@@ -236,7 +236,8 @@ MODULE COMMON
        BSSJKLM(NKP,NISSP,NLPMax,NMP),P(NINP,NLPMax,NMP), &
        CARBSEQM(4,NMP),CARBDISP(NLPMax,NMP), &
        REMFRAC(2,NLPMax),CARBSEQ(4,NLPMax,NMP),REMFRACP(2,NLPMax), &      
-       ESERV(NNLPMax,NMP),ESERVK(NKP,NNLPMax,NMP), &      
+       ESERV(NNLPMax,NMP),ESERVK(NKP,NNLPMax,NMP), & 
+       CSEQbyFuel(3,3,NLPMax,NMP),	&    	! Carb seq by process (elec,synf,H2) and fuel
        ECapLim(NUP), &	! Var for capacity limts. sjs - 1/01
      
        ! HYRDOGEN Common Block

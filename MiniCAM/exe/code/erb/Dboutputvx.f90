@@ -746,6 +746,26 @@ END IF
 	DBAR(vl(ct,sct,4),:) = 1/GCI(3,2)
 	DBAR(vl(ct,sct,5),:) = 1/GCI(4,2)
       
+!	Carb Seq by fuel and processes
+	sct = 13
+	sctstr(ct,sct) = 'CarbSeqDetail'
+      IF(vp)CALL ivid(0,ct,sct,1,'Oil_elec','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,2,'Gas_elec','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,3,'Coal_elec','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,4,'Coal_Synf','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,5,'Oil_H2','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,6,'Gas_H2','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,7,'Coal_H2','EJ/yr')
+ 	DBAR(vl(ct,sct,1),:) = CSEQbyFuel(1,1,L,2:NM)
+	DBAR(vl(ct,sct,2),:) = CSEQbyFuel(1,2,L,2:NM)
+	DBAR(vl(ct,sct,3),:) = CSEQbyFuel(1,3,L,2:NM)
+	DBAR(vl(ct,sct,4),:) = CSEQbyFuel(2,3,L,2:NM)
+	DBAR(vl(ct,sct,5),:) = CSEQbyFuel(3,1,L,2:NM)
+	DBAR(vl(ct,sct,6),:) = CSEQbyFuel(3,2,L,2:NM)
+	DBAR(vl(ct,sct,7),:) = CSEQbyFuel(3,3,L,2:NM)
+
+
+
 !	REFINERY DEMAND FOR FUELS
 	sct = 20
 	sctstr(ct,sct) = 'Ref Demand'

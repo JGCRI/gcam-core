@@ -163,9 +163,10 @@
             - SYNFUEL(ICOAL,IGAS,L,M)*COI(IGAS)*(1.D0-SFEDIL(IGAS,L))
       CO2IL(IICSYN,L) = CO2IL(IICSYN,L)*(1.0-REMFRACP(1,L))
       CO2ILM(IICSYN,L,M) = CO2IL(IICSYN,L)
-      CARBSEQ(1,L,M) = CO2IL(IICSYN,L)*REMFRACP(1,L)
+      CARBSEQ(1,L,M) = CO2IL(IICSYN,L)*REMFRACP(1,L)/(1.0-REMFRACP(1,L))	! Fixed 1/03 sjs
 !     Net emissions by fuel
       CARBFUEL(INCOAL,L,M) = CO2IL(IICSYN,L)
+	  CSEQbyFuel(2,3,L,M) = CARBSEQ(1,L,M)	!	Carb seq by coal synfuel technologies
 
 !**** CONVENTIONAL COAL CONSUMPTION
 !     no more biomass in there 
@@ -214,6 +215,7 @@
 !     Net emissions by fuel
       CARBFUEL(INCOAL,L,M) = CARBFUEL(INCOAL,L,M) -  &
                          COI(ICOAL)*CSCRUB*REMFRAC(2,L)
+	  CSEQbyFuel(1,3,L,M) = CARBSEQ(2,L,M)	!	Carb seq by coal elec power technologies. sjs
 
 !**** OIL POWER CARBON CAPTURE
 	I=JUOSCRUB
@@ -223,6 +225,7 @@
 !     Net emissions by fuel
       CARBFUEL(INOIL,L,M) = CARBFUEL(INOIL,L,M) -  &
                          COI(IOIL)*CSCRUB*REMFRAC(2,L)
+	  CSEQbyFuel(1,1,L,M) = COI(IOIL)*CSCRUB*REMFRAC(2,L)	!	Carb seq by oil elec power technologies. sjs
 
 !**** GAS POWER CARBON CAPTURE
 	I=JUGSCRUB
@@ -232,6 +235,7 @@
 !     Net emissions by fuel
       CARBFUEL(INGAS,L,M) = CARBFUEL(INGAS,L,M) -  &
                          COI(IGAS)*CSCRUB*REMFRAC(2,L)
+	  CSEQbyFuel(1,2,L,M) = COI(IGAS)*CSCRUB*REMFRAC(2,L)	!	Carb seq by gas elec power technologies. sjs
 
 
 !**** EMISSIONS REMOVED BY HYDROGEN PRODUCTION SCRUBBER TECHNOLOGY
@@ -243,6 +247,7 @@
 !     Net emissions by fuel
          CARBFUEL(J,L,M) = CARBFUEL(J,L,M) -  &
                          COI(J)*CSCRUB*REMFRAC(2,L)
+	  CSEQbyFuel(3,J,L,M) = COI(J)*CSCRUB*REMFRAC(2,L)	!	Carb seq by H2 technologies. sjs
       END DO
 
 !**** Emissions removed by policy that forces conversion of all fossil fuels
