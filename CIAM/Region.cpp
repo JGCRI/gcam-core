@@ -398,7 +398,7 @@ void Region::completeInit() {
    findSimul( 0 );
 }
 
-//! Write datamembers to datastream in XML format.
+/*! \brief Write datamembers to datastream in XML format. \note \ref faqitem1 */
 void Region::toXML( ostream& out ) const {
    
    const Modeltime* modeltime = scenario->getModeltime();
