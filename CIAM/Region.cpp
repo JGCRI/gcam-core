@@ -250,7 +250,7 @@ void Region::XMLParse( const DOMNode* node ){
 	As needed for calibration	(not implimented)
 	*/
 	// MarketSetup;
-	finalsupply(0);	// Dummy call to final supply to setup fuel map
+	updateSummary(0);	// Dummy call to final supply to setup fuel map
 	findSimul(0);
 	
 	// Create AgLU markets
@@ -1096,7 +1096,6 @@ void Region::findSimul(const int per) const {
         for ( jsec=0; jsec<nossec; jsec++ ) {
             InnerSectorName = supplysector[jsec]->getName();
             fuelIterOne=fuelcons.find(InnerSectorName);	// Search in outer sector for name of inner sector 
-            
             // Check if the inner sector is a fuel used by the outer sector (and not same sector!)
             if ( ( jsec != isec ) && ( fuelIterOne!=fuelcons.end() ) ) {	
                 Innerfuelcons = supplysector[jsec]->getfuelcons(per);	// Get map of fuels used in inner sector
