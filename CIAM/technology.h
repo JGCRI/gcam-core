@@ -72,9 +72,12 @@ protected:
     
 public:
    technology(); // default construtor
+   technology( const technology& techIn ); // copy constructor.
+   technology& operator=( const technology& techIn ); // assignment operator.
     virtual ~technology();
     virtual void clear();
-    virtual technology* clone() const; // returns a clone of the technology object
+    virtual void copy( const technology& techIn );
+
     void initElementalMembers();
     virtual void XMLParse( const DOMNode* tempnode ); // initialize technology with xml data
     void completeInit();

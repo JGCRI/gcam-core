@@ -42,52 +42,58 @@ technology::~technology() {
 }
 
 // ! Deep copy and return of technology object
-technology* technology::clone() const {
-    technology* newtech = new technology();
+technology::technology( const technology& techIn ) {
+   copy( techIn );
+}
 
-    newtech->year = year; //!< period year or vintage
-    newtech->shrwts = shrwts; //!< logit share weight
-    newtech->eff = eff; //!< energy intensity
-    newtech->necost = necost; //!< all non-fuel costs (levelized)
-    newtech->fuelcost = fuelcost; //!< fuel cost only
-    newtech->techcost = techcost; //!< total cost of technology
-    newtech->tax = tax; //!< utility tax
-    newtech->fMultiplier = fMultiplier; //!< multiplier on fuel cost or price
-    newtech->pMultiplier = pMultiplier; //!< multiplier on total cost or price
-    newtech->carbontax = carbontax; //!< carbon tax in $/TC
-    newtech->carbontaxgj = carbontaxgj; //!< carbon tax in $/GJ
-    newtech->carbontaxpaid = carbontaxpaid; //!< total carbon taxes paid
-    newtech->lexp = lexp; //!< logit exponential
-    newtech->share = share; //!< technology shares
-    newtech->input = input; //!< total fuel input (fossil and uranium)
-    newtech->output = output; //!< technology output
-    newtech->techchange = techchange;  //!< technical change in %/year
-    newtech->fixedSupply = fixedSupply; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
-    newtech->fixedOutputVal = fixedOutputVal; //!< A fixed amount of output.
-    newtech->name = name; //!< technology name
-    newtech->unit = unit; //!< unit of final product from technology
-    newtech->fuelname = fuelname; //!< name of fuel used
-    newtech->doCalibration = doCalibration; // Flag set if calibration value is read-in
-    newtech->calInputValue = calInputValue; // Calibration value
-    newtech->emissmap = emissmap; //!< map of ghg emissions
-    newtech->emfuelmap = emfuelmap; //!< map of ghg emissions implicit in fuel
-    newtech->emindmap = emindmap; //!< map of indirect ghg emissions
+//! Assignment operator.
+technology& technology::operator =( const technology& techIn ) {
+
+   if( this != &techIn ) { // check for self assignment 
+      clear();
+      copy( techIn );
+   }
+   return *this;
+}
+
+//! Helper copy function to avoid replicating code.
+void technology::copy( const technology& techIn ) {
+    year = techIn.year;
+    shrwts = techIn.shrwts;
+    eff = techIn.eff; 
+    necost = techIn.necost;
+    fuelcost = techIn.fuelcost;
+    techcost = techIn.techcost;
+    tax = techIn.tax;
+    fMultiplier = techIn.fMultiplier;
+    pMultiplier = techIn.pMultiplier;
+    carbontax = techIn.carbontax;
+    carbontaxgj = techIn.carbontaxgj;
+    carbontaxpaid = techIn.carbontaxpaid;
+    lexp = techIn.lexp;
+    share = techIn.share;
+    input = techIn.input;
+    output = techIn.output;
+    techchange = techIn.techchange;
+    fixedSupply = techIn.fixedSupply;
+    fixedOutputVal = techIn.fixedOutputVal;
+    name = techIn.name;
+    unit = techIn.unit;
+    fuelname = techIn.fuelname;
+    doCalibration = techIn.doCalibration;
+    calInputValue = techIn.calInputValue;
+    emissmap = techIn.emissmap; 
+    emfuelmap = techIn.emfuelmap; 
+    emindmap = techIn.emindmap; 
     
-    // attributes for hydroelectricity only!
-    newtech->resource = resource; //!< available hydro resource in energy units
-    newtech->A = A; //!< logit function shape parameter
-    newtech->B = B; //!< logit function shape parameter
-    newtech->ghgNameMap = ghgNameMap; //!< Map of ghg name to integer position in vector. 
+    resource = techIn.resource;
+    A = techIn.A;
+    B = techIn.B;
+    ghgNameMap = techIn.ghgNameMap; 
     
-    for (vector<Ghg*>::const_iterator iter = ghg.begin(); iter != ghg.end(); iter++) {
-        newtech->ghg.push_back(new Ghg( **iter ) ); //!< suite of greenhouse gases
+    for (vector<Ghg*>::const_iterator iter = techIn.ghg.begin(); iter != techIn.ghg.end(); iter++) {
+        ghg.push_back( new Ghg( **iter ) );
     }
- 
- /*   for (int i=0; i<ghg.size(); i++) {
-        newtech->ghg.push_back(ghg[i]); //!< suite of greenhouse gases
-    }
-   */ 
-    return newtech;
 }
 
 
@@ -101,6 +107,12 @@ void technology::clear(){
     emissmap.clear();
     emfuelmap.clear();
     emindmap.clear();
+    ghgNameMap.clear();
+    
+    // Delete the GHGs to avoid a memory leak.
+    for( vector<Ghg*>::iterator iter = ghg.begin(); iter != ghg.end(); iter++ ) {
+        delete *iter;
+    }
 }
 
 //! Initialize elemental data members.
@@ -227,6 +239,7 @@ void technology::completeInit() {
    if( ghg.empty() ) {
       Ghg* CO2 = new Ghg( "CO2", "MTC", 0, 1, 0 ); // at least CO2 must be present
       ghg.push_back( CO2 );
+      ghgNameMap[ "CO2" ] = 0;
   }
 }
 
