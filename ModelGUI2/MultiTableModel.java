@@ -205,6 +205,10 @@ public class MultiTableModel extends BaseTableModel{
 		  		j++;
 	  		}
 			CopyPaste copyPaste = new CopyPaste( jTable );
+			/* only want the action to be passed to this copy paste when it is in focus
+			((FileChooserDemo)parentFrame).copyMenu.addActionListener(copyPaste);
+			((FileChooserDemo)parentFrame).pasteMenu.addActionListener(copyPaste);
+			*/
 	  		JScrollPane tableView = new JScrollPane(jTable);
 	  		if(tables == null) {
 		  		tables = new Vector();

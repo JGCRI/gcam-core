@@ -38,6 +38,8 @@ public class FileChooserDemo extends JFrame
   JMenuItem menuClose = null;
   JMenuItem menuTableFilter = null;
   JMenuItem menuTableAdd = null;
+  protected JMenuItem copyMenu = null;
+  protected JMenuItem pasteMenu = null;
   JSplitPane splitPane;
   JLabel infoLabel;
   JTextField nameField;
@@ -195,11 +197,20 @@ public class FileChooserDemo extends JFrame
 	submenu.add(menuItem);
 	m.add(submenu);
 
-
 	m.add(menuSave  = makeMenuItem("Save"));
 	menuSave.setEnabled(false); // save will first be gray since no file open
 	m.add(menuClose = makeMenuItem("Quit"));
 
+	JMenu editMenu = new JMenu("Edit");
+	copyMenu = new JMenuItem("Copy");
+	copyMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+	editMenu.add(copyMenu);
+	pasteMenu = new JMenuItem("Paste");
+	pasteMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+	editMenu.add(pasteMenu);
+
+	copyMenu.setEnabled(false);
+	pasteMenu.setEnabled(false);
 
 	JMenu tableMenu = new JMenu("Table");
 	tableMenu.add(menuTableFilter = makeMenuItem("Filter"));
@@ -212,6 +223,7 @@ public class FileChooserDemo extends JFrame
 
 	JMenuBar mb = new JMenuBar();
 	mb.add(m);
+	mb.add(editMenu);
 	mb.add(tableMenu);
 
 	setJMenuBar(mb);
@@ -444,7 +456,6 @@ public class FileChooserDemo extends JFrame
 					return;
 				}
 	  			splitPane.setRightComponent(tableView);
-	  		    menuTableFilter.setEnabled(true);
 				tableMenu = makePopupTableMenu();
 				// add the listener for right click which currently only handles flip
 				((JTable)tableView.getViewport().getView()).addMouseListener(new MouseAdapter() {
