@@ -30,30 +30,29 @@ class World;
 class Scenario
 {
 private:
-	Modeltime* modeltime; //!< The modeltime for the scenario
-	World* world; //!< The world object
-	Marketplace* marketplace; //!< The goods and services marketplace.
-   std::string name; //!< Scenario name.
-   std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
+    Modeltime* modeltime; //!< The modeltime for the scenario
+    World* world; //!< The world object
+    Marketplace* marketplace; //!< The goods and services marketplace.
+    std::string name; //!< Scenario name.
+    std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
 
 public:
-	Scenario();
-   ~Scenario();
-	const Modeltime* getModeltime() const;
-	const Marketplace* getMarketplace() const;
-	Marketplace* getMarketplace();
-	const World* getWorld() const;
-	World* getWorld();
-	void clear();
-	void XMLParse( const xercesc::DOMNode* node );
-   void completeInit();
-   void toXML( std::ostream& out ) const;
-   void toDebugXMLOpen( const int period, std::ostream& out ) const;
-   void toDebugXMLClose( const int period, std::ostream& out ) const;
-   std::string getName() const;
-   static std::string XMLCreateDate( const time_t& time );
-	void run();
-   void printGraphs( const int period ) const;
+    Scenario();
+    ~Scenario();
+    const Modeltime* getModeltime() const;
+    const Marketplace* getMarketplace() const;
+    Marketplace* getMarketplace();
+    const World* getWorld() const;
+    World* getWorld();
+    void clear();
+    void XMLParse( const xercesc::DOMNode* node );
+    void completeInit();
+    void toXML( std::ostream& out ) const;
+    void toDebugXMLOpen( const int period, std::ostream& out ) const;
+    void toDebugXMLClose( const int period, std::ostream& out ) const;
+    std::string getName() const;
+    void run();
+    void printGraphs( const int period ) const;
 };
 
 #endif // _SCENARIO_H_
