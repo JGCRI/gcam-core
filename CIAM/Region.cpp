@@ -523,7 +523,8 @@ void Region::toXML( ostream& out ) const {
    out << "</region>" << endl;
 }
 
-/*! Write datamembers to datastream in XML format for debugging purposes.  Calls XMLWriteElement function from the XMLHelper class for the actual writing.
+/*! \brief Write datamembers to datastream in XML format for debugging purposes.  
+* Calls XMLWriteElement function from the XMLHelper class for the actual writing.
 *  Calls debug functions in other contained objects. 
 *
 * \param period Model time period
