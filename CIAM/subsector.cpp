@@ -463,8 +463,9 @@ void subsector::toDebugXML( const int period, ostream& out ) const {
 */
 void subsector::initCalc( const int period ) {
     
+    int i = 0;
     // Set any fixed demands
-    for ( int i=0 ;i<notech; i++ ) {
+    for ( i=0 ;i<notech; i++ ) {
         techs[i][ period ]->calcFixedSupply( period );
         techs[i][ period ]->initCalc( );
     }
@@ -480,7 +481,7 @@ void subsector::initCalc( const int period ) {
     }
    
    // check to see if input fuel has changed
-    for ( int i=0 ;i<notech && period > 0; i++ ) {
+    for ( i=0 ;i<notech && period > 0; i++ ) {
       std::string orgFuel = techs[i][ period-1 ]->getFName();
       if ( orgFuel != techs[i][ period ]->getFName() ) {
          cerr << "WARNING: Type of fuel "<< orgFuel << " changed in period " << period << ", tech: ";
@@ -689,8 +690,9 @@ void subsector::calcTechShares( const string& regionName, const int per ) {
     for (i=0;i<notech;i++) {
         techs[i][per]->normShare(sum);
         // Logit exponential should not be zero or positive when more than one technology
-        if(notech>1 && techs[i][per]->getlexp()>=0) 
+        if(notech>1 && techs[i][per]->getlexp()>=0) {
           cerr << "Tech for sector " << name << " Logit Exponential is invalid (>= 0)" << endl;
+        }
     }
 }	
 

@@ -81,8 +81,11 @@ void dboutput4(string var1name,string var2name,string var3name,string var4name,
 	    DBoutrst.SetField(4L, COleVariant(var3name.c_str(), VT_BSTRT));
 	    DBoutrst.SetField(5L, COleVariant(var4name.c_str(), VT_BSTRT));
 	    DBoutrst.SetField(6L, COleVariant(uname.c_str(), VT_BSTRT));
+        // get scenario name and output to dbout
+        string scenarioName = scenario->getName();
+	    DBoutrst.SetField(7L, COleVariant(scenarioName.c_str(), VT_BSTRT));
 	    for (i=0;i< static_cast<int>( dout.size() );i++) {
-		    j = 7+i;
+		    j = 8+i;
 		    DBoutrst.SetField(j, COleVariant(dout[i]));
 	    }
 	    DBoutrst.Update(); // save and write the record

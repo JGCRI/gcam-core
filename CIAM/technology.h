@@ -44,6 +44,7 @@ protected:
     double pMultiplier; //!< multiplier on total cost or price
     double carbontax; //!< carbon tax in $/TC
     double carbontaxgj; //!< carbon tax in $/GJ
+    double carbonValue; //!< the value of carbon, tax + any storage cost, in $/GJ
     double carbontaxpaid; //!< total carbon taxes paid
     double lexp; //!< logit exponential
     double share; //!< technology shares

@@ -137,11 +137,11 @@ namespace util {
     * \bug GMT offset does not work properly.
     */
 
-   static std::string XMLCreateDate( const std::time_t& time ) {
+   static std::string XMLCreateDate( const time_t& time ) {
        std::stringstream buffer;
        std::string retString;
-       struct std::tm* timeInfo;
-       struct std::tm* umtTimeInfo;
+       struct tm* timeInfo;
+       struct tm* umtTimeInfo;
 	
 	    timeInfo = localtime( &time );
 	    umtTimeInfo = gmtime( &time );

@@ -388,10 +388,12 @@ void technology::addghgtax( const string ghgname, const string regionName, const
     // returns coef for primary fuels only
     // carbontax has value for primary fuels only
     carbontaxgj = 0; // initialize
+    carbonValue = 0; // initialize
     carbontax = marketplace->getPrice(ghgname,regionName,per);
     // add to previous ghg tax if more than one ghg
+    // carbonValue and carbontax must be in same unit as fuel price
     for(int i=0;i< static_cast<int>( ghg.size() );i++) {
-        carbontaxgj += carbontax*ghg[i]->taxcnvrt( regionName, fuelname)*1e-3;
+        carbonValue += ghg[i]->getGHGValue( regionName, fuelname, per);
     }
     // need to add taxes from all ghgs
 }
@@ -400,11 +402,13 @@ void technology::addghgtax( const string ghgname, const string regionName, const
 void technology::calcCost( const string regionName, const int per ) 
 {
     Marketplace* marketplace = scenario->getMarketplace();
+
     double fuelprice = marketplace->getPrice(fuelname,regionName,per);
     
+    // code for integrating technical change
     //techcost = fprice/eff/pow(1+techchange,modeltime->gettimestep(per)) + necost;
     // fMultiplier and pMultiplier are initialized to 1 for those not read in
-    fuelcost = ( (fuelprice * fMultiplier) + carbontaxgj ) / eff;
+    fuelcost = ( (fuelprice * fMultiplier) + carbonValue ) / eff;
     techcost = ( fuelcost + necost ) * pMultiplier;
 }
 
@@ -417,7 +421,6 @@ void technology::calcCost( const string regionName, const int per )
 */
 void technology::calcShare( const string regionName, const int per)
 {
-    // use pow(x,y) == x**y in fortran, x and y are double, need math.h
     share = shrwts * pow(techcost,lexp);
 }
 

@@ -178,7 +178,7 @@ void createMCvarid() {
 	// insert into run labels table
 	sqltemp = "INSERT INTO ";
 	sqltemp += dbtrun;
-	sqltemp += " SELECT DISTINCT RunID";
+	sqltemp += " SELECT DISTINCT RunID,RunLabel";
 	sqltemp = sqltemp + " FROM " + DBout;
 	try {
 		db.Execute(sqltemp.c_str()); }

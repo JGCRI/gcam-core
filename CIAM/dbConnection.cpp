@@ -77,6 +77,8 @@ void createDBout() {
 	DBoutTD.Fields.Append(tfield);
 	tfield = DBoutTD.CreateField("VarUnits",dbText);
 	DBoutTD.Fields.Append(tfield);
+	tfield = DBoutTD.CreateField("RunLabel",dbText);
+	DBoutTD.Fields.Append(tfield);
 	char buffer[4];
 	string str;
 	// add years as fields

@@ -39,8 +39,20 @@
 						<period year="1975" fillout="1">
 							<name>Hydrogen</name>
 							<year>1975</year>
-							<fuelname>hydrogen</fuelname>
+							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
+							<intensity unit="Btu/veh-mi">6352</intensity>
+							<nonenergycost>0.45408</nonenergycost>
+							<serviceoutput/>
+							<loadFactor>1.62</loadFactor>
+							<techchange>0.0018</techchange>
+							<logitexp>-3</logitexp>
+						</period>
+						<period year="2020" fillout="1">
+							<name>Hydrogen</name>
+							<year>2020</year>
+							<fuelname>hydrogen_td_trn</fuelname>
+							<sharewt>0.95</sharewt>
 							<intensity unit="Btu/veh-mi">6352</intensity>
 							<nonenergycost>0.45408</nonenergycost>
 							<serviceoutput/>
@@ -145,8 +157,20 @@
 						<period year="1975" fillout="1">
 							<name>Hydrogen</name>
 							<year>1975</year>
-							<fuelname>hydrogen</fuelname>
+							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
+							<intensity>7987</intensity>
+							<nonenergycost>0.48</nonenergycost>
+							<serviceoutput/>
+							<loadFactor>1.6</loadFactor>
+							<techchange>0.0018</techchange>
+							<logitexp>-3</logitexp>
+						</period>
+						<period year="2020" fillout="1">
+							<name>Hydrogen</name>
+							<year>2020</year>
+							<fuelname>hydrogen_td_trn</fuelname>
+							<sharewt>0.95</sharewt>
 							<intensity>7987</intensity>
 							<nonenergycost>0.48</nonenergycost>
 							<serviceoutput/>
@@ -251,7 +275,7 @@
 						<period year="1975" fillout="1">
 							<name>Hydrogen</name>
 							<year>1975</year>
-							<fuelname>hydrogen</fuelname>
+							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>27401</intensity>
 							<nonenergycost>1.44</nonenergycost>
@@ -343,7 +367,7 @@
 						<period year="1975" fillout="1">
 							<name>Hydrogen</name>
 							<year>1975</year>
-							<fuelname>hydrogen</fuelname>
+							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>74388</intensity>
 							<nonenergycost>4.8</nonenergycost>
@@ -435,7 +459,7 @@
 						<period year="1975" fillout="1">
 							<name>Hydrogen</name>
 							<year>1975</year>
-							<fuelname>hydrogen</fuelname>
+							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>447125</intensity>
 							<nonenergycost>14.4</nonenergycost>
@@ -527,7 +551,7 @@
 						<period year="1975" fillout="1">
 							<name>Hydrogen</name>
 							<year>1975</year>
-							<fuelname>hydrogen</fuelname>
+							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>30913</intensity>
 							<nonenergycost>1.2</nonenergycost>
@@ -619,7 +643,7 @@
 						<period year="1975" fillout="1">
 							<name>Hydrogen</name>
 							<year>1975</year>
-							<fuelname>hydrogen</fuelname>
+							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>2596</intensity>
 							<nonenergycost>0.18</nonenergycost>
@@ -814,7 +838,7 @@
 						<period year="1975" fillout="1">
 							<name>Hydrogen</name>
 							<year>1975</year>
-							<fuelname>hydrogen</fuelname>
+							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>26309</intensity>
 							<nonenergycost>0.4</nonenergycost>
@@ -922,7 +946,7 @@
 						<period year="1975" fillout="1">
 							<name>Hydrogen</name>
 							<year>1975</year>
-							<fuelname>hydrogen</fuelname>
+							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>16819</intensity>
 							<nonenergycost>4</nonenergycost>
@@ -1030,7 +1054,7 @@
 						<period year="1975" fillout="1">
 							<name>Hydrogen</name>
 							<year>1975</year>
-							<fuelname>hydrogen</fuelname>
+							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>450553</intensity>
 							<nonenergycost>12</nonenergycost>
@@ -1138,7 +1162,7 @@
 						<period year="1975" fillout="1">
 							<name>Hydrogen</name>
 							<year>1975</year>
-							<fuelname>hydrogen</fuelname>
+							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>1288107</intensity>
 							<nonenergycost>1</nonenergycost>

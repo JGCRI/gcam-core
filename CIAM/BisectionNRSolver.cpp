@@ -630,7 +630,7 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
    
    World* world = scenario->getWorld();
    const Modeltime* modeltime = scenario->getModeltime();
-   int i;
+   int i, j;
    int numDerivativeCalcs = 0; // count number of times derivatives are calculated
    int iter = 0; // number of iterations through solution algorithm
    int code = 2; // code that reports success 1 or failure 0
@@ -681,7 +681,7 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
          numDerivativeCalcs++; // increment count of derivative calculation
          
          for( i = 0; i < marketsToSolve; i++ ) {
-            for( int j = 0; j < marketsToSolve; j++ ) {
+            for( j = 0; j < marketsToSolve; j++ ) {
                JF[ i ][ j ] = JFSM[ i ][ j ] - JFDM[ i ][ j ];
                assert( util::isValidNumber( JF[ i ][ j ] ) );
             }
@@ -702,7 +702,7 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
       }
       
       for ( i = 0; i < marketsToSolve; i++ ) {
-         for ( int j = 0; j < marketsToSolve; j++ ) {
+         for ( j = 0; j < marketsToSolve; j++ ) {
             double tempValue = log( max( sol[ j ].X, util::getSmallNumber() ) );
             KD[ i ] -= tempValue * JFDM[ i ][ j ];
             KS[ i ] -= tempValue * JFSM[ i ][ j ];
@@ -719,7 +719,7 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
          
          NP[ i ] = 0;
          
-         for ( int j = 0; j < marketsToSolve; j++ ) {
+         for ( j = 0; j < marketsToSolve; j++ ) {
             assert( util::isValidNumber( JF[ i ][ j ] ) );
             NP[ i ] += JF[ i ][ j ] * KDS[ j ];
             assert( util::isValidNumber( NP[ i ] ) );
@@ -732,14 +732,14 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
             cerr << " Large price in market: " << sol[ i ].getName() << endl;
             // first get largest derivitive
             double maxDerVal = 0; double maxKDSval = 0;
-            for ( int j = 0; j < marketsToSolve; j++ ) {
+            for ( j = 0; j < marketsToSolve; j++ ) {
                maxKDSval = max(maxKDSval, fabs(KDS[ j ]) );
                maxDerVal = max(maxDerVal, fabs(JF[ i ][ j ]) );
             }
             cout << "Max KDS: " << maxKDSval << ", Max Derivitive: " << maxDerVal;
             cout << " Prev Price?: " << prevprice << endl;
             cout << "Large derivitives against: " << endl;
-            for ( int j = 0; j < marketsToSolve; j++ ) {
+            for ( j = 0; j < marketsToSolve; j++ ) {
                if ( abs(JF[ i ][ j ]) > maxDerVal/100 ) {
                  cout << "   Market: " << sol[ j ].getName() << ", Value: "<< JF[ i ][ j ] << endl;
                }
