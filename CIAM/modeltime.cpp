@@ -85,7 +85,11 @@ void Modeltime::XMLParse( const DOMNode* node ) {
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
 		// select the type of node.
-		if ( nodeName == "startyear" ){
+      if( nodeName == "#text" ) {
+         continue;
+      }
+
+		else if ( nodeName == "startyear" ){
 			startYear = XMLHelper<int>::getValue( curr );
 		} 
 		else if ( nodeName == "interyear1" ){
@@ -115,6 +119,9 @@ void Modeltime::XMLParse( const DOMNode* node ) {
 		else if ( nodeName == "datatimestep" ){
 			dataTimeStep = XMLHelper<int>::getValue( curr );
 		}
+      else {
+         cout << "Unrecognized text string: " << nodeName << " found while parsing modeltime." << endl;
+      }
 	}
 }
 

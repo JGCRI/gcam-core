@@ -31,6 +31,7 @@ ghg_mrk::ghg_mrk(){
    const Modeltime* modeltime = scenario->getModeltime();
 	const int maxper = modeltime->getmaxper();
    constraint.resize( maxper );
+   emission.resize( modeltime->getmaxper() ); // emissions (tgC or MTC)
 }
 
 //! Clear member variables.
@@ -85,7 +86,11 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
 		curr = nodeList->item( i );
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
-		if( nodeName == "market" ){
+      if( nodeName == "#text" ) {
+         continue;
+      }
+
+		else if( nodeName == "market" ){
 			market = XMLHelper<string>::getValueString( curr ); // should be only one market
 		}
 
@@ -96,16 +101,21 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
 			for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
 				currChild = childNodeList->item( j );
 				childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+            
+            if( childNodeName == "#text" ) {
+               continue;
+            }
 
-				if( childNodeName == "constraint" ){
+				else if( childNodeName == "constraint" ){
                XMLHelper<double>::insertValueIntoVector( currChild, constraint, modeltime );
 				}
+
+            else {
+               cout << "Unrecognized text string: " << nodeName << " found while parsing ghg market." << endl;
+            }
 			}
 		}
-	}
-	// completed parsing.
-	// not a read in value
-	emission.resize( modeltime->getmaxper() ); // emissions (tgC or MTC)
+   }
 }
 
 //! Writes datamembers to datastream in XML format.

@@ -87,7 +87,11 @@ void Ghg::XMLParse(const DOMNode* node)
 		curr = nodeList->item( i );
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
 		
-		if( nodeName == "unit"){
+      if( nodeName == "#text" ){
+         continue;
+      }
+
+		else if( nodeName == "unit"){
 			unit = XMLHelper<string>::getValueString( curr );
 		}
 
@@ -102,6 +106,9 @@ void Ghg::XMLParse(const DOMNode* node)
 		else if( nodeName == "GWP" ){
 			gwp = XMLHelper<double>::getValue( curr );
 		}
+      else {
+         cout << "Unrecognized text string: " << nodeName << " found while parsing GHG." << endl;
+      }
 	}
 }
 
