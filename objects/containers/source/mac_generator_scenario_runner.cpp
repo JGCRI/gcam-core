@@ -125,10 +125,10 @@ bool MACGeneratorScenarioRunner::runScenario( Timer& aTimer ) {
 * varied fixed carbon taxes in order to determine an abatement cost curve.
 * \return Whether all model runs solved successfully.
 * \author Josh Lurz
+* \todo Find a better way to check for the existance of a carbon market taking into account 
+* different carbon policies in different regions. 
 */
 bool MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
-    // TODO: Find a better way to do this taking into account different carbon policies in 
-    // different regions. 
     // If there is no policy market, the model will not create cost curves and 
     // will leave mRanCosts as false. This will prevent the cost curves from printing.
     if( !scenario->getMarketplace()->doesMarketExist( mGhgName, "USA", 1 ) ){
