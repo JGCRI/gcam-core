@@ -21,8 +21,8 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief Class which defines a market for a single greenhouse gas.
 * \author Sonny Kim
-* \date $ Date $
-* \version $ Revision $
+* \date $Date$
+* \version $Revision$
 */
 
 class ghg_mrk

@@ -23,8 +23,8 @@ using namespace std;
 * coefficients, and each emisscoef_ind object is
 * used to represent the secondary energy sector.
 * \author Sonny Kim
-* \date $ Date $
-* \version $ Revision $
+* \date $Date $
+* \version $Revision $
 */
 
 class Emcoef_ind

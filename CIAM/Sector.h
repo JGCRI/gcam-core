@@ -22,8 +22,8 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief A class which defines a single supply sector.
 * \author Sonny Kim
-* \date $ Date $
-* \version $ Revision $
+* \date $Date $
+* \version $Revision $
 */
 
 class sector

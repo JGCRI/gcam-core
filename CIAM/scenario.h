@@ -22,8 +22,8 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief A class which defines a model scenario.
 * \author Sonny Kim
-* \date $ Date $
-* \version $ Revision $
+* \date $Date $
+* \version $Revision $
 */
 
 class Scenario

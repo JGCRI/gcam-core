@@ -29,8 +29,8 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief This technology class is based on the MiniCAM description of technology.
 * \author Sonny Kim
-* \date $ Date $
-* \version $ Revision $
+* \date $Date $
+* \version $Revision $
 */
 
 class technology

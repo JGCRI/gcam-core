@@ -22,8 +22,8 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief A class which defines the time information neccessary for the model to run.
 * \author Sonny Kim
-* \date $ Date $
-* \version $ Revision $
+* \date $Date $
+* \version $Revision $
 */
 
 class Modeltime

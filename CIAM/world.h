@@ -21,8 +21,8 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief A class which contains all the model's regions.
 * \author Sonny Kim
-* \date $ Date $
-* \version $ Revision $
+* \date $Date $
+* \version $Revision $
 */
 
 class World

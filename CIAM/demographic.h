@@ -21,8 +21,8 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief An object which contains the demographic information for a region.
 * \author Sonny Kim
-* \date $ Date $
-* \version $ Revision $
+* \date $Date $
+* \version $Revision $
 */
 class demographic
 {

@@ -29,8 +29,8 @@ typedef matrix<double, rectangle<>, dense<>, row_major>::type Matrix;
 * \ingroup CIAM
 * \brief A class which describes the single global marketplace.
 * \author Sonny Kim
-* \date $ Date $
-* \version $ Revision $
+* \date $Date $
+* \version $Revision $
 */
 
 class Marketplace

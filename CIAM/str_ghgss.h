@@ -1,7 +1,6 @@
 #ifndef _STR_GHGSS_H_
 #define _STR_GHGSS_H_
 #pragma once
-
 /*! 
 * \file str_ghgss.h
 * \ingroup CIAM
@@ -18,8 +17,8 @@
 * Stores emissions for each gas for region, sector, subsector
 * and technology totals.
 * \author Sonny Kim
-* \date $ Date $
-* \version $ Revision $
+* \date $Date $
+* \version $Revision $
 */
 
 struct str_ghgss
