@@ -232,7 +232,7 @@ string Configuration::getFile( const string& key, const string& defaultValue ) c
 
 	else {
 		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
-		LOG( log, Logger::WARNING_LEVEL ) << "Could not find file: " << key << endl;
+		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find file: " << key << endl;
 		return defaultValue;
 	}
 }
@@ -262,7 +262,7 @@ string Configuration::getString( const string& key, const string& defaultValue )
 
 	else {
 		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
-		LOG( log, Logger::WARNING_LEVEL ) << "Could not find String: " << key << endl;
+		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find String: " << key << endl;
 		return defaultValue;
 	}
 }
@@ -292,7 +292,7 @@ bool Configuration::getBool( const string& key, const bool defaultValue ) const 
 
 	else {
 		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
-		LOG( log, Logger::WARNING_LEVEL ) << "Could not find bool: " << key << endl;
+		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find bool: " << key << endl;
 		return defaultValue;
 	}
 }
@@ -322,7 +322,7 @@ int Configuration::getInt( const string& key, const int defaultValue ) const {
 
 	else {
 		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
-		LOG( log, Logger::WARNING_LEVEL ) << "Could not find int: " << key << endl;
+		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find int: " << key << endl;
 		return defaultValue;
 	}
 }
@@ -351,7 +351,7 @@ double Configuration::getDouble( const string& key, const double defaultValue ) 
 
 	else {
 		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
-		LOG( log, Logger::WARNING_LEVEL ) << "Could not find double: " << key << endl;
+		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find double: " << key << endl;
 		return defaultValue;
 	}
 }
