@@ -490,6 +490,7 @@ double Market::getLogChangeInSupply( const double SMALL_NUM ) const {
    
    // Case 3: Supply or Previous Supply is negative. This should not occur.
    else {
+      cerr << "Error negative supply in market: " << getName() << "! Price: " << price << " Supply: " << supply << " Previous supply: " << storedSupply << endl;
       change = 0; // This avoids a compiler warning.
       assert( false );
    }
