@@ -26,7 +26,7 @@ private:
 	map<string, double> emissfuel;  //!< map of ghg emissions implicit in fuel
 	map<string, double> emissind;  //!< map of indirect ghg emissions
 public:
-	Summary(); // default construtor
+	Summary();
 	void initfuelcons( const string& fname, const double value );
 	void initpeprod( const string& fname, const double value );
 	void initemission( const string& ghgname, const double value );
