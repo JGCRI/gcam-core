@@ -62,6 +62,12 @@ END IF
 	else	! Calculated by the model
 	
 	! Need to be the same as in Allothergases
+	
+	! Need to put this into common block
+	basegwp = (/21.0, 310.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, &
+	790.0, 1300.0, 2800.0, 3800.0, 22200.0, 11900.0, 5700.0, 0.0 , 0.0, &
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
+
 	IH245 = 10	! HFC245fa equiv
 	IH134 = 11	! HFC134a equiv
 	IH125 = 12	! HFC125 equiv (including HFC227ea)
