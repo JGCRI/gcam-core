@@ -98,10 +98,16 @@ public class RadioButton extends JDialog implements ActionListener {
 		if ("Select".equals(e.getActionCommand())) {
 			RadioButton.value = (String)(list.getSelectedValue());
 			System.out.println("button selected!!!!! it's " + list.getSelectedValue().toString());
+		} else {
+			System.out.println("Got cancel");
+			RadioButton.value = "";
 		}
 		RadioButton.dialog.setVisible(false);
 	}
 	public static JScrollPane createSelection(TreePath tp, Document doc, JFrame pf) {
+		if(RadioButton.value.equals("")) {
+			return null;
+		}
 		if(RadioButton.value.equals("Single Table")) {
 			BaseTableModel bt = new NewDataTableModel(tp, doc, pf);
 	  		JTable jTable = new JTable(bt);
@@ -144,22 +150,25 @@ public class RadioButton extends JDialog implements ActionListener {
 			return new JScrollPane(jTable);
 		} else if(RadioButton.value.equals("Combo Tables")){
 			BaseTableModel bt = new ComboTableModel(tp, doc, pf);
-			JTable jTable = new JTable(bt);
+			TableSorter sorter = new TableSorter(bt);
+			JTable jTable = new JTable(sorter);
 			// Should the listener be set like so..
 			jTable.getModel().addTableModelListener((FileChooserDemo)pf);
+	  		sorter.setTableHeader(jTable.getTableHeader());
 
 			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	 
 			jTable.setCellSelectionEnabled(true);
 
 			javax.swing.table.TableColumn col;
-			//Iterator i = regions.iterator();
-			col = jTable.getColumnModel().getColumn(0);
-			col.setPreferredWidth(75);
-			int j = 1;
+			int j = 0;
 			while(j < jTable.getColumnCount()) {
 				col = jTable.getColumnModel().getColumn(j);
-				col.setPreferredWidth(jTable.getColumnName(j).length()*5+30);
+				if(jTable.getColumnName(j).equals("")) {
+					col.setPreferredWidth(75);
+				} else {
+					col.setPreferredWidth(jTable.getColumnName(j).length()*5+30);
+				}
 				j++;
 			}
 			CopyPaste copyPaste = new CopyPaste( jTable );

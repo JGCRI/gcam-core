@@ -342,13 +342,15 @@ public class FileChooserDemo extends JFrame
 	else if (command.equals("Filter")) {
 		try {
 			((BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel()).filterData(this);
-			// NOT THE BEST WAY TO SET ROW HEIGHT
-			int j = 1;
-			JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
-			while( j < jTable.getRowCount()) {
-				jTable.setRowHeight(j-1,16);
-				jTable.setRowHeight(j,200);
-				j += 2;
+			if(((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel() instanceof MultiTableModel) {
+				// NOT THE BEST WAY TO SET ROW HEIGHT
+				int j = 1;
+				JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
+				while( j < jTable.getRowCount()) {
+					jTable.setRowHeight(j-1,16);
+					jTable.setRowHeight(j,200);
+					j += 2;
+				}
 			}
 		} catch (UnsupportedOperationException uoe) {
 			JOptionPane.showMessageDialog( null, "This table does not support filtering", "Table Filter Error", JOptionPane.ERROR_MESSAGE);
@@ -390,6 +392,9 @@ public class FileChooserDemo extends JFrame
 			if (!jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
 				RadioButton.showDialog(frame, null, "", "Choose Table Viewing Type", names,"");
 				JScrollPane tableView = RadioButton.createSelection(selectedPath, doc, thisFrame);
+				if(tableView == null) {
+					return;
+				}
 	  			splitPane.setRightComponent(tableView);
 	  		        menuTableFilter.setEnabled(true);
 				tableMenu = makePopupTableMenu();

@@ -126,7 +126,6 @@ public class ComboTableModel extends BaseTableModel{
 	while(it.hasNext()) {	
 		Map.Entry me = (Map.Entry)it.next();
 		if(me.getValue() instanceof Node) {
-
 			TreeMapVector.add( (TreeMap)parent.getValue() );
 			
 			// create a left side 2d vector, add it to LeftSideVector
@@ -134,7 +133,7 @@ public class ComboTableModel extends BaseTableModel{
 			String lineToParse = title+'/';
 			System.out.println("about to parse " + lineToParse);
 			
-			// example:		/populationSGMRate:year=1985/gender:type=female/
+			// example:		/populationSGMRate@year=1985/gender:type=female/
 	
 			// get rid of begin and end '/'
 			lineToParse = lineToParse.substring( 1, lineToParse.length()-1 );
@@ -163,10 +162,6 @@ public class ComboTableModel extends BaseTableModel{
 			if(leftHeaderVector == null) {
 				leftHeaderVector = tempVector;
 			}
-			for(int j=0; j < onerow.size(); j++) {
-				System.out.print("onoerow: "+onerow.get(j)+" ");
-			}
-			System.out.println();
 			if( ! onerow.isEmpty() ){
 				leftSideVector.add( onerow );
 			}
@@ -220,7 +215,7 @@ public class ComboTableModel extends BaseTableModel{
 		return activeRows.size();
 	}
 	public Object getValueAt(int row, int col) {
-		//try{
+		try{
 		//System.out.println( "row and col are " + row + " " + col );
 		if( col < leftHeaderVector.size() ){
 			//System.out.println( "part1 " + ((Integer)activeLeft.get( row )).intValue() / (indRow.size()));
@@ -234,14 +229,9 @@ public class ComboTableModel extends BaseTableModel{
 			//System.out.println("2ndpart2 "+((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) ));
 			return ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue();
 		}
-		/*
-	} catch(Exception e) {
-		System.out.println( "row and col are " + row + " " + col );
-	}
-	return null;*/
-		
-
-		//return tables.get(((Integer)activeRows.get(row)).intValue());
+		} catch(NullPointerException e) {
+			return "";
+		}
 	}
 	public String getColumnName(int col) {
 		if( col < leftHeaderVector.size() ){

@@ -55,7 +55,9 @@ public class NewDataTableModel extends BaseTableModel{
 	  do {
 		  if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
 			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-			  if(!getOneAttrVal(n).equals("fillout=1")) {
+			  if(!n.hasAttributes()) {
+				  ret.add(n.getNodeName());
+			  } else if(!getOneAttrVal(n).equals("fillout=1")) {
 			  	ret.add(getOneAttrVal(n));
 			  } else {
 			        ret.add(getOneAttrVal(n, 1));
