@@ -35,7 +35,7 @@ public:
     void XMLParse( const xercesc::DOMNode* node );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual const std::string& getXMLName() const;
+    const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
 private:
     static const std::string XML_NAME; //!< node name for toXML methods

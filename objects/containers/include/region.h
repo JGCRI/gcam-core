@@ -59,7 +59,7 @@ public:
     void completeInit();
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	virtual const std::string& getXMLName() const;
+	const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
     std::string getName() const;
     void calc( const int period, const bool doCalibrations );
