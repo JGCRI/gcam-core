@@ -62,6 +62,7 @@ public:
     void setEmissionsInputStatus();
     bool getEmissionsCoefInputStatus() const;
     void setEmissionsCoefInputStatus();
+    double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const;
     void initCalc();
 
 protected:
@@ -79,7 +80,6 @@ protected:
     double emission; //!< emissions (calculated)
     double sequestAmountGeologic; //!< geologic sequestered emissions (calculated)
     double sequestAmountNonEngy; //!< sequestered in non-energy form (calculated)
-    double emissGwp; //!< gwp emissions (calculated)
     double emissCoef; //!< emissions coefficient
     double emissCoefPrev; //!< emissions coefficient passed forward from previous period
     double emissFuel; //!< implied emissions from total fuel consumption

@@ -42,7 +42,6 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     storageCost = util::getLargeNumber(); // default to a large cost to turn off CCS
     sequestAmountGeologic = 0;
     sequestAmountNonEngy = 0;
-    emissGwp = 0;
     emissFuel = 0;
     emissInd = 0;
     emissCoefPrev = 0;
@@ -91,7 +90,6 @@ void Ghg::copy( const Ghg& other ){
     storageCost = other.storageCost;
     sequestAmountGeologic = other.sequestAmountGeologic;
     sequestAmountNonEngy = other.sequestAmountNonEngy;
-    emissGwp = other.emissGwp;
     emissFuel = other.emissFuel;
     emissInd = other.emissInd;
     emissCoefPrev = other.emissCoefPrev;
@@ -258,7 +256,6 @@ void Ghg::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( storageCost, "storageCost", out, tabs );
     XMLWriteElement( sequestAmountGeologic, "sequestAmountGeologic", out, tabs );
     XMLWriteElement( sequestAmountNonEngy, "sequestAmountNonEngy", out, tabs );
-    XMLWriteElement( emissGwp, "emissGwp", out, tabs );
     XMLWriteElement( emissCoef, "emisscoef", out, tabs );
     XMLWriteElement( emissFuel, "emissFuel", out, tabs );
     XMLWriteElement( emissInd, "emissInd", out, tabs );
@@ -284,7 +281,7 @@ void Ghg::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) c
 
 /*! \brief Get the XML node name for output to XML.
 *
-* This public function accesses the private constant string, XML_NAME.
+* This protected function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
 * This function may be virtual to be overriden by derived class pointers.
 * \author Josh Lurz, James Blackwood
@@ -318,42 +315,42 @@ const std::string& Ghg::getXMLNameStatic() {
 */
 void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
 
-   assert( prevGHG ); // Make sure valid pointer was passed
-   
-   // Copy values that always need to be the same for all periods.
-	// Note that finalEmissCoef is not copied, since fmax has already been set appropriately
-	fMax = prevGHG->fMax;
-	gdp0 = prevGHG->gdp0;
-	tau = prevGHG->tau;
-   unit = prevGHG->unit;
-   fMaxWasInput = prevGHG->fMaxWasInput;
+    assert( prevGHG ); // Make sure valid pointer was passed
 
-	// Copy values that could change, so only copy if these are still zero (and, thus, were never read-in)
-   if ( !techDiff ) { 
-		techDiff = prevGHG->techDiff; // only copy if GWP has not changed
-	}
-   if ( !gwp ) { 
-		gwp = prevGHG->gwp; // only copy if GWP has not changed
-	}
-   if ( !emissCoef ) {
-		emissCoef = prevGHG->emissCoef; // only copy if emissCoef has not changed
-	}
+    // Copy values that always need to be the same for all periods.
+    // Note that finalEmissCoef is not copied, since fmax has already been set appropriately
+    fMax = prevGHG->fMax;
+    gdp0 = prevGHG->gdp0;
+    tau = prevGHG->tau;
+    unit = prevGHG->unit;
+    fMaxWasInput = prevGHG->fMaxWasInput;
 
-	// If an emissions value was input last period, and none was input this period, then copy emissions coefficient
-	if (  !valueWasInput && prevGHG->valueWasInput ) {
-		emissCoef = prevGHG->emissCoef;
-		setEmissionsInputStatus();	// Set valueWasInput to true so that the next GHG object will get this coefficient passed on to it
-	}
+    // Copy values that could change, so only copy if these are still zero (and, thus, were never read-in)
+    if ( !techDiff ) { 
+        techDiff = prevGHG->techDiff; // only copy if GWP has not changed
+    }
+    if ( !gwp ) { 
+        gwp = prevGHG->gwp; // only copy if GWP has not changed
+    }
+    if ( !emissCoef ) {
+        emissCoef = prevGHG->emissCoef; // only copy if emissCoef has not changed
+    }
 
-	// If Mac curve was input then copy it, as long as one was not read in for this period
-	if ( !ghgMac.get() && prevGHG->ghgMac.get() ) {
-		ghgMac.reset( prevGHG->ghgMac->clone() );
-	}
+    // If an emissions value was input last period, and none was input this period, then copy emissions coefficient
+    if ( !valueWasInput && prevGHG->valueWasInput ) {
+        emissCoef = prevGHG->emissCoef;
+        setEmissionsInputStatus();	// Set valueWasInput to true so that the next GHG object will get this coefficient passed on to it
+    }
+
+    // If Mac curve was input then copy it, as long as one was not read in for this period
+    if ( !ghgMac.get() && prevGHG->ghgMac.get() ) {
+        ghgMac.reset( prevGHG->ghgMac->clone() );
+    }
 }
 
 //! Perform initializations that only need to be done once per period
 void Ghg::initCalc( ) {    
- 
+
 }
 
 /*! Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients
@@ -447,8 +444,8 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
     return generalizedCost;
 }
 
-// finds an appropriate value for fMax, adjusts gdp0 and sets fControl
-/* The control function is needed in the calcEmission function and takes 4 parameters, fMax, tau, gdp0, and gdpCap.
+/*! \brief Finds an appropriate value for fMax, adjusts gdp0 and sets fControl
+* \details The control function is needed in the calcEmission function and takes 4 parameters, fMax, tau, gdp0, and gdpCap.
 * tau and gdp0 are necessary inputs to the control function, fMax can either be inputed directly, or
 * can be computed in this function using the input "finalEmissCoef."
 * if either tau or gdp0 are not input, or are 0, or if the emissions coefficient is 0, the function will set
@@ -456,9 +453,9 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
 * finalEmissCoef are input (which does not make sense)  only finalEmissCoef will be used.
 * The function additionally calls calcTechChange which reduces gdp0 over time to account for technological change/diffusion.
 * \author Nick Fernandez & Steve Smith
-* param gdpCap - The gdp per capita for the current period 
-* param emissDrive The amount fo fuel that emissions are prortional to
-* param period the current period where calculations are occuring
+* \param gdpCap - The gdp per capita for the current period 
+* \param emissDrive The amount fo fuel that emissions are prortional to
+* \param period the current period where calculations are occuring
 */
 void Ghg::findControlFunction( const double gdpCap, const double emissDrive, const int period ){
     double gdp0Adj = gdp0;
@@ -498,12 +495,12 @@ void Ghg::findControlFunction( const double gdpCap, const double emissDrive, con
     }
 }
 
-// Adjusts the value of gdp0, based on technological change, returns that adjusted value.
-/* The Variable techDiff represents the percent reduction in gdp0 per year, due to technological change and diffusion.
+/* \brief Adjusts the value of gdp0, based on technological change, returns that adjusted value.
+* \details The Variable techDiff represents the percent reduction in gdp0 per year, due to technological change and diffusion.
 * The overall reduciton in gdp0 is 1 + the techDiff percentage raised to the power of the number of years after 
 * the base year.  When applied to the control funciton, this will allow emissions controls to approach fMax sooner.
-*\ Author Nick Fernandez
-* param period the current period where calculations occur
+* \author Nick Fernandez
+* \param period the current period where calculations occur
 */
 double Ghg::calcTechChange( const int period ){
     const Modeltime* modeltime = scenario->getModeltime();
@@ -543,7 +540,6 @@ void Ghg::calcEmission( const string& regionName, const string& fuelname, const 
         // 100% efficiency and same coefficient, no emissions
         if (input==output && coefFuel == coefProduct ) {
             emission = 0;
-            emissGwp = 0;
             sequestAmountGeologic = 0;
             sequestAmountNonEngy = 0;
             emissFuel = (1.0-rmfrac)*input* coefFuel;
@@ -563,7 +559,6 @@ void Ghg::calcEmission( const string& regionName, const string& fuelname, const 
             }
             // Note that negative emissions can occur here since biomass has a coef of 0. 
             emission = ( 1.0 - rmfrac ) * ( ( input* coefFuel ) - ( output* coefProduct ) );
-            emissGwp = ( 1.0 - rmfrac ) * gwp * ( ( input * coefFuel ) - ( output * coefProduct ) );
             emissFuel = ( 1.0 - rmfrac ) * input* coefFuel;
         }
     }
@@ -587,7 +582,6 @@ void Ghg::calcEmission( const string& regionName, const string& fuelname, const 
             emission = emissDriver * emissCoef * ( 1 - emAdjust )* ( 1 - fControl ) * ( 1 - mac ) ;
             emissFuel =  emission;
         }
-        emissGwp = gwp * emission;
     }
 }
 
@@ -689,4 +683,26 @@ double Ghg::emissionsDriver( const double inputIn, const double outputIn ) const
     return inputIn - outputIn;
 }
 
+/*! \brief Get the carbon tax paid for the ghg.
+* \details Calculate and return the total amount of carbon tax paid, or credit received
+* for a single greenhouse gas. The tax or credit is calculated as emissions multiplied by
+* the tax from the marketplace for the gas and the global warming potential.
+* \warning This function calculates this value dynamically which requires a call to the marketplace,
+* so it is slow. It should be avoided except for reporting purposes.
+* \param aRegionName The name of the region containing the ghg.
+* \param aPeriod The name of the period for which to calculate carbon tax paid.
+* \author Josh Lurz
+* \return The total carbon tax paid.
+*/
+double Ghg::getCarbonTaxPaid( const string& aRegionName, const int aPeriod ) const {
+    double GHGTax = 0;
+    const Marketplace* marketplace = scenario->getMarketplace();
+    if ( marketplace->doesMarketExist( name, aRegionName, aPeriod ) ){
+        GHGTax = marketplace->getPrice( name, aRegionName, aPeriod );
+    }
+    // The carbon tax paid is the amount of the emission multiplied by the tax and the global
+    // warming emission. This may be a negative in the case of a credit.
+    return GHGTax * emission * gwp;
+}
 
+        
