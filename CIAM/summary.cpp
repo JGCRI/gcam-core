@@ -80,7 +80,8 @@ void Summary::updatefuelcons( const map<string, double>& fuelinfo ) {
 		fuelcons[fmap->first] += fmap->second; // Add values from the passed map to fuelcons
 	}
 
-	// map primary energy consumption only
+	// map primary energy consumption only.
+   // Note: This is all hardcoded in which should be fixed. -JPL
 	fmap=fuelinfo.find("crude oil");
 	if(fmap!=fuelinfo.end()) {
 		pecons[fmap->first] += fmap->second;
@@ -106,6 +107,16 @@ void Summary::updatefuelcons( const map<string, double>& fuelinfo ) {
 		pecons[fmap->first] += fmap->second;
 		pecons["zTotal"] += fmap->second;
 	}	
+   fmap=fuelinfo.find("traditional biomass");
+	if(fmap!=fuelinfo.end()) {
+		pecons[fmap->first] += fmap->second;
+		pecons["zTotal"] += fmap->second;
+	}
+   fmap=fuelinfo.find("biomass");
+	if(fmap!=fuelinfo.end()) {
+		pecons[fmap->first] += fmap->second;
+		pecons["zTotal"] += fmap->second;
+	}
 }
 
 void Summary::updatepetrade() {
