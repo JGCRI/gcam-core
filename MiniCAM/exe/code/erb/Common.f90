@@ -3,7 +3,7 @@
 ! sjs - Changed 9/00 so that number of regions is input parameter, not hard coded
 ! ktg - Converted into module form 7/01
      
-MODULE COMMON
+	MODULE COMMON
 
 	  IMPLICIT NONE
 
@@ -475,7 +475,9 @@ MODULE COMMON
 	   IOTHGASTOG,              & ! toggle to switch between co2 only and tce
 	   IFREEREDUX,              & ! toggle to turn free reductions on and off (regardless of iothgastog) mj11-02
 	   IBZFIRST,                & ! first period reductions from cost curves appear
-       IBZSTEPS,                & ! number of steps for phasing in <0 redux
+       IBZSTEPS                   ! number of steps for phasing in <0 redux
+
+       Real(8) &
        basegwp(1:NOGMax)		  ! gwp's assumed
 
 ! Moved cement emissions from MAGLINK so that can be accessed elsewhere. sjs - 02/02  
