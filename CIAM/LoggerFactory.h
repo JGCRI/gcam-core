@@ -11,7 +11,6 @@
 * \version $Revision$
 */
 
-#include "Definitions.h"
 #include <map>
 #include "Logger.h"
 

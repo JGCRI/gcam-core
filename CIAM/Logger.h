@@ -11,7 +11,6 @@
 * \version $Revision$
 */
 
-#include "Definitions.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
