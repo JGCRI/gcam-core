@@ -882,6 +882,7 @@ public class FileChooserDemo extends JFrame
   // for the tablechangedmodel listener
   public void tableChanged(TableModelEvent e) {
 	  if(1==1) {
+		  if(1==1) {return;}
 	  	System.out.println("!!! "+e);
 		Node mod = ((NewDataTableModel)e.getSource()).getNodeAt(e.getFirstRow(), e.getColumn());
 		Vector temp = new Vector();
@@ -901,8 +902,8 @@ public class FileChooserDemo extends JFrame
 		jtree.setSelectionPath(a);
 		//jtree.setSelectionPath(b);
 		//jtree.setSelectionPath(jtree.getNextMatch("populationMiniCAM year = 1990", 20, javax.swing.text.Position.Bias.Forward).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod.getParentNode())).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod)));
-		System.out.println(jtree.getSelectionPath());
-		System.out.println(new TreePath(temp.toArray()));
+		//System.out.println(jtree.getSelectionPath());
+		//System.out.println(new TreePath(temp.toArray()));
 		//System.out.println(jtree.getNextMatch("populationMiniCAM year = 1990", 20, javax.swing.text.Position.Bias.Forward));
 	  	return;
 	  }

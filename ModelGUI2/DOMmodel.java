@@ -151,8 +151,8 @@ public class DOMmodel implements TreeModel {
 			//boolean ret = n.equals(((DOMNodeAdapter)o).getNode());
 			boolean ret = n == ((DOMNodeAdapter)o).getNode();
 			if(!ret) {
-				System.out.println("WoW: "+n+" o: "+((DOMNodeAdapter)o).getNode());
-				System.out.println("This: "+toString()+" o: "+o.toString());
+				//System.out.println("WoW: "+n+" o: "+((DOMNodeAdapter)o).getNode());
+				//System.out.println("This: "+toString()+" o: "+o.toString());
 				//return true;
 			}
 			return ret;

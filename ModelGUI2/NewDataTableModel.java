@@ -30,6 +30,7 @@ public class NewDataTableModel extends AbstractTableModel {
 	}
 
 	public void flip() {
+		System.out.println("fliping");
 		Vector tempArr = indCol;
 		indCol = indRow;
 		indRow = tempArr;
@@ -120,6 +121,11 @@ public class NewDataTableModel extends AbstractTableModel {
 			
 			String attributesLine = getKey( row, col );
 			String[] attributesLineArray = attributesLine.split(";", 2);
+			if(flipped) {
+				String temp = attributesLineArray[0];
+				attributesLineArray[0] = attributesLineArray[1];
+				attributesLineArray[1] = temp;
+			}
 
 			StringTokenizer st = new StringTokenizer( attributesLineArray[ 0 ], "=", false);
 			
