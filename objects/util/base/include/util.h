@@ -224,7 +224,16 @@ namespace util {
         }
         return values;
        }
-
+    
+    //! Convert a value to a string using the built in stringstream.
+    template<class T>
+        std::string toString( const T& value ){
+        std::stringstream converter;
+        converter << value;
+        std::string output;
+        converter >> output;
+        return output;
+        }
     /*! \brief Function which creates an XML compliant date time string.
     *
     * This function takes as an argument a time_t object and returns a string containing the date and time in the following format:
