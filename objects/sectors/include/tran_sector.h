@@ -4,11 +4,13 @@
 #pragma once
 #endif
 
-/* TransSector.h									            *
-* This header contains the Specialized Transportation Sector   *
-* MAW  3/11/03							                        *
-* Revised to work with latest code.                            *
-* SHK 6/30/03                                                  *
+/*! 
+* \file tran_sector.h
+* \ingroup Objects
+* \brief The Transportation Sector header file. 
+* \author Marshall Wise, Sonny Kim, Josh Lurz
+* \date $Date$
+* \version $Revision$
 */
 
 #include <vector>
@@ -19,25 +21,32 @@
 // Forward declarations
 class GDP;
 
-// transportation demand sector class derived from demsector class
+/*! 
+* \ingroup Objects
+* \brief This class represents a specialized transporation demand sector.
+* \author Marshall Wise, Sonny Kim, Josh Lurz
+*/
 class TranSector : public DemandSector
 {
-private:
-	static const std::string XML_NAME; //!< node name for toXML methods
+public:
+    TranSector( const std::string regionName );
+    virtual ~TranSector();
+    virtual void aggdemand( const GDP* gdp, const int period  ); 
+	static const std::string& getXMLNameStatic();
+    virtual void checkSectorCalData( const int period );
 protected:
     std::vector<double> percentLicensed; //!< Percent of population licensed
     double baseScaler; //!< constant scaler to scale base output
     double baseScalerNotLic; //!< constant scaler to scale base unlicensed output
     double priceRatioNotLic;//!< price ratio for unlicensed population
-public:
-    TranSector( const std::string regionName );
-    virtual ~TranSector();
-    virtual void clear();
-    virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
-    virtual void aggdemand(  const GDP* gdp, const int period  ); 
-    virtual void checkSectorCalData( const int period );
-	virtual const std::string& getXMLName() const;
-	static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+private:
+	static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _TRANSSECTOR_H_

@@ -40,8 +40,18 @@ class GDP;
 
 class DemandSector: public Sector
 {
-private:
-	static const std::string XML_NAME; //!< node name for toXML methods
+public:
+    DemandSector( const std::string regionName );
+    virtual ~DemandSector();
+	static const std::string& getXMLNameStatic();
+    virtual void calc_pElasticity( const int period );
+    virtual void aggdemand( const GDP* gdp, const int period ); 
+    virtual void csvOutputFile() const;
+    virtual void dbOutput() const;
+    virtual void calibrateSector( const int period );
+    double getService( const int period ) const;
+    double getServiceWoTC( const int period ) const;
+    void scaleOutput( const int period, double scaleFactor );
 protected:
     bool perCapitaBased; //!< demand equation based on per capita GNP, true or false.
     double pElasticityBase; //!< base year energy price elasticity
@@ -56,26 +66,14 @@ protected:
     std::vector<double> techChangeCumm; //!< cummulative technical change on end-use service
     virtual void printStyle( std::ostream& outStream ) const;
     void MCoutput_subsec() const;
- 
-public:
-    DemandSector( const std::string regionName );
-    virtual ~DemandSector();
-    virtual void clear();
-    virtual void XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
-    virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
+    virtual bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-	virtual const std::string& getXMLName() const; 
-	static const std::string& getXMLNameStatic();
-    virtual void calc_pElasticity( const int period );
-    virtual void aggdemand( const GDP* gdp, const int period ); 
-    virtual void csvOutputFile() const;
-    virtual void dbOutput() const;
-    virtual void calibrateSector( const int period );
-    double getService( const int period ) const;
-    double getServiceWoTC( const int period ) const;
-    void scaleOutput( const int period, double scaleFactor );
+ 	virtual const std::string& getXMLName() const; 
+private:
+	static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _DEMAND_SECTOR_H_

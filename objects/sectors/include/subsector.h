@@ -37,6 +37,7 @@ class Subsector
 {
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
+    void clear();
 protected:
     bool debugChecking; //!< General toggle to turn on various checks
     std::string name; //!< subsector name
@@ -67,25 +68,27 @@ protected:
     std::vector<bool> calibrationStatus; // Set true if sector or any tech is calibrated
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> techNameMap; //!< Map of technology name to integer position in vector. 
-    void clear();
     void shareWeightScale( const int pmer ); // Consistantly adjust share weights
     void sumOutput( const int period );
     void shareWeightInterp( const int beginPeriod,  const int endPeriod );
     bool techHasInput( const technology* thisTech, const std::string& goodName ) const;
     virtual void MCDerivedClassOutput() const;
     virtual void csvDerivedClassOutput() const;
+    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    virtual const std::string& getXMLName() const;
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const{};
+    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const{};
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const{};
 public:
     Subsector( const std::string regionName, const std::string sectorName );
     virtual ~Subsector();
     static double capLimitTransform( double capLimit, double orgShare ); 
     const std::string getName() const;
     void XMLParse( const xercesc::DOMNode* tempNode );
-    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     void completeInit();
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
     virtual void calcPrice( const int period );
     double getPrice( const int period ) const;

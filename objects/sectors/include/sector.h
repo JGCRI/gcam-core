@@ -23,7 +23,7 @@ class Subsector;
 class Summary;
 class Emcoef_ind;
 class Region;
-class Logger;
+class ILogger;
 class GDP;
 class Tabs;
 
@@ -38,6 +38,8 @@ class Tabs;
 
 class Sector
 {
+private:
+    void clear();
 protected:
     std::string name; //!< Sector name
     std::string regionName; //!< region name
@@ -76,23 +78,21 @@ protected:
     double getFixedSupply( const int period ) const; 
     bool isCapacityLimitsInSector( const int period ) const;
     virtual void printStyle( std::ostream& outStream ) const;
-
-public:
-    explicit Sector( std::string regionName );
-    virtual ~Sector();
-    virtual void clear();
-    std::string getName() const;
-    virtual const std::string& getXMLName() const = 0;
-    virtual void XMLParse( const xercesc::DOMNode* node );
-    void completeInit();
-    virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
-    virtual void XMLDerivedClassParseAttr( const xercesc::DOMNode* node ) = 0; // Remove me after fixing input files.
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
+    virtual bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node ) = 0; // Remove me after fixing input files.
+    virtual const std::string& getXMLName() const = 0;
+public:
+    explicit Sector( std::string regionName );
+    virtual ~Sector();
+    std::string getName() const;
+    virtual void XMLParse( const xercesc::DOMNode* node );
+    void completeInit();
+    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void setMarket();
     void initCalc( const int period );
     virtual void calibrateSector( const int period ); 
@@ -132,7 +132,7 @@ public:
     void setupForSort( const Region* parentRegion );
     std::vector<std::string> getInputDependencies( const Region* parentRegion ) const;
     const std::vector<std::string>& getDependsList() const;
-    void printSectorDependencies( Logger* logger ) const;
+    void printSectorDependencies( ILogger& aLog ) const;
 
     /*!
     * \brief Binary function used to order Sector* pointers by input dependency. 

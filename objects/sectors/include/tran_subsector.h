@@ -4,11 +4,13 @@
 #pragma once
 #endif
 
-/* transSubSector.h									*
-* This header contains the Specialized Transportation SubSector
-* MAW  3/11/03						
-* Revised to work with latest code.
-* SHK  6/30/03
+/*! 
+* \file tran_subsector.h
+* \ingroup Objects
+* \brief The Transportation Subsector header file. 
+* \author Marshall Wise, Sonny Kim, Josh Lurz
+* \date $Date$
+* \version $Revision$
 */
 
 #include <vector>
@@ -19,10 +21,18 @@
 // Forward declarations
 class GDP;
 
-// transportation demand subsector class derived from base subsector class
-// Modes of transportation are implemented as subsectors
-class TranSubsector : public Subsector
+/*! 
+* \ingroup Objects
+* \brief A derived subsector representing a mode of transportation.
+* \author Marshall Wise, Sonny Kim, Josh Lurz
+*/
+class TranSubsector: public Subsector
 {
+public:
+    TranSubsector( std::string regionName, std::string sectorName );
+    virtual void calcShare( const int period, const GDP* gdp ); 
+    virtual void setoutput( const double demand, const int period, const GDP* gdp );
+    static const std::string& getXMLNameStatic();
 protected:
     std::vector<double> speed; // Speed of Mode in Miles/hour
     std::vector<double> popDenseElasticity; // Population Density Elasticity of mode
@@ -33,13 +43,13 @@ protected:
     double popDensity; // population density per land area
     double baseScaler; // constant scaler to scale base output
     virtual void MCDerivedClassOutput() const;
-public:
-    TranSubsector( std::string regionName, std::string sectorName );
-    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
-    virtual void calcShare( const int period, const GDP* gdp ); 
-    virtual void setoutput( const double demand, const int period, const GDP* gdp );
-
-    
+    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+    virtual const std::string& getXMLName() const;
+private:
+    static const std::string XML_NAME; //!< XML name of this object.
 };
 
 

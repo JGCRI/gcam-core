@@ -23,15 +23,16 @@
 class SupplySector: public Sector
 {
 public:
-	SupplySector ( const std::string regionNameIn );
+	explicit SupplySector( const std::string regionNameIn );
 	virtual ~SupplySector();
-	virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
-    virtual void XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
-    virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
+protected:
+    virtual bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
+	virtual const std::string& getXMLName() const;
 private:
 	const static std::string XML_NAME; //!< node name for toXML methods	
 };
