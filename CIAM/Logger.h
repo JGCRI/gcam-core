@@ -14,6 +14,7 @@
 */
 
 #include <iosfwd>
+#include <sstream>
 #include <xercesc/dom/DOM.hpp>
 
 //! Macro used to insert the line and file into a logging command.
