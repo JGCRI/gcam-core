@@ -25,13 +25,20 @@ PointSetCurve::PointSetCurve( PointSet* pointSetIn ) {
     /*! \pre pointSet is not null */
     assert( pointSetIn );
     pointSet = pointSetIn;
-    XML_ELEMENT_NAME = "PointSetCurve";
+    numericalLabel = 0;
 }
 
 //! Destructor
 PointSetCurve::~PointSetCurve(){
     delete pointSet;
 }
+
+//! Return the name of the XML tag this objects uses to write itself out.
+string PointSetCurve::getXMLTagName() {
+    const string XML_ELEMENT_NAME = "PointSetCurve";
+    return XML_ELEMENT_NAME;
+}
+
 //! Get the X value corresponding to a given Y value.
 double PointSetCurve::getY( const double xValue ) const {
     double retValue;
@@ -281,10 +288,10 @@ double PointSetCurve::getDiscountedValue( const double lowDomain, const double h
 }
 //! Print out the curve to an XML File
 void PointSetCurve::toXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( XML_ELEMENT_NAME, out, tabs, 0, title );
-    XMLWriteElement( getIntegral(), "Integral", out, tabs );
+    // This is a temporary hack. 
+    XMLWriteOpeningTag( getXMLTagName(), out, tabs, static_cast<int>( numericalLabel ), title );
     pointSet->toXML( out, tabs );
-    XMLWriteClosingTag( XML_ELEMENT_NAME, out, tabs );
+    XMLWriteClosingTag( getXMLTagName(), out, tabs );
 }
 
 //! Perform a linear interpolation determining a y value.

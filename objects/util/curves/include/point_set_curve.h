@@ -37,6 +37,7 @@ public:
     PointSetCurve( PointSet* pointSetIn );
     PointSetCurve( const PointSetCurve& curveIn );
     ~PointSetCurve();
+    static std::string getXMLTagName();
     double getY( const double xValue ) const;
     double getX( const double yValue ) const;
     bool setY( const double xValue, const double yValue );
@@ -59,9 +60,9 @@ public:
     double getIntegral( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX ) const;
     double getDiscountedValue( const double lowDomain, const double highDomain, const double discountRate ) const;
     void toXML( std::ostream& out, Tabs* tabs ) const ;
+
 protected:    
     PointSet* pointSet;
-    std::string XML_ELEMENT_NAME;
     std::string title;
     double numericalLabel;
     std::string xAxisLabel;
