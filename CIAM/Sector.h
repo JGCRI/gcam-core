@@ -65,6 +65,7 @@ protected:
     void sumInput(int per); // private function, sum taken care of automatically
     double getFixedShare( const std::string& regionName, const int sectorNum, const int per ); // utility function 
     virtual void calcPrice(int per);
+    virtual void printStyle( std::ostream& outStream ) const;
 
 public:
     sector();

@@ -1427,7 +1427,7 @@ void sector::addToDependencyGraph( ostream& outStream, const int period ) {
    map<string, double> sectorsUsed;  
    typedef map<string,double>:: const_iterator CI;
    CI fuelIter;
-   
+
    // Make sure the outputstream is open.
    assert( outStream );
    // Get the supply sector name.
@@ -1436,15 +1436,17 @@ void sector::addToDependencyGraph( ostream& outStream, const int period ) {
    
    sectorsUsed = getfuelcons( period );
    
+   // Print out the style for the sector.
+   printStyle( outStream );
+
    // Now loop through the fuel map.
    for( fuelIter = sectorsUsed.begin(); fuelIter != sectorsUsed.end(); fuelIter++ ) {
       fuelName = fuelIter->first;
-      if( fuelName != "zTotal" ) {
+      if( fuelName != "zTotal" && ( fuelIter->second > 0.00001 || conf->getBool( "ShowNullPaths", 0 ) ) ) {
          util::replaceSpaces( fuelName );
          // outStream << "\t" << fuelName << " -> " << sectorName << " [label=\"" << fuelIter->second << "\"];" << endl;
          outStream << "\t" << fuelName << " -> " << sectorName;
          outStream << " [style=\"";
-         
          if( fuelIter->second < 1.0 ) {
             outStream << "dotted";
          }
@@ -1469,6 +1471,25 @@ void sector::addToDependencyGraph( ostream& outStream, const int period ) {
          outStream << "];" << endl;
       }
    }
+}
+
+/*! \brief A function to add the sector coloring and style to the dependency graph.
+*
+* This function add the sector specific coloring and style to the dependency graph.
+*
+* \author Josh Lurz
+* \param outStream An output stream to write to which was previously created.
+*/
+void sector::printStyle( ostream& outStream ) const {
+
+    // Make sure the output stream is open.
+    assert( outStream );
+    
+    // Get the sector name.
+   string sectorName = getName();
+   util::replaceSpaces( sectorName );
+
+   // output sector coloring here.
 }
 
 /*! \brief A function to add the name of a sector the current sector has a simul with. 
