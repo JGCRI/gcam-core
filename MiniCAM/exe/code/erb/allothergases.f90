@@ -843,7 +843,7 @@
 	END
 !
 !-------------------------
-!  activity level for deforestation
+!  activity level for deforestation emissions = above ground forest + unmanaged biomass change
 
 	FUNCTION DefroR(L,M)
 
@@ -858,6 +858,33 @@
 	if (DefroR.lt.0.0) DefroR=0.0
     endif
 
+
+	RETURN
+	END
+	
+!
+!-------------------------
+!  total grassland
+
+	FUNCTION grassland(L,M)
+
+	USE Ag2Global8
+	
+	REAL*8 TotalLand, grassL, newAgLand, baseAgLand
+	INTEGER L,M
+    
+	Saveland(5,L,1)=HistLand(L,9)
+	If (M.gt.1) then
+		TotalLand = sum( Saveland(1:5,L,M) )
+		baseAgLand = Saveland(1,L,1)+Saveland(2,L,1)+Saveland(4,L,1)
+		newAgLand = Saveland(1,L,M)+Saveland(2,L,M)+Saveland(4,L,M)
+				
+		grassL = TotalLand * fractSavannah(L)
+		grassL = grassL - fractPotentialAgSavannah(L) * (newAgLand - baseAgLand)
+		
+		if (grassL.lt.0.0) grassL=0.0
+    endif
+	grassland = grassL	
 
 	RETURN
 	END

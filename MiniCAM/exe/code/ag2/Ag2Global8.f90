@@ -51,6 +51,7 @@ ForestN(NLP,NMP),           & ! New forest land
 SaveLand(6,NLP,NMP),        &
 SoilEmiss(5,NLP,NMP),		& ! Soil Emissions to be shared out over time periods
 CarbEmiss(NLP,NMP),         & ! Carbon emissions from change in land use
+EmPart(1:5,NLP), 			& ! Carbon emissions components (above ground)
 SaveProf(NLP,NMP),          &
 sprice(10,NLP,NMP),         & ! Store prices for output file
 SaveYield(12,NLP,NMP),      & ! Store yields for output file
@@ -85,6 +86,11 @@ FeedReq(NLP,3),				& ! Animal Feed Requirements
 Bioyield(NLP),				& ! Biomass avg observed yields
 GJperTON(NLP),				& ! Gigajoules per Ton conversion factor
 bioyieldcap(NLP),			& ! Upper limit of biomass yields
+recovForestFrac(NLP),		& ! see Ag2GetData.f90
+unmanForestFrac(NLP),		& ! see Ag2GetData.f90
+fractSavannah(NLP),			& ! see Ag2GetData.f90
+fractAgSavannah(NLP),		& ! see Ag2GetData.f90
+fractPotentialAgSavannah(NLP),	& ! see Ag2GetData.f90
 
 AG2CH4(4,NLP,NMP),			& ! Methane Emissions
 AG2N2O(4,NLP,NMP),			& ! Nitrous oxide Emissions

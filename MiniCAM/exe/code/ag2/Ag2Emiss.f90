@@ -6,7 +6,6 @@ IMPLICIT NONE
 
 REAL(8) CarbEmiss1(NLP,NMP)
 REAL(8) CarbEmissSave(4,NLP,NMP)
-REAL(8) EmPart(1:5,NLP)
 
 INTEGER i,T
 

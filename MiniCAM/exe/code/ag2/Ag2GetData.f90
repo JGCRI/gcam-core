@@ -39,9 +39,17 @@ DO WHILE(INDIC.EQ.1)
 
   SELECT CASE(IVARNUM)
 
-! Read the number of regions
-  CASE(601)
-     READ (1,*) NL
+! 1990 Base Year CH4 and N2O Emissions
+  CASE (301)
+	DO L=1,NL
+      READ(1,*) IDUM,(BaseCH4N2O(L,J),J=1,6)
+    END DO
+
+! 1990 percentage of Rice in food grains
+  CASE (302)
+	DO L=1,NL
+      READ(1,*) IDUM,(PCTRICE(L))
+    END DO
 
 ! Read population data (thousands of people)
   CASE(506)
@@ -67,6 +75,10 @@ DO WHILE(INDIC.EQ.1)
 !      READ (1,*) IDUM,(PROLM(L,M),M=1,NMP)
 !    END DO
          
+! Read the number of regions
+  CASE(601)
+     READ (1,*) NL
+
 ! Technical change parameters
   CASE (602)
     READ(1,*) MSTART,L,(KJIMP(J,L,MSTART),J=1,NZ(L))
@@ -185,42 +197,12 @@ DO WHILE(INDIC.EQ.1)
       READ(1,*) IDUM,OilPrice(M),CarbonPrice(M)
     END DO
    
-! Base-year demand for food in kcal per person per day
-  CASE (731)
-    DO L=1,NL
-      READ(1,*) IDUM,(kcal1(L,J,2),J=1,10)
-    END DO
-  
-! End-year demand for food in kcal per person per day
-  CASE (736)
-    DO L=1,NL
-      READ(1,*) IDUM,(kcal1(L,J,9),J=1,10)
-    END DO
-
-! Base-year demand - other uses of food products
-  CASE (732)
-    DO L=1,NL
-      READ(1,*) IDUM,(kcal2(L,J),J=1,10)
-    END DO
-          
-! Net exports of food products in base year (10^10 kcal)
-  CASE (733)
-    DO L=1,NL
-      READ(1,*) IDUM,(NetExport(L,J),J=1,12)
-    END DO
-                   
 ! Calories of crop needed per calorie of processed crop
   CASE (634)
     DO L=1,NL
       READ(1,*) IDUM,(InputProcCrop(L,J),J=1,4)
     END DO
 
-! Calories of crop needed per calorie of animal product
-  CASE (735)
-    DO L=1,NL
-      READ(1,*) IDUM,(InputAnimPrds(L,J),J=1,12)
-    END DO 
-    
 ! Self-consumption fractions for crops and animal products
   CASE (637)
     DO L=1,NL
@@ -262,6 +244,28 @@ DO WHILE(INDIC.EQ.1)
   CASE (639)
     DO L=1,NL
       READ(1,*) IDUM,agrho(L)
+    END DO
+
+! Fraction of aboveground woody biomass that is recoverable as a feedstock
+  CASE (698)
+	DO L=1,NL
+      READ(1,*) IDUM,recovForestFrac(L)
+    END DO
+
+! Land Distribution Fractions
+! unmanForestFrac = Fraction of unmanaged land that is forest
+! fractSavannah = Fraction of total land that is savannah
+  CASE (699)
+	DO L=1,NL
+      READ(1,*) IDUM,unmanForestFrac(L),fractSavannah(L)
+    END DO
+
+! Ag Potential Distribution Fractions
+! fractAgSavannah = Fraction of savannah that has ag potential
+! fractPotentialAgSavannah = Fraction of remaining potential Ag land that is Savannah (1990)
+  CASE (700)
+	DO L=1,NL
+      READ(1,*) IDUM,fractAgSavannah(L),fractPotentialAgSavannah(L)
     END DO
 
 ! Area Harvested Data
@@ -306,18 +310,36 @@ DO WHILE(INDIC.EQ.1)
       READ(1,*) IDUM,(FeedReq(L,J),J=1,3)
     END DO
 
-! 1990 Base Year CH4 and N2O Emissions
-  CASE (301)
-	DO L=1,NL
-      READ(1,*) IDUM,(BaseCH4N2O(L,J),J=1,6)
+! Base-year demand for food in kcal per person per day
+  CASE (731)
+    DO L=1,NL
+      READ(1,*) IDUM,(kcal1(L,J,2),J=1,10)
+    END DO
+  
+! Calories of crop needed per calorie of animal product
+  CASE (735)
+    DO L=1,NL
+      READ(1,*) IDUM,(InputAnimPrds(L,J),J=1,12)
+    END DO 
+    
+! End-year demand for food in kcal per person per day
+  CASE (736)
+    DO L=1,NL
+      READ(1,*) IDUM,(kcal1(L,J,9),J=1,10)
     END DO
 
-! 1990 percentage of Rice in food grains
-  CASE (302)
-	DO L=1,NL
-      READ(1,*) IDUM,(PCTRICE(L))
+! Base-year demand - other uses of food products
+  CASE (732)
+    DO L=1,NL
+      READ(1,*) IDUM,(kcal2(L,J),J=1,10)
     END DO
-
+          
+! Net exports of food products in base year (10^10 kcal)
+  CASE (733)
+    DO L=1,NL
+      READ(1,*) IDUM,(NetExport(L,J),J=1,12)
+    END DO
+                   
 ! All other input blocks are ignored                                
   CASE DEFAULT
 
