@@ -302,43 +302,47 @@ void sector::sumoutput(int per)
 void sector::supply( const string regionName, const int per)
 {
 	double mrkprice, mrkdmd;
-        int i;
-        int bug = 1;
-        
+    int i;
+    bool bug = true;
+	double totalFixedSupply = 0;
+    double fixedSupply = 0;
+    double varShareTot = 0; // sum of shares without fixed supply   
+    double Sharetotal = 0; // sum of shares without fixed supply   
+           
 	carbontaxpaid[per] = 0; // initialize carbon taxes paid
 	
 	mrkprice = marketplace.showprice( name, regionName, per ); // price for the good produced by this sector
 	mrkdmd = marketplace.showdemand( name, regionName, per ); // demand for the good produced by this sector
 
-         if (mrkdmd < 0) {
-            cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;
-        }
+    if (mrkdmd < 0) {
+        cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;
+    }
         
-	for (i=0;i<nosubsec;i++) // clear subsector fuel consumption map
+	for (i=0;i<nosubsec;i++) { // clear subsector fuel consumption map
 		subsec[i]->clearfuelcons(per);
+	}
 
 	summary[per].clearfuelcons(); // clears sector fuel consumption map
 
+    
 	// calculate output from technologies that have fixed outputs such as hydro electric
-	double totalFixedSupply = 0;
-        double temp;
-        double varShareTot = 0; // sum of shares without fixed supply   
-        double Sharetotal = 0; // sum of shares without fixed supply   
-       
-        // Determine total fixed production and total var shares
-        // Need to change the exog_supply function once new, general fixed supply method is available
+    // Determine total fixed production and total var shares
+    // Need to change the exog_supply function once new, general fixed supply method is available
 	for (i=0;i<nosubsec;i++) {
-            temp = subsec[i]->exog_supply(per);
-            totalFixedSupply += temp;
-            if (temp == 0) varShareTot += subsec[i]->showshare(per);
-            Sharetotal += subsec[i]->showshare(per);
+        fixedSupply = subsec[i]->exog_supply(per);
+        if (fixedSupply == 0) { 
+			varShareTot += subsec[i]->showshare(per);
+		}
+        totalFixedSupply += fixedSupply;
+        Sharetotal += subsec[i]->showshare(per);
 	}
 
-        // Adjust shares for any fixed output
-	if (totalFixedSupply > 0)
-            for (i=0;i<nosubsec;i++) {
-                subsec[i]->adjShares( mrkdmd, varShareTot, totalFixedSupply, per ); 
-            }
+     // Adjust shares for any fixed output
+	if (totalFixedSupply > 0) {
+		for (i=0;i<nosubsec;i++) {
+			subsec[i]->adjShares( mrkdmd, varShareTot, totalFixedSupply, per ); 
+		}
+	}
                 
 	for (i=0;i<nosubsec;i++) {
 		// set subsector output from sector demand
@@ -349,14 +353,14 @@ void sector::supply( const string regionName, const int per)
 		summary[per].updatefuelcons(subsec[i]->getfuelcons( per )); 
 	}
     
-        if (bug) {
-            sumoutput(per); // Sum output just so its available below
-            double mrksupply = getoutput(per);
-            if (per > 0 && abs(mrksupply - mrkdmd) > 0.01) {
-                mrksupply = mrksupply * 1.0000001;
-                cout << "Market Supply and demand are not equal";
-            }
-        }
+    if (bug) {
+        sumoutput(per); // Sum output just so its available below
+		double mrksupply = getoutput(per);
+		if (per > 0 && abs(mrksupply - mrkdmd) > 0.01) {
+			mrksupply = mrksupply * 1.0000001;
+			cout << "Market supply and demand are not equal";
+		}
+	}
 }
 
 void sector::show()
@@ -614,6 +618,13 @@ map<string, double> sector::getemfuelmap(int per)
 // demand sector method definitions
 //**********************************
 
+//! Default constructor
+demsector::demsector() {
+	perCapitaBased = 0;
+	pElasticityBase = 0;
+}
+
+
 //! Clear member variables.
 void demsector::clear(){
 	
@@ -621,6 +632,8 @@ void demsector::clear(){
 	sector::clear();
 	
 	// now clear own data.
+	perCapitaBased = 0;
+	pElasticityBase = 0;
 	fe_cons.clear();
 	service.clear();
 	iElasticity.clear();
@@ -701,6 +714,7 @@ void demsector::XMLParse( const DOMNode* node ){
 	summary.resize( maxper ); // object containing summaries
 	fe_cons.resize(maxper); // end-use sector final energy consumption
 	service.resize(maxper); // total end-use sector service 
+	sectorfuelprice.resize(maxper); // total end-use sector service 
 }
 
 //! Write object to xml output stream.
@@ -791,7 +805,10 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( input[ period ], "input", out );
 	XMLWriteElement( output[ period ], "output", out );
 	XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out );
+
+	XMLWriteElement( sectorfuelprice[ period ], "sectorfuelprice", out );
 	
+
 	// Now write out own members.
 	if ( period < fe_cons.size() ){
 		XMLWriteElement( fe_cons[ period ], "fe_cons", out );
@@ -882,11 +899,14 @@ void demsector::calc_share( const string regionName, const int per, const double
 void demsector::calc_pElasticity(int per)
 {
 	pElasticity[per]=0.0;
-	double sectorfuelprice = 0; // using basesharewts, for p elasticity only
+	//double sectorfuelprice = 0; // using basesharewts, for p elasticity only
+	sectorfuelprice[per] = 0;
+	double priceRatio = 0; // ratio of total price to fuel price
 	for (int i=0;i<nosubsec;i++) {
-		sectorfuelprice += subsec[i]->getwtfuelprice(per);
+		sectorfuelprice[per] += subsec[i]->getwtfuelprice(per);
 	}
-	pElasticity[per] = pElasticityBase*sectorprice[per]/sectorfuelprice;
+	priceRatio = sectorprice[per]/sectorfuelprice[per];
+	pElasticity[per] = pElasticityBase*priceRatio;
 }
 
 
@@ -909,10 +929,12 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
 	else {
 		// perCapitaBased is true or false
 		if (perCapitaBased) { // demand based on per capita GNP
-			ser_dmd = base*pow(priceRatio,pElasticity[per])*pow(gnp_cap,iElasticity[per]);
+			//ser_dmd = base*pow(priceRatio,pElasticity[per])*pow(gnp_cap,iElasticity[per]);
+			ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp_cap,iElasticity[per]);
 		}
 		else { // demand based on scale of GNP
-			ser_dmd = base*pow(priceRatio,pElasticity[per])*pow(gnp,iElasticity[per]);
+			//ser_dmd = base*pow(priceRatio,pElasticity[per])*pow(gnp,iElasticity[per]);
+			ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp,iElasticity[per]);
 			int stop =1;
 		}
 	}

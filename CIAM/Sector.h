@@ -93,14 +93,16 @@ class demsector : public sector
 {
 protected:
 	int perCapitaBased; //!< demand equation based on per capita GNP, true or false
+	double pElasticityBase; //!< base year energy price elasticity
+	vector<double> sectorfuelprice; // temp vec
 	vector<double> fe_cons; //!< end-use sector final energy consumption
 	vector<double> service; //!< total end-use sector service 
 	vector<double> iElasticity; //!< income elasticity 
-	double pElasticityBase; //!< base year energy price elasticity
 	vector<double> pElasticity; //!< price elasticity.
 	vector<double> aeei; //!< autonomous end-use energy intensity parameter
 
 public:
+	demsector(); //default construtor
 	virtual void clear();
 	virtual void XMLParse(const DOMNode* node);
 	virtual void toXML( ostream& out ) const;

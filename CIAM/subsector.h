@@ -41,7 +41,7 @@ protected:
 	vector<double> fuelprice; //! subsector fuel price only for all periods
 	vector<double> output; //!< total amount of final output from subsector
 	vector<double> carbontaxpaid; //!< total subsector carbon taxes paid
-	vector<double> fuelprefElasticity; //!< Fuel Preference elasticity
+	vector<double> fuelPrefElasticity; //!< Fuel preference elasticity
 	vector<Summary> summary; //!< summary for reporting
 public:
 	subsector();

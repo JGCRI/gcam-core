@@ -26,6 +26,7 @@ extern Modeltime modeltime;
 subsector::subsector(){
 	notech = 0;
 	tax = 0;
+	basesharewt = 0;
 }
 
 //! Destructor.
@@ -53,7 +54,7 @@ void subsector::clear(){
 	caplim.clear();
 	shrwts.clear();
 	lexp.clear();
-	fuelprefElasticity.clear();
+	fuelPrefElasticity.clear();
 	share.clear();
 	input.clear();
 	pe_cons.clear();
@@ -86,7 +87,6 @@ void subsector::XMLParse( const DOMNode* node )
 	int maxper = modeltime.getmaxper();
 	share.resize(maxper); // subsector shares
 	input.resize(maxper); // subsector energy input
-	fuelprefElasticity.resize(0); // resize to 0 if not readin
 	pe_cons.resize(maxper); // subsector primary energy consumption
 	subsectorprice.resize(maxper); // subsector price for all periods
 	fuelprice.resize(maxper); // subsector fuel price for all periods
@@ -124,13 +124,12 @@ void subsector::XMLParse( const DOMNode* node )
 		}
 
 		else if( nodeName == "fuelprefElasticity" ){
-			fuelprefElasticity.push_back( XMLHelper<double>::getValue( curr ) );
+			fuelPrefElasticity.push_back( XMLHelper<double>::getValue( curr ) );
 		}
 
 		// basesharewt is not a vector but a single value
 		else if( nodeName == "basesharewt" ){
 			basesharewt = XMLHelper<double>::getValue( curr );
-			int stop =1;
 		}
 
 		else if( nodeName == "technology" ){
@@ -181,8 +180,8 @@ void subsector::toXML( ostream& out ) const {
 		XMLWriteElement( lexp[ i ], "logitexp", out, modeltime.getper_to_yr( i ) );
 	}
 
-	for( i = 0; i < static_cast<int>( fuelprefElasticity.size() ); i++ ){
-		XMLWriteElement( fuelprefElasticity[ i ], "fuelprefElasticity", out, modeltime.getper_to_yr( i ) );
+	for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
+		XMLWriteElement( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, modeltime.getper_to_yr( i ) );
 	}
 
 	XMLWriteElement( basesharewt, "basesharewt", out, modeltime.getstartyr( ) );
@@ -233,7 +232,9 @@ void subsector::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( caplim[ period ], "caplim", out );
 	XMLWriteElement( shrwts[ period ], "sharewts", out );
 	XMLWriteElement( lexp[ period ], "lexp", out );
-	//XMLWriteElement( fuelprefElasticity[ period ], "fuelprefElasticity", out );
+	if ( ! fuelPrefElasticity.empty() ) {
+		XMLWriteElement( fuelPrefElasticity[ period ], "fuelprefElasticity", out );
+	}
 	XMLWriteElement( share[ period ], "share", out );
 	XMLWriteElement( basesharewt, "basesharewt", out );
 	XMLWriteElement( input[ period ], "input", out );
@@ -367,7 +368,6 @@ void subsector::calc_tech_shares( const string regionName, const int per )
 //! calculate subsector share numerator 
 void subsector::calc_share( const string regionName, const int per, const double gnp_cap )
 {
-	double iprefElasticity = 0; // income based preference elasticity
 	// call function to compute technology shares
 	calc_tech_shares(regionName, per);
 
@@ -384,14 +384,13 @@ void subsector::calc_share( const string regionName, const int per, const double
 		share[per] = 0;
 	}
 	else {
-		if (fuelprefElasticity.size()==0) {
-			iprefElasticity = 0;
+		if (fuelPrefElasticity.empty()) { // supply subsector
+			share[per] = shrwts[per]*pow(subsectorprice[per],lexp[per]);
 		}
-		else {
-			iprefElasticity = fuelprefElasticity[per];
+		else { // demand subsector
+			share[per] = shrwts[per]*pow(subsectorprice[per],lexp[per])*pow(gnp_cap,fuelPrefElasticity[per]);
 		}
 
-		share[per] = shrwts[per]*pow(subsectorprice[per],lexp[per])*pow(gnp_cap,iprefElasticity);
 	}
 }
 
@@ -420,54 +419,57 @@ double subsector::exog_supply(int per)
 }
 
 //! Adjusts shares to be consistant with any fixed production 
-void subsector::adjShares(
-        double dmd, // total demand for all sectors
-        double varSectorSharesTot, // sum of sector shares that have no fixed production
-        double totalFixedSupply, // total fixed supply from all sectors
-        int per)	// model period
-        
+// total demand for all sectors
+// sum of sector shares that have no fixed production
+// total fixed supply from all sectors
+// model period
+void subsector::adjShares( double dmd, double varSectorSharesTot, double totalFixedSupply,
+						  int per)	
 {
-        double fixedSupply = 0; // no subsector demand
-        double temp;
-        double varShareTot = 0; // sum of shares without fixed supply
-        
-        // add up the fixed supply and share of non-fixed supply
-        for (int i=0;i<notech;i++) {
-            temp = techs[i][per]->getFixedSupply(per);
-            fixedSupply += temp;
-            if (temp == 0) varShareTot += techs[i][per]->showshare();
+	double fixedSupply = 0; // no subsector demand
+	double temp;
+	double varShareTot = 0; // sum of shares without fixed supply
+	double RemainingDemand = 0;
+	
+	// add up the fixed supply and share of non-fixed supply
+	for (int i=0;i<notech;i++) {
+		temp = techs[i][per]->getFixedSupply(per);
+		fixedSupply += temp;
+		if (temp == 0) varShareTot += techs[i][per]->showshare();
 	}
-        
-        // Adjust the share for this subsector
-        // This makes the implicit assumption that the subsector is either all
-        // fixed production or all variable. Would need to amend the logic below
-        // to take care of other cases.
-        
-        double RemainingDemand;
-        if(totalFixedSupply != 0) {
-            RemainingDemand = dmd - totalFixedSupply;
-            if (RemainingDemand < 0) RemainingDemand = 0;       
-            if (fixedSupply != 0) {	// This sector has a fixed supply
-                if (dmd != 0) {
-                    share[per] = fixedSupply/dmd; }
-                else {
-                    share[per] = 0; }
-            }
-            else {	// This tech does not have fixed supply
-                if (dmd != 0 && varShareTot != 0) {
-                    share[per] = share[per] * (RemainingDemand/dmd)/varShareTot; }
-                else {
-                    share[per] = 0; }  // Maybe not correct
-            } 
-        }
-
-        // then adjust technology shares to be consistent
-        double subsecdmd = share[per]*dmd; // share is subsector level
+	
+	// Adjust the share for this subsector
+	// This makes the implicit assumption that the subsector is either all
+	// fixed production or all variable. Would need to amend the logic below
+	// to take care of other cases.
+	
+	if(totalFixedSupply != 0) {
+		RemainingDemand = dmd - totalFixedSupply;
+		if (RemainingDemand < 0) RemainingDemand = 0;       
+		if (fixedSupply != 0) {	// This sector has a fixed supply
+			if (dmd != 0) {
+				share[per] = fixedSupply/dmd; 
+			}
+			else {
+				share[per] = 0; 
+			}
+		}
+		else {	// This tech does not have fixed supply
+			if (dmd != 0 && varShareTot != 0) {
+				share[per] = share[per] * (RemainingDemand/dmd)/varShareTot; 
+			}
+			else {
+				share[per] = 0; // Maybe not correct
+			}  
+		} 
+	}
+	
+	// then adjust technology shares to be consistent
+	double subsecdmd = share[per]*dmd; // share is subsector level
 	for (int j=0;j<notech;j++) {
 		// adjust tech shares 
-                techs[j][per]->adjShares(subsecdmd, fixedSupply, varShareTot, per);
+		techs[j][per]->adjShares(subsecdmd, fixedSupply, varShareTot, per);
 	}
-        
 }
 
 //! sets demand to output and output

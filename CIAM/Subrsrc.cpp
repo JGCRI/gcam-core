@@ -74,9 +74,9 @@ void subrsrc::XMLParse( const DOMNode* node )
 	// get the name attribute.
 	name = XMLHelper<string>::getAttrString( node, "name" );
 	
-#if ( _DEBUG )
-	cout << "\t\tSubResource name set as " << name << endl;
-#endif
+	#if ( _DEBUG )
+		cout << "\t\tSubResource name set as " << name << endl;
+	#endif
 	
 	// get all child nodes.
 	nodeList = node->getChildNodes();

@@ -57,6 +57,7 @@ void technology::initElementalMembers(){
 	year = 0;
 	shrwts = 0;
 	eff = 0;
+	fuelcost = 0;
 	necost = 0;
 	techcost = 0;
 	tax = 0;
@@ -198,6 +199,7 @@ void technology::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( shrwts, "sharewt", out );
 	XMLWriteElement( fuelname, "fuelname", out );
 	XMLWriteElement( eff, "efficiency", out );
+	XMLWriteElement( fuelcost, "fuelcost", out );
 	XMLWriteElement( necost, "nonenergycost", out );
 	XMLWriteElement( tax, "tax", out );
 	XMLWriteElement( carbontax, "carbontax", out );
@@ -308,8 +310,8 @@ double technology::getFixedSupply(int per)
 has a fixed supply */
 void technology::adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per)
 {
-    double remainingDemand;
-    double fixedSupply;
+    double remainingDemand = 0;
+    double fixedSupply = 0;
     
     if(totalFixedSupply != 0) {
         remainingDemand = subsecdmd - totalFixedSupply;
@@ -323,9 +325,11 @@ void technology::adjShares(double subsecdmd, double totalFixedSupply, double var
                 share = fixedSupply/subsecdmd;
                 // Set value of fixed supply
                 if (fixedSupply > subsecdmd) {
-                    fixedOutputVal = totalFixedSupply; }  // downgrade output if > fixedsupply
+                    fixedOutputVal = totalFixedSupply; // downgrade output if > fixedsupply
+				}  
                 else {
-                    fixedOutputVal = fixedSupply; }
+                    fixedOutputVal = fixedSupply; 
+				}
             }
             else {
                 share = 0;
@@ -355,9 +359,10 @@ void technology::production(double dmd,int per)
 		output = fixedOutputVal;
 	}
 	
-	if (fueltype == 0) // fueltye=0 reserved for renewables
+	if (fueltype == 0) { // fueltye=0 reserved for renewables
 		input = output/eff;
-	else {// demand for fossil, uranium and secondary energy
+	}
+	else { // demand for fossil, uranium and secondary energy
 		//input = output/eff/pow(1+techchange,timestep);
 		input = output/eff;
 	}
