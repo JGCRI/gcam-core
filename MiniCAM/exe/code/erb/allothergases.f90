@@ -869,13 +869,15 @@
     endif
 
 	! Deforested biomass in energy terms
-	DefroR = DefroR/CarbDensity * EnergyDensity / 1000
+	DefroR = DefroR/CarbDensity * EnergyDensity / 1000d0
 	
 	! Now adjust for amount harvested for energy
 	
 	UseFract = (1d0 - recovForestFrac(L) )	! Basic amount that can be potentially used
 	
-	UseFract = (gdppercap/15) * UseFract	! Assume that less is used at low incomes
+	if (gdppercap < 15 ) then
+		UseFract = (gdppercap/15d0) * UseFract	! Assume that less is used at low incomes
+	endif
 
 	! Assume that none is used at a low biomass price ($1/GJ), maxing out at $5/GJ
 	maxUse = 0.90	! Assume that 90% of the usable biomass is used if price is high enough
