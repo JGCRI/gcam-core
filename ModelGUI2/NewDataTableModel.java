@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.tree.TreePath;
 import org.apache.xpath.domapi.*;
 import org.w3c.dom.xpath.*;
+import javax.swing.*;
 
 public class NewDataTableModel extends BaseTableModel{
 	Vector indCol;
@@ -150,6 +151,34 @@ public class NewDataTableModel extends BaseTableModel{
 			n = doc.createTextNode( val.toString() );
 			Node updown = null;
 			Node side = null;
+			
+			// time to search for 'updown' and 'side'
+			int theRow = -1;
+			int theCol = -1;
+			for(int r=0; r< getRowCount(); r++ ){
+				if( r != row && ( (Node)data.get(getKey(r, col)) != null )){
+					theRow = r;
+					break;
+				}
+			}
+			for(int c=1; c< getColumnCount(); c++ ){
+				if( c != col && ( (Node)data.get(getKey(row, c)) != null )){
+					theCol = c;
+					break;
+				}
+			}
+			if( theRow == -1 || theCol == -1 ){
+				System.out.println("not enough info to do the null replacement thing");
+				JOptionPane.showMessageDialog(parentFrame, "Not enough information to create node on the fly", "Rewrite nonexistent node Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			updown = (Node)data.get(getKey(theRow, col));
+			side = (Node)data.get(getKey(row, theCol));
+			if( updown == null || side == null){
+				System.out.println("BIG TROUBLE NOW! THESE SHOULD NOTTTT BE NULL");
+			}
+			
+			/*
 			if( row > 0 ){
 				updown = (Node)data.get(getKey(row-1, col));
 				if ( col > 0 ){
@@ -164,7 +193,8 @@ public class NewDataTableModel extends BaseTableModel{
 				}else{ // col == 0
 					side = (Node)data.get(getKey(row, col+1));
 				}
-			}
+			}*/
+			
 			ArrayList nodepath = new ArrayList();
 			Node parent = ((Node)updown.getParentNode());
 			
