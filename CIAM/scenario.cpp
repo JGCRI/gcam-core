@@ -20,6 +20,8 @@
 #include "world.h"
 #include "xmlHelper.h"
 #include "Configuration.h"
+#include "LoggerFactory.h"
+#include "Logger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -242,6 +244,11 @@ void Scenario::run(){
 	logfile << "Period:  " << per << endl;
 	// end of first period.
 	
+    // Print the sector dependencies.
+    if( conf->getBool( "PrintSectorDependencies", 0 ) ){
+        printSectorDependencies();
+    }
+
 	// Loop over time steps and operate model
 	for ( per = 1; per < modeltime->getmaxper(); per++ ) {	
 		
@@ -292,7 +299,7 @@ void Scenario::run(){
 	xmlDebugStream.close();
 }
 
-/*! A function which print dependency graphs showing fuel usage by sector.
+/*! \brief A function which print dependency graphs showing fuel usage by sector.
 *
 * This function creates a filename and stream for printing the graph data in the dot graphing language.
 * The filename is created from the dependencyGraphName configuration attribute concatenated with the period.
@@ -322,5 +329,14 @@ void Scenario::printGraphs( const int period ) const {
    world->printGraphs( graphStream, period );
 
    graphStream.close();
+}
+
+/*! \brief A function to print a csv file including the list of all regions and their sector dependencies.
+* 
+* \author Josh Lurz
+*/
+void Scenario::printSectorDependencies() const {
+    Logger* logger = LoggerFactory::getLogger( "SectorDependenciesLogger" );
+    world->printSectorDependencies( logger );
 }
 

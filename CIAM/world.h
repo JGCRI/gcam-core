@@ -19,6 +19,7 @@
 
 // Forward declarations
 class Region;
+class Logger;
 
 /*! 
 * \ingroup CIAM
@@ -71,6 +72,7 @@ public:
    const std::vector<std::string> getPrimaryFuelList() const;
    double getPrimaryFuelCO2Coef( const std::string& regionName, const std::string& fuelName ) const;
    double getCarbonTaxCoef( const std::string& regionName, const std::string& fuelName ) const;
+   void printSectorDependencies( Logger* logger ) const;
 };
 
 #endif // _WORLD_H_

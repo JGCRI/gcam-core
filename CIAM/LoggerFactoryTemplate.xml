@@ -57,4 +57,18 @@
 		<logTabSize>3</logTabSize>
 		<headerMessage>{date}: This is the Configuration class logger.</headerMessage>
 	</Logger>
+	<Logger name="SectorDependenciesLogger" type="PlainTextLogger">
+		<FileName>SectorDependencies.csv</FileName>
+		<printLogNest>0</printLogNest>
+		<printLogWarningLevel>0</printLogWarningLevel>
+		<printLogTimeStamp>0</printLogTimeStamp>
+		<printLogDateStamp>0</printLogDateStamp>
+		<printLogLineNumber>0</printLogLineNumber>
+		<printLogFileName>0</printLogFileName>
+		<printLogFullPath>0</printLogFullPath>
+		<minLogWarningLevel>0</minLogWarningLevel>
+		<minToScreenWarningLevel>5</minToScreenWarningLevel>
+		<logTabSize>3</logTabSize>
+		<headerMessage>{date}: All regions and their sector dependencies.</headerMessage>
+	</Logger>
 </LoggerFactory>

@@ -31,6 +31,7 @@
 #include "World.h"
 #include "Util.h"
 #include "Region.h"
+#include "Logger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -1559,5 +1560,18 @@ const vector<string> sector::getDependsList() const {
     return dependsList;
 }
 
+/*! \brief A function to print a csv file including a sector's name and all it's dependencies. 
+* 
+* \author Josh Lurz
+* \pre setupForSort function has been called to initialize the dependsList. 
+* \param logger The to which to print the dependencies. 
+*/
+void sector::printSectorDependencies( Logger* logger ) const {
+    LOG( logger, Logger::DEBUG_LEVEL ) << "," << name << ",";
+    for( vector<string>::const_iterator depIter = dependsList.begin(); depIter != dependsList.end(); depIter++ ) {
+        LOG( logger, Logger::DEBUG_LEVEL ) << *depIter << ",";
+    }
+    LOG( logger, Logger::DEBUG_LEVEL ) << endl;
+}
 
 

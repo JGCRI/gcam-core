@@ -33,6 +33,7 @@
 #include "Marketplace.h"
 #include "Configuration.h"
 #include "Util.h"
+#include "Logger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -1545,5 +1546,18 @@ vector<string> Region::getSectorDependencies( const string& sectorName ) const {
 
     // Return the resulting list.
     return retVector;
+}
+
+/*! \brief A function to print a csv file including all sectors and their dependencies
+* 
+* \author Josh Lurz
+* \param logger The to which to print the dependencies. 
+*/
+void Region::printSectorDependencies( Logger* logger ) const {
+    LOG( logger, Logger::DEBUG_LEVEL ) << name << ",Sector,Dependencies ->," << endl;
+    for( vector<sector*>::const_iterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); sectorIter++ ) {
+        ( *sectorIter )->printSectorDependencies( logger );
+    }
+    LOG( logger, Logger::DEBUG_LEVEL ) << endl;
 }
 

@@ -24,6 +24,7 @@ class AgSector;
 class ghg_mrk;
 class Summary;
 class Emcoef_ind;
+class Logger;
 
 /*! 
 * \ingroup CIAM
@@ -126,6 +127,7 @@ public:
     double getPrimaryFuelCO2Coef( const std::string& fuelName ) const;
     double getCarbonTaxCoef( const std::string& fuelName ) const;
     std::vector<std::string> getSectorDependencies( const std::string& sectorName ) const;
+    void printSectorDependencies( Logger* logger ) const;
 };
 
 #endif // _REGION_H_

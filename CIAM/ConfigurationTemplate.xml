@@ -31,6 +31,7 @@
 		<Value name="PrintDependencyGraphs">0</Value>
 		<Value name="PrintValuesOnGraphs">0</Value>
 		<Value name="debugFindSD">1</Value>
+		<Value name="PrintSectorDependencies">1</Value>
 	</Bools>
 	<Ints>
 		<Value name="NumberOfScenarioAddOnFiles">1</Value>

@@ -35,6 +35,8 @@ private:
     Marketplace* marketplace; //!< The goods and services marketplace.
     std::string name; //!< Scenario name.
     std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
+    
+    void printSectorDependencies() const;
 
 public:
     Scenario();

@@ -22,7 +22,7 @@ class subsector;
 class Summary;
 class Emcoef_ind;
 class Region;
-
+class Logger;
 /*! 
 * \ingroup CIAM
 * \brief This class represents a single good that is produced, transformed, or consumed.
@@ -65,7 +65,6 @@ protected:
     void sumInput(int per); // private function, sum taken care of automatically
     double getFixedShare( const std::string& regionName, const int sectorNum, const int per ); // utility function 
     virtual void calcPrice(int per);
-
 
 public:
     sector();
@@ -120,8 +119,9 @@ public:
     void setupForSort( const Region* parentRegion );
     std::vector<std::string> getInputDependencies( const Region* parentRegion ) const;
     const std::vector<std::string> getDependsList() const;
-
-     /*!
+    void printSectorDependencies( Logger* logger ) const;
+    
+    /*!
     * \brief Binary function used to order Sector* pointers by input dependency. 
     * \author Josh Lurz
     *

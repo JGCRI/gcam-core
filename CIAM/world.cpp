@@ -571,3 +571,14 @@ double World::getCarbonTaxCoef( const string& regionName, const string& fuelName
 
    return coef;
 }
+
+/*! \brief A function to print a csv file including the list of all regions their sector dependencies.
+* 
+* \author Josh Lurz
+* \param logger The to which to print the dependencies. 
+*/
+void World::printSectorDependencies( Logger* logger ) const {
+    for( vector<Region*>::const_iterator regionIter = region.begin(); regionIter != region.end(); regionIter++ ) {
+        ( *regionIter )->printSectorDependencies( logger );
+    }
+}
