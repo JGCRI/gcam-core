@@ -134,6 +134,12 @@ int main( int argc, char *argv[] ) {
 		xmlOut.close();
 	} 
 	else {
+		// Override scenario name from data file with that from configuration file
+		string overrideName = conf->getString( "scenarioName" );
+		if ( overrideName != "") {
+			scenario->setName(overrideName);
+		}
+
 		// Finish initialization.
 		scenarioPtr->completeInit();
 
