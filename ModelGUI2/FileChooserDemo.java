@@ -239,6 +239,7 @@ public class FileChooserDemo extends JFrame
 	  
   jtree.addTreeSelectionListener(new TreeSelectionListener() {
 	  public void valueChanged(TreeSelectionEvent e) {
+		  /*
 		  System.out.println("So it changed");
 		  jtree.makeVisible(e.getPath());
 		  if(jtree.isVisible(e.getPath())) {
@@ -250,8 +251,6 @@ public class FileChooserDemo extends JFrame
 		  if(jtree.isExpanded(e.getPath())) {
 			System.out.println("is expanded");
 		  }
-		  /*
-		  TreePath[] paths = jtree.getSelectionPaths();
 		  if (paths != null) {
 				System.out.println("in valueChanged paths! "+e+" --- "+e.getPath());
 			  //clearDisplay();
@@ -883,6 +882,28 @@ public class FileChooserDemo extends JFrame
   // for the tablechangedmodel listener
   public void tableChanged(TableModelEvent e) {
 	  if(1==1) {
+	  	System.out.println("!!! "+e);
+		Node mod = ((NewDataTableModel)e.getSource()).getNodeAt(e.getFirstRow(), e.getColumn());
+		Vector temp = new Vector();
+		while(mod.getParentNode() != null) {
+			temp.add(0, ((DOMmodel)jtree.getModel()).getAdapterNode(mod)); 
+			mod = mod.getParentNode();
+		}
+		mod = ((NewDataTableModel)e.getSource()).getNodeAt(e.getFirstRow(), e.getColumn());
+		TreePath a = new TreePath(temp.toArray());
+		TreePath b = jtree.getNextMatch("populationMiniCAM year = 1990", 20, javax.swing.text.Position.Bias.Forward).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod.getParentNode())).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod));
+		System.out.println("a = b: "+a.equals(b)+" b = a: "+b.equals(a));
+		//((DOMmodel)jtree.getModel()).fireTreeNodesChanged(new TreeModelEvent(e.getSource(), temp.toArray()));
+		//jtree.updateUI();
+		//System.out.println(new TreePath(temp.toArray()));
+		//jtree.scrollPathToVisible(new TreePath(temp.toArray()));
+		///jtree.setSelectionPath(new TreePath(temp.toArray()));
+		jtree.setSelectionPath(a);
+		//jtree.setSelectionPath(b);
+		//jtree.setSelectionPath(jtree.getNextMatch("populationMiniCAM year = 1990", 20, javax.swing.text.Position.Bias.Forward).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod.getParentNode())).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod)));
+		System.out.println(jtree.getSelectionPath());
+		System.out.println(new TreePath(temp.toArray()));
+		//System.out.println(jtree.getNextMatch("populationMiniCAM year = 1990", 20, javax.swing.text.Position.Bias.Forward));
 	  	return;
 	  }
 	  System.out.println("!!! "+e);
@@ -1050,8 +1071,6 @@ public class FileChooserDemo extends JFrame
 		  		tables = new Vector();
 	  		}
 	  		tables.add(tableView);
-	  		
-
 
 		}
 		*/

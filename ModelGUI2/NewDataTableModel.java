@@ -48,6 +48,12 @@ public class NewDataTableModel extends AbstractTableModel {
 		return indRow.size();
 	}
 
+	public Node getNodeAt(int row, int col) {
+		if(col == 0) {
+			return null;
+		}
+		return ((Node)data.get(getKey(row,col)));
+	}
 	public Object getValueAt(int row, int col) {
 		if(col ==0) {
 			return indRow.get(row);
@@ -78,6 +84,7 @@ public class NewDataTableModel extends AbstractTableModel {
 		Node n = (Node)data.get(getKey(row,col));
 		//if( n != null ){
 			n.setNodeValue(val.toString());
+			fireTableCellUpdated(row, col);
 		/*}else{
 			n = doc.createElement( val.toString() );
 			//n.setNodeValue(val.toString());
