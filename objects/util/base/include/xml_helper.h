@@ -550,7 +550,7 @@ void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elem
 
 template <class T>
 bool XMLHelper<T>::parseXML( const std::string& xmlFile, IParsable* aModelElement ) {
-    XercesDOMParser* parser = XMLHelper<T>::getParser();
+    xercesc::XercesDOMParser* parser = XMLHelper<T>::getParser();
     try {
         parser->parse( xmlFile.c_str() );
     } catch ( const xercesc::XMLException& toCatch ) {
