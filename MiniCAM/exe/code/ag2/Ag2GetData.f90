@@ -16,6 +16,7 @@ DATA TABLEMRK/'INPUT_TABLE'/
 
 IVMAX = 3
 NJ = 4
+DeforBioUse = 1	! Default Value, turned on
 
 !OPEN(1,FILE='AGIN.csv')
 
@@ -246,6 +247,10 @@ DO WHILE(INDIC.EQ.1)
       READ(1,*) IDUM,agrho(L)
     END DO
 
+! Flag to turn off consumption of biomass previously deforested
+  CASE (697)
+	DeforBioUse = 0
+ 
 ! Fraction of aboveground woody biomass that is recoverable as a feedstock
   CASE (698)
 	DO L=1,NL

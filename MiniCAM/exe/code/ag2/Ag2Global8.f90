@@ -5,6 +5,7 @@ REAL(8),PARAMETER :: InterestR=0.0200d0, STEP=15.0d0
 REAL(8),PARAMETER :: GJperGcal = 4.1868d0 ! Biomass energy to crop output(GJ per Gcal)
 
 INTEGER IDUM,NL,ICASE,NU,NZ(0:NLP),NC(NLP),CLIMTOGGLE(2),MODL1
+INTEGER DeforBioUse	! Toggle to turn off biomass use from deforestation
 REAL(8) BREAK
 
 

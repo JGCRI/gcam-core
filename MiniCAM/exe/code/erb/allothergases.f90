@@ -227,18 +227,18 @@
     CmtGamma = 3;
     CementGDPperCap = 1000*GNPPPP(L,M)/ZLM(L,M) /8
 
-    if( CementGDPperCap > 0.0_8 ) then
+    if( CementGDPperCap .gt. 0.0d0 ) then
         CementDenom = CementGDPperCap**CmtGamma + CementGDPperCap**(-CmtGamma)
     else
-        write( *, * ) "GDP Per capita 0 in cement emissions calculation. L: ", L, " M: ", M
-        CementDenom = 1_8
+        if ( M .gt. 1 ) write( *, * ) "GDP Per capita 0 in cement emissions calculation. L: ", L, " M: ", M
+        CementDenom = 1d0
     endif
 
 ! src 1 : cement demand driver for low GDP
-    if( CementGDPperCap > 0.0_8 ) then
+    if( CementGDPperCap .gt. 0.0d0 ) then
         OGACT(ICemt,1,L,M) = CementGDPperCap * CementGDPperCap**(-CmtGamma) /CementDenom
     else 
-        OGACT(ICemt,1,L,M) = 0.0_8
+        OGACT(ICemt,1,L,M) = 0.0d0
     endif
 
 ! src 2 : cement demand driver for high GDP
@@ -854,10 +854,11 @@
 
 	USE Ag2Global8
 	
-	REAL*8 DefroR, gdppercap
+	REAL*8 DefroR, gdppercap, biomassprice
 	INTEGER L,M
 
 	REAL*8 CarbDensity, EnergyDensity, UseFract, priceFactor, maxUse
+	REAL*8 gdpFact, orgDefor
     
     CarbDensity = 0.5 ! Assume half of biomass weight is carbon
     EnergyDensity = 17.5 ! GJ/Tonne
@@ -869,15 +870,17 @@
     endif
 
 	! Deforested biomass in energy terms
-	DefroR = DefroR/CarbDensity * EnergyDensity / 1000d0
-	
+	orgDefor = DefroR/CarbDensity * EnergyDensity / 1000d0
+
 	! Now adjust for amount harvested for energy
 	
 	UseFract = (1d0 - recovForestFrac(L) )	! Basic amount that can be potentially used
 	
-	if (gdppercap < 15 ) then
-		UseFract = (gdppercap/15d0) * UseFract	! Assume that less is used at low incomes
+	gdpFact = 1d0
+	if (gdppercap .lt. 15d0 ) then
+		gdpFact = (gdppercap/15d0) 	! Assume that less is used at low incomes
 	endif
+	UseFract = UseFract	* gdpFact
 
 	! Assume that none is used at a low biomass price ($1/GJ), maxing out at $5/GJ
 	maxUse = 0.90	! Assume that 90% of the usable biomass is used if price is high enough
@@ -888,8 +891,14 @@
 	
 	UseFract = UseFract	* priceFactor
 	
-	DefroR = DefroR * (1d0 - UseFract)
+	If (DeforBioUse .eq. 0) UseFract = 0
+	DefroR = orgDefor * (1d0 - UseFract)
 	
+	if (L .eq. 100) then
+		write (97,'(I3,8(f8.2,","))') M, DefroR,orgDefor,UseFract,gdpFact,priceFactor
+		write (97,*) "   EmPart(5,L): ",EmPart(5,L),SaveLand(5,L,M), SaveLand(5,L,M-1)
+	endif
+
 	RETURN
 	END
 	
