@@ -430,7 +430,7 @@ void XMLWriteElementCheckDefault( const T value, const string elementName, ostre
    if( !std::isEqual( value, defaultValue ) ) {
 	   Tabs::writeTabs( out );
 	
-   	out << "<" << elementName;
+   	   out << "<" << elementName;
 	
 	   if ( name != "" ) {
 		   out << " name=\"" << name << "\"";

@@ -77,15 +77,30 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
     }
 }
 
-//! Write datamembers to datastream in XML format.
+//! Write datamembers to datastream in XML format for replicating input file.
 void Grade::toXML( ostream& out ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     
     Tabs::writeTabs( out );
-    out << "<Grade name=\"" << name << "\">" << endl;
+    out << "<grade name=\"" << name << "\">" << endl;
     Tabs::increaseIndent();
 
-    XMLWriteElement( name, "name", out );
+    XMLWriteElement( available, "available", out );
+    XMLWriteElement( extractCost, "extractioncost", out );
+        
+    Tabs::decreaseIndent();
+    Tabs::writeTabs( out );
+    out << "</grade>" << endl;
+}
+
+//! Write datamembers to datastream in XML format for outputting results
+void Grade::toOutputXML( ostream& out ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    
+    Tabs::writeTabs( out );
+    out << "<grade name=\"" << name << "\">" << endl;
+    Tabs::increaseIndent();
+
     XMLWriteElement( available, "available", out );
     XMLWriteElement( extractCost, "extractioncost", out );
     
@@ -95,7 +110,7 @@ void Grade::toXML( ostream& out ) const {
     
     Tabs::decreaseIndent();
     Tabs::writeTabs( out );
-    out << "</Grade>" << endl;
+    out << "</grade>" << endl;
 }
 
 //! Write datamembers to debugging datastream in XML format.

@@ -49,6 +49,7 @@ public:
     // Since this is not defined within the resource class, must declare this as abstract
     virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* node ) = 0; // the = 0 makes this an abstract method
     void toXML( ostream& out ) const;
+    void toOutputXML( ostream& out ) const;
     void toDebugXML( const int period, ostream &out ) const;
     string getName() const; // return resource name
     void setMarket( const string& regionName );

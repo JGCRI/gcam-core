@@ -116,8 +116,42 @@ void Resource::completeInit() {
    }
 }
 
-//! Write datamembers to datastream in XML format.
+//! Write datamembers to datastream in XML format for replicating input file.
 void Resource::toXML( ostream& out ) const {
+   const Modeltime* modeltime = scenario->getModeltime();
+   // write the beginning tag.
+   Tabs::writeTabs( out );
+   out << "<" << getXMLType() << " name=\"" << name << "\">"<< endl;
+   
+   // increase the indent.
+   Tabs::increaseIndent();
+   
+   // write the xml for the class members.
+   // write out the market string.
+   XMLWriteElement( market, "market", out );
+   
+   // write out resource prices for base period only
+   int m = 0;
+   XMLWriteElement( rscprc[m], "price", out, modeltime->getper_to_yr(m));
+   
+   // write out the depresource objects.
+   for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
+      ( *i )->toXML( out );
+   }
+   
+   // finished writing xml for the class members.
+   
+   // decrease the indent.
+   Tabs::decreaseIndent();
+   
+   // write the closing tag.
+   Tabs::writeTabs( out );
+   out << "</" << getXMLType() << ">" << endl;
+   
+}
+
+//! Write datamembers to datastream in XML format for outputting results.
+void Resource::toOutputXML( ostream& out ) const {
    const Modeltime* modeltime = scenario->getModeltime();
    // write the beginning tag.
    Tabs::writeTabs( out );

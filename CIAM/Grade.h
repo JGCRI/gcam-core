@@ -44,6 +44,7 @@ public:
     void initElementalMembers();
     void XMLParse( const DOMNode* tempnode );
     void toXML( ostream& out ) const;
+    void toOutputXML( ostream& out ) const;
     void toDebugXML( const int period, ostream& out ) const;
     void calcCost( const double tax, const double cumTechChange, const double environCost, const int per );
     double getAvail() const;

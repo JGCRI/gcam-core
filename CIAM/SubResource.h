@@ -60,6 +60,7 @@ public:
     virtual void initializeResource(); 
     void toXML( ostream& out ) const;
     virtual void toXMLforDerivedClass( ostream& out ) const;
+    void toOutputXML( ostream& out ) const;
     void toDebugXML( const int period, ostream& out ) const;
     virtual void cumulsupply(double prc,int per); // calculate cummulative production
     double getPrice(int per);

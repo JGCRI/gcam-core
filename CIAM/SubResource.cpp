@@ -165,7 +165,62 @@ void SubResource::toXMLforDerivedClass( ostream& out ) const {
 void SubResource::initializeResource( ) {   
 }	
 
+//! Write datamembers to datastream in XML format for replicating input file.
 void SubResource::toXML( ostream& out ) const {
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    int m = 0;
+    // write the beginning tag.
+    Tabs::writeTabs( out );
+    out << "<subresource name=\"" << name << "\">"<< endl;
+    
+    // increase the indent.
+    Tabs::increaseIndent();
+    
+    // write the xml for the class members.
+    
+    for(m = 0; m < static_cast<int>(environCost.size() ); m++ ) {
+        XMLWriteElementCheckDefault(environCost[m],"environCost",out,0,modeltime->getper_to_yr(m));
+    }
+    
+    for(m = 0; m < static_cast<int>(severanceTax.size() ); m++ ) {
+        XMLWriteElementCheckDefault(severanceTax[m],"severanceTax",out,0,modeltime->getper_to_yr(m));
+    }
+    
+    // for base year only
+    m = 0;
+    XMLWriteElement(annualprod[m],"annualprod",out,modeltime->getper_to_yr(m));
+        
+    for(m = 0; m < static_cast<int>(techChange.size() ); m++ ) {
+        XMLWriteElementCheckDefault(techChange[m],"techChange",out,0,modeltime->getper_to_yr(m));
+    }
+    
+	for(m = 0; m < static_cast<int>(scaleFactor.size() ); m++ ) {
+        XMLWriteElementCheckDefault(scaleFactor[m],"scaleFactor",out,SCALE_FACTOR_DEFAULT,modeltime->getper_to_yr(m));
+	}
+
+    XMLWriteElementCheckDefault(minShortTermSLimit,"minShortTermSLimit",out,0);
+    XMLWriteElementCheckDefault(priceElas,"priceElas",out,1);
+    // finished writing xml for the class members.
+    
+    // write out anything specific to the derived classes
+    toXMLforDerivedClass( out );
+    
+    // write out the grade objects.
+    for( vector<Grade*>::const_iterator i = grade.begin(); i != grade.end(); i++ ){	
+        ( *i )->toXML( out );
+    }
+
+    // decrease the indent.
+    Tabs::decreaseIndent();
+    
+    // write the closing tag.
+    Tabs::writeTabs( out );
+    out << "</subresource>" << endl;
+}
+
+//! Write datamembers to datastream in XML format for outputting results
+void SubResource::toOutputXML( ostream& out ) const {
 
     const Modeltime* modeltime = scenario->getModeltime();
     int m = 0;
@@ -224,6 +279,7 @@ void SubResource::toXML( ostream& out ) const {
     Tabs::writeTabs( out );
     out << "</subresource>" << endl;
 }
+
 
 void SubResource::toDebugXML( const int period, ostream& out ) const {
     

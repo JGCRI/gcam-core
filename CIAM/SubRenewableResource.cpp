@@ -64,6 +64,14 @@ void SubRenewableResource::toXMLforDerivedClass( ostream& out ) const {
    
 }   
 
+//! Write out to XML variables specific to this derived class
+void SubRenewableResource::toOutputXMLforDerivedClass( ostream& out ) const {
+   
+   XMLWriteElement( maxSubResource, "maxSubResource", out );
+   XMLWriteElement( gdpSupplyElasticity, "gdpSupplyElast", out );
+   
+}   
+
 //! Returns the type of the Resource.
 string SubRenewableResource::getType() const {
    return "Renewable";
@@ -83,9 +91,7 @@ void SubRenewableResource::cumulsupply( double prc, int per ) {
       }
       // Determine cost
       grade[ gr ]->calcCost( severanceTax[ per ],cumulativeTechChange[ per ], environCost[ per ], per );
-   }
-   
-   
+   }   
 }
 
 //! calculate annual supply 
