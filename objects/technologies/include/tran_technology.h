@@ -6,7 +6,7 @@
 
 /*! 
 * \file tran_technology.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The transportation technology class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -19,30 +19,34 @@
 class GDP;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This transportation technology class is based on the MiniCAM description of technology.
 * \author Sonny Kim
 */
 
-class tranTechnology : public technology
+class TranTechnology : public technology
 {
+public:
+    TranTechnology();
+    TranTechnology* clone() const;
+    const std::string& getXMLName1D() const;
+    static const std::string& getXMLNameStatic1D();
+    void calcCost( const std::string& regionName, const std::string& sectorName, const int per );
+    void production( const std::string& regionName, const std::string& prodName,double dmd, const GDP* gdp, const int per);    
+    double getIntensity(const int per) const;
+    double getCalibrationOutput() const;
 protected:
     double techChangeCumm; //!< cummulative technical change
     double loadFactor; //!< vechile load factor
     double vehicleOutput; //!< service per vehicle
     double serviceOutput; //!< service by technology
-	double baseScaler; // constant scaler to scale base output
-    
-public:
-    tranTechnology();
-    virtual tranTechnology* clone() const;
-    virtual void clear();
-    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
-    virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per );
-    // calculates fuel input and technology output
-    virtual void production( const std::string& regionName, const std::string& prodName,double dmd, const GDP* gdp, const int per);    
-    virtual double getIntensity(const int per) const; // return fuel intensity
-    virtual double getCalibrationOutput( ) const;
+	double baseScaler; //!< constant scaler to scale base output
+    bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+private:
+    static const std::string XML_NAME; //!< The XML name of this object.
 };
 
 #endif // _TRAN_TECHNOLOGY_H_

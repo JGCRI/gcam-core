@@ -27,6 +27,7 @@
 #include "emissions/include/indirect_emiss_coef.h"
 #include "containers/include/gdp.h"
 #include "util/base/include/configuration.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -54,8 +55,7 @@ technology::technology( const technology& techIn ) {
 }
 
 //! Assignment operator.
-technology& technology::operator =( const technology& techIn ) {
-    
+technology& technology::operator = ( const technology& techIn ) {
     if( this != &techIn ) { // check for self assignment 
         clear();
         copy( techIn );
@@ -166,10 +166,9 @@ void technology::XMLParse( const DOMNode* node ) {
     assert( node );
     
     DOMNodeList* nodeList = node->getChildNodes();
-    string nodeName;
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
         DOMNode* curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
         
         if( nodeName == "#text" ) {
             continue;
@@ -252,17 +251,22 @@ void technology::XMLParse( const DOMNode* node ) {
             note = XMLHelper<string>::getValue( curr );
         }
         // parse derived classes
-        else {
-            XMLDerivedClassParse( nodeName, curr );
+        else if( XMLDerivedClassParse( nodeName, curr ) ){
         } 
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName1D() << "." << endl;
+        }
+
     }
 }
 
 //! Parses any input variables specific to derived classes
-void technology::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+bool technology::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ){
     // do nothing. Defining method here even though it does nothing so that we do not
     // create an abstract class.
-    cout << "Unrecognized text string: " << nodeName << " found while parsing technology." << endl;
+    return false;
 }
 
 //! Complete initialization
@@ -316,7 +320,7 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     }
     
     // finished writing xml for the class members.
-    
+    toInputXMLDerived( out, tabs );
     XMLWriteClosingTag( getXMLName2D(), out, tabs );
 }
 
@@ -358,7 +362,7 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     }
     
     // finished writing xml for the class members.
-    
+    toDebugXMLDerived( period, out, tabs );
     XMLWriteClosingTag( getXMLName1D(), out, tabs );
 }
 

@@ -31,12 +31,12 @@ class GDP;
 *
 * \author Sonny Kim
 */
-
 class technology
 {
 private:
     static const std::string XML_NAME1D; //!< tag name for toInputXML
     static const std::string XML_NAME2D; //!< tag name for toInputXML
+    void clear();
 protected:
     std::string name; //!< technology name
     std::string unit; //!< unit of final product from technology
@@ -79,24 +79,27 @@ protected:
     double A; //!< logit function shape parameter
     double B; //!< logit function shape parameter
     std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
-    void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per ); 
+    void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per );
+    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
+    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
+    virtual void copy( const technology& techIn );
+    void initElementalMembers();
+    virtual const std::string& getXMLName2D() const;
 public:
     technology(); // default construtor
     technology( const technology& techIn ); // copy constructor.
     technology& operator=( const technology& techIn ); // assignment operator.
     virtual technology* clone() const;
     virtual ~technology();
-    virtual void clear();
-    virtual void copy( const technology& techIn );
-    void initElementalMembers();
     virtual void XMLParse( const xercesc::DOMNode* tempnode ); // initialize technology with xml data
-    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
+     // for derived classes
     void completeInit();
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
-    virtual const std::string& getXMLName2D() const;
     static const std::string& getXMLNameStatic2D();
     void initCalc( );
     virtual void derivedTechInitCalc();

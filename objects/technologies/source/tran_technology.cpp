@@ -1,20 +1,17 @@
 /*! 
 * \file tran_technology.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief transporation technology class source file.
-* \author Sonny Kim
+* \author Sonny Kim, Josh Lurz
 * \date $Date$
 * \version $Revision$
 */
 
-// Standard Library headers
 #include "util/base/include/definitions.h"
 #include <string>
 #include <iostream>
 #include <cassert>
 #include <cmath>
-
-// User headers
 #include "technologies/include/tran_technology.h"
 #include "emissions/include/ghg.h"
 #include "containers/include/scenario.h"
@@ -22,16 +19,17 @@
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/gdp.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
 
-// tranTechnology class method definition
+const string TranTechnology::XML_NAME = "tranTechnology";
 
 //! Default constructor.
-tranTechnology::tranTechnology() {
+TranTechnology::TranTechnology() {
 	intensity = 1;
     techChangeCumm = 1;
     loadFactor = 1;
@@ -41,25 +39,37 @@ tranTechnology::tranTechnology() {
 }
 
 //! Clone function. Returns a deep copy of the current TranTechnology.
-tranTechnology* tranTechnology::clone() const {
-    return new tranTechnology( *this );
+TranTechnology* TranTechnology::clone() const {
+    return new TranTechnology( *this );
 }
 
-//! Clear member variables.
-void tranTechnology::clear(){
-    technology::clear();
-    intensity = 1;
-    techChangeCumm = 1;
-    loadFactor = 1;
-    vehicleOutput = 0;
-    serviceOutput = 0;
-    baseScaler = 0;
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& TranTechnology::getXMLName1D() const {
+	return XML_NAME;
 }
 
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& TranTechnology::getXMLNameStatic1D() {
+	return XML_NAME;
+}
 
-//! initialize tranTechnology with xml data
-void tranTechnology::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
-    // additional read in for transportation
+//! initialize TranTechnology with xml data
+bool TranTechnology::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
     if( nodeName == "intensity" ){
         intensity = XMLHelper<double>::getValue( curr );
     }
@@ -70,40 +80,67 @@ void tranTechnology::XMLDerivedClassParse( const string nodeName, const DOMNode*
         serviceOutput = XMLHelper<double>::getValue( curr );
     }
     else {
-        cout << "Unrecognized text string: " << nodeName << " found while parsing tranTechnology." << endl;
+        return false;
     }
+    return true;
+}
+/*! \brief XML output stream for derived classes
+*
+* Function writes output due to any variables specific to derived classes to XML
+*
+* \author Josh Lurz
+* \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
+*/
+void TranTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
+    XMLWriteElementCheckDefault( intensity, "intensity", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( loadFactor, "loadFactor", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( serviceOutput, "serviceoutput", out, tabs, 0.0 );
+}	
+
+
+//! XML output for viewing.
+void TranTechnology::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
+    XMLWriteElementCheckDefault( intensity, "intensity", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( loadFactor, "loadFactor", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( serviceOutput, "serviceoutput", out, tabs, 0.0 );
 }
 
-//! define technology fuel cost and total cost
-void tranTechnology::calcCost( const string& regionName, const string& sectorName, const int per ) 
-{
-    Marketplace* marketplace = scenario->getMarketplace();
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int timestep = modeltime->gettimestep(per);
+//! Write object to debugging xml output stream.
+void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 
+    XMLWriteElement( intensity, "intensity", out, tabs );
+    XMLWriteElement( loadFactor, "loadFactor", out, tabs );
+    XMLWriteElement( serviceOutput, "serviceoutput", out, tabs );
+    XMLWriteElement( techChangeCumm, "techChangeCumm", out, tabs );
+    XMLWriteElement( vehicleOutput, "vehicleOutput", out, tabs );
+    XMLWriteElement( baseScaler, "baseScaler", out, tabs );
+}	
 
-    double fuelprice = marketplace->getPrice(fuelname,regionName,per);
-    
-    if(per>=2) {
+//! define technology fuel cost and total cost
+void TranTechnology::calcCost( const string& regionName, const string& sectorName, const int per ) {
+    if( per > 1 ){
+        const Modeltime* modeltime = scenario->getModeltime();
+        const int timestep = modeltime->gettimestep(per);
         techChangeCumm = pow(1+techchange,timestep*(per-1));
     }
     // fMultiplier and pMultiplier are initialized to 1 for those not read in
     // 75$/GJ 
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    const double JperBTU = 1055.0; // 1055 Joules per BTU
+    const double JPERBTU = 1055; // 1055 Joules per BTU
     calcTotalGHGCost( regionName, sectorName, per );
+
+    Marketplace* marketplace = scenario->getMarketplace();
+    double fuelprice = marketplace->getPrice(fuelname,regionName,per);
     fuelcost = ( (fuelprice * fMultiplier) + totalGHGCost ) * intensity/techChangeCumm
-             * JperBTU/(1.0E9)*CVRT90;
+             * JPERBTU/(1.0E9)*CVRT90;
     techcost = ( fuelcost + necost ) * pMultiplier;
 }
 
-
-//! Calculates fuel input and tranTechnology output.
+//! Calculates fuel input and TranTechnology output.
 /*! Adds demands for fuels and ghg emissions to markets in the marketplace
 */
-void tranTechnology::production(const string& regionName,const string& prodName,
+void TranTechnology::production(const string& regionName,const string& prodName,
                                 double dmd, const GDP* gdp, const int per ) {
-    Marketplace* marketplace = scenario->getMarketplace();
-    
     output = share * dmd;
         
     // for transportation technology use intensity instead of efficiency
@@ -116,9 +153,12 @@ void tranTechnology::production(const string& regionName,const string& prodName,
     //input = vehicleOutput*intensity*ECONV;
    
     if (input < 0) {
-        cerr << "ERROR: Output value < 0 for tranTechnology " << name << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Output value < 0 for TranTechnology " << name << endl;
     }
     
+    Marketplace* marketplace = scenario->getMarketplace();    
     // set demand for fuel in marketplace
     marketplace->addToDemand(fuelname,regionName,input,per);
     
@@ -128,7 +168,7 @@ void tranTechnology::production(const string& regionName,const string& prodName,
     carbontaxpaid = input * totalGHGCost * 1e+3;
     
     // calculate emissions for each gas after setting input and output amounts
-    for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
+    for ( unsigned int i = 0; i < ghg.size(); ++i ) {
         ghg[i]->calcEmission(regionName, fuelname,input,prodName,output, gdp, per );
         // set emissions as demand side of gas market
         marketplace->addToDemand(ghg[i]->getName(),regionName,ghg[i]->getEmission(),per);		
@@ -136,13 +176,13 @@ void tranTechnology::production(const string& regionName,const string& prodName,
 }
 
 //! return technology calibration value
-double tranTechnology::getCalibrationOutput( ) const {
+double TranTechnology::getCalibrationOutput( ) const {
     const double ECONV = 1.055e-9;
     return calInputValue * techChangeCumm*loadFactor / (intensity*ECONV);
 }
 
 //! return fuel intensity
-double tranTechnology::getIntensity(const int per) const {
+double TranTechnology::getIntensity(const int per) const {
     return intensity/techChangeCumm;
 }
 
