@@ -475,7 +475,8 @@ MODULE COMMON
 	   IOTHGASTOG,              & ! toggle to switch between co2 only and tce
 	   IFREEREDUX,              & ! toggle to turn free reductions on and off (regardless of iothgastog) mj11-02
 	   IBZFIRST,                & ! first period reductions from cost curves appear
-       IBZSTEPS                   ! number of steps for phasing in <0 redux
+       IBZSTEPS,                & ! number of steps for phasing in <0 redux
+       basegwp(1:NOGMax)		  ! gwp's assumed
 
 ! Moved cement emissions from MAGLINK so that can be accessed elsewhere. sjs - 02/02  
 ! Also added ability to have hard-coded deforestation emissions  
