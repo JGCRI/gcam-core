@@ -12,7 +12,7 @@
 	IMPLICIT DOUBLE PRECISION (A-H,O-Z)
 
 	INTEGER gas, src
-	REAL*8 gdpcap, enprdelta, base_ctrl, applytax
+	REAL*8 gdpcap, enprdelta, base_ctrl, applytax, bioprice
 
 	ICH4 = 1
 	IN2O = 2
@@ -44,6 +44,7 @@
 ! ****************************************************************************************
 
     gdpcap = 1000*GNPPPP(L,M)/ZLM(L,M)  !ppp gdp per capita
+    bioprice = P(INBMASS,L,M)*CVRT90
 
 ! -------------------------------------------------------------------------------------------------
 ! Estimate the fraction of electric generation that is due to advanced, high efficiency technologies
@@ -346,10 +347,10 @@
 	OGACT(INOx,21,L,M) = GNPMRKT(L,M)**0.25
 
 ! src 22: savannah burning
-	OGACT(INOx,22,L,M) = 1 !set to some arbitary constant
+	OGACT(INOx,22,L,M) = grassland(L,M) !drive by amount of grassland
 
 ! src 23: deforestation
-	OGACT(INOx,23,L,M) = DefroR(L,M)
+	OGACT(INOx,23,L,M) = DefroR(bioprice, gdpcap, L,M)
 
 ! src 24: agricultural waste
 	OGACT(INOx,24,L,M) = saveland(1,L,M) 	! total ag land
@@ -410,10 +411,10 @@
 	OGACT(ICO,15,L,M) = GNPMRKT(L,M)**0.25
 
 ! src 16: savannah burning
-	OGACT(ICO,16,L,M) = 1 !set to some arbitary constant
+	OGACT(ICO,16,L,M) = grassland(L,M) !drive by amount of grassland
 
 ! src 17: deforestation
-	OGACT(ICO,17,L,M) = DefroR(L,M)
+	OGACT(ICO,17,L,M) = DefroR(bioprice, gdpcap, L,M)
 
 ! src 18: agricultural waste
 	OGACT(ICO,18,L,M) =  saveland(1,L,M) 	! total ag land
@@ -483,11 +484,11 @@
 	OGACT(IVOC,16,L,M) = GNPMRKT(L,M)**0.25
 
 ! src 17: savannah burning
-	OGACT(IVOC,17,L,M) = 1 !set to some arbitary constant
+	OGACT(IVOC,17,L,M) = grassland(L,M) !drive by amount of grassland
 
 ! src 18: deforestation
-	OGACT(IVOC,18,L,M) = DefroR(L,M)
-!	write(1001,*) DefroR(L,M),L,M
+	OGACT(IVOC,18,L,M) = DefroR(bioprice, gdpcap, L,M)
+!	write(1001,*) DefroR(bioprice, gdpcap, L,M),L,M
 
 ! src 19: agricultural waste
 	OGACT(IVOC,19,L,M) =  saveland(1,L,M) 	! total ag land
@@ -551,18 +552,18 @@
 	OGACT(IBC,15,L,M) = FJKL(5,3,L)
 
 ! src 16: savannah burning
-	OGACT(IBC,16,L,M) = 1 !set to some arbitary constant
+	OGACT(IBC,16,L,M) = grassland(L,M) !drive by amount of grassland
 
 ! src 17: deforestation
-	OGACT(IBC,17,L,M) = DefroR(L,M)
-	OGACT(IBC,17,L,M) = 1.0
+	OGACT(IBC,17,L,M) = DefroR(bioprice, gdpcap, L,M)
+!	OGACT(IBC,17,L,M) = 1.0
 
 ! src 18: forest fires
-	OGACT(IBC,18,L,M) = 1.0
+	OGACT(IBC,18,L,M) = saveland(3,L,M) + unmanForestFrac(L) * saveland(5,L,M)	!total forests
 
 ! src 19: agricultural waste
 	OGACT(IBC,19,L,M) =  saveland(1,L,M) 	! total ag land
-	OGACT(IBC,19,L,M) =  1.0
+!	OGACT(IBC,19,L,M) =  1.0
 
 !
 !
@@ -630,17 +631,18 @@
 	OGACT(IOC,15,L,M) = FJKL(5,3,L)
 
 ! src 16: savannah burning
-	OGACT(IOC,16,L,M) = 1 !set to some arbitary constant
+	OGACT(IOC,16,L,M) = grassland(L,M) !drive by amount of grassland
 
 ! src 17: deforestation
-	OGACT(IOC,17,L,M) = DefroR(L,M)
-	OGACT(IOC,17,L,M) = 1.0
+	OGACT(IOC,17,L,M) = DefroR(bioprice, gdpcap, L,M)
+!	OGACT(IOC,17,L,M) = 1.0
+
 ! src 18: forest fires
-	OGACT(IOC,18,L,M) = 1.0
+	OGACT(IOC,18,L,M) = saveland(3,L,M) + unmanForestFrac(L) * saveland(5,L,M)	!total forests
 
 ! src 19: agricultural waste
 	OGACT(IOC,19,L,M) =  saveland(1,L,M) 	! total ag land
-	OGACT(IOC,19,L,M) =  1.0
+!	OGACT(IOC,19,L,M) =  1.0
 
 
 !
@@ -843,14 +845,22 @@
 	END
 !
 !-------------------------
-!  activity level for deforestation emissions = above ground forest + unmanaged biomass change
+! activity level for deforestation emissions
+! = above ground forest + unmanaged biomass change, converted to energy units
+! so as to be able to compare emissions
+! modified by a function that takes into account use of biomass for energy
 
-	FUNCTION DefroR(L,M)
+	FUNCTION DefroR(bioprice, gdpcap, L,M)
 
 	USE Ag2Global8
 	
-	REAL*8 DefroR
+	REAL*8 DefroR, gdpcap
 	INTEGER L,M
+
+	REAL*8 CDensity, EnergyDensity, UseFract, priceFactor, maxUse
+    
+    CDensity = 0.5 ! Assume half of biomass weight is carbon
+    EnergyDensity = 17.5 ! GJ/Tonne
     
 	DefroR = 0
 	If (M.gt.1) then
@@ -858,7 +868,26 @@
 		if (EmPart(5,L) .gt. 0) DefroR = DefroR + EmPart(5,L)
     endif
 
+	! Deforested biomass in energy terms
+	DefroR = DefroR/CDensity * EnergyDensity / 1000
+	
+	! Now adjust for amount harvested for energy
+	
+	UseFract = (1d0 - recovForestFrac(L) )	! Basic amount that can be potentially used
+	
+	UseFract = (gdpcap/15) * UseFract	! Assume that less is used at low incomes
 
+	! Assume that none is used at a low biomass price ($1/GJ), maxing out at $5/GJ
+	maxUse = 0.90	! Assume that 90% of the usable biomass is used if price is high enough
+	
+	priceFactor =  ( bioprice - 1d0 ) / (5d0 - 1d0) * maxUse
+	if (priceFactor .gt. 1d0) priceFactor = maxUse
+	if (priceFactor .lt. 0) priceFactor = 0
+	
+	UseFract = UseFract	* priceFactor
+	
+	DefroR = DefroR * (1d0 - UseFract)
+	
 	RETURN
 	END
 	
