@@ -243,7 +243,24 @@ string XMLHelper<T>::getAttrString( const DOMNode* node, const string attrName )
 		return safeTranscode( nameAttr->getValue() );
 	}
 }
-// document me
+
+//! Function which converts XMLCh* to a string without leaking memory.
+
+/*! 
+* This function when passed an XMLCh* string will call the XMLString::transcode method to
+* convert the string into a dynamically allocated char* buffer. The function will then
+* convert the buffer into a string and free the buffer. This function should always be used instead
+* of the XMLString::transcode( XMLCh* ).
+
+* \warning Always use this function instead of XMLString::transcode( XMLCh* ) otherwise memory will leak.
+* \warning This function replaces XMLString::transcode( XMLCh* ) but not XMLString::transcode( char* ). 
+* The latter version is used to create an XMLCh* string. This must still be done with XMLString::transcode. 
+* Be very careful to free memory when doing so.
+
+* \param XMLCh* string to be converted to a standard string.
+* \return An STL string equivalent to the XMLCh* string passed into the function.
+*/
+
 template<class T>
 string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
 	
@@ -263,6 +280,7 @@ string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
 * \param year Optional year value to print as an attribute.
 * \return void
 */
+
 template<class T>
 void XMLWriteElement( const T value, const string elementName, ostream& out, const int year = 0, const string name = "" ) {
 	
