@@ -42,14 +42,13 @@ private:
 	std::map<std::string, int> intMap;  //!< A map of the ints the program uses.
 	std::map<std::string, double> doubleMap;  //!< A map of the doubles the program uses.
 	
-	//! Private constructor to prevent a programmer from creating a second object.
-	Configuration(){};
+	Configuration();
 	
-	//! Private copy constructor to prevent a programmer from creating a second object.
-	Configuration( const Configuration& confIn ){};
+	//! Private undefined constructor to prevent a programmer from creating a second object.
+	Configuration( const Configuration& );
 
-	//! Private assignment operator to prevent a programmer from creating a second object.
-	Configuration& operator= ( const Configuration& confIn ){ return *this; };
+	//! Private undefined assignment operator to prevent a programmer from creating a second object.
+	Configuration& operator= ( const Configuration& );
 
 public:
 	static Configuration* getInstance();

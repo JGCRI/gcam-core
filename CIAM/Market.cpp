@@ -622,7 +622,7 @@ void Market::printSupplyDemandDebuggingCurves( Logger* sdLog ) {
    LOG( sdLog, Logger::WARNING_LEVEL ) << "Supply and Demand curves for: " << getName() << endl;
    LOG( sdLog, Logger::WARNING_LEVEL ) << "Price,Demand,Supply," << endl;
    
-   // Sort the vector and print it.
+   // Sort the SavePoint object pointers in the sdPoints vector by increasing price by using the LesserPrice binary operator. 
    sort( sdPoints.begin(), sdPoints.end(), SavePoint::LesserPrice() );
    for ( vector<SavePoint*>::const_iterator i = sdPoints.begin(); i != sdPoints.end(); i++ ) {
       ( *i )->print( sdLog );

@@ -101,7 +101,13 @@ void LoggerFactory::cleanUp() {
 	
 }
 
-void LoggerFactory::toDebugXML( ostream& out ) const {
+/*! \brief Writes out the LoggerFactory to an XML file. 
+*
+* \param out Output stream to write to.
+* \return void
+* \warning This method is NOT constant, because static methods are not allowed to be declared const.
+*/
+void LoggerFactory::toDebugXML( ostream& out ) {
 	
 	// write out the root tag.
 	out << "<LoggerFactory>" << endl;

@@ -23,6 +23,10 @@ using namespace xercesc;
 bool Configuration::confExists = false;
 Configuration* Configuration::instance = 0;
 
+//! Private constructor to prevent a programmer from creating a second object.
+Configuration::Configuration() {
+}
+	
 //! Destructor
 Configuration::~Configuration() {
 	confExists = false;
