@@ -28,6 +28,8 @@ static msVC6_4786WorkAround emptyStatic;
 #endif
 
 #include <limits>
+
+#include <iostream>;
 // VC 6.0 does not define min and max in <algorithm>
 #if defined(_MSC_VER) && _MSC_VER < 1300
 
@@ -80,7 +82,11 @@ template <class T>
 template <class T>
 //! Helper function to check for validity of numbers. 
 const bool isValidNumber( const T number ) {
-   return ( ( number == number ) && ( number != std::numeric_limits<T>::infinity() ) );
+bool tempval =  ( number == number );
+if ( numeric_limits<double>::infinity() != 0 ) {
+   tempval = tempval && ( number != std::numeric_limits<T>::infinity() );
+}
+return tempval;
 }
 }
 
