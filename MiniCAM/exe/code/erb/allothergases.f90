@@ -559,7 +559,7 @@
 !	OGACT(IBC,17,L,M) = 1.0
 
 ! src 18: forest fires
-	OGACT(IBC,18,L,M) = saveland(3,L,M) + unmanForestFrac(L) * saveland(5,L,M)	!total forests
+	OGACT(IBC,18,L,M) = saveland(3,L,M) + forestFract(L) * saveland(5,L,M)	!total forests
 
 ! src 19: agricultural waste
 	OGACT(IBC,19,L,M) =  saveland(1,L,M) 	! total ag land
@@ -638,7 +638,7 @@
 !	OGACT(IOC,17,L,M) = 1.0
 
 ! src 18: forest fires
-	OGACT(IOC,18,L,M) = saveland(3,L,M) + unmanForestFrac(L) * saveland(5,L,M)	!total forests
+	OGACT(IOC,18,L,M) = saveland(3,L,M) + forestFract(L) * saveland(5,L,M)	!total forests
 
 ! src 19: agricultural waste
 	OGACT(IOC,19,L,M) =  saveland(1,L,M) 	! total ag land
@@ -850,16 +850,16 @@
 ! so as to be able to compare emissions
 ! modified by a function that takes into account use of biomass for energy
 
-	FUNCTION DefroR(bioprice, gdpcap, L,M)
+	FUNCTION DefroR(biomassprice, gdppercap, L,M)
 
 	USE Ag2Global8
 	
-	REAL*8 DefroR, gdpcap
+	REAL*8 DefroR, gdppercap
 	INTEGER L,M
 
-	REAL*8 CDensity, EnergyDensity, UseFract, priceFactor, maxUse
+	REAL*8 CarbDensity, EnergyDensity, UseFract, priceFactor, maxUse
     
-    CDensity = 0.5 ! Assume half of biomass weight is carbon
+    CarbDensity = 0.5 ! Assume half of biomass weight is carbon
     EnergyDensity = 17.5 ! GJ/Tonne
     
 	DefroR = 0
@@ -869,18 +869,18 @@
     endif
 
 	! Deforested biomass in energy terms
-	DefroR = DefroR/CDensity * EnergyDensity / 1000
+	DefroR = DefroR/CarbDensity * EnergyDensity / 1000
 	
 	! Now adjust for amount harvested for energy
 	
 	UseFract = (1d0 - recovForestFrac(L) )	! Basic amount that can be potentially used
 	
-	UseFract = (gdpcap/15) * UseFract	! Assume that less is used at low incomes
+	UseFract = (gdppercap/15) * UseFract	! Assume that less is used at low incomes
 
 	! Assume that none is used at a low biomass price ($1/GJ), maxing out at $5/GJ
 	maxUse = 0.90	! Assume that 90% of the usable biomass is used if price is high enough
 	
-	priceFactor =  ( bioprice - 1d0 ) / (5d0 - 1d0) * maxUse
+	priceFactor =  ( biomassprice - 1d0 ) / (5d0 - 1d0) * maxUse
 	if (priceFactor .gt. 1d0) priceFactor = maxUse
 	if (priceFactor .lt. 0) priceFactor = 0
 	
@@ -914,6 +914,19 @@
 		if (grassL.lt.0.0) grassL=0.0
     endif
 	grassland = grassL	
+
+	RETURN
+	END
+
+!
+!-------------------------
+!  return fraction of unmanaged land that is forest
+
+	FUNCTION forestFract(L)
+
+	USE Ag2Global8
+	
+	forestFract = unmanForestFrac(L)	
 
 	RETURN
 	END
