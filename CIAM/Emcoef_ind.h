@@ -29,14 +29,13 @@
 class Emcoef_ind
 {
 private:
-	std::string name; //!< name of secondary good or sector
-   std::map<std::string, double> emcoef; //!< contains all coefficients for all gases
+    std::string name; //!< name of secondary good or sector
+    std::map<std::string, double> emcoef; //!< contains all coefficients for all gases
 public:
-	Emcoef_ind();
-	void setName( const std::string& secname );
-   void setemcoef( const std::map<std::string,double>& eminfo, const double toutput );
-	const std::string& getName() const;
-	double getemcoef( const std::string& gasName ) const;
+    Emcoef_ind( const std::string sectorName );
+    void setemcoef( const std::map<std::string,double>& eminfo, const double toutput );
+    const std::string& getName() const;
+    double getemcoef( const std::string& gasName ) const;
 };
 
 #endif // _EMCOEF_IND_H_
