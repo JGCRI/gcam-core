@@ -22,6 +22,7 @@
 	INOx = 4
 	ICO  = 5
 	IVOC = 6
+	IBC = 7
 
 	basegwp = (/21.0, 310.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, &
 	9200.0, 7000.0, 6500.0, 2800.0, 1300.0, 3800.0, 140.0, 2900.0, 11700.0, &
@@ -455,10 +456,79 @@
 
 ! src 19: agricultural waste
 	OGACT(IVOC,19,L,M) = ArPro(L,M) + PasPro(L,M)
+
+
+! ****************************************************************************************
+! Activities for Black Carbon -- sjs
+! ****************************************************************************************
+
+!        Activities for BC
+!
+! src 1 : conventional coal used for electric utility generation
+    OGACT(IBC,1,L,M) = EDRIKL(INCOAL,1,L) * (1-TotAdvCoal) 
+
+! src 2 : petroleum oil used for conventional electric utility generation
+	OGACT(IBC,2,L,M) = EDRIKL(INOIL,1,L) * (1-TotAdvOil)
+
+! src 3 : natural gas used for conventional electric utility generation
+	OGACT(IBC,3,L,M) = EDRIKL(INGAS,1,L) * (1-TotAdvGas)
+
+! src 4 : coal used for industrial purposes
+	OGACT(IBC,4,L,M) = FJKL(3,2,L)
+
+! src 5 : petroleum oil used for industrial purposes
+!	OGACT(IBC,5,L,M) = FJKL(1,2,L)
+! Correction for uncombusted oil for industrial sector
+	J = 1 ! Oil 
+	ISEC= 2 ! Industrial sector
+	EOilTot = SUM(FJKLM(1,:,L,2)) !Here M is set to 2 (base year)
+	EOil_NE_Fract = SFEDIL(J,L)*EOilTot/FJKLM(J,ISEC,L,2)     ! Adjust SFEDIL from fract of total to fract o industrial use
+	OGACT(IBC,5,L,M) = FJKL(1,2,L)*(1-EOil_NE_Fract)
+
+! src 6 : natural gas used for industrial purposes
+	OGACT(IBC,6,L,M) = FJKL(2,2,L)
+
+! src 7 : wood used for industrial purposes
+	OGACT(IBC,7,L,M) = EDILM(IBMASS,L,M)
+
+! src 8 : coal used for building/commercial purposes
+	OGACT(IBC,8,L,M) = FJKL(3,1,L)
+
+! src 9: petroleum oil used for building/commercial purposes
+	OGACT(IBC,9,L,M) = FJKL(1,1,L)
+
+! src 10: natural gas used for building/commercial purposes
+	OGACT(IBC,10,L,M) = FJKL(2,1,L)
+
+! src 11: wood used for building/commercial
+	OGACT(IBC,11,L,M) = EDILM(IBMASS,L,M)
+
+! src 12: coal used for transportation
+	OGACT(IBC,12,L,M) = FJKL(3,3,L)
+
+! src 13: petroleum oil used for transportation
+	OGACT(IBC,13,L,M) = FJKL(1,3,L)
+
+! src 14: natural gas used for transportation
+	OGACT(IBC,14,L,M) = FJKL(2,3,L)
+
+! src 15: wood used for transportation
+	OGACT(IBC,15,L,M) = FJKL(5,3,L)
+
+! src 16: savannah burning
+	OGACT(IBC,16,L,M) = 1 !set to some arbitary constant
+
+! src 17: deforestation
+	OGACT(IBC,17,L,M) = DefroR(L,M)
+
+! src 18: agricultural waste
+	OGACT(IBC,18,L,M) = ArPro(L,M) + PasPro(L,M)
+
 !
 !
 !***********************************************************
 !
+
 
 ! Following code is a big loop calling the common emissions code for each gas and source
 
