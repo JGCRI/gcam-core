@@ -13,7 +13,6 @@
 * \version $Revision$
 */
 #include <xercesc/dom/DOMNode.hpp>
-
 // Forward declaration.
 class Grade;
 class GDP;
@@ -28,7 +27,6 @@ class SubResource
 public:
     SubResource();
     virtual ~SubResource();
-    void clear();
     std::string getName() const;
     void XMLParse( const xercesc::DOMNode* tempnode );
     virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node ) = 0; 
