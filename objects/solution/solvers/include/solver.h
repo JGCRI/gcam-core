@@ -13,8 +13,11 @@
 * \date $Date$
 * \version $Revision$
 */
-#include "solution/util/include/calc_counter.h"
+#include <memory>
+#include <string>
 
+// class CalcCounter; // TODO: Fix this without causing incomplete destructor warnings.
+#include "solution/util/include/calc_counter.h" 
 class Marketplace;
 class World;
 /*! 
@@ -27,14 +30,15 @@ class World;
 
 class Solver {
 public:
-   Solver( Marketplace* marketplaceIn, World* worldIn ):marketplace( marketplaceIn ), world( worldIn ){};
-   virtual ~Solver(){};
-   virtual void init() = 0;
-   virtual bool solve( const int period ) = 0;
+    Solver( Marketplace* aMarketplace, World* aWorld ):marketplace( aMarketplace ), world( aWorld ){};
+    virtual ~Solver(){};
+    virtual void init() = 0;
+    virtual bool solve( const int period ) = 0;
+    static std::auto_ptr<Solver> getSolver( const std::string& aSolverName, Marketplace* aMarketplace, World* aWorld );
 protected:
-   Marketplace* marketplace; //<! The marketplace to solve. 
-   World* world; //!< The world to call calc on.
-   CalcCounter calcCounter; //<! Tracks the number of calls to world.calc
+    Marketplace* marketplace; //<! The marketplace to solve. 
+    World* world; //!< The world to call calc on.
+    std::auto_ptr<CalcCounter> mCalcCounter; //<! Tracks the number of calls to world.calc
 };
 
 #endif // _SOLVER_H_
