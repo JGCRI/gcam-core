@@ -48,7 +48,7 @@ private:
 	double EnergyGDPElas; //!< Energy service price feedback elasticity for GDP
 	double PPPConversionFact; //!< 1990 Ratio of PPP to Market GDP
     double PPPDelta; //!< Internal exponent variable for PPP conversion
-	bool VariablePPPConvert; //!< Flag to turn on dynamic ratio of PPP to Market GDP
+	bool constRatio; //!< Flag to turn on dynamic ratio of PPP to Market GDP
 	static const std::string XML_NAME; //!< node name for toXML methods
 
 	void calculatePPP( const int period,const double marketGDPperCap ); // function to calculate PPP values
