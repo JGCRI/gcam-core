@@ -250,7 +250,7 @@ void SolverLibrary::calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& J
         double newPrice = exp( NP[ i ] );
         if( !util::isValidNumber( newPrice ) ){
             cout << "Invalid price after correction." << endl;
-            solverSet.getSolvable( i ).setPrice( 0 );
+            solverSet.getSolvable( i ).setPrice( 1 );
         }
         else {
             solverSet.getSolvable( i ).setPrice( newPrice );
