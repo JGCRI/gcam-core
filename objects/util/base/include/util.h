@@ -184,9 +184,9 @@ namespace util {
    * \return A vector of all keys from the map in the same order as the map iterator returns.
    */
    template<class T, class U>
-       const std::vector<const T> getKeys( const std::map<T,U> aMap ){
+       const std::vector<T> getKeys( const std::map<T,U> aMap ){
         typedef std::map<T,U>::const_iterator ConstMapIterator;
-        std::vector<const T> keys;
+        std::vector<T> keys;
         for( ConstMapIterator mapIter = aMap.begin(); mapIter != aMap.end(); mapIter++ ){
             keys.push_back( ( *mapIter ).first );
         }
@@ -200,9 +200,9 @@ namespace util {
    * \return A vector of all values from the map in the same order as the map iterator returns.
    */
    template<class T, class U>
-       const std::vector<const U> getValues( const std::map<T,U> aMap ){
+        const std::vector<U> getValues( const std::map<T,U> aMap ){
         typedef std::map<T,U>::const_iterator ConstMapIterator;
-        std::vector<const U> values;
+        std::vector<U> values;
         for( ConstMapIterator mapIter = aMap.begin(); mapIter != aMap.end(); mapIter++ ){
             values.push_back( ( *mapIter ).second );
         }
