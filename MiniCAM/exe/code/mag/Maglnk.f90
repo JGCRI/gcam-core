@@ -18,8 +18,12 @@
 ! sjs - 05/01
 ! write extrapolated emissions out to 2055 so that can get better WRE approx
 ! mj - 7/02  removed magicclinkII, ag emissions passed to erb arrays earlier
+! sjs - 08/03. Code to write QEXTRA added so as to include BC/OC forcing in MAGICC
 
 
+	! Write QEXTRA
+	CALL WriteMagExtra
+	
 	AGPCO2(2:NM) = SUM(CARBLAND(1:NL,2:NM),DIM=1)/1000  ! sum and convert land use emissions
 
 ! Option added to use deforestation emissions as read-in instead of AgLU version (above).  sjs - 02/02
@@ -227,7 +231,12 @@ Subroutine WriteMagExtra()
       COMMON/BCOC/FBC1990, FOC1990	! Used only in maglink
 
       Real*8 SO2Hist(2,200), BCOCFOrcing(200)
-      INTEGER NHist, II
+      Real*8 FossForcing, BioBForcing, BioB_BCfract, BioB_OCfract
+      Real*8 BCOCFValue, FossilFScale, BiomassBScale
+      INTEGER NHist, II, N
+
+	IBC = 7
+	IOC = 8
 
       OPEN (99, FILE='SO2Hist.csv')
       READ (99,*)
@@ -238,9 +247,39 @@ Subroutine WriteMagExtra()
       END DO
 
 	  CLOSE (99)
+	  
+	  StartYr = 1765
+	  EndYr = 2100
+	  
+	  
+	  BioB_BCfract = SUM(OGEMISS(IBC,16:19,:,2))/SUM(OGEMISS(IBC,:,:,2))
+	  BioB_OCfract = SUM(OGEMISS(IOC,16:19,:,2))/SUM(OGEMISS(IOC,:,:,2))
+	  
+	  FossForcing = (1 - BioB_OCfract) * FOC1990 + (1 - BioB_OCfract) * FOC1990
+	  BioBForcing = (BioB_OCfract) * FOC1990 + (BioB_OCfract) * FOC1990
+	  
+	  MsgStr = "Fraction Biomass Burning: BC"
+      Call MCLog(4,MsgStr,0,0,1,BioB_BCfract)
+	  MsgStr = "Fraction Biomass Burning: OC"
+      Call MCLog(4,MsgStr,0,0,1,BioB_OCfract)
+
+	  
+	  OPEN (99,FILE='..\magTAR\QEXTRA.IN')
+	  WRITE(99,'(1X,I5)') 1
+	  WRITE(99,'(1X,2I5)') StartYr, EndYr
+	  
+	  DO II = StartYr,EndYr
+	     IF ( II .LT. SO2Hist(0,0) ) THEN
+	        WRITE(99,'(1X,I5,F10.0)') II, 0
+	     ELSE
+	        N = II - SO2Hist(0,0)
+	        FossilFScale = SO2Hist(0,N) / SO2Hist(0,NHist-1)
+	        BiomassBScale = (II - StartYr)/(EndYr - StartYr)
+	        BCOCFValue = FossForcing * FossilFScale + BiomassBScale * BiomassBScale
+	
+	        WRITE(99,'(1X,I5,F10.0)') II, BCOCFValue
+	     END ELSE
+      END DO
 
 RETURN
 END
-
-
-	  
