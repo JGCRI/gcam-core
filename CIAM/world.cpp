@@ -93,7 +93,7 @@ void World::XMLParse( const DOMNode* node ){
 	// get all the children.
 	DOMNodeList* nodeList = node->getChildNodes();
 	
-	for( int i = 0; i < nodeList->getLength(); i++ ){
+	for( int i = 0; static_cast<int>( i < nodeList->getLength() ); i++ ){
 		curr = nodeList->item( i );
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
@@ -164,6 +164,7 @@ void World::toXML( ostream& out ) const {
 }
 
 //! Write out XML for debugging purposes.
+/*! \warning This only call Region::toXML for the US. */
 void World::toDebugXML( const int period, ostream& out ) const {
 	
 	// write the beginning tag.
@@ -188,8 +189,8 @@ void World::toDebugXML( const int period, ostream& out ) const {
 	scenario->getMarketplace()->toDebugXML( period, out );
 	
 	for( vector<Region*>::const_iterator i = region.begin(); i == region.begin(); i++ ) { 
-	//for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ) { 
-		( *i )->toDebugXML( period, out );
+	// for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ) {
+      ( *i )->toDebugXML( period, out );
 	}
 	
 	for( vector<str_ghgss>::const_iterator j = ghgs.begin(); j != ghgs.end(); j++ ) {
@@ -210,8 +211,6 @@ void World::toDebugXML( const int period, ostream& out ) const {
  * cumulative technology change, etc.
  */
 void World::initCalc( const int per ) {	
-	
-	Configuration* conf = Configuration::getInstance();
 	
    for ( int i=0 ;i<noreg; i++ ) {
 		region[ i ]->initCalc( per );
@@ -238,14 +237,18 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
 	}
 	else {
 		for( vector<string>::const_iterator regionName = regionsToSolve.begin(); regionName != regionsToSolve.end(); regionName++ ) {
-			const int regionNumber = ( regionNamesToNumbers.find( *regionName ) )->second; // error checking?
-			regionNumbersToSolve.push_back( regionNumber );
+         map<string,int>::const_iterator foundName = regionNamesToNumbers.find( *regionName );
+         if ( foundName != regionNamesToNumbers.end() ) {
+            const int regionNumber = foundName->second; 
+			   regionNumbersToSolve.push_back( regionNumber );
+         }
+         else {
+            cout << "Error: Region " << *regionName << " not found." << endl;
+         }
 		}
-		cout << endl;
 	}
 
 	for ( vector<int>::iterator i = regionNumbersToSolve.begin(); i != regionNumbersToSolve.end(); i++ ) {
-		
       // Write back calibrated values to the member variables.
       // These are still trial values.
       if( conf->getBool( "CalibrationActive" ) ) {
@@ -284,7 +287,7 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
          region[ *i ]->doCalibration( doCalibrations, per );
       }
 
-	}	
+	}
 }
 
 //! Update all summary information for reporting
@@ -440,7 +443,7 @@ void World::turnCalibrationsOff()
 }
 
 //! return calibration setting
-bool World::getCalibrationSetting()
+bool World::getCalibrationSetting() const 
 {
 	return doCalibrations;
 }
@@ -531,4 +534,13 @@ void World::setupCalibrationMarkets() {
    for( vector<Region*>::iterator i = region.begin(); i != region.end(); i++ ) {
       ( *i )->setupCalibrationMarkets();
    }
+}
+
+vector<string> World::getRegionVector() const {
+   vector<string> regionNames;
+
+   for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ) {
+      regionNames.push_back( ( *i )->getName() );
+   }
+   return regionNames;
 }

@@ -77,9 +77,10 @@ public:
 	double showHFC245ca(int per); // return global emissions for period
 	double showSF6(int per); // return global emissions for period
 	void createRegionMap(void); // create map of region names
+   vector<string> getRegionVector() const;
 	void turnCalibrationsOn(); // turn on calibrations
 	void turnCalibrationsOff(); // turn off calibrations
-	bool getCalibrationSetting(); // return calibration setting
+	bool getCalibrationSetting() const; // return calibration setting
 };
 
 #endif
