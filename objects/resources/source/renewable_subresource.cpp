@@ -24,6 +24,14 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
+const double GDP_SUPPLY_ELASTICITY_DEFAULT = 0;
+//! Constructor
+
+SubRenewableResource::SubRenewableResource(){
+    maxSubResource = 0;
+    gdpSupplyElasticity = GDP_SUPPLY_ELASTICITY_DEFAULT;
+    baseGDP = 0;
+}
 //! NOTE SURE ABOUT what to do with THIS
 //void SubRenewableResource::updateAvailable( const int period ){
 
@@ -39,6 +47,7 @@ void SubRenewableResource::XMLDerivedClassParse( const string nodeName, const DO
 
 //! Do any initializations needed for this resource
 /*! Renewable resources should have only grades with well defined cost curves. 
+\todo The extra elements in the vector should be removed. 
 Also remove any grades with zero available by resetting the parameter nograde. */
 void SubRenewableResource::initializeResource( ) {   
    int tempNumGrades = 1; 

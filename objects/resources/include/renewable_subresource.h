@@ -32,8 +32,8 @@ protected:
    double maxSubResource;
    double baseGDP;
    double gdpSupplyElasticity;
-   
 public: 
+    SubRenewableResource();
     virtual std::string getType() const; 
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
     virtual void toXMLforDerivedClass( std::ostream& out ) const;
