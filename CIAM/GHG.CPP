@@ -251,10 +251,12 @@ void Ghg::calc_emiss( const string& regionName, const string& fuelname, const do
             emiss_gwp = 0;
             seq_emiss = 0;
             emiss_fuel = (1.0-rmfrac)*input* coefFuel;
+            // Note: The primary fuel emissions will not be correct if sequestered emissions occur down the line.
         }
         else {
             // sequestered emissions
             seq_emiss = rmfrac * ( (input * coefFuel ) - ( output * coefProduct ) );
+            // Note that negative emissions can occur here since biomass has a coef of 0. 
             emission = ( 1.0 - rmfrac ) * ( ( input* coefFuel ) - ( output* coefProduct ) );
             emiss_gwp = ( 1.0 - rmfrac ) * gwp * ( ( input * coefFuel ) - ( output * coefProduct ) );
             emiss_fuel = (1.0-rmfrac) * input* coefFuel;
