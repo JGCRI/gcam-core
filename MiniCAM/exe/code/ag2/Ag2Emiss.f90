@@ -181,28 +181,11 @@ SoilEmiss(4,i,T) = SoilEmiss(1,i,T) * 0.10d0	! Emissions the 2nd time period (30
 
 END SUBROUTINE SoilDecay
 
-
-!
-!-------------------------
-! Function returns amount of deforested biomass that is used for fuel or logged
-
-	FUNCTION deforBioUseFract(biomassprice, gdppercap, L,M)
-
-	UseFract = deforBioUseFract_part1(biomassprice, gdppercap, L,M)
-	
-    UseFract = UseFract + loggedFract(L)
-	UseFract = min(UseFract,maxUse)
-
-	deforBioUseFract = UseFract
-
-	RETURN
-	END
-
 !
 !-------------------------
 ! Function returns amount of deforested biomass that is used for fuel, not including logged fraction
 
-	FUNCTION deforBioUseFract_part1(biomassprice, gdppercap, L,M)
+	FUNCTION deforBioUseFract(biomassprice, gdppercap, L,M)
 
 	USE Ag2Global8
 	
@@ -210,7 +193,9 @@ END SUBROUTINE SoilDecay
 	INTEGER L,M
 
 	REAL*8 UseFract, priceFactor, maxUse, gdpFact, gdpSplitPoint
-    
+	REAL*8 CarbDensity, EnergyDensity
+	REAL*8 orgDefor
+     
 	UseFract = recovForestFrac(L)	! Basic amount that can be potentially used
 	
 	gdpFact = 1d0
@@ -232,9 +217,7 @@ END SUBROUTINE SoilDecay
 	If (DeforBioUse .eq. 0) UseFract = 0
 
 ! Also calculate the energy content of biomass and store that
-	REAL*8 CarbDensity, EnergyDensity, UseFract1
-	REAL*8 gdpFact, orgDefor
-    
+   
     CarbDensity = 0.5 ! Assume half of biomass weight is carbon
     EnergyDensity = 17.5 ! GJ/Tonne
     
@@ -245,16 +228,16 @@ END SUBROUTINE SoilDecay
 
 	! Deforested biomass in energy terms
 	orgDefor = DefroR/CarbDensity * EnergyDensity / 1000d0
+	
+	deforEnergy(L,M) = orgDefor * UseFract
 
-	! Now adjust for amount harvested for energy, assuming logging takes precidence
+! Calculate final use fraction, including logging
 	
-	UseFract1 = UseFract - loggedFract(L)
-	UseFract1 = max( 0d0, UseFract1) 
-	
-	deforEnergy(L,M) = orgDefor * (1d0 - UseFract1)
+    UseFract = UseFract + loggedFract(L)
+	UseFract = min(UseFract,maxUse)
 
 ! Return fraction used for energy or logging
-	deforBioUseFract_part1 = UseFract
+	deforBioUseFract = UseFract
 
 	
 	RETURN
