@@ -53,11 +53,8 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
         
         numRows = tableLefter.size();
         numCols = (int)Math.ceil(values.size() / numRows);
-        
-//System.out.println("haeder size = " + header.size());
-        
+                
         if (header != null && !header.isEmpty()) {
-//System.out.println("adding things to header");
             tableHeader = (Vector)header.clone();
         } else {
             tableHeader = new Vector();

@@ -50,6 +50,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private JButton selectNodesButton;
     
     private MapNode rootMapNode;
+    private ModelTime modelTime;
     
     private JTree tree;
     private Document document;
@@ -289,7 +290,9 @@ public class ControlPanel extends javax.swing.JFrame {
         SAXBuilder parser = new SAXBuilder();
         try {
             document = parser.build(new File(fileName));
-            createTreeMap(new AdapterNode(document.getRootElement()));
+            AdapterNode tempRoot = new AdapterNode(document.getRootElement());
+            rootMapNode = new MapNode(tempRoot);
+            modelTime = new ModelTime(tempRoot);
             return true;
         } catch (Exception e){
             System.out.println("Exception " + e + " in function readXMLFile");
@@ -529,14 +532,9 @@ public class ControlPanel extends javax.swing.JFrame {
         rootPointers = new Vector();
         rootPointers.addElement(currRootPointer);
         
-        Vector regionNames = new Vector();
-        AdapterNode kid;
-        java.util.List children = currRootPointer.getChildren();
-        Iterator it = children.iterator();
-        while (it.hasNext()) {
-            kid = (AdapterNode)it.next();
-            regionNames.addElement(kid.getAttributeValue("name"));
-        }
+        //get the names of all regions
+        MapNode regionNode = rootMapNode.getDescendant("region");
+        Vector regionNames = regionNode.getPossibleNames();
         
         queryPanel.add(new JLabel("  for region(s)  "));
         regionBox = new JList(regionNames.toArray());
@@ -609,8 +607,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private void addQueryControl(Component predecessor, int index) {
         //get the parent of the nodes whose names will populate the new combo box
         currRootPointer = (AdapterNode)rootPointers.elementAt(index);
-        
-        //System.out.println("predecessor = " + predecessor.getName() + "|");
+        MapNode currNodePointer = rootMapNode.getDescendant(currRootPointer.getName());
         
         //check if combo box already exists, remove all traces of it
         if (queryControls.size() > index) {
@@ -618,18 +615,15 @@ public class ControlPanel extends javax.swing.JFrame {
         } else {    //just elliminate that Horizontal glue that's the last component
             queryPanel.remove(queryPanel.getComponents().length-1);
         }
-        
-        AdapterNode kid;
-        String name;
+
         Vector names = new Vector();
+        MapNode kid;
         names.addElement(DEFAULT_SELECTION_STRING);
-        java.util.List children = currRootPointer.getChildren();
+        Vector children = currNodePointer.getChildren();
         Iterator it = children.iterator();
         while (it.hasNext()) {
-            kid = (AdapterNode)it.next();
-            name = kid.getName();
-            if (names.isEmpty()) names.addElement(name);
-            else if (!names.contains(name)) names.addElement(name);
+            kid = (MapNode)it.next();
+            names.addElement(kid.getNodeName());
         }
         
         JComboBox comboBox;
@@ -678,21 +672,15 @@ public class ControlPanel extends javax.swing.JFrame {
     
     private void addAttributeControl(Component predecessor, String nodeName, int index){
         //get the parent of the nodes whose names will populate the new combo box
-        currRootPointer = (AdapterNode)rootPointers.elementAt(index);
+        //currRootPointer = (AdapterNode)rootPointers.elementAt(index);
+        //System.out.println("parent of attribute is " + currRootPointer);
         
-        AdapterNode kid;
-        String name;
-        Vector names = new Vector();
-        names.addElement(DEFAULT_SELECTION_STRING);
-        names.addElement(DEFAULT_PLURAL_STRING);
-        java.util.List children = currRootPointer.getChildren();
-        Iterator it = children.iterator();
-        while (it.hasNext()) {
-            kid = (AdapterNode)it.next();
-            if (nodeName.equals(kid.getName())) {
-                names.addElement(kid.getAttributeValue("name"));
-            }
-        }
+        JComboBox tempBox = (JComboBox)queryControls.elementAt(index);
+        MapNode currMapPointer = rootMapNode.getDescendant(tempBox.getSelectedItem().toString());
+        
+        Vector names = currMapPointer.getPossibleNames();
+        if (names.size() > 1) names.insertElementAt(DEFAULT_PLURAL_STRING, 0);
+        names.insertElementAt(DEFAULT_SELECTION_STRING, 0);
         
         JComboBox comboBox;
         
@@ -874,148 +862,192 @@ public class ControlPanel extends javax.swing.JFrame {
         JComboBox lastBox = (JComboBox)queryControls.lastElement();
         String finalNodeName = lastBox.getSelectedItem().toString();
         
-        if (listTableBox.getSelectedIndex() == LIST) {
-            String regionName;
-            Object[] regions = regionBox.getSelectedValues();
-            currRootPointer = (AdapterNode)rootPointers.elementAt(0);
-            
-            //get all regions, place the appropriate nodes in the queue
-            //  remove nodes from the begining of the queue and add all appropriate children to the end of the queue
-            for (int j = 0; j < regions.length; j++) {
-                regionName = regions[j].toString();
-                AdapterNode currNode = currRootPointer.getChild("region", regionName);
-                currNode.setIndex(1);
-                queue.addElement(currNode);
-                
-                while (!queue.isEmpty()) {
-                    currNode = (AdapterNode)queue.remove(0);
-                    index = currNode.getIndex();
+        //if (listTableBox.getSelectedIndex() == LIST) {
+        String regionName;
+        Object[] regions = regionBox.getSelectedValues();
+        currRootPointer = (AdapterNode)rootPointers.elementAt(0);
+
+        //perform a bredth-first traversal of the tree looking for nodes that fit a path 
+        //  described by the array of query and attribute controls
+        //for each region, place the appropriate nodes in the queue
+        //  remove nodes from the begining of the queue and add all appropriate children to the end of the queue
+        for (int j = 0; j < regions.length; j++) {
+            regionName = regions[j].toString();
+            AdapterNode currNode = currRootPointer.getChild("region", regionName);
+            currNode.setIndex(1);
+            queue.addElement(currNode);
+
+            while (!queue.isEmpty()) {
+                currNode = (AdapterNode)queue.remove(0);
+                index = currNode.getIndex();
+
+                //get the name of the current node
+                currComboBox = (JComboBox)queryControls.elementAt(index);
+                nodeName = currComboBox.getSelectedItem().toString();
+
+                //get the desired attribute name of the current node, if any
+                attribVal = "";
+                if (!attributeControls.isEmpty() && attributeControls.size() > index 
+                            && attributeControls.elementAt(index) != null) {
+                    //get the "name" attribute if appropriate
+                    currComboBox = (JComboBox)attributeControls.elementAt(index);
+                    attribVal = currComboBox.getSelectedItem().toString();
+                    if (attribVal.equals(DEFAULT_SELECTION_STRING)) attribVal = "";
+                }
+
+                //after obtaining the node name and name attribute of the current node, 
+                //  decide it is an intermediate node or an end target whoes values are to be displayed
+                if(nodeName.equals(finalNodeName)) {
                     
-                    //get the name of the current node
-                    currComboBox = (JComboBox)queryControls.elementAt(index);
-                    nodeName = currComboBox.getSelectedItem().toString();
-                    
-                    //get the desired attribute name of the current node
-                    attribVal = "";
-                    if (!attributeControls.isEmpty() && attributeControls.size() > index && attributeControls.elementAt(index) != null) {
-                        //get the "name" attribute if appropriate
-                        currComboBox = (JComboBox)attributeControls.elementAt(index);
-                        attribVal = currComboBox.getSelectedItem().toString();
-                        if (attribVal.equals(DEFAULT_SELECTION_STRING)) attribVal = "";
-                    }
-                    
-                    if(nodeName.equals(finalNodeName)) {
-                        String lefterName = regionName + " " + currNode.toString();
-                        String prevName;
+                    //remember the name of the parent of the node whose value 
+                    //  will be displayed in the left-side header
+                    String lefterName = regionName + " " + currNode.toString();
+                    String prevName;
+                    if (!lefter.isEmpty()) {
+                        prevName = (String)lefter.lastElement();
+                        if (!(prevName.equals(lefterName))) lefter.add(lefterName);
+                    } else lefter.add(lefterName);
+
+                    //for nodes directly under a period node                        
+                    int index1 = lefterName.indexOf('<');
+                    int index2 = lefterName.indexOf('>');
+                    if (lefterName.substring(index1+1, index2).equals("period")) {
+                        //remember the last index in values that contains confirmed entry
+                        int lastValIndex = values.size() - 1;
                         
-                        //for nodes directly under period nodes                        
-                        int index1, index2; 
-                        //Vector newQueue = new Vector();
-                        index1 = lefterName.indexOf('<');
-                        index2 = lefterName.indexOf('>');
-                        if (lefterName.substring(index1+1, index2).equals("period")) {
-                            //get a list of all period nodes in that subtree
-                            AdapterNode parent = currNode.getParent();
-//System.out.println("I think period's parent is: " + parent);
-                            childNodes = parent.getChildren("period", "");
-                            Iterator it = childNodes.iterator();
-                            while (it.hasNext()) {
-                                //for each period node, get the value of the "final node" under it, 
-                                //  remember the period node's year attribute
-                                parent = (AdapterNode)it.next();
-//System.out.println("I think the period node is: " + parent);
-                                currNode = parent.getChild(nodeName, "");
-                                //if (showNames) {
-                                //    values.addElement(currNode.getAttributeValue("name"));
-                                //} else {
-                                values.addElement(currNode);
-//System.out.println("Just added " + currNode);
+                        //fill values with appropriate number of empty nodes
+                        int numPeriods = modelTime.getNumOfSteps();
+                        for (int k = 0; k < numPeriods; k++) {
+                            values.addElement(new AdapterNode());
+                            
+                            attribVal = modelTime.getYear(k);
+                            if (header.isEmpty()) header.addElement(attribVal);
+                            else if (!header.contains(attribVal)) header.addElement(attribVal);
+                        }            
+                        
+                        //get a list of all period nodes in that subtree
+                        int offset = 0;
+                        AdapterNode parent = currNode.getParent();
+                        childNodes = parent.getChildren("period", "");
+                        Iterator it = childNodes.iterator();
+                        while (it.hasNext()) {
+                            //for each period node, get the value of the "final node" under it, 
+                            //  remember the period node's year attribute
+                            parent = (AdapterNode)it.next();
+                            currNode = parent.getChild(nodeName, "");
+                            
+                            attribVal = parent.getAttributeValue("year");
+                            offset = modelTime.getYearIndex(attribVal);
+                            if (showNames) {
+                                values.setElementAt(currNode.getAttributeValue("name"), lastValIndex+offset);
+                            } else {
+                                values.setElementAt(currNode, lastValIndex+offset);
+                            }
+                            //lefterName = regionName + "< >";
+                            /*if (!lefter.isEmpty()) {
+                                prevName = (String)lefter.lastElement();
+                                if (!(prevName.equals(lefterName))) lefter.add(lefterName);
+                            } else lefter.add(lefterName);*/
+                        }
 
-                                attribVal = parent.getAttributeValue("year");
+                    } else {        //if parent of desired node(s) isn't "period"
+
+                        Integer lastYear = new Integer(modelTime.getStart());
+                        Vector years = modelTime.getTimeIntervals();
+                        Iterator yearIt = years.iterator();
+                        
+                        if (attribVal.equals(DEFAULT_PLURAL_STRING)) attribVal = "";
+                        childNodes = currNode.getChildren(nodeName, attribVal);
+                        Iterator it = childNodes.iterator();
+
+                        while (it.hasNext()) {
+                            currNode = (AdapterNode)it.next();
+                            if (showNames) {
+                                values.addElement(currNode.getAttributeValue("name"));
+                            } else {
+                                attribVal = currNode.getAttributeValue("year");
                                 if (attribVal != null) {
-                                    if (header.isEmpty()) header.addElement(attribVal);
-                                    else if (!header.contains(attribVal)) header.addElement(attribVal);
-                                }
-                                //}
-                                lefterName = regionName + "< >";
-                                if (!lefter.isEmpty()) {
-                                    prevName = (String)lefter.lastElement();
-                                    if (!(prevName.equals(lefterName))) lefter.add(lefterName);
-                                } else lefter.add(lefterName);
-                            }
-                           
-                        }
-                        else {
-                            if (attribVal.equals(DEFAULT_PLURAL_STRING)) attribVal = "";
-                            childNodes = currNode.getChildren(nodeName, attribVal);
-                            Iterator it = childNodes.iterator();
-                            while (it.hasNext()) {
-                                currNode = (AdapterNode)it.next();
-                                if (showNames) {
-                                    values.addElement(currNode.getAttributeValue("name"));
-                                } else {
-                                    values.addElement(currNode);
-
-                                    attribVal = currNode.getAttributeValue("year");
-                                    if (attribVal != null) {
-                                        if (header.isEmpty()) header.addElement(attribVal);
-                                        else if (!header.contains(attribVal)) header.addElement(attribVal);
+                                    //if node has year, make sure that values are saved under proper year
+                                    Integer attribYear = new Integer(attribVal);
+                                    Integer currYear = (Integer)yearIt.next();
+                                    while (!attribYear.equals(currYear)) {
+                                        if (header.isEmpty()) header.addElement(currYear.toString());
+                                        else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
+                                        values.addElement(new AdapterNode());
+                                        currYear = (Integer)yearIt.next();
                                     }
+                                    if (header.isEmpty()) header.addElement(currYear.toString());
+                                    else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
+                                    lastYear = currYear;
+                                    //if (header.isEmpty()) header.addElement(attribVal);
+                                    //else if (!header.contains(attribVal)) header.addElement(attribVal);
+                                    
                                 }
+                                
+                                values.addElement(currNode);                                
+                            }
 
-                                if (!lefter.isEmpty()) {
-                                    prevName = (String)lefter.lastElement();
-                                    if (!(prevName.equals(lefterName))) lefter.add(lefterName);
-                                } else lefter.add(lefterName);
-                            }
+                            /*if (!lefter.isEmpty()) {
+                                prevName = (String)lefter.lastElement();
+                                if (!(prevName.equals(lefterName))) lefter.add(lefterName);
+                            } else lefter.add(lefterName);*/
                         }
-                    } else {
-                        if(attribVal.equals(DEFAULT_PLURAL_STRING)) {
-                            childNodes = currNode.getChildren(nodeName, "");
-                            Iterator it = childNodes.iterator();
-                            while (it.hasNext()) {
-                                currNode = (AdapterNode)it.next();
-                                currNode.setIndex(index+1);
-                                queue.addElement(currNode);
-                            }
-                        } else {
-                            currNode = currNode.getChild(nodeName, attribVal);
+                        while (!lastYear.equals(new Integer(modelTime.getEnd()))) {
+                            lastYear = (Integer)yearIt.next();
+                            if (header.isEmpty()) header.addElement(lastYear.toString());
+                            else if (!header.contains(lastYear.toString())) header.addElement(lastYear.toString());
+                            values.addElement(new AdapterNode());
+                        }                            
+                    }
+                } else {    //current node is an intermediate step along the tree
+                    if(attribVal.equals(DEFAULT_PLURAL_STRING)) {
+                        //get all chidren and add to the queue for examination
+                        childNodes = currNode.getChildren(nodeName, "");
+                        Iterator it = childNodes.iterator();
+                        while (it.hasNext()) {
+                            currNode = (AdapterNode)it.next();
                             currNode.setIndex(index+1);
                             queue.addElement(currNode);
                         }
+                    } else {
+                        //get child with target name attribute and add it to the queue for examination
+                        currNode = currNode.getChild(nodeName, attribVal);
+                        currNode.setIndex(index+1);
+                        queue.addElement(currNode);
                     }
                 }
-            }
+            } //belongs to while (!queue.isEmpty())
+        } //belongs to for each region
+        
+        TableViewModel model = new TableViewModel(values, header, lefter, showNames);
+        table = new JTable(model);
+        table.setCellSelectionEnabled(true);
+        table.setTransferHandler(new TableTransferHandler());
 
-            TableViewModel model = new TableViewModel(values, header, lefter, showNames);
-            table = new JTable(model);
-            table.setCellSelectionEnabled(true);
-            table.setTransferHandler(new TableTransferHandler());
-            
-            //use panels to place the table appropriately
-            JPanel tempPanel = new JPanel();
-            tempPanel.setLayout(new BorderLayout());
-            tempPanel.add(table.getTableHeader(), BorderLayout.NORTH);
-            tempPanel.add(table, BorderLayout.CENTER);
-            
-            JPanel tempPanel2 = new JPanel();
-            tempPanel2.setLayout(new BorderLayout());
-            if (!lefter.isEmpty()) {
-                //JPanel lefterPanel = makeLefter(lefter, nodeName);
-                lefter = model.getTableLefter();
-                JPanel lefterPanel = makeLefter(lefter, finalNodeName);
-                tempPanel2.add(lefterPanel, BorderLayout.WEST);
-            }
-            tempPanel2.add(tempPanel, BorderLayout.CENTER);
-            
-            //dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
-            dataPanel.add(tempPanel2);
-            
-            tableExistsFlag = true;
-            
-            dataPanel.revalidate();
-            repaint();
+        //use panels to place the table appropriately
+        JPanel tempPanel = new JPanel();
+        tempPanel.setLayout(new BorderLayout());
+        tempPanel.add(table.getTableHeader(), BorderLayout.NORTH);
+        tempPanel.add(table, BorderLayout.CENTER);
+
+        JPanel tempPanel2 = new JPanel();
+        tempPanel2.setLayout(new BorderLayout());
+        if (!lefter.isEmpty()) {
+            //JPanel lefterPanel = makeLefter(lefter, nodeName);
+            lefter = model.getTableLefter();
+            JPanel lefterPanel = makeLefter(lefter, finalNodeName);
+            tempPanel2.add(lefterPanel, BorderLayout.WEST);
         }
+        tempPanel2.add(tempPanel, BorderLayout.CENTER);
+
+        //dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
+        dataPanel.add(tempPanel2);
+
+        tableExistsFlag = true;
+
+        dataPanel.revalidate();
+        repaint();
+        //}
     }
     
     public void makeAddChildPanel() {
@@ -1135,10 +1167,6 @@ public class ControlPanel extends javax.swing.JFrame {
         //AdapterNode parent = (AdapterNode)selectedPath.getLastPathComponent();
         JDomToTreeModelAdapter model = (JDomToTreeModelAdapter)tree.getModel();
         model.insertNodeInto(newNode, selectedPath, 0);
-        //tree.setModel(model);
-        //tree.revalidate();
-        
-        
     }
     
     //display the add dialog box
@@ -1149,6 +1177,7 @@ public class ControlPanel extends javax.swing.JFrame {
         
         //display possible locations where to add node
         
+        
         addChildDialog.pack();
         //center above the main window
         addChildDialog.setLocationRelativeTo(addChildDialog.getParent());
@@ -1158,10 +1187,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private void hideAddChildDialog() {
         addChildDialog.hide();
     }
-    
-    private void createTreeMap(AdapterNode treeRoot) {
-        rootMapNode = new MapNode(treeRoot);
-    }
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
