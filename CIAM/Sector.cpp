@@ -36,23 +36,23 @@ extern ofstream outfile, bugoutfile;
 
 //! Default constructor
 sector::sector() {
-   initElementalMembers();
-   Configuration* conf = Configuration::getInstance();
-   debugChecking = conf->getBool( "debugChecking" );
-   
-   // resize vectors
-	const Modeltime* modeltime = scenario->getModeltime();
-	const int maxper = modeltime->getmaxper();
-	
-   sectorprice.resize( maxper );
-   price_norm.resize( maxper ); // sector price normalized to base year
-	pe_cons.resize( maxper ); // sectoral primary energy consumption
-	input.resize( maxper ); // sector total energy consumption
-	output.resize( maxper ); // total amount of final output from sector
-	fixedOutput.resize( maxper );
-   carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
-	summary.resize( maxper ); // object containing summaries
-
+    initElementalMembers();
+    Configuration* conf = Configuration::getInstance();
+    debugChecking = conf->getBool( "debugChecking" );
+    
+    // resize vectors
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    
+    sectorprice.resize( maxper );
+    price_norm.resize( maxper ); // sector price normalized to base year
+    pe_cons.resize( maxper ); // sectoral primary energy consumption
+    input.resize( maxper ); // sector total energy consumption
+    output.resize( maxper ); // total amount of final output from sector
+    fixedOutput.resize( maxper );
+    carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
+    summary.resize( maxper ); // object containing summaries
+    
 }
 
 //! Default destructor.
@@ -296,61 +296,62 @@ void sector::adjSharesCapLimit( const int per )
     // check for capacity limits, repeating to take care of any knock-on effects. 
     // Do this a maximum of times equal to number of subsectors, 
     // which is the maximum number of times could possibly need to do this
-   for (int n = 0;  n < nosubsec && capLimited; n++) {
-       double sumSharesOverLimit = 0.0;		// portion of shares over cap limits
-       double sumSharesNotLimited = 0.0;	// sum of shares not subject to cap limits
-       capLimited = false;
-       
-      //  Check for capacity limits, looping through each subsector
-      for ( i=0; i<nosubsec; i++ ) {
-         tempCapacityLimit = subsec[i]->getCapacityLimit( per ); // call once, store these locally
-         tempSubSectShare = subsec[i]->getShare( per ) ;
-                
-         // if there is a capacity limit and are over then set flag and count excess shares
-         if ( tempSubSectShare > tempCapacityLimit ) {
-            capLimited = true;
-            sumSharesOverLimit += tempSubSectShare - tempCapacityLimit;
-         }
-                
-         // also sum shares under limit (but not those just at their limits)
-         if ( tempSubSectShare < tempCapacityLimit ) {
-            sumSharesNotLimited += tempSubSectShare;
-         }                 
-      } // end of loop over sub-sectors
+    for (int n = 0;  n < nosubsec && capLimited; n++) {
+        double sumSharesOverLimit = 0.0;		// portion of shares over cap limits
+        double sumSharesNotLimited = 0.0;	// sum of shares not subject to cap limits
+        capLimited = false;
         
-      // re-normalize subsector shares if capacity limits have been exceeded
-      // See comments above for derivation of multiplier
-      if ( capLimited ) {
-         if ( sumSharesNotLimited > 0 ) {
+        //  Check for capacity limits, looping through each subsector
+        for ( i=0; i<nosubsec; i++ ) {
+            tempCapacityLimit = subsec[i]->getCapacityLimit( per ); // call once, store these locally
+            tempSubSectShare = subsec[i]->getShare( per ) ;
+            
+            // if there is a capacity limit and are over then set flag and count excess shares
+            if ( tempSubSectShare > tempCapacityLimit ) {
+                capLimited = true;
+                sumSharesOverLimit += tempSubSectShare - tempCapacityLimit;
+            }
+            
+            // also sum shares under limit (but not those just at their limits)
+            if ( tempSubSectShare < tempCapacityLimit ) {
+                sumSharesNotLimited += tempSubSectShare;
+            }                 
+        } // end of loop over sub-sectors
+        
+        // re-normalize subsector shares if capacity limits have been exceeded
+        // See comments above for derivation of multiplier
+        if ( capLimited ) {
+            if ( sumSharesNotLimited > 0 ) {
+                for ( i=0; i<nosubsec; i++ ) {
+                    double multiplier = 1 + sumSharesOverLimit/sumSharesNotLimited;
+                    subsec[i]->limitShares( multiplier, per );
+                }
+            }
+            else { // If there are no sectors without limits and there are still shares to be re-distributed
+                if ( sumSharesOverLimit > 0 ) {
+                    // if there is no shares left then too much was limited!
+                    cerr << "Insufficient capacity to meet demand" << endl;
+                }
+            }
+            
+        }
+        
+        // Check to make sure shares still equal 1
+        if ( debugChecking ) {
+            double sumshares = 0;
             for ( i=0; i<nosubsec; i++ ) {
-               double multiplier = 1 + sumSharesOverLimit/sumSharesNotLimited;
-               subsec[i]->limitShares( multiplier, per );
+                // Check the validity of shares.
+                double tempshare = subsec[i]->getShare(per);
+                assert( tempshare == tempshare ); // This checks for NaN since NaN != NaN.
+                assert( tempshare != std::numeric_limits<double>::infinity() ); // Checks for infinity. 
+                
+                sumshares += subsec[i]->getShare(per) ;
             }
-         }
-         else { // If there are no sectors without limits and there are still shares to be re-distributed
-            if ( sumSharesOverLimit > 0 ) {
-               // if there is no shares left then too much was limited!
-               cerr << "Insufficient capacity to meet demand" << endl;
+            if ( fabs(sumshares - 1) > 1e-6 ) {
+                cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << endl;
             }
-         }
-      }
-    
-      // Check to make sure shares still equal 1
-      if ( debugChecking ) {
-         double sumshares = 0;
-         for ( i=0; i<nosubsec; i++ ) {
-            // Check the validity of shares.
-            double tempshare = subsec[i]->getShare(per);
-            assert( tempshare == tempshare ); // This checks for NaN since NaN != NaN.
-            assert( tempshare != std::numeric_limits<double>::infinity() ); // Checks for infinity. 
-
-            sumshares += subsec[i]->getShare(per) ;
-         }
-         if ( fabs(sumshares - 1) > 1e-6 ) {
-            cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << endl;
-         }
-      }
-    
+        }
+        
     } // end for loop
     
     // if have exited and still capacity limited, then report error
@@ -365,7 +366,7 @@ void sector::price(int per)
 {
 	sectorprice[per]=0.0;
 	for (int i=0;i<nosubsec;i++) {	
-		sectorprice[per] += subsec[i]->getShare(per) * subsec[i]->getprice(per);
+		sectorprice[per] += subsec[i]->getShare(per) * subsec[i]->getPrice(per);
 	}
 }
 
@@ -398,10 +399,10 @@ void sector::setoutput(const string& regionName,double dmd, int per)
 }
 
 //! Scale share weights after sub-sector or technology calibration
-void sector::init_calc( const int per )
+void sector::initCalc( const int per )
 {
 	for ( int i=0; i<nosubsec; i++ ) {
-		subsec[ i ]->init_calc( per );
+		subsec[ i ]->initCalc( per );
 	}
 }
 
@@ -464,11 +465,7 @@ void sector::supply( const string regionName, const int per) {
 			shareVariableNew = 0;
 		}
 		else {
-			// check for 0 so that shareVariableNew does not blow up
-         // Note: This will still blow up -JPL
-		    if (mrkdmd == 0) {
-				cerr << "ERROR: Demand value = 0 for good " << name << " in region " << regionName << endl;
-			}
+		    assert( mrkdmd != 0); // check for 0 so that shareVariableNew does not blow up
 			shareVariableNew = 1 - (totalFixedSupply/mrkdmd);
 		}
 
@@ -479,6 +476,7 @@ void sector::supply( const string regionName, const int per) {
 			shareRatio = shareVariableNew/shareVariable;
 		}
         for (i=0;i<nosubsec;i++) {
+			// shareRatio = 0 is okay, sets all non-fixed shares to 0
             subsec[i]->adjShares( mrkdmd, shareRatio, totalFixedSupply, per ); 
         }
 	}

@@ -61,7 +61,7 @@ public:
 	virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 ); // calculates and normalizes shares 
 	virtual void price(int per); // calculates sector price
     void adjSharesCapLimit( const int per ); // adjust for capacity limit
-   void init_calc( const int per ); // Consistantly adjust share weights
+   void initCalc( const int per ); // Consistantly adjust share weights
 	void production( const string& regionName,int per); // calculates production using mrk prices
 	void setoutput(const string& regionName, double dmd, int per); // sets demand to totoutput and output
 	void sumoutput(int per); // sum subsector outputs
