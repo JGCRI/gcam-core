@@ -38,6 +38,8 @@ extern Scenario* scenario;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
+const int LOGIT_EXP_DEFAULT = -3;
+
 Subsector::Subsector( const string regionName, const string sectorName ){
     this->regionName = regionName;
     this->sectorName = sectorName;
@@ -53,7 +55,7 @@ Subsector::Subsector( const string regionName, const string sectorName ){
     const int maxper = modeltime->getmaxper();
     capLimit.resize( maxper, 1.0 );
     shrwts.resize( maxper, 1.0 ); // default 1.0, for sectors with one tech.
-    lexp.resize( maxper );
+    lexp.resize( maxper, LOGIT_EXP_DEFAULT );
     share.resize(maxper); // subsector shares
     input.resize(maxper); // subsector energy input
     pe_cons.resize(maxper); // subsector primary energy consumption
@@ -292,7 +294,7 @@ void Subsector::toXML( ostream& out ) const {
     }
     
     for( i = 0; i < static_cast<int>( lexp.size() ); i++ ){
-        XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, LOGIT_EXP_DEFAULT, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
