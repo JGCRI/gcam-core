@@ -617,7 +617,9 @@ void technology::emission( const string prodname ) {
         // emissions by gas and fuel names combined
         // used to calculate emissions by fuel
         emissmap[ghg[i]->getname() + fuelname] = ghg[i]->getemission();
-        emfuelmap[ghg[i]->getname()] = ghg[i]->getemiss_fuel();
+        // emfuelmap[ghg[i]->getname()] = ghg[i]->getemiss_fuel();
+        // This really should include the GHG name as well.
+        emfuelmap[fuelname] = ghg[i]->getemiss_fuel();
     }
 }
 
