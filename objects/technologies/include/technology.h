@@ -125,6 +125,8 @@ public:
     double getCarbonValue() const; // return carbon tax and storage cost added to tech in $/TC
     double getCarbontaxpaid() const; // return carbon taxes paid
     double getCO2() const; // return actual CO2 emissions from technology
+    const std::vector<const std::string> getGHGNames() const;
+    double getGHGEmissionCoef( const std::string& ghgName ) const;
     std::map<std::string,double> getemissmap() const; // return map of all ghg emissions
     std::map<std::string,double> getemfuelmap() const; // return map of all ghg emissions
     std::map<std::string,double> getemindmap() const; // return map of all ghg emissions

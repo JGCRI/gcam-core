@@ -808,6 +808,40 @@ double technology::getCO2()  const {
     return ghg[0]->getEmission(); // index 0 is for CO2
 }
 
+/*! \brief Return a vector listing the names of all the GHGs within the Technology.
+* \detailed This function returns all GHG names the Technology contains. It does 
+* this by searching the underlying ghgNameMap.
+* \author Josh Lurz
+* \return A vector of GHG names contained in the Technology.
+*/
+const vector<const string> technology::getGHGNames() const {
+    return util::getKeys( ghgNameMap );
+}
+
+/*! \brief Return a GHG emissions coefficient for a given GHG name.
+* \detailed This function searches the mapping of GHG names to values and
+* returns the emissions coefficient from the GHG with the given name,
+* or -1 if there is not a GHG with the given name.
+* \todo Eliminate this function and getGHGNames when technology is converted to a multi-timeperiod structure.
+* \param ghgName The name of a GHG to return the emissions coefficient for.
+* \return The emissions coefficient of the GHG with ghgName, -1 if the GHG does not exist.
+*/
+double technology::getGHGEmissionCoef( const std::string& ghgName ) const {
+    const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
+    double emissCoef;
+
+    // Need to perform error checking b/c the searchForValue function will return 0 if the name
+    // is not found or if the correct element is at position 1. This handles the first case. 
+    if( ( ghgIndex == 0 ) && ( ( ghg.size() == 0 ) || ( ghg[ 0 ]->getName() != ghgName ) ) ){
+        // A ghg with the passed in name does not exist.
+        emissCoef = -1;
+    }
+    else {
+        emissCoef = ghg[ ghgIndex ]->getEmissCoef();
+    }
+    return emissCoef;
+}
+
 //! return map of all ghg emissions
 map<string,double> technology::getemissmap() const {
     return emissmap;
