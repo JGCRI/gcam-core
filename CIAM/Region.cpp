@@ -773,7 +773,7 @@ void Region::doCalibration( const int per ) {
       Marketplace* marketplace = scenario.getMarketplace();
 		marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
 		marketplace->setsupply( goodName, name, gnp_dol[ per ], per );
-		marketplace->setMarketToSolve( goodName, name );
+		//marketplace->setMarketToSolve( goodName, name );
 	}
 }
 

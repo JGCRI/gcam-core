@@ -40,7 +40,7 @@ private:
 	struct solinfo {
 		double X;		//!< unknown, prices
 		double ED;		//!< excess demand for X
-      double demand;  //!< demand for X.
+        double demand;  //!< demand for X.
 		double dX;		//!< change in excess demand
 		double XL;		//!< left bracket
 		double XR;		//!< right bracket
@@ -63,12 +63,12 @@ private:
 		int noDemandMarkets; //!< number of demand sector markets.
 		int noghgmrks;	//!< number of GHG markets
 		double priceMult; //!< resolution enhancement for price markets
-      double SMALL_NUM; //!< constant small number to replace for null
-      double VERY_SMALL_NUM; //!< constant small number to replace for null
-      bool bugTracking; //!< Turn on to enable bugout tracking in various solution routines
-      bool bugMinimal; //!< Turn on minimal tracking of solution results
-      bool trackED; //!< Turn on solution mechanism tracking (to cout)
-      int TotIter; //!< Cumulative number of interations
+        double SMALL_NUM; //!< constant small number to replace for null
+        double VERY_SMALL_NUM; //!< constant small number to replace for null
+        bool bugTracking; //!< Turn on to enable bugout tracking in various solution routines
+        bool bugMinimal; //!< Turn on minimal tracking of solution results
+        bool trackED; //!< Turn on solution mechanism tracking (to cout)
+        int TotIter; //!< Cumulative number of interations
 		vector< vector<Market> > mrk; //!< no of market objects by period
 		vector<int> mrk_isol; //!< index look up for markets that require solving
 		vector<int> mrk_isol_NR; //!< index look up for markets for Newton-Rhapson
@@ -91,7 +91,7 @@ private:
 		double checkSupply( const string& goodName, const string& regionName, const int period ) const;
 		double checkSupply( const int marketNumber, const int period ) const;
 		string getName( const int marketNumber ) const;
-      string getRegionName( const int marketNumber ) const;
+        string getRegionName( const int marketNumber ) const;
 		string getGoodName( const int marketNumber) const;
 		double getRawSupply( const int marketNumber, const int period ) const;
 		double getRawDemand( const int marketNumber, const int period ) const;
@@ -105,12 +105,12 @@ private:
 		const vector<double> getExcessDemands( const vector<int>& indices, const int period ) const;
 		const vector<double> getLogExcessDemands( const vector<int>& indices, const int period ) const; 
 		const vector<double> getDemands( const vector<int>& indices, const int per ) const;
-      const vector<double> getLogDemands( const vector<int>& indices, const int period ) const;
+        const vector<double> getLogDemands( const vector<int>& indices, const int period ) const;
 		
-      const vector<double> getLogSupplies( const vector<int>& indices, const int period ) const;
+        const vector<double> getLogSupplies( const vector<int>& indices, const int period ) const;
 		static void invertMatrix( Matrix& A );
-      bool isWithinTolerance( const double excessDemand, const double demand, const double solutionTolerance, const double minimum ) const;
-	   double getRelativeED( const double excessDemand, const double demand, const double excessDemandFloor ) const ;
+        bool isWithinTolerance( const double excessDemand, const double demand, const double solutionTolerance, const double minimum ) const;
+	    double getRelativeED( const double excessDemand, const double demand, const double excessDemandFloor ) const ;
    
    public:
 		Marketplace();
@@ -121,10 +121,10 @@ private:
 		void nullprc( const int period ); // initialize all market prices to 0
 		void nulldem( const int period ); // initialize all market demands to 0
 		void nulldem( const string& goodName, const string& regionName, const int period ); // set one market demand to 0
-      void nullsup( const int period ); // initialize all market supplies to 0
+        void nullsup( const int period ); // initialize all market supplies to 0
 		void nullsup( const string& goodName, const string& regionName, const int period ); // set one market supply to 0
 		
-      void showmrks( const int period ) const; // show market information
+        void showmrks( const int period ) const; // show market information
 		
 		// set market price
 		void setprice( const string& goodName, const string& regionName, const double value , const int period );
@@ -168,7 +168,7 @@ private:
 		
 		Market::marketType getType( const string goodname, const string regionName, const int period ) const;
 		string getRegionName( const string& goodName, const string& regionName) const;
-      void setMarketToSolve ( const string& goodName, const string& regionName, const int period = -1 );
+        void setMarketToSolve ( const string& goodName, const string& regionName, const int period = -1 );
 		void prices_to_bugout( const int period ) const;
 		void supply_to_bugout( const int period ) const;
 		void demand_to_bugout( const int period ) const;

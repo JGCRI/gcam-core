@@ -41,7 +41,6 @@ Resource::Resource(){
 
 //! Destructor.
 Resource::~Resource() {
-
 	for ( vector<subrsrc*>::iterator iter = depsubrsrc.begin(); iter != depsubrsrc.end(); iter++ ) {
 		delete *iter;
 	}

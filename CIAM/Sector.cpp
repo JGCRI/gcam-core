@@ -286,8 +286,8 @@ void sector::adjSharesCapLimit( const int per )
 {
     double tempCapacityLimit;
     double tempSubSectShare;
-    //bool capLimited = true;
-    bool capLimited = false;
+    bool capLimited = true;
+    //bool capLimited = false;
     int i=0;
     
     // check for capacity limits, repeating to take care of any knock-on effects. 
@@ -455,8 +455,13 @@ void sector::supply( const string regionName, const int per) {
 			}
 			shareVariableNew = 1 - (totalFixedSupply/mrkdmd);
 		}
-         
-        shareRatio = shareVariableNew/shareVariable;
+
+		if (shareVariable == 0) {
+			shareRatio = 0; // if all subsectors are fixed output, unlikely
+		}
+		else {
+			shareRatio = shareVariableNew/shareVariable;
+		}
         for (i=0;i<nosubsec;i++) {
             subsec[i]->adjShares( mrkdmd, shareRatio, totalFixedSupply, per ); 
         }

@@ -324,7 +324,13 @@ double subsector::getfuelprice(int per) const
 //! returns subsector base share weighted fuel price 
 double subsector::getwtfuelprice(int per) const
 {
-	return basesharewt*fuelprice[per];
+    if (per == 0) {
+        //return basesharewt*fuelprice[per];
+        return share[per]*fuelprice[per]; // base year share initialized to basesharewt
+    }
+    else {
+        return share[per-1]*fuelprice[per];
+    }
 }
 
 //! passes carbon tax to technology

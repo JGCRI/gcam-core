@@ -290,14 +290,14 @@ void subrsrc::cumulsupply(double prc,int per)
 	maxgrd = nograde-1;
 	
 	// calculate total extraction cost for each grade
-        // This is a waste of time, should only do this once!
+    // This is a waste of time, should only do this once!
 	for (int gr=0; gr<nograde; gr++) {
-            if (per > 0) {
-                cumulativeTechChange[per] = cumulativeTechChange[ per-1 ] * 
-                                  pow( ( 1.0 + techChange[per] ), modeltime->gettimestep(per) );
-            }
-            // Determine cost
-            depgrade[gr][per]->calcCost( severanceTax[per],cumulativeTechChange[per], environCost[ per ], per );
+        if (per > 0) {
+            cumulativeTechChange[per] = cumulativeTechChange[ per-1 ] * 
+                    pow( ( 1.0 + techChange[per] ), modeltime->gettimestep(per) );
+        }
+        // Determine cost
+        depgrade[gr][per]->calcCost( severanceTax[per],cumulativeTechChange[per], environCost[ per ], per );
 	}
 	
 	if (per == 0) {
