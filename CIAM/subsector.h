@@ -72,6 +72,7 @@ public:
     subsector();
     virtual ~subsector();
     virtual void clear();
+    static double capLimitTransform( double capLimit, double orgShare ); 
     const std::string getName() const;
     void XMLParse( const xercesc::DOMNode* tempNode );
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
@@ -100,7 +101,6 @@ public:
     void normShare( const double sum, const int period );
     double getShare( const int period ) const;
     void limitShares( const double sum, const int period );
-    double capLimitTransform( double capLimit, double orgShare );
     void setCapLimitStatus( const bool value, const int period );
     bool getCapLimitStatus( const int period ) const;
     void calcTechShares ( const std::string& regionName, const int period );

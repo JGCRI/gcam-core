@@ -84,7 +84,6 @@ public:
     void addghgtax( const std::string& ghgname, const std::string& regionName, const int per);
     virtual void calcShare( const std::string& regionName, const int per, const double gnp_cap = 1 );
     void adjSharesCapLimit( const std::string& regionName, const int per ); 
-    double capLimitTransform( double capLimit, double orgShare ); 
     void checkShareSum( const std::string& regionName, const int per );
     void initCalc( const std::string& regionName, const int per );
     void production( const std::string& regionName,int per);

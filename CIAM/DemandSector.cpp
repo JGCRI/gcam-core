@@ -500,7 +500,6 @@ void demsector::calc_pElasticity(int per) {
 */
 void demsector::aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per) {
     const Modeltime* modeltime = scenario->getModeltime();
-    const Marketplace* marketplace = scenario->getMarketplace();
     double ser_dmd;
     double base;
     // double pelasticity = -0.9;

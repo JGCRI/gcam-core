@@ -790,16 +790,16 @@ void subsector::limitShares( const double multiplier, const int per ) {
    }
 }
 
-/*!
-* \brief Transform share to smoothly impliment capacity limit.
+/*! \brief Transform share to smoothly impliment capacity limit.
 *
-* Function returns the original orgShare when share << capLimit and returns capLimit
-* when orgShare is large
+* Function transformes the original share value into one that smoothly approaches the capacity limit.
+* Returns the original orgShare when share << capLimit and returns capLimit when orgShare is large by using a logistic transformation.
+* 
 *
 * \author Steve Smith
 * \param capLimit capacity limit (share)
 * \param orgShare original share for sector
-* \return new share value
+* \return transfomred share value
 */
  double subsector::capLimitTransform( double capLimit, double orgShare )
 {

@@ -617,7 +617,7 @@ void sector::adjSharesCapLimit( const string& regionName, const int per )
             if ( subsec[ i ]->getCapLimitStatus( per ) ) {
                tempCapacityLimit = subsec[ i ]->getShare( per );
             } else {
-               tempCapacityLimit = capLimitTransform( actualCapacityLimit, tempSubSectShare );
+               tempCapacityLimit = subsector::capLimitTransform( actualCapacityLimit, tempSubSectShare );
             }
             
             // if there is a capacity limit and are over then set flag and count excess shares
@@ -698,33 +698,6 @@ void sector::checkShareSum( const string& regionName, int per ) {
        }
        cout << endl;
     }
-}
-
-
-/*! \brief Transform share to smoothly impliment capacity limit.
-*
-* Function transformes the original share value into one that smoothly approaches the capacity limit.
-* Returns the original orgShare when share << capLimit and returns capLimit when orgShare is large by using a logistic transformation.
-* 
-*
-* \author Steve Smith
-* \param capLimit capacity limit (share)
-* \param orgShare original share for sector
-* \return transfomred share value
-*/
- double sector::capLimitTransform( double capLimit, double orgShare )
-{
-   const double SMALL_NUM = util::getSmallNumber();
-   const double exponentValue =  2;
-   const double mult =  1.4;
-   double newShare = capLimit ;
-
-   if ( capLimit < ( 1 - SMALL_NUM ) ) {
-      double factor = exp( pow( mult * orgShare/capLimit , exponentValue ) );
-      newShare = orgShare * factor/( 1 + ( orgShare/capLimit ) * factor);
-   }
-   
-   return newShare;
 }
 
 /*! \brief Calculate weighted average price of subsectors.
