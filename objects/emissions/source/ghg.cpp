@@ -52,24 +52,9 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
 Ghg::~Ghg(){
 }
 
-//! Clear member variables.
-void Ghg::clear(){
-
-    // clear elemental data.
-    rmfrac = 0;
-    storageCost = util::getLargeNumber(); // default to a large cost to turn off CCS
-    gwp = 0;
-    emission = 0;
-	isGeologicSequestration = false;
-    sequestAmountGeologic = 0;
-    sequestAmountNonEngy = 0;
-    emissGwp = 0;
-    emissCoef = 0;
-    emissFuel = 0;
-    emissInd = 0;
-    name = "";
-    unit = "";
-    storageName = "";
+//! Clone function which returns a deep copy of the Ghg.
+Ghg* Ghg::clone() const {
+    return new Ghg( *this );
 }
 
 //! initialize Ghg object with xml data
