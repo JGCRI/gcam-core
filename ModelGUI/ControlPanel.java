@@ -1126,10 +1126,19 @@ System.out.println("timeInterval = " + timeInterval);
             }
         });
         
+        JButton addAllButton = new JButton("Add Everywhere");
+        addAllButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addChildrenNodes();
+                hideAddChildDialog();
+            }
+        });
+        
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         buttonPanel.add(addNodeButton);
         //buttonPanel.add(Box.createRigidArea(new Dimension(5,5)));
-        buttonPanel.add(cancelButton);  
+        buttonPanel.add(cancelButton); 
+        buttonPanel.add(addAllButton);
         buttonPanel.add(Box.createVerticalGlue());
         
         JPanel tempPanel = new JPanel();
@@ -1179,6 +1188,103 @@ System.out.println("timeInterval = " + timeInterval);
         
         JDomToTreeModelAdapter model = (JDomToTreeModelAdapter)tree.getModel();
         model.insertNodeInto(newNode, selectedPath, 0);
+    }
+    
+    private void addChildrenNodes() {
+        String nodeName = nameField.getText().trim();
+        String attribs = attribField.getText().trim();
+        String value = valueField.getText().trim();
+        int sIndex, eIndex, index;
+        
+        //create new node with given name
+        AdapterNode newNode = new AdapterNode(nodeName);
+        
+        //add all attributes to the new node, if the exist
+        //  assumes a comma-seporated list of attributes in the form: name=nodeName, year=1975, ...
+        if (attribs.length() > 0) {
+            eIndex = attribs.indexOf(',');
+            sIndex = 0;
+            String attrib, val;
+            while (eIndex > 0) {
+                attrib = attribs.substring(sIndex, eIndex);
+                index = attrib.indexOf('=');
+                val = attrib.substring(index+1).trim();
+                attrib = attrib.substring(0, index).trim();
+                newNode.setAttribute(attrib, val);
+                
+                sIndex = eIndex + 1;
+                eIndex = attribs.indexOf('=', sIndex);
+            }
+            attrib = attribs.substring(sIndex);
+            index = attrib.indexOf('=');
+            val = attrib.substring(index+1).trim();
+            attrib = attrib.substring(0, index).trim();
+            newNode.setAttribute(attrib, val);
+        }
+        
+        if (value.length() > 0) {
+            newNode.setText(value);
+        }
+        
+        JDomToTreeModelAdapter model = (JDomToTreeModelAdapter)tree.getModel();
+        
+        AdapterNode pathStep, treeStep, prevNode = new AdapterNode();
+        TreePath newPath, prevPath = selectedPath;
+        Object[] newPathNodes;
+        Object[] pathNodes = selectedPath.getPath();
+        
+        Vector queue = new Vector();
+        Vector addedPaths = new Vector();
+int ct = 0;        
+        treeStep = (AdapterNode)model.getRoot();
+System.out.println("starting with " + treeStep);
+        //queue.addElement(new AdapterNode());
+        for (int j = 0; j < pathNodes.length; j++) {
+            pathStep = (AdapterNode)pathNodes[j];
+            while (treeStep != null) {
+                if (pathStep.getName().equals(treeStep.getName())) {
+System.out.println(treeStep + " matches");
+                    //add a new child, substituting appropriate new object
+                    newPathNodes = selectedPath.getPath();
+                    //newPath = makePath(selectedPath, treeStep, j);
+                    newPathNodes[j] = treeStep;
+                    newPath = new TreePath(newPathNodes);
+                    
+                    //avoid adding the same child to the same path
+                    if (!addedPaths.contains(newPath.toString())) {
+                        model.insertNodeInto((AdapterNode)newNode.clone(), newPath, 0);
+                        addedPaths.addElement(newPath.toString());
+                        ct++;
+System.out.println("added to " + newPath.toString());
+                    }
+                                        
+                    queue.addAll(treeStep.getChildren());
+                    
+                    prevNode = treeStep;
+                    if (!queue.isEmpty())treeStep = (AdapterNode)queue.remove(0);
+                    else treeStep = null;
+                    if (!prevNode.getName().equals(treeStep.getName())) break;
+                } else {
+System.out.println(treeStep + " doesn't match");
+                    //dequeue next, keep checking against the same path step object
+                    if (!queue.isEmpty())treeStep = (AdapterNode)queue.remove(0);
+                    else {
+                        treeStep = null;
+System.out.println("queue is empty in if");
+                    }
+                }
+            }
+        }
+System.out.println("added " + ct + " nodes");
+    }
+    
+    private TreePath makePath(TreePath oldPath, Object newElement, int newIndex) {
+        TreePath newPath = new TreePath(oldPath.getPath());
+        
+        Object[] path = newPath.getPath();
+        path[newIndex] = newElement;
+        
+        return new TreePath(path);
     }
     
     //display the add dialog box

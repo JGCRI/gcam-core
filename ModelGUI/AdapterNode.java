@@ -39,21 +39,8 @@ public class AdapterNode {
     /************** Functions used by TreeModel********************/
     
     public int addChild(AdapterNode newChild) {
-        /*List l = node.getChildren();
-        Object[] arr = l.toArray();
-        int size = arr.length;
-        Object*/
-        
-        
-        //v.add(index, newChild);
-        
-        //v.addAll(node.getChildren().clone());
-        //v.addElement(newChild.getElement());
-        
-        //node.setContent(v);
         node.addContent(newChild.getElement());
         return (node.getChildren().size()-1);
-        //return v.size()-1;
     }
     
     private Element getElement() {
@@ -231,5 +218,17 @@ public class AdapterNode {
     public void setAttribute (String name, String value) {
         Element newNode = node.setAttribute(name, value);
         node = newNode;
+    }
+    
+    public void setAttributes(List attribs) {
+        node.setAttributes(attribs);
+    }
+    
+    public Object clone(){
+        AdapterNode newNode = new AdapterNode(node.getName());
+        newNode.setText(node.getText());
+        newNode.setAttributes(node.getAttributes());
+        
+        return newNode;
     }
 }
