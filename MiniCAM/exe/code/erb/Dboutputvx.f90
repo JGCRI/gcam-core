@@ -1066,9 +1066,14 @@ END IF
       IF(vp)CALL ivid(0,ct,sct,3,'Coal','90US$/GJ')
       IF(vp)CALL ivid(0,ct,sct,4,'Biomass','90US$/GJ')
       IF(vp)CALL ivid(0,ct,sct,5,'Elctrlys','90US$/GJ')
+      IF (NH2_New >0) IF(vp)CALL ivid(0,ct,sct,6,'New_H2tech1','90US$/GJ')
+      IF (NH2_New >1) IF(vp)CALL ivid(0,ct,sct,7,'New_H2tech2','90US$/GJ')
       DO I=1,5
          DBAR(vl(ct,sct,I),:) = (PHILM(I,L,2:NM)*CVRT90)
       END DO	        
+      IF (NH2_New >0) DBAR(vl(ct,sct,6),:) = (PHILM(9,L,2:NM)*CVRT90)
+      IF (NH2_New >1) DBAR(vl(ct,sct,7),:) = (PHILM(10,L,2:NM)*CVRT90)
+
 !	HYDROGEN Production Non-Energy Cost by Fuel Source (1990 US $/GJ)
 	sct = 21
 	sctstr(ct,sct) = 'H2 NF Cost'
@@ -1080,7 +1085,9 @@ END IF
       IF(vp)CALL ivid(0,ct,sct,6,'Oil_Cap','90US$/GJ')
       IF(vp)CALL ivid(0,ct,sct,7,'Gas_Cap','90US$/GJ')
       IF(vp)CALL ivid(0,ct,sct,8,'Coal_Cap','90US$/GJ')
-      DO I=1,8
+      IF (NH2_New >0) IF(vp)CALL ivid(0,ct,sct,9,'New_H2tech1','90US$/GJ')
+      IF (NH2_New >1) IF(vp)CALL ivid(0,ct,sct,10,'New_H2tech2','90US$/GJ')
+      DO I=1,8+NH2_New
          DBAR(vl(ct,sct,I),:) = (HHILM(I,2:NM)*CVRT90)
       END DO	   
 
