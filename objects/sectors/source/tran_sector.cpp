@@ -67,7 +67,7 @@ void TranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cu
 
 
 //! Aggrgate sector energy service demand function.
-void TranSector::aggdemand( const double gnp_cap, const double gnp, const int period) { 
+void TranSector::aggdemand( const double gdp_cap, const double gdp, const int period) { 
     
     const Modeltime* modeltime = scenario->getModeltime();
     double ser_dmd;
@@ -82,17 +82,17 @@ void TranSector::aggdemand( const double gnp_cap, const double gnp, const int pe
         priceRatioNotLic=1.0;
         
         // calculate base year scalers
-        if (perCapitaBased) { // demand based on per capita GNP
+        if (perCapitaBased) { // demand based on per capita GDP
             baseScaler = service[0]* percentLicensed[period] * pow(priceRatio,-pElasticity[period])
-                * pow(gnp_cap,-iElasticity[period]);
+                * pow(gdp_cap,-iElasticity[period]);
             baseScalerNotLic = service[0]* (1 - percentLicensed[period]) * pow(priceRatioNotLic,-pElasticity[period])
-                * pow(gnp_cap,-iElasticity[period]);
+                * pow(gdp_cap,-iElasticity[period]);
         }
         else {
             baseScaler = service[0]* percentLicensed[period] * pow(priceRatio,-pElasticity[period])
-                * pow(gnp,-iElasticity[period]);
+                * pow(gdp,-iElasticity[period]);
             baseScalerNotLic = service[0]* (1 - percentLicensed[period]) * pow(priceRatioNotLic,-pElasticity[period])
-                * pow(gnp,-iElasticity[period]);
+                * pow(gdp,-iElasticity[period]);
         }
         // base output is initialized by data
         ser_dmd = service[0]; 
@@ -108,15 +108,15 @@ void TranSector::aggdemand( const double gnp_cap, const double gnp, const int pe
            priceRatio = sectorprice[period]/sectorprice[period-1];
            priceRatioNotLic = sectorprice[period]/sectorprice[period-1];
         // perCapitaBased is true or false
-        if (perCapitaBased) { // demand based on per capita GNP
-            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gnp_cap,iElasticity[period])
-                + baseScalerNotLic*pow(priceRatioNotLic,pElasticity[period])*pow(gnp_cap,iElasticity[period]);
+        if (perCapitaBased) { // demand based on per capita GDP
+            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gdp_cap,iElasticity[period])
+                + baseScalerNotLic*pow(priceRatioNotLic,pElasticity[period])*pow(gdp_cap,iElasticity[period]);
             // need to multiply above by population ratio (current population/base year
-            // population).  The gnp ratio provides the population ratio.
-            ser_dmd *= gnp/gnp_cap;
+            // population).  The gdp ratio provides the population ratio.
+            ser_dmd *= gdp/gdp_cap;
         }
-        else { // demand based on scale of GNP
-            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gnp,iElasticity[period]);
+        else { // demand based on scale of GDP
+            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gdp,iElasticity[period]);
         }
         // Save the service demand without technical change applied for comparison with miniCAM.
         servicePreTechChange[ period ] = ser_dmd;

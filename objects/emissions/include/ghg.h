@@ -39,7 +39,7 @@ public:
     void toXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     double getGHGValue( const std::string& regionName, const std::string& fuelName, const std::string& prodName, const double efficiency, const int period) const;
-    void calcEmission( const std::string& regionName, const std::string& fuelname, const double input, const std::string& prodname, const double output );
+    virtual void calcEmission( const std::string& regionName, const std::string& fuelname, const double input, const std::string& prodname, const double output );
     void calcIndirectEmission( const double input, const std::string& fuelname, const std::vector<Emcoef_ind>& emcoef_ind  );
     std::string getName() const;
     std::string getUnit() const;
@@ -49,12 +49,14 @@ public:
     double getEmissFuel() const;
     double getEmissInd() const;
     double getEmissCoef() const;
-private:
+    void setEmissCoef( const double emissCoefIn );
+	 bool getEmissionsInputStatus() const;
+protected:
     std::string name; //!< name of ghg gas
     std::string unit; //!< unit for ghg gas
     std::string storageName; //!< name of ghg gas storage 
     double rmfrac; //!< fraction of carbon removed from fuel
-	bool isGeologicSequestration; //!< is geologic sequestration, true or false
+	 bool isGeologicSequestration; //!< is geologic sequestration, true or false
     double storageCost; //!< storage cost associated with the remove fraction
     double gwp; //!< global warming poential
     double emission; //!< emissions (calculated)
@@ -62,8 +64,11 @@ private:
     double sequestAmountNonEngy; //!< sequestered in non-energy form (calculated)
     double emissGwp; //!< gwp emissions (calculated)
     double emissCoef; //!< emissions coefficient
+    double emissCoefPrev; //!< emissions coefficient passed forward from previous period
     double emissFuel; //!< implied emissions from total fuel consumption
     double emissInd; //!< indirect emissions
+	 double inputEmissions;  //!< input emissions for this object
+	 bool emissionsWereInput;  //!< toggle to indicate that emissions were input for this object
 
 };
 

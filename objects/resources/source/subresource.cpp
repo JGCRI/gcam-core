@@ -16,6 +16,7 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 
 #include "containers/include/scenario.h"
+#include "containers/include/gdp.h"
 #include "util/base/include/model_time.h"
 #include "resources/include/subresource.h"
 #include "resources/include/grade.h"
@@ -82,8 +83,7 @@ void SubResource::XMLParse( const DOMNode* node )
     DOMNode* curr = 0;
     string nodeName;
     string childNodeName;
-    Grade* tempGrade = 0;
-    
+     
     const Modeltime* modeltime = scenario->getModeltime();
     
     // make sure we were passed a valid node.
@@ -434,7 +434,7 @@ void SubResource::updateAvailable( const int period ){
 //! calculate annual supply
 /*! Takes into account short-term capacity limits.
 Note that cumulsupply() must be called before calling this function. */
-void SubResource::annualsupply(int per,double gnp,double prev_gnp,double price,double prev_price) {
+void SubResource::annualsupply( int per, const GDP* gdp, double price, double prev_price ) {
     const Modeltime* modeltime = scenario->getModeltime();
     // for per = 0 use initial annual supply
     // cumulative production is 0 for per = 0
@@ -454,9 +454,13 @@ void SubResource::annualsupply(int per,double gnp,double prev_gnp,double price,d
             // minShortTermSLimit is the minimun short-term capacity limit
             double cur_annualprod = 0;
             
+				// Change in GDP. 
+				// since per >=2 in this branch have not checked for invalid periods
+				double gdpRatio = gdp->getApproxGDP( per ) / gdp->getApproxGDP( per - 1 ); 
+
             // check to see if base short-term capacity (supply) limit is smaller than the minimum
             double max_annualprod = annualprod[per-1]
-                *pow(gnp/prev_gnp,gdpExpans[per])
+                *pow(gdpRatio,gdpExpans[per])
                 *pow((1+techChange[per]),modeltime->gettimestep(per));
             
             if(minShortTermSLimit < max_annualprod) { 

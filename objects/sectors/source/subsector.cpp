@@ -27,6 +27,7 @@
 #include "util/base/include/summary.h"
 #include "emissions/include/indirect_emiss_coef.h"
 #include "containers/include/world.h"
+#include "containers/include/gdp.h"
 
 using namespace std;
 using namespace xercesc;
@@ -467,6 +468,7 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 *
 * Any initializations or calcuations that only need to be done once per period (instead of every iteration) should be placed in this function.
 *
+* \warning the ghg part of this routine assumes the existance of technologies in the previous and future periods
 * \author Steve Smith
 * \param period Model period
 */
@@ -475,7 +477,7 @@ void Subsector::initCalc( const int period ) {
     int i = 0;
     // Set any fixed demands
     for ( i=0 ;i<notech; i++ ) {        
-        techs[i][ period ]->initCalc();
+        techs[i][ period ]->initCalc( );
         techs[i][ period ]->calcFixedSupply( period );
     }
     
@@ -499,6 +501,23 @@ void Subsector::initCalc( const int period ) {
       }
     }
 
+   // Pass forward any emissions coefficients
+    for ( i=0 ;i<notech && period > 0 && period < 8; i++ ) {
+		std::vector<std::string> ghgNames;
+		ghgNames = techs[i][period]->getGHGNames();
+		
+		int numberOfGHGs = static_cast<int>( ghgNames.size() ) ;
+		if ( numberOfGHGs != techs[i][ period - 1 ]->getNumbGHGs() ) {
+			cerr << "WARNING: Number of GHG objects changed in period " << period << ", tech: ";
+			cerr << techs[i][ period ]->getName();
+			cerr << ", sub-s: "<< name << ", sect: " << sectorName << ", region: " << regionName << endl;
+		}
+		for ( int j=0 ; j<numberOfGHGs && period > 0; j++ ) {
+			if ( techs[i][ period ]->getEmissionsInputStatus( ghgNames[j] ) ) {
+				techs[i][ period + 1 ]->setGHGEmissionCoef( ghgNames[j] , techs[i][ period ]->getGHGEmissionCoef( ghgNames[j] ) );
+			}
+		}
+    }
 }
 
 /*! \brief Computes weighted cost of all technologies in Subsector.
@@ -714,11 +733,11 @@ void Subsector::calcTechShares( const int period ) {
 * \author Sonny Kim, Josh Lurz
 * \param regionName region name
 * \param period model period
-* \param gnp_cap GDP per capita, relative to base year
+* \param gdp_cap GDP per capita, relative to base year
 * \warning technologies can not independently have fixed outputs
+* \warning there is no difference between demand and supply technologies. Control behavior with value of parameter fuelPrefElasticity
 */
-void Subsector::calcShare(const int period, const double gnp_cap ) {
-    double prevShare = share[period];
+void Subsector::calcShare(const int period, const GDP* gdp ) {
     // call function to compute technology shares
     calcTechShares( period );
     
@@ -736,16 +755,10 @@ void Subsector::calcShare(const int period, const double gnp_cap ) {
         share[period] = 0;
     }
     else {
-        // this logic doesn't work now, but does no harm
-        if (fuelPrefElasticity.empty()) { // supply Subsector
-            share[period] = shrwts[period]*pow(subsectorprice[period],lexp[period]);
-        }
-        else { // demand Subsector
-            share[period] = shrwts[period]*pow(subsectorprice[period],lexp[period])*pow(gnp_cap,fuelPrefElasticity[period]);
-        }
-
+		double gdp_cap = gdp->getBestScaledGDPperCap( period );
+		share[period] = shrwts[period]*pow(subsectorprice[period],lexp[period])*pow(gdp_cap,fuelPrefElasticity[period]);
 	}
-   
+	
    if (shrwts[period]  > 1e4) {
     cout << "WARNING: Huge shareweight for sub-sector " << name << " : " << shrwts[period] 
          << " in region " << regionName <<endl;

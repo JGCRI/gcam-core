@@ -20,6 +20,7 @@
 #include "util/base/include/summary.h"
 #include "sectors/include/subsector.h"
 #include "containers/include/scenario.h"
+#include "containers/include/gdp.h"
 
 using namespace std;
 using namespace xercesc;
@@ -334,16 +335,16 @@ void DemandSector::setMarket() {
 
 * This routine calls subsector::calcShare for each subsector, which calculated an unnormalized share, and then calls normShare to normalize the shares for each subsector.
 * \param period model period
-* \param gnp_cap GDP per capita (scaled to base year)
+* \param gdp pointer to the gdp object for this region
 
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-void DemandSector::calcShare( const int period, const double gnp_cap ) {
+void DemandSector::calcShare( const int period, const GDP* gdp ) {
     int i=0;
     double sum = 0.0;
     for (i=0;i<nosubsec;i++) {
         // determine subsector shares based on technology shares
-        subsec[i]->calcShare( period, gnp_cap );
+        subsec[i]->calcShare( period, gdp );
         sum += subsec[i]->getShare(period);
 
         // initialize cap limit status as false
@@ -476,16 +477,16 @@ void DemandSector::calc_pElasticity(int period) {
 /*! \brief Aggrgate sector energy service demand function
 *
 * Function calculates the aggregate demand for energy services and passes that down to the sub-sectors. 
-* Demand is proportional to either GNP (to a power) or GNP per capita (to a power) times population.
+* Demand is proportional to either GDP (to a power) or GDP per capita (to a power) times population.
 *
 * \author Sonny Kim
-* \param gnp GNP (relative or absolute?)
-* \param gnp_cap GDP per capita, relative to base year
+* \param gdp GDP (relative or absolute?)
+* \param scaledGDPperCap GDP per capita, relative to base year
 * \param period Model period
 * \todo Sonny to add more to this description if necessary
 * \pre Sector price attribute must have been previously calculated and set (via calcPrice)
 */
-void DemandSector::aggdemand( const double gnp_cap, const double gnp, const int period ) {
+void DemandSector::aggdemand( const GDP* gdp, const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
     double ser_dmd;
     // double pelasticity = -0.9;
@@ -501,17 +502,22 @@ void DemandSector::aggdemand( const double gnp_cap, const double gnp, const int 
     }
     else {
         const int normPeriod = modeltime->getyr_to_per(1990);
+		  const int basePer = modeltime->getyr_to_per( modeltime->getstartyr() );
         priceRatio = getPrice( period ) / getPrice( normPeriod );
         // perCapitaBased is true or false
-        if (perCapitaBased) { // demand based on per capita GNP
-            ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp_cap,iElasticity[period]);
+		  
+		  double gdpRatio = gdp->getGDP( period ) / gdp->getGDP( basePer );
+        if ( perCapitaBased ) { // demand based on per capita GDP
+				double scaledGDPperCap = gdp->getScaledGDPperCap( period );
+            ser_dmd = base*pow(priceRatio,pelasticity)*pow(scaledGDPperCap,iElasticity[period]);
             // need to multiply above by population ratio (current population/base year
-            // population).  The gnp ratio provides the population ratio.
-            ser_dmd *= gnp/gnp_cap;
+            // population).  This ratio provides the population ratio.
+            ser_dmd *= gdpRatio/scaledGDPperCap;
+				
         }
-        else { // demand based on scale of GNP    
+        else { // demand based on scale of GDP    
 
-            ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp,iElasticity[period]);
+            ser_dmd = base*pow( priceRatio, pelasticity )*pow( gdpRatio, iElasticity[period] );
         }
         
         // calculate cummulative technical change using AEEI, autonomous end-use energy intensity
@@ -548,7 +554,7 @@ void DemandSector::outputfile() const {
     // total sector output
     for (m=0;m<maxper;m++) {
         temp[m] = output[ m ]; }
-    fileoutput3(regionName,getName()," "," ","prodution","SerUnit",temp);
+    fileoutput3(regionName,getName()," "," ","production","SerUnit",temp);
     // total sector eneryg input
     for (m=0;m<maxper;m++) {
         temp[m] = input[ m ]; }

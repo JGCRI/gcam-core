@@ -149,7 +149,7 @@ void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
 
 
 //! calculate subsector share numerator
-void TranSubsector::calcShare( const int period, const double gnp_cap )
+void TranSubsector::calcShare( const int period, const double gdp_cap )
 {
     
     // call function to compute technology shares
@@ -171,14 +171,14 @@ void TranSubsector::calcShare( const int period, const double gnp_cap )
     const double hoursPerWeek = 40.0;
     
     // convert $/vehicle-mi into $/pass-mi or $/ton-mi 
-    // add cost of time spent on travel by converting gnp/cap into
+    // add cost of time spent on travel by converting gdp/cap into
     // an hourly wage and multipling by average speed
     servicePrice[period] = subsectorprice[period]/loadFactor[period] ;
     // calculate time value based on hours worked per year
-    // gnp_cap is normalized, need GNP per capita in $/person, fix when available
-    const double dollarGNP75 = 3.46985e+12;
+    // gdp_cap is normalized, need GDP per capita in $/person, fix when available
+    const double dollarGDP75 = 3.46985e+12;
     const double population75 = 2.16067e+8;
-    timeValue[period] = gnp_cap*(dollarGNP75/population75)/(hoursPerWeek*weeksPerYear)/speed[period] ;
+    timeValue[period] = gdp_cap*(dollarGDP75/population75)/(hoursPerWeek*weeksPerYear)/speed[period] ;
 
     generalizedCost[period] = servicePrice[period] + timeValue[period] ;
     
@@ -187,12 +187,12 @@ void TranSubsector::calcShare( const int period, const double gnp_cap )
     
     if(period==0) {
         baseScaler = output[0] / shrwts[period] * pow(generalizedCost[period], -lexp[period])
-            * pow(gnp_cap, -fuelPrefElasticity[period])
+            * pow(gdp_cap, -fuelPrefElasticity[period])
             * pow(popDensity, -popDenseElasticity[period]);
     }
 
     share[period]  = baseScaler * shrwts[period] * pow(generalizedCost[period], lexp[period])
-        * pow(gnp_cap, fuelPrefElasticity[period])
+        * pow(gdp_cap, fuelPrefElasticity[period])
         * pow(popDensity, popDenseElasticity[period]);
     
 }

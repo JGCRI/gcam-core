@@ -62,7 +62,7 @@ class Marketplace
    void resetToPriceMarket( const std::string& goodName, const std::string& regionName );
    void setMarketToSolve( const std::string& goodName, const std::string& regionName, const int period = -1 );
    void unsetMarketToSolve( const std::string& goodName, const std::string& regionName, const int period = -1 );
-   bool checkMarketSolution( const double soltoleranceerance,  const double excessDemandSolutionFloor, const int period );
+   bool checkMarketSolution( const double soltoleranceerance,  const double excessDemandSolutionFloor, const int period, const bool notSolved );
    void storeinfo( const int period );
    void restoreinfo( const int period );
    void setMarketInfo( const std::string& goodName, const std::string& regionName, const int period, const std::string itemName, const double itemValue );

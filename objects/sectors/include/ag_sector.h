@@ -38,7 +38,7 @@ private:
 
     std::string name; //!< Name of the agricultural sector.
     int regionNumber; //!< The region number of the container region.
-    std::vector<double> gnp; //!< Contains the gnps passed to the AgLu model.
+    std::vector<double> gdp; //!< Contains the gnps passed to the AgLu model.
     std::vector<double> population; //!< Contains population passed to the AgLu model.
     double biomassPrice; //!< Initial market biomass price passed to the AgLu model.
     std::vector<double> CO2Emissions; //!< Co2 emissions by period returned from the AgLu model.

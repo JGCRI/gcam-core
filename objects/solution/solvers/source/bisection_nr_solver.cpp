@@ -173,7 +173,7 @@ bool BisectionNRSolver::solve( const int period ) {
    while ( maxSolVal >= solTolerance && ++worldCalcCount < 1000 );			// report success, 0
    code = ( maxSolVal < solTolerance ? 0 : -1 );				// or failure, -1, 
    
-   if ( !marketplace->checkMarketSolution( solTolerance, excessDemandSolutionFloor, period ) && ( code == 0 ) ) {
+   if ( !marketplace->checkMarketSolution( solTolerance, excessDemandSolutionFloor, period, true ) && ( code == 0 ) ) {
       cerr << "ERROR: Supplies and Demands are NOT equal" << endl;
    }
    
@@ -662,6 +662,8 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
    const int MAX_DERIVATIVE_CALC = 1; // count number of times derivatives are normally calculated
    const double MAXED_FOR_DERIV_RECALC = 25; // recalculate derivatives is ED is larger than this 
    double maxSolVal; // maximum equality value 
+   Configuration* conf = Configuration::getInstance();
+   bool debugChecking = conf->getBool( "debugChecking" );
    
    // Initialize solution vector.
    sol = SolverLibrary::getMarketsToSolve( marketplace, per, true );
@@ -821,6 +823,10 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
       // If have iterated 10 times in NR without solving, then re-do derivatives
       if ( (iter > 3) && ((iter % 10) == 0) ) {
          numDerivativeCalcs = 0;
+			// sjs add this to print out SD curves when has trouble solving
+			if ( debugChecking ) {
+				bool dmy = marketplace->checkMarketSolution( solutionTolerance, excessDemandSolutionFloor, per , false) ;
+			}
       }
       
       // IF ED is too high then re-calculate derivatives

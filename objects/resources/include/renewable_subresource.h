@@ -41,6 +41,6 @@ public:
     virtual void toOutputXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
     virtual void initializeResource(); 
     virtual void cumulsupply(double prc,int per);
-    virtual void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
+    virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
 };
 #endif // _RENEWABLE_SUBRESOURCE_H_

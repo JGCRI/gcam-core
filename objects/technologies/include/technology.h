@@ -127,12 +127,15 @@ public:
     double getCO2() const; // return actual CO2 emissions from technology
     const std::vector<std::string> getGHGNames() const;
     double getGHGEmissionCoef( const std::string& ghgName ) const;
+	 bool getEmissionsInputStatus( const std::string& ghgName ) const;
+	 void setGHGEmissionCoef( const std::string& ghgName, const double emissionsCoef );
     std::map<std::string,double> getemissmap() const; // return map of all ghg emissions
     std::map<std::string,double> getemfuelmap() const; // return map of all ghg emissions
     std::map<std::string,double> getemindmap() const; // return map of all ghg emissions
     double get_emissmap_second( const std::string& str ) const; // return value for ghg
     double getlexp() const; // return logit exponential for the technology
     double getFixedSupply() const; // return fixed supply
+	 int technology::getNumbGHGs()  const; // number of GHG objects in this technology
     void setYear( const int yearIn );
 };
 

@@ -103,7 +103,7 @@ int AgSector::getNumAgMarkets() {
 void AgSector::clear() {
    regionNumber = 0;
    name = "";
-   gnp.clear();
+   gdp.clear();
    population.clear();
    CO2Emissions.clear();
    prices.clear();
@@ -144,8 +144,8 @@ void AgSector::toXML( ostream& out, Tabs* tabs ) const {
    XMLWriteElement( regionNumber, "regionNumber", out, tabs );
    XMLWriteElement( numAgMarkets, "numAgMarkets", out, tabs );
    
-   for( iter = 0; iter < static_cast<int>( gnp.size() ); iter++ ){
-      XMLWriteElement( gnp[ iter ], "gnp", out, tabs, modeltime->getper_to_yr( iter ) );
+   for( iter = 0; iter < static_cast<int>( gdp.size() ); iter++ ){
+      XMLWriteElement( gdp[ iter ], "gdp", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    
    for( iter= 0; iter < static_cast<int>( population.size() ); iter++ ) {
@@ -182,13 +182,13 @@ void AgSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    XMLWriteElement( regionNumber, "regionNumber", out, tabs );
    XMLWriteElement( numAgMarkets, "numAgMarkets", out, tabs );
    
-   for( iter = 0; iter < static_cast<int>( gnp.size() ); iter++ ){
-      XMLWriteElement( gnp[ iter ], "gnp", out, tabs, modeltime->getper_to_yr( iter ) );
+   for( iter = 0; iter < static_cast<int>( gdp.size() ); iter++ ){
+      XMLWriteElement( gdp[ iter ], "gdp", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    
    #if(__HAVE_FORTRAN__)
    for ( iter = 0; iter < modeltime->getmaxper(); iter++ ){
-      XMLWriteElement( GETGNP( tempRegion, iter ), "gnpFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
+      XMLWriteElement( GETGNP( tempRegion, iter ), "gdpFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    #endif
    
@@ -228,15 +228,15 @@ void AgSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    out << "</agsector>" << endl;
 }
 
-//! Set the AgLU gnps from the regional gnp data.
-void AgSector::setGNP( const vector<double>& gnpsToFortran ) {
+//! Set the AgLU gdps from the regional gdp data.
+void AgSector::setGNP( const vector<double>& gdpsToFortran ) {
    #if(__HAVE_FORTRAN__)
-   gnp = gnpsToFortran;
+   gdp = gdpsToFortran;
    
-   double* toFortran = new double[ gnpsToFortran.size() ];
+   double* toFortran = new double[ gdpsToFortran.size() ];
    
-   for ( int i = 0; i < static_cast<int>( gnpsToFortran.size() ); i++ ) {
-      toFortran[ i ] = gnpsToFortran[ i ];
+   for ( int i = 0; i < static_cast<int>( gdpsToFortran.size() ); i++ ) {
+      toFortran[ i ] = gdpsToFortran[ i ];
       // toFortran[ i ] = readGDPS[ regionNumber ][ i ];
    }
    

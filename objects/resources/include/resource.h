@@ -18,6 +18,7 @@
 
 // Forward declaration.
 class SubResource;
+class GDP;
 
 /*! 
 * \ingroup CIAM
@@ -55,7 +56,7 @@ public:
     double getPrice(int per); 
     void cumulsupply(double prc,int per);
     double getCummProd(int per);
-    void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
+    void annualsupply( int per, const GDP* gdp, double price1, double price2 );
     double getAnnualProd(int per);
     double getAvailable(int per);
     double getSubAvail( const std::string& subResourceName, const int per);

@@ -274,7 +274,7 @@ double Resource::getCummProd(int per)
 
 
 //! Calculate annual production
-void Resource::annualsupply(int per,double gnp,double prev_gnp,double price,double prev_price)
+void Resource::annualsupply( int per, const GDP* gdp, double price, double prev_price )
     {	
     int i=0;
     annualprod[per]=0.0;
@@ -285,7 +285,7 @@ void Resource::annualsupply(int per,double gnp,double prev_gnp,double price,doub
 
     // sum annual production of each subsector
     for (i=0;i<nosubrsrc;i++) {
-        subResource[i]->annualsupply(per,gnp,prev_gnp,price,prev_price);
+        subResource[i]->annualsupply( per, gdp, price, prev_price );
         annualprod[per] += subResource[i]->getAnnualProd(per);
         available[per] += subResource[i]->getAvailable(per);
         }

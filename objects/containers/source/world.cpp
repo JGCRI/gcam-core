@@ -252,8 +252,8 @@ void World::calc( const int period, const vector<string>& regionsToSolve ) {
         if( conf->getBool( "CalibrationActive" ) ) {
             regions[ *i ]->writeBackCalibratedValues( period );
         }
-        // calculate regional GNP
-        regions[ *i ]->calcGnp( period );
+        // calculate regional GDP
+        regions[ *i ]->calcGDP( period );
         // set regional GHG constraint to market supply
         regions[ *i ]->setGhgSupply(period);
         // set regional GHG tax to individual technologies
@@ -264,8 +264,8 @@ void World::calc( const int period, const vector<string>& regionsToSolve ) {
         regions[ *i ]->finalSupplyPrc(period);
         // calculate enduse service price
         regions[ *i ]->calcEndUsePrice( period );
-        // adjust gnp for energy cost changes
-        regions[ *i ]->adjustGnp(period);
+        // adjust GDP for energy cost changes
+        regions[ *i ]->adjustGDP(period);
 
         // determine end-use demand for energy and other goods
         regions[ *i ]->enduseDemand(period);

@@ -124,7 +124,6 @@ void Sector::XMLParse( const DOMNode* node ){
     DOMNode* curr = 0;
     DOMNodeList* nodeList = 0;
     string nodeName;
-    Subsector* tempSubSector = 0;
 
     /*! \pre make sure we were passed a valid node. */
     assert( node );
@@ -446,17 +445,21 @@ void Sector::addGhgTax( const string& ghgname, const int period ) {
 /*!
 * \brief  Calculate subsector shares, adjusting for capacity limits.
 
-* This routine calls subsector::calcShare for each subsector, which calculated an unnormalized share, and then calls normShare to normalize the shares for each subsector.
-* The code below also takes into account sectors with fixed output. The sectors without fixed output are normalized to sum/(1-fixedSum) and the sectors with fixed output are reset to their fixed share. Note that the fixed share is an approximation, held over from the last iteration, of the actual share of any technology with a fixed output. 
+* This routine calls subsector::calcShare for each subsector, which calculated an unnormalized 
+* share, and then calls normShare to normalize the shares for each subsector.
+* The code below also takes into account sectors with fixed output. The sectors without fixed 
+* output are normalized to sum/(1-fixedSum) and the sectors with fixed output are reset to their
+* fixed share. Note that the fixed share is an approximation, held over from the last iteration, 
+* of the actual share of any technology with a fixed output. 
 *
 * \param period model period
-* \param gnpPerCap GDP per capita (scaled to base year)
+* \param gdpPerCap GDP per capita (scaled to base year)
 
 * \author Sonny Kim, Steve Smith, Josh Lurz
 * \todo add warnings to sub-Sector and technology (?) that fixed capacity has to be >0
 * \warning model with fixed capacity in sectors where demand is not a solved market may not solve
 */
-void Sector::calcShare( const int period, const double gnpPerCap ) {
+void Sector::calcShare( const int period, const GDP* gdp ) {
     // Note that this solution for the fixed capacity share problem requires that 
     // simultaneity be turned on. This would seem to be because the fixed share is lagged one period
     // and can cause an oscillation. With the demand for this Sector in the marketplace, however, the
@@ -465,28 +468,31 @@ void Sector::calcShare( const int period, const double gnpPerCap ) {
     int i=0;
     double sum = 0.0;
     double fixedSum = 0.0;
-
+	 
     // first loop through all subsectors to get the appropriate sums
     for ( i=0; i<nosubsec; i++ ) {
-        // determine subsector shares based on technology shares
-        subsec[ i ]->calcShare( period );
-        sum += subsec[ i ]->getShare( period );
+		// calculate subsector shares (based on technology shares)
+		subsec[ i ]->calcShare( period, gdp );
 
-        // sum fixed capacity separately, but don't bother with the extra code if this Sector has none
-        if ( anyFixedCapacity) {
-            double fixedShare = getFixedShare( i , period );
-            if ( fixedShare > 0 ) {
-                sum -= subsec[ i ]->getShare( period ); // if fixed, subtract fixed share from sum
-                fixedSum += fixedShare; // keep track of total fixed shares
-            }
-        }
+		// sum fixed capacity separately, but don't bother with the extra code if this Sector has none
+		// Calculation re-ordered to eliminate subtraction of fixed share from sum which eliminated 
+		// a share <> 1 warning when initial (non-fixed) sum was extremely small (2/04 - sjs)
+		double fixedShare = 0.0;
+		if ( anyFixedCapacity) {
+			fixedShare = getFixedShare( i , period );
+			fixedSum += fixedShare; // keep track of total fixed shares
+		}
 
-        // initialize cap limit status as false
-        // (will be changed in adjSharesCapLimit if necessary)
-        subsec[ i ]->setCapLimitStatus( false , period );
+		// Sum shares that are not fixed
+		if ( fixedShare < util::getTinyNumber() ) {
+			sum += subsec[ i ]->getShare( period );
+		}
+		
+		// initialize cap limit status as false for this sector (will be changed in adjSharesCapLimit if necessary)
+		subsec[ i ]->setCapLimitStatus( false , period );
     }
 
-    // Tkae care of case where fixed share is > 1
+    // Take care of case where fixed share is > 1
     double scaleFixedShare = 1.0;
     if ( fixedSum > 1.0 ) {
         scaleFixedShare = 1/fixedSum;
@@ -496,27 +502,24 @@ void Sector::calcShare( const int period, const double gnpPerCap ) {
     // Now normalize shares
     for ( i=0; i<nosubsec; i++ ) {
 
-        if ( subsec[ i ]->getFixedSupply( period ) == 0) {
-            // normalize subsector shares that are not fixed
-            if ( fixedSum < 1 ) {
-					subsec[ i ]->normShare( sum / ( 1 - fixedSum ) , period );	
-            } 
-			else {
-                subsec[ i ]->normShare( sum / util::getTinyNumber() , period );	// if all fixed supply, eliminate other shares
-            }
+		if ( subsec[ i ]->getFixedSupply( period ) == 0) {
+			// normalize subsector shares that are not fixed
+			if ( fixedSum < 1 ) {
+	 			subsec[ i ]->normShare( sum / ( 1 - fixedSum ) , period );	
+			} else {
+				subsec[ i ]->normShare( sum / util::getTinyNumber() , period );	// if all fixed supply, eliminate other shares
+			}
 
-            // reset share of sectors with fixed supply to their appropriate value
-        } 
-		else {
+		// reset share of sectors with fixed supply to their appropriate value
+		} else {
             double fixedShare = getFixedShare( i , period ) * scaleFixedShare;
             double currentShare = subsec[ i ]->getFixedShare( period );
             subsec[ i ]->setShareToFixedValue( period );
             if ( currentShare > 0 ) { subsec[ i ]->scaleFixedSupply( fixedShare/currentShare, period ); }
             subsec[ i ]->setShareToFixedValue( period );
-        }
+		}
     }
-    fixedShareSavedVal = fixedSum; // save share value for debugging check
-   
+
     // Now adjust for capacity limits
     // on 10/22/03 adding this check saves about 1/40 of the model run time.
     if ( capLimitsPresent[ period ] ) {

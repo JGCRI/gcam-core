@@ -31,7 +31,7 @@ class Tabs;
 
 /*! 
 * \ingroup CIAM
-* \brief This class defines a single region of the model and contains other regional information such as demographics, resources, supply and demand sectors, and GNPs.
+* \brief This class defines a single region of the model and contains other regional information such as demographics, resources, supply and demand sectors, and GDPs.
 *
 * The classes contained in the Region are the Populations, Resource, Sector, Demsector.  Since this particular implementation of the model is based on a partial equilibrium concept,
 * it is not mandatory to instantiate all of these classes.  The region can contain just one of these objects or any combination of each of these objects.  The demand sector object, however, requires Populations
@@ -68,11 +68,10 @@ public:
     void addGhgTax( const int period );
     void rscSupply( const int period );
     void finalSupplyPrc( const int period );
-    void calcGnp( const int period );
-    const std::vector<double> calcFutureGNP() const;
-    void calcGNPlfp( const int period );
+    void calcGDP( const int period );
+    const std::vector<double> calcFutureGDP() const;
     void calcEndUsePrice( const int period );
-    void adjustGnp( const int period );
+    void adjustGDP( const int period );
     void enduseDemand( const int period );
     void finalSupply( const int period );
     void emission( const int period );
@@ -101,7 +100,7 @@ private:
     int noSSec; //!< number of supply sectors in each region
     int noDSec; //!< number of demand sectors in each region
     int noRegMrks; //!< number of markets in each region
-    double EnergyGNPElas; //!< elasticity for energy price feedback on GNP
+    double EnergyGDPElas; //!< elasticity for energy price feedback on GDP
     Population* population; //!< Population object
     GDP* gdp; //!< GDP object.
     std::vector<Resource*> resources; //!< vector of pointers toresource objects
@@ -110,11 +109,11 @@ private:
     AgSector* agSector; //!< Agricultural sector
     std::vector<GHGPolicy*> ghgMarket; //!< vector of pointers to ghg market objects, container for constraints and emissions
     std::vector<double> iElasticity; //!< income elasticity
-    std::vector<double> gnpDol; //!< regional gross national product in dollar value
-    std::vector<double> calibrationGNPs; //!< GNPs to calibrate to
-    std::vector<double> gnp; //!< regional gross national product normalized
-    std::vector<double> gnpAdj; //!< regional gross national product normalized and adjusted for energy
-    std::vector<double> gnpCap; //!< regional gross national product per capita normalized 
+    std::vector<double> gdpDol; //!< regional gross national product in dollar value
+    std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
+    std::vector<double> gdpVal; //!< regional gross national product normalized
+    std::vector<double> gdpAdj; //!< regional gross national product normalized and adjusted for energy
+    std::vector<double> gdpCap; //!< regional gross national product per capita normalized 
     std::vector<double> input; //!< total fuel consumption in energy units
     std::vector<double> priceSer; //!< aggregate price for demand services
     std::vector<double> carbonTax; //!< regional carbon tax

@@ -879,7 +879,7 @@ double Marketplace::getDemand(  const string& goodName, const string& regionName
 * \param period Period in which to check the solution.
 * \return Whether or not the markets all cleared.
 */
-bool Marketplace::checkMarketSolution( const double solTolerance, const double excessDemandSolutionFloor, const int period ) {
+bool Marketplace::checkMarketSolution( const double solTolerance, const double excessDemandSolutionFloor, const int period, const bool notSolved ) {
 
     const Configuration* conf = Configuration::getInstance();
     const bool debugChecking = conf->getBool( "debugChecking" );
@@ -896,7 +896,11 @@ bool Marketplace::checkMarketSolution( const double solTolerance, const double e
 
     if( !unsolved.empty() ) {
         solvedOK = false;
-        cout << "Unsolved markets: " << endl;
+        if ( notSolved ) {
+				cout << "Unsolved markets: " << endl;
+		  } else {
+				cout << "Markets that had difficulty solving: " << endl;
+		  }
     }
 
     for ( vector<Market*>::const_iterator iter = unsolved.begin(); iter != unsolved.end(); iter++ ) {
@@ -907,7 +911,11 @@ bool Marketplace::checkMarketSolution( const double solTolerance, const double e
     if ( debugFindSD && !unsolved.empty() ) {
         string logName = Configuration::getInstance()->getFile( "supplyDemandOutputFileName", "SDCurves.csv" );
         Logger* sdLog = LoggerFactory::getLogger( logName );
-        LOG( sdLog, Logger::WARNING_LEVEL ) << "Supply and demand curves for markets that did not solve in period: " << period << endl;
+        if ( notSolved ) {
+				LOG( sdLog, Logger::WARNING_LEVEL ) << "Supply and demand curves for markets that did not solve in period: " << period << endl;
+		  } else {
+				LOG( sdLog, Logger::WARNING_LEVEL ) << "Supply and demand curves for markets that had difficulty solving in period: " << period << endl;
+		  }
         findAndPrintSD( unsolved, period );
     }
 

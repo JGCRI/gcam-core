@@ -23,6 +23,7 @@ class technology;
 class hydro_tech;
 class Emcoef_ind;
 class Tabs;
+class GDP;
 
 /*! 
 * \ingroup CIAM
@@ -98,7 +99,7 @@ public:
     double getwtfuelprice( const int period ) const;
     double getCapacityLimit( const int period ) const;
     void addGhgTax( const std::string& ghgname, const int period ); 
-    virtual void calcShare( const int period, const double gnp_cap = 1 ); 
+    virtual void calcShare( const int period, const GDP* gdp ); 
     void setShare( const double shareVal, const int period );
     void normShare( const double sum, const int period );
     double getShare( const int period ) const;

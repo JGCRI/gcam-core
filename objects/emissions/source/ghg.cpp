@@ -34,13 +34,16 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     gwp = gwpIn;
     emissCoef = emissCoefIn;
     emission = 0;
-	isGeologicSequestration = true;
+	 isGeologicSequestration = true;
     storageCost = util::getLargeNumber(); // default to a large cost to turn off CCS
     sequestAmountGeologic = 0;
     sequestAmountNonEngy = 0;
     emissGwp = 0;
     emissFuel = 0;
     emissInd = 0;
+	 emissCoefPrev = 0;
+	 inputEmissions = 0;
+	 emissionsWereInput = false;
 }
 
 //! Clear member variables.
@@ -93,6 +96,10 @@ void Ghg::XMLParse(const DOMNode* node)
         else if( nodeName == "unit"){
             unit = XMLHelper<string>::getValueString( curr );
         }
+        else if( nodeName == "inputEmissions" ){
+            inputEmissions = XMLHelper<double>::getValue( curr );
+				emissionsWereInput = true;
+        }
         else if( nodeName == "emisscoef" ){
             emissCoef = XMLHelper<double>::getValue( curr );
         }
@@ -127,7 +134,11 @@ void Ghg::toXML( ostream& out, Tabs* tabs ) const {
 
     // write xml for data members
     XMLWriteElement( unit, "unit", out, tabs );
-    XMLWriteElementCheckDefault( emissCoef, "emisscoef", out, tabs, 0 );
+    if( emissionsWereInput ) {
+	    XMLWriteElement( inputEmissions, "inputEmissions", out, tabs );
+	 } else {
+		 XMLWriteElementCheckDefault( emissCoef, "emisscoef", out, tabs, 0);
+	 }
     XMLWriteElementCheckDefault( rmfrac, "removefrac", out, tabs, 0 );
     XMLWriteElementCheckDefault( isGeologicSequestration, "isGeologicSequestration", out, tabs, 1 );
     XMLWriteElementCheckDefault( storageCost, "storageCost", out, tabs, util::getLargeNumber() );
@@ -315,9 +326,20 @@ void Ghg::calcEmission( const string& regionName, const string& fuelname, const 
 				sequestAmountNonEngy = rmfrac * (input-output) * emissCoef;
 			}
         }
-        emission = (1.0 - rmfrac) * (input-output) * emissCoef;
-        emissGwp = (1.0 - rmfrac) * gwp * (input-output) * emissCoef;
-        emissFuel = (1.0 - rmfrac) * input * emissCoef;
+	
+		if ( emissionsWereInput ) {
+			emission = inputEmissions;
+			emissFuel = inputEmissions;
+			if ( input == output ) {
+				emissCoef = inputEmissions / ( (1.0 - rmfrac) * (input-output) );
+			} else {
+				emissCoef = 0;
+			}
+		} else {
+			emission = input * emissCoef;
+			emissFuel =  emission;
+		}
+		emissGwp = gwp * emission;
     }
 }
 
@@ -372,3 +394,12 @@ double Ghg::getEmissCoef() const{
     return emissCoef;
 }
 
+//! Return ghg emissions coefficient.
+void Ghg::setEmissCoef( const double emissCoefIn ) {
+	emissCoef = emissCoefIn;
+}
+
+//! Return flag that indicates if emissions were input for this technology
+bool Ghg::getEmissionsInputStatus() const {
+	return emissionsWereInput;
+}

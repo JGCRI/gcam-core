@@ -17,6 +17,9 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/sector.h"
 
+// Forward declarations
+class GDP;
+
 /*! 
 * \ingroup CIAM
 * \brief A class which defines a single demand sector.
@@ -63,9 +66,9 @@ public:
     virtual void toXMLDerivedClass( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void setMarket();
-    virtual void calcShare( const int period, const double gnp_cap = 1 );
+    virtual void calcShare( const int period, const GDP* gdp );
     virtual void calc_pElasticity( const int period );
-    virtual void aggdemand( const double gnp_cap, const double gnp, const int period ); 
+    virtual void aggdemand( const GDP* gdp, const int period ); 
     virtual void outputfile() const;
     virtual void MCoutput() const;
     virtual void calibrateSector( const int period );

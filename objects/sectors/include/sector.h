@@ -23,6 +23,8 @@ class Summary;
 class Emcoef_ind;
 class Region;
 class Logger;
+class GDP;
+
 /*! 
 * \ingroup CIAM
 * \brief This class represents a single good that is produced, transformed, or consumed.
@@ -83,7 +85,7 @@ public:
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void setMarket();
     void addGhgTax( const std::string& ghgname, const int period );
-    virtual void calcShare( const int period, const double gnp_cap = 1 );
+    virtual void calcShare( const int period, const GDP* gdp );
     void adjSharesCapLimit( const int period ); 
     void checkShareSum( const int period ) const;
     void initCalc( const int period );

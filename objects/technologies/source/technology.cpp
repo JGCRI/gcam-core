@@ -17,6 +17,7 @@
 // User headers
 #include "technologies/include/technology.h"
 #include "emissions/include/ghg.h"
+#include "emissions/include/ghg_output.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
@@ -241,6 +242,9 @@ void technology::XMLParse( const DOMNode* node )
         }
         else if( nodeName == "GHG" ){
             parseContainerNode( curr, ghg, ghgNameMap, new Ghg() );
+        }
+        else if( nodeName == "GHG_OUTPUT" ){
+            parseContainerNode( curr, ghg, ghgNameMap, new GhgOutput() );
         }
         // parse derived classes
         else {
@@ -819,11 +823,12 @@ const vector<string> technology::getGHGNames() const {
 }
 
 /*! \brief Return a GHG emissions coefficient for a given GHG name.
-* \detailed This function searches the mapping of GHG names to values and
+* This function searches the mapping of GHG names to values and
 * returns the emissions coefficient from the GHG with the given name,
 * or -1 if there is not a GHG with the given name.
 * \todo Eliminate this function and getGHGNames when technology is converted to a multi-timeperiod structure.
 * \param ghgName The name of a GHG to return the emissions coefficient for.
+* \warning Assumes there is only one GHG object with any given name
 * \return The emissions coefficient of the GHG with ghgName, -1 if the GHG does not exist.
 */
 double technology::getGHGEmissionCoef( const std::string& ghgName ) const {
@@ -840,6 +845,44 @@ double technology::getGHGEmissionCoef( const std::string& ghgName ) const {
         emissCoef = ghg[ ghgIndex ]->getEmissCoef();
     }
     return emissCoef;
+}
+
+/*! \brief sets the emissions coefficient for a GHG specified byname.
+* This function searches the mapping of GHG names to values and
+* returns the emissions coefficient from the GHG with the given name,
+* or -1 if there is not a GHG with the given name.
+* \todo Eliminate this function and getGHGNames when technology is converted to a multi-timeperiod structure.
+* \param ghgName The name of a GHG to return the emissions coefficient for.
+* \warning Assumes there is only one GHG object with any given name
+* \return The emissions coefficient of the GHG with ghgName, -1 if the GHG does not exist.
+*/
+void technology::setGHGEmissionCoef( const std::string& ghgName, const double emissionsCoef ) {
+    const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
+
+    // Need to perform error checking b/c the searchForValue function will return 0 if the name
+    // is not found or if the correct element is at position 1. This handles the first case. 
+    if( ( ghgIndex == 0 ) && ( ( ghg.size() == 0 ) || ( ghg[ 0 ]->getName() != ghgName ) ) ){
+        // A ghg with the passed in name does not exist.
+    }
+    else {
+         ghg[ ghgIndex ]->setEmissCoef( emissionsCoef );
+    }
+}
+
+/*! \brief Return the flag that tells if the GHG had an emissions coefficient read in
+* This function searches the mapping of GHG names to values and
+* returns the appropriate flag,
+* or -1 if there is not a GHG with the given name.
+* \todo Eliminate this function and getGHGNames when technology is converted to a multi-timeperiod structure.
+* \param ghgName The name of a GHG to return the emissions coefficient for.
+* \warning Assumes there is only one GHG object with any given name
+* \warning No error checking is possible for this function. Error checking is done in function getGHGEmissionCoef.
+* \return A boolean that indicates if the GHG with the given name had an emissions read-in.
+*/
+bool technology::getEmissionsInputStatus( const std::string& ghgName ) const {
+    const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
+	 
+	 return ghg[ ghgIndex ]->getEmissionsInputStatus();
 }
 
 //! return map of all ghg emissions
@@ -870,6 +913,19 @@ double technology::getlexp()  const {
 //! Set the technology year.
 void technology::setYear( const int yearIn ) {
     year = yearIn;
+}
+
+/*! \brief returns the number of ghg objects.
+*
+* Calcuation is done using length of GHG string to be consistant with use of ghg names to access GHG information.
+*
+*
+* \author Steve Smith
+*/
+int technology::getNumbGHGs()  const {
+	std::vector<std::string> ghgNames = getGHGNames();
+
+	return ghgNames.size();
 }
 
 

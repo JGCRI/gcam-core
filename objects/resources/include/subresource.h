@@ -16,7 +16,7 @@
 
 // Forward declaration.
 class Grade;
-
+class GDP;
 /*! 
 * \ingroup CIAM
 * \brief SubResource is a class that contains grades.
@@ -62,7 +62,7 @@ public:
    virtual void cumulsupply(double prc,int per);
    double getPrice(int per);
    double getCumulProd(int per);
-   virtual void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
+   virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
    double getAnnualProd(int per);
    double getAvailable(int per);
    int getMaxGrade();

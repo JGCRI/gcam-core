@@ -18,6 +18,7 @@
 #include "resources/include/grade.h"
 #include "resources/include/renewable_subresource.h"
 #include "resources/include/subresource.h"
+#include "containers/include/gdp.h"
 
 using namespace std;
 using namespace xercesc;
@@ -110,7 +111,7 @@ void SubRenewableResource::cumulsupply( double prc, int per ) {
 * Technological change is applied if present. 
 * Note that the cost curve needs to be in the form of price, and cumulative fraction available.
 */
-void SubRenewableResource::annualsupply( int period, double gnp, double prev_gnp, double price, double prev_price ) {
+void SubRenewableResource::annualsupply( int period, const GDP* gdp, double price, double prev_price ) {
    
    double gradeAvail;
    double gradeCost;
@@ -123,7 +124,7 @@ void SubRenewableResource::annualsupply( int period, double gnp, double prev_gnp
    
    // Make sure base GDP has been stored
    if ( period == 0 ) {
-      baseGDP = gnp;
+      baseGDP = gdp->getApproxGDP( period );
    }
    
    // if below minimum cost
@@ -132,13 +133,15 @@ void SubRenewableResource::annualsupply( int period, double gnp, double prev_gnp
       return;
    }
    
-   //! \todo perhaps turn production into a function -- arguments period, gnp, price;
+   //! \todo perhaps turn production into a function -- arguments period, gdp, price;
    
+	double currentAproxGDP = gdp->getApproxGDP( period );
+	
    // To save time without doing the loop, check first to see if price is above max price point
    if ( price > grade[ nograde - 1 ]->getCost(period) ) {
       gradeFraction = grade[ nograde - 1 ]->getAvail();
       annualprod[ period ] = grade[ nograde - 1 ]->getAvail() 
-         * maxSubResource  * pow( gnp / baseGDP, gdpSupplyElasticity );
+         * maxSubResource  * pow( currentAproxGDP / baseGDP, gdpSupplyElasticity );
    }
    else {
       bool pricePointFound = false;
@@ -157,7 +160,7 @@ void SubRenewableResource::annualsupply( int period, double gnp, double prev_gnp
                gradeFraction * ( gradeAvail - prevGradeAvail ); 
             
             // now convert to absolute value of production
-            annualprod[ period ] *= maxSubResource * pow( gnp/baseGDP, gdpSupplyElasticity ); 
+            annualprod[ period ] *= maxSubResource * pow( currentAproxGDP/baseGDP, gdpSupplyElasticity ); 
             
             pricePointFound = true; // can exit loop now
          } 

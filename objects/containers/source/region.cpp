@@ -51,22 +51,17 @@ extern Scenario* scenario;
 Region::Region() {
     agSector = 0; // null pointer
     population = 0; // null pointer
-    gdp = 0;
+    gdp = 0;  // null pointer
     initElementalMembers(); //
 
     // Resize all vectors to maximum period
     const int maxper = scenario->getModeltime()->getmaxper();
-    gnp.resize( maxper ); // regional gross national product normalized
-    gnpAdj.resize( maxper ); // regional gross national product adjusted for energy and normalized
-    gnpCap.resize( maxper ); // regional gross national product per capita and normalized
-    gnpDol.resize( maxper ); // regional gross national product in dollar value
     input.resize( maxper ); // total fuel and energy consumption
     TFEcalb.resize( maxper ); // Total Final Energy calibration value
     priceSer.resize( maxper ); // aggregate price for demand services
     carbonTaxPaid.resize( maxper ); // total regional carbon taxes paid
     summary.resize( maxper ); // summary object for reporting
-    calibrationGNPs.resize( maxper ); // GNPs for calibration
-    iElasticity.resize( maxper ); // income elasticity for region
+    calibrationGDPs.resize( maxper ); // GDPs for calibration
 }
 
 //! Default destructor destroys sector, demsector, Resource, agSector, and population objects.
@@ -105,7 +100,7 @@ void Region::initElementalMembers(){
     noSSec = 0;
     noDSec = 0;
     noRegMrks = 0;
-    EnergyGNPElas = 0;
+    EnergyGDPElas = 0;
 }
 
 /*! Return the region name.
@@ -120,6 +115,7 @@ string Region::getName() const {
 *  As the XML data is parsed, new objects are continually added to the object container using the push_back routine.
 *
 * \param node XML DOM node of the region
+* \todo Change the diagnosic "assert( node );" to fail with a more informative error (file, previous node?, location?)
 */
 void Region::XMLParse( const DOMNode* node ){
 
@@ -153,10 +149,6 @@ void Region::XMLParse( const DOMNode* node ){
 
         if( nodeName == "#text" ) {
             continue;
-        }
-
-        else if( nodeName == "e_GNP_elas" ){
-            EnergyGNPElas = XMLHelper<double>::getValue( curr ); 
         }
 
         else if( nodeName == "PrimaryFuelCO2Coef" ) {
@@ -225,7 +217,7 @@ void Region::XMLParse( const DOMNode* node ){
             }
         }
         // regional economic data
-        else if( nodeName == "economicdata" ){
+        else if( nodeName == "calibrationdata" ){
             // get all child nodes.
             nodeListChild = curr->getChildNodes();
             // loop through the child nodes.
@@ -236,18 +228,15 @@ void Region::XMLParse( const DOMNode* node ){
                 if( nodeNameChild == "#text" ) {
                     continue;
                 }
-                else if( nodeNameChild == "GNP" ) {
-                    XMLHelper<double>::insertValueIntoVector( currChild, calibrationGNPs, modeltime );
-                }
-                else if(nodeNameChild == "incomeelasticity") {
-                    XMLHelper<double>::insertValueIntoVector( currChild, iElasticity, modeltime );
+                else if( nodeNameChild == "GDPcal" ) {
+                    XMLHelper<double>::insertValueIntoVector( currChild, calibrationGDPs, modeltime );
                 }
 
                 else if(nodeNameChild == "TFEcalb") {
                     XMLHelper<double>::insertValueIntoVector( currChild, TFEcalb, modeltime );
                 }
                 else {
-                    cout << "Unrecognized text string: " << nodeNameChild << " found while parsing region->economicdata." << endl;
+                    cout << "Unrecognized text string: " << nodeNameChild << " found while parsing region->calibrationdata." << endl;
                 }
 
             }
@@ -269,8 +258,6 @@ void Region::completeInit() {
 
     Configuration* conf = Configuration::getInstance();
 
-    gnpDol[ 0 ] = calibrationGNPs[ 0 ];
-
     numResources = static_cast<int>( resources.size() );
     noSSec = static_cast<int>( supplySector.size() );
     noDSec = static_cast<int>( demandSector.size() );
@@ -289,7 +276,7 @@ void Region::completeInit() {
 
     // Finish initializing agLu
     if( conf->getBool( "agSectorActive" ) ){
-        agSector->setGNP( calcFutureGNP() );
+        agSector->setGNP( calcFutureGDP() );
         agSector->setPop( population->getTotalPopVec() );
     }
     // create markets and set market indeces
@@ -337,7 +324,7 @@ void Region::completeInit() {
     }
 
     // Now sort the sectors by dependency.
-    std::sort( supplySector.begin(), supplySector.end(), Sector::DependencyOrdering() );
+   //std::sort( supplySector.begin(), supplySector.end(), Sector::DependencyOrdering() );
 }
 
 /*! 
@@ -358,9 +345,6 @@ void Region::toXML( ostream& out, Tabs* tabs ) const {
 
     // increase the indent.
     tabs->increaseIndent();
-
-    // Write out gnp energy elasticity.
-    XMLWriteElementCheckDefault( EnergyGNPElas, "e_GNP_elas", out, tabs, 0 );
 
     // Write out the Co2 Coefficients. 
     for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
@@ -404,21 +388,16 @@ void Region::toXML( ostream& out, Tabs* tabs ) const {
 
     // Write out regional economic data
     tabs->writeTabs( out );
-    out << "<economicdata>" << endl;
+    out << "<calibrationdata>" << endl;
 
     tabs->increaseIndent();
 
-    // write out GNP
-    for( m = 0; m < static_cast<int>( gnpDol.size() ); m++ ){
-        XMLWriteElementCheckDefault( gnpDol[ m ], "GNP", out, tabs, 0, modeltime->getper_to_yr( m ) );
+    // write out calibration GDP
+    for( m = 0; m < static_cast<int>( calibrationGDPs.size() ); m++ ){
+        XMLWriteElementCheckDefault( calibrationGDPs[ m ], "GDPcal", out, tabs, 0, modeltime->getper_to_yr( m ) );
     }
 
-    // write out income elasticity
-    for( m = 0; m < static_cast<int>( iElasticity.size() ); m++ ) {
-        XMLWriteElementCheckDefault( iElasticity[ m ],"incomeelasticity", out, tabs, 0, modeltime->getper_to_yr( m ) );
-    }
-
-    // write out TFE calibration values
+     // write out TFE calibration values
     for( m = 0; m < static_cast<int>( TFEcalb.size() ); m++ ) {
         if ( TFEcalb[ m ] != 0 ) {
             XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, tabs, 0, modeltime->getper_to_yr( m ) );
@@ -427,7 +406,7 @@ void Region::toXML( ostream& out, Tabs* tabs ) const {
 
     tabs->decreaseIndent();
     tabs->writeTabs( out );
-    out << "</economicdata>" << endl;
+    out << "</calibrationdata>" << endl;
     // End write out regional economic data
 
     // finished writing xml for the class members.
@@ -463,16 +442,10 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( noSSec, "noSSec", out, tabs );
     XMLWriteElement( noDSec, "noDSec", out, tabs );
     XMLWriteElement( noRegMrks, "noRegMrks", out, tabs );
-    XMLWriteElement( gnp[ period ], "gnp", out, tabs  );
-    XMLWriteElement( gnpCap[ period ], "gnpPerCapita", out, tabs );
-    XMLWriteElement( gnpDol[ period ], "gnpDollarValue", out, tabs );
-    XMLWriteElement( calibrationGNPs[ period ], "calibrationGNPs", out, tabs );
-    XMLWriteElement( gnpAdj[ period ], "gnpAdj", out, tabs );
+    XMLWriteElement( calibrationGDPs[ period ], "calibrationGDPs", out, tabs );
     XMLWriteElement( input[ period ], "input", out, tabs );
     XMLWriteElement( priceSer[ period ], "priceSer", out, tabs );
     XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
-    // Write out gnp energy elasticity.
-    XMLWriteElement( EnergyGNPElas, "e_GNP_elas", out, tabs );
 
     // Write out the Co2 Coefficients. 
     for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
@@ -514,22 +487,7 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // Write out summary object.
     //summary[ period ].toDebugXML( period, out ); // is this vector by period?
 
-    // Write out regional economic data.
-    tabs->writeTabs( out );
-    out << "<economicdata>" << endl;
-    tabs->increaseIndent();
-
-    // Write out GNP.
-    XMLWriteElement( gnpDol[ period ], "gnpDol", out, tabs );
-
-    // Write out income elasticity.
-    XMLWriteElement( iElasticity[ period ],"iElasticity", out, tabs );
-
-    tabs->decreaseIndent();
-    tabs->writeTabs( out );
-    out << "</economicdata>"<< endl;
-    // End write out regional economic data
-    // Finished writing xml for the class members.
+	// Finished writing xml for the class members.
 
     // decrease the indent.
     tabs->decreaseIndent();
@@ -593,7 +551,6 @@ void Region::rscSupply( const int period )  {
     string goodName;
     string regionName = name; // name is Region attribute
     double prev_price = 0;
-    double prev_gdp = 0;
     double price = 0;
     //for (int i=0;i<numResources-1;i++) {
     for (int i=0;i<numResources;i++) {
@@ -601,15 +558,13 @@ void Region::rscSupply( const int period )  {
         price = marketplace->getPrice(goodName,regionName,period); // get market price
         if (period==0) {
             prev_price = price;
-            prev_gdp = gnp[period];
         }
         else {
             prev_price = marketplace->getPrice(goodName,regionName,period-1); // get market price
-            prev_gdp = gnp[period-1];
         }
 
         // calculate annual supply
-        resources[i]->annualsupply(period,gnp[period],prev_gdp,price,prev_price);
+        resources[i]->annualsupply( period, gdp, price, prev_price );
 
         // set market supply of resources used for solution mechanism
         marketplace->addToSupply(goodName,regionName,resources[i]->getAnnualProd(period),period);
@@ -630,7 +585,7 @@ void Region::finalSupplyPrc( const int period ) {
         goodName = supplySector[i]->getName();
        
         // name is region or country name
-        supplySector[i]->calcShare( period );
+        supplySector[i]->calcShare( period , gdp );
         goodPrice = supplySector[ i ]->getPrice( period );
         // set market price of intermediate goods
         // name is region or country name
@@ -679,105 +634,36 @@ void Region::finalSupply( const int period ) {
     }
 }
 
-/*! Calculate regional gnp.
+/*! Calculate initial gdp value (without feedbacks) 
 *
 * \param period Model time period
 */
-void Region::calcGnp( const int period ) {
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int baseYear = modeltime->getstartyr();
-    const int basePer = modeltime->getyr_to_per(baseYear);
-
-    if ( period == modeltime->getyr_to_per( baseYear ) ) {
-        gnp[ period ] = 1.0; // normalize to 1975
-    }
-    else {
-        double currentLF = gdp->getLaborForce( period );
-        double lastLF = gdp->getLaborForce( period - 1 );
-        double tlab = gdp->getTotalLaborProductivity( period );
-        gnp[ period ] = gnp[ period - 1 ] * tlab * ( currentLF / lastLF );
-        if (gnp[period] == 0) {
-            cerr << "error with GNP calculation:  currentLF: " << currentLF
-                << "  lastLF: " << lastLF << "  lab: " << tlab << endl;
-        }
-    }
-
-
-    // gnp period capita normalized
-    // correct using energy adjusted gnp*****
-    gnpCap[ period ] = gnp[ period ] * population->getTotal( basePer ) / population->getTotal( period );
+void Region::calcGDP( const int period ) {
+	 gdp->initialGDPcalc( period, population->getTotal( period ) );
 }
 
-//! Calculate a forward looking gnp.
-const vector<double> Region::calcFutureGNP() const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    vector<double> gnps;
-    double laborProd = 0;
-    double currentLaborForce = 0;
-    double lastLaborForce = 0;
-    double tlab = 0;
-
-    assert( calibrationGNPs.size() > 1 );
-
-    const double baseYearConversion = calibrationGNPs[ 1 ] / calibrationGNPs[ 0 ];
-
-    gnps.resize( modeltime->getmaxper() );
-
-    for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
-        if ( period == 0 ) { // Normalize to the base year.
-            gnps[ 0 ] = 1.0;
-        }
-
-        else if ( static_cast<int>( calibrationGNPs.size() ) > period && calibrationGNPs[ period ] > 0 ){
-            gnps[ period ] = calibrationGNPs[ period ] / baseYearConversion;
-        }
-        else {
-            laborProd = 1 + gdp->getLaborProdGR( period );
-            currentLaborForce = gdp->getLaborForce( period );
-            lastLaborForce = gdp->getLaborForce( period - 1 );
-            tlab = pow( laborProd, modeltime->gettimestep( period ) );
-            gnps[ period ] = gnps[ period - 1 ] * tlab * ( currentLaborForce / lastLaborForce );
-            assert( gnps[ period ] != 0 );
-        }
-    }
-
-    for ( vector<double>::iterator iter = gnps.begin(); iter != gnps.end(); iter++ ){
-        *iter *= baseYearConversion / 1000000;
-    }
-    return gnps;
-}
-
-/*! Calculate regional GNP using laborforce participation and labor productivity.
+/*! Calculate forward-looking gdp (without feedbacks) for AgLU use
+* It is necessary to have a gdp without feedbacks so that all values are known and AgLU can calibrate
 *
+* This routine runs through each period and calculates a series of gdp values
+* without use of the energy price feedback.
+*
+* \author Steve Smith, Josh Lurz
 * \param period Model time period
+* \warning this will interfere with the normal gdp calculation if this is used after model calc starts
+* \todo check to see if this works with AgLU. Not sure about conversions.
 */
-void Region::calcGNPlfp( const int period ) {
-    const Modeltime* modeltime = scenario->getModeltime();
-    double labprd=0;
-    const int baseYear = modeltime->getstartyr();
-    const int basePer = modeltime->getyr_to_per(baseYear);
-    if (period==modeltime->getyr_to_per(baseYear)) {
-        gnp[period] = 1.0;
-    }
-    else {
-        // 1 + labor productivity growth rate
-        // population->labor returns labor productivity growth rate
-        labprd = 1 + gdp->getLaborProdGR(period);
-        double tlabprd = pow( labprd, modeltime->gettimestep( period ) );
-        gnp[period] = gnp[period-1] * tlabprd * ( gdp->getLaborForce( period )
-            / gdp->getLaborForce(period-1) );
-        if (gnp[period] == 0) {
-            cerr << "error with GNP calculation:  labor force(period): " 
-                << gdp->getLaborForce(period)
-                << "  labor force(period-1): " << gdp->getLaborForce(period-1) 
-                << "  labor productivity: " << tlabprd << endl;
-        }
-    }
-    // gnp period capita normalized
-    // correct using energy adjusted gnp*****
-    gnpCap[period] = gnp[period] * population->getTotal( basePer ) / population->getTotal( period );
+const vector<double> Region::calcFutureGDP() const {
+	const Modeltime* modeltime = scenario->getModeltime();
+	vector<double> gdps;
+	gdps.resize( modeltime->getmaxper() );
+   
+	for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
+		gdp->initialGDPcalc( period, population->getTotal( period ) );
+		gdps[ period ] = gdp->getAproxScaledGDPperCap( period );
+	}
 
+	return gdps;
 }
 
 /*! Calculate demand sector aggregate price.
@@ -789,7 +675,7 @@ void Region::calcEndUsePrice( const int period ) {
     priceSer[ period ] = 0;
 
     for ( int i = 0; i < noDSec; i++ ) {
-        demandSector[ i ]->calcShare( period, gnpCap[ period ] );		
+        demandSector[ i ]->calcShare( period, gdp );		
 
         // calculate service price for each demand sector
         // demandsector[ i ]->price( period ); Protected and moved to getPrice function
@@ -807,37 +693,19 @@ void Region::calcEndUsePrice( const int period ) {
     }
 }
 
-/*! Adjust regional gnp for energy.
+/*! Adjust regional gdp for energy.
 *
 * \param period Model time period
 */
-void Region::adjustGnp( const int period ) {
+void Region::adjustGDP( const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
 
-    const int baseYear = modeltime->getstartyr();
-    double tempratio;
-    if (period<=modeltime->getyr_to_per(1990)) {
-        gnpAdj[period] = gnp[period];
-    }
-    else {
-        // adjust gnp using energy cost changes and 
-        // energy to gnp feedback elasticity
-        tempratio = priceSer[period]/priceSer[period-1];
-        if (tempratio != tempratio) {
-            cerr << " Error: priceSer[period] = " << priceSer[period];
-            cerr << " and, priceSer[period-1] = " << priceSer[period-1] << endl;
-        }
-        try {
-            gnpAdj[period] = gnp[period]*pow(tempratio,EnergyGNPElas);
-        } catch(...) {
-            cerr << "Error calculating gnpAdj in region.adjust_gnp()\n";
-        }
-    }
+	double tempratio = 1;
+	if ( period > modeltime->getyr_to_per(1990) ) {
+		tempratio = priceSer[period]/priceSer[period-1];
+	}
 
-    // calculate dollar value gnp using base year dollar value GNP
-    if ( period > modeltime->getyr_to_per( baseYear ) ){ 
-        gnpDol[ period ] = gnpAdj[ period ] * gnpDol[ modeltime->getyr_to_per( baseYear ) ];
-    }
+	 gdp->adjustGDP( period, tempratio );
 }
 
 /*! Write back the calibrated values from the marketplace into the member variables. 
@@ -886,11 +754,11 @@ void Region::calibrateRegion( const bool doCalibrations, const int period ) {
 
     // Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.
     // Insert the newly calculated values into the calibration markets. 
-    if( static_cast<int>( calibrationGNPs.size() ) > period && calibrationGNPs[ period ] > 0 ){ 
+    if( static_cast<int>( calibrationGDPs.size() ) > period && calibrationGDPs[ period ] > 0 ){ 
         const string goodName = "GDP";
         Marketplace* marketplace = scenario->getMarketplace();
-        marketplace->addToDemand( goodName, name, calibrationGNPs[ period ], period );
-        marketplace->addToSupply( goodName, name, gnpDol[ period ], period );
+        marketplace->addToDemand( goodName, name, calibrationGDPs[ period ], period );
+        marketplace->addToSupply( goodName, name, gdp->getGDP( period ), period );
         marketplace->setMarketToSolve( goodName, name );
     }
 }
@@ -961,21 +829,11 @@ void Region::initCalc( const int period )
 void Region::enduseDemand( const int period ) {
     carbonTaxPaid[period] = 0; // initialize total regional carbon taxes paid
 
-    // gnpCap using energy adjusted gnp
-    gnpCap[period] = gnpAdj[ period ] * population->getTotal( 0 ) / population->getTotal( period );
-
-    // This is an early point in the calcuation and, thus, a good point for a NaN error check.
-    if ( gnpCap[period] != gnpCap[period] ) {
-        cerr << "Error in Region: " << name << ", bad value. " ;
-        cerr << " gnpCap[period] = " << gnpCap[period];
-        cout << " gnpAdj[period] = " << gnpAdj[period] << endl;
-    }
-
     for (int i=0;i<noDSec;i++) {
         // calculate aggregate demand for end-use sector services
         // set fuel demand from aggregate demand for services
         // name is region or country name
-        demandSector[ i ]->aggdemand( gnpCap[period], gnpAdj[period], period ); 
+        demandSector[ i ]->aggdemand( gdp, period ); 
         carbonTaxPaid[ period ] += demandSector[ i ]->getTotalCarbonTaxPaid( period );
 
         // update sector input
@@ -1062,10 +920,6 @@ void Region::outputFile() const {
     population->outputfile( name );
     gdp->outputfile( name );
 
-    // write gnp and adjusted gnp for region
-    fileoutput3(name," "," "," ","GNP","Bil90US$",gnpDol);
-    fileoutput3(name," "," "," ","GNP","norm",gnp);
-    fileoutput3(name," "," "," ","GNP","energy adj",gnpAdj);
     // regional total carbon taxes paid
     fileoutput3(name," "," "," ","C tax revenue","Mil90$",carbonTaxPaid);
 
@@ -1103,14 +957,8 @@ void Region::MCoutput() const {
     population->MCoutput( name );
     gdp->MCoutput( name );
 
-    // write gnp and adjusted gnp for region
-    dboutput4(name,"General","GDP 90$","GDP(90mer)","90US$",gnpDol);
-    dboutput4(name,"General","GDP","norm","unitless",gnp);
-    dboutput4(name,"General","GDP","energy adj","unitless",gnpAdj);
-    dboutput4(name,"General","GDP","per cap","unitless",gnpCap);
     // regional total carbon taxes paid
     dboutput4(name,"General","CarbonTax","revenue","90US$",carbonTaxPaid);
-
 
     // CO2 emissions by fuel
     const vector<string> primaryFuelList = scenario->getWorld()->getPrimaryFuelList();
