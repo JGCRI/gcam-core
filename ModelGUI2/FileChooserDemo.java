@@ -20,7 +20,7 @@ import javax.swing.tree.TreePath;
 
 
 public class FileChooserDemo extends JFrame
-	   implements ActionListener
+	   implements ActionListener, TableModelListener
 {
 
 	private Document doc;
@@ -221,6 +221,17 @@ public class FileChooserDemo extends JFrame
 							((JMenuItem)me[i]).setEnabled(true);
 						}
 					}
+					if (((JMenuItem)me[i]).getText().equals("Add Child")) {
+						Node nodeClicked = ((DOMmodel.DOMNodeAdapter)jtree.getLastSelectedPathComponent()).getNode();
+
+						if ( nodeClicked.getNodeType() == Element.TEXT_NODE ) {
+							((JMenuItem)me[i]).setEnabled(false);
+						} else {
+							// HERE TO DISABLE TABLES set false 
+							((JMenuItem)me[i]).setEnabled(true);
+						}	
+						
+					}
 				}
 				treeMenu.show(e.getComponent(), e.getX(), e.getY());
 			 }
@@ -343,8 +354,13 @@ public class FileChooserDemo extends JFrame
 	   menuItem.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
 			   jtree.setSelectionPath(selectedPath);
-               System.out.println("RIGHT CLICKED ADD CHILD!");
-			   showAddChildDialog();
+
+			   Node nodeClicked = ((DOMmodel.DOMNodeAdapter)jtree.getLastSelectedPathComponent()).getNode();
+			   if( nodeClicked.getNodeType() != Element.TEXT_NODE ){ // can't add child to text node
+					System.out.println("RIGHT CLICKED ADD CHILD!");
+			   		showAddChildDialog();
+			   }
+
 			}
 			public void mouseClicked(MouseEvent e) {}
 			public void mousePressed(MouseEvent e) {}
@@ -578,8 +594,28 @@ public class FileChooserDemo extends JFrame
 	  return xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(currNode));
   }
   */
+  
+  // ********* newly added **************
+  // for the tablechangedmodel listener
+  public void tableChanged(TableModelEvent e) {
+	  int row = e.getFirstRow();
+	  int column = e.getColumn();
+	  DataTableModel model = (DataTableModel)e.getSource();
+	  String columnName = model.getColumnName(column);
+	  Object data = model.getValueAtNew(row, column);
 
-  private void buildTable(XPathExpression xpe) {
+	  //System.out.println("printing out -- data: " + data);
+	  System.out.println("row is: " + row + " and col is: " + column);
+		System.out.println("data is " + data + "!!! yay!!!!!!! :)");
+	  System.out.println("printing out columnName " + columnName);
+	  
+
+	  
+	  // *** HERE! *********************************************************
+  }
+  
+
+  private void buildTable(XPathExpression xpe){
 	  jTable = null;
 	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 	  xpe = null;
@@ -589,7 +625,6 @@ public class FileChooserDemo extends JFrame
 	  Vector rows = new Vector();
 	  HashMap filterMaps; 
 	  HashMap tempMap;
-	  Vector path;
 	  if (tableModel == null) {
 		  filterMaps = new HashMap();
 	  } else {
@@ -597,14 +632,10 @@ public class FileChooserDemo extends JFrame
 	  }
 	  while ((tempNode = res.iterateNext()) != null) {
 		  if (cols.isEmpty()) {
-			  cols = recBuildParentList(tempNode, cols, null);
+			  cols = recBuildParentList(tempNode, cols, true);
 		  }
-		  path = new Vector();
 		  tempVector = new Vector();
-		  tempVector = recBuildParentList(tempNode, tempVector, path);
-		  //tempVector.addElement(new TreePath(path.toArray()));
-		  System.out.println(new TreePath(path.toArray()));
-		  //System.out.println(new TreePath(jtree.getModel().getPathToRoot(new DOMmodel.DOMNodeAdapter(tempNode))));
+		  tempVector = recBuildParentList(tempNode, tempVector, false);
 		  for (int i = 0; i < tempVector.size() -1; i++) {
 	                  if (filterMaps.containsKey(cols.get(i))) {
 	                          tempMap = (HashMap)filterMaps.get(cols.get(i));
@@ -621,6 +652,9 @@ public class FileChooserDemo extends JFrame
 	  tableModel = new DataTableModel(cols, rows, filterMaps, this);
 	  TableSorter sorter = new TableSorter(tableModel);
 	  jTable = new JTable(sorter);
+
+	  jTable.getModel().addTableModelListener(this);
+
 	  sorter.setTableHeader(jTable.getTableHeader());
 	  //jTable = new JTable(tableModel);
 	  jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -634,12 +668,12 @@ public class FileChooserDemo extends JFrame
 	  menuTableFilter.setEnabled(true);
   }
 
-  private Vector recBuildParentList(Node currNode, Vector currList, Vector path) {
+  private Vector recBuildParentList(Node currNode, Vector currList, boolean headers) {
 	  if (currNode.getParentNode() == null) {
 		  return currList;
 	  }
-	  currList = recBuildParentList(currNode.getParentNode(),currList, path);
-	  if (path == null) {
+	  currList = recBuildParentList(currNode.getParentNode(),currList, headers);
+	  if (headers) {
 		  if (currNode.hasAttributes()) {
 			  currList.addElement(currNode.getNodeName() +" "+getOneAttrVal(currNode).substring(0,getOneAttrVal(currNode).indexOf("=")));
 		  }
@@ -647,7 +681,6 @@ public class FileChooserDemo extends JFrame
 		  	currList.addElement(currNode.getNodeName());
 		  }
 	  } else {
-		  path.addElement(currNode);
 		  if (currNode.hasAttributes()) {
 			  currList.addElement(getOneAttrVal(currNode).substring(getOneAttrVal(currNode).indexOf('=')+1));
 		  }
@@ -682,25 +715,16 @@ class MyTreeModelListener implements TreeModelListener {
 			System.out.println("treenodes have changed!");
 			Node node = ((DOMmodel.DOMNodeAdapter)e.getTreePath().getLastPathComponent()).getNode();
 
-			/*
-			 * If the event lists children, then the changed
-			 * node is the child of the node we've already
-			 * gotten.  Otherwise, the changed node and the
-			 * specified node are the same.
-			 */
-			 
-			 System.out.println("in nodeschanged, before try");
-			 
+			 /*
 			try {
 				int index = e.getChildIndices()[0];
 				System.out.println("index is " + index);
 				node = ((Node)(jtree.getModel().getChild(node, index)));
 			} catch (Exception exc) {
 				System.out.println("exception: "+exc);
-			}
+			}*/
 
 			System.out.println("The user has finished editing the node!!!!!!!!!!!!");
-			System.out.println("New value: ");
 		}
 
 		public void treeNodesInserted(TreeModelEvent e) {
@@ -711,8 +735,7 @@ class MyTreeModelListener implements TreeModelListener {
 		}
     }
 
-   
-   
+     
 	private Node extractNewChild() {
 		String nodeName = nameField.getText().trim();
 		String attribs = attribField.getText().trim();
@@ -914,7 +937,9 @@ class MyTreeModelListener implements TreeModelListener {
 	  else if( result == JFileChooser.APPROVE_OPTION){
 		file = fc.getSelectedFile();
 		if (!file.getName().matches("[.]")) {
-			file = new File(file.getAbsolutePath()+".xml");
+			if( !(file.getAbsolutePath().endsWith(".xml")) ){
+				file = new File(file.getAbsolutePath()+".xml");
+			}
 		}
 		if( file.exists()){
 			int response = JOptionPane.showConfirmDialog(null,

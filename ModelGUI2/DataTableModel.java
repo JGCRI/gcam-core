@@ -34,6 +34,23 @@ public class DataTableModel extends AbstractTableModel {
 		return cols.size();
 	}
 
+	public boolean isCellEditable(int row, int col) {
+		if(col == cols.size()-1 ){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public void setValueAt(Object value, int row, int col) {
+		if (value instanceof Double) {
+			value = ((Double)value).toString();
+		}
+		((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).set(col, value);
+		fireTableCellUpdated(row, col);
+	}
+
+
 	public Object getValueAt(int row, int column) {
 		Object ret = ((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).get(column);
 		if (checkClass(ret) == Double.class) {
@@ -41,6 +58,11 @@ public class DataTableModel extends AbstractTableModel {
 		}
 		return ret;
 		//return ((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).get(column);
+	}
+
+	// ** NEW!!! **
+	public Object getValueAtNew(int row, int column){
+		return ((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).get(column);
 	}
 
 	/*
