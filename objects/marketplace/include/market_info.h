@@ -14,7 +14,6 @@
 */
 
 #include <map>
-
 class Tabs;
 
 /*!
