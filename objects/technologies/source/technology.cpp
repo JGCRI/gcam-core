@@ -494,20 +494,8 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
     calcTotalGHGCost( regionName, sectorName, per );
 	techcost += totalGHGCost;
     
-    /* \post fuelcost and techcost are greater than or equal to 0. */
-	if(fuelcost < 0){
-		cout << "fuelcost < 0"<<endl;
-		cout << regionName <<","<<name <<","<<fuelname<<","<<fuelprice<<","<<fMultiplier<<","<<totalGHGCost<<endl;
-		cout << "CO2EmFactor  "<< marketplace->getMarketInfo(fuelname,regionName,per,"CO2EmFactor")<<endl;
-	}
-	else if(techcost <= 0){
-		cout << "techcost <= 0"<<endl;
-		cout << regionName <<","<<name <<","<<fuelname<<","<<fuelprice<<","<<fMultiplier<<","<<totalGHGCost<<endl;
-		cout << "CO2EmFactor  "<< marketplace->getMarketInfo(fuelname,regionName,per,"CO2EmFactor")<<endl;
-	}
-	assert( fuelcost >= 0 );
-    assert( techcost >= 0 );
-	
+    // techcost can drift below zero in disequalibrium.
+    techcost = max( techcost, util::getSmallNumber() );
 }
 
 /*! \brief calculate technology unnormalized shares
