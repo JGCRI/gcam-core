@@ -83,12 +83,11 @@ void Population::XMLParse( const DOMNode* node ){
 void Population::toInputXML( ostream& out, Tabs* tabs ) const {
 
     const Modeltime* modeltime = scenario->getModeltime();
-    int iter;
 
 	XMLWriteOpeningTag( getXMLName(), out, tabs );
 
     // write the xml for the class members.
-    for( iter = 0; iter < static_cast<int>( totalpop.size() ); iter++ ){
+    for(unsigned int iter = 0; iter < totalpop.size(); iter++ ){
         XMLWriteElement( totalpop[ iter ], "population", out, tabs, modeltime->getPopPeriodToYear( iter ) );
     }
 
