@@ -142,8 +142,29 @@ public class RadioButton extends JDialog implements ActionListener {
 			//jTable.setRowHeight(200);
 			CopyPaste copyPaste = new CopyPaste( jTable );
 			return new JScrollPane(jTable);
-		}
+		} else if(RadioButton.value.equals("Combo Tables")){
+			BaseTableModel bt = new ComboTableModel(tp, doc, pf);
+			JTable jTable = new JTable(bt);
+			// Should the listener be set like so..
+			jTable.getModel().addTableModelListener((FileChooserDemo)pf);
 
+			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	 
+			jTable.setCellSelectionEnabled(true);
+
+			javax.swing.table.TableColumn col;
+			//Iterator i = regions.iterator();
+			col = jTable.getColumnModel().getColumn(0);
+			col.setPreferredWidth(75);
+			int j = 1;
+			while(j < jTable.getColumnCount()) {
+				col = jTable.getColumnModel().getColumn(j);
+				col.setPreferredWidth(jTable.getColumnName(j).length()*5+30);
+				j++;
+			}
+			CopyPaste copyPaste = new CopyPaste( jTable );
+			return new JScrollPane(jTable);		
+		}
 		return null;
 	}
 }

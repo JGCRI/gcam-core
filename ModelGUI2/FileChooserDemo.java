@@ -68,7 +68,7 @@ public class FileChooserDemo extends JFrame
   static final int rightWidth = 340;
   static final int windowWidth = leftWidth + rightWidth;
 
-  static String[] names = {"Single Table", "Multi Tables", "Both Tables"};
+  static String[] names = {"Single Table", "Multi Tables", "Combo Tables"};
   static JFrame frame; // goes with radio buttons
 
   public static void main(String [] args)
@@ -229,7 +229,6 @@ public class FileChooserDemo extends JFrame
 	jtree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 	jtree.setShowsRootHandles(true);
 	jtree.getModel().addTreeModelListener(new MyTreeModelListener());
-
 
 	//listen for right click on the tree
 	 jtree.addMouseListener(new MouseAdapter() {

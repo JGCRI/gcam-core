@@ -166,15 +166,10 @@ public class NewDataTableModel extends BaseTableModel{
 			ArrayList nodepath = new ArrayList();
 			Node parent = ((Node)updown.getParentNode());
 			
-			//System.out.println("side.getnodee name is " + side.getNodeName());
-			//System.out.println("updown is " + updown.getNodeName());
+
 			
 			String headerone = ind1Name; // ex. region
 			String headertwo = ind2Name; // ex. populationSGM
-			
-			//System.out.println("headerone is " + headerone);
-			//System.out.println("header2 is " + headertwo);
-			
 			
 			String attributesLine = getKey( row, col );
 			String[] attributesLineArray = attributesLine.split(";", 2);
@@ -192,12 +187,6 @@ public class NewDataTableModel extends BaseTableModel{
 			st = new StringTokenizer( attributesLineArray[1], "=", false);
 			String attrFrom2 = st.nextToken();
 			String attrTo2 = st.nextToken();
-			
-			//System.out.println("attrfrom is " + attrFrom1);
-			//System.out.println("attrto is " + attrTo1);
-			
-			//System.out.println("attrfrom2 is " + attrFrom2);
-			//System.out.println("attto2 is " + attrTo2);
 			
 			int index = 0;
 			boolean stoplooking = false;

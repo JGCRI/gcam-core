@@ -1,4 +1,4 @@
-import javax.swing.table.AbstractTableModel;
+
 import java.util.*;
 import org.w3c.dom.*;
 import javax.swing.table.*;
@@ -6,10 +6,7 @@ import javax.swing.JTable;
 import java.awt.Component;
 import javax.swing.JScrollPane;
 import javax.swing.*;
-import java.awt.*;
 import javax.swing.tree.TreePath;
-import java.awt.event.*;
-import org.apache.xpath.domapi.*;
 import org.w3c.dom.xpath.*;
 
 public class MultiTableModel extends BaseTableModel{
@@ -138,6 +135,7 @@ public class MultiTableModel extends BaseTableModel{
 		if(me.getValue() instanceof Node) {
 	  		NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), title+'/'+(String)parent.getKey(), (TreeMap)parent.getValue(), doc); 
 	  		JTable jTable = new JTable(tM);
+
 	  		jTable.getModel().addTableModelListener((FileChooserDemo)parentFrame);
 
 	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
