@@ -33,6 +33,7 @@ private:
 
 public:
 	World(); // default construtor
+	~World();
 	void clear();
 	void XMLParse( const DOMNode* node );
 	void toXML( ostream& out ) const;

@@ -42,6 +42,12 @@ World::World() {
 	noreg = 0;
 }
 
+World::~World(){
+	for ( vector<Region*>::iterator regionIter = region.begin(); regionIter != region.end(); regionIter++ ) {
+		delete *regionIter;
+	}
+}
+
 //! Initialize member variables.
 void World::clear(){
 	noreg = 0;
@@ -85,6 +91,7 @@ void World::XMLParse( const DOMNode* node ){
 	// Initialize AgLU
 	Configuration* conf = Configuration::getInstance();
 	if( conf->getBool( "agSectorActive" ) ) {
+		cout << "Initializing global aglu." << endl;
 		initAgLu();
 	}
 }
