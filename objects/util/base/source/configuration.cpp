@@ -52,34 +52,26 @@ Configuration* Configuration::getInstance() {
 }
 
 //! Initialize Configuration object with xml data.
-void Configuration::XMLParse( const DOMNode* root ) {	
-	
-	DOMNode* currSectionNode = 0;
-	DOMNode* currValueNode = 0;
-	DOMNodeList* nodeSectionList = 0;
-	DOMNodeList* nodeValueList = 0;
-	string sectionName;
-	string valueName;
-
+void Configuration::XMLParse( const DOMNode* root ) {
 	/*! \pre Assume we are passed a valid node. */
 	assert( root );
 	
-	nodeSectionList = root->getChildNodes();
+	DOMNodeList* nodeSectionList = root->getChildNodes();
 	
-	for( int i = 0; i < static_cast<int>( nodeSectionList->getLength() ); i++ ) {
+	for( unsigned int i = 0; i < nodeSectionList->getLength(); i++ ) {
 		
-		currSectionNode = nodeSectionList->item( i );
-		sectionName = XMLHelper<string>::safeTranscode( currSectionNode->getNodeName() );		
-		nodeValueList = currSectionNode->getChildNodes();
+		DOMNode* currSectionNode = nodeSectionList->item( i );
+		string sectionName = XMLHelper<string>::safeTranscode( currSectionNode->getNodeName() );		
+		DOMNodeList* nodeValueList = currSectionNode->getChildNodes();
 		
-		for( int j = 0; j < static_cast<int>( nodeValueList->getLength() ); j++ ) {
-			currValueNode = nodeValueList->item( j );
+		for( unsigned int j = 0; j < nodeValueList->getLength(); j++ ) {
+			DOMNode* currValueNode = nodeValueList->item( j );
 
 			if ( currValueNode->getNodeType() != DOMNode::ELEMENT_NODE ) {
 				continue;
 			}
 
-			valueName = XMLHelper<string>::getAttrString( currValueNode, "name" );
+			const string valueName = XMLHelper<string>::getAttrString( currValueNode, "name" );
 			
 			if( sectionName == "Files" ){
 				fileMap[ valueName ] = XMLHelper<string>::getValueString( currValueNode );
@@ -90,8 +82,7 @@ void Configuration::XMLParse( const DOMNode* root ) {
 			}
 			
 			else if(  sectionName == "Bools" ) {
-				int tempInt = XMLHelper<int>::getValue( currValueNode );
-				if ( tempInt ) {
+				if ( XMLHelper<int>::getValue( currValueNode ) ) {
 					boolMap[ valueName ] = true;
 				}
 				else {
