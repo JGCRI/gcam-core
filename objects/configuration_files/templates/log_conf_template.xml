@@ -3,7 +3,7 @@
 <LoggerFactory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="LoggerFactory.xsd">
 	<Logger name="main_log" type="PlainTextLogger">
 		<FileName>logs/main_log.txt</FileName>
-		<printLogWarningLevel>0</printLogWarningLevel>
+		<printLogWarningLevel>1</printLogWarningLevel>
 		<minLogWarningLevel>0</minLogWarningLevel>
 		<minToScreenWarningLevel>1</minToScreenWarningLevel>
 		<headerMessage>{date}:{time}</headerMessage>
