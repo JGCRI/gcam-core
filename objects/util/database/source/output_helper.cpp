@@ -1,7 +1,9 @@
 /*! 
 * \file output_helper.cpp
 * \ingroup CIAM
-* \brief Contians the functions to write out single records to output file or table in the database.
+* \brief Contains the functions to write out single records to output file or table in the database.
+* \File includes functions to open, create, and close database and tables.
+* \Revision 2004/10/13
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
@@ -23,17 +25,24 @@
 #include <ctime>
 #include "containers/include/scenario.h" 
 #include "containers/include/world.h"
+#include "util/base/include/model_time.h"
+#include "util/base/include/configuration.h"
 
 using namespace std;
-
-#if(__HAVE_DB__)
-extern CdbDatabase db;
-extern CdbRecordset DBoutrst;
-#endif
 
 extern time_t ltime;
 extern ofstream outFile;
 extern Scenario* scenario;
+
+#if(__HAVE_DB__)
+// define global DB engine and database
+CdbDBEngine dben;
+CdbDatabase db;
+CdbTableDef DBoutTD; // table definitions for creating tables in the database
+CdbField tfield; // tempory field for creating fields in tables
+CdbRecordset DBoutrst; // recordset for writing results
+const char *DBout = "DBout"; // name of the table for outputs compatible with dataviewer
+#endif
 
 /*! Output single records to file.
 *
@@ -54,9 +63,11 @@ void fileoutput3( string var1name,string var2name,string var3name,
 
 /*! Output single records MiniCAM style to the database. 
 *
-* Names of categories, subcategories, and variables are written
-* as strings in the argument.  Values are also passed as arguments.
-*
+* Names of categories, subcategories, variables, and units are written
+* as strings passed in by the argument.  Values are also passed as arguments.
+* \warning Variable id field has been taken out of the dbout database table
+   and this function no longer compensate for this field.  Ensure that the 
+   revised dbout table is used.
 */
 void dboutput4(string var1name,string var2name,string var3name,string var4name,
 			   string uname,vector<double> dout)
@@ -82,30 +93,157 @@ void dboutput4(string var1name,string var2name,string var3name,string var4name,
                    + lt->tm_mday * 1000000 
 				   + (lt->tm_mon * 100000000 + 100000000); // 0 is january
 
-	        DBoutrst.SetField(0L, COleVariant(RunID,VT_I4)); // Bad line.
-	        DBoutrst.SetField(1L, COleVariant(short(iter->second)));
-	        DBoutrst.SetField(3L, COleVariant(var2name.c_str(), VT_BSTRT));
-	        DBoutrst.SetField(4L, COleVariant(var3name.c_str(), VT_BSTRT));
-	        DBoutrst.SetField(5L, COleVariant(var4name.c_str(), VT_BSTRT));
-	        DBoutrst.SetField(6L, COleVariant(uname.c_str(), VT_BSTRT));
+	        DBoutrst.SetField(0L, COleVariant(RunID,VT_I4)); // run id
+	        DBoutrst.SetField(1L, COleVariant(short(iter->second))); // region id
+	        DBoutrst.SetField(2L, COleVariant(var2name.c_str(), VT_BSTRT)); // category
+	        DBoutrst.SetField(3L, COleVariant(var3name.c_str(), VT_BSTRT)); // subscategory
+	        DBoutrst.SetField(4L, COleVariant(var4name.c_str(), VT_BSTRT)); // variable
+	        DBoutrst.SetField(5L, COleVariant(uname.c_str(), VT_BSTRT)); // units
             // get scenario name and output to dbout
             string scenarioName = scenario->getName();
-	        DBoutrst.SetField(7L, COleVariant(scenarioName.c_str(), VT_BSTRT));
+	        DBoutrst.SetField(6L, COleVariant(scenarioName.c_str(), VT_BSTRT));
 	        for (i=0;i< static_cast<int>( dout.size() );i++) {
-		        j = 8+i;
+		        j = 7+i;
 		        DBoutrst.SetField(j, COleVariant(dout[i]));
 	        }
-	        DBoutrst.Update(); // save and write the record
-        
-            } catch( _com_error e ){
-                printf("Error:*************************************************\n");
-                printf("Code = %08lx\n", e.Error());
-                printf("Message = %s\n", e.ErrorMessage());
-                printf("Source = %s\n", (LPCSTR) e.Source());
-                printf("Description = %s\n", (LPCSTR) e.Description());
-            }
+	        DBoutrst.Update(); // save and write the record        
+        } 
+		catch( _com_error e ){
+            printf("Error:*************************************************\n");
+            printf("Code = %08lx\n", e.Error());
+            printf("Message = %s\n", e.ErrorMessage());
+            printf("Source = %s\n", (LPCSTR) e.Source());
+            printf("Description = %s\n", (LPCSTR) e.Description());
         }
+    }
     // if region not found in regionMap, do nothing
 #endif
 }
 
+#if(__HAVE_DB__)
+//! Open connection to the database
+void openDB(void) {
+	Configuration* conf = Configuration::getInstance();
+	string dbFile = conf->getFile( "dbFileName" );
+	// Open a global Jet database in exclusive, read/write mode.
+	try {
+		db = dben.OpenDatabase( dbFile.c_str()); 
+	}
+	catch(...) {
+		cout<<"Error opening database: "<< dbFile << endl; 
+	}
+}
+
+//! Close connection to the database
+void closeDB() {
+	db.Close();
+}
+
+/*! \brief Create and open the main database output table.
+* 
+* Recordset for dbout table is opened here for writing to by output_helper.cpp 
+* The code to delete and create new dbout table is commented out.
+* Results are continually appended to the dbout table.  This function no longer
+* clears out and recreates the dbout table.
+* \warning The output database has been greatly simplified and fewer tables exists in
+   the database.  Results are continually appended to the dbout table, which is now the
+   only table of results.  RunLabel and RegionInfo talbles exists in the database and 
+   are recreated in createMCvarid().
+*/
+
+void createDBout() {
+	// open DBout table as a recordset (DBoutrst) for writing
+	DBoutrst = db.OpenRecordset(DBout,dbOpenDynaset);
+	// **** End DBout table *****	
+}
+
+//! Create run label and region info tables that are necessary for the dataviewer.xls.
+void createMCvarid() {
+	string sqltemp; // temporary string for sql
+
+	// *** Delete and Create DbRunLabels table ***
+	const char *dbtrun = "DBRunLabels"; // database table names
+	// first delete existing table
+	try { db.TableDefs.Delete(dbtrun); } 
+	catch (...) {cout<<"\nError deleting "<<dbtrun<<" table\n";}
+	// Reusing RunLabelTD and tfield to add fields to the table
+	CdbField tfield; // tempory field for creating fields in tables
+	CdbTableDef RunLabelTD = db.CreateTableDef(dbtrun);	// tempory RunLabel table definition
+	// create run id field
+	tfield = RunLabelTD.CreateField("RunID",dbLong);
+	RunLabelTD.Fields.Append(tfield);
+	// create run label field
+	tfield = RunLabelTD.CreateField("RunLabel",dbText);
+	RunLabelTD.Fields.Append(tfield);
+	// create run comments field
+	tfield = RunLabelTD.CreateField("RunComments",dbText);
+	RunLabelTD.Fields.Append(tfield);
+	// create the region info table
+	try {db.TableDefs.Append(RunLabelTD);}
+	catch(...) { cout<<"\nError appending "<<dbtrun<<" table to database\n";}
+
+	// insert into the new run labels table the list of runs
+	sqltemp = "INSERT INTO ";
+	sqltemp += dbtrun;
+	sqltemp += " SELECT DISTINCT RunID,RunLabel";
+	sqltemp = sqltemp + " FROM " + DBout;
+	try {
+		db.Execute(sqltemp.c_str()); }
+	catch(...) {
+		cout<<"\nError executing sql: \""<<sqltemp<<"\"\n"; }
+	// *** end DbRunLabels table ***
+
+	// *** Delete and Create RegionInfo table ***
+	const char *dbtregion = "RegionInfo"; // database table names
+	// first delete existing table
+	try { db.TableDefs.Delete(dbtregion); } 
+	catch (...) {cout<<"\nError deleting "<<dbtregion<<" table\n";}
+	// create new region info table definition
+	CdbTableDef RegionInfoTD = db.CreateTableDef(dbtregion);
+	// create region name field
+	tfield = RegionInfoTD.CreateField("RegionLabel",dbText);
+	RegionInfoTD.Fields.Append(tfield);
+	// create region id field
+	tfield = RegionInfoTD.CreateField("RegionID",dbLong);
+	RegionInfoTD.Fields.Append(tfield);
+	// create the region info table
+	try {db.TableDefs.Append(RegionInfoTD);}
+	catch(...) { cout<<"\nError appending "<<dbtregion<<" table to database\n";}
+
+	// create a recordset for the region info table
+	CdbRecordset RegionInfoRst = db.OpenRecordset(dbtregion,dbOpenDynaset);
+	typedef map<string,int>:: const_iterator CI;
+	string regstr; // temporary string for region names
+    map<string,int> regionMap = scenario->getWorld()->getOutputRegionMap();
+	for (CI rmap=regionMap.begin(); rmap!=regionMap.end(); ++rmap) {
+		RegionInfoRst.AddNew(); // now the current record is this empty new one
+		regstr = rmap->first; // region name
+		RegionInfoRst.SetField(_T("RegionLabel"), COleVariant(regstr.c_str(), VT_BSTRT));
+		RegionInfoRst.SetField(_T("RegionID"), COleVariant(long(rmap->second), VT_I4));
+		RegionInfoRst.Update(); // save and write the record
+		// add a Global region that includes all regions to sum all regional outputs
+        if(rmap->second != 0) {
+			RegionInfoRst.AddNew(); // now the current record is this empty new one
+			RegionInfoRst.SetField(_T("RegionLabel"), COleVariant("zGlobal", VT_BSTRT));
+			RegionInfoRst.SetField(_T("RegionID"), COleVariant(long(rmap->second), VT_I4));
+			RegionInfoRst.Update(); // save and write the record
+        }
+	}
+	RegionInfoRst.Close();
+	// *** end RegionInfo table ***
+}
+// if not working with database
+#else
+void closeDB(void) {
+	// do nothing if not utilizing database
+}
+void openDB(void) {
+	// do nothing if not utilizing database
+}
+void createDBout(void) {
+	// do nothing if not utilizing database
+}
+void createMCvarid(void) {
+	// do nothing if not utilizing database
+}
+#endif
