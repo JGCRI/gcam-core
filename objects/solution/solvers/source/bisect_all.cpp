@@ -9,7 +9,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/bisect_all.h"
@@ -20,18 +19,14 @@
 #include "solution/util/include/solver_info_set.h"
 #include "solution/util/include/solver_library.h"
 #include "util/base/include/util.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
 const string BisectAll::SOLVER_NAME = "BisectAll";
-extern ofstream bugoutfile, logfile;
 
 //! Default Constructor. Constructs the base class. 
 BisectAll::BisectAll( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):SolverComponent( marketplaceIn, worldIn, calcCounterIn ) {
-}
-
-//! Default Destructor. Currently does nothing. 
-BisectAll::~BisectAll(){
 }
 
 //! Init method. Currently does nothing.
@@ -50,6 +45,7 @@ const string& BisectAll::getName() const {
 
 /*! \brief Bisection Solution Mechanism (all markets)
 * \detailed This solution mechanism bisects all markets at once. 
+* \todo Update this documentation.
 * Bisection is always periodformed at least a few times. Bisection stops if the maximum 
 * relative ED does not change at a rate larger than BREAK_OUT_THRESHOLD.
 * If the maximum relative "ED" is larger than BRACKET_THRESHOLD, then the unsolved markets
@@ -61,7 +57,7 @@ const string& BisectAll::getName() const {
 * A check for that is periodformed each time and the brackets are adjusted accordingly.
 * This check is critical for solution with simultuantey.
 *
-* Useful TrackED writeout to screen is turned on by toggle in configuration file.
+* Tracking the excess demand is turned on from the logging configuration file.
 * \author Sonny Kim, Josh Lurz, Steve Smith
 * \warning Unless stated otherwise, ED values are normalized (i.e., that 10 == 10% difference).
 * \todo need more general way to reset price and demand market types within bisect
@@ -76,36 +72,29 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
     startMethod();
 
     int numIterations = 0; // number of iterations
-    int interLimitAdd = 0; // Variable to allow more iterations if re-bisect
-    int numbRebrackets = 0; // Variable to allow more iterations if re-bisect
     ReturnCode code = ORIGINAL_STATE; // code that reports success 1 or failure 0
-    bool breakout;	// var to allow various conditions to exit bisection routine
-    const int MAX_REBRACKETS = 3;
-    const double BREAK_OUT_THRESHOLD = 0.001; // leave bracketing if not improving by at least this much
-    const double BRACKET_THRESHOLD = 10;	// if breakout & relative maxED is > this then try re-bracketing
-    double bracketInterval = 0.05; // starting value for re-bracketing interval
-    double previousEDvalue = -1;
-    SolverInfo previousED = solverSet.getSolvable( 0 );
-    bool reBracketingDone = false;
-
-    if ( trackED ) { 
-        cout << endl << "Bisection routine starting..." << endl; 
-    }
-    logfile << ",,Bisection_all function called." << endl;
+    const static int MAX_ITER_NO_IMPROVEMENT = 10; // Maximum number of iterations without improvement.
+    
+    // Setup Logging.
+    ILogger& solverLog = ILogger::getLogger( "solver_log" );
+    solverLog.setLevel( ILogger::NOTICE );
+    ILogger& worstMarketLog = ILogger::getLogger( "worst_market_log" );
+    worstMarketLog.setLevel( ILogger::NOTICE );
+    solverLog << "Bisection_all routine starting" << endl; 
 
     solverSet.updateFromMarkets();
     solverSet.updateSolvable( false );
     
     // Select the worst market.
     SolverInfo& worstSol = solverSet.getWorstSolverInfo( edSolutionFloor );
-    // addIteration( worstSol.getName(), worstSol.getRelativeED( edSolutionFloor ) );
     // solve all markets
+    ILogger& singleLog = ILogger::getLogger( "single_market_log" );
+    singleLog.setLevel( ILogger::DEBUG );
+
     do {
-        breakout = false; //default is not to breakout of bisection routine
-        if (bugMinimal) {
-            bugoutfile << " Bisect " << numIterations;
-        }
-        solverSet.printMarketInfo( "Bisect All", calcCounter->getPeriodCount() );
+        solverLog.setLevel( ILogger::NOTICE );
+        solverLog << "BisectionAll " << numIterations << endl;
+        solverSet.printMarketInfo( "Bisect All", calcCounter->getPeriodCount(), singleLog );
 
         for ( unsigned int i = 0; i < solverSet.getNumSolvable(); ++i ) {
             SolverInfo& currSol = solverSet.getSolvable( i );
@@ -130,7 +119,7 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
         }
 
         solverSet.updateToMarkets();
-        marketplace->nullSuppliesAndDemands(period);
+        marketplace->nullSuppliesAndDemands( period );
 
         world->calc( period );
         solverSet.updateFromMarkets();
@@ -143,94 +132,23 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
         
         const SolverInfo maxSol = solverSet.getWorstSolverInfo( edSolutionFloor );
         addIteration( maxSol.getName(), maxSol.getRelativeED( edSolutionFloor ) );
-
-        // double maxSolValue = maxSol.getRelativeED( edSolutionFloor );
-
-        if ( trackED ) {
-            cout << "BisectAll-maxRelED: ";
-            maxSol.printTrackED();
-        }
-        
-        /*
-        // If the worst ED is not changing too much then breakout of bisection
-        if ( numIterations > 5 ) {	// always bisect a few times . MAGIC NUMBER!        
-            if ( fabs( maxSolValue - previousEDvalue ) / previousEDvalue < BREAK_OUT_THRESHOLD && maxSol == previousED )  {
-                if( trackED ){
-                    cout << "Setting breakout flag." << endl;
-                }
-                breakout = true; 
-            }
-        }
-
-        previousEDvalue = maxSolValue;
-        previousED = maxSol;
-        
-        // If have not solved, then try bracketing again.
-        // This helps when some market has fell out of its bracketing range
-        // This helps if the maxED is still somewhat large (otherwise, NR should be fine)
-        // This needs to be below maxED printout so that inconsistent TrackED printout does not occur
-        if ( breakout && !reBracketingDone && ( fabs( maxSolValue ) > BRACKET_THRESHOLD ) ) {
-            if( trackED ){
-                cout << "Rebracketing" << endl;
-            }
-            ++numbRebrackets;
-
-            if ( numbRebrackets > MAX_REBRACKETS ) {
-                reBracketingDone = true; // only try this once
-            }
-
-            // reset bracket flag for any markets not solved
-            for( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
-                SolverInfo& currSol = solverSet.getSolvable( i );
-                if ( !currSol.isWithinTolerance( solutionTolerance, edSolutionFloor ) ) {
-                    currSol.resetBrackets();
-                }
-                else {
-                    currSol.setBracketed();
-                }
-            }
-            logfile << ",";
-            SolverLibrary::bracket( marketplace, world, bracketInterval, solverSet, period );
-
-            // Reduce bracket interval for next re-bracket so do not periodturb prices as much
-            bracketInterval = bracketInterval/2; 
-            breakout = false;
-            interLimitAdd = numIterations;
-            logfile << ",,,Bisection_all continuing after re-bracketing." << endl;
-            if (trackED) {
-                cout << "Bisection continuing after re-bracketing" << endl; 
-            }
-        } // end re-bracket block           
-    */
+        worstMarketLog << "BisectAll-maxRelED: " << maxSol << endl;
     } // end do loop		
-    while ( isImproving( 10 ) && ++numIterations < ( maxIterations+interLimitAdd) && solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) >= solutionTolerance && !breakout );
+    while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) && ++numIterations < maxIterations && !solverSet.isAllSolved( solutionTolerance, edSolutionFloor ) );
 
     // Set the return code. 
     code = ( solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) < solutionTolerance ? SUCCESS : FAILURE_ITER_MAX_REACHED ); // report success, or failure
-
-    if ( numIterations >= ( maxIterations + interLimitAdd ) && !breakout ) {
-        if( trackED ){
-            cout << "Exiting Bisection all due to reaching the maximum number of iterations." << endl;
-        }
-        logfile << ",,,Exited Bisection_all. Max number of Iterations exceeded." << endl;
+    
+    // Report exit conditions.
+    solverLog.setLevel( ILogger::NOTICE );
+    if ( numIterations >= maxIterations ){
+        solverLog << "Exiting BisectionAll due to reaching the maximum number of iterations." << endl;
     }
-    else if( breakout ){
-        if( trackED ){
-            cout << "Exiting Bisection all due to breakout flag." << endl;
-        }
-        logfile << ",,,Exited Bisection_all. Breakout flag set." << endl;
-    }
-    else if( !isImproving( 10 ) ){
-        if( trackED ){
-            cout << "Exiting BisectionAll due to lack of improvement in RED." << endl;
-        }
+    else if( !isImproving( MAX_ITER_NO_IMPROVEMENT ) ){
+        solverLog << "Exiting BisectionAll due to lack of improvement in relative excess demand." << endl;
     }
     else {
-        if( trackED ){
-            cout << "Exiting BisectionAll with model fully solved." << endl;
-        }
+        solverLog << "Exiting BisectionAll with model fully solved." << endl;
     }
-    if (trackED) { cout << endl; }
-
     return code;
 }

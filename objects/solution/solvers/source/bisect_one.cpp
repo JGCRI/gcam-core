@@ -9,7 +9,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/bisect_one.h"
@@ -20,18 +19,14 @@
 #include "solution/util/include/solver_info_set.h"
 #include "solution/util/include/solver_library.h"
 #include "util/base/include/util.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
 const string BisectOne::SOLVER_NAME = "BisectOne";
-extern ofstream bugoutfile, logfile;
 
 //! Default Constructor. Constructs the base class. 
 BisectOne::BisectOne( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):SolverComponent( marketplaceIn, worldIn, calcCounterIn ) {
-}
-
-//! Default Destructor. Currently does nothing. 
-BisectOne::~BisectOne(){
 }
 
 //! Init method. Currently does nothing.
@@ -58,23 +53,33 @@ const string& BisectOne::getNameStatic() {
 */
 SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, const double edSolutionFloor, const int maxIterations, SolverInfoSet& solverSet, const int period ){
     startMethod();
-    int numIterations = 0; // number of iterations
 
-    if ( trackED ) { 
-        cout << endl << "Bisection one routine starting..." << endl; 
-    }
-    logfile << ",,Bisection_one function called." << endl;
+    // Constants.
+    const static unsigned int MAX_ITER_NO_IMPROVEMENT = 8; // Maximum number of iterations without improvement.
+
+    // Setup logging.
+    ILogger& solverLog = ILogger::getLogger( "solver_log" );
+    solverLog.setLevel( ILogger::NOTICE );
+
+    ILogger& worstMarketLog = ILogger::getLogger( "worst_market_log" );
+    ILogger& singleLog = ILogger::getLogger( "single_market_log" );
+    singleLog.setLevel( ILogger::DEBUG );
 
     // Make sure we have all updated information.
     solverSet.updateFromMarkets();
     solverSet.updateSolvable( false );
+
     // Select the worst market.
+    // SolverInfo& worstSol = solverSet.getWorstSolverInfoReverse( solutionTolerance, 0, true );
     SolverInfo& worstSol = solverSet.getWorstSolverInfo( edSolutionFloor );
-    // addIteration( worstSol.getName(), worstSol.getRelativeED( edSolutionFloor ) );
+    // worstSol.setBisectedFlag();
+    solverLog.setLevel( ILogger::NOTICE );
+    solverLog << "BisectOne function called on market " << worstSol.getName() << "." << endl;
+    unsigned int numIterations = 0;
     worstSol.expandBracket( 1.025 ); // I'm not sure about this.
     do {
-        solverSet.printMarketInfo( "Bisect "+worstSol.getName(), calcCounter->getPeriodCount() );
-        
+        solverSet.printMarketInfo( "Bisect One" + worstSol.getName(), calcCounter->getPeriodCount(), singleLog );
+
         // Move the left bracket in if Supply > Demand
         if ( worstSol.getED() < 0 ) {
             worstSol.moveLeftBracketToX();
@@ -100,27 +105,19 @@ SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, co
         solverSet.updateFromMarkets();
         solverSet.updateSolvable( false );
         addIteration( worstSol.getName(), worstSol.getRelativeED( edSolutionFloor ) );
-        
-        if ( trackED ) {
-            cout << "BisectOne-RelED: ";
-            worstSol.printTrackED();
-        }
+        worstMarketLog << "BisectOne-MaxRelED: "  << worstSol << endl;
     } // end do loop		
-    while ( isImproving( 8 ) && ++numIterations < maxIterations && !worstSol.isWithinTolerance( solutionTolerance, edSolutionFloor ) );
-    
-    if( trackED ){
-        if( numIterations >= maxIterations ){
-            cout << "Exiting BisectOne due to reaching max iterations." << endl;
-            logfile << "Exiting BisectOne due to reaching max iterations." << endl;
-        }
-        else if( !isImproving( 5 ) ){
-            cout << "Exiting BisectOne due to lack of improvement." << endl;
-            logfile << "Exiting BisectOne due to lack of improvement." << endl;
-        }
-        else {
-            cout << "Exiting BisectOne because chosen market is solved." << endl;
-            logfile << "Exiting BisectOne because chosen market is solved." << endl;
-        }
+    while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) && ++numIterations < static_cast<unsigned int>( maxIterations ) && !worstSol.isWithinTolerance( solutionTolerance, edSolutionFloor ) );
+    // Report results.
+    solverLog.setLevel( ILogger::NOTICE );
+    if( numIterations >= static_cast<unsigned int>( maxIterations ) ){
+        solverLog << "Exiting BisectOne due to reaching max iterations." << endl;
     }
-    return solverSet.isAllSolved( solutionTolerance, edSolutionFloor )? SUCCESS: FAILURE_ITER_MAX_REACHED; // WRONG ERROR CODE
+    else if( !isImproving( MAX_ITER_NO_IMPROVEMENT ) ){
+        solverLog << "Exiting BisectOne due to lack of improvement." << endl;
+    }
+    else {
+        solverLog << "Exiting BisectOne because chosen market is solved." << endl;
+    }
+    return solverSet.isAllSolved( solutionTolerance, edSolutionFloor ) ? SUCCESS: FAILURE_ITER_MAX_REACHED; // WRONG ERROR CODE
 }
