@@ -6,6 +6,7 @@ IMPLICIT NONE
 
 REAL(8) CarbEmiss1(NLP,NMP)
 REAL(8) CarbEmissSave(4,NLP,NMP)
+REAL(8) deforUseMult, biomassprice
 
 INTEGER i,T
 
@@ -93,27 +94,13 @@ DO i=1,NL
 
 	CALL SoilDecay(i,T)
 
+	  ! Initialize the AgLU price of biomass and convert to 1990$/Gcal
+	  MC_CALP(i,JBio) = P(INBMASS,i,1) * CVRT90 * GJperGCAL
+
+	biomassprice = biomassprice / GJperGCAL
+	deforUseMult = 1d0 - deforBioUseFract(biomassprice, gdpcap(i,t), i,T)
+	
   ! Vegetation Emissions
-	! Crops
-    CarbEmiss(i,T) = CarbEmiss(i,T) - CDensity(i,1) *  &
-                    (SaveLand(1,i,T) - SaveLand(1,i,T-1)) / STEP
-	! Biomass
-    CarbEmiss(i,T) = CarbEmiss(i,T) - CDensity(i,2) *  &
-                    (SaveLand(4,i,T) - SaveLand(4,i,T-1)) / STEP
-	! Pasture
-    CarbEmiss(i,T) = CarbEmiss(i,T) - CDensity(i,3) *  &
-                    (SaveLand(2,i,T) - SaveLand(2,i,T-1)) / STEP
-	! Forests (which we could have started in period 2)
-    CarbEmiss(i,T) = CarbEmiss(i,T) - CDensity(i,4) *  &
-                    (SaveLand(3,i,T) - SaveLand(3,i,T-1)) / STEP
-	! Unmanaged land
-    CarbEmiss(i,T) = CarbEmiss(i,T) - CDensity(i,5) *  &
-                    (SaveLand(5,i,T) - SaveLand(5,i,T-1)) / STEP
-
-
-   CarbEmissSave(1,i,T) = CarbEmiss(i,T)
-   CarbEmissSave(2:4,i,T) = SoilEmiss(2:4,i,T)
-
 	! Crops
        EmPart(1,i) =  - CDensity(i,1) *  &
                     (SaveLand(1,i,T) - SaveLand(1,i,T-1)) / STEP
@@ -130,6 +117,13 @@ DO i=1,NL
        EmPart(5,i) =  - CDensity(i,5) *  &
                     (SaveLand(5,i,T) - SaveLand(5,i,T-1)) / STEP
 
+	! Add emissions to total, discounting approximately for forest biomass used for fuel
+    CarbEmiss(i,T) = CarbEmiss(i,T) + SUM(EmPart(1:3,i))
+    CarbEmiss(i,T) = CarbEmiss(i,T) + SUM(EmPart(4:5,i)) * deforUseMult
+    
+
+   CarbEmissSave(1,i,T) = CarbEmiss(i,T)
+   CarbEmissSave(2:4,i,T) = SoilEmiss(2:4,i,T)
    
   ! Total LUC CO2 Emissions
 	CarbEmiss(i,T) = CarbEmiss(i,T) + SoilEmiss(2,i,T) + SoilEmiss(3,i,T-1)

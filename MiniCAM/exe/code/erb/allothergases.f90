@@ -874,6 +874,29 @@
 
 	! Now adjust for amount harvested for energy
 	
+	DefroR = orgDefor * (1d0 - deforBioUseFract(biomassprice, gdppercap, L,M))
+	
+	if (L .eq. 100) then
+		write (97,'(I3,8(f8.2,","))') M, DefroR,orgDefor,UseFract,gdpFact,priceFactor
+		write (97,*) "   EmPart(5,L): ",EmPart(5,L),SaveLand(5,L,M), SaveLand(5,L,M-1)
+	endif
+
+	RETURN
+	END
+	
+!
+!-------------------------
+! Function returns amount of deforested biomass that is used for fuel
+
+	FUNCTION deforBioUseFract(biomassprice, gdppercap, L,M)
+
+	USE Ag2Global8
+	
+	REAL*8 deforBioUseFract, gdppercap, biomassprice
+	INTEGER L,M
+
+	REAL*8 UseFract, priceFactor, maxUse, gdpFact
+    
 	UseFract = (1d0 - recovForestFrac(L) )	! Basic amount that can be potentially used
 	
 	gdpFact = 1d0
@@ -892,16 +915,12 @@
 	UseFract = UseFract	* priceFactor
 	
 	If (DeforBioUse .eq. 0) UseFract = 0
-	DefroR = orgDefor * (1d0 - UseFract)
-	
-	if (L .eq. 100) then
-		write (97,'(I3,8(f8.2,","))') M, DefroR,orgDefor,UseFract,gdpFact,priceFactor
-		write (97,*) "   EmPart(5,L): ",EmPart(5,L),SaveLand(5,L,M), SaveLand(5,L,M-1)
-	endif
 
+	deforBioUseFract = UseFract
+	
 	RETURN
 	END
-	
+
 !
 !-------------------------
 !  total grassland
