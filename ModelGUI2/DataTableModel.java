@@ -8,6 +8,10 @@ import org.w3c.dom.*;
 import org.w3c.dom.xpath.*;
 //import java.awt.event.*;
 
+/**
+ * Not used anymore, was the first table, but was decided that it wasn't useful. The Code hasn't been
+ * updated in a while so it will need some work to get it working again with the changes to BaseTableModel
+ */
 public class DataTableModel extends BaseTableModel{
 	private Vector cols;
 	private Vector rows;

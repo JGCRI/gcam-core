@@ -10,6 +10,9 @@ import javax.swing.tree.TreePath;
 import org.w3c.dom.xpath.*;
 
 public class MultiTableModel extends BaseTableModel{
+	// used to be able to edit tables in a cell
+	// don't really know what to do here
+	// it seems to work, but obviously this isn't correct
 	private class TableEditor implements TableCellEditor {
 		public TableEditor () {}
 		public void removeCellEditorListener(javax.swing.event.CellEditorListener cE ) {
@@ -34,6 +37,7 @@ public class MultiTableModel extends BaseTableModel{
 			return (JScrollPane)value;
 		}
 	}
+	// to be able to render a table inside a cell
 	private class TableRenderer implements TableCellRenderer {
 		public TableRenderer () {}
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col ) {
@@ -48,6 +52,14 @@ public class MultiTableModel extends BaseTableModel{
 	TableRenderer tableRenderer;
 	TableEditor tableEditor;
 
+	/**
+	 * Constructor initializes data members, and calls buildTable to initialize data, and filterMaps
+	 * and create the individual tables
+	 * @param tp the Tree Path which was selected from the tree, needed to build table
+	 *        doc needed to run the XPath query against
+	 *        parentFrame needed to create dialogs
+	 *        tableTypeString to be able to display the type of table this is
+	 */
 	public MultiTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
 		super(tp, doc, parentFrame, tableTypeString);
 		wild = chooseTableHeaders(tp, parentFrame);
@@ -61,10 +73,20 @@ public class MultiTableModel extends BaseTableModel{
 			activeRows.add(new Integer(i));
 		}
 	}
+	/**
+	 * flipps the axis of the individual table
+	 * @param row used to figure out which cell needs to be flipped
+	 *        col not really important since we only have 1 col
+	 */
 	public void flip(int row, int col) {
 				((NewDataTableModel)((JTable)((JScrollPane)getValueAt(row, col)).getViewport().getView()).getModel()).flip(row, col);
 	}
 
+	/**
+	 * Runs an XPath expression to get a set of nodes, which then are sorted, based on its path in
+	 * the tree.  Uses the sorted data to create a set of tables, also initalizes the filterMaps.
+	 * @param xpe the XPath expression which will be used to get nodes.
+	 */
   	protected void buildTable(XPathExpression xpe) {
 	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 	  xpe = null;
@@ -82,6 +104,14 @@ public class MultiTableModel extends BaseTableModel{
 	  }
 	  recAddTables(dataTree, null, regions, years, "");
   	}
+
+	/**
+	 * Gets the 2 attributes of the 2 wilds from going up the parent path of a node, also update the
+	 * filter maps
+	 * @param n the node whos wild node's attrubutes need to be determined
+	 *        filterMaps maps which has the filtering information, which will be updated with the attribute value from this nodes parent path
+	 * @return an array of size 2 with the attrubute values of the wild which lead to this node
+	 */
   	private Object[] getRegionAndYearFromNode(Node n, Map filterMaps) {
 	  Vector ret = new Vector(2,0);
 	  do {
@@ -101,6 +131,9 @@ public class MultiTableModel extends BaseTableModel{
                                   tempFilter = new HashMap();
                           }
 			  String attr = getOneAttrVal(n);
+			  if(attr.equals("fillout=1")) {
+				  attr = getOneAttrVal(n, 1);
+			  }
 			  if (!tempFilter.containsKey(attr)) {
                           	tempFilter.put(attr, new Boolean(true));
                           	filterMaps.put(n.getNodeName(), tempFilter);
@@ -110,16 +143,28 @@ public class MultiTableModel extends BaseTableModel{
 	  } while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
 	  return ret.toArray();
   	}
+  /**
+   * Sort data so that we know where each set of data comes from. Recursivly moves to the top of the parentPath
+   * and at each level crates/uses the appropriate mapping for this node
+   * @param currNode current node we are analyzing in the tree
+   *        dataTree the complete set of maps sorting the data
+   * @return the current mapping that was just created/used
+   */
   private TreeMap addToDataTree(Node currNode, TreeMap dataTree) {
 	  if (currNode.getNodeType() == Node.DOCUMENT_NODE) {
 		  return dataTree;
 	  }
 	  TreeMap tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-	  if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().equals("subsector") ) {
+	  // used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
+	  if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().equals(".*[Ss]ector") ) {
 		  return tempMap;
 	  }
 	  if(currNode.hasAttributes() && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
-		String attr = currNode.getNodeName()+":"+getOneAttrVal(currNode);
+		String attr = getOneAttrVal(currNode);
+		if(attr.equals("fillout=1")) {
+			attr = getOneAttrVal(currNode, 1);
+		}
+		attr = currNode.getNodeName()+"@"+attr;
 		if(!tempMap.containsKey(attr)) {
 			tempMap.put(attr, new TreeMap());
 		}
@@ -128,6 +173,15 @@ public class MultiTableModel extends BaseTableModel{
 	  return tempMap;
   }
 
+  /**
+   * Move down the dataTree map until we hit the level of node, as apposed to mappin, then the mapping 
+   * one level up is the data map for a table, and it's path is described by title
+   * @param dataTree the mappings of attrubutes which will get us to the data
+   *        parent so that we can get the data map which is a level up once we hit the bottom
+   *        regions column axis attrubutes
+   *        years row axis attributes
+   *        title a string describing the path in which the data in the table is coming from
+   */
   private void recAddTables(TreeMap dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String title) {
 	Iterator it = dataTree.entrySet().iterator();
 	while(it.hasNext()) {
@@ -163,24 +217,64 @@ public class MultiTableModel extends BaseTableModel{
 		}
 	}
   }
+        /**
+	 * gets the instance of table editor used to be able to edit a table within a table cell
+	 * @return tableEditor
+	 */
 	public TableCellEditor getCellEditor(int row, int col ) {
 			return tableEditor;
 	}
+
+        /**
+	 * gets the instance of table renderer used to be able to view a table within a table cell
+	 * @return tableRenderer
+	 */
 	public TableCellRenderer getCellRenderer(int row, int col ) {
 			return tableRenderer;
 	}
+
+	/**
+	 * get the number of columns in the table
+	 * @return always returns 1
+	 */
 	public int getColumnCount() {
 		return 1;
 	}
+
+	/**
+	 * Get the number of rows in the table. This is really tables * 2, since each table has a label.
+	 * Also need to account for the tables which have been filtered out.
+	 * @return The number of elements in activeRows
+	 */
 	public int getRowCount() {
 		return activeRows.size();
 	}
+
+	/**
+	 * returns the table at the requested cell
+	 * @param row the row position of the cell
+	 *        col the column position of the cell
+	 * @return the table at the requested cell
+	 */
 	public Object getValueAt(int row, int col) {
 		return tables.get(((Integer)activeRows.get(row)).intValue());
 	}
+
+	/**
+	 * return the heading for the column
+	 * @param col there is only really 1 column, so not used
+	 * @return heading for the column
+	 */
 	public String getColumnName(int col) {
-		return "Stuff";
+		return "Stuff"; // should have a more meaningful title
 	}
+
+	/**
+	 * determines wheter a cell is editable, only tables are editable, which are every other row.
+	 * @param row the row position being queryed
+	 *        col the column position being queryed
+	 * @return true or false depeneding on if the cell is editable
+	 */
 	public boolean isCellEditable(int row, int col) {
 		if(row % 2 == 0) {
 			return false;
@@ -189,6 +283,13 @@ public class MultiTableModel extends BaseTableModel{
 		}
 	}
 
+	/**
+	 * Updates activeRows to include only the tables which didn't come from any of the attributes filtered
+	 * out. Does this by creating a regular expression in the form /nodeName[attrName=attrVal | any more
+	 * attrubutes which are still valid]/next child. Then tests each table's label against the regular
+	 * expression
+	 * @param possibleFilters the vector nodeNames that had valid attributes for filtering
+	 */
 	protected void doFilter(Vector possibleFilters) {
 		String regex = "^/";
 		for(int i = possibleFilters.size()-1; i >= 0; i--) {

@@ -21,8 +21,17 @@ public class ComboTableModel extends BaseTableModel{
 	String ind2Name;
 	boolean flipped;
 
-	Vector tables;
+	//Vector tables;
 
+	/**
+	 * Constructor initializes data members, and calls buildTable to create the arrays of data maps,
+	 * and the path vectors for each data map. Creates the headers for the table axis and path, , also
+	 * creates the filterMaps based on the path information.
+	 * @param tp the Tree Path which was selected from the tree, needed to build table
+	 *        doc needed to run the XPath query against
+	 *        parentFrame needed to create dialogs
+	 *        tableTypeString to be able to display the type of table this is
+	 */ 
 	public ComboTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
 		super(tp, doc, parentFrame, tableTypeString);
 		leftHeaderVector = null;
@@ -36,6 +45,13 @@ public class ComboTableModel extends BaseTableModel{
 		}
 		indCol.add(0, ind1Name);
 	}
+
+	/**
+	 * Switches the row and column headers, and names. Also sets a boolean so we know 
+	 * it has been flipped, since it makes a difference how we reference into the data maps
+	 * @param row not used here
+	 *        col not used here
+	 */
 	public void flip(int row, int col) {
 		Vector tempArr = indCol;
 		indCol = indRow;
@@ -46,11 +62,15 @@ public class ComboTableModel extends BaseTableModel{
 		ind2Name= tempStr;
 		indCol.add(0, ind1Name);
 		flipped = !flipped;
+		// to set active rows appropriatly
 		doFilter( new Vector(tableFilterMaps.keySet()) );
 		fireTableStructureChanged();
-				//((NewDataTableModel)((JTable)((JScrollPane)getValueAt(row, col)).getViewport().getView()).getModel()).flip(row, col);
 	}
 
+	/**
+	 * Builds table and sets data maps, in a similar fashions as the MultiTableModel
+	 * @see MultiTableModel#buildTable(XPathExpression)
+	 */
 	protected void buildTable(XPathExpression xpe) {
 	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 	  xpe = null;
@@ -72,6 +92,13 @@ public class ComboTableModel extends BaseTableModel{
 	  ind1Name = (String)wild.get(0);
 	  ind2Name = (String)wild.get(1);
 	}
+
+	/**
+	 * Gets path information from a node in a similar fashions as the MultiTableModel
+	 * @param n the node to get path info from
+	 * @param filterMaps temporary filter map to update
+	 * @see MultiTableModel#getRegionAndYearFromNode(Node, Map)
+	 */
 	private Object[] getRegionAndYearFromNode(Node n, Map filterMaps) {
 	  Vector ret = new Vector(2,0);
 	  do {
@@ -87,31 +114,46 @@ public class ComboTableModel extends BaseTableModel{
 
 		  } else if(n.hasAttributes()) {
 			  HashMap tempFilter;
-				  if (filterMaps.containsKey(n.getNodeName())) {
-							  tempFilter = (HashMap)filterMaps.get(n.getNodeName());
-						  } else {
-								  tempFilter = new HashMap();
-						  }
+			  if (filterMaps.containsKey(n.getNodeName())) {
+				  tempFilter = (HashMap)filterMaps.get(n.getNodeName());
+			  } else {
+				  tempFilter = new HashMap();
+			  }
 			  String attr = getOneAttrVal(n);
+			  if(attr.equals("fillout=1")) {
+				  attr = getOneAttrVal(n, 1);
+			  }
 			  if (!tempFilter.containsKey(attr)) {
-							tempFilter.put(attr, new Boolean(true));
-							filterMaps.put(n.getNodeName(), tempFilter);
+				tempFilter.put(attr, new Boolean(true));
+				filterMaps.put(n.getNodeName(), tempFilter);
 			  }
 		  }
 		  n = n.getParentNode();
 	  } while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
 	  return ret.toArray();
 	}
+
+  /**
+   * Sorts nodes in a map of maps creating a tree of data, same as in MulitTableModel.
+   * @param currNode current level in tree being sorted
+   * @param dataTree the entire data maps tree
+   * @return the current map being used
+   * @see MultiTableModel#addToDataTree(Node, TreeMap)
+   */
   private TreeMap addToDataTree(Node currNode, TreeMap dataTree) {
 	  if (currNode.getNodeType() == Node.DOCUMENT_NODE) {
 		  return dataTree;
 	  }
 	  TreeMap tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-	  if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().equals("subsector") ) {
+	  if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().matches(".*[Ss]ector") ) {
 		  return tempMap;
 	  }
 	  if(currNode.hasAttributes() && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
-		String attr = currNode.getNodeName()+"@"+getOneAttrVal(currNode);
+		String attr = getOneAttrVal(currNode);
+		if(attr.equals("fillout=1")) {
+			attr = getOneAttrVal(currNode, 1);
+		}
+		attr = currNode.getNodeName()+"@"+attr;
 		if(!tempMap.containsKey(attr)) {
 			tempMap.put(attr, new TreeMap());
 		}
@@ -120,6 +162,16 @@ public class ComboTableModel extends BaseTableModel{
 	  return tempMap;
   }
 
+  /**
+   * Similar to MultiTable model, except instead of creating a table adds the data to a vector of data maps, 
+   * and splits the path string up into a vector for path info.
+   * @param dataTree the mappings of attrubutes which will get us to the data
+   * @param parent so that we can get the data map which is a level up once we hit the bottom
+   * @param regions column axis attrubutes
+   * @param years row axis attributes
+   * @param title a string describing the path in which the data in the table is coming from
+   * @see MultiTableModel#recAddTables(TreeMap, Map.Entry, TreeSet, TreeSet, String)
+   */
   private void recAddTables(TreeMap dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String title) {
 	Iterator it = dataTree.entrySet().iterator();
 	while(it.hasNext()) {	
@@ -167,38 +219,19 @@ public class ComboTableModel extends BaseTableModel{
 		}else{
 			recAddTables((TreeMap)me.getValue(), me, regions, years, title+'/'+(String)me.getKey());
 		}
-		/*
-
-			NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), title+'/'+(String)parent.getKey(), (TreeMap)parent.getValue(), doc); 
-			JTable jTable = new JTable(tM);
-
-			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-	 
-			jTable.setCellSelectionEnabled(true);
-
-			javax.swing.table.TableColumn col;
-			Iterator i = regions.iterator();
-			int j = 0;
-			while(i.hasNext()) {
-				col = jTable.getColumnModel().getColumn(j);
-				col.setPreferredWidth(((String)i.next()).length()*5+30);
-				j++;
-			}
-			CopyPaste copyPaste = new CopyPaste( jTable );
-			JScrollPane tableView = new JScrollPane(jTable);
-			if(tables == null) {
-				tables = new Vector();
-			}
-			tables.add(title+"/");
-			tables.add(tableView);
-			return;
-		} else {
-			recAddTables((TreeMap)me.getValue(), me, regions, years, title+'/'+(String)me.getKey());
-		}*/
 	}
   }
   
+  /**
+   * Gets the Key needed to reference into the data map, given a row and col position in the table
+   * @param row the row for which we should get the row key
+   * @param col the col for which we should get the col key
+   * @return a string in format key1;key2
+   */
   private String getKey (int row, int col) {
+	  // if it is flipped the row needs to go first
+	  // need to mod by the number of data blocks we have to get the correct key for the row
+	  // and have to take into account the additional column headers for path
 	  if(flipped) {
 		  return (String)indRow.get(row % (indRow.size()))+";"+(String)indCol.get(col - leftHeaderVector.size());
 	  }
@@ -206,24 +239,39 @@ public class ComboTableModel extends BaseTableModel{
   }
 
   
+        /**
+	 * Returns the total number of column headers, which include the path headers
+	 * one space for row axis, and column headers
+	 * @return total number of column headers
+	 */
 	public int getColumnCount() {
 		return leftHeaderVector.size() + indCol.size();
 	}
+
+	/**
+	 * Total number of rows, does not include rows that have been filtered out
+	 * @return length of acitveRows
+	 */
 	public int getRowCount() {
 		return activeRows.size();
 	}
+
+	/**
+	 * Returns the value to be displayed in the table at a certain position.
+	 * @param row the row position in the table
+	 *        col the col position in the table
+	 * @return the data at the position requested
+	 */
 	public Object getValueAt(int row, int col) {
 		try{
-			//System.out.println( "row and col are " + row + " " + col );
+			// this is part of the path get info from leftHeaderVector
 			if( col < leftHeaderVector.size() ){
-				//System.out.println( "part1 " + ((Integer)activeLeft.get( row )).intValue() / (indRow.size()));
-				//System.out.println("part2 "+((Vector)leftSideVector.get( ((Integer)activeLeft.get( row )).intValue()/ (indRow.size()) )).get(col));
 				return ((Vector)leftSideVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( col );
+			// this is the col for row axis
 			}else if( col == leftHeaderVector.size() ){
 				return indRow.get( ((Integer)activeRows.get( row )).intValue() % (indRow.size()) );
+			// these columns represent data
 			}else{
-				//System.out.println( "2ndpart1 " + ((Integer)activeLeft.get( row )).intValue() / (indRow.size()));
-				//System.out.println("2ndpart2 "+((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) ));
 				return new Double(((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue());
 			}
 		} catch(NullPointerException e) {
@@ -232,6 +280,12 @@ public class ComboTableModel extends BaseTableModel{
 			return ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue();
 		}
 	}
+
+	/**
+	 * returns the attr value which defines the column/path by number passed in
+	 * @param column an integer position to define which column
+	 * @return the header value in the column index, or path index  at the position passed in
+	 */
 	public String getColumnName(int col) {
 		if( col < leftHeaderVector.size() ){
 			return (String)leftHeaderVector.get( col );
@@ -239,6 +293,14 @@ public class ComboTableModel extends BaseTableModel{
 			return (String)indCol.get( col - leftHeaderVector.size() );
 		}
 	}
+
+	/**
+	 * Used to tell which cells are editable, which are all but the path columns and 
+	 * the column for row headers.
+	 * @param row the row position being queryed
+	 *        col the column position being queryed
+	 * @return true or false depeneding on if the cell is editable
+	 */
 	public boolean isCellEditable(int row, int col) {
 		if( col <= leftHeaderVector.size() ){
 			return false;
@@ -247,13 +309,25 @@ public class ComboTableModel extends BaseTableModel{
 		}
 	}
 
+	/**
+	 * Update the activeRows vector by going through all of the path information, and
+	 * the filterMaps and determining if any of the rows correspond the the qualifying
+	 * path info.
+	 * @param possibleFilters the list of nodeNames in the filterMap that wil be fillered
+	 */
 	protected void doFilter(Vector possibleFilters) {
+		        // reset the activeRows
 			activeRows = new Vector();
 			for (int i = 0; i < (leftSideVector.size() * indRow.size()); i++) {
 				activeRows.addElement(new Integer(i));
 			}
 			Integer rowPos = new Integer(-1);
 
+			// Should be able to make this more efficient, but just need it to work right now
+			// goes through all of the nodeNames in the filterMaps
+			// then goes through each of its different attrubutes that are filtered out 
+			// and then goes through all of activeRows to see if they have that attrubutes 
+			// in the pathVector, 
 			for (int i = 0; i < possibleFilters.size(); i++) {
 				if (((String)possibleFilters.get(i)).equals("")) {
 					continue;
@@ -276,6 +350,13 @@ public class ComboTableModel extends BaseTableModel{
 			}
 	}
 	
+	/**
+	 * Update the value of a cell in the table, same as in NewDataTableModel 
+	 * @param val new value the cell should be changed to
+	 * @param row the row of the cell being edited
+	 * @param col the col of the cell being edited
+	 * @see NewDataTableModel#setValueAt(Object, int, int)
+	 */
 	public void setValueAt(Object val, int row, int col) {
 		
 		TreeMap data = ((TreeMap)TreeMapVector.get( row / (indRow.size())));

@@ -71,6 +71,9 @@ public class FileChooserDemo extends JFrame
   static String[] names = {"Single Table", "Multi Tables", "Combo Tables"};
   static JFrame frame; // goes with radio buttons
 
+  /**
+   * Main function, creates a new thread for the gui and runs it.
+   */
   public static void main(String [] args)
   {
   	
@@ -90,6 +93,9 @@ public class FileChooserDemo extends JFrame
 
   }
 
+  /**
+   * Create a new instance of this class and makes it visible
+   */
   public static void createAndShowGUI() {
 	  FileChooserDemo f = new FileChooserDemo("ModelGUI");
 	  //f.pack();
@@ -97,8 +103,12 @@ public class FileChooserDemo extends JFrame
 	  //f.show();
   }
 
-  // Create a frame with JTextArea and a menubar
-  // with a "File" dropdown menu.
+  /**
+   * Create a frame, add menu items, and initialize the DOM stuff. Looks for the recent.xml file to find
+   * previous settings, currently only the previous directory, and sets that as the current directory to
+   * look for files. Also adds window listeners so we can be notified of clicks on menu items.
+   * @param title The title of this frame 
+   */
   FileChooserDemo(String title)
   {
 	super(title);
@@ -143,8 +153,8 @@ public class FileChooserDemo extends JFrame
 	  }
 
 	} catch (Exception e) {
-		System.out.println("exception " + e);
-		System.out.println("so that hopefully means no file, so i'll just use default");
+		//System.out.println("exception " + e);
+		//System.out.println("so that hopefully means no file, so i'll just use default");
 		globalFC.setCurrentDirectory( new File(".") );
 		
 		Node aNode = lastDoc.createElement("lastDirectory");
@@ -193,7 +203,10 @@ public class FileChooserDemo extends JFrame
 
 	JMenu tableMenu = new JMenu("Table");
 	tableMenu.add(menuTableFilter = makeMenuItem("Filter"));
+	 
+	// nothing for this is implemented, just something i figured should happen
 	tableMenu.add(menuTableAdd = makeMenuItem("Add Data"));
+
 	menuTableFilter.setEnabled(false);
 	menuTableAdd.setEnabled(false);
 
@@ -218,6 +231,11 @@ public class FileChooserDemo extends JFrame
 
   }
 
+  /**
+   * Creates a new JTree with the current doc, then sets up a splitPane to hold the JTree on the left, 
+   * and and empty pane for future tables of the right. Also creates the listener for the JTree so
+   * right click options can be handled.
+   */ 
   public void displayJtree() {
 	  Container contentPane = getContentPane();
 	  if (splitPane != null ){
@@ -243,6 +261,8 @@ public class FileChooserDemo extends JFrame
 				 selectedPath = jtree.getClosestPathForLocation(e.getX(), e.getY());
 			   	jtree.setSelectionPath(selectedPath);
 				MenuElement[] me = treeMenu.getSubElements();
+				// Display Table is only availabe on elements that contain text data
+				// Add Child is available on non text nodes
 			        for (int i = 0; i < me.length; i++) {
 					if (((JMenuItem)me[i]).getText().equals("Display Table")) {
 						Node currentNode = ((DOMmodel.DOMNodeAdapter)jtree.getLastSelectedPathComponent()).getNode();
@@ -303,7 +323,10 @@ public class FileChooserDemo extends JFrame
 	   this.setVisible(true);
    }
 
-  // Process events from the chooser.
+  /**
+   * Process events from the menu items.
+   * @param e the event, only care about a click on a menu item
+   */
   public void actionPerformed( ActionEvent e )
   {
 	boolean status = false;
@@ -375,7 +398,10 @@ public class FileChooserDemo extends JFrame
 	}
   }
   
-  public void updateRecentDoc(){ // updates recentDoc with most current globalFC
+  /**
+   * Updates recentDoc with most current globalFC
+   */ 
+  public void updateRecentDoc(){ 
 	XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(lastDoc);
 	XPathResult res = (XPathResult)xpeImpl.createExpression("//recent/lastDirectory/node()", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 		
@@ -387,8 +413,11 @@ public class FileChooserDemo extends JFrame
   }
   
 
-  // This "helper method" makes a menu item and then
-  // registers this object as a listener to it.
+  /**
+   * This "helper method" makes a menu item and then registers this object as a listener to it.
+   * @param name Name of menu item
+   * @return a new menu item with specified name
+   */ 
   private JMenuItem makeMenuItem(String name)
   {
 	JMenuItem m = new JMenuItem( name );
@@ -396,6 +425,10 @@ public class FileChooserDemo extends JFrame
 	return m;
   }
 
+  /**
+   * Create right click menu for the JTree and returns it, also defines the listeners for each button
+   * @return the right click menu for the JTree
+   */
   private JPopupMenu makePopupTreeMenu() {
 	   treeMenu = new JPopupMenu();
 	   JMenuItem menuItem = new JMenuItem("Display Table");
@@ -403,8 +436,8 @@ public class FileChooserDemo extends JFrame
 		   public void mouseReleased(MouseEvent e) {
 			if (!jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
 
-				RadioButton.showDialog(frame, null, "", "Choose Table Viewing Type", names,"");
-
+				// find out the type of table and create it
+				RadioButton.showDialog(/*frame*/thisFrame, null, "", "Choose Table Viewing Type", names,"");
 				JScrollPane tableView = RadioButton.createSelection(selectedPath, doc, thisFrame);
 
 				if(tableView == null) {
@@ -413,6 +446,7 @@ public class FileChooserDemo extends JFrame
 	  			splitPane.setRightComponent(tableView);
 	  		    menuTableFilter.setEnabled(true);
 				tableMenu = makePopupTableMenu();
+				// add the listener for right click which currently only handles flip
 				((JTable)tableView.getViewport().getView()).addMouseListener(new MouseAdapter() {
 		   			public void mousePressed(MouseEvent e) {
 			   			maybeShowPopup(e);
@@ -481,12 +515,17 @@ public class FileChooserDemo extends JFrame
 	   return treeMenu;
    }
   
-  // new code for 'flip' ..
+  /**
+   * Creates the right click menu for tables which currently consists of flip, also creates the listener
+   * @return the right click menu created
+   */
   private JPopupMenu makePopupTableMenu() {
 		tableMenu = new JPopupMenu();
 		JMenuItem menuItem = new JMenuItem("Flip");
 		menuItem.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
+				// get the correct row and col which only matters for mulitablemodel
+				// then be sure to pass on the call to the correct table model
 				e.translatePoint( lastFlipX, lastFlipY );
 				Point p = e.getPoint();
 				JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
@@ -509,8 +548,11 @@ public class FileChooserDemo extends JFrame
 		tableMenu.add(menuItem);
 		return tableMenu; 
   }
-  // end new code for flip ..
   
+   /**
+    * Creates dialogs to confirm deleting a node from the tree, if yes then tell the tree model to 
+    * delete the node from the slected path
+    */
    private void deleteNode() {
 	   //Node currNode = ((DOMmodel.DOMNodeAdapter)selectedPath.getLastPathComponent()).getNode();
 	   String message = "Are you sure you want to delete this node";
@@ -529,6 +571,9 @@ public class FileChooserDemo extends JFrame
 	   ((DOMmodel)jtree.getModel()).removeNodeFrom(selectedPath);   
    }
    
+   /**
+    * Intializes and shows the add child dialog
+    */
    private void showAddChildDialog() {
 		  infoLabel.setText("Adding child to " + selectedPath.getLastPathComponent());
         
@@ -557,6 +602,10 @@ public class FileChooserDemo extends JFrame
 	   content.add(makeAddChildButtonPanel());
    }
 
+   /**
+    * Creates the layout for the add node input part of the dialog
+    * @return the panel which was created for the dialog layout
+    */
    private JPanel makeAddNodePanel() {
 	   infoLabel = new JLabel(".");
 	   nameField = new JTextField();
@@ -593,6 +642,10 @@ public class FileChooserDemo extends JFrame
 	   return childPanel;
    }
 
+   /**
+    * Creates the layout for the add node button part of the dialog
+    * @return the panel which was created for the dialog layout
+    */
    private JPanel makeAddChildButtonPanel() {   
 	   JPanel buttonPanel = new JPanel();
 	   buttonPanel.setLayout(new GridLayout(0,1,5,5));
@@ -627,6 +680,9 @@ public class FileChooserDemo extends JFrame
 	   return buttonPanel;
    }
 
+ /**
+  * Takes the newly created node and tells the tree model to add it to the tree
+  */
  private void addChildNode() {
 	   //build the new child from info entered into Add Child dialog
 	   Node newChild = extractNewChild();
@@ -642,14 +698,22 @@ public class FileChooserDemo extends JFrame
    }
 
 
-  // ********* newly added **************
-  // for the tablechangedmodel listener
+  /**
+   * Listener for table model events, we only care about when a user has updated the data, in which case
+   * we have to tell the tree to refresh to show the changed value int the tree.
+   * @param e the event that has occured
+   */
   public void tableChanged(TableModelEvent e) {
 	  if(e.getType() == TableModelEvent.UPDATE) {
 		((DOMmodel)jtree.getModel()).fireTreeNodesChanged(new TreeModelEvent(e.getSource(), selectedPath));
 	  }
   }
 
+        /**
+	 * Listener of tree model events only care about when a user has updated the data, in which case
+	 * we have to tell the table to refresh to show the changed value.  Make sure that the event came from the
+	 * tree model so we don't keep sending messages back and forth between the table and tree
+	 */
 	class MyTreeModelListener implements TreeModelListener {
 		public void treeNodesChanged(TreeModelEvent e) {
 			try {
@@ -674,6 +738,11 @@ public class FileChooserDemo extends JFrame
     }
 
      
+        /**
+	 * Gets the input values from the add child dialog and parses them makes sure they are valid
+	 * then returns a new node as specified by the input in the dialog.
+	 * @return new node as specified in the dialog
+	 */
 	private Node extractNewChild() {
 		String nodeName = nameField.getText().trim();
 		String attribs = attribField.getText().trim();
@@ -764,6 +833,10 @@ public class FileChooserDemo extends JFrame
 		return newNode;
 	}
 
+  /**
+   * Creates a JFileChooser to figure out which file to parse, then parses the file and sets doc to it
+   * @return true if we parsed a file, false otherwise
+   */
   boolean openXMLFile(){
 
 	  JFileChooser fc = new JFileChooser();
@@ -798,6 +871,11 @@ public class FileChooserDemo extends JFrame
 	  return true;
    }
 
+   /**
+    * Creates filchoosers to get a CSV file and a header file, then processes them with the CSV to 
+    * XML converter
+    * @return true if processed and created a doc, false otherwise
+    */
    boolean openCSVFile(){
 
 	 File file2;
@@ -898,6 +976,10 @@ public class FileChooserDemo extends JFrame
   }
 
 
+  /**
+   * Does the parsing of an XML file, and sets doc to it
+   * @param file the file that will be parsed
+   */
   public void readXMLFile(File file){
 	  try {
 		lsInput.setByteStream(new FileInputStream(file));
@@ -911,6 +993,12 @@ public class FileChooserDemo extends JFrame
 	  }
   }
 
+  /**
+   * Takes a CSV file, and Headers file, then processes the files by building a new tree with the
+   * DOMTreeBuilder class. After the tree is build doc is set to that tree
+   * @param file the CSV file
+   * @param file2 the Headers file
+   */
   public void readCSVFile(File file, File file2){
 	StringTokenizer st;
 	String intValueStr;
@@ -1049,6 +1137,12 @@ public class FileChooserDemo extends JFrame
 	}
   }
 
+  /**
+   * Writes the DOM document to the specified file
+   * @param file where the XML tree will be written to
+   * @param thDoc the tree that should be written
+   * @return whether the file was actually written or not
+   */
   public boolean writeFile(File file, Document theDoc){
 	// specify output formating properties
 	OutputFormat format = new OutputFormat(theDoc);

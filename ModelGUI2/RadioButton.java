@@ -10,6 +10,11 @@ public class RadioButton extends JDialog implements ActionListener {
 	private JList list;
 	private static Frame parentFrame;
 
+	/**
+	 * Creates and shows a short dialog to choose which type of table the use would
+	 * like to use.
+	 * @return the name of the table selected
+	 */
 	public static String showDialog(Component frameComp,
 									Component locationComp,
 									String labelText,
@@ -27,6 +32,10 @@ public class RadioButton extends JDialog implements ActionListener {
 		return value;
 	}
 
+	/**
+	 * Initializes some of the data and creates the list of selections, and sets up
+	 * the layout.
+	 */
 	public RadioButton(Frame frame,
 					   Component locationComp,
 					   String labelText,
@@ -86,7 +95,11 @@ public class RadioButton extends JDialog implements ActionListener {
 		setLocationRelativeTo(locationComp);
 	}
 
-	//Handle clicks on the Set and Cancel buttons.
+	/**
+	 * Handle clicks on the Select and Cancel buttons, sets the value to the name of
+	 * the table that was selected.
+	 * @param e the even that occured, only care about clicks on a button
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if ("Select".equals(e.getActionCommand())) {
 			RadioButton.value = (String)(list.getSelectedValue());
@@ -97,6 +110,14 @@ public class RadioButton extends JDialog implements ActionListener {
 		}
 		RadioButton.dialog.setVisible(false);
 	}
+	/**
+	 * Handles creating the table based on value, sets up column widths, and any 
+	 * additional layers such as CopyPaste, and TableSorter.
+	 * @param tp needed to create the table.
+	 * @param doc needed to create the table.
+	 * @param pf needed to create the table.
+	 * @return Returns the pane to be displayed in the right side of the splitpane
+	 */
 	public static JScrollPane createSelection(TreePath tp, Document doc, JFrame pf) {
 		if(RadioButton.value.equals("")) {
 			return null;

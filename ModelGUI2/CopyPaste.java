@@ -10,6 +10,10 @@ public class CopyPaste implements ActionListener{
 	private StringSelection stringSelection;
 	private JTable myJTable ;
 
+	/**
+	 * Constructor initializes the table for which we will be copy and pasting
+	 * @param the table for which we will be copy and pasting
+	 */
 	public CopyPaste(JTable jTable)
     {
 	  myJTable = jTable;
@@ -22,14 +26,26 @@ public class CopyPaste implements ActionListener{
 	  clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     }
 
+        /**
+	 * Returns the table that the instance copys and pastes for
+	 * @return this classes reference to it's jtable
+	 */
 	public JTable getJTable() {
 		return myJTable;
 	}
 
+	/**
+	 * Sets a new table to copy and paste for
+	 * @param aJTable new JTable reference to copy paste to
+	 */
 	public void setJTable(JTable aJTable) {
 		this.myJTable = aJTable;
 	}
 
+	/**
+	 * Listen for copy and paste actions, and handle them appropriatly
+	 * @param e the event that has occured, only care about copy and paste
+	 */
 	public void actionPerformed(ActionEvent e)
   	{
 		if (e.getActionCommand().equals("Copy")) {
@@ -57,6 +73,7 @@ public class CopyPaste implements ActionListener{
 				    }
 				}
 				stringBuffer.append("\n");
+				//stringBuffer.append(System.getProperty("line.separator"));
 			}
 			stringSelection  = new StringSelection(stringBuffer.toString());
 			clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -73,6 +90,7 @@ public class CopyPaste implements ActionListener{
 				String stringToPaste = (String)(clipboard.getContents(this).getTransferData(DataFlavor.stringFlavor));
 				System.out.println("String is:" + stringToPaste);
 				StringTokenizer stRow = new StringTokenizer(stringToPaste, "\n"); //divide into rows
+				//StringTokenizer stRow = new StringTokenizer(stringToPaste, System.getProperty("line.separator")); //divide into rows
 				for(int i=0; stRow.hasMoreTokens(); i++){	
 					entireRow = stRow.nextToken();
 					StringTokenizer stCol = new StringTokenizer(entireRow,"\t");
@@ -96,6 +114,13 @@ public class CopyPaste implements ActionListener{
 		}
    	}
    	
+	/**
+	 * Make sure that the data being pasted is of a similar type, so that we don't have invalid data in
+	 * out table and tree
+	 * @param oldStr used to determine an appropriate type
+	 * @param newStr new value to be checked if it is appropriate
+	 * @return true if they are of similar types, false otherwise
+	 */
    	public boolean areOfTheSameType( String oldStr, String newStr ){
    		try{
    			double oldDouble = Double.parseDouble(oldStr); //old is a double

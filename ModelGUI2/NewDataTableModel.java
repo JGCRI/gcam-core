@@ -20,6 +20,13 @@ public class NewDataTableModel extends BaseTableModel{
 	String w3;
 	//Document doc;
 
+	/**
+	 * Constructor initializes data members, and calls buildTable to initialize data, and filterMaps
+	 * @param tp the Tree Path which was selected from the tree, needed to build table
+	 *        doc needed to run the XPath query against
+	 *        parentFrame needed to create dialogs
+	 *        tableTypeString to be able to display the type of table this is
+	 */
 	public NewDataTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
 		super(tp, doc, parentFrame, tableTypeString);
 		indCol = new Vector();
@@ -35,22 +42,38 @@ public class NewDataTableModel extends BaseTableModel{
 		ind2Name = (String)wild.get(1);
 		flipped = false;
 	}
+
+	/**
+	 * Uses an XPath expression to get a set of data nodes, then figures out which attrubute values of the 
+	 * axes define where to find the node, and stores it in the data map
+	 * @param xpe an XPath expression which will be evaluated to get a set of nodes
+	 */
 	protected void buildTable(XPathExpression xpe) {
 	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 	  xpe = null;
+	  // TreeSets don't allow duplicates
 	  TreeSet col = new TreeSet();
 	  TreeSet row = new TreeSet();
 	  Node tempNode;
+	  // region and year isn't a good name anymore
+	  // more like axis keys
 	  Object[] regionAndYear;
 	  while ((tempNode = res.iterateNext()) != null) {
 		regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode());
 		col.add(regionAndYear[0]);
 		row.add(regionAndYear[1]);
+		// colKey;rowKey maps to the data that should go in that cell
 		data.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
 	  }
 	  indCol = new Vector(col);
 	  indRow = new Vector(row);
 	}
+
+	/**
+	 * Gets the 2 attributes of the 2 wilds from going up the parent path of a node
+	 * @param n the node whos wild node's attrubutes need to be determined
+	 * @return an array of size 2 with the attrubute values of the wild which lead to this node
+	 */
   	private Object[] getRegionAndYearFromNode(Node n) {
 	  Vector ret = new Vector(2,0);
 	  do {
@@ -69,12 +92,31 @@ public class NewDataTableModel extends BaseTableModel{
 	  } while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
 	  return ret.toArray();
   	}
+
+	/**
+	 * not supported for a single table
+	 */
 	protected void filterData(JFrame ParentFrame) {
 		throw new UnsupportedOperationException();
 	}
+
+	/**
+	 * can't execute a filter since it is not supported
+	 */
 	protected void doFilter(Vector possibleFilters){
 		throw new UnsupportedOperationException();
 	}
+
+	/**
+	 * Constructor used by multitablemodel which has already determined axis and data
+	 * @param set1 column axis values
+	 *        set1Name the node name which the column attrubutes come from
+	 *        set2 row axis values
+	 *        set2Name the node name which the row attrubutes come from
+	 *        w3In a string which gives a better idea of where this thable comes from
+	 *        dataIn the map which defines mapping of colKey;rowKey to data
+	 *        docIn document of where the data comes from
+	 */
 	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, TreeMap dataIn, Document docIn) {
 		w3 = w3In;
 		indCol = new Vector(set1);
@@ -87,6 +129,13 @@ public class NewDataTableModel extends BaseTableModel{
 		ind2Name = set2Name;
 	}
 
+	/**
+	 * Will be called by muli table model, switches the row and column headers, and names.
+	 * Also sets a boolean so we know it has been flipped, since it makes a difference how we
+	 * reference into the data map
+	 * @param row not used here
+	 *        col not used here
+	 */
 	public void flip(int row, int col) {
 		Vector tempArr = indCol;
 		indCol = indRow;
@@ -100,21 +149,39 @@ public class NewDataTableModel extends BaseTableModel{
 		fireTableStructureChanged();
 	}
 
+	/**
+	 * Returns the number of attributes for the column axis
+	 * @return length of the column axis
+	 */
 	public int getColumnCount() {
 		return indCol.size();
 	}
 
+	/**
+	 * Returns the number of attributes for the row axis
+	 * @return length of the row axis
+	 */
 	public int getRowCount() {
 		return indRow.size();
 	}
 
+	/* not used anymore
 	public Node getNodeAt(int row, int col) {
 		if(col == 0) {
 			return null;
 		}
 		return ((Node)data.get(getKey(row,col)));
 	}
+	*/
+
+	/**
+	 * Returns the value to be displayed in the table at a certain position
+	 * @param row the row position in the table
+	 *        col the col position in the table
+	 * @return the data at the position requested
+	 */
 	public Object getValueAt(int row, int col) {
+		// first column is for the row headers
 		if(col ==0) {
 			return indRow.get(row);
 		}
@@ -125,21 +192,49 @@ public class NewDataTableModel extends BaseTableModel{
 		return ret.getNodeValue();
 	}
 
+	/**
+	 * returns the attr value which defines the column passed in
+	 * @param column an integer position to define which column
+	 * @return the header value in the column index at the position passed in
+	 */
 	public String getColumnName(int column) {
 		return (String)indCol.get(column);
 	}
 
+	/**
+	 * Used to tell which cells are editable, which are all but the first column, which is 
+	 * reserved for row headers
+	 * @param row the row position being queryed
+	 *        col the column position being queryed
+	 * @return true or false depeneding on if the cell is editable
+	 */
 	public boolean isCellEditable(int row, int col) {
 		return col > 0;
 	}
 
+	/**
+	 * Determines the key used to reference into the data map to get data
+	 * @param row the row position of the data
+	 *        col the column poition of the data
+	 * @return the key in format key1;key2
+	 */
 	private String getKey (int row, int col) {
+		// if it is filipped then the row should be the first key, and col is the second
 		if(flipped) {
 			return (String)indRow.get(row)+";"+(String)indCol.get(col);
 		}
 		return (String)indCol.get(col)+";"+(String)indRow.get(row);
 	}
 
+	/**
+	 * Update the value in the cell specified. It there was data backing the cell
+	 * previously, then it will just change the nodeValue, otherwise it will try to
+	 * create a new node and add it to the tree, by attempting to analyze it's surrounding
+	 * nodes, and it's row/column header values
+	 * @param val new value the cell should be changed to
+	 * @param row the row of the cell being edited
+	 * @param col the col of the cell being edited
+	 */
 	public void setValueAt(Object val, int row, int col) {
 		if(!isCellEditable(row, col)) {
 			return;
