@@ -87,6 +87,15 @@
 			STOP
 		END IF
 	END DO
+    IF ( ITER.GT.MAXITER ) THEN
+ 			Write(97,*) "***************************"
+			Write(97,*) "MAXIMUM ITERATIONS EXCEEDED"
+			Write(97,*) "Model quitting"
+			Write(*,*) "MAXIMUM ITERATIONS EXCEEDED"
+			Write(*,*) " Model quitting:"
+			Close(97)
+			STOP
+    END IF
 
 	!the current value for CEMTARGS and model evaluation are the solution
 	!to transfer back to the OPT routines, include the final taxes and
