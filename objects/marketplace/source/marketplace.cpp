@@ -34,7 +34,6 @@
 #include "util/base/include/supply_demand_curve.h"
 
 using namespace std;
-using namespace mtl;
 
 extern ofstream logfile;
 extern Scenario* scenario;
@@ -691,6 +690,39 @@ void Marketplace::setMarketToSolve ( const string& goodName, const string& regio
     }
 }
 
+/*! \brief Unset the solve flag for this market for the given period, or all periods if per argument is undefined.
+* \todo Decide a)If this is a good name b)If this function should be combined with the above using a parameter. c)Overloaded function for period?
+* This function determines a market from a good and region and unsets the market to solve for the period passed to the function.
+* If this period is -1, the default value, the function unsets the solve flag for all periods of the market. This solve flag 
+* determines whether the market is solved by the solution mechanism, except for cases where the market does not pass certain
+* other criteria related to singularities. If this flag is set to false, as is the default, the market will never be solved. 
+*
+* \param goodName The name of the good of the market.
+* \param regionName The region name of the market.
+* \param per The period for which the market should not be solved, -1 is the default values and tells the function to set the flag for all periods.
+*/
+void Marketplace::unsetMarketToSolve ( const string& goodName, const string& regionName, const int per ) {
+
+    const int marketNumber = getMarketNumber( goodName, regionName );
+
+    // If the market exists.
+    if ( marketNumber != -1 ) {
+        // If by default we are setting all time periods to solve.
+        if( per == -1 ) {
+            for( int per = 0; per < static_cast<int>( markets[ marketNumber ].size() ); per++ ){                 
+                markets[ marketNumber ][ per ]->setSolveMarket( false );
+            }
+        }
+        // Otherwise set the individual market to solve.
+        else {
+            markets[ marketNumber ][ per ]->setSolveMarket( false );
+        }
+    }
+    else {
+        cout << "Error: Market cannot be set not to solve as it does not exist: " << goodName << " " << regionName << endl;
+    }
+}
+
 /*! \brief Initialize all market demands for the given period.
 * 
 * This function iterates through the markets and nulls the demand of each market
@@ -1052,6 +1084,52 @@ void Marketplace::storeinfo( const int period ) {
 void Marketplace::restoreinfo( const int period) {
     for ( int i = 0; i < numMarkets; i++ ) {
         markets[ i ][ period ]->restoreInfo();
+    }
+}
+
+/*! \brief Adds an information value and an associated key to the market for the
+* specified goodName, regionName and period.
+* \detailed This functions adds to the Market extra information which needs to be
+* explicitally associated with a Market. 
+* \author Josh Lurz
+* \warning The function is UNRELATED to storeinfo and restoreinfo.
+* \param goodName The good of the market to add the information for.
+* \param regionName The region used to find the market to add the information to.
+* \param period The period the information is associated with. 
+* \param itemName The string to use as the key for this information value.
+* \param itemValue The value to be associated with this key. 
+*/
+void Marketplace::setMarketInfo( const string& goodName, const string& regionName, const int period, const string itemName, const double itemValue ){
+    const int marketNumber = getMarketNumber( goodName, regionName );
+
+    if ( marketNumber != -1 ) {
+        markets[ marketNumber ][ period ]->setMarketInfo( itemName, itemValue );
+    }
+    else {
+        cerr << "ERROR: Called setMarketInfo for non-existant market " << goodName << " in " << regionName << endl;
+    }
+}
+
+   /*! \brief Gets an information value for associated key from the market for the
+* specified goodName, regionName and period.
+* \detailed This functions gets extra Market information which needs to be
+* explicitally associated with a Market. 
+* \author Josh Lurz
+* \warning The function is UNRELATED to storeinfo and restoreinfo.
+* \param goodName The good of the market to get the information for.
+* \param regionName The region used to find the market to get the information from.
+* \param period The period the information is associated with. 
+* \param itemName The string to use as the key to query the market.
+*/
+double Marketplace::getMarketInfo( const string& goodName, const string& regionName, const int period, const string& itemName ){
+    const int marketNumber = getMarketNumber( goodName, regionName );
+
+    if ( marketNumber != -1 ) {
+        return markets[ marketNumber ][ period ]->getMarketInfo( itemName );
+    }
+    else {
+        cerr << "ERROR: Called getMarketInfo for non-existant market "<< goodName << " in " << regionName << endl;
+        return 0;
     }
 }
 

@@ -17,6 +17,7 @@
 #include "util/base/include/model_time.h" 
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/market.h"
+#include "marketplace/include/market_info.h"
 
 using namespace std;
 
@@ -39,10 +40,12 @@ good( goodNameIn ), region( regionNameIn ), period( periodIn ) {
    supply = 0;
    storedSupply = 0;
    solveMarket = false;
+   marketInfo = new MarketInfo();
 }
 
-//! Empty destructor defined for future use. 
+//! Destructor
 Market::~Market() {
+    delete marketInfo;
 }
 
 /*! \brief Write out XML for debugging purposes.
@@ -55,8 +58,6 @@ Market::~Market() {
 * \param out Output stream to print to.
 */
 void Market::toDebugXML( const int period, ostream& out ) const {
-   
-   
    // write the beginning tag.
    Tabs::writeTabs( out );
    out << "<Market name=\""<< getName() << "\" type=\"" << getType() << "\">" << endl;
@@ -77,7 +78,7 @@ void Market::toDebugXML( const int period, ostream& out ) const {
    for( vector<string>::const_iterator i = containedRegionNames.begin(); i != containedRegionNames.end(); i++ ) {
       XMLWriteElement( *i, "ContainedRegion", out );
    }
-
+   marketInfo->toDebugXML( out );
    derivedToDebugXML( out );
    
    // finished writing xml for the class members.
@@ -376,6 +377,17 @@ string Market::getName() const {
    return region + good;
 }
 
+/*! \brief Return the market region.
+* 
+* This method returns the region of the market. This may not be one of the miniCAM
+* regions, as a market region can contain several regions.
+*
+* \return The market region.
+*/
+string Market::getRegionName() const {
+   return region;
+}
+
 /*! \brief Return the market good name.
 * 
 * This function returns the good that the market represents. 
@@ -386,15 +398,29 @@ string Market::getGoodName() const {
    return good;
 }
 
-/*! \brief Return the market region.
-* 
-* This method returns the region of the market. This may not be one of the miniCAM
-* regions, as a market region can contain several regions.
-*
-* \return The market region.
+/*! \brief Set a name and value for a piece of information related to the market.
+* \detailed This function will add the item and value to the MarketInfo object,
+* which if itemName already exists will reset the current value, otherwise it will
+* create a new key value pair. 
+* \author Josh Lurz
+* \param itemName The string to use as the key for this information value.
+* \param itemValue The value to be associated with this key. 
 */
-string Market::getRegionName() const {
-   return region;
+void Market::setMarketInfo( const std::string& itemName, const double itemValue ){
+    marketInfo->addItem( itemName, itemValue );
+}
+
+/*! \brief Get the value of the information stored with itemName as the key.
+* \detailed This function will query the market's MarketInfo object for the value 
+* associated with the key itemName. If the itemName does not exist, it will return 0.
+* The MarketInfo object will also emit a warning if this occurs. 
+* \author Josh Lurz
+* \param itemName The key for the value to be queried.
+* \return The value associated with itemName if it exists, 0 otherwise.
+* \todo Is zero the best return value for a non-existant key?
+*/
+double Market::getMarketInfo( const std::string& itemName ) const {
+    return marketInfo->getItemValue( itemName );
 }
 
 /*! \brief Store info from last period into the market's stored variables.
