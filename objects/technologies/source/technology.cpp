@@ -18,6 +18,7 @@
 #include "technologies/include/technology.h"
 #include "emissions/include/ghg.h"
 #include "emissions/include/ghg_output.h"
+#include "emissions/include/ghg_input.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
@@ -245,6 +246,9 @@ void technology::XMLParse( const DOMNode* node )
         }
         else if( nodeName == "GHG_OUTPUT" ){
             parseContainerNode( curr, ghg, ghgNameMap, new GhgOutput() );
+        }
+        else if( nodeName == "GHG_INPUT" ){
+            parseContainerNode( curr, ghg, ghgNameMap, new GhgInput() );
         }
         // parse derived classes
         else {
