@@ -40,15 +40,9 @@ public:
     std::string getName() const; 
     void completeInit();
     void setMarket( const std::string& regionName );
-    double getPrice(int per); 
-    void cumulsupply(double prc,int per);
-    double getCummProd(int per);
-    void annualsupply( int per, const GDP* gdp, double price1, double price2 );
+    double getPrice(int per);
+    void calcSupply( const std::string& regionName, const GDP* gdp, const int period );
     double getAnnualProd(int per);
-    double getAvailable(int per);
-    double getSubAvail( const std::string& subResourceName, const int per);
-    int getNoSubrsrc();
-    void show();
     void dbOutput( const std::string& regname ); 
     void csvOutputFile( const std::string& regname ); 
     void addToDependencyGraph( std::ostream& outStream, const int period ) const;
@@ -62,6 +56,8 @@ protected:
     std::vector<double> annualprod; //!< annual production rate of Resource
     std::vector<double> cummprod; //!< cummulative production of Resource
     std::map<std::string,int> subResourceNameMap; //!< Map of subResource name to integer position in vector. 
+    void annualsupply( int per, const GDP* gdp, double price, double prev_price );
+    void cumulsupply( double prc, int per );
     void printStyle( std::ostream& outStream ) const;
 };
 

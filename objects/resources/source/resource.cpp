@@ -202,10 +202,13 @@ void Resource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 void Resource::setMarket( const string& regionName ) {
 
     Marketplace* marketplace = scenario->getMarketplace();
+    const Modeltime* modeltime = scenario->getModeltime();
     // name is resource name
     if ( marketplace->createMarket( regionName, market, name, Marketplace::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, rscprc );
-        marketplace->setMarketToSolve (name, regionName);
+        for( int per = 1; per < modeltime->getmaxper(); ++per ){
+            marketplace->setMarketToSolve( name, regionName, per );
+        }
     }
 }
 
@@ -220,10 +223,26 @@ double Resource::getPrice(int per)
     return rscprc[per] ;
 }
 
-//! Returns total number of subsectors.
-int Resource::getNoSubrsrc() 
-{
-    return nosubrsrc;
+//! Calculate total resource supply for a period.
+void Resource::calcSupply( const string& regionName, const GDP* gdp, const int period ){
+    // This code is moved down from Region
+    Marketplace* marketplace = scenario->getMarketplace();
+
+    double price = marketplace->getPrice( name, regionName, period );
+    double lastPeriodPrice;
+
+    if ( period == 0 ) {
+        lastPeriodPrice = price;
+    }
+    else {
+        lastPeriodPrice = marketplace->getPrice( name, regionName, period - 1 );
+    }
+
+    // calculate annual supply
+    annualsupply( period, gdp, price, lastPeriodPrice );
+
+    // set market supply of resource
+    marketplace->addToSupply( name, regionName, annualprod[ period ], period );
 }
 
 void Resource::cumulsupply(double prc,int per)
@@ -238,12 +257,6 @@ void Resource::cumulsupply(double prc,int per)
         cummprod[per] += subResource[i]->getCumulProd(per);
     }
 }
-
-double Resource::getCummProd(int per)
-{
-    return cummprod[per];
-}
-
 
 //! Calculate annual production
 void Resource::annualsupply( int per, const GDP* gdp, double price, double prev_price )
@@ -265,35 +278,8 @@ void Resource::annualsupply( int per, const GDP* gdp, double price, double prev_
 
 
 //! Return annual production of resources.
-double Resource::getAnnualProd(int per)
-{
+double Resource::getAnnualProd(int per) {
     return annualprod[per];
-}
-
-//! Return resource available from all subsectors.
-double Resource::getAvailable(int per)
-{
-    return available[ per ];
-}
-
-//! Return resource available from each subsector.
-double Resource::getSubAvail( const string& subResourceName, const int per ) {
-    for (int i=0;i<nosubrsrc;i++) {
-        if (subResource[i]->getName() == subResourceName )
-            return subResource[i]->getAvailable(per);
-    }
-    return 0;
-}
-
-void Resource::show()
-{
-    int i=0;
-    //write to file or database later
-    cout << name << endl;
-    cout << "Number of Subsectors: " << nosubrsrc <<"\n";
-    for (i=0;i<nosubrsrc;i++) {
-        cout<<subResource[i]->getName()<<"\n";
-    }
 }
 
 //! Write resource output to file.
