@@ -331,7 +331,7 @@ double Market::getStoredRawSupply() const {
 * This method is used to set the true value of the supply variable in the Market. It is often used in the solution mechanism.
 * Note that all the functions with "Raw" in the name have this behavior.
 *
-* \param value The new value to set the supply variable to. 
+* \param supplyIn The new value to set the supply variable to. 
 * \sa setSupply
 */
 void Market::setRawSupply( const double supplyIn ) {
