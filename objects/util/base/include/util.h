@@ -108,7 +108,7 @@ namespace util {
     * \param fName The name of the file streamIn references, so that the error message can be more informative.
     */
     template <class T>
-    inline void checkIsOpen( const T& streamIn, const std::string& fName ) {
+    inline void checkIsOpen( T& streamIn, const std::string& fName ) {
         if( !streamIn.is_open() ) {
             std::cerr << "Severe Error: File " << fName << " could not be opened." << std::endl;
             abort();
@@ -221,6 +221,6 @@ namespace util {
 	
 	    return retString;
     }
-}
+} // End util namespace.
 #endif // _UTIL_H_
 

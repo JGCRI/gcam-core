@@ -15,13 +15,14 @@
 
 #include <vector>
 #include <map>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 
 // Forward declarations
 class Summary;
 class technology;
 class hydro_tech;
 class Emcoef_ind;
+class Tabs;
 
 /*! 
 * \ingroup CIAM
@@ -79,9 +80,9 @@ public:
     void XMLParse( const xercesc::DOMNode* tempNode );
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     void completeInit();
-    void toXML( std::ostream& out ) const;
-    virtual void toOutputXML( std::ostream& out ) const;
-    void toDebugXML( const int period, std::ostream& out ) const;
+    void toXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void calcPrice( const int period );
     double getPrice( const int period ) const;
     double getCO2EmFactor(int period) const;

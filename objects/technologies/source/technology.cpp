@@ -11,6 +11,8 @@
 #include <string>
 #include <iostream>
 #include <cassert>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 
 // User headers
 #include "technologies/include/technology.h"
@@ -238,17 +240,7 @@ void technology::XMLParse( const DOMNode* node )
             B = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "GHG" ){
-            map<string,int>::const_iterator ghgMapIter = ghgNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-            if( ghgMapIter != ghgNameMap.end() ) {
-                // ghg already exists.
-                ghg[ ghgMapIter->second ]->XMLParse( curr );
-            }
-            else {
-                tempGhg = new Ghg();
-                tempGhg->XMLParse( curr );
-                ghg.push_back( tempGhg );
-                ghgNameMap[ tempGhg->getName() ] = static_cast<int>( ghg.size() ) - 1;
-            }
+            parseContainerNode( curr, ghg, ghgNameMap, new Ghg() );
         }
         // parse derived classes
         else {
@@ -283,97 +275,97 @@ void technology::completeInit() {
 
 
 //! write object to xml output stream
-void technology::toXML( ostream& out ) const {
+void technology::toXML( ostream& out, Tabs* tabs ) const {
     
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<period year=\"" << year << "\">" << endl;
     
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     
     // write the xml for the class members.
     
-    XMLWriteElement( name, "name", out );
-    XMLWriteElement( year, "year", out );
+    XMLWriteElement( name, "name", out, tabs );
+    XMLWriteElement( year, "year", out, tabs );
     
-    XMLWriteElementCheckDefault( shrwts, "sharewt", out, 1 );
+    XMLWriteElementCheckDefault( shrwts, "sharewt", out, tabs, 1 );
     
     if (doCalibration) {
-        XMLWriteElement( calInputValue, "calInputValue", out );
+        XMLWriteElement( calInputValue, "calInputValue", out, tabs );
     }
     
-    XMLWriteElement( fuelname, "fuelname", out );
-    
-    XMLWriteElementCheckDefault( effBase, "efficiency", out, 1 );
-    XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, 0 );
-    XMLWriteElementCheckDefault( neCostBase, "nonenergycost", out, 0 );
-	XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, 0 );
-    XMLWriteElementCheckDefault( tax, "tax", out, 0 );
-    XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, 1 );
-    XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, 1 );
-    XMLWriteElementCheckDefault( lexp, "logitexp", out, -6 );
-    XMLWriteElementCheckDefault( techchange, "techchange", out, 0 );
-    XMLWriteElementCheckDefault( resource, "resource", out, 0 );
-    XMLWriteElementCheckDefault( A, "A", out, 0 );
-    XMLWriteElementCheckDefault( B, "B", out, 0 );
+    XMLWriteElement( fuelname, "fuelname", out, tabs );
+    XMLWriteElementCheckDefault( effBase, "efficiency", out, tabs, 1 );
+    XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0 );
+    XMLWriteElementCheckDefault( neCostBase, "nonenergycost", out, tabs, 0 );
+	XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0 );
+    XMLWriteElementCheckDefault( tax, "tax", out, tabs, 0 );
+    XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1 );
+    XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1 );
+    XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, -6 );
+    XMLWriteElementCheckDefault( techchange, "techchange", out, tabs, 0 );
+    XMLWriteElementCheckDefault( resource, "resource", out, tabs, 0 );
+    XMLWriteElementCheckDefault( A, "A", out, tabs, 0 );
+    XMLWriteElementCheckDefault( B, "B", out, tabs, 0 );
     
     for( vector<Ghg*>::const_iterator ghgIter = ghg.begin(); ghgIter != ghg.end(); ghgIter++ ){
-        ( *ghgIter )->toXML( out );
+        ( *ghgIter )->toXML( out, tabs );
     }
     
     // finished writing xml for the class members.
     
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
     
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</period>" << endl;
 }
 
 //! write object to xml debugging output stream
-void technology::toDebugXML( const int period, ostream& out ) const {
+void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<technology name=\"" << name << "\" year=\"" << year << "\">" << endl;
     
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     // write the xml for the class members.
     
-    XMLWriteElement( unit, "unit", out );
-    XMLWriteElement( fuelname, "fuelname", out );
-    XMLWriteElement( shrwts, "sharewt", out );
+    XMLWriteElement( unit, "unit", out, tabs );
+    XMLWriteElement( fuelname, "fuelname", out, tabs );
+    XMLWriteElement( shrwts, "sharewt", out, tabs );
     if (doCalibration) {
-        XMLWriteElement( calInputValue, "calInputValue", out );
+        XMLWriteElement( calInputValue, "calInputValue", out, tabs );
     }
-    XMLWriteElement( eff, "efficiencyEffective", out );
-    XMLWriteElement( effBase, "efficiencyBase", out );
-    XMLWriteElement( effPenalty, "efficiencyPenalty", out );
-    XMLWriteElement( fuelcost, "fuelcost", out );
-    XMLWriteElement( necost, "nonEnergyCostEffective", out );
-    XMLWriteElement( neCostBase, "neCostBase", out );
-    XMLWriteElement( neCostPenalty, "neCostPenalty", out );
-    XMLWriteElement( tax, "tax", out );
-    XMLWriteElement( fMultiplier, "fMultiplier", out );
-    XMLWriteElement( pMultiplier, "pMultiplier", out );
-    XMLWriteElement( carbontax, "carbontax", out );
-    XMLWriteElement( carbontaxgj, "carbontaxgj", out );
-    XMLWriteElement( carbontaxpaid, "carbontaxpaid", out );
-    XMLWriteElement( lexp, "logitexp", out );
-    XMLWriteElement( share, "share", out );
-    XMLWriteElement( output, "output", out );
-    XMLWriteElement( input, "input", out );
-    XMLWriteElement( techchange, "techchange", out );
-    XMLWriteElement( resource, "resource", out );
-    XMLWriteElement( A, "A", out );
-    XMLWriteElement( B, "B", out );
+    XMLWriteElement( eff, "efficiencyEffective", out, tabs );
+    XMLWriteElement( effBase, "efficiencyBase", out, tabs );
+    XMLWriteElement( effPenalty, "efficiencyPenalty", out, tabs );
+    XMLWriteElement( fuelcost, "fuelcost", out, tabs );
+    XMLWriteElement( necost, "nonEnergyCostEffective", out, tabs );
+    XMLWriteElement( neCostBase, "neCostBase", out, tabs );
+    XMLWriteElement( neCostPenalty, "neCostPenalty", out, tabs );
+    XMLWriteElement( tax, "tax", out, tabs );
+    XMLWriteElement( fMultiplier, "fMultiplier", out, tabs );
+    XMLWriteElement( pMultiplier, "pMultiplier", out, tabs );
+    XMLWriteElement( carbontax, "carbontax", out, tabs );
+    XMLWriteElement( carbontaxgj, "carbontaxgj", out, tabs );
+    XMLWriteElement( carbontaxpaid, "carbontaxpaid", out, tabs );
+    XMLWriteElement( lexp, "logitexp", out, tabs );
+    XMLWriteElement( share, "share", out, tabs );
+    XMLWriteElement( output, "output", out, tabs );
+    XMLWriteElement( input, "input", out, tabs );
+    XMLWriteElement( techchange, "techchange", out, tabs );
+    XMLWriteElement( resource, "resource", out, tabs );
+    XMLWriteElement( A, "A", out, tabs );
+    XMLWriteElement( B, "B", out, tabs );
+
     // write our ghg object, vector is of number of gases
     for( vector<Ghg*>::const_iterator i = ghg.begin(); i != ghg.end(); i++ ){
-        ( *i )->toDebugXML( period, out );
+        ( *i )->toDebugXML( period, out, tabs );
     }
     
     // finished writing xml for the class members.
     
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
     
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</technology>" << endl;
 }
 
@@ -478,19 +470,19 @@ void technology::normShare(double sum)
 void technology::calcFixedSupply(int per)
 {
     const Modeltime* modeltime = scenario->getModeltime();
-    string FixedTech = "hydro";
+    const string FIXED_TECH = "hydro";
     
     // MiniCAM style hydro specification
-    if(name == FixedTech) {
-        int T = per*modeltime->gettimestep(per);
+    if( name == FIXED_TECH ) {
+        const int T = per * modeltime->gettimestep( per );
         // resource and logit function 
-        double fact = exp(A+B*T);
-        output = fixedOutputVal = resource*fact/(1+fact);
+        const double fact = exp( A + B * T );
+        output = fixedOutputVal = resource * fact / ( 1 + fact );
         fixedSupply = fixedOutputVal;
     }
     
     // Data-driven specification
-    if (fixedSupply > 0) {
+    if ( fixedSupply > 0 ) {
         fixedOutputVal = fixedSupply;
     }
 }
@@ -502,8 +494,7 @@ void technology::calcFixedSupply(int per)
 * \author Steve Smith
 * \param per model period
 */
-void technology::resetFixedSupply(int per)
-{
+void technology::resetFixedSupply( int per ) {
     fixedOutputVal = fixedSupply;
 }
 
@@ -637,7 +628,7 @@ void technology::calcEmission( const string prodname ) {
         // emissions by gas and fuel names combined
         // used to calculate emissions by fuel
         emissmap[ghg[i]->getName() + fuelname] = ghg[i]->getEmission();
-               // add sequestered amount to emissions map
+        // add sequestered amount to emissions map
         // used to calculate emissions by fuel
         emissmap[ghg[i]->getName() + "sequestGeologic"] = ghg[i]->getSequestAmountGeologic();
         emissmap[ghg[i]->getName() + "sequestNonEngy"] = ghg[i]->getSequestAmountNonEngy();
@@ -833,7 +824,7 @@ void technology::setYear( const int yearIn ) {
 //  ******* method definition for hydro_tech
 
 //! Default constructor
-hydro_tech::hydro_tech(){
+hydro_tech::hydro_tech(): technology() {
     resource = 0;
     A = 0;
     B = 0;

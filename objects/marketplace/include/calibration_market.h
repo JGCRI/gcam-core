@@ -13,7 +13,7 @@
 * \version $Revision$
 */
 
-#include "Market.h"
+#include "marketplace/include/market.h"
 
 /*!
 * \ingroup CIAM
@@ -25,7 +25,7 @@ class CalibrationMarket: public Market {
 public:
     CalibrationMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
     ~CalibrationMarket();
-    virtual void derivedToDebugXML( std::ostream& out ) const;
+    virtual void derivedToDebugXML( std::ostream& out, Tabs* tabs ) const;
     virtual std::string getType() const;
 
     virtual void initPrice();

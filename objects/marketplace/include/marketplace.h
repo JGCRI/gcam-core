@@ -19,6 +19,7 @@
 class Market;
 class Solver;
 class SolverLibrary;
+class Tabs;
 
 /*! 
 * \ingroup CIAM
@@ -42,7 +43,7 @@ class Marketplace
    Marketplace();
    ~Marketplace();
    void solve( const int per );
-   void toDebugXML( const int period, std::ostream& out ) const;
+   void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
    bool createMarket( const std::string& regionName, const std::string& marketName, const std::string& goodName, const NewMarketType typeIn );
    void initPrices();
    void nullDemands( const int period );

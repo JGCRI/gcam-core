@@ -12,7 +12,7 @@
 * \date $Date$
 * \version $Revision$
 */
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 #include <vector>
 #include <map>
 
@@ -47,9 +47,9 @@ public:
     virtual void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node ) = 0; // the = 0 makes this an abstract method
-    void toXML( std::ostream& out ) const;
-    void toOutputXML( std::ostream& out ) const;
-    void toDebugXML( const int period, std::ostream &out ) const;
+    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toOutputXML( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXML( const int period, std::ostream &out, Tabs* tabs ) const;
     std::string getName() const; 
     void setMarket( const std::string& regionName );
     double getPrice(int per); 

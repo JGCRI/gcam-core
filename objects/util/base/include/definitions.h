@@ -18,8 +18,8 @@
 */
 
 // Configuration constants. To turn off Fortran code or databases uncomment these lines.
-#define __HAVE_FORTRAN__ 0
-// #define __HAVE_DB__ 0
+#define __HAVE_FORTRAN__ 0 //!< A flag which tells whether to attempt linking of fortran portions.
+#define __HAVE_DB__ 0 //!< A flag which turns on or off compilation of database code. 
 // End of configuration constants.
 
 // In VC 6.0 turn off warning 4786. 
@@ -64,7 +64,7 @@ namespace std {
 #   ifdef _DEBUG
 // usually the followin two lines are defined in Microsoft's generated stdafx.h
 #       define VC_EXTRALEAN // do not include rarely used parts
-#       include <afxwin.h>  // MFC core und standard components
+// #       include <afxwin.h>  // MFC core und standard components
 // extra definition for check whether all needed headers are included
 #       undef SEARCH_MEMORY_LEAKS_ENABLED
 #       define SEARCH_MEMORY_LEAKS_ENABLED

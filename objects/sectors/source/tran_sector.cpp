@@ -18,17 +18,15 @@
 
 // xml headers
 #include "util/base/include/xml_helper.h"
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-extern ofstream outfile;
-
 
 //! Default constructor
-tranSector::tranSector( const string regionName ): DemandSector( regionName ) {
+TranSector::TranSector( const string regionName ): DemandSector( regionName ) {
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
@@ -36,11 +34,11 @@ tranSector::tranSector( const string regionName ): DemandSector( regionName ) {
 }
 
 //! Destructor.
-tranSector::~tranSector() {
+TranSector::~TranSector() {
 }
 
 //! Clear member variables.
-void tranSector::clear() {
+void TranSector::clear() {
     
     // call super clear
     DemandSector::clear();
@@ -51,10 +49,9 @@ void tranSector::clear() {
 
 
 //! Parses any input variables specific to derived classes
-void tranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
+void TranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     
     const Modeltime* modeltime = scenario->getModeltime();
-    tranSubsector* tempSubSector = 0;
     
     // call the demand sector XML parse to fill demand sector attributes
     DemandSector::XMLDerivedClassParse( nodeName, curr );
@@ -63,16 +60,14 @@ void tranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cu
         XMLHelper<double>::insertValueIntoVector( curr, percentLicensed,modeltime );
     } 
     else if( nodeName == "tranSubsector" ){
-        tempSubSector = new tranSubsector( regionName, name );
-        tempSubSector->XMLParse( curr );
-        subsec.push_back( tempSubSector );
+        parseContainerNode( curr, subsec, subSectorNameMap, new TranSubsector( regionName, name ) );
     }	
     
 }
 
 
 //! Aggrgate sector energy service demand function.
-void tranSector::aggdemand( const double gnp_cap, const double gnp, const int period) { 
+void TranSector::aggdemand( const double gnp_cap, const double gnp, const int period) { 
     
     const Modeltime* modeltime = scenario->getModeltime();
     double ser_dmd;

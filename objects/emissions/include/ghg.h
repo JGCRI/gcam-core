@@ -13,10 +13,12 @@
 * \version $Revision$
 */
 
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <vector>
 
 // Forward declaration
 class Emcoef_ind;
+class Tabs;
 
 /*! 
 * \ingroup CIAM
@@ -30,6 +32,23 @@ class Emcoef_ind;
 
 class Ghg
 {
+public:
+    Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 0, const double emissCoefIn = 0 );
+    void clear();
+    void XMLParse( const xercesc::DOMNode* tempnode );
+    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    double getGHGValue( const std::string& regionName, const std::string& fuelName, const std::string& prodName, const double efficiency, const int period) const;
+    void calcEmission( const std::string& regionName, const std::string& fuelname, const double input, const std::string& prodname, const double output );
+    void calcIndirectEmission( const double input, const std::string& fuelname, const std::vector<Emcoef_ind>& emcoef_ind  );
+    std::string getName() const;
+    std::string getUnit() const;
+    double getEmission() const;
+    double getSequestAmountGeologic() const;
+    double getSequestAmountNonEngy() const;
+    double getEmissFuel() const;
+    double getEmissInd() const;
+    double getEmissCoef() const;
 private:
     std::string name; //!< name of ghg gas
     std::string unit; //!< unit for ghg gas
@@ -45,25 +64,7 @@ private:
     double emissCoef; //!< emissions coefficient
     double emissFuel; //!< implied emissions from total fuel consumption
     double emissInd; //!< indirect emissions
-public:
-    Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 0, const double emissCoefIn = 0 );
-    void clear();
-    void setCoef( const double emCoef );
-    void XMLParse( const xercesc::DOMNode* tempnode );
-    void toXML( std::ostream& out ) const;
-    void toDebugXML( const int period, std::ostream& out ) const;
-    void setRmfrac( const double trmfrac );
-    double getGHGValue( const std::string& regionName, const std::string& fuelName, const std::string& prodName, const double efficiency, const int period) const;
-    void calcEmission( const std::string& regionName, const std::string& fuelname, const double input, const std::string& prodname, const double output );
-    void calcIndirectEmission( const double input, const std::string& fuelname, const std::vector<Emcoef_ind>& emcoef_ind  );
-    std::string getName() const;
-    std::string getUnit() const;
-    double getEmission() const;
-    double getSequestAmountGeologic() const;
-    double getSequestAmountNonEngy() const;
-    double getEmissFuel() const;
-    double getEmissInd() const;
-    double getEmissCoef() const;
+
 };
 
 #endif // _GHG_H_

@@ -12,7 +12,7 @@
 * \date $Date$
 * \version $Revision$
 */
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 
 // Forward declaration.
 class Grade;
@@ -55,10 +55,10 @@ public:
    void completeInit();
    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node ) = 0; 
    virtual void initializeResource(); 
-   void toXML( std::ostream& out ) const;
-   virtual void toXMLforDerivedClass( std::ostream& out ) const;
-   void toOutputXML( std::ostream& out ) const;
-   void toDebugXML( const int period, std::ostream& out ) const;
+   void toXML( std::ostream& out, Tabs* tabs ) const;
+   virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
+   void toOutputXML( std::ostream& out, Tabs* tabs ) const;
+   void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
    virtual void cumulsupply(double prc,int per);
    double getPrice(int per);
    double getCumulProd(int per);

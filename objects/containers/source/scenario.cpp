@@ -12,8 +12,10 @@
 #include <iostream>
 #include <fstream>
 #include <cassert>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 
+// User headers
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
@@ -22,6 +24,7 @@
 #include "util/base/include/configuration.h"
 #include "util/logger/include/logger_factory.h"
 #include "util/logger/include/logger.h"
+#include "util/curves/include/curve.h"
 
 using namespace std;
 using namespace xercesc;
@@ -32,12 +35,13 @@ extern "C" { void _stdcall CLIMAT(void); };
 #endif
 
 extern time_t ltime;
-extern ofstream logfile, sdcurvefile;
+extern ofstream logfile;
 
 //! Default construtor
 Scenario::Scenario() {
     world = 0;
     modeltime = 0;
+    runCompleted = false;
     marketplace = new Marketplace();
 }
 
@@ -138,8 +142,8 @@ void Scenario::completeInit() {
 }
 
 //! Write object to xml output stream.
-void Scenario::toXML( ostream& out ) const {
-
+void Scenario::toXML( ostream& out, Tabs* tabs ) const {
+    
     // write heading for XML input file
     bool header = true;
     if (header) {
@@ -153,53 +157,53 @@ void Scenario::toXML( ostream& out ) const {
     out << "<scenario xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"";
     out << " xsi:noNamespaceSchemaLocation=\"C:\\PNNL\\CIAM\\CVS\\CIAM\\Ciam.xsd\"";
     out << " name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
-
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // summary notes on scenario
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<summary>\"SRES B2 Scenario is used for this Reference Scenario\"</summary>" << endl;
 
     // write the xml for the class members.
-    modeltime->toXML( out );
-    world->toXML( out );
+    modeltime->toXML( out, tabs );
+    world->toXML( out, tabs );
     // finished writing xml for the class members.
 
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</scenario>" << endl;
+
 }
 
 //! Write out object to output stream for debugging.
-void Scenario::toDebugXMLOpen( const int period, ostream& out ) const {
+void Scenario::toDebugXMLOpen( const int period, ostream& out, Tabs* tabs ) const {
 
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     string dateString = util::XMLCreateDate( ltime );
     out << "<scenario name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
 
-    Tabs::increaseIndent();
-    Tabs::writeTabs( out );
+    tabs->increaseIndent();
+    tabs->writeTabs( out );
     out << "<summary>\"Debugging output\"</summary>" << endl;
 
     // write the xml for the class members.
-    modeltime->toDebugXML( period, out );
-    world->toDebugXML( period, out );
+    modeltime->toDebugXML( period, out, tabs );
+    world->toDebugXML( period, out, tabs );
     // finished writing xml for the class members.
 
 }
 
 //! Write out close scenario tag to output stream for debugging.
-void Scenario::toDebugXMLClose( const int period, ostream& out ) const {
+void Scenario::toDebugXMLClose( const int period, ostream& out, Tabs* tabs ) const {
 
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</scenario>" << endl;
 }
 
@@ -209,13 +213,19 @@ string Scenario::getName() const {
 }
 
 //! Run the scenario
-void Scenario::run(){
+void Scenario::run( string filenameEnding ){
 	
 	Configuration* conf = Configuration::getInstance();
 	ofstream xmlDebugStream;
+    
+    // Need to insert the filename ending before the file type.
+    string debugFileName = conf->getFile( "xmlDebugFileName", "debug.xml" );
+    int dotPos = static_cast<int>( debugFileName.find_last_of( "." ) );
+    debugFileName = debugFileName.insert( dotPos, filenameEnding );
+    cout << "Debugging information for this run in: " << debugFileName << endl;
+	xmlDebugStream.open( debugFileName.c_str(), ios::out );
+    util::checkIsOpen( xmlDebugStream, debugFileName );
 
-	xmlDebugStream.open( conf->getFile( "xmlDebugFileName" ).c_str(), ios::out );
-	
 	// Start Model run for the first period.
 	int per = 0;
    
@@ -228,8 +238,10 @@ void Scenario::run(){
 	marketplace->nullSupplies( per ); // null market supply
 	
 	// Write scenario root element for the debugging.
-	toDebugXMLOpen( per, xmlDebugStream );
+    Tabs* tabs = new Tabs();
+	// toDebugXMLOpen( per, xmlDebugStream, tabs );
 	
+    world->initCalc( per ); // call to initialize anything that won't change during calc
 	world->calc( per ); // Calculate supply and demand
 	world->updateSummary( per ); // Update summaries for reporting
 	world->emiss_ind( per ); // Calculate global emissions
@@ -237,6 +249,7 @@ void Scenario::run(){
 	cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr(per) << endl;
 	cout << "Period 0 not solved" << endl;
 	logfile << "Period:  " << per << "  Year:  " << modeltime->getper_to_yr(per) << endl;
+    toDebugXMLOpen( per, xmlDebugStream, tabs );
 	// end of first period.
 	
     // Print the sector dependencies.
@@ -250,12 +263,6 @@ void Scenario::run(){
 		// Write out some info.
 		cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl;
     	logfile << "Period:  " << per << "  Year:  " << modeltime->getper_to_yr(per) << endl;
-		sdcurvefile << "Period " << per << ": "<< modeltime->getper_to_yr( per ) << endl;
-		sdcurvefile << "Market,Name,Price,Supply,Demand,";
-		sdcurvefile << "Market,Name,Price,Supply,Demand,";
-		sdcurvefile << "Market,Name,Price,Supply,Demand,";
-		sdcurvefile << "Market,Name,Price,Supply,Demand,";
-		sdcurvefile << "Market,Name,Price,Supply,Demand," << endl;
 		
 		// Run the iteration of the model.
 		marketplace->nullDemands( per ); // initialize market demand to null
@@ -269,7 +276,7 @@ void Scenario::run(){
 		world->emiss_ind( per ); // call to calculate global emissions
 		
 		// Write out the results for debugging.
-		world->toDebugXML( per, xmlDebugStream );
+		world->toDebugXML( per, xmlDebugStream, tabs );
       
       if( conf->getBool( "PrintDependencyGraphs" ) ) {
          // Print out dependency graphs.
@@ -277,7 +284,10 @@ void Scenario::run(){
       }
 	}
 	
-	toDebugXMLClose( per, xmlDebugStream ); // Close the xml debugging tag.
+    // Denote the run has been performed. 
+    runCompleted = true;
+
+	toDebugXMLClose( per, xmlDebugStream, tabs ); // Close the xml debugging tag.
 	
 	// calling fortran subroutine climat/magicc
 	world->calculateEmissionsTotals();
@@ -288,7 +298,7 @@ void Scenario::run(){
     CLIMAT();
     cout << "Finished with CLIMAT()" << endl;
 #endif
-
+    delete tabs;
     xmlDebugStream.close();
 }
 
@@ -333,3 +343,28 @@ void Scenario::printSectorDependencies() const {
     world->printSectorDependencies( logger );
 }
 
+/*! \brief A function to generate a series of ghg emissions quantity curves based on an already performed model run.
+* \detailed This function used the information stored in it to create a series of curves, one for each region,
+* with each datapoint containing a time period and an amount of gas emissions.
+* \note The user is responsible for deallocating the memory in the returned Curves.
+* \author Josh Lurz
+* \param The name of the ghg to create a set of curves for.
+* \return A vector of Curve objects representing ghg emissions quantity by time period by region.
+*/
+const map<const string, const Curve*> Scenario::getEmissionsQuantityCurves( const string& ghgName ) const {
+    /*! \pre The run has been completed. */
+    return world->getEmissionsQuantityCurves( ghgName );
+}
+
+/*! \brief A function to generate a series of ghg emissions price curves based on an already performed model run.
+* \detailed This function used the information stored in it to create a series of curves, one for each period,
+* with each datapoint containing a time period and the price gas emissions. 
+* \note The user is responsible for deallocating the memory in the returned Curves.
+* \author Josh Lurz
+* \param The name of the ghg to create a set of curves for.
+* \return A vector of Curve objects representing the price of ghg emissions by time period by Region. 
+*/
+const map<const string,const Curve*> Scenario::getEmissionsPriceCurves( const string& ghgName ) const {
+    /*! \pre The run has been completed. */
+    return world->getEmissionsPriceCurves( ghgName );
+}

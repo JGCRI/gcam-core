@@ -13,10 +13,12 @@
 #include <string>
 #include <vector>
 #include <cassert>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 #include <algorithm>
 
 #include "containers/include/region.h"
+#include "containers/include/gdp.h"
 #include "util/base/include/summary.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/demand_sector.h"
@@ -34,17 +36,22 @@
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/logger.h"
+#include "util/curves/include/curve.h"
+#include "util/curves/include/point_set_curve.h"
+#include "util/curves/include/xy_data_point.h"
+#include "util/curves/include/point_set.h"
+#include "util/curves/include/explicit_point_set.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-extern ofstream outfile, sdfile;	
 
 //! Default constructor
 Region::Region() {
     agSector = 0; // null pointer
     population = 0; // null pointer
+    gdp = 0;
     initElementalMembers(); //
 
     // Resize all vectors to maximum period
@@ -88,6 +95,7 @@ void Region::clear(){
     }
 
     delete population;
+    delete gdp;
 }
 
 //! Initialize elemental data members.
@@ -122,12 +130,6 @@ void Region::XMLParse( const DOMNode* node ){
     DOMNode* curr = 0;
     DOMNode* currChild = 0;
     DOMNodeList* nodeListChild = 0;
-    Resource* tempResource = 0;
-    Sector* tempSupSector = 0;
-    DemandSector* tempDemSector = 0;
-    tranSector* tempTranSector = 0;
-    GHGPolicy* tempGhgMrk = 0;
-    map<string,int>::const_iterator resourceIter;
 
     const Modeltime* modeltime = scenario->getModeltime();
 
@@ -165,89 +167,34 @@ void Region::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == "demographics" ){
             if( population == 0 ) {
-                population = new demographic();
+                population = new Population();
             }
             population->XMLParse( curr ); // only one demographics object.
         }
+        else if( nodeName == "GDP" ){
+            if( gdp == 0 ){
+                gdp = new GDP();
+            }
+            gdp->XMLParse( curr );
+        }
         else if( nodeName == "depresource" ){
-            resourceIter = resourceNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-            if( resourceIter != resourceNameMap.end() ){
-                // The resource already exists.
-                resources[ resourceIter->second ]->XMLParse( curr );
-            }
-            else {
-                tempResource = new DepletableResource();
-                tempResource->XMLParse( curr );
-                resources.push_back( tempResource );
-                resourceNameMap[ tempResource->getName() ] = static_cast<int>( resources.size() ) - 1;
-            }
+            parseContainerNode( curr, resources, resourceNameMap, new DepletableResource() );
         }
         else if( nodeName == "fixedresource" ){
-            map<string,int>::const_iterator resourceIter = resourceNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-            resourceIter = resourceNameMap.find( XMLHelper<string>::getAttrString( node, "name" ) );
-            if( resourceIter != resourceNameMap.end() ){
-                // The resource already exists.
-                resources[ resourceIter->second ]->XMLParse( curr );
-            }
-            else {
-                tempResource = new FixedResource();
-                tempResource->XMLParse( curr );
-                resources.push_back( tempResource );
-                resourceNameMap[ tempResource->getName() ] = static_cast<int>( resources.size() ) - 1;
-            }
+            parseContainerNode( curr, resources, resourceNameMap, new FixedResource() );
         }
         else if( nodeName == "renewresource" ){
-            resourceIter = resourceNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-            if( resourceIter != resourceNameMap.end() ){
-                // The resource already exists.
-                resources[ resourceIter->second ]->XMLParse( curr );
-            }
-            else {
-                tempResource = new RenewableResource();
-                tempResource->XMLParse( curr );
-                resources.push_back( tempResource );
-                resourceNameMap[ tempResource->getName() ] = static_cast<int>( resources.size() ) - 1;
-            }
+            parseContainerNode( curr, resources, resourceNameMap, new RenewableResource() );
         }
         else if( nodeName == "supplysector" ){
-            map<string,int>::const_iterator supplySectorIter = supplySectorNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-            if( supplySectorIter != supplySectorNameMap.end() ) {
-                // The supply sector already exists.
-                supplySector[ supplySectorIter->second ]->XMLParse( curr );
-            }
-            else {
-                tempSupSector = new Sector( name );
-                tempSupSector->XMLParse( curr );
-                supplySector.push_back( tempSupSector );
-                supplySectorNameMap[ tempSupSector->getName() ] = static_cast<int>( supplySector.size() ) - 1;
-            }
+            parseContainerNode( curr, supplySector, supplySectorNameMap, new Sector( name ) );
         }
         else if( nodeName == "demandsector" ){
-            map<string,int>::const_iterator demandSectorIter = demandSectorNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-            if( demandSectorIter != demandSectorNameMap.end() ) {
-                // The demand sector already exists.
-                demandSector[ demandSectorIter->second ]->XMLParse( curr );
-            }
-            else {
-                tempDemSector = new DemandSector( name );
-                tempDemSector->XMLParse( curr );
-                demandSector.push_back( tempDemSector );
-                demandSectorNameMap[ tempDemSector->getName() ] = static_cast<int>( demandSector.size() ) - 1;
-            }
+            parseContainerNode( curr, demandSector, demandSectorNameMap, new DemandSector( name ) );
         }
         // transportation sector is contained in demandSector
         else if( nodeName == "tranSector" ){
-            map<string,int>::const_iterator demandSectorIter = demandSectorNameMap.find( XMLHelper<string>::getAttrString( node, "name" ) );
-            if( demandSectorIter != demandSectorNameMap.end() ) {
-                // The demand sector already exists.
-                demandSector[ demandSectorIter->second ]->XMLParse( curr );
-            }
-            else {
-                tempTranSector = new tranSector( name );
-                tempTranSector->XMLParse( curr );
-                demandSector.push_back( tempTranSector );
-                demandSectorNameMap[ tempTranSector->getName() ] = static_cast<int>( demandSector.size() ) - 1;
-            }
+            parseContainerNode( curr, demandSector, demandSectorNameMap, new TranSector( name ) );
         } 
         else if( nodeName == "agsector" ) {
             if( Configuration::getInstance()->getBool( "agSectorActive" ) ){
@@ -258,17 +205,7 @@ void Region::XMLParse( const DOMNode* node ){
             }
         }
         else if( nodeName == "ghgpolicy" ){
-            map<string,int>::const_iterator ghgMarketIter = ghgMarketNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-            if( ghgMarketIter != ghgMarketNameMap.end() ) {
-                // ghg market already exists.
-                ghgMarket[ ghgMarketIter->second ]->XMLParse( curr );
-            }
-            else {
-                tempGhgMrk = new GHGPolicy();
-                tempGhgMrk->XMLParse( curr );
-                ghgMarket.push_back( tempGhgMrk );
-                ghgMarketNameMap[ tempGhgMrk->getName() ] = static_cast<int>( ghgMarket.size() ) - 1;
-            }
+            parseContainerNode( curr, ghgMarket, ghgMarketNameMap, new GHGPolicy() );
         }
         // regional taxes
         else if( nodeName == "taxes" ){
@@ -347,6 +284,9 @@ void Region::completeInit() {
     
     // emcoefInd.resize( noSSec ); // indirect GHG coef object for every supply sector
     
+    // Initialize the GDP
+    gdp->initData( population );
+
     // Finish initializing agLu
     if( conf->getBool( "agSectorActive" ) ){
         agSector->setGNP( calcFutureGNP() );
@@ -406,105 +346,97 @@ void Region::completeInit() {
 * \note 
 * \ref faqitem1 
 */
-void Region::toXML( ostream& out ) const {
+void Region::toXML( ostream& out, Tabs* tabs ) const {
 
     const Modeltime* modeltime = scenario->getModeltime();
 
     int m;
 
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<region name=\"" << name << "\">"<< endl;
 
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // Write out gnp energy elasticity.
-    XMLWriteElementCheckDefault( EnergyGNPElas, "e_GNP_elas", out, 0 );
+    XMLWriteElementCheckDefault( EnergyGNPElas, "e_GNP_elas", out, tabs, 0 );
 
     // Write out the Co2 Coefficients. 
     for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
-        XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, 0, coefAllIter->first );
+        XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, tabs, 0, coefAllIter->first );
     }
 
     for( map<string,double>::const_iterator coefPriIter = carbonTaxFuelCoef.begin(); coefPriIter != carbonTaxFuelCoef.end(); coefPriIter++ ) {
-        XMLWriteElement( coefPriIter->second, "CarbonTaxFuelCoef", out, 0, coefPriIter->first );
+        XMLWriteElement( coefPriIter->second, "CarbonTaxFuelCoef", out, tabs, 0, coefPriIter->first );
     }
     // write the xml for the class members.
     // write out the single population object.
-    population->toXML( out );
+    population->toXML( out, tabs );
+    
+    gdp->toXML( out, tabs );
 
     // write out the resources objects.
     for( vector<Resource*>::const_iterator i = resources.begin(); i != resources.end(); i++ ){
-        ( *i )->toXML( out );
+        ( *i )->toXML( out, tabs );
     }
 
     // write out supply sector objects.
     for( vector<Sector*>::const_iterator j = supplySector.begin(); j != supplySector.end(); j++ ){
-        ( *j )->toXML( out );
+        ( *j )->toXML( out, tabs );
     }
 
     // write out demand sector objects.
     for( vector<DemandSector*>::const_iterator k = demandSector.begin(); k != demandSector.end(); k++ ){
-        ( *k )->toXML( out );
+        ( *k )->toXML( out, tabs );
     }
 
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<agsector/>" << endl;
 
     if( agSector != 0 ){
-        agSector->toXML( out );
+        agSector->toXML( out, tabs );
     }
     // write out ghgMarket objects.
     for( vector<GHGPolicy*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
-        ( *l )->toXML( out );
+        ( *l )->toXML( out, tabs );
     }
 
     // Write out regional economic data
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<economicdata>" << endl;
 
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // write out GNP
     for( m = 0; m < static_cast<int>( gnpDol.size() ); m++ ){
-        XMLWriteElementCheckDefault( gnpDol[ m ], "GNP", out, 0, modeltime->getper_to_yr( m ) );
+        XMLWriteElementCheckDefault( gnpDol[ m ], "GNP", out, tabs, 0, modeltime->getper_to_yr( m ) );
     }
 
     // write out income elasticity
     for( m = 0; m < static_cast<int>( iElasticity.size() ); m++ ) {
-        XMLWriteElementCheckDefault( iElasticity[ m ],"incomeelasticity", out, 0, modeltime->getper_to_yr( m ) );
+        XMLWriteElementCheckDefault( iElasticity[ m ],"incomeelasticity", out, tabs, 0, modeltime->getper_to_yr( m ) );
     }
 
     // write out TFE calibration values
     for( m = 0; m < static_cast<int>( TFEcalb.size() ); m++ ) {
         if ( TFEcalb[ m ] != 0 ) {
-            XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, 0, modeltime->getper_to_yr( m ) );
+            XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, tabs, 0, modeltime->getper_to_yr( m ) );
         }
     }
 
-    Tabs::decreaseIndent();
-    Tabs::writeTabs( out );
+    tabs->decreaseIndent();
+    tabs->writeTabs( out );
     out << "</economicdata>" << endl;
     // End write out regional economic data
-
-    // Write out regional taxes
-    Tabs::writeTabs( out );
-    out << "<taxes>"<< endl;
-    Tabs::increaseIndent();
-
-    Tabs::decreaseIndent();
-    Tabs::writeTabs( out );
-    out << "</taxes>"<< endl;
-    // End write out regional taxes
 
     // finished writing xml for the class members.
 
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</region>" << endl;
 }
 
@@ -516,57 +448,59 @@ void Region::toXML( ostream& out ) const {
 * \param out Output file for debugging purposes in XML format
 *
 */
-void Region::toDebugXML( const int period, ostream& out ) const {
-
+void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
+    
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<region name=\"" << name << "\">"<< endl;
 
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // write out basic datamembers
-    XMLWriteElement( noGhg, "noGhg", out );
-    XMLWriteElement( numResources, "numResources", out );
-    XMLWriteElement( noSSec, "noSSec", out );
-    XMLWriteElement( noDSec, "noDSec", out );
-    XMLWriteElement( noRegMrks, "noRegMrks", out );
-    XMLWriteElement( gnp[ period ], "gnp", out );
-    XMLWriteElement( gnpCap[ period ], "gnpPerCapita", out );
-    XMLWriteElement( gnpDol[ period ], "gnpDollarValue", out);
-    XMLWriteElement( calibrationGNPs[ period ], "calibrationGNPs", out );
-    XMLWriteElement( gnpAdj[ period ], "gnpAdj", out );
-    XMLWriteElement( input[ period ], "input", out );
-    XMLWriteElement( priceSer[ period ], "priceSer", out );
-    XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out );
+    XMLWriteElement( noGhg, "noGhg", out, tabs );
+    XMLWriteElement( numResources, "numResources", out, tabs );
+    XMLWriteElement( noSSec, "noSSec", out, tabs );
+    XMLWriteElement( noDSec, "noDSec", out, tabs );
+    XMLWriteElement( noRegMrks, "noRegMrks", out, tabs );
+    XMLWriteElement( gnp[ period ], "gnp", out, tabs  );
+    XMLWriteElement( gnpCap[ period ], "gnpPerCapita", out, tabs );
+    XMLWriteElement( gnpDol[ period ], "gnpDollarValue", out, tabs );
+    XMLWriteElement( calibrationGNPs[ period ], "calibrationGNPs", out, tabs );
+    XMLWriteElement( gnpAdj[ period ], "gnpAdj", out, tabs );
+    XMLWriteElement( input[ period ], "input", out, tabs );
+    XMLWriteElement( priceSer[ period ], "priceSer", out, tabs );
+    XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
     // Write out gnp energy elasticity.
-    XMLWriteElement( EnergyGNPElas, "e_GNP_elas", out );
+    XMLWriteElement( EnergyGNPElas, "e_GNP_elas", out, tabs );
 
     // Write out the Co2 Coefficients. 
     for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
-        XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, 0, coefAllIter->first );
+        XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, tabs, 0, coefAllIter->first );
     }
 
     for( map<string,double>::const_iterator coefPriIter = carbonTaxFuelCoef.begin(); coefPriIter != carbonTaxFuelCoef.end(); coefPriIter++ ) {
-        XMLWriteElement( coefPriIter->second, "CarbonTaxFuelCoef", out, 0, coefPriIter->first );
+        XMLWriteElement( coefPriIter->second, "CarbonTaxFuelCoef", out, tabs, 0, coefPriIter->first );
     }
     // write the xml for the class members.
     // write out the single population object.
-    population->toDebugXML( period, out );
+    population->toDebugXML( period, out, tabs );
+    
+    gdp->toDebugXML( period, out, tabs );
 
     // write out the resources objects.
     for( vector<Resource*>::const_iterator i = resources.begin(); i != resources.end(); i++ ){
-        ( *i )->toDebugXML( period, out );
+        ( *i )->toDebugXML( period, out, tabs );
     }
 
     // write out supply sector objects.
     for( vector<Sector*>::const_iterator j = supplySector.begin(); j != supplySector.end(); j++ ){
-        ( *j )->toDebugXML( period, out );
+        ( *j )->toDebugXML( period, out, tabs );
     }
 
     // write out demand sector objects.
     for( vector<DemandSector*>::const_iterator k = demandSector.begin(); k != demandSector.end(); k++ ){
-        ( *k )->toDebugXML( period, out );
+        ( *k )->toDebugXML( period, out, tabs );
     }
 
     // Write out the single agSector object.
@@ -574,46 +508,34 @@ void Region::toDebugXML( const int period, ostream& out ) const {
 
     // write out ghgMarket objects.
     for( vector<GHGPolicy*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
-        ( *l )->toDebugXML( period, out );
+        ( *l )->toDebugXML( period, out, tabs );
     }
 
     // Write out summary object.
     //summary[ period ].toDebugXML( period, out ); // is this vector by period?
 
     // Write out regional economic data.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<economicdata>" << endl;
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // Write out GNP.
-    XMLWriteElement( gnpDol[ period ], "gnpDol", out );
+    XMLWriteElement( gnpDol[ period ], "gnpDol", out, tabs );
 
     // Write out income elasticity.
-    XMLWriteElement( iElasticity[ period ],"iElasticity", out );
+    XMLWriteElement( iElasticity[ period ],"iElasticity", out, tabs );
 
-    Tabs::decreaseIndent();
-    Tabs::writeTabs( out );
+    tabs->decreaseIndent();
+    tabs->writeTabs( out );
     out << "</economicdata>"<< endl;
     // End write out regional economic data
-
-    // Write out regional taxes.
-    Tabs::writeTabs( out );
-    out << "<taxes>"<< endl;
-    Tabs::increaseIndent();
-
-
-    Tabs::decreaseIndent();
-    Tabs::writeTabs( out );
-    out << "</taxes>"<< endl;
-    // End write out regional taxes
-
     // Finished writing xml for the class members.
 
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</region>" << endl;
 }
 
@@ -621,7 +543,7 @@ void Region::toDebugXML( const int period, ostream& out ) const {
 /* \todo Calibration shouldn't be in the population object.
 */
 void Region::setupCalibrationMarkets() {
-    population->setupCalibrationMarkets( name );
+    gdp->setupCalibrationMarkets( name );
 }
 
 /*! Run the agLu Model and determine CO2 emitted.
@@ -637,15 +559,8 @@ void Region::calcAgSector( const int period ) {
 * \param period Model time period
 */
 void Region::setGhgSupply( const int period ) {
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    string ghgName;
-    double ghgtarget;
-
-    for (int i=0;i<noGhg;i++) {
-        ghgName = ghgMarket[i]->getName();
-        ghgtarget = ghgMarket[i]->getConstraint(period);
-        marketplace->addToSupply(ghgName,name,ghgtarget,period);		
+    for ( int i = 0; i < noGhg; i++ ) {
+        ghgMarket[i]->addGHGSupply( name, period );
     }
 }
 
@@ -778,20 +693,20 @@ void Region::calcGnp( const int period ) {
         gnp[ period ] = 1.0; // normalize to 1975
     }
     else {
-        double currentLF = population->getlaborforce( period );
-        double lastLF = population->getlaborforce( period - 1 );
-        double tlab = population->getTotalLaborProductivity( period );
+        double currentLF = gdp->getLaborForce( period );
+        double lastLF = gdp->getLaborForce( period - 1 );
+        double tlab = gdp->getTotalLaborProductivity( period );
         gnp[ period ] = gnp[ period - 1 ] * tlab * ( currentLF / lastLF );
         if (gnp[period] == 0) {
             cerr << "error with GNP calculation:  currentLF: " << currentLF
-                << "  lastLF: " << lastLF << "  lab: " << tlab << "\n";
+                << "  lastLF: " << lastLF << "  lab: " << tlab << endl;
         }
     }
 
 
     // gnp period capita normalized
     // correct using energy adjusted gnp*****
-    gnpCap[ period ] = gnp[ period ] * population->total( basePer ) / population->total( period );
+    gnpCap[ period ] = gnp[ period ] * population->getTotal( basePer ) / population->getTotal( period );
 }
 
 //! Calculate a forward looking gnp.
@@ -818,9 +733,9 @@ const vector<double> Region::calcFutureGNP() const {
             gnps[ period ] = calibrationGNPs[ period ] / baseYearConversion;
         }
         else {
-            laborProd = 1 + population->labor( period );
-            currentLaborForce = population->getlaborforce( period );
-            lastLaborForce = population->getlaborforce( period - 1 );
+            laborProd = 1 + gdp->getLaborProdGR( period );
+            currentLaborForce = gdp->getLaborForce( period );
+            lastLaborForce = gdp->getLaborForce( period - 1 );
             tlab = pow( laborProd, modeltime->gettimestep( period ) );
             gnps[ period ] = gnps[ period - 1 ] * tlab * ( currentLaborForce / lastLaborForce );
             assert( gnps[ period ] != 0 );
@@ -848,20 +763,20 @@ void Region::calcGNPlfp( const int period ) {
     else {
         // 1 + labor productivity growth rate
         // population->labor returns labor productivity growth rate
-        labprd = 1 + population->labor(period);
-        double tlabprd = pow(labprd,modeltime->gettimestep(period));
-        gnp[period] = gnp[period-1] * tlabprd * ( population->getlaborforce(period)
-            / population->getlaborforce(period-1) );
+        labprd = 1 + gdp->getLaborProdGR(period);
+        double tlabprd = pow( labprd, modeltime->gettimestep( period ) );
+        gnp[period] = gnp[period-1] * tlabprd * ( gdp->getLaborForce( period )
+            / gdp->getLaborForce(period-1) );
         if (gnp[period] == 0) {
             cerr << "error with GNP calculation:  labor force(period): " 
-                << population->getlaborforce(period)
-                << "  labor force(period-1): " << population->getlaborforce(period-1) 
-                << "  labor productivity: " << tlabprd << "\n";
+                << gdp->getLaborForce(period)
+                << "  labor force(period-1): " << gdp->getLaborForce(period-1) 
+                << "  labor productivity: " << tlabprd << endl;
         }
     }
     // gnp period capita normalized
     // correct using energy adjusted gnp*****
-    gnpCap[period] = gnp[period]*population->total(basePer)/population->total(period);
+    gnpCap[period] = gnp[period] * population->getTotal( basePer ) / population->getTotal( period );
 
 }
 
@@ -930,7 +845,7 @@ void Region::adjustGnp( const int period ) {
 * \param period Model time period
 */
 void Region::writeBackCalibratedValues( const int period ) {
-    population->writeBackCalibratedValues( name, period );
+    gdp->writeBackCalibratedValues( name, period );
 }
 
 //! Do regional calibration
@@ -1047,7 +962,7 @@ void Region::enduseDemand( const int period ) {
     carbonTaxPaid[period] = 0; // initialize total regional carbon taxes paid
 
     // gnpCap using energy adjusted gnp
-    gnpCap[period] = gnpAdj[period]*population->total(0)/population->total(period);
+    gnpCap[period] = gnpAdj[ period ] * population->getTotal( 0 ) / population->getTotal( period );
 
     // This is an early point in the calcuation and, thus, a good point for a NaN error check.
     if ( gnpCap[period] != gnpCap[period] ) {
@@ -1089,7 +1004,8 @@ void Region::emission( const int period )
     }
 }
 
-//! Calculate regional emissions by fuel for reporting
+/*! \brief Calculate regional emissions by fuel for reporting
+\warning This function assumes emission has already been called, as this function cannot clear the summary emissions.-JPL */
 void Region::calcEmissFuel( const int period )
 {
     map<string, double> fuelemiss; // tempory emissions by fuel
@@ -1144,6 +1060,8 @@ void Region::outputFile() const {
 
     // write population results to database
     population->outputfile( name );
+    gdp->outputfile( name );
+
     // write gnp and adjusted gnp for region
     fileoutput3(name," "," "," ","GNP","Bil90US$",gnpDol);
     fileoutput3(name," "," "," ","GNP","norm",gnp);
@@ -1182,7 +1100,9 @@ void Region::MCoutput() const {
         string uname,vector<double> dout);
 
     // write population results to database
-    population->MCoutput( name.c_str() );
+    population->MCoutput( name );
+    gdp->MCoutput( name );
+
     // write gnp and adjusted gnp for region
     dboutput4(name,"General","GDP 90$","GDP(90mer)","90US$",gnpDol);
     dboutput4(name,"General","GDP","norm","unitless",gnp);
@@ -1519,4 +1439,87 @@ void Region::printSectorDependencies( Logger* logger ) const {
     LOG( logger, Logger::DEBUG_LEVEL ) << endl;
 }
 
+/*! \brief This function will set the tax policy with the given name to a fixed tax policy.
+* \detailed This function searches for a GHGPolicy with the name policyName. If it finds it, it will
+* reset it to a fixed tax policy using the taxes in the taxes vector. Otherwise, it will create a new
+* fixed tax policy with policyName.
+* \author Josh Lurz
+* \param policyName The name of the GHGPolicy to convert to a fixed tax.
+* \param marketName The name of the market the GHGPolicy applies to.
+* \param taxes The taxes to use for the policy.
+*/
+void Region::setFixedTaxes( const std::string& policyName, const std::string& marketName, const vector<double>& taxes ){
+    bool foundPolicy = false;
 
+    for( int i = 0; i < static_cast<int>( ghgMarket.size() ); i++ ){
+        if( ghgMarket[ i ]->getName() == policyName ){
+            foundPolicy = true;
+            ghgMarket[ i ]->changePolicyToFixedTax( name );
+            ghgMarket[ i ]->setFixedTaxes( name, taxes );
+            break;
+        }
+    }
+    // Create a new policy since the policy did not exist.
+    if( !foundPolicy ){
+        GHGPolicy* policy = new GHGPolicy( policyName, "", marketName , true );
+        policy->setFixedTaxes( name, taxes );
+        policy->setMarket( name );
+        ghgMarket.push_back( policy );
+    }
+}
+
+/*! \brief A function to generate a ghg emissions quantity curve based on an already performed model run.
+* \detailed This function used the information stored in it to create a curve, with each datapoint 
+* containing a time period and an amount of gas emissions. These values are retrieved from the emissions.
+* \note The user is responsible for deallocating the memory in the returned Curve.
+* \author Josh Lurz
+* \param The name of the ghg to create a curve for.
+* \return A Curve object representing ghg emissions quantity by time period.
+*/
+const Curve* Region::getEmissionsQuantityCurve( const string& ghgName ) const {
+    /*! \pre The run has been completed. */
+    const Modeltime* modeltime = scenario->getModeltime();
+    
+    ExplicitPointSet* emissionsPoints = new ExplicitPointSet();
+    
+    for( int i = 0; i < scenario->getModeltime()->getmaxper(); i++ ) {
+        XYDataPoint* currPoint = new XYDataPoint( modeltime->getper_to_yr( i ), summary[ i ].get_emissmap_second( ghgName ) );
+        emissionsPoints->addPoint( currPoint );
+    }
+    
+    Curve* emissionsCurve = new PointSetCurve( emissionsPoints );
+    emissionsCurve->setTitle( ghgName + " emissions curve" );
+    emissionsCurve->setXAxisLabel( "year" );
+    emissionsCurve->setYAxisLabel( "emissions quantity" );
+
+    return emissionsCurve;
+}
+
+/*! \brief A function to generate a ghg emissions price curve based on an already performed model run.
+* \detailed This function used the information stored in it to create a curve, with each datapoint 
+* containing a time period and the price gas emissions. These values are retrieved from the marketplace. 
+* \note The user is responsible for deallocating the memory in the returned Curve.
+* \author Josh Lurz
+* \param The name of the ghg to create a curve for.
+* \param The region to use to determine the market.
+* \return A Curve object representing the price of ghg emissions by time period. 
+*/
+const Curve* Region::getEmissionsPriceCurve( const string& ghgName ) const {
+    /*! \pre The run has been completed. */
+    const Modeltime* modeltime = scenario->getModeltime();
+    const Marketplace* marketplace = scenario->getMarketplace();
+
+    ExplicitPointSet* emissionsPoints = new ExplicitPointSet();
+    
+    for( int i = 0; i < modeltime->getmaxper(); i++ ) {
+        XYDataPoint* currPoint = new XYDataPoint( modeltime->getper_to_yr( i ), marketplace->getPrice( ghgName, name, i ) );
+        emissionsPoints->addPoint( currPoint );
+    }
+    
+    Curve* emissionsCurve = new PointSetCurve( emissionsPoints );
+    emissionsCurve->setTitle( ghgName + " emissions curve" );
+    emissionsCurve->setXAxisLabel( "year" );
+    emissionsCurve->setYAxisLabel( "emissions tax" );
+
+    return emissionsCurve;
+}

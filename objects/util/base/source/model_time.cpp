@@ -17,7 +17,8 @@
 #include <cassert>
 
 // xml headers
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
 
@@ -130,64 +131,64 @@ void Modeltime::XMLParse( const DOMNode* node ) {
 }
 
 //! Write data members to datastream in XML format.
-void Modeltime::toXML( ostream& out ) const {
+void Modeltime::toXML( ostream& out, Tabs* tabs ) const {
 	
-	Tabs::writeTabs( out );
+	tabs->writeTabs( out );
 	out << "<modeltime>" << endl;
 	
-	Tabs::increaseIndent();
+	tabs->increaseIndent();
 
-	XMLWriteElement( startYear, "startyear", out );
-	XMLWriteElement( interYear1, "interyear1", out );
-	XMLWriteElement( interYear2, "interyear2", out );
-	XMLWriteElement( endYear, "endyear", out );
-	XMLWriteElement( startReportYear, "startReportYear", out );
-	XMLWriteElement( timeStep1, "timestep1", out );
-	XMLWriteElement( timeStep2, "timestep2", out );
-	XMLWriteElement( timeStep3, "timestep3", out );
-	XMLWriteElement( popStartYear, "popbegin", out );
-	XMLWriteElement( dataEndYear, "dataend", out );
-	XMLWriteElement( dataTimeStep, "datatimestep", out );
+	XMLWriteElement( startYear, "startyear", out, tabs );
+	XMLWriteElement( interYear1, "interyear1", out, tabs );
+	XMLWriteElement( interYear2, "interyear2", out, tabs );
+	XMLWriteElement( endYear, "endyear", out, tabs );
+    XMLWriteElement( startReportYear, "startReportYear", out, tabs );
+	XMLWriteElement( timeStep1, "timestep1", out, tabs );
+	XMLWriteElement( timeStep2, "timestep2", out, tabs );
+	XMLWriteElement( timeStep3, "timestep3", out, tabs );
+	XMLWriteElement( popStartYear, "popbegin", out, tabs );
+	XMLWriteElement( dataEndYear, "dataend", out, tabs );
+	XMLWriteElement( dataTimeStep, "datatimestep", out, tabs );
 	
-	Tabs::decreaseIndent();
+	tabs->decreaseIndent();
 
-	Tabs::writeTabs( out );
+	tabs->writeTabs( out );
 	out << "</modeltime>" << endl;
 }
 
 //! Write out object to output stream for debugging.
-void Modeltime::toDebugXML( const int period, ostream& out ) const {
+void Modeltime::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	
-	Tabs::writeTabs( out );
+	tabs->writeTabs( out );
 	out << "<modeltime>" << endl;
 	
-	Tabs::increaseIndent();
+	tabs->increaseIndent();
 
-	XMLWriteElement( startYear, "startyear", out );
-	XMLWriteElement( interYear1, "interyear1", out );
-	XMLWriteElement( interYear2, "interyear2", out );
-	XMLWriteElement( endYear, "endyear", out );
-	XMLWriteElement( startReportYear, "startReportYear", out );
-	XMLWriteElement( timeStep1, "timestep1", out );
-	XMLWriteElement( timeStep2, "timestep2", out );
-	XMLWriteElement( timeStep3, "timestep3", out );
-	XMLWriteElement( popStartYear, "popbegin", out );
-	XMLWriteElement( dataEndYear, "dataend", out );
-	XMLWriteElement( dataTimeStep, "datatimestep", out );
-	XMLWriteElement( periodToTimeStep[ period ], "periodToTimeStep", out );
+	XMLWriteElement( startYear, "startyear", out, tabs );
+	XMLWriteElement( interYear1, "interyear1", out, tabs );
+	XMLWriteElement( interYear2, "interyear2", out, tabs );
+	XMLWriteElement( endYear, "endyear", out, tabs );
+    XMLWriteElement( startReportYear, "startReportYear", out, tabs );
+	XMLWriteElement( timeStep1, "timestep1", out, tabs );
+	XMLWriteElement( timeStep2, "timestep2", out, tabs );
+	XMLWriteElement( timeStep3, "timestep3", out, tabs );
+	XMLWriteElement( popStartYear, "popbegin", out, tabs );
+	XMLWriteElement( dataEndYear, "dataend", out, tabs );
+	XMLWriteElement( dataTimeStep, "datatimestep", out, tabs );
+	XMLWriteElement( periodToTimeStep[ period ], "periodToTimeStep", out, tabs );
 
 	// Write out the three vectors associated with the model period.
-	XMLWriteElement( dataOffset[ period ], "dataOffset", out );
-	XMLWriteElement( modelPeriodToYear[ period ], "modelPeriodToYear", out );
-	XMLWriteElement( modelPeriodToPopPeriod[ period ], "modelPeriodToPopPeriod", out );
+	XMLWriteElement( dataOffset[ period ], "dataOffset", out, tabs );
+	XMLWriteElement( modelPeriodToYear[ period ], "modelPeriodToYear", out, tabs );
+	XMLWriteElement( modelPeriodToPopPeriod[ period ], "modelPeriodToPopPeriod", out, tabs );
 
-	Tabs::decreaseIndent();
+	tabs->decreaseIndent();
 
-	Tabs::writeTabs( out );
+	tabs->writeTabs( out );
 	out << "</modeltime>" << endl;
 }
 
-void Modeltime::set(void) {
+void Modeltime::set() {
 	
 	numberOfPeriods1 = (interYear1 - startYear)/timeStep1 + 1; // +1 for first year
 	numberOfPeriods2 = (interYear2 - interYear1)/timeStep2; 

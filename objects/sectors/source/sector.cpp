@@ -14,12 +14,13 @@
 #include <cassert>
 
 // xml headers
-#include "util/base/include/xml_helper.h"
-#include <xercesc/dom/DOM.hpp>
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 
+#include "util/base/include/xml_helper.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
 #include "containers/include/scenario.h"
@@ -37,7 +38,7 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-extern ofstream outfile, bugoutfile;
+extern ofstream bugoutfile;
 
 /*! \brief Default constructor.
 *
@@ -45,8 +46,8 @@ extern ofstream outfile, bugoutfile;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-Sector::Sector( const string regionName ) {
-    this->regionName = regionName;
+Sector::Sector( const string regionNameIn ) {
+    regionName = regionNameIn;
     initElementalMembers();
     Configuration* conf = Configuration::getInstance();
     debugChecking = conf->getBool( "debugChecking" );
@@ -163,19 +164,8 @@ void Sector::XMLParse( const DOMNode* node ){
             unit = XMLHelper<string>::getValueString( curr );
         }
         else if( nodeName == "subsector" ){
-            map<string,int>::const_iterator subSectorMapIter = subSectorNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-            if( subSectorMapIter != subSectorNameMap.end() ) {
-                // subSector already exists.
-                subsec[ subSectorMapIter->second ]->XMLParse( curr );
-            }
-            else {
-                tempSubSector = new Subsector( regionName, name );
-                tempSubSector->XMLParse( curr );
-                subsec.push_back( tempSubSector );
-                subSectorNameMap[ tempSubSector->getName() ] = static_cast<int>( subsec.size() ) - 1;
-            }	
+            parseContainerNode( curr, subsec, subSectorNameMap, new Subsector( regionName, name ) );
         }
-
         else {
             XMLDerivedClassParse( nodeName, curr );
         }
@@ -232,44 +222,44 @@ void Sector::XMLDerivedClassParseAttr( const DOMNode* node ) {
 * \author Josh Lurz
 * \param out reference to the output stream
 */
-void Sector::toXML( ostream& out ) const {
+void Sector::toXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<supplysector name=\"" << name << "\">"<< endl;
 
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // write the xml for the class members.
     // write out the market string.
-    XMLWriteElement( market, "market", out );
-    XMLWriteElement( unit, "unit", out );
+    XMLWriteElement( market, "market", out, tabs );
+    XMLWriteElement( unit, "unit", out, tabs );
 
     for( int i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
-        XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, tabs, 0, modeltime->getper_to_yr( i ) );
     }
 
     for( int j = 0; modeltime->getper_to_yr( j ) <= 1990; j++ ){
-        XMLWriteElement( output[ j ], "output", out, modeltime->getper_to_yr( j ) );
+        XMLWriteElement( output[ j ], "output", out, tabs, modeltime->getper_to_yr( j ) );
     }
 
     // write out the subsector objects.
     for( vector<Subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
-        ( *k )->toXML( out );
+        ( *k )->toXML( out, tabs );
     }
 
     // write out variables for derived classes
-    toXMLDerivedClass( out );
+    toXMLDerivedClass( out, tabs );
 
     // finished writing xml for the class members.
 
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</supplysector>" << endl;
 }
 
@@ -282,44 +272,44 @@ void Sector::toXML( ostream& out ) const {
 * \param out reference to the output stream
 * \todo josh to update documentation on this method ..
 */
-void Sector::toOutputXML( ostream& out ) const {
+void Sector::toOutputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<supplysector name=\"" << name << "\">"<< endl;
 
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // write the xml for the class members.
     // write out the market string.
-    XMLWriteElement( market, "market", out );
-    XMLWriteElement( unit, "unit", out );
+    XMLWriteElement( market, "market", out, tabs );
+    XMLWriteElement( unit, "unit", out, tabs );
 
     for( int i = 0; i < static_cast<int>( sectorprice.size() ); i++ ){
-        XMLWriteElement( sectorprice[ i ], "price", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElement( sectorprice[ i ], "price", out, tabs, modeltime->getper_to_yr( i ) );
     }
 
     for( int j = 0; j < static_cast<int>( output.size() ); j++ ){
-        XMLWriteElement( output[ j ], "output", out, modeltime->getper_to_yr( j ) );
+        XMLWriteElement( output[ j ], "output", out, tabs, modeltime->getper_to_yr( j ) );
     }
 
     // write out the subsector objects.
     for( vector<Subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
-        ( *k )->toXML( out );
+        ( *k )->toXML( out, tabs );
     }
 
     // write out variables for derived classes
-    toXMLDerivedClass( out );
+    toXMLDerivedClass( out, tabs );
 
     // finished writing xml for the class members.
 
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</supplysector>" << endl;
 }
 
@@ -330,7 +320,7 @@ void Sector::toOutputXML( ostream& out ) const {
 * \author Steve Smith, Josh Lurz
 * \param out reference to the output stream
 */
-void Sector::toXMLDerivedClass( ostream& out ) const {  
+void Sector::toXMLDerivedClass( ostream& out, Tabs* tabs ) const {  
     // do nothing
 }	
 
@@ -343,42 +333,42 @@ void Sector::toXMLDerivedClass( ostream& out ) const {
 * \param period model period
 * \param out reference to the output stream
 */
-void Sector::toDebugXML( const int period, ostream& out ) const {
+void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<supplysector name=\"" << name << "\">"<< endl;
 
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // write the xml for the class members.
     // write out the market string.
-    XMLWriteElement( market, "market", out );
-    XMLWriteElement( unit, "unit", out );
+    XMLWriteElement( market, "market", out, tabs );
+    XMLWriteElement( unit, "unit", out, tabs );
 
     // Write out the data in the vectors for the current period.
-    XMLWriteElement( sectorprice[ period ], "sectorprice", out );
-    XMLWriteElement( pe_cons[ period ], "pe_cons", out );
-    XMLWriteElement( input[ period ], "input", out );
-    XMLWriteElement( output[ period ], "output", out );
-    XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out );
+    XMLWriteElement( sectorprice[ period ], "sectorprice", out, tabs );
+    XMLWriteElement( pe_cons[ period ], "pe_cons", out, tabs );
+    XMLWriteElement( input[ period ], "input", out, tabs );
+    XMLWriteElement( output[ period ], "output", out, tabs );
+    XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
 
     // Write out the summary
     // summary[ period ].toDebugXML( period, out );
 
     // write out the subsector objects.
     for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
-        ( *j )->toDebugXML( period, out );
+        ( *j )->toDebugXML( period, out, tabs );
     }
 
     // finished writing xml for the class members.
 
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</supplysector>" << endl;
 }
 
@@ -471,7 +461,7 @@ void Sector::calcShare( const int period, const double gnpPerCap ) {
     // simultaneity be turned on. This would seem to be because the fixed share is lagged one period
     // and can cause an oscillation. With the demand for this Sector in the marketplace, however, the
     // fixed capacity converges as the trial value for demand converges.
-
+    
     int i=0;
     double sum = 0.0;
     double fixedSum = 0.0;

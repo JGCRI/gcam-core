@@ -13,11 +13,11 @@
 
 #include <vector>
 #include <string>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/demand_sector.h"
 
 // transportation demand sector class derived from demsector class
-class tranSector : public DemandSector
+class TranSector : public DemandSector
 {
 protected:
     std::vector<double> percentLicensed; //!< Percent of population licensed
@@ -25,8 +25,8 @@ protected:
     double baseScalerNotLic; //!< constant scaler to scale base unlicensed output
     double priceRatioNotLic;//!< price ratio for unlicensed population
 public:
-    tranSector( const std::string regionName );
-    virtual ~tranSector();
+    TranSector( const std::string regionName );
+    virtual ~TranSector();
     virtual void clear();
     virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void aggdemand( const double gnp_cap, const double gnp, const int period ); 

@@ -115,30 +115,30 @@ void Marketplace::solve( const int period ){
 * \param out The output stream to which to print.
 * \author Josh Lurz
 */
-void Marketplace::toDebugXML( const int period, ostream& out ) const {
+void Marketplace::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<Marketplace>" << endl;
 
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // write the xml for the class members.
-    XMLWriteElement( numMarkets, "numberOfMarkets", out );
+    XMLWriteElement( numMarkets, "numberOfMarkets", out, tabs );
 
     // First write out the individual markets
     for( int i = 0; i < static_cast<int>( markets.size() ); i++ ){
-        markets[ i ][ period ]->toDebugXML( period, out );
+        markets[ i ][ period ]->toDebugXML( period, out, tabs );
     }
 
     // finished writing xml for the class members.
 
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</Marketplace>" << endl;
 }
 
@@ -695,7 +695,8 @@ void Marketplace::setMarketToSolve ( const string& goodName, const string& regio
 * This function determines a market from a good and region and unsets the market to solve for the period passed to the function.
 * If this period is -1, the default value, the function unsets the solve flag for all periods of the market. This solve flag 
 * determines whether the market is solved by the solution mechanism, except for cases where the market does not pass certain
-* other criteria related to singularities. If this flag is set to false, as is the default, the market will never be solved. 
+* other criteria related to singularities. If this flag is set to false, as is the default, the market will never be solved.
+* This function also clears supply and demand for the market at the same time. 
 *
 * \param goodName The name of the good of the market.
 * \param regionName The region name of the market.
@@ -711,11 +712,15 @@ void Marketplace::unsetMarketToSolve ( const string& goodName, const string& reg
         if( per == -1 ) {
             for( int per = 0; per < static_cast<int>( markets[ marketNumber ].size() ); per++ ){                 
                 markets[ marketNumber ][ per ]->setSolveMarket( false );
+                markets[ marketNumber ][ per ]->nullSupply();
+                markets[ marketNumber ][ per ]->nullDemand();
             }
         }
         // Otherwise set the individual market to solve.
         else {
             markets[ marketNumber ][ per ]->setSolveMarket( false );
+            markets[ marketNumber ][ per ]->nullSupply();
+            markets[ marketNumber ][ per ]->nullDemand();
         }
     }
     else {

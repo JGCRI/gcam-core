@@ -11,7 +11,7 @@
 #include <string>
 #include <iostream>
 #include <cmath>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/xml_helper.h"
 
 #include "sectors/include/demand_sector.h"
@@ -111,68 +111,67 @@ void DemandSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
     else if( nodeName == "aeei" ) {
         XMLHelper<double>::insertValueIntoVector( curr, aeei, modeltime );
     }
-
 }
 
 
 //! Write object to xml output stream.
-void DemandSector::toXML( ostream& out ) const {
+void DemandSector::toXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     int i = 0;
     
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<demandsector name=\"" << name << "\" perCapitaBased=\"" << perCapitaBased << "\">" << endl;
     
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     
     // write the xml for the class members.
     // write out the market string.
-    XMLWriteElement( market, "market", out );
-    XMLWriteElement( unit, "unit", out );
-    XMLWriteElementCheckDefault( pElasticityBase, "pElasticityBase", out, 0 );
+    XMLWriteElement( market, "market", out, tabs );
+    XMLWriteElement( unit, "unit", out, tabs );
+    XMLWriteElementCheckDefault( pElasticityBase, "pElasticityBase", out, tabs, 0 );
     
     for( i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
-        XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, tabs, 0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( pElasticity.size() ); i++ ){
-        XMLWriteElementCheckDefault( pElasticity[ i ], "priceelasticity", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( pElasticity[ i ], "priceelasticity", out, tabs, 0, modeltime->getper_to_yr( i ) );
     }
 
     for( i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
-        XMLWriteElementCheckDefault( service[ i ], "serviceoutput", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( service[ i ], "serviceoutput", out, tabs, 0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
-        XMLWriteElement( output[ i ], "output", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElement( output[ i ], "output", out, tabs, modeltime->getper_to_yr( i ) );
     }
 
     for( i = 0; i < static_cast<int>( finalEngyCons.size() ); i++ ){
-        XMLWriteElementCheckDefault( finalEngyCons[ i ], "energyconsumption", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( finalEngyCons[ i ], "energyconsumption", out, tabs, 0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( iElasticity.size() ); i++ ){
-        XMLWriteElementCheckDefault( iElasticity[ i ], "incomeelasticity", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( iElasticity[ i ], "incomeelasticity", out, tabs, 0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( aeei.size() ); i++ ){
-        XMLWriteElementCheckDefault( aeei[ i ], "aeei", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( aeei[ i ], "aeei", out, tabs, 0, modeltime->getper_to_yr( i ) );
     }
     
     // write out the subsector objects.
     for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
-        ( *j )->toXML( out );
+        ( *j )->toXML( out, tabs );
     }
     
     // finished writing xml for the class members.
     
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
     
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</demandsector>" << endl;
 }
 
@@ -183,59 +182,59 @@ void DemandSector::toXML( ostream& out ) const {
 * \author Steve Smith, Josh Lurz
 * \param out reference to the output stream
 */
-void DemandSector::toXMLDerivedClass( ostream& out ) const {  
+void DemandSector::toXMLDerivedClass( ostream& out, Tabs* tabs ) const {  
     
 }	
 
 
 //! XML output for viewing.
-void DemandSector::toOutputXML( ostream& out ) const {
+void DemandSector::toOutputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     int i = 0;
     
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<demandsector name=\"" << name << "\">" << endl;
     
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     
     // write the xml for the class members.
     // write out the market string.
-    XMLWriteElement( market, "market", out );
-    XMLWriteElement( unit, "unit", out );
-    XMLWriteElement( pElasticityBase, "pElasticityBase", out );
+    XMLWriteElement( market, "market", out, tabs );
+    XMLWriteElement( unit, "unit", out, tabs );
+    XMLWriteElement( pElasticityBase, "pElasticityBase", out, tabs );
     
     for( i = 0; i < static_cast<int>( sectorprice.size() ); i++ ){
-        XMLWriteElement( sectorprice[ i ], "price", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElement( sectorprice[ i ], "price", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( output.size() ); i++ ){
-        XMLWriteElement( output[ i ], "output", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElement( output[ i ], "output", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( service.size() ); i++ ){
-        XMLWriteElement( service[ i ], "serviceoutput", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElement( service[ i ], "serviceoutput", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( servicePreTechChange.size() ); i++ ){
-        XMLWriteElement( servicePreTechChange[ i ], "servicePreTechChange", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElement( servicePreTechChange[ i ], "servicePreTechChange", out, tabs, modeltime->getper_to_yr( i ) );
     }
 
     for( i = 0; i < static_cast<int>( finalEngyCons.size() ); i++ ){
-        XMLWriteElement( finalEngyCons[ i ], "energyconsumption", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElement( finalEngyCons[ i ], "energyconsumption", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( iElasticity.size() ); i++ ){
-        XMLWriteElement( iElasticity[ i ], "incomeelasticity", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElement( iElasticity[ i ], "incomeelasticity", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( pElasticity.size() ); i++ ){
-        XMLWriteElement( pElasticity[ i ], "priceelasticity", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElement( pElasticity[ i ], "priceelasticity", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( aeei.size() ); i++ ){
-        XMLWriteElement( aeei[ i ], "aeei", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElement( aeei[ i ], "aeei", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
     // does aeei need to be written?
@@ -243,72 +242,72 @@ void DemandSector::toOutputXML( ostream& out ) const {
     
     // write out the subsector objects.
     for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
-        ( *j )->toXML( out );
+        ( *j )->toXML( out, tabs );
     }
     
     // finished writing xml for the class members.
     
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
     
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</demandsector>" << endl;
 }
 
 //! Write object to debugging xml output stream.
-void DemandSector::toDebugXML( const int period, ostream& out ) const {
+void DemandSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<demandsector name=\"" << name << "\" perCapitaBased=\""
         << perCapitaBased << "\">" << endl;
     
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     
     // write the xml for the class members.
     // write out the market string.
-    XMLWriteElement( market, "market", out );
-    XMLWriteElement( unit, "unit", out );
-    XMLWriteElement( pElasticityBase, "pElasticityBase", out );
-    XMLWriteElement( priceRatio, "priceRatio", out );
+    XMLWriteElement( market, "market", out, tabs );
+    XMLWriteElement( unit, "unit", out, tabs );
+    XMLWriteElement( pElasticityBase, "pElasticityBase", out, tabs );
+    XMLWriteElement( priceRatio, "priceRatio", out, tabs );
     
     // Write out the data in the vectors for the current period.
     // First write out inherited members.
-    XMLWriteElement( sectorprice[ period ], "sectorprice", out );
-    XMLWriteElement( pe_cons[ period ], "pe_cons", out );
-    XMLWriteElement( input[ period ], "input", out );
-    XMLWriteElement( output[ period ], "output", out );
-    XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out );
+    XMLWriteElement( sectorprice[ period ], "sectorprice", out, tabs );
+    XMLWriteElement( pe_cons[ period ], "pe_cons", out, tabs );
+    XMLWriteElement( input[ period ], "input", out, tabs );
+    XMLWriteElement( output[ period ], "output", out, tabs );
+    XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
     
-    XMLWriteElement( sectorFuelCost[ period ], "sectorFuelCost", out );
-    XMLWriteElement( techChangeCumm[ period ], "techChangeCumm", out );
+    XMLWriteElement( sectorFuelCost[ period ], "sectorFuelCost", out, tabs );
+    XMLWriteElement( techChangeCumm[ period ], "techChangeCumm", out, tabs );
     
     
     // Now write out own members.
-    XMLWriteElement( finalEngyCons[ period ], "finalEngyCons", out );
-    XMLWriteElement( service[ period ], "service", out );
-    XMLWriteElement( servicePreTechChange[ period ], "servicePreTechChange", out );
-    XMLWriteElement( iElasticity[ period ], "iElasticity", out );
-    XMLWriteElement( pElasticity[ period ], "pElasticity", out );
-    XMLWriteElement( aeei[ period ], "aeei", out );
+    XMLWriteElement( finalEngyCons[ period ], "finalEngyCons", out, tabs );
+    XMLWriteElement( service[ period ], "service", out, tabs );
+    XMLWriteElement( servicePreTechChange[ period ], "servicePreTechChange", out, tabs );
+    XMLWriteElement( iElasticity[ period ], "iElasticity", out, tabs );
+    XMLWriteElement( pElasticity[ period ], "pElasticity", out, tabs );
+    XMLWriteElement( aeei[ period ], "aeei", out, tabs );
     
     // Write out the summary
     // summary[ period ].toDebugXML( period, out );
     
     // write out the subsector objects.
     for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
-        ( *j )->toDebugXML( period, out );
+        ( *j )->toDebugXML( period, out, tabs );
     }
     
     // finished writing xml for the class members.
     
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
     
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</demandsector>" << endl;
 }
 
@@ -492,22 +491,20 @@ void DemandSector::calc_pElasticity(int period) {
 void DemandSector::aggdemand( const double gnp_cap, const double gnp, const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
     double ser_dmd;
-    double base;
     // double pelasticity = -0.9;
     double pelasticity = pElasticity[period];
-    
-    base = getOutput(0);
-    
-    // normalize prices to 1990 base
-    int normPeriod = modeltime->getyr_to_per(1990);
-    priceRatio = getPrice( period ) / getPrice( normPeriod );
+    const double base = getOutput(0);
      
     // demand for service
     if (period == 0) {
+        priceRatio = 0;
+
         ser_dmd = base; // base output is initialized by data
         techChangeCumm[period] = 1; // base year technical change
     }
     else {
+        const int normPeriod = modeltime->getyr_to_per(1990);
+        priceRatio = getPrice( period ) / getPrice( normPeriod );
         // perCapitaBased is true or false
         if (perCapitaBased) { // demand based on per capita GNP
             ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp_cap,iElasticity[period]);
@@ -515,7 +512,8 @@ void DemandSector::aggdemand( const double gnp_cap, const double gnp, const int 
             // population).  The gnp ratio provides the population ratio.
             ser_dmd *= gnp/gnp_cap;
         }
-        else { // demand based on scale of GNP
+        else { // demand based on scale of GNP    
+
             ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp,iElasticity[period]);
         }
         

@@ -180,7 +180,7 @@ void Summary::clearemindmap() {
 void Summary::clearSequesteredAmountMap() {
 	sequesteredAmount.clear();
 }
-
+/*! \todo Fix all these names. Should not include 'second'.*/
 double Summary::get_fmap_second( const string& name ) const {
     return util::searchForValue( fuelcons, name );
 }
@@ -198,7 +198,7 @@ double Summary::get_peprodmap_second( const string& name ) const {
 }
 
 double Summary::get_emissmap_second( const string& name ) const {
-	return util::searchForValue( emission,name );
+	return util::searchForValue( emission, name );
 }
 
 //! return the sequestered amount which is second part of the map

@@ -33,34 +33,34 @@ MarketInfo::~MarketInfo(){
 *
 * \param out Output stream to print to.
 */
-void MarketInfo::toDebugXML( ostream& out ) const {
+void MarketInfo::toDebugXML( ostream& out, Tabs* tabs ) const {
    // write the beginning tag.
-   Tabs::writeTabs( out );
+   tabs->writeTabs( out );
    out << "<MarketInfo>" << endl;
    
    // increase the indent.
-   Tabs::increaseIndent();
+   tabs->increaseIndent();
   
    // Write out all the name value pairs.
    for( map<string,double>::const_iterator iter = infoMap.begin(); iter != infoMap.end(); iter++ ){
-       Tabs::writeTabs( out );
+       tabs->writeTabs( out );
        out << "<Pair>" << endl;
        
-       Tabs::increaseIndent();
-       XMLWriteElement( iter->first, "key", out );
-       XMLWriteElement( iter->second, "value", out );
-       Tabs::decreaseIndent();
+       tabs->increaseIndent();
+       XMLWriteElement( iter->first, "key", out, tabs );
+       XMLWriteElement( iter->second, "value", out, tabs );
+       tabs->decreaseIndent();
 
-       Tabs::writeTabs( out );
+       tabs->writeTabs( out );
        out << "</Pair>" << endl;
    }
    // finished writing xml for the class members.
    
    // decrease the indent.
-   Tabs::decreaseIndent();
+   tabs->decreaseIndent();
    
    // write the closing tag.
-   Tabs::writeTabs( out );
+   tabs->writeTabs( out );
    out << "</MarketInfo>" << endl;
 }
 

@@ -14,7 +14,9 @@
 #include <vector>
 #include <map>
 #include <algorithm>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
+
 #include "util/base/include/xml_helper.h"
 #include "containers/include/world.h"
 #include "containers/include/region.h"
@@ -25,7 +27,11 @@
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
 #include "util/base/include/summary.h"
-
+#include "util/curves/include/curve.h"
+#include "util/curves/include/point_set_curve.h"
+#include "util/curves/include/point_set.h"
+#include "util/curves/include/explicit_point_set.h"
+#include "util/curves/include/xy_data_point.h"
 using namespace std;
 using namespace xercesc;
 
@@ -58,7 +64,6 @@ void World::XMLParse( const DOMNode* node ){
 
     string nodeName;
     DOMNode* curr = 0;
-    Region* tempRegion = 0; // tempory region object
 
     // assume we are passed a valid node.
     assert( node );
@@ -75,18 +80,7 @@ void World::XMLParse( const DOMNode* node ){
         }
 
         else if( nodeName == "region" ){
-            // Check if the region already exists.
-            map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-            if( regionIter != regionNamesToNumbers.end() ) {
-                // Region exists.
-                regions[ regionIter->second ]->XMLParse( curr );
-            }
-            else {
-                tempRegion = new Region();
-                tempRegion->XMLParse( curr );
-                regions.push_back( tempRegion ); // resizes vector of region objects
-                regionNamesToNumbers[ tempRegion->getName() ] = static_cast<int>( regions.size() ) - 1;
-            }
+            parseContainerNode( curr, regions, regionNamesToNumbers, new Region() );
         }
         else if( nodeName == "primaryFuelName" ) {
             // Get the fuel name.
@@ -139,59 +133,64 @@ void World::initAgLu() {
 }
 
 //! Write out datamembers to XML output stream.
-void World::toXML( ostream& out ) const {
+void World::toXML( ostream& out, Tabs* tabs ) const {
 
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<world>" << endl;
-
+    /*! \todo Use the new XML helper function to write out all opening tags.
+    * \todo Use the new XML helper function to write out all closing tags.
+    * \todo Implement static function for each class named getXMLTagName(). This 
+    * would return a constant string which is the name of the XML tag. This would replace
+    * the hardcoded strings we have everywhere.
+    */
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // write the xml for the class members.
     // for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
     // won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
     for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
-        XMLWriteElement( *fuelIter, "primaryFuelName", out );
+        XMLWriteElement( *fuelIter, "primaryFuelName", out, tabs );
     }
 
     for( vector<Region*>::const_iterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->toXML( out );
+        ( *i )->toXML( out, tabs );
     }
     // finished writing xml for the class members.
 
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</world>" << endl;
 
 }
 
 //! Write out XML for debugging purposes.
 /*! \warning This only call Region::toXML for the US. */
-void World::toDebugXML( const int period, ostream& out ) const {
+void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<world period=\"" << period << "\">" << endl;
 
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // write the xml for the class members.
     for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
-        XMLWriteElement( *fuelIter, "primaryFuelName", out );
+        XMLWriteElement( *fuelIter, "primaryFuelName", out, tabs );
     }
 
     // for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
     // won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
-    scenario->getMarketplace()->toDebugXML( period, out );
+    scenario->getMarketplace()->toDebugXML( period, out, tabs );
 
     for( vector<Region*>::const_iterator i = regions.begin(); i == regions.begin(); i++ ) { 
         // for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ) {
-        ( *i )->toDebugXML( period, out );
+        ( *i )->toDebugXML( period, out, tabs );
     }
 
     for( vector<map<string,double> >::const_iterator j = ghgs.begin(); j != ghgs.end(); j++ ) {
@@ -200,10 +199,10 @@ void World::toDebugXML( const int period, ostream& out ) const {
     // finished writing xml for the class members.
 
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</world>" << endl;
 }
 
@@ -479,3 +478,81 @@ void World::printSectorDependencies( Logger* logger ) const {
         ( *regionIter )->printSectorDependencies( logger );
     }
 }
+
+/*! \brief A function which sets a fixed tax for each specified region on a specific gas.
+* \detailed This function sets a fixed tax for each region in the regionsToSet vector.
+* Each region will handle resetting the market to a fixed tax market and removing previous constraints.
+* \author Josh Lurz
+* \param policyName The name of the existing policy to turn into a fixed tax, or to create if it does not exist.
+* \param marketName The name of the market the fixed tax applies to. 
+* \param taxes A vector of taxes to set into each specified region, one for each time period.
+* \param regionsToSet A vector of regions for which to set the tax. If it is empty (the default value) ALL regions will be set.
+*/
+void World::setFixedTaxes( const string& policyName, const string& marketName, const vector<double> taxes, const std::vector<std::string>& regionsToSet ) {
+    for( int i = 0; i < static_cast<int>( regions.size() ); i++ ) {
+        // If the regions to set vector is empty or contains the region, set the carbon taxes.
+        if( ( static_cast<int>( regionsToSet.size() ) == 0 ) ||
+            ( find( regionsToSet.begin(), regionsToSet.end(), regions[ i ]->getName() ) != regionsToSet.end() ) ) {
+                regions[ i ]->setFixedTaxes( policyName, marketName, taxes );
+            }
+    }
+}
+
+/*! \brief A function to generate a series of ghg emissions quantity curves based on an already performed model run.
+* \detailed This function used the information stored in it to create a series of curves, one for each region,
+* with each datapoint containing a time period and an amount of gas emissions.
+* \note The user is responsible for deallocating the memory in the returned Curves.
+* \author Josh Lurz
+* \param The name of the ghg to create a set of curves for.
+* \return A map with keys as region names and Curves as values representing the quantity of ghg emissions by time period.
+*/
+const map<const string,const Curve*> World::getEmissionsQuantityCurves( const string& ghgName ) const {
+    /*! \pre The run has been completed. */
+    const string GLOBAL_NAME = "global";
+
+    map<const string,const Curve*> emissionsQCurves;
+
+    for( vector<Region*>::const_iterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
+        emissionsQCurves[ (*rIter)->getName() ] = (*rIter)->getEmissionsQuantityCurve( ghgName );
+    }
+
+    // Add an entry for the global emissions. Should do this better. 
+    ExplicitPointSet* globalQs = new ExplicitPointSet();
+    const Marketplace* marketplace = scenario->getMarketplace();
+    const Modeltime* modeltime = scenario->getModeltime();
+
+    for( int per = 0; per < modeltime->getmaxper(); per++ ){
+        globalQs->addPoint( new XYDataPoint( modeltime->getper_to_yr( per ), marketplace->getDemand( ghgName, "USA", per ) ) );
+    }
+    emissionsQCurves[ GLOBAL_NAME ] = new PointSetCurve( globalQs );
+    return emissionsQCurves;
+}
+
+/*! \brief A function to generate a series of ghg emissions price curves based on an already performed model run.
+* \detailed This function used the information stored in it to create a series of curves, one for each period,
+* with each datapoint containing a time period and the price gas emissions. 
+* \note The user is responsible for deallocating the memory in the returned Curves.
+* \author Josh Lurz
+* \param The name of the ghg to create a set of Curves for.
+* \return A map with keys as region names and Curves as values representing the price of ghg emissions by time period. 
+*/
+const map<const string,const Curve*> World::getEmissionsPriceCurves( const string& ghgName ) const {
+    /*! \pre The run has been completed. */
+    map<const string,const Curve*> emissionsPCurves;
+    const string GLOBAL_NAME = "global";
+    
+    for( vector<Region*>::const_iterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
+        emissionsPCurves[ (*rIter)->getName() ] = (*rIter)->getEmissionsPriceCurve( ghgName );
+    }
+
+    // Add an entry for the global emissions. Should do this better. 
+    ExplicitPointSet* globalQs = new ExplicitPointSet();
+    const Marketplace* marketplace = scenario->getMarketplace();
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int per = 0; per < modeltime->getmaxper(); per++ ){
+        globalQs->addPoint( new XYDataPoint( modeltime->getper_to_yr( per ), marketplace->getPrice( ghgName, "USA", per ) ) );
+    }
+    emissionsPCurves[ GLOBAL_NAME ] = new PointSetCurve( globalQs );
+    return emissionsPCurves;
+}
+

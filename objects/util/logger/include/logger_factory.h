@@ -14,9 +14,11 @@
 */
 
 #include <map>
+#include <xercesc/dom/DOMNode.hpp>
 
 // Forward Declaration
 class Logger;
+class Tabs;
 
 /*! 
 * \ingroup CIAM
@@ -34,7 +36,7 @@ public:
 	
    static void cleanUp();
 	
-   static void toDebugXML( std::ostream& out );
+   static void toDebugXML( std::ostream& out, Tabs* tabs );
 
    static void XMLParse( const xercesc::DOMNode* root );
 

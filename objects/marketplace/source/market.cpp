@@ -55,37 +55,37 @@ Market::~Market() {
 * \param period Model period for which to print information.
 * \param out Output stream to print to.
 */
-void Market::toDebugXML( const int period, ostream& out ) const {
+void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    // write the beginning tag.
-   Tabs::writeTabs( out );
+   tabs->writeTabs( out );
    out << "<Market name=\""<< getName() << "\" type=\"" << getType() << "\">" << endl;
    
    // increase the indent.
-   Tabs::increaseIndent();
+   tabs->increaseIndent();
    
-   XMLWriteElement( good, "MarketGoodOrFuel", out );
-   XMLWriteElement( region, "MarketRegion", out );
-   XMLWriteElement( period, "period", out );
-   XMLWriteElement( price, "price", out );
-   XMLWriteElement( storedPrice, "storedPrice", out );
-   XMLWriteElement( demand, "demand", out );
-   XMLWriteElement( storedDemand, "storedDemand", out );
-   XMLWriteElement( supply, "supply", out );
-   XMLWriteElement( storedSupply, "storedSupply", out );
+   XMLWriteElement( good, "MarketGoodOrFuel", out, tabs );
+   XMLWriteElement( region, "MarketRegion", out, tabs );
+   XMLWriteElement( period, "period", out, tabs );
+   XMLWriteElement( price, "price", out, tabs );
+   XMLWriteElement( storedPrice, "storedPrice", out, tabs );
+   XMLWriteElement( demand, "demand", out, tabs );
+   XMLWriteElement( storedDemand, "storedDemand", out, tabs );
+   XMLWriteElement( supply, "supply", out, tabs );
+   XMLWriteElement( storedSupply, "storedSupply", out, tabs );
    
    for( vector<string>::const_iterator i = containedRegionNames.begin(); i != containedRegionNames.end(); i++ ) {
-      XMLWriteElement( *i, "ContainedRegion", out );
+      XMLWriteElement( *i, "ContainedRegion", out, tabs );
    }
-   marketInfo.toDebugXML( out );
-   derivedToDebugXML( out );
+   marketInfo.toDebugXML( out, tabs );
+   derivedToDebugXML( out, tabs );
    
    // finished writing xml for the class members.
    
    // decrease the indent.
-   Tabs::decreaseIndent();
+   tabs->decreaseIndent();
    
    // write the closing tag.
-   Tabs::writeTabs( out );
+   tabs->writeTabs( out );
    out << "</Market>" << endl;
 }
 

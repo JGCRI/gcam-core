@@ -11,6 +11,9 @@
 #include <string>
 #include <iostream>
 #include <cassert>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
+
 #include "containers/include/scenario.h"
 #include "resources/include/grade.h"
 #include "util/base/include/model_time.h"
@@ -76,53 +79,53 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
 }
 
 //! Write datamembers to datastream in XML format for replicating input file.
-void Grade::toXML( ostream& out ) const {
+void Grade::toXML( ostream& out, Tabs* tabs ) const {
     
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<grade name=\"" << name << "\">" << endl;
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
-    XMLWriteElementCheckDefault( available, "available", out, 0 );
-    XMLWriteElementCheckDefault( extractCost, "extractioncost", out, 0 );
+    XMLWriteElementCheckDefault( available, "available", out, tabs, 0 );
+    XMLWriteElementCheckDefault( extractCost, "extractioncost", out, tabs, 0 );
         
-    Tabs::decreaseIndent();
-    Tabs::writeTabs( out );
+    tabs->decreaseIndent();
+    tabs->writeTabs( out );
     out << "</grade>" << endl;
 }
 
 //! Write datamembers to datastream in XML format for outputting results
-void Grade::toOutputXML( ostream& out ) const {
+void Grade::toOutputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<grade name=\"" << name << "\">" << endl;
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
-    XMLWriteElement( available, "available", out );
-    XMLWriteElement( extractCost, "extractioncost", out );
+    XMLWriteElement( available, "available", out, tabs );
+    XMLWriteElement( extractCost, "extractioncost", out, tabs );
     
     for( int i = 0; i < static_cast<int>( totalCost.size() ); i++ ){
-        XMLWriteElement( totalCost[ i ], "totalcost", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElement( totalCost[ i ], "totalcost", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
-    Tabs::decreaseIndent();
-    Tabs::writeTabs( out );
+    tabs->decreaseIndent();
+    tabs->writeTabs( out );
     out << "</grade>" << endl;
 }
 
 //! Write datamembers to debugging datastream in XML format.
-void Grade::toDebugXML( const int period, ostream& out ) const {
+void Grade::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<Grade name=\"" << name << "\">" << endl;
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     
-    XMLWriteElement( available, "available", out );
-    XMLWriteElement( extractCost, "extractioncost", out );
-    XMLWriteElement( totalCost[period], "totalcost", out );
+    XMLWriteElement( available, "available", out, tabs );
+    XMLWriteElement( extractCost, "extractioncost", out, tabs );
+    XMLWriteElement( totalCost[period], "totalcost", out, tabs );
     
-    Tabs::decreaseIndent();
-    Tabs::writeTabs( out );
+    tabs->decreaseIndent();
+    tabs->writeTabs( out );
     out << "</Grade>" << endl;
 }
 

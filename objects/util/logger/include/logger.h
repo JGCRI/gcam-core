@@ -15,13 +15,14 @@
 
 #include <iosfwd>
 #include <sstream>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 
 //! Macro used to insert the line and file into a logging command.
 #define LOG( logger, level ) logger->setLevel( level ); logger->setLine( __LINE__ ); logger->setFile( __FILE__ ); *logger
 
 // Forward definition of the Logger class.
 class Logger; 
+class Tabs;
 
 /*!
 * \ingroup CIAM
@@ -109,7 +110,7 @@ public:
 
     void setFile( const std::string& fileIn );
 
-    void toDebugXML( std::ostream& out ) const;
+    void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 
 protected:
     //! Logger name

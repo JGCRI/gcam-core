@@ -6,7 +6,7 @@
 
 /*! 
 * \file xml_logger.h
-* \ingroup CIAM
+* \ingroup Util
 * \brief The XMLLogger class header file.
 * \author Josh Lurz
 * \date $Date$

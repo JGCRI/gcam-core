@@ -13,8 +13,8 @@
 #include <iostream>
 #include <sstream>
 #include <cassert>
-#include <xercesc/dom/DOM.hpp>
-
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/logger/include/logger.h"
 #include "util/base/include/xml_helper.h"
 
@@ -318,31 +318,31 @@ void Logger::XMLParse( const DOMNode* node ) {
 	}
 }
 
-void Logger::toDebugXML( ostream& out ) const {
+void Logger::toDebugXML( ostream& out, Tabs* tabs ) const {
 	
 	// write out the root tag.
 	out << "<Logger name=\"" << name << "\" type=\"" << type << "\" >" << endl;
 
 	// increase the indent.
-	Tabs::increaseIndent();
+	tabs->increaseIndent();
 
-	XMLWriteElement( fileName, "fileName", out );
-	XMLWriteElement( minLogWarningLevel, "minLogWarningLevel", out );
-	XMLWriteElement( minToScreenWarningLevel, "minToScreenWarningLevel", out );
-	XMLWriteElement( logTabSize, "logTabSize", out );
-	XMLWriteElement( printLogNest, "printLogNest", out );
-	XMLWriteElement( printLogWarningLevel, "printLogWarningLevel", out );
-	XMLWriteElement( printLogTimeStamp, "printLogTimeStamp", out );
-	XMLWriteElement( printLogDateStamp, "printLogDateStamp", out );
-	XMLWriteElement( printLogLineNumber, "printLogLineNumber", out );
-	XMLWriteElement( printLogFileName, "printLogFileName", out );
-	XMLWriteElement( printLogFullPath, "printLogFullPath", out );
+	XMLWriteElement( fileName, "fileName", out, tabs );
+	XMLWriteElement( minLogWarningLevel, "minLogWarningLevel", out, tabs );
+	XMLWriteElement( minToScreenWarningLevel, "minToScreenWarningLevel", out, tabs );
+	XMLWriteElement( logTabSize, "logTabSize", out, tabs );
+	XMLWriteElement( printLogNest, "printLogNest", out, tabs );
+	XMLWriteElement( printLogWarningLevel, "printLogWarningLevel", out, tabs );
+	XMLWriteElement( printLogTimeStamp, "printLogTimeStamp", out, tabs );
+	XMLWriteElement( printLogDateStamp, "printLogDateStamp", out, tabs );
+	XMLWriteElement( printLogLineNumber, "printLogLineNumber", out, tabs );
+	XMLWriteElement( printLogFileName, "printLogFileName", out, tabs );
+	XMLWriteElement( printLogFullPath, "printLogFullPath", out, tabs );
 
 	// decrease the indent.
-	Tabs::decreaseIndent();
+	tabs->decreaseIndent();
 	
 	// write the closing tag.
-	Tabs::writeTabs( out );
+	tabs->writeTabs( out );
 	out << "</Logger>" << endl;
 }
 

@@ -12,6 +12,9 @@
 #include <string>
 #include <iostream>
 #include <cassert>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
+
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "resources/include/subresource.h"
@@ -102,17 +105,7 @@ void SubResource::XMLParse( const DOMNode* node )
         }
         
         else if( nodeName == "grade" ){
-            map<string,int>::const_iterator gradeMapIter = gradeNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-            if( gradeMapIter != gradeNameMap.end() ) {
-                // grade already exists.
-                grade[ gradeMapIter->second ]->XMLParse( curr );
-            }
-            else {
-                tempGrade = new Grade();
-                tempGrade->XMLParse( curr );
-                grade.push_back( tempGrade );
-                gradeNameMap[ tempGrade->getName() ] = static_cast<int>( grade.size() ) - 1;
-            }
+            parseContainerNode( curr, grade, gradeNameMap, new Grade() );
         }
         else if( nodeName == "annualprod" ){
             XMLHelper<double>::insertValueIntoVector( curr, annualprod, modeltime );
@@ -158,7 +151,7 @@ void SubResource::completeInit() {
 }
 
 //! Blank definition so that don't have to define in derived classes if there is nothing to write out
-void SubResource::toXMLforDerivedClass( ostream& out ) const {   
+void SubResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {   
 }	
 
 //! Do any initializations needed for this resource
@@ -166,163 +159,163 @@ void SubResource::initializeResource( ) {
 }	
 
 //! Write datamembers to datastream in XML format for replicating input file.
-void SubResource::toXML( ostream& out ) const {
+void SubResource::toXML( ostream& out, Tabs* tabs ) const {
     
     const Modeltime* modeltime = scenario->getModeltime();
     int m = 0;
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<subresource name=\"" << name << "\">"<< endl;
     
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     
     // write the xml for the class members.
     
     for(m = 0; m < static_cast<int>(environCost.size() ); m++ ) {
-        XMLWriteElementCheckDefault(environCost[m],"environCost",out,0,modeltime->getper_to_yr(m));
+        XMLWriteElementCheckDefault(environCost[m],"environCost",out, tabs, 0,modeltime->getper_to_yr(m));
     }
     
     for(m = 0; m < static_cast<int>(severanceTax.size() ); m++ ) {
-        XMLWriteElementCheckDefault(severanceTax[m],"severanceTax",out,0,modeltime->getper_to_yr(m));
+        XMLWriteElementCheckDefault(severanceTax[m],"severanceTax",out, tabs, 0,modeltime->getper_to_yr(m));
     }
     
     // for base year only
     m = 0;
-    XMLWriteElementCheckDefault(annualprod[m],"annualprod",out, 0, modeltime->getper_to_yr(m));
+    XMLWriteElementCheckDefault(annualprod[m],"annualprod",out, tabs, 0, modeltime->getper_to_yr(m));
     
     for(m = 0; m < static_cast<int>(techChange.size() ); m++ ) {
-        XMLWriteElementCheckDefault(techChange[m],"techChange",out,0,modeltime->getper_to_yr(m));
+        XMLWriteElementCheckDefault(techChange[m],"techChange",out, tabs, 0,modeltime->getper_to_yr(m));
     }
     
     for(m = 0; m < static_cast<int>(scaleFactor.size() ); m++ ) {
-        XMLWriteElementCheckDefault(scaleFactor[m],"scaleFactor",out,SCALE_FACTOR_DEFAULT,modeltime->getper_to_yr(m));
+        XMLWriteElementCheckDefault(scaleFactor[m],"scaleFactor",out, tabs, SCALE_FACTOR_DEFAULT,modeltime->getper_to_yr(m));
     }
     
-    XMLWriteElementCheckDefault(minShortTermSLimit,"minShortTermSLimit",out,0);
-    XMLWriteElementCheckDefault(priceElas,"priceElas",out,1);
+    XMLWriteElementCheckDefault(minShortTermSLimit,"minShortTermSLimit",out, tabs, 0 );
+    XMLWriteElementCheckDefault(priceElas,"priceElas",out, tabs, 1 );
     // finished writing xml for the class members.
     
     // write out anything specific to the derived classes
-    toXMLforDerivedClass( out );
+    toXMLforDerivedClass( out, tabs );
     
     // write out the grade objects.
     for( vector<Grade*>::const_iterator i = grade.begin(); i != grade.end(); i++ ){	
-        ( *i )->toXML( out );
+        ( *i )->toXML( out, tabs );
     }
     
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
     
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</subresource>" << endl;
 }
 
 //! Write datamembers to datastream in XML format for outputting results
-void SubResource::toOutputXML( ostream& out ) const {
+void SubResource::toOutputXML( ostream& out, Tabs* tabs ) const {
     
     const Modeltime* modeltime = scenario->getModeltime();
     int m = 0;
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<subresource name=\"" << name << "\">"<< endl;
     
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     
     // write the xml for the class members.
     
     // write out the grade objects.
     for( vector<Grade*>::const_iterator i = grade.begin(); i != grade.end(); i++ ){	
-        ( *i )->toXML( out );
+        ( *i )->toXML( out, tabs );
     }
     
     for(m = 0; m < static_cast<int>(annualprod.size() ); m++ ) {
-        XMLWriteElement(annualprod[m],"annualprod",out,modeltime->getper_to_yr(m));
+        XMLWriteElement(annualprod[m],"annualprod",out, tabs, modeltime->getper_to_yr(m));
     }
     
     for(m = 0; m < static_cast<int>(gdpExpans.size() ); m++ ) {
-        XMLWriteElement(gdpExpans[m],"gdpExpans",out,modeltime->getper_to_yr(m));
+        XMLWriteElement(gdpExpans[m],"gdpExpans",out, tabs, modeltime->getper_to_yr(m));
     }
     
     for(m = 0; m < static_cast<int>(techChange.size() ); m++ ) {
-        XMLWriteElement(techChange[m],"techChange",out,modeltime->getper_to_yr(m));
+        XMLWriteElement(techChange[m],"techChange",out, tabs, modeltime->getper_to_yr(m));
     }
     
     for(m = 0; m < static_cast<int>(environCost.size() ); m++ ) {
-        XMLWriteElement(environCost[m],"environCost",out,modeltime->getper_to_yr(m));
+        XMLWriteElement(environCost[m],"environCost",out, tabs, modeltime->getper_to_yr(m));
     }
     
     for(m = 0; m < static_cast<int>(severanceTax.size() ); m++ ) {
-        XMLWriteElement(severanceTax[m],"severanceTax",out,modeltime->getper_to_yr(m));
+        XMLWriteElement(severanceTax[m],"severanceTax",out, tabs, modeltime->getper_to_yr(m));
     }
     
     for(m = 0; m < static_cast<int>(scaleFactor.size() ); m++ ) {
         if ( scaleFactor[m] != SCALE_FACTOR_DEFAULT ) {  
-            XMLWriteElement(scaleFactor[m],"scaleFactor",out,modeltime->getper_to_yr(m));
+            XMLWriteElement(scaleFactor[m],"scaleFactor",out, tabs, modeltime->getper_to_yr(m));
         }
     }
     
-    XMLWriteElement(minShortTermSLimit,"minShortTermSLimit",out);
-    XMLWriteElement(priceElas,"priceElas",out);
+    XMLWriteElement(minShortTermSLimit,"minShortTermSLimit",out, tabs );
+    XMLWriteElement(priceElas,"priceElas",out, tabs );
     
     // finished writing xml for the class members.
     
     // write out anything specific to the derived classes
-    toXMLforDerivedClass( out );
+    toXMLforDerivedClass( out, tabs );
     
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
     
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</subresource>" << endl;
 }
 
 
-void SubResource::toDebugXML( const int period, ostream& out ) const {
+void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<subresource name=\"" << name << "\">"<< endl;
     
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     
     // write the xml for the class members.
-    XMLWriteElement( nograde, "nograde", out );
-    XMLWriteElement( minShortTermSLimit, "minShortTermSLimit", out );
-    XMLWriteElement( priceElas, "priceElas", out );
+    XMLWriteElement( nograde, "nograde", out, tabs );
+    XMLWriteElement( minShortTermSLimit, "minShortTermSLimit", out, tabs );
+    XMLWriteElement( priceElas, "priceElas", out, tabs );
     
     // Write out data for the period we are in from the vectors.
-    XMLWriteElement( rscprc[ period ], "rscprc", out );
-    XMLWriteElement( available[ period ], "available", out );
-    XMLWriteElement( annualprod[ period ], "annualprod", out );
-    XMLWriteElement( cumulprod[ period ], "cumulprod", out );
-    XMLWriteElement( gdpExpans[ period ], "gdpExpans", out );
-    XMLWriteElement( techChange[ period ], "techChange", out );
-    XMLWriteElement( environCost[ period ], "environCost", out );
-    XMLWriteElement( severanceTax[ period ], "severanceTax", out );
+    XMLWriteElement( rscprc[ period ], "rscprc", out, tabs );
+    XMLWriteElement( available[ period ], "available", out, tabs );
+    XMLWriteElement( annualprod[ period ], "annualprod", out, tabs );
+    XMLWriteElement( cumulprod[ period ], "cumulprod", out, tabs );
+    XMLWriteElement( gdpExpans[ period ], "gdpExpans", out, tabs );
+    XMLWriteElement( techChange[ period ], "techChange", out, tabs );
+    XMLWriteElement( environCost[ period ], "environCost", out, tabs );
+    XMLWriteElement( severanceTax[ period ], "severanceTax", out, tabs );
     if ( scaleFactor[ period ] != SCALE_FACTOR_DEFAULT ) {  
-        XMLWriteElement( scaleFactor[ period ], "scaleFactor", out );
+        XMLWriteElement( scaleFactor[ period ], "scaleFactor", out, tabs );
     }
     
     // write out the grade objects.
     for( int i = 0; i < static_cast<int>( grade.size() ); i++ ){	
-        grade[ i ]->toDebugXML( period, out );
+        grade[ i ]->toDebugXML( period, out, tabs );
     }
     
     // finished writing xml for the class members.
     
     // write out anything specific to the derived classes
-    toXMLforDerivedClass( out );
+    toXMLforDerivedClass( out, tabs );
     
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
     
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</subresource>" << endl;
 }
 

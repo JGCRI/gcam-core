@@ -13,7 +13,7 @@
 * \version $Revision$
 */
 
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 #include "technology.h"
 
 /*! 

@@ -13,8 +13,10 @@
 * \version $Revision$
 */
 
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 #include <map>
+
+class Tabs;
 
 /*! 
 * \ingroup CIAM
@@ -54,7 +56,7 @@ public:
 	static Configuration* getInstance();
 	~Configuration();
 	void XMLParse( const xercesc::DOMNode* tempnode );
-	void toDebugXML( std::ostream& out ) const;
+	void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 	std::string getFile( const std::string& key, const std::string& defaultValue = "" ) const;
 	std::string getString( const std::string& key, const std::string& defaultValue = "" ) const;
 	bool getBool( const std::string& key, const bool defaultValue = false ) const;

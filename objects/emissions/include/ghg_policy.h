@@ -14,7 +14,10 @@
 */
 
 #include <vector>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <string>
+
+class Tabs;
 
 /*! 
 * \ingroup CIAM
@@ -30,21 +33,21 @@ private:
     std::string market; //!< Name of the market
     bool isFixedTax; //!< boolean to use fixed tax or constraint
     std::vector<double> constraint; //!< Emissions constraint by year(tgC or MTC)
-    std::vector<double> fixedTax; //!< Fixed tax on Emissions by year($/TC)
-    std::vector<double> emission; //!< Emissions by year(tgC or MTC)
+    std::vector<double> fixedTaxes; //!< Fixed tax on Emissions by year($/TC)
+    std::vector<double> emissions; //!< Emissions by year(tgC or MTC)
 
 public:
-    GHGPolicy();
+    GHGPolicy( const std::string nameIn = "", const std::string unitIn = "", const std::string marketIn = "", const bool isFixedTaxIn = false );
     void clear();
-    void XMLParse( const xercesc::DOMNode* node );
-    void toXML( std::ostream& out ) const;
-    void toDebugXML( const int period, std::ostream& out ) const;
-    void setMarket( const std::string& regname );
     std::string getName() const;
-    void setEmission( const double amount, const int per );
-    double getConstraint( const int per ) const;
-    double getFixedTax( const int per ) const;
-    double getEmission( const int per ) const;
+    void setEmission( const double emission, const int period );
+    void setMarket( const std::string& regname );
+    void addGHGSupply( const std::string& regionName, const int period ) const;
+    void changePolicyToFixedTax( const std::string& regionName );
+    void setFixedTaxes( const std::string& regionName, const std::vector<double>& taxes );
+    void XMLParse( const xercesc::DOMNode* node );
+    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 };
 
 #endif // _GHG_POLICY_H_

@@ -17,76 +17,78 @@
 #include <memory>
 
 // xerces xml headers
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
 #include "util/base/include/xml_helper.h"
 
 // include custom headers
 #include "util/base/include/configuration.h"
-#include "containers/include/world.h"
-#include "util/base/include/model_time.h"
 #include "containers/include/scenario.h"
-#include "sectors/include/ag_sector.h"
-#include "marketplace/include/marketplace.h"
+#include "containers/include/scenario_runner.h"
+#include "containers/include/mac_generator_scenario_runner.h"
 #include "util/logger/include/logger_factory.h"
 #include "util/logger/include/logger.h"
+#include "util/base/include/timer.h"
 
-// Function Prototypes (for functions called by main())
-extern void createDBout();
-extern void openDB();
-extern void createMCvarid();
-extern void closeDB();
+#if( BUILD_TESTS )
+// Unit test prototype
+int runTests();
+#endif
 
-using namespace std; // enables elimination of std::
+using namespace std;
 using namespace xercesc;
 
 // define file (ofstream) objects for outputs, debugging and logs
-ofstream bugoutfile,outfile,outfile2,dbout,logfile,sdcurvefile,sdfile;	
+/* \todo Finish removing globals-JPL */
+ofstream bugoutfile, outfile, logfile;	
 
 Scenario* scenario = 0; // model scenario info
 time_t ltime;
-int Tabs::numTabs = 0;
+XercesDOMParser* XMLHelper<void>::parser = 0;
+ErrorHandler* XMLHelper<void>::errHandler = 0;
 
 //******* Start of Main Program ********
-int main() {
-
-    clock_t start, afterinit, intermediate, finish;
+int main( int argc, char *argv[] ) {
 
     // Use a smart pointer for configuration so that if the main is exited before the end the memory is freed.
     auto_ptr<Configuration> confPtr( Configuration::getInstance() );
     Configuration* conf = confPtr.get();
+    string configurationArg = "configuration.xml";
+    string loggerFactoryArg = "logger_factory.xml";
 
+    // Parse the arguments 
+    for( int i = 1; i < argc; i++ ){
+        string temp( argv[ i ] );
+        if( temp.compare(0,2,"-C" ) == 0 ){
+            configurationArg = temp.substr( 2, temp.length() );
+            cout << "Configuration file name set to: " << configurationArg << endl;
+            } 
+        else if( temp.compare(0,2,"-L" ) == 0 ){
+            loggerFactoryArg = temp.substr( 2, temp.length() );
+            cout << "Logger Configuration file name set to: " << loggerFactoryArg << endl;
+            }
+        else {
+            cout << "Invalid argument: " << temp << endl;
+            cout << "Usage: " << argv[ 0 ] << " [-CconfigurationFileName ][ -LloggerFactoryFileName ]";
+            return 1;
+            }
+        }
 
-    double duration = 0;
-    ofstream xmlOutStream;
-
-    const string configurationFileName = string( __ROOT_PREFIX__ ) + string( "configuration.xml");
-    start = clock(); // start of model run
-    time(&ltime); // get time and date before model run
-
-    // Initialize the Xerces parser
-    try {
-        XMLPlatformUtils::Initialize();
-    } catch ( const XMLException& toCatch ) {
-        string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
-        cout << "Error during initialization!"<< endl << message << endl;
-        return -1;
-    }
-
+    // Completed initializing the arguments.
+    XercesDOMParser* parser = XMLHelper<void>::getParser();
     DOMNode* root = 0;
-    XercesDOMParser* parser = new XercesDOMParser();
-    parser->setValidationScheme( XercesDOMParser::Val_Always );
-    parser->setDoNamespaces( false );
-    parser->setDoSchema( true );
-    parser->setCreateCommentNodes( false ); // No comment nodes
-    parser->setIncludeIgnorableWhitespace( false ); // No text nodes
 
-    ErrorHandler* errHandler = ( ErrorHandler* ) new HandlerBase();
-    parser->setErrorHandler( errHandler );
-    // XML Parser initialized.
+    const string configurationFileName = string( __ROOT_PREFIX__ ) + configurationArg;
+    
+    // Initialize the timer.
+    Timer timer;
+    timer.start();
+    
+    // Get time and date before model run
+    time(&ltime); 
 
     // Initialize the LoggerFactory
-    const string loggerFileName = string( __ROOT_PREFIX__ ) + string( "logger_factory.xml" );
+    const string loggerFileName = string( __ROOT_PREFIX__ ) + loggerFactoryArg;
     root = XMLHelper<void>::parseXML( loggerFileName, parser );
     LoggerFactory::XMLParse( root );
 
@@ -99,23 +101,11 @@ int main() {
     logfile.open( logFileName.c_str(), ios::out );
     util::checkIsOpen( logfile, logFileName  );
 
-    const string xmlOutFileName = conf->getFile( "xmlOutputFileName" );
-    xmlOutStream.open( xmlOutFileName.c_str(), ios::out );
-    util::checkIsOpen( xmlOutStream, xmlOutFileName );
-
     const string bugOutFileName = conf->getFile( "bugOutFileName" );
     bugoutfile.open( bugOutFileName.c_str(), ios::out );
     util::checkIsOpen( bugoutfile, bugOutFileName );
-
-    const string outFileName = conf->getFile( "outFileName" );
-    outfile.open( outFileName.c_str(), ios::out );
-    util::checkIsOpen( outfile, outFileName );
-
-    const string dbOutFileName = conf->getFile( "dbOutFileName" );
-    dbout.open( dbOutFileName.c_str(), ios::out );
-    util::checkIsOpen( dbout, dbOutFileName );
-
-
+    
+    // Pare the input file.
     root = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), parser );
 
     // Use a smart pointer for scenario so that if the main program exits before the end the memory is freed correctly. 
@@ -123,7 +113,11 @@ int main() {
     scenario = scenarioPtr.get();
 
     scenario->XMLParse( root );
-
+    
+    /*! \todo Improve how reading additional files is done. Current idea would be to have a seperate section
+    * in the configuration file for scenario add on files. There would be a method to get all of them as a list
+    * which could be iterated over. Each element would also have a "use" tag which could be set to 0 to turn off
+    * reading in the file. This would replace all other switches. -JPL */
     if( conf->getBool( "runningNonReference" ) ) {
         const int numAddFiles = conf->getInt( "NumberOfScenarioAddOnFiles" );
         cout << "Number of additional scenario files: " << numAddFiles << endl;
@@ -137,101 +131,42 @@ int main() {
             string addOnFileName = conf->getFile( xmlFileName );
 
             if( addOnFileName != "" ) {
-                root = XMLHelper<void>::parseXML( addOnFileName, parser );
-                scenario->XMLParse( root );
-            }
-        }  
-    }
+                    root = XMLHelper<void>::parseXML( addOnFileName, parser );
+                    scenario->XMLParse( root );
+                }
+            }  
+        }
 
     cout << "XML parsing complete." << endl;
     logfile << "XML parsing complete." << endl;
 
     // Cleanup Xerces.
-    delete errHandler;
-    delete parser;
-    XMLPlatformUtils::Terminate();
+    XMLHelper<void>::cleanupParser();
 
     // Finish initialization.
     scenario->completeInit();
 
-    // Compute data read in time
-    afterinit = clock();
-    duration = (double)(afterinit-start) / CLOCKS_PER_SEC;
-    cout << "XML Readin Time: " << duration << " Seconds" << endl;
-    logfile << "XML Readin Time: " << duration << " Seconds" << endl;
+    // Print data read in time.
+    timer.save();
+    timer.print( cout, "XML Readin Time:" );
+    timer.print( logfile, "XML Readin Time:" );
 
-    const Modeltime* modeltime = scenario->getModeltime();
-    World* world = scenario->getWorld();
-    const Marketplace* marketplace = scenario->getMarketplace();
-
-    int t;
-    outfile <<"Region,Sector,Subsector,Technology,Variable,Units,";
-
-    for (t=0;t<modeltime->getmaxper();t++) { 
-        outfile << modeltime->getper_to_yr(t) <<",";
-    }
-    outfile <<"Date,Notes" << endl;
-
-    // output file header
-    dbout <<"RunID,Region,VarID,";
-    for (t=1;t<modeltime->getmaxper();t++) { 
-        dbout<<"y" << modeltime->getper_to_yr(t) <<",";
-    }
-    dbout << endl;
-    // ******* end MiniCAM stype output *******
- 
-    scenario->run();
-
-    // Print output xml file.
-    scenario->toXML( xmlOutStream );
-
-    // compute data read in time
-    duration = (double)(afterinit-start) / CLOCKS_PER_SEC;
-    cout << endl << "Data Readin Time: "<<duration<<" Seconds" << endl;
-
-    // compute model run time
-    intermediate = clock();
-    duration = (double)(intermediate-start) / CLOCKS_PER_SEC;
-    cout << "Data Readin & Model Run Time: "<<duration<<" Seconds" << endl;
-
-    if ( conf->getBool( "timestamp" )  ) {
-        bugoutfile << endl << "Model Run Time: ,"<< duration <<", Seconds";
-    }
-
-    // ***** Write results to database after last period
-    openDB(); // open MS Access database
-    createDBout(); // create main database output table before calling output routines
-
-    // ***** Write to text file and database
-    world->outputfile(); // write results to file
-    world->MCoutput(); // MiniCAM style output to database
-    marketplace->MCoutput(); // write global market info to database
-    createMCvarid(); // create MC variable id's 
-    // ***** end of writing to database
-
-    finish = clock(); 
-    duration = (double)(finish-start) / CLOCKS_PER_SEC;
-    logfile << "Data Readin, Model Run & Write Time: "<< duration <<" Seconds" << endl;
-    cout << endl<< "Date & Time: "<<ctime(&ltime)<< endl;
-    logfile << endl<< "Date & Time: "<< ctime( &ltime ) << endl;
-
-    if ( conf->getBool( "timestamp" ) ) { 
-        bugoutfile << endl<< "Total Run & Write Time: ,"<< duration <<", Seconds";
-    }
-
-    if( conf->getBool( "agSectorActive" ) ){
-        AgSector::internalOutput();
-    }
+    // Create a scenario runner to handle running the scenario.
+    // and possibly creating a cost curve. 
+    ScenarioRunner* scenRunner = new MACGeneratorScenarioRunner( scenario );
+    
+    // Run the initial scenario.
+    scenRunner->runScenario( timer );
+    
+    delete scenRunner;
+    
+    cout << endl << "Date & Time: " << ctime( &ltime ) << endl;
+    logfile << endl << "Date & Time: " << ctime( &ltime ) << endl;
 
     //******** Close All Text Files
-    xmlOutStream.close();
-    outfile.close();
     bugoutfile.close();
     logfile.close();
-    sdcurvefile.close();
-    sdfile.close();
-    dbout.close();
-    closeDB(); // close MS Access database
+
     LoggerFactory::cleanUp();
 
     return 0;

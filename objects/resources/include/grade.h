@@ -14,7 +14,7 @@
 */
 
 #include <vector>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 
 /*! 
 * \ingroup CIAM
@@ -38,9 +38,9 @@ public:
     void clear();
     void initElementalMembers();
     void XMLParse( const xercesc::DOMNode* tempnode );
-    void toXML( std::ostream& out ) const;
-    void toOutputXML( std::ostream& out ) const;
-    void toDebugXML( const int period, std::ostream& out ) const;
+    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toOutputXML( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void calcCost( const double tax, const double cumTechChange, const double environCost, const int per );
     double getAvail() const;
     double getCost( const int per ) const;

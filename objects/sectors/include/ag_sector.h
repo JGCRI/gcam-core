@@ -13,10 +13,12 @@
 * \version $Revision$
 */
 
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 #include <iosfwd>
 #include <vector>
 #include <map>
+
+class Tabs;
 
 /*! 
 * \ingroup CIAM
@@ -49,8 +51,8 @@ public:
     void clear();
     void XMLParse( const xercesc::DOMNode* node );
     static int getNumAgMarkets();
-    void toXML( std::ostream& out ) const;
-    void toDebugXML( const int period, std::ostream& out ) const;
+    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void setGNP( const std::vector<double>& gnpsIn );
     void setPop( const std::vector<double>& popsIn );
     void setBiomassPrice( const double bioPriceIn );

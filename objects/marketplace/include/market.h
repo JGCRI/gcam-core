@@ -17,6 +17,7 @@
 #include <functional>
 #include "marketplace/include/market_info.h"
 
+class Tabs;
 
 /*!
 * \ingroup CIAM
@@ -30,14 +31,14 @@ public:
 
     Market( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
     virtual ~Market();
-    void toDebugXML( const int period, std::ostream& out ) const;
+    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
     /*! \brief Add additional information to the debug xml stream for derived classes.
     *
     * This method is inherited from by derived class if they which to add any additional information to the printout of the class.
     * \param out Output stream to print to.
     */ 
-    virtual void derivedToDebugXML( std::ostream& out ) const = 0;
+    virtual void derivedToDebugXML( std::ostream& out, Tabs* tabs ) const = 0;
     void addRegion( const std::string& regionNameIn );
     const std::vector<std::string> getContainedRegions() const;
 

@@ -1,7 +1,7 @@
 /*! 
 * \file population.cpp
 * \ingroup CIAM
-* \brief demographic class source file.
+* \brief Population class source file.
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
@@ -14,14 +14,14 @@
 #include <cassert>
 #include <vector>
 #include <cmath>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "containers/include/scenario.h"
 #include "demographics/include/population.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
-#include "marketplace/include/marketplace.h"
 
 using namespace std;
 using namespace xercesc;
@@ -29,260 +29,166 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default constructor
-demographic::demographic(){
-   const Modeltime* modeltime = scenario->getModeltime();
-   
-   // Resize all vectors to the max population period. 
-   const int popmaxper = modeltime->getmaxpopdata();
-	malepop.resize( popmaxper ); 
-	femalepop.resize( popmaxper );
-   laborforce.resize( popmaxper );
-   totalpop.resize( popmaxper );
-   laborprod.resize( popmaxper );
-   laborforce_p.resize( popmaxper );
+Population::Population(){
+    // Resize all vectors to the max population period. 
+    const int popmaxper = scenario->getModeltime()->getmaxpopdata();
+    malepop.resize( popmaxper ); 
+    femalepop.resize( popmaxper );
+    totalpop.resize( popmaxper );
 }
 
 //! Clear data members.
-void demographic::clear(){
-	malepop.clear();
-	femalepop.clear();
-	totalpop.clear();
-	laborprod.clear();
-	laborforce_p.clear();
-	laborforce.clear();
+void Population::clear(){
+    malepop.clear();
+    femalepop.clear();
+    totalpop.clear();
 }
 
-//! parses demographic xml object
-void demographic::XMLParse( const DOMNode* node ){
-	
-	const Modeltime* modeltime = scenario->getModeltime();
+//! parses Population xml object
+void Population::XMLParse( const DOMNode* node ){
 
-	DOMNode* curr = 0;
-	DOMNodeList* nodeList;
-	string nodeName;
-	
-	// make sure we were passed a valid node.
-	assert( node );
-	
-	nodeList = node->getChildNodes();
-	
-	for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-		curr = nodeList->item( i );
-		
-		// get the name of the node.
-		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-		// total population 
-		if( nodeName == "population" ){
-         XMLHelper<double>::insertValueIntoVector( curr, totalpop, modeltime, true );
-		}
-		// labor productivity growth rate
-		else if ( nodeName == "laborproductivity" ){
-         XMLHelper<double>::insertValueIntoVector( curr, laborprod, modeltime, true );
-		}
-		// labor force participation rate
-		else if( nodeName == "laborforce" ){
-		   XMLHelper<double>::insertValueIntoVector( curr, laborforce_p, modeltime, true );
-		}
-	}
-	
-	initData();
+    const Modeltime* modeltime = scenario->getModeltime();
 
+    DOMNode* curr = 0;
+    DOMNodeList* nodeList;
+    string nodeName;
+
+    // make sure we were passed a valid node.
+    assert( node );
+
+    nodeList = node->getChildNodes();
+
+    for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
+        curr = nodeList->item( i );
+
+        // get the name of the node.
+        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+
+        if( nodeName == "#text" ) {
+            continue;
+        }
+        // total population 
+        else if( nodeName == "population" ){
+            XMLHelper<double>::insertValueIntoVector( curr, totalpop, modeltime, true );
+        } 
+        else {
+            cout << "Unrecognized text string: " << nodeName << " found while parsing Population." << endl;
+        }
+    }
 }
 
 //! Writes datamembers to datastream in XML format.
-void demographic::toXML( ostream& out ) const {
-	
-	const Modeltime* modeltime = scenario->getModeltime();
-	int iter;
+void Population::toXML( ostream& out, Tabs* tabs ) const {
 
-	// write the beginning tag.
-	Tabs::writeTabs( out );
-	out << "<demographics>" << endl;
-	
-	// increase the indent.
-	Tabs::increaseIndent();
-	
-	// write the xml for the class members.
-	for( iter = 0; iter < static_cast<int>( totalpop.size() ); iter++ ){
-		XMLWriteElement( totalpop[ iter ], "population", out, modeltime->getPopPeriodToYear( iter ) );
-	}
+    const Modeltime* modeltime = scenario->getModeltime();
+    int iter;
 
-	for( iter = 0; iter < static_cast<int>( laborprod.size() ); iter++ ){
-		XMLWriteElement( laborprod[ iter ], "laborproductivity", out, modeltime->getPopPeriodToYear( iter ) );
-	}
+    // write the beginning tag.
+    tabs->writeTabs( out );
+    out << "<demographics>" << endl;
 
-	for( iter = 0; iter < static_cast<int>( laborforce_p.size() ); iter++ ){
-		XMLWriteElement( laborforce_p[ iter ], "laborforce", out, modeltime->getPopPeriodToYear( iter ) );
-	}
-	
-	// decrease the indent.
-	Tabs::decreaseIndent();
-	
-	// write the closing tag.
-	Tabs::writeTabs( out );
-	out << "</demographics>" << endl;
+    // increase the indent.
+    tabs->increaseIndent();
+
+    // write the xml for the class members.
+    for( iter = 0; iter < static_cast<int>( totalpop.size() ); iter++ ){
+        XMLWriteElement( totalpop[ iter ], "population", out, tabs, modeltime->getPopPeriodToYear( iter ) );
+    }
+
+    // decrease the indent.
+    tabs->decreaseIndent();
+
+    // write the closing tag.
+    tabs->writeTabs( out );
+    out << "</demographics>" << endl;
 }
 
 //! Writes datamembers to debugging datastream in XML format.
-void demographic::toDebugXML( const int period, ostream& out ) const {
-	
-	const Modeltime* modeltime = scenario->getModeltime();
+void Population::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-	// one additional period (base - 1) is read in for demographics data
-	// call modeltime for proper offset
-	int pop_period = modeltime->getmod_to_pop(period);
+    const Modeltime* modeltime = scenario->getModeltime();
 
-	// write the beginning tag.
-	Tabs::writeTabs( out );
-	out << "<demographics>" << endl;
-	
-	// increase the indent.
-	Tabs::increaseIndent();
-	
-	// Write the xml for the class members.
-	XMLWriteElement( malepop[ pop_period ], "malepop", out );
-	
-	XMLWriteElement( femalepop[ pop_period ], "femalepop", out );
+    // one additional period (base - 1) is read in for demographics data
+    // call modeltime for proper offset
+    int pop_period = modeltime->getmod_to_pop(period);
 
-	XMLWriteElement( totalpop[ pop_period ], "totalpop", out );
+    // write the beginning tag.
+    tabs->writeTabs( out );
+    out << "<demographics>" << endl;
 
-	XMLWriteElement( laborprod[ pop_period ], "laborprod", out );
-	
-	XMLWriteElement( laborforce_p[ pop_period ], "laborforce_p", out );
+    // increase the indent.
+    tabs->increaseIndent();
 
-	XMLWriteElement( laborforce[ pop_period ], "laborforce", out );
-	// Done writing XML for the class members.
+    // Write the xml for the class members.
+    XMLWriteElement( malepop[ pop_period ], "malepop", out, tabs );
 
-	// decrease the indent.
-	Tabs::decreaseIndent();
-	
-	// write the closing tag.
-	Tabs::writeTabs( out );
-	out << "</demographics>" << endl;
-}
+    XMLWriteElement( femalepop[ pop_period ], "femalepop", out, tabs );
 
-void demographic::initData(){
-	
-   const Modeltime* modeltime = scenario->getModeltime();
-   const int popmaxper = modeltime->getmaxpopdata();
+    XMLWriteElement( totalpop[ pop_period ], "totalpop", out, tabs );
+    // Done writing XML for the class members.
 
-	for ( int i = 0; i < popmaxper; i++ ) {
-		laborforce[ i ] = totalpop[ i ] * laborforce_p[ i ];
-	}
-}
+    // decrease the indent.
+    tabs->decreaseIndent();
 
-//! return labor productivity
-double demographic::labor( const int per ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
-	return laborprod[modeltime->getmod_to_pop(per)];
+    // write the closing tag.
+    tabs->writeTabs( out );
+    out << "</demographics>" << endl;
 }
 
 //! return total population vector
-const vector<double>& demographic::getTotalPopVec() const {
-	return totalpop;
+const vector<double>& Population::getTotalPopVec() const {
+    return totalpop;
 }
 
 //! return total population
-double demographic::total( const int per ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
-	return totalpop[ modeltime->getmod_to_pop( per ) ];
-}
-
-//! return labor force (actual working)
-double demographic::getlaborforce( const int per ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
-	return laborforce[ modeltime->getmod_to_pop( per ) ];
-}
-
-//! show demographic information to screen
-void demographic::show(int per) {
-	const Modeltime* modeltime = scenario->getModeltime();
-	const int m = modeltime->getmod_to_pop(per);
-	cout << "Male Population: " << malepop[m] << endl;
-	cout << "Female Population: " << femalepop[m] << endl;
-	cout << "Total Population: " << totalpop[m] << endl;
+double Population::getTotal( const int per, const bool isPopPeriod ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    
+    int period;
+    if( isPopPeriod ){
+        period = per;
+    }
+    else {
+        period = modeltime->getmod_to_pop( per );
+    }
+    return totalpop[ period ];
 }
 
 //! outputing population info to file
-void demographic::outputfile( const string& regname ) {
-	int i=0;
-	const Modeltime* modeltime = scenario->getModeltime();
-	int maxper = modeltime->getmaxper();
-	vector<double> temp(maxper);
+void Population::outputfile( const string& regionName ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxPeriod = modeltime->getmaxper();
+    vector<double> temp( maxPeriod );
 
-	// function protocol
-	void fileoutput3( string var1name,string var2name,string var3name,
-				  string var4name,string var5name,string uname,vector<double> dout);
-	
-	// write population to temporary array since not all will be sent to output
-	for (i=0;i<maxper;i++)
-		temp[i] = totalpop[modeltime->getmod_to_pop(i)];
-	// function arguments are variable name, double array, db name, table name
-	// the function writes all years
-	fileoutput3( regname," "," "," ","population","1000s",temp);
+    // function protocol
+    void fileoutput3( string var1name,string var2name,string var3name,
+        string var4name,string var5name,string uname,vector<double> dout);
 
-	// labor productivity
-	for (i=0;i<maxper;i++)
-		temp[i] = laborprod[modeltime->getmod_to_pop(i)];
-	fileoutput3( regname," "," "," ","labor prod","%/yr",temp);	
+    // write population to temporary array since not all will be sent to output
+    for ( int i = 0; i < maxPeriod; i++ ){
+        temp[ i ] = totalpop[ modeltime->getmod_to_pop( i ) ];
+    }
+
+    // function arguments are variable name, double array, db name, table name
+    // the function writes all years
+    fileoutput3( regionName," "," "," ","population","1000s",temp);
 }
 
 //! MiniCAM output to file
-void demographic::MCoutput( const string& regname ) {
-	int i=0;
-	const Modeltime* modeltime = scenario->getModeltime();
-	int maxper = modeltime->getmaxper();
-	vector<double> temp(maxper);
+void Population::MCoutput( const string& regionName ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxPeriod = modeltime->getmaxper();
+    vector<double> temp( maxPeriod );
 
-	// function protocol
-	void dboutput4(string var1name,string var2name,string var3name,string var4name,
-			   string uname,vector<double> dout);
-	
-	// write population to temporary array since not all will be sent to output
-	for (i=0;i<maxper;i++)
-		temp[i] = totalpop[modeltime->getmod_to_pop(i)];
-	// function arguments are variable name, double array, db name, table name
-	// the function writes all years
-	dboutput4(regname,"General","Population","Total","thous",temp);
+    // function protocol
+    void dboutput4(string var1name,string var2name,string var3name,string var4name,
+        string uname,vector<double> dout);
 
-	// labor productivity
-	for (i=0;i<maxper;i++)
-		temp[i] = laborprod[modeltime->getmod_to_pop(i)];
-	dboutput4(regname,"General","Labor Prod","GrowthRate","per yr",temp);	
-}
-
-//! Write back the calibrated values from the marketplace to the member variables.
-void demographic::writeBackCalibratedValues( const string& regionName, const int period ) {
-   
-   const Marketplace* marketplace = scenario->getMarketplace();
-   const Modeltime* modeltime = scenario->getModeltime();
-   const string goodName = "GDP";
-
-   // Only need to write back calibrated values for the current period.
-   double totalLaborProd = marketplace->getPrice( goodName, regionName, period );
-   
-   laborprod[ modeltime->getmod_to_pop( period ) ] = pow( totalLaborProd, double( 1 ) / double( modeltime->gettimestep( period ) ) ) - 1;
-}
-
-//! Create calibration markets
-void demographic::setupCalibrationMarkets( const string& regionName ) {
-	
-	const string goodName = "GDP";
-	const Modeltime* modeltime = scenario->getModeltime();
-	Marketplace* marketplace = scenario->getMarketplace();
-
-	if ( marketplace->createMarket( regionName, regionName, goodName, Marketplace::CALIBRATION ) ) {
-		vector<double> tempLFPs( modeltime->getmaxper() );
-		for( int i = 0; i < modeltime->getmaxper(); i++ ){
-			tempLFPs[ i ] = pow( 1 + laborprod[ modeltime->getmod_to_pop( i ) ], modeltime->gettimestep( i ) );
-		}
-		marketplace->setPriceVector( goodName, regionName, tempLFPs );
-	}
-}
-
-//! Return the correct total labor force productivity. 
-double demographic::getTotalLaborProductivity( const int period ) const {
-
-      const Modeltime* modeltime = scenario->getModeltime();
-      return pow( 1 + laborprod[ modeltime->getmod_to_pop( period ) ], modeltime->gettimestep( period ) );
+    // write population to temporary array since not all will be sent to output
+    for ( int i = 0; i < maxPeriod; i++ ){
+        temp[ i ] = totalpop[ modeltime->getmod_to_pop( i ) ];
+    }
+    // function arguments are variable name, double array, db name, table name
+    // the function writes all years
+    dboutput4( regionName, "General", "Population", "Total", "thous", temp );
 }

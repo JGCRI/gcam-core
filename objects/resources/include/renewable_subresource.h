@@ -12,12 +12,13 @@
 * \date $Date$
 * \version $Revision$
 */
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 #include "SubResource.h"
 
 // Forward declarations.
 class Grade;
 class SubResource;
+class Tabs;
 
 /*! 
 * \ingroup CIAM
@@ -36,8 +37,8 @@ public:
     SubRenewableResource();
     virtual std::string getType() const; 
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
-    virtual void toXMLforDerivedClass( std::ostream& out ) const;
-    virtual void toOutputXMLforDerivedClass( std::ostream& out ) const;
+    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
+    virtual void toOutputXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
     virtual void initializeResource(); 
     virtual void cumulsupply(double prc,int per);
     virtual void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);

@@ -13,6 +13,8 @@
 #include <map>
 #include <vector>
 #include <cassert>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 #include "emissions/include/ghg.h"
 #include "emissions/include/indirect_emiss_coef.h"
 #include "util/base/include/xml_helper.h"
@@ -59,11 +61,6 @@ void Ghg::clear(){
     name = "";
     unit = "";
     storageName = "";
-}
-
-//! Set emissions coefficient from data
-void Ghg::setCoef( const double emCoef ) {
-    emissCoef = emCoef; // set attribute
 }
 
 //! initialize Ghg object with xml data
@@ -121,61 +118,55 @@ void Ghg::XMLParse(const DOMNode* node)
 }
 
 //! Writes datamembers to datastream in XML format.
-void Ghg::toXML( ostream& out ) const {
+void Ghg::toXML( ostream& out, Tabs* tabs ) const {
 
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<GHG name=\"" << name << "\">" << endl;
 
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // write xml for data members
-    XMLWriteElement( unit, "unit", out );
-    XMLWriteElementCheckDefault( emissCoef, "emisscoef", out, 0 );
-    XMLWriteElementCheckDefault( rmfrac, "removefrac", out, 0 );
-    XMLWriteElementCheckDefault( isGeologicSequestration, "isGeologicSequestration", out, 1);
-    XMLWriteElementCheckDefault( storageCost, "storageCost", out, util::getLargeNumber() );
-    XMLWriteElementCheckDefault( gwp, "GWP", out, 0 );
+    XMLWriteElement( unit, "unit", out, tabs );
+    XMLWriteElementCheckDefault( emissCoef, "emisscoef", out, tabs, 0 );
+    XMLWriteElementCheckDefault( rmfrac, "removefrac", out, tabs, 0 );
+    XMLWriteElementCheckDefault( isGeologicSequestration, "isGeologicSequestration", out, tabs, 1 );
+    XMLWriteElementCheckDefault( storageCost, "storageCost", out, tabs, util::getLargeNumber() );
+    XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 0 );
     // done writing xml for data members.
 
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</GHG>" << endl;
 }
 
 //! Writes datamembers to debugging datastream in XML format.
-void Ghg::toDebugXML( const int period, ostream& out ) const {
+void Ghg::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<GHG name=\"" << name << "\">" << endl;
 
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
 
     // write xml for data members
-    XMLWriteElement( unit, "unit", out );
-    XMLWriteElement( rmfrac, "removefrac", out );
-    XMLWriteElement( gwp, "GWP", out );
-    XMLWriteElement( emission, "emission", out );
-    XMLWriteElement( isGeologicSequestration, "isGeologicSequestration", out );
-    XMLWriteElement( storageCost, "storageCost", out );
-    XMLWriteElement( sequestAmountGeologic, "sequestAmountGeologic", out );
-    XMLWriteElement( sequestAmountNonEngy, "sequestAmountNonEngy", out );
-    XMLWriteElement( emissGwp, "emissGwp", out );
-    XMLWriteElement( emissCoef, "emisscoef", out );
-    XMLWriteElement( emissFuel, "emissFuel", out );
-    XMLWriteElement( emissInd, "emissInd", out );
+    XMLWriteElement( unit, "unit", out, tabs );
+    XMLWriteElement( rmfrac, "removefrac", out, tabs );
+    XMLWriteElement( gwp, "GWP", out, tabs );
+    XMLWriteElement( emission, "emission", out, tabs );
+    XMLWriteElement( isGeologicSequestration, "isGeologicSequestration", out, tabs );
+    XMLWriteElement( storageCost, "storageCost", out, tabs );
+    XMLWriteElement( sequestAmountGeologic, "sequestAmountGeologic", out, tabs );
+    XMLWriteElement( sequestAmountNonEngy, "sequestAmountNonEngy", out, tabs );
+    XMLWriteElement( emissGwp, "emissGwp", out, tabs );
+    XMLWriteElement( emissCoef, "emisscoef", out, tabs );
+    XMLWriteElement( emissFuel, "emissFuel", out, tabs );
+    XMLWriteElement( emissInd, "emissInd", out, tabs );
     // done writing xml for data members.
 
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
 
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</GHG>" << endl;
-}
-
-//! Set remove fraction from data.
-
-void Ghg::setRmfrac( const double trmfrac ) {
-    rmfrac = trmfrac;	
 }
 
 /*! Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients

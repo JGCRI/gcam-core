@@ -1,6 +1,6 @@
 /*! 
 * \file configuration.cpp
-* \ingroup CIAM
+* \ingroup Util
 * \brief Configuration class source file.
 * \author Josh Lurz
 * \date $Date$
@@ -10,7 +10,8 @@
 #include <string>
 #include <map>
 #include <iostream>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/configuration.h"
 #include "util/base/include/xml_helper.h"
 #include "util/logger/include/logger.h"
@@ -114,93 +115,93 @@ void Configuration::XMLParse( const DOMNode* root ) {
 }
 
 //! Print the internal variables to XML output.
-void Configuration::toDebugXML( ostream& out ) const {
+void Configuration::toDebugXML( ostream& out, Tabs* tabs ) const {
 		
 	// write heading for XML input file
 	out << "<Configuration>" << endl;
 	
 	// increase the indent.
-	Tabs::increaseIndent();
+	tabs->increaseIndent();
 	
 	// Write each type.
 	
 	// First write files.
-	Tabs::writeTabs( out );
+	tabs->writeTabs( out );
 	out << "<Files>" << endl;
-	Tabs::increaseIndent();
+	tabs->increaseIndent();
 
 	// Loop through the map
 	for ( map<string,string>::const_iterator fileIter = fileMap.begin(); fileIter != fileMap.end(); fileIter++ ) {
-		XMLWriteElement( fileIter->second, "Value", out, 0, fileIter->first );
+		XMLWriteElement( fileIter->second, "Value", out, tabs, 0, fileIter->first );
 	}
 
-	Tabs::decreaseIndent();
-	Tabs::writeTabs( out );
+	tabs->decreaseIndent();
+	tabs->writeTabs( out );
 	out << "</Files>" << endl;
 	// Done with files.
 
 	// Write strings.
-	Tabs::writeTabs( out );
+	tabs->writeTabs( out );
 	out << "<Strings>" << endl;
-	Tabs::increaseIndent();
+	tabs->increaseIndent();
 
 	// Loop through the map
 	for ( map<string,string>::const_iterator stringIter = stringMap.begin(); stringIter != stringMap.end(); stringIter++ ) {
-		XMLWriteElement( stringIter->second, "Value", out, 0, stringIter->first );
+		XMLWriteElement( stringIter->second, "Value", out, tabs, 0, stringIter->first );
 	}
 
-	Tabs::decreaseIndent();
-	Tabs::writeTabs( out );
+	tabs->decreaseIndent();
+	tabs->writeTabs( out );
 	out << "</Strings>" << endl;
 	// Done with strings.
 
 	// Write bools.
-	Tabs::writeTabs( out );
+	tabs->writeTabs( out );
 	out << "<Bools>" << endl;
-	Tabs::increaseIndent();
+	tabs->increaseIndent();
 
 	// Loop through the map
 	for ( map<string,bool>::const_iterator boolIter = boolMap.begin(); boolIter != boolMap.end(); boolIter++ ) {
-		XMLWriteElement( boolIter->second, "Value", out, 0, boolIter->first );
+		XMLWriteElement( boolIter->second, "Value", out, tabs, 0, boolIter->first );
 	}
 
-	Tabs::decreaseIndent();
-	Tabs::writeTabs( out );
+	tabs->decreaseIndent();
+	tabs->writeTabs( out );
 	out << "</Bools>" << endl;
 	// Done with bools.
 
 	// Write ints.
-	Tabs::writeTabs( out );
+	tabs->writeTabs( out );
 	out << "<Ints>" << endl;
-	Tabs::increaseIndent();
+	tabs->increaseIndent();
 
 	// Loop through the map
 	for ( map<string,int>::const_iterator intIter = intMap.begin(); intIter != intMap.end(); intIter++ ) {
-		XMLWriteElement( intIter->second, "Value", out, 0, intIter->first );
+		XMLWriteElement( intIter->second, "Value", out, tabs, 0, intIter->first );
 	}
 
-	Tabs::decreaseIndent();
-	Tabs::writeTabs( out );
+	tabs->decreaseIndent();
+	tabs->writeTabs( out );
 	out << "</Ints>" << endl;
 	// Done with ints.
 
 	// Write doubles.
-	Tabs::writeTabs( out );
+	tabs->writeTabs( out );
 	out << "<Doubles>" << endl;
-	Tabs::increaseIndent();
+	tabs->increaseIndent();
 
 	// Loop through the map
 	for ( map<string,double>::const_iterator doubleIter = doubleMap.begin(); doubleIter != doubleMap.end(); doubleIter++ ) {
-		XMLWriteElement( doubleIter->second, "Value", out, 0, doubleIter->first );
+		XMLWriteElement( doubleIter->second, "Value", out, tabs, 0, doubleIter->first );
 	}
 
-	Tabs::decreaseIndent();
-	Tabs::writeTabs( out );
+	tabs->decreaseIndent();
+	tabs->writeTabs( out );
 	out << "</Doubles>" << endl;
 	// Done with doubles.
 
 	// decrease the indent.
-	Tabs::decreaseIndent();
+	tabs->decreaseIndent();
 	
 	// write the closing tag.
 	out << "</Configuration>" << endl;
@@ -232,7 +233,7 @@ string Configuration::getFile( const string& key, const string& defaultValue ) c
 
 	else {
 		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
-		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find file: " << key << endl;
+		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find filename: " << key << endl;
 		return defaultValue;
 	}
 }

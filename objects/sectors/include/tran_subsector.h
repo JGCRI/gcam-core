@@ -13,12 +13,12 @@
 
 #include <vector>
 #include <string>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 #include "subsector.h"
 
 // transportation demand subsector class derived from base subsector class
 // Modes of transportation are implemented as subsectors
-class tranSubsector : public Subsector
+class TranSubsector : public Subsector
 {
 protected:
     std::vector<double> speed; // Speed of Mode in Miles/hour
@@ -31,7 +31,7 @@ protected:
     double baseScaler; // constant scaler to scale base output
     
 public:
-    tranSubsector( std::string regionName, std::string sectorName );
+    TranSubsector( std::string regionName, std::string sectorName );
     virtual void clear();
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
     virtual void calcShare(const int period, const double gnp_cap = 1 ); 

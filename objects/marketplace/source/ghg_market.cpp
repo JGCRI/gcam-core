@@ -19,7 +19,7 @@ GHGMarket::GHGMarket( const string& goodNameIn, const string& regionNameIn, cons
 Market( goodNameIn, regionNameIn, periodIn ) {
 }
 
-void GHGMarket::derivedToDebugXML( ostream& out ) const {
+void GHGMarket::derivedToDebugXML( ostream& out, Tabs* tabs ) const {
 }
 
 string GHGMarket::getType() const {

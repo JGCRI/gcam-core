@@ -13,7 +13,9 @@
 * \version $Revision$
 */
 
-#include "Market.h"
+#include "marketplace/include/market.h"
+
+class Tabs;
 
 /*!
 * \ingroup CIAM
@@ -25,7 +27,7 @@ class PriceMarket: public Market {
 public:
     PriceMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn, Market* demandMarketIn );
     PriceMarket( const Market& marketIn, Market* demandMarketIn );
-    virtual void derivedToDebugXML( std::ostream& out ) const;
+    virtual void derivedToDebugXML( std::ostream& out, Tabs* tabs ) const;
     virtual std::string getType() const;
 
     virtual void initPrice();

@@ -49,7 +49,7 @@ void PlainTextLogger::logCompleteMessage( const int line, const string& file, co
         stringstream buffer;
         bool printColon = false;
 
-        // Print the tabs.
+        // Print the tabs->
         if ( printLogNest ) {
             for ( int nest = 0; nest < currentNestLevel; nest++ ) {
                 for ( int space = 0; space < logTabSize; space++ ) {

@@ -13,6 +13,7 @@
 #include <cassert>
 #include <vector>
 #include <algorithm>
+#include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/configuration.h"
@@ -30,7 +31,6 @@
 using namespace std;
 using namespace xercesc;
 
-extern ofstream outfile;	
 extern Scenario* scenario;
 
 /*! \brief Default constructor.
@@ -207,6 +207,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
             
             else {
                 // create a new vector of techs.
+                /*! \todo Clean this up and make it work with the deletion of objects. */
                 childNodeList = curr->getChildNodes();
                 
                 // loop through technologies children.
@@ -270,138 +271,138 @@ void Subsector::completeInit() {
 }
 
 //! Output the Subsector member variables in XML format.
-void Subsector::toXML( ostream& out ) const {
+void Subsector::toXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     int i;
     
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<subsector name=\"" << name << "\">"<< endl;
     
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     
     // write the xml for the class members.
     for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
-        XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, 1, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, tabs, 1, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( calOutputValue.size() ); i++ ){
         if ( doCalibration[ i ] ) {
-            XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, 0, modeltime->getper_to_yr( i ) );
+            XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, tabs, 0, modeltime->getper_to_yr( i ) );
         }
     }
     
     for( i = 0; i < static_cast<int>( shrwts.size() ); i++ ){
-        XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, 1, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, tabs, 1, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( lexp.size() ); i++ ){
-        XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, LOGIT_EXP_DEFAULT, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, tabs, LOGIT_EXP_DEFAULT, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
-        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelprefElasticity", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelprefElasticity", out, tabs, 0, modeltime->getper_to_yr( i ) );
     }
     
-    XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, 0, modeltime->getstartyr( ) );
+    XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, tabs, 0, modeltime->getstartyr( ) );
     
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
-        Tabs::writeTabs( out );
+        tabs->writeTabs( out );
         
         // If we have an empty vector this won't work, but that should never happen.
         assert( j->begin() != j->end() );
         
         out << "<technology name=\"" << ( * ( j->begin() ) )->getName() << "\">" << endl;
         
-        Tabs::increaseIndent();
+        tabs->increaseIndent();
         
         for( vector<technology*>::const_iterator k = j->begin(); k != j->end(); k++ ){
-            ( *k )->toXML( out );
+            ( *k )->toXML( out, tabs );
         }
         
-        Tabs::decreaseIndent();
+        tabs->decreaseIndent();
         
-        Tabs::writeTabs( out );
+        tabs->writeTabs( out );
         out << "</technology>" << endl;
     }
     
     // finished writing xml for the class members.
     
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
     
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</subsector>" << endl;
 }
 
 //! XML output for viewing.
-void Subsector::toOutputXML( ostream& out ) const {
+void Subsector::toOutputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     int i;
     
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<subsector name=\"" << name << "\">"<< endl;
     
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     
     // write the xml for the class members.
     for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
-        XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, 1, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, tabs, 1, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( calOutputValue.size() ); i++ ){
         if ( doCalibration[ i ] ) {
-            XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, 0, modeltime->getper_to_yr( i ) );
+            XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, tabs, 0, modeltime->getper_to_yr( i ) );
         }
     }
     
     for( i = 0; i < static_cast<int>( shrwts.size() ); i++ ){
-        XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, 1, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, tabs, 1, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( lexp.size() ); i++ ){
-        XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, tabs, 0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
-        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, tabs, 0, modeltime->getper_to_yr( i ) );
     }
     
-    XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, 0, modeltime->getstartyr( ) );
+    XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, tabs, 0, modeltime->getstartyr( ) );
     
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
-        Tabs::writeTabs( out );
+        tabs->writeTabs( out );
         
         // If we have an empty vector this won't work, but that should never happen.
         assert( j->begin() != j->end() );
         
         out << "<technology name=\"" << ( * ( j->begin() ) )->getName() << "\">" << endl;
         
-        Tabs::increaseIndent();
+        tabs->increaseIndent();
         
         for( vector<technology*>::const_iterator k = j->begin(); k != j->end(); k++ ){
-            ( *k )->toXML( out );
+            ( *k )->toXML( out, tabs );
         }
         
-        Tabs::decreaseIndent();
+        tabs->decreaseIndent();
         
-        Tabs::writeTabs( out );
+        tabs->writeTabs( out );
         out << "</technology>" << endl;
     }
     
     // finished writing xml for the class members.
     
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
     
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</subsector>" << endl;
 }
 
@@ -413,40 +414,40 @@ void Subsector::toOutputXML( ostream& out ) const {
 * \param period model period
 * \param out reference to the output stream
 */
-void Subsector::toDebugXML( const int period, ostream& out ) const {
+void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
     // write the beginning tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "<subsector name=\"" << name << "\">"<< endl;
     
     // increase the indent.
-    Tabs::increaseIndent();
+    tabs->increaseIndent();
     
     // Write the xml for the class members.
-    XMLWriteElement( unit, "unit", out );
-    XMLWriteElement( fueltype, "fueltype", out );
-    XMLWriteElement( notech, "notech", out );
-    XMLWriteElement( tax, "tax", out );
+    XMLWriteElement( unit, "unit", out, tabs );
+    XMLWriteElement( fueltype, "fueltype", out, tabs );
+    XMLWriteElement( notech, "notech", out, tabs );
+    XMLWriteElement( tax, "tax", out, tabs );
     
     // Write the data for the current period within the vector.
-    XMLWriteElement( capLimit[ period ], "capLimit", out );
-    XMLWriteElement( shrwts[ period ], "sharewt", out );
-    XMLWriteElement( lexp[ period ], "lexp", out );
-    XMLWriteElement( fuelPrefElasticity[ period ], "fuelprefElasticity", out );
-    XMLWriteElement( share[ period ], "share", out );
-    XMLWriteElement( basesharewt, "basesharewt", out );
-    XMLWriteElement( input[ period ], "input", out );
-    XMLWriteElement( pe_cons[ period ], "pe_cons", out );
-    XMLWriteElement( subsectorprice[ period ], "subsectorprice", out );
-    XMLWriteElement( output[ period ], "output", out );
-    XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out );
+    XMLWriteElement( capLimit[ period ], "capLimit", out, tabs );
+    XMLWriteElement( shrwts[ period ], "sharewt", out, tabs );
+    XMLWriteElement( lexp[ period ], "lexp", out, tabs );
+    XMLWriteElement( fuelPrefElasticity[ period ], "fuelprefElasticity", out, tabs );
+    XMLWriteElement( share[ period ], "share", out, tabs );
+    XMLWriteElement( basesharewt, "basesharewt", out, tabs );
+    XMLWriteElement( input[ period ], "input", out, tabs );
+    XMLWriteElement( pe_cons[ period ], "pe_cons", out, tabs );
+    XMLWriteElement( subsectorprice[ period ], "subsectorprice", out, tabs );
+    XMLWriteElement( output[ period ], "output", out, tabs );
+    XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out, tabs );
     
     // Write out the summary object.
     // summary[ period ].toDebugXML( period, out );
     // write out the technology objects.
     
     for( int j = 0; j < static_cast<int>( techs.size() ); j++ ){
-        techs[ j ][ period ]->toDebugXML( period, out );
+        techs[ j ][ period ]->toDebugXML( period, out, tabs );
     }
     
     // write out the hydrotech. Not yet implemented
@@ -455,10 +456,10 @@ void Subsector::toDebugXML( const int period, ostream& out ) const {
     // finished writing xml for the class members.
     
     // decrease the indent.
-    Tabs::decreaseIndent();
+    tabs->decreaseIndent();
     
     // write the closing tag.
-    Tabs::writeTabs( out );
+    tabs->writeTabs( out );
     out << "</subsector>" << endl;
 }
 
@@ -473,9 +474,9 @@ void Subsector::initCalc( const int period ) {
     
     int i = 0;
     // Set any fixed demands
-    for ( i=0 ;i<notech; i++ ) {
+    for ( i=0 ;i<notech; i++ ) {        
+        techs[i][ period ]->initCalc();
         techs[i][ period ]->calcFixedSupply( period );
-        techs[i][ period ]->initCalc( );
     }
     
     setCalibrationStatus( period );
@@ -719,14 +720,14 @@ void Subsector::calcTechShares( const int period ) {
 void Subsector::calcShare(const int period, const double gnp_cap ) {
     double prevShare = share[period];
     // call function to compute technology shares
-    Subsector::calcTechShares( period );
+    calcTechShares( period );
     
     // calculate and return Subsector share; uses above price function
     // calc_price() uses normalized technology shares calculated above
     // Logit exponential should not be zero
     
     // compute Subsector weighted average price of technologies
-    Subsector::calcPrice( period);
+    calcPrice( period);
 
     // Subsector logit exponential check
     if(lexp[period]==0) cerr << "SubSec Logit Exponential is 0." << endl;
@@ -844,7 +845,6 @@ void Subsector::limitShares( const double multiplier, const int period ) {
 double Subsector::getFixedSupply( const int period ) const {
     double fixedOutput = 0;
     for ( int i=0 ;i<notech; i++ ) {
-        techs[ i ][ period ]->calcFixedSupply( period );
         fixedOutput += techs[i][period]->getFixedSupply();
     }
     return fixedOutput;
@@ -1553,7 +1553,8 @@ void Subsector::emission( const int period ){
     assert( period <= scenario->getModeltime()->getmaxper() );
     summary[period].clearemiss(); // clear emissions map
     summary[period].clearemfuelmap(); // clear emissions map
-    for ( int i=0 ;i<notech; i++ ) {
+
+    for ( int i = 0; i < notech; i++ ) {
         techs[i][period]->calcEmission( sectorName );
         summary[period].updateemiss( techs[i][period]->getemissmap() );
         summary[period].updateemfuelmap( techs[i][period]->getemfuelmap() );

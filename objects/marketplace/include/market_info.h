@@ -15,6 +15,8 @@
 
 #include <map>
 
+class Tabs;
+
 /*!
 * \ingroup CIAM
 * \brief This class contains a set of information related to a particular market.
@@ -26,7 +28,7 @@ class MarketInfo
 public:
     MarketInfo();
     ~MarketInfo();
-    void toDebugXML( std::ostream& out ) const;
+    void toDebugXML( std::ostream& out, Tabs* tabs ) const;
     void addItem( const std::string& itemName, const double itemValue );
     double getItemValue( const std::string& itemName ) const;
 private:

@@ -15,12 +15,13 @@
 
 #include <map>
 #include <vector>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 
 // Forward declarations
 class Region;
 class Logger;
-
+class Curve;
+class Tabs;
 /*! 
 * \ingroup CIAM
 * \brief A class which contains all the model's regions.
@@ -35,10 +36,10 @@ public:
     void setupCalibrationMarkets();
     void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
-    void toXML( std::ostream& out ) const;
-    void toDebugXML( const int period, std::ostream& out ) const;
+    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void initCalc( const int period ); 
-    void calc( const int period, const std::vector<std::string>& regionsToSolve = std::vector<std::string>( 0 ) ); // model calculation for each region
+    void calc( const int period, const std::vector<std::string>& regionsToSolve = std::vector<std::string>( 0 ) );
     void updateSummary( const int period ); 
     void emiss_ind( const int period );
     void calculateEmissionsTotals();
@@ -55,7 +56,9 @@ public:
     double getPrimaryFuelCO2Coef( const std::string& regionName, const std::string& fuelName ) const;
     double getCarbonTaxCoef( const std::string& regionName, const std::string& fuelName ) const;
     void printSectorDependencies( Logger* logger ) const;
-
+    void setFixedTaxes( const std::string& policyName, const std::string& marketName, const std::vector<double> taxes, const std::vector<std::string>& regionsToSet = std::vector<std::string>( 0 ) );
+    const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
+    const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
 private:
     std::map<std::string, int> regionNamesToNumbers; //!< Map of region name to indice. 
     std::vector<Region*> regions; //!< array of pointers to Region objects

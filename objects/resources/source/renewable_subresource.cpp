@@ -67,18 +67,18 @@ void SubRenewableResource::initializeResource( ) {
 }
 
 //! Write out to XML variables specific to this derived class
-void SubRenewableResource::toXMLforDerivedClass( ostream& out ) const {
+void SubRenewableResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
    
-   XMLWriteElement( maxSubResource, "maxSubResource", out );
-   XMLWriteElement( gdpSupplyElasticity, "gdpSupplyElast", out );
+   XMLWriteElement( maxSubResource, "maxSubResource", out, tabs );
+   XMLWriteElement( gdpSupplyElasticity, "gdpSupplyElast", out, tabs );
    
 }   
 
 //! Write out to XML variables specific to this derived class
-void SubRenewableResource::toOutputXMLforDerivedClass( ostream& out ) const {
+void SubRenewableResource::toOutputXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
    
-   XMLWriteElement( maxSubResource, "maxSubResource", out );
-   XMLWriteElement( gdpSupplyElasticity, "gdpSupplyElast", out );
+   XMLWriteElement( maxSubResource, "maxSubResource", out, tabs );
+   XMLWriteElement( gdpSupplyElasticity, "gdpSupplyElast", out, tabs );
    
 }   
 

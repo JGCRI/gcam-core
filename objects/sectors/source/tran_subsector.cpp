@@ -11,6 +11,8 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "sectors/include/tran_subsector.h"
 #include "technologies/include/tran_technology.h"
@@ -23,15 +25,14 @@
 
 using namespace std;
 using namespace xercesc;
-
-extern ofstream outfile;	
+	
 extern Scenario* scenario;
 
 
-/*  Begin tranSubsector Method Definitions */
+/*  Begin TranSubsector Method Definitions */
 
 //! Default constructor
-tranSubsector::tranSubsector( const string regionName, const string sectorName ): Subsector( regionName, sectorName ) {
+TranSubsector::TranSubsector( const string regionName, const string sectorName ): Subsector( regionName, sectorName ) {
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
@@ -47,7 +48,7 @@ tranSubsector::tranSubsector( const string regionName, const string sectorName )
 
 
 //! Clear member variables.
-void tranSubsector::clear()
+void TranSubsector::clear()
 {
     // call super clear
     Subsector::clear();
@@ -62,7 +63,7 @@ void tranSubsector::clear()
 }
 
 //! Parses any input variables specific to derived classes
-void tranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
     
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxperiod = modeltime->getmaxper();
@@ -148,7 +149,7 @@ void tranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
 
 
 //! calculate subsector share numerator
-void tranSubsector::calcShare( const int period, const double gnp_cap )
+void TranSubsector::calcShare( const int period, const double gnp_cap )
 {
     
     // call function to compute technology shares
@@ -201,7 +202,7 @@ void tranSubsector::calcShare( const int period, const double gnp_cap )
 *  This is then shared out at the technology level.
 *  See explanation for sector::setoutput. 
 */
-void tranSubsector::setoutput( const double demand, const int period) {
+void TranSubsector::setoutput( const double demand, const int period) {
 
     int i=0;
     input[period] = 0; // initialize subsector total fuel input 

@@ -14,7 +14,7 @@
 */
 
 #include <vector>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 #include <algorithm>
 
 // Forward declarations
@@ -77,10 +77,10 @@ public:
     void completeInit();
     virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void XMLDerivedClassParseAttr( const xercesc::DOMNode* node );
-    virtual void toXML( std::ostream& out ) const;
-    virtual void toOutputXML( std::ostream& out ) const;
-    virtual void toXMLDerivedClass( std::ostream& out ) const;
-    virtual void toDebugXML( const int period, std::ostream& out ) const;
+    virtual void toXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toXMLDerivedClass( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void setMarket();
     void addGhgTax( const std::string& ghgname, const int period );
     virtual void calcShare( const int period, const double gnp_cap = 1 );

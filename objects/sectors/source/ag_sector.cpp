@@ -128,103 +128,103 @@ void AgSector::XMLParse( const DOMNode* node ) {
 }
 
 //! Output the results in XML format.
-void AgSector::toXML( ostream& out ) const {
+void AgSector::toXML( ostream& out, Tabs* tabs ) const {
    const Modeltime* modeltime = scenario->getModeltime();
    int iter = 0;
    
    // write the beginning tag.
-   Tabs::writeTabs( out );
+   tabs->writeTabs( out );
    out << "<agsector name=\"" << name << "\">"<< endl;
    
    // increase the indent.
-   Tabs::increaseIndent();
+   tabs->increaseIndent();
    
    // write the xml for the class members.
    // write out the market string.
-   XMLWriteElement( regionNumber, "regionNumber", out );
-   XMLWriteElement( numAgMarkets, "numAgMarkets", out );
+   XMLWriteElement( regionNumber, "regionNumber", out, tabs );
+   XMLWriteElement( numAgMarkets, "numAgMarkets", out, tabs );
    
    for( iter = 0; iter < static_cast<int>( gnp.size() ); iter++ ){
-      XMLWriteElement( gnp[ iter ], "gnp", out, modeltime->getper_to_yr( iter ) );
+      XMLWriteElement( gnp[ iter ], "gnp", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    
    for( iter= 0; iter < static_cast<int>( population.size() ); iter++ ) {
-      XMLWriteElement( population[ iter ], "population", out, modeltime->getper_to_yr( iter ) );
+      XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    
-   XMLWriteElement( biomassPrice, "biomassprice", out );
+   XMLWriteElement( biomassPrice, "biomassprice", out, tabs );
    
    // finished writing xml for the class members.
    
    // decrease the indent.
-   Tabs::decreaseIndent();
+   tabs->decreaseIndent();
    
    // write the closing tag.
-   Tabs::writeTabs( out );
+   tabs->writeTabs( out );
    out << "</agsector>" << endl;
 }
 
 //! Print the internal variables to XML output.
-void AgSector::toDebugXML( const int period, ostream& out ) const {
+void AgSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    int iter = 0;
    int tempRegion = regionNumber; // Needed b/c function is constant.
    const Modeltime* modeltime = scenario->getModeltime();
    
    // write the beginning tag.
-   Tabs::writeTabs( out );
+   tabs->writeTabs( out );
    out << "<agsector name=\"" << name << "\">"<< endl;
    
    // increase the indent.
-   Tabs::increaseIndent();
+   tabs->increaseIndent();
    
    // write the xml for the class members.
    // write out the market string.
-   XMLWriteElement( regionNumber, "regionNumber", out );
-   XMLWriteElement( numAgMarkets, "numAgMarkets", out );
+   XMLWriteElement( regionNumber, "regionNumber", out, tabs );
+   XMLWriteElement( numAgMarkets, "numAgMarkets", out, tabs );
    
    for( iter = 0; iter < static_cast<int>( gnp.size() ); iter++ ){
-      XMLWriteElement( gnp[ iter ], "gnp", out, modeltime->getper_to_yr( iter ) );
+      XMLWriteElement( gnp[ iter ], "gnp", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    
    #if(__HAVE_FORTRAN__)
    for ( iter = 0; iter < modeltime->getmaxper(); iter++ ){
-      XMLWriteElement( GETGNP( tempRegion, iter ), "gnpFromFortran", out, modeltime->getper_to_yr( iter ) );
+      XMLWriteElement( GETGNP( tempRegion, iter ), "gnpFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    #endif
    
    for( iter = 0; iter < static_cast<int>( population.size() ); iter++ ) {
-      XMLWriteElement( population[ iter ], "population", out, modeltime->getPopPeriodToYear( iter ) );
+      XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getPopPeriodToYear( iter ) );
    }
    
    #if(__HAVE_FORTRAN__)
    for ( iter = 1; iter < modeltime->getmaxpopdata(); iter++ ){
-      XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, modeltime->getPopPeriodToYear( iter ) );
+      XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, tabs, modeltime->getPopPeriodToYear( iter ) );
    }
    #endif
    
-   XMLWriteElement( biomassPrice, "biomassprice", out );
+   XMLWriteElement( biomassPrice, "biomassprice", out, tabs );
    
    #if(__HAVE_FORTRAN__)
-   XMLWriteElement( GETBIOMASSPRICE(), "biomasspriceFromFortran", out );
+   XMLWriteElement( GETBIOMASSPRICE(), "biomasspriceFromFortran", out, tabs );
    #endif
    
    for( iter = 0; iter < static_cast<int>( prices[ period ].size() ); iter++ ) {
-      XMLWriteElement( prices[ period ][ iter ], "prices", out, modeltime->getper_to_yr( period ) );
+      XMLWriteElement( prices[ period ][ iter ], "prices", out, tabs, modeltime->getper_to_yr( period ) );
    }
    
    for( iter = 0; iter < static_cast<int>( supplies[ period ].size() ); iter++ ) {
-      XMLWriteElement( supplies[ period ][ iter ], "supplies", out, modeltime->getper_to_yr( period ) );
+      XMLWriteElement( supplies[ period ][ iter ], "supplies", out, tabs, modeltime->getper_to_yr( period ) );
    }	
    for( iter = 0; iter < static_cast<int>( demands[ period ].size() ); iter++ ) {
-      XMLWriteElement( demands[ period ][ iter ], "demands", out, modeltime->getper_to_yr( period ) );
+      XMLWriteElement( demands[ period ][ iter ], "demands", out, tabs, modeltime->getper_to_yr( period ) );
    }
    // finished writing xml for the class members.
    
    // decrease the indent.
-   Tabs::decreaseIndent();
+   tabs->decreaseIndent();
    
    // write the closing tag.
-   Tabs::writeTabs( out );
+   tabs->writeTabs( out );
    out << "</agsector>" << endl;
 }
 

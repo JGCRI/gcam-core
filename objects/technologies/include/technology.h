@@ -15,11 +15,13 @@
 
 #include <vector>
 #include <map>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 
 // Forward declaration
 class Ghg;
 class Emcoef_ind;
+class Tabs;
+
 /*! 
 * \ingroup CIAM
 * \brief This technology class is based on the MiniCAM description of technology.
@@ -86,8 +88,8 @@ public:
     virtual void XMLParse( const xercesc::DOMNode* tempnode ); // initialize technology with xml data
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
     void completeInit();
-    virtual void toXML( std::ostream& out ) const;
-    virtual void toDebugXML( const int period, std::ostream& out ) const;
+    virtual void toXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void initCalc( );
     // sets ghg tax to technologies
     void addGhgTax( const std::string ghgname, const std::string regionName, const std::string sectorName, const int per ); 

@@ -14,7 +14,8 @@
 
 // xerces xml headers
 #include <xercesc/parsers/XercesDOMParser.hpp>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
@@ -107,23 +108,23 @@ void LoggerFactory::cleanUp() {
 * \return void
 * \warning This method is NOT constant, because static methods are not allowed to be declared const.
 */
-void LoggerFactory::toDebugXML( ostream& out ) {
+void LoggerFactory::toDebugXML( ostream& out, Tabs* tabs ) {
 	
 	// write out the root tag.
 	out << "<LoggerFactory>" << endl;
 
 	// increase the indent.
-	Tabs::increaseIndent();
+	tabs->increaseIndent();
 
 	for( map<string,Logger*>::const_iterator logIter = loggers.begin(); logIter != loggers.end(); logIter++ ){
-		logIter->second->toDebugXML( out );
+		logIter->second->toDebugXML( out, tabs );
 	}
 	
 	// decrease the indent.
-	Tabs::decreaseIndent();
+	tabs->decreaseIndent();
 	
 	// write the closing tag.
-	Tabs::writeTabs( out );
+	tabs->writeTabs( out );
 	out << "</LoggerFactory>" << endl;
 }
 

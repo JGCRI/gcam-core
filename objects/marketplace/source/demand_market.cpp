@@ -20,8 +20,8 @@ Market( goodNameIn, regionNameIn, periodIn ) {
    demMktSupply = 0;
 }
 
-void DemandMarket::derivedToDebugXML( ostream& out ) const {
-   XMLWriteElement( demMktSupply, "DemandMarketSupply", out );
+void DemandMarket::derivedToDebugXML( ostream& out, Tabs* tabs ) const {
+   XMLWriteElement( demMktSupply, "DemandMarketSupply", out, tabs );
 }
 
 string DemandMarket::getType() const {

@@ -15,8 +15,9 @@
 
 #include <vector>
 #include <map>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 
+class Tabs;
 /*! 
 * \ingroup CIAM
 * \brief A class which defines the time information neccessary for the model to run.
@@ -64,8 +65,8 @@ public:
     Modeltime();
     void clear();
     void XMLParse( const xercesc::DOMNode* node );
-    void toXML( std::ostream& out ) const;
-    void toDebugXML( const int period, std::ostream& out ) const;
+    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void set(); // calculates parameters
     int getstartyr() const { return startYear; }
     int getendyr() const { return endYear; }
