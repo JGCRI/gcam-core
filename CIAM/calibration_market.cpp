@@ -1,5 +1,5 @@
 /*! 
-* \file _market.cpp
+* \file calibration_market.cpp
 * \ingroup CIAM
 * \brief CalibrationMarket class source file.
 * \author Josh Lurz
