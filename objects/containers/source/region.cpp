@@ -327,10 +327,12 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
     }
     // write the xml for the class members.
     // write out the single population object.
-    population->toInputXML( out, tabs );
-    
-    gdp->toInputXML( out, tabs );
-
+	if( population ){ // Check if population object exists
+		population->toInputXML( out, tabs );
+	}
+	if( gdp ){ // Check if gdp object exists
+		gdp->toInputXML( out, tabs );
+	}
     // write out the resources objects.
     for( vector<Resource*>::const_iterator i = resources.begin(); i != resources.end(); i++ ){
         ( *i )->toInputXML( out, tabs );
@@ -358,22 +360,25 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
         ( *l )->toInputXML( out, tabs );
     }
 
-    // Write out regional economic data
-	XMLWriteOpeningTag( "calibrationdata", out, tabs ); 
+	if( ( count( calibrationGDPs.begin(), calibrationGDPs.end(), 0 ) != calibrationGDPs.size() ) || 
+        ( count( TFEcalb.begin(), TFEcalb.end(), 0 ) != TFEcalb.size() ) ){ // makes sure tags aren't printed if no real data
 
-    // write out calibration GDP
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( unsigned int m = 0; m < calibrationGDPs.size(); m++ ){
-        XMLWriteElementCheckDefault( calibrationGDPs[ m ], "GDPcal", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
-    }
+		// Write out regional economic data
+		XMLWriteOpeningTag( "calibrationdata", out, tabs ); 
 
-     // write out TFE calibration values
-    for( unsigned int m = 0; m < TFEcalb.size(); m++ ) {
-        XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
-    }
+		// write out calibration GDP
+		const Modeltime* modeltime = scenario->getModeltime();
+		for( unsigned int m = 0; m < calibrationGDPs.size(); m++ ){
+			XMLWriteElementCheckDefault( calibrationGDPs[ m ], "GDPcal", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
+		}
 
-	XMLWriteClosingTag( "calibrationdata", out, tabs );
-    // End write out regional economic data
+		// write out TFE calibration values
+		for( unsigned int m = 0; m < TFEcalb.size(); m++ ) {
+			XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
+		}
+		XMLWriteClosingTag( "calibrationdata", out, tabs );
+		// End write out regional economic data
+	} // close calibration IF
 
     // finished writing xml for the class members.
 	XMLWriteClosingTag( getXMLName(), out, tabs );
