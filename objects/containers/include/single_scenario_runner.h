@@ -5,7 +5,7 @@
 #endif
 
 /*! 
-* \file scenario_runner.h
+* \file single_scenario_runner.h
 * \ingroup Objects
 * \brief The SingleScenarioRunner class header file.
 * \author Josh Lurz
