@@ -575,20 +575,22 @@ void Region::setCO2coef()
    */
    // setting emissions coefficients to these fuels
    // applies carbon taxes to secondary fuels
-   co2coefpri["refined oil"] = 19.9691;
+   co2coefpri["refined oil"] = 18.9;
    co2coefpri["delivered gas"] = 14.2;
    co2coefpri["delivered coal"] = 27.3;
    
    // initialize map (tgC/EJ) or (MTC/EJ)
-   co2coefall["crude oil"] = 19.9691; 
-   co2coefall["crude oil regional"] = 19.9691; 
-   co2coefall["refined oil"] = 19.9691;
+   co2coefall["crude oil"] = 18.9; 
+   co2coefall["crude oil regional"] = 18.9; 
+   co2coefall["refined oil"] = 18.9;
    co2coefall["natural gas"] = 14.2;
    co2coefall["natural gas regional"] = 14.2;
    co2coefall["delivered gas"] = 14.2;
    co2coefall["coal"] = 27.3;
    co2coefall["coal regional"] = 27.3;
    co2coefall["delivered coal"] = 27.3;
+   co2coefall["shale oil"] = 27.9;
+   co2coefall["shale oil regional"] = 27.9;
 }
 
 
@@ -1024,15 +1026,13 @@ void Region::calcEmissFuel(int per)
    map<string, double> fuelemiss; // tempory emissions by fuel
    // add CO2OIL,CO2GAS,CO2COAL to the emissions map for emissions
    // by fuel
-   fuelemiss["CO2OIL"] = summary[per].get_pemap_second("crude oil")
-      * co2coefall["crude oil"];
-   double temp = fuelemiss["CO2oil"];
-   temp = summary[per].get_pemap_second("crude oil");
-   temp = co2coefall["crude oil"];
-   fuelemiss["CO2GAS"] = summary[per].get_pemap_second("natural gas")
-      * co2coefall["natural gas"];
-   fuelemiss["CO2COAL"] = summary[per].get_pemap_second("coal")
-      * co2coefall["coal"];
+   fuelemiss["CO2OIL"] = summary[per].get_pemap_second("crude oil") * co2coefall["crude oil"];
+
+   fuelemiss["CO2SHALEOIL"] = summary[per].get_pemap_second("shale oil") * co2coefall["shale oil"];
+
+   fuelemiss["CO2GAS"] = summary[per].get_pemap_second("natural gas") * co2coefall["natural gas"];
+   
+   fuelemiss["CO2COAL"] = summary[per].get_pemap_second("coal") * co2coefall["coal"];
    
    summary[per].updateemiss(fuelemiss); // add CO2 emissions by fuel
 }
@@ -1136,6 +1136,13 @@ void Region::MCoutput() {
       temp[m] = summary[m].get_emissmap_second("CO2OIL");
    }
    dboutput4(name,"CO2 Emiss","by Fuel","crude oil","MTC",temp);
+   
+   // emissions by fuel for region shale oil
+   for (m=0;m<maxper;m++) {
+      temp[m] = summary[m].get_emissmap_second("CO2SHALEOIL");
+   }
+   dboutput4(name,"CO2 Emiss","by Fuel","shale oil","MTC",temp);
+   
    // emissions by fuel for region natural gas
    for (m=0;m<maxper;m++) {
       temp[m] = summary[m].get_emissmap_second("CO2GAS");
