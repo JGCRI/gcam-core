@@ -620,20 +620,20 @@ Variable ID,,,,
 639,,,,
 ,,0 rho = Cobb-Douglas,,
 Region,rho,mc14regname,,
-1,0.6,USA,,
-2,0.6,Canada,,
-3,0.6,OECD90 Europe,,ALL CAN BE SET TO .6 FOR STAND-ALONE (use CES function)
-4,0.6,Japan,,0 = Cobb-Douglas
-5,0.6,Aus & NZ,,
-6,0.6,FSU,,
-7,0.6,China/CPA,,
-8,0.6,MiddleEast,,
-9,0.6,Africa,,
-10,0.6,Latin America,,
-11,0.6,S&E Asia,,
-12,0.6,EEU,,
-13,0.6,Korea,,
-14,0.6,India,,
+1,0.9,USA,,
+2,0.9,Canada,,
+3,0.9,OECD90 Europe,,ALL CAN BE SET TO .6 FOR STAND-ALONE (use CES function)
+4,0.9,Japan,,0 = Cobb-Douglas
+5,0.9,Aus & NZ,,
+6,0.9,FSU,,
+7,0.9,China/CPA,,
+8,0.9,MiddleEast,,
+9,0.9,Africa,,
+10,0.9,Latin America,,
+11,0.9,S&E Asia,,
+12,0.9,EEU,,
+13,0.9,Korea,,
+14,0.9,India,,
 
 
 Area Harvested (1990 data in 000 ha),,,,
@@ -920,16 +920,16 @@ mc14regid,UnmanForestFrac(L),fractSavannah(L),mc14regname
 1,0.293,0.038,USA
 2,0.388,0.006,Canada
 3,0.107,0.045,OECD90 Europe
-4,0.299,0.000,Japan
+4,0.299,0,Japan
 5,0.096,0.103,Aus & NZ
 6,0.211,0.055,FSU
 7,0.078,0.041,China/CPA
 8,0.003,0.007,MiddleEast
 9,0.133,0.194,Africa
-10,0.474,0.110,Latin America
-11,0.270,0.016,S&E Asia
+10,0.474,0.11,Latin America
+11,0.27,0.016,S&E Asia
 12,0.089,0.027,EEU
-13,0.041,0.000,Korea
+13,0.041,0,Korea
 14,0.027,0.038,India
 
 Ag Potential Distribution Fractions,,,
@@ -938,19 +938,20 @@ Variable ID,,,! fractPotentialAgSavannah = Fraction of remaining potential Ag la
 700,,,
 
 mc14regid,fractAgSavannah(L),fractPotentialAgSavannah(L),mc14regname
-1,0.418,0.060,USA
+1,0.418,0.06,USA
 2,0.177,0.014,Canada
 3,0.495,0.125,OECD90 Europe
-4,0.517,0.000,Japan
+4,0.517,0,Japan
 5,0.184,0.147,Aus & NZ
 6,0.259,0.139,FSU
 7,0.213,0.255,China/CPA
-8,0.114,0.510,MiddleEast
+8,0.114,0.51,MiddleEast
 9,0.524,0.321,Africa
-10,0.481,0.130,Latin America
+10,0.481,0.13,Latin America
 11,0.336,0.065,S&E Asia
 12,0.772,0.059,EEU
-13,0.399,0.000,Korea
-14,0.300,0.480,India
+13,0.399,0,Korea
+14,0.3,0.48,India
+
 
 EoF,,,
