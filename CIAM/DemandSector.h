@@ -44,8 +44,10 @@ protected:
 public:
 	demsector();
 	virtual void clear();
-	virtual void XMLParse(const DOMNode* node);
-	virtual void toXML( ostream& out ) const;
+    virtual void XMLDerivedClassParseAttr( const DOMNode* node ); 
+    virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* curr ); 
+    virtual void toXML( ostream& out ) const;
+    virtual void toXMLDerivedClass( ostream& out ) const;
 	virtual void toDebugXML( const int period, ostream& out ) const;
 	virtual void setMarket( const string& regname );
 	virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 );

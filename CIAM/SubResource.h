@@ -53,7 +53,8 @@ public:
     void clear();
     string getName() const; // return SubResource name
     void XMLParse( const DOMNode* tempnode ); // initialize with xml data
-    virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* node ) = 0; //abstract method 
+    //abstract method, this class cannot be used to instantiate objects, can only be derived
+    virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* node ) = 0; 
     virtual void initializeResource(); 
     void toXML( ostream& out ) const;
     virtual void toXMLforDerivedClass( ostream& out ) const;
