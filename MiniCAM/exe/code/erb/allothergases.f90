@@ -1,7 +1,3 @@
-
-
-
-
 	SUBROUTINE ALLOTHERGASES
 
 
@@ -50,6 +46,10 @@
 
 	IOC = 8
 
+	
+
+	! If any of these are changed, change also in MagLink
+
 	IH245 = 10	! HFC245fa equiv
 
 	IH134 = 11	! HFC134a equiv
@@ -68,7 +68,7 @@
 
 	basegwp = (/21.0, 310.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, &
 
-	560.0, 1300.0, 2800.0, 3800.0, 23900.0, 9200.0, 6500.0, 0.0 , 0.0, &
+	790.0, 1300.0, 2800.0, 3800.0, 22200.0, 11900.0, 5700.0, 0.0 , 0.0, &
 
 	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
 
@@ -306,7 +306,7 @@
 
 ! src 14 : ag_residue
 
-	  OGACT(ICH4,14,L,M) = SUM(saveland(1:1,L,M)) ! ag2 total crop area
+	  OGACT(ICH4,14,L,M) = saveland(1:1,L,M) ! ag2 total crop area
 
 
 
@@ -394,7 +394,7 @@
 
 ! src 9 : ag_residue
 
-	OGACT(IN2O,9,L,M) = SUM(saveland(1:1,L,M))  ! ag2 total crop area
+	OGACT(IN2O,9,L,M) = saveland(1:1,L,M)  ! ag2 total crop area
 
 	
 
@@ -648,7 +648,7 @@
 
 ! src 24: agricultural waste
 
-	OGACT(INOx,24,L,M) = SUM(saveland(1:1,L,M)) 	! total ag land
+	OGACT(INOx,24,L,M) = saveland(1:1,L,M) 	! total ag land
 
 
 
@@ -776,7 +776,7 @@
 
 ! src 18: agricultural waste
 
-	OGACT(ICO,18,L,M) =  SUM(saveland(1:1,L,M)) 	! total ag land
+	OGACT(ICO,18,L,M) =  saveland(1:1,L,M) 	! total ag land
 
 
 
@@ -924,7 +924,7 @@
 
 ! src 19: agricultural waste
 
-	OGACT(IVOC,19,L,M) =  SUM(saveland(1:1,L,M)) 	! total ag land
+	OGACT(IVOC,19,L,M) =  saveland(1:1,L,M) 	! total ag land
 
 
 
@@ -1058,7 +1058,7 @@
 
 ! src 18: agricultural waste
 
-	OGACT(IBC,18,L,M) =  SUM(saveland(1:1,L,M)) 	! total ag land
+	OGACT(IBC,18,L,M) =  saveland(1:1,L,M) 	! total ag land
 
 
 
@@ -1206,7 +1206,7 @@
 
 ! src 18: agricultural waste
 
-	OGACT(IOC,18,L,M) =  SUM(saveland(1:1,L,M)) 	! total ag land
+	OGACT(IOC,18,L,M) =  saveland(1:1,L,M) 	! total ag land
 
 
 
@@ -1242,7 +1242,7 @@
 
 ! src 1 : foams
 
-    OGACT(IH245,1,L,M) = GNPMRKT(L,M)
+    OGACT(IH245,1,L,M) = GNPMRKT(L,M)/1e6
 
     
 
@@ -1252,25 +1252,25 @@
 
 ! src 1 : Aerosols
 
-    OGACT(IH134,1,L,M) = ZLM(L,M)
+    OGACT(IH134,1,L,M) = ZLM(L,M)/1e6
 
     
 
 ! src 2 : Solvents
 
-    OGACT(IH134,2,L,M) = GNPMRKT(L,M)
+    OGACT(IH134,2,L,M) = GNPMRKT(L,M)/1e6
 
     
 
 ! src 3 : Transport AC
 
-    OGACT(IH134,3,L,M) = sum(FJKLM(1:NNJ,3,L,M))	! could replace this with transportation service demand
+    OGACT(IH134,3,L,M) = sum(FJKL(1:NNJ,3,L))/1e4	! could replace this with transportation service demand
 
     
 
 ! src 4 : Commertial Buildings AC
 
-    OGACT(IH134,4,L,M) = ZLM(L,M) * CoolDemand(L)
+    OGACT(IH134,4,L,M) = ZLM(L,M) * CoolDemand(L)/1e9
 
     
 
@@ -1280,25 +1280,25 @@
 
 ! src 1 : Fire Extinquishers
 
-    OGACT(IH125,1,L,M) = ZLM(L,M)
+    OGACT(IH125,1,L,M) = ZLM(L,M)/1e9
 
     
 
 ! src 2 : Commertial Buildings AC
 
-    OGACT(IH125,2,L,M) = ZLM(L,M) * CoolDemand(L)
+    OGACT(IH125,2,L,M) = ZLM(L,M) * CoolDemand(L)/1e9
 
     
 
 ! src 3 : Residential Buildings AC
 
-    OGACT(IH125,3,L,M) = ZLM(L,M) * CoolDemand(L)
+    OGACT(IH125,3,L,M) = ZLM(L,M) * CoolDemand(L)/1e9
 
     
 
 ! src 4 : Food Distribution and Household Appliances
 
-    OGACT(IH125,4,L,M) = ZLM(L,M) * SaveDiet(8,L,M)	! processed food demand
+    OGACT(IH125,4,L,M) = ZLM(L,M) * SaveDiet(8,L,M)/1e9	! processed food demand
 
     
 
@@ -1308,7 +1308,7 @@
 
 ! src 1 : Food Distribution and Household Appliances
 
-    OGACT(IH143,1,L,M) = ZLM(L,M) * SaveDiet(8,L,M)	! processed food demand
+    OGACT(IH143,1,L,M) = ZLM(L,M) * SaveDiet(8,L,M)/1e9	! processed food demand
 
 
 
@@ -1318,9 +1318,9 @@
 
 ! src 1 : Electric transformers, T&D
 
-    OGACT(IHSF6,1,L,M) = SUM(ESILM(4:6,L,M))+ESILM(JUFUSION,L,M) &
+    OGACT(IHSF6,1,L,M) = (SUM(ESILM(4:6,L,M))+ESILM(JUFUSION,L,M) &
 
-             +ESILM(JUWIND,L,M)+ESILM(JUWIND+1,L,M)+ESILM(JUWIND+2,L,M)
+             +ESILM(JUWIND,L,M)+ESILM(JUWIND+1,L,M)+ESILM(JUWIND+2,L,M))/1e4
 
     
 
@@ -1336,7 +1336,7 @@
 
 ! src 1 : Semiconductors
 
-    OGACT(IHC2F6,1,L,M) = SUM(GNPMRKT(:,M))
+    OGACT(IHC2F6,1,L,M) = SUM(GNPMRKT(:,M))/1e9
 
     
 
@@ -1344,13 +1344,13 @@
 
 ! src 1 : Aluminum & Magnesium Smelting
 
-    OGACT(IHCF4,1,L,M) = GNPMRKT(L,M)
+    OGACT(IHCF4,1,L,M) = GNPMRKT(L,M)/1e6
 
     
 
 ! src 2 : Solvents
 
-    OGACT(IHCF4,1,L,M) = GNPMRKT(L,M)
+    OGACT(IHCF4,2,L,M) = GNPMRKT(L,M)/1e6
 
 
 
@@ -1607,6 +1607,8 @@
 	if (DefroR.lt.0.0) DefroR=0.0
 
     endif
+
+
 
 
 
