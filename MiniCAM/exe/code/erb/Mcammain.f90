@@ -253,8 +253,8 @@
 	    DO isrc = 1, NOGSrcMax
 
 		  IF (OGERROR(igas,isrc,L).EQ.1) THEN
-	      	MsgStr = "Other Gas ERROR: 0 base year activity level"
-			Call MCLog(2,MsgStr,M,L,igas,isrc)
+	      	MsgStr = "Other Gas ERROR: 0 base year activity level for source #: "
+			Call MCLog(2,MsgStr,M,L,igas,1d0*isrc)
 		  END IF
 
 
