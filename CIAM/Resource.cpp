@@ -104,7 +104,7 @@ void Resource::XMLParse( const DOMNode* node ){
 
 //! Complete the initialization.
 void Resource::completeInit() {
-   nosubrsrc = subResource.size();
+   nosubrsrc = static_cast<int>( subResource.size() );
    
    for( vector<SubResource*>::iterator subResIter = subResource.begin(); subResIter != subResource.end(); subResIter++ ) {
       ( *subResIter )->completeInit();
@@ -396,7 +396,7 @@ void DepletableResource::XMLDerivedClassParse( const string nodeName, const DOMN
          tempSubResource = new SubDepletableResource();
          tempSubResource->XMLParse( node );
          subResource.push_back( tempSubResource );
-         subResourceNameMap[ tempSubResource->getName() ] = subResource.size() - 1;
+         subResourceNameMap[ tempSubResource->getName() ] = static_cast<int>( subResource.size() ) - 1;
       }
    }
 }
@@ -427,7 +427,7 @@ void FixedResource::XMLDerivedClassParse( const string nodeName, const DOMNode* 
          tempSubResource = new SubFixedResource();
          tempSubResource->XMLParse( node );
          subResource.push_back( tempSubResource );
-         subResourceNameMap[ tempSubResource->getName() ] = subResource.size() - 1;
+         subResourceNameMap[ tempSubResource->getName() ] = static_cast<int>( subResource.size() ) - 1;
       }
    }
 }
@@ -459,7 +459,7 @@ void RenewableResource::XMLDerivedClassParse( const string nodeName, const DOMNo
          tempSubResource = new SubRenewableResource();
          tempSubResource->XMLParse( node );
          subResource.push_back( tempSubResource );
-         subResourceNameMap[ tempSubResource->getName() ] = subResource.size() - 1;
+         subResourceNameMap[ tempSubResource->getName() ] = static_cast<int>( subResource.size() ) - 1;
       }
    }
 }
