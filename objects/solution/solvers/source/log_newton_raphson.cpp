@@ -251,7 +251,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
         */
     } // end do loop	
 
-    while ( isImproving( 5 ) && calcCounter->getMethodCount( SOLVER_NAME ) - nrCalcsStart < maxIterations && solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) >= solutionTolerance );	
+    while ( isImproving( 7 ) && calcCounter->getMethodCount( SOLVER_NAME ) - nrCalcsStart < maxIterations && solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) >= solutionTolerance );	
 
     // Update the return code. 
     code = ( solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) < solutionTolerance ? SUCCESS : FAILURE_ITER_MAX_REACHED );

@@ -104,7 +104,7 @@ SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, co
             worstSol.printTrackED();
         }
     } // end do loop		
-    while ( isImproving( 5 ) && ++numIterations < maxIterations && !worstSol.isWithinTolerance( solutionTolerance, edSolutionFloor ) );
+    while ( isImproving( 8 ) && ++numIterations < maxIterations && !worstSol.isWithinTolerance( solutionTolerance, edSolutionFloor ) );
     
     if( trackED ){
         if( numIterations >= maxIterations ){
