@@ -57,6 +57,8 @@ protected:
 	string name; //!< technology name
 	string unit; //!< unit of final product from technology
 	string fuelname; //!< name of fuel used
+   bool doCalibration; // Flag set if calibration value is read-in
+   double calInputValue; // Calibration value
 	vector<Ghg*> ghg; //!< suite of greenhouse gases
 	map<string,double> emissmap; //!< map of ghg emissions
 	map<string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
@@ -96,6 +98,7 @@ public:
 	int showfuelno() const; // return fuel number
 	double showeff() const; // return fuel efficiency
 	double getShare() const; // return normalized share
+	bool getCalibrationStatus( ) const; // return true if technology has calibration value
 	double showinput() const; // return fuel input amount
 	double showoutput() const; // return technology output
 	double getfuelcost() const; // return fuel cost only

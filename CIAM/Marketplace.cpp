@@ -362,12 +362,13 @@ void Marketplace::setdemand( const string& goodName, const string& regionName, c
 }
 
 //! return market price
+/* If the market does not exist, return an extremely large price.*/
 double Marketplace::showprice( const string& goodName, const string& regionName, const int per ) const {
    
    const int marketNumber = getMarketNumber( goodName, regionName );
    
    if( marketNumber == -1 ) {
-      return 0;
+      return 1e12;
    }
    else {
       return mrk[ marketNumber ][ per ].getPrice();

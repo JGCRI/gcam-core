@@ -38,7 +38,7 @@ subsector::subsector(){
 	const Modeltime* modeltime = scenario->getModeltime();
 	const int maxper = modeltime->getmaxper();
    capLimit.resize( maxper, 1.0 );
-	shrwts.resize( maxper );
+	shrwts.resize( maxper, 1.0 ); // default 1.0, for sectors with one tech.
    lexp.resize( maxper );
    share.resize(maxper); // subsector shares
    input.resize(maxper); // subsector energy input
@@ -50,8 +50,9 @@ subsector::subsector(){
 	summary.resize(maxper); // object containing summaries
    fuelPrefElasticity.resize( maxper );
    summary.resize( maxper );
+   calOutputValue.resize( maxper );
    doCalibration.resize( maxper, false );
-   calValue.resize( maxper );
+   calibrationStatus.resize( maxper, false );
 }
 
 //! Destructor.
@@ -130,8 +131,8 @@ void subsector::XMLParse( const DOMNode* node ) {
 		else if( nodeName == "sharewt" ){
          XMLHelper<double>::insertValueIntoVector( curr, shrwts, modeltime );
 		}
-		else if( nodeName == "calValue" ){
-         XMLHelper<double>::insertValueIntoVector( curr, calValue, modeltime );
+		else if( nodeName == "calOutputValue" ){
+         XMLHelper<double>::insertValueIntoVector( curr, calOutputValue, modeltime );
          int thisPeriod = XMLHelper<double>::getNodePeriod( curr, modeltime );
          doCalibration[ thisPeriod ] = true;
 		}
@@ -193,9 +194,9 @@ void subsector::toXML( ostream& out ) const {
 		XMLWriteElement( capLimit[ i ], "capacitylimit", out, modeltime->getper_to_yr( i ) );
 	}
 
-	for( i = 0; i < static_cast<int>( calValue.size() ); i++ ){
+	for( i = 0; i < static_cast<int>( calOutputValue.size() ); i++ ){
       if ( doCalibration[ i ] ) {
-		   XMLWriteElement( calValue[ i ], "calValue", out, modeltime->getper_to_yr( i ) );
+		   XMLWriteElement( calOutputValue[ i ], "calOutputValue", out, modeltime->getper_to_yr( i ) );
       }
 	}
 	
@@ -298,6 +299,16 @@ void subsector::copytolast( const int period ) {
 	lexp[ period ] = lexp[ period - 1 ];
 }
 
+
+//! Perform initializations that only need to be done once per period
+void subsector::init_calc( const int period ) {
+
+   setCalibrationStatus( period );
+   
+   shareWeightScale( period ); 
+}
+
+
 //! Computes weighted cost of all technologies in subsector
 /*! price function called below in calc_share after technology shares are determined.
   price function separated to allow different weighting for subsector price
@@ -321,6 +332,26 @@ void subsector::calc_price( const string regionName, const int per ) {
 //! returns subsector price 
 double subsector::getprice( const int period ) const {
 	return subsectorprice[ period ];
+}
+
+//! returns true if this subsector, or underlying technologies, are calibrated 
+bool subsector::getCalibrationStatus( const int period ) const {
+	return calibrationStatus[ period ];
+}
+
+//! returns true if this subsector, or underlying technologies, are calibrated 
+void subsector::setCalibrationStatus( const int period ) {
+	if ( doCalibration[ period ] ) {
+      calibrationStatus[ period ] = true;
+      return;
+   } else {
+     	for (int i=0; i<notech; i++ ) {
+         if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
+            calibrationStatus[ period ] = true;
+            return;
+         }
+      }
+   }
 }
 
 //! returns subsector capacity limit 
@@ -348,14 +379,14 @@ double subsector::getwtfuelprice(int per) const
 
 //! passes carbon tax to technology
 void subsector::applycarbontax( const double tax, const int period ) {
-	for (int i=0;i<notech;i++) {
+	for ( int i=0 ;i<notech; i++ ) {
 		techs[i][ period ]->applycarbontax(tax);
 	}
 }
 
 //! sets ghg tax to technologies
 void subsector::addghgtax( const string& ghgname, const string& regionName, const int per ) {
-	for (int i=0;i<notech;i++) {
+	for ( int i=0 ;i<notech; i++ ) {
 		techs[i][per]->addghgtax( ghgname, regionName, per );
 	}
 }
@@ -456,7 +487,7 @@ void subsector::limitShares( const double multiplier, const int per) {
     calls to technology production with non-zero demand . g*/
 double subsector::exogSupply( const int per ) {
 	double fixedOutput = 0;
-	for (int i=0;i<notech;i++) {
+	for ( int i=0 ;i<notech; i++ ) {
 		techs[i][per]->calcFixedSupply(per);
 		fixedOutput += techs[i][per]->getFixedSupply();
 	}
@@ -466,9 +497,38 @@ double subsector::exogSupply( const int per ) {
 //! Scale down fixed supply if the total fixed production is greater than the actual demand 
 void subsector::scaleFixedSupply( const double scaleRatio, const int per ) {
 	// scale fixed technology output down
-	for (int i=0;i<notech;i++) {
+	for ( int i=0 ;i<notech; i++ ) {
 		techs[i][per]->scaleFixedSupply(scaleRatio);
 	}
+}
+
+//! Consistantly adjust share weights after calibration 
+/*! If the previous sector share was changed due to calibration, 
+ * then adjust next few shares so that there is not a big jump in share weights.
+ * \todo Make end period year more general from data read-in.
+*/
+void subsector::shareWeightScale( const int period ) {
+	const Modeltime* modeltime = scenario->getModeltime();
+
+   // if previous period was calibrated, then adjust future shares
+   if ( period > 1 ) {
+      if ( calibrationStatus[ period - 1 ] ) {
+         int endPeriod = modeltime->getyr_to_per( 2050 );
+         shareWeightInterp( period - 1, endPeriod );
+     }
+	}
+}
+
+//! Linearly interpolate share weights between specified endpoints
+void subsector::shareWeightInterp( const int beginPeriod,  const int endPeriod ) {
+
+   if ( endPeriod > beginPeriod ) {
+      double shareIncrement = ( shrwts[ endPeriod ] - shrwts[ beginPeriod ] ) / 
+                              ( endPeriod - beginPeriod );
+      for ( int per = beginPeriod + 1 ;per<endPeriod ; per++ ) {
+         shrwts[ per ] = shrwts[ per - 1 ] + shareIncrement;
+      }
+ 	}
 }
 
 //! Adjusts shares to be consistant with any fixed production 
@@ -483,7 +543,7 @@ void subsector::adjShares( const double dmd, double shareRatio,
 	double varShareTot = 0; // sum of shares without fixed supply
 	double subsecdmd; // subsector demand adjusted with new shares
 	// add up the fixed supply and share of non-fixed supply
-	for (int i=0;i<notech;i++) {
+	for ( int i=0 ;i<notech; i++ ) {
 		fixedSupply = techs[i][per]->getFixedSupply();
 		sumFixedSupply += fixedSupply;
 		if (fixedSupply == 0) varShareTot += techs[i][per]->getShare();
@@ -533,38 +593,67 @@ void subsector::setoutput( const string& regionName, const string& prodName, con
 	int i=0;
 	input[per] = 0; // initialize subsector total fuel input 
 	carbontaxpaid[per] = 0; // initialize subsector total carbon taxes paid 
-
+   bool techOutputCal = false;
+   double newOutput = 0; // sum of technology outputs in case needed for calibration
+   
    // output is in service unit when called from demand sectors
    double subsecdmd = share[per]*dmd; // share is subsector level
-   if ( doCalibration[ per ] == true ) {
-      double shareScaleValue = 0;
-      if ( subsecdmd > 0 ) {
-         shareScaleValue = calValue[ per ] / subsecdmd;
-         if ( shrwts[ per ]  == 0 ) {
-            shrwts[ per ]  = 1;
-          }
-      }
-      
-      // Tests with only one cal value set indicate that setting the demand value 
-      // here has little effect
-      shrwts[ per ]  = shrwts[ per ]  * shareScaleValue;
-      subsecdmd = calValue[ per ];
+
+   // reset parameters, including subsecdmd, if are calibrating
+   if ( doCalibration[ per ] ) {
+      adjustForCalibration( subsecdmd, calOutputValue[ per ], per );
    }
+   
 	for ( i=0; i<notech; i++ ) {
 		// calculate technology output and fuel input from subsector output
-		techs[i][per]->production(regionName,prodName,subsecdmd,per);
+		techs[i][per]->production( regionName, prodName, subsecdmd, per );
 
 		// total energy input into subsector, must call after tech production
 		input[per] += techs[i][per]->showinput();
 		// sum total carbon tax paid for subsector
 		carbontaxpaid[per] += techs[i][per]->showcarbontaxpaid();
+      newOutput =+ techs[i][per]->showoutput();
+
+      if ( techs[i][per]->getCalibrationStatus( )) {
+         techOutputCal = true;
+      }
 	}
+   
+   // Adjust share weight if technologies were calibrated as well
+   if ( techOutputCal ) {
+      adjustForCalibration( subsecdmd, newOutput, per );
+      if ( doCalibration[ per ] ) { // opps, both sub-sector and technologies were calibrated
+         cerr << "WARNING in  Subsect: "  << name;
+         cerr <<  " both technology and sub-sector have calibration values." << endl;
+      }
+   }
+}
+  
+//! Adjusts share weights and subsector demand to be consistant with calibration value
+/* Share weights are scaled to be consistant with the calibration value.
+ * subector demand is also set equal to calibration value in order to pass down to technologies.
+ * \warning The value of subsecdmd is changed.
+ */
+void subsector::adjustForCalibration( double& subsecdmd, double calOutputValue, const int period ) {
+   double shareScaleValue = 0;
+
+   if ( subsecdmd > 0 ) {
+      shareScaleValue = calOutputValue / subsecdmd;
+      if ( shrwts[ period ]  == 0 ) {
+         shrwts[ period ]  = 1;
+         }
+   }
+      
+   // Tests with only one cal value set indicate that setting the demand value 
+   // here has little additional effect on the solution speed. Need to test more.
+   shrwts[ period ]  = shrwts[ period ]  * shareScaleValue;
+   subsecdmd = calOutputValue;
 }
   
 //! calculates fuel input and subsector output
 void subsector::sumoutput( const int per ) {
 	output[per] = 0;
-	for (int i=0;i<notech;i++) {
+	for ( int i=0 ;i<notech; i++ ) {
 		output[per] += techs[i][per]->showoutput();
 	}
 }
@@ -905,7 +994,7 @@ void subsector::emission( const int per, const string& prodname ){
 	assert( per <= scenario->getModeltime()->getmaxper() );
 	summary[per].clearemiss(); // clear emissions map
 	summary[per].clearemfuelmap(); // clear emissions map
-	for (int i=0;i<notech;i++) {
+	for ( int i=0 ;i<notech; i++ ) {
 		techs[i][per]->emission(prodname);
 		summary[per].updateemiss(techs[i][per]->getemissmap());
 		summary[per].updateemfuelmap(techs[i][per]->getemfuelmap());
@@ -917,7 +1006,7 @@ void subsector::indemission(const int per) {
 	//! \pre per is less than or equal to max period.
 	assert( per <= scenario->getModeltime()->getmaxper() );
 	summary[per].clearemindmap(); // clear emissions map
-	for (int i=0;i<notech;i++) {
+	for ( int i=0 ;i<notech; i++ ) {
 		techs[i][per]->indemission();
 		summary[per].updateemindmap(techs[i][per]->getemindmap());
 	}
@@ -928,7 +1017,7 @@ double subsector::showpe_cons( const int per ) {
 	//! \pre per is less than or equal to max period.
 	assert( per <= scenario->getModeltime()->getmaxper() );
 	pe_cons[per] = 0;
-	for (int i=0;i<notech;i++) {
+	for ( int i=0 ;i<notech; i++ ) {
 		// depleatable resource indeces are less than 5
 		// how should this condition be made generic?
 		// shk 7/23/01

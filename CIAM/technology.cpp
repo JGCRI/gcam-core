@@ -60,8 +60,8 @@ void technology::clear(){
 void technology::initElementalMembers(){
 	fueltype = 0;
 	year = 0;
-	shrwts = 0;
-	eff = 0;
+	shrwts = 1; // initialied to 1 
+	eff = 1; // initialied to 1 
 	fuelcost = 0;
 	necost = 0;
 	techcost = 0;
@@ -71,7 +71,7 @@ void technology::initElementalMembers(){
 	carbontax = 0;
 	carbontaxgj = 0;
 	carbontaxpaid = 0;
-	lexp = 0;
+	lexp = 1; // initialied to 1 
 	share = 0;
 	input = 0;
 	output = 0;
@@ -79,7 +79,9 @@ void technology::initElementalMembers(){
 	A = 0;
 	B = 0;
 	resource = 0;
-    fixedOutputVal = 0;
+   fixedOutputVal = 0;
+   doCalibration = false;
+   calInputValue = 0;
 }
 
 //! initialize technology with xml data
@@ -117,6 +119,10 @@ void technology::XMLParse( const DOMNode* node )
 		}
 		else if( nodeName == "sharewt" ){
 			shrwts = XMLHelper<double>::getValue( curr );
+		}
+		else if( nodeName == "calInputValue" ){
+         calInputValue = XMLHelper<double>::getValue( curr );
+         doCalibration = true;
 		}
 		else if( nodeName == "efficiency" ){
 			eff = XMLHelper<double>::getValue( curr );
@@ -176,6 +182,9 @@ void technology::toXML( ostream& out ) const {
 	XMLWriteElement( year, "year", out );
 	XMLWriteElement( fueltype, "fueltype", out );
 	XMLWriteElement( shrwts, "sharewt", out );
+   if (doCalibration) {
+	   XMLWriteElement( calInputValue, "calInputValue", out );
+   }
 	XMLWriteElement( fuelname, "fuelname", out );
 	XMLWriteElement( eff, "efficiency", out );
 	XMLWriteElement( necost, "nonenergycost", out );
@@ -213,6 +222,9 @@ void technology::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( fueltype, "fueltype", out );
 	XMLWriteElement( fuelname, "fuelname", out );
 	XMLWriteElement( shrwts, "sharewt", out );
+   if (doCalibration) {
+	   XMLWriteElement( calInputValue, "calInputValue", out );
+   }
 	XMLWriteElement( fuelname, "fuelname", out );
 	XMLWriteElement( eff, "efficiency", out );
 	XMLWriteElement( fuelcost, "fuelcost", out );
@@ -225,7 +237,8 @@ void technology::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( carbontaxpaid, "carbontaxpaid", out );
 	XMLWriteElement( lexp, "logitexp", out );
 	XMLWriteElement( share, "share", out );
-	XMLWriteElement( input, "output", out );
+	XMLWriteElement( output, "output", out );
+	XMLWriteElement( input, "input", out );
 	XMLWriteElement( techchange, "techchange", out );
 	XMLWriteElement( resource, "resource", out );
 	XMLWriteElement( A, "A", out );
@@ -380,11 +393,14 @@ void technology::adjShares(double subsecdmd, double totalFixedSupply, double var
 }
 
 //! Calculates fuel input and technology output.
-//! Adds demands for fuels and ghg emissions to markets in the marketplace
+/*! Adds demands for fuels and ghg emissions to markets in the marketplace
+\todo I think carbontaxpaid gets applied for all fuels. Need to check that.
+*/
 void technology::production(const string& regionName,const string& prodName,
 							double dmd,const int per) {
 	string hydro = "hydro";
 	Marketplace* marketplace = scenario->getMarketplace();
+   
 	// dmd is total subsector demand
 	if(name != hydro) {
 		output = share * dmd; // use share to get output for each technology
@@ -394,14 +410,19 @@ void technology::production(const string& regionName,const string& prodName,
 		output = fixedOutputVal = dmd;
 	}
 	
-	if (fueltype == 0) { // fueltye=0 reserved for renewables
-		input = output/eff;
-	}
-	else { // demand for fossil, uranium and secondary energy
-		//input = output/eff/pow(1+techchange,timestep);
-		input = output/eff;
-	}
-	
+   // If a calibration value was read in, then set output from that instead.
+   if ( doCalibration ) {
+      output = calInputValue * eff;
+      if (dmd != 0) { // note that dmd could be < 0 for non-energy markets
+         share = output / dmd;
+      }
+   }
+   
+   // eliminated renewable branch for input calc, since code was the same. sjs
+   // non renewable technologies previously had
+   //input = output/eff/pow(1+techchange,timestep);
+	input = output/eff;
+	   
 	if (input < 0) {
 		cerr << "ERROR: Output value < 0 for technology " << name << endl;
 	}
@@ -546,6 +567,11 @@ double technology::showeff() const {
 //! return technology share
 double technology::getShare() const {
 	return share;
+}
+
+//! returns true if this technoloy is calibrated for this period
+bool technology::getCalibrationStatus( ) const {
+	return doCalibration;
 }
 
 //! return fuel input for technology

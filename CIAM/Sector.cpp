@@ -400,6 +400,14 @@ void sector::setoutput(const string& regionName,double dmd, int per)
 	}
 }
 
+//! Scale share weights after sub-sector or technology calibration
+void sector::init_calc( const int per )
+{
+	for ( int i=0; i<nosubsec; i++ ) {
+		subsec[ i ]->init_calc( per );
+	}
+}
+
 //! Sum subsector outputs.
 void sector::sumoutput(int per)
 {

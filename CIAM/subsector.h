@@ -54,9 +54,14 @@ protected:
 	vector<double> output; //!< total amount of final output from subsector
 	vector<double> carbontaxpaid; //!< total subsector carbon taxes paid
 	vector<double> fuelPrefElasticity; //!< Fuel preference elasticity
+   vector<double> calOutputValue; // Calibration value
    vector<bool> doCalibration; // Flag set if calibration value is read-in
-   vector<double> calValue; // Calibration value
+   vector<bool> calibrationStatus; // Set true if sector or any tech is calibrated
 	vector<Summary> summary; //!< summary for reporting
+   
+   void adjustForCalibration( double& subsecdmd, double calOutputValue, const int period ); // Adjust for calibration
+   void shareWeightScale( const int per ); // Consistantly adjust share weights
+   
 public:
 	subsector();
 	~subsector();
@@ -68,14 +73,18 @@ public:
 	void copytolast( const int period );
 	virtual void calc_price( const string regionName, const int period); // maw
 	double getprice( const int period ) const;
+   void init_calc( const int per ); // Consistantly adjust share weights
+	bool getCalibrationStatus( const int period ) const;
+	void setCalibrationStatus( const int period );
 	double getfuelprice( const int period ) const; 
 	double getwtfuelprice( const int period ) const;
 	double getCapacityLimit( const int period ) const;
 	void applycarbontax( const double tax, const int period );
 	void addghgtax( const string& ghgname, const string& regionName, const int period ); 
 	virtual void calcShare( const string& regionName, const int period, const double gnp_cap = 1 ); 
+   void shareWeightInterp( const int beginPeriod,  const int endPeriod );
 	void normShare( const double sum, const int period );
-    void limitShares( const double sum, const int period );
+   void limitShares( const double sum, const int period );
 	// maw compute tech shares within subsector in seperate method
 	void calcTechShares ( const string& regionName, const int period );
 	// sets demand to output and output

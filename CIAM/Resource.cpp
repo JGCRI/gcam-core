@@ -173,7 +173,7 @@ void Resource::toDebugXML( const int period, ostream& out ) const {
 	// Write out cumulative prod for debugging period.
 	XMLWriteElement( cummprod[ period ], "cummprod", out );
 	
-	// Write out the number of depletable resources.
+	// Write out the number of sub-resources.
 	XMLWriteElement( nosubrsrc, "nosubrsrc", out );
 
 	// Write out the depresource objects.

@@ -795,6 +795,20 @@ void Region::doCalibration( const int per ) {
 	}
 }
 
+//! Call any initializations that are only done once per period
+void Region::init_calc( const int per ) 
+{
+   int i;
+   
+	for ( i=0;i<nodsec;i++) {
+		demandsector[ i ]->init_calc( per ); 
+	}
+
+	for ( i=0;i<nossec;i++) {
+		supplysector[ i ]->init_calc( per ); 
+	}
+}
+
 //! Calculate regional demand for energy and other goods for all sectors.
 void Region::endusedemand(int per) 
 {

@@ -203,6 +203,20 @@ void World::toDebugXML( const int period, ostream& out ) const {
 	out << "</world>" << endl;
 }
 
+//! initialize anything that won't change during the calcuation
+/*! Examples: share weight scaling due to previous calibration, 
+ * cumulative technology change, etc.
+ */
+void World::init_calc( const int per ) {	
+	
+	Configuration* conf = Configuration::getInstance();
+	
+   for ( int i=0 ;i<noreg; i++ ) {
+		region[ i ]->init_calc( per );
+	}
+   
+}
+
 //! calculate supply and demand and emissions for all regions
 /*! This is the main action loop for the model. 
 Uses "MiniCAM" style logic where primary costs are calculated, 

@@ -72,6 +72,7 @@ public:
    void writeBackCalibratedValues( const int period );
    void setupCalibrationMarkets();
    void doCalibration( const int per );
+   void init_calc( const int per ); // Call sectors to consistantly adjust share weights
 	void setCO2coef(void); // set default CO2 emissions coefficients
 	void setghgsupply(int per); // sets ghg constraint to market supply
 	void setghgdemand(int per); // sets ghg emissions to market demand

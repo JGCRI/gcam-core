@@ -147,7 +147,7 @@ int main() {
 	const Marketplace* marketplace = scenario->getMarketplace();
 
    int t;
-	outfile <<"Region,RegionName,Sector,Subsector,Technology,Variable,Units,";
+	outfile <<"Region,Sector,Subsector,Technology,Variable,Units,";
 
 	for (t=0;t<modeltime->getmaxper();t++) { 
 		outfile << modeltime->getper_to_yr(t) <<",";
