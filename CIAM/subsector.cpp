@@ -203,7 +203,7 @@ void subsector::XMLParse( const DOMNode* node ) {
                     if (fillout) {
                         // will not do if period is already last period or maxperiod
                         for (int i = thisPeriod+1; i < maxperiod; i++) {
-                            techVec[ i ] = techVec[ thisPeriod ];
+                            techVec[ i ] = new technology( *techVec[ thisPeriod ] );
                             techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
                         }
                     }
@@ -228,6 +228,7 @@ void subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr
     // do nothing
     // defining method here even though it does nothing so that we do not
     // create an abstract class.
+   cout << "Unrecognized text string: " << nodeName << " found while parsing Subsector." << endl;
 }
 
 //! Complete the initialization.
@@ -237,6 +238,7 @@ void subsector::completeInit() {
    
     for ( vector< vector< technology* > >::iterator outerIter = techs.begin(); outerIter != techs.end(); outerIter++ ) {
         for( vector< technology* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
+           assert( *innerIter ); // Make sure the technology has been defined.
             ( *innerIter )->completeInit();
         }
     }

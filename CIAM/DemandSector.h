@@ -44,6 +44,7 @@ protected:
     
 public:
     demsector();
+    virtual ~demsector();
     virtual void clear();
     virtual void XMLDerivedClassParseAttr( const DOMNode* node ); 
     virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* curr ); 

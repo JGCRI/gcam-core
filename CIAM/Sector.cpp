@@ -134,6 +134,9 @@ void sector::XMLParse( const DOMNode* node ){
       else if( nodeName == "output" ) {
          XMLHelper<double>::insertValueIntoVector( curr, output, modeltime );
       }
+      else if( nodeName == "unit" ) {
+         unit = XMLHelper<string>::getValueString( curr );
+      }
       else if( nodeName == "subsector" ){
          map<string,int>::const_iterator subSectorMapIter = subSectorNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
          if( subSectorMapIter != subSectorNameMap.end() ) {

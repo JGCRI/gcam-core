@@ -38,6 +38,10 @@ tranSector::tranSector() {
     percentLicensed.resize( maxper ); // percentage of population licensed
 }
 
+//! Destructor.
+tranSector::~tranSector() {
+}
+
 //! Clear member variables.
 void tranSector::clear() {
     

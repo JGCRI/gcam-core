@@ -29,6 +29,7 @@ protected:
     double priceRatioNotLic;// price ratio for unlicensed population
 public:
     tranSector();
+    virtual ~tranSector();
 	virtual void clear();
     virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* curr ); 
 	// aggregate demand for service

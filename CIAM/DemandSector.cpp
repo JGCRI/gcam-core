@@ -51,6 +51,10 @@ demsector::demsector() {
     servicePreTechChange.resize( maxper );
 }
 
+//! Destructor
+demsector::~demsector() {
+}
+
 //! Clear member variables.
 void demsector::clear(){
     
