@@ -15,6 +15,12 @@
 
 #include "Market.h"
 
+/*!
+* \ingroup CIAM
+* \brief A class which defines the normal supply-demand type market.
+* \author Sonny Kim
+*/
+
 class NormalMarket: public Market {
 public:
     NormalMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
