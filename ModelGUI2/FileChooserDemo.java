@@ -42,6 +42,8 @@ public class FileChooserDemo extends JFrame
   JTextField attribField;
   JTextField valueField;
 
+  Document lastDoc;
+
   JTextArea textArea;
   JTree jtree;
   JTable jTable;
@@ -54,6 +56,8 @@ public class FileChooserDemo extends JFrame
   XMLFilter xmlFilter = new XMLFilter();
   CSVFilter csvFilter = new CSVFilter();
   File file;
+  File recentFile = new File("recent.xml");
+
 
   JFileChooser globalFC; // for saving last current directory
 
@@ -99,7 +103,7 @@ public class FileChooserDemo extends JFrame
 	super(title);
 	
 	globalFC = new JFileChooser();
-	globalFC.setCurrentDirectory( new File(".") );
+	//globalFC.setCurrentDirectory( new File(".") );
 
 	try {
 		System.setProperty(DOMImplementationRegistry.PROPERTY,
@@ -114,9 +118,36 @@ public class FileChooserDemo extends JFrame
 		}
 		implls = (DOMImplementationLS) impl;
 		lsInput = implls.createLSInput();
+		DocumentType DOCTYPE = impl.createDocumentType("recent", "","");
+		lastDoc = impl.createDocument("", "recent", DOCTYPE);
 	} catch (Exception e) {
 		System.err.println("Couldn't initialize DOMImplementation: "+e);
 		JOptionPane.showMessageDialog(this, "Couldn't initialize DOMImplementation\n"+e, "Initialization Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	try {
+	  lsInput.setByteStream(new FileInputStream(recentFile));
+	  lsParser = implls.createLSParser(DOMImplementationLS.MODE_SYNCHRONOUS, null);
+	  lsParser.setFilter(new ParseFilter());
+	  lastDoc = lsParser.parse(lsInput);
+
+	  XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(lastDoc);
+	  XPathResult res = (XPathResult)xpeImpl.createExpression("//recent/lastDirectory/node()", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		
+	  Node tempNode;
+	  while( (tempNode = res.iterateNext()) != null ){
+		String pathDirectory = tempNode.getNodeValue();	
+		globalFC.setCurrentDirectory( new File( pathDirectory) );
+	  }
+
+	} catch (Exception e) {
+		System.out.println("exception " + e);
+		System.out.println("so that hopefully means no file, so i'll just use default");
+		globalFC.setCurrentDirectory( new File(".") );
+		
+		Node aNode = lastDoc.createElement("lastDirectory");
+		aNode.appendChild( lastDoc.createTextNode(".") );
+		lastDoc.getDocumentElement().appendChild(aNode);
 	}
 
 	Container contentPane = getContentPane();
@@ -180,6 +211,8 @@ public class FileChooserDemo extends JFrame
 		public void windowClosing(WindowEvent e)
 		{
 		  dispose();
+		  updateRecentDoc();
+		  writeFile( recentFile, lastDoc ); // NEWLY ADDED !!!!!!!!!!!
 		  System.exit(0);
 		}
 	  }
@@ -354,6 +387,19 @@ public class FileChooserDemo extends JFrame
 	}
 	else if(command.equals("Quit") ){
 		dispose();
+		updateRecentDoc();
+		writeFile( recentFile, lastDoc ); // NEWLY ADDED !!!!!!!!!!!
+	}
+  }
+  
+  public void updateRecentDoc(){ // updates recentDoc with most current globalFC
+	XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(lastDoc);
+	XPathResult res = (XPathResult)xpeImpl.createExpression("//recent/lastDirectory/node()", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		
+	Node tempNode;
+	while( (tempNode = res.iterateNext()) != null ){
+	  tempNode.setNodeValue( globalFC.getCurrentDirectory().toString() );
+	  System.out.println("just updated the recent doc!");
 	}
   }
   
@@ -1791,7 +1837,7 @@ class MyTreeModelListener implements TreeModelListener {
 			if( response == JOptionPane.CANCEL_OPTION) return true;
 		}
 		globalFC.setCurrentDirectory(fc.getCurrentDirectory());
-		return writeFile(file);
+		return writeFile(file, doc);
 	  }
 	  else{
 		return false;
@@ -1950,9 +1996,9 @@ class MyTreeModelListener implements TreeModelListener {
 	}
   }
 
-  public boolean writeFile(File file){
+  public boolean writeFile(File file, Document theDoc){
 	// specify output formating properties
-	OutputFormat format = new OutputFormat(doc);
+	OutputFormat format = new OutputFormat(theDoc);
 	format.setEncoding("UTF-8");
 	format.setLineSeparator("\n");
 	format.setIndenting(true);
@@ -1967,7 +2013,7 @@ class MyTreeModelListener implements TreeModelListener {
 		FileWriter fw = new FileWriter(file);
 		XMLSerializer serializer = new XMLSerializer (fw, format);
 		serializer.asDOMSerializer();
-		serializer.serialize(doc);
+		serializer.serialize(theDoc);
 		fw.close();
 	} catch (java.io.IOException e) {
 		System.err.println("Error outputing tree: "+e);
@@ -1975,5 +2021,6 @@ class MyTreeModelListener implements TreeModelListener {
 	}
 	return true;
   }
+
 }
 
