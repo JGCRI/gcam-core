@@ -153,7 +153,6 @@ void AgSector::toInputXML( ostream& out, Tabs* tabs ) const {
 
 //! Print the internal variables to XML output.
 void AgSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-   int tempRegion = regionNumber; // Needed b/c function is constant.
    const Modeltime* modeltime = scenario->getModeltime();
    
    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
@@ -168,26 +167,21 @@ void AgSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    }
    
    #if(__HAVE_FORTRAN__)
+   int tempRegion = regionNumber; // Needed b/c function is constant.
    for ( int iter = 0; iter < modeltime->getmaxper(); iter++ ){
       XMLWriteElement( GETGNP( tempRegion, iter ), "gdpFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
    }
+   for ( int iter = 1; iter < modeltime->getmaxpopdata(); iter++ ){
+      XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, tabs, modeltime->getPopPeriodToYear( iter ) );
+   }
+   XMLWriteElement( GETBIOMASSPRICE(), "biomasspriceFromFortran", out, tabs );
    #endif
    
    for( int iter = 0; iter < static_cast<int>( population.size() ); iter++ ) {
       XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getPopPeriodToYear( iter ) );
    }
    
-   #if(__HAVE_FORTRAN__)
-   for ( int iter = 1; iter < modeltime->getmaxpopdata(); iter++ ){
-      XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, tabs, modeltime->getPopPeriodToYear( iter ) );
-   }
-   #endif
-   
    XMLWriteElement( biomassPrice, "biomassprice", out, tabs );
-   
-   #if(__HAVE_FORTRAN__)
-   XMLWriteElement( GETBIOMASSPRICE(), "biomasspriceFromFortran", out, tabs );
-   #endif
    
    for( int iter = 0; iter < static_cast<int>( prices[ period ].size() ); iter++ ) {
       XMLWriteElement( prices[ period ][ iter ], "prices", out, tabs, modeltime->getper_to_yr( period ) );
@@ -200,7 +194,6 @@ void AgSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
       XMLWriteElement( demands[ period ][ iter ], "demands", out, tabs, modeltime->getper_to_yr( period ) );
    }
    // finished writing xml for the class members.
-   
    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
@@ -281,9 +274,7 @@ void AgSector::runModel( const int period, const string& regionName ) {
    double* priceArray = new double[ numAgMarkets ];
    double* demandArray = new double[ numAgMarkets ];
    double* supplyArray = new double[ numAgMarkets ];
-   int tempRegionNumber = regionNumber;
-   int tempPeriod = period;
-   
+
    for( int l = 0; l < numAgMarkets; l++ ){
        if( marketplace->doesMarketExist( indiceToNameMap[ l ], regionName, period ) ){
             prices[ period ][ l ] = marketplace->getPrice( indiceToNameMap[ l ], regionName, period );
@@ -297,6 +288,8 @@ void AgSector::runModel( const int period, const string& regionName ) {
       priceArray[ i ] = prices[ period ][ i ];
    }
    #if(__HAVE_FORTRAN__)
+   int tempRegionNumber = regionNumber;
+   int tempPeriod = period;
    AG2RUN( priceArray, tempRegionNumber, tempPeriod, demandArray, supplyArray );
    #endif
    
@@ -334,8 +327,7 @@ void AgSector::carbLand( const int period, const string& regionName ) {
 //! Create a market for the sector.
 // sjs -- added option agBioMarketSet in config file so that biomass market is not altered (so regional markets can be set elsewhere)
 void AgSector::setMarket( const string& regionName ) {
-	Configuration* conf = Configuration::getInstance();
-	bool setAgBioMarket = Configuration::getInstance()->getBool( "agBioMarketSet" );
+    bool setAgBioMarket = Configuration::getInstance()->getBool( "agBioMarketSet" );
 	 
    Marketplace* marketplace = scenario->getMarketplace();
    const Modeltime* modeltime = scenario->getModeltime();

@@ -679,7 +679,6 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
    bool breakout = false;	// var to allow various conditions to exit NR routine
    double beforeEDvalue = -1;
    double previousEDvalue = -1;
-   double BREAK_OUT_THRESHOLD = 0.001;
    
    if ( trackED ) { 
       cout << "NR_Ron begin "; 
@@ -825,7 +824,7 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
          numDerivativeCalcs = 0;
 			// sjs add this to print out SD curves when has trouble solving
 			if ( debugChecking ) {
-				bool dmy = marketplace->checkMarketSolution( solutionTolerance, excessDemandSolutionFloor, per , false) ;
+				marketplace->checkMarketSolution( solutionTolerance, excessDemandSolutionFloor, per , false) ;
 			}
       }
       

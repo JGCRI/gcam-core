@@ -649,7 +649,7 @@ void Sector::calcPrice( const int period ) {
 */
 void Sector::calcFinalSupplyPrice( const GDP* gdp, const int period ){
     calcShare( period, gdp );
-    double goodPrice = getPrice( period );
+    calcPrice( period );
     // set market price of intermediate goods
     Marketplace* marketplace = scenario->getMarketplace();
     marketplace->setPrice( name, regionName, sectorprice[ period ], period );
@@ -783,7 +783,6 @@ double Sector::getFixedOutput( const int period, bool printValues ) const {
 */
 double Sector::getFixedShare( const int subsectorNum, const int period ) const {
     Marketplace* marketplace = scenario->getMarketplace();
- //   World* world = scenario->getWorld();
 
     if ( subsectorNum >= 0 && subsectorNum < nosubsec ) {
         double fixedShare = subsec[ subsectorNum ]->getFixedShare( period );

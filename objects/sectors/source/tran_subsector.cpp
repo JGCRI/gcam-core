@@ -150,8 +150,6 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
     if(lexp[period]==0) cerr << "TranSubSec Logit Exponential is 0." << endl;
     
     //Adjust price to consider time value 
-    const double daysPerYear = 365.0;
-    const double hoursPerDay = 24.0;
     const double weeksPerYear = 50.0;
     const double hoursPerWeek = 40.0;
     
@@ -161,7 +159,6 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
     servicePrice[period] = subsectorprice[period]/loadFactor[period] ;
 
     // calculate time value based on hours worked per year
-
  	 // Convert GDPperCap into dollars (instead of 1000's of $'s)
     // GDP value at this point in the code does not include energy feedback calculation for this year, so is, therefore, approximate
     timeValue[period] = gdp->getApproxGDPperCap( period ) * 1000 /(hoursPerWeek*weeksPerYear)/speed[period];
