@@ -1,0 +1,9 @@
+/*!
+\page faq Frequently Asked Questions
+\section cplusplusques C++ Questions
+\subsection faqitem1 How does a STL container iterator work?
+Container iterators are declared as containerName<type>::iterator iteratorName. The iterator then behaves as a pointer
+to the item within the container it points at, and pointer operations can be perfomed on it, such as dereferencing. If 
+the container held pointers to objects, the iterator must be dereferenced twice in order to access the object. Put example here.
+\section modelques Model Questions
+*/
