@@ -35,7 +35,7 @@ private:
     Marketplace* marketplace; //!< The goods and services marketplace.
     std::string name; //!< Scenario name.
     std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
-    
+    void printGraphs( const int period ) const;
     void printSectorDependencies() const;
 
 public:
@@ -54,7 +54,6 @@ public:
     void toDebugXMLClose( const int period, std::ostream& out ) const;
     std::string getName() const;
     void run();
-    void printGraphs( const int period ) const;
 };
 
 #endif // _SCENARIO_H_
