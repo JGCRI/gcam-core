@@ -22,6 +22,8 @@
 #include "modeltime.h"
 #include "Marketplace.h"
 
+using namespace std;
+
 extern Marketplace marketplace;
 extern Modeltime modeltime;
 
