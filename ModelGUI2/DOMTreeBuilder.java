@@ -222,24 +222,50 @@ public class DOMTreeBuilder {
 		int currPos;
 		// loop through all the headers that are the immediate child of name
                 //for (int i = 0; i < children.size(); i++) {
+		System.out.println(name+" has child# "+children.size());
 		while(it.hasNext()) {
 			currPos = ((Integer)it.next()).intValue();
                         chName = head.getChildHeader(currPos);
-			// this indicates that the child with specify which parent it belongs under
-			if (head.checkChildStackFront() == currPos ) {
-				head.popChildStack();
+			System.out.println(name+" --- "+chName+" --- "+head.checkChildStackFront());
+			if (currPos == 23) {
+				System.out.println("HERE!!!!!!!!!!!!!");
+				System.out.println(chName);
 			}
-			if ( chName.startsWith( "*" ) ) {
+			// this indicates that the child with specify which parent it belongs under
+			if ( chName.startsWith( "*" ) && head.checkChildStackFront() != currPos) {
 				makeTreeHelper( parent, chName.substring( 1, chName.length() ) );
 			}
+			else if (!head.getParentHeader(currPos).startsWith("{") && head.getParentHeader(currPos).matches(".*\\..*") && head.checkChildStackFront() != currPos) {
+				chName = head.getParentHeader(currPos);
+				System.out.println("ADDING FROM STACK");
+				head.addToChildStack(currPos);
+				chName = '@' +chName.substring(0,chName.indexOf("/"));
+				System.out.println("About to use "+chName);
+				makeTree(parent, chName);
+				// check to see if this node exists already so as to not duplicate it, and
+				// recurse using this child as the new parent
+				/*
+                        	if ((retNode = compare((Element)parent, tempNode)) == null) {
+                                	parent.appendChild(tempNode);
+                                	makeTree(tempNode, chName);
+                        	} else {
+                                	makeTree(retNode, chName);
+                        	}
+				*/
+
+			}
 			else {
+				if (head.checkChildStackFront() == currPos ) {
+					System.out.println("REMOVING FROM STACK");
+					head.popChildStack();
+				}
                         	tempNode = doc.createElement(chName);
 				// look up and get proper attribute names and it's value
                         	if ( !(attrStr = head.isAttribute(chName)).equals("")  ) {
-					retVal = head.getAttribute(chName+"\\"+attrStr);
-					if ( retVal == null ) {
-						retVal = head.getAttribute(name+"\\"+chName+"\\"+attrStr);
-					}
+					//retVal = head.getAttribute(chName+"\\"+attrStr);
+					//if ( retVal == null ) {
+						retVal = head.getAttribute(head.getParentHeader(currPos)+"\\"+chName+"\\"+attrStr);
+					//}
 					if ( retVal instanceof Integer ) {
                                 		tempNode.setAttribute(attrStr,(String)dataArr.get(((Integer)retVal).intValue()));
 					}
@@ -247,7 +273,7 @@ public class DOMTreeBuilder {
 						tempNode.setAttribute(attrStr,(String)retVal);
 					}
 					else if ( retVal instanceof ArrayList) {
-						//System.out.println("In array part for "+chName+" with no ch "+((ArrayList)retVal).size());
+						System.out.println("In array part for "+chName+" with no ch "+((ArrayList)retVal).size());
 						Iterator itTemp = it;
 						while(itTemp.hasNext()) {
 							if (head.getChildHeader(((Integer)itTemp.next()).intValue()).equals(chName)) {
@@ -268,6 +294,7 @@ public class DOMTreeBuilder {
 								tempText = doc.createTextNode((String)dataArr.get(retInt));
 								tempNode.appendChild(tempText);
 							}
+							System.out.println("About to use "+chName);
 							// check to see if this node exists already so as to not duplicate it, and
 							// recurse using this child as the new parent
 							if ((retNode = compare((Element)parent, tempNode)) == null) {
@@ -291,6 +318,7 @@ public class DOMTreeBuilder {
                                		tempText = doc.createTextNode((String)dataArr.get(retInt));
                                 	tempNode.appendChild(tempText);
                         	}
+				System.out.println("About to use "+chName);
 				// check to see if this node exists already so as to not duplicate it, and
 				// recurse using this child as the new parent
                         	if ((retNode = compare((Element)parent, tempNode)) == null) {
@@ -321,11 +349,18 @@ public class DOMTreeBuilder {
 		int retInt = 0;
 		boolean isExt = false;
 		// go through all the children, and create their parent as they specify
+		System.out.println("Got here from"+name+" with ch# "+children.size());
 		for (int i = 0; i < children.size(); i++ ) {
 			// need to parse this parent header as they will not come in parsed
 			parentName = head.getParentHeader(((Integer)children.get(i)).intValue());
-			if (parentName.split("/").length > 1) {
-			//if (parentName.matches("/../")) {
+			if (head.checkChildStackFront() == ((Integer)children.get(i)).intValue()) {
+				//System.out.println("REMOVING FROM STACK");
+				//head.popChildStack();
+				parentName = parentName.substring(parentName.lastIndexOf('/')+1);
+			}
+			//if (parentName.split("/").length > 1) {
+			if (parentName.matches(".*\\..*")) {
+				System.out.println("ADDING FROM STACK");
 				head.addToChildStack(((Integer)children.get(i)).intValue());
 				parentName = parentName.substring(0,parentName.indexOf("/"));
 				isExt = true;
@@ -341,8 +376,13 @@ public class DOMTreeBuilder {
 				tempNode.setAttribute(attrStr.substring(0,retInt), attrStr.substring(retInt+1, attrStr.length()));
 			}
 			else {
+				System.out.println("How did i get here");
 				tempNode = doc.createElement(parentName);
+				if (isExt) {
+					parentName = '@' + parentName;
+				}
 			}
+			System.out.println("About to use "+parentName);
 			// same idea as makeTree, where we need to avoid duplicates, the child should now be
 			// able to recurse normally
 			if ((retNode = compare((Element)parent, tempNode)) == null) {

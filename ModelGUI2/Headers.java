@@ -31,7 +31,7 @@ public class Headers {
 		String child;
 		String firstArg;
 		String secArg;
-		String tempAttrName;
+		String parentPlaceHolder = null;
 		parentArr = new ArrayList();
 	        childArr = new ArrayList();
         	//attrMap = new HashMap();
@@ -53,7 +53,11 @@ public class Headers {
 			else if (st.countTokens() == 4) {
 				parent = st.nextToken() + "/" + st.nextToken() + "/" + st.nextToken();
 				child = st.nextToken().trim();
-				parentTemp.add(parent.substring(parent.indexOf("}")+1,parent.indexOf('/')));
+				if (parent.startsWith("{")) {
+					parentTemp.add(parent.substring(parent.indexOf("}")+1,parent.indexOf('/')));
+				} else {
+					//parentTemp.add(parent.substring(0,parent.indexOf('/')));
+				}
 			}
 			else if (st.countTokens() == 2) {
 				if( (parent = st.nextToken()) != null ){
@@ -79,7 +83,7 @@ public class Headers {
 				firstArg = stA.nextToken(); // holds attr_name
 				child = stA.nextToken(); // holds the tag
 				tagAttrMap.put(child, firstArg);
-				parentAttrMap.put(child + "\\" + firstArg, new Integer( i ));
+				parentAttrMap.put(parent + "\\" + child + "\\" + firstArg, new Integer( i ));
 				//attrMap.put( child, new Integer( i ) );
 			}
 
@@ -116,8 +120,16 @@ public class Headers {
 				secArg = stA.nextToken(); // holds attr_value
 				child = stA.nextToken(); // holds the tag name
 				tagAttrMap.put(child, firstArg );
+				System.out.println(parent);
+				/*
+				if (parent.matches(".*\\..*")) {
+					System.out.println("HERE in GP");
+					parentPlaceHolder = parent;
+					parent = parent.substring(parent.indexOf('.')+4);
+					System.out.println("HERE "+parent);
+				}
+				*/
 				if (parent.startsWith("{")) {
-					System.out.println("HERE");
 					parentAttrMap.put(parent + "\\" + child + "\\" + firstArg, secArg);
 				} else {
 				if (!parentAttrMap.containsKey(parent + "\\" + child + "\\" + firstArg)) {
@@ -131,14 +143,21 @@ public class Headers {
 				//parentAttrMap.put(parent + "\\" + child + "\\" + firstArg, secArg );
 				//parentAttrMap.put(child + "\\" + firstArg, secArg );
 				}
+				if (parentPlaceHolder != null) {
+					System.out.println("Switching back from "+parent+" to "+parentPlaceHolder);
+					parent = parentPlaceHolder;
+					parentPlaceHolder = null;
+				}
 			}
 			parentArr.add( i, parent );
 			childArr.add( i, child );
 		}
 		int temp;
 		for (int i = 0; i < parentTemp.size(); i++) {
+			System.out.println("Parent temp: "+parentTemp.get(i));
 			temp = childArr.indexOf((String)parentTemp.get(i));
 			if (temp != -1 && !((String)childArr.get(temp)).startsWith("*")) {
+				System.out.println("Success for: "+(String)childArr.get(temp)+" at "+temp);
 				child = "*" + (String)childArr.get(temp);
 				childArr.set(temp, child);
 			}
@@ -208,26 +227,54 @@ public class Headers {
 	// Will match +World,-World,World
 	public ArrayList getIndecesWhereParentHeaderIs( String word ){
 		ArrayList returnvalue = new ArrayList();
+		boolean dbgChk = false;
+		if (word.equals("demandsector")) {
+			System.out.println("Start Debug");
+			dbgChk = true;
+		}
 		for(int i=0; i<numCols; i++){
 			if( parentArr.get( i ) != null ) {
 				String strToTest = ((String)parentArr.get(i));
+				if (strToTest.matches(".*\\.\\..*") && dbgChk) {
+					System.out.println("Child stack: "+checkChildStackFront());
+					System.out.println("the parentStr: "+strToTest);
+					System.out.println("substred: "+strToTest.substring(strToTest.lastIndexOf('/')+1));
+				}
 				if (i == checkChildStackFront() && strToTest.substring(strToTest.lastIndexOf('/')+1).equals(word)) {
+					if(dbgChk) {
+					System.out.println("In some deal about child front: "+i);
+					}
 					returnvalue.add( new Integer ( i ) );
 					continue;
 				}
 				if( strToTest.split("/").length > 1 && checkChildStackFront() == -1) {
 				//if( strToTest.matches("[/]")) {
+					if(dbgChk) {
+					System.out.println("Some deal about gp: "+i);
+					}
 					strToTest = strToTest.substring(0,strToTest.indexOf("/"));
 				}
+				if (i == checkChildStackFront()) {
+					strToTest = strToTest.substring(strToTest.lastIndexOf('/')+1);
+				}
 				if( strToTest.startsWith("{")){
+					if(dbgChk) {
+					System.out.println("Test start with atrr: "+i);
+					}
 					StringTokenizer st = new StringTokenizer( strToTest, "}", false);
 					st.nextToken();
 					String newStrToTest = st.nextToken();
 					if(newStrToTest.equals(word)){
+						if(dbgChk) {
+						System.out.println("Test with attr succ: "+i);
+						}
 						returnvalue.add( new Integer( i ));
 					}
 				}
 				if( strToTest.equals(word) ){
+					if(dbgChk) {
+					System.out.println("Words are just eq: "+i);
+					}
 					returnvalue.add( new Integer( i ) );
 				}
 			}
