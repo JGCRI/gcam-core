@@ -21,6 +21,7 @@
 #include <map>
 #include <ctime>
 #include "scenario.h" 
+#include "World.h"
 
 using namespace std;
 
@@ -31,7 +32,6 @@ extern CdbRecordset DBoutrst;
 
 extern time_t ltime;
 extern ofstream outfile;
-extern map<string,int> regionMap;
 extern Scenario* scenario;
 
 /*! Output single records to file.
@@ -63,8 +63,11 @@ void dboutput4(string var1name,string var2name,string var3name,string var4name,
 #if(!__HAVE_DB__)
 	fileoutput3( var1name,var2name,var3name,var4name,"",uname,dout);
 #else
+    const map<string,int> regionMap = scenario->getWorld()->getOutputRegionMap();
+
     // only output regions already defined in regionMap
-    if(regionMap.find(var1name) != regionMap.end()) {
+    map<string,int>::const_iterator iter = regionMap.find( var1name );
+    if( iter != regionMap.end()) {
 	    int i=0,j;
 	    // COleVariant does not take int, must be short or long
 	    // now write to the database
@@ -76,7 +79,7 @@ void dboutput4(string var1name,string var2name,string var3name,string var4name,
                    + lt->tm_mday * 1000000 
 				   + (lt->tm_mon * 100000000 + 100000000); // 0 is january
 	    DBoutrst.SetField(0L, COleVariant(RunID,VT_I4));
-	    DBoutrst.SetField(1L, COleVariant(short int(regionMap[var1name])));
+	    DBoutrst.SetField(1L, COleVariant(short int(iter->second)));
 	    DBoutrst.SetField(3L, COleVariant(var2name.c_str(), VT_BSTRT));
 	    DBoutrst.SetField(4L, COleVariant(var3name.c_str(), VT_BSTRT));
 	    DBoutrst.SetField(5L, COleVariant(var4name.c_str(), VT_BSTRT));
