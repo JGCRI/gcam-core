@@ -2597,7 +2597,7 @@ IF(IWrite.eq.1)THEN
 
 	IF (IWrite .eq. 1) WRITE(9,101)  !header row
 
-        IIPRT=15	! sjs -- changed to 5 year interval in order to save more data points
+        IIPRT=5	! sjs -- changed to 5 year interval in order to save more data points
         DO K=1990,IYEND,IIPRT
 
 !*** code from mag.out forcing table again...

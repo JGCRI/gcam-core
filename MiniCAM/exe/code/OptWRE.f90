@@ -53,7 +53,13 @@
 		IF (WHICHTARG(LG) .EQ. 4) TARGVAL = MAXVAL(MAGICCCResults(2,1:MagInt))
 
 		DIFF = (TARGVAL - CUMTARG(LG)) / CUMTARG(LG)
-		WRITE(*,*) "val, targ, diff",TARGVAL, CUMTARG(LG), DIFF
+		Write(*,'(a,2(f10.4,","),f10.4,"%")') &
+			"val, targ, diff: ",TARGVAL, CUMTARG(LG), 100*DIFF
+		Write(97,*) 
+		Write(97,*) "***************************"
+		Write(97,'(a,I3,a)') "WRE Target run number ",ITER
+		Write(97,'(a,2(f10.4,","),f10.4,"%")') &
+			"  val, targ, diff: ",TARGVAL, CUMTARG(LG), 100*DIFF
 		IF (ITER.EQ.1) THEN 
 		    InterpWREPATH = SECONDWREPATH
 		ELSE
