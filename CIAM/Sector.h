@@ -83,7 +83,7 @@ public:
     int shownosubsec(void);
     double getoutput(int per); // returns sector output 
     double getFixedSupply(int per) const; // returns sector output 
-    bool sector::sectorAllCalibrated( int per );
+    bool sectorAllCalibrated( int per );
     double getCalOutput(int per) const; // returns sector output 
     double showprice(int per); // returns sector aggregate price
     void emission(int per); // sum subsector emissions

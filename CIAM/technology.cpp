@@ -139,6 +139,7 @@ void technology::initElementalMembers(){
     fixedSupply = 0; // initialize to no fixed supply
     fixedOutputVal = 0;
     doCalibration = false;
+    doCalOutput = false;
     calInputValue = 0;
 }
 
@@ -182,7 +183,10 @@ void technology::XMLParse( const DOMNode* node )
         else if( nodeName == "calInputValue" ){
             calInputValue = XMLHelper<double>::getValue( curr );
             doCalibration = true;
-            //doCalibration = false;
+        }
+        else if( nodeName == "calOutputValue" ){
+            calOutputValue = XMLHelper<double>::getValue( curr );
+            doCalibration = true;
         }
         else if( nodeName == "efficiency" ){
             eff = XMLHelper<double>::getValue( curr );
@@ -252,6 +256,7 @@ void technology::completeInit() {
         ghgNameMap[ "CO2" ] = 0;
     }
 }
+
 
 //! write object to xml output stream
 void technology::toXML( ostream& out ) const {
@@ -341,6 +346,19 @@ void technology::toDebugXML( const int period, ostream& out ) const {
     
     Tabs::writeTabs( out );
     out << "</technology>" << endl;
+}
+
+//! Perform initializations that only need to be done once per period
+void technology::initCalc( ) {    
+   if ( doCalOutput ) {
+      calInputValue = calOutputValue/eff;
+      doCalibration = true;
+   }
+   
+   if ( calInputValue < 0 ) {
+      cerr << "Calibration value < 0 for tech " << name << ". Calibration removed" << endl;
+       doCalibration = false;
+   }
 }
 
 //! apply carbon tax to appropriate technology
@@ -461,25 +479,20 @@ has a fixed supply */
 void technology::adjShares(double subsecdmd, double subsecFixedSupply, double varShareTot, int per)
 {
     double remainingDemand = 0;
-    double fixedSupply = 0;
     
     if(subsecFixedSupply > 0) {
         remainingDemand = subsecdmd - subsecFixedSupply;
         if (remainingDemand < 0) {
             remainingDemand = 0;
         }
-        fixedSupply = fixedOutputVal; 
         
-        if ( fixedSupply > 0 ) {	// This tech has a fixed supply
+        if ( fixedOutputVal > 0 ) {	// This tech has a fixed supply
             if (subsecdmd > 0) {
-                share = fixedSupply/subsecdmd;
+                share = fixedOutputVal/subsecdmd;
                 // Set value of fixed supply
-                if (fixedSupply > subsecdmd) {
+                if (fixedOutputVal > subsecdmd) {
                     fixedOutputVal = subsecFixedSupply; // downgrade output if > fixedsupply
                 }  
-                else {
-                    fixedOutputVal = fixedSupply; 
-                }
             }
             else {
                 share = 0;

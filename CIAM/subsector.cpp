@@ -17,6 +17,7 @@
 #include <vector>
 #include <algorithm>
 
+#include "Configuration.h"
 #include "subsector.h"
 #include "technology.h"
 #include "scenario.h"
@@ -443,6 +444,7 @@ void subsector::initCalc( const int period ) {
     // Set any fixed demands
     for ( int i=0 ;i<notech; i++ ) {
         techs[i][ period ]->calcFixedSupply( period );
+        techs[i][ period ]->initCalc( );
     }
     
     setCalibrationStatus( period );
@@ -552,7 +554,8 @@ void subsector::calcTechShares( const string& regionName, const int per ) {
         techs[i][per]->normShare(sum);
         // Logit exponential should not be zero or positive when more than
         // one technology
-        if(notech>1 && techs[i][per]->getlexp()>=0) cerr << "Tech Logit Exponential is invalid." << endl;
+        if(notech>1 && techs[i][per]->getlexp()>=0) 
+          cerr << "Tech for sector " << name << " Logit Exponential is invalid (>= 0)" << endl;
     }
 }	
 
@@ -595,8 +598,8 @@ void subsector::calcShare( const string& regionName, const int per, const double
       
    if (share[per] < 0) {
      cerr << "Share is < 0 for " << name << " in " << regionName << endl;
-     cout << "subsectorprice[per]: " << subsectorprice[per] << endl;
-     cout << "shrwts[per]: " << shrwts[per] << endl;
+     cerr << "    subsectorprice[per]: " << subsectorprice[per] << endl;
+     cerr << "    shrwts[per]: " << shrwts[per] << endl;
    }
 }
 
@@ -813,12 +816,21 @@ void subsector::adjustForCalibration( double sectorDemand, double totalFixedSupp
       shareScaleValue = calOutputSubsect / subSectorDemand;
       shrwts[ period ]  = shrwts[ period ]  * shareScaleValue;
     }
-      
+    
+   if ( shrwts[ period ] < 0 ) {
+     cerr << "Share Weight is < 0 in subsector " << name << endl;
+     cerr << "    shrwts[per]: " << shrwts[ period ] << " (reset to 1)" << endl;
+     shrwts[ period ] = 1;
+   }
+
  }
   
 //! returns total calibrated output values
 double subsector::getTotalCalOutputs( const int per ) const {
 	double sumCalValues = 0;
+   Configuration* conf = Configuration::getInstance();
+   bool debugChecking = conf->getBool( "debugChecking" );
+   debugChecking = true;
 
    if ( doCalibration[ per ] ) {
       sumCalValues += calOutputValue[ per ];
@@ -826,6 +838,14 @@ double subsector::getTotalCalOutputs( const int per ) const {
    else {
    	for ( int i=0; i<notech; i++ ) {
          if ( techs[ i ][ per ]->getCalibrationStatus( ) ) {
+            
+            if ( debugChecking ) {
+              if ( techs[ i ][ per ]->getCalibrationOutput( ) < 0 ) {
+                 cerr << "calibration < 0 for tech " << techs[ i ][ per ]->getName() 
+                      << " in subsector " << name << endl;
+              }
+            }
+
             sumCalValues += techs[ i ][ per ]->getCalibrationOutput( );
          }
       }

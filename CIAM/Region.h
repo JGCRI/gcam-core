@@ -84,6 +84,7 @@ public:
    void writeBackCalibratedValues( const int period );
    void setupCalibrationMarkets();
    void calibrateRegion( const bool doCalibrations, const int per );
+   bool demandAllCalibrated( const int per );
    void calibrateTFE( const int per ); 
    void initCalc( const int per ); // Call sectors to consistantly adjust share weights
 	void setghgsupply(int per); // sets ghg constraint to market supply

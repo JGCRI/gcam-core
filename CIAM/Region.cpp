@@ -928,7 +928,12 @@ void Region::calibrateRegion( const bool doCalibrations, const int per ) {
    
    // Calibrate Regional TFE
    if ( doCalibrations ) {
-      calibrateTFE( per );
+      if ( !demandAllCalibrated( per ) ) {
+         calibrateTFE( per );
+      } else {
+         // do nothing now. Need to make a variant of the total cal outputs function
+         // so that can compare TFE with cal value 
+      }
    }
    
    // Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.
@@ -940,6 +945,19 @@ void Region::calibrateRegion( const bool doCalibrations, const int per ) {
       marketplace->setsupply( goodName, name, gnp_dol[ per ], per );
       marketplace->setMarketToSolve( goodName, name );
    }
+}
+
+//! Returns true if all demand sectors are calibrated (or fixed)
+bool Region::demandAllCalibrated( const int per ) {
+   bool allCalibrated = true;
+   
+   for ( int i=0;i<nodsec;i++ && allCalibrated ) {
+      if ( !demandsector[ i ]->sectorAllCalibrated( per ) ) {
+          allCalibrated = false;
+      }
+   }
+   
+   return allCalibrated;
 }
 
 //! Calibrate total final energy Demand for this region.

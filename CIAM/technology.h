@@ -53,12 +53,14 @@ protected:
     double output; //!< technology output
     double techchange;  //!< technical change in %/year
     double fixedSupply; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
-    double fixedOutputVal; //!< A fixed amount of output.
+    double fixedOutputVal; //!< The actual fixed output value
     string name; //!< technology name
     string unit; //!< unit of final product from technology
     string fuelname; //!< name of fuel used
     bool doCalibration; // Flag set if calibration value is read-in
+    bool doCalOutput; // Flag set if calibration value is read-in
     double calInputValue; // Calibration value
+    double calOutputValue; // Calibration value
     vector<Ghg*> ghg; //!< suite of greenhouse gases
     map<string,double> emissmap; //!< map of ghg emissions
     map<string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
@@ -83,6 +85,7 @@ public:
     void completeInit();
     virtual void toXML( ostream& out ) const;
     virtual void toDebugXML( const int period, ostream& out ) const;
+    void initCalc( );
     void applycarbontax( const string& regionName, const double tax); // apply carbon tax to appropriate technology
     // sets ghg tax to technologies
     void addghgtax( const string ghgname, const string regionName, const int per ); 
