@@ -212,7 +212,8 @@ void sector::setMarket( const string& regionName ) {
 	
 	Marketplace* marketplace = scenario.getMarketplace();
 	// name is resource name
-        // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
+    // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
+	
 	if( marketplace->setMarket( regionName, market, name, Market::NORMAL ) ) {
 		marketplace->setPriceVector( name, regionName, sectorprice );
 	}

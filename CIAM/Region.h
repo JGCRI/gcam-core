@@ -48,6 +48,7 @@ private:
 	vector<ghg_mrk*> ghgmarket; //! array of pointers to ghg market objects, container for constraints and emissions
 	vector<double> i_elas; //! income elasticity
 	vector<double> gnp_dol; //! regional gross national product
+	vector<double> calibrationGNPs; //! GNPs to calibrate to.
 	vector<double> gnp; //! normalized regional gross national product
 	vector<double> gnp_adj; //! regional gross national product adjusted for energy
 	vector<double> gnp_cap; //! regional gross national product per capita

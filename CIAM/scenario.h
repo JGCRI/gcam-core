@@ -33,8 +33,7 @@ class Scenario
 private:
 	Modeltime modeltime; //!< The modeltime for the scenario
 	World world; //!< The world object
-	Marketplace goodsMarketplace; //!< The goods and services marketplace.
-	Marketplace GDPMarketplace; //!< Marketplace for calibrating to GDP paths. 
+	Marketplace marketplace; //!< The goods and services marketplace.
 	string name; //!< Scenario name.
 	string scenarioSummary; //!< A summary of the purpose of the Scenario.
 
@@ -42,9 +41,7 @@ public:
 	Scenario();
 	const Modeltime* getModeltime() const;
 	const Marketplace* getMarketplace() const;
-	const Marketplace* getGDPMarketplace() const;
 	Marketplace* getMarketplace();
-	Marketplace* getGDPMarketplace();
 	const World* getWorld() const;
 	World* getWorld();
 	void clear();

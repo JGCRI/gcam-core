@@ -85,6 +85,7 @@ void Region::clear(){
 	gnp.clear();
 	gnp_adj.clear();
 	gnp_cap.clear();
+	calibrationGNPs.clear();
 	input.clear();
 	price_ser.clear();
 	carbontax.clear();
@@ -120,7 +121,7 @@ void Region::XMLParse( const DOMNode* node ){
 	//	TransSector* tempTransSector = 0;  //maw
 	ghg_mrk* tempGhgMrk = 0;
 	Configuration* conf = Configuration::getInstance();
-	
+
 	// make sure we were passed a valid node.
 	assert( node );
 	
@@ -144,6 +145,7 @@ void Region::XMLParse( const DOMNode* node ){
 		}
 		else if( nodeName == "demographics" ){
 			population.XMLParse( curr ); // only one demographics object.
+			population.setCalibrationMarkets( name );
 		}
 		else if( nodeName == "depresource" ){
 			tempResource = new DepletableResource();
@@ -209,15 +211,18 @@ void Region::XMLParse( const DOMNode* node ){
 				currChild = nodeListChild->item( j );
 				nodeNameChild = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
 				if(nodeNameChild == "GNP") {
-					gnp_dol.push_back( XMLHelper<double>::getValue( currChild ) );
+					calibrationGNPs.push_back( XMLHelper<double>::getValue( currChild ) );
 				}
 				else if(nodeNameChild == "incomeelasticity") {
 					i_elas.push_back( XMLHelper<double>::getValue( currChild ) );
 				}
 			}
+
 		}
 	}
 	
+	gnp_dol[ 0 ] = calibrationGNPs[ 0 ];
+
 	numResources = resources.size();
 	nossec = supplysector.size();
 	nodsec = demandsector.size();
@@ -364,6 +369,9 @@ void Region::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( nodsec, "nodsec", out );
 	XMLWriteElement( noregmrks, "noregmrks", out );
 	XMLWriteElement( gnp[ period ], "gnp", out );
+	XMLWriteElement( gnp_cap[ period ], "gnpPerCapita", out );
+	XMLWriteElement( gnp_dol[ period ], "gnpDollarValue", out);
+	XMLWriteElement( calibrationGNPs[ period ], "calibrationGNPs", out );
 	XMLWriteElement( gnp_adj[ period ], "gnp_adj", out );
 	XMLWriteElement( input[ period ], "input", out );
 	XMLWriteElement( price_ser[ period ], "price_ser", out );
@@ -445,6 +453,7 @@ void Region::initperXML() {
 	gnp.resize(maxper); // normalized regional gross national product
 	gnp_adj.resize(maxper); // regional gross national product adjusted for energy
 	gnp_cap.resize(maxper); // regional gross national product per capita
+	gnp_dol.resize(maxper); 
 	input.resize(maxper); // total fuel and energy consumption
 	price_ser.resize(maxper); // aggregate price for demand services
 	carbontaxpaid.resize(maxper); // total regional carbon taxes paid
@@ -605,35 +614,32 @@ void Region::finalsupply(int per) {
 }
 
 //! Calculate regional gnp.
-void Region::calc_gnp(int per) {
+void Region::calc_gnp( int per ) {
+	const Marketplace* marketplace = scenario.getMarketplace();
 	const Modeltime* modeltime = scenario.getModeltime();
+	double labprd = 0;
+	const int baseYear = modeltime->getstartyr();
+	const int basePer = modeltime->getyr_to_per(baseYear);
+	const string goodName = "GDP";
 
-	double labprd=0;
-	int baseYear = modeltime->getstartyr();
-	int basePer = modeltime->getyr_to_per(baseYear);
-	
-	if (per == modeltime->getyr_to_per(baseYear)) {
-		gnp[per] = 1.0; // normalize to 1975
+	if ( per == modeltime->getyr_to_per( baseYear ) ) {
+		gnp[ per ] = 1.0; // normalize to 1975
 	}
 	else {
-		// 1 + labor productivity growth rate
-		labprd = 1 + population.labor(per); // return labor productivity gr
-		//double pop1 = population.total(per-1);
-		//double pop2 = population.total(per-2);
-		double pop1 = population.getlaborforce(per);
-		double pop2 = population.getlaborforce(per-1);
-		double tlab = pow(labprd,modeltime->gettimestep(per));
-		//gnp[per] = gnp_adj[per-1]*pow(labprd,Years)
-		//*population.total(per-1)/population.total(per-2);
-		gnp[per] = gnp[per-1] * tlab * (pop1/pop2);
+		double currentLF = population.getlaborforce( per );
+		double lastLF = population.getlaborforce( per - 1 );
+		double tlab = marketplace->showprice( goodName, name, per );
+		gnp[ per ] = gnp[ per - 1 ] * tlab * ( currentLF / lastLF );
 		if (gnp[per] == 0) {
-			cerr << "error with GNP calculation:  pop1: " << pop1
-				<< "  pop2: " << pop2 << "  lab: " << tlab << "\n";
+			cerr << "error with GNP calculation:  currentLF: " << currentLF
+				<< "  lastLF: " << lastLF << "  lab: " << tlab << "\n";
 		}
 	}
+
+
 	// gnp per capita normalized
 	// correct using energy adjusted gnp*****
-	gnp_cap[per] = gnp[per]*population.total(basePer)/population.total(per);
+	gnp_cap[ per ] = gnp[ per ] * population.total( basePer ) / population.total( per );
 }
 
 //! Calculate a forward looking gnp.
@@ -645,9 +651,9 @@ const vector<double> Region::calcFutureGNP() const {
 	double lastLaborForce = 0;
 	double tlab = 0;
 	
-	assert( gnp_dol.size() > 1 );
+	assert( calibrationGNPs.size() > 1 );
 
-	const double baseYearConversion = gnp_dol[ 1 ] / gnp_dol[ 0 ];
+	const double baseYearConversion = calibrationGNPs[ 1 ] / calibrationGNPs[ 0 ];
 
 	gnps.resize( modeltime->getmaxper() );
 	
@@ -656,8 +662,8 @@ const vector<double> Region::calcFutureGNP() const {
 			gnps[ 0 ] = 1.0;
 		}
 		
-		else if ( gnp_dol.size() > period && gnp_dol[ period ] > 0 ){
-			gnps[ period ] = gnp_dol[ period ] / baseYearConversion;
+		else if ( calibrationGNPs.size() > period && calibrationGNPs[ period ] > 0 ){
+			gnps[ period ] = calibrationGNPs[ period ] / baseYearConversion;
 		}
 		else {
 			laborProd = 1 + population.labor( period );
@@ -670,7 +676,7 @@ const vector<double> Region::calcFutureGNP() const {
 	}
 	
 	for ( vector<double>::iterator iter = gnps.begin(); iter != gnps.end(); iter++ ){
-		*iter *= baseYearConversion / 1000;
+		*iter *= baseYearConversion / 1000000;
 	}
 	return gnps;
 }
@@ -733,6 +739,9 @@ void Region::calcEndUsePrice( const int period ) {
 //! Adjust regional gnp for energy.
 void Region::adjust_gnp(int per) {
 	const Modeltime* modeltime = scenario.getModeltime();
+	Marketplace* marketplace = scenario.getMarketplace();
+	const string goodName = "GDP";
+
 	const int baseYear = modeltime->getstartyr();
 	double tempratio;
 	if (per<=modeltime->getyr_to_per(1990)) {
@@ -743,14 +752,23 @@ void Region::adjust_gnp(int per) {
 		// energy to gnp feedback elasticity
 		tempratio = price_ser[per]/price_ser[per-1];
 		try {
-			gnp_adj[per] = gnp[per]*pow(tempratio,EnergyGNPElas);}
-		catch(...) {
+			gnp_adj[per] = gnp[per]*pow(tempratio,EnergyGNPElas);
+      } catch(...) {
 			cerr << "Error calculating gnp_adj in region.adjust_gnp()\n";
 		}
 	}
+	
 	// calculate dollar value gnp using base year dollar value GNP
-	if (per>modeltime->getyr_to_per(baseYear)) gnp_dol[per] = 
-		gnp_adj[per]*gnp_dol[modeltime->getyr_to_per(baseYear)];
+	if ( per > modeltime->getyr_to_per( baseYear ) ){ 
+		gnp_dol[ per ] = gnp_adj[ per ] * gnp_dol[ modeltime->getyr_to_per( baseYear ) ];
+	}
+
+	// Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.	
+	if( calibrationGNPs.size() > per && calibrationGNPs[ per ] > 0 ){ 
+		marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
+		marketplace->setsupply( goodName, name, gnp_dol[ per ], per );
+		marketplace->setMarketToSolve( goodName, name );
+	}
 }
 
 //! Calculate regional demand for energy and other goods for all sectors.

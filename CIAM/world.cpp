@@ -205,17 +205,6 @@ void World::initper()
 	ghgs.resize(maxper+2); // structure containing ghg emissions
 }
 
-//! calculate regional gnps
-void World::gnp(int per)
-{
-	for (int i=0;i<noreg;i++) {
-		// calculate gnp
-		region[i]->calc_gnp(per);
-		// calculate GNP using labor force participation and labor productivity rates
-		//region[i]->calcGNPlfp(per);
-	}
-}
-
 //! calculate supply and demand and emissions for all regions
 /*! This is the main action loop for the model. 
 Uses "MiniCAM" style logic where primary costs are calculated, 
@@ -242,7 +231,9 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
 	}
 
 	for ( vector<int>::iterator i = regionNumbersToSolve.begin(); i != regionNumbersToSolve.end(); i++ ) {
-	
+		
+		// calculate regional GNP
+		region[ *i ]->calc_gnp( per );
 		// apply carbon taxes to appropriate technologie
 		region[ *i ]->applycarbontax(per);
 		// set regional GHG constraint to market supply

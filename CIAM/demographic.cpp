@@ -244,3 +244,20 @@ void demographic::MCoutput( const string& regname ) {
 		temp[i] = laborprod[modeltime->getmod_to_pop(i)];
 	dboutput4(regname,"General","Labor Prod","GrowthRate","per yr",temp);	
 }
+
+//! Create calibration markets
+void demographic::setCalibrationMarkets( const string& regionName ) {
+	
+	const string goodName = "GDP";
+	const Modeltime* modeltime = scenario.getModeltime();
+	Marketplace* marketplace = scenario.getMarketplace();
+
+	if ( marketplace->setMarket( regionName, regionName, goodName, Market::CALIBRATION ) ) {
+		vector<double> tempLFPs( modeltime->getmaxper() );
+		for( int i = 0; i < modeltime->getmaxper(); i++ ){
+			int popPeriod = modeltime->getmod_to_pop( i );
+			tempLFPs[ i ] = pow( 1 + laborprod[ popPeriod ], modeltime->gettimestep( i ) );
+		}
+		marketplace->setPriceVector( goodName, regionName, tempLFPs );
+	}
+}

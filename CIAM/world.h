@@ -47,7 +47,6 @@ public:
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
 	void initper(void); // sets number of periods in World
-	void gnp(int per); // gnp calculation for each region
 	void calc( const int per, const vector<string>& regionsToSolve = vector<string>( 0 ) ); // model calculation for each region
 	void updateSummary(int per); // update summaries for reporting
 	void sumpop(int per); // sum global population

@@ -47,11 +47,12 @@ public:
 	const vector<double>& getTotalPopVec() const; 
 	// return labor force (actual working)
 	double getlaborforce( const int per ) const;
-	void show(int per);
+	void show( int per );
 	// outputs to file
-	void outputfile(const string& regname ); 
+	void outputfile( const string& regname ); 
 	// MiniCAM outputs to file
-	void MCoutput(const string& regname ); 
+	void MCoutput( const string& regname ); 
+	void setCalibrationMarkets( const string& regionName );
 };
 
 #endif // _DEMOGRAPHIC_H_

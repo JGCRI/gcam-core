@@ -47,24 +47,14 @@ const Modeltime* Scenario::getModeltime() const {
 	return &modeltime;
 }
 
-//! Return a constant reference to the goods and services goodsMarketplace.
+//! Return a constant reference to the goods and services marketplace.
 const Marketplace* Scenario::getMarketplace() const {
-	return &goodsMarketplace;
+	return &marketplace;
 }
 
-//! Return a constant reference to the goodsMarketplace used for GDP calibration.
-const Marketplace* Scenario::getGDPMarketplace() const {
-	return &GDPMarketplace;
-}
-
-//! Return a mutable reference to the goods and services goodsMarketplace.
+//! Return a mutable reference to the goods and services marketplace.
 Marketplace* Scenario::getMarketplace() {
-	return &goodsMarketplace;
-}
-
-//! Return a mutable reference to the goods and services goodsMarketplace.
-Marketplace* Scenario::getGDPMarketplace() {
-	return &GDPMarketplace;
+	return &marketplace;
 }
 
 //! Return a constant reference to the world object.
@@ -199,14 +189,13 @@ void Scenario::run(){
 	// Start Model run for the first period.
 	int per = 0;
 	
-	goodsMarketplace.initXMLPrices(); // initialize prices
-	goodsMarketplace.nulldem( per ); // null market demands
-	goodsMarketplace.nullsup( per ); // null market supply
+	marketplace.initXMLPrices(); // initialize prices
+	marketplace.nulldem( per ); // null market demands
+	marketplace.nullsup( per ); // null market supply
 	
 	// Write scenario root element for the debugging.
 	toDebugXMLOpen( per, xmlDebugStream );
 	
-	world.gnp( per ); // Calculate regional gnps
 	world.calc( per ); // Calculate supply and demand
 	world.updateSummary( per ); // Update summaries for reporting
 	world.sumpop( per ); // Calculate global population
@@ -232,13 +221,12 @@ void Scenario::run(){
 		sdcurvefile << "Market,Name,Price,Supply,Demand," << endl;
 		
 		// Run the iteration of the model.
-		goodsMarketplace.nulldem( per ); // initialize market demand to null
-		goodsMarketplace.nullsup( per ); // initialize market supply to null
-		goodsMarketplace.storeto_last( per ); // save last period's info to stored variables
-		goodsMarketplace.init_to_last( per ); // initialize to last period's info
-		world.gnp( per ); // call to calculate regional gnps
+		marketplace.nulldem( per ); // initialize market demand to null
+		marketplace.nullsup( per ); // initialize market supply to null
+		marketplace.storeto_last( per ); // save last period's info to stored variables
+		marketplace.init_to_last( per ); // initialize to last period's info
 		world.calc( per ); // call to calculate supply and demand
-		goodsMarketplace.solve( per ); // solution uses Bisect and NR routine to clear markets
+		marketplace.solve( per ); // solution uses Bisect and NR routine to clear markets
 		world.updateSummary( per ); // call to update summaries for reporting
 		world.sumpop( per ); // call to calculate global population
 		world.emiss_ind( per ); // call to calculate global emissions
