@@ -19,6 +19,8 @@
 	<Bools>
 		<Value name="minicam">1</Value>
 		<Value name="timestamp">0</Value>
+		<Value name="agSectorActive">0</Value>
+		<Value name="simulActive">0</Value>
 	</Bools>
 	<Ints/>
 	<Doubles/>
