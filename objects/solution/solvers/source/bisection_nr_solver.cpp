@@ -21,37 +21,40 @@
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
-#include "util/logger/include/logger.h"
-#include "util/logger/include/logger_factory.h"
+#include "containers/include/world.h"
+#include "util/logger/include/ilogger.h"
+#include "solution/util/include/calc_counter.h"
 
 using namespace std;
 
 extern Scenario* scenario;
-extern ofstream bugoutfile, logfile;
 
 //! Constructor
-BisectionNRSolver::BisectionNRSolver( Marketplace* marketplaceIn, World* worldIn ):Solver( marketplaceIn, worldIn ) {
-    // Setup configuration options.
-    const Configuration* conf = Configuration::getInstance();
-    bugTracking = conf->getBool( "bugTracking" );
-    bugMinimal = conf->getBool( "bugMinimal" );
-    trackED = conf->getBool( "trackMaxED" );
-
+BisectionNRSolver::BisectionNRSolver( Marketplace* aMarketplace, World* aWorld ):Solver( aMarketplace, aWorld ){
     // Construct components.
-    logNewtonRaphson = SolverComponent::getSolverComponent( "LogNewtonRaphson", marketplace, world, &calcCounter );
-    bisectAll = SolverComponent::getSolverComponent( "BisectAll", marketplace, world, &calcCounter );
-    bisectOne = SolverComponent::getSolverComponent( "BisectOne", marketplace, world, &calcCounter );
-    logNewtonRaphsonSaveDeriv = SolverComponent::getSolverComponent( "LogNewtonRaphsonSaveDeriv", marketplace, world, &calcCounter );
+    mCalcCounter.reset( new CalcCounter() );
+    mLogNewtonRaphson = SolverComponent::getSolverComponent( "LogNewtonRaphson", marketplace, world, mCalcCounter.get() );
+    mBisectAll = SolverComponent::getSolverComponent( "BisectAll", marketplace, world, mCalcCounter.get() );
+    mBisectOne = SolverComponent::getSolverComponent( "BisectOne", marketplace, world, mCalcCounter.get() );
+    if( scenario->getWorld()->getCalibrationSetting() ){
+        mLogNewtonRaphsonSaveDeriv = SolverComponent::getSolverComponent( "LogNewtonRaphsonSaveDeriv", marketplace, world, mCalcCounter.get() );
+    }
 }
 
 //! Destructor
 BisectionNRSolver::~BisectionNRSolver() {
 }
 
+//! Get the solver name.
+const string& BisectionNRSolver::getName(){
+    const static string name = "BisectionNRSolver";
+    return name;
+}
+
 //! Initialize the solver at the beginning of the model.
 void BisectionNRSolver::init() {
     // Set the pointer into the world for the CalcCounter so that it is automatically updated.
-    world->setCalcCounter( &calcCounter );
+    world->setCalcCounter( mCalcCounter.get() );
 }
 
 /*! \brief Solution method to solve all markets for one period.
@@ -79,59 +82,63 @@ bool BisectionNRSolver::solve( const int period ) {
     static const int MAX_CALCS_BISECT_ONE = 35;
     static const int MAX_CALCS_NR = 500; // Should be based on number of markets.
     static const unsigned int CAL_REPEAT_LIMIT = 20;
-    Configuration* conf = Configuration::getInstance();
-    trackED = conf->getBool( "trackMaxED" ); //!< Get parameter to turn on (or not) solution mechanism tracking (to cout)
-
+ 
     // Create and initialize the SolutionInfoSet. 
     // This will fetch the markets to solve and update the prices, supplies and demands.
     SolverInfoSet sol( marketplace );
     sol.init( period );
     sol.updateSolvable( false );
+    
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::DEBUG );
+    mainLog << "Starting Solution. Solving for " << sol.getNumSolvable() << " markets." << endl;
 
-    logfile << ",Starting Solution. Solving for " << sol.getNumSolvable() << " markets." << endl;
-    sol.printMarketInfo( "Begin Solve", calcCounter.getPeriodCount() );
+    ILogger& singleLog = ILogger::getLogger( "single_market_log" );
+    mainLog.setLevel( ILogger::DEBUG );
+    sol.printMarketInfo( "Begin Solve", mCalcCounter->getPeriodCount(), singleLog );
     
     // if no markets to solve, break out of solution.
-    if ( sol.getNumSolvable() == 0 ) {
-        cout << "Model solved with last period's prices"; 
+    if ( sol.getNumSolvable() == 0 ){
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Model solved with last period's prices." << endl;
         return true;
     }
-
-
-    // for debugging
-    if ( bugMinimal ) {
-        bugoutfile << "Solution() Begin. Per " << period << endl;
-        bugoutfile <<"Number of Markets: "<< sol.getNumSolvable() << endl;
-        bugoutfile <<"Solution Information Initialized: Left and Right values are same. "<< endl;
-        bugoutfile << sol << endl;
+    else if( period == 0 ){
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Period zero has solvable markets." << endl;
     }
 
+    // Print out extra debugging information.
+    ILogger& solverLog = ILogger::getLogger( "solver_log" );
+    solverLog.setLevel( ILogger::NOTICE );
+    solverLog << "Solution() Begin. Per " << period << endl;
+    solverLog << "Number of Markets: " << sol.getNumSolvable() << endl;
+    solverLog << "Solution Information Initialized: Left and Right values are the same." << endl;
+    
+    solverLog.setLevel( ILogger::DEBUG );
+    solverLog << sol << endl;
+
     // Initialize solver components
-    logNewtonRaphson->init( );
-    bisectAll->init( );
-    bisectOne->init( );
-    logNewtonRaphsonSaveDeriv->init();
+    mLogNewtonRaphson->init();
+    mBisectAll->init();
+    mBisectOne->init();
+    if( mLogNewtonRaphsonSaveDeriv.get() ){
+        mLogNewtonRaphsonSaveDeriv->init();
+    }
     
     // Loop is done at least once.
     do {
-        if ( bugTracking ) {
-            bugoutfile << "Solution() loop. N: " << calcCounter.getPeriodCount() << endl;
-        }
-
-        // Check if the brackets are correct. If not, reset.
-        sol.checkAndResetBrackets();
-        if( bugTracking ){
-            bugoutfile << "CheckBracket() called: Left and Right sides reinitialized if unbracketed. " << endl;
-        }
-        if( trackED ){
-            cout << "CheckBracket() called. Resetting left and right brackets." << endl;
-        }
+        solverLog.setLevel( ILogger::NOTICE );
+        solverLog << "Solution() loop. N: " << mCalcCounter->getPeriodCount() << endl;
+        solverLog.setLevel( ILogger::DEBUG );
+        solverLog << "Solution before BracketAll: " << endl;
+        solverLog << sol << endl;
 
         // Check if the solution is bracketed.
         if ( !sol.isAllBracketed() ) {
-            sol.printMarketInfo( "Begin Bracketing", calcCounter.getPeriodCount() );
+            singleLog << "Begin Bracketing" << mCalcCounter->getPeriodCount() << endl;
             SolverLibrary::bracket( marketplace, world, BRACKET_INTERVAL, sol, period );
-            sol.printMarketInfo( "End Bracketing", calcCounter.getPeriodCount() );
+            singleLog << "End Bracketing" << mCalcCounter->getPeriodCount() << endl;
             // If its not all bracketed, jump to the top of the loop.
             if ( !sol.isAllBracketed() ){
                 continue;
@@ -140,7 +147,7 @@ bool BisectionNRSolver::solve( const int period ) {
         
         // If the solution is not near, use bisect all.
         if( sol.getMaxRelativeExcessDemand( ED_SOLUTION_FLOOR ) > MIN_ED_FOR_BISECT_ALL ) {
-            solved = bisectAll->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_BISECT_ALL, sol, period ) == SolverComponent::SUCCESS ? true : false;
+            solved = mBisectAll->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_BISECT_ALL, sol, period ) == SolverComponent::SUCCESS ? true : false;
             if( solved ){
                 continue;
             }
@@ -148,98 +155,78 @@ bool BisectionNRSolver::solve( const int period ) {
 
         // If we are near the solution, call NR.
         if( sol.getMaxRelativeExcessDemand( ED_SOLUTION_FLOOR ) < MAX_REL_ED_FOR_NR ) {
-            // Debug output
-            if ( bugMinimal ) {
-                bugoutfile << endl << "Solution before NR_Ron: " << endl;
-                bugoutfile << sol << endl;
-            }
-
+            solverLog.setLevel( ILogger::DEBUG );
+            solverLog << "Solution before NewtonRaphson: " << endl;
+            solverLog << sol << endl;
             // Call LogNewtonRaphson. Ignoring return code. 
-            logNewtonRaphson->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_NR, sol, period );
+            mLogNewtonRaphson->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_NR, sol, period );
 
-            // Debug output
-            if ( bugMinimal || bugTracking ) { 
-                bugoutfile << "After Ron_NR "<< calcCounter.getPeriodCount() << endl;
-            }
-            if ( bugMinimal ) {
-                bugoutfile << endl << "Solution after NR_Ron: " << endl;
-                bugoutfile << sol << endl;
-            }
+            solverLog.setLevel( ILogger::DEBUG );
+            solverLog << "Solution after NewtonRaphson: " << endl;
+            solverLog << sol << endl;
         }
         
         // Try bisecting a single market.
         if( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
-            bisectOne->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_BISECT_ONE, sol, period );
+            mBisectOne->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_BISECT_ONE, sol, period );
         }
         
         // If we are near the solution, call NR.
         if( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) && sol.getMaxRelativeExcessDemand( ED_SOLUTION_FLOOR ) < MAX_REL_ED_FOR_NR ) {
-            // Debug output
-            if ( bugMinimal ) {
-                bugoutfile << endl << "Solution before NR_Ron: " << endl;
-                bugoutfile << sol << endl;
-            }
+            solverLog.setLevel( ILogger::DEBUG );
+            solverLog << "Solution before NewtonRaphson: " << endl;
+            solverLog << sol << endl;
 
             // Call LogNewtonRaphson. Ignoring return code. 
-            logNewtonRaphson->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_NR, sol, period );
+            mLogNewtonRaphson->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_NR, sol, period );
 
-            // Debug output
-            if ( bugMinimal || bugTracking ) { 
-                bugoutfile << "After Ron_NR "<< calcCounter.getPeriodCount() << endl;
-            }
-            if ( bugMinimal ) {
-                bugoutfile << endl << "Solution after NR_Ron: " << endl;
-                bugoutfile << sol << endl;
-            }
+            solverLog.setLevel( ILogger::DEBUG );
+            solverLog << "Solution after NewtonRaphson: " << endl;
+            solverLog << sol << endl;
         }
         
         // Try bisecting a single market.
         if( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
-            bisectOne->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_BISECT_ONE, sol, period );
+            mBisectOne->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_BISECT_ONE, sol, period );
         }
-        
-        
-   // Determine if the model has solved
-    } while ( ( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ) 
-               && calcCounter.getPeriodCount() < MAX_CALCS );
-
-    // Make sure calibration was achieved
-    // The use of the logNewtonRaphsonSaveDeriv solution component significantly cuts down on the time it takes to achieve final calibration
+        // Determine if the model has solved. 
+    } while ( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) && mCalcCounter->getPeriodCount() < MAX_CALCS );
+    
+   // Make sure calibration was achieved
     unsigned int calCount = 0;
     while( ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false ) || !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ) && calCount < CAL_REPEAT_LIMIT ){
-        logfile << "Repeating to calibrate. N = " << calcCounter.getPeriodCount() <<  endl;
+        solverLog.setLevel( ILogger::NOTICE );
+        solverLog << "Repeating to calibrate. N = " << mCalcCounter->getPeriodCount() <<  endl;
         world->calc( period );
-        logNewtonRaphsonSaveDeriv->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_NR, sol, period );
+        mLogNewtonRaphsonSaveDeriv->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_NR, sol, period );
         ++calCount;
     }
-   
-   if ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false) ) {
-        cout << "Model did not calibrate sucesfully in period: " << period << endl;
-        logfile << "Model did not calibrate sucesfully in period: " << period << endl;
-   }
 
-    if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
-        cout << "Model solved normally. Iterations this period: " << calcCounter.getPeriodCount() << ". Total iterations: "<< calcCounter.getTotalCount() << endl;
-        logfile << ",Model solved normally: worldCalcCount = " << calcCounter.getPeriodCount() << "; Cumulative = "<< calcCounter.getTotalCount() << endl;
-        return world->isAllCalibrated( period, CALIBRATION_ACCURACY, true); // print out calibration warnings this time.
-    }
-    else { // SolverComponent::FAILURE:
-        cout << "Model did not solve within set iteration " << calcCounter.getPeriodCount() << endl;
-        logfile << ",Model did not solve within set iteration " << calcCounter.getPeriodCount() << endl;
-        logfile << sol << endl;
-
-        // Print unsolved markets.
-        sol.printUnsolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR );
-
-        const Configuration* conf = Configuration::getInstance();
-        if( conf->getBool( "debugFindSD" ) ){
-            string logName = Configuration::getInstance()->getFile( "supplyDemandOutputFileName", "SDCurves.csv" );
-            Logger* sdLog = LoggerFactory::getLogger( logName );
-            LOG( sdLog, Logger::WARNING_LEVEL ) << "Supply and demand curves for markets that did not solve in period: " << period << endl;
-            sol.findAndPrintSD( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, world, marketplace, period, sdLog );
-        }
-        world->isAllCalibrated( period, CALIBRATION_ACCURACY, true); // print out calibration warnings.
+    mainLog.setLevel( ILogger::ERROR );
+    if ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, true ) ) {
+        mainLog << "Model did not calibrate sucesfully in period: " << period << endl;
         return false;
     }
+
+    if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
+        mainLog << "Model solved normally. Iterations this period: " << mCalcCounter->getPeriodCount() << ". Total iterations: "<< mCalcCounter->getTotalCount() << endl;
+        return true;
+    }
+
+    mainLog << "Model did not solve within set iteration " << mCalcCounter->getPeriodCount() << endl;
+    solverLog << "Printing solution information after failed attempt to solve." << endl;
+    solverLog << sol << endl;
+
+    // Print unsolved markets.
+    sol.printUnsolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, mainLog );
+
+    if( Configuration::getInstance()->getBool( "debugFindSD" ) ){
+        string logName = Configuration::getInstance()->getFile( "supplyDemandOutputFileName", "supply_demand_curves" );
+        ILogger& sdLog = ILogger::getLogger( logName );
+        sdLog.setLevel( ILogger::WARNING );
+        sdLog << "Supply and demand curves for markets that did not solve in period: " << period << endl;
+        sol.findAndPrintSD( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, world, marketplace, period, sdLog );
+    }
+    return false;
 }
 
