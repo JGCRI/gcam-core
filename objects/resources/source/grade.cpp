@@ -28,55 +28,39 @@ const string Grade::XML_NAME = "grade";
 
 //! Default constructor
 Grade::Grade() {
-    initElementalMembers();
+    available = 0;
+    extractCost = 0; 
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     totalCost.resize( maxper );
 }
 
-//! Clear member variables
-void Grade::clear() {
-    initElementalMembers();
-    name = "";
-    totalCost.clear();
-}
-
-//! Initialize elemental members
-void Grade::initElementalMembers() {
-    available = 0;
-    extractCost = 0; 
-}
-
 //! Initialize data members from XML.
 void Grade::XMLParse( const DOMNode* tempNode ) {
-    DOMNodeList* tempNodeLst;
-    DOMNode* tNode = 0;
-    string tNodeName;
-    
     /*! \pre assume we are passed a valid node. */
     assert( tempNode );
-    
+
     // get the name attribute.
     name = XMLHelper<string>::getAttrString( tempNode, "name" );
-    tempNodeLst = tempNode->getChildNodes();
-    
-    for( int i = 0; i < static_cast<int>( tempNodeLst->getLength() ); i++ ) {
-        tNode = tempNodeLst->item( i );
-        tNodeName = XMLHelper<string>::safeTranscode( tNode->getNodeName() );
-        
+    DOMNodeList* tempNodeLst = tempNode->getChildNodes();
+
+    for( unsigned int i = 0; i < tempNodeLst->getLength(); ++i ) {
+        DOMNode* tNode = tempNodeLst->item( i );
+        string tNodeName = XMLHelper<string>::safeTranscode( tNode->getNodeName() );
+
         if( tNodeName == "#text" ) {
-           continue;
+            continue;
         }
-        
+
         else if( tNodeName == "available" ){
             available = XMLHelper<double>::getValue( tNode );
         }
         else if( tNodeName == "extractioncost" ){
             extractCost = XMLHelper<double>::getValue( tNode );
         }
-         else {
+        else {
             cout << "Unrecognized text string: " << tNodeName << " found while parsing grade." << endl;
-         }
+        }
     }
 }
 
@@ -142,7 +126,7 @@ const std::string& Grade::getXMLNameStatic() {
 }
 
 //! Total cost of each grade.
-void Grade::calcCost(  const double tax, const double cumTechChange, const double environCost, const int per ) {
+void Grade::calcCost( const double tax, const double cumTechChange, const double environCost, const int per ) {
     totalCost[per] = ( extractCost + environCost ) / cumTechChange + tax;
 }
 
