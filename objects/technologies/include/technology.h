@@ -70,7 +70,8 @@ protected:
     std::map<std::string,double> emissmap; //!< map of ghg emissions
     std::map<std::string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
     std::map<std::string,double> emindmap; //!< map of indirect ghg emissions
-    
+    std::string note; //!< input data notation for this technology
+	 
     // attributes for hydroelectricity only!
     double resource; //!< available hydro resource in energy units
     double A; //!< logit function shape parameter

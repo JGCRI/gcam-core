@@ -158,6 +158,7 @@ void technology::initElementalMembers(){
     calInputValue = 0;
     calOutputValue = 0;
     carbonValue = 0;
+	 note = "";
 }
 
 /*! \brief initialize technology with xml data
@@ -256,6 +257,9 @@ void technology::XMLParse( const DOMNode* node )
         else if( nodeName == "GHG_INPUT" ){
             parseContainerNode( curr, ghg, ghgNameMap, new GhgInput() );
         }
+        else if( nodeName == "note" ){
+            note = XMLHelper<string>::getValue( curr );
+        }
         // parse derived classes
         else {
             XMLDerivedClassParse( nodeName, curr );
@@ -320,6 +324,9 @@ void technology::toXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( resource, "resource", out, tabs, 0 );
     XMLWriteElementCheckDefault( A, "A", out, tabs, 0 );
     XMLWriteElementCheckDefault( B, "B", out, tabs, 0 );
+    if ( note != "") { 
+		XMLWriteElement( note, "note", out, tabs );
+	 }
     
     for( vector<Ghg*>::const_iterator ghgIter = ghg.begin(); ghgIter != ghg.end(); ghgIter++ ){
         ( *ghgIter )->toXML( out, tabs );
@@ -438,11 +445,11 @@ void technology::calcCost( const string regionName, const int per )
 		fuelprice = 0;
 	 }
 	 
-    // code for integrating technical change
-    //techcost = fprice/eff/pow(1+techchange,modeltime->gettimestep(per)) + necost;
-    // fMultiplier and pMultiplier are initialized to 1 for those not read in
-    fuelcost = ( fuelprice * fMultiplier ) / eff;
-    techcost = ( fuelcost + necost ) * pMultiplier;
+	// code for integrating technical change
+	//techcost = fprice/eff/pow(1+techchange,modeltime->gettimestep(per)) + necost;
+	// fMultiplier and pMultiplier are initialized to 1 for those not read in
+	fuelcost = ( fuelprice * fMultiplier ) / eff;
+	techcost = ( fuelcost + necost ) * pMultiplier;
 	techcost += carbonValue;
     
     /* \post fuelcost and techcost are greater than or equal to 0. */
