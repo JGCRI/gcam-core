@@ -1437,7 +1437,7 @@ void Region::dbOutput() const {
     for (m=0;m<maxper;m++) {
         temp[m] = getTotFinalEnergy(m);
     }
-    dboutput4(name,"Final Energy Cons","total","","EJ",temp);
+    dboutput4(name,"Final Energy Cons","total","total","EJ",temp);
     
     // regional fuel consumption (primary and secondary) by fuel type
     map<string,double> tfuelmap = summary[0].getfuelcons();
