@@ -348,7 +348,7 @@ void DemandSector::aggdemand( const GDP* gdp, const int period ) {
     }
     else {
         const int normPeriod = modeltime->getyr_to_per(1990);
-		  const int basePer = modeltime->getyr_to_per( modeltime->getstartyr() );
+        const int basePer = modeltime->getyr_to_per( modeltime->getstartyr() );
         priceRatio = getPrice( period ) / getPrice( normPeriod );
         // perCapitaBased is true or false
 		  
@@ -356,7 +356,7 @@ void DemandSector::aggdemand( const GDP* gdp, const int period ) {
 		  // If perCapitaBased, service_demand = B * P^r * GDPperCap^r * Population.
 		  // All values are relative to the base year
         if ( perCapitaBased ) { // demand based on per capita GDP
-				double scaledGDPperCap = gdp->getScaledGDPperCap( period );
+            double scaledGDPperCap = gdp->getScaledGDPperCap( period );
             ser_dmd = base*pow(priceRatio,pelasticity)*pow(scaledGDPperCap,iElasticity[period]);
             // need to multiply above by population ratio (current population/base year
             // population).  This ratio provides the population ratio.
