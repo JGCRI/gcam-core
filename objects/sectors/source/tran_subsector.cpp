@@ -46,22 +46,6 @@ TranSubsector::TranSubsector( const string regionName, const string sectorName )
     baseScaler = 0;
 }
 
-
-//! Clear member variables.
-void TranSubsector::clear()
-{
-    // call super clear
-    Subsector::clear();
-    
-    // now clear own data.
-    speed.clear();
-    popDenseElasticity.clear();
-    servicePrice.clear(); 
-    timeValue.clear(); 
-    generalizedCost.clear(); 
-    loadFactor.clear(); 
-}
-
 //! Parses any input variables specific to derived classes
 void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
     
@@ -180,27 +164,20 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
 
  	 // Convert GDPperCap into dollars (instead of 1000's of $'s)
     // GDP value at this point in the code does not include energy feedback calculation for this year, so is, therefore, approximate
-    timeValue[period] = gdp->getApproxGDPperCap( period ) * 1000 /(hoursPerWeek*weeksPerYear)/speed[period] ;
-
-    const double dollarGDP75 = 3.46985e+12;
-    const double population75 = 2.16067e+8;
-    double temp = gdp_cap*(dollarGDP75/population75)/(hoursPerWeek*weeksPerYear)/speed[period] ;
-    cout << (timeValue[period]-temp) << " : " << timeValue[period] << endl;
+    timeValue[period] = gdp->getApproxGDPperCap( period ) * 1000 /(hoursPerWeek*weeksPerYear)/speed[period];
 	 
     generalizedCost[period] = servicePrice[period] + timeValue[period] ;
     
-    /*!  Compute calibrating scaler if first period, otherwise use computed
+    /*  Compute calibrating scaler if first period, otherwise use computed
     scaler in subsequent periods */
     
     if(period==0) {
         baseScaler = output[0] / shrwts[period] * pow(generalizedCost[period], -lexp[period])
-            * pow(gdp_cap, -fuelPrefElasticity[period])
-            * pow(popDensity, -popDenseElasticity[period]);
+            * pow(gdp_cap, -fuelPrefElasticity[period]) * pow(popDensity, -popDenseElasticity[period]);
     }
 
-    share[period]  = baseScaler * shrwts[period] * pow(generalizedCost[period], lexp[period])
-        * pow(gdp_cap, fuelPrefElasticity[period])
-        * pow(popDensity, popDenseElasticity[period]);
+    share[period] = baseScaler * shrwts[period] * pow(generalizedCost[period], lexp[period])
+        * pow(gdp_cap, fuelPrefElasticity[period]) * pow(popDensity, popDenseElasticity[period]);
     
 }
 

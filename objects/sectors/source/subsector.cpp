@@ -85,40 +85,16 @@ Subsector::Subsector( const string regionName, const string sectorName ){
 * \author Josh Lurz
 */
 Subsector::~Subsector() {
-    
+    clear();
+}
+
+//! Clear the Subsector member variables.
+void Subsector::clear(){
     for ( vector< vector< technology* > >::iterator outerIter = techs.begin(); outerIter != techs.end(); outerIter++ ) {
         for( vector< technology* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
             delete *innerIter;
         }
     }
-}
-
-//! Clear the Subsector member variables.
-void Subsector::clear(){
-    notech = 0;
-    tax = 0;
-    basesharewt = 0;
-	CO2EmFactor = 0;
-    name = "";
-    unit = "";
-    fueltype = "";
-    
-    
-    // clear the vectors.
-    techs.clear();
-    hydro.clear();
-    shrwts.clear();
-    lexp.clear();
-    fuelPrefElasticity.clear();
-    share.clear();
-    input.clear();
-    pe_cons.clear();
-    subsectorprice.clear();
-    fuelprice.clear();
-    output.clear();
-    carbontaxpaid.clear();
-    summary.clear();
-    
 }
 
 /*! \brief Returns sector name
@@ -674,20 +650,6 @@ double Subsector::getwtfuelprice(int period) const
     return tempShare*fuelprice[period];
 }
 
-/*! \brief Sets ghg tax from the market to individual technologies.
-*
-* \author Sonny Kim, Josh Lurz
-* \param regionName region name
-* \param ghgname name of the ghg to apply tax to
-* \param period model period
-*/
-void Subsector::addGhgTax( const string& ghgname, const int period ) {
-    for ( int i=0 ;i<notech; i++ ) {
-        techs[ i ][ period ]->addGhgTax( ghgname, regionName, sectorName, period );
-    }
-}
-
-
 /*! \brief calculate technology shares within Subsector
 *
 * Calls technology objects to first calculate cost, then their share. Follos this by normalizing shares. 
@@ -703,7 +665,7 @@ void Subsector::calcTechShares( const int period ) {
     
     for (i=0;i<notech;i++) {
         // calculate technology cost
-        techs[i][period]->calcCost( regionName, period );
+        techs[i][period]->calcCost( regionName, sectorName, period );
         // determine shares based on technology costs
         techs[i][period]->calcShare( regionName,period );
         sum += techs[i][period]->getShare();
@@ -1399,11 +1361,7 @@ void Subsector::csvOutputFile() const {
             temp[m] = techs[i][m]->getTechcost();
         }
         fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"price","$/GJ",temp);
-        // ghg tax applied to technology
-        for (m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getCarbontax();
-        }
-        fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"C tax","$/TC",temp);
+        
         // ghg tax paid
         for (m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getCarbontaxpaid();
@@ -1616,17 +1574,11 @@ void Subsector::MCoutputC() const {
             }
             dboutput4(regionName,"Tech Share",sectorName,str,"%",temp);
             
-			// ghg tax applied to technology
-            for (m=0;m<maxper;m++) {
-                temp[m] = techs[i][m]->getCarbontax();
-            }
-            dboutput4(regionName,"C Tax",sectorName,str,"$/TC",temp);
-
 			// ghg tax and storage cost applied to technology if any
             for (m=0;m<maxper;m++) {
-                temp[m] = techs[i][m]->getCarbonValue();
+                temp[m] = techs[i][m]->getTotalGHGCost();
             }
-            dboutput4(regionName,"C Value",sectorName,str,"$/gj",temp);
+            dboutput4(regionName,"Total GHG Cost",sectorName,str,"$/gj",temp);
 
 			// ghg tax paid
             for (m=0;m<maxper;m++) {
