@@ -318,7 +318,7 @@ void Scenario::printGraphs( const int period ) const {
    fileNameBuffer >> fileName;
 
    graphStream.open( fileName.c_str() );
-   util::checkIsOpen( graphStream );
+   util::checkIsOpen( graphStream, fileName );
 
    world->printGraphs( graphStream, period );
 
