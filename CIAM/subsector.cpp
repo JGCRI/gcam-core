@@ -287,11 +287,11 @@ void subsector::calc_price( const string regionName, const int per ) {
 
 	for (i=0;i<notech;i++) {
 		// calculate weighted average price for subsector
-		subsectorprice[per] += techs[i][per]->showshare()*
+		subsectorprice[per] += techs[i][per]->getShare()*
 			techs[i][per]->gettechcost();
 		// calculate weighted average price of fuel only
 		// technology shares are based on total cost
-		fuelprice[per] += techs[i][per]->showshare()*
+		fuelprice[per] += techs[i][per]->getShare()*
 			techs[i][per]->getfuelcost();
 	}
 }
@@ -336,7 +336,7 @@ void subsector::calc_tech_shares( const string& regionName, const int per ) {
 		techs[i][per]->cost( regionName, per );
 		// determine shares based on technology costs
 		techs[i][per]->calc_share( regionName,per );
-		sum += techs[i][per]->showshare();
+		sum += techs[i][per]->getShare();
 	}
 	// normalize technology shares to total 100 %
 	for (i=0;i<notech;i++) {
@@ -352,17 +352,18 @@ void subsector::calc_tech_shares( const string& regionName, const int per ) {
 void subsector::calc_share( const string& regionName, const int per, const double gnp_cap )
 {
 	// call function to compute technology shares
-	calc_tech_shares(regionName, per);
+	subsector::calc_tech_shares(regionName, per);
 
 	// calculate and return subsector share; uses above price function
 	// calc_price() uses normalized technology shares calculated above
 	// Logit exponential should not be zero
 
-	//compute subsector weighted average price of technologies
-	calc_price( regionName,per);
+	// compute subsector weighted average price of technologies
+	subsector::calc_price( regionName,per);
 	
-	// not read in just yet so use default
+	// subsector logit exponential
 	if(lexp[per]==0) cerr << "SubSec Logit Exponential is 0." << endl;
+
 	if(subsectorprice[per]==0) {
 		share[per] = 0;
 	}
@@ -390,15 +391,21 @@ void subsector::norm_share( const double sum, const int per) {
 //! call technology production, only exogenously driven technology gives an output
 /*! Since the calls below set output, this call must be done before
     calls to technology production with non-zero demand . g*/
-double subsector::exog_supply( const string& regionName, const string& prodName, const int per ) {
-	double subsecdmd = 0; // no subsector demand
-	double tprod=0;
+double subsector::exog_supply( const int per ) {
+	double fixedOutput = 0;
 	for (int i=0;i<notech;i++) {
-		// calculate technology output and fuel input from subsector output
-		techs[i][per]->production(regionName,prodName,subsecdmd,per);
-		tprod += techs[i][per]->showoutput();
+		techs[i][per]->calcFixedSupply(per);
+		fixedOutput += techs[i][per]->getFixedSupply();
 	}
-	return tprod;
+	return fixedOutput;
+}
+
+//! Scale down fixed supply if the total fixed production is greater than the actual demand 
+void subsector::scaleFixedSupply( const double scaleRatio, const int per ) {
+	// scale fixed technology output down
+	for (int i=0;i<notech;i++) {
+		techs[i][per]->scaleFixedSupply(scaleRatio);
+	}
 }
 
 //! Adjusts shares to be consistant with any fixed production 
@@ -414,9 +421,9 @@ void subsector::adjShares( const double dmd, double varSectorSharesTot, const do
 	
 	// add up the fixed supply and share of non-fixed supply
 	for (int i=0;i<notech;i++) {
-		temp = techs[i][per]->getFixedSupply(per);
+		temp = techs[i][per]->getFixedSupply();
 		fixedSupply += temp;
-		if (temp == 0) varShareTot += techs[i][per]->showshare();
+		if (temp == 0) varShareTot += techs[i][per]->getShare();
 	}
 	
 	// Adjust the share for this subsector
@@ -426,7 +433,9 @@ void subsector::adjShares( const double dmd, double varSectorSharesTot, const do
 	
 	if(totalFixedSupply != 0) {
 		RemainingDemand = dmd - totalFixedSupply;
-		if (RemainingDemand < 0) RemainingDemand = 0;       
+		if (RemainingDemand < 0) {
+			RemainingDemand = 0;
+		}
 		if (fixedSupply != 0) {	// This sector has a fixed supply
 			if (dmd != 0) {
 				share[per] = fixedSupply/dmd; 
@@ -507,7 +516,7 @@ void subsector::show_subsec() const {
 	cout << name << endl;
 	cout << "Number of Technologies: " << notech << endl;
 	for (i=0;i<notech;i++)
-		cout<<"Share["<<i<<"] "<<techs[i][m]->showshare()<< endl;
+		cout<<"Share["<<i<<"] "<<techs[i][m]->getShare()<< endl;
 	cout <<"Total subsector Output: " << output[m] << endl;
 }
 //! returns share for each subsector
@@ -574,7 +583,7 @@ void subsector::outputfile( const string& regname, const string& secname ) const
 		// technology share
 		if(notech>1) {
 			for (m=0;m<maxper;m++)
-				temp[m] = techs[i][m]->showshare();
+				temp[m] = techs[i][m]->getShare();
 			fileoutput3( regname,secname,name,techs[i][mm]->showname(),"tech share","%",temp);
 		}
 		// technology cost
@@ -763,7 +772,7 @@ void subsector::MCoutputC( const string& regname, const string& secname ) const 
 			}
 			// technology share
 			for (m=0;m<maxper;m++)
-				temp[m] = techs[i][m]->showshare();
+				temp[m] = techs[i][m]->getShare();
 			dboutput4(regname,"Tech Share",secname,str,"%",temp);
 			// ghg tax applied to technology
 			for (m=0;m<maxper;m++)

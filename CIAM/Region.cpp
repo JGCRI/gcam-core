@@ -568,49 +568,20 @@ void Region::finalsupply(int per)
 	int j = 0;
 	double mrksupply;
 
-	
-	// These debugging statements will help diagnose if there is a simultunaety problem of
-	// the sort where a demand is set and later is added to elsewhere.
-
-	const bool bug = false;
-	double mrkdmd, mrkdmd1,mrkdmd2,mrkdmd3,mrkdmd4,mrkdmd5;
-	
-
 	// loop through all sectors once to get total output
-	//marketplace.storeInfo(per); // market info from end-use demand
 	for (i=0;i<nossec;i++) {
 	// start with last supply sector
 	// need demand for all intermediate and final energy to
 	// determine need for primary energy
 		j = nossec - (i+1);
 		
-		goodName = supplysector[j]->getName();
-		if (bug && "electricity" == goodName) {
-			mrkdmd1 = marketplace.showdemand( goodName,name, per ); 
-		}
-		
+		goodName = supplysector[j]->getName();		
 		// name is country/region name
 		supplysector[j]->supply( name, per );
-		if (bug && "electricity" == goodName) {
-			mrkdmd2 = marketplace.showdemand( goodName,name, per ); 
-		}
-		
 		supplysector[j]->sumoutput(per);
 		carbontaxpaid[per] += supplysector[j]->showcarbontaxpaid(per);
-		
-		if (bug && "electricity" == goodName) {
-			mrkdmd3 = marketplace.showdemand( goodName,name, per ); 
-		}
 	}
-	
-	if (bug)  { 
-		mrkdmd4 = marketplace.showdemand( "electricity" ,name, per ); 
-	}
-	
-	
-	//sdfile<<"\n"; //supply & demand info
-	//marketplace.restoreInfo(per); // restore info from end-use demand
-	
+			
 	// loop through supply sectors and assign supplies to marketplace and update fuel consumption map
 	// the supplies in the market sector are, at present, not used except to double check 
 	// that the output of the supply sectors does equal supply
@@ -621,22 +592,9 @@ void Region::finalsupply(int per)
 		// supply and demand for intermediate and final good are set equal
 		goodName = supplysector[i]->getName();
 		mrksupply = supplysector[i]->getoutput(per);
-		// set market supply of intermediate goods
-
-		if (bug && "electricity" == goodName) {
-			mrkdmd5 = marketplace.showdemand( goodName,name, per ); 
-		}
-
-		marketplace.setsupply(goodName,name,mrksupply,per);
 		
-        if (bug && "electricity" == goodName) {
-            mrkdmd = marketplace.showdemand( goodName,name, per ); 
-            if ( abs(mrkdmd - mrksupply) > 0.01 ) {
-                cout << name<<" - Region::finalsupply mrksupply: " << mrksupply;
-                cout <<" - sector::supply mrkdmd: " << mrkdmd << " diff: " << mrkdmd-mrksupply<<endl;
-            }
-        }
-			
+		// set market supply of intermediate goods
+		marketplace.setsupply(goodName,name,mrksupply,per);			
 	}
 }
 

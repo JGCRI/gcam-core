@@ -275,9 +275,7 @@ void technology::addghgtax( const string ghgname, const string regionName, const
 //! define technology fuel cost and total cost
 void technology::cost( const string regionName, const int per ) 
 {
-	double fuelprice = 0;
-	
-	fuelprice = marketplace.showprice(fuelname,regionName,per);
+	double fuelprice = marketplace.showprice(fuelname,regionName,per);
 	
 	//techcost = fprice/eff/pow(1+techchange,modeltime.gettimestep(per)) + necost;
 	// fMultiplier and pMultiplier are initialized to 1 for those not read in
@@ -295,28 +293,41 @@ void technology::calc_share( const string regionName, const int per)
 //! normalize technology shares
 void technology::norm_share(double sum) 
 {
-	if (sum==0)
+	if (sum==0) {
 		share = 0;
-	else
+	}
+	else {
 		share /= sum;
+	}
 }
 
-//! calculates fuel input and technology output
 /*! This function sets the value of fixed supply. At present this does so only for Hydro 
 acccording to the MiniCAM formula. In the future, this will be superseeded by read-in values. */
-double technology::getFixedSupply(int per)
+void technology::calcFixedSupply(int per)
 {
-	string hydro = "hydro";
-	// dmd is total subsector demand
-	if(name != hydro) {
-		return 0; 
-	}
-	else { // do for hydroelectricity
+	string FixedTech = "hydro";
+	if(name == FixedTech) {
 		int T = per*modeltime.gettimestep(per);
 		// resource and logit function 
 		double fact = exp(A+B*T);
-		output = resource*fact/(1+fact);
-		return output;
+		output = fixedOutputVal = resource*fact/(1+fact);
+	}
+}
+
+//! Get fixed technology supply
+double technology::getFixedSupply() const {
+	return fixedOutputVal;
+}
+
+//! Scale down fixed supply if total fixed production is greater than actual demand.
+//! Use a ratio of total demand to total fixed supply
+void technology::scaleFixedSupply(const double scaleRatio)
+{
+	string FixedTech = "hydro";
+	// dmd is total subsector demand
+	if(name == FixedTech) {
+		output *= scaleRatio;
+		fixedOutputVal *= scaleRatio;
 	}
 }
 
@@ -333,7 +344,7 @@ void technology::adjShares(double subsecdmd, double totalFixedSupply, double var
         if (remainingDemand < 0) {
 			remainingDemand = 0;
 		}
-        fixedSupply = getFixedSupply(per); 
+        fixedSupply = getFixedSupply(); 
         
         if ( fixedSupply != 0 ) {	// This tech has a fixed supply
             if (subsecdmd != 0) {
@@ -374,7 +385,8 @@ void technology::production(const string& regionName,const string& prodName,
 		output = share * dmd; // use share to get output for each technology
 	}
 	else { // do for hydroelectricity
-		output = fixedOutputVal;
+		//output = fixedOutputVal;
+		output = fixedOutputVal = dmd;
 	}
 	
 	if (fueltype == 0) { // fueltye=0 reserved for renewables
@@ -527,7 +539,7 @@ double technology::showeff() const {
 }
 
 //! return technology share
-double technology::showshare() const {
+double technology::getShare() const {
 	return share;
 }
 

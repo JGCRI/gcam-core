@@ -74,8 +74,9 @@ public:
 	// sets demand to output and output
 	void setoutput( const string& regionName, const string& prodName, const double dmd, const int period ); 
 	void sumoutput( const int period );
-	//double supply( const string& regionName, const int period ); // calculates supply by technology
-	double exog_supply( const string& regionName, const string& prodName, const int period ); // calculates exogenous supply
+	// calculates exogenous supply
+	double exog_supply( const int period );
+	void scaleFixedSupply( const double scaleRatio, const int per );
 	void show_subsec() const;
 	double showshare( const int period ) const;
 	void showtechs( const int period, const string ofile ) const;

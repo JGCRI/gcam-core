@@ -240,8 +240,9 @@ void sector::calc_share( const string regionName, const int per, const double gn
 		sum += subsec[i]->showshare(per);
 	}
 	// normalize subsector shares to total 100 %
-	for (i=0;i<nosubsec;i++)
+	for (i=0;i<nosubsec;i++) {
 		subsec[i]->norm_share(sum, per);	
+	}
 }
 
 //! Calculate weighted average price of subsectors.
@@ -250,8 +251,6 @@ void sector::price(int per)
 	sectorprice[per]=0.0;
 	for (int i=0;i<nosubsec;i++) {	
 		sectorprice[per] += subsec[i]->showshare(per) * subsec[i]->getprice(per);
-		double temp1 = subsec[i]->showshare(per);
-		double temp2 = subsec[i]->getprice(per);
 	}
 }
 
@@ -300,11 +299,10 @@ void sector::supply( const string regionName, const int per)
 {
 	double mrkprice, mrkdmd;
     int i;
-    bool bug = true;
-	double totalFixedSupply = 0;
+	double totalFixedSupply = 0; 
     double fixedSupply = 0;
-    double varShareTot = 0; // sum of shares without fixed supply   
-    double Sharetotal = 0; // sum of shares without fixed supply   
+    double shareVariable = 0; // sum of shares without fixed supply   
+    double shareTotal = 0; // sum of all shares with and without fixed supply   
            
 	carbontaxpaid[per] = 0; // initialize carbon taxes paid
 	
@@ -315,39 +313,39 @@ void sector::supply( const string regionName, const int per)
         cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;
     }
             
-	// calculate output from technologies that have fixed outputs such as hydro electric
+	// calculate output from technologies that have fixed outputs such as hydro electricity
     // Determine total fixed production and total var shares
     // Need to change the exog_supply function once new, general fixed supply method is available
 	for (i=0;i<nosubsec;i++) {
-        fixedSupply = subsec[i]->exog_supply(regionName,name,per);
+        fixedSupply = subsec[i]->exog_supply(per);
+		// add up subsector shares without fixed output
         if (fixedSupply == 0) { 
-			varShareTot += subsec[i]->showshare(per);
+			shareVariable += subsec[i]->showshare(per);
 		}
+        shareTotal += subsec[i]->showshare(per);
         totalFixedSupply += fixedSupply;
-        Sharetotal += subsec[i]->showshare(per);
+	}
+
+	// Scale down fixed output if its greater than actual demand
+	if ( totalFixedSupply > mrkdmd ) {
+		for (i=0;i<nosubsec;i++) {
+			subsec[i]->scaleFixedSupply( mrkdmd/totalFixedSupply, per ); 
+		}
 	}
 
      // Adjust shares for any fixed output
 	if (totalFixedSupply > 0) {
 		for (i=0;i<nosubsec;i++) {
-			subsec[i]->adjShares( mrkdmd, varShareTot, totalFixedSupply, per ); 
+			subsec[i]->adjShares( mrkdmd, shareVariable, totalFixedSupply, per ); 
 		}
 	}
-                
+
+	// This is where subsector and technology outputs are set
 	for (i=0;i<nosubsec;i++) {
 		// set subsector output from sector demand
 		subsec[i]->setoutput( regionName, name, mrkdmd, per ); // CHANGED JPL
 		subsec[i]->sumoutput( per );
 		carbontaxpaid[per] += subsec[i]->showcarbontaxpaid( per );
-	}
-    
-    if (bug) {
-        sumoutput(per); // Sum output just so its available below
-		double mrksupply = getoutput(per);
-		if (per > 0 && abs(mrksupply - mrkdmd) > 0.01) {
-			mrksupply = mrksupply * 1.0000001;
-			cout << "Market supply and demand are not equal";
-		}
 	}
 }
 

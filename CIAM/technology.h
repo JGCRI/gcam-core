@@ -83,6 +83,9 @@ public:
 	// uses logit function to calculate technology share
 	void calc_share( const string regionName, const int per); 
 	void norm_share(double sum); // normalize technology share
+    void calcFixedSupply(int per); // calculate fixed supply
+    void adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per);
+	void scaleFixedSupply(const double scaleRatio); // scale fixed supply
 	 // calculates fuel input and technology output
 	virtual void production(const string& regionName,const string& prodName,double dmd,const int per);
 	void emission( const string prodname); // calculates GHG emissions from technology
@@ -93,7 +96,7 @@ public:
 	string getfname() const; // return fuel name
 	int showfuelno() const; // return fuel number
 	double showeff() const; // return fuel efficiency
-	double showshare() const; // return normalized share
+	double getShare() const; // return normalized share
 	double showinput() const; // return fuel input amount
 	double showoutput() const; // return technology output
 	double getfuelcost() const; // return fuel cost only
@@ -108,8 +111,7 @@ public:
 	map<string,double> getemindmap() const; // return map of all ghg emissions
 	double get_emissmap_second( const string& str ) const; // return value for ghg
 	double getlexp() const; // return logit exponential for the technology
-    void adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per);
-    double getFixedSupply(int per);
+    double getFixedSupply() const; // return fixed supply
 
 };
 
