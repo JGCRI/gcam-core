@@ -44,6 +44,8 @@ protected:
 	double fuelcost; //!< fuel cost only
 	double techcost; //!< total cost of technology
 	double tax; //!< utility tax
+	double fMultiplier; //!< multiplier on fuel cost or price
+	double pMultiplier; //!< multiplier on total cost or price
 	double carbontax; //!< carbon tax in $/TC
 	double carbontaxgj; //!< carbon tax in $/GJ
 	double carbontaxpaid; //!< total carbon taxes paid

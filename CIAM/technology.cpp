@@ -63,6 +63,8 @@ void technology::initElementalMembers(){
 	necost = 0;
 	techcost = 0;
 	tax = 0;
+	fMultiplier = 1; // initialied to 1 
+	pMultiplier = 1; // initialied to 1 
 	carbontax = 0;
 	carbontaxgj = 0;
 	carbontaxpaid = 0;
@@ -122,6 +124,12 @@ void technology::XMLParse( const DOMNode* node )
 		else if( nodeName == "tax" ){
 			tax = XMLHelper<double>::getValue( curr );
 		}
+		else if( nodeName == "pMultiplier" ){
+			pMultiplier = XMLHelper<double>::getValue( curr );
+		}
+		else if( nodeName == "fMultiplier" ){
+			fMultiplier = XMLHelper<double>::getValue( curr );
+		}
 		else if( nodeName == "logitexp" ){
 			lexp = XMLHelper<double>::getValue( curr );
 		}
@@ -168,6 +176,8 @@ void technology::toXML( ostream& out ) const {
 	XMLWriteElement( eff, "efficiency", out );
 	XMLWriteElement( necost, "nonenergycost", out );
 	XMLWriteElement( tax, "tax", out );
+	XMLWriteElement( fMultiplier, "fuelMultiplier", out );
+	XMLWriteElement( pMultiplier, "priceMultiplier", out );
 	XMLWriteElement( lexp, "logitexp", out );
 	XMLWriteElement( techchange, "techchange", out );
 	XMLWriteElement( resource, "resource", out );
@@ -204,6 +214,8 @@ void technology::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( fuelcost, "fuelcost", out );
 	XMLWriteElement( necost, "nonenergycost", out );
 	XMLWriteElement( tax, "tax", out );
+	XMLWriteElement( fMultiplier, "fuelMultiplier", out );
+	XMLWriteElement( pMultiplier, "priceMultiplier", out );
 	XMLWriteElement( carbontax, "carbontax", out );
 	XMLWriteElement( carbontaxgj, "carbontaxgj", out );
 	XMLWriteElement( carbontaxpaid, "carbontaxpaid", out );
@@ -268,8 +280,9 @@ void technology::cost( const string regionName, const int per )
 	fuelprice = marketplace.showprice(fuelname,regionName,per);
 	
 	//techcost = fprice/eff/pow(1+techchange,modeltime.gettimestep(per)) + necost;
-	fuelcost = (fuelprice+carbontaxgj)/eff;
-	techcost = fuelcost + necost;
+	// fMultiplier and pMultiplier are initialized to 1 for those not read in
+	fuelcost = ( (fuelprice * fMultiplier) + carbontaxgj ) / eff;
+	techcost = ( fuelcost + necost ) * pMultiplier;
 }
 
 //! calculate technology shares
