@@ -15,7 +15,7 @@
 
 #include "XMLLogger.h"
 #include "Logger.h"
-#include "scenario.h"
+#include "util.h"
 
 using namespace std;
 
@@ -35,7 +35,7 @@ void XMLLogger::open( const char[] ){
 	// Print the header message
 	time_t ltime;
 	time(&ltime);
-	string dateString = Scenario::XMLCreateDate( ltime );
+	string dateString = util::XMLCreateDate( ltime );
 	logFile << "<XMLLogger name=\"" << name << "\" date=\"" << dateString << "\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"D:\\cvs\\Code\\EXE\\XMLLog.xsd\">" << endl;
 }
 
