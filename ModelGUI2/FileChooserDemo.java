@@ -364,7 +364,13 @@ public class FileChooserDemo extends JFrame
 	final Object[] itemsObjs = path.getPath();
 	String[] items = new String[ itemsObjs.length ];
 	for(int i=0; i<itemsObjs.length; i++){
-		items[i] = ((DOMmodel.DOMNodeAdapter)itemsObjs[i]).getNode().getNodeName();	
+		Node currNode = ((DOMmodel.DOMNodeAdapter)itemsObjs[i]).getNode();
+		if( currNode.hasAttributes() ){ // print out first attribute, just to help
+			NamedNodeMap nodeMap = currNode.getAttributes();
+			items[i] = currNode.getNodeName() + " (" + nodeMap.item(0).getNodeName() + " = " + nodeMap.item(0).getNodeValue() + ")"; 
+		}else{
+			items[i] = currNode.getNodeName();
+		}
 	}
 	//String[] items = { "one", "two", "three", "four" };
 	final JList list = new JList(items);
@@ -505,6 +511,7 @@ public class FileChooserDemo extends JFrame
 		menuItem.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
 				System.out.println("RIGHT CLICKED FLIP!, do stuff HERE...");
+				// CALL FLIP METHOD HERE !!!!!
 			}
 			public void mouseClicked(MouseEvent e) {
 				//shouldn't the action go here
@@ -1968,11 +1975,5 @@ class MyTreeModelListener implements TreeModelListener {
 	}
 	return true;
   }
-
-
-
-
-
-
 }
 
