@@ -246,7 +246,7 @@ void Region::XMLParse( const DOMNode* node ){
 	*/
 	// MarketSetup;
 	finalsupply(0);	// Dummy call to final supply to setup fuel map
-	findSimul(0);	// Just print out simul's for now
+	findSimul(0);
 	
 	// Create AgLU markets
 	if( conf->getBool( "agSectorActive" ) ){
@@ -668,8 +668,12 @@ const vector<double> Region::calcFutureGNP() const {
 	double laborProd = 0;
 	double currentLaborForce = 0;
 	double lastLaborForce = 0;
-	double tlab = 0; // ?
+	double tlab = 0;
 	
+	assert( gnp_dol.size() > 1 );
+
+	const double baseYearConversion = gnp_dol[ 1 ] / gnp_dol[ 0 ];
+
 	gnps.resize( modeltime.getmaxper() );
 	
 	for ( int period = 0; period < modeltime.getmaxper(); period++ ) {
@@ -677,6 +681,9 @@ const vector<double> Region::calcFutureGNP() const {
 			gnps[ 0 ] = 1.0;
 		}
 		
+		else if ( gnp_dol.size() > period && gnp_dol[ period ] > 0 ){
+			gnps[ period ] = gnp_dol[ period ] / baseYearConversion;
+		}
 		else {
 			laborProd = 1 + population.labor( period );
 			currentLaborForce = population.getlaborforce( period );
@@ -687,6 +694,9 @@ const vector<double> Region::calcFutureGNP() const {
 		}
 	}
 	
+	for ( vector<double>::iterator iter = gnps.begin(); iter != gnps.end(); iter++ ){
+		*iter *= baseYearConversion / 1000;
+	}
 	return gnps;
 }
 
