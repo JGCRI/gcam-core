@@ -21,6 +21,9 @@ using namespace xercesc;
 * \version $ Revision $
 */
 
+using namespace std;
+using namespace xercesc;
+
 class grade
 {
 private:

@@ -22,6 +22,14 @@ using namespace xercesc;
 * \date $ Date $
 * \version $ Revision $
 */
+=======
+
+// xerces xml headers
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/util/XMLString.hpp>
+
+using namespace std; // enables elimination of std::
+using namespace xercesc;
 
 class Ghg
 {

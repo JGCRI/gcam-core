@@ -4,7 +4,7 @@
 
 #include <string>
 #include <map>
-using namespace std; // enables elimination of std::
+using namespace std;
 
 /*! 
 * \ingroup CIAM

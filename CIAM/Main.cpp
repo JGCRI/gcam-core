@@ -307,7 +307,6 @@ int main()
 	
 	// ***** Write to text file and database
 	world.outputfile(); // write results to file
-	marketplace.outputfile(); // write global market info to file
 	world.MCoutput(); // MiniCAM style output to database
 	marketplace.MCoutput(); // write global market info to database
 	
