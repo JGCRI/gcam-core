@@ -108,7 +108,7 @@ Variable ID,,CONVERGENCE TABLE --  this makes the emissions coefficient converge
 810,,,,,,,,,,,,,,,
 Source Inputs,,"Enter the desired coefficient (check OG_COEFFS.CSV for the implied coefficients if base year emissions are entered), -1 turns off convergence for that cell",,,,,,,,,,,,,
 Gas,NumSources,Nregions,,,,,,,,,,,,,
-4,19,14,,,,,,,,,,,,,
+6,19,14,,,,,,,,,,,,,
 0,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14
 Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E ASIA,EEUR,KOR,INDIA
 1,elec_coal,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
@@ -140,7 +140,7 @@ Variable ID,,,,,,,,,,,,,,,
 801,,,,,,,,,,,,,,,
 Source Inputs,,,,,,,,,,,,,,,
 Gas,NumSources,Nregions,DataType,,,,,,,,,,,,
-4,1,1,0,(Base-year emissions coefficient Tg C eJ-1),,,,,,,,,,,
+6,1,1,0,(Base-year emissions coefficient Tg C eJ-1),,,,,,,,,,,
 0,0,1,,,,,,,,,,,,,
 Src Index,Label,USA,,
 18,deforest,0.5,,
@@ -151,7 +151,7 @@ Variable ID,,,,
 801,,,,
 Source Inputs,,,,
 Gas,NumSources,Nregions,DataType,
-4,1,1,0,(Base-year emissions coefficient Tg C eJ-1)
+6,1,1,0,(Base-year emissions coefficient Tg C eJ-1)
 0,0,8,,
 Src Index,Label,MIDEAST,,
 11,bldg_biom,0.5,,
