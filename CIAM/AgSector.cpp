@@ -295,10 +295,12 @@ void AgSector::setMarket( const string& regionName ) {
 	// Add all global markets.
 	for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end() - 1; i++ ) {
 		marketplace.setMarket( regionName, "global", *i, Market::NORMAL );
+		marketplace.setMarketToSolve ( *i, regionName );
 	}
 	
 	// Add the regional markets.
 	marketplace.setMarket( regionName, regionName, marketNameVector[ 6 ], Market::NORMAL );
+	marketplace.setMarketToSolve ( marketNameVector[ 6 ], regionName );
 	// Initialize prices at a later point.
 }
 
