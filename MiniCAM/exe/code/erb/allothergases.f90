@@ -70,7 +70,7 @@
 
 	560.0, 1300.0, 2800.0, 3800.0, 23900.0, 9200.0, 6500.0, 0.0 , 0.0, &
 
-	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
 
 
 
@@ -1264,7 +1264,7 @@
 
 ! src 3 : Transport AC
 
-    OGACT(IH134,3,L,M) = FJKLM(1:NNJ,3,L,M)	! could replace this with transportation service demand
+    OGACT(IH134,3,L,M) = sum(FJKLM(1:NNJ,3,L,M))	! could replace this with transportation service demand
 
     
 

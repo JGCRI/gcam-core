@@ -778,18 +778,18 @@ END IF
       IF(vp)CALL ivid(0,ct,sct,7,'Total','EJ/yr')
  	DBAR(vl(ct,sct,1),:) =	(EDRIKLM(INOIL,1,L,2:NM)-ESUILM(INOIL,L,2:NM)) + &	! elec gen
  							(EDRIKLM(JUOSCRUB,1,L,2:NM)-(ESUILM(JUOSCRUB,L,2:NM)*GUILM(JUOSCRUB,L,2:NM))) + &	! elec gen - scrubbed
-  							(EDRIKLM(INOIL,KH2,L,2:NM)-(ESHILM(INOIL,L,2:NM)+ESHILM(INOIL+NH2,L,2:NM))) + &	! H2 gen
+  							(EDRIKLM(INOIL,KH2,L,2:NM)-(ESHILM(INOIL,L,2:NM)+ESHILM(INOIL+NH2,L,2:NM))) 	! H2 gen
  	DBAR(vl(ct,sct,2),:) =	(EDRIKLM(INGAS,1,L,2:NM)-ESUILM(INGAS,L,2:NM)) + &	! elec gen
  							(EDRIKLM(JUGSCRUB,1,L,2:NM)-(ESUILM(JUGSCRUB,L,2:NM)*GUILM(JUGSCRUB,L,2:NM))) + &	! elec gen - scrubbed
  							(SYNINPUT(INGAS,L,2:NM)-SYNFUEL(INGAS,1,L,2:NM)) + &	! syn gas-liq
-  							(EDRIKLM(INGAS,KH2,L,2:NM)-(ESHILM(INGAS,L,2:NM)+ESHILM(INGAS+NH2,L,2:NM))) + &	! H2 gen
+  							(EDRIKLM(INGAS,KH2,L,2:NM)-(ESHILM(INGAS,L,2:NM)+ESHILM(INGAS+NH2,L,2:NM))) 	! H2 gen
  	DBAR(vl(ct,sct,3),:) =	(EDRIKLM(INCOAL,1,L,2:NM)-ESUILM(INCOAL,L,2:NM)) + &	! elec gen
 							(EDRIKLM(JUCSCRUB,1,L,2:NM)-(ESUILM(JUCSCRUB,L,2:NM)*GUILM(JUCSCRUB,L,2:NM))) + &	! elec gen - scrubbed
   							(SYNINPUT(INCOAL,L,2:NM)-(SYNFUEL(3,1,L,2:NM)+SYNFUEL(3,2,L,2:NM))) + &	! syn COAL-gas&liq
-  							(EDRIKLM(INCOAL,KH2,L,2:NM)-(ESHILM(INCOAL,L,2:NM)+ESHILM(INCOAL+NH2,L,2:NM))) + &	! H2 gen
+  							(EDRIKLM(INCOAL,KH2,L,2:NM)-(ESHILM(INCOAL,L,2:NM)+ESHILM(INCOAL+NH2,L,2:NM))) 	! H2 gen
 	DBAR(vl(ct,sct,4),:) =	(EDRIKLM(IBMASS,1,L,2:NM)-ESUILM(7,L,2:NM)) + &	! elec gen
  							(SYNINPUT(IBMASS,L,2:NM)-(SYNFUEL(4,1,L,2:NM)+SYNFUEL(4,2,L,2:NM))) + &	! syn Biomass-gas&liq
-  							(EDRIKLM(IBMASS,KH2,L,2:NM)-ESHILM(IBMASS,L,2:NM)) + &	! H2 gen
+  							(EDRIKLM(IBMASS,KH2,L,2:NM)-ESHILM(IBMASS,L,2:NM)) 	! H2 gen
 	DBAR(vl(ct,sct,5),:) =	(EDRIKLM(JUH2GEN,1,L,2:NM)-ESUILM(11,L,2:NM))	! Elec gen from H2
 	DBAR(vl(ct,sct,6),:) =	ESHILM(JHELCTRO,L,2:NM)*(GHILM(JHELCTRO,2:NM)-1.d0)	! H2 gen by Electrolysis
 	DBAR(vl(ct,sct,7),:) =	DBAR(vl(ct,sct,1),:) + DBAR(vl(ct,sct,2),:) + DBAR(vl(ct,sct,3),:) + &

@@ -506,8 +506,9 @@ MODULE COMMON
        OGINPUT(NOGMax,NOGSrcMax,NLPMax),        & ! input (either base yr emiss, or em coef) 
        OGGAMMA(NOGMax,NOGSrcMax,NLPMax),        & ! exponent for scaling activity levels
        OGREPORT(NOGMax,NOGSrcMax),              & ! switch used to determine if a gas-source is active
-       OGCNVRG(NOGMax,NOGSrcMax,NLPMax)			  ! converge-to coefficient
-
+       OGCNVRG(NOGMax,NOGSrcMax,NLPMax),		& ! converge-to coefficient
+	   COOLDEMAND(NLPMax)						  ! per-capita cooling demand -- sjs 03/03
+		
       INTEGER &
        OGTYPE(NOGMax,NOGSrcMax,NLPMax),			& ! type of input above
        OGERROR(NOGMax,NOGSrcMax,NLPMax),		& ! holds error codes from emissions calculation
