@@ -13,10 +13,12 @@ public class NewDataTableModel extends AbstractTableModel {
 	String ind2Name;
 	TreeMap data;
 	boolean flipped;
+	String w3;
 
-	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, TreeMap dataIn) {
+	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, TreeMap dataIn) {
+		w3 = w3In;
 		indCol = new Vector(set1);
-		indCol.add(0,set2Name);
+		indCol.add(0,w3 /*set2Name*/);
 		indRow = new Vector(set2);
 		data = dataIn;
 		flipped = false;
@@ -30,7 +32,7 @@ public class NewDataTableModel extends AbstractTableModel {
 		String tempStr = ind1Name;
 		ind1Name = ind2Name;
 		ind2Name= tempStr;
-		indCol.add(0, ind2Name);
+		indCol.add(0, w3 /*ind2Name*/);
 		flipped = !flipped;
 		fireTableStructureChanged();
 	}

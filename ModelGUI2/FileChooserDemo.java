@@ -935,14 +935,15 @@ public class FileChooserDemo extends JFrame
 	  Object[] regionAndYear;
 	  TreeSet regions = new TreeSet();
 	  TreeSet years = new TreeSet();
-	  TreeMap data = new TreeMap();
+	  //TreeMap data = new TreeMap();
 	  String old3DVar = null;
+	  TreeMap thrdDimToData = new TreeMap();
 	  //try {
 	  	while ((tempNode = res.iterateNext()) != null) {
 			regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode());
-			if(old3DVar !+ null && !(String)regionAndYear[2].equals(old3DVar)) {
-				old3DVar = (String)regionAndYear[2];
-	  			NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), data);
+			/*
+			if(old3DVar != null && !((String)regionAndYear[2]).equals(old3DVar)) {
+	  			NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), old3DVar, data);
 	  			jTable = new JTable(tM);
 	  			jTable.getModel().addTableModelListener(this);
 
@@ -964,17 +965,56 @@ public class FileChooserDemo extends JFrame
 		  			tables = new Vector();
 	  			}
 	  			tables.add(tableView);
+	  			regions = new TreeSet();
+	  			years = new TreeSet();
+	  			data = new TreeMap();
+				old3DVar = (String)regionAndYear[2];
 			}
+			if(old3DVar == null) {
+				old3DVar = (String)regionAndYear[2];
+			}
+			*/
 
 			regions.add(regionAndYear[0]);
 			years.add(regionAndYear[1]);
-			data.put((String)regionAndYear[0]+(String)regionAndYear[1], tempNode);
+			//data.put((String)regionAndYear[0]+(String)regionAndYear[1], tempNode);
+			if(!thrdDimToData.containsKey(regionAndYear[2])) {
+				thrdDimToData.put(regionAndYear[2], new TreeMap());
+			}
+			((TreeMap)thrdDimToData.get(regionAndYear[2])).put((String)regionAndYear[0]+(String)regionAndYear[1], tempNode);
+		}
+		Iterator it = thrdDimToData.entrySet().iterator();
+		while(it.hasNext()) {
+			Map.Entry me = (Map.Entry)it.next();
+	  		NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), (String)me.getKey(), (TreeMap)me.getValue()); 
+	  		jTable = new JTable(tM);
+	  		jTable.getModel().addTableModelListener(this);
+
+	  		//jTable = new JTable(tableModel);
+	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	 
+			jTable.setCellSelectionEnabled(true);
+
+	  		javax.swing.table.TableColumn col;
+	  		Iterator i = regions.iterator();
+	  		int j = 0;
+	  		while(i.hasNext()) {
+		  	col = jTable.getColumnModel().getColumn(j);
+		  		col.setPreferredWidth(((String)i.next()).length()*5+30);
+		  		j++;
+	  		}
+	  		JScrollPane tableView = new JScrollPane(jTable);
+	  		if(tables == null) {
+		  		tables = new Vector();
+	  		}
+	  		tables.add(tableView);
 		}
 
 
 	  //Container c = new Container();
 	  //c.add(tableView);
 	  //JScrollPane tableView = (JScrollPane)splitPane.getRightComponent();
+	  /*
 	  if(tableView == null) {
 		  System.out.println("HERe1");
 		  //tableView = new JScrollPane(jTable);
@@ -983,6 +1023,7 @@ public class FileChooserDemo extends JFrame
 	  	//tableView.add(jTable);
 		//tableView.validate();
 	  }
+	  */
 	  //splitPane.setRightComponent(tableView);
 	  //menuTableFilter.setEnabled(true);
 	  /*} catch(Exception e) {
@@ -1001,12 +1042,13 @@ public class FileChooserDemo extends JFrame
 	  Node temp;
 	  String region = null;
 	  String year = null;
-	  Vector ret = new Vector(2,0);
+	  Vector ret = new Vector(3,0);
 	  do {
-		  if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))
-				  /* || n.getNodeName().equals((String)wild.get(2))*/ ) {
-			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
+		  if(n.getNodeName().equals((String)wild.get(2))) {
 			  ret.add(getOneAttrVal(n));
+		  } else if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
+			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
+			  ret.add(0,getOneAttrVal(n));
 		  }
 		  n = n.getParentNode();
 	  } while(n.getNodeType() != Node.DOCUMENT_NODE && (region == null || year == null));
@@ -1578,12 +1620,12 @@ public class FileChooserDemo extends JFrame
   }
 
   private Vector getAttrsNoRegionYear(Node node) {
-	  if( ((((String)wild.get(0)).matches(".*Sector") || ((String)wild.get(1)).matches(".*Sector"))) /* || ((String)wild.get(1)).matches(".*Sector")) */ && node.getNodeName().equals("subsector") ) {
+	  if( ((((String)wild.get(0)).matches(".*Sector") || ((String)wild.get(1)).matches(".*Sector")) || ((String)wild.get(1)).matches(".*Sector")) && node.getNodeName().equals("subsector") ) {
 		  return new Vector();
 	  }
 
 	  if(node.getNodeName().equals((String)wild.get(0)) || node.getNodeName().equals((String)wild.get(1)) 
-			  /* || node.getNodeName().equals((String)wild.get(2) */ ) {
+			   || node.getNodeName().equals((String)wild.get(2)) ) {
 		 return new Vector();
 	  }
 	  NamedNodeMap nodeMap = node.getAttributes();
