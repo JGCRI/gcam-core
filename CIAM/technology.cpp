@@ -362,7 +362,8 @@ void technology::adjShares(double subsecdmd, double totalFixedSupply, double var
     }    
 }
 
-//! calculates fuel input and technology output
+//! Calculates fuel input and technology output.
+//! Adds demands for fuels and ghg emissions to markets in the marketplace
 void technology::production(const string& regionName,const string& prodName,
 							double dmd,const int per) 
 {
@@ -388,6 +389,9 @@ void technology::production(const string& regionName,const string& prodName,
 		cerr << "ERROR: Output value < 0 for technology " << name << endl;
 	}
 	
+	// set demand for fuel in marketplace
+	marketplace.setdemand(fuelname,regionName,input,per);
+
 	// total carbon taxes paid
 	// carbontax is null for technologies that do not consume fossil fuels
 	// input(EJ), carbontax(90$/GJ), carbontaxpaid(90$Mil)
@@ -404,16 +408,13 @@ void technology::production(const string& regionName,const string& prodName,
 //! calculate GHG emissions from technology use
 void technology::emission( const string prodname ) {
 	// alternative ghg emissions calculation
-	//for_each(ghg.begin(),ghg.end(),ghg.calc_emiss());
 	emissmap.clear(); // clear emissions map
 	emfuelmap.clear(); // clear emissions map
 	for (int i=0; i<ghg.size(); i++) {
-		//ghg[i]->calc_emiss(fuelname,input,prodname,output);
 		// emissions by gas name only
 		emissmap[ghg[i]->getname()] = ghg[i]->getemission();
 		// emissions by gas and fuel names combined
 		// used to calculate emissions by fuel
-		//string str = ghg[i]->getname() + fuelname;
 		emissmap[ghg[i]->getname() + fuelname] = ghg[i]->getemission();
 		emfuelmap[ghg[i]->getname()] = ghg[i]->getemiss_fuel();
 	}

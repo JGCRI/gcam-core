@@ -458,28 +458,19 @@ void subsector::adjShares( const double dmd, double varSectorSharesTot, const do
     This is then shared out at the technology level.
     See explanation for sector::setoutput. */
 void subsector::setoutput( const string& regionName, const string& prodName, const double dmd, const int per) {
-	string goodName;
 	int i=0;
-	string tname; // temporary string
-	double tinput=0;  // temporary input
-
 	input[per] = 0; // initialize subsector total fuel input 
 	carbontaxpaid[per] = 0; // initialize subsector total carbon taxes paid 
-	fueltype = techs[0][0]->getfname(); // all techs in subsec have same fuel type
+
 	// output is in service unit when called from demand sectors
 	double subsecdmd = share[per]*dmd; // share is subsector level
 	for (i=0;i<notech;i++) {
-		goodName = techs[i][0]->getfname();
-		tinput = techs[i][per]->showinput();
-
 		// calculate technology output and fuel input from subsector output
 		techs[i][per]->production(regionName,prodName,subsecdmd,per);
 
 		// total energy input into subsector, must call after tech production
 		input[per] += techs[i][per]->showinput();
-
-		// sets subsector fuel demand
-		marketplace.setdemand(goodName, regionName,techs[i][per]->showinput(),per);
+		// sum total carbon tax paid for subsector
 		carbontaxpaid[per] += techs[i][per]->showcarbontaxpaid();
 	}
 }
