@@ -39,7 +39,7 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-extern ofstream bugoutfile;
+extern ofstream bugoutfile, logfile;
 
 /*! \brief Default constructor.
 *
@@ -181,7 +181,15 @@ void Sector::XMLParse( const DOMNode* node ){
 void Sector::completeInit() {
 
     nosubsec = static_cast<int>( subsec.size() );
-
+    
+    // Check if the market string is blank, if so default to the region name.
+    if( market == "" ){
+        logfile << "Warning: No marketname set in " << regionName << "->" << name << endl;
+        logfile << "Defaulting to regional market." << endl;
+        market = regionName;
+    }
+    
+    // Complete the subsector initializations. 
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
         ( *subSecIter )->completeInit();
     }
