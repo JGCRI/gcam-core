@@ -142,6 +142,8 @@ void technology::initElementalMembers(){
     doCalibration = false;
     doCalOutput = false;
     calInputValue = 0;
+    carbontaxgj = 0;
+    carbonValue = 0;
 }
 
 //! initialize technology with xml data
@@ -410,6 +412,10 @@ void technology::calcCost( const string regionName, const int per )
     // fMultiplier and pMultiplier are initialized to 1 for those not read in
     fuelcost = ( (fuelprice * fMultiplier) + carbonValue ) / eff;
     techcost = ( fuelcost + necost ) * pMultiplier;
+    
+    /* \post fuelcost and techcost are greater than or equal to 0. */
+    assert( fuelcost >= 0 );
+    assert( techcost >= 0 );
 }
 
 /*! \brief calculate technology unnormalized shares
