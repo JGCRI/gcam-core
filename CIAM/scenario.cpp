@@ -210,78 +210,79 @@ string Scenario::getName() const {
 
 //! Run the scenario
 void Scenario::run(){
+	
+	Configuration* conf = Configuration::getInstance();
+	ofstream xmlDebugStream;
 
-    Configuration* conf = Configuration::getInstance();
-    ofstream xmlDebugStream;
+	xmlDebugStream.open( conf->getFile( "xmlDebugFileName" ).c_str(), ios::out );
+	
+	// Start Model run for the first period.
+	int per = 0;
+   
+   if ( conf->getBool( "CalibrationActive" ) ) {
+	   world->setupCalibrationMarkets();
+   }
 
-    xmlDebugStream.open( conf->getFile( "xmlDebugFileName" ).c_str(), ios::out );
-
-    // Start Model run for the first period.
-    int per = 0;
-
-    if ( conf->getBool( "CalibrationActive" ) ) {
-        world->setupCalibrationMarkets();
-    }
-
-    marketplace->initPrices(); // initialize prices
-    marketplace->nullDemands( per ); // null market demands
-    marketplace->nullSupplies( per ); // null market supply
-
-    // Write scenario root element for the debugging.
-    toDebugXMLOpen( per, xmlDebugStream );
-
-    world->calc( per ); // Calculate supply and demand
-    world->updateSummary( per ); // Update summaries for reporting
-    world->emiss_ind( per ); // Calculate global emissions
-
-    cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr(per) << endl;
-    cout << "Period 0 not solved" << endl;
-    logfile << "Period:  " << per << endl;
-    // end of first period.
-
+	marketplace->initPrices(); // initialize prices
+	marketplace->nullDemands( per ); // null market demands
+	marketplace->nullSupplies( per ); // null market supply
+	
+	// Write scenario root element for the debugging.
+	toDebugXMLOpen( per, xmlDebugStream );
+	
+	world->calc( per ); // Calculate supply and demand
+	world->updateSummary( per ); // Update summaries for reporting
+	world->emiss_ind( per ); // Calculate global emissions
+	
+	cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr(per) << endl;
+	cout << "Period 0 not solved" << endl;
+	logfile << "Period:  " << per << "  Year:  " << modeltime->getper_to_yr(per) << endl;
+	// end of first period.
+	
     // Print the sector dependencies.
     if( conf->getBool( "PrintSectorDependencies", 0 ) ){
         printSectorDependencies();
     }
 
-    // Loop over time steps and operate model
-    for ( per = 1; per < modeltime->getmaxper(); per++ ) {	
+	// Loop over time steps and operate model
+	for ( per = 1; per < modeltime->getmaxper(); per++ ) {	
+		
+		// Write out some info.
+		cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl;
+    	logfile << "Period:  " << per << "  Year:  " << modeltime->getper_to_yr(per) << endl;
+		sdcurvefile << "Period " << per << ": "<< modeltime->getper_to_yr( per ) << endl;
+		sdcurvefile << "Market,Name,Price,Supply,Demand,";
+		sdcurvefile << "Market,Name,Price,Supply,Demand,";
+		sdcurvefile << "Market,Name,Price,Supply,Demand,";
+		sdcurvefile << "Market,Name,Price,Supply,Demand,";
+		sdcurvefile << "Market,Name,Price,Supply,Demand," << endl;
+		
+		// Run the iteration of the model.
+		marketplace->nullDemands( per ); // initialize market demand to null
+		marketplace->nullSupplies( per ); // initialize market supply to null
+		marketplace->storeto_last( per ); // save last period's info to stored variables
+		marketplace->init_to_last( per ); // initialize to last period's info
+		world->initCalc( per ); // call to initialize anything that won't change during calc
+		world->calc( per ); // call to calculate initial supply and demand
+		marketplace->solve( per ); // solution uses Bisect and NR routine to clear markets
+		world->updateSummary( per ); // call to update summaries for reporting
+		world->emiss_ind( per ); // call to calculate global emissions
+		
+		// Write out the results for debugging.
+		world->toDebugXML( per, xmlDebugStream );
+      
+      if( conf->getBool( "PrintDependencyGraphs" ) ) {
+         // Print out dependency graphs.
+         printGraphs( per );
+      }
+	}
+	
+	toDebugXMLClose( per, xmlDebugStream ); // Close the xml debugging tag.
+	
+	// calling fortran subroutine climat/magicc
+	world->calculateEmissionsTotals();
+	writeClimatData(); // writes the input text file
 
-        // Write out some info.
-        cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl;
-        logfile << "Period:  " << per << endl;
-        sdcurvefile << "Period " << per << ": "<< modeltime->getper_to_yr( per ) << endl;
-        sdcurvefile << "Market,Name,Price,Supply,Demand,";
-        sdcurvefile << "Market,Name,Price,Supply,Demand,";
-        sdcurvefile << "Market,Name,Price,Supply,Demand,";
-        sdcurvefile << "Market,Name,Price,Supply,Demand,";
-        sdcurvefile << "Market,Name,Price,Supply,Demand," << endl;
-
-        // Run the iteration of the model.
-        marketplace->nullDemands( per ); // initialize market demand to null
-        marketplace->nullSupplies( per ); // initialize market supply to null
-        marketplace->storeto_last( per ); // save last period's info to stored variables
-        marketplace->init_to_last( per ); // initialize to last period's info
-        world->initCalc( per ); // call to initialize anything that won't change during calc
-        world->calc( per ); // call to calculate initial supply and demand
-        marketplace->solve( per ); // solution uses Bisect and NR routine to clear markets
-        world->updateSummary( per ); // call to update summaries for reporting
-        world->emiss_ind( per ); // call to calculate global emissions
-
-        // Write out the results for debugging.
-        world->toDebugXML( per, xmlDebugStream );
-
-        if( conf->getBool( "PrintDependencyGraphs" ) ) {
-            // Print out dependency graphs.
-            printGraphs( per );
-        }
-    }
-
-    toDebugXMLClose( per, xmlDebugStream ); // Close the xml debugging tag.
-
-    // calling fortran subroutine climat/magicc
-    world->calculateEmissionsTotals();
-    writeClimatData(); // writes the input text file
 #if(__HAVE_FORTRAN__)
     cout << endl << "Calling CLIMAT() "<< endl;
     CLIMAT();
