@@ -814,7 +814,7 @@ double technology::getCO2()  const {
 * \author Josh Lurz
 * \return A vector of GHG names contained in the Technology.
 */
-const vector<const string> technology::getGHGNames() const {
+const vector<string> technology::getGHGNames() const {
     return util::getKeys( ghgNameMap );
 }
 
