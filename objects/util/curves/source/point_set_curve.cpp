@@ -94,7 +94,7 @@ const string& PointSetCurve::getXMLName() const {
     return XML_NAME;
 }
 
-//! Get the X value corresponding to a given Y value.
+//! Get the Y value corresponding to a given X value.
 double PointSetCurve::getY( const double xValue ) const {
     double retValue;
 
@@ -140,7 +140,7 @@ double PointSetCurve::getY( const double xValue ) const {
     return retValue;
 }
 
-//! Get the y value corresponding to a given X value.
+//! Get the X value corresponding to a given Y value.
 double PointSetCurve::getX( const double yValue ) const {
       double retValue;
 
@@ -334,16 +334,12 @@ void PointSetCurve::invertAxises() {
 
 //! Perform a linear interpolation determining a y value.
 double PointSetCurve::linearInterpolateY( const double xVal, const double x1, const double y1, const double x2, const double y2 ) {
-    const double slope = getSlope( x1, y1, x2, y2 );
-    const double yIntercept = -1 * slope * x1;
-    return ( slope * xVal + yIntercept );
+   return ( xVal - x1 ) * ( y2 - y1 )/( x2 - x1 ) + y1;
 }
 
 //! Perform a linear interpolation determining an x value.
 double PointSetCurve::linearInterpolateX( const double yVal, const double x1, const double y1, const double x2, const double y2 ) {
-    const double slope = getSlope( x1, y1, x2, y2 );
-    const double yIntercept = -1 * slope * x1;
-    return( ( yVal - yIntercept ) / slope );
+    return ( yVal - y1 ) * ( x2 - x1 ) / ( y2 - y1 ) + x1;
 }
 
 //! Determine the slope of a line.
