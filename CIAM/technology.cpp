@@ -187,8 +187,8 @@ void technology::toXML( ostream& out ) const {
     XMLWriteElement( eff, "efficiency", out );
     XMLWriteElement( necost, "nonenergycost", out );
     XMLWriteElement( tax, "tax", out );
-    XMLWriteElement( fMultiplier, "fuelMultiplier", out );
-    XMLWriteElement( pMultiplier, "priceMultiplier", out );
+    XMLWriteElement( fMultiplier, "fMultiplier", out );
+    XMLWriteElement( pMultiplier, "pMultiplier", out );
     XMLWriteElement( lexp, "logitexp", out );
     XMLWriteElement( techchange, "techchange", out );
     XMLWriteElement( resource, "resource", out );
@@ -228,8 +228,8 @@ void technology::toDebugXML( const int period, ostream& out ) const {
     XMLWriteElement( fuelcost, "fuelcost", out );
     XMLWriteElement( necost, "nonenergycost", out );
     XMLWriteElement( tax, "tax", out );
-    XMLWriteElement( fMultiplier, "fuelMultiplier", out );
-    XMLWriteElement( pMultiplier, "priceMultiplier", out );
+    XMLWriteElement( fMultiplier, "fMultiplier", out );
+    XMLWriteElement( pMultiplier, "pMultiplier", out );
     XMLWriteElement( carbontax, "carbontax", out );
     XMLWriteElement( carbontaxgj, "carbontaxgj", out );
     XMLWriteElement( carbontaxpaid, "carbontaxpaid", out );
