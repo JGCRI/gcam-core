@@ -35,8 +35,6 @@ private:
 	static map<string, int> nameToIndiceMap; //! Converts market name into market indice.
 	static vector<string> marketNameVector; //! Contains the names of all agLu markets.
 	static map<int, string> indiceToNameMap; //! Contains a mapping of indice to name.
-	static vector< vector< double > > readGDPS; //! Contains read-in GDP's
-	static vector<double> bPriceVector; //!< Biomass prices from minicam.
 	
 	string name; //!< Name of the agricultural sector.
 	int regionNumber; //!< The region number of the container region.

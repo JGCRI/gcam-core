@@ -187,17 +187,12 @@ subroutine AG2RUN( P, Region, Period, AGDEM, AGSUP )
 	  agPriceLocal( JCoarseGr, Region ) = P( INCOARSEGR )
 	  agPriceLocal( JOilCrops, Region ) = P( INOILCROPS )
 	  agPriceLocal( JMiscCrops, Region ) = P( INMISCCROPS )
-	  agPriceLocal( JBio, Region ) = P( INBMASS ) ! * CVRT90 * GJperGCAL // new
+	  agPriceLocal( JBio, Region ) = P( INBMASS ) * CVRT90 * GJperGCAL !
        
-      ! write( *, '("agPriceLocal: ",10F5.2)' )  agPriceLocal( 1:10, Region )
-
 	! Now adjust biomass price for carbon price. 
 	! The market "price" for market INLUCEm is the emissions per unit biomass production in Tg/EJ
 	! So conversion is the same as for TXUILM0 (except LU model takes prices in $1990)
-	  
-	  if ( agPriceLocal( JBio, Region ) < 0.0_8 ) then
-        agPriceLocal( JBio, Region ) = 0.0_8
-	  endif
+	 
 
 	  ! Call the AgLU model, passing in prices, passing out supply and demand
 	  call Ag2model( Region, Period, agPriceLocal, Dem, Sup )
@@ -210,8 +205,8 @@ subroutine AG2RUN( P, Region, Period, AGDEM, AGSUP )
 	  AGSUP( INCOARSEGR ) = Sup( JCoarseGr, Region, Period)
 	  AGSUP( INOILCROPS ) = Sup( JOilCrops, Region, Period)
 	  AGSUP( INMISCCROPS ) = Sup( JMiscCrops, Region, Period)
-	  AGSUP( INBMASS ) = Sup( JBio, Region, Period) * GJperGCAL / ( 100000.0_8 ) ! Convert from 10^13cals to EJ
-      ! write( *, '("AGSUP: ",10F10.2)' )  AGSUP(1:10)
+	  AGSUP( INBMASS ) = Sup( JBio, Region, Period) * GJperGCAL / (100000d0) ! Convert from 10^13cals to EJ
+
 
 	  ! Return demand back to the MiniCAM (not for biomass)
 	  AGDEM( INFOREST  ) = Dem( JWood, Region, Period )
@@ -221,7 +216,6 @@ subroutine AG2RUN( P, Region, Period, AGDEM, AGSUP )
 	  AGDEM( INCOARSEGR ) = Dem( JCoarseGr, Region, Period )
 	  AGDEM( INOILCROPS ) = Dem( JOilCrops, Region, Period )
 	  AGDEM( INMISCCROPS ) = Dem( JMiscCrops, Region, Period )
-      ! write( *, '("AGDEM: ",10F10.2)' )  AGDEM(1:10)
 	END IF
 
 end subroutine AG2RUN

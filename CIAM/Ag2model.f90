@@ -32,6 +32,10 @@ CALL Ag2Supply(i,T)
 qsup2(:,i,t) = qsup(:,i,t)
 qdem2(:,i,t) = qdem(:,i,t)
 
+!if( qsup( 8, i, t ) > 0 ) then
+!write( *, * ) "QSUP2: ", qsup2( 8, i, t ),  " QSUP1: ", qsup( 8, i, t )
+!endif
+
 ! Save prices for output
 sprice(:,i,T) = price(:,i)
 
