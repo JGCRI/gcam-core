@@ -1,12 +1,11 @@
-/*! ******************************************************************
-main.cpp															 
-C++ Integrated Assessment Model								 
-JGCRI
-
-  This is the Main program file which controls the initialization,
-  model looping over time steps, and outputs results  for the model.
-  Initial Creation by Son Hwi Kim, March 27, 2000							
-****************************************************************************/
+/*!
+* \file main.cpp															 
+* \brief This is the Main program file which controls the initialization,
+*  model looping over time steps, and outputs results  for the model.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
 
 #include "Definitions.h"
 
