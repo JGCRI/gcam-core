@@ -328,6 +328,8 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
       }
 
 	}
+
+   Marketplace* marketplace = scenario->getMarketplace();
 }
 
 //! Update all summary information for reporting
@@ -585,6 +587,25 @@ vector<string> World::getRegionVector() const {
       regionNames.push_back( ( *i )->getName() );
    }
    return regionNames;
+}
+
+/*! A function which print dependency graphs showing fuel usage by sector.
+*
+* This function is called by Scenario::printGraphs to iterate through the regions and call
+* Region::printGraphs, which does the actual printing.
+*
+* \param outStream An output stream to write to which was previously created.
+* \param period The period to print graphs for.
+* \return void
+* \warning Currently only the U.S. has graphs printed for it.
+*/
+void World::printGraphs( ostream& outStream, const int period ) const {
+   assert( outStream );
+
+   // Only do the US for now.
+   for ( vector<Region*>::const_iterator regionIter = region.begin(); regionIter == region.begin(); regionIter++ ) {
+      ( *regionIter )->printGraphs( outStream, period );
+   }
 }
 
 //! Return the list of primary fuels. 

@@ -116,6 +116,8 @@ public:
 	double showrsc( const string resourceName, const int per );
 	double showsubrsc( const string resourceName, const string& subResourceName, const int per );
 	void updateSummary( const int period ); // update regional summary for reporting
+   void printGraphs( ostream& outStream, const int period ) const;
+   static void replaceSpaces( string& stringIn );
    double getPrimaryFuelCO2Coef( const string& fuelName ) const;
    double getCarbonTaxCoef( const string& fuelName ) const;
 };

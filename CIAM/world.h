@@ -85,6 +85,7 @@ public:
 	void turnCalibrationsOn(); // turn on calibrations
 	void turnCalibrationsOff(); // turn off calibrations
 	bool getCalibrationSetting() const; // return calibration setting
+   void printGraphs( ostream& outStream, const int period ) const;
    const vector<string> getPrimaryFuelList() const;
    double getPrimaryFuelCO2Coef( const string& regionName, const string& fuelName ) const;
    double getCarbonTaxCoef( const string& regionName, const string& fuelName ) const;

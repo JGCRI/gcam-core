@@ -50,6 +50,7 @@ protected:
     virtual void initElementalMembers();
     
 public:
+   
     sector();
     virtual ~sector();
     virtual void clear();
@@ -101,6 +102,7 @@ public:
     map<string, double> getemission(int per);// get ghg emissions map in summary object 
     map<string, double> getemfuelmap(int per);// get ghg emissions map in summary object
     void updateSummary(const int per);  //  update summaries for reporting
+    void addToDependencyGraph( ostream& outStream, const int period );
 };
 
 #endif // _SECTOR_H_

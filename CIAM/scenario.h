@@ -55,6 +55,7 @@ public:
 	string getName() const;
    static string XMLCreateDate( const time_t& time );
 	void run();
+   void printGraphs( const int period ) const;
 };
 
 #endif // _SCENARIO_H_

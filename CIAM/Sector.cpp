@@ -20,6 +20,8 @@
 #include "xmlHelper.h"
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
+#include <iostream>
+#include <iomanip>
 
 #include "sector.h"
 #include "subsector.h"
@@ -29,6 +31,7 @@
 #include "Configuration.h"
 #include "Summary.h"
 #include "Emcoef_ind.h"
+#include "Region.h"
 
 using namespace std;
 
@@ -984,5 +987,62 @@ void sector::updateSummary( const int per )
     input[per] = summary[per].get_fmap_second("zTotal");
 }
 
-
+/*! A function to add the sectors fuel dependency information to an existing graph.
+*
+* This function prints the sectors fuel dependencies to an existing graph.
+*
+* \param outStream An output stream to write to which was previously created.
+* \param period The period to print graphs for.
+* \return void
+*/
+void sector::addToDependencyGraph( ostream& outStream, const int period ) {
+   Configuration* conf = Configuration::getInstance();
+   string sectorName;
+   string fuelName;
+   map<string, double> sectorsUsed;  
+   typedef map<string,double>:: const_iterator CI;
+   CI fuelIter;
+   
+   // Make sure the outputstream is open.
+   assert( outStream );
+   // Get the supply sector name.
+   sectorName = getName();
+   Region::replaceSpaces( sectorName );
+   
+   sectorsUsed = getfuelcons( period );
+   
+   // Now loop through the fuel map.
+   for( fuelIter = sectorsUsed.begin(); fuelIter != sectorsUsed.end(); fuelIter++ ) {
+      fuelName = fuelIter->first;
+      if( fuelName != "zTotal" ) {
+         Region::replaceSpaces( fuelName );
+         // outStream << "\t" << fuelName << " -> " << sectorName << " [label=\"" << fuelIter->second << "\"];" << endl;
+         outStream << "\t" << fuelName << " -> " << sectorName;
+         outStream << " [style=\"";
+         
+         if( fuelIter->second < 1.0 ) {
+            outStream << "dotted";
+         }
+         else if ( fuelIter->second < 5.0 ) {
+            outStream << "dashed";
+         }
+         else if ( fuelIter->second < 10.0 ) {
+            outStream << "";
+         }
+         else {
+            outStream << "bold";
+         }
+         
+         outStream << "\"";
+         
+         if( conf->getBool( "PrintValuesOnGraphs" ) ) {
+            outStream << ",label=\"";
+            outStream << setiosflags( ios::fixed | ios::showpoint ) << setprecision( 2 );
+            outStream << fuelIter->second;
+            outStream << "\"";
+         }
+         outStream << "];" << endl;
+      }
+   }
+}
 

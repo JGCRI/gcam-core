@@ -109,6 +109,7 @@ void Region::clear(){
    carbontax.clear();
    carbontaxpaid.clear();
    summary.clear();
+   emcoef_ind.clear();
 }
 
 //! Initialize elemental data members.
@@ -366,14 +367,14 @@ void Region::completeInit() {
       resources[ i ]->setMarket( name );
    }
    
-   // supply sector markets, pass region name
-   for( i = 0;i < nossec; i++ ){
-      supplysector[ i ]->setMarket( name );
-   }
-   
    // ghg markets, pass region name
    for( i = 0; i < noghg; i++ ){
       ghgmarket[i]->setMarket( name );
+   }
+
+   // supply sector markets, pass region name
+   for( i = 0;i < nossec; i++ ){
+      supplysector[ i ]->setMarket( name );
    }
    
    // Create AgLU markets
@@ -1101,9 +1102,9 @@ void Region::emiss_ind(int per)
    int i;
    // calculate indirect GHG emissions
    for (i=0;i<nossec;i++)
-      supplysector[i]->indemission(per, emcoef_ind );
+      supplysector[i]->indemission( per, emcoef_ind );
    for (i=0;i<nodsec;i++) 
-      demandsector[i]->indemission(per, emcoef_ind );
+      demandsector[i]->indemission( per, emcoef_ind );
 }
 
 //! Set regional GHG emissions as market demand.
@@ -1378,6 +1379,65 @@ void Region::updateSummary( const int per ) {
    }
    // update primary energy trade from consumption and production amounts
    summary[per].updatepetrade(); 
+}
+
+/*! A function which print dependency graphs showing fuel usage by sector.
+*
+* This function prints the opening tag for the graph, calls Sector::addToDependencyGraph
+* on all supply and demand sectors, and then prints the closing tag.
+*
+* \param outStream An output stream to write to which was previously created.
+* \param period The period to print graphs for.
+* \return void
+*/
+void Region::printGraphs( ostream& outStream, const int period ) const {
+   
+   
+   string tempName;
+
+   // Make sure the outputstream is open.
+   assert( outStream );
+   
+   // Remove spaces from the region name.
+   tempName = name;
+   replaceSpaces( tempName );
+
+   // Print the graph header.
+   outStream << "digraph " << tempName << " {" << endl;
+
+   // Now iterate through sectors.
+
+   // Loop through all supply sectors
+   for ( int supplyIter = 0; supplyIter < nossec; supplyIter++ ) {				
+      supplysector[ supplyIter ]->addToDependencyGraph( outStream, period );
+   }
+
+   // Loop through all demand sectors.
+   for ( int demandIter = 0; demandIter < nodsec; demandIter++ ) {				
+      demandsector[ demandIter ]->addToDependencyGraph( outStream, period );
+   }
+
+   // Now close the graph
+   outStream << "}" << endl << endl;
+}
+
+/*! A function to replace spaces with underscores.
+*
+* This function is used by the graph creating functions to replace spaces with underscores,
+* as spaces in names are not legal in the dot language.
+*
+* \param stringIn The string to modify.
+* \return void
+* \sa printGraphs
+*/
+void Region::replaceSpaces( string& stringIn ) {
+   static const basic_string <char>::size_type npos = -1;
+   basic_string <char>::size_type index;
+
+   while( stringIn.find_first_of( " " ) != npos ) {
+      index = stringIn.find_first_of( " " );
+      stringIn.replace( index, 1, "_" );
+   }
 }
 
 //! Return the primaryFuelCO2Coef for a specific  fuel.

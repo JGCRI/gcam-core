@@ -271,6 +271,11 @@ void Scenario::run(){
 		
 		// Write out the results for debugging.
 		world->toDebugXML( per, xmlDebugStream );
+      
+      if( conf->getBool( "PrintDependencyGraphs" ) ) {
+         // Print out dependency graphs.
+         printGraphs( per );
+      }
 	}
 	
 	toDebugXMLClose( per, xmlDebugStream ); // Close the xml debugging tag.
@@ -288,8 +293,39 @@ void Scenario::run(){
 	xmlDebugStream.close();
 }
 
-//! Function which creates an XML compliant date time string.
+/*! A function which print dependency graphs showing fuel usage by sector.
+*
+* This function creates a filename and stream for printing the graph data in the dot graphing language.
+* The filename is created from the dependencyGraphName configuration attribute concatenated with the period.
+* The function then calls the World::printDependencyGraphs function to perform the printing.
+* Once the data is printed, dot must be called to create the actual graph as follows:
+* dot -Tpng depGraphs_8.dot -o graphs.png
+* where depGraphs_8.dot is the file created by this function and graphs.png is the file you want to create.
+* The output format can be changed, see the dot documentation for further information.
+*
+* \param period The period to print graphs for.
+* \return void
+*/
+void Scenario::printGraphs( const int period ) const {
+   
+   Configuration* conf = Configuration::getInstance();
+   string fileName;
+   ofstream graphStream;
+   stringstream fileNameBuffer;
+   
+   // Create the filename.
+   fileNameBuffer << conf->getFile( "dependencyGraphName", "graph" ) << "_" << period << ".dot";
+   fileNameBuffer >> fileName;
 
+   graphStream.open( fileName.c_str() );
+   assert( graphStream );
+
+   world->printGraphs( graphStream, period );
+
+   graphStream.close();
+}
+
+//! Function which creates an XML compliant date time string.
 /*! 
 * This function takes as an argument a time_t object and returns a string containing the date and time in the following format:
 * yyyy-mm-dd-Thh:mm-GMTOFFSET
