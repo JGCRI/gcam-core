@@ -286,7 +286,7 @@ void technology::toXML( ostream& out ) const {
     XMLWriteElementCheckDefault( tax, "tax", out, 0 );
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, 1 );
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, 1 );
-    XMLWriteElementCheckDefault( lexp, "logitexp", out, 1 );
+    XMLWriteElementCheckDefault( lexp, "logitexp", out, -6 );
     XMLWriteElementCheckDefault( techchange, "techchange", out, 0 );
     XMLWriteElementCheckDefault( resource, "resource", out, 0 );
     XMLWriteElementCheckDefault( A, "A", out, 0 );
