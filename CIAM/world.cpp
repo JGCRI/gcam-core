@@ -24,6 +24,7 @@
 #include "Marketplace.h"
 #include "Configuration.h"
 #include "Util.h"
+#include "Summary.h"
 
 using namespace std;
 using namespace xercesc;
@@ -31,498 +32,397 @@ using namespace xercesc;
 extern "C" { void _stdcall AG2INITC( double[14][12] ); };
 extern Scenario* scenario;
 
-// global map of region names
-map<string,int> regionMap;
-
 //! Default constructor.
 World::World() {
-	// initialize elemental datamembers.
-	noreg = 0;
-
-   doCalibrations = true;
-   
-   // We can resize all the arrays because we are garunteed by the schema that the modeltime object is parsed first.
-   const int maxper = scenario->getModeltime()->getmaxper();
-	population.resize(maxper); // total global population
-	crudeoilrsc.resize(maxper); // global crude oil resource
-	unconvoilrsc.resize(maxper); // global crude oil resource
-	natgasrsc.resize(maxper); // global natural gas resource
-	coalrsc.resize(maxper); // global coal resource
-	uranrsc.resize(maxper); // global uranium resource
-	ghgs.resize(maxper+2); // structure containing ghg emissions
+    // initialize elemental datamembers.
+    doCalibrations = true;
+    // We can resize all the arrays because we are garunteed by the schema that the modeltime object is parsed first.
+    ghgs.resize( scenario->getModeltime()->getmaxper() ); // structure containing ghg emissions
 }
 
+//! World destructor. 
 World::~World(){
-	for ( vector<Region*>::iterator regionIter = region.begin(); regionIter != region.end(); regionIter++ ) {
-		delete *regionIter;
-	}
+    clear();
 }
 
-//! Initialize member variables.
+//! Helper member function for the destructor. Clears all clears all datastructures and deallocates memory. 
 void World::clear(){
-	noreg = 0;
-	region.clear();
-	population.clear();
-	crudeoilrsc.clear();
-	unconvoilrsc.clear();
-	natgasrsc.clear();
-	coalrsc.clear();
-	uranrsc.clear();
-	ghgs.clear();
+
+    ghgs.clear();
+    for ( vector<Region*>::iterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
+        delete *regionIter;
+    }
+
+    regions.clear();
 }
 
 //! parses World xml object
 void World::XMLParse( const DOMNode* node ){
-	
-	string nodeName;
-	DOMNode* curr = 0;
-	Region* tempRegion = 0; // tempory region object
-	
-	// assume we are passed a valid node.
-	assert( node );
-	
-	// get all the children.
-	DOMNodeList* nodeList = node->getChildNodes();
-	
-	for( int i = 0;  i < static_cast<int>( nodeList->getLength() ); i++ ){
-		curr = nodeList->item( i );
-		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-		
-      if( nodeName == "#text" ) {
-         continue;
-      }
 
-		else if( nodeName == "region" ){
-         // Check if the region already exists.
-         map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-         if( regionIter != regionNamesToNumbers.end() ) {
-            // Region exists.
-            region[ regionIter->second ]->XMLParse( curr );
-         }
-         else {
-			   tempRegion = new Region();
-			   tempRegion->XMLParse( curr );
-			   region.push_back( tempRegion ); // resizes vector of region objects
-			   regionNamesToNumbers[ tempRegion->getName() ] = static_cast<int>( region.size() ) - 1;
-         }
-		}
-      else if( nodeName == "primaryFuelName" ) {
-         // Get the fuel name.
-         const string primaryFuelName = XMLHelper<string>::getValueString( curr );
-         
-         // Check if it already exists.
-        if( std::find( primaryFuelList.begin(), primaryFuelList.end(), primaryFuelName ) == primaryFuelList.end() ) {
-            primaryFuelList.push_back( primaryFuelName );
-         }
-      }
-      else {
-         cout << "Unrecognized text string: " << nodeName << " found while parsing World." << endl;
-      }
-	}
+    string nodeName;
+    DOMNode* curr = 0;
+    Region* tempRegion = 0; // tempory region object
+
+    // assume we are passed a valid node.
+    assert( node );
+
+    // get all the children.
+    DOMNodeList* nodeList = node->getChildNodes();
+
+    for( int i = 0;  i < static_cast<int>( nodeList->getLength() ); i++ ){
+        curr = nodeList->item( i );
+        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+
+        if( nodeName == "#text" ) {
+            continue;
+        }
+
+        else if( nodeName == "region" ){
+            // Check if the region already exists.
+            map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+            if( regionIter != regionNamesToNumbers.end() ) {
+                // Region exists.
+                regions[ regionIter->second ]->XMLParse( curr );
+            }
+            else {
+                tempRegion = new Region();
+                tempRegion->XMLParse( curr );
+                regions.push_back( tempRegion ); // resizes vector of region objects
+                regionNamesToNumbers[ tempRegion->getName() ] = static_cast<int>( regions.size() ) - 1;
+            }
+        }
+        else if( nodeName == "primaryFuelName" ) {
+            // Get the fuel name.
+            const string primaryFuelName = XMLHelper<string>::getValueString( curr );
+
+            // Check if it already exists.
+            if( std::find( primaryFuelList.begin(), primaryFuelList.end(), primaryFuelName ) == primaryFuelList.end() ) {
+                primaryFuelList.push_back( primaryFuelName );
+            }
+        }
+        else {
+            cout << "Unrecognized text string: " << nodeName << " found while parsing World." << endl;
+        }
+    }
 }
 
 //! Complete the initialization.
 void World::completeInit() {
-   
-   // Set the number of regions.
-   noreg = static_cast<int>( region.size() );
 
-   // Finish initializing all the regions.
-   for( vector<Region*>::iterator regionIter = region.begin(); regionIter != region.end(); regionIter++ ) {
-      ( *regionIter )->completeInit();
-   }
+    // Finish initializing all the regions.
+    for( vector<Region*>::iterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
+        ( *regionIter )->completeInit();
+    }
 
-   // Initialize AgLU
-	Configuration* conf = Configuration::getInstance();
-	if( conf->getBool( "agSectorActive" ) ) {
-		initAgLu();
-	}
+    // Initialize AgLU
+    Configuration* conf = Configuration::getInstance();
+    if( conf->getBool( "agSectorActive" ) ) {
+        initAgLu();
+    }
 }
 
 //! Initialize the AgLu model.
 void World::initAgLu() {
-	
-   cout << "Initializing agLU" << endl;
-	double prices[ 14 ][ 12 ]; 
-	
-	vector<double> tempVec( 12 );
-	
+
+    cout << "Initializing agLU" << endl;
+    double prices[ 14 ][ 12 ]; 
+
+    vector<double> tempVec( 12 );
+
 #if(__HAVE_FORTRAN__)		
-	AG2INITC( prices ); // not implimented for non-PC's at this time
+    AG2INITC( prices ); // not implimented for non-PC's at this time
 #endif
-	
-	for ( int j = 0; j < noreg; j++ ) {
-		for ( int k = 0; k < AgSector::getNumAgMarkets(); k++ ) {
-			tempVec[ k ] = prices[ j ][ k ];
-		}
-		region[ j ]->initializeAgMarketPrices( tempVec );
-	}
+
+    for ( int j = 0; j < static_cast<int>( regions.size() ); j++ ) {
+        for ( int k = 0; k < AgSector::getNumAgMarkets(); k++ ) {
+            tempVec[ k ] = prices[ j ][ k ];
+        }
+        regions[ j ]->initializeAgMarketPrices( tempVec );
+    }
 }
 
 //! Write out datamembers to XML output stream.
 void World::toXML( ostream& out ) const {
-	
-	// write the beginning tag.
-	Tabs::writeTabs( out );
-	out << "<world>" << endl;
-	
-	// increase the indent.
-	Tabs::increaseIndent();
-	
-	// write the xml for the class members.
-	// for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
-	// won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
-   for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
-      XMLWriteElement( *fuelIter, "primaryFuelName", out );
-   }
 
-	for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ){
-		//for( vector<Region>::const_iterator i = region.begin(); i <= region.begin(); i++ ){
-		( *i )->toXML( out );
-	}
-	// finished writing xml for the class members.
-	
-	// decrease the indent.
-	Tabs::decreaseIndent();
-	
-	// write the closing tag.
-	Tabs::writeTabs( out );
-	out << "</world>" << endl;
-	
+    // write the beginning tag.
+    Tabs::writeTabs( out );
+    out << "<world>" << endl;
+
+    // increase the indent.
+    Tabs::increaseIndent();
+
+    // write the xml for the class members.
+    // for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
+    // won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
+    for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
+        XMLWriteElement( *fuelIter, "primaryFuelName", out );
+    }
+
+    for( vector<Region*>::const_iterator i = regions.begin(); i != regions.end(); i++ ){
+        ( *i )->toXML( out );
+    }
+    // finished writing xml for the class members.
+
+    // decrease the indent.
+    Tabs::decreaseIndent();
+
+    // write the closing tag.
+    Tabs::writeTabs( out );
+    out << "</world>" << endl;
+
 }
 
 //! Write out XML for debugging purposes.
 /*! \warning This only call Region::toXML for the US. */
 void World::toDebugXML( const int period, ostream& out ) const {
-	
-	// write the beginning tag.
-	Tabs::writeTabs( out );
-	out << "<world period=\"" << period << "\">" << endl;
-	
-	// increase the indent.
-	Tabs::increaseIndent();
-	
-	// write the xml for the class members.
-	for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
-      XMLWriteElement( *fuelIter, "primaryFuelName", out );
-   }
 
-	XMLWriteElement( noreg, "numberOfRegions", out );
-	XMLWriteElement( population[ period ], "globalPopulation", out );
-	XMLWriteElement( crudeoilrsc[ period ], "globalCrudeOil", out );
-	XMLWriteElement( unconvoilrsc[ period ], "globalUnconventionalOil", out );
-	XMLWriteElement( natgasrsc[ period ], "globalNaturalGas", out );
-	XMLWriteElement( coalrsc[ period ], "globalCoal", out );
-	XMLWriteElement( uranrsc[ period ], "globalUranium", out );
-	
-	// for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
-	// won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
-	scenario->getMarketplace()->toDebugXML( period, out );
-	
-	for( vector<Region*>::const_iterator i = region.begin(); i == region.begin(); i++ ) { 
-	// for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ) {
-      ( *i )->toDebugXML( period, out );
-	}
-	
-	for( vector<map<string,double> >::const_iterator j = ghgs.begin(); j != ghgs.end(); j++ ) {
-		// j->toDebugXML( out ); // not yet implemented.
-	}
-	// finished writing xml for the class members.
-	
-	// decrease the indent.
-	Tabs::decreaseIndent();
-	
-	// write the closing tag.
-	Tabs::writeTabs( out );
-	out << "</world>" << endl;
+    // write the beginning tag.
+    Tabs::writeTabs( out );
+    out << "<world period=\"" << period << "\">" << endl;
+
+    // increase the indent.
+    Tabs::increaseIndent();
+
+    // write the xml for the class members.
+    for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
+        XMLWriteElement( *fuelIter, "primaryFuelName", out );
+    }
+
+    // for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
+    // won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
+    scenario->getMarketplace()->toDebugXML( period, out );
+
+    for( vector<Region*>::const_iterator i = regions.begin(); i == regions.begin(); i++ ) { 
+        // for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ) {
+        ( *i )->toDebugXML( period, out );
+    }
+
+    for( vector<map<string,double> >::const_iterator j = ghgs.begin(); j != ghgs.end(); j++ ) {
+        // j->toDebugXML( out ); // not yet implemented.
+    }
+    // finished writing xml for the class members.
+
+    // decrease the indent.
+    Tabs::decreaseIndent();
+
+    // write the closing tag.
+    Tabs::writeTabs( out );
+    out << "</world>" << endl;
 }
 
 //! initialize anything that won't change during the calcuation
 /*! Examples: share weight scaling due to previous calibration, 
- * cumulative technology change, etc.
- */
-void World::initCalc( const int per ) {	
-	
-   for ( int i=0 ;i<noreg; i++ ) {
-		region[ i ]->initCalc( per );
-	}
-   
+* cumulative technology change, etc.
+*/
+void World::initCalc( const int period ) {	
+    for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ){
+        ( *i )->initCalc( period );
+    }
 }
 
 //! calculate supply and demand and emissions for all regions
 /*! This is the main action loop for the model. 
 Uses "MiniCAM" style logic where primary costs are calculated, 
 then prices of refined fuels, end-use costs, end-use, etc. */
-void World::calc( const int per, const vector<string>& regionsToSolve ) {	
-	
-	vector<int> regionNumbersToSolve;
-	
-	Configuration* conf = Configuration::getInstance();
-	
-	if ( regionsToSolve.size() == 0 ) {
-		regionNumbersToSolve.resize( region.size() );
-		
-		for( int regionNumber = 0; regionNumber < static_cast<int> ( regionNumbersToSolve.size() ); regionNumber++ ) {
-			regionNumbersToSolve[ regionNumber ] = regionNumber;
-		}
-	}
-	else {
-		for( vector<string>::const_iterator regionName = regionsToSolve.begin(); regionName != regionsToSolve.end(); regionName++ ) {
-         map<string,int>::const_iterator foundName = regionNamesToNumbers.find( *regionName );
-         if ( foundName != regionNamesToNumbers.end() ) {
-            const int regionNumber = foundName->second; 
-			   regionNumbersToSolve.push_back( regionNumber );
-         }
-         else {
-            cout << "Error: Region " << *regionName << " not found." << endl;
-         }
-		}
-	}
+void World::calc( const int period, const vector<string>& regionsToSolve ) {	
 
-	for ( vector<int>::iterator i = regionNumbersToSolve.begin(); i != regionNumbersToSolve.end(); i++ ) {
-      // Write back calibrated values to the member variables.
-      // These are still trial values.
-      if( conf->getBool( "CalibrationActive" ) ) {
-         region[ *i ]->writeBackCalibratedValues( per );
-      }
-		// calculate regional GNP
-		region[ *i ]->calcGnp( per );
-		// apply carbon taxes to appropriate technologie
-		region[ *i ]->applycarbontax(per);
-		// set regional GHG constraint to market supply
-		region[ *i ]->setGhgSupply(per);
-		// set regional GHG tax to individual technologies
-		region[ *i ]->addGhgTax(per);
-		// determine supply of primary resources
-		region[ *i ]->rscSupply(per);
-		// determine prices of refined fuels and electricity
-		region[ *i ]->finalSupplyPrc(per);
-		// calculate enduse service price
-		region[ *i ]->calcEndUsePrice( per );
-		// adjust gnp for energy cost changes
-		region[ *i ]->adjustGnp(per);
+    vector<int> regionNumbersToSolve;
 
-		// determine end-use demand for energy and other goods
-		region[ *i ]->enduseDemand(per);
+    Configuration* conf = Configuration::getInstance();
 
-		// determine supply of final energy and other goods based on demand
-		region[ *i ]->finalSupply(per);
-		
-		if( conf->getBool( "agSectorActive" ) ){
-			region[ *i ]->calcAgSector(per);
-		}
+    if ( regionsToSolve.size() == 0 ) {
+        regionNumbersToSolve.resize( regions.size() );
 
-      // Perform calibrations
-      if( conf->getBool( "CalibrationActive" ) ) {
-         region[ *i ]->calibrateRegion( doCalibrations, per );
-      }
-   
-	}
-   
+        for( int regionNumber = 0; regionNumber < static_cast<int> ( regionNumbersToSolve.size() ); regionNumber++ ) {
+            regionNumbersToSolve[ regionNumber ] = regionNumber;
+        }
+    }
+    else {
+        for( vector<string>::const_iterator regionName = regionsToSolve.begin(); regionName != regionsToSolve.end(); regionName++ ) {
+            map<string,int>::const_iterator foundName = regionNamesToNumbers.find( *regionName );
+            if ( foundName != regionNamesToNumbers.end() ) {
+                const int regionNumber = foundName->second; 
+                regionNumbersToSolve.push_back( regionNumber );
+            }
+            else {
+                cout << "Error: Region " << *regionName << " not found." << endl;
+            }
+        }
+    }
+
+    for ( vector<int>::iterator i = regionNumbersToSolve.begin(); i != regionNumbersToSolve.end(); i++ ) {
+        // Write back calibrated values to the member variables.
+        // These are still trial values.
+        if( conf->getBool( "CalibrationActive" ) ) {
+            regions[ *i ]->writeBackCalibratedValues( period );
+        }
+        // calculate regional GNP
+        regions[ *i ]->calcGnp( period );
+        // apply carbon taxes to appropriate technologie
+        regions[ *i ]->applycarbontax(period);
+        // set regional GHG constraint to market supply
+        regions[ *i ]->setGhgSupply(period);
+        // set regional GHG tax to individual technologies
+        regions[ *i ]->addGhgTax(period);
+        // determine supply of primary resources
+        regions[ *i ]->rscSupply(period);
+        // determine prices of refined fuels and electricity
+        regions[ *i ]->finalSupplyPrc(period);
+        // calculate enduse service price
+        regions[ *i ]->calcEndUsePrice( period );
+        // adjust gnp for energy cost changes
+        regions[ *i ]->adjustGnp(period);
+
+        // determine end-use demand for energy and other goods
+        regions[ *i ]->enduseDemand(period);
+
+        // determine supply of final energy and other goods based on demand
+        regions[ *i ]->finalSupply(period);
+
+        if( conf->getBool( "agSectorActive" ) ){
+            regions[ *i ]->calcAgSector(period);
+        }
+
+        // Perform calibrations
+        if( conf->getBool( "CalibrationActive" ) ) {
+            regions[ *i ]->calibrateRegion( doCalibrations, period );
+        }
+
+    }
+
 }
 
 //! Update all summary information for reporting
 // Orginally in world.calc, removed to call only once after solved
-void World::updateSummary( int per )
-{
-	for (int i=0;i<noreg;i++) {
-		region[i]->emission(per);
-		region[i]->updateSummary(per);
-		region[i]->calcEmissFuel(per);
-	}
-}
-
-//! sum population from each region for global total
-void World::sumpop( int per )
-{
-	population[per] = 0.0;
-	// divide by 1000 to get millions
-	for ( int i = 0; i < noreg; i++ ) {
-		population[per] += region[i]->getPop(per)/1000;
-	}
-}
-
-//! sum regional resources for global total
-void World::sumrsc( int per )
-{
-	crudeoilrsc[per] = 0.0;
-	unconvoilrsc[per] = 0.0;
-	natgasrsc[per] = 0.0;
-	coalrsc[per] = 0.0;
-	uranrsc[per] = 0.0;
-	
-	for ( int i = 0; i < noreg; i++ ) {
-		crudeoilrsc[per] += region[i]->getSubRsc( "crude oil", "crude oil", per );
-		unconvoilrsc[per] += region[i]->getSubRsc( "crude oil", "unconventional oil", per );
-		natgasrsc[per] += region[i]->getRsc( "natural gas",per );
-		coalrsc[per] += region[i]->getRsc( "coal" ,per );
-		uranrsc[per] += region[i]->getRsc( "uranium", per );
-	}
+void World::updateSummary( const int period ) {
+    for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ){
+        ( *i )->emission( period );
+        ( *i )->updateSummary( period );
+        ( *i )->calcEmissFuel( period );
+    }
 }
 
 //! calculate indirect emissions for each region
-void World::emiss_ind(int per)
-{
-	for (int i=0;i<noreg;i++) {
-		region[i]->emissionInd(per); // calculate indirect emissions
-	}
+void World::emiss_ind( const int period ) {
+    for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ){
+        ( *i )->emissionInd( period ); // calculate indirect emissions
+    }
 }
 
-//! set global emissions for all GHG for climat
-void World::emiss_all() {
-	const int maxper = scenario->getModeltime()->getmaxdataper();
-	int  per;
-
-	ifstream gasfile2;
-	const string gasFileName = Configuration::getInstance()->getFile( "GHGInputFileName" );
-	gasfile2.open( gasFileName.c_str(), ios::in ); // open input file for reading
-
-   util::checkIsOpen( gasfile2, gasFileName );
-
-	// read in all other gases except CO2 from fossil fuels
-	// CO2 from fossil fuels comes from model
-	int skiplines = 5;
-	for (int i=0;i<skiplines;i++)
-		gasfile2.ignore(80,'\n'); // skip lines
-	for (per=1;per<maxper;per++) {
-		gasfile2.ignore(80,','); // skip year column
-		gasfile2.ignore(80,','); // skip CO2 column
-		gasfile2 >> ghgs[per][ "CO2ag" ];
-      gasfile2.ignore(80,','); // skip comma
-		gasfile2 >> ghgs[per][ "CH4" ];
-		gasfile2.ignore(80,','); // skip comma
-      gasfile2 >> ghgs[per][ "N2O" ];
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2 >> ghgs[per][ "SOXreg1" ];
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per][ "SOXreg2" ];
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per][ "SOXreg3" ];
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per][ "CF4" ];
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per][ "C2F6" ];
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per][ "HFC125" ];
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per][ "HFC134a" ];
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per][ "HFC143a" ];
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per][ "HFC227ea" ];
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per][ "HFC245ca" ];
-		gasfile2.ignore(80,','); // skip comma
-		gasfile2>> ghgs[per][ "SF6" ];
-		gasfile2.ignore(80,'\n'); // next line
-	}
-	for (per=maxper;per<maxper+2;per++) {
-		ghgs[per]=ghgs[per-1];
-	}
-	
-	gasfile2.close();
+//! Calculates the global emissions. Currently only CO2 exists.
+void World::calculateEmissionsTotals() {
+    for( vector<Region*>::iterator iter = regions.begin(); iter != regions.end(); iter++ ) {
+        for( int i = 0; i < scenario->getModeltime()->getmaxper(); i++ ){
+            Summary tempSummary = ( *iter )->getSummary( i );
+            ghgs[ i ][ "CO2" ] += tempSummary.get_emissmap_second( "CO2" );
+        }
+    }
 }
 
 //! write results for all regions to file
-void World::outputfile() {
-	const int maxper = scenario->getModeltime()->getmaxper();
-	vector<double> temp(maxper);
-	// function protocol
-	void fileoutput3(string var1name,string var2name,string var3name,
-		string var4name,string var5name,string uname,vector<double> dout);
-	
-	// write global population results to database
-	fileoutput3("global"," "," "," ","population","Millions",population);
-	
-	// write total emissions for World
-	for (int m=0;m<maxper;m++)
-		temp[m] = ghgs[m][ "CO2" ];
-	fileoutput3( "global"," "," "," ","CO2 emiss","MTC",temp);
-	fileoutput3( "global"," "," "," ","c.oil resource(conv)","EJ",crudeoilrsc);
-	fileoutput3( "global"," "," "," ","c.oil resource(unconv)","EJ",unconvoilrsc);
-	fileoutput3( "global"," "," "," ","n.gas resource","EJ",natgasrsc);
-	fileoutput3( "global"," "," "," ","coal resource","EJ",coalrsc);
-	fileoutput3( "global"," "," "," ","uran resource","EJ",uranrsc);
-    for (int i=0;i<noreg;i++) {
-		region[i]->outputFile();
+void World::outputfile() const {
+    const int maxper = scenario->getModeltime()->getmaxper();
+    vector<double> temp(maxper);
+    // function protocol
+    void fileoutput3(string var1name,string var2name,string var3name,
+        string var4name,string var5name,string uname,vector<double> dout);
+
+    // write global population results to database
+    // fileoutput3("global"," "," "," ","population","Millions",population);
+
+    // write total emissions for World
+    for ( int m = 0; m < maxper; m++ ){
+        map<string,double>::const_iterator ghgValue = ghgs[m].find( "CO2" );
+        if( ghgValue != ghgs[ m ].end() ){
+            temp[m] = ghgValue->second;
+        } else {
+            temp[m] = 0;
+        }
+    }
+    fileoutput3( "global"," "," "," ","CO2 emiss","MTC",temp);
+
+    for( vector<Region*>::const_iterator i = regions.begin(); i != regions.end(); i++ ){
+        ( *i )->outputFile();
     }
 }
 
 //! MiniCAM style output to database
-void World::MCoutput() {
-	const int maxper = scenario->getModeltime()->getmaxper();
-	vector<double> temp(maxper);
-	// function protocol
-	void dboutput4(string var1name,string var2name,string var3name,string var4name,
-		string uname,vector<double> dout);
-	
-	// write global population results to database
-	//dboutput4("global","General","Population","zTotal","thous",population);
-	
-	// call regional output
-	for (int i=0;i<noreg;i++) {
-		region[i]->MCoutput();
-	}
+void World::MCoutput() const {
+    // call regional output
+    for( vector<Region*>::const_iterator i = regions.begin(); i != regions.end(); i++ ){
+        ( *i )->MCoutput();
+    }
 }
 
 //! turn on calibrations
-void World::turnCalibrationsOn()
-{
-	doCalibrations = true;
+void World::turnCalibrationsOn() {
+    doCalibrations = true;
 }
 
 //! turn off calibrations
-void World::turnCalibrationsOff()
-{
-	doCalibrations = false;
+void World::turnCalibrationsOff(){
+    doCalibrations = false;
 }
 
 //! return calibration setting
-bool World::getCalibrationSetting() const 
-{
-	return doCalibrations;
+bool World::getCalibrationSetting() const {
+    return doCalibrations;
 }
 
 //! Return the amount of the given GHG in the given period.
-double World::getGHGEmissions( const std::string& ghgName, const int per ) const {
-   assert( per < static_cast<int>( ghgs.size() ) );
+double World::getGHGEmissions( const std::string& ghgName, const int period ) const {
+    assert( period < static_cast<int>( ghgs.size() ) );
 
-   map<string,double>::const_iterator iter = ghgs[ per ].find( ghgName );
-   
-   if( iter != ghgs[ per ].end() ) {
-      return iter->second;
-   }
-   else {
-      cout << "GHG: " << ghgName << " was not found for period " << per << "." << endl;
-      return 0;
-   }
+    map<string,double>::const_iterator iter = ghgs[ period ].find( ghgName );
+
+    if( iter != ghgs[ period ].end() ) {
+        return iter->second;
+    }
+    else {
+        cout << "GHG: " << ghgName << " was not found for period " << period << "." << endl;
+        return 0;
+    }
 }
+/*! \brief This function returns a special mapping of strings to ints for use in the outputs. 
+* \details This map is created such that global maps to zero, region 0 maps to 1, etc
+* It is similiar to the regionNamesToNumbers map but has the global element and each region number in the 
+* regionMap is 1 + the number in the regionNamesToNumbers map.
+* \warning This function should only be used by the database output functions. 
+* \return The map of region names to numbers.
+*/
+const map<string,int> World::getOutputRegionMap() const {
+    map<string,int> regionMap;
 
-void World::createRegionMap(void) // create map of region names
-{
-	for (int i=0;i<noreg;i++) {
-		regionMap[region[i]->getName()] = i+1; // start index from 1
-	}
+    for ( int i = 0; i < static_cast<int>( regions.size() ); i++ ) {
+        regionMap[regions[i]->getName()] = i+1; // start index from 1
+    }
     // hardcode for now
     regionMap["global"] = 0;
+    return regionMap;
 }
 
 void World::setupCalibrationMarkets() {
-   for( vector<Region*>::iterator i = region.begin(); i != region.end(); i++ ) {
-      ( *i )->setupCalibrationMarkets();
-   }
+    for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ) {
+        ( *i )->setupCalibrationMarkets();
+    }
 }
 
-vector<string> World::getRegionVector() const {
-   vector<string> regionNames;
+/* \brief This function returns a vector of all region names which exist in the world.
+* \detailed This function creates a vector of region names in the same order as they exist 
+* in the world.
+* \todo There are still several functions returning region names.
+* \return A constant vector of region names.
+*/
+const vector<string> World::getRegionVector() const {
+    vector<string> regionNames;
 
-   for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ) {
-      regionNames.push_back( ( *i )->getName() );
-   }
-   return regionNames;
+    for( vector<Region*>::const_iterator i = regions.begin(); i != regions.end(); i++ ) {
+        regionNames.push_back( ( *i )->getName() );
+    }
+    return regionNames;
 }
 
-/*! A function which print dependency graphs showing fuel usage by sector.
+/*! \brief A function which print dependency graphs showing fuel usage by sector.
 *
 * This function is called by Scenario::printGraphs to iterate through the regions and call
 * Region::printGraphs, which does the actual printing.
@@ -533,43 +433,43 @@ vector<string> World::getRegionVector() const {
 * \warning Currently only the U.S. has graphs printed for it.
 */
 void World::printGraphs( ostream& outStream, const int period ) const {
-   assert( outStream );
+    assert( outStream );
 
-   // Only do the US for now.
-   for ( vector<Region*>::const_iterator regionIter = region.begin(); regionIter == region.begin(); regionIter++ ) {
-      ( *regionIter )->printGraphs( outStream, period );
-   }
+    // Only do the US for now.
+    for ( vector<Region*>::const_iterator regionIter = regions.begin(); regionIter == regions.begin(); regionIter++ ) {
+        ( *regionIter )->printGraphs( outStream, period );
+    }
 }
 
 //! Return the list of primary fuels. 
 const vector<string> World::getPrimaryFuelList() const {
-   return primaryFuelList;
+    return primaryFuelList;
 }
 
 //! Return the primaryFuelCO2Coef for a specific region and fuel.
 double World::getPrimaryFuelCO2Coef( const string& regionName, const string& fuelName ) const {
-   
-   // Determine the correct region.
-   double coef = 0;
-   map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( regionName );
-   if( regionIter != regionNamesToNumbers.end() ) {
-      coef = region[ regionIter->second ]->getPrimaryFuelCO2Coef( fuelName );
-   }
 
-   return coef;
+    // Determine the correct region.
+    double coef = 0;
+    map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( regionName );
+    if( regionIter != regionNamesToNumbers.end() ) {
+        coef = regions[ regionIter->second ]->getPrimaryFuelCO2Coef( fuelName );
+    }
+
+    return coef;
 }
 
 //! Return the carbonTaxCoef for a specific region and fuel.
 double World::getCarbonTaxCoef( const string& regionName, const string& fuelName ) const {
-   
-   // Determine the correct region.
-   double coef = 0;
-   map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( regionName );
-   if( regionIter != regionNamesToNumbers.end() ) {
-      coef = region[ regionIter->second ]->getCarbonTaxCoef( fuelName );
-   }
 
-   return coef;
+    // Determine the correct region.
+    double coef = 0;
+    map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( regionName );
+    if( regionIter != regionNamesToNumbers.end() ) {
+        coef = regions[ regionIter->second ]->getCarbonTaxCoef( fuelName );
+    }
+
+    return coef;
 }
 
 /*! \brief A function to print a csv file including the list of all regions their sector dependencies.
@@ -578,7 +478,7 @@ double World::getCarbonTaxCoef( const string& regionName, const string& fuelName
 * \param logger The to which to print the dependencies. 
 */
 void World::printSectorDependencies( Logger* logger ) const {
-    for( vector<Region*>::const_iterator regionIter = region.begin(); regionIter != region.end(); regionIter++ ) {
+    for( vector<Region*>::const_iterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
         ( *regionIter )->printSectorDependencies( logger );
     }
 }
