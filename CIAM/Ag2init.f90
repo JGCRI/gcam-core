@@ -21,7 +21,7 @@ CALL Ag2control
 ! Could calculate GDP here using MiniCAM's labor prod numbers
 ! GDP in trillions of 1990 dollars
 DO i=2, NLP
-  CALP(i,8) = CALP(1,8) ! Only brought period 1 in, clear the rest. Could be very wrong.
+  CALP(i,8) = CALP2(i,8) ! Only brought period 1 in, clear the rest. Could be very wrong.
 END DO
 
 ! Procedure to calculate GDP per capita using MiniCAM data(starting in 1990)
