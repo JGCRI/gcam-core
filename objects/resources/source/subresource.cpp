@@ -171,7 +171,11 @@ void SubResource::toInputXML( ostream& out, Tabs* tabs ) const {
     for(m = 0; m < static_cast<int>(environCost.size() ); m++ ) {
         XMLWriteElementCheckDefault(environCost[m],"environCost",out, tabs, 0.0 ,modeltime->getper_to_yr(m));
     }
-    
+
+    for(m = 0; m < static_cast<int>(gdpExpans.size() ); m++ ) {
+        XMLWriteElementCheckDefault(gdpExpans[m],"gdpExpans",out, tabs, GDP_EXPANS_DEFAULT ,modeltime->getper_to_yr(m));
+    }
+
     for(m = 0; m < static_cast<int>(severanceTax.size() ); m++ ) {
         XMLWriteElementCheckDefault(severanceTax[m],"severanceTax",out, tabs, 0.0 ,modeltime->getper_to_yr(m));
     }
