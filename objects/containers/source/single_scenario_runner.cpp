@@ -19,11 +19,11 @@
 #include "sectors/include/ag_sector.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/auto_file.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
 
-extern ofstream bugoutfile, logfile;
 extern Scenario* scenario;
 
 // Function Prototypes. These need a helper class. 
@@ -38,9 +38,6 @@ SingleScenarioRunner::SingleScenarioRunner(){
 
 //! Destructor. Closes all the open files. 
 SingleScenarioRunner::~SingleScenarioRunner(){
-     // Close All Text Files
-    bugoutfile.close();
-    logfile.close();
 }
 
 /*! \brief Setup the Scenario to be run.
@@ -53,18 +50,8 @@ SingleScenarioRunner::~SingleScenarioRunner(){
 * \return Whether the setup completed successfully.
 */
 bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, const list<string> aScenComponents ){
-
-    // Open various files.
-    const Configuration* conf = Configuration::getInstance();
-    const string logFileName = conf->getFile( "logOutFileName" );
-    logfile.open( logFileName.c_str(), ios::out );
-    util::checkIsOpen( logfile, logFileName  );
-    
-    const string bugOutFileName = conf->getFile( "bugOutFileName" );
-    bugoutfile.open( bugOutFileName.c_str(), ios::out );
-    util::checkIsOpen( bugoutfile, bugOutFileName );
-    
     // Parse the input file.
+    const Configuration* conf = Configuration::getInstance();
     XercesDOMParser* parser = XMLHelper<void>::getParser();
     DOMNode* root = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), parser );
 
@@ -89,33 +76,30 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
         scenComponents.push_back( *curr );
     }
     
+
     // Iterate over the vector.
     typedef list<string>::const_iterator ScenCompIter;
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::NOTICE );
+
     for( ScenCompIter currComp = scenComponents.begin(); currComp != scenComponents.end(); ++currComp ) {
-        if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
-            cout << "Parsing " << *currComp << " scenario component." << endl;
-        }
+        mainLog << "Parsing " << *currComp << " scenario component." << endl;
         root = XMLHelper<void>::parseXML( *currComp, parser );
         overrideName += XMLHelper<string>::getAttrString( root, "name" );
         mScenario->XMLParse( root );
     }
-    if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
-        cout << "XML parsing complete." << endl;
-    }
-    logfile << "XML parsing complete." << endl;
+ 
+    mainLog << "XML parsing complete." << endl;
     
     // If the name was not set from the level above or the configuration, set it to the combination
-    // of the add on names.
+    // of the add on names. Not quite right.
     if( !nameSet ){
         mScenario->setName( overrideName );
     }
     // Print data read in time.
     timer.save();
-    if ( Configuration::getInstance()->getBool( "timestamp" ) ) { 
-        timer.print( cout, "XML Readin Time:" );
-    }
-    timer.print( logfile, "XML Readin Time:" );
-
+    mainLog.setLevel( ILogger::NOTICE );
+    timer.print( mainLog, "XML Readin Time:" );
     return true;
 }
 
@@ -124,7 +108,10 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
 * \param aTimer The timer used to print out the amount of time spent performing operations.
 */
 bool SingleScenarioRunner::runScenario( Timer& timer ){
-    cout << "Starting a model run..." << endl;
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Starting a model run." << endl;
+    
     // Finish initialization.
     mScenario->completeInit();
 
@@ -133,9 +120,8 @@ bool SingleScenarioRunner::runScenario( Timer& timer ){
 
     // Compute model run time.
     timer.save();
-    if ( Configuration::getInstance()->getBool( "timestamp" ) ) { 
-        timer.print( cout, "Data Readin & Initial Model Run Time:" );
-    }
+    mainLog.setLevel( ILogger::DEBUG );
+    timer.print( mainLog, "Data Readin & Initial Model Run Time:" );
 
     // Return whether the scenario ran correctly. 
     return success;
@@ -149,16 +135,17 @@ bool SingleScenarioRunner::runScenario( Timer& timer ){
 * \param aCloseDB Whether to close the database and output variable IDs. Defaults to true.
 */
 void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
-    cout << "Printing output..." << endl;
-    // Get a pointer to the configuration object.
-    const Configuration* conf = Configuration::getInstance();
-        
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Printing output" << endl;
+
     // Print output xml file.
     AutoOutputFile xmlOut( "xmlOutputFileName", "output.xml" );
     Tabs tabs;
     mScenario->toInputXML( *xmlOut, &tabs );
 
     // Write out the ag sector data.
+    const Configuration* conf = Configuration::getInstance();
     if( conf->getBool( "agSectorActive" ) ){
         AgSector::internalOutput();
     }
@@ -180,11 +167,8 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
 
      // Print the timestamps.
     aTimer.save();
-    aTimer.print( logfile, "Data Readin, Model Run & Write Time:" );
-    
-    if ( conf->getBool( "timestamp" ) ) { 
-        aTimer.print( bugoutfile, "Data Readin, Model Run & Write Time:" );
-    }
-
-
+    mainLog.setLevel( ILogger::DEBUG );
+    aTimer.print( mainLog, "Data Readin, Model Run & Write Time:" );
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Model run completed." << endl;
 }

@@ -22,6 +22,7 @@
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -51,20 +52,16 @@ void Population::XMLParse( const DOMNode* node ){
 
     const Modeltime* modeltime = scenario->getModeltime();
 
-    DOMNode* curr = 0;
-    DOMNodeList* nodeList;
-    string nodeName;
-
     // make sure we were passed a valid node.
     assert( node );
 
-    nodeList = node->getChildNodes();
+    DOMNodeList* nodeList = node->getChildNodes();
 
-    for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        curr = nodeList->item( i );
+    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
+        DOMNode* curr = nodeList->item( i );
 
         // get the name of the node.
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
         if( nodeName == "#text" ) {
             continue;
@@ -74,7 +71,9 @@ void Population::XMLParse( const DOMNode* node ){
             XMLHelper<double>::insertValueIntoVector( curr, totalpop, modeltime, true );
         } 
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing Population." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing Population." << endl;
         }
     }
 }
@@ -101,18 +100,12 @@ void Population::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
 
     // one additional period (base - 1) is read in for demographics data
     // call modeltime for proper offset
-    int pop_period = modeltime->getmod_to_pop(period);
+    int popPeriod = modeltime->getmod_to_pop( period );
 
     XMLWriteOpeningTag( getXMLName(), out, tabs );
-
-    // Write the xml for the class members.
-    XMLWriteElement( malepop[ pop_period ], "malepop", out, tabs );
-
-    XMLWriteElement( femalepop[ pop_period ], "femalepop", out, tabs );
-
-    XMLWriteElement( totalpop[ pop_period ], "totalpop", out, tabs );
-    // Done writing XML for the class members.
-
+    XMLWriteElement( malepop[ popPeriod ], "malepop", out, tabs );
+    XMLWriteElement( femalepop[ popPeriod ], "femalepop", out, tabs );
+    XMLWriteElement( totalpop[ popPeriod ], "totalpop", out, tabs );
 	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
@@ -147,6 +140,7 @@ const vector<double>& Population::getTotalPopVec() const {
 }
 
 //! return total population
+// Todo: Remove the second parameter and always pass in the model period.
 double Population::getTotal( const int per, const bool isPopPeriod ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     
