@@ -42,6 +42,8 @@
       USE COMMON
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)                                           
       COMMON/CO2Cal/CO2Calb(3)	! Used only in calib.for
+      COMMON/BCOC/FBC1990, FOC1990	! Used only in maglink
+
 !
 !  -- DECLARE CHARACTER VARIABLES --
       REAL*8 TMPREAD(NLPMax,NMP),TMM,TMI  ! temporary array for reading in.
@@ -1864,6 +1866,11 @@
            DO L=1,NL
                READ (IUNIT,*) IDUM,(PEcalib(L,M), M = 3,9)
           END DO
+          
+!     read in BC and OC 1990 Radiative Forcing Values
+         CASE(1020)	
+         READ (IUNIT,*) FBC1990
+         READ (IUNIT,*) FOC1990
           
 ! ------------------------------------------------------------------
          CASE DEFAULT
