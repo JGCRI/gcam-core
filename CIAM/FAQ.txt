@@ -1,9 +1,23 @@
 /*!
 \page faq Frequently Asked Questions
+
 \section cplusplusques C++ Questions
+
 \subsection faqitem1 How does a STL container iterator work?
 Container iterators are declared as containerName<type>::iterator iteratorName. The iterator then behaves as a pointer
 to the item within the container it points at, and pointer operations can be perfomed on it, such as dereferencing. If 
 the container held pointers to objects, the iterator must be dereferenced twice in order to access the object. Put example here.
+
+
 \section modelques Model Questions
+
+\subsection modelques1 How do the simultaneity markets work?
+When a normal_market is turned into a simultaneity market, the normal_market is seperated into two markets, a PriceMarket and a DemandMarket. 
+Both markets are solved, but only the PriceMarket is accessable from outside the marketplace. Both markets contain a pointer to the other market. 
+Calls to PriceMarket::getDemand, PriceMarket::getSupply, PriceMarket::addToDemand, and PriceMarket::addToSupply are redirected to the DemandMarket. 
+PriceMarket::setPrice is also a special function, it sets demand equal to the new price and supply equal to the current price. DemandMarket::getDemand
+and DemandMarket::addToSupply are also overridden so that DemandMarket::getDemand returns the price and DemandMarket::addToDemand sets the supply
+equal to the price. These are the functions used from outside the Marketplace, the Market also contains a set of functions with the word "Raw"
+ub the name which return or set the true values of the price, supply and demand variables. These are the functions used by the Solver to clear
+the markets. 
 */
