@@ -10,7 +10,7 @@ package ModelGUI;
  *
  * @author  Yulia Eyman (yulia@wam.umd.edu)
  *This class provides the Grapical User Interface that interacts
- *with an XML file
+ *  with an XML file
  */
 
 import javax.swing.*;
@@ -21,6 +21,7 @@ import javax.swing.tree.*;
 import java.io.*;
 import java.lang.*;
 import java.util.*;
+import java.util.zip.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.xml.parsers.*;
@@ -35,6 +36,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private JPanel browsePanel;
     private JPanel treePanel;
     private JPanel dataPanel;
+    private JScrollPane dataView;
     private JPanel queryPanel;
     private JTextField valuePane;
     private JSplitPane splitPane;
@@ -49,6 +51,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private JButton displayButton;
     private JButton selectNodesButton;
     
+    private AdapterNode rootTreeNode;
     private MapNode rootMapNode;
     private ModelTime modelTime;
     
@@ -72,8 +75,9 @@ public class ControlPanel extends javax.swing.JFrame {
     
     private Vector queryControls;
     private Vector attributeControls;
-    private Vector rootPointers;
-    private AdapterNode currRootPointer;
+    //private Vector rootPointers;
+    private Vector mapPointers;
+    //private AdapterNode currRootPointer;
     private boolean tableExistsFlag;
     
     private final JFileChooser fc = new JFileChooser( "." );
@@ -169,25 +173,9 @@ public class ControlPanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_frameResized
     
-    /*
-     *This function allows the user to select all nodes that have the same tag name
-     *  (but a different path in the tree) and displays all the values in the panel
-     *  to the side of the tree
-     */
+    
     private void selectNodesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectNodesButtonActionPerformed
-        if (evt.getSource() == selectNodesButton) {
-            TreePath[] paths = tree.getSelectionPaths();
-            if (paths != null) {
-                AdapterNode node;
-                
-                clearDisplay();
-                for (int j = 0; j < paths.length; j++) {
-                    //get the tag name of each selected node
-                    node = (AdapterNode)paths[j].getLastPathComponent();
-                    ansestorNodes = node.getAnsestors();
-                }
-            }
-        }
+
     }//GEN-LAST:event_selectNodesButtonActionPerformed
     
     /*
@@ -229,7 +217,7 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jBbrowseActionPerformed
     
     private void saveAllButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        XMLOutputter outputter = new XMLOutputter();
+        /*XMLOutputter outputter = new XMLOutputter();
         
         int returnVal = fc.showSaveDialog(this.getContentPane());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -240,7 +228,9 @@ public class ControlPanel extends javax.swing.JFrame {
             } catch (Exception e) {
                 System.err.println(e);
             }
-        }
+        }*/
+        
+        saveFile();
     }
     
     /** Exit the Application */
@@ -394,11 +384,23 @@ public class ControlPanel extends javax.swing.JFrame {
         dataPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
         dataPanel.add(queryPanel);
-        JScrollPane dataView = new JScrollPane(dataPanel);
-        //JScrollPane dataView = new JScrollPane
+        dataPanel.addComponentListener(new ComponentListener() {
+            public void componentHidden(ComponentEvent e) {}
+            public void componentMoved(ComponentEvent e) {} 
+            public void componentResized(ComponentEvent e) {
+                JScrollBar bar = dataView.getHorizontalScrollBar();
+                bar.setValue(bar.getMaximum());                
+            }
+            public void componentShown(ComponentEvent e) {}
+
+        });
+        
+        dataView = new JScrollPane(dataPanel);
         dataView.setPreferredSize(new Dimension(rightWidth, windowHeight));
         dataView.setMinimumSize(new Dimension(50, 50));
-        
+        dataView.getHorizontalScrollBar().setUnitIncrement(10);
+        dataView.getHorizontalScrollBar().setBlockIncrement(50);
+
         bigDataPane.add(dataView);
         
         //make button that will display the table
@@ -430,14 +432,30 @@ public class ControlPanel extends javax.swing.JFrame {
         splitPane.setMinimumSize(new Dimension(windowWidth + 10, windowHeight+10));
         splitPane.setMaximumSize(new Dimension(2000, 1500));
         
-        //create the selection button
-       /* selectNodesButton = new JButton("Table View");
-        selectNodesButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectNodesButtonActionPerformed(evt);
-            }
-        });*/
+        // Build the pop-up menu that's displayed by right-clicking on tree panel
+        treeMenu = makePopupMenu();        
         
+        JButton saveAllButton = new JButton("Save File");
+        saveAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAllButtonActionPerformed(evt);
+            }
+        });
+        
+        treePanel.add(Box.createRigidArea(new Dimension(0,5)));
+        treePanel.add(splitPane);
+        treePanel.add(Box.createRigidArea(new Dimension(0,5)));
+        treePanel.add(saveAllButton);
+        
+        //create the dialog for adding new node children, but leave invisible
+        makeAddChildPanel();
+        
+        pack();
+        //treePanel.revalidate();
+        //repaint();
+    }
+    
+    private JPopupMenu makePopupMenu() {
         treeMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem("Add Child");
         /*menuItem.addActionListener(new ActionListener() {
@@ -472,6 +490,21 @@ public class ControlPanel extends javax.swing.JFrame {
         treeMenu.add(menuItem);*/
         
         treeMenu.add(new JSeparator());
+        menuItem = new JMenuItem("Show Table and Path");
+        menuItem.addMouseListener(new MouseListener() {
+            public void mouseReleased(MouseEvent e) {
+                tree.setSelectionPath(selectedPath);
+                
+                makeNewThread();
+            }
+            public void mouseClicked(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {}
+        });
+        treeMenu.add(menuItem);
+        
+        treeMenu.add(new JSeparator());
         menuItem = new JMenuItem("Delete Node");
         menuItem.addMouseListener(new MouseListener() {
             public void mouseReleased(MouseEvent e) {
@@ -486,25 +519,7 @@ public class ControlPanel extends javax.swing.JFrame {
         });
         treeMenu.add(menuItem);
         
-        
-        JButton saveAllButton = new JButton("Save File");
-        saveAllButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveAllButtonActionPerformed(evt);
-            }
-        });
-        
-        treePanel.add(Box.createRigidArea(new Dimension(0,5)));
-        treePanel.add(splitPane);
-        treePanel.add(Box.createRigidArea(new Dimension(0,5)));
-        treePanel.add(saveAllButton);
-        
-        //create the dialog for adding new node children, but leave invisible
-        makeAddChildPanel();
-        
-        pack();
-        //treePanel.revalidate();
-        //repaint();
+        return treeMenu;
     }
     
     private void makeQueryPanel(boolean firstAttempt) {
@@ -543,16 +558,19 @@ public class ControlPanel extends javax.swing.JFrame {
         queryPanel.remove(queryPanel.getComponents().length-1);
         
         //find the first mention of "World", Region nodes will be its children
-        currRootPointer = (AdapterNode)tree.getModel().getRoot();
-        if (!currRootPointer.hasChild("region")){
-            findRoot(currRootPointer, "region");
+        rootTreeNode = (AdapterNode)tree.getModel().getRoot();
+        if (!rootTreeNode.hasChild("region")){
+            findRoot(rootTreeNode, "region");
         }
-        rootPointers = new Vector();
-        rootPointers.addElement(currRootPointer);
-        
+        //rootPointers = new Vector();
+        //rootPointers.addElement(currRootPointer);
+        mapPointers = new Vector();
+        mapPointers.addElement(rootMapNode.getDescendant("world"));
+                
         //get the names of all regions
         MapNode regionNode = rootMapNode.getDescendant("region");
         Vector regionNames = regionNode.getPossibleNames(false);
+        mapPointers.addElement(regionNode);
         
         queryPanel.add(new JLabel("  for region(s)  "));
         regionBox = new JList(regionNames.toArray());
@@ -566,17 +584,16 @@ public class ControlPanel extends javax.swing.JFrame {
                     showTableButton.setEnabled(true);
                     
                     JList temp = (JList)e.getSource();
-                    int index = temp.getMinSelectionIndex();
-                    String regionName = temp.getModel().getElementAt(index).toString();
+                    //int index = temp.getMinSelectionIndex();
+                    //String regionName = temp.getModel().getElementAt(index).toString();
                     
-                    //remove any existing query components
-                    //removeComponents(queryPanel, temp, 0);
-                    //queryPanel.add(Box.createHorizontalGlue());
+                    //currRootPointer = (AdapterNode)rootPointers.elementAt(0);
+                    //rootPointers.addElement(currRootPointer.getChild("region", regionName));
+                    //MapNode mp = (MapNode)mapPointers.elementAt(0);
+                    //mapPointers.addElement(mp.getDescendant("region"));
                     
-                    currRootPointer = (AdapterNode)rootPointers.elementAt(0);
-                    rootPointers.addElement(currRootPointer.getChild("region", regionName));
-                    
-                    if (rootPointers.size() < 3) addQueryControl(temp, 1);
+                    //if (rootPointers.size() < 3) addQueryControl(temp, 1);
+                    if (mapPointers.size() < 3) addQueryControl(temp, 1);
                 }
             }
         });
@@ -617,17 +634,19 @@ public class ControlPanel extends javax.swing.JFrame {
         repaint();
         
         //remove components from the control arrays (add one because indexes start at 0)
-        if (rootPointers != null && rootPointers.size() > index+2) rootPointers.setSize(index+2);
+        //if (rootPointers != null && rootPointers.size() > index+2) rootPointers.setSize(index+2);
+        if (mapPointers != null && mapPointers.size() > index+2) mapPointers.setSize(index+2);
         if (queryControls != null && queryControls.size() > index+1) queryControls.setSize(index+1);
         if (attributeControls != null && attributeControls.size() > index+1) attributeControls.setSize(index+1);
     }
     
     private void addQueryControl(Component predecessor, int index) {
         //get the parent of the nodes whose names will populate the new combo box
-        currRootPointer = (AdapterNode)rootPointers.elementAt(index);
-        MapNode currNodePointer = rootMapNode.getDescendant(currRootPointer.getName());
+        //currRootPointer = (AdapterNode)rootPointers.elementAt(index);
+        //MapNode currNodePointer = rootMapNode.getDescendant(currRootPointer.getName());
+        MapNode mp = (MapNode)mapPointers.elementAt(index);
         boolean hasAttribute = false;
-        if (currNodePointer.hasPossibleNames()) hasAttribute = true;
+        if (mp.hasPossibleNames()) hasAttribute = true; 
         
         //check if combo box already exists, remove all traces of it
         if ((queryControls.size() > index) || (!hasAttribute && attributeControls.size() > index-1)) {
@@ -636,18 +655,22 @@ public class ControlPanel extends javax.swing.JFrame {
             queryPanel.remove(queryPanel.getComponents().length-1);
         }
         
-        if (currRootPointer.isLeaf()) {
+        //if (currNodePointer.isLeaf()) {
+        //if node is leaf, no additional boxes need to be added
+        if (!mp.hasChildren()) {
             queryPanel.add(Box.createHorizontalGlue());
             queryPanel.revalidate();
             repaint();
+            //notifyAll();
         
             return;
         }
         
+        //if node does have children
         Vector names = new Vector();
         MapNode kid;
         names.addElement(DEFAULT_SELECTION_STRING);
-        Vector children = currNodePointer.getChildren();
+        Vector children = mp.getChildren();
         Iterator it = children.iterator();
         while (it.hasNext()) {
             kid = (MapNode)it.next();
@@ -664,25 +687,44 @@ public class ControlPanel extends javax.swing.JFrame {
                 JComboBox temp = (JComboBox)e.getSource();
                 String name = temp.getSelectedItem().toString();
                 int index = queryControls.indexOf(temp);
+System.out.println("index = " + index + " of " + queryControls.size());
+System.out.println(mapPointers);
                 
                 //check in corresponding node has an attribute name
-                currRootPointer = (AdapterNode)rootPointers.elementAt(index);
-                if (currRootPointer.hasChildWithAttribute(name, "name")) {
+                //currRootPointer = (AdapterNode)rootPointers.elementAt(index);
+                //if (currRootPointer.hasChildWithAttribute(name, "name")) {
+                
+                MapNode parent = (MapNode)mapPointers.elementAt(index);
+                MapNode mp = parent.getChild(name);
+                if (mapPointers.size() > index+1) {
+                    mapPointers.setElementAt(mp, index+1);
+                } else {
+                    mapPointers.addElement(mp);
+                }
+
+                if (mp.hasPossibleNames()) {
                     addAttributeControl((Component)e.getSource(), name, index);
                 } else {    //node does not have "name", only children
-                    AdapterNode newPointer = currRootPointer.getChild(name, "");
-					
-					// Need to check that the node has children.
-					if( newPointer != null ) {
+                    //AdapterNode newPointer = currRootPointer.getChild(name, "");
+                    MapNode child = mp.getChild(name);
+
+                    // Need to check that the node has children.
+                    //if( child != null ) {
                     	//replace root pointer if it already exists or add new one if it does not
-                    	if (rootPointers.size() > index+1) {
+                    	/*if (rootPointers.size() > index+1) {
                         	//if the combo box already exists, change the pointer to its contents
                         	rootPointers.setElementAt(newPointer, index+1);
                     	} else {
                         	rootPointers.addElement(newPointer);
-                    	}
+                    	}*/
+                        /*if (mapPointers.size() > index+1) {
+                            mapPointers.setElementAt(mp, index+1);
+                        } else {
+                            mapPointers.addElement(mp);
+                        }*/
+                                            
                     	addQueryControl((Component)e.getSource(), index+1);
-					}
+                    //}
                 }
             }
         });
@@ -697,6 +739,7 @@ public class ControlPanel extends javax.swing.JFrame {
         
         queryPanel.revalidate();
         repaint();
+        //notifyAll();
     }
     
     private void addAttributeControl(Component predecessor, String nodeName, int index){
@@ -704,17 +747,18 @@ public class ControlPanel extends javax.swing.JFrame {
         //currRootPointer = (AdapterNode)rootPointers.elementAt(index);
         
         JComboBox tempBox = (JComboBox)queryControls.elementAt(index);
-        MapNode currMapPointer = rootMapNode.getDescendant(tempBox.getSelectedItem().toString());
+        //MapNode currMapPointer = rootMapNode.getDescendant(tempBox.getSelectedItem().toString());
+        MapNode mp = (MapNode)mapPointers.elementAt(index+1);
         
         Vector names = new Vector();
         if (index > 1 && attributeControls.size() > index-1) {
             tempBox = (JComboBox)attributeControls.elementAt(index-1);
             if (tempBox != null) {
                 //String parentName = tempBox.getSelectedItem().toString();
-                names = currMapPointer.getPossibleNames(tempBox.getSelectedItem().toString());
+                names = mp.getPossibleNames(tempBox.getSelectedItem().toString());
             }
         } else {
-            names = currMapPointer.getPossibleNames(false);
+            names = mp.getPossibleNames(false);
         }
         
         if (names.size() != 1) names.insertElementAt(DEFAULT_PLURAL_STRING, 0);
@@ -745,21 +789,23 @@ public class ControlPanel extends javax.swing.JFrame {
                 String nodeName = temp.getModel().getSelectedItem().toString();
                 
                 //find node with nodeName and "name" attribute = attribVal
-                currRootPointer = (AdapterNode)rootPointers.elementAt(index);
-                
-                if (attribVal.equals(DEFAULT_PLURAL_STRING)) attribVal = "";
-                AdapterNode newPointer = currRootPointer.getChild(nodeName, attribVal);
+                //currRootPointer = (AdapterNode)rootPointers.elementAt(index);
+                MapNode mp = (MapNode)mapPointers.elementAt(index);
+                MapNode newPointer = mp.getChild(nodeName);
+                //if (attribVal.equals(DEFAULT_PLURAL_STRING)) attribVal = "";
+                //AdapterNode newPointer = currRootPointer.getChild(nodeName, attribVal);
                 if (!newPointer.isLeaf()) {
                     //create new component with the nodes's set of chilren
                     //replace root pointer if it already exists or add new one if it does not
-                    if (rootPointers.size() > index+1) {
+                    /*if (rootPointers.size() > index+1) {
                         rootPointers.setElementAt(newPointer, index+1);
                     } else {
                         rootPointers.addElement(newPointer);
-                    }
+                    }*/
                     //removeComponents(queryPanel, (Component)e.getSource(), index);
                     addQueryControl((Component)e.getSource(), index+1);
                 }
+                
             }
         });
         
@@ -774,6 +820,7 @@ public class ControlPanel extends javax.swing.JFrame {
         
         queryPanel.revalidate();
         repaint();
+        //notifyAll();
     }
     
     /*
@@ -781,7 +828,7 @@ public class ControlPanel extends javax.swing.JFrame {
      */
     private void findRoot(AdapterNode currRoot, String targetName) {
         if (currRoot.hasChild(targetName)) {
-            currRootPointer = currRoot;
+            rootTreeNode = currRoot;
             return;
         }
         
@@ -822,7 +869,7 @@ public class ControlPanel extends javax.swing.JFrame {
         JPanel lefterPanel = new JPanel();
         
         Rectangle buttonSize = table.getCellRect(0, 0, true);
-        buttonSize = new Rectangle((int)buttonSize.getWidth()+400, (int)buttonSize.getHeight());
+        buttonSize = new Rectangle((int)buttonSize.getWidth()+200, (int)buttonSize.getHeight());
         Rectangle blankSize = new Rectangle((int)buttonSize.getWidth(), (int)buttonSize.getHeight()+4);
         lefterPanel.setLayout(new BoxLayout(lefterPanel, BoxLayout.Y_AXIS));
         
@@ -901,7 +948,7 @@ public class ControlPanel extends javax.swing.JFrame {
         //if (listTableBox.getSelectedIndex() == LIST) {
         String regionName;
         Object[] regions = regionBox.getSelectedValues();
-        currRootPointer = (AdapterNode)rootPointers.elementAt(0);
+        //currRootPointer = (AdapterNode)rootPointers.elementAt(0);
         boolean timeInterval = false;
         
         //perform a bredth-first traversal of the tree looking for nodes that fit a path
@@ -910,7 +957,7 @@ public class ControlPanel extends javax.swing.JFrame {
         //  remove nodes from the begining of the queue and add all appropriate children to the end of the queue
         for (int j = 0; j < regions.length; j++) {
             regionName = regions[j].toString();
-            AdapterNode currNode = currRootPointer.getChild("region", regionName);
+            AdapterNode currNode = rootTreeNode.getChild("region", regionName);
             currNode.setIndex(1);
             queue.addElement(currNode);
             
@@ -1080,7 +1127,8 @@ public class ControlPanel extends javax.swing.JFrame {
         table = new JTable(model);
         table.setCellSelectionEnabled(true);
         table.setTransferHandler(new TableTransferHandler());
-        table.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
+	  table.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
+        
         //use panels to place the table appropriately
         JPanel tempPanel = new JPanel();
         tempPanel.setLayout(new BorderLayout());
@@ -1334,10 +1382,107 @@ public class ControlPanel extends javax.swing.JFrame {
         
         //delete the node
         JDomToTreeModelAdapter model = (JDomToTreeModelAdapter)tree.getModel();
-        model.removeNodeFrom(selectedPath);
-        
+        model.removeNodeFrom(selectedPath);   
+    }
+       
+    protected void makeNewThread() {
+        Thread newThread = new Thread() {
+            public void run() {
+                Object[] pathNodes = selectedPath.getPath();
+                int j = 0;
+                AdapterNode currNode = (AdapterNode)pathNodes[j];
+                while (j-1 < pathNodes.length && !currNode.getName().equals("region")) {
+                    currNode = (AdapterNode)pathNodes[j++];
+                } 
+
+                if (!currNode.getName().equals("region")) {
+                    System.out.println("Can't show table, no region node found");
+                    return;
+                }
+
+                if (regionBox == null) displayRegionBox();
+                regionBox.setSelectedValue(currNode.getAttributeValue("name"), true);
+                yield();
+
+                int index = 1;
+                JComboBox tempBox;
+                String attrib;
+                for (int k = j; k < pathNodes.length; k++) {
+                    currNode = (AdapterNode)pathNodes[k];
+                    tempBox = (JComboBox)queryControls.elementAt(index);
+                    tempBox.setSelectedItem(currNode.getName());
+                    yield();
+
+                    attrib = currNode.getAttributeValue("name");
+                    if (attrib != null) {
+                        tempBox = (JComboBox)attributeControls.elementAt(index);
+                        tempBox.setSelectedItem(attrib);
+                        if (!tempBox.getSelectedItem().toString().equals(attrib)) {
+                            tempBox.setSelectedItem(DEFAULT_PLURAL_STRING);
+                        }
+                    }
+                    yield();
+
+                    index++;            
+                }
+                if (currNode.getText() != null) showTable();
+            }
+            
+        };
+        newThread.start();
     }
     
+    private void saveFile() {
+        XMLOutputter outputter = new XMLOutputter();
+        
+        int returnVal = fc.showSaveDialog(this.getContentPane());
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            
+            /*//determine whether the file is to be an xml or zip
+            String fileName = file.toString();
+            boolean zipping = false;
+            int index = fileName.lastIndexOf('.');
+            if (index > 0) {
+                if (fileName.substring(index+1).equals("zip")) zipping = true;
+            }*/
+            
+            try {
+                //if (!zipping) {
+//System.out.println("saving");
+                    outputter.output(document, new FileOutputStream(file));
+                    //nodeValueChangedFlag = false;
+                //} else {*/
+/*System.out.println("writing 1 " + file.toString());
+
+
+                    
+                    byte[] buf = new byte[1024];
+                    int len;
+                    ZipEntry zipEntry = new ZipEntry(file.toString());
+                    FileInputStream fin = new FileInputStream(file);
+                    BufferedInputStream in = new BufferedInputStream(fin);
+                    ZipOutputStream zos = new ZipOutputStream(new FileOutputStream("c:\\new.zip"));
+                    zos.putNextEntry(zipEntry);
+                    while ((len = in.read(buf, 0, 1024)) != -1)
+                    {
+                       zos.write(buf, 0, len);
+                    }
+                    
+                    zipEntry.setSize(file.length());
+                    zos.closeEntry();
+                    //Close the input stream.
+                    in.close();*/
+
+
+                    nodeValueChangedFlag = false;
+//System.out.println("done");
+                //}
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -165,6 +165,17 @@ public class MapNode {
             return null;
     }
     
+    //returns a child with the specified name or null if the child is not found
+    public MapNode getChild(String childName) {
+        MapNode kid;
+        Iterator it = children.iterator();
+        while (it.hasNext()) {
+            kid = (MapNode)it.next();
+            if (kid.getNodeName().equals(childName)) return kid;
+        }
+        return null;
+    }
+    
     public Vector getChildren() {
         return children;
     }
@@ -291,8 +302,14 @@ public class MapNode {
     }
     
     public boolean hasPossibleNames() {
+System.out.println(names);
         if (names.size() > 0) return true;
         else return false;
+    }
+    
+    public boolean isLeaf() {
+        if (children.size() > 0) return false;
+        else return true;
     }
     
     private Vector merge(List v1, List v2) {
