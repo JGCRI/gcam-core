@@ -151,7 +151,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
     
 	JScrollPane scrollingList = new JScrollPane(list);
     		
-	final JDialog filterDialog = new JDialog(parentFrame, tableTypeString + " for " + ((DOMmodel.DOMNodeAdapter)itemsObjs[itemsObjs.length-1]).getNode().getNodeName() + ". Please choose two headers:", true);
+	final JDialog filterDialog = new JDialog(parentFrame, tableTypeString + " for \'" + ((DOMmodel.DOMNodeAdapter)itemsObjs[itemsObjs.length-1]).getNode().getNodeName() + "\'. Please choose two headers:", true);
 	filterDialog.setSize(500,400);
 	filterDialog.setLocation(100,100);
 	filterDialog.setResizable(false);

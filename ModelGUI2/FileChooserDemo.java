@@ -245,11 +245,18 @@ public class FileChooserDemo extends JFrame
 				MenuElement[] me = treeMenu.getSubElements();
 			        for (int i = 0; i < me.length; i++) {
 					if (((JMenuItem)me[i]).getText().equals("Display Table")) {
-						if (jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
+						Node currentNode = ((DOMmodel.DOMNodeAdapter)jtree.getLastSelectedPathComponent()).getNode();
+						if( currentNode.getFirstChild() != null && currentNode.getFirstChild().getNodeType() == Element.TEXT_NODE ){
+							((JMenuItem)me[i]).setEnabled(true);	
+						}else{
+							((JMenuItem)me[i]).setEnabled(false);
+						}
+			/*			if (jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
 							((JMenuItem)me[i]).setEnabled(false);
 						} else {
 							((JMenuItem)me[i]).setEnabled(true);
 						}
+			*/
 					}
 					if (((JMenuItem)me[i]).getText().equals("Add Child")) {
 						Node nodeClicked = ((DOMmodel.DOMNodeAdapter)jtree.getLastSelectedPathComponent()).getNode();
