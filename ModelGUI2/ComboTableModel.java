@@ -456,5 +456,16 @@ public class ComboTableModel extends BaseTableModel{
 		// fireOffSomeListeners?
 
 	}
+	public Class getColumnClass(int column) {
+		try {
+			new Double(getValueAt(0, column).toString());
+			return String.class;
+		} catch (NumberFormatException e) {
+			return String.class;
+		} catch (Exception f){
+			System.out.println("you suck " + f);
+			return String.class;
+		}
+	}
 	
 }
