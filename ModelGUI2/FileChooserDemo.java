@@ -91,7 +91,6 @@ public class FileChooserDemo extends JFrame
   }
 
   public static void createAndShowGUI() {
-	  // Can pass frame title in command line arguments
 	  FileChooserDemo f = new FileChooserDemo("ModelGUI");
 	  //f.pack();
 	  f.setVisible(true);
@@ -231,32 +230,6 @@ public class FileChooserDemo extends JFrame
 	jtree.setShowsRootHandles(true);
 	jtree.getModel().addTreeModelListener(new MyTreeModelListener());
 
-	  
-  jtree.addTreeSelectionListener(new TreeSelectionListener() {
-	  public void valueChanged(TreeSelectionEvent e) {
-		  /*
-		  System.out.println("So it changed");
-		  jtree.makeVisible(e.getPath());
-		  if(jtree.isVisible(e.getPath())) {
-		  	System.out.println("is visible");
-		  }
-		  if(jtree.isPathSelected(e.getPath())) {
-			System.out.println("is same");
-		  }
-		  if(jtree.isExpanded(e.getPath())) {
-			System.out.println("is expanded");
-		  }
-		  if (paths != null) {
-				System.out.println("in valueChanged paths! "+e+" --- "+e.getPath());
-			  //clearDisplay();
-			  //for (int j = 0; j < paths.length; j++) {
-				//  AdapterNode node = (AdapterNode)paths[j].getLastPathComponent();
-				 // displayValue(node.getText(), false);
-			  //}
-		  }
-		  */
-	  }
-  });
 
 	//listen for right click on the tree
 	 jtree.addMouseListener(new MouseAdapter() {
@@ -269,8 +242,6 @@ public class FileChooserDemo extends JFrame
 		 private void maybeShowPopup(MouseEvent e) {
 			 if (e.isPopupTrigger()) {
 				 selectedPath = jtree.getClosestPathForLocation(e.getX(), e.getY());
-				 //System.out.println("Path: "+selectedPath);
-				 //System.out.println("Lead: "+jtree.getLeadSelectionPath());
 			   	jtree.setSelectionPath(selectedPath);
 				MenuElement[] me = treeMenu.getSubElements();
 			        for (int i = 0; i < me.length; i++) {
@@ -278,7 +249,6 @@ public class FileChooserDemo extends JFrame
 						if (jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
 							((JMenuItem)me[i]).setEnabled(false);
 						} else {
-							// HERE TO DISABLE TABLES set false 
 							((JMenuItem)me[i]).setEnabled(true);
 						}
 					}
@@ -288,7 +258,6 @@ public class FileChooserDemo extends JFrame
 						if ( nodeClicked.getNodeType() == Element.TEXT_NODE ) {
 							((JMenuItem)me[i]).setEnabled(false);
 						} else {
-							// HERE TO DISABLE TABLES set false 
 							((JMenuItem)me[i]).setEnabled(true);
 						}	
 						
@@ -374,13 +343,14 @@ public class FileChooserDemo extends JFrame
 	else if (command.equals("Filter")) {
 		try {
 			((BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel()).filterData(this);
-	int j = 1;
-	JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
-	while( j < jTable.getRowCount()) {
-		jTable.setRowHeight(j-1,16);
-		jTable.setRowHeight(j,200);
-		j += 2;
-	}
+			// NOT THE BEST WAY TO SET ROW HEIGHT
+			int j = 1;
+			JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
+			while( j < jTable.getRowCount()) {
+				jTable.setRowHeight(j-1,16);
+				jTable.setRowHeight(j,200);
+				j += 2;
+			}
 		} catch (UnsupportedOperationException uoe) {
 			JOptionPane.showMessageDialog( null, "This table does not support filtering", "Table Filter Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -418,7 +388,6 @@ public class FileChooserDemo extends JFrame
 	   JMenuItem menuItem = new JMenuItem("Display Table");
 	   menuItem.addMouseListener(new MouseListener() {
 		   public void mouseReleased(MouseEvent e) {
-
 			if (!jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
 				RadioButton.showDialog(frame, null, "", "Choose Table Viewing Type", names,"");
 				JScrollPane tableView = RadioButton.createSelection(selectedPath, doc, thisFrame);
@@ -426,107 +395,30 @@ public class FileChooserDemo extends JFrame
 	  		        menuTableFilter.setEnabled(true);
 				tableMenu = makePopupTableMenu();
 	   			((JTable)tableView.getViewport().getView()).addMouseListener(new MouseAdapter() {
-		   public void mousePressed(MouseEvent e) {
-			   maybeShowPopup(e);
-		   }
-		   public void mouseReleased(MouseEvent e) {
-			   maybeShowPopup(e);
-		   }
-		   private void maybeShowPopup(MouseEvent e) {
-			   if (e.isPopupTrigger()) {
-				   //selectedPath = jtree.getClosestPathForLocation(e.getX(), e.getY());
-				  MenuElement[] me = tableMenu.getSubElements();
-					  for (int i = 0; i < me.length; i++) {
-					  if (((JMenuItem)me[i]).getText().equals("Flip")) {
-							System.out.println("Flip menu activated");
-							System.out.println("flipped original x and y are " + e.getX() + " " + e.getY());
-							lastFlipX = e.getX();
-							lastFlipY = e.getY();
-					  }
-				  }
-				  tableMenu.show(e.getComponent(), e.getX(), e.getY());
-			   }
-		   }
-	   });
+		   			public void mousePressed(MouseEvent e) {
+			   			maybeShowPopup(e);
+		   			}
+		   			public void mouseReleased(MouseEvent e) {
+			   			maybeShowPopup(e);
+		   			}
+		   			private void maybeShowPopup(MouseEvent e) {
+			   			if (e.isPopupTrigger()) {
+				   			//selectedPath = jtree.getClosestPathForLocation(e.getX(), e.getY());
+				  			MenuElement[] me = tableMenu.getSubElements();
+					  		for (int i = 0; i < me.length; i++) {
+					  			if (((JMenuItem)me[i]).getText().equals("Flip")) {
+									System.out.println("Flip menu activated");
+									System.out.println("flipped original x and y are " + e.getX() + " " + e.getY());
+									lastFlipX = e.getX();
+									lastFlipY = e.getY();
+					  			}
+				  			}
+				  			tableMenu.show(e.getComponent(), e.getX(), e.getY());
+			   			}
+		   			}
+	   			});
 			}
 
-			// ****** THIS IS WHERE YOU SPLIT INTO THREE DIFFERENT TABLE CALLS ******
-
-
-			if ( 1==2 && !jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
-			   /*
-			   Node temp = ((DOMmodel.DOMNodeAdapter)jtree.getLastSelectedPathComponent()).getNode();
-			   // HERE TO DISABLE TABLE remark function call
-			   //buildTable(treePathtoXPath(selectedPath, temp, 0)); 
-			   tables = null;
-			   Object[] path = selectedPath.getPath();
-	   		   wild = chooseTableHeaders(selectedPath);
-	   		   wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
-	   		   wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
-		       	   buildRegionYearTable(treePathtoXPath(selectedPath, temp, 0)); 
-			   /*
-			   wild.add(null);
-			   for(int i = 0; i < path.length; i++) {
-				String curr = ((DOMmodel.DOMNodeAdapter)path[i]).getNode().getNodeName();
-				if( ((DOMmodel.DOMNodeAdapter)path[i]).getNode().hasAttributes() && 
-					!curr.equals((String)wild.get(0)) && !curr.equals((String)wild.get(1))) {
-					wild.set(2, curr);
-			   		buildRegionYearTable(treePathtoXPath(selectedPath, temp, 0)); 
-				}
-			   }
-			   //used to be close comment here
-			   MultiTableModel multiTable = new MultiTableModel(tables, filterMaps);
-			   jTable = new JTable(multiTable);
-			   jTable.getColumnModel().getColumn(0).setCellRenderer(multiTable.getCellRenderer(0,0));
-			   jTable.getColumnModel().getColumn(0).setCellEditor(multiTable.getCellEditor(0,0));
-			   jTable.setRowHeight(200);
-	  		   menuTableFilter.setEnabled(true);
-			   //jTable.setPreferredScrollableViewportSize(jTable.getPreferredScrollableViewportSize());
-	  // putting flip code here
-	  
-		tableMenu = makePopupTableMenu();
-
-		//	listen for right click on the table
-	   jTable.addMouseListener(new MouseAdapter() {
-		   public void mousePressed(MouseEvent e) {
-			   maybeShowPopup(e);
-		   }
-		   public void mouseReleased(MouseEvent e) {
-			   maybeShowPopup(e);
-		   }
-		   private void maybeShowPopup(MouseEvent e) {
-			   if (e.isPopupTrigger()) {
-				   //selectedPath = jtree.getClosestPathForLocation(e.getX(), e.getY());
-				  MenuElement[] me = tableMenu.getSubElements();
-					  for (int i = 0; i < me.length; i++) {
-					  if (((JMenuItem)me[i]).getText().equals("Flip")) {
-							System.out.println("Flip menu activated");
-							System.out.println("flipped original x and y are " + e.getX() + " " + e.getY());
-							lastFlipX = e.getX();
-							lastFlipY = e.getY();
-					  }
-				  }
-				  tableMenu.show(e.getComponent(), e.getX(), e.getY());
-			   }
-		   }
-	   });
-	   */
-				BaseTableModel t = new NewDataTableModel(selectedPath, doc, thisFrame);
-				jTable = new JTable(t);
-				//BaseTableModel t = new DataTableModel(selectedPath, doc, thisFrame);
-				/*BaseTableModel t = new MultiTableModel(selectedPath, doc, thisFrame);
-				jTable = new JTable(t);
-			   jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)t).getCellRenderer(0,0));
-			   jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)t).getCellEditor(0,0));
-			   jTable.setRowHeight(200);
-	  		   menuTableFilter.setEnabled(true);
-			   */
-			   JScrollPane tableView = new JScrollPane(jTable);
-	  		   splitPane.setRightComponent(tableView);
-			   //jtree.setSelectionPath(selectedPath);
-               System.out.println("RIGHT CLICKED DISPLAY TABLE!");
-			   //showAddChildDialog();
-			}
 		   }
 		   public void mouseClicked(MouseEvent e) {
 			   //shouldn't the action go here
@@ -544,7 +436,6 @@ public class FileChooserDemo extends JFrame
 
 			   Node nodeClicked = ((DOMmodel.DOMNodeAdapter)jtree.getLastSelectedPathComponent()).getNode();
 			   if( nodeClicked.getNodeType() != Element.TEXT_NODE ){ // can't add child to text node
-					System.out.println("RIGHT CLICKED ADD CHILD!");
 			   		showAddChildDialog();
 			   }
 
@@ -561,7 +452,6 @@ public class FileChooserDemo extends JFrame
 	  menuItem.addMouseListener(new MouseListener() {
 		  public void mouseReleased(MouseEvent e) {
 			  jtree.setSelectionPath(selectedPath);
-              System.out.println("RIGHT CLICKED DELETE NODE");
 			  deleteNode();
 		  }
 		  public void mouseClicked(MouseEvent e) {}
@@ -580,17 +470,13 @@ public class FileChooserDemo extends JFrame
 		JMenuItem menuItem = new JMenuItem("Flip");
 		menuItem.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
-				System.out.println("RIGHT CLICKED FLIP!, do stuff HERE...");
 				e.translatePoint( lastFlipX, lastFlipY );
 				Point p = e.getPoint();
 				JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
 				int row = jTable.rowAtPoint( p );
 				int col = jTable.columnAtPoint( p );
-				System.out.println("Source: "+e.getSource()+" Point:"+p+" row: "+row+" col: "+col);
 				
 				((BaseTableModel)jTable.getModel()).flip(row, col);
-				//((NewDataTableModel)((JTable)((JScrollPane)jTable.getValueAt(row, col)).getViewport().getView()).getModel()).flip();
-				// CALL FLIP METHOD HERE !!!!!
 			}
 			public void mouseClicked(MouseEvent e) {
 				//shouldn't the action go here
@@ -740,106 +626,21 @@ public class FileChooserDemo extends JFrame
    }
 
 
- // WHAT TO DO WITH THIS
   // ********* newly added **************
   // for the tablechangedmodel listener
   public void tableChanged(TableModelEvent e) {
-	  /*
-	int j = 1;
-	JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
-	while( j < jTable.getRowCount()) {
-		jTable.setRowHeight(j,200);
-		j += 2;
-	}
-	*/
- /*
-	  if(1==1) {
-		  if(1==1) {return;}
-	  	System.out.println("!!! "+e);
-		Node mod = ((NewDataTableModel)e.getSource()).getNodeAt(e.getFirstRow(), e.getColumn());
-		Vector temp = new Vector();
-		while(mod.getParentNode() != null) {
-			temp.add(0, ((DOMmodel)jtree.getModel()).getAdapterNode(mod)); 
-			mod = mod.getParentNode();
-		}
-		mod = ((NewDataTableModel)e.getSource()).getNodeAt(e.getFirstRow(), e.getColumn());
-		TreePath a = new TreePath(temp.toArray());
-		//TreePath b = jtree.getNextMatch("populationMiniCAM year = 1990", 20, javax.swing.text.Position.Bias.Forward).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod.getParentNode())).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod));
-		//System.out.println("a = b: "+a.equals(b)+" b = a: "+b.equals(a));
-		//((DOMmodel)jtree.getModel()).fireTreeNodesChanged(new TreeModelEvent(e.getSource(), temp.toArray()));
-		//jtree.updateUI();
-		//System.out.println(new TreePath(temp.toArray()));
-		//jtree.scrollPathToVisible(new TreePath(temp.toArray()));
-		///jtree.setSelectionPath(new TreePath(temp.toArray()));
-		jtree.setSelectionPath(a);
-		//jtree.setSelectionPath(b);
-		//jtree.setSelectionPath(jtree.getNextMatch("populationMiniCAM year = 1990", 20, javax.swing.text.Position.Bias.Forward).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod.getParentNode())).pathByAddingChild(((DOMmodel)jtree.getModel()).getAdapterNode(mod)));
-		//System.out.println(jtree.getSelectionPath());
-		//System.out.println(new TreePath(temp.toArray()));
-		//System.out.println(jtree.getNextMatch("populationMiniCAM year = 1990", 20, javax.swing.text.Position.Bias.Forward));
-	  	return;
+	  if(e.getType() == TableModelEvent.UPDATE) {
+		((DOMmodel)jtree.getModel()).fireTreeNodesChanged(new TreeModelEvent(e.getSource(), selectedPath));
 	  }
-	  System.out.println("!!! "+e);
-	  System.out.println("Source: "+e.getSource()+" type: "+e.getType()+" update: "+TableModelEvent.UPDATE);
-	  if(e.getType() != TableModelEvent.UPDATE) {
-		  System.out.println("Ignoring changed table");
-		  return;
-	  }
-	  if(e.getSource().toString().matches("TableSorter.*") && e.getType() == TableModelEvent.UPDATE) { // Ignore table sorting events
-		  System.out.println("Ignoring table sorting");
-		  return;
-	  }
-	  int row = e.getFirstRow();
-	  int column = e.getColumn();
-	  //DataTableModel model = (DataTableModel)e.getSource();
-	  String columnName = tableModel.getColumnName(column);
-	  Object newValue = tableModel.getValueAt(row, column);
-
-	  System.out.println("row is: " + row + " and col is: " + column);
-	  System.out.println("newValue is " + newValue + "!!! yay!!!!!!! :)");
-	  System.out.println("printing out columnName " + columnName);
-	  
-	  System.out.println("time to alter the tree.... dun dun dun");
-	  
-	  System.out.println("printing out 'treepath': " + tableModel.getValueAt(row, tableModel.getColumnCount()));
-	  TreePath pathAltered = ((TreePath)tableModel.getValueAt(row, tableModel.getColumnCount()));
-	  jtree.getModel().valueForPathChanged(pathAltered, newValue);
-	  /*
-	  //jtree.setSelectionPath(pathAltered);
-	  Node parent = ((DOMmodel.DOMNodeAdapter)pathAltered.getLastPathComponent()).getNode();
-	  parent.setNodeValue( newValue.toString() );
-	  jtree.setExpandsSelectedPaths(true);
-	  jtree.setLeadSelectionPath(pathAltered);
-  	  jtree.scrollPathToVisible(pathAltered);
-	  jtree.setSelectionPath(pathAltered);
-			System.out.println(jtree.getSelectionPath());
-			System.out.println(jtree.getLeadSelectionPath());
-	  System.out.println("parent "+parent+" has "+parent.getChildNodes().getLength()+" children");
-	  NodeList children = parent.getChildNodes();
-	  for(int i=0; i < children.getLength(); i++){
-		  System.out.println("Searching for child");
-		if ( children.item(i).getNodeType() == Element.TEXT_NODE ){
-			System.out.println("Found Child");
-			//children.item(i).setNodeValue( (String)newValue );
-			children.item(i).setNodeValue( newValue.toString() );
-			jtree.clearSelection();
-			jtree.setSelectionPath(pathAltered.pathByAddingChild( ((DOMmodel)jtree.getModel()).getAdapterNode(children.item(i))) );
-			//jtree.setSelectionPath(pathAltered.pathByAddingChild( jtree.getModel().getChild(((DOMmodel)jtree.getModel()).getAdapterNode(parent), i)));
-			System.out.println(jtree.getSelectionPath());
-			System.out.println(jtree.getLeadSelectionPath());
-			if(jtree.getExpandsSelectedPaths()) {
-				System.out.println("Should make visible");
-			}
-		}
-	  }
-	 */
   }
 
-class MyTreeModelListener implements TreeModelListener {
+	class MyTreeModelListener implements TreeModelListener {
 		public void treeNodesChanged(TreeModelEvent e) {
 			try {
-				BaseTableModel bt = (BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel();
-				bt.fireTableRowsUpdated(0,bt.getRowCount());
+				if(e.getSource() instanceof DOMmodel) {
+					BaseTableModel bt = (BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel();
+					bt.fireTableRowsUpdated(0,bt.getRowCount());
+				}
 			} catch(Exception ex) {}
 		}
 
@@ -857,7 +658,7 @@ class MyTreeModelListener implements TreeModelListener {
 		String attribs = attribField.getText().trim();
 		String value = valueField.getText().trim();
 		int sIndex, eIndex, index;
-        boolean repeat = true;
+        	boolean repeat = true;
 		//create new node with given name
 		Element newNode = null;
 		

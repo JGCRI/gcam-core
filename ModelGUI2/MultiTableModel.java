@@ -138,8 +138,7 @@ public class MultiTableModel extends BaseTableModel{
 		if(me.getValue() instanceof Node) {
 	  		NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), title+'/'+(String)parent.getKey(), (TreeMap)parent.getValue(), doc); 
 	  		JTable jTable = new JTable(tM);
-			//HERE
-	  		//jTable.getModel().addTableModelListener(this);
+	  		jTable.getModel().addTableModelListener((FileChooserDemo)parentFrame);
 
 	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	 

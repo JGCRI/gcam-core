@@ -127,7 +127,7 @@ public class NewDataTableModel extends BaseTableModel{
 	}
 
 	public boolean isCellEditable(int row, int col) {
-		return col > 1;
+		return col > 0;
 	}
 
 	private String getKey (int row, int col) {
@@ -138,6 +138,9 @@ public class NewDataTableModel extends BaseTableModel{
 	}
 
 	public void setValueAt(Object val, int row, int col) {
+		if(!isCellEditable(row, col)) {
+			return;
+		}
 		Node n = (Node)data.get(getKey(row,col));
 		if( n != null ){
 			n.setNodeValue(val.toString());

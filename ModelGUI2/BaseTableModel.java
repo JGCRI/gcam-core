@@ -17,6 +17,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	protected Document doc;
 	protected ArrayList wild;
 	protected Map tableFilterMaps;
+	protected Frame parentFrame;
 
 	// stuff for filtering
 	// can i move these somewhere
@@ -26,6 +27,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	public BaseTableModel() {}
 	public BaseTableModel(TreePath tp, Document doc, JFrame parentFrame) {
 		this.doc = doc;
+		this.parentFrame = parentFrame;
 	}
 	
 	public abstract void flip(int row, int col);
