@@ -118,13 +118,9 @@ public class AdapterNode {
         Iterator it = children.iterator();
         while (it.hasNext()) {
             kid = (Element)it.next();
-System.out.println("looking at " + kid.getName());
             if (nodeName.equals(kid.getName())) {
-System.out.println("Blah 1");
                 if (attribVal.equals("") || attribVal.equals(kid.getAttributeValue("name"))) {
-System.out.println("Blah 2");
                     list.addElement(new AdapterNode(kid));
-System.out.println("added " + kid.getName());
                 }
             }
         }

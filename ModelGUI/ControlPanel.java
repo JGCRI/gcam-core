@@ -39,7 +39,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private JPanel treePanel;
     //private JTabbedPane dataPane;
     private JPanel dataPanel;
-    private JPanel querryPanel;
+    private JPanel queryPanel;
     private JTextField valuePane;
     private JSplitPane splitPane;
     private JPanel tableHeaderPanel;
@@ -63,7 +63,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private JComboBox listTableBox;
     private JList regionBox;
     
-    private Vector querryControls;
+    private Vector queryControls;
     private Vector attributeControls;
     private Vector rootPointers;
     private AdapterNode currRootPointer;
@@ -371,8 +371,8 @@ public class ControlPanel extends javax.swing.JFrame {
         tempValPanel.add(valuePane);
         
         //More right-side view
-        // build panel that'll house querry for the table view
-        makeQuerryPanel(true);
+        // build panel that'll house query for the table view
+        makeQueryPanel(true);
         
         JPanel bigDataPane = new JPanel();
         bigDataPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -391,7 +391,7 @@ public class ControlPanel extends javax.swing.JFrame {
         dataPanel = new JPanel();
         dataPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
-        dataPanel.add(querryPanel);
+        dataPanel.add(queryPanel);
         JScrollPane dataView = new JScrollPane(dataPanel);
         //JScrollPane dataView = new JScrollPane
         dataView.setPreferredSize(new Dimension(rightWidth, windowHeight));
@@ -399,7 +399,7 @@ public class ControlPanel extends javax.swing.JFrame {
         bigDataPane.add(dataView);
         
         //make button that will display the table
-        showTableButton = new JButton("Show Querry Result");
+        showTableButton = new JButton("Show Query Result");
         showTableButton.setAlignmentX(Box.CENTER_ALIGNMENT);
         showTableButton.setAlignmentY(Box.TOP_ALIGNMENT);
         showTableButton.setMaximumSize(new Dimension(150, DEFAULT_COMPONENT_HEIGHT));
@@ -459,20 +459,20 @@ public class ControlPanel extends javax.swing.JFrame {
         pack();
     }
     
-    private void makeQuerryPanel(boolean firstAttempt) {
+    private void makeQueryPanel(boolean firstAttempt) {
         if (firstAttempt) {
             firstAttempt = false;
             
-            querryPanel = new JPanel();
-            querryPanel.setLayout(new BoxLayout(querryPanel, BoxLayout.X_AXIS));
+            queryPanel = new JPanel();
+            queryPanel.setLayout(new BoxLayout(queryPanel, BoxLayout.X_AXIS));
             
-            querryPanel.add(new JLabel("View a  "));
+            queryPanel.add(new JLabel("View a  "));
             String[] array = {"List ", "Table "};
             listTableBox = new JComboBox(array);
             listTableBox.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
-            querryPanel.add(listTableBox);
+            queryPanel.add(listTableBox);
             
-            querryPanel.add(new JLabel("  of  "));
+            queryPanel.add(new JLabel("  of  "));
             String[] array2 = {DEFAULT_SELECTION_STRING, "Names", "Numeric Values"};
             JComboBox box = new JComboBox(array2);
             box.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
@@ -484,15 +484,15 @@ public class ControlPanel extends javax.swing.JFrame {
                     if (regionBox == null) displayRegionBox();
                 }
             });
-            querryPanel.add(box);
+            queryPanel.add(box);
             
         }
-        querryPanel.add(Box.createHorizontalGlue());
+        queryPanel.add(Box.createHorizontalGlue());
     }
     
     private void displayRegionBox() {
         //remove the horizontal glue to display components adjecently
-        querryPanel.remove(querryPanel.getComponents().length-1);
+        queryPanel.remove(queryPanel.getComponents().length-1);
         
         //find the first mention of "World", Region nodes will be its children
         currRootPointer = (AdapterNode)tree.getModel().getRoot();
@@ -511,7 +511,7 @@ public class ControlPanel extends javax.swing.JFrame {
             regionNames.addElement(kid.getAttributeValue("name"));
         }
         
-        querryPanel.add(new JLabel("  for region(s)  "));
+        queryPanel.add(new JLabel("  for region(s)  "));
         regionBox = new JList(regionNames.toArray());
         regionBox.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED),
         BorderFactory.createEmptyBorder(0,3,0,3)));
@@ -522,36 +522,71 @@ public class ControlPanel extends javax.swing.JFrame {
                 if (e.getValueIsAdjusting() == false) {
                     showTableButton.setEnabled(true);
                     
-                    JList temp = (JList)querryControls.elementAt(0);
+                    JList temp = (JList)e.getSource(); //(JList)queryControls.elementAt(0);
                     int index = temp.getMinSelectionIndex();
                     String regionName = temp.getModel().getElementAt(index).toString();
                     
-                    AdapterNode pointer = (AdapterNode)rootPointers.elementAt(0);
-                    rootPointers.addElement(pointer.getChild("region", regionName));
-                    addQuerryControl(1);
+                    //remove any existing query components
+                    removeComponents(queryPanel, temp, 0);
+                    queryPanel.add(Box.createHorizontalGlue());
+                    
+                    currRootPointer = (AdapterNode)rootPointers.elementAt(0);
+                    rootPointers.addElement(currRootPointer.getChild("region", regionName));
+                    addQueryControl(temp, 1);
                 }
             }
         });
         
         attributeControls = new Vector();
-        querryControls = new Vector();
-        querryControls.addElement(regionBox);
+        queryControls = new Vector();
+        queryControls.addElement(regionBox);
         
-        querryPanel.add(regionBox);
+        queryPanel.add(regionBox);
         
-        //put back the horizontal glue to make sure componenets of querryPanel are left justified
-        querryPanel.add(Box.createHorizontalGlue());
+        //put back the horizontal glue to make sure componenets of queryPanel are left justified
+        queryPanel.add(Box.createHorizontalGlue());
         
         pack();
     }
     
-    private void addQuerryControl(int index) {
-        //remove the horizontal glue to display components adjecently
-        querryPanel.remove(querryPanel.getComponents().length-1);
+    /*
+     * This function removes GUI components that sequentially follow curr components in parent container
+     *  Paremeters: parent - the container in the GUI from which elements are to be moved
+     *              curr - the component that will be the most recently added component once the function finishes
+     *              index - the index in the queryControls array where the pointer to each control is stored
+     */
+    public void removeComponents(Container parent, Component curr, int index) {
+        Component[] comps = parent.getComponents();
+        boolean remove = false;
         
+        //remove components from the panel
+        for (int j = 0; j < comps.length; j++) {
+//System.out.println(j + "-component: " + comps[j]);
+            if (remove) {
+System.out.println("removing component # " + j + " of " + comps.length);
+                parent.remove(comps[j]);
+            }
+            if (!remove && curr.equals(comps[j])) {
+                remove = true;
+//System.out.println("curr turned out to equal comps-" + j);
+            }
+        }
+        
+        //pack();
+        repaint();
+        
+        //remove components from the control arrays (add one because indexes start at 0)
+        if (rootPointers != null && rootPointers.size() > index+2) rootPointers.setSize(index+2);
+        if (queryControls != null && queryControls.size() > index+1) queryControls.setSize(index+1);
+        if (attributeControls != null && attributeControls.size() > index+1) attributeControls.setSize(index+1);
+        
+    }
+    
+    private void addQueryControl(Component predecessor, int index) {
+//System.out.println("rootPointers " + rootPointers.toString());
         //get the parent of the nodes whose names will populate the new combo box
         currRootPointer = (AdapterNode)rootPointers.elementAt(index);
-        
+
         AdapterNode kid;
         String name;
         Vector names = new Vector();
@@ -567,59 +602,62 @@ public class ControlPanel extends javax.swing.JFrame {
         
         JComboBox comboBox;
         
-        //check if combo box already exists
-        if (!(querryControls.size() <= index)) {
-            //the combo box already exists - must change its elements, delete all components following it
+        //check if combo box already exists, remove all traces of it
+        if (queryControls.size() > index) {
+            removeComponents(queryPanel, predecessor, index);
+            
+            /*//the combo box already exists - must change its elements, delete all components following it
             int ct;
-            comboBox = (JComboBox)querryControls.elementAt(index);
-            Component[] comps = querryPanel.getComponents();
+            comboBox = (JComboBox)queryControls.elementAt(index);
+            Component[] comps = queryPanel.getComponents();
             for (ct = 0; ct < comps.length; ct++) {
                 if (comboBox.equals(comps[ct])) break;
             }
             //remove combo box and its followers from the panel and both vectors
             for (int j = ct; j < comps.length; j++) {
-                querryPanel.remove(j);
+                queryPanel.remove(j);
             }
-            querryControls.setSize(ct);
-            attributeControls.setSize(ct);
+            queryControls.setSize(ct);
+            attributeControls.setSize(ct);*/
+        } else {    //just elliminate that Horizontal glue that's the last component
+            queryPanel.remove(queryPanel.getComponents().length-1);
         }
         
-        //create new component
+        for (int q = 0; q < 100000; q++) {}
+        
+        //create new entirely component
         comboBox = new JComboBox(names);
         comboBox.setMaximumSize(new Dimension(1000, DEFAULT_COMPONENT_HEIGHT));
         comboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JComboBox temp = (JComboBox)e.getSource();
                 String name = temp.getSelectedItem().toString();
-                int index = querryControls.indexOf(temp);
+                int index = queryControls.indexOf(temp);
                 
                 //check in corresponding node has an attribute name
                 currRootPointer = (AdapterNode)rootPointers.elementAt(index);
                 if (currRootPointer.hasChildWithAttribute(name, "name")) {
-                    addAttributeControl(name, index);
+                    addAttributeControl((Component)e.getSource(), name, index);
                 } else {
                     AdapterNode newPointer = currRootPointer.getChild(name, "");
                     if (!newPointer.isLeaf()) {
                         //create new component with the nodes's set of chilren
                         rootPointers.addElement(newPointer);
-                        addQuerryControl(index+1);
+                        addQueryControl((Component)e.getSource(), index+1);
                     }
                 }
             }
         });
         
-        querryControls.addElement(comboBox);
+        queryControls.addElement(comboBox);
         
-        querryPanel.add(new JLabel("  of  "));
-        querryPanel.add(comboBox);
-        querryPanel.add(Box.createHorizontalGlue());
+        queryPanel.add(new JLabel("  of  "));
+        queryPanel.add(comboBox);
+        queryPanel.add(Box.createHorizontalGlue()); 
         pack();
     }
     
-    private void addAttributeControl(String nodeName, int index){
-        //remove the horizontal glue to display components adjecently
-        querryPanel.remove(querryPanel.getComponents().length-1);
-        
+    private void addAttributeControl(Component predecessor, String nodeName, int index){
         //get the parent of the nodes whose names will populate the new combo box
         currRootPointer = (AdapterNode)rootPointers.elementAt(index);
         
@@ -639,20 +677,24 @@ public class ControlPanel extends javax.swing.JFrame {
         JComboBox comboBox;
         
         //check if combo box already exists
-        if (!(attributeControls.size() <= index)) {
-            //the combo box already exists - must change its elements, delete all components following it
+        if (attributeControls.size() > index) {
+            removeComponents(queryPanel, predecessor, index);
+           /*//the combo box already exists - must change its elements, delete all components following it
             int ct;
             comboBox = (JComboBox)attributeControls.elementAt(index);
-            Component[] comps = querryPanel.getComponents();
+            Component[] comps = queryPanel.getComponents();
             for (ct = 0; ct < comps.length; ct++) {
                 if (comboBox.equals(comps[ct])) break;
             }
             //remove combo box and its followers from the panel and both vectors
             for (int j = ct; j < comps.length; j++) {
-                querryPanel.remove(j);
+                queryPanel.remove(j);
             }
-            querryControls.setSize(ct);
-            attributeControls.setSize(ct);
+            queryControls.setSize(ct);
+            attributeControls.setSize(ct); */
+        } else {
+            //remove the horizontal glue to display components adjecently
+            queryPanel.remove(queryPanel.getComponents().length-1);
         }
         
         //create new component
@@ -666,7 +708,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 int index = attributeControls.indexOf(temp);
                 
                 //get the name of that node
-                temp = (JComboBox)querryControls.elementAt(index);
+                temp = (JComboBox)queryControls.elementAt(index);
                 String nodeName = temp.getModel().getSelectedItem().toString();
                 
                 //find node with nodeName and "name" attribute = attribVal
@@ -676,7 +718,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 if (!newPointer.isLeaf()) {
                     //create new component with the nodes's set of chilren
                     rootPointers.addElement(newPointer);
-                    addQuerryControl(index+1);
+                    addQueryControl((Component)e.getSource(), index+1);
                 }
             }
         });
@@ -686,9 +728,9 @@ public class ControlPanel extends javax.swing.JFrame {
         }
         attributeControls.setElementAt(comboBox, index);
         
-        querryPanel.add(Box.createRigidArea(new Dimension(5,0)));
-        querryPanel.add(comboBox);
-        querryPanel.add(Box.createHorizontalGlue());
+        queryPanel.add(Box.createRigidArea(new Dimension(5,0)));
+        queryPanel.add(comboBox);
+        queryPanel.add(Box.createHorizontalGlue());
         pack();
     }
     
@@ -862,7 +904,7 @@ public class ControlPanel extends javax.swing.JFrame {
         AdapterNode node = (AdapterNode)parentPath.getLastPathComponent();
         String parent = node.getName();
         
-        //find all children of the subtree that have the same name as innitial querry
+        //find all children of the subtree that have the same name as innitial query
         tableNodes = new Vector();
         children = tableRoot.getChildren();
         Element kid;
@@ -1012,7 +1054,7 @@ public class ControlPanel extends javax.swing.JFrame {
         //System.out.println("Parent = " + node.getParent());
     }
     
-    private JPanel makeLefter(Vector headings) {
+    private JPanel makeLefter(Vector headings, String varName) {
         //create vertical table labels
         JPanel temp = new JPanel();
         
@@ -1022,7 +1064,7 @@ public class ControlPanel extends javax.swing.JFrame {
         temp.setLayout(new BoxLayout(temp, BoxLayout.Y_AXIS));
         
         JButton[] lefters = new JButton[headings.size()];
-        JButton b = new JButton();
+        JButton b = new JButton(varName);
         b.setPreferredSize(blankSize.getSize());
         b.setMinimumSize(blankSize.getSize());
         b.setMaximumSize(blankSize.getSize());
@@ -1054,42 +1096,55 @@ public class ControlPanel extends javax.swing.JFrame {
                 regionName = regions[j].toString();
                 header.addElement(regionName);
                 AdapterNode currNode = currRootPointer.getChild("region", regionName);
+//System.out.println("Hello 1");
                 
                 String nodeName;
                 String attribVal = "";
                 JComboBox temp;
                 
                 //get the path of the variable desired by user
-                int pathLength = querryControls.size() - 1; //the last control's entries will be handled later
-                temp = (JComboBox)querryControls.lastElement();
+                int pathLength = queryControls.size() - 1; //the last control's entries will be handled later
+                temp = (JComboBox)queryControls.lastElement();
                 if (temp.getSelectedItem().toString().equals(DEFAULT_SELECTION_STRING)) pathLength--;
                 
-                //fo through all intermediate controls, start at 1 because zeroth control is regionBox
+//System.out.println("Hello 2");
+                //go through all intermediate controls, start at 1 because zeroth control is regionBox
                 for (int k = 1; k < pathLength; k++) {
-                    temp = (JComboBox)querryControls.elementAt(k);
+                    temp = (JComboBox)queryControls.elementAt(k);
                     nodeName = temp.getSelectedItem().toString();
-                    if (!attributeControls.isEmpty() && attributeControls.elementAt(k) != null) {
+//System.out.println("Hello 3");
+
+                    attribVal = "";
+                    if (!attributeControls.isEmpty() && attributeControls.size() > k && attributeControls.elementAt(k) != null) {
+//System.out.println("Hello 3.1");
                         //get the "name" attribute if appropriate
                         temp = (JComboBox)attributeControls.elementAt(k);
                         attribVal = temp.getSelectedItem().toString();
                         if (attribVal.equals(DEFAULT_SELECTION_STRING)) attribVal = "";
                     }
                     
+//System.out.println("Hello 3.2, Node Name = " + nodeName + " attribVal = " + attribVal);
                     currNode = currNode.getChild(nodeName, attribVal);
+//System.out.println("Hello 3.3");
                 }
                 
-                temp = (JComboBox)querryControls.elementAt(pathLength);
+//System.out.println("Hello 4");
+                //loop through all the children of the last control
+                temp = (JComboBox)queryControls.elementAt(pathLength);
                 nodeName = temp.getSelectedItem().toString();
-                if (!attributeControls.isEmpty() && attributeControls.elementAt(pathLength) != null) {
+                attribVal = "";
+                if (!attributeControls.isEmpty() && attributeControls.size() > pathLength && attributeControls.elementAt(pathLength) != null) {
                     temp = (JComboBox)attributeControls.elementAt(pathLength);
                     attribVal = temp.getSelectedItem().toString();
                     if (attribVal.equals(DEFAULT_SELECTION_STRING)) attribVal = "";
                 }
                 
+//System.out.println("Hello 5");
                 java.util.List nodes = currNode.getChildren(nodeName, attribVal);
                 Iterator it = nodes.iterator();
                 while (it.hasNext()) {
                     currNode = (AdapterNode)it.next();
+//System.out.println("Hello 6");
                     if (showNames) {
                         values.addElement(currNode.getAttributeValue("name"));
                         System.out.println("really did add " + currNode);
@@ -1101,7 +1156,7 @@ public class ControlPanel extends javax.swing.JFrame {
                             else if (!lefter.contains(attribVal)) lefter.addElement(attribVal);
                         }
                     }
-                    
+//System.out.println("Hello 7");
                 }
                 
                 TableViewModel model = new TableViewModel(values, header, showNames);
@@ -1113,10 +1168,11 @@ public class ControlPanel extends javax.swing.JFrame {
                 tempPanel.add(table.getTableHeader(), BorderLayout.NORTH);
                 tempPanel.add(table, BorderLayout.CENTER);
                 
+//System.out.println("Hello 8");
                 JPanel tempPanel2 = new JPanel();
                 tempPanel2.setLayout(new BorderLayout());
                 if (!lefter.isEmpty()) {
-                    JPanel lefterPanel = makeLefter(lefter);
+                    JPanel lefterPanel = makeLefter(lefter, nodeName);
                     tempPanel2.add(lefterPanel, BorderLayout.WEST);
                 }
                 tempPanel2.add(tempPanel, BorderLayout.CENTER);
