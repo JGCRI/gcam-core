@@ -275,19 +275,19 @@
 	OGACT(INOx,9,L,M) = FJKL(2,2,L)
 
 ! src 10 : wood used for industrial purposes
-	OGACT(INOx,10,L,M) = EDILM(IBMASS,L,M)
+	OGACT(INOx,10,L,M) =  fjkl(5,2,L)		! corrected -- sjs (index issue)
 
-! src 11 : coal used for building/commercial purposes
+! src 11 : coal used for residential/commercial building purposes
 	OGACT(INOx,11,L,M) = FJKL(3,1,L)
 
-! src 12: petroleum oil used for building/commercial purposes
+! src 12: petroleum oil used for residential/commercial building purposes
 	OGACT(INOx,12,L,M) = FJKL(1,1,L)
 
-! src 13: natural gas used for building/commercial purposes
+! src 13: natural gas used for residential/commercial building purposes
 	OGACT(INOx,13,L,M) = FJKL(2,1,L)
 
-! src 14: wood used for building/commercial
-	OGACT(INOx,14,L,M) = EDILM(IBMASS,L,M)
+! src 14: wood used for residential/commercial building
+	OGACT(INOx,14,L,M) =  fjkl(5,1,L)		! corrected -- sjs (index issue)
 
 ! src 15: coal used for transportation
 	OGACT(INOx,15,L,M) = FJKL(3,3,L)
@@ -348,19 +348,19 @@
 	OGACT(ICO,6,L,M) = FJKL(2,2,L)
 
 ! src 7 : wood used for industrial purposes
-	OGACT(ICO,7,L,M) = EDILM(IBMASS,L,M)
+	OGACT(ICO,7,L,M) =  fjkl(5,2,L)		! corrected -- sjs (index issue)
 
-! src 8 : coal used for building/commercial purposes
+! src 8 : coal used for residential/commercial building purposes
 	OGACT(ICO,8,L,M) = FJKL(3,1,L)
 
-! src 9: petroleum oil used for building/commercial purposes
+! src 9: petroleum oil used for residential/commercial building purposes
 	OGACT(ICO,9,L,M) = FJKL(1,1,L)
 
-! src 10: natural gas used for building/commercial purposes
+! src 10: natural gas used for residential/commercial building purposes
 	OGACT(ICO,10,L,M) = FJKL(2,1,L)
 
-! src 11: wood used for building/commercial
-	OGACT(ICO,11,L,M) = EDILM(IBMASS,L,M)
+! src 11: wood used for residential/commercial building
+	OGACT(ICO,11,L,M) = fjkl(5,1,L)		! corrected -- sjs (index issue)
 
 ! src 12: coal used for transportation
 	OGACT(ICO,12,L,M) = FJKL(3,3,L)
@@ -412,19 +412,19 @@
 	OGACT(IVOC,6,L,M) = FJKL(2,2,L)
 
 ! src 7 : wood used for industrial purposes
-	OGACT(IVOC,7,L,M) = EDILM(IBMASS,L,M)
+	OGACT(IVOC,7,L,M) =  fjkl(5,2,L)		! corrected -- sjs (index issue)
 
-! src 8 : coal used for building/commercial purposes
+! src 8 : coal used for residential/commercial building purposes
 	OGACT(IVOC,8,L,M) = FJKL(3,1,L)
 
-! src 9: petroleum oil used for building/commercial purposes
+! src 9: petroleum oil used for residential/commercial building purposes
 	OGACT(IVOC,9,L,M) = FJKL(1,1,L)
 
-! src 10: natural gas used for building/commercial purposes
+! src 10: natural gas used for residential/commercial building purposes
 	OGACT(IVOC,10,L,M) = FJKL(2,1,L)
 
-! src 11: wood used for building/commercial
-	OGACT(IVOC,11,L,M) = EDILM(IBMASS,L,M)
+! src 11: wood used for residential/commercial building
+	OGACT(IVOC,11,L,M) =  fjkl(5,1,L)		! corrected -- sjs (index issue)
 
 ! src 12: coal used for transportation
 	OGACT(IVOC,12,L,M) = FJKL(3,3,L)
@@ -489,19 +489,19 @@
 	OGACT(IBC,6,L,M) = FJKL(2,2,L)
 
 ! src 7 : wood used for industrial purposes
-	OGACT(IBC,7,L,M) = EDILM(IBMASS,L,M)
+	OGACT(IBC,7,L,M) =  fjkl(5,2,L)		! corrected -- sjs (index issue)
 
-! src 8 : coal used for building/commercial purposes
+! src 8 : coal used for residential/commercial building purposes
 	OGACT(IBC,8,L,M) = FJKL(3,1,L)
 
-! src 9: petroleum oil used for building/commercial purposes
+! src 9: petroleum oil used for residential/commercial building purposes
 	OGACT(IBC,9,L,M) = FJKL(1,1,L)
 
-! src 10: natural gas used for building/commercial purposes
+! src 10: natural gas used for residential/commercial building purposes
 	OGACT(IBC,10,L,M) = FJKL(2,1,L)
 
-! src 11: wood used for building/commercial
-	OGACT(IBC,11,L,M) = EDILM(IBMASS,L,M)
+! src 11: wood used for residential/commercial building
+	OGACT(IBC,11,L,M) =  fjkl(5,1,L)		! corrected -- sjs (index issue)
 
 ! src 12: coal used for transportation
 	OGACT(IBC,12,L,M) = FJKL(3,3,L)
