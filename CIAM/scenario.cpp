@@ -196,10 +196,6 @@ void Scenario::run(){
 	xmlDebugStream.open( conf->getFile( "xmlDebugFileName" ).c_str(), ios::out );
 	gasfile.open( conf->getFile( "climatFileName" ).c_str(), ios::out );
 	
-	// set size of global arrays depending on MaxPer 
-	// works fine with XMLParse, only calls maxper
-	// world->initper(); 
-	
 	// Start Model run for the first period.
 	int per = 0;
    
