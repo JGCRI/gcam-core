@@ -1665,16 +1665,6 @@ void Region::dbOutput() const {
         }
     }
 
-    /*	summary does not contain fuel consumption by sector	
-    // regional total fuel consumption for all demand sectors
-    for (m=0;m<maxper;m++) {
-    temp[m] = 0; // initialize temp to 0 for each period
-    for (i=0;i<noDSec;i++) { // sum for all period and demand sectors
-    temp[m] += summary[m].get_fmap_second(demandSector[i]->getName());
-    }
-    }
-    dboutput4(name,"Fuel Consumption","by End-Use Sector","zTotal","EJ",temp);
-    */	
     // region primary energy consumption by fuel type
     map<string,double> tpemap = summary[0].getpecons();
     for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
