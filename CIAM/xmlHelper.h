@@ -255,11 +255,11 @@ string XMLHelper<T>::getAttrString( const DOMNode* node, const string attrName )
 * This function when passed a node, vector and modeltime object will first extract the year attribute and lookup
 * the corresponding period from the modeltime object. It will then insert the item in that position in the vector.
 *
-* \todo Make this work for the demographics object. 
 * \warning Make sure the node passed as an argument as a year attribute.
 * \param node A pointer to a node from which to extract the data.
 * \param insertToVector A vector passed by reference in which to insert the value.
-* \param A pointer to the modeltime object to use to determine the correct period.
+* \param modeltime A pointer to the modeltime object to use to determine the correct period.
+* \param isPopulationData A flag which tells the function the vector is a demographics vector.
 */
 
 template<class T>

@@ -1,3 +1,8 @@
+/*! 
+* \defgroup CIAM C++ Integrated Assessment Model
+*/
+
+
 /*!
 * \namespace std 
 * \brief The C++ std library namespace. Defining it avoids writing std:: prefixes.
@@ -14,7 +19,7 @@
 */
 
 /*!
-* \mainpage CIAM model API documentation
+* \mainpage CIAM API documentation
 *
 * \section intro Introduction
 *

@@ -1,7 +1,7 @@
 /*! 
 * \file XMLLogger.cpp
 * \ingroup CIAM
-* \brief XMLLoger class source file.
+* \brief XMLLogger class source file.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$
