@@ -129,7 +129,6 @@ void AgSector::XMLParse( const DOMNode* node ) {
 void AgSector::toXML( ostream& out ) const {
    const Modeltime* modeltime = scenario->getModeltime();
    int iter = 0;
-   int innerIter = 0;
    
    // write the beginning tag.
    Tabs::writeTabs( out );

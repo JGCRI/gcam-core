@@ -56,20 +56,19 @@ void Configuration::XMLParse( const DOMNode* root ) {
 	DOMNodeList* nodeValueList = 0;
 	string sectionName;
 	string valueName;
-	int tempValue = 0;
 
 	//! \pre Assume we are passed a valid node.
 	assert( root );
 	
 	nodeSectionList = root->getChildNodes();
 	
-	for( int i = 0; i < nodeSectionList->getLength(); i++ ) {
+	for( int i = 0; i < static_cast<int>( nodeSectionList->getLength() ); i++ ) {
 		
 		currSectionNode = nodeSectionList->item( i );
 		sectionName = XMLHelper<string>::safeTranscode( currSectionNode->getNodeName() );		
 		nodeValueList = currSectionNode->getChildNodes();
 		
-		for( int j = 0; j < nodeValueList->getLength(); j++ ) {
+		for( int j = 0; j < static_cast<int>( nodeValueList->getLength() ); j++ ) {
 			currValueNode = nodeValueList->item( j );
 
 			if ( currValueNode->getNodeType() != DOMNode::ELEMENT_NODE ) {
