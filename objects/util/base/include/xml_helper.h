@@ -300,7 +300,6 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
    if( isPopulationData == false ) {   
       period = modeltime->getyr_to_per( year );
       
-      
       // Check that the period returned correctly.
       assert( ( period >= 0 ) && ( period <= modeltime->getmaxper() ) );
    }
@@ -729,6 +728,10 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Could not delete node " << objName << " as it does not exist." << endl;
         } 
+        else if( XMLHelper<bool>::getAttr( node, "nocreate" ) ) {
+            mainLog.setLevel( ILogger::NOTICE );
+            mainLog << "Did not create node " << objName << " as the nocreate input flag was set." << endl;
+        }
         else {
             newNode->XMLParse( node );
             insertToVector.push_back( newNodePtr.release() );
