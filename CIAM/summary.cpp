@@ -83,6 +83,7 @@ void Summary::updatefuelcons( const map<string, double>& fuelinfo ) {
 	// map all primary and secondary fuel consumption
 	for (fmap=fuelinfo.begin(); fmap!=fuelinfo.end(); ++fmap) {	// iterate to one less than the end
 		fuelcons[fmap->first] += fmap->second; // Add values from the passed map to fuelcons
+        // Don't need a zTotal b/c the fuels are uncomparable. 
 	}
 
 	// map primary energy consumption only.
@@ -173,6 +174,10 @@ double Summary::get_peprodmap_second( const string& name ) const {
 
 double Summary::get_emissmap_second( const string& name ) const {
 	return ( emission.find( name ) )->second;
+}
+
+double Summary::get_emissfuelmap_second( const string& name ) const {
+	return ( emissfuel.find( name ) )->second;
 }
 
 double Summary::get_emindmap_second( const string& name ) const {

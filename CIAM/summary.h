@@ -59,6 +59,7 @@ public:
 	double get_peprodmap_second( const std::string& name ) const;
 	double get_emissmap_second( const std::string& name ) const;
 	double get_emindmap_second( const std::string& name ) const;
+    double get_emissfuelmap_second( const std::string& name ) const;
 };
 
 #endif // _SUMMARY_H_
