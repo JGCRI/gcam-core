@@ -13,7 +13,7 @@
 * \date $Date$
 * \version $Revision$
 */
-#include<string>
+#include <string>
 
 class CalcCounter; 
 class Marketplace;
@@ -29,7 +29,6 @@ class SolverInfoSet;
 class BisectAll: public SolverComponent {
 public:        
     BisectAll( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
-    ~BisectAll();
     void init();
     static const std::string& getNameStatic();
     ReturnCode solve( const double solutionTolerance, const double edSolutionFloor, const int maxIterations, SolverInfoSet& solverSet, const int period );
