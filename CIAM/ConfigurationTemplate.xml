@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Josh Lurz (PNNL) -->
-<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:\cvs\Code\EXE\Configuration.xsd">
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Josh Lurz (PNNL) -->
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:\cvs\Code\Ciam\Configuration.xsd">
 	<Files>
 		<Value name="erbInputFileName">../input/erbinput2.csv</Value>
 		<Value name="outFileName">outFile.csv</Value>
@@ -15,10 +15,12 @@
 		<Value name="dbOutFileName">dbout.csv</Value>
 		<Value name="dbFileName">../input/erbdb.mdb</Value>
 		<Value name="scenarioXmlInputFileName1">../CIAM/scenarioAddOn.xml</Value>
+		<Value name="supplyDemandOutputFileName">SDCurves.csv</Value>
 	</Files>
 	<Strings/>
 	<Bools>
-		<Value name="DebugChecking">1</Value> <!-- Turns on various internal checks -->
+		<Value name="DebugChecking">1</Value>
+		<!-- Turns on various internal checks -->
 		<Value name="minicam">1</Value>
 		<Value name="timestamp">0</Value>
 		<Value name="agSectorActive">0</Value>
@@ -26,9 +28,14 @@
 		<Value name="CalibrationActive">0</Value>
 		<Value name="trackMaxED">0</Value> <!-- Writes out the worst ED to screen as solution proceeds -->
 		<Value name="runningNonReference">0</Value>
+		<Value name="PrintDependencyGraphs">0</Value>
+		<Value name="PrintValuesOnGraphs">0</Value>
+		<Value name="debugFindSD">1</Value>
 	</Bools>
 	<Ints>
 		<Value name="NumberOfScenarioAddOnFiles">1</Value>
+		<Value name="numMarketsToFindSD">3</Value>
+		<Value name="numPointsForSD">21</Value>
 	</Ints>
 	<Doubles/>
 </Configuration>
