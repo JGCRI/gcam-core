@@ -449,6 +449,8 @@ void Region::initperXML()
 }
 
 //! Set default emissions coefficient for CO2.
+//  Must find another way to set emissions coefficients rather than
+//  hardcoding it here. shk
 void Region::setCO2coef()
 {
 	// initialize map (tgC/EJ) or (MTC/EJ)
@@ -465,10 +467,13 @@ void Region::setCO2coef()
 	
 	// initialize map (tgC/EJ) or (MTC/EJ)
 	co2coefall["crude oil"] = 18.4; 
+	co2coefall["crude oil regional"] = 18.4; 
 	co2coefall["refined oil"] = 18.4;
 	co2coefall["natural gas"] = 15.0;
+	co2coefall["natural gas regional"] = 15.0;
 	co2coefall["delivered gas"] = 15.0;
 	co2coefall["coal"] = 25.3;
+	co2coefall["coal regional"] = 25.3;
 	co2coefall["delivered coal"] = 25.3;
 }
 

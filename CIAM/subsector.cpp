@@ -703,7 +703,6 @@ void subsector::MCoutputC( const string& regname, const string& secname ) const 
 			   string uname,vector<double> dout);
 
 	int i=0, m=0;
-	int mm=0; // temp period
 	int maxper = modeltime.getmaxper();
 	vector<double> temp(maxper);
 	string str; // tempory string
@@ -731,6 +730,7 @@ void subsector::MCoutputC( const string& regname, const string& secname ) const 
 
 	//string tssname = name; // tempory subsector name
 	string tssname = "tech_"; // tempory subsector name
+	int mm=0; // temp period to get base period
 	// do for all technologies in the subsector
 	for (i=0;i<notech;i++) {
 		//str = tssname + techs[i][mm].showname();
@@ -738,14 +738,19 @@ void subsector::MCoutputC( const string& regname, const string& secname ) const 
 //		if(notech>1) {  // write out if more than one technology
 		if(notech>0) {  // write out if more than one technology
 			// technology CO2 emission
-			for (m=0;m<maxper;m++)
-				temp[m] = summary[m].get_emissmap_second("CO2");
+			for (m=0;m<maxper;m++) {
+				// this gives subsector total CO2 emissions
+				//temp[m] = summary[m].get_emissmap_second("CO2");
+				// get CO2 emissions for each technology
+				temp[m] = techs[i][m]->get_emissmap_second("CO2");
+			}
 			dboutput4(regname,"CO2 Emiss",secname,str,"MTC",temp);
 			// technology indirect CO2 emission
 			for (m=0;m<maxper;m++)
 				temp[m] = summary[m].get_emindmap_second("CO2");
 			dboutput4(regname,"CO2 Emiss(ind)",secname,str,"MTC",temp);
 			// technology ghg emissions, get gases for per 
+			// all gases not just CO2
 			map<string,double> temissmap = techs[i][0]->getemissmap();
 			for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
 				for (m=0;m<maxper;m++) {
@@ -776,6 +781,21 @@ void subsector::MCoutputC( const string& regname, const string& secname ) const 
 				temp[m] = techs[i][m]->showinput();
 			dboutput4(regname,"Fuel Consumption",secname,techs[i][0]->getfname(),"EJ",temp);
 		}
+
+		
+		
+		
+/*	CI fmap; // define fmap
+	map<string,double> tfuelmap = summary[0].getfuelcons();
+	for (fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
+		for (m=0;m<maxper;m++) {
+			temp[m] = summary[m].get_fmap_second(fmap->first);
+		}
+		dboutput4(regname,"Fuel Consumption",secname,fmap->first,"EJ",temp);
+	}
+*/		
+		
+		
 		// for 1 or more technologies
 		// technology efficiency
 		for (m=0;m<maxper;m++)
@@ -887,6 +907,9 @@ map<string, double> subsector::getemindmap(const int per) const {
 void subsector::updateSummary(const int per) {
 	int i = 0;
 	string goodName;
+	
+	// clears subsector fuel consumption map
+	summary[per].clearfuelcons();
 
 	for (i=0;i<notech;i++) {
 		goodName = techs[i][0]->getfname();

@@ -156,7 +156,7 @@ void Marketplace::resetToPriceMarket( const string& goodName, const string& regi
     bool mktset;
     string marketName;
     string DemandGoodName;
-    const bool setNewMarkets = true; // for debugging, set this to false to turn this off
+    const bool setNewMarkets = false; // for debugging, set this to false to turn this off
     const int first_period = 1;   // first period for price markets
 	// skip first period since this is not really solved
     

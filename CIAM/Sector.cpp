@@ -250,6 +250,8 @@ void sector::price(int per)
 	sectorprice[per]=0.0;
 	for (int i=0;i<nosubsec;i++) {	
 		sectorprice[per] += subsec[i]->showshare(per) * subsec[i]->getprice(per);
+		double temp1 = subsec[i]->showshare(per);
+		double temp2 = subsec[i]->getprice(per);
 	}
 }
 
@@ -603,7 +605,7 @@ void sector::updateSummary( const int per )
 
 	for (i=0;i<nosubsec;i++) {
 		// clears subsector fuel consumption map
-		subsec[i]->clearfuelcons(per);
+		//subsec[i]->clearfuelcons(per);
 		// call update summary for subsector
 		subsec[i]->updateSummary(per);
 		// sum subsector fuel consumption for sector fuel consumption
@@ -946,11 +948,15 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
 		if (perCapitaBased) { // demand based on per capita GNP
 			//ser_dmd = base*pow(priceRatio,pElasticity[per])*pow(gnp_cap,iElasticity[per]);
 			ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp_cap,iElasticity[per]);
+			// need to multiply above by population ratio (current population/base year
+			// population).  The gnp ratio provides the population ratio.
+			ser_dmd *= gnp/gnp_cap;
 		}
 		else { // demand based on scale of GNP
 			//ser_dmd = base*pow(priceRatio,pElasticity[per])*pow(gnp,iElasticity[per]);
 			ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp,iElasticity[per]);
 		}
+
 		// calculate cummulative technical change using AEEI, autonomous end-use energy intensity
 		techChangeCumm[per] = techChangeCumm[per-1]*pow(1+aeei[per],modeltime.gettimestep(per));
 	}
@@ -1031,10 +1037,13 @@ void demsector::MCoutput( const string& regionName )
 	typedef map<string,double>:: const_iterator CI;
 	map<string,double> tfuelmap = sector::getfuelcons(m=0);
 	CI fmap; // define fmap
-	for (fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
+	// *** Either write out for each fuel here which is contained in the map
+	// or write out in subsector
+/*	for (fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
 		for (m=0;m<maxper;m++) {
 			temp[m] = sector::getfuelcons_second(m,fmap->first);
 		}
+		string strtemp = fmap->first;
 		dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
 
 		// if last element which is zTotal
@@ -1044,6 +1053,15 @@ void demsector::MCoutput( const string& regionName )
 			dboutput4(regionName,"Fuel Consumption","by End-Use Sector",secname,"EJ",temp);
 		}
 	}
+*/
+	// Write out total (zTotal) fuel consumption for each sector only
+	fmap = --tfuelmap.end();
+	for (m=0;m<maxper;m++) {
+		temp[m] = sector::getfuelcons_second(m,fmap->first);
+	}
+	dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
+	dboutput4(regionName,"Fuel Consumption","by End-Use Sector",secname,"EJ",temp);
+
 
 	// sector emissions for all greenhouse gases
 	map<string,double> temissmap = summary[0].getemission(); // get gases for per 0
@@ -1071,7 +1089,7 @@ void demsector::MCoutput( const string& regionName )
 
 	// sector price
 	for (m=0;m<maxper;m++) {
-		temp[m] = sector::showprice(m);
+		temp[m] = sector::showprice(m)/sector::showprice(0);
 	}
 	dboutput4(regionName,"Price",secname,"zSectorAvg","$/Ser",temp);
 	dboutput4(regionName,"Price","by End-Use Sector",secname,"$/Ser",temp);
