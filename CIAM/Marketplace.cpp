@@ -14,13 +14,13 @@ extern ofstream bugoutfile, sdcurvefile, logfile;
 extern Modeltime modeltime;
 extern World world;
 
-const double priceMult = 1; // resolution enhancement for price markets
-const double SMALLNUM = 1e-6; // constant small number to replace for null
-const double VERYSMALLNUM = 1e-8; // constant small number to replace for null
-const int bugTracking = 0; //Turn on to enable bugout tracking in various solution routines
-const int bugMinimal = 1; //Turn on minimal tracking of solution results
+const static double priceMult = 1; // resolution enhancement for price markets
+const static double SMALLNUM = 1e-6; // constant small number to replace for null
+const static double VERYSMALLNUM = 1e-8; // constant small number to replace for null
+const static bool bugTracking = false; //Turn on to enable bugout tracking in various solution routines
+const static bool bugMinimal = true; //Turn on minimal tracking of solution results
 
-const int trackED = 0; // Turn on solution mechanism tracking (to cout)
+const static bool trackED = false; // Turn on solution mechanism tracking (to cout)
 
 //! Default constructor.
 Marketplace::Marketplace() {
@@ -279,7 +279,7 @@ void Marketplace::nullsup_imrk( const string& goodName, const string& regionName
 	}
 }
 
-//! initialize market price to 0
+//! Print markets to standard out.
 void Marketplace::showmrks( const int per ) const 
 {
 	for (int i=0;i<nomrks;i++) {
@@ -1896,16 +1896,12 @@ int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, dou
         
     if (trackED) { cout <<"NR_Ron begin "; }
 
-	double** aaa = new double*[ m ];
-	double** bbb = new double*[ m ];
 	double **JFDM = new double*[ m ];
 	double **JFSM = new double*[ m ];
 	
 	for( i = 0; i < m; i++ ) {
-		aaa[ i ] = new double[ m ];
-		bbb[ i ] = new double[ m ];
-		JFDM[ i ] = aaa[ i ];
-		JFSM[ i ] = bbb[ i ];
+		JFDM[ i ] = new double[ m ];
+		JFSM[ i ] = new double[ m ];
 	}
 	
 	// function protocol
@@ -2044,12 +2040,10 @@ int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, dou
 			// free up memory before breaking out
 	
 			for( i = 0; i < m; i++ ) {
-				delete[] aaa[ i ];
-				delete[] bbb[ i ];
+				delete[] JFDM[ i ];
+				delete[] JFSM[ i ];
 			}
 	
-			delete[] aaa;
-			delete[] bbb;
 			delete[] JFDM;
 			delete[] JFSM;
 
@@ -2073,12 +2067,10 @@ int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, dou
 	// free up memory when done
 	
 	for( i = 0; i < m; i++ ) {
-		delete[] aaa[ i ];
-		delete[] bbb[ i ];
+		delete[] JFDM[ i ];
+		delete[] JFSM[ i ];
 	}
 	
-	delete[] aaa;
-	delete[] bbb;
 	delete[] JFDM;
 	delete[] JFSM;
 	return Code;
@@ -2117,17 +2109,13 @@ void Marketplace::solve( const int per ) {
 	}
 	
 	// For Newton-Raphson Solution Mechanism
-	double** a = new double*[ m ];
-	double** b = new double*[ m ];
 	
 	double** JF = new double*[ m ];
 	double** bb = new double*[ m ];
 	
 	for ( i = 0; i < m; i++ ) {
-		a[ i ] = new double[ m ];
-		b[ i ] = new double[ m ];
-		JF[ i ] = a[ i ];
-		bb[ i ] = b[ i ];
+		JF[ i ] = new double[ m ];
+		bb[ i ] = new double[ m ];
 	}
 	
 	logED(per); // calculate log of excess demand
@@ -2338,12 +2326,10 @@ void Marketplace::solve( const int per ) {
 	
 	// free up memory when done
 	for( i = 0; i < m; i++ ) {
-		delete[] a[ i ];
-		delete[] b[ i ];
+		delete[] JF[ i ];
+		delete[] bb[ i ];
 	}
 	
-	delete[] a;
-	delete[] b;
 	delete[] JF;
 	delete[] bb;
 }
