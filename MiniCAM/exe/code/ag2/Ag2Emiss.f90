@@ -6,7 +6,7 @@ IMPLICIT NONE
 
 REAL(8) CarbEmiss1(NLP,NMP)
 REAL(8) CarbEmissSave(4,NLP,NMP)
-REAL(8) deforUseMult, biomassprice
+REAL(8) deforUseMult, biomassprice, deforBioUseFract
 
 INTEGER i,T
 
@@ -94,11 +94,10 @@ DO i=1,NL
 
 	CALL SoilDecay(i,T)
 
-	  ! Initialize the AgLU price of biomass and convert to 1990$/Gcal
-	  MC_CALP(i,JBio) = P(INBMASS,i,1) * CVRT90 * GJperGCAL
-
-	biomassprice = biomassprice / GJperGCAL
-	deforUseMult = 1d0 - deforBioUseFract(biomassprice, gdpcap(i,t), i,T)
+	! Reduce deforestation above ground by half bio use 
+	! This is a crude approximation to displacing some fossil and some non-fossil
+	biomassprice = price(8,i) / GJperGcal
+	deforUseMult = 1d0 - deforBioUseFract(biomassprice, gdpcap(i,t)*2.12/1000d0, i,T)/2
 	
   ! Vegetation Emissions
 	! Crops

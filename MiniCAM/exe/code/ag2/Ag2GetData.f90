@@ -248,8 +248,13 @@ DO WHILE(INDIC.EQ.1)
     END DO
 
 ! Flag to turn off consumption of biomass previously deforested
-  CASE (697)
+  CASE (696)
 	DeforBioUse = 0
+ 
+! Flag to turn on consumption of biomass previously deforested
+! Is default value
+  CASE (697)
+	DeforBioUse = 1
  
 ! Fraction of aboveground woody biomass that is recoverable as a feedstock
   CASE (698)

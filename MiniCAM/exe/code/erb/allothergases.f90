@@ -876,11 +876,6 @@
 	
 	DefroR = orgDefor * (1d0 - deforBioUseFract(biomassprice, gdppercap, L,M))
 	
-	if (L .eq. 100) then
-		write (97,'(I3,8(f8.2,","))') M, DefroR,orgDefor,UseFract,gdpFact,priceFactor
-		write (97,*) "   EmPart(5,L): ",EmPart(5,L),SaveLand(5,L,M), SaveLand(5,L,M-1)
-	endif
-
 	RETURN
 	END
 	
@@ -918,6 +913,11 @@
 
 	deforBioUseFract = UseFract
 	
+	if (L .eq. 100) then
+		write(97,'(3I6,10(f6.2,", "))') M,L,DeforBioUse,UseFract, gdpFact, priceFactor, recovForestFrac(L)
+	!	write(97,'("  -- Pbio,Pop",10(f6.2,", "))') biomassprice, popu(10,m)
+		write(97,*) "GDP per cap",gdppercap
+	endif
 	RETURN
 	END
 
