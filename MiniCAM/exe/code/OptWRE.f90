@@ -28,7 +28,7 @@
 	END IF
 	LG = 1 ! set opt routines to group number 1
 
-
+	
 	!set the first path to try to the base one read in:
 	WREPATH = BASEWREPATH
 
@@ -45,7 +45,7 @@
 		END DO
 		CALL MCAMMAIN(1) ! call the model
 		! Hard code target year to be 2095, unless 2100 data is available, then use 2100
- 	    MagInt = 15/INT(MAGICCCResults(0,2)-MAGICCCResults(0,1))*(9 - 1)
+ 	    MagInt =1+15/INT(MAGICCCResults(0,2)-MAGICCCResults(0,1))*(9 - 2)
  	    if (INT(MAGICCCResults(0,2)-MAGICCCResults(0,1)) .eq. 5) MagInt = MagInt + 1
 
 		IF (WHICHTARG(LG) .EQ. 2) TARGVAL = MAGICCCResults(2,MagInt)

@@ -195,7 +195,7 @@
       SUBROUTINE CLIMAT (IWrite, MAGICCCResults,MagEM)	
 !      IMPLICIT REAL*8 (a-h,o-z), Integer (I-N)
 
-  	  REAL*8 MAGICCCResults(0:30,50), MagEM(20,19) ! mrj 5/03 pass data to/from MiniCAM
+  	  REAL*8 MAGICCCResults(0:30,75), MagEM(20,19) ! mrj 5/03 pass data to/from MiniCAM
 	  Integer IWrite ! and this toggles writing on/off to save time
 !
 !   THIS IS THE CLIMATE MODEL MODULE.
@@ -2597,7 +2597,7 @@ IF(IWrite.eq.1)THEN
 
 	IF (IWrite .eq. 1) WRITE(9,101)  !header row
 
-        IIPRT=5	! sjs -- change to 5 year interval in order to save more data points
+        IIPRT=15	! sjs -- changed to 5 year interval in order to save more data points
         DO K=1990,IYEND,IIPRT
 
 !*** code from mag.out forcing table again...

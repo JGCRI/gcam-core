@@ -259,7 +259,7 @@
 	
       ELSE  ! these are targets from MAGICC
 	  ! the target below is set for 2095, which is time index _9_ in minicam
- 	      MagInt = 15/INT(MAGICCCResults(0,2)-MAGICCCResults(0,1))*(9 - 1)
+ 	      MagInt =1+15/INT(MAGICCCResults(0,2)-MAGICCCResults(0,1))*(9 - 2)
 
 		  IF (WHICHTARG(LG) .EQ. 2) TARGVAL = MAGICCCResults(2,MagInt)
 	      IF (WHICHTARG(LG) .EQ. 3) TARGVAL = MAGICCCResults(1,MagInt)

@@ -73,7 +73,7 @@
 	            END DO
 	        ELSE IF (CarbConstraintType .le. 4) THEN ! IF aggreate climate target
 				MRKPRD(MRK) = CEMTARGS(L,M)
-				MagInt = 15/INT(MAGICCCResults(0,2)-MAGICCCResults(0,1))*(M - 1)
+				MagInt =1+15/INT(MAGICCCResults(0,2)-MAGICCCResults(0,1))*(M - 2)
 				SELECT CASE(CarbConstraintType)
 				CASE(2)	! CO2 Concentration
 	              	MRKDEM(MRK) = MAGICCCResults(2,MagInt)

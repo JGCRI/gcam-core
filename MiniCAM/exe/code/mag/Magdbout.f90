@@ -27,7 +27,7 @@
 	  WRITE(108,200) 950101+II,'MAGICC','Summary',labels(II),units(II)
 	  
 	  DO IV = 2,NLPMax
-	   	MagInt = 15/INT(MAGICCCResults(0,2)-MAGICCCResults(0,1))*(IV - 1)
+	   	MagInt =1+15/INT(MAGICCCResults(0,2)-MAGICCCResults(0,1))*(IV - 2)
 	   	TempOut(IV) = MAGICCCResults(II,MagInt)
 	  END DO
 

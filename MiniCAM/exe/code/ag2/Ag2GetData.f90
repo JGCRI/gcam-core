@@ -18,6 +18,7 @@ IVMAX = 3
 NJ = 4
 DeforBioUse = 1	! Default Value, turned on
 landUseReductionFract = 0.5		! Default, reduce land-use carbon emissions by half
+
 DO L=1,NL
 	gdppercap_point(L) = 15d0	! Default value $15,000 per capita
 END DO 

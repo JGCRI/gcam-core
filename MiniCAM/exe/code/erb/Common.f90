@@ -488,7 +488,7 @@
       DeForest(NMP)		  ! Global net deforestation emissions
 
 	  Real(8) &				! Vars for passing emissions & results to/from MAGICC
-	    MAGICCCResults(0:30,50), &	! Array of MAGICC results
+	    MAGICCCResults(0:30,75), &	! Array of MAGICC results
 	    MagEM(20,19)				! Array of MAGICC input emissions
 	    
 	  REAL(8) &
