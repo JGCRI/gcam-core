@@ -23,6 +23,7 @@ public class FileChooserDemo extends JFrame
 	   implements ActionListener, TableModelListener
 {
 
+	private JFrame thisFrame;
 	private Document doc;
 	private LSInput lsInput;
 	private LSParser lsParser;
@@ -108,6 +109,7 @@ public class FileChooserDemo extends JFrame
   FileChooserDemo(String title)
   {
 	super(title);
+	  thisFrame = this;
 	
 	globalFC = new JFileChooser();
 	//globalFC.setCurrentDirectory( new File(".") );
@@ -277,8 +279,8 @@ public class FileChooserDemo extends JFrame
 		 private void maybeShowPopup(MouseEvent e) {
 			 if (e.isPopupTrigger()) {
 				 selectedPath = jtree.getClosestPathForLocation(e.getX(), e.getY());
-				 System.out.println("Path: "+selectedPath);
-				 System.out.println("Lead: "+jtree.getLeadSelectionPath());
+				 //System.out.println("Path: "+selectedPath);
+				 //System.out.println("Lead: "+jtree.getLeadSelectionPath());
 			   	jtree.setSelectionPath(selectedPath);
 				MenuElement[] me = treeMenu.getSubElements();
 			        for (int i = 0; i < me.length; i++) {
@@ -553,6 +555,7 @@ public class FileChooserDemo extends JFrame
 
 
 			if (!jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
+			   /*
 			   Node temp = ((DOMmodel.DOMNodeAdapter)jtree.getLastSelectedPathComponent()).getNode();
 			   // HERE TO DISABLE TABLE remark function call
 			   //buildTable(treePathtoXPath(selectedPath, temp, 0)); 
@@ -572,7 +575,7 @@ public class FileChooserDemo extends JFrame
 			   		buildRegionYearTable(treePathtoXPath(selectedPath, temp, 0)); 
 				}
 			   }
-			   */
+			   //used to be close comment here
 			   MultiTableModel multiTable = new MultiTableModel(tables, filterMaps);
 			   jTable = new JTable(multiTable);
 			   jTable.getColumnModel().getColumn(0).setCellRenderer(multiTable.getCellRenderer(0,0));
@@ -608,6 +611,14 @@ public class FileChooserDemo extends JFrame
 			   }
 		   }
 	   });
+	   */
+				//BaseTableModel t = new DataTableModel(selectedPath, doc, thisFrame);
+				BaseTableModel t = new MultiTableModel(selectedPath, doc, thisFrame);
+				jTable = new JTable(t);
+			   jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)t).getCellRenderer(0,0));
+			   jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)t).getCellEditor(0,0));
+			   jTable.setRowHeight(200);
+	  		   menuTableFilter.setEnabled(true);
 			   JScrollPane tableView = new JScrollPane(jTable);
 	  		   splitPane.setRightComponent(tableView);
 			   //jtree.setSelectionPath(selectedPath);
@@ -1229,7 +1240,7 @@ public class FileChooserDemo extends JFrame
           	  }
 		  rows.addElement(tempVector);
 	  }
-	  tableModel = new DataTableModel(cols, rows, filterMaps, DataTableModel.NORMAL_TABLE, this);
+	  //tableModel = new DataTableModel(cols, rows, filterMaps, DataTableModel.NORMAL_TABLE, this);
 	  TableSorter sorter = new TableSorter(tableModel);
 	  jTable = new JTable(sorter);
 
@@ -1339,7 +1350,7 @@ public class FileChooserDemo extends JFrame
 		updateTable(dcTable, rows, cols, filterMaps);
 
 	}
-	tableModel = new DataTableModel(cols, rows, filterMaps, DataTableModel.DEMAND_COMPONENTS_TABLE, this);
+	//tableModel = new DataTableModel(cols, rows, filterMaps, DataTableModel.DEMAND_COMPONENTS_TABLE, this);
 	TableSorter sorter = new TableSorter(tableModel);
 	jTable = new JTable(sorter);
 
@@ -1665,7 +1676,7 @@ public class FileChooserDemo extends JFrame
 		}
 		updateTable(samTable, rows, cols, filterMaps);
 	}
-	tableModel = new DataTableModel(cols, rows, filterMaps, DataTableModel.SAM, this);
+	//tableModel = new DataTableModel(cols, rows, filterMaps, DataTableModel.SAM, this);
 	TableSorter sorter = new TableSorter(tableModel);
 	jTable = new JTable(sorter);
 

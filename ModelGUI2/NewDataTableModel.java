@@ -1,13 +1,15 @@
 import javax.swing.table.AbstractTableModel;
 import java.util.*;
-import org.w3c.dom.Node;
 import org.w3c.dom.*;
+import javax.swing.JFrame;
 //import javax.swing.*;
 //import java.awt.*;
-//import javax.swing.tree.TreePath;
 //import java.awt.event.*;
+import javax.swing.tree.TreePath;
+import org.apache.xpath.domapi.*;
+import org.w3c.dom.xpath.*;
 
-public class NewDataTableModel extends AbstractTableModel {
+public class NewDataTableModel extends AbstractTableModel{
 	Vector indCol;
 	Vector indRow;
 	String ind1Name;
@@ -17,6 +19,19 @@ public class NewDataTableModel extends AbstractTableModel {
 	String w3;
 	Document doc;
 
+	/*
+	public NewDataTableModel(TreePath tp, Document doc, JFrame parentFrame) {
+		super(tp, doc, parentFrame);
+	}
+	protected void buildTable(XPathExpression xpe) {
+	}
+	protected void filterData(JFrame ParentFrame) {
+		throw new UnsupportedOperationException();
+	}
+	protected void doFilter(Vector possibleFilters){
+		throw new UnsupportedOperationException();
+	}
+	*/
 	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, TreeMap dataIn, Document docIn) {
 		w3 = w3In;
 		indCol = new Vector(set1);
@@ -30,7 +45,6 @@ public class NewDataTableModel extends AbstractTableModel {
 	}
 
 	public void flip() {
-		System.out.println("fliping");
 		Vector tempArr = indCol;
 		indCol = indRow;
 		indRow = tempArr;

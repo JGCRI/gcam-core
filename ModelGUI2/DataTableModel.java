@@ -3,6 +3,9 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.tree.TreePath;
+import org.w3c.dom.*;
+import org.apache.xpath.domapi.*;
+import org.w3c.dom.xpath.*;
 /*
 import javax.swing.JDialog;
 import javax.swing.JButton;
@@ -14,17 +17,122 @@ import java.awt.Container;
 */
 import java.awt.event.*;
 
-public class DataTableModel extends AbstractTableModel {
+public class DataTableModel extends BaseTableModel{
 	private Vector cols;
 	private Vector rows;
-	private Vector activeRows;
-	private HashMap tableFilterMaps;
+	//private Vector activeRows;
+	//private HashMap tableFilterMaps;
 	private short tableType;
 	
 	public static final short NORMAL_TABLE = 0;
 	public static final short DEMAND_COMPONENTS_TABLE = 1;
 	public static final short SAM = 2;
 
+	public DataTableModel(TreePath tp, Document doc, JFrame parentFrame) {
+		super(tp, doc, parentFrame);
+		cols = new Vector();
+		rows = new Vector();
+		activeRows = new Vector();
+		buildTable(treePathtoXPath(tp, doc.getDocumentElement(), 0));
+		tableType = NORMAL_TABLE;
+		for (int i = 0; i < rows.size(); i++) {
+			activeRows.addElement(new Integer(i));
+		}
+	}
+  	protected void buildTable(XPathExpression xpe){
+	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+	  xpe = null;
+	  Node tempNode;
+	  //Vector cols = new Vector();
+	  Vector tempVector;
+	  //Vector rows = new Vector();
+	  //HashMap filterMaps; 
+	  HashMap tempMap;
+	  Vector path;
+	  if(tableFilterMaps == null) {
+		  tableFilterMaps = new HashMap();
+	  }
+	  /*
+	  if (tableModel == null) {
+		  filterMaps = new HashMap();
+	  } else {
+		  filterMaps = tableModel.getFilterMaps();
+	  }
+	  */
+	  while ((tempNode = res.iterateNext()) != null) {
+		  if (cols.isEmpty()) {
+			  cols = recBuildParentList(tempNode, cols, null);
+		  }
+		  path = new Vector();
+		  tempVector = new Vector();
+		  tempVector = recBuildParentList(tempNode, tempVector, path);
+		  tempVector.addElement(new TreePath(path.toArray()));
+		  for (int i = 0; i < tempVector.size() -2; i++) {
+	           	  if (tableFilterMaps.containsKey(cols.get(i))) {
+	                          tempMap = (HashMap)tableFilterMaps.get(cols.get(i));
+                          } else {
+                                  tempMap = new HashMap();
+                          }
+			  if (!tempMap.containsKey(tempVector.get(i))) {
+                          	tempMap.put(tempVector.get(i), new Boolean(true));
+                          	tableFilterMaps.put(cols.get(i), tempMap);
+			  }
+          	  }
+		  rows.addElement(tempVector);
+	  }
+	  /*
+	  tableModel = new DataTableModel(cols, rows, filterMaps, DataTableModel.NORMAL_TABLE, this);
+	  TableSorter sorter = new TableSorter(tableModel);
+	  jTable = new JTable(sorter);
+
+	  jTable.getModel().addTableModelListener(this);
+
+	  sorter.setTableHeader(jTable.getTableHeader());
+	  //jTable = new JTable(tableModel);
+	  jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	  
+	  jTable.setCellSelectionEnabled(true);
+
+	  javax.swing.table.TableColumn col;
+	  for (int i = 0; i < cols.size(); i++) {
+		  col = jTable.getColumnModel().getColumn(i);
+		  col.setPreferredWidth(((String)cols.get(i)).length()*5+30);
+	  }
+	  JScrollPane tableView = new JScrollPane(jTable);
+	  splitPane.setRightComponent(tableView);
+	  menuTableFilter.setEnabled(true);
+	  */
+  }
+  private Vector recBuildParentList(Node currNode, Vector currList, Vector path) {
+	  if (currNode.getParentNode() == null) {
+		  return currList;
+	  }
+	  currList = recBuildParentList(currNode.getParentNode(),currList, path);
+	  if (path == null) {
+		  if (currNode.hasAttributes()) {
+			  currList.addElement(currNode.getNodeName() +" "+getOneAttrVal(currNode).substring(0,getOneAttrVal(currNode).indexOf("=")));
+		  }
+		  if (!getTextData(currNode).equals("")) {
+		  	currList.addElement(currNode.getNodeName());
+		  }
+	  } else {
+		  //path.addElement(new jtree.getModel().DOMNodeAdapter (currNode));
+		  //path.addElement(((DOMmodel)jtree.getModel()).getAdapterNode(currNode));
+		  // HERE for now
+		  path.addElement(currNode);
+		  if (currNode.hasAttributes()) {
+			  currList.addElement(getOneAttrVal(currNode).substring(getOneAttrVal(currNode).indexOf('=')+1));
+		  }
+		  if (!getTextData(currNode).equals("")) {
+		  	  currList.addElement(getTextData(currNode));
+		  }
+		  else {
+			  //currList.addElement("");
+		  }
+	  }
+	  return currList;
+  }
+	/*
 	public DataTableModel(Vector colHeaders, Vector rowData, HashMap filterMaps, short type, JFrame parentFrame) {
 		cols = colHeaders;
 		rows = rowData;
@@ -34,10 +142,11 @@ public class DataTableModel extends AbstractTableModel {
 		for (int i = 0; i < rows.size(); i++) {
 			activeRows.addElement(new Integer(i));
 		}
-		*/
+		// used to be end comment
 		filterData(parentFrame, true);
 		tableType = type;
 	}
+	*/
 
 	public int getRowCount() {
 		return activeRows.size();
@@ -118,6 +227,7 @@ public class DataTableModel extends AbstractTableModel {
 		return checkClass((((Vector)rows.get(0)).get(column)));
 	}
 
+	/*
 	private int currFilter;
 	private String[] currKeys;
 	public void filterData(JFrame parentFrame, boolean isCondensed) {
@@ -132,7 +242,7 @@ public class DataTableModel extends AbstractTableModel {
 		for (int i = 0; i < rows.size(); i++) {
 			activeRows.addElement(new Integer(i));
 		}
-		*/
+		// used to be close comment
 		currKeys = new String[0];
 		final HashMap tempFilterMaps = (HashMap)tableFilterMaps.clone();
 		final Vector possibleKeys = new Vector();
@@ -303,8 +413,10 @@ public class DataTableModel extends AbstractTableModel {
 		tempVector = null;
 		list.setSelectedIndices(selected);
 	}
+	*/
 
-	private void doFilter(Vector possibleFilters, boolean isCondensed) {
+	protected void doFilter(Vector possibleFilters) {
+		boolean isCondensed = false;
 		activeRows = new Vector();
 		for (int i = 0; i < rows.size(); i++) {
 			activeRows.addElement(new Integer(i));
@@ -354,11 +466,11 @@ public class DataTableModel extends AbstractTableModel {
 	}
 
 	public HashMap getFilterMaps() {
-		return tableFilterMaps;
+		return (HashMap)tableFilterMaps;
 	}
 
 	public void updateDataFilter(JFrame parentFrame) {
-		filterData(parentFrame, false);
+		filterData(parentFrame);
 	}
 }
 
