@@ -570,7 +570,7 @@ bool Market::shouldSolve() const {
 
 //! Determine if a market should be solved for NR.
 bool Market::shouldSolveNR( const double SMALL_NUM ) const {
-   return ( solveMarket && demand > SMALL_NUM );
+   return ( solveMarket && demand > SMALL_NUM && supply > SMALL_NUM );
 }
 
 //! Return the type of the market.
