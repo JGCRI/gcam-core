@@ -114,7 +114,6 @@ public:
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period );
     virtual void csvOutputFile() const;
-    void MCoutput_subsec() const;
     virtual void dbOutput() const;
     void subsec_outfile() const;
     double getTotalCarbonTaxPaid( const int period ) const;

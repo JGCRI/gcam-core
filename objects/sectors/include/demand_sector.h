@@ -55,7 +55,8 @@ protected:
     std::vector<double> aeei; //!< autonomous end-use energy intensity parameter
     std::vector<double> techChangeCumm; //!< cummulative technical change on end-use service
     virtual void printStyle( std::ostream& outStream ) const;
-
+    void MCoutput_subsec() const;
+ 
 public:
     DemandSector( const std::string regionName );
     virtual ~DemandSector();

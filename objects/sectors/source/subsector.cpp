@@ -1394,12 +1394,22 @@ void Subsector::csvOutputFile() const {
         }
         fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"CO2 emiss(ind)","MTC",temp);
     }
-	
+    
+    csvDerivedClassOutput( );
 }
 
-//! write MiniCAM style Subsector output to database
-/*! Part A for supply sector, titles and units are different for Part B */
-void Subsector::MCoutputA() const {
+//! Outputs any variables specific to derived classes
+void Subsector::csvDerivedClassOutput( ) {
+    // do nothing
+}
+
+/*! \brief Write supply sector MiniCAM style Subsector output to database.
+*
+* Writes outputs with titles and units appropriate to supply sectors.
+*
+* \author Sonny Kim
+*/
+void Subsector::MCoutputSupplySector() const {
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
@@ -1449,9 +1459,14 @@ void Subsector::MCoutputA() const {
     }
 }
 
-//! write MiniCAM style Subsector output to database
-/*! Part B for demand sector, titles and units are different from Part A */
-void Subsector::MCoutputB() const {
+/*! \brief Write demand sector MiniCAM style Subsector output to database.
+*
+* Writes outputs with titles and units appropriate to demand sectors.
+* Part B is for demand sector, titles and units are different from Part A
+*
+* \author Sonny Kim
+*/
+void Subsector::MCoutputDemandSector() const {
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
@@ -1499,9 +1514,13 @@ void Subsector::MCoutputB() const {
     }
 }
 
-
-//! write MiniCAM style Subsector output to database
-void Subsector::MCoutputC() const {
+/*! \brief Write common MiniCAM style Subsector output to database.
+*
+* Writes outputs that are common to both supply and demand sectors.
+*
+* \author Sonny Kim
+*/
+void Subsector::MCoutputAllSectors() const {
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
@@ -1618,6 +1637,14 @@ void Subsector::MCoutputC() const {
         }
         dboutput4(regionName,"Tech Intensity",sectorName+" "+name,str,"In/Out",temp);
     }
+    
+    MCDerivedClassOutput( );
+    
+}
+
+//! Outputs any variables specific to derived classes
+void Subsector::MCDerivedClassOutput( ) {
+    // do nothing
 }
 
 //! calculate GHG emissions from annual production of each technology

@@ -513,6 +513,16 @@ void DemandSector::dbOutput() const {
     MCoutput_subsec();
 }
 
+//! Write out subsector results from demand Sector.
+void DemandSector::MCoutput_subsec() const {
+	// do for all subsectors in the Sector
+    for (int i=0;i<nosubsec;i++) {
+        // output or demand for each technology
+        subsec[ i ]->MCoutputDemandSector();
+        subsec[ i ]->MCoutputAllSectors();
+    }
+}
+
 /*! \brief returns the demand sector service supplied.
 *
 *

@@ -205,3 +205,29 @@ void TranSubsector::setoutput( const double demand, const int period, const GDP*
     
 }
 
+
+/*! \brief Writes variables specific to transportation class to database.
+*
+* \author Steve Smith
+*/
+void TranSubsector::MCDerivedClassOutput( ) {
+    // function protocol
+    void dboutput4(string var1name,string var2name,string var3name,string var4name,
+        string uname,vector<double> dout);
+    
+    int i=0, m=0;
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    vector<double> temp(maxper);
+    string str; // tempory string
+
+    // Subsector service price
+    dboutput4(regionName,"General","ServicePrice",name," $/pass(ton)-mi",servicePrice);
+    // Subsector timeValue price
+    dboutput4(regionName,"General","TimeValue",name," $/pass(ton)-mi",timeValue);
+    // Subsector speed
+    dboutput4(regionName,"General","Speed",name,"Miles/hr",speed);
+    // Subsector speed
+    dboutput4(regionName,"General","LoadFactor",name,"persons(tons) per vehicle",loadFactor);
+}
+

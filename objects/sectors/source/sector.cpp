@@ -1178,16 +1178,6 @@ void Sector::csvOutputFile() const {
     fileoutput3( regionName, name, " ", " ", "C tax paid", "Mil90$", carbonTaxPaid);
 }
 
-//! Write out subsector results from demand Sector.
-void Sector::MCoutput_subsec() const {
-	// do for all subsectors in the Sector
-    for (int i=0;i<nosubsec;i++) {
-        // output or demand for each technology
-        subsec[ i ]->MCoutputB();
-        subsec[ i ]->MCoutputC();
-    }
-}
-
 //! Write MiniCAM style Sector output to database.
 void Sector::dbOutput() const {
     const Modeltime* modeltime = scenario->getModeltime();
@@ -1254,8 +1244,8 @@ void Sector::dbOutput() const {
     // do for all subsectors in the Sector
     for (int i=0;i<nosubsec;i++) {
         // output or demand for each technology
-        subsec[ i ]->MCoutputA();
-        subsec[ i ]->MCoutputC();
+        subsec[ i ]->MCoutputSupplySector();
+        subsec[ i ]->MCoutputAllSectors();
     }
 }
 

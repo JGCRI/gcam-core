@@ -38,6 +38,7 @@ public:
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
     virtual void calcShare( const int period, const GDP* gdp ); 
     virtual void setoutput( const double demand, const int period, const GDP* gdp );
+    virtual void MCDerivedClassOutput( );
     
 };
 

@@ -117,9 +117,11 @@ public:
     double getTotalCalOutputs( const int period ) const;
     double getFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const;
     void csvOutputFile() const; 
-    void MCoutputA() const; 
-    void MCoutputB() const; 
-    void MCoutputC() const; 
+    virtual void csvDerivedClassOutput( );
+    void MCoutputSupplySector() const; 
+    void MCoutputDemandSector() const; 
+    void MCoutputAllSectors() const; 
+    virtual void MCDerivedClassOutput( );
     void emission( const int period );
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period )  const;
