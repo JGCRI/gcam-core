@@ -313,12 +313,28 @@ void demsector::calc_share( const string regionName, const int per, const double
 	double sum = 0.0;
 	for (i=0;i<nosubsec;i++) {
 		// determine subsector shares based on technology shares
-		subsec[i]->calc_share( regionName, per, gnp_cap );
-		sum += subsec[i]->showshare(per);
+		subsec[i]->calcShare( regionName, per, gnp_cap );
+		sum += subsec[i]->getShare(per);
 	}
 	// normalize subsector shares to total 100 %
 	for (i=0;i<nosubsec;i++)
-		subsec[i]->norm_share(sum, per);	
+		subsec[i]->normShare(sum, per);	
+}
+
+//! Calculate weighted average price of subsectors.
+void demsector::price(int per)
+{
+	sectorprice[per]=0.0;
+	for (int i=0;i<nosubsec;i++) {	
+		if (per == 0) {
+			// uses read in base year shares
+			sectorprice[per] += subsec[i]->getShare(per) * subsec[i]->getprice(per);
+		}
+		else {
+			// uses previous period's actual shares
+			sectorprice[per] += subsec[i]->getShare(per-1) * subsec[i]->getprice(per);
+		}
+	}
 }
 
 //! Calculate end-use service price elasticity
@@ -381,8 +397,8 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
 
 	set_ser_dmd(ser_dmd_adj,per); // sets the output
 	// sets subsector outputs, technology outputs, and market demands
-	setoutput(regionName,ser_dmd_adj,per);
-	sumoutput(per);
+	sector::setoutput(regionName,ser_dmd_adj,per);
+	sector::sumoutput(per);
 }
 
 //! Write sector output to database.
@@ -431,10 +447,6 @@ void demsector::MCoutput( const string& regionName ) {
 	string str; // temporary string
 
 	// total sector output
-	for (m=0;m<maxper;m++) {
-		temp[m] = sector::getoutput(m);
-	}
-//	dboutput4(regionName,"End-Use Service","by Sector",secname,"Ser Unit",temp);
 	dboutput4(regionName,"End-Use Service","by Sector",secname,"Ser Unit",service);
 	dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",temp);
 
@@ -473,6 +485,8 @@ void demsector::MCoutput( const string& regionName ) {
 	}
 	dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
 	dboutput4(regionName,"Fuel Consumption","by End-Use Sector",secname,"EJ",temp);
+	// output for zTotal get written for each demand sector and dataviewer sums it up
+	dboutput4(regionName,"Fuel Consumption","by End-Use Sector","zTotal","EJ",temp);
 
 
 	// sector emissions for all greenhouse gases
@@ -499,17 +513,29 @@ void demsector::MCoutput( const string& regionName ) {
 	}
 	dboutput4(regionName,"CO2 Emiss(ind)",secname,"zTotal","MTC",temp);
 
-	// sector price
+	// sector price (not normalized)
+	for (m=0;m<maxper;m++) {
+		temp[m] = sector::showprice(m);
+	}
+	dboutput4(regionName,"Price",secname,"zSectorAvg","75$/Ser",temp);
+	
+	// sector price normalized to base price
 	for (m=0;m<maxper;m++) {
 		temp[m] = sector::showprice(m)/sector::showprice(0);
 	}
-	dboutput4(regionName,"Price",secname,"zSectorAvg","$/Ser",temp);
-	dboutput4(regionName,"Price","by End-Use Sector",secname,"$/Ser",temp);
+	dboutput4(regionName,"Price","by End-Use Sector",secname,"Norm75",temp);
+	
 	// sector carbon taxes paid
 	for (m=0;m<maxper;m++) {
 		temp[m] = sector::showcarbontaxpaid(m);
 	}
 	dboutput4(regionName,"General","CarbonTaxPaid",secname,"$",temp);
+	
 	// do for all subsectors in the sector
 	MCoutput_subsec( regionName );
+}
+
+//! Return demand sector service
+double demsector::getService(const int per) {
+	return service[per];
 }

@@ -47,10 +47,12 @@ public:
 	virtual void toDebugXML( const int period, ostream& out ) const;
 	virtual void setMarket( const string& regname );
 	virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 );
+	virtual void price(int per); // calculates sector price
 	virtual void calc_pElasticity( const int per );
 	virtual void aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per); 
 	virtual void outputfile( const string& regionName );
 	virtual void MCoutput( const string& regionName );
+	double getService(const int per);
 };
 
 #endif // _DEMAND_SECTOR_H_

@@ -141,6 +141,7 @@ void technology::XMLParse( const DOMNode* node )
 		}
 		else if( nodeName == "resource" ){
 			resource = XMLHelper<double>::getValue( curr );
+			//resource = 0.0;
 		}
 		else if( nodeName == "A" ){
 			A = XMLHelper<double>::getValue( curr );
@@ -344,15 +345,15 @@ void technology::adjShares(double subsecdmd, double totalFixedSupply, double var
     double remainingDemand = 0;
     double fixedSupply = 0;
     
-    if(totalFixedSupply != 0) {
+    if(totalFixedSupply > 0) {
         remainingDemand = subsecdmd - totalFixedSupply;
         if (remainingDemand < 0) {
 			remainingDemand = 0;
 		}
-        fixedSupply = getFixedSupply(); 
+        fixedSupply = fixedOutputVal; 
         
-        if ( fixedSupply != 0 ) {	// This tech has a fixed supply
-            if (subsecdmd != 0) {
+        if ( fixedSupply > 0 ) {	// This tech has a fixed supply
+            if (subsecdmd > 0) {
                 share = fixedSupply/subsecdmd;
                 // Set value of fixed supply
                 if (fixedSupply > subsecdmd) {
@@ -367,7 +368,7 @@ void technology::adjShares(double subsecdmd, double totalFixedSupply, double var
 			}
         }
         else {	// This tech does not have fixed supply
-            if (subsecdmd != 0 && varShareTot != 0) {
+            if (subsecdmd > 0) {
                 share = share * (remainingDemand/subsecdmd)/varShareTot;
 			}
             else {

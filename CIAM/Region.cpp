@@ -989,7 +989,16 @@ void Region::MCoutput() {
 		dboutput4(name,"Emissions","by gas",gmap->first,"MTC",temp);
 	}
 	
-	// region fuel consumption (primary and secondary) by fuel type
+	// regional total end-use service demand for all demand sectors
+	for (m=0;m<maxper;m++) {
+		temp[m] = 0; // initialize temp to 0 for each period
+		for (i=0;i<nodsec;i++) { // sum for all period and demand sectors
+			temp[m] += demandsector[i]->getService( m );
+		}
+	}
+	dboutput4(name,"End-Use Service","by Sector","zTotal","Ser Unit",temp);
+	
+	// regional fuel consumption (primary and secondary) by fuel type
 	map<string,double> tfuelmap = summary[0].getfuelcons();
 	for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
 		for (int m=0;m<maxper;m++) {
@@ -998,6 +1007,16 @@ void Region::MCoutput() {
 		dboutput4(name,"Fuel Consumption","by fuel",fmap->first,"EJ",temp);
 	}
 	
+/*	summary does not contain fuel consumption by sector	
+	// regional total fuel consumption for all demand sectors
+	for (m=0;m<maxper;m++) {
+		temp[m] = 0; // initialize temp to 0 for each period
+		for (i=0;i<nodsec;i++) { // sum for all period and demand sectors
+			temp[m] += summary[m].get_fmap_second(demandsector[i]->getName());
+		}
+	}
+	dboutput4(name,"Fuel Consumption","by End-Use Sector","zTotal","EJ",temp);
+*/	
 	// region primary energy consumption by fuel type
 	map<string,double> tpemap = summary[0].getpecons();
 	CI pmap;
@@ -1024,14 +1043,17 @@ void Region::MCoutput() {
 	dboutput4(name,"Pri Energy","Production by Sector","zTotal","EJ",temp);
 	
 	// write depletable resource results to database
-	for (i=0;i<numResources;i++) 
+	for (i=0;i<numResources;i++) {
 		resources[i]->MCoutput( name );
+	}
 	// write supply sector results to database
-	for (i=0;i<nossec;i++)
+	for (i=0;i<nossec;i++) {
 		supplysector[i]->MCoutput( name );
+	}
 	// write end-use sector demand results to database
-	for (i=0;i<nodsec;i++)
+	for (i=0;i<nodsec;i++) {
 		demandsector[i]->MCoutput( name );
+	}
 }
 
 //! Find out which markets have simultaneities 

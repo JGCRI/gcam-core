@@ -37,7 +37,6 @@ using namespace mtl;
 
 extern ofstream bugoutfile, sdcurvefile, logfile;
 extern Scenario scenario;
-
 // Need to avoid global variables.
 const static double priceMult = 1; //!< resolution enhancement for price markets
 const static double SMALLNUM = 1e-6; //!< constant small number to replace for null

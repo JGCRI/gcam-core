@@ -84,7 +84,6 @@ void subsector::XMLParse( const DOMNode* node ) {
 	string childNodeName;
 	vector<technology*> techVec;
 	technology* tempTech = 0;
-        int m;
         
 	// resize vectors not read in, therefore not sized by XML input
 	const Modeltime* modeltime = scenario.getModeltime();
@@ -120,7 +119,7 @@ void subsector::XMLParse( const DOMNode* node ) {
 			capLimit.push_back( XMLHelper<double>::getValue( curr ) );
 		}
 		else if( nodeName == "sharewt" ){
-			if(name=="windxxxx") { // Change this to "wind" to turn wind shares down
+			if(name=="wind") { // Change this to "wind" to turn wind shares down
 				shrwts.push_back(0.001);
 			}
 			else {
@@ -139,6 +138,7 @@ void subsector::XMLParse( const DOMNode* node ) {
 		// basesharewt is not a vector but a single value
 		else if( nodeName == "basesharewt" ){
 			basesharewt = XMLHelper<double>::getValue( curr );
+			share[0] = basesharewt;
 		}
 
 		else if( nodeName == "technology" ){
@@ -162,9 +162,9 @@ void subsector::XMLParse( const DOMNode* node ) {
 	}
 	// completed parsing.
 
-        // Initialzie any arrays that have non-zero default value
-        capLimit.resize(maxper,1.0); 
-        
+    // Initialzie any arrays that have non-zero default value
+    capLimit.resize(maxper,1.0); 
+	
 	notech = techs.size();
 
 }
@@ -343,7 +343,7 @@ void subsector::addghgtax( const string& ghgname, const string& regionName, cons
 
 
 // maw  calculate technology shares within subsector
-void subsector::calc_tech_shares( const string& regionName, const int per ) {
+void subsector::calcTechShares( const string& regionName, const int per ) {
 	int i=0;
 	double sum = 0;
 
@@ -365,10 +365,10 @@ void subsector::calc_tech_shares( const string& regionName, const int per ) {
 	
 
 //! calculate subsector share numerator 
-void subsector::calc_share( const string& regionName, const int per, const double gnp_cap )
+void subsector::calcShare( const string& regionName, const int per, const double gnp_cap )
 {
 	// call function to compute technology shares
-	subsector::calc_tech_shares(regionName, per);
+	subsector::calcTechShares(regionName, per);
 
 	// calculate and return subsector share; uses above price function
 	// calc_price() uses normalized technology shares calculated above
@@ -395,7 +395,7 @@ void subsector::calc_share( const string& regionName, const int per, const doubl
 }
 
 //! normalizes shares to 100%
-void subsector::norm_share( const double sum, const int per) {
+void subsector::normShare( const double sum, const int per) {
 	if ( sum==0 ) {
 		share[per]=0;
 	}
@@ -435,7 +435,7 @@ void subsector::limitShares( const double multiplier, const int per) {
 //! call technology production, only exogenously driven technology gives an output
 /*! Since the calls below set output, this call must be done before
     calls to technology production with non-zero demand . g*/
-double subsector::exog_supply( const int per ) {
+double subsector::exogSupply( const int per ) {
 	double fixedOutput = 0;
 	for (int i=0;i<notech;i++) {
 		techs[i][per]->calcFixedSupply(per);
@@ -457,17 +457,17 @@ void subsector::scaleFixedSupply( const double scaleRatio, const int per ) {
 // sum of sector shares that have no fixed production
 // total fixed supply from all sectors
 // model period
-void subsector::adjShares( const double dmd, double varSectorSharesTot, const double totalFixedSupply, const int per) {
-	double fixedSupply = 0; // no subsector demand
-	double temp;
+void subsector::adjShares( const double dmd, double shareRatio, 
+                          const double totalFixedSupply, const int per) {
+	double sumFixedSupply = 0; // total subsector fixed supply
+	double fixedSupply = 0; // fixed supply for each technology
 	double varShareTot = 0; // sum of shares without fixed supply
-	double RemainingDemand = 0;
-	
+	double subsecdmd; // subsector demand adjusted with new shares
 	// add up the fixed supply and share of non-fixed supply
 	for (int i=0;i<notech;i++) {
-		temp = techs[i][per]->getFixedSupply();
-		fixedSupply += temp;
-		if (temp == 0) varShareTot += techs[i][per]->getShare();
+		fixedSupply = techs[i][per]->getFixedSupply();
+		sumFixedSupply += fixedSupply;
+		if (fixedSupply == 0) varShareTot += techs[i][per]->getShare();
 	}
 	
 	// Adjust the share for this subsector
@@ -475,22 +475,19 @@ void subsector::adjShares( const double dmd, double varSectorSharesTot, const do
 	// fixed production or all variable. Would need to amend the logic below
 	// to take care of other cases.
 	
-	if(totalFixedSupply != 0) {
-		RemainingDemand = dmd - totalFixedSupply;
-		if (RemainingDemand < 0) {
-			RemainingDemand = 0;
-		}
-		if (fixedSupply != 0) {	// This sector has a fixed supply
-			if (dmd != 0) {
-				share[per] = fixedSupply/dmd; 
+    // totalFixedSupply is the sector total
+	if(totalFixedSupply > 0) {
+		if (sumFixedSupply > 0) {	// This subsector has a fixed supply
+			if (dmd > 0) {
+				share[per] = sumFixedSupply/dmd; 
 			}
-			else {
+            else { // no fixed share if no demand
 				share[per] = 0; 
 			}
 		}
-		else {	// This tech does not have fixed supply
-			if (dmd != 0 && varShareTot != 0) {
-				share[per] = share[per] * (RemainingDemand/dmd)/varShareTot; 
+		else {	// This subsector does not have fixed supply
+			if (dmd > 0) {
+				share[per] = share[per] * shareRatio; 
 			}
 			else {
 				share[per] = 0; // Maybe not correct
@@ -499,7 +496,7 @@ void subsector::adjShares( const double dmd, double varSectorSharesTot, const do
 	}
 	
 	// then adjust technology shares to be consistent
-	double subsecdmd = share[per]*dmd; // share is subsector level
+	subsecdmd = share[per]*dmd; // share is subsector level
 	for (int j=0;j<notech;j++) {
 		// adjust tech shares 
 		techs[j][per]->adjShares(subsecdmd, fixedSupply, varShareTot, per);
@@ -564,7 +561,7 @@ void subsector::show_subsec() const {
 	cout <<"Total subsector Output: " << output[m] << endl;
 }
 //! returns share for each subsector
-double subsector::showshare( const int per ) const {
+double subsector::getShare( const int per ) const {
 	return share[per];
 }
 
@@ -677,12 +674,13 @@ void subsector::MCoutputA( const string& regname, const string& secname ) const 
 	int mm=0; // temp period
 	const Modeltime* modeltime = scenario.getModeltime();
 	const int maxper = modeltime->getmaxper();
+	const double cvrt90 = 2.212; //  convert '75 price to '90 price
 	vector<double> temp(maxper);
 	
 	// total subsector output
 	dboutput4(regname,"Secondary Energy Prod",secname,name,"EJ",output);
 	// subsector price
-	dboutput4(regname,"Price",secname,name,"$/GJ",subsectorprice);
+	dboutput4(regname,"Price",secname,name,"75$/GJ",subsectorprice);
 
 	string tssname = "tech_"; // tempory subsector name
 	string str1, str2; // tempory string
@@ -694,7 +692,7 @@ void subsector::MCoutputA( const string& regname, const string& secname ) const 
 		// technology non-energy cost
 		for (m=0;m<maxper;m++)
 			temp[m] = techs[i][m]->getnecost();
-		dboutput4(regname,"Price NE Cost",secname,str2,"$/GJ",temp);
+		dboutput4(regname,"Price NE Cost",secname,str2,"75$/GJ",temp);
 		// secondary energy and price output by tech
 		// output or demand for each technology
 		for (m=0;m<maxper;m++)
@@ -702,8 +700,8 @@ void subsector::MCoutputA( const string& regname, const string& secname ) const 
 		dboutput4(regname,"Secondary Energy Prod",str1,str2,"EJ",temp);
 		// technology cost
 		for (m=0;m<maxper;m++)
-			temp[m] = techs[i][m]->gettechcost();
-		dboutput4(regname,"Price",str1,str2,"$/GJ",temp);
+			temp[m] = techs[i][m]->gettechcost()*cvrt90;
+		dboutput4(regname,"Price",str1,str2,"90$/GJ",temp);
 	}
 }
 
@@ -722,7 +720,7 @@ void subsector::MCoutputB( const string& regname, const string& secname ) const 
 	// total subsector output
 	dboutput4(regname,"End-Use Service",secname,name,"Ser Unit",output);
 	// subsector price
-	dboutput4(regname,"Price",secname,name,"$/Ser",subsectorprice);
+	dboutput4(regname,"Price",secname,name,"75$/Ser",subsectorprice);
 
 	string tssname = "tech_"; // tempory subsector name
 	string str; // tempory string
@@ -738,12 +736,16 @@ void subsector::MCoutputB( const string& regname, const string& secname ) const 
 			// technology cost
 			for (m=0;m<maxper;m++)
 				temp[m] = techs[i][m]->gettechcost();
-			dboutput4(regname,"Price",secname,str,"$/Ser",temp);
+			dboutput4(regname,"Price",secname,str,"75$/Ser",temp);
 		}
+		// technology fuel cost
+		for (m=0;m<maxper;m++)
+			temp[m] = techs[i][m]->getfuelcost();
+		dboutput4(regname,"Price",secname+" Fuel Cost",str,"75$/Ser",temp);
 		// technology non-energy cost
 		for (m=0;m<maxper;m++)
 			temp[m] = techs[i][m]->getnecost();
-		dboutput4(regname,"Price NE Cost",secname,str,"$/Ser",temp);
+		dboutput4(regname,"Price",secname+" NE Cost",str,"75$/Ser",temp);
 	}
 }
 

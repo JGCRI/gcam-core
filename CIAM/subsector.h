@@ -66,19 +66,19 @@ public:
 	double getCapacityLimit( const int period ) const;
 	void applycarbontax( const double tax, const int period );
 	void addghgtax( const string& ghgname, const string& regionName, const int period ); 
-	virtual void calc_share( const string& regionName, const int period, const double gnp_cap = 1 ); 
-	void norm_share( const double sum, const int period );
-        void limitShares( const double sum, const int period );
+	virtual void calcShare( const string& regionName, const int period, const double gnp_cap = 1 ); 
+	void normShare( const double sum, const int period );
+    void limitShares( const double sum, const int period );
 	// maw compute tech shares within subsector in seperate method
-	void calc_tech_shares ( const string& regionName, const int period );
+	void calcTechShares ( const string& regionName, const int period );
 	// sets demand to output and output
 	void setoutput( const string& regionName, const string& prodName, const double dmd, const int period ); 
 	void sumoutput( const int period );
 	// calculates exogenous supply
-	double exog_supply( const int period );
+	double exogSupply( const int period );
 	void scaleFixedSupply( const double scaleRatio, const int per );
 	void show_subsec() const;
-	double showshare( const int period ) const;
+	double getShare( const int period ) const;
 	void showtechs( const int period, const string ofile ) const;
 	void showlabel( const string& ofile ) const;
 	void outputfile( const string& regionName, const string& sectorName) const; 

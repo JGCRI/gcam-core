@@ -247,13 +247,13 @@ void sector::calc_share( const string regionName, const int per, const double gn
 	double sum = 0.0;
 	for (i=0;i<nosubsec;i++) {
 		// determine subsector shares based on technology shares
-		subsec[i]->calc_share( regionName, per );
-		sum += subsec[i]->showshare(per);
+		subsec[i]->calcShare( regionName, per );
+		sum += subsec[i]->getShare(per);
 	}
 	// normalize subsector shares to total 100 %
 	for (i=0;i<nosubsec;i++) {
-		subsec[i]->norm_share(sum, per);	
-        }
+		subsec[i]->normShare(sum, per);	
+	}
 
     // Now adjust for capacity limits
       adjSharesCapLimit( per );
@@ -285,7 +285,8 @@ void sector::adjSharesCapLimit( const int per )
 {
     double tempCapacityLimit;
     double tempSubSectShare;
-    bool capLimited = true;
+    //bool capLimited = true;
+    bool capLimited = false;
     int i=0;
     
     // check for capacity limits, repeating to take care of any knock-on effects. 
@@ -299,7 +300,7 @@ void sector::adjSharesCapLimit( const int per )
         //  Check for capacity limits, looping through each subsector
         for ( i=0; i<nosubsec; i++ ) {
                 tempCapacityLimit = subsec[i]->getCapacityLimit( per ); // call once, store these locally
-                tempSubSectShare = subsec[i]->showshare( per ) ;
+                tempSubSectShare = subsec[i]->getShare( per ) ;
                 
                  // if there is a capacity limit and are over then set flag and count excess shares
                 if ( tempSubSectShare > tempCapacityLimit ) {
@@ -334,7 +335,7 @@ void sector::adjSharesCapLimit( const int per )
       if ( debugChecking ) {
             double sumshares = 0;
             for ( i=0; i<nosubsec; i++ ) {
-                sumshares += subsec[i]->showshare(per) ;
+                sumshares += subsec[i]->getShare(per) ;
             }
             if ( fabs(sumshares - 1) > 1e-6 ) {
                 cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << endl;
@@ -355,7 +356,7 @@ void sector::price(int per)
 {
 	sectorprice[per]=0.0;
 	for (int i=0;i<nosubsec;i++) {	
-		sectorprice[per] += subsec[i]->showshare(per) * subsec[i]->getprice(per);
+		sectorprice[per] += subsec[i]->getShare(per) * subsec[i]->getprice(per);
 	}
 }
 
@@ -407,9 +408,10 @@ void sector::supply( const string regionName, const int per) {
     int i;
 	double totalFixedSupply = 0; 
     double fixedSupply = 0;
-    double shareVariable = 0; // sum of shares without fixed supply   
-    double shareTotal = 0; // sum of all shares with and without fixed supply   
-           
+    double shareVariable = 0; // original sum of shares of non-fixed subsectors   
+    double shareVariableNew = 0; // new sum of shares of non-fixed subsectors   
+	double shareRatio;  // ratio for adjusting shares of non-fixed subsectors
+
 	carbontaxpaid[per] = 0; // initialize carbon taxes paid
 	
 	mrkprice = marketplace->showprice( name, regionName, per ); // price for the good produced by this sector
@@ -423,12 +425,11 @@ void sector::supply( const string regionName, const int per) {
     // Determine total fixed production and total var shares
     // Need to change the exog_supply function once new, general fixed supply method is available
 	for (i=0;i<nosubsec;i++) {
-        fixedSupply = subsec[i]->exog_supply(per);
+        fixedSupply = subsec[i]->exogSupply(per);
 		// add up subsector shares without fixed output
         if (fixedSupply == 0) { 
-			shareVariable += subsec[i]->showshare(per);
+			shareVariable += subsec[i]->getShare(per);
 		}
-        shareTotal += subsec[i]->showshare(per);
         totalFixedSupply += fixedSupply;
 	}
 
@@ -439,18 +440,32 @@ void sector::supply( const string regionName, const int per) {
 		}
 	}
 
-     // Adjust shares for any fixed output
-	if (totalFixedSupply > 0) {
-		for (i=0;i<nosubsec;i++) {
-			subsec[i]->adjShares( mrkdmd, shareVariable, totalFixedSupply, per ); 
+    // Adjust shares for any fixed output
+    if (totalFixedSupply > 0) {
+		if (totalFixedSupply > mrkdmd) {
+			// not used for fixed output
+			shareVariableNew = 0;
 		}
-	}
+		else {
+			// check for 0 so that shareVariableNew does not blow up
+		    if (mrkdmd == 0) {
+				cerr << "ERROR: Demand value = 0 for good " << name << " in region " << regionName << endl;
+			}
+			shareVariableNew = 1 - (totalFixedSupply/mrkdmd);
+		}
 
+        shareRatio = shareVariableNew/shareVariable;
+        for (i=0;i<nosubsec;i++) {
+            subsec[i]->adjShares( mrkdmd, shareRatio, totalFixedSupply, per ); 
+        }
+	}
+	
 	// This is where subsector and technology outputs are set
 	for (i=0;i<nosubsec;i++) {
 		// set subsector output from sector demand
 		subsec[i]->setoutput( regionName, name, mrkdmd, per ); // CHANGED JPL
 		subsec[i]->sumoutput( per );
+		// for reporting only
 		carbontaxpaid[per] += subsec[i]->showcarbontaxpaid( per );
 	}
     
@@ -477,7 +492,7 @@ void sector::show()
 	cout << "Sector: " << name<< endl;
 	cout << "Number of Subsectors: " << nosubsec << endl;
 	for (i=0;i<nosubsec;i++)
-		cout<<"Share["<<i<<"] "<<subsec[i]->showshare(m)<< endl;
+		cout<<"Share["<<i<<"] "<<subsec[i]->getShare(m)<< endl;
 	cout <<"Total Sector Output: " << output[m] << endl;
 
 }
