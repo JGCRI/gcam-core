@@ -179,3 +179,48 @@ SoilEmiss(4,i,T) = SoilEmiss(1,i,T) * 0.10d0	! Emissions the 2nd time period (30
 
 
 END SUBROUTINE SoilDecay
+
+
+!
+!-------------------------
+! Function returns amount of deforested biomass that is used for fuel
+
+	FUNCTION deforBioUseFract(biomassprice, gdppercap, L,M)
+
+	USE Ag2Global8
+	
+	REAL*8 deforBioUseFract, gdppercap, biomassprice
+	INTEGER L,M
+
+	REAL*8 UseFract, priceFactor, maxUse, gdpFact, gdpSplitPoint
+    
+	UseFract = recovForestFrac(L)	! Basic amount that can be potentially used
+	
+	gdpFact = 1d0
+	gdpSplitPoint = gdppercap_point(L)
+	if (gdppercap .lt. gdpSplitPoint ) then
+		gdpFact = (gdppercap/gdpSplitPoint) 	! Assume that less is used at low incomes
+	endif
+	UseFract = UseFract	* gdpFact
+
+	! Assume that none is used at a low biomass price ($1/GJ), maxing out at $5/GJ
+	maxUse = 0.90	! Assume that 90% of the usable biomass is used if price is high enough
+	
+	priceFactor =  ( biomassprice - 1d0 ) / (5d0 - 1d0) * maxUse
+	if (priceFactor .gt. 1d0) priceFactor = maxUse
+	if (priceFactor .lt. 0) priceFactor = 0
+	
+	UseFract = UseFract	* priceFactor
+	
+	If (DeforBioUse .eq. 0) UseFract = 0
+
+	deforBioUseFract = UseFract
+	
+	if (L .eq. 100) then
+		write(97,'(3I6,10(f6.2,", "))') M,L,DeforBioUse,UseFract, gdpFact, priceFactor, recovForestFrac(L)
+	!	write(97,'("  -- Pbio,Pop",10(f6.2,", "))') biomassprice, popu(10,m)
+		write(97,*) "GDP per cap",gdppercap
+	endif
+	RETURN
+	END
+

@@ -17,6 +17,9 @@ DATA TABLEMRK/'INPUT_TABLE'/
 IVMAX = 3
 NJ = 4
 DeforBioUse = 1	! Default Value, turned on
+DO L=1,NL
+	gdppercap_point(L) = 15d0	! Default value $15,000 per capita
+END DO 
 
 !OPEN(1,FILE='AGIN.csv')
 
@@ -246,6 +249,12 @@ DO WHILE(INDIC.EQ.1)
     DO L=1,NL
       READ(1,*) IDUM,agrho(L)
     END DO
+
+! Flag to turn off consumption of biomass previously deforested
+  CASE (695)
+    DO L=1,NL
+      READ(1,*) IDUM,gdppercap_point(L)
+    END DO 
 
 ! Flag to turn off consumption of biomass previously deforested
   CASE (696)
