@@ -25,6 +25,8 @@ public class NewDataTableModel extends AbstractTableModel {
 		data = dataIn;
 		flipped = false;
 		doc = docIn;
+		ind1Name = set1Name;
+		ind2Name = set2Name;
 	}
 
 	public void flip() {
