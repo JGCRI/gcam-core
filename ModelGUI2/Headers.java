@@ -120,7 +120,7 @@ public class Headers {
 				secArg = stA.nextToken(); // holds attr_value
 				child = stA.nextToken(); // holds the tag name
 				tagAttrMap.put(child, firstArg );
-				System.out.println(parent);
+				//System.out.println(parent);
 				/*
 				if (parent.matches(".*\\..*")) {
 					System.out.println("HERE in GP");
@@ -154,10 +154,10 @@ public class Headers {
 		}
 		int temp;
 		for (int i = 0; i < parentTemp.size(); i++) {
-			System.out.println("Parent temp: "+parentTemp.get(i));
+			//System.out.println("Parent temp: "+parentTemp.get(i));
 			temp = childArr.indexOf((String)parentTemp.get(i));
 			if (temp != -1 && !((String)childArr.get(temp)).startsWith("*")) {
-				System.out.println("Success for: "+(String)childArr.get(temp)+" at "+temp);
+				//System.out.println("Success for: "+(String)childArr.get(temp)+" at "+temp);
 				child = "*" + (String)childArr.get(temp);
 				childArr.set(temp, child);
 			}
@@ -229,8 +229,8 @@ public class Headers {
 		ArrayList returnvalue = new ArrayList();
 		boolean dbgChk = false;
 		if (word.equals("demandsector")) {
-			System.out.println("Start Debug");
-			dbgChk = true;
+			//System.out.println("Start Debug");
+			dbgChk = false;
 		}
 		for(int i=0; i<numCols; i++){
 			if( parentArr.get( i ) != null ) {
