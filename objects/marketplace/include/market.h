@@ -15,8 +15,8 @@
 
 #include <vector>
 #include <functional>
+#include "marketplace/include/market_info.h"
 
-class MarketInfo;
 
 /*!
 * \ingroup CIAM
@@ -106,7 +106,7 @@ protected:
     double supply; //!< The market supply.
     double storedSupply; //!< The stored supply.
     std::vector <std::string> containedRegionNames; //!< Vector of names of all regions contained within this market.
-    MarketInfo* marketInfo; //!< Object containing information related to the market. 
+    MarketInfo marketInfo; //!< Object containing information related to the market. 
 };
 
 #endif // _MARKET_H_

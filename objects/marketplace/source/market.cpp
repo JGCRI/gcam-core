@@ -40,12 +40,10 @@ good( goodNameIn ), region( regionNameIn ), period( periodIn ) {
    supply = 0;
    storedSupply = 0;
    solveMarket = false;
-   marketInfo = new MarketInfo();
 }
 
 //! Destructor
 Market::~Market() {
-    delete marketInfo;
 }
 
 /*! \brief Write out XML for debugging purposes.
@@ -78,7 +76,7 @@ void Market::toDebugXML( const int period, ostream& out ) const {
    for( vector<string>::const_iterator i = containedRegionNames.begin(); i != containedRegionNames.end(); i++ ) {
       XMLWriteElement( *i, "ContainedRegion", out );
    }
-   marketInfo->toDebugXML( out );
+   marketInfo.toDebugXML( out );
    derivedToDebugXML( out );
    
    // finished writing xml for the class members.
@@ -407,7 +405,7 @@ string Market::getGoodName() const {
 * \param itemValue The value to be associated with this key. 
 */
 void Market::setMarketInfo( const std::string& itemName, const double itemValue ){
-    marketInfo->addItem( itemName, itemValue );
+    marketInfo.addItem( itemName, itemValue );
 }
 
 /*! \brief Get the value of the information stored with itemName as the key.
@@ -420,7 +418,7 @@ void Market::setMarketInfo( const std::string& itemName, const double itemValue 
 * \todo Is zero the best return value for a non-existant key?
 */
 double Market::getMarketInfo( const std::string& itemName ) const {
-    return marketInfo->getItemValue( itemName );
+    return marketInfo.getItemValue( itemName );
 }
 
 /*! \brief Store info from last period into the market's stored variables.
