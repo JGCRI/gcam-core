@@ -247,7 +247,7 @@ namespace util {
     * \return string The time converted to XML date string format.
     * \bug GMT offset does not work properly.
     */
-   static std::string XMLCreateDate( const time_t& time ) {
+   static inline std::string XMLCreateDate( const time_t& time ) {
        std::stringstream buffer;
        std::string retString;
        struct tm* timeInfo;
