@@ -12,9 +12,12 @@
 #include "xmlHelper.h"
 // end of xerces headers
 
-#include "PlainTextLogger.h"
 #include "LoggerFactory.h"
 #include "Logger.h"
+
+// Logger subclass headers.
+#include "PlainTextLogger.h"
+#include "XMLLogger.h"
 
 map<string,Logger*> LoggerFactory::loggers;
 
@@ -47,6 +50,9 @@ void LoggerFactory::XMLParse( const DOMNode* root ) {
 			// Add additional types here.
 			if( loggerType == "PlainTextLogger" ){
 				newLogger = new PlainTextLogger();
+			}
+			else if( loggerType == "XMLLogger" ){
+				newLogger = new XMLLogger();
 			}
 			else {
 				newLogger = new PlainTextLogger();
@@ -114,7 +120,7 @@ Logger* LoggerFactory::getLogger( const string& loggerName ) {
 void LoggerFactory::cleanUp() {
 	for( map<string,Logger*>::iterator logIter = loggers.begin(); logIter != loggers.end(); logIter++ ){
 		logIter->second->close();
-		delete *logIter->second;
+		delete logIter->second;
 	}
 	loggers.clear();
 	
