@@ -30,7 +30,7 @@
 #include "xmlHelper.h"
 #include "scenario.h"
 #include "Emcoef_ind.h"
-
+#include "World.h"
 #include "modeltime.h" 
 #include "Marketplace.h"
 #include "Configuration.h"
@@ -1036,15 +1036,11 @@ void Region::emission(int per)
 void Region::calcEmissFuel(int per)
 {
    map<string, double> fuelemiss; // tempory emissions by fuel
-   // add CO2OIL,CO2GAS,CO2COAL to the emissions map for emissions
-   // by fuel
-   fuelemiss["CO2OIL"] = summary[per].get_pemap_second("crude oil") * co2coefall["crude oil"];
-
-   fuelemiss["CO2SHALEOIL"] = summary[per].get_pemap_second("shale oil") * co2coefall["shale oil"];
-
-   fuelemiss["CO2GAS"] = summary[per].get_pemap_second("natural gas") * co2coefall["natural gas"];
+   const vector<string> primaryFuelList = scenario->getWorld()->getPrimaryFuelList();
    
-   fuelemiss["CO2COAL"] = summary[per].get_pemap_second("coal") * co2coefall["coal"];
+   for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
+      fuelemiss[ *fuelIter ] = summary[per].get_pemap_second( *fuelIter ) * co2coefall[ *fuelIter ];
+   }
    
    summary[per].updateemiss(fuelemiss); // add CO2 emissions by fuel
 }
@@ -1143,28 +1139,16 @@ void Region::MCoutput() {
    dboutput4(name,"General","CarbonTax","revenue","90US$",carbontaxpaid);
    
    
-   // emissions by fuel for region crude oil
-   for (m=0;m<maxper;m++) {
-      temp[m] = summary[m].get_emissmap_second("CO2OIL");
-   }
-   dboutput4(name,"CO2 Emiss","by Fuel","crude oil","MTC",temp);
+   // emissions by fuel
+   const vector<string> primaryFuelList = scenario->getWorld()->getPrimaryFuelList();
    
-   // emissions by fuel for region shale oil
-   for (m=0;m<maxper;m++) {
-      temp[m] = summary[m].get_emissmap_second("CO2SHALEOIL");
+   for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
+      for (m=0;m<maxper;m++) {
+         temp[m] = summary[m].get_emissmap_second( *fuelIter );
+      }
+      dboutput4(name,"CO2 Emiss","by Fuel",*fuelIter,"MTC",temp);
    }
-   dboutput4(name,"CO2 Emiss","by Fuel","shale oil","MTC",temp);
-   
-   // emissions by fuel for region natural gas
-   for (m=0;m<maxper;m++) {
-      temp[m] = summary[m].get_emissmap_second("CO2GAS");
-   }
-   dboutput4(name,"CO2 Emiss","by Fuel","natural gas","MTC",temp);
-   // emissions by fuel for region coal
-   for (m=0;m<maxper;m++) {
-      temp[m] = summary[m].get_emissmap_second("CO2COAL");
-   }
-   dboutput4(name,"CO2 Emiss","by Fuel","coal","MTC",temp);
+
    // total emission by fuel for region
    for (m=0;m<maxper;m++)
       temp[m] = summary[m].get_emissmap_second("CO2");

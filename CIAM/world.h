@@ -41,6 +41,7 @@ private:
 	vector<double> coalrsc; //!< global coal resource
 	vector<double> uranrsc; //!< global uranium resource
 	vector<str_ghgss> ghgs; //!< structure containing ghg emissions
+   vector<string> primaryFuelList; //!< vector of names of primary fuels. 
 	void initAgLu(); 
    bool doCalibrations; //!< turn on or off calibration routines
    
@@ -82,6 +83,7 @@ public:
 	void turnCalibrationsOn(); // turn on calibrations
 	void turnCalibrationsOff(); // turn off calibrations
 	bool getCalibrationSetting() const; // return calibration setting
+   const vector<string> getPrimaryFuelList() const;
 };
 
 #endif

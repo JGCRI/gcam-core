@@ -115,8 +115,17 @@ void World::XMLParse( const DOMNode* node ){
 			   regionNamesToNumbers[ tempRegion->getName() ] = region.size() - 1;
          }
 		}
+      else if( nodeName == "primaryFuelName" ) {
+         // Get the fuel name.
+         const string primaryFuelName = XMLHelper<string>::getValueString( curr );
+         
+         // Check if it already exists.
+        if( std::find( primaryFuelList.begin(), primaryFuelList.end(), primaryFuelName ) == primaryFuelList.end() ) {
+            primaryFuelList.push_back( primaryFuelName );
+         }
+      }
       else {
-         cout << "Unrecognized text string: " << nodeName << " found while parsing region." << endl;
+         cout << "Unrecognized text string: " << nodeName << " found while parsing World." << endl;
       }
 	}
 }
@@ -173,7 +182,10 @@ void World::toXML( ostream& out ) const {
 	// write the xml for the class members.
 	// for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
 	// won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
-	
+   for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
+      XMLWriteElement( *fuelIter, "primaryFuelName", out );
+   }
+
 	for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ){
 		//for( vector<Region>::const_iterator i = region.begin(); i <= region.begin(); i++ ){
 		( *i )->toXML( out );
@@ -201,7 +213,10 @@ void World::toDebugXML( const int period, ostream& out ) const {
 	Tabs::increaseIndent();
 	
 	// write the xml for the class members.
-	
+	for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
+      XMLWriteElement( *fuelIter, "primaryFuelName", out );
+   }
+
 	XMLWriteElement( noreg, "numberOfRegions", out );
 	XMLWriteElement( population[ period ], "globalPopulation", out );
 	XMLWriteElement( crudeoilrsc[ period ], "globalCrudeOil", out );
@@ -569,4 +584,9 @@ vector<string> World::getRegionVector() const {
       regionNames.push_back( ( *i )->getName() );
    }
    return regionNames;
+}
+
+//! Return the list of primary fuels. 
+const vector<string> World::getPrimaryFuelList() const {
+   return primaryFuelList;
 }

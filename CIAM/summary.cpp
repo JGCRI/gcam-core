@@ -9,7 +9,11 @@
 
 #include "Definitions.h"
 #include "summary.h"
+#include "World.h"
+#include "Scenario.h"
+#include <vector>
 
+extern Scenario* scenario;
 
 //! Default constructor
 Summary::Summary() {
@@ -76,53 +80,19 @@ void Summary::updatefuelcons( const map<string, double>& fuelinfo ) {
         
 	// map all primary and secondary fuel consumption
 	for (fmap=fuelinfo.begin(); fmap!=fuelinfo.end(); ++fmap) {	// iterate to one less than the end
-		str = fmap->first;	// for debugging, first is the key (to the map)
 		fuelcons[fmap->first] += fmap->second; // Add values from the passed map to fuelcons
 	}
 
 	// map primary energy consumption only.
-   // Note: This is all hardcoded in which should be fixed. -JPL
-	fmap=fuelinfo.find("crude oil");
-	if(fmap!=fuelinfo.end()) {
-		pecons[fmap->first] += fmap->second;
-		pecons["zTotal"] += fmap->second;
-	}
-   fmap=fuelinfo.find("shale oil");
-	if(fmap!=fuelinfo.end()) {
-		pecons[fmap->first] += fmap->second;
-		pecons["zTotal"] += fmap->second;
-	}
-
-	fmap=fuelinfo.find("natural gas");
-	if(fmap!=fuelinfo.end()) {
-		pecons[fmap->first] += fmap->second;
-		pecons["zTotal"] += fmap->second;
-	}
-	fmap=fuelinfo.find("coal");
-	if(fmap!=fuelinfo.end()) {
-		pecons[fmap->first] += fmap->second;
-		pecons["zTotal"] += fmap->second;
-	}
-	fmap=fuelinfo.find("uranium");
-	if(fmap!=fuelinfo.end()) {
-		pecons[fmap->first] += fmap->second;
-		pecons["zTotal"] += fmap->second;
-	}
-	fmap=fuelinfo.find("renewable");
-	if(fmap!=fuelinfo.end()) {
-		pecons[fmap->first] += fmap->second;
-		pecons["zTotal"] += fmap->second;
-	}	
-   fmap=fuelinfo.find("traditional biomass");
-	if(fmap!=fuelinfo.end()) {
-		pecons[fmap->first] += fmap->second;
-		pecons["zTotal"] += fmap->second;
-	}
-   fmap=fuelinfo.find("biomass");
-	if(fmap!=fuelinfo.end()) {
-		pecons[fmap->first] += fmap->second;
-		pecons["zTotal"] += fmap->second;
-	}
+   const vector<string> primaryFuelList = scenario->getWorld()->getPrimaryFuelList();
+   
+   for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
+	   fmap=fuelinfo.find( *fuelIter );
+	   if(fmap!=fuelinfo.end()) {
+		   pecons[fmap->first] += fmap->second;
+		   pecons["zTotal"] += fmap->second;
+	   }
+   }
 }
 
 void Summary::updatepetrade() {
