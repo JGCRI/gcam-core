@@ -423,11 +423,6 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
         else {
             generalizedCost = GHGTax * gwp * (coefFuel/efficiency - coefProduct) / CVRT90 * CVRT_tg_MT;
         }
-        //******* override generalizedCost if coefFuel is 0 *******
-        // need to fix this
-        if (coefFuel < SMALL_NUM) {
-            generalizedCost = 0;
-        }
     }
     // for all other gases used read-in emissions coefficient
     else {
@@ -448,12 +443,8 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
             generalizedCost = GHGTax * gwp * emissCoef / CVRT90;
         }
     }
-    // for debugging
-    if (generalizedCost < 0) {
-        cout<<"generalized cost " << generalizedCost << endl;
-        cout<<"GHGTax "<<GHGTax<<"  coefFuel  "<<coefFuel<<"  coefProduct"<<coefProduct<<endl;
-        exit(-1);
-    }
+    // The generalized cost returned by the GHG may be negative if
+    // emissions crediting is occuring.
     return generalizedCost;
 }
 
