@@ -196,22 +196,26 @@ void technology::toXML( ostream& out ) const {
     
     XMLWriteElement( name, "name", out );
     XMLWriteElement( year, "year", out );
-    XMLWriteElement( fueltype, "fueltype", out );
-    XMLWriteElement( shrwts, "sharewt", out );
+    
+    XMLWriteElementCheckDefault( fueltype, "fueltype", out, 0 );
+    XMLWriteElementCheckDefault( shrwts, "sharewt", out, 1 );
+    
     if (doCalibration) {
         XMLWriteElement( calInputValue, "calInputValue", out );
     }
+    
     XMLWriteElement( fuelname, "fuelname", out );
-    XMLWriteElement( eff, "efficiency", out );
-    XMLWriteElement( necost, "nonenergycost", out );
-    XMLWriteElement( tax, "tax", out );
-    XMLWriteElement( fMultiplier, "fMultiplier", out );
-    XMLWriteElement( pMultiplier, "pMultiplier", out );
-    XMLWriteElement( lexp, "logitexp", out );
-    XMLWriteElement( techchange, "techchange", out );
-    XMLWriteElement( resource, "resource", out );
-    XMLWriteElement( A, "A", out );
-    XMLWriteElement( B, "B", out );
+    
+    XMLWriteElementCheckDefault( eff, "efficiency", out, 1 );
+    XMLWriteElementCheckDefault( necost, "nonenergycost", out, 0 );
+    XMLWriteElementCheckDefault( tax, "tax", out, 0 );
+    XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, 1 );
+    XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, 1 );
+    XMLWriteElementCheckDefault( lexp, "logitexp", out, 1 );
+    XMLWriteElementCheckDefault( techchange, "techchange", out, 0 );
+    XMLWriteElementCheckDefault( resource, "resource", out, 0 );
+    XMLWriteElementCheckDefault( A, "A", out, 0 );
+    XMLWriteElementCheckDefault( B, "B", out, 0 );
     
     for( vector<Ghg*>::const_iterator ghgIter = ghg.begin(); ghgIter != ghg.end(); ghgIter++ ){
         ( *ghgIter )->toXML( out );

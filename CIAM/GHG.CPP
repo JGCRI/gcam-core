@@ -111,7 +111,7 @@ void Ghg::XMLParse(const DOMNode* node)
 
 //! Writes datamembers to datastream in XML format.
 void Ghg::toXML( ostream& out ) const {
-	
+
 	Tabs::writeTabs( out );
 	out << "<GHG name=\"" << name << "\">" << endl;
 	
@@ -119,9 +119,9 @@ void Ghg::toXML( ostream& out ) const {
 	
 	// write xml for data members
 	XMLWriteElement( unit, "unit", out );
-	XMLWriteElement( emiss_coef, "emisscoef", out );
-	XMLWriteElement( rmfrac, "removefrac", out );
-	XMLWriteElement( gwp, "GWP", out );
+	XMLWriteElementCheckDefault( emiss_coef, "emisscoef", out, 0 );
+	XMLWriteElementCheckDefault( rmfrac, "removefrac", out, 0 );
+	XMLWriteElementCheckDefault( gwp, "GWP", out, 0 );
 	// done writing xml for data members.
 
 	Tabs::decreaseIndent();

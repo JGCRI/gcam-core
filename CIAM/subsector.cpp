@@ -229,28 +229,28 @@ void subsector::toXML( ostream& out ) const {
     
     // write the xml for the class members.
     for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
-        XMLWriteElement( capLimit[ i ], "capacitylimit", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, 1, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( calOutputValue.size() ); i++ ){
         if ( doCalibration[ i ] ) {
-            XMLWriteElement( calOutputValue[ i ], "calOutputValue", out, modeltime->getper_to_yr( i ) );
+            XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, 0, modeltime->getper_to_yr( i ) );
         }
     }
     
     for( i = 0; i < static_cast<int>( shrwts.size() ); i++ ){
-        XMLWriteElement( shrwts[ i ], "sharewt", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, 1, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( lexp.size() ); i++ ){
-        XMLWriteElement( lexp[ i ], "logitexp", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, 0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
-        XMLWriteElement( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, 0, modeltime->getper_to_yr( i ) );
     }
     
-    XMLWriteElement( basesharewt, "basesharewt", out, modeltime->getstartyr( ) );
+    XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, 0, modeltime->getstartyr( ) );
     
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){

@@ -410,6 +410,11 @@ void Region::toXML( ostream& out ) const {
       ( *k )->toXML( out );
    }
    
+   Tabs::writeTabs( out );
+
+   if( agSector != 0 ){
+      out << "<agsector/>" << endl;
+   }
    // agSector->toXML( out );
    
    // write out ghgmarket objects.
