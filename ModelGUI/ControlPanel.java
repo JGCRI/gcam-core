@@ -67,6 +67,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private Vector attributeControls;
     private Vector rootPointers;
     private AdapterNode currRootPointer;
+    private boolean tableExistsFlag;
     
     private final JFileChooser fc = new JFileChooser();
     
@@ -78,6 +79,8 @@ public class ControlPanel extends javax.swing.JFrame {
     /** Creates new form ControlPanel */
     public ControlPanel() {
         initComponents();
+        
+        tableExistsFlag = false;
         
         layout = new GridBagLayout();
         layoutCon = new GridBagConstraints();
@@ -405,12 +408,12 @@ public class ControlPanel extends javax.swing.JFrame {
         showTableButton.setMaximumSize(new Dimension(150, DEFAULT_COMPONENT_HEIGHT));
         showTableButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                try {
+                //try {
                     showTable();
-                } catch (Exception ex) {
+                /*} catch (Exception ex) {
                     System.out.println("I've failed miserably");
                     System.out.println(ex);
-                }
+                }*/
             }
         });
         showTableButton.setEnabled(false);
@@ -563,7 +566,7 @@ public class ControlPanel extends javax.swing.JFrame {
         for (int j = 0; j < comps.length; j++) {
 //System.out.println(j + "-component: " + comps[j]);
             if (remove) {
-System.out.println("removing component # " + j + " of " + comps.length);
+//System.out.println("removing component # " + j + " of " + comps.length);
                 parent.remove(comps[j]);
             }
             if (!remove && curr.equals(comps[j])) {
@@ -572,7 +575,6 @@ System.out.println("removing component # " + j + " of " + comps.length);
             }
         }
         
-        //pack();
         repaint();
         
         //remove components from the control arrays (add one because indexes start at 0)
@@ -583,10 +585,18 @@ System.out.println("removing component # " + j + " of " + comps.length);
     }
     
     private void addQueryControl(Component predecessor, int index) {
-//System.out.println("rootPointers " + rootPointers.toString());
         //get the parent of the nodes whose names will populate the new combo box
         currRootPointer = (AdapterNode)rootPointers.elementAt(index);
+        
+//System.out.println("predecessor = " + predecessor.getName() + "|");
 
+        //check if combo box already exists, remove all traces of it
+        if (queryControls.size() > index || attributeControls.size() >= index) {
+            removeComponents(queryPanel, predecessor, index);
+        } else {    //just elliminate that Horizontal glue that's the last component
+            queryPanel.remove(queryPanel.getComponents().length-1);
+        }
+        
         AdapterNode kid;
         String name;
         Vector names = new Vector();
@@ -602,29 +612,6 @@ System.out.println("removing component # " + j + " of " + comps.length);
         
         JComboBox comboBox;
         
-        //check if combo box already exists, remove all traces of it
-        if (queryControls.size() > index) {
-            removeComponents(queryPanel, predecessor, index);
-            
-            /*//the combo box already exists - must change its elements, delete all components following it
-            int ct;
-            comboBox = (JComboBox)queryControls.elementAt(index);
-            Component[] comps = queryPanel.getComponents();
-            for (ct = 0; ct < comps.length; ct++) {
-                if (comboBox.equals(comps[ct])) break;
-            }
-            //remove combo box and its followers from the panel and both vectors
-            for (int j = ct; j < comps.length; j++) {
-                queryPanel.remove(j);
-            }
-            queryControls.setSize(ct);
-            attributeControls.setSize(ct);*/
-        } else {    //just elliminate that Horizontal glue that's the last component
-            queryPanel.remove(queryPanel.getComponents().length-1);
-        }
-        
-        for (int q = 0; q < 100000; q++) {}
-        
         //create new entirely component
         comboBox = new JComboBox(names);
         comboBox.setMaximumSize(new Dimension(1000, DEFAULT_COMPONENT_HEIGHT));
@@ -638,16 +625,24 @@ System.out.println("removing component # " + j + " of " + comps.length);
                 currRootPointer = (AdapterNode)rootPointers.elementAt(index);
                 if (currRootPointer.hasChildWithAttribute(name, "name")) {
                     addAttributeControl((Component)e.getSource(), name, index);
-                } else {
+                } else {    //node does not have "name", only children
+//System.out.println("entered kid territory");
                     AdapterNode newPointer = currRootPointer.getChild(name, "");
-                    if (!newPointer.isLeaf()) {
-                        //create new component with the nodes's set of chilren
-                        rootPointers.addElement(newPointer);
+                    if (!newPointer.isLeaf()) { //create new component with the nodes's set of chilren
+                        //replace root pointer if it already exists or add new one if it does not
+                        if (rootPointers.size() > index+1) { 
+                            //if the combo box already exists, change the pointer to its contents
+                            rootPointers.setElementAt(newPointer, index+1);
+                        } else { 
+                            rootPointers.addElement(newPointer);
+                        }
                         addQueryControl((Component)e.getSource(), index+1);
                     }
                 }
             }
         });
+        
+        comboBox.setName(names.toString());
         
         queryControls.addElement(comboBox);
         
@@ -679,19 +674,6 @@ System.out.println("removing component # " + j + " of " + comps.length);
         //check if combo box already exists
         if (attributeControls.size() > index) {
             removeComponents(queryPanel, predecessor, index);
-           /*//the combo box already exists - must change its elements, delete all components following it
-            int ct;
-            comboBox = (JComboBox)attributeControls.elementAt(index);
-            Component[] comps = queryPanel.getComponents();
-            for (ct = 0; ct < comps.length; ct++) {
-                if (comboBox.equals(comps[ct])) break;
-            }
-            //remove combo box and its followers from the panel and both vectors
-            for (int j = ct; j < comps.length; j++) {
-                queryPanel.remove(j);
-            }
-            queryControls.setSize(ct);
-            attributeControls.setSize(ct); */
         } else {
             //remove the horizontal glue to display components adjecently
             queryPanel.remove(queryPanel.getComponents().length-1);
@@ -717,9 +699,14 @@ System.out.println("removing component # " + j + " of " + comps.length);
                 AdapterNode newPointer = currRootPointer.getChild(nodeName, attribVal);
                 if (!newPointer.isLeaf()) {
                     //create new component with the nodes's set of chilren
-                    rootPointers.addElement(newPointer);
+                    //replace root pointer if it already exists or add new one if it does not
+                        if (rootPointers.size() > index+1) { 
+                            rootPointers.setElementAt(newPointer, index+1);
+                        } else { 
+                            rootPointers.addElement(newPointer);
+                        }
                     addQueryControl((Component)e.getSource(), index+1);
-                }
+                }          
             }
         });
         
@@ -1086,6 +1073,14 @@ System.out.println("removing component # " + j + " of " + comps.length);
         Vector header = new Vector();
         Vector lefter = new Vector();
         
+        if (tableExistsFlag) {
+            int compCount = dataPanel.getComponentCount();
+            //remove the currely showing table, it's the last component
+            dataPanel.remove(compCount-1);
+            //remove the rigid area seporating table and show table button
+            dataPanel.remove(compCount-2);
+        }
+        
         if (listTableBox.getSelectedIndex() == LIST) {
             String regionName;
             Object[] regions = regionBox.getSelectedValues();
@@ -1094,7 +1089,7 @@ System.out.println("removing component # " + j + " of " + comps.length);
             //for each region
             for (int j = 0; j < regions.length; j++) {
                 regionName = regions[j].toString();
-                header.addElement(regionName);
+                lefter.addElement(regionName);
                 AdapterNode currNode = currRootPointer.getChild("region", regionName);
 //System.out.println("Hello 1");
                 
@@ -1147,41 +1142,46 @@ System.out.println("removing component # " + j + " of " + comps.length);
 //System.out.println("Hello 6");
                     if (showNames) {
                         values.addElement(currNode.getAttributeValue("name"));
-                        System.out.println("really did add " + currNode);
+//System.out.println("really did add " + currNode);
                     } else {
                         values.addElement(currNode);
                         attribVal = currNode.getAttributeValue("year");
                         if (attribVal != null) {
-                            if (lefter.isEmpty()) lefter.addElement(attribVal);
-                            else if (!lefter.contains(attribVal)) lefter.addElement(attribVal);
+                            if (header.isEmpty()) header.addElement(attribVal);
+                            else if (!header.contains(attribVal)) header.addElement(attribVal);
+//System.out.println("header size = " + header.size() + "adding " + attribVal);
                         }
                     }
 //System.out.println("Hello 7");
                 }
-                
-                TableViewModel model = new TableViewModel(values, header, showNames);
-                table = new JTable(model);
-                
-                //use panels to place the table appropriately
-                JPanel tempPanel = new JPanel();
-                tempPanel.setLayout(new BorderLayout());
-                tempPanel.add(table.getTableHeader(), BorderLayout.NORTH);
-                tempPanel.add(table, BorderLayout.CENTER);
-                
-//System.out.println("Hello 8");
-                JPanel tempPanel2 = new JPanel();
-                tempPanel2.setLayout(new BorderLayout());
-                if (!lefter.isEmpty()) {
-                    JPanel lefterPanel = makeLefter(lefter, nodeName);
-                    tempPanel2.add(lefterPanel, BorderLayout.WEST);
-                }
-                tempPanel2.add(tempPanel, BorderLayout.CENTER);
-                                
-                dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
-                dataPanel.add(tempPanel2);
-                
-                pack();
             }
+            
+            TableViewModel model = new TableViewModel(values, header, lefter, showNames);
+            table = new JTable(model);
+            table.setCellSelectionEnabled(true);
+
+            //use panels to place the table appropriately
+            JPanel tempPanel = new JPanel();
+            tempPanel.setLayout(new BorderLayout());
+            tempPanel.add(table.getTableHeader(), BorderLayout.NORTH);
+            tempPanel.add(table, BorderLayout.CENTER);
+
+//System.out.println("Hello 8");
+            JPanel tempPanel2 = new JPanel();
+            tempPanel2.setLayout(new BorderLayout());
+            if (!lefter.isEmpty()) {
+                //JPanel lefterPanel = makeLefter(lefter, nodeName);
+                JPanel lefterPanel = makeLefter(lefter, "");
+                tempPanel2.add(lefterPanel, BorderLayout.WEST);
+            }
+            tempPanel2.add(tempPanel, BorderLayout.CENTER);
+
+            dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
+            dataPanel.add(tempPanel2);
+            
+            tableExistsFlag = true;
+
+            pack();
         }
     }
     

@@ -23,12 +23,12 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
     private int numCols;
     
     /** Creates a new instance of TableViewModel */
-    public TableViewModel(Vector values, Vector header, boolean names) {
-        tableHeader = (Vector)header.clone();
-        tableLefter = new Vector();
+    public TableViewModel(Vector values, Vector lefter, boolean names) {
+        tableHeader = new Vector();
+        tableLefter = (Vector)lefter.clone(); 
         
-        numCols = tableHeader.size();
-        numRows = (int)Math.ceil(values.size() / numCols);
+        numRows = tableLefter.size();
+        numCols = (int)Math.ceil(values.size() / numRows);
         
         tableValues = new AdapterNode[numRows][numCols];
         int ct = 0;
@@ -44,36 +44,46 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
             for (int row = 0; row < numRows; row++) {
                 for (int col = 0; col < numCols; col++) {
                     tableValues[row][col] = (AdapterNode)values.elementAt(ct++);
-System.out.println("added " + tableValues[row][col] + ", " + tableValues[row][col].getText());
+//System.out.println("added " + tableValues[row][col] + ", " + tableValues[row][col].getText());
                 }
             }
         }
     }
     
-    public TableViewModel(Vector values, Vector header, Vector lefter) {
-        tableHeader = (Vector)header.clone();
+    public TableViewModel(Vector values, Vector header, Vector lefter, boolean names) {
         tableLefter = (Vector)lefter.clone();
         
-        numCols = tableHeader.size();
-        numRows = (int)Math.ceil(tableHeader.size() / numCols);
+        numRows = tableLefter.size();
+        numCols = (int)Math.ceil(values.size() / numRows);
         
-        /*Vector tableValues = new Vector();
-        Vector row = new Vector();
-        int ct = 0;
-        for (int j = 0; j < numRows; j++) {
-            //row = new Element[numCols];
-            row.clear();
-            for (int k = 0; k < numCols; k++) {
-                row.addElement(values.elementAt(ct++));
-                //row[k] = (Element)values.elementAt(ct++);
+//System.out.println("haeder size = " + header.size());
+        
+        if (header != null && !header.isEmpty()) {
+//System.out.println("adding things to header");
+            tableHeader = (Vector)header.clone();
+        } else {
+            tableHeader = new Vector();
+            for (int j = 0; j < numCols; j++) {
+                tableHeader.addElement(" ");
             }
-            tableValues.add(row);
-        }*/
+        }
+       
         tableValues = new AdapterNode[numRows][numCols];
         int ct = 0;
-        for (int row = 0; row < numRows; row++) {
-            for (int col = 0; col < numCols; col++) {
-                tableValues[row][col] = (AdapterNode)values.elementAt(ct++);
+        if (names) {
+            for (int row = 0; row < numRows; row++) {
+                for (int col = 0; col < numCols; col++) {
+                    AdapterNode newNode = new AdapterNode();
+                    newNode.setText((String)values.elementAt(ct++));
+                    tableValues[row][col] = newNode;
+                }
+            }
+        } else {
+            for (int row = 0; row < numRows; row++) {
+                for (int col = 0; col < numCols; col++) {
+                    tableValues[row][col] = (AdapterNode)values.elementAt(ct++);
+//System.out.println("added " + tableValues[row][col] + ", " + tableValues[row][col].getText());
+                }
             }
         }
     }
