@@ -69,9 +69,9 @@ protected:
     std::vector<bool> calibrationStatus; // Set true if sector or any tech is calibrated
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> techNameMap; //!< Map of technology name to integer position in vector. 
-    void shareWeightScale( const int pmer ); // Consistantly adjust share weights
+    void interpolateShareWeights( const int period ); // Consistantly adjust share weights
     void sumOutput( const int period );
-    void shareWeightInterp( const int beginPeriod,  const int endPeriod );
+    void shareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
     bool techHasInput( const technology* thisTech, const std::string& goodName ) const;
     virtual void MCDerivedClassOutput() const;
     virtual void csvDerivedClassOutput() const;
@@ -80,6 +80,8 @@ protected:
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const{};
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const{};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const{};
+    void normalizeTechShareWeights( const int period );
+    void techShareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
 public:
     Subsector( const std::string regionName, const std::string sectorName );
     virtual ~Subsector();
@@ -110,6 +112,8 @@ public:
     void setShare( const double shareVal, const int period );
     void normShare( const double sum, const int period );
     double getShare( const int period ) const;
+    double getShareWeight( const int period ) const;
+    void scaleShareWeight( const double scaleValue, const int period );
     void limitShares( const double sum, const int period );
     void setCapLimitStatus( const bool value, const int period );
     bool getCapLimitStatus( const int period ) const;

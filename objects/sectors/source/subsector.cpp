@@ -451,7 +451,7 @@ void Subsector::initCalc( const int period ) {
     }
 
     setCalibrationStatus( period );
-    shareWeightScale( period ); 
+    interpolateShareWeights( period ); 
     fixedShare[ period ] = 0;
     
     // Prevent pathological situation where share is zero where a fixed capacity is present.
@@ -922,9 +922,9 @@ void Subsector::scalefixedOutput( const double scaleRatio, const int period ) {
 *
 * \author Steve Smith
 * \param period Model period
-* \todo Make end period year more general from data read-in.
+* \warning Share weights must be scaled (from sector) before this is called.
 */
-void Subsector::shareWeightScale( const int period ) {
+void Subsector::interpolateShareWeights( const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
     
     // if previous period was calibrated, then adjust future shares
@@ -935,7 +935,22 @@ void Subsector::shareWeightScale( const int period ) {
             endPeriod = modeltime->getyr_to_per( scaleYear );
         }
         if  ( endPeriod >= ( period - 1) ) {
-            shareWeightInterp( period - 1, endPeriod );
+            // If begining share weight is zero, then it wasn't changed by calibration so do not scale
+           // sjsTEMP. Change this to > zero once other share interps are changed. This was a mistake in the original vers.
+             if ( shrwts[ period - 1 ] >= 0 ) {
+                shareWeightLinearInterpFn( period - 1, endPeriod );
+            }
+        }
+        
+        // Also do this at the technology level if necessary
+        if ( notech > 1 ) {
+            // First renormalize share weights
+            // sjsTEMP. Turn this on once data is updated
+          //  normalizeTechShareWeights( period - 1 );
+
+            // Linearlly interpolate shareweights if > 0
+            // sjsTEMP. Turn this on once data is updated
+         //   techShareWeightLinearInterpFn( period - 1, modeltime->getyr_to_per( modeltime->getendyr() ) );
         }
     }
 }
@@ -947,22 +962,101 @@ void Subsector::shareWeightScale( const int period ) {
 * \param beginPeriod Period in which to begin the interpolation.
 * \param endPeriod Period in which to end the interpolation.
 */
-void Subsector::shareWeightInterp( const int beginPeriod,  const int endPeriod ) {
+void Subsector::shareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod ) {
 const Modeltime* modeltime = scenario->getModeltime();
 double shareIncrement = 0;
     
+    int loopPeriod = endPeriod;
     if ( endPeriod > beginPeriod ) {
         shareIncrement = ( shrwts[ endPeriod ] - shrwts[ beginPeriod ] ) / ( endPeriod - beginPeriod );
-    }
-    
-    int loopPeriod = endPeriod;
-    // If end period equals the begining period then this is a flag to keep the weights the same, so loop over rest of periods
+    } else
     if ( endPeriod == beginPeriod ) {
+        // If end period equals the begining period then this is a flag to keep the weights the same, so make increment zero
+        // and loop over rest of periods
         loopPeriod = modeltime->getmaxper();  
+        shareIncrement = 0;
     }
         
     for ( int period = beginPeriod + 1; period < loopPeriod; period++ ) {
         shrwts[ period ] = shrwts[ period - 1 ] + shareIncrement;
+    }
+
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::DEBUG );
+    mainLog << "Shareweights interpolated for subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
+
+}
+
+/*! \brief Linearly interpolate technology share weights between specified endpoints 
+* Utility function to linearly scale technology share weights between two specified points.
+*
+* \author Steve Smith
+* \param beginPeriod Period in which to begin the interpolation.
+* \param endPeriod Period in which to end the interpolation.
+*/
+void Subsector::techShareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod ) {
+const Modeltime* modeltime = scenario->getModeltime();
+double shareIncrement = 0;
+     
+    for ( int i=0; i<notech; i++ ) {
+        double beginingShareWeight = techs[ i ][ beginPeriod ]->getShareWeight();
+        
+        // If begining share weight is zero, then it wasn't changed by calibration so do not scale
+        if ( beginingShareWeight > 0 ) {
+            if ( endPeriod > beginPeriod ) {
+                shareIncrement = ( techs[ i ][ endPeriod ]->getShareWeight() - beginingShareWeight );
+                shareIncrement /= endPeriod - beginPeriod;
+            }
+    
+            int loopPeriod = endPeriod;
+            // If end period equals the begining period then this is a flag to keep the weights the same, so loop over rest of periods
+            if ( endPeriod == beginPeriod ) {
+                loopPeriod = modeltime->getmaxper();  
+                shareIncrement = 0;
+            }
+            
+            for ( int period = beginPeriod + 1; period < loopPeriod; period++ ) {
+                 techs[ i ][ period ]->setShareWeight( techs[ i ][ period - 1 ]->getShareWeight() + shareIncrement );
+            }
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << "Shareweights interpolated for technologies in subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
+        }
+    }
+}
+
+/*! \brief Scales technology share weights so that they equal number of subsectors.
+*
+* This is needed so that 1) share weights can be easily interpreted (> 1 means favored) and so that
+* future share weights can be consistently applied relative to calibrated years.
+*
+* \author Steve Smith
+* \param period Model period
+* \warning The routine assumes that all tech outputs are calibrated.
+*/
+void Subsector::normalizeTechShareWeights( const int period ) {
+    
+    double shareWeightTotal = 0;
+    int numberNonzeroTechs = 0;
+    for ( int i=0; i<notech; i++ ) {
+        double techShareWeight = techs[ i ][ period ]->getShareWeight();
+        shareWeightTotal += techShareWeight;
+        if ( techShareWeight > 0 ) {
+            numberNonzeroTechs += 1;
+        }
+    }
+
+    if ( shareWeightTotal == 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "ERROR: in subsector " << name << " Shareweights sum to zero." << endl;
+    } else {
+        for ( int i=0; i<notech; i++ ) {
+             techs[ i ][ period ]->scaleShareWeight( numberNonzeroTechs / shareWeightTotal );
+        }
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::DEBUG );
+        mainLog << "Shareweights normalized for technologies in subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
     }
 }
 
@@ -1337,6 +1431,30 @@ void Subsector::scaleCalibrationInput( const int period, const double scaleFacto
     }
 }
 
+/*! \brief returns share weight for this Subsector
+*
+* Needed so that share weights can be scaled by sector
+*
+* \author Steve Smith
+* \param period Model period
+* \return share weight
+*/
+double Subsector::getShareWeight( const int period ) const {
+    return shrwts[ period ];
+}
+
+/*! \brief Scales share weight for this Subsector
+*
+* \author Steve Smith
+* \param period Model period
+* \param scaleValue Multipliciatve scale factor for shareweight
+*/
+void Subsector::scaleShareWeight( const double scaleValue, const int period ) {
+    
+    if ( scaleValue != 0 ) {
+        shrwts[ period ] *= scaleValue;
+    }
+}
 /*! \brief returns share for this Subsector
 *
 * \author Sonny Kim, Josh Lurz

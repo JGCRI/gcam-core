@@ -65,6 +65,7 @@ protected:
     double CO2EmFactor; //! CO2 emissions factor, calculated based on fuel input and share
 
     virtual void initElementalMembers();
+    void normalizeShareWeights( const int period );
     void sumOutput( const int period ); // private function, sum taken care of automatically
     void sumInput( const int period ); // private function, sum taken care of automatically
     double getFixedShare( const int sectorNum, const int period ) const; // utility function 

@@ -857,6 +857,33 @@ double technology::getShare() const {
     return share;
 }
 
+/*! \brief returns share weight for this technology
+*
+* \author Steve Smith
+* \return share weight
+*/
+double technology::getShareWeight() const {
+    return shrwts;
+}
+
+/*! \brief scale share weight for this technology
+*
+* \author Steve Smith
+* \param scaleValue multiplicative scaling factor for share weight
+*/
+void technology::scaleShareWeight( double scaleValue ) {
+    shrwts *= scaleValue;
+}
+
+/*! \brief scale share weight for this technology
+*
+* \author Steve Smith
+* \param shareWeightValue new value for share weight
+*/
+void technology::setShareWeight( double shareWeightValue ) {
+    shrwts = shareWeightValue;
+}
+
 /*! \brief Returns calibration status for this technoloy
 *
 * This is true if a calibration value has been read in for this technology.

@@ -121,6 +121,8 @@ public:
     double getShare() const; // return normalized share
     bool getCalibrationStatus( ) const; // return true if technology has calibration value
     void scaleCalibrationInput( const double scaleFactor ); // scale calibration value
+    void scaleShareWeight( double scaleValue );
+    void setShareWeight( double shareWeightValue );
     double getCalibrationInput() const; // return calibration input value
     virtual double getCalibrationOutput() const; // return calibration output value
     void adjustForCalibration( double subSectorDemand ); // Adjust share weights for calibration
@@ -133,6 +135,7 @@ public:
     double getNecost() const; // return non-fuel cost
     double getTotalGHGCost() const; // return carbon tax and storage cost added to tech in $/TC
     double getCarbontaxpaid() const; // return carbon taxes paid
+    double getShareWeight() const;
     void technology::copyGHGParameters( const Ghg* prevGHG );
     Ghg* technology::getGHGPointer( const std::string& ghgName );
     const std::vector<std::string> getGHGNames() const;

@@ -304,6 +304,10 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \param period Model period
 */
 void Sector::initCalc( const int period ) {
+
+    // normalizeShareWeights must be called before subsector initializations
+    normalizeShareWeights( period );
+    
     // do any sub-Sector initializations
     for ( int i=0; i<nosubsec; i++ ) {
         subsec[ i ]->initCalc( period );
@@ -341,6 +345,49 @@ void Sector::checkSectorCalData( const int period ) {
 
     for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
         ( *j )->checkSubSectorCalData( period );
+    }
+}
+
+/*! \brief Scales sub-sector share weights so that they equal number of subsectors.
+*
+* This is needed so that 1) share weights can be easily interpreted (> 1 means favored) and so that
+* future share weights can be consistently applied relative to calibrated years.
+*
+* \author Steve Smith
+* \param period Model period
+* \warning This must be done before subsector inits so that share weights are scaled before they are interpolated
+*/
+void Sector::normalizeShareWeights( const int period ) {
+    
+    // If this sector was completely calibrated, or otherwise fixed, then scale shareweights to equal number of subsectors
+    if  ( period > 0 ) {
+        if ( inputsAllFixed( period - 1, name ) && ( getCalOutput ( period - 1) > 0 ) ) {
+
+            double shareWeightTotal = 0;
+            int numberNonzeroSubSectors = 0;
+            for ( int i=0; i<nosubsec; i++ ) {
+                double subsectShareWeight = subsec[ i ]->getShareWeight( period - 1 );
+                shareWeightTotal += subsectShareWeight;
+                if ( subsectShareWeight > 0 ) {
+                    numberNonzeroSubSectors += 1;
+                }
+            }
+
+            if ( shareWeightTotal == 0 ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "ERROR: in sector " << name << " Shareweights sum to zero." << endl;
+            } else {
+                for ( int i=0; i<nosubsec; i++ ) {
+                    // sjsTEMP. Turn this on once data is updated
+                  //  subsec[ i ]->scaleShareWeight( numberNonzeroSubSectors / shareWeightTotal, period - 1 );
+                }
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::DEBUG );
+                    // sjsTEMP. Turn this on once data is updated
+              //  mainLog << "Shareweights normalized for sector " << name << " in region " << regionName << endl;
+            }
+        }
     }
 }
 
