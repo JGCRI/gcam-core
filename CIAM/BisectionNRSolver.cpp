@@ -461,9 +461,9 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
 * \todo need more general way to reset price and demand market types within bisect
 * \todo implement check on price and demand markets within bracket?
 * \param solutionTolerance Target value for maximum relative solution for worst market 
-* \param excessDemandSolutionFloor *Absolute value* beneath which market is ignored 
+* \param excessDemandSolutionFloor *Absolute value* beneath which market is ignored
+* \param IterLimit Maximum number of iterations the subroutine will perform. 
 * \param sol Vector of market solution information 
-*** WHAT IS INDEXING OF THE ABOVE? 
 * \param worldCalcCount Counter for number of worldcalc model calls 
 * \param per Model period
 */

@@ -1,5 +1,5 @@
 /*! 
-* \file Grade.CPP
+* \file GRADE.CPP
 * \ingroup CIAM
 * \brief Grade class source file.
 * \author Sonny Kim
@@ -48,7 +48,7 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
     DOMNode* tNode = 0;
     string tNodeName;
     
-    //! \pre assume we are passed a valid node.
+    /*! \pre assume we are passed a valid node. */
     assert( tempNode );
     
     // get the name attribute.

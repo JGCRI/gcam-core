@@ -29,7 +29,7 @@ PassToParentStreamBuf::PassToParentStreamBuf() {
 //! Overriding overflow function which passes its argument to its parent.
 int PassToParentStreamBuf::overflow( int ch ){
 	
-	//! \pre Make sure the parent is not null.
+	/*! \pre Make sure the parent is not null. */
 	assert( parent );
 	return parent->receiveCharFromUnderStream( ch );
 }
@@ -37,7 +37,7 @@ int PassToParentStreamBuf::overflow( int ch ){
 //! Overriding underflow function which should not be reached because this is a write-only stream.
 int PassToParentStreamBuf::underflow( int ch ) {
 	
-	//! \pre This function should never be called..
+	/*! \pre This function should never be called. */
 	assert( false );
 	return 0;
 }
@@ -45,7 +45,7 @@ int PassToParentStreamBuf::underflow( int ch ) {
 //! Set the parent of the stream to which we will pass all data.
 void PassToParentStreamBuf::setParent( Logger* parentIn ) {
 	
-	//! \pre Make sure a non-null parent is passed in.
+	/*! \pre Make sure a non-null parent is passed in. */
 	assert( parentIn );
 	parent = parentIn;
 }

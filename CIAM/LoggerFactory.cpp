@@ -42,7 +42,7 @@ void LoggerFactory::XMLParse( const DOMNode* root ) {
 	
 	Logger* newLogger = 0;
 	
-	//! \pre assume we were passed a valid node.
+	/*! \pre assume we were passed a valid node. */
 	assert( root );
 	
 	// get the children of the node.

@@ -40,9 +40,15 @@ private:
 };
 
 namespace std {
+   /*! \ingroup CIAM
+* \brief Specialization of the std::greater struct on Savepoint pointers to allow sorting of Savepoints by
+* price.
+* \author Josh Lurz
+*/  
    template <>
-   struct std::greater<SavePoint*>
+   struct greater<SavePoint*>
    {
+      //! Operator which performs comparison. 
       bool operator()( const SavePoint* lhs, const SavePoint* rhs ) const
       {   
          return lhs->getPrice() > rhs->getPrice();

@@ -100,7 +100,7 @@ void sector::XMLParse( const DOMNode* node ){
    string nodeName;
    subsector* tempSubSector = 0;
    
-   //! \pre make sure we were passed a valid node.
+   /*! \pre make sure we were passed a valid node. */
    assert( node );
    
    // get the name attribute.

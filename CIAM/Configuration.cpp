@@ -57,7 +57,7 @@ void Configuration::XMLParse( const DOMNode* root ) {
 	string sectionName;
 	string valueName;
 
-	//! \pre Assume we are passed a valid node.
+	/*! \pre Assume we are passed a valid node. */
 	assert( root );
 	
 	nodeSectionList = root->getChildNodes();

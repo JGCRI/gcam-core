@@ -250,7 +250,6 @@ const vector<double> SolverLibrary::calcSupplyElas( const Marketplace* marketpla
 * <li> Return the partial demand matrices of supply and demand. </li>
 * </ol>
 *
-* \param prices The current market prices.
 * \param JFDM A matrix of partial derivatives of demands. This matrix is modified by the function and returned by reference.
 * \param JFSM A matrix of partial derivatives of supplies. This matrix is modified by the function and returned by reference.
 * \param worldCalcCount The current number of iterations of World::calc. This value is modified by the function and returned by reference.

@@ -191,9 +191,16 @@ public:
 };
 
 namespace std {
+
+/*! \ingroup CIAM
+* \brief Specialization of the std::greater struct on Market pointers to allow sorting of markets by
+* worst excess demand.
+* \author Josh Lurz
+*/   
     template <>
-    struct std::greater<Market*>
+    struct greater<Market*>
     {
+       //! Operator which performs comparison. 
       bool operator()( const Market* lhs, const Market* rhs ) const
         {   
                return lhs->getRelativeExcessDemand() > rhs->getRelativeExcessDemand();

@@ -21,9 +21,8 @@ double SavePoint::getPrice() const {
 
 /*! \brief Write out XML for debugging purposes.
 *
-* This method is called by the SavePoint::toDebugXML method to write out information for each individual save point.
+* This method is called by the Market::toDebugXML method to write out information for each individual SavePoint.
 *
-* \param period Model period for which to print information.
 * \param out Output stream to print to.
 * \return void
 */

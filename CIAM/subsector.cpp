@@ -115,7 +115,7 @@ void subsector::XMLParse( const DOMNode* node ) {
     vector<technology*> techVec( modeltime->getmaxper() );
     technology* tempTech = 0;
     
-    //! \pre Make sure we were passed a valid node.
+    /*! \pre Make sure we were passed a valid node. */
     assert( node );
     
     // get the name attribute.
@@ -1232,7 +1232,7 @@ int subsector::shownotech() const {
 
 //! calculate GHG emissions from annual production of subresource
 void subsector::emission( const int per, const string& prodname ){
-    //! \pre per is less than or equal to max period.
+    /*! \pre per is less than or equal to max period. */
     assert( per <= scenario->getModeltime()->getmaxper() );
     summary[per].clearemiss(); // clear emissions map
     summary[per].clearemfuelmap(); // clear emissions map
@@ -1245,7 +1245,7 @@ void subsector::emission( const int per, const string& prodname ){
 
 //! calculate indirect GHG emissions from annual production of subresource
 void subsector::indemission(const int per, const vector<Emcoef_ind>& emcoef_ind ) {
-    //! \pre per is less than or equal to max period.
+    /*! \pre per is less than or equal to max period. */
     assert( per <= scenario->getModeltime()->getmaxper() );
     summary[per].clearemindmap(); // clear emissions map
     for ( int i=0 ;i<notech; i++ ) {
@@ -1257,7 +1257,7 @@ void subsector::indemission(const int per, const vector<Emcoef_ind>& emcoef_ind 
 //! returns subsector primary energy consumption
 double subsector::showpe_cons( const int per ) {
     
-    //! \pre per is less than or equal to max period.
+    /*! \pre per is less than or equal to max period. */
     assert( per <= scenario->getModeltime()->getmaxper() );
     const vector<string> primaryFuelList = scenario->getWorld()->getPrimaryFuelList();
     pe_cons[per] = 0;
@@ -1271,7 +1271,7 @@ double subsector::showpe_cons( const int per ) {
 
 //! returns primary or final energy input
 double subsector::getInput( const int per ) const {
-    //! \pre per is less than or equal to max period.
+    /*! \pre per is less than or equal to max period. */
     assert( per <= scenario->getModeltime()->getmaxper() );
     
     return input[per];
@@ -1279,7 +1279,7 @@ double subsector::getInput( const int per ) const {
 
 //! returns subsector output
 double subsector::getoutput( const int per ) const {
-    //! \pre per is less than or equal to max period.
+    /*! \pre per is less than or equal to max period. */
     assert( per <= scenario->getModeltime()->getmaxper() );
     
     return output[per];
@@ -1287,7 +1287,7 @@ double subsector::getoutput( const int per ) const {
 
 //! returns total subsector carbon taxes paid
 double subsector::showcarbontaxpaid( const int per ) const {
-    //! \pre per is less than or equal to max period.
+    /*! \pre per is less than or equal to max period. */
     assert( per <= scenario->getModeltime()->getmaxper() );
     
     return carbontaxpaid[per];
@@ -1295,7 +1295,7 @@ double subsector::showcarbontaxpaid( const int per ) const {
 
 //!  gets fuel consumption map in summary object.
 map<string, double> subsector::getfuelcons(const int per) const {
-    //! \pre per is less than or equal to max period.
+    /*! \pre per is less than or equal to max period. */
     assert( per <= scenario->getModeltime()->getmaxper() );
     
     return summary[per].getfuelcons();

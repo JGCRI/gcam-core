@@ -65,7 +65,7 @@ void Ghg::XMLParse(const DOMNode* node)
 	DOMNodeList* nodeList;
 	string nodeName;
 
-	//! \pre Assume we are passed a valid node.
+	/*! \pre Assume we are passed a valid node. */
 	assert( node );
 	
 	// get the name attribute.

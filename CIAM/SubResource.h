@@ -5,7 +5,7 @@
 #endif
 
 /*! 
-* \file subResource.h
+* \file SubResource.h
 * \ingroup CIAM
 * \brief The SubResource class header file.
 * \author Sonny Kim

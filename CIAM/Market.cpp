@@ -157,7 +157,7 @@ const vector<string>& Market::getContainedRegions() {
 
 void Market::setCompanionMarketPointer( Market* pointerIn ) {
    
-   //! \pre This should never be called for the base Market class.
+   /*! \pre This should never be called for the base Market class. */
    assert( false );
 }
 
@@ -216,7 +216,7 @@ void Market::setPrice( const double priceIn ) {
 * no-op. This is because for CalibrationMarket the initial price is read in and should not be set from the last period.
 * 
 * \warning Use this instead of setRawPrice when setting the price to the price from the last period.
-* \param priceIn Price from the last period to set the price variable to.
+* \param lastPrice Price from the last period to set the price variable to.
 * \return void
 * \sa setRawPrice
 * \sa setPrice

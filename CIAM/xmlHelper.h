@@ -223,10 +223,10 @@ T XMLHelper<T>::getAttr( const xercesc::DOMNode* node, const std::string attrNam
 template<class T>
 std::string XMLHelper<T>::getAttrString( const xercesc::DOMNode* node, const std::string attrName ) {
    
-   //! \pre Make sure we were passed a valid node reference.
+   /*! \pre Make sure we were passed a valid node reference. */
    assert( node );
    
-   //! \pre Make sure it is an element before we cast, if function is used correctly it will be.
+   /*! \pre Make sure it is an element before we cast, if function is used correctly it will be. */
    assert( node->getNodeType() == xercesc::DOMNode::ELEMENT_NODE );
    
    // need to cast node to an element.
@@ -249,7 +249,7 @@ std::string XMLHelper<T>::getAttrString( const xercesc::DOMNode* node, const std
 /*! 
 * \brief Function which takes a node and inserts its value into the correct position 
 * in an argument vector based on the year attribute.
-* \updated to fill out for the rest of the time period if the fillout attribute is true
+* Updated to fill out for the rest of the time period if the fillout attribute is true.
 *
 * This function when passed a node, vector and modeltime object will first extract the year attribute and lookup
 * the corresponding period from the modeltime object. It will then insert the item in that position in the vector.
@@ -264,7 +264,7 @@ std::string XMLHelper<T>::getAttrString( const xercesc::DOMNode* node, const std
 template<class T>
 void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vector<T>& insertToVector, const Modeltime* modeltime, const bool isPopulationData ) {
    
-   //! \pre Make sure we were passed a valid node reference.
+   /*! \pre Make sure we were passed a valid node reference. */
    assert( node );
    
    const int year = XMLHelper<int>::getAttr( node, "year" );
@@ -316,12 +316,13 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
 * \warning Make sure the node passed as an argument as a year attribute.
 * \param node A pointer to a node from which to extract the data.
 * \param modeltime A pointer to the modeltime object to use to determine the correct period.
+* \param isPopulationData A boolean which denotes whether the data will be inserted into a population vector.
 */
 
 template<class T>
 int XMLHelper<T>::getNodePeriod ( const xercesc::DOMNode* node, const Modeltime* modeltime, const bool isPopulationData ) {
    
-   //! \pre Make sure we were passed a valid node reference.
+   /*! \pre Make sure we were passed a valid node reference. */
    assert( node );
    
    const int year = XMLHelper<int>::getAttr( node, "year" );

@@ -5,9 +5,9 @@
 #endif
 
 /*! 
-* \file subResource.h
+* \file SubRenewableResource.h
 * \ingroup CIAM
-* \brief The SubResource class header file.
+* \brief The SubRenewableResource class header file.
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$

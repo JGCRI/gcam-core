@@ -64,7 +64,7 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
 	string nodeName;
 	
 	// PRECONDITION
-	//! \pre assume we are passed a valid node.
+	/*! \pre assume we are passed a valid node.*/
 	assert( node );
 
 	// get the name attribute.

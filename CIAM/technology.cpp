@@ -152,7 +152,7 @@ void technology::XMLParse( const DOMNode* node )
     string nodeName;
     DOMNodeList* nodeList;
     
-    //! \pre Assume we are passed a valid node.
+    /*! \pre Assume we are passed a valid node. */
     assert( node );
     
     nodeList = node->getChildNodes();
