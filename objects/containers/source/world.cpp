@@ -255,8 +255,6 @@ void World::calc( const int period, const vector<string>& regionsToSolve ) {
         }
         // calculate regional GNP
         regions[ *i ]->calcGnp( period );
-        // apply carbon taxes to appropriate technologie
-        regions[ *i ]->applycarbontax(period);
         // set regional GHG constraint to market supply
         regions[ *i ]->setGhgSupply(period);
         // set regional GHG tax to individual technologies

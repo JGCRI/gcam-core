@@ -30,14 +30,15 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     unit = unitIn;
     rmfrac = rmfracIn;
     gwp = gwpIn;
-    emiss_coef = emissCoefIn;
+    emissCoef = emissCoefIn;
     emission = 0;
-    storageCost = 0;
-    sequesteredAmount = 0;
-    emiss_gwp = 0;
-    emiss_coef = 0;
-    emiss_fuel = 0;
-    emiss_ind = 0;
+	isGeologicSequestration = true;
+    storageCost = util::getLargeNumber(); // default to a large cost to turn off CCS
+    sequestAmountGeologic = 0;
+    sequestAmountNonEngy = 0;
+    emissGwp = 0;
+    emissFuel = 0;
+    emissInd = 0;
 }
 
 //! Clear member variables.
@@ -45,21 +46,24 @@ void Ghg::clear(){
 
     // clear elemental data.
     rmfrac = 0;
-    storageCost = 0;
+    storageCost = util::getLargeNumber(); // default to a large cost to turn off CCS
     gwp = 0;
     emission = 0;
-    sequesteredAmount = 0;
-    emiss_gwp = 0;
-    emiss_coef = 0;
-    emiss_fuel = 0;
-    emiss_ind = 0;
+	isGeologicSequestration = false;
+    sequestAmountGeologic = 0;
+    sequestAmountNonEngy = 0;
+    emissGwp = 0;
+    emissCoef = 0;
+    emissFuel = 0;
+    emissInd = 0;
     name = "";
     unit = "";
+    storageName = "";
 }
 
 //! Set emissions coefficient from data
-void Ghg::setcoef( const double em_coef ) {
-    emiss_coef = em_coef; // set attribute
+void Ghg::setCoef( const double emCoef ) {
+    emissCoef = emCoef; // set attribute
 }
 
 //! initialize Ghg object with xml data
@@ -89,23 +93,24 @@ void Ghg::XMLParse(const DOMNode* node)
         if( nodeName == "#text" ){
             continue;
         }
-
         else if( nodeName == "unit"){
             unit = XMLHelper<string>::getValueString( curr );
         }
-
         else if( nodeName == "emisscoef" ){
-            emiss_coef = XMLHelper<double>::getValue( curr );
+            emissCoef = XMLHelper<double>::getValue( curr );
         }
-
         else if( nodeName == "removefrac" ){
             rmfrac = XMLHelper<double>::getValue( curr );
         }
-
+		// is geologic sequestration, true or false
+        else if( nodeName == "isGeologicSequestration" ){
+            isGeologicSequestration = XMLHelper<bool>::getValue( curr );
+        }
+		// fixed storage cost read in from data
         else if( nodeName == "storageCost" ){
+            storageName = XMLHelper<string>::getAttrString( curr, "name" );
             storageCost = XMLHelper<double>::getValue( curr );
         }
-
         else if( nodeName == "GWP" ){
             gwp = XMLHelper<double>::getValue( curr );
         }
@@ -125,8 +130,10 @@ void Ghg::toXML( ostream& out ) const {
 
     // write xml for data members
     XMLWriteElement( unit, "unit", out );
-    XMLWriteElementCheckDefault( emiss_coef, "emisscoef", out, 0 );
+    XMLWriteElementCheckDefault( emissCoef, "emisscoef", out, 0 );
     XMLWriteElementCheckDefault( rmfrac, "removefrac", out, 0 );
+    XMLWriteElementCheckDefault( isGeologicSequestration, "isGeologicSequestration", out, 1);
+    XMLWriteElementCheckDefault( storageCost, "storageCost", out, util::getLargeNumber() );
     XMLWriteElementCheckDefault( gwp, "GWP", out, 0 );
     // done writing xml for data members.
 
@@ -149,11 +156,14 @@ void Ghg::toDebugXML( const int period, ostream& out ) const {
     XMLWriteElement( rmfrac, "removefrac", out );
     XMLWriteElement( gwp, "GWP", out );
     XMLWriteElement( emission, "emission", out );
-    XMLWriteElement( sequesteredAmount, "sequesteredAmount", out );
-    XMLWriteElement( emiss_gwp, "emiss_gwp", out );
-    XMLWriteElement( emiss_coef, "emisscoef", out );
-    XMLWriteElement( emiss_fuel, "emiss_fuel", out );
-    XMLWriteElement( emiss_ind, "emiss_ind", out );
+    XMLWriteElement( isGeologicSequestration, "isGeologicSequestration", out );
+    XMLWriteElement( storageCost, "storageCost", out );
+    XMLWriteElement( sequestAmountGeologic, "sequestAmountGeologic", out );
+    XMLWriteElement( sequestAmountNonEngy, "sequestAmountNonEngy", out );
+    XMLWriteElement( emissGwp, "emissGwp", out );
+    XMLWriteElement( emissCoef, "emisscoef", out );
+    XMLWriteElement( emissFuel, "emissFuel", out );
+    XMLWriteElement( emissInd, "emissInd", out );
     // done writing xml for data members.
 
     Tabs::decreaseIndent();
@@ -164,79 +174,104 @@ void Ghg::toDebugXML( const int period, ostream& out ) const {
 
 //! Set remove fraction from data.
 
-void Ghg::setrmfrac( const double trmfrac ) {
+void Ghg::setRmfrac( const double trmfrac ) {
     rmfrac = trmfrac;	
 }
 
-//! Convert carbon tax to energy tax.
-double Ghg::taxcnvrt( const string& regionName, const string& fuelname ) const {
-
-    const World* world = scenario->getWorld();
-
-    double conversion; 
-    if (name == "CO2") {
-        // use map object for coefficient
-        conversion = (1.0 - rmfrac) * gwp * world->getCarbonTaxCoef( regionName, fuelname );
-    }
-    // for all other gases used read-in emissions coefficient
-    else {
-        // apply carbon equivalent to emiss coefficienr
-        //conversion = (1.0 - rmfrac) * gwp * emiss_coef;
-        conversion = 0;
-    }
-    return conversion;
-}
-
-/*! Convert GHG tax and any storage costs into energy units using GHG coefficients
-*   and return the value or cost of the tax and storage for the GHG
+/*! Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients
+*   and return the value or cost of the tax and storage for the GHG.
+*   Apply taxes only if emissions occur.  Emissions occur if there is a difference in the emissions
+*   coefficients.
 *  \param regionName Name of the region for GHG
 *  \param fuelName Name of the fuel
 *  \return Generalized cost or value of the GHG
 */
-double Ghg::getGHGValue( const string& regionName, const string& fuelName, const int period) const {
+double Ghg::getGHGValue( const string& regionName, const string& fuelName, const string& prodName, const double efficiency, const int period) const {
 
     const World* world = scenario->getWorld();
     const Marketplace* marketplace = scenario->getMarketplace();
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    // returns coef for primary fuels only
-    // carbontax has value for primary fuels only
+    const double SMALL_NUM = util::getSmallNumber();
+    const double CVRT_tg_MT = 1e-3; // to get teragrams of carbon per EJ to metric tons of carbon per GJ
     // name is GHG name
     double GHGTax = marketplace->getPrice(name,regionName,period);
+	// get carbon storage cost from the market
+	double marketStorageCost = 0;
+	if ( marketplace->doesMarketExist( storageName, regionName, period ) ) {
+		// market exists, use market storage cost
+        marketStorageCost = marketplace->getPrice(storageName,regionName,period);
+	}
+	else {
+		// market does not exist, use default or read in storage cost
+		marketStorageCost = storageCost;
+	}
 
+	// if tax is 0 or small, turn off sequestration technology by increasing storage cost
+	if (GHGTax < SMALL_NUM) {
+		marketStorageCost = util::getLargeNumber();
+	}
+    
+	// units for generalized cost is in 75$/gj
     double generalizedCost = 0; 
-    if (name == "CO2") {
-        // storageCost is a fixed cost for storage that is read in (unit 90$/tC)
-        // in the future, get storageCost from the market like GHGTax
-        // 1e-3 is to get teragrams of carbon per EJ to metric tons of carbon per GJ
-        // if remove fraction is greater than zero and storage is required
+    const double coefFuel = world->getPrimaryFuelCO2Coef( regionName, fuelName );
+    const double coefProduct = world->getPrimaryFuelCO2Coef( regionName, prodName );
+
+	if (name == "CO2") {
+        // if remove fraction is greater than zero and storage cost is required
         if (rmfrac > 0) {
-            generalizedCost = (GHGTax*(1.0 - rmfrac)*gwp + storageCost/CVRT90)
-                * world->getCarbonTaxCoef( regionName, fuelName ) * 1e-3;
+			// add geologic sequestration cost
+			if (isGeologicSequestration) {
+				// gwp applied only on the amount emitted
+				// account for conversion losses through efficiency
+		        generalizedCost = ((1.0 - rmfrac)*GHGTax*gwp + rmfrac*marketStorageCost)
+			        * (coefFuel/efficiency - coefProduct) / CVRT90 * CVRT_tg_MT;
+			}
+			// no sequestration or storage cost added for non-energy use of fossil fuels
+			else {
+				generalizedCost = ((1.0 - rmfrac)*GHGTax*gwp)
+			        * (coefFuel/efficiency - coefProduct) / CVRT90 * CVRT_tg_MT;
+			}
         }
         // no storage required
         else {
-            generalizedCost = GHGTax*(1.0 - rmfrac)*gwp
-                * world->getCarbonTaxCoef( regionName, fuelName ) * 1e-3;
+            generalizedCost = GHGTax * gwp * (coefFuel/efficiency - coefProduct) / CVRT90 * CVRT_tg_MT;
         }
-
+		//******* override generalizedCost if coefFuel is 0 *******
+		// need to fix this
+		if (coefFuel < SMALL_NUM) {
+			generalizedCost = 0;
+		}
     }
     // for all other gases used read-in emissions coefficient
     else {
         // apply carbon equivalent to emiss coefficienr
         // if remove fraction is greater than zero and storage is required
         if (rmfrac > 0) {
-            generalizedCost = (GHGTax*(1.0 - rmfrac)*gwp + storageCost/CVRT90) * emiss_coef;
+			// add geologic sequestration cost
+			if (isGeologicSequestration) {
+	            generalizedCost = ((1.0 - rmfrac)*GHGTax*gwp + rmfrac*storageCost) * emissCoef / CVRT90;
+			}
+			// no storage cost added
+			else {
+	            generalizedCost = ((1.0 - rmfrac)*GHGTax*gwp) * emissCoef / CVRT90;
+			}
         }
         // no storage required
         else {
-            generalizedCost = GHGTax*(1.0 - rmfrac)*gwp * emiss_coef;
+            generalizedCost = GHGTax * gwp * emissCoef / CVRT90;
         }
     }
+	// for debugging
+	if (generalizedCost < 0) {
+		cout<<"generalized cost " << generalizedCost << endl;
+		cout<<"GHGTax "<<GHGTax<<"  coefFuel  "<<coefFuel<<"  coefProduct"<<coefProduct<<endl;
+		exit(-1);
+	}
     return generalizedCost;
 }
 
 //! Calculate Ghg emissions.
-void Ghg::calc_emiss( const string& regionName, const string& fuelname, const double input, const string& prodname, const double output ) {
+void Ghg::calcEmission( const string& regionName, const string& fuelname, const double input, const string& prodname, const double output ) {
 
     const World* world = scenario->getWorld();
 
@@ -249,77 +284,97 @@ void Ghg::calc_emiss( const string& regionName, const string& fuelname, const do
         // 100% efficiency and same coefficient, no emissions
         if (input==output && coefFuel == coefProduct ) {
             emission = 0;
-            emiss_gwp = 0;
-            sequesteredAmount = 0;
-            emiss_fuel = (1.0-rmfrac)*input* coefFuel;
+            emissGwp = 0;
+            sequestAmountGeologic = 0;
+            sequestAmountNonEngy = 0;
+            emissFuel = (1.0-rmfrac)*input* coefFuel;
             // Note: The primary fuel emissions will not be correct if sequestered emissions occur down the line.
         }
         else {
             // sequestered emissions
             if (rmfrac > 0) {
-                sequesteredAmount = rmfrac * ( (input * coefFuel ) - ( output * coefProduct ) );
+				// geologic sequestration
+				if(isGeologicSequestration) {
+					sequestAmountGeologic = rmfrac * ( (input * coefFuel ) - ( output * coefProduct ) );
+				}
+				// non-energy use of fuel, ie petrochemicals
+				else {
+					sequestAmountNonEngy = rmfrac * ( (input * coefFuel ) - ( output * coefProduct ) );
+				}
             }
             // Note that negative emissions can occur here since biomass has a coef of 0. 
             emission = ( 1.0 - rmfrac ) * ( ( input* coefFuel ) - ( output* coefProduct ) );
-            emiss_gwp = ( 1.0 - rmfrac ) * gwp * ( ( input * coefFuel ) - ( output * coefProduct ) );
-            emiss_fuel = (1.0-rmfrac) * input* coefFuel;
+            emissGwp = ( 1.0 - rmfrac ) * gwp * ( ( input * coefFuel ) - ( output * coefProduct ) );
+            emissFuel = ( 1.0 - rmfrac ) * input* coefFuel;
         }
-    }
+	}
     // for all other gases used read-in emissions coefficient
     else {
         // sequestered emissions
         if (rmfrac > 0) {
-            sequesteredAmount = rmfrac * (input-output) * emiss_coef;
+			// geologic sequestration
+			if(isGeologicSequestration) {
+	            sequestAmountGeologic = rmfrac * (input-output) * emissCoef;
+			}
+			// non-energy use of fuel, ie petrochemicals
+			else {
+				sequestAmountNonEngy = rmfrac * (input-output) * emissCoef;
+			}
         }
-        emission = (1.0 - rmfrac) * (input-output) * emiss_coef;
-        emiss_gwp = (1.0 - rmfrac) * gwp * (input-output) * emiss_coef;
-        emiss_fuel = (1.0 - rmfrac) * input * emiss_coef;
+        emission = (1.0 - rmfrac) * (input-output) * emissCoef;
+        emissGwp = (1.0 - rmfrac) * gwp * (input-output) * emissCoef;
+        emissFuel = (1.0 - rmfrac) * input * emissCoef;
     }
 }
 
 //! calculates emissions associated with the use of secondary energy
 /*! get indirect emissions coefficient from map object */
-void Ghg::calc_emiss_ind( const double input, const string& fuelname, const vector<Emcoef_ind>& emcoef_ind ) {
-    emiss_ind = 0; // to initialize
+void Ghg::calcIndirectEmission( const double input, const string& fuelname, const vector<Emcoef_ind>& emcoef_ind ) {
+    emissInd = 0; // to initialize
     for (int i=0;i< static_cast<int>( emcoef_ind.size() );i++) {
         if (emcoef_ind[i].getName() == fuelname) { // sector name
-            emiss_ind = emcoef_ind[i].getemcoef(name) * input;
+            emissInd = emcoef_ind[i].getemcoef(name) * input;
         }
     }
 }
 
 //! Return name of Ghg.
-string Ghg::getname() const {
+string Ghg::getName() const {
     return name;
 }
 
 //! Return unit for Ghg.
-string Ghg::getunit() const {
+string Ghg::getUnit() const {
     return unit;
 }
 
 //! Return Ghg emissions.
-double Ghg::getemission() const {
+double Ghg::getEmission() const {
     return emission;
 }
 
-//! Return sequestered ghg emissions.
-double Ghg::getSequesteredAmount() const {
-    return sequesteredAmount;
+//! Return geologic sequestered ghg emissions.
+double Ghg::getSequestAmountGeologic() const {
+    return sequestAmountGeologic;
+}
+
+//! Return non-energy sequestered ghg emissions.
+double Ghg::getSequestAmountNonEngy() const {
+    return sequestAmountNonEngy;
 }
 
 //! Return ghg emissions inplicit in fuel.
-double Ghg::getemiss_fuel() const {
-    return emiss_fuel;
+double Ghg::getEmissFuel() const {
+    return emissFuel;
 }
 
 //! Return indirect ghg emissions.
-double Ghg::getemiss_ind() const {
-    return emiss_ind;
+double Ghg::getEmissInd() const {
+    return emissInd;
 }
 
 //! Return ghg emissions coefficient.
-double Ghg::getemiss_coef() const{
-    return emiss_coef;
+double Ghg::getEmissCoef() const{
+    return emissCoef;
 }
 

@@ -45,7 +45,7 @@ namespace util {
         if( iter != currMap.end() ){
             retValue = iter->second;
         } else {
-            retValue = V();
+            retValue = V(); //returns default constructor, 0 for doubles and ints
         }
         return retValue;
     }
@@ -165,6 +165,17 @@ namespace util {
    static inline double getTinyNumber() {
       const double EXTREMELY_SMALL_NUM = 1e-16;
       return EXTREMELY_SMALL_NUM;
+   }
+
+    /*! \brief Static function which returns LARGE_NUM. 
+    * \detailed This is a static function which is used to find the value of the constant LARGE_NUM.
+    * This avoids the initialization problems of static variables. This function should be used instead
+    * of defining this constant in multiple locations in the code.
+    * \return The constant LARGE_NUM.
+    */
+   static inline double getLargeNumber() {
+      const double LARGE_NUM = 1e+6;
+      return LARGE_NUM;
    }
 
     /*! \brief Function which creates an XML compliant date time string.

@@ -51,6 +51,7 @@ void Modeltime::initElementalMembers(){
 	interYear1 = 0;
 	interYear2 = 0;
 	endYear = 0;
+	startReportYear = 0;
 	popStartYear = 0;
 	dataEndYear = 0;
 	maxPeriod = 0;
@@ -101,6 +102,9 @@ void Modeltime::XMLParse( const DOMNode* node ) {
 		else if ( nodeName == "endyear" ){
 			endYear = XMLHelper<int>::getValue( curr );
 		} 
+		else if ( nodeName == "startReportYear" ){
+			startReportYear = XMLHelper<int>::getValue( curr );
+		} 
 		else if ( nodeName == "timestep1" ){
 			timeStep1 = XMLHelper<int>::getValue( curr );
 		} 
@@ -137,6 +141,7 @@ void Modeltime::toXML( ostream& out ) const {
 	XMLWriteElement( interYear1, "interyear1", out );
 	XMLWriteElement( interYear2, "interyear2", out );
 	XMLWriteElement( endYear, "endyear", out );
+	XMLWriteElement( startReportYear, "startReportYear", out );
 	XMLWriteElement( timeStep1, "timestep1", out );
 	XMLWriteElement( timeStep2, "timestep2", out );
 	XMLWriteElement( timeStep3, "timestep3", out );
@@ -162,6 +167,7 @@ void Modeltime::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( interYear1, "interyear1", out );
 	XMLWriteElement( interYear2, "interyear2", out );
 	XMLWriteElement( endYear, "endyear", out );
+	XMLWriteElement( startReportYear, "startReportYear", out );
 	XMLWriteElement( timeStep1, "timestep1", out );
 	XMLWriteElement( timeStep2, "timestep2", out );
 	XMLWriteElement( timeStep3, "timestep3", out );
@@ -217,7 +223,7 @@ void Modeltime::set(void) {
 	// retrieve timeStep for each modeling period
 	periodToTimeStep.resize(maxPeriod);
 
-        int i;	//Need to define "i" outside loops in order to work with strict c++ definitions of gcc
+    int i;	//Need to define "i" outside loops in order to work with strict c++ definitions of gcc
 
 	for(i=0;i<numberOfPeriods1;i++){
 		periodToTimeStep[i]=timeStep1;

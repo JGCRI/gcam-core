@@ -35,6 +35,7 @@ class Emcoef_ind;
 class Subsector
 {
 protected:
+    bool debugChecking; //!< General toggle to turn on various checks
     std::string name; //!< subsector name
     std::string regionName; //!< region name
     std::string sectorName; //!< sector name
@@ -43,7 +44,7 @@ protected:
     int notech; //!< number of technologies in each subsector
     double tax; //!< subsector tax or subsidy
     double basesharewt; //! subsector base year consumption share weight
-    bool debugChecking; //!< General toggle to turn on various checks
+    double CO2EmFactor; //! CO2 emissions factor, calculated based on fuel input and share
     std::vector<std::vector<technology*> > techs; //!< array of pointers to technology objects for each period
     std::vector<hydro_tech> hydro; //!< array of hydroelectricity by period
     std::vector<double> capLimit; //!< subsector capacity limit
@@ -83,6 +84,7 @@ public:
     void toDebugXML( const int period, std::ostream& out ) const;
     virtual void calcPrice( const int period );
     double getPrice( const int period ) const;
+    double getCO2EmFactor(int period) const;
     void initCalc( const int period );
     bool getCalibrationStatus( const int period ) const;
     void setCalibrationStatus( const int period );
@@ -94,7 +96,6 @@ public:
     double getfuelprice( const int period ) const; 
     double getwtfuelprice( const int period ) const;
     double getCapacityLimit( const int period ) const;
-    void applycarbontax( const double tax, const int period );
     void addGhgTax( const std::string& ghgname, const int period ); 
     virtual void calcShare( const int period, const double gnp_cap = 1 ); 
     void setShare( const double shareVal, const int period );

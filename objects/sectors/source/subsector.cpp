@@ -50,7 +50,8 @@ Subsector::Subsector( const string regionName, const string sectorName ){
     basesharewt = 0;
     Configuration* conf = Configuration::getInstance();
     debugChecking = conf->getBool( "debugChecking" );
-    
+	CO2EmFactor = 0;
+
     // resize vectors.
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
@@ -94,6 +95,7 @@ void Subsector::clear(){
     notech = 0;
     tax = 0;
     basesharewt = 0;
+	CO2EmFactor = 0;
     name = "";
     unit = "";
     fueltype = "";
@@ -510,10 +512,12 @@ void Subsector::initCalc( const int period ) {
 * \param period Model period
 */
 void Subsector::calcPrice( const int period ) {
-    int i=0;
+    const World* world = scenario->getWorld();
+	int i=0;
     subsectorprice[period] = 0; // initialize to 0 for summing
     fuelprice[period] = 0; // initialize to 0 for summing
-    
+	CO2EmFactor = 0; // initialize to 0 for summing
+
     for (i=0;i<notech;i++) {
         // calculate weighted average price for Subsector
         subsectorprice[period] += techs[i][period]->getShare()*
@@ -522,6 +526,9 @@ void Subsector::calcPrice( const int period ) {
         // technology shares are based on total cost
         fuelprice[period] += techs[i][period]->getShare()*
             techs[i][period]->getFuelcost();
+        // calculate share weighted average CO2 emissions factor
+        CO2EmFactor += techs[i][period]->getShare()*
+			world->getPrimaryFuelCO2Coef(regionName, techs[i][period]->getFName());
     }
 }
 
@@ -561,8 +568,8 @@ bool Subsector::getCalibrationStatus( const int period ) const {
 void Subsector::setCalibrationStatus( const int period ) {
     if ( doCalibration[ period ] ) {
         calibrationStatus[ period ] = true;
-        return;
-    } else {
+    } 
+	else {
         for (int i=0; i<notech; i++ ) {
             if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
                 calibrationStatus[ period ] = true;
@@ -614,13 +621,23 @@ bool Subsector::getCapLimitStatus( const int period ) const {
 *
 * \author Steve Smith
 * \param period Model period
-* \return Boolean capacity limit status
+* \return fuel price
 */
 double Subsector::getfuelprice(int period) const
 {
     return fuelprice[period];
 }
 
+/*! \brief returns Subsector CO2 emissions factor.
+*
+* \author Sonny Kim
+* \param period Model period
+* \return CO2EmFactor
+*/
+double Subsector::getCO2EmFactor(int period) const
+{
+    return CO2EmFactor;
+}
 /*! \brief returns Subsector fuel price times share
 *
 * Returns the share-weighted fuel price, which is later summed to get the sector-weighted fuel price (or cost)
@@ -631,34 +648,19 @@ double Subsector::getfuelprice(int period) const
 */
 double Subsector::getwtfuelprice(int period) const
 {
+	double tempShare;
+	// base year share
     if (period == 0) {
-        //return basesharewt*fuelprice[period];
-        return share[period]*fuelprice[period]; // base year share initialized to basesharewt
+        tempShare = share[period]; 
     }
+	// lagged one period
     else {
-        return share[period-1]*fuelprice[period];
+        tempShare = share[period-1];
     }
+    return tempShare*fuelprice[period];
 }
 
-/*! \brief Pass along a fixed carbon price to technologies
-*
-* Routine passes a fixed carbon price to each technology as given through data read-in
-*
-* \author Sonny Kim, Josh Lurz
-* \param regionName region name
-* \param tax the carbon prie for this region
-* \param period model period
-* \todo combine this with ghgtax by using a "fixedTax" tag in data input (see e-mail of 10/21/03)
-*/
-void Subsector::applycarbontax( const double tax, const int period ) {
-    for ( int i=0 ;i<notech; i++ ) {
-        techs[i][ period ]->applycarbontax( regionName, tax );
-    }
-}
-
-/*! \brief Passes ghg price (tax) to technologies
-*
-* The GHG price is passed along to each technology. This is the price as determined through the solution routine.
+/*! \brief Sets ghg tax from the market to individual technologies.
 *
 * \author Sonny Kim, Josh Lurz
 * \param regionName region name
@@ -667,7 +669,7 @@ void Subsector::applycarbontax( const double tax, const int period ) {
 */
 void Subsector::addGhgTax( const string& ghgname, const int period ) {
     for ( int i=0 ;i<notech; i++ ) {
-        techs[ i ][ period ]->addGhgTax( ghgname, regionName, period );
+        techs[ i ][ period ]->addGhgTax( ghgname, regionName, sectorName, period );
     }
 }
 
@@ -792,7 +794,7 @@ void Subsector::limitShares( const double multiplier, const int period ) {
       share[period] = 0;
    }
    else {	
-      double capLimitValue = capLimitTransform( capLimit[period], share[period]  );
+      double capLimitValue = capLimitTransform( capLimit[period], share[period] );
       if ( share[period] >= capLimitValue ) {
          // Only adjust if not already capacity limited
          // need this because can't transform more than once, see capLimitTransform
@@ -800,7 +802,8 @@ void Subsector::limitShares( const double multiplier, const int period ) {
             setShare( capLimitValue, period );
             setCapLimitStatus( true, period ); // set status to true
          }
-      } else {
+      } 
+	  else {
          if ( fixedShare[ period ] == 0 ) { // don't change if fixed
             setShare( share[period] * multiplier, period );
          }
@@ -808,9 +811,9 @@ void Subsector::limitShares( const double multiplier, const int period ) {
    }
 }
 
-/*! \brief Transform share to smoothly impliment capacity limit.
+/*! \brief Transform share to smoothly implement capacity limit.
 *
-* Function transformes the original share value into one that smoothly approaches the capacity limit.
+* Function transforms the original share value into one that smoothly approaches the capacity limit.
 * Returns the original orgShare when share << capLimit and returns capLimit when orgShare is large by using a logistic transformation.
 * 
 *
@@ -829,7 +832,6 @@ void Subsector::limitShares( const double multiplier, const int period ) {
       double factor = exp( pow( mult * orgShare/capLimit , exponentValue ) );
       newShare = orgShare * factor/( 1 + ( orgShare/capLimit ) * factor);
    }
-   
    return newShare;
 }
 
@@ -938,7 +940,8 @@ void Subsector::shareWeightScale( const int period ) {
     // if previous period was calibrated, then adjust future shares
     if ( period > modeltime->getyr_to_per( 1990 ) ) {
         if ( calibrationStatus[ period - 1 ] ) {
-            int endPeriod = modeltime->getyr_to_per( 2050 );
+            //int endPeriod = modeltime->getyr_to_per( 2050 );
+            int endPeriod = modeltime->getyr_to_per( 2095 );
             shareWeightInterp( period - 1, endPeriod );
         }
     }
@@ -1451,14 +1454,12 @@ void Subsector::MCoutputC() const {
         dboutput4(regionName,"Emissions",str,gmap->first,"MTC",temp);
     }
     
-    //string tssname = name; // tempory Subsector name
-    string tssname = "tech_"; // tempory Subsector name
+    string tssname = name; // tempory Subsector name
     int mm=0; // temp period to get base period
     // do for all technologies in the Subsector
     for (i=0;i<notech;i++) {
-        //str = tssname + techs[i][mm].showname();
-        str = techs[i][mm]->getName();
-        //		if(notech>1) {  // write out if more than one technology
+        str = tssname + techs[i][mm]->getName();
+        //str = techs[i][mm]->getName();
         if(notech>0) {  // write out for all technology
             // technology CO2 emission
             for (m=0;m<maxper;m++) {
@@ -1494,17 +1495,26 @@ void Subsector::MCoutputC() const {
                 temp[m] = techs[i][m]->getShare();
             }
             dboutput4(regionName,"Tech Share",sectorName,str,"%",temp);
-            // ghg tax applied to technology
+            
+			// ghg tax applied to technology
             for (m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getCarbontax();
             }
             dboutput4(regionName,"C Tax",sectorName,str,"$/TC",temp);
-            // ghg tax paid
+
+			// ghg tax and storage cost applied to technology if any
+            for (m=0;m<maxper;m++) {
+                temp[m] = techs[i][m]->getCarbonValue();
+            }
+            dboutput4(regionName,"C Value",sectorName,str,"$/gj",temp);
+
+			// ghg tax paid
             for (m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getCarbontaxpaid();
             }
             dboutput4(regionName,"C Tax Paid",sectorName,str,"90Mil$",temp);
-            // technology fuel input
+            
+			// technology fuel input
             for (m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getInput();
             }
@@ -1544,7 +1554,7 @@ void Subsector::emission( const int period ){
     summary[period].clearemiss(); // clear emissions map
     summary[period].clearemfuelmap(); // clear emissions map
     for ( int i=0 ;i<notech; i++ ) {
-        techs[i][period]->emission( sectorName );
+        techs[i][period]->calcEmission( sectorName );
         summary[period].updateemiss( techs[i][period]->getemissmap() );
         summary[period].updateemfuelmap( techs[i][period]->getemfuelmap() );
     }

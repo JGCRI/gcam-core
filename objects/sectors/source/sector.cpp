@@ -99,6 +99,7 @@ void Sector::initElementalMembers(){
     prevVal = 0;
     prevPer = -1;
     anyFixedCapacity = false;
+	CO2EmFactor = 0;
 }
 
 /*! \brief Returns Sector name
@@ -440,24 +441,7 @@ void Sector::setMarket() {
     }
 }
 
-/*! \brief Pass along a fixed carbon price to subsectors
-*
-* Routine passes a fixed carbon price to each subsector as given through data read-in
-*
-* \author Sonny Kim, Josh Lurz
-* \param tax the carbon prie for this region
-* \param period model period
-* \todo combine this with ghgtax by using a "fixedTax" tag in data input (see e-mail of 10/21/03)
-*/
-void Sector::applycarbontax( const double tax, const int period ) {
-    for ( int i = 0; i < nosubsec; i++ ) {
-        subsec[ i ]->applycarbontax( tax, period );
-    }
-}
-
-/*! \brief Passes ghg price (tax) to subsectors
-*
-* The GHG price is passed along to each subsector. This is the price as determined through the solution routine.
+/*! \brief Sets ghg tax from the market to individual technologies.
 *
 * \author Sonny Kim, Josh Lurz
 * \param ghgname name of the ghg to apply tax to
@@ -526,12 +510,14 @@ void Sector::calcShare( const int period, const double gnpPerCap ) {
             // normalize subsector shares that are not fixed
             if ( fixedSum < 1 ) {
 					subsec[ i ]->normShare( sum / ( 1 - fixedSum ) , period );	
-            } else {
+            } 
+			else {
                 subsec[ i ]->normShare( sum / util::getTinyNumber() , period );	// if all fixed supply, eliminate other shares
             }
 
             // reset share of sectors with fixed supply to their appropriate value
-        } else {
+        } 
+		else {
             double fixedShare = getFixedShare( i , period ) * scaleFixedShare;
             double currentShare = subsec[ i ]->getFixedShare( period );
             subsec[ i ]->setShareToFixedValue( period );
@@ -603,7 +589,8 @@ void Sector::adjSharesCapLimit( const int period ) {
             // this is needed because can only do the transform once
             if ( subsec[ i ]->getCapLimitStatus( period ) ) {
                 tempCapacityLimit = subsec[ i ]->getShare( period );
-            } else {
+            } 
+			else {
                 tempCapacityLimit = Subsector::capLimitTransform( actualCapacityLimit, tempSubSectShare );
             }
 
@@ -692,10 +679,14 @@ void Sector::checkShareSum( const int period ) const {
 * \param period Model period
 */
 void Sector::calcPrice( const int period ) {
+    Marketplace* marketplace = scenario->getMarketplace();
     sectorprice[ period ]= 0;
+	CO2EmFactor = 0; // reinitialize to 0 everytime
     for (int i=0;i<nosubsec;i++) {	
         sectorprice[ period ] += subsec[ i ]->getShare( period ) * subsec[ i ]->getPrice( period );
+        CO2EmFactor += subsec[ i ]->getShare( period ) * subsec[ i ]->getCO2EmFactor( period );
     }
+	marketplace->setMarketInfo(name,regionName,period,"CO2EmFactor",CO2EmFactor);
 }
 
 /*! \brief returns the Sector price.
@@ -724,7 +715,8 @@ bool Sector::isAllCalibrated( const int period ) const {
 
     if ( period < 0 ) {
         allCalibrated = false;
-    } else {
+    } 
+	else {
         for ( int i=0; i<nosubsec; i++ ) {
             if ( !(subsec[ i ]->allOuputFixed( period )) ) {
                 allCalibrated = false;
@@ -747,7 +739,8 @@ bool Sector::isCapacityLimitsInSector( const int period ) const {
 
     if ( period < 0 ) {
         anyCapacityLimits = false;
-    } else {
+    } 
+	else {
         for ( int i = 0; i < nosubsec && !anyCapacityLimits; i++ ) {
             if ( !( subsec[ i ]->getCapacityLimit( period ) == 1 ) ) {
                 anyCapacityLimits = true;
@@ -821,7 +814,8 @@ double Sector::getFixedShare( const int sectorNum, const int period ) const {
             }
         }
         return fixedShare;
-    } else {
+    } 
+	else {
         cerr << "Illegal Sector number: " << sectorNum << endl;
         return 0;
     }
@@ -907,7 +901,8 @@ void Sector::adjustForFixedSupply( const double marketDemand, const int period )
         //     -- but that didn't give capacity limits exactly.
         if ( fixedSupply == 0 ) { 
             variableShares += subsec[ i ]->getShare( period );
-        } else {
+        } 
+		else {
             if ( marketDemand != 0 ) {
                 double shareVal = fixedSupply / marketDemand;
                 if ( shareVal > 1 ) { 
@@ -1037,6 +1032,7 @@ void Sector::supply( const int period ) {
 void Sector::sumOutput( const int period ) {
     output[ period ] = 0;
     for ( int i=0; i<nosubsec; i++ ) {
+		// getOutput() calls subsector summing routine
         double temp = subsec[ i ]->getOutput( period );
         output[ period ] += temp;
 
@@ -1224,7 +1220,7 @@ void Sector::MCoutput() const {
     // Sector price
     dboutput4( regionName,"Price","by Sector",name,"$/GJ",sectorprice);
     // Sector carbon taxes paid
-    dboutput4( regionName,"General","carbonTaxPaid",name,"$",carbonTaxPaid);
+    dboutput4( regionName,"General","CarbonTaxPaid",name,"$",carbonTaxPaid);
     // do for all subsectors in the Sector
     for (int i=0;i<nosubsec;i++) {
         // output or demand for each technology

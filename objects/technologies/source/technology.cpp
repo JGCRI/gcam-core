@@ -59,8 +59,12 @@ void technology::copy( const technology& techIn ) {
     year = techIn.year;
     shrwts = techIn.shrwts;
     eff = techIn.eff; 
+    effBase = techIn.effBase; 
+    effPenalty = techIn.effPenalty; 
     intensity = techIn.intensity; 
     necost = techIn.necost;
+    neCostBase = techIn.neCostBase;
+    neCostPenalty = techIn.neCostPenalty;
     fuelcost = techIn.fuelcost;
     techcost = techIn.techcost;
     tax = techIn.tax;
@@ -84,6 +88,8 @@ void technology::copy( const technology& techIn ) {
     emissmap = techIn.emissmap; 
     emfuelmap = techIn.emfuelmap; 
     emindmap = techIn.emindmap; 
+    calInputValue = techIn.calInputValue;
+    carbonValue = techIn.carbonValue;
     
     resource = techIn.resource;
     A = techIn.A;
@@ -117,19 +123,23 @@ void technology::clear(){
 //! Initialize elemental data members.
 void technology::initElementalMembers(){
     year = 0;
-    shrwts = 1; // initialied to 1 
-    eff = 1; // initialied to 1 
-    intensity = 1; // initialied to 1 
+    shrwts = 1;
+    eff = 1; 
+    effBase = 1; 
+    effPenalty = 0; 
+    intensity = 1; 
     fuelcost = 0;
     necost = 0;
+    neCostBase = 0;
+    neCostPenalty = 0;
     techcost = 0;
     tax = 0;
-    fMultiplier = 1; // initialied to 1 
-    pMultiplier = 1; // initialied to 1 
+    fMultiplier = 1; 
+    pMultiplier = 1; 
     carbontax = 0;
     carbontaxgj = 0;
     carbontaxpaid = 0;
-    lexp = -6; // initialied to -6 
+    lexp = -6; 
     share = 0;
     input = 0;
     output = 0;
@@ -192,10 +202,16 @@ void technology::XMLParse( const DOMNode* node )
             doCalOutput = true;
         }
         else if( nodeName == "efficiency" ){
-            eff = XMLHelper<double>::getValue( curr );
+            effBase = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "efficiencyPenalty" ){
+            effPenalty = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "nonenergycost" ){
-            necost = XMLHelper<double>::getValue( curr );
+            neCostBase = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "neCostPenalty" ){
+            neCostPenalty = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "tax" ){
             tax = XMLHelper<double>::getValue( curr );
@@ -231,7 +247,7 @@ void technology::XMLParse( const DOMNode* node )
                 tempGhg = new Ghg();
                 tempGhg->XMLParse( curr );
                 ghg.push_back( tempGhg );
-                ghgNameMap[ tempGhg->getname() ] = static_cast<int>( ghg.size() ) - 1;
+                ghgNameMap[ tempGhg->getName() ] = static_cast<int>( ghg.size() ) - 1;
             }
         }
         // parse derived classes
@@ -260,6 +276,9 @@ void technology::completeInit() {
         ghg.push_back( CO2 );
         ghgNameMap[ "CO2" ] = 0;
     }
+	// calculate effective efficiency
+	eff = effBase * (1 - effPenalty); // reduces efficiency by penalty
+	necost = neCostBase * (1 + neCostPenalty); // increases cost by penalty
 }
 
 
@@ -284,8 +303,10 @@ void technology::toXML( ostream& out ) const {
     
     XMLWriteElement( fuelname, "fuelname", out );
     
-    XMLWriteElementCheckDefault( eff, "efficiency", out, 1 );
-    XMLWriteElementCheckDefault( necost, "nonenergycost", out, 0 );
+    XMLWriteElementCheckDefault( effBase, "efficiency", out, 1 );
+    XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, 0 );
+    XMLWriteElementCheckDefault( neCostBase, "nonenergycost", out, 0 );
+	XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, 0 );
     XMLWriteElementCheckDefault( tax, "tax", out, 0 );
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, 1 );
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, 1 );
@@ -322,10 +343,13 @@ void technology::toDebugXML( const int period, ostream& out ) const {
     if (doCalibration) {
         XMLWriteElement( calInputValue, "calInputValue", out );
     }
-    XMLWriteElement( fuelname, "fuelname", out );
-    XMLWriteElement( eff, "efficiency", out );
+    XMLWriteElement( eff, "efficiencyEffective", out );
+    XMLWriteElement( effBase, "efficiencyBase", out );
+    XMLWriteElement( effPenalty, "efficiencyPenalty", out );
     XMLWriteElement( fuelcost, "fuelcost", out );
-    XMLWriteElement( necost, "nonenergycost", out );
+    XMLWriteElement( necost, "nonEnergyCostEffective", out );
+    XMLWriteElement( neCostBase, "neCostBase", out );
+    XMLWriteElement( neCostPenalty, "neCostPenalty", out );
     XMLWriteElement( tax, "tax", out );
     XMLWriteElement( fMultiplier, "fMultiplier", out );
     XMLWriteElement( pMultiplier, "pMultiplier", out );
@@ -366,27 +390,9 @@ void technology::initCalc( ) {
    }
 }
 
-//! apply carbon tax to appropriate technology
-void technology::applycarbontax( const string& regionName, const double tax )
-{
-    // convert tax from $/carbon unit to $/energy unit
-    // if fuel does not contain carbon, emissions coefficient
-    // is zero and so is the carbon tax
-    // units: tax (90$/TC), CO2coef (MTC/EJ), carbontax (75$/GJ)
-    carbontaxgj = 0; // initialize
-    carbontax = tax;
-    
-    // returns emissions coefficient only if fuels are primary fuels
-    // crude oil, natural gas and coal
-    // add to previous ghg tax if more than one ghg
-    for(int i=0;i< static_cast<int>( ghg.size() );i++) {
-        carbontaxgj += carbontax*ghg[i]->taxcnvrt( regionName, fuelname)*1e-3;
-    }
-}
-
 //! sets ghg tax to technologies
 /*! does not get called if there are no markets for ghgs */
-void technology::addGhgTax( const string ghgname, const string regionName, const int per ) {
+void technology::addGhgTax( const string ghgname, const string regionName, const string sectorName, const int per ) {
     Marketplace* marketplace = scenario->getMarketplace();
     // returns coef for primary fuels only
     // carbontax has value for primary fuels only
@@ -395,7 +401,7 @@ void technology::addGhgTax( const string ghgname, const string regionName, const
     // add to previous ghg tax if more than one ghg
     // carbonValue and carbontax must be in same unit as fuel price
     for(int i=0;i< static_cast<int>( ghg.size() );i++) {
-        carbonValue += ghg[i]->getGHGValue( regionName, fuelname, per);
+        carbonValue += ghg[i]->getGHGValue( regionName, fuelname, sectorName, eff, per);
     }
     // need to add taxes from all ghgs
 }
@@ -410,12 +416,24 @@ void technology::calcCost( const string regionName, const int per )
     // code for integrating technical change
     //techcost = fprice/eff/pow(1+techchange,modeltime->gettimestep(per)) + necost;
     // fMultiplier and pMultiplier are initialized to 1 for those not read in
-    fuelcost = ( (fuelprice * fMultiplier) + carbonValue ) / eff;
+    fuelcost = ( fuelprice * fMultiplier ) / eff;
     techcost = ( fuelcost + necost ) * pMultiplier;
+	techcost += carbonValue;
     
     /* \post fuelcost and techcost are greater than or equal to 0. */
-    assert( fuelcost >= 0 );
+	if(fuelcost < 0){
+		cout << "fuelcost < 0"<<endl;
+		cout << regionName <<","<<name <<","<<fuelname<<","<<fuelprice<<","<<fMultiplier<<","<<carbonValue<<endl;
+		cout << "CO2EmFactor  "<< marketplace->getMarketInfo(fuelname,regionName,per,"CO2EmFactor")<<endl;
+	}
+	else if(techcost <= 0){
+		cout << "techcost <= 0"<<endl;
+		cout << regionName <<","<<name <<","<<fuelname<<","<<fuelprice<<","<<fMultiplier<<","<<carbonValue<<endl;
+		cout << "CO2EmFactor  "<< marketplace->getMarketInfo(fuelname,regionName,per,"CO2EmFactor")<<endl;
+	}
+	assert( fuelcost >= 0 );
     assert( techcost >= 0 );
+	
 }
 
 /*! \brief calculate technology unnormalized shares
@@ -600,30 +618,33 @@ void technology::production(const string& regionName,const string& prodName,
     
     // calculate emissions for each gas after setting input and output amounts
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
-        ghg[i]->calc_emiss(regionName, fuelname,input,prodName,output);
+        ghg[i]->calcEmission(regionName, fuelname,input,prodName,output);
         // set emissions as demand side of gas market
-        marketplace->addToDemand(ghg[i]->getname(),regionName,ghg[i]->getemission(),per);		
+        marketplace->addToDemand(ghg[i]->getName(),regionName,ghg[i]->getEmission(),per);		
+        // set sequestered amount as demand side of carbon storage market
+        marketplace->addToDemand("carbon storage",regionName,ghg[i]->getSequestAmountGeologic(),per);		
     }
 }
 
 //! calculate GHG emissions from technology use
-void technology::emission( const string prodname ) {
+void technology::calcEmission( const string prodname ) {
     // alternative ghg emissions calculation
     emissmap.clear(); // clear emissions map
     emfuelmap.clear(); // clear emissions map
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
         // emissions by gas name only
-        emissmap[ghg[i]->getname()] = ghg[i]->getemission();
+        emissmap[ghg[i]->getName()] = ghg[i]->getEmission();
         // emissions by gas and fuel names combined
         // used to calculate emissions by fuel
-        emissmap[ghg[i]->getname() + fuelname] = ghg[i]->getemission();
+        emissmap[ghg[i]->getName() + fuelname] = ghg[i]->getEmission();
                // add sequestered amount to emissions map
         // used to calculate emissions by fuel
-        emissmap[ghg[i]->getname() + "sequestered"] = ghg[i]->getSequesteredAmount();
+        emissmap[ghg[i]->getName() + "sequestGeologic"] = ghg[i]->getSequestAmountGeologic();
+        emissmap[ghg[i]->getName() + "sequestNonEngy"] = ghg[i]->getSequestAmountNonEngy();
         
-        // emfuelmap[ghg[i]->getname()] = ghg[i]->getemiss_fuel();
+        // emfuelmap[ghg[i]->getName()] = ghg[i]->getEmissFuel();
         // This really should include the GHG name as well.
-        emfuelmap[fuelname] = ghg[i]->getemiss_fuel();
+        emfuelmap[fuelname] = ghg[i]->getEmissFuel();
     }
 }
 
@@ -632,8 +653,8 @@ void technology::indemission( const vector<Emcoef_ind>& emcoef_ind )
 {
     emindmap.clear(); // clear emissions map
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
-        ghg[i]->calc_emiss_ind(input,fuelname, emcoef_ind );
-        emindmap[ghg[i]->getname()] = ghg[i]->getemiss_ind();
+        ghg[i]->calcIndirectEmission(input,fuelname, emcoef_ind );
+        emindmap[ghg[i]->getName()] = ghg[i]->getEmissInd();
     }
 }
 
@@ -761,6 +782,12 @@ double technology::getCarbontaxgj() const {
     return carbontaxgj;
 }
 
+//! return any carbon tax and storage cost applied to technology
+double technology::getCarbonValue() const {
+    // (75$/GJ)
+    return carbonValue;
+}
+
 //! return carbon taxes paid by technology
 double technology::getCarbontaxpaid() const {
     return carbontaxpaid;
@@ -768,7 +795,7 @@ double technology::getCarbontaxpaid() const {
 
 //! returns actual CO2 emissions from technology, alternate
 double technology::getCO2()  const {
-    return ghg[0]->getemission(); // index 0 is for CO2
+    return ghg[0]->getEmission(); // index 0 is for CO2
 }
 
 //! return map of all ghg emissions

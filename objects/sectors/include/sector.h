@@ -59,6 +59,7 @@ protected:
     double fixedShareSavedVal; //!< debugging value
     double prevVal;
     double prevPer;
+    double CO2EmFactor; //! CO2 emissions factor, calculated based on fuel input and share
 
     virtual void initElementalMembers();
     void sumOutput( const int period ); // private function, sum taken care of automatically
@@ -81,7 +82,6 @@ public:
     virtual void toXMLDerivedClass( std::ostream& out ) const;
     virtual void toDebugXML( const int period, std::ostream& out ) const;
     virtual void setMarket();
-    void applycarbontax( double tax, const int period );
     void addGhgTax( const std::string& ghgname, const int period );
     virtual void calcShare( const int period, const double gnp_cap = 1 );
     void adjSharesCapLimit( const int period ); 

@@ -31,6 +31,7 @@ private:
     int interYear1; //!< First intermediate year.
     int interYear2; //!< Second intermediate year.
     int endYear; //!< Model end year (read-in).
+    int startReportYear; //!< Model reporting and calibration year (read-in).
     int popStartYear; //!< Start year for population data (read-in).
     int dataEndYear; //!< Last year for general data (read-in). 
     int maxPeriod; //!< Maximum number of model periods (calculated).
@@ -68,6 +69,7 @@ public:
     void set(); // calculates parameters
     int getstartyr() const { return startYear; }
     int getendyr() const { return endYear; }
+    int getStartReportYr() const { return startReportYear; }
     int getPopStartYear() const { return popStartYear; }
     int getdataendyr() const { return dataEndYear; }
     int gettimestep( const int period ) const{ return periodToTimeStep[ period ]; } // years from last to current per

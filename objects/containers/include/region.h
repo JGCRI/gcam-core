@@ -67,7 +67,6 @@ private:
     std::vector<double> gnpCap; //!< regional gross national product per capita normalized 
     std::vector<double> input; //!< total fuel consumption in energy units
     std::vector<double> priceSer; //!< aggregate price for demand services
-    std::vector<double> carbonTax; //!< regional carbon tax
     std::vector<double> carbonTaxPaid; //!< total regional carbon taxes paid
     std::vector<double> TFEcalb;  //!< Total Final Energy Calibration value (cannot be equal to 0)
     std::vector<Summary> summary; //!< summary values and totals for reporting
@@ -110,7 +109,6 @@ public:
     void emission( const int period );
     void calcEmissFuel( const int period );
     void emissionInd( const int period );
-    void applycarbontax( const int period );
     void outputFile() const;
     void MCoutput() const;
     void findSimul( const int period );

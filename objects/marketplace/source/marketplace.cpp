@@ -821,15 +821,16 @@ void Marketplace::addToDemand( const string& goodName, const string& regionName,
 double Marketplace::getPrice( const string& goodName, const string& regionName, const int per ) const {
 
     const int marketNumber = getMarketNumber( goodName, regionName );
-
+	// if market number is not found, marketNumber is -1
     if( marketNumber == -1 ) {
         // the "renewable" fuel depends on the returned price being zero
-        if ( goodName != "renewable" ) {
+        if ( goodName == "renewable" ) {
+            return 0;
+        } 
+		else {
             logfile << "Market not found for " << goodName << " in region " << regionName << endl;
             cerr << "Market not found for " << goodName << " in region " << regionName << endl;
             return 1e12;
-        } else {
-            return 0;
         }
     }
     else {
@@ -1209,6 +1210,8 @@ void Marketplace::MCoutput() const {
     int j;
     // write market prices, supply and demand
     for (int i=0;i< static_cast<int>( markets.size() );i++) {
+		string tempRegName = markets[i][0]->getRegionName();
+		string tempGoodName = markets[i][0]->getGoodName();
         for (j=0;j<maxPeriod;j++) {
             temp[j] = markets[i][j]->getRawPrice();
         }

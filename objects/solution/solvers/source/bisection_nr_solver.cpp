@@ -88,6 +88,7 @@ bool BisectionNRSolver::solve( const int period ) {
    if ( bugMinimal ) {
       bugoutfile << endl << "Solution() Begin. Per " << period << endl;
       bugoutfile <<"Number of Markets: "<< marketsToSolve << endl;
+	  bugoutfile <<"Solution Information Initialized: Left and Right values are same. "<< endl;
       bugoutfile << endl << "Market,X,XL,XR,ED,EDL,EDR,Tolerance" << endl;
       
       for ( i = 0; i < marketsToSolve; i++ ) {
@@ -133,6 +134,16 @@ bool BisectionNRSolver::solve( const int period ) {
             if ( bugMinimal ) { 
                bugoutfile << "After Ron_NR "<< worldCalcCount;
             }
+		    // for debugging
+			if ( bugTracking ) {
+				bugoutfile << endl << "Solution() After NR_Ron. N: " << worldCalcCount << endl;
+				bugoutfile << endl << "Market,X,XL,XR,ED,EDL,EDR,Tolerance" << endl;
+         
+				for (i = 0; i < marketsToSolve; ++i ) {
+					bugoutfile << sol[ i ].marketName << sol[ i ].marketGood << "," << sol[ i ].X << "," << sol[ i ].XL << "," << sol[ i ].XR 
+					<< ","<< sol[ i ].ED << "," << sol[ i ].EDL <<","<<sol[ i ].EDR << "," << solTolerance << endl;
+				} 
+			}// end debugging
          }
          
          if ( !solved ) {
@@ -147,6 +158,9 @@ bool BisectionNRSolver::solve( const int period ) {
       // for debugging
       if ( bugTracking ) {
          bugoutfile << endl << "Solution() loop. N: " << worldCalcCount << endl;
+         if ( !solved ) {
+			 bugoutfile << "CheckBracket() called: Left and Right sides reinitialized. " << endl;
+		 }
          bugoutfile << endl << "Market,X,XL,XR,ED,EDL,EDR,Tolerance" << endl;
          
          for (i = 0; i < marketsToSolve; ++i ) {

@@ -28,7 +28,9 @@ private:
     std::string name; //!< GHG name
     std::string unit; //!< GHG unit
     std::string market; //!< Name of the market
+    bool isFixedTax; //!< boolean to use fixed tax or constraint
     std::vector<double> constraint; //!< Emissions constraint by year(tgC or MTC)
+    std::vector<double> fixedTax; //!< Fixed tax on Emissions by year($/TC)
     std::vector<double> emission; //!< Emissions by year(tgC or MTC)
 
 public:
@@ -41,6 +43,7 @@ public:
     std::string getName() const;
     void setEmission( const double amount, const int per );
     double getConstraint( const int per ) const;
+    double getFixedTax( const int per ) const;
     double getEmission( const int per ) const;
 };
 

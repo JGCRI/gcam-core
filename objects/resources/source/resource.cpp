@@ -356,6 +356,13 @@ void Resource::MCoutput( const string& regname ) {
    dboutput4(regname,"Pri Energy","Production by Sector",name,"EJ",annualprod);
    // resource price
    dboutput4(regname,"Price","by Sector",name,"$/GJ",rscprc);
+   // do for all subsectors in the sector
+   for (int m=0;m<maxper;m++) {
+	   for (int i=0;i<nosubrsrc;i++) {
+		  temp[m] += subResource[i]->getCumulProd(m);
+	   }
+   }
+   dboutput4(regname,"Resource","CummProd "+name,"zTotal","EJ",temp);
    
    // do for all subsectors in the sector
    for (int i=0;i<nosubrsrc;i++) {

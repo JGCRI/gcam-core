@@ -32,11 +32,18 @@ class Emcoef_ind;
 class technology
 {
 protected:
+    std::string name; //!< technology name
+    std::string unit; //!< unit of final product from technology
+    std::string fuelname; //!< name of fuel used
     int year; //!< period year or vintage
     double shrwts; //!< logit share weight
-    double eff; //!< energy efficiency
+    double eff; //!< effective energy efficiency applies penalty to base 
+    double effBase; //!< base energy efficiency read in
+    double effPenalty; //!< energy efficiency penalty
     double intensity; //!< energy intensity (1/eff)
-    double necost; //!< all non-fuel costs (levelized)
+    double necost; //!< effective non-fuel costs applies penalty to base (levelized)
+    double neCostBase; //!< base non-fuel costs read in(levelized)
+    double neCostPenalty; //!< penalty on non-fuel costs 
     double fuelcost; //!< fuel cost only
     double techcost; //!< total cost of technology
     double tax; //!< utility tax
@@ -53,9 +60,6 @@ protected:
     double techchange;  //!< technical change in %/year
     double fixedSupply; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
     double fixedOutputVal; //!< The actual fixed output value
-    std::string name; //!< technology name
-    std::string unit; //!< unit of final product from technology
-    std::string fuelname; //!< name of fuel used
     bool doCalibration; // Flag set if calibration value is read-in
     bool doCalOutput; // Flag set if calibration value is read-in
     double calInputValue; // Calibration value
@@ -85,9 +89,8 @@ public:
     virtual void toXML( std::ostream& out ) const;
     virtual void toDebugXML( const int period, std::ostream& out ) const;
     void initCalc( );
-    void applycarbontax( const std::string& regionName, const double tax); // apply carbon tax to appropriate technology
     // sets ghg tax to technologies
-    void addGhgTax( const std::string ghgname, const std::string regionName, const int per ); 
+    void addGhgTax( const std::string ghgname, const std::string regionName, const std::string sectorName, const int per ); 
     virtual void calcCost( const std::string regionName, const int per); 
     virtual void calcShare( const std::string regionName, const int per); 
     void normShare(double sum); // normalize technology share
@@ -97,7 +100,7 @@ public:
     void scaleFixedSupply(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
     virtual void production(const std::string& regionName,const std::string& prodName,double dmd,const int per);
-    void emission( const std::string prodname); // calculates GHG emissions from technology
+    void calcEmission( const std::string prodname); // calculates GHG emissions from technology
     void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
     // ****** return names and values ******
     std::string getName() const; // return technology name
@@ -117,6 +120,7 @@ public:
     double getNecost() const; // return non-fuel cost
     double getCarbontax() const; // return carbon taxes in $/TC
     double getCarbontaxgj() const; // return carbon taxes in $/GJ
+    double getCarbonValue() const; // return carbon tax and storage cost added to tech in $/TC
     double getCarbontaxpaid() const; // return carbon taxes paid
     double getCO2() const; // return actual CO2 emissions from technology
     std::map<std::string,double> getemissmap() const; // return map of all ghg emissions

@@ -8,6 +8,7 @@
 		<interyear1>2005</interyear1>
 		<interyear2>2020</interyear2>
 		<endyear>2095</endyear>
+		<startReportYear>1990</startReportYear>
 		<timestep1>15</timestep1>
 		<timestep2>15</timestep2>
 		<timestep3>15</timestep3>
@@ -5269,6 +5270,15 @@
 					<capacitylimit year="2065">0.06</capacitylimit>
 					<capacitylimit year="2080">0.06</capacitylimit>
 					<capacitylimit year="2095">0.06</capacitylimit>
+					<sharewt year="1975">0.01</sharewt>
+					<sharewt year="1990">0.01</sharewt>
+					<sharewt year="2005">0.01</sharewt>
+					<sharewt year="2020">0.01</sharewt>
+					<sharewt year="2035">0.01</sharewt>
+					<sharewt year="2050">0.01</sharewt>
+					<sharewt year="2065">0.01</sharewt>
+					<sharewt year="2080">0.01</sharewt>
+					<sharewt year="2095">0.01</sharewt>
 					<logitexp year="1975">-3</logitexp>
 					<logitexp year="1990">-3</logitexp>
 					<logitexp year="2005">-3</logitexp>
@@ -5289,6 +5299,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -5301,6 +5312,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -5313,6 +5325,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -5325,6 +5338,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -5337,6 +5351,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -5349,6 +5364,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -5361,6 +5377,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -5373,6 +5390,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -5385,6 +5403,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -12186,6 +12205,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -12198,6 +12218,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -12210,6 +12231,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -12222,6 +12244,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -12234,6 +12257,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -12246,6 +12270,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -12258,6 +12283,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -12270,6 +12296,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -12282,6 +12309,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -19102,6 +19130,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -19114,6 +19143,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -19126,6 +19156,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -19138,6 +19169,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -19150,6 +19182,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -19162,6 +19195,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -19174,6 +19208,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -19186,6 +19221,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -19198,6 +19234,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -26002,6 +26039,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -26014,6 +26052,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -26026,6 +26065,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -26038,6 +26078,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -26050,6 +26091,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -26062,6 +26104,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -26074,6 +26117,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -26086,6 +26130,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -26098,6 +26143,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -32908,6 +32954,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -32920,6 +32967,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -32932,6 +32980,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -32944,6 +32993,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -32956,6 +33006,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -32968,6 +33019,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -32980,6 +33032,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -32992,6 +33045,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -33004,6 +33058,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -39806,6 +39861,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -39818,6 +39874,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -39830,6 +39887,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -39842,6 +39900,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -39854,6 +39913,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -39866,6 +39926,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -39878,6 +39939,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -39890,6 +39952,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -39902,6 +39965,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -46864,6 +46928,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -46876,6 +46941,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -46888,6 +46954,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -46900,6 +46967,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -46912,6 +46980,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -46924,6 +46993,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -46936,6 +47006,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -46948,6 +47019,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -46960,6 +47032,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -53774,6 +53847,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -53786,6 +53860,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -53798,6 +53873,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -53810,6 +53886,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -53822,6 +53899,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -53834,6 +53912,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -53846,6 +53925,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -53858,6 +53938,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -53870,6 +53951,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -60673,6 +60755,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -60685,6 +60768,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -60697,6 +60781,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -60709,6 +60794,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -60721,6 +60807,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -60733,6 +60820,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -60745,6 +60833,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -60757,6 +60846,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -60769,6 +60859,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -67586,6 +67677,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -67598,6 +67690,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -67610,6 +67703,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -67622,6 +67716,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -67634,6 +67729,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -67646,6 +67742,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -67658,6 +67755,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -67670,6 +67768,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -67682,6 +67781,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -74481,6 +74581,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -74493,6 +74594,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -74505,6 +74607,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -74517,6 +74620,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -74529,6 +74633,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -74541,6 +74646,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -74553,6 +74659,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -74565,6 +74672,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -74577,6 +74685,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -81374,6 +81483,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -81386,6 +81496,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -81398,6 +81509,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -81410,6 +81522,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -81422,6 +81535,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -81434,6 +81548,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -81446,6 +81561,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -81458,6 +81574,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -81470,6 +81587,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -88247,6 +88365,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -88259,6 +88378,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -88271,6 +88391,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -88283,6 +88404,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -88295,6 +88417,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -88307,6 +88430,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -88319,6 +88443,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -88331,6 +88456,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -88343,6 +88469,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -95138,6 +95265,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -95150,6 +95278,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -95162,6 +95291,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -95174,6 +95304,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -95186,6 +95317,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -95198,6 +95330,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -95210,6 +95343,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -95222,6 +95356,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>
@@ -95234,6 +95369,7 @@
 							<GHG name="CO2">
 								<unit>MTC</unit>
 								<removefrac>1.0</removefrac>
+								<isGeologicSequestration>0</isGeologicSequestration>
 								<GWP>1</GWP>
 							</GHG>
 						</period>

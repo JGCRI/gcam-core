@@ -58,7 +58,6 @@ Region::Region() {
     priceSer.resize( maxper ); // aggregate price for demand services
     carbonTaxPaid.resize( maxper ); // total regional carbon taxes paid
     summary.resize( maxper ); // summary object for reporting
-    carbonTax.resize( maxper ); // fixed carbon tax
     calibrationGNPs.resize( maxper ); // GNPs for calibration
     iElasticity.resize( maxper ); // income elasticity for region
 }
@@ -283,9 +282,6 @@ void Region::XMLParse( const DOMNode* node ){
                 if( nodeNameChild == "#text" ) {
                     continue;
                 }
-                else if( nodeNameChild == "carbonTax" ) {
-                    XMLHelper<double>::insertValueIntoVector( currChild, carbonTax, modeltime );
-                }
                 else {
                     cout << "Unrecognized text string: " << nodeNameChild << " found while parsing region->taxes." << endl;
                 }
@@ -401,7 +397,7 @@ void Region::completeInit() {
     }
 
     // Now sort the sectors by dependency.
-//    std::sort( supplySector.begin(), supplySector.end(), Sector::DependencyOrdering() );
+    std::sort( supplySector.begin(), supplySector.end(), Sector::DependencyOrdering() );
 }
 
 /*! 
@@ -496,11 +492,6 @@ void Region::toXML( ostream& out ) const {
     Tabs::writeTabs( out );
     out << "<taxes>"<< endl;
     Tabs::increaseIndent();
-
-    // Write out regional fixed taxes
-    for( m = 0; m < static_cast<int>( carbonTax.size() ); m++ ){
-        XMLWriteElementCheckDefault( carbonTax[ m ],"carbonTax", out, 0, modeltime->getper_to_yr( m ) );			
-    }
 
     Tabs::decreaseIndent();
     Tabs::writeTabs( out );
@@ -610,8 +601,6 @@ void Region::toDebugXML( const int period, ostream& out ) const {
     out << "<taxes>"<< endl;
     Tabs::increaseIndent();
 
-    // Write out regional fixed taxes.
-    XMLWriteElement( carbonTax[ period ], "carbonTax", out );			
 
     Tabs::decreaseIndent();
     Tabs::writeTabs( out );
@@ -1080,17 +1069,6 @@ void Region::enduseDemand( const int period ) {
     }
 }
 
-//! Apply carbon taxes to appropriate sectors.
-void Region::applycarbontax( const int period )
-{
-    int i=0;
-    // apply carbon taxes by period to primary fossil fuel user only
-    for (i=0;i<noSSec;i++)
-        supplySector[i]->applycarbontax( carbonTax[period],period);
-    for (i=0;i<noDSec;i++)
-        demandSector[i]->applycarbontax( carbonTax[period],period);
-}
-
 //! Calculate regional emissions from resources.
 void Region::emission( const int period )
 {
@@ -1170,8 +1148,6 @@ void Region::outputFile() const {
     fileoutput3(name," "," "," ","GNP","Bil90US$",gnpDol);
     fileoutput3(name," "," "," ","GNP","norm",gnp);
     fileoutput3(name," "," "," ","GNP","energy adj",gnpAdj);
-    // regional carbon taxes
-    fileoutput3(name," "," "," ","C tax (fixed)","90$/TC",carbonTax);
     // regional total carbon taxes paid
     fileoutput3(name," "," "," ","C tax revenue","Mil90$",carbonTaxPaid);
 
@@ -1212,8 +1188,6 @@ void Region::MCoutput() const {
     dboutput4(name,"General","GDP","norm","unitless",gnp);
     dboutput4(name,"General","GDP","energy adj","unitless",gnpAdj);
     dboutput4(name,"General","GDP","per cap","unitless",gnpCap);
-    // regional carbon taxes
-    dboutput4(name,"General","CarbonTax","Fos Fuel","90US$",carbonTax);
     // regional total carbon taxes paid
     dboutput4(name,"General","CarbonTax","revenue","90US$",carbonTaxPaid);
 
@@ -1228,13 +1202,23 @@ void Region::MCoutput() const {
         }
         dboutput4(name,"CO2 Emiss","by Fuel",*fuelIter,"MTC",temp);
     }
-    // add total sequested amount to emissions by fuel
+    // add amount of geologic sequestration to emissions by fuel
+	// todo change hardcoded category name
     for (m=0;m<maxper;m++) {
         // note the negative value for sequestered amount
-        temp[m] = - summary[m].get_emissmap_second( "CO2sequestered" );
+        temp[m] = - summary[m].get_emissmap_second( "CO2sequestGeologic" );
         temptot[m] += temp[m];
     }
-    dboutput4(name,"CO2 Emiss","by Fuel","sequestered","MTC",temp);
+    dboutput4(name,"CO2 Emiss","by Fuel","geologic sequestration","MTC",temp);
+
+    // add amount of sequestration from non-energy use to emissions by fuel
+	// todo change hardcoded category name
+    for (m=0;m<maxper;m++) {
+        // note the negative value for sequestered amount
+        temp[m] = - summary[m].get_emissmap_second( "CO2sequestNonEngy" );
+        temptot[m] += temp[m];
+    }
+    dboutput4(name,"CO2 Emiss","by Fuel","non-energy use","MTC",temp);
 
     // total emissions by sector for region
     for (m=0;m<maxper;m++) {

@@ -28,7 +28,9 @@ extern Scenario* scenario;
 GHGPolicy::GHGPolicy(){
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    constraint.resize( maxper );
+	isFixedTax = false; // default policy to constraint case
+    constraint.resize( maxper );  // emissions constraint to solve for
+    fixedTax.resize( maxper );  // fixed tax on emissions, not solved
     emission.resize( maxper ); // emissions (tgC or MTC)
 }
 
@@ -37,20 +39,36 @@ void GHGPolicy::clear(){
     name = "";
     unit = "";
     market = "";
+    isFixedTax = false;
     constraint.clear();
+    fixedTax.clear();
     emission.clear();
 }
 
 //! Create GHG markets
+// GHG markets are created for both constraint and fixed tax policies.
+// In the fixed tax policy, market prices are set to the fixed taxes, but
+// the markets are not solved.  Also for the fixed tax policy, if the market name
+// is the same for all regions, the fixed tax vector of the last region overrides
+// the market prices.
+//  
 void GHGPolicy::setMarket( const string& regionName ) {
 
     Marketplace* marketplace = scenario->getMarketplace();
 
     // name is GHG name
     marketplace->createMarket( regionName, market, name, Marketplace::GHG );
-    marketplace->setMarketToSolve ( name, regionName );
-    /* no need to use market.setPriceVector here unless GHG markets need
-    initial prices read-in for the base year */  
+	if (isFixedTax) {
+		// set fixed taxes 
+		// market does not solve
+		marketplace->setPriceVector( name, regionName, fixedTax );
+	}
+	else {
+		// solve only for the constraint policy and not the fixed tax policy
+		marketplace->setMarketToSolve ( name, regionName );
+	    /* no need to use market.setPriceVector here unless GHG markets need
+		initial prices read-in for the base year */  
+	}
 }
 
 
@@ -88,6 +106,12 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
         else if( nodeName == "market" ){
             market = XMLHelper<string>::getValueString( curr ); // should be only one market
         }
+        else if( nodeName == "isFixedTax" ){
+			isFixedTax = XMLHelper<bool>::getValue( curr );
+        }
+        else if( nodeName == "fixedTax" ){
+            XMLHelper<double>::insertValueIntoVector( curr, fixedTax, modeltime );
+        }
 
         else if( nodeName == "constraint" ){
             XMLHelper<double>::insertValueIntoVector( curr, constraint, modeltime );
@@ -101,6 +125,9 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
 //! Writes datamembers to datastream in XML format.
 void GHGPolicy::toXML( ostream& out ) const {
 
+	int m = 0;
+    const Modeltime* modeltime = scenario->getModeltime();
+
     // write the beginning tag.
     Tabs::writeTabs( out );
     out << "<ghgmarket name=\"" << name << "\">" << endl;
@@ -112,20 +139,17 @@ void GHGPolicy::toXML( ostream& out ) const {
     XMLWriteElement( unit, "unit", out );
     // write out the market string.
     XMLWriteElement( market, "market", out );
+    // write out the isFixedTax boolean.
+    XMLWriteElement( isFixedTax, "isFixedTax", out, false );
 
-    for( vector<double>::const_iterator i = constraint.begin(); i != constraint.end(); i++ ){
-        Tabs::increaseIndent();
-        Tabs::writeTabs( out );
+	// Write the constraint for the current year
+    for( m = 0; m < static_cast<int>( constraint.size() ); m++ ) {
+        XMLWriteElementCheckDefault(  constraint[m], "constraint", out, 0, modeltime->getper_to_yr( m ) );
+    }
 
-        out << "<period>" << endl;
-
-        Tabs::increaseIndent();
-        XMLWriteElement( *i, "constraint", out );
-        Tabs::decreaseIndent();
-
-        Tabs::writeTabs( out );
-        out << "</period>" << endl;	
-        Tabs::decreaseIndent();
+	// Write the fixedTax for the current year
+    for( m = 0; m < static_cast<int>( fixedTax.size() ); m++ ) {
+        XMLWriteElementCheckDefault(  fixedTax[m], "fixedTax", out, 0, modeltime->getper_to_yr( m ) );
     }
 
     // finished writing xml for the class members.
@@ -154,10 +178,16 @@ void GHGPolicy::toDebugXML( const int period, ostream& out ) const {
     // write out the market string.
     XMLWriteElement( market, "market", out );
 
-    // Write the constraint for the current year
-    XMLWriteElement( constraint[ period ], "constraint", out );
+    // write out the isFixedTax boolean.
+    XMLWriteElement( isFixedTax, "isFixedTax", out );
 
-    XMLWriteElement( emission[ period ], "emission", out );
+	// Write the constraint for the current year
+    XMLWriteElement( constraint[period], "constraint", out );
+
+	// Write the fixedTax for the current year
+    XMLWriteElement( fixedTax[period], "fixedTax", out );
+
+	XMLWriteElement( emission[period], "emission", out );
     // finished writing xml for the class members.
 
     // decrease the indent.
@@ -184,6 +214,12 @@ string GHGPolicy::getName() const
 double GHGPolicy::getConstraint( const int per ) const
 {
     return constraint[ per ]; // emissions constraint (tgC or MTC)
+}
+
+//! Return fixed tax.
+double GHGPolicy::getFixedTax( const int per ) const
+{
+    return fixedTax[ per ]; // fixed tax ($/TC)
 }
 
 //! Return emissions.

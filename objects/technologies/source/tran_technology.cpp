@@ -31,7 +31,7 @@ extern Scenario* scenario;
 
 //! Default constructor.
 tranTechnology::tranTechnology() {
-    intensity = 1;
+	intensity = 1;
     techChangeCumm = 1;
     loadFactor = 1;
     vehicleOutput = 0;
@@ -148,9 +148,9 @@ void tranTechnology::production(const string& regionName,const string& prodName,
     
     // calculate emissions for each gas after setting input and output amounts
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
-        ghg[i]->calc_emiss(regionName, fuelname,input,prodName,output);
+        ghg[i]->calcEmission(regionName, fuelname,input,prodName,output);
         // set emissions as demand side of gas market
-        marketplace->addToDemand(ghg[i]->getname(),regionName,ghg[i]->getemission(),per);		
+        marketplace->addToDemand(ghg[i]->getName(),regionName,ghg[i]->getEmission(),per);		
     }
 }
 

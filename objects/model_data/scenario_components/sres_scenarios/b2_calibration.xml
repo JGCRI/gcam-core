@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Son H. Kim (PNNL) --><scenario name="Reference" date="2003-01-11T09:30:47-05:00">
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Son H. Kim (PNNL) -->
+<scenario name="B2 Reference" date="2003-01-11T09:30:47-05:00">
 	<summary>"SRES B2 Scenario is used for this Reference Scenario"</summary>
 	<modeltime>
 		<startyear>1975</startyear>
@@ -15,7 +16,7 @@
 	</modeltime>
 	<world>
 		<region name="USA">
-		<economicdata>
+			<economicdata>
 				<TFEcalb year="1990">61.582</TFEcalb>
 				<TFEcalb year="2005">77.100</TFEcalb>
 				<TFEcalb year="2020">86.645</TFEcalb>
@@ -120,7 +121,7 @@
 			</economicdata>
 		</region>
 		<region name="Former Soviet Union">
-				<economicdata>
+			<economicdata>
 				<GNP year="1975">309837</GNP>
 				<GNP year="1990">944457</GNP>
 				<GNP year="2005">626496</GNP>
@@ -141,7 +142,7 @@
 			</economicdata>
 		</region>
 		<region name="China">
-		<economicdata>
+			<economicdata>
 				<GNP year="1975">62245</GNP>
 				<GNP year="1990">358285</GNP>
 				<GNP year="2005">1370421</GNP>

@@ -523,7 +523,9 @@ void SubResource::MCoutput( const string &regname, const string& secname )
     // the function writes all years
     // total subsector output
     dboutput4(regname,"Pri Energy Production",secname,name,"EJ",annualprod);
-    dboutput4(regname,"Resource",secname,str,"EJ",available);
+//    dboutput4(regname,"Resource",secname,str,"EJ",available);
+    dboutput4(regname,"Resource","Available "+secname,name,"EJ",available);
+    dboutput4(regname,"Resource","CummProd "+secname,name,"EJ",cumulprod);
     dboutput4(regname,"Price",secname,name,"$/GJ",rscprc);
     
     // do for all grades in the sector

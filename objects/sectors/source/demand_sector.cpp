@@ -48,7 +48,6 @@ DemandSector::DemandSector( const string regionName ): Sector( regionName ){
     aeei.resize( maxper );
     techChangeCumm.resize( maxper ); // cummulative technical change
     servicePreTechChange.resize( maxper );
-    capLimitsPresent.resize( maxper, false ); // flag for presence of capacity limits
 }
 
 //! Default destructor
@@ -361,7 +360,7 @@ void DemandSector::calcShare( const int period, const double gnp_cap ) {
 
     // Now adjust for capacity limits, if any are present
     if ( capLimitsPresent[ period ] ) {
-       adjSharesCapLimit( period );
+        adjSharesCapLimit( period );
     }
 }
 
@@ -501,7 +500,7 @@ void DemandSector::aggdemand( const double gnp_cap, const double gnp, const int 
     
     // normalize prices to 1990 base
     int normPeriod = modeltime->getyr_to_per(1990);
-    priceRatio =	getPrice( period ) / getPrice( normPeriod );
+    priceRatio = getPrice( period ) / getPrice( normPeriod );
      
     // demand for service
     if (period == 0) {
@@ -535,9 +534,8 @@ void DemandSector::aggdemand( const double gnp_cap, const double gnp, const int 
 
     // sets subsector outputs, technology outputs, and market demands
     Sector::setoutput( service[ period ], period );
-   
-   // Sector::sumOutput( period );
-   // this call now included in setOutput -- although sector outputs at this point are NaN! ????
+    // sums output of technologies and subsectors
+    Sector::sumOutput( period );
 }
 
 //! Write sector output to database.
