@@ -733,8 +733,8 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
             // first get largest derivitive
             double maxDerVal = 0; double maxKDSval = 0;
             for ( int j = 0; j < marketsToSolve; j++ ) {
-               maxKDSval = max(maxKDSval, abs(KDS[ j ]) );
-               maxDerVal = max(maxDerVal, abs(JF[ i ][ j ]) );
+               maxKDSval = max(maxKDSval, fabs(KDS[ j ]) );
+               maxDerVal = max(maxDerVal, fabs(JF[ i ][ j ]) );
             }
             cout << "Max KDS: " << maxKDSval << ", Max Derivitive: " << maxDerVal;
             cout << " Prev Price?: " << prevprice << endl;
