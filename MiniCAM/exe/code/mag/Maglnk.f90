@@ -48,7 +48,7 @@ END IF
     NLoop = Min(Nper,NM)
 ! Write emissions loop	
 
-    if (1=2) then	! HGWP's read in
+    if (1 .eq. 2) then	! HGWP's read in
 	!	pick out the 8 high gwp emissions that magicc requires from the 
 	!	ones read into HGWPREAD
 		HGWPMAG(1,2:NM) = SUM(HGWPREAD(3,:,2:NM),DIM=1) !CF4
@@ -69,7 +69,7 @@ END IF
 	IHSF6 = 14	! SF6 equiv
 	IHC2F6 = 15	! C2F6 equiv
 	IHCF4 = 16	! CF4 equiv
-		for MM = 2, NLoop
+		do MM = 2, NLoop
 			HGWPMAG(1,MM) = SUM(OGEMISS(IHCF4,:,:,MM)) !CF4
 			HGWPMAG(2,MM) = SUM(OGEMISS(IHC2F6,:,:,MM)) !C2F6
 			HGWPMAG(3,MM) = SUM(OGEMISS(IH125,:,:,MM)) !HFC125
