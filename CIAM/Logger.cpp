@@ -117,16 +117,23 @@ void Logger::setFile( const string& fileIn ) {
 //! Receive a single character from the underlying stream and buffer it, printing the buffer it is a newline.
 int Logger::receiveCharFromUnderStream( int ch ) {
 	
-	buf << (char)ch;
-
 	if( ch == '\n' ) {
-		string buffer;
-		buffer = buf.str();
+		string tempBuf;
+        string buffer;
+        while( buf.good() ){
+            buf >> tempBuf;
+            tempBuf += " ";
+            buffer += tempBuf;
+        }
         buf.clear();
-		printToScreenIfConfigured( currentLine, currentFile, currentWarningLevel, buffer );
+
+        printToScreenIfConfigured( currentLine, currentFile, currentWarningLevel, buffer );
 		logCompleteMessage( currentLine, currentFile, currentWarningLevel, buffer );
 	}
-	
+    else {
+        buf << (char)ch;
+    }
+
 	return ch;
 }
 
