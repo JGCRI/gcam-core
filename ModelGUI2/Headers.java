@@ -78,6 +78,7 @@ public class Headers {
 				//System.exit(0);
 			}
 			if ( child.startsWith( "+{" ) && (child.indexOf("=") == -1)){ // just attr
+				System.out.println("In headers, read attr");
 				child = child.substring( 2, child.length() );
 				stA = new StringTokenizer( child, "}", false);
 				firstArg = stA.nextToken(); // holds attr_name

@@ -51,6 +51,8 @@ public class FileChooserDemo extends JFrame
   CSVFilter csvFilter = new CSVFilter();
   File file;
 
+  JFileChooser globalFC; // for saving last current directory
+
   //DOMTreeBuilder tree = new DOMTreeBuilder();
   DataTableModel tableModel;
 
@@ -61,6 +63,7 @@ public class FileChooserDemo extends JFrame
 
   public static void main(String [] args)
   {
+  	
 	  //Schedule a job for the event-dispatching thread:
 	  //creating and showing this application's GUI.
 	  UIManager u = new UIManager();
@@ -90,6 +93,10 @@ public class FileChooserDemo extends JFrame
   FileChooserDemo(String title)
   {
 	super(title);
+	
+	globalFC = new JFileChooser();
+	globalFC.setCurrentDirectory( new File(".") );
+
 	try {
 		System.setProperty(DOMImplementationRegistry.PROPERTY,
 			   "org.apache.xerces.dom.DOMImplementationSourceImpl");
@@ -613,14 +620,15 @@ public class FileChooserDemo extends JFrame
 	  
 	  System.out.println("printing out 'treepath': " + tableModel.getValueAt(row, tableModel.getColumnCount()));
 	  TreePath pathAltered = ((TreePath)tableModel.getValueAt(row, tableModel.getColumnCount()));
-	  jtree.setSelectionPath(pathAltered);
+	  //jtree.setSelectionPath(pathAltered);
 	  Node parent = ((DOMmodel.DOMNodeAdapter)pathAltered.getLastPathComponent()).getNode();
 	  //System.out.println(child.getParentNode());
 	  NodeList children = parent.getChildNodes();
 	  for(int i=0; i < children.getLength(); i++){
 		if ( children.item(i).getNodeType() == Element.TEXT_NODE ){
 			children.item(i).setNodeValue( (String)newValue );
-			jtree.setSelectionPath(pathAltered.pathByAddingChild( ((DOMmodel)jtree.getModel()).getAdapterNode(children.item(i))) );
+			System.out.println("setting selection path!!!!");
+			jtree.expandPath(pathAltered.pathByAddingChild( ((DOMmodel)jtree.getModel()).getAdapterNode(children.item(i))) );
 		}
 	  }
   }
@@ -672,6 +680,9 @@ public class FileChooserDemo extends JFrame
 	  sorter.setTableHeader(jTable.getTableHeader());
 	  //jTable = new JTable(tableModel);
 	  jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	  
+	  jTable.setCellSelectionEnabled(true);
+
 	  javax.swing.table.TableColumn col;
 	  for (int i = 0; i < cols.size(); i++) {
 		  col = jTable.getColumnModel().getColumn(i);
@@ -853,7 +864,7 @@ class MyTreeModelListener implements TreeModelListener {
 	  fc.setFileSelectionMode( JFileChooser.FILES_ONLY);
 
 	  // Start in current directory
-	  fc.setCurrentDirectory(new File("."));
+	  fc.setCurrentDirectory(globalFC.getCurrentDirectory());
 
 	  // Set filter for Java source files.
 	  fc.setFileFilter(xmlFilter);
@@ -866,6 +877,7 @@ class MyTreeModelListener implements TreeModelListener {
 	  }
 	  else if( result == JFileChooser.APPROVE_OPTION){
 		file = fc.getSelectedFile();
+		globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 		readXMLFile( file);
 
 		//textArea.setText("Opened");
@@ -887,7 +899,7 @@ class MyTreeModelListener implements TreeModelListener {
 	 fc.setFileSelectionMode( JFileChooser.FILES_ONLY);
 
 	 // Start in current directory
-	 fc.setCurrentDirectory(new File("."));
+	 fc.setCurrentDirectory(globalFC.getCurrentDirectory());
 
 	 // Set filter for Java source files.
 	 fc.setFileFilter(csvFilter);
@@ -900,6 +912,7 @@ class MyTreeModelListener implements TreeModelListener {
 	 }
 	 else if( result == JFileChooser.APPROVE_OPTION){
 		file = fc.getSelectedFile();
+		globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 
 		// inserted for opening file 2
 		JFileChooser fc2 = new JFileChooser();
@@ -912,6 +925,7 @@ class MyTreeModelListener implements TreeModelListener {
 		}
 		else if(result2 == JFileChooser.APPROVE_OPTION){
 			file2 = fc2.getSelectedFile();
+			globalFC.setCurrentDirectory(fc2.getCurrentDirectory());
 			readCSVFile(file, file2);
 			// DO STUFF WITH FILE1 AND FILE2
 		}
@@ -936,7 +950,7 @@ class MyTreeModelListener implements TreeModelListener {
 	  JFileChooser fc = new JFileChooser();
 
 	  // Start in current directory
-	  fc.setCurrentDirectory(new File("."));
+	  fc.setCurrentDirectory(globalFC.getCurrentDirectory());
 
 	  // Set filter for Java source files.
 	  fc.setFileFilter(xmlFilter); // *********************************
@@ -966,6 +980,7 @@ class MyTreeModelListener implements TreeModelListener {
 			//made it return true, that could be a problem in the future
 			if( response == JOptionPane.CANCEL_OPTION) return true;
 		}
+		globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 		return writeFile(file);
 	  }
 	  else{
