@@ -45,7 +45,7 @@ extern ofstream outfile, bugoutfile;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-sector::sector( const string regionName ) {
+Sector::Sector( const string regionName ) {
     this->regionName = regionName;
     initElementalMembers();
     Configuration* conf = Configuration::getInstance();
@@ -56,28 +56,28 @@ sector::sector( const string regionName ) {
     const int maxper = modeltime->getmaxper();
 
     sectorprice.resize( maxper );
-    price_norm.resize( maxper ); // sector price normalized to base year
+    price_norm.resize( maxper ); // Sector price normalized to base year
     pe_cons.resize( maxper ); // sectoral primary energy consumption
-    input.resize( maxper ); // sector total energy consumption
-    output.resize( maxper ); // total amount of final output from sector
+    input.resize( maxper ); // Sector total energy consumption
+    output.resize( maxper ); // total amount of final output from Sector
     fixedOutput.resize( maxper );
-    carbonTaxPaid.resize( maxper ); // total sector carbon taxes paid
+    carbonTaxPaid.resize( maxper ); // total Sector carbon taxes paid
     summary.resize( maxper ); // object containing summaries
     capLimitsPresent.resize( maxper, false ); // flag for presence of capacity limits
 }
 
 /*! \brief Destructor
-* \detailed Deletes all subsector objects associated  with this sector.
+* \detailed Deletes all subsector objects associated  with this Sector.
 * \author Josh Lurz
 */
-sector::~sector() {
-    for( vector<subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
+Sector::~Sector() {
+    for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
         delete *subSecIter;
     }
 }
 
 //! Clear member variables
-void sector::clear(){
+void Sector::clear(){
     initElementalMembers();
     name = "";
     unit = "";
@@ -93,7 +93,7 @@ void sector::clear(){
 }
 
 //! Initialize elemental data members.
-void sector::initElementalMembers(){
+void Sector::initElementalMembers(){
     nosubsec = 0;
     tax = 0;
     prevVal = 0;
@@ -101,12 +101,12 @@ void sector::initElementalMembers(){
     anyFixedCapacity = false;
 }
 
-/*! \brief Returns sector name
+/*! \brief Returns Sector name
 *
 * \author Sonny Kim
-* \return sector name as a string
+* \return Sector name as a string
 */
-string sector::getName() const {
+string Sector::getName() const {
     return name;
 }
 
@@ -116,13 +116,13 @@ string sector::getName() const {
 * \param node pointer to the current node in the XML input tree
 * \todo josh to add appropriate detailed comment here
 */
-void sector::XMLParse( const DOMNode* node ){
+void Sector::XMLParse( const DOMNode* node ){
 
     const Modeltime* modeltime = scenario->getModeltime();
     DOMNode* curr = 0;
     DOMNodeList* nodeList = 0;
     string nodeName;
-    subsector* tempSubSector = 0;
+    Subsector* tempSubSector = 0;
 
     /*! \pre make sure we were passed a valid node. */
     assert( node );
@@ -168,7 +168,7 @@ void sector::XMLParse( const DOMNode* node ){
                 subsec[ subSectorMapIter->second ]->XMLParse( curr );
             }
             else {
-                tempSubSector = new subsector( regionName, name );
+                tempSubSector = new Subsector( regionName, name );
                 tempSubSector->XMLParse( curr );
                 subsec.push_back( tempSubSector );
                 subSectorNameMap[ tempSubSector->getName() ] = static_cast<int>( subsec.size() ) - 1;
@@ -186,24 +186,24 @@ void sector::XMLParse( const DOMNode* node ){
 * \author Josh Lurz
 * \todo josh to add appropriate detailed comment here
 */
-void sector::completeInit() {
+void Sector::completeInit() {
 
     nosubsec = static_cast<int>( subsec.size() );
 
-    for( vector<subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
+    for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
         ( *subSecIter )->completeInit();
     }
 }
 
 /*! \brief Parses any child nodes specific to derived classes
 *
-* Method parses any input data from child nodes that are specific to the classes derived from this class. Since sector is the generic base class, there are no values here.
+* Method parses any input data from child nodes that are specific to the classes derived from this class. Since Sector is the generic base class, there are no values here.
 *
 * \author Josh Lurz, Steve Smith
 * \param nodeName name of current node
 * \param curr pointer to the current node in the XML input tree
 */
-void sector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
+void Sector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     // do nothing
     // defining method here even though it does nothing so that we do not
     // create an abstract class.
@@ -213,12 +213,12 @@ void sector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr )
 
 /*! \brief Parses any attributes specific to derived classes
 *
-* Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class. Since sector is the generic base class, there are no values here.
+* Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class. Since Sector is the generic base class, there are no values here.
 *
 * \author Josh Lurz, Steve Smith
 * \param node pointer to the current node in the XML input tree
 */
-void sector::XMLDerivedClassParseAttr( const DOMNode* node ) {
+void Sector::XMLDerivedClassParseAttr( const DOMNode* node ) {
     // do nothing
     // defining method here even though it does nothing so that we do not
     // create an abstract class.
@@ -231,7 +231,7 @@ void sector::XMLDerivedClassParseAttr( const DOMNode* node ) {
 * \author Josh Lurz
 * \param out reference to the output stream
 */
-void sector::toXML( ostream& out ) const {
+void Sector::toXML( ostream& out ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 
     // write the beginning tag.
@@ -255,7 +255,7 @@ void sector::toXML( ostream& out ) const {
     }
 
     // write out the subsector objects.
-    for( vector<subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
+    for( vector<Subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
         ( *k )->toXML( out );
     }
 
@@ -281,7 +281,7 @@ void sector::toXML( ostream& out ) const {
 * \param out reference to the output stream
 * \todo josh to update documentation on this method ..
 */
-void sector::toOutputXML( ostream& out ) const {
+void Sector::toOutputXML( ostream& out ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 
     // write the beginning tag.
@@ -305,7 +305,7 @@ void sector::toOutputXML( ostream& out ) const {
     }
 
     // write out the subsector objects.
-    for( vector<subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
+    for( vector<Subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
         ( *k )->toXML( out );
     }
 
@@ -329,7 +329,7 @@ void sector::toOutputXML( ostream& out ) const {
 * \author Steve Smith, Josh Lurz
 * \param out reference to the output stream
 */
-void sector::toXMLDerivedClass( ostream& out ) const {  
+void Sector::toXMLDerivedClass( ostream& out ) const {  
     // do nothing
 }	
 
@@ -342,7 +342,7 @@ void sector::toXMLDerivedClass( ostream& out ) const {
 * \param period model period
 * \param out reference to the output stream
 */
-void sector::toDebugXML( const int period, ostream& out ) const {
+void Sector::toDebugXML( const int period, ostream& out ) const {
 
     // write the beginning tag.
     Tabs::writeTabs( out );
@@ -367,7 +367,7 @@ void sector::toDebugXML( const int period, ostream& out ) const {
     // summary[ period ].toDebugXML( period, out );
 
     // write out the subsector objects.
-    for( vector<subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
+    for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
         ( *j )->toDebugXML( period, out );
     }
 
@@ -389,11 +389,11 @@ void sector::toDebugXML( const int period, ostream& out ) const {
 * \param regionName region name
 * \param period Model period
 */
-void sector::initCalc( const int period ) {
+void Sector::initCalc( const int period ) {
     double calOutput;
     double sectorOutput;
 
-    // do any sub-sector initializations
+    // do any sub-Sector initializations
     for ( int i=0; i<nosubsec; i++ ) {
         subsec[ i ]->initCalc( period );
     }
@@ -403,18 +403,18 @@ void sector::initCalc( const int period ) {
         anyFixedCapacity = true;
     }
 
-    // find out if this sector has any capacity limits
+    // find out if this Sector has any capacity limits
     capLimitsPresent[ period ] = isCapacityLimitsInSector( period );
 
     // check to see if previous period's calibrations were set ok
-    // Not sure if this works. Didn't seem to for demand sector
+    // Not sure if this works. Didn't seem to for demand Sector
     if ( period > 0 ) {
         for ( int i=0; i<nosubsec; i++ ) {
             if ( subsec[ i ]->getCalibrationStatus( period - 1 ) ) {
                 calOutput = subsec[ i ]->getTotalCalOutputs( period - 1 );
                 sectorOutput = subsec[ i ]->getFixedSupply( period - 1 );
                 if ( calOutput < sectorOutput * 0.99999 ) {
-                    cerr << "WARNING: calibrated output < sector output for " 
+                    cerr << "WARNING: calibrated output < Sector output for " 
                         << name << " subSect " << subsec[ i ]->getName()
                         << " in region " << regionName << endl;
                 }
@@ -423,16 +423,16 @@ void sector::initCalc( const int period ) {
     }
 }
 
-/*! \brief Create new market for this sector
+/*! \brief Create new market for this Sector
 *
-* Sets up the appropriate market within the marketplace for this sector. Note that the type of market is NORMAL -- signifying that this market is a normal market that is solved (if necessary).
+* Sets up the appropriate market within the marketplace for this Sector. Note that the type of market is NORMAL -- signifying that this market is a normal market that is solved (if necessary).
 *
 * \author Sonny Kim, Josh Lurz, Steve Smith
 */
-void sector::setMarket() {
+void Sector::setMarket() {
 
     Marketplace* marketplace = scenario->getMarketplace();
-    // name is sector name (name of good supplied or demanded)
+    // name is Sector name (name of good supplied or demanded)
     // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
 
     if( marketplace->createMarket( regionName, market, name, Marketplace::NORMAL ) ) {
@@ -449,7 +449,7 @@ void sector::setMarket() {
 * \param period model period
 * \todo combine this with ghgtax by using a "fixedTax" tag in data input (see e-mail of 10/21/03)
 */
-void sector::applycarbontax( const double tax, const int period ) {
+void Sector::applycarbontax( const double tax, const int period ) {
     for ( int i = 0; i < nosubsec; i++ ) {
         subsec[ i ]->applycarbontax( tax, period );
     }
@@ -463,7 +463,7 @@ void sector::applycarbontax( const double tax, const int period ) {
 * \param ghgname name of the ghg to apply tax to
 * \param period model period
 */
-void sector::addghgtax( const string& ghgname, const int period ) {
+void Sector::addghgtax( const string& ghgname, const int period ) {
     for ( int i = 0; i < nosubsec; i++ ) {
         subsec[ i ]->addghgtax( ghgname, period );
     }
@@ -479,14 +479,14 @@ void sector::addghgtax( const string& ghgname, const int period ) {
 * \param gnpPerCap GDP per capita (scaled to base year)
 
 * \author Sonny Kim, Steve Smith, Josh Lurz
-* \todo add warnings to sub-sector and technology (?) that fixed capacity has to be >0
+* \todo add warnings to sub-Sector and technology (?) that fixed capacity has to be >0
 * \warning model with fixed capacity in sectors where demand is not a solved market may not solve
 */
-void sector::calcShare( const int period, const double gnpPerCap )
+void Sector::calcShare( const int period, const double gnpPerCap )
 {
     // Note that this solution for the fixed capacity share problem requires that 
     // simultaneity be turned on. This would seem to be because the fixed share is lagged one period
-    // and can cause an oscillation. With the demand for this sector in the marketplace, however, the
+    // and can cause an oscillation. With the demand for this Sector in the marketplace, however, the
     // fixed capacity converges as the trial value for demand converges.
 
     int i=0;
@@ -499,7 +499,7 @@ void sector::calcShare( const int period, const double gnpPerCap )
         subsec[ i ]->calcShare( period );
         sum += subsec[ i ]->getShare( period );
 
-        // sum fixed capacity separately, but don't bother with the extra code if this sector has none
+        // sum fixed capacity separately, but don't bother with the extra code if this Sector has none
         if ( anyFixedCapacity) {
             double fixedShare = getFixedShare( i , period );
             if ( fixedShare > 0 ) {
@@ -557,7 +557,7 @@ void sector::calcShare( const int period, const double gnpPerCap )
 /*!
 * \brief Determine if any capacity limits are exceeded and adjust for shares if so.
 *
-* If a capacity limit comes into play the routine shifts the "excess" share (over the capacity limits) to the non-limited sectors. This routine loops several times in case this shift then causes another sector to exceed a capacity limit.
+* If a capacity limit comes into play the routine shifts the "excess" share (over the capacity limits) to the non-limited sectors. This routine loops several times in case this shift then causes another Sector to exceed a capacity limit.
 *
 * Sectors that have fixed outputs are not adjusted.
 * 
@@ -577,7 +577,7 @@ void sector::calcShare( const int period, const double gnpPerCap )
 * \warning The routine assumes that shares are already normalized.
 * \param period Model period
 */
-void sector::adjSharesCapLimit( const int period ) {
+void Sector::adjSharesCapLimit( const int period ) {
 
     const double SMALL_NUM = util::getSmallNumber();
     double tempCapacityLimit;
@@ -600,12 +600,12 @@ void sector::adjSharesCapLimit( const int period ) {
             double actualCapacityLimit = subsec[ i ]->getCapacityLimit( period ); // call once, store these locally
             tempSubSectShare = subsec[ i ]->getShare( period ) ;
 
-            // if sector has been cap limited, then return limit, otherwise transform
+            // if Sector has been cap limited, then return limit, otherwise transform
             // this is needed because can only do the transform once
             if ( subsec[ i ]->getCapLimitStatus( period ) ) {
                 tempCapacityLimit = subsec[ i ]->getShare( period );
             } else {
-                tempCapacityLimit = subsector::capLimitTransform( actualCapacityLimit, tempSubSectShare );
+                tempCapacityLimit = Subsector::capLimitTransform( actualCapacityLimit, tempSubSectShare );
             }
 
             // if there is a capacity limit and are over then set flag and count excess shares
@@ -614,7 +614,7 @@ void sector::adjSharesCapLimit( const int period ) {
                 sumSharesOverLimit += tempSubSectShare - tempCapacityLimit;
 
                 //           cout << "Cap limit changed from " << actualCapacityLimit << " to " << tempCapacityLimit;
-                //  cout << " in sub-sector: " << subsec[ i ]->getName() << endl;
+                //  cout << " in sub-Sector: " << subsec[ i ]->getName() << endl;
 
             }
 
@@ -644,7 +644,7 @@ void sector::adjSharesCapLimit( const int period ) {
             else { // If there are no sectors without limits and there are still shares to be re-distributed
                 if ( sumSharesOverLimit > 0 ) {
                     // if there is no shares left then too much was limited!
-                    cerr << regionName << ": Insufficient capacity to meet demand in sector " << name << endl;
+                    cerr << regionName << ": Insufficient capacity to meet demand in Sector " << name << endl;
                 }
             }
         }
@@ -652,7 +652,7 @@ void sector::adjSharesCapLimit( const int period ) {
 
     // if have exited and still capacity limited, then report error
     if ( capLimited ) {
-        cerr << "Capacity limit not resolved in sector " << name << endl;
+        cerr << "Capacity limit not resolved in Sector " << name << endl;
     }
 }
 
@@ -664,7 +664,7 @@ void sector::adjSharesCapLimit( const int period ) {
 * \author Steve Smith
 * \param period Model period
 */
-void sector::checkShareSum( const int period ) const {
+void Sector::checkShareSum( const int period ) const {
     const double SMALL_NUM = util::getSmallNumber();
     double sumshares = 0;
     int i;
@@ -675,7 +675,7 @@ void sector::checkShareSum( const int period ) const {
         sumshares += subsec[ i ]->getShare( period ) ;
     }
     if ( fabs(sumshares - 1) > SMALL_NUM ) {
-        cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << " in sector " << name;
+        cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << " in Sector " << name;
         cerr << ", region: " << regionName << endl;
         cout << "Shares: ";
         for ( i=0; i<nosubsec; i++ ) {
@@ -692,14 +692,14 @@ void sector::checkShareSum( const int period ) const {
 * \author Sonny Kim, Josh Lurz
 * \param period Model period
 */
-void sector::calcPrice( const int period ) {
+void Sector::calcPrice( const int period ) {
     sectorprice[ period ]= 0;
     for (int i=0;i<nosubsec;i++) {	
         sectorprice[ period ] += subsec[ i ]->getShare( period ) * subsec[ i ]->getPrice( period );
     }
 }
 
-/*! \brief returns the sector price.
+/*! \brief returns the Sector price.
 *
 * Returns the weighted price. 
 * Calcuation of price incorporated into call to ensure that this is calculated.
@@ -707,20 +707,20 @@ void sector::calcPrice( const int period ) {
 * \author Sonny Kim
 * \param period Model period
 */
-double sector::getPrice( const int period ) {
+double Sector::getPrice( const int period ) {
     calcPrice( period );
     return sectorprice[ period ];
 }
 
-/*! \brief Returns true if all sub-sector outputs are fixed or calibrated.
+/*! \brief Returns true if all sub-Sector outputs are fixed or calibrated.
 *
-* Routine loops through all the subsectors in the current sector. If output is calibrate, assigned a fixed output, or set to zero (by setting the share weight to zero) then true is returned. If all ouptput is not fixed, then the sector has at least some capacity to respond to a change in prices.
+* Routine loops through all the subsectors in the current Sector. If output is calibrate, assigned a fixed output, or set to zero (by setting the share weight to zero) then true is returned. If all ouptput is not fixed, then the Sector has at least some capacity to respond to a change in prices.
 *
 * \author Steve Smith
 * \param period Model period
-* \return Boolean that is true if entire sector is calibrated or has fixed output
+* \return Boolean that is true if entire Sector is calibrated or has fixed output
 */
-bool sector::isAllCalibrated( const int period ) const {
+bool Sector::isAllCalibrated( const int period ) const {
     bool allCalibrated = true;
 
     if ( period < 0 ) {
@@ -741,9 +741,9 @@ bool sector::isAllCalibrated( const int period ) const {
 * Routine checks to see if any capacity limits are present in the sub-sectors. Is used to avoid calling capacity limit calculation unnecessary. *
 * \author Steve Smith
 * \param period Model period
-* \return Boolean that is true if there are any capacity limits present in any sub-sector
+* \return Boolean that is true if there are any capacity limits present in any sub-Sector
 */
-bool sector::isCapacityLimitsInSector( const int period ) const {
+bool Sector::isCapacityLimitsInSector( const int period ) const {
     bool anyCapacityLimits = false;
 
     if ( period < 0 ) {
@@ -758,25 +758,25 @@ bool sector::isCapacityLimitsInSector( const int period ) const {
     return anyCapacityLimits;
 }
 
-//! Set output for sector (ONLY USED FOR energy service demand at present).
+//! Set output for Sector (ONLY USED FOR energy service demand at present).
 /*! Demand from the "dmd" parameter (could be energy or energy service) is passed to subsectors.
 This is then shared out at the technology level.
 In the case of demand, what is passed here is the energy service demand. 
 The technologies convert this to an energy demand.
 The demand is then summed at the subsector level (subsec::sumOutput) then
-later at the sector level (in region via supplysector[j].sumOutput( per ))
-to equal the total sector output.
+later at the Sector level (in region via supplysector[j].sumOutput( per ))
+to equal the total Sector output.
 *
 * \author Sonny Kim, Josh Lurz, Steve Smith
 * \param demand Demand to be passed to the subsectors. (Sonny check this)
 * \param period Model period
 */
-void sector::setoutput( const double demand, const int period ) {
+void Sector::setoutput( const double demand, const int period ) {
 
     carbonTaxPaid[ period ] = 0; // initialize carbon taxes paid
 
     for ( int i=0; i<nosubsec; i++ ) {
-        // set subsector output from sector demand
+        // set subsector output from Sector demand
         subsec[ i ]->setoutput( demand, period );
         carbonTaxPaid[ period ] += subsec[ i ]->getTotalCarbonTaxPaid( period );
     }
@@ -790,7 +790,7 @@ void sector::setoutput( const double demand, const int period ) {
 * \param period Model period
 * \return total fixed supply
 */
-double sector::getFixedSupply( const int period ) const {
+double Sector::getFixedSupply( const int period ) const {
     double totalFixedSupply = 0;
     for ( int i=0; i<nosubsec; i++ ) {
         totalFixedSupply += subsec[ i ]->getFixedSupply( period );
@@ -800,7 +800,7 @@ double sector::getFixedSupply( const int period ) const {
 
 /*! \brief Returns the share of fixed supply from the given subsector using a particular logic, depending on model setup.
 *
-* This function returns either the saved sub-sector share, or the share as derived from the marketplace demand, if available.
+* This function returns either the saved sub-Sector share, or the share as derived from the marketplace demand, if available.
 *
 * \author Steve Smith
 * \param sectorNum Sector number
@@ -808,7 +808,7 @@ double sector::getFixedSupply( const int period ) const {
 * \return total fixed supply
 * \warning Not sure how well using market demand will work if multiple sectors are adding demands. 
 */
-double sector::getFixedShare( const int sectorNum, const int period ) const {
+double Sector::getFixedShare( const int sectorNum, const int period ) const {
     Marketplace* marketplace = scenario->getMarketplace();
     World* world = scenario->getWorld();
 
@@ -823,7 +823,7 @@ double sector::getFixedShare( const int sectorNum, const int period ) const {
         }
         return fixedShare;
     } else {
-        cerr << "Illegal sector number: " << sectorNum << endl;
+        cerr << "Illegal Sector number: " << sectorNum << endl;
         return 0;
     }
 }
@@ -836,7 +836,7 @@ double sector::getFixedShare( const int sectorNum, const int period ) const {
 * \param period Model period
 * \return total calibrated outputs
 */
-double sector::getCalOutput( const int period  ) const {
+double Sector::getCalOutput( const int period  ) const {
     double totalCalOutput = 0;
     for ( int i=0; i<nosubsec; i++ ) {
         totalCalOutput += subsec[ i ]->getTotalCalOutputs( period );
@@ -844,9 +844,9 @@ double sector::getCalOutput( const int period  ) const {
     return totalCalOutput;
 }
 
-/*! \brief Calibrate sector output.
+/*! \brief Calibrate Sector output.
 *
-* This performs supply sector technology and sub-sector output/input calibration. 
+* This performs supply Sector technology and sub-Sector output/input calibration. 
 Determines total amount of calibrated and fixed output and passes that down to the subsectors.
 
 * Note that this routine only performs subsector and technology-level calibration. Total final energy calibration is done by Region::calibrateTFE and GDP calibration is set up in Region::calibrateRegion.
@@ -854,7 +854,7 @@ Determines total amount of calibrated and fixed output and passes that down to t
 * \author Steve Smith
 * \param period Model period
 */
-void sector::calibrateSector( const int period )
+void Sector::calibrateSector( const int period )
 {
     Marketplace* marketplace = scenario->getMarketplace();
     double totalFixedSupply;
@@ -862,7 +862,7 @@ void sector::calibrateSector( const int period )
     double mrkdmd;
 
     totalFixedSupply = getFixedSupply( period ); 
-    mrkdmd = marketplace->getDemand( name, regionName, period ); // demand for the good produced by this sector
+    mrkdmd = marketplace->getDemand( name, regionName, period ); // demand for the good produced by this Sector
     totalCalOutputs = getCalOutput( period );
 
     for (int i=0; i<nosubsec; i++ ) {
@@ -874,14 +874,14 @@ void sector::calibrateSector( const int period )
 
 /*! \brief Adjust shares to be consistant with fixed supply
 *
-* This routine determines the total amount of fixed supply in this sector and adjusts other shares to be consistant with the fixed supply.  If fixed supply exceeds demand then the fixed supply is reduced. An internal variable with the sector share of fixed supply for each sub-sector is set so that this information is available to other routines.
+* This routine determines the total amount of fixed supply in this Sector and adjusts other shares to be consistant with the fixed supply.  If fixed supply exceeds demand then the fixed supply is reduced. An internal variable with the Sector share of fixed supply for each sub-Sector is set so that this information is available to other routines.
 
 * \author Steve Smith
-* \param marketDemand demand for the good produced by this sector
+* \param marketDemand demand for the good produced by this Sector
 * \param period Model period
 * \warning fixed supply must be > 0 (to obtain 0 supply, set share weight to zero)
 */
-void sector::adjustForFixedSupply( const double marketDemand, const int period ) {
+void Sector::adjustForFixedSupply( const double marketDemand, const int period ) {
     World* world = scenario->getWorld();
     int i;
     double totalFixedSupply = 0; 
@@ -963,10 +963,10 @@ void sector::adjustForFixedSupply( const double marketDemand, const int period )
     }
 }
 
-/*! \brief Set supply sector output
+/*! \brief Set supply Sector output
 *
 * This routine takes the market demand and propagates that through the supply sub-sectors
-where it is shared out (and subsequently passed to the technology level within each sub-sector
+where it is shared out (and subsequently passed to the technology level within each sub-Sector
 to be shared out).
 
 Routine also calls adjustForFixedSupply which adjusts shares, if necessary, for any fixed output sub-sectors.
@@ -974,14 +974,14 @@ Routine also calls adjustForFixedSupply which adjusts shares, if necessary, for 
 * \author Sonny Kim
 \param period Model period
 */
-void sector::supply( const int period ) {
+void Sector::supply( const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
 
     double mrkdmd;
 
     carbonTaxPaid[ period ] = 0; // initialize carbon taxes paid
 
-    mrkdmd = marketplace->getDemand( name, regionName, period ); // demand for the good produced by this sector
+    mrkdmd = marketplace->getDemand( name, regionName, period ); // demand for the good produced by this Sector
 
     if ( mrkdmd < 0 ) {
         cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;
@@ -994,7 +994,7 @@ void sector::supply( const int period ) {
 
     // This is where subsector and technology outputs are set
     for (int i=0;i<nosubsec;i++) {
-        // set subsector output from sector demand
+        // set subsector output from Sector demand
         subsec[ i ]->setoutput( mrkdmd, period ); // CHANGED JPL
         // for reporting only
         carbonTaxPaid[ period ] += subsec[ i ]->getTotalCarbonTaxPaid( period );
@@ -1029,7 +1029,7 @@ void sector::supply( const int period ) {
 * \author Sonny Kim, Josh Lurz
 * \param period Model period
 */
-void sector::sumOutput( const int period ) {
+void Sector::sumOutput( const int period ) {
     output[ period ] = 0;
     for ( int i=0; i<nosubsec; i++ ) {
         double temp = subsec[ i ]->getOutput( period );
@@ -1037,14 +1037,14 @@ void sector::sumOutput( const int period ) {
 
         // error check
         if ( temp != temp ) {
-            cerr << "output for sector "<< i <<" is not valid, with value " << temp << endl;
+            cerr << "output for Sector "<< i <<" is not valid, with value " << temp << endl;
         }
     }
 }
 
-/*! \brief returns sector output.
+/*! \brief returns Sector output.
 *
-* Returns the total amount of the sector. 
+* Returns the total amount of the Sector. 
 * 
 * Routine now incorporates sumOutput so that output is automatically correct.
 *
@@ -1053,9 +1053,9 @@ void sector::sumOutput( const int period ) {
 * \todo make year 1975 regular model year so that logic below can be removed
 * \return total output
 */
-double sector::getOutput( const int period ) {
+double Sector::getOutput( const int period ) {
 
-    // this is needed because output for 1975 is hard coded at the sector level for some sectors,
+    // this is needed because output for 1975 is hard coded at the Sector level for some sectors,
     // in which case do not want to sum.
     if ( period > 0 || output[ period ] == 0 ) {
         sumOutput( period );
@@ -1064,7 +1064,7 @@ double sector::getOutput( const int period ) {
 }
 
 
-/*! \brief Calculate GHG emissions for each sector from subsectors.
+/*! \brief Calculate GHG emissions for each Sector from subsectors.
 *
 * Calculates emissions for subsectors and technologies, then updates emissions maps for emissions by gas and emissions by fuel & gas.
 *
@@ -1073,7 +1073,7 @@ double sector::getOutput( const int period ) {
 * \author Sonny Kim
 * \param period Model period
 */
-void sector::emission( const int period )
+void Sector::emission( const int period )
 {
     summary[ period ].clearemiss(); // clear emissions map
     summary[ period ].clearemfuelmap(); // clear emissions fuel map
@@ -1084,13 +1084,13 @@ void sector::emission( const int period )
     }
 }
 
-/*! \brief Calculate indirect GHG emissions for each sector from subsectors.
+/*! \brief Calculate indirect GHG emissions for each Sector from subsectors.
 *
 * \author Sonny Kim
 * \param period Model period
 * \param emcoef_ind Vector of indirect emissions objects. 
 */
-void sector::indemission( const int period, const vector<Emcoef_ind>& emcoef_ind )
+void Sector::indemission( const int period, const vector<Emcoef_ind>& emcoef_ind )
 {
     summary[ period ].clearemindmap(); // clear emissions map
     for ( int i = 0; i<nosubsec;i++) {
@@ -1106,7 +1106,7 @@ void sector::indemission( const int period, const vector<Emcoef_ind>& emcoef_ind
 * \author Sonny Kim, Josh Lurz
 * \param period Model period
 */
-void sector::sumInput( const int period )
+void Sector::sumInput( const int period )
 {
     input[ period ] = 0;
     for (int i=0;i<nosubsec;i++) {
@@ -1123,13 +1123,13 @@ void sector::sumInput( const int period )
 * \param per Model period
 * \return total input
 */
-double sector::getInput( const int period ) {
+double Sector::getInput( const int period ) {
     sumInput( period );
     return input[ period ];
 }
 
-//! Write sector output to database.
-void sector::outputfile() const
+//! Write Sector output to database.
+void Sector::outputfile() const
 {
     // function protocol
     void fileoutput3(string var1name,string var2name,string var3name,
@@ -1137,19 +1137,19 @@ void sector::outputfile() const
 
     // function arguments are variable name, double array, db name, table name
     // the function writes all years
-    // total sector output
+    // total Sector output
     fileoutput3(regionName,name," "," ","production","EJ",output);
-    // total sector eneryg input
+    // total Sector eneryg input
     fileoutput3( regionName,name," "," ","consumption","EJ",input);
-    // sector price
+    // Sector price
     fileoutput3( regionName,name," "," ","price","$/GJ",sectorprice);
-    // sector carbon taxes paid
+    // Sector carbon taxes paid
     fileoutput3( regionName,name," "," ","C tax paid","Mil90$",carbonTaxPaid);
 }
 
-//! Write out subsector results from demand sector.
-void sector::MCoutput_subsec() const 	
-{	// do for all subsectors in the sector
+//! Write out subsector results from demand Sector.
+void Sector::MCoutput_subsec() const 	
+{	// do for all subsectors in the Sector
     for (int i=0;i<nosubsec;i++) {
         // output or demand for each technology
         subsec[ i ]->MCoutputB();
@@ -1157,15 +1157,15 @@ void sector::MCoutput_subsec() const
     }
 }
 
-//! Write MiniCAM style sector output to database.
-void sector::MCoutput() const {
+//! Write MiniCAM style Sector output to database.
+void Sector::MCoutput() const {
     const Modeltime* modeltime = scenario->getModeltime();
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
     int m;
 
-    // total sector output
+    // total Sector output
     dboutput4( regionName,"Secondary Energy Prod","by Sector",name,"EJ",output);
     dboutput4( regionName,"Secondary Energy Prod",name,"zTotal","EJ",output);
 
@@ -1173,7 +1173,7 @@ void sector::MCoutput() const {
     vector<double> temp(maxper);
     string str; // temporary string
 
-    // sector fuel consumption by fuel type
+    // Sector fuel consumption by fuel type
     typedef map<string,double>:: const_iterator CI;
     map<string,double> tfuelmap = summary[0].getfuelcons();
     for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
@@ -1183,32 +1183,32 @@ void sector::MCoutput() const {
         dboutput4( regionName,"Fuel Consumption",name,fmap->first,"EJ",temp);
     }
 
-    // sector emissions for all greenhouse gases
+    // Sector emissions for all greenhouse gases
     map<string,double> temissmap = summary[0].getemission(); // get gases for per 0
     for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
         for (int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_emissmap_second(gmap->first);
         }
-        str = "Sec: "; // sector heading
-        str+= name; // sector name
+        str = "Sec: "; // Sector heading
+        str+= name; // Sector name
         dboutput4(regionName,"Emissions",str,gmap->first,"MTC",temp);
     }
-    // CO2 emissions by sector
+    // CO2 emissions by Sector
     for (m=0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second("CO2");
     }
     dboutput4( regionName,"CO2 Emiss","by Sector",name,"MTC",temp);
     dboutput4( regionName,"CO2 Emiss",name,"zTotal","MTC",temp);
 
-    // CO2 indirect emissions by sector
+    // CO2 indirect emissions by Sector
     for (m=0;m<maxper;m++) {
         temp[m] = summary[m].get_emindmap_second("CO2");
     }
     dboutput4( regionName,"CO2 Emiss(ind)",name,"zTotal","MTC",temp);
 
-    // sector price
+    // Sector price
     dboutput4( regionName,"Price",name,"zSectorAvg","$/GJ",sectorprice);
-    // for electricity sector only
+    // for electricity Sector only
     if (name == "electricity") {
         for (m=0;m<maxper;m++) {
             temp[m] = sectorprice[m] * 2.212 * 0.36;
@@ -1216,11 +1216,11 @@ void sector::MCoutput() const {
         dboutput4( regionName,"Price","electricity C/kWh","zSectorAvg","90C/kWh",temp);
     }
 
-    // sector price
+    // Sector price
     dboutput4( regionName,"Price","by Sector",name,"$/GJ",sectorprice);
-    // sector carbon taxes paid
+    // Sector carbon taxes paid
     dboutput4( regionName,"General","carbonTaxPaid",name,"$",carbonTaxPaid);
-    // do for all subsectors in the sector
+    // do for all subsectors in the Sector
     for (int i=0;i<nosubsec;i++) {
         // output or demand for each technology
         subsec[ i ]->MCoutputA();
@@ -1229,47 +1229,47 @@ void sector::MCoutput() const {
 }
 
 //! Write subsector output to database.
-void sector::subsec_outfile() const
+void Sector::subsec_outfile() const
 {
-    // do for all subsectors in the sector
+    // do for all subsectors in the Sector
     for (int i=0;i<nosubsec;i++) {
         // output or demand for each technology
         subsec[ i ]->outputfile();
     }
 }
 
-/*! \brief Sets output of sector, used for demand sectors
+/*! \brief Sets output of Sector, used for demand sectors
 *
-* For demand sectors, the output of the sector, which is the total service demand, is set directly, instead of summing up from subsectors.
-* \note If its for demand sectors why is it in sector? -Josh
+* For demand sectors, the output of the Sector, which is the total service demand, is set directly, instead of summing up from subsectors.
+* \note If its for demand sectors why is it in Sector? -Josh
 * \author Sonny Kim
 * \param demand Total service demand
 * \param period Model period
 */
-void sector::setServiceDemand( const double demand, const int period )
+void Sector::setServiceDemand( const double demand, const int period )
 {
     output[ period ] = demand;
 }
 
-/*! \brief Returns total carbon tax paid by sector.
+/*! \brief Returns total carbon tax paid by Sector.
 *
 * \author Sonny Kim
 * \param period Model period
 * \warning Input value is not accurate unless subsector::setoutput has been called first
 * \return total carbon taxes paid
 */
-double sector::getTotalCarbonTaxPaid( const int period ) const {
+double Sector::getTotalCarbonTaxPaid( const int period ) const {
     return carbonTaxPaid[ period ];
 }
 
-/*! \brief Return fuel consumption map for this sector
+/*! \brief Return fuel consumption map for this Sector
 *
 * \author Sonny Kim
 * \param period Model period
 * \todo Input change name of this and other methods here to proper capitilization
 * \return fuel consumption map
 */
-map<string, double> sector::getfuelcons( const int period ) const
+map<string, double> Sector::getfuelcons( const int period ) const
 {
     return summary[ period ].getfuelcons();
 }
@@ -1282,61 +1282,61 @@ map<string, double> sector::getfuelcons( const int period ) const
 * \param fuelName name of fuel
 * \return fuel consumption
 */
-double sector::getConsByFuel( const int period, const std::string& fuelName ) const {
+double Sector::getConsByFuel( const int period, const std::string& fuelName ) const {
     return summary[ period ].get_fmap_second( fuelName );
 }
 
-/*! \brief Clear fuel consumption map for this sector
+/*! \brief Clear fuel consumption map for this Sector
 *
 * \author Sonny Kim
 * \param per Model period
 */
-void sector::clearfuelcons( const int period ) {
+void Sector::clearfuelcons( const int period ) {
     summary[ period ].clearfuelcons();
 }
 
-/*! \brief Return the ghg emissions map for this sector
+/*! \brief Return the ghg emissions map for this Sector
 *
 * \author Sonny Kim
 * \param period Model period
 * \return GHG emissions map
 */
-map<string, double> sector::getemission( const int period ) const {
+map<string, double> Sector::getemission( const int period ) const {
     return summary[ period ].getemission();
 }
 
 /*! \brief Return ghg emissions map in summary object
 *
-* This map is used to calculate the emissions coefficient for this sector (and fuel?) in region
+* This map is used to calculate the emissions coefficient for this Sector (and fuel?) in region
 *
 * \author Sonny Kim
 * \param period Model period
 * \return GHG emissions map
 */
-map<string, double> sector::getemfuelmap( const int period ) const {
+map<string, double> Sector::getemfuelmap( const int period ) const {
     return summary[ period ].getemfuelmap();
 }
 
 /*! \brief update summaries for reporting
 *
-*  Updates summary information for the sector and all subsectors.
+*  Updates summary information for the Sector and all subsectors.
 *
 * \author Sonny Kim
 * \param period Model period
 * \return GHG emissions map
 */
-void sector::updateSummary( const int period ) {
-    // clears sector fuel consumption map
+void Sector::updateSummary( const int period ) {
+    // clears Sector fuel consumption map
     summary[ period ].clearfuelcons();
 
     for ( int i = 0; i < nosubsec; i++ ) {
         // call update summary for subsector
         subsec[ i ]->updateSummary( period );
-        // sum subsector fuel consumption for sector fuel consumption
+        // sum subsector fuel consumption for Sector fuel consumption
         summary[ period ].updatefuelcons(subsec[ i ]->getfuelcons( period )); 
     }
-    // set input to total fuel consumed by sector
-    // input in sector is used for reporting purposes only
+    // set input to total fuel consumed by Sector
+    // input in Sector is used for reporting purposes only
     input[ period ] = summary[ period ].get_fmap_second("zTotal");
 }
 
@@ -1348,7 +1348,7 @@ void sector::updateSummary( const int period ) {
 * \param outStream An output stream to write to which was previously created.
 * \param period The period to print graphs for.
 */
-void sector::addToDependencyGraph( ostream& outStream, const int period ) const {
+void Sector::addToDependencyGraph( ostream& outStream, const int period ) const {
     Configuration* conf = Configuration::getInstance();
     string sectorName;
     string fuelName;
@@ -1358,13 +1358,13 @@ void sector::addToDependencyGraph( ostream& outStream, const int period ) const 
 
     // Make sure the outputstream is open.
     assert( outStream );
-    // Get the supply sector name.
+    // Get the supply Sector name.
     sectorName = getName();
     util::replaceSpaces( sectorName );
 
     sectorsUsed = getfuelcons( period );
 
-    // Print out the style for the sector.
+    // Print out the style for the Sector.
     printStyle( outStream );
 
     // Now loop through the fuel map.
@@ -1401,52 +1401,52 @@ void sector::addToDependencyGraph( ostream& outStream, const int period ) const 
     }
 }
 
-/*! \brief A function to add the sector coloring and style to the dependency graph.
+/*! \brief A function to add the Sector coloring and style to the dependency graph.
 *
-* This function add the sector specific coloring and style to the dependency graph.
+* This function add the Sector specific coloring and style to the dependency graph.
 *
 * \author Josh Lurz
 * \param outStream An output stream to write to which was previously created.
 */
-void sector::printStyle( ostream& outStream ) const {
+void Sector::printStyle( ostream& outStream ) const {
 
     // Make sure the output stream is open.
     assert( outStream );
 
-    // Get the sector name.
+    // Get the Sector name.
     string sectorName = getName();
     util::replaceSpaces( sectorName );
 
-    // output sector coloring here.
+    // output Sector coloring here.
 }
 
-/*! \brief A function to add the name of a sector the current sector has a simul with. 
+/*! \brief A function to add the name of a Sector the current Sector has a simul with. 
 *
-* This function adds the name of the sector to the simulList vector, if the name
+* This function adds the name of the Sector to the simulList vector, if the name
 * does not already exist within the vector. This vector is 
 * then used to sort the sectors by fuel dependencies so that calculations are always 
 * consistent. 
 *
 * \author Josh Lurz
-* \param sectorName The name of the sector the current sector has a simul with. 
+* \param sectorName The name of the Sector the current Sector has a simul with. 
 */
-void sector::addSimul( const string sectorName ) {
+void Sector::addSimul( const string sectorName ) {
     if( std::find( simulList.begin(), simulList.end(), sectorName ) == simulList.end() ) {
         simulList.push_back( sectorName );
     }
 }
 
-/*! \brief This function sets up the sector for sorting. 
+/*! \brief This function sets up the Sector for sorting. 
 *
 * This function uses the recursive function getInputDependencies to 
-* find the full list of dependencies for the sector, including 
+* find the full list of dependencies for the Sector, including 
 * transative dependencies. It then sorts that list of dependencies
 * for rapid searching.
 *
 * \author Josh Lurz
 * \param parentRegion A pointer to the parent region.
 */
-void sector::setupForSort( const Region* parentRegion ) {
+void Sector::setupForSort( const Region* parentRegion ) {
 
     // Setup the internal dependencies vector.
     dependsList = getInputDependencies( parentRegion );
@@ -1457,7 +1457,7 @@ void sector::setupForSort( const Region* parentRegion ) {
 
 /*! \brief This gets the full list of input dependencies including transative dependencies. 
 *
-* This function recursively determines the input dependencies for the sector. To do this
+* This function recursively determines the input dependencies for the Sector. To do this
 * correctly, it must also recursively find all the input dependencies for its direct inputs.
 * This can result in a long list of dependencies. Dependencies already accounted for by simuls
 * are not included in this list. 
@@ -1466,7 +1466,7 @@ void sector::setupForSort( const Region* parentRegion ) {
 * \param parentRegion A pointer to the parent region.
 * \return The full list of input dependencies including transative ones. 
 */
-vector<string> sector::getInputDependencies( const Region* parentRegion ) const {
+vector<string> Sector::getInputDependencies( const Region* parentRegion ) const {
     // Setup the vector we will return.
     vector<string> depVector;
 
@@ -1476,17 +1476,17 @@ vector<string> sector::getInputDependencies( const Region* parentRegion ) const 
     for( map<string, double>::const_iterator fuelIter = tempMap.begin(); fuelIter != tempMap.end(); fuelIter++ ) {
         string depSectorName = fuelIter->first;
 
-        // Check for zTotal, which is not a sector name and simuls which are not dependencies. 
+        // Check for zTotal, which is not a Sector name and simuls which are not dependencies. 
         if( depSectorName != "zTotal" && ( find( simulList.begin(), simulList.end(), depSectorName ) == simulList.end() ) ) {
             // First add the dependency.
             depVector.push_back( depSectorName );
 
-            // Now get the sector's dependencies.
+            // Now get the Sector's dependencies.
             vector<string> tempDepVector = parentRegion->getSectorDependencies( depSectorName );
 
             // Add the dependencies if they are unique.
             for( vector<string>::const_iterator tempVecIter = tempDepVector.begin(); tempVecIter != tempDepVector.end(); tempVecIter++ ) {
-                // If the sector is not already in the dep vector, add it. 
+                // If the Sector is not already in the dep vector, add it. 
                 if( find( depVector.begin(), depVector.end(), *tempVecIter ) == depVector.end() ){
                     depVector.push_back( *tempVecIter );
                 }
@@ -1497,25 +1497,25 @@ vector<string> sector::getInputDependencies( const Region* parentRegion ) const 
     return depVector;
 }
 
-/*! This function returns a copy of the list of dependencies of the sector
+/*! This function returns a copy of the list of dependencies of the Sector
 *
 * This function returns a vector of strings created during setupForSort.
-* It lists the names of all inputs the sector uses. These inputs are also sectors. 
+* It lists the names of all inputs the Sector uses. These inputs are also sectors. 
 *
 * \author Josh Lurz
-* \return A vector of sector names which are inputs the sector uses. 
+* \return A vector of Sector names which are inputs the Sector uses. 
 */
-const vector<string> sector::getDependsList() const {
+const vector<string> Sector::getDependsList() const {
     return dependsList;
 }
 
-/*! \brief A function to print a csv file including a sector's name and all it's dependencies. 
+/*! \brief A function to print a csv file including a Sector's name and all it's dependencies. 
 * 
 * \author Josh Lurz
 * \pre setupForSort function has been called to initialize the dependsList. 
 * \param logger The to which to print the dependencies. 
 */
-void sector::printSectorDependencies( Logger* logger ) const {
+void Sector::printSectorDependencies( Logger* logger ) const {
     LOG( logger, Logger::DEBUG_LEVEL ) << "," << name << ",";
     for( vector<string>::const_iterator depIter = dependsList.begin(); depIter != dependsList.end(); depIter++ ) {
         LOG( logger, Logger::DEBUG_LEVEL ) << *depIter << ",";

@@ -32,7 +32,7 @@ class Emcoef_ind;
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 
-class subsector
+class Subsector
 {
 protected:
     std::string name; //!< subsector name
@@ -70,8 +70,8 @@ protected:
     void shareWeightInterp( const int beginPeriod,  const int endPeriod );
 
 public:
-    subsector( const std::string regionName, const std::string sectorName );
-    virtual ~subsector();
+    Subsector( const std::string regionName, const std::string sectorName );
+    virtual ~Subsector();
     virtual void clear();
     static double capLimitTransform( double capLimit, double orgShare ); 
     const std::string getName() const;
@@ -88,9 +88,9 @@ public:
     void setCalibrationStatus( const int period );
     void scaleCalibrationInput( const int period, const double scaleFactor );
     bool allOuputFixed( const int period ) const;
-    double subsector::getFixedShare( const int period ) const;
-    void subsector::setFixedShare( const int period, const double share );
-    void subsector::setShareToFixedValue( const int period );
+    double getFixedShare( const int period ) const;
+    void setFixedShare( const int period, const double share );
+    void setShareToFixedValue( const int period );
     double getfuelprice( const int period ) const; 
     double getwtfuelprice( const int period ) const;
     double getCapacityLimit( const int period ) const;

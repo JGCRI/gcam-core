@@ -7,7 +7,7 @@
 /*! 
 * \file Sector.h
 * \ingroup CIAM
-* \brief The sector class header file.
+* \brief The Sector class header file.
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
@@ -18,7 +18,7 @@
 #include <algorithm>
 
 // Forward declarations
-class subsector;
+class Subsector;
 class Summary;
 class Emcoef_ind;
 class Region;
@@ -27,35 +27,35 @@ class Logger;
 * \ingroup CIAM
 * \brief This class represents a single good that is produced, transformed, or consumed.
 
-* All production, consumption, and transformation (other than resource extraction) is contained within the sector class. Each sector represents a distinct good that can either be supplied or demanded. The demand sector derived from this class contains a few classes where changes are necessary, although most of the basic mechanisms are unchanged.
+* All production, consumption, and transformation (other than resource extraction) is contained within the Sector class. Each Sector represents a distinct good that can either be supplied or demanded. The demand Sector derived from this class contains a few classes where changes are necessary, although most of the basic mechanisms are unchanged.
 
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 
-class sector
+class Sector
 {
 protected:
-    std::string name; //!< sector name
+    std::string name; //!< Sector name
     std::string regionName; //!< region name
-    std::string unit; //!< unit of final product from sector
+    std::string unit; //!< unit of final product from Sector
     std::string market; //!< regional market
-    int nosubsec; //!< number of subsectors in each sector
-    double tax; //!< sector tax or subsidy
+    int nosubsec; //!< number of subsectors in each Sector
+    double tax; //!< Sector tax or subsidy
     bool debugChecking; //!< General toggle to turn on various checks
-    std::vector<subsector*> subsec; //!< subsector objects
-    std::vector<double> sectorprice; //!< sector price in $/service
-    std::vector<double> price_norm; //!< sector price normalized to base year
+    std::vector<Subsector*> subsec; //!< subsector objects
+    std::vector<double> sectorprice; //!< Sector price in $/service
+    std::vector<double> price_norm; //!< Sector price normalized to base year
     std::vector<double> pe_cons; //!< sectoral primary energy consumption
-    std::vector<double> input; //!< sector total energy consumption
+    std::vector<double> input; //!< Sector total energy consumption
     std::vector<double> output; //!< total amount of final output from sector
-    std::vector<double> fixedOutput; //!< total amount of fixed output from sector
-    std::vector<double> carbonTaxPaid; //!< total sector carbon taxes paid
+    std::vector<double> fixedOutput; //!< total amount of fixed output from Sector
+    std::vector<double> carbonTaxPaid; //!< total Sector carbon taxes paid
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
     std::vector<bool> capLimitsPresent; //!< Flag if any capacity limits are present 
     std::vector<std::string> simulList; //!< List of all sectors with simuls to this one. 
-    std::vector<std::string> dependsList; //!< List of all dependencies of this sector. 
-    bool anyFixedCapacity; //!< flag set to true if any fixed capacity is present in this sector
+    std::vector<std::string> dependsList; //!< List of all dependencies of this Sector. 
+    bool anyFixedCapacity; //!< flag set to true if any fixed capacity is present in this Sector
     double fixedShareSavedVal; //!< debugging value
     double prevVal;
     double prevPer;
@@ -68,8 +68,8 @@ protected:
     virtual void printStyle( std::ostream& outStream ) const;
 
 public:
-    sector( std::string regionName );
-    virtual ~sector();
+    Sector( std::string regionName );
+    virtual ~Sector();
     virtual void clear();
     std::string getName() const;
     virtual void XMLParse( const xercesc::DOMNode* node );
@@ -125,20 +125,20 @@ public:
     * \author Josh Lurz
     *
     * The DependencyOrdering struct is used by the region class in the stl sort to compare
-    * two sector pointers and order them by dependency. It is a strict weak ordering.
-    * The algorithm checks if the rhs  sector depends on the lhs sector with a non-simul. If this is true, it returns true as the 
+    * two Sector pointers and order them by dependency. It is a strict weak ordering.
+    * The algorithm checks if the rhs  Sector depends on the lhs Sector with a non-simul. If this is true, it returns true as the 
     * lhs is needed before the rhs, but when a simul market exists, the ordering between two sectors is trivial.
     * Otherwise, the operator returns false. This is done so that unrelated sectors are equivalent.
     */   
-    struct DependencyOrdering : public std::binary_function<sector*, sector*, bool>
+    struct DependencyOrdering : public std::binary_function<Sector*, Sector*, bool>
     {
-        //! \brief The () operator, which is used for sorting two sector pointers. 
+        //! \brief The () operator, which is used for sorting two Sector pointers. 
 
-        bool operator()( const sector* lhs, const sector* rhs ) const {
+        bool operator()( const Sector* lhs, const Sector* rhs ) const {
             // First cache a copy of the dependsList
             std::vector<std::string> rhsDependsList = rhs->getDependsList();
             
-            // Check if the left sector depends on the right sector.
+            // Check if the left Sector depends on the right Sector.
             if ( std::binary_search( rhsDependsList.begin(), rhsDependsList.end(), lhs->getName() ) ) {
                 return true;
             }

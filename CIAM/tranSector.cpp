@@ -28,7 +28,7 @@ extern ofstream outfile;
 
 
 //! Default constructor
-tranSector::tranSector( const string regionName ): demsector( regionName ) {
+tranSector::tranSector( const string regionName ): DemandSector( regionName ) {
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
@@ -43,7 +43,7 @@ tranSector::~tranSector() {
 void tranSector::clear() {
     
     // call super clear
-    demsector::clear();
+    DemandSector::clear();
     
     // now clear own data.
     percentLicensed.clear();
@@ -57,7 +57,7 @@ void tranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cu
     tranSubsector* tempSubSector = 0;
     
     // call the demand sector XML parse to fill demand sector attributes
-    demsector::XMLDerivedClassParse( nodeName, curr );
+    DemandSector::XMLDerivedClassParse( nodeName, curr );
     
     if( nodeName == "percentLicensed" ) {
         XMLHelper<double>::insertValueIntoVector( curr, percentLicensed,modeltime );

@@ -18,7 +18,7 @@
 
 // transportation demand subsector class derived from base subsector class
 // Modes of transportation are implemented as subsectors
-class tranSubsector : public subsector
+class tranSubsector : public Subsector
 {
 protected:
     std::vector<double> speed; // Speed of Mode in Miles/hour

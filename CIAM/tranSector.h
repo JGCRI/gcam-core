@@ -17,7 +17,7 @@
 #include "DemandSector.h"
 
 // transportation demand sector class derived from demsector class
-class tranSector : public demsector
+class tranSector : public DemandSector
 {
 protected:
     std::vector<double> percentLicensed; //!< Percent of population licensed

@@ -31,7 +31,7 @@ extern Scenario* scenario;
 /*  Begin tranSubsector Method Definitions */
 
 //! Default constructor
-tranSubsector::tranSubsector( const string regionName, const string sectorName ): subsector( regionName, sectorName ) {
+tranSubsector::tranSubsector( const string regionName, const string sectorName ): Subsector( regionName, sectorName ) {
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
@@ -50,7 +50,7 @@ tranSubsector::tranSubsector( const string regionName, const string sectorName )
 void tranSubsector::clear()
 {
     // call super clear
-    subsector::clear();
+    Subsector::clear();
     
     // now clear own data.
     speed.clear();
