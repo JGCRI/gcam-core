@@ -1111,7 +1111,7 @@ void Marketplace::MCoutput() const {
     vector<double> temp(maxPeriod);
     int j;
     // write market prices, supply and demand
-    for (int i=0;i<numMarkets;i++) {
+    for (int i=0;i< static_cast<int>( markets.size() );i++) {
         for (j=0;j<maxPeriod;j++) {
             temp[j] = markets[i][j]->getRawPrice();
         }
