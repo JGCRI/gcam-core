@@ -42,9 +42,7 @@ technology::technology() {
 
 // ! Destructor
 technology::~technology() {
-    for( vector<Ghg*>::iterator iter = ghg.begin(); iter != ghg.end(); iter++ ) {
-        delete *iter;
-    }
+    clear();
 }
 
 technology::technology( const technology& techIn ) {
@@ -104,23 +102,17 @@ void technology::copy( const technology& techIn ) {
     ghgNameMap = techIn.ghgNameMap; 
     
     for (vector<Ghg*>::const_iterator iter = techIn.ghg.begin(); iter != techIn.ghg.end(); iter++) {
-        ghg.push_back( new Ghg( **iter ) );
+        ghg.push_back( (*iter)->clone() );
     }
 }
 
+//! Clone Function. Returns a deep copy of the current technology.
+technology* technology::clone() const {
+    return new technology( *this );
+}
 
 //! Clear member variables.
 void technology::clear(){
-    initElementalMembers();
-    name = "";
-    unit = "";
-    fuelname = "";
-    ghg.clear();
-    emissmap.clear();
-    emfuelmap.clear();
-    emindmap.clear();
-    ghgNameMap.clear();
-    
     // Delete the GHGs to avoid a memory leak.
     for( vector<Ghg*>::iterator iter = ghg.begin(); iter != ghg.end(); iter++ ) {
         delete *iter;
@@ -161,7 +153,6 @@ void technology::initElementalMembers(){
     calInputValue = 0;
     calOutputValue = 0;
     carbonValue = 0;
-	 note = "";
 }
 
 /*! \brief initialize technology with xml data
