@@ -16,6 +16,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <vector>
 #include <memory>
+#include <string>
 
 // Forward declaration
 class Emcoef_ind;
