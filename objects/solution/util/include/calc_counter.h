@@ -36,7 +36,6 @@ class CalcCounter {
     }
 public:
     CalcCounter();
-    ~CalcCounter();
     int getTotalCount() const;
     int getPeriodCount() const;
     int getMethodCount( const std::string methodName ) const;
