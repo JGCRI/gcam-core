@@ -41,9 +41,9 @@ private:
 	std::map<std::string, bool> boolMap; //!< A map of the bools the program uses.
 	std::map<std::string, int> intMap;  //!< A map of the ints the program uses.
 	std::map<std::string, double> doubleMap;  //!< A map of the doubles the program uses.
-	
+
 	Configuration();
-	
+
 	//! Private undefined constructor to prevent a programmer from creating a second object.
 	Configuration( const Configuration& );
 
@@ -53,8 +53,8 @@ private:
 public:
 	static Configuration* getInstance();
 	~Configuration();
-	void XMLParse( const xercesc::DOMNode* tempnode ); // initialize with xml data
-   void toDebugXML( std::ostream& out ) const;
+	void XMLParse( const xercesc::DOMNode* tempnode );
+	void toDebugXML( std::ostream& out ) const;
 	std::string getFile( const std::string& key, const std::string& defaultValue = "" ) const;
 	std::string getString( const std::string& key, const std::string& defaultValue = "" ) const;
 	bool getBool( const std::string& key, const bool defaultValue = false ) const;

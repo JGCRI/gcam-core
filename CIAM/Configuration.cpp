@@ -40,7 +40,6 @@ Configuration::~Configuration() {
 * \warning The user is responsible for deleting the instance when they are finished with it.
 * \return A pointer to the single instance of the Configuration class.
 */
-
 Configuration* Configuration::getInstance() {
 
 	if ( !confExists ) {
