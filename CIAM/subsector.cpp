@@ -748,7 +748,7 @@ void subsector::calcShare( const string& regionName, const int per, const double
    }   
 }
 
-/*! \brief normalizes subsector shares to 100%
+/*! \brief normalizes subsector shares
 *
 * \author Sonny Kim, Josh Lurz
 * \param sum sum of sector shares

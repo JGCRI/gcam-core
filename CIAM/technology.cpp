@@ -408,14 +408,26 @@ void technology::calcCost( const string regionName, const int per )
     techcost = ( fuelcost + necost ) * pMultiplier;
 }
 
-//! calculate technology shares
+/*! \brief calculate technology unnormalized shares
+*
+*
+* \author Sonny Kim
+* \param regionName region name
+* \param per model period
+*/
 void technology::calcShare( const string regionName, const int per)
 {
     // use pow(x,y) == x**y in fortran, x and y are double, need math.h
     share = shrwts * pow(techcost,lexp);
 }
 
-//! normalize technology shares
+/*! \brief normalizes technology shares
+*
+* \author Sonny Kim
+* \param sum sum of sector shares
+* \warning sum must be correct sum of shares
+* \pre calcShares must be called first
+*/
 void technology::normShare(double sum) 
 {
     if (sum==0) {
@@ -426,11 +438,15 @@ void technology::normShare(double sum)
     }
 }
 
-//! This function sets the value of fixed supply
-/*! This needs to be called only once per period. Sets the amount of fixed supply to either the read-in value or the "MiniCAM-style" formula used for hydro. 
+/*! \brief This function sets the value of fixed supply
+* This needs to be called only once per period. Sets the amount of fixed supply to either the read-in value or the "MiniCAM-style" formula used for hydro. 
+* 
 * A == Minicam HYDRO(1,L)
-* A == Minicam HYDRO(2,L)
+* B == Minicam HYDRO(2,L) ??
 * resource == Minicam HYDRO(3,L)
+*
+* \author Sonny Kim, Steve Smith
+* \param per model period
 */
 void technology::calcFixedSupply(int per)
 {
@@ -452,19 +468,37 @@ void technology::calcFixedSupply(int per)
     }
 }
 
-//! This function resets the value of fixed supply to the maximum value 
+
+/*! \brief This function resets the value of fixed supply to the maximum value
+* See calcFixedSupply
+*
+* \author Steve Smith
+* \param per model period
+*/
 void technology::resetFixedSupply(int per)
 {
     fixedOutputVal = fixedSupply;
 }
 
-//! Get fixed technology supply
+/*! \brief Return fixed technology supply
+* 
+* returns the current value of fixedSupply. This may differ from the variable fixedSupply due to scale down if demand is less than the value of fixedSupply.
+*
+* \author Steve Smith
+* \param per model period
+* \return value of fixed output for this technology
+*/
 double technology::getFixedSupply() const {
     return fixedOutputVal;
 }
 
-//! Scale down fixed supply if total fixed production is greater than actual demand.
-//! Use a ratio of total demand to total fixed supply
+/*! \brief Scale fixed technology supply
+* 
+* Scale down fixed supply. Used if total fixed production is greater than actual demand.
+*
+* \author Steve Smith
+* \param scaleRatio multipliciative value to scale fixed supply
+*/
 void technology::scaleFixedSupply(const double scaleRatio)
 {
   //  string FixedTech = "hydro";
@@ -475,9 +509,18 @@ void technology::scaleFixedSupply(const double scaleRatio)
     }
 }
 
-//! Adjusts shares to be consistant with any fixed production 
-/*! This version may not work if more than one technology within each sector 
-has a fixed supply */
+/*! \brief Adjusts shares to be consistant with any fixed production
+* 
+* Adjust shares to account for fixed supply. Sets appropriate share for fixed supply and scales shares of other technologies appropriately.
+*
+* \author Steve Smith
+* \param subsecdmd subsector demand
+* \param subsecFixedSupply total amount of fixed supply in this subsector
+* \param varShareTot Sum of shares that are not fixed
+* \param per model period
+* \warning This version may not work if more than one (or not all) technologies within each sector 
+has a fixed supply
+*/
 void technology::adjShares(double subsecdmd, double subsecFixedSupply, double varShareTot, int per)
 {
     double remainingDemand = 0;
@@ -606,7 +649,12 @@ double technology::getEff() const {
     return eff;
 }
 
-//! return fuel intensity
+/*! \brief Return fuel intensity (input over output) for this technology
+*
+* \author Sonny Kim
+* \return fuel intensity (input/output) of this technology
+* \todo Need to impliment method of adding appropriate units (btu/kwh; gallons/mile, etc.)
+*/
 double technology::getIntensity(const int per) const {
     return intensity;
 }
