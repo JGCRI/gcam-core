@@ -37,7 +37,7 @@ extern "C" { void _stdcall CLIMAT(void); };
 #endif
 
 extern time_t ltime;
-extern ofstream logfile;
+extern ofstream logfile, outFile;
 
 const string Scenario::XML_NAME = "scenario";
 
@@ -88,24 +88,21 @@ World* Scenario::getWorld() {
 
 //! Set data members from XML input.
 void Scenario::XMLParse( const DOMNode* node ){
-
-    DOMNode* curr = 0;
-    DOMNodeList* nodeList;
-    string nodeName;
-
     // assume we were passed a valid node.
     assert( node );
 
-    // set the scenario name
-    name = XMLHelper<string>::getAttrString( node, "name" );
+    // set the scenario name. Note this can be overridden.
+    if( name == "" ){
+        name = XMLHelper<string>::getAttrString( node, "name" );
+    }
 
     // get the children of the node.
-    nodeList = node->getChildNodes();
+    DOMNodeList* nodeList = node->getChildNodes();
 
     // loop through the children
     for ( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        DOMNode* curr = nodeList->item( i );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
         if( nodeName == "#text" ) {
             continue;
@@ -358,6 +355,33 @@ void Scenario::solve( const int period ){
             cout << endl;
         }
     }
+}
+
+//! Output Scenario members to a CSV file.
+// I don't really like this function being hardcoded to an output file, but its very hardcoded.
+void Scenario::csvOutputFile() const {
+    // Open the output file.
+    const Configuration* conf = Configuration::getInstance();
+    const string outFileName = conf->getFile( "outFileName" );
+    outFile.open( outFileName.c_str(), ios::out );
+    util::checkIsOpen( outFile, outFileName ); 
+    
+    // Write results to the output file.
+    // Minicam style output.
+    outFile << "Region,Sector,Subsector,Technology,Variable,Units,";
+    
+    for ( int t = 0; t < modeltime->getmaxper(); t++ ) { 
+        outFile << modeltime->getper_to_yr( t ) <<",";
+    }
+    outFile << "Date,Notes" << endl;
+    world->csvOutputFile();
+    outFile.close();
+}
+
+//! Output Scenario members to the database.
+void Scenario::dbOutput() const {
+    world->dbOutput();
+    marketplace->dbOutput();
 }
 
 //! Open the debugging XML file with the correct name and check for any errors.

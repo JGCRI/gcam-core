@@ -54,6 +54,8 @@ public:
 	void run( std::string filenameEnding = "" );
 	const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
 	const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
+    void csvOutputFile() const;
+    void dbOutput() const;
 private:
 	const static std::string XML_NAME; //!< node name for toXML methods
     std::auto_ptr<Modeltime> modeltime; //!< The modeltime for the scenario
