@@ -31,18 +31,22 @@ static msVC6_4786WorkAround emptyStatic;
 #if defined(_MSC_VER) && _MSC_VER < 1300
 
 #ifndef min
+namespace std {
 template<class T>
 const T& min(const T& x, const T& y)
 {
 	return ( x < y ? x : y);
 }
+}
 #endif // min
  
 #ifndef max
+namespace std {
 template<class T>
 const T& max(const T& x, const T& y)
 {
 return ( x > y ? x : y);
+}
 }
 #endif // max
 
