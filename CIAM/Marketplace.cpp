@@ -86,17 +86,20 @@ void Marketplace::solve( const int period ){
     if( !solver->solve( period ) ) {
         unsolvedPeriods.push_back( period );
     }
-    
+
     // If it was the last period print the ones that did not solve.
-    if( static_cast<int>( unsolvedPeriods.size() ) == 0 ) {
-        cout << "All model periods solved correctly." << endl;
-    }
-    else {
-        cout << "The following model periods did not solve: ";
-        for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
-            cout << *i << ", ";
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( modeltime->getmaxper() - 1 == period  ){
+        if( static_cast<int>( unsolvedPeriods.size() ) == 0 ) {
+            cout << "All model periods solved correctly." << endl;
         }
-        cout << endl;
+        else {
+            cout << "The following model periods did not solve: ";
+            for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
+                cout << *i << ", ";
+            }
+            cout << endl;
+        }
     }
 }
 
