@@ -5,7 +5,8 @@ subroutine SETGNP( regionNumber, gnps )
     integer(4), intent( in ) :: regionNumber
     real(8), intent( in ) :: gnps( 1:NMP )
 
-    gdp( regionNumber + 1, 1:NMP ) = gnps( 1:NMP ) * CVRT90 !??
+    gdp( regionNumber + 1, 1:NMP ) = gnps( 1:NMP )
+    write(*, * ) gdp( regionNumber+1, : )
 
 end subroutine SETGNP
 
@@ -124,7 +125,7 @@ SUBROUTINE AG2INITC( P )
 	! Initialize YLM for Mkt_GDP function within Ag2init
 	do i=1, NLP
 	  ! Initialize the AgLU price of biomass and convert to 1990$/Gcal
-	  MC_CALP(i,JBio) = 2.5_8 * CVRT90 * GJperGCAL
+	  MC_CALP(i,JBio) = 23.153_8 ! 2.5_8 * CVRT90 * GJperGCAL
 	end do
 
 	! Initialize the AgLU model, passing in population and passing out initial prices
