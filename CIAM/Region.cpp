@@ -536,7 +536,7 @@ void Region::rscsupply(int per)
 		resources[i]->annualsupply(per,gnp[per],prev_gdp,price,prev_price);
 		
 		// set market supply of resources used for solution mechanism
-		marketplace.setsupply(goodName,regionName,resources[i]->showannualprod(per),per);				
+		marketplace.setsupply(goodName,regionName,resources[i]->getAnnualProd(per),per);				
 	}
 }
 
@@ -842,7 +842,7 @@ double Region::showrsc( const string resourceName, const int per )
 {
 	for (int i=0;i<numResources;i++) {
 		if (resources[i]->getName() == resourceName )
-			return resources[i]->showavailable(per);
+			return resources[i]->getAvailable(per);
 	}
 	return 0;
 }
@@ -852,7 +852,7 @@ double Region::showsubrsc( const string resourceName, const string& subResourceN
 {
 	for (int i=0;i<numResources;i++) {
 		if (resources[i]->getName() == resourceName )
-			return resources[i]->showsubavail( subResourceName, per );
+			return resources[i]->getSubAvail( subResourceName, per );
 	}
 	return 0;
 }
@@ -1138,7 +1138,7 @@ void Region::updateSummary( const int per ) {
 	summary[per].clearfuelcons();
 	
 	for (i=0;i<numResources;i++) {
-		summary[per].initpeprod(resources[i]->getName(),resources[i]->showannualprod(per));
+		summary[per].initpeprod(resources[i]->getName(),resources[i]->getAnnualProd(per));
 	}
 	for (i=0;i<nodsec;i++) {
 		// call update for demand sector

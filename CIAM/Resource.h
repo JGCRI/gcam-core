@@ -48,13 +48,13 @@ public:
 	void setMarket( const string& regionName );
 	double getPrice(int per); // return resource price
 	void cummsupply(double prc,int per); // calculative cummulative supply from supply curve
-	double showcummprod(int per); // returns cummulative supply
+	double getCummProd(int per); // returns cummulative supply
 	// calculates annual supply or production
 	void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
-	double showannualprod(int per); // returns annnual production of Resource
-	double showavailable(int per); // returns total available Resource
-	double showsubavail( const string& subResourceName, const int per); // returns total available subResource
-	int shownosubrsrc(void); // returns total number of subsectors
+	double getAnnualProd(int per); // returns annnual production of Resource
+	double getAvailable(int per); // returns total available Resource
+	double getSubAvail( const string& subResourceName, const int per); // returns total available subResource
+	int getNoSubrsrc(void); // returns total number of subsectors
 	void show(void); // shows Resource name and subResources
 	// MiniCAM style output to database table
 	void MCoutput( const string& regname ); 

@@ -36,15 +36,15 @@ private:
 
 	string name; //!< subrsrc name
 	int nograde; //!< number of grades of each subrsrc
-	double min_annualprod; //!< minimum annual production of subrsrc
-	vector< vector<grade*> > depgrade; //!< amount of subrsrc for each grade
+    double priceElas; //!< price elasticity for short-term supply limit
+	double minShortTermSLimit; //!< short-term supply limit.
 	vector<double> rscprc; //!< subresource price
+	vector<double> techChange; //!< technical change
 	vector<double> available; //!< total available resource
 	vector<double> annualprod; //!< annual production of subrsrc
 	vector<double> cummprod; //!< cummulative production of subrsrc
 	vector<double> gdpExpans; //!< short-term supply limit expansion elasticity w/ gdp
-    double prc_elas; //!< price elasticity for short-term supply limit
-	double minShortTermSLimit; //!< short-term supply limit.
+	vector< vector<grade*> > depgrade; //!< amount of subrsrc for each grade
 
 public:
 	subrsrc(); //default construtor
@@ -54,14 +54,14 @@ public:
 	void XMLParse( const DOMNode* tempnode ); // initialize with xml data
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
-	double price(int per);
 	void cummsupply(double prc,int per); // calculate cummulative production
-	double showcummprod(int per); // return cummulative production
+	double getPrice(int per);
+	double getCummProd(int per); // return cummulative production
 	// calculate annual production
 	void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
-	double showannualprod(int per); // return annual production
-	double showavailable(int per); // return available resource
-	int maxgrade(void); // returns total number of grades
+	double getAnnualProd(int per); // return annual production
+	double getAvailable(int per); // return available resource
+	int getMaxGrade(void); // returns total number of grades
 	// MiniCAM style output to database table
 	void MCoutput( const string& regname, const string& secname); 
 	// output to file

@@ -24,7 +24,7 @@ extern Modeltime modeltime;
 subrsrc::subrsrc() {
 	nograde = 0;
 	minShortTermSLimit = 0;
-	prc_elas = 1;	// default value if not read in
+	priceElas = 1;	// default value if not read in
 }
 
 //! Destructor.
@@ -42,9 +42,10 @@ void subrsrc::clear(){
 	name = ""; // MSVC is missing String::Clear();
 	nograde = 0;
 	minShortTermSLimit = 0;
-	prc_elas = 1;
+	priceElas = 1;
 	depgrade.clear();
 	rscprc.clear();
+	techChange.clear();
 	available.clear();
 	annualprod.clear();
 	cummprod.clear();
@@ -68,6 +69,16 @@ void subrsrc::XMLParse( const DOMNode* node )
 	vector<grade*> tempGradesVec;
 	grade* tempGrade = 0;
 	
+	// resize vectors not read in
+	int maxper = modeltime.getmaxper();
+	annualprod.resize( maxper ); // annual production of subresource
+	rscprc.resize( maxper ); // subresource price
+	techChange.resize( maxper ); // subresource price
+	available.resize( maxper ); // total available resource
+	cummprod.resize( maxper ); // cummulative production of subrsrc
+	gdpExpans.resize( maxper ); // cummulative production of subrsrc
+	updateAvailable( 0 ); 
+
 	// make sure we were passed a valid node.
 	assert( node );
 	
@@ -105,34 +116,32 @@ void subrsrc::XMLParse( const DOMNode* node )
 			tempGradesVec.clear(); // clears vector, size is 0
 		}
 		else if( nodeName == "annualprod" ){
-			annualprod.push_back( XMLHelper<double>::getValue( curr ) );
+			int year = XMLHelper<int>::getAttr( curr, "year" );
+			int period = modeltime.getyr_to_per(year);
+			annualprod[period] = XMLHelper<double>::getValue( curr );
 		}
 		else if( nodeName == "minShortTermSLimit" ){
 			minShortTermSLimit = XMLHelper<double>::getValue( curr );
 		}
-		else if( nodeName == "prc_elas" ){
-			prc_elas = XMLHelper<double>::getValue( curr );
+		else if( nodeName == "priceElas" ){
+			priceElas = XMLHelper<double>::getValue( curr );
+		}
+		else if( nodeName == "techChange" ){
+			int year = XMLHelper<int>::getAttr( curr, "year" );
+			int period = modeltime.getyr_to_per(year);
+			techChange[period] =  XMLHelper<double>::getValue( curr );
+		}
+		else if( nodeName == "gdpExpans" ){
+			int year = XMLHelper<int>::getAttr( curr, "year" );
+			int period = modeltime.getyr_to_per(year);
+			gdpExpans[period] =  XMLHelper<double>::getValue( curr );
 		}
 		
 	}
 	// completed parsing.
 	
 	nograde = depgrade.size(); // number of grades for each subresource
-	// resize vectors not read in
-	int maxper = modeltime.getmaxper();
-	rscprc.resize( maxper ); // subresource price
-	available.resize( maxper ); // total available resource
-	cummprod.resize( maxper ); // cummulative production of subrsrc
-	gdpExpans.resize( maxper ); // cummulative production of subrsrc
-	updateAvailable( 0 ); 
-	
-	//Temporary code until this variable is read in (might, for some reason, want to make this var zero)
-	for( int k = 0; k < static_cast<int>( gdpExpans.size() ); k++ ){
-		if (gdpExpans[ k ] == 0) { 
-			gdpExpans[ k ] = 1; 
-		}
-	}
-	
+
 }
 
 void subrsrc::toXML( ostream& out ) const {
@@ -167,8 +176,12 @@ void subrsrc::toXML( ostream& out ) const {
 		XMLWriteElement(gdpExpans[m],"gdpExpans",out,modeltime.getper_to_yr(m));
 	}
 	
+	for(m = 0; m < static_cast<int>(techChange.size() ); m++ ) {
+		XMLWriteElement(techChange[m],"techChange",out,modeltime.getper_to_yr(m));
+	}
+	
 	XMLWriteElement(minShortTermSLimit,"minShortTermSLimit",out);
-	XMLWriteElement(prc_elas,"prc_elas",out);
+	XMLWriteElement(priceElas,"priceElas",out);
 	
 	// finished writing xml for the class members.
 	
@@ -192,7 +205,7 @@ void subrsrc::toDebugXML( const int period, ostream& out ) const {
 	// write the xml for the class members.
 	XMLWriteElement( nograde, "nograde", out );
 	XMLWriteElement( minShortTermSLimit, "minShortTermSLimit", out );
-	XMLWriteElement( prc_elas, "prc_elas", out );
+	XMLWriteElement( priceElas, "priceElas", out );
 	
 	// Write out data for the period we are in from the vectors.
 	XMLWriteElement( rscprc[ period ], "rscprc", out );
@@ -200,6 +213,7 @@ void subrsrc::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( annualprod[ period ], "annualprod", out );
 	XMLWriteElement( cummprod[ period ], "cummprod", out );
 	XMLWriteElement( gdpExpans[ period ], "gdpExpans", out );
+	XMLWriteElement( techChange[ period ], "techChange", out );
 	
 	// write out the grade objects.
 	for( int i = 0; i < static_cast<int>( depgrade.size() ); i++ ){	
@@ -216,14 +230,12 @@ void subrsrc::toDebugXML( const int period, ostream& out ) const {
 	out << "</subresource>" << endl;
 }
 
-double subrsrc::price(int per)
+double subrsrc::getPrice(int per)
 {
-	rscprc[per] = 0.0;
-	
 	return rscprc[per] ;
 }
 
-int subrsrc::maxgrade() // returns total number of grades
+int subrsrc::getMaxGrade() // returns total number of grades
 {
 	return nograde;
 }
@@ -286,7 +298,7 @@ void subrsrc::cummsupply(double prc,int per)
 	//available[per]=available[0]-cummprod[per];
 }
 
-double subrsrc::showcummprod(int per)
+double subrsrc::getCummProd(int per)
 {
 	return cummprod[per];
 }
@@ -317,12 +329,15 @@ void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,doubl
 		// incorporate short-term capacity limits after 1990
 		// This represents a limit to how fast production capacity can expand
 		if (per >= 2) {
-			// minShortTermSLimit is defined in object and read in from database
+			// minShortTermSLimit is defined in object and read in from xml
 			// minShortTermSLimit is the minimun short-term capacity limit
 			double cur_annualprod = 0;
 			
 			// check to see if base short-term capacity (supply) limit is smaller than the minimum
-			double max_annualprod = annualprod[per-1]*pow(gnp/prev_gnp,gdpExpans[per]);
+			double max_annualprod = annualprod[per-1]
+					*pow(gnp/prev_gnp,gdpExpans[per])
+					*pow((1+techChange[per]),modeltime.gettimestep(per));
+			
 			if(minShortTermSLimit < max_annualprod) { 
 				cur_annualprod = max_annualprod; 
 			}
@@ -331,7 +346,7 @@ void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,doubl
 			}
 			
 			// adjust short-term capacity limit for price effects
-			cur_annualprod *= pow((price/prev_price),prc_elas);
+			cur_annualprod *= pow((price/prev_price),priceElas);
 			
 			// Adjust current production and cummulative production to date
 			// if greater than the short-term capacity limit
@@ -351,13 +366,13 @@ void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,doubl
 
 
 //! return annual production for period
-double subrsrc::showannualprod(int per)
+double subrsrc::getAnnualProd(int per)
 {
 	return annualprod[per];
 }
 
 //! return available resource for period
-double subrsrc::showavailable(int per)
+double subrsrc::getAvailable(int per)
 {
 	return available[per];
 }

@@ -621,6 +621,7 @@ void sector::updateSummary( const int per )
 demsector::demsector() {
 	perCapitaBased = 0;
 	pElasticityBase = 0;
+	priceRatio = 1;
 }
 
 //! Clear member variables.
@@ -632,6 +633,7 @@ void demsector::clear(){
 	// now clear own data.
 	perCapitaBased = 0;
 	pElasticityBase = 0;
+	priceRatio = 1;
 	fe_cons.clear();
 	service.clear();
 	iElasticity.clear();
@@ -805,6 +807,7 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( market, "market", out );
 	XMLWriteElement( unit, "unit", out );
 	XMLWriteElement( pElasticityBase, "pElasticityBase", out );
+	XMLWriteElement( priceRatio, "priceRatio", out );
 
 	// Write out the data in the vectors for the current period.
 	// First write out inherited members.
@@ -908,14 +911,13 @@ void demsector::calc_share( const string regionName, const int per, const double
 void demsector::calc_pElasticity(int per)
 {
 	pElasticity[per]=0.0;
-	//double sectorfuelprice = 0; // using basesharewts, for p elasticity only
 	sectorfuelprice[per] = 0;
-	double priceRatio = 0; // ratio of total price to fuel price
+	double tmpPriceRatio = 0; // ratio of total price to fuel price
 	for (int i=0;i<nosubsec;i++) {
 		sectorfuelprice[per] += subsec[i]->getwtfuelprice(per);
 	}
-	priceRatio = sectorprice[per]/sectorfuelprice[per];
-	pElasticity[per] = pElasticityBase*priceRatio;
+	tmpPriceRatio = sectorprice[per]/sectorfuelprice[per];
+	pElasticity[per] = pElasticityBase*tmpPriceRatio;
 }
 
 
@@ -931,9 +933,8 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
 
 	// normalize prices to 1990 base
 	int normPeriod = modeltime.getyr_to_per(1990);
-	//price_norm[per] = sectorprice[per]/sectorprice[normPeriod];
-	//double priceRatio = price_norm[per];
-	double priceRatio = sectorprice[per]/sectorprice[normPeriod];
+	priceRatio = sectorprice[per]/sectorprice[normPeriod];
+	//priceRatio = 1;
 
 	// demand for service
 	if (per == 0) {

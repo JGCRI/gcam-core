@@ -205,7 +205,7 @@ double Resource::getPrice(int per)
 }
 
 //! Returns total number of subsectors.
-int Resource::shownosubrsrc() 
+int Resource::getNoSubrsrc() 
 {
 	return nosubrsrc;
 }
@@ -219,11 +219,11 @@ void Resource::cummsupply(double prc,int per)
 	// sum cummulative production of each subsector
 	for (i=0;i<nosubrsrc;i++) {
 		depsubrsrc[i]->cummsupply(prc,per);
-		cummprod[per] += depsubrsrc[i]->showcummprod(per);
+		cummprod[per] += depsubrsrc[i]->getCummProd(per);
 	}
 }
 
-double Resource::showcummprod(int per)
+double Resource::getCummProd(int per)
 {
 	return cummprod[per];
 }
@@ -239,29 +239,29 @@ void Resource::annualsupply(int per,double gnp,double prev_gnp,double price,doub
 	// sum annual production of each subsector
 	for (i=0;i<nosubrsrc;i++) {
 		depsubrsrc[i]->annualsupply(per,gnp,prev_gnp,price,prev_price);
-		annualprod[per] += depsubrsrc[i]->showannualprod(per);
-		available[per] += depsubrsrc[i]->showavailable(per);
+		annualprod[per] += depsubrsrc[i]->getAnnualProd(per);
+		available[per] += depsubrsrc[i]->getAvailable(per);
 	}
 }
 
 
 //! Return annual production of resources.
-double Resource::showannualprod(int per)
+double Resource::getAnnualProd(int per)
 {
 	return annualprod[per];
 }
 
 //! Return resource available from all subsectors.
-double Resource::showavailable(int per)
+double Resource::getAvailable(int per)
 {
 	return available[ per ];
 }
 
 //! Return resource available from each subsectors.
-double Resource::showsubavail( const string& subResourceName, const int per ) {
+double Resource::getSubAvail( const string& subResourceName, const int per ) {
 	for (int i=0;i<nosubrsrc;i++) {
 		if (depsubrsrc[i]->getName() == subResourceName )
-			return depsubrsrc[i]->showavailable(per);
+			return depsubrsrc[i]->getAvailable(per);
 	}
 	return 0;
 }

@@ -102,6 +102,7 @@ class demsector : public sector
 protected:
 	int perCapitaBased; //!< demand equation based on per capita GNP, true or false
 	double pElasticityBase; //!< base year energy price elasticity
+	double priceRatio; // temp price ratio
 	vector<double> sectorfuelprice; // temp vec
 	vector<double> fe_cons; //!< end-use sector final energy consumption
 	vector<double> service; //!< total end-use sector service 
