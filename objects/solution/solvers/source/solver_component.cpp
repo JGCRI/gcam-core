@@ -14,6 +14,7 @@
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/log_newton_raphson.h"
+#include "solution/solvers/include/log_newton_raphson_SD.h"
 #include "solution/solvers/include/bisect_all.h"
 #include "solution/solvers/include/bisect_one.h"
 #include "util/base/include/configuration.h"
@@ -61,6 +62,9 @@ auto_ptr<SolverComponent> SolverComponent::getSolverComponent( const string& sol
     }
     else if( solverName == BisectAll::getNameStatic() ){
         return auto_ptr<SolverComponent>( new BisectAll( marketplace, world, calcCounter ) );
+    }
+    else if( solverName == LogNewtonRaphsonSaveDeriv::getNameStatic() ){
+        return auto_ptr<SolverComponent>( new LogNewtonRaphsonSaveDeriv( marketplace, world, calcCounter ) );
     }
     else if( solverName == BisectOne::getNameStatic() ){
         return auto_ptr<SolverComponent>( new BisectOne( marketplace, world, calcCounter ) );

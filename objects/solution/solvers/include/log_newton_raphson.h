@@ -14,6 +14,9 @@
 * \version $Revision$
 */
 #include<string>
+#include <mtl/matrix.h>
+
+typedef mtl::matrix<double, mtl::rectangle<>, mtl::dense<>, mtl::row_major>::type Matrix;
 
 class CalcCounter; 
 class Marketplace;
@@ -33,9 +36,18 @@ public:
     void init();
     static const std::string& getNameStatic();
     ReturnCode solve( const double solutionTolerance, const double edSolutionFloor, const int maxIterations, SolverInfoSet& solverSet, const int period );
+    
 protected:
     const std::string& getName() const;
     static const std::string SOLVER_NAME;
+    virtual ReturnCode calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period );
+
+    bool calcDerivativeDefault;
+    bool derivativesCalculated;
+    std::auto_ptr <Matrix> JFSave;
+    std::auto_ptr <Matrix> JFDMSave;
+    std::auto_ptr <Matrix> JFSMSave;
+    int savedMatrixSize;
 };
 
 #endif // _NEWTON_RAPHSON_H_

@@ -23,20 +23,25 @@
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
 
+#include <mtl/matrix.h>
+#include <mtl/mtl.h>
+#include <mtl/utils.h>
+
 using namespace std;
 
 const string LogNewtonRaphson::SOLVER_NAME = "LogNewtonRaphson";
 extern ofstream logfile, bugoutfile;
 
 //! Default Constructor. Constructs the base class. 
-LogNewtonRaphson::LogNewtonRaphson( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):SolverComponent( marketplaceIn, worldIn, calcCounterIn ) {
+LogNewtonRaphson::LogNewtonRaphson( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn )
+:SolverComponent( marketplaceIn, worldIn, calcCounterIn ) {
 }
 
 //! Default Destructor. Currently does nothing.
 LogNewtonRaphson::~LogNewtonRaphson(){
 }
 
-//! Init method. Currently does nothing. 
+//! Init method.  
 void LogNewtonRaphson::init() {
 }
 
@@ -70,7 +75,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     unsigned int numDerivativeCalcs = 0; // count number of times derivatives are calculated
     unsigned int iterInNR = 0;
     ReturnCode code = SolverComponent::ORIGINAL_STATE;
-
+      
     // Constants
     const static unsigned int MAX_DERIVATIVE_CALC = 25; // count number of times derivatives are normally calculated
     const static double MAXED_FOR_DERIV_RECALC = 0; // recalculate derivatives is ED is larger than this 
@@ -94,11 +99,6 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
         return SUCCESS; // Need a new code here.
     }
 
-    vector<double> NP; // adjustment value
-    vector<double> KD; // k values demand
-    vector<double> KS; // k values supply
-    vector<double> KDS; // k values demand - supply
-
     // Turn off calibration.
     const bool calibrationStatus = world->getCalibrationSetting();
     world->turnCalibrationsOff();
@@ -109,89 +109,22 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     // addIteration( worstSol.getName(), worstSol.getRelativeED( edSolutionFloor ) );
 
     do {
-
+       
         // Declare matrices here due to resize bug.
         Matrix JF( solverSet.getNumSolvable(), solverSet.getNumSolvable() );
         Matrix JFDM( solverSet.getNumSolvable(), solverSet.getNumSolvable() );
         Matrix JFSM( solverSet.getNumSolvable(), solverSet.getNumSolvable() );
         
-        // control no of times derivatives are calculated
-        // if ( ( numDerivativeCalcs < MAX_DERIVATIVE_CALC ) || ( solvableChanged != SolverInfoSet::UNCHANGED ) ) { 
-            // Resize vectors to current number of solvable. 
-            NP.resize( solverSet.getNumSolvable() );
-            KD.resize( solverSet.getNumSolvable() );
-            KS.resize( solverSet.getNumSolvable() );
-            KDS.resize( solverSet.getNumSolvable() );
-
-            // Calculate derivatives.
-            SolverLibrary::derivatives( marketplace, world, solverSet, period ); 
-            // numDerivativeCalcs++;
-
-            logfile << ",,,Derivatives calculated" << endl;
-
-            if ( trackED ) {
-                cout <<" End Derivatives " << endl;
-            }
-        // }
-        // Update the JF, JFDM, and JFSM matrices
-        SolverLibrary::updateMatrices( solverSet, JFSM, JFDM, JF );
-        SolverLibrary::invertMatrix( JF );
-
-        // initialize KD and KS as logs of original demand and supply
-        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
-            KD[ i ] = log( max( solverSet.getSolvable( i ).getDemand(), util::getSmallNumber() ) );
-            KS[ i ] = log( max( solverSet.getSolvable( i ).getSupply(), util::getSmallNumber() ) );
-        }
-    
-        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
-            for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
-                double tempValue = log( max( solverSet.getSolvable( j ).getPrice(), util::getSmallNumber() ) );
-                KD[ i ] -= tempValue * JFDM[ i ][ j ];
-                KS[ i ] -= tempValue * JFSM[ i ][ j ];
-                assert( util::isValidNumber( KD[ i ] ) );
-                assert( util::isValidNumber( KS[ i ] ) );
-            }
-
-            KDS[ i ] = KD[ i ] - KS[ i ];
-            assert( util::isValidNumber( KDS[ i ] ) );
-        }
-
-        // Calculate new log price based on NR
-        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
-            NP[ i ] = 0;
-            for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
-                assert( util::isValidNumber( JF[ i ][ j ] ) );
-                NP[ i ] += JF[ i ][ j ] * KDS[ j ];
-                assert( util::isValidNumber( NP[ i ] ) );
-            }
-            
-            // Set the new price with the exponent of the correction vector.
-            solverSet.getSolvable( i ).setPrice( exp( NP[ i ] ) );
-            assert( util::isValidNumber( solverSet.getSolvable( i ).getPrice() ) );
-            
-            // Debugging output.
-            if( debugChecking ){
-                if ( solverSet.getSolvable( i ).getPrice() > 1e10) {
-                    cerr << " Large price in market: " << solverSet.getSolvable( i ).getName() << endl;
-                    // first get largest derivitive
-                    double maxDerVal = 0; 
-                    double maxKDSval = 0;
-                    for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
-                        maxKDSval = max( maxKDSval, fabs( KDS[ j ] ) );
-                        maxDerVal = max( maxDerVal, fabs( JF[ i ][ j ]) );
-                    }
-                    cout << "Max KDS: " << maxKDSval << ", Max Derivitive: " << maxDerVal;
-                    cout << "Large derivitives against: " << endl;
-                    for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
-                        if ( fabs( JF[ i ][ j ]) > maxDerVal / 100 ) {
-                            cout << "   Market: " << solverSet.getSolvable( j ).getName() << ", Value: "<< JF[ i ][ j ] << endl;
-                        }
-                    }
-                }
-            }
+        // Calculate derivatives
+        code = calculateDerivatives( solverSet, JFSM, JFDM, JF, period );        
+        if ( code != SUCCESS ) {
+            return code;
         }
         
-        // Call world.calc and update supplies and demands. 
+        // Calculate new prices
+        SolverLibrary::calculateNewPricesLogNR( solverSet, JFSM, JFDM, JF );        
+       
+         // Call world.calc and update supplies and demands. 
         solverSet.updateToMarkets();
         marketplace->nullSuppliesAndDemands( period );
         world->calc( period );
@@ -209,50 +142,8 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
             cout << "NR-maxRelED: ";
             worstSol.printTrackED();
         }
-        
-        /*
-        // if solution moves in wrong direction
-        if( solverSet.getMaxRelativeExcessDemand( edSolutionFloor + 5 ) > EXIT_VALUE ){
-            logfile << ",,Exit Newton-Raphson function maxSolVal > " << EXIT_VALUE << endl;
-            if ( trackED ) {
-                cout << "Exit Newton-Raphson function maxSolVal > " << EXIT_VALUE << endl;
-            }
-            
-            const double maxSolVal = solverSet.getMaxRelativeExcessDemand( edSolutionFloor + 5 );
-            for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
-                const double relativeED = solverSet.getSolvable( i ).getRelativeED( edSolutionFloor + 5 );
-                if ( fabs( relativeED ) > maxSolVal / 20 ) {
-                    if ( trackED ) {
-                        cout << "RED: (" << solverSet.getSolvable( i ).getName()  << ") - " << relativeED << endl;
-                    }
-                    logfile << ",,,Due to market " << solverSet.getSolvable( i ).getName() << " - RED: " << relativeED << endl;
-                }
-            }
-            return FAILURE_WRONG_DIRECTION;
-        }
-
-        // If have iterated 10 times in NR without solving, then re-do derivatives
-        if ( ( iterInNR > 0 ) && ( iterInNR % MAX_ITER_BEFORE_DERIV_RECALC == 0 ) ) {
-            numDerivativeCalcs = 0;
-            // sjs add this to print out SD curves when has trouble solving
-            if ( debugChecking ) {
-                marketplace->checkMarketSolution( solutionTolerance, edSolutionFloor, period , false ) ;
-            }
-        }
-
-        // IF ED is too high then re-calculate derivatives
-        if ( solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) > MAXED_FOR_DERIV_RECALC ) {
-            numDerivativeCalcs = 0;
-        }
-         // Debug output
-        if ( bugMinimal ) {
-            bugoutfile << endl << "Solution after " << iterInNR << " iterations in NR_RON: " << endl;
-            bugoutfile << solverSet << endl;
-        }
-        
-        iterInNR++;
-        */
-    } // end do loop	
+                
+   } // end do loop	
 
     while ( isImproving( 7 ) && calcCounter->getMethodCount( SOLVER_NAME ) - nrCalcsStart < maxIterations && solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) >= solutionTolerance );	
 
@@ -284,6 +175,27 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     if ( calibrationStatus ) { // turn end-use calibrations back on if were on originally
         world->turnCalibrationsOn();
     }  
-
+    
     return code;
+}
+
+//! Calculate derivatives
+SolverComponent::ReturnCode LogNewtonRaphson::calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period ) {
+        
+      // Always calculate derivatives in this solver component
+           
+      // Calculate derivatives.
+      SolverLibrary::derivatives( marketplace, world, solverSet, period ); 
+      // numDerivativeCalcs++;
+   
+      logfile << ",,,Derivatives calculated" << endl;
+      if ( trackED ) {
+         cout <<" End Derivatives " << endl;
+      }
+               
+      // Update the JF, JFDM, and JFSM matrices
+      SolverLibrary::updateMatrices( solverSet, JFSM, JFDM, JF );
+      SolverLibrary::invertMatrix( JF );
+                       
+      return SUCCESS;
 }

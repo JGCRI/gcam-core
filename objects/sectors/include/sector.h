@@ -96,16 +96,18 @@ public:
     virtual void setMarket();
     void initCalc( const int period );
     virtual void calibrateSector( const int period ); 
+    virtual void checkSectorCalData( const int period );
     void setFinalSupply( const int period );
     void setoutput( const double demand, const int period, const GDP* gdp ); 
     void adjustForFixedOutput( const double marketDemand, const int period );
+    bool isAllCalibrated( const int period, const bool printWarming ) const;
     void supply( const int period, const GDP* gdp );
     double getOutput( const int period );
     void calcFinalSupplyPrice( const GDP* gdp, const int period );
     double getFixedOutput( const int period, bool printValues = false ) const; 
     bool outputsAllFixed( const int period ) const;
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
-    double getFixedInputs( const int period, const std::string& goodName, const bool bothVals=true ) const;
+    double getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals = true ) const;
     void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
     double getPrice( const int period );
     double getCalOutput( const int period ) const;
@@ -113,6 +115,7 @@ public:
     void emission( const int period );
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period );
+    virtual double getEnergyInput( const int period );
     virtual void csvOutputFile() const;
     virtual void dbOutput() const;
     void subsec_outfile() const;

@@ -327,6 +327,26 @@ bool World::getCalibrationSetting() const {
     return doCalibrations;
 }
 
+
+/*! \brief Test to see if calibration worked for all regions
+*
+* Compares the sum of calibrated + fixed values to output of each sector.
+*
+* \author Steve Smith
+* \param period Model period
+* \return Boolean true if calibration is ok.
+*/
+bool World::isAllCalibrated( const int period ) const {
+    
+   for( RegionIterator i = regions.begin(); i != regions.end(); i++ ){
+      if ( !( *i )->isAllCalibrated( period ) ) {
+         return false;
+      }
+   }
+   
+   return true;
+}
+
 //! Return the amount of the given GHG in the given period.
 double World::getGHGEmissions( const std::string& ghgName, const int period ) const {
     assert( period < static_cast<int>( ghgs.size() ) );

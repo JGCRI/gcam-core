@@ -116,7 +116,7 @@ public:
     double getFixedOutput( const int period ) const;
     void resetfixedOutput( const int period );
     double getTotalCalOutputs( const int period ) const;
-    double getFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const;
+    double getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const;
     void csvOutputFile() const; 
     void MCoutputSupplySector() const; 
     void MCoutputDemandSector() const; 
@@ -135,5 +135,6 @@ public:
     void updateSummary( const int period );
     void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
     void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
+    int getNumberAvailTechs( const int period ) const;
 };
 #endif // _SUBSECTOR_H_

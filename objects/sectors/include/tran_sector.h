@@ -35,6 +35,7 @@ public:
     virtual void clear();
     virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void aggdemand(  const GDP* gdp, const int period  ); 
+    virtual void checkSectorCalData( const int period );
 	virtual const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
 };

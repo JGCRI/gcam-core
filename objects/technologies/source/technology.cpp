@@ -219,6 +219,11 @@ void technology::XMLParse( const DOMNode* node ) {
         else if( nodeName == "logitexp" ){
             lexp = XMLHelper<double>::getValue( curr );
         }
+        else if( nodeName == "fixedOutput" ){
+            fixedOutput = XMLHelper<double>::getValue( curr );
+            // need to initialize this here (needs to be available for setting simul markets before init() is called)
+            fixedOutputVal = fixedOutput; 
+        }
         else if( nodeName == "techchange" ){
             techchange = XMLHelper<double>::getValue( curr );
         }
@@ -299,6 +304,7 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, -6.0 );
+    XMLWriteElementCheckDefault( fixedOutput, "fixedOutput", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( techchange, "techchange", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( resource, "resource", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( A, "A", out, tabs, 0.0 );
@@ -700,6 +706,56 @@ void technology::production(const string& regionName,const string& prodName,
     }
 }
 
+/*! \brief Adjusts technooogy share weights to be consistent with calibration value.
+* This is done only if there is more than one technology
+* Calibration is, therefore, performed as part of the iteration process. 
+* Since this can change derivatives, best to turn calibration off when using N-R solver.
+*
+* This routine adjusts technology shareweights so that relative shares are correct for each subsector.
+* Note that all calibration values are scaled (up or down) according to total sectorDemand 
+* -- getting the overall scale correct is the job of the TFE calibration
+*
+* \author Steve Smith
+* \param subSectorDemand total demand for this subsector
+*/
+void technology::adjustForCalibration( double subSectorDemand ) {
+
+   // total calibrated outputs for this sub-sector
+   double calOutput = getCalibrationOutput( );
+
+    // make sure share weights aren't zero or else cann't calibrate
+    if ( shrwts  == 0 && ( calOutput > 0 ) ) {
+        shrwts  = 1;
+    }
+   
+   // Next block adjusts calibration values if total cal + fixed demands for this subsector 
+//   if ( !( totalCalOutputs > subSectorDemand ) ) {
+ //    calOutput = calOutput * ( subSectorDemand  / totalCalOutputs );
+ //  }
+   
+   // Adjust share weights
+   double technologyDemand = share * subSectorDemand;
+   if ( technologyDemand > 0 ) {
+      double shareScaleValue = calOutput / technologyDemand;
+      shrwts  = shrwts * shareScaleValue;
+   }
+    
+   // Check to make sure share weights are not less than zero (and reset if they are)
+   if ( shrwts < 0 ) {
+     cerr << "Share Weight is < 0 in technology " << name << endl;
+     cerr << "    shrwts: " << shrwts << " (reset to 1)" << endl;
+     shrwts = 1;
+   }
+
+   Configuration* conf = Configuration::getInstance();
+   bool debugChecking = conf->getBool( "debugChecking" );
+   
+  // Report if share weight gets extremely large
+   if ( debugChecking && (shrwts > 1e4 ) ) {
+         cout << "Large share weight in calibration for technology: " << name << endl;
+   }
+}
+
 //! calculate GHG emissions from technology use
 void technology::calcEmission( const string prodname ) {
     // alternative ghg emissions calculation
@@ -799,7 +855,20 @@ bool technology::ouputFixed( ) const {
    } 
    
    return outputFixed;
-   
+}
+
+/*! \brief Returns true if this technology is available for production and not fixed
+*
+* A true value means that this technology is available to respond to a demand and vary its output
+* 
+* \author Steve Smith
+* \return Boolean that is true if technology is available
+*/
+bool technology::techAvailable( ) const {
+   if ( !doCalibration && ( fixedOutput != 0  ||  shrwts == 0 ) ) {
+      return false;  // this sector is not available to produce variable output
+   } 
+   return true;
 }
 
 //! return fuel input for technology
@@ -826,7 +895,7 @@ double technology::getCalibrationInput( ) const {
 void technology::scaleCalibrationInput( const double scaleFactor ) {
     if ( scaleFactor != 0 ) {
         calInputValue = calInputValue * scaleFactor;
-		  calOutputValue = calInputValue * eff;
+		  calOutputValue = calOutputValue * scaleFactor;
     }
 }
 

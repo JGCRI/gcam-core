@@ -192,7 +192,7 @@ void TranSubsector::setoutput( const double demand, const int period, const GDP*
     // output is in service unit when called from demand sectors
     double subsecdmd = share[period]* demand; // share is subsector level
     //subsecdmd /= loadFactor[period]; // convert to per veh-mi
-    
+
     for ( i=0; i<notech; i++ ) {
         // calculate technology output and fuel input from subsector output
         techs[i][period]->production( regionName, sectorName, subsecdmd, gdp, period );

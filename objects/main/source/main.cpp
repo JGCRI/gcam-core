@@ -107,6 +107,9 @@ int main( int argc, char *argv[] ) {
     XMLHelper<void>::cleanupParser();
     LoggerFactory::cleanUp();
     cout << "Model exiting successfully." << endl;
+    
+   // sleep(10000000); // Un-comment to use unix memory analysis tool. sjs
+    
     // Return exit code based on whether the model succeeded(Non-zero is failure by convention).
     return 0 ? 1 : success; 
 }

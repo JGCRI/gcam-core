@@ -54,6 +54,7 @@ public:
     void turnCalibrationsOn(); 
     void turnCalibrationsOff();
     bool getCalibrationSetting() const;
+    bool isAllCalibrated( const int period ) const;
     void printGraphs( std::ostream& outStream, const int period ) const;
     const std::vector<std::string> getPrimaryFuelList() const;
     double getPrimaryFuelCO2Coef( const std::string& regionName, const std::string& fuelName ) const;

@@ -37,13 +37,15 @@ public:
         ORIGINAL_STATE,
         SUCCESS,
         FAILURE_ITER_MAX_REACHED,
-        FAILURE_WRONG_DIRECTION
+        FAILURE_WRONG_DIRECTION,
+        FAILURE_SOLUTION_SIZE_CHANGED
     };
    SolverComponent( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
    virtual ~SolverComponent();
    static std::auto_ptr<SolverComponent> getSolverComponent( const std::string& solverName, Marketplace* marketplace, World* world, CalcCounter* calcCounter );
    virtual void init() = 0;
    virtual ReturnCode solve( const double solutionTolerance, const double edSolutionFloor, const int maxIterations, SolverInfoSet& solverSet, const int period ) = 0;
+
 protected:
    Marketplace* marketplace; //<! The marketplace to solve. 
    World* world; //<! World to call calc on.

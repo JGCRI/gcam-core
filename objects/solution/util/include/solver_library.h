@@ -46,7 +46,9 @@ public:
    static void invertMatrix( Matrix& A );
 	
    static void updateMatrices( SolverInfoSet& sol, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
+   static void calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
    static bool bracket( Marketplace* marketplace, World* world, const double bracketInterval, SolverInfoSet& sol, const int period );
+   
 private:
     typedef std::map<std::string, std::vector<double> > RegionalMarketValues;
     typedef std::vector<std::string>::const_iterator RegionIterator;

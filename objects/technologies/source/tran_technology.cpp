@@ -97,38 +97,15 @@ void tranTechnology::calcCost( const string& regionName, const string& sectorNam
 }
 
 
-//! calculate technology shares
-void tranTechnology::calcShare( const string& regionName, const int per)
-{
-    // original technology share calculation
-    share = shrwts * pow(techcost,lexp);
-
-    // problem with this code because baseScalar is recalculated every period
-/*    if(per==0 || per==1) {
-        baseScaler = serviceOutput / shrwts * pow(techcost, -lexp);
-    }
-    // for base period share = serviceOutput
-    share = baseScaler * shrwts * pow(techcost,lexp);
-*/
-}
-
 //! Calculates fuel input and tranTechnology output.
 /*! Adds demands for fuels and ghg emissions to markets in the marketplace
 */
 void tranTechnology::production(const string& regionName,const string& prodName,
                                 double dmd, const GDP* gdp, const int per ) {
-    string hydro = "hydro";
     Marketplace* marketplace = scenario->getMarketplace();
     
-    // dmd is total subsector demand
-    if(name != hydro) {
-        output = share * dmd; // use share to get output for each tranTechnology
-    }
-    else { // do for hydroelectricity
-        output = fixedOutputVal = dmd;
-    }
-    
-    // eliminated renewable branch for input calc, since code was the same. sjs
+    output = share * dmd;
+        
     // for transportation technology use intensity instead of efficiency
     // convert from million Btu to EJ
     vehicleOutput = output/loadFactor;
@@ -155,9 +132,14 @@ void tranTechnology::production(const string& regionName,const string& prodName,
         ghg[i]->calcEmission(regionName, fuelname,input,prodName,output, gdp, per );
         // set emissions as demand side of gas market
         marketplace->addToDemand(ghg[i]->getName(),regionName,ghg[i]->getEmission(),per);		
-    }
+    }    
 }
 
+//! return technology calibration value
+double tranTechnology::getCalibrationOutput( ) const {
+    const double ECONV = 1.055e-9;
+    return calInputValue * techChangeCumm*loadFactor / (intensity*ECONV);
+}
 
 //! return fuel intensity
 double tranTechnology::getIntensity(const int per) const {

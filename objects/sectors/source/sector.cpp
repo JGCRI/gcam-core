@@ -345,39 +345,69 @@ void Sector::initCalc( const int period ) {
 	 // to make sure share weights have been adjusted to be consistant with final solution prices
 	 //
 	 // If debugchecking flag is on extra information is printed
-    if ( Configuration::getInstance()->getBool( "debugChecking" ) && Configuration::getInstance()->getBool( "CalibrationActive" ) ) { 
-        const double CAL_CHECK_VAL = 0.001; // tollerance for calibration check (somewhat arbitrary)
-        if ( period > 0 ) {
-            double calOutputs = getCalOutput( period - 1 );
-            double totalFixed = calOutputs + getFixedOutput( period - 1 );
-            double calDiff =  totalFixed - getOutput( period - 1 );
+    if ( Configuration::getInstance()->getBool( "debugChecking" ) && period > 0 ) { 
+       isAllCalibrated( period - 1 , true );
+    }
+}
 
-            // Two cases to check for. If outputs are all fixed, then calDiff should be small in either case.
-            // Even if outputs are not all fixed, then calDiff shouldn't be > CAL_CHECK_VAL (i.e., totalFixedOutputs > actual output)
-            const bool printDetails = false; // toggle for more detailed debugging output
-            if ( calOutputs > 0 ) {
-                double diffFraction = calDiff/calOutputs;
-                if ( ( calDiff > CAL_CHECK_VAL ) || ( ( abs(diffFraction) > CAL_CHECK_VAL ) && outputsAllFixed( period - 1 ) ) ) {
-                    cerr << "WARNING: " << name << " " << getXMLName() << " in " << regionName << " != cal+fixed vals (";
-                    cerr << totalFixed << " )" << " in yr " <<  scenario->getModeltime()->getper_to_yr( period - 1 );
-                    cerr << " by: " << calDiff << " (" << calDiff*100/calOutputs << "%) " << endl;
-                    if ( printDetails) {
-                        cout << "   fixedSupplies: " << "  "; 
-                        for ( int i=0; i<nosubsec; i++ ) {
-                            double fixedSubSectorOut =  subsec[ i ]->getTotalCalOutputs( period - 1 ) + subsec[ i ]->getFixedOutput( period - 1 );
-                            cout << "ss["<<i<<"] "<< fixedSubSectorOut << ", ";
-                        } 
-                        cout << endl;
-                        cout << "   Production: " << "  "; 
-                        for ( int i=0; i<nosubsec; i++ ) {
-                            cout << "ss["<<i<<"] "<< subsec[ i ]->getOutput( period - 1 ) << ", ";
-                        } 
-                        cout << endl;
-                    }
-                } // calDiff branch
+/*! \brief Perform any sector level calibration data consistancy checks
+*
+* \author Steve Smith
+* \param period Model period
+*/
+void Sector::checkSectorCalData( const int period ) {
+}
+
+/*! \brief Test to see if calibration worked for this sector
+*
+* Compares the sum of calibrated + fixed values to output of sector.
+* Will optionally print warning to the screen (and eventually log file).
+* 
+* If all outputs are not calibrated then this does not check for consistancy.
+*
+* \author Steve Smith
+* \param period Model period
+* \param printWarming if true prints a warning
+* \return Boolean true if calibration is ok.
+*/
+bool Sector::isAllCalibrated( const int period, const bool printWarming ) const {	
+   const double CAL_CHECK_VAL = 0.001; // tollerance for calibration check (somewhat arbitrary)
+   const bool PRINT_DETAILS = false; // toggle for more detailed debugging output
+        
+   bool checkCalResult = true; 
+   if ( period > 0 && Configuration::getInstance()->getBool( "CalibrationActive" ) ) {
+      double calOutputs = getCalOutput( period );
+      double totalFixed = calOutputs + getFixedOutput( period );
+      double calDiff =  totalFixed - getOutput( period );
+
+      // Two cases to check for. If outputs are all fixed, then calDiff should be small in either case.
+      // Even if outputs are not all fixed, then calDiff shouldn't be > CAL_CHECK_VAL (i.e., totalFixedOutputs > actual output)
+      if ( calOutputs > 0 ) {
+         double diffFraction = calDiff/calOutputs;
+         if ( ( calDiff > CAL_CHECK_VAL ) || ( ( abs(diffFraction) > CAL_CHECK_VAL ) && outputsAllFixed( period ) ) ) {
+            checkCalResult = false;
+            if ( printWarming ) {
+               cerr << "WARNING: " << name << " " << getXMLName() << " in " << regionName << " != cal+fixed vals (";
+               cerr << totalFixed << " )" << " in yr " <<  scenario->getModeltime()->getper_to_yr( period );
+               cerr << " by: " << calDiff << " (" << calDiff*100/calOutputs << "%) " << endl;
+               if ( PRINT_DETAILS) {
+                  cout << "   fixedSupplies: " << "  "; 
+                  for ( int i=0; i<nosubsec; i++ ) {
+                     double fixedSubSectorOut =  subsec[ i ]->getTotalCalOutputs( period ) + subsec[ i ]->getFixedOutput( period );
+                     cout << "ss["<<i<<"] "<< fixedSubSectorOut << ", ";
+                  } 
+                  cout << endl;
+                  cout << "   Production: " << "  "; 
+                  for ( int i=0; i<nosubsec; i++ ) {
+                     cout << "ss["<<i<<"] "<< subsec[ i ]->getOutput( period ) << ", ";
+                  } 
+                  cout << endl;
+               }
             }
-    }
-    }
+         } // calDiff > CAL_CHECK_VAL branch
+      }
+   }
+   return checkCalResult;
 }
 
 /*! \brief Create new market for this Sector
@@ -420,7 +450,7 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
     // Note that this solution for the fixed capacity share problem requires that 
     // simultaneity be turned on. This would seem to be because the fixed share is lagged one period
     // and can cause an oscillation. With the demand for this Sector in the marketplace, however, the
-    // fixed capacity converges as the trial value for demand converges.
+    // fixed capacity converges as the trial value for demand converges. Region::findSimul now checks for this.
     
     double sum = 0;
     double fixedSum = 0;
@@ -830,10 +860,10 @@ double Sector::getCalOutput( const int period  ) const {
 * \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
 * \return total fixed inputs
 */
-double Sector::getFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const {
+double Sector::getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const {
     double totalFixedInput = 0;
     for ( int i=0; i<nosubsec; i++ ) {
-        totalFixedInput += subsec[ i ]->getFixedInputs( period, goodName, bothVals );
+        totalFixedInput += subsec[ i ]->getCalAndFixedInputs( period, goodName, bothVals );
     }
     return totalFixedInput;
 }
@@ -844,6 +874,7 @@ double Sector::getFixedInputs( const int period, const std::string& goodName, co
 *
 * \author Steve Smith
 * \param period Model period
+* \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
 * \return total calibrated inputs
 */
 bool Sector::inputsAllFixed( const int period, const std::string& goodName ) const {
@@ -1030,7 +1061,7 @@ void Sector::supply( const int period, const GDP* gdp ) {
         subsec[ i ]->setoutput( mrkdmd, period, gdp ); // CHANGED JPL
         // for reporting only
         carbonTaxPaid[ period ] += subsec[ i ]->getTotalCarbonTaxPaid( period );
-    }
+    }    
 
     if ( debugChecking ) {
         // If the model is working correctly this should never give an error
@@ -1157,6 +1188,18 @@ void Sector::sumInput( const int period ) {
 double Sector::getInput( const int period ) {
     sumInput( period );
     return input[ period ];
+}
+
+/*! \brief Returns sectoral energy consumption.
+*
+* Returns all input for energy sectors.
+*
+* \author Steve Smith
+* \param per Model period
+* \return total input
+*/
+double Sector::getEnergyInput( const int period ) {
+    return getInput( period );
 }
 
 //! Write Sector output to database.

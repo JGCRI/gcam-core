@@ -36,6 +36,7 @@ public:
     virtual bool solve( const int period );
 private:
 
+    std::auto_ptr<SolverComponent> logNewtonRaphsonSaveDeriv; //!< LogNewtonRaphsonSaveDerivatives solver component.
     std::auto_ptr<SolverComponent> logNewtonRaphson; //!< LogNewtonRaphson solver component.
     std::auto_ptr<SolverComponent> bisectAll; //!< BisectAll solver component.
     std::auto_ptr<SolverComponent> bisectOne; //!< BisectOne solver component.

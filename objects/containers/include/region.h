@@ -86,6 +86,7 @@ public:
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
     void checkData( const int period );
     void setupCalibrationMarkets();
+    bool isAllCalibrated( const int period ) const;
 
 private:
     const static std::string XML_NAME; //!< node name for toXML method.
@@ -112,6 +113,7 @@ private:
     std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
     double getFixedDemand( const int period, const std::string& goodName, bool printValues = false );
     void adjustCalibrations( const int period );
+    void checkSectorCalData( const int period );
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
     std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
     typedef std::vector<SupplySector*>::iterator SupplySectorIterator;
@@ -135,6 +137,7 @@ private:
     void setFinalSupply( const int period );
     void calcAgSector( const int period );
     void calibrateRegion( const bool doCalibrations, const int period );
+    double calcTFEscaleFactor( const int period );
     const std::vector<double> calcFutureGDP() const;
 };
 

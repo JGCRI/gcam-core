@@ -32,6 +32,10 @@
 #include "solution/util/include/solver_info_set.h"
 #include "marketplace/include/market.h"
 
+#include <mtl/matrix.h>
+#include <mtl/mtl.h>
+#include <mtl/utils.h>
+
 using namespace std;
 using namespace mtl;
 
@@ -184,6 +188,85 @@ void SolverLibrary::updateMatrices( SolverInfoSet& solverSet, Matrix& JFSM, Matr
             assert( util::isValidNumber( JF[ i ][ j ] ) );
         }
     }
+}
+
+/*! \brief Calculate and set new market prices based on Log NR  mechanism
+
+* \param JF matrix 
+* \param JFDM matrix 
+* \param JFSM matrix 
+* \param KS k values supply
+* \param KD k values demand
+* \param solverSet An object containing the set of MarketInfo objects representing all markets.
+* \param period Model period
+*/
+void SolverLibrary::calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF ){
+    const Configuration* conf = Configuration::getInstance();
+    const bool debugChecking = conf->getBool( "debugChecking" );
+
+    vector<double> NP; // adjustment value
+    vector<double> KD; // k values demand
+    vector<double> KS; // k values supply
+    vector<double> KDS; // k values demand - supply
+
+    KD.resize( solverSet.getNumSolvable() );
+    KS.resize( solverSet.getNumSolvable() );
+    NP.resize( solverSet.getNumSolvable() );
+    KDS.resize( solverSet.getNumSolvable() );
+
+        // initialize KD and KS as logs of original demand and supply
+        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
+            KD[ i ] = log( max( solverSet.getSolvable( i ).getDemand(), util::getSmallNumber() ) );
+            KS[ i ] = log( max( solverSet.getSolvable( i ).getSupply(), util::getSmallNumber() ) );
+        }
+    
+        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
+            for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
+                double tempValue = log( max( solverSet.getSolvable( j ).getPrice(), util::getSmallNumber() ) );
+                KD[ i ] -= tempValue * JFDM[ i ][ j ];
+                KS[ i ] -= tempValue * JFSM[ i ][ j ];
+                assert( util::isValidNumber( KD[ i ] ) );
+                assert( util::isValidNumber( KS[ i ] ) );
+            }
+
+            KDS[ i ] = KD[ i ] - KS[ i ];
+            assert( util::isValidNumber( KDS[ i ] ) );
+        }
+
+        // Calculate new log price based on NR
+        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
+            NP[ i ] = 0;
+            for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
+                assert( util::isValidNumber( JF[ i ][ j ] ) );
+                NP[ i ] += JF[ i ][ j ] * KDS[ j ];
+                assert( util::isValidNumber( NP[ i ] ) );
+            }
+            
+            // Set the new price with the exponent of the correction vector.
+            solverSet.getSolvable( i ).setPrice( exp( NP[ i ] ) );
+            assert( util::isValidNumber( solverSet.getSolvable( i ).getPrice() ) );
+            
+            // Debugging output.
+            if( debugChecking ){
+                if ( solverSet.getSolvable( i ).getPrice() > 1e10) {
+                    cerr << " Large price in market: " << solverSet.getSolvable( i ).getName() << endl;
+                    // first get largest derivitive
+                    double maxDerVal = 0; 
+                    double maxKDSval = 0;
+                    for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
+                        maxKDSval = max( maxKDSval, fabs( KDS[ j ] ) );
+                        maxDerVal = max( maxDerVal, fabs( JF[ i ][ j ]) );
+                    }
+                    cout << "Max KDS: " << maxKDSval << ", Max Derivitive: " << maxDerVal;
+                    cout << "Large derivitives against: " << endl;
+                    for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
+                        if ( fabs( JF[ i ][ j ]) > maxDerVal / 100 ) {
+                            cout << "   Market: " << solverSet.getSolvable( j ).getName() << ", Value: "<< JF[ i ][ j ] << endl;
+                        }
+                    }
+                }
+            }
+        }
 }
 
 /*! \brief Calculate the inverse of a matrix using an LU factorization.

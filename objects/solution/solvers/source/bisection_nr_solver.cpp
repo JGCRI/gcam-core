@@ -21,7 +21,6 @@
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
-#include "containers/include/world.h"
 #include "util/logger/include/logger.h"
 #include "util/logger/include/logger_factory.h"
 
@@ -42,6 +41,7 @@ BisectionNRSolver::BisectionNRSolver( Marketplace* marketplaceIn, World* worldIn
     logNewtonRaphson = SolverComponent::getSolverComponent( "LogNewtonRaphson", marketplace, world, &calcCounter );
     bisectAll = SolverComponent::getSolverComponent( "BisectAll", marketplace, world, &calcCounter );
     bisectOne = SolverComponent::getSolverComponent( "BisectOne", marketplace, world, &calcCounter );
+    logNewtonRaphsonSaveDeriv = SolverComponent::getSolverComponent( "LogNewtonRaphsonSaveDeriv", marketplace, world, &calcCounter );
 }
 
 //! Destructor
@@ -103,6 +103,12 @@ bool BisectionNRSolver::solve( const int period ) {
         bugoutfile << sol << endl;
     }
 
+    // Initialize solver components
+    logNewtonRaphson->init( );
+    bisectAll->init( );
+    bisectOne->init( );
+    logNewtonRaphsonSaveDeriv->init();
+    
     // Loop is done at least once.
     do {
         if ( bugTracking ) {
@@ -188,8 +194,28 @@ bool BisectionNRSolver::solve( const int period ) {
         if( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
             bisectOne->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_BISECT_ONE, sol, period );
         }
-        // Determine if the model has solved. 
-    } while ( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) && calcCounter.getPeriodCount() < MAX_CALCS );
+        
+        
+   // Determine if the model has solved
+    } while ( ( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ) 
+               && calcCounter.getPeriodCount() < MAX_CALCS );
+
+   // Make sure calibration was achieved
+   if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) && !world->isAllCalibrated( period ) ){
+      const int CAL_REPEAT_LIMIT = 20;
+      int calCount = 1;
+      do {
+         logfile << "Repeating to calibrate. N = " << calcCounter.getPeriodCount() <<  endl;
+         world->calc( period );
+         logNewtonRaphsonSaveDeriv->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_NR, sol, period );
+         calCount ++;
+      } while ( !world->isAllCalibrated( period ) && calCount < CAL_REPEAT_LIMIT && sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) );
+   }
+   
+   if ( !world->isAllCalibrated( period ) ) {
+        cout << "Model did not calibrate sucesfully in period: " << period << endl;
+        logfile << "Model did not calibrate sucesfully in period: " << period << endl;
+   }
 
     if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
         cout << "Model solved normally. Iterations this period: " << calcCounter.getPeriodCount() << ". Total iterations: "<< calcCounter.getTotalCount() << endl;

@@ -118,7 +118,9 @@ public:
     bool getCalibrationStatus( ) const; // return true if technology has calibration value
     void scaleCalibrationInput( const double scaleFactor ); // scale calibration value
     double getCalibrationInput() const; // return calibration input value
-    double getCalibrationOutput() const; // return calibration output value
+    virtual double getCalibrationOutput() const; // return calibration output value
+    void adjustForCalibration( double subSectorDemand ); // Adjust share weights for calibration
+    bool techAvailable( ) const; // Return available status (re: calibration)
     bool ouputFixed() const; // return calibration output value
     double getInput() const; // return fuel input amount
     double getOutput() const; // return technology output

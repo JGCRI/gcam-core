@@ -442,7 +442,7 @@ void Subsector::initCalc( const int period ) {
         techs[i][ period ]->initCalc( );
         techs[i][ period ]->calcfixedOutput( period );
     }
-    
+
     setCalibrationStatus( period );
     shareWeightScale( period ); 
     fixedShare[ period ] = 0;
@@ -536,7 +536,7 @@ double Subsector::getPrice( const int period ) const {
 /*! \brief Returns calibration status.
 *
 * Since this information in needed often, this is stored in a variable. 
-* Can be set just once, since this never chagnes during an interation.
+* Can be set just once, since this never changes during an interation.
 * See setCalibrationStatus
 *
 * \author Steve Smith
@@ -1032,13 +1032,15 @@ void Subsector::setoutput( const double demand, const int period, const GDP* gdp
 * Calibration is, therefore, performed as part of the iteration process. 
 * Since this can change derivatives, best to turn calibration off when using N-R solver.
 *
-* This routine adjusts shareweights so that relative shares are correct for each subsector.
+* This routine adjusts subsector shareweights so that relative shares are correct for each subsector.
 * Note that all calibration values are scaled (up or down) according to total sectorDemand 
 * -- getting the overall scale correct is the job of the TFE calibration
 *
 * Routine takes into account fixed supply, which is assumed to take precedence over calibration values
 * Note that this routine doesn't notice if the calibration is at the technology or sub-sector level, 
 * this is taken care of by routine getTotalCalOutputs.
+*
+* Routine also calls adjustment to scale technology share weights if necessary.
 *
 * \author Steve Smith
 * \param sectorDemand total demand for this sector
@@ -1090,16 +1092,37 @@ void Subsector::adjustForCalibration( double sectorDemand, double totalfixedOutp
      shrwts[ period ] = 1;
    }
 
-   // Report if share weight gets extremely large
-   bool watchSubSector = ( name == "oil" && sectorName == "electricity" && regionName == "Canadaxx");
-   if ( debugChecking && (shrwts[ period ] > 1e4 || watchSubSector) ) {
-      if ( !watchSubSector ) {
-         cout << "In calibration for sub-sector: " << name;
-         cout << " in sector: "<< sectorName << " in region: " << regionName << endl;
-      } else { cout << " ||" ; }
+   int numberTechs = getNumberAvailTechs( period );
+   // Now calibrate technology shares if necessary
+   if ( numberTechs > 1 ) {
+      for (int j=0;j<notech;j++) {
+         // adjust tech shares 
+         if ( techs[j][period]->techAvailable( ) ) {
+            techs[j][period]->adjustForCalibration( calOutputSubsect );
+         }
+      }
    }
 }
   
+/*! \brief returns the total of technologies available this period
+*
+* Technologies are available if they exist and shareweights are not zero
+*
+* \author Steve Smith
+* \param period Model period
+* \return Number of available technologies
+*/
+int Subsector::getNumberAvailTechs( const int period ) const {
+int numberAvailable = 0;
+
+   for ( int i=0; i<notech; i++ ) {
+      // calculate technology output and fuel input from Subsector output
+      if ( techs[i][period]->techAvailable( ) ) {
+         numberAvailable += 1;
+      }
+   }
+   return numberAvailable;
+}
 
 /*! \brief returns the total calibrated output from this sector.
 *
@@ -1144,7 +1167,7 @@ double Subsector::getTotalCalOutputs( const int period ) const {
 * \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
 * \return Total calibrated input for this Subsector
 */
-double Subsector::getFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const {
+double Subsector::getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const {
 	double sumCalInputValues = 0;
 
 	for ( int i=0; i<notech; i++ ) {
@@ -1160,22 +1183,19 @@ double Subsector::getFixedInputs( const int period, const std::string& goodName,
    return sumCalInputValues;
 }
 
-/*! \brief returns the total calibrated or fixed input from this sector for the specified good.
-*
-* Routine adds up calibrated or fixed input values from all technologies.
+/*! \brief returns true if inputs are all fixed for this subsector and input good
 *
 * \author Steve Smith
 * \param period Model period
-* \param goodName market good to return inputs for
-* \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
-* \return Total calibrated input for this Subsector
+* \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
+* \return boolean true if inputs of specified good are fixed
 */
 bool Subsector::inputsAllFixed( const int period, const std::string& goodName ) const {
 	bool allInputsFixed = false;
 	
 	// test for each method of fixing output, if none of these are true then demand is not all fixed
 	for ( int i=0; i<notech; i++ ) {
-		if ( techHasInput( techs[ i ][ period ], goodName ) ) {
+		if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
 			if ( ( techs[ i ][ period ]->getCalibrationStatus( ) ) ) {
 				allInputsFixed = true;
 			} 
@@ -1194,10 +1214,9 @@ bool Subsector::inputsAllFixed( const int period, const std::string& goodName ) 
 
 /*! \brief checks to see if technology demands the specified good
 *
-* Routine adds up calibrated or fixed input values from all technologies.
-*
 * \author Steve Smith
-* \warning This routine depends on technologies being named for their fuel type. This works currently for electricity, but will not for other techs. Need to impliment a more robust method of checking calibrations.
+* \warning This routine depends on technologies being named for their fuel type or if fuelname is equal to the good. 
+* This works currently for electricity, but will not for other techs. Need to impliment a more robust method of checking calibrations.
 * \param goodName market good to check for
 * \param pointer to technology to consider
 * \return True if the specified technology has goodname as input
@@ -1205,7 +1224,7 @@ bool Subsector::inputsAllFixed( const int period, const std::string& goodName ) 
 */
 bool Subsector::techHasInput( const technology* thisTech, const std::string& goodName ) const {
 	
-	return ( thisTech->getName() == goodName );
+	return ( thisTech->getName() == goodName || thisTech->getFuelName() == goodName );
 	
 }
 

@@ -850,27 +850,48 @@ bool Region::isDemandAllCalibrated( const int period ) const {
     return true;
 }
 
+/*! \brief Test to see if calibration worked for all sectors in this region
+*
+* Compares the sum of calibrated + fixed values to output of each sector.
+*
+* \author Steve Smith
+* \param period Model period
+* \return Boolean true if calibration is ok.
+*/
+bool Region::isAllCalibrated( const int period ) const {
+   const double TFE_CAL_TOLLERANCE = 1e-3;
+   
+   for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
+      if ( !demandSector[ i ]->isAllCalibrated( period, false ) ) {
+         return false;
+      }
+   }
+
+   for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
+      if ( !supplySector[ i ]->isAllCalibrated( period, false ) ) {
+         return false;
+      }
+   }
+   
+   // Check Regional TFE calibration if exists
+   if ( !isDemandAllCalibrated( period ) && TFEcalb[ period ]  > 0 ) {
+      if ( fabs( calcTFEscaleFactor( period ) - 1.0 ) > TFE_CAL_TOLLERANCE ) {
+         return false;
+      }
+   }
+
+   return true;
+}
+
 //! Calibrate total final energy Demand for this region.
 /*! Adjusts AEEI in each demand sector until TFE is equal to the calibration value.
 */
 void Region::calibrateTFE( const int period ) {
-    // Calculate total final energy demand for all demand sectors
-    double totalFinalEnergy = 0;
-    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-        totalFinalEnergy += demandSector[ i ]->getInput( period );;
-    }
+    // Ratio of TFE in sector to cal value
+    double scaleFactor = calcTFEscaleFactor( period ); // value of zero means cal value was zero
 
     // Don't calibrate unless non zero value of TFE
-    if ( TFEcalb[ period ]  > 0 ) {
-        // Ratio of TFE in sector to cal value
-        double scaleFactor = TFEcalb[ period ] / totalFinalEnergy;
-
-        if ( totalFinalEnergy == 0 ) {
-            cout << "ERROR: totalFinalEnergy = 0 in region " << name << endl;
-        }
-
-        //   cout << name << ":  TFE Calib: " << TFEcalb[ period ] << "; TFE: " << totalFinalEnergy << endl;
-
+    if ( scaleFactor  > 0 ) { 
         // Scale each sector's output to approach calibration value
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
             if ( !demandSector[ i ]->outputsAllFixed( period ) ) {
@@ -878,6 +899,33 @@ void Region::calibrateTFE( const int period ) {
             }
         }
     }
+}
+
+/*! \brief Return ratio of TFE and calibrated value
+*
+* Returns 0 if TFE calib value is zero, which indicate there is no calibration
+*
+* \author Steve Smith
+* \param period Model period
+* \return Double ratio TFE in model to calibrated value.
+*/
+double Region::calcTFEscaleFactor( const int period ) {
+
+   if ( TFEcalb[ period ]  > 0 ) {
+      // Calculate total final energy demand for all demand sectors
+      double totalFinalEnergy = 0;
+      for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
+         totalFinalEnergy += demandSector[ i ]->getEnergyInput( period );
+      }
+
+      if ( totalFinalEnergy > util::getVerySmallNumber() ) {
+         return TFEcalb[ period ] / totalFinalEnergy;
+      } else {
+         return 0; 
+      }
+   } else {
+      return 0;
+   }
 }
 
 /*! \brief Perform checks on consistancy of the input data.
@@ -906,11 +954,12 @@ void Region::initCalc( const int period )
     for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
         (*currSector)->initCalc( period ); 
     }
+
     // Make sure TFE is same as calibrated values
     if ( isDemandAllCalibrated( period ) ) {
       double totalFinalEnergy = 0;
       for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-        totalFinalEnergy += demandSector[ i ]->getFixedInputs( period, "allInputs" );
+        totalFinalEnergy += demandSector[ i ]->getCalAndFixedInputs( period, "allInputs" );
       }
       if ( TFEcalb[ period ] != 0 ) {
          double scaleFactor = totalFinalEnergy / TFEcalb[ period ];
@@ -922,6 +971,7 @@ void Region::initCalc( const int period )
     } 
 
 }
+
 
 /*! \brief Adjusts calibrated demands to be consistant with calibrated supply.
 *
@@ -941,6 +991,8 @@ void Region::adjustCalibrations( const int period ) {
     if( conf->getBool( "CalibrationActive" ) ){
         bool debugChecking = conf->getBool( "debugChecking" );
 
+        checkSectorCalData( period );
+        
         for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
             string goodName = supplySector[ i ]->getName();
             if ( inputsAllFixed( period, goodName ) ) {
@@ -963,7 +1015,7 @@ void Region::adjustCalibrations( const int period ) {
                     // Get calibrated inputs, only scale those, not fixed demands (if any)
                     double fixedCalInputs = 0;
                     for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-                        fixedCalInputs += demandSector[ j ]->getFixedInputs( period, goodName, false ); 
+                        fixedCalInputs += demandSector[ j ]->getCalAndFixedInputs( period, goodName, false ); 
                     }
 
                     double ScaleValue = 1 + ( calSupply-calDemand )/fixedCalInputs;
@@ -982,9 +1034,9 @@ void Region::adjustCalibrations( const int period ) {
                 // if calibrated demand is less than calibrated supply, even if supply is not all calibrated, issue warning
                 // This would cause a problem if not all supply was calibrated, but what was calibrated was > calibrated demand
                 // If debugchecking flag is on extra information is printed
-                if ( debugChecking ) {
-                    if ( ( calSupply - calDemand ) > util::getSmallNumber() ) {
-                        logfile << "WARNING: Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
+               if ( ( calSupply - calDemand ) > util::getSmallNumber() ) {
+                  logfile << "WARNING: Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
+                  if ( debugChecking ) {
                         cout << "WARNING: Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
                         cout << "   supply all fixed values : " << supplySector[ i ]->outputsAllFixed( period ) << endl;
                         cout << "   demand all fixed : " << inputsAllFixed( period, goodName ) << endl;
@@ -1003,6 +1055,20 @@ void Region::adjustCalibrations( const int period ) {
     }
 }
 
+/*! \brief Perform any sector level data consistancy checks
+*
+* \author Steve Smith
+* \param period Model period
+*/
+void Region::checkSectorCalData( const int period ) {
+    for( SupplySectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
+        (*currSector)->checkSectorCalData( period );
+    }
+    for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
+        (*currSector)->checkSectorCalData( period ); 
+    }
+}
+
 /*! \brief Returns true if all inputs for the selected good are fixed.
 *
 * Fixed inputs can be by either fixedCapacity, calibration, or zero share
@@ -1010,7 +1076,7 @@ void Region::adjustCalibrations( const int period ) {
 *
 * \author Steve Smith
 * \param period Model period
-* \param goodName market good to return inputs for
+* \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
 */
 bool Region::inputsAllFixed( const int period, const std::string& goodName ) const {
    
@@ -1034,8 +1100,8 @@ bool Region::inputsAllFixed( const int period, const std::string& goodName ) con
 double Region::getFixedDemand( const int period, const std::string& goodName, bool printValues ) {
    double calDemand = 0;
    for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-      calDemand += demandSector[ j ]->getFixedInputs( period, goodName ); 
-      if ( printValues ) { cout << "dsec["<<j<<"] "<< demandSector[ j ]->getFixedInputs( period, goodName ) << ", "; }
+      calDemand += demandSector[ j ]->getCalAndFixedInputs( period, goodName ); 
+      if ( printValues ) { cout << "dsec["<<j<<"] "<< demandSector[ j ]->getCalAndFixedInputs( period, goodName ) << ", "; }
    }
    return calDemand;
 }
@@ -1284,11 +1350,20 @@ void Region::dbOutput() const {
     }
 }
 
-//! Find out which markets have simultaneities 
-/* Want to loop through each sector, then loop through each fuels that sector uses.
-Then loop through each other sector that is also a fuel.
-Then loop through the fuels in that sector to see if that sector uses
-the first as a fuel.  */
+/*! \brief Find out which markets have simultaneities.
+*
+* Loops through each sector, then through loop through each fuel that sector uses.
+* For each of these fuels, check every other sector that is also a fuel.
+* Loop through each of the fuels used in that sector to see if that sector uses the first as a fuel. 
+*
+* If a simultaneities is found then the sector is added to the simultaneities list for that sector
+* The market is also reset to a price market
+
+* Routine now (10/04) also sets a simultaneity if a supply sector has any fixed output
+*
+* \author Steve Smith, Josh Lurz
+* \param period Model period
+*/
 void Region::findSimul(const int period) {
     Marketplace* marketplace = scenario->getMarketplace();
     string OuterSectorName;
@@ -1338,6 +1413,13 @@ void Region::findSimul(const int period) {
                 }
             }
         }
+        
+        // Now also check if this sector has any fixed capacity. In this case, this market also needs to be set as a simultunaety
+        // This is because resolution of fixed capacity requires a trial value for demand. sjs. 10/04
+         if ( supplySector[isec]->getFixedOutput( period ) != 0 ) {
+            supplySector[ isec ]->addSimul( supplySector[ isec ]->getName() );
+            marketplace->resetToPriceMarket( OuterSectorName, name );
+        } 
     }
 }
 

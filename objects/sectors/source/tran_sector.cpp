@@ -67,6 +67,23 @@ void TranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cu
     }	
 }
 
+/*! \brief Perform any sector level calibration data consistancy checks
+*
+* Check to make sure that total calibrated outputs are equal to sector demand in base period.
+* 
+* \author Steve Smith
+* \param period Model period
+*/
+void TranSector::checkSectorCalData( const int period ) {
+// Since period 1 is calibrated, must make sure that read-in calibration is equal to demand. 
+
+   // Adjust aggregate demand to match calibrated outputs of all inputs to this sector are calibrated
+  if ( inputsAllFixed( period, "allInputs" ) ) {
+      double scaleFactor = getCalOutput( period ) / service[0];
+      service[0] = scaleFactor * service[0];
+      logfile << "Calibrated Demand Scaled by " << scaleFactor << " in Region " << regionName << " sector: " << name << endl;
+   }
+}
 
 //! Aggrgate sector energy service demand function.
 void TranSector::aggdemand( const GDP* gdp, const int period ) { 
@@ -136,6 +153,7 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
     // sets subsector outputs, technology outputs, and market demands
     setoutput( service[ period ], period, gdp );
     sumOutput(period);
+    
 }
 
 /*! \brief Get the XML node name for output to XML.
