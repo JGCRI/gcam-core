@@ -14,6 +14,9 @@
 */
 
 #include <map>
+#include <vector>
+#include <memory>
+#include <string>
 
 // Forward declarations.
 class Population;
@@ -59,30 +62,17 @@ public:
 	virtual const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
     std::string getName() const;
-    void writeBackCalibratedValues( const int period );
-    void setupCalibrationMarkets();
-    void calibrateRegion( const bool doCalibrations, const int period );
+    void calc( const int period, const bool doCalibrations );
     bool isDemandAllCalibrated( const int period ) const;
     void calibrateTFE( const int period ); 
     void initCalc( const int period );
-    void setGhgSupply( const int period );
-    void setGhgDemand( const int period );
-    void addGhgTax( const int period );
-    void rscSupply( const int period );
-    void finalSupplyPrc( const int period );
-    void calcGDP( const int period );
-    const std::vector<double> calcFutureGDP() const;
-    void calcEndUsePrice( const int period );
-    void adjustGDP( const int period );
-    void enduseDemand( const int period );
-    void finalSupply( const int period );
-    void emission( const int period );
+    void calcEmissions( const int period );
     void calcEmissFuel( const int period );
     void emissionInd( const int period );
+    void calcTotalCarbonTaxPaid( const int period );
     void csvOutputFile() const;
     void dbOutput() const;
     void findSimul( const int period );
-    void calcAgSector( const int period );
     void initializeAgMarketPrices( const std::vector<double>& pricesIn );
     void updateSummary( const int period );
     void printGraphs( std::ostream& outStream, const int period ) const;
@@ -94,33 +84,22 @@ public:
     void setFixedTaxes( const std::string& policyName, const std::string& marketName, const std::vector<double>& taxes );
     const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
-	 void checkData( const int period );
+    void checkData( const int period );
+    void setupCalibrationMarkets();
 
 private:
     const static std::string XML_NAME; //!< node name for toXML method.
     std::string name; //!< Region name
-    int noGhg; //!< number of ghg for market solution in each region
-    int numResources; //!< number of resources in each region
-    int noSSec; //!< number of supply sectors in each region
-    int noDSec; //!< number of demand sectors in each region
-    int noRegMrks; //!< number of markets in each region
-    double EnergyGDPElas; //!< elasticity for energy price feedback on GDP
-    Population* population; //!< Population object
-    GDP* gdp; //!< GDP object.
+    std::auto_ptr<Population> population; //!< Population object
+    std::auto_ptr<GDP> gdp; //!< GDP object.
+    std::auto_ptr<AgSector> agSector; //!< Agricultural sector
     std::vector<Resource*> resources; //!< vector of pointers toresource objects
     std::vector<SupplySector*> supplySector; //!< vector of pointers to supply sector objects
     std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects
-    AgSector* agSector; //!< Agricultural sector
     std::vector<GHGPolicy*> ghgMarket; //!< vector of pointers to ghg market objects, container for constraints and emissions
     std::vector<double> iElasticity; //!< income elasticity
-    std::vector<double> gdpDol; //!< regional gross national product in dollar value
     std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
-    std::vector<double> gdpVal; //!< regional gross national product normalized
-    std::vector<double> gdpAdj; //!< regional gross national product normalized and adjusted for energy
-    std::vector<double> gdpCap; //!< regional gross national product per capita normalized 
-    std::vector<double> input; //!< total fuel consumption in energy units
     std::vector<double> priceSer; //!< aggregate price for demand services
-    std::vector<double> carbonTax; //!< regional carbon tax
     std::vector<double> carbonTaxPaid; //!< total regional carbon taxes paid
     std::vector<double> TFEcalb;  //!< Total Final Energy Calibration value (cannot be equal to 0)
     std::vector<Summary> summary; //!< summary values and totals for reporting
@@ -135,12 +114,29 @@ private:
 	 void adjustCalibrations( const int period );
 	 bool inputsAllFixed( const int period, const std::string& goodName ) const;
     std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
-    typedef std::vector<SupplySector*>::iterator SectorIterator;
-    typedef std::vector<SupplySector*>::const_iterator ConstSectorIterator;
+    typedef std::vector<SupplySector*>::iterator SupplySectorIterator;
+    typedef std::vector<SupplySector*>::const_iterator CSupplySectorIterator;
+    typedef std::vector<DemandSector*>::iterator DemandSectorIterator;
+    typedef std::vector<DemandSector*>::const_iterator CDemandSectorIterator;
+    typedef std::vector<Resource*>::iterator ResourceIterator;
+    typedef std::vector<Resource*>::const_iterator CResourceIterator;
+    typedef std::vector<GHGPolicy*>::iterator GHGPolicyIterator;
+    typedef std::vector<GHGPolicy*>::const_iterator CGHGPolicyIterator;
     void clear();
     bool reorderSectors( const std::vector<std::string>& orderList );
     bool sortSectorsByDependency();
     bool isRegionOrderedCorrectly() const;
+    void calcGDP( const int period );
+    void setGhgSupply( const int period );
+    void calcResourceSupply( const int period );
+    void calcFinalSupplyPrice( const int period );
+    void calcEndUsePrice( const int period );
+    void adjustGDP( const int period );
+    void calcEndUseDemand( const int period );
+    void setFinalSupply( const int period );
+    void calcAgSector( const int period );
+    void calibrateRegion( const bool doCalibrations, const int period );
+    const std::vector<double> calcFutureGDP() const;
 };
 
 #endif // _REGION_H_

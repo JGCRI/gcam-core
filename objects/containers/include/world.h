@@ -34,7 +34,6 @@ class World
 public:
     World();
     ~World();
-    void setupCalibrationMarkets();
     void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
@@ -63,6 +62,8 @@ public:
     const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
 private:
+    typedef std::vector<Region*>::iterator RegionIterator;
+    typedef std::vector<Region*>::const_iterator ConstRegionIterator;
     std::map<std::string, int> regionNamesToNumbers; //!< Map of region name to indice. 
     std::vector<Region*> regions; //!< array of pointers to Region objects
     std::vector<std::map<std::string,double> > ghgs; //!< maps containing ghg emissions
@@ -72,7 +73,7 @@ private:
     
     void initAgLu(); 
     void clear();
-
+    const std::vector<int> getRegionIndexesToCalculate( const std::vector<std::string>& regionsToSolve );
 };
 
 #endif // _WORLD_H_

@@ -45,13 +45,11 @@ const string Scenario::XML_NAME = "scenario";
 /*! \todo Implement a factory method which chooses solvers to abstract this further. -JPL
 */
 Scenario::Scenario() {
-    world = 0;
-    modeltime = 0;
     runCompleted = false;
-    marketplace = new Marketplace();
+    marketplace.reset( new Marketplace() );
 
     // Create the solver and initialize with a pointer to the Marketplace.
-    solver = new BisectionNRSolver( marketplace );
+    solver.reset( new BisectionNRSolver( marketplace.get() ) );
 }
 
 //! Destructor
@@ -61,37 +59,31 @@ Scenario::~Scenario() {
 
 //! Perform memory deallocation.
 void Scenario::clear() {
-    delete world;
-    delete modeltime;
-    delete marketplace;
-
-    // Delete the solution mechanism.
-    delete solver;
 }
 
 //! Return a reference to the modeltime->
 const Modeltime* Scenario::getModeltime() const {
-    return modeltime;
+    return modeltime.get();
 }
 
 //! Return a constant reference to the goods and services marketplace.
 const Marketplace* Scenario::getMarketplace() const {
-    return marketplace;
+    return marketplace.get();
 }
 
 //! Return a mutable reference to the goods and services marketplace.
 Marketplace* Scenario::getMarketplace() {
-    return marketplace;
+    return marketplace.get();
 }
 
 //! Return a constant reference to the world object.
 const World* Scenario::getWorld() const {
-    return world;
+    return world.get();
 }
 
 //! Return a mutable reference to the world object.
 World* Scenario::getWorld() {
-    return world;
+    return world.get();
 }
 
 //! Set data members from XML input.
@@ -124,8 +116,8 @@ void Scenario::XMLParse( const DOMNode* node ){
         }
 
 		else if ( nodeName == Modeltime::getXMLNameStatic() ){
-            if( modeltime == 0 ) {
-                modeltime = new Modeltime();
+            if( !modeltime.get() ) {
+                modeltime.reset( new Modeltime() );
                 modeltime->XMLParse( curr );
                 modeltime->set(); // This call cannot be delayed until completeInit() because it is needed first. 
             }
@@ -134,8 +126,8 @@ void Scenario::XMLParse( const DOMNode* node ){
             }
         }
 		else if ( nodeName == World::getXMLNameStatic() ){
-            if( world == 0 ) {
-                world = new World();
+            if( !world.get() ) {
+                world.reset( new World() );
             }
             world->XMLParse( curr );
         }
@@ -156,7 +148,7 @@ void Scenario::setName(string newName) {
 void Scenario::completeInit() {
 
     // Complete the init of the world object.
-    assert( world );
+    assert( world.get() );
     world->completeInit();
 }
 
@@ -192,24 +184,16 @@ void Scenario::toInputXML( ostream& out, Tabs* tabs ) const {
 }
 
 //! Write out object to output stream for debugging.
-void Scenario::toDebugXMLOpen( const int period, ostream& out, Tabs* tabs ) const {
-
-    tabs->writeTabs( out );
+void Scenario::toDebugXMLOpen( ostream& out, Tabs* tabs ) const {
     string dateString = util::XMLCreateDate( ltime );
     out << "<" << XML_NAME << " name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
 
     tabs->increaseIndent();
-    tabs->writeTabs( out );
-    out << "<summary>\"Debugging output\"</summary>" << endl;
-
-    // write the xml for the class members.
-    modeltime->toDebugXML( period, out, tabs );
-    world->toDebugXML( period, out, tabs );
-    // finished writing xml for the class members.
+    XMLWriteElement( "Debugging output", "summary", out, tabs );
 }
 
 //! Write out close scenario tag to output stream for debugging.
-void Scenario::toDebugXMLClose( const int period, ostream& out, Tabs* tabs ) const {
+void Scenario::toDebugXMLClose( ostream& out, Tabs* tabs ) const {
     XMLWriteClosingTag( XML_NAME, out, tabs );
 }
 
@@ -220,93 +204,61 @@ string Scenario::getName() const {
 
 //! Run the scenario
 void Scenario::run( string filenameEnding ){
-	
-	Configuration* conf = Configuration::getInstance();
-	ofstream xmlDebugStream;
-    
-    // Need to insert the filename ending before the file type.
-    string debugFileName = conf->getFile( "xmlDebugFileName", "debug.xml" );
-    int dotPos = static_cast<int>( debugFileName.find_last_of( "." ) );
-    debugFileName = debugFileName.insert( dotPos, filenameEnding );
-    cout << "Debugging information for this run in: " << debugFileName << endl;
-	xmlDebugStream.open( debugFileName.c_str(), ios::out );
-    util::checkIsOpen( xmlDebugStream, debugFileName );
-    
+
+    Configuration* conf = Configuration::getInstance();
+    ofstream xmlDebugStream;
+    openDebugXMLFile( xmlDebugStream, filenameEnding );
+
     // Print the sector dependencies. This may need a better spot 
     // and name as it now prints sector ordering as well. 
     if( conf->getBool( "PrintSectorDependencies", false ) ){
         printSectorDependencies();
     }
 
-	// Start Model run for the first period.
-	int per = 0;
-   
-   if ( conf->getBool( "CalibrationActive" ) ) {
-	   world->setupCalibrationMarkets();
-   }
+    Tabs tabs;
+    marketplace->initPrices(); // initialize prices
+    toDebugXMLOpen( xmlDebugStream, &tabs );
 
-	marketplace->initPrices(); // initialize prices
-	marketplace->nullDemands( per ); // null market demands
-	marketplace->nullSupplies( per ); // null market supply
-	
-	// Write scenario root element for the debugging.
-    Tabs* tabs = new Tabs();
-	
-    world->initCalc( per ); // call to initialize anything that won't change during calc
-	world->calc( per ); // Calculate supply and demand
-	world->updateSummary( per ); // Update summaries for reporting
-	world->emiss_ind( per ); // Calculate global emissions
-	
-	cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr(per) << endl;
-	cout << "Period 0 not solved" << endl;
-	logfile << "Period:  " << per << "  Year:  " << modeltime->getper_to_yr(per) << endl;
-    toDebugXMLOpen( per, xmlDebugStream, tabs );
-	// end of first period.
-	
+    // Loop over time steps and operate model
+    for ( int per = 0; per < modeltime->getmaxper(); per++ ) {	
 
+        // Write out some info.
+        cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl;
+        logfile << "Period:  " << per << "  Year:  " << modeltime->getper_to_yr(per) << endl;
 
-	// Loop over time steps and operate model
-	for ( per = 1; per < modeltime->getmaxper(); per++ ) {	
-		
-		// Write out some info.
-		cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl;
-    	logfile << "Period:  " << per << "  Year:  " << modeltime->getper_to_yr(per) << endl;
-		
-		// Run the iteration of the model.
-		marketplace->nullDemands( per ); // initialize market demand to null
-		marketplace->nullSupplies( per ); // initialize market supply to null
-		marketplace->storeto_last( per ); // save last period's info to stored variables
-		marketplace->init_to_last( per ); // initialize to last period's info
-		world->initCalc( per ); // call to initialize anything that won't change during calc
-		world->calc( per ); // call to calculate initial supply and demand
-		solve( per ); // solution uses Bisect and NR routine to clear markets
-		world->updateSummary( per ); // call to update summaries for reporting
-		world->emiss_ind( per ); // call to calculate global emissions
-		
-		// Write out the results for debugging.
-		world->toDebugXML( per, xmlDebugStream, tabs );
-      
-      if( conf->getBool( "PrintDependencyGraphs" ) ) {
-         // Print out dependency graphs.
-         printGraphs( per );
-      }
-	}
-	
+        // Run the iteration of the model.
+        marketplace->nullDemands( per ); // initialize market demand to null
+        marketplace->nullSupplies( per ); // initialize market supply to null
+        marketplace->storeto_last( per ); // save last period's info to stored variables
+        marketplace->init_to_last( per ); // initialize to last period's info
+        world->initCalc( per ); // call to initialize anything that won't change during calc
+        world->calc( per ); // call to calculate initial supply and demand
+        solve( per ); // solution uses Bisect and NR routine to clear markets
+        world->updateSummary( per ); // call to update summaries for reporting
+        world->emiss_ind( per ); // call to calculate global emissions
+
+        // Write out the results for debugging.
+        world->toDebugXML( per, xmlDebugStream, &tabs );
+
+        if( conf->getBool( "PrintDependencyGraphs" ) ) {
+            printGraphs( per ); // Print out dependency graphs.
+        }
+    }
+
     // Denote the run has been performed. 
     runCompleted = true;
 
-	toDebugXMLClose( per, xmlDebugStream, tabs ); // Close the xml debugging tag.
-	
-	// calling fortran subroutine climat/magicc
-	world->calculateEmissionsTotals();
-	writeClimatData(); // writes the input text file
+    toDebugXMLClose( xmlDebugStream, &tabs ); // Close the xml debugging tag.
+
+    // calling fortran subroutine climat/magicc
+    world->calculateEmissionsTotals();
+    writeClimatData(); // writes the input text file
 
 #if(__HAVE_FORTRAN__)
     cout << endl << "Calling CLIMAT() "<< endl;
     CLIMAT();
     cout << "Finished with CLIMAT()" << endl;
 #endif
-    delete tabs;
     xmlDebugStream.close();
 }
 
@@ -406,4 +358,16 @@ void Scenario::solve( const int period ){
             cout << endl;
         }
     }
+}
+
+//! Open the debugging XML file with the correct name and check for any errors.
+void Scenario::openDebugXMLFile( ofstream& xmlDebugStream, const string& fileNameEnding ){
+    // Need to insert the filename ending before the file type.
+    const Configuration* conf = Configuration::getInstance();
+    string debugFileName = conf->getFile( "xmlDebugFileName", "debug.xml" );
+    size_t dotPos = debugFileName.find_last_of( "." );
+    debugFileName = debugFileName.insert( dotPos, fileNameEnding );
+    cout << "Debugging information for this run in: " << debugFileName << endl;
+    xmlDebugStream.open( debugFileName.c_str(), ios::out );
+    util::checkIsOpen( xmlDebugStream, debugFileName );
 }

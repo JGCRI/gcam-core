@@ -54,14 +54,8 @@ const string Region::XML_NAME = "region";
 
 //! Default constructor
 Region::Region() {
-    agSector = 0; // null pointer
-    population = 0; // null pointer
-    gdp = 0;  // null pointer
-    initElementalMembers(); //
-
     // Resize all vectors to maximum period
     const int maxper = scenario->getModeltime()->getmaxper();
-    input.resize( maxper ); // total fuel and energy consumption
     TFEcalb.resize( maxper ); // Total Final Energy calibration value
     priceSer.resize( maxper ); // aggregate price for demand services
     carbonTaxPaid.resize( maxper ); // total regional carbon taxes paid
@@ -76,34 +70,17 @@ Region::~Region() {
 
 //! Clear member variables and initialize elemental members.
 void Region::clear(){
-    for ( vector<SupplySector*>::iterator secIter = supplySector.begin(); secIter != supplySector.end(); secIter++ ) {
+    for ( SupplySectorIterator secIter = supplySector.begin(); secIter != supplySector.end(); secIter++ ) {
         delete *secIter;
     }
 
-    for ( vector<DemandSector*>::iterator demIter = demandSector.begin(); demIter != demandSector.end(); demIter++ ) {
+    for ( DemandSectorIterator demIter = demandSector.begin(); demIter != demandSector.end(); demIter++ ) {
         delete *demIter;
     }
 
-    for ( vector<Resource*>::iterator rescIter = resources.begin(); rescIter != resources.end(); rescIter++ ) {
+    for ( ResourceIterator rescIter = resources.begin(); rescIter != resources.end(); rescIter++ ) {
         delete *rescIter;
     }
-
-    if ( agSector != 0 ) {
-        delete agSector;	
-    }
-
-    delete population;
-    delete gdp;
-}
-
-//! Initialize elemental data members.
-void Region::initElementalMembers(){
-    noGhg = 0;
-    numResources = 0;
-    noSSec = 0;
-    noDSec = 0;
-    noRegMrks = 0;
-    EnergyGDPElas = 0;
 }
 
 /*! Return the region name.
@@ -121,14 +98,6 @@ string Region::getName() const {
 * \todo Change the diagnosic "assert( node );" to fail with a more informative error (file, previous node?, location?)
 */
 void Region::XMLParse( const DOMNode* node ){
-    string nodeName;
-    string nodeNameChild;
-    DOMNode* curr = 0;
-    DOMNode* currChild = 0;
-    DOMNodeList* nodeListChild = 0;
-
-    const Modeltime* modeltime = scenario->getModeltime();
-
     // make sure we were passed a valid node.
     assert( node );
 
@@ -141,10 +110,11 @@ void Region::XMLParse( const DOMNode* node ){
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
+    string nodeName;
 
     // loop through the child nodes.
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        curr = nodeList->item( i );
+        DOMNode* curr = nodeList->item( i );
         nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
         if( nodeName == "#text" ) {
@@ -156,15 +126,15 @@ void Region::XMLParse( const DOMNode* node ){
         else if( nodeName == "CarbonTaxFuelCoef" ) {
             carbonTaxFuelCoef[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
         }
-	else if( nodeName == Population::getXMLNameStatic() ){
-            if( population == 0 ) {
-                population = new Population();
+		else if( nodeName == Population::getXMLNameStatic() ){
+            if( !population.get() ){
+                population.reset( new Population() );
             }
             population->XMLParse( curr ); // only one demographics object.
         }
 		else if( nodeName == GDP::getXMLNameStatic() ){
-            if( gdp == 0 ){
-                gdp = new GDP();
+            if( !gdp.get() ){
+                gdp.reset( new GDP() );
             }
             gdp->XMLParse( curr );
         }
@@ -187,12 +157,12 @@ void Region::XMLParse( const DOMNode* node ){
 		else if( nodeName == TranSector::getXMLNameStatic() ){
             parseContainerNode( curr, demandSector, demandSectorNameMap, new TranSector( name ) );
         } 
-		else if( nodeName == AgSector::getXMLNameStatic() ) {
+        else if( nodeName == AgSector::getXMLNameStatic() ) {
             if( Configuration::getInstance()->getBool( "agSectorActive" ) ){
-                if( agSector == 0 ) {
-                    agSector = new AgSector();
-                    agSector->XMLParse( curr );
+                if( !agSector.get() ){
+                    agSector.reset( new AgSector() );
                 }
+                agSector->XMLParse( curr );
             }
         }
         else if( nodeName == GHGPolicy::getXMLNameStatic() ){
@@ -201,16 +171,18 @@ void Region::XMLParse( const DOMNode* node ){
         // regional economic data
         else if( nodeName == "calibrationdata" ){
             // get all child nodes.
-            nodeListChild = curr->getChildNodes();
+            DOMNodeList* nodeListChild = curr->getChildNodes();
             // loop through the child nodes.
+            string nodeNameChild;
             for( unsigned int j = 0; j < nodeListChild->getLength(); j++ ){
-                currChild = nodeListChild->item( j );
+                DOMNode* currChild = nodeListChild->item( j );
                 nodeNameChild = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+                const Modeltime* modeltime = scenario->getModeltime();
 
                 if( nodeNameChild == "#text" ) {
                     continue;
                 }
-                else if( nodeNameChild == "GDPcal" ) {
+                else if( nodeNameChild == "GDPcal" ) { // TODO: MOVE TO GDP
                     XMLHelper<double>::insertValueIntoVector( currChild, calibrationGDPs, modeltime );
                 }
 
@@ -220,16 +192,16 @@ void Region::XMLParse( const DOMNode* node ){
                 else {
                     cout << "Unrecognized text string: " << nodeNameChild << " found while parsing region->calibrationdata." << endl;
                 }
-
             }
         }
          // A list representing the correct order in which to calculate the sectors. 
         else if( nodeName == "SectorOrderList" ){
             // get all child nodes.
-            nodeListChild = curr->getChildNodes();
+            string nodeNameChild;
+            DOMNodeList* nodeListChild = curr->getChildNodes();
             // loop through the child nodes.
             for( unsigned int j = 0; j < nodeListChild->getLength(); j++ ){
-                currChild = nodeListChild->item( j );
+                DOMNode* currChild = nodeListChild->item( j );
                 nodeNameChild = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
 
                 if( nodeNameChild == "#text" ) {
@@ -254,66 +226,41 @@ void Region::XMLParse( const DOMNode* node ){
 * \todo I think since there is one indirect ghg object for each sector, it might be better in sector. This may require deriving supply sector.
 */
 void Region::completeInit() {
-
-    int i = 0;
-
     Configuration* conf = Configuration::getInstance();
-
-    numResources = static_cast<int>( resources.size() );
-    noSSec = static_cast<int>( supplySector.size() );
-    noDSec = static_cast<int>( demandSector.size() );
-    noGhg = static_cast<int>( ghgMarket.size() );
-    
-    // Need to perform the resize by iteratively adding each one so we can set the sector name. 
-    for( vector<SupplySector*>::iterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ){
-        Emcoef_ind temp( ( *sectorIter )->getName() );
-        emcoefInd.push_back( temp );
-    }
-    
-    // emcoefInd.resize( noSSec ); // indirect GHG coef object for every supply sector
     
     // Initialize the GDP
-    gdp->initData( population );
+    gdp->initData( population.get() );
+    
+    for( SupplySectorIterator supplySectorIter = supplySector.begin(); supplySectorIter != supplySector.end(); ++supplySectorIter ) {
+        ( *supplySectorIter )->completeInit();
+        (*supplySectorIter)->setMarket();
+        Emcoef_ind temp( ( *supplySectorIter )->getName() );
+        emcoefInd.push_back( temp );
+    }
 
-    // Finish initializing agLu
     if( conf->getBool( "agSectorActive" ) ){
         agSector->setGNP( calcFutureGDP() );
         agSector->setPop( population->getTotalPopVec() );
-    }
-    
-    // supply sector markets, pass region name
-    for( i = 0;i < noSSec; i++ ){
-        supplySector[ i ]->setMarket();
-    }
-
-    // Create AgLU markets
-    if( conf->getBool( "agSectorActive" ) ){
         agSector->setMarket( name );
     }
-
-    // Complete the initializations.
-    for( vector<Resource*>::iterator resourceIter = resources.begin(); resourceIter != resources.end(); ++resourceIter ) {
-        ( *resourceIter )->completeInit();
-    }
-    for( SectorIterator supplySectorIter = supplySector.begin(); supplySectorIter != supplySector.end(); ++supplySectorIter ) {
-        ( *supplySectorIter )->completeInit();
+    for( ResourceIterator resourceIter = resources.begin(); resourceIter != resources.end(); ++resourceIter ) {
+        (*resourceIter)->completeInit();
+        (*resourceIter)->setMarket( name );
     }
 
-    for( vector<DemandSector*>::iterator demandSectorIter = demandSector.begin(); demandSectorIter != demandSector.end(); ++demandSectorIter ) {
-        ( *demandSectorIter )->completeInit();
+    for( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
+        (*currSector)->completeInit();
     }
 
-    // create markets and set market indeces
-    // Resource markets, pass region name
-    for( i = 0; i < numResources; i++ ){
-        resources[ i ]->setMarket( name );
+    for( GHGPolicyIterator ghgPolicy = ghgMarket.begin(); ghgPolicy != ghgMarket.end(); ++ghgPolicy ){
+        (*ghgPolicy)->setMarket( name );
     }
 
-    // ghg markets, pass region name
-    for( i = 0; i < noGhg; i++ ){
-        ghgMarket[i]->setMarket( name );
+    /*
+    if( conf->getBool( "CalibrationActive" ) ){
+        gdp->setupCalibrationMarkets( name );
     }
-
+    */
     // Find simuls.
     updateSummary( 0 );	// Dummy call to final supply to setup fuel map
     findSimul( 0 );
@@ -324,10 +271,17 @@ void Region::completeInit() {
     }
     else { // Otherwise use the built-in sort routine.
         // Setup each sector for sorting. 
-        for( SectorIterator iter = supplySector.begin(); iter!= supplySector.end(); ++iter ){
+        for( SupplySectorIterator iter = supplySector.begin(); iter!= supplySector.end(); ++iter ){
             (*iter)->setupForSort( this );
         }
         sortSectorsByDependency();
+    }
+}
+
+/*! \brief Initialize the calibration markets. */
+void Region::setupCalibrationMarkets() {
+    if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
+        gdp->setupCalibrationMarkets( name );
     }
 }
 
@@ -405,9 +359,9 @@ bool Region::sortSectorsByDependency() {
     bool success = true;
 
     // Loop through each position in the vector except the last.
-    for( SectorIterator outerPosition = supplySector.begin(); outerPosition != supplySector.end() - 1; ++outerPosition ){
+    for( SupplySectorIterator outerPosition = supplySector.begin(); outerPosition != supplySector.end() - 1; ++outerPosition ){
         // Compare this position with every other. 
-        for( SectorIterator innerPosition = outerPosition + 1; innerPosition != supplySector.end(); ++innerPosition ){
+        for( SupplySectorIterator innerPosition = outerPosition + 1; innerPosition != supplySector.end(); ++innerPosition ){
             // Check if the outer position sector depends on the inner position sector, and so should 
             // be after the innerposition sector.
             if( orderingOperator( *innerPosition, *outerPosition ) ){
@@ -462,9 +416,9 @@ bool Region::isRegionOrderedCorrectly() const {
     bool isOrderedCorrectly = true;
 
     // Loop through all sectors except the last one as there is nothing to compare the last to.
-    for( ConstSectorIterator outerPosition = supplySector.begin(); outerPosition != supplySector.end() - 1; ++outerPosition ){
+    for( CSupplySectorIterator outerPosition = supplySector.begin(); outerPosition != supplySector.end() - 1; ++outerPosition ){
         // Compare the sector to all other following sectors.
-        for( ConstSectorIterator innerPosition = outerPosition + 1; innerPosition != supplySector.end(); ++innerPosition ){
+        for( CSupplySectorIterator innerPosition = outerPosition + 1; innerPosition != supplySector.end(); ++innerPosition ){
             // Check if the outer position sector depends on the inner position sector, and so should 
             // be before the outer position sector.
             if( orderingOperator( *innerPosition, *outerPosition ) ){
@@ -498,28 +452,28 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
     }
     // write the xml for the class members.
     // write out the single population object.
-	if( population ){ // Check if population object exists
+	if( population.get() ){ // Check if population object exists
 		population->toInputXML( out, tabs );
 	}
-	if( gdp ){ // Check if gdp object exists
+	if( gdp.get() ){ // Check if gdp object exists
 		gdp->toInputXML( out, tabs );
 	}
     // write out the resources objects.
-    for( vector<Resource*>::const_iterator i = resources.begin(); i != resources.end(); i++ ){
+    for( CResourceIterator i = resources.begin(); i != resources.end(); i++ ){
         ( *i )->toInputXML( out, tabs );
     }
 
     // write out supply sector objects.
-    for( vector<SupplySector*>::const_iterator j = supplySector.begin(); j != supplySector.end(); j++ ){
+    for( CSupplySectorIterator j = supplySector.begin(); j != supplySector.end(); j++ ){
         ( *j )->toInputXML( out, tabs );
     }
 
     // write out demand sector objects.
-    for( vector<DemandSector*>::const_iterator k = demandSector.begin(); k != demandSector.end(); k++ ){
+    for( CDemandSectorIterator k = demandSector.begin(); k != demandSector.end(); k++ ){
         ( *k )->toInputXML( out, tabs );
     }
 
-    if( agSector != 0 ){
+    if( agSector.get() ){
         agSector->toInputXML( out, tabs );
     }
 	else {
@@ -527,7 +481,7 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
 		out << "<agsector/>" << endl;
 	}
     // write out ghgMarket objects.
-    for( vector<GHGPolicy*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
+    for( CGHGPolicyIterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
         ( *l )->toInputXML( out, tabs );
     }
     
@@ -554,7 +508,7 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
             // End write out regional economic data
         } // close calibration IF
         // Write out the sector ordering.
-        if( sectorOrderList.size() > 0 ){
+        if( !sectorOrderList.empty() ){
             XMLWriteOpeningTag( "SectorOrderList", out, tabs );
             for( unsigned int m = 0; m < sectorOrderList.size(); m++ ){
                 XMLWriteElement( "", "SectorName", out, tabs, 0, sectorOrderList[ m ] );
@@ -579,13 +533,11 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write out basic datamembers
-    XMLWriteElement( noGhg, "noGhg", out, tabs );
-    XMLWriteElement( numResources, "numResources", out, tabs );
-    XMLWriteElement( noSSec, "noSSec", out, tabs );
-    XMLWriteElement( noDSec, "noDSec", out, tabs );
-    XMLWriteElement( noRegMrks, "noRegMrks", out, tabs );
+    XMLWriteElement( static_cast<unsigned int>( ghgMarket.size() ), "noGhg", out, tabs );
+    XMLWriteElement( static_cast<unsigned int>( resources.size() ), "numResources", out, tabs );
+    XMLWriteElement( static_cast<unsigned int>( supplySector.size() ), "noSSec", out, tabs );
+    XMLWriteElement( static_cast<unsigned int>( demandSector.size() ), "noDSec", out, tabs );
     XMLWriteElement( calibrationGDPs[ period ], "calibrationGDPs", out, tabs );
-    XMLWriteElement( input[ period ], "input", out, tabs );
     XMLWriteElement( priceSer[ period ], "priceSer", out, tabs );
     XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
 
@@ -599,31 +551,33 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     }
     // write the xml for the class members.
     // write out the single population object.
-    population->toDebugXML( period, out, tabs );
-    
-    gdp->toDebugXML( period, out, tabs );
-
+    if( population.get() ){
+        population->toDebugXML( period, out, tabs );
+    }
+    if( gdp.get() ){
+        gdp->toDebugXML( period, out, tabs );
+    }
     // write out the resources objects.
-    for( vector<Resource*>::const_iterator i = resources.begin(); i != resources.end(); i++ ){
-        ( *i )->toDebugXML( period, out, tabs );
+    for( CResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
+        (*currResource)->toDebugXML( period, out, tabs );
     }
 
     // write out supply sector objects.
-    for( vector<SupplySector*>::const_iterator j = supplySector.begin(); j != supplySector.end(); j++ ){
-        ( *j )->toDebugXML( period, out, tabs );
+    for( CSupplySectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
+        (*currSector)->toDebugXML( period, out, tabs );
     }
 
     // write out demand sector objects.
-    for( vector<DemandSector*>::const_iterator k = demandSector.begin(); k != demandSector.end(); k++ ){
-        ( *k )->toDebugXML( period, out, tabs );
+    for( CDemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ){
+        (*currSector)->toDebugXML( period, out, tabs );
     }
 
     // Write out the single agSector object.
     // agSector->toDebugXML( period, out );
 
     // write out ghgMarket objects.
-    for( vector<GHGPolicy*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
-        ( *l )->toDebugXML( period, out, tabs );
+    for( CGHGPolicyIterator currPolicy = ghgMarket.begin(); currPolicy != ghgMarket.end(); ++currPolicy ){
+        (*currPolicy)->toDebugXML( period, out, tabs );
     }
 
     // Write out summary object.
@@ -664,11 +618,45 @@ const std::string& Region::getXMLNameStatic() {
 	return XML_NAME;
 }
 
-//! Initialize calibration markets.
-/* \todo Calibration shouldn't be in the population object.
-*/
-void Region::setupCalibrationMarkets() {
-    gdp->setupCalibrationMarkets( name );
+//! Calculate the region.
+void Region::calc( const int period, const bool doCalibrations ) {
+    // Store configuration variables locally as statics.
+    static const Configuration* conf = Configuration::getInstance();
+    static const bool agSectorActive = conf->getBool( "agSectorActive" );
+    static const bool calibrationActive = conf->getBool( "CalibrationActive" );
+    
+    // Write back calibrated values to the member variables.
+    // These are still trial values.
+    if( calibrationActive ) {
+       gdp->writeBackCalibratedValues( name, period );
+    }
+    // calculate regional GDP
+    calcGDP( period );
+    // set regional GHG constraint to market supply
+    setGhgSupply( period );
+    // determine supply of primary resources
+    calcResourceSupply( period );
+    // determine prices of refined fuels and electricity
+    calcFinalSupplyPrice( period );
+    // calculate enduse service price
+    calcEndUsePrice( period );
+    // adjust GDP for energy cost changes
+    adjustGDP( period );
+
+    // determine end-use demand for energy and other goods
+    calcEndUseDemand( period );
+
+    // determine supply of final energy and other goods based on demand
+    setFinalSupply( period );
+
+    if( agSectorActive ){
+        calcAgSector( period );
+    }
+
+    // Perform calibrations
+    if( calibrationActive ) {
+        calibrateRegion( doCalibrations, period );
+    }
 }
 
 /*! Run the agLu Model and determine CO2 emitted.
@@ -684,58 +672,18 @@ void Region::calcAgSector( const int period ) {
 * \param period Model time period
 */
 void Region::setGhgSupply( const int period ) {
-    for ( int i = 0; i < noGhg; i++ ) {
+    for ( unsigned int i = 0; i < ghgMarket.size(); i++ ) {
         ghgMarket[i]->addGHGSupply( name, period );
     }
 }
-
-/*! Set regional ghg tax to individual technologies.
-*
-* \param period Model time period
-*/
-void Region::addGhgTax( const int period ) {
-    string ghgname;
-    int i,j,k;
-
-    for (i=0;i<noGhg;i++) {
-        ghgname = ghgMarket[i]->getName();
-        for (j=0;j<noSSec;j++) {
-            supplySector[j]->addGhgTax( ghgname, period );
-        }
-        for (k=0;k<noDSec;k++) {
-             demandSector[k]->addGhgTax( ghgname, period );
-        }
-    }
-}
-
 
 /*! Calculates annual supply of primay resources.
 *
 * \param period Model time period
 */
-void Region::rscSupply( const int period )  {
-    Marketplace* marketplace = scenario->getMarketplace();
-    string goodName;
-    string regionName = name; // name is Region attribute
-    double prev_price = 0;
-    double price = 0;
-    //for (int i=0;i<numResources-1;i++) {
-    for (int i=0;i<numResources;i++) {
-        goodName = resources[i]->getName();
-        price = marketplace->getPrice(goodName,regionName,period); // get market price
-        if (period==0) {
-            prev_price = price;
-        }
-        else {
-            prev_price = marketplace->getPrice(goodName,regionName,period-1); // get market price
-        }
-
-        // calculate annual supply
-        resources[i]->annualsupply( period, gdp, price, prev_price );
-
-        // set market supply of resources used for solution mechanism
-        marketplace->addToSupply(goodName,regionName,resources[i]->getAnnualProd(period),period);
-
+void Region::calcResourceSupply( const int period ){
+    for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
+        (*currResource)->calcSupply( name, gdp.get(), period );
     }
 }
 
@@ -743,20 +691,9 @@ void Region::rscSupply( const int period )  {
 *
 * \param period Model time period
 */
-void Region::finalSupplyPrc( const int period ) {
-    Marketplace* marketplace = scenario->getMarketplace();
-    string goodName;
-    double goodPrice;
-
-    for (int i=0;i<noSSec;i++) {
-        goodName = supplySector[i]->getName();
-       
-        // name is region or country name
-        supplySector[i]->calcShare( period , gdp );
-        goodPrice = supplySector[ i ]->getPrice( period );
-        // set market price of intermediate goods
-        // name is region or country name
-        marketplace->setPrice( goodName, name, goodPrice, period );
+void Region::calcFinalSupplyPrice( const int period ) {
+    for( SupplySectorIterator currSupply = supplySector.begin(); currSupply != supplySector.end(); ++currSupply ){
+        (*currSupply)->calcFinalSupplyPrice( gdp.get(), period );
     }
 }
 
@@ -764,39 +701,16 @@ void Region::finalSupplyPrc( const int period ) {
 *
 * \param period Model time period
 */
-void Region::finalSupply( const int period ) {
-
-    Marketplace* marketplace = scenario->getMarketplace();
-    string goodName;
-    int i = 0;
-    double mrksupply;
-
-
-    // loop through all sectors once to get total output
-    for ( vector<SupplySector*>::reverse_iterator ri = supplySector.rbegin(); ri != supplySector.rend(); ri++ ) {
-        goodName = ( *ri )->getName();		
-
-        // name is country/region name
-        ( *ri )->supply( period, gdp );
-        carbonTaxPaid[period] += ( *ri )->getTotalCarbonTaxPaid(period);
+void Region::setFinalSupply( const int period ) {
+    // loop through all sectors in reverse once to get total output.
+    typedef  vector<SupplySector*>::reverse_iterator ReverseSupplySectorIterator;
+    for ( ReverseSupplySectorIterator currSupply = supplySector.rbegin(); currSupply != supplySector.rend(); ++currSupply ) {
+        (*currSupply)->supply( period, gdp.get() );
     }
 
-    // loop through supply sectors and assign supplies to marketplace and update fuel consumption map
-    // the supplies in the market sector are, at present, not used except to double check 
-    // that the output of the supply sectors does equal supply
-
-    for (i=0;i<noSSec;i++) {
-        // name is country/region name
-        //supplySector[j].supply(name,no,period);
-        // supply and demand for intermediate and final good are set equal
-        goodName = supplySector[i]->getName();
-        mrksupply = supplySector[i]->getOutput(period);
-
-        // set market supply of intermediate goods
-        marketplace->addToSupply(goodName,name,mrksupply,period);
-
-        // update sector input
-        // supplySector[ i ]->sumInput( period );
+    // loop through supply sectors and assign supplies to marketplace.
+    for( SupplySectorIterator currSupply = supplySector.begin(); currSupply != supplySector.end(); ++currSupply ){
+        (*currSupply)->setFinalSupply( period );
     }
 }
 
@@ -839,21 +753,21 @@ void Region::calcEndUsePrice( const int period ) {
 
     priceSer[ period ] = 0;
 
-    for ( int i = 0; i < noDSec; i++ ) {
-        demandSector[ i ]->calcShare( period, gdp );		
+    for ( DemandSectorIterator currDemSector = demandSector.begin(); currDemSector != demandSector.end(); ++currDemSector ) {
+        (*currDemSector)->calcShare( period, gdp.get() );		
 
         // calculate service price for each demand sector
-        // demandSector[ i ]->price( period ); Protected and moved to getPrice function
 
         // calculate aggregate service price for region
-        priceSer[ period ] += demandSector[ i ]->getOutput( 0 ) * demandSector[ i ]->getPrice( period );
+        priceSer[ period ] += (*currDemSector)->getOutput( 0 ) * (*currDemSector)->getPrice( period );
 
         // calculate service price elasticity for each demand sector
         // or use read in value, temporary code
+        // Note: If this is set to false the model solves better generally. -JPL
         bool useReadinData = true;
         // do nothing if false
         if (!useReadinData) {
-            demandSector[ i ]->calc_pElasticity( period );
+            (*currDemSector)->calc_pElasticity( period );
         } 
     }
 }
@@ -861,6 +775,7 @@ void Region::calcEndUsePrice( const int period ) {
 /*! Adjust regional gdp for energy.
 *
 * \param period Model time period
+* \todo Move this calculation down to GDP
 */
 void Region::adjustGDP( const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
@@ -873,14 +788,6 @@ void Region::adjustGDP( const int period ) {
 	 gdp->adjustGDP( period, tempratio );
 }
 
-/*! Write back the calibrated values from the marketplace into the member variables. 
-*
-* \param period Model time period
-*/
-void Region::writeBackCalibratedValues( const int period ) {
-    gdp->writeBackCalibratedValues( name, period );
-}
-
 //! Do regional calibration
 /*! Must be done after demands are calculated. 
 Two levels of calibration are possible. 
@@ -891,24 +798,19 @@ or, at the level of total final energy demand (via calibrateTFE)
 * \param period Model time period
 */
 void Region::calibrateRegion( const bool doCalibrations, const int period ) {
-    int i;
-
     // Do subsector and technology level energy calibration
     // can only turn off calibrations that do not involve markets
     if ( doCalibrations ) {
         // Calibrate demand sectors
-        for ( i=0;i<noDSec;i++) {
+        for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
             demandSector[ i ]->calibrateSector( period );
         }
 
         // Calibrate supply sectors
-        for ( i=0;i<noSSec;i++) {
+        for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
             supplySector[ i ]->calibrateSector( period );
         }
-    }
-
-    // Calibrate Regional TFE
-    if ( doCalibrations ) {
+        // Calibrate Regional TFE
         if ( !isDemandAllCalibrated( period ) ) {
             calibrateTFE( period );
         } else {
@@ -924,7 +826,9 @@ void Region::calibrateRegion( const bool doCalibrations, const int period ) {
         Marketplace* marketplace = scenario->getMarketplace();
         marketplace->addToDemand( goodName, name, calibrationGDPs[ period ], period );
         marketplace->addToSupply( goodName, name, gdp->getGDP( period ), period );
-        marketplace->setMarketToSolve( goodName, name );
+        if( period > 0 ){
+            marketplace->setMarketToSolve( goodName, name );
+        }
     }
 }
 
@@ -933,26 +837,21 @@ void Region::calibrateRegion( const bool doCalibrations, const int period ) {
 * \param period Model time period
 */
 bool Region::isDemandAllCalibrated( const int period ) const {
-    bool allCalibrated = true;
-
-    for ( int i = 0; i < noDSec; i++ && allCalibrated ) {
+    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
         if ( !demandSector[ i ]->outputsAllFixed( period ) ) {
-            allCalibrated = false;
+            return false;
         }
     }
-
-    return allCalibrated;
+    return true;
 }
 
 //! Calibrate total final energy Demand for this region.
 /*! Adjusts AEEI in each demand sector until TFE is equal to the calibration value.
 */
 void Region::calibrateTFE( const int period ) {
-    int i;
-
     // Calculate total final energy demand for all demand sectors
     double totalFinalEnergy = 0;
-    for ( i=0;i<noDSec;i++) {
+    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
         totalFinalEnergy += demandSector[ i ]->getInput( period );;
     }
 
@@ -968,14 +867,13 @@ void Region::calibrateTFE( const int period ) {
         //   cout << name << ":  TFE Calib: " << TFEcalb[ period ] << "; TFE: " << totalFinalEnergy << endl;
 
         // Scale each sector's output to approach calibration value
-        for ( i=0;i<noDSec;i++) {
+        for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
             if ( !demandSector[ i ]->outputsAllFixed( period ) ) {
                 demandSector[ i ]->scaleOutput( period , scaleFactor );
             }
         }
     }
 }
-
 
 /*! \brief Perform checks on consistancy of the input data.
 *
@@ -997,15 +895,12 @@ void Region::checkData( const int period ) {
 */
 void Region::initCalc( const int period ) 
 {
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    for ( int i=0;i<noDSec;i++) {
-        demandSector[ i ]->initCalc( period ); 
+    for( SupplySectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
+        (*currSector)->initCalc( period );
     }
-
-    for ( int i=0;i<noSSec;i++) {
-        supplySector[ i ]->initCalc( period ); 
-    }	 
+    for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
+        (*currSector)->initCalc( period ); 
+    }
 }
 
 /*! \brief Adjusts calibrated demands to be consistant with calibrated supply.
@@ -1025,7 +920,7 @@ void Region::adjustCalibrations( const int period ) {
    Configuration* conf = Configuration::getInstance();
    bool debugChecking = conf->getBool( "debugChecking" );
 
-    for ( int i=0;i<noSSec;i++) {
+    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
       string goodName = supplySector[ i ]->getName();
       
       if ( inputsAllFixed( period, goodName ) ) {
@@ -1048,12 +943,12 @@ void Region::adjustCalibrations( const int period ) {
 
             // Get calibrated inputs, only scale those, not fixed demands (if any)
             double fixedCalInputs = 0;
-            for ( int j=0; j<noDSec; j++ ) {
+            for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
                fixedCalInputs += demandSector[ j ]->getFixedInputs( period, goodName, false ); 
             }
             
             double ScaleValue = 1 + ( calSupply-calDemand )/fixedCalInputs;
-            for ( int j=0; j<noDSec; j++ ) {
+            for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
                demandSector[ j ]->scaleCalibratedValues( period, goodName, ScaleValue ); 
             }
          } else {
@@ -1099,8 +994,8 @@ void Region::adjustCalibrations( const int period ) {
 */
 bool Region::inputsAllFixed( const int period, const std::string& goodName ) const {
    
-   for ( int j=0; j<noDSec; j++ ) {
-      if ( ! demandSector[ j ]->inputsAllFixed( period, goodName ) ) {
+   for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
+      if ( !demandSector[ j ]->inputsAllFixed( period, goodName ) ) {
          return false; 
       }
    }
@@ -1118,7 +1013,7 @@ bool Region::inputsAllFixed( const int period, const std::string& goodName ) con
 */
 double Region::getFixedDemand( const int period, const std::string& goodName, bool printValues ) {
    double calDemand = 0;
-   for ( int j=0; j<noDSec; j++ ) {
+   for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
       calDemand += demandSector[ j ]->getFixedInputs( period, goodName ); 
       if ( printValues ) { cout << "dsec["<<j<<"] "<< demandSector[ j ]->getFixedInputs( period, goodName ) << ", "; }
    }
@@ -1126,38 +1021,27 @@ double Region::getFixedDemand( const int period, const std::string& goodName, bo
 }
 
 //! Calculate regional demand for energy and other goods for all sectors.
-void Region::enduseDemand( const int period ) {
-    carbonTaxPaid[period] = 0; // initialize total regional carbon taxes paid
-
-    for (int i=0;i<noDSec;i++) {
+void Region::calcEndUseDemand( const int period ) {
+    for ( DemandSectorIterator currDemSector = demandSector.begin(); currDemSector != demandSector.end(); ++currDemSector ){
         // calculate aggregate demand for end-use sector services
         // set fuel demand from aggregate demand for services
-        // name is region or country name
-        demandSector[ i ]->aggdemand( gdp, period ); 
-        carbonTaxPaid[ period ] += demandSector[ i ]->getTotalCarbonTaxPaid( period );
-
-        // update sector input
-        // sjs -- moved to getInput ( but that may never be called! Don't think input var is ever used.)
-        // demandSector[ i ]->sumInput( period );
+        (*currDemSector)->aggdemand( gdp.get(), period );
     }
     
 }
 
 //! Calculate regional emissions from resources.
-void Region::emission( const int period )
-{
-    int i=0;
-
+void Region::calcEmissions( const int period ) {
     summary[period].clearemiss(); // clear emissions map
 
     // need to call emissions function but sum is not needed
-    for (i=0;i<noSSec;i++) {
+    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
         supplySector[i]->emission(period);
         summary[period].updateemiss(supplySector[i]->getemission(period));
         emcoefInd[i].setemcoef(supplySector[i]->getemfuelmap(period), 
             supplySector[i]->getOutput(period));
     }
-    for (i=0;i<noDSec;i++) {
+    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
         demandSector[i]->emission(period);
         summary[period].updateemiss(demandSector[i]->getemission(period));
     }
@@ -1178,39 +1062,31 @@ void Region::calcEmissFuel( const int period )
 }
 
 //! Calculate regional indirect emissions from intermediate and final demand sectors.
-void Region::emissionInd( const int period )
-{
-    int i;
-    // calculate indirect GHG emissions
-    for (i=0;i<noSSec;i++)
-        supplySector[i]->indemission( period, emcoefInd );
-    for (i=0;i<noDSec;i++) 
-        demandSector[i]->indemission( period, emcoefInd );
+void Region::emissionInd( const int period ){
+    for( SupplySectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
+        (*currSector)->indemission( period, emcoefInd );
+    }
+    for( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ){
+        (*currSector)->indemission( period, emcoefInd );
+    }
 }
 
-//! Set regional GHG emissions as market demand.
-void Region::setGhgDemand( const int period )
-{
-    double ghgemiss;
-    string ghgname;
-
-    for (int i=0;i<noGhg;i++) {
-        ghgname = ghgMarket[i]->getName();
-        if(ghgname == "CO2") {
-            ghgemiss = summary[period].get_emissmap_second("CO2");
-            ghgMarket[i]->setEmission(ghgemiss,period);
-        }
-        else if(ghgname == "CH4") {
-            ghgemiss = summary[period].get_emissmap_second("CH4");
-            ghgMarket[i]->setEmission(ghgemiss,period);
-        }
+//! Calculate total carbon tax paid in the region by all supply and demand sectors.
+void Region::calcTotalCarbonTaxPaid( const int period ) {
+    carbonTaxPaid[ period ] = 0; // initialize total regional carbon taxes paid 
+    // Loop through supply sectors.
+    for( CSupplySectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
+        carbonTaxPaid[ period ] += (*currSector)->getTotalCarbonTaxPaid( period );
     }
-}	
+    // Loop through demand sectors.
+    for( CDemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ){
+        carbonTaxPaid[ period ] += (*currSector)->getTotalCarbonTaxPaid( period );
+    }
+}
 
 //! Write all outputs to file.
 void Region::csvOutputFile() const {
     const Modeltime* modeltime = scenario->getModeltime();
-    int i=0;
     const int maxper = modeltime->getmaxper();
     vector<double> temp(maxper);
     // function protocol
@@ -1229,25 +1105,24 @@ void Region::csvOutputFile() const {
         temp[m] = summary[m].get_emissmap_second("CO2");
     fileoutput3(name," "," "," ","CO2 emiss","MTC",temp);
     // write depletable resource results to file
-    for (i=0;i<numResources;i++) 
+    for ( unsigned int i = 0; i < resources.size(); i++ ) 
         resources[i]->csvOutputFile( name );
     // write supply sector results to file
-    for (i=0;i<noSSec;i++) {
+    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
         supplySector[i]->csvOutputFile();
         supplySector[i]->subsec_outfile();
     }
     // write end-use sector demand results to file
-    for (i=0;i<noDSec;i++) {
+    for ( unsigned int i = 0; i < demandSector.size(); i++ ){
         demandSector[i]->csvOutputFile();	
         demandSector[i]->subsec_outfile();
     }
-
 }
 
 //! Write MiniCAM style outputs to file.
 void Region::dbOutput() const {
     const Modeltime* modeltime = scenario->getModeltime();
-    int i=0, m=0;
+    int m=0;
     const int maxper = modeltime->getmaxper();
     vector<double> temp(maxper),temptot(maxper);
     // function protocol
@@ -1310,7 +1185,7 @@ void Region::dbOutput() const {
     // regional total end-use service demand for all demand sectors
     for (m=0;m<maxper;m++) {
         temp[m] = 0; // initialize temp to 0 for each period
-        for (i=0;i<noDSec;i++) { // sum for all period and demand sectors
+        for ( unsigned int i = 0; i < demandSector.size(); i++ ) { // sum for all period and demand sectors
             temp[m] += demandSector[i]->getService( m );
         }
     }
@@ -1319,7 +1194,7 @@ void Region::dbOutput() const {
     // regional total end-use service demand without Tech Change for all demand sectors
     for (m=0;m<maxper;m++) {
         temp[m] = 0; // initialize temp to 0 for each period
-        for (i=0;i<noDSec;i++) { // sum for all period and demand sectors
+        for ( unsigned int i = 0; i < demandSector.size(); i++ ) { // sum for all period and demand sectors
             temp[m] += demandSector[i]->getServiceWoTC( m );
         }
     }
@@ -1370,15 +1245,15 @@ void Region::dbOutput() const {
     dboutput4(name,"Pri Energy","Production by Sector","zTotal","EJ",temp);
 
     // write depletable resource results to database
-    for (i=0;i<numResources;i++) {
+    for ( unsigned int i = 0; i < resources.size(); i++ ) {
         resources[i]->dbOutput( name );
     }
     // write supply sector results to database
-    for (i=0;i<noSSec;i++) {
+    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
         supplySector[i]->dbOutput();
     }
     // write end-use sector demand results to database
-    for (i=0;i<noDSec;i++) {
+    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
         demandSector[i]->dbOutput();
     }
 }
@@ -1390,8 +1265,6 @@ Then loop through the fuels in that sector to see if that sector uses
 the first as a fuel.  */
 void Region::findSimul(const int period) {
     Marketplace* marketplace = scenario->getMarketplace();
-    int isec;
-    int	jsec;
     string OuterSectorName;
     string InnerSectorName;
     string InnerFuelName;    
@@ -1404,12 +1277,12 @@ void Region::findSimul(const int period) {
 
     // Loop through all supply sectors
     if (WriteOut) { cout << "Region: " << name << endl; }
-    for ( isec=0; isec<noSSec; isec++ ) {				
+    for ( unsigned int isec=0; isec<supplySector.size(); isec++ ) {				
         OuterSectorName = supplySector[isec]->getName();
         if (WriteOut) { cout << "Checking Sector: " << OuterSectorName << endl; }
         fuelcons = supplySector[isec]->getfuelcons(period);	// Get fuel consumption map for outer sector
         // Inner loop through all supply sectors
-        for ( jsec=0; jsec<noSSec; jsec++ ) {
+        for ( unsigned int jsec=0; jsec<supplySector.size(); jsec++ ) {
             InnerSectorName = supplySector[jsec]->getName();
             fuelIterOne=fuelcons.find(InnerSectorName);	// Search in outer sector for name of inner sector 
             // Check if the inner sector is a fuel used by the outer sector (and not same sector!)
@@ -1447,26 +1320,22 @@ void Region::initializeAgMarketPrices( const vector<double>& pricesIn ) {
     agSector->initMarketPrices( name, pricesIn );
 }
 
-
 //! update regional summaries for reporting
 void Region::updateSummary( const int period ) { 
-
-    int i = 0;
-
     summary[period].clearpeprod();
     summary[period].clearfuelcons();
 
-    for (i=0;i<numResources;i++) {
+    for ( unsigned int i = 0; i < resources.size(); i++ ) {
         summary[period].initpeprod(resources[i]->getName(),resources[i]->getAnnualProd(period));
     }
-    for (i=0;i<noDSec;i++) {
+    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
         // call update for demand sector
         demandSector[i]->updateSummary( period );
         // update regional fuel consumption (primary and secondary) for demand sector
         summary[ period ].updatefuelcons( demandSector[ i ]->getfuelcons( period ) ); 
         summary[ period ].updateemfuelmap( demandSector[ i ]->getemfuelmap( period ) );
     }
-    for (i=0;i<noSSec;i++) {
+    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
         // call update for supply sector
         supplySector[i]->updateSummary( period );
         // update regional fuel consumption (primary and secondary) for supply sector
@@ -1500,17 +1369,17 @@ void Region::printGraphs( ostream& outStream, const int period ) const {
     // Now iterate through sectors.
 
     // Loop through all resource sectors
-    for ( int resourceIter = 0; resourceIter < numResources; resourceIter++ ) {				
+    for ( unsigned int resourceIter = 0; resourceIter < resources.size(); resourceIter++ ) {				
         resources[ resourceIter ]->addToDependencyGraph( outStream, period );
     }
 
     // Loop through all supply sectors
-    for ( int supplyIter = 0; supplyIter < noSSec; supplyIter++ ) {				
+    for ( unsigned int supplyIter = 0; supplyIter < supplySector.size(); supplyIter++ ) {				
         supplySector[ supplyIter ]->addToDependencyGraph( outStream, period );
     }
 
     // Loop through all demand sectors.
-    for ( int demandIter = 0; demandIter < noDSec; demandIter++ ) {				
+    for ( unsigned int demandIter = 0; demandIter < demandSector.size(); demandIter++ ) {				
         demandSector[ demandIter ]->addToDependencyGraph( outStream, period );
     }
 
@@ -1586,18 +1455,18 @@ vector<string> Region::getSectorDependencies( const string& sectorName ) const {
 * \param logger The to which to print the dependencies. 
 */
 void Region::printSectorDependencies( Logger* logger ) const {
-    typedef vector<SupplySector*>::const_iterator ConstSectorIterator;
+    typedef CSupplySectorIterator CSupplySectorIterator;
 
     // Print the final ordering of the sectors within the region.
     LOG( logger, Logger::DEBUG_LEVEL ) << " Final Sector ordering for " << name << endl;
-    for(  ConstSectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
+    for(  CSupplySectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
         LOG( logger, Logger::DEBUG_LEVEL )<< ( *currSector )->getName() << endl;
     }
     LOG( logger, Logger::DEBUG_LEVEL ) << endl;
 
     // Print the sector dependencies for all sectors within this region.
     LOG( logger, Logger::DEBUG_LEVEL ) << name << ",Sector,Dependencies ->," << endl;
-    for( ConstSectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ) {
+    for( CSupplySectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ) {
         ( *currSector )->printSectorDependencies( logger );
     }
     LOG( logger, Logger::DEBUG_LEVEL ) << endl;
