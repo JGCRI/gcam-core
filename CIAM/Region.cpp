@@ -40,6 +40,7 @@ map<string, double> co2coefall;
 vector<Emcoef_ind> emcoef_ind;
 // indirect emissions coefficients for secondary energy
 map<string, double> co2coefind;
+// test 1
 
 int countdbrec(string fdname,const char* dbname,const char* dbtname);
 int count_sec(string region,string fdname,const char* dbtname);
