@@ -152,7 +152,7 @@ string Scenario::getName() const {
 * \bug GMT offset does not work properly.
 */
 
-string Scenario::XMLCreateDate( const time_t& time ) const {
+string Scenario::XMLCreateDate( const time_t& time ) {
 	stringstream buffer;
 	string retString;
 	struct tm* timeInfo;

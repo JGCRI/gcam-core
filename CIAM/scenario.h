@@ -40,7 +40,7 @@ public:
 	void toDebugXMLOpen( const int period, ostream& out ) const;
 	void toDebugXMLClose( const int period, ostream& out ) const;
 	string getName() const; // return scenario name
-	string XMLCreateDate( const time_t& time ) const;
+	string static XMLCreateDate( const time_t& time );
 };
 
 #endif // _SCENARIO_H_
