@@ -698,7 +698,7 @@ Region,ArableLand,Pasture,Forest,Other,TotalLand,NonWild,,,Poor Pasture
 10,106132.325,147691.2304,1011154,886481.0446,886481.05,1264977.555,,,476272.8
 11,106717.411,52244.95403,257910,150750.835,150750.84,416872.365,,,10834.4
 12,39218.649,24605.49431,35158,22138.85669,22138.86,98982.14331,,,4076.2
-13,2414.501,200.4,6476,404.099,404.10,9090.901,,,17.6
+13,2414.501,200.4,6476,404.099,404.1,9090.901,,,17.6
 14,175297.367,17645.6,67762,47568.133,47568.13,260704.967,,,2320.4
 
 
@@ -954,4 +954,26 @@ mc14regid,fractAgSavannah(L),fractPotentialAgSavannah(L),mc14regname
 14,0.3,0.48,India
 
 
-EoF,,,
+GDP per capita trip point,,,
+INPUT_TABLE,,,GDP per capita above which all usable biomass is available
+Variable ID,,,"Units, 1000's of $1990"
+695,,,
+
+mc14regid,gdppercap_point,mc14regname
+1,10,USA
+2,10,Canada
+3,10,OECD90 Europe
+4,10,Japan
+5,10,Aus & NZ
+6,10,FSU
+7,10,China/CPA
+8,10,MiddleEast
+9,10,Africa
+10,10,Latin America
+11,10,S&E Asia
+12,10,EEU
+13,10,Korea
+14,10,India
+
+
+EoF
