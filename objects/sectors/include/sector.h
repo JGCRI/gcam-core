@@ -117,7 +117,7 @@ public:
     void addSimul( const std::string sectorName );
     void setupForSort( const Region* parentRegion );
     std::vector<std::string> getInputDependencies( const Region* parentRegion ) const;
-    const std::vector<std::string> getDependsList() const;
+    const std::vector<std::string>& getDependsList() const;
     void printSectorDependencies( Logger* logger ) const;
     
     /*!
@@ -139,12 +139,7 @@ public:
             std::vector<std::string> rhsDependsList = rhs->getDependsList();
             
             // Check if the left Sector depends on the right Sector.
-            if ( std::binary_search( rhsDependsList.begin(), rhsDependsList.end(), lhs->getName() ) ) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return std::binary_search( rhsDependsList.begin(), rhsDependsList.end(), lhs->getName() );
         }
     };
 };

@@ -1527,7 +1527,7 @@ vector<string> Sector::getInputDependencies( const Region* parentRegion ) const 
 * \author Josh Lurz
 * \return A vector of Sector names which are inputs the Sector uses. 
 */
-const vector<string> Sector::getDependsList() const {
+const vector<string>& Sector::getDependsList() const {
     return dependsList;
 }
 
