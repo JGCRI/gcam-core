@@ -61,7 +61,7 @@ const std::string& SO2Emissions::getXMLNameStatic() {
 }
 
 /*! \brief Parses any child nodes specific to derived classes.
-* \detailed Method parses any input data from child nodes that are specific to the classes derived from this class.
+* \details Method parses any input data from child nodes that are specific to the classes derived from this class.
 * \author Nick Fernandez
 * \param nodeName name of current node
 * \param curr pointer to the current node in the XML input tree

@@ -61,7 +61,7 @@ Market::~Market(){
 }
 
 /*! \brief Protected copy constructor
-* \detailed This copy constructor is needed because auto_ptr held memory cannot be copied automatically.
+* \details This copy constructor is needed because auto_ptr held memory cannot be copied automatically.
 * The copy constructor is protected because it should only be accessed by the PriceMarket derived class.
 * \param aMarket The market to copy.
 * \author Josh Lurz
@@ -85,10 +85,11 @@ containedRegionNames( aMarket.containedRegionNames ){
 }
 
 /*! \brief Static factory method to create a market based on its type.
-* \detailed
+* \details
 * \param aGoodName The good or fuel name for the item in the market to create.
 * \param aRegionName The region which the market to create covers.
 * \param aPeriod The period the market to create exists in.
+* \param aType Type of market to create.
 * \return A pointer to the newly allocated market, null if the type did not exist. 
 */
 auto_ptr<Market> Market::createMarket( const IMarketType::Type aType, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod ) {

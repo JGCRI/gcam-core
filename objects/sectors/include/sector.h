@@ -137,7 +137,7 @@ public:
     /*!
     * \brief Binary function used to order Sector* pointers by input dependency. 
     * \author Josh Lurz
-    * \detailed This function checks if the right hand side sector has an input dependency
+    * \details This function checks if the right hand side sector has an input dependency
     * on the left hand side Sector. If it does, the right hand side should go after the left
     * hand side, and so is greater than the left hand side, and this operator returns true. 
     */   

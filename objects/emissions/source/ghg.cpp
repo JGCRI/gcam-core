@@ -308,7 +308,7 @@ const std::string& Ghg::getXMLNameStatic() {
 }
 
 /*! \brief Copies parameters such as Tau, GDP0, and MAC curve that should only be specified once
-* \detailed Certain parameters for GHG emissions should only be specified once so that they are
+* \details Certain parameters for GHG emissions should only be specified once so that they are
 * consistent for all years (and also to simplify input). Given that GHG objects are embedded in 
 * technology objects this means that these parameters need to be copied from object to object.
 * This method copies any needed parameters from the previous year's GHG object.
@@ -525,7 +525,7 @@ double Ghg::calcTechChange( const int period ){
 }
 
 /*! \brief Calculates emissions of GHG's that use input-output as the emissions Driver
-* \detailed Emissions of these gases are equal to the emissions driver multiplied by the emissions coefficient (how much of the
+* \details Emissions of these gases are equal to the emissions driver multiplied by the emissions coefficient (how much of the
 * chemical forming the GHG is present in the fuel) multiplied by the control function (the extent to which regions
 * are expected to put controls on end-of-pipe emissions- based on their pppGdp) multiplied by the result of the 
 * Marginal Abatement curve, and finally by an external read-in emissions Adjustment factor(if any).  The function also
@@ -536,6 +536,7 @@ double Ghg::calcTechChange( const int period ){
 * \param input The amount of fuel sent out
 * \param prodname The name of the output product
 * \param output The amount of fuel consumed
+* \param gdp GDP object used to calculate various types of GDPs.
 * \param period The period in which this calculation is occurring.
 * \todo seperate out CO2.
 */
@@ -666,7 +667,7 @@ void Ghg::setEmissionsInputStatus() {
 }
 
 /*! \brief performs the calculations that solve the control function in the current period
-* \detailed The control function is an inverse exponential funciton.  It approaches 0 for values of gdpCap much less
+* \details The control function is an inverse exponential funciton.  It approaches 0 for values of gdpCap much less
 * than gdp0, and approaches fMax for values of gdpCap much greater than gdp0. CLOGIT is a constant equal
 * to 2 times the natural log of 9, such that fControl is equal to 1/2 fMax at gdp0.  
 * the function returns the value of 0 in the case that either gdp0 or tau are not input, or are equal to 0.

@@ -63,6 +63,7 @@ Marketplace::~Marketplace() {
 * US region.
 * \param period The period for which to print the debugging information.
 * \param out The output stream to which to print.
+* \param tabs Tabs object used to track the number of tabs to print.
 * \author Josh Lurz
 */
 void Marketplace::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
@@ -106,7 +107,7 @@ string Marketplace::createMarketKey( const string& marketName, const string& goo
 * \param regionName The region of the sector for which to create a market.
 * \param marketName The market region for which to create a market. This varies from the regionName, it can be global, a multi-region market, or the same as the region name.
 * \param goodName The good for which to create a market.
-* \param aTy[e The type of market to create.
+* \param aType The type of market to create.
 * \return Whether a market was created.
 */
 bool Marketplace::createMarket( const string& regionName, const string& marketName, const string& goodName, const IMarketType::Type aType ) {
@@ -435,6 +436,7 @@ double Marketplace::getPrice( const string& goodName, const string& regionName, 
 *
 * \param goodName The good for which a supply is needed.
 * \param regionName The region for which a supply is needed.
+* \param per Period to get the supply for.
 * \return The market supply.
 */
 double Marketplace::getSupply( const string& goodName, const string& regionName, const int per ) const {
