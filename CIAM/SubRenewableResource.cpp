@@ -46,7 +46,7 @@ void SubRenewableResource::initializeResource( ) {
    
    // Note that available only exists in period 0 at present data structure.
    for ( int i = 1; i < nograde && !badGradeFound; i++ ) {
-      if ( ( grade[ i ][ 0 ]->getAvail() > 0 ) && ( grade[ i ][ 0 ]->getAvail() > grade[ i - 1 ][ 0 ]->getAvail() ) ) {
+      if ( ( grade[ i ]->getAvail() > 0 ) && ( grade[ i ]->getAvail() > grade[ i - 1 ]->getAvail() ) ) {
          tempNumGrades++;
       }
       else {
@@ -73,14 +73,7 @@ string SubRenewableResource::getType() const {
 /*! Cumulative production  Is not needed for renewable resources. But still do any preliminary calculations that need to be done before calculating production */
 void SubRenewableResource::cumulsupply( double prc, int per ) {   
    const Modeltime* modeltime = scenario->getModeltime();
-   
-   //! Make sure available is passed from year to year
-   if ( per > 0 ) {
-      for ( int i = 0; i < nograde; i++ ) {
-         grade[ i ][ per ]->setAvail( grade[ i ][ per - 1 ]->getAvail() );
-      }
-   }
-   
+      
    // calculate total extraction cost for each grade
    // This is a waste of time, should only do this once!
    for ( int gr=0; gr<nograde; gr++ ) {
@@ -89,7 +82,7 @@ void SubRenewableResource::cumulsupply( double prc, int per ) {
             pow( ( 1.0 + techChange[ per ] ), modeltime->gettimestep( per ) );
       }
       // Determine cost
-      grade[ gr ][ per ]->calcCost( severanceTax[ per ],cumulativeTechChange[ per ], environCost[ per ], per );
+      grade[ gr ]->calcCost( severanceTax[ per ],cumulativeTechChange[ per ], environCost[ per ], per );
    }
    
    
@@ -106,8 +99,8 @@ void SubRenewableResource::annualsupply( int period, double gnp, double prev_gnp
    const Modeltime* modeltime = scenario->getModeltime();
    double gradeAvail;
    double gradeCost;
-   double prevGradeCost = grade[ 0 ][ period ]->getCost(); // Minimum cost for any production
-   double prevGradeAvail = grade[ 0 ][ period ]->getAvail(); // Lowest fraction available
+   double prevGradeCost = grade[ 0 ]->getCost(period - 1); // Minimum cost for any production
+   double prevGradeAvail = grade[ 0 ]->getAvail(); // Lowest fraction available
    double gradeFraction;
    
    // default value
@@ -127,17 +120,17 @@ void SubRenewableResource::annualsupply( int period, double gnp, double prev_gnp
    //! \todo perhaps turn production into a function -- arguments period, gnp, price;
    
    // To save time without doing the loop, check first to see if price is above max price point
-   if ( price > grade[ nograde - 1 ][ period ]->getCost() ) {
-      gradeFraction = grade[ nograde - 1 ][ 0 ]->getAvail();
-      annualprod[ period ] = grade[ nograde - 1 ][ 0 ]->getAvail() 
+   if ( price > grade[ nograde - 1 ]->getCost(period) ) {
+      gradeFraction = grade[ nograde - 1 ]->getAvail();
+      annualprod[ period ] = grade[ nograde - 1 ]->getAvail() 
          * maxSubResource  * pow( gnp / baseGDP, gdpSupplyElasticity );
    }
    else {
       bool pricePointFound = false;
       // Move up cost curve until reach price
       for ( int increment = 1; increment < nograde && !pricePointFound; increment++ ) {
-         gradeAvail = grade[ increment ][ 0 ]->getAvail();
-         gradeCost = grade[ increment ][ period ]->getCost();
+         gradeAvail = grade[ increment ]->getAvail();
+         gradeCost = grade[ increment ]->getCost(period);
          
          // if have reached the appropriate point in cost curve, calculate production
          if ( price <= gradeCost && price > prevGradeCost ) {

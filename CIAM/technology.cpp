@@ -119,8 +119,8 @@ void technology::XMLParse( const DOMNode* node )
         }
         else if( nodeName == "calInputValue" ){
             calInputValue = XMLHelper<double>::getValue( curr );
-            //doCalibration = true;
-            doCalibration = false;
+            doCalibration = true;
+            //doCalibration = false;
         }
         else if( nodeName == "efficiency" ){
             eff = XMLHelper<double>::getValue( curr );

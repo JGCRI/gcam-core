@@ -55,10 +55,8 @@ SubResource::SubResource() {
 //! Destructor.
 SubResource::~SubResource() {
    
-   for ( vector< vector< Grade* > >::iterator outerIter = grade.begin(); outerIter != grade.end(); outerIter++ ) {
-      for( vector< Grade* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
-         delete *innerIter;
-      }
+   for ( vector<Grade*>::iterator outerIter = grade.begin(); outerIter != grade.end(); outerIter++ ) {
+         delete *outerIter;
    }
 }
 
@@ -87,7 +85,6 @@ void SubResource::XMLParse( const DOMNode* node )
    DOMNode* currChild = 0;
    string nodeName;
    string childNodeName;
-   vector<Grade*> tempGradesVec;
    Grade* tempGrade = 0;
    
    const Modeltime* modeltime = scenario->getModeltime();
@@ -108,22 +105,9 @@ void SubResource::XMLParse( const DOMNode* node )
       nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
       
       if( nodeName == "grade" ){
-         childNodeList = curr->getChildNodes();
-         
-         // loop through grades children.
-         for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
-            
-            currChild = childNodeList->item( j );
-            childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-            
-            if( childNodeName == "period" ){
-               tempGrade = new Grade();
-               tempGrade->XMLParse( currChild );
-               tempGradesVec.push_back( tempGrade );
-            }
-         }
-         grade.push_back( tempGradesVec );
-         tempGradesVec.clear(); // clears vector, size is 0
+         tempGrade = new Grade();
+         tempGrade->XMLParse( curr );
+         grade.push_back( tempGrade );
       }
       else if( nodeName == "annualprod" ){
          XMLHelper<double>::insertValueIntoVector( curr, annualprod, modeltime );
@@ -183,13 +167,10 @@ void SubResource::toXML( ostream& out ) const {
     // write the xml for the class members.
     
     // write out the grade objects.
-    for( vector< vector<Grade*> >::const_iterator i = grade.begin(); i != grade.end(); i++ ){	
+    for( vector<Grade*>::const_iterator i = grade.begin(); i != grade.end(); i++ ){	
         Tabs::writeTabs( out );
         out << "<Grade>" << endl;
-        Tabs::increaseIndent();
-        for( vector<Grade*>::const_iterator j = i->begin(); j != i->end(); j++ ){
-            ( *j )->toXML( out );
-        }
+        ( *i )->toXML( out );
         Tabs::decreaseIndent();
         Tabs::writeTabs( out );
         out << "</grade>" << endl;
@@ -266,7 +247,7 @@ void SubResource::toDebugXML( const int period, ostream& out ) const {
     
     // write out the grade objects.
     for( int i = 0; i < static_cast<int>( grade.size() ); i++ ){	
-        grade[ i ][ period ]->toDebugXML( period, out );
+        grade[ i ]->toDebugXML( period, out );
     }
     
     // finished writing xml for the class members.
@@ -318,7 +299,7 @@ void SubResource::cumulsupply(double prc,int per)
                 pow( ( 1.0 + techChange[per] ), modeltime->gettimestep(per) );
         }
         // Determine cost
-        grade[gr][per]->calcCost( severanceTax[per],cumulativeTechChange[per], environCost[ per ], per );
+        grade[gr]->calcCost( severanceTax[per],cumulativeTechChange[per], environCost[ per ], per );
     }
     
     if (per == 0) {
@@ -328,34 +309,34 @@ void SubResource::cumulsupply(double prc,int per)
         // Case 1
         // if market price is less than cost of first grade, then zero cumulative 
         // production
-        if (prc <= grade[0][per]->getCost()) {
+        if (prc <= grade[0]->getCost(per)) {
             cumulprod[per] = cumulprod[per-1];
         }
         
         // Case 2
         // if market price is in between cost of first and last grade, then calculate 
         // cumulative production in between those grades
-        if (prc > grade[0][per]->getCost() && prc <= grade[maxgrd][per]->getCost()) {
+        if (prc > grade[0]->getCost(per) && prc <= grade[maxgrd]->getCost(per)) {
             int iL=0,iU=0;
-            while (grade[i][per]->getCost() < prc) {
+            while (grade[i]->getCost(per) < prc) {
                 iL=i; i++; iU=i;
             }
             // add subrsrcs up to the lower grade
             for (i=0;i<=iL;i++) {
-                cumulprod[per] += grade[i][0]->getAvail();
+                cumulprod[per] += grade[i]->getAvail();
             }
             // price must reach upper grade cost to produce all of lower grade
-            slope = grade[iL][0]->getAvail()
-                / (grade[iU][per]->getCost() - grade[iL][per]->getCost());
-            cumulprod[per] -= slope * (grade[iU][per]->getCost() - prc);
+            slope = grade[iL]->getAvail()
+                / (grade[iU]->getCost(per) - grade[iL]->getCost(per));
+            cumulprod[per] -= slope * (grade[iU]->getCost(per) - prc);
         }
         
         // Case 3
         // if market price greater than the cost of the last grade, then
         // cumulative production is the amount in all grades
-        if (prc > grade[maxgrd][per]->getCost()) {
+        if (prc > grade[maxgrd]->getCost(per)) {
             for (i=0;i<nograde;i++) {
-                cumulprod[per] += grade[i][0]->getAvail();
+                cumulprod[per] += grade[i]->getAvail();
             }
         }
     }
@@ -381,10 +362,12 @@ double SubResource::getCumulProd(int per)
    return cumulprod[per];
 }
 
+// there is no period info now, returns the same value for 
+// any period.  shk 6/30
 void SubResource::updateAvailable( const int period ){
    available[ period ] = 0;
    for ( int i = 0; i < nograde; i++ ) {
-      available[ period ] += grade[ i ][ period ]->getAvail();
+      available[ period ] += grade[ i ]->getAvail();
    }
 }
 
@@ -478,18 +461,18 @@ void SubResource::MCoutput( const string &regname, const string& secname )
    
    // do for all grades in the sector
    for (i=0;i<nograde;i++) {
-      str = tssname + "_" + grade[i][0]->getName();
+      str = tssname + "_" + grade[i]->getName();
       // grade cost
       for (m=0;m<maxper;m++)
-         temp[m] = grade[i][m]->getCost();
+         temp[m] = grade[i]->getCost(m);
       dboutput4(regname,"Price",secname,str,"$/GJ",temp);
       // grade extraction cost
       for (m=0;m<maxper;m++)
-         temp[m] = grade[i][m]->getExtCost();
+         temp[m] = grade[i]->getExtCost();
       dboutput4(regname,"Price ExtCost",secname,str,"$/GJ",temp);
       // available resource for each grade
       for (m=0;m<maxper;m++)
-         temp[m] = grade[i][0]->getAvail();
+         temp[m] = grade[i]->getAvail();
       dboutput4(regname,"Resource",secname,str,"EJ",temp);
    }
 }
@@ -510,26 +493,6 @@ void SubResource::outputfile( const string &regname, const string& sname) {
    fileoutput3( regname,sname,name," ","production","EJ",annualprod);
    fileoutput3( regname,sname,name," ","resource","EJ",available);
    
-   /*	// do for all grades in the sector
-   for (i=0;i<nograde;i++) {
-   // output or demand for each grade
-   for (m=0;m<maxper;m++)
-   temp[m] = grade[i][m].showavail();
-   fileoutput2(reg,regname,sname,name,"supply",grade[i][0].getname(),temp,"EJ");
-   // grade cost
-   for (m=0;m<maxper;m++)
-   temp[m] = grade[i][m].getcost();
-   fileoutput2(reg,regname,sname,name,"cost",grade[i][0].getname(),temp,"$/GJ");
-   // grade efficiency
-   for (m=0;m<maxper;m++)
-   temp[m] = grade[i][m].getextcost();
-   fileoutput2(reg,regname,sname,name,"ext cost",grade[i][0].getname(),temp,"$/GJ");
-   // grade environmental cost
-   for (m=0;m<maxper;m++)
-   temp[m] = grade[i][m].getenvcost();
-   fileoutput2(reg,regname,sname,name,"env cost",grade[i][0].getname(),temp,"$/GJ");
-   }
-   */
 }
 
 

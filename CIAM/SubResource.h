@@ -44,7 +44,7 @@ protected:
 	vector<double> scaleFactor; //!< Knob to control regional resource production. Default == 1.
     vector<double> cumulativeTechChange; //!< Cumulative Technical Change for this sub-sector
     // Cumulative technical change needs to be in sub-resource sector 
-    vector< vector<Grade*> > grade; //!< amount of SubResource for each grade
+    vector<Grade*> grade; //!< amount of SubResource for each grade
     
 public:
     SubResource(); //default constructor (automatically virtual)

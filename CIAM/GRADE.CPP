@@ -25,132 +25,124 @@ extern Scenario* scenario;
 
 //! Default constructor
 Grade::Grade() {
-	initElementalMembers();
+    initElementalMembers();
 }
 
 //! Clear member variables
 void Grade::clear() {
-	initElementalMembers();
-	name = "";
+    initElementalMembers();
+    name = "";
+    totalCost.clear();
 }
 
 //! Initialize elemental members
 void Grade::initElementalMembers() {
-	year = 0;
-	available = 0;
-	extractCost = 0;
-	totalCost = 0;
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    available = 0;
+    extractCost = 0;
+    totalCost.resize( maxper );
 }
 
 //! Initialize data members from XML.
 void Grade::XMLParse( const DOMNode* tempNode ) {
-	DOMNodeList* tempNodeLst;
-	DOMNode* tNode = 0;
-	string tNodeName;
-
-	//! \pre assume we are passed a valid node.
-	assert( tempNode );
-	
-	tempNodeLst = tempNode->getChildNodes();
-
-	for( int i = 0; i < static_cast<int>( tempNodeLst->getLength() ); i++ ) {
-		tNode = tempNodeLst->item( i );
-		tNodeName = XMLHelper<string>::safeTranscode( tNode->getNodeName() );
-		
-		if( tNodeName == "name" ){
-			name = XMLHelper<string>::getValueString( tNode );
-		}
-		else if( tNodeName == "year" ){
-			year = XMLHelper<int>::getValue( tNode );
-		}
-		else if( tNodeName == "available" ){
-			available = XMLHelper<double>::getValue( tNode );
-		}
-		else if( tNodeName == "extractioncost" ){
-			extractCost = XMLHelper<double>::getValue( tNode );
-		}
-	}
+    DOMNodeList* tempNodeLst;
+    DOMNode* tNode = 0;
+    string tNodeName;
+    
+    //! \pre assume we are passed a valid node.
+    assert( tempNode );
+    
+    // get the name attribute.
+    name = XMLHelper<string>::getAttrString( tempNode, "name" );
+    tempNodeLst = tempNode->getChildNodes();
+    
+    for( int i = 0; i < static_cast<int>( tempNodeLst->getLength() ); i++ ) {
+        tNode = tempNodeLst->item( i );
+        tNodeName = XMLHelper<string>::safeTranscode( tNode->getNodeName() );
+        
+        if( tNodeName == "available" ){
+            available = XMLHelper<double>::getValue( tNode );
+        }
+        else if( tNodeName == "extractioncost" ){
+            extractCost = XMLHelper<double>::getValue( tNode );
+        }
+    }
 }
 
 //! Write datamembers to datastream in XML format.
 void Grade::toXML( ostream& out ) const {
-	
-	Tabs::writeTabs( out );
-	out << "<period>" << endl;
-	
-	Tabs::increaseIndent();
-
-	XMLWriteElement( name, "name", out );
-	XMLWriteElement( year, "year", out );
-	XMLWriteElement( available, "available", out );
-	XMLWriteElement( extractCost, "extractioncost", out );
-	XMLWriteElement( totalCost, "totalcost", out );
-	
-	Tabs::decreaseIndent();
-
-	Tabs::writeTabs( out );
-	out << "</period>" << endl;
+    const Modeltime* modeltime = scenario->getModeltime();
+    
+    Tabs::writeTabs( out );
+    
+    XMLWriteElement( name, "name", out );
+    XMLWriteElement( available, "available", out );
+    XMLWriteElement( extractCost, "extractioncost", out );
+    for(int i = 0; i < static_cast<int>( totalCost.size() ); i++ ){
+        XMLWriteElement( totalCost[ i ], "totalcost", out, modeltime->getper_to_yr( i ) );
+    }
+    
 }
 
 //! Write datamembers to debugging datastream in XML format.
 void Grade::toDebugXML( const int period, ostream& out ) const {
-	
-	Tabs::writeTabs( out );
-	out << "<Grade name=\"" << name << "\" year=\"" << year << "\">" << endl;
-	Tabs::increaseIndent();
-
-	XMLWriteElement( available, "available", out );
-	XMLWriteElement( extractCost, "extractioncost", out );
-	XMLWriteElement( totalCost, "totalcost", out );
-	
-	Tabs::decreaseIndent();
-	Tabs::writeTabs( out );
-	out << "</Grade>" << endl;
+    
+    Tabs::writeTabs( out );
+    out << "<Grade name=\"" << name << "\">" << endl;
+    Tabs::increaseIndent();
+    
+    XMLWriteElement( available, "available", out );
+    XMLWriteElement( extractCost, "extractioncost", out );
+    XMLWriteElement( totalCost[period], "totalcost", out );
+    
+    Tabs::decreaseIndent();
+    Tabs::writeTabs( out );
+    out << "</Grade>" << endl;
 }
 
 //! Print technology info.
 void Grade::printGrade() const
 {
-	// write to file or database later
-	cout << name << endl;
-	cout << "Year: " << year << endl;
-	cout << "Available: " << available << endl;
-	cout << "Extraction Cost: " << extractCost << endl;
+    // write to file or database later
+    cout << name << endl;
+    cout << "Available: " << available << endl;
+    cout << "Extraction Cost: " << extractCost << endl;
 }
 
 //! Total cost of each grade.
 void Grade::calcCost(  const double tax, const double cumTechChange, const double environCost, const int per ) {
-	totalCost = ( extractCost + environCost ) / cumTechChange + tax;
+    totalCost[per] = ( extractCost + environCost ) / cumTechChange + tax;
 }
 
 //! Return available amount in each Grade.
 double Grade::getAvail() const {
-	return available;
+    return available;
 }
 
 //! Return available amount in each Grade.
 void Grade::setAvail( double availableVal ) {
-   available = availableVal;
+    available = availableVal;
 }
 
 //! Return the total cost.
-double Grade::getCost() const {
-	return totalCost;
+double Grade::getCost(const int per) const {
+    return totalCost[per];
 }
 
 //! Return the extraction cost.
 double Grade::getExtCost() const {
-	return extractCost;
+    return extractCost;
 }
 
 //! Set the extraction cost.
 void Grade::setExtCost( const double eCost ) {
-	extractCost = eCost;
+    extractCost = eCost;
 }
 
 //! Get the name.
 string Grade::getName() const {
-	return name;
+    return name;
 }
 
 
