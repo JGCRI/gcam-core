@@ -341,11 +341,6 @@
 						<available>1.5</available>
 						<extractioncost>2.22</extractioncost>
 					</grade>
-					<!--Added by Josh to remove flat supply curve-->
-					<grade name="grade 6">
-						<available>2</available>
-						<extractioncost>100</extractioncost>
-					</grade>
 				</subresource>
 			</renewresource>
 			<supplysector name="regional coal">
