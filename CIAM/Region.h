@@ -125,6 +125,7 @@ public:
     void printGraphs( std::ostream& outStream, const int period ) const;
     double getPrimaryFuelCO2Coef( const std::string& fuelName ) const;
     double getCarbonTaxCoef( const std::string& fuelName ) const;
+    std::vector<std::string> getSectorDependencies( const std::string& sectorName ) const;
 };
 
 #endif // _REGION_H_

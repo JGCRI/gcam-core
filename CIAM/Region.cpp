@@ -411,7 +411,7 @@ void Region::completeInit() {
 
    // Setup each sector for sorting. 
    for( vector<sector*>::iterator supplySectorSortIter = supplySector.begin(); supplySectorSortIter != supplySector.end(); supplySectorSortIter++ ){
-       ( *supplySectorSortIter )->setupForSort();
+       ( *supplySectorSortIter )->setupForSort( this );
    }
 
    // Now sort the sectors by dependency.
@@ -1519,3 +1519,31 @@ double Region::getCarbonTaxCoef( const string& fuelName ) const {
    
    return coef;
 }
+
+/*! \brief Return the dynamically determined input dependencies for a given sector.
+*
+* This function is a helper function to the recursive sector::getInputDependencies.
+* It is required so that a sector can determine its full list of input dependencies,
+* which in turn requires determining that for each of its input sectors.
+*
+* \author Josh Lurz
+* \param sectorName Sector to find the full list of input dependencies for.
+* \return The full list of input dependencies for the given sector
+*/
+vector<string> Region::getSectorDependencies( const string& sectorName ) const {
+    
+    // Setup the return vector.
+    vector<string> retVector;
+    
+    // Find the correct sector.
+    map<string,int>::const_iterator iter = supplySectorNameMap.find( sectorName );
+    
+    // If the sector exists returns the dependency list.
+    if( iter != supplySectorNameMap.end() ) {
+        retVector = supplySector[ iter->second ]->getInputDependencies( this );
+    }
+
+    // Return the resulting list.
+    return retVector;
+}
+
