@@ -37,7 +37,13 @@ BisectionNRSolver::BisectionNRSolver( Marketplace* marketplaceIn ):Solver( marke
 BisectionNRSolver::~BisectionNRSolver() {
 }
 
-//! Solution method for all markets for one period
+/*! \brief Solution method to solve all markets for one period.
+* \detailed This is the main solution function called from within the Marketplace. It is called once for each period to clear all 
+* markets which should be solved. This solve method first brackets the markets, then uses several iterations of bisection_all to move 
+* the prices into the range of the solution, and then uses Newton-Rhaphson to clear the markets.
+* \param period The period to solve.
+* \return Whether the markets all solved.
+*/
 bool BisectionNRSolver::solve( const int period ) {
    
    World* world = scenario->getWorld();
@@ -159,11 +165,13 @@ bool BisectionNRSolver::solve( const int period ) {
    }
    
    totIter += worldCalcCount;
-   
+   bool retCode;
+
    switch (code) {
    case 0:
       cout << "Model solved normally: worldCalcCount = " << int( worldCalcCount ) << "; Cumulative = "<< int( totIter ) << endl;
       logfile << ",Model solved normally: worldCalcCount = " << int( worldCalcCount ) << "; Cumulative = "<< int( totIter ) << endl;
+      retCode = true;
       break;
    case -1:
       cout << "Model did not solve within set iteration	" << int( worldCalcCount )<< endl;
@@ -173,18 +181,22 @@ bool BisectionNRSolver::solve( const int period ) {
       for ( i = 0; i < marketsToSolve; i++ ) {
          logfile << "," << sol[ i ].marketName << sol[ i ].marketGood << ","<<sol[i].X<<","<<sol[i].XL<<","<<sol[i].XR
             <<","<<sol[i].ED<<","<<sol[i].EDL<<","<<sol[i].EDR<<","<<solTolerance<< endl;
-      }
+      }      
+      retCode = false;
       break;
    case 2:
       cout << "Original code has not been changed" << endl;
       logfile << ",Original code has not been changed" << endl;
+      retCode = true;
       break;
    default:
       cout << "Case for code not found" << endl;
       logfile << ",Case for code not found" << endl;
+      retCode = false;
       break;
+      
    }
-   return true;
+   return retCode;
 }
 
 //! Bracketing function only

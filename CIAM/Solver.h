@@ -18,7 +18,7 @@ class Marketplace;
 
 /*! 
 * \ingroup CIAM
-* \brief A class which defines an abstract solver.
+* \brief A class interface which defines an abstract solver.
 * \author Josh Lurz
 */
 
@@ -28,7 +28,7 @@ public:
    virtual ~Solver(){};
    virtual bool solve( const int period ) = 0;
 protected:
-   Marketplace* marketplace;
+   Marketplace* marketplace; //<! The marketplace to solve. 
 };
 
 #endif // _SOLVER_H_
