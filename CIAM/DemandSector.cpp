@@ -1,7 +1,7 @@
 /*! 
 * \file DemandSector.cpp
 * \ingroup CIAM
-* \brief demsector class source file.
+* \brief DemandSector class source file.
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
@@ -32,7 +32,7 @@ extern Scenario* scenario;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-demsector::demsector( const string regionName ): sector( regionName ){
+DemandSector::DemandSector( const string regionName ): Sector( regionName ){
     perCapitaBased = 0;
     pElasticityBase = 0;
     priceRatio = 1;
@@ -51,14 +51,14 @@ demsector::demsector( const string regionName ): sector( regionName ){
 }
 
 //! Default destructor
-demsector::~demsector() {
+DemandSector::~DemandSector() {
 }
 
 //! Clear member variables.
-void demsector::clear(){
+void DemandSector::clear(){
     
     // call super clear
-    sector::clear();
+    Sector::clear();
     
     // now clear own data.
     perCapitaBased = 0;
@@ -79,7 +79,7 @@ void demsector::clear(){
 * \author Josh Lurz, Steve Smith, Sonny Kim
 * \param node pointer to the current node in the XML input tree
 */
-void demsector::XMLDerivedClassParseAttr( const DOMNode* node ) {
+void DemandSector::XMLDerivedClassParseAttr( const DOMNode* node ) {
     // get the perCapitaBased attribute for the demand sector
     perCapitaBased = XMLHelper<bool>::getAttr( node, "perCapitaBased" );
 }
@@ -92,7 +92,7 @@ void demsector::XMLDerivedClassParseAttr( const DOMNode* node ) {
 * \param nodeName The name of the curr node. 
 * \param curr pointer to the current node in the XML input tree
 */
-void demsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
+void DemandSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     
     const Modeltime* modeltime = scenario->getModeltime();
     
@@ -116,7 +116,7 @@ void demsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cur
 
 
 //! Write object to xml output stream.
-void demsector::toXML( ostream& out ) const {
+void DemandSector::toXML( ostream& out ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     int i = 0;
     
@@ -162,7 +162,7 @@ void demsector::toXML( ostream& out ) const {
     }
     
     // write out the subsector objects.
-    for( vector<subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
+    for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
         ( *j )->toXML( out );
     }
     
@@ -183,13 +183,13 @@ void demsector::toXML( ostream& out ) const {
 * \author Steve Smith, Josh Lurz
 * \param out reference to the output stream
 */
-void demsector::toXMLDerivedClass( ostream& out ) const {  
+void DemandSector::toXMLDerivedClass( ostream& out ) const {  
     
 }	
 
 
 //! XML output for viewing.
-void demsector::toOutputXML( ostream& out ) const {
+void DemandSector::toOutputXML( ostream& out ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     int i = 0;
     
@@ -242,7 +242,7 @@ void demsector::toOutputXML( ostream& out ) const {
     
     
     // write out the subsector objects.
-    for( vector<subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
+    for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
         ( *j )->toXML( out );
     }
     
@@ -257,7 +257,7 @@ void demsector::toOutputXML( ostream& out ) const {
 }
 
 //! Write object to debugging xml output stream.
-void demsector::toDebugXML( const int period, ostream& out ) const {
+void DemandSector::toDebugXML( const int period, ostream& out ) const {
     
     // write the beginning tag.
     Tabs::writeTabs( out );
@@ -298,7 +298,7 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
     // summary[ period ].toDebugXML( period, out );
     
     // write out the subsector objects.
-    for( vector<subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
+    for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
         ( *j )->toDebugXML( period, out );
     }
     
@@ -319,7 +319,7 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
 * \author Sonny Kim, Josh Lurz, Steve Smith
 * \param regionName region name
 */
-void demsector::setMarket() {
+void DemandSector::setMarket() {
     Marketplace* marketplace = scenario->getMarketplace();
     
     if( marketplace->createMarket( regionName, market, name, Marketplace::NORMAL ) ) {
@@ -341,7 +341,7 @@ void demsector::setMarket() {
 
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-void demsector::calcShare( const int period, const double gnp_cap ) {
+void DemandSector::calcShare( const int period, const double gnp_cap ) {
     int i=0;
     double sum = 0.0;
     for (i=0;i<nosubsec;i++) {
@@ -371,7 +371,7 @@ void demsector::calcShare( const int period, const double gnp_cap ) {
 * \param period Model period
 * \todo consider if there is a way to use the current sector share so that this is not different from the supply sector function.
 */
-void demsector::calcPrice(int period)
+void DemandSector::calcPrice(int period)
 {
     sectorprice[period]=0.0;
     for (int i=0;i<nosubsec;i++) {	
@@ -401,7 +401,7 @@ void demsector::calcPrice(int period)
 * \param regionName region name
 * \param period Model period
 */
-void demsector::calibrateSector( const int period ) {
+void DemandSector::calibrateSector( const int period ) {
     double totalFixedSupply = 0; // no fixed supply for demand sectors
     double mrkdmd;
     double totalCalOutputs = getCalOutput( period );
@@ -434,7 +434,7 @@ void demsector::calibrateSector( const int period ) {
 * \param scaleFactor amount by which to scale output from this sector
 * \param period Model period
 */
-void demsector::scaleOutput( int period, double scaleFactor ) {
+void DemandSector::scaleOutput( int period, double scaleFactor ) {
    const Modeltime* modeltime = scenario->getModeltime();
     
     // The solution for the scaling factor for AEEI (Afact), is
@@ -460,7 +460,7 @@ void demsector::scaleOutput( int period, double scaleFactor ) {
 * \param period Model period
 * \todo Sonny to add more to this description
 */
-void demsector::calc_pElasticity(int period) {
+void DemandSector::calc_pElasticity(int period) {
     pElasticityBase = pElasticity[ 0 ]; // base year read in value
     pElasticity[period]=0.0;
     sectorFuelCost[period] = 0;
@@ -485,7 +485,7 @@ void demsector::calc_pElasticity(int period) {
 * \todo Sonny to add more to this description if necessary
 * \pre Sector price attribute must have been previously calculated and set (via calcPrice)
 */
-void demsector::aggdemand( const double gnp_cap, const double gnp, const int period ) {
+void DemandSector::aggdemand( const double gnp_cap, const double gnp, const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
     double ser_dmd;
     double base;
@@ -529,14 +529,14 @@ void demsector::aggdemand( const double gnp_cap, const double gnp, const int per
     setServiceDemand( service[ period ], period ); // sets the output
 
     // sets subsector outputs, technology outputs, and market demands
-    sector::setoutput( service[ period ], period );
+    Sector::setoutput( service[ period ], period );
    
-   // sector::sumOutput( period );
+   // Sector::sumOutput( period );
    // this call now included in setOutput -- although sector outputs at this point are NaN! ????
 }
 
 //! Write sector output to database.
-void demsector::outputfile() const {
+void DemandSector::outputfile() const {
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     int m=0;
@@ -568,7 +568,7 @@ void demsector::outputfile() const {
 }
 
 //! Write MiniCAM style demand sector output to database.
-void demsector::MCoutput() const {
+void DemandSector::MCoutput() const {
     const Modeltime* modeltime = scenario->getModeltime();
     int m;
     const int maxper = modeltime->getmaxper();
@@ -578,7 +578,7 @@ void demsector::MCoutput() const {
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
     
-    const string secname = sector::getName();
+    const string secname = Sector::getName();
     string str; // temporary string
     
     // total sector output
@@ -598,13 +598,13 @@ void demsector::MCoutput() const {
     
     // sector fuel consumption by fuel type
     typedef map<string,double>:: const_iterator CI;
-    map<string,double> tfuelmap = sector::getfuelcons(m=0);
+    map<string,double> tfuelmap = Sector::getfuelcons(m=0);
     CI fmap; // define fmap
     // *** Either write out for each fuel here which is contained in the map
     // or write out in subsector
     /*	for (fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
     for (m=0;m<maxper;m++) {
-    temp[m] = sector::getConsByFuel(m,fmap->first);
+    temp[m] = Sector::getConsByFuel(m,fmap->first);
     }
     string strtemp = fmap->first;
     dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
@@ -620,7 +620,7 @@ void demsector::MCoutput() const {
     // Write out total (zTotal) fuel consumption for each sector only
     fmap = --tfuelmap.end();
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::getConsByFuel(m,fmap->first);
+        temp[m] = Sector::getConsByFuel(m,fmap->first);
     }
     dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
     dboutput4(regionName,"Fuel Consumption","by End-Use Sector",secname,"EJ",temp);
@@ -666,7 +666,7 @@ void demsector::MCoutput() const {
     
     // sector carbon taxes paid
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::getTotalCarbonTaxPaid(m);
+        temp[m] = Sector::getTotalCarbonTaxPaid(m);
     }
     dboutput4(regionName,"General","CarbonTaxPaid",secname,"$",temp);
     
@@ -681,7 +681,7 @@ void demsector::MCoutput() const {
 * \param period Model period
 * \return amount of energy service supplied by this sector
 */
-double demsector::getService( const int period ) const {
+double DemandSector::getService( const int period ) const {
     return service[period];
 }
 
@@ -693,11 +693,11 @@ double demsector::getService( const int period ) const {
 * \param period Model period
 * \return energy service demand before technological change is applied
 */
-double demsector::getServiceWoTC( const int period ) const {
+double DemandSector::getServiceWoTC( const int period ) const {
     return servicePreTechChange[ period ];
 }
 
-void demsector::printStyle( ostream& outStream ) const {
+void DemandSector::printStyle( ostream& outStream ) const {
 
     // Make sure the output stream is open.
     assert( outStream );

@@ -7,7 +7,7 @@
 /*! 
 * \file DemandSector.h
 * \ingroup CIAM
-* \brief The demsector class header file.
+* \brief The DemandSector class header file.
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
@@ -38,7 +38,7 @@ class subsector;
 * \author Sonny Kim
 */
 
-class demsector: public sector
+class DemandSector: public Sector
 {
 protected:
     bool perCapitaBased; //!< demand equation based on per capita GNP, true or false.
@@ -56,8 +56,8 @@ protected:
     virtual void printStyle( std::ostream& outStream ) const;
 
 public:
-    demsector( const std::string regionName );
-    virtual ~demsector();
+    DemandSector( const std::string regionName );
+    virtual ~DemandSector();
     virtual void clear();
     virtual void XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
     virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
