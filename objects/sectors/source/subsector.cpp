@@ -503,9 +503,10 @@ void Subsector::initCalc( const int period ) {
 			if ( techs[i][ period - 1 ]->getEmissionsInputStatus( ghgNames[j] ) ) {
 				techs[i][ period ]->setGHGEmissionCoef( ghgNames[j] , techs[i][ period - 1 ]->getGHGEmissionCoef( ghgNames[j] ) );
 				techs[i][ period ]->setEmissionsInputStatus( ghgNames[j] ); // Need to set this flag so that all future ghg objects get emissions coef passed to them
-			}
-		}
-    }
+				
+				} // End if
+			} // End For
+		} // End For
 }
 
 /*! \brief Computes weighted cost of all technologies in Subsector.
@@ -1040,7 +1041,7 @@ void Subsector::adjShares( const double demand, double shareRatio,
 * \param period Model period
 * \pre dmd must be the total demand for this project, so must be called after this has been determined
 */
-void Subsector::setoutput( const double demand, const int period ) {
+void Subsector::setoutput( const double demand, const int period, const GDP* gdp ) {
     int i=0;
     input[period] = 0; // initialize Subsector total fuel input 
     carbontaxpaid[period] = 0; // initialize Subsector total carbon taxes paid 
@@ -1051,7 +1052,7 @@ void Subsector::setoutput( const double demand, const int period ) {
     
     for ( i=0; i<notech; i++ ) {
         // calculate technology output and fuel input from Subsector output
-        techs[i][period]->production( regionName, sectorName, subsecdmd, period );
+        techs[i][period]->production( regionName, sectorName, subsecdmd, gdp, period );
         
         // total energy input into Subsector, must call after tech production
         input[period] += techs[i][period]->getInput();
@@ -1280,7 +1281,7 @@ void Subsector::csvOutputFile() const {
     // do for all technologies in the Subsector
     for (i=0;i<notech;i++) {
         // output or demand for each technology
-        for (m=0;m<maxper;m++) {
+		for (m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getOutput();
         }
         fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"production","EJ",temp);
@@ -1332,6 +1333,7 @@ void Subsector::csvOutputFile() const {
         }
         fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"CO2 emiss(ind)","MTC",temp);
     }
+	
 }
 
 //! write MiniCAM style Subsector output to database
@@ -1716,5 +1718,4 @@ void Subsector::updateSummary( const int period ) {
         summary[period].initfuelcons(goodName,techs[i][period]->getInput());
     }
 }
-
 

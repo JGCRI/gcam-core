@@ -205,7 +205,7 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
 *  This is then shared out at the technology level.
 *  See explanation for sector::setoutput. 
 */
-void TranSubsector::setoutput( const double demand, const int period) {
+void TranSubsector::setoutput( const double demand, const int period, const GDP* gdp ) {
 
     int i=0;
     input[period] = 0; // initialize subsector total fuel input 
@@ -217,7 +217,7 @@ void TranSubsector::setoutput( const double demand, const int period) {
     
     for ( i=0; i<notech; i++ ) {
         // calculate technology output and fuel input from subsector output
-        techs[i][period]->production( regionName, sectorName, subsecdmd, period );
+        techs[i][period]->production( regionName, sectorName, subsecdmd, gdp, period );
         
         // total energy input into subsector, must call after tech production
         input[period] += techs[i][period]->getInput();

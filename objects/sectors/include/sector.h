@@ -93,10 +93,10 @@ public:
     void initCalc( const int period );
     void production( const int period );
     virtual void calibrateSector( const int period ); 
-    void setoutput( const double demand, const int period ); 
+    void setoutput( const double demand, const int period, const GDP* gdp ); 
     void setServiceDemand( const double demand, const int period );
     void adjustForFixedSupply( const double marketDemand, const int period );
-    void supply( const int period );
+    void supply( const int period, const GDP* gdp );
     double getOutput( const int period );
     double getFixedSupply( const int period ) const; 
     bool isAllCalibrated( const int period ) const;

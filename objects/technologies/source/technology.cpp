@@ -18,12 +18,14 @@
 #include "technologies/include/technology.h"
 #include "emissions/include/ghg.h"
 #include "emissions/include/ghg_output.h"
+#include "emissions/include/so2_emissions.h"
 #include "emissions/include/ghg_input.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "emissions/include/indirect_emiss_coef.h"
+#include "containers/include/gdp.h"
 
 using namespace std;
 using namespace xercesc;
@@ -161,32 +163,21 @@ void technology::initElementalMembers(){
 * \param node current node
 * \todo Add Warning when addin files add new containers (regions, sectors, technologies, etc.)
 */
-void technology::XMLParse( const DOMNode* node )
-{	
-    Ghg* tempGhg = 0;
-    DOMNode* curr = 0;
-    string nodeName;
-    DOMNodeList* nodeList;
-    
+void technology::XMLParse( const DOMNode* node ) {	
     /*! \pre Assume we are passed a valid node. */
     assert( node );
     
-    nodeList = node->getChildNodes();
-    
-    for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ) {
-        curr = nodeList->item( i );
+    DOMNodeList* nodeList = node->getChildNodes();
+    string nodeName;
+    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
+        DOMNode* curr = nodeList->item( i );
         nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
         
         if( nodeName == "#text" ) {
             continue;
         }
-        
         else if( nodeName == "name" ) {
             name = XMLHelper<string>::getValueString( curr );
-            
-#if( _DEBUG )
-            // cout << "\t\t\tTechnology name set as " << name << endl;
-#endif
         } 
         else if( nodeName == "year" ){
             year = XMLHelper<int>::getValue( curr );
@@ -245,11 +236,14 @@ void technology::XMLParse( const DOMNode* node )
 		else if( nodeName == Ghg::getXMLNameStatic() ){
             parseContainerNode( curr, ghg, ghgNameMap, new Ghg() );
         }
-        else if( nodeName == "GHG_OUTPUT" ){
+        else if( nodeName == GhgOutput::getXMLNameStatic() ){
             parseContainerNode( curr, ghg, ghgNameMap, new GhgOutput() );
         }
-        else if( nodeName == "GHG_INPUT" ){
+        else if( nodeName == GhgInput::getXMLNameStatic() ){
             parseContainerNode( curr, ghg, ghgNameMap, new GhgInput() );
+        }
+        else if( nodeName == SO2Emissions::getXMLNameStatic() ){
+            parseContainerNode( curr, ghg, ghgNameMap, new SO2Emissions() );
         }
         else if( nodeName == "note" ){
             note = XMLHelper<string>::getValue( curr );
@@ -257,34 +251,31 @@ void technology::XMLParse( const DOMNode* node )
         // parse derived classes
         else {
             XMLDerivedClassParse( nodeName, curr );
-        }
-        
+        } 
     }
 }
 
 //! Parses any input variables specific to derived classes
 void technology::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
-    // do nothing
-    // defining method here even though it does nothing so that we do not
+    // do nothing. Defining method here even though it does nothing so that we do not
     // create an abstract class.
     cout << "Unrecognized text string: " << nodeName << " found while parsing technology." << endl;
 }
 
-
 //! Complete initialization
 void technology::completeInit() {
-    if( ghg.empty() ) {
+    const string CO2_NAME = "CO2";
+    if( !util::searchForValue( ghgNameMap, CO2_NAME ) ) {
         // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
         // for CO2 this emissions coefficient is not used
-        Ghg* CO2 = new Ghg( "CO2", "MTC", 0, 1, 0 ); // at least CO2 must be present
+        Ghg* CO2 = new Ghg( CO2_NAME, "MTC", 0, 1, 0 ); // at least CO2 must be present
         ghg.push_back( CO2 );
-        ghgNameMap[ "CO2" ] = 0;
+        ghgNameMap[ CO2_NAME ] = static_cast<int>( ghg.size() ) - 1;
     }
 	// calculate effective efficiency
 	eff = effBase * (1 - effPenalty); // reduces efficiency by penalty
 	necost = neCostBase * (1 + neCostPenalty); // increases cost by penalty
 }
-
 
 //! write object to xml output stream
 void technology::toInputXML( ostream& out, Tabs* tabs ) const {
@@ -428,7 +419,7 @@ void technology::initCalc( ) {
    
    if ( calInputValue < 0 ) {
       cerr << "Calibration value < 0 for tech " << name << ". Calibration removed" << endl;
-       doCalibration = false;
+      doCalibration = false;
    }
 }
 
@@ -646,7 +637,7 @@ void technology::adjShares(double subsecdmd, double subsecFixedSupply, double va
 /*! Adds demands for fuels and ghg emissions to markets in the marketplace
 */
 void technology::production(const string& regionName,const string& prodName,
-                            double dmd,const int per) {
+                            double dmd, const GDP* gdp, const int per) {
     string hydro = "hydro";
     Marketplace* marketplace = scenario->getMarketplace();
     
@@ -678,7 +669,7 @@ void technology::production(const string& regionName,const string& prodName,
     
     // calculate emissions for each gas after setting input and output amounts
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
-        ghg[i]->calcEmission(regionName, fuelname,input,prodName,output);
+        ghg[i]->calcEmission(regionName, fuelname,input,prodName,output, gdp, per );
         // set emissions as demand side of gas market
         marketplace->addToDemand(ghg[i]->getName(),regionName,ghg[i]->getEmission(),per);		
         // set sequestered amount as demand side of carbon storage market
@@ -915,7 +906,7 @@ void technology::setGHGEmissionCoef( const std::string& ghgName, const double em
     }
 }
 
-/*! \brief Return the flag that tells if the GHG had an emissions coefficient read in
+/*! \brief Return the flag that tells if the GHG had an emissions value read in
 * This function searches the mapping of GHG names to values and
 * returns the appropriate flag,
 * or -1 if there is not a GHG with the given name.
@@ -931,7 +922,7 @@ bool technology::getEmissionsInputStatus( const std::string& ghgName ) const {
 	 return ghg[ ghgIndex ]->getEmissionsInputStatus();
 }
 
-/*! \brief Set the flag that indicates that a GHG had an emissions coefficient read in 
+/*! \brief Set the flag that indicates that a GHG had an emissions value read in
 * This function searches the mapping of GHG names to values and
 * returns the appropriate flag,
 * or -1 if there is not a GHG with the given name.
@@ -943,8 +934,7 @@ bool technology::getEmissionsInputStatus( const std::string& ghgName ) const {
 */
 void technology::setEmissionsInputStatus( const std::string& ghgName ){
     const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
-	 
-	 return ghg[ ghgIndex ]->setEmissionsInputStatus();
+    return ghg[ ghgIndex ]->setEmissionsInputStatus();
 }
 
 //! return map of all ghg emissions

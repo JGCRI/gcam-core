@@ -12,6 +12,7 @@
 * \date $Date$
 * \version $Revision$
 */
+
 #include "emissions/include/ghg.h"
 
 /*! 
@@ -22,7 +23,13 @@
 
 class GhgInput: public Ghg {
 public:
-    virtual void calcEmission( const std::string& regionName, const std::string& fuelname, const double input, const std::string& prodname, const double output );
+    GhgInput* clone() const;
+    const std::string& getXMLName() const;
+    static const std::string& getXMLNameStatic();
+protected:
+    double emissionsDriver( const double inputIn, const double outputIn ) const;
+private:
+    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _GHG_INPUT_H_

@@ -21,6 +21,7 @@
 class Ghg;
 class Emcoef_ind;
 class Tabs;
+class GDP;
 
 /*! 
 * \ingroup CIAM
@@ -110,7 +111,7 @@ public:
     void adjShares(double subsecdmd, double subsecFixedSupply, double varShareTot, int per);
     void scaleFixedSupply(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
-    virtual void production(const std::string& regionName,const std::string& prodName,double dmd,const int per);
+    virtual void production(const std::string& regionName,const std::string& prodName,double dmd, const GDP* gdp, const int per);
     void calcEmission( const std::string prodname); // calculates GHG emissions from technology
     void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
     // ****** return names and values ******
@@ -138,6 +139,8 @@ public:
     double getGHGEmissionCoef( const std::string& ghgName ) const;
 	 bool getEmissionsInputStatus( const std::string& ghgName ) const;
 	 void setEmissionsInputStatus( const std::string& ghgName );
+	bool getEmissionsCoefInputStatus( const std::string& ghgName ) const;
+	 void setEmissionsCoefInputStatus( const std::string& ghgName );
 	 void setGHGEmissionCoef( const std::string& ghgName, const double emissionsCoef );
     std::map<std::string,double> getemissmap() const; // return map of all ghg emissions
     std::map<std::string,double> getemfuelmap() const; // return map of all ghg emissions

@@ -21,6 +21,7 @@
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
+#include "containers/include/gdp.h"
 
 using namespace std;
 using namespace xercesc;
@@ -115,7 +116,7 @@ void tranTechnology::calcShare( const string regionName, const int per)
 /*! Adds demands for fuels and ghg emissions to markets in the marketplace
 */
 void tranTechnology::production(const string& regionName,const string& prodName,
-                                double dmd, const int per) {
+                                double dmd, const GDP* gdp, const int per ) {
     string hydro = "hydro";
     Marketplace* marketplace = scenario->getMarketplace();
     const Modeltime* modeltime = scenario->getModeltime();
@@ -152,7 +153,7 @@ void tranTechnology::production(const string& regionName,const string& prodName,
     
     // calculate emissions for each gas after setting input and output amounts
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
-        ghg[i]->calcEmission(regionName, fuelname,input,prodName,output);
+        ghg[i]->calcEmission(regionName, fuelname,input,prodName,output, gdp, per );
         // set emissions as demand side of gas market
         marketplace->addToDemand(ghg[i]->getName(),regionName,ghg[i]->getEmission(),per);		
     }

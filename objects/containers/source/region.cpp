@@ -775,7 +775,7 @@ void Region::finalSupply( const int period ) {
         goodName = ( *ri )->getName();		
 
         // name is country/region name
-        ( *ri )->supply( period );
+        ( *ri )->supply( period, gdp );
         carbonTaxPaid[period] += ( *ri )->getTotalCarbonTaxPaid(period);
     }
 

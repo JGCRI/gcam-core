@@ -134,7 +134,7 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
     
     output[period] = service[period];
     // sets subsector outputs, technology outputs, and market demands
-    setoutput( service[ period ], period );
+    setoutput( service[ period ], period, gdp );
     sumOutput(period);
 }
 

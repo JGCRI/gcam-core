@@ -16,6 +16,8 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/technology.h"
 
+class GDP;
+
 /*! 
 * \ingroup CIAM
 * \brief This transportation technology class is based on the MiniCAM description of technology.
@@ -39,7 +41,7 @@ public:
     virtual void calcCost( const std::string regionName, const int per); 
     virtual void calcShare( const std::string regionName, const int per); 
     // calculates fuel input and technology output
-    virtual void production( const std::string& regionName, const std::string& prodName,double dmd,const int per);    
+    virtual void production( const std::string& regionName, const std::string& prodName,double dmd, const GDP* gdp, const int per);    
     virtual double getIntensity(const int per) const; // return fuel intensity
 };
 

@@ -705,13 +705,13 @@ to equal the total Sector output.
 * \param demand Demand to be passed to the subsectors. (Sonny check this)
 * \param period Model period
 */
-void Sector::setoutput( const double demand, const int period ) {
+void Sector::setoutput( const double demand, const int period, const GDP* gdp ) {
 
     carbonTaxPaid[ period ] = 0; // initialize carbon taxes paid
 
     for ( int i=0; i<nosubsec; i++ ) {
         // set subsector output from Sector demand
-        subsec[ i ]->setoutput( demand, period );
+        subsec[ i ]->setoutput( demand, period, gdp );
         carbonTaxPaid[ period ] += subsec[ i ]->getTotalCarbonTaxPaid( period );
     }
 }
@@ -918,7 +918,7 @@ Routine also calls adjustForFixedSupply which adjusts shares, if necessary, for 
 * \author Sonny Kim
 \param period Model period
 */
-void Sector::supply( const int period ) {
+void Sector::supply( const int period, const GDP* gdp ) {
     Marketplace* marketplace = scenario->getMarketplace();
 
     carbonTaxPaid[ period ] = 0; // initialize carbon taxes paid
@@ -937,7 +937,7 @@ void Sector::supply( const int period ) {
     // This is where subsector and technology outputs are set
     for (int i=0;i<nosubsec;i++) {
         // set subsector output from Sector demand
-        subsec[ i ]->setoutput( mrkdmd, period ); // CHANGED JPL
+        subsec[ i ]->setoutput( mrkdmd, period, gdp ); // CHANGED JPL
         // for reporting only
         carbonTaxPaid[ period ] += subsec[ i ]->getTotalCarbonTaxPaid( period );
     }

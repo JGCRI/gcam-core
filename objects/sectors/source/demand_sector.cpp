@@ -380,7 +380,7 @@ void DemandSector::aggdemand( const GDP* gdp, const int period ) {
     setServiceDemand( service[ period ], period ); // sets the output
 
     // sets subsector outputs, technology outputs, and market demands
-    Sector::setoutput( service[ period ], period );
+    Sector::setoutput( service[ period ], period, gdp );
     // sums output of technologies and subsectors
     Sector::sumOutput( period );
 }

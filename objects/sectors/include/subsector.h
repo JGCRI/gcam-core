@@ -111,7 +111,7 @@ public:
     void setCapLimitStatus( const bool value, const int period );
     bool getCapLimitStatus( const int period ) const;
     void calcTechShares ( const int period );
-    virtual void setoutput( const double demand, const int period ); 
+    virtual void setoutput( const double demand, const int period, const GDP* gdp ); 
     double exogSupply( const int period );
     void scaleFixedSupply( const double scaleRatio, const int period );
     double getFixedSupply( const int period ) const;
