@@ -301,7 +301,6 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * Any initializations or calcuations that only need to be done once per period (instead of every iteration) should be placed in this function.
 *
 * \author Steve Smith
-* \param regionName region name
 * \param period Model period
 */
 void Sector::initCalc( const int period ) {
@@ -350,6 +349,7 @@ void Sector::checkSectorCalData( const int period ) {
 *
 * \author Steve Smith
 * \param period Model period
+* \calAccuracy Accuracy to check if calibrations are within.
 * \param printWarnings if true prints a warning
 * \return Boolean true if calibration is ok.
 */
@@ -422,8 +422,7 @@ void Sector::setMarket() {
 * of the actual share of any technology with a fixed output. 
 *
 * \param period model period
-* \param gdpPerCap GDP per capita (scaled to base year)
-
+* \param gdp GDP object used to calculate various types of GDPs.
 * \author Sonny Kim, Steve Smith, Josh Lurz
 * \todo add warnings to sub-Sector and technology (?) that fixed capacity has to be >0
 * \warning model with fixed capacity in sectors where demand is not a solved market may not solve
@@ -657,7 +656,7 @@ void Sector::calcPrice( const int period ) {
 }
 
 /*! \brief Calculate the final supply price.
-* \detailed Calculates shares for the sector, then sets the price of the good
+* \details Calculates shares for the sector, then sets the price of the good
 * into the marketplace.
 */
 void Sector::calcFinalSupplyPrice( const GDP* gdp, const int period ){
@@ -753,6 +752,7 @@ to equal the total Sector output.
 * \author Sonny Kim, Josh Lurz, Steve Smith
 * \param demand Demand to be passed to the subsectors. (Sonny check this)
 * \param period Model period
+* \param gdp GDP object uses to calculate various types of GDPs.
 */
 void Sector::setoutput( const double demand, const int period, const GDP* gdp ) {
 
@@ -1019,7 +1019,8 @@ to be shared out).
 Routine also calls adjustForFixedOutput which adjusts shares, if necessary, for any fixed output sub-sectors.
 
 * \author Sonny Kim
-\param period Model period
+* \param period Model period
+* \param gdp GDP object uses to calculate various types of GDPs.
 */
 void Sector::supply( const int period, const GDP* gdp ) {
     Marketplace* marketplace = scenario->getMarketplace();
@@ -1178,7 +1179,7 @@ void Sector::sumInput( const int period ) {
 * Sector input is now summed every time this function is called.
 *
 * \author Sonny Kim
-* \param per Model period
+* \param period Model period
 * \return total input
 */
 double Sector::getInput( const int period ) {
@@ -1191,7 +1192,7 @@ double Sector::getInput( const int period ) {
 * Returns all input for energy sectors.
 *
 * \author Steve Smith
-* \param per Model period
+* \param period Model period
 * \return total input
 */
 double Sector::getEnergyInput( const int period ) {
@@ -1239,7 +1240,12 @@ void Sector::dbOutput() const {
         for (int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_fmap_second(fmap->first);
         }
-        dboutput4( regionName,"Fuel Consumption",name,fmap->first,"EJ",temp);
+        if( fmap->first == "" ){
+            dboutput4( regionName,"Fuel Consumption",name, "No Fuelname", "EJ",temp);
+        }
+        else {
+            dboutput4( regionName,"Fuel Consumption",name,fmap->first,"EJ",temp);
+        }
     }
 
     // Sector emissions for all greenhouse gases
@@ -1345,7 +1351,7 @@ double Sector::getConsByFuel( const int period, const std::string& fuelName ) co
 /*! \brief Clear fuel consumption map for this Sector
 *
 * \author Sonny Kim
-* \param per Model period
+* \param period Model period
 */
 void Sector::clearfuelcons( const int period ) {
     summary[ period ].clearfuelcons();
@@ -1595,7 +1601,7 @@ const vector<string>& Sector::getDependsList() const {
 * 
 * \author Josh Lurz
 * \pre setupForSort function has been called to initialize the dependsList. 
-* \param logger The to which to print the dependencies. 
+* \param aLog The to which to print the dependencies. 
 */
 void Sector::printSectorDependencies( ILogger& aLog ) const {
     aLog << "," << name << ",";

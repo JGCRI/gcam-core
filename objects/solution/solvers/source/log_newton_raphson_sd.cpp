@@ -1,5 +1,5 @@
 /*! 
-* \file log_newton_raphson.cpp
+* \file log_newton_raphson_sd.cpp
 * \ingroup objects
 * \brief LogNewtonRaphson class source file.
 * \author Josh Lurz

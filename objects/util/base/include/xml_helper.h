@@ -405,6 +405,7 @@ std::string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 * \param year Optional year value to print as an attribute.
 * \param name Optional name value to print as an attribute.
+* \param fillout Optional attribute which specifies the value should be applied to all following time periods.
 */
 template<class T>
 void XMLWriteElement( const T value, const std::string elementName, std::ostream& out, const Tabs* tabs, const int year = 0, const std::string name = "", const bool fillout = false ) {
@@ -459,7 +460,7 @@ void XMLWriteElementAndAttribute( const T value, const std::string elementName, 
 }
 
 /*! \brief Write an opening XML tag.
-* \detailed This function is used to write an opening XML tag and an optional name and year to the output stream.
+* \details This function is used to write an opening XML tag and an optional name and year to the output stream.
 * The name and year are optional attributes. The name and year may be left out, or only the year may be left out, but
 * the year cannot be written without a year unless the empty string is included in the function arguments, due
 * to the way that C++ default arguments work. If the arguments are left out, the function will not write the attribute. 
@@ -490,12 +491,12 @@ inline void XMLWriteOpeningTag( const std::string& elementName, std::ostream& ou
 } 
 
 /*!  \brief Write a closing XML tag.
-* \detailed This function is used to write a closing XML tag. It decreases the indent before writing the tag,
+* \details This function is used to write a closing XML tag. It decreases the indent before writing the tag,
 * and adds a newline.
 * \note Closing tags cannot have attributes. 
 * \param elementName Name of the element.
 * \param out Stream to print to.
-* \param Tabs The number of tabs to print before the element. 
+* \param tabs The number of tabs to print before the element. 
 */
 inline void XMLWriteClosingTag( const std::string& elementName, std::ostream& out, Tabs* tabs ) {
     
@@ -527,7 +528,7 @@ void XMLWriteElementCheckDefault( const T value, const std::string elementName, 
 
 /*! 
 * \brief Function which writes out the values contained in a vector. 
-* \detailed This function is used to write out the values of a vector in XML format, along with their year tag.
+* \details This function is used to write out the values of a vector in XML format, along with their year tag.
 * The function will also avoid writing out elements if they have default values, and will collapse consecutive 
 * equal values into one element with a fillout attribute. The function also correctly determines the year for 
 * population data, assuming the flag is passed in. 

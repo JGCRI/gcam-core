@@ -99,7 +99,7 @@ namespace util {
     }
 
     /*!\brief This is a template function which compares two values. 
-    * \detailed This function very simply uses the == operator of the 
+    * \details This function very simply uses the == operator of the 
     * two arguments to compare them, and returns the return value of the ==
     * operator. The reason for this function is so that it can be overridden
     * for doubles to perform special comparison not using the == operator. 
@@ -212,7 +212,7 @@ namespace util {
       return LARGE_NUM;
    }
   /* \brief Function which returns a vector of keys from a map.
-   * \detailed This function takes a map as an argument and returns a vector 
+   * \details This function takes a map as an argument and returns a vector 
    * of all the keys of the map. It uses the same order as the map iterator returns.
    * \param aMap A map to return all keys for.
    * \return A vector of all keys from the map in the same order as the map iterator returns.
@@ -228,7 +228,7 @@ namespace util {
        }
     
    /* \brief Function which returns a vector of values from a map.
-   * \detailed This function takes a map as an argument and returns a vector 
+   * \details This function takes a map as an argument and returns a vector 
    * of all the values of the map. It uses the same order as the map iterator returns.
    * \param aMap A map to return all values for.
    * \return A vector of all values from the map in the same order as the map iterator returns.

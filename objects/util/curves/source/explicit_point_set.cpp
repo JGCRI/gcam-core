@@ -411,7 +411,8 @@ DataPoint* ExplicitPointSet::findY( const double yValue ) {
 * \param lowDomain The lowest x value to write out.
 * \param highDomain The highest x value to write out.
 * \param lowRange The lowest y value to write out.
-* \param highRange The highest y value to write out. 
+* \param highRange The highest y value to write out.
+* \param minPoints Minimum number of points to print.
 */
 void ExplicitPointSet::print( ostream& out, const double lowDomain, const double highDomain,
                              const double lowRange, const double highRange, const int minPoints ) const {

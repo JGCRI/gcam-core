@@ -32,7 +32,7 @@ PointSetCurve::PointSetCurve( PointSet* pointSetIn ) {
 }
 
 /*! \brief Constructor which uses a set of y coordinates, a starting X value, and an interval between X values.
-* \detailed This constructor creates a PointSetCurve by creating a point for each input Y value
+* \details This constructor creates a PointSetCurve by creating a point for each input Y value
 * with a companion X value starting at the input starting X, and incrementing by the X interval.
 * This function uses the default PointSetType.
 * \param pointSetType The type of PointSet to use.

@@ -44,7 +44,7 @@ const string& BisectAll::getName() const {
 }
 
 /*! \brief Bisection Solution Mechanism (all markets)
-* \detailed This solution mechanism bisects all markets at once. 
+* \details This solution mechanism bisects all markets at once. 
 * \todo Update this documentation.
 * Bisection is always periodformed at least a few times. Bisection stops if the maximum 
 * relative ED does not change at a rate larger than BREAK_OUT_THRESHOLD.

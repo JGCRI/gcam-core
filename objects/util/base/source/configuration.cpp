@@ -297,7 +297,7 @@ double Configuration::getDouble( const string& key, const double defaultValue ) 
 
 /*!
 * \brief Fetch a list of filenames for all scenario components.
-* \detailed This method returns a vector of filenames for each scenario component that should 
+* \details This method returns a vector of filenames for each scenario component that should 
 * be read in. 
 * \warning The XMLParse function must be called before this function, otherwise the Configuration object will be empty.
 * \return A list of scenario component filenames.

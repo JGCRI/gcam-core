@@ -1,5 +1,5 @@
 /*! 
-* \file bisection_nr_solver.cpp
+* \file bisection_policy_nr_solver.cpp
 * \ingroup objects
 * \brief BisectPolicyNRSolver class source file.
 * \author Josh Lurz

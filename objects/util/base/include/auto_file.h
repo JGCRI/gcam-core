@@ -5,7 +5,7 @@
 #endif
 
 /*! 
-* \file auto_output_file.h  
+* \file auto_file.h  
 * \ingroup util
 * \brief Header file for the AutoOutputFile class.
 * \author Josh Lurz

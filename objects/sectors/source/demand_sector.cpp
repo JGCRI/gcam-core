@@ -315,8 +315,7 @@ void DemandSector::calc_pElasticity(int period) {
 * Demand is proportional to either GDP (to a power) or GDP per capita (to a power) times population.
 *
 * \author Sonny Kim
-* \param gdp GDP (relative or absolute?)
-* \param scaledGDPperCap GDP per capita, relative to base year
+* \param gdp GDP object for calculating various types of gdps.
 * \param period Model period
 * \todo Sonny to add more to this description if necessary
 * \pre Sector price attribute must have been previously calculated and set (via calcPrice)

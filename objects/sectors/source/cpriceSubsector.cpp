@@ -54,9 +54,8 @@ Cpricesubsector::Cpricesubsector( const string regionName, const string sectorNa
 * Is temporary fix to allow mixed sub-sectors until top-down price calcuation is completed.
 *
 * \author Sonny Kim, Josh Lurz
-* \param regionName region name
 * \param period model period
-* \param scaledGdpPerCapita GDP per capita, relative to base year
+* \param gdp GDP object for calculating different types of gdps.
 */
 void Cpricesubsector::calcShare( const int period, const GDP* gdp ) {
     const World* world = scenario->getWorld();

@@ -443,7 +443,7 @@ void technology::initCalc( ) {
 }
 
 /*! \brief This function calculates the sum of the Carbon Values for all GHG's in this technology.
-* \detailed The function first checks if a carbon tax exists for the technology, and 
+* \details The function first checks if a carbon tax exists for the technology, and 
 * if it does loops through all GHGs to calculate a sum carbon value. The GHG function which
 * it calls, getGHGValue() calculates the carbon equivalent of all GHG's contained in this technology.
 * The totalGHGCost attribute of the technology is then set to this new value.
@@ -943,7 +943,7 @@ double technology::getCarbontaxpaid() const {
 }
 
 /*! \brief Return a vector listing the names of all the GHGs within the Technology.
-* \detailed This function returns all GHG names the Technology contains. It does 
+* \details This function returns all GHG names the Technology contains. It does 
 * this by searching the underlying ghgNameMap.
 * \author Josh Lurz
 * \return A vector of GHG names contained in the Technology.

@@ -5,7 +5,7 @@
 #endif
 
 /*! 
-* \file log_newton_raphson.h
+* \file log_newton_raphson_sd.h
 * \ingroup objects
 * \brief This is the header file for the LogNewtonRaphsonSaveDeriv solver component class.
 *

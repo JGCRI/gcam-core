@@ -46,7 +46,7 @@ int CalcCounter::getMethodCount( const string methodName ) const {
 }
 
 /*!\brief Increment the world.calc count by a given amount, 1 by default.
-* \detailed This method increments the total count, period count and count for the current method
+* \details This method increments the total count, period count and count for the current method
 * by the amount passed as an argument. 
 * \param additional Amount to increment the counts by, 1 is the default.
 */
@@ -64,7 +64,7 @@ void CalcCounter::setCurrentMethod( const string methodName ){
 }
 
 /*! \brief Start a new period. 
-* \detailed Starts a new period by resetting the period based counters.
+* \details Starts a new period by resetting the period based counters.
 */
 void CalcCounter::startNewPeriod(){
     periodCount = 0;

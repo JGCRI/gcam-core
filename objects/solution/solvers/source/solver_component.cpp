@@ -29,7 +29,7 @@
 using namespace std;
 
 /*! \brief Constructor.
-* \detailed This constructor takes as arguments the marketplace, and world which it will be solving, and a pointer to the CalcCounter
+* \details This constructor takes as arguments the marketplace, and world which it will be solving, and a pointer to the CalcCounter
 * which tracks calls to world.calc(). It also initializes several variables from values in the Configuration object.
 * \param marketplaceIn The marketplace which will be used for solving.
 * \param worldIn The world which will be used for solving.
@@ -43,7 +43,7 @@ SolverComponent::~SolverComponent(){
 }
 
 /*! \brief Static factory method to generate SolverComponents. 
-* \detailed This is a static factory method which when passed in the name of a SolverComponent
+* \details This is a static factory method which when passed in the name of a SolverComponent
 * returns an auto_ptr to a new dynamically allocated instance of the appropriate SolverComponent.
 * If there is not a SolverComponent of the given name, the function will report an error to the console
 * and return a null auto_ptr. This function is designed to encapsulate SolverComponents so that there 

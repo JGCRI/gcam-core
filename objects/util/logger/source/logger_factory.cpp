@@ -94,16 +94,16 @@ void LoggerFactory::cleanUp() {
 
 /*! \brief Writes out the LoggerFactory to an XML file. 
 *
-* \param out Output stream to write to.
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
+* \param aOut Output stream to write to.
+* \param aTabs A tabs object responsible for printing the correct number of tabs. 
 * \warning This method is NOT constant, because static methods are not allowed to be declared const.
 */
-void LoggerFactory::toDebugXML( ostream& out, Tabs* tabs ) {
+void LoggerFactory::toDebugXML( ostream& aOut, Tabs* aTabs ) {
 	
-    XMLWriteOpeningTag( "LoggerFactory", out, tabs );
+    XMLWriteOpeningTag( "LoggerFactory", aOut, aTabs );
 	for( map<string,Logger*>::const_iterator logIter = mLoggers.begin(); logIter != mLoggers.end(); ++logIter ){
-		logIter->second->toDebugXML( out, tabs );
+		logIter->second->toDebugXML( aOut, aTabs );
 	}
-	XMLWriteClosingTag( "LoggerFactory", out, tabs );
+	XMLWriteClosingTag( "LoggerFactory", aOut, aTabs );
 }
 

@@ -53,7 +53,7 @@ const string& LogNewtonRaphson::getName() const {
 }
 
 /*! \brief Ron's version of the Newton Raphson Solution Mechanism (all markets)
-* \detailed Derivatives are taken once. They are not taken again unless:
+* \details Derivatives are taken once. They are not taken again unless:
 * a) The Max Relative ED after calculation is greater than MAXED_FOR_DERIV_RECALC
 * b) or 10 NR iterations have occurred.
 * As long as Bisection is close, one set of derivatives per period is sufficient.
