@@ -1859,16 +1859,16 @@ int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, in
 		// for debugging
 		const bool bug = false; // debugging
 		if (bug) {
-			bugoutfile<<"\nMarket,X,DP,ED,Tolerance\n";
+			bugoutfile << endl << "Market,X,DP,ED,Tolerance" << endl;
 			for (i=0; i<m; ++i) {
-				bugoutfile<<i<<","<<Xtemp[i]<<","<<DP[i]<<","<<EDtemp[i]<<","<<Tol<<"\n";
+				bugoutfile<<i<<","<<Xtemp[i]<<","<<DP[i]<<","<<EDtemp[i]<<","<<Tol<< endl;
 			}
 			bugout(per,nn);
 			sdcurves(per,nn); 
 		}
 		// if solution moves in wrong direction
 		if(M>1500) {
-			logfile << ",,Exit Newton-Raphson function M>1500.\n";
+			logfile << ",,Exit Newton-Raphson function M>1500." << endl;
 			return 0;
 		}
 	} // end do loop		
