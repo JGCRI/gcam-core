@@ -180,7 +180,7 @@ std::string XMLHelper<T>::getValueString( const xercesc::DOMNode* node ) {
 * This function searches for the attribute with name attrName of the argument node.
 * It then converts it to type T and returns the value. If the function is not passed an element
 * it will throw an error. If the requested attribute is not present, the function will return the default
-* constructor for type T.
+* constructor for type T. (zero for doubles, or false for boolean)
 *
 * \warning It must be called as getXMLValue<type> because it is templated only on the return type.
 * \warning If the attribute is a string and there might be spaces in it getXMLAttrString must be used.
@@ -420,6 +420,34 @@ void XMLWriteElement( const T value, const std::string elementName, std::ostream
       out << " year=\"" << year << "\"";
    }
    
+   out << ">";
+   
+   out << value;
+   
+   out << "</" << elementName << ">" << std::endl;
+}
+//! Function to write the argument element to xml with a integer attribute in proper format.
+/*! 
+* This function is used to write a single element containing a single value along with an integer attribute to the output stream
+* in XML.
+* \param value Value to print to XML.
+* \param elementName Name of the element.
+* \param out Stream to print to.
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
+* \param attrValue Value to print as an attribute.
+* \param attrName Name of attribute.
+*/
+template<class T>
+void XMLWriteElementAndAttribute( const T value, const std::string elementName, std::ostream& out, const Tabs* tabs, const int attrValue, const std::string attrName ) {
+   
+   tabs->writeTabs( out );
+   
+   out << "<" << elementName;
+   
+   if ( attrName != "" ) {
+      out << " " << attrName <<"=\"" << attrValue << "\"";		
+   }
+      
    out << ">";
    
    out << value;
