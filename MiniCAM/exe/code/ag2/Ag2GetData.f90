@@ -17,6 +17,7 @@ DATA TABLEMRK/'INPUT_TABLE'/
 IVMAX = 3
 NJ = 4
 DeforBioUse = 1	! Default Value, turned on
+landUseReductionFract = 0.5		! Default, reduce land-use carbon emissions by half
 DO L=1,NL
 	gdppercap_point(L) = 15d0	! Default value $15,000 per capita
 END DO 
@@ -250,7 +251,17 @@ DO WHILE(INDIC.EQ.1)
       READ(1,*) IDUM,agrho(L)
     END DO
 
-! Flag to turn off consumption of biomass previously deforested
+! Fraction land-use carbon emissions are reduced by recoverable biomass
+  CASE (693)
+	READ(1,*) landUseReductionFract
+
+! Fraction of recoverable biomass that is logged (constant)
+  CASE (694)
+    DO L=1,NL
+      READ(1,*) IDUM,loggedFract(L)
+    END DO 
+
+! Point at which infrastructure can use all available biomass
   CASE (695)
     DO L=1,NL
       READ(1,*) IDUM,gdppercap_point(L)

@@ -88,11 +88,13 @@ Bioyield(NLP),				& ! Biomass avg observed yields
 GJperTON(NLP),				& ! Gigajoules per Ton conversion factor
 bioyieldcap(NLP),			& ! Upper limit of biomass yields
 recovForestFrac(NLP),		& ! see Ag2GetData.f90
+loggedFract(NLP),			& ! see Ag2GetData.f90
 unmanForestFrac(NLP),		& ! see Ag2GetData.f90
 fractSavannah(NLP),			& ! see Ag2GetData.f90
 fractAgSavannah(NLP),		& ! see Ag2GetData.f90
 fractPotentialAgSavannah(NLP),	& ! see Ag2GetData.f90
 gdppercap_point(NLP),		& ! see Ag2GetData.f90
+landUseReductionFract,		& ! see Ag2GetData.f90
 
 AG2CH4(4,NLP,NMP),			& ! Methane Emissions
 AG2N2O(4,NLP,NMP),			& ! Nitrous oxide Emissions

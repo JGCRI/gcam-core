@@ -97,7 +97,8 @@ DO i=1,NL
 	! Reduce deforestation above ground by half bio use 
 	! This is a crude approximation to displacing some fossil and some non-fossil
 	biomassprice = price(8,i) / GJperGcal
-	deforUseMult = 1d0 - deforBioUseFract(biomassprice, gdpcap(i,t)*2.12/1000d0, i,T)/2
+	deforUseMult = 1d0 - deforBioUseFract(biomassprice, gdpcap(i,t)*2.12/1000d0, i,T)* &
+					landUseReductionFract
 	
   ! Vegetation Emissions
 	! Crops
