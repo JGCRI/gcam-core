@@ -33,6 +33,7 @@ protected:
     
 public:
     tranTechnology();
+    virtual tranTechnology* clone() const;
     virtual void clear();
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
     virtual void calcCost( const std::string regionName, const int per); 

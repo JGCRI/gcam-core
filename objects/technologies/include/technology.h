@@ -85,6 +85,7 @@ public:
     technology(); // default construtor
     technology( const technology& techIn ); // copy constructor.
     technology& operator=( const technology& techIn ); // assignment operator.
+    virtual technology* clone() const;
     virtual ~technology();
     virtual void clear();
     virtual void copy( const technology& techIn );
