@@ -4,11 +4,6 @@ import java.awt.event.*;
 import javax.swing.tree.TreePath;
 import org.w3c.dom.Document;
 
-/*
- * ListDialog.java is a 1.4 class meant to be used by programs such as
- * ListDialogRunner.  It requires no additional files.
- */
-
 public class RadioButton extends JDialog implements ActionListener {
 	private static RadioButton dialog;
 	private static String value = "";
@@ -107,7 +102,7 @@ public class RadioButton extends JDialog implements ActionListener {
 			return null;
 		}
 		if(RadioButton.value.equals("Single Table")) {
-			BaseTableModel bt = new NewDataTableModel(tp, doc, pf);
+			BaseTableModel bt = new NewDataTableModel(tp, doc, pf, "Single Table");
 	  		JTable jTable = new JTable(bt);
 			// Should the listener be set like so..
 	  		jTable.getModel().addTableModelListener((FileChooserDemo)pf);
@@ -129,7 +124,7 @@ public class RadioButton extends JDialog implements ActionListener {
 			CopyPaste copyPaste = new CopyPaste( jTable );
 			return new JScrollPane(jTable);
 		} else if(RadioButton.value.equals("Multi Tables")) {
-			BaseTableModel bt = new MultiTableModel(tp, doc, pf);
+			BaseTableModel bt = new MultiTableModel(tp, doc, pf, "Multi Tables");
 			JTable jTable = new JTable(bt);
 	  		jTable.getModel().addTableModelListener((FileChooserDemo)pf);
 
@@ -147,7 +142,7 @@ public class RadioButton extends JDialog implements ActionListener {
 			CopyPaste copyPaste = new CopyPaste( jTable );
 			return new JScrollPane(jTable);
 		} else if(RadioButton.value.equals("Combo Tables")){
-			BaseTableModel bt = new ComboTableModel(tp, doc, pf);
+			BaseTableModel bt = new ComboTableModel(tp, doc, pf, "Combo Tables");
 			TableSorter sorter = new TableSorter(bt);
 			JTable jTable = new JTable(sorter);
 			// Should the listener be set like so..

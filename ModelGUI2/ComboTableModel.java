@@ -23,8 +23,8 @@ public class ComboTableModel extends BaseTableModel{
 
 	Vector tables;
 
-	public ComboTableModel(TreePath tp, Document doc, JFrame parentFrame) {
-		super(tp, doc, parentFrame);
+	public ComboTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
+		super(tp, doc, parentFrame, tableTypeString);
 		leftHeaderVector = null;
 		wild = chooseTableHeaders(tp, parentFrame);
 		wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
@@ -34,7 +34,7 @@ public class ComboTableModel extends BaseTableModel{
 		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
 			activeRows.add(new Integer(i));
 		}
-		indCol.add(0, "");
+		indCol.add(0, ind1Name);
 	}
 	public void flip(int row, int col) {
 		Vector tempArr = indCol;
@@ -44,7 +44,7 @@ public class ComboTableModel extends BaseTableModel{
 		String tempStr = ind1Name;
 		ind1Name = ind2Name;
 		ind2Name= tempStr;
-		indCol.add(0, "");
+		indCol.add(0, ind1Name);
 		flipped = !flipped;
 		doFilter( new Vector(tableFilterMaps.keySet()) );
 		fireTableStructureChanged();

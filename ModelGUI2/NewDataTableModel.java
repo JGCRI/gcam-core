@@ -19,8 +19,8 @@ public class NewDataTableModel extends BaseTableModel{
 	String w3;
 	//Document doc;
 
-	public NewDataTableModel(TreePath tp, Document doc, JFrame parentFrame) {
-		super(tp, doc, parentFrame);
+	public NewDataTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
+		super(tp, doc, parentFrame, tableTypeString);
 		indCol = new Vector();
 		indRow = new Vector();
 		data = new TreeMap();
@@ -77,7 +77,7 @@ public class NewDataTableModel extends BaseTableModel{
 	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, TreeMap dataIn, Document docIn) {
 		w3 = w3In;
 		indCol = new Vector(set1);
-		indCol.add(0,w3 /*set2Name*/);
+		indCol.add(0,set1Name);
 		indRow = new Vector(set2);
 		data = dataIn;
 		flipped = false;
@@ -94,7 +94,7 @@ public class NewDataTableModel extends BaseTableModel{
 		String tempStr = ind1Name;
 		ind1Name = ind2Name;
 		ind2Name= tempStr;
-		indCol.add(0, w3 /*ind2Name*/);
+		indCol.add(0, ind1Name);
 		flipped = !flipped;
 		fireTableStructureChanged();
 	}

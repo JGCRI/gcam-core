@@ -23,11 +23,14 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	// can i move these somewhere
 	protected int currFilter;
 	protected String[] currKeys;
+	
+	protected String tableTypeString;
 
 	public BaseTableModel() {}
-	public BaseTableModel(TreePath tp, Document doc, JFrame parentFrame) {
+	public BaseTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
 		this.doc = doc;
 		this.parentFrame = parentFrame;
+		this.tableTypeString = tableTypeString;
 	}
 	
 	public abstract void flip(int row, int col);
@@ -132,6 +135,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	final ArrayList selected = new ArrayList(2);
 
 	final Object[] itemsObjs = path.getPath();
+	
 	String[] items = new String[ itemsObjs.length ];
 	for(int i=0; i<itemsObjs.length; i++){
 		Node currNode = ((DOMmodel.DOMNodeAdapter)itemsObjs[i]).getNode();
@@ -147,7 +151,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
     
 	JScrollPane scrollingList = new JScrollPane(list);
     		
-	final JDialog filterDialog = new JDialog(parentFrame, "Please choose two headers:", true);
+	final JDialog filterDialog = new JDialog(parentFrame, tableTypeString + " for " + ((DOMmodel.DOMNodeAdapter)itemsObjs[itemsObjs.length-1]).getNode().getNodeName() + ". Please choose two headers:", true);
 	filterDialog.setSize(500,400);
 	filterDialog.setLocation(100,100);
 	filterDialog.setResizable(false);
