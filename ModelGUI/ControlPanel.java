@@ -81,9 +81,9 @@ public class ControlPanel extends javax.swing.JFrame {
     
     private static int LIST = 0;
     private static int TABLE = 1;
-    private static int DEFAULT_COMPONENT_HEIGHT = 20;
-    private static String DEFAULT_SELECTION_STRING = "--chose one--";
-    private static String DEFAULT_PLURAL_STRING = "-- all --";
+    private final static int DEFAULT_COMPONENT_HEIGHT = 20;
+    protected final static String DEFAULT_SELECTION_STRING = "--chose one--";
+    protected final static String DEFAULT_PLURAL_STRING = "-- all --";
     
     /** Creates new form ControlPanel */
     public ControlPanel() {
@@ -531,7 +531,7 @@ public class ControlPanel extends javax.swing.JFrame {
         
         //get the names of all regions
         MapNode regionNode = rootMapNode.getDescendant("region");
-        Vector regionNames = regionNode.getPossibleNames();
+        Vector regionNames = regionNode.getPossibleNames(false);
         
         queryPanel.add(new JLabel("  for region(s)  "));
         regionBox = new JList(regionNames.toArray());
@@ -670,14 +670,23 @@ public class ControlPanel extends javax.swing.JFrame {
     private void addAttributeControl(Component predecessor, String nodeName, int index){
         //get the parent of the nodes whose names will populate the new combo box
         //currRootPointer = (AdapterNode)rootPointers.elementAt(index);
-        //System.out.println("parent of attribute is " + currRootPointer);
         
         JComboBox tempBox = (JComboBox)queryControls.elementAt(index);
         MapNode currMapPointer = rootMapNode.getDescendant(tempBox.getSelectedItem().toString());
         
-        Vector names = currMapPointer.getPossibleNames();
-        if (names.size() > 1) names.insertElementAt(DEFAULT_PLURAL_STRING, 0);
-        names.insertElementAt(DEFAULT_SELECTION_STRING, 0);
+        Vector names = new Vector();
+        if (index > 0 && attributeControls.size() > index-1) {
+            tempBox = (JComboBox)attributeControls.elementAt(index-1);
+            if (tempBox != null) {
+                //String parentName = tempBox.getSelectedItem().toString();
+                names = currMapPointer.getPossibleNames(tempBox.getSelectedItem().toString());
+            } 
+        } else {
+            names = currMapPointer.getPossibleNames(false);
+        }
+           
+        if (names.size() != 1) names.insertElementAt(DEFAULT_PLURAL_STRING, 0);
+        names.insertElementAt(DEFAULT_SELECTION_STRING, 0);       
         
         JComboBox comboBox;
         
@@ -851,8 +860,6 @@ public class ControlPanel extends javax.swing.JFrame {
             int compCount = dataPanel.getComponentCount();
             //remove the currely showing table, it's the last component
             dataPanel.remove(compCount-1);
-            //remove the rigid area seporating table and show table button
-            //dataPanel.remove(compCount-2);
         }
         
         //get the name of the last element among the nodes to compaire and know when to stop
@@ -895,7 +902,6 @@ public class ControlPanel extends javax.swing.JFrame {
                 //after obtaining the node name and name attribute of the current node, 
                 //  decide it is an intermediate node or an end target whoes values are to be displayed
                 if(nodeName.equals(finalNodeName)) {
-                    
                     //remember the name of the parent of the node whose value 
                     //  will be displayed in the left-side header
                     String lefterName = regionName + " " + currNode.toString();
@@ -908,7 +914,7 @@ public class ControlPanel extends javax.swing.JFrame {
                     //for nodes directly under a period node                        
                     int index1 = lefterName.indexOf('<');
                     int index2 = lefterName.indexOf('>');
-                    if (lefterName.substring(index1+1, index2).equals("period")) {
+                    if (lefterName.substring(index1+1, index2).equals("period")) {                        
                         //remember the last index in values that contains confirmed entry
                         int lastValIndex = values.size();
                         
@@ -916,6 +922,7 @@ public class ControlPanel extends javax.swing.JFrame {
                         int numPeriods = modelTime.getNumOfSteps();
                         for (int k = 0; k < numPeriods; k++) {
                             values.addElement(new AdapterNode());
+System.out.println("adding blank node (" + k);
                             
                             attribVal = modelTime.getYear(k);
                             if (header.isEmpty()) header.addElement(attribVal);
@@ -944,6 +951,7 @@ public class ControlPanel extends javax.swing.JFrame {
 
                     } else {        //if parent of desired node(s) isn't "period"
 
+                        boolean timeInterval = false;
                         Integer lastYear = new Integer(modelTime.getStart());
                         Vector years = modelTime.getTimeIntervals();
                         Iterator yearIt = years.iterator();
@@ -953,12 +961,15 @@ public class ControlPanel extends javax.swing.JFrame {
                         Iterator it = childNodes.iterator();
 
                         while (it.hasNext()) {
+                            //timeInterval = false;
                             currNode = (AdapterNode)it.next();
                             if (showNames) {
+System.out.println("adding " + currNode.getAttributeValue("name"));
                                 values.addElement(currNode.getAttributeValue("name"));
                             } else {
                                 attribVal = currNode.getAttributeValue("year");
                                 if (attribVal != null) {
+                                    timeInterval = true;
                                     //if node has year, make sure that values are saved under proper year
                                     Integer attribYear = new Integer(attribVal);
                                     Integer currYear = (Integer)yearIt.next();
@@ -966,6 +977,7 @@ public class ControlPanel extends javax.swing.JFrame {
                                         if (header.isEmpty()) header.addElement(currYear.toString());
                                         else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
                                         values.addElement(new AdapterNode());
+System.out.println("adding blank node");
                                         currYear = (Integer)yearIt.next();
                                     }
                                     if (header.isEmpty()) header.addElement(currYear.toString());
@@ -976,14 +988,16 @@ public class ControlPanel extends javax.swing.JFrame {
                                     
                                 }
                                 
-                                values.addElement(currNode);                                
+                                values.addElement(currNode);  
+System.out.println("adding node " + currNode);
                             }
                         }
-                        while (!lastYear.equals(new Integer(modelTime.getEnd()))) {
+                        while (timeInterval && !lastYear.equals(new Integer(modelTime.getEnd()))) {
                             lastYear = (Integer)yearIt.next();
                             if (header.isEmpty()) header.addElement(lastYear.toString());
                             else if (!header.contains(lastYear.toString())) header.addElement(lastYear.toString());
                             values.addElement(new AdapterNode());
+System.out.println("adding end blank node");
                         }                            
                     }
                 } else {    //current node is an intermediate step along the tree
@@ -1005,6 +1019,8 @@ public class ControlPanel extends javax.swing.JFrame {
                 }
             } //belongs to while (!queue.isEmpty())
         } //belongs to for each region
+       
+System.out.println("values  = " + values.size() + " header = " + header.size() + " lefter = " + lefter.size());
         
         TableViewModel model = new TableViewModel(values, header, lefter, showNames);
         table = new JTable(model);
