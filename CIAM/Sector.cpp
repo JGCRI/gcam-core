@@ -18,6 +18,7 @@
 #include <xercesc/dom/DOM.hpp>
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
 
 #include "sector.h"
 #include "subsector.h"
@@ -1489,4 +1490,72 @@ void sector::addToDependencyGraph( ostream& outStream, const int period ) {
       }
    }
 }
+
+/*! A function to add the name of a sector the current sector has a simul with. 
+*
+* This function adds the name of the sector to the simulList vector, if the name
+* does not already exist within the vector. This vector is 
+* then used to sort the sectors by fuel dependencies so that calculations are always 
+* consistent. 
+*
+* \author Josh Lurz
+* \param sectorName The name of the sector the current sector has a simul with. 
+*/
+void sector::addSimul( const string sectorName ) {
+    if( std::find( simulList.begin(), simulList.end(), sectorName ) == simulList.end() ) {
+        simulList.push_back( sectorName );
+    }
+}
+
+/*! This function performs several setup operations to optimize sorting. 
+*
+* This function uses the standard library to sort the list of simuls. 
+* This allows for the later use of binary search during comparisons of sectors
+* to speed that operation. It then creates a list of all inputs that the sector uses.
+*
+* \todo It might be better if this function didn't use the fuelmap.
+* \author Josh Lurz
+*/
+void sector::setupForSort() {
+    // Sort the simul list for faster searching.
+    sort( simulList.begin(), simulList.end() );
+    
+    // Setup an input vector.
+    map<string, double> tempMap = getfuelcons( 0 );
+
+    for( map<string, double>::const_iterator fuelIter = tempMap.begin(); fuelIter != tempMap.end(); fuelIter++ ) {
+        // Check for zTotal, which is not a sector name. 
+        if( fuelIter->first != "zTotal" ) {
+            inputList.push_back( fuelIter->first );
+        }
+    }
+    sort( inputList.begin(), inputList.end() );
+}
+
+/*! This function returns a copy of the list of simuls for the sector.
+*
+* This function returns a vector of strings created during the search for simuls.
+* It lists the names of all sectors which have a simul with the sector. The list is
+* currently used when sorting the sectors by input dependency. 
+*
+* \author Josh Lurz
+* \return A vector of sector names with which the sector has simuls.
+*/
+const vector<string> sector::getSimulList() const {
+    return simulList;
+}
+
+/*! This function returns a copy of the list inputs the sector uses. 
+*
+* This function returns a vector of strings created during setupForSort.
+* It lists the names of all inputs the sector uses. These inputs are also sectors. 
+*
+* \author Josh Lurz
+* \return A vector of sector names which are inputs the sector uses. 
+*/
+const vector<string> sector::getInputList() const {
+    return inputList;
+}
+
+
 

@@ -116,7 +116,7 @@ public:
     void MCoutput(void);
     int getNoDRsc(void);
     int getNoSSec(void);
-    void findSimul( const int per ) const;
+    void findSimul( const int per );
     void calcAgSector( const int period );
     void initializeAgMarketPrices( const std::vector<double>& pricesIn );
     double getRsc( const std::string resourceName, const int per );

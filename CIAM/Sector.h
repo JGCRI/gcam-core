@@ -15,6 +15,7 @@
 
 #include <vector>
 #include <xercesc/dom/DOM.hpp>
+#include <algorithm>
 
 // Forward declarations
 class subsector;
@@ -51,6 +52,8 @@ protected:
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
     std::vector<bool> capLimitsPresent; //!< Flag if any capacity limits are present 
+    std::vector<std::string> simulList; //!< List of all sectors with simuls to this one. 
+    std::vector<std::string> inputList; //!< List of all inputs this sector uses. 
     bool anyFixedCapacity; //!< flag set to true if any fixed capacity is present in this sector
     double fixedShareSavedVal; //!< debugging value
     double prevVal;
@@ -113,6 +116,48 @@ public:
     void updateSummary(const int per);
     void addToDependencyGraph( std::ostream& outStream, const int period );
     void setRegionName(const std::string& regname);
+    void addSimul( const std::string sectorName );
+    void setupForSort();
+    const std::vector<std::string> getSimulList() const;
+    const std::vector<std::string> getInputList() const;
+
+     /*!
+    * \brief Binary function used to order Sector* pointers by input dependency. 
+    * \author Josh Lurz
+    *
+    * The DependencyOrdering struct is used by the region class in the stl sort to compare
+    * two sector pointers and order them by dependency. The algorithm first checks if a simul
+    * exists between two sectors. If it does, the comparison between the two is performed alphabetically.
+    * This is because when a simul market exists, the ordering between two sectors is trivial.
+    * Next the comparison checks if the lhs sector has the rhs sector as an input. If it does, a dependency exists
+    * and the lhs sector must be after the rhs sector. Finally, if two sectors are unrelated, they are ordered alphabetically. 
+    */   
+    struct DependencyOrdering : public std::binary_function<sector*, sector*, bool>
+    {
+        //! \brief The () operator, which is used for sorting two sector pointers. 
+
+        bool operator()( const sector* lhs, const sector* rhs ) const {
+            
+            // First cache copies of the list.
+            std::vector<std::string> simulList = lhs->getSimulList();
+            std::vector<std::string> inputList = lhs->getInputList();
+            
+            // Check for a simul.
+            if ( std::binary_search( simulList.begin(), simulList.end(), rhs->getName() ) ) {
+                // If a simul exists we want to order alphabetically. 
+                return( lhs->getName() < rhs->getName() );
+            }
+
+            // Now check if sector uses another sector. If so the other sector needs to be first. 
+            else if( std::binary_search( inputList.begin(), inputList.end(), rhs->getName() ) ) {
+                return false;
+            }
+            // Finally order alphabetically if no dependency exists between the two sectors.
+            else {
+                return( lhs->getName() < rhs->getName() );
+            }
+        }
+    };
 };
 
 #endif // _SECTOR_H_

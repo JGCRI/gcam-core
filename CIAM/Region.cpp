@@ -14,6 +14,7 @@
 #include <vector>
 #include <cassert>
 #include <xercesc/dom/DOM.hpp>
+#include <algorithm>
 
 #include "region.h"
 #include "summary.h"
@@ -407,6 +408,14 @@ void Region::completeInit() {
    // Find simuls.
    updateSummary( 0 );	// Dummy call to final supply to setup fuel map
    findSimul( 0 );
+
+   // Setup each sector for sorting. 
+   for( vector<sector*>::iterator supplySectorSortIter = supplySector.begin(); supplySectorSortIter != supplySector.end(); supplySectorSortIter++ ){
+       ( *supplySectorSortIter )->setupForSort();
+   }
+
+   // Now sort the sectors by dependency.
+   std::sort( supplySector.begin(), supplySector.end(), sector::DependencyOrdering() );
 }
 
 /*! 
@@ -751,19 +760,15 @@ void Region::finalSupply(int per) {
    
    
    // loop through all sectors once to get total output
-   for (i=0;i<noSSec;i++) {
-      // start with last supply sector
-      // need demand for all intermediate and final energy to
-      // determine need for primary energy
-      j = noSSec - (i+1);
+   for ( vector<sector*>::reverse_iterator ri = supplySector.rbegin(); ri != supplySector.rend(); ri++ ) {
       
-      goodName = supplySector[j]->getName();		
+      goodName = ( *ri )->getName();		
       
       // name is country/region name
-      supplySector[j]->supply( name, per );
-      double sectorOutput = supplySector[j]->getOutput(per);
+      ( *ri )->supply( name, per );
+      double sectorOutput = ( *ri )->getOutput(per);
       
-      carbonTaxPaid[per] += supplySector[j]->getTotalCarbonTaxPaid(per);
+      carbonTaxPaid[per] += ( *ri )->getTotalCarbonTaxPaid(per);
    }
    
    // loop through supply sectors and assign supplies to marketplace and update fuel consumption map
@@ -909,9 +914,7 @@ void Region::calcEndUsePrice( const int period ) {
       // do nothing if false
       if (!useReadinData) {
          demandSector[ i ]->calc_pElasticity( period );
-      }
-      
-      
+      } 
    }
 }
 
@@ -1367,7 +1370,7 @@ void Region::MCoutput() {
 Then loop through each other sector that is also a fuel.
 Then loop through the fuels in that sector to see if that sector uses
 the first as a fuel.  */
-void Region::findSimul(const int per) const {
+void Region::findSimul(const int per) {
    Marketplace* marketplace = scenario->getMarketplace();
    int isec;
    int	jsec;
@@ -1401,6 +1404,9 @@ void Region::findSimul(const int per) const {
                InnerFuelName = fuelIterTwo->first;
                if(InnerFuelName == OuterSectorName) {
                   // Have found a simultaneity
+                  supplySector[ isec ]->addSimul( supplySector[ jsec ]->getName() );
+                  supplySector[ jsec ]->addSimul( supplySector[ isec ]->getName() );
+
                   marketplace->resetToPriceMarket( InnerFuelName, name );
                   marketplace->resetToPriceMarket(InnerSectorName, name);
                   if (WriteOut) { 
