@@ -3,6 +3,15 @@
 #pragma once
 
 /*! 
+* \file str_ghgss.h
+* \ingroup CIAM
+* \brief The str_ghgss struct header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
+/*! 
 * \ingroup CIAM
 * \brief Struct for the collection of Greenhouse gases.
 *

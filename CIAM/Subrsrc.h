@@ -2,6 +2,15 @@
 #define _SUBRSRC_H_
 #pragma once
 
+/*! 
+* \file Subrsrc.h
+* \ingroup CIAM
+* \brief The subrsrc class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <vector>
 #include <string>
 #include "grade.h"

@@ -1,6 +1,16 @@
 #ifndef _GRADE_H_
 #define _GRADE_H_
 #pragma once
+
+/*! 
+* \file Grade.h
+* \ingroup CIAM
+* \brief The grade class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <string>
 
 // xerces xml headers
@@ -21,9 +31,6 @@ using namespace xercesc;
 * \version $ Revision $
 */
 
-using namespace std;
-using namespace xercesc;
-
 class grade
 {
 private:
@@ -36,12 +43,12 @@ private:
 	double tax; //!< severance tax
 	double tCost; //!< total cost
 public:
-	grade(); //default construtor
-	grade( const string nameIn, const int noIn );//constructor
+	grade();
+	grade( const string nameIn, const int noIn );
 	void clear();
 	void initElementalMembers();
-	void XMLParse( const DOMNode* tempnode ); // initialize with xml data
-	void toXML( ostream& out ) const; // write out xml.
+	void XMLParse( const DOMNode* tempnode );
+	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
 	void printGrade() const;
 	void cost( const int per );

@@ -2,6 +2,15 @@
 #define _LOGGER_H_
 #pragma once
 
+/*! 
+* \file Logger.h
+* \ingroup CIAM
+* \brief The Logger class header file.
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
 #include <iostream>
 #include <fstream>
@@ -10,7 +19,7 @@
 
 using namespace std;
 
-// Macro used to insert the line and file into a logging command.
+//! Macro used to insert the line and file into a logging command.
 #define LOG( logger, level ) logger->setLevel( level ); logger->setLine( __LINE__ ); logger->setFile( __FILE__ ); *logger
 
 // Forward definition of the Logger class.

@@ -2,6 +2,15 @@
 #define _SUMMARY_H_
 #pragma once
 
+/*! 
+* \file summary.h
+* \ingroup CIAM
+* \brief The Summary class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <map>
 #include <string> 
 

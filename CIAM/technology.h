@@ -2,6 +2,15 @@
 #define _TECHNOLOGY_H_
 #pragma once
 
+/*! 
+* \file technology.h
+* \ingroup CIAM
+* \brief The technology class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 // Standard Library headers.
 #include <vector>
 #include <map>

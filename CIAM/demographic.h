@@ -2,6 +2,15 @@
 #define _DEMOGRAPHIC_H_
 #pragma once
 
+/*! 
+* \file demographic.h
+* \ingroup CIAM
+* \brief The demographic class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <vector>
 #include <xercesc/dom/DOM.hpp>
 

@@ -2,19 +2,30 @@
 #define _MODELTIME_H_
 #pragma once
 
+/*! 
+* \file modeltime.h
+* \ingroup CIAM
+* \brief The Modeltime class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <vector>
 #include <map>
 #include <xercesc/dom/DOM.hpp>
 
-using namespace std; // enables elimination of std::
+using namespace std;
 using namespace xercesc;
 
 /*! 
 * \ingroup CIAM
+* \brief A class which defines the time information neccessary for the model to run.
 * \author Sonny Kim
 * \date $ Date $
 * \version $ Revision $
 */
+
 class Modeltime
 {
 private:

@@ -1,5 +1,15 @@
 #ifndef _PLAIN_TEXT_LOGGER_H_
 #define _PLAIN_TEXT_LOGGER_H_
+#pragma once
+
+/*! 
+* \file PlainTextLogger.h
+* \ingroup CIAM
+* \brief The PlainTextLogger class header file.
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
+*/
 
 #include "Definitions.h"
 #include <string>
@@ -20,20 +30,18 @@
 */
 
 class PlainTextLogger: public Logger {
-	
 	friend LoggerFactory;
-
-public:
-	virtual void open( const char[] = 0 );
-	virtual void close();
-	virtual void logCompleteMessage( const int line, const string& file, const WarningLevel warningLevel, const string& message );	
-
 private:
 	
 	//! The filestream to which data is written.
 	ofstream logFile;
 	
 	PlainTextLogger();
+
+public:
+	virtual void open( const char[] = 0 );
+	virtual void close();
+	virtual void logCompleteMessage( const int line, const string& file, const WarningLevel warningLevel, const string& message );	
 };
 
 #endif _PLAIN_TEXT_LOGGER_H_

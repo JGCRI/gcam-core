@@ -2,6 +2,15 @@
 #define _MARKET_H_
 #pragma once
 
+/*! 
+* \file Market.h
+* \ingroup CIAM
+* \brief The Market class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <string>
 
 using namespace std;

@@ -2,6 +2,15 @@
 #define _LOGGER_FACTORY_H_
 #pragma once
 
+/*! 
+* \file LoggerFactory.h
+* \ingroup CIAM
+* \brief The LoggerFactory class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
 #include "Logger.h"
 

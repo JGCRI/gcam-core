@@ -2,6 +2,15 @@
 #define _EMCOEF_IND_H_
 #pragma once
 
+/*! 
+* \file Emcoef_ind.h
+* \ingroup CIAM
+* \brief The Emcoef_ind class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <string>
 #include <map>
 using namespace std;

@@ -2,6 +2,15 @@
 #define _REGION_H_
 #pragma once
 
+/*! 
+* \file Region.h
+* \ingroup CIAM
+* \brief The Region class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "demographic.h"
 #include "resource.h"
 #include "sector.h"

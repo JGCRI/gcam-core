@@ -2,6 +2,15 @@
 #define _GHG_H_
 #pragma once
 
+/*! 
+* \file GHG.H
+* \ingroup CIAM
+* \brief The Ghg class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <string>
 
 // xerces xml headers
@@ -23,26 +32,19 @@ using namespace xercesc;
 * \version $ Revision $
 */
 
-// xerces xml headers
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/XMLString.hpp>
-
-using namespace std; // enables elimination of std::
-using namespace xercesc;
-
 class Ghg
 {
 private:
-	string name; //! name of ghg gas
-	string unit; //! unit for ghg gas
-	double rmfrac; //! fraction of emissions removed
-	double gwp; //! global warming poential
-	double emission; //! emissions (calculated)
-	double seq_emiss; //! sequestered emissions (calculated)
-	double emiss_gwp; //! gwp emissions (calculated)
-	double emiss_coef; //! emissions coefficient
-	double emiss_fuel; //! implied emissions from total fuel consumption
-	double emiss_ind; //! indirect emissions
+	string name; //!< name of ghg gas
+	string unit; //!< unit for ghg gas
+	double rmfrac; //!< fraction of emissions removed
+	double gwp; //!< global warming poential
+	double emission; //!< emissions (calculated)
+	double seq_emiss; //!< sequestered emissions (calculated)
+	double emiss_gwp; //!< gwp emissions (calculated)
+	double emiss_coef; //!< emissions coefficient
+	double emiss_fuel; //!< implied emissions from total fuel consumption
+	double emiss_ind; //!< indirect emissions
 public:
 	Ghg( const string& nameIn = "", const string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 0, const double emissionIn = 0 );
 	void clear();

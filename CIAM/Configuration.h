@@ -2,6 +2,15 @@
 #define _CONFIGURATION_H_
 #pragma once
 
+/*! 
+* \file Configuration.h
+* \ingroup CIAM
+* \brief The Configuration class header file.
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <xercesc/dom/DOM.hpp>
 #include <string>
 #include <map>

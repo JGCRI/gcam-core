@@ -2,6 +2,15 @@
 #define _SCENARIO_H_
 #pragma once
 
+/*! 
+* \file scenario.h
+* \ingroup CIAM
+* \brief The Scenario class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <xercesc/dom/DOM.hpp>
 #include <string>
 #include <iostream>

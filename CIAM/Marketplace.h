@@ -6,6 +6,15 @@
 #pragma warning( disable: 4275 )
 #endif
 
+/*! 
+* \file Marketplace.h
+* \ingroup CIAM
+* \brief The Marketplace class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <string>
 #include <vector>
 #include <map>

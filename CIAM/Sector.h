@@ -2,6 +2,15 @@
 #define _SECTOR_H_
 #pragma once
 
+/*! 
+* \file Sector.h
+* \ingroup CIAM
+* \brief The sector and demsector classes header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <vector>
 #include <xercesc/dom/DOM.hpp>
 #include "subsector.h" // generic technology class

@@ -1,12 +1,21 @@
+#ifndef _AGSECTOR_
+#define _AGSECTOR_
+#pragma once
+
+/*! 
+* \file AgSector.h
+* \ingroup CIAM
+* \brief The AgSector class header file.
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <xercesc/dom/DOM.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
 #include <map>
-
-#ifndef _AGSECTOR_
-#define _AGSECTOR_
-#pragma once
 
 using namespace std;
 using namespace xercesc;

@@ -2,6 +2,15 @@
 #define _SUBSECTOR_H_
 #pragma once
 
+/*! 
+* \file subsector.h
+* \ingroup CIAM
+* \brief The subsector class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <vector>
 #include <string>
 #include "technology.h"

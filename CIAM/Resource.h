@@ -2,6 +2,15 @@
 #define _RESOURCE_H_
 #pragma once
 
+/*! 
+* \file Resource.h
+* \ingroup CIAM
+* \brief The Resource, DepletableResource, FixedResource, and RenewableResource classes header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "subrsrc.h"
 #include <xercesc/dom/DOM.hpp>
 
@@ -15,9 +24,8 @@ using namespace xercesc;
 * \version $ Revision $
 */
 
-class Resource
+class Resource {
 
-{
 protected:
 	string name; //!< Resource name
 	string market; //!< regional market

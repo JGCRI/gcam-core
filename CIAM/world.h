@@ -2,6 +2,15 @@
 #define _WORLD_H_
 #pragma once
 
+/*! 
+* \file world.h
+* \ingroup CIAM
+* \brief The World class header file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "region.h"
 #include "str_ghgss.h"
 #include <xercesc/dom/DOM.hpp>
