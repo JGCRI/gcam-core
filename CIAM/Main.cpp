@@ -128,6 +128,13 @@ int main() {
 
 	scenario->XMLParse( root );
 	
+   if( conf->getBool( "runningNonReference" ) ) {
+      // Now read in scenario specific information.
+      cout << "Reading in additional scenario file." << endl;
+      root = XMLHelper<void>::parseXML( conf->getFile( "scenarioXmlInputFileName" ), parser );
+      scenario->XMLParse( root );
+   }
+
 	cout << "XML parsing complete." << endl;
 	logfile << "XML parsing complete." << endl;
 	
@@ -136,6 +143,9 @@ int main() {
 	delete parser;
 	XMLPlatformUtils::Terminate();
 	
+   // Finish initialization.
+   scenario->completeInit();
+
 	// Compute data read in time
 	afterinit = clock();
 	duration = (double)(afterinit-start) / CLOCKS_PER_SEC;
