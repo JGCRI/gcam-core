@@ -1859,7 +1859,7 @@ void Subsector::MCoutputAllSectors() const {
         dboutput4(regionName,"Total GHG Cost",sectorName, subsecTechName,"$/gj",temp);
 
         // ghg tax paid
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getCarbonTaxPaid( regionName, m );
         }
         dboutput4(regionName,"C Tax Paid",sectorName, subsecTechName,"90Mil$",temp);
