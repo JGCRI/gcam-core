@@ -17,7 +17,7 @@
 #include <map>
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
-#include "sectors/include/Subsector.h"
+#include "sectors/include/subsector.h"
 
 // Forward declarations
 class Summary;

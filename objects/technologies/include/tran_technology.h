@@ -14,7 +14,7 @@
 */
 
 #include <xercesc/dom/DOMNode.hpp>
-#include "technology.h"
+#include "technologies/include/technology.h"
 
 /*! 
 * \ingroup CIAM

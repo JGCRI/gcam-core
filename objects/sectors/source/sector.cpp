@@ -23,7 +23,7 @@
 #include "util/base/include/xml_helper.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
-#include "sectors/include/cpricesubsector.h"
+#include "sectors/include/cpriceSubsector.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
@@ -384,9 +384,7 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \param period Model period
 */
 void Sector::initCalc( const int period ) {
-    double calOutput;
-    double sectorOutput;
-
+    
     // do any sub-Sector initializations
     for ( int i=0; i<nosubsec; i++ ) {
         subsec[ i ]->initCalc( period );
@@ -402,6 +400,8 @@ void Sector::initCalc( const int period ) {
 
     // check to see if previous period's calibrations were set ok
     // Not sure if this works. Didn't seem to for demand Sector
+    double calOutput;
+    double sectorOutput;
     if ( period > 0 ) {
         for ( int i=0; i<nosubsec; i++ ) {
             if ( subsec[ i ]->getCalibrationStatus( period - 1 ) ) {

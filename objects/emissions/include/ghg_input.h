@@ -12,7 +12,7 @@
 * \date $Date$
 * \version $Revision$
 */
-#include "Ghg.h"
+#include "emissions/include/ghg.h"
 
 /*! 
 * \ingroup CIAM

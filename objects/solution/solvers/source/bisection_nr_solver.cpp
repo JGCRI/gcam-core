@@ -105,7 +105,7 @@ bool BisectionNRSolver::solve( const int period ) {
       if ( !allbracketed ) {
          Bracket( solTolerance, excessDemandSolutionFloor, BRACKET_INTERVAL, sol,allbracketed,firsttime,worldCalcCount,period );
       }
-      
+
       // Bisect method
       if (allbracketed ) {
          if (bn < 1) {
@@ -119,7 +119,7 @@ bool BisectionNRSolver::solve( const int period ) {
             ++bn;
          }
       }
-      
+
       // Ron's version of the NR routine
       if ( allbracketed  ) {
          const int maxIter = 30;

@@ -403,8 +403,13 @@ void SubResource::cumulsupply(double prc,int per)
             << " cumulprod[ per-1 ]: " << cumulprod[ per-1 ] << endl;
     }
     // multiply change in cumulative produciton by the adjustement scale factor
-    cumulprod[ per ] = cumulprod[ per-1 ] + (cumulprod[ per ] - cumulprod[ per-1 ]) * scaleFactor[ per ];
-    
+    if( per == 0 ){
+        cumulprod[ per ] = cumulprod[ per ]  * scaleFactor[ per ];
+    }
+    else {
+        cumulprod[ per ] = cumulprod[ per-1 ] + (cumulprod[ per ] - cumulprod[ per-1 ]) * scaleFactor[ per ];
+    }
+
     if ( scaleFactor[ per ] != 1 ) {
         cout << " new cumul prod: " << cumulprod[ per ] << endl;
     }

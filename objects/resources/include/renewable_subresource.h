@@ -13,7 +13,7 @@
 * \version $Revision$
 */
 #include <xercesc/dom/DOMNode.hpp>
-#include "SubResource.h"
+#include "resources/include/subresource.h"
 
 // Forward declarations.
 class Grade;

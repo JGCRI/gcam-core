@@ -392,7 +392,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<
       // Check if the sum adds up to the total. 
       for( int marketCheckIter = 0; marketCheckIter < numMarkets; marketCheckIter++ ) {
          if( fabs( originalSupplies[ marketCheckIter ] - suppliesSum[ marketCheckIter ] ) > 1E-5 ){
-            if ( ErrorCount < 0 ) {
+            if ( ErrorCount > 0 ) {
                cout << "Error in derivative Calc. Unequal sums: ";
                cout << " S Difference: " << originalSupplies[ marketCheckIter ] - suppliesSum[ marketCheckIter ];
                cout << endl;
@@ -400,7 +400,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<
             ErrorCount += 1;
          }
          if ( fabs( originalDemands[ marketCheckIter ] - demandsSum[ marketCheckIter ] ) > 1E-5 ) {
-            if ( ErrorCount < 0 ) {
+            if ( ErrorCount > 0 ) {
                cout << "Error in derivative Calc. Unequal sums: ";
                cout << " D Difference: " << originalDemands[ marketCheckIter ] - demandsSum[ marketCheckIter ];
                cout << endl;

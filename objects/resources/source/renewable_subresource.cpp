@@ -115,7 +115,7 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
    
    double gradeAvail;
    double gradeCost;
-   double prevGradeCost = grade[ 0 ]->getCost(period - 1); // Minimum cost for any production
+   
    double prevGradeAvail = grade[ 0 ]->getAvail(); // Lowest fraction available
    double gradeFraction;
    
@@ -128,6 +128,11 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
    }
    
    // if below minimum cost
+    double prevGradeCost = 0; // Minimum cost for any production
+    if( period > 0 ){
+        grade[ 0 ]->getCost(period - 1);
+    }
+
    if ( price < prevGradeCost ) {
       annualprod[ period ] = 0;
       return;

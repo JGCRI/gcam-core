@@ -22,6 +22,7 @@ class Region;
 class Logger;
 class Curve;
 class Tabs;
+
 /*! 
 * \ingroup CIAM
 * \brief A class which contains all the model's regions.
