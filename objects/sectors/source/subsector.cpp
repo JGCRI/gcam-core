@@ -76,6 +76,7 @@ Subsector::Subsector( const string regionName, const string sectorName ){
     fixedShare.resize( maxper );
     capLimited.resize( maxper, false );
     scaleYear = modeltime->getendyr(); // default year to scale share weight to after calibration
+    techScaleYear = modeltime->getendyr(); // default year to scale share weight to after calibration
 }
 
 /*! \brief Default destructor.
@@ -155,7 +156,10 @@ void Subsector::XMLParse( const DOMNode* node ) {
         else if( nodeName == "scaleYear" ){
             scaleYear = XMLHelper<int>::getValue( curr );
         }
-        else if( nodeName == getChildXMLName() ){
+        else if( nodeName == "techScaleYear" ){
+            techScaleYear = XMLHelper<int>::getValue( curr );
+        }
+        else if(  isNameOfChild  ( nodeName ) ){
             map<string,int>::const_iterator techMapIter = techNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
 
             if( techMapIter != techNameMap.end() ) {
@@ -221,7 +225,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
                     }
 
                     else if( childNodeName == technology::getXMLNameStatic2D() ){
-                        auto_ptr<technology> tempTech( createChild() );
+                        auto_ptr<technology> tempTech( createChild( nodeName ) );
                         tempTech->XMLParse( currChild );
                         int thisPeriod = XMLHelper<void>::getNodePeriod( currChild, modeltime );
 
@@ -270,12 +274,12 @@ void Subsector::XMLParse( const DOMNode* node ) {
 }
 
 //! Virtual function which specifies the XML name of the children of this class, the type of technology.
-const string& Subsector::getChildXMLName() const {
-    return technology::getXMLNameStatic1D();
+bool Subsector::isNameOfChild  ( const string& nodename ) const {
+    return nodename == technology::getXMLNameStatic1D();
 }
 
 //! Virtual function to generate a child element or construct the appropriate technology.
-technology* Subsector::createChild() const {
+technology* Subsector::createChild( const string& nodename ) const {
     return new technology();
 }
 
@@ -287,7 +291,13 @@ bool Subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr
     return false;
 }
 
-//! Complete the initialization.
+/*! \brief Complete the initialization
+*
+* This routine is only called once per model run
+*
+* \author Josh Lurz
+* \warning markets are not necesarilly set when completeInit is called
+*/
 void Subsector::completeInit() {
     mSubsectorInfo.reset( new MarketInfo() );
 
@@ -313,6 +323,7 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
     }
 
     XMLWriteElementCheckDefault( scaleYear, "scaleYear", out, tabs, modeltime->getendyr() );
+    XMLWriteElementCheckDefault( techScaleYear, "techScaleYear", out, tabs, modeltime->getendyr() );
 
     for( unsigned i = 0; i < calOutputValue.size(); i++ ){
         if ( doCalibration[ i ] ) {
@@ -365,6 +376,7 @@ void Subsector::toOutputXML( ostream& out, Tabs* tabs ) const {
     }
     
     XMLWriteElementCheckDefault( scaleYear, "scaleYear", out, tabs, modeltime->getendyr() );
+    XMLWriteElementCheckDefault( techScaleYear, "techScaleYear", out, tabs, modeltime->getendyr() );
 
     for( unsigned i = 0; i < calOutputValue.size(); i++ ){
         if ( doCalibration[ i ] ) {
@@ -424,6 +436,8 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( fueltype, "fueltype", out, tabs );
     XMLWriteElement( notech, "notech", out, tabs );
     XMLWriteElement( tax, "tax", out, tabs );
+    XMLWriteElement( scaleYear, "scaleYear", out, tabs );
+    XMLWriteElement( techScaleYear, "techScaleYear", out, tabs );
     
     // Write the data for the current period within the vector.
     XMLWriteElement( capLimit[ period ], "capLimit", out, tabs );
@@ -435,6 +449,7 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( input[ period ], "input", out, tabs );
     XMLWriteElement( subsectorprice[ period ], "subsectorprice", out, tabs );
     XMLWriteElement( output[ period ], "output", out, tabs );
+
     toDebugXMLDerived( period, out, tabs );
     // Write out the summary object.
     // summary[ period ].toDebugXML( period, out );
@@ -485,13 +500,13 @@ const std::string& Subsector::getXMLNameStatic() {
 * \author Steve Smith
 * \param period Model period
 */
-void Subsector::initCalc( const int period ) {
+void Subsector::initCalc( const int period, const MarketInfo* aSectorInfo ) {
    const Modeltime* modeltime = scenario->getModeltime();
     
     int i = 0;
     // Set any fixed demands
     for ( i=0 ;i<notech; i++ ) {        
-        techs[i][ period ]->initCalc( );
+        techs[i][ period ]->initCalc( mSubsectorInfo.get() );
         techs[i][ period ]->calcfixedOutput( period );
     }
 
@@ -546,6 +561,7 @@ void Subsector::initCalc( const int period ) {
 		}
       
 	} // End For
+    
 }
 
 /*! \brief Perform any sub-sector level calibration data consistancy checks
@@ -629,7 +645,7 @@ bool Subsector::getCalibrationStatus( const int period ) const {
     return calibrationStatus[ period ];
 }
 
-/*! \brief Returns true if this Subsector, or underlying technologies, are calibrated.
+/*! \brief Sets the calibrationStatus variable to true if this Subsector, or underlying technologies, are calibrated.
 *
 * If either the Subsector output, or the output of all the technologies under this Subsector (not including those with zero output) are calibrated, then the calibrationStatus for the sector is set to true.
 *
@@ -971,7 +987,7 @@ void Subsector::scalefixedOutput( const double scaleRatio, const int period ) {
     setFixedShare( period, fixedShare[ period ] * scaleRatio ); 
 }
 
-/*! \brief Consistantly adjust share weights after calibration 
+/*! \brief Consistently adjust share weights for previous period after calibration 
 * If the sector share weight in the previous period was changed due to calibration, 
 * then adjust next few shares so that there is not a big jump in share weights.
 *
@@ -986,9 +1002,9 @@ void Subsector::scalefixedOutput( const double scaleRatio, const int period ) {
 void Subsector::interpolateShareWeights( const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
     
-    // if previous period was calibrated, then adjust future shares
-     if ( ( period > modeltime->getyr_to_per( 1990 ) ) && calibrationStatus[ period - 1 ] && Configuration::getInstance()->getBool( "CalibrationActive" ) ) {
-        // Only scale shareweights if after 1990 and scaleYear is after this period
+    // if previous period was calibrated, then adjust future share weights
+    // Only scale shareweights if after 1990 (don't like hard coded year, but need general solution to base year issue)
+    if ( ( period > modeltime->getyr_to_per( 1990 ) ) && calibrationStatus[ period - 1 ] && Configuration::getInstance()->getBool( "CalibrationActive" ) ) {
 
         int endPeriod = 0;
         if ( scaleYear >= modeltime->getstartyr() ) {
@@ -996,23 +1012,30 @@ void Subsector::interpolateShareWeights( const int period ) {
         }
         if  ( endPeriod >= ( period - 1) ) {
             // If begining share weight is zero, then it wasn't changed by calibration so do not scale
-           // sjsTEMP. Change this to > zero once other share interps are changed. This was a mistake in the original vers.
-             if ( shrwts[ period - 1 ] >= 0 ) {
+              if ( shrwts[ period - 1 ] > 0 ) {
                 shareWeightLinearInterpFn( period - 1, endPeriod );
             }
         }
         
-        // Also do this at the technology level if necessary
-        if ( notech > 1 ) {
-            // First renormalize share weights
-            // sjsTEMP. Turn this on once data is updated
-          //  normalizeTechShareWeights( period - 1 );
-
-            // Linearlly interpolate shareweights if > 0
-            // sjsTEMP. Turn this on once data is updated
-         //   techShareWeightLinearInterpFn( period - 1, modeltime->getyr_to_per( modeltime->getendyr() ) );
-        }
+        adjustTechnologyShareWeights( period );
     }
+}
+
+/*! \brief Wrapper method for calls to normalize and/or interpolate technology shareweights  
+*
+* \author Steve Smith
+* \param period Model period
+*/
+void Subsector::adjustTechnologyShareWeights( const int period ) {
+    const Modeltime* modeltime = scenario->getModeltime();
+
+    if ( notech > 1 ) {
+        // First renormalize share weights
+        normalizeTechShareWeights( period - 1 );
+    }
+
+    // Linearlly interpolate technology shareweights
+    techShareWeightLinearInterpFn( period - 1, modeltime->getyr_to_per( techScaleYear ) );
 }
 
 /*! \brief Linearly interpolate share weights between specified endpoints 
@@ -1106,7 +1129,7 @@ void Subsector::normalizeTechShareWeights( const int period ) {
         }
     }
 
-    if ( shareWeightTotal == 0 ) {
+    if ( shareWeightTotal < util::getTinyNumber() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "ERROR: in subsector " << name << " Shareweights sum to zero." << endl;
@@ -1280,7 +1303,7 @@ void Subsector::adjustForCalibration( double sectorDemand, double totalfixedOutp
       for (int j=0;j<notech;j++) {
          // adjust tech shares 
          if ( techs[j][period]->techAvailable( ) ) {
-            techs[j][period]->adjustForCalibration( calOutputSubsect );
+            techs[j][period]->adjustForCalibration( calOutputSubsect, regionName, mSubsectorInfo.get() , period );
          }
       }
    }
@@ -1947,6 +1970,9 @@ void Subsector::sumOutput( const int period ) {
 *
 * output summed every time to ensure consistency
 * this is never called for demand sectors!
+*
+* It is important that output be obtained from this function 
+* -- it is derived for some classes where a different behaviour is needed
 *
 * \author Sonny Kim, Josh Lurz
 * \param period Model period

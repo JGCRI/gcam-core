@@ -20,6 +20,8 @@
 #include "sectors/include/sector.h"
 #include "sectors/include/supply_sector.h"
 #include "containers/include/scenario.h"
+#include "marketplace/include/imarket_type.h"
+#include "marketplace/include/marketplace.h"
 
 using namespace std;
 using namespace xercesc;
@@ -84,3 +86,22 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
 bool SupplySector::XMLDerivedClassParseAttr( const DOMNode* node ) {
     return false;
 }
+
+/*! \brief Create new market for this Sector
+*
+* Sets up the appropriate market within the marketplace for this Sector. Note that the type of market is NORMAL -- 
+* signifying that this market is a normal market that is solved (if necessary).
+*
+* \author Sonny Kim, Josh Lurz, Steve Smith
+*/
+void SupplySector::setMarket() {	
+    Marketplace* marketplace = scenario->getMarketplace();
+    // name is Sector name (name of good supplied or demanded)
+    // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
+    if( marketplace->createMarket( regionName, market, name, IMarketType::NORMAL ) ) {
+        marketplace->setPriceVector( name, regionName, sectorprice );
+    }
+	/* The above initilaizes prices with any values that are read-in. 
+    This only affects the base period, which is not currently solved. */
+}
+

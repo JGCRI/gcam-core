@@ -27,7 +27,8 @@ public:
       NORMAL, //!< Normal Market
       CALIBRATION, //!< Calibration Market
       GHG, //!< Greenhouse Gas Market
-      DEMAND //!< Demand Market
+      DEMAND, //!< Demand Market
+      TRIAL_VALUE //!< Trial Value Market
     };
 };
 

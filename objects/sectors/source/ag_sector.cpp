@@ -228,6 +228,19 @@ const std::string& AgSector::getXMLNameStatic() {
 	return XML_NAME;
 }
 
+/*! \brief Complete the initialization
+*
+* This routine is only called once per model run
+*
+* \author Josh Lurz
+* \warning markets are not necesarilly set when completeInit is called
+*/
+void AgSector::completeInit( const string& regionName ) {
+
+    // Set markets for this sector
+    setMarket( regionName );
+}
+
 //! Set the AgLU gdps from the regional gdp data.
 void AgSector::setGNP( const vector<double>& gdpsToFortran ) {
    #if(__HAVE_FORTRAN__)

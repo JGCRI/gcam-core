@@ -28,6 +28,7 @@
 #include "containers/include/gdp.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
+#include "marketplace/include/market_info.h"
 
 using namespace std;
 using namespace xercesc;
@@ -36,6 +37,7 @@ extern Scenario* scenario;
 // static initialize.
 const string technology::XML_NAME1D = "technology";
 const string technology::XML_NAME2D = "period";
+const double LOGIT_EXP_DEFAULT = -6;
 
 // Technology class method definition
 
@@ -137,7 +139,7 @@ void technology::initElementalMembers(){
     tax = 0;
     fMultiplier = 1;
     pMultiplier = 1;
-    lexp = -6; 
+    lexp = LOGIT_EXP_DEFAULT; 
     share = 0;
     input = 0;
     output = 0;
@@ -272,7 +274,13 @@ bool technology::XMLDerivedClassParse( const string nodeName, const DOMNode* cur
     return false;
 }
 
-//! Complete initialization
+/*! \brief Complete the initialization
+*
+* This routine is only called once per model run
+*
+* \author Josh Lurz
+* \warning markets are not necesarilly set when completeInit is called
+*/
 void technology::completeInit() {
     const string CO2_NAME = "CO2";
     if( !util::hasValue( ghgNameMap, CO2_NAME ) ) {
@@ -285,6 +293,7 @@ void technology::completeInit() {
 	// calculate effective efficiency
 	eff = effBase * (1 - effPenalty); // reduces efficiency by penalty
 	necost = neCostBase * (1 + neCostPenalty); // increases cost by penalty
+
 }
 
 //! write object to xml output stream
@@ -311,7 +320,7 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( tax, "tax", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, -6.0 );
+    XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, LOGIT_EXP_DEFAULT );
     XMLWriteElementCheckDefault( fixedOutput, "fixedOutput", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( techchange, "techchange", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( resource, "resource", out, tabs, 0.0 );
@@ -420,7 +429,7 @@ const std::string& technology::getXMLNameStatic2D() {
 }
 
 //! Perform initializations that only need to be done once per period
-void technology::initCalc( ) {    
+void technology::initCalc( const MarketInfo* aSubsectorInfo ) {    
     if ( doCalOutput ) {
         calInputValue = calOutputValue/eff;
         doCalibration = true;
@@ -715,7 +724,7 @@ void technology::production(const string& regionName,const string& prodName,
 * \author Steve Smith
 * \param subSectorDemand total demand for this subsector
 */
-void technology::adjustForCalibration( double subSectorDemand ) {
+void technology::adjustForCalibration( double subSectorDemand, const string& regionName, const MarketInfo*, const int period ) {
 
    // total calibrated outputs for this sub-sector
    double calOutput = getCalibrationOutput( );

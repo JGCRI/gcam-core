@@ -33,7 +33,7 @@ public:
     void calcShare( const int period, const GDP* gdp ); 
     void setoutput( const double demand, const int period, const GDP* gdp );
     static const std::string& getXMLNameStatic();
-    void initCalc( const int period );
+    void initCalc( const int period, const MarketInfo* aSectorInfo );
 protected:
     std::vector<double> speed; // Speed of Mode in Miles/hour
     std::vector<double> popDenseElasticity; // Population Density Elasticity of mode
@@ -49,8 +49,8 @@ protected:
     void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;
-    const std::string& getChildXMLName() const;
-    technology* createChild() const;
+    bool isNameOfChild  ( const std::string& nodename ) const;
+    technology* createChild( const std::string& nodename ) const;
 private:
     static const std::string XML_NAME; //!< XML name of this object.
 };

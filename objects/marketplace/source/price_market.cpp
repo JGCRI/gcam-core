@@ -40,6 +40,20 @@ void PriceMarket::initPrice() {
     Market::initPrice();
 }
 
+/*! \brief Set the price of the market based on the type.
+*
+* This method is used throughout the model to set a new price into a market. 
+* But this is not used by the solution mechanism.
+* For the price markets the price set directly to this market (priceIn) is the 
+* actual price calculated by a supply sector. This is set to the demand side.
+* The supply side is set here to equal the price variable (set directly by the solution mechanism)
+* This sets up the solution mechanism to always give a trial value for this price.
+*
+* \author Josh Lurz
+* \param priceIn The new price to set the market price to.
+* \sa setRawPrice
+* \sa setPriceToLast
+*/
 void PriceMarket::setPrice( const double priceIn ) {
     demand = priceIn;
     supply = price;

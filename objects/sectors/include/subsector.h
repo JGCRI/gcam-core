@@ -48,6 +48,7 @@ protected:
     std::string fueltype; //!< each subsector has one fueltype
     int notech; //!< number of technologies in each subsector
     int scaleYear; //!< year to scale share weights to after calibration
+    int techScaleYear; //!< year to scale technology share weights to after calibration
     double tax; //!< subsector tax or subsidy
     double basesharewt; //! subsector base year consumption share weight
     double CO2EmFactor; //! CO2 emissions factor, calculated based on fuel input and share
@@ -81,16 +82,17 @@ protected:
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const{};
     void normalizeTechShareWeights( const int period );
+    virtual void adjustTechnologyShareWeights( const int period );
     void techShareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
-    virtual const std::string& getChildXMLName() const;
-    virtual technology* createChild() const;
+    virtual bool isNameOfChild  ( const std::string& nodename ) const;
+    virtual technology* createChild( const std::string& nodename ) const;
 public:
     Subsector( const std::string regionName, const std::string sectorName );
     virtual ~Subsector();
     static double capLimitTransform( double capLimit, double orgShare ); 
     const std::string getName() const;
     void XMLParse( const xercesc::DOMNode* tempNode );
-    void completeInit();
+    virtual void completeInit();
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
@@ -98,10 +100,10 @@ public:
     virtual void calcPrice( const int period );
     double getPrice( const int period ) const;
     double getCO2EmFactor(int period) const;
-    virtual void initCalc( const int period );
+    virtual void initCalc( const int period, const MarketInfo* aSectorInfo );
     virtual void checkSubSectorCalData( const int period );
     bool getCalibrationStatus( const int period ) const;
-    void setCalibrationStatus( const int period );
+    virtual void setCalibrationStatus( const int period );
     void scaleCalibrationInput( const int period, const double scaleFactor );
     bool allOuputFixed( const int period ) const;
     double getFixedShare( const int period ) const;
@@ -136,7 +138,7 @@ public:
     void emission( const int period );
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period )  const;
-    double getOutput( const int period );
+    virtual double getOutput( const int period );
     double getTotalCarbonTaxPaid( const int period ) const;
     std::map<std::string, double> getfuelcons( const int period ) const; 
     void clearfuelcons( const int period );
@@ -145,7 +147,7 @@ public:
     std::map<std::string, double> getemindmap( const int period ) const;
     void adjShares( const double demand, const double shareRatio, const double totalfixedOutput, const int period );
     void updateSummary( const int period );
-    void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
+    virtual void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
     void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
     int getNumberAvailTechs( const int period ) const;
     void tabulateFixedDemands( const int period );

@@ -67,7 +67,7 @@ DemandSector::~DemandSector() {
 bool DemandSector::XMLDerivedClassParseAttr( const DOMNode* node ) {
     // get the perCapitaBased attribute for the demand sector
     perCapitaBased = XMLHelper<bool>::getAttr( node, "perCapitaBased" );
-    return true;
+    return false;
 }
 
 /*! \brief Parses any attributes specific to derived classes
@@ -221,6 +221,15 @@ const std::string& DemandSector::getXMLName() const {
 */
 const std::string& DemandSector::getXMLNameStatic() {
 	return XML_NAME;
+}
+
+/*! \brief Create new market for this Sector
+*
+* Normal demand sectors do not set any markets so this is blank.
+*
+* \author Steve Smith
+*/
+void DemandSector::setMarket() {	
 }
 
 //! Calibrate sector output
@@ -403,7 +412,6 @@ void DemandSector::csvOutputFile() const {
 /*! \brief Sets output of Sector, used for demand sectors
 *
 * For demand sectors, the output of the Sector, which is the total service demand, is set directly, instead of summing up from subsectors.
-* \note If its for demand sectors why is it in Sector? -Josh
 * \author Sonny Kim
 * \param demand Total service demand
 * \param period Model period

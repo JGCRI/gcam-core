@@ -119,7 +119,13 @@ void SubResource::XMLParse( const DOMNode* node ){
     
 }
 
-//! Complete initialization.
+/*! \brief Complete the initialization
+*
+* This routine is only called once per model run
+*
+* \author Josh Lurz
+* \warning markets are not necesarilly set when completeInit is called
+*/
 void SubResource::completeInit() {
     nograde = static_cast<int>( grade.size() ); // number of grades for each subresource   
     initializeResource(); // Do any initializations needed for this resource

@@ -26,7 +26,6 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
-#include "marketplace/include/imarket_type.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/summary.h"
 #include "emissions/include/indirect_emiss_coef.h"
@@ -151,8 +150,10 @@ void Sector::XMLParse( const DOMNode* node ){
 
 /*! \brief Complete the initialization
 *
+* This routine is only called once per model run
+*
 * \author Josh Lurz
-* \todo josh to add appropriate detailed comment here
+* \warning markets are not necesarilly set when completeInit is called
 */
 void Sector::completeInit() {
     // Allocate the sector info.
@@ -172,6 +173,9 @@ void Sector::completeInit() {
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
         ( *subSecIter )->completeInit();
     }
+    
+    // Set markets for this sector
+    setMarket();
 }
 
 /*! \brief Write object to xml output stream
@@ -297,14 +301,14 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \author Steve Smith
 * \param period Model period
 */
-void Sector::initCalc( const int period ) {
+void Sector::initCalc( const int period, const MarketInfo* aRegionInfo ) {
 
     // normalizeShareWeights must be called before subsector initializations
     normalizeShareWeights( period );
     
     // do any sub-Sector initializations
     for ( int i=0; i<nosubsec; i++ ) {
-        subsec[ i ]->initCalc( period );
+        subsec[ i ]->initCalc( period, mSectorInfo.get() );
     }
 
     // set flag if there are any fixed supplies
@@ -381,19 +385,17 @@ void Sector::normalizeShareWeights( const int period ) {
                 }
             }
 
-            if ( shareWeightTotal == 0 ) {
+            if ( shareWeightTotal < util::getTinyNumber() ) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::ERROR );
                 mainLog << "ERROR: in sector " << name << " Shareweights sum to zero." << endl;
             } else {
                 for ( int i=0; i<nosubsec; i++ ) {
-                    // sjsTEMP. Turn this on once data is updated
-                  //  subsec[ i ]->scaleShareWeight( numberNonzeroSubSectors / shareWeightTotal, period - 1 );
+                    subsec[ i ]->scaleShareWeight( numberNonzeroSubSectors / shareWeightTotal, period - 1 );
                 }
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::DEBUG );
-                    // sjsTEMP. Turn this on once data is updated
-              //  mainLog << "Shareweights normalized for sector " << name << " in region " << regionName << endl;
+                mainLog << "Shareweights normalized for sector " << name << " in region " << regionName << endl;
             }
         }
     }
@@ -428,9 +430,11 @@ bool Sector::isAllCalibrated( const int period, double calAccuracy, const bool p
          if ( ( calDiff > calAccuracy ) || ( ( abs(diffFraction) > calAccuracy ) && outputsAllFixed( period ) ) ) {
             checkCalResult = false;
             if ( printWarnings ) {
-               cerr << "WARNING: " << name << " " << getXMLName() << " in " << regionName << " != cal+fixed vals (";
-               cerr << totalFixed << " )" << " in yr " <<  scenario->getModeltime()->getper_to_yr( period );
-               cerr << " by: " << calDiff << " (" << calDiff*100/calOutputs << "%) " << endl;
+               ILogger& mainLog = ILogger::getLogger( "main_log" );
+               mainLog.setLevel( ILogger::WARNING );
+               mainLog << "WARNING: " << name << " " << " in " << regionName << " != cal+fixed vals (";
+               mainLog << totalFixed << " )" << " in yr " <<  scenario->getModeltime()->getper_to_yr( period );
+               mainLog << " by: " << calDiff << " (" << calDiff*100/calOutputs << "%) " << endl;
                if ( PRINT_DETAILS) {
                   cout << "   fixedSupplies: " << "  "; 
                   for ( int i=0; i<nosubsec; i++ ) {
@@ -449,25 +453,6 @@ bool Sector::isAllCalibrated( const int period, double calAccuracy, const bool p
       }
    }
    return checkCalResult;
-}
-
-/*! \brief Create new market for this Sector
-*
-* Sets up the appropriate market within the marketplace for this Sector. Note that the type of market is NORMAL -- 
-* signifying that this market is a normal market that is solved (if necessary).
-*
-* \author Sonny Kim, Josh Lurz, Steve Smith
-*/
-void Sector::setMarket() {	
-    Marketplace* marketplace = scenario->getMarketplace();
-    // name is Sector name (name of good supplied or demanded)
-    // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
-    if( marketplace->createMarket( regionName, market, name, IMarketType::NORMAL ) ) {
-        marketplace->setPriceVector( name, regionName, sectorprice );
-    }
-	/* The above initilaizes prices with any values that are read-in. 
-    This only affects the base period, which is not currently solved.
-    Any prices not initialized by read-in, are set by initXMLPrices(). */
 }
 
 /*!

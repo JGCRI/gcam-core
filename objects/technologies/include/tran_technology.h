@@ -17,6 +17,7 @@
 #include "technologies/include/technology.h"
 
 class GDP;
+class MarketInfo;
 
 /*! 
 * \ingroup Objects
@@ -35,7 +36,7 @@ public:
     void production( const std::string& regionName, const std::string& prodName,double dmd, const GDP* gdp, const int per);    
     double getIntensity(const int per) const;
     double getCalibrationOutput() const;
-    void initCalc( );
+    void initCalc( const MarketInfo* aSubsectorInfo );
 
 protected:
     double techChangeCumm; //!< cummulative technical change

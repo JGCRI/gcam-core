@@ -101,7 +101,12 @@ void World::XMLParse( const DOMNode* node ){
     }
 }
 
-//! Complete the initialization.
+/*! \brief Complete the initialization
+*
+* This routine is only called once per model run
+*
+* \author Josh Lurz
+*/
 void World::completeInit() {
 
     // Finish initializing all the regions.
@@ -213,19 +218,22 @@ const std::string& World::getXMLNameStatic() {
 	return XML_NAME;
 }
 
-//! initialize anything that won't change during the calcuation
+//! initialize anything that won't change during the calculation
 /*! Examples: share weight scaling due to previous calibration, 
 * cumulative technology change, etc.
 */
 void World::initCalc( const int period ) {
+    
+    // cal consistency check needs to be before initCalc so calInput values have already been scaled
+    // if necessary
+    checkCalConsistancy( period );
+
     // Reset the calc counter.
     calcCounter->startNewPeriod();
     for( RegionIterator i = regions.begin(); i != regions.end(); i++ ){
         ( *i )->initCalc( period );
         ( *i )->checkData( period );
     }
-    
-    checkCalConsistancy( period );
 }
 
 /*! \brief Assure that calibrated inputs and outputs are consistant.

@@ -29,6 +29,8 @@ class Tabs;
 class AgSector {
 
 private:
+    void setMarket( const std::string& regname );
+
     static int regionCount; //!< Tracks how many AgSectors have been instantiated.
     static const int numAgMarkets; //!<Number of internally solved ag markets.
     static bool init; //!< Whether the static data has been initialized.
@@ -57,12 +59,12 @@ public:
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 	const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
+    void completeInit( const std::string& regionName );
     void setGNP( const std::vector<double>& gnpsIn );
     void setPop( const std::vector<double>& popsIn );
     void setBiomassPrice( const double bioPriceIn );
     void carbLand( const int period, const std::string& regionName );
     void runModel( const int period, const std::string& regionName );
-    void setMarket( const std::string& regname );
     void initMarketPrices( const std::string& regionName, const std::vector<double>& pricesIn );
     static void internalOutput();
     static void transposeArray( double array[][14], int dimension1, int dimension2 );

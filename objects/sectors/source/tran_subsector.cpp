@@ -92,12 +92,12 @@ bool TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
 }
 
 //! Virtual function which specifies the XML name of the children of this class, the type of technology.
-const string& TranSubsector::getChildXMLName() const {
-    return TranTechnology::getXMLNameStatic1D();
+bool TranSubsector::isNameOfChild  ( const string& nodename ) const {
+    return nodename == TranTechnology::getXMLNameStatic1D();
 }
 
 //! Virtual function to generate a child element or construct the appropriate technology.
-technology* TranSubsector::createChild() const {
+technology* TranSubsector::createChild( const std::string& nodename ) const {
     return new TranTechnology();
 }
 
@@ -155,7 +155,7 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
 * \author Steve Smith
 * \param period Model period
 */
-void TranSubsector::initCalc( const int period ) {
+void TranSubsector::initCalc( const int period, const MarketInfo* aSectorInfo ) {
 
     // Check if illegal values have been read in
     if ( speed[period] == 0 ) {
@@ -165,7 +165,7 @@ void TranSubsector::initCalc( const int period ) {
         mainLog << "ERROR: speed was zero in subsector: " << name << " in region " << regionName << "." << endl;
     }
 
-    Subsector::initCalc( period );
+    Subsector::initCalc( period, aSectorInfo );
     
 }
 

@@ -71,11 +71,12 @@ protected:
     virtual void calcPrice( const int period );
     void production( const int period );
     void adjustForFixedSupply( const double marketDemand, const int period );
-    void setoutput( const double demand, const int period ); 
+    void setoutput( const double demand, const int period, const GDP* gdp ); 
     void adjSharesCapLimit( const int period ); 
     void checkShareSum( const int period ) const;
     double getFixedSupply( const int period ) const; 
     bool isCapacityLimitsInSector( const int period ) const;
+    virtual void setMarket() = 0;
     virtual void printStyle( std::ostream& outStream ) const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
@@ -92,12 +93,10 @@ public:
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void setMarket();
-    virtual void initCalc( const int period );
+    virtual void initCalc( const int period, const MarketInfo* aRegionInfo );
     virtual void calibrateSector( const int period ); 
     virtual void checkSectorCalData( const int period );
     void setFinalSupply( const int period );
-    void setoutput( const double demand, const int period, const GDP* gdp ); 
     void adjustForFixedOutput( const double marketDemand, const int period );
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void supply( const int period, const GDP* gdp );

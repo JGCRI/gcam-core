@@ -24,6 +24,9 @@
 #include "sectors/include/supply_sector.h"
 #include "sectors/include/demand_sector.h"
 #include "sectors/include/tran_sector.h"
+#include "sectors/include/ag_sector.h"
+#include "sectors/include/building_dmd_sector.h"
+#include "sectors/include/building_supply_sector.h"
 #include "resources/include/resource.h"
 #include "sectors/include/ag_sector.h"
 #include "demographics/include/population.h"
@@ -34,6 +37,7 @@
 #include "containers/include/world.h"
 #include "util/base/include/model_time.h" 
 #include "marketplace/include/marketplace.h"
+#include "marketplace/include/market_info.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
@@ -61,6 +65,9 @@ Region::Region() {
     summary.resize( maxper ); // summary object for reporting
     calibrationGDPs.resize( maxper ); // GDPs for calibration
     GDPcalPerCapita.resize( maxper ); // GDP per capita for calibration. This is converted to an absolute GDP using population.
+
+    heatingDegreeDays = 0;
+    coolingDegreeDays = 0;
 }
 
 //! Default destructor destroys sector, demsector, Resource, agSector, and population objects.
@@ -139,6 +146,12 @@ void Region::XMLParse( const DOMNode* node ){
             }
             gdp->XMLParse( curr );
         }
+        else if( nodeName == "coolingDegreeDays" ){
+            coolingDegreeDays = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "heatingDegreeDays" ) {
+            heatingDegreeDays = XMLHelper<double>::getValue( curr );
+        }
 		else if( nodeName == DepletableResource::getXMLNameStatic() ){
             parseContainerNode( curr, resources, resourceNameMap, new DepletableResource() );
         }
@@ -151,8 +164,14 @@ void Region::XMLParse( const DOMNode* node ){
 		else if( nodeName == SupplySector::getXMLNameStatic() ){
             parseContainerNode( curr, supplySector, supplySectorNameMap, new SupplySector( name ) );
         }
+		else if( nodeName == BuildingSupplySector::getXMLNameStatic() ){
+            parseContainerNode( curr, supplySector, supplySectorNameMap, new BuildingSupplySector( name ) );
+        }
 		else if( nodeName == DemandSector::getXMLNameStatic() ){
             parseContainerNode( curr, demandSector, demandSectorNameMap, new DemandSector( name ) );
+        }
+		else if( nodeName == BuildingDemandSector::getXMLNameStatic() ){
+            parseContainerNode( curr, demandSector, demandSectorNameMap, new BuildingDemandSector( name ) );
         }
         // transportation sector is contained in demandSector
 		else if( nodeName == TranSector::getXMLNameStatic() ){
@@ -234,6 +253,8 @@ void Region::XMLParse( const DOMNode* node ){
 * \todo I think since there is one indirect ghg object for each sector, it might be better in sector. This may require deriving supply sector.
 */
 void Region::completeInit() {
+    mRegionInfo.reset( new MarketInfo() );
+
     // Initialize the GDP
     if( gdp.get() ){
         gdp->initData( population.get() );
@@ -256,7 +277,6 @@ void Region::completeInit() {
     
     for( SupplySectorIterator supplySectorIter = supplySector.begin(); supplySectorIter != supplySector.end(); ++supplySectorIter ) {
         ( *supplySectorIter )->completeInit();
-        (*supplySectorIter)->setMarket();
         Emcoef_ind temp( ( *supplySectorIter )->getName() );
         emcoefInd.push_back( temp );
     }
@@ -267,11 +287,10 @@ void Region::completeInit() {
         if( population.get() ){
             agSector->setPop( population->getTotalPopVec() );
         }
-        agSector->setMarket( name );
+        agSector->completeInit( name );
     }
     for( ResourceIterator resourceIter = resources.begin(); resourceIter != resources.end(); ++resourceIter ) {
-        (*resourceIter)->completeInit();
-        (*resourceIter)->setMarket( name );
+        (*resourceIter)->completeInit( name );
     }
 
     for( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
@@ -508,6 +527,10 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
     for( map<string,double>::const_iterator coefPriIter = carbonTaxFuelCoef.begin(); coefPriIter != carbonTaxFuelCoef.end(); coefPriIter++ ) {
         XMLWriteElement( coefPriIter->second, "CarbonTaxFuelCoef", out, tabs, 0, coefPriIter->first );
     }
+
+    XMLWriteElementCheckDefault( heatingDegreeDays, "heatingDegreeDays", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( coolingDegreeDays, "coolingDegreeDays", out, tabs, 0.0 );
+
     // write the xml for the class members.
     // write out the single population object.
 	if( population.get() ){ // Check if population object exists
@@ -591,6 +614,8 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write out basic datamembers
+    XMLWriteElement( heatingDegreeDays, "heatingDegreeDays", out, tabs );
+    XMLWriteElement( coolingDegreeDays, "coolingDegreeDays", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( mGhgPolicies.size() ), "noGhg", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( resources.size() ), "numResources", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( supplySector.size() ), "noSSec", out, tabs );
@@ -1072,11 +1097,15 @@ void Region::checkData( const int period ) {
 */
 void Region::initCalc( const int period ) 
 {
+
+    mRegionInfo->addItem( "heatingDegreeDays", heatingDegreeDays );
+    mRegionInfo->addItem( "coolingDegreeDays", coolingDegreeDays );
+
     for( SupplySectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
-        (*currSector)->initCalc( period );
+        (*currSector)->initCalc( period, mRegionInfo.get() );
     }
     for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
-        (*currSector)->initCalc( period ); 
+        (*currSector)->initCalc( period, mRegionInfo.get() ); 
     }
 
     // Make sure TFE is same as calibrated values

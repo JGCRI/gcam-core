@@ -38,8 +38,7 @@ public:
     void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream &out, Tabs* tabs ) const;
     std::string getName() const; 
-    void completeInit();
-    void setMarket( const std::string& regionName );
+    void completeInit( const std::string& regionName );
     double getPrice(int per);
     void calcSupply( const std::string& regionName, const GDP* gdp, const int period );
     double getAnnualProd(int per);
@@ -61,6 +60,7 @@ protected:
     void annualsupply( int per, const GDP* gdp, double price, double prev_price );
     void cumulsupply( double prc, int per );
     void printStyle( std::ostream& outStream ) const;
+    void setMarket( const std::string& regionName );
 };
 
 /*! 

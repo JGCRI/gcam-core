@@ -26,6 +26,7 @@ public:
 	explicit SupplySector( const std::string regionNameIn );
 	virtual ~SupplySector();
     static const std::string& getXMLNameStatic();
+    virtual void setMarket();
 protected:
     virtual bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 

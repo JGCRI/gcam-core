@@ -64,6 +64,7 @@ protected:
     std::vector<double> pElasticity; //!< price elasticity.
     std::vector<double> aeei; //!< autonomous end-use energy intensity parameter
     std::vector<double> techChangeCumm; //!< cummulative technical change on end-use service
+    virtual void setMarket();
     virtual void printStyle( std::ostream& outStream ) const;
     void MCoutput_subsec() const;
     virtual bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 

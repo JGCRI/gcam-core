@@ -25,6 +25,7 @@
 #include "marketplace/include/calibration_market.h"
 #include "marketplace/include/ghg_market.h"
 #include "marketplace/include/normal_market.h"
+#include "marketplace/include/trial_value_market.h"
 
 using namespace std;
 
@@ -105,6 +106,9 @@ auto_ptr<Market> Market::createMarket( const IMarketType::Type aType, const std:
     }
     else if ( aType == IMarketType::DEMAND ) {
         rNewMarket.reset( new DemandMarket( aGoodName, aRegionName, aPeriod ) );
+    }
+    else if ( aType == IMarketType::TRIAL_VALUE ) {
+        rNewMarket.reset( new TrialValueMarket( aGoodName, aRegionName, aPeriod ) );
     }
     else {
         cerr << "Invalid market type: " << aType << endl;
@@ -216,6 +220,7 @@ void Market::initPrice() {
 * Note that all the functions with "Raw" in the name have this behavior.
 *
 * \warning This function is not virtual.
+* \author Josh Lurz
 * \param priceIn The value to which to set the price member variable.
 * \sa setPrice
 * \sa setPriceToLast
@@ -227,6 +232,7 @@ void Market::setRawPrice( const double priceIn ) {
 /*! \brief Set the price of the market based on the type.
 *
 * This method is used throughout the model to set a new price into a market. 
+* But this is not used by the solution mechanism.
 *
 * \param priceIn The new price to set the market price to.
 * \sa setRawPrice

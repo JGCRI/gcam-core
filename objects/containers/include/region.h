@@ -31,6 +31,7 @@ class ILogger;
 class GDP;
 class Curve;
 class Tabs;
+class MarketInfo;
 
 /*! 
 * \ingroup CIAM
@@ -97,6 +98,7 @@ private:
     std::auto_ptr<Population> population; //!< Population object
     std::auto_ptr<GDP> gdp; //!< GDP object.
     std::auto_ptr<AgSector> agSector; //!< Agricultural sector
+    std::auto_ptr<MarketInfo> mRegionInfo; //!< The region's information store.
     std::vector<Resource*> resources; //!< vector of pointers toresource objects
     std::vector<SupplySector*> supplySector; //!< vector of pointers to supply sector objects
     std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects
@@ -116,6 +118,8 @@ private:
     std::vector<Emcoef_ind> emcoefInd; //!< vector of objects containing indirect emissions coefficients
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
     std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
+    double heatingDegreeDays; //!< heatingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
+    double coolingDegreeDays; //!< coolingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
     bool anySupplyFixedOutput( const int sectorNumber ) const;
     void checkSectorCalData( const int period );
     void initializeCalValues( const int period );

@@ -109,13 +109,22 @@ void Resource::XMLParse( const DOMNode* node ){
     }
 }
 
-//! Complete the initialization.
-void Resource::completeInit() {
+/*! \brief Complete the initialization
+*
+* This routine is only called once per model run
+*
+* \author Josh Lurz
+* \warning markets are not necesarilly set when completeInit is called
+*/
+void Resource::completeInit( const string& regionName ) {
     nosubrsrc = static_cast<int>( subResource.size() );
 
     for( vector<SubResource*>::iterator subResIter = subResource.begin(); subResIter != subResource.end(); subResIter++ ) {
         ( *subResIter )->completeInit();
     }
+
+    // Set markets for this sector
+    setMarket( regionName );
 }
 
 //! Write datamembers to datastream in XML format for replicating input file.
