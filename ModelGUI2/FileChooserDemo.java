@@ -625,6 +625,7 @@ public class FileChooserDemo extends JFrame
 	  Vector rows = new Vector();
 	  HashMap filterMaps; 
 	  HashMap tempMap;
+	  Vector path;
 	  if (tableModel == null) {
 		  filterMaps = new HashMap();
 	  } else {
@@ -632,10 +633,12 @@ public class FileChooserDemo extends JFrame
 	  }
 	  while ((tempNode = res.iterateNext()) != null) {
 		  if (cols.isEmpty()) {
-			  cols = recBuildParentList(tempNode, cols, true);
+			  cols = recBuildParentList(tempNode, cols, null);
 		  }
+		  path = new Vector();
 		  tempVector = new Vector();
-		  tempVector = recBuildParentList(tempNode, tempVector, false);
+		  tempVector = recBuildParentList(tempNode, tempVector, path);
+		  tempVector.addElement(new TreePath(path));
 		  for (int i = 0; i < tempVector.size() -1; i++) {
 	                  if (filterMaps.containsKey(cols.get(i))) {
 	                          tempMap = (HashMap)filterMaps.get(cols.get(i));
@@ -668,12 +671,12 @@ public class FileChooserDemo extends JFrame
 	  menuTableFilter.setEnabled(true);
   }
 
-  private Vector recBuildParentList(Node currNode, Vector currList, boolean headers) {
+  private Vector recBuildParentList(Node currNode, Vector currList, Vector path) {
 	  if (currNode.getParentNode() == null) {
 		  return currList;
 	  }
-	  currList = recBuildParentList(currNode.getParentNode(),currList, headers);
-	  if (headers) {
+	  currList = recBuildParentList(currNode.getParentNode(),currList, path);
+	  if (path == null) {
 		  if (currNode.hasAttributes()) {
 			  currList.addElement(currNode.getNodeName() +" "+getOneAttrVal(currNode).substring(0,getOneAttrVal(currNode).indexOf("=")));
 		  }
@@ -681,6 +684,8 @@ public class FileChooserDemo extends JFrame
 		  	currList.addElement(currNode.getNodeName());
 		  }
 	  } else {
+		  //path.addElement(new jtree.getModel().DOMNodeAdapter (currNode));
+		  path.addElement(((DOMmodel)jtree.getModel()).getAdapterNode(currNode));
 		  if (currNode.hasAttributes()) {
 			  currList.addElement(getOneAttrVal(currNode).substring(getOneAttrVal(currNode).indexOf('=')+1));
 		  }

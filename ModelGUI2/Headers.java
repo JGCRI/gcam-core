@@ -108,7 +108,6 @@ public class Headers {
                			dataMap.put( parent + "\\" + child, new Integer( i ) );
 			}
 			else if (child.startsWith( "{")) { //specify atrr no data
-				System.out.println("Parent is:"+parent);
 				stA = new StringTokenizer( child, "=", false);
 				firstArg = stA.nextToken();
 				firstArg = firstArg.substring( 1, firstArg.length());

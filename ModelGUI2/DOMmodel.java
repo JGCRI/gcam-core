@@ -109,6 +109,11 @@ public class DOMmodel implements TreeModel {
   	//identified by path to newValue. If newValue signifies a truly new value
   	//the model should post a treeNodesChanged event.
     }
+
+    public DOMNodeAdapter getAdapterNode( Node e ) {
+	    return new DOMNodeAdapter(e);
+    }
+
     public class DOMNodeAdapter {
 		Node n;
 		public DOMNodeAdapter( Node e) {
