@@ -130,8 +130,13 @@ private:
     std::vector<Emcoef_ind> emcoefInd; //!< vector of objects containing indirect emissions coefficients
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
     std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
+    std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
+    typedef std::vector<SupplySector*>::iterator SectorIterator;
+    typedef std::vector<SupplySector*>::const_iterator ConstSectorIterator;
     void clear();
-
+    bool reorderSectors( const std::vector<std::string>& orderList );
+    bool sortSectorsByDependency();
+    bool isRegionOrderedCorrectly() const;
 };
 
 #endif // _REGION_H_

@@ -74,8 +74,6 @@ Region::~Region() {
 
 //! Clear member variables and initialize elemental members.
 void Region::clear(){
-    
-    // Free memory.
     for ( vector<SupplySector*>::iterator secIter = supplySector.begin(); secIter != supplySector.end(); secIter++ ) {
         delete *secIter;
     }
@@ -223,6 +221,26 @@ void Region::XMLParse( const DOMNode* node ){
 
             }
         }
+         // A list representing the correct order in which to calculate the sectors. 
+        else if( nodeName == "SectorOrderList" ){
+            // get all child nodes.
+            nodeListChild = curr->getChildNodes();
+            // loop through the child nodes.
+            for( unsigned int j = 0; j < nodeListChild->getLength(); j++ ){
+                currChild = nodeListChild->item( j );
+                nodeNameChild = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+
+                if( nodeNameChild == "#text" ) {
+                    continue;
+                }
+                else if( nodeNameChild == "SectorName" ){
+                    sectorOrderList.push_back( XMLHelper<string>::getAttrString( currChild, "name" ) );
+                }
+                else {
+                    cout << "Unrecognized text string: " << nodeNameChild << " found while parsing region->SectorOrderList." << endl;
+                }
+            }
+        }
         else {
             cout << "Unrecognized text string: " << nodeName << " found while parsing region." << endl;
         }
@@ -260,17 +278,7 @@ void Region::completeInit() {
         agSector->setGNP( calcFutureGDP() );
         agSector->setPop( population->getTotalPopVec() );
     }
-    // create markets and set market indeces
-    // Resource markets, pass region name
-    for( i = 0; i < numResources; i++ ){
-        resources[ i ]->setMarket( name );
-    }
-
-    // ghg markets, pass region name
-    for( i = 0; i < noGhg; i++ ){
-        ghgMarket[i]->setMarket( name );
-    }
-
+    
     // supply sector markets, pass region name
     for( i = 0;i < noSSec; i++ ){
         supplySector[ i ]->setMarket();
@@ -282,30 +290,191 @@ void Region::completeInit() {
     }
 
     // Complete the initializations.
-    for( vector<Resource*>::iterator resourceIter = resources.begin(); resourceIter != resources.end(); resourceIter++ ) {
+    for( vector<Resource*>::iterator resourceIter = resources.begin(); resourceIter != resources.end(); ++resourceIter ) {
         ( *resourceIter )->completeInit();
     }
-
-    for( vector<SupplySector*>::iterator supplySectorIter = supplySector.begin(); supplySectorIter != supplySector.end(); supplySectorIter++ ) {
+    for( SectorIterator supplySectorIter = supplySector.begin(); supplySectorIter != supplySector.end(); ++supplySectorIter ) {
         ( *supplySectorIter )->completeInit();
-
     }
 
-    for( vector<DemandSector*>::iterator demandSectorIter = demandSector.begin(); demandSectorIter != demandSector.end(); demandSectorIter++ ) {
+    for( vector<DemandSector*>::iterator demandSectorIter = demandSector.begin(); demandSectorIter != demandSector.end(); ++demandSectorIter ) {
         ( *demandSectorIter )->completeInit();
+    }
+
+    // create markets and set market indeces
+    // Resource markets, pass region name
+    for( i = 0; i < numResources; i++ ){
+        resources[ i ]->setMarket( name );
+    }
+
+    // ghg markets, pass region name
+    for( i = 0; i < noGhg; i++ ){
+        ghgMarket[i]->setMarket( name );
     }
 
     // Find simuls.
     updateSummary( 0 );	// Dummy call to final supply to setup fuel map
     findSimul( 0 );
 
-    // Setup each sector for sorting. 
-    for( vector<SupplySector*>::iterator supplySectorSortIter = supplySector.begin(); supplySectorSortIter != supplySector.end(); supplySectorSortIter++ ){
-        ( *supplySectorSortIter )->setupForSort( this );
+    // Set sector ordering via read-in list (sectorOrderList).
+    if( !sectorOrderList.empty() ){
+        reorderSectors( sectorOrderList );
+    }
+    else { // Otherwise use the built-in sort routine.
+        // Setup each sector for sorting. 
+        for( SectorIterator iter = supplySector.begin(); iter!= supplySector.end(); ++iter ){
+            (*iter)->setupForSort( this );
+        }
+        sortSectorsByDependency();
+    }
+}
+
+/*! \brief Reorder the sectors based on a read in list of sector names. 
+* \details This function is used to reorder a list of sectors based on a user-supplied
+* ordering. In the partial-equilibrium model, the ordering of the supply sectors is critical
+* to the correct solving of the model. This method allows the user to order the list of 
+* sectors in a specific way. This function handles errors as follows: 
+* <ul><li>If a read-in sector is not specified in the list, the function will issue 
+* a warning and remove the sector. </li>
+* <li>If a sector name in the ordering list is not an existing sector in the model, 
+* a warning will be issued and the sector will be skipped. </li></ul>
+* \param orderList A list of sector names in the order in which the sectors should be put. 
+* \return Whether the reordering was completed without any errors. 
+*/
+bool Region::reorderSectors( const vector<string>& orderList ){
+    bool success = true;
+    // Create temporary copy of the sectors and the sector name map.
+    vector<SupplySector*> originalOrder = supplySector;
+    map<string,int> originalNameMap = supplySectorNameMap;
+    
+    // Clear the list of sectors and sectorNames. 
+    supplySector.clear();
+    supplySectorNameMap.clear();
+
+    // Loop through the sector order vector. 
+    typedef vector<string>::const_iterator NameIterator;
+    typedef map<string,int>::iterator NameMapIterator;
+
+    for( NameIterator currSectorName = orderList.begin(); currSectorName != orderList.end(); ++currSectorName ){
+        NameMapIterator origSectorPosition = originalNameMap.find( *currSectorName );
+
+        // Check if the sector name in the sector orderling list exists currently.
+        if( origSectorPosition != originalNameMap.end() ){
+            // Assign the sector.
+            supplySector.push_back( originalOrder[ origSectorPosition->second ] );
+            supplySectorNameMap[ *currSectorName ] = static_cast<int>( supplySector.size() - 1 );
+
+            // Remove the original sector mapping. This will allow us to clean up sectors that were 
+            // not assigned a new ordering. This also is more efficient as there are less entries to search.
+            originalNameMap.erase( origSectorPosition );
+        }
+        else {
+            success = false;
+            cout << "Error: " << *currSectorName << " is not the name of an existing sector. " << endl;
+            cout << "It will not be included in the sector ordering." << endl;
+        } // end else
+    } // end for.
+
+    // Check if there are any unassigned sectors and remove them.
+    for( NameMapIterator currSecName = originalNameMap.begin(); currSecName != originalNameMap.end(); ++currSecName ){
+        success = false;
+        cout << "Error: " << currSecName->first << " was not assigned a position in the explicit sector ordering list." << endl;
+        cout << "This sector will be removed from the model." << endl;
+        // This sector is not in the new list, so free its memory. 
+        delete originalOrder[ currSecName->second ];
+    }
+    return success;
+}
+
+/*! \brief Sort the sectors based on their dependencies defined as sectors that have output
+* which the current sector requires as input. 
+* \details This function is used to reorder the sectors dynamically based on their 
+* input dependencies. Simultinaties are ignored as the ordering is already resolved.
+* In the partial-equilibrium model, the ordering of the supply sectors is critical
+* to the correct solving of the model.
+* \pre setupForSort() must have been called on all sectors so that the comparison operator
+* can work.
+* \return Whether the sorting was completed without any errors.
+* \todo Currently this routine may be able to go into an infinite loop for certain unsortable sector orderings.
+* It would be possible to design a check which searched for input loops that would cause this. 
+*/
+bool Region::sortSectorsByDependency() {
+    Sector::DependencyOrdering orderingOperator;
+    bool success = true;
+
+    // Loop through each position in the vector except the last.
+    for( SectorIterator outerPosition = supplySector.begin(); outerPosition != supplySector.end() - 1; ++outerPosition ){
+        // Compare this position with every other. 
+        for( SectorIterator innerPosition = outerPosition + 1; innerPosition != supplySector.end(); ++innerPosition ){
+            // Check if the outer position sector depends on the inner position sector, and so should 
+            // be before the outerposition sector.
+            if( orderingOperator( *innerPosition, *outerPosition ) ){
+                // Create a temporary copy of the pointer to the sector which will be moved.
+                SupplySector* sectorToMove = *innerPosition;
+
+                // Remove the vector spot for the innerPosition
+                supplySector.erase( innerPosition );
+
+                // Add the value that was at the innerPosition iterator before the outerPosition in the vector.
+                // Reset outerPosition to this value.
+                outerPosition = supplySector.insert( outerPosition, sectorToMove );
+
+                // Set the innerposition iterator, skipping over the sector we just 
+                // moved in front of. This might be able to be optimized by 
+                // moving the iterator further. 
+                innerPosition = outerPosition + 2;
+            }
+        }
     }
 
-    // Now sort the sectors by dependency.
-   //std::sort( supplySector.begin(), supplySector.end(), Sector::DependencyOrdering() );
+    // Perform an extra looping over all sectors to check that all dependency ordering is correct.
+    if( Configuration::getInstance()->getBool( "debugChecking", false ) ){
+        // C++ Note: This && operator ensures that if success was set to false previously in this
+        // function, that it will retain its false value. 
+        success = success && isRegionOrderedCorrectly();
+    }
+
+    // Reset the map. Could this be a function somewhere? xml_helper or util?
+    supplySectorNameMap.clear();
+    for( unsigned int i = 0; i < supplySector.size(); ++i ){
+        supplySectorNameMap[ supplySector[ i ]->getName() ] = i;
+    }
+
+    // Return success code. 
+    return success;
+}
+/*! \brief Function to check whether the sectors are properly ordered.
+* \details This function loops through the sectors comparing a sector 
+* to all sectors which follow it in the ordering. If a sector is before
+* a sector it depends on, as defined as the other sector takes the current sector
+* as an input, then the function will report an error and set the return code to false.
+* \pre setupForSort() must have been called on all sectors so that the comparison operator
+* can work.
+* \return Whether the sectors are properly ordered.
+*/
+bool Region::isRegionOrderedCorrectly() const { 
+    // Declare an instance of the sort operator. 
+    Sector::DependencyOrdering orderingOperator;
+    
+    // Boolean marking whether the sectors are correctly ordered. 
+    bool isOrderedCorrectly = true;
+
+    // Loop through all sectors except the last one as there is nothing to compare the last to.
+    for( ConstSectorIterator outerPosition = supplySector.begin(); outerPosition != supplySector.end() - 1; ++outerPosition ){
+        // Compare the sector to all other following sectors.
+        for( ConstSectorIterator innerPosition = outerPosition + 1; innerPosition != supplySector.end(); ++innerPosition ){
+            // Check if the outer position sector depends on the inner position sector, and so should 
+            // be before the outer position sector.
+            if( orderingOperator( *innerPosition, *outerPosition ) ){
+                // The sectors are ordered incorrectly. Do not early return so that more than one
+                // error statement can be printed, one for each bad ordering. 
+                isOrderedCorrectly = false;
+                // Add log out here.
+                cout << "Error: " << ( *innerPosition )->getName() << " should be before " << ( *outerPosition )->getName() << endl;
+            } // end if
+        } // end inner for loop
+    } // end outer for loop
+    return isOrderedCorrectly;
 }
 
 /*! 
@@ -363,28 +532,36 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
     // Note: The count function is an STL algorithm that counts the number of times a value occurs
     // within the a range of a container. The first two arguments to the function are the range of the 
     // container to search, the third is the value to search for.
-	if( ( count( calibrationGDPs.begin(), calibrationGDPs.end(), 0 ) != calibrationGDPs.size() ) || 
-        ( count( TFEcalb.begin(), TFEcalb.end(), 0 ) != TFEcalb.size() ) ){ // makes sure tags aren't printed if no real data
+    if( ( count( calibrationGDPs.begin(), calibrationGDPs.end(), 0 ) != calibrationGDPs.size() ) 
+        || ( count( TFEcalb.begin(), TFEcalb.end(), 0 ) != TFEcalb.size() ) ){ // makes sure tags aren't printed if no real data
 
-		// Write out regional economic data
-		XMLWriteOpeningTag( "calibrationdata", out, tabs ); 
+            // Write out regional economic data
+            XMLWriteOpeningTag( "calibrationdata", out, tabs ); 
 
-		// write out calibration GDP
-		const Modeltime* modeltime = scenario->getModeltime();
-		for( unsigned int m = 0; m < calibrationGDPs.size(); m++ ){
-			XMLWriteElementCheckDefault( calibrationGDPs[ m ], "GDPcal", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
-		}
+            // write out calibration GDP
+            const Modeltime* modeltime = scenario->getModeltime();
+            for( unsigned int m = 0; m < calibrationGDPs.size(); m++ ){
+                XMLWriteElementCheckDefault( calibrationGDPs[ m ], "GDPcal", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
+            }
 
-		// write out TFE calibration values
-		for( unsigned int m = 0; m < TFEcalb.size(); m++ ) {
-			XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
-		}
-		XMLWriteClosingTag( "calibrationdata", out, tabs );
-		// End write out regional economic data
-	} // close calibration IF
+            // write out TFE calibration values
+            for( unsigned int m = 0; m < TFEcalb.size(); m++ ) {
+                XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
+            }
+            XMLWriteClosingTag( "calibrationdata", out, tabs );
+            // End write out regional economic data
+        } // close calibration IF
+        // Write out the sector ordering.
+        if( sectorOrderList.size() > 0 ){
+            XMLWriteOpeningTag( "SectorOrderList", out, tabs );
+            for( unsigned int m = 0; m < sectorOrderList.size(); m++ ){
+                XMLWriteElement( "", "SectorName", out, tabs, 0, sectorOrderList[ m ] );
+            }
+            XMLWriteClosingTag( "SectorOrderList", out, tabs );
+        }
 
-    // finished writing xml for the class members.
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+        // finished writing xml for the class members.
+        XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Write datamembers to datastream in XML format for debugging purposes.  
@@ -449,7 +626,12 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     // Write out summary object.
     //summary[ period ].toDebugXML( period, out ); // is this vector by period?
-
+    // Write out the sector ordering.
+    XMLWriteOpeningTag( "SectorOrderList", out, tabs );
+    for( unsigned int m = 0; m < sectorOrderList.size(); m++ ){
+        XMLWriteElement( "", "SectorName", out, tabs, 0, sectorOrderList[ m ] );
+    }
+    XMLWriteClosingTag( "SectorOrderList", out, tabs );
 	// Finished writing xml for the class members.
 
 	XMLWriteClosingTag( getXMLName(), out, tabs );
@@ -590,7 +772,6 @@ void Region::finalSupply( const int period ) {
 
     // loop through all sectors once to get total output
     for ( vector<SupplySector*>::reverse_iterator ri = supplySector.rbegin(); ri != supplySector.rend(); ri++ ) {
-
         goodName = ( *ri )->getName();		
 
         // name is country/region name
@@ -645,7 +826,6 @@ const vector<double> Region::calcFutureGDP() const {
 		gdp->initialGDPcalc( period, population->getTotal( period ) );
 		gdps[ period ] = gdp->getAproxScaledGDPperCap( period );
 	}
-
 	return gdps;
 }
 
@@ -661,7 +841,7 @@ void Region::calcEndUsePrice( const int period ) {
         demandSector[ i ]->calcShare( period, gdp );		
 
         // calculate service price for each demand sector
-        // demandsector[ i ]->price( period ); Protected and moved to getPrice function
+        // demandSector[ i ]->price( period ); Protected and moved to getPrice function
 
         // calculate aggregate service price for region
         priceSer[ period ] += demandSector[ i ]->getOutput( 0 ) * demandSector[ i ]->getPrice( period );
@@ -921,7 +1101,7 @@ void Region::csvOutputFile() const {
     // write end-use sector demand results to file
     for (i=0;i<noDSec;i++) {
         demandSector[i]->csvOutputFile();	
-        demandSector[i]->subsec_outfile();	
+        demandSector[i]->subsec_outfile();
     }
 
 }
@@ -1262,15 +1442,25 @@ vector<string> Region::getSectorDependencies( const string& sectorName ) const {
     return retVector;
 }
 
-/*! \brief A function to print a csv file including all sectors and their dependencies
+/*! \brief A function to print a csv file including the final sector ordering, and all sectors and their dependencies.
 * 
 * \author Josh Lurz
 * \param logger The to which to print the dependencies. 
 */
 void Region::printSectorDependencies( Logger* logger ) const {
+    typedef vector<SupplySector*>::const_iterator ConstSectorIterator;
+
+    // Print the final ordering of the sectors within the region.
+    LOG( logger, Logger::DEBUG_LEVEL ) << " Final Sector ordering for " << name << endl;
+    for(  ConstSectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
+        LOG( logger, Logger::DEBUG_LEVEL )<< ( *currSector )->getName() << endl;
+    }
+    LOG( logger, Logger::DEBUG_LEVEL ) << endl;
+
+    // Print the sector dependencies for all sectors within this region.
     LOG( logger, Logger::DEBUG_LEVEL ) << name << ",Sector,Dependencies ->," << endl;
-    for( vector<SupplySector*>::const_iterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); sectorIter++ ) {
-        ( *sectorIter )->printSectorDependencies( logger );
+    for( ConstSectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ) {
+        ( *currSector )->printSectorDependencies( logger );
     }
     LOG( logger, Logger::DEBUG_LEVEL ) << endl;
 }
