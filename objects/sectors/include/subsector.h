@@ -73,6 +73,7 @@ protected:
     void shareWeightScale( const int pmer ); // Consistantly adjust share weights
     void sumOutput( const int period );
     void shareWeightInterp( const int beginPeriod,  const int endPeriod );
+	 bool techHasInput( const technology* thisTech, const std::string& goodName ) const;
 
 public:
     Subsector( const std::string regionName, const std::string sectorName );
@@ -113,10 +114,12 @@ public:
     void calcTechShares ( const int period );
     virtual void setoutput( const double demand, const int period, const GDP* gdp ); 
     double exogSupply( const int period );
-    void scaleFixedSupply( const double scaleRatio, const int period );
-    double getFixedSupply( const int period ) const;
-    void resetFixedSupply( const int period );
+	 bool inputsAllFixed( const int period, const std::string& goodName ) const;
+    void scalefixedOutput( const double scaleRatio, const int period );
+    double getFixedOutput( const int period ) const;
+    void resetfixedOutput( const int period );
     double getTotalCalOutputs( const int period ) const;
+    double getFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const;
     void csvOutputFile() const; 
     void MCoutputA() const; 
     void MCoutputB() const; 
@@ -131,8 +134,9 @@ public:
     std::map<std::string, double> getemission( const int period ) const;
     std::map<std::string, double> getemfuelmap( const int period ) const; 
     std::map<std::string, double> getemindmap( const int period ) const;
-    void adjShares( const double demand, const double shareRatio, const double totalFixedSupply, const int period );
+    void adjShares( const double demand, const double shareRatio, const double totalfixedOutput, const int period );
     void updateSummary( const int period );
-    void adjustForCalibration( double sectorDemand, double totalFixedSupply, double totalCalOutputs, const int period );
+    void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const int period );
+	 void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
 };
 #endif // _SUBSECTOR_H_

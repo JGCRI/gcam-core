@@ -94,6 +94,7 @@ public:
     void setFixedTaxes( const std::string& policyName, const std::string& marketName, const std::vector<double>& taxes );
     const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
+	 void checkData( const int period );
 
 private:
     const static std::string XML_NAME; //!< node name for toXML method.
@@ -130,6 +131,9 @@ private:
     std::vector<Emcoef_ind> emcoefInd; //!< vector of objects containing indirect emissions coefficients
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
     std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
+	 double getFixedDemand( const int period, const std::string& goodName, bool printValues = false );
+	 void adjustCalibrations( const int period );
+	 bool inputsAllFixed( const int period, const std::string& goodName ) const;
     std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
     typedef std::vector<SupplySector*>::iterator SectorIterator;
     typedef std::vector<SupplySector*>::const_iterator ConstSectorIterator;

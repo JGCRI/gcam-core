@@ -71,8 +71,9 @@ public:
 	void dbOutput( const std::string& regionName ) const;
 	void initialGDPcalc( const int period, const double population);
 	void adjustGDP( const int period, const double priceratio );
-	double getAproxScaledGDPperCap( const int period ) const;
-	double getAproxScaledGDP( const int period ) const;
+   double getApproxGDPperCap( const int period ) const;
+   double getApproxScaledGDPperCap( const int period ) const;
+	double getApproxScaledGDP( const int period ) const;
 	double getScaledGDPperCap( const int period ) const;
 	double getGDPperCap( const int period ) const;
 	double getPPPGDPperCap( const int period ) const;
