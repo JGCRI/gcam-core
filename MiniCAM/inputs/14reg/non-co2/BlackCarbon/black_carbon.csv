@@ -78,22 +78,22 @@ Variable ID,,CONVERGENCE TABLE ,,,,,,,
 810,,,,,,,,,
 Source Inputs,,"Enter the desired coefficient, -1 turns off convergence for that cell",,,,,,,
 Gas,NumSources,Nregions,,,,,,,
-7,14,14,,,,,,,,,,,,,
-0,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14
-Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E ASIA,EEUR,KOR,INDIA
-1,elec_coal,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004
-2,elec_oil,0.001,-1,0.001,0.001,-1,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-3,elec_gas,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034
-4,inds_coal,0.012,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083
-5,inds_oil,0.007,0.007,-1,0.007,0.007,-1,0.007,-1,0.007,0.007,0.007,0.007,0.007,0.007
-6,inds_gas,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002
-7,inds_biom,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004
-8,bldg_coal,0.015,0.015,0.015,0.015,0.015,0.015,0.015,0.015,0.015,0.015,-1,0.015,0.015,-1
-9,bldg_oil,0.0012,-1,-1,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012
-10,bldg_gas,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006
-11,bldg_biom,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03
-12,trans_coal,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,-1
-13,trans_oil,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107
+7,14,14,,,,,,,,,,,,,,
+0,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,
+Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E ASIA,EEUR,KOR,INDIA,
+1,elec_coal,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,0.0004,
+2,elec_oil,0.001,-1,0.001,0.001,-1,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,
+3,elec_gas,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,0.000034,
+4,inds_coal,0.012,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,0.0083,
+5,inds_oil,0.007,0.007,-1,0.007,0.007,-1,0.007,-1,0.007,0.007,0.007,0.007,0.007,0.007,
+6,inds_gas,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,0.000002,
+7,inds_biom,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,
+8,bldg_coal,0.015,0.015,0.015,0.015,0.015,0.015,0.015,0.015,0.015,0.015,-1,0.015,0.015,-1,
+9,bldg_oil,0.0012,-1,-1,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012,0.0012,
+10,bldg_gas,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,0.000006,
+11,bldg_biom,0.04,0.04,0.03,0.03,0.03,0.03,0.03,0.03,0.03,-1,0.03,0.03,0.03,0.03,Higher coeff in US/Canada to track higher current emissions
+12,trans_coal,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,0.04,-1,
+13,trans_oil,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,0.0107,
 15,trans_biom,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004
 
 INPUT_TABLE,,,,,,,,,,,,,,,
@@ -109,11 +109,23 @@ Region,F_max,GDP_0,Tau,,,,,,,,,,,,
 4,0,20,15,JAPAN,,,,,,,,,,,
 5,0,20,15,AUS&NZ,,,,,,,,,,,
 
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,,,
+808,,,,
+"OGGDPPARMS(igas,isrc,1:3,L)",,,,
+gas,Nregions,,Do the same as above for OC so that reduction paths match,
+8,5,,,
+Region,F_max,GDP_0,Tau,
+1,0,29,15,US
+2,0,26,15,CANADA
+3,0,20,15,WEUR
+4,0,20,15,JAPAN
+5,0,20,15,AUS&NZ
 
-xxxINPUT_TABLE,,,,,,,,,
-Variable ID,,CONVERGENCE TABLE ,,,,,,,
-810,,,,,,,,,
-Source Inputs,,Add forest fires to regions with deforestation but no ffires in base year,,,,,,,
+xxxINPUT_TABLE,,,,
+Variable ID,,CONVERGENCE TABLE ,,
+810,,,,
+Source Inputs,,Add forest fires to regions with deforestation but no ffires in base year,,
 Gas,NumSources,Nregions,,,,,,,
 7,1,8,,,,,,,
 0,0,7,8,9,10,11,12,13,14
@@ -126,10 +138,10 @@ Advanced Diesel Technology ,,,,,,,,,
 
 xxxINPUT_TABLE,,,,,,,,,
 Variable ID,,For BC,,,,,,,
-807,,,,,
-"OGGDPPARMS(igas,isrc,1:4,:)",,,,,
-gas,Nsrc's,,,,
-7,18,,,,
+807,,,,,,,,,
+"OGGDPPARMS(igas,isrc,1:4,:)",,,,,,,,,
+gas,Nsrc's,,,,,,,,
+7,18,,,,,,,,
 Source,,F_max,GDP_0,Tau,techchange
 1,elec_coal,0,8,8,0.01
 2,elec_oil,0,8,8,0.01
@@ -142,10 +154,10 @@ Source,,F_max,GDP_0,Tau,techchange
 9,bldg_oil,0,8,8,0.01
 10,bldg_gas,0,8,8,0.01
 11,bldg_biom,0,8,8,0.01
-12,trans_coal,0,8,8,0.01,,,,,,,,,,
-13,trans_oil,0,8,8,0.25,,,,,,,,,,
-14,trans_gas,0,8,8,0.01,,,,,,,,,,
-15,trans_biom,0,8,8,0.01,,,,,,,,,,
+12,trans_coal,0,8,8,0.01
+13,trans_oil,0,8,8,0.25
+14,trans_gas,0,8,8,0.01
+15,trans_biom,0,8,8,0.01
 16,savannah_burn,0,8,8,0.01,,,,,,,,,,
 17,deforest,0,8,8,0.01,,,,,,,,,,
 18,agri_was,0,8,8,0.01,,,,,,,,,,
@@ -162,18 +174,18 @@ Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E 
 13,trans_oil,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003
 
 
-INPUT_TABLE,,(longer transition -- same parameters as NOx),,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,,,
-806,,,,,,,,,,,,,,,
-"OGGDPPARMS(igas,isrc,1:3,L)",,,,,,,,,,,,,,,
-gas,src,,Increase GDP0 for transportation oil compared to other sources,,,,,,,,,,,,
-7,13,,transportation_oil,,,,,,,,,,,,
-Region,F_max,GDP_0,Tau,Techchange,,,,,,,,,,,
-1,0,35,20,0.25,US,Increase GDP0 further since current GDP is higher,,,,,,,,,
-2,0,35,20,0.25,CANADA,Increase GDP0 further since current GDP is higher,,,,,,,,,
-3,0,25,20,0.25,WEUR,,,,,,,,,,
-4,0,25,20,0.25,JAPAN,,,,,,,,,,
-5,0,30,20,0.25,AUS&NZ,Increase GDP0 further since current GDP is higher,,,,,,,,,
+INPUT_TABLE,,(longer transition -- same parameters as NOx),,,,
+Variable ID,,,,,,
+806,,,,,,
+"OGGDPPARMS(igas,isrc,1:3,L)",,,,,,
+gas,src,,Increase GDP0 for transportation oil compared to other sources,,,
+7,13,,transportation_oil,,,
+Region,F_max,GDP_0,Tau,Techchange,,
+1,0,35,20,0.25,US,Increase GDP0 further since current GDP is higher
+2,0,35,20,0.25,CANADA,Increase GDP0 further since current GDP is higher
+3,0,25,20,0.25,WEUR,
+4,0,25,20,0.25,JAPAN,
+5,0,30,20,0.25,AUS&NZ,Increase GDP0 further since current GDP is higher
 6,0,20,20,0.25,FSU,
 7,0,10,15,0.25,ACENP,
 8,0,15,20,0.25,MIDEAST,
@@ -190,10 +202,10 @@ Region,F_max,GDP_0,Tau,Techchange,,,,,,,,,,,
 More Advanced x-port Tech & Earlier ,,,,,,
 *****************************************************************************,,,,,,
 
-xxINPUT_TABLE,,,,,
-Variable ID,,For BC,,,
-807,,,,,
-"OGGDPPARMS(igas,isrc,1:4,:)",,,,,
+xxINPUT_TABLE,,,,,,
+Variable ID,,For BC,,,,
+807,,,,,,
+"OGGDPPARMS(igas,isrc,1:4,:)",,,,,,
 gas,Nsrc's,,,,
 7,18,,,,
 Source,,F_max,GDP_0,Tau,techchange
@@ -210,54 +222,54 @@ Source,,F_max,GDP_0,Tau,techchange
 11,bldg_biom,0,8,8,0.01
 12,trans_coal,0,8,8,0.01
 13,trans_oil,0,8,8,1
-14,trans_gas,0,8,8,0.01
-15,trans_biom,0,8,8,0.01
-16,savannah_burn,0,8,8,0.01
-17,deforest,0,8,8,0.01
-18,agri_was,0,8,8,0.01
+14,trans_gas,0,8,8,0.01,,,,,,,,,,
+15,trans_biom,0,8,8,0.01,,,,,,,,,,
+16,savannah_burn,0,8,8,0.01,,,,,,,,,,
+17,deforest,0,8,8,0.01,,,,,,,,,,
+18,agri_was,0,8,8,0.01,,,,,,,,,,
 
 
-xxINPUT_TABLE,,,,,
-Variable ID,,CONVERGENCE TABLE ,,,
-810,,,,,
-Source Inputs,,"Enter the desired coefficient, -1 turns off convergence for that cell",,,
-Gas,NumSources,Nregions,,,
+xxINPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,CONVERGENCE TABLE ,,,,,,,,,,,,,
+810,,,,,,,,,,,,,,,
+Source Inputs,,"Enter the desired coefficient, -1 turns off convergence for that cell",,,,,,,,,,,,,
+Gas,NumSources,Nregions,,,,,,,,,,,,,
 7,1,14,,,,,,,,,,,,,
 0,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14
 Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E ASIA,EEUR,KOR,INDIA
 13,trans_oil,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015,0.0015
 
 
-xxINPUT_TABLE,,(longer transition -- same parameters as NOx),,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,,,
-805,,,,,,,,,,,,,,,
-"OGGDPPARMS(igas,isrc,1:3,L)",,,,,,,,,,,,,,,
-gas,src,,Increase GDP0 for transportation oil compared to other sources,,,,,,,,,,,,
-7,13,,transportation_oil,,,,,,,,,,,,
-Region,F_max,GDP_0,Tau,,,,,,,,,,,,
-1,0,35,15,US,Increase even further since current GDP is higher,,,,,,,,,,
-2,0,35,15,CANADA,Increase even further since current GDP is higher,,,,,,,,,,
-3,0,25,15,WEUR,,,,,,,,,,,
+xxINPUT_TABLE,,(longer transition -- same parameters as NOx),,,
+Variable ID,,,,,
+805,,,,,
+"OGGDPPARMS(igas,isrc,1:3,L)",,,,,
+gas,src,,Increase GDP0 for transportation oil compared to other sources,,
+7,13,,transportation_oil,,
+Region,F_max,GDP_0,Tau,,
+1,0,35,15,US,Increase even further since current GDP is higher
+2,0,35,15,CANADA,Increase even further since current GDP is higher
+3,0,25,15,WEUR,
 4,0,25,15,JAPAN,
 5,0,30,15,AUS&NZ,Increase even further since current GDP is higher
 6,0,25,15,FSU,
 7,0,25,15,ACENP,
-8,0,25,15,MIDEAST,
-9,0,25,15,AFRICA,
-10,0,25,15,L AMER,
-11,0,25,15,S&E ASIA,
-12,0,25,15,EEUR,
-13,0,25,15,KOR,
-14,0,25,15,INDIA,
+8,0,25,15,MIDEAST
+9,0,25,15,AFRICA
+10,0,25,15,L AMER
+11,0,25,15,S&E ASIA
+12,0,25,15,EEUR
+13,0,25,15,KOR
+14,0,25,15,INDIA
 
-********************************************************************************************************************************,,,,,
-OC Emissions,,,,,
-********************************************************************************************************************************,,,,,
-INPUT_TABLE,,,,,
-Variable ID,,OC -- base year emissions (Tg),,,,,,,,,,,,,,
-801,,,,,,,,,,,,,,,,
-Source Inputs,,,,,,,,,,,,,,,,
-Gas,NumSources,Nregions,DataType,,,,,,,,,,,,,
+********************************************************************************************************************************,,,,
+OC Emissions,,,,
+********************************************************************************************************************************,,,,
+INPUT_TABLE,,,,
+Variable ID,,OC -- base year emissions (Tg),,
+801,,,,
+Source Inputs,,,,
+Gas,NumSources,Nregions,DataType,
 8,19,14,1,(Base-year emissions),,,,,,,,,,,,
 0,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,
 Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E ASIA,EEUR,KOR,INDIA,Global
@@ -286,27 +298,27 @@ Source:,Bond and Streets (2003),,,,,,,,,,,,,,,
 
 *****************************************************************************,,,,,,,,,,,,,,,,
 Best current aggregate performance,,,,,,,,,,,,,,,,
-*****************************************************************************,,,,,,,,,,,,,,,
+*****************************************************************************,,,,,,,,,,,,,,,,
 
-INPUT_TABLE,,,,,,,,,,,,,,,
-Variable ID,,CONVERGENCE TABLE ,,,,,,,,,,,,,
-810,,,,,,,,,,,,,,,
-Source Inputs,,"Enter the desired coefficient, -1 turns off convergence for that cell",,,,,,,,,,,,,
-Gas,NumSources,Nregions,,,,,,,,,,,,,
-8,14,14,,,,,,,,,,,,,
-0,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14
-Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E ASIA,EEUR,KOR,INDIA
-1,elec_coal,0.00004,0.00004,0.00004,-1,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004
-2,elec_oil,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-3,elec_gas,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-4,inds_coal,-1,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006
-5,inds_oil,0.005,0.005,-1,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
-6,inds_gas,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+INPUT_TABLE,,,,,,,,,,,,,,,,
+Variable ID,,CONVERGENCE TABLE ,,,,,,,,,,,,,,
+810,,,,,,,,,,,,,,,,
+Source Inputs,,"Enter the desired coefficient, -1 turns off convergence for that cell",,,,,,,,,,,,,,
+Gas,NumSources,Nregions,,,,,,,,,,,,,,
+8,14,14,,,,,,,,,,,,,,
+0,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,
+Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E ASIA,EEUR,KOR,INDIA,
+1,elec_coal,0.00004,0.00004,0.00004,-1,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,0.00004,
+2,elec_oil,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+3,elec_gas,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+4,inds_coal,-1,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,0.006,
+5,inds_oil,0.005,0.005,-1,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,
+6,inds_gas,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 7,inds_biom,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,
 8,bldg_coal,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.007,0.007,
 9,bldg_oil,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,
-10,bldg_gas,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-11,bldg_biom,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+10,bldg_gas,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,Higher coeff in US/Canada to track higher current emissions
+11,bldg_biom,0.2,0.2,0.15,-1,-1,-1,-1,-1,-1,-1,0.15,0.15,-1,0.15,
 12,trans_coal,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 13,trans_oil,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,0.004,Reduced N American coefficient below current value. Sjs 1/04
 15,trans_biom,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
@@ -318,10 +330,10 @@ Variable ID,,Transport oil,,,,,,,,,,,,,,
 Source Inputs,,,,,,,,,,,,,,,,
 gas,src,,,,,,,,,,,,,,,
 8,13,,,,,,,,,,,,,,,
-Region,1990,2005,2020,2035,2050,2065,2080,2095,
-1,0,0.034,0.102,0.17,0.239,0.303,0.367,0.432,US
-2,0,0.034,0.102,0.17,0.239,0.303,0.367,0.432,CANADA
-3,0,0.034,0.102,0.17,0.239,0.303,0.367,0.432,WEUR
+Region,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,,,
+1,0,0.034,0.102,0.17,0.239,0.303,0.367,0.432,US,,,,,,,
+2,0,0.034,0.102,0.17,0.239,0.303,0.367,0.432,CANADA,,,,,,,
+3,0,0.034,0.102,0.17,0.239,0.303,0.367,0.432,WEUR,,,,,,,
 4,0,0.034,0.102,0.17,0.239,0.303,0.367,0.432,JAPAN
 5,0,0.034,0.102,0.17,0.239,0.303,0.367,0.432,AUS&NZ
 6,0,0.034,0.102,0.17,0.239,0.303,0.367,0.432,FSU
@@ -334,22 +346,22 @@ Region,1990,2005,2020,2035,2050,2065,2080,2095,
 13,0,0.034,0.102,0.17,0.239,0.303,0.367,0.432,KOR
 14,0,0.034,0.102,0.17,0.239,0.303,0.367,0.432,INDIA
 
-% Aircraft fuel,12%,15%,21%,27%,33%,39%,44%,50%
+% Aircraft fuel,12%,15%,21%,27%,33%,39%,44%,50%,
 
-INPUT_TABLE,,(longer transition -- same parameters as NOx),,,,,,
-Variable ID,,,,,,,,
-806,,,,,,,,
-"OGGDPPARMS(igas,isrc,1:3,L)",,,,,,,,
-gas,src,,Increase GDP0 for transportation oil compared to other sources,,,,,
-8,13,,transportation_oil,,,,,
-Region,F_max,GDP_0,Tau,Techchange,,,,
-1,0,35,20,0.25,US,Increase GDP0 further since current GDP is higher,,
-2,0,35,20,0.25,CANADA,Increase GDP0 further since current GDP is higher,,
-3,0,25,20,0.25,WEUR,,,
-4,0,25,20,0.25,JAPAN,,,
-5,0,30,20,0.25,AUS&NZ,Increase GDP0 further since current GDP is higher,,
-6,0,20,20,0.25,FSU,,,
-7,0,10,15,0.25,ACENP,,,
+INPUT_TABLE,,(longer transition -- same parameters as NOx),,,,,,,
+Variable ID,,,,,,,,,
+806,,,,,,
+"OGGDPPARMS(igas,isrc,1:3,L)",,,,,,
+gas,src,,Increase GDP0 for transportation oil compared to other sources,,,
+8,13,,transportation_oil,,,
+Region,F_max,GDP_0,Tau,Techchange,,
+1,0,35,20,0.25,US,Increase GDP0 further since current GDP is higher
+2,0,35,20,0.25,CANADA,Increase GDP0 further since current GDP is higher
+3,0,25,20,0.25,WEUR,
+4,0,25,20,0.25,JAPAN,
+5,0,30,20,0.25,AUS&NZ,Increase GDP0 further since current GDP is higher
+6,0,20,20,0.25,FSU,
+7,0,10,15,0.25,ACENP,
 8,0,15,20,0.25,MIDEAST,
 9,0,15,20,0.25,AFRICA,
 10,0,15,15,0.25,L AMER,
