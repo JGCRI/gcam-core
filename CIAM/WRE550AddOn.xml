@@ -8,13 +8,13 @@
 				<market>global</market>
 				<constraint year="1975">0</constraint>
 				<constraint year="1990">0</constraint>
-				<constraint year="2005">7309</constraint>
-				<constraint year="2020">8828</constraint>
-				<constraint year="2035">9335</constraint>
-				<constraint year="2050">7250</constraint>
-				<constraint year="2065">6000</constraint>
-				<constraint year="2080">4800</constraint>
-				<constraint year="2095">4000</constraint>
+				<constraint year="2005">0</constraint>
+				<constraint year="2020">9282</constraint>
+				<constraint year="2035">9786</constraint>
+				<constraint year="2050">9352</constraint>
+				<constraint year="2065">8540</constraint>
+				<constraint year="2080">7560</constraint>
+				<constraint year="2095">6552</constraint>
 			</ghgMarket>
 		</region>
 		<region name="Canada">
