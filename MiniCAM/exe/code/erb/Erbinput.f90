@@ -1663,7 +1663,7 @@
 	   CASE(800)  !other gases
 !	------ read gas labels, gwp's, type of input ----
 		DO I = 1, NOGMax
-			READ (IUNIT,*) IDUM, OGLabel(I), tempgwp, temptype, tempfmax, tempgdp0, temptau
+			READ (IUNIT,*) IDUM, OGLabel(I), tempgwp, temptype, tempfmax, tempgdp0, temptau, temptechc
 
 !           Now check to see if this is a new gas or if inputs have already been read in:
 !           If inputs have already been read, the data from the old case 800 is used;
@@ -1676,6 +1676,7 @@
 				OGGDPPARMS(I,:,1,:) = tempfmax  ! all gdp controls same initially
 				OGGDPPARMS(I,:,2,:) = tempgdp0
 				OGGDPPARMS(I,:,3,:) = temptau
+				OGGDPPARMS(I,:,4,:) = temptechc
 			END IF			
 		
 		END DO
@@ -1708,7 +1709,7 @@
 
 
 	   CASE(803)
-!------- READ ARBITRARY CALIBRATION CONTROL FRACTIONS ("user" controls)
+!------- READ CALIBRATION CONTROL FRACTIONS ("user" controls)
 		READ (IUNIT,*) igas, isrc
 		READ (IUNIT,*)
 		DO L=1,NL
@@ -1753,6 +1754,23 @@
 			OGGDPPARMS(igas,isrc,2,:) = OGGDPPARMS(igas,isrc,2,1)
 			OGGDPPARMS(igas,isrc,3,:) = OGGDPPARMS(igas,isrc,3,1)
 			OGGDPPARMS(igas,isrc,4,:) = OGGDPPARMS(igas,isrc,4,1)
+		END DO		
+
+!	do we want this even for the coefficients?  mj 8/02
+!		IF (igas.eq.2) THEN   ! special case to convert Tg N inputs to Tg gas for consistency
+!			OGCNVRG(igas,1:inumlines,:) = OGCNVRG(igas,1:inumlines,:) * NtoN2O
+!		END IF
+
+
+	   CASE(808) 
+!	------ read GDP coefficients by region ---- sjs -- 01/03
+		READ (IUNIT,*) igas, tempNRegions
+		READ(IUNIT,*)
+		DO LTemp=1,tempNRegions
+			READ(IUNIT,*) L, temp1, temp2, temp3
+			OGGDPPARMS(igas,:,1,L) = temp1
+			OGGDPPARMS(igas,:,2,L) = temp2
+			OGGDPPARMS(igas,:,3,L) = temp3
 		END DO		
 
 

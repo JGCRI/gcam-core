@@ -268,6 +268,7 @@
 	DO I = 1, NOGMax
 		IF (SUM(OGREPORT(I,:)).EQ.0) CYCLE  ! if gas has no sources then skip
 		IF(vp)CALL ivid(0,ct,sct,I,OGLabel(I),'MMTCE')
+		IF (OGGWP(I,2).EQ.0) CYCLE  ! if Index is zero, then no equiv defined, so skip
 		DBAR(vl(ct,sct,I),:) = SUM(OGEMISS(I,:,L,2:NM),DIM=1)*OGGWP(I,2:NM)*CO2toC
 	END DO
 
@@ -342,6 +343,7 @@
 
 	DO I = 1, NOGMax
 		IF (SUM(OGREPORT(I,:)).EQ.0) CYCLE  ! if gas has no sources then skip
+		IF (OGGWP(I,2).EQ.0) CYCLE  ! if Index is zero, then no equiv defined, so skip
 		sct = 25+I
 		sctstr(ct,sct) = TRIM(OGLabel(I))//' CEEmiss '
 		DO II = 1, NOGSrcMax
