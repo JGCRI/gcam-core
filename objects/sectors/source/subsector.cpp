@@ -28,6 +28,7 @@
 #include "emissions/include/indirect_emiss_coef.h"
 #include "containers/include/world.h"
 #include "containers/include/gdp.h"
+#include "marketplace/include/market_info.h"
 
 using namespace std;
 using namespace xercesc;
@@ -156,51 +157,82 @@ void Subsector::XMLParse( const DOMNode* node ) {
         else if( nodeName == "scaleYear" ){
             scaleYear = XMLHelper<int>::getValue( curr );
         }
-
-        else if( nodeName == technology::getXMLNameStatic1D() ){
+        else if( nodeName == getChildXMLName() ){
             map<string,int>::const_iterator techMapIter = techNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+
             if( techMapIter != techNameMap.end() ) {
                 // technology already exists.
-                DOMNodeList*childNodeList = curr->getChildNodes();
-
-                // loop through technologies children.
-                for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
-                    DOMNode* currChild = childNodeList->item( j );
-                    string childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-
-                    if( childNodeName == "#text" ){
-                        continue;
+                // Check if we should delete. This is a hack.
+                if( XMLHelper<bool>::getAttr( curr, "delete" ) ){
+                    int vecSpot = techMapIter->second;
+                    // Deallocate memory.
+                    for( vector<technology*>::iterator iter = techs[ vecSpot ].begin(); iter != techs[ vecSpot ].end(); ++iter ){
+                        delete *iter;
                     }
-                    else if( childNodeName == technology::getXMLNameStatic2D() ){
-                        int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
-                        techs[ techMapIter->second ][ thisPeriod ]->XMLParse( currChild );
+                    // Wipe the vector.
+                    vector<vector<technology*> >::iterator delVecIter = techs.begin() + vecSpot;
+                    techs.erase( delVecIter );
+
+                    // Wipe out the map.
+                    techNameMap.clear();
+
+                    // Reset it.
+                    int i = 0;
+                    for( vector<vector<technology*> >::const_iterator iter = techs.begin(); iter != techs.end(); ++iter, i++ ){
+                        assert( iter->begin() != iter->end() );
+                        techNameMap[ (*iter)[ 0 ]->getName() ] = i;
+                    }
+                } // end hack.
+                else {
+                    DOMNodeList*childNodeList = curr->getChildNodes();
+
+                    // loop through technologies children.
+                    for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
+                        DOMNode* currChild = childNodeList->item( j );
+                        string childNodeName = XMLHelper<void>::safeTranscode( currChild->getNodeName() );
+
+                        if( childNodeName == "#text" ){
+                            continue;
+                        }
+                        else if( childNodeName == technology::getXMLNameStatic2D() ){
+                            int thisPeriod = XMLHelper<void>::getNodePeriod( currChild, modeltime );
+                            techs[ techMapIter->second ][ thisPeriod ]->XMLParse( currChild );
+                        }
                     }
                 }
             }
-
+            else if( XMLHelper<bool>::getAttr( curr, "nocreate" ) ){
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Not creating technology " << XMLHelper<string>::getAttrString( curr, "name" ) 
+                    << " in subsector " << name << " because nocreate flag is set." << endl;
+            }
             else {
                 // technology does not exist, create a new vector of techs.
-                /*! \todo Clean this up and make it work with the deletion of objects. */
+
                 DOMNodeList* childNodeList = curr->getChildNodes();
                 vector<technology*> techVec( modeltime->getmaxper() );
 
                 // loop through technologies children.
                 for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
                     DOMNode* currChild = childNodeList->item( j );
-                    const string childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+                    const string childNodeName = XMLHelper<void>::safeTranscode( currChild->getNodeName() );
 
                     if( childNodeName == "#text" ){
                         continue;
                     }
 
                     else if( childNodeName == technology::getXMLNameStatic2D() ){
-                        auto_ptr<technology> tempTech( new technology() );
+                        auto_ptr<technology> tempTech( createChild() );
                         tempTech->XMLParse( currChild );
-                        int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
+                        int thisPeriod = XMLHelper<void>::getNodePeriod( currChild, modeltime );
 
                         // Check that a technology does not already exist.
                         if( techVec[ thisPeriod ] ){
-                            cout << "Warning: Removing duplicate technology." << endl;
+                            ILogger& mainLog = ILogger::getLogger( "main_log" );
+                            mainLog.setLevel( ILogger::DEBUG );
+                            mainLog << "Removing duplicate technology " << techVec[ thisPeriod ]->getName() 
+                                << " in subsector " << name << " in sector " << sectorName << "." << endl;
                             delete techVec[ thisPeriod ];
                         }
 
@@ -212,10 +244,13 @@ void Subsector::XMLParse( const DOMNode* node ) {
                             for ( int i = thisPeriod + 1; i < modeltime->getmaxper(); i++ ) {
                                 // Check that a technology does not already exist.
                                 if( techVec[ i ] ){
-                                    cout << "Warning: Removing duplicate technology." << endl;
+                                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                                    mainLog.setLevel( ILogger::DEBUG );
+                                    mainLog << "Removing duplicate technology " << techVec[ i ]->getName() 
+                                        << " in subsector " << name << " in sector " << sectorName << "." << endl;
                                     delete techVec[ i ];
                                 }
-                                techVec[ i ] = new technology( *techVec[ thisPeriod ] );
+                                techVec[ i ] = techVec[ thisPeriod ]->clone();
                                 techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
                             } // end for
                         } // end if fillout
@@ -226,12 +261,24 @@ void Subsector::XMLParse( const DOMNode* node ) {
             }
         }
         // parsed derived classes
-        else if ( XMLDerivedClassParse( nodeName, curr ) ) {
-        } 
+        else if( XMLDerivedClassParse( nodeName, curr ) ){
+        }
         else {
-          cout << "Unrecognized text string: " << nodeName << " found while parsing "<< getXMLName() <<" "<<name<<"." << endl;        
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Unknown element " << nodeName << " encountered while parsing " << getXMLName() << endl;
         }
     }
+}
+
+//! Virtual function which specifies the XML name of the children of this class, the type of technology.
+const string& Subsector::getChildXMLName() const {
+    return technology::getXMLNameStatic1D();
+}
+
+//! Virtual function to generate a child element or construct the appropriate technology.
+technology* Subsector::createChild() const {
+    return new technology();
 }
 
 //! Parses any input variables specific to derived classes
@@ -244,6 +291,8 @@ bool Subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr
 
 //! Complete the initialization.
 void Subsector::completeInit() {
+    mSubsectorInfo.reset( new MarketInfo() );
+
     // Initialize any arrays that have non-zero default value
     notech = static_cast<int>( techs.size() );
     

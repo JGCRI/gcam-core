@@ -35,6 +35,7 @@
 #include "util/base/include/util.h"
 #include "containers/include/region.h"
 #include "util/logger/include/ilogger.h"
+#include "marketplace/include/market_info.h"
 
 using namespace std;
 using namespace xercesc;
@@ -161,6 +162,8 @@ void Sector::XMLParse( const DOMNode* node ){
 * \todo josh to add appropriate detailed comment here
 */
 void Sector::completeInit() {
+    // Allocate the sector info.
+    mSectorInfo.reset( new MarketInfo() );
 
     nosubsec = static_cast<int>( subsec.size() );
     

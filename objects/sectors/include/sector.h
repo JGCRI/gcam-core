@@ -26,6 +26,7 @@ class Region;
 class ILogger;
 class GDP;
 class Tabs;
+class MarketInfo;
 
 /*! 
 * \ingroup CIAM
@@ -48,6 +49,7 @@ protected:
     int nosubsec; //!< number of subsectors in each Sector
     double tax; //!< Sector tax or subsidy
     bool debugChecking; //!< General toggle to turn on various checks
+    std::auto_ptr<MarketInfo> mSectorInfo; //!< Pointer to the sector's information store.
     std::vector<Subsector*> subsec; //!< subsector objects
     std::vector<double> sectorprice; //!< Sector price in $/service
     std::vector<double> price_norm; //!< Sector price normalized to base year

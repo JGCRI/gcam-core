@@ -49,6 +49,8 @@ protected:
     void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;
+    const std::string& getChildXMLName() const;
+    technology* createChild() const;
 private:
     static const std::string XML_NAME; //!< XML name of this object.
 };

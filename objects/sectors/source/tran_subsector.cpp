@@ -85,75 +85,20 @@ bool TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
     else if( nodeName == "serviceoutput" ){
         XMLHelper<double>::insertValueIntoVector( curr, output, modeltime );
     }
-    // Todo: Rework this to use the subsector parsing.
-    else if( nodeName == TranTechnology::getXMLNameStatic1D() ){
-        map<string,int>::const_iterator techMapIter = techNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
-        if( techMapIter != techNameMap.end() ) {
-            // technology already exists.
-            DOMNodeList* childNodeList = curr->getChildNodes();
-            
-            // loop through technologies children.
-            for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
-                
-                DOMNode* currChild = childNodeList->item( j );
-                string childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-                
-                if( childNodeName == "#text" ){
-                    continue;
-                }
-                else if( childNodeName == technology::getXMLNameStatic2D() ){
-                    int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
-                    techs[ techMapIter->second ][ thisPeriod ]->XMLParse( currChild );
-                }
-            }
-        }
-        
-        else {
-            vector<technology*> techVec( modeltime->getmaxper() );
-            // create a new vector of techs.
-            DOMNodeList* childNodeList = curr->getChildNodes();
-            
-            // loop through technologies children.
-            for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
-                
-                DOMNode* currChild = childNodeList->item( j );
-                string childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-                
-                if( childNodeName == technology::getXMLNameStatic2D() ){ // this is "period"
-                    TranTechnology* tempTech = new TranTechnology();
-                    tempTech->XMLParse( currChild );
-                    int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
-                    techVec[ thisPeriod ] = tempTech;
-                    
-                    // boolean to fill out the readin value to all the periods
-                    const bool fillout = XMLHelper<bool>::getAttr( currChild, "fillout" );
-                    
-                    // copy technology object for one period to all the periods
-                    if (fillout) {
-                        // will not do if period is already last period or maxperiod
-                        for (int i = thisPeriod+1; i < modeltime->getmaxper(); i++) {
-                            // Check that a technology does not already exist.
-                            if( techVec[ i ] ){
-                                cout << "Warning: Removing duplicate technology." << endl;
-                                delete techVec[ i ];
-                            }
-                            techVec[ i ] = new TranTechnology( *tempTech );
-                            techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
-                        }
-                    }
-                    
-                }
-            }
-            techs.push_back( techVec );
-            techNameMap[ techVec[ 0 ]->getName() ] = static_cast<int>( techs.size() ) - 1;
-            techVec.clear();
-            techVec.resize( modeltime->getmaxper(), 0 );
-        } 
-    }  else {
-      return false;
+    else {
+        return false;
     }
     return true;
-    // completed parsing.
+}
+
+//! Virtual function which specifies the XML name of the children of this class, the type of technology.
+const string& TranSubsector::getChildXMLName() const {
+    return TranTechnology::getXMLNameStatic1D();
+}
+
+//! Virtual function to generate a child element or construct the appropriate technology.
+technology* TranSubsector::createChild() const {
+    return new TranTechnology();
 }
 
 /*! \brief XML output stream for derived classes

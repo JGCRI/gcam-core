@@ -23,6 +23,7 @@ class technology;
 class Emcoef_ind;
 class Tabs;
 class GDP;
+class MarketInfo;
 
 /*! 
 * \ingroup CIAM
@@ -50,6 +51,7 @@ protected:
     double tax; //!< subsector tax or subsidy
     double basesharewt; //! subsector base year consumption share weight
     double CO2EmFactor; //! CO2 emissions factor, calculated based on fuel input and share
+    std::auto_ptr<MarketInfo> mSubsectorInfo; //!< The subsector's information store.
     std::vector<std::vector<technology*> > techs; //!< vector of technology by period
     std::vector<double> capLimit; //!< subsector capacity limit
     std::vector<bool> capLimited; //!< true if subsector has hit its capacity limit
@@ -77,11 +79,13 @@ protected:
     virtual void csvDerivedClassOutput() const;
     virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const{};
-    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const{};
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
+    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const{};
     void normalizeTechShareWeights( const int period );
     void techShareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
+    virtual const std::string& getChildXMLName() const;
+    virtual technology* createChild() const;
 public:
     Subsector( const std::string regionName, const std::string sectorName );
     virtual ~Subsector();
