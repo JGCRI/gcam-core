@@ -76,6 +76,11 @@ BeefMutton2 = popu(i,t) * kcal2(i,6) * (price(mkt,i)/CALP(i,mkt))**PE(i,mkt) &
 
 SaveDiet(mkt,i,t) = BeefMutton1 * 10000000.0d0 / (popu(i,t) * 365.0d0)
 
+if (i .eq. 111) then
+ write(97,'(f7.1,a,5(f7.1,","),(f8.0,","),5(f7.1,","))') &
+ BeefMutton1," : ", kcal1(i,6,t), price(mkt,i),(price(mkt,i)/CALP(i,mkt)), &
+ gdpcap(i,t),(gdpcap(i,t)/gdpcap(i,2)), popu(i,t), PE(i,mkt),IE(i,mkt)
+end if
   ! Adjust for fixed trade in beefprds demand
 beefdem = BeefMutton1 + BeefMutton2 + NetExport(i,8)
 

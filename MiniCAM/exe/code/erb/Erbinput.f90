@@ -42,7 +42,7 @@
       USE COMMON
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)                                           
       COMMON/CO2Cal/CO2Calb(3)	! Used only in calib.for
-      COMMON/BCOC/FBC1990, FOC1990	! Used only in maglink
+      COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990	! Used only in maglink
 
 !
 !  -- DECLARE CHARACTER VARIABLES --
@@ -1871,6 +1871,10 @@
          CASE(1020)	
          READ (IUNIT,*) FBC1990
          READ (IUNIT,*) FOC1990
+          
+         CASE(1021)	
+         READ (IUNIT,*) FSO2_dir1990
+         READ (IUNIT,*) FSO2_ind1990
           
 ! ------------------------------------------------------------------
          CASE DEFAULT

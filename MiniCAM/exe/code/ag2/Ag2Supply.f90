@@ -4,7 +4,7 @@ USE Ag2Global8
 
 IMPLICIT NONE
 
-INTEGER Region,t,s,i,ncrops,k
+INTEGER Region,t,s,i,ncrops,k,kk
 
 REAL(8) ModeCrop(10),ModeBio,ModePast,ModeTreeF,  &
         RateCrop(10),RateBio,RatePast,RateTreeF,RateUnMan,  &
@@ -173,6 +173,10 @@ do k=1,ncrops
   YieldCrop(k) = max(YieldCrop(k), 0.0d0) ! if the price is less than vc, no crops & no yield
   SaveYield(5+k,i,t) = YieldCrop(k)
 end do
+
+if (Region .eq. 111) THEN
+  write(97,'(10( "(",f8.3,",",f8.3,")" ))') (YieldCrop(k),vc_crop(k), k = 1,ncrops)
+end if
 
 ! Save tree yield for supply calculation when trees are cut
 TreeYield(i,T+S) = YieldTreeF

@@ -555,12 +555,14 @@
 
 ! src 17: deforestation
 	OGACT(IBC,17,L,M) = DefroR(L,M)
+	OGACT(IBC,17,L,M) = 1.0
 
 ! src 18: forest fires
 	OGACT(IBC,18,L,M) = 1.0
 
 ! src 19: agricultural waste
 	OGACT(IBC,19,L,M) =  saveland(1,L,M) 	! total ag land
+	OGACT(IBC,19,L,M) =  1.0
 
 !
 !
@@ -632,12 +634,13 @@
 
 ! src 17: deforestation
 	OGACT(IOC,17,L,M) = DefroR(L,M)
-
+	OGACT(IOC,17,L,M) = 1.0
 ! src 18: forest fires
 	OGACT(IOC,18,L,M) = 1.0
 
 ! src 19: agricultural waste
 	OGACT(IOC,19,L,M) =  saveland(1,L,M) 	! total ag land
+	OGACT(IOC,19,L,M) =  1.0
 
 
 !

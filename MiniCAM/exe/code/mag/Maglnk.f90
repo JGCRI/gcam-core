@@ -4,7 +4,7 @@
 
 	SUBROUTINE MAGICCLINK(Nper)
       USE COMMON
-      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+     IMPLICIT DOUBLE PRECISION (A-H,O-Z)
 
 	REAL*8 AGPCO2(NM), HGWPMAG(8,2:NM),WMRSULF(3)
 	REAL*8 CO2Adj, DefAdj,AdjFact
@@ -228,58 +228,109 @@ Subroutine WriteMagExtra()
 
       USE COMMON
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      COMMON/BCOC/FBC1990, FOC1990	! Used only in maglink
+      COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990
 
-      Real*8 SO2Hist(2,200), BCOCFOrcing(200)
-      Real*8 FossForcing, BioBForcing, BioB_BCfract, BioB_OCfract
+      Real*8 SO2Hist(2,200)
+      Real*8 FossForcing90, BioBForcing90, BioB_BCfract, BioB_OCfract
       Real*8 BCOCFValue, FossilFScale, BiomassBScale
-      INTEGER NHist, II, N
+      Real*8 BC_OCForcing,BC_OCNext, BCEmiss, OCEmiss
+	  Real*8 BCELast,OCELast, BCEmiss90, OCEmiss90
+      INTEGER NHist, II, StartYr,EndYr, N, Year, NextYear
 
 	IBC = 7
 	IOC = 8
 
-      OPEN (99, FILE='SO2Hist.csv')
-      READ (99,*)
-	  READ (99,*) NHist
+      OPEN (45, FILE='..\magTAR\SO2Hist.csv')
+      READ (45,*)
+	  READ (45,*) NHist
+      READ (45,*) ! Read lables
 
 	  DO II = 1,NHist
-	    READ (99,*) SO2Hist(0,II), SO2Hist(1,II)
+	    READ (45,*) SO2Hist(1,II), SO2Hist(2,II)
+		
       END DO
 
-	  CLOSE (99)
+	  CLOSE (45)
 	  
 	  StartYr = 1765
 	  EndYr = 2100
 	  
+	  Year = 1990
+	  BCEmiss90 = SUM(OGEMISS(IBC,:,:,2))
+	  OCEmiss90 = SUM(OGEMISS(IOC,:,:,2))
+	  BCELast = BCEmiss90
+	  OCELast = OCEmiss90
 	  
-	  BioB_BCfract = SUM(OGEMISS(IBC,16:19,:,2))/SUM(OGEMISS(IBC,:,:,2))
-	  BioB_OCfract = SUM(OGEMISS(IOC,16:19,:,2))/SUM(OGEMISS(IOC,:,:,2))
+	  BioB_BCfract = SUM(OGEMISS(IBC,16:19,:,2))/BCEmiss90
+	  BioB_OCfract = SUM(OGEMISS(IOC,16:19,:,2))/OCEmiss90
 	  
-	  FossForcing = (1 - BioB_OCfract) * FOC1990 + (1 - BioB_OCfract) * FOC1990
-	  BioBForcing = (BioB_OCfract) * FOC1990 + (BioB_OCfract) * FOC1990
+	  FossForcing90 = (1 - BioB_BCfract) * FBC1990 + (1 - BioB_OCfract) * FOC1990
+	  BioBForcing90 = (BioB_BCfract) * FBC1990 + (BioB_OCfract) * FOC1990
 	  
+	  BC_OCForcing = FBC1990 + FOC1990
+
+      NextYear = 2005
+	  BCEmiss = SUM(OGEMISS(IBC,:,:,3))
+	  OCEmiss = SUM(OGEMISS(IOC,:,:,3))
+      BC_OCNext = FBC1990 * (BCEmiss/BCEmiss90) + FOC1990 * (OCEmiss/OCEmiss90)
+
 	  MsgStr = "Fraction Biomass Burning: BC"
       Call MCLog(4,MsgStr,0,0,1,BioB_BCfract)
 	  MsgStr = "Fraction Biomass Burning: OC"
       Call MCLog(4,MsgStr,0,0,1,BioB_OCfract)
 
 	  
-	  OPEN (99,FILE='..\magTAR\QEXTRA.IN')
-	  WRITE(99,'(1X,I5)') 1
-	  WRITE(99,'(1X,2I5)') StartYr, EndYr
+	  OPEN (45,FILE='..\magTAR\QEXTRA.IN')
+	  WRITE(45,'(1X,I5)') 1
+	  WRITE(45,'(1X,2I5)') StartYr, EndYr
 	  
 	  DO II = StartYr,EndYr
-	     IF ( II .LT. SO2Hist(0,0) ) THEN
-	        WRITE(99,'(1X,I5,F10.0)') II, 0
-	     ELSE
-	        N = II - SO2Hist(0,0)
-	        FossilFScale = SO2Hist(0,N) / SO2Hist(0,NHist-1)
-	        BiomassBScale = (II - StartYr)/(EndYr - StartYr)
-	        BCOCFValue = FossForcing * FossilFScale + BiomassBScale * BiomassBScale
+	     IF ( II .LT. SO2Hist(1,1) ) THEN
+	        BiomassBScale = float(II - StartYr)/float(1990 - StartYr)
+	        BCOCFValue = BiomassBScale * BioBForcing90
+
+	        WRITE(45,'(1X,I5,F10.4)') II, BCOCFValue
+	     ELSE IF (II .LE. SO2Hist(1,NHist) ) THEN
+	        N = II - SO2Hist(1,1) + 1
+	        FossilFScale = abs(SO2Hist(2,N) / SO2Hist(2,NHist))
+	        BiomassBScale = float(II - StartYr)/float(1990 - StartYr)
+	        BCOCFValue = FossilFScale * FossForcing90 + BiomassBScale * BioBForcing90
 	
-	        WRITE(99,'(1X,I5,F10.0)') II, BCOCFValue
-	     END ELSE
+	        WRITE(45,'(1X,I5,F10.4)') II, BCOCFValue
+	     ELSE
+            If (II .EQ. NextYear) THEN
+			  Year = II
+ 			  IF (NextYear .LT. 2095) THEN
+                NextYear = NextYear + 15
+				BCELast = BCEmiss
+				OCELast = OCEmiss
+	            BCEmiss = SUM(OGEMISS(IBC,:,:,(NextYear-1975)/15))
+	            OCEmiss = SUM(OGEMISS(IOC,:,:,(NextYear-1975)/15))
+			  ELSE
+			    NextYear = 2100
+				tmpBCEmiss = (BCEmiss - BCELast)/3 + BCEmiss
+				tmpOCEmiss = (OCEmiss - OCELast)/3 + OCEmiss
+				BCELast = BCEmiss
+				OCELast = OCEmiss
+				BCEmiss = tmpBCEmiss
+				OCEmiss = tmpOCEmiss
+			  END IF
+  			END IF
+		    
+			BCEm = float(II-Year)/float(NextYear-Year) * (BCEmiss - BCELast) + BCELast
+			OCEm = float(II-Year)/float(NextYear-Year) * (OCEmiss - OCELast) + OCELast
+            
+			IF (II .EQ. 2100) THEN
+			   BCEm = BCELast
+			   OCEm = OCELast
+			END IF
+
+			BCOCFValue = FBC1990 * (BCEm/BCEmiss90) + FOC1990 * (OCEm/OCEmiss90)
+		 	WRITE(45,'(1X,I5,F10.4)') II, BCOCFValue
+
+		 END IF
       END DO
+      CLOSE(45)
 
 RETURN
 END

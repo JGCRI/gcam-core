@@ -19,6 +19,7 @@
 ! COMMON BLOCKS
       USE COMMON
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990
 	  
 	  INTEGER RunID
       INTEGER(2) tmpday, tmpmonth, tmpyear

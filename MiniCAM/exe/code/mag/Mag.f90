@@ -192,10 +192,10 @@
 ! Written by Tom Wigley, Sarah Raper & Mike Salmon, Climatic Research Unit, UEA.
 !-------------------------------------------------------------------------------
 !
-      SUBROUTINE CLIMAT (IWrite,MAGICCCResults,MagEM)	
+      SUBROUTINE CLIMAT (IWrite, MAGICCCResults,MagEM)	
 !      IMPLICIT REAL*8 (a-h,o-z), Integer (I-N)
 
-	  REAL*8 MAGICCCResults(0:30,50), MagEM(20,19) ! mrj 5/03 pass data to/from MiniCAM
+  	  REAL*8 MAGICCCResults(0:30,50), MagEM(20,19) ! mrj 5/03 pass data to/from MiniCAM
 	  Integer IWrite ! and this toggles writing on/off to save time
 !
 !   THIS IS THE CLIMATE MODEL MODULE.
@@ -216,6 +216,9 @@
       XSO22(4,iTp-225),XSO23(4,iTp-225),XGHG(4,iTp-225), &
       SCALER(197:iTp),SCALAR(197:iTp)
 !
+      Real*8 FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990
+      COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990
+
       common /Limits/KEND
 !
       COMMON/OZ/OZ00CH4,OZCH4,OZNOX,OZCO,OZVOC
@@ -406,6 +409,11 @@
 !
       close(lun)
 !
+       IF ( FSO2_dir1990 .LT. 0) THEN
+          S90Duser = FSO2_dir1990
+	      S90Iuser = FSO2_ind1990
+	   END IF
+
       IF(OVRWRITE.EQ.1)THEN
         LEVCO2=4
         LEVSO4=4
@@ -2614,7 +2622,7 @@ IF(IWrite.eq.1)THEN
 ! now we can write stuff out
 
 		IF (IWrite .eq. 1)  &
-          WRITE (9,100) K,TEMUSER(IYR),CO2(IYR),CH4(IYR),CN2O(IYR), &
+          WRITE (9,100) K,TEMUSER(IYR)+TGAV(226),CO2(IYR),CH4(IYR),CN2O(IYR), &
           DELQCO2,DELQM,DELQN,DELQCFC,DELQOZ, &
           DELQD,DELQIND,DELQBIO,DELQTOT,EF(IYR),EDNET(IYR),ECH4(IYR), &
           EN2O(IYR),ESO21(IYR)-ES1990,ESO22(IYR)-ES1990,ESO23(IYR)-ES1990,SLUSER(IYR)
@@ -2622,7 +2630,7 @@ IF(IWrite.eq.1)THEN
 ! code to pass these items to MiniCAM in Results array
 
 	 MAGICCCResults(0,(K-1990)/IIPRT+1) = Float(K)
-	 MAGICCCResults(1,(K-1990)/IIPRT+1) = TEMUSER(IYR)
+	 MAGICCCResults(1,(K-1990)/IIPRT+1) = TEMUSER(IYR)+TGAV(226)
 	 MAGICCCResults(2,(K-1990)/IIPRT+1) = CO2(IYR)
 	 MAGICCCResults(3,(K-1990)/IIPRT+1) = CH4(IYR)
 	 MAGICCCResults(4,(K-1990)/IIPRT+1) = CN2O(IYR)
@@ -3930,7 +3938,7 @@ IF(IWrite.eq.1)THEN
 !   EXTRAPOLATED VALUES FOR TEMPERATURE AND CO2 CONCENTRATION.
 !   RELEVANT VALUES ARE FROM START YEAR FOR MODEL PROJECTIONS.
 !
-      TX=2.0*TGAV(J-1)-TGAV(J-2)
+      IF (J .GT. 1) TX=2.0*TGAV(J-1)-TGAV(J-2)
       IF(J.EQ.226)DELT90=TX
       IF(J.EQ.236)DELT00=TX
 !

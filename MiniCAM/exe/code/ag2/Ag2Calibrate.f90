@@ -221,6 +221,8 @@ BREAK = 1.0d0
 	! Calc the calibration price of animal products
 	CALP(i,3)=AnimFeed(i,5) * FEEDOUT(i,2) + CALP(i,10) * PASTOUT(i,2) + othcostperout1(i,3)
 
+    write(97,*) i,',',CALP(i,3),',',AnimFeed(i,5) * FEEDOUT(i,2),',',CALP(i,10)*PASTOUT(i,2),',',othcostperout1(i,3)
+    write(97,*)  '   FEED&PAST OUT:,', FEEDOUT(i,2),',', PASTOUT(i,2)
   ! Extend the variable cost data throughout the 3D Array
 	DO sector = 1,numsectors
 		DO M=MSTART, NZ(i)
