@@ -294,8 +294,9 @@ void subsector::set_hydrotech(int itech)
 void subsector::calc_price( const string regionName, const int per )
 {
 	int i=0;
+	subsectorprice[per] = 0; // initialize to 0 for summing
+	fuelprice[per] = 0; // initialize to 0 for summing
 
-	subsectorprice[per]=0.0;
 	for (i=0;i<notech;i++) {
 		// calculate weighted average price for subsector
 		subsectorprice[per] += techs[i][per]->showshare()*

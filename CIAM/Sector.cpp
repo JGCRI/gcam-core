@@ -915,7 +915,8 @@ void demsector::calc_pElasticity(int per)
 void demsector::aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per)
 {
 	double ser_dmd, base, ser_dmd_adj;
-	double pelasticity = -0.9;
+	//double pelasticity = -0.9;
+	double pelasticity = pElasticity[per];
 	
 	base = getoutput(0);
 
@@ -1001,7 +1002,14 @@ void demsector::MCoutput( const string& regionName )
 	}
 	dboutput4(regionName,"End-Use Service","by Sector",secname,"Ser Unit",temp);
 	dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",temp);
-	
+
+	// End-use service price elasticity
+	str = secname + "_price";
+	dboutput4(regionName,"End-Use Service","Elasticity",str," ",pElasticity);
+	str = secname + "_income";
+	// End-use service income elasticity
+	dboutput4(regionName,"End-Use Service","Elasticity",str," ",iElasticity);
+
 	// sector fuel consumption by fuel type
 	typedef map<string,double>:: const_iterator CI;
 	map<string,double> tfuelmap = sector::getfuelcons(m=0);

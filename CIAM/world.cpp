@@ -162,7 +162,7 @@ void World::toDebugXML( const int period, ostream& out ) const {
 	marketplace.toDebugXML( period, out );
 	
 	for( vector<Region*>::const_iterator i = region.begin(); i == region.begin(); i++ ) { 
-		//for( vector<Region>::const_iterator i = region.begin(); i != region.end(); i++ ) { 
+	//for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ) { 
 		( *i )->toDebugXML( period, out );
 	}
 	
