@@ -13,7 +13,6 @@
 * \version $Revision$
 */
 
-#include <iostream>
 #include "containers/include/scenario_runner.h"
 
 class Timer;
@@ -32,7 +31,7 @@ public:
     virtual ~MACGeneratorScenarioRunner();
     virtual void runScenario( Timer& timer );
 private:
-    void printOutput();
+    void printOutput() const;
     void calculateAbatementCostCurve();
     };
 #endif // _MAC_GENERATOR_SCENARIO_RUNNER_H_

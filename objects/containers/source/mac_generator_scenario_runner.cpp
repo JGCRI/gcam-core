@@ -79,7 +79,7 @@ void MACGeneratorScenarioRunner::runScenario( Timer& timer ) {
     if ( conf->getBool( "timestamp" ) ) { 
         timer.print( bugoutfile, "Data Readin, Model Run & Write Time:" );
     }
-    
+
     // Create cost curve if configured.
     if( conf->getBool( "createCostCurve", false ) ){
         calculateAbatementCostCurve();
@@ -91,6 +91,7 @@ void MACGeneratorScenarioRunner::runScenario( Timer& timer ) {
 * \detailed This function performs multiple calls to scenario.run() with 
 * varied fixed carbon taxes in order to determine an abatement cost curve.
 * \note This code could be readily modified to deal with other gasses at this level. 
+* \todo Break this function up into several smaller more intelligent ones. Its too long. -JPL
 */
 void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     // Determine the number of additional points to calculate. 
@@ -124,6 +125,8 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     emissionsQCurves[ numPoints ] = scenario->getEmissionsQuantityCurves( GHG_NAME );
     emissionsTCurves[ numPoints ] = scenario->getEmissionsPriceCurves( GHG_NAME );
     
+    // TEMP
+    XMLWriteOpeningTag( "USARegionCurves", ccOut, &tabs );
     // Run a trial for each point. 
     
     World* world = scenario->getWorld();
@@ -159,13 +162,26 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
         // Save information.
         emissionsQCurves[ currPoint ] = scenario->getEmissionsQuantityCurves( GHG_NAME );
         emissionsTCurves[ currPoint ] = scenario->getEmissionsPriceCurves( GHG_NAME );
-    }
+
+        // TEMP WRITOUT
+        emissionsQCurves[ currPoint ][ "USA" ]->toXML( ccOut, &tabs );
+        emissionsTCurves[ currPoint ][ "USA" ]->toXML( ccOut, &tabs );
+    }   
+    
+    // TEMP
+    emissionsQCurves[ numPoints ][ "USA" ]->toXML( ccOut, &tabs );
+    emissionsTCurves[ numPoints ][ "USA" ]->toXML( ccOut, &tabs );
+
+    // TEMP
+    XMLWriteClosingTag( "USARegionCurves", ccOut, &tabs );
     
     // Create curves for each period based on all trials.
     vector<map<const string, Curve*> > periodCostCurves( maxPeriod );
     
+    XMLWriteOpeningTag( "PeriodCostCurves", ccOut, &tabs );
     for( int per = 0; per < maxPeriod; per++ ){
         const int year = modeltime->getper_to_yr( per );
+        XMLWriteOpeningTag( "CostCurves", ccOut, &tabs, per );
         // Iterate over each region.
         for( RegionIter rIter = emissionsQCurves[ 0 ].begin(); rIter != emissionsQCurves[ 0 ].end(); rIter++ ){
             ExplicitPointSet* currPoints = new ExplicitPointSet();
@@ -177,11 +193,20 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
                 XYDataPoint* currPoint = new XYDataPoint( reduction, tax );
                 currPoints->addPoint( currPoint );
             }
-            periodCostCurves[ per ][ region ] = new PointSetCurve( currPoints );
+            Curve* perCostCurve = new PointSetCurve( currPoints );
+            perCostCurve->setTitle( region + " period cost curve" );
+            perCostCurve->setNumericalLabel( per );
+            
+            // Only write out USA data for now. 
+            if( region == "USA" ){
+                perCostCurve->toXML( ccOut, &tabs );
+            }
+            periodCostCurves[ per ][ region ] = perCostCurve;
         }
+        XMLWriteClosingTag( "CostCurves", ccOut, &tabs );
        
     }
-    
+    XMLWriteClosingTag( "PeriodCostCurves", ccOut, &tabs );
     // Storage for the final cost curves. 
     map<const string, const Curve*> regionalCostCurves;
     
@@ -204,7 +229,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
         // Loop through the periods. 
         for( int per = 0; per < maxPeriod; per++ ){
             const int year = modeltime->getper_to_yr( per );
-            double periodCost = periodCostCurves[ per ][ *rNameIter ]->getIntegral( 0, DBL_MAX );
+            double periodCost = periodCostCurves[ per ][ *rNameIter ]->getIntegral( 0, DBL_MAX ); // Integrate from zero to the reduction.
             XYDataPoint* currPoint = new XYDataPoint( year, periodCost );
             costPoints->addPoint( currPoint );
         }
@@ -218,6 +243,8 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
         regionalCostCurves[ *rNameIter ] = regCostCurve;
         regionalCosts[ *rNameIter ] = regionalCost;
         regionalDiscountedCosts[ *rNameIter ] = discountedRegionalCost;
+
+        // Check if we are double summing globalcost!
         globalCost += regionalCost;
         globalDiscountedCost += discountedRegionalCost;
     }
@@ -233,7 +260,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     tabs.increaseIndent();
     typedef map<const string,double>::const_iterator constDoubleMapIter;
     for( constDoubleMapIter iter = regionalCosts.begin(); iter != regionalCosts.end(); iter++ ){
-        XMLWriteElement( iter->second, iter->first, ccOut, &tabs );
+        XMLWriteElement( iter->second, "UndiscountedCost", ccOut, &tabs, 0, iter->first );
     }
     tabs.decreaseIndent();
     tabs.writeTabs( ccOut );
@@ -246,7 +273,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     tabs.increaseIndent();
     typedef map<const string,double>::const_iterator constDoubleMapIter;
     for( constDoubleMapIter iter = regionalDiscountedCosts.begin(); iter != regionalDiscountedCosts.end(); iter++ ){
-        XMLWriteElement( iter->second, iter->first, ccOut, &tabs );
+        XMLWriteElement( iter->second, "DiscountedCost", ccOut, &tabs, 0, iter->first );
     }
     tabs.decreaseIndent();
     tabs.writeTabs( ccOut );
@@ -286,7 +313,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
 * All file names are defined by the configuration file. All file handles
 * are closed when the function completes.
 */
-void MACGeneratorScenarioRunner::printOutput() {
+void MACGeneratorScenarioRunner::printOutput() const {
     
     // Get a pointer to the configuration object.
     const Configuration* conf = Configuration::getInstance();
