@@ -18,8 +18,8 @@
 */
 
 // Configuration constants. To turn off Fortran code or databases uncomment these lines.
-#define __HAVE_FORTRAN__ 0 //!< A flag which tells whether to attempt linking of fortran portions.
-#define __HAVE_DB__ 0 //!< A flag which turns on or off compilation of database code. 
+#define __HAVE_FORTRAN__ 1 //!< A flag which tells whether to attempt linking of fortran portions.
+#define __HAVE_DB__ 1 //!< A flag which turns on or off compilation of database code. 
 // End of configuration constants.
 
 // In VC 6.0 turn off warning 4786. 
