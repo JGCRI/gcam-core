@@ -92,7 +92,7 @@ void tranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
             childNodeList = curr->getChildNodes();
             
             // loop through technologies children.
-            for( int j = 0; j < childNodeList->getLength(); j++ ){
+            for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
                 
                 currChild = childNodeList->item( j );
                 childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
@@ -112,7 +112,7 @@ void tranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
             childNodeList = curr->getChildNodes();
             
             // loop through technologies children.
-            for( int j = 0; j < childNodeList->getLength(); j++ ){
+            for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
                 
                 currChild = childNodeList->item( j );
                 childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
@@ -138,7 +138,7 @@ void tranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
                 }
             }
             techs.push_back( techVec );
-            techNameMap[ techVec[ 0 ]->getName() ] = techs.size() - 1;
+            techNameMap[ techVec[ 0 ]->getName() ] = static_cast<int>( techs.size() ) - 1;
             techVec.clear();
             techVec.resize( modeltime->getmaxper(), 0 );
         }
