@@ -84,7 +84,7 @@ void GHGPolicy::changePolicyToFixedTax( const string& regionName ) {
     
     // First remove the constraints. This is not strictly neccessary but is clearer.
     // This does not actually remove supplies, although that has no effect.
-    const int maxPeriod = scenario->getModeltime()->getmaxdataper();
+    const int maxPeriod = scenario->getModeltime()->getmaxper();
     constraint.clear();
     constraint.resize( maxPeriod, -1 );
     
@@ -117,7 +117,7 @@ void GHGPolicy::setFixedTaxes( const string& regionName, const vector<double>& t
     assert( isFixedTax );
     
     // Set the policy tax to the new tax value for all periods.
-    const int maxPeriod = scenario->getModeltime()->getmaxdataper();
+    const int maxPeriod = scenario->getModeltime()->getmaxper();
     fixedTaxes.clear();
     fixedTaxes.resize( maxPeriod );
     
