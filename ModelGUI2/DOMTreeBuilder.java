@@ -34,6 +34,8 @@ public class DOMTreeBuilder {
 	private ArrayList dataArr; //!< Current line of data being processed.
 	private Node rootElement; //!< Holds the pointer to the root of the DOM tree
 	private String docName; //!< Holds the tagName of the root
+	private HashMap lookUpMap;
+	private boolean buildMap;
 
 	/*! \brief Default constructor.
 	*
@@ -58,6 +60,8 @@ public class DOMTreeBuilder {
 		} catch (Exception e) {
 			System.err.println(e);
 		}
+		lookUpMap = new HashMap();
+		buildMap = false;
 	}
 
 	/* \brief Set the header.
@@ -66,6 +70,12 @@ public class DOMTreeBuilder {
 	*
 	*/
 	public void setHeader(String headerIn) throws Exception {
+		if(headerIn.matches(".*MAP,.*")) {
+			System.out.println("Got a Map");
+			buildMap = true;
+		} else {
+			buildMap = false;
+		}
 		head = new Headers(headerIn.split(","));
 	}
 
@@ -77,12 +87,17 @@ public class DOMTreeBuilder {
 	*   \warning user must set a header before calling this function.
 	*/
 	public void addToTree (ArrayList data) {
-		if (head == null) {
+		if (head == null && !buildMap) {
 			System.out.println("Warning, no header set, skipping data");
 			return;
 		}
 		dataArr = data;
-		makeTree(rootElement, docName);
+		if (buildMap) {
+			System.out.println("Processing map");
+			addToMap();
+		} else {
+			makeTree(rootElement, docName);
+		}
 	}
 
 	/* \brief Outputs the Tree in XML format to filename.
@@ -113,6 +128,33 @@ public class DOMTreeBuilder {
 
 	public Document getDoc() {
 		return doc;
+	}
+
+	private void addToMap() {
+		HashMap tempMap;
+		System.out.println(head.getNumCols());
+		if(lookUpMap.containsKey(head.getParentHeader(0))) {
+			tempMap = (HashMap)lookUpMap.get(head.getParentHeader(0));
+		} else {
+			tempMap = new HashMap();
+		}
+		tempMap.put(dataArr.get(0),dataArr.get(1));
+		for(int i = 0; i < head.getNumCols(); i++) {
+			System.out.println("Adding: "+head.getParentHeader(i)+" -> "+dataArr.get(0)+" -> "+dataArr.get(1));
+			lookUpMap.put(head.getParentHeader(i),tempMap);
+		}
+	}
+
+	private String convertData(String elementName, String dataRead) {
+		Object ret = lookUpMap.get(elementName);
+		if(ret == null) {
+			return dataRead;
+		}
+		ret = ((HashMap)ret).get(dataRead);
+		if(ret == null) {
+			return dataRead;
+		}
+		return (String)ret;
 	}
 
 	/*! \brief Compare to Individual Elements of a DOM tree.
@@ -265,7 +307,7 @@ public class DOMTreeBuilder {
 						retVal = head.getAttribute(head.getParentHeader(currPos)+"\\"+chName+"\\"+attrStr);
 					//}
 					if ( retVal instanceof Integer ) {
-                                		tempNode.setAttribute(attrStr,(String)dataArr.get(((Integer)retVal).intValue()));
+                                		tempNode.setAttribute(attrStr,convertData(chName, (String)dataArr.get(((Integer)retVal).intValue())));
 					}
 					else if ( retVal instanceof String) {
 						tempNode.setAttribute(attrStr,(String)retVal);
@@ -289,7 +331,7 @@ public class DOMTreeBuilder {
 								if ( (retInt+1) > dataArr.size()) {
 									System.out.println("FAILED: dataArr.get(retInt), array bounds exceeded "+(retInt+1)+" > "+dataArr.size());
 								}
-								tempText = doc.createTextNode((String)dataArr.get(retInt));
+								tempText = doc.createTextNode(convertData(chName, (String)dataArr.get(retInt)));
 								tempNode.appendChild(tempText);
 							}
 							//System.out.println("About to use "+chName);
@@ -313,7 +355,7 @@ public class DOMTreeBuilder {
 					if ( (retInt+1) > dataArr.size()) {
 						System.out.println("FAILED: dataArr.get(retInt), array bounds exceeded "+(retInt+1)+" > "+dataArr.size());
 					}
-                               		tempText = doc.createTextNode((String)dataArr.get(retInt));
+                               		tempText = doc.createTextNode(convertData(chName, (String)dataArr.get(retInt)));
                                 	tempNode.appendChild(tempText);
                         	}
 				//System.out.println("About to use "+chName);

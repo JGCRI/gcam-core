@@ -41,7 +41,28 @@ public class Headers {
 		childStack = new Stack();
 		ArrayList tempArr;
 		ArrayList parentTemp = new ArrayList();
-		for ( int i = 0; i < numCols; i++ ) {
+		for ( int i = 0; i < splitHeaders.length; i++ ) {
+			if(splitHeaders[0].equals("MAP")) {
+				System.out.println("Parsing map header "+splitHeaders[i]);
+				if( i != 0) {
+					System.out.println("HERE");
+					parentArr.add(splitHeaders[i]);
+				}
+				else {
+					numCols--;
+				}
+				continue;
+			}
+			/*
+			if(splitHeaders[i].matches(".*->.*")) {
+				parent = splitHeaders[i].substring(splitHeaders[i].indexOf(']')+1, splitHeaders[i].indexOf('-'));
+				firstArg = splitHeaders[i].substring(splitHeaders[i].indexOf('[')+1, splitHeaders[i].indexOf(']'));
+				secArg = splitHeaders[i].substring(splitHeaders[i].indexOf('>')+1);
+				System.out.println("Got a Map thinger: "+parent+" reads "+firstArg+" maps to "+secArg);
+				numCols--;
+				continue;
+			}
+			*/
 			st = new StringTokenizer( splitHeaders[i] , "/", false);
 			if (st.countTokens() == 1) {
 				parent = null;
@@ -166,6 +187,7 @@ public class Headers {
 	}
 
 	public int getNumCols() {
+		System.out.println("parentheadersize: "+parentArr.size());
 		return numCols;
 	}
 
