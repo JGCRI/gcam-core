@@ -632,15 +632,6 @@ void sector::supply( const string regionName, const int per) {
         cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;
     }
     
-    // TEMP -sjs
-    if (regionName == "USA" && name == "electricity"  && 1==2) {
-        cout << " 2 Share: " ;
-        for (i=0;i<nosubsec;i++) {
-            cout << i << " : " << subsec[i]->getShare( per ) << " ";
-        }
-        cout << endl;
-    }
-    
     // calculate output from technologies that have fixed outputs such as hydro electricity
     // Determine total fixed production and total var shares
     // Need to change the exog_supply function once new, general fixed supply method is available
@@ -656,29 +647,11 @@ void sector::supply( const string regionName, const int per) {
         totalFixedSupply += fixedSupply;
     }
     
-    // TEMP -sjs
-    if (regionName == "USA" && name == "electricity"  && 1==2) {
-        cout << " 2a Share: " ;
-        for (i=0;i<nosubsec;i++) {
-            cout << i << " : " << subsec[i]->getShare( per ) << " ";
-        }
-        cout << endl;
-    }
-    
     // Scale down fixed output if its greater than actual demand
     if ( totalFixedSupply > mrkdmd ) {
         for (i=0;i<nosubsec;i++) {
             subsec[i]->scaleFixedSupply( mrkdmd/totalFixedSupply, per ); 
         }
-    }
-    
-    // TEMP -sjs
-    if (regionName == "USA" && name == "electricity"  && 1==2) {
-        cout << " 2b Share: " ;
-        for (i=0;i<nosubsec;i++) {
-            cout << i << " : " << subsec[i]->getShare( per ) << " ";
-        }
-        cout << endl;
     }
     
     // Adjust shares for any fixed output
