@@ -253,21 +253,18 @@ void AgSector::runModel( const int period, const string& regionName ) {
 		prices[ period ][ l ] = marketplace.showprice( indiceToNameMap[ l ], regionName, period );
 	}
 	
-	// cout << "PRICE BEFORE: ";
 	for( int i = 0; i < numAgMarkets; i++ ) {
 		priceArray[ i ] = prices[ period ][ i ];
-		// cout << indiceToNameMap[ i ] << " " << priceArray[ i ] << " ";
 	}
 
-	// cout << endl;
-	
+	// Temporarily zero biomass price
+	priceArray[ 3 ] = 0;
+
 	AG2RUN( priceArray, tempRegionNumber, tempPeriod, demandArray, supplyArray );
 	
 	for( int j = 0; j < numAgMarkets; j++ ) {
 		demands[ period ][ j ] = demandArray[ j ];
-		// cout << indiceToNameMap[ j ] << " PRICE: " << priceArray[ j ] << " DEMAND: " << demands[ period ][ j ] << " ";
 		supplies[ period ][ j ] = supplyArray[ j ];
-		// cout << "SUPPLY: " << supplies[ period ][ j ] << endl;
 	}
 	
 	// set the market supplies and demands.
