@@ -18,8 +18,8 @@
 // Forward declarations.
 class demographic;
 class Resource;
-class sector;
-class demsector;
+class Sector;
+class DemandSector;
 class AgSector;
 class ghg_mrk;
 class Summary;
@@ -55,8 +55,8 @@ private:
     double EnergyGNPElas; //!< elasticity for energy price feedback on GNP
     demographic* population; //!< demographic object
     std::vector<Resource*> resources; //!< vector of pointers toresource objects
-    std::vector<sector*> supplySector; //!< vector of pointers to supply sector objects
-    std::vector<demsector*> demandSector; //!< vector of pointers to demand sector objects
+    std::vector<Sector*> supplySector; //!< vector of pointers to supply sector objects
+    std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects
     AgSector* agSector; //!< Agricultural sector
     std::vector<ghg_mrk*> ghgMarket; //!< vector of pointers to ghg market objects, container for constraints and emissions
     std::vector<double> iElasticity; //!< income elasticity
@@ -78,11 +78,10 @@ private:
     std::vector<Emcoef_ind> emcoefInd; //!< vector of objects containing indirect emissions coefficients
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
     std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
-
+    void clear();
 public:
    Region();
     ~Region(); 
-    void clear();
     void initElementalMembers();
     void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
@@ -91,41 +90,37 @@ public:
     std::string getName() const;
     void writeBackCalibratedValues( const int period );
     void setupCalibrationMarkets();
-    void calibrateRegion( const bool doCalibrations, const int per );
-    bool demandAllCalibrated( const int per );
-    void calibrateTFE( const int per ); 
-    void initCalc( const int per );
-    void setGhgSupply(int per);
-    void setGhgDemand(int per);
-    void addGhgTax(int per);
-    void rscSupply(int per);
-    void finalSupplyPrc(int per);
-    void calcGnp(int per);
+    void calibrateRegion( const bool doCalibrations, const int period );
+    bool isDemandAllCalibrated( const int period ) const;
+    void calibrateTFE( const int period ); 
+    void initCalc( const int period );
+    void setGhgSupply( const int period );
+    void setGhgDemand( const int period );
+    void addGhgTax( const int period );
+    void rscSupply( const int period );
+    void finalSupplyPrc( const int period );
+    void calcGnp( const int period );
     const std::vector<double> calcFutureGNP() const;
-    void calcGNPlfp(int per);
-    void calcEnduseprice(int per);
+    void calcGNPlfp( const int period );
+    void calcEnduseprice( const int period );
     void calcEndUsePrice( const int period );
-    void adjustGnp(int per);
-    void enduseDemand(int per);
-    void finalSupply(int per);
-    void emission(int per);
-    void calcEmissFuel(int per);
-    void emissionInd(int per);
-    void applycarbontax(int per);
-    double getPop(int per);
-    void outputFile(void);
-    void MCoutput(void);
-    int getNoDRsc(void);
-    int getNoSSec(void);
-    void findSimul( const int per );
+    void adjustGnp( const int period );
+    void enduseDemand( const int period );
+    void finalSupply( const int period );
+    void emission( const int period );
+    void calcEmissFuel( const int period );
+    void emissionInd( const int period );
+    void applycarbontax( const int period );
+    void outputFile() const;
+    void MCoutput() const;
+    void findSimul( const int period );
     void calcAgSector( const int period );
     void initializeAgMarketPrices( const std::vector<double>& pricesIn );
-    double getRsc( const std::string resourceName, const int per );
-    double getSubRsc( const std::string resourceName, const std::string& subResourceName, const int per );
     void updateSummary( const int period );
     void printGraphs( std::ostream& outStream, const int period ) const;
     double getPrimaryFuelCO2Coef( const std::string& fuelName ) const;
     double getCarbonTaxCoef( const std::string& fuelName ) const;
+    const Summary getSummary( const int period ) const;
     std::vector<std::string> getSectorDependencies( const std::string& sectorName ) const;
     void printSectorDependencies( Logger* logger ) const;
 };
