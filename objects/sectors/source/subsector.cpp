@@ -262,7 +262,9 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
     for( unsigned i = 0; i < capLimit.size(); i++ ){
         XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
-    
+
+    XMLWriteElementCheckDefault( scaleYear, "scaleYear", out, tabs, modeltime->getendyr() );
+
     for( unsigned i = 0; i < calOutputValue.size(); i++ ){
         if ( doCalibration[ i ] ) {
             XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
@@ -313,6 +315,8 @@ void Subsector::toOutputXML( ostream& out, Tabs* tabs ) const {
         XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
     
+    XMLWriteElementCheckDefault( scaleYear, "scaleYear", out, tabs, modeltime->getendyr() );
+
     for( unsigned i = 0; i < calOutputValue.size(); i++ ){
         if ( doCalibration[ i ] ) {
             XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
@@ -901,7 +905,7 @@ void Subsector::scalefixedOutput( const double scaleRatio, const int period ) {
 * If the sector share weight in the previous period was changed due to calibration, 
 * then adjust next few shares so that there is not a big jump in share weights.
 *
-* Can turn this feature off by setting the scaleYear before the calibration year (e.g., 1975 -- must be >= model start year)
+* Can turn this feature off by setting the scaleYear before the calibration year (e.g., 1975, or even zero)
 *
 * If scaleYear is set to be the calibration year then shareweights are kept constant
 *
@@ -911,11 +915,14 @@ void Subsector::scalefixedOutput( const double scaleRatio, const int period ) {
 */
 void Subsector::shareWeightScale( const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
-
+    
     // if previous period was calibrated, then adjust future shares
      if ( ( period > modeltime->getyr_to_per( 1990 ) ) && calibrationStatus[ period - 1 ] ) {
         // Only scale shareweights if after 1990 and scaleYear is after this period
-        int endPeriod = modeltime->getyr_to_per( scaleYear );
+        int endPeriod = 0;
+        if ( scaleYear >= modeltime->getstartyr() ) {
+            endPeriod = modeltime->getyr_to_per( scaleYear );
+        }
         if  ( endPeriod >= ( period - 1) ) {
             shareWeightInterp( period - 1, endPeriod );
         }
