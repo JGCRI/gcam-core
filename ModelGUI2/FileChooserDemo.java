@@ -73,6 +73,9 @@ public class FileChooserDemo extends JFrame
   static final int rightWidth = 340;
   static final int windowWidth = leftWidth + rightWidth;
 
+  static String[] names = {"Single Table", "Multi Tables", "Both Tables"};
+  static JFrame frame; // goes with radio buttons
+
   public static void main(String [] args)
   {
   	
@@ -493,11 +496,62 @@ public class FileChooserDemo extends JFrame
 	return m;
   }
 
+
+/*
+
+  public static JPanel createUI() {
+	  //Create the labels.
+	  JLabel intro = new JLabel("Type of tables:");
+	  final JLabel name = new JLabel("anything");
+	  intro.setLabelFor(name);
+
+	  RadioButton.showDialog(									  frame,
+									  null,
+									  "hm",
+									  "Name Chooser",
+									  names,
+									  name.getText());
+
+	  //Create the content pane and set up the layout.
+	  JPanel contentPane = new JPanel();
+	  contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+	  contentPane.setBorder(BorderFactory.createEmptyBorder(20,20,10,20));
+	  intro.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+	  name.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+	  //button.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+
+	  //Add the labels to the content pane.
+	  contentPane.add(intro);
+	  contentPane.add(name);
+
+	  //Add a vertical spacer that also guarantees us a minimum width:
+	  contentPane.add(Box.createRigidArea(new Dimension(150,10)));
+
+	  //Add the button.
+	  //contentPane.add(button);
+
+	  return contentPane;
+  }
+*/
+
+
+
+
+
+
+
+
   private JPopupMenu makePopupTreeMenu() {
 	   treeMenu = new JPopupMenu();
 	   JMenuItem menuItem = new JMenuItem("Display Table");
 	   menuItem.addMouseListener(new MouseListener() {
 		   public void mouseReleased(MouseEvent e) {
+
+			RadioButton.showDialog(frame, null, "", "Choose Table Viewing Type", names,"");
+
+			// ****** THIS IS WHERE YOU SPLIT INTO THREE DIFFERENT TABLE CALLS ******
+
+
 			if (!jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
 			   Node temp = ((DOMmodel.DOMNodeAdapter)jtree.getLastSelectedPathComponent()).getNode();
 			   // HERE TO DISABLE TABLE remark function call
