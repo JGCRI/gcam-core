@@ -4,6 +4,7 @@
 	<summary>"SRES B2 Scenario is used for this Reference Scenario that includes a new transportation sector for the US"</summary>
 	<world>
 		<region name="USA">
+      			<demandsector name="transportation" delete="1"/>
 			<tranSector name="Passenger" perCapitaBased="1">
 				<market/>
 				<price year="1975">0</price>
