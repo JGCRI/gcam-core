@@ -777,14 +777,14 @@ END IF
       IF(vp)CALL ivid(0,ct,sct,6,'Elec->H2','EJ/yr')
       IF(vp)CALL ivid(0,ct,sct,7,'Total','EJ/yr')
  	DBAR(vl(ct,sct,1),:) =	(EDRIKLM(INOIL,1,L,2:NM)-ESUILM(INOIL,L,2:NM)) + &	! elec gen
- 							(EDRIKLM(JUOSCRUB,1,L,2:NM)-(ESUILM(JUOSCRUB,L,2:NM)*GUILM(JUOSCRUB,L,2:NM))) + &	! elec gen - scrubbed
+ 							(ESUILM(JUOSCRUB,L,2:NM)*GUILM(JUOSCRUB,L,2:NM)-(ESUILM(JUOSCRUB,L,2:NM))) + &	! elec gen - scrubbed
   							(EDRIKLM(INOIL,KH2,L,2:NM)-(ESHILM(INOIL,L,2:NM)+ESHILM(INOIL+NH2,L,2:NM))) 	! H2 gen
  	DBAR(vl(ct,sct,2),:) =	(EDRIKLM(INGAS,1,L,2:NM)-ESUILM(INGAS,L,2:NM)) + &	! elec gen
- 							(EDRIKLM(JUGSCRUB,1,L,2:NM)-(ESUILM(JUGSCRUB,L,2:NM)*GUILM(JUGSCRUB,L,2:NM))) + &	! elec gen - scrubbed
+ 							(ESUILM(JUGSCRUB,L,2:NM)*GUILM(JUGSCRUB,L,2:NM)-(ESUILM(JUGSCRUB,L,2:NM))) + &	! elec gen - scrubbed
  							(SYNINPUT(INGAS,L,2:NM)-SYNFUEL(INGAS,1,L,2:NM)) + &	! syn gas-liq
   							(EDRIKLM(INGAS,KH2,L,2:NM)-(ESHILM(INGAS,L,2:NM)+ESHILM(INGAS+NH2,L,2:NM))) 	! H2 gen
  	DBAR(vl(ct,sct,3),:) =	(EDRIKLM(INCOAL,1,L,2:NM)-ESUILM(INCOAL,L,2:NM)) + &	! elec gen
-							(EDRIKLM(JUCSCRUB,1,L,2:NM)-(ESUILM(JUCSCRUB,L,2:NM)*GUILM(JUCSCRUB,L,2:NM))) + &	! elec gen - scrubbed
+							(ESUILM(JUCSCRUB,L,2:NM)*GUILM(JUCSCRUB,L,2:NM)-(ESUILM(JUCSCRUB,L,2:NM))) + &	! elec gen - scrubbed
   							(SYNINPUT(INCOAL,L,2:NM)-(SYNFUEL(3,1,L,2:NM)+SYNFUEL(3,2,L,2:NM))) + &	! syn COAL-gas&liq
   							(EDRIKLM(INCOAL,KH2,L,2:NM)-(ESHILM(INCOAL,L,2:NM)+ESHILM(INCOAL+NH2,L,2:NM))) 	! H2 gen
 	DBAR(vl(ct,sct,4),:) =	(EDRIKLM(IBMASS,1,L,2:NM)-ESUILM(7,L,2:NM)) + &	! elec gen
