@@ -23,8 +23,33 @@
 #include <string>
 #include <ctime>
 #include <sstream>
-
+#include <map>
+#include <vector>
 namespace util {
+
+    /*! \brief Returns the value within this map associated with a given key. 
+    * \detailed This function takes as its input a map and a key to search for. 
+    * It will return the value associated with the key, or the default value for the class
+    * of the object if the key is not found.
+    * \note Use this function instead of recoding a map search, as this function should be more efficient and 
+    * handle errors more appropriately. 
+    * \todo Evaluate returning a const reference.
+    * \param currMap The map within which to search for the value.
+    * \param key The key to find the value with which it is associated.
+    * \return The value in the currMap associated with the key, the default constructed object otherwise. 
+    */
+    template <class K, class V>
+    const V searchForValue( const std::map<K,V>& currMap, const K& key ){
+        V retValue;
+        std::map<K,V>::const_iterator iter = currMap.find( key );
+        if( iter != currMap.end() ){
+            retValue = iter->second;
+        } else {
+            retValue = V();
+        }
+        return retValue;
+    }
+
     /*! \brief A function to determine the sign of a number.
     * \param number A templated parameter which must be comparable to 0.
     * \return Returns -1 if the number is less than 0, +1 otherwise.
@@ -96,7 +121,7 @@ namespace util {
     * exactly one underscore, multiple spaces are not concatonated. Other whitespace characters are not
     * replaced. 
     * 
-    * \todo This function currently generated a compiler warning, which should be fixed. 
+    * \todo This function currently generates a compiler warning, which should be fixed. 
     * \param stringIn The string in which spaces should be replaced by underscores.
     */
     inline void replaceSpaces( std::string& stringIn ) {
@@ -109,22 +134,37 @@ namespace util {
         }
     }
 
-    //! Static function which returns SMALL_NUM. This avoid initialization problems. 
+    /*! \brief Static function which returns SMALL_NUM. 
+    * \detailed This is a static function which is used to find the value of the constant SMALL_NUM.
+    * This avoids the initialization problems of static variables. This function should be used instead
+    * of defining this constant in multiple locations in the code.
+    * \return The constant SMALL_NUM.
+    */
    static inline double getSmallNumber() {
       const double SMALL_NUM = 1e-6;
       return SMALL_NUM;
    }
 
-   //! Static function which returns VERY_SMALL_NUM. This avoids initialization problems. 
+    /*! \brief Static function which returns VERY_SMALL_NUM. 
+    * \detailed This is a static function which is used to find the value of the constant VERY_SMALL_NUM.
+    * This avoids the initialization problems of static variables. This function should be used instead
+    * of defining this constant in multiple locations in the code.
+    * \return The constant VERY_SMALL_NUM.
+    */
    static inline double getVerySmallNumber() {
       const double VERY_SMALL_NUM = 1e-8;
       return VERY_SMALL_NUM;
    }
 
-   //! Static function which returns VERY_SMALL_NUM. This avoids initialization problems. 
+    /*! \brief Static function which returns EXTREMELY_SMALL_NUM. 
+    * \detailed This is a static function which is used to find the value of the constant EXTREMELY_SMALL_NUM.
+    * This avoids the initialization problems of static variables. This function should be used instead
+    * of defining this constant in multiple locations in the code.
+    * \return The constant EXTREMELY_SMALL_NUM.
+    */
    static inline double getTinyNumber() {
-      const double VERY_SMALL_NUM = 1e-16;
-      return VERY_SMALL_NUM;
+      const double EXTREMELY_SMALL_NUM = 1e-16;
+      return EXTREMELY_SMALL_NUM;
    }
 
     /*! \brief Function which creates an XML compliant date time string.
@@ -136,7 +176,6 @@ namespace util {
     * \return string The time converted to XML date string format.
     * \bug GMT offset does not work properly.
     */
-
    static std::string XMLCreateDate( const time_t& time ) {
        std::stringstream buffer;
        std::string retString;
