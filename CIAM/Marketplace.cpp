@@ -1722,7 +1722,7 @@ int Marketplace::Secant_all( const double solutionTolerance,vector<solinfo>& sol
 void Marketplace::JFunction( vector<double> prices, Matrix& JFDM, double& worldCalcCount, int const per ) {
    World* world = scenario->getWorld();
    const int marketsToSolve = prices.size();
-   const double DELTAP = 1e-4; // What is the proper value for delta?
+   const double DELTAP = 1e-10; // What is the proper value for delta?
    vector<double> tprices = prices; // define and initialize prices for storage
    vector<double> tmpJFD( marketsToSolve );
    
@@ -1787,7 +1787,7 @@ void Marketplace::Derivatives( vector<double> prices, Matrix& JFDM, Matrix& JFSM
    cout << endl << "Begin derivative calculation..." << endl;
    World* world = scenario->getWorld();
    const int marketsToSolve = prices.size();
-   const double DELTAP = 1e-4; // Orginal, What is the proper value for delta?
+   const double DELTAP = 1e-10; // Orginal, What is the proper value for delta?
    //const double DELTAP = 1e-5; // What is the proper value for delta?
    vector<double> tprices = prices; // define and initialize prices for storage
    vector<double> tmpJFD( marketsToSolve );
