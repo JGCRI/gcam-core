@@ -263,7 +263,7 @@ void technology::XMLDerivedClassParse( const string nodeName, const DOMNode* cur
 //! Complete initialization
 void technology::completeInit() {
     const string CO2_NAME = "CO2";
-    if( !util::searchForValue( ghgNameMap, CO2_NAME ) ) {
+    if( !util::hasValue( ghgNameMap, CO2_NAME ) ) {
         // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
         // for CO2 this emissions coefficient is not used
         Ghg* CO2 = new Ghg( CO2_NAME, "MTC", 0, 1, 0 ); // at least CO2 must be present
