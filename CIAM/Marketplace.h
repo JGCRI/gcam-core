@@ -60,7 +60,6 @@ private:
 		int Bisection_all( const double Tol, const int IterLimit, vector<solinfo>& sol, int& n, const int per );
 		void CheckBracket( const double Tol, vector<solinfo>& sol, bool& allbracketed );
 		int Bracket( const double Tol, vector<solinfo>& sol, bool& allbracketed, bool& firsttime,int& n, const int per );
-		int sign( const int number ) const;
 		int getMarketNumber( const string& goodName, const string& regionName ) const; // get the market number
 		double marketDemand( const int mktNumber, const int period);
 		double checkSupply( const string& goodName, const string& regionName, const int period ) const;
