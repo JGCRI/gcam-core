@@ -71,7 +71,7 @@ bool BisectionNRSolver::solve( const int period ) {
    
    // if marketsToSolve = 0, no markets to solve, break out of solution.
    if ( marketsToSolve == 0 ) {
-      cout << "Model solved with last period's prices"; 
+      cout << "No markets required solving." << endl; 
       return true;
    }
    
@@ -182,7 +182,7 @@ bool BisectionNRSolver::solve( const int period ) {
 
    switch (code) {
    case 0:
-      cout << "Model solved normally: worldCalcCount = " << int( worldCalcCount ) << "; Cumulative = "<< int( totIter ) << endl;
+       cout << "Model solved normally. Number of iterations: " << int( worldCalcCount ) << ". Total iterations: "<< int( totIter ) << "." << endl;
       logfile << ",Model solved normally: worldCalcCount = " << int( worldCalcCount ) << "; Cumulative = "<< int( totIter ) << endl;
       retCode = true;
       break;

@@ -319,8 +319,11 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<
     marketplace->nullSupplies( per );
     world->calc( per );
     update( marketplace, solutionVector, per );
+    
+    if( Configuration::getInstance()->getBool( "trackMaxED" ) ){
+        cout << endl << "Begin derivative calculation..." << endl;
+    }
 
-    cout << endl << "Begin derivative calculation..." << endl;
     const int marketsToSolve = static_cast<int>( solutionVector.size() );
     const double DELTAP = 1e-10; // Orginal, What is the proper value for delta?
     vector<double> tmpJFD( marketsToSolve );

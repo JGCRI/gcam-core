@@ -119,7 +119,9 @@ void World::completeInit() {
 
 //! Initialize the AgLu model.
 void World::initAgLu() {
-    cout << "Initializing agLU" << endl;
+    if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
+        cout << "Initializing agLU..." << endl;
+    }
     double prices[ 14 ][ 12 ]; 
 
     vector<double> tempVec( 12 );

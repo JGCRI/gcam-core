@@ -90,17 +90,22 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
     // Iterate over the vector.
     typedef list<string>::const_iterator ScenCompIter;
     for( ScenCompIter currComp = scenComponents.begin(); currComp != scenComponents.end(); ++currComp ) {
-        cout << "Parsing " << *currComp << " scenario component." << endl;
+        if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
+            cout << "Parsing " << *currComp << " scenario component." << endl;
+        }
         root = XMLHelper<void>::parseXML( *currComp, parser );
         mScenario->XMLParse( root );
     }
-
-    cout << "XML parsing complete." << endl;
+    if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
+        cout << "XML parsing complete." << endl;
+    }
     logfile << "XML parsing complete." << endl;
 
     // Print data read in time.
     timer.save();
-    timer.print( cout, "XML Readin Time:" );
+    if ( Configuration::getInstance()->getBool( "timestamp" ) ) { 
+        timer.print( cout, "XML Readin Time:" );
+    }
     timer.print( logfile, "XML Readin Time:" );
 
     return true;
@@ -111,7 +116,7 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
 * \param aTimer The timer used to print out the amount of time spent performing operations.
 */
 void SingleScenarioRunner::runScenario( Timer& timer ){
-
+    cout << "Starting a model run..." << endl;
     // Finish initialization.
     mScenario->completeInit();
 
@@ -120,7 +125,9 @@ void SingleScenarioRunner::runScenario( Timer& timer ){
 
     // Compute model run time.
     timer.save();
-    timer.print( cout, "Data Readin & Initial Model Run Time:" );
+    if ( Configuration::getInstance()->getBool( "timestamp" ) ) { 
+        timer.print( cout, "Data Readin & Initial Model Run Time:" );
+    }
 }
 
 /*! \brief Function to perform both file and database output. 
@@ -131,7 +138,7 @@ void SingleScenarioRunner::runScenario( Timer& timer ){
 * \param aCloseDB Whether to close the database and output variable IDs. Defaults to true.
 */
 void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
-    
+    cout << "Printing output..." << endl;
     // Get a pointer to the configuration object.
     const Configuration* conf = Configuration::getInstance();
         

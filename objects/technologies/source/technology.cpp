@@ -26,6 +26,7 @@
 #include "marketplace/include/marketplace.h"
 #include "emissions/include/indirect_emiss_coef.h"
 #include "containers/include/gdp.h"
+#include "util/base/include/configuration.h"
 
 using namespace std;
 using namespace xercesc;
@@ -407,15 +408,17 @@ const std::string& technology::getXMLNameStatic2D() {
 
 //! Perform initializations that only need to be done once per period
 void technology::initCalc( ) {    
-   if ( doCalOutput ) {
-      calInputValue = calOutputValue/eff;
-      doCalibration = true;
-   }
-   
-   if ( calInputValue < 0 ) {
-      cerr << "Calibration value < 0 for tech " << name << ". Calibration removed" << endl;
-      doCalibration = false;
-   }
+    if ( doCalOutput ) {
+        calInputValue = calOutputValue/eff;
+        doCalibration = true;
+    }
+
+    if ( calInputValue < 0 ) {
+        if( Configuration::getInstance()->getBool( "debugChecking" ) ){
+            cerr << "Calibration value < 0 for tech " << name << ". Calibration removed" << endl;
+        }
+        doCalibration = false;
+    }
 
     for( unsigned int i = 0; i < ghg.size(); i++ ){
         ghg[i]->initCalc( );

@@ -138,7 +138,7 @@ bool BatchRunner::runSingleScenario( const map<string, FileSet> aComponents, Tim
             components.push_back( currFile->second );
         }
     }
-    cout << "Running scenario " << scenName << endl;
+    cout << "Running scenario " << scenName << "..." << endl;
 
     // Check if cost curve creation is needed.
     const Configuration* conf = Configuration::getInstance();

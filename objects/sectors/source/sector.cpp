@@ -322,10 +322,6 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \param period Model period
 */
 void Sector::initCalc( const int period ) {
-	const Modeltime* modeltime = scenario->getModeltime();
-   Configuration* conf = Configuration::getInstance();
-   bool debugChecking = conf->getBool( "debugChecking" );
-   
     // do any sub-Sector initializations
     for ( int i=0; i<nosubsec; i++ ) {
         subsec[ i ]->initCalc( period );
@@ -348,36 +344,38 @@ void Sector::initCalc( const int period ) {
 	 // to make sure share weights have been adjusted to be consistant with final solution prices
 	 //
 	 // If debugchecking flag is on extra information is printed
-    const double CAL_CHECK_VAL = 0.001; // tollerance for calibration check (somewhat arbitrary)
-    if ( period > 0 ) {
-      double calOutputs = getCalOutput( period - 1 );
-      double totalFixed = calOutputs + getFixedOutput( period - 1 );
-      double calDiff =  totalFixed - getOutput( period - 1 );
-		
-		// Two cases to check for. If outputs are all fixed, then calDiff should be small in either case.
-		// Even if outputs are not all fixed, then calDiff shouldn't be > CAL_CHECK_VAL (i.e., totalFixedOutputs > actual output)
- 		const bool printDetails = false; // toggle for more detailed debugging output
-      if ( calOutputs > 0 ) {
-         double diffFraction = calDiff/calOutputs;
-         if ( ( calDiff > CAL_CHECK_VAL ) || ( ( abs(diffFraction) > CAL_CHECK_VAL ) && outputsAllFixed( period - 1 ) ) ) {
-            cerr << "WARNING: " << name << " " << getXMLName() << " in " << regionName << " != cal+fixed vals (";
-            cerr << totalFixed << " )" << " in yr " <<  modeltime->getper_to_yr( period - 1 );
-            cerr << " by: " << calDiff << " (" << calDiff*100/calOutputs << "%) " << endl;
-            if ( debugChecking && printDetails) {
-               cout << "   fixedSupplies: " << "  "; 
-               for ( int i=0; i<nosubsec; i++ ) {
-                  double fixedSubSectorOut =  subsec[ i ]->getTotalCalOutputs( period - 1 ) + subsec[ i ]->getFixedOutput( period - 1 );
-                  cout << "ss["<<i<<"] "<< fixedSubSectorOut << ", ";
-               } 
-               cout << endl;
-               cout << "   Production: " << "  "; 
-               for ( int i=0; i<nosubsec; i++ ) {
-                  cout << "ss["<<i<<"] "<< subsec[ i ]->getOutput( period - 1 ) << ", ";
-               } 
-               cout << endl;
+    if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
+        const double CAL_CHECK_VAL = 0.001; // tollerance for calibration check (somewhat arbitrary)
+        if ( period > 0 ) {
+            double calOutputs = getCalOutput( period - 1 );
+            double totalFixed = calOutputs + getFixedOutput( period - 1 );
+            double calDiff =  totalFixed - getOutput( period - 1 );
+
+            // Two cases to check for. If outputs are all fixed, then calDiff should be small in either case.
+            // Even if outputs are not all fixed, then calDiff shouldn't be > CAL_CHECK_VAL (i.e., totalFixedOutputs > actual output)
+            const bool printDetails = false; // toggle for more detailed debugging output
+            if ( calOutputs > 0 ) {
+                double diffFraction = calDiff/calOutputs;
+                if ( ( calDiff > CAL_CHECK_VAL ) || ( ( abs(diffFraction) > CAL_CHECK_VAL ) && outputsAllFixed( period - 1 ) ) ) {
+                    cerr << "WARNING: " << name << " " << getXMLName() << " in " << regionName << " != cal+fixed vals (";
+                    cerr << totalFixed << " )" << " in yr " <<  scenario->getModeltime()->getper_to_yr( period - 1 );
+                    cerr << " by: " << calDiff << " (" << calDiff*100/calOutputs << "%) " << endl;
+                    if ( printDetails) {
+                        cout << "   fixedSupplies: " << "  "; 
+                        for ( int i=0; i<nosubsec; i++ ) {
+                            double fixedSubSectorOut =  subsec[ i ]->getTotalCalOutputs( period - 1 ) + subsec[ i ]->getFixedOutput( period - 1 );
+                            cout << "ss["<<i<<"] "<< fixedSubSectorOut << ", ";
+                        } 
+                        cout << endl;
+                        cout << "   Production: " << "  "; 
+                        for ( int i=0; i<nosubsec; i++ ) {
+                            cout << "ss["<<i<<"] "<< subsec[ i ]->getOutput( period - 1 ) << ", ";
+                        } 
+                        cout << endl;
+                    }
+                } // calDiff branch
             }
-         } // calDiff branch
-      }
+    }
     }
 }
 

@@ -51,7 +51,7 @@ MACGeneratorScenarioRunner::MACGeneratorScenarioRunner( const string aGhgName, c
     mSingleScenario.reset( new SingleScenarioRunner() );
 
     // Check to make sure calibration is off.
-    if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
+    if( Configuration::getInstance()->getBool( "debugChecking" ) && Configuration::getInstance()->getBool( "CalibrationActive" ) ){
         cout << "Warning: Calibration is incompatable with the generation of marginal abatement curves." << endl;
     }
 }
@@ -170,7 +170,7 @@ void MACGeneratorScenarioRunner::runTrials(){
             // Set the fixed taxes into the world.
             world->setFixedTaxes( mGhgName, rIter->first, currTaxes );
         }
-        cout << endl << "Running new trial...." << endl << endl;
+
         // Create an ending for the output files using the run number.
         scenario->run( util::toString( currPoint ) );
 

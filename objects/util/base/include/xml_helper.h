@@ -583,15 +583,12 @@ void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elem
 
 template <class T>
 xercesc::DOMNode* XMLHelper<T>::parseXML( const std::string& xmlFile, xercesc::XercesDOMParser* parser ) {
-   
-   xercesc::DOMDocument* doc = 0;
-   
    try {
-      const unsigned long startMillis = xercesc::XMLPlatformUtils::getCurrentMillis();
+      // const unsigned long startMillis = xercesc::XMLPlatformUtils::getCurrentMillis();
       parser->parse( xmlFile.c_str() );
-      const unsigned long endMillis = xercesc::XMLPlatformUtils::getCurrentMillis();
-      long parseTime = endMillis - startMillis;
-      std::cout << "Parsing took " << parseTime / 1000.0 << " seconds." << std::endl;
+      // const unsigned long endMillis = xercesc::XMLPlatformUtils::getCurrentMillis();
+      // long parseTime = endMillis - startMillis;
+      // std::cout << "Parsing took " << parseTime / 1000.0 << " seconds." << std::endl;
    } catch ( const xercesc::XMLException& toCatch ) {
       std::string message = XMLHelper<std::string>::safeTranscode( toCatch.getMessage() );
       std::cout << "Exception message is:" << std::endl << message << std::endl;
@@ -609,8 +606,7 @@ xercesc::DOMNode* XMLHelper<T>::parseXML( const std::string& xmlFile, xercesc::X
       return 0;
    }
    
-   doc = parser->getDocument();
-   return doc->getDocumentElement();
+   return parser->getDocument()->getDocumentElement(); // Return the root element of the document. 
 }
 /*! \brief Function which initializes the XML Platform and creates an instance
 * of an error handler and parser. 

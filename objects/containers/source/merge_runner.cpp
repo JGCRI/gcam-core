@@ -65,17 +65,23 @@ bool MergeRunner::setupScenario( Timer& timer, const string aName, const list<st
     // Iterate over the vector.
     typedef list<string>::const_iterator ScenCompIter;
     for( ScenCompIter currComp = scenComponents.begin(); currComp != scenComponents.end(); ++currComp ) {
-        cout << "Parsing " << *currComp << " scenario component." << endl;
+        if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
+            cout << "Parsing " << *currComp << " scenario component." << endl;
+        }
         root = XMLHelper<void>::parseXML( *currComp, parser );
         mScenario->XMLParse( root );
     }
 
-    cout << "XML parsing complete." << endl;
+    if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
+        cout << "XML parsing complete." << endl;
+    }
     logfile << "XML parsing complete." << endl;
 
     // Print data read in time.
     timer.save();
-    timer.print( cout, "XML Readin Time:" );
+    if ( Configuration::getInstance()->getBool( "timestamp" ) ) { 
+        timer.print( cout, "XML Readin Time:" );
+    }
     timer.print( logfile, "XML Readin Time:" );
 
     return true;
