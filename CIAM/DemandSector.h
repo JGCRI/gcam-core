@@ -64,7 +64,7 @@ public:
     virtual void toOutputXML( std::ostream& out ) const;
     virtual void toXMLDerivedClass( std::ostream& out ) const;
     virtual void toDebugXML( const int period, std::ostream& out ) const;
-    virtual void setMarket( const std::string& regname );
+    virtual void setMarket( const std::string& regionName );
     virtual void calcShare( const std::string regionName, const int per, const double gnp_cap = 1 );
     virtual void calc_pElasticity( const int per );
     virtual void aggdemand( const std::string& regionName, const double gnp_cap, const double gnp, const int per); 

@@ -89,6 +89,7 @@ void demsector::XMLDerivedClassParseAttr( const DOMNode* node ) {
 * Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class.
 *
 * \author Josh Lurz, Steve Smith
+* \param nodeName The name of the curr node. 
 * \param curr pointer to the current node in the XML input tree
 */
 void demsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
