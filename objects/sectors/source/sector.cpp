@@ -61,7 +61,6 @@ Sector::Sector( const string regionNameIn ): regionName( regionNameIn ){
     input.resize( maxper ); // Sector total energy consumption
     output.resize( maxper ); // total amount of final output from Sector
     fixedOutput.resize( maxper );
-    carbonTaxPaid.resize( maxper ); // total Sector carbon taxes paid
     summary.resize( maxper ); // object containing summaries
     capLimitsPresent.resize( maxper, false ); // flag for presence of capacity limits
 }
@@ -279,7 +278,6 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( sectorprice[ period ], "sectorprice", out, tabs );
     XMLWriteElement( input[ period ], "input", out, tabs );
     XMLWriteElement( output[ period ], "output", out, tabs );
-    XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
 
 	toDebugXMLDerived (period, out, tabs);
 
@@ -820,13 +818,9 @@ to equal the total Sector output.
 * \param gdp GDP object uses to calculate various types of GDPs.
 */
 void Sector::setoutput( const double demand, const int period, const GDP* gdp ) {
-
-    carbonTaxPaid[ period ] = 0; // initialize carbon taxes paid
-
     for ( int i=0; i<nosubsec; i++ ) {
         // set subsector output from Sector demand
         subsec[ i ]->setoutput( demand, period, gdp );
-        carbonTaxPaid[ period ] += subsec[ i ]->getTotalCarbonTaxPaid( period );
     }
 }
 
@@ -1134,9 +1128,6 @@ Routine also calls adjustForFixedOutput which adjusts shares, if necessary, for 
 */
 void Sector::supply( const int period, const GDP* gdp ) {
     Marketplace* marketplace = scenario->getMarketplace();
-
-    carbonTaxPaid[ period ] = 0; // initialize carbon taxes paid
-
     double mrkdmd = marketplace->getDemand( name, regionName, period ); // demand for the good produced by this Sector
 
     if ( mrkdmd < 0 ) {
@@ -1151,9 +1142,7 @@ void Sector::supply( const int period, const GDP* gdp ) {
     // This is where subsector and technology outputs are set
     for (int i=0;i<nosubsec;i++) {
         // set subsector output from Sector demand
-        subsec[ i ]->setoutput( mrkdmd, period, gdp ); // CHANGED JPL
-        // for reporting only
-        carbonTaxPaid[ period ] += subsec[ i ]->getTotalCarbonTaxPaid( period );
+        subsec[ i ]->setoutput( mrkdmd, period, gdp );
     }    
 
     if ( debugChecking ) {
@@ -1324,7 +1313,13 @@ void Sector::csvOutputFile() const {
     // Sector price
     fileoutput3( regionName, name, " ", " ", "price", "$/GJ", sectorprice);
     // Sector carbon taxes paid
-    fileoutput3( regionName, name, " ", " ", "C tax paid", "Mil90$", carbonTaxPaid);
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    vector<double> temp(maxper);
+    for( int per = 0; per < maxper; ++per ){
+        temp[ per ] = getTotalCarbonTaxPaid( per );
+    }
+    fileoutput3( regionName, name, " ", " ", "C tax paid", "Mil90$", temp );
 }
 
 //! Write MiniCAM style Sector output to database.
@@ -1394,7 +1389,10 @@ void Sector::dbOutput() const {
     // Sector price
     dboutput4( regionName,"Price","by Sector",name,"$/GJ",sectorprice);
     // Sector carbon taxes paid
-    dboutput4( regionName,"General","CarbonTaxPaid",name,"$",carbonTaxPaid);
+    for( int per = 0; per < maxper; ++per ){
+        temp[ per ] = getTotalCarbonTaxPaid( per );
+    }
+    dboutput4( regionName,"General","CarbonTaxPaid",name,"$", temp );
     // do for all subsectors in the Sector
     for (int i=0;i<nosubsec;i++) {
         // output or demand for each technology
@@ -1416,11 +1414,14 @@ void Sector::subsec_outfile() const {
 *
 * \author Sonny Kim
 * \param period Model period
-* \warning Input value is not accurate unless subsector::setoutput has been called first
 * \return total carbon taxes paid
 */
 double Sector::getTotalCarbonTaxPaid( const int period ) const {
-    return carbonTaxPaid[ period ];
+    double sum = 0;
+    for( vector<Subsector*>::const_iterator currSub = subsec.begin(); currSub != subsec.end(); ++currSub ){
+        sum += (*currSub)->getTotalCarbonTaxPaid( period );
+    }
+    return sum;
 }
 
 /*! \brief Return fuel consumption map for this Sector

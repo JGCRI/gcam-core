@@ -55,7 +55,6 @@ protected:
     std::vector<double> input; //!< Sector total energy consumption
     std::vector<double> output; //!< total amount of final output from sector
     std::vector<double> fixedOutput; //!< total amount of fixed output from Sector
-    std::vector<double> carbonTaxPaid; //!< total Sector carbon taxes paid
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
     std::vector<bool> capLimitsPresent; //!< Flag if any capacity limits are present 

@@ -63,7 +63,6 @@ protected:
     std::vector<double> subsectorprice; //!< subsector price for all periods
     std::vector<double> fuelprice; //! subsector fuel price only for all periods
     std::vector<double> output; //!< total amount of final output from subsector
-    std::vector<double> carbontaxpaid; //!< total subsector carbon taxes paid
     std::vector<double> fuelPrefElasticity; //!< Fuel preference elasticity
     std::vector<double> calOutputValue; // Calibration value
     std::vector<bool> doCalibration; // Flag set if calibration value is read-in
@@ -122,7 +121,6 @@ public:
     bool getCapLimitStatus( const int period ) const;
     void calcTechShares ( const GDP* gdp, const int period );
     virtual void setoutput( const double demand, const int period, const GDP* gdp ); 
-    double exogSupply( const int period );
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
     void scalefixedOutput( const double scaleRatio, const int period );
     double getFixedOutput( const int period ) const;

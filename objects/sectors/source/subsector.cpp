@@ -67,7 +67,6 @@ Subsector::Subsector( const string regionName, const string sectorName ){
     subsectorprice.resize(maxper); // subsector price for all periods
     fuelprice.resize(maxper); // subsector fuel price for all periods
     output.resize(maxper); // total amount of final output from subsector
-    carbontaxpaid.resize(maxper); // total subsector carbon taxes paid
     summary.resize(maxper); // object containing summaries
     fuelPrefElasticity.resize( maxper );
     summary.resize( maxper );
@@ -436,7 +435,6 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( input[ period ], "input", out, tabs );
     XMLWriteElement( subsectorprice[ period ], "subsectorprice", out, tabs );
     XMLWriteElement( output[ period ], "output", out, tabs );
-    XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out, tabs );
     toDebugXMLDerived( period, out, tabs );
     // Write out the summary object.
     // summary[ period ].toDebugXML( period, out );
@@ -1196,22 +1194,18 @@ void Subsector::adjShares( const double demand, double shareRatio,
 * \pre dmd must be the total demand for this project, so must be called after this has been determined
 */
 void Subsector::setoutput( const double demand, const int period, const GDP* gdp ) {
-    int i=0;
     input[period] = 0; // initialize Subsector total fuel input 
-    carbontaxpaid[period] = 0; // initialize Subsector total carbon taxes paid 
     
     // note that output is in service unit when called from demand sectors
     // multiply dmd by Subsector share go get the total demand to be supplied by this Subsector
     double subsecdmd = share[period]* demand; 
     
-    for ( i=0; i<notech; i++ ) {
+    for ( int i=0; i<notech; i++ ) {
         // calculate technology output and fuel input from Subsector output
         techs[i][period]->production( regionName, sectorName, subsecdmd, gdp, period );
         
         // total energy input into Subsector, must call after tech production
         input[period] += techs[i][period]->getInput();
-        // sum total carbon tax paid for Subsector
-        carbontaxpaid[period] += techs[i][period]->getCarbontaxpaid();
     }
 }
 
@@ -1366,19 +1360,19 @@ double Subsector::getTotalCalOutputs( const int period ) const {
 * \return Total calibrated input for this Subsector
 */
 double Subsector::getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const {
-	double sumCalInputValues = 0;
+    double sumCalInputValues = 0;
 
-	for ( int i=0; i<notech; i++ ) {
-		if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
-			if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
-				sumCalInputValues += techs[ i ][ period ]->getCalibrationInput( );
-			} 
-			else if ( techs[ i ][ period ]->ouputFixed( ) && bothVals ) {
-				sumCalInputValues += techs[ i ][ period ]->getFixedInput( );
-			}
-		}
-   }
-   return sumCalInputValues;
+    for ( int i=0; i<notech; i++ ) {
+        if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
+            if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
+                sumCalInputValues += techs[ i ][ period ]->getCalibrationInput( );
+            } 
+            else if ( techs[ i ][ period ]->ouputFixed( ) && bothVals ) {
+                sumCalInputValues += techs[ i ][ period ]->getFixedInput( );
+            }
+        }
+    }
+    return sumCalInputValues;
 }
 
 /*! \brief returns the total calibrated or fixed input from this sector for the specified good.
@@ -1392,19 +1386,19 @@ double Subsector::getCalAndFixedInputs( const int period, const std::string& goo
 * \return Total calibrated input for this Subsector
 */
 double Subsector::getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals ) const {
-	double sumCalOutputValues = 0;
+    double sumCalOutputValues = 0;
 
-	for ( int i=0; i<notech; i++ ) {
-		if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
-			if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
-				sumCalOutputValues += techs[ i ][ period ]->getCalibrationOutput( );
-			} 
-			else if ( techs[ i ][ period ]->ouputFixed( ) && bothVals ) {
-				sumCalOutputValues += techs[ i ][ period ]->getFixedOutput( );
-			}
-		}
-   }
-   return sumCalOutputValues;
+    for ( int i=0; i<notech; i++ ) {
+        if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
+            if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
+                sumCalOutputValues += techs[ i ][ period ]->getCalibrationOutput( );
+            } 
+            else if ( techs[ i ][ period ]->ouputFixed( ) && bothVals ) {
+                sumCalOutputValues += techs[ i ][ period ]->getFixedOutput( );
+            }
+        }
+    }
+    return sumCalOutputValues;
 }
 
 /*! \brief Calculates the input value needed to produce the required output
@@ -1424,12 +1418,13 @@ bool Subsector::setImpliedFixedInput( const int period, const std::string& goodN
                 inputWasChanged = true;
                 double existingMarketDemand = max( marketplace->getMarketInfo( goodName, regionName , period, "calDemand" ), 0.0 );
                 marketplace->setMarketInfo( goodName, regionName, period, "calDemand", existingMarketDemand + inputValue );
-             } else {
+            } 
+            else {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::WARNING );
                 mainLog << "  WARNING: More than one technology input would have been changed " 
-                        << " in sub-sector " << name << " in sector " << sectorName
-                        << " in region " << regionName << endl; 
+                    << " in sub-sector " << name << " in sector " << sectorName
+                    << " in region " << regionName << endl; 
             }
         }
     }
@@ -1444,25 +1439,25 @@ bool Subsector::setImpliedFixedInput( const int period, const std::string& goodN
 * \return boolean true if inputs of specified good are fixed
 */
 bool Subsector::inputsAllFixed( const int period, const std::string& goodName ) const {
-	bool allInputsFixed = false;
-	
-	// test for each method of fixing output, if none of these are true then demand is not all fixed
-	for ( int i=0; i<notech; i++ ) {
-		if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
-			if ( ( techs[ i ][ period ]->getCalibrationStatus( ) ) ) {
-				allInputsFixed = true;
-			} 
-			else if ( techs[ i ][ period ]->ouputFixed( ) != 0 ) {
-				allInputsFixed =  true;
-			} else if ( shrwts[ period ] == 0) {
-				allInputsFixed = true;
-			} else {
-				return false;
-			}
-		}
-   }
-   
-   return true;
+    bool allInputsFixed = false;
+
+    // test for each method of fixing output, if none of these are true then demand is not all fixed
+    for ( int i=0; i<notech; i++ ) {
+        if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
+            if ( ( techs[ i ][ period ]->getCalibrationStatus( ) ) ) {
+                allInputsFixed = true;
+            } 
+            else if ( techs[ i ][ period ]->ouputFixed( ) != 0 ) {
+                allInputsFixed =  true;
+            } else if ( shrwts[ period ] == 0) {
+                allInputsFixed = true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 /*! \brief checks to see if technology demands the specified good
@@ -1509,30 +1504,29 @@ void Subsector::scaleCalibratedValues( const int period, const std::string& good
 * \return Total calibrated output for this Subsector
 */
 bool Subsector::allOuputFixed( const int period ) const {
-   bool oneNotFixed = false;
-   bool outputFixed = false;
+    bool oneNotFixed = false;
+    bool outputFixed = false;
 
-   if ( doCalibration[ period ] ) {
-      outputFixed = true;  // this sector has fixed output
-   } 
-   else  if ( shrwts[ period ] == 0 ) {
-      outputFixed = true; // this sector has no output, so is also fixed
-   }
-   // if not fixed at sub-sector level, then check at the technology level
-   else {
-      for ( int i=0; i<notech; i++ ) {
-         if ( !( techs[ i ][ period ]->ouputFixed( ) ) ) {
-            oneNotFixed = true;
+    if ( doCalibration[ period ] ) {
+        outputFixed = true;  // this sector has fixed output
+    } 
+    else  if ( shrwts[ period ] == 0 ) {
+        outputFixed = true; // this sector has no output, so is also fixed
+    }
+    // if not fixed at sub-sector level, then check at the technology level
+    else {
+        for ( int i=0; i<notech; i++ ) {
+            if ( !( techs[ i ][ period ]->ouputFixed( ) ) ) {
+                oneNotFixed = true;
+            }
         }
-      }
-   }
-   
-   if ( outputFixed ) {
-      return true;
-   } else {
-      return !oneNotFixed;
-   }
-   
+    }
+
+    if ( outputFixed ) {
+        return true;
+    } else {
+        return !oneNotFixed;
+    }
 }
 
 /*! \brief scale calibration values.
@@ -1607,8 +1601,6 @@ void Subsector::csvOutputFile() const {
     void fileoutput3( string var1name,string var2name,string var3name,
         string var4name,string var5name,string uname,vector<double> dout);
     
-    int i=0, m=0;
-    int mm=0; // temp period
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     vector<double> temp(maxper);
@@ -1620,75 +1612,79 @@ void Subsector::csvOutputFile() const {
     // Subsector price
     fileoutput3( regionName,sectorName,name," ","price","$/GJ(ser)",subsectorprice);
     // Subsector carbon taxes paid
-    for (m=0;m<maxper;m++)
+    for( int m = 0; m < maxper; m++ ){
+        temp[ m ] = getTotalCarbonTaxPaid( m );
+    }
+    fileoutput3( regionName, sectorName, name, " ", "C tax paid", "Mil90$", temp );
+
+    for ( int m=0;m<maxper;m++){
         temp[m] = summary[m].get_emissmap_second("CO2");
-    fileoutput3( regionName,sectorName,name," ","C tax paid","Mil90$",carbontaxpaid);
+    }
     fileoutput3( regionName,sectorName,name," ","CO2 emiss","MTC",temp);
 
     // do for all technologies in the Subsector
-    for (i=0;i<notech;i++) {
-// sjs -- bad coding here, hard-wired period. But is difficult to do something different with current output structure. This is just for csv file.
-		int numberOfGHGs =  techs[ i ][ 2 ]->getNumbGHGs();
-      std::vector<std::string> ghgNames;
-      ghgNames = techs[i][ 2 ]->getGHGNames();		
-      for ( int ghgN =0; ghgN <= ( numberOfGHGs - 1 ); ghgN++ ) {
-         if ( ghgNames[ ghgN ] != "CO2" ) {
- 				for (m=0;m<maxper;m++) {
-               temp[m] = techs[i][ m ]->get_emissmap_second( ghgNames[ ghgN ] );
-				}
-				string ghgLabel = ghgNames[ ghgN ] + " emiss";
-				fileoutput3( regionName,sectorName,name,techs[i][ 2 ]->getName(),ghgLabel,"Tg",temp);
-			}
-		}
-    
+    for ( int i=0;i<notech;i++) {
+        // sjs -- bad coding here, hard-wired period. But is difficult to do something different with current output structure. This is just for csv file.
+        int numberOfGHGs =  techs[ i ][ 2 ]->getNumbGHGs();
+        vector<string> ghgNames;
+        ghgNames = techs[i][ 2 ]->getGHGNames();		
+        for ( int ghgN =0; ghgN <= ( numberOfGHGs - 1 ); ghgN++ ) {
+            if ( ghgNames[ ghgN ] != "CO2" ) {
+                for ( int m=0;m<maxper;m++) {
+                    temp[m] = techs[i][ m ]->get_emissmap_second( ghgNames[ ghgN ] );
+                }
+                fileoutput3( regionName,sectorName,name,techs[i][ 2 ]->getName(), ghgNames[ ghgN ] + " emiss","Tg",temp);
+            }
+        }
+
         // output or demand for each technology
-		for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getOutput();
         }
-        fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"production","EJ",temp);
+        fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"production","EJ",temp);
         // technology share
         if(notech>1) {
-            for (m=0;m<maxper;m++) {
+            for ( int m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getShare();
             }
-            fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"tech share","%",temp);
+            fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"tech share","%",temp);
         }
         // technology cost
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getTechcost();
         }
-        fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"price","$/GJ",temp);
+        fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"price","$/GJ",temp);
         
         // ghg tax paid
-        for (m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getCarbontaxpaid();
+        for ( int m=0;m<maxper;m++) {
+            temp[m] = techs[i][m]->getCarbonTaxPaid( regionName, m );
         }
-        fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"C tax paid","90Mil$",temp);
+        fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"C tax paid","90Mil$",temp);
         // technology fuel input
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getInput();
         }
-        fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"fuel consump","EJ",temp);
+        fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"fuel consump","EJ",temp);
         // technology efficiency
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getEff();
         }
-        fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"efficiency","%",temp);
+        fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"efficiency","%",temp);
         // technology non-energy cost
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getNecost();
         }
-        fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"non-energy cost","$/GJ",temp);
+        fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"non-energy cost","$/GJ",temp);
         // technology CO2 emission
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->get_emissmap_second("CO2");
         }
-        fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"CO2 emiss","MTC",temp);
+        fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"CO2 emiss","MTC",temp);
         // technology indirect CO2 emission
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->get_emissmap_second("CO2ind");
         }
-        fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"CO2 emiss(ind)","MTC",temp);
+        fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"CO2 emiss(ind)","MTC",temp);
     }
     
     csvDerivedClassOutput();
@@ -1710,11 +1706,9 @@ void Subsector::MCoutputSupplySector() const {
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
     
-    int i=0, m=0;
-    int mm=0; // temp period
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    const double cvrt90 = 2.212; //  convert '75 price to '90 price
+    const double CVRT_90 = 2.212; //  convert '75 price to '90 price
     vector<double> temp(maxper);
     
     // total Subsector output
@@ -1723,35 +1717,30 @@ void Subsector::MCoutputSupplySector() const {
     dboutput4(regionName,"Price",sectorName,name,"75$/GJ",subsectorprice);
     // for electricity sector only
     if (sectorName == "electricity") {
-        for (m=0;m<maxper;m++) {
-            temp[m] = subsectorprice[m] * cvrt90 * 0.36;
+        for ( int m=0;m<maxper;m++) {
+            temp[m] = subsectorprice[m] * CVRT_90 * 0.36;
         }
         dboutput4(regionName,"Price",sectorName+" C/kWh",name,"90C/kWh",temp);
     }
     
-    string tssname = "tech_"; // tempory Subsector name
-    string str1, str2; // tempory string
     // do for all technologies in the Subsector
-    for (i=0;i<notech;i++) {
-        str1 = sectorName;
-        str1 += "_tech";
-        str2 = techs[i][mm]->getName();
+    for ( int i=0;i<notech;i++) {
         // technology non-energy cost
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getNecost();
         }
-        dboutput4(regionName,"Price NE Cost",sectorName,str2,"75$/GJ",temp);
+        dboutput4( regionName, "Price NE Cost", sectorName, techs[i][ 0 ]->getName(), "75$/GJ", temp );
         // secondary energy and price output by tech
         // output or demand for each technology
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getOutput();
         }
-        dboutput4(regionName,"Secondary Energy Prod",str1,str2,"EJ",temp);
+        dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech", techs[i][ 0 ]->getName(), "EJ", temp );
         // technology cost
-        for (m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getTechcost()*cvrt90;
+        for ( int m=0;m<maxper;m++) {
+            temp[m] = techs[i][m]->getTechcost() * CVRT_90;
         }
-        dboutput4(regionName,"Price",str1,str2,"90$/GJ",temp);
+        dboutput4( regionName, "Price", sectorName + "_tech", techs[i][ 0 ]->getName(), "90$/GJ", temp );
     }
 }
 
@@ -1767,8 +1756,6 @@ void Subsector::MCoutputDemandSector() const {
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
     const Modeltime* modeltime = scenario->getModeltime();
-    int i=0, m=0;
-    int mm=0; // temp period
     const int maxper = modeltime->getmaxper();
     vector<double> temp(maxper);
     
@@ -1778,34 +1765,29 @@ void Subsector::MCoutputDemandSector() const {
     // Subsector price
     dboutput4(regionName,"Price",sectorName,name+" Tot Cost","75$/Ser",subsectorprice);
     
- 
-    string tssname = "tech "; // tempory Subsector name
-    string str; // tempory string
     // do for all technologies in the Subsector
-    for (i=0;i<notech;i++) {
-        //str = tssname + techs[i][mm].showname();
-        str = techs[i][mm]->getName();
+    for ( int i=0;i<notech;i++) {
         if(notech>1) {  // write out if more than one technology
             // output or demand for each technology
-            for (m=0;m<maxper;m++) {
+            for ( int m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getOutput();
             }
-            dboutput4(regionName,"End-Use Service",sectorName+" "+name,str,"Ser Unit",temp);
+            dboutput4(regionName,"End-Use Service",sectorName+" "+name,techs[i][ 0 ]->getName(),"Ser Unit",temp);
             // total technology cost
-            for (m=0;m<maxper;m++) {
+            for ( int m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getTechcost();
             }
-            dboutput4(regionName,"Price",sectorName+" "+name,str,"75$/Ser",temp);
+            dboutput4(regionName,"Price",sectorName+" "+name,techs[i][ 0 ]->getName(),"75$/Ser",temp);
            // technology fuel cost
-            for (m=0;m<maxper;m++) {
+            for ( int m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getFuelcost();
             }
-            dboutput4(regionName,"Price",sectorName+" "+name+" Fuel Cost",str,"75$/Ser",temp);
+            dboutput4( regionName,"Price",sectorName+" "+name+" Fuel Cost",techs[i][ 0 ]->getName(),"75$/Ser",temp);
             // technology non-energy cost
             for (m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getNecost();
             }
-            dboutput4(regionName,"Price",sectorName+" "+name+" NE Cost",str,"75$/Ser",temp);
+            dboutput4( regionName, "Price", sectorName + " " + name + " NE Cost", techs[i][ 0 ]->getName(), "75$/Ser", temp );
         }
     }
 }
@@ -1820,122 +1802,88 @@ void Subsector::MCoutputAllSectors() const {
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
-    
-    int i=0, m=0;
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     vector<double> temp(maxper);
-    string str; // tempory string
     
-    //for (m=0;m<maxper;m++)
-    //	temp[m] = summary[m].get_emissmap_second("CO2");
-    //dboutput4(regionName,"CO2 Emiss",sectorName,name,"MTC",temp);
     // Subsector carbon taxes paid
-    dboutput4(regionName,"General","CarbonTaxPaid",name,"$",carbontaxpaid);
+    // Subsector carbon taxes paid
+    for( int m = 0; m < maxper; m++ ){
+        temp[ m ] = getTotalCarbonTaxPaid( m );
+    }
+    dboutput4( regionName, "General", "CarbonTaxPaid by subsec", sectorName + name, "$", temp );
     // Subsector share 
     dboutput4(regionName,"Subsec Share",sectorName,name,"100%",share);
     // Subsector emissions for all greenhouse gases
-    typedef map<string,double>:: const_iterator CI;
-    map<string,double> temissmap = summary[0].getemission(); // get gases for period 0
+    // fuel consumption by Subsector
+    dboutput4( regionName, "Fuel Consumption", sectorName + " by Subsec", name, "EJ", input );
+    
+    // subsector CO2 emission. How is this different then below?
+    for( int i = 0; i < notech; ++i ){
+        for ( int m = 0; m < maxper; m++ ) {
+            // this gives Subsector total CO2 emissions
+            // get CO2 emissions for each technology
+            temp[m] = techs[i][m]->get_emissmap_second("CO2");
+        }
+    }
+    dboutput4( regionName, "CO2 Emiss", sectorName, name, "MTC", temp );
+
+    typedef map<string,double>::const_iterator CI;
+    map<string,double> temissmap = summary[0].getemission(); // get gas names for period 0
     for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_emissmap_second(gmap->first);
         }
-        str = "Subsec: "; // Subsector heading
-        str+= sectorName; // sector name
-        str+= "_";
-        str+= name; // Subsector name
-        dboutput4(regionName,"Emissions",str,gmap->first,"MTC",temp);
+        const string subsecHeading = "Subsec: " + sectorName + "_" + name;
+        dboutput4( regionName, "Emissions", subsecHeading, gmap->first, "MTC", temp );
     }
     
-    string tssname = name; // tempory Subsector name
-    int mm=0; // temp period to get base period
     // do for all technologies in the Subsector
-    for (i=0;i<notech;i++) {
-        str = tssname + techs[i][mm]->getName();
-        //str = techs[i][mm]->getName();
-        if(notech>0) {  // write out for all technology
-            // technology CO2 emission
-            for (m=0;m<maxper;m++) {
-                // this gives Subsector total CO2 emissions
-                //temp[m] = summary[m].get_emissmap_second("CO2");
-                // get CO2 emissions for each technology
-                temp[m] = techs[i][m]->get_emissmap_second("CO2");
-            }
-            //dboutput4(regionName,"CO2 Emiss",sectorName,str,"MTC",temp);
-            dboutput4(regionName,"CO2 Emiss",sectorName,name,"MTC",temp);
-            // technology indirect CO2 emission
-            for (m=0;m<maxper;m++) {
-                temp[m] = summary[m].get_emindmap_second("CO2");
-            }
-            dboutput4(regionName,"CO2 Emiss(ind)",sectorName,str,"MTC",temp);
-            // technology ghg emissions, get gases for period 
-            // all gases not just CO2
-            map<string,double> temissmap = techs[i][0]->getemissmap();
-            /*            for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
-            for (m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->get_emissmap_second(gmap->first);
-            }
-            str = "Tech: "; // Subsector heading
-            str += sectorName; // sector name
-            str += "_";
-            str += name; // Subsector name
-            str += "_";
-            str += techs[i][mm]->getName(); // technology name
-            dboutput4(regionName,"Emissions",str,gmap->first,"MTC",temp);
-            }
-            */           // technology share
-            for (m=0;m<maxper;m++) {
-                temp[m] = techs[i][m]->getShare();
-            }
-            dboutput4(regionName,"Tech Share",sectorName,str,"%",temp);
-            
-			// ghg tax and storage cost applied to technology if any
-            for (m=0;m<maxper;m++) {
-                temp[m] = techs[i][m]->getTotalGHGCost();
-            }
-            dboutput4(regionName,"Total GHG Cost",sectorName,str,"$/gj",temp);
+    for ( int i = 0; i < notech; i++ ) {
+        const string subsecTechName = name + techs[i][ 0 ]->getName();
+        // technology indirect CO2 emission
+        for( int m=0;m<maxper;m++) {
+            temp[m] = summary[m].get_emindmap_second("CO2");
+        }
+        dboutput4(regionName,"CO2 Emiss(ind)",sectorName, subsecTechName,"MTC",temp);
+        // technology share
+        for ( int m=0;m<maxper;m++) {
+            temp[m] = techs[i][m]->getShare();
+        }
+        dboutput4(regionName,"Tech Share",sectorName, subsecTechName,"%",temp);
 
-			// ghg tax paid
-            for (m=0;m<maxper;m++) {
-                temp[m] = techs[i][m]->getCarbontaxpaid();
-            }
-            dboutput4(regionName,"C Tax Paid",sectorName,str,"90Mil$",temp);
-            
-			// technology fuel input
-            for (m=0;m<maxper;m++) {
-                temp[m] = techs[i][m]->getInput();
-            }
-            dboutput4(regionName,"Fuel Consumption",sectorName + " by Technology",techs[i][0]->getFuelName(),"EJ",temp);
+        // ghg tax and storage cost applied to technology if any
+        for ( int m=0;m<maxper;m++) {
+            temp[m] = techs[i][m]->getTotalGHGCost();
         }
-        
-        
-        /*	CI fmap; // define fmap
-        map<string,double> tfuelmap = summary[0].getfuelcons();
-        for (fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
+        dboutput4(regionName,"Total GHG Cost",sectorName, subsecTechName,"$/gj",temp);
+
+        // ghg tax paid
         for (m=0;m<maxper;m++) {
-        temp[m] = summary[m].get_fmap_second(fmap->first);
+            temp[m] = techs[i][m]->getCarbonTaxPaid( regionName, m );
         }
-        dboutput4(regionName,"Fuel Consumption",sectorName,fmap->first,"EJ",temp);
+        dboutput4(regionName,"C Tax Paid",sectorName, subsecTechName,"90Mil$",temp);
+
+        // technology fuel input
+        for ( int m=0;m<maxper;m++) {
+            temp[m] = techs[i][m]->getInput();
         }
-        */		
-        // fuel consumption by Subsector
-        dboutput4(regionName,"Fuel Consumption",sectorName+" by Subsec",name,"EJ",input);
-        
+        dboutput4( regionName,"Fuel Consumption", sectorName + " by Technology " + subsecTechName, techs[i][0]->getFuelName(), "EJ", temp );
+
         // for 1 or more technologies
         // technology efficiency
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getEff();
         }
-        dboutput4(regionName,"Tech Efficiency",sectorName+" "+name,str,"%",temp);
-        for (m=0;m<maxper;m++) {
+        dboutput4(regionName,"Tech Efficiency",sectorName, subsecTechName,"%",temp);
+        for ( int m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getIntensity(m);
         }
-        dboutput4(regionName,"Tech Intensity",sectorName+" "+name,str,"In/Out",temp);
+        dboutput4(regionName,"Tech Intensity", sectorName, subsecTechName,"In/Out",temp);
     }
-    
+
     MCDerivedClassOutput( );
-    
+
 }
 
 //! Outputs any variables specific to derived classes
@@ -2021,8 +1969,11 @@ double Subsector::getOutput( const int period ) {
 double Subsector::getTotalCarbonTaxPaid( const int period ) const {
     /*! \pre period is less than or equal to max period. */
     assert( period <= scenario->getModeltime()->getmaxper() );
-    
-    return carbontaxpaid[ period ];
+    double sum = 0;
+    for( unsigned int i = 0; i < techs.size(); ++i ){
+        sum += techs[ i ][ period ]->getCarbonTaxPaid( regionName, period );
+    }
+    return sum;
 }
 
 /*! \brief returns gets fuel consumption map for this sub-sector
@@ -2085,15 +2036,11 @@ map<string, double> Subsector::getemindmap( const int period ) const {
 * \param period Model period
 */
 void Subsector::updateSummary( const int period ) {
-    int i = 0;
-    string goodName;
-    
     // clears Subsector fuel consumption map
     summary[period].clearfuelcons();
     
-    for (i=0;i<notech;i++) {
-        goodName = techs[i][0]->getFuelName();
-        summary[period].initfuelcons(goodName,techs[i][period]->getInput());
+    for ( int i = 0; i < notech; i++ ) {
+        summary[period].initfuelcons( techs[i][0]->getFuelName(), techs[i][period]->getInput() );
     }
 }
 

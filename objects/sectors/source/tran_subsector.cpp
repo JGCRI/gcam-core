@@ -222,24 +222,18 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
 */
 void TranSubsector::setoutput( const double demand, const int period, const GDP* gdp ) {
 
-    int i=0;
     input[period] = 0; // initialize subsector total fuel input 
-    carbontaxpaid[period] = 0; // initialize subsector total carbon taxes paid 
     
     // output is in service unit when called from demand sectors
     double subsecdmd = share[period]* demand; // share is subsector level
-    //subsecdmd /= loadFactor[period]; // convert to per veh-mi -- now DONE IN TECHNOLOGY
     
-    for ( i=0; i<notech; i++ ) {
+    for ( int i=0; i<notech; i++ ) {
         // calculate technology output and fuel input from subsector output
         techs[i][period]->production( regionName, sectorName, subsecdmd, gdp, period );
         
         // total energy input into subsector, must call after tech production
         input[period] += techs[i][period]->getInput();
-        // sum total carbon tax paid for subsector
-        carbontaxpaid[period] += techs[i][period]->getCarbontaxpaid();
     }
-    
 }
 
 /*! \brief Writes variables specific to transportation class to database.
@@ -251,17 +245,11 @@ void TranSubsector::MCDerivedClassOutput() const {
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
     
-    int i=0, m=0;
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    string str; // tempory string
-
     // Subsector service price
-    dboutput4(regionName,"General","ServicePrice",name," $/pass(ton)-mi",servicePrice);
+    dboutput4( regionName, "General","ServicePrice", sectorName + name, "$/pass(ton)-mi", servicePrice );
     // Subsector timeValue price
-    dboutput4(regionName,"General","TimeValue",name," $/pass(ton)-mi",timeValue);
+    dboutput4( regionName, "General", "TimeValue", sectorName + name, "$/pass(ton)-mi", timeValue );
     // Subsector speed
-    dboutput4(regionName,"General","Speed",name,"Miles/hr",speed);
+    dboutput4( regionName, "General", "Speed", sectorName + name, "Miles/hr", speed );
 }
 

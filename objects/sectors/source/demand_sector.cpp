@@ -391,7 +391,13 @@ void DemandSector::csvOutputFile() const {
     // Sector price
     fileoutput3( regionName, getName(), " ", " ", "price", "$/Service", sectorprice);
     // Sector carbon taxes paid
-    fileoutput3( regionName, getName(), " ", " ", "C tax paid", "Mil90$", carbonTaxPaid);
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    vector<double> temp(maxper);
+    for( int per = 0; per < maxper; ++per ){
+        temp[ per ] = getTotalCarbonTaxPaid( per );
+    }
+    fileoutput3( regionName, getName(), " ", " ", "C tax paid", "Mil90$", temp );
 }
 
 /*! \brief Sets output of Sector, used for demand sectors
@@ -426,7 +432,6 @@ void DemandSector::dbOutput() const {
     dboutput4(regionName,"End-Use Service",secname+"_bySubsec","zTotal","Ser Unit",service);
 
     dboutput4(regionName,"End-Use Service","by Sector w/o TC",secname,"Ser Unit",servicePreTechChange);
-    //dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",temp);
 
     // End-use service price elasticity
     str = secname + "_price";
@@ -439,23 +444,6 @@ void DemandSector::dbOutput() const {
     typedef map<string,double>:: const_iterator CI;
     map<string,double> tfuelmap = Sector::getfuelcons(m=0);
     CI fmap; // define fmap
-    // *** Either write out for each fuel here which is contained in the map
-    // or write out in subsector
-    /*	for (fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
-    for (m=0;m<maxper;m++) {
-    temp[m] = Sector::getConsByFuel(m,fmap->first);
-    }
-    string strtemp = fmap->first;
-    dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
-    
-      // if last element which is zTotal
-      // note: end() returns one past the last so use --
-      // Total fuel consumption by end-use sector
-      if (fmap == --tfuelmap.end()) {
-      dboutput4(regionName,"Fuel Consumption","by End-Use Sector",secname,"EJ",temp);
-      }
-      }
-    */
     // Write out total (zTotal) fuel consumption for each sector only
     fmap = --tfuelmap.end();
     for (m=0;m<maxper;m++) {
@@ -463,7 +451,7 @@ void DemandSector::dbOutput() const {
     }
     dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
     dboutput4(regionName,"Fuel Consumption","by End-Use Sector",secname,"EJ",temp);
-    // output for zTotal get written for each demand sector and dataviewer sums it up
+    // output for zTotal gets written for each demand sector and dataviewer sums it up
     dboutput4(regionName,"Fuel Consumption","by End-Use Sector","zTotal","EJ",temp);
     
     
