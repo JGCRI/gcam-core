@@ -122,7 +122,7 @@ void subsector::XMLParse( const DOMNode* node ) {
     nodeList = node->getChildNodes();
     
     // loop through the child nodes.
-    for( int i = 0; i < nodeList->getLength(); i++ ){
+    for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
         curr = nodeList->item( i );
         nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         
@@ -173,7 +173,7 @@ void subsector::XMLParse( const DOMNode* node ) {
     }
     // completed parsing.
     
-    // Initialzie any arrays that have non-zero default value
+    // Initialize any arrays that have non-zero default value
     notech = techs.size();
     
 }
@@ -1049,6 +1049,7 @@ void subsector::indemission(const int per) {
 
 //! returns subsector primary energy consumption
 double subsector::showpe_cons( const int per ) {
+
     //! \pre per is less than or equal to max period.
     assert( per <= scenario->getModeltime()->getmaxper() );
     pe_cons[per] = 0;
