@@ -326,6 +326,7 @@ void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
 	gdp0 = prevGHG->gdp0;
 	tau = prevGHG->tau;
    unit = prevGHG->unit;
+   fMaxWasInput = prevGHG->fMaxWasInput;
 
 	// Copy values that could change, so only copy if these are still zero (and, thus, were never read-in)
    if ( !techDiff ) { 
@@ -483,6 +484,7 @@ void Ghg::findControlFunction( const double gdpCap, const double emissDrive, con
             const double multiplier = emissDrive * (1 - emAdjust) * (1 - mac);
             const double B = (1/controlFunction(1,tau,gdp0Adj,gdpCap));
             fMax = 100 * (1 - (finalEmissCoef * ((B - 1)) / (((B * inputEmissions) / multiplier ) - finalEmissCoef)));
+            fMaxWasInput = true;
             // method for calculating an fMax when using emissions coefficients that require fMax in their
             // calculation.  The formula is derived by setting up equations where fMax can be eliminated through 
             // substitution, the emissions coeffiecient can be solved for, and that expression can be substituted back in 
@@ -492,10 +494,13 @@ void Ghg::findControlFunction( const double gdpCap, const double emissDrive, con
             if (emissCoef != 0){
                 // cannot divide by 0 
                 fMax = 100 * (1 - ( finalEmissCoef / (emissCoef)));
+                fMaxWasInput = true;
             }
             else {
                 fMax = 0;
-                cout << "Warning: emissCoef = 0, control function set to 0"<< endl;
+                if ( finalEmissCoef != 0 ) {
+                  cout << "Warning: emissCoef = 0, control function set to 0"<< endl;
+                }
             }
         }
         fControl = controlFunction(fMax,tau,gdp0Adj,gdpCap);

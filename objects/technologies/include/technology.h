@@ -57,6 +57,7 @@ protected:
     double pMultiplier; //!< multiplier on total cost or price
     double totalGHGCost; //!< the value of GHG tax + any storage cost, in $/GJ
     double carbontaxpaid; //!< total carbon taxes paid
+    double fuelPrefElasticity; //!< Fuel preference elasticity
     double lexp; //!< logit exponential
     double share; //!< technology shares
     double input; //!< total fuel input (fossil and uranium)
@@ -104,7 +105,7 @@ public:
     void initCalc( );
     virtual void derivedTechInitCalc();
     virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per ); 
-    virtual void calcShare( const std::string& regionName, const int per); 
+    virtual void calcShare( const std::string& regionName, const GDP* gdp, const int per ); 
     void normShare(double sum); // normalize technology share
     void calcfixedOutput(int per); // calculate fixed supply
     void resetfixedOutput(int per); // reset fixed supply to max value

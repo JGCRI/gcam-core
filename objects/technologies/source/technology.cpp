@@ -98,6 +98,7 @@ void technology::copy( const technology& techIn ) {
     emfuelmap = techIn.emfuelmap; 
     emindmap = techIn.emindmap; 
     totalGHGCost = techIn.totalGHGCost;
+    fuelPrefElasticity = techIn.fuelPrefElasticity;
     resource = techIn.resource;
     A = techIn.A;
     B = techIn.B;
@@ -153,6 +154,7 @@ void technology::initElementalMembers(){
     calInputValue = 0;
     calOutputValue = 0;
     totalGHGCost = 0;
+    fuelPrefElasticity = 0;
 }
 
 /*! \brief initialize technology with xml data
@@ -184,6 +186,9 @@ void technology::XMLParse( const DOMNode* node ) {
         }
         else if( nodeName == "sharewt" ){
             shrwts = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "fuelprefElasticity" ){
+            fuelPrefElasticity = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "calInputValue" ){
             calInputValue = XMLHelper<double>::getValue( curr );
@@ -303,7 +308,8 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( effBase, "efficiency", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( neCostBase, "nonenergycost", out, tabs, 0.0 );
-	XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
+	 XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
+	 XMLWriteElementCheckDefault( neCostPenalty, "fuelprefElasticity", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( tax, "tax", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
@@ -516,13 +522,20 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
 
 /*! \brief calculate technology unnormalized shares
 *
-*
-* \author Sonny Kim
+* fuelPrefElasticity added 11/05/2004 sjs
+* 
+* \author Sonny Kim, Steve Smith
 * \param regionName region name
 * \param per model period
+* \todo Check to see if power function for trival values really wastes time
 */
-void technology::calcShare( const string& regionName, const int per) {
+void technology::calcShare( const string& regionName, const GDP* gdp, const int period ) {
     share = shrwts * pow(techcost,lexp);
+    // This is rarely used, so probably worth it to not to waste cycles on the power function. sjs
+    if ( fuelPrefElasticity != 0 ) {
+      double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
+      share *= pow( scaledGdpPerCapita, fuelPrefElasticity );
+    }
 }
 
 /*! \brief normalizes technology shares

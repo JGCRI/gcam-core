@@ -213,10 +213,10 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
 //! calculate subsector share numerator
 void TranSubsector::calcShare( const int period, const GDP* gdp )
 {
-    const double gdp_cap = gdp->getBestScaledGDPperCap(period);
+    const double scaledGdpPerCapita = gdp->getBestScaledGDPperCap(period);
 
     // call function to compute technology shares
-    calcTechShares( period );
+    calcTechShares( gdp, period );
     
     // calculate and return subsector share; uses calcPrice function
     // calcPrice() uses normalized technology shares calculated above
@@ -248,12 +248,11 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
     
     if(period==0) {
         baseScaler = output[0] / shrwts[period] * pow(generalizedCost[period], -lexp[period])
-            * pow(gdp_cap, -fuelPrefElasticity[period]) * pow(popDensity, -popDenseElasticity[period]);
+            * pow( scaledGdpPerCapita, -fuelPrefElasticity[period]) * pow(popDensity, -popDenseElasticity[period]);
     }
 
     share[period] = baseScaler * shrwts[period] * pow(generalizedCost[period], lexp[period])
-        * pow(gdp_cap, fuelPrefElasticity[period]) * pow(popDensity, popDenseElasticity[period]);
-    
+        * pow( scaledGdpPerCapita, fuelPrefElasticity[period]) * pow(popDensity, popDenseElasticity[period]);
 }
 
 //! sets demand to output and output
@@ -270,7 +269,7 @@ void TranSubsector::setoutput( const double demand, const int period, const GDP*
     // output is in service unit when called from demand sectors
     double subsecdmd = share[period]* demand; // share is subsector level
     //subsecdmd /= loadFactor[period]; // convert to per veh-mi
-
+    
     for ( i=0; i<notech; i++ ) {
         // calculate technology output and fuel input from subsector output
         techs[i][period]->production( regionName, sectorName, subsecdmd, gdp, period );

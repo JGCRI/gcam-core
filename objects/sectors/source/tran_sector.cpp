@@ -139,7 +139,7 @@ void TranSector::checkSectorCalData( const int period ) {
 //! Aggrgate sector energy service demand function.
 void TranSector::aggdemand( const GDP* gdp, const int period ) { 
       
-    double gdp_cap = gdp->getBestScaledGDPperCap(period); 
+    double scaledGdpPerCapita = gdp->getBestScaledGDPperCap(period); 
 			 
 	double gdp1 = gdp->getApproxScaledGDP(period); //gdp->getGDP(period); 
 	
@@ -158,9 +158,9 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
         // calculate base year scalers
         if (perCapitaBased) { // demand based on per capita GDP
             baseScaler = service[0]* percentLicensed[period] * pow(priceRatio,-pElasticity[period])
-                * pow(gdp_cap,-iElasticity[period]);
+                * pow(scaledGdpPerCapita,-iElasticity[period]);
             baseScalerNotLic = service[0]* (1 - percentLicensed[period]) * pow(priceRatioNotLic,-pElasticity[period])
-                * pow(gdp_cap,-iElasticity[period]);
+                * pow(scaledGdpPerCapita,-iElasticity[period]);
         }
         else {
             baseScaler = service[0]* percentLicensed[period] * pow(priceRatio,-pElasticity[period])
@@ -183,11 +183,11 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
            priceRatioNotLic = sectorprice[period]/sectorprice[period-1];
         // perCapitaBased is true or false
         if (perCapitaBased) { // demand based on per capita GDP
-            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gdp_cap,iElasticity[period])
-                + baseScalerNotLic*pow(priceRatioNotLic,pElasticity[period])*pow(gdp_cap,iElasticity[period]);
+            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(scaledGdpPerCapita,iElasticity[period])
+                + baseScalerNotLic*pow(priceRatioNotLic,pElasticity[period])*pow(scaledGdpPerCapita,iElasticity[period]);
             // need to multiply above by population ratio (current population/base year
             // population).  The gdp ratio provides the population ratio.
-            ser_dmd *= gdp1/gdp_cap;
+            ser_dmd *= gdp1/scaledGdpPerCapita;
         }
         else { // demand based on scale of GDP
             ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gdp1,iElasticity[period]);
@@ -204,6 +204,5 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
     // sets subsector outputs, technology outputs, and market demands
     setoutput( service[ period ], period, gdp );
     sumOutput(period);
-    
 }
 

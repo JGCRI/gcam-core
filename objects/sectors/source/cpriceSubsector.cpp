@@ -56,16 +56,16 @@ Cpricesubsector::Cpricesubsector( const string regionName, const string sectorNa
 * \author Sonny Kim, Josh Lurz
 * \param regionName region name
 * \param period model period
-* \param gdp_cap GDP per capita, relative to base year
+* \param scaledGdpPerCapita GDP per capita, relative to base year
 */
-void Cpricesubsector::calcShare(const int period, const GDP* gdp ) {
+void Cpricesubsector::calcShare( const int period, const GDP* gdp ) {
     const World* world = scenario->getWorld();
     const Marketplace* marketplace = scenario->getMarketplace();
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const double CVRT_tg_MT = 1e-3; // to get teragrams of carbon per EJ to metric tons of carbon per GJ
 
     // call function to compute technology shares
-    calcTechShares( period );
+    calcTechShares( gdp, period );
     
     // calculate and return Subsector share; uses above price function
     // calc_price() uses normalized technology shares calculated above
@@ -92,8 +92,8 @@ void Cpricesubsector::calcShare(const int period, const GDP* gdp ) {
         share[period] = 0;
     }
     else {
-		double gdp_cap = gdp->getBestScaledGDPperCap( period );
-		share[period] = shrwts[period]*pow(subsectorprice[period]+ghgCost,lexp[period])*pow(gdp_cap,fuelPrefElasticity[period]);
+       double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
+		share[period] = shrwts[period]*pow(subsectorprice[period]+ghgCost,lexp[period])*pow(scaledGdpPerCapita,fuelPrefElasticity[period]);
 	}
 	
    if (shrwts[period]  > 1e4) {

@@ -27,6 +27,8 @@ using namespace std;
 
 extern Scenario* scenario;
 
+const string BisectPolicyNRSolver::SOLVER_NAME = "BisectPolicyNRSolver";
+
 //! Constructor
 BisectPolicyNRSolver::BisectPolicyNRSolver( Marketplace* marketplaceIn, World* worldIn ):Solver( marketplaceIn, worldIn ) {
     // Construct components.
@@ -43,8 +45,12 @@ BisectPolicyNRSolver::~BisectPolicyNRSolver() {
 
 //! Get the solver name.
 const string& BisectPolicyNRSolver::getName(){
-    const static string name = "BisectPolicyNRSolver";
-    return name;
+    return SOLVER_NAME;
+}
+
+//! Get the name of the SolverComponent
+const string& BisectPolicyNRSolver::getNameStatic() {
+    return SOLVER_NAME;
 }
 
 //! Initialize the solver at the beginning of the model.

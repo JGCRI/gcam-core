@@ -323,8 +323,8 @@ void Subsector::toOutputXML( ostream& out, Tabs* tabs ) const {
         XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
-    for( unsigned i = 0; i < fuelPrefElasticity.size(); i++ ){
-        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    for( unsigned int i = 0; i < fuelPrefElasticity.size(); i++ ){
+        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelprefElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
     XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, tabs, 0.0, modeltime->getstartyr( ) );
@@ -473,7 +473,8 @@ void Subsector::initCalc( const int period ) {
 		int numberOfGHGs =  techs[ i ][ period ]->getNumbGHGs();
 
 		if ( numberOfGHGs != techs[i][ period - 1 ]->getNumbGHGs() ) {
-			cerr << "WARNING: Number of GHG objects changed in period " << period << ", tech: ";
+			cerr << "WARNING: Number of GHG objects changed in period " << period;
+         cerr << " to " << numberOfGHGs <<", tech: ";
 			cerr << techs[i][ period ]->getName();
 			cerr << ", sub-s: "<< name << ", sect: " << sectorName << ", region: " << regionName << endl;
 		}
@@ -661,7 +662,7 @@ double Subsector::getwtfuelprice(int period) const
 * \param period model period
 * \warning technologies can not independently have fixed outputs at this point
 */
-void Subsector::calcTechShares( const int period ) {
+void Subsector::calcTechShares( const GDP* gdp, const int period ) {
     int i=0;
     double sum = 0;
     
@@ -669,7 +670,7 @@ void Subsector::calcTechShares( const int period ) {
         // calculate technology cost
         techs[i][period]->calcCost( regionName, sectorName, period );
         // determine shares based on technology costs
-        techs[i][period]->calcShare( regionName,period );
+        techs[i][period]->calcShare( regionName, gdp, period );
         sum += techs[i][period]->getShare();
     }
     // normalize technology shares to total 100 %
@@ -691,20 +692,20 @@ void Subsector::calcTechShares( const int period ) {
 * \author Sonny Kim, Josh Lurz
 * \param regionName region name
 * \param period model period
-* \param gdp_cap GDP per capita, relative to base year
+* \param scaledGdpPerCapita GDP per capita, relative to base year
 * \warning technologies can not independently have fixed outputs
 * \warning there is no difference between demand and supply technologies. Control behavior with value of parameter fuelPrefElasticity
 */
 void Subsector::calcShare(const int period, const GDP* gdp ) {
+   
     // call function to compute technology shares
-    calcTechShares( period );
-    double gdp_cap;
+    calcTechShares( gdp, period );
     // calculate and return Subsector share; uses above price function
     // calc_price() uses normalized technology shares calculated above
     // Logit exponential should not be zero
     
     // compute Subsector weighted average price of technologies
-    calcPrice( period);
+    calcPrice( period );
 
     // Subsector logit exponential check
     if(lexp[period]==0) cerr << "SubSec Logit Exponential is 0." << endl;
@@ -713,10 +714,10 @@ void Subsector::calcShare(const int period, const GDP* gdp ) {
         share[period] = 0;
     }
     else {
-		gdp_cap = gdp->getBestScaledGDPperCap( period );
-		share[period] = shrwts[period]*pow(subsectorprice[period],lexp[period])*pow(gdp_cap,fuelPrefElasticity[period]);
+      double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
+		share[period] = shrwts[period]*pow(subsectorprice[period],lexp[period])*pow(scaledGdpPerCapita,fuelPrefElasticity[period]);
 	}
-	
+		
    if (shrwts[period]  > 1e4) {
     cout << "WARNING: Huge shareweight for sub-sector " << name << " : " << shrwts[period] 
          << " in region " << regionName <<endl;
@@ -1359,22 +1360,22 @@ void Subsector::csvOutputFile() const {
     fileoutput3( regionName,sectorName,name," ","C tax paid","Mil90$",carbontaxpaid);
     fileoutput3( regionName,sectorName,name," ","CO2 emiss","MTC",temp);
 
-// sjs -- bad coding here, hard-wired period. But is only for csvOutputFile.
+    // do for all technologies in the Subsector
+    for (i=0;i<notech;i++) {
+// sjs -- bad coding here, hard-wired period. But is difficult to do something different with current output structure. This is just for csv file.
 		int numberOfGHGs =  techs[ i ][ 2 ]->getNumbGHGs();
-		if (numberOfGHGs > 1 ) {
-		   std::vector<std::string> ghgNames;
-			ghgNames = techs[i][ 2 ]->getGHGNames();
-			for ( int ghgN = 2; ghgN <= numberOfGHGs; ghgN++ ) {
-				for (m=0;m<maxper;m++) {
-					temp[m] = summary[m].get_emissmap_second( ghgNames[ ghgN - 1 ] );
+      std::vector<std::string> ghgNames;
+      ghgNames = techs[i][ 2 ]->getGHGNames();		
+      for ( int ghgN =0; ghgN <= ( numberOfGHGs - 1 ); ghgN++ ) {
+         if ( ghgNames[ ghgN ] != "CO2" ) {
+ 				for (m=0;m<maxper;m++) {
+               temp[m] = techs[i][ m ]->get_emissmap_second( ghgNames[ ghgN ] );
 				}
-				string ghgLabel = ghgNames[ ghgN - 1 ] + " emiss";
-				fileoutput3( regionName,sectorName,name," ",ghgLabel,"Tg",temp);
+				string ghgLabel = ghgNames[ ghgN ] + " emiss";
+				fileoutput3( regionName,sectorName,name,techs[i][ 2 ]->getName(),ghgLabel,"Tg",temp);
 			}
 		}
     
-    // do for all technologies in the Subsector
-    for (i=0;i<notech;i++) {
         // output or demand for each technology
 		for (m=0;m<maxper;m++) {
             temp[m] = techs[i][m]->getOutput();

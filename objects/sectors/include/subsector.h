@@ -111,7 +111,7 @@ public:
     void limitShares( const double sum, const int period );
     void setCapLimitStatus( const bool value, const int period );
     bool getCapLimitStatus( const int period ) const;
-    void calcTechShares ( const int period );
+    void calcTechShares ( const GDP* gdp, const int period );
     virtual void setoutput( const double demand, const int period, const GDP* gdp ); 
     double exogSupply( const int period );
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
