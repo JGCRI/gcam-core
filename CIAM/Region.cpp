@@ -1178,6 +1178,15 @@ void Region::MCoutput() {
    }
    dboutput4(name,"End-Use Service","by Sector","zTotal","Ser Unit",temp);
    
+   // regional total end-use service demand without Tech Change for all demand sectors
+   for (m=0;m<maxper;m++) {
+      temp[m] = 0; // initialize temp to 0 for each period
+      for (i=0;i<nodsec;i++) { // sum for all period and demand sectors
+         temp[m] += demandsector[i]->getServiceWoTC( m );
+      }
+   }
+   dboutput4(name,"End-Use Service","by Sector w/o TC","zTotal","Ser Unit",temp);
+
    // regional fuel consumption (primary and secondary) by fuel type
    map<string,double> tfuelmap = summary[0].getfuelcons();
    for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {

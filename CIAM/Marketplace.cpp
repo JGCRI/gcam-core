@@ -2202,7 +2202,7 @@ int Marketplace::NR_Ron( const double solutionTolerance, const double excessDema
       previousEDvalue = maxSolVal;
       
       // if solution moves in wrong direction
-      if( maxSolVal > 1500) {
+      if( maxSolVal > 25) {
          logfile << ",,***Exit Newton-Raphson function maxSolVal > 1500. "<< endl;
          //   logfile << ", Due to market " << getRegionName(maxInt)<< "-"<< getGoodName(maxInt) <<"\n";
          if ( trackED && per > 0) {

@@ -410,10 +410,10 @@ void demsector::MCoutput( const string& regionName ) {
     
     // total sector output
     dboutput4(regionName,"End-Use Service","by Sector",secname,"Ser Unit",service);
-    dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",temp);
+    dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",service);
 
-    dboutput4(regionName,"End-Use Service w/o Tech Change","by Sector",secname,"Ser Unit",servicePreTechChange);
-    dboutput4(regionName,"End-Use Service w/o Tech Change",secname,"zTotal","Ser Unit",temp);
+    dboutput4(regionName,"End-Use Service","by Sector w/o TC",secname,"Ser Unit",servicePreTechChange);
+    //dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",temp);
 
     // End-use service price elasticity
     str = secname + "_price";
@@ -504,3 +504,9 @@ void demsector::MCoutput( const string& regionName ) {
 double demsector::getService(const int per) {
     return service[per];
 }
+
+//! Return demand sector service
+double demsector::getServiceWoTC(const int per) {
+    return servicePreTechChange[per];
+}
+

@@ -882,6 +882,14 @@ void sector::MCoutput(const string& regname ) {
     
     // sector price
     dboutput4(regname,"Price",name,"zSectorAvg","$/GJ",sectorprice);
+    // for electricity sector only
+    if (name == "electricity") {
+        for (m=0;m<maxper;m++) {
+            temp[m] = sectorprice[m] * 2.212 * 0.36;
+        }
+        dboutput4(regname,"Price","electricity C/kWh","zSectorAvg","90C/kWh",temp);
+    }
+
     // sector price
     dboutput4(regname,"Price","by Sector",name,"$/GJ",sectorprice);
     // sector carbon taxes paid

@@ -884,6 +884,13 @@ void subsector::MCoutputA( const string& regname, const string& secname ) const 
     dboutput4(regname,"Secondary Energy Prod",secname,name,"EJ",output);
     // subsector price
     dboutput4(regname,"Price",secname,name,"75$/GJ",subsectorprice);
+    // for electricity sector only
+    if (secname == "electricity") {
+        for (m=0;m<maxper;m++) {
+            temp[m] = subsectorprice[m] * cvrt90 * 0.36;
+        }
+        dboutput4(regname,"Price",secname+" C/kWh",name,"90C/kWh",temp);
+    }
     
     string tssname = "tech_"; // tempory subsector name
     string str1, str2; // tempory string
@@ -1010,7 +1017,7 @@ void subsector::MCoutputC( const string& regname, const string& secname ) const 
             // technology ghg emissions, get gases for per 
             // all gases not just CO2
             map<string,double> temissmap = techs[i][0]->getemissmap();
-            for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
+/*            for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
                 for (m=0;m<maxper;m++) {
                     temp[m] = techs[i][m]->get_emissmap_second(gmap->first);
                 }
@@ -1022,7 +1029,7 @@ void subsector::MCoutputC( const string& regname, const string& secname ) const 
                 str += techs[i][mm]->getName(); // technology name
                 dboutput4(regname,"Emissions",str,gmap->first,"MTC",temp);
             }
-            // technology share
+ */           // technology share
             for (m=0;m<maxper;m++)
                 temp[m] = techs[i][m]->getShare();
             dboutput4(regname,"Tech Share",secname,str,"%",temp);
