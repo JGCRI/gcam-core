@@ -15,10 +15,10 @@
 #include <vector>
 #include <map>
 #include <iosfwd>
-#include "marketplace/include/market.h"
-
+#include <string>
+#include "marketplace/include/imarket_type.h"
 class Tabs;
-
+class Market;
 /*! 
 * \ingroup CIAM
 * \brief A class which describes the single global marketplace.
@@ -33,7 +33,7 @@ public:
     ~Marketplace();
     void solve( const int per );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    bool createMarket( const std::string& regionName, const std::string& marketName, const std::string& goodName, const Market::MarketType aMarketType );
+    bool createMarket( const std::string& regionName, const std::string& marketName, const std::string& goodName, const IMarketType::Type aMarketType );
     void initPrices();
     void nullSuppliesAndDemands( const int period );
     void setPrice( const std::string& goodName, const std::string& regionName, const double value , const int period );
@@ -57,8 +57,8 @@ public:
     bool doesMarketExist( const std::string& goodName, const std::string& regionName, const int period ) const;
     std::vector<Market*> getMarketsToSolve( const int period ) const;
 private:
-    int uniqueNo; //!< number for creating markets
-    int numMarkets;  //!< number of markets
+    unsigned int uniqueNo; //!< number for creating markets
+    unsigned int numMarkets;  //!< number of markets
     std::vector< std::vector<Market*> > markets; //!< no of market objects by period
     std::map<std::string,int> marketMap; //!< map of unique market id from good and market-region names
     std::map<std::string,int> regionToMarketMap; //!< map of market lookup from good and region names
