@@ -38,12 +38,6 @@ void Summary::initpeprod( const string& fname, const double value ){
 	peprod[ "zTotal" ] += value;
 }
 
-void Summary::initemission( const string& ghgname, const double value)
-{
-	emission[ ghgname ] += value;
-	emission[ "zTotal" ] += value;
-}
-
 map<string, double> Summary::getfuelcons() const {
 	
 	return fuelcons;

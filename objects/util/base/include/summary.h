@@ -37,7 +37,6 @@ public:
 	Summary(); // default construtor
 	void initfuelcons( const std::string& fname, const double value );
 	void initpeprod( const std::string& fname, const double value );
-	void initemission( const std::string& ghgname, const double value );
 	std::map<std::string, double> getfuelcons() const;
 	std::map<std::string, double> getpecons() const;
 	std::map<std::string, double> getpetrade() const;
