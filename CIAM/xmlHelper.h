@@ -411,6 +411,40 @@ void XMLWriteElement( const T value, const string elementName, ostream& out, con
     
     out << "</" << elementName << ">" << endl;
 }
+
+//! Function to write the argument element to xml in proper format if it is not equal to the default value for the element..
+/*! 
+* This function is used to write a single element containing a single value and an optional year to the output stream
+* in XML if the value is not equal to the default value.. If the year is not passed in, the function will not print the year attribute.
+* \param value Value to print to XML.
+* \param elementName Name of the element.
+* \param out Stream to print to.
+* \param defaultValue Default value to compare the value to. 
+* \param year Optional year value to print as an attribute.
+* \param name Optional name value to print as an attribute.
+* \return void
+*/
+template<class T>
+void XMLWriteElementCheckDefault( const T value, const string elementName, ostream& out, const double defaultValue, const int year = 0, const string name = "" ) {
+   
+   if( !std::isEqual( value, defaultValue ) ) {
+	   Tabs::writeTabs( out );
+	
+   	out << "<" << elementName;
+	
+	   if ( name != "" ) {
+		   out << " name=\"" << name << "\"";
+	   }
+	
+	   if( year != 0 ){
+		   out << " year=\"" << year << "\"";
+	   }
+	
+	   out << ">";
+	   out << value;
+	   out << "</" << elementName << ">" << endl;
+   }
+}
 /*!
 * \brief Function to parse an XML file, returning a pointer to the root.
 * 
