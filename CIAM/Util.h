@@ -21,6 +21,8 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <ctime>
+#include <sstream>
 
 namespace util {
     /*! \brief A function to determine the sign of a number.
@@ -118,6 +120,51 @@ namespace util {
       const double VERY_SMALL_NUM = 1e-8;
       return VERY_SMALL_NUM;
    }
+
+    /*! \brief Function which creates an XML compliant date time string.
+    *
+    * This function takes as an argument a time_t object and returns a string containing the date and time in the following format:
+    * yyyy-mm-dd-Thh:mm-GMTOFFSET
+    * ie: 2003-01-11T09:30:47-05:00
+    * \param time time_t to convert to XML string form.
+    * \return string The time converted to XML date string format.
+    * \bug GMT offset does not work properly.
+    */
+
+   static std::string XMLCreateDate( const std::time_t& time ) {
+       std::stringstream buffer;
+       std::string retString;
+       struct std::tm* timeInfo;
+       struct std::tm* umtTimeInfo;
+	
+	    timeInfo = localtime( &time );
+	    umtTimeInfo = gmtime( &time );
+	
+	    // Create the string
+	    buffer << ( timeInfo->tm_year + 1900 ); // Set the year
+	    buffer << "-";
+	    buffer << timeInfo->tm_mday; // Set the day
+	    buffer << "-";
+	    buffer << ( timeInfo->tm_mon + 1 ); // Month's in ctime range from 0-11
+	    buffer << "T";
+	    buffer << timeInfo->tm_hour;
+	    buffer << ":";
+	    buffer << timeInfo->tm_min;
+	    buffer << ":";
+	    buffer << timeInfo->tm_sec;
+	    buffer << "-";
+	
+	    int umtDiff = timeInfo->tm_hour - umtTimeInfo->tm_hour;
+	    if( umtDiff < 10 ) {
+		    buffer << "0";
+	    }
+	    buffer << umtDiff;
+	    buffer << ":00";
+	    // Completed creating the string;
+	    buffer >> retString;
+	
+	    return retString;
+    }
 }
 #endif // _UTIL_H_
 
