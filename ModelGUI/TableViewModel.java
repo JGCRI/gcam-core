@@ -118,27 +118,23 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
     
     public void addBlankRow(int newRowIndex) {
         AdapterNode[][] newValues = new AdapterNode[numRows+1][numCols];
-//System.out.println("newRowIndex = " + newRowIndex + ", numRows = " + numRows + ", actual num rows = " + newValues.length);
         
         //copy the begining of the array
         for (int j = 0; j < newRowIndex; j++) {
             for (int k = 0; k < numCols; k++) {
                 newValues[j][k] = tableValues[j][k];
-//System.out.println("added " + newValues[j][k].getText() + " at " + j + ", " + k);
             }
         }
         
         //insert the blank row
         for (int k = 0; k < numCols; k++) {
             newValues[newRowIndex][k] = new AdapterNode();
-//System.out.println("added " + newValues[newRowIndex][k].getText() + " at " + newRowIndex + ",     " + k);
         }
         
         //copy the rest of the array
         for (int j = newRowIndex; j < numRows; j++) {
             for (int k = 0; k < numCols; k++) {
                 newValues[j+1][k] = tableValues[j][k];
-//System.out.println("added " + newValues[j+1][k].getText() + " at " + j + ", " + k);
             }
         }
         tableValues = newValues;
@@ -154,9 +150,16 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
         int numBlanks = 0;
         boolean modified = false;
         
+        if (tableLefter.size() == 1) {
+            lefterName = (String)tableLefter.firstElement();
+            index1 = lefterName.indexOf('<');
+            tableLefter.setElementAt(lefterName.substring(0, index1), 0);
+            return;
+        }
+        
         //check that there are more than one entry per region
         lefterName = tableLefter.elementAt(0).toString();
-        currRegion = tableLefter.elementAt(1).toString();
+        //currRegion = tableLefter.elementAt(1).toString();
         index1 = lefterName.indexOf('<');
         
         //get the name of current region
@@ -186,7 +189,6 @@ public class TableViewModel extends javax.swing.table.AbstractTableModel {
         }
         
         for (int j = 0; j < size; j++) {
-System.out.println("lefter name = " + lefterName);
             //get the name of current region
             lefterName = tableLefter.elementAt(j).toString();
             index1 = lefterName.indexOf('<');

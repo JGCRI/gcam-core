@@ -185,9 +185,6 @@ public class ControlPanel extends javax.swing.JFrame {
                     //get the tag name of each selected node
                     node = (AdapterNode)paths[j].getLastPathComponent();
                     ansestorNodes = node.getAnsestors();
-                    
-                    //obtain the axis from user
-                    //displayTableChoices();
                 }
             }
         }
@@ -496,14 +493,14 @@ public class ControlPanel extends javax.swing.JFrame {
             queryPanel = new JPanel();
             queryPanel.setLayout(new BoxLayout(queryPanel, BoxLayout.X_AXIS));
             
-            queryPanel.add(new JLabel("View a  "));
-            String[] array = {"List ", "Table "};
+            queryPanel.add(new JLabel("View a table of  "));
+            /*String[] array = {"List ", "Table "};
             listTableBox = new JComboBox(array);
             listTableBox.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
-            queryPanel.add(listTableBox);
+            queryPanel.add(listTableBox);*/
             
-            queryPanel.add(new JLabel("  of  "));
-            String[] array2 = {DEFAULT_SELECTION_STRING, "Names", "Numeric Values"};
+            //queryPanel.add(new JLabel("  of  "));
+            String[] array2 = {DEFAULT_SELECTION_STRING, "Names", "Values"};
             JComboBox box = new JComboBox(array2);
             box.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
             box.addActionListener(new ActionListener() {
@@ -913,7 +910,7 @@ public class ControlPanel extends javax.swing.JFrame {
                     int index2 = lefterName.indexOf('>');
                     if (lefterName.substring(index1+1, index2).equals("period")) {
                         //remember the last index in values that contains confirmed entry
-                        int lastValIndex = values.size() - 1;
+                        int lastValIndex = values.size();
                         
                         //fill values with appropriate number of empty nodes
                         int numPeriods = modelTime.getNumOfSteps();
@@ -943,11 +940,6 @@ public class ControlPanel extends javax.swing.JFrame {
                             } else {
                                 values.setElementAt(currNode, lastValIndex+offset);
                             }
-                            //lefterName = regionName + "< >";
-                            /*if (!lefter.isEmpty()) {
-                                prevName = (String)lefter.lastElement();
-                                if (!(prevName.equals(lefterName))) lefter.add(lefterName);
-                            } else lefter.add(lefterName);*/
                         }
 
                     } else {        //if parent of desired node(s) isn't "period"
@@ -986,11 +978,6 @@ public class ControlPanel extends javax.swing.JFrame {
                                 
                                 values.addElement(currNode);                                
                             }
-
-                            /*if (!lefter.isEmpty()) {
-                                prevName = (String)lefter.lastElement();
-                                if (!(prevName.equals(lefterName))) lefter.add(lefterName);
-                            } else lefter.add(lefterName);*/
                         }
                         while (!lastYear.equals(new Integer(modelTime.getEnd()))) {
                             lastYear = (Integer)yearIt.next();
