@@ -14,38 +14,38 @@ INPUT_TABLE,,,,
 Variable ID,,,,
 800,,,,
 Other Gases,,,,{ Paramaters for GDP control -- set fmax to 0 to disable -- detail by source/region using input 805 }
-Index,Label,GWP,Input Type,fmax,gdp0,tau
-1,CH4,21,1,0,15,10
-2,N2O,310,1,0,15,10
-3,SO2,0,1,0,15,10
-4,NOx,0,1,0,15,15
-5,CO,0,1,0,15,10
-6,VOC,0,1,0,15,10
-7,BC,0,1,0,8,8
-8,,0,1,0,15,10
-9,,0,1,0,15,10
-10,,0,1,0,15,10
-11,C2F6,9200,0,0,15,10
-12,C4F10,7000,0,0,15,10
-13,CF4 ,6500,0,0,15,10
-14,HFC-125,2800,0,0,15,10
-15,HFC-134a,1300,0,0,15,10
-16,HFC-143a,3800,0,0,15,10
-17,HFC-152a,140,0,0,15,10
-18,HFC-227ea,2900,0,0,15,10
-19,HFC-23,11700,0,0,15,10
-20,HFC-236fa,6300,0,0,15,10
-21,HFC-245ca,560,0,0,15,10
-22,HFC-32,650,0,0,15,10
-23,HFC-43-10,1300,0,0,15,10
-24,SF6 ,23900,0,0,15,10
-25,,0,1,0,15,10
+Index,Label,GWP,Input Type,fmax,gdp0,tau,techchange,
+1,CH4,21,1,0,15,10,0.001,:-- Timescale - changes somewhat into the future
+2,N2O,310,1,0,15,10,0.001,:-- Timescale - changes somewhat into the future
+3,SO2,0,1,0,12,12,0.001,:-- Timescale - changes somewhat into the future
+4,NOx,0,1,0,20,20,0.001,:-- Timescale - changes significantly into the future
+5,CO,0,1,0,10,10,0.001,":-- Timescale - ""catchup"" to current development"
+6,VOC,0,1,0,10,10,0.001,":-- Timescale - ""catchup"" to current development"
+7,BC,0,1,0,8,8,0.001,
+8,,0,1,0,15,10,0.001,
+9,,0,1,0,15,10,0.001,
+10,,0,1,0,15,10,0.001,
+11,C2F6,9200,0,0,15,10,0.001,
+12,C4F10,7000,0,0,15,10,0.001,
+13,CF4 ,6500,0,0,15,10,0.001,
+14,HFC-125,2800,0,0,15,10,0.001,
+15,HFC-134a,1300,0,0,15,10,0.001,
+16,HFC-143a,3800,0,0,15,10,0.001
+17,HFC-152a,140,0,0,15,10,0.001
+18,HFC-227ea,2900,0,0,15,10,0.001
+19,HFC-23,11700,0,0,15,10,0.001
+20,HFC-236fa,6300,0,0,15,10,0.001
+21,HFC-245ca,560,0,0,15,10,0.001
+22,HFC-32,650,0,0,15,10,0.001
+23,HFC-43-10,1300,0,0,15,10,0.001
+24,SF6 ,23900,0,0,15,10,0.001
+25,,0,1,0,15,10,
 
 
 
-NOTE: Must have correct region and sector numbers below,,,,,,
+NOTE: Must have correct region and sector numbers below,,,,,,,
 
-INPUT_TABLE,,,,,,
+INPUT_TABLE,,,,,,,
 Variable ID,,METHANE -- base year emissions in Tg CH4  -- SOURCE EMF 21 / EPA 11/02 AND EDGAR v 3.2,,,,,,,,,,,,,
 801,,,,,,,,,,,,,,,
 Source Inputs,,,,,,,,,,,,,,,
