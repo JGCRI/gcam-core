@@ -8,16 +8,33 @@ Container iterators are declared as containerName<type>::iterator iteratorName. 
 to the item within the container it points at, and pointer operations can be perfomed on it, such as dereferencing. If 
 the container held pointers to objects, the iterator must be dereferenced twice in order to access the object. Put example here.
 
+\subsection faqitem2 When should I forward declare a class?
+Forward declaration is a very useful technique for reducing compilation dependencies, but can be difficult to use correctly. Forward declaration
+tells the compiler to create a placeholder for the class definition, so that you can define it at a later time. Here is a list of criteria for 
+when you can use a forward declaration
+<ul>
+<li>You are working on a header file.
+<li>The class you are trying to forward declare is NOT an STL class.
+<li>The only use of the class is a datamember which is a pointer to the class, or the argument to a function.
+<li>The header file does not contain any inline functions which use the class or its functions. 
+</ul>
+
+If these criteria are met, you may forward declare the class with the line:
+class className;
+
+Make sure to do this before the class documentation so that doxygen is not confused.
+ 
+list of criteria of when to use this method. 
 
 \section modelques Model Questions
 
 \subsection modelques1 How do the simultaneity markets work?
-When a normal_market is turned into a simultaneity market, the normal_market is seperated into two markets, a PriceMarket and a DemandMarket. 
+When a NormalMarket is turned into a simultaneity market, the NormalMarket is seperated into two markets, a PriceMarket and a DemandMarket. 
 Both markets are solved, but only the PriceMarket is accessable from outside the marketplace. Both markets contain a pointer to the other market. 
 Calls to PriceMarket::getDemand, PriceMarket::getSupply, PriceMarket::addToDemand, and PriceMarket::addToSupply are redirected to the DemandMarket. 
 PriceMarket::setPrice is also a special function, it sets demand equal to the new price and supply equal to the current price. DemandMarket::getDemand
 and DemandMarket::addToSupply are also overridden so that DemandMarket::getDemand returns the price and DemandMarket::addToDemand sets the supply
 equal to the price. These are the functions used from outside the Marketplace, the Market also contains a set of functions with the word "Raw"
-ub the name which return or set the true values of the price, supply and demand variables. These are the functions used by the Solver to clear
+in the name which return or set the true values of the Market::price, Market::supply and Market::demand variables. These are the functions used by the Solver to clear
 the markets. 
 */
