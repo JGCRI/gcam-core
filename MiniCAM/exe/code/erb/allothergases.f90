@@ -890,13 +890,14 @@
 	REAL*8 deforBioUseFract, gdppercap, biomassprice
 	INTEGER L,M
 
-	REAL*8 UseFract, priceFactor, maxUse, gdpFact
+	REAL*8 UseFract, priceFactor, maxUse, gdpFact, gdpSplitPoint
     
 	UseFract = (1d0 - recovForestFrac(L) )	! Basic amount that can be potentially used
 	
 	gdpFact = 1d0
-	if (gdppercap .lt. 15d0 ) then
-		gdpFact = (gdppercap/15d0) 	! Assume that less is used at low incomes
+	gdpSplitPoint = 10d0
+	if (gdppercap .lt. gdpSplitPoint ) then
+		gdpFact = (gdppercap/gdpSplitPoint) 	! Assume that less is used at low incomes
 	endif
 	UseFract = UseFract	* gdpFact
 
