@@ -16,6 +16,7 @@
 		<Value name="dbFileName">../input/erbdb.mdb</Value>
 		<Value name="scenarioXmlInputFileName1">../CIAM/scenarioAddOn.xml</Value>
 		<Value name="supplyDemandOutputFileName">SDCurves.csv</Value>
+		<Value name="GHGInputFileName">gas2.emk</Value>
 	</Files>
 	<Strings/>
 	<Bools>
