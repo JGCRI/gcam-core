@@ -1610,7 +1610,7 @@ void Subsector::MCoutputAllSectors() const {
             for (m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getInput();
             }
-            dboutput4(regionName,"Fuel Consumption",sectorName,techs[i][0]->getFuelName(),"EJ",temp);
+            dboutput4(regionName,"Fuel Consumption",sectorName + " by Technology",techs[i][0]->getFuelName(),"EJ",temp);
         }
         
         
