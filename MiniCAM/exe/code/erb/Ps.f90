@@ -151,7 +151,7 @@
 ! These are added after the scrubbing sectors
 
       DO I = NH2 + (NNH2-NH2)+1,NH2 + (NNH2-NH2) + NH2_New
-         PHILM(I,L,M) = HHILM(JH,M)
+         PHILM(I,L,M) = HHILM(I,M)
          RHI(I) = RHI(JHELCTRO)
       END DO
 
