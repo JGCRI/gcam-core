@@ -52,8 +52,6 @@ protected:
     std::auto_ptr<MarketInfo> mSectorInfo; //!< Pointer to the sector's information store.
     std::vector<Subsector*> subsec; //!< subsector objects
     std::vector<double> sectorprice; //!< Sector price in $/service
-    std::vector<double> price_norm; //!< Sector price normalized to base year
-    std::vector<double> pe_cons; //!< sectoral primary energy consumption
     std::vector<double> input; //!< Sector total energy consumption
     std::vector<double> output; //!< total amount of final output from sector
     std::vector<double> fixedOutput; //!< total amount of fixed output from Sector
@@ -111,6 +109,8 @@ public:
     bool outputsAllFixed( const int period ) const;
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
     double getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals = true ) const;
+    double getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals = true ) const;
+    void setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
     void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
     double getPrice( const int period );
     double getCalOutput( const int period ) const;
@@ -135,6 +135,7 @@ public:
     std::vector<std::string> getInputDependencies( const Region* parentRegion ) const;
     const std::vector<std::string>& getDependsList() const;
     void printSectorDependencies( ILogger& aLog ) const;
+    void tabulateFixedDemands( const int period );
 
     /*!
     * \brief Binary function used to order Sector* pointers by input dependency. 

@@ -154,6 +154,7 @@ public:
     double getFixedInput() const; // return fixed input
     int getNumbGHGs()  const; // number of GHG objects in this technology
     void setYear( const int yearIn );
+    void tabulateFixedDemands( const std::string regionName, const int period );
 };
 #endif // _TECHNOLOGY_H_
 

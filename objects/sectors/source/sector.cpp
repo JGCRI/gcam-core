@@ -58,8 +58,6 @@ Sector::Sector( const string regionNameIn ): regionName( regionNameIn ){
     const int maxper = modeltime->getmaxper();
 
     sectorprice.resize( maxper );
-    price_norm.resize( maxper ); // Sector price normalized to base year
-    pe_cons.resize( maxper ); // sectoral primary energy consumption
     input.resize( maxper ); // Sector total energy consumption
     output.resize( maxper ); // total amount of final output from Sector
     fixedOutput.resize( maxper );
@@ -279,7 +277,6 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     // Write out the data in the vectors for the current period.
     XMLWriteElement( sectorprice[ period ], "sectorprice", out, tabs );
-    XMLWriteElement( pe_cons[ period ], "pe_cons", out, tabs );
     XMLWriteElement( input[ period ], "input", out, tabs );
     XMLWriteElement( output[ period ], "output", out, tabs );
     XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
@@ -351,6 +348,20 @@ void Sector::checkSectorCalData( const int period ) {
     }
 }
 
+/*! \brief check for fixed demands and set values to counter
+*
+* Routine flows down to technoogy and sets fixed demands to the appropriate marketplace to be counted
+*
+* \author Steve Smith
+* \param period Model period
+*/
+void Sector::tabulateFixedDemands( const int period ) {
+
+    for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
+        ( *j )->tabulateFixedDemands( period );
+    }
+}
+
 /*! \brief Scales sub-sector share weights so that they equal number of subsectors.
 *
 * This is needed so that 1) share weights can be easily interpreted (> 1 means favored) and so that
@@ -361,9 +372,9 @@ void Sector::checkSectorCalData( const int period ) {
 * \warning This must be done before subsector inits so that share weights are scaled before they are interpolated
 */
 void Sector::normalizeShareWeights( const int period ) {
-    
+
     // If this sector was completely calibrated, or otherwise fixed, then scale shareweights to equal number of subsectors
-    if  ( period > 0 ) {
+    if  ( period > 0 && Configuration::getInstance()->getBool( "CalibrationActive" ) ) {
         if ( inputsAllFixed( period - 1, name ) && ( getCalOutput ( period - 1) > 0 ) ) {
 
             double shareWeightTotal = 0;
@@ -873,6 +884,8 @@ double Sector::getFixedShare( const int subsectorNum, const int period ) const {
 * Returns the total calibrated outputs from all subsectors and technologies. 
 * Note that any calibrated input values are converted to outputs and are included.
 *
+* This returns only calibrated outputs, not values otherwise fixed (as fixed or zero share weights)
+*
 * \author Steve Smith
 * \param period Model period
 * \return total calibrated outputs
@@ -893,7 +906,7 @@ double Sector::getCalOutput( const int period  ) const {
 * \author Steve Smith
 * \param period Model period
 * \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
-* \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
+* \param bothVals optional parameter. It true (default) both calibration and fixed values are returned, if false only calInputs
 * \return total fixed inputs
 */
 double Sector::getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const {
@@ -902,6 +915,49 @@ double Sector::getCalAndFixedInputs( const int period, const std::string& goodNa
         totalFixedInput += subsec[ i ]->getCalAndFixedInputs( period, goodName, bothVals );
     }
     return totalFixedInput;
+}
+
+/*! \brief Return subsector total fixed or calibrated inputs.
+*
+* Returns the total fixed inputs from all subsectors and technologies. 
+* Note that any calibrated output values are converted to inputs and are included.
+*
+* \author Steve Smith
+* \param period Model period
+* \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
+* \param bothVals optional parameter. It true (default) both calibration and fixed values are returned, if false only calInputs
+* \return total fixed inputs
+*/
+double Sector::getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals ) const {
+    double sumCalOutputValues = 0;
+    for ( int i=0; i<nosubsec; i++ ) {
+        sumCalOutputValues += subsec[ i ]->getCalAndFixedOutputs( period, goodName, bothVals );
+    }
+    return sumCalOutputValues;
+}
+
+/*! \brief Calculates the input value needed to produce the required output
+*
+* \author Steve Smith
+* \param period Model period
+* \param goodName market good to determine the inputs for.
+* \param requiredOutput Amount of output to produce
+*/
+void Sector::setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput ) {
+    bool inputWasChanged = false;
+    for ( int i=0; i<nosubsec; i++ ) {
+        if ( !inputWasChanged ) {
+            inputWasChanged = subsec[ i ]->setImpliedFixedInput( period, goodName, requiredOutput );
+        } else {
+            bool tempChange = subsec[ i ]->setImpliedFixedInput( period, goodName, requiredOutput );
+            if ( tempChange ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "  WARNING: caldemands for more than one subsector were changed " ; 
+                mainLog << " in sector " << name << " in region " << regionName << endl; 
+            }
+        }
+    }
 }
 
 /*! \brief Returns true if all subsector inputs for the the specified good are fixed.

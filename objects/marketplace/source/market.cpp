@@ -487,10 +487,6 @@ string Market::getGoodName() const {
 * \param itemValue The value to be associated with this key. 
 */
 void Market::setMarketInfo( const std::string& itemName, const double itemValue ){
-    // Make sure we are not setting a zero.
-    if( itemValue < util::getVerySmallNumber() ){
-        return;
-    }
     
     // Lazily allocate the MarketInfo object.
     if( !mMarketInfo.get() ){

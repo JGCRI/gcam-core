@@ -46,6 +46,8 @@ public:
     void dbOutput( const std::string& regname ); 
     void csvOutputFile( const std::string& regname ); 
     void addToDependencyGraph( std::ostream& outStream, const int period ) const;
+    void setCalibratedSupplyInfo( const int period, const std::string& regionName );
+    
 protected:
     std::string name; //!< Resource name
     std::string market; //!< regional market

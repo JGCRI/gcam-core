@@ -419,7 +419,6 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
     int numIterations = 0;
     bool code = false;
     Configuration* conf = Configuration::getInstance();
-    const static bool debugChecking = conf->getBool( "debugChecking" );
     bool calibrationStatus = world->getCalibrationSetting();
     static const double LOWER_BOUND = util::getSmallNumber();
     static const int MAX_ITERATIONS = 30;

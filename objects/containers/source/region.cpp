@@ -1059,7 +1059,8 @@ double Region::calcTFEscaleFactor( const int period ) const {
 * \param period Model period
 */
 void Region::checkData( const int period ) {
-	 adjustCalibrations( period );	 
+    checkSectorCalData( period );
+
 }
 
 /*! \brief Call any initializations that are only done once per period.
@@ -1097,93 +1098,319 @@ void Region::initCalc( const int period )
 
 }
 
-
-/*! \brief Adjusts calibrated demands to be consistant with calibrated supply.
+/*! \brief Sets marketplace supply and demands to calibrated values
 *
-* For each supply sector that is completely calibrated, this routine adjusts calibrated demands, 
-* if they are all calibrated, to exactly match supplies. 
-* The adjustments are written to the log file.
+* The result of this routine, once called for all regions, is a set of calSupply and calDemand values in marketInfo.
+* The calSupply variable has a non-negative value for each supply sector that is completely calibrated. 
+* Similarly, the calDemand variable has a non-negative value for each demand good that is completely calibrated. 
+* Only those markets where all supplies or demands are calibrated will have non-zero values for these variables.
 *
-* If a calibration value is missing for a subsector or technology then the calibration check will not run and warnings may appear
-* 
 * \author Steve Smith
 * \param period Model period
-* \warning the current version cheats and assumes sub-sector names are equal to the supply sector fuel names.
-* \todo need to impliment "calonly" runmode for world.calc() so that can look at full chain of supplies and demands, working through the sector order.
-* \todo need to generalize outputsAllFixed routine that works for all sectors once we have multiple outputs
 */
-void Region::adjustCalibrations( const int period ) {
-    Configuration* conf = Configuration::getInstance();
-    if( conf->getBool( "CalibrationActive" ) ){
-        bool debugChecking = conf->getBool( "debugChecking" );
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-
-        checkSectorCalData( period );
+void Region::setCalSuppliesAndDemands( const int period ) {
+    Marketplace* marketplace = scenario->getMarketplace();
+    const double MKT_NOT_ALL_FIXED = -1;
+    
+    initializeCalValues( period );
+            
+    // Check for fully calibrated/fixed supplies
+    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
+        string goodName = supplySector[ i ]->getName();
         
-        for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-            string goodName = supplySector[ i ]->getName();
-            if ( inputsAllFixed( period, goodName ) ) {
+        if ( supplySector[ i ]->outputsAllFixed( period )  ) {
 
-                // First find the total calibrated or fixed supply of this good         
-                double calSupply = supplySector[ i ]->getCalOutput( period );  // total calibrated output
-                calSupply += supplySector[ i ]->getFixedOutput( period );  // total fixed output
-
-                // now find total fixed inputs demanded for this good
-                double calDemand = getFixedDemand( period, goodName );
-
-                // if calibrated output and demand are not equal, then scale demand so that they match
-                if ( !util::isEqual( calSupply, calDemand ) && ( calDemand != 0 ) && supplySector[ i ]->outputsAllFixed( period ) ) {
-                    mainLog << "Inputs and Outputs all fixed for " << goodName << endl;
-                    mainLog << "Cal difference in region " << name << " sector: " << goodName;
-                    mainLog << " Supply: " << calSupply << " S-D: " << calSupply-calDemand;
-                    mainLog << " ("<<(calSupply-calDemand)*100/calSupply<<"%)"<<endl;
-
-                    // Get calibrated inputs, only scale those, not fixed demands (if any)
-                    double fixedCalInputs = 0;
-                    for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-                        fixedCalInputs += demandSector[ j ]->getCalAndFixedInputs( period, goodName, false ); 
-                    }
-
-                    double ScaleValue = 1 + ( calSupply-calDemand )/fixedCalInputs;
-                    for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-                        demandSector[ j ]->scaleCalibratedValues( period, goodName, ScaleValue ); 
-                    }
-                } else if ( calDemand != 0 ) {
-                   mainLog.setLevel( ILogger::DEBUG );
-                   mainLog << "Demands all fixed (but not supply) for " << goodName << endl;
-                } else {
-                    if ( supplySector[ i ]->outputsAllFixed( period ) && ( calDemand != 0 || calSupply != 0 ) ) {
-                        mainLog << ", Supply is fixed at, " << calSupply;
-                        mainLog << ", and Demand is fixed at, "<< calDemand;
-                        mainLog << ", for good " << goodName<< " in region "<< name << endl;
-                    } else {
-                      //  logfile << ", fixed demand is zero or indirect." << endl;
-                    }
-                }
-
-                calDemand = getFixedDemand( period, goodName ); // get new demand to check if ok
-                // if calibrated demand is less than calibrated supply, even if supply is not all calibrated, issue warning
-                // This would cause a problem if not all supply was calibrated, but what was calibrated was > calibrated demand
-                // If debugchecking flag is on extra information is printed
-               if ( ( calSupply - calDemand ) > util::getSmallNumber() ) {
-                   mainLog.setLevel( ILogger::WARNING );
-                   mainLog << "Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
-                   if ( debugChecking ){
-                       mainLog.setLevel( ILogger::DEBUG );
-                       mainLog << "Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
-                       mainLog << "supply all fixed values : " << supplySector[ i ]->outputsAllFixed( period ) << endl;
-                       mainLog << "demand all fixed : " << inputsAllFixed( period, goodName ) << endl;
-                       mainLog << "fixedDemandsTot: " << calDemand << endl; 
-                       mainLog << "fixedSupplyTot: " << calSupply << endl;
-                   }
-               }
-            } // if allfixed
-            else if ( supplySector[ i ]->outputsAllFixed( period ) ) {
-                mainLog << "Inputs NOT ALL fixed for " << goodName << ", but supplies ARE all fixed" << endl;
-            }
-        } // for block
+            // If supply of this good has not been elimiated from the search and output is fixed then add to fixed supply value
+            double calSupply = supplySector[ i ]->getCalOutput( period );  // total calibrated output
+            calSupply += supplySector[ i ]->getFixedOutput( period );  // total fixed output
+  
+            double existingCalSupply = max( marketplace->getMarketInfo( goodName, name, period, "calSupply" ), 0.0 );
+            marketplace->setMarketInfo( goodName, name, period, "calSupply", existingCalSupply + calSupply );
+         } 
+         else {
+            // If supply of this good is not fixed then set flag to eliminate this from other searches
+            marketplace->setMarketInfo( goodName, name, period, "calSupply", MKT_NOT_ALL_FIXED );
+        }
     }
+
+    // Check for fully calibrated/fixed resources
+    for ( unsigned int i = 0; i < resources.size(); i++ ) {
+        resources[i]->setCalibratedSupplyInfo( period, name );
+    }
+    
+    // Check for fully calibrated/fixed demands. Search through all supply technologies
+    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
+      supplySector[ i ]->tabulateFixedDemands( period );
+    }
+
+    // Check for fully calibrated/fixed demands. Search through all demand technologies
+    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
+      demandSector[ i ]->tabulateFixedDemands( period );
+    }
+}
+
+/*! \brief Initializes calDemand and calSupply values for all sectors
+*
+* All calSupply and calDemand values are reset to -1
+* This erases any information from a prior period 
+* and eliminates warning messages for value not found in information store
+*
+* \author Steve Smith
+* \param period Model period
+*/
+void Region::initializeCalValues( const int period ) {
+    Marketplace* marketplace = scenario->getMarketplace();
+    const double DEFAULT_CAL_VALUE = -1;  // This will get set to -1 if this market is not fixed and a value >= 0 otherwise
+ 
+    
+    updateSummary( period );	// Dummy call to final supply to setup fuel map.
+     
+    typedef map<string,double>:: const_iterator CI;
+    
+    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
+       // Now prepare to loop through all the fuels used by this sector
+        map<string, double> fuelcons = supplySector[ i ]->getfuelcons( period );	// Get fuel consumption map for sector
+        
+        // Set default values for supply sector
+        marketplace->setMarketInfo( supplySector[ i ]->getName(), name, period, "calSupply", DEFAULT_CAL_VALUE );
+        marketplace->setMarketInfo( supplySector[ i ]->getName(), name, period, "calDemand", DEFAULT_CAL_VALUE );
+        
+        // then for all fuels used by this sector
+        for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
+            
+              if ( marketplace->doesMarketExist( fuelUsedIter->first, name, period ) ) {
+                marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calSupply", DEFAULT_CAL_VALUE );
+                marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calDemand", DEFAULT_CAL_VALUE );
+            }
+         }
+    }
+        
+    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
+       // Now prepare to loop through all the fuels used by this sector
+        map<string, double> fuelcons = demandSector[ i ]->getfuelcons( period );	// Get fuel consumption map for sector
+
+         for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
+            
+            if ( marketplace->doesMarketExist( fuelUsedIter->first, name, period ) ) {
+                marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calSupply", DEFAULT_CAL_VALUE );
+                marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calDemand", DEFAULT_CAL_VALUE );
+            }
+         }
+    }
+
+    for ( unsigned int i = 0; i < resources.size(); i++ ) {
+       // Now prepare to loop through all the fuels used by this sector
+        string resourceName = resources[ i ]->getName( );	// Get fuel name for this resource
+        
+        if ( marketplace->doesMarketExist( resourceName, name, period ) ) {
+            marketplace->setMarketInfo( resourceName, name, period, "calSupply", DEFAULT_CAL_VALUE );
+            marketplace->setMarketInfo( resourceName, name, period, "calDemand", DEFAULT_CAL_VALUE );
+        }
+    }
+}
+
+/*! \brief Sets input values for transitive dependancies
+*
+* If a supply sector has a fixed demand as an output then calculate the corresponding input.
+* For every supply sector with a fixed demand (e.g. elec_T&D_bld), this routine checks each fuel used by that sector.
+* If there is only one fuel that does not have a fixed demand (e.g. electricity) then the fixed demand for the sector is
+* translated to a demand for the given fuel.
+* 
+* Routine is repatedly called from world until all potential depndencies have been found. 
+* When any transitive dependency is found another iteration must be done (for all regions) to determine if
+* this new fixed demand feeds into another sector. 
+*
+* \author Steve Smith
+* \param period Model period
+*/
+bool Region::setImpliedCalInputs( const int period ) {
+     Configuration* conf = Configuration::getInstance();
+    Marketplace* marketplace = scenario->getMarketplace();
+    const double MKT_NOT_ALL_FIXED = -1;
+    bool debugChecking = conf->getBool( "debugChecking" );
+    bool calcIsDone = true;
+
+    // Instantiate the relationship map here if it does not already exist
+    if ( !fuelRelationshipMap.get() ) {
+        fuelRelationshipMap.reset( new FuelRelationshipMap() ); // Clear relationship map for this iteration
+    }
+    
+    // For each sector, check if a fixed demand is an output
+    // If supply is fixed stop.
+    // Make sure all inputs are fixed demands
+    for ( unsigned int jsec = 0; jsec < supplySector.size(); jsec++ ) {
+        string sectorName = supplySector[ jsec ]->getName( );
+        double sectorCalDemand = marketplace->getMarketInfo( sectorName, name , period, "calDemand" );
+
+        // Check to see if this sector supplies a fuel with a fixed demand. 
+        // If so, and this is not a fuel that already has a fixed supply, then calculate the cooresponding fixed supply
+        if ( sectorCalDemand >= 0  && ( marketplace->getMarketInfo( sectorName, name , period, "calSupply" ) < 0 ) ) {
+
+            // Now prepare to loop through all the fuels used by this sector
+            map<string, double> fuelcons = supplySector[ jsec ]->getfuelcons( period );	// Get fuel consumption map for sector
+            double totalCalOutputs = 0; // Total directly calibrated outputs (not outputs infered from market)
+            int numbFixedMktInputs = 0; // Count of number of fixed market inputs to this sector. This is to make sure there is only one.
+
+            string newFixedDemandInputName;
+            typedef map<string,double>:: const_iterator CI;
+            for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
+                
+                // If inputs are all fixed for this fuel
+                if ( supplySector[ jsec ]->inputsAllFixed( period, fuelUsedIter->first ) ) {
+                    totalCalOutputs += supplySector[ jsec ]->getCalAndFixedOutputs( period, fuelUsedIter->first );
+                } 
+                // else have an input that can be adjusted
+                else {
+                    numbFixedMktInputs ++;
+                    newFixedDemandInputName = fuelUsedIter->first;
+                }
+            }
+            
+            // If we found one, and only one, unfixed input then figure out what this should be and set things appropriately
+            if ( numbFixedMktInputs == 1 ) {
+                // Calculate required input (which will be set to the marketplace)
+                double requiredOutput = sectorCalDemand; 
+                // subtract other calOutputs so that we only calculate the output from the remaining fuel
+                requiredOutput -= totalCalOutputs;
+ 
+                if ( debugChecking ) {
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::DEBUG );
+                    mainLog << "  Transitive demand for " << newFixedDemandInputName  
+                            << " in sector " << sectorName << " added with value " << requiredOutput << endl; 
+                }
+                
+                supplySector[ jsec ]->setImpliedFixedInput( period, newFixedDemandInputName, requiredOutput );
+ 
+                // Now that transitive demand has been set, clear demand for this good so this won't be done again
+                marketplace->setMarketInfo( sectorName, name , period, "calDemand", MKT_NOT_ALL_FIXED );
+                
+                // Save this relationship information
+                // First element of vector is the root, or current root of chain and second element is a vector of dependents
+                
+                vector<string> tempDependents;
+
+                // Set up fuel relationship map
+                // For each fuel in the first (key) position, the map lists every fuel that is derived, directly or indirectly, on that fuel
+                // At this point in the routine, we have found that a sector sectorName which has a fixed input, has newFixedDemandInputName as an input
+                // So we need to add this relationship to the fuelRelationshipMap.
+                // If the current sectorName is present as a key, then it should be moved to the dependents vector with the new fuel name as the key.
+                if ( fuelRelationshipMap->find( sectorName ) != fuelRelationshipMap->end() ) {
+                    tempDependents = (*fuelRelationshipMap)[ sectorName ];
+                    fuelRelationshipMap->erase( sectorName );
+                } 
+                // If proper key is already there, then copy dependent list (the new fuelname will be added to it below)
+                else if ( fuelRelationshipMap->find( newFixedDemandInputName ) != fuelRelationshipMap->end() ) {
+                    tempDependents = (*fuelRelationshipMap)[ newFixedDemandInputName ];
+                }
+                // In any event, current sector should be added as a key (this overwrites previous dependents list if it existed)
+                tempDependents.push_back( sectorName );
+                (*fuelRelationshipMap)[ newFixedDemandInputName ] = tempDependents;
+ 
+                // If this demand does not correspond to a sector with a fixed supply then we are not done with checking. 
+                // Otherwise we are done for this region if no sectors satisfy this criteria.
+                if ( marketplace->getMarketInfo( newFixedDemandInputName, name , period, "calSupply" ) < 0 ) {
+                    calcIsDone = false;
+                }
+            } 
+            else if ( numbFixedMktInputs > 1 ) {
+                // Print a warning, but only if calDemand is not zero (if calDemand is zero then this is probably not a problem)
+                if ( sectorCalDemand > 0 ) {
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::WARNING );
+                    mainLog <<" WARNING: Couldn't calculate transitive demand for input "<< newFixedDemandInputName <<" sector: " <<  sectorName << " region: " << name << endl;
+                    // If can't calculate this demand then reset so that nothing is scaled
+                    marketplace->setMarketInfo( newFixedDemandInputName, name , period, "calDemand", MKT_NOT_ALL_FIXED );
+                }
+            }
+        } // End of fixed demand transitive calculation loop        
+    } // End of sector loop
+      
+    return calcIsDone;
+}
+
+/*! \brief Scales input calibration values for fuels so that calibrated supplies and demands are equal
+*
+* Checks for all demands and scales calibration input values if necessary to assure that calibrated supplies and
+* demands are identical, including transitive dependencies.
+* 
+* \todo Eliminate doesMarketExist function by using something other than the fuelmap (needs to be implemented) to find what fuels a region/sector uses
+* \author Steve Smith
+* \param period Model period
+*/
+void Region::scaleCalInputs( const int period ) {
+    Marketplace* marketplace = scenario->getMarketplace();
+    Configuration* conf = Configuration::getInstance();
+
+    if ( conf->getBool( "PrintSectorDependencies", false ) && !fuelRelationshipMap->empty() ) {
+        ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
+        dependenciesLog.setLevel( ILogger::NOTICE );
+        dependenciesLog << endl;
+        dependenciesLog << name << " REGIONAL DEPENDENCIES as used for calibration input/output adjustments. Period "<< period << endl;
+        dependenciesLog << "These are direct and transitive dependencies only for sectors that potentially have calibration adjustments" << endl;
+        typedef map<std::string, std::vector<std::string> > :: const_iterator CIMAP;
+        for( CIMAP fuelDependencyIter = fuelRelationshipMap->begin(); fuelDependencyIter != fuelRelationshipMap->end(); ++fuelDependencyIter ){
+            dependenciesLog << fuelDependencyIter->first << " - ";
+            for ( unsigned int i = 0; i < fuelDependencyIter->second.size(); i ++ ) {
+                dependenciesLog << fuelDependencyIter->second[ i ] << ":";
+            }
+            dependenciesLog << endl;
+        }
+    }
+  
+    // For each demand that needs to be scaled, loop through all supply and demand sectors and scale demand.
+    // To find this out, construct a regional fuel map and then loop through each value and check for calSupply & demand
+    // The end...
+    // If supply is fixed stop.
+    // Make sure all inputs are fixed demands
+
+    map<string,double> fuelCons = summary[0].getfuelcons();
+    typedef map<string,double>:: const_iterator CI;
+
+    // Loop through each fuel used in this region
+    for( CI fuelIter = fuelCons.begin(); fuelIter != fuelCons.end(); ++fuelIter ){
+        // This check eliminates warnings 
+        if ( fuelIter->first != "zTotal" && marketplace->doesMarketExist( fuelIter->first, name , period ) ) {
+            //  Determine if inputs for this fuel need to be scaled
+            double calSupplyValue = marketplace->getMarketInfo( fuelIter->first, name , period, "calSupply" );
+            double calDemandValue = marketplace->getMarketInfo( fuelIter->first, name , period, "calDemand" );
+            // If both of these are positive then need to scale calInputs for this input
+            string fuelNameSector = fuelIter->first;
+            if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
+                double ScaleValue = calSupplyValue / calDemandValue;
+                
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::DEBUG );
+                mainLog << "    Scaling by " <<  ScaleValue << " for fuels "; 
+            
+                // Repeat for all fuels derived from this one
+                vector<string> dependentFuels = (*fuelRelationshipMap)[ fuelIter->first ];
+                 
+                // Note loop goes to 1 + number of fuels so that basefuel is covered.
+                for ( unsigned int i = 0; i <= dependentFuels.size(); ++ i) {
+                    string fuelName;
+                   
+                    if ( i == dependentFuels.size() ) {
+                        fuelName = fuelIter->first; // Finish with base fuel in case that is used directly
+                    } else {
+                        fuelName = dependentFuels [ i ];
+                    }
+                    
+                    mainLog  << fuelName <<", "; 
+                    for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
+                        demandSector[ j ]->scaleCalibratedValues( period, fuelName, ScaleValue ); 
+                    }
+                    for ( unsigned int j = 0; j < supplySector.size(); j++ ) {
+                        supplySector[ j ]->scaleCalibratedValues( period, fuelName, ScaleValue ); 
+                    }
+                } // dependentFuels loop
+               mainLog << " in region " << name << endl ; 
+             } // end scaling loop
+        } // end zTotal check loop
+    } // end fuelCons loop
+    
+    // This is not needed anymore so release this memory
+    fuelRelationshipMap.release();
 }
 
 /*! \brief Perform any sector level data consistancy checks
@@ -1198,40 +1425,6 @@ void Region::checkSectorCalData( const int period ) {
     for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
         (*currSector)->checkSectorCalData( period ); 
     }
-}
-
-/*! \brief Returns true if all inputs for the selected good are fixed.
-*
-* Fixed inputs can be by either fixedCapacity, calibration, or zero share
-*
-*
-* \author Steve Smith
-* \param period Model period
-* \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
-*/
-bool Region::inputsAllFixed( const int period, const std::string& goodName ) const {
-   for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-      if ( !demandSector[ j ]->inputsAllFixed( period, goodName ) ) {
-         return false; 
-      }
-   }
-   return true;
-}
-
-/*! \brief Returns total fixed demand for the specified good
-*
-* Can be either calibrated demand or fixed input
-*
-* \author Steve Smith
-* \param period Model period
-* \param goodName market good to return demand for
-*/
-double Region::getFixedDemand( const int period, const std::string& goodName ) {
-   double calDemand = 0;
-   for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-      calDemand += demandSector[ j ]->getCalAndFixedInputs( period, goodName ); 
-   }
-   return calDemand;
 }
 
 //! Calculate regional demand for energy and other goods for all sectors.

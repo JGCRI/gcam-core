@@ -87,6 +87,9 @@ public:
     void checkData( const int period );
     void setupCalibrationMarkets();
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
+    void setCalSuppliesAndDemands( const int period );
+    bool setImpliedCalInputs( const int period );
+    void scaleCalInputs( const int period );
 
 private:
     const static std::string XML_NAME; //!< node name for toXML method.
@@ -113,12 +116,10 @@ private:
     std::vector<Emcoef_ind> emcoefInd; //!< vector of objects containing indirect emissions coefficients
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
     std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
-    double getFixedDemand( const int period, const std::string& goodName );
     bool anySupplyFixedOutput( const int sectorNumber ) const;
-    void adjustCalibrations( const int period );
     void checkSectorCalData( const int period );
+    void initializeCalValues( const int period );
     double getTotFinalEnergy( const int period ) const;
-    bool inputsAllFixed( const int period, const std::string& goodName ) const;
     std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
     typedef std::vector<SupplySector*>::iterator SupplySectorIterator;
     typedef std::vector<SupplySector*>::const_iterator CSupplySectorIterator;
@@ -128,6 +129,8 @@ private:
     typedef std::vector<Resource*>::const_iterator CResourceIterator;
     typedef std::vector<GHGPolicy*>::iterator GHGPolicyIterator;
     typedef std::vector<GHGPolicy*>::const_iterator CGHGPolicyIterator;
+    typedef std::map<std::string, std::vector<std::string> > FuelRelationshipMap; //!< map for fuel relationships
+    std::auto_ptr<FuelRelationshipMap> fuelRelationshipMap; //!< ptr to map of fuel relationships used for calibration consistency adjustments
     void clear();
     bool reorderSectors( const std::vector<std::string>& orderList );
     bool sortSectorsByDependency();

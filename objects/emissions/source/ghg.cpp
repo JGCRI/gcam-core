@@ -375,7 +375,6 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
     
     // Constants
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    const double SMALL_NUM = util::getSmallNumber();
     const double CVRT_tg_MT = 1e-3; // to get teragrams of carbon per EJ to metric tons of carbon per GJ
     
     // get carbon storage cost from the market

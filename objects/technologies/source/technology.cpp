@@ -1119,3 +1119,34 @@ int technology::getNumbGHGs()  const {
 		return 0;
 	}
 }
+
+/*! \brief check for fixed demands and set values to counter
+*
+* If the output of this technology is fixed then set that value to the appropriate marketplace counter
+* If it is not, then reset counter
+*
+* \author Steve Smith
+* \param period Model period
+*/
+void technology::tabulateFixedDemands( const string regionName, const int period ) {
+    Marketplace* marketplace = scenario->getMarketplace();
+
+    // Checking for market existence here avoids emitting a warning (which happens for fuel "renewable")
+    if ( marketplace->doesMarketExist( fuelname, regionName, period ) ) {
+        if ( doCalibration || ( fixedOutput != 0 ) || ( shrwts == 0 ) ) {
+            double fixedInput = 0;
+            // this sector has fixed output
+            if ( doCalibration ) {
+                fixedInput = getCalibrationInput();
+            } else if ( fixedOutput != 0 ) {
+                fixedInput = getFixedInput();
+            }
+            // set demand for fuel in marketInfo counter
+            double exisitngDemand = max( marketplace->getMarketInfo( fuelname, regionName , period, "calDemand" ), 0.0 );
+            marketplace->setMarketInfo( fuelname, regionName, period, "calDemand", exisitngDemand + fixedInput );        
+        } else {
+            // If not fixed, then set to -1 to indicate a demand that is not completely fixed
+            marketplace->setMarketInfo( fuelname, regionName, period, "calDemand", -1 );
+        }
+    }
+}

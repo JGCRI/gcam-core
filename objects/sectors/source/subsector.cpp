@@ -64,7 +64,6 @@ Subsector::Subsector( const string regionName, const string sectorName ){
     lexp.resize( maxper, LOGIT_EXP_DEFAULT );
     share.resize(maxper); // subsector shares
     input.resize(maxper); // subsector energy input
-    pe_cons.resize(maxper); // subsector primary energy consumption
     subsectorprice.resize(maxper); // subsector price for all periods
     fuelprice.resize(maxper); // subsector fuel price for all periods
     output.resize(maxper); // total amount of final output from subsector
@@ -435,7 +434,6 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( share[ period ], "share", out, tabs );
     XMLWriteElement( basesharewt, "basesharewt", out, tabs );
     XMLWriteElement( input[ period ], "input", out, tabs );
-    XMLWriteElement( pe_cons[ period ], "pe_cons", out, tabs );
     XMLWriteElement( subsectorprice[ period ], "subsectorprice", out, tabs );
     XMLWriteElement( output[ period ], "output", out, tabs );
     XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out, tabs );
@@ -560,6 +558,20 @@ void Subsector::initCalc( const int period ) {
 void Subsector::checkSubSectorCalData( const int period ) {
 }
 
+
+/*! \brief check for fixed demands and set values to counter
+*
+* Routine flows down to technoogy and sets fixed demands to the appropriate marketplace to be counted
+*
+* \author Steve Smith
+* \param period Model period
+*/
+void Subsector::tabulateFixedDemands( const int period ) {
+
+    for ( int i=0 ;i<notech; i++ ) {        
+        techs[i][ period ]->tabulateFixedDemands(  regionName, period );
+   }
+}
 
 /*! \brief Computes weighted cost of all technologies in Subsector.
 *
@@ -977,8 +989,9 @@ void Subsector::interpolateShareWeights( const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
     
     // if previous period was calibrated, then adjust future shares
-     if ( ( period > modeltime->getyr_to_per( 1990 ) ) && calibrationStatus[ period - 1 ] ) {
+     if ( ( period > modeltime->getyr_to_per( 1990 ) ) && calibrationStatus[ period - 1 ] && Configuration::getInstance()->getBool( "CalibrationActive" ) ) {
         // Only scale shareweights if after 1990 and scaleYear is after this period
+
         int endPeriod = 0;
         if ( scaleYear >= modeltime->getstartyr() ) {
             endPeriod = modeltime->getyr_to_per( scaleYear );
@@ -1311,6 +1324,7 @@ int numberAvailable = 0;
 /*! \brief returns the total calibrated output from this sector.
 *
 * Routine adds up calibrated values from both the sub-sector and (if not calibrated at Subsector), technology levels.
+* This returns only calibrated outputs, not values otherwise fixed (as fixed or zero share weights)
 *
 * \author Steve Smith
 * \param period Model period
@@ -1348,7 +1362,7 @@ double Subsector::getTotalCalOutputs( const int period ) const {
 * \author Steve Smith
 * \param period Model period
 * \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
-* \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
+* \param bothVals optional parameter. It true (default) both calibration and fixed values are returned, if false only calInputs
 * \return Total calibrated input for this Subsector
 */
 double Subsector::getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const {
@@ -1365,6 +1379,61 @@ double Subsector::getCalAndFixedInputs( const int period, const std::string& goo
 		}
    }
    return sumCalInputValues;
+}
+
+/*! \brief returns the total calibrated or fixed input from this sector for the specified good.
+*
+* Routine adds up calibrated or fixed input values from all technologies.
+*
+* \author Steve Smith
+* \param period Model period
+* \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
+* \param bothVals optional parameter. It true (default) both calibration and fixed values are returned, if false only calInputs
+* \return Total calibrated input for this Subsector
+*/
+double Subsector::getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals ) const {
+	double sumCalOutputValues = 0;
+
+	for ( int i=0; i<notech; i++ ) {
+		if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
+			if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
+				sumCalOutputValues += techs[ i ][ period ]->getCalibrationOutput( );
+			} 
+			else if ( techs[ i ][ period ]->ouputFixed( ) && bothVals ) {
+				sumCalOutputValues += techs[ i ][ period ]->getFixedOutput( );
+			}
+		}
+   }
+   return sumCalOutputValues;
+}
+
+/*! \brief Calculates the input value needed to produce the required output
+*
+* \author Steve Smith
+* \param period Model period
+* \param goodName market good to determine the inputs for.
+* \param requiredOutput Amount of output to produce
+*/
+bool Subsector::setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput ) {
+    Marketplace* marketplace = scenario->getMarketplace();
+    bool inputWasChanged = false;
+    for ( int i=0; i<notech; i++ ) {
+        if ( techHasInput( techs[ i ][ period ], goodName ) ) {
+            double inputValue = requiredOutput / techs[ i ][ period ]->getEff();
+            if ( !inputWasChanged ) {
+                inputWasChanged = true;
+                double existingMarketDemand = max( marketplace->getMarketInfo( goodName, regionName , period, "calDemand" ), 0.0 );
+                marketplace->setMarketInfo( goodName, regionName, period, "calDemand", existingMarketDemand + inputValue );
+             } else {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "  WARNING: More than one technology input would have been changed " 
+                        << " in sub-sector " << name << " in sector " << sectorName
+                        << " in region " << regionName << endl; 
+            }
+        }
+    }
+    return inputWasChanged;
 }
 
 /*! \brief returns true if inputs are all fixed for this subsector and input good
@@ -1408,7 +1477,7 @@ bool Subsector::inputsAllFixed( const int period, const std::string& goodName ) 
 */
 bool Subsector::techHasInput( const technology* thisTech, const std::string& goodName ) const {
 	
-	return ( thisTech->getName() == goodName || thisTech->getFuelName() == goodName );
+	return ( thisTech->getFuelName() == goodName );
 	
 }
 
@@ -1417,7 +1486,7 @@ bool Subsector::techHasInput( const technology* thisTech, const std::string& goo
 * \author Steve Smith
 * \param period Model period
 * \param goodName market good to return inputs for
-* \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
+* \param scaleValue multipliciative scaler for calibrated values 
 * \return Total calibrated input for this Subsector
 */
 void Subsector::scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue ) {

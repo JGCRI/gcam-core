@@ -364,6 +364,20 @@ void Resource::printStyle( ostream& outStream ) const {
     outStream << "\t" << sectorName << " [shape=box, style=filled, color=indianred1 ];" << endl;
 }
 
+/*! \brief Set marketInfo for fixed supplies for this resources.
+*
+* For now this sets -1 to flag that supplies are not fixed.
+* This will need to change once resource supply are calibrated.
+* \author Steve Smith
+* \param period model period.
+*/
+void Resource::setCalibratedSupplyInfo( const int period, const std::string& regionName ) {
+    const double MKT_NOT_ALL_FIXED = -1;
+    Marketplace* marketplace = scenario->getMarketplace();
+    
+    marketplace->setMarketInfo( name, regionName, period, "calSupply", MKT_NOT_ALL_FIXED );
+}
+
 // ************************************************************
 // Definitions for the derived classes below.
 // Since these are very small changes, keep in same file for simplicity
@@ -509,4 +523,5 @@ bool RenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMN
     }
     return false;
 }
+
 

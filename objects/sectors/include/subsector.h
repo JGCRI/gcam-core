@@ -60,7 +60,6 @@ protected:
     std::vector<double> lexp; //!< subsector logit exponential
     std::vector<double> share; //!< subsector shares
     std::vector<double> input; //!< subsector energy input
-    std::vector<double> pe_cons; //!< subsector primary energy consumption
     std::vector<double> subsectorprice; //!< subsector price for all periods
     std::vector<double> fuelprice; //! subsector fuel price only for all periods
     std::vector<double> output; //!< total amount of final output from subsector
@@ -130,6 +129,8 @@ public:
     void resetfixedOutput( const int period );
     double getTotalCalOutputs( const int period ) const;
     double getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const;
+    double getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals ) const;
+    bool setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
     void csvOutputFile() const; 
     void MCoutputSupplySector() const; 
     void MCoutputDemandSector() const; 
@@ -149,5 +150,6 @@ public:
     void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
     void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
     int getNumberAvailTechs( const int period ) const;
+    void tabulateFixedDemands( const int period );
 };
 #endif // _SUBSECTOR_H_

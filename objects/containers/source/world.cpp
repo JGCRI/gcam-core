@@ -224,6 +224,67 @@ void World::initCalc( const int period ) {
         ( *i )->initCalc( period );
         ( *i )->checkData( period );
     }
+    
+    checkCalConsistancy( period );
+}
+
+/*! \brief Assure that calibrated inputs and outputs are consistant.
+*
+* Function determines if calibrated supplies and demands are consistent and 
+* scales demands if necessary to make this so. The calsupply and demand values are put into corresponding
+* values in marketInfo. These are then used to determine transitive fixed demands (for example the calibrated
+* demand for electricity due to a calibrated demand for elec_T&D_buildings).
+* If all supply and demand for a good are calibrated or otherwise fixed then calibration 
+* demand values are adjusted for consistency
+* Each of these steps is called separately for each region. This, and using markets as the basis of calculating 
+* cal supplies and demands means that both regional and global (or anything in-between) markets are handled 
+* appropriately.
+*
+* \author Steve Smith
+* \warning A simultaneity in the base year may or may not be handled correctly.
+*/
+void World::checkCalConsistancy( const int period ) {
+
+    // Don't check for this unless calibration is active
+    Configuration* conf = Configuration::getInstance();
+    if( conf->getBool( "CalibrationActive" ) ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+
+        mainLog << "Starting world calibration consistency check " << endl;
+        
+        //Setup for checking by adding up all fixed supplies and demands
+         for( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
+            ( *i )->setCalSuppliesAndDemands( period );
+        }
+
+        // Now walk through sectors in each region to calculate dependent (transitive) outputs 
+        bool calIsDone = false;
+        int iteration = 0;
+        while (!calIsDone ) {
+            calIsDone = true;
+             for ( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
+                // If any region returns status as not done (false) then save that status
+                if ( !( *i )->setImpliedCalInputs( period ) ) {
+                    calIsDone = false;
+                }
+            }
+             iteration ++;
+            // In case user sets up infinite loop in input, break.
+            if (iteration > 50 ) {
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "ERROR: calibration check stuck in large loop. Aborting. " << endl;
+                return;
+            }
+        }
+
+        // Scale calibrated input values once all supplies and demands have been counted
+        for( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
+            ( *i )->scaleCalInputs( period );
+        }
+        
+    }
+
 }
 
 //! calculate supply and demand and emissions for all regions
