@@ -105,6 +105,8 @@ public class ControlPanel extends javax.swing.JFrame {
         tableExistsFlag = false;
         nodeValueChangedFlag = false;
         fc = new JFileChooser( "." );
+        XMLFileFilter filter = new XMLFileFilter();
+        fc.setFileFilter(filter);
         toolkit = this.getToolkit();
         
         this.getContentPane().setLayout(new BorderLayout());
@@ -966,14 +968,12 @@ public class ControlPanel extends javax.swing.JFrame {
         Vector values = new Vector();
         Vector header = new Vector();
         Vector lefter = new Vector();
-        //String varName = "";
         Vector queue = new Vector();
         int index;
         String nodeName;
         String attribVal = "";
         JComboBox currComboBox;
         java.util.List childNodes;
-        //int rowCount = 0;
         boolean timeInterval = false;
         Integer lastYear = new Integer(modelTime.getStart());
         
@@ -1024,8 +1024,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 if(nodeName.equals(finalNodeName)) {
                     //remember the name of the parent of the node whose value
                     //  will be displayed in the left-side header
-                    
-                    //rowCount++;
+
                     String lefterName = currNode.toLefterString();
                     String prevName;
                     if (!lefter.isEmpty()) {
