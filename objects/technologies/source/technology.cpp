@@ -398,13 +398,32 @@ void technology::addGhgTax( const string ghgname, const string regionName, const
     // need to add taxes from all ghgs
 }
 
-//! define technology fuel cost and total cost
+/*! \brief Calculate technology fuel cost and total cost.
+*
+* This caculates the cost (per unit output) of this specific technology. 
+* The cost includes fuel cost, carbon value, and non-fuel costs.
+* Conversion efficiency, and optional fuelcost and total price multipliers are used if specified.
+*
+* Special check for "none" fuel is implimented here.
+*
+* \warning Check for "none" fueltype is implimented here. Need to find a better way do do this and renewable fuels.
+* \author Sonny Kim, Steve Smith
+* \param period Model regionName
+* \param period Model per
+*/
 void technology::calcCost( const string regionName, const int per ) 
 {
     Marketplace* marketplace = scenario->getMarketplace();
 
-    double fuelprice = marketplace->getPrice(fuelname,regionName,per);
-    
+	 // code specical case where there is no fuel input. sjs
+	 // used now to drive non-CO2 GHGs
+    double fuelprice;
+	 if ( fuelname != "none" ) {
+		fuelprice = marketplace->getPrice(fuelname,regionName,per);
+    } else {
+		fuelprice = 0;
+	 }
+	 
     // code for integrating technical change
     //techcost = fprice/eff/pow(1+techchange,modeltime->gettimestep(per)) + necost;
     // fMultiplier and pMultiplier are initialized to 1 for those not read in

@@ -626,7 +626,7 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
             std::cout << "Deleting node " << objName << endl;
             
             // Create an iterator which points at the location which should be deleted.
-            vector<U>::iterator delIter = insertToVector.begin() + iter->second;
+            std::vector<U>::iterator delIter = insertToVector.begin() + iter->second;
             // Clean up the memory the vector points at.
             delete *delIter;
             // Remove the pointer from the vector. 

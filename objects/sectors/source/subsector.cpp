@@ -1547,7 +1547,7 @@ void Subsector::MCoutputC() const {
     }
 }
 
-//! calculate GHG emissions from annual production of subresource
+//! calculate GHG emissions from annual production of each technology
 void Subsector::emission( const int period ){
     /*! \pre period is less than or equal to max period. */
     assert( period <= scenario->getModeltime()->getmaxper() );
@@ -1561,7 +1561,7 @@ void Subsector::emission( const int period ){
     }
 }
 
-//! calculate indirect GHG emissions from annual production of subresource
+//! calculate indirect GHG emissions from annual production of each technology
 void Subsector::indemission( const int period, const vector<Emcoef_ind>& emcoef_ind ) {
     /*! \pre period is less than or equal to max period. */
     assert( period <= scenario->getModeltime()->getmaxper() );
