@@ -1189,11 +1189,11 @@ int Marketplace::Bracket( const double Tol, vector<solinfo>& sol, bool& allbrack
 		if (!allbracketed) {
 			for (i=0; i<nmrks; ++i) {
 				if (!sol[i].bracketed) {
-					if (sign(sol[i].ED) == sign(sol[i].EDL)) { //first will always be true
+					if (std::sign(sol[i].ED) == std::sign(sol[i].EDL)) { //first will always be true
 						if (sol[i].ED < 0) {
 							sol[i].XL = sol[i].X; 
 							sol[i].EDL = sol[i].ED;
-							if (sign(sol[i].EDL) == sign(sol[i].EDR)) {
+							if (std::sign(sol[i].EDL) == std::sign(sol[i].EDR)) {
 								sol[i].X *= 0.5; 
 							}
 							else {
@@ -1207,7 +1207,7 @@ int Marketplace::Bracket( const double Tol, vector<solinfo>& sol, bool& allbrack
 							else {
 								sol[i].XR = sol[i].X; 
 								sol[i].EDR = sol[i].ED;
-								if (sign(sol[i].EDL) == sign(sol[i].EDR)) {
+								if (std::sign(sol[i].EDL) == std::sign(sol[i].EDR)) {
 									sol[i].X *= 1.5;
 								}
 								else {

@@ -70,9 +70,10 @@ return ( x > y ? x : y);
 
 //! Helper function to determine the sign of a number.
 namespace std {
-template <class T>
-const int sign( const T number ) {
-	return ( number < 0 )?(-1):(1);
+   template <class T>
+   const int sign( const T number ) {
+      return ( number < 0 )?(-1):(1);
+   }
 }
-}
+
 #endif // _DEFINITIONS_H_

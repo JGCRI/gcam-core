@@ -88,7 +88,11 @@ int main() {
 	// XML Parser initialized.
 
 	// Initialize the LoggerFactory
+#ifndef WIN32  
+	const string loggerFileName = "/LoggerFactory.xml";
+#else
 	const string loggerFileName = "LoggerFactory.xml";
+#endif
 	root = XMLHelper<void>::parseXML( loggerFileName, parser );
 	LoggerFactory::XMLParse( root );
 	 
