@@ -341,12 +341,6 @@ bool World::getCalibrationSetting() const {
 * \return Boolean true if calibration is ok.
 */
 bool World::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
-    // Return true immediately if calibration is not on.
-    const static bool calOn = Configuration::getInstance()->getBool( "CalibrationActive" );
-    if( !calOn ){
-        return true;
-    }
-
     for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
         if ( !( *i )->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
             return false;
