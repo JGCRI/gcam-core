@@ -701,6 +701,13 @@ double DemandSector::getServiceWoTC( const int period ) const {
     return servicePreTechChange[ period ];
 }
 
+/*! \brief A function to add the Sector coloring and style to the dependency graph.
+*
+* This function add the Sector specific coloring and style to the dependency graph.
+*
+* \author Josh Lurz
+* \param outStream An output stream to write to which was previously created.
+*/
 void DemandSector::printStyle( ostream& outStream ) const {
 
     // Make sure the output stream is open.
