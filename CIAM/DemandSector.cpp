@@ -389,7 +389,7 @@ void demsector::scaleOutput( int per, double scaleFactor ) {
     // TC_0 = techChangeCumm[per-1] & SF = scaleFactor
 
    // If scale factor is significant then change AEEI
-   if ( abs( 1 - scaleFactor ) > 1e-6 ) {   
+   if ( fabs( 1 - scaleFactor ) > 1e-6 ) {   
       double timeStep = modeltime->gettimestep(per);
       double aeeiScale; // amount to change AEEI
       double temp = pow( 1+aeei[per] , timeStep );
