@@ -86,7 +86,12 @@ END IF
 	
 
 	DO MM = 2, NLoop
-
+! Put internal cement emissions into array. Convert from MMT CO2 to GtC
+	  ICemt = 9 
+	  IF ( SUM(OGREPORT(ICemt,:)).GT.0 ) THEN 
+	    Cement(MM) = SUM( OGEMISS(ICemt,:,:,MM) ) / 3.664 / 1000
+	  END IF
+              
 ! Calcuate adjustments due to standardization, if used.
 	AdjFact = 1. - (MM*15.+1960.-2000.)/100.		! sjs. Standardization adjustments
 	! Declining offset for deforestation and SO2 (SO2 not implimented yet)
