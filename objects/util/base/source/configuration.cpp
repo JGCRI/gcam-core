@@ -14,18 +14,17 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/configuration.h"
 #include "util/base/include/xml_helper.h"
-#include "util/logger/include/logger.h"
-#include "util/logger/include/logger_factory.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
 
 // Static initializations.
-bool Configuration::confExists = false;
-Configuration* Configuration::instance = 0;
+bool Configuration::confExists;
+Configuration* Configuration::instance;
 
 //! Private constructor to prevent a programmer from creating a second object.
-Configuration::Configuration() {
+Configuration::Configuration(): mLogFile( "main_log" ){
 }
 	
 //! Destructor
@@ -179,8 +178,9 @@ const string& Configuration::getFile( const string& key, const string& defaultVa
 		return found->second;
 	}
 	else {
-		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
-		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find filename: " << key << endl;
+		ILogger& log = ILogger::getLogger( mLogFile );
+        log.setLevel( ILogger::WARNING );
+        log << "Could not find filename: " << key << endl;
 		return defaultValue;
 	}
 }
@@ -204,8 +204,9 @@ const string& Configuration::getString( const string& key, const string& default
 		return found->second;
 	}
 	else {
-		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
-		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find String: " << key << endl;
+		ILogger& log = ILogger::getLogger( mLogFile );
+        log.setLevel( ILogger::WARNING );
+		log << "Could not find String: " << key << endl;
 		return defaultValue;
 	}
 }
@@ -231,8 +232,9 @@ bool Configuration::getBool( const string& key, const bool defaultValue ) const 
 		return found->second;
 	}
 	else {
-		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
-		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find bool: " << key << endl;
+        ILogger& log = ILogger::getLogger( mLogFile );
+        log.setLevel( ILogger::WARNING );
+		log << "Could not find bool: " << key << endl;
 		return defaultValue;
 	}
 }
@@ -259,8 +261,9 @@ int Configuration::getInt( const string& key, const int defaultValue ) const {
 		return found->second;
 	}
 	else {
-		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
-		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find int: " << key << endl;
+        ILogger& log = ILogger::getLogger( mLogFile );
+        log.setLevel( ILogger::WARNING );
+		log << "Could not find int: " << key << endl;
 		return defaultValue;
 	}
 }
@@ -285,8 +288,9 @@ double Configuration::getDouble( const string& key, const double defaultValue ) 
 		return found->second;
 	}
 	else {
-		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
-		LOG( log, Logger::SEVERE_LEVEL ) << "Could not find double: " << key << endl;
+        ILogger& log = ILogger::getLogger( mLogFile );
+        log.setLevel( ILogger::WARNING );
+		log << "Could not find double: " << key << endl;
 		return defaultValue;
 	}
 }

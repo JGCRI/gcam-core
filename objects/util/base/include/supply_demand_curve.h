@@ -16,7 +16,7 @@
 #include <functional>
 #include <vector>
 
-class Logger;
+class ILogger;
 class Market;
 class World;
 class Marketplace; 
@@ -32,7 +32,7 @@ public:
    SupplyDemandCurve( Market* marketIn );
    ~SupplyDemandCurve();
    void calculatePoints( const int numPoints, World* world, Marketplace* marketplace, const int period );
-   void print( Logger* sdLog ) const;
+   void print( ILogger& aSDLog ) const;
 
 private:
    Market* market; //!< Pointer to the market which the curve is calculating for.
@@ -49,7 +49,7 @@ class SupplyDemandPoint
 public:
    SupplyDemandPoint( const double priceIn = 0, const double demandIn = 0, const double supplyIn = 0 );
    double getPrice() const;
-   void print( Logger* sdLog ) const;
+   void print( ILogger& aSDLog ) const;
    
 /*!
 * \brief Binary comparison operator used for SavePoint pointers to order by increasing price. 

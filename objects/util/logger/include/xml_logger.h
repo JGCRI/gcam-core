@@ -13,7 +13,6 @@
 * \version $Revision$
 */
 
-#include <fstream>
 #include "util/logger/include/logger.h"
 
 /*! 
@@ -29,18 +28,15 @@
 */
 
 class XMLLogger: public Logger {
-	friend class LoggerFactory;
-private:
-	
-	//! The filestream to which data is written.
-   std::ofstream logFile;
-	
-   XMLLogger( const std::string& loggerName ="" );
-
+    friend class LoggerFactory;
 public:
-	virtual void open( const char[] = 0 );
-	virtual void close();
-   virtual void logCompleteMessage( const int line, const std::string& file, const WarningLevel warningLevel, const std::string& message );	
+    void open( const char[] = 0 );
+    void close();
+    void logCompleteMessage( const std::string& aMessage );	
+
+private:
+    std::ofstream mLogFile; //!< The filestream to which data is written.
+    XMLLogger( const std::string& loggerName ="" );
 };
 
 #endif // _XML_LOGGER_H_

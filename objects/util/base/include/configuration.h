@@ -49,6 +49,7 @@ public:
 private:
 	static bool confExists; //!< Flag which indicates if the instace has been created.
 	static Configuration* instance; //!< A pointer to the static singleton instance.
+    const std::string mLogFile; //!< The name of the log to use.
 	std::map<std::string, std::string> fileMap; //!< A map of the file names the program uses.
 	std::map<std::string, std::string> stringMap; //!< A map of the strings the program uses.
 	std::map<std::string, bool> boolMap; //!< A map of the bools the program uses.

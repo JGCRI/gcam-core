@@ -16,9 +16,7 @@
 #include <iosfwd>
 #include <sstream>
 #include <xercesc/dom/DOMNode.hpp>
-
-//! Macro used to insert the line and file into a logging command.
-#define LOG( logger, level ) logger->setLevel( level ); logger->setLine( __LINE__ ); logger->setFile( __FILE__ ); *logger
+#include "util/logger/include/ilogger.h"
 
 // Forward definition of the Logger class.
 class Logger; 
@@ -37,21 +35,17 @@ class Tabs;
 */
 
 class PassToParentStreamBuf: std::streambuf {
-
     friend class Logger;
 
 public:
-
     PassToParentStreamBuf();
     int overflow( int ch );
     int underflow( int ch );
     void setParent( Logger* parentIn );
     void toDebugXML( std::ostream& out ) const;
-
 private:
-
     //! A pointer to the parent logger which will receive all data. 
-    Logger* parent;
+    Logger* mParent;
 };
 
 // Forward definition of LoggerFactory class.
@@ -72,126 +66,39 @@ class LoggerFactory;
 * \warning Loggers can only be created by the LoggerFactory.
 */
 
-class Logger: public std::ostream {
+class Logger: public ILogger {
 
     //! Friend declaration to allow LoggerFactory to create Loggers.
     friend class LoggerFactory;
-
 public:
-
-    //! Enumeration which describes the possible levels for messages.
-    enum WarningLevel 
-    {
-        DEBUG_LEVEL, //!< Debugging warning level.
-        NOTICE_LEVEL, //!< Notice warning level.
-        WARNING_LEVEL, //!< Warning warning level.
-        ERROR_LEVEL, //!< Error warning level.
-        SEVERE_LEVEL //!< Severe warning level.
-    };
-
-    //! Virtual destructor.
-    virtual ~Logger();
-
-    //! Pure virtual function called to begin logging.
-    virtual void open( const char[] = 0 ) = 0;
-
-    void increaseNest();
-
-    void decreaseNest();
-
-    int receiveCharFromUnderStream( int ch );
-
-    //! Pure virtual function called to complete the log and clean up.
+    virtual ~Logger(); //!< Virtual destructor.
+    virtual void open( const char[] = 0 ) = 0; //!< Pure virtual function called to begin logging.
+    int receiveCharFromUnderStream( int ch ); //!< Pure virtual function called to complete the log and clean up.
     virtual void close() = 0;
-
-    void setLevel( const WarningLevel newLevel );
-
-    void setLine( const int lineIn );
-
-    void setFile( const std::string& fileIn );
-
+    void setLevel( const ILogger::WarningLevel newLevel );
     void toDebugXML( std::ostream& out, Tabs* tabs ) const;
-
 protected:
-    //! Logger name
-    std::string name;
-
-    //! Logger type
-    std::string type;
-
-    //! File name of the file it uses.
-    std::string fileName;
-
-    //! Header message to print at the beginning of the log.
-    std::string headerMessage;
-
-    //! Defines the minimum level of warnings which should be omitted.
-    int minLogWarningLevel;
-
-    //! Defines the mininum level of warnings to print to the console.
-    int minToScreenWarningLevel;
-
-    //! Defines the current warning level.
-    WarningLevel currentWarningLevel;
-
-    //! Defines the current line number
-    int currentLine;
-
-    //! Defines the current file name.
-    std::string currentFile;
-
-    //! Defines the current level of nesting. May be ignored by subclass.
-    int currentNestLevel;
-
-    //! Defines the tab size
-    int logTabSize;
-
-    //! Defines whether to print the nesting.
-    bool printLogNest;
-
-    //! Defines whether to print the warning level.
-    bool printLogWarningLevel;
-
-    //! Defines whether or not to print the timestamp.
-    bool printLogTimeStamp;
-
-    //! Defines whether to print the datestamp.
-    bool printLogDateStamp;
-
-    //! Defines whether to print the line number.
-    bool printLogLineNumber;
-
-    //! Defines whether to print the file name.
-    bool printLogFileName;
-
-    //! Defines whether to print the full path
-    bool printLogFullPath;
-
-    Logger( const std::string& fileNameIn = "" );
-
+    std::string mName; //!< Logger name
+    std::string mType; //!< Logger type
+    std::string mFileName; //!< File name of the file it uses.
+    std::string mHeaderMessage; //!< Header message to print at the beginning of the log.
+    ILogger::WarningLevel mMinLogWarningLevel; //!< Defines the minimum level of messages which should be printed.
+    ILogger::WarningLevel mMinToScreenWarningLevel; //!< Defines the mininum level of warnings to print to the console.
+    ILogger::WarningLevel mCurrentWarningLevel; //!< Defines the current warning level.
+    bool mPrintLogWarningLevel; //!< Defines whether to print the warning level.
+    Logger( const std::string& aFileName = "" );
+    //! Log a message with the given warning level.
+    virtual void logCompleteMessage( const std::string& aMessage ) = 0;
+    void printToScreenIfConfigured( const std::string& aMessage );
+    static void parseHeader( std::string& aHeader );
+    const static int MAX_LINE_SIZE = 1000;
+private:
+    std::stringstream mBuf; //!< Buffer which contains characters waiting to be printed.
+    PassToParentStreamBuf mUnderStream; //!< Underlying ofstream
+    void XMLParse( const xercesc::DOMNode* node );
+    static const std::string getTimeString();
     static const std::string getDateString();
 
-    static const std::string getTimeString();
-
-    // make static
-    static const std::string getFileNameFromPath( const std::string& fullPath );
-
-    //! Log a message with the given warning level.
-    virtual void logCompleteMessage( const int line, const std::string& file, const WarningLevel warningLevel, const std::string& message ) = 0;
-
-    void printToScreenIfConfigured( const int line, const std::string& file, const WarningLevel warningLevel, const std::string& message );
-
-    static void parseHeader( std::string& headerIn );
-
-private:
-
-    //! Buffer which contains characters waiting to be printed.
-    std::stringstream buf;
-
-    //! Underlying ofstream
-    PassToParentStreamBuf underStream;
-
-    void XMLParse( const xercesc::DOMNode* node );
 };
 
 #endif // _LOGGER_H_

@@ -14,7 +14,7 @@
 #include <cmath>
 #include "util/base/include/supply_demand_curve.h"
 #include "marketplace/include/market.h"
-#include "util/logger/include/logger.h"
+#include "util/logger/include/ilogger.h"
 #include "containers/include/world.h"
 #include "marketplace/include/marketplace.h"
 
@@ -118,9 +118,9 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
 *
 * \param sdLog Logger to print the points to.
 */
-void SupplyDemandCurve::print( Logger* sdLog ) const {
-    LOG( sdLog, Logger::NOTICE_LEVEL ) << "Supply and Demand curves for: " << market->getName() << endl;
-    LOG( sdLog, Logger::NOTICE_LEVEL ) << "Price,Demand,Supply," << endl;
+void SupplyDemandCurve::print( ILogger& aSDLog ) const {
+    aSDLog << "Supply and Demand curves for: " << market->getName() << endl;
+    aSDLog << "Price,Demand,Supply," << endl;
 
     // Create a copy of the points vector so that we can sort it while keeping the print function constant.
     // Since the vector contains pointers to SupplyDemandPoints, this is relatively inexpensive.
@@ -129,10 +129,10 @@ void SupplyDemandCurve::print( Logger* sdLog ) const {
     // Sort the SupplyDemandPoint object pointers in the pointsCopy vector by increasing price by using the LesserPrice binary operator. 
     sort( pointsCopy.begin(), pointsCopy.end(), SupplyDemandPoint::LesserPrice() );
     for ( vector<SupplyDemandPoint*>::const_iterator i = pointsCopy.begin(); i != pointsCopy.end(); i++ ) {
-        ( *i )->print( sdLog );
+        ( *i )->print( aSDLog );
     }
 
-    LOG( sdLog, Logger::NOTICE_LEVEL ) << endl;
+    aSDLog << endl;
 }
 
 //! Constructor
@@ -156,7 +156,7 @@ double SupplyDemandCurve::SupplyDemandPoint::getPrice() const {
 *
 * \param sdLog The Logger to print to.
 */
-void SupplyDemandCurve::SupplyDemandPoint::print( Logger* sdLog ) const {
-    LOG( sdLog, Logger::NOTICE_LEVEL ) << price << "," << demand << "," << supply << endl;
+void SupplyDemandCurve::SupplyDemandPoint::print( ILogger& aSDLog ) const {
+    aSDLog << price << "," << demand << "," << supply << endl;
 }
 

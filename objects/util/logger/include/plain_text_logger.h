@@ -29,17 +29,13 @@
 
 class PlainTextLogger: public Logger {
     friend class LoggerFactory;
+    public:
+    void open( const char[] = 0 );
+    void close();
+    void logCompleteMessage( const std::string& aMessage );
 private:
-
-    //! The filestream to which data is written.
-    std::ofstream logFile;
-
-    PlainTextLogger( const std::string& loggerName ="" );
-
-public:
-    virtual void open( const char[] = 0 );
-    virtual void close();
-    virtual void logCompleteMessage( const int line, const std::string& file, const WarningLevel warningLevel, const std::string& message );	
+    std::ofstream mLogFile; //!< The filestream to which data is written.
+    PlainTextLogger( const std::string& aLoggerName ="" );
 };
 
 #endif // _PLAIN_TEXT_LOGGER_H_

@@ -10,9 +10,8 @@
 #include "util/base/include/definitions.h"
 #include <iostream>
 #include <string>
-#include <sstream>
 #include <ctime>
-
+#include <fstream>
 #include "util/logger/include/xml_logger.h"
 #include "util/logger/include/logger.h"
 #include "util/base/include/util.h"
@@ -20,59 +19,46 @@
 using namespace std;
 
 //! Constructor
-XMLLogger::XMLLogger( const string& loggerName ):Logger( loggerName ){
+XMLLogger::XMLLogger( const string& aLoggerName ):Logger( aLoggerName ){
 }
 
 //! Tells the logger to begin logging.
 void XMLLogger::open( const char[] ){
-	if( fileName == "" ) { // set a default value
+	if( mFileName == "" ) { // set a default value
 		cout << "Using default log file name." << endl;
-		fileName = "Log.xml";
+		mFileName = "log.xml";
 	}
 
-	logFile.open( fileName.c_str(), ios::out );
+    mLogFile.open( mFileName.c_str(), ios::out );
 
 	// Print the header message
 	time_t ltime;
 	time(&ltime);
 	string dateString = util::XMLCreateDate( ltime );
-	logFile << "<XMLLogger name=\"" << name << "\" date=\"" << dateString << "\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"D:\\cvs\\Code\\EXE\\XMLLog.xsd\">" << endl;
+	mLogFile << "<XMLLogger name=\"" << mName << "\" date=\"" << dateString << "\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"D:\\cvs\\Code\\EXE\\XMLLog.xsd\">" << endl;
 }
 
 //! Tells the logger to finish logging.
 void XMLLogger::close(){
 	// Print the closing tag
-	logFile << "</XMLLogger>" << endl;
-	logFile.close();
+	mLogFile << "</XMLLogger>" << endl;
+	mLogFile.close();
 }
 
 //! Logs a single message.
-void XMLLogger::logCompleteMessage( const int line, const string& file, const WarningLevel warningLevelIn, const string& message ) {
-	
+void XMLLogger::logCompleteMessage( const string& aMessage ){
 	// Decide whether to print the message
-	if ( warningLevelIn >= minLogWarningLevel ){
-		
+	if ( mCurrentWarningLevel >= mMinLogWarningLevel ){
 		// Print the opening log tag.
-		logFile << "\t<LogEntry>" << endl;
+		mLogFile << "\t<LogEntry>" << endl;
 		
 		// Print the warning level
-		logFile << "\t\t<WarningLevel>" << warningLevelIn << "</WarningLevel>" << endl;
-		
-		// Print the file.
-		if ( printLogFullPath ) {		
-			logFile << "\t\t<Filename>" << file << "</Filename>" << endl;
-		}
-		else {
-			logFile << "\t\t<Filename>" << getFileNameFromPath( file ) << "</Filename>" << endl;
-		}
-
-		// Print the line.
-		logFile << "\t\t<LineNumber>" << line << "</LineNumber>" << endl;
+		mLogFile << "\t\t<WarningLevel>" << mCurrentWarningLevel << "</WarningLevel>" << endl;
 
 		// Print the message
-		logFile << "\t\t<Message>" << message << "</Message>" << endl;
+		mLogFile << "\t\t<Message>" << aMessage << "</Message>" << endl;
 
 		// Print the closing tag.
-		logFile << "\t</LogEntry>" << endl;
+		mLogFile << "\t</LogEntry>" << endl;
 	}
 }

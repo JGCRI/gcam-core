@@ -11,20 +11,12 @@
 #include <string>
 #include <map>
 #include <cassert>
-
-// xerces xml headers
-#include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/sax/HandlerBase.hpp>
-#include <xercesc/util/XMLString.hpp>
-#include <xercesc/util/PlatformUtils.hpp>
 #include "util/base/include/xml_helper.h"
-// end of xerces headers
-
 #include "util/logger/include/logger_factory.h"
 #include "util/logger/include/logger.h"
-
+#include "util/logger/include/ilogger.h"
 // Logger subclass headers.
 #include "util/logger/include/plain_text_logger.h"
 #include "util/logger/include/xml_logger.h"
@@ -32,33 +24,27 @@
 using namespace std;
 using namespace xercesc;
 
-map<string,Logger*> LoggerFactory::loggers;
+map<string,Logger*> LoggerFactory::mLoggers;
 
 //! Parse the XML data.
-void LoggerFactory::XMLParse( const DOMNode* root ) {
-	DOMNode* curr = 0;
-	DOMNodeList* nodeList;
-	string loggerType;
-	string nodeName;
-	
-	Logger* newLogger = 0;
-	
+void LoggerFactory::XMLParse( const DOMNode* aRoot ){
 	/*! \pre assume we were passed a valid node. */
-	assert( root );
+	assert( aRoot );
 	
 	// get the children of the node.
-	nodeList = root->getChildNodes();
+	DOMNodeList* nodeList = aRoot->getChildNodes();
 	
 	// loop through the children
-	for ( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-		curr = nodeList->item( i );
-		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+	for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
+		DOMNode* curr = nodeList->item( i );
+		string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
 		if( nodeName == "Logger" ) {
 			// get the Logger type.
-			loggerType = XMLHelper<string>::getAttrString( curr, "type" );
+			string loggerType = XMLHelper<string>::getAttrString( curr, "type" );
 			
 			// Add additional types here.
+            Logger* newLogger = 0;
 			if( loggerType == "PlainTextLogger" ){
 				newLogger = new PlainTextLogger();
 			}
@@ -66,40 +52,44 @@ void LoggerFactory::XMLParse( const DOMNode* root ) {
 				newLogger = new XMLLogger();
 			}
 			else {
-				newLogger = new PlainTextLogger();
+                cerr << "Unknown Logger Type: " << loggerType << endl;
+                return;
 			}
 			
 			newLogger->XMLParse( curr );
 			newLogger->open();
-			loggers[ newLogger->name ] = newLogger;
+			mLoggers[ newLogger->mName ] = newLogger;
 		}
 	}
 }
 
+//! Single static method of ILogger interface.
+ILogger& ILogger::getLogger( const string& aLoggerName ){
+    return LoggerFactory::getLogger( aLoggerName );
+}
+
 //! Returns the instance of the Logger, creating it if neccessary.
-Logger* LoggerFactory::getLogger( const string& loggerName ) {
-	map<string,Logger*>::const_iterator logIter = loggers.find( loggerName );
+Logger& LoggerFactory::getLogger( const string& aLoggerName ) {
+	map<string,Logger*>::const_iterator logIter = mLoggers.find( aLoggerName );
 	
-	if( logIter != loggers.end() ) {
-		return logIter->second;
+	if( logIter != mLoggers.end() ) {
+		return *logIter->second;
 	}
 	else {
-		cout << "Creating uninitialized logger." << endl;
-		Logger* newLogger = new PlainTextLogger( loggerName );
+		cout << "Creating an uninitialized logger." << endl;
+		Logger* newLogger = new PlainTextLogger( aLoggerName );
 		newLogger->open();
-		loggers[ loggerName ] = newLogger;
-		return newLogger;
+        mLoggers[ aLoggerName ] = newLogger;
+		return *mLoggers[ aLoggerName ];
 	}
 }
 
 //! Cleans up the logger.
 void LoggerFactory::cleanUp() {
-	for( map<string,Logger*>::iterator logIter = loggers.begin(); logIter != loggers.end(); logIter++ ){
+	for( map<string,Logger*>::iterator logIter = mLoggers.begin(); logIter != mLoggers.end(); logIter++ ){
 		logIter->second->close();
 		delete logIter->second;
 	}
-	loggers.clear();
-	
 }
 
 /*! \brief Writes out the LoggerFactory to an XML file. 
@@ -110,16 +100,10 @@ void LoggerFactory::cleanUp() {
 */
 void LoggerFactory::toDebugXML( ostream& out, Tabs* tabs ) {
 	
-	// write out the root tag.
-	out << "<LoggerFactory>" << endl;
-
-	// increase the indent.
-	tabs->increaseIndent();
-
-	for( map<string,Logger*>::const_iterator logIter = loggers.begin(); logIter != loggers.end(); logIter++ ){
+    XMLWriteOpeningTag( "LoggerFactory", out, tabs );
+	for( map<string,Logger*>::const_iterator logIter = mLoggers.begin(); logIter != mLoggers.end(); ++logIter ){
 		logIter->second->toDebugXML( out, tabs );
 	}
-
 	XMLWriteClosingTag( "LoggerFactory", out, tabs );
 }
 

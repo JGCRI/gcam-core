@@ -36,6 +36,7 @@
 
 #include "util/base/include/model_time.h"
 #include "util/base/include/util.h"
+#include "util/logger/include/ilogger.h"
 
 /*!
 * \ingroup CIAM
@@ -611,7 +612,7 @@ xercesc::DOMNode* XMLHelper<T>::parseXML( const std::string& xmlFile, xercesc::X
 }
 /*! \brief Function which initializes the XML Platform and creates an instance
 * of an error handler and parser. 
-*
+* \note Logs are not initialized yet so they cannot be used.
 * \author Josh Lurz
 */
 template<class T>
@@ -621,8 +622,8 @@ void XMLHelper<T>::initParser() {
         xercesc::XMLPlatformUtils::Initialize();
     } catch ( const xercesc::XMLException& toCatch ) {
         std::string message = XMLHelper<std::string>::safeTranscode( toCatch.getMessage() );
-        std::cout << "Error during initialization!"<< std::endl << message << std::endl;
-        exit(-1);
+        std::cout << "Severe error during XML Platform initialization: "<< std::endl << message << std::endl;
+        exit( -1 );
     }
     
     // Initialize the instances of the parser and error handler. 
@@ -693,12 +694,15 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
     // Determine if we should be deleting a node. 
     bool shouldDelete = XMLHelper<bool>::getAttr( node, "delete" );
     
+    // Get the main log.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
     // Check if the node already exists in the model tree. 
     if( iter != corrMap.end() ){     
         // Modify or delete the node based on the contents of the delete attribute.
         if( shouldDelete ) {
             // Perform deletion
-            std::cout << "Deleting node " << objName << endl;
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << "Deleting node: " << objName << endl;
             
             // Create an iterator which points at the location which should be deleted.
             typedef typename std::vector<U>::iterator VectorIterator;
@@ -722,7 +726,8 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
     // The node does not already exist.
     else {
         if( shouldDelete ) {
-            std::cout << "Error! Could not delete node " << objName << " as it does not exist." << endl;
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Could not delete node " << objName << " as it does not exist." << endl;
         } 
         else {
             newNode->XMLParse( node );

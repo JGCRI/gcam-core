@@ -26,8 +26,6 @@
 #include <map>
 #include <vector>
 
-extern std::ofstream logfile;
-
 namespace util {
 
     /*! \brief Returns the value within this map associated with a given key. 
@@ -147,7 +145,6 @@ namespace util {
     inline void checkIsOpen( T& streamIn, const std::string& fName ) {
         if( !streamIn.is_open() ) {
             std::cerr << "Severe Error: File " << fName << " could not be opened." << std::endl;
-            logfile << "Severe Error: File " << fName << " could not be opened." << std::endl;
             abort();
         }
     }
