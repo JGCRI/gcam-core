@@ -1,13 +1,20 @@
+/*! 
+* \file XMLLogger.cpp
+* \ingroup CIAM
+* \brief XMLLoger class source file.
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <ctime>
 #include "scenario.h"
 #include "Logger.h"
 #include "XMLLogger.h"
-#include "Configuration.h"
-
-extern time_t ltime;
 
 //! Constructor
 XMLLogger::XMLLogger( const string& loggerName ):Logger( loggerName ){
@@ -23,6 +30,8 @@ void XMLLogger::open( const char[] ){
 	logFile.open( fileName.c_str(), ios::out );
 
 	// Print the header message
+	time_t ltime;
+	time(&ltime);
 	string dateString = Scenario::XMLCreateDate( ltime );
 	logFile << "<XMLLogger name=\"" << name << "\" date=\"" << dateString << "\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"D:\\cvs\\Code\\EXE\\XMLLog.xsd\">" << endl;
 }

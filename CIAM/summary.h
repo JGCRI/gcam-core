@@ -20,8 +20,6 @@ using namespace std;
 * \ingroup CIAM
 * \brief An object which contains variables for reporting.
 * \author Sonny Kim
-* \date $Date $
-* \version $Revision $
 */
 
 class Summary

@@ -1,3 +1,7 @@
+#ifndef _XML_HELPER_H_
+#define _XML_HELPER_H_
+#pragma once
+
 /*! 
 * \file xmlHelper.h
 * \ingroup CIAM
@@ -11,10 +15,6 @@
 * \version $Revision$
 */
 
-#ifndef _XML_HELPER_H_
-#define _XML_HELPER_H_
-#pragma once
-
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -22,6 +22,9 @@
 #include <vector>
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/util/XMLString.hpp>
+#include <xercesc/sax/HandlerBase.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/util/PlatformUtils.hpp>
 
 using namespace std;
 using namespace xercesc;
@@ -30,8 +33,6 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief A basic class which is a container for a static variable containing the current level of indention in the xml being written.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 class Tabs {
@@ -61,8 +62,6 @@ public:
 * \ingroup CIAM
 * \brief A helper class of functions used to parse XML DOM trees.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 template<class T>
@@ -73,7 +72,8 @@ public:
 	static string getValueString( const DOMNode* node );
 	static T getAttr( const DOMNode* node, const string attrName );
 	static string getAttrString( const DOMNode* node, const string attrName );
-	static string safeTranscode( const XMLCh* toTranscode );  
+	static string safeTranscode( const XMLCh* toTranscode );
+	static DOMNode* parseXML( const string& xmlFile, XercesDOMParser* parser );
 };
 
 //! Returns the data value associated with the element node.
@@ -303,5 +303,45 @@ void XMLWriteElement( const T value, const string elementName, ostream& out, con
 	
 	out << "</" << elementName << ">" << endl;
 }
+/*!
+* \brief Function to parse an XML file, returning a pointer to the root.
+* 
+* This is a very simple function which calls the parse function and handles the exceptions which it may throw.
+* It also takes care of fetching the document and its root element.
+* \param xmlFile The name of the file to parse.
+* \param parser A pointer to an already created xercesDOMParser.
+* \return The root element of the newly parsed DOM document.
+*/
 
+template <class T>
+DOMNode* XMLHelper<T>::parseXML( const string& xmlFile, XercesDOMParser* parser ) {
+	
+	DOMDocument* doc = 0;
+
+	try {
+		const unsigned long startMillis = XMLPlatformUtils::getCurrentMillis();
+		parser->parse( xmlFile.c_str() );
+		const unsigned long endMillis = XMLPlatformUtils::getCurrentMillis();
+		long parseTime = endMillis - startMillis;
+		cout << "Parsing took " << parseTime / float( 1000 ) << " seconds." << endl;
+	} catch ( const XMLException& toCatch ) {
+		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
+		cout << "Exception message is:" << endl << message << endl;
+		return 0;
+	} catch ( const DOMException& toCatch ) {
+		string message = XMLHelper<string>::safeTranscode( toCatch.msg );
+		cout << "Exception message is:" << endl << message << endl;
+		return 0;
+	} catch ( const SAXException& toCatch ){
+		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
+		cout << "Exception message is:" << endl << message << endl;
+		return 0;
+	} catch (...) {
+		cout << "Unexpected Exception." << endl;
+		return 0;
+	}
+	
+	doc = parser->getDocument();
+	return doc->getDocumentElement();
+}
 #endif // _XML_HELPER_H_

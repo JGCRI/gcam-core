@@ -1,6 +1,11 @@
-/* subrsrc.cpp												*
-* Method definition for subrsrc class						*
-* Coded by Sonny Kim 9/13/00								*/
+/*! 
+* \file Subrsrc.cpp
+* \ingroup CIAM
+* \brief subrsrc class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
 
 #include "Definitions.h"
 #include <vector>
@@ -11,6 +16,7 @@
 #include <cmath>
 #include <ctime> 
 #include <cassert>
+#include "scenario.h"
 #include "modeltime.h"
 #include "subrsrc.h"
 #include "xmlHelper.h"
@@ -18,7 +24,7 @@
 using namespace std;
 
 extern ofstream bugoutfile, outfile;	
-extern Modeltime modeltime;
+extern Scenario scenario;
 
 //! Default constructor.
 subrsrc::subrsrc() {
@@ -70,7 +76,8 @@ void subrsrc::XMLParse( const DOMNode* node )
 	grade* tempGrade = 0;
 	
 	// resize vectors not read in
-	int maxper = modeltime.getmaxper();
+	const Modeltime* modeltime = scenario.getModeltime();
+	const int maxper = modeltime->getmaxper();
 	annualprod.resize( maxper ); // annual production of subresource
 	rscprc.resize( maxper ); // subresource price
 	techChange.resize( maxper ); // subresource price
@@ -117,7 +124,7 @@ void subrsrc::XMLParse( const DOMNode* node )
 		}
 		else if( nodeName == "annualprod" ){
 			int year = XMLHelper<int>::getAttr( curr, "year" );
-			int period = modeltime.getyr_to_per(year);
+			int period = modeltime->getyr_to_per(year);
 			annualprod[period] = XMLHelper<double>::getValue( curr );
 		}
 		else if( nodeName == "minShortTermSLimit" ){
@@ -128,12 +135,12 @@ void subrsrc::XMLParse( const DOMNode* node )
 		}
 		else if( nodeName == "techChange" ){
 			int year = XMLHelper<int>::getAttr( curr, "year" );
-			int period = modeltime.getyr_to_per(year);
+			int period = modeltime->getyr_to_per(year);
 			techChange[period] =  XMLHelper<double>::getValue( curr );
 		}
 		else if( nodeName == "gdpExpans" ){
 			int year = XMLHelper<int>::getAttr( curr, "year" );
-			int period = modeltime.getyr_to_per(year);
+			int period = modeltime->getyr_to_per(year);
 			gdpExpans[period] =  XMLHelper<double>::getValue( curr );
 		}
 		
@@ -145,6 +152,7 @@ void subrsrc::XMLParse( const DOMNode* node )
 }
 
 void subrsrc::toXML( ostream& out ) const {
+	const Modeltime* modeltime = scenario.getModeltime();
 	int m = 0;
 	// write the beginning tag.
 	Tabs::writeTabs( out );
@@ -169,15 +177,15 @@ void subrsrc::toXML( ostream& out ) const {
 	}
 	
 	for(m = 0; m < static_cast<int>(annualprod.size() ); m++ ) {
-		XMLWriteElement(annualprod[m],"annualprod",out,modeltime.getper_to_yr(m));
+		XMLWriteElement(annualprod[m],"annualprod",out,modeltime->getper_to_yr(m));
 	}
 	
 	for(m = 0; m < static_cast<int>(gdpExpans.size() ); m++ ) {
-		XMLWriteElement(gdpExpans[m],"gdpExpans",out,modeltime.getper_to_yr(m));
+		XMLWriteElement(gdpExpans[m],"gdpExpans",out,modeltime->getper_to_yr(m));
 	}
 	
 	for(m = 0; m < static_cast<int>(techChange.size() ); m++ ) {
-		XMLWriteElement(techChange[m],"techChange",out,modeltime.getper_to_yr(m));
+		XMLWriteElement(techChange[m],"techChange",out,modeltime->getper_to_yr(m));
 	}
 	
 	XMLWriteElement(minShortTermSLimit,"minShortTermSLimit",out);
@@ -313,13 +321,13 @@ void subrsrc::updateAvailable( const int period ){
 //! calculate annual supply
 /*! Takes into account short-term capacity limits.
 Note that cummsupply() must be called before calling this function. */
-void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,double prev_price)
-{	
+void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,double prev_price) {
+	const Modeltime* modeltime = scenario.getModeltime();
 	// for per = 0 use initial annual supply
 	// cummulative production is 0 for per = 0
 	if (per >= 1) {
 		// 2 is for the average of the annual productions
-		annualprod[per] = 2.0 * (cummprod[per] - cummprod[per-1])/modeltime.gettimestep(per)
+		annualprod[per] = 2.0 * (cummprod[per] - cummprod[per-1])/modeltime->gettimestep(per)
 			- annualprod[per-1];
 		if(annualprod[per] <= 0) {
 			cummprod[per] = cummprod[per-1];
@@ -336,7 +344,7 @@ void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,doubl
 			// check to see if base short-term capacity (supply) limit is smaller than the minimum
 			double max_annualprod = annualprod[per-1]
 					*pow(gnp/prev_gnp,gdpExpans[per])
-					*pow((1+techChange[per]),modeltime.gettimestep(per));
+					*pow((1+techChange[per]),modeltime->gettimestep(per));
 			
 			if(minShortTermSLimit < max_annualprod) { 
 				cur_annualprod = max_annualprod; 
@@ -352,14 +360,14 @@ void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,doubl
 			// if greater than the short-term capacity limit
 			if(cur_annualprod < annualprod[per]) {
 				cummprod[per] = cummprod[per-1]+(cur_annualprod+annualprod[per-1])
-					*modeltime.gettimestep(per)/2.0;
+					*modeltime->gettimestep(per)/2.0;
 				annualprod[per] = cur_annualprod;
 			}
 		}
 		// available is the total resource (stock)
-		//available[per]=available[per-1]-(annualprod[per]*modeltime.gettimestep(per)/2);
+		//available[per]=available[per-1]-(annualprod[per]*modeltime->gettimestep(per)/2);
 		available[per]=available[per-1]-((annualprod[per]+annualprod[per-1])
-			/2*modeltime.gettimestep(per));
+			/2*modeltime->gettimestep(per));
 		if (available[per]<=0) available[per] = 0;
 	}
 }
@@ -385,7 +393,8 @@ void subrsrc::MCoutput( const string &regname, const string& secname )
 		string uname,vector<double> dout);
 	
 	int i=0, m=0;
-	int maxper = modeltime.getmaxper();
+	const Modeltime* modeltime = scenario.getModeltime();
+	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	string tssname = name; // tempory subsector name
 	string str; // tempory string
@@ -421,13 +430,13 @@ void subrsrc::MCoutput( const string &regname, const string& secname )
 }
 
 //! write subrsrc output to file
-void subrsrc::outputfile( const string &regname, const string& sname)
-{
+void subrsrc::outputfile( const string &regname, const string& sname) {
+	const Modeltime* modeltime = scenario.getModeltime();
 	// function protocol
 	void fileoutput3( string var1name,string var2name,string var3name,
 		string var4name,string var5name,string uname,vector<double> dout);
 	
-	int maxper = modeltime.getmaxper();
+	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	
 	// function arguments are variable name, double array, db name, table name

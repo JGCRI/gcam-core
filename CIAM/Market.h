@@ -19,8 +19,6 @@ using namespace std;
 * \ingroup CIAM
 * \brief A class which defines a single market object.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 class Market

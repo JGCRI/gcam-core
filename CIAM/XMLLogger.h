@@ -3,7 +3,7 @@
 #pragma once
 
 /*! 
-* \file XMLTextLogger.h
+* \file XMLLogger.h
 * \ingroup CIAM
 * \brief The XMLLogger class header file.
 * \author Josh Lurz
@@ -25,8 +25,6 @@
 * It does support the option to print absolute or relative pathnames.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 * \warning Since XMLLoggers can only be created by the LoggerFactory, public functions not in the Logger interface will be unusable.
 */
 

@@ -25,8 +25,6 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief A class which defines a single Subsector of the model.
 * \author Sonny Kim
-* \date $Date $
-* \version $Revision $
 */
 
 class subsector

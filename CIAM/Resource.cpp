@@ -1,6 +1,11 @@
-/* resource.cpp												*
- * Method definition for resource class						*
- * Coded by Sonny Kim 9/13/00								*/
+/*! 
+* \file Resource.cpp
+* \ingroup CIAM
+* \brief Resource class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
 
 #include "Definitions.h"
 
@@ -8,7 +13,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include <ctime> // to use clock and time functions
+#include <ctime>
 #include <vector>
 #include <cassert>
 
@@ -18,16 +23,16 @@
 
 // class headers
 #include "xmlHelper.h"
+#include "scenario.h"
 #include "modeltime.h"
 #include "resource.h"
 #include "market.h"
 #include "Marketplace.h"
 
-using namespace std; // enables elimination of std:
+using namespace std;
 
 extern ofstream bugoutfile,outfile;	
-extern Modeltime modeltime;
-extern Marketplace marketplace;
+extern Scenario scenario;
 
 //! Default constructor.
 Resource::Resource(){
@@ -96,7 +101,8 @@ void Resource::XMLParse( const DOMNode* node ){
 	nosubrsrc = depsubrsrc.size();
 
 	// resize vectors not read in
-	int maxper = modeltime.getmaxper();
+	const Modeltime* modeltime = scenario.getModeltime();
+	const int maxper = modeltime->getmaxper();
 	available.resize(maxper); // total resource availabl
 	annualprod.resize(maxper); // annual production rate of resource
 	cummprod.resize(maxper); // cummulative production of resource
@@ -104,7 +110,7 @@ void Resource::XMLParse( const DOMNode* node ){
 
 //! Write datamembers to datastream in XML format.
 void Resource::toXML( ostream& out ) const {
-	
+	const Modeltime* modeltime = scenario.getModeltime();
 	// write the beginning tag.
 	Tabs::writeTabs( out );
 	out << "<" << getType() << " name=\"" << name << "\">"<< endl;
@@ -118,7 +124,7 @@ void Resource::toXML( ostream& out ) const {
 
 	// write out resource prices for all periods
 	for(int m = 0; m < static_cast<int>(rscprc.size()); m++ ) {
-		XMLWriteElement( rscprc[m], "price", out, modeltime.getper_to_yr(m));
+		XMLWriteElement( rscprc[m], "price", out, modeltime->getper_to_yr(m));
 	}
 		
 	// write out the depresource objects.
@@ -183,13 +189,13 @@ void Resource::toDebugXML( const int period, ostream& out ) const {
 }
 
 //! Create markets
-void Resource::setMarket( const string& regionName )
-{
-	// marketplace is a global object
+void Resource::setMarket( const string& regionName ) {
+	
+	Marketplace* marketplace = scenario.getMarketplace();
 	// name is resource name
-	if ( marketplace.setMarket( regionName, market, name, Market::NORMAL ) ) {
-		marketplace.setPriceVector( name, regionName, rscprc );
-                marketplace.setMarketToSolve (name, regionName);
+	if ( marketplace->setMarket( regionName, market, name, Market::NORMAL ) ) {
+		marketplace->setPriceVector( name, regionName, rscprc );
+		marketplace->setMarketToSolve (name, regionName);
 	}
 }
 
@@ -295,7 +301,8 @@ void Resource::outputfile( const string& regname )
 
 //! Write resource output to database.
 void Resource::MCoutput( const string& regname ) {
-	int maxper = modeltime.getmaxper();
+	const Modeltime* modeltime = scenario.getModeltime();
+	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,

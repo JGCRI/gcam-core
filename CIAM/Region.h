@@ -14,6 +14,7 @@
 #include "demographic.h"
 #include "resource.h"
 #include "sector.h"
+#include "DemandSector.h"
 #include "AgSector.h"
 #include "ghg_mrk.h"
 // #include "TransSector.h" // Transportation sector class class  maw
@@ -27,8 +28,6 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief A class which defines a single region of the model.
 * \author Sonny Kim
-* \date $Date $
-* \version $Revision $
 */
 
 class Region

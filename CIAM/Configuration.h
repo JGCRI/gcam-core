@@ -28,9 +28,6 @@ using namespace std;
 * does not need to be changed. Then to access the variable, use the get method appropriate for the value's type.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
-* \todo Print a warning to the log when a value does not exist in the map. 
 * \bug Bools are currently stored in XML as ints due to conversion problems.
 * \warning The class is a singleton, so it may not be created with the constructor. Instead call getInstance to return a pointer to the instance.
 * \warning The user must call delete on the object when they are finished with it.

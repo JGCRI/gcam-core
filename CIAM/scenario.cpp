@@ -1,27 +1,36 @@
-/* scenario.cpp										*
- * This file contains the methods definition for the 	*
- * the scenario class.								*
- * SHK  3/12/02										*/
+/*! 
+* \file scenario.cpp
+* \ingroup CIAM
+* \brief Scenario class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/				
 
 #include "Definitions.h"
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <cassert>
+#include <ctime>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 #include "scenario.h"
 #include "modeltime.h"
 #include "world.h"
 #include "xmlHelper.h"
-#include <ctime>
-
+#include "Configuration.h"
 
 using namespace std;
 
-extern Modeltime modeltime;
-extern World world;
+void climat_data(void); // function to write data for climat
+#ifdef WIN32
+extern "C" { void _stdcall CLIMAT(void); };
+#endif
+
+ofstream gasfile; // text file for climate input
 extern time_t ltime;
-// scenario class methods
+extern ofstream logfile, sdcurvefile;
 
 //! Default construtor
 Scenario::Scenario() {
@@ -31,6 +40,41 @@ Scenario::Scenario() {
 void Scenario::clear() {
 	name = "";
 	scenarioSummary = "";
+}
+
+//! Return a reference to the modeltime.
+const Modeltime* Scenario::getModeltime() const {
+	return &modeltime;
+}
+
+//! Return a constant reference to the goods and services goodsMarketplace.
+const Marketplace* Scenario::getMarketplace() const {
+	return &goodsMarketplace;
+}
+
+//! Return a constant reference to the goodsMarketplace used for GDP calibration.
+const Marketplace* Scenario::getGDPMarketplace() const {
+	return &GDPMarketplace;
+}
+
+//! Return a mutable reference to the goods and services goodsMarketplace.
+Marketplace* Scenario::getMarketplace() {
+	return &goodsMarketplace;
+}
+
+//! Return a mutable reference to the goods and services goodsMarketplace.
+Marketplace* Scenario::getGDPMarketplace() {
+	return &GDPMarketplace;
+}
+
+//! Return a constant reference to the world object.
+const World* Scenario::getWorld() const {
+	return &world;
+}
+
+//! Return a mutable reference to the world object.
+World* Scenario::getWorld() {
+	return &world;
 }
 
 //! Set data members from XML input.
@@ -48,7 +92,7 @@ void Scenario::XMLParse( const DOMNode* node ){
 	
 	// get the children of the node.
 	nodeList = node->getChildNodes();
-
+	
 	// loop through the children
 	for ( int i = 0; i < nodeList->getLength(); i++ ){
 		curr = nodeList->item( i );
@@ -57,7 +101,7 @@ void Scenario::XMLParse( const DOMNode* node ){
 		if ( nodeName == "summary" ){
 			scenarioSummary = XMLHelper<string>::getValueString( curr );
 		}
-
+		
 		else if ( nodeName == "modeltime" ){
 			modeltime.XMLParse( curr );
 			modeltime.set(); // calculate time parameters and conversions
@@ -84,14 +128,14 @@ void Scenario::toXML( ostream& out ) const {
 	out << "<scenario xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"";
 	out << " xsi:noNamespaceSchemaLocation=\"C:\\PNNL\\CIAM\\CVS\\CIAM\\Ciam.xsd\"";
 	out << " name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
-
+	
 	// increase the indent.
 	Tabs::increaseIndent();
-
+	
 	// summary notes on scenario
 	Tabs::writeTabs( out );
 	out << "<summary>\"SRES B2 Scenario is used for this Reference Scenario\"</summary>" << endl;
-
+	
 	// write the xml for the class members.
 	modeltime.toXML( out );
 	world.toXML( out );
@@ -115,7 +159,7 @@ void Scenario::toDebugXMLOpen( const int period, ostream& out ) const {
 	Tabs::increaseIndent();
 	Tabs::writeTabs( out );
 	out << "<summary>\"Debugging output\"</summary>" << endl;
-
+	
 	// write the xml for the class members.
 	modeltime.toDebugXML( period, out );
 	world.toDebugXML( period, out );
@@ -125,7 +169,7 @@ void Scenario::toDebugXMLOpen( const int period, ostream& out ) const {
 
 //! Write out close scenario tag to output stream for debugging.
 void Scenario::toDebugXMLClose( const int period, ostream& out ) const {
-		
+	
 	// decrease the indent.
 	Tabs::decreaseIndent();
 	
@@ -139,6 +183,85 @@ string Scenario::getName() const {
 	return name; 
 }
 
+//! Run the scenario
+void Scenario::run(){
+	
+	Configuration* conf = Configuration::getInstance();
+	ofstream xmlDebugStream;
+
+	xmlDebugStream.open( conf->getFile( "xmlDebugFileName" ).c_str(), ios::out );
+	gasfile.open( conf->getFile( "climatFileName" ).c_str(), ios::out );
+	
+	// set size of global arrays depending on MaxPer 
+	// works fine with XMLParse, only calls maxper
+	world.initper(); 
+	
+	// Start Model run for the first period.
+	int per = 0;
+	
+	goodsMarketplace.initXMLPrices(); // initialize prices
+	goodsMarketplace.nulldem( per ); // null market demands
+	goodsMarketplace.nullsup( per ); // null market supply
+	
+	// Write scenario root element for the debugging.
+	toDebugXMLOpen( per, xmlDebugStream );
+	
+	world.gnp( per ); // Calculate regional gnps
+	world.calc( per ); // Calculate supply and demand
+	world.updateSummary( per ); // Update summaries for reporting
+	world.sumpop( per ); // Calculate global population
+	world.emiss_ind( per ); // Calculate global emissions
+	world.sumrsc( per ); // Calculate global depletable resources
+	
+	cout << endl << "Period " << per <<": "<< modeltime.getper_to_yr(per) << endl;
+	cout << "Period 0 not solved" << endl;
+	logfile << "Period:  " << per << endl;
+	// end of first period.
+	
+	// Loop over time steps and operate model
+	for ( per = 1; per < modeltime.getmaxper(); per++ ) {	
+		
+		// Write out some info.
+		cout << endl << "Period " << per <<": "<< modeltime.getper_to_yr( per ) << endl;
+		logfile << "Period:  " << per << endl;
+		sdcurvefile << "Period " << per << ": "<< modeltime.getper_to_yr( per ) << endl;
+		sdcurvefile << "Market,Name,Price,Supply,Demand,";
+		sdcurvefile << "Market,Name,Price,Supply,Demand,";
+		sdcurvefile << "Market,Name,Price,Supply,Demand,";
+		sdcurvefile << "Market,Name,Price,Supply,Demand,";
+		sdcurvefile << "Market,Name,Price,Supply,Demand," << endl;
+		
+		// Run the iteration of the model.
+		goodsMarketplace.nulldem( per ); // initialize market demand to null
+		goodsMarketplace.nullsup( per ); // initialize market supply to null
+		goodsMarketplace.storeto_last( per ); // save last period's info to stored variables
+		goodsMarketplace.init_to_last( per ); // initialize to last period's info
+		world.gnp( per ); // call to calculate regional gnps
+		world.calc( per ); // call to calculate supply and demand
+		goodsMarketplace.solve( per ); // solution uses Bisect and NR routine to clear markets
+		world.updateSummary( per ); // call to update summaries for reporting
+		world.sumpop( per ); // call to calculate global population
+		world.emiss_ind( per ); // call to calculate global emissions
+		world.sumrsc( per ); // call to calculate global depletable resources
+		
+		// Write out the results for debugging.
+		world.toDebugXML( per, xmlDebugStream );
+	}
+	
+	toDebugXMLClose( per, xmlDebugStream ); // Close the xml debugging tag.
+	
+	// calling fortran subroutine climat/magicc
+	world.emiss_all(); // read in all ghg gases except for CO2
+	// climat_data(); // writes the input text file
+	gasfile.close(); // close input file for climat
+#ifdef WIN32
+	cout << endl << "Calling CLIMAT() "<< endl;
+    //    CLIMAT();
+	cout << "Finished with CLIMAT()" << endl;
+#endif
+	
+	xmlDebugStream.close();
+}
 
 //! Function which creates an XML compliant date time string.
 
@@ -157,10 +280,10 @@ string Scenario::XMLCreateDate( const time_t& time ) {
 	string retString;
 	struct tm* timeInfo;
 	struct tm* umtTimeInfo;
-
+	
 	timeInfo = localtime( &time );
 	umtTimeInfo = gmtime( &time );
-
+	
 	// Create the string
 	buffer << ( timeInfo->tm_year + 1900 ); // Set the year
 	buffer << "-";
@@ -174,7 +297,7 @@ string Scenario::XMLCreateDate( const time_t& time ) {
 	buffer << ":";
 	buffer << timeInfo->tm_sec;
 	buffer << "-";
-
+	
 	int umtDiff = timeInfo->tm_hour - umtTimeInfo->tm_hour;
 	if( umtDiff < 10 ) {
 		buffer << "0";
@@ -183,7 +306,7 @@ string Scenario::XMLCreateDate( const time_t& time ) {
 	buffer << ":00";
 	// Completed creating the string;
 	buffer >> retString;
-
+	
 	return retString;
 }
 

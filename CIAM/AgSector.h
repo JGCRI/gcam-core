@@ -24,8 +24,6 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief A class which defines the agricultural sector of a region. 
 * \author Josh Lurz
-* \date $ Date $
-* \version $ Revision $
 */
 
 class AgSector {

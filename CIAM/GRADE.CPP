@@ -1,6 +1,11 @@
-/* grade.cpp												*
- * Method definition for grade class						*
- * Coded by Sonny Kim 9/13/00								*/
+/*! 
+* \file GRADE.CPP
+* \ingroup CIAM
+* \brief grade class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
 
 #include "Definitions.h"
 #include <string>
@@ -9,28 +14,28 @@
 #include <fstream>
 #include <cmath>
 #include <cassert>
+#include "scenario.h"
 #include "grade.h"
 #include "modeltime.h"
 #include "xmlHelper.h"
 
-using namespace std; // enables elimination of std::
+using namespace std;
 
-extern Modeltime modeltime;
+extern Scenario scenario;
 
 //! Default constructor
-grade::grade() 
-{
+grade::grade() {
 	initElementalMembers();
 }
 
 //! Clear member variables
-void grade::clear(){
+void grade::clear() {
 	initElementalMembers();
 	name = "";
 }
 
 //! Initialize elemental members
-void grade::initElementalMembers(){
+void grade::initElementalMembers() {
 	year = 0;
 	available = 0;
 	extractCost = 0;
@@ -42,8 +47,7 @@ void grade::initElementalMembers(){
 }
 
 //! Initialize data members from XML.
-void grade::XMLParse( const DOMNode* tempNode )
-{	
+void grade::XMLParse( const DOMNode* tempNode ) {
 	DOMNodeList* tempNodeLst;
 	DOMNode* tNode = 0;
 	string tNodeName;
@@ -140,10 +144,12 @@ void grade::printGrade() const
 }
 
 //! Calculate cummulative technical change for each grade.
-void grade::calcTechChangeCumm( const int per ) 
-{
+void grade::calcTechChangeCumm( const int per ) {
+
+	const Modeltime* modeltime = scenario.getModeltime();
+
 	// total years from base year to current year
-	int years = modeltime.getper_to_yr(per) - modeltime.getstartyr();
+	const int years = modeltime->getper_to_yr( per ) - modeltime->getstartyr();
 
 	// works like the MiniCAM only because techChange is a constant
 	// for all periods
@@ -151,39 +157,37 @@ void grade::calcTechChangeCumm( const int per )
 }
 
 //! Total cost of each grade.
-void grade::calcCost( const int per ) 
-{
+void grade::calcCost( const int per ) {
 	totalCost = ( extractCost + environCost ) / techChangeCumm + tax;
 }
 
 //! Return available amount in each grade.
-double grade::getAvail() const 
-{
+double grade::getAvail() const {
 	return available;
 }
 
-double grade::getCost() const
-{
+//! Return the total cost.
+double grade::getCost() const {
 	return totalCost;
 }
 
-double grade::getExtCost() const
-{
+//! Return the extraction cost.
+double grade::getExtCost() const {
 	return extractCost;
 }
 
-double grade::getEnvCost() const
-{
+//! Return the environmental cost.
+double grade::getEnvCost() const {
 	return environCost;
 }
 
-void grade::setExtCost( const double eCost ) 
-{
+//! Set the extraction cost.
+void grade::setExtCost( const double eCost ) {
 	extractCost = eCost;
 }
 
-string grade::getName() const 
-{
+//! Get the name.
+string grade::getName() const {
 	return name;
 }
 

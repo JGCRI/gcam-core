@@ -1,11 +1,21 @@
+/*! 
+* \file Market.cpp
+* \ingroup CIAM
+* \brief Market class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
 #include <iostream>
 #include <vector>
-#include "modeltime.h"  // model runtime info
+
+#include "modeltime.h" 
 #include "XMLHelper.h"
 #include "Market.h"
 
-using namespace std; // enables elimination of std::
+using namespace std;
 
 //! Default constructor.
 Market::Market(){

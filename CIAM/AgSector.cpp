@@ -1,12 +1,22 @@
+/*! 
+* \file AgSector.cpp
+* \ingroup CIAM
+* \brief AgSector class source file.
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
+#include <cassert>
+#include <iostream>
+#include <fstream>
 #include "AgSector.h"
 #include "xmlHelper.h"
 #include "market.h"
 #include "Marketplace.h"
 #include "modeltime.h"
-#include <cassert>
-#include <iostream>
-#include <fstream>
+#include "scenario.h"
 
 // Fortran calls.
 extern "C" { void _stdcall SETGNP( int&, double[] ); };
@@ -19,8 +29,7 @@ extern "C" { void _stdcall AG2RUN( double[], int&, int&, double[], double[] ); }
 extern "C" { double _stdcall AG2CO2EMISSIONS( int&, int& ); };
 extern "C" { void _stdcall AG2LINKOUT( void ); };
 
-extern Modeltime modeltime;
-extern Marketplace marketplace;
+extern Scenario scenario;
 
 using namespace std;
 
@@ -145,12 +154,14 @@ void AgSector::clear() {
 
 //! Initialize the object with XML data.
 void AgSector::XMLParse( const DOMNode* node ) {
-	CO2Emissions.resize( modeltime.getmaxper() );
-	prices.resize( modeltime.getmaxper() );
-	supplies.resize( modeltime.getmaxper() );
-	demands.resize( modeltime.getmaxper() );
+	const Modeltime* modeltime = scenario.getModeltime();
+
+	CO2Emissions.resize( modeltime->getmaxper() );
+	prices.resize( modeltime->getmaxper() );
+	supplies.resize( modeltime->getmaxper() );
+	demands.resize( modeltime->getmaxper() );
 	
-	for( int i = 0; i < modeltime.getmaxper(); i++ ) {
+	for( int i = 0; i < modeltime->getmaxper(); i++ ) {
 		prices[ i ].resize( numAgMarkets );
 		supplies[ i ].resize( numAgMarkets );
 		demands[ i ].resize( numAgMarkets );
@@ -159,7 +170,7 @@ void AgSector::XMLParse( const DOMNode* node ) {
 
 //! Output the results in XML format.
 void AgSector::toXML( ostream& out ) const {
-	
+	const Modeltime* modeltime = scenario.getModeltime();
 	int iter = 0;
 	int innerIter = 0;
 
@@ -176,11 +187,11 @@ void AgSector::toXML( ostream& out ) const {
 	XMLWriteElement( numAgMarkets, "numAgMarkets", out );
 
 	for( iter = 0; iter < static_cast<int>( gnp.size() ); iter++ ){
-		XMLWriteElement( gnp[ iter ], "gnp", out, modeltime.getper_to_yr( iter ) );
+		XMLWriteElement( gnp[ iter ], "gnp", out, modeltime->getper_to_yr( iter ) );
 	}
 	
 	for( iter= 0; iter < static_cast<int>( population.size() ); iter++ ) {
-		XMLWriteElement( population[ iter ], "population", out, modeltime.getper_to_yr( iter ) );
+		XMLWriteElement( population[ iter ], "population", out, modeltime->getper_to_yr( iter ) );
 	}
 	
 	XMLWriteElement( biomassPrice, "biomassprice", out );
@@ -199,6 +210,7 @@ void AgSector::toXML( ostream& out ) const {
 void AgSector::toDebugXML( const int period, ostream& out ) const {
 	int iter = 0;
 	int tempRegion = regionNumber; // Needed b/c function is constant.
+	const Modeltime* modeltime = scenario.getModeltime();
 	
 	// write the beginning tag.
 	Tabs::writeTabs( out );
@@ -213,19 +225,19 @@ void AgSector::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( numAgMarkets, "numAgMarkets", out );
 
 	for( iter = 0; iter < static_cast<int>( gnp.size() ); iter++ ){
-		XMLWriteElement( gnp[ iter ], "gnp", out, modeltime.getper_to_yr( iter ) );
+		XMLWriteElement( gnp[ iter ], "gnp", out, modeltime->getper_to_yr( iter ) );
 	}
 	
-	for ( iter = 0; iter < modeltime.getmaxper(); iter++ ){
-		XMLWriteElement( GETGNP( tempRegion, iter ), "gnpFromFortran", out, modeltime.getper_to_yr( iter ) );
+	for ( iter = 0; iter < modeltime->getmaxper(); iter++ ){
+		XMLWriteElement( GETGNP( tempRegion, iter ), "gnpFromFortran", out, modeltime->getper_to_yr( iter ) );
 	}
 
 	for( iter = 0; iter < static_cast<int>( population.size() ); iter++ ) {
-		XMLWriteElement( population[ iter ], "population", out, modeltime.getPopPeriodToYear( iter ) );
+		XMLWriteElement( population[ iter ], "population", out, modeltime->getPopPeriodToYear( iter ) );
 	}
 	
-	for ( iter = 1; iter < modeltime.getmaxpopdata(); iter++ ){
-		XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, modeltime.getPopPeriodToYear( iter ) );
+	for ( iter = 1; iter < modeltime->getmaxpopdata(); iter++ ){
+		XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, modeltime->getPopPeriodToYear( iter ) );
 	}
 	
 	XMLWriteElement( biomassPrice, "biomassprice", out );
@@ -233,14 +245,14 @@ void AgSector::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( GETBIOMASSPRICE(), "biomasspriceFromFortran", out );
 	
 	for( iter = 0; iter < static_cast<int>( prices[ period ].size() ); iter++ ) {
-		XMLWriteElement( prices[ period ][ iter ], "prices", out, modeltime.getper_to_yr( period ) );
+		XMLWriteElement( prices[ period ][ iter ], "prices", out, modeltime->getper_to_yr( period ) );
 	}
 
 	for( iter = 0; iter < static_cast<int>( supplies[ period ].size() ); iter++ ) {
-		XMLWriteElement( supplies[ period ][ iter ], "supplies", out, modeltime.getper_to_yr( period ) );
+		XMLWriteElement( supplies[ period ][ iter ], "supplies", out, modeltime->getper_to_yr( period ) );
 	}	
 	for( iter = 0; iter < static_cast<int>( demands[ period ].size() ); iter++ ) {
-		XMLWriteElement( demands[ period ][ iter ], "demands", out, modeltime.getper_to_yr( period ) );
+		XMLWriteElement( demands[ period ][ iter ], "demands", out, modeltime->getper_to_yr( period ) );
 	}
 	// finished writing xml for the class members.
 	
@@ -293,7 +305,8 @@ void AgSector::setBiomassPrice( const double bioPriceIn ) {
 
 //! Run the underlying AgLU model.
 void AgSector::runModel( const int period, const string& regionName ) {
-	
+	Marketplace* marketplace = scenario.getMarketplace();
+
 	double* priceArray = new double[ numAgMarkets ];
 	double* demandArray = new double[ numAgMarkets ];
 	double* supplyArray = new double[ numAgMarkets ];
@@ -301,7 +314,7 @@ void AgSector::runModel( const int period, const string& regionName ) {
 	int tempPeriod = period;
 	
 	for( int l = 0; l < numAgMarkets; l++ ){
-		prices[ period ][ l ] = marketplace.showprice( indiceToNameMap[ l ], regionName, period );
+		prices[ period ][ l ] = marketplace->showprice( indiceToNameMap[ l ], regionName, period );
 	}
 	
 	for( int i = 0; i < numAgMarkets; i++ ) {
@@ -326,8 +339,8 @@ void AgSector::runModel( const int period, const string& regionName ) {
 	
 	// set the market supplies and demands.
 	for ( vector<string>::iterator k = marketNameVector.begin(); k != marketNameVector.end(); k++ ) {
-		marketplace.setdemand( *k, regionName, demands[ period ][ nameToIndiceMap[ *k ] ], period );
-		marketplace.setsupply( *k, regionName, supplies[ period ][ nameToIndiceMap[ *k ] ], period );
+		marketplace->setdemand( *k, regionName, demands[ period ][ nameToIndiceMap[ *k ] ], period );
+		marketplace->setsupply( *k, regionName, supplies[ period ][ nameToIndiceMap[ *k ] ], period );
 	}
 	delete priceArray;
 	delete demandArray;
@@ -345,16 +358,18 @@ void AgSector::carbLand( const int period, const string& regionName ) {
 
 //! Create a market for the sector.
 void AgSector::setMarket( const string& regionName ) {
+	
+	Marketplace* marketplace = scenario.getMarketplace();
 
 	// Add all global markets.
 	for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end() - 1; i++ ) {
-		marketplace.setMarket( regionName, "global", *i, Market::NORMAL );
-		marketplace.setMarketToSolve ( *i, regionName );
+		marketplace->setMarket( regionName, "global", *i, Market::NORMAL );
+		marketplace->setMarketToSolve ( *i, regionName );
 	}
 	
 	// Add the regional markets.
-	marketplace.setMarket( regionName, regionName, marketNameVector[ 6 ], Market::NORMAL );
-	marketplace.setMarketToSolve ( marketNameVector[ 6 ], regionName );
+	marketplace->setMarket( regionName, regionName, marketNameVector[ 6 ], Market::NORMAL );
+	marketplace->setMarketToSolve ( marketNameVector[ 6 ], regionName );
 	// Initialize prices at a later point.
 }
 
@@ -366,8 +381,10 @@ void AgSector::internalOutput() {
 //! Initialize the market prices for agricultural goods. 
 void AgSector::initMarketPrices( const string& regionName, const vector<double>& pricesIn ) {
 	
+	Marketplace* marketplace = scenario.getMarketplace();
+
 	// Initialize prices.
  	for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end(); i++ ) {
-		marketplace.setprice( *i, regionName, pricesIn[ nameToIndiceMap[ *i ] ], 0 );
+		marketplace->setprice( *i, regionName, pricesIn[ nameToIndiceMap[ *i ] ], 0 );
 	}
 }

@@ -1,8 +1,11 @@
-/* technology.cpp									*
-* Method definition for the technology class.		*
-* This technology class is based on the MiniCAM	*
-* description of technology.						*
-* SHK  6/12/00										*/
+/*! 
+* \file technology.cpp
+* \ingroup CIAM
+* \brief technology class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
 
 // Standard Library headers
 #include "Definitions.h"
@@ -16,6 +19,7 @@
 #include <cassert>
 
 // User headers
+#include "scenario.h"
 #include "xmlHelper.h"
 #include "market.h"
 #include "technology.h"
@@ -24,8 +28,7 @@
 
 using namespace std;
 
-extern Marketplace marketplace;
-extern Modeltime modeltime;
+extern Scenario scenario;
 
 // Technology class method definition
 
@@ -259,12 +262,12 @@ void technology::applycarbontax(double tax)
 
 //! sets ghg tax to technologies
 /*! does not get called if there are no markets for ghgs */
-void technology::addghgtax( const string ghgname, const string regionName, const int per )
-{
+void technology::addghgtax( const string ghgname, const string regionName, const int per ) {
+	Marketplace* marketplace = scenario.getMarketplace();
 	// returns coef for primary fuels only
 	// carbontax has value for primary fuels only
 	carbontaxgj = 0; // initialize
-	carbontax = marketplace.showprice(ghgname,regionName,per);
+	carbontax = marketplace->showprice(ghgname,regionName,per);
 	// add to previous ghg tax if more than one ghg
 	for(int i=0;i<ghg.size();i++) {
 		carbontaxgj += carbontax*ghg[i]->taxcnvrt(fuelname)*1e-3;
@@ -275,9 +278,10 @@ void technology::addghgtax( const string ghgname, const string regionName, const
 //! define technology fuel cost and total cost
 void technology::cost( const string regionName, const int per ) 
 {
-	double fuelprice = marketplace.showprice(fuelname,regionName,per);
+	Marketplace* marketplace = scenario.getMarketplace();
+	double fuelprice = marketplace->showprice(fuelname,regionName,per);
 	
-	//techcost = fprice/eff/pow(1+techchange,modeltime.gettimestep(per)) + necost;
+	//techcost = fprice/eff/pow(1+techchange,modeltime->gettimestep(per)) + necost;
 	// fMultiplier and pMultiplier are initialized to 1 for those not read in
 	fuelcost = ( (fuelprice * fMultiplier) + carbontaxgj ) / eff;
 	techcost = ( fuelcost + necost ) * pMultiplier;
@@ -305,9 +309,10 @@ void technology::norm_share(double sum)
 acccording to the MiniCAM formula. In the future, this will be superseeded by read-in values. */
 void technology::calcFixedSupply(int per)
 {
+	const Modeltime* modeltime = scenario.getModeltime();
 	string FixedTech = "hydro";
 	if(name == FixedTech) {
-		int T = per*modeltime.gettimestep(per);
+		int T = per*modeltime->gettimestep(per);
 		// resource and logit function 
 		double fact = exp(A+B*T);
 		output = fixedOutputVal = resource*fact/(1+fact);
@@ -376,10 +381,9 @@ void technology::adjShares(double subsecdmd, double totalFixedSupply, double var
 //! Calculates fuel input and technology output.
 //! Adds demands for fuels and ghg emissions to markets in the marketplace
 void technology::production(const string& regionName,const string& prodName,
-							double dmd,const int per) 
-{
+							double dmd,const int per) {
 	string hydro = "hydro";
-	
+	Marketplace* marketplace = scenario.getMarketplace();
 	// dmd is total subsector demand
 	if(name != hydro) {
 		output = share * dmd; // use share to get output for each technology
@@ -402,7 +406,7 @@ void technology::production(const string& regionName,const string& prodName,
 	}
 	
 	// set demand for fuel in marketplace
-	marketplace.setdemand(fuelname,regionName,input,per);
+	marketplace->setdemand(fuelname,regionName,input,per);
 
 	// total carbon taxes paid
 	// carbontax is null for technologies that do not consume fossil fuels
@@ -413,7 +417,7 @@ void technology::production(const string& regionName,const string& prodName,
 	for (int i=0; i<ghg.size(); i++) {
 		ghg[i]->calc_emiss(fuelname,input,prodName,output);
 		// set emissions as demand side of gas market
-		marketplace.setdemand(ghg[i]->getname(),regionName,ghg[i]->getemission(),per);		
+		marketplace->setdemand(ghg[i]->getname(),regionName,ghg[i]->getemission(),per);		
 	}
 }
 
@@ -636,7 +640,7 @@ void hydro_tech::clear(){
 //! calculates hydroelectricity output based on logit function
 void hydro_tech::production(double dmd,int per) 
 {
-	int T = per*modeltime.gettimestep(per);
+	int T = per*scenario.getModeltime()->gettimestep(per);
 	double tempOutput;
 	// resource and logit function 
 	double fact = exp(A+B*T);

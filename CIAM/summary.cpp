@@ -1,8 +1,12 @@
-/* summary.cpp									*
- * Method definition for summary class.			*
- * Summany contains variables for reporting.	*
- *												*
- * SHK  7/25/02									*/
+/*! 
+* \file summary.cpp
+* \ingroup CIAM
+* \brief summary class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
 #include "summary.h"
 

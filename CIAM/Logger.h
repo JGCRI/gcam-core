@@ -35,8 +35,6 @@ class Logger;
 * When the streambuf receives a character it passes it to its parent stream for processing.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 * \warning Overriding the iostream class is somewhat difficult so this class may be somewhat esoteric.
 * \warning This is a write-only streambuf.
 */
@@ -52,9 +50,9 @@ public:
 	int underflow( int ch );
 	void setParent( Logger* parentIn );
 	void toDebugXML( ostream& out ) const;
-
+	
 private:
-
+	
 	//! A pointer to the parent logger which will receive all data. 
 	Logger* parent;
 };
@@ -88,10 +86,10 @@ public:
 	enum WarningLevel 
 	{
 		DEBUG_LEVEL, //!< Debugging warning level.
-			NOTICE_LEVEL, //!< Notice warning level.
-			WARNING_LEVEL, //!< Warning warning level.
-			ERROR_LEVEL, //!< Error warning level.
-			SEVERE_LEVEL //!< Severe warning level.
+		NOTICE_LEVEL, //!< Notice warning level.
+		WARNING_LEVEL, //!< Warning warning level.
+		ERROR_LEVEL, //!< Error warning level.
+		SEVERE_LEVEL //!< Severe warning level.
 	};
 	
 	//! Virtual destructor.
@@ -116,11 +114,11 @@ public:
 	void setFile( const string& fileIn );
 	
 	void toDebugXML( ostream& out ) const;
-
+	
 protected:
 	//! Logger name
 	string name;
-
+	
 	//! Logger type
 	string type;
 	
@@ -129,13 +127,13 @@ protected:
 	
 	//! Header message to print at the beginning of the log.
 	string headerMessage;
-
+	
 	//! Defines the minimum level of warnings which should be omitted.
 	int minLogWarningLevel;
 	
 	//! Defines the mininum level of warnings to print to the console.
 	int minToScreenWarningLevel;
-
+	
 	//! Defines the current warning level.
 	WarningLevel currentWarningLevel;
 	
@@ -156,7 +154,7 @@ protected:
 	
 	//! Defines whether to print the warning level.
 	bool printLogWarningLevel;
-
+	
 	//! Defines whether or not to print the timestamp.
 	bool printLogTimeStamp;
 	
@@ -185,17 +183,17 @@ protected:
 	virtual void logCompleteMessage( const int line, const string& file, const WarningLevel warningLevel, const string& message ) = 0;
 	
 	void printToScreenIfConfigured( const int line, const string& file, const WarningLevel warningLevel, const string& message );
-
+	
 	void static parseHeader( string& headerIn );
-
+	
 private:
-
+	
 	//! Buffer which contains characters waiting to be printed.
 	stringstream buf;
 	
 	//! Underlying ofstream
 	PassToParentStreamBuf underStream;
-
+	
 	void XMLParse( const DOMNode* node );
 };
 

@@ -1,8 +1,11 @@
-/*! ghg.cpp											*
- * This header contains the methods for the			*
- * Greenhouse Gas class.							*
- *       											*
- * Coded by: Sonny Kim and Marshall Wise 10/09/02	*/
+/*! 
+* \file GHG.CPP
+* \ingroup CIAM
+* \brief Ghg class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
 
 #include "Definitions.h"
 #include <string>
@@ -214,7 +217,7 @@ void Ghg::calc_emiss2( const double activity, const double gamma, const double* 
 void Ghg::calc_emiss_ind( const double input, const string& fuelname ) {
 	emiss_ind = 0; // to initialize
 	for (int i=0;i<emcoef_ind.size();i++) {
-		if (emcoef_ind[i].getname() == fuelname) { // sector name
+		if (emcoef_ind[i].getName() == fuelname) { // sector name
 			double temp = emcoef_ind[i].getemcoef(name);
 			emiss_ind = emcoef_ind[i].getemcoef(name) * input;
 		}

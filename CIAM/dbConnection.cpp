@@ -1,10 +1,12 @@
-/* dbConnection.cpp															*
- * Function to open and close database connection and						*
- * to create database table for writing result.								*
- * This table is used to create DBmain table used by the Dataviewer.xls		*
- * DBout table is first deleted and recreated with the proper set of fiels.	*
- * Then create a recordset of this table for writing results.				*
- * SHK 2/27/03																*/
+/*! 
+* \file dbConnection.cpp
+* \ingroup CIAM
+* \brief Contains the functions to open and close database connection and to create database table for writing result.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
 #ifdef WIN32
 // standard libraries
@@ -14,12 +16,13 @@
 #include <dbdaoerr.h>
 #include <direct.h>
 #include <iostream>
-#include <string> // using "string.h" does not enable use of string class
+#include <string>
 // custom header
+#include "scenario.h"
 #include "modeltime.h"
 #include "Configuration.h"
 
-using namespace std; // enables elimination of std::
+using namespace std;
 
 // define global DB engine and database
 CdbDBEngine dben;
@@ -28,9 +31,9 @@ CdbTableDef DBoutTD; // table definitions for creating tables in the database
 CdbField tfield; // tempory field for creating fields in tables
 CdbRecordset DBoutrst; // recordset for writing results
 
-const char *DBout = "DBout"; // name of the table for outputs compatible with dataviewer
-extern Modeltime modeltime;
+extern Scenario scenario;
 
+const char *DBout = "DBout"; // name of the table for outputs compatible with dataviewer
 
 //! Open connection to the database
 void openDB(void) {
@@ -44,15 +47,21 @@ void openDB(void) {
 }
 
 //! Close connection to the database
-void closeDB(void) {
+void closeDB() {
 
 	db.Close();
 }
 
-//! Create and open the main database output table.
-//  No data is appended from this method.
-void createDBout(void)
-{
+/*! \brief Create and open the main database output table.
+* 
+* No data is appended from this method. 
+* This table is used to create DBmain table used by the Dataviewer.xls.
+* DBout table is first deleted and recreated with the proper set of fields,
+* then create a recordset of this table for writing results.
+*/
+
+void createDBout() {
+
 	// ***** Create DBout table ******
 	// first delete existing table
 	try { db.TableDefs.Delete(DBout); } 
@@ -76,9 +85,9 @@ void createDBout(void)
 	char buffer[4];
 	string str;
 	// add years as fields
-	for (int t=0;t<modeltime.getmaxper();t++) { 
+	for (int t=0;t<scenario.getModeltime()->getmaxper();t++) { 
 		str = "y";
-		str += _itoa(modeltime.getper_to_yr(t),buffer,10); // convert int to char*
+		str += itoa(scenario.getModeltime()->getper_to_yr(t),buffer,10); // convert int to char*
 		tfield = DBoutTD.CreateField(str.c_str(),dbText);
 		DBoutTD.Fields.Append(tfield);
 	}

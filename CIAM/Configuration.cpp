@@ -1,3 +1,11 @@
+/*! 
+* \file Configuration.cpp
+* \ingroup CIAM
+* \brief Configuration class source file.
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
+*/
 #include "Definitions.h"
 #include <string>
 #include <map>
@@ -5,6 +13,8 @@
 #include <xercesc/dom/DOM.hpp>
 #include "Configuration.h"
 #include "xmlHelper.h"
+#include "Logger.h"
+#include "LoggerFactory.h"
 
 using namespace std;
 using namespace xercesc;
@@ -202,7 +212,8 @@ string Configuration::getFile( const string& key ) const {
 	}
 
 	else {
-		// issue warning
+		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
+		LOG( log, Logger::WARNING_LEVEL ) << "Could not find file: " << key << endl;
 		return "";
 	}
 }
@@ -217,7 +228,8 @@ string Configuration::getString( const string& key ) const {
 	}
 
 	else {
-		// issue warning
+		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
+		LOG( log, Logger::WARNING_LEVEL ) << "Could not find String: " << key << endl;
 		return "";
 	}
 }
@@ -232,7 +244,8 @@ bool Configuration::getBool( const string& key ) const {
 	}
 
 	else {
-		// issue warning
+		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
+		LOG( log, Logger::WARNING_LEVEL ) << "Could not find bool: " << key << endl;
 		return false;
 	}
 }
@@ -247,7 +260,8 @@ int Configuration::getInt( const string& key ) const {
 	}
 
 	else {
-		// issue warning
+		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
+		LOG( log, Logger::WARNING_LEVEL ) << "Could not find int: " << key << endl;
 		return 0;
 	}
 }
@@ -262,7 +276,8 @@ double Configuration::getDouble( const string& key ) const {
 	}
 
 	else {
-		// issue warning
+		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
+		LOG( log, Logger::WARNING_LEVEL ) << "Could not find double: " << key << endl;
 		return 0;
 	}
 }

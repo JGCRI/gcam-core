@@ -1,29 +1,31 @@
-/* ghg_mrk.cpp										*
- * This header contains the methods for the		*
- * Greenhouse Gas class.						*
- *       										*
- * SHK  12/11/00								*/
+/*! 
+* \file ghg_mrk.cpp
+* \ingroup CIAM
+* \brief ghg_mrk class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
 
 #include "Definitions.h"
 #include <cassert>
-
-// xml headers
-#include "xmlHelper.h"
-#include <xercesc/util/XMLString.hpp>
-#include <xercesc/dom/DOM.hpp>
-
-//** Other Headers ********
 #include <iostream>
 #include <string>
-#include "modeltime.h" // model start, end, timestep and period info
+
+// xml headers
+#include <xercesc/util/XMLString.hpp>
+#include <xercesc/dom/DOM.hpp>
+#include "xmlHelper.h"
+
+#include "scenario.h"
+#include "modeltime.h"
 #include "ghg_mrk.h"
 #include "market.h"
 #include "Marketplace.h"
 
-using namespace std; // enables elimination of std::
+using namespace std;
 
-extern Modeltime modeltime;
-extern Marketplace marketplace;
+extern Scenario scenario;
 
 //! Default construtor.
 ghg_mrk::ghg_mrk(){
@@ -39,12 +41,13 @@ void ghg_mrk::clear(){
 }
 
 //! Create GHG markets
-void ghg_mrk::setMarket( const string& regionName )
-{
-	// marketplace is a global object
+void ghg_mrk::setMarket( const string& regionName ) {
+	
+	Marketplace* marketplace = scenario.getMarketplace();
+
 	// name is GHG name
-	marketplace.setMarket( regionName, market, name, Market::GHG );
-        marketplace.setMarketToSolve (name, market);
+	marketplace->setMarket( regionName, market, name, Market::GHG );
+    marketplace->setMarketToSolve (name, market);
 	/* no need to use market.setPriceVector here unless GHG markets need
         initial prices read-in for the base year */  
 }
@@ -53,6 +56,7 @@ void ghg_mrk::setMarket( const string& regionName )
 //! Initializes data members from XML.
 void ghg_mrk::XMLParse( const DOMNode* node ){
 	
+	const Modeltime* modeltime = scenario.getModeltime();
 	DOMNodeList* nodeList;
 	DOMNodeList* childNodeList;
 	DOMNode* curr = 0;
@@ -99,7 +103,7 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
 	}
 	// completed parsing.
 	// not a read in value
-	emission.resize( modeltime.getmaxper() ); // emissions (tgC or MTC)
+	emission.resize( modeltime->getmaxper() ); // emissions (tgC or MTC)
 }
 
 //! Writes datamembers to datastream in XML format.

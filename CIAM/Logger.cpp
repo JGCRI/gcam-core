@@ -1,3 +1,12 @@
+/*! 
+* \file Logger.cpp
+* \ingroup CIAM
+* \brief Logger class source file.
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
 #include <ctime>
 #include <string>
@@ -8,7 +17,6 @@
 #include <xercesc/dom/DOM.hpp>
 
 #include "Logger.h"
-#include "Configuration.h"
 #include "xmlHelper.h"
 
 using namespace std;
@@ -21,6 +29,7 @@ PassToParentStreamBuf::PassToParentStreamBuf() {
 
 //! Overriding overflow function which passes its argument to its parent.
 int PassToParentStreamBuf::overflow( int ch ){
+	
 	//! \pre Make sure the parent is not null.
 	assert( parent );
 	return parent->receiveCharFromUnderStream( ch );
@@ -42,7 +51,7 @@ void PassToParentStreamBuf::setParent( Logger* parentIn ) {
 	parent = parentIn;
 }
 
-//! Constructor which reads in values from configuration file.
+//! Constructor which sets default values.
 Logger::Logger( const string& fileNameIn ) : ostream( &underStream ) {
 	
 	// Initialize all variables which are not set by Configuration values.

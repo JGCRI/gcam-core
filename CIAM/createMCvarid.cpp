@@ -1,7 +1,12 @@
-/* createMCvarid															 *
- * funtion to create variable id's for outputs that are compatible with the  *
- * dataviewer.xls.                                                           *
- * shk 6/26/02																 */
+/*! 
+* \file createMCvarid.cpp
+* \ingroup CIAM
+* \brief This file contains the function to create variable ids for outputs that are compatible with the dataviewer.xls. 
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
 #ifdef WIN32
 // standard libraries
@@ -12,17 +17,16 @@
 #include <direct.h>
 #include <iostream>
 #include <map>
-#include <string> // using "string.h" does not enable use of string class
+#include <string>
 
-using namespace std; // enables elimination of std::
+using namespace std; 
 
 extern map<string,int> regionMap; // map of region names
 extern const char *DBout; // Minicam style output
 extern CdbDatabase db;
 
-
-void createMCvarid(void) 
-{
+//! Create variable ids for outputs that are compatable with the dataviewer.xls.
+void createMCvarid() {
 	const char *DBVarLabels = "DbVarLabels"; // database table for variable ids
 	CdbRecordset temprst,DBVarLabelsrst,DBtemprst; // recordsets for writing tables
 	CdbTableDef DBVarLabelsTD; // table definitions for creating new tables

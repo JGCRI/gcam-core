@@ -24,8 +24,6 @@
 * It does support nesting and options to activate or deactive sections of the log line.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 * \warning Since PlainTextLoggers can only be created by the LoggerFactory, public functions not in the Logger interface will be unusable.
 */
 

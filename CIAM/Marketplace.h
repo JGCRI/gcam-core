@@ -1,11 +1,6 @@
 #ifndef _MARKETPLACE_H_
 #define _MARKETPLACE_H_
 
-#if defined(_MSC_VER)
-#pragma once
-#pragma warning( disable: 4275 )
-#endif
-
 /*! 
 * \file Marketplace.h
 * \ingroup CIAM
@@ -15,10 +10,16 @@
 * \version $Revision$
 */
 
+#if defined(_MSC_VER)
+#pragma once
+#pragma warning( disable: 4275 )
+#endif
+
 #include <string>
 #include <vector>
 #include <map>
 #include <mtl/matrix.h>
+#include "Market.h"
 
 using namespace std;
 using namespace mtl;
@@ -29,8 +30,6 @@ typedef matrix<double, rectangle<>, dense<>, row_major>::type Matrix;
 * \ingroup CIAM
 * \brief A class which describes the single global marketplace.
 * \author Sonny Kim
-* \date $Date $
-* \version $Revision $
 */
 
 class Marketplace
@@ -88,25 +87,19 @@ private:
 		double getRawSupply( const int marketNumber, const int period ) const;
 		double getRawDemand( const int marketNumber, const int period ) const;
 		double getRawPrice( const int marketNumber, const int period ) const;
-		Market::marketType getType( const int marketNumber, const int period) const;
-		const vector<double> jacobian( const int marketNumber, const int period ) const; // calculate the derivative or Jacobian
-		const vector<double> dem_elas( const int marketNumber, const int period ) const; // calculate the demand elasticity
-		const vector<double> dem_elas_NR( const int marketNumber, const int period ) const; // calculate the demand elasticity
-		const vector<double> sup_elas( const int marketNumber, const int period ) const; // calculate the supply elasticity
-		const vector<double> sup_elas_NR( const int marketNumber, const int period ) const; // calculate the supply elasticity
-		int showmrk_sol( const int id ) const; // returns market index that requires solving
-		const vector<double> showPRC( const int period ) const; // returns vector of market prices
-		const vector<double> showPRC_NR( const int period ) const; // returns vector of market prices
-		const vector<double> showED( const int period ) const; // returns vector of market excess demands
-		const vector<double> showED_NR( const int period ) const; // returns vector of market excess demands
-		const vector<double> showlogED( const int period ) const; // returns vector of log of market excess demands
-		const vector<double> showlogED_NR( const int period ) const; // returns vector of log of market excess demands
-		const vector<double> showlogDem( const int period ) const; // returns vector of log of demand
-		const vector<double> showlogDem_NR( const int period ) const; // returns vector of log of demand
-		const vector<double> showlogSup( const int period ) const; // returns vector of log of supply
-		const vector<double> showlogSup_NR( const int period ) const; // returns vector of log of supply
-		void setPRC( const vector<double>& prices, const int period ); // sets solution prices for all markets
-		void setPRC_NR( const vector<double>& prices, const int period ); // sets solution prices for all markets
+		Market::marketType getType( const int marketNumber, const int period ) const;
+		const vector<double> jacobian( const vector<int>& indices, const int marketNumber, const int period ) const;
+		const vector<double> calcDemandElas( const vector<int>& indices, const int marketSolutionNumber, const int period ) const;
+		const vector<double> calcSupplyElas( const vector<int>& indices, const int marketSolutionNumber, const int period ) const;
+		int showmrk_sol( const int id ) const;
+		const vector<double> getPrices( const vector<int>& indices, const int period ) const;
+		void setPrices( const vector<double>& prices, const vector<int>& indices, const int period );
+		const vector<double> getExcessDemands( const vector<int>& indices, const int period ) const;
+		const vector<double> getLogExcessDemands( const vector<int>& indices, const int period ) const; 
+		const vector<double> getLogDemands( const vector<int>& indices, const int period ) const;
+		const vector<double> getLogSupplies( const vector<int>& indices, const int period ) const;
+		void nullsup( const int per, const vector<string>& regionsToSolve );
+		void nulldem( const int per, const vector<string>& regionsToSolve );
 		static void invertMatrix( Matrix& A );
 	public:
 		Marketplace();
@@ -155,8 +148,7 @@ private:
 		void storeto_last( const int period ); // initialize current market t info to last period
 		void storeinfo( const int period ); // stores original market information
 		void restoreinfo( const int period ); // restores original market information
-		void restoreprc( const int period );
-		void restoreprc_NR( const int period );
+		void restoreprc( const vector<int>& indices, const int period );
 		void MCoutput() const; 
 		void outputfile() const; 
 		void bugout( const int period, const int iteration ) const;

@@ -20,8 +20,6 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief An abstract class which defines a Resource object, which is a container for multiple Subresource objects.
 * \author Sonny Kim
-* \date $Date $
-* \version $Revision $
 */
 
 class Resource {

@@ -1,10 +1,18 @@
+/*! 
+* \file PlainTextLogger.cpp
+* \ingroup CIAM
+* \brief PlainTextLogger class source file.
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
 #include <iostream>
 #include <string>
 #include <sstream>
 #include "Logger.h"
 #include "PlainTextLogger.h"
-#include "Configuration.h"
 
 //! Constructor
 PlainTextLogger::PlainTextLogger( const string& loggerName ):Logger( loggerName ){

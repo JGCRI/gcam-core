@@ -25,8 +25,6 @@ using namespace xercesc;
 *
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 * \warning This class cannot be instantiated.
 * \warning Loggers can only be created by the LoggerFactory.
 */
@@ -35,8 +33,6 @@ class LoggerFactory {
 
 
 public:
-	//! Initialize the LoggerFactory
-	static void initialize( XercesDOMParser* parser );
 
 	//! Returns an instance of the Logger class selected in the Configuration file.
 	static Logger* getLogger( const string& loggerName );
@@ -45,6 +41,8 @@ public:
 	static void cleanUp();
 	
 	void toDebugXML( ostream& out ) const;
+
+	static void XMLParse( const DOMNode* root );
 
 private:
 	static map<string,Logger*> loggers; //!< Map of logger names to loggers.
@@ -60,7 +58,7 @@ private:
 	//! Private assignment operator to prevent a programmer from copying a LoggerFactory.
 	LoggerFactory& operator= ( const LoggerFactory& loggerFactoryIn ){ return *this; };
 	
-	static void XMLParse( const DOMNode* root );
+
 };
 
 #endif // _LOGGER_FACTORY_H_

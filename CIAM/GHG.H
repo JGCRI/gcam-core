@@ -28,8 +28,6 @@ using namespace xercesc;
 *
 * Emissions emitted indirectly through use of technology are also calculated.
 * \author Sonny Kim and Marshall Wise
-* \date $Date $
-* \version $Revision $
 */
 
 class Ghg

@@ -1,6 +1,11 @@
-/* subsector.cpp										*
- * Method definition for the Subsector class.			*
- * SHK 10/24/00											*/
+/*! 
+* \file subsector.cpp
+* \ingroup CIAM
+* \brief subsector class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
 
 #include "Definitions.h"
 #include <string>
@@ -10,17 +15,17 @@
 #include <cmath>
 #include <cassert>
 #include <vector>
+#include "scenario.h"
 #include "market.h"
 #include "modeltime.h"
 #include "subsector.h"
 #include "xmlHelper.h"
-#include "Marketplace.h"
+#include "marketplace.h"
 
-using namespace std; // enables elimination of std::
+using namespace std;
 
-extern Marketplace marketplace;
 extern ofstream outfile;	
-extern Modeltime modeltime;
+extern Scenario scenario;
 	
  //! Default constructor
 subsector::subsector(){
@@ -71,8 +76,7 @@ const string subsector::getName() const {
 
 
 //! Initialize subsector with xml data
-void subsector::XMLParse( const DOMNode* node )
-{	
+void subsector::XMLParse( const DOMNode* node ) {	
 	DOMNodeList* nodeList = 0;
 	DOMNodeList* childNodeList = 0;
 	DOMNode* curr = 0;
@@ -83,7 +87,8 @@ void subsector::XMLParse( const DOMNode* node )
 	technology* tempTech = 0;
 
 	// resize vectors not read in, therefore not sized by XML input
-	int maxper = modeltime.getmaxper();
+	const Modeltime* modeltime = scenario.getModeltime();
+	const int maxper = modeltime->getmaxper();
 	share.resize(maxper); // subsector shares
 	input.resize(maxper); // subsector energy input
 	pe_cons.resize(maxper); // subsector primary energy consumption
@@ -163,6 +168,7 @@ void subsector::XMLParse( const DOMNode* node )
 
 //! Output the subsector member variables in XML format.
 void subsector::toXML( ostream& out ) const {
+	const Modeltime* modeltime = scenario.getModeltime();
 	int i;
 
 	// write the beginning tag.
@@ -174,22 +180,22 @@ void subsector::toXML( ostream& out ) const {
 
 	// write the xml for the class members.
 	for( i = 0; i < static_cast<int>( caplim.size() ); i++ ){
-		XMLWriteElement( caplim[ i ], "capacitylimit", out, modeltime.getper_to_yr( i ) );
+		XMLWriteElement( caplim[ i ], "capacitylimit", out, modeltime->getper_to_yr( i ) );
 	}
 	
 	for( i = 0; i < static_cast<int>( shrwts.size() ); i++ ){
-		XMLWriteElement( shrwts[ i ], "sharewt", out, modeltime.getper_to_yr( i ) );
+		XMLWriteElement( shrwts[ i ], "sharewt", out, modeltime->getper_to_yr( i ) );
 	}
 	
 	for( i = 0; i < static_cast<int>( lexp.size() ); i++ ){
-		XMLWriteElement( lexp[ i ], "logitexp", out, modeltime.getper_to_yr( i ) );
+		XMLWriteElement( lexp[ i ], "logitexp", out, modeltime->getper_to_yr( i ) );
 	}
 
 	for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
-		XMLWriteElement( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, modeltime.getper_to_yr( i ) );
+		XMLWriteElement( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, modeltime->getper_to_yr( i ) );
 	}
 
-	XMLWriteElement( basesharewt, "basesharewt", out, modeltime.getstartyr( ) );
+	XMLWriteElement( basesharewt, "basesharewt", out, modeltime->getstartyr( ) );
 
 	// write out the technology objects.
 	for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
@@ -497,7 +503,7 @@ void subsector::sumoutput( const int per ) {
 double subsector::supply( const string& regionName, const int per ) {	
 	double dmd=0;
 
-	dmd = marketplace.showdemand( name, regionName, per );
+	dmd = marketplace->showdemand( name, regionName, per );
 
 	// this demand does not account for simultaneity
 
@@ -559,7 +565,8 @@ void subsector::outputfile( const string& regname, const string& secname ) const
 
 	int i=0, m=0;
 	int mm=0; // temp period
-	int maxper = modeltime.getmaxper();
+	const Modeltime* modeltime = scenario.getModeltime();
+	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	
 	// function arguments are variable name, double array, db name, table name
@@ -630,7 +637,8 @@ void subsector::MCoutputA( const string& regname, const string& secname ) const 
 
 	int i=0, m=0;
 	int mm=0; // temp period
-	int maxper = modeltime.getmaxper();
+	const Modeltime* modeltime = scenario.getModeltime();
+	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	
 	// total subsector output
@@ -667,10 +675,10 @@ void subsector::MCoutputB( const string& regname, const string& secname ) const 
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
 			   string uname,vector<double> dout);
-
+	const Modeltime* modeltime = scenario.getModeltime();
 	int i=0, m=0;
 	int mm=0; // temp period
-	int maxper = modeltime.getmaxper();
+	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	
 	// total subsector output
@@ -709,7 +717,8 @@ void subsector::MCoutputC( const string& regname, const string& secname ) const 
 			   string uname,vector<double> dout);
 
 	int i=0, m=0;
-	int maxper = modeltime.getmaxper();
+	const Modeltime* modeltime = scenario.getModeltime();
+	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	string str; // tempory string
 	
@@ -817,7 +826,7 @@ int subsector::shownotech() const {
 //! calculate GHG emissions from annual production of subresource
 void subsector::emission( const int per, const string& prodname ){
 	//! \pre per is less than or equal to max period.
-	assert( per <= modeltime.getmaxper() );
+	assert( per <= scenario.getModeltime()->getmaxper() );
 	summary[per].clearemiss(); // clear emissions map
 	summary[per].clearemfuelmap(); // clear emissions map
 	for (int i=0;i<notech;i++) {
@@ -830,7 +839,7 @@ void subsector::emission( const int per, const string& prodname ){
 //! calculate indirect GHG emissions from annual production of subresource
 void subsector::indemission(const int per) {
 	//! \pre per is less than or equal to max period.
-	assert( per <= modeltime.getmaxper() );
+	assert( per <= scenario.getModeltime()->getmaxper() );
 	summary[per].clearemindmap(); // clear emissions map
 	for (int i=0;i<notech;i++) {
 		techs[i][per]->indemission();
@@ -841,7 +850,7 @@ void subsector::indemission(const int per) {
 //! returns subsector primary energy consumption
 double subsector::showpe_cons( const int per ) {
 	//! \pre per is less than or equal to max period.
-	assert( per <= modeltime.getmaxper() );
+	assert( per <= scenario.getModeltime()->getmaxper() );
 	pe_cons[per] = 0;
 	for (int i=0;i<notech;i++) {
 		// depleatable resource indeces are less than 5
@@ -860,7 +869,7 @@ double subsector::showpe_cons( const int per ) {
 //! returns primary or final energy input
 double subsector::showinput( const int per ) const {
 	//! \pre per is less than or equal to max period.
-	assert( per <= modeltime.getmaxper() );
+	assert( per <= scenario.getModeltime()->getmaxper() );
 
 	return input[per];
 }
@@ -868,7 +877,7 @@ double subsector::showinput( const int per ) const {
 //! returns subsector output
 double subsector::getoutput( const int per ) const {
 	//! \pre per is less than or equal to max period.
-	assert( per <= modeltime.getmaxper() );
+	assert( per <= scenario.getModeltime()->getmaxper() );
 	
 	return output[per];
 }
@@ -876,7 +885,7 @@ double subsector::getoutput( const int per ) const {
 //! returns total subsector carbon taxes paid
 double subsector::showcarbontaxpaid( const int per ) const {
 	//! \pre per is less than or equal to max period.
-	assert( per <= modeltime.getmaxper() );
+	assert( per <= scenario.getModeltime()->getmaxper() );
 	
 	return carbontaxpaid[per];
 }
@@ -884,7 +893,7 @@ double subsector::showcarbontaxpaid( const int per ) const {
 //!  gets fuel consumption map in summary object.
 map<string, double> subsector::getfuelcons(const int per) const {
 	//! \pre per is less than or equal to max period.
-	assert( per <= modeltime.getmaxper() );
+	assert( per <= scenario.getModeltime()->getmaxper() );
 
 	return summary[per].getfuelcons();
 }

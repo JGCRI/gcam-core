@@ -3,6 +3,15 @@
 #pragma warning( disable: 4786 )
 #endif
 
+/*! 
+* \file Marketplace.cpp
+* \ingroup CIAM
+* \brief Marketplace class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include <mtl/matrix.h>
 #include <mtl/mtl.h>
 #include <mtl/utils.h>
@@ -15,6 +24,7 @@
 #include <cmath>
 #include <algorithm>
 
+#include "scenario.h"
 #include "Market.h"
 #include "Marketplace.h"
 #include "modeltime.h"
@@ -25,17 +35,16 @@
 using namespace std;
 using namespace mtl;
 
-extern ofstream bugoutfile, sdcurvefile, logfile;	
-extern Modeltime modeltime;
-extern World world;
+extern ofstream bugoutfile, sdcurvefile, logfile;
+extern Scenario scenario;
 
-const static double priceMult = 1; // resolution enhancement for price markets
-const static double SMALLNUM = 1e-6; // constant small number to replace for null
-const static double VERYSMALLNUM = 1e-8; // constant small number to replace for null
-const static bool bugTracking = false; //Turn on to enable bugout tracking in various solution routines
-const static bool bugMinimal = true; //Turn on minimal tracking of solution results
-
-const static bool trackED = false; // Turn on solution mechanism tracking (to cout)
+// Need to avoid global variables.
+const static double priceMult = 1; //!< resolution enhancement for price markets
+const static double SMALLNUM = 1e-6; //!< constant small number to replace for null
+const static double VERYSMALLNUM = 1e-8; //!< constant small number to replace for null
+const static bool bugTracking = false; //!< Turn on to enable bugout tracking in various solution routines
+const static bool bugMinimal = false; //!< Turn on minimal tracking of solution results
+const static bool trackED = false; //!< Turn on solution mechanism tracking (to cout)
 
 //! Default constructor.
 Marketplace::Marketplace() {
@@ -63,11 +72,6 @@ void Marketplace::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( nomrks, "numberOfMarkets", out );
 	XMLWriteElement( nomrks_t, "numberOfMarketsRequireSolving", out );
 	XMLWriteElement( nomrks_t_NR, "numberOfMarketsForNR", out );
-	//XMLWriteElement( nodrscmrks, "numberOfResourceMarkets", out );
-	//XMLWriteElement( nossecmrks, "numberOfSupplyMarkets", out );
-	//XMLWriteElement( noDemandMarkets, "numberOfDemandMarkets", out );
-	//XMLWriteElement( noghgmrks, "numberOfGHGMarkets", out );
-	// maybe add more to write out.
 	
 	// First write out the individual markets
 	for( int i = 0; i < static_cast<int>( mrk.size() ); i++ ){
@@ -91,6 +95,7 @@ The key to the market is the goodName + market name.
 The region_marketMap map, uses goodName + regionName to find that market.
 */
 bool Marketplace::setMarket( const string& regionName, const string& mrkname, const string& goodName, const Market::marketType typeIn ) {
+	const Modeltime* modeltime = scenario.getModeltime();
 	int mrkNo;
 	bool retValue;
 	
@@ -100,6 +105,13 @@ bool Marketplace::setMarket( const string& regionName, const string& mrkname, co
 	if ( marketMap.find( key ) != marketMap.end() ) { // market exists, no unique number
 		retValue = false;
 		mrkNo = marketMap[ key ];
+
+		// add the additional region to the contained region names.
+		for( int i = 0; i < static_cast<int> ( mrk[ mrkNo ].size() ); i++ ) {
+			if ( std::find( mrk[ mrkNo ][ i ].containedRegionNames.begin(), mrk[ mrkNo ][ i ].containedRegionNames.end(), regionName ) == mrk[ mrkNo ][ i ].containedRegionNames.end()  ) {
+				mrk[ mrkNo ][ i ].containedRegionNames.push_back( regionName );
+			}
+		}
 	} 
 	else { // market does not exist, give unique number
 		retValue = true;
@@ -108,15 +120,16 @@ bool Marketplace::setMarket( const string& regionName, const string& mrkname, co
 		tempMarket.name = goodName;
 		tempMarket.region = mrkname;
 		tempMarket.type = typeIn;
-		
+		tempMarket.containedRegionNames.push_back( regionName );
+
 		// Need to set market parameters before vector is created.
 		
         // create a vector of market objects, one for each period
-		vector<Market> tempVector( modeltime.getmaxper(), tempMarket );
+		vector<Market> tempVector( modeltime->getmaxper(), tempMarket );
 		
 		// set the years for the markets.
 		for( int i = 0; i < static_cast<int>( tempVector.size() ); i++ ){
-			tempVector[ i ].year = modeltime.getper_to_yr( i );
+			tempVector[ i ].year = modeltime->getper_to_yr( i );
 		}
 		
 		mrk.push_back( tempVector ); // create individual markets
@@ -152,15 +165,17 @@ differently for PRICE and DEMAND markets so that these changes are transparent t
 rest of the code.
 */
 void Marketplace::resetToPriceMarket( const string& goodName, const string& regionName ) {
-    const int marketNumber = getMarketNumber(goodName, regionName);
-    bool mktset;
+	Configuration* conf = Configuration::getInstance();
+
+    const int marketNumber = getMarketNumber( goodName, regionName );
+    bool mktset= true;
     string marketName;
-    string DemandGoodName;
-	// set to false to turn off creation of simultaneity markets
-    const bool setNewMarkets = false; // for debugging, set this to false to turn this off
+    string demandGoodName;
+    const bool setNewMarkets = conf->getBool( "simulActive" ); // for debugging, set this to false to turn this off
+
     const int first_period = 1;   // first period for price markets
 	// skip first period since this is not really solved
-    
+
     if( marketNumber == -1 ) {
         cerr << "ERROR: Market "<< goodName << " does not exist"  << endl;
     }
@@ -171,20 +186,20 @@ void Marketplace::resetToPriceMarket( const string& goodName, const string& regi
         else if (setNewMarkets) {
             // Setup the cooresponding demand markets
             marketName = getName( goodName, regionName );
-            DemandGoodName = goodName + "Demand_int";
-            mktset = setMarket( regionName, marketName, DemandGoodName, Market::DEMAND );
+            demandGoodName = goodName + "Demand_int";
+            mktset = setMarket( regionName, marketName, demandGoodName, Market::DEMAND );
 			
             // loop through time periods            
             for( int per = first_period; per < static_cast<int>( mrk[ marketNumber ].size() ); per++ ){                
                 mrk[marketNumber][per].type = Market::PRICE;
                 setMarketToSolve (goodName, regionName, per);
-                setMarketToSolve (DemandGoodName, regionName, per);
+                setMarketToSolve (demandGoodName, regionName, per);
                 // this assumes that all markets have the same number of periods
             }
             
-			// if (mktset) {
+			//if (mktset) {
 			//	cout << "Adjusted the "<< regionName<<" market for " << goodName << " for simultaneities" << endl;
-			// }
+			//}
         }
     }
 }
@@ -233,16 +248,16 @@ void Marketplace::initXMLPrices(){
 }
 
 //! Set the solve flag for this market for the given period
-void Marketplace::setMarketToSolve ( const string& goodName, const string& regionName , const int per) {
-    int marketNumber = getMarketNumber( goodName, regionName );
+void Marketplace::setMarketToSolve ( const string& goodName, const string& regionName , const int per ) {
+    const int marketNumber = getMarketNumber( goodName, regionName );
     if ( marketNumber != -1 ) {
         mrk[ marketNumber ][ per ].solveMarket = true;
 	}
 }
 
 //! Set the solve flag for this market for ALL periods
-void Marketplace::setMarketToSolve ( const string& goodName, const string& regionName) {
-    int marketNumber = getMarketNumber( goodName, regionName );
+void Marketplace::setMarketToSolve ( const string& goodName, const string& regionName ) {
+    const int marketNumber = getMarketNumber( goodName, regionName );
 	
 	//   cout << "setMarketToSolve -- goodName: " << goodName << "  regionName: " << regionName;
 	
@@ -255,30 +270,64 @@ void Marketplace::setMarketToSolve ( const string& goodName, const string& regio
 
 //! initialize all market prices to 0
 void Marketplace::nullprc( const int per ){
-	for (int i=0;i<nomrks;i++)
-		mrk[i][per].price = 0.0;
+	for ( int i = 0; i < nomrks; i++ )
+		mrk[ i ][ per ].price = 0.0;
 }
 
 //! initialize all market demands to 0
 void Marketplace::nulldem( const int per ){
-	for (int i=0;i<nomrks;i++) {
-		mrk[i][per].demand = 0.0;
+	for ( int i = 0; i < nomrks; i++ ) {
+		mrk[ i ][ per ].demand = 0.0;
 	}
 }
 
+//! Initialize market demands to zero for all markets who affect a region in the region list.
+void Marketplace::nulldem( const int per, const vector<string>& regionsToSolve ){
+	vector<string> result( regionsToSolve.size() );
+	vector<string>::iterator resultIter;
+
+	for( int i = 0; i < nomrks; i++ ) {
+		resultIter = set_intersection( regionsToSolve.begin(), regionsToSolve.end(), 
+			mrk[ i ][ per ].containedRegionNames.begin(), mrk[ i ][ per ].containedRegionNames.end(),
+			result.begin() );
+		if( resultIter != result.begin() ){
+			cout << "Nulling demand b/c region matched: " << result[ 0 ] << endl;
+			mrk[ i ][ per ].demand = 0.0;
+		}
+		else {
+			cout << "Not changing demand." << endl;
+		}
+	}
+}
+	
 //! initialize all market supplies to 0
 void Marketplace::nullsup( const int per)
 {
-	for (int i=0;i<nomrks;i++) {
-		mrk[i][per].supply = 0.0;
-		mrk[i][per].demMktSupply = 0.0;
+	for ( int i = 0; i < nomrks; i++ ) {
+		mrk[ i ][ per ].supply = 0.0;
+		mrk[ i ][ per ].demMktSupply = 0.0;
+	}
+}
+
+//! Initialize market supplies to zero for all markets who affect a region in the region list.
+void Marketplace::nullsup( const int per, const vector<string>& regionsToSolve ){
+	vector<string> result( regionsToSolve.size() + 1 );
+	vector<string>::iterator resultIter;
+
+	for( int i = 0; i < nomrks; i++ ) {
+		resultIter = set_intersection( regionsToSolve.begin(), regionsToSolve.end(), 
+			mrk[ i ][ per ].containedRegionNames.begin(), mrk[ i ][ per ].containedRegionNames.end(),
+			result.begin() );
+		if( resultIter != result.begin() ){
+			mrk[ i ][ per ].supply = 0.0;
+		}
 	}
 }
 
 //! Set one market demand to 0.
 /*! Not used at present */
 void Marketplace::nulldem_imrk( const string& goodName, const string& regionName, const int per ){
-	int marketNumber = getMarketNumber( goodName, regionName );
+	const int marketNumber = getMarketNumber( goodName, regionName );
 	
 	if ( marketNumber != -1 ) {
 		mrk[ marketNumber ][ per ].demand = 0;
@@ -288,7 +337,7 @@ void Marketplace::nulldem_imrk( const string& goodName, const string& regionName
 //! Set one market supply to 0
 /*! Not used at present */
 void Marketplace::nullsup_imrk( const string& goodName, const string& regionName, const int per ){
-	int marketNumber = getMarketNumber( goodName, regionName );
+	const int marketNumber = getMarketNumber( goodName, regionName );
 	
 	if ( marketNumber != -1 ) {
 		mrk[ marketNumber ][ per ].supply = 0;
@@ -314,7 +363,7 @@ The market price is also used to set the demand.
 Use this convention for pseudo markets -- model values are supply, trail market values are used
 for demand. */
 void Marketplace::setprice( const string& goodName, const string& regionName, const double value, const int per ){
-	int marketNumber = getMarketNumber( goodName, regionName );
+	const int marketNumber = getMarketNumber( goodName, regionName );
 	
 	if ( marketNumber != -1 ) {
 		// If is price market, then set "supply" to passed-in price
@@ -332,10 +381,10 @@ void Marketplace::setprice( const string& goodName, const string& regionName, co
 }
 
 //! Add to the supply for this market
-void Marketplace::setsupply( const string& goodName, const string& regionName, const double value, const int per){
-	int marketNumber = getMarketNumber( goodName, regionName );
+void Marketplace::setsupply( const string& goodName, const string& regionName, const double value, const int per ){
+	const int marketNumber = getMarketNumber( goodName, regionName );
 	string marketName;
-	string DemandGoodName;
+	string demandGoodName;
 	Market::marketType thisMarketType;
 	
 	if ( marketNumber != -1 ) {
@@ -343,8 +392,8 @@ void Marketplace::setsupply( const string& goodName, const string& regionName, c
 		// If is price market, then set supply instead for the corresponding demand market
 		if ( thisMarketType == Market::PRICE ) {
 			marketName = getName( goodName, regionName );
-			DemandGoodName = goodName + "Demand_int";
-			setsupply ( DemandGoodName, regionName, value, per );
+			demandGoodName = goodName + "Demand_int";
+			setsupply ( demandGoodName, regionName, value, per );
 		}
 		else if ( thisMarketType == Market::DEMAND ) {
 			// if its a demand market then this is where the supply was set
@@ -359,10 +408,10 @@ void Marketplace::setsupply( const string& goodName, const string& regionName, c
 }
 
 //! set market demand to used for solution mechanism
-void Marketplace::setdemand( const string& goodName, const string& regionName, const double value , const int per){
+void Marketplace::setdemand( const string& goodName, const string& regionName, const double value, const int per ){
 	const int marketNumber = getMarketNumber( goodName, regionName );
 	string marketName;
-	string DemandGoodName;
+	string demandGoodName;
 	
 	// The following condition used to be here, don't think this is needed any more
 	//	if( goodName != "renewable" ){ // just a guess
@@ -375,8 +424,8 @@ void Marketplace::setdemand( const string& goodName, const string& regionName, c
 		// If is price market, then set demand instead for the corresponding demand market
 		if ( getType( marketNumber , per ) == Market::PRICE) {
 			marketName = getName( goodName, regionName );
-			DemandGoodName = goodName + "Demand_int";
-			setdemand ( DemandGoodName, regionName, value, per );
+			demandGoodName = goodName + "Demand_int";
+			setdemand ( demandGoodName, regionName, value, per );
 		}
 		else {
 			// Otherwise, set demand as normal
@@ -386,17 +435,14 @@ void Marketplace::setdemand( const string& goodName, const string& regionName, c
 }
 
 //! return market price
-double Marketplace::showprice( const string& goodName, const string& regionName, const int per ) const 
-{
+double Marketplace::showprice( const string& goodName, const string& regionName, const int per ) const {
 	// returns market price
 	//
 	if( goodName == "renewable" ){ // total guess
 		return 0;
 	}
 	else {
-		int marketNumber = getMarketNumber( goodName, regionName );
-		
-		
+		const int marketNumber = getMarketNumber( goodName, regionName );
 		
 		if ( marketNumber != -1 ) {
 			if ( getType( marketNumber , per ) == Market::PRICE) {
@@ -413,16 +459,16 @@ double Marketplace::showprice( const string& goodName, const string& regionName,
 //! return market supply used for solution mechanism
 double Marketplace::showsupply( const string& goodName, const string& regionName, const int per) const 
 {
-	int marketNumber = getMarketNumber( goodName, regionName );
+	const int marketNumber = getMarketNumber( goodName, regionName );
 	string marketName;
-	string DemandGoodName;
+	string demandGoodName;
 	
 	if ( marketNumber != -1 ) {
 		// If is price market, then get supply instead for the corresponding demand market
 		if ( getType( marketNumber , per ) == Market::PRICE) {
 			marketName = getName( goodName, regionName );
-			DemandGoodName = goodName + "Demand_int";
-			return showsupply ( DemandGoodName, regionName, per );
+			demandGoodName = goodName + "Demand_int";
+			return showsupply ( demandGoodName, regionName, per );
 		}
 		else {
 			// Otherwise, get supply as normal
@@ -437,11 +483,10 @@ double Marketplace::showsupply( const string& goodName, const string& regionName
 
 //! return supply for use in checking solution, including actual supply for demand market
 /*! Not used now, could be used for debugging at some point*/
-double Marketplace::checkSupply( const string& goodName, const string& regionName, const int per) const 
-{
-	int marketNumber = getMarketNumber( goodName, regionName );
+double Marketplace::checkSupply( const string& goodName, const string& regionName, const int per ) const {
+	const int marketNumber = getMarketNumber( goodName, regionName );
 	string marketName;
-	string DemandGoodName;
+	string demandGoodName;
 	
 	if ( marketNumber != -1 ) {
 		// If is price market, then get supply instead for the corresponding demand market
@@ -461,8 +506,7 @@ double Marketplace::checkSupply( const string& goodName, const string& regionNam
 
 //! return supply for use in checking solution, including actual supply for demand market
 /*! Used to double-check solution. Should not use otherwise. */
-double Marketplace::checkSupply( const int marketNumber, const int per) const 
-{
+double Marketplace::checkSupply( const int marketNumber, const int per) const {
 	if ( marketNumber != -1 ) {
 		// If is price market, then get supply instead for the corresponding demand market
 		if ( getType( marketNumber, per ) == Market::DEMAND) {
@@ -486,17 +530,17 @@ If this is a demand market (through the redirect), then get the demand from the 
 */
 double Marketplace::showdemand(  const string& goodName, const string& regionName, const int per) const 
 {
-	int marketNumber = getMarketNumber( goodName, regionName );
+	const int marketNumber = getMarketNumber( goodName, regionName );
 	string marketName;
-	string DemandGoodName;
+	string demandGoodName;
 	
 	if ( marketNumber != -1 ) {
 		Market::marketType MType = getType( marketNumber , per );
 		// If is price market, then get demand instead for the corresponding demand market
 		if ( MType == Market::PRICE) {
 			marketName = getName( goodName, regionName );
-			DemandGoodName = goodName + "Demand_int";
-			return showdemand ( DemandGoodName, regionName, per );
+			demandGoodName = goodName + "Demand_int";
+			return showdemand ( demandGoodName, regionName, per );
 		}
 		else if (MType == Market::DEMAND) {
 			// Otherwise, get demand from the trial value
@@ -513,7 +557,7 @@ double Marketplace::showdemand(  const string& goodName, const string& regionNam
 	}
 }
 
-//! return name (region group) of market
+//! return name (region group) of market ??? Region name is not the marketName. 
 string Marketplace::getName( const string& goodName, const string& regionName) const {
 	int marketNumber = getMarketNumber( goodName, regionName );
 	
@@ -527,7 +571,7 @@ string Marketplace::getName( const string& goodName, const string& regionName) c
 
 //! return name (region group) of market
 /*! Use for debugging only */
-string Marketplace::getName( const int marketNumber) const {
+string Marketplace::getName( const int marketNumber ) const {
 	if ( marketNumber != -1 ) {
 		return mrk[ marketNumber ][ 0 ].region;
 	}
@@ -538,7 +582,7 @@ string Marketplace::getName( const int marketNumber) const {
 
 //! return name (region group) of market
 /*! Use for debugging only */
-string Marketplace::getGoodName( const int marketNumber) const 
+string Marketplace::getGoodName( const int marketNumber ) const 
 {
 	if ( marketNumber != -1 ) {
 		return mrk[ marketNumber ][ 0 ].name;
@@ -549,9 +593,8 @@ string Marketplace::getGoodName( const int marketNumber) const
 }
 
 //! Return market type (NORMAL, PRICE, DEMAND, etc.)
-Market::marketType Marketplace::getType( const string goodName, const string regionName, int per ) const
-{
-    int marketNumber = getMarketNumber(goodName, regionName);
+Market::marketType Marketplace::getType( const string goodName, const string regionName, const int per ) const {
+    const int marketNumber = getMarketNumber(goodName, regionName);
     
     if( marketNumber == -1 ) {
         cerr << "ERROR: Market "<< goodName << " does not exist"  << endl;
@@ -564,68 +607,59 @@ Market::marketType Marketplace::getType( const string goodName, const string reg
 
 //! return market supply used for solution mechanism
 /*! Use for debugging only */
-Market::marketType Marketplace::getType( const int marketNumber, const int per) const 
-{
+Market::marketType Marketplace::getType( const int marketNumber, const int per ) const {
 	return mrk[ marketNumber ][ per ].type;
 }
 
 //! return market supply used for solution mechanism
 /*! Use for debugging only */
-double Marketplace::getRawSupply( const int marketNumber, const int per) const 
-{
+double Marketplace::getRawSupply( const int marketNumber, const int per ) const {
 	return mrk[ marketNumber ][ per ].supply;
 }
 
 //! return market supply used for solution mechanism
 /*! Use for debugging only */
-double Marketplace::getRawDemand( const int marketNumber, const int per) const 
-{
+double Marketplace::getRawDemand( const int marketNumber, const int per ) const {
 	return mrk[ marketNumber ][ per ].demand;
 }
 
 //! return market supply used for solution mechanism
 /*! Use for debugging only */
-double Marketplace::getRawPrice( const int marketNumber, const int per) const 
-{
+double Marketplace::getRawPrice( const int marketNumber, const int per ) const {
 	return mrk[ marketNumber ][ per ].price;
 }
 
-
 //! calculates excess demand for all markets
-void Marketplace::excessdemand( const int per ) 
-{
-	for (int i=0;i<nomrks;i++) {
-		mrk[i][per].exdmd = mrk[i][per].demand - mrk[i][per].supply; 
+void Marketplace::excessdemand( const int per ) {
+	for ( int i = 0; i < nomrks; i++ ) {
+		mrk[ i ][ per ].exdmd = mrk[ i ][ per ].demand - mrk[ i ][ per ].supply; 
 	}
 }
 
 //! calculates log of excess demand for all markets
-void Marketplace::logED( const int per ) 
-{
-	for (int i=0;i<nomrks;i++) {
-		if (mrk[i][per].demand < SMALLNUM && mrk[i][per].supply < SMALLNUM) {
-			mrk[i][per].lexdmd = 0; // logs may not be calculated exactly
+void Marketplace::logED( const int per ) {
+	for ( int i = 0; i < nomrks; i++ ) {
+		if ( mrk[ i ][ per ].demand < SMALLNUM && mrk[ i ][ per ].supply < SMALLNUM ) {
+			mrk[ i ][ per ].lexdmd = 0; // logs may not be calculated exactly
 		}
 		else {
-			mrk[i][per].lexdmd = log10(max( mrk[i][per].demand, SMALLNUM )) 
-				- log10(max(mrk[i][per].supply,SMALLNUM)); 
+			mrk[ i ][ per ].lexdmd = log10( max( mrk[ i ][ per ].demand, SMALLNUM ) ) - log10( max( mrk[ i ][ per ].supply, SMALLNUM ) ); 
 		}
 	}
 }
 
 //! calculates log of demand for all markets
-void Marketplace::logDem( const int per ) 
-{
-	for (int i=0;i<nomrks;i++) {
-		mrk[i][per].ldem = log(max( mrk[i][per].demand ,SMALLNUM )); 
+void Marketplace::logDem( const int per ) {
+	for ( int i = 0; i < nomrks; i++ ) {
+		mrk[ i ][ per ].ldem = log( max( mrk[ i ][ per ].demand, SMALLNUM ) ); 
 	}
 }
 
 //! calculates log of supply for all markets
-void Marketplace::logSup( const int per ) 
-{
-	for (int i=0;i<nomrks;i++)
-		mrk[i][per].lsup = log(max(mrk[i][per].supply,SMALLNUM));
+void Marketplace::logSup( const int per ) {
+	for ( int i = 0; i < nomrks; i++ ) {
+		mrk[ i ][ per ].lsup = log( max( mrk[ i ][ per ].supply, SMALLNUM ) );
+	}
 }
 
 //! Check to see that all markets actually solved.
@@ -710,7 +744,7 @@ int Marketplace::setMarketsToSolveNR( const int period ) {
 //! Return market number when given solution market index
 /*! Used for debugging. */
 int Marketplace::showmrk_sol( const int id ) const {
-	return 	mrk_isol[id];
+	return 	mrk_isol[ id ];
 }
 
 //! checks if supply > 0 for all markets
@@ -727,16 +761,17 @@ bool Marketplace::checkprod( const int per ) const
 	return true;
 }
 
-//! return market with largest excess demand
+//! return market with largest excess demand. 
+// ? should this only be for markets being solved? 
 int Marketplace::worstED( const int per ) const {
 	int worstID = 0;
-	double temp = fabs(mrk[0][per].exdmd);
+	double temp = 0;
 	
-	for (int i=1;i<nomrks_t;i++) {
-		int j = mrk_isol[i];	// look up index
-		if (fabs(mrk[j][per].exdmd) > temp) { // need to check constraint case
+	for ( int i = 0; i < nomrks_t; i++ ) {
+		const int j = mrk_isol[ i ];	// look up index
+		if ( fabs( mrk[ j ][ per ].exdmd ) > temp ) { // need to check constraint case
 			worstID = i;
-			temp = fabs(mrk[j][per].exdmd);
+			temp = fabs( mrk[ j ][ per ].exdmd );
 		}
 	}
 	return worstID;
@@ -749,11 +784,10 @@ double Marketplace::maxED( const int per ) const {
 	
 	// if price is less than small number or null then
 	// constraint case where constraint is greater than demand
-	for (int i=0;i<nomrks_t;i++) {
-		int j = mrk_isol[i];	// look up index
-		temp = fabs(mrk[j][per].exdmd);
-		if (mrk[j][per].price > SMALLNUM && 
-			temp > largest) {
+	for ( int i = 0; i < nomrks_t; i++ ) {
+		const int j = mrk_isol[ i ];	// look up index
+		temp = fabs( mrk[ j ][ per ].exdmd );
+		if ( mrk[ j ][ per ].price > SMALLNUM && temp > largest ) {
 			largest = temp;
 		}
 	}
@@ -761,41 +795,29 @@ double Marketplace::maxED( const int per ) const {
 }
 
 //! set new solution prices for all markets
-void Marketplace::setPRC( const vector<double>& prices, const int per ) {
+void Marketplace::setPrices( const vector<double>& prices, const vector<int>& indices, const int per ) {
 	// set prices only for markets in price vector
-	for (int i=0;i<nomrks_t;i++) {
-		int j = mrk_isol[i];	// look up index
-		mrk[j][per].price = prices[i];
-		//   if (j == 9) {cout << "e price:" << prices[i]<<", sup:"<<mrk[j][per].supply<<", dem:"<<mrk[j][per].demand << endl;}
+	for ( int i = 0; i < indices.size(); i++ ) {
+		const int j = indices[ i ];	// look up index
+		mrk[ j ][ per ].price = prices[ i ];
 	}
 }
 
-//! set new solution prices for all markets in Newton-Rhapson
-void Marketplace::setPRC_NR( const vector<double>& prices, const int per )
-{
-	// set prices only for markets in price vector
-	for (int i=0;i<nomrks_t_NR;i++) {
-		int j = mrk_isol_NR[i];	// look up index
-		mrk[j][per].price = prices[i];
-	}
-}
-
-//! Initizliae marketplace price
+//! Initialize the marketplace prices 
 /*! Use last period demand price as starting point for next period */
-void Marketplace::init_to_last( const int per )
-{ 
+void Marketplace::init_to_last( const int per ) { 
 	// only after the starting period
-	if (per > 0)
-		for (int i=0;i<nomrks;i++) {
+	if ( per > 0 ) {
+		for ( int i = 0; i < nomrks; i++ ) {
 			//mrk[i][per].demand = mrk[i][per-1].demand;
 			//mrk[i][per].supply = mrk[i][per-1].supply;
 			mrk[i][per].price = mrk[i][per-1].price;
 		}
+	}
 }
 
 //! For debugging, print out all prices
-void Marketplace::prices_to_bugout( const int per ) const
-{
+void Marketplace::prices_to_bugout( const int per ) const {
     bugoutfile << ",,,,";
     for (int i=0;i<nomrks;i++) bugoutfile << i << ",";
     bugoutfile << endl;
@@ -807,8 +829,7 @@ void Marketplace::prices_to_bugout( const int per ) const
 }
 
 //! For debugging, print out all supplies
-void Marketplace::supply_to_bugout( const int per ) const
-{
+void Marketplace::supply_to_bugout( const int per ) const {
     bugoutfile << ",Per,"<< per <<",Supplies:,";
 	for (int i=0;i<nomrks;i++) {
 		bugoutfile << mrk[i][per].supply << ",";
@@ -817,8 +838,7 @@ void Marketplace::supply_to_bugout( const int per ) const
 }
 
 //! For debugging, print out all demands
-void Marketplace::demand_to_bugout( const int per ) const
-{
+void Marketplace::demand_to_bugout( const int per ) const {
     bugoutfile << ",Per,"<< per <<",Demands:,";
 	for (int i=0;i<nomrks;i++) {
 		bugoutfile << mrk[i][per].demand << ",";
@@ -826,11 +846,8 @@ void Marketplace::demand_to_bugout( const int per ) const
     bugoutfile << endl;
 }
 
-//! Initizliae marketplace price
-/*! Use last period demand, supply and price
-as starting point for next period */
-void Marketplace::storeto_last( const int per )
-{
+//! This sets the ts of the current period to last periods values.
+void Marketplace::storeto_last( const int per ) {
 	// only after the starting period
 	if (per > 0) {
 		for (int i=0;i<nomrks;i++) {
@@ -843,8 +860,7 @@ void Marketplace::storeto_last( const int per )
 
 //! Store original demand, supply and price
 /*! Used for calculation of derivative */
-void Marketplace::storeinfo( const int per )
-{
+void Marketplace::storeinfo( const int per ) {
 	// store only for markets that need solving
 	//for (int i=0;i<nomrks_t;i++) {
 	for (int i=0;i<nomrks;i++) {
@@ -856,8 +872,7 @@ void Marketplace::storeinfo( const int per )
 
 //! Restore original demand, supply and price
 /*! Used for calculation of derivative */
-void Marketplace::restoreinfo( const int per )
-{
+void Marketplace::restoreinfo( const int per ) {
 	// store only for markets that need solving
 	//for (int i=0;i<nomrks_t;i++) {
 	for (int i=0;i<nomrks;i++) {
@@ -867,276 +882,187 @@ void Marketplace::restoreinfo( const int per )
 	}
 }
 
-//! Restore original demand, supply and price
+//! Restore original demand, supply and price.
 /*! Used for calculation of derivative */
-void Marketplace::restoreprc( const int per )
-{
+void Marketplace::restoreprc( const vector<int>& indices, const int per ) {
 	// store only for markets that need solving
-	for (int i=0;i<nomrks_t;i++) {
-		int j = mrk_isol[i];	// look up index
-		mrk[j][per].price = mrk[j][per].tprice;
-	}
-}
-
-//! Restore original demand, supply and price
-/*! Used for calculation of derivative */
-void Marketplace::restoreprc_NR( const int per )
-{
-	// store only for markets that need solving
-	for (int i=0;i<nomrks_t_NR;i++) {
-		int j = mrk_isol_NR[i];	// look up index
-		mrk[j][per].price = mrk[j][per].tprice;
+	for ( int i = 0; i < static_cast<int>( indices.size() ); i++ ) {
+		const int j = indices[ i ];	// look up index
+		mrk[ j ][ per ].price = mrk[ j ][ per ].tprice;
 	}
 }
 
 //! returns vector of market prices
-const vector<double> Marketplace::showPRC( const int per ) const {
-	vector<double> prices(nomrks_t);
+const vector<double> Marketplace::getPrices( const vector<int>& indices, const int per ) const {
 	
-	for (int i=0;i<nomrks_t;i++) {
-		int j = mrk_isol[i];	// look up index
-		prices[i] = mrk[j][per].price;
-	}
+	vector<double> prices( indices.size() );
 	
-	return prices;
-}
-
-//! returns vector of market prices
-const vector<double> Marketplace::showPRC_NR( const int per ) const {
-	vector<double> prices(nomrks_t_NR);
-	
-	for (int i=0;i<nomrks_t_NR;i++) {
-		int j = mrk_isol_NR[i];	// look up index
-		prices[i] = mrk[j][per].price;
+	for ( int i = 0; i < static_cast<int>( indices.size() ); i++ ) {
+		const int j = indices[ i ];	// look up index
+		prices[ i ] = mrk[ j ][ per ].price;
 	}
 	
 	return prices;
 }
 
 //! returns vector of market excess demands
-const vector<double> Marketplace::showED( const int per ) const {
-	vector<double> ED(nomrks_t);
+const vector<double> Marketplace::getExcessDemands( const vector<int>& indices, const int per ) const {
 	
-	for (int i=0;i<nomrks_t;i++) {
-		int j = mrk_isol[i];	// look up index
-		ED[i] = mrk[j][per].exdmd;
-	}	
+	vector<double> ED( indices.size() );
 	
-	return ED;
-}
-
-//! returns vector of market excess demands
-const vector<double> Marketplace::showED_NR( const int per ) const {
-	vector<double> ED(nomrks_t_NR);
-	
-	for (int i=0;i<nomrks_t_NR;i++) {
-		int j = mrk_isol_NR[i];	// look up index
-		ED[i] = mrk[j][per].exdmd;
+	for ( int i = 0; i < static_cast<int>( indices.size() ); i++ ) {
+		const int j = indices[ i ];	// look up index
+		ED[ i ] = mrk[ j ][ per ].exdmd;
 	}	
 	
 	return ED;
 }
 
 //! returns vector of log of market excess demands
-const vector<double> Marketplace::showlogED( const int per ) const {
-	vector<double> ED(nomrks_t);
+const vector<double> Marketplace::getLogExcessDemands( const vector<int>& indices, const int per ) const {
 	
-	for (int i=0;i<nomrks_t;i++) {
-		int j = mrk_isol[i];	// look up index
-		ED[i] = mrk[j][per].lexdmd;
-	}
+	vector<double> ED( indices.size() );
 	
-	return ED;
-}
-
-//! returns vector of log of market excess demands
-const vector<double> Marketplace::showlogED_NR( const int per ) const {
-	vector<double> ED(nomrks_t_NR);
-	
-	for (int i=0;i<nomrks_t_NR;i++) {
-		int j = mrk_isol_NR[i];	// look up index
-		ED[i] = mrk[j][per].lexdmd;
+	for ( int i = 0; i < static_cast<int>( indices.size() ); i++ ) {
+		const int j = indices[ i ];	// look up index
+		ED[ i ] = mrk[ j ][ per ].lexdmd;
 	}
 	
 	return ED;
 }
 
 //! returns vector of log of market demands
-const vector<double> Marketplace::showlogDem( const int per ) const {
-	vector<double> Dem(nomrks_t);
+const vector<double> Marketplace::getLogDemands( const vector<int>& indices, const int per ) const {
+	vector<double> demands( indices.size() );
 	
-	for (int i=0;i<nomrks_t;i++) {
-		int j = mrk_isol[i];	// look up index
-		Dem[i] = mrk[j][per].ldem;
+	for ( int i = 0;i < static_cast<int>( indices.size() ); i++ ) {
+		const int j = indices[ i ];	// look up index
+		demands[ i ] = mrk[ j ][ per ].ldem;
 	}
 	
-	return Dem;
+	return demands;
 }
 
-//! returns vector of log of market demands
-const vector<double> Marketplace::showlogDem_NR( const int per ) const {
-	vector<double> Dem(nomrks_t_NR);
+//! returns vector of log of market supplies
+const vector<double> Marketplace::getLogSupplies( const vector<int>& indices, const int per ) const {
+	vector<double> supplies( indices.size() );
 	
-	for (int i=0;i<nomrks_t_NR;i++) {
-		int j = mrk_isol_NR[i];	// look up index
-		Dem[i] = mrk[j][per].ldem;
+	for ( int i = 0; i < static_cast<int>( indices.size() ); i++ ) {
+		const int j = indices[ i ];	// look up index
+		supplies[ i ] = mrk[ j ][ per ].lsup;
 	}
 	
-	return Dem;
+	return supplies;
 }
 
-//! returns vector of log of market supplys
-const vector<double> Marketplace::showlogSup( const int per ) const {
-	vector<double> Sup(nomrks_t);
+//! Calculate the derivatives, elasticities or Jacobian.
+const vector<double> Marketplace::jacobian( const vector<int>& indices, const int k, const int per ) const {
+	double ddemand;
+	double dsupply;
+	double dprice;
+	vector<double> JFD( indices.size() );
 	
-	for (int i=0;i<nomrks_t;i++) {
-		int j = mrk_isol[i];	// look up index
-		Sup[i] = mrk[j][per].lsup;
-	}
-	
-	return Sup;
-}
-
-//! returns vector of log of market supplys
-const vector<double> Marketplace::showlogSup_NR( const int per ) const {
-	vector<double> Sup(nomrks_t_NR);
-	
-	for (int i=0;i<nomrks_t_NR;i++) {
-		int j = mrk_isol_NR[i];	// look up index
-		Sup[i] = mrk[j][per].lsup;
-	}
-	
-	return Sup;
-}
-
-//! Calculate the derivatives, elasticities or Jacobian
-const vector<double> Marketplace::jacobian( const int k, const int per ) const {
-	double ddemand,dsupply,dprice;
-	vector<double> JFD(nomrks_t_NR);
-	
-	for (int i=0;i<nomrks_t_NR;i++) {
-		int j = mrk_isol_NR[i];	// look up index
-		if(mrk[j][per].demand == 0) 
+	for ( int i = 0; i < static_cast<int>( indices.size() ); i++ ) {
+		const int j = indices[ i ];	// look up index
+		
+		if( mrk[ j ][ per ].tdemand == 0 ){ 
 			ddemand = 0;
-		else
-			ddemand = (mrk[j][per].demand - mrk[j][per].tdemand)
-			/mrk[j][per].tdemand;
-		if(mrk[j][per].tsupply == 0) 
+		}
+		else { 
+			ddemand = ( mrk[ j ][ per ].demand - mrk[ j ][ per ].tdemand ) / mrk[ j ][ per ].tdemand;
+		}
+		
+		if( mrk[ j ][ per ].tsupply == 0 ){ 
 			dsupply = 0;
-		else
-			dsupply = (mrk[j][per].supply - mrk[j][per].tsupply)
-			/mrk[j][per].tsupply;
-		if(mrk[j][per].tprice == 0) 
+		}
+		else {
+			dsupply = ( mrk[ j ][ per ].supply - mrk[ j ][ per ].tsupply ) / mrk[ j ][ per ].tsupply;
+		}
+		
+		if( mrk[ j ][ per ].tprice == 0 ){ 
 			dprice = 0;
-		else
-			dprice = (mrk[k][per].price - mrk[k][per].tprice)
-			/mrk[k][per].tprice;
-		JFD[i] = (ddemand - dsupply)
-			/dprice; 
+		}
+		else {
+			dprice = ( mrk[ k ][ per ].price - mrk[ k ][ per ].tprice ) / mrk[ k ][ per ].tprice;
+		}
+		
+		// What if dprice == 0?
+		JFD[ i ] = ( ddemand - dsupply ) / dprice; 
 	}
 	return JFD;
 }
 
 //! Calculate demand elasticities
-const vector<double> Marketplace::dem_elas( const int k, const int per ) const {
-	double ddemand,dprice;
-	vector<double> JFD(nomrks_t);
+const vector<double> Marketplace::calcDemandElas( const vector<int>& indices, const int marketSolutionNumber, const int per ) const {
+	double ddemand;
+	double dprice;
+	vector<double> JFD( indices.size() );
 	
-	int kk = mrk_isol[k]; // market index 
+	const int marketNumber = indices[ marketSolutionNumber ]; // market index 
 	
-	for (int i=0;i<nomrks_t;i++) {
-		int j = mrk_isol[i];	// look up index
-		if(mrk[j][per].tdemand == 0) 
+	for ( int i = 0; i < static_cast<int>( indices.size() ); i++ ) {
+		const int j = indices[ i ];	// look up index
+		
+		if( mrk[ j ][ per ].tdemand == 0 ) {
 			ddemand = SMALLNUM;
-		else
-			ddemand = log(mrk[j][per].demand) - log(mrk[j][per].tdemand);
-		if(mrk[kk][per].tprice == 0) 
+		}
+		else {
+			ddemand = log( mrk[j][per].demand) - log(mrk[j][per].tdemand );
+		}
+		
+		if( mrk[ marketNumber ][ per ].tprice == 0 ) {
 			dprice = SMALLNUM;
-		else
-			dprice = log(mrk[kk][per].price)- log(mrk[kk][per].tprice);
-		JFD[i] = ddemand/dprice; 
-	}
-	return JFD;
-}
-
-//! Calculate demand elasticities
-const vector<double> Marketplace::dem_elas_NR( const int k, const int per ) const {
-	double ddemand,dprice;
-	vector<double> JFD(nomrks_t_NR);
-	
-	int kk = mrk_isol_NR[k]; // market index 
-	
-	for (int i=0;i<nomrks_t_NR;i++) {
-		int j = mrk_isol_NR[i];	// look up index
-		if(mrk[j][per].tdemand == 0) 
-			ddemand = SMALLNUM;
-		else
-			ddemand = log(mrk[j][per].demand) - log(mrk[j][per].tdemand);
-		if(mrk[kk][per].tprice == 0) 
-			dprice = SMALLNUM;
-		else
-			dprice = log(mrk[kk][per].price)- log(mrk[kk][per].tprice);
-		JFD[i] = ddemand/dprice; 
+		}
+		else {
+			dprice = log( mrk[ marketNumber ][ per ].price ) - log( mrk[ marketNumber ][ per ].tprice );
+		}
+		
+		JFD[ i ] = ddemand / dprice; 
 	}
 	return JFD;
 }
 
 //! Calculate supply elasticities
-const vector<double> Marketplace::sup_elas( const int k, const int per ) const {
-	double dsupply,dprice;
-	vector<double> JFS(nomrks_t);
+const vector<double> Marketplace::calcSupplyElas( const vector<int>& indices, const int marketSolutionNumber, const int per ) const {
 	
-	int kk = mrk_isol[k]; // market index 
+	double dsupply;
+	double dprice;
 	
-	for (int i=0;i<nomrks_t;i++) {
-		int j = mrk_isol[i];	// look up index
-		if(mrk[j][per].tsupply == 0) 
-			dsupply = SMALLNUM;
-		else
-			dsupply = log(mrk[j][per].supply) - log(mrk[j][per].tsupply);
-		if(mrk[kk][per].tprice == 0) 
-			dprice = SMALLNUM;
-		else
-			dprice = log(mrk[kk][per].price) - log(mrk[kk][per].tprice);
-		JFS[i] = dsupply/dprice; 
-	}
-	return JFS;
-}
-
-//! Calculate supply elasticities for NR solution method
-const vector<double> Marketplace::sup_elas_NR( const int k, const int per ) const {
-	double dsupply,dprice;
-	vector<double> JFS(nomrks_t_NR);
+	vector<double> JFS( indices.size() );
 	
-	int kk = mrk_isol_NR[k]; // market index 
+	const int marketNumber = indices[ marketSolutionNumber ]; // market index 
 	
-	for (int i=0;i<nomrks_t_NR;i++) {
-		int j = mrk_isol_NR[i];	// look up index	(array fixed, changed from mrk_isol, 3/14/03 -- sjs)
-		if(mrk[j][per].tsupply == 0) {
+	for ( int i = 0; i < static_cast<int>( indices.size() ); i++ ) {
+		const int j = indices[ i ];	// look up index
+		
+		if( mrk[ j ][ per ].tsupply == 0 ) { 
 			dsupply = SMALLNUM;
 		}
 		else {
-			dsupply = log(mrk[j][per].supply) - log(mrk[j][per].tsupply);
-		}
-		if(mrk[kk][per].tprice == 0) {
-			dprice = SMALLNUM;
-		}
-		else {
-			dprice = log(mrk[kk][per].price) - log(mrk[kk][per].tprice);
+			dsupply = log( mrk[ j ][ per ].supply) - log( mrk[ j ][ per ].tsupply );
 		}
 		
-		JFS[i] = dsupply/dprice; 
+		if( mrk[ marketNumber ][ per ].tprice == 0 ){ 
+			dprice = SMALLNUM;
+		}
+		else {
+			dprice = log( mrk[ marketNumber ][ per ].price ) - log( mrk[ marketNumber ][ per ].tprice );
+		}
+
+		JFS[ i ] = dsupply / dprice; 
 	}
 	return JFS;
 }
 
 //! write out market info to database
 void Marketplace::MCoutput() const {
-	// function protocol
+	
+	const Modeltime* modeltime = scenario.getModeltime();
+
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
 		string uname,vector<double> dout);
 	
-	int maxper = modeltime.getmaxper();
+	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	int m;
 	// write market prices, supply and demand
@@ -1158,13 +1084,16 @@ void Marketplace::MCoutput() const {
 
 //! write out market info to file
 void Marketplace::outputfile() const {
+
+	const Modeltime* modeltime = scenario.getModeltime();
+
 	// function protocol
 	void fileoutput2(string var1name,string var2name,string var3name,
 		string var4name,string var5name,vector<double> dout,string uname);
 	void fileoutput3(string var1name,string var2name,string var3name,
 		string var4name,string var5name,string uname,vector<double> dout);
 	
-	int maxper = modeltime.getmaxper();
+	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	int m;
 	
@@ -1213,8 +1142,10 @@ void Marketplace::sdcurves( const int per, const int iteration) const {
 
 //! Bracketing function only, does not find solution
 int Marketplace::Bracket( const double Tol, vector<solinfo>& sol, bool& allbracketed, bool& firsttime,int& n, const int per ) {
+	
+	World* world = scenario.getWorld();
 	int i, j;
-	int nmrks = sol.size(); // number of markets to solve
+	const int nmrks = sol.size(); // number of markets to solve
 	int nn = 0; // number of iterations
 	int Code = 2; // Code that reports success 1 or failure 0
 	vector<double> Xtemp(nmrks); // temporary prices
@@ -1367,29 +1298,31 @@ int Marketplace::Bracket( const double Tol, vector<solinfo>& sol, bool& allbrack
 				Xtemp[i]=sol[i].X;
 			}
 			
-			setPRC(Xtemp,per); // set new prices
+			setPrices( Xtemp, mrk_isol, per ); // set new prices
 			nulldem(per);	// null demand
 			nullsup(per); // null supply
 			
-			world.calc(per); // call world object to recalculate supply and demand
+			world->calc(per); // call world object to recalculate supply and demand
 			
 			logED(per); // calculate log of excess demand
 			excessdemand(per); // calculate excess demand
 			// using log of ED does not matter for bracketing
 			// since only sign matters
 			//logED =  showlogED(per); // show log of excess demand
-			EDtemp = showED(per); // show excess demand
+			EDtemp = getExcessDemands( mrk_isol, per ); // show excess demand
 			for (i=0;i<nmrks;i++) {
 				sol[i].ED = EDtemp[i];
 			}
 			
 			// for debugging
-			int bug = 0; // debugging on(1) or off(0)
+			const bool bug = true; // debugging
 			if (bug) {
-				bugoutfile<<"\nMarket,X,XL,XR,ED,EDL,EDR,Tolerance\n";
+				bugoutfile << "In bracketing." << endl;
+
+				bugoutfile<<"\nMarket,X,XL,XR,ED,EDL,EDR,Tolerance,Bracketed" << endl;
 				for (i=0; i<nmrks; ++i) {
-					bugoutfile<<i<<","<<sol[i].X<<","<<sol[i].XL<<","<<sol[i].XR
-						<<","<<sol[i].ED<<","<<sol[i].EDL<<","<<sol[i].EDR<<","<<Tol<<"\n";
+					bugoutfile<< getName( mrk_isol[ i ] ) << getGoodName( mrk_isol[ i ] ) << ","<<sol[i].X<<","<<sol[i].XL<<","<<sol[i].XR
+						<<","<<sol[i].ED<<","<<sol[i].EDL<<","<<sol[i].EDR<<","<< Tol << "," << sol[i].bracketed << endl;
 				}
 				bugout(per,nn);
 				sdcurves(per,nn);
@@ -1422,23 +1355,23 @@ void Marketplace::CheckBracket( const double Tol, vector<solinfo>& sol, bool& al
 }
 
 //! Bisection Solution Mechanism (all markets)
-int Marketplace::Bisection_all( const double Tol, const int IterLimit, vector<solinfo>& sol,
-							   int& n, const int per ) {
+int Marketplace::Bisection_all( const double Tol, const int IterLimit, vector<solinfo>& sol, int& n, const int per ) {
 	
+	World* world = scenario.getWorld();
 	int i, j;
 	int nn = 0; // number of iterations
 	int Code = 2; // Code that reports success 1 or failure 0
-	int nmrks = sol.size(); // number of markets to solve
+	const int nmrks = sol.size(); // number of markets to solve
 	double MaxSolVal; // maximum equality value
 	vector<double> Xtemp(nmrks); // temporary prices
 	vector<double> EDtemp(nmrks); // temporary excess demand
 	bool breakout;	// var to allow various conditions to exit bisection routine
-    double breakOutThreshold = 0.001;
+    const double breakOutThreshold = 0.001;
     double previousEDvalue = -1;
     double maxEDvalue = 0;
     int maxInt = 0;
 	
-	const int bug = 0; // debugging on(1) or off(0)
+	const bool bug = false;
 	
 	if (bug) {
 		bugoutfile<<"\nMarket,X-unknown,L-Brack,R-Brack,Ex Dem,EDL-Brac,EDR-Brac,Supply,Price,Demand,Tolerance\n";
@@ -1484,15 +1417,15 @@ int Marketplace::Bisection_all( const double Tol, const int IterLimit, vector<so
 			} 
 			Xtemp[i]=sol[i].X; // copy prices to temporary vector
 		}
-		setPRC(Xtemp,per); // set new prices
+		setPrices( Xtemp, mrk_isol, per ); // set new prices
 		nulldem(per);	// null demand
 		nullsup(per); // null supply
 		
-		world.calc(per); // call world object to recalculate supply and demand
+		world->calc(per); // call world object to recalculate supply and demand
 		
 		logED(per); // calculate log of excess demand
 		excessdemand(per); // calculate excess demand
-		EDtemp = showED(per); // show excess demand
+		EDtemp = getExcessDemands( mrk_isol, per ); // show excess demand
 		for (i=0;i<nmrks;i++) {
 			sol[i].ED = EDtemp[i];
 			j = showmrk_sol(i); 
@@ -1571,11 +1504,12 @@ int Marketplace::Bisection_all( const double Tol, const int IterLimit, vector<so
 
 //! Bisection Solution Mechanism (single market)
 int Marketplace::Bisection_i( const int i, const double Tol, vector<solinfo>& sol,int& n, const int per ){
+	World* world = scenario.getWorld();
 	int nn = 0; // number of iterations
 	int Code = 2; // Code that reports success 1 or failure 0
 	double M; // maximum equality value
-	vector<double> Xtemp= showPRC(per); // temporary prices
-	vector<double> EDtemp= showED(per); // temporary excess demand
+	vector<double> Xtemp= getPrices( mrk_isol, per ); // temporary prices
+	vector<double> EDtemp= getExcessDemands( mrk_isol, per ); // temporary excess demand
 	
 	logfile << ",,Bisection_i function called.\n";
     // solve only one market
@@ -1594,15 +1528,15 @@ int Marketplace::Bisection_i( const int i, const double Tol, vector<solinfo>& so
 		}			
 		Xtemp[i]=sol[i].X; // copy prices to temporary vector
 		// only current market should have different prices
-		setPRC(Xtemp,per); // set new prices
+		setPrices( Xtemp, mrk_isol, per ); // set new prices
 		nulldem(per);	// null demand
 		nullsup(per); // null supply
 		
-		world.calc(per); // call world object to recalculate supply and demand
+		world->calc(per); // call world object to recalculate supply and demand
 		
 		logED(per); // calculate log of excess demand
 		excessdemand(per); // calculate excess demand
-		EDtemp = showED(per); // show excess demand
+		EDtemp = getExcessDemands( mrk_isol, per ); // show excess demand
 		for (int j=0;j<EDtemp.size();j++) {
 			sol[j].ED = EDtemp[j];
 		}
@@ -1628,6 +1562,7 @@ int Marketplace::Bisection_i( const int i, const double Tol, vector<solinfo>& so
 
 //! False Position Solution Mechanism (all markets)
 int Marketplace::FalsePos_all( const double Tol,vector<solinfo>& sol,int& n, const int per ) {
+	World* world = scenario.getWorld();
 	int i;
 	int nn = 0; // number of iterations
 	int Code = 2; // Code that reports success 1 or failure 0
@@ -1654,15 +1589,15 @@ int Marketplace::FalsePos_all( const double Tol,vector<solinfo>& sol,int& n, con
 			}		
 			Xtemp[i] = sol[i].X;
 		}
-		setPRC(Xtemp,per); // set new prices
+		setPrices( Xtemp, mrk_isol, per ); // set new prices
 		nulldem(per);	// null demand
 		nullsup(per); // null supply
 		
-		world.calc(per); // call world object to recalculate supply and demand
+		world->calc(per); // call world object to recalculate supply and demand
 		
 		logED(per); // calculate log of excess demand
 		excessdemand(per); // calculate excess demand
-		EDtemp =  showED(per); // show excess demand
+		EDtemp =  getExcessDemands( mrk_isol, per ); // show excess demand
 		for (i=0;i<EDtemp.size();i++)
 			sol[i].ED = EDtemp[i];
 		
@@ -1689,6 +1624,7 @@ int Marketplace::FalsePos_all( const double Tol,vector<solinfo>& sol,int& n, con
 
 //! Secant Solution Mechanism (all markets)
 int Marketplace::Secant_all( const double Tol,vector<solinfo>& sol,int& n, const int per ) {
+	World* world = scenario.getWorld();
 	int i;
 	int iSec=0; 
 	int nn = 0; // number of iterations
@@ -1726,15 +1662,15 @@ int Marketplace::Secant_all( const double Tol,vector<solinfo>& sol,int& n, const
 		}
 		iSec++;
 		
-		setPRC(Xtemp,per); // set new prices
+		setPrices( Xtemp, mrk_isol, per ); // set new prices
 		nulldem(per);	// null demand
 		nullsup(per); // null supply
 		
-		world.calc(per); // call world object to recalculate supply and demand
+		world->calc(per); // call world object to recalculate supply and demand
 		
 		logED(per); // calculate log of excess demand
 		excessdemand(per); // calculate excess demand
-		EDtemp =  showED(per); // show excess demand
+		EDtemp =  getExcessDemands( mrk_isol, per ); // show excess demand
 		for (i=0;i<EDtemp.size();i++)
 			sol[i].ED = EDtemp[i];
 		
@@ -1762,6 +1698,7 @@ int Marketplace::Secant_all( const double Tol,vector<solinfo>& sol,int& n, const
 //! Function to calculate derivative
 //void JFunction(valarray<double> prices, Matrix& JFDM, int per)
 void Marketplace::JFunction( vector<double> prices, Matrix& JFDM, int& n, int const per ) {
+	World* world = scenario.getWorld();
 	int m = prices.size();
 	double deltap = 1e-4; // What is the proper value for delta?
 	vector<double> tprices = prices; // define and initialize prices for storage
@@ -1771,15 +1708,15 @@ void Marketplace::JFunction( vector<double> prices, Matrix& JFDM, int& n, int co
 	for (int j=0;j<m;++j) {	// j is column index
 		prices[j] *= (1 + deltap);	  // add price times deltap
 		//prices[j] += deltap;	  // add price times deltap
-		setPRC_NR(prices,per);	// set new price for one market
+		setPrices( prices, mrk_isol_NR, per );	// set new price for one market
 		nulldem(per);	// null demand
 		nullsup(per);	// null supply
-		world.calc(per); // call world object to recalculate supply and demand
+		world->calc(per); // call world object to recalculate supply and demand
 		int col = j; // function calculates rows for each column
-		tmpJFD =  jacobian(col,per); // calculate elasticities or Jacobian
+		tmpJFD =  jacobian( mrk_isol_NR, col, per ); // calculate elasticities or Jacobian
 		for (int i=0;i<m;++i) // copy column vector to Jacobian Matrix
 			JFDM[i][j] = tmpJFD[i]; // i is row index
-		restoreprc_NR(per); // restore perturbed market price
+		restoreprc( mrk_isol_NR, per ); // restore perturbed market price
 		prices[j] = tprices[j]; //  restore perturbed market price
 		n++;
 	}
@@ -1787,35 +1724,42 @@ void Marketplace::JFunction( vector<double> prices, Matrix& JFDM, int& n, int co
 
 //! Function to calculate derivative for Ron's version
 void Marketplace::Derivatives( vector<double> prices, Matrix& JFDM, Matrix& JFSM, int& n, const int per ) {
-	int m = prices.size();
+	World* world = scenario.getWorld();
+	const int m = prices.size();
 	//double deltap = 1e-4; // Orginal, What is the proper value for delta?
-	double deltap = 1e-5; // What is the proper value for delta?
+	const double DELTAP = 1e-5; // What is the proper value for delta?
 	vector<double> tprices = prices; // define and initialize prices for storage
-	vector<double> tmpJFD(m),tmpJFS(m);
+	vector<double> tmpJFD( m );
+	vector<double> tmpJFS( m );
 	
-	storeinfo(per); // store original market info before perturbing price
-	for (int j=0;j<m;++j) {	// j is column index
-		prices[j] *= (1 + deltap);	  // add price times deltap
-		setPRC_NR(prices,per);	// set new price for one market
-		nulldem(per);	// null demand
-		nullsup(per);	// null supply
-		world.calc(per); // call world object to recalculate supply and demand
-		int col = j; // function calculates rows for each column
-		tmpJFD =  dem_elas_NR(col,per); // calculate demand elasticities
-		tmpJFS =  sup_elas_NR(col,per); // calculate supply elasticities
-		for (int i=0;i<m;++i) {// copy column vector to Jacobian Matrix
-			JFDM[i][j] = tmpJFD[i]; // i is row index
-			JFSM[i][j] = tmpJFS[i]; // i is row index
+	storeinfo( per ); // store original market info before perturbing price
+	
+	for ( int j = 0; j < m; j++ ) {	// j is column index
+		const int fullMarketNumber = mrk_isol_NR[ j ]; // the market number is the complete mrk vector.
+		prices[ j ] *= ( 1 + DELTAP );	  // add price times deltap
+		setPrices( prices, mrk_isol_NR, per );	// set new price for one market
+		nulldem( per ); //, mrk[ fullMarketNumber ][ per ].containedRegionNames );	// null demand for all markets in this markets regions.
+		nullsup( per ) ; //, mrk[ fullMarketNumber ][ per ].containedRegionNames );	// null supply for all markets in this markets regions.
+		// world->calc( per, mrk[ fullMarketNumber ][ per ].containedRegionNames ); // call world object to recalculate supply and demand
+		world->calc( per );
+		tmpJFD =  calcDemandElas( mrk_isol_NR, j, per ); // calculate demand elasticities
+		tmpJFS =  calcSupplyElas( mrk_isol_NR, j, per ); // calculate supply elasticities
+		
+		for ( int i = 0; i < m; i++ ) {// copy column vector to Jacobian Matrix
+			// cout << "DDerivative: " << tmpJFD[ i ] << " SDerivative: " << tmpJFS[ i ] << endl;
+			JFDM[ i ][ j ] = tmpJFD[ i ]; // i is row index
+			JFSM[ i ][ j ] = tmpJFS[ i ]; // i is row index
 		}
-		restoreprc_NR(per); // restore perturbed market price
-		prices[j] = tprices[j]; //  restore perturbed market price
+		restoreprc( mrk_isol_NR, per ); // restore perturbed market price
+		prices[ j ] = tprices[ j ]; //  restore perturbed market price
 		n++;
 	}
 }
 
 //! Newton Raphson Solution Mechanism (all markets)
 int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, int& n, const int per ){
-	
+	World* world = scenario.getWorld();
+	const Modeltime* modeltime = scenario.getModeltime();
 	int i;
 	int NRn=0; // calls to calculate elasticities
 	int nn = 0; // number of iterations
@@ -1823,15 +1767,15 @@ int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, in
 	double M; // maximum equality value
 	int m =  setMarketsToSolveNR(per); // number of markets to solve
 	vector<double> DP(m); // adjustment value
-	vector<double> logEDVec =  showlogED_NR(per); // show log of excess demand
-	vector<double> Xtemp= showPRC_NR(per); // temporary prices
+	vector<double> logEDVec =  getLogExcessDemands( mrk_isol_NR, per ); // show log of excess demand
+	vector<double> Xtemp = getPrices( mrk_isol_NR, per ); // temporary prices
 	vector<double> EDtemp(m); // temporary excess demand
 	
 	// function protocol
 	logfile << ",,Newton-Raphson function called.\n";
 	// solve all markets
 	do {
-		if ((NRn < 5) && (per < modeltime.getmaxper())) { // do only once for each period
+		if ((NRn < 5) && (per < modeltime->getmaxper())) { // do only once for each period
 			JFunction(Xtemp,JF,n,per); //recalculate Jacobian matrix, returns JF matrix
 			invertMatrix( JF );
 		}
@@ -1845,15 +1789,15 @@ int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, in
 			Xtemp[i]*=(1+DP[i]); // new price
 		}
 		
-		setPRC_NR(Xtemp,per); // set new prices
+		setPrices( Xtemp, mrk_isol_NR, per ); // set new prices
 		nulldem(per);	// null demand
 		nullsup(per); // null supply
 		
-		world.calc(per); // call world object to recalculate supply and demand
+		world->calc(per); // call world object to recalculate supply and demand
 		logED( per ); // calculate log of excess demand
 		excessdemand(per); // calculate excess demand
-		logEDVec =  showlogED_NR(per); // show log of excess demand
-		EDtemp =  showED_NR(per); // show excess demand
+		logEDVec =  getLogExcessDemands( mrk_isol_NR, per ); // show log of excess demand
+		EDtemp = getExcessDemands( mrk_isol_NR, per ); // show excess demand
 		
 		M =  maxED(per); // Max returns largest ED[i]
 		
@@ -1877,8 +1821,8 @@ int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, in
 	Code = (M < Tol ? 1 : 0);				// or failure, 0, 
 	// resize and reasign all solution prices and ED's
 	// need to copy prices and ED to sol
-	Xtemp =  showPRC(per);
-	EDtemp =  showED(per);
+	Xtemp =  getPrices( mrk_isol_NR, per );
+	EDtemp =  getExcessDemands( mrk_isol_NR, per );
 	for (i=0; i<Xtemp.size(); i++) {
 		sol[i].X = Xtemp[i];
 		sol[i].ED = EDtemp[i];
@@ -1889,19 +1833,21 @@ int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, in
 
 //! Ron's version of the Newton Raphson Solution Mechanism (all markets)
 int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, Matrix& JF, int& n, const int per ) {
+	World* world = scenario.getWorld();
 	int i;
 	int iNRdx = 0; // count number of times derivatives are calculated
 	int iter = 0; // number of iterations through solution algorithm
 	int Code = 2; // Code that reports success 1 or failure 0
 	double MaxSolVal; // maximum equality value 
-	const int m =  setMarketsToSolveNR(per ); // number of markets to solve
+	const int m =  setMarketsToSolveNR( per ); // number of markets to solve
 	vector<double> NP(m); // adjustment value
 	vector<double> KD(m); // k values demand
 	vector<double> KS(m); // k values supply
 	vector<double> KDS(m); // k values demand - supply
-	vector<double> Xtemp= showPRC_NR(per); // temporary prices
+	vector<double> Xtemp = getPrices( mrk_isol_NR, per ); // temporary prices
 	vector<double> EDtemp(m); // temporary excess demand
-	
+	const Modeltime* modeltime = scenario.getModeltime();
+
 	bool breakout = false;	// var to allow various conditions to exit NR routine
     int maxInt = 0;
     double beforeEDvalue = -1;
@@ -1924,7 +1870,7 @@ int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, Matrix& JF, int
 		logDem(per); // calculate log of demand
 		logSup(per); // calculate log of supply
 		
-		if ((iNRdx < 5) && (per < modeltime.getmaxper())) { // control no of times derivatives are calculated
+		if ((iNRdx < 5) && (per < modeltime->getmaxper())) { // control no of times derivatives are calculated
             if (trackED) { cout <<" ... "; }
 			Derivatives(Xtemp,JFDM,JFSM,n,per); //recalculate Jacobian matrix, returns JF matrix
 			
@@ -1948,8 +1894,8 @@ int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, Matrix& JF, int
 		}
 		
 		// initialize KD and KS as logs of original demand and supply
-		KD =  showlogDem_NR(per); // return log of demand
-		KS =  showlogSup_NR(per); // return log of supply
+		KD =  getLogDemands( mrk_isol_NR, per ); // return log of demand
+		KS =  getLogSupplies( mrk_isol_NR, per ); // return log of supply
 		for (i=0; i<m; ++i) {
 			for (int j=0; j<m; ++j) {
 				KD[i] -= (log(max(Xtemp[j],SMALLNUM))*JFDM[i][j]);
@@ -1970,14 +1916,14 @@ int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, Matrix& JF, int
 			Xtemp[i] = exp(NP[i]); // new price
 		}
 		
-		setPRC_NR(Xtemp,per); // set new prices
+		setPrices( Xtemp, mrk_isol_NR, per ); // set new prices
 		nulldem(per);	// null demand
 		nullsup(per); // null supply
 		if (bugTracking) {
 			bugoutfile <<endl<< "--before .calc "<<iter;  prices_to_bugout(per);
 		}
 		
-		world.calc(per); // call world object to recalculate supply and demand
+		world->calc(per); // call world object to recalculate supply and demand
 		
 		if (bugTracking) {
 			bugoutfile << "--after .calc "<<iter;  prices_to_bugout(per);
@@ -1985,7 +1931,7 @@ int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, Matrix& JF, int
 		}
 		
 		excessdemand(per); // calculate excess demand
-		EDtemp =  showED_NR(per); // show excess demand
+		EDtemp =  getExcessDemands( mrk_isol_NR, per ); // show excess demand
 		
 		MaxSolVal =  maxED(per); // Max returns largest ED[i]
 		
@@ -2003,7 +1949,7 @@ int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, Matrix& JF, int
 		
         maxInt = worstED(per);
         if (trackED) {
-			cout << "maxED: "<<MaxSolVal<<" ("<< getName(maxInt)<< getGoodName(maxInt) << ")" << endl;
+			cout << "maxED: "<<MaxSolVal<<" ("<< getName(mrk_isol_NR[ maxInt ] )<< getGoodName(mrk_isol_NR[maxInt]) << ")" << endl;
 		}
 		
         if (iter > 3) {	
@@ -2054,8 +2000,8 @@ int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, Matrix& JF, int
 	Code = (MaxSolVal < Tol ? 1 : 0); // report sucess 1 or failure 0, 
 	// resize and reasign all solution prices and ED's
 	// need to copy prices and ED to sol
-	Xtemp =  showPRC(per);
-	EDtemp =  showED(per);
+	Xtemp =  getPrices( mrk_isol_NR, per );
+	EDtemp =  getExcessDemands( mrk_isol_NR, per );
 	for (i=0; i<Xtemp.size(); i++) {
 		sol[i].X = Xtemp[i];
 		sol[i].ED = EDtemp[i];
@@ -2103,9 +2049,9 @@ void Marketplace::solve( const int per ) {
 	Matrix JF( numNRMarkets, numNRMarkets );
 	
 	logED(per); // calculate log of excess demand
-	X =  showPRC(per); // showPRC returns a vector of prices	
-	logEDVec =  showlogED(per); // showlogED returns a vector of logED
-	ED =  showED(per); // showED returns a vector of ED
+	X =  getPrices( mrk_isol, per ); // showPRC returns a vector of prices	
+	logEDVec =  getLogExcessDemands( mrk_isol, per ); // showlogED returns a vector of logED
+	ED =  getExcessDemands( mrk_isol, per ); // showED returns a vector of ED
 	
 	vector<solinfo> sol(m); // create vector of solution information
 	// initialize solution information
@@ -2221,7 +2167,7 @@ void Marketplace::solve( const int per ) {
 			logfile <<",Number of iterations: n = "<<n<<"\n";
 			maxSolVal =  maxED(per); // Max returns largest ED[i]
 			// Bisection returns ED, not log of ED
-			if(!solved && maxSolVal<1500) {
+			if(!solved && maxSolVal< 1500 ) {
 				solved = NewtRap(solTolerance,sol,JF,n,per);
 			}
 			if (!solved) { 
@@ -2231,7 +2177,7 @@ void Marketplace::solve( const int per ) {
 		
 		// Ron's version of the NR routine
 		if ( allbracketed && useNR_Ron ) {
-			const int maxIter = 30;
+			const int maxIter = 15;
 			//int maxIter = 15;
 			solved = Bisection_all( solTolerance, maxIter, sol, n, per );
 			logfile << ",Number of iterations: n = " << n << endl;
@@ -2259,7 +2205,7 @@ void Marketplace::solve( const int per ) {
 		//sdfile<<"Iteration: "<<n<<"\n"; //supply & demand info
 		
 		// make sure that ED, NOT Log of ED, is checked against tolerance
-		ED =  showED(per);
+		ED =  getExcessDemands( mrk_isol, per );
 		maxSolVal =  maxED(per); // Max returns largest ED[i]
 		
 		// for debugging

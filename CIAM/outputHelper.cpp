@@ -1,8 +1,11 @@
-/* outputHelper.cpp															*
- * Function to write out single records to output file or table in the		*
- * database.  Names of categories, subcategories, and variables are written	*
- * as strings in the argument.  Values are also passed as arguments.	 	*	
- * Coded by Sonny Kim 9/6/00												*/
+/*! 
+* \file outputHelper.cpp
+* \ingroup CIAM
+* \brief Contians the functions to write out single records to output file or table in the database.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
 
 #include "Definitions.h"
 
@@ -17,26 +20,31 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include <ctime> // to use clock and time functions
+#include <ctime>
 #include "scenario.h" 
 
-using namespace std; // enables elimination of std::
+using namespace std;
 
 #ifdef WIN32
 extern CdbDatabase db;
 extern CdbRecordset DBoutrst;
 #endif
 
-extern time_t ltime; // global time variable set in main
+extern time_t ltime;
 extern ofstream outfile;
 extern map<string,int> mapreg;
 extern map<string,int> regionMap;
-extern Scenario scenario; // model scenario info
+extern Scenario scenario;
 
-// outputs to file
+/*! Output single records to file.
+*
+* Names of categories, subcategories, and variables are written
+* as strings in the argument.  Values are also passed as arguments.
+*
+*/
+
 void fileoutput3( string var1name,string var2name,string var3name,
-			  string var4name,string var5name,string uname,vector<double> dout)
-{
+			  string var4name,string var5name,string uname,vector<double> dout) {
 	outfile <<var1name<<","<<var2name<<","<<var3name<<","
 			<<var4name<<","<<var5name<<","<<uname<<",";
 	for (int i=0;i<dout.size();i++) {
@@ -45,7 +53,12 @@ void fileoutput3( string var1name,string var2name,string var3name,
 	outfile <<ctime(&ltime);
 }
 
-// MiniCAM style outputs to databasae
+/*! Output single records MiniCAM style to the database. 
+*
+* Names of categories, subcategories, and variables are written
+* as strings in the argument.  Values are also passed as arguments.
+*
+*/
 void dboutput4(string var1name,string var2name,string var3name,string var4name,
 			   string uname,vector<double> dout)
 {

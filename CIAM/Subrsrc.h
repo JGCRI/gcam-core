@@ -26,8 +26,6 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief subrsrc is a class that contains grades.
 * \author Sonny Kim
-* \date $Date $
-* \version $Revision $
 */
 
 class subrsrc

@@ -27,8 +27,6 @@ using namespace xercesc;
 * grade is a that contains technologies that characterized each grade.
 *
 * \author Sonny Kim
-* \date $Date $
-* \version $Revision $
 */
 
 class grade

@@ -1,3 +1,12 @@
+/*! 
+* \file modeltime.cpp
+* \ingroup CIAM
+* \brief modeltime class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
 #include <iostream>
 #include <fstream>

@@ -1,3 +1,12 @@
+/*! 
+* \file LoggerFactory.cpp
+* \ingroup CIAM
+* \brief LoggerFactory class source file.
+* \author Josh Lurz
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "Definitions.h"
 #include <string>
 #include <map>
@@ -30,9 +39,7 @@ void LoggerFactory::XMLParse( const DOMNode* root ) {
 	
 	Logger* newLogger = 0;
 	
-	cout << "In XML Parse" << endl;
-	
-	// assume we were passed a valid node.
+	//! \pre assume we were passed a valid node.
 	assert( root );
 	
 	// get the children of the node.
@@ -63,41 +70,6 @@ void LoggerFactory::XMLParse( const DOMNode* root ) {
 			loggers[ newLogger->name ] = newLogger;
 		}
 	}
-}
-
-//! Initialize the LoggerFactory
-void LoggerFactory::initialize( XercesDOMParser* parser ){
-	
-	cout << "Initializing the LoggerFactory." << endl;
-	// This cannot be in the configuration.xml file so that the Configuration class can safely use the LoggerFactory.
-	const string loggerFileName = "LoggerFactory.xml";
-	
-	DOMDocument* doc = 0;
-	DOMNode* root = 0;
-
-	// Parse the LoggerFactory configuration file.
-	try {
-		const unsigned long startMillis = XMLPlatformUtils::getCurrentMillis();
-		parser->parse( loggerFileName.c_str() );
-		const unsigned long endMillis = XMLPlatformUtils::getCurrentMillis();
-		long parseTime = endMillis - startMillis;
-		cout << "Parsing took " << parseTime / float( 1000 ) << " seconds." << endl;
-	} catch ( const XMLException& toCatch ) {
-		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
-		cout << "Exception message is:" << endl << message << endl;
-	} catch ( const DOMException& toCatch ) {
-		string message = XMLHelper<string>::safeTranscode( toCatch.msg );
-		cout << "Exception message is:" << endl << message << endl;
-	} catch ( const SAXException& toCatch ){
-		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
-		cout << "Exception message is:" << endl << message << endl;
-	} catch (...) {
-		cout << "Unexpected Exception." << endl;
-	}
-	
-	doc = parser->getDocument();
-	root = doc->getDocumentElement();
-	XMLParse( root );
 }
 
 //! Returns the instance of the Logger, creating it if neccessary.

@@ -1,6 +1,11 @@
-/* World.cpp												*
-* Method definition for World class						*
-* Coded by Sonny Kim 2/21/01								*/
+/*! 
+* \file world.cpp
+* \ingroup CIAM
+* \brief world class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
 
 #include "Definitions.h"
 #include <ctime>
@@ -19,6 +24,7 @@
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 
+#include "scenario.h"
 #include "world.h"
 #include "modeltime.h"
 #include "Market.h"
@@ -30,8 +36,7 @@ using namespace std;
 extern "C" { void _stdcall AG2INITC( double[14][12] ); };
 // global variables defined in main
 extern ofstream bugoutfile,outfile, sdfile;	
-extern Modeltime modeltime;
-extern Marketplace marketplace;
+extern Scenario scenario;
 
 // global map of region names
 map<string,int> regionMap;
@@ -167,7 +172,7 @@ void World::toDebugXML( const int period, ostream& out ) const {
 	
 	// for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
 	// won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
-	marketplace.toDebugXML( period, out );
+	scenario.getMarketplace()->toDebugXML( period, out );
 	
 	for( vector<Region*>::const_iterator i = region.begin(); i == region.begin(); i++ ) { 
 	//for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ) { 
@@ -190,7 +195,7 @@ void World::toDebugXML( const int period, ostream& out ) const {
 //! set size of global arrays depending on MaxPer 
 void World::initper()
 {
-	int maxper = modeltime.getmaxper();
+	int maxper = scenario.getModeltime()->getmaxper();
 	population.resize(maxper); // total global population
 	crudeoilrsc.resize(maxper); // global crude oil resource
 	unconvoilrsc.resize(maxper); // global crude oil resource
@@ -313,9 +318,8 @@ void World::emiss_ind(int per)
 }
 
 //! set global emissions for all GHG for climat
-void World::emiss_all()
-{
-	int maxper = modeltime.getmaxdataper();
+void World::emiss_all() {
+	const int maxper = scenario.getModeltime()->getmaxdataper();
 	int  per;
 	
 	ifstream gasfile2;
@@ -366,9 +370,8 @@ void World::emiss_all()
 }
 
 //! write results for all regions to file
-void World::outputfile(void)
-{
-	int maxper = modeltime.getmaxper();
+void World::outputfile() {
+	const int maxper = scenario.getModeltime()->getmaxper();
 	vector<double> temp(maxper);
 	// function protocol
 	void fileoutput3(string var1name,string var2name,string var3name,
@@ -391,9 +394,8 @@ void World::outputfile(void)
 }
 
 //! MiniCAM style output to database
-void World::MCoutput(void)
-{
-	int maxper = modeltime.getmaxper();
+void World::MCoutput() {
+	const int maxper = scenario.getModeltime()->getmaxper();
 	vector<double> temp(maxper);
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,

@@ -1,6 +1,11 @@
-/* region.cpp											*
-* Method definition for Region class						*
-* Coded by Sonny Kim 7/29/00								*/
+/*! 
+* \file Region.cpp
+* \ingroup CIAM
+* \brief Region class source file.
+* \author Sonny Kim
+* \date $Date$
+* \version $Revision$
+*/
 
 #include "Definitions.h"
 #include <iostream>
@@ -14,7 +19,7 @@
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 #include "xmlHelper.h"
-
+#include "scenario.h"
 #include "market.h"
 #include "Emcoef_ind.h"
 #include "region.h" 
@@ -24,9 +29,8 @@
 
 using namespace std;
 
-extern Marketplace marketplace;
+extern Scenario scenario;
 extern ofstream outfile, sdfile;	
-extern Modeltime modeltime;
 
 //! map of CO2 emissions coefficient for primary fuel only
 map<string, double> co2coefpri;
@@ -260,6 +264,8 @@ void Region::XMLParse( const DOMNode* node ){
 //! Write datamembers to datastream in XML format.
 void Region::toXML( ostream& out ) const {
 	
+	const Modeltime* modeltime = scenario.getModeltime();
+
 	int m;
 	
 	// write the beginning tag.
@@ -303,12 +309,12 @@ void Region::toXML( ostream& out ) const {
 	
 	// write out GNP
 	for( m = 0; m < static_cast<int>( gnp_dol.size() ); m++ ){
-		XMLWriteElement( gnp_dol[ m ], "GNP", out, modeltime.getper_to_yr( m ) );
+		XMLWriteElement( gnp_dol[ m ], "GNP", out, modeltime->getper_to_yr( m ) );
 	}
 	
 	// write out income elasticity
 	for( m = 0; m < static_cast<int>( i_elas.size() ); m++ ) {
-		XMLWriteElement( i_elas[ m ],"incomeelasticity", out, modeltime.getper_to_yr( m ) );
+		XMLWriteElement( i_elas[ m ],"incomeelasticity", out, modeltime->getper_to_yr( m ) );
 	}
 	
 	Tabs::decreaseIndent();
@@ -323,7 +329,7 @@ void Region::toXML( ostream& out ) const {
 	
 	// Write out regional fixed taxes
 	for( m = 0; m < static_cast<int>( carbontax.size() ); m++ ){
-		XMLWriteElement( carbontax[ m ],"carbontax", out, modeltime.getper_to_yr( m ) );			
+		XMLWriteElement( carbontax[ m ],"carbontax", out, modeltime->getper_to_yr( m ) );			
 	}
 	
 	Tabs::decreaseIndent();
@@ -433,9 +439,9 @@ void Region::toDebugXML( const int period, ostream& out ) const {
 }
 
 //! Set array size to max period for variables not set by XMLParse
-void Region::initperXML()
-{
-	int maxper = modeltime.getmaxper();
+void Region::initperXML() {
+	const Modeltime* modeltime = scenario.getModeltime();
+	const int maxper = modeltime->getmaxper();
 	gnp.resize(maxper); // normalized regional gross national product
 	gnp_adj.resize(maxper); // regional gross national product adjusted for energy
 	gnp_cap.resize(maxper); // regional gross national product per capita
@@ -482,21 +488,21 @@ void Region::calcAgSector( const int period ) {
 }
 
 //! Set regional ghg constraint to market supply.
-void Region::setghgsupply(int per)
-{
+void Region::setghgsupply( int per ) {
+	Marketplace* marketplace = scenario.getMarketplace();
+
 	string ghgName;
 	double ghgtarget;
 	
 	for (int i=0;i<noghg;i++) {
 		ghgName = ghgmarket[i]->getName();
 		ghgtarget = ghgmarket[i]->getConstraint(per);
-		marketplace.setsupply(ghgName,name,ghgtarget,per);		
+		marketplace->setsupply(ghgName,name,ghgtarget,per);		
 	}
 }
 
 //! Set regional ghg tax to individual technologies.
-void Region::addghgtax(int per)
-{
+void Region::addghgtax( int per ) {
 	string ghgname;
     int i,j,k;
 	
@@ -513,8 +519,8 @@ void Region::addghgtax(int per)
 
 
 //! Calculates annual supply of primay resources.
-void Region::rscsupply(int per) 
-{
+void Region::rscsupply(int per)  {
+	Marketplace* marketplace = scenario.getMarketplace();
 	string goodName;
 	string regionName = name; // name is Region attribute
 	double prev_price = 0;
@@ -523,13 +529,13 @@ void Region::rscsupply(int per)
 	//for (int i=0;i<numResources-1;i++) {
 	for (int i=0;i<numResources;i++) {
 		goodName = resources[i]->getName();
-		price = marketplace.showprice(goodName,regionName,per); // get market price
+		price = marketplace->showprice(goodName,regionName,per); // get market price
 		if (per==0) {
 			prev_price = price;
 			prev_gdp = gnp[per];
 		}
 		else {
-			prev_price = marketplace.showprice(goodName,regionName,per-1); // get market price
+			prev_price = marketplace->showprice(goodName,regionName,per-1); // get market price
 			prev_gdp = gnp[per-1];
 		}
 		
@@ -538,13 +544,13 @@ void Region::rscsupply(int per)
 		resources[i]->annualsupply(per,gnp[per],prev_gdp,price,prev_price);
 		
 		// set market supply of resources used for solution mechanism
-		marketplace.setsupply(goodName,regionName,resources[i]->getAnnualProd(per),per);				
+		marketplace->setsupply(goodName,regionName,resources[i]->getAnnualProd(per),per);				
 	}
 }
 
 //! Calculate prices of refined fuels and electricity.
-void Region::finalsupplyprc(int per)
-{
+void Region::finalsupplyprc(int per) {
+	Marketplace* marketplace = scenario.getMarketplace();
 	string goodName;
 	double goodPrice;
 	
@@ -556,13 +562,13 @@ void Region::finalsupplyprc(int per)
 		goodPrice = supplysector[ i ]->showprice( per );
 		// set market price of intermediate goods
 		// name is region or country name
-		marketplace.setprice( goodName, name, goodPrice, per );
+		marketplace->setprice( goodName, name, goodPrice, per );
 	}
 }
 
 //! Calculates supply of final energy and other goods.
-void Region::finalsupply(int per) 
-{
+void Region::finalsupply(int per) {
+	Marketplace* marketplace = scenario.getMarketplace();
 	string goodName;
 	int i = 0;
 	int j = 0;
@@ -594,18 +600,19 @@ void Region::finalsupply(int per)
 		mrksupply = supplysector[i]->getoutput(per);
 		
 		// set market supply of intermediate goods
-		marketplace.setsupply(goodName,name,mrksupply,per);			
+		marketplace->setsupply(goodName,name,mrksupply,per);
 	}
 }
 
 //! Calculate regional gnp.
-void Region::calc_gnp(int per) 
-{
+void Region::calc_gnp(int per) {
+	const Modeltime* modeltime = scenario.getModeltime();
+
 	double labprd=0;
-	int baseYear = modeltime.getstartyr();
-	int basePer = modeltime.getyr_to_per(baseYear);
+	int baseYear = modeltime->getstartyr();
+	int basePer = modeltime->getyr_to_per(baseYear);
 	
-	if (per == modeltime.getyr_to_per(baseYear)) {
+	if (per == modeltime->getyr_to_per(baseYear)) {
 		gnp[per] = 1.0; // normalize to 1975
 	}
 	else {
@@ -615,7 +622,7 @@ void Region::calc_gnp(int per)
 		//double pop2 = population.total(per-2);
 		double pop1 = population.getlaborforce(per);
 		double pop2 = population.getlaborforce(per-1);
-		double tlab = pow(labprd,modeltime.gettimestep(per));
+		double tlab = pow(labprd,modeltime->gettimestep(per));
 		//gnp[per] = gnp_adj[per-1]*pow(labprd,Years)
 		//*population.total(per-1)/population.total(per-2);
 		gnp[per] = gnp[per-1] * tlab * (pop1/pop2);
@@ -631,6 +638,7 @@ void Region::calc_gnp(int per)
 
 //! Calculate a forward looking gnp.
 const vector<double> Region::calcFutureGNP() const {
+	const Modeltime* modeltime = scenario.getModeltime();
 	vector<double> gnps;
 	double laborProd = 0;
 	double currentLaborForce = 0;
@@ -641,9 +649,9 @@ const vector<double> Region::calcFutureGNP() const {
 
 	const double baseYearConversion = gnp_dol[ 1 ] / gnp_dol[ 0 ];
 
-	gnps.resize( modeltime.getmaxper() );
+	gnps.resize( modeltime->getmaxper() );
 	
-	for ( int period = 0; period < modeltime.getmaxper(); period++ ) {
+	for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
 		if ( period == 0 ) { // Normalize to the base year.
 			gnps[ 0 ] = 1.0;
 		}
@@ -655,7 +663,7 @@ const vector<double> Region::calcFutureGNP() const {
 			laborProd = 1 + population.labor( period );
 			currentLaborForce = population.getlaborforce( period );
 			lastLaborForce = population.getlaborforce( period - 1 );
-			tlab = pow( laborProd, modeltime.gettimestep( period ) );
+			tlab = pow( laborProd, modeltime->gettimestep( period ) );
 			gnps[ period ] = gnps[ period - 1 ] * tlab * ( currentLaborForce / lastLaborForce );
 			assert( gnps[ period ] != 0 );
 		}
@@ -668,19 +676,19 @@ const vector<double> Region::calcFutureGNP() const {
 }
 
 //! Calculate regional GNP using laborforce participation and labor productivity.
-void Region::calcGNPlfp(int per) 
-{
+void Region::calcGNPlfp(int per) {
+	const Modeltime* modeltime = scenario.getModeltime();
 	double labprd=0;
-	int baseYear = modeltime.getstartyr();
-	int basePer = modeltime.getyr_to_per(baseYear);
-	if (per==modeltime.getyr_to_per(baseYear)) {
+	const int baseYear = modeltime->getstartyr();
+	const int basePer = modeltime->getyr_to_per(baseYear);
+	if (per==modeltime->getyr_to_per(baseYear)) {
 		gnp[per] = 1.0;
 	}
 	else {
 		// 1 + labor productivity growth rate
 		// population.labor returns labor productivity growth rate
 		labprd = 1 + population.labor(per);
-		double tlabprd = pow(labprd,modeltime.gettimestep(per));
+		double tlabprd = pow(labprd,modeltime->gettimestep(per));
 		gnp[per] = gnp[per-1] * tlabprd * ( population.getlaborforce(per)
 			/ population.getlaborforce(per-1) );
 		if (gnp[per] == 0) {
@@ -723,11 +731,11 @@ void Region::calcEndUsePrice( const int period ) {
 }
 
 //! Adjust regional gnp for energy.
-void Region::adjust_gnp(int per) 
-{
-	int baseYear = modeltime.getstartyr();
+void Region::adjust_gnp(int per) {
+	const Modeltime* modeltime = scenario.getModeltime();
+	const int baseYear = modeltime->getstartyr();
 	double tempratio;
-	if (per<=modeltime.getyr_to_per(1990)) {
+	if (per<=modeltime->getyr_to_per(1990)) {
 		gnp_adj[per] = gnp[per];
 	}
 	else {
@@ -741,8 +749,8 @@ void Region::adjust_gnp(int per)
 		}
 	}
 	// calculate dollar value gnp using base year dollar value GNP
-	if (per>modeltime.getyr_to_per(baseYear)) gnp_dol[per] = 
-		gnp_adj[per]*gnp_dol[modeltime.getyr_to_per(baseYear)];
+	if (per>modeltime->getyr_to_per(baseYear)) gnp_dol[per] = 
+		gnp_adj[per]*gnp_dol[modeltime->getyr_to_per(baseYear)];
 }
 
 //! Calculate regional demand for energy and other goods for all sectors.
@@ -887,10 +895,10 @@ void Region::setghgdemand(int per)
 }	
 
 //! Write all outputs to file.
-void Region::outputfile()
-{
+void Region::outputfile() {
+	const Modeltime* modeltime = scenario.getModeltime();
 	int i=0;
-	int maxper = modeltime.getmaxper();
+	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	// function protocol
 	void fileoutput3(string var1name,string var2name,string var3name,
@@ -928,10 +936,10 @@ void Region::outputfile()
 }
 
 //! Write MiniCAM style outputs to file.
-void Region::MCoutput()
-{
+void Region::MCoutput() {
+	const Modeltime* modeltime = scenario.getModeltime();
 	int i=0, m=0;
-	int maxper = modeltime.getmaxper();
+	const int maxper = modeltime->getmaxper();
 	vector<double> temp(maxper);
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
@@ -1032,7 +1040,8 @@ Then loop through each other sector that is also a fuel.
 Then loop through the fuels in that sector to see if that sector uses
 the first as a fuel.  */
 void Region::findSimul(const int per) const {
-    int isec;
+    Marketplace* marketplace = scenario.getMarketplace();
+	int isec;
     int	jsec;
     string OuterSectorName;
     string InnerSectorName;
@@ -1064,8 +1073,8 @@ void Region::findSimul(const int per) const {
                     InnerFuelName = fuelIterTwo->first;
                     if(InnerFuelName == OuterSectorName) {
                         // Have found a simultaneity
-                        marketplace.resetToPriceMarket( InnerFuelName, name );
-                        marketplace.resetToPriceMarket(InnerSectorName, name);
+                        marketplace->resetToPriceMarket( InnerFuelName, name );
+                        marketplace->resetToPriceMarket(InnerSectorName, name);
                         if (WriteOut) { 
 							cout << "  ***Sector " << InnerSectorName << " uses " << InnerFuelName << endl; 
 						}
