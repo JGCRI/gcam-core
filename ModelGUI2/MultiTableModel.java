@@ -38,7 +38,11 @@ public class MultiTableModel extends AbstractTableModel {
 	private class TableRenderer implements TableCellRenderer {
 		public TableRenderer () {}
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col ) {
-			return (JScrollPane)value;
+			if(row % 2 == 0) {
+				return (new DefaultTableCellRenderer()).getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+			} else {
+				return (JScrollPane)value;
+			}
 		}
 	}
 	Vector tables;
@@ -50,10 +54,22 @@ public class MultiTableModel extends AbstractTableModel {
 		tables = tablesIn;
 	}
 	public TableCellEditor getCellEditor(int row, int col ) {
-		return tableEditor;
+		/*
+		if(row % 2 == 0) {
+			return new javax.swing.DefaultCellEditor();
+		} else {
+		*/
+			return tableEditor;
+		//}
 	}
 	public TableCellRenderer getCellRenderer(int row, int col ) {
-		return tableRenderer;
+		/*
+		if(row % 2 == 0) {
+			return new DefaultTableCellRenderer();
+		} else {
+		*/
+			return tableRenderer;
+		//}
 	}
 	public int getColumnCount() {
 		return 1;
@@ -68,6 +84,10 @@ public class MultiTableModel extends AbstractTableModel {
 		return "Stuff";
 	}
 	public boolean isCellEditable(int row, int col) {
-		return true;
+		if(row % 2 == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
