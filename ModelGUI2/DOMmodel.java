@@ -49,12 +49,6 @@ public class DOMmodel implements TreeModel {
 			return -1;
 		}
 		else{
-			/*
-			if (((DOMNodeAdapter)child).getNode().getNodeType() == Node.TEXT_NODE) {
-				System.out.println("HERE");
-				return -1;
-			}
-			*/
 			try {
 			int counter = 0;
 			NodeList childlist = ((DOMNodeAdapter)parent).getNode().getChildNodes();
@@ -93,7 +87,6 @@ public class DOMmodel implements TreeModel {
 	}
 
     public void valueForPathChanged(TreePath path, Object newValue) {
-        System.out.println("ValueForPathChanged, path: " + path + ", newValue: " + newValue);
         Object oldValue = path.getLastPathComponent();
 		//if the value of the node has not changed, do nothing
 		if(oldValue.equals(newValue)) return;
@@ -184,7 +177,7 @@ public class DOMmodel implements TreeModel {
 	    int[] arr1 = {ct};
 		Node[] arr2 = {newChild};
 		fireTreeNodesInserted(new TreeModelEvent(this, parentPath, arr1, arr2));
-		System.out.println("outputting tree!!!");
+		//System.out.println("outputting tree!!!");
 	}
 	
 	public void removeNodeFrom(TreePath nodePath) {

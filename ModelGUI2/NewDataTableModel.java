@@ -166,14 +166,14 @@ public class NewDataTableModel extends BaseTableModel{
 			ArrayList nodepath = new ArrayList();
 			Node parent = ((Node)updown.getParentNode());
 			
-			System.out.println("side.getnodee name is " + side.getNodeName());
-			System.out.println("updown is " + updown.getNodeName());
+			//System.out.println("side.getnodee name is " + side.getNodeName());
+			//System.out.println("updown is " + updown.getNodeName());
 			
 			String headerone = ind1Name; // ex. region
 			String headertwo = ind2Name; // ex. populationSGM
 			
-			System.out.println("headerone is " + headerone);
-			System.out.println("header2 is " + headertwo);
+			//System.out.println("headerone is " + headerone);
+			//System.out.println("header2 is " + headertwo);
 			
 			
 			String attributesLine = getKey( row, col );
@@ -193,24 +193,24 @@ public class NewDataTableModel extends BaseTableModel{
 			String attrFrom2 = st.nextToken();
 			String attrTo2 = st.nextToken();
 			
-			System.out.println("attrfrom is " + attrFrom1);
-			System.out.println("attrto is " + attrTo1);
+			//System.out.println("attrfrom is " + attrFrom1);
+			//System.out.println("attrto is " + attrTo1);
 			
-			System.out.println("attrfrom2 is " + attrFrom2);
-			System.out.println("attto2 is " + attrTo2);
+			//System.out.println("attrfrom2 is " + attrFrom2);
+			//System.out.println("attto2 is " + attrTo2);
 			
 			int index = 0;
 			boolean stoplooking = false;
 			while( parent != null ){
 				nodepath.add( parent );
 				if ( !stoplooking && (parent.getNodeName().equals( headerone ) )){ // or headertwo
-					System.out.println("found headtwo! parent is " + parent.getNodeName());
+					//System.out.println("found headtwo! parent is " + parent.getNodeName());
 					index = nodepath.indexOf( parent ); // gives me '5'
-					System.out.println("index is ... " + index + " found it!");
+					//System.out.println("index is ... " + index + " found it!");
 						
 				}
 				parent = ((Node)parent.getParentNode());
-				System.out.println("looking for parent");
+				//System.out.println("looking for parent");
 			}
 			
 			// index is 5, i want to split on 5+1 = 6
@@ -235,8 +235,8 @@ public class NewDataTableModel extends BaseTableModel{
 						if( attrSplit.item(i).getNodeName().equals( attrFrom2 )){
 							if( attrSplit.item(i).getNodeValue().equals( attrTo2 )){
 								curr = onechild; // move down the list
-								System.out.println("FOUND IT!");
-								System.out.println("curr is " + curr.getNodeName() );
+								//System.out.println("FOUND IT!");
+								//System.out.println("curr is " + curr.getNodeName() );
 								stopsplitcount = true;
 							}	
 						}
@@ -245,22 +245,24 @@ public class NewDataTableModel extends BaseTableModel{
 				splitcount++;
 			}
 			
+			/*
 			System.out.println("node path is ");
 			for(int i=0; i< nodepath.size(); i++){
 				System.out.println(i + " " + ((Node)nodepath.get(i)).getNodeName());	
 			}
+			*/
 			
 			index--;
-			System.out.println("index is " + index);
+			//System.out.println("index is " + index);
 			
 			//curr = (Node)nodepath.get( index );
-			System.out.println("curr is " + curr.getNodeName());
+			//System.out.println("curr is " + curr.getNodeName());
 			if ( index >= 0 ){
-				System.out.println("in loop, index it " + index);
+				//System.out.println("in loop, index it " + index);
 				for(int theRest = index; theRest >= 0; theRest-- ){
-					System.out.println("in for loop, theRest is " + theRest);
+					//System.out.println("in for loop, theRest is " + theRest);
 					Node pathNext = ((Node)nodepath.get( theRest ));
-					System.out.println("pathnext's is " + pathNext.getNodeName() );
+					//System.out.println("pathnext's is " + pathNext.getNodeName() );
 					
 					NodeList children = curr.getChildNodes(); // either find it or create it
 					int counter = 0;					
@@ -275,11 +277,11 @@ public class NewDataTableModel extends BaseTableModel{
 							NamedNodeMap attrs1 = eChild.getAttributes();
 							NamedNodeMap attrs2 = ePathNext.getAttributes();
 							String temp;
-							System.out.println("are they not the right size? " + attrs1.getLength() + " " + attrs2.getLength());
+							//System.out.println("are they not the right size? " + attrs1.getLength() + " " + attrs2.getLength());
 							if (attrs1.getLength() == attrs2.getLength()) {
 								if ( attrs1.getLength() == 0 ){
 									curr = child;
-									System.out.println("found inside the node!");	
+									//System.out.println("found inside the node!");	
 									getOutOfLoop = true;
 								}else{
 
@@ -288,8 +290,8 @@ public class NewDataTableModel extends BaseTableModel{
 										if (eChild.getAttribute(temp).equals(ePathNext.getAttribute(temp))) {
 											// found the node!
 											curr = child; // move down the list
-											System.out.println("inside found the node!");
-											System.out.println("curr is " + curr.getNodeName()+ " moving down the list!");
+											//System.out.println("inside found the node!");
+											//System.out.println("curr is " + curr.getNodeName()+ " moving down the list!");
 											getOutOfLoop = true;
 										}
 									}
@@ -302,24 +304,20 @@ public class NewDataTableModel extends BaseTableModel{
 						Node createdNode = pathNext.cloneNode( false ); // clone the node and add it
 						curr.appendChild( createdNode );
 						curr = createdNode;
-						System.out.println("didn't find it, moving curr");
-						System.out.println("createdNode's name is " + createdNode.getNodeName());
+						//System.out.println("didn't find it, moving curr");
+						//System.out.println("createdNode's name is " + createdNode.getNodeName());
 					}
 				}
 			}// now index should == nodepath.size() - 1
 			
-			System.out.println("end, curr is ... " + curr.getNodeName());
+			//System.out.println("end, curr is ... " + curr.getNodeName());
 			
 			curr.appendChild( n );
 			data.put( getKey(row,col), n );
-			System.out.println("just appended the child");
-			System.out.println("curr is " + curr.getNodeName());
-			System.out.println(" n is " + n.getNodeName());
+			//System.out.println("just appended the child");
+			//System.out.println("curr is " + curr.getNodeName());
+			//System.out.println(" n is " + n.getNodeName());
 		}
-		
 		fireTableCellUpdated(row, col);
-
-		// fireOffSomeListeners?
-
 	}
 }

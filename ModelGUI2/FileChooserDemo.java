@@ -369,7 +369,7 @@ public class FileChooserDemo extends JFrame
 	Node tempNode;
 	while( (tempNode = res.iterateNext()) != null ){
 	  tempNode.setNodeValue( globalFC.getCurrentDirectory().toString() );
-	  System.out.println("just updated the recent doc!");
+	  //System.out.println("just updated the recent doc!");
 	}
   }
   
@@ -407,8 +407,6 @@ public class FileChooserDemo extends JFrame
 				  			MenuElement[] me = tableMenu.getSubElements();
 					  		for (int i = 0; i < me.length; i++) {
 					  			if (((JMenuItem)me[i]).getText().equals("Flip")) {
-									System.out.println("Flip menu activated");
-									System.out.println("flipped original x and y are " + e.getX() + " " + e.getY());
 									lastFlipX = e.getX();
 									lastFlipY = e.getY();
 					  			}
@@ -527,9 +525,6 @@ public class FileChooserDemo extends JFrame
    /** Creates the dialog box that will be made visible when the user choses to
 	* add a child to an esiting node in the tree. */
    public void makeAddChildDialog() {
-   	
-   		System.out.println("in makeAddChildDialog");
-   	
 	   addChildDialog = new JDialog(this, "Add Child Node", true);
 	   Container content = addChildDialog.getContentPane();
 	   content.setLayout(new BoxLayout(addChildDialog.getContentPane(), BoxLayout.X_AXIS));
@@ -619,8 +614,6 @@ public class FileChooserDemo extends JFrame
 		   model.insertNodeInto(newChild, selectedPath);
   		   jtree.scrollPathToVisible(new TreePath(newChild));
 
-       }else{
-       		System.out.println("NO CHILD ADDED");
        }
 
    }
@@ -727,7 +720,7 @@ public class FileChooserDemo extends JFrame
 						repeat = false;
 					}
 
-					System.out.println("BAD ATTRIBUTE ADDED!!!!");
+					//System.out.println("BAD ATTRIBUTE ADDED!!!!");
 				}
 			}else{
 				repeat = false;

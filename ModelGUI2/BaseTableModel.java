@@ -85,7 +85,6 @@ public abstract class BaseTableModel extends AbstractTableModel {
            else {
                    pathStr = pathStr + "/node()";
            }
-	   System.out.println(pathStr);
            return xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(currNode));
 	}
   public String getOneAttrVal(Node node) {
@@ -156,7 +155,6 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	final JButton nextButton = new JButton(" Finished With Selection ");
 	nextButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("pushed next button");
 			int[] selectedIndices = list.getSelectedIndices();
 			if( selectedIndices.length == 2 ){
 				selected.add( itemsObjs[ selectedIndices[0] ] );
@@ -240,13 +238,10 @@ public abstract class BaseTableModel extends AbstractTableModel {
 					tableFilterMaps = tempFilterMaps;
 					doFilter(possibleKeys);
 					if (oldNumRows < activeRows.size()) {
-						System.out.println("%% 1 %%");
 						fireTableRowsInserted(oldNumRows, activeRows.size());
 					} else if (oldNumRows > activeRows.size()) {
-						System.out.println("%% 2 %%");
 						fireTableRowsDeleted(0, activeRows.size());
 					} else {
-						System.out.println("%% 3 %%");
 						fireTableRowsUpdated(0,activeRows.size());
 					}
 				}
@@ -328,15 +323,12 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		for (int i = 0; i < currKeys.length; i++) {
 			// clean this up... maybe
 			if (((Boolean)((HashMap)tempFilterMaps.get(key)).get(currKeys[i])).booleanValue() && (j >= selectedKeys.length || i != selectedKeys[j])) {
-				//System.out.println("Changing Key: "+currKeys[i]+"'s value to false pos is "+i+" and selected key pos "+selectedKeys[j]);
 				((HashMap)tempFilterMaps.get(key)).put(currKeys[i], new Boolean(false));
 			} else if (!((Boolean)((HashMap)tempFilterMaps.get(key)).get(currKeys[i])).booleanValue() && (j < selectedKeys.length && i == selectedKeys[j])) {
-				//System.out.println("Changing Key: "+currKeys[i]+"'s value to true");
 				((HashMap)tempFilterMaps.get(key)).put(currKeys[i], new Boolean(true));
 			}
 			if (j < selectedKeys.length && i == selectedKeys[j]) {
 				j++;
-				//System.out.println("j is now "+j);
 			}
 		}
 	}
