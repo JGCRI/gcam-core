@@ -14,12 +14,14 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include "Scenario.h"
+#include "World.h"
 
 using namespace std; 
 
-extern map<string,int> regionMap; // map of region names
 extern const char *DBout; // Minicam style output
 extern CdbDatabase db;
+extern Scenario* scenario;
 
 //! Create variable ids for outputs that are compatable with the dataviewer.xls.
 void createMCvarid() {
@@ -204,6 +206,7 @@ void createMCvarid() {
 	CdbRecordset RegionInfoRst = db.OpenRecordset(dbtregion,dbOpenDynaset);
 	typedef map<string,int>:: const_iterator CI;
 	string regstr;
+    map<string,int> regionMap = scenario->getWorld()->getOutputRegionMap();
 	for (CI rmap=regionMap.begin(); rmap!=regionMap.end(); ++rmap) {
 		RegionInfoRst.AddNew(); // now the current record is this empty new one
 		regstr = rmap->first;
