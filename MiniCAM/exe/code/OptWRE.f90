@@ -48,9 +48,10 @@
  	    MagInt =1+15/INT(MAGICCCResults(0,2)-MAGICCCResults(0,1))*(9 - 2)
  	    if (INT(MAGICCCResults(0,2)-MAGICCCResults(0,1)) .eq. 5) MagInt = MagInt + 1
 
-		IF (WHICHTARG(LG) .EQ. 2) TARGVAL = MAGICCCResults(2,MagInt)
-		IF (WHICHTARG(LG) .EQ. 3) TARGVAL = MAGICCCResults(1,MagInt)
-		IF (WHICHTARG(LG) .EQ. 4) TARGVAL = MAXVAL(MAGICCCResults(2,1:MagInt))
+		IF (WHICHTARG(LG) .EQ. 2) TARGVAL = MAGICCCResults(2,MagInt)	! CO2 Concentration
+		IF (WHICHTARG(LG) .EQ. 3) TARGVAL = MAGICCCResults(1,MagInt)	! Gbl Mean temp
+		IF (WHICHTARG(LG) .EQ. 4) TARGVAL = MAXVAL(MAGICCCResults(2,1:MagInt))	! Max CO2 conc
+		IF (WHICHTARG(LG) .EQ. 5) TARGVAL = MAXVAL(MAGICCCResults(13,MagInt))	! Total Forcing
 
 		DIFF = (TARGVAL - CUMTARG(LG)) / CUMTARG(LG)
 		Write(*,'(a,2(f10.4,","),f10.4,"%")') &
