@@ -2523,6 +2523,16 @@ END IF !IWrite
 ! sjs -- write out halocarbon forcings separately as well
 ! *******************************************************************************************
 
+! Calculate 1990 halocarbon forcings so these can be output
+	QCF4_ar(226) = CF4(226) * ( QCF4_ar(227)/CF4(227) )
+	QC2F6_ar(226) = C2F6(226) * ( QC2F6_ar(227)/C2F6(227) )
+	qSF6_ar(226) = CSF6(226) * ( qSF6_ar(227)/CSF6(227) )
+
+! Approximate to same 1989 forcing
+	QCF4_ar(225) = QCF4_ar(226)
+	QC2F6_ar(225) = QC2F6_ar(226)
+	qSF6_ar(225) = qSF6_ar(226)
+
 !
 !
 IF(IWrite.eq.1)THEN
@@ -2739,6 +2749,7 @@ IF(IWrite.eq.1)THEN
 	IF (IWrite .eq. 1) CLOSE (9)
 !     ******* END MINICAM OUTPUT ***
  
+
 !
 !  **************************************************************
 !  **************************************************************
@@ -4242,7 +4253,6 @@ IF(IWrite.eq.1)THEN
 	Q227_ar(J) = Q227
 	Q245_ar(J) = Q245
 
-
       ENDIF
 !
 !  *******************************************************
@@ -5712,3 +5722,21 @@ IF(IWrite.eq.1)THEN
 !
       RETURN
       END
+
+      FUNCTION co2Conc( inYear )
+
+      parameter (iTp=740)
+
+      COMMON/CARB/CCO2(4,224:iTp),EDGROSS(4,226:iTp),EF(226:iTp+1), &
+      REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
+      TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
+      FOC(4,226:iTp),co2(0:iTp)
+
+	  REAL*8 co2Conc
+
+      IYR = inYear-1990+226
+
+      co2Conc = CO2( IYR )
+
+      RETURN 
+	  END
