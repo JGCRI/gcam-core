@@ -196,11 +196,11 @@ void Sector::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( market, "market", out, tabs );
     XMLWriteElement( unit, "unit", out, tabs );
 
-    for( int i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
+    for( int i = 0; modeltime->getper_to_yr( i ) <= 1975; i++ ){
         XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
 
-    for( int i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
+    for( int i = 0; modeltime->getper_to_yr( i ) <= 1975; i++ ){
         XMLWriteElement( output[ i ], "output", out, tabs, modeltime->getper_to_yr( i ) );
     }
 
