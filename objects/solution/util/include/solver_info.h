@@ -15,6 +15,7 @@
 
 #include <string>
 #include <iosfwd>
+#include <functional>
 
 class Market;
 class SolverInfoSet;
@@ -70,9 +71,13 @@ public:
     bool isSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR );
     double getDemandElasWithRespectTo( const unsigned int aMarketNumber ) const;
     double getSupplyElasWithRespectTo( const unsigned int aMarketNumber ) const;
+    bool isUnsolvedAndSingular( const double aSolTolerance, const double aSolFloor );
+    void setBisectedFlag();
+    void unsetBisectedFlag();
+    bool hasBisected() const;
     const std::vector<std::string> getContainedRegions() const;
-    void printTrackED( bool printEOL = true ) const;
     SupplyDemandCurve createSDCurve();
+    void printDerivatives( std::ostream& aOut ) const;
     /*!
     * \brief Binary function used to order SolverInfo* pointers by decreasing relative excess demand. 
     * \author Josh Lurz
@@ -91,6 +96,7 @@ public:
     };
 private:
     bool bracketed;	//!< Bracketed or unbracketed.
+    bool mBisected;
     Market* linkedMarket; //!< Linked market. 
     double X;		//!< unknown, price.
     double storedX;      //!< previous unknown.
