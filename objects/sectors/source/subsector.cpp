@@ -447,7 +447,7 @@ void Subsector::initCalc( const int period ) {
     shareWeightScale( period ); 
     fixedShare[ period ] = 0;
     
-    // Prevent pathological situation were share is zero where a fixed capacity is present.\
+    // Prevent pathological situation were share is zero where a fixed capacity is present.
     // This can happen at begining of an initialization. Share will be set properly within secotr::calcShare 
     if ( ( getFixedOutput( period ) > 0 ) && ( fixedShare[ period ] == 0 ) ) {
        fixedShare[ period ] = 0.1;
@@ -791,7 +791,7 @@ void Subsector::limitShares( const double multiplier, const int period ) {
 * \author Steve Smith
 * \param capLimit capacity limit (share)
 * \param orgShare original share for sector
-* \return transfomred share value
+* \return transformed share value
 */
  double Subsector::capLimitTransform( double capLimit, double orgShare ) {
    const double SMALL_NUM = util::getSmallNumber();
@@ -839,7 +839,6 @@ double Subsector::getFixedShare( const int period ) const {
 \param share sector share that is fixed supply
 */
 void Subsector::setFixedShare( const int period, const double share ) {
-
     // option to turn this off during calibration
     // This does not work correctly, shares will not sum to one. -JPL
     // if ( world->getCalibrationSetting() ) {
