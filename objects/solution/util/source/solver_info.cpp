@@ -16,14 +16,15 @@
 #include "solution/util/include/solver_library.h"
 #include "marketplace/include/market.h"
 #include "util/base/include/supply_demand_curve.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
 //! Constructor
-SolverInfo::SolverInfo( Market* linkedMarket ){
-    assert( linkedMarket );
+SolverInfo::SolverInfo( Market* aLinkedMarket ){
+    assert( aLinkedMarket );
     // initialize the data members.
-    this->linkedMarket = linkedMarket;
+    linkedMarket = aLinkedMarket;
     X = 0;
     storedX = 0;
     demand = 0;
@@ -35,6 +36,7 @@ SolverInfo::SolverInfo( Market* linkedMarket ){
     EDL = 0;
     EDR = 0;
     bracketed = false;
+    mBisected = false;
 }
 
 //! Equals operator based on the equality of the linked market.
@@ -48,7 +50,7 @@ bool SolverInfo::operator!=( const SolverInfo& rhs ) const {
 }
 
 //! Initialize the SolverInfo.
-void SolverInfo::init() {
+void SolverInfo::init(){
     // Update price, supply and demand from the market.
     X = linkedMarket->getRawPrice();
     supply = linkedMarket->getRawSupply();
@@ -82,7 +84,7 @@ double SolverInfo::getPrice() const {
 
 //! Set the price
 void SolverInfo::setPrice( const double aPrice ){
-    X = aPrice;
+   X = aPrice;
 }
 
 //! Set the price to the median value between the left and right bracket.
@@ -427,7 +429,9 @@ bool SolverInfo::isSolved( const double SOLUTION_TOLERANCE, const double ED_SOLU
 // This should be replaced with a map and market name.
 double SolverInfo::getDemandElasWithRespectTo( const unsigned int aMarketNumber ) const {
     if( aMarketNumber > demandElasticities.size() ){
-        cout << "Error: Invalid market number in SolverInfo::getDemandElasWithRespectTo of : " << aMarketNumber << endl;
+       ILogger& mainLog = ILogger::getLogger( "solver_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Invalid market number in SolverInfo::getDemandElasWithRespectTo of : " << aMarketNumber << endl;
         return 0;
     }
     return demandElasticities.at( aMarketNumber );
@@ -443,28 +447,49 @@ const vector<string> SolverInfo::getContainedRegions() const {
 // This should be replaced with a map and market name.
 double SolverInfo::getSupplyElasWithRespectTo( const unsigned int aMarketNumber ) const {
     if( aMarketNumber > supplyElasticities.size() ){
-        cout << "Error: Invalid market number in SolverInfo::getSupplyElasWithRespectTo of : " << aMarketNumber << endl;
+        ILogger& solverLog = ILogger::getLogger( "solver_log" );
+        solverLog.setLevel( ILogger::ERROR );
+        solverLog << "Invalid market number in SolverInfo::getSupplyElasWithRespectTo of : " << aMarketNumber << endl;
         return 0;
     }
     return supplyElasticities.at( aMarketNumber );
 }
 
-//! Print out information from the SolverInfo to a file.
-void SolverInfo::print( ostream& out ) const {
-    out << getName() << "," << X << "," << XL << "," << XR << ","<< getED() << "," << EDL <<","<< EDR << "," << bracketed << "," << demand << "," << supply;
+//! Return whether this market is currently unsolved and has a singularity. 
+bool SolverInfo::isUnsolvedAndSingular( const double aSolTolerance, const double aSolFloor ){
+    // Check if the market is not solved, is solved under bisection and is not solved under NR.
+    return( !isSolved( aSolTolerance, aSolFloor ) && shouldSolve( false ) && !shouldSolve( true ) );
 }
 
-/*! \brief Print out information for tracking
-* \author Josh Lurz, Steve Smith
-* \param printEOL optional parameter to control printing of linefeed (default true).
-*/
-void SolverInfo::printTrackED( bool printEOL ) const {
-    cout << getName() << " X: " << X << " ED: " << getED() << " RED: " << getRelativeED( 0 ) << " S: " << supply << " D: " << demand;
-    if ( printEOL ) {
-      cout << endl;
-   }
+void SolverInfo::setBisectedFlag(){
+    mBisected = true;
+}
+
+void SolverInfo::unsetBisectedFlag(){
+    mBisected = false;
+}
+
+bool SolverInfo::hasBisected() const {
+    return mBisected;
+}
+//! Print out information from the SolverInfo to a file.
+void SolverInfo::print( ostream& out ) const {
+    out << getName() << " X: " << X << " XL: " << XL << " XR: " << XR << " ED: " << getED() << " EDR: " << EDR << " EDL: " << EDL << " RED: " << getRelativeED( 0 ) << " S: " << supply << " D: " << demand;
 }
 
 SupplyDemandCurve SolverInfo::createSDCurve(){
     return SupplyDemandCurve( linkedMarket );
+}
+
+void SolverInfo::printDerivatives( ostream& aOut ) const {
+    aOut << getName() << " SupplyDer: ";
+    for( unsigned int i = 0; i < supplyElasticities.size(); ++i ){
+        aOut << "," << supplyElasticities[ i ];
+    }
+    aOut << endl;
+        aOut << getName() << " DemandDer: ";
+    for( unsigned int i = 0; i < demandElasticities.size(); ++i ){
+        aOut << "," << demandElasticities[ i ];
+    }
+    aOut << endl;
 }
