@@ -145,6 +145,9 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
         AgSector::internalOutput();
     }
     
+    // Write csv file output
+    mScenario->csvOutputFile();
+    
     // Perform the database output. 
     // Initialize the database.
     openDB(); // Open MS Access database
