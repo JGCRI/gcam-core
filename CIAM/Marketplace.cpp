@@ -44,7 +44,8 @@ extern Scenario* scenario;
 * The default constructor for the Marketplace which initializes several datamembers and
 * creates an instance of the selected solver.
 *
-* \todo Make a static methor which returns a new BisectionNRSolver for further encapsulation.
+* \todo Improve error checking and handling. 
+* \todo Make a static method which returns a new BisectionNRSolver for further encapsulation.
 * \todo Marketplace might be better as a singleton.
 */
 Marketplace::Marketplace() {
@@ -77,7 +78,7 @@ Marketplace::~Marketplace() {
 * that was created in the constructor. This method then clears the market.
 *
 * \param period Period of the model to solve.
-* \todo <s>Error checking return codes for solve.</s>
+* \todo <strike>Error checking return codes for solve.</strike>
 */
 
 void Marketplace::solve( const int period ){
@@ -144,6 +145,7 @@ void Marketplace::toDebugXML( const int period, ostream& out ) const {
 * This convenience function was added to consistently create the name of the market from the region name and
 * good name.
 *
+* \author Josh Lurz
 * \param marketName The market region.
 * \param goodName The market good.
 */
@@ -151,7 +153,16 @@ string Marketplace::createMarketKey( const string& marketName, const string& goo
     return ( marketName + goodName );
 }
 
-//! Function to find the market number from the market name and good name.
+/*! \brief Function to find the market number from the market name and good name.
+*
+* This function uses the market region and and good name to determine the market. It performs a lookup
+* on the key created by createMarketKey using the marketMap to determine the market. 
+*
+* \author Josh Lurz
+* \param marketName The market region of the market.
+* \param goodName The good of the market. 
+* \return The market number of the market, -1 if the lookup fails.
+*/
 int Marketplace::getMarketNumberFromNameAndGood( const string& marketName, const string& goodName ) const {
 
     string key = createMarketKey( goodName, marketName );
@@ -167,8 +178,17 @@ int Marketplace::getMarketNumberFromNameAndGood( const string& marketName, const
     }
 }
 
-//! Function to set the raw price from the marketName and goodName.
-/*! \warning MarketName is NOT the same as RegionName.
+/*! \brief Function to set the raw price from the marketName and goodName.
+*
+* This function first finds a market based on its marketName and goodName. It then
+* sets the value of Market::price to the passed in value.
+*
+* \author Josh Lurz
+* \warning MarketName is NOT the same as RegionName.
+* \param marketName The marketRegion of the market.
+* \param goodName The name of the good the market contains. 
+* \param priceIn The value to set Market::price to.
+* \param period The period in which to set the new price. 
 */
 void Marketplace::setRawPrice( const string& marketName, const string& goodName, const double priceIn, const int period ) {
 
@@ -180,15 +200,20 @@ void Marketplace::setRawPrice( const string& marketName, const string& goodName,
         markets[ marketNumber ][ period ]->setRawPrice( priceIn );
     }
     if ( priceIn > 1e10 ) {
-        cerr << "Error: " << goodName<<" Price in "<< marketName <<" is being set to: " << priceIn << endl;
+        cerr << "Error: " << goodName << " price in "<< marketName <<" is being set to: " << priceIn << endl;
     }
 }
 
-/*
-//! returns a single market's raw demand from the market name and good name.
-/*! \warning MarketName is NOT the same as RegionName.
+/*! \brief Return the market's raw demand. 
+*
+* This function uses a market type independent function to find the raw or true demand for a market determined by the goodName and regionName.
+* For non-existant markets, this function returns 0. This function is used by the solution mechanism, which needs access to the raw demand. 
+*
+* \warning marketName is not the same as regionName.
+* \param goodName The good for which a raw demand is needed.
+* \param regionName The region for which a raw demand is needed.
+* \return The market's raw demand.
 */
-
 double Marketplace::getRawDemand( const string& marketName, const string& goodName, const int period ) const {
 
     // Get the market number.
@@ -204,8 +229,16 @@ double Marketplace::getRawDemand( const string& marketName, const string& goodNa
     }
 }
 
-//! returns a single market's stored raw demand from the market name and good name.
-/*! \warning MarketName is NOT the same as RegionName.
+/*! \brief Return the market's stored raw demand. 
+*
+* This function uses a market type independent function to find the stored raw or true demand for a market determined by the goodName and regionName.
+* For non-existant markets, this function returns 0. This function is used by the solution mechanism, which needs access to the stored raw demand in
+* order to calculate derivatives. 
+*
+* \warning marketName is not the same as regionName.
+* \param goodName The good for which a raw stored demand is needed.
+* \param regionName The region for which a raw stored demand is needed.
+* \return The market's raw stored demand.
 */
 double Marketplace::getStoredRawDemand( const string& marketName, const string& goodName, const int period ) const {
 
@@ -222,9 +255,18 @@ double Marketplace::getStoredRawDemand( const string& marketName, const string& 
     }
 }
 
-//! returns if a market is a price or demand market.
-/*! \warning MarketName is NOT the same as RegionName.
-* \note This still isn't very good OO programming. 
+/*! \brief This function returns true if the given market is a price or demand market.  
+*
+* This function is used to determine if a given market is a price or demand market. Currently 
+* these markets have special behavior within the solution mechanism, so the solution mechanism
+* must have access to this information.
+*
+* \note This is not particularly good OO programming.
+* \todo Find a way to avoid leaking this information.
+* \warning marketName is not the same as regionName.
+* \param goodName The good of the market. 
+* \param regionName The region of the market.
+* \return If a market is a price or demand market. 
 */
 bool Marketplace::isPriceOrDemandMarket( const string& marketName, const string& goodName, const int period ) const {
 
@@ -242,8 +284,15 @@ bool Marketplace::isPriceOrDemandMarket( const string& marketName, const string&
     return retValue;
 }
 
-//! returns a single market's raw supply from the market name and good name.
-/*! \warning MarketName is NOT the same as RegionName.
+/*! \brief Return the market's raw supply. 
+*
+* This function uses a market type independent function to find the raw or true supply for a market determined by the goodName and regionName.
+* For non-existant markets, this function returns 0. This function is used by the solution mechanism, which needs access to the raw supply. 
+*
+* \warning marketName is not the same as regionName.
+* \param goodName The good for which a raw supply is needed.
+* \param regionName The region for which a raw supply is needed.
+* \return The market's raw supply.
 */
 double Marketplace::getRawSupply( const string& marketName, const string& goodName, const int period ) const {
 
@@ -260,8 +309,16 @@ double Marketplace::getRawSupply( const string& marketName, const string& goodNa
     }
 }
 
-//! returns a single market's stored raw supply from the market name and good name.
-/*! \warning MarketName is NOT the same as RegionName.
+/*! \brief Return the market's stored raw supply. 
+*
+* This function uses a market type independent function to find the stored raw or true supply for a market determined by the goodName and regionName.
+* For non-existant markets, this function returns 0. This function is used by the solution mechanism, which needs access to the stored raw supply in
+* order to calculate derivatives. 
+*
+* \warning marketName is not the same as regionName.
+* \param goodName The good for which a raw stored supply is needed.
+* \param regionName The region for which a raw stored supply is needed.
+* \return The market's raw stored supply.
 */
 double Marketplace::getStoredRawSupply( const string& marketName, const string& goodName, const int period ) const {
 
@@ -278,8 +335,16 @@ double Marketplace::getStoredRawSupply( const string& marketName, const string& 
     }
 }
 
-//! returns a single market's raw price from the market name and good name.
-/*! \warning MarketName is NOT the same as RegionName.
+/*! \brief Return the market's raw price. 
+*
+* This function uses a market type independent function to find the raw or true price for a market determined by the goodName and regionName.
+* For non-existant markets, this function returns 0. This behavior is different than getPrice becuase this function is only called from within
+* the solution mechanism, which should never be searching for a non-existant market.
+*
+* \warning marketName is not the same as regionName.
+* \param goodName The good for which a raw price is needed.
+* \param regionName The region for which a raw price is needed.
+* \return The market's raw price.
 */
 double Marketplace::getRawPrice( const string& marketName, const string& goodName, const int period ) const {
 
@@ -296,8 +361,16 @@ double Marketplace::getRawPrice( const string& marketName, const string& goodNam
     }
 }
 
-//! returns a single market's stored raw price from the market name and good name.
-/*! \warning MarketName is NOT the same as RegionName.
+/*! \brief Return the market's stored raw price. 
+*
+* This function uses a market type independent function to find the stored raw or true price for a market determined by the goodName and regionName.
+* For non-existant markets, this function returns 0. This function is used by the solution mechanism, which needs access to the stored raw price in
+* order to calculate derivatives. 
+*
+* \warning marketName is not the same as regionName.
+* \param goodName The good for which a raw stored price is needed.
+* \param regionName The region for which a raw stored price is needed.
+* \return The market's raw stored price.
 */
 double Marketplace::getStoredRawPrice( const string& marketName, const string& goodName, const int period ) const {
 
@@ -314,7 +387,18 @@ double Marketplace::getStoredRawPrice( const string& marketName, const string& g
     }
 }
 
-//! Remove an amount from all markets raw demand.
+/*! \brief Remove an amount specified for each market from each market's raw demand.
+*
+* This function is passed a vector of raw demands of the same size and same ordering as the market vector. 
+* Each vector item is the amount of demand to remove from the associated market in the marketplace.
+* This method uses the Market::removeFromRawDemand method, so that the Market::demand variable is directly reduced,
+* in a type independent manner. This method is needed for calculating regional derivatives. 
+*
+* \author Josh Lurz
+* \todo Relying on the ordering of the markets is probably not a good idea. 
+* \param rawDemands Vector in the same order as the markets in the marketplace containing an amount of demand to remove for each market.
+* \param period Period in which to remove the demand. 
+*/
 void Marketplace::removeFromRawDemands( const vector<double>& rawDemands, const int period ) {
 
     // First check vector sizes match.
@@ -326,7 +410,18 @@ void Marketplace::removeFromRawDemands( const vector<double>& rawDemands, const 
     }
 }
 
-//! Remove an amount from all markets raw supply.
+/*! \brief Remove an amount specified for each market from each market's raw supply.
+*
+* This function is passed a vector of raw supplies of the same size and same ordering as the market vector. 
+* Each vector item is the amount of supply to remove from the associated market in the marketplace.
+* This method uses the Market::removeFromRawSupply method, so that the Market::supply variable is directly reduced,
+* in a type independent manner. This method is needed for calculating regional derivatives. 
+*
+* \author Josh Lurz
+* \todo Relying on the ordering of the markets is probably not a good idea. 
+* \param rawSupplies Vector in the same order as the markets in the marketplace containing an amount of supply to remove for each market.
+* \param period Period in which to remove the supply. 
+*/
 void Marketplace::removeFromRawSupplies( const vector<double>& rawSupplies, const int period ) {
 
     // First check vector sizes match.
@@ -338,7 +433,17 @@ void Marketplace::removeFromRawSupplies( const vector<double>& rawSupplies, cons
     }
 }
 
-//! Get the list of contained regions from a market. 
+/*! \brief Get the list of contained regions from a market.
+*
+* Each market contains a list of regions that are within it. This represents regions who feed into and take out of this market.
+* This function returns that listing.
+*
+* \author Josh Lurz
+* \param marketName The name of the market region.
+* \param goodName The good of the market.
+* \param period The period of the market to return the contained regions.
+* \return A vector of region names contained by the market.
+*/
 const vector<string> Marketplace::getContainedRegions( const string& marketName, const string& goodName, const int period ) const {
 
     // Get the market number.
@@ -353,17 +458,28 @@ const vector<string> Marketplace::getContainedRegions( const string& marketName,
     }
 }
 
-//! Function which adds a regional market into the regionToMarketMap map, uses goodName + regionName to find that market.
-/*! Returns true if a new market was added. False if the market already exists.
+/*! \brief This function creates a market of the specified type for a given market region and good if it does not already exist.
+*
+* This function first checks if a market exists for a given market name and good name. If it does, the function add the region 
+* to the contained regions of the market and add the region and good name to the regionToMarketMap, then finally returns false.
+* Otherwise, it creates a market of the specified type, add the region to the contained region list, and adds keys to the marketMap and regionToMarketMap.
+* The key to the marketMap is based on the marketName and goodName and the key to the regionToMarketMap is based on the regionName and goodName.
+*
+* \todo A factory method should be used so all market classes don't have to be included by this class. 
 * \warning There is an important distinction here between the region name vs the market name. The key to the market is the goodName + market name.
+* \param regionName The region of the sector for which to create a market.
+* \param marketName The market region for which to create a market. This varies from the regionName, it can be global, a multi-region market, or the same as the region name.
+* \param goodName The good for which to create a market.
+* \param typeIn The type of market to create.
+* \return Whether a market was created.
 */
-bool Marketplace::createMarket( const string& regionName, const string& marketsname, const string& goodName, const NewMarketType typeIn ) {
+bool Marketplace::createMarket( const string& regionName, const string& marketName, const string& goodName, const NewMarketType typeIn ) {
     const Modeltime* modeltime = scenario->getModeltime();
     int marketsNo;
     bool retValue;
 
     // create unique markets from distinct good and market region names
-    string key = createMarketKey( goodName, marketsname );
+    string key = createMarketKey( goodName, marketName );
 
     if ( marketMap.find( key ) != marketMap.end() ) { // market exists, no unique number
         retValue = false;
@@ -383,16 +499,16 @@ bool Marketplace::createMarket( const string& regionName, const string& marketsn
 
         for( int i = 0; i < static_cast<int>( tempVector.size() ); i++ ){
             if ( typeIn == NORMAL ){
-                tempVector[ i ] = new NormalMarket( goodName, marketsname, i );
+                tempVector[ i ] = new NormalMarket( goodName, marketName, i );
             }
             else if ( typeIn == GHG ) {
-                tempVector[ i ] = new GHGMarket( goodName, marketsname, i );
+                tempVector[ i ] = new GHGMarket( goodName, marketName, i );
             }
             else if ( typeIn == CALIBRATION ) {
-                tempVector[ i ] = new CalibrationMarket( goodName, marketsname, i );
+                tempVector[ i ] = new CalibrationMarket( goodName, marketName, i );
             }
             else if ( typeIn == DEMAND ) {
-                tempVector[ i ] = new DemandMarket( goodName, marketsname, i );
+                tempVector[ i ] = new DemandMarket( goodName, marketName, i );
             }
             else {
                 cerr << "Invalid market type: " << typeIn << endl;
@@ -416,7 +532,14 @@ bool Marketplace::createMarket( const string& regionName, const string& marketsn
     return retValue;
 }
 
-//! Returns the market number of a market given a goodName and regionName.
+/*! \brief Returns the market number of a market given a goodName and regionName.
+*
+* This function uses the regionToMarketMap to lookup a market based on the passed goodName and regionName.
+*
+* \param goodName The good of the market.
+* \param regionName The region for which a market is needed.
+* \return The market number if the lookup is successful, -1 otherwise.
+*/
 int Marketplace::getMarketNumber( const string& goodName, const string& regionName ) const {
     map <string, int> :: const_iterator findIter = regionToMarketMap.find( goodName + regionName );
 
@@ -428,12 +551,18 @@ int Marketplace::getMarketNumber( const string& goodName, const string& regionNa
     }
 }
 
-//! Restructures a market to account for simultaneities
-/*! Changes the named market to a price market, which suplies a trial price for a secondary good
-* Also adds a corresponding demand market that provides a trial value for demand.
-* Routines such as Marketplace::setdemand, getdemand, getprice, etc. are adjusted to act 
-* differently for PRICE and DEMAND markets so that these changes are transparent to the 
+/*! \brief Restructures a market to account for simultaneities.
+*
+* Changes the named market to a price market, which suplies a trial price for a secondary good.
+* It also adds a corresponding demand market that provides a trial value for demand.
+* Markets are subclassed to allow Market::addToDemand, Market::getDemand, Market::getPrice, etc. to act 
+* differently for PriceMarket and DemandMarket so that these changes are transparent to the 
 * rest of the code.
+* 
+* \author Steve Smith
+* \todo This currently will not work for global markets. 
+* \param goodName The name of the good of the market to be restructured.
+* \param regionName The region of the market to be restructured.
 */
 void Marketplace::resetToPriceMarket( const string& goodName, const string& regionName ) {
 
@@ -486,7 +615,16 @@ void Marketplace::resetToPriceMarket( const string& goodName, const string& regi
     }
 }
 
-//! Set the prices by period of a market from a vector.
+/*! \brief Set the prices by period of a market from a vector.
+*
+* This function sets the price for each period of a market according to the corresponding value in the prices vector.
+* The function checks so that it will not fail if the prices vector is a different size than the markets vector. 
+*
+* \author Josh Lurz
+* \param goodName The goodName of the market for which to set new prices.
+* \param regionName The regionName to use for the lookup to determine the correct market.
+* \param prices A vector containing prices to set into the market. 
+*/
 void Marketplace::setPriceVector( const string& goodName, const string& regionName, const vector<double>& prices ){
 
     // determine what market the region and good are in.
@@ -497,16 +635,16 @@ void Marketplace::setPriceVector( const string& goodName, const string& regionNa
     }
 }
 
-//! Initialize prices
-/*! Supply and demand sector prices should always get set somewhere else, except for first period,
-* although no such guarantee for GHG markets, but initialize prices for all periods 
-* in all markets just to be safe if not already set. 
+/*! \brief Initialize prices for all markets. 
+*
+* Supply and demand sector prices should always get set somewhere else except for in the first period.
+* However, no such guarantee exists for GHG markets. The function initializes prices for all periods 
+* in all markets just to be safe if they are not already set. 
 * Initialization also occurs for supply and demand markets that have prices read-in via routine:
-* setPriceVector (in sector as supply & demand mkts are created).
+* setPriceVector in sector as supply and demand markets are created.
 * This has no effect for future periods as these prices are overwritten by 
-* Marketplace::init_to_last
+* Marketplace::init_to_last except for CalibrationMarkets.
 */
-
 void Marketplace::initPrices(){
 
     // initialize supply and demand sector market prices to 1.
@@ -517,7 +655,17 @@ void Marketplace::initPrices(){
     }
 }
 
-//! Set the solve flag for this market for the given period, or all periods if per argument is undefined.
+/*! \brief Set the solve flag for this market for the given period, or all periods if per argument is undefined.
+*
+* This function determines a market from a good and region and sets the market to solve for the period passed to the function.
+* If this period is -1, the default value, the function sets the solve flag for all periods of the market. This solve flag 
+* determines whether the market is solved by the solution mechanism, except for cases where the market does not pass certain
+* other criteria related to singularities. If this flag is set to false, as is the default, the market will never be solved. 
+*
+* \param goodName The name of the good of the market.
+* \param regionName The region name of the market.
+* \param per The period for which the market should be solved, -1 is the default values and tells the function to set the flag for all periods.
+*/
 void Marketplace::setMarketToSolve ( const string& goodName, const string& regionName, const int per ) {
 
     const int marketNumber = getMarketNumber( goodName, regionName );
@@ -540,31 +688,52 @@ void Marketplace::setMarketToSolve ( const string& goodName, const string& regio
     }
 }
 
-//! initialize all market prices for the given period to 0.
+/*! \brief Initialize all market prices for the given period.
+* 
+* This function iterates through the markets and nulls the price of each market
+* in the given period.
+*
+* \param period Period in which to null the prices. 
+*/
 void Marketplace::nullPrices( const int period ) {
     for ( int i = 0; i < numMarkets; i++ )
         markets[ i ][ period ]->nullPrice();
 }
 
-//! initialize all market demands for the given period to 0.
+/*! \brief Initialize all market demands for the given period.
+* 
+* This function iterates through the markets and nulls the demand of each market
+* in the given period.
+*
+* \param period Period in which to null the demands. 
+*/
 void Marketplace::nullDemands( const int period ) {
     for ( int i = 0; i < numMarkets; i++ ) {
         markets[ i ][ period ]->nullDemand();
     }
 }
 
-//! initialize all market supplies to 0
+/*! \brief Initialize all market supplies for the given period.
+* 
+* This function iterates through the markets and nulls the supply of each market
+* in the given period.
+*
+* \param period Period in which to null the supplies. 
+*/
 void Marketplace::nullSupplies( const int period ) {
     for ( int i = 0; i < numMarkets; i++ ) {
         markets[ i ][ period ]->nullSupply();
     }
 }
 
-//! set market price
-/*! If this is a price market, then the price passed is used to set supply instead of price. 
-* The market price is also used to set the demand.
-* Use this convention for pseudo markets -- model values are supply, trial market values are used
-* for demand. 
+/*! \brief Set the market price.
+*
+* This function uses the type dependent method Market::setPrice to set the passed in value into the market.
+*
+* \param goodName The good of the market.
+* \param regionName The region setting the price.
+* \param value The value to which to set price.
+* \param per The period in which to set the price.
 */
 void Marketplace::setPrice( const string& goodName, const string& regionName, const double value, const int per ){
     const int marketNumber = getMarketNumber( goodName, regionName );
@@ -574,7 +743,16 @@ void Marketplace::setPrice( const string& goodName, const string& regionName, co
     }
 }
 
-//! Add to the supply for this market
+/*! \brief Add to the supply for this market.
+*
+* This function increments the supply for a market determined by the goodName and regionName
+* by a given value. This function is used throughout the model to add supply to markets. 
+*
+* \param goodName Name of the good for which to add supply.
+* \param regionName Name of the region in which supply should be added for the market.
+* \param value Amount of supply to add.
+* \param per Period in which to add supply.
+*/
 void Marketplace::addToSupply( const string& goodName, const string& regionName, const double value, const int per ){
 
     const int marketNumber = getMarketNumber( goodName, regionName );
@@ -584,7 +762,16 @@ void Marketplace::addToSupply( const string& goodName, const string& regionName,
     }
 }
 
-//! set market demand to used for solution mechanism
+/*! \brief Add to the demand for this market.
+*
+* This function increments the demand for a market determined by the goodName and regionName
+* by a given value. This function is used throughout the model to add demand to markets. 
+*
+* \param goodName Name of the good for which to add demand.
+* \param regionName Name of the region in which demand should be added for the market.
+* \param value Amount of demand to add.
+* \param per Period in which to add demand.
+*/
 void Marketplace::addToDemand( const string& goodName, const string& regionName, const double value, const int per ){
     const int marketNumber = getMarketNumber( goodName, regionName );
 
@@ -597,9 +784,16 @@ void Marketplace::addToDemand( const string& goodName, const string& regionName,
     }
 }
 
-//! return market price
-/*! If the market does not exist, return an extremely large price.
-\todo do something else about "renewable"
+/*! \brief Return the market price. 
+*
+* This function uses a market type dependent function to find the price for a market determined by the goodName and regionName.
+* This price is not always the raw or true price. For non-existant markets, this function returns a near infinite price, except for renewable
+* markets that do not exist, for which it returns 0.
+*
+* \todo do something else about "renewable"
+* \param goodName The good for which a price is needed.
+* \param regionName The region for which a price is needed.
+* \return The market price.
 */
 double Marketplace::getPrice( const string& goodName, const string& regionName, const int per ) const {
 
@@ -621,7 +815,15 @@ double Marketplace::getPrice( const string& goodName, const string& regionName, 
 
 }
 
-//! return market supply used for solution mechanism
+/*! \brief Return the market supply. 
+*
+* This function uses a market type dependent function to find the supply for a market determined by the goodName and regionName.
+* This supply is not always the raw or true supply. For non-existant markets, this function returns 0.
+*
+* \param goodName The good for which a supply is needed.
+* \param regionName The region for which a supply is needed.
+* \return The market supply.
+*/
 double Marketplace::getSupply( const string& goodName, const string& regionName, const int per ) const {
     const int marketNumber = getMarketNumber( goodName, regionName );
 
@@ -634,6 +836,7 @@ double Marketplace::getSupply( const string& goodName, const string& regionName,
     }
 }
 
+/* UNUSED!
 //! return supply for use in checking solution, including Raw supply for demand market
 /*! Not used now, could be used for debugging at some point*/
 double Marketplace::checkSupply( const string& goodName, const string& regionName, const int per ) const {
@@ -651,14 +854,20 @@ double Marketplace::checkSupply( const string& goodName, const string& regionNam
 
 //! return supply for use in checking solution, including Raw supply for demand market
 /*! Used to double-check solution. Should not use otherwise. */
+/*
 double Marketplace::checkSupply( const int marketNumber, const int per ) const {
     return markets[ marketNumber ][ per ]->getSupplyForChecking();
 }
+*/
 
-//! return market demand used for solution mechanism
-/*! If this is a price market, then get the demand from the corresponding demand market.
-If this is a demand market (through the redirect), then get the demand from the trail value (.price)
--- although this is never Rawly occurs at present. 
+/*! \brief Return the market demand. 
+*
+* This function uses a market type dependent function to find the demand for a market determined by the goodName and regionName.
+* This demand is not always the raw or true demand. For non-existant markets, this function returns 0.
+*
+* \param goodName The good for which a demand is needed.
+* \param regionName The region for which a demand is needed.
+* \return The market demand.
 */
 double Marketplace::getDemand(  const string& goodName, const string& regionName, const int per ) const {
     const int marketNumber = getMarketNumber( goodName, regionName );
@@ -672,7 +881,17 @@ double Marketplace::getDemand(  const string& goodName, const string& regionName
     }
 }
 
-//! Check to see that all markets Rawly solved.
+/*! \brief This function is used to check whether all markets cleared. It also prints supply-demand curves for unsolved markets.
+*
+* This function checks each market's raw supply and raw demand against each other and compares them to the solutionTolerance.
+* If they are not within the tolerance, it adds them to the unsolved market vector. This vector is then printed out, and if the option 
+* is set, supply demand curves are created for the worst n of these markets, where n is a configuration setting. 
+*
+* \param solTolerance The tolerance value to use when checking if a market cleared.
+* \param excessDemandSolutionFloor An absolute value of excess demand below which markets are considered cleared.
+* \param period Period in which to check the solution.
+* \return Whether or not the markets all cleared.
+*/
 bool Marketplace::checkMarketSolution( const double solTolerance, const double excessDemandSolutionFloor, const int period ) {
 
     const Configuration* conf = Configuration::getInstance();
@@ -707,7 +926,16 @@ bool Marketplace::checkMarketSolution( const double solTolerance, const double e
     return solvedOK;
 }
 
-//! Find Supply and Demand curves for bad markets and print them.
+/*! \brief Find and print supply-demand curves for unsolved markets.
+*
+* This function determines the n worst markets, where n is defined by the configuration file, 
+* and creates a SupplyDemandCurve for each. It then instructs the SupplyDemandCurve to calculate the 
+* supply and demand at a series of prices, and to print the resulting curve.
+*
+* \author Josh Lurz
+* \param unsolved Vector of unsolved markets.
+* \param period Period for which to print supply-demand curves.
+*/
 void Marketplace::findAndPrintSD( vector<Market*>& unsolved, const int period ) {
 
     const Configuration* conf = Configuration::getInstance();
@@ -749,7 +977,17 @@ void Marketplace::findAndPrintSD( vector<Market*>& unsolved, const int period ) 
 
 }
 
-//! Select markets to solve.
+/*! \brief This function iterates through the markets and returns the set that should be solved.
+*
+* The function uses each market's Market::shouldSolve or Market::shouldSolveNR to determine if the market should 
+* be solved. If it should be, then it inserts into the vector the regionName and goodName pair which is unique
+* and so can later be used by the solution mechanism to reference an individual market.
+*
+* \author Josh Lurz
+* \param period Period for which to find markets to solve.
+* \param isNR Whether or not the markets are for Newton-Rhaphson.
+* \return A vector of pairs of market regions and good names. 
+*/
 vector< pair< string, string > > Marketplace::getMarketsToSolve( const int period, const bool isNR ) const {
 
     vector< pair< string, string > > marketsToSolve;
@@ -771,8 +1009,14 @@ vector< pair< string, string > > Marketplace::getMarketsToSolve( const int perio
     return marketsToSolve;
 }
 
-//! Initialize the marketplace prices 
-/*! Use last period demand price as starting point for next period */
+/*! \brief Initializes the market prices to the market prices from the previous period.
+* 
+* This function initializes each periods raw price with the raw price from the previous period.
+* This only occurs for periods greater than 0.
+* 
+* \author Sonny Kim
+* \param period Period for which to initialize prices.
+*/
 void Marketplace::init_to_last( const int period ) { 
     // only after the starting period
     if ( period > 0 ) {
@@ -782,8 +1026,13 @@ void Marketplace::init_to_last( const int period ) {
     }
 }
 
-//! This sets the ts of the current period to last periods values.
-// Pass the old market.
+/*! \brief Sets the values of the stored variables to the raw values from the previous period.
+*
+* Is this actually neccessary??
+* 
+* \todo Determine if this is neccessary. 
+* \param period Period for which to set the stored values.
+*/
 void Marketplace::storeto_last( const int period ) {
     // only after the starting period
     if ( period > 0 ) {
@@ -793,23 +1042,44 @@ void Marketplace::storeto_last( const int period ) {
     }
 }
 
-//! Store original demand, supply and price
-/*! Used for calculation of derivative */
+/*! \brief Store the demand, supply and price for each market. 
+*
+* This function called the Market::storenfo function on each market in the marketplace,
+* which causes them to set their stored demand, supply, and price to the respective current values
+* for those variables.
+*
+* \author Sonny Kim
+* \param period Period for which to store demands, supplies and prices.
+*/
 void Marketplace::storeinfo( const int period ) {
     for ( int i = 0; i  < numMarkets; i++ ) {
         markets[ i ][ period ]->storeInfo();
     }
 }
 
-//! Restore original demand, supply and price
-/*! Used for calculation of derivative */
+/*! \brief Restore the stored demand, supply and price for each market. 
+*
+* This function called the Market::restoreInfo function on each market in the marketplace,
+* which causes them to set their demand, supply, and price to the respective stored values
+* for those variables.
+*
+* \param period Period for which to restore demands, supplies, and prices.
+*/
 void Marketplace::restoreinfo( const int period) {
     for ( int i = 0; i < numMarkets; i++ ) {
         markets[ i ][ period ]->restoreInfo();
     }
 }
 
-//! Returns a vector of market demands for all markets.
+/*! \brief Returns a vector of raw market demands for all markets.
+*
+* This method returns a vector of raw demands in the order the markets are contained.
+* This function is used to help with calculation of derivatives of regional markets.
+* 
+* \todo This ordering is bad. Should maybe use a map?
+* \param per Period for which to return demands.
+* \return A vector of raw demands, one for each market. 
+*/
 const vector<double> Marketplace::getDemands( const int per ) const {
 
     vector<double> demands( numMarkets );
@@ -820,7 +1090,15 @@ const vector<double> Marketplace::getDemands( const int per ) const {
     return demands;
 }
 
-//! Returns a vector of market supplies for all markets.
+/*! \brief Returns a vector of raw market supplies for all markets.
+*
+* This method returns a vector of raw supplies in the order the markets are contained.
+* This function is used to help with calculation of derivatives of regional markets.
+* 
+* \todo This ordering is bad. Should maybe use a map?
+* \param per Period for which to return supplies.
+* \return A vector of raw supplies, one for each market. 
+*/
 const vector<double> Marketplace::getSupplies( const int per ) const {
 
     vector<double> supplies( numMarkets );
@@ -832,7 +1110,12 @@ const vector<double> Marketplace::getSupplies( const int per ) const {
 }
 
 
-//! write out market info to database
+/*! \brief Write out the market information to the database.
+*
+* This function is used to perform a data writeout to the database.
+*
+* \note This will be replaced by toXMLOutput
+*/
 void Marketplace::MCoutput() const {
 
     const Modeltime* modeltime = scenario->getModeltime();
@@ -860,7 +1143,12 @@ void Marketplace::MCoutput() const {
     }
 }
 
-//! write out market info to file
+/*! \brief Write out the market information to a file.
+*
+* This function is used to perform a data writeout to a plain text file.
+*
+* \note This will be replaced by toXMLOutput
+*/
 void Marketplace::outputfile() const {
 
     const Modeltime* modeltime = scenario->getModeltime();
