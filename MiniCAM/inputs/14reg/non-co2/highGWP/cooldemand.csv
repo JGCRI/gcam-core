@@ -1,0 +1,20 @@
+Cooling Demand,,,
+INPUT_TABLE,,,
+Variable ID,,,
+530,,,
+Per capita cooling demand (cooling degree days),,,
+Region,CoolDemand,,
+1,21.5,,Calculated as the (convolution of temperature  * population)/population
+2,71.7,,
+3,17.1,,
+4,17.2,,
+5,0.5,,
+6,65.0
+7,21.0
+8,6.6
+9,0.0
+10,0.5
+11,2.9
+12,30.5
+13,30.9
+14,1.3
