@@ -66,6 +66,7 @@ public:
     void setEmissionsInputStatus();
     bool getEmissionsCoefInputStatus() const;
     void setEmissionsCoefInputStatus();
+    void initCalc();
 
 protected:
     std::string name; //!< name of ghg gas

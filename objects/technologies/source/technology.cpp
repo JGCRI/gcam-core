@@ -416,6 +416,11 @@ void technology::initCalc( ) {
       cerr << "Calibration value < 0 for tech " << name << ". Calibration removed" << endl;
       doCalibration = false;
    }
+
+    for( unsigned int i = 0; i < ghg.size(); i++ ){
+        ghg[i]->initCalc( );
+    }
+
 }
 
 /*! \brief This function calculates the sum of the Carbon Values for all GHG's in this technology.

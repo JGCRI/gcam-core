@@ -348,6 +348,10 @@ void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
 	}
 }
 
+//! Perform initializations that only need to be done once per period
+void Ghg::initCalc( ) {    
+ 
+}
 
 /*! Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients
 *   and return the value or cost of the tax and storage for the GHG.
