@@ -12,6 +12,7 @@
 */
 
 #include <vector>
+#include <string>
 #include <xercesc/dom/DOM.hpp>
 #include "subsector.h"
 
@@ -30,11 +31,11 @@ protected:
     double baseScaler; // constant scaler to scale base output
     
 public:
-    tranSubsector();
+    tranSubsector( std::string regionName, std::string sectorName );
     virtual void clear();
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
-    virtual void calcShare( const std::string& regionName, const int period, const double gnp_cap = 1 ); 
-    virtual void setoutput( const std::string& regionName, const std::string& prodName, const double dmd, const int per);
+    virtual void calcShare(const int period, const double gnp_cap = 1 ); 
+    virtual void setoutput( const double demand, const int period );
     
 };
 

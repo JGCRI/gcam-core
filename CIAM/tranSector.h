@@ -12,6 +12,7 @@
 */
 
 #include <vector>
+#include <string>
 #include <xercesc/dom/DOM.hpp>
 #include "DemandSector.h"
 
@@ -19,16 +20,16 @@
 class tranSector : public demsector
 {
 protected:
-   std::vector<double> percentLicensed; //!< Percent of population licensed
-	double baseScaler; //!< constant scaler to scale base output
-	double baseScalerNotLic; //!< constant scaler to scale base unlicensed output
-   double priceRatioNotLic;//!< price ratio for unlicensed population
+    std::vector<double> percentLicensed; //!< Percent of population licensed
+    double baseScaler; //!< constant scaler to scale base output
+    double baseScalerNotLic; //!< constant scaler to scale base unlicensed output
+    double priceRatioNotLic;//!< price ratio for unlicensed population
 public:
-   tranSector();
-   virtual ~tranSector();
-   virtual void clear();
-   virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
-   virtual void aggdemand( const std::string& regionName, const double gnp_cap, const double gnp, const int per); 
+    tranSector( const std::string regionName );
+    virtual ~tranSector();
+    virtual void clear();
+    virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
+    virtual void aggdemand( const double gnp_cap, const double gnp, const int period ); 
 };
 
 #endif // _TRANSSECTOR_H_

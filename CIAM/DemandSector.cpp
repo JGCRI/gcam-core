@@ -32,7 +32,7 @@ extern Scenario* scenario;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-demsector::demsector() {
+demsector::demsector( const string regionName ): sector( regionName ){
     perCapitaBased = 0;
     pElasticityBase = 0;
     priceRatio = 1;
@@ -319,7 +319,7 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
 * \author Sonny Kim, Josh Lurz, Steve Smith
 * \param regionName region name
 */
-void demsector::setMarket( const string& regionName ) {
+void demsector::setMarket() {
     Marketplace* marketplace = scenario->getMarketplace();
     
     if( marketplace->createMarket( regionName, market, name, Marketplace::NORMAL ) ) {
@@ -336,39 +336,28 @@ void demsector::setMarket( const string& regionName ) {
 * This routine calls subsector::calcShare for each subsector, which calculated an unnormalized share, and then calls normShare to normalize the shares for each subsector.
 
 * \param regionName Region name
-* \param per model period
+* \param period model period
 * \param gnp_cap GDP per capita (scaled to base year)
 
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-void demsector::calcShare( const string regionName, const int per, const double gnp_cap )
-{
+void demsector::calcShare( const int period, const double gnp_cap ) {
     int i=0;
     double sum = 0.0;
     for (i=0;i<nosubsec;i++) {
         // determine subsector shares based on technology shares
-        subsec[i]->calcShare( regionName, per, gnp_cap );
-        sum += subsec[i]->getShare(per);
+        subsec[i]->calcShare( period, gnp_cap );
+        sum += subsec[i]->getShare(period);
     }
     // normalize subsector shares to total 100 %
     for (i=0;i<nosubsec;i++) {
-        subsec[i]->normShare(sum, per);
+        subsec[i]->normShare(sum, period);
    }
 
     // Now adjust for capacity limits, if any are present
-    if ( capLimitsPresent[ per ] ) {
-       adjSharesCapLimit( regionName , per );
+    if ( capLimitsPresent[ period ] ) {
+       adjSharesCapLimit( period );
     }
-       
-       if ( regionName == "USAxxx" && name == "building" ) {
-         cout << "¥¥Shares: ";
-        for ( i=0; i<nosubsec; i++ ) {
-         cout << subsec[ i ]->getShare( per ) << ", ";
-       }
-       cout << endl;
-   }
-   
-
 }
 
 /*! \brief Calculate weighted average price of subsectors.
@@ -379,20 +368,20 @@ void demsector::calcShare( const string regionName, const int per, const double 
 * Since this is only used for a feedback term its not a large error. But is there a way around this?
 *
 * \author Sonny Kim, Josh Lurz
-* \param per Model period
+* \param period Model period
 * \todo consider if there is a way to use the current sector share so that this is not different from the supply sector function.
 */
-void demsector::calcPrice(int per)
+void demsector::calcPrice(int period)
 {
-    sectorprice[per]=0.0;
+    sectorprice[period]=0.0;
     for (int i=0;i<nosubsec;i++) {	
-        if (per == 0) {
+        if (period == 0) {
             // uses read in base year shares
-            sectorprice[per] += subsec[i]->getShare(per) * subsec[i]->getPrice(per);
+            sectorprice[period] += subsec[i]->getShare(period) * subsec[i]->getPrice(period);
         }
         else {
             // uses previous period's actual shares
-            sectorprice[per] += subsec[i]->getShare(per-1) * subsec[i]->getPrice(per);
+            sectorprice[period] += subsec[i]->getShare(period-1) * subsec[i]->getPrice(period);
         }
     }
 }
@@ -410,28 +399,27 @@ void demsector::calcPrice(int per)
    consistent with calibrated values.
 * \author Steve Smith
 * \param regionName region name
-* \param per Model period
+* \param period Model period
 */
-void demsector::calibrateSector( const string regionName, const int per )
-{
+void demsector::calibrateSector( const int period ) {
     double totalFixedSupply = 0; // no fixed supply for demand sectors
     double mrkdmd;
-    double totalCalOutputs = getCalOutput( per );
+    double totalCalOutputs = getCalOutput( period );
     
-    mrkdmd = getService( per ); // demand for the good produced by this sector
+    mrkdmd = getService( period ); // demand for the good produced by this sector
     
     for (int i=0; i<nosubsec; i++ ) {
-        if ( subsec[i]->getCalibrationStatus( per ) ) {
-            subsec[i]->adjustForCalibration( mrkdmd, totalFixedSupply, totalCalOutputs, per );
+        if ( subsec[i]->getCalibrationStatus( period ) ) {
+            subsec[i]->adjustForCalibration( mrkdmd, totalFixedSupply, totalCalOutputs, period );
         }
     }
 
-    if ( sectorAllCalibrated( per ) ) {
-       scaleOutput( per , totalCalOutputs/service[ per ] );
-       if ( service[ per ] == 0 ) {
+    if ( isAllCalibrated( period ) ) {
+       scaleOutput( period , totalCalOutputs/service[ period ] );
+       if ( service[ period ] == 0 ) {
           cout << "ERROR: service = 0 in " << regionName << ":" << name << endl;
          }
-     //  cout << "scaled output for " << regionName << ":" << name <<" by " << totalCalOutputs/service[ per ] << endl;
+     //  cout << "scaled output for " << regionName << ":" << name <<" by " << totalCalOutputs/service[ period ] << endl;
     }
 }
 
@@ -444,24 +432,24 @@ void demsector::calibrateSector( const string regionName, const int per )
     sjs
 * \author Steve Smith
 * \param scaleFactor amount by which to scale output from this sector
-* \param per Model period
+* \param period Model period
 */
-void demsector::scaleOutput( int per, double scaleFactor ) {
+void demsector::scaleOutput( int period, double scaleFactor ) {
    const Modeltime* modeltime = scenario->getModeltime();
     
     // The solution for the scaling factor for AEEI (Afact), is
     // SF = TC_0 * (1+AEII)^T / [ TC_0 * (1+Afact*AEII)^T ] = (1+AEII)^T /[(1+Afact*AEII)^T]
     // So Afact = [( (1+AEII)^T /SF )^(1/T)-1]/AEII
-    // TC_0 = techChangeCumm[per-1] & SF = scaleFactor
+    // TC_0 = techChangeCumm[period-1] & SF = scaleFactor
 
    // If scale factor is significant then change AEEI
    if ( fabs( 1 - scaleFactor ) > 1e-6 ) {   
-      double timeStep = modeltime->gettimestep(per);
+      double timeStep = modeltime->gettimestep(period);
       double aeeiScale; // amount to change AEEI
-      double temp = pow( 1+aeei[per] , timeStep );
-      aeeiScale = ( pow( temp/ scaleFactor ,1/timeStep ) - 1) / aeei[ per ]; 
+      double temp = pow( 1+aeei[period] , timeStep );
+      aeeiScale = ( pow( temp/ scaleFactor ,1/timeStep ) - 1) / aeei[ period ]; 
  
-      aeei[ per ]  = aeei[ per ] * aeeiScale;
+      aeei[ period ]  = aeei[ period ] * aeeiScale;
    }
 }
 
@@ -469,86 +457,86 @@ void demsector::scaleOutput( int per, double scaleFactor ) {
 *
 *
 * \author Sonny Kim
-* \param per Model period
+* \param period Model period
 * \todo Sonny to add more to this description
 */
-void demsector::calc_pElasticity(int per) {
+void demsector::calc_pElasticity(int period) {
     pElasticityBase = pElasticity[ 0 ]; // base year read in value
-    pElasticity[per]=0.0;
-    sectorFuelCost[per] = 0;
+    pElasticity[period]=0.0;
+    sectorFuelCost[period] = 0;
     double tmpPriceRatio = 0; // ratio of total price to fuel price
     for (int i=0;i<nosubsec;i++) {
-        sectorFuelCost[per] += subsec[i]->getwtfuelprice(per);
+        sectorFuelCost[period] += subsec[i]->getwtfuelprice(period);
     }
-    tmpPriceRatio = sectorprice[per]/sectorFuelCost[per];
-    pElasticity[per] = pElasticityBase*tmpPriceRatio;
+    tmpPriceRatio = sectorprice[period]/sectorFuelCost[period];
+    pElasticity[period] = pElasticityBase*tmpPriceRatio;
 }
 
 /*! \brief Aggrgate sector energy service demand function
 *
 * Function calculates the aggregate demand for energy services and passes that down to the sub-sectors. 
-* Demand is proportional to either GNP (to a power) or GDNP per capita (to a power) times population.
+* Demand is proportional to either GNP (to a power) or GNP per capita (to a power) times population.
 *
 * \author Sonny Kim
 * \param gnp GNP (relative or absolute?)
 * \param gnp_cap GDP per capita, relative to base year
 * \param regionName region name
-* \param per Model period
+* \param period Model period
 * \todo Sonny to add more to this description if necessary
 * \pre Sector price attribute must have been previously calculated and set (via calcPrice)
 */
-void demsector::aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per) {
+void demsector::aggdemand( const double gnp_cap, const double gnp, const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
     double ser_dmd;
     double base;
     // double pelasticity = -0.9;
-    double pelasticity = pElasticity[per];
+    double pelasticity = pElasticity[period];
     
     base = getOutput(0);
     
     // normalize prices to 1990 base
     int normPeriod = modeltime->getyr_to_per(1990);
-    priceRatio =	getPrice( per ) / getPrice( normPeriod );
+    priceRatio =	getPrice( period ) / getPrice( normPeriod );
      
     // demand for service
-    if (per == 0) {
+    if (period == 0) {
         ser_dmd = base; // base output is initialized by data
-        techChangeCumm[per] = 1; // base year technical change
+        techChangeCumm[period] = 1; // base year technical change
     }
     else {
         // perCapitaBased is true or false
         if (perCapitaBased) { // demand based on per capita GNP
-            ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp_cap,iElasticity[per]);
+            ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp_cap,iElasticity[period]);
             // need to multiply above by population ratio (current population/base year
             // population).  The gnp ratio provides the population ratio.
             ser_dmd *= gnp/gnp_cap;
         }
         else { // demand based on scale of GNP
-            ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp,iElasticity[per]);
+            ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp,iElasticity[period]);
         }
         
         // calculate cummulative technical change using AEEI, autonomous end-use energy intensity
-        techChangeCumm[per] = techChangeCumm[per-1]*pow(1+aeei[per],modeltime->gettimestep(per));
+        techChangeCumm[period] = techChangeCumm[period-1]*pow(1+aeei[period],modeltime->gettimestep(period));
     }
     
     // Save the service demand without technical change applied for comparison with miniCAM.
-    servicePreTechChange[ per ] = ser_dmd;
+    servicePreTechChange[ period ] = ser_dmd;
     
     // demand sector output is total end-use sector demand for service
     // adjust demand using cummulative technical change
-    service[ per ] = ser_dmd/techChangeCumm[per];
+    service[ period ] = ser_dmd/techChangeCumm[period];
     
-    set_ser_dmd( service[ per ], per ); // sets the output
+    setServiceDemand( service[ period ], period ); // sets the output
 
     // sets subsector outputs, technology outputs, and market demands
-    sector::setoutput( regionName, service[ per ], per );
+    sector::setoutput( service[ period ], period );
    
-   // sector::sumOutput( per );
+   // sector::sumOutput( period );
    // this call now included in setOutput -- although sector outputs at this point are NaN! ????
 }
 
 //! Write sector output to database.
-void demsector::outputfile(const string& regionName ) {
+void demsector::outputfile() const {
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     int m=0;
@@ -561,25 +549,26 @@ void demsector::outputfile(const string& regionName ) {
     // the function writes all years
     // total sector output
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::getOutput(m); }
+        temp[m] = output[ m ]; }
     fileoutput3(regionName,getName()," "," ","prodution","SerUnit",temp);
     // total sector eneryg input
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::getInput(m); }
+        temp[m] = input[ m ]; }
     fileoutput3(regionName,getName()," "," ","consumption","EJ",temp);
     // sector price
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::getPrice(m); }
+        temp[m] = sectorprice[m]; 
+    }
     fileoutput3(regionName,getName()," "," ","price","$/Service",temp);
     // sector carbon taxes paid
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::getTotalCarbonTaxPaid(m); }
+        temp[m] = carbonTaxPaid[ m ]; }
     fileoutput3(regionName,getName()," "," ","C tax paid","Mil90$",temp);
     
 }
 
 //! Write MiniCAM style demand sector output to database.
-void demsector::MCoutput( const string& regionName ) {
+void demsector::MCoutput() const {
     const Modeltime* modeltime = scenario->getModeltime();
     int m;
     const int maxper = modeltime->getmaxper();
@@ -640,7 +629,7 @@ void demsector::MCoutput( const string& regionName ) {
     
     
     // sector emissions for all greenhouse gases
-    map<string,double> temissmap = summary[0].getemission(); // get gases for per 0
+    map<string,double> temissmap = summary[0].getemission(); // get gases for period 0
     for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
         for (int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_emissmap_second(gmap->first);
@@ -665,13 +654,13 @@ void demsector::MCoutput( const string& regionName ) {
     
     // sector price (not normalized)
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::getPrice(m);
+        temp[m] = sectorprice[ m ];
     }
     dboutput4(regionName,"Price",secname,"zSectorAvg","75$/Ser",temp);
     
     // sector price normalized to base price
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::getPrice(m)/sector::getPrice(0);
+        temp[m] = sectorprice[ m ] / sectorprice[ 0 ];
     }
     dboutput4(regionName,"Price","by End-Use Sector",secname,"Norm75",temp);
     
@@ -682,18 +671,18 @@ void demsector::MCoutput( const string& regionName ) {
     dboutput4(regionName,"General","CarbonTaxPaid",secname,"$",temp);
     
     // do for all subsectors in the sector
-    MCoutput_subsec( regionName );
+    MCoutput_subsec();
 }
 
 /*! \brief returns the demand sector service supplied.
 *
 *
 * \author Sonny Kim
-* \param per Model period
+* \param period Model period
 * \return amount of energy service supplied by this sector
 */
-double demsector::getService(const int per) {
-    return service[per];
+double demsector::getService( const int period ) const {
+    return service[period];
 }
 
 /*! \brief returns the demand sector service before tech change is applied.
@@ -701,11 +690,11 @@ double demsector::getService(const int per) {
 * This is useful for debugging and output, but is not used by the model itself at this point
 *
 * \author Sonny Kim
-* \param per Model period
+* \param period Model period
 * \return energy service demand before technological change is applied
 */
-double demsector::getServiceWoTC(const int per) {
-    return servicePreTechChange[per];
+double demsector::getServiceWoTC( const int period ) const {
+    return servicePreTechChange[ period ];
 }
 
 void demsector::printStyle( ostream& outStream ) const {

@@ -52,11 +52,11 @@ protected:
     std::vector<double> pElasticity; //!< price elasticity.
     std::vector<double> aeei; //!< autonomous end-use energy intensity parameter
     std::vector<double> techChangeCumm; //!< cummulative technical change on end-use service
-    virtual void calcPrice(int per);
+    virtual void calcPrice( const int period );
     virtual void printStyle( std::ostream& outStream ) const;
 
 public:
-    demsector();
+    demsector( const std::string regionName );
     virtual ~demsector();
     virtual void clear();
     virtual void XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
@@ -65,16 +65,16 @@ public:
     virtual void toOutputXML( std::ostream& out ) const;
     virtual void toXMLDerivedClass( std::ostream& out ) const;
     virtual void toDebugXML( const int period, std::ostream& out ) const;
-    virtual void setMarket( const std::string& regionName );
-    virtual void calcShare( const std::string regionName, const int per, const double gnp_cap = 1 );
-    virtual void calc_pElasticity( const int per );
-    virtual void aggdemand( const std::string& regionName, const double gnp_cap, const double gnp, const int per); 
-    virtual void outputfile( const std::string& regionName );
-    virtual void MCoutput( const std::string& regionName );
-    virtual void calibrateSector( const std::string regionName, const int per );
-    double getService(const int per);
-    double getServiceWoTC(const int per);
-    void scaleOutput( int per, double scaleFactor );
+    virtual void setMarket();
+    virtual void calcShare( const int period, const double gnp_cap = 1 );
+    virtual void calc_pElasticity( const int period );
+    virtual void aggdemand( const double gnp_cap, const double gnp, const int period ); 
+    virtual void outputfile() const;
+    virtual void MCoutput() const;
+    virtual void calibrateSector( const int period );
+    double getService( const int period ) const;
+    double getServiceWoTC( const int period ) const;
+    void scaleOutput( const int period, double scaleFactor );
 };
 
 #endif // _DEMAND_SECTOR_H_

@@ -61,14 +61,14 @@ protected:
     double prevPer;
 
     virtual void initElementalMembers();
-    void sumOutput(int per); // private function, sum taken care of automatically
-    void sumInput(int per); // private function, sum taken care of automatically
-    double getFixedShare( const std::string& regionName, const int sectorNum, const int per ); // utility function 
-    virtual void calcPrice(int per);
+    void sumOutput( const int period ); // private function, sum taken care of automatically
+    void sumInput( const int period ); // private function, sum taken care of automatically
+    double getFixedShare( const int sectorNum, const int period ) const; // utility function 
+    virtual void calcPrice( const int period );
     virtual void printStyle( std::ostream& outStream ) const;
 
 public:
-    sector();
+    sector( std::string regionName );
     virtual ~sector();
     virtual void clear();
     std::string getName() const;
@@ -80,42 +80,40 @@ public:
     virtual void toOutputXML( std::ostream& out ) const;
     virtual void toXMLDerivedClass( std::ostream& out ) const;
     virtual void toDebugXML( const int period, std::ostream& out ) const;
-    virtual void setMarket( const std::string& regionName );
-    void applycarbontax( const std::string& regionName, double tax,int per);
-    void addghgtax( const std::string& ghgname, const std::string& regionName, const int per);
-    virtual void calcShare( const std::string& regionName, const int per, const double gnp_cap = 1 );
-    void adjSharesCapLimit( const std::string& regionName, const int per ); 
-    void checkShareSum( const std::string& regionName, const int per );
-    void initCalc( const std::string& regionName, const int per );
-    void production( const std::string& regionName,int per);
-    virtual void calibrateSector( const std::string& regionName, const int per ); 
-    void setoutput(const std::string& regionName, double dmd, int per); 
-    void set_ser_dmd(double dmd, int per);
-    void adjustForFixedSupply( const double mrkdmd, const std::string& regionName, const int per);
-    void supply( const std::string& regionName, const int per );
-    int getNumberOfSubSec(void) const;
-    double getOutput(int per);
-    double getFixedSupply(int per) const; 
-    bool sectorAllCalibrated( int per );
-    bool capacityLimitsInSector( int per );
-    double getCalOutput(int per) const;
-    double getPrice(int per);
-    void emission(int per);
-    void indemission( const int per, const std::vector<Emcoef_ind>& emcoef_ind );
-    double getInput(int per);
-    virtual void outputfile(const std::string& regname );
-    void MCoutput_subsec(const std::string& regname );
-    virtual void MCoutput(const std::string& regname );
-    void subsec_outfile(const std::string& regname );
-    double getTotalCarbonTaxPaid(int per) const;
-    std::map<std::string, double> getfuelcons(int per) const;
-    double getConsByFuel(const int per, const std::string& key) const;
-    void clearfuelcons(int per);
-    std::map<std::string, double> getemission(int per) const;
-    std::map<std::string, double> getemfuelmap(int per) const;
-    void updateSummary(const int per);
-    void addToDependencyGraph( std::ostream& outStream, const int period );
-    void setRegionName(const std::string& regionNameIn );
+    virtual void setMarket();
+    void applycarbontax( double tax, const int period );
+    void addghgtax( const std::string& ghgname, const int period );
+    virtual void calcShare( const int period, const double gnp_cap = 1 );
+    void adjSharesCapLimit( const int period ); 
+    void checkShareSum( const int period ) const;
+    void initCalc( const int period );
+    void production( const int period );
+    virtual void calibrateSector( const int period ); 
+    void setoutput( const double demand, const int period ); 
+    void setServiceDemand( const double demand, const int period );
+    void adjustForFixedSupply( const double marketDemand, const int period );
+    void supply( const int period );
+    double getOutput( const int period );
+    double getFixedSupply( const int period ) const; 
+    bool isAllCalibrated( const int period ) const;
+    bool isCapacityLimitsInSector( const int period ) const;
+    double getCalOutput( const int period ) const;
+    double getPrice( const int period );
+    void emission( const int period );
+    void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
+    double getInput( const int period );
+    virtual void outputfile() const;
+    void MCoutput_subsec() const;
+    virtual void MCoutput() const;
+    void subsec_outfile() const;
+    double getTotalCarbonTaxPaid( const int period ) const;
+    std::map<std::string, double> getfuelcons( const int period ) const;
+    double getConsByFuel( const int period, const std::string& key) const;
+    void clearfuelcons( const int period );
+    std::map<std::string, double> getemission( const int period ) const;
+    std::map<std::string, double> getemfuelmap( const int period ) const;
+    void updateSummary( const int period );
+    void addToDependencyGraph( std::ostream& outStream, const int period ) const;
     void addSimul( const std::string sectorName );
     void setupForSort( const Region* parentRegion );
     std::vector<std::string> getInputDependencies( const Region* parentRegion ) const;

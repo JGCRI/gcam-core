@@ -31,7 +31,7 @@ extern Scenario* scenario;
 /*  Begin tranSubsector Method Definitions */
 
 //! Default constructor
-tranSubsector::tranSubsector() {
+tranSubsector::tranSubsector( const string regionName, const string sectorName ): subsector( regionName, sectorName ) {
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
@@ -148,20 +148,20 @@ void tranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
 
 
 //! calculate subsector share numerator
-void tranSubsector::calcShare( const string& regionName, const int per, const double gnp_cap )
+void tranSubsector::calcShare( const int period, const double gnp_cap )
 {
     
     // call function to compute technology shares
-    calcTechShares(regionName, per);
+    calcTechShares( period );
     
     // calculate and return subsector share; uses calcPrice function
     // calcPrice() uses normalized technology shares calculated above
     // Logit exponential should not be zero
     
     //compute subsector weighted average price of technologies
-    calcPrice( regionName,per);
+    calcPrice( period );
     
-    if(lexp[per]==0) cerr << "TranSubSec Logit Exponential is 0." << endl;
+    if(lexp[period]==0) cerr << "TranSubSec Logit Exponential is 0." << endl;
     
     //Adjust price to consider time value 
     const double daysPerYear = 365.0;
@@ -172,27 +172,27 @@ void tranSubsector::calcShare( const string& regionName, const int per, const do
     // convert $/vehicle-mi into $/pass-mi or $/ton-mi 
     // add cost of time spent on travel by converting gnp/cap into
     // an hourly wage and multipling by average speed
-    servicePrice[per] = subsectorprice[per]/loadFactor[per] ;
+    servicePrice[period] = subsectorprice[period]/loadFactor[period] ;
     // calculate time value based on hours worked per year
     // gnp_cap is normalized, need GNP per capita in $/person, fix when available
     const double dollarGNP75 = 3.46985e+12;
     const double population75 = 2.16067e+8;
-    timeValue[per] = gnp_cap*(dollarGNP75/population75)/(hoursPerWeek*weeksPerYear)/speed[per] ;
+    timeValue[period] = gnp_cap*(dollarGNP75/population75)/(hoursPerWeek*weeksPerYear)/speed[period] ;
 
-    generalizedCost[per] = servicePrice[per] + timeValue[per] ;
+    generalizedCost[period] = servicePrice[period] + timeValue[period] ;
     
     /*!  Compute calibrating scaler if first period, otherwise use computed
     scaler in subsequent periods */
     
-    if(per==0) {
-        baseScaler = output[0] / shrwts[per] * pow(generalizedCost[per], -lexp[per])
-            * pow(gnp_cap, -fuelPrefElasticity[per])
-            * pow(popDensity, -popDenseElasticity[per]);
+    if(period==0) {
+        baseScaler = output[0] / shrwts[period] * pow(generalizedCost[period], -lexp[period])
+            * pow(gnp_cap, -fuelPrefElasticity[period])
+            * pow(popDensity, -popDenseElasticity[period]);
     }
 
-    share[per]  = baseScaler * shrwts[per] * pow(generalizedCost[per], lexp[per])
-        * pow(gnp_cap, fuelPrefElasticity[per])
-        * pow(popDensity, popDenseElasticity[per]);
+    share[period]  = baseScaler * shrwts[period] * pow(generalizedCost[period], lexp[period])
+        * pow(gnp_cap, fuelPrefElasticity[period])
+        * pow(popDensity, popDenseElasticity[period]);
     
 }
 
@@ -201,23 +201,23 @@ void tranSubsector::calcShare( const string& regionName, const int per, const do
 *  This is then shared out at the technology level.
 *  See explanation for sector::setoutput. 
 */
-void tranSubsector::setoutput( const string& regionName, const string& prodName, const double dmd, const int per) {
+void tranSubsector::setoutput( const double demand, const int period) {
     int i=0;
-    input[per] = 0; // initialize subsector total fuel input 
-    carbontaxpaid[per] = 0; // initialize subsector total carbon taxes paid 
+    input[period] = 0; // initialize subsector total fuel input 
+    carbontaxpaid[period] = 0; // initialize subsector total carbon taxes paid 
     
     // output is in service unit when called from demand sectors
-    double subsecdmd = share[per]*dmd; // share is subsector level
-    //subsecdmd /= loadFactor[per]; // convert to per veh-mi
+    double subsecdmd = share[period]* demand; // share is subsector level
+    //subsecdmd /= loadFactor[period]; // convert to per veh-mi
     
     for ( i=0; i<notech; i++ ) {
         // calculate technology output and fuel input from subsector output
-        techs[i][per]->production( regionName, prodName, subsecdmd, per );
+        techs[i][period]->production( regionName, sectorName, subsecdmd, period );
         
         // total energy input into subsector, must call after tech production
-        input[per] += techs[i][per]->getInput();
+        input[period] += techs[i][period]->getInput();
         // sum total carbon tax paid for subsector
-        carbontaxpaid[per] += techs[i][per]->getCarbontaxpaid();
+        carbontaxpaid[period] += techs[i][period]->getCarbontaxpaid();
     }
     
 }

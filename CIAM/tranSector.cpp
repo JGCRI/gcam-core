@@ -28,7 +28,7 @@ extern ofstream outfile;
 
 
 //! Default constructor
-tranSector::tranSector() {
+tranSector::tranSector( const string regionName ): demsector( regionName ) {
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
@@ -63,7 +63,7 @@ void tranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cu
         XMLHelper<double>::insertValueIntoVector( curr, percentLicensed,modeltime );
     } 
     else if( nodeName == "tranSubsector" ){
-        tempSubSector = new tranSubsector();
+        tempSubSector = new tranSubsector( regionName, name );
         tempSubSector->XMLParse( curr );
         subsec.push_back( tempSubSector );
     }	
@@ -72,7 +72,7 @@ void tranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cu
 
 
 //! Aggrgate sector energy service demand function.
-void tranSector::aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per) { 
+void tranSector::aggdemand( const double gnp_cap, const double gnp, const int period) { 
     
     const Modeltime* modeltime = scenario->getModeltime();
     double ser_dmd;
@@ -82,57 +82,57 @@ void tranSector::aggdemand( const string& regionName, const double gnp_cap, cons
     
     // demand for service
     // reading in period 1 data so calibrate scaler to same for both periods
-    if (per == 0 || per == 1) {
+    if (period == 0 || period == 1) {
         priceRatio=1.0;
         priceRatioNotLic=1.0;
         
         // calculate base year scalers
         if (perCapitaBased) { // demand based on per capita GNP
-            baseScaler = service[0]* percentLicensed[per] * pow(priceRatio,-pElasticity[per])
-                * pow(gnp_cap,-iElasticity[per]);
-            baseScalerNotLic = service[0]* (1 - percentLicensed[per]) * pow(priceRatioNotLic,-pElasticity[per])
-                * pow(gnp_cap,-iElasticity[per]);
+            baseScaler = service[0]* percentLicensed[period] * pow(priceRatio,-pElasticity[period])
+                * pow(gnp_cap,-iElasticity[period]);
+            baseScalerNotLic = service[0]* (1 - percentLicensed[period]) * pow(priceRatioNotLic,-pElasticity[period])
+                * pow(gnp_cap,-iElasticity[period]);
         }
         else {
-            baseScaler = service[0]* percentLicensed[per] * pow(priceRatio,-pElasticity[per])
-                * pow(gnp,-iElasticity[per]);
-            baseScalerNotLic = service[0]* (1 - percentLicensed[per]) * pow(priceRatioNotLic,-pElasticity[per])
-                * pow(gnp,-iElasticity[per]);
+            baseScaler = service[0]* percentLicensed[period] * pow(priceRatio,-pElasticity[period])
+                * pow(gnp,-iElasticity[period]);
+            baseScalerNotLic = service[0]* (1 - percentLicensed[period]) * pow(priceRatioNotLic,-pElasticity[period])
+                * pow(gnp,-iElasticity[period]);
         }
         // base output is initialized by data
         ser_dmd = service[0]; 
 
         // Save the service demand without technical change applied for comparison with miniCAM.
-        servicePreTechChange[ per ] = ser_dmd;
-        service[per] = service[0];
+        servicePreTechChange[ period ] = ser_dmd;
+        service[period] = service[0];
     }
     else {
         // for non-base year
         // note normalized to previous year not base year
         // has implications for how technical change is applied
-           priceRatio = sectorprice[per]/sectorprice[per-1];
-           priceRatioNotLic = sectorprice[per]/sectorprice[per-1];
+           priceRatio = sectorprice[period]/sectorprice[period-1];
+           priceRatioNotLic = sectorprice[period]/sectorprice[period-1];
         // perCapitaBased is true or false
         if (perCapitaBased) { // demand based on per capita GNP
-            ser_dmd = baseScaler*pow(priceRatio,pElasticity[per])*pow(gnp_cap,iElasticity[per])
-                + baseScalerNotLic*pow(priceRatioNotLic,pElasticity[per])*pow(gnp_cap,iElasticity[per]);
+            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gnp_cap,iElasticity[period])
+                + baseScalerNotLic*pow(priceRatioNotLic,pElasticity[period])*pow(gnp_cap,iElasticity[period]);
             // need to multiply above by population ratio (current population/base year
             // population).  The gnp ratio provides the population ratio.
             ser_dmd *= gnp/gnp_cap;
         }
         else { // demand based on scale of GNP
-            ser_dmd = baseScaler*pow(priceRatio,pElasticity[per])*pow(gnp,iElasticity[per]);
+            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gnp,iElasticity[period]);
         }
         // Save the service demand without technical change applied for comparison with miniCAM.
-        servicePreTechChange[ per ] = ser_dmd;
+        servicePreTechChange[ period ] = ser_dmd;
 
         // adjust demand for AEEI, autonomous end-use energy intensity
         // note: not using cummulative technical change
-        service[per] = ser_dmd/pow(1+aeei[per],modeltime->gettimestep(per));
+        service[period] = ser_dmd/pow(1+aeei[period],modeltime->gettimestep(period));
     }
     
-    output[per] = service[per];
+    output[period] = service[period];
     // sets subsector outputs, technology outputs, and market demands
-    setoutput( regionName,service[per],per);
-    sumOutput(per);
+    setoutput( service[ period ], period );
+    sumOutput(period);
 }
