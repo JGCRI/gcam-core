@@ -398,11 +398,6 @@ int sector::shownosubsec(void)
 	return nosubsec;
 }
 
-string sector::showsubsecname(int iss)
-{
-	return subsec[iss]->showname();
-}
-
 //! returns sector output
 double sector::getoutput(int per)
 {
@@ -626,13 +621,6 @@ void sector::updateSummary( const int per )
 demsector::demsector() {
 	perCapitaBased = 0;
 	pElasticityBase = 0;
-}
-
-//! Default destructor.
-demsector::~demsector() {
-	for( vector<subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
-		delete *subSecIter;
-	}
 }
 
 //! Clear member variables.

@@ -37,8 +37,8 @@ protected:
 	virtual void initElementalMembers();
 
 public:
-	sector(); //default construtor
-	virtual ~sector();
+	sector();
+	~sector();
 	virtual void clear();
 	string getName(); // return name of sector
 	virtual void XMLParse( const DOMNode* node );
@@ -58,7 +58,6 @@ public:
 	void showsubsec(int per, const char* ofile); // shows all subsectors in the sector
 	void showlabel(const char* ofile); // show sector label
 	int shownosubsec(void);
-	string showsubsecname(int iss);
 	double getoutput(int per); // returns sector output 
 	double getFixedOutput(int per); // returns sector output 
 	double showprice(int per); // returns sector aggregate price
@@ -104,7 +103,6 @@ protected:
 
 public:
 	demsector();
-	virtual ~demsector();
 	virtual void clear();
 	virtual void XMLParse(const DOMNode* node);
 	virtual void toXML( ostream& out ) const;
