@@ -27,7 +27,7 @@ using namespace xercesc;
 extern Scenario* scenario;
 // static initialize.
 const string GDP::XML_NAME = "GDP";
-const BASE_PPP_YEAR = 1990;   // Base year for PPP conversion. PPP values are not known before about this time.
+const int BASE_PPP_YEAR = 1990;   // Base year for PPP conversion. PPP values are not known before about this time.
 
 //! Default Constructor
 GDP::GDP() {
