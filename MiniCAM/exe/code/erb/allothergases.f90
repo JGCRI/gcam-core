@@ -663,8 +663,7 @@
              +ESILM(JUWIND,L,M)+ESILM(JUWIND+1,L,M)+ESILM(JUWIND+2,L,M))/1e4
     
 ! src 2 : HCFC-22 Production
-    OGACT(IHSF6,2,L,M) = 1.0	! no driver, determined by base-year emissions & User inputs
-    
+    OGACT(IHSF6,2,L,M) = GNPPPP(L,M)/1e6	! HCFC-22 future use primarilly as feedstock chemical
 
 ! C2F6 equiv
 ! src 1 : Semiconductors
