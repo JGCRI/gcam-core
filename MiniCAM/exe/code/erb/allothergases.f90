@@ -93,26 +93,6 @@
 ! Ag model: fraction of beef (in value terms) that is grain fed (as opposed to pasture)  mj 11/02
 	FBeefFrac = 1.0 - PASTOUT(L,M) * price(10,L) / price(3,L)
 
-! New CO2 Driver code for cement -JPL
-    CmtGamma = 3;
-    CementGDPperCap = 1000*GNPPPP(L,M)/ZLM(L,M) /8
-
-    if( CementGDPperCap > 0.0_8 ) then
-        CementDenom = CementGDPperCap**CmtGamma + CementGDPperCap**(-CmtGamma)
-    else
-        write( *, * ) "GDP Per capita 0 in cement emissions calculation. L: ", L, " M: ", M
-        CementDenom = 1_8
-    endif
-
-! src 1 : cement demand driver for low GDP
-    if( CementGDPperCap > 0.0_8 ) then
-        OGACT(ICemt,1,L,M) = CementGDPperCap * CementGDPperCap**(-CmtGamma) /CementDenom
-    else 
-        OGACT(ICemt,1,L,M) = 0.0_8
-    endif
-
-! src 2 : cement demand driver for high GDP
-	OGACT(ICemt,2,L,M) = ZLM(L,M) * CementGDPperCap**(CmtGamma) /CementDenom
 
 
 ! ****************************************************************************************
@@ -238,6 +218,30 @@
 
 !   TO DO
 
+
+! ****************************************************************************************
+! Activities for Cement
+! ****************************************************************************************
+! New CO2 Driver code for cement -JPL
+    CmtGamma = 3;
+    CementGDPperCap = 1000*GNPPPP(L,M)/ZLM(L,M) /8
+
+    if( CementGDPperCap > 0.0_8 ) then
+        CementDenom = CementGDPperCap**CmtGamma + CementGDPperCap**(-CmtGamma)
+    else
+        write( *, * ) "GDP Per capita 0 in cement emissions calculation. L: ", L, " M: ", M
+        CementDenom = 1_8
+    endif
+
+! src 1 : cement demand driver for low GDP
+    if( CementGDPperCap > 0.0_8 ) then
+        OGACT(ICemt,1,L,M) = CementGDPperCap * CementGDPperCap**(-CmtGamma) /CementDenom
+    else 
+        OGACT(ICemt,1,L,M) = 0.0_8
+    endif
+
+! src 2 : cement demand driver for high GDP
+	OGACT(ICemt,2,L,M) = ZLM(L,M) * CementGDPperCap**(CmtGamma) /CementDenom
 
 
 ! ****************************************************************************************
@@ -552,8 +556,11 @@
 ! src 17: deforestation
 	OGACT(IBC,17,L,M) = DefroR(L,M)
 
-! src 18: agricultural waste
-	OGACT(IBC,18,L,M) =  saveland(1,L,M) 	! total ag land
+! src 18: forest fires
+	OGACT(IBC,18,L,M) = 1.0
+
+! src 19: agricultural waste
+	OGACT(IBC,19,L,M) =  saveland(1,L,M) 	! total ag land
 
 !
 !
@@ -626,9 +633,14 @@
 ! src 17: deforestation
 	OGACT(IOC,17,L,M) = DefroR(L,M)
 
-! src 18: agricultural waste
-	OGACT(IOC,18,L,M) =  saveland(1,L,M) 	! total ag land
+! src 18: forest fires
+	OGACT(IOC,18,L,M) = 1.0
 
+! src 19: agricultural waste
+	OGACT(IOC,19,L,M) =  saveland(1,L,M) 	! total ag land
+
+
+!
 !
 !
 !***********************************************************
