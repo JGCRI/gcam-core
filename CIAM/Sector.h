@@ -51,19 +51,19 @@ protected:
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
     std::vector<bool> capLimitsPresent; //!< Flag if any capacity limits are present 
+    bool anyFixedCapacity; //!< flag set to true if any fixed capacity is present in this sector
+    double fixedShareSavedVal; //!< debugging value
+    double prevVal;
+    double prevPer;
+
     virtual void initElementalMembers();
     void sumOutput(int per); // private function, sum taken care of automatically
     void sumInput(int per); // private function, sum taken care of automatically
     double getFixedShare( const std::string& regionName, const int sectorNum, const int per ); // utility function 
     virtual void calcPrice(int per);
-    bool anyFixedCapacity; //!< flag set to true if any fixed capacity is present in this sector
-    double fixedShareSavedVal; //!< debugging value
-    
-    double prevVal;
-    double prevPer;
+
 
 public:
-
     sector();
     virtual ~sector();
     virtual void clear();
