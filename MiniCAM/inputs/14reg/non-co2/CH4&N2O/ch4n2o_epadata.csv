@@ -14,37 +14,37 @@ OTHER GASES MAIN TABLE:  MUST BE READ IN FIRST
 INPUT_TABLE
 Variable ID
 800
-Other Gases,,,,{ Paramaters for GDP control -- set fmax to 0 to disable -- detail by source/region using input 805 },,,,,
-Index,Label,GWP,Input Type,fmax,gdp0,tau,techchange,,
-1,CH4,21,1,0,15,10,0.001,:-- Timescale - changes somewhat into the future,
-2,N2O,310,1,0,15,10,0.001,:-- Timescale - changes somewhat into the future,
-3,SO2,0,1,0,12,12,0.001,:-- Timescale - changes somewhat into the future,
-4,NOx,0,1,0,20,20,0.001,:-- Timescale - changes significantly into the future,
-5,CO,0,1,0,10,10,0.001,":-- Timescale - ""catchup"" to current development",
-6,VOC,0,1,0,10,10,0.001,":-- Timescale - ""catchup"" to current development",
-7,BC,0,1,0,8,8,0.001,,
-8,OC,0,1,0,15,10,0.001,,
-9,not-used,0,1,0,15,10,0.001,,
-10,HFC-245ca,560,1,0,15,10,0.001,??? Previous data had fa not ca here,
-11,HFC-134a,1300,1,0,15,10,0.001,,HFC-245fa - GWP = 790
-12,HFC125(227ea),2800,1,0,15,10,0.001,,
-13,HFC-143a,3800,1,0,15,10,0.001,,
-14,SF6 ,23900,1,0,15,10,0.001,,
-15,C2F6,9200,1,0,15,10,0.001
-16,CF4 ,6500,1,0,15,10,0.001
-17,not-used,0,0,0,15,10,0.001
-18,not-used,0,0,0,15,10,0.001
-19,not-used,0,0,0,15,10,0.001
-20,not-used,0,0,0,15,10,0.001
-21,not-used,0,0,0,15,10,0.001
-22,not-used,0,0,0,15,10,0.001
-23,not-used,0,0,0,15,10,0.001
-24,not-used,0,0,0,15,10,0.001
-25,not-used,0,1,0,15,10,0.001
+Other Gases,,,,{ Paramaters for GDP control -- set fmax to 0 to disable -- detail by source/region using input 805 },,,,,,,,
+Index,Label,GWP,Input Type,fmax,gdp0,tau,techchange,,,,,
+1,CH4,21,1,0,15,10,0.001,:-- Timescale - changes somewhat into the future,,,,
+2,N2O,310,1,0,15,10,0.001,:-- Timescale - changes somewhat into the future,,,,
+3,SO2,0,1,0,12,12,0.001,:-- Timescale - changes somewhat into the future,,,,
+4,NOx,0,1,0,20,20,0.001,:-- Timescale - changes significantly into the future,,,,
+5,CO,0,1,0,10,10,0.001,":-- Timescale - ""catchup"" to current development",,,,
+6,VOC,0,1,0,10,10,0.001,":-- Timescale - ""catchup"" to current development",,,,
+7,BC,0,1,0,8,8,0.001,,,,,
+8,OC,0,1,0,15,10,0.001,,,,,
+9,not-used,0,1,0,15,10,0.001,,,,,
+10,HFC-245fa,790,1,0,10,10,0.001,:-- Timescale - changes somewhat into the future,,,,??? Previous data had fa not ca here
+11,HFC-134a,1300,1,0,10,10,0.001,:-- Timescale - changes somewhat into the future,,,,HFC-245fa - GWP = 790
+12,HFC125(227ea),2800,1,0,10,10,0.001,:-- Timescale - changes somewhat into the future,,,,
+13,HFC-143a,3800,1,0,10,10,0.001,:-- Timescale - changes somewhat into the future,,,,
+14,SF6 ,22200,1,0,10,10,0.001,:-- Timescale - changes somewhat into the future,,,,
+15,C2F6,11900,1,0,10,10,0.001,:-- Timescale - changes somewhat into the future
+16,CF4 ,5700,1,0,10,10,0.001,:-- Timescale - changes somewhat into the future
+17,not-used,0,0,0,15,10,0.001,
+18,not-used,0,0,0,15,10,0.001,
+19,not-used,0,0,0,15,10,0.001,
+20,not-used,0,0,0,15,10,0.001,
+21,not-used,0,0,0,15,10,0.001,
+22,not-used,0,0,0,15,10,0.001,
+23,not-used,0,0,0,15,10,0.001,
+24,not-used,0,0,0,15,10,0.001,
+25,not-used,0,1,0,15,10,0.001,
 
 
 
-NOTE: Must have correct region and sector numbers below,,,,,,,
+NOTE: Must have correct region and sector numbers below,,,,,,,,
 
 INPUT_TABLE,,,,,,,,,,,,,,,
 Variable ID,,METHANE -- base year emissions in Tg CH4  -- SOURCE EMF 21 / EPA 11/02 AND EDGAR v 3.2,,,,,,,,,,,,,
