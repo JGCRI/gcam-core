@@ -27,7 +27,6 @@ public:
     ~CalibrationMarket();
     virtual void derivedToDebugXML( std::ostream& out ) const;
     virtual std::string getType() const;
-    virtual void setCompanionMarketPointer( Market* pointerIn );
 
     virtual void initPrice();
     virtual void setPrice( const double priceIn );

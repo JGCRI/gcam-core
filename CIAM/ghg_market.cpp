@@ -26,10 +26,6 @@ string GHGMarket::getType() const {
    return "GHGMarket";
 }
 
-void GHGMarket::setCompanionMarketPointer( Market* pointerIn ) {
-    Market::setCompanionMarketPointer( pointerIn );
-}
-
 void GHGMarket::initPrice() {
    price = 1;
 }

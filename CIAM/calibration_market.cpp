@@ -29,9 +29,6 @@ string CalibrationMarket::getType() const {
    return "CalibrationMarket";
 }
 
-void CalibrationMarket::setCompanionMarketPointer( Market* pointerIn ) {
-}
-
 void CalibrationMarket::initPrice() {
     Market::initPrice();
 }
