@@ -51,9 +51,9 @@ class Marketplace
    void setPriceVector( const std::string& goodName, const std::string& regionName, const std::vector<double>& prices );
    void setsupply( const std::string& goodName, const std::string& regionName, const double value, const int period );
    void setdemand( const std::string& goodName, const std::string& regionName, const double value, const int period );
-   double showprice( const std::string& goodName, const std::string& regionName, const int period ) const;
-   double showsupply( const std::string& goodName, const std::string& regionName, const int period ) const;
-   double showdemand( const std::string& goodName, const std::string& regionName, const int period ) const;
+   double getPrice( const std::string& goodName, const std::string& regionName, const int period ) const;
+   double getSupply( const std::string& goodName, const std::string& regionName, const int period ) const;
+   double getDemand( const std::string& goodName, const std::string& regionName, const int period ) const;
    void init_to_last( const int period );
    void storeto_last( const int period );
    void MCoutput() const; 

@@ -39,14 +39,25 @@ using namespace mtl;
 extern ofstream logfile;
 extern Scenario* scenario;
 
-//! Constructor.
+/*! \brief Default constructor
+*
+* The default constructor for the Marketplace which initializes several datamembers and
+* creates an instance of the selected solver.
+*
+* \todo Make a static methor which returns a new BisectionNRSolver for further encapsulation.
+* \today Marketplace might be better as a singleton.
+*/
 Marketplace::Marketplace() {
    uniqueNo = 0;
    numMarkets = 0;
    solver = new BisectionNRSolver( this );
 }
 
-//! Destructor
+/*! \brief Destructor
+*
+* Destructor for the marketplace which first deletes all the markets and then
+* deletes the solution mechanism.
+*/
 Marketplace::~Marketplace() {
    
    // Clean up the markets.
@@ -60,12 +71,32 @@ Marketplace::~Marketplace() {
    delete solver;
 }
 
-//! Solve the marketplace using the Solver.
+/*! \brief Solve the marketplace using the Solver.
+*
+* The solve method calls the solve method of the instance of the Solver object 
+* that was created in the constructor. This method then clears the market.
+*
+* \param period Period of the model to solve.
+* \todo Error checking return codes for solve.
+*/
+
 void Marketplace::solve( const int period ){
    solver->solve( period );
 }
 
-//! Write out XML for debugging purposes.
+/*! \brief Write out XML for debugging purposes.
+*
+* This method is called hierarchically from the main loop to write out 
+* the current state of the model at a given time period. All member variables relevant to the running 
+* of the model are written out to assist with debugging. It writes to the output stream
+* passed as an argument in an XML format. 
+* 
+* \warning Currently to limit the size of the file which is written this method is only called for the
+* US region.
+* \param period The period for which to print the debugging information.
+* \param out The output stream to which to print.
+* \author Josh Lurz
+*/
 void Marketplace::toDebugXML( const int period, ostream& out ) const {
    
    // write the beginning tag.
@@ -93,7 +124,14 @@ void Marketplace::toDebugXML( const int period, ostream& out ) const {
    out << "</Marketplace>" << endl;
 }
 
-//! Function to create market key from a market name and a good name.
+/*! \brief Function to create market key from a region name and a good name.
+* 
+* This convenience function was added to consistently create the name of the market from the region name and
+* good name.
+*
+* \param marketName The market region.
+* \param goodName The market good.
+*/
 string Marketplace::createMarketKey( const string& marketName, const string& goodName ) {
    return ( marketName + goodName );
 }
@@ -132,6 +170,8 @@ void Marketplace::setRawPrice( const string& marketName, const string& goodName,
 //! returns a single market's excess demand from the market name and good name.
 /*! \warning MarketName is NOT the same as RegionName.
 *//*
+*/
+/*
 double Marketplace::getExcessDemand( const string& marketName, const string& goodName, const int period ) const {
    
    // Get the market number.
@@ -146,10 +186,11 @@ double Marketplace::getExcessDemand( const string& marketName, const string& goo
       return 0;
    }
 }
-*/
+/*
 //! returns a single market's raw demand from the market name and good name.
 /*! \warning MarketName is NOT the same as RegionName.
 */
+
 double Marketplace::getRawDemand( const string& marketName, const string& goodName, const int period ) const {
    
    // Get the market number.
@@ -554,15 +595,12 @@ void Marketplace::setsupply( const string& goodName, const string& regionName, c
 //! set market demand to used for solution mechanism
 void Marketplace::setdemand( const string& goodName, const string& regionName, const double value, const int per ){
    const int marketNumber = getMarketNumber( goodName, regionName );
-   string marketName;
-   string demandGoodName;
    
    if (value < 0 && goodName != "CO2" ) {
       cerr << "ERROR in setdemand: Demand value < 0 for market " << goodName << " in region " << regionName << endl;
    }
    
    if ( marketNumber != -1 ) {
-      
       markets[ marketNumber ][ per ]->addToDemand( value );
    }
 }
@@ -571,7 +609,7 @@ void Marketplace::setdemand( const string& goodName, const string& regionName, c
 /*! If the market does not exist, return an extremely large price.
 \todo do something else about "renewable"
 */
-double Marketplace::showprice( const string& goodName, const string& regionName, const int per ) const {
+double Marketplace::getPrice( const string& goodName, const string& regionName, const int per ) const {
    
    const int marketNumber = getMarketNumber( goodName, regionName );
    
@@ -591,10 +629,8 @@ double Marketplace::showprice( const string& goodName, const string& regionName,
 }
 
 //! return market supply used for solution mechanism
-double Marketplace::showsupply( const string& goodName, const string& regionName, const int per ) const {
+double Marketplace::getSupply( const string& goodName, const string& regionName, const int per ) const {
    const int marketNumber = getMarketNumber( goodName, regionName );
-   string marketName;
-   string demandGoodName;
    
    if ( marketNumber != -1 ) {
       return markets[ marketNumber ][ per ]->getSupply();
@@ -623,7 +659,6 @@ double Marketplace::checkSupply( const string& goodName, const string& regionNam
 //! return supply for use in checking solution, including Raw supply for demand market
 /*! Used to double-check solution. Should not use otherwise. */
 double Marketplace::checkSupply( const int marketNumber, const int per ) const {
-   
    return markets[ marketNumber ][ per ]->getSupplyForChecking();
 }
 
@@ -632,10 +667,8 @@ double Marketplace::checkSupply( const int marketNumber, const int per ) const {
 If this is a demand market (through the redirect), then get the demand from the trail value (.price)
 -- although this is never Rawly occurs at present. 
 */
-double Marketplace::showdemand(  const string& goodName, const string& regionName, const int per ) const {
+double Marketplace::getDemand(  const string& goodName, const string& regionName, const int per ) const {
    const int marketNumber = getMarketNumber( goodName, regionName );
-   string marketName;
-   string demandGoodName;
    
    if ( marketNumber != -1 ) {
       return markets[ marketNumber ][ per ]->getDemand();

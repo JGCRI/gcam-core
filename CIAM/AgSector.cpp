@@ -284,7 +284,7 @@ void AgSector::runModel( const int period, const string& regionName ) {
    int tempPeriod = period;
    
    for( int l = 0; l < numAgMarkets; l++ ){
-      prices[ period ][ l ] = marketplace->showprice( indiceToNameMap[ l ], regionName, period );
+      prices[ period ][ l ] = marketplace->getPrice( indiceToNameMap[ l ], regionName, period );
    }
    
    for( int i = 0; i < numAgMarkets; i++ ) {

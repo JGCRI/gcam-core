@@ -603,7 +603,7 @@ void sector::calibrateSector( const string regionName, const int per )
     double mrkdmd;
     
     totalFixedSupply = getFixedSupply( per ); 
-    mrkdmd = marketplace->showdemand( name, regionName, per ); // demand for the good produced by this sector
+    mrkdmd = marketplace->getDemand( name, regionName, per ); // demand for the good produced by this sector
     totalCalOutputs = getCalOutput( per );
     
     for (int i=0; i<nosubsec; i++ ) {
@@ -629,8 +629,8 @@ void sector::supply( const string regionName, const int per) {
     
     carbontaxpaid[per] = 0; // initialize carbon taxes paid
     
-    mrkprice = marketplace->showprice( name, regionName, per ); // price for the good produced by this sector
-    mrkdmd = marketplace->showdemand( name, regionName, per ); // demand for the good produced by this sector
+    mrkprice = marketplace->getPrice( name, regionName, per ); // price for the good produced by this sector
+    mrkdmd = marketplace->getDemand( name, regionName, per ); // demand for the good produced by this sector
     
     if (mrkdmd < 0) {
         cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;

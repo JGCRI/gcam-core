@@ -388,7 +388,7 @@ void technology::addghgtax( const string ghgname, const string regionName, const
     // returns coef for primary fuels only
     // carbontax has value for primary fuels only
     carbontaxgj = 0; // initialize
-    carbontax = marketplace->showprice(ghgname,regionName,per);
+    carbontax = marketplace->getPrice(ghgname,regionName,per);
     // add to previous ghg tax if more than one ghg
     for(int i=0;i< static_cast<int>( ghg.size() );i++) {
         carbontaxgj += carbontax*ghg[i]->taxcnvrt( regionName, fuelname)*1e-3;
@@ -400,7 +400,7 @@ void technology::addghgtax( const string ghgname, const string regionName, const
 void technology::calcCost( const string regionName, const int per ) 
 {
     Marketplace* marketplace = scenario->getMarketplace();
-    double fuelprice = marketplace->showprice(fuelname,regionName,per);
+    double fuelprice = marketplace->getPrice(fuelname,regionName,per);
     
     //techcost = fprice/eff/pow(1+techchange,modeltime->gettimestep(per)) + necost;
     // fMultiplier and pMultiplier are initialized to 1 for those not read in

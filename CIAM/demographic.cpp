@@ -259,7 +259,7 @@ void demographic::writeBackCalibratedValues( const string& regionName, const int
    const string goodName = "GDP";
 
    // Only need to write back calibrated values for the current period.
-   double totalLaborProd = marketplace->showprice( goodName, regionName, period );
+   double totalLaborProd = marketplace->getPrice( goodName, regionName, period );
    
    laborprod[ modeltime->getmod_to_pop( period ) ] = pow( totalLaborProd, double( 1 ) / double( modeltime->gettimestep( period ) ) ) - 1;
 }

@@ -697,13 +697,13 @@ void Region::rscSupply(int per)  {
    //for (int i=0;i<numResources-1;i++) {
    for (int i=0;i<numResources;i++) {
       goodName = resources[i]->getName();
-      price = marketplace->showprice(goodName,regionName,per); // get market price
+      price = marketplace->getPrice(goodName,regionName,per); // get market price
       if (per==0) {
          prev_price = price;
          prev_gdp = gnp[per];
       }
       else {
-         prev_price = marketplace->showprice(goodName,regionName,per-1); // get market price
+         prev_price = marketplace->getPrice(goodName,regionName,per-1); // get market price
          prev_gdp = gnp[per-1];
       }
       

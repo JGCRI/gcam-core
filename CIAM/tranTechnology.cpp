@@ -76,7 +76,7 @@ void tranTechnology::calcCost( const string regionName, const int per )
     const Modeltime* modeltime = scenario->getModeltime();
     const int timestep = modeltime->gettimestep(per);
 
-    double fuelprice = marketplace->showprice(fuelname,regionName,per);
+    double fuelprice = marketplace->getPrice(fuelname,regionName,per);
     
     if(per>=2) {
         techChangeCumm = pow(1+techchange,timestep*(per-1));
