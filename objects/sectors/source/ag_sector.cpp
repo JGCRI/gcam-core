@@ -56,6 +56,11 @@ AgSector::AgSector() {
    }
 }
 
+//! Destructor
+AgSector::~AgSector(){
+    regionCount--;
+}
+
 //! Initialize static data members.
 void AgSector::staticInitialize(){
    init = true;
