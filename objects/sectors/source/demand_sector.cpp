@@ -57,24 +57,6 @@ DemandSector::DemandSector( const string regionName ): Sector( regionName ){
 DemandSector::~DemandSector() {
 }
 
-//! Clear member variables.
-void DemandSector::clear(){
-    
-    // call super clear
-    Sector::clear();
-    
-    // now clear own data.
-    perCapitaBased = 0;
-    pElasticityBase = 0;
-    priceRatio = 1;
-    finalEngyCons.clear();
-    service.clear();
-    iElasticity.clear();
-    pElasticity.clear();
-    techChangeCumm.clear();
-    servicePreTechChange.clear();
-}
-
 /*! \brief Parses any child nodes specific to derived classes
 *
 * Method parses any input data from child nodes that are specific to the classes derived from this class. 
@@ -82,9 +64,10 @@ void DemandSector::clear(){
 * \author Josh Lurz, Steve Smith, Sonny Kim
 * \param node pointer to the current node in the XML input tree
 */
-void DemandSector::XMLDerivedClassParseAttr( const DOMNode* node ) {
+bool DemandSector::XMLDerivedClassParseAttr( const DOMNode* node ) {
     // get the perCapitaBased attribute for the demand sector
     perCapitaBased = XMLHelper<bool>::getAttr( node, "perCapitaBased" );
+    return true;
 }
 
 /*! \brief Parses any attributes specific to derived classes
@@ -95,7 +78,7 @@ void DemandSector::XMLDerivedClassParseAttr( const DOMNode* node ) {
 * \param nodeName The name of the curr node. 
 * \param curr pointer to the current node in the XML input tree
 */
-void DemandSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
+bool DemandSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     
     const Modeltime* modeltime = scenario->getModeltime();
     
@@ -117,6 +100,10 @@ void DemandSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
 	else if( nodeName == "perCapitaBased" ) {
 		perCapitaBased = XMLHelper<bool>::getValue( curr );
     }
+    else {
+        return false;
+    }
+    return true;
 }
 
 /*! \brief XML output stream for derived classes
