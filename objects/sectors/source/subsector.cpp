@@ -1784,7 +1784,7 @@ void Subsector::MCoutputDemandSector() const {
             }
             dboutput4( regionName,"Price",sectorName+" "+name+" Fuel Cost",techs[i][ 0 ]->getName(),"75$/Ser",temp);
             // technology non-energy cost
-            for (m=0;m<maxper;m++) {
+            for ( int m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getNecost();
             }
             dboutput4( regionName, "Price", sectorName + " " + name + " NE Cost", techs[i][ 0 ]->getName(), "75$/Ser", temp );
