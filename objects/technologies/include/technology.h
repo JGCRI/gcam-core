@@ -56,7 +56,6 @@ protected:
     double fMultiplier; //!< multiplier on fuel cost or price
     double pMultiplier; //!< multiplier on total cost or price
     double totalGHGCost; //!< the value of GHG tax + any storage cost, in $/GJ
-    double carbontaxpaid; //!< total carbon taxes paid
     double fuelPrefElasticity; //!< Fuel preference elasticity
     double lexp; //!< logit exponential
     double share; //!< technology shares
@@ -134,7 +133,7 @@ public:
     double getTechcost() const; // return total technology cost
     double getNecost() const; // return non-fuel cost
     double getTotalGHGCost() const; // return carbon tax and storage cost added to tech in $/TC
-    double getCarbontaxpaid() const; // return carbon taxes paid
+    double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const;
     double getShareWeight() const;
     void technology::copyGHGParameters( const Ghg* prevGHG );
     Ghg* technology::getGHGPointer( const std::string& ghgName );
@@ -145,9 +144,9 @@ public:
     bool getEmissionsCoefInputStatus( const std::string& ghgName ) const;
     void setEmissionsCoefInputStatus( const std::string& ghgName );
     void setGHGEmissionCoef( const std::string& ghgName, const double emissionsCoef );
-    std::map<std::string,double> getemissmap() const; // return map of all ghg emissions
-    std::map<std::string,double> getemfuelmap() const; // return map of all ghg emissions
-    std::map<std::string,double> getemindmap() const; // return map of all ghg emissions
+    const std::map<std::string,double>& getemissmap() const; // return map of all ghg emissions
+    const std::map<std::string,double>& getemfuelmap() const; // return map of all ghg emissions
+    const std::map<std::string,double>& getemindmap() const; // return map of all ghg emissions
     double get_emissmap_second( const std::string& str ) const; // return value for ghg
     double getlexp() const; // return logit exponential for the technology
     double getFixedOutput() const; // return fixed output

@@ -79,7 +79,6 @@ void technology::copy( const technology& techIn ) {
     tax = techIn.tax;
     fMultiplier = techIn.fMultiplier;
     pMultiplier = techIn.pMultiplier;
-    carbontaxpaid = techIn.carbontaxpaid;
     lexp = techIn.lexp;
     share = techIn.share;
     input = techIn.input;
@@ -138,7 +137,6 @@ void technology::initElementalMembers(){
     tax = 0;
     fMultiplier = 1;
     pMultiplier = 1;
-    carbontaxpaid = 0;
     lexp = -6; 
     share = 0;
     input = 0;
@@ -308,8 +306,8 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( effBase, "efficiency", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( neCostBase, "nonenergycost", out, tabs, 0.0 );
-	 XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
-	 XMLWriteElementCheckDefault( neCostPenalty, "fuelprefElasticity", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( neCostPenalty, "fuelprefElasticity", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( tax, "tax", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
@@ -352,7 +350,6 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     XMLWriteElement( tax, "tax", out, tabs );
     XMLWriteElement( fMultiplier, "fMultiplier", out, tabs );
     XMLWriteElement( pMultiplier, "pMultiplier", out, tabs );
-    XMLWriteElement( carbontaxpaid, "carbontaxpaid", out, tabs );
     XMLWriteElement( lexp, "logitexp", out, tabs );
     XMLWriteElement( share, "share", out, tabs );
     XMLWriteElement( output, "output", out, tabs );
@@ -480,11 +477,11 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
 	 // code specical case where there is no fuel input. sjs
 	 // used now to drive non-CO2 GHGs
     double fuelprice;
-	 if ( fuelname != "none" ) {
-		fuelprice = marketplace->getPrice(fuelname,regionName,per);
+    if ( fuelname != "none" ) {
+        fuelprice = marketplace->getPrice(fuelname,regionName,per);
     } else {
-		fuelprice = 0;
-	 }
+        fuelprice = 0;
+    }
 	 
 	// code for integrating technical change
 	//techcost = fprice/eff/pow(1+techchange,modeltime->gettimestep(per)) + necost;
@@ -613,7 +610,6 @@ double technology::getFixedInput() const {
 */
 void technology::scalefixedOutput(const double scaleRatio)
 {
-  //  string FixedTech = "hydro";
     // dmd is total subsector demand
     if( fixedOutputVal != 0 ) {
         output *= scaleRatio;
@@ -685,13 +681,9 @@ void technology::production(const string& regionName,const string& prodName,
         output = share * dmd; // use share to get output for each technology
     }
     else { // do for hydroelectricity
-        //output = fixedOutputVal;
         output = fixedOutputVal = dmd;
     }
     
-    // eliminated renewable branch for input calc, since code was the same. sjs
-    // non renewable technologies previously had
-    //input = output/eff/pow(1+techchange,timestep);
     input = output/eff;
 	   
     if (input < 0) {
@@ -700,11 +692,6 @@ void technology::production(const string& regionName,const string& prodName,
     
     // set demand for fuel in marketplace
     marketplace->addToDemand(fuelname,regionName,input,per);
-	 
-    // total carbon taxes paid for reporting only
-    // carbontax and carbontaxpaid is null for technologies that do not consume fossil fuels
-    // input(EJ), carbontax(90$/GJ), carbontaxpaid(90$Mil)
-    carbontaxpaid = input*totalGHGCost*1e+3;
     
     // calculate emissions for each gas after setting input and output amounts
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
@@ -733,7 +720,7 @@ void technology::adjustForCalibration( double subSectorDemand ) {
    // total calibrated outputs for this sub-sector
    double calOutput = getCalibrationOutput( );
 
-    // make sure share weights aren't zero or else cann't calibrate
+    // make sure share weights aren't zero or else can't calibrate
     if ( shrwts  == 0 && ( calOutput > 0 ) ) {
         shrwts  = 1;
     }
@@ -932,7 +919,7 @@ double technology::getCalibrationInput( ) const {
 void technology::scaleCalibrationInput( const double scaleFactor ) {
     if ( scaleFactor != 0 ) {
         calInputValue = calInputValue * scaleFactor;
-		  calOutputValue = calOutputValue * scaleFactor;
+        calOutputValue = calOutputValue * scaleFactor;
     }
 }
 
@@ -958,8 +945,12 @@ double technology::getTotalGHGCost() const {
 }
 
 //! return carbon taxes paid by technology
-double technology::getCarbontaxpaid() const {
-    return carbontaxpaid;
+double technology::getCarbonTaxPaid( const string& aRegionName, int aPeriod ) const {
+    double sum = 0;
+    for( vector<Ghg*>::const_iterator currGhg = ghg.begin(); currGhg != ghg.end(); ++currGhg ){
+        sum += (*currGhg)->getCarbonTaxPaid( aRegionName, aPeriod );
+    }
+    return sum;
 }
 
 /*! \brief Return a vector listing the names of all the GHGs within the Technology.
@@ -1032,14 +1023,13 @@ Ghg* technology::getGHGPointer( const std::string& ghgName ) {
 */
 void technology::setGHGEmissionCoef( const std::string& ghgName, const double emissionsCoef ) {
     const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
-
     // Need to perform error checking b/c the searchForValue function will return 0 if the name
     // is not found or if the correct element is at position 1. This handles the first case. 
     if( ( ghgIndex == 0 ) && ( ( ghg.size() == 0 ) || ( ghg[ 0 ]->getName() != ghgName ) ) ){
         // A ghg with the passed in name does not exist.
     }
     else {
-         ghg[ ghgIndex ]->setEmissCoef( emissionsCoef );
+        ghg[ ghgIndex ]->setEmissCoef( emissionsCoef );
     }
 }
 
@@ -1055,8 +1045,7 @@ void technology::setGHGEmissionCoef( const std::string& ghgName, const double em
 */
 bool technology::getEmissionsInputStatus( const std::string& ghgName ) const {
     const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
-	 
-	 return ghg[ ghgIndex ]->getEmissionsInputStatus();
+    return ghg[ ghgIndex ]->getEmissionsInputStatus();
 }
 
 /*! \brief Set the flag that indicates that a GHG had an emissions value read in
@@ -1075,17 +1064,17 @@ void technology::setEmissionsInputStatus( const std::string& ghgName ){
 }
 
 //! return map of all ghg emissions
-map<string,double> technology::getemissmap() const {
+const map<string,double>& technology::getemissmap() const {
     return emissmap;
 }
 
 //! return map of all ghg emissions
-map<string,double> technology::getemfuelmap() const {
+const map<string,double>& technology::getemfuelmap() const {
     return emfuelmap;
 }
 
 //! return map of all ghg emissions
-map<string,double> technology::getemindmap() const {
+const map<string,double>& technology::getemindmap() const {
     return emindmap;
 }
 
@@ -1112,12 +1101,12 @@ void technology::setYear( const int yearIn ) {
 * \author Steve Smith
 */
 int technology::getNumbGHGs()  const {
-	std::vector<std::string> ghgNames = getGHGNames();
-   if ( ghgNames[0] != "" ) {
-		return static_cast<int>( ghgNames.size() ); 
-	} else {
-		return 0;
-	}
+    std::vector<std::string> ghgNames = getGHGNames();
+    if ( ghgNames[0] != "" ) {
+        return static_cast<int>( ghgNames.size() ); 
+    } else {
+        return 0;
+    }
 }
 
 /*! \brief check for fixed demands and set values to counter
@@ -1142,8 +1131,8 @@ void technology::tabulateFixedDemands( const string regionName, const int period
                 fixedInput = getFixedInput();
             }
             // set demand for fuel in marketInfo counter
-            double exisitngDemand = max( marketplace->getMarketInfo( fuelname, regionName , period, "calDemand" ), 0.0 );
-            marketplace->setMarketInfo( fuelname, regionName, period, "calDemand", exisitngDemand + fixedInput );        
+            double exisitingDemand = max( marketplace->getMarketInfo( fuelname, regionName , period, "calDemand" ), 0.0 );
+            marketplace->setMarketInfo( fuelname, regionName, period, "calDemand", exisitingDemand + fixedInput );        
         } else {
             // If not fixed, then set to -1 to indicate a demand that is not completely fixed
             marketplace->setMarketInfo( fuelname, regionName, period, "calDemand", -1 );

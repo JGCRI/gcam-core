@@ -204,11 +204,6 @@ void TranTechnology::production(const string& regionName,const string& prodName,
     // set demand for fuel in marketplace
     marketplace->addToDemand(fuelname,regionName,input,per);
     
-    // total carbon taxes paid for reporting only
-    // carbontax and carbontaxpaid is null for technologies that do not consume fossil fuels
-    // input(EJ), carbonValue(90$/GJ), carbontaxpaid(90$Mil)
-    carbontaxpaid = input * totalGHGCost * 1e+3;
-    
     // calculate emissions for each gas after setting input and output amounts
     for ( unsigned int i = 0; i < ghg.size(); ++i ) {
         ghg[i]->calcEmission(regionName, fuelname,input,prodName,output, gdp, per );
