@@ -145,6 +145,13 @@ void Scenario::XMLParse( const DOMNode* node ){
     }
 }
 
+//! Sets the name of the scenario. 
+void Scenario::setName(string newName) {
+
+    // Used to override the read-in scenario name.
+    name = newName;
+}
+
 //! Finish all initializations needed before the model can run.
 void Scenario::completeInit() {
 
