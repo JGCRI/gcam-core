@@ -27,7 +27,7 @@
 #include "Configuration.h"
 #include "Summary.h"
 #include "Emcoef_ind.h"
-#include "Region.h"
+#include "Util.h"
 
 using namespace std;
 using namespace xercesc;
@@ -117,7 +117,7 @@ void sector::XMLParse( const DOMNode* node ){
    nodeList = node->getChildNodes();
    
    // loop through the child nodes.
-   for( int i = 0; i < nodeList->getLength(); i++ ){
+   for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
       curr = nodeList->item( i );
       nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
       
@@ -147,7 +147,7 @@ void sector::XMLParse( const DOMNode* node ){
             tempSubSector = new subsector();
             tempSubSector->XMLParse( curr );
             subsec.push_back( tempSubSector );
-            subSectorNameMap[ tempSubSector->getName() ] = subsec.size() - 1;
+            subSectorNameMap[ tempSubSector->getName() ] = static_cast<int>( subsec.size() ) - 1;
          }	
       }
       
@@ -160,7 +160,7 @@ void sector::XMLParse( const DOMNode* node ){
 //! Complete the initialization.
 void sector::completeInit() {
    
-   nosubsec = subsec.size();
+   nosubsec = static_cast<int>( subsec.size() );
    
    for( vector<subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
       ( *subSecIter )->completeInit();
@@ -986,7 +986,6 @@ void sector::updateSummary( const int per )
 *
 * \param outStream An output stream to write to which was previously created.
 * \param period The period to print graphs for.
-* \return void
 */
 void sector::addToDependencyGraph( ostream& outStream, const int period ) {
    Configuration* conf = Configuration::getInstance();
@@ -1000,7 +999,7 @@ void sector::addToDependencyGraph( ostream& outStream, const int period ) {
    assert( outStream );
    // Get the supply sector name.
    sectorName = getName();
-   Region::replaceSpaces( sectorName );
+   util::replaceSpaces( sectorName );
    
    sectorsUsed = getfuelcons( period );
    
@@ -1008,7 +1007,7 @@ void sector::addToDependencyGraph( ostream& outStream, const int period ) {
    for( fuelIter = sectorsUsed.begin(); fuelIter != sectorsUsed.end(); fuelIter++ ) {
       fuelName = fuelIter->first;
       if( fuelName != "zTotal" ) {
-         Region::replaceSpaces( fuelName );
+         util::replaceSpaces( fuelName );
          // outStream << "\t" << fuelName << " -> " << sectorName << " [label=\"" << fuelIter->second << "\"];" << endl;
          outStream << "\t" << fuelName << " -> " << sectorName;
          outStream << " [style=\"";
