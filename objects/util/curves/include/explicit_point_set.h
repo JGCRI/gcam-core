@@ -18,69 +18,37 @@
 #include <iosfwd>
 #include <string>
 #include <cfloat>
-#include <functional>
+#include <xercesc/dom/DOMNode.hpp>
 #include "util/curves/include/point_set.h"
 
 class Tabs;
+class DataPoint;
 
 /*!
-* \ingroup CIAM
+* \ingroup Util
 * \brief A PointSet subclass which can be described as a set of points. 
 * \author Josh Lurz
 */
 
 class ExplicitPointSet: public PointSet {
-    friend class ExplicitPointSetTests;
     friend std::ostream& operator<<( std::ostream& os, const ExplicitPointSet& pointSet ) {
         pointSet.print( os );
         return os;
     }
 public:
-    class DataPoint {
-        friend std::ostream& operator<<( std::ostream& os, const DataPoint& dataPoint ){
-            dataPoint.print( os );
-            return os;
-        }
-    public:
-        DataPoint(){};
-        virtual ~DataPoint(){};
-        bool operator==( const DataPoint& rhs ) const {
-            return( ( getX() == rhs.getX() ) && ( ( getY() == rhs.getY() ) ) );
-        }
-        bool operator!=( const DataPoint& rhs ) const {
-            return !( *this == rhs );
-        }
-        virtual DataPoint* clone() const = 0;
-        virtual double getX() const = 0;
-        virtual double getY() const = 0;
-        virtual void setX( const double xValue ) = 0;
-        virtual void setY( const double yValue ) = 0;
-        virtual void toXML( std::ostream& out, Tabs* tabs ) const = 0;
-        /*!
-        * \brief Binary comparison operator used for DataPoint pointers to order by increasing x values. 
-        * \author Josh Lurz
-        */  
-        struct LesserX : public std::binary_function<DataPoint*,DataPoint*,bool>
-        {
-            //! Operator which performs comparison. 
-            bool operator()( const DataPoint* lhs, const DataPoint* rhs ) const
-            {   
-                return lhs->getX() < rhs->getX();
-            }
-        };
-    protected:
-        virtual void print( std::ostream& out ) const = 0;
-    };
-    
-
+    typedef std::vector<DataPoint*>::iterator DataPointIterator;
+    typedef std::vector<DataPoint*>::const_iterator DataPointConstIterator;
     ExplicitPointSet();
     ExplicitPointSet( const ExplicitPointSet& rhs );
     ~ExplicitPointSet();
     ExplicitPointSet& operator=( const ExplicitPointSet& rhs );
     bool operator==( const ExplicitPointSet& rhs ) const;
     bool operator!=( const ExplicitPointSet& rhs ) const;
+    ExplicitPointSet* clone() const;
     void copy( const ExplicitPointSet& rhs );
     void clear();
+    static const std::string& getXMLNameStatic();
+    const std::string& getXMLName() const;
     bool addPoint( DataPoint* dataPoint );
     double getY( const double xValue ) const;
     double getX( const double yValue ) const;
@@ -88,8 +56,10 @@ public:
     bool setX( const double yValue, const double xValue );
     bool removePointFindX( const double xValue );
     bool removePointFindY( const double yValue );
-    const std::vector<double> getXCoords( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX, const int minPoints = 0 ) const;
-    const std::vector<double> getYCoords( const double lowRange = -DBL_MAX, const double highRange = DBL_MAX, const int minPoints = 0 ) const;
+    double getMaxX() const;
+    double getMaxY() const;
+    double getMinX() const;
+    double getMinY() const;
     std::vector<std::pair<double,double> > getSortedPairs( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX, const int minPoints = 0 ) const;
     bool containsX( const double x ) const;
     bool containsY( const double y ) const;
@@ -98,7 +68,10 @@ public:
     double getNearestYBelow( const double x ) const;
     double getNearestYAbove( const double x ) const;
     void toXML( std::ostream& out, Tabs* tabs ) const;
+    void XMLParse( const xercesc::DOMNode* node );
+    void invertAxises();
 protected:   
+    static const std::string XML_NAME; //!< The name of the XML tag associated with this object.
     std::vector<DataPoint*> points;
     const DataPoint* findX( const double xValue ) const;
     DataPoint* findX( const double xValue );

@@ -173,27 +173,27 @@ void SubResource::toXML( ostream& out, Tabs* tabs ) const {
     // write the xml for the class members.
     
     for(m = 0; m < static_cast<int>(environCost.size() ); m++ ) {
-        XMLWriteElementCheckDefault(environCost[m],"environCost",out, tabs, 0,modeltime->getper_to_yr(m));
+        XMLWriteElementCheckDefault(environCost[m],"environCost",out, tabs, 0.0 ,modeltime->getper_to_yr(m));
     }
     
     for(m = 0; m < static_cast<int>(severanceTax.size() ); m++ ) {
-        XMLWriteElementCheckDefault(severanceTax[m],"severanceTax",out, tabs, 0,modeltime->getper_to_yr(m));
+        XMLWriteElementCheckDefault(severanceTax[m],"severanceTax",out, tabs, 0.0 ,modeltime->getper_to_yr(m));
     }
     
     // for base year only
     m = 0;
-    XMLWriteElementCheckDefault(annualprod[m],"annualprod",out, tabs, 0, modeltime->getper_to_yr(m));
+    XMLWriteElementCheckDefault(annualprod[m],"annualprod",out, tabs, 0.0 , modeltime->getper_to_yr(m));
     
     for(m = 0; m < static_cast<int>(techChange.size() ); m++ ) {
-        XMLWriteElementCheckDefault(techChange[m],"techChange",out, tabs, 0,modeltime->getper_to_yr(m));
+        XMLWriteElementCheckDefault(techChange[m],"techChange",out, tabs, 0.0 ,modeltime->getper_to_yr(m));
     }
     
     for(m = 0; m < static_cast<int>(scaleFactor.size() ); m++ ) {
         XMLWriteElementCheckDefault(scaleFactor[m],"scaleFactor",out, tabs, SCALE_FACTOR_DEFAULT,modeltime->getper_to_yr(m));
     }
     
-    XMLWriteElementCheckDefault(minShortTermSLimit,"minShortTermSLimit",out, tabs, 0 );
-    XMLWriteElementCheckDefault(priceElas,"priceElas",out, tabs, 1 );
+    XMLWriteElementCheckDefault(minShortTermSLimit,"minShortTermSLimit",out, tabs, 0.0  );
+    XMLWriteElementCheckDefault(priceElas,"priceElas",out, tabs, 1.0 );
     // finished writing xml for the class members.
     
     // write out anything specific to the derived classes

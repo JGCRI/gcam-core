@@ -305,28 +305,26 @@ void technology::toXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( name, "name", out, tabs );
     XMLWriteElement( year, "year", out, tabs );
     
-    XMLWriteElementCheckDefault( shrwts, "sharewt", out, tabs, 1 );
+    XMLWriteElementCheckDefault( shrwts, "sharewt", out, tabs, 1.0 );
     
     if (doCalibration) {
         XMLWriteElement( calInputValue, "calInputValue", out, tabs );
     }
     
     XMLWriteElement( fuelname, "fuelname", out, tabs );
-    XMLWriteElementCheckDefault( effBase, "efficiency", out, tabs, 1 );
-    XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0 );
-    XMLWriteElementCheckDefault( neCostBase, "nonenergycost", out, tabs, 0 );
-	XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0 );
-    XMLWriteElementCheckDefault( tax, "tax", out, tabs, 0 );
-    XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1 );
-    XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1 );
-    XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, -6 );
-    XMLWriteElementCheckDefault( techchange, "techchange", out, tabs, 0 );
-    XMLWriteElementCheckDefault( resource, "resource", out, tabs, 0 );
-    XMLWriteElementCheckDefault( A, "A", out, tabs, 0 );
-    XMLWriteElementCheckDefault( B, "B", out, tabs, 0 );
-    if ( note != "") { 
-		XMLWriteElement( note, "note", out, tabs );
-	 }
+    XMLWriteElementCheckDefault( effBase, "efficiency", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( neCostBase, "nonenergycost", out, tabs, 0.0 );
+	XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( tax, "tax", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, -6.0 );
+    XMLWriteElementCheckDefault( techchange, "techchange", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( resource, "resource", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( A, "A", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( B, "B", out, tabs, 0.0 );
+	XMLWriteElementCheckDefault( note, "note", out, tabs );
     
     for( vector<Ghg*>::const_iterator ghgIter = ghg.begin(); ghgIter != ghg.end(); ghgIter++ ){
         ( *ghgIter )->toXML( out, tabs );

@@ -394,14 +394,12 @@ void Region::toXML( ostream& out, Tabs* tabs ) const {
 
     // write out calibration GDP
     for( m = 0; m < static_cast<int>( calibrationGDPs.size() ); m++ ){
-        XMLWriteElementCheckDefault( calibrationGDPs[ m ], "GDPcal", out, tabs, 0, modeltime->getper_to_yr( m ) );
+        XMLWriteElementCheckDefault( calibrationGDPs[ m ], "GDPcal", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
     }
 
      // write out TFE calibration values
     for( m = 0; m < static_cast<int>( TFEcalb.size() ); m++ ) {
-        if ( TFEcalb[ m ] != 0 ) {
-            XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, tabs, 0, modeltime->getper_to_yr( m ) );
-        }
+        XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
     }
 
     tabs->decreaseIndent();

@@ -1,6 +1,6 @@
 /*! 
 * \file sector.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief Sector class source file.
 * \author Sonny Kim, Steve Smith, Josh Lurz
 * \date $Date$
@@ -247,7 +247,7 @@ void Sector::toXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( unit, "unit", out, tabs );
 
     for( int i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
-        XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, tabs, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
 
     for( int j = 0; modeltime->getper_to_yr( j ) <= 1990; j++ ){
@@ -823,7 +823,7 @@ double Sector::getFixedShare( const int subsectorNum, const int period ) const {
         return fixedShare;
     } 
 	else {
-        cerr << "Illegal Subector number: " << subsectorNum << endl;
+        cerr << "Illegal Subsector number: " << subsectorNum << endl;
         return 0;
     }
 }

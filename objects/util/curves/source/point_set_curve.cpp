@@ -7,25 +7,66 @@
 * \version $Revision$
 */
 
+#include "util/base/include/definitions.h"
 #include "util/curves/include/point_set_curve.h"
 #include "util/curves/include/point_set.h"
+#include "util/curves/include/explicit_point_set.h" // I dont like this. 
+#include "util/curves/include/data_point.h"
 #include "util/base/include/xml_helper.h"
-
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 #include <vector>
 #include <cassert>
 #include <cfloat>
 
 using namespace std;
 
+const string PointSetCurve::XML_NAME = "PointSetCurve";
+
 /*! \brief Constructor
 * \warning This curve is takes responsibility for this PointSet one it is constructed. 
 * \param pointSetIn The PointSet which defines this curve's data.
 */
 PointSetCurve::PointSetCurve( PointSet* pointSetIn ) {
-    /*! \pre pointSet is not null */
-    assert( pointSetIn );
     pointSet = pointSetIn;
-    numericalLabel = 0;
+}
+
+/*! \brief Constructor which uses a set of y coordinates, a starting X value, and an interval between X values.
+* \detailed This constructor creates a PointSetCurve by creating a point for each input Y value
+* with a companion X value starting at the input starting X, and incrementing by the X interval.
+* This function uses the default PointSetType.
+* \param pointSetType The type of PointSet to use.
+* \param dataPointType The type of DataPoint to use. 
+* \param yValues The Y Values to use to create the points.
+* \param xStart The first X value to use.
+* \param xInterval The amount to increment each X value by. 
+* \todo This currently is forced to use a ExplicitPointSet.
+*/
+PointSetCurve::PointSetCurve( const string pointSetType, const string dataPointType, const vector<double> yValues, const double xStart, const double xInterval ) {
+    
+    // Create the PointSet
+    ExplicitPointSet* exPointSet = new ExplicitPointSet();
+    
+    // Iterate through the yValues and add a point for each.
+    typedef vector<double>::const_iterator YValueIter;
+    
+    double xVal = xStart;
+    for( YValueIter yVal = yValues.begin(); yVal != yValues.end(); yVal++ ){
+        // Get a new DataPoint
+        DataPoint* currPoint = DataPoint::getDataPoint( dataPointType );
+        
+        // Set the X and Y values
+        currPoint->setX( xVal );
+        currPoint->setY( *yVal ); // Note: yVal is an iterator so the value must be dereferenced.
+        
+        // Add the point.
+        exPointSet->addPoint( currPoint );
+
+        // Increment the xValue
+        xVal += xInterval;
+    }
+    // Set the pointSet member variable to the newly created ExplicitPointSet.
+    pointSet = exPointSet;
 }
 
 //! Destructor
@@ -33,10 +74,24 @@ PointSetCurve::~PointSetCurve(){
     delete pointSet;
 }
 
+//! Copy Constructor
+PointSetCurve::PointSetCurve( const PointSetCurve& otherCurve ){
+    pointSet = otherCurve.pointSet->clone();
+}
+
+//! Return a copy of the Curve.
+PointSetCurve* PointSetCurve::clone() const {
+    return new PointSetCurve( *this );
+}
+
+//! Static function to return the name of the XML tag this objects uses to write itself out.
+const string& PointSetCurve::getXMLNameStatic() {
+    return XML_NAME;
+}
+
 //! Return the name of the XML tag this objects uses to write itself out.
-string PointSetCurve::getXMLTagName() {
-    const string XML_ELEMENT_NAME = "PointSetCurve";
-    return XML_ELEMENT_NAME;
+const string& PointSetCurve::getXMLName() const {
+    return XML_NAME;
 }
 
 //! Get the X value corresponding to a given Y value.
@@ -143,79 +198,35 @@ bool PointSetCurve::setX( const double yValue, const double xValue ){
     return pointSet->setX( yValue, xValue );
 }
 
-//! Get the X coordinates of all points within the specified domain for the underlying pointset. 
-const std::vector<double> PointSetCurve::getXCoords( const double lowDomain, const double highDomain, const int minPoints ) const {
-    return pointSet->getXCoords( lowDomain, highDomain, minPoints );
+
+//! Calculate the slope between two x coordinates.
+double PointSetCurve::getSlope( const double x1, const double x2 ) const {
+    return ( ( getY( x2 ) - getY( x1 ) ) / ( x2 - x1 ) );
 }
 
-//! Get the Y coordinates of all points within the specified range from the underlying pointset.
-const std::vector<double> PointSetCurve::getYCoords( const double lowRange, const double highRange, const int minPoints ) const {
-    return pointSet->getYCoords( lowRange, highRange, minPoints );
+//! Return the maximum X value contained in the underlying PointSet
+double PointSetCurve::getMaxX() const {
+    return pointSet->getMaxX();
+}
+
+//! Return the maximum Y value contained in the underlying PointSet
+double PointSetCurve::getMaxY() const {
+    return pointSet->getMaxY();
+}
+
+//! Return the minimum X value contained in the underlying PointSet
+double PointSetCurve::getMinX() const {
+    return pointSet->getMinX();
+}
+
+//! Return the minimum Y value contained in the underlying PointSet
+double PointSetCurve::getMinY() const {
+    return pointSet->getMinY();
 }
 
 //! Return a vector of pairs of x y coordinates sorted in increasing x order.
-std::vector<std::pair<double,double> > PointSetCurve::getSortedPairs( const double lowDomain, const double highDomain, const int minPoints ) const {
+PointSet::SortedPairVector PointSetCurve::getSortedPairs( const double lowDomain, const double highDomain, const int minPoints ) const {
     return pointSet->getSortedPairs( lowDomain, highDomain, minPoints );
-}
-
-//! Get the curve title.
-const std::string PointSetCurve::getTitle() const {
-    return title;
-}
-
-//! Set the curve title.
-void PointSetCurve::setTitle( const std::string& titleIn ){
-    title = titleIn;
-}
-
-//! Get the numerical value or label associated with this curve.
-double PointSetCurve::getNumericalLabel() const {
-    return numericalLabel;
-}
-
-//! Set the numerical value or label associated with this curve.
-void PointSetCurve::setNumericalLabel( const double numericalLabelIn ) {
-    numericalLabel = numericalLabelIn;
-}
-
-//! Get the X axis label.
-const std::string PointSetCurve::getXAxisLabel() const {
-    return xAxisLabel;
-}
-
-//! Get the y axis label.
-const std::string PointSetCurve::getYAxisLabel() const {
-    return yAxisLabel;
-}
-
-//! Set the X axis label.
-void PointSetCurve::setXAxisLabel( const std::string& xLabelIn ) {
-    xAxisLabel = xLabelIn;
-}
-
-//! Set the Y axis label. 
-void PointSetCurve::setYAxisLabel( const std::string& yLabelIn ) {
-    yAxisLabel = yLabelIn;
-}
-
-//! Get the X axis units.
-const std::string PointSetCurve::getXAxisUnits() const {
-    return xAxisUnits;
-}
-
-//! Get the Y axis units.
-const std::string PointSetCurve::getYAxisUnits() const {
-    return yAxisUnits;
-}
-
-//! Set the X axis units.
-void PointSetCurve::setXAxisUnits( const std::string& xUnitsIn ){
-    xAxisUnits = xUnitsIn;
-}
-
-//! Set the Y axis units.
-void PointSetCurve::setYAxisUnits( const std::string& yUnitsIn ){
-    yAxisUnits = yUnitsIn;
 }
 
 //! Integrate the curve. Currently uses a trapezoidal integration.
@@ -240,10 +251,11 @@ double PointSetCurve::getIntegral( const double lowDomain, const double highDoma
         }
 
         // Perform the integration.
-
-        for( int i = 1; i < static_cast<int>( sortedPoints.size() ); i++ ){
-            double height = sortedPoints[ i ].first - sortedPoints[ i - 1 ].first;
-            sum += 0.5 * height * ( sortedPoints[ i ].second + sortedPoints[ i - 1 ].second );
+        // Note: If there was only one point, and no low domain or high domain, this loop will be skipped.
+        // This is correct, the integral of a single point is 0.
+        for( unsigned int i = 1; i < sortedPoints.size(); i++ ){
+            double height = sortedPoints.at( i ).first - sortedPoints.at( i - 1 ).first;
+            sum += 0.5 * height * ( sortedPoints.at( i ).second + sortedPoints.at( i - 1 ).second );
         }
     }
     return sum;
@@ -286,12 +298,38 @@ double PointSetCurve::getDiscountedValue( const double lowDomain, const double h
     }
     return sum;
 }
+
 //! Print out the curve to an XML File
-void PointSetCurve::toXML( ostream& out, Tabs* tabs ) const {
-    // This is a temporary hack. 
-    XMLWriteOpeningTag( getXMLTagName(), out, tabs, static_cast<int>( numericalLabel ), title );
+void PointSetCurve::toXMLDerived( ostream& out, Tabs* tabs ) const {
     pointSet->toXML( out, tabs );
-    XMLWriteClosingTag( getXMLTagName(), out, tabs );
+}
+
+//! Parse a curve from a DOM tree.
+bool PointSetCurve::XMLParseDerived( const xercesc::DOMNode* node ) {
+
+    bool nodeParsed = false;
+
+    // assume node is valid.
+    assert( node );
+    
+    // Get the name of the node.
+    string nodeName = XMLHelper<void>::safeTranscode( node->getNodeName() );
+
+    if ( nodeName == PointSet::getXMLNameStatic() ){
+        nodeParsed = true;
+        // First clear the existing pointset to prevent a memory leak.
+        delete pointSet;
+        pointSet = PointSet::getPointSet( XMLHelper<string>::getAttrString( node, "type" ) );
+        pointSet->XMLParse( node );
+    }
+    return nodeParsed;
+}
+
+//! Swap the X and the Y axises.
+void PointSetCurve::invertAxises() {
+    swap( xAxisLabel, yAxisLabel );
+    swap( xAxisUnits, yAxisUnits );
+    pointSet->invertAxises();
 }
 
 //! Perform a linear interpolation determining a y value.
@@ -340,7 +378,7 @@ void PointSetCurve::print( std::ostream& out, const double lowDomain, const doub
     }
 
     // Now print the labels.
-    out << title << endl;
+    out << title << " " << name << " " << numericalLabel << endl;
     out << xAxisLabel << "," << yAxisLabel << endl;
 
     // Print the points

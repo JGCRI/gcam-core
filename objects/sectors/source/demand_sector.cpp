@@ -131,18 +131,18 @@ void DemandSector::toXML( ostream& out, Tabs* tabs ) const {
     // write out the market string.
     XMLWriteElement( market, "market", out, tabs );
     XMLWriteElement( unit, "unit", out, tabs );
-    XMLWriteElementCheckDefault( pElasticityBase, "pElasticityBase", out, tabs, 0 );
+    XMLWriteElementCheckDefault( pElasticityBase, "pElasticityBase", out, tabs, 0.0 );
     
     for( i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
-        XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, tabs, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( pElasticity.size() ); i++ ){
-        XMLWriteElementCheckDefault( pElasticity[ i ], "priceelasticity", out, tabs, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( pElasticity[ i ], "priceelasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
 
     for( i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
-        XMLWriteElementCheckDefault( service[ i ], "serviceoutput", out, tabs, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( service[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
@@ -150,15 +150,15 @@ void DemandSector::toXML( ostream& out, Tabs* tabs ) const {
     }
 
     for( i = 0; i < static_cast<int>( finalEngyCons.size() ); i++ ){
-        XMLWriteElementCheckDefault( finalEngyCons[ i ], "energyconsumption", out, tabs, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( finalEngyCons[ i ], "energyconsumption", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( iElasticity.size() ); i++ ){
-        XMLWriteElementCheckDefault( iElasticity[ i ], "incomeelasticity", out, tabs, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( iElasticity[ i ], "incomeelasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( aeei.size() ); i++ ){
-        XMLWriteElementCheckDefault( aeei[ i ], "aeei", out, tabs, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( aeei[ i ], "aeei", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
     // write out the subsector objects.

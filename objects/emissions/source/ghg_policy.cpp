@@ -235,9 +235,9 @@ void GHGPolicy::toXML( ostream& out, Tabs* tabs ) const {
         out << "<period>" << endl;
 
         tabs->increaseIndent();
-        XMLWriteElementCheckDefault( constraint[ i ], "constraint", out, tabs, 0 );
-        XMLWriteElementCheckDefault( fixedTaxes[ i ], "fixedTax", out, tabs, 0 );
-        XMLWriteElementCheckDefault( emissions[ i ], "emissions", out, tabs, 0 );
+        XMLWriteElementCheckDefault( constraint[ i ], "constraint", out, tabs, 0.0 );
+        XMLWriteElementCheckDefault( fixedTaxes[ i ], "fixedTax", out, tabs, 0.0 );
+        XMLWriteElementCheckDefault( emissions[ i ], "emissions", out, tabs, 0.0 );
         tabs->decreaseIndent();
         
         tabs->writeTabs( out );

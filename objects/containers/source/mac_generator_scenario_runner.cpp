@@ -29,7 +29,6 @@
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
 #include "util/curves/include/explicit_point_set.h"
-
 using namespace std;
 
 // Function Prototypes
@@ -222,7 +221,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     tabs.writeTabs( ccOut );
     ccOut << "<RegionalCostCurvesByPeriod>" << endl;
     tabs.increaseIndent();
-    const double discountRate = conf->getDouble( "discountRate", 0.1 );
+    const double discountRate = conf->getDouble( "discountRate", 0.05 );
 
     for( RNameIter rNameIter = regions.begin(); rNameIter != regions.end(); rNameIter++ ){
         ExplicitPointSet* costPoints = new ExplicitPointSet();
@@ -239,7 +238,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
         regCostCurve->toXML( ccOut, &tabs );
         const double regionalCost = regCostCurve->getIntegral( modeltime->getper_to_yr( 1 ), modeltime->getendyr() );
 
-        // Temporary hardcoding of end year.
+        // Temporary hardcoding of start year.
         const double discountedRegionalCost = regCostCurve->getDiscountedValue( modeltime->getper_to_yr( 1 ), modeltime->getendyr(), discountRate );
         regionalCostCurves[ *rNameIter ] = regCostCurve;
         regionalCosts[ *rNameIter ] = regionalCost;

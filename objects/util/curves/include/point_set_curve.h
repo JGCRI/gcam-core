@@ -17,13 +17,14 @@
 #include <iosfwd>
 #include <string>
 #include <cfloat>
+#include <xercesc/dom/DOMNode.hpp>
 #include "util/curves/include/curve.h"
 
 class PointSet;
 class Tabs;
 
 /*!
-* \ingroup CIAM
+* \ingroup Util
 * \brief This class defines a curve based on a set of points.  
 * \author Josh Lurz
 */
@@ -34,41 +35,31 @@ class PointSetCurve: public Curve {
         return os;
     }
 public:
-    PointSetCurve( PointSet* pointSetIn );
+    PointSetCurve( PointSet* pointSetIn = 0 );
     PointSetCurve( const PointSetCurve& curveIn );
+    PointSetCurve( const std::string pointSetType, const std::string dataPointType, const std::vector<double> yValues, const double xStart, const double xInterval );
     ~PointSetCurve();
-    static std::string getXMLTagName();
+    PointSetCurve* clone() const;
+    static const std::string& getXMLNameStatic();
+    const std::string& getXMLName() const;
     double getY( const double xValue ) const;
     double getX( const double yValue ) const;
     bool setY( const double xValue, const double yValue );
     bool setX( const double yValue, const double xValue );
-    const std::vector<double> getXCoords( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX, const int minPoints = 0 ) const;
-    const std::vector<double> getYCoords( const double lowRange = -DBL_MAX, const double highRange = DBL_MAX, const int minPoints = 0 ) const;
+    double getSlope( const double x1, const double x2 ) const;
+    double getMaxX() const;
+    double getMaxY() const;
+    double getMinX() const;
+    double getMinY() const;
     std::vector<std::pair<double,double> > getSortedPairs( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX, const int minPoints = 0 ) const;
-    const std::string getTitle() const;
-    void setTitle( const std::string& titleIn );
-    double getNumericalLabel() const;
-    void setNumericalLabel( const double numericalLabelIn );
-    const std::string getXAxisLabel() const;
-    const std::string getYAxisLabel() const;
-    void setXAxisLabel( const std::string& xLabelIn );
-    void setYAxisLabel( const std::string& yLabelIn );
-    const std::string getXAxisUnits() const;
-    const std::string getYAxisUnits() const;
-    void setXAxisUnits( const std::string& xUnitsIn );
-    void setYAxisUnits( const std::string& yUnitsIn );
-    double getIntegral( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX ) const;
+    double getIntegral( const double lowDomain, const double highDomain ) const;
     double getDiscountedValue( const double lowDomain, const double highDomain, const double discountRate ) const;
-    void toXML( std::ostream& out, Tabs* tabs ) const ;
-
-protected:    
+    void toXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    bool XMLParseDerived( const xercesc::DOMNode* node );
+    void invertAxises();
+protected:
+    static const std::string XML_NAME; //!< The name of the XML tag associated with this object.
     PointSet* pointSet;
-    std::string title;
-    double numericalLabel;
-    std::string xAxisLabel;
-    std::string yAxisLabel;
-    std::string xAxisUnits;
-    std::string yAxisUnits;
     static double linearInterpolateY( const double xVal, const double x1, const double y1, const double x2, const double y2 );
     static double linearInterpolateX( const double yVal, const double x1, const double y1, const double x2, const double y2 );
     static double getSlope( const double x1, const double y1, const double x2, const double y2 );

@@ -8,21 +8,26 @@
 */
 
 #include "util/base/include/definitions.h"
-#include "util/curves/include/explicit_point_set.h"
-#include "util/base/include/util.h"
 #include <vector>
 #include <algorithm>
 #include <limits>
 #include <cassert>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
+#include "util/curves/include/explicit_point_set.h"
+#include "util/curves/include/data_point.h"
+#include "util/base/include/util.h"
 
 using namespace std;
+
+const string ExplicitPointSet::XML_NAME = "ExplicitPointSet";
 
 //! Constructor
 ExplicitPointSet::ExplicitPointSet() {
 }
 
-//! Copy constructor. This is needed so we don't have a double-free problem.
+//! Copy constructor.
 ExplicitPointSet::ExplicitPointSet( const ExplicitPointSet& rhs ){
     copy( rhs );
 }
@@ -42,8 +47,8 @@ ExplicitPointSet& ExplicitPointSet::operator=( const ExplicitPointSet& rhs ){
 }
 
 //! Equals operator
-bool ExplicitPointSet::operator ==( const ExplicitPointSet &rhs ) const {
-    return( ( getXCoords() == rhs.getXCoords() ) && ( getYCoords() == rhs.getYCoords() ) );
+bool ExplicitPointSet::operator==( const ExplicitPointSet &rhs ) const {
+    return( getSortedPairs() == rhs.getSortedPairs() );
 }
 
 //! Inequality operator
@@ -51,12 +56,16 @@ bool ExplicitPointSet::operator!=( const ExplicitPointSet& rhs ) const {
     return !( *this == rhs ); // Invokes ExplicitPointSet::operator==
 }
 
+//! Return a copy of the PointSet
+ExplicitPointSet* ExplicitPointSet::clone() const {
+    return new ExplicitPointSet( *this );
+}
+
 //! Helper function which frees memory.
 void ExplicitPointSet::clear() {
-    for( vector<DataPoint*>::iterator delIter = points.begin(); delIter != points.end(); delIter++ ){
+    for( DataPointIterator delIter = points.begin(); delIter != points.end(); delIter++ ){
         delete *delIter;
     }
-    points.clear();
 }
 
 //! Helper function which copies into a new object.
@@ -70,13 +79,23 @@ void ExplicitPointSet::copy( const ExplicitPointSet& rhs ){
     }
 }
 
+//! Static function to return the name of the XML element associated with this object.
+const string& ExplicitPointSet::getXMLNameStatic() {
+    return XML_NAME;
+}
+
+//! Return the name of the XML element associated with this object.
+const string& ExplicitPointSet::getXMLName() const {
+    return XML_NAME;
+}
+
 //! Add a new data point to the point set. Returns true if it was added successfully, it is a unique point.
-bool ExplicitPointSet::addPoint( ExplicitPointSet::DataPoint* pointIn ) {
+bool ExplicitPointSet::addPoint( DataPoint* pointIn ) {
     bool retValue;
 
     // First check if the point already exists
     bool foundPoint = false;
-    for( vector<ExplicitPointSet::DataPoint*>::const_iterator iter = points.begin(); iter != points.end(); iter++ ){
+    for( vector<DataPoint*>::const_iterator iter = points.begin(); iter != points.end(); iter++ ){
         if( **iter == *pointIn ){
             foundPoint = true;
             break;
@@ -148,7 +167,7 @@ bool ExplicitPointSet::removePointFindX( const double xValue ){
     bool retValue = false;
 
     if( point != 0 ){
-        vector<DataPoint*>::iterator delIter = find( points.begin(), points.end(), point );
+        DataPointIterator delIter = find( points.begin(), points.end(), point );
         if( delIter == points.end() ){
             assert( false );
         } 
@@ -168,7 +187,7 @@ bool ExplicitPointSet::removePointFindY( const double yValue ){
     bool retValue = false;
 
     if( point != 0 ){
-        vector<DataPoint*>::iterator delIter = find( points.begin(), points.end(), point );
+        DataPointIterator delIter = find( points.begin(), points.end(), point );
         if( delIter == points.end() ){
             assert( false );
         } else {
@@ -181,40 +200,35 @@ bool ExplicitPointSet::removePointFindY( const double yValue ){
     return retValue;
 }
 
-//! Return a vector containing all x coordinates in the dataset between lowDomain and highDomain.
-/*! \todo Handle minPoints. */
-const vector<double> ExplicitPointSet::getXCoords( const double lowDomain, const double highDomain, const int minPoints ) const {
-    vector<double> returnValues;
-    
-    for( vector<DataPoint*>::const_iterator iter = points.begin(); iter != points.end(); iter++ ){
-        if( ( (*iter)->getX() >= lowDomain ) && ( (*iter)->getX() <= highDomain ) ){
-            returnValues.push_back( (*iter)->getX() );
-        }
-    }
-    return returnValues;
+//! Return the maximum X value in this point set.
+double ExplicitPointSet::getMaxX() const {
+        return( *max_element( points.begin(), points.end(), DataPoint::LesserX() ) )->getX();
 }
 
-//! Return a vector containing all y coordinates in the dataset between lowRange and highRange.
-const vector<double> ExplicitPointSet::getYCoords( const double lowRange, const double highRange, const int minPoints ) const {
-    vector<double> returnValues;
-    
-    for( vector<DataPoint*>::const_iterator iter = points.begin(); iter != points.end(); iter++ ){
-        if( ( (*iter)->getY() >= lowRange ) && ( (*iter)->getY() <= highRange ) ){
-            returnValues.push_back( (*iter)->getY() );
-        }
-    }
-    return returnValues;
+//! Return the maximum Y value in this point set.
+double ExplicitPointSet::getMaxY() const {
+    return( *max_element( points.begin(), points.end(), DataPoint::LesserX() ) )->getY();
+}
+
+//! Return the minimum X value in this point set.
+double ExplicitPointSet::getMinX() const {
+    return( *min_element( points.begin(), points.end(), DataPoint::LesserX() ) )->getX();
+}
+
+//! Return the minimum Y value in this point set.
+double ExplicitPointSet::getMinY() const {
+    return( *min_element( points.begin(), points.end(), DataPoint::LesserY() ) )->getY();
 }
 
 //! Return a vector of pairs of x y coordinates sorted in increasing x order.
-vector<pair<double,double> > ExplicitPointSet::getSortedPairs( const double lowDomain, const double highDomain, const int minPoints ) const {
+ExplicitPointSet::SortedPairVector ExplicitPointSet::getSortedPairs( const double lowDomain, const double highDomain, const int minPoints ) const {
     // Create a copy of the points as this is a const function.
     vector<DataPoint*> pointsCopy = points;
-    sort( pointsCopy.begin(), pointsCopy.end() );
+    sort( pointsCopy.begin(), pointsCopy.end(), DataPoint::LesserX() );
 
     // Now create a vector of std::pairs to return. This is due to the superclass being unaware of the underlying representation.
     vector<pair<double,double> > sortedPoints;
-    for( vector<DataPoint*>::const_iterator iter = pointsCopy.begin(); iter != pointsCopy.end(); iter++ ){
+    for( DataPointConstIterator iter = pointsCopy.begin(); iter != pointsCopy.end(); iter++ ){
         // Check if it is within the requested domain. 
         if( ( (*iter)->getX() >= lowDomain ) && ( (*iter)->getX() <= highDomain ) ){
             // add the point.
@@ -247,7 +261,7 @@ bool ExplicitPointSet::containsY( const double y ) const {
 //! Determines the x coordinate of the nearest point below x.
 double ExplicitPointSet::getNearestXBelow( const double x ) const {
     double closestX = -DBL_MAX;
-    for( vector<DataPoint*>::const_iterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
+    for( DataPointConstIterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
         double currX = ( *pointsIter )->getX();
         if( ( currX < x ) && ( fabs( x - currX ) < fabs( x - closestX ) ) ){
             closestX = currX;
@@ -259,7 +273,7 @@ double ExplicitPointSet::getNearestXBelow( const double x ) const {
 //! Determines the x coordinate of the nearest point above x.
 double ExplicitPointSet::getNearestXAbove( const double x ) const {
     double closestX = DBL_MAX;
-    for( vector<DataPoint*>::const_iterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
+    for( DataPointConstIterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
         double currX = ( *pointsIter )->getX();
         if( ( currX > x ) && ( fabs( currX - x ) < fabs( closestX - x ) ) ){
             closestX = currX;
@@ -271,7 +285,7 @@ double ExplicitPointSet::getNearestXAbove( const double x ) const {
 //! Determines the y coordinate of the nearest point below y.
 double ExplicitPointSet::getNearestYBelow( const double y ) const {
     double closestY = -DBL_MAX;
-    for( vector<DataPoint*>::const_iterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
+    for( DataPointConstIterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
         double currY = ( *pointsIter )->getY();
         if( ( currY < y ) && ( fabs( y - currY ) < fabs( y - closestY ) ) ){
             closestY = currY;
@@ -283,7 +297,7 @@ double ExplicitPointSet::getNearestYBelow( const double y ) const {
 //! Determines the x coordinate of the nearest point above y.
 double ExplicitPointSet::getNearestYAbove( const double y ) const {
     double closestY = DBL_MAX;
-    for( vector<DataPoint*>::const_iterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
+    for( DataPointConstIterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
         double currY = ( *pointsIter )->getY();
         if( ( currY > y ) && ( fabs( currY - y ) < fabs( closestY - y ) ) ){
             closestY = currY;
@@ -292,23 +306,62 @@ double ExplicitPointSet::getNearestYAbove( const double y ) const {
     return closestY;
 }
 
-//! Print out the PointSet to an XML file.
+//! Print out the ExplicitPointSet to an XML file.
 void ExplicitPointSet::toXML( ostream& out, Tabs* tabs ) const {
-    tabs->writeTabs( out );
-    out << "<ExplicitPointSet>" << endl;
-    tabs->increaseIndent();
-    for( vector<DataPoint*>::const_iterator point = points.begin(); point != points.end(); point++ ){
+    XMLWriteOpeningTag( PointSet::getXMLNameStatic(), out, tabs, 0, "", getXMLName() );
+    for( DataPointConstIterator point = points.begin(); point != points.end(); point++ ){
         ( *point )->toXML( out, tabs );
     }
-    tabs->decreaseIndent();
-    tabs->writeTabs( out );
-    out << "</ExplicitPointSet>" << endl;
+    XMLWriteClosingTag( PointSet::getXMLNameStatic(), out, tabs );
+}
+
+//! Parse an ExplicitPointSet from a DOM tree.
+void ExplicitPointSet::XMLParse( const xercesc::DOMNode* node ) {
+    
+    // First clear the existing points to prevent a memory leak.
+    clear();
+
+    xercesc::DOMNode* curr = 0;
+    xercesc::DOMNodeList* nodeList; 
+    string nodeName;
+
+    // assume node is valid.
+    assert( node );
+
+    // get all children of the node.
+    nodeList = node->getChildNodes();
+
+    // loop through the children
+    for ( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
+        curr = nodeList->item( i );
+        nodeName = XMLHelper<void>::safeTranscode( curr->getNodeName() );
+
+        // select the type of node.
+        if( nodeName == "#text" ) {
+            continue;
+        }
+        else if ( nodeName == DataPoint::getXMLNameStatic() ){
+            DataPoint* currPoint = DataPoint::getDataPoint( XMLHelper<string>::getAttrString( curr, "type" ) );
+            currPoint->XMLParse( curr );
+            addPoint( currPoint );
+        } 
+        else {
+            cout << "Unrecognized text string: " << nodeName << " found while parsing ExplicitPointSet." << endl;
+        }
+    }
+}
+
+//! Switch the X and Y values of each datapoint.
+void ExplicitPointSet::invertAxises(){
+    for( DataPointIterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
+        ( *pointsIter )->invertAxises();
+    }
 }
 
 //! Const helper function which returns the point with a given x value.
-const ExplicitPointSet::DataPoint* ExplicitPointSet::findX( const double xValue ) const {
+const DataPoint* ExplicitPointSet::findX( const double xValue ) const {
     DataPoint* retValue = 0;
-    for( vector<DataPoint*>::const_iterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
+    for( DataPointConstIterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
         if( util::isEqual( xValue, ( *pointsIter )->getX() ) ){
             retValue = *pointsIter;
             break;
@@ -318,9 +371,9 @@ const ExplicitPointSet::DataPoint* ExplicitPointSet::findX( const double xValue 
 }
 
 //! Non-Const helper function which returns the point with a given x value.
-ExplicitPointSet::DataPoint* ExplicitPointSet::findX( const double xValue ) {
+DataPoint* ExplicitPointSet::findX( const double xValue ) {
     DataPoint* retValue = 0;
-    for( vector<DataPoint*>::iterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
+    for( DataPointIterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
         if( util::isEqual( xValue, ( *pointsIter )->getX() ) ){
             retValue = *pointsIter;
             break;
@@ -330,9 +383,9 @@ ExplicitPointSet::DataPoint* ExplicitPointSet::findX( const double xValue ) {
 }
 
 //! Const helper function which returns the point with a given y value.
-const ExplicitPointSet::DataPoint* ExplicitPointSet::findY( const double yValue ) const {
+const DataPoint* ExplicitPointSet::findY( const double yValue ) const {
     DataPoint* retValue = 0;
-    for( vector<DataPoint*>::const_iterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
+    for( DataPointConstIterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
         if( util::isEqual( yValue, ( *pointsIter )->getY() ) ){
             retValue = *pointsIter;
             break;
@@ -342,9 +395,9 @@ const ExplicitPointSet::DataPoint* ExplicitPointSet::findY( const double yValue 
 }
 
 //! Non-Const helper function which returns the point with a given y value.
-ExplicitPointSet::DataPoint* ExplicitPointSet::findY( const double yValue ) {
+DataPoint* ExplicitPointSet::findY( const double yValue ) {
     DataPoint* retValue = 0;    
-    for( vector<DataPoint*>::iterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
+    for( DataPointIterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
         if( util::isEqual( yValue, ( *pointsIter )->getY() ) ){
             retValue = *pointsIter;
             break;
@@ -363,10 +416,10 @@ ExplicitPointSet::DataPoint* ExplicitPointSet::findY( const double yValue ) {
 void ExplicitPointSet::print( ostream& out, const double lowDomain, const double highDomain,
                              const double lowRange, const double highRange, const int minPoints ) const {
     vector<DataPoint*> pointsCopy = points;
-    sort( pointsCopy.begin(), pointsCopy.end(), ExplicitPointSet::DataPoint::LesserX() );
+    sort( pointsCopy.begin(), pointsCopy.end(), DataPoint::Lesser() );
 	
     out << "x,y" << endl;
-    for( vector<DataPoint*>::const_iterator pointIter = pointsCopy.begin(); pointIter != pointsCopy.end(); pointIter++ ){
+    for( DataPointConstIterator pointIter = pointsCopy.begin(); pointIter != pointsCopy.end(); pointIter++ ){
         // Check if the point meets the printing conditions.
 	
         if( ( ( *pointIter )->getX() <= highDomain ) && ( ( *pointIter )->getX() >= lowDomain ) &&

@@ -79,6 +79,19 @@ namespace util {
         return tempval;
     }
 
+    /*!\brief This is a template function which compares two values. 
+    * \detailed This function very simply uses the == operator of the 
+    * two arguments to compare them, and returns the return value of the ==
+    * operator. The reason for this function is so that it can be overridden
+    * for doubles to perform special comparison not using the == operator. 
+    * \param firstValue The first value to compare.
+    * \param secondValue The second value to compare.
+    * \return Whether or not the two values are equal.
+    */
+    template<class T>
+    bool isEqual( const T firstValue, const T secondValue ) {
+        return ( firstValue == secondValue );
+    }
     /*! \brief A function to determine if two doubles are equal.
     *
     * Due to inaccuracies in machine arithmatic, it is virtually impossible for two doubles with decimal values
@@ -90,8 +103,9 @@ namespace util {
     * \param secondNumber The second double to compare.
     * \return Whether the two doubles are within SMALL_NUM of equivalence. 
     */
-    inline const bool isEqual( const double firstNumber, const double secondNumber ) {
-        const double SMALL_NUM = 1E-10;
+    template<double>
+    bool isEqual( const double firstNumber, const double secondNumber ) {
+        const static double SMALL_NUM = 1E-10;
         return ( fabs( firstNumber - secondNumber ) < SMALL_NUM );
     }
 

@@ -438,8 +438,9 @@ void XMLWriteElement( const T value, const std::string elementName, std::ostream
 * \param Tabs The number of tabs to print before the element. 
 * \param name Optional name value to print as an attribute.
 * \param year Optional year value to print as an attribute.
+* \param type Optional type name to print as an attribute. 
 */
-inline void XMLWriteOpeningTag( const std::string& elementName, std::ostream& out, Tabs* tabs,  const int year = 0, const std::string& name = "" ) {
+inline void XMLWriteOpeningTag( const std::string& elementName, std::ostream& out, Tabs* tabs,  const int year = 0, const std::string& name = "", const std::string& type = "" ) {
 
     tabs->writeTabs( out );
     out << "<" << elementName;
@@ -447,11 +448,12 @@ inline void XMLWriteOpeningTag( const std::string& elementName, std::ostream& ou
     if( year ){
         out << " year=\"" << year << "\"";
     }
-    
-    if ( name != "" ) {
+    if ( name != "" ){
         out << " name=\"" << name << "\"";
     }
-
+    if( type != "" ){
+        out << " type=\"" << type << "\"";
+    }
     out << ">" << std::endl;
     tabs->increaseIndent();
 } 
@@ -485,7 +487,7 @@ inline void XMLWriteClosingTag( const std::string& elementName, std::ostream& ou
 * \param name Optional name value to print as an attribute.
 */
 template<class T>
-void XMLWriteElementCheckDefault( const T value, const std::string elementName, std::ostream& out, const Tabs* tabs, const double defaultValue, const int year = 0, const std::string name = "" ) {
+void XMLWriteElementCheckDefault( const T value, const std::string elementName, std::ostream& out, const Tabs* tabs, const T defaultValue = T(), const int year = 0, const std::string name = "" ) {
    
    if( !util::isEqual( value, defaultValue ) ) {
        XMLWriteElement( value, elementName, out, tabs, year, name );

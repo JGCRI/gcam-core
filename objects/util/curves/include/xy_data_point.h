@@ -14,15 +14,16 @@
 */
 
 #include <iosfwd>
-#include "util/curves/include/explicit_point_set.h"
+#include <xercesc/dom/DOMNode.hpp>
+#include "util/curves/include/data_point.h"
 
 /*!
-* \ingroup CIAM
-* \brief A PointSet subclass which defines a simple x, y point.
+* \ingroup Util
+* \brief A DataPoint subclass which defines a simple x, y point.
 * \author Josh Lurz
 */
 
-class XYDataPoint: public ExplicitPointSet::DataPoint {
+class XYDataPoint: public DataPoint {
         friend std::ostream& operator<<( std::ostream& os, const XYDataPoint& dataPoint ){
             dataPoint.print( os );
             return os;
@@ -30,6 +31,8 @@ class XYDataPoint: public ExplicitPointSet::DataPoint {
     public:
         XYDataPoint( const double xIn = 0, const double yIn = 0 );
         ~XYDataPoint();
+        const std::string& getXMLName() const;
+        static const std::string& getXMLNameStatic();
         bool operator==( const XYDataPoint& rhs ) const;
         bool operator!=( const XYDataPoint& rhs ) const;
 	    DataPoint* XYDataPoint::clone() const;
@@ -38,7 +41,10 @@ class XYDataPoint: public ExplicitPointSet::DataPoint {
         void setX( const double xValue );
         void setY( const double yValue );
         void toXML( std::ostream& out, Tabs* tabs ) const;
+        void XMLParse( const xercesc::DOMNode* node );
+        void invertAxises();
     protected:
+        static const std::string XML_NAME;  //!< The name of the XML tag associated with this object.
         double x;
         double y;
         void print( std::ostream& out ) const;

@@ -85,8 +85,8 @@ void Grade::toXML( ostream& out, Tabs* tabs ) const {
     out << "<grade name=\"" << name << "\">" << endl;
     tabs->increaseIndent();
 
-    XMLWriteElementCheckDefault( available, "available", out, tabs, 0 );
-    XMLWriteElementCheckDefault( extractCost, "extractioncost", out, tabs, 0 );
+    XMLWriteElementCheckDefault( available, "available", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( extractCost, "extractioncost", out, tabs, 0.0 );
         
     tabs->decreaseIndent();
     tabs->writeTabs( out );

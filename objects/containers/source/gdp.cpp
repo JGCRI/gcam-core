@@ -116,13 +116,13 @@ void GDP::toXML( ostream& out, Tabs* tabs ) const {
 	tabs->increaseIndent();
 
 	// GDP to PPP conversion factor
-	XMLWriteElementCheckDefault( PPPConversionFact, "PPPConvert", out, tabs, 0 );
+	XMLWriteElementCheckDefault( PPPConversionFact, "PPPConvert", out, tabs, 0.0 );
 
 	// Write out base-year GDP
 	XMLWriteElement( baseGDP, "baseGDP", out, tabs);
 
 	// Write out gdp energy elasticity.
-	XMLWriteElementCheckDefault( EnergyGDPElas, "e_GDP_elas", out, tabs, 0 );
+	XMLWriteElementCheckDefault( EnergyGDPElas, "e_GDP_elas", out, tabs, 0.0 );
 
 	for( iter = 0; iter < static_cast<int>( laborProdGrowthRate.size() ); iter++ ){
 		XMLWriteElement( laborProdGrowthRate[ iter ], "laborproductivity", out, tabs, modeltime->getPopPeriodToYear( iter ) );
@@ -165,13 +165,13 @@ void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	tabs->increaseIndent();
 
 	// GDP to PPP conversion factor
-	XMLWriteElementCheckDefault( PPPConversionFact, "PPPConvert", out, tabs, 0 );
+	XMLWriteElementCheckDefault( PPPConversionFact, "PPPConvert", out, tabs, 0.0 );
 
 	// Write out base-year GDP
 	XMLWriteElement( baseGDP, "baseGDP", out, tabs);
 
 	// Write out gdp energy elasticity.
-	XMLWriteElementCheckDefault( EnergyGDPElas, "e_GDP_elas", out, tabs, 0 );
+	XMLWriteElementCheckDefault( EnergyGDPElas, "e_GDP_elas", out, tabs, 0.0 );
 
 	XMLWriteElement( laborProdGrowthRate[ popPeriod ], "laborprod", out, tabs );
 
@@ -182,12 +182,12 @@ void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
 	// write out MER-based GDP
 	for(int m = 0; m < static_cast<int>( gdpValueAdjusted.size() ); m++ ){
-		XMLWriteElementCheckDefault( gdpValueAdjusted[ m ], "GDP(MER)", out, tabs, 0, modeltime->getper_to_yr( m ) );
+		XMLWriteElementCheckDefault( gdpValueAdjusted[ m ], "GDP(MER)", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
 	}
 
 	// write out PPP-based GDP
 	for(int m = 0; m < static_cast<int>( gdpValueAdjusted.size() ); m++ ){
-		XMLWriteElementCheckDefault( gdpValueAdjustedPPP[ m ], "GDP(PPP)", out, tabs, 0, modeltime->getper_to_yr( m ) );
+		XMLWriteElementCheckDefault( gdpValueAdjustedPPP[ m ], "GDP(PPP)", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
 	}
 
 	// decrease the indent.

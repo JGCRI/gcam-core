@@ -9,10 +9,15 @@
 
 #include "util/base/include/definitions.h"
 #include <iostream>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
+#include "util/curves/include/data_point.h"
 #include "util/curves/include/xy_data_point.h"
 #include "util/base/include/xml_helper.h"
 
 using namespace std;
+
+const string XYDataPoint::XML_NAME = "XYDataPoint";
 
 /*! \brief Constructor
 * \details This is the default constructor for the XYDataPoint. The parameters are used
@@ -28,8 +33,18 @@ XYDataPoint::~XYDataPoint(){
 }
 
 //! Clone
-ExplicitPointSet::DataPoint* XYDataPoint::clone() const {
+DataPoint* XYDataPoint::clone() const {
 	return new XYDataPoint( x, y );
+}
+
+//! Static function to return the name of the XML element associated with this object.
+const string& XYDataPoint::getXMLNameStatic() {
+    return XML_NAME;
+}
+
+//! Return the name of the XML element associated with this object.
+const string& XYDataPoint::getXMLName() const {
+    return XML_NAME;
 }
 
 //! Equality
@@ -69,12 +84,47 @@ void XYDataPoint::print( ostream& out ) const {
 
 //! Print the datapoint to an XML stream.
 void XYDataPoint::toXML( ostream& out, Tabs* tabs ) const {
-    tabs->writeTabs( out );
-    out << "<XYDataPoint>" << endl;
-    tabs->increaseIndent();
+    XMLWriteOpeningTag( DataPoint::getXMLNameStatic(), out, tabs, 0, "", getXMLName() );
     XMLWriteElement( x, "x", out, tabs );
     XMLWriteElement( y, "y", out, tabs );
-    tabs->decreaseIndent();
-    tabs->writeTabs( out );
-    out << "</XYDataPoint>" << endl;
+    XMLWriteClosingTag( DataPoint::getXMLNameStatic(), out, tabs );
+}
+
+//! Parse the XYDataPoint from an XML DOM tree.
+void XYDataPoint::XMLParse( const xercesc::DOMNode* node ) {
+    
+    xercesc::DOMNode* curr = 0;
+    xercesc::DOMNodeList* nodeList; 
+    string nodeName;
+
+    // assume node is valid.
+    assert( node );
+
+    // get all children of the node.
+    nodeList = node->getChildNodes();
+
+    // loop through the children
+    for ( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
+        curr = nodeList->item( i );
+        nodeName = XMLHelper<void>::safeTranscode( curr->getNodeName() );
+
+        // select the type of node.
+        if( nodeName == "#text" ) {
+            continue;
+        }
+        else if ( nodeName == "x" ){
+            x = XMLHelper<double>::getValue( curr );
+        }
+        else if ( nodeName == "y" ){
+            y = XMLHelper<double>::getValue( curr );
+        } 
+        else {
+            cout << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << endl;
+        }
+    }
+}
+
+//! Switch the X and Y values.
+void XYDataPoint::invertAxises(){
+    swap( x, y );
 }

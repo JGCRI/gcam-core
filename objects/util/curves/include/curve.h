@@ -17,11 +17,13 @@
 #include <iosfwd>
 #include <string>
 #include <cfloat>
+#include <functional>
+#include <xercesc/dom/DOMNode.hpp>
 
 class Tabs;
 
 /*!
-* \ingroup CIAM
+* \ingroup Util
 * \brief A class which defines the interface to a curve. 
 * \author Josh Lurz
 */
@@ -32,40 +34,109 @@ class Curve {
         return os;
     }
 public:
-    Curve(){};
-    Curve( const Curve& curveIn ){};
-    virtual ~Curve(){};
-    bool operator==( const Curve& rhs ) const {
-        return( getXCoords() == rhs.getXCoords() && getYCoords() == rhs.getYCoords() );
-    }
-    bool operator!=( const Curve& rhs ) const {
-        return !( *this == rhs );
-    }
-
+    typedef std::vector<std::pair<double,double> > SortedPairVector;
+    Curve();
+    Curve( const Curve& curveIn );
+    virtual ~Curve();
+    virtual bool operator==( const Curve& rhs ) const;
+    virtual bool operator!=( const Curve& rhs ) const;
+    virtual Curve* clone() const = 0;
+    static Curve* getCurve( const std::string& type );
+    static const std::string& getXMLNameStatic();
+    virtual const std::string& getXMLName() const;
+    void toXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
+    void XMLParse( const xercesc::DOMNode* node );
+    virtual bool XMLParseDerived( const xercesc::DOMNode* node ) = 0;
+    virtual void invertAxises() = 0;
+    const std::string getName() const;
+    const std::string getTitle() const;
+    void setTitle( const std::string& titleIn );
+    double getNumericalLabel() const;
+    void setNumericalLabel( const double numericalLabelIn );
+    const std::string getXAxisLabel() const;
+    const std::string getYAxisLabel() const;
+    void setXAxisLabel( const std::string& xLabelIn );
+    void setYAxisLabel( const std::string& yLabelIn );
+    const std::string getXAxisUnits() const;
+    const std::string getYAxisUnits() const;
+    void setXAxisUnits( const std::string& xUnitsIn );
+    void setYAxisUnits( const std::string& yUnitsIn );
+    
     virtual double getX( const double yValue ) const = 0;
     virtual double getY( const double xValue ) const = 0;
     virtual bool setX( const double yValue, const double xValue ) = 0;
     virtual bool setY( const double xValue, const double yValue ) = 0;
-    virtual const std::vector<double> getXCoords( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX, const int minPoints = 0 ) const = 0;
-    virtual const std::vector<double> getYCoords( const double lowRange= -DBL_MAX, const double highRange = DBL_MAX, const int minPoints = 0 ) const = 0;
-    virtual std::vector<std::pair<double,double> > getSortedPairs( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX, const int minPoints = 0 ) const = 0;
-    virtual const std::string getTitle() const = 0;
-    virtual void setTitle( const std::string& titleIn ) = 0;
-    virtual double getNumericalLabel() const = 0;
-    virtual void setNumericalLabel( const double numericalLabelIn ) = 0;
-    virtual const std::string getXAxisLabel() const = 0;
-    virtual const std::string getYAxisLabel() const = 0;
-    virtual void setXAxisLabel( const std::string& xLabelIn ) = 0;
-    virtual void setYAxisLabel( const std::string& yLabelIn ) = 0;
-    virtual const std::string getXAxisUnits() const = 0;
-    virtual const std::string getYAxisUnits() const = 0;
-    virtual void setXAxisUnits( const std::string& xUnitsIn ) = 0;
-    virtual void setYAxisUnits( const std::string& yUnitsIn ) = 0;
-    virtual double getIntegral( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX ) const = 0;
+    virtual double getMaxX() const = 0;
+    virtual double getMaxY() const = 0;
+    virtual double getMinX() const = 0;
+    virtual double getMinY() const = 0;
+    virtual SortedPairVector getSortedPairs( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX, const int minPoints = 0 ) const = 0;
+    virtual double getIntegral( const double lowDomain, const double highDomain ) const = 0;
     virtual double getDiscountedValue( const double lowDomain, const double highDomain, const double discountRate ) const = 0;
-    virtual void toXML( std::ostream& out, Tabs* tabs ) const = 0;
-protected:    
+    virtual double getSlope( const double x1, const double x2 ) const = 0;
+    virtual double getHammingDistance( const Curve* otherCurve, const double xStart, const double xEnd, const double xInterval ) const;
+
+protected:
+    const static std::string XML_NAME; //!< The name of the XML tag associated with this object.
+    double numericalLabel;
+    std::string name;
+    std::string title;
+    std::string xAxisLabel;
+    std::string yAxisLabel;
+    std::string xAxisUnits;
+    std::string yAxisUnits;
+
     virtual void print( std::ostream& out, const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX,
         const double lowRange = -DBL_MAX, const double highRange = DBL_MAX, const int minPoints = 0 ) const = 0;
+
+     /*!
+    * \brief Binary comparison operator which compares two Curves by least minimum X value.
+    * \author Josh Lurz
+    */  
+    struct LesserMinX: public std::binary_function<Curve*,Curve*,bool>
+    {
+        //! Operator which performs comparison. 
+        bool operator()( const Curve* lhs, const Curve* rhs ) const
+        {   
+            return ( lhs->getMinX() < rhs->getMinX() );
+        }
+    };
+    /*!
+    * \brief Binary comparison operator which compares two Curves by least minimum Y value.
+    * \author Josh Lurz
+    */  
+    struct LesserMinY: public std::binary_function<Curve*,Curve*,bool>
+    {
+        //! Operator which performs comparison. 
+        bool operator()( const Curve* lhs, const Curve* rhs ) const
+        {   
+            return ( lhs->getMinY() < rhs->getMinY() );
+        }
+    };
+    /*!
+    * \brief Binary comparison operator which compares two Curves by least maximum X value.
+    * \author Josh Lurz
+    */  
+    struct LesserMaxX: public std::binary_function<Curve*,Curve*,bool>
+    {
+        //! Operator which performs comparison. 
+        bool operator()( const Curve* lhs, const Curve* rhs ) const
+        {   
+            return ( lhs->getMaxX() < rhs->getMaxX() );
+        }
+    };
+    /*!
+    * \brief Binary comparison operator which compares two Curves by least maximum Y value.
+    * \author Josh Lurz
+    */  
+    struct LesserMaxY: public std::binary_function<Curve*,Curve*,bool>
+    {
+        //! Operator which performs comparison. 
+        bool operator()( const Curve* lhs, const Curve* rhs ) const
+        {   
+            return ( lhs->getMaxY() < rhs->getMaxY() );
+        }
+    };
 };
 #endif // _CURVE_H_

@@ -34,16 +34,16 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     gwp = gwpIn;
     emissCoef = emissCoefIn;
     emission = 0;
-	 isGeologicSequestration = true;
+    isGeologicSequestration = true;
     storageCost = util::getLargeNumber(); // default to a large cost to turn off CCS
     sequestAmountGeologic = 0;
     sequestAmountNonEngy = 0;
     emissGwp = 0;
     emissFuel = 0;
     emissInd = 0;
-	 emissCoefPrev = 0;
-	 inputEmissions = 0;
-	 emissionsWereInput = false;
+    emissCoefPrev = 0;
+    inputEmissions = 0;
+    emissionsWereInput = false;
 }
 
 //! Destructor
@@ -141,12 +141,12 @@ void Ghg::toXML( ostream& out, Tabs* tabs ) const {
     if( emissionsWereInput ) {
 	    XMLWriteElement( inputEmissions, "inputEmissions", out, tabs );
 	 } else {
-		 XMLWriteElementCheckDefault( emissCoef, "emisscoef", out, tabs, 0);
+		 XMLWriteElementCheckDefault( emissCoef, "emisscoef", out, tabs, 0.0 );
 	 }
-    XMLWriteElementCheckDefault( rmfrac, "removefrac", out, tabs, 0 );
-    XMLWriteElementCheckDefault( isGeologicSequestration, "isGeologicSequestration", out, tabs, 1 );
+    XMLWriteElementCheckDefault( rmfrac, "removefrac", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( isGeologicSequestration, "isGeologicSequestration", out, tabs, true );
     XMLWriteElementCheckDefault( storageCost, "storageCost", out, tabs, util::getLargeNumber() );
-    XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 0 );
+    XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 0.0 );
     // done writing xml for data members.
 
     tabs->decreaseIndent();

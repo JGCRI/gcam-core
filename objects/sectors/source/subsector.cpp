@@ -40,7 +40,7 @@ extern Scenario* scenario;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-const int LOGIT_EXP_DEFAULT = -3;
+const double LOGIT_EXP_DEFAULT = -3;
 
 Subsector::Subsector( const string regionName, const string sectorName ){
     this->regionName = regionName;
@@ -285,17 +285,17 @@ void Subsector::toXML( ostream& out, Tabs* tabs ) const {
     
     // write the xml for the class members.
     for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
-        XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, tabs, 1, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( calOutputValue.size() ); i++ ){
         if ( doCalibration[ i ] ) {
-            XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, tabs, 0, modeltime->getper_to_yr( i ) );
+            XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
         }
     }
     
     for( i = 0; i < static_cast<int>( shrwts.size() ); i++ ){
-        XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, tabs, 1, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( lexp.size() ); i++ ){
@@ -303,10 +303,10 @@ void Subsector::toXML( ostream& out, Tabs* tabs ) const {
     }
     
     for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
-        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelprefElasticity", out, tabs, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelprefElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
-    XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, tabs, 0, modeltime->getstartyr( ) );
+    XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, tabs, 0.0, modeltime->getstartyr( ) );
     
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
@@ -353,28 +353,28 @@ void Subsector::toOutputXML( ostream& out, Tabs* tabs ) const {
     
     // write the xml for the class members.
     for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
-        XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, tabs, 1, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( calOutputValue.size() ); i++ ){
         if ( doCalibration[ i ] ) {
-            XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, tabs, 0, modeltime->getper_to_yr( i ) );
+            XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
         }
     }
     
     for( i = 0; i < static_cast<int>( shrwts.size() ); i++ ){
-        XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, tabs, 1, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( lexp.size() ); i++ ){
-        XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, tabs, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
     for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
-        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, tabs, 0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
-    XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, tabs, 0, modeltime->getstartyr( ) );
+    XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, tabs, 0.0, modeltime->getstartyr( ) );
     
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
