@@ -414,6 +414,11 @@
 	      S90Iuser = FSO2_ind1990
 	   END IF
 
+       IF ( FBC1990 .NE. 0) THEN
+          FOC90usr = 0
+	      S90Buser = 0
+	   END IF
+
       IF(OVRWRITE.EQ.1)THEN
         LEVCO2=4
         LEVSO4=4
@@ -484,6 +489,10 @@
         RLO=1.05+0.6228*EXP(-0.339*DT2XUSER)
       ENDIF
 !
+       IF ( FBC1990 .NE. 0) THEN
+          IQREAD = 1
+	   END IF	      
+
       close(lun)
       IF(IVARW.EQ.2)THEN
         TW0SH=TW0NH

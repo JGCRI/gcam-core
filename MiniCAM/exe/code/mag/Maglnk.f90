@@ -261,24 +261,32 @@ Subroutine WriteMagExtra()
 	  BCELast = BCEmiss90
 	  OCELast = OCEmiss90
 	  
-	  BioB_BCfract = SUM(OGEMISS(IBC,16:19,:,2))/BCEmiss90
-	  BioB_OCfract = SUM(OGEMISS(IOC,16:19,:,2))/OCEmiss90
+	  IF (BCEmiss90 .NE. 0 .and. OCEmiss90 .NE. 0) THEN
+
+  	    BioB_BCfract = SUM(OGEMISS(IBC,16:19,:,2))/BCEmiss90
+	    BioB_OCfract = SUM(OGEMISS(IOC,16:19,:,2))/OCEmiss90
 	  
-	  FossForcing90 = (1 - BioB_BCfract) * FBC1990 + (1 - BioB_OCfract) * FOC1990
-	  BioBForcing90 = (BioB_BCfract) * FBC1990 + (BioB_OCfract) * FOC1990
+	    FossForcing90 = (1 - BioB_BCfract) * FBC1990 + (1 - BioB_OCfract) * FOC1990
+	    BioBForcing90 = (BioB_BCfract) * FBC1990 + (BioB_OCfract) * FOC1990
 	  
-	  BC_OCForcing = FBC1990 + FOC1990
+	    BC_OCForcing = FBC1990 + FOC1990
 
-      NextYear = 2005
-	  BCEmiss = SUM(OGEMISS(IBC,:,:,3))
-	  OCEmiss = SUM(OGEMISS(IOC,:,:,3))
-      BC_OCNext = FBC1990 * (BCEmiss/BCEmiss90) + FOC1990 * (OCEmiss/OCEmiss90)
+        NextYear = 2005
+	    BCEmiss = SUM(OGEMISS(IBC,:,:,3))
+	    OCEmiss = SUM(OGEMISS(IOC,:,:,3))
+        BC_OCNext = FBC1990 * (BCEmiss/BCEmiss90) + FOC1990 * (OCEmiss/OCEmiss90)
 
-	  MsgStr = "Fraction Biomass Burning: BC"
-      Call MCLog(4,MsgStr,0,0,1,BioB_BCfract)
-	  MsgStr = "Fraction Biomass Burning: OC"
-      Call MCLog(4,MsgStr,0,0,1,BioB_OCfract)
-
+	    MsgStr = "Fraction Biomass Burning: BC"
+        Call MCLog(4,MsgStr,0,0,1,BioB_BCfract)
+	    MsgStr = "Fraction Biomass Burning: OC"
+        Call MCLog(4,MsgStr,0,0,1,BioB_OCfract)
+      ELSE
+	    BioB_BCfract = 0
+        BioB_OCfract = 0
+		BioBForcing90 = 0
+        FossForcing90 = 0
+        NextYear = 2005
+	  END IF
 	  
 	  OPEN (45,FILE='..\magTAR\QEXTRA.IN')
 	  WRITE(45,'(1X,I5)') 1
@@ -325,7 +333,11 @@ Subroutine WriteMagExtra()
 			   OCEm = OCELast
 			END IF
 
-			BCOCFValue = FBC1990 * (BCEm/BCEmiss90) + FOC1990 * (OCEm/OCEmiss90)
+			IF (BCEmiss90 .NE. 0) THEN
+			   BCOCFValue = FBC1990 * (BCEm/BCEmiss90) + FOC1990 * (OCEm/OCEmiss90)
+			ELSE
+			   BCOCFValue = 0
+			END IF
 		 	WRITE(45,'(1X,I5,F10.4)') II, BCOCFValue
 
 		 END IF
