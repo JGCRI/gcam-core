@@ -553,7 +553,7 @@ void Region::finalsupply(int per)
         double mrkdmd, mrkdmd1,mrkdmd2,mrkdmd3,mrkdmd4,mrkdmd5;
 
 	// loop through all sectors once to get total output
-	//marketplace.storeinfo(per); // market info from end-use demand
+	//marketplace.storeInfo(per); // market info from end-use demand
 	for (i=0;i<nossec;i++) {
 		// start with last supply sector
 		// need demand for all intermediate and final energy to
