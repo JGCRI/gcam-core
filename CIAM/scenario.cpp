@@ -26,12 +26,11 @@
 using namespace std;
 using namespace xercesc;
 
-void climat_data(void); // function to write data for climat
+void writeClimatData(void); // function to write data for climat
 #if(__HAVE_FORTRAN__)
 extern "C" { void _stdcall CLIMAT(void); };
 #endif
 
-ofstream gasfile; // text file for climate input
 extern time_t ltime;
 extern ofstream logfile, sdcurvefile;
 
@@ -217,7 +216,6 @@ void Scenario::run(){
 	ofstream xmlDebugStream;
 
 	xmlDebugStream.open( conf->getFile( "xmlDebugFileName" ).c_str(), ios::out );
-	gasfile.open( conf->getFile( "climatFileName" ).c_str(), ios::out );
 	
 	// Start Model run for the first period.
 	int per = 0;
@@ -235,9 +233,7 @@ void Scenario::run(){
 	
 	world->calc( per ); // Calculate supply and demand
 	world->updateSummary( per ); // Update summaries for reporting
-	world->sumpop( per ); // Calculate global population
 	world->emiss_ind( per ); // Calculate global emissions
-	world->sumrsc( per ); // Calculate global depletable resources
 	
 	cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr(per) << endl;
 	cout << "Period 0 not solved" << endl;
@@ -271,9 +267,7 @@ void Scenario::run(){
 		world->calc( per ); // call to calculate initial supply and demand
 		marketplace->solve( per ); // solution uses Bisect and NR routine to clear markets
 		world->updateSummary( per ); // call to update summaries for reporting
-		world->sumpop( per ); // call to calculate global population
 		world->emiss_ind( per ); // call to calculate global emissions
-		world->sumrsc( per ); // call to calculate global depletable resources
 		
 		// Write out the results for debugging.
 		world->toDebugXML( per, xmlDebugStream );
@@ -287,12 +281,11 @@ void Scenario::run(){
 	toDebugXMLClose( per, xmlDebugStream ); // Close the xml debugging tag.
 	
 	// calling fortran subroutine climat/magicc
-	world->emiss_all(); // read in all ghg gases except for CO2
-	climat_data(); // writes the input text file
-	gasfile.close(); // close input file for climat
+	world->calculateEmissionsTotals();
+	writeClimatData(); // writes the input text file
 #if(__HAVE_FORTRAN__)
 	cout << endl << "Calling CLIMAT() "<< endl;
-    //    CLIMAT();
+    CLIMAT();
 	cout << "Finished with CLIMAT()" << endl;
 #endif
 	
