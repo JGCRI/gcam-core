@@ -125,11 +125,10 @@ public:
     * \author Josh Lurz
     *
     * The DependencyOrdering struct is used by the region class in the stl sort to compare
-    * two sector pointers and order them by dependency. The algorithm first checks if the rhs 
+    * two sector pointers and order them by dependency. The algorithm checks if the rhs 
     * sector depends on the lhs sector with a non-simul. If this is true, it returns true as the 
     * lhs is needed before the rhs, but when a simul market exists, the ordering between two sectors is trivial.
-    * Next the operator checks which sector has fewer dependencies, and orders that one first.
-    * Finally, the two sectors are ordered alphabetically. 
+    * Otherwise, the operator returns false. This is done so that unrelated sectors are equivalent.
     */   
     struct DependencyOrdering : public std::binary_function<sector*, sector*, bool>
     {
