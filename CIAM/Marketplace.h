@@ -1,10 +1,20 @@
 #ifndef _MARKETPLACE_H_
 #define _MARKETPLACE_H_
+
+#if defined(_MSC_VER)
 #pragma once
+#pragma warning( disable: 4275 )
+#endif
 
 #include <string>
 #include <vector>
 #include <map>
+#include <mtl/matrix.h>
+
+using namespace std;
+using namespace mtl;
+
+typedef matrix<double, rectangle<>, dense<>, row_major>::type Matrix;
 
 /*! 
 * \ingroup CIAM
@@ -50,10 +60,10 @@ private:
 		map<string,int> region_marketMap; //!< map of market lookup from good and region names
 		
 		// Private Functions
-		int NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, double** bb, int& n, const int per );
-		int NewtRap( const double Tol, vector<solinfo>& sol, double** JF, double** bb, int& n, const int per );
-		void Derivatives( vector<double> prices, double** JFDM, double** JFSM, int& n, const int per );
-		void JFunction( vector<double> prices, double** JFDM, int& n, int const per );
+		int NR_Ron( const double Tol,vector<solinfo>& sol, Matrix& JF, int& n, const int per );
+		int NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, int& n, const int per );
+		void Derivatives( vector<double> prices, Matrix& JFDM, Matrix& JFSM, int& n, const int per );
+		void JFunction( vector<double> prices, Matrix& JFDM, int& n, int const per );
 		int Secant_all( const double Tol,vector<solinfo>& sol,int& n, const int per );
 		int FalsePos_all( const double Tol,vector<solinfo>& sol,int& n, const int per );
 		int Bisection_i( const int i, const double Tol, vector<solinfo>& sol,int& n, const int per );
@@ -88,7 +98,7 @@ private:
 		const vector<double> showlogSup_NR( const int period ) const; // returns vector of log of supply
 		void setPRC( const vector<double>& prices, const int period ); // sets solution prices for all markets
 		void setPRC_NR( const vector<double>& prices, const int period ); // sets solution prices for all markets
-		
+		static void invertMatrix( Matrix& A );
 	public:
 		Marketplace();
 		void solve( const int per );

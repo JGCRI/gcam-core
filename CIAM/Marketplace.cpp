@@ -1,14 +1,28 @@
 #include "Definitions.h"
+
 #include <iostream>
 #include <fstream>
 #include <cmath>
 #include <algorithm>
+
+#if defined(_MSC_VER)
+#pragma warning( disable: 4275 )
+#endif
+
+#include <mtl/matrix.h>
+#include <mtl/mtl.h>
+#include <mtl/utils.h>
+#include <mtl/lu.h>
+
 #include "Market.h"
 #include "Marketplace.h"
-#include "modeltime.h"  // model runtime info
+#include "modeltime.h"
 #include "XMLHelper.h"
 #include "Configuration.h"
 #include "World.h"
+
+using namespace std;
+using namespace mtl;
 
 extern ofstream bugoutfile, sdcurvefile, logfile;	
 extern Modeltime modeltime;
@@ -137,12 +151,12 @@ differently for PRICE and DEMAND markets so that these changes are transparent t
 rest of the code.
 */
 void Marketplace::resetToPriceMarket( const string& goodName, const string& regionName ) {
-    int marketNumber = getMarketNumber(goodName, regionName);
+    const int marketNumber = getMarketNumber(goodName, regionName);
     bool mktset;
     string marketName;
     string DemandGoodName;
     const bool setNewMarkets = false; // for debugging, set this to false to turn this off
-    int first_period = 1;   // first period for price markets
+    const int first_period = 1;   // first period for price markets
 	// skip first period since this is not really solved
     
     if( marketNumber == -1 ) {
@@ -321,7 +335,7 @@ void Marketplace::setsupply( const string& goodName, const string& regionName, c
 	string marketName;
 	string DemandGoodName;
 	Market::marketType thisMarketType;
-		
+	
 	if ( marketNumber != -1 ) {
 		thisMarketType = getType( marketNumber, per );
 		// If is price market, then set supply instead for the corresponding demand market
@@ -465,9 +479,9 @@ double Marketplace::checkSupply( const int marketNumber, const int per) const
 
 //! return market demand used for solution mechanism
 /*! If this is a price market, then get the demand from the corresponding demand market.
-    If this is a demand market (through the redirect), then get the demand from the trail value (.price)
-     -- although this is never actually occurs at present. 
-    */
+If this is a demand market (through the redirect), then get the demand from the trail value (.price)
+-- although this is never actually occurs at present. 
+*/
 double Marketplace::showdemand(  const string& goodName, const string& regionName, const int per) const 
 {
 	int marketNumber = getMarketNumber( goodName, regionName );
@@ -475,7 +489,7 @@ double Marketplace::showdemand(  const string& goodName, const string& regionNam
 	string DemandGoodName;
 	
 	if ( marketNumber != -1 ) {
-                Market::marketType MType = getType( marketNumber , per );
+		Market::marketType MType = getType( marketNumber , per );
 		// If is price market, then get demand instead for the corresponding demand market
 		if ( MType == Market::PRICE) {
 			marketName = getName( goodName, regionName );
@@ -591,8 +605,8 @@ void Marketplace::logED( const int per )
 			mrk[i][per].lexdmd = 0; // logs may not be calculated exactly
 		}
 		else {
-			mrk[i][per].lexdmd = log10(max( mrk[i][per].demand, SMALLNUM )) 
-							- log10(max(mrk[i][per].supply,SMALLNUM)); 
+			mrk[i][per].lexdmd = log10(std::max( mrk[i][per].demand, SMALLNUM )) 
+				- log10(std::max(mrk[i][per].supply,SMALLNUM)); 
 		}
 	}
 }
@@ -601,7 +615,7 @@ void Marketplace::logED( const int per )
 void Marketplace::logDem( const int per ) 
 {
 	for (int i=0;i<nomrks;i++) {
-		mrk[i][per].ldem = log(max( mrk[i][per].demand ,SMALLNUM )); 
+		mrk[i][per].ldem = log(std::max( mrk[i][per].demand ,SMALLNUM )); 
 	}
 }
 
@@ -609,7 +623,7 @@ void Marketplace::logDem( const int per )
 void Marketplace::logSup( const int per ) 
 {
 	for (int i=0;i<nomrks;i++)
-		mrk[i][per].lsup = log(max(mrk[i][per].supply,SMALLNUM));
+		mrk[i][per].lsup = log(std::max(mrk[i][per].supply,SMALLNUM));
 }
 
 //! Check to see that all markets actually solved.
@@ -659,7 +673,7 @@ int Marketplace::setMarketsToSolveNR( const int period ) {
 	bool solvemkt = false;
 	nomrks_t_NR = 0;
 	mrk_isol_NR.clear();
-		
+	
 	for( int i = 0; i < static_cast<int>( mrk.size() ); i++ ) {
 		solvemkt = false;
 		// Check if this market is supposed to be solved & if a significant demand exists
@@ -893,7 +907,7 @@ const vector<double> Marketplace::showPRC_NR( const int per ) const {
 		int j = mrk_isol_NR[i];	// look up index
 		prices[i] = mrk[j][per].price;
 	}
-
+	
 	return prices;
 }
 
@@ -905,7 +919,7 @@ const vector<double> Marketplace::showED( const int per ) const {
 		int j = mrk_isol[i];	// look up index
 		ED[i] = mrk[j][per].exdmd;
 	}	
-
+	
 	return ED;
 }
 
@@ -917,7 +931,7 @@ const vector<double> Marketplace::showED_NR( const int per ) const {
 		int j = mrk_isol_NR[i];	// look up index
 		ED[i] = mrk[j][per].exdmd;
 	}	
-
+	
 	return ED;
 }
 
@@ -1108,7 +1122,7 @@ const vector<double> Marketplace::sup_elas_NR( const int k, const int per ) cons
 		else {
 			dprice = log(mrk[kk][per].price) - log(mrk[kk][per].tprice);
 		}
-
+		
 		JFS[i] = dsupply/dprice; 
 	}
 	return JFS;
@@ -1236,7 +1250,7 @@ int Marketplace::Bracket( const double Tol, vector<solinfo>& sol, bool& allbrack
 		else {
 			allbracketed = false;
 		}
-			
+		
 		// Bracketing of prices; done first regardless of choice of solution
 		// algorithm.
 		if (!allbracketed) {
@@ -1307,7 +1321,7 @@ int Marketplace::Bracket( const double Tol, vector<solinfo>& sol, bool& allbrack
 				if (sol[i].XL == sol[i].XR) {
 					sol[i].bracketed = false;
 				}
-					
+				
 				// Check if market has fixed constraint and 
 				// if demand is always below contraint.
 				// Small prices will increase demand and reduce supply
@@ -1317,7 +1331,7 @@ int Marketplace::Bracket( const double Tol, vector<solinfo>& sol, bool& allbrack
 					sol[i].X = sol[i].XL = sol[i].XR = 0;
 					sol[i].bracketed = true;
 				}
-					
+				
 				// case when supply is zero and cannot bracket (ie. resource runs out)
 				if(!sol[i].bracketed && (fabs(sol[i].ED)<Tol)) {
 					sol[i].bracketed = true;
@@ -1350,13 +1364,13 @@ int Marketplace::Bracket( const double Tol, vector<solinfo>& sol, bool& allbrack
 			for (i=0;i<nmrks;i++) {
 				Xtemp[i]=sol[i].X;
 			}
-				
+			
 			setPRC(Xtemp,per); // set new prices
 			nulldem(per);	// null demand
 			nullsup(per); // null supply
-				
+			
 			world.calc(per); // call world object to recalculate supply and demand
-				
+			
 			logED(per); // calculate log of excess demand
 			excessdemand(per); // calculate excess demand
 			// using log of ED does not matter for bracketing
@@ -1366,7 +1380,7 @@ int Marketplace::Bracket( const double Tol, vector<solinfo>& sol, bool& allbrack
 			for (i=0;i<nmrks;i++) {
 				sol[i].ED = EDtemp[i];
 			}
-					
+			
 			// for debugging
 			int bug = 0; // debugging on(1) or off(0)
 			if (bug) {
@@ -1379,7 +1393,7 @@ int Marketplace::Bracket( const double Tol, vector<solinfo>& sol, bool& allbrack
 				sdcurves(per,nn);
 			}
 		}
-				
+		
 	} // end do loop		
 	while (++nn < 30 && !allbracketed);			// report sucess, 1
 	Code = (allbracketed ? 1 : 0);				// or failure, 0, 
@@ -1407,8 +1421,8 @@ void Marketplace::CheckBracket( const double Tol, vector<solinfo>& sol, bool& al
 
 //! Bisection Solution Mechanism (all markets)
 int Marketplace::Bisection_all( const double Tol, const int IterLimit, vector<solinfo>& sol,
-	int& n, const int per ) {
-
+							   int& n, const int per ) {
+	
 	int i, j;
 	int nn = 0; // number of iterations
 	int Code = 2; // Code that reports success 1 or failure 0
@@ -1431,7 +1445,7 @@ int Marketplace::Bisection_all( const double Tol, const int IterLimit, vector<so
     if (trackED) { 
 		cout << endl <<"Bisection begin " <<endl; 
 	}
-  	logfile << ",,Bisection_all function called.\n";
+	logfile << ",,Bisection_all function called.\n";
 	// solve all markets
 	do {
         breakout = false; //default is not to breakout of bisection routine
@@ -1491,22 +1505,22 @@ int Marketplace::Bisection_all( const double Tol, const int IterLimit, vector<so
 				//		<< getGoodName(j)<< ")" << endl;
 				//}
 			}
-                        
+			
             // debugging code that tracks ED
             if (i< 10 && false) {
-               cout << getGoodName(j)<<": "<<sol[i].XL <<"("<<getRawPrice(j,per) <<") "<< sol[i].XR;
-               if (!(getType(j,per) == Market::NORMAL)) {
-                  cout <<"  S,D: ["<<getRawSupply(j,per)<<","<< getRawDemand(j,per) <<"]";
-                  if (sol[i].XL < getRawDemand(j,per) ) {
-					  cout << "***";
-				  } 
-               }
-               else {
-                  cout <<"  ED: ["<<getRawDemand(j,per) - getRawSupply(j,per)<<","<< sol[i].ED<<"]";
-               }
-               cout <<endl;
+				cout << getGoodName(j)<<": "<<sol[i].XL <<"("<<getRawPrice(j,per) <<") "<< sol[i].XR;
+				if (!(getType(j,per) == Market::NORMAL)) {
+					cout <<"  S,D: ["<<getRawSupply(j,per)<<","<< getRawDemand(j,per) <<"]";
+					if (sol[i].XL < getRawDemand(j,per) ) {
+						cout << "***";
+					} 
+				}
+				else {
+					cout <<"  ED: ["<<getRawDemand(j,per) - getRawSupply(j,per)<<","<< sol[i].ED<<"]";
+				}
+				cout <<endl;
             }
-                    
+			
 		}
 		MaxSolVal = maxED(per);
 		
@@ -1530,26 +1544,26 @@ int Marketplace::Bisection_all( const double Tol, const int IterLimit, vector<so
 			//  sdcurves(per,nn); 
 		}
         if (trackED) { 
-           maxInt = worstED(per);
-           cout << "maxED: "<<MaxSolVal<<" ("<< getName(maxInt)<< getGoodName(maxInt) << ")"  << endl; 
+			maxInt = worstED(per);
+			cout << "maxED: "<<MaxSolVal<<" ("<< getName(maxInt)<< getGoodName(maxInt) << ")"  << endl; 
         }
         if (nn > 5 && false) {	// always bisect a few times
-           // If the worst ED is not changing too much then breakout of bisection and let NR try to solve this
-           if (abs(MaxSolVal-previousEDvalue)/previousEDvalue < breakOutThreshold)  {  
-              //breakout = true; 
-              breakout = false; 
-           }
+			// If the worst ED is not changing too much then breakout of bisection and let NR try to solve this
+			if (abs(MaxSolVal-previousEDvalue)/previousEDvalue < breakOutThreshold)  {  
+				//breakout = true; 
+				breakout = false; 
+			}
         }
-            
+		
         previousEDvalue = MaxSolVal;
-            
+		
 	} // end do loop		
 	while (++nn < IterLimit && MaxSolVal >= Tol && !breakout);
 	Code = (MaxSolVal < Tol ? 1 : 0); // report sucess, 1 or failure, 0
 	n+=nn-1;
-        
+	
     if (trackED) { cout << endl; }
-
+	
 	return Code;
 }
 
@@ -1745,7 +1759,7 @@ int Marketplace::Secant_all( const double Tol,vector<solinfo>& sol,int& n, const
 
 //! Function to calculate derivative
 //void JFunction(valarray<double> prices, Matrix& JFDM, int per)
-void Marketplace::JFunction( vector<double> prices, double** JFDM, int& n, int const per ) {
+void Marketplace::JFunction( vector<double> prices, Matrix& JFDM, int& n, int const per ) {
 	int m = prices.size();
 	double deltap = 1e-4; // What is the proper value for delta?
 	vector<double> tprices = prices; // define and initialize prices for storage
@@ -1770,7 +1784,7 @@ void Marketplace::JFunction( vector<double> prices, double** JFDM, int& n, int c
 }
 
 //! Function to calculate derivative for Ron's version
-void Marketplace::Derivatives( vector<double> prices, double** JFDM, double** JFSM, int& n, const int per ) {
+void Marketplace::Derivatives( vector<double> prices, Matrix& JFDM, Matrix& JFSM, int& n, const int per ) {
 	int m = prices.size();
 	//double deltap = 1e-4; // Orginal, What is the proper value for delta?
 	double deltap = 1e-5; // What is the proper value for delta?
@@ -1798,7 +1812,8 @@ void Marketplace::Derivatives( vector<double> prices, double** JFDM, double** JF
 }
 
 //! Newton Raphson Solution Mechanism (all markets)
-int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, double** JF, double** bb, int& n, const int per ){
+int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, int& n, const int per ){
+	
 	int i;
 	int NRn=0; // calls to calculate elasticities
 	int nn = 0; // number of iterations
@@ -1811,15 +1826,12 @@ int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, double** JF, d
 	vector<double> EDtemp(m); // temporary excess demand
 	
 	// function protocol
-	//void gaussj(Matrix& a,int n,Matrix& b,int m); // function protocol
-	void gaussj(double** a,int n,double** b,int m);
-	
 	logfile << ",,Newton-Raphson function called.\n";
 	// solve all markets
 	do {
 		if ((NRn < 5) && (per < modeltime.getmaxper())) { // do only once for each period
 			JFunction(Xtemp,JF,n,per); //recalculate Jacobian matrix, returns JF matrix
-			gaussj(JF,m,bb,1); // inverse of JF matrix by reference
+			invertMatrix( JF );
 		}
 		NRn++;
 		for (i=0; i<m; ++i) {
@@ -1844,7 +1856,7 @@ int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, double** JF, d
 		M =  maxED(per); // Max returns largest ED[i]
 		
 		// for debugging
-		int bug = 0; // debugging on(1) or off(0)
+		const bool bug = false; // debugging
 		if (bug) {
 			bugoutfile<<"\nMarket,X,DP,ED,Tolerance\n";
 			for (i=0; i<m; ++i) {
@@ -1874,13 +1886,13 @@ int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, double** JF, d
 }
 
 //! Ron's version of the Newton Raphson Solution Mechanism (all markets)
-int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, double** bb, int& n, const int per ) {
+int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, Matrix& JF, int& n, const int per ) {
 	int i;
 	int iNRdx = 0; // count number of times derivatives are calculated
 	int iter = 0; // number of iterations through solution algorithm
 	int Code = 2; // Code that reports success 1 or failure 0
 	double MaxSolVal; // maximum equality value 
-	int m =  setMarketsToSolveNR(per ); // number of markets to solve
+	const int m =  setMarketsToSolveNR(per ); // number of markets to solve
 	vector<double> NP(m); // adjustment value
 	vector<double> KD(m); // k values demand
 	vector<double> KS(m); // k values supply
@@ -1893,19 +1905,11 @@ int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, dou
     double beforeEDvalue = -1;
     double previousEDvalue = -1;
     double breakOutThreshold = 0.001;
-        
+	
     if (trackED) { cout <<"NR_Ron begin "; }
-
-	double **JFDM = new double*[ m ];
-	double **JFSM = new double*[ m ];
 	
-	for( i = 0; i < m; i++ ) {
-		JFDM[ i ] = new double[ m ];
-		JFSM[ i ] = new double[ m ];
-	}
-	
-	// function protocol
-	void gaussj(double** a,int n,double** b,int m);
+	Matrix JFDM( m, m );
+	Matrix JFSM( m, m );
 	
 	logfile << ",,Ron's version of the Newton-Raphson function called.\n";
 	// solve all markets
@@ -1914,25 +1918,28 @@ int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, dou
 			bugoutfile<<"Number of Markets:  "<< m << "\n";
 			bugoutfile << "Ron_NR "<<iter;  prices_to_bugout(per);
 		}
-
+		
 		logDem(per); // calculate log of demand
 		logSup(per); // calculate log of supply
 		
 		if ((iNRdx < 5) && (per < modeltime.getmaxper())) { // control no of times derivatives are calculated
             if (trackED) { cout <<" ... "; }
 			Derivatives(Xtemp,JFDM,JFSM,n,per); //recalculate Jacobian matrix, returns JF matrix
+			
 			for(i=0;i<m;++i) {
 				for(int j=0;j<m;++j) {
-					JF[i][j] = JFSM[i][j]-JFDM[i][j];
+					JF[i][j] = JFSM[i][j] - JFDM[i][j];
 				}
 			}
-			gaussj(JF,m,bb,1); // inverse of JF matrix by reference
+			
+			invertMatrix( JF );
+			
             if (trackED) {
 				cout <<" End Derivatives " <<endl;
 			}
 		}
 		iNRdx++; // increment count of derivative calculation
-
+		
 		if (bugTracking) {
 			bugoutfile << "--after gaussj "<<iter;  prices_to_bugout(per);
 			bugoutfile <<",,,Xtemp1,";
@@ -1943,8 +1950,8 @@ int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, dou
 		KS =  showlogSup_NR(per); // return log of supply
 		for (i=0; i<m; ++i) {
 			for (int j=0; j<m; ++j) {
-				KD[i] -= (log(max(Xtemp[j],SMALLNUM))*JFDM[i][j]);
-				KS[i] -= (log(max(Xtemp[j],SMALLNUM))*JFSM[i][j]);
+				KD[i] -= (log(std::max(Xtemp[j],SMALLNUM))*JFDM[i][j]);
+				KS[i] -= (log(std::max(Xtemp[j],SMALLNUM))*JFSM[i][j]);
 			}
 			KDS[i] = KD[i] - KS[i];
 		}
@@ -1979,9 +1986,9 @@ int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, dou
 		EDtemp =  showED_NR(per); // show excess demand
 		
 		MaxSolVal =  maxED(per); // Max returns largest ED[i]
-
+		
 		// for debugging
-		bool bug = false; // debugging on or off
+		const bool bug = false; // debugging on or off
 		
 		if (bug) {
 			bugoutfile<<"\nMarket,X,DP,ED,Tolerance\n";
@@ -1991,38 +1998,38 @@ int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, dou
 			bugout(per,iter);
 			sdcurves(per,iter); 
 		}
-                
+		
         maxInt = worstED(per);
         if (trackED) {
 			cout << "maxED: "<<MaxSolVal<<" ("<< getName(maxInt)<< getGoodName(maxInt) << ")" << endl;
 		}
-
+		
         if (iter > 3) {	
-        // If the worst ED is not changing too much then breakout
-        // double tempVal = abs(MaxSolVal-previousEDvalue)/previousEDvalue;
-        //  cout << " diff: "<<tempVal<<" ";
+			// If the worst ED is not changing too much then breakout
+			// double tempVal = abs(MaxSolVal-previousEDvalue)/previousEDvalue;
+			//  cout << " diff: "<<tempVal<<" ";
 			if (abs(MaxSolVal-previousEDvalue)/previousEDvalue < breakOutThreshold) {  // not converging very fast
 				breakout = false;
                 if (trackED) {
 					cout << "slow convergance" << endl;
 				}
 			}
-          /*  if (abs(MaxSolVal-beforeEDvalue)/beforeEDvalue < 0.01 && !breakout) {  // oscillating
-				breakout = false; 
-                if (trackED) {
-					cout << "oscillating" << endl;
-				}
-                logfile << ",,,Exited NR due to oscillation" << endl;
-            } */
+			/*  if (abs(MaxSolVal-beforeEDvalue)/beforeEDvalue < 0.01 && !breakout) {  // oscillating
+			breakout = false; 
+			if (trackED) {
+			cout << "oscillating" << endl;
+			}
+			logfile << ",,,Exited NR due to oscillation" << endl;
+		} */
         }      
-                  
+		
         beforeEDvalue = previousEDvalue;
         previousEDvalue = MaxSolVal;
-                   
+		
 		// if solution moves in wrong direction
 		if( MaxSolVal > 1500) {
 			logfile << ",,Exit Newton-Raphson function MaxSolVal>1500. "<< endl;
-       //   logfile << ", Due to market " << getName(maxInt)<< "-"<< getGoodName(maxInt) <<"\n";
+			//   logfile << ", Due to market " << getName(maxInt)<< "-"<< getGoodName(maxInt) <<"\n";
             if (trackED && per > 0) {
 				cout << "Exit Newton-Raphson function MaxSolVal>1500" << endl;
 			}
@@ -2030,24 +2037,14 @@ int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, dou
                 if (fabs(mrk[i][per].exdmd) > MaxSolVal/100) {
 					if (trackED) {
 						cout << "ED: ("<<getName(i)<< "-"<< getGoodName(i)<<") - " 
-						<< mrk[i][per].exdmd << endl;
+							<< mrk[i][per].exdmd << endl;
 					}
 					logfile << ",,,Due to market "<<getName(i)<< "-"<< getGoodName(i)<<" - ED: " 
 						<< mrk[i][per].exdmd << endl;
                 }
             }
-
-			// free up memory before breaking out
-	
-			for( i = 0; i < m; i++ ) {
-				delete[] JFDM[ i ];
-				delete[] JFSM[ i ];
-			}
-	
-			delete[] JFDM;
-			delete[] JFSM;
-
-			return 0;  // this may cause memory problems since arrays are not deleted
+			
+			return 0; 
 		}
 	} // end do loop	
 	
@@ -2063,16 +2060,7 @@ int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, dou
 	}
 	n+=iter-1;
 	logfile << ",Number of Newton-Raphson iterations: n="<<iter<<"\n";
-
-	// free up memory when done
 	
-	for( i = 0; i < m; i++ ) {
-		delete[] JFDM[ i ];
-		delete[] JFSM[ i ];
-	}
-	
-	delete[] JFDM;
-	delete[] JFSM;
 	return Code;
 }
 
@@ -2109,14 +2097,8 @@ void Marketplace::solve( const int per ) {
 	}
 	
 	// For Newton-Raphson Solution Mechanism
-	
-	double** JF = new double*[ m ];
-	double** bb = new double*[ m ];
-	
-	for ( i = 0; i < m; i++ ) {
-		JF[ i ] = new double[ m ];
-		bb[ i ] = new double[ m ];
-	}
+	int numNRMarkets = setMarketsToSolveNR( per );
+	Matrix JF( numNRMarkets, numNRMarkets );
 	
 	logED(per); // calculate log of excess demand
 	X =  showPRC(per); // showPRC returns a vector of prices	
@@ -2150,13 +2132,13 @@ void Marketplace::solve( const int per ) {
 			bool wasFirstTime = firsttime;
             int didBracket;
 			didBracket = Bracket(solTolerance,sol,allbracketed,firsttime,n,per);
-                        
+			
             // In case initial prices are way out of wack, bisect a few times and re-bracket
-//            if (wasFirstTime && !solved) { 
-//               solved = Bisection_all(solTolerance,15,sol,n,per); 
-          //   cout << endl <<"********Rebracketing*******" << endl;
-          //   if ( !solved ) { didBracket = Bracket(solTolerance,sol,allbracketed,firsttime,n,per); }
-//            }
+			//            if (wasFirstTime && !solved) { 
+			//               solved = Bisection_all(solTolerance,15,sol,n,per); 
+			//   cout << endl <<"********Rebracketing*******" << endl;
+			//   if ( !solved ) { didBracket = Bracket(solTolerance,sol,allbracketed,firsttime,n,per); }
+			//            }
 		}
 		// Bisect method
 		if (allbracketed && useBisect) {
@@ -2231,14 +2213,14 @@ void Marketplace::solve( const int per ) {
 		// Use Newton-Raphson only if all markets are bracketed
 		// and production is not zero.
 		if (allbracketed && useNR) {
-			int maxIter = 30;
+			const int maxIter = 30;
 			//int maxIter = 15;
 			solved = Bisection_all(solTolerance,maxIter,sol,n,per);
 			logfile <<",Number of iterations: n = "<<n<<"\n";
 			maxSolVal =  maxED(per); // Max returns largest ED[i]
 			// Bisection returns ED, not log of ED
 			if(!solved && maxSolVal<1500) {
-				solved = NewtRap(solTolerance,sol,JF,bb,n,per);
+				solved = NewtRap(solTolerance,sol,JF,n,per);
 			}
 			if (!solved) { 
 				CheckBracket(solTolerance,sol,allbracketed);
@@ -2247,13 +2229,13 @@ void Marketplace::solve( const int per ) {
 		
 		// Ron's version of the NR routine
 		if ( allbracketed && useNR_Ron ) {
-			int maxIter = 30;
+			const int maxIter = 30;
 			//int maxIter = 15;
 			solved = Bisection_all( solTolerance, maxIter, sol, n, per );
 			logfile << ",Number of iterations: n = " << n << endl;
 			maxSolVal =  maxED(per); // Max returns largest ED[i]
 			if(!solved && maxSolVal<1500) {
-				solved = NR_Ron(solTolerance,sol,JF,bb,n,per);
+				solved = NR_Ron(solTolerance,sol,JF,n,per);
 				if (bugMinimal) { 
 					bugoutfile << "After Ron_NR "<<n;
 				}
@@ -2284,7 +2266,7 @@ void Marketplace::solve( const int per ) {
 			bugoutfile<<"\nMarket,X,XL,XR,ED,EDL,EDR,Tolerance\n";
 			for (i=0; i<m; ++i) {
 				bugoutfile<<i<<","<<sol[i].X<<","<<sol[i].XL<<","<<sol[i].XR
-				<<","<<sol[i].ED<<","<<sol[i].EDL<<","<<sol[i].EDR<<","<<solTolerance<<"\n";
+					<<","<<sol[i].ED<<","<<sol[i].EDL<<","<<sol[i].EDR<<","<<solTolerance<<"\n";
 			}
 			bugout(per,n);
 			sdcurves(per,n);
@@ -2323,15 +2305,21 @@ void Marketplace::solve( const int per ) {
 		logfile<< ",Case for Code not found" << endl;
 		break;
 	}
+}
+
+//! Calculate the inverse of a matrix using an LU factorization.
+void Marketplace::invertMatrix( Matrix& A ) {
 	
-	// free up memory when done
-	for( i = 0; i < m; i++ ) {
-		delete[] JF[ i ];
-		delete[] bb[ i ];
-	}
+	// create LU decomposition
+	Matrix LU( A.nrows(), A.ncols() );
 	
-	delete[] JF;
-	delete[] bb;
+	dense1D<int> pvector( A.nrows() );
+	
+	copy(A, LU);
+	lu_factor( LU, pvector );
+	
+	// solve
+	lu_inverse( LU, pvector, A );
 }
 
 
