@@ -43,13 +43,14 @@ Scenario::Scenario() {
 
 //! Destructor
 Scenario::~Scenario() {
-   delete world;
-   delete modeltime;
-   delete marketplace;
+   clear();
 }
 
 //! Clear all datamembers.
 void Scenario::clear() {
+    delete world;
+   delete modeltime;
+   delete marketplace;
 	name = "";
 	scenarioSummary = "";
 }

@@ -37,7 +37,7 @@ private:
     std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
     void printGraphs( const int period ) const;
     void printSectorDependencies() const;
-
+    void clear();
 public:
     Scenario();
     ~Scenario();
@@ -46,7 +46,6 @@ public:
     Marketplace* getMarketplace();
     const World* getWorld() const;
     World* getWorld();
-    void clear();
     void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
     void toXML( std::ostream& out ) const;

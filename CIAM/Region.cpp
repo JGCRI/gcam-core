@@ -65,7 +65,13 @@ Region::Region() {
 
 //! Default destructor destroys sector, demsector, Resource, agSector, and population objects.
 Region::~Region() {
+    clear();
+}
 
+//! Clear member variables and initialize elemental members.
+void Region::clear(){
+    
+    // Free memory.
     for ( vector<Sector*>::iterator secIter = supplySector.begin(); secIter != supplySector.end(); secIter++ ) {
         delete *secIter;
     }
@@ -83,10 +89,6 @@ Region::~Region() {
     }
 
     delete population;
-}
-
-//! Clear member variables and initialize elemental members.
-void Region::clear(){
 
     // initialize elemental data members.
     initElementalMembers();
@@ -644,6 +646,8 @@ void Region::toDebugXML( const int period, ostream& out ) const {
 }
 
 //! Initialize calibration markets.
+/* \todo Calibration shouldn't be in the population object.
+*/
 void Region::setupCalibrationMarkets() {
     population->setupCalibrationMarkets( name );
 }
