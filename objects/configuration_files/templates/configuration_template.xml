@@ -2,53 +2,61 @@
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Josh Lurz (PNNL) -->
 <Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:\cvs\Code\Ciam\Configuration.xsd">
 	<Files>
-		<Value name="erbInputFileName">../input/erbinput2.csv</Value>
+		<!--START User Modifiable Variables-->
+		<Value name="xmlInputFileName">..\cvs\objects\model_data\base\base_input.xml</Value>
+		<Value name="xmlOutputFileName">..\output\output.xml</Value>
+		<Value name="BatchFileName">BatchFile.xml</Value>
+		<!--END User Modifiable variables-->
+		<!--START Developer Only Modifiable Variables-->
 		<Value name="outFileName">outFile.csv</Value>
 		<Value name="bugOutFileName">bugoutfile.csv</Value>
 		<Value name="logOutFileName">logfile.csv</Value>
 		<Value name="climatFileName">gas.emk</Value>
-		<Value name="xmlInputFileName">../objects/inputs/reference/reference.xml</Value>
-		<Value name="xmlOutputFileName">output.xml</Value>
 		<Value name="xmlDebugFileName">debug.xml</Value>
-		<Value name="sdCurveFileName">sdcurve.csv</Value>
-		<Value name="sdFileName">sdall.csv</Value>
-		<Value name="dbOutFileName">dbout.csv</Value>
-		<Value name="dbFileName">../input/erbdb.mdb</Value>
+		<Value name="dbFileName">../output/output.mdb</Value>
 		<Value name="supplyDemandOutputFileName">SDCurves.csv</Value>
-		<Value name="GHGInputFileName">../objects/magicc/inputs/gas.emk</Value>
+		<Value name="GHGInputFileName">../cvs/objects/magicc/inputs/input_gases.emk</Value>
 		<Value name="dependencyGraphName">DependencyGraph</Value>
-		<Value name="BatchFile">batch_file.xml</Value>
+		<!--END Developer Only Modifiable Variables-->
 	</Files>
 	<ScenarioComponents>
-		<Value name="WRE550">../objects/inputs/scenario_addons/wre/wre_550_addOn.xml</Value>
+		<!--START User Modifiable Variables-->
+		<Value name="B2Calibration">..\cvs\objects\model_data\scenario_components\sres_scenarios\b2_calibration.xml</Value>
+		<!--END User Modifiable variables-->
 	</ScenarioComponents>
 	<Strings>
-		<!--Value name="scenarioName">B2WRE550New</Value-->
+		<!--START User Modifiable Variables-->
+		<Value name="scenarioName"></Value>
+		<!--END User Modifiable variables-->
 	</Strings>
 	<Bools>
-		<Value name="BatchMode">1</Value>
-		<Value name="debugChecking">1</Value>
-		<!-- Turns on various internal checks -->
+		<!--START User Modifiable Variables-->
+		<Value name="CalibrationActive">1</Value>
+		<Value name="createCostCurve">0</Value>
+		<Value name="BatchMode">0</Value>
+		<!--END User Modifiable variables-->
+		<!--START Developer Only Modifiable Variables-->
+		<Value name="debugChecking">0</Value>
 		<Value name="timestamp">0</Value>
-		<Value name="agSectorActive">0</Value>
+		<Value name="agSectorActive">1</Value>
 		<Value name="agBioMarketSet">0</Value>
 		<Value name="simulActive">1</Value>
-		<Value name="CalibrationActive">1</Value>
 		<Value name="trackMaxED">0</Value>
-		<!-- Writes out the worst ED to screen as solution proceeds -->
 		<Value name="PrintDependencyGraphs">0</Value>
 		<Value name="PrintValuesOnGraphs">0</Value>
-		<Value name="debugFindSD">1</Value>
-		<Value name="PrintSectorDependencies">1</Value>
-		<Value name="PrintPrices">0</Value>
-		<Value name="createCostCurve">0</Value>
+		<Value name="debugFindSD">0</Value>
+		<Value name="PrintSectorDependencies">0</Value>
 		<Value name="ShowNullPaths">0</Value>
+		<Value name="PrintPrices">1</Value>
 		<Value name="mergeFilesOnly">0</Value>
+		<!--END Developer Only Modifiable Variables-->
 	</Bools>
 	<Ints>
-		<Value name="numMarketsToFindSD">3</Value>
+		<!--START Developer Only Modifiable Variables-->
+		<Value name="numMarketsToFindSD">10</Value>
 		<Value name="numPointsForSD">21</Value>
+		<Value name="numPointsForCO2CostCurve">5</Value>
+		<!--END Developer Only Modifiable Variables-->
 	</Ints>
-	<Doubles>
-	</Doubles>
+	<Doubles/>
 </Configuration>
