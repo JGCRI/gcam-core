@@ -77,7 +77,9 @@ public class ComboTableModel extends BaseTableModel{
 	  do {
 		  if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
 			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-			  if(!getOneAttrVal(n).equals("fillout=1")) {
+			  if(!n.hasAttributes()) {
+				  ret.add(n.getNodeName());
+			  } else if(!getOneAttrVal(n).equals("fillout=1")) {
 				ret.add(getOneAttrVal(n));
 			  } else {
 					ret.add(getOneAttrVal(n, 1));
@@ -128,7 +130,6 @@ public class ComboTableModel extends BaseTableModel{
 			// create a left side 2d vector, add it to LeftSideVector
 			
 			String lineToParse = title+'/';
-			System.out.println("about to parse " + lineToParse);
 			
 			// example:		/populationSGMRate@year=1985/gender:type=female/
 	
@@ -213,21 +214,22 @@ public class ComboTableModel extends BaseTableModel{
 	}
 	public Object getValueAt(int row, int col) {
 		try{
-		//System.out.println( "row and col are " + row + " " + col );
-		if( col < leftHeaderVector.size() ){
-			//System.out.println( "part1 " + ((Integer)activeLeft.get( row )).intValue() / (indRow.size()));
-			//System.out.println("part2 "+((Vector)leftSideVector.get( ((Integer)activeLeft.get( row )).intValue()/ (indRow.size()) )).get(col));
-			return ((Vector)leftSideVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( col );
-		}else if( col == leftHeaderVector.size() ){
-			return indRow.get( ((Integer)activeRows.get( row )).intValue() % (indRow.size()) );
-		}else{
-			
-			//System.out.println( "2ndpart1 " + ((Integer)activeLeft.get( row )).intValue() / (indRow.size()));
-			//System.out.println("2ndpart2 "+((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) ));
-			return ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue();
-		}
+			//System.out.println( "row and col are " + row + " " + col );
+			if( col < leftHeaderVector.size() ){
+				//System.out.println( "part1 " + ((Integer)activeLeft.get( row )).intValue() / (indRow.size()));
+				//System.out.println("part2 "+((Vector)leftSideVector.get( ((Integer)activeLeft.get( row )).intValue()/ (indRow.size()) )).get(col));
+				return ((Vector)leftSideVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( col );
+			}else if( col == leftHeaderVector.size() ){
+				return indRow.get( ((Integer)activeRows.get( row )).intValue() % (indRow.size()) );
+			}else{
+				//System.out.println( "2ndpart1 " + ((Integer)activeLeft.get( row )).intValue() / (indRow.size()));
+				//System.out.println("2ndpart2 "+((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) ));
+				return new Double(((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue());
+			}
 		} catch(NullPointerException e) {
 			return "";
+		} catch(NumberFormatException nf) { // if the data is not numbers
+			return ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue();
 		}
 	}
 	public String getColumnName(int col) {
@@ -256,29 +258,20 @@ public class ComboTableModel extends BaseTableModel{
 				if (((String)possibleFilters.get(i)).equals("")) {
 					continue;
 				}
-				System.out.println(" table filter maps " + tableFilterMaps.get((String)possibleFilters.get(i)));
 				currKeys = (String[])((Map)tableFilterMaps.get((String)possibleFilters.get(i))).keySet().toArray(new String[0]);
 				//for (Iterator it = activeRows.iterator(); it.hasNext(); rowPos = (Integer)it.next()) {
 				Iterator it = activeRows.iterator();
-				//int counterRow = 0;
 				while (it.hasNext()) {
 					rowPos = (Integer)it.next();
 					for (int j = 0; j < currKeys.length; j++) {
-						System.out.println("At row: "+rowPos.intValue()+" with key: "+currKeys[j]);
 						if (!((Boolean)((Map)tableFilterMaps.get((String)possibleFilters.get(i))).get(currKeys[j])).booleanValue() ){
-							System.out.println("yay i = " + ( possibleFilters.size()-i-1));
-							System.out.println((String)((Vector)leftSideVector.get( rowPos.intValue() / (indRow.size()) )).get( possibleFilters.size()-i-1 ));
 							if (((String)((Vector)leftSideVector.get( rowPos.intValue() / (indRow.size()) )).get( possibleFilters.size()-i-1 )).equals(currKeys[j])){
-							//if(((String)getValueAt( rowPos.intValue(), j)).equals(currKeys[j])) {
-								System.out.println("Going to Remove "+rowPos.intValue());
 								it.remove();
-								//counterRow--;
 								break;
 	
 							}
 						}
 					}
-					//counterRow++;
 				}
 			}
 	}
@@ -338,13 +331,10 @@ public class ComboTableModel extends BaseTableModel{
 			while( parent != null ){
 				nodepath.add( parent );
 				if ( !stoplooking && (parent.getNodeName().equals( headerone ) )){ // or headertwo
-					System.out.println("found headtwo! parent is " + parent.getNodeName());
 					index = nodepath.indexOf( parent ); // gives me '5'
-					System.out.println("index is ... " + index + " found it!");
 						
 				}
 				parent = ((Node)parent.getParentNode());
-				System.out.println("looking for parent");
 			}
 			
 			// index is 5, i want to split on 5+1 = 6
@@ -369,8 +359,6 @@ public class ComboTableModel extends BaseTableModel{
 						if( attrSplit.item(i).getNodeName().equals( attrFrom2 )){
 							if( attrSplit.item(i).getNodeValue().equals( attrTo2 )){
 								curr = onechild; // move down the list
-								System.out.println("FOUND IT!");
-								System.out.println("curr is " + curr.getNodeName() );
 								stopsplitcount = true;
 							}	
 						}
@@ -379,22 +367,15 @@ public class ComboTableModel extends BaseTableModel{
 				splitcount++;
 			}
 			
-			System.out.println("node path is ");
 			for(int i=0; i< nodepath.size(); i++){
-				System.out.println(i + " " + ((Node)nodepath.get(i)).getNodeName());	
 			}
 			
 			index--;
-			System.out.println("index is " + index);
 			
 			//curr = (Node)nodepath.get( index );
-			System.out.println("curr is " + curr.getNodeName());
 			if ( index >= 0 ){
-				System.out.println("in loop, index it " + index);
 				for(int theRest = index; theRest >= 0; theRest-- ){
-					System.out.println("in for loop, theRest is " + theRest);
 					Node pathNext = ((Node)nodepath.get( theRest ));
-					System.out.println("pathnext's is " + pathNext.getNodeName() );
 					
 					NodeList children = curr.getChildNodes(); // either find it or create it
 					int counter = 0;					
@@ -409,11 +390,9 @@ public class ComboTableModel extends BaseTableModel{
 							NamedNodeMap attrs1 = eChild.getAttributes();
 							NamedNodeMap attrs2 = ePathNext.getAttributes();
 							String temp;
-							System.out.println("are they not the right size? " + attrs1.getLength() + " " + attrs2.getLength());
 							if (attrs1.getLength() == attrs2.getLength()) {
 								if ( attrs1.getLength() == 0 ){
 									curr = child;
-									System.out.println("found inside the node!");	
 									getOutOfLoop = true;
 								}else{
 
@@ -422,8 +401,6 @@ public class ComboTableModel extends BaseTableModel{
 										if (eChild.getAttribute(temp).equals(ePathNext.getAttribute(temp))) {
 											// found the node!
 											curr = child; // move down the list
-											System.out.println("inside found the node!");
-											System.out.println("curr is " + curr.getNodeName()+ " moving down the list!");
 											getOutOfLoop = true;
 										}
 									}
@@ -436,19 +413,13 @@ public class ComboTableModel extends BaseTableModel{
 						Node createdNode = pathNext.cloneNode( false ); // clone the node and add it
 						curr.appendChild( createdNode );
 						curr = createdNode;
-						System.out.println("didn't find it, moving curr");
-						System.out.println("createdNode's name is " + createdNode.getNodeName());
 					}
 				}
 			}// now index should == nodepath.size() - 1
 			
-			System.out.println("end, curr is ... " + curr.getNodeName());
 			
 			curr.appendChild( n );
 			data.put( getKey(row,col), n );
-			System.out.println("just appended the child");
-			System.out.println("curr is " + curr.getNodeName());
-			System.out.println(" n is " + n.getNodeName());
 		}
 		
 		fireTableCellUpdated(row, col);
@@ -456,16 +427,4 @@ public class ComboTableModel extends BaseTableModel{
 		// fireOffSomeListeners?
 
 	}
-	public Class getColumnClass(int column) {
-		try {
-			new Double(getValueAt(0, column).toString());
-			return String.class;
-		} catch (NumberFormatException e) {
-			return String.class;
-		} catch (Exception f){
-			System.out.println("you suck " + f);
-			return String.class;
-		}
-	}
-	
 }
