@@ -1,28 +1,41 @@
 /*!
 \page checklist Code Review Checklist
 
+
 \section DocChecks Documentation Checks
 
 \subsection docItem1 File includes complete file level documentation.
+
 \subsection docItem2 All enums are fully documented. 
+
 \subsection docItem3 All member variables are properly documented in the header file.
 The reviewer should make sure to check that if the documentation is written after the variable definition the correct doxygen comment is used. Link to doxygen faq. 
+
 \subsection docItem4 All functions are documented with a detailed section.
 The detailed section should occur wherever the source of the function is written, not in the header file.
 The detailed section should only occur in the header file if the function it is documenting is abstract
 and thus would have no source.
+
 \subsection docItem5 All function arguments and return types are documented.
 This documentation should occur in the same place as the detailed section. 
+
 \section StyleChecks Style Guideline checks
+
 \subsection styleChecks1 All functions are named according to style guidelines.
+
 \subsection styleChecks2 All arguments to functions are named according to style guidelines.
+
 \subsection styleChecks3 All other style guidelines are followed.
 
 \section IncludeChecks Proper File Inclusion Checks
 The reviewer should perform these checks on all files. 
+
 \subsection includeCheck1 Includes the minimum required set of standard library files.
+
 \subsection includeCheck2 Uses standard library versions of c libraries (cmath instead of math.h).
+
 \subsection includeCheck3 Includes the minimum required set of user files.
+
 
 \section HeaderFile Header File Specific Checks
 The reviewer should perform these checks on all header files (.h or .hpp)
@@ -35,28 +48,43 @@ Example:
 The name of the constant name could be any unique string; however style guidelines mandate the above form.
 
 \subsection headItem2 File does not include source files (*.cpp).
+
 \subsection headItem17 Using namespace statements do not occur.
 While the use of 'using namespace std' or 'using namespace xercesc' is allowed in source files, it is considered poor style to do this in a header file. The reason for this is if any source file included the header file it would have unknowingly declared the use of that namespace.
 This could cause future problems and can be avoided by explicitly scoping each variable which that is in a namespace. 
 Example:
 std::string or std::vector
+
 \subsection headItem18 Forward declared classes are used whenever possible.
 link to FAQ here
 
 \subsection headItem3 Class has no unused member variables. 
+
 \subsection headItem4 Class has no public variables.
+
 \subsection headItem5 Constructor and destructor are explicitly defined.
+
 \subsection headItem6 Destructor of a base class is declared virtual.
+
 \subsection headItem7 Class has no unused member functions.
+
 \subsection headItem8 All base class functions which are derived from are declared virtual.
+
 \subsection headItem9 All functions specify a return type.
+
 \subsection headItem10 All functions which do not modify member variables are declared constant.
+
 \subsection headItem11 All argument names match names in source file.
+
 \subsection headItem12 Any variable who's value does not change during the course of a function is declared constant.
+
 \subsection headItem13 Any non-elemental variable who's value does not change through the course of a function is passed by constant reference.
 Make link to FAQ item here.
+
 \subsection headItem14 All functions not called from outside the class are declared private. 
+
 \subsection headItem15 Class ends with a semicolon.
+
 \subsection headItem16 Header guard is concluded correctly
 The header guard should be ended with an endif preprocessor statement followed by a comment specifying the name of the previously declared constant.
 #endif // _HEADER_FILE_NAME_H_ 
@@ -71,6 +99,11 @@ Due to this, it is important it is the first included file so that compilation o
 
 \subsection sourceItem2 File declares use of standard namespace.
 Nearly all of our files use items from the standard library, so it is simpler for consistency to import the namespace into all source files. 
+
+\subsection sourceItem15 File uses minimal number of global variables. 
+
+\subsection sourceItem16 Use Initialization lists in the constructor where possible.
+Link to FAQ Item
 
 \subsection sourceItem3 The constructor initializes all pointer and elemental type variables.
 In C++, pointers and elemental variables such as ints and floats are initialized to garbage values for efficiency reasons. The reviewer should
@@ -116,8 +149,9 @@ doFunction( constant1, constant2 )
 \subsection sourceItem12 Logger class is used instead of output streams.
 The use of the Logger class allows for more fine grained control and simpler code than using built-in output streams. 
 Add link to FAQ here.
-\subsection sourceItem12 Use STL style endl instead of \n
 
-\subsection sourceItem13 Functions do not return pointers or references to internal variables
+\subsection sourceItem13 Use STL style endl instead of \n
+
+\subsection sourceItem14 Functions do not return pointers or references to internal variables
 The reviewer should check that all return values are passed by value, not reference, except in rare circumstances where this is the desired behavior.
 */
