@@ -28,8 +28,6 @@ static msVC6_4786WorkAround emptyStatic;
 #endif
 
 #include <limits>
-
-#include <iostream>;
 // VC 6.0 does not define min and max in <algorithm>
 #if defined(_MSC_VER) && _MSC_VER < 1300
 
