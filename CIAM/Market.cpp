@@ -17,8 +17,6 @@
 #include "modeltime.h" 
 #include "XMLHelper.h"
 #include "Market.h"
-#include "SavePoint.h"
-#include "Logger.h"
 
 using namespace std;
 
@@ -42,21 +40,11 @@ Market::Market( const string& goodNameIn, const string& regionNameIn, const int 
    storedDemand = 0;
    supply = 0;
    storedSupply = 0;
-   excessDemand = 0;
-   logOfExcessDemand = 0;
-   storedExcessDemand = 0;
-   derivativeOfExcessDemand = 0;
-   logOfDemand = 0;
-   logOfSupply = 0;
    solveMarket = false;
 }
 
 //! Destructor
 Market::~Market() {
-
-   for ( vector<SavePoint*>::iterator iter2 = sdPoints.begin(); iter2 != sdPoints.end(); iter2++ ) {
-      delete *iter2;
-   }
 }
 
 /*! \brief Write out XML for debugging purposes.
@@ -88,12 +76,6 @@ void Market::toDebugXML( const int period, ostream& out ) const {
    XMLWriteElement( storedDemand, "storedDemand", out );
    XMLWriteElement( supply, "supply", out );
    XMLWriteElement( storedSupply, "storedSupply", out );
-   XMLWriteElement( excessDemand, "excessDemand", out );
-   XMLWriteElement( logOfExcessDemand, "logOfExcessDemand", out );
-   XMLWriteElement( storedExcessDemand, "storedExcessDemand", out );
-   XMLWriteElement( derivativeOfExcessDemand, "derivativeOfExcessDemand", out );
-   XMLWriteElement( logOfDemand, "logOfDemand", out );
-   XMLWriteElement( logOfSupply, "logOfSupply", out );
    
    for( vector<string>::const_iterator i = containedRegionNames.begin(); i != containedRegionNames.end(); i++ ) {
       XMLWriteElement( *i, "ContainedRegion", out );
@@ -111,17 +93,6 @@ void Market::toDebugXML( const int period, ostream& out ) const {
    out << "</Market>" << endl;
 }
 
-/*! \brief Add additional information to the debug xml stream for derived classes.
-*
-* This method is inherited from by derived class if they which to add any additional information to the printout of the class.
-* This method is not abstract, but for the base class it is simply an empty method. Thus it is optional to derive this method.
-*
-* \param out Output stream to print to.
-* \return void
-*/
-void Market::derivedToDebugXML( ostream& out ) const {
-}
-
 /*! \brief Add a region to the contained regions.
 *
 * This function is used to add a region to the list of model regions which are contained in the market region.
@@ -136,15 +107,6 @@ void Market::addRegion( const string& regionNameIn ) {
    }
 }
 
-/*! \brief Set an internal pointer to the companion price or demand market.
-*
-* This function exists in the NormalMarket to avoid dynamic casting and the use of RTTI. 
-* In the base class, this function is a no-op. If it is called the program terminates as this is an error.
-*
-* \param pointerIn A pointer to the companion market. 
-* \return void
-*/
-
 /*! \brief Get the vector of contained regions.
 * This function when called returns the containedRegions vector. This vector consists of the names of all regions
 * within this market.
@@ -155,10 +117,15 @@ const vector<string>& Market::getContainedRegions() {
    return containedRegionNames;
 }
 
-void Market::setCompanionMarketPointer( Market* pointerIn ) {
-   
-   /*! \pre This should never be called for the base Market class. */
-   assert( false );
+/*! \brief Set an internal pointer to the companion price or demand market.
+*
+* This function exists in the NormalMarket to avoid dynamic casting and the use of RTTI. 
+* In the base class, this function is a no-op. If it is called the program terminates as this is an error.
+*
+* \param pointerIn A pointer to the companion market. 
+*/
+void Market::setCompanionMarketPointer( Market* pointerIn ){
+    assert( false );
 }
 
 /*! \brief Set an initial price for the market.
@@ -167,7 +134,7 @@ void Market::setCompanionMarketPointer( Market* pointerIn ) {
 */
 void Market::initPrice() {
    // Generally want a non-zero value as starting value.
-   if ( price < 1E-6 ) {	// don't set if already set by read-in
+   if ( price < util::getSmallNumber() ) {	// don't set if already set by read-in
       price = 1;	
    }
 }
@@ -177,7 +144,7 @@ void Market::initPrice() {
 * \return void
 */
 void Market::nullPrice() {
-   price = 0.0;
+   price = 0;
 }
 
 /*! \brief Sets the price variable to the value specified.
@@ -221,7 +188,7 @@ void Market::setPrice( const double priceIn ) {
 * \sa setRawPrice
 * \sa setPrice
 */
-void Market::setPriceToLast( const double lastPrice ) {
+void Market::setPriceFromLast( const double lastPrice ) {
    price = lastPrice;
 }
 
@@ -250,64 +217,15 @@ double Market::getRawPrice() const {
    return price;
 }
 
-/*! \brief Restore the previous price.
+/*! \brief Get the storedPrice.
 *
-* This function resets the price to the stored price. It is often used in the solution algorithms.
+* This method is used to get the value of the storedPrice variable in the Market. It is often used in the solution mechanism.
 *
-* \return void
+* \return The value of the storedPrice variable.
+* \sa getPrice
 */
-void Market::restorePrice() {
-   price = storedPrice;
-}
-
-/*! \brief Get the change in price relative to the previous price.
-*
-* This function calculates the change from the current value of price to the stored value of price.
-* It then divides by the stored value of price. 
-*
-* \warning If the stored value of price is zero, the function will return zero.
-* \return void
-*/
-double Market::getChangeInPrice() const {
-   double change;
-   
-   if( storedPrice == 0  ){ 
-      change = 0;
-   }
-   else {
-      change = ( price - storedPrice ) / storedPrice;
-   }
-   return change;
-}
-
-/*! \brief Get the natural log of the change in price relative to the stored price.
-* This function calculates the difference between the natural log of the stored price minus the natural log of the 
-* current price. If either price is zero, the function will return the small constant passed to it. If either price is
-* negative an assert will trigger an error.
-*
-* \param SMALL_NUM A constant small number to return if either price is zero.
-* \return The change in the natural log of the prices.
-*/
-
-double Market::getLogChangeInPrice( const double SMALL_NUM ) const {
-   // Should 0 be replaced with SMALL_NUM?
-   double change;
-   // Case 1: Price or Previous price is 0.
-   if( ( storedPrice == 0 ) || ( price == 0 ) ) {
-      change = SMALL_NUM;
-   }
-   
-   // Case 2: Price and Previous Price are both positive. 
-   else if( ( storedPrice > 0 ) && ( price > 0 ) ) {
-      change = log( price ) - log( storedPrice );
-   }
-   
-   // Case 3: Price or Previous Price are negative. This should not occur.
-   else {
-      change = 0; // This avoids a compiler warning.
-      assert( false );
-   }
-   return change;
+double Market::getStoredRawPrice() const {
+   return storedPrice;
 }
 
 /*! \brief Null the demand.
@@ -316,7 +234,7 @@ double Market::getLogChangeInPrice( const double SMALL_NUM ) const {
 * \return void
 */
 void Market::nullDemand() {
-   demand = 0.0;
+   demand = 0;
 }
 
 /*! \brief Set the Raw demand.
@@ -340,7 +258,7 @@ void Market::setRawDemand( const double value ) {
 * \return void
 * \sa setRawDemand
 */
-void Market::setDemand( const double demandIn ) {
+void Market::addToDemand( const double demandIn ) {
    demand += demandIn;
 }
 
@@ -367,66 +285,41 @@ double Market::getRawDemand() const {
    return demand;
 }
 
+/*! \brief Get the storedDemand.
+*
+* This method is used to get the value of the storedDemand variable in the Market. It is often used in the solution mechanism.
+*
+* \return The value of the storedDemand variable.
+* \sa getPrice
+*/
+double Market::getStoredRawDemand() const {
+   return storedDemand;
+}
+
 //! Get the demand.
 double Market::getDemand() const {
    return demand;
 }
 
-//! Calculate the natural log of the demand.
-void Market::calcLogDemand( const double SMALL_NUM ) {
-   logOfDemand = log( max( demand, SMALL_NUM ) );
-}
-
-//! Return the natural log of the demand.
-double Market::getLogDemand() const {
-   return logOfDemand;
-}
-
-//! Return the change in demand relative to the previous demand.
-double Market::getChangeInDemand() const {
-   
-   double change;
-   
-   if( storedDemand == 0 ){ 
-      change = 0;
-   }
-   else { 
-      change = ( demand - storedDemand ) / storedDemand;
-   }
-   return change;
-}
-
-//! Get the log of the change in demand relative to the previous demand.
-double Market::getLogChangeInDemand( const double SMALL_NUM ) const {
-   
-   double change;
-   // Case 1: Demand or Previous Demand is zero.
-   if( storedDemand == 0 || demand == 0 ) {
-      change = SMALL_NUM;
-   }
-   
-   // Case 2: Demand and Previous Demand are both positive.
-   else if( ( demand > 0 ) && ( storedDemand > 0 ) ) {
-      change = log( demand ) - log( storedDemand );
-   }
-   
-   // Case 3: Demand or Previous Demand is negative. This should not occur.
-   else {
-      change = 0; // This avoids a compiler warning.
-      assert( false );
-   }
-   
-   return change;
-}
-
 //! Null the supply.
 void Market::nullSupply() {
-   supply = 0.0;
+   supply = 0;
 }
 
 //! Get the Raw supply.
 double Market::getRawSupply() const {
    return supply;
+}
+
+/*! \brief Get the storedSupply.
+*
+* This method is used to get the value of the storedSupply variable in the Market. It is often used in the solution mechanism.
+*
+* \return The value of the storedSupply variable.
+* \sa getPrice
+*/
+double Market::getStoredRawSupply() const {
+   return storedSupply;
 }
 
 //! Set the Raw supply.
@@ -445,7 +338,7 @@ double Market::getSupplyForChecking() const {
 }
 
 //! Set the supply.
-void Market::setSupply( const double supplyIn ) {
+void Market::addToSupply( const double supplyIn ) {
    supply += supplyIn;
 }
 
@@ -458,79 +351,6 @@ void Market::setSupply( const double supplyIn ) {
 */
 void Market::removeFromRawSupply( const double supplyIn ) {
    supply -= supplyIn;
-}
-
-//! Calculate the natural log of the supply.
-void Market::calcLogSupply( const double SMALL_NUM ) {
-   logOfSupply = log( max( supply, SMALL_NUM ) );
-}
-
-//! Get the natural log of the supply.
-double Market::getLogSupply() const {
-   return logOfSupply;
-}
-
-//! Get the change in the supply relative to the previous supply.
-double Market::getChangeInSupply() const {
-   
-   double change;
-   
-   if( storedSupply == 0 ){ 
-      change = 0;
-   }
-   else {
-      change = ( supply - storedSupply ) / storedSupply;
-   }
-   return change;
-}
-
-//! Get the log of the change in supply relative to the previous supply.
-double Market::getLogChangeInSupply( const double SMALL_NUM ) const {
-   
-   double change;
-   // Case 1: Supply or Previous Supply is zero.
-   if( storedSupply == 0 || supply == 0 ) {
-      change = SMALL_NUM;
-   }
-   
-   // Case 2: Supply and Previous Supply are both positive.
-   else if( ( supply > 0 ) && ( storedSupply > 0 ) ) {
-      change = log( supply ) - log( storedSupply );
-   }
-   
-   // Case 3: Supply or Previous Supply is negative. This should not occur.
-   else {
-      cerr << "Error negative supply in market: " << getName() << "! Price: " << price << " Supply: " << supply << " Previous supply: " << storedSupply << endl;
-      change = 0; // This avoids a compiler warning.
-      assert( false );
-   }
-   
-   return change;
-}
-
-//! Calculate the excess demand, setting the excessDemand variable.
-void Market::calcExcessDemand() {
-   excessDemand = demand - supply;
-}
-
-//! Return the excess demand.
-double Market::getExcessDemand() const {
-   return excessDemand;
-}
-
-//! Calculate the log base 10 of the excess demand, setting the logOfExcessDemand variable.
-void Market::calcLogExcessDemand( const double SMALL_NUM ) {
-   if ( demand < SMALL_NUM && supply < SMALL_NUM ) {
-      logOfExcessDemand = 0; // logs may not be calculated exactly
-   }
-   else {
-      logOfExcessDemand = log10( max( demand, SMALL_NUM ) ) - log10( max( supply, SMALL_NUM ) ); 
-   }
-}
-
-//! Return the log base 10 of the excess demand.
-double Market::getLogExcessDemand() const {
-   return logOfExcessDemand;
 }
 
 //! Return the market name.
@@ -579,14 +399,9 @@ bool Market::shouldSolve() const {
    return solveMarket;
 }
 
-//! Determine if a market should be solved for NR.
-bool Market::shouldSolveNR( const double SMALL_NUM ) const {
-   return ( solveMarket && demand > SMALL_NUM && supply > SMALL_NUM );
-}
-
-//! Return the type of the market.
-string Market::getType() const {
-   return "NormalMarket";
+//! Determine if a market should be solved for Newton-Rhapson.
+bool Market::shouldSolveNR() const {
+   return ( solveMarket && demand > util::getSmallNumber() && supply > util::getSmallNumber() );
 }
 
 //! Print the market to the given output stream.
@@ -600,43 +415,11 @@ void Market::print( ostream& out ) const {
    out << "Market Demand: " << demand << endl << endl;
 }
 
-//! Create create stored Supply-Demand point which can be printed later.
-void Market::createSDPoint() {
-   SavePoint* newSavePoint = new SavePoint( price, demand, supply );
-   sdPoints.push_back( newSavePoint );
-}
-
-//! Clear the current vector of SD points.
-void Market::clearSDPoints() {
-
-   for ( vector<SavePoint*>::iterator iter = sdPoints.begin(); iter != sdPoints.end(); iter++ ) {
-      delete *iter;
-   }
-
-   sdPoints.clear();
-}
-
-//! Print supply and demand curved created for debugging.
-void Market::printSupplyDemandDebuggingCurves( Logger* sdLog ) {
-
-   LOG( sdLog, Logger::WARNING_LEVEL ) << "Supply and Demand curves for: " << getName() << endl;
-   LOG( sdLog, Logger::WARNING_LEVEL ) << "Price,Demand,Supply," << endl;
-   
-   // Sort the SavePoint object pointers in the sdPoints vector by increasing price by using the LesserPrice binary operator. 
-   sort( sdPoints.begin(), sdPoints.end(), SavePoint::LesserPrice() );
-   for ( vector<SavePoint*>::const_iterator i = sdPoints.begin(); i != sdPoints.end(); i++ ) {
-      ( *i )->print( sdLog );
-   }
-
-   LOG( sdLog, Logger::WARNING_LEVEL ) << endl;
-}
 
 //! Get the relative excess demand, used for sorting markets.
 double Market::getRelativeExcessDemand() const {
    
-   const double SMALL_NUM = 1E-6;
-   
-   if( demand < SMALL_NUM ) {
+   if( demand < util::getSmallNumber() ) {
       return 0;
    }
 
@@ -647,152 +430,11 @@ double Market::getRelativeExcessDemand() const {
 
 // Other markets here temp
 
-//! Constructor
-PriceMarket::PriceMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-Market( goodNameIn, regionNameIn, periodIn ) {
-   priceMultiplier = 1;
-   demandMarketPointer = 0;
-}
 
-//! Copy Constructor.
-PriceMarket::PriceMarket( const Market& marketIn ) : Market( marketIn ) {
-   priceMultiplier = 1;
-   demandMarketPointer = 0;
-}
 
-void PriceMarket::setCompanionMarketPointer( Market* pointerIn ) {
-   assert( pointerIn );
-   demandMarketPointer = pointerIn;
-}
 
-void PriceMarket::derivedToDebugXML( ostream& out ) const {
-   XMLWriteElement( priceMultiplier, "PriceMultiplier", out );
-   
-   if ( demandMarketPointer != 0 ) {
-      XMLWriteElement( demandMarketPointer->getName(), "LinkedDemandMarket", out );
-   }
-}
 
-string PriceMarket::getType() const {
-   return "PriceMarket";
-}
 
-void PriceMarket::setPrice( const double priceIn ) {
-   
-   // Note, can't use function sestoredSupply here since that would be re-directed
-   // reversed (the other order does not work)
-   demand = priceIn * priceMultiplier;
-   supply = price * priceMultiplier;
-}
 
-double PriceMarket::getPrice() const {
-   return price / priceMultiplier; 
-}
 
-void PriceMarket::setSupply( const double supplyIn ) {
-   // Pass the supply to the underlying supply market.
-   assert( demandMarketPointer );
-   demandMarketPointer->setSupply( supplyIn );
-}
 
-double PriceMarket::getSupply() const {
-   assert( demandMarketPointer );
-   return demandMarketPointer->getSupply();
-}
-
-void PriceMarket::setDemand( const double demandIn ) {
-   assert( demandMarketPointer );
-   demandMarketPointer->setDemand( demandIn );
-}
-
-double PriceMarket::getDemand() const {
-   assert( demandMarketPointer );
-   return demandMarketPointer->getDemand();
-}
-
-//! Constructor
-DemandMarket::DemandMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-Market( goodNameIn, regionNameIn, periodIn ) {
-   demMktSupply = 0;
-   priceMarketPointer = 0;
-}
-
-void DemandMarket::derivedToDebugXML( ostream& out ) const {
-   XMLWriteElement( demMktSupply, "DemandMarketSupply", out );
-   if ( priceMarketPointer != 0 ) {
-      XMLWriteElement( priceMarketPointer->getName(), "LinkedPriceMarket", out );
-   }
-}
-
-string DemandMarket::getType() const {
-   return "DemandMarket";
-}
-
-double DemandMarket::getDemand() const {
-   return price;
-}
-
-double DemandMarket::getSupplyForChecking() const {
-   return demMktSupply;
-}
-
-void DemandMarket::setSupply( const double supplyIn ) {
-   supply = price; 
-   demMktSupply += supplyIn; // Store Raw supply value to check later
-}
-
-void DemandMarket::nullSupply() {
-   supply = 0;
-   demMktSupply = 0;
-}
-
-void DemandMarket::setCompanionMarketPointer( Market* pointerIn ) {
-   assert( pointerIn );
-   priceMarketPointer = pointerIn;
-}
-
-//! Constructor
-GHGMarket::GHGMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-Market( goodNameIn, regionNameIn, periodIn ) {
-}
-
-string GHGMarket::getType() const {
-   return "GHGMarket";
-}
-
-void GHGMarket::initPrice() {
-   price = 1;
-}
-
-bool GHGMarket::shouldSolve() const {
-
-   // Don't solve if  there is no constraint
-   return ( solveMarket && supply > 1E-6 );
-}
-
-bool GHGMarket::shouldSolveNR( const double SMALL_NUM ) const {
-   bool doSolveMarket = false;
-   // Check if this market is supposed to be solved & if a significant demand exists
-   if ( solveMarket && demand > SMALL_NUM ) {
-      doSolveMarket = true;
-   }
-   
-   if ( ( supply < SMALL_NUM ) ||  ( price < SMALL_NUM && excessDemand < SMALL_NUM ) || ( price < SMALL_NUM ) ) {
-      doSolveMarket = false; 
-   }
-
-   return doSolveMarket;
-}
-
-//! Constructor
-CalibrationMarket::CalibrationMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-Market( goodNameIn, regionNameIn, periodIn ) {
-}
-
-string CalibrationMarket::getType() const {
-   return "CalibrationMarket";
-}
-
-void CalibrationMarket::setPriceToLast( const double lastPrice ) {
-   // Do nothing, as in a calibration market the initial values for each period are set from the XML.
-}

@@ -27,8 +27,6 @@ extern ofstream bugoutfile, logfile;
 
 //! Constructor
 BisectionNRSolver::BisectionNRSolver( Marketplace* marketplaceIn ):Solver( marketplaceIn ) {
-   SMALL_NUM = 1e-6;
-   VERY_SMALL_NUM = 1e-8;
    bugTracking = true;
    bugMinimal = true;
    trackED = false;
@@ -62,7 +60,7 @@ bool BisectionNRSolver::solve( const int period ) {
    Configuration* conf = Configuration::getInstance();
    trackED = conf->getBool( "trackMaxED" ); //!< Get parameter to turn on (or not) solution mechanism tracking (to cout)
    
-   vector<SolutionInfo> sol = SolverLibrary::getMarketsToSolve( marketplace, period );
+   vector<SolverLibrary::SolutionInfo> sol = SolverLibrary::getMarketsToSolve( marketplace, period );
    const int marketsToSolve =  static_cast<int>( sol.size() );
    
    logfile << ",Starting Solution. Solving for " << marketsToSolve << " markets." << endl;
@@ -210,12 +208,12 @@ bool BisectionNRSolver::solve( const int period ) {
 * \param per Model period
 */
 int BisectionNRSolver::Bracket( const double solutionTolerance, const double excessDemandSolutionFloor, 
-                               const double bracketInterval, vector<SolutionInfo>& sol, bool& allbracketed, 
+                               const double bracketInterval, vector<SolverLibrary::SolutionInfo>& sol, bool& allbracketed, 
                                bool& firsttime, double& worldCalcCount, const int per ) {
    
    World* world = scenario->getWorld();
    int i;
-   const int numCurrMarkets = sol.size(); // number of markets to solve
+   const int numCurrMarkets = static_cast<int>( sol.size() ); // number of markets to solve
    int numIterations = 0; // number of iterations
    int code = 2; // code that reports success 1 or failure 0
    
@@ -267,12 +265,12 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
                         // Decrease X.
                         
                         // If X is positive.
-                        if( sol[ i ].X > SMALL_NUM ) {
+                        if( sol[ i ].X > util::getSmallNumber() ) {
                            sol[ i ].X *= 1 - bracketInterval; 
                         }
                         
                         // If X is near 0. 
-                        else if ( fabs( sol[ i ].X ) < SMALL_NUM ) {
+                        else if ( fabs( sol[ i ].X ) < util::getSmallNumber() ) {
                            sol[ i ].X = 0;
                         }
                         
@@ -304,12 +302,12 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
                         // Increase X.
                         
                         // If X is positive.
-                        if( sol[ i ].X > SMALL_NUM ) {
+                        if( sol[ i ].X > util::getSmallNumber() ) {
                            sol[ i ].X *= ( 1 + bracketInterval );
                         }
                         
                         // If X is 0
-                        else if ( fabs( sol[ i ].X ) < SMALL_NUM ) {
+                        else if ( fabs( sol[ i ].X ) < util::getSmallNumber() ) {
                            sol[ i ].X = 0.05;
                         }
                         
@@ -344,12 +342,12 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
                         // Decrease X.
                         
                         // If X is positive.
-                        if( sol[ i ].X > SMALL_NUM ) {
+                        if( sol[ i ].X > util::getSmallNumber() ) {
                            sol[ i ].X *= 1 - bracketInterval;
                         }
                         
                         // If X is 0
-                        else if ( fabs( sol[ i ].X ) < SMALL_NUM ) {
+                        else if ( fabs( sol[ i ].X ) < util::getSmallNumber() ) {
                            sol[ i ].X = 0;
                         }
                         
@@ -377,12 +375,12 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
                         // Increase X.
                         
                         // If X is positive.
-                        if( sol[ i ].X > SMALL_NUM ) {
+                        if( sol[ i ].X > util::getSmallNumber() ) {
                            sol[ i ].X *= ( 1 + bracketInterval );
                         }
                         
                         // If X is 0
-                        else if ( fabs( sol[ i ].X ) < SMALL_NUM ) {
+                        else if ( fabs( sol[ i ].X ) < util::getSmallNumber() ) {
                            sol[ i ].X = 0;
                         }
                         
@@ -401,7 +399,7 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
             } // if( !sol[ i ].bracketed )
             
             // Check if the bracket is empty.
-            // if ( fabs( sol[ i ].XL - sol[ i ].XR ) < VERY_SMALL_NUM ) {
+            // if ( fabs( sol[ i ].XL - sol[ i ].XR ) < util::getVerySmallNumber() ) {
             //    sol[ i ].bracketed = false;
             //    sol[ i ].XL = sol[ i ].XR = sol[ i ].X;
             //    sol[ i ].EDL = sol[ i ].EDR = sol[ i ].ED;
@@ -420,7 +418,7 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
             }
             
             // Check if the market is unbracketable. This check is needed for GHG markets. 
-            if( ( sol[ i ].X < VERY_SMALL_NUM ) && ( sol[ i ].ED < SMALL_NUM ) ) {
+            if( ( sol[ i ].X < util::getVerySmallNumber() ) && ( sol[ i ].ED < util::getSmallNumber() ) ) {
                sol[ i ].bracketed = true;
                sol[ i ].XR = sol[ i ].X = 0;
             }
@@ -467,7 +465,7 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
 * \param worldCalcCount Counter for number of worldcalc model calls 
 * \param per Model period
 */
-int BisectionNRSolver::Bisection_all( const double solutionTolerance, const double excessDemandSolutionFloor, const int IterLimit, vector<SolutionInfo>& sol, double& worldCalcCount, const int per ) {
+int BisectionNRSolver::Bisection_all( const double solutionTolerance, const double excessDemandSolutionFloor, const int IterLimit, vector<SolverLibrary::SolutionInfo>& sol, double& worldCalcCount, const int per ) {
    
    World* world = scenario->getWorld();
    int i;
@@ -475,7 +473,7 @@ int BisectionNRSolver::Bisection_all( const double solutionTolerance, const doub
    int interLimitAdd = 0; // Variable to allow more iterations if re-bisect
    int numbRebrackets = 0; // Variable to allow more iterations if re-bisect
    int code = 2; // code that reports success 1 or failure 0
-   const int numCurrMarkets = sol.size(); // number of markets to solve
+   const int numCurrMarkets = static_cast<int>( sol.size() ); // number of markets to solve
    double maxSolVal; // maximum equality value
    bool breakout;	// var to allow various conditions to exit bisection routine
    const int MAX_REBRACKETS = 3;
@@ -519,7 +517,7 @@ int BisectionNRSolver::Bisection_all( const double solutionTolerance, const doub
          // price=0 and supply>demand
          // only true for constraint case
          // other markets cannot have supply>demand as price->0
-         if (fabs(sol[i].X)<SMALL_NUM && sol[i].ED<0) { 
+         if (fabs(sol[i].X)< util::getSmallNumber() && sol[i].ED<0) { 
             sol[i].X = 0; 
             sol[i].dX = 0;
          } 
@@ -625,7 +623,7 @@ As long as Bisection is close, one set of derivatives per period is sufficient.
 * \param worldCalcCount Counter for number of worldcalc model calls 
 * \param per Model period
 */
-int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double excessDemandSolutionFloor, vector<SolutionInfo>& sol, double& worldCalcCount, const int per ) {
+int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double excessDemandSolutionFloor, vector<SolverLibrary::SolutionInfo>& sol, double& worldCalcCount, const int per ) {
    
    World* world = scenario->getWorld();
    const Modeltime* modeltime = scenario->getModeltime();
@@ -699,7 +697,7 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
       
       for ( i = 0; i < marketsToSolve; i++ ) {
          for ( int j = 0; j < marketsToSolve; j++ ) {
-            double tempValue = log( max( sol[ j ].X, SMALL_NUM ) );
+            double tempValue = log( max( sol[ j ].X, util::getSmallNumber() ) );
             KD[ i ] -= tempValue * JFDM[ i ][ j ];
             KS[ i ] -= tempValue * JFSM[ i ][ j ];
             assert( util::isValidNumber( KD[ i ] ) );
@@ -757,7 +755,7 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
             cout << "Exit Newton-Raphson function maxSolVal > 25" << endl;
          }
 
-         for ( i = 0; i < sol.size(); i++ ) {
+         for ( i = 0; i < static_cast<int>( sol.size() ); i++ ) {
             if ( fabs( sol[ i ].ED ) > maxSolVal / 100 ) {
                if ( trackED ) {
                   cout << "ED: (" << sol[ i ].marketName + sol[ i ].marketGood  << ") - " << sol[ i ].ED << endl;

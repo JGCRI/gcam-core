@@ -16,6 +16,11 @@
 
 #include "scenario.h"
 #include "Market.h"
+#include "price_market.h"
+#include "demand_market.h"
+#include "calibration_market.h"
+#include "ghg_market.h"
+#include "normal_market.h"
 #include "Marketplace.h"
 #include "SolverLibrary.h"
 #include "modeltime.h"
@@ -26,6 +31,7 @@
 #include "Logger.h"
 #include "Solver.h"
 #include "BisectionNRSolver.h"
+#include "SupplyDemandCurve.h"
 
 using namespace std;
 using namespace mtl;
@@ -37,8 +43,6 @@ extern Scenario* scenario;
 Marketplace::Marketplace() {
    uniqueNo = 0;
    numMarkets = 0;
-   SMALL_NUM = 1e-6;
-   VERY_SMALL_NUM = 1e-8;
    solver = new BisectionNRSolver( this );
 }
 
@@ -124,9 +128,10 @@ void Marketplace::setRawPrice( const string& marketName, const string& goodName,
    }
 }
 
+
 //! returns a single market's excess demand from the market name and good name.
 /*! \warning MarketName is NOT the same as RegionName.
-*/
+*//*
 double Marketplace::getExcessDemand( const string& marketName, const string& goodName, const int period ) const {
    
    // Get the market number.
@@ -134,14 +139,14 @@ double Marketplace::getExcessDemand( const string& marketName, const string& goo
    
    // Get the excess demand.
    if ( marketNumber != -1 ) {
-      return markets[ marketNumber ][ period ]->getExcessDemand();
+      return markets[ marketNumber ][ period ]->getDemand() - markets[ marketNumber ][ period ]->getSupply();
    }
    else {
       cout << "Error market not found!" << endl;
       return 0;
    }
 }
-
+*/
 //! returns a single market's raw demand from the market name and good name.
 /*! \warning MarketName is NOT the same as RegionName.
 */
@@ -160,8 +165,27 @@ double Marketplace::getRawDemand( const string& marketName, const string& goodNa
    }
 }
 
+//! returns a single market's stored raw demand from the market name and good name.
+/*! \warning MarketName is NOT the same as RegionName.
+*/
+double Marketplace::getStoredRawDemand( const string& marketName, const string& goodName, const int period ) const {
+   
+   // Get the market number.
+   const int marketNumber = getMarketNumberFromNameAndGood( marketName, goodName );
+   
+   // Get the raw demand.
+   if ( marketNumber != -1 ) {
+      return markets[ marketNumber ][ period ]->getStoredRawDemand();
+   }
+   else {
+      cout << "Error market not found!" << endl;
+      return 0;
+   }
+}
+
 //! returns if a market is a price or demand market.
 /*! \warning MarketName is NOT the same as RegionName.
+* \note This still isn't very good OO programming. 
 */
 bool Marketplace::isPriceOrDemandMarket( const string& marketName, const string& goodName, const int period ) const {
    
@@ -177,42 +201,6 @@ bool Marketplace::isPriceOrDemandMarket( const string& marketName, const string&
       }
    }
    return retValue;
-}
-
-//! returns a single market's log change in raw demand from the market name and good name.
-/*! \warning MarketName is NOT the same as RegionName.
-*/
-double Marketplace::getLogChangeInRawDemand( const string& marketName, const string& goodName, const int period ) const {
-   
-   // Get the market number.
-   const int marketNumber = getMarketNumberFromNameAndGood( marketName, goodName );
-   
-   // Get the log change in raw demand.
-   if ( marketNumber != -1 ) {
-      return markets[ marketNumber ][ period ]->getLogChangeInDemand( SMALL_NUM );
-   }
-   else {
-      cout << "Error market not found!" << endl;
-      return 0;
-   }
-}
-
-//! returns a single market's change in raw demand from the market name and good name.
-/*! \warning MarketName is NOT the same as RegionName.
-*/
-double Marketplace::getChangeInRawDemand( const string& marketName, const string& goodName, const int period ) const {
-   
-   // Get the market number.
-   const int marketNumber = getMarketNumberFromNameAndGood( marketName, goodName );
-   
-   // Get the change in raw demand.
-   if ( marketNumber != -1 ) {
-      return markets[ marketNumber ][ period ]->getChangeInDemand();
-   }
-   else {
-      cout << "Error market not found!" << endl;
-      return 0;
-   }
 }
 
 //! returns a single market's raw supply from the market name and good name.
@@ -233,35 +221,17 @@ double Marketplace::getRawSupply( const string& marketName, const string& goodNa
    }
 }
 
-//! returns a single market's change in raw supply from the market name and good name.
+//! returns a single market's stored raw supply from the market name and good name.
 /*! \warning MarketName is NOT the same as RegionName.
 */
-double Marketplace::getChangeInRawSupply( const string& marketName, const string& goodName, const int period ) const {
+double Marketplace::getStoredRawSupply( const string& marketName, const string& goodName, const int period ) const {
    
    // Get the market number.
    const int marketNumber = getMarketNumberFromNameAndGood( marketName, goodName );
    
-   // Get the change in raw supply.
+   // Get the raw supply.
    if ( marketNumber != -1 ) {
-      return markets[ marketNumber ][ period ]->getChangeInSupply();
-   }
-   else {
-      cout << "Error market not found!" << endl;
-      return 0;
-   }
-}
-
-//! returns a single market's log change in raw supply from the market name and good name.
-/*! \warning MarketName is NOT the same as RegionName.
-*/
-double Marketplace::getLogChangeInRawSupply( const string& marketName, const string& goodName, const int period ) const {
-   
-   // Get the market number.
-   const int marketNumber = getMarketNumberFromNameAndGood( marketName, goodName );
-   
-   // Get the log change in raw supply.
-   if ( marketNumber != -1 ) {
-      return markets[ marketNumber ][ period ]->getLogChangeInSupply( SMALL_NUM );
+      return markets[ marketNumber ][ period ]->getStoredRawSupply();
    }
    else {
       cout << "Error market not found!" << endl;
@@ -287,35 +257,17 @@ double Marketplace::getRawPrice( const string& marketName, const string& goodNam
    }
 }
 
-//! returns a single market's change in raw price from the market name and good name.
+//! returns a single market's stored raw price from the market name and good name.
 /*! \warning MarketName is NOT the same as RegionName.
 */
-double Marketplace::getChangeInRawPrice( const string& marketName, const string& goodName, const int period ) const {
+double Marketplace::getStoredRawPrice( const string& marketName, const string& goodName, const int period ) const {
    
    // Get the market number.
    const int marketNumber = getMarketNumberFromNameAndGood( marketName, goodName );
    
-   // Get the change in raw price.
+   // Get the raw price.
    if ( marketNumber != -1 ) {
-      return markets[ marketNumber ][ period ]->getChangeInPrice();
-   }
-   else {
-      cout << "Error market not found!" << endl;
-      return 0;
-   }
-}
-
-//! returns a single market's log change in raw price from the market name and good name.
-/*! \warning MarketName is NOT the same as RegionName.
-*/
-double Marketplace::getLogChangeInRawPrice( const string& marketName, const string& goodName, const int period ) const {
-   
-   // Get the market number.
-   const int marketNumber = getMarketNumberFromNameAndGood( marketName, goodName );
-   
-   // Get the log change in raw price.
-   if ( marketNumber != -1 ) {
-      return markets[ marketNumber ][ period ]->getLogChangeInPrice( SMALL_NUM );
+      return markets[ marketNumber ][ period ]->getStoredRawPrice();
    }
    else {
       cout << "Error market not found!" << endl;
@@ -392,7 +344,7 @@ bool Marketplace::setMarket( const string& regionName, const string& marketsname
       
       for( int i = 0; i < static_cast<int>( tempVector.size() ); i++ ){
          if ( typeIn == NORMAL ){
-            tempVector[ i ] = new Market( goodName, marketsname, i );
+            tempVector[ i ] = new NormalMarket( goodName, marketsname, i );
          }
          else if ( typeIn == GHG ) {
             tempVector[ i ] = new GHGMarket( goodName, marketsname, i );
@@ -595,7 +547,7 @@ void Marketplace::setsupply( const string& goodName, const string& regionName, c
    const int marketNumber = getMarketNumber( goodName, regionName );
    
    if ( marketNumber != -1 ) {
-      markets[ marketNumber ][ per ]->setSupply( value );
+      markets[ marketNumber ][ per ]->addToSupply( value );
    }
 }
 
@@ -611,7 +563,7 @@ void Marketplace::setdemand( const string& goodName, const string& regionName, c
    
    if ( marketNumber != -1 ) {
       
-      markets[ marketNumber ][ per ]->setDemand( value );
+      markets[ marketNumber ][ per ]->addToDemand( value );
    }
 }
 
@@ -694,34 +646,6 @@ double Marketplace::showdemand(  const string& goodName, const string& regionNam
    }
 }
 
-//! Calculates excess demand for all markets
-void Marketplace::excessdemand( const int period ) {
-   for ( int i = 0; i < numMarkets; i++ ) {
-      markets[ i ][ period ]->calcExcessDemand(); 
-   }
-}
-
-//! Calculates log of excess demand for all markets
-void Marketplace::logED( const int period ) {
-   for ( int i = 0; i < numMarkets; i++ ) {
-      markets[ i ][ period ]->calcLogExcessDemand( SMALL_NUM );
-   }
-}
-
-//! Calculates log of demand for all markets
-void Marketplace::logDem( const int period ) {
-   for ( int i = 0; i < numMarkets; i++ ) {
-      markets[ i ][ period ]->calcLogDemand( SMALL_NUM ); 
-   }
-}
-
-//! Calculates log of supply for all markets
-void Marketplace::logSup( const int period ) {
-   for ( int i = 0; i < numMarkets; i++ ) {
-      markets[ i ][ period ]->calcLogSupply( SMALL_NUM );
-   }
-}
-
 //! Check to see that all markets Rawly solved.
 bool Marketplace::checkMarketSolution( const double solTolerance, const double excessDemandSolutionFloor, const int period ) {
    
@@ -765,13 +689,7 @@ void Marketplace::findAndPrintSD( vector<Market*>& unsolved, const int period ) 
    const int numPointsForSD = conf->getInt( "numPointsForSD", 5 );
    string logName = Configuration::getInstance()->getFile( "supplyDemandOutputFileName", "SDCurves.csv" );
    Logger* sdLog = LoggerFactory::getLogger( logName );
-
-   vector<double> priceMults;
-   Marketplace* marketplace = scenario->getMarketplace();
    World* world = scenario->getWorld();
-
-   // store the original market information.
-   storeinfo( period );
    
    // Remove any unsolved markets.
    for( vector<Market*>::iterator removeIter = unsolved.begin(); removeIter != unsolved.end(); ) {
@@ -795,69 +713,14 @@ void Marketplace::findAndPrintSD( vector<Market*>& unsolved, const int period ) 
    if( static_cast<int>( unsolved.size() ) > numMarketsToFindSD ) { 
       unsolved.resize( numMarketsToFindSD );
    }
-
-   // Determine price ratios.
-   const int middle = static_cast<int>( floor( double( numPointsForSD ) / double( 2 ) ) );
-
-   for( int pointNumber = 0; pointNumber < numPointsForSD; pointNumber++ ) {
-      
-      if( pointNumber < middle ) {
-         priceMults.push_back( 1 - double( 1 ) / double( middle - std::abs( middle - pointNumber ) + 2 ) );
-      }
-      else if( pointNumber == middle ) {
-         priceMults.push_back( 1 );
-      }
-      else {
-         priceMults.push_back( 1 + double( 1 ) / double( middle - std::abs( middle - pointNumber ) + 2 ) );
-      }
-   }
       
    // Now determine supply and demand curves for each.
    for ( vector<Market*>::iterator iter = unsolved.begin(); iter != unsolved.end(); iter++ ) {
-      
-      cout << "Determining SD for market: " << ( *iter )->getName() << endl;
-      // get the base price of the market.
-      const double basePrice = ( *iter )->getRawPrice();
-      
-      // Save the original point as price 1.
-      // ( *iter )->createSDPoint();
-      
-      // iterate through the points and determine supply and demand.
-      for ( int pointNumber2 = 0; pointNumber2 < numPointsForSD; pointNumber2++ ) {
-         
-         // We have a priceMult of 1, which we have already solved for.
-         // if ( fabs( priceMults[ pointNumber2 ] - 1 ) < SMALL_NUM ) {
-         //    continue;
-         // }
-         
-         // clear demands and supplies.
-         nulldem( period );
-         nullsup( period );
-         
-         // set the price to the current point.
-         // ( *iter )->setRawPrice( priceMults[ pointNumber2 ] * basePrice );
-         ( *iter )->setRawPrice( pointNumber2 * ( double( 10 ) / double( numPointsForSD - 1 ) ) );
-
-         // calculate the world.
-         world->calc( period );
-         
-         // Store the results of the current point.
-         ( *iter )->createSDPoint();
-      
-      } // Completed iterating through all price points.
-
-      // restore the original market price.
-      ( *iter )->setRawPrice( basePrice );
-
-      // print the results.
-      ( *iter )->printSupplyDemandDebuggingCurves( sdLog );
-      
-      // Clear the internal vector of SD points.
-      ( *iter )->clearSDPoints();
+      SupplyDemandCurve sdCurve( *iter );
+      sdCurve.calculatePoints( numPointsForSD, world, period );
+      sdCurve.print( sdLog );
    }
    
-   // Restore the original market information.
-   restoreinfo( period );
 }
 
 //! Select markets to solve.
@@ -874,7 +737,7 @@ vector< pair< string, string > > Marketplace::getMarketsToSolve( const int perio
       }
       else {
          // Add markets to NR solution list
-         if ( markets[ i ][ period ]->shouldSolveNR( SMALL_NUM ) ) {
+         if ( markets[ i ][ period ]->shouldSolveNR() ) {
             marketsToSolve.push_back( pair<string,string>( markets[ i ][ period ]->getRegionName(), markets[ i ][ period ]->getGoodName() ) );
          }
       }
@@ -888,7 +751,7 @@ void Marketplace::init_to_last( const int period ) {
    // only after the starting period
    if ( period > 0 ) {
       for ( int i = 0; i < numMarkets; i++ ) {
-         markets[ i ][ period ]->setPriceToLast( markets[ i ][ period - 1 ]->getRawPrice() );
+         markets[ i ][ period ]->setPriceFromLast( markets[ i ][ period - 1 ]->getRawPrice() );
       }
    }
 }

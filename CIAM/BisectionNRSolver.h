@@ -6,8 +6,7 @@
 
 #include <vector>
 #include "Solver.h"
-
-class SolutionInfo;
+#include "SolverLibrary.h"
 
 /*! 
 * \file BisectionNRSolver.h
@@ -31,18 +30,17 @@ public:
    virtual ~BisectionNRSolver();
    virtual bool solve( const int period );
 private:
-   double SMALL_NUM; //!< constant small number to replace for null
-   double VERY_SMALL_NUM; //!< constant small number to replace for null
+
    bool bugTracking; //!< Turn on to enable bugout tracking in various solution routines
    bool bugMinimal; //!< Turn on minimal tracking of solution results
    bool trackED; //!< Turn on solution mechanism tracking (to cout)
    double totIter; //!< Cumulative number of interations
 
    int Bracket( const double solutionTolerance, const double excessDemandSolutionFloor, 
-                         const double bracketInterval, std::vector<SolutionInfo>& sol, bool& allbracketed, 
+                         const double bracketInterval, std::vector<SolverLibrary::SolutionInfo>& sol, bool& allbracketed, 
                          bool& firsttime, double& worldCalcCount, const int per );
-   int Bisection_all( const double solutionTolerance, const double excessDemandSolutionFloor, const int IterLimit, std::vector<SolutionInfo>& sol, double& worldCalcCount, const int per );
-   int NR_Ron( const double solutionTolerance, const double excessDemandSolutionFloor, std::vector<SolutionInfo>& sol, double& worldCalcCount, const int per );
+   int Bisection_all( const double solutionTolerance, const double excessDemandSolutionFloor, const int IterLimit, std::vector<SolverLibrary::SolutionInfo>& sol, double& worldCalcCount, const int per );
+   int NR_Ron( const double solutionTolerance, const double excessDemandSolutionFloor, std::vector<SolverLibrary::SolutionInfo>& sol, double& worldCalcCount, const int per );
 };
 
 #endif // _BISECTION_NR_SOLVER_

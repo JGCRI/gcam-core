@@ -29,56 +29,8 @@ class SolverLibrary;
 class Marketplace
 {	
    friend class SolverLibrary;
-private:
-   
-   int uniqueNo; //!< number for creating markets
-   int numMarkets;  //!< number of markets
-   double SMALL_NUM; //!< constant small number to replace for null
-   double VERY_SMALL_NUM; //!< constant small number to replace for null
-   std::vector< std::vector<Market*> > markets; //!< no of market objects by period
-   std::map<std::string,int> marketMap; //!< map of unique market id from good and market-region names
-   std::map<std::string,int> regionToMarketMap; //!< map of market lookup from good and region names
-   Solver* solver; //!< Pointer to a solution mechanism.
-   
-   static std::string createMarketKey( const std::string& regionName, const std::string& goodName );
-   int getMarketNumberFromNameAndGood( const std::string& marketName, const std::string& goodName ) const;
-   std::vector< std::pair< std::string, std::string > > getMarketsToSolve( const int period, const bool isNR ) const;
-   bool isPriceOrDemandMarket( const std::string& marketName, const std::string& goodName, const int period ) const;
-   int getMarketNumber( const std::string& goodName, const std::string& regionName ) const;
 
-   double getRawDemand( const std::string& marketName, const std::string& goodName, const int period ) const;
-   double getChangeInRawDemand( const std::string& marketName, const std::string& goodName, const int period ) const;
-   double getLogChangeInRawDemand( const std::string& marketName, const std::string& goodName, const int period ) const;
-   double getExcessDemand( const std::string& marketName, const std::string& goodName, const int period ) const;
-   
-   double getRawSupply( const std::string& marketName, const std::string& goodName, const int period ) const;
-   double getChangeInRawSupply( const std::string& marketName, const std::string& goodName, const int period ) const;
-   double getLogChangeInRawSupply( const std::string& marketName, const std::string& goodName, const int period ) const;
-   
-   void setRawPrice( const std::string& marketName, const std::string& goodName, const double priceIn, const int period );
-   double getRawPrice( const std::string& marketName, const std::string& goodName, const int period ) const;
-   double getChangeInRawPrice( const std::string& marketName, const std::string& goodName, const int period ) const;
-   double getLogChangeInRawPrice( const std::string& marketName, const std::string& goodName, const int period ) const;
-   
-   void removeFromRawDemands( const std::vector<double>& rawDemands, const int period );
-   void removeFromRawSupplies( const std::vector<double>& rawSupplies, const int period );
-   const std::vector<std::string> getContainedRegions( const std::string& marketName, const std::string& goodName, const int period ) const;
-   
-   double checkSupply( const std::string& goodName, const std::string& regionName, const int period ) const;
-   double checkSupply( const int marketNumber, const int period ) const;
-   const std::vector<double> getSupplies( const int per ) const;
-   const std::vector<double> getDemands( const int per ) const;
-  
-   void findAndPrintSD( std::vector<Market*>& unsolved, const int period );
-   void excessdemand( const int period );
-   void logED( const int period );
-   void logDem( const int period );
-   void logSup( const int period );
-
-   void storeinfo( const int period );
-   void restoreinfo( const int period );
-
-public:
+   public:
    enum NewMarketType { //!< Types of new markets which can be instantiated from other parts of the model.
       NORMAL, //!< Normal Market
       CALIBRATION, //!< Calibration Market
@@ -109,6 +61,44 @@ public:
    void resetToPriceMarket( const std::string& goodName, const std::string& regionName );
    void setMarketToSolve ( const std::string& goodName, const std::string& regionName, const int period = -1 );
    bool checkMarketSolution( const double soltoleranceerance,  const double excessDemandSolutionFloor, const int period );
+
+private:
+   
+   int uniqueNo; //!< number for creating markets
+   int numMarkets;  //!< number of markets
+   std::vector< std::vector<Market*> > markets; //!< no of market objects by period
+   std::map<std::string,int> marketMap; //!< map of unique market id from good and market-region names
+   std::map<std::string,int> regionToMarketMap; //!< map of market lookup from good and region names
+   Solver* solver; //!< Pointer to a solution mechanism.
+   
+   static std::string createMarketKey( const std::string& regionName, const std::string& goodName );
+   int getMarketNumberFromNameAndGood( const std::string& marketName, const std::string& goodName ) const;
+   std::vector< std::pair< std::string, std::string > > getMarketsToSolve( const int period, const bool isNR ) const;
+   bool isPriceOrDemandMarket( const std::string& marketName, const std::string& goodName, const int period ) const;
+   int getMarketNumber( const std::string& goodName, const std::string& regionName ) const;
+
+   double getRawDemand( const std::string& marketName, const std::string& goodName, const int period ) const;
+   double getStoredRawDemand( const std::string& marketName, const std::string& goodName, const int period ) const;
+   
+   double getRawSupply( const std::string& marketName, const std::string& goodName, const int period ) const;
+   double getStoredRawSupply( const std::string& marketName, const std::string& goodName, const int period ) const;
+   
+   void setRawPrice( const std::string& marketName, const std::string& goodName, const double priceIn, const int period );
+   double getRawPrice( const std::string& marketName, const std::string& goodName, const int period ) const;
+   double getStoredRawPrice( const std::string& marketName, const std::string& goodName, const int period ) const;
+   
+   void removeFromRawDemands( const std::vector<double>& rawDemands, const int period );
+   void removeFromRawSupplies( const std::vector<double>& rawSupplies, const int period );
+   const std::vector<std::string> getContainedRegions( const std::string& marketName, const std::string& goodName, const int period ) const;
+   
+   double checkSupply( const std::string& goodName, const std::string& regionName, const int period ) const;
+   double checkSupply( const int marketNumber, const int period ) const;
+   const std::vector<double> getSupplies( const int per ) const;
+   const std::vector<double> getDemands( const int per ) const;
+  
+   void findAndPrintSD( std::vector<Market*>& unsolved, const int period );
+   void storeinfo( const int period );
+   void restoreinfo( const int period );
 };
 
 #endif
