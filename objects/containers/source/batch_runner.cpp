@@ -59,47 +59,46 @@ bool BatchRunner::setupScenario( Timer& aTimer, const string aName, const list<s
 * \detailed This is the main function of the BatchRunner which determines all permutations
 * of the ComponentSets and runs a Scenario for each. 
 * \param aTimer The timer used to print out the amount of time spent performing operations.
+* \todo Handle duplicate names. Print a warning at least.
 */
 void BatchRunner::runScenario( Timer& aTimer ){
     // Quick error checking for empty readin.
-    if( mComponentSets.empty() ){
+    if( mComponentSet.empty() ){
         cout << "Error: No scenario sets to run!" << endl;
         return;
     }
 
-    // Make a map of ComponentSet name to iterator position.
-    typedef map<string, ComponentSet::reverse_iterator> PositionMap;
-    PositionMap currPositions;
-
-    // Initialize the map with the first positions of each.
-    for( ComponentSetStructure::iterator currSet = mComponentSets.begin(); currSet != mComponentSets.end(); ++currSet ){
-        currPositions[ currSet->first ] = currSet->second.rbegin();
+    // Initialize each components iterator to the beginning of the vector. 
+    for( ComponentSet::iterator currSet = mComponentSet.begin(); currSet != mComponentSet.end(); ++currSet ){
+        currSet->mFileSetIterator = currSet->mFileSets.begin();
     }
     
     bool shouldExit = false;
     while( !shouldExit ){
         // Perform the currently setup run.
         // Create the list of addons.
-        map<string, FileSet> currentComponents;
+        Component fileSetsToRun;
 
-        // Loop through the iterators.
-        for( PositionMap::const_iterator currPos = currPositions.begin(); currPos != currPositions.end(); ++currPos ){
-            currentComponents[ currPos->second->first ] = currPos->second->second;
+        // Loop through the ComponentSet to create the current scenario.
+        for( ComponentSet::const_iterator currSet = mComponentSet.begin(); currSet != mComponentSet.end(); ++currSet ){
+            fileSetsToRun.mFileSets.push_back( *( currSet->mFileSetIterator ) );
+            fileSetsToRun.mName += currSet->mFileSetIterator->mName;
         }
         // Run it.
-        runSingleScenario( currentComponents, aTimer );
+        runSingleScenario( fileSetsToRun, aTimer );
 
-        // Loop backwards to find a position to decrement.
-        for( PositionMap::reverse_iterator revPos = currPositions.rbegin(); revPos != currPositions.rend(); ++revPos ){
+        // Loop forward to find a position to increment.
+        for( ComponentSet::iterator outPos = mComponentSet.begin(); outPos != mComponentSet.end(); ++outPos ){
             // Increment the position.
-            revPos->second++;
+            outPos->mFileSetIterator++;
 
             // Check if it reached the end.
-            if( revPos->second == mComponentSets.find( revPos->first )->second.rend() ){
-                revPos->second = mComponentSets.find( revPos->first )->second.rbegin();
+            if( outPos->mFileSetIterator == outPos->mFileSets.end() ){
+                // Reset it to the beginning.
+                outPos->mFileSetIterator = outPos->mFileSets.begin();
 
-                // If we just reset the first position, exit the loop.
-                if( revPos == --currPositions.rend() ){
+                // If we just reset the last position, exit the loop.
+                if( outPos == --mComponentSet.end() ){
                     shouldExit = true;
                 }
             }
@@ -126,19 +125,16 @@ void BatchRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
 * \param aComponents A map of FileSets which is expanded to create the list of scenario components to read in.
 * \param aTimer The timer used to print out the amount of time spent performing operations.
 */
-bool BatchRunner::runSingleScenario( const map<string, FileSet> aComponents, Timer& aTimer ){
+bool BatchRunner::runSingleScenario( const Component aComponents, Timer& aTimer ){
     // Expand the file sets into a flat list and a scenario information string.
     list<string> components;
 
-    // Scenario name.
-    string scenName;
-    for( map<string, FileSet>::const_iterator currFileSet = aComponents.begin(); currFileSet != aComponents.end(); ++currFileSet ){
-        scenName += currFileSet->first;
-        for( FileSet::const_iterator currFile = currFileSet->second.begin(); currFile != currFileSet->second.end(); ++currFile ){
-            components.push_back( currFile->second );
+    for( vector<FileSet>::const_iterator currFileSet = aComponents.mFileSets.begin(); currFileSet != aComponents.mFileSets.end(); ++currFileSet ){
+        for( vector<File>::const_iterator currFile = currFileSet->mFiles.begin(); currFile != currFileSet->mFiles.end(); ++currFile ){
+            components.push_back( currFile->mPath );
         }
     }
-    cout << "Running scenario " << scenName << "..." << endl;
+    cout << "Running scenario " << aComponents.mName << "..." << endl;
 
     // Check if cost curve creation is needed.
     const Configuration* conf = Configuration::getInstance();
@@ -152,7 +148,7 @@ bool BatchRunner::runSingleScenario( const map<string, FileSet> aComponents, Tim
         mInternalRunner.reset( new SingleScenarioRunner() );
     }
     // Setup the scenario.
-    mInternalRunner->setupScenario( aTimer, scenName, components );
+    mInternalRunner->setupScenario( aTimer, aComponents.mName, components );
 
     // Run the scenario.
     mInternalRunner->runScenario( aTimer );
@@ -184,7 +180,7 @@ void BatchRunner::XMLParse( const DOMNode* aRoot ){
             continue;
         }
         // This is a three level XMLParse. Breaking up for now.
-		else if ( nodeName == "ComponentSet" ){
+		else if ( nodeName == "ComponentSet" ){ // Changed internal struct to component, backwards compatable.
             XMLParseComponentSet( curr );
         }
         else {
@@ -202,9 +198,12 @@ void BatchRunner::XMLParseComponentSet( const DOMNode* aNode ){
     // assume we were passed a valid node.
     assert( aNode );
     
-    // Create the new scenario set and set the name.
-    ComponentSet& currComponentSet = mComponentSets[ XMLHelper<string>::getAttrString( aNode, "name" ) ];
-    
+    // Create a new Component
+    Component newComponent;
+
+    // Get the name of the component set. 
+    newComponent.mName = XMLHelper<string>::getAttrString( aNode, "name" );
+
     // get the children of the node.
     DOMNodeList* nodeList = aNode->getChildNodes();
 
@@ -217,12 +216,14 @@ void BatchRunner::XMLParseComponentSet( const DOMNode* aNode ){
             continue;
         }
         else if ( nodeName == "FileSet" ){
-            XMLParseFileSet( curr, currComponentSet );
+            XMLParseFileSet( curr, newComponent );
         }
         else {
             cout << "Unrecognized text string: " << nodeName << " found while parsing ComponentSet." << endl;
         }
     }
+    // Add the new component
+    mComponentSet.push_back( newComponent );
 }
 
 /*! \brief Helper function to parse a single FileSet element.
@@ -231,13 +232,14 @@ void BatchRunner::XMLParseComponentSet( const DOMNode* aNode ){
 * \param aNode DOM node corresponding to the current FileSet.
 * \param aCurrComponentSet The ComponentSet to add this FileSet to.
 */
-void BatchRunner::XMLParseFileSet( const DOMNode* aNode, ComponentSet& aCurrComponentSet ){
+void BatchRunner::XMLParseFileSet( const DOMNode* aNode, Component& aCurrComponent ){
     // assume we were passed a valid node.
     assert( aNode );
     
     // Create the new file set and set the name.
-    FileSet& currFileSet = aCurrComponentSet[ XMLHelper<string>::getAttrString( aNode, "name" ) ];
-    
+    FileSet newFileSet;
+    newFileSet.mName = XMLHelper<string>::getAttrString( aNode, "name" );
+
     // get the children of the node.
     DOMNodeList* nodeList = aNode->getChildNodes();
 
@@ -250,10 +252,19 @@ void BatchRunner::XMLParseFileSet( const DOMNode* aNode, ComponentSet& aCurrComp
             continue;
         }
         else if ( nodeName == "Value" ){
-            currFileSet[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<string>::getValueString( curr );
+            // Create the new File
+            File newFile;
+            // Get the name of the file.
+            newFile.mName = XMLHelper<string>::getAttrString( curr, "name" );
+            // Get the full path of the file.
+            newFile.mPath = XMLHelper<string>::getValueString( curr );
+            // Add the file to the current new file set.
+            newFileSet.mFiles.push_back( newFile );
         }
         else {
             cout << "Unrecognized text string: " << nodeName << " found while parsing FileSet." << endl;
         }
     }
+    // Add the new file set to the current component.
+    aCurrComponent.mFileSets.push_back( newFileSet );
 }

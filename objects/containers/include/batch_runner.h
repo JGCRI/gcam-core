@@ -16,6 +16,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <list>
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 #include "containers/include/scenario_runner.h"
@@ -36,15 +37,29 @@ public:
     virtual void runScenario( Timer& aTimer );
     virtual void printOutput( Timer& aTimer, const bool aCloseDB ) const;
 protected:
-    typedef std::map<std::string, std::string> FileSet;
-    typedef std::map<std::string, FileSet> ComponentSet;
-    typedef std::map<std::string, ComponentSet> ComponentSetStructure;
+    struct File {
+        std::string mName;
+        std::string mPath;
+    };
+
+    struct FileSet {
+        std::vector<File> mFiles;
+        std::string mName;
+    };
+
+    struct Component {
+        std::vector<FileSet> mFileSets;
+        std::vector<FileSet>::const_iterator mFileSetIterator;
+        std::string mName;
+    };
+    
+    typedef std::vector<Component> ComponentSet;
+    ComponentSet mComponentSet; //!< Big data structure.
     std::auto_ptr<ScenarioRunner> mInternalRunner;
     const std::string mBatchFileName; //!< Name of the XML file with batch information.
-    ComponentSetStructure mComponentSets; //!< Big data structure.
-    bool runSingleScenario( const std::map<std::string, FileSet> aCurrComponents, Timer& aTimer );
+    bool runSingleScenario( const Component aCurrComponents, Timer& aTimer );
     void XMLParse( const xercesc::DOMNode* aRoot );
     void XMLParseComponentSet( const xercesc::DOMNode* aNode );
-    void XMLParseFileSet( const xercesc::DOMNode* aNode, ComponentSet& aCurrComponentSet );
+    void XMLParseFileSet( const xercesc::DOMNode* aNode, Component& aCurrComponentSet );
     };
 #endif // _BATCH_RUNNER_H_
