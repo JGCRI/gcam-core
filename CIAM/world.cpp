@@ -207,12 +207,12 @@ void World::toDebugXML( const int period, ostream& out ) const {
 /*! Examples: share weight scaling due to previous calibration, 
  * cumulative technology change, etc.
  */
-void World::init_calc( const int per ) {	
+void World::initCalc( const int per ) {	
 	
 	Configuration* conf = Configuration::getInstance();
 	
    for ( int i=0 ;i<noreg; i++ ) {
-		region[ i ]->init_calc( per );
+		region[ i ]->initCalc( per );
 	}
    
 }

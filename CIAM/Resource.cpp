@@ -65,50 +65,50 @@ void Resource::clear(){
 
 //! Set data members from XML input.
 void Resource::XMLParse( const DOMNode* node ){
-	
-   const Modeltime* modeltime = scenario->getModeltime();
-	string nodeName;
-	DOMNodeList* nodeList = 0;
-	DOMNode* curr = 0;
-
-	// resize vectors not read in
-	const int maxper = modeltime->getmaxper();
-	available.resize(maxper); // total resource availabl
-	annualprod.resize(maxper); // annual production rate of resource
-	cummprod.resize(maxper); // cummulative production of resource
-   rscprc.resize( maxper ); 
-
-	// make sure we were passed a valid node.
-	assert( node );
-	
-	// get the name attribute.
-	name = XMLHelper<string>::getAttrString( node, "name" );
-	
-	#if( _DEBUG )
-		cout << "\tResource name set as " << name << endl;
-	#endif
-
-	// get all child nodes.
-	nodeList = node->getChildNodes();
-
-	// loop through the child nodes.
-	for( int i = 0; i < nodeList->getLength(); i++ ){
-		curr = nodeList->item( i );
-		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-		if( nodeName == "market" ){
-			market = XMLHelper<string>::getValueString( curr ); // only one market element.
-		}
-		else if( nodeName == "price" ){
-			XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );
-		}
-		else {
-         XMLDerivedClassParse( nodeName, curr );
-      }
-	}
-
-	nosubrsrc = subResource.size();
-
+    
+    const Modeltime* modeltime = scenario->getModeltime();
+    string nodeName;
+    DOMNodeList* nodeList = 0;
+    DOMNode* curr = 0;
+    
+    // resize vectors not read in
+    const int maxper = modeltime->getmaxper();
+    available.resize(maxper); // total resource availabl
+    annualprod.resize(maxper); // annual production rate of resource
+    cummprod.resize(maxper); // cummulative production of resource
+    rscprc.resize( maxper ); 
+    
+    // make sure we were passed a valid node.
+    assert( node );
+    
+    // get the name attribute.
+    name = XMLHelper<string>::getAttrString( node, "name" );
+    
+#if( _DEBUG )
+    cout << "\tResource name set as " << name << endl;
+#endif
+    
+    // get all child nodes.
+    nodeList = node->getChildNodes();
+    
+    // loop through the child nodes.
+    for( int i = 0; i < nodeList->getLength(); i++ ){
+        curr = nodeList->item( i );
+        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        
+        if( nodeName == "market" ){
+            market = XMLHelper<string>::getValueString( curr ); // only one market element.
+        }
+        else if( nodeName == "price" ){
+            XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );
+        }
+        else {
+            XMLDerivedClassParse( nodeName, curr );
+        }
+    }
+    
+    nosubrsrc = subResource.size();
+    
 }
 
 //! Write datamembers to datastream in XML format.
@@ -284,8 +284,9 @@ void Resource::show()
 	//write to file or database later
 	cout << name << endl;
 	cout << "Number of Subsectors: " << nosubrsrc <<"\n";
-	for (i=0;i<nosubrsrc;i++)
+    for (i=0;i<nosubrsrc;i++) {
 		cout<<subResource[i]->getName()<<"\n";
+    }
 }
 
 //! Write resource output to file.
@@ -301,8 +302,9 @@ void Resource::outputfile( const string& regname )
 	fileoutput3( regname,name," "," ","production","EJ",annualprod);
 
 	// do for all subsectors in the sector
-	for (int i=0;i<nosubrsrc;i++)
+    for (int i=0;i<nosubrsrc;i++) {
 		subResource[i]->outputfile(regname ,name);
+    }
 }
 
 //! Write resource output to database.
@@ -322,8 +324,9 @@ void Resource::MCoutput( const string& regname ) {
 	dboutput4(regname,"Price","by Sector",name,"$/GJ",rscprc);
 
 	// do for all subsectors in the sector
-	for (int i=0;i<nosubrsrc;i++)
+    for (int i=0;i<nosubrsrc;i++) {
 		subResource[i]->MCoutput(regname,name);
+    }
 }
 
 // ************************************************************

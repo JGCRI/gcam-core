@@ -239,7 +239,7 @@ void Scenario::run(){
 		marketplace->nullsup( per ); // initialize market supply to null
 		marketplace->storeto_last( per ); // save last period's info to stored variables
 		marketplace->init_to_last( per ); // initialize to last period's info
-		world->init_calc( per ); // call to initialize anything that won't change during calc
+		world->initCalc( per ); // call to initialize anything that won't change during calc
 		world->calc( per ); // call to calculate initial supply and demand
 		marketplace->solve( per ); // solution uses Bisect and NR routine to clear markets
 		world->updateSummary( per ); // call to update summaries for reporting

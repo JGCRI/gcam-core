@@ -26,43 +26,43 @@ class SubResource;
 */
 
 class Resource {
-
+    
 protected:
-	string name; //!< Resource name
-	string market; //!< regional market
-	int nosubrsrc; //!< number of subsectors for each Resource
-	vector<SubResource*> subResource; //!< subsector objects for each Resource
-	vector<double> rscprc; //!< Resource price
-	vector<double> available; //!< total Resource available
-	vector<double> annualprod; //!< annual production rate of Resource
-	vector<double> cummprod; //!< cummulative production of Resource
-
+    string name; //!< Resource name
+    string market; //!< regional market
+    int nosubrsrc; //!< number of subsectors for each Resource
+    vector<SubResource*> subResource; //!< subsector objects for each Resource
+    vector<double> rscprc; //!< Resource price
+    vector<double> available; //!< total Resource available
+    vector<double> annualprod; //!< annual production rate of Resource
+    vector<double> cummprod; //!< cummulative production of Resource
+    
 public:
-	Resource(); // default construtor
-	virtual ~Resource();
-	virtual string getType() const = 0; // Any one = 0 anywhere makes this an abstract class
-	void clear();
-	virtual void XMLParse( const DOMNode* node );
-   // Since this is not defined within the resource class, must declare this as abstract
-   virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* node ) = 0; // the = 0 makes this an abstract method
-	void toXML( ostream& out ) const;
-	void toDebugXML( const int period, ostream &out ) const;
-	string getName() const; // return resource name
-	void setMarket( const string& regionName );
-	double getPrice(int per); // return resource price
-	void cumulsupply(double prc,int per); // calculative cummulative supply from supply curve
-	double getCummProd(int per); // returns cummulative supply
-	// calculates annual supply or production
-	void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
-	double getAnnualProd(int per); // returns annnual production of Resource
-	double getAvailable(int per); // returns total available Resource
-	double getSubAvail( const string& subResourceName, const int per); // returns total available subResource
-	int getNoSubrsrc(void); // returns total number of subsectors
-	void show(void); // shows Resource name and subResources
-	// MiniCAM style output to database table
-	void MCoutput( const string& regname ); 
-	// output to file
-	void outputfile( const string& regname ); 
+    Resource(); // default construtor
+    virtual ~Resource();
+    virtual string getType() const = 0; // Any one = 0 anywhere makes this an abstract class
+    void clear();
+    virtual void XMLParse( const DOMNode* node );
+    // Since this is not defined within the resource class, must declare this as abstract
+    virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* node ) = 0; // the = 0 makes this an abstract method
+    void toXML( ostream& out ) const;
+    void toDebugXML( const int period, ostream &out ) const;
+    string getName() const; // return resource name
+    void setMarket( const string& regionName );
+    double getPrice(int per); // return resource price
+    void cumulsupply(double prc,int per); // calculative cummulative supply from supply curve
+    double getCummProd(int per); // returns cummulative supply
+    // calculates annual supply or production
+    void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
+    double getAnnualProd(int per); // returns annnual production of Resource
+    double getAvailable(int per); // returns total available Resource
+    double getSubAvail( const string& subResourceName, const int per); // returns total available subResource
+    int getNoSubrsrc(void); // returns total number of subsectors
+    void show(void); // shows Resource name and subResources
+    // MiniCAM style output to database table
+    void MCoutput( const string& regname ); 
+    // output to file
+    void outputfile( const string& regname ); 
 };
 
 /*! 
@@ -74,8 +74,8 @@ public:
 */
 class DepletableResource: public Resource {
 public: 
-	virtual string getType() const;
-   virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
+    virtual string getType() const;
+    virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
 };
 
 /*! 
@@ -87,8 +87,8 @@ public:
 */
 class FixedResource: public Resource {
 public: 
-	virtual string getType() const;
-   virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
+    virtual string getType() const;
+    virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
 };
 
 /*! 
@@ -100,8 +100,8 @@ public:
 */
 class RenewableResource: public Resource {
 public: 
-	virtual string getType() const;
-   virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
+    virtual string getType() const;
+    virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
 };
 
 #endif // _RESOURCE_H_
