@@ -63,9 +63,8 @@ int main( int argc, char *argv[] ) {
     timer.start();
 
     // Initialize the LoggerFactory
-    XercesDOMParser* parser = XMLHelper<void>::getParser();
-    DOMNode* root = XMLHelper<void>::parseXML( loggerFileName, parser );
-    LoggerFactory::XMLParse( root );
+    auto_ptr<LoggerFactoryWrapper> loggerFactoryWrapper( new LoggerFactoryWrapper() );
+    XMLHelper<void>::parseXML( loggerFileName, loggerFactoryWrapper.get() );
 
     // Create an auto_ptr to the scenario runner. This will automatically deallocate memory.
     auto_ptr<ScenarioRunner> runner;
@@ -75,9 +74,8 @@ int main( int argc, char *argv[] ) {
     
     // Parse configuration file.
     mainLog << "Parsing input files..." << endl;
-    root = XMLHelper<void>::parseXML( configurationFileName, parser );
     auto_ptr<Configuration> conf( Configuration::getInstance() );
-    conf->XMLParse( root );
+    XMLHelper<void>::parseXML( configurationFileName, conf.get() );
     
     // Determine the correct type of ScenarioRunner to create.
     // todo: Consider a factory method.
@@ -100,7 +98,7 @@ int main( int argc, char *argv[] ) {
 
     // Setup the scenario.
     runner->setupScenario( timer );
-    
+
     // Run the scenario.
     bool success = runner->runScenario( timer );
 
@@ -109,8 +107,6 @@ int main( int argc, char *argv[] ) {
     mainLog << "Model exiting successfully." << endl;
     // Cleanup Xerces. This should be encapsulated with an initializer object to ensure against leakage.
     XMLHelper<void>::cleanupParser();
-    LoggerFactory::cleanUp();
-    
     // sleep(10000000); // Un-comment to use OSX memory analysis tool. sjs
     
     // Return exit code based on whether the model succeeded(Non-zero is failure by convention).
