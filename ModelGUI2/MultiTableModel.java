@@ -200,7 +200,11 @@ public class MultiTableModel extends BaseTableModel{
 						regex += me.getKey()+"|";
 					}
 				}
-				regex = regex.substring(0,regex.length()-1)+")/";
+				if(regex.endsWith("|")) {
+					regex = regex.substring(0,regex.length()-1)+")/";
+				} else {
+					regex += ")/";
+				}
 			} else {
 				regex += (String)possibleFilters.get(i)+"/";
 			}

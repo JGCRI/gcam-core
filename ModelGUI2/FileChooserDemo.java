@@ -63,10 +63,6 @@ public class FileChooserDemo extends JFrame
 
   JFileChooser globalFC; // for saving last current directory
 
-  //DOMTreeBuilder tree = new DOMTreeBuilder();
-  DataTableModel tableModel;
-  private Vector tables = null;
-
   static final int windowHeight = 460;
   static final int leftWidth = 300;
   static final int rightWidth = 340;
@@ -376,10 +372,18 @@ public class FileChooserDemo extends JFrame
 		//remember the cancel case if stuff is added here in the future
 	}
 	else if (command.equals("Filter")) {
-		//tableModel.updateDataFilter(this);
-		//((MultiTableModel)jTable.getModel()).filterData(this);
-		((BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel()).filterData(this);
-		//		((NewDataTableModel)((JTable)((JScrollPane)jTable.getValueAt(row, col)).getViewport().getView()).getModel()).flip();
+		try {
+			((BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel()).filterData(this);
+	int j = 1;
+	JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
+	while( j < jTable.getRowCount()) {
+		jTable.setRowHeight(j-1,16);
+		jTable.setRowHeight(j,200);
+		j += 2;
+	}
+		} catch (UnsupportedOperationException uoe) {
+			JOptionPane.showMessageDialog( null, "This table does not support filtering", "Table Filter Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	else if(command.equals("Quit") ){
 		dispose();
@@ -560,6 +564,7 @@ public class FileChooserDemo extends JFrame
 				System.out.println("Source: "+e.getSource()+" Point:"+p+" row: "+row+" col: "+col);
 				
 				((NewDataTableModel)((JTable)((JScrollPane)jTable.getValueAt(row, col)).getViewport().getView()).getModel()).flip();
+				((NewDataTableModel)((JTable)((JScrollPane)jTable.getValueAt(row, col)).getViewport().getView()).getModel()).flip();
 				// CALL FLIP METHOD HERE !!!!!
 			}
 			public void mouseClicked(MouseEvent e) {
@@ -714,6 +719,15 @@ public class FileChooserDemo extends JFrame
   // ********* newly added **************
   // for the tablechangedmodel listener
   public void tableChanged(TableModelEvent e) {
+	  /*
+	int j = 1;
+	JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
+	while( j < jTable.getRowCount()) {
+		jTable.setRowHeight(j,200);
+		j += 2;
+	}
+	*/
+ /*
 	  if(1==1) {
 		  if(1==1) {return;}
 	  	System.out.println("!!! "+e);
@@ -793,13 +807,16 @@ public class FileChooserDemo extends JFrame
 			}
 		}
 	  }
-	  */
+	 */
   }
-  
 
   // DO WE NEED THIS
 class MyTreeModelListener implements TreeModelListener {
 		public void treeNodesChanged(TreeModelEvent e) {
+			try {
+				BaseTableModel bt = (BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel();
+				bt.fireTableRowsUpdated(0,bt.getRowCount());
+			} catch(Exception ex) {}
 			System.out.println("treenodes have changed!");
 			//jtree.setSelectionPath(e.getTreePath());
 			//System.out.println(jtree.getSelectionPath());

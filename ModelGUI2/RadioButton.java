@@ -106,7 +106,7 @@ public class RadioButton extends JDialog implements ActionListener {
 			BaseTableModel bt = new NewDataTableModel(tp, doc, pf);
 	  		JTable jTable = new JTable(bt);
 			// Should the listener be set like so..
-	  		//jTable.getModel().addTableModelListener(pf);
+	  		jTable.getModel().addTableModelListener((FileChooserDemo)pf);
 
 	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	 
@@ -127,7 +127,7 @@ public class RadioButton extends JDialog implements ActionListener {
 		} else if(RadioButton.value.equals("Multi Tables")) {
 			BaseTableModel bt = new MultiTableModel(tp, doc, pf);
 			JTable jTable = new JTable(bt);
-			// Any Listeners?
+	  		jTable.getModel().addTableModelListener((FileChooserDemo)pf);
 
 			//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
 
