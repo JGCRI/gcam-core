@@ -671,7 +671,7 @@ void Sector::checkShareSum( const int period ) const {
 
     for ( i=0; i<nosubsec; i++ ) {
         // Check the validity of shares.
-        assert( util::isValidNumber( subsec[ i ]->getShare( per ) ) );
+        assert( util::isValidNumber( subsec[ i ]->getShare( period ) ) );
         sumshares += subsec[ i ]->getShare( period ) ;
     }
     if ( fabs(sumshares - 1) > SMALL_NUM ) {
