@@ -2594,7 +2594,7 @@ IF(IWrite.eq.1)THEN
 
 	IF (IWrite .eq. 1) WRITE(9,101)  !header row
 
-        IIPRT=15
+        IIPRT=5	! sjs -- change to 5 year interval in order to save more data points
         DO K=1990,IYEND,IIPRT
 
 !*** code from mag.out forcing table again...
@@ -2725,21 +2725,21 @@ IF(IWrite.eq.1)THEN
  177  FORMAT (/1X,'DT2X =',F5.2,' : CONSTANT W')
  178  FORMAT (/1X,'DT2X =',F5.2,' : VARIABLE W')
  179  FORMAT (/1X,'*************************************************')
- 181  FORMAT ('TO1990, ',e15.7,',',e15.7,',',e15.7,',',e15.7,',', e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',', e15.7,',',e15.7,',',e15.7)
- 182  FORMAT ('TO1990, ',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7)
- 183  FORMAT ('TO1990, ',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7)
- 184  FORMAT ('TO1990, ',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7)
- 185  FORMAT ('TO1990, ',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7)
+ 181  FORMAT ('TO1990, ',e15.7,20(',',e15.7))
+ 182  FORMAT ('TO1990, ',e15.7,20(',',e15.7))
+ 183  FORMAT ('TO1990, ',e15.7,20(',',e15.7))
+ 184  FORMAT ('TO1990, ',e15.7,20(',',e15.7))
+ 185  FORMAT ('TO1990, ',e15.7,20(',',e15.7))
  186  FORMAT (1X,'FULL GLOBAL SO2 EMISSIONS',/)
  187  FORMAT (1X,'SO2 EMISSIONS CONSTANT AFTER 1990',/)
  188  FORMAT (1X,'REGION 1 SO2 EMISSIONS',/)
  189  FORMAT (1X,'REGION 2 SO2 EMISSIONS',/)
  190  FORMAT (1X,'REGION 3 SO2 EMISSIONS',/)
- 191  FORMAT (1X,I5,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',I6)
- 192  FORMAT (1X,I5,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',I6)
- 193  FORMAT (1X,I5,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',I6)
- 194  FORMAT (1X,I5,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',I6)
- 195  FORMAT (1X,I5,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',I6)
+ 191  FORMAT (1X,I5,',',e15.7,11(',',e15.7),',',I6)
+ 192  FORMAT (1X,I5,',',e15.7,12(',',e15.7),',',I6)
+ 193  FORMAT (1X,I5,',',e15.7,11(',',e15.7),',',I6)
+ 194  FORMAT (1X,I5,',',e15.7,11(',',e15.7),',',I6)
+ 195  FORMAT (1X,I5,',',e15.7,8(',',e15.7),',',I6)
 !
  20   FORMAT (1X,'*** CONCENTRATIONS (CO2,PPM : CH4,N2O,PPB) ***',/1X,'*** MIDYEAR VALUES ***')
  202  FORMAT (1X,'*** CONCENTRATIONS (CO2,PPM : CH4,N2O,PPB) ***',/1X,'*** START OF YEAR VALUES FOR YR.GE.1990 IN COLS 2,3,4 ***')
@@ -2750,7 +2750,7 @@ IF(IWrite.eq.1)THEN
  212  FORMAT (1X,'YEAR,FOSSCO2, NETDEFOR,CH4,N2O,',' SO2-REG1, SO2-REG2, SO2-REG3, SO2-GL')
  213  FORMAT (1X,'YEAR, TEMUSER,TEMLO, TEMMID,,TEMHI, TEMNOSO2')
  214  FORMAT (1X,'YEAR,MSLUSER,MSLLO, MSLMID,,MSLHI, MSLNOSO2')
- 220  FORMAT (1X,I4,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',I6,',',e15.7)
+ 220  FORMAT (1X,I4,',',e15.7,',',e15.7,7(',',e15.7),',',I6,',',e15.7)
  221  FORMAT (1X,I4,',',e15.7,',',e15.7,',',e15.7,',',',,,,,,',I6)
  222  FORMAT (1X,I4,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',I6)
  223  FORMAT (1X,I4,9F8.1)
@@ -2778,7 +2778,8 @@ IF(IWrite.eq.1)THEN
  561  FORMAT (1X,'CH4tot INCLUDES STRATH2O : TROPO3 INCLUDES CH4',' COMPONENT')
  562  FORMAT (1X,'HALOtot INCLUDES STRAT O3')
  563  FORMAT (1X,'HALOtot (AND QTOTAL) DOES NOT INCLUDE STRAT O3')
- 57   FORMAT (1X,'YEAR,CO2,CH4tot,N2O, HALOtot,','TROPOZ,SO4DIR,SO4IND,BIOAER,TOTAL, FOC+FBC,',' YEAR,CH4-O3, STRATO3, MONTDIR,QKYOTO')
+ 57   FORMAT (1X,'YEAR,CO2,CH4tot,N2O, HALOtot,','TROPOZ,SO4DIR,SO4IND,BIOAER,TOTAL, FOC+FBC,',' YEAR,CH4-O3,',&
+ 		' STRATO3, MONTDIR,QKYOTO')
  571  FORMAT (1X,I4,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7, ',',e15.7,',',e15.7,',',e15.7,',',e15.7,10(',',e15.7))
  58   FORMAT (1X,'** GAS BY GAS DELTA-Q FROM 1765 : MIDYEAR VALUES **')
 !
