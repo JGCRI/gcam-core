@@ -188,7 +188,11 @@ void Scenario::run(){
 	
 	// Start Model run for the first period.
 	int per = 0;
-	
+   
+   if ( conf->getBool( "CalibrationActive" ) ) {
+	   world.setupCalibrationMarkets();
+   }
+
 	marketplace.initXMLPrices(); // initialize prices
 	marketplace.nulldem( per ); // null market demands
 	marketplace.nullsup( per ); // null market supply

@@ -145,7 +145,6 @@ void Region::XMLParse( const DOMNode* node ){
 		}
 		else if( nodeName == "demographics" ){
 			population.XMLParse( curr ); // only one demographics object.
-			population.setCalibrationMarkets( name );
 		}
 		else if( nodeName == "depresource" ){
 			tempResource = new DepletableResource();
@@ -446,6 +445,11 @@ void Region::toDebugXML( const int period, ostream& out ) const {
 	out << "</region>" << endl;
 }
 
+//! Initialize calibration markets.
+void Region::setupCalibrationMarkets() {
+   population.setupCalibrationMarkets( name );
+}
+
 //! Set array size to max period for variables not set by XMLParse
 void Region::initperXML() {
 	const Modeltime* modeltime = scenario.getModeltime();
@@ -615,12 +619,11 @@ void Region::finalsupply(int per) {
 
 //! Calculate regional gnp.
 void Region::calc_gnp( int per ) {
-	const Marketplace* marketplace = scenario.getMarketplace();
+
 	const Modeltime* modeltime = scenario.getModeltime();
 	double labprd = 0;
 	const int baseYear = modeltime->getstartyr();
 	const int basePer = modeltime->getyr_to_per(baseYear);
-	const string goodName = "GDP";
 
 	if ( per == modeltime->getyr_to_per( baseYear ) ) {
 		gnp[ per ] = 1.0; // normalize to 1975
@@ -628,7 +631,7 @@ void Region::calc_gnp( int per ) {
 	else {
 		double currentLF = population.getlaborforce( per );
 		double lastLF = population.getlaborforce( per - 1 );
-		double tlab = marketplace->showprice( goodName, name, per );
+      double tlab = population.getTotalLaborProductivity( per, name );
 		gnp[ per ] = gnp[ per - 1 ] * tlab * ( currentLF / lastLF );
 		if (gnp[per] == 0) {
 			cerr << "error with GNP calculation:  currentLF: " << currentLF
@@ -740,7 +743,6 @@ void Region::calcEndUsePrice( const int period ) {
 void Region::adjust_gnp(int per) {
 	const Modeltime* modeltime = scenario.getModeltime();
 	Marketplace* marketplace = scenario.getMarketplace();
-	const string goodName = "GDP";
 
 	const int baseYear = modeltime->getstartyr();
 	double tempratio;
@@ -762,9 +764,13 @@ void Region::adjust_gnp(int per) {
 	if ( per > modeltime->getyr_to_per( baseYear ) ){ 
 		gnp_dol[ per ] = gnp_adj[ per ] * gnp_dol[ modeltime->getyr_to_per( baseYear ) ];
 	}
+}
 
-	// Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.	
+void Region::doCalibration( const int per ) {
+	// Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.
 	if( calibrationGNPs.size() > per && calibrationGNPs[ per ] > 0 ){ 
+      const string goodName = "GDP";
+      Marketplace* marketplace = scenario.getMarketplace();
 		marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
 		marketplace->setsupply( goodName, name, gnp_dol[ per ], per );
 		marketplace->setMarketToSolve( goodName, name );
@@ -1162,5 +1168,4 @@ void Region::updateSummary( const int per ) {
 	// update primary energy trade from consumption and production amounts
 	summary[per].updatepetrade(); 
 }
-
 

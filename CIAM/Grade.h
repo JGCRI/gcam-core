@@ -24,7 +24,7 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief Technologies representing a grade for each resource.
 *
-* grade is a that contains technologies that characterized each grade.
+* grade is an object that contains technologies that characterize each grade.
 *
 * \author Sonny Kim
 */

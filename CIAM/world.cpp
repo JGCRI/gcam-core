@@ -249,15 +249,22 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
 		region[ *i ]->calcEndUsePrice( per );
 		// adjust gnp for energy cost changes
 		region[ *i ]->adjust_gnp(per);
+
 		// determine end-use demand for energy and other goods
 		region[ *i ]->endusedemand(per);
-		//sdfile<<"\n"; // supply & demand info.
+
 		// determine supply of final energy and other goods based on demand
 		region[ *i ]->finalsupply(per);
 		
 		if( conf->getBool( "agSectorActive" ) ){
 			region[ *i ]->calcAgSector(per);
 		}
+
+      // Adjust the calibration values with the new gnps.
+      if( conf->getBool( "CalibrationActive" ) ) {
+         region[ *i ]->doCalibration( per );
+      }
+
 	}	
 }
 
@@ -481,4 +488,10 @@ void World::createRegionMap(void) // create map of region names
 	for (int i=0;i<noreg;i++) {
 		regionMap[region[i]->getName()] = i+1; // start index from 1
 	}
+}
+
+void World::setupCalibrationMarkets() {
+   for( vector<Region*>::iterator i = region.begin(); i != region.end(); i++ ) {
+      ( *i )->setupCalibrationMarkets();
+   }
 }

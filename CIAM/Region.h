@@ -58,6 +58,7 @@ private:
 	vector<double> carbontaxpaid; //! total regional carbon taxes paid
 	vector<Summary> summary; //! summary for reporting
 public:
+	
 	Region(); // default construtor
 	~Region(); 
 	void clear();
@@ -66,6 +67,8 @@ public:
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
 	string getName() const;
+   void setupCalibrationMarkets();
+   void doCalibration( const int per );
 	void initperXML(void); // set array size to max period for variables not set by XMLParse
 	void setCO2coef(void); // set default CO2 emissions coefficients
 	void setghgsupply(int per); // sets ghg constraint to market supply

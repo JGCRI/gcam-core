@@ -449,12 +449,13 @@ void sector::supply( const string regionName, const int per) {
 		}
 		else {
 			// check for 0 so that shareVariableNew does not blow up
+         // Note: This will still blow up -JPL
 		    if (mrkdmd == 0) {
 				cerr << "ERROR: Demand value = 0 for good " << name << " in region " << regionName << endl;
 			}
 			shareVariableNew = 1 - (totalFixedSupply/mrkdmd);
 		}
-
+         
         shareRatio = shareVariableNew/shareVariable;
         for (i=0;i<nosubsec;i++) {
             subsec[i]->adjShares( mrkdmd, shareRatio, totalFixedSupply, per ); 

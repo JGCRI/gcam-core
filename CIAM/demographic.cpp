@@ -23,7 +23,8 @@
 #include "demographic.h"
 #include "modeltime.h"
 #include "xmlHelper.h"
-
+#include "Configuration.h"
+#include "Marketplace.h"
 
 using namespace std;
 extern Scenario scenario;
@@ -191,10 +192,10 @@ double demographic::getlaborforce( const int per ) const {
 //! show demographic information to screen
 void demographic::show(int per) {
 	const Modeltime* modeltime = scenario.getModeltime();
-	int m = modeltime->getmod_to_pop(per);
-	cout << "Male Population: " << malepop[m] << "\n";
-	cout << "Female Population: " << femalepop[m] << "\n";
-	cout << "Total Population: " << totalpop[m] << "\n";
+	const int m = modeltime->getmod_to_pop(per);
+	cout << "Male Population: " << malepop[m] << endl;
+	cout << "Female Population: " << femalepop[m] << endl;
+	cout << "Total Population: " << totalpop[m] << endl;
 }
 
 //! outputing population info to file
@@ -246,7 +247,7 @@ void demographic::MCoutput( const string& regname ) {
 }
 
 //! Create calibration markets
-void demographic::setCalibrationMarkets( const string& regionName ) {
+void demographic::setupCalibrationMarkets( const string& regionName ) {
 	
 	const string goodName = "GDP";
 	const Modeltime* modeltime = scenario.getModeltime();
@@ -255,9 +256,30 @@ void demographic::setCalibrationMarkets( const string& regionName ) {
 	if ( marketplace->setMarket( regionName, regionName, goodName, Market::CALIBRATION ) ) {
 		vector<double> tempLFPs( modeltime->getmaxper() );
 		for( int i = 0; i < modeltime->getmaxper(); i++ ){
-			int popPeriod = modeltime->getmod_to_pop( i );
-			tempLFPs[ i ] = pow( 1 + laborprod[ popPeriod ], modeltime->gettimestep( i ) );
+			tempLFPs[ i ] = pow( 1 + laborprod[ modeltime->getmod_to_pop( i ) ], modeltime->gettimestep( i ) );
 		}
 		marketplace->setPriceVector( goodName, regionName, tempLFPs );
 	}
+}
+
+double demographic::getTotalLaborProductivity( const int period, const string& regionName ) const {
+
+      const Configuration* conf = Configuration::getInstance();
+      const Marketplace* marketplace = scenario.getMarketplace();
+      const Modeltime* modeltime = scenario.getModeltime();
+
+      double totalLaborProd = 0;
+      const string goodName = "GDP";
+
+      // If calibration is active get the parameter from the marketplace.
+      if( conf->getBool( "CalibrationActive" ) ){
+	      totalLaborProd = marketplace->showprice( goodName, regionName, period );
+      }
+
+      // Otherwise determine it from the read-in vector.
+      else {
+         totalLaborProd = pow( 1 + laborprod[ modeltime->getmod_to_pop( period ) ], modeltime->gettimestep( period ) );
+      }
+
+      return totalLaborProd;
 }

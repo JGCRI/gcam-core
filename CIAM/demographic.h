@@ -35,7 +35,6 @@ private:
 	vector<double> laborforce; //!< actual labor force
 public:
 	demographic(); //default construtor
-	demographic( int per, double mpop, double fpop ); //constructor
 	void clear();
 	void XMLParse( const DOMNode* node );
 	void toXML( ostream& out ) const;
@@ -52,7 +51,8 @@ public:
 	void outputfile( const string& regname ); 
 	// MiniCAM outputs to file
 	void MCoutput( const string& regname ); 
-	void setCalibrationMarkets( const string& regionName );
+	void setupCalibrationMarkets( const string& regionName );
+   double getTotalLaborProductivity( const int period, const string& regionName ) const;
 };
 
 #endif // _DEMOGRAPHIC_H_

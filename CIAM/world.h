@@ -40,6 +40,7 @@ private:
 	void initAgLu(); 
 
 public:
+	void setupCalibrationMarkets();
 	World(); // default construtor
 	~World();
 	void clear();
