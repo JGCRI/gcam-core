@@ -41,15 +41,11 @@ public:
     Ghg( const Ghg& other );
     virtual Ghg& operator=( const Ghg& other );
     void XMLParse( const xercesc::DOMNode* tempnode );
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual Ghg* clone() const;
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
-	 void copyGHGParameters( const Ghg* prevGHG );
+	void copyGHGParameters( const Ghg* prevGHG );
     double getGHGValue( const std::string& regionName, const std::string& fuelName, const std::string& prodName, const double efficiency, const int period) const;
     virtual void calcEmission( const std::string& regionName, const std::string& fuelname, const double input, const std::string& prodname, const double output, const GDP* gdp, const int period );
     void calcIndirectEmission( const double input, const std::string& fuelname, const std::vector<Emcoef_ind>& emcoef_ind  );
@@ -99,6 +95,11 @@ protected:
     double finalEmissCoef; //!< user input final emissions factor that is approached asymptotically
     double emissDriver; //!< the amount of fuel that governs emissions levels for various GHGs
     std::auto_ptr<GhgMAC> ghgMac; //!< Marginal Abatement Cost Curve Object
+
+    virtual const std::string& getXMLName() const;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void findControlFunction( const double gdpCap, const double emissDriver, const int period );
     virtual double emissionsDriver( const double inputIn, const double outputIn ) const;
     double controlFunction( const double fMaxIn, const double tauIn, const double gdp0In, const double gdpCapIn );

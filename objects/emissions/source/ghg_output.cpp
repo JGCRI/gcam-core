@@ -15,6 +15,10 @@ using namespace std;
 
 const string GhgOutput::XML_NAME = "GHG_OUTPUT"; // All caps is non-standard.
 
+//! Empty constructor. Needed for virtual classes.
+GhgOutput::GhgOutput(){
+}
+
 //! Clone function which returns a deep copy of the Ghg.
 GhgOutput* GhgOutput::clone() const {
     return new GhgOutput( *this );

@@ -14,6 +14,10 @@ using namespace std;
 
 const string GhgInput::XML_NAME = "GHG_INPUT"; // All caps is non-standard.
 
+//! Empty constructor. Needed for virtual classes.
+GhgInput::GhgInput(){
+}
+
 //! Clone function which returns a deep copy of the Ghg.
 GhgInput* GhgInput::clone() const {
     return new GhgInput( *this );
