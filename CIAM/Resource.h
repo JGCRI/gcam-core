@@ -45,7 +45,7 @@ public:
 	string getName() const; // return resource name
 	void setMarket( const string& regionName );
 	double getPrice(int per); // return resource price
-	void cummsupply(double prc,int per); // calculative cummulative supply from supply curve
+	void cumulsupply(double prc,int per); // calculative cummulative supply from supply curve
 	double getCummProd(int per); // returns cummulative supply
 	// calculates annual supply or production
 	void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);

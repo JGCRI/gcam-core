@@ -61,6 +61,7 @@ private:
 		int nossecmrks;  //!< number of supply sector markets
 		int noDemandMarkets; //!< number of demand sector markets.
 		int noghgmrks;	//!< number of GHG markets
+      int TotIter; //!< Cumulative number of interations
 		vector< vector<Market> > mrk; //!< no of market objects by period
 		vector<int> mrk_isol; //!< index look up for markets that require solving
 		vector<int> mrk_isol_NR; //!< index look up for markets for Newton-Rhapson
@@ -68,8 +69,8 @@ private:
 		map<string,int> region_marketMap; //!< map of market lookup from good and region names
 		
 		// Private Functions
-		int NR_Ron( const double Tol,vector<solinfo>& sol, Matrix& JF, int& n, const int per );
-		int NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, int& n, const int per );
+		int NR_Ron( const double Tol,vector<solinfo>& sol, int& n, const int per );
+		int NewtRap( const double Tol, vector<solinfo>& sol, int& n, const int per );
 		void Derivatives( vector<double> prices, Matrix& JFDM, Matrix& JFSM, int& n, const int per );
 		void JFunction( vector<double> prices, Matrix& JFDM, int& n, int const per );
 		int Secant_all( const double Tol,vector<solinfo>& sol,int& n, const int per );

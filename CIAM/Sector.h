@@ -32,6 +32,7 @@ protected:
 	string market; //!< regional market
 	int nosubsec; //!< number of subsectors in each sector
 	double tax; //!< sector tax or subsidy
+   bool debugChecking; //!< General toggle to turn on various checks
 	vector<subsector*> subsec; //!< subsector objects
 	vector<double> sectorprice; //!< sector price in $/service
 	vector<double> price_norm; //!< sector price normalized to base year
@@ -55,6 +56,7 @@ public:
 	void applycarbontax(double tax,int per); // passes along regional carbon tax
 	void addghgtax( const string ghgname, const string regionName, const int per); // sets ghg tax to technologies
 	virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 ); // calculates and normalizes shares 
+        void adjSharesCapLimit( const int per ); // adjust for capacity limit
 	void price(int per); // calculates sector price
 	void production( const string& regionName,int per); // calculates production using mrk prices
 	void setoutput(const string& regionName, double dmd, int per); // sets demand to totoutput and output

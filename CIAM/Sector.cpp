@@ -19,6 +19,7 @@
 #include "modeltime.h"
 #include "sector.h"
 #include "Marketplace.h"
+#include "Configuration.h"
 
 // xml headers
 #include "xmlHelper.h"
@@ -34,6 +35,9 @@ extern ofstream outfile, bugoutfile;
 //! Default constructor
 sector::sector() {
 	initElementalMembers();
+        // Note that this can be in the constructor of most objects -- except globals such as marketplace, modeltime, and scenario
+        Configuration* conf = Configuration::getInstance();
+        debugChecking = conf->getBool( "debugChecking" ); 
 }
 
 //! Default destructor.
@@ -236,7 +240,7 @@ void sector::addghgtax( const string ghgname, const string regionName, const int
 	}
 }
 
-//! Calculat subsector shares.
+//! Calculate subsector shares, adjusting for capacity limits.
 void sector::calc_share( const string regionName, const int per, const double gnp_cap )
 {
 	int i=0;
@@ -249,8 +253,102 @@ void sector::calc_share( const string regionName, const int per, const double gn
 	// normalize subsector shares to total 100 %
 	for (i=0;i<nosubsec;i++) {
 		subsec[i]->norm_share(sum, per);	
-	}
+        }
+
+    // Now adjust for capacity limits
+      adjSharesCapLimit( per );
 }
+
+
+/*!
+ * \brief Determine if any capacity limits are exceeded and adjust for shares if so.
+ *
+ * If a capacity limit comes into play the routine shifts the "excess" share (over the capacity limits) to the non limited sectors. This routine loops several times in case this shift then causes another sector to exceed a capacity limit.
+ * 
+ * The logic for the share adjustment is as follows:
+ *     Sum_notlim(Si) + Sum_limited(Si) + sumSharesOverLimit = 1
+ *     where:
+ *         Sum_notlim(Si)  = sum of shares that are not capacity limited
+ *         Sum_limited(Si) = sum of shares that are capacity limited
+ *         sumSharesOverLimit = portion of shares that were over capacity limits
+ *         
+ *     Need to solve for the amount to increase shares to account for capacity limits
+ *    if:
+ *         newSi = a * Si, then a few lines of algebra gives:
+ *         a = 1 + overelimit/Sum_notlim(Si)
+ *
+ * \author Steve Smith
+ * \warning The routine assumes that shares are already normalized.
+ * \param per Model period
+ */
+void sector::adjSharesCapLimit( const int per )
+{
+    double tempCapacityLimit;
+    double tempSubSectShare;
+    bool capLimited = true;
+    int i=0;
+    
+    // check for capacity limits, repeating to take care of any knock-on effects. 
+    // Do this a maximum of times equal to number of subsectors, 
+    // which is the maximum number of times could possibly need to do this
+    for (int n = 0;  n < nosubsec && capLimited; n++) {
+        double sumSharesOverLimit = 0.0;		// portion of shares over cap limits
+        double sumSharesNotLimited = 0.0;	// sum of shares not subject to cap limits
+        capLimited = false;
+       
+        //  Check for capacity limits, looping through each subsector
+        for ( i=0; i<nosubsec; i++ ) {
+                tempCapacityLimit = subsec[i]->getCapacityLimit( per ); // call once, store these locally
+                tempSubSectShare = subsec[i]->showshare( per ) ;
+                
+                 // if there is a capacity limit and are over then set flag and count excess shares
+                if ( tempSubSectShare > tempCapacityLimit ) {
+                    capLimited = true;
+                    sumSharesOverLimit += tempSubSectShare - tempCapacityLimit;
+                }
+                
+                // also sum shares under limit (but not those just at their limits)
+               if ( tempSubSectShare < tempCapacityLimit ) {
+                    sumSharesNotLimited += tempSubSectShare;
+                }                 
+        } // end of loop over sub-sectors
+        
+      // re-normalize subsector shares if capacity limits have been exceeded
+      // See comments above for derivation of multiplier
+      if ( capLimited ) {
+            if ( sumSharesNotLimited > 0 ) {
+                for ( i=0; i<nosubsec; i++ ) {
+                    double multiplier = 1 + sumSharesOverLimit/sumSharesNotLimited;
+                    subsec[i]->limitShares( multiplier, per );
+                }
+            }
+            else { // If there are no sectors without limits and there are still shares to be re-distributed
+                if ( sumSharesOverLimit > 0 ) {
+                    // if there is no shares left then too much was limited!
+                    cerr << "Insufficient capacity to meet demand" << endl;
+                }
+            }
+      }
+    
+      // Check to make sure shares still equal 1
+      if ( debugChecking ) {
+            double sumshares = 0;
+            for ( i=0; i<nosubsec; i++ ) {
+                sumshares += subsec[i]->showshare(per) ;
+            }
+            if ( fabs(sumshares - 1) > 1e-6 ) {
+                cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << endl;
+            }
+      }
+    
+    } // end for loop
+    
+    // if have exited and still capacity limited, then report error
+    if ( capLimited ) {
+        cerr << "Capacity limit not resolved" << endl;
+    }
+}
+
 
 //! Calculate weighted average price of subsectors.
 void sector::price(int per)
@@ -355,6 +453,20 @@ void sector::supply( const string regionName, const int per) {
 		subsec[i]->sumoutput( per );
 		carbontaxpaid[per] += subsec[i]->showcarbontaxpaid( per );
 	}
+    
+    if (debugChecking) {
+        sumoutput(per); // Sum output just so its available below for an error check. sjs
+        // If the model is working correctly this should never give an error
+        // An error here means that the supply summed up from the supply sectors is not equal to the demand that was passed in 
+		double mrksupply = getoutput(per);
+		if (per > 0 && fabs(mrksupply - mrkdmd) > 0.01 && (regionName == "USA")) {
+			mrksupply = mrksupply * 1.000000001;
+			cout << regionName << " Market "<<  name<< " demand and derived supply are not equal by: ";
+                        cout << fabs(mrksupply - mrkdmd) << ": ";
+                        cout << "S: " << mrksupply << "  D: " << mrkdmd << endl;
+		}
+	}
+    
 }
 
 void sector::show()
@@ -619,5 +731,6 @@ void sector::updateSummary( const int per )
 	}
 
 }
+
 
 

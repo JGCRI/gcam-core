@@ -38,7 +38,7 @@ protected:
 	double basesharewt; //! subsector base year consumption share weight
 	vector<vector<technology*> > techs; //!< array of pointers to technology objects for each period
 	vector<hydro_tech> hydro; //!< array of hydroelectricity by period
-	vector<double> caplim; //!< subsector capacity limit
+	vector<double> capLimit; //!< subsector capacity limit
 	vector<double> shrwts; //!< subsector logit share weights
 	vector<double> lexp; //!< subsector logit exponential
 	vector<double> share; //!< subsector shares
@@ -63,10 +63,12 @@ public:
 	double getprice( const int period ) const;
 	double getfuelprice( const int period ) const; 
 	double getwtfuelprice( const int period ) const;
+	double getCapacityLimit( const int period ) const;
 	void applycarbontax( const double tax, const int period );
 	void addghgtax( const string& ghgname, const string& regionName, const int period ); 
 	virtual void calc_share( const string& regionName, const int period, const double gnp_cap = 1 ); 
 	void norm_share( const double sum, const int period );
+        void limitShares( const double sum, const int period );
 	// maw compute tech shares within subsector in seperate method
 	void calc_tech_shares ( const string& regionName, const int period );
 	// sets demand to output and output

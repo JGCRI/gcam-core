@@ -56,6 +56,7 @@ Marketplace::Marketplace() {
 	nossecmrks = 0;
 	noDemandMarkets = 0;
 	noghgmrks = 0;
+   TotIter = 0;
 }
 
 //! Write out XML for debugging purposes.
@@ -1757,7 +1758,7 @@ void Marketplace::Derivatives( vector<double> prices, Matrix& JFDM, Matrix& JFSM
 }
 
 //! Newton Raphson Solution Mechanism (all markets)
-int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, int& n, const int per ){
+int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, int& n, const int per ){
 	World* world = scenario.getWorld();
 	const Modeltime* modeltime = scenario.getModeltime();
 	int i;
@@ -1771,6 +1772,7 @@ int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, in
 	vector<double> Xtemp = getPrices( mrk_isol_NR, per ); // temporary prices
 	vector<double> EDtemp(m); // temporary excess demand
 	
+   Matrix JF(m,m);
 	// function protocol
 	logfile << ",,Newton-Raphson function called.\n";
 	// solve all markets
@@ -1832,7 +1834,7 @@ int Marketplace::NewtRap( const double Tol, vector<solinfo>& sol, Matrix& JF, in
 }
 
 //! Ron's version of the Newton Raphson Solution Mechanism (all markets)
-int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, Matrix& JF, int& n, const int per ) {
+int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, int& n, const int per ) {
 	World* world = scenario.getWorld();
 	int i;
 	int iNRdx = 0; // count number of times derivatives are calculated
@@ -1856,6 +1858,7 @@ int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, Matrix& JF, int
 	
     if (trackED) { cout <<"NR_Ron begin "; }
 	
+   Matrix JF( m, m );
 	Matrix JFDM( m, m );
 	Matrix JFSM( m, m );
 	
@@ -2044,10 +2047,6 @@ void Marketplace::solve( const int per ) {
 		return;
 	}
 	
-	// For Newton-Raphson Solution Mechanism
-	int numNRMarkets = setMarketsToSolveNR( per );
-	Matrix JF( numNRMarkets, numNRMarkets );
-	
 	logED(per); // calculate log of excess demand
 	X =  getPrices( mrk_isol, per ); // showPRC returns a vector of prices	
 	logEDVec =  getLogExcessDemands( mrk_isol, per ); // showlogED returns a vector of logED
@@ -2168,7 +2167,7 @@ void Marketplace::solve( const int per ) {
 			maxSolVal =  maxED(per); // Max returns largest ED[i]
 			// Bisection returns ED, not log of ED
 			if(!solved && maxSolVal< 1500 ) {
-				solved = NewtRap(solTolerance,sol,JF,n,per);
+				solved = NewtRap(solTolerance,sol,n,per);
 			}
 			if (!solved) { 
 				CheckBracket(solTolerance,sol,allbracketed);
@@ -2183,7 +2182,7 @@ void Marketplace::solve( const int per ) {
 			logfile << ",Number of iterations: n = " << n << endl;
 			maxSolVal =  maxED(per); // Max returns largest ED[i]
 			if(!solved && maxSolVal<1500) {
-				solved = NR_Ron(solTolerance,sol,JF,n,per);
+				solved = NR_Ron(solTolerance,sol,n,per);
 				if (bugMinimal) { 
 					bugoutfile << "After Ron_NR "<<n;
 				}
@@ -2226,13 +2225,15 @@ void Marketplace::solve( const int per ) {
 	Code = (maxSolVal < solTolerance ? 0 : -1);				// or failure, -1, 
 	
 	if (! checkMarketSolution(  solTolerance, per ) && (Code == 0)) {
-		cerr << "ERROR: Supplies and Demands are NOT equal" << endl;
+		cerr << "ERROR: Supplies and Demands are NOT equal for the listed markets" << endl;
 	}
+        
+        TotIter += n;
 	
 	switch (Code) {
 	case 0:
-		cout<< "Model solved normally:	World Calc n = " << n << endl;
-		logfile<< ",Model solved normally:  World Calc n = " << n << endl;
+		cout    << "Model solved normally: World Calc n = " << n << ", Cumulative Iterations = "<< TotIter <<endl;
+		logfile<< ",Model solved normally:,, World Calc n =," << n << ", Cumulative Iterations =,,"<< TotIter <<endl;
 		break;
 	case -1:
 		cout<< "Model did not solve within set iteration	" << n << endl;

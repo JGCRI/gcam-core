@@ -36,10 +36,7 @@ private:
 	int year; //!< year
 	double available; //!< amount of grade for each grade
 	double extractCost; //!< extraction cost of each grade
-	double environCost; //!< environmental cost of each grade
-	double techChange; //!< technical change for all grades
-	double techChangeCumm; //!< cummulative technical change for all grades
-	double tax; //!< severance tax
+	vector<double> techChangeCumm; //!< cummulative technical change for all grades
 	double totalCost; //!< total cost
 public:
 	grade();
@@ -50,12 +47,11 @@ public:
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
 	void printGrade() const;
-	void calcTechChangeCumm( const int per );
-	void calcCost( const int per );
+	void calcTechChangeCumm( const double techChange, const int per );
+	void calcCost( const double tax, const double cumTechChange, const double environCost, const int per );
 	double getAvail() const;
 	double getCost() const;
 	double getExtCost() const;
-	double getEnvCost() const;
 	void setExtCost( const double ecost );
 	string getName() const;
 };

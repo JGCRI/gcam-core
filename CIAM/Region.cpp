@@ -540,7 +540,7 @@ void Region::rscsupply(int per)  {
 		}
 		
 		// calculate annual supply from cummulative production
-		resources[i]->cummsupply(price,per);
+		resources[i]->cumulsupply(price,per);
 		resources[i]->annualsupply(per,gnp[per],prev_gdp,price,prev_price);
 		
 		// set market supply of resources used for solution mechanism

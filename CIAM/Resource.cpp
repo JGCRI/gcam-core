@@ -216,7 +216,7 @@ int Resource::getNoSubrsrc()
 	return nosubrsrc;
 }
 
-void Resource::cummsupply(double prc,int per)
+void Resource::cumulsupply(double prc,int per)
 {	
 	int i=0;
 	cummprod[per]=0.0;
@@ -224,8 +224,8 @@ void Resource::cummsupply(double prc,int per)
 	rscprc[per] = prc;
 	// sum cummulative production of each subsector
 	for (i=0;i<nosubrsrc;i++) {
-		depsubrsrc[i]->cummsupply(prc,per);
-		cummprod[per] += depsubrsrc[i]->getCummProd(per);
+		depsubrsrc[i]->cumulsupply(prc,per);
+		cummprod[per] += depsubrsrc[i]->getCumulProd(per);
 	}
 }
 

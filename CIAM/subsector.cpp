@@ -56,7 +56,6 @@ void subsector::clear(){
 	// clear the vectors.
 	techs.clear();
 	hydro.clear();
-	caplim.clear();
 	shrwts.clear();
 	lexp.clear();
 	fuelPrefElasticity.clear();
@@ -85,7 +84,8 @@ void subsector::XMLParse( const DOMNode* node ) {
 	string childNodeName;
 	vector<technology*> techVec;
 	technology* tempTech = 0;
-
+        int m;
+        
 	// resize vectors not read in, therefore not sized by XML input
 	const Modeltime* modeltime = scenario.getModeltime();
 	const int maxper = modeltime->getmaxper();
@@ -117,10 +117,10 @@ void subsector::XMLParse( const DOMNode* node ) {
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
 		if( nodeName == "capacitylimit" ){
-			caplim.push_back( XMLHelper<double>::getValue( curr ) );
+			capLimit.push_back( XMLHelper<double>::getValue( curr ) );
 		}
 		else if( nodeName == "sharewt" ){
-			if(name=="wind") {
+			if(name=="windxxxx") { // Change this to "wind" to turn wind shares down
 				shrwts.push_back(0.001);
 			}
 			else {
@@ -162,6 +162,9 @@ void subsector::XMLParse( const DOMNode* node ) {
 	}
 	// completed parsing.
 
+        // Initialzie any arrays that have non-zero default value
+        capLimit.resize(maxper,1.0); 
+        
 	notech = techs.size();
 
 }
@@ -179,8 +182,8 @@ void subsector::toXML( ostream& out ) const {
 	Tabs::increaseIndent();
 
 	// write the xml for the class members.
-	for( i = 0; i < static_cast<int>( caplim.size() ); i++ ){
-		XMLWriteElement( caplim[ i ], "capacitylimit", out, modeltime->getper_to_yr( i ) );
+	for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
+		XMLWriteElement( capLimit[ i ], "capacitylimit", out, modeltime->getper_to_yr( i ) );
 	}
 	
 	for( i = 0; i < static_cast<int>( shrwts.size() ); i++ ){
@@ -241,7 +244,7 @@ void subsector::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( tax, "tax", out );
 	
 	// Write the data for the current period within the vector.
-	XMLWriteElement( caplim[ period ], "caplim", out );
+	XMLWriteElement( capLimit[ period ], "capLimit", out );
 	XMLWriteElement( shrwts[ period ], "sharewts", out );
 	XMLWriteElement( lexp[ period ], "lexp", out );
 	if ( ! fuelPrefElasticity.empty() ) {
@@ -307,14 +310,21 @@ double subsector::getprice( const int period ) const {
 	return subsectorprice[ period ];
 }
 
+//! returns subsector capacity limit 
+double subsector::getCapacityLimit( const int period ) const {
+	return capLimit[ period ];
+}
+
 //! returns subsector fuel price 
-double subsector::getfuelprice( const int period ) const {
-	return fuelprice[ period ];
+double subsector::getfuelprice(int per) const
+{
+	return fuelprice[per];
 }
 
 //! returns subsector base share weighted fuel price 
-double subsector::getwtfuelprice( const int period ) const {
-	return basesharewt * fuelprice[ period ];
+double subsector::getwtfuelprice(int per) const
+{
+	return basesharewt*fuelprice[per];
 }
 
 //! passes carbon tax to technology
@@ -392,6 +402,34 @@ void subsector::norm_share( const double sum, const int per) {
 	else {
 		share[per] /= sum;
 	}
+}
+
+/*!
+ * \brief normalizes shares to 100% subject to capacity limit.
+ *
+ * Used by sector::calc_share() to re-normalize shares, adjusting for capacity limits.
+ *
+ * Note that a multiplier is passed, not a divisor. The appropriate multiplier must be calculated by the calling routine.
+ *
+ * Sub-sectors that are not subject to a capacity limit get multiplied by mult.
+ * Capacity limited subsectors are set to their capacity limit.
+ *
+ * \author Steve Smith
+ * \warning The routine assumes that shares are already normalized.
+ * \param mult Multiplier by which to scale shares of all non-capacity limited sub-sectors
+ * \param per Model period
+ */
+void subsector::limitShares( const double multiplier, const int per) {
+    if ( multiplier == 0 ) {
+	share[per] = 0;
+	}
+    else {		
+        if ( share[per] >= capLimit[per]) {
+                share[per] = capLimit[per];
+        } else {
+                share[per] *= multiplier;
+        }
+    }
 }
 
 //! call technology production, only exogenously driven technology gives an output
@@ -931,4 +969,5 @@ void subsector::updateSummary(const int per) {
 		summary[per].initfuelcons(goodName,techs[i][per]->showinput());
 	}
 }
+
 

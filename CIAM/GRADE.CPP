@@ -39,10 +39,6 @@ void grade::initElementalMembers() {
 	year = 0;
 	available = 0;
 	extractCost = 0;
-	environCost = 0;
-	techChange = 0;
-	techChangeCumm = 1;
-	tax = 0;
 	totalCost = 0;
 }
 
@@ -76,7 +72,7 @@ void grade::XMLParse( const DOMNode* tempNode ) {
 		else if( tNodeName == "extractioncost" ){
 			extractCost = XMLHelper<double>::getValue( tNode );
 		}
-		else if( tNodeName == "environmentalcost" ){
+	/*	else if( tNodeName == "environmentalcost" ){
 			environCost = XMLHelper<double>::getValue( tNode );
 		}
 		else if( tNodeName == "severencetax" ){
@@ -84,7 +80,7 @@ void grade::XMLParse( const DOMNode* tempNode ) {
 		}
 		else if( tNodeName == "techchange" ){
 			techChange = XMLHelper<double>::getValue( tNode );
-		}
+		} */
 	}
 }
 
@@ -100,9 +96,9 @@ void grade::toXML( ostream& out ) const {
 	XMLWriteElement( year, "year", out );
 	XMLWriteElement( available, "available", out );
 	XMLWriteElement( extractCost, "extractioncost", out );
-	XMLWriteElement( environCost, "environmentalcost", out );
-	XMLWriteElement( tax, "severencetax", out );
-	XMLWriteElement( techChange, "techchange", out );
+//	XMLWriteElement( environCost, "environmentalcost", out );
+//	XMLWriteElement( tax, "severencetax", out );
+//	XMLWriteElement( techChange, "techchange", out );
 	// XMLWriteElement( totalCost, "totalcost", out );
 	
 	Tabs::decreaseIndent();
@@ -120,9 +116,9 @@ void grade::toDebugXML( const int period, ostream& out ) const {
 
 	XMLWriteElement( available, "available", out );
 	XMLWriteElement( extractCost, "extractioncost", out );
-	XMLWriteElement( environCost, "environmentalcost", out );
-	XMLWriteElement( techChange, "techchange", out );
-	XMLWriteElement( tax, "severencetax", out );
+//	XMLWriteElement( environCost, "environmentalcost", out );
+//	XMLWriteElement( techChange, "techchange", out );
+//	XMLWriteElement( tax, "severencetax", out );
 	XMLWriteElement( totalCost, "totalcost", out );
 	
 	Tabs::decreaseIndent();
@@ -138,27 +134,20 @@ void grade::printGrade() const
 	cout << "Year: " << year << endl;
 	cout << "Available: " << available << endl;
 	cout << "Extraction Cost: " << extractCost << endl;
-	cout << "Environmental Cost: " << environCost << endl;
-	cout << "Technical Change: " << techChange << endl;
-	cout << "Severance Tax: "<< tax << endl << endl;
 }
 
 //! Calculate cummulative technical change for each grade.
-void grade::calcTechChangeCumm( const int per ) {
-
+void grade::calcTechChangeCumm( const double techChange, const int per ) {
 	const Modeltime* modeltime = scenario.getModeltime();
-
-	// total years from base year to current year
-	const int years = modeltime->getper_to_yr( per ) - modeltime->getstartyr();
-
-	// works like the MiniCAM only because techChange is a constant
-	// for all periods
-	techChangeCumm = pow( ( 1.0 + techChange ), years );
+        if (per > 0) {
+            techChangeCumm[per] = techChangeCumm[ per-1 ] * 
+                                  pow( ( 1.0 + techChange ), modeltime->gettimestep(per) );
+        }
 }
 
 //! Total cost of each grade.
-void grade::calcCost( const int per ) {
-	totalCost = ( extractCost + environCost ) / techChangeCumm + tax;
+void grade::calcCost(  const double tax, const double cumTechChange, const double environCost, const int per ) {
+	totalCost = ( extractCost + environCost ) / cumTechChange + tax;
 }
 
 //! Return available amount in each grade.
@@ -176,11 +165,6 @@ double grade::getExtCost() const {
 	return extractCost;
 }
 
-//! Return the environmental cost.
-double grade::getEnvCost() const {
-	return environCost;
-}
-
 //! Set the extraction cost.
 void grade::setExtCost( const double eCost ) {
 	extractCost = eCost;
@@ -190,4 +174,5 @@ void grade::setExtCost( const double eCost ) {
 string grade::getName() const {
 	return name;
 }
+
 

@@ -31,6 +31,12 @@ subrsrc::subrsrc() {
 	nograde = 0;
 	minShortTermSLimit = 0;
 	priceElas = 1;	// default value if not read in
+        
+        const Modeltime* modeltime = scenario.getModeltime();
+	const int maxper = modeltime->getmaxper();
+        cumulativeTechChange.resize(maxper); // cumulative technical change
+        cumulativeTechChange[0] = 1.0;
+
 }
 
 //! Destructor.
@@ -52,10 +58,11 @@ void subrsrc::clear(){
 	depgrade.clear();
 	rscprc.clear();
 	techChange.clear();
+	environCost.clear();
+	severanceTax.clear();
 	available.clear();
 	annualprod.clear();
-	cummprod.clear();
-	gdpExpans.clear();
+	cumulprod.clear();
 }
 
 //! return subrsrc name
@@ -80,13 +87,15 @@ void subrsrc::XMLParse( const DOMNode* node )
 	const int maxper = modeltime->getmaxper();
 	annualprod.resize( maxper ); // annual production of subresource
 	rscprc.resize( maxper ); // subresource price
-	techChange.resize( maxper ); // subresource price
+	techChange.resize( maxper ); // subresource tech change
+	environCost.resize( maxper ); // environmental extraction costs change
+	severanceTax.resize( maxper ); // subresource severance tax
 	available.resize( maxper ); // total available resource
-	cummprod.resize( maxper ); // cummulative production of subrsrc
-	gdpExpans.resize( maxper ); // cummulative production of subrsrc
+	cumulprod.resize( maxper ); // cumulative production of subrsrc
+	gdpExpans.resize( maxper, 1.0 ); // cumulative production of subrsrc
 	updateAvailable( 0 ); 
 
-	// make sure we were passed a valid node.
+ 	// make sure we were passed a valid node.
 	assert( node );
 	
 	// get the name attribute.
@@ -138,6 +147,16 @@ void subrsrc::XMLParse( const DOMNode* node )
 			int period = modeltime->getyr_to_per(year);
 			techChange[period] =  XMLHelper<double>::getValue( curr );
 		}
+		else if( nodeName == "environCost" ){
+			int year = XMLHelper<int>::getAttr( curr, "year" );
+			int period = modeltime->getyr_to_per(year);
+			environCost[period] =  XMLHelper<double>::getValue( curr );
+		}
+		else if( nodeName == "severanceTax" ){
+			int year = XMLHelper<int>::getAttr( curr, "year" );
+			int period = modeltime->getyr_to_per(year);
+			severanceTax[period] =  XMLHelper<double>::getValue( curr );
+		}
 		else if( nodeName == "gdpExpans" ){
 			int year = XMLHelper<int>::getAttr( curr, "year" );
 			int period = modeltime->getyr_to_per(year);
@@ -188,6 +207,14 @@ void subrsrc::toXML( ostream& out ) const {
 		XMLWriteElement(techChange[m],"techChange",out,modeltime->getper_to_yr(m));
 	}
 	
+	for(m = 0; m < static_cast<int>(environCost.size() ); m++ ) {
+		XMLWriteElement(environCost[m],"environCost",out,modeltime->getper_to_yr(m));
+	}
+	
+	for(m = 0; m < static_cast<int>(severanceTax.size() ); m++ ) {
+		XMLWriteElement(severanceTax[m],"severanceTax",out,modeltime->getper_to_yr(m));
+	}
+        
 	XMLWriteElement(minShortTermSLimit,"minShortTermSLimit",out);
 	XMLWriteElement(priceElas,"priceElas",out);
 	
@@ -219,9 +246,11 @@ void subrsrc::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( rscprc[ period ], "rscprc", out );
 	XMLWriteElement( available[ period ], "available", out );
 	XMLWriteElement( annualprod[ period ], "annualprod", out );
-	XMLWriteElement( cummprod[ period ], "cummprod", out );
+	XMLWriteElement( cumulprod[ period ], "cumulprod", out );
 	XMLWriteElement( gdpExpans[ period ], "gdpExpans", out );
 	XMLWriteElement( techChange[ period ], "techChange", out );
+	XMLWriteElement( environCost[ period ], "environCost", out );
+	XMLWriteElement( severanceTax[ period ], "severanceTax", out );
 	
 	// write out the grade objects.
 	for( int i = 0; i < static_cast<int>( depgrade.size() ); i++ ){	
@@ -248,11 +277,12 @@ int subrsrc::getMaxGrade() // returns total number of grades
 	return nograde;
 }
 
-void subrsrc::cummsupply(double prc,int per)
+void subrsrc::cumulsupply(double prc,int per)
 {	
+	const Modeltime* modeltime = scenario.getModeltime();
 	int i=0,maxgrd;
 	double slope=0;
-	cummprod[per]=0.0;
+	cumulprod[per]=0.0;
 	
 	rscprc[per] = prc;
 	// the index of the last grade is number of grades minus one
@@ -260,25 +290,30 @@ void subrsrc::cummsupply(double prc,int per)
 	maxgrd = nograde-1;
 	
 	// calculate total extraction cost for each grade
+        // This is a waste of time, should only do this once!
 	for (int gr=0; gr<nograde; gr++) {
-		depgrade[gr][per]->calcTechChangeCumm(per);
-		depgrade[gr][per]->calcCost(per);
+            if (per > 0) {
+                cumulativeTechChange[per] = cumulativeTechChange[ per-1 ] * 
+                                  pow( ( 1.0 + techChange[per] ), modeltime->gettimestep(per) );
+            }
+            // Determine cost
+            depgrade[gr][per]->calcCost( severanceTax[per],cumulativeTechChange[per], environCost[ per ], per );
 	}
 	
 	if (per == 0) {
-		cummprod[per] = 0.0;
+		cumulprod[per] = 0.0;
 	}
 	else {
 		// Case 1
-		// if market price is less than cost of first grade, then zero cummulative 
+		// if market price is less than cost of first grade, then zero cumulative 
 		// production
 		if (prc <= depgrade[0][per]->getCost()) {
-			cummprod[per] = cummprod[per-1];
+			cumulprod[per] = cumulprod[per-1];
 		}
 		
 		// Case 2
 		// if market price is in between cost of first and last grade, then calculate 
-		// cummulative production in between those grades
+		// cumulative production in between those grades
 		if (prc > depgrade[0][per]->getCost() && prc <= depgrade[maxgrd][per]->getCost()) {
 			int iL=0,iU=0;
 			while (depgrade[i][per]->getCost() < prc) {
@@ -286,29 +321,29 @@ void subrsrc::cummsupply(double prc,int per)
 			}
 			// add subrsrcs up to the lower grade
 			for (i=0;i<=iL;i++) {
-				cummprod[per] += depgrade[i][0]->getAvail();
+				cumulprod[per] += depgrade[i][0]->getAvail();
 			}
 			// price must reach upper grade cost to produce all of lower grade
 			slope = depgrade[iL][0]->getAvail()
 				/ (depgrade[iU][per]->getCost() - depgrade[iL][per]->getCost());
-			cummprod[per] -= slope * (depgrade[iU][per]->getCost() - prc);
+			cumulprod[per] -= slope * (depgrade[iU][per]->getCost() - prc);
 		}
 		
 		// Case 3
 		// if market price greater than the cost of the last grade, then
-		// cummulative production is the amount in all grades
+		// cumulative production is the amount in all grades
 		if (prc > depgrade[maxgrd][per]->getCost()) {
 			for (i=0;i<nograde;i++) {
-				cummprod[per] += depgrade[i][0]->getAvail();
+				cumulprod[per] += depgrade[i][0]->getAvail();
 			}
 		}
 	}
-	//available[per]=available[0]-cummprod[per];
+	//available[per]=available[0]-cumulprod[per];
 }
 
-double subrsrc::getCummProd(int per)
+double subrsrc::getCumulProd(int per)
 {
-	return cummprod[per];
+	return cumulprod[per];
 }
 
 void subrsrc::updateAvailable( const int period ){
@@ -320,20 +355,20 @@ void subrsrc::updateAvailable( const int period ){
 
 //! calculate annual supply
 /*! Takes into account short-term capacity limits.
-Note that cummsupply() must be called before calling this function. */
+Note that cumulsupply() must be called before calling this function. */
 void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,double prev_price) {
 	const Modeltime* modeltime = scenario.getModeltime();
 	// for per = 0 use initial annual supply
-	// cummulative production is 0 for per = 0
+	// cumulative production is 0 for per = 0
 	if (per >= 1) {
 		// 2 is for the average of the annual productions
-		annualprod[per] = 2.0 * (cummprod[per] - cummprod[per-1])/modeltime->gettimestep(per)
+		annualprod[per] = 2.0 * (cumulprod[per] - cumulprod[per-1])/modeltime->gettimestep(per)
 			- annualprod[per-1];
 		if(annualprod[per] <= 0) {
-			cummprod[per] = cummprod[per-1];
+			cumulprod[per] = cumulprod[per-1];
 			annualprod[per] = 0.0;
 		} 
-		
+
 		// incorporate short-term capacity limits after 1990
 		// This represents a limit to how fast production capacity can expand
 		if (per >= 2) {
@@ -356,10 +391,10 @@ void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,doubl
 			// adjust short-term capacity limit for price effects
 			cur_annualprod *= pow((price/prev_price),priceElas);
 			
-			// Adjust current production and cummulative production to date
+			// Adjust current production and cumulative production to date
 			// if greater than the short-term capacity limit
 			if(cur_annualprod < annualprod[per]) {
-				cummprod[per] = cummprod[per-1]+(cur_annualprod+annualprod[per-1])
+				cumulprod[per] = cumulprod[per-1]+(cur_annualprod+annualprod[per-1])
 					*modeltime->gettimestep(per)/2.0;
 				annualprod[per] = cur_annualprod;
 			}
@@ -418,10 +453,6 @@ void subrsrc::MCoutput( const string &regname, const string& secname )
 		for (m=0;m<maxper;m++)
 			temp[m] = depgrade[i][m]->getExtCost();
 		dboutput4(regname,"Price ExtCost",secname,str,"$/GJ",temp);
-		// grade environmental cost
-		for (m=0;m<maxper;m++)
-			temp[m] = depgrade[i][m]->getEnvCost();
-		dboutput4(regname,"Price EnvCost",secname,str,"$/GJ",temp);
 		// available resource for each grade
 		for (m=0;m<maxper;m++)
 			temp[m] = depgrade[i][0]->getAvail();
@@ -466,4 +497,5 @@ void subrsrc::outputfile( const string &regname, const string& sname) {
 	}
 	*/
 }
+
 
