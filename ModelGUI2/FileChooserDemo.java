@@ -944,6 +944,9 @@ public class FileChooserDemo extends JFrame
 		  return dataTree;
 	  }
 	  TreeMap tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+	  if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().equals("subsector") ) {
+		  return tempMap;
+	  }
 	  if(currNode.hasAttributes() && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
 		String attr = getOneAttrVal(currNode);
 		if(!tempMap.containsKey(attr)) {
@@ -960,7 +963,7 @@ public class FileChooserDemo extends JFrame
 	while(it.hasNext()) {
 		Map.Entry me = (Map.Entry)it.next();
 		if(me.getValue() instanceof Node) {
-	  		NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), title+'/'+(String)parent.getKey(), (TreeMap)parent.getValue()); 
+	  		NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), title+'/'+(String)parent.getKey(), (TreeMap)parent.getValue(),doc); 
 	  		jTable = new JTable(tM);
 	  		jTable.getModel().addTableModelListener(this);
 
@@ -977,6 +980,7 @@ public class FileChooserDemo extends JFrame
 		  		col.setPreferredWidth(((String)i.next()).length()*5+30);
 		  		j++;
 	  		}
+			CopyPaste copyPaste = new CopyPaste( jTable );
 	  		JScrollPane tableView = new JScrollPane(jTable);
 	  		if(tables == null) {
 		  		tables = new Vector();
@@ -1043,7 +1047,6 @@ public class FileChooserDemo extends JFrame
 	  		tables.add(tableView);
 	  		
 
-			CopyPaste copyPaste = new CopyPaste( jTable );
 
 		}
 		*/
@@ -1089,7 +1092,12 @@ public class FileChooserDemo extends JFrame
 			  ret.add(getOneAttrVal(n));
 		  } else*/ if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
 			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-			  ret.add(getOneAttrVal(n));
+			  if(!getOneAttrVal(n).equals("fillout=1")) {
+			  	ret.add(getOneAttrVal(n));
+			  } else {
+			        ret.add(getOneAttrVal(n, 1));
+			  }
+
 		  }
 		  n = n.getParentNode();
 	  } while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
@@ -1655,6 +1663,12 @@ public class FileChooserDemo extends JFrame
   private String getOneAttrVal(Node node) {
 	  NamedNodeMap nodeMap = node.getAttributes();
 	  return nodeMap.item(0).getNodeName() +"="+ nodeMap.item(0).getNodeValue();
+	  //return ((Element)node).getAttribute(nodeMap.item(0).getNodeValue());
+  }
+
+  private String getOneAttrVal(Node node, int pos) {
+	  NamedNodeMap nodeMap = node.getAttributes();
+	  return nodeMap.item(pos).getNodeName() +"="+ nodeMap.item(pos).getNodeValue();
 	  //return ((Element)node).getAttribute(nodeMap.item(0).getNodeValue());
   }
 
