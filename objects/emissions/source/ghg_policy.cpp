@@ -52,7 +52,7 @@ string GHGPolicy::getName() const {
 */
 void GHGPolicy::setMarket( const string& regionName ) {
     Marketplace* marketplace = scenario->getMarketplace();
-    bool marketCreated = marketplace->createMarket( regionName, market, name, Market::GHG );
+    bool marketCreated = marketplace->createMarket( regionName, market, name, IMarketType::GHG );
     
     // Put the taxes in the market as the market prices if it is a fixed tax policy.
     // And the market has not previously been initialized.
@@ -139,12 +139,6 @@ void GHGPolicy::setFixedTaxes( const string& regionName, const vector<double>& t
 //! Initializes data members from XML.
 void GHGPolicy::XMLParse( const DOMNode* node ){
 
-    const Modeltime* modeltime = scenario->getModeltime();
-    DOMNodeList* nodeList;
-    DOMNode* curr = 0;
-    string nodeName;
-
-    // PRECONDITION
     /*! \pre assume we are passed a valid node.*/
     assert( node );
 
@@ -152,12 +146,12 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
     name = XMLHelper<string>::getAttrString( node, "name" );
 
     // get all child nodes.
-    nodeList = node->getChildNodes();
-
+    DOMNodeList* nodeList = node->getChildNodes();
+    const Modeltime* modeltime = scenario->getModeltime();
     // loop through the child nodes.
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        DOMNode* curr = nodeList->item( i );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
         if( nodeName == "#text" ) {
             continue;
