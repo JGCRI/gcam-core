@@ -4,7 +4,7 @@
 		<region name="USA">
 			<depresource name="carbon storage">
 				<market>USA</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>545</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -130,7 +130,7 @@
 		<region name="Canada">
 			<depresource name="carbon storage">
 				<market>Canada</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>372</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -256,7 +256,7 @@
 		<region name="Western Europe">
 			<depresource name="carbon storage">
 				<market>Western Europe</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>172</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -382,7 +382,7 @@
 		<region name="Japan">
 			<depresource name="carbon storage">
 				<market>Japan</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>10</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -508,7 +508,7 @@
 		<region name="Australia_NZ">
 			<depresource name="carbon storage">
 				<market>Australia_NZ</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>18</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -634,7 +634,7 @@
 		<region name="Former Soviet Union">
 			<depresource name="carbon storage">
 				<market>Former Soviet Union</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>876</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -760,7 +760,7 @@
 		<region name="China">
 			<depresource name="carbon storage">
 				<market>China</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>230</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -886,7 +886,7 @@
 		<region name="Middle East">
 			<depresource name="carbon storage">
 				<market>Middle East</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>1939</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -1012,7 +1012,7 @@
 		<region name="Africa">
 			<depresource name="carbon storage">
 				<market>Africa</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>1058</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -1138,7 +1138,7 @@
 		<region name="Latin America">
 			<depresource name="carbon storage">
 				<market>Latin America</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>540</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -1264,7 +1264,7 @@
 		<region name="Southeast Asia">
 			<depresource name="carbon storage">
 				<market>Southeast Asia</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>289</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -1390,7 +1390,7 @@
 		<region name="Eastern Europe">
 			<depresource name="carbon storage">
 				<market>Eastern Europe</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>19</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -1516,7 +1516,7 @@
 		<region name="Korea">
 			<depresource name="carbon storage">
 				<market>Korea</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>10</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
@@ -1642,7 +1642,7 @@
 		<region name="India">
 			<depresource name="carbon storage">
 				<market>India</market>
-				<price year="1975">20</price>
+				<price year="1975">1</price>
 				<subresource name="depleted oil plays">
 					<minShortTermSLimit>289</minShortTermSLimit>
 					<priceElas>0.5</priceElas>
