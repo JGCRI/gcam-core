@@ -1121,7 +1121,7 @@ void Marketplace::setMarketInfo( const string& goodName, const string& regionNam
 * \param period The period the information is associated with. 
 * \param itemName The string to use as the key to query the market.
 */
-double Marketplace::getMarketInfo( const string& goodName, const string& regionName, const int period, const string& itemName ){
+double Marketplace::getMarketInfo( const string& goodName, const string& regionName, const int period, const string& itemName ) const{
     const int marketNumber = getMarketNumber( goodName, regionName );
 
     if ( marketNumber != -1 ) {
