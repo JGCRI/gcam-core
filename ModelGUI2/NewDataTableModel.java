@@ -1,6 +1,7 @@
 import javax.swing.table.AbstractTableModel;
 import java.util.*;
 import org.w3c.dom.Node;
+import org.w3c.dom.*;
 //import javax.swing.*;
 //import java.awt.*;
 //import javax.swing.tree.TreePath;
@@ -14,14 +15,16 @@ public class NewDataTableModel extends AbstractTableModel {
 	TreeMap data;
 	boolean flipped;
 	String w3;
+	Document doc;
 
-	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, TreeMap dataIn) {
+	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, TreeMap dataIn, Document docIn) {
 		w3 = w3In;
 		indCol = new Vector(set1);
 		indCol.add(0,w3 /*set2Name*/);
 		indRow = new Vector(set2);
 		data = dataIn;
 		flipped = false;
+		doc = docIn;
 	}
 
 	public void flip() {
@@ -73,7 +76,62 @@ public class NewDataTableModel extends AbstractTableModel {
 
 	public void setValueAt(Object val, int row, int col) {
 		Node n = (Node)data.get(getKey(row,col));
-		n.setNodeValue(val.toString());
+		//if( n != null ){
+			n.setNodeValue(val.toString());
+		/*}else{
+			n = doc.createElement( val.toString() );
+			//n.setNodeValue(val.toString());
+			Node updown = null;
+			Node side = null;
+			if( row > 0 ){
+				updown = (Node)data.get(getKey(row-1, col));
+				if ( col > 0 ){
+					side = (Node)data.get(getKey(row, col-1));
+				}else{ // col == 0
+					side = (Node)data.get(getKey(row, col+1));
+				}
+			}else{ // row == 0
+				updown = (Node)data.get(getKey(row+1, col));
+				if ( col > 0 ){
+					side = (Node)data.get(getKey(row, col-1));
+				}else{ // col == 0
+					side = (Node)data.get(getKey(row, col+1));
+				}
+			}
+			ArrayList nodepath = new ArrayList();
+			Node parent = updown.getParentNode();
+			int index = 0;
+			boolean splitonside = false;
+			boolean stoplooking = false;
+			while( parent != null ){
+				nodepath.add( parent );
+				if ( !stoplooking && (parent.getNodeName() == side.getNodeName() || parent.getNodeName() == updown.getNodeName())){
+					index = nodepath.indexOf( parent );
+					if ( parent.getNodeName() == side.getNodeName() ){
+						splitonside = true;
+					}else{
+						splitonside = false;
+					}
+					System.out.println("inedex is .. " + index);
+					stoplooking = true;
+				}
+				parent = parent.getParentNode();
+			}
+			if( splitonside ){
+				Node curr = (Node)nodepath.get( index );
+				if ( index == nodepath.size()-1 ){
+						
+				}else{
+					Nodelist children = curr.getChildNodes();
+					
+				}
+				
+			}else{ // split on updown
+				
+			}
+			
+		}
 		// fireOffSomeListeners?
-	}
+*/
+		}
 }

@@ -526,6 +526,7 @@ public class FileChooserDemo extends JFrame
 			   jTable.setRowHeight(200);
 			   //jTable.setPreferredScrollableViewportSize(jTable.getPreferredScrollableViewportSize());
 	  // putting flip code here
+	  
 		tableMenu = makePopupTableMenu();
 
 		//	listen for right click on the table
@@ -1018,7 +1019,7 @@ public class FileChooserDemo extends JFrame
 		Iterator it = thrdDimToData.entrySet().iterator();
 		while(it.hasNext()) {
 			Map.Entry me = (Map.Entry)it.next();
-	  		NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), (String)me.getKey(), (TreeMap)me.getValue()); 
+	  		NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), (String)me.getKey(), (TreeMap)me.getValue(), doc); 
 	  		jTable = new JTable(tM);
 	  		jTable.getModel().addTableModelListener(this);
 
@@ -1040,6 +1041,10 @@ public class FileChooserDemo extends JFrame
 		  		tables = new Vector();
 	  		}
 	  		tables.add(tableView);
+	  		
+
+			CopyPaste copyPaste = new CopyPaste( jTable );
+
 		}
 		*/
 
@@ -1149,9 +1154,7 @@ public class FileChooserDemo extends JFrame
 	  splitPane.setRightComponent(tableView);
 	  menuTableFilter.setEnabled(true);
 	  
-	  // TRYING OUT COPY AND PASTE STUFF HERE *********************
-	  CopyPaste copyPaste = new CopyPaste(jTable); 
-	  // **
+
 	  
   }
 
