@@ -402,7 +402,7 @@ Variable ID
 702
 IBZSTEPS
 "number of timesteps in which to pick up below 0 cost curve reductions (value of 2 means 50% appear in first avail period (IBZFIRST), and all in 2nd avail period -- 0 and 1 have the same effect)"
-2
+4
 
 
 "Sensitivity to energy prices -- 1 indicates movement directly with gas prices, < 1 indicates less efficient/partial recovery of methane"
