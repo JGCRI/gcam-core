@@ -19,6 +19,7 @@
 #include <string>
 #include <map>
 #include <memory>
+#include "util/base/include/iparsable.h"
 
 // Forward declarations
 class Modeltime;
@@ -34,7 +35,7 @@ class Solver;
 * \author Sonny Kim
 */
 
-class Scenario
+class Scenario: public IParsable 
 {
 public:
 	Scenario();
@@ -44,7 +45,7 @@ public:
 	Marketplace* getMarketplace();
 	const World* getWorld() const;
 	World* getWorld();
-	void XMLParse( const xercesc::DOMNode* node );
+	bool XMLParse( const xercesc::DOMNode* node );
 	void completeInit();
 	void setName(std::string newName);
 	void toInputXML( std::ostream& out, Tabs* tabs ) const;

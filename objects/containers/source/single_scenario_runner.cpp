@@ -50,22 +50,18 @@ SingleScenarioRunner::~SingleScenarioRunner(){
 * \return Whether the setup completed successfully.
 */
 bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, const list<string> aScenComponents ){
-    // Parse the input file.
-    const Configuration* conf = Configuration::getInstance();
-    XercesDOMParser* parser = XMLHelper<void>::getParser();
-    DOMNode* root = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), parser );
-
     // Use a smart pointer for scenario so that if the main program exits before the end the memory is freed correctly. 
     mScenario.reset( new Scenario() );
     scenario = mScenario.get(); // Need to set the global pointer.
-    mScenario->XMLParse( root );
+    
+    // Parse the input file.
+    const Configuration* conf = Configuration::getInstance();
+    XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
     
     // Override scenario name from data file with that from configuration file
-    string overrideName = conf->getString( "scenarioName" ) + aName;
-    bool nameSet = false;
-    if ( overrideName != "") {
+    const string overrideName = conf->getString( "scenarioName" ) + aName;
+    if ( overrideName != "" ) {
         mScenario->setName( overrideName );
-        nameSet = true;
     }
 
     // Fetch the listing of Scenario Components.
@@ -76,26 +72,18 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
         scenComponents.push_back( *curr );
     }
     
-
     // Iterate over the vector.
     typedef list<string>::const_iterator ScenCompIter;
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     for( ScenCompIter currComp = scenComponents.begin(); currComp != scenComponents.end(); ++currComp ) {
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Parsing " << *currComp << " scenario component." << endl;
-        root = XMLHelper<void>::parseXML( *currComp, parser );
-        overrideName += XMLHelper<string>::getAttrString( root, "name" );
-        mScenario->XMLParse( root );
+        XMLHelper<void>::parseXML( *currComp, mScenario.get() );
     }
     
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "XML parsing complete." << endl;
-    
-    // If the name was not set from the level above or the configuration, set it to the combination
-    // of the add on names. Not quite right.
-    if( !nameSet ){
-        mScenario->setName( overrideName );
-    }
+
     // Print data read in time.
     timer.save();
     mainLog.setLevel( ILogger::DEBUG );

@@ -31,19 +31,16 @@ MergeRunner::~MergeRunner(){
 
 //! Setup the scenario.
 bool MergeRunner::setupScenario( Timer& timer, const string aName, const list<string> aScenComponents ){
-
-    // Parse the input file.
-    XercesDOMParser* parser = XMLHelper<void>::getParser();
-    const Configuration* conf = Configuration::getInstance();
-    DOMNode* root = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), parser );
-
     // Use a smart pointer for scenario so that if the main program exits before the end the memory is freed correctly. 
     mScenario.reset( new Scenario() );
     scenario = mScenario.get(); // Need to set the global pointer.
-    mScenario->XMLParse( root );
+    
+    // Parse the input file.
+    const Configuration* conf = Configuration::getInstance();
+    XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
     
     // Override scenario name from data file with that from configuration file
-    string overrideName = conf->getString( "scenarioName" ) + aName;
+    const string overrideName = conf->getString( "scenarioName" ) + aName;
     if ( overrideName != "" ) {
         mScenario->setName( overrideName );
     }
@@ -59,8 +56,7 @@ bool MergeRunner::setupScenario( Timer& timer, const string aName, const list<st
     typedef list<string>::const_iterator ScenCompIter;
     for( ScenCompIter currComp = scenComponents.begin(); currComp != scenComponents.end(); ++currComp ) {
         mainLog << "Parsing " << *currComp << " scenario component." << endl;
-        root = XMLHelper<void>::parseXML( *currComp, parser );
-        mScenario->XMLParse( root );
+        XMLHelper<void>::parseXML( *currComp, mScenario.get() );
     }
     
     mainLog << "XML parsing complete." << endl;

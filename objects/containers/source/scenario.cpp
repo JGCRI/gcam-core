@@ -80,7 +80,7 @@ World* Scenario::getWorld() {
 }
 
 //! Set data members from XML input.
-void Scenario::XMLParse( const DOMNode* node ){
+bool Scenario::XMLParse( const DOMNode* node ){
     // assume we were passed a valid node.
     assert( node );
 
@@ -125,8 +125,10 @@ void Scenario::XMLParse( const DOMNode* node ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing scenario." << endl;
+            return false;
         }
-    }
+    } // end for loop
+    return true;
 }
 
 //! Sets the name of the scenario. 
@@ -137,6 +139,13 @@ void Scenario::setName(string newName) {
 
 //! Finish all initializations needed before the model can run.
 void Scenario::completeInit() {
+    // Make sure that some name is set.
+    if( name == "" ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "No scenario name was set, using default." << endl;
+        name = "NoScenarioName";
+    }
 
     // Complete the init of the world object.
     assert( world.get() );

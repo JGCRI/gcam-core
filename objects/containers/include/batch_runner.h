@@ -20,7 +20,7 @@
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 #include "containers/include/scenario_runner.h"
-
+#include "util/base/include/iparsable.h"
 class Timer;
 
 /*! 
@@ -29,13 +29,14 @@ class Timer;
 * and runs scenarios based on permutations of these files. More documentation.
 * \author Josh Lurz
 */
-class BatchRunner: public ScenarioRunner {
+class BatchRunner: public ScenarioRunner, IParsable {
 public:
     BatchRunner( const std::string& aBatchFileName );
     virtual ~BatchRunner();
     virtual bool setupScenario( Timer& aTimer, const std::string aName = "", const std::list<std::string> aScenComponents = std::list<std::string>() );
     virtual bool runScenario( Timer& aTimer );
     virtual void printOutput( Timer& aTimer, const bool aCloseDB ) const;
+    bool XMLParse( const xercesc::DOMNode* aRoot );
 protected:
     struct File {
         std::string mName;
@@ -59,7 +60,6 @@ protected:
     std::auto_ptr<ScenarioRunner> mInternalRunner;
     const std::string mBatchFileName; //!< Name of the XML file with batch information.
     bool runSingleScenario( const Component aCurrComponents, Timer& aTimer );
-    void XMLParse( const xercesc::DOMNode* aRoot );
     void XMLParseComponentSet( const xercesc::DOMNode* aNode );
     void XMLParseFileSet( const xercesc::DOMNode* aNode, Component& aCurrComponentSet );
     };

@@ -21,7 +21,6 @@
 #include "util/base/include/timer.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
-#include "containers/include/scenario.h"
 #include "util/logger/include/ilogger.h"
 using namespace std;
 using namespace xercesc;
@@ -46,12 +45,7 @@ BatchRunner::~BatchRunner(){
 */
 bool BatchRunner::setupScenario( Timer& aTimer, const string aName, const list<string> aScenComponents ){
     // Parse the batch file passed in on the command line.
-    XercesDOMParser* parser = XMLHelper<void>::getParser();
-    DOMNode* root = XMLHelper<void>::parseXML( mBatchFileName, parser );
-
-    // Private XML Parse
-    XMLParse( root );
-    
+    XMLHelper<void>::parseXML( mBatchFileName, this );
     return true;
 }
 
@@ -153,7 +147,7 @@ bool BatchRunner::runSingleScenario( const Component aComponents, Timer& aTimer 
         }
     }
     ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::NOTICE );
+    mainLog.setLevel( ILogger::WARNING );
     mainLog << "Running scenario " << aComponents.mName << "..." << endl;
 
     // Check if cost curve creation is needed.
@@ -188,7 +182,7 @@ bool BatchRunner::runSingleScenario( const Component aComponents, Timer& aTimer 
 * to the correct helper function to be parsed. Currently only parses "ComponentSet" tags.
 * \param aRoot Root node of the DOM tree.
 */
-void BatchRunner::XMLParse( const DOMNode* aRoot ){
+bool BatchRunner::XMLParse( const DOMNode* aRoot ){
     // assume we were passed a valid node.
     assert( aRoot );
     
@@ -200,11 +194,11 @@ void BatchRunner::XMLParse( const DOMNode* aRoot ){
         DOMNode* curr = nodeList->item( i );
         string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-        if( nodeName == "#text" ) {
+        if( nodeName == XMLHelper<void>::text() ) {
             continue;
         }
         // This is a three level XMLParse. Breaking up for now.
-		else if ( nodeName == "ComponentSet" ){ // Changed internal struct to component, backwards compatable.
+		else if ( nodeName == "ComponentSet" ){
             XMLParseComponentSet( curr );
         }
         else {
@@ -213,6 +207,7 @@ void BatchRunner::XMLParse( const DOMNode* aRoot ){
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing BatchScenarioRunner." << endl;
         }
     }
+    return true;
 }
 
 /*! \brief Helper function to parse a single scenario set element.
@@ -228,7 +223,7 @@ void BatchRunner::XMLParseComponentSet( const DOMNode* aNode ){
     Component newComponent;
 
     // Get the name of the component set. 
-    newComponent.mName = XMLHelper<string>::getAttrString( aNode, "name" );
+    newComponent.mName = XMLHelper<string>::getAttrString( aNode, XMLHelper<void>::name() );
 
     // get the children of the node.
     DOMNodeList* nodeList = aNode->getChildNodes();
@@ -238,7 +233,7 @@ void BatchRunner::XMLParseComponentSet( const DOMNode* aNode ){
         DOMNode* curr = nodeList->item( i );
         string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-        if( nodeName == "#text" ) {
+        if( nodeName == XMLHelper<void>::text() ) {
             continue;
         }
         else if ( nodeName == "FileSet" ){
@@ -266,7 +261,7 @@ void BatchRunner::XMLParseFileSet( const DOMNode* aNode, Component& aCurrCompone
     
     // Create the new file set and set the name.
     FileSet newFileSet;
-    newFileSet.mName = XMLHelper<string>::getAttrString( aNode, "name" );
+    newFileSet.mName = XMLHelper<string>::getAttrString( aNode, XMLHelper<void>::name() );
 
     // get the children of the node.
     DOMNodeList* nodeList = aNode->getChildNodes();
@@ -276,14 +271,14 @@ void BatchRunner::XMLParseFileSet( const DOMNode* aNode, Component& aCurrCompone
         DOMNode* curr = nodeList->item( i );
         string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-        if( nodeName == "#text" ) {
+        if( nodeName == XMLHelper<void>::text() ) {
             continue;
         }
         else if ( nodeName == "Value" ){
             // Create the new File
             File newFile;
             // Get the name of the file.
-            newFile.mName = XMLHelper<string>::getAttrString( curr, "name" );
+            newFile.mName = XMLHelper<string>::getAttrString( curr, XMLHelper<void>::name() );
             // Get the full path of the file.
             newFile.mPath = XMLHelper<string>::getValueString( curr );
             // Add the file to the current new file set.
