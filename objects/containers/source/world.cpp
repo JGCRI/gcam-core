@@ -33,6 +33,7 @@
 #include "util/curves/include/explicit_point_set.h"
 #include "util/curves/include/xy_data_point.h"
 #include "solution/util/include/calc_counter.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -66,10 +67,6 @@ void World::clear(){
 
 //! parses World xml object
 void World::XMLParse( const DOMNode* node ){
-
-    string nodeName;
-    DOMNode* curr = 0;
-
     // assume we are passed a valid node.
     assert( node );
 
@@ -77,8 +74,8 @@ void World::XMLParse( const DOMNode* node ){
     DOMNodeList* nodeList = node->getChildNodes();
 
     for( unsigned int i = 0;  i < nodeList->getLength(); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        DOMNode* curr = nodeList->item( i );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
         if( nodeName == "#text" ) {
             continue;
@@ -97,7 +94,9 @@ void World::XMLParse( const DOMNode* node ){
             }
         }
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing World." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing World." << endl;
         }
     }
 }
@@ -123,11 +122,11 @@ void World::completeInit() {
 
 //! Initialize the AgLu model.
 void World::initAgLu() {
-    if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
-        cout << "Initializing agLU..." << endl;
-    }
-    double prices[ 14 ][ 12 ]; 
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Initializing agLU..." << endl;
 
+    double prices[ 14 ][ 12 ]; 
     vector<double> tempVec( 12 );
 
 #if(__HAVE_FORTRAN__)
@@ -337,14 +336,18 @@ bool World::getCalibrationSetting() const {
 * \return Boolean true if calibration is ok.
 */
 bool World::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
-    
-   for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
-      if ( !( *i )->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
-         return false;
-      }
-   }
-   
-   return true;
+    // Return true immediately if calibration is not on.
+    const static bool calOn = Configuration::getInstance()->getBool( "CalibrationActive" );
+    if( !calOn ){
+        return true;
+    }
+
+    for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
+        if ( !( *i )->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
+            return false;
+        }
+    }
+    return true;
 }
 
 //! Return the amount of the given GHG in the given period.
@@ -357,7 +360,9 @@ double World::getGHGEmissions( const std::string& ghgName, const int period ) co
         return iter->second;
     }
     else {
-        cout << "GHG: " << ghgName << " was not found for period " << period << "." << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "GHG: " << ghgName << " was not found for period " << period << "." << endl;
         return 0;
     }
 }
@@ -449,9 +454,9 @@ double World::getCarbonTaxCoef( const string& regionName, const string& fuelName
 * \author Josh Lurz
 * \param logger The to which to print the dependencies. 
 */
-void World::printSectorDependencies( Logger* logger ) const {
+void World::printSectorDependencies( ILogger& aLog ) const {
     for( ConstRegionIterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
-        ( *regionIter )->printSectorDependencies( logger );
+        ( *regionIter )->printSectorDependencies( aLog );
     }
 }
 
@@ -566,7 +571,9 @@ const vector<int> World::getRegionIndexesToCalculate( const vector<string>& regi
                 regionNumbersToSolve.push_back( regionNumber );
             }
             else {
-                cout << "Error: Region " << *regionName << " not found." << endl;
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Region " << *regionName << " not found." << endl;
             }
         }
     }
