@@ -23,12 +23,8 @@ public class AdapterNode {
     /** Creates a new instance of AdapterNode */
     public AdapterNode() {
         node = new Element("custom");
+        levelIndex = -1;
     }
-    
-    /*public AdapterNode(String value) {
-        node = new Element("custom");
-        node.setText(value);
-    }*/
     
     public AdapterNode(Element newNode) {
         node = newNode;
@@ -99,9 +95,14 @@ public class AdapterNode {
         Element kid;
         List children = node.getChildren();
         Iterator it = children.iterator();
+        int periodEncounters = 0;
         while (it.hasNext()) {
             kid = (Element)it.next();
             if (nodeName.equals(kid.getName())) {
+                if (nodeName.equals("period") && periodEncounters < 8) {
+                    periodEncounters++;
+                    continue;
+                }
                 if (attribVal.equals("") || attribVal.equals(kid.getAttributeValue("name"))) {
                     return new AdapterNode(kid);
                 }

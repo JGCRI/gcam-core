@@ -90,6 +90,10 @@ public class JDomToTreeModelAdapter implements javax.swing.tree.TreeModel {
         }
     }
     
+    public void insertNodeInto(AdapterNode newChild, AdapterNode parent, int index) {
+        System.out.println("Want to insert node");
+    }
+    
       /*
        * Invoke these methods to inform listeners of changes.
        * (Not needed for this example.)
