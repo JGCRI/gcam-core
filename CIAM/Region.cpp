@@ -576,7 +576,7 @@ void Region::setCO2coef()
    // setting emissions coefficients to these fuels
    // applies carbon taxes to secondary fuels
    //co2coefpri["refined oil"] = 18.9;
-   co2coefpri["refined oil"] = 19.9822;
+   co2coefpri["refined oil"] = 19.6;
    co2coefpri["delivered gas"] = 14.2;
    co2coefpri["delivered coal"] = 27.3;
    
@@ -584,9 +584,9 @@ void Region::setCO2coef()
 //   co2coefall["crude oil"] = 18.9; 
 //   co2coefall["crude oil regional"] = 18.9; 
 //   co2coefall["refined oil"] = 18.9;
-   co2coefall["crude oil"] = 19.9822; 
-   co2coefall["crude oil regional"] = 19.9822; 
-   co2coefall["refined oil"] = 19.9822;
+   co2coefall["crude oil"] = 19.6; 
+   co2coefall["crude oil regional"] = 19.6; 
+   co2coefall["refined oil"] = 19.6;
    co2coefall["natural gas"] = 14.2;
    co2coefall["natural gas regional"] = 14.2;
    co2coefall["delivered gas"] = 14.2;
