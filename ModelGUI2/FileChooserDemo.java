@@ -609,7 +609,8 @@ public class FileChooserDemo extends JFrame
 		System.out.println("data is " + data + "!!! yay!!!!!!! :)");
 	  System.out.println("printing out columnName " + columnName);
 	  
-
+	  System.out.println("time to alter the tree.... dun dun dun");
+	  
 	  
 	  // *** HERE! *********************************************************
   }

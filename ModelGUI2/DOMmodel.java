@@ -98,6 +98,14 @@ public class DOMmodel implements TreeModel {
 		//if the value of the node has not changed, do nothing
 		if(oldValue.equals(newValue)) return;
         
+        
+        Node child = ((DOMmodel.DOMNodeAdapter)path.getLastPathComponent()).getNode();
+        if( child.getNodeType() == Element.TEXT_NODE ){
+        	child.setNodeValue( (String)newValue );
+        }else{
+        	System.out.println("ERROR: can only change text nodes!");
+        }
+        
 		TreeModelListener listener;
 		Iterator it = treeModelListeners.iterator();
 		while (it.hasNext()) {
@@ -196,6 +204,14 @@ public class DOMmodel implements TreeModel {
 		while ( listeners.hasNext() ) {
 			TreeModelListener listener = (TreeModelListener) listeners.next();
 			listener.treeNodesRemoved( e );
+		}
+	}
+
+	public void fireTreeNodesChanged( TreeModelEvent e ) {
+		Iterator listeners = treeModelListeners.iterator();
+		while ( listeners.hasNext() ) {
+			TreeModelListener listener = (TreeModelListener) listeners.next();
+			listener.treeNodesChanged( e );
 		}
 	}
 
