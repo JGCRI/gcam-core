@@ -8,7 +8,6 @@
 */
 
 #include "util/base/include/definitions.h"
-#include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -37,7 +36,7 @@
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
-#include "util/logger/include/logger.h"
+#include "util/logger/include/ilogger.h"
 #include "util/curves/include/curve.h"
 #include "util/curves/include/point_set_curve.h"
 #include "util/curves/include/xy_data_point.h"
@@ -46,8 +45,6 @@
 
 using namespace std;
 using namespace xercesc;
-
-extern ofstream logfile;
 
 extern Scenario* scenario;
 // static initialize.
@@ -108,18 +105,16 @@ void Region::XMLParse( const DOMNode* node ){
     // get the name attribute.
     name = XMLHelper<string>::getAttrString( node, "name" );
 
-#if ( _DEBUG )
-    cout << "Region name set as " << name << endl;
-#endif
-
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
-    string nodeName;
-
+    
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::WARNING );
+    
     // loop through the child nodes.
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
         DOMNode* curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
         if( nodeName == "#text" ) {
             continue;
@@ -189,12 +184,11 @@ void Region::XMLParse( const DOMNode* node ){
                 else if( nodeNameChild == "GDPcal" ) { // TODO: MOVE TO GDP
                     XMLHelper<double>::insertValueIntoVector( currChild, calibrationGDPs, modeltime );
                 }
-
                 else if(nodeNameChild == "TFEcalb") {
                     XMLHelper<double>::insertValueIntoVector( currChild, TFEcalb, modeltime );
                 }
                 else {
-                    cout << "Unrecognized text string: " << nodeNameChild << " found while parsing region->calibrationdata." << endl;
+                    mainLog << "Unrecognized text string: " << nodeNameChild << " found while parsing region->calibrationdata." << endl;
                 }
             }
         }
@@ -215,12 +209,12 @@ void Region::XMLParse( const DOMNode* node ){
                     sectorOrderList.push_back( XMLHelper<string>::getAttrString( currChild, "name" ) );
                 }
                 else {
-                    cout << "Unrecognized text string: " << nodeNameChild << " found while parsing region->SectorOrderList." << endl;
+                    mainLog << "Unrecognized text string: " << nodeNameChild << " found while parsing region->SectorOrderList." << endl;
                 }
             }
         }
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing region." << endl;
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing region." << endl;
         }
     }
 }
@@ -230,8 +224,6 @@ void Region::XMLParse( const DOMNode* node ){
 * \todo I think since there is one indirect ghg object for each sector, it might be better in sector. This may require deriving supply sector.
 */
 void Region::completeInit() {
-    Configuration* conf = Configuration::getInstance();
-    
     // Initialize the GDP
     if( gdp.get() ){
         gdp->initData( population.get() );
@@ -244,7 +236,8 @@ void Region::completeInit() {
         emcoefInd.push_back( temp );
     }
 
-    if( conf->getBool( "agSectorActive" ) ){
+    Configuration* conf = Configuration::getInstance();
+    if( conf->getBool( "agSectorActive" ) && agSector.get() ){
         agSector->setGNP( calcFutureGDP() );
         if( population.get() ){
             agSector->setPop( population->getTotalPopVec() );
@@ -264,13 +257,8 @@ void Region::completeInit() {
         (*ghgPolicy)->setMarket( name );
     }
 
-    /*
-    if( conf->getBool( "CalibrationActive" ) ){
-        gdp->setupCalibrationMarkets( name );
-    }
-    */
     // Find simuls.
-    updateSummary( 0 );	// Dummy call to final supply to setup fuel map
+    updateSummary( 0 );	// Dummy call to final supply to setup fuel map.
     findSimul( 0 );
 
     // Set sector ordering via read-in list (sectorOrderList).
@@ -288,7 +276,14 @@ void Region::completeInit() {
 
 /*! \brief Initialize the calibration markets. */
 void Region::setupCalibrationMarkets() {
-    if( Configuration::getInstance()->getBool( "CalibrationActive" ) && gdp.get() ){
+    if( !gdp.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "GDP object has not been created before GDP calibration. Check for an region name mismatch." << endl;
+        return;
+    }
+
+    if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
         gdp->setupCalibrationMarkets( name, calibrationGDPs );
     }
 }
@@ -314,6 +309,10 @@ bool Region::reorderSectors( const vector<string>& orderList ){
     // Clear the list of sectors and sectorNames. 
     supplySector.clear();
     supplySectorNameMap.clear();
+    
+    // Get the main logger.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::WARNING );
 
     // Loop through the sector order vector. 
     typedef vector<string>::const_iterator NameIterator;
@@ -334,16 +333,17 @@ bool Region::reorderSectors( const vector<string>& orderList ){
         }
         else {
             success = false;
-            cout << "Error: " << *currSectorName << " is not the name of an existing sector. " << endl;
-            cout << "It will not be included in the sector ordering." << endl;
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << *currSectorName << " is not the name of an existing sector. " << endl;
+            mainLog << "It will not be included in the sector ordering." << endl;
         } // end else
     } // end for.
 
     // Check if there are any unassigned sectors and remove them.
     for( NameMapIterator currSecName = originalNameMap.begin(); currSecName != originalNameMap.end(); ++currSecName ){
         success = false;
-        cout << "Error: " << currSecName->first << " was not assigned a position in the explicit sector ordering list." << endl;
-        cout << "This sector will be removed from the model." << endl;
+        mainLog << currSecName->first << " was not assigned a position in the explicit sector ordering list." << endl;
+        mainLog << "This sector will be removed from the model." << endl;
         // This sector is not in the new list, so free its memory. 
         delete originalOrder[ currSecName->second ];
     }
@@ -363,6 +363,11 @@ bool Region::reorderSectors( const vector<string>& orderList ){
 * It would be possible to design a check which searched for input loops that would cause this. 
 */
 bool Region::sortSectorsByDependency() {
+    // Do not sort if there is less than two sectors.
+    if( supplySector.size() < 2 ){
+        return true;
+    }
+
     Sector::DependencyOrdering orderingOperator;
     bool success = true;
 
@@ -422,7 +427,7 @@ bool Region::isRegionOrderedCorrectly() const {
     
     // Boolean marking whether the sectors are correctly ordered. 
     bool isOrderedCorrectly = true;
-
+    
     // Loop through all sectors except the last one as there is nothing to compare the last to.
     for( CSupplySectorIterator outerPosition = supplySector.begin(); outerPosition != supplySector.end() - 1; ++outerPosition ){
         // Compare the sector to all other following sectors.
@@ -433,8 +438,10 @@ bool Region::isRegionOrderedCorrectly() const {
                 // The sectors are ordered incorrectly. Do not early return so that more than one
                 // error statement can be printed, one for each bad ordering. 
                 isOrderedCorrectly = false;
-                // Add log out here.
-                cout << "Error: " << ( *innerPosition )->getName() << " should be before " << ( *outerPosition )->getName() << endl;
+                // Get the log and report the error.
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << ( *innerPosition )->getName() << " should be before " << ( *outerPosition )->getName() << endl;
             } // end if
         } // end inner for loop
     } // end outer for loop
@@ -664,7 +671,7 @@ void Region::calc( const int period, const bool doCalibrations ) {
     // determine supply of final energy and other goods based on demand
     setFinalSupply( period );
 
-    if( agSectorActive ){
+    if( agSectorActive && agSector.get() ){
         calcAgSector( period );
     }
 
@@ -687,6 +694,12 @@ void Region::calcAgSector( const int period ) {
 * \param period Model time period
 */
 void Region::calcResourceSupply( const int period ){
+    if( !gdp.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "GDP object has not been created before resource calculation. Check for an region name mismatch." << endl;
+        return;
+    }
     for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
         (*currResource)->calcSupply( name, gdp.get(), period );
     }
@@ -697,6 +710,13 @@ void Region::calcResourceSupply( const int period ){
 * \param period Model time period
 */
 void Region::calcFinalSupplyPrice( const int period ) {
+    if( !gdp.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "GDP object has not been created before final supply price calculation. Check for an region name mismatch." << endl;
+        return;
+    }
+
     for( SupplySectorIterator currSupply = supplySector.begin(); currSupply != supplySector.end(); ++currSupply ){
         (*currSupply)->calcFinalSupplyPrice( gdp.get(), period );
     }
@@ -707,6 +727,12 @@ void Region::calcFinalSupplyPrice( const int period ) {
 * \param period Model time period
 */
 void Region::setFinalSupply( const int period ) {
+    if( !gdp.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "GDP object has not been created before final supply price calculation. Check for an region name mismatch." << endl;
+        return;
+    }
     // loop through all sectors in reverse once to get total output.
     typedef  vector<SupplySector*>::reverse_iterator ReverseSupplySectorIterator;
     for ( ReverseSupplySectorIterator currSupply = supplySector.rbegin(); currSupply != supplySector.rend(); ++currSupply ) {
@@ -723,10 +749,21 @@ void Region::setFinalSupply( const int period ) {
 *
 * \param period Model time period
 */
-void Region::calcGDP( const int period ) {
-    if( gdp.get() && population.get() ){
-	    gdp->initialGDPcalc( period, population->getTotal( period ) );
+void Region::calcGDP( const int period ){
+    if( !gdp.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "GDP object has not been created before GDP calculation. Check for an region name mismatch." << endl;
+        return;
     }
+    if( !population.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Population object has not been created before GDP calculation. Check for an region name mismatch." << endl;
+        return;
+    }
+    
+    gdp->initialGDPcalc( period, population->getTotal( period ) );
 }
 
 /*! Calculate forward-looking gdp (without feedbacks) for AgLU use
@@ -741,17 +778,28 @@ void Region::calcGDP( const int period ) {
 * \todo check to see if this works with AgLU. Not sure about conversions.
 */
 const vector<double> Region::calcFutureGDP() const {
-	const Modeltime* modeltime = scenario->getModeltime();
-	vector<double> gdps;
-	gdps.resize( modeltime->getmaxper() );
-    
-    if( gdp.get() && population.get() ){
-	    for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
-		    gdp->initialGDPcalc( period, population->getTotal( period ) );
-		    gdps[ period ] = gdp->getApproxScaledGDPperCap( period );
-	    }
+    if( !gdp.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "GDP object has not been created before future GDP calculation. Check for an region name mismatch." << endl;
+        return vector<double>( 0 );
     }
-	return gdps;
+    if( !population.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Population object has not been created before future GDP calculation. Check for an region name mismatch." << endl;
+        return vector<double>( 0 );
+    }
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    vector<double> gdps;
+    gdps.resize( modeltime->getmaxper() );
+
+    for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
+        gdp->initialGDPcalc( period, population->getTotal( period ) );
+        gdps[ period ] = gdp->getApproxScaledGDPperCap( period );
+    }
+    return gdps;
 }
 
 /*! Calculate demand sector aggregate price.
@@ -786,16 +834,21 @@ void Region::calcEndUsePrice( const int period ) {
 * \param period Model time period
 * \todo Move this calculation down to GDP
 */
-void Region::adjustGDP( const int period ) {
+void Region::adjustGDP( const int period ){
+    if( !gdp.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "GDP object has not been created before GDP adjustment. Check for an region name mismatch." << endl;
+        return;
+    }
+    
     const Modeltime* modeltime = scenario->getModeltime();
 
 	double tempratio = 1;
 	if ( period > modeltime->getyr_to_per(1990) ) {
 		tempratio = priceSer[period]/priceSer[period-1];
 	}
-    if( gdp.get() ){
-	    gdp->adjustGDP( period, tempratio );
-    }
+    gdp->adjustGDP( period, tempratio );
 }
 
 //! Do regional calibration
@@ -829,8 +882,14 @@ void Region::calibrateRegion( const bool doCalibrations, const int period ) {
         }
     }
 
+    if( !gdp.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "GDP object has not been created before GDP calibration. Check for an region name mismatch." << endl;
+        return;
+    }
     // TODO: Move this into GDP object.
-    if( calibrationGDPs[ period ] > 0 && gdp.get() ){
+    if( calibrationGDPs[ period ] > 0 ){
         const string goodName = "GDP";
         Marketplace* marketplace = scenario->getMarketplace();
         marketplace->addToSupply( goodName, name, gdp->getGDP( period ), period );
@@ -936,12 +995,9 @@ double Region::calcTFEscaleFactor( const int period ) const {
 
       if ( totalFinalEnergy > util::getVerySmallNumber() ) {
          return TFEcalb[ period ] / totalFinalEnergy;
-      } else {
-         return 0; 
       }
-   } else {
-      return 0;
    }
+   return 0;
 }
 
 /*! \brief Perform checks on consistancy of the input data.
@@ -980,7 +1036,9 @@ void Region::initCalc( const int period )
       if ( TFEcalb[ period ] != 0 ) {
          double scaleFactor = totalFinalEnergy / TFEcalb[ period ];
          if ( abs( scaleFactor - 1 ) > util::getSmallNumber() ) {
-            logfile << "TFE in region " << name << " scaled by: "<< scaleFactor << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << "TFE in region " << name << " scaled by: "<< scaleFactor << endl;
             TFEcalb[ period ] = totalFinalEnergy; 
          }
       }
@@ -1006,6 +1064,8 @@ void Region::adjustCalibrations( const int period ) {
     Configuration* conf = Configuration::getInstance();
     if( conf->getBool( "CalibrationActive" ) ){
         bool debugChecking = conf->getBool( "debugChecking" );
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
 
         checkSectorCalData( period );
         
@@ -1022,10 +1082,10 @@ void Region::adjustCalibrations( const int period ) {
 
                 // if calibrated output and demand are not equal, then scale demand so that they match
                 if ( !util::isEqual( calSupply, calDemand ) && ( calDemand != 0 ) && supplySector[ i ]->outputsAllFixed( period ) ) {
-                    logfile << ",Cal difference in region " << name << " sector: " << goodName;
-                    logfile << " Supply: " << calSupply << " S-D: " << calSupply-calDemand;
-                    logfile << " ("<<(calSupply-calDemand)*100/calSupply<<"%)";
-                    logfile << " -- demand values scaled."<<endl;
+                    mainLog << "Inputs and Outputs all fixed for " << goodName << endl;
+                    mainLog << "Cal difference in region " << name << " sector: " << goodName;
+                    mainLog << " Supply: " << calSupply << " S-D: " << calSupply-calDemand;
+                    mainLog << " ("<<(calSupply-calDemand)*100/calSupply<<"%)"<<endl;
 
                     // Get calibrated inputs, only scale those, not fixed demands (if any)
                     double fixedCalInputs = 0;
@@ -1037,11 +1097,14 @@ void Region::adjustCalibrations( const int period ) {
                     for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
                         demandSector[ j ]->scaleCalibratedValues( period, goodName, ScaleValue ); 
                     }
+                } else if ( calDemand != 0 ) {
+                    mainLog.setLevel( ILogger::DEBUG );
+                    mainLog << "Outputs are NOT all fixed." << endl;
                 } else {
                     if ( supplySector[ i ]->outputsAllFixed( period ) && ( calDemand != 0 || calSupply != 0 ) ) {
-                        logfile << ", ****Supply is fixed at, "<< calSupply;
-                        logfile << ", and Demand is fixed at, "<< calDemand;
-                        logfile << ", for good " << goodName<< " in region "<< name << endl;
+                        mainLog << ", Supply is fixed at, " << calSupply;
+                        mainLog << ", and Demand is fixed at, "<< calDemand;
+                        mainLog << ", for good " << goodName<< " in region "<< name << endl;
                     } else {
                       //  logfile << ", fixed demand is zero or indirect." << endl;
                     }
@@ -1052,21 +1115,20 @@ void Region::adjustCalibrations( const int period ) {
                 // This would cause a problem if not all supply was calibrated, but what was calibrated was > calibrated demand
                 // If debugchecking flag is on extra information is printed
                if ( ( calSupply - calDemand ) > util::getSmallNumber() ) {
-                  logfile << "WARNING: Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
-                  if ( debugChecking ) {
-                        cout << "WARNING: Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
-                        cout << "   supply all fixed values : " << supplySector[ i ]->outputsAllFixed( period ) << endl;
-                        cout << "   demand all fixed : " << inputsAllFixed( period, goodName ) << endl;
-                        cout << "   fixedDemandsTot: " << calDemand << "  "; calDemand = getFixedDemand( period, goodName, true ); cout << endl;
-                        cout << "   fixedSupplyTot: " << calSupply<< "  "; 
-                        calSupply = supplySector[ i ]->getFixedOutput( period , true ); cout << endl;
-                    }
-                }
+                   mainLog.setLevel( ILogger::WARNING );
+                   mainLog << "Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
+                   if ( debugChecking ){
+                       mainLog.setLevel( ILogger::DEBUG );
+                       mainLog << "Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
+                       mainLog << "supply all fixed values : " << supplySector[ i ]->outputsAllFixed( period ) << endl;
+                       mainLog << "demand all fixed : " << inputsAllFixed( period, goodName ) << endl;
+                       mainLog << "fixedDemandsTot: " << calDemand << endl; 
+                       mainLog << "fixedSupplyTot: " << calSupply << endl;
+                   }
+               }
             } // if allfixed
-            else {   // if not all fixed
-                if ( supplySector[ i ]->outputsAllFixed( period ) ) {
-                    logfile << "Inputs NOT ALL fixed for " << goodName << ", but supplies ARE all fixed" << endl;
-                }
+            else if ( supplySector[ i ]->outputsAllFixed( period ) ) {
+                mainLog << "Inputs NOT ALL fixed for " << goodName << ", but supplies ARE all fixed" << endl;
             }
         } // for block
     }
@@ -1096,7 +1158,6 @@ void Region::checkSectorCalData( const int period ) {
 * \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
 */
 bool Region::inputsAllFixed( const int period, const std::string& goodName ) const {
-   
    for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
       if ( !demandSector[ j ]->inputsAllFixed( period, goodName ) ) {
          return false; 
@@ -1112,19 +1173,24 @@ bool Region::inputsAllFixed( const int period, const std::string& goodName ) con
 * \author Steve Smith
 * \param period Model period
 * \param goodName market good to return demand for
-* \param printValues Optional toggle to print out each value for debugging (default false)
 */
-double Region::getFixedDemand( const int period, const std::string& goodName, bool printValues ) {
+double Region::getFixedDemand( const int period, const std::string& goodName ) {
    double calDemand = 0;
    for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
       calDemand += demandSector[ j ]->getCalAndFixedInputs( period, goodName ); 
-      if ( printValues ) { cout << "dsec["<<j<<"] "<< demandSector[ j ]->getCalAndFixedInputs( period, goodName ) << ", "; }
    }
    return calDemand;
 }
 
 //! Calculate regional demand for energy and other goods for all sectors.
 void Region::calcEndUseDemand( const int period ) {
+    if( !gdp.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "GDP object has not been created before demand calculation. Check for an region name mismatch." << endl;
+        return;
+    }
+    
     for ( DemandSectorIterator currDemSector = demandSector.begin(); currDemSector != demandSector.end(); ++currDemSector ){
         // calculate aggregate demand for end-use sector services
         // set fuel demand from aggregate demand for services
@@ -1599,22 +1665,22 @@ vector<string> Region::getSectorDependencies( const string& sectorName ) const {
 * \author Josh Lurz
 * \param logger The to which to print the dependencies. 
 */
-void Region::printSectorDependencies( Logger* logger ) const {
+void Region::printSectorDependencies( ILogger& aLog ) const {
     typedef CSupplySectorIterator CSupplySectorIterator;
 
     // Print the final ordering of the sectors within the region.
-    LOG( logger, Logger::DEBUG_LEVEL ) << " Final Sector ordering for " << name << endl;
+    aLog << " Final Sector ordering for " << name << endl;
     for(  CSupplySectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
-        LOG( logger, Logger::DEBUG_LEVEL )<< ( *currSector )->getName() << endl;
+        aLog << ( *currSector )->getName() << endl;
     }
-    LOG( logger, Logger::DEBUG_LEVEL ) << endl;
+    aLog << endl;
 
     // Print the sector dependencies for all sectors within this region.
-    LOG( logger, Logger::DEBUG_LEVEL ) << name << ",Sector,Dependencies ->," << endl;
+    aLog << name << ",Sector,Dependencies ->," << endl;
     for( CSupplySectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ) {
-        ( *currSector )->printSectorDependencies( logger );
+        ( *currSector )->printSectorDependencies( aLog );
     }
-    LOG( logger, Logger::DEBUG_LEVEL ) << endl;
+    aLog << endl;
 }
 
 /*! \brief This function will set the tax policy with the given name to a fixed tax policy.
