@@ -491,8 +491,6 @@ void SubResource::dbOutput( const string &regname, const string& secname ){
     const int maxper = modeltime->getmaxper();
     vector<double> temp(maxper);
     string tssname = name; // tempory subsector name
-    string str; // tempory string
-    str = name + "Total";
     
     // function arguments are variable name, double array, db name, table name
     // the function writes all years
@@ -505,7 +503,7 @@ void SubResource::dbOutput( const string &regname, const string& secname ){
     
     // do for all grades in the sector
     for (i=0;i<nograde;i++) {
-        str = tssname + "_" + grade[i]->getName();
+        string str = tssname + "_" + grade[i]->getName();
         // grade cost
         for (m=0;m<maxper;m++) {
             temp[m] = grade[i]->getCost(m);

@@ -1355,9 +1355,7 @@ void Sector::dbOutput() const {
         for (int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_emissmap_second(gmap->first);
         }
-        str = "Sec: "; // Sector heading
-        str+= name; // Sector name
-        dboutput4(regionName,"Emissions",str,gmap->first,"MTC",temp);
+        dboutput4(regionName,"Emissions","Sec-"+name,gmap->first,"MTC",temp);
     }
     // CO2 emissions by Sector
     for (m=0;m<maxper;m++) {

@@ -434,11 +434,9 @@ void DemandSector::dbOutput() const {
     dboutput4(regionName,"End-Use Service","by Sector w/o TC",secname,"Ser Unit",servicePreTechChange);
 
     // End-use service price elasticity
-    str = secname + "_price";
-    dboutput4(regionName,"End-Use Service","Elasticity",str," ",pElasticity);
-    str = secname + "_income";
+    dboutput4(regionName,"End-Use Service","Elasticity",secname + "_price"," ",pElasticity);
     // End-use service income elasticity
-    dboutput4(regionName,"End-Use Service","Elasticity",str," ",iElasticity);
+    dboutput4(regionName,"End-Use Service","Elasticity",secname + "_income"," ",iElasticity);
     
     // sector fuel consumption by fuel type
     typedef map<string,double>:: const_iterator CI;
@@ -461,9 +459,7 @@ void DemandSector::dbOutput() const {
         for (int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_emissmap_second(gmap->first);
         }
-        str = "Sec: "; // sector heading
-        str+= secname; // sector name
-        dboutput4(regionName,"Emissions",str,gmap->first,"MTC",temp);
+        dboutput4(regionName,"Emissions","Sec-"+secname,gmap->first,"MTC",temp);
     }
     
     // CO2 emissions by sector
