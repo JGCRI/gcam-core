@@ -104,10 +104,22 @@ void SubResource::XMLParse( const DOMNode* node )
       curr = nodeList->item( i );
       nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
       
-      if( nodeName == "grade" ){
-         tempGrade = new Grade();
-         tempGrade->XMLParse( curr );
-         grade.push_back( tempGrade );
+      if( nodeName == "#text" ) {
+         continue;
+      }
+
+      else if( nodeName == "grade" ){
+         map<string,int>::const_iterator gradeMapIter = gradeNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+         if( gradeMapIter != gradeNameMap.end() ) {
+            // grade already exists.
+            grade[ gradeMapIter->second ]->XMLParse( curr );
+         }
+         else {
+            tempGrade = new Grade();
+            tempGrade->XMLParse( curr );
+            grade.push_back( tempGrade );
+            gradeNameMap[ tempGrade->getName() ] = grade.size() - 1;
+         }
       }
       else if( nodeName == "annualprod" ){
          XMLHelper<double>::insertValueIntoVector( curr, annualprod, modeltime );
@@ -135,14 +147,14 @@ void SubResource::XMLParse( const DOMNode* node )
         }
       else {
          XMLDerivedClassParse( nodeName, curr );
-      }
-      
+      }  
    }
-   // completed parsing.
-   
-   nograde = grade.size(); // number of grades for each subresource
-   
-   initializeResource(); // Do any initializations needed for this resource   
+}
+
+//! Complete initialization.
+void SubResource::completeInit() {
+   nograde = grade.size(); // number of grades for each subresource   
+   initializeResource(); // Do any initializations needed for this resource
 }
 
 //! Blank definition so that don't have to define in derived classes if there is nothing to write out
@@ -168,12 +180,7 @@ void SubResource::toXML( ostream& out ) const {
     
     // write out the grade objects.
     for( vector<Grade*>::const_iterator i = grade.begin(); i != grade.end(); i++ ){	
-        Tabs::writeTabs( out );
-        out << "<Grade>" << endl;
         ( *i )->toXML( out );
-        Tabs::decreaseIndent();
-        Tabs::writeTabs( out );
-        out << "</grade>" << endl;
     }
     
     for(m = 0; m < static_cast<int>(annualprod.size() ); m++ ) {

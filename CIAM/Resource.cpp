@@ -91,7 +91,11 @@ void Resource::XMLParse( const DOMNode* node ){
       curr = nodeList->item( i );
       nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
       
-      if( nodeName == "market" ){
+      if( nodeName == "#text" ) {
+         continue;
+      }
+      
+      else if( nodeName == "market" ){
          market = XMLHelper<string>::getValueString( curr ); // only one market element.
       }
       else if( nodeName == "price" ){
@@ -101,8 +105,15 @@ void Resource::XMLParse( const DOMNode* node ){
          XMLDerivedClassParse( nodeName, curr );
       }
    }
-   
+}
+
+//! Complete the initialization.
+void Resource::completeInit() {
    nosubrsrc = subResource.size();
+   
+   for( vector<SubResource*>::iterator subResIter = subResource.begin(); subResIter != subResource.end(); subResIter++ ) {
+      ( *subResIter )->completeInit();
+   }
 }
 
 //! Write datamembers to datastream in XML format.
@@ -342,12 +353,19 @@ void DepletableResource::XMLDerivedClassParse( const string nodeName, const DOMN
    SubResource* tempSubResource = 0;
    
    if( nodeName == "subresource" ){
-      tempSubResource = new SubDepletableResource();
-      tempSubResource->XMLParse( node );
-      subResource.push_back( tempSubResource );
+      map<string,int>::const_iterator subResourceMapIter = subResourceNameMap.find( XMLHelper<string>::getAttrString( node, "name" ) );
+      if( subResourceMapIter != subResourceNameMap.end() ) {
+         // subResource already exists.
+         subResource[ subResourceMapIter->second ]->XMLParse( node );
+      }
+      else {
+         tempSubResource = new SubDepletableResource();
+         tempSubResource->XMLParse( node );
+         subResource.push_back( tempSubResource );
+         subResourceNameMap[ tempSubResource->getName() ] = subResource.size() - 1;
+      }
    }
 }
-
 // *******************************************************************
 // FixedResource Class
 // *******************************************************************
@@ -361,9 +379,17 @@ string FixedResource::getType() const {
 void FixedResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
    SubResource* tempSubResource = 0;
    if( nodeName == "subresource" ){
-      tempSubResource = new SubFixedResource();
-      tempSubResource->XMLParse( node );
-      subResource.push_back( tempSubResource );
+      map<string,int>::const_iterator subResourceMapIter = subResourceNameMap.find( XMLHelper<string>::getAttrString( node, "name" ) );
+      if( subResourceMapIter != subResourceNameMap.end() ) {
+         // subResource already exists.
+         subResource[ subResourceMapIter->second ]->XMLParse( node );
+      }
+      else {
+         tempSubResource = new SubFixedResource();
+         tempSubResource->XMLParse( node );
+         subResource.push_back( tempSubResource );
+         subResourceNameMap[ tempSubResource->getName() ] = subResource.size() - 1;
+      }
    }
 }
 
@@ -379,10 +405,18 @@ string RenewableResource::getType() const {
 /*! In this case, this read-in just substantiates the appropriate type of subResource */
 void RenewableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
    SubResource* tempSubResource = 0;
-   if( nodeName == "subresource" ){	
-      tempSubResource = new SubRenewableResource();
-      tempSubResource->XMLParse( node );
-      subResource.push_back( tempSubResource );
+   if( nodeName == "subresource" ){
+      map<string,int>::const_iterator subResourceMapIter = subResourceNameMap.find( XMLHelper<string>::getAttrString( node, "name" ) );
+      if( subResourceMapIter != subResourceNameMap.end() ) {
+         // subResource already exists.
+         subResource[ subResourceMapIter->second ]->XMLParse( node );
+      }
+      else {
+         tempSubResource = new SubRenewableResource();
+         tempSubResource->XMLParse( node );
+         subResource.push_back( tempSubResource );
+         subResourceNameMap[ tempSubResource->getName() ] = subResource.size() - 1;
+      }
    }
 }
 

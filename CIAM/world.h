@@ -50,6 +50,7 @@ public:
 	~World();
 	void clear();
 	void XMLParse( const DOMNode* node );
+   void completeInit();
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
    void initCalc( const int per ); // initializations

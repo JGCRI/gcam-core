@@ -12,6 +12,7 @@
 */
 
 #include <string>
+#include <map>
 
 using namespace std;
 using namespace xercesc;
@@ -59,6 +60,10 @@ private:
 	vector<double> carbontax; //! regional carbon tax
 	vector<double> carbontaxpaid; //! total regional carbon taxes paid
 	vector<Summary> summary; //! summary for reporting
+   map<string,int> resourceNameMap; //!< Map of resource name to integer position in vector. 
+   map<string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector. 
+   map<string,int> demandSectorNameMap; //!< Map of demandsector name to integer position in vector. 
+   map<string,int> ghgMarketNameMap; //!< Map of ghgmarket name to integer position in vector. 
 public:
 	
 	Region(); // default construtor
@@ -66,6 +71,7 @@ public:
 	void clear();
 	void initElementalMembers();
 	void XMLParse( const DOMNode* node );
+   void completeInit();
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
 	string getName() const;

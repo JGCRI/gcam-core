@@ -45,6 +45,7 @@ protected:
     vector<double> fixedOutput; //!< total amount of fixed output from sector
     vector<double> carbontaxpaid; //!< total sector carbon taxes paid
     vector<Summary> summary; //!< summary for reporting
+    map<string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
     virtual void initElementalMembers();
     
 public:
@@ -53,6 +54,7 @@ public:
     virtual void clear();
     string getName(); // return name of sector
     virtual void XMLParse( const DOMNode* node );
+    void completeInit();
     virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* curr ); // for derived classes
     virtual void XMLDerivedClassParseAttr( const DOMNode* node ); // for derived classes
     virtual void toXML( ostream& out ) const;

@@ -48,6 +48,7 @@ public:
 	World* getWorld();
 	void clear();
 	void XMLParse( const DOMNode* node );
+   void completeInit();
 	void toXML( ostream& out ) const;
 	void toDebugXMLOpen( const int period, ostream& out ) const;
 	void toDebugXMLClose( const int period, ostream& out ) const;

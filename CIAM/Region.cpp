@@ -147,7 +147,8 @@ void Region::XMLParse( const DOMNode* node ){
    demsector* tempDemSector = 0;
    //	TransSector* tempTransSector = 0;  //maw
    ghg_mrk* tempGhgMrk = 0;
-   Configuration* conf = Configuration::getInstance();
+   map<string,int>::const_iterator resourceIter;
+
    const Modeltime* modeltime = scenario->getModeltime();
    
    // make sure we were passed a valid node.
@@ -164,58 +165,122 @@ void Region::XMLParse( const DOMNode* node ){
    DOMNodeList* nodeList = node->getChildNodes();
    
    // loop through the child nodes.
-   for(i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
+   for( i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
       curr = nodeList->item( i );
       nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
       
-      if( nodeName == "e_GNP_elas" ){
+      if( nodeName == "#text" ) {
+         continue;
+      }
+
+      else if( nodeName == "e_GNP_elas" ){
          EnergyGNPElas = XMLHelper<double>::getValue( curr ); 
       }
       else if( nodeName == "demographics" ){
-         population = new demographic();
+         if( population == 0 ) {
+            population = new demographic();
+         }
          population->XMLParse( curr ); // only one demographics object.
       }
       else if( nodeName == "depresource" ){
-         tempResource = new DepletableResource();
-         tempResource->XMLParse( curr );
-         resources.push_back( tempResource );
+         resourceIter = resourceNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+         if( resourceIter != resourceNameMap.end() ){
+            // The resource already exists.
+            resources[ resourceIter->second ]->XMLParse( curr );
+         }
+         else {
+            tempResource = new DepletableResource();
+            tempResource->XMLParse( curr );
+            resources.push_back( tempResource );
+            resourceNameMap[ tempResource->getName() ] = resources.size() - 1;
+         }
       }
-      else if( nodeName == "fixedresource" ){
-         tempResource = new FixedResource();
-         tempResource->XMLParse( curr );
-         resources.push_back( tempResource );
+      else if( nodeName == "fixedresource" ){map<string,int>::const_iterator resourceIter = resourceNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+         resourceIter = resourceNameMap.find( XMLHelper<string>::getAttrString( node, "name" ) );
+         if( resourceIter != resourceNameMap.end() ){
+            // The resource already exists.
+            resources[ resourceIter->second ]->XMLParse( curr );
+         }
+         else {
+            tempResource = new FixedResource();
+            tempResource->XMLParse( curr );
+            resources.push_back( tempResource );
+            resourceNameMap[ tempResource->getName() ] = resources.size() - 1;
+         }
       }
       else if( nodeName == "renewresource" ){
-         tempResource = new RenewableResource();
-         tempResource->XMLParse( curr );
-         resources.push_back( tempResource );
+         resourceIter = resourceNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+         if( resourceIter != resourceNameMap.end() ){
+            // The resource already exists.
+            resources[ resourceIter->second ]->XMLParse( curr );
+         }
+         else {
+            tempResource = new RenewableResource();
+            tempResource->XMLParse( curr );
+            resources.push_back( tempResource );
+            resourceNameMap[ tempResource->getName() ] = resources.size() - 1;
+         }
       }
       else if( nodeName == "supplysector" ){
-         tempSupSector = new sector();
-         tempSupSector->XMLParse( curr );
-         supplysector.push_back( tempSupSector );
+         map<string,int>::const_iterator supplySectorIter = supplySectorNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+         if( supplySectorIter != supplySectorNameMap.end() ) {
+            // The supply sector already exists.
+            supplysector[ supplySectorIter->second ]->XMLParse( curr );
+         }
+         else {
+            tempSupSector = new sector();
+            tempSupSector->XMLParse( curr );
+            supplysector.push_back( tempSupSector );
+            supplySectorNameMap[ tempSupSector->getName() ] = supplysector.size() - 1;
+         }
       }
       else if( nodeName == "demandsector" ){
-         tempDemSector = new demsector();
-         tempDemSector->XMLParse( curr );
-         demandsector.push_back( tempDemSector );
+         map<string,int>::const_iterator demandSectorIter = demandSectorNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+         if( demandSectorIter != demandSectorNameMap.end() ) {
+            // The demand sector already exists.
+            demandsector[ demandSectorIter->second ]->XMLParse( curr );
+         }
+         else {
+            tempDemSector = new demsector();
+            tempDemSector->XMLParse( curr );
+            demandsector.push_back( tempDemSector );
+            demandSectorNameMap[ tempDemSector->getName() ] = demandsector.size() - 1;
+         }
       }
       /*		// maw
       else if( nodeName == "transsector" ){
-      tempTransSector = new TransSector();
-      tempTransSector->XMLParse( curr );
-      demandsector.push_back( tempTransSector );
+         map<string,int>::const_iterator demandSectorIter = demandSectorNameMap.find( XMLHelper<string>::getAttrString( node, "name" ) );
+         if( demandSectorIter != demandSectorNameMap.end() ) {
+            // The demand sector already exists.
+            demandsector[ demandSectorIter->second ]->XMLParse( curr );
+         }
+         else {
+            tempTransSector = new TransSector();
+            tempTransSector->XMLParse( curr );
+            demandsector.push_back( tempTransSector );
+            demandSectorNameMap[ tempDemSector->getName() ] = demandsector.size() - 1;
+        }
    } */
       else if( nodeName == "agsector" ) {
-         if( conf->getBool( "agSectorActive" ) ){
-            agSector = new AgSector();
-            agSector->XMLParse( curr );	
+         if( Configuration::getInstance()->getBool( "agSectorActive" ) ){
+            if( agSector == 0 ) {
+               agSector = new AgSector();
+               agSector->XMLParse( curr );
+            }
          }
       }
       else if( nodeName == "ghgmarket" ){
-         tempGhgMrk = new ghg_mrk();
-         tempGhgMrk->XMLParse( curr );
-         ghgmarket.push_back( tempGhgMrk );
+         map<string,int>::const_iterator ghgMarketIter = ghgMarketNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+         if( ghgMarketIter != ghgMarketNameMap.end() ) {
+            // ghg market already exists.
+            ghgmarket[ ghgMarketIter->second ]->XMLParse( curr );
+         }
+         else {
+            tempGhgMrk = new ghg_mrk();
+            tempGhgMrk->XMLParse( curr );
+            ghgmarket.push_back( tempGhgMrk );
+            ghgMarketNameMap[ tempGhgMrk->getName() ] = ghgmarket.size() - 1;
+         }
       }
       // regional taxes
       else if( nodeName == "taxes" ){
@@ -248,7 +313,20 @@ void Region::XMLParse( const DOMNode* node ){
          }
          
       }
+
+      else {
+         cout << "Unrecognized text string: " << nodeName << " found while parsing region." << endl;
+      }
+
    }
+}
+
+//! Complete the initialization.
+void Region::completeInit() {
+   
+   int i = 0;
+
+   Configuration* conf = Configuration::getInstance();
    
    gnp_dol[ 0 ] = calibrationGNPs[ 0 ];
    
@@ -276,8 +354,8 @@ void Region::XMLParse( const DOMNode* node ){
    }
    
    // ghg markets, pass region name
-   for(i=0;i<noghg;i++){
-      ghgmarket[i]->setMarket(name);
+   for( i = 0; i < noghg; i++ ){
+      ghgmarket[i]->setMarket( name );
    }
    
    // Create AgLU markets
@@ -285,11 +363,22 @@ void Region::XMLParse( const DOMNode* node ){
       agSector->setMarket( name );
    }
    
-   // MarketSetup;
-   updateSummary(0);	// Dummy call to final supply to setup fuel map
-   findSimul(0);
+   // Complete the initializations.
+   for( vector<Resource*>::iterator resourceIter = resources.begin(); resourceIter != resources.end(); resourceIter++ ) {
+      ( *resourceIter )->completeInit();
+   }
+
+   for( vector<sector*>::iterator supplySectorIter = supplysector.begin(); supplySectorIter != supplysector.end(); supplySectorIter++ ) {
+      ( *supplySectorIter )->completeInit();
+   }
    
-   
+   for( vector<demsector*>::iterator demandSectorIter = demandsector.begin(); demandSectorIter != demandsector.end(); demandSectorIter++ ) {
+      ( *demandSectorIter )->completeInit();
+   }
+
+   // Find simuls.
+   updateSummary( 0 );	// Dummy call to final supply to setup fuel map
+   findSimul( 0 );
 }
 
 //! Write datamembers to datastream in XML format.

@@ -59,8 +59,8 @@ protected:
     vector<bool> doCalibration; // Flag set if calibration value is read-in
     vector<bool> calibrationStatus; // Set true if sector or any tech is calibrated
     vector<Summary> summary; //!< summary for reporting
-    
-   void shareWeightScale( const int per ); // Consistantly adjust share weights
+    map<string,int> techNameMap; //!< Map of technology name to integer position in vector. 
+   void shareWeightScale( const int pmer ); // Consistantly adjust share weights
 
 public:
     subsector();
@@ -68,6 +68,7 @@ public:
     virtual void clear();
     const string getName() const;
     void XMLParse( const DOMNode* tempNode );
+    void completeInit();
     void toXML( ostream& out ) const;
     void toDebugXML( const int period, ostream& out ) const;
     void copytolast( const int period );

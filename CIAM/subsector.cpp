@@ -109,7 +109,7 @@ void subsector::XMLParse( const DOMNode* node ) {
     DOMNode* currChild = 0;
     string nodeName;
     string childNodeName;
-    vector<technology*> techVec;
+    vector<technology*> techVec( modeltime->getmaxper(), 0 );
     technology* tempTech = 0;
     
     //! \pre Make sure we were passed a valid node.
@@ -126,7 +126,10 @@ void subsector::XMLParse( const DOMNode* node ) {
         curr = nodeList->item( i );
         nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         
-        if( nodeName == "capacitylimit" ){
+        if( nodeName == "#text" ) {
+           continue;
+        }
+        else if( nodeName == "capacitylimit" ){
             XMLHelper<double>::insertValueIntoVector( curr, capLimit, modeltime );
         }
         else if( nodeName == "sharewt" ){
@@ -142,8 +145,7 @@ void subsector::XMLParse( const DOMNode* node ) {
         }
         
         else if( nodeName == "fuelprefElasticity" ){
-            XMLHelper<double>::insertValueIntoVector( curr, fuelPrefElasticity, modeltime );
-            
+            XMLHelper<double>::insertValueIntoVector( curr, fuelPrefElasticity, modeltime );  
         }
         
         // basesharewt is not a vector but a single value
@@ -153,29 +155,63 @@ void subsector::XMLParse( const DOMNode* node ) {
         }
         
         else if( nodeName == "technology" ){
-            childNodeList = curr->getChildNodes();
+            map<string,int>::const_iterator techMapIter = techNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+            if( techMapIter != techNameMap.end() ) {
+               // technology already exists.
+                childNodeList = curr->getChildNodes();
             
-            // loop through technologies children.
-            for( int j = 0; j < childNodeList->getLength(); j++ ){
+               // loop through technologies children.
+               for( int j = 0; j < childNodeList->getLength(); j++ ){
                 
-                currChild = childNodeList->item( j );
-                childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-                
-                if( childNodeName == "period" ){
-                    tempTech = new technology();
-                    tempTech->XMLParse( currChild );
-                    techVec.push_back( tempTech );
-                }
+                  currChild = childNodeList->item( j );
+                  childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+                  
+                  if( childNodeName == "#text" ){
+                     continue;
+                  }
+                  else if( childNodeName == "period" ){
+                     int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
+                     techs[ techMapIter->second ][ thisPeriod ]->XMLParse( currChild );
+                  }
+               }
             }
-            techs.push_back( techVec );
-            techVec.clear();
+            
+            else {
+               // create a new vector of techs.
+               childNodeList = curr->getChildNodes();
+            
+               // loop through technologies children.
+               for( int j = 0; j < childNodeList->getLength(); j++ ){
+                
+                  currChild = childNodeList->item( j );
+                  childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+                
+                  if( childNodeName == "period" ){
+                     tempTech = new technology();
+                     tempTech->XMLParse( currChild );
+                     int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
+                     techVec[ thisPeriod ] = tempTech;
+                  }
+               }
+               techs.push_back( techVec );
+               techNameMap[ techVec[ 0 ]->getName() ] = techs.size() - 1;
+               techVec.clear();
+               techVec.resize( modeltime->getmaxper(), 0 );
+            }
         }
     }
-    // completed parsing.
-    
-    // Initialize any arrays that have non-zero default value
+}
+
+//! Complete the initialization.
+void subsector::completeInit() {
+   // Initialize any arrays that have non-zero default value
     notech = techs.size();
-    
+   
+    for ( vector< vector< technology* > >::iterator outerIter = techs.begin(); outerIter != techs.end(); outerIter++ ) {
+        for( vector< technology* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
+            ( *innerIter )->completeInit();
+        }
+    }
 }
 
 //! Output the subsector member variables in XML format.

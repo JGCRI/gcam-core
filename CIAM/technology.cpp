@@ -84,86 +84,103 @@ void technology::initElementalMembers(){
 //! initialize technology with xml data
 void technology::XMLParse( const DOMNode* node )
 {	
-    Ghg* tempGhg = 0;
-    DOMNode* curr = 0;
-    string nodeName;
-    DOMNodeList* nodeList;
-    
-    //! \pre Assume we are passed a valid node.
-    assert( node );
-    
-    nodeList = node->getChildNodes();
-    
-    for( int i = 0; i < nodeList->getLength(); i++ ) {
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
-        
-        if( nodeName == "name" ) {
-            name = XMLHelper<string>::getValueString( curr );
-            
+   Ghg* tempGhg = 0;
+   DOMNode* curr = 0;
+   string nodeName;
+   DOMNodeList* nodeList;
+   
+   //! \pre Assume we are passed a valid node.
+   assert( node );
+   
+   nodeList = node->getChildNodes();
+   
+   for( int i = 0; i < nodeList->getLength(); i++ ) {
+      curr = nodeList->item( i );
+      nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
+      
+      if( nodeName == "#text" ) {
+         continue;
+      }
+
+      else if( nodeName == "name" ) {
+         name = XMLHelper<string>::getValueString( curr );
+         
 #if( _DEBUG )
-            // cout << "\t\t\tTechnology name set as " << name << endl;
+         // cout << "\t\t\tTechnology name set as " << name << endl;
 #endif
-        } 
-        else if ( nodeName == "fueltype" ){
-            fueltype = XMLHelper<int>::getValue( curr );
-        }
-        else if( nodeName == "year" ){
-            year = XMLHelper<int>::getValue( curr );
-        }
-        else if( nodeName == "fuelname" ){
-            fuelname = XMLHelper<string>::getValueString( curr );
-        }
-        else if( nodeName == "sharewt" ){
-            shrwts = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "calInputValue" ){
-            calInputValue = XMLHelper<double>::getValue( curr );
-            doCalibration = true;
-            //doCalibration = false;
-        }
-        else if( nodeName == "efficiency" ){
-            eff = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "nonenergycost" ){
-            necost = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "tax" ){
-            tax = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "pMultiplier" ){
-            pMultiplier = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "fMultiplier" ){
-            fMultiplier = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "logitexp" ){
-            lexp = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "techchange" ){
-            techchange = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "resource" ){
-            resource = XMLHelper<double>::getValue( curr );
-            //resource = 0.0;
-        }
-        else if( nodeName == "A" ){
-            A = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "B" ){
-            B = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "GHG" ){
+      } 
+      else if ( nodeName == "fueltype" ){
+         fueltype = XMLHelper<int>::getValue( curr );
+      }
+      else if( nodeName == "year" ){
+         year = XMLHelper<int>::getValue( curr );
+      }
+      else if( nodeName == "fuelname" ){
+         fuelname = XMLHelper<string>::getValueString( curr );
+      }
+      else if( nodeName == "sharewt" ){
+         shrwts = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "calInputValue" ){
+         calInputValue = XMLHelper<double>::getValue( curr );
+         doCalibration = true;
+         //doCalibration = false;
+      }
+      else if( nodeName == "efficiency" ){
+         eff = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "nonenergycost" ){
+         necost = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "tax" ){
+         tax = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "pMultiplier" ){
+         pMultiplier = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "fMultiplier" ){
+         fMultiplier = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "logitexp" ){
+         lexp = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "techchange" ){
+         techchange = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "resource" ){
+         resource = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "A" ){
+         A = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "B" ){
+         B = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "GHG" ){
+         map<string,int>::const_iterator ghgMapIter = ghgNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+         if( ghgMapIter != ghgNameMap.end() ) {
+            // ghg already exists.
+            ghg[ ghgMapIter->second ]->XMLParse( curr );
+         }
+         else {
             tempGhg = new Ghg();
             tempGhg->XMLParse( curr );
             ghg.push_back( tempGhg );
-        }
-    }
-    
-    if( ghg.empty() ) {
-        Ghg* CO2 = new Ghg( "CO2", "MTC", 0, 0, 1 ); // at least CO2 must be present
-        ghg.push_back( CO2 );
-    }
+            ghgNameMap[ tempGhg->getname() ] = ghg.size() - 1;
+         }
+      }
+
+      else {
+         cout << "Unrecognized text string: " << nodeName << " found while parsing technology." << endl;
+      }
+   }
+}
+//! Complete initialization
+void technology::completeInit() {
+   if( ghg.empty() ) {
+      Ghg* CO2 = new Ghg( "CO2", "MTC", 0, 0, 1 ); // at least CO2 must be present
+      ghg.push_back( CO2 );
+  }
 }
 
 //! write object to xml output stream

@@ -97,20 +97,45 @@ void World::XMLParse( const DOMNode* node ){
 		curr = nodeList->item( i );
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
-		if( nodeName == "region" ){
-			tempRegion = new Region();
-			tempRegion->setCO2coef(); // sets default CO2 emissions coefficients
-			tempRegion->XMLParse( curr );
-			region.push_back( tempRegion ); // resizes vector of region objects
-			regionNamesToNumbers[ tempRegion->getName() ] = region.size() - 1;
+      if( nodeName == "#text" ) {
+         continue;
+      }
+
+		else if( nodeName == "region" ){
+         // Check if the region already exists.
+         map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+         if( regionIter != regionNamesToNumbers.end() ) {
+            // Region exists.
+            region[ regionIter->second ]->XMLParse( curr );
+         }
+         else {
+			   tempRegion = new Region();
+			   tempRegion->XMLParse( curr );
+			   region.push_back( tempRegion ); // resizes vector of region objects
+			   regionNamesToNumbers[ tempRegion->getName() ] = region.size() - 1;
+         }
 		}
+      else {
+         cout << "Unrecognized text string: " << nodeName << " found while parsing region." << endl;
+      }
 	}
-	noreg = region.size();
-	
-	// Initialize AgLU
+}
+
+//! Complete the initialization.
+void World::completeInit() {
+   
+   // Set the number of regions.
+   noreg = region.size();
+
+   // Finish initializing all the regions.
+   for( vector<Region*>::iterator regionIter = region.begin(); regionIter != region.end(); regionIter++ ) {
+      ( *regionIter )->setCO2coef(); // sets default CO2 emissions coefficients
+      ( *regionIter )->completeInit();
+   }
+
+   // Initialize AgLU
 	Configuration* conf = Configuration::getInstance();
 	if( conf->getBool( "agSectorActive" ) ) {
-		cout << "Initializing global aglu." << endl;
 		initAgLu();
 	}
 }
@@ -118,6 +143,7 @@ void World::XMLParse( const DOMNode* node ){
 //! Initialize the AgLu model.
 void World::initAgLu() {
 	
+   cout << "Initializing agLU" << endl;
 	double prices[ 14 ][ 12 ]; 
 	
 	vector<double> tempVec( 12 );

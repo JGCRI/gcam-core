@@ -100,20 +100,42 @@ void Scenario::XMLParse( const DOMNode* node ){
 		curr = nodeList->item( i );
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
-		if ( nodeName == "summary" ){
+      if( nodeName == "#text" ) {
+         continue;
+      }
+
+		else if ( nodeName == "summary" ){
 			scenarioSummary = XMLHelper<string>::getValueString( curr );
 		}
 		
 		else if ( nodeName == "modeltime" ){
-         modeltime = new Modeltime();
-			modeltime->XMLParse( curr );
-			modeltime->set(); // calculate time parameters and conversions
+         if( modeltime == 0 ) {
+            modeltime = new Modeltime();
+            modeltime->XMLParse( curr );
+            modeltime->set(); // This call cannot be delayed until completeInit() because it is needed first. 
+         }
+         else {
+            cout << "Modeltime information cannot be modified in a scenario add-on." << endl;
+         }
 		}
 		else if ( nodeName == "world" ){
-         world = new World();
+         if( world == 0 ) {
+            world = new World();
+         }
 			world->XMLParse( curr );
 		}
+      else {
+         cout << "Unrecognized text string: " << nodeName << " found while parsing scenario." << endl;
+      }
 	}
+}
+
+//! Finish all initializations needed before the model can run.
+void Scenario::completeInit() {
+
+   // Complete the init of the world object.
+   assert( world );
+   world->completeInit();
 }
 
 //! Write object to xml output stream.

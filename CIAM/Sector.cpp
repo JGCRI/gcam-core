@@ -92,53 +92,75 @@ string sector::getName()
 
 //! Set data members from XML input.
 void sector::XMLParse( const DOMNode* node ){
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    DOMNode* curr = 0;
-    DOMNodeList* nodeList = 0;
-    string nodeName;
-    subsector* tempSubSector = 0;
-    
-    //! \pre make sure we were passed a valid node.
-    assert( node );
-    
-    // get the name attribute.
-    name = XMLHelper<string>::getAttrString( node, "name" );
-
-    // get additional attributes for derived classes
-    XMLDerivedClassParseAttr( node );
-    
+   
+   const Modeltime* modeltime = scenario->getModeltime();
+   DOMNode* curr = 0;
+   DOMNodeList* nodeList = 0;
+   string nodeName;
+   subsector* tempSubSector = 0;
+   
+   //! \pre make sure we were passed a valid node.
+   assert( node );
+   
+   // get the name attribute.
+   name = XMLHelper<string>::getAttrString( node, "name" );
+   
+   // get additional attributes for derived classes
+   XMLDerivedClassParseAttr( node );
+   
 #if( _DEBUG )
-    cout << "\tSector name set as " << name << endl;
+   cout << "\tSector name set as " << name << endl;
 #endif
-    
-    // get all child nodes.
-    nodeList = node->getChildNodes();
-    
-    // loop through the child nodes.
-    for( int i = 0; i < nodeList->getLength(); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "market" ){
-            market = XMLHelper<string>::getValueString( curr ); // only one market element.
-        }
-        else if( nodeName == "price" ){
-            XMLHelper<double>::insertValueIntoVector( curr, sectorprice, modeltime );
-        }
-        else if( nodeName == "output" ) {
-            XMLHelper<double>::insertValueIntoVector( curr, output, modeltime );
-        }
-        else if( nodeName == "subsector" ){
+   
+   // get all child nodes.
+   nodeList = node->getChildNodes();
+   
+   // loop through the child nodes.
+   for( int i = 0; i < nodeList->getLength(); i++ ){
+      curr = nodeList->item( i );
+      nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+      
+      if( nodeName == "#text" ) {
+         continue;
+      }
+
+      else if( nodeName == "market" ){
+         market = XMLHelper<string>::getValueString( curr ); // only one market element.
+      }
+      else if( nodeName == "price" ){
+         XMLHelper<double>::insertValueIntoVector( curr, sectorprice, modeltime );
+      }
+      else if( nodeName == "output" ) {
+         XMLHelper<double>::insertValueIntoVector( curr, output, modeltime );
+      }
+      else if( nodeName == "subsector" ){
+         map<string,int>::const_iterator subSectorMapIter = subSectorNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+         if( subSectorMapIter != subSectorNameMap.end() ) {
+            // subSector already exists.
+            subsec[ subSectorMapIter->second ]->XMLParse( curr );
+         }
+         else {
             tempSubSector = new subsector();
             tempSubSector->XMLParse( curr );
             subsec.push_back( tempSubSector );
-        }	
-        else {
-            XMLDerivedClassParse( nodeName, curr );
-        }
-    }
-    nosubsec = subsec.size();
+            subSectorNameMap[ tempSubSector->getName() ] = subsec.size() - 1;
+         }	
+      }
+      
+      else {
+         XMLDerivedClassParse( nodeName, curr );
+      }
+   }
+}
+
+//! Complete the initialization.
+void sector::completeInit() {
+   
+   nosubsec = subsec.size();
+   
+   for( vector<subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
+      ( *subSecIter )->completeInit();
+   }
 }
 
 //! Parses any input variables specific to derived classes

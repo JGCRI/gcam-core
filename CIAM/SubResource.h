@@ -45,6 +45,7 @@ protected:
     vector<double> cumulativeTechChange; //!< Cumulative Technical Change for this sub-sector
     // Cumulative technical change needs to be in sub-resource sector 
     vector<Grade*> grade; //!< amount of SubResource for each grade
+    map<string,int> gradeNameMap; //!< Map of grade name to integer position in vector. 
     
 public:
     SubResource(); //default constructor (automatically virtual)
@@ -53,6 +54,7 @@ public:
     void clear();
     string getName() const; // return SubResource name
     void XMLParse( const DOMNode* tempnode ); // initialize with xml data
+    void completeInit();
     //abstract method, this class cannot be used to instantiate objects, can only be derived
     virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* node ) = 0; 
     virtual void initializeResource(); 

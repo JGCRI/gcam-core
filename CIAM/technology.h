@@ -69,6 +69,7 @@ protected:
     double resource; //!< available hydro resource in energy units
     double A; //!< logit function shape parameter
     double B; //!< logit function shape parameter
+    map<string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
     
 public:
    technology(); // default construtor
@@ -76,6 +77,7 @@ public:
     virtual void clear();
     void initElementalMembers();
     virtual void XMLParse( const DOMNode* tempnode ); // initialize technology with xml data
+    void completeInit();
     virtual void toXML( ostream& out ) const;
     virtual void toDebugXML( const int period, ostream& out ) const;
     void applycarbontax(double tax); // apply carbon tax to appropriate technology

@@ -36,6 +36,7 @@ protected:
     vector<double> available; //!< total Resource available
     vector<double> annualprod; //!< annual production rate of Resource
     vector<double> cummprod; //!< cummulative production of Resource
+    map<string,int> subResourceNameMap; //!< Map of subResource name to integer position in vector. 
     
 public:
     Resource(); // default construtor
@@ -43,6 +44,7 @@ public:
     virtual string getType() const = 0; // Any one = 0 anywhere makes this an abstract class
     void clear();
     virtual void XMLParse( const DOMNode* node );
+    void completeInit();
     // Since this is not defined within the resource class, must declare this as abstract
     virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* node ) = 0; // the = 0 makes this an abstract method
     void toXML( ostream& out ) const;
