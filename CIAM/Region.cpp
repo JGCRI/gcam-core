@@ -15,13 +15,14 @@
 #include <xercesc/dom/DOM.hpp>
 #include "xmlHelper.h"
 
-#include "market.h" //contains market no.,supply,demand,price,and period.
-#include "Emcoef_ind.h" // indirect greenhouse gas emissions coefficient class
-#include "region.h" // generic region class
-#include "modeltime.h" // model start, end, timestep and period info
+#include "market.h"
+#include "Emcoef_ind.h"
+#include "region.h" 
+#include "modeltime.h" 
 #include "Marketplace.h"
+#include "Configuration.h"
 
-using namespace std; //! enables elimination of std::
+using namespace std;
 
 extern Marketplace marketplace;
 extern ofstream outfile, sdfile;	
@@ -111,6 +112,7 @@ void Region::XMLParse( const DOMNode* node ){
 	demsector* tempDemSector = 0;
 	//	TransSector* tempTransSector = 0;  //maw
 	ghg_mrk* tempGhgMrk = 0;
+	Configuration* conf = Configuration::getInstance();
 	
 	// make sure we were passed a valid node.
 	assert( node );
@@ -168,8 +170,10 @@ void Region::XMLParse( const DOMNode* node ){
 		demandsector.push_back( tempTransSector );
 	} */
 		else if( nodeName == "agsector" ) {
-			//agSector = new AgSector();
-			//agSector->XMLParse( curr );	
+			if( conf->getBool( "agSectorActive" ) ){
+				agSector = new AgSector();
+				agSector->XMLParse( curr );	
+			}
 		}
 		else if( nodeName == "ghgmarket" ){
 			tempGhgMrk = new ghg_mrk();
@@ -215,9 +219,10 @@ void Region::XMLParse( const DOMNode* node ){
 	emcoef_ind.resize(nossec); // indirect GHG coef object for every supply sector
 	
 	// Finish initializing agLu
-	// agSector->setGNP( calcFutureGNP() );
-	// agSector->setPop( population.getTotalPopVec() );
-	
+	if( conf->getBool( "agSectorActive" ) ){
+		agSector->setGNP( calcFutureGNP() );
+		agSector->setPop( population.getTotalPopVec() );
+	}
 	// create markets and set market indeces
 	// Resource markets, pass region name
 	for( i = 0; i < numResources; i++ ){
@@ -244,7 +249,9 @@ void Region::XMLParse( const DOMNode* node ){
 	findSimul(0);	// Just print out simul's for now
 	
 	// Create AgLU markets
-	// agSector->setMarket( name );
+	if( conf->getBool( "agSectorActive" ) ){
+		agSector->setMarket( name );
+	}
 }
 
 //! Write datamembers to datastream in XML format.

@@ -323,7 +323,10 @@ int main()
 	if ( conf->getBool( "timestamp" ) ) { 
 		bugoutfile << "\nTotal Run & Write Time: ,"<<duration<<", Seconds";
 	}
-	// AgSector::internalOutput();
+	if( conf->getBool( "agSectorActive" ) ){
+		AgSector::internalOutput();
+	}
+
 	xmlOutStream.close();
 	xmlDebugStream.close();
 	

@@ -1,6 +1,6 @@
 /* World.cpp												*
- * Method definition for World class						*
- * Coded by Sonny Kim 2/21/01								*/
+* Method definition for World class						*
+* Coded by Sonny Kim 2/21/01								*/
 
 #include "Definitions.h"
 #include <ctime>
@@ -19,13 +19,13 @@
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/dom/DOM.hpp>
 
-
-using namespace std; // enables elimination of std::
-
 #include "world.h"
 #include "modeltime.h"
 #include "Market.h"
 #include "Marketplace.h"
+#include "Configuration.h"
+
+using namespace std;
 
 extern "C" { void _stdcall AG2INITC( double[14][12] ); };
 // global variables defined in main
@@ -64,7 +64,7 @@ void World::XMLParse( const DOMNode* node ){
 	
 	// assume we are passed a valid node.
 	assert( node );
-
+	
 	// get all the children.
 	DOMNodeList* nodeList = node->getChildNodes();
 	
@@ -83,7 +83,10 @@ void World::XMLParse( const DOMNode* node ){
 	noreg = region.size();
 	
 	// Initialize AgLU
-	// initAgLu();
+	Configuration* conf = Configuration::getInstance();
+	if( conf->getBool( "agSectorActive" ) ) {
+		initAgLu();
+	}
 }
 
 //! Initialize the AgLu model.
@@ -92,7 +95,7 @@ void World::initAgLu() {
 	double prices[ 14 ][ 12 ]; 
 	
 	vector<double> tempVec( 12 );
-
+	
 #ifdef WIN32		
 	AG2INITC( prices ); // not implimented for non-PC's at this time
 #endif
@@ -114,13 +117,13 @@ void World::toXML( ostream& out ) const {
 	
 	// increase the indent.
 	Tabs::increaseIndent();
-
+	
 	// write the xml for the class members.
 	// for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
 	// won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
-
+	
 	for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ){
-	//for( vector<Region>::const_iterator i = region.begin(); i <= region.begin(); i++ ){
+		//for( vector<Region>::const_iterator i = region.begin(); i <= region.begin(); i++ ){
 		( *i )->toXML( out );
 	}
 	// finished writing xml for the class members.
@@ -131,7 +134,7 @@ void World::toXML( ostream& out ) const {
 	// write the closing tag.
 	Tabs::writeTabs( out );
 	out << "</world>" << endl;
-
+	
 }
 
 //! Write out XML for debugging purposes.
@@ -145,7 +148,7 @@ void World::toDebugXML( const int period, ostream& out ) const {
 	Tabs::increaseIndent();
 	
 	// write the xml for the class members.
-
+	
 	XMLWriteElement( noreg, "numberOfRegions", out );
 	XMLWriteElement( population[ period ], "globalPopulation", out );
 	XMLWriteElement( crudeoilrsc[ period ], "globalCrudeOil", out );
@@ -153,16 +156,16 @@ void World::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( natgasrsc[ period ], "globalNaturalGas", out );
 	XMLWriteElement( coalrsc[ period ], "globalCoal", out );
 	XMLWriteElement( uranrsc[ period ], "globalUranium", out );
-
+	
 	// for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
 	// won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
 	marketplace.toDebugXML( period, out );
-
+	
 	for( vector<Region*>::const_iterator i = region.begin(); i == region.begin(); i++ ) { 
-	//for( vector<Region>::const_iterator i = region.begin(); i != region.end(); i++ ) { 
+		//for( vector<Region>::const_iterator i = region.begin(); i != region.end(); i++ ) { 
 		( *i )->toDebugXML( period, out );
 	}
-
+	
 	for( vector<str_ghgss>::const_iterator j = ghgs.begin(); j != ghgs.end(); j++ ) {
 		// j->toDebugXML( out ); // not yet implemented.
 	}
@@ -202,10 +205,13 @@ void World::gnp(int per)
 
 //! calculate supply and demand and emissions for all regions
 /*! This is the main action loop for the model. 
- Uses "MiniCAM" style logic where primary costs are calculated, 
- then prices of refined fuels, end-use costs, end-use, etc. */
+Uses "MiniCAM" style logic where primary costs are calculated, 
+then prices of refined fuels, end-use costs, end-use, etc. */
 void World::calc(int per)
-{
+{	
+	
+	Configuration* conf = Configuration::getInstance();
+	
 	for (int i=0;i<noreg;i++) {
 		// apply carbon taxes to appropriate technologie
 		region[i]->applycarbontax(per);
@@ -227,24 +233,27 @@ void World::calc(int per)
 		//sdfile<<"\n"; // supply & demand info.
 		// determine supply of final energy and other goods based on demand
 		region[i]->finalsupply(per);
-
-// 		region[i]->calcAgSector(per);
+		
+		if( conf->getBool( "agSectorActive" ) ){
+			region[i]->calcAgSector(per);
+		}
+		
 		// calculate GHG emissions for region by technology
 		region[i]->emission(per);
 		// set regional GHG emissions as market demand
 		region[i]->setghgdemand(per);
-                
-                // Optional routine to check if prices have any dependancies. Compare outputs
-                // to see if they have changed in-between calls. Haven't yet, could automate this
-                // if it turns out to be a problem. Probably good idea to check if model inputs
-                // are significantly re-structured.
-                const int check = 0;
-                if (check==1 && per == 7) {
-                    // vector<double> sectorprice
-                    bugoutfile << "1st,"; marketplace.prices_to_bugout(per);
-                    region[i]->finalsupplyprc(per);
-                    bugoutfile << "2nd,"; marketplace.prices_to_bugout(per);
-                }
+		
+		// Optional routine to check if prices have any dependancies. Compare outputs
+		// to see if they have changed in-between calls. Haven't yet, could automate this
+		// if it turns out to be a problem. Probably good idea to check if model inputs
+		// are significantly re-structured.
+		const int check = 0;
+		if (check==1 && per == 7) {
+			// vector<double> sectorprice
+			bugoutfile << "1st,"; marketplace.prices_to_bugout(per);
+			region[i]->finalsupplyprc(per);
+			bugoutfile << "2nd,"; marketplace.prices_to_bugout(per);
+		}
 		
 	}	
 }
@@ -289,8 +298,8 @@ void World::emiss_ind(int per)
 void World::emiss_all()
 {
 	int maxper = modeltime.getmaxdataper();
-        int  per;
-        
+	int  per;
+	
 	ifstream gasfile2;
 	//gasfile2.open("gas2.emk",ios::in); // open input file for reading
 	gasfile2.open("gas2.emk"); // open input file for reading
@@ -334,7 +343,7 @@ void World::emiss_all()
 	for (per=maxper;per<maxper+2;per++) {
 		ghgs[per]=ghgs[per-1];
 	}
-
+	
 	gasfile2.close();
 }
 
@@ -345,11 +354,11 @@ void World::outputfile(void)
 	vector<double> temp(maxper);
 	// function protocol
 	void fileoutput3(string var1name,string var2name,string var3name,
-				  string var4name,string var5name,string uname,vector<double> dout);
-
+		string var4name,string var5name,string uname,vector<double> dout);
+	
 	// write global population results to database
 	fileoutput3("global"," "," "," ","population","Millions",population);
-
+	
 	// write total emissions for World
 	for (int m=0;m<maxper;m++)
 		temp[m] = ghgs[m].CO2;
@@ -370,11 +379,11 @@ void World::MCoutput(void)
 	vector<double> temp(maxper);
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
-			   string uname,vector<double> dout);
-
+		string uname,vector<double> dout);
+	
 	// write global population results to database
 	//dboutput4("global","General","Population","zTotal","thous",population);
-
+	
 	// call regional output
 	for (int i=0;i<noreg;i++) {
 		region[i]->MCoutput();
