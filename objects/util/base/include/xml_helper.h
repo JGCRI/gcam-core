@@ -437,8 +437,8 @@ void XMLWriteElement( const T value, const std::string elementName, std::ostream
 * \param attrValue Value to print as an attribute.
 * \param attrName Name of attribute.
 */
-template<class T>
-void XMLWriteElementAndAttribute( const T value, const std::string elementName, std::ostream& out, const Tabs* tabs, const int attrValue, const std::string attrName ) {
+template<class U>
+void XMLWriteElementAndAttribute( const U value, const std::string elementName, std::ostream& out, const Tabs* tabs, const int attrValue, const std::string attrName ) {
    
    tabs->writeTabs( out );
    
