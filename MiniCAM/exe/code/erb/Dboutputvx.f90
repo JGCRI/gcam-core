@@ -788,9 +788,9 @@ END IF
   							(SYNINPUT(INCOAL,L,2:NM)-(SYNFUEL(3,1,L,2:NM)+SYNFUEL(3,2,L,2:NM))) + &	! syn COAL-gas&liq
   							(EDRIKLM(INCOAL,KH2,L,2:NM)-(ESHILM(INCOAL,L,2:NM)+ESHILM(INCOAL+NH2,L,2:NM))) 	! H2 gen
 	DBAR(vl(ct,sct,4),:) =	(EDRIKLM(IBMASS,1,L,2:NM)-ESUILM(7,L,2:NM)) + &	! elec gen
- 							(SYNINPUT(IBMASS,L,2:NM)-(SYNFUEL(4,1,L,2:NM)+SYNFUEL(4,2,L,2:NM))) + &	! syn Biomass-gas&liq
-  							(EDRIKLM(IBMASS,KH2,L,2:NM)-ESHILM(IBMASS,L,2:NM)) 	! H2 gen
-	DBAR(vl(ct,sct,5),:) =	(EDRIKLM(JUH2GEN,1,L,2:NM)-ESUILM(11,L,2:NM))	! Elec gen from H2
+ 							(SYNINPUT(4,L,2:NM)-(SYNFUEL(4,1,L,2:NM)+SYNFUEL(4,2,L,2:NM))) + &	! syn Biomass-gas&liq
+  							(EDRIKLM(IBMASS,KH2,L,2:NM)-ESHILM(4,L,2:NM)) 	! H2 gen
+	DBAR(vl(ct,sct,5),:) =	(ESUILM(JUH2GEN,L,2:NM)*(GUILM(JUH2GEN,L,2:NM)-1.d0) )	! Elec gen from H2
 	DBAR(vl(ct,sct,6),:) =	ESHILM(JHELCTRO,L,2:NM)*(GHILM(JHELCTRO,2:NM)-1.d0)	! H2 gen by Electrolysis
 	DBAR(vl(ct,sct,7),:) =	DBAR(vl(ct,sct,1),:) + DBAR(vl(ct,sct,2),:) + DBAR(vl(ct,sct,3),:) + &
 							DBAR(vl(ct,sct,4),:) + DBAR(vl(ct,sct,5),:) + DBAR(vl(ct,sct,6),:)
