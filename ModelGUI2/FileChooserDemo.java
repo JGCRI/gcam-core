@@ -49,6 +49,8 @@ public class FileChooserDemo extends JFrame
   private TreePath selectedPath;
   private JDialog addChildDialog;
 
+  private JPopupMenu tableMenu; // for new 'flip' right click option
+
   XMLFilter xmlFilter = new XMLFilter();
   CSVFilter csvFilter = new CSVFilter();
   File file;
@@ -496,6 +498,27 @@ public class FileChooserDemo extends JFrame
 	   return treeMenu;
    }
   
+  // new code for 'flip' ..
+  private JPopupMenu makePopupTableMenu() {
+		tableMenu = new JPopupMenu();
+		JMenuItem menuItem = new JMenuItem("Flip");
+		menuItem.addMouseListener(new MouseListener() {
+			public void mouseReleased(MouseEvent e) {
+				System.out.println("RIGHT CLICKED FLIP!, do stuff HERE...");
+			}
+			public void mouseClicked(MouseEvent e) {
+				//shouldn't the action go here
+			}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+		});
+		tableMenu.add(menuItem);
+		return tableMenu;
+	}
+  // end new code for flip ..
+  
+  
   private void removeEmptyTextNodes(Node curr) {
 	  NodeList nl = curr.getChildNodes();
 	  Node temp;
@@ -877,6 +900,33 @@ public class FileChooserDemo extends JFrame
 		  	System.out.println(e.getMessage());
 		  }
 	  }*/
+	  
+	  
+	  // putting flip code here
+		tableMenu = makePopupTableMenu();
+
+		//	listen for right click on the table
+	   jTable.addMouseListener(new MouseAdapter() {
+		   public void mousePressed(MouseEvent e) {
+			   maybeShowPopup(e);
+		   }
+		   public void mouseReleased(MouseEvent e) {
+			   maybeShowPopup(e);
+		   }
+		   private void maybeShowPopup(MouseEvent e) {
+			   if (e.isPopupTrigger()) {
+				   //selectedPath = jtree.getClosestPathForLocation(e.getX(), e.getY());
+				  MenuElement[] me = tableMenu.getSubElements();
+					  for (int i = 0; i < me.length; i++) {
+					  if (((JMenuItem)me[i]).getText().equals("Flip")) {
+							System.out.println("Flip menu activated");
+					  }
+				  }
+				  tableMenu.show(e.getComponent(), e.getX(), e.getY());
+			   }
+		   }
+	   });
+	   
   }
 
   private Object[] getRegionAndYearFromNode(Node n) {
@@ -1918,5 +1968,11 @@ class MyTreeModelListener implements TreeModelListener {
 	}
 	return true;
   }
+
+
+
+
+
+
 }
 
