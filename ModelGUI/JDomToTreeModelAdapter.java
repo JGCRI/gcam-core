@@ -20,9 +20,15 @@ import java.awt.Dimension;
 import org.jdom.*;
 
 // This adapter converts a JDOM into a JTree model.
-public class JDomToTreeModelAdapter implements javax.swing.tree.TreeModel {
+public class JDomToTreeModelAdapter implements javax.swing.tree.TreeModel { //extends DefaultTreeModel { //
     private Document document; 
     private List listenerList;
+    
+    /*public JDomToTreeModelAdapter(Document doc) {
+        super((TreeNode)new AdapterNode(doc.getRootElement()));
+        document = doc;
+        listenerList = new LinkedList();
+    }*/
     
     public JDomToTreeModelAdapter(Document doc) {
         document = doc;
@@ -90,49 +96,44 @@ public class JDomToTreeModelAdapter implements javax.swing.tree.TreeModel {
         }
     }
     
-    public void insertNodeInto(AdapterNode newChild, AdapterNode parent, int index) {
-        System.out.println("Want to insert node");
+    public void insertNodeInto(AdapterNode newChild, TreePath parentPath, int index) {
+        AdapterNode parent = (AdapterNode)parentPath.getLastPathComponent();
+        //List kids = parent.getChildren();
+        //kids.clear();
+        
+        //parent.addChild(newChild, index);
+        int[] arr1 = {parent.addChild(newChild)};
+        AdapterNode[] arr2 = {newChild};
+        fireTreeNodesInserted(new TreeModelEvent(this, parentPath, arr1, arr2));
+        System.out.println("all done...?");
     }
     
-      /*
-       * Invoke these methods to inform listeners of changes.
-       * (Not needed for this example.)
-       * Methods taken from TreeModelSupport class described at
-       *   http://java.sun.com/products/jfc/tsc/articles/jtree/index.html
-       * That architecture (produced by Tom Santos and Steve Wilson)
-       * is more elegant. I just hacked 'em in here so they are
-       * immediately at hand.
-       */
-/*    public void fireTreeNodesChanged( TreeModelEvent e ) {
-        Enumeration listeners = listenerList.elements();
-        while ( listeners.hasMoreElements() ) {
-            TreeModelListener listener =
-            (TreeModelListener) listeners.nextElement();
+    public void fireTreeNodesChanged( TreeModelEvent e ) {
+        Iterator listeners = listenerList.iterator();
+        while ( listeners.hasNext() ) {
+            TreeModelListener listener = (TreeModelListener) listeners.next();
             listener.treeNodesChanged( e );
         }
     }
     public void fireTreeNodesInserted( TreeModelEvent e ) {
-        Enumeration listeners = listenerList.elements();
-        while ( listeners.hasMoreElements() ) {
-            TreeModelListener listener =
-            (TreeModelListener) listeners.nextElement();
+        Iterator listeners = listenerList.iterator();
+        while ( listeners.hasNext() ) {
+            TreeModelListener listener = (TreeModelListener) listeners.next();
             listener.treeNodesInserted( e );
         }
     }
     public void fireTreeNodesRemoved( TreeModelEvent e ) {
-        Enumeration listeners = listenerList.elements();
-        while ( listeners.hasMoreElements() ) {
-            TreeModelListener listener =
-            (TreeModelListener) listeners.nextElement();
+        Iterator listeners = listenerList.iterator();
+        while ( listeners.hasNext() ) {
+            TreeModelListener listener = (TreeModelListener) listeners.next();
             listener.treeNodesRemoved( e );
         }
     }
     public void fireTreeStructureChanged( TreeModelEvent e ) {
-        Enumeration listeners = listenerList.elements();
-        while ( listeners.hasMoreElements() ) {
-            TreeModelListener listener =
-            (TreeModelListener) listeners.nextElement();
-            listener.treeStructureChanged( e );
+        Iterator listeners = listenerList.iterator();
+        while (listeners.hasNext()) {
+            TreeModelListener listener = (TreeModelListener)listeners.next();
+            listener.treeStructureChanged(e);
         }
-    } */
+    } 
 }

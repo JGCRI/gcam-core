@@ -26,12 +26,39 @@ public class AdapterNode {
         levelIndex = -1;
     }
     
+    public AdapterNode(String nodeName) {
+        node = new Element(nodeName);
+        levelIndex = -1;
+    }
+    
     public AdapterNode(Element newNode) {
         node = newNode;
         levelIndex = -1;
     }
     
     /************** Functions used by TreeModel********************/
+    
+    public int addChild(AdapterNode newChild) {
+        /*List l = node.getChildren();
+        Object[] arr = l.toArray();
+        int size = arr.length;
+        Object*/
+        
+        
+        //v.add(index, newChild);
+        
+        //v.addAll(node.getChildren().clone());
+        //v.addElement(newChild.getElement());
+        
+        //node.setContent(v);
+        node.addContent(newChild.getElement());
+        return (node.getChildren().size()-1);
+        //return v.size()-1;
+    }
+    
+    private Element getElement() {
+        return node;
+    }
     
     public AdapterNode child(int searchIndex) {
         //Note: JTree index is zero-based.
@@ -199,5 +226,10 @@ public class AdapterNode {
     
     public void setText(String text) {
         node.setText(text);
+    }
+    
+    public void setAttribute (String name, String value) {
+        Element newNode = node.setAttribute(name, value);
+        node = newNode;
     }
 }

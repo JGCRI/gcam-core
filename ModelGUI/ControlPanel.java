@@ -40,13 +40,22 @@ public class ControlPanel extends javax.swing.JFrame {
     private JSplitPane splitPane;
     private JPanel tableHeaderPanel;
     
+    private JDialog addChildDialog;
+    private JTextField nameField;
+    private JTextField attribField;
+    private JTextField valueField;
+    private JPanel locationPanel;
+    
     private JButton displayButton;
     private JButton selectNodesButton;
+    
+    private MapNode rootMapNode;
     
     private JTree tree;
     private Document document;
     private java.util.List ansestorNodes;
     private JPopupMenu treeMenu;
+    private TreePath selectedPath;
     
     private JTable table;
     private int tableFlag;
@@ -248,9 +257,9 @@ public class ControlPanel extends javax.swing.JFrame {
                     File file = fc.getSelectedFile();
                     //jTFfileName.setText(file.getAbsolutePath());
                     try {
-                        outputter.output(document, new FileOutputStream("C:/test1.xml"));
-                    }
-                    catch (Exception e) {
+                        outputter.output(document, new FileOutputStream(file));
+                        nodeValueChangedFlag = false;
+                    } catch (Exception e) {
                         System.err.println(e);
                     }
                 }
@@ -280,6 +289,7 @@ public class ControlPanel extends javax.swing.JFrame {
         SAXBuilder parser = new SAXBuilder();
         try {
             document = parser.build(new File(fileName));
+            createTreeMap(new AdapterNode(document.getRootElement()));
             return true;
         } catch (Exception e){
             System.out.println("Exception " + e + " in function readXMLFile");
@@ -297,7 +307,7 @@ public class ControlPanel extends javax.swing.JFrame {
         int rightWidth = 350;
         int windowHeight = 500;
         int windowWidth = leftWidth + rightWidth;
-        
+               
         tree = new JTree(new JDomToTreeModelAdapter(document));
         //allow multiple nodes to be selected simultaneously
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -329,6 +339,7 @@ public class ControlPanel extends javax.swing.JFrame {
             private void maybeShowPopup(MouseEvent e) {
                 if (e.isPopupTrigger()) {
                     treeMenu.show(e.getComponent(), e.getX(), e.getY());
+                    selectedPath = tree.getClosestPathForLocation(e.getX(), e.getY());
                 }
             }
         });
@@ -434,7 +445,19 @@ public class ControlPanel extends javax.swing.JFrame {
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
+                
             }
+        });
+        menuItem.addMouseListener(new MouseListener() {
+            public void mouseReleased(MouseEvent e) {
+                tree.setSelectionPath(selectedPath);
+                
+                showAddChildDialog();
+            }
+            public void mouseClicked(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {}
         });
         treeMenu.add(menuItem);
         menuItem = new JMenuItem("Another popup menu item");
@@ -453,9 +476,11 @@ public class ControlPanel extends javax.swing.JFrame {
         treePanel.add(Box.createRigidArea(new Dimension(0,5)));
         treePanel.add(splitPane);
         treePanel.add(Box.createRigidArea(new Dimension(0,5)));
-        //treePanel.add(selectNodesButton);
-        //treePanel.add(Box.createRigidArea(new Dimension(0,5)));
         treePanel.add(saveAllButton);
+        
+        //create the dialog for adding new node children, but leave invisible
+        makeAddChildPanel();
+        
         pack();
         //treePanel.revalidate();
         //repaint();
@@ -891,7 +916,7 @@ public class ControlPanel extends javax.swing.JFrame {
                         if (lefterName.substring(index1+1, index2).equals("period")) {
                             //get a list of all period nodes in that subtree
                             AdapterNode parent = currNode.getParent();
-System.out.println("I think period's parent is: " + parent);
+//System.out.println("I think period's parent is: " + parent);
                             childNodes = parent.getChildren("period", "");
                             Iterator it = childNodes.iterator();
                             while (it.hasNext()) {
@@ -904,7 +929,7 @@ System.out.println("I think period's parent is: " + parent);
                                 //    values.addElement(currNode.getAttributeValue("name"));
                                 //} else {
                                 values.addElement(currNode);
-System.out.println("Just added " + currNode);
+//System.out.println("Just added " + currNode);
 
                                 attribVal = parent.getAttributeValue("year");
                                 if (attribVal != null) {
@@ -991,6 +1016,151 @@ System.out.println("Just added " + currNode);
             dataPanel.revalidate();
             repaint();
         }
+    }
+    
+    public void makeAddChildPanel() {
+        addChildDialog = new JDialog(this, "Add child node", true);
+        addChildDialog.getContentPane().setLayout(new BoxLayout(addChildDialog.getContentPane(), BoxLayout.X_AXIS));
+        
+        nameField = new JTextField();
+        attribField = new JTextField();
+        valueField = new JTextField();
+        
+        JPanel childPanel = new JPanel();
+        childPanel.setLayout(new BoxLayout(childPanel, BoxLayout.Y_AXIS));
+        childPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 5, 5));
+        
+        JLabel nameLabel = new JLabel("Node Name (required): ");
+        childPanel.add(nameLabel);
+        childPanel.add(Box.createRigidArea(new Dimension(0, 3)));
+        childPanel.add(nameField);
+        childPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        
+        JLabel attribLabel = new JLabel("Node Attribute(s) (optional list in the form name=node name, year=1975");
+        childPanel.add(attribLabel);
+        childPanel.add(Box.createRigidArea(new Dimension(0, 3)));
+        childPanel.add(attribField);
+        childPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        
+        JLabel valueLabel = new JLabel("Node Value ");
+        childPanel.add(valueLabel);
+        childPanel.add(Box.createRigidArea(new Dimension(0, 3)));
+        childPanel.add(valueField);
+        childPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        
+        addChildDialog.getContentPane().add(childPanel);
+        
+        
+        locationPanel = new JPanel();
+        locationPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));     
+        addChildDialog.getContentPane().add(locationPanel);
+        
+        
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(0,1,5,5));
+        //buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        
+        JButton addNodeButton = new JButton("Add Node");
+        //addNodeButton.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
+        //addNodeButton.setPreferredSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
+        addNodeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addChildNode();
+                hideAddChildDialog();
+            }
+        });
+        
+        JButton cancelButton = new JButton("Cancel");
+        //cancelButton.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
+        //cancelButton.setPreferredSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
+        //cancelButton.setPreferredSize(new Dimension(100, 25));
+        //cancelButton.setMinimumSize(new Dimension(100, 25));
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                hideAddChildDialog();
+            }
+        });
+        
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        buttonPanel.add(addNodeButton);
+        //buttonPanel.add(Box.createRigidArea(new Dimension(5,5)));
+        buttonPanel.add(cancelButton);  
+        buttonPanel.add(Box.createVerticalGlue());
+        
+        JPanel tempPanel = new JPanel();
+        tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+        tempPanel.add(new JSeparator(SwingConstants.VERTICAL));
+        tempPanel.add(buttonPanel);
+        //tempPanel.add(Box.createVerticalGlue());
+        
+        addChildDialog.getContentPane().add(tempPanel);
+    }
+    
+    private void addChildNode() {
+        String nodeName = nameField.getText().trim();
+        String attribs = attribField.getText().trim();
+        String value = valueField.getText().trim();
+        int sIndex, eIndex, index;
+        
+        //create new node with given name
+        AdapterNode newNode = new AdapterNode(nodeName);
+        
+        //add all attributes to the new node, if the exist
+        //  assumes a comma-seporated list of attributes in the form: name="nodeName", year="1975", ...
+        if (attribs.length() > 0) {
+            eIndex = attribs.indexOf(',');
+            sIndex = 0;
+            String attrib, val;
+            while (eIndex > 0) {
+                attrib = attribs.substring(sIndex, eIndex);
+                index = attrib.indexOf('=');
+                val = attrib.substring(index+1).trim();
+                attrib = attrib.substring(0, index).trim();
+                newNode.setAttribute(attrib, val);
+                
+                sIndex = eIndex + 1;
+                eIndex = attribs.indexOf('=', sIndex);
+            }
+            attrib = attribs.substring(sIndex);
+            index = attrib.indexOf('=');
+            val = attrib.substring(index+1).trim();
+            attrib = attrib.substring(0, index).trim();
+            newNode.setAttribute(attrib, val);
+        }
+        
+        if (value.length() > 0) {
+            newNode.setText(value);
+        }
+        
+        //AdapterNode parent = (AdapterNode)selectedPath.getLastPathComponent();
+        JDomToTreeModelAdapter model = (JDomToTreeModelAdapter)tree.getModel();
+        model.insertNodeInto(newNode, selectedPath, 0);
+        //tree.setModel(model);
+        //tree.revalidate();
+        
+        
+    }
+    
+    //display the add dialog box
+    private void showAddChildDialog() {
+        nameField.setText("");
+        attribField.setText("");
+        valueField.setText("");
+        
+        //display possible locations where to add node
+        
+        addChildDialog.pack();
+        //center above the main window
+        addChildDialog.setLocationRelativeTo(addChildDialog.getParent());
+        addChildDialog.show();
+    }
+    
+    private void hideAddChildDialog() {
+        addChildDialog.hide();
+    }
+    
+    private void createTreeMap(AdapterNode treeRoot) {
+        rootMapNode = new MapNode(treeRoot);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
