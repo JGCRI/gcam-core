@@ -340,8 +340,8 @@ void Ghg::calcEmission( const string& regionName, const string& fuelname, const 
 				emissCoef = 0;
 			}
 		} else {
-			emission = input * emissCoef;
-			emissFuel =  emission;
+			emission = ( input - output ) * emissCoef;
+			emissFuel =  emissCoef * emissCoef;
 		}
 		emissGwp = gwp * emission;
     }
