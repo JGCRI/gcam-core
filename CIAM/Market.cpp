@@ -1,5 +1,6 @@
 #include "Definitions.h"
 #include <iostream>
+#include <vector>
 #include "modeltime.h"  // model runtime info
 #include "XMLHelper.h"
 #include "Market.h"
@@ -54,6 +55,10 @@ void Market::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( dexdmd, "dexdmd", out );
 	XMLWriteElement( ldem, "ldem", out );
 	XMLWriteElement( lsup, "lsup", out );
+	
+	for( vector<string>::const_iterator i = containedRegionNames.begin(); i != containedRegionNames.end(); i++ ) {
+		XMLWriteElement( *i, "ContainedRegion", out );
+	}
 	// maybe add more to write out.
 	
 	// finished writing xml for the class members.

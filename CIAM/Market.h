@@ -12,6 +12,7 @@
 */
 
 #include <string>
+#include <vector>
 
 using namespace std;
 /*!
@@ -41,6 +42,7 @@ public:
 	bool solveMarket; //! Toggle for markets that should be solved
 	marketType type; //! market type: normal, price, demand, etc.
 	int year; //! period
+	vector<string> containedRegionNames; //! Vector of names of all regions within this vector.
 	double price;  //! market price
 	double tprice;  //! store market price
 	double demand; //! demand for market solution
