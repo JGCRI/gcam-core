@@ -27,6 +27,9 @@ public class FileChooserDemo extends JFrame
 	private LSInput lsInput;
 	private LSParser lsParser;
 	private DOMImplementationLS implls;
+	
+	int lastFlipX = 0;
+	int lastFlipY = 0;
 
   JMenuItem menuOpenX = null;
   JMenuItem menuOpenC = null;
@@ -538,6 +541,9 @@ public class FileChooserDemo extends JFrame
 					  for (int i = 0; i < me.length; i++) {
 					  if (((JMenuItem)me[i]).getText().equals("Flip")) {
 							System.out.println("Flip menu activated");
+							System.out.println("flipped original x and y are " + e.getX() + " " + e.getY());
+							lastFlipX = e.getX();
+							lastFlipY = e.getY();
 					  }
 				  }
 				  tableMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -604,10 +610,12 @@ public class FileChooserDemo extends JFrame
 		menuItem.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
 				System.out.println("RIGHT CLICKED FLIP!, do stuff HERE...");
+				e.translatePoint( lastFlipX, lastFlipY );
 				Point p = e.getPoint();
-				int row = jTable.rowAtPoint(p);
-				int col = jTable.columnAtPoint(p);
+				int row = jTable.rowAtPoint( p );
+				int col = jTable.columnAtPoint( p );
 				System.out.println("Source: "+e.getSource()+" Point:"+p+" row: "+row+" col: "+col);
+				
 				((NewDataTableModel)((JTable)((JScrollPane)jTable.getValueAt(row, col)).getViewport().getView()).getModel()).flip();
 				// CALL FLIP METHOD HERE !!!!!
 			}
