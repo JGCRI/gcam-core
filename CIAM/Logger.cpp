@@ -248,7 +248,7 @@ const string Logger::getTimeString() {
 
 //! Shorten the full path into the file name.
 const string Logger::getFileNameFromPath( const string& fullPath ) {
-	int position = fullPath.rfind( "\\" ); // find the last /. This may need modification for unix.
+	int position = static_cast<int>( fullPath.rfind( "\\" ) ); // find the last /. This may need modification for unix.
 	return fullPath.substr( position ); // return all characters past the last /.
 }
 
@@ -353,7 +353,7 @@ void Logger::parseHeader( string& headerIn ) {
 	while( offset < static_cast<int>( headerIn.size() ) && offset != npos ){
 		
 		// Find the first left bracket.
-		leftBracket = headerIn.find_first_of( "{", offset );
+		leftBracket = static_cast<int>( headerIn.find_first_of( "{", offset ) );
 		offset = leftBracket;
 
 		// Exit if we do not find it.
@@ -361,7 +361,7 @@ void Logger::parseHeader( string& headerIn ) {
 			break;
 		}
 		
-		rightBracket = headerIn.find_first_of( "}", offset );
+		rightBracket = static_cast<int>( headerIn.find_first_of( "}", offset ) );
 		offset = rightBracket;
 
 		// Exit if we do not find it.
