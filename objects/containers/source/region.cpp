@@ -359,7 +359,10 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
     for( vector<GHGPolicy*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
         ( *l )->toInputXML( out, tabs );
     }
-
+    
+    // Note: The count function is an STL algorithm that counts the number of times a value occurs
+    // within the a range of a container. The first two arguments to the function are the range of the 
+    // container to search, the third is the value to search for.
 	if( ( count( calibrationGDPs.begin(), calibrationGDPs.end(), 0 ) != calibrationGDPs.size() ) || 
         ( count( TFEcalb.begin(), TFEcalb.end(), 0 ) != TFEcalb.size() ) ){ // makes sure tags aren't printed if no real data
 
