@@ -1,14 +1,19 @@
-/** 
+/*!
 * \namespace std 
 * \brief The C++ std library namespace. Defining it avoids writing std:: prefixes.
 */
 
-/**
+/*!
 * \namespace xercesc
 * \brief The namespace for the Xerces xml parser.
 */
 
-/**
+/*!
+* \namespace mtl
+* \brief The namespace for the Matrix Template Library.
+*/
+
+/*!
 * \mainpage CIAM model API documentation
 *
 * \section intro Introduction
