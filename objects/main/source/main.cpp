@@ -85,7 +85,7 @@ int main( int argc, char *argv[] ) {
     // Determine the correct type of ScenarioRunner to create.
     if( conf->getBool( "BatchMode" ) ){
         // Create the batch runner.
-        const string batchFile = conf->getFile( "BatchFile" );
+        const string batchFile = conf->getFile( "BatchFileName" );
         runner.reset( new BatchRunner( batchFile ) );
     }
     else if( conf->getBool( "mergeFilesOnly" ) ) {
