@@ -75,7 +75,7 @@ void tranTechnology::production(const string& regionName,const string& prodName,
     //input = output/eff/pow(1+techchange,timestep);
     // for transportation technology use intensity instead of efficiency
     // convert from million Btu to EJ
-    const int ECONV = 1.055e-9;
+    const double ECONV = 1.055e-9;
     input = output*intensity*ECONV;
 	   
     if (input < 0) {
