@@ -320,11 +320,11 @@ void demsector::price(int per)
 	for (int i=0;i<nosubsec;i++) {	
 		if (per == 0) {
 			// uses read in base year shares
-			sectorprice[per] += subsec[i]->getShare(per) * subsec[i]->getprice(per);
+			sectorprice[per] += subsec[i]->getShare(per) * subsec[i]->getPrice(per);
 		}
 		else {
 			// uses previous period's actual shares
-			sectorprice[per] += subsec[i]->getShare(per-1) * subsec[i]->getprice(per);
+			sectorprice[per] += subsec[i]->getShare(per-1) * subsec[i]->getPrice(per);
 		}
 	}
 }
