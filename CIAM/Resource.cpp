@@ -20,10 +20,10 @@ using namespace std; // enables elimination of std::
 #include "str_indexname.h" // get index and name from database
 #include "modeltime.h"
 
-extern const char *dbfile;
-extern const char *dbtdrsc;
-extern const char *dbtgen;
-extern const char *dbtout;
+extern const char* dbfile;
+extern const char* dbtdrsc;
+extern const char* dbtgen;
+extern const char* dbtout;
 extern CdbRecordset drscrst,drscrst_ct;
 extern CdbRecordset regidrst,catidrst,subcatidrst,varidrst,subvaridrst;
 extern ofstream bugoutfile,outfile;	
@@ -81,16 +81,13 @@ void resource::initper(void)
 	available.resize(maxper); // total resource availabl
 	annualprod.resize(maxper); // annual production rate of resource
 	cummprod.resize(maxper); // cummulative production of resource
-	ghgs.resize(maxper); // structure containing ghg emissions
 }
 
 // set number of subsecsectors for each depletable resource
 void resource::setdepsubrsrc(int iss,int* tgrade) 
 {
-
 	nosubrsrc = iss; 
 	depsubrsrc.resize(nosubrsrc);
-
 	for (int i=0;i<nosubrsrc;i++) {
 		depsubrsrc[i].initper(); // counts number of grades and creates objects
 		int ig = *(tgrade+i); // gives number of grades in subresource
@@ -104,7 +101,6 @@ void resource::initialize(char* region,int tregno)
 	int i=0;
 	no = drscrst.GetField("Sector").intVal;
 	strcpy(name,drscrst.GetField("SectorName").pcVal);
-
 	for (i=0;i<nosubrsrc;i++) {
 		depsubrsrc[i].dbreadgrade(tregno,no); // reads grade data
 		depsubrsrc[i].dbreadgen(region,depsubrsrc[i].showname(),dbtgen);
@@ -118,7 +114,7 @@ int resource::index(void)
 }
 
 // return resource name
-char * resource::showname(void)
+char* resource::showname(void)
 {
 	return name;
 }
@@ -201,36 +197,8 @@ void resource::show(void)
 		cout<<depsubrsrc[i].showname()<<"\n";
 }
 
-// calculate GHG emissions for each resource from subresources
-void resource::emission(int per)
-{
-	// emission function calculate and returns CO2 only for now
-	ghgs[per].CO2 = 0; // initialize
-	for (int i=0;i<nosubrsrc;i++)
-		ghgs[per].CO2 += depsubrsrc[i].emission(per);
-}
-
-// return GHG emissions for each resource
-void resource::ghgoutputdb(const char *regname,int reg)
-{
-	int m=0;
-	int maxper = modeltime.getmaxper();
-	vector<double> temp(maxper);
-	// function protocol
-	void dboutput2(string varreg,string var1name,string var2name,string var3name,
-			  string var4name,vector<double> dout,string uname);
-	
-	// function arguments are variable name, double array, db name, table name
-	// the function writes all years
-	// total sector output
-	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
-	dboutput2(regname,"emissions","CO2",name,"CO2 emissions",temp,"MTC");
-
-}
-
 // write resource output to database
-void resource::outputdb(const char *regname,int reg)
+void resource::outputdb(const char* regname,int reg)
 {
 	// function protocol
 	void dboutput2(string varreg,string var1name,string var2name,string var3name,
@@ -244,25 +212,6 @@ void resource::outputdb(const char *regname,int reg)
 	// do for all subsectors in the sector
 	for (int i=0;i<nosubrsrc;i++)
 		depsubrsrc[i].outputdb(regname,reg,name);
-}
-
-// return GHG emissions for each resource
-void resource::ghgoutputfile(const char *regname,int reg)
-{
-	int m=0;
-	int maxper = modeltime.getmaxper();
-	vector<double> temp(maxper);
-	// function protocol
-	void fileoutput3(int regno,string var1name,string var2name,string var3name,
-				  string var4name,string var5name,string uname,vector<double> dout);
-	
-	// function arguments are variable name, double array, db name, table name
-	// the function writes all years
-	// total sector output
-	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
-	fileoutput3(reg,regname,name," "," ","CO2 emiss","MTC",temp);
-
 }
 
 // write resource output to file
@@ -283,7 +232,7 @@ void resource::outputfile(const char *regname,int reg)
 }
 
 // write resource output to database
-void resource::MCoutput(const char *regname,int reg)
+void resource::MCoutput(const char* regname,int reg)
 {
 	int m=0;
 	int maxper = modeltime.getmaxper();
@@ -296,10 +245,6 @@ void resource::MCoutput(const char *regname,int reg)
 	// the function writes all years
 	// total sector output
 	dboutput4(regname,"Pri Energy","Production by Sector",name,"EJ",annualprod);
-	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
-	dboutput4(regname,"CO2 Emiss","by Fuel",name,"MTC",temp);
-	dboutput4(regname,"CO2 Emiss",name,"zTotal","MTC",temp);
 	// resource price
 	dboutput4(regname,"Price","by Sector",name,"$/GJ",rscprc);
 

@@ -85,7 +85,6 @@ void subrsrc::initper(void) //set vector size
 	available.resize(maxper); // total available resource
 	annualprod.resize(maxper); // annual production of subrsrc
 	cummprod.resize(maxper); // cummulative production of subrsrc
-	gases.resize(maxper); // suite of greenhouse gas
 }
 
 void subrsrc::setgrades2(int igrade)
@@ -182,9 +181,6 @@ void subrsrc::dbreadgrade(int treg,int tsec)
 	// mainly done to get to EOF when last region resource is read in
 	drscrst.MoveNext(); 
 	
-	for (lYear = 0; lYear < maxper; lYear++) {
-		gases[lYear].setcoefs(); // initializes emissions coefficients
-	}
 	delete [] prsctechRows; // free memory
 }
 
@@ -319,25 +315,6 @@ double subrsrc::showavailable(int per)
 	return available[per];
 }
 
-// calculate GHG emissions from annual production of subresource
-double subrsrc::emission(int per)
-{
-	gases[per].calc_allgases(annualprod[per], name);	
-	return gases[per].showCO2();
-}
-/*
-void subrsrc::show(void)
-{
-	int i=0;
-	//write to file or database later
-	cout << no <<"  " << name<<"\n";
-	cout << "Number of Grades: " << nograde <<"\n";
-	for (i=0;i<nograde;i++)
-		cout<<"Annual Production: "<<annualprod(per)<<"\n";
-}
-
-*/
-
 // write subrsrc output to database
 void subrsrc::outputdb(const char *regname,int reg,const char *sname)
 {
@@ -354,10 +331,6 @@ void subrsrc::outputdb(const char *regname,int reg,const char *sname)
 	// total subsector output
 	dboutput2(regname,sname,name,"all grades","production",annualprod,"EJ");
 	dboutput2(regname,sname,name,"all grades","available",available,"EJ");
-
-	for (m=0;m<maxper;m++)
-		temp[m] = gases[m].showCO2();
-	dboutput2(regname,sname,name,"all grades","CO2 emissions",temp,"MTC");
 
 /*	// do for all grades in the sector
 	for (i=0;i<nograde;i++) {
@@ -382,7 +355,7 @@ void subrsrc::outputdb(const char *regname,int reg,const char *sname)
 }
 
 // write subrsrc output to database
-void subrsrc::MCoutput(const char *regname,int reg,const char *sname)
+void subrsrc::MCoutput(const char *regname,int reg,const char *secname)
 {
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
@@ -395,37 +368,28 @@ void subrsrc::MCoutput(const char *regname,int reg,const char *sname)
 	// function arguments are variable name, double array, db name, table name
 	// the function writes all years
 	// total subsector output
-	dboutput4(regname,"Pri Energy Production",sname,name,"EJ",annualprod);
-	dboutput4(regname,"Resource",sname,name,"EJ",available);
-
-	for (m=0;m<maxper;m++)
-		temp[m] = gases[m].showCO2();
-	dboutput4(regname,"CO2 Emiss",sname,name,"MTC",temp);
-	dboutput4(regname,"Price",sname,name,"$/GJ",rscprc);
+	dboutput4(regname,"Pri Energy Production",secname,name,"EJ",annualprod);
+	dboutput4(regname,"Resource",secname,name,"EJ",available);
+	dboutput4(regname,"Price",secname,name,"$/GJ",rscprc);
 
 	string tssname = name; // tempory subsector name
 	string str; // tempory string
 
 	// do for all grades in the sector
 	for (i=0;i<nograde;i++) {
-		str = tssname + " " + depgrade[i][0].showname();
-		//str = depgrade[i][0].showname();
-		// output or demand for each grade
-		for (m=0;m<maxper;m++)
-			temp[m] = depgrade[i][m].showavail();
-		dboutput4(regname,"Resource",sname,str,"EJ",temp);
+		str = tssname + "_" + depgrade[i][0].showname();
 		// grade cost
 		for (m=0;m<maxper;m++)
 			temp[m] = depgrade[i][m].getcost();
-		dboutput4(regname,"Price",sname,str,"$/GJ",temp);
+		dboutput4(regname,"Price",secname,str,"$/GJ",temp);
 		// grade extraction cost
 		for (m=0;m<maxper;m++)
 			temp[m] = depgrade[i][m].getextcost();
-		dboutput4(regname,"Price ExtCost",sname,str,"$/GJ",temp);
+		dboutput4(regname,"Price ExtCost",secname,str,"$/GJ",temp);
 		// grade environmental cost
 		for (m=0;m<maxper;m++)
 			temp[m] = depgrade[i][m].getenvcost();
-		dboutput4(regname,"Price EnvCost",sname,str,"$/GJ",temp);
+		dboutput4(regname,"Price EnvCost",secname,str,"$/GJ",temp);
 	}
 }
 
@@ -445,10 +409,6 @@ void subrsrc::outputfile(const char *regname,int reg,const char *sname)
 	// total subsector output
 	fileoutput3(reg,regname,sname,name," ","production","EJ",annualprod);
 	fileoutput3(reg,regname,sname,name," ","resource","EJ",available);
-
-	for (m=0;m<maxper;m++)
-		temp[m] = gases[m].showCO2();
-	fileoutput3(reg,regname,sname,name," ","CO2 emiss","MTC",temp);
 
 /*	// do for all grades in the sector
 	for (i=0;i<nograde;i++) {

@@ -33,13 +33,13 @@ private:
 	vector<double> price_ser; // aggregate price for demand services
 	vector<double> carbontax; // regional carbon tax
 	vector<double> carbontaxpaid; // total regional carbon taxes paid
-	vector<str_ghgss> ghgs; // structure containing ghg emissions
 	vector<Summary> summary; // summary for reporting
 public:
 	region(void); // default construtor
 	~region(void); // destructor
 	void setlabel(const char* nstr,int sno); // set region name and index
 	void initper(void); // set array size to max period
+	void setCO2coef(void); // set default CO2 emissions coefficients
 	void setpop(void); // set vector size
 	void initpop(void); // read population information
 	void setcarbontax(void); // read in carbon tax from database
@@ -65,7 +65,7 @@ public:
 							   // after getting demand
 	void override_mrks(int per); // intermediate goods supply=cost demand=solution price 
 	void emission(int per); // calculates GHG emissions by fuel and sector
-	void ind_emission(int per); // calculates indirect GHG emissions from demand sectors
+	void emiss_ind(int per); // calculates indirect GHG emissions from demand sectors
 	void showsupsector(int per, const char* ofile); // write supply sector info to text file
 	void showdemsector(int per, const char* ofile); // write demand sector info to text file
 	void applycarbontax(int per); // apply carbon taxes to appropriate sectors
@@ -77,5 +77,4 @@ public:
 	void MCoutput(void); // MiniCAM output to file
 	int shownodrsc(void); // show number of depletable resources
 	int shownossec(void); // show number of supply sectors
-	double showco2emiss(int per); // show regional CO2 emissions total
 };

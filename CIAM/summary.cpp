@@ -54,6 +54,16 @@ map<string, double> Summary::getemission(void)
 	return emission;
 }
 
+map<string, double> Summary::getemfuelmap(void)
+{
+	return emissfuel;
+}
+
+map<string, double> Summary::getemindmap(void)
+{
+	return emissind;
+}
+
 void Summary::updatefuelcons(map<string, double> fuelinfo)
 {
 	string str;
@@ -119,6 +129,32 @@ void Summary::updateemiss(map<string, double> ghginfo)
 	}
 }
 
+void Summary::updateemfuelmap(map<string, double> ghginfo)
+{
+	string str;
+	typedef map<string,double>:: const_iterator CI;
+
+	// map all primary and secondary fuel consumption
+	for (CI fmap=ghginfo.begin(); fmap!=ghginfo.end(); ++fmap) {
+		str = fmap->first;
+		double test = fmap->second;
+		emissfuel[fmap->first] += fmap->second;
+	}
+}
+
+void Summary::updateemindmap(map<string, double> ghginfo)
+{
+	string str;
+	typedef map<string,double>:: const_iterator CI;
+
+	// map all primary and secondary fuel consumption
+	for (CI fmap=ghginfo.begin(); fmap!=ghginfo.end(); ++fmap) {
+		str = fmap->first;
+		double test = fmap->second;
+		emissind[fmap->first] += fmap->second;
+	}
+}
+
 void Summary::clearfuelcons(void)
 {
 	fuelcons.clear();
@@ -134,6 +170,16 @@ void Summary::clearpeprod(void)
 void Summary::clearemiss(void)
 {
 	emission.clear();
+}
+
+void Summary::clearemfuelmap(void)
+{
+	emissfuel.clear();
+}
+
+void Summary::clearemindmap(void)
+{
+	emissind.clear();
 }
 
 double Summary::get_fmap_second(string str)
@@ -159,4 +205,9 @@ double Summary::get_peprodmap_second(string str)
 double Summary::get_emissmap_second(string str)
 {
 	return emission[str];
+}
+
+double Summary::get_emindmap_second(string str)
+{
+	return emissind[str];
 }

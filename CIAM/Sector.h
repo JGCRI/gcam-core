@@ -32,7 +32,6 @@ private:
 	vector<double> output; // total amount of final output from sector
 	double tax; // sector tax or subsidy
 	vector<double> carbontaxpaid; // total sector carbon taxes paid
-	vector<str_ghgss> ghgs; // str containing ghg emissions
 protected:
 	vector<Summary> summary; // summary for reporting
 public:
@@ -71,29 +70,24 @@ public:
 	void setbaseshr(char* region,const char* dbtname); // reads in sector base share from database
 	int shownosubsec(void);
 	char* showsubsecname(int iss);
-	double showoutput(int per); // returns sector output 
+	double getoutput(int per); // returns sector output 
 	double showprice(int per); // returns sector aggregate price
 	void emission(int per); // sum subsector emissions
 	void indemission(int per); // sum subsector indirect emissions
-	double showCO2(int per); // return sector CO2 emissions
-	double showCO2ind(int per); // return sector indirect CO2 emissions
-	double showCO2fuel(int per); // return sector equivalent CO2 emissions from fuel input
 	double showpe_cons(int per); // return sector primary energy consumption
 	void suminput(int per); // sums subsector primary and final energy consumption
 	double showinput(int per); // return sector energy consumption
-	void ghgoutputdb(const char* regname,int reg); // emissions output to database table
-	void ghgoutputfile(const char* regname,int reg); // emissions output to file
-	void ghgMCoutput(const char* regname,int reg); // MiniCAM emissions output to file
 	void outputdb(const char* regname,int reg); // write out sector result to database
 	virtual void outputfile(const char* regname,int reg); // write out sector result to file
-	void MCoutput_subsec(const char *regname,int reg); // calls write for subsector 
+	void MCoutput_subsec(const char* regname,int reg); // calls write for subsector 
 	virtual void MCoutput(const char* regname,int reg); // write out sector result to file
-	void subsec_outfile(const char *regname,int reg);  // call fn to write subsector output
+	void subsec_outfile(const char* regname,int reg);  // call fn to write subsector output
 	double showcarbontaxpaid(int per); // return total sector carbon taxes paid
 	map<string, double> getfuelcons(int per); // get fuel consumption map
 	double getfuelcons_second(int per,string key); // get second of fuel consumption map
 	void clearfuelcons(int per);  //  clears the fuelcons map in summary
 	map<string, double> getemission(int per);// get ghg emissions map in summary object 
+	map<string, double> getemfuelmap(int per);// get ghg emissions map in summary object 
 };
 
 

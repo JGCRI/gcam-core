@@ -8,7 +8,7 @@
 
 // World class includes the following headers
 #include "region.h" // generic region class
-
+#include "str_ghgss.h" // structure for ghgs
 class World
 {
 private:
@@ -32,7 +32,7 @@ public:
 	void calc(int per); // model calculation for each region
 	void sumpop(int per); // sum global population
 	void sumrsc(int per); // sum regional resources for global total
-	void emission(int per); // calculate global emissions
+	void emiss_ind(int per); // calculate indirect emissions
 	void emiss_all(void); // set global emissions for all GHG for climat
 	void outputdb(void); // write output to database table
 	void outputfile(void); // write output to file

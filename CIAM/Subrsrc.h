@@ -5,7 +5,6 @@
 
 #include <vector>
 #include "grade.h"
-#include "ghg_ff.h"
 using namespace std; // enables elimination of std::
 
 // class definition for sub-resources
@@ -23,7 +22,6 @@ private:
 	vector<double> annualprod; // annual production of subrsrc
 	double min_annualprod; // minimum annual production of subrsrc
 	vector<double> cummprod; // cummulative production of subrsrc
-	vector<ghg_ff> gases; // suite of greenhouse gas
 public:
 	subrsrc(void); //default construtor
 	subrsrc(const char *nstr,int rno);//constructor
@@ -44,12 +42,11 @@ public:
 	void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
 	double showannualprod(int per); // return annual production
 	double showavailable(int per); // return available resource
-	double emission(int per); // returns CO2 emissions
 	int maxgrade(void); // returns total number of grades
 	// output to database table
 	void outputdb(const char *regname,int reg,const char *sname); 
 	// MiniCAM style output to database table
-	void MCoutput(const char *regname,int reg,const char *sname); 
+	void MCoutput(const char *regname,int reg,const char *secname); 
 	// output to file
 	void outputfile(const char *regname,int reg,const char *sname); 
 };

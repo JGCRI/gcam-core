@@ -29,7 +29,8 @@ private:
 	double seq_emiss; // sequestered emissions (calculated)
 	double emiss_gwp; // gwp emissions (calculated)
 	double emiss_coef; // emissions coefficient
-	double ind_co2emiss; // indirect CO2 emissions
+	double emiss_fuel; // implied emissions from total fuel consumption
+	double emiss_ind; // indirect emissions
 public:
 	Ghg(void); //default construtor
 	~Ghg(void); // destructor
@@ -39,15 +40,15 @@ public:
 	void initializeptr(lpstrGhg lpstrghg); // initialize all attributes from data using pointers
 	void setcoef(double em_coef); // set emissions coefficients from data
 	void setrmfrac(double trmfrac); // set remove fraction from data
-	void setCO2coef(void); // set default CO2 emissions coefficients for the gas
 	double taxcnvrt(string fuelname); // conversion for carbon tax to energy equivalent
 	void calc_emiss(string fuelname,double input,string prodname,double output); // calculate emissions
 	void calc_emiss2(double activity,double gamma,double* cntl); // calculate emissions alternative
-	void calc_ind_emiss(double input,string fuelname); // calculate ind emissions
+	void calc_emiss_ind(double input,string fuelname); // calculate ind emissions
 	string getname(void); // return name of ghg
 	string getunit(void); // return unit for ghg
 	double getemission(void); // return ghg emissions
 	double getseq_emiss(void); // return sequestered emissions
-	double getind_co2emiss(void); // return indirect CO2 emissions
+	double getemiss_fuel(void); // return ghg emissions implicit in fuel
+	double getemiss_ind(void); // return indirect ghg emissions
 	double getemiss_coef(void); // return ghg emissions coefficient
 };

@@ -81,6 +81,8 @@ void World::setregion(void) // set number of regions in World
 		country[i].setlabel(str_in[i].name,str_in[i].index);
 		// initialize size of arrays to max period
 		country[i].initper();
+		// set default CO2 emissions coefficients
+		country[i].setCO2coef();
 		// set size of population and labor productivity
 		country[i].setpop();	
 		// read in carbon tax from database for each region
@@ -182,14 +184,11 @@ void World::sumrsc(int per)
 	}
 }
 
-// calculate global emissions from each region
-void World::emission(int per)
+// calculate indirect emissions for each region
+void World::emiss_ind(int per)
 {
-	double temp = 0;
-	ghgs[per].CO2 = 0; // regional total is calculated by fuel
 	for (int i=0;i<noreg;i++) {
-		country[i].ind_emission(per); // calculate indirect emissions
-		ghgs[per].CO2 += country[i].showco2emiss(per);
+		country[i].emiss_ind(per); // calculate indirect emissions
 	}
 }
 

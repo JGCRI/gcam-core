@@ -12,7 +12,6 @@
 #include <string>
 #include "technology.h" // generic technology class
 #include "summary.h" // summary class for reporting
-#include "str_ghgss.h"
 
 // struct to read database for subsectors
 typedef struct
@@ -38,12 +37,11 @@ private:
 	vector<double> share; // subsector shares
 	vector<double> input; // subsector energy input
 	vector<double> pe_cons; // subsector primary energy consumption
-	vector<Summary> summary; // summary for reporting
 	vector<double> subsectorprice; // subsector price for all periods
 	vector<double> output; // total amount of final output from subsector
 	double tax; // subsector tax or subsidy
 	vector<double> carbontaxpaid; // total subsector carbon taxes paid
-	vector<str_ghgss> ghgs; // struct containing ghg emissions
+	vector<Summary> summary; // summary for reporting
 public:
 	subsector(void); //default construtor
 	subsector(const char* nstr,int sno,double ttax); //constructor
@@ -105,5 +103,7 @@ public:
 	map<string, double> getfuelcons(int per); 
 	void clearfuelcons(int per);  //  clears the fuelcons map in summary
 	map<string, double> getemission(int per);// get ghg emissions map in summary object 
+	map<string, double> getemfuelmap(int per);// get ghg emissions map in summary object 
+	map<string, double> getemindmap(int per);// get ghg emissions map in summary object 
 };
 

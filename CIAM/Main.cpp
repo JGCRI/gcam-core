@@ -185,7 +185,7 @@ int main(void)
 	world.gnp(per); // call to calculate regional gnps
 	world.calc(per); // call to calculate supply and demand
 	world.sumpop(per); // call to calculate global population
-	world.emission(per); // call to calculate global emissions
+	world.emiss_ind(per); // call to calculate global emissions
 	world.sumrsc(per); // call to calculate global depletable resources
 
 	// Loop over time steps and operate model
@@ -210,7 +210,7 @@ int main(void)
 		world.calc(per); // call to calculate supply and demand
 		solution(per); // solution uses Bisect and NR routine to clear markets
 		world.sumpop(per); // call to calculate global population
-		world.emission(per); // call to calculate global emissions
+		world.emiss_ind(per); // call to calculate global emissions
 		world.sumrsc(per); // call to calculate global depletable resources
 	}
 

@@ -106,7 +106,6 @@ void technology::setghg(void)
 {
 	ghg.resize(1); // at least one for CO2
 	ghg[0].init("CO2","MTC",0,0,1); //gas,unit,rmfrac,emcoef,gwp
-	ghg[0].setCO2coef();
 }
 
 // set number of greenhouse gases for each technology
@@ -173,10 +172,6 @@ void technology::settechghg(int regionno,int sectorno,int subsecno)
 // apply carbon tax to appropriate technology
 void technology::applycarbontax(double tax)
 {
-	// ******* not a good place to call setcoefs() move later **********
-	// could change coefficients by period if needed
-	gases.setcoefs(); // set all emissions coefficients to default
-
 	// convert tax from $/carbon unit to $/energy unit
 	// if fuel does not contain carbon, emissions coefficient
 	// is zero and so is the carbon tax
@@ -185,8 +180,10 @@ void technology::applycarbontax(double tax)
 
 	// returns emissions coefficient only if fuels are primary fuels
 	// crude oil, natural gas and coal
-	double emcoef = gases.showghgcoef(fuelname,"CO2");
-	carbontaxgj = carbontax*emcoef*1e-3;
+	// add to previous ghg tax if more than one ghg
+	for(int i=0;i<ghg.size();i++) {
+		carbontaxgj += carbontax*ghg[i].taxcnvrt(fuelname)*1e-3;
+	}
 }
 
 // sets ghg tax to technologies
@@ -195,24 +192,9 @@ void technology::addghgtax(int ghgno,char* ghgname,int country_id,int per)
 {
 	// returns coef for primary fuels only
 	// carbontax has value for primary fuels only
-	double emcoef = gases.showghgcoef(fuelname,ghgname);
-	carbontax = marketplace.showprice(ghgno,country_id,per);
-	// add to previous ghg tax if more than one ghg
-	carbontaxgj += carbontax*emcoef*1e-3;
-	// need to add taxes from all ghgs
-}
-
-// sets ghg tax to technologies
-// does not get called if there are no markets for ghgs
-void technology::addghgtax2(int ghgno,char* ghgname,int country_id,int per)
-{
-	// returns coef for primary fuels only
-	// carbontax has value for primary fuels only
-	double emcoef = gases.showghgcoef(fuelname,ghgname);
 	carbontax = marketplace.showprice(ghgno,country_id,per);
 	// add to previous ghg tax if more than one ghg
 	for(int i=0;i<ghg.size();i++) {
-		double temp = ghg[i].taxcnvrt(fuelname);
 		carbontaxgj += carbontax*ghg[i].taxcnvrt(fuelname)*1e-3;
 	}
 	// need to add taxes from all ghgs
@@ -276,24 +258,25 @@ void technology::production(double dmd,int per)
 // calculate GHG emissions from technology use
 void technology::emission(char* prodname)
 {
-	// calculate all ghg emissions	
-	gases.calc_allgases(input,output,fuelname,prodname); 
 	// alternative ghg emissions calculation
 	//for_each(ghg.begin(),ghg.end(),ghg.calc_emiss());
 	emissmap.clear(); // clear emissions map
+	emfuelmap.clear(); // clear emissions map
 	for (int i=0; i<ghg.size(); i++) {
 		ghg[i].calc_emiss(fuelname,input,prodname,output);
 		emissmap[ghg[i].getname()] = ghg[i].getemission();
-		double temp = ghg[i].getemission();
-		int stop=1;
+		emfuelmap[ghg[i].getname()] = ghg[i].getemiss_fuel();
 	}
 }
 
 // calculate indirect GHG emissions from technology use
 void technology::indemission(void)
 {
-	// calculate all ghg emissions
-	gases.calc_indgases(input,fuelname); 	
+	emindmap.clear(); // clear emissions map
+	for (int i=0; i<ghg.size(); i++) {
+		ghg[i].calc_emiss_ind(input,fuelname);
+		emindmap[ghg[i].getname()] = ghg[i].getemiss_ind();
+	}
 }
 
 // show technology info
@@ -412,7 +395,7 @@ double technology::showcarbontaxpaid(void)
 // returns actual CO2 emissions from technology, alternate
 double technology::getCO2(void) 
 {
-	return ghg[0].getemission();
+	return ghg[0].getemission(); // index 0 is for CO2
 }
 
 // return Ghg object for initialization
@@ -428,27 +411,27 @@ void technology::setGhg(vector<Ghg> tempghg)
 }
 
 // return map of all ghg emissions
-map<string,double> technology::getemission(void)
-{	// emission is a map
+map<string,double> technology::getemissmap(void)
+{
 	return emissmap;
+}
+
+// return map of all ghg emissions
+map<string,double> technology::getemfuelmap(void)
+{
+	return emfuelmap;
+}
+
+// return map of all ghg emissions
+map<string,double> technology::getemindmap(void)
+{
+	return emindmap;
 }
 
 // return value for ghg
 double technology::get_emissmap_second(string str)
 {
 	return emissmap[str];
-}
-
-// returns indirect CO2 emissions from technology use
-double technology::showCO2ind(void) 
-{
-	return gases.showCO2ind();
-}
-
-// returns equivalent CO2 emissions from fuel input
-double technology::showCO2fuel(void) 
-{
-	return gases.showCO2fuel();
 }
 
 // returns technology logit exponential
@@ -480,7 +463,6 @@ void hydro_tech::setall3(lpstrtech2 tempstr)
 	// plus additional stuff
 }
 
-
 // calculates hydroelectricity output based on logit function
 void hydro_tech::production(double dmd,int per) 
 {
@@ -490,4 +472,3 @@ void hydro_tech::production(double dmd,int per)
 	technology::setoutput(resource*fact/(1+fact));
 	technology::setinput(0); // no fuel input for hydro
 }
-

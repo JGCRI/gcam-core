@@ -10,10 +10,7 @@
 #include <vector>
 #include <map>
 #include <string>
-// GHG object for supply sector technologies
-#include "ghg_ss.h"
-// new ghg object
-#include "ghg.h"
+#include "ghg.h" // ghg object
 
 // struct for reading in inputs from database
 typedef struct
@@ -34,11 +31,11 @@ typedef struct
 // struct for reading in hydroelectricity inputs from database
 typedef struct
 {
-	const char *tname;  // technology name
+	const char* tname;  // technology name
 	long tno; // technology number
 	int yr; // year or vintage
 	int ftype; // fuel type
-	const char *fname;  // fuel name
+	const char* fname;  // fuel name
 	double shrs; // logit share weight
 	double teff;  // energy intensity
 	double tnecost;  // all non-energy cost (levelized)
@@ -73,9 +70,10 @@ private:
 	double input; // total fuel input (fossil and uranium)
 	double output; // technology output
 	double techchange;  // technical change in %/year
-	ghg_ss gases; // suite of greenhouse gases
 	vector<Ghg> ghg; // suite of greenhouse gases
 	map<string,double> emissmap; // map of ghg emissions
+	map<string,double> emfuelmap; // map of ghg emissions implicit in fuel
+	map<string,double> emindmap; // map of indirect ghg emissions
 	// attributes for hydroelectricity only!
 	double resource; // available hydro resource in energy units
 	double A; // logit function shape parameter
@@ -119,12 +117,12 @@ public:
 	double showcarbontaxgj(void); // return carbon taxes in $/GJ
 	double showcarbontaxpaid(void); // return carbon taxes paid
 	double getCO2(void); // return actual CO2 emissions from technology
-	map<string,double> getemission(void); // return map of all ghg emissions
+	map<string,double> getemissmap(void); // return map of all ghg emissions
+	map<string,double> getemfuelmap(void); // return map of all ghg emissions
+	map<string,double> getemindmap(void); // return map of all ghg emissions
 	vector<Ghg> getGhg(void); // return Ghg object for initialization
 	double get_emissmap_second(string str); // return value for ghg
 	void setGhg(vector<Ghg> tempghg); // initialize Ghg object from argument 
-	double showCO2ind(void); // return indirect CO2 emissions from technology use
-	double showCO2fuel(void); // return equivalent CO2 emissions from total fuel input
 	double getlexp(void); // return logit exponential for the technology
 	void setinput(double in); // set input exogenously
 	void setoutput(double out); // set output exogenously

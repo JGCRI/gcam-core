@@ -80,7 +80,6 @@ void subsector::initper(void) //set vector size
 	subsectorprice.resize(maxper); // subsector price for all periods
 	output.resize(maxper); // total amount of final output from subsector
 	carbontaxpaid.resize(maxper); // total subsector carbon taxes paid
-	ghgs.resize(maxper); // struct containing ghg emissions
 	summary.resize(maxper); // object containing summaries
 }
 
@@ -352,8 +351,7 @@ void subsector::applycarbontax(double tax,int per)
 void subsector::addghgtax(int ghgno,char* ghgname,int country_id,int per)
 {
 	for (int i=0;i<notech;i++) {
-		//techs[i][per].addghgtax(ghgno,ghgname,country_id,per);
-		techs[i][per].addghgtax2(ghgno,ghgname,country_id,per);
+		techs[i][per].addghgtax(ghgno,ghgname,country_id,per);
 	}
 }
 
@@ -551,7 +549,7 @@ void subsector::outputdb(const char *regname,int reg,const char *secname)
 	// subsector price
 	dboutput2(regname,secname,name,"all technologies","ave cost",subsectorprice,"$/Service");
 	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
+		temp[m] = summary[m].get_emissmap_second("CO2");
 	dboutput2(regname,secname,name,"all technologies","CO2 emissions",temp,"MTC");
 	// subsector carbon taxes paid
 	dboutput2(regname,secname,name,"all technologies","carbon taxes paid",carbontaxpaid,"Mil90$");
@@ -596,11 +594,11 @@ void subsector::outputdb(const char *regname,int reg,const char *secname)
 		dboutput2(regname,secname,name,techs[i][mm].showname(),"non-energy cost",temp,"$/EJ");
 		// technology CO2 emission
 		for (m=0;m<maxper;m++)
-			temp[m] = techs[i][m].getCO2();
+			temp[m] = techs[i][m].get_emissmap_second("CO2");
 		dboutput2(regname,secname,name,techs[i][mm].showname(),"CO2 emissions",temp,"MTC");
 		// technology indirect CO2 emission
 		for (m=0;m<maxper;m++)
-			temp[m] = techs[i][m].showCO2ind();
+			temp[m] = techs[i][m].get_emissmap_second("CO2ind");
 		dboutput2(regname,secname,name,techs[i][mm].showname(),"CO2 ind emissions",temp,"MTC");
 	}
 }
@@ -624,7 +622,7 @@ void subsector::outputfile(const char *regname,int reg,const char *secname)
 	// subsector price
 	fileoutput3(reg,regname,secname,name," ","price","$/GJ(ser)",subsectorprice);
 	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
+		temp[m] = summary[m].get_emissmap_second("CO2");
 	fileoutput3(reg,regname,secname,name," ","CO2 emiss","MTC",temp);
 	// subsector carbon taxes paid
 	fileoutput3(reg,regname,secname,name," ","C tax paid","Mil90$",carbontaxpaid);
@@ -667,11 +665,11 @@ void subsector::outputfile(const char *regname,int reg,const char *secname)
 		fileoutput3(reg,regname,secname,name,techs[i][mm].showname(),"non-energy cost","$/GJ",temp);
 		// technology CO2 emission
 		for (m=0;m<maxper;m++)
-			temp[m] = techs[i][m].getCO2();
+			temp[m] = techs[i][m].get_emissmap_second("CO2");
 		fileoutput3(reg,regname,secname,name,techs[i][mm].showname(),"CO2 emiss","MTC",temp);
 		// technology indirect CO2 emission
 		for (m=0;m<maxper;m++)
-			temp[m] = techs[i][m].showCO2ind();
+			temp[m] = techs[i][m].get_emissmap_second("CO2ind");
 		fileoutput3(reg,regname,secname,name,techs[i][mm].showname(),"CO2 emiss(ind)","MTC",temp);
 	}
 }
@@ -778,8 +776,8 @@ void subsector::MCoutputC(const char *regname,int reg,const char *secname)
 	vector<double> temp(maxper);
 	string str; // tempory string
 	
-	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
+	//for (m=0;m<maxper;m++)
+	//	temp[m] = summary[m].get_emissmap_second("CO2");
 	//dboutput4(regname,"CO2 Emiss",secname,name,"MTC",temp);
 	// subsector carbon taxes paid
 	dboutput4(regname,"General","CarbonTaxPaid",name,"$",carbontaxpaid);
@@ -809,14 +807,14 @@ void subsector::MCoutputC(const char *regname,int reg,const char *secname)
 		if(notech>0) {  // write out if more than one technology
 			// technology CO2 emission
 			for (m=0;m<maxper;m++)
-				temp[m] = techs[i][m].getCO2();
+				temp[m] = summary[m].get_emissmap_second("CO2");
 			dboutput4(regname,"CO2 Emiss",secname,str,"MTC",temp);
 			// technology indirect CO2 emission
 			for (m=0;m<maxper;m++)
-				temp[m] = techs[i][m].showCO2ind();
+				temp[m] = summary[m].get_emindmap_second("CO2");
 			dboutput4(regname,"CO2 Emiss(ind)",secname,str,"MTC",temp);
 			// technology ghg emissions, get gases for per 
-			map<string,double> temissmap = techs[i][0].getemission();
+			map<string,double> temissmap = techs[i][0].getemissmap();
 			for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
 				for (m=0;m<maxper;m++) {
 					temp[m] = techs[i][m].get_emissmap_second(gmap->first);
@@ -867,43 +865,23 @@ char* subsector::showtechname(int id)
 // calculate GHG emissions from annual production of subresource
 void subsector::emission(int per, char* prodname)
 {
-	// add all emissions from each technology for each subsector
-	ghgs[per].CO2 = 0;
-	ghgs[per].CO2fuel = 0;
 	summary[per].clearemiss(); // clear emissions map
+	summary[per].clearemfuelmap(); // clear emissions map
 	for (int i=0;i<notech;i++) {
 		techs[i][per].emission(prodname);
-		ghgs[per].CO2 += techs[i][per].getCO2();
-		summary[per].updateemiss(techs[i][per].getemission());
-		ghgs[per].CO2fuel += techs[i][per].showCO2fuel();
+		summary[per].updateemiss(techs[i][per].getemissmap());
+		summary[per].updateemfuelmap(techs[i][per].getemfuelmap());
 	}
 }
 
 // calculate indirect GHG emissions from annual production of subresource
 void subsector::indemission(int per)
 {
-	// add all emissions from each technology for each subsector
-	ghgs[per].CO2ind = 0;
+	summary[per].clearemindmap(); // clear emissions map
 	for (int i=0;i<notech;i++) {
 		techs[i][per].indemission();
-		ghgs[per].CO2ind += techs[i][per].showCO2ind();
+		summary[per].updateemindmap(techs[i][per].getemindmap());
 	}
-}
-
-double subsector::showCO2(int per)
-{
-	return ghgs[per].CO2;
-}
-
-double subsector::showCO2ind(int per)
-{
-	return ghgs[per].CO2ind;
-}
-
-// returns equivalent CO2 emissions from fuel input
-double subsector::showCO2fuel(int per) 
-{
-	return ghgs[per].CO2fuel;
 }
 
 // returns subsector primary energy consumption
@@ -958,7 +936,17 @@ void subsector::clearfuelcons(int per)
 //  get ghg emissions map in summary object
 map<string, double> subsector::getemission(int per) 
 {
-	map<string, double> test = summary[per].getemission();
 	return summary[per].getemission();
 }
 
+//  get ghg emissions map in summary object
+map<string, double> subsector::getemfuelmap(int per) 
+{
+	return summary[per].getemfuelmap();
+}
+
+//  get ghg emissions map in summary object
+map<string, double> subsector::getemindmap(int per) 
+{
+	return summary[per].getemindmap();
+}

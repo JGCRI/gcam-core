@@ -4,7 +4,6 @@
  * that contains resource subsectors 		*/
 
 #include "subrsrc.h"
-#include "str_ghgff.h"
 
 // struct for index and name
 
@@ -20,7 +19,6 @@ private:
 	vector<double> available; // total resource availabl
 	vector<double> annualprod; // annual production rate of resource
 	vector<double> cummprod; // cummulative production of resource
-	vector<str_ghgff> ghgs; // structure containing ghg emissions
 public:
 	resource(void); // default construtor
 	resource(const char* nstr,int rno); // constructor
@@ -42,16 +40,11 @@ public:
 	double showavailable(int per); // returns total available resource
 	double showsubavail(int subrscno,int per); // returns total available subresource
 	int shownosubrsrc(void); // returns total number of subsectors
-	void emission(int per); // sum subsector emissions
 	void show(void); // shows resource name and subresources
-	// emissions output to database table
-	void ghgoutputdb(const char *regname,int reg); 
 	// output to database table
 	void outputdb(const char *regname,int reg); 
 	// MiniCAM style output to database table
 	void MCoutput(const char *regname,int reg); 
-	// emissions output to file
-	void ghgoutputfile(const char *regname,int reg); 
 	// output to file
 	void outputfile(const char *regname,int reg); 
 };

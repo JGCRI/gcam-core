@@ -1,4 +1,4 @@
-/* ghg_ss.cpp										*
+/* ghg_mrk.cpp										*
  * This header contains the methods for the		*
  * Greenhouse Gas class.						*
  *       										*

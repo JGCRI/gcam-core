@@ -84,14 +84,12 @@ void sector::initper(void)
 	input.resize(maxper); // sector total energy consumption
 	output.resize(maxper); // total amount of final output from sector
 	carbontaxpaid.resize(maxper); // total sector carbon taxes paid
-	ghgs.resize(maxper); // str containing ghg emissions	
 	summary.resize(maxper); // object containing summaries
 }
 
 // set number of subsectors and technologies for each sector and region
 void sector::set_subsec(int iss,int* ttech) 
 {
-
 	nosubsec = iss; 
 	subsec.resize(nosubsec);
 
@@ -438,7 +436,7 @@ char* sector::showsubsecname(int iss)
 	return subsec[iss].showname();
 }
 
-double sector::showoutput(int per)
+double sector::getoutput(int per)
 {
 	return output[per]; // returns sector output
 }
@@ -446,43 +444,23 @@ double sector::showoutput(int per)
 // calculate GHG emissions for each sector from subsectors
 void sector::emission(int per)
 {
-	// add all subsector emission for each sector
-	ghgs[per].CO2 = 0;
-	ghgs[per].CO2fuel = 0;
 	summary[per].clearemiss(); // clear emissions map
+	summary[per].clearemfuelmap(); // clear emissions map
 	for (int i=0;i<nosubsec;i++) {
 		subsec[i].emission(per,name);
-		ghgs[per].CO2 += subsec[i].showCO2(per);
 		summary[per].updateemiss(subsec[i].getemission(per));
-		ghgs[per].CO2fuel += subsec[i].showCO2fuel(per);
+		summary[per].updateemfuelmap(subsec[i].getemfuelmap(per));
 	}
 }
 
 // calculate indirect GHG emissions for each sector from subsectors
 void sector::indemission(int per)
 {
-	// add all subsector emission for each sector
-	ghgs[per].CO2ind = 0;
+	summary[per].clearemindmap(); // clear emissions map
 	for (int i=0;i<nosubsec;i++) {
 		subsec[i].indemission(per);
-		ghgs[per].CO2ind += subsec[i].showCO2ind(per);
+		summary[per].updateemindmap(subsec[i].getemindmap(per));
 	}
-}
-
-double sector::showCO2(int per)
-{
-	return ghgs[per].CO2;
-}
-
-double sector::showCO2ind(int per)
-{
-	return ghgs[per].CO2ind;
-}
-
-// returns CO2 emissions calculated from total fuel consumed
-double sector::showCO2fuel(int per)
-{
-	return ghgs[per].CO2fuel;
 }
 
 // returns sectoral primary energy consumption
@@ -600,6 +578,19 @@ void sector::MCoutput(const char *regname,int reg)
 		str+= name; // sector name
 		dboutput4(regname,"Emissions",str,gmap->first,"MTC",temp);
 	}
+	// CO2 emissions by sector
+	for (int m=0;m<maxper;m++) {
+		temp[m] = summary[m].get_emissmap_second("CO2");
+	}
+	dboutput4(regname,"CO2 Emiss","by Sector",name,"MTC",temp);
+	dboutput4(regname,"CO2 Emiss",name,"zTotal","MTC",temp);
+
+	// CO2 indirect emissions by sector
+	for (m=0;m<maxper;m++) {
+		temp[m] = summary[m].get_emindmap_second("CO2");
+	}
+	dboutput4(regname,"CO2 Emiss(ind)",name,"zTotal","MTC",temp);
+
 	// sector price
 	dboutput4(regname,"Price",name,"zSectorAvg","$/GJ",sectorprice);
 	// sector price
@@ -624,59 +615,6 @@ void sector::subsec_outfile(const char *regname,int reg)
 	}
 }
 
-// write GHG emissions for each sector
-void sector::ghgoutputdb(const char *regname,int reg)
-{
-	int m=0;
-	int maxper = modeltime.getmaxper();
-	vector<double> temp(maxper);
-	// function protocol
-	void dboutput2(string varreg,string var1name,string var2name,string var3name,
-			  string var4name,vector<double> dout,string uname);
-	
-	// function arguments are variable name, double array, db name, table name
-	// the function writes all years
-	// total sector output
-	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
-	dboutput2(regname,"emissions","CO2",name,"CO2 emissions",temp,"MTC");
-}
-
-// write GHG emissions for each sector
-void sector::ghgoutputfile(const char *regname,int reg)
-{
-	int m=0;
-	int maxper = modeltime.getmaxper();
-	vector<double> temp(maxper);
-	// function protocol
-	void fileoutput3(int regno,string var1name,string var2name,string var3name,
-				  string var4name,string var5name,string uname,vector<double> dout);
-	
-	// function arguments are variable name, double array, db name, table name
-	// the function writes all years
-	// total sector output
-	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
-	fileoutput3(reg,regname,name," "," ","CO2 emiss","MTC",temp);
-}
-
-// write MiniCAM style GHG emissions for each sector
-void sector::ghgMCoutput(const char *regname,int reg)
-{
-	int m=0;
-	int maxper = modeltime.getmaxper();
-	vector<double> temp(maxper);
-	// function protocol
-	void dboutput4(string var1name,string var2name,string var3name,string var4name,
-			   string uname,vector<double> dout);
-	
-	for (m=0;m<maxper;m++) {
-		temp[m] = ghgs[m].CO2;
-	}
-	dboutput4(regname,"CO2 Emiss","by Sector",name,"MTC",temp);
-	dboutput4(regname,"CO2 Emiss",name,"zTotal","MTC",temp);
-}
-
 void sector::set_ser_dmd(double dmd, int per)
 {
 	output[per] = dmd;
@@ -687,7 +625,6 @@ double sector::showcarbontaxpaid(int per)
 {
 	return carbontaxpaid[per];
 }
-
 
 //  gets fuel consumption map in summary object
 map<string, double> sector::getfuelcons(int per) 
@@ -710,8 +647,13 @@ void sector::clearfuelcons(int per)
 //  get ghg emissions map in summary object
 map<string, double> sector::getemission(int per) 
 {
-	map<string, double> test = summary[per].getemission();
 	return summary[per].getemission();
+}
+
+//  get ghg emissions map in summary object
+map<string, double> sector::getemfuelmap(int per) 
+{
+	return summary[per].getemfuelmap();
 }
 
 //**********************************
@@ -738,7 +680,7 @@ void demsector::aggdemand(char* varcountry,int country_id,double prc,double x,do
 	//ielasticity = 0.7;
 	//aeei = 0.1;
 	aeei = 0.05;
-	base = showoutput(0);
+	base = getoutput(0);
 
 	// demand function for each sector
 	// demand for service
@@ -774,7 +716,7 @@ void demsector::outputfile(const char *regname,int reg)
 	// the function writes all years
 	// total sector output
 	for (m=0;m<maxper;m++)
-		temp[m] = sector::showoutput(m);
+		temp[m] = sector::getoutput(m);
 	fileoutput3(reg,regname,showname()," "," ","prodution","SerUnit",temp);
 	// total sector eneryg input
 	for (m=0;m<maxper;m++)
@@ -808,7 +750,7 @@ void demsector::MCoutput(const char *regname,int reg)
 
 	// total sector output
 	for (int m=0;m<maxper;m++) {
-		temp[m] = sector::showoutput(m);
+		temp[m] = sector::getoutput(m);
 	}
 	dboutput4(regname,"End-Use Service","by Sector",secname,"Ser Unit",temp);
 	dboutput4(regname,"End-Use Service",secname,"zTotal","Ser Unit",temp);
@@ -833,6 +775,19 @@ void demsector::MCoutput(const char *regname,int reg)
 		str+= secname; // sector name
 		dboutput4(regname,"Emissions",str,gmap->first,"MTC",temp);
 	}
+
+	// CO2 emissions by sector
+	for (m=0;m<maxper;m++) {
+		temp[m] = summary[m].get_emissmap_second("CO2");
+	}
+	dboutput4(regname,"CO2 Emiss","by Sector",secname,"MTC",temp);
+	dboutput4(regname,"CO2 Emiss",secname,"zTotal","MTC",temp);
+
+	// CO2 indirect emissions by sector
+	for (m=0;m<maxper;m++) {
+		temp[m] = summary[m].get_emindmap_second("CO2");
+	}
+	dboutput4(regname,"CO2 Emiss(ind)",secname,"zTotal","MTC",temp);
 
 	// sector price
 	for (m=0;m<maxper;m++) {

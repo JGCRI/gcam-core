@@ -12,7 +12,7 @@
 #include <math.h>
 
 #include "market.h" //contains market no.,supply,demand,price,and period.
-#include "ghg_ind.h" // indirect greenhouse gas emissions coefficient class
+#include "Emcoef_ind.h" // indirect greenhouse gas emissions coefficient class
 #include "str_indexname.h" // get index and name from database
 #include "region.h" // generic region class
 #include "modeltime.h" // model start, end, timestep and period info
@@ -32,8 +32,14 @@ extern bool Minicam;  // run Minicam(true) or full CGE(false)
 extern ofstream outfile, sdfile;	
 extern Modeltime modeltime;
 
-// create ghg_ind object
-ghg_ind regGHGcoef; // indirect GHG emissions coefficient
+// map of CO2 emissions coefficient for primary fuel only
+map<string, double> co2coefpri;
+// map of CO2 emissions coefficient for all fossil fuels
+map<string, double> co2coefall;
+// vector of objects containing indirect emissions coefficients
+vector<Emcoef_ind> emcoef_ind;
+// indirect emissions coefficients for secondary energy
+map<string, double> co2coefind;
 
 int countdbrec(string fdname,const char* dbname,const char* dbtname);
 int count_sec(string region,string fdname,const char* dbtname);
@@ -67,8 +73,30 @@ void region::initper(void)
 	price_ser.resize(maxper); // aggregate price for demand services
 	carbontax.resize(maxper); // regional carbon tax
 	carbontaxpaid.resize(maxper); // total regional carbon taxes paid
-	ghgs.resize(maxper); // structure containing ghg emissions
 	summary.resize(maxper); // summary for reporting
+}
+
+// set default emissions coefficient for CO2
+void region::setCO2coef(void)
+{
+	// initialize map (tgC/EJ) or (MTC/EJ)
+	// apply carbon taxes to primary fuels
+/*	co2coefpri["crude oil"] = 18.4; 
+	co2coefpri["natural gas"] = 15.0;
+	co2coefpri["coal"] = 25.3;
+*/
+	// apply carbon taxes to secondary fuels
+	co2coefpri["refined oil"] = 18.4;
+	co2coefpri["delivered gas"] = 15.0;
+	co2coefpri["delivered coal"] = 25.3;
+
+	// initialize map (tgC/EJ) or (MTC/EJ)
+	co2coefall["crude oil"] = 18.4; 
+	co2coefall["refined oil"] = 18.4;
+	co2coefall["natural gas"] = 15.0;
+	co2coefall["delivered gas"] = 15.0;
+	co2coefall["coal"] = 25.3;
+	co2coefall["delivered coal"] = 25.3;
 }
 
 // set size of population and labor productivity variable to max period
@@ -263,12 +291,12 @@ void region::setsupsector(void) // set number of supply sectors
 	countsec[no] = seccount;
 	nossec = seccount; // number of supply sectors
 	supplysector.resize(nossec); // create array of suppley sector objects
-	regGHGcoef.setcoefs(nossec); // indirect GHG coef object for every supply sector
+	emcoef_ind.resize(nossec); // indirect GHG coef object for every supply sector
 
 	for (int i=0;i<nossec;i++) {
 		// set number of subsectors and technologies for each sector
 		supplysector[i].set_subsec(countsubsec[no][i],counttech[no][i]);
-		regGHGcoef.setindex(i,sectorname[i]);
+		emcoef_ind[i].setname(sectorname[i]);
 		supplysector[i].initper();
 	}	
 }
@@ -502,7 +530,7 @@ void region::finalsupply(int per)
 		// supply and demand for intermediate and final good are set equal
 		mrkname = supplysector[i].showname();
 		sectorid = supplysector[i].showno();
-		mrksupply = supplysector[i].showoutput(per);
+		mrksupply = supplysector[i].getoutput(per);
 		// set market supply of intermediate goods
 		marketplace.setsupply(sectorid,no,mrksupply,per); 
 		marketplace.setsupply_good(sectorid,no,mrksupply,per); 
@@ -544,16 +572,16 @@ void region::calc_gnp(int per)
 {
 	double labprd=0;
 
-	if (per<=modeltime.getyr_to_per(1990)) {
-		gnp[per] = 1.0; // normalize to 1990
+	if (per==modeltime.getyr_to_per(1975)) {
+		gnp[per] = 1.0; // normalize to 1975
 	}
 	else {
 		// 1 + labor productivity growth rate
 		labprd = 1 + population.labor(per); // return labor productivity gr
 		//double pop1 = population.total(per-1);
 		//double pop2 = population.total(per-2);
-		double pop1 = population.getlaborforce(per-1);
-		double pop2 = population.getlaborforce(per-2);
+		double pop1 = population.getlaborforce(per);
+		double pop2 = population.getlaborforce(per-1);
 		double tlab = pow(labprd,modeltime.gettimestep(per));
 		//gnp[per] = gnp_adj[per-1]*pow(labprd,Years)
 			//*population.total(per-1)/population.total(per-2);
@@ -568,9 +596,7 @@ void region::calc_gnp(int per)
 // calculates demand sector aggregate price 
 void region::calc_enduseprice(int per) 
 {
-
 	price_ser[per] = 0.0;
-
 	for (int i=0;i<nodsec;i++) {
 		if (per == 0) {
 			// read in base year service
@@ -585,7 +611,7 @@ void region::calc_enduseprice(int per)
 		// calculate service price for each demand sector
 		demandsector[i].price(per);
 		// calculate aggregate service price for region
-		price_ser[per] += demandsector[i].showoutput(0)*demandsector[i].showprice(per);
+		price_ser[per] += demandsector[i].getoutput(0)*demandsector[i].showprice(per);
 	}
 }
 
@@ -695,54 +721,38 @@ double region::showsubrsc(int rscno,int subrscno,int per)
 // calculate regional emissions from resources
 void region::emission(int per)
 {
-	ghgs[per].CO2 = 0; // regional total is calculated by fuel
-	ghgs[per].CO2oil = 0; // regional total is calculated by fuel
-	ghgs[per].CO2gas = 0; // regional total is calculated by fuel
-	ghgs[per].CO2coal = 0; // regional total is calculated by fuel
-	ghgs[per].CO2s = 0; // regional total is calculated by sector
+	int i=0;
+	map<string, double> fuelemiss; // tempory emissions by fuel
 
-	ghgs[per].CO2oil = summary[per].get_pemap_second("crude oil")
-					* 18.4;
-	ghgs[per].CO2gas = summary[per].get_pemap_second("natural gas")
-					* 15.0;
-	ghgs[per].CO2coal = summary[per].get_pemap_second("coal")
-					* 25.3;
-
-	ghgs[per].CO2 = ghgs[per].CO2oil + ghgs[per].CO2gas + ghgs[per].CO2coal;
+	fuelemiss["CO2oil"] = summary[per].get_pemap_second("crude oil")
+					    * co2coefall["crude oil"];
+	fuelemiss["CO2gas"] = summary[per].get_pemap_second("natural gas")
+					    * co2coefall["natural gas"];
+	fuelemiss["CO2coal"] = summary[per].get_pemap_second("coal")
+				  	    * co2coefall["coal"];
 
 	summary[per].clearemiss(); // clear emissions map
+	summary[per].updateemiss(fuelemiss); // add CO2 emissions by fuel
 
-	// need to call emissions function but sum is not needed
-	for (int i=0;i<nodrsc;i++) {
-		depresource[i].emission(per);
-	}
 	// need to call emissions function but sum is not needed
 	for (i=0;i<nossec;i++) {
 		supplysector[i].emission(per);
-		ghgs[per].CO2s += supplysector[i].showCO2(per);
 		summary[per].updateemiss(supplysector[i].getemission(per));
-		regGHGcoef.setco2coef(supplysector[i].showname(),
-			supplysector[i].showCO2fuel(per),
-			supplysector[i].showoutput(per));
+		emcoef_ind[i].setemcoef(supplysector[i].getemfuelmap(per), 
+			supplysector[i].getoutput(per));
 	}
 	for (i=0;i<nodsec;i++) {
 		demandsector[i].emission(per);
-		//demandsector[i].indemission(per);
-		ghgs[per].CO2s += demandsector[i].showCO2(per);
 		summary[per].updateemiss(demandsector[i].getemission(per));
 	}
 }
 
 // calculate regional indirect emissions from intermediate and final demand sectors
-void region::ind_emission(int per)
+void region::emiss_ind(int per)
 {
 	// calculate indirect GHG emissions
-	for (int i=0;i<nossec;i++) {
+	for (int i=0;i<nossec;i++)
 		supplysector[i].indemission(per);
-		regGHGcoef.setco2coef(supplysector[i].showname(),
-			supplysector[i].showCO2fuel(per),
-			supplysector[i].showoutput(per));
-	}
 	for (i=0;i<nodsec;i++) 
 		demandsector[i].indemission(per);
 }
@@ -758,24 +768,17 @@ void region::setghgdemand(int per)
 		ghgno = ghgmarket[i].showghgno();
 		ghgname = ghgmarket[i].showname();
 		if(ghgname == "CO2") {
-			//ghgemiss = ghgs[per].CO2;
-			ghgemiss = ghgs[per].CO2s;
+			ghgemiss = summary[per].get_emissmap_second("CO2");
 			ghgmarket[i].setemission(ghgemiss,per);
 			marketplace.setdemand(ghgno,no,ghgemiss,per);		
 		}
 		else if(ghgname == "CH4") {
-			ghgemiss = ghgs[per].CH4;
+			ghgemiss = summary[per].get_emissmap_second("CH4");
 			ghgmarket[i].setemission(ghgemiss,per);
 			marketplace.setdemand(ghgno,no,ghgemiss,per);		
 		}
 	}
 }	
-
-// show regional CO2 emissions total
-double region::showco2emiss(int per) 
-{
-	return ghgs[per].CO2;
-}
 
 // place all outputs to database here
 void region::outputdb(void)
@@ -800,21 +803,8 @@ void region::outputdb(void)
 
 	// write total emissions for region based on sector
 	for (int m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2s;
-	dboutput2(name,"emissions","CO2","total region(sector)","CO2 emissions",temp,"MTC");
-	// write emissions from supply sector to database
-	for (i=0;i<nossec;i++) 
-		supplysector[i].ghgoutputdb(name,no);
-	// write emissions from demand sector to database
-	for (i=0;i<nodsec;i++) 
-		demandsector[i].ghgoutputdb(name,no);
-	// write total emissions for region based on fuel
-	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
-	dboutput2(name,"emissions","CO2","total region(fuel)","CO2 emissions",temp,"MTC");
-	// write emissions from fossil resources to database
-	for (i=0;i<nodrsc;i++) 
-		depresource[i].ghgoutputdb(name,no);
+		temp[m] = summary[m].get_emissmap_second("CO2");
+	dboutput2(name,"emissions","CO2","total region","CO2 emissions",temp,"MTC");
 	// write depletable resource results to database
 	for (i=0;i<nodrsc;i++) 
 		depresource[i].outputdb(name,no);
@@ -850,21 +840,8 @@ void region::outputfile(void)
 
 	// write total emissions for region
 	for (int m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
-	fileoutput3(no,name," "," "," ","CO2 emiss (by fuel)","MTC",temp);
-	// write total emissions for region based on sector
-	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2s;
-	fileoutput3(no,name," "," "," ","CO2 emiss (by sec)","MTC",temp);
-	// write emissions from fossil resources to file
-	for (i=0;i<nodrsc;i++) 
-		depresource[i].ghgoutputfile(name,no);
-	// write emissions from supply sector to file
-	for (i=0;i<nossec;i++) 
-		supplysector[i].ghgoutputfile(name,no);
-	// write emissions from demand sector to file
-	for (i=0;i<nodsec;i++) 
-		demandsector[i].ghgoutputfile(name,no);
+		temp[m] = summary[m].get_emissmap_second("CO2");
+	fileoutput3(no,name," "," "," ","CO2 emiss","MTC",temp);
 	// write depletable resource results to file
 	for (i=0;i<nodrsc;i++) 
 		depresource[i].outputfile(name,no);
@@ -884,7 +861,7 @@ void region::outputfile(void)
 // MiniCAM outputs to file
 void region::MCoutput(void)
 {
-	int i=0;
+	int i=0, m=0;
 	int maxper = modeltime.getmaxper();
 	vector<double> temp(maxper);
 	// function protocol
@@ -902,32 +879,24 @@ void region::MCoutput(void)
 	// regional total carbon taxes paid
 	dboutput4(name,"General","CarbonTax","revenue","90US$",carbontaxpaid);
 
-	// write total emissions for region based on sector
-	for (int m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2s;
-	dboutput4(name,"CO2 Emiss","by Sector","zTotal","MTC",temp);
-	// write emissions from supply sector to database
-	for (i=0;i<nossec;i++) 
-		supplysector[i].ghgMCoutput(name,no);
-	// write emissions from demand sector to database
-	for (i=0;i<nodsec;i++) 
-		demandsector[i].ghgMCoutput(name,no);
-	// regional CO2 emissions from crude oil
+
+	// emissions by fuel for region crude oil
 	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2oil;
+		temp[m] = summary[m].get_emissmap_second("CO2oil");
 	dboutput4(name,"CO2 Emiss","by Fuel","crude oil","MTC",temp);
-	// write total emissions for region
+	// emissions by fuel for region natural gas
 	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2gas;
+		temp[m] = summary[m].get_emissmap_second("CO2gas");
 	dboutput4(name,"CO2 Emiss","by Fuel","natural gas","MTC",temp);
-	// write total emissions for region
+	// emissions by fuel for region coal
 	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2coal;
+		temp[m] = summary[m].get_emissmap_second("CO2coal");
 	dboutput4(name,"CO2 Emiss","by Fuel","coal","MTC",temp);
-	// write total emissions for region
+	// total emission by fuel for region
 	for (m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
+		temp[m] = summary[m].get_emissmap_second("CO2");
 	dboutput4(name,"CO2 Emiss","by Fuel","zTotal","MTC",temp);
+	dboutput4(name,"CO2 Emiss","by Sector","zTotal","MTC",temp);
 
 	// regional emissions for all greenhouse gases
 	typedef map<string,double>:: const_iterator CI;
