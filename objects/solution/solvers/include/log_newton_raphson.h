@@ -15,7 +15,6 @@
 */
 #include <string>
 #include <mtl/matrix.h>
-
 typedef mtl::matrix<double, mtl::rectangle<>, mtl::dense<>, mtl::row_major>::type Matrix;
 
 class CalcCounter; 
@@ -32,16 +31,15 @@ class SolverInfoSet;
 class LogNewtonRaphson: public SolverComponent {
 public:
     LogNewtonRaphson( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
-    ~LogNewtonRaphson();
-    void init();
+    virtual ~LogNewtonRaphson();
+    virtual void init();
     static const std::string& getNameStatic();
     ReturnCode solve( const double solutionTolerance, const double edSolutionFloor, const int maxIterations, SolverInfoSet& solverSet, const int period );
     
 protected:
-    const std::string& getName() const;
     static const std::string SOLVER_NAME;
+    virtual const std::string& getName() const;
     virtual ReturnCode calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period );
-
 };
 
 #endif // _NEWTON_RAPHSON_H_
