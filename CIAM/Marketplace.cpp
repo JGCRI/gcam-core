@@ -1546,7 +1546,7 @@ int Marketplace::Bisection_all( const double Tol, const int IterLimit, vector<so
 		}
         if (trackED) { 
 			maxInt = worstED(per);
-			cout << "maxED: "<<MaxSolVal<<" ("<< getName(maxInt)<< getGoodName(maxInt) << ")"  << endl; 
+			cout << "maxED: "<<MaxSolVal<<" ("<< getName(mrk_isol[ maxInt ] )<< getGoodName( mrk_isol[ maxInt ]) << ")"  << endl; 
         }
         if (nn > 5 && false) {	// always bisect a few times
 			// If the worst ED is not changing too much then breakout of bisection and let NR try to solve this
