@@ -6,12 +6,12 @@
 		<region name="USA">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<constraint year="2020">11792</constraint>
-				<constraint year="2035">13277</constraint>
-				<constraint year="2050">13810</constraint>
-				<constraint year="2065">13727</constraint>
-				<constraint year="2080">13000</constraint>
-				<constraint year="2095">12007</constraint>
+				<constraint year="2020">9769</constraint>
+				<constraint year="2035">11248</constraint>
+				<constraint year="2050">11764</constraint>
+				<constraint year="2065">11668</constraint>
+				<constraint year="2080">10914</constraint>
+				<constraint year="2095">9916</constraint>
 			</ghgpolicy>
 		</region>
 		<region name="Canada">
