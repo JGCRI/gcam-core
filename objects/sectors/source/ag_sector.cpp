@@ -13,6 +13,7 @@
 #include "sectors/include/ag_sector.h"
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
+#include "marketplace/include/market.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/configuration.h"
@@ -269,6 +270,7 @@ void AgSector::setBiomassPrice( const double bioPriceIn ) {
    biomassPriceArray[ 0 ] = bioPriceIn;
    
    // SETBIOMASSPRICE( biomassPriceArray ); // new
+   delete[] biomassPriceArray;
    #endif
 }
 
@@ -314,9 +316,9 @@ void AgSector::runModel( const int period, const string& regionName ) {
    // set biomass supply
    marketplace->addToSupply( "biomass", regionName, supplies[ period ][ nameToIndiceMap[ "biomass" ] ], period );
    
-   delete priceArray;
-   delete demandArray;
-   delete supplyArray;
+   delete[] priceArray;
+   delete[] demandArray;
+   delete[] supplyArray;
 }
 
 //! Use the underlying model to calculate the amount of CO2 emitted.
@@ -340,7 +342,7 @@ void AgSector::setMarket( const string& regionName ) {
    for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end() - 1; i++ ) {
 		// check if should set ag bio market
 		if ( ( *i != "biomass") || setAgBioMarket ) {
-			marketplace->createMarket( regionName, "global", *i, Marketplace::NORMAL );
+			marketplace->createMarket( regionName, "global", *i, Market::NORMAL );
             for( int per = 1; per < modeltime->getmaxper(); ++per ){
                 marketplace->setMarketToSolve ( *i, regionName, per );
             }
@@ -348,11 +350,10 @@ void AgSector::setMarket( const string& regionName ) {
    }
    
    // Add the regional markets.
-   marketplace->createMarket( regionName, regionName, marketNameVector[ 6 ], Marketplace::NORMAL );
+   marketplace->createMarket( regionName, regionName, marketNameVector[ 6 ], Market::NORMAL );
    for( int per = 1; per < modeltime->getmaxper(); ++per ){
       marketplace->setMarketToSolve ( marketNameVector[ 6 ], regionName, per );           
    }
-
    // Initialize prices at a later point.
 }
 

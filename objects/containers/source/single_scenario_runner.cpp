@@ -75,8 +75,10 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
     
     // Override scenario name from data file with that from configuration file
     string overrideName = conf->getString( "scenarioName" ) + aName;
+    bool nameSet = false;
     if ( overrideName != "") {
         mScenario->setName( overrideName );
+        nameSet = true;
     }
 
     // Fetch the listing of Scenario Components.
@@ -94,13 +96,19 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
             cout << "Parsing " << *currComp << " scenario component." << endl;
         }
         root = XMLHelper<void>::parseXML( *currComp, parser );
+        overrideName += XMLHelper<string>::getAttrString( root, "name" );
         mScenario->XMLParse( root );
     }
     if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
         cout << "XML parsing complete." << endl;
     }
     logfile << "XML parsing complete." << endl;
-
+    
+    // If the name was not set from the level above or the configuration, set it to the combination
+    // of the add on names.
+    if( !nameSet ){
+        mScenario->setName( overrideName );
+    }
     // Print data read in time.
     timer.save();
     if ( Configuration::getInstance()->getBool( "timestamp" ) ) { 
@@ -115,19 +123,22 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
 * \detailed This function completes the initialization and runs the Scenario.
 * \param aTimer The timer used to print out the amount of time spent performing operations.
 */
-void SingleScenarioRunner::runScenario( Timer& timer ){
+bool SingleScenarioRunner::runScenario( Timer& timer ){
     cout << "Starting a model run..." << endl;
     // Finish initialization.
     mScenario->completeInit();
 
     // Perform the initial run of the scenario.
-    mScenario->run();
+    bool success = mScenario->run();
 
     // Compute model run time.
     timer.save();
     if ( Configuration::getInstance()->getBool( "timestamp" ) ) { 
         timer.print( cout, "Data Readin & Initial Model Run Time:" );
     }
+
+    // Return whether the scenario ran correctly. 
+    return success;
 }
 
 /*! \brief Function to perform both file and database output. 

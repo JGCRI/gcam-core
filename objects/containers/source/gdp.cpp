@@ -28,7 +28,7 @@ extern Scenario* scenario;
 // static initialize.
 const string GDP::XML_NAME = "GDP";
 const int BASE_PPP_YEAR = 1990;   // Base year for PPP conversion. PPP values are not known before about this time.
-
+/*! \todo There are uninitialized memory reads all over this file. Lines: 308, 307, 285 (roughly) */
 //! Default Constructor
 GDP::GDP() {
 	// Resize all vectors to the max population period. 
@@ -44,10 +44,10 @@ GDP::GDP() {
 	gdpValueAdjusted.resize( maxper );
 	gdpPerCapitaAdjusted.resize( maxper );
 	gdpPerCapitaAdjustedPPP.resize( maxper );
-	gdpAdjustedFlag.resize( maxper, false );
+	gdpAdjustedFlag.resize( maxper );
 	calibrationGDPs.resize( maxper );
-   gdpValueNotAdjusted.resize( maxper );
-   gdpPerCapitaNotAdjusted.resize( maxper );
+    gdpValueNotAdjusted.resize( maxper );
+    gdpPerCapitaNotAdjusted.resize( maxper );
 
 
 	EnergyGDPElas = 0;
@@ -86,8 +86,8 @@ void GDP::XMLParse( const DOMNode* node ){
 		// GDP to PPP conversion factor
       // Note that variable conversion attribute defaults to true
 		else if ( nodeName == "PPPConvert" ){
-			PPPConversionFact = XMLHelper<double>::getValue( curr );
-         constRatio = XMLHelper<bool>::getAttr( curr, "constRatio" );
+		    PPPConversionFact = XMLHelper<double>::getValue( curr );
+            constRatio = XMLHelper<bool>::getAttr( curr, "constRatio" );
 		}
 		// base-year GDP
 		else if ( nodeName == "baseGDP" ){
@@ -218,7 +218,7 @@ void GDP::initData( const Population* regionalPop ){
 	const int popmaxper = modeltime->getmaxpopdata();
 
 	for ( int i = 0; i < popmaxper; i++ ) {
-		laborForce[ i ] = regionalPop->getTotal(  i, true ) * laborForceParticipationPercent[ i ];
+		laborForce[ i ] = regionalPop->getTotal( i, true ) * laborForceParticipationPercent[ i ];
 	}
    
    for( int period = 0; period < modeltime->getmaxper(); ++period ){
@@ -230,19 +230,27 @@ void GDP::initData( const Population* regionalPop ){
 }
 
 //! Create calibration markets
-void GDP::setupCalibrationMarkets( const string& regionName ) {
+void GDP::setupCalibrationMarkets( const string& regionName, const vector<double> aCalibrationGDPs ) {
 
 	const string goodName = "GDP";
 	const Modeltime* modeltime = scenario->getModeltime();
 	Marketplace* marketplace = scenario->getMarketplace();
 
-	if ( marketplace->createMarket( regionName, regionName, goodName, Marketplace::CALIBRATION ) ) {
+	if ( marketplace->createMarket( regionName, regionName, goodName, Market::CALIBRATION ) ) {
 		vector<double> tempLFPs( modeltime->getmaxper() );
 		for( int i = 0; i < modeltime->getmaxper(); i++ ){
-			tempLFPs[ i ] = pow( 1 + laborProdGrowthRate[ modeltime->getmod_to_pop( i ) ], modeltime->gettimestep( i ) );
+            tempLFPs[ i ] = pow( 1 + laborProdGrowthRate[ modeltime->getmod_to_pop( i ) ], modeltime->gettimestep( i ) );
 		}
 		marketplace->setPriceVector( goodName, regionName, tempLFPs );
 	}
+
+    // Set the constraint.
+    for( int per = 1; per < modeltime->getmaxper(); per++ ){
+        if( aCalibrationGDPs[ per ] > 0 ){
+            marketplace->addToDemand( goodName, regionName, aCalibrationGDPs[ per  ], per );
+            marketplace->setMarketToSolve( goodName, regionName, per );
+        }
+    }
 }
 
 //! Write back the calibrated values from the marketplace to the member variables.
@@ -354,8 +362,8 @@ void GDP::initialGDPcalc( const int period, const double population ) {
 	gdpPerCapita[ period ] = gdpValue[ period ] / population;   
    
    // Temporary values so that if requested a real value is returned (with error warning)
-	gdpPerCapitaAdjusted[ period ] = gdpPerCapita[ period ]; 
-   gdpPerCapitaAdjustedPPP[ period ] = gdpValue[ period ] / population;
+    gdpPerCapitaAdjusted[ period ] = gdpPerCapita[ period ]; 
+    gdpPerCapitaAdjustedPPP[ period ] = gdpValue[ period ] / population;
 }
 
 /*! Adjust regional gdp for energy service price effect

@@ -15,6 +15,7 @@
 
 #include <vector>
 #include <functional>
+#include <memory>
 #include "marketplace/include/market_info.h"
 
 class Tabs;
@@ -28,9 +29,15 @@ class Tabs;
 class Market
 {
 public:
-
+    enum MarketType { //!< Types of new markets which can be instantiated from other parts of the model.
+      NORMAL, //!< Normal Market
+      CALIBRATION, //!< Calibration Market
+      GHG, //!< Greenhouse Gas Market
+      DEMAND //!< Demand Market
+    };
     Market( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
     virtual ~Market();
+    static std::auto_ptr<Market> createMarket( const Market::MarketType aMarketType, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
     /*! \brief Add additional information to the debug xml stream for derived classes.
@@ -53,7 +60,7 @@ public:
     double getRawPrice() const;
     double getStoredRawPrice() const;
 
-    void nullDemand();
+    virtual void nullDemand();
     void setRawDemand( const double value );
     virtual void addToDemand( const double demandIn ) = 0;
     void removeFromRawDemand( const double demandIn );
@@ -82,22 +89,10 @@ public:
     void restoreInfo();
 
     void setSolveMarket( const bool doSolve );
+    virtual bool meetsSpecialSolutionCriteria() const = 0;
     virtual bool shouldSolve() const = 0;
     virtual bool shouldSolveNR() const = 0;
     virtual std::string getType() const = 0;
-    /*!
-    * \brief Binary function used to order Market* pointers by decreasing relative excess demand. 
-    * \author Josh Lurz
-    */   
-    struct greaterRelativeExcessDemand : public std::binary_function<Market*, Market*, bool>
-    {
-        //! Operator which performs comparison. 
-        bool operator()( const Market* lhs, const Market* rhs ) const
-        {   
-            return lhs->getRelativeExcessDemand() > rhs->getRelativeExcessDemand();
-        }
-    };
-
 protected:
     std::string good;  //!< The good the market represents
     std::string region;  //!< The region of the market.

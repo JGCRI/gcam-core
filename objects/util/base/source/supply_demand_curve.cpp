@@ -86,8 +86,7 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
     for ( int pointNumber2 = 0; pointNumber2 < numPoints; pointNumber2++ ) {
 
         // clear demands and supplies.
-        marketplace->nullDemands( period );
-        marketplace->nullSupplies( period );
+        marketplace->nullSuppliesAndDemands( period );
 
         // set the price to the current point.
         // market->setRawPrice( priceMults[ pointNumber2 ] * basePrice );
@@ -101,8 +100,7 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
     } // Completed iterating through all price points.
 
     marketplace->restoreinfo( period );
-    marketplace->nullDemands( period );
-    marketplace->nullSupplies( period );
+    marketplace->nullSuppliesAndDemands( period );
 
     // Call world.calc a final time to restore information for summary.
     world->calc( period );

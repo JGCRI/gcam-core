@@ -6,11 +6,9 @@
 
 /*! 
 * \file solver_library.h
-* \ingroup CIAM
-* \brief A set of helper functions used by solvers.
-*
-* This library contains a set of generic routines used by the various solution mechanisms.
-*
+* \ingroup Objects
+* \brief A file containing the header for the static SolverLibrary class which
+* contains helper methods used by SolverComponents.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$
@@ -21,56 +19,55 @@
 
 #include <mtl/matrix.h>
 #include <vector>
+#include <map>
+#include <string>
+#include <functional>
 
 typedef mtl::matrix<double, mtl::rectangle<>, mtl::dense<>, mtl::row_major>::type Matrix;
 
 class Marketplace;
 class World;
-
-
+class SolverInfo;
+class SolverInfoSet;
 
 /*!
-* \ingroup CIAM
-* \brief A set of static methods in a container class which are used to help solve Marketplaces.
+* \ingroup Objects
+* \brief A class with all static functions which are used by the SolverComponents classes and 
+* contains common functionality. 
 * \author Josh Lurz
 */
 
 class SolverLibrary {
 public:
-   //! Class which contains the solution information for a single market.
-   class SolutionInfo {
-   public:
-      std::string marketName; //!< Market area name.
-      std::string marketGood; //< Market fuel or good name.
-      double X;		//!< unknown, prices
-      double ED;		//!< excess demand for X
-      double demand;  //!< demand for X.
-      double supply; //!< supply for X
-      double dX;		//!< change in excess demand
-      double XL;		//!< left bracket
-      double XR;		//!< right bracket
-      double EDL;		//!< excess demand for left bracket
-      double EDR;		//!< excess demand for right bracket
-      bool bracketed;	//!< Bracketed or unbrackted.
-      SolutionInfo( const std::string& marketNameIn, const std::string& marketGoodIn );
-      std::string getName() const;
-   };
-   static std::vector<SolutionInfo> getMarketsToSolve( const Marketplace* marketplace, const int period, const bool isNR = false );
-   static void setPricesToMarkets( Marketplace* marketplace, const std::vector<SolutionInfo>& solutionVector, const int period );
-   static void update( Marketplace* marketplace, std::vector<SolutionInfo>& solutionVector, const int period );
-   static void adjustPriceAndDemandMarkets( const Marketplace* marketplace, std::vector<SolutionInfo>& solutionVector, const int period );
-   static double findMaxExcessDemand( const std::vector<SolutionInfo>& solutionVector, const double excessDemandSolutionFloor, int& worstMarketIndex, const int period );
+    // Some of these still might go.
    static double getRelativeED( const double excessDemand, const double demand, const double excessDemandFloor );
    static bool isWithinTolerance( const double excessDemand, const double demand, const double solutionTolerance, const double excessDemandSolutionFloor );
-   static const std::vector<double> calcDemandElas( const Marketplace* marketplace, const std::vector<SolutionInfo>& solutionVector, const int marketSolutionNumber, const int period );
-   static const std::vector<double> calcSupplyElas( const Marketplace* marketplace, const std::vector<SolutionInfo>& solutionVector, const int marketSolutionNumber, const int period );
-   static void derivatives( Marketplace* marketplace, World* world, std::vector<SolutionInfo>& solutionVector, Matrix& JFDM, Matrix& JFSM,double& worldCalcCount, const int per );
+   static void derivatives( Marketplace* marketplace, World* world, SolverInfoSet& solutionVector, const int per );
    static void invertMatrix( Matrix& A );
-   static void checkBracket( const double solutionTolerance, const double excessDemandSolutionFloor, std::vector<SolutionInfo>& sol, bool& allbracketed );
+   static void updateMatrices( SolverInfoSet& sol, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
+   static bool bracket( Marketplace* marketplace, World* world, const double bracketInterval, SolverInfoSet& sol, const int period );
 private:
-   static double getLogChangeInRawDemand( const Marketplace* marketplace, const std::vector<SolutionInfo>& sol, const int solNumber, const int per );
-   static double getLogChangeInRawSupply( const Marketplace* marketplace, const std::vector<SolutionInfo>& sol, const int solNumber, const int per );
-   static double getLogChangeInRawPrice( const Marketplace* marketplace, const std::vector<SolutionInfo>& sol, const int solNumber, const int per );
+    typedef std::map<std::string, std::vector<double> > RegionalMarketValues;
+    typedef std::vector<std::string>::const_iterator RegionIterator;
+    
+    //! A simple struct to link Supplies and Demands.
+    struct RegionalSDDifferences {
+        RegionalMarketValues supplies;
+        RegionalMarketValues demands;
+    };
+    
+    //! A function object to compare to values and see if they are approximately equal. 
+    struct ApproxEqual : public std::unary_function<double, bool> {
+        const double compareValue; //!< A value to compare the argument value against.
+        const double tolerance; //!< The tolerance within which to return that the values are equal.
+        ApproxEqual( double compareValueIn, double toleranceIn ):compareValue( compareValueIn ), tolerance( toleranceIn ){}
+        operator()( const double value ){
+            return fabs( value - compareValue ) < tolerance;
+        }
+    };
+    
+    static bool doRegionalValuesSum( const RegionalMarketValues& regionalValues, const std::vector<double>& worldTotals, const bool doPrint = false );
+    static const RegionalSDDifferences calcRegionalSDDifferences( Marketplace* marketplace, World* world, SolverInfoSet& sol, const int per );
 };
 
 #endif // _SOLVER_LIBRARY_H_

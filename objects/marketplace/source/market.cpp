@@ -19,6 +19,11 @@
 #include "marketplace/include/market.h"
 #include "marketplace/include/market_info.h"
 #include "containers/include/scenario.h"
+#include "marketplace/include/price_market.h"
+#include "marketplace/include/demand_market.h"
+#include "marketplace/include/calibration_market.h"
+#include "marketplace/include/ghg_market.h"
+#include "marketplace/include/normal_market.h"
 
 using namespace std;
 
@@ -50,6 +55,33 @@ good( goodNameIn ), region( regionNameIn ), period( periodIn ) {
 
 //! Destructor
 Market::~Market() {
+}
+
+/*! \brief Static factory method to create a market based on its type.
+* \detailed
+* \param aGoodName The good or fuel name for the item in the market to create.
+* \param aRegionName The region which the market to create covers.
+* \param aPeriod The period the market to create exists in.
+* \return A pointer to the newly allocated market, null if the type did not exist. 
+*/
+auto_ptr<Market> Market::createMarket( const Market::MarketType aType, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod ) {
+    auto_ptr<Market> rNewMarket;
+    if ( aType == NORMAL ){
+        rNewMarket.reset( new NormalMarket( aGoodName, aRegionName, aPeriod ) );
+    }
+    else if ( aType == GHG ) {
+        rNewMarket.reset( new GHGMarket( aGoodName, aRegionName, aPeriod ) );
+    }
+    else if ( aType == CALIBRATION ) {
+        rNewMarket.reset( new CalibrationMarket( aGoodName, aRegionName, aPeriod ) );
+    }
+    else if ( aType == DEMAND ) {
+        rNewMarket.reset( new DemandMarket( aGoodName, aRegionName, aPeriod ) );
+    }
+    else {
+        cerr << "Invalid market type: " << aType << endl;
+    }
+    return rNewMarket;
 }
 
 /*! \brief Write out XML for debugging purposes.
@@ -382,7 +414,7 @@ void Market::addToSupply( const double supplyIn ) {
 * \return void
 */
 void Market::removeFromRawSupply( const double supplyIn ) {
-   supply -= supplyIn;
+    supply -= supplyIn;
 }
 
 /*! \brief Return the market name.
@@ -534,11 +566,10 @@ double Market::getRelativeExcessDemand() const {
    }
 }
 
-
-
-
-
-
+//! COMMENT ME
+bool Market::meetsSpecialSolutionCriteria() const {
+    return false;
+}
 
 
 

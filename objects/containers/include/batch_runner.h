@@ -34,7 +34,7 @@ public:
     BatchRunner( const std::string& aBatchFileName );
     virtual ~BatchRunner();
     virtual bool setupScenario( Timer& aTimer, const std::string aName = "", const std::list<std::string> aScenComponents = std::list<std::string>() );
-    virtual void runScenario( Timer& aTimer );
+    virtual bool runScenario( Timer& aTimer );
     virtual void printOutput( Timer& aTimer, const bool aCloseDB ) const;
 protected:
     struct File {
@@ -55,6 +55,7 @@ protected:
     
     typedef std::vector<Component> ComponentSet;
     ComponentSet mComponentSet; //!< Big data structure.
+    std::vector<std::string> mUnsolvedNames; //!< List of scenarios that failed.
     std::auto_ptr<ScenarioRunner> mInternalRunner;
     const std::string mBatchFileName; //!< Name of the XML file with batch information.
     bool runSingleScenario( const Component aCurrComponents, Timer& aTimer );

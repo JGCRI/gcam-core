@@ -32,6 +32,8 @@
 #include "util/curves/include/point_set.h"
 #include "util/curves/include/explicit_point_set.h"
 #include "util/curves/include/xy_data_point.h"
+#include "solution/util/include/calc_counter.h"
+
 using namespace std;
 using namespace xercesc;
 
@@ -44,6 +46,8 @@ const string World::XML_NAME = "world";
 World::World() {
     // initialize elemental datamembers.
     doCalibrations = true;
+    calcCounter = 0;
+
     // We can resize all the arrays because we are garunteed by the schema that the modeltime object is parsed first.
     ghgs.resize( scenario->getModeltime()->getmaxper() ); // structure containing ghg emissions
 }
@@ -214,7 +218,9 @@ const std::string& World::getXMLNameStatic() {
 /*! Examples: share weight scaling due to previous calibration, 
 * cumulative technology change, etc.
 */
-void World::initCalc( const int period ) {	
+void World::initCalc( const int period ) {
+    // Reset the calc counter.
+    calcCounter->startNewPeriod();
     for( RegionIterator i = regions.begin(); i != regions.end(); i++ ){
         ( *i )->initCalc( period );
         ( *i )->checkData( period );
@@ -229,6 +235,11 @@ void World::calc( const int period, const vector<string>& regionsToSolve ) {
     
     // Get the list of valid region numbers to solve.
     vector<int> regionNumbersToSolve = getRegionIndexesToCalculate( regionsToSolve );
+    
+    // Increment the world.calc count based on the number of regions to solve. 
+    if( calcCounter ){
+        calcCounter->incrementCount( static_cast<double>( regionNumbersToSolve.size() ) / static_cast<double>( regions.size() ) );
+    }
     
     // Perform calculation loop on each region to calculate. 
     for ( vector<int>::iterator i = regionNumbersToSolve.begin(); i != regionNumbersToSolve.end(); i++ ) {
@@ -501,6 +512,13 @@ const map<const string,const Curve*> World::getEmissionsPriceCurves( const strin
     return emissionsPCurves;
 }
 
+//! Set a pointer to an object which tracks the number of calls to world.calc that are made.
+void World::setCalcCounter( CalcCounter* calcCounter ){
+    /*! \pre The calcCounter is not null. */
+    assert( calcCounter );
+    this->calcCounter = calcCounter;
+}
+
 /*! \brief Protected function which takes a listing of region names to calculate and returns a list
 * of region indexes to calculate. 
 * \detailed This function translates a passed in list of region names to solve to a vector of valid
@@ -534,3 +552,4 @@ const vector<int> World::getRegionIndexesToCalculate( const vector<string>& regi
     }
     return regionNumbersToSolve;
 }
+

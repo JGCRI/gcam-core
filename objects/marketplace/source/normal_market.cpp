@@ -65,6 +65,10 @@ void NormalMarket::addToSupply( const double supplyIn ) {
     Market::addToSupply( supplyIn );
 }
 
+bool NormalMarket::meetsSpecialSolutionCriteria() const {
+    return Market::meetsSpecialSolutionCriteria();
+}
+
 bool NormalMarket::shouldSolve() const {
    return Market::shouldSolve();
 }

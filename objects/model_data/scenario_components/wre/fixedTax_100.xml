@@ -7,112 +7,72 @@
 			<ghgpolicy name="CO2">
 				<market>global</market>
 				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
 				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Canada">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Western Europe">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Japan">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Australia_NZ">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Former Soviet Union">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="China">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Middle East">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Africa">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Latin America">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Southeast Asia">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Eastern Europe">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Korea">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="India">
 			<ghgpolicy name="CO2">
 				<market>global</market>
-				<isFixedTax>1</isFixedTax>
-				<fixedTax year="1975" fillout="1">0</fixedTax>
-				<fixedTax year="2020" fillout="1">100</fixedTax>
 			</ghgpolicy>
 		</region>
 	</world>

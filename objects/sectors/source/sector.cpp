@@ -27,6 +27,7 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
+#include "marketplace/include/market.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/summary.h"
 #include "emissions/include/indirect_emiss_coef.h"
@@ -344,7 +345,7 @@ void Sector::initCalc( const int period ) {
 	 // to make sure share weights have been adjusted to be consistant with final solution prices
 	 //
 	 // If debugchecking flag is on extra information is printed
-    if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
+    if ( Configuration::getInstance()->getBool( "debugChecking" ) && Configuration::getInstance()->getBool( "CalibrationActive" ) ) { 
         const double CAL_CHECK_VAL = 0.001; // tollerance for calibration check (somewhat arbitrary)
         if ( period > 0 ) {
             double calOutputs = getCalOutput( period - 1 );
@@ -390,7 +391,7 @@ void Sector::setMarket() {
     Marketplace* marketplace = scenario->getMarketplace();
     // name is Sector name (name of good supplied or demanded)
     // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
-    if( marketplace->createMarket( regionName, market, name, Marketplace::NORMAL ) ) {
+    if( marketplace->createMarket( regionName, market, name, Market::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, sectorprice );
     }
 	/* The above initilaizes prices with any values that are read-in. 

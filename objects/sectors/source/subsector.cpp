@@ -108,32 +108,23 @@ const string Subsector::getName() const {
 
 //! Initialize Subsector with xml data
 void Subsector::XMLParse( const DOMNode* node ) {	
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxperiod = modeltime->getmaxper();
-    DOMNodeList* nodeList = 0;
-    DOMNodeList* childNodeList = 0;
-    DOMNode* curr = 0;
-    DOMNode* currChild = 0;
-    string nodeName;
-    string childNodeName;
-    vector<technology*> techVec( modeltime->getmaxper() );
-    technology* tempTech = 0;
-    
+
     /*! \pre Make sure we were passed a valid node. */
     assert( node );
-    
+
     // get the name attribute.
     name = XMLHelper<string>::getAttrString( node, "name" );
-    
+
     // get all child nodes.
-    nodeList = node->getChildNodes();
-    
+    DOMNodeList* nodeList = node->getChildNodes();
+
+    const Modeltime* modeltime = scenario->getModeltime();
+
     // loop through the child nodes.
-    for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
+    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
+        DOMNode* curr = nodeList->item( i );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+
         if( nodeName == "#text" ) {
             continue;
         }
@@ -151,74 +142,83 @@ void Subsector::XMLParse( const DOMNode* node ) {
         else if( nodeName == "logitexp" ){
             XMLHelper<double>::insertValueIntoVector( curr, lexp, modeltime );
         }
-        
+
         else if( nodeName == "fuelprefElasticity" ){
             XMLHelper<double>::insertValueIntoVector( curr, fuelPrefElasticity, modeltime );  
         }
-        
+
         // basesharewt is not a vector but a single value
         else if( nodeName == "basesharewt" ){
             basesharewt = XMLHelper<double>::getValue( curr );
             share[0] = basesharewt;
         }
-        
-		else if( nodeName == technology::getXMLNameStatic1D() ){
+
+        else if( nodeName == technology::getXMLNameStatic1D() ){
             map<string,int>::const_iterator techMapIter = techNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
             if( techMapIter != techNameMap.end() ) {
                 // technology already exists.
-                childNodeList = curr->getChildNodes();
-                
+                DOMNodeList*childNodeList = curr->getChildNodes();
+
                 // loop through technologies children.
-                for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
-                    
-                    currChild = childNodeList->item( j );
-                    childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-                    
+                for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
+                    DOMNode* currChild = childNodeList->item( j );
+                    string childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+
                     if( childNodeName == "#text" ){
                         continue;
                     }
-					else if( childNodeName == technology::getXMLNameStatic2D() ){
+                    else if( childNodeName == technology::getXMLNameStatic2D() ){
                         int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
                         techs[ techMapIter->second ][ thisPeriod ]->XMLParse( currChild );
                     }
                 }
             }
-            
+
             else {
                 // create a new vector of techs.
                 /*! \todo Clean this up and make it work with the deletion of objects. */
-                childNodeList = curr->getChildNodes();
-                
+                DOMNodeList* childNodeList = curr->getChildNodes();
+                vector<technology*> techVec( modeltime->getmaxper() );
+
                 // loop through technologies children.
-                for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
-                    
-                    currChild = childNodeList->item( j );
-                    childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-                    
-                    if( childNodeName == technology::getXMLNameStatic2D() ){
-                        tempTech = new technology();
+                for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
+                    DOMNode* currChild = childNodeList->item( j );
+                    const string childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+
+                    if( childNodeName == "#text" ){
+                        continue;
+                    }
+
+                    else if( childNodeName == technology::getXMLNameStatic2D() ){
+                        auto_ptr<technology> tempTech( new technology() );
                         tempTech->XMLParse( currChild );
                         int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
-                        techVec[ thisPeriod ] = tempTech;
-                        
-                        // boolean to fill out the readin value to all the periods
-                        const bool fillout = XMLHelper<bool>::getAttr( currChild, "fillout" );
-                        
+
+                        // Check that a technology does not already exist.
+                        if( techVec[ thisPeriod ] ){
+                            cout << "Warning: Removing duplicate technology." << endl;
+                            delete techVec[ thisPeriod ];
+                        }
+
+                        techVec[ thisPeriod ] = tempTech.release();
+
                         // copy technology object for one period to all the periods
-                        if (fillout) {
+                        if ( XMLHelper<bool>::getAttr( currChild, "fillout" ) ) {
                             // will not do if period is already last period or maxperiod
-                            for (int i = thisPeriod+1; i < maxperiod; i++) {
+                            for ( int i = thisPeriod + 1; i < modeltime->getmaxper(); i++ ) {
+                                // Check that a technology does not already exist.
+                                if( techVec[ i ] ){
+                                    cout << "Warning: Removing duplicate technology." << endl;
+                                    delete techVec[ i ];
+                                }
                                 techVec[ i ] = new technology( *techVec[ thisPeriod ] );
                                 techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
-                            }
-                        }
-                        
-                    }
-                }
+                            } // end for
+                        } // end if fillout
+                    } // end else if
+                } // end for
                 techs.push_back( techVec );
                 techNameMap[ techVec[ 0 ]->getName() ] = static_cast<int>( techs.size() ) - 1;
-                techVec.clear();
-                techVec.resize( modeltime->getmaxper(), 0 );
             }
         }
         // parsed derived classes
@@ -675,7 +675,7 @@ void Subsector::calcTechShares( const int period ) {
         techs[i][period]->normShare(sum);
         // Logit exponential should not be zero or positive when more than one technology
         if(notech>1 && techs[i][period]->getlexp()>=0) {
-          cerr << "Tech for sector " << name << " Logit Exponential is invalid (>= 0)" << endl;
+          // cerr << "Tech for sector " << name << " Logit Exponential is invalid (>= 0)" << endl;
         }
     }
 }	

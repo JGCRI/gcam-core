@@ -49,20 +49,12 @@ Scenario::Scenario() {
     runCompleted = false;
     marketplace.reset( new Marketplace() );
 
-    // Create the solver and initialize with a pointer to the Marketplace.
-    solver.reset( new BisectionNRSolver( marketplace.get() ) );
-
     // Get time and date before model run
     time( &ltime ); 
 }
 
 //! Destructor
 Scenario::~Scenario() {
-    clear();
-}
-
-//! Perform memory deallocation.
-void Scenario::clear() {
 }
 
 //! Return a reference to the modeltime->
@@ -151,6 +143,12 @@ void Scenario::completeInit() {
     // Complete the init of the world object.
     assert( world.get() );
     world->completeInit();
+    
+    // Create the solver and initialize with a pointer to the Marketplace and World.
+    solver.reset( new BisectionNRSolver( marketplace.get(), world.get() ) );
+
+    // Complete the init of the solution object.
+    solver->init();
 }
 
 //! Write object to xml output stream.
@@ -203,8 +201,11 @@ string Scenario::getName() const {
     return name; 
 }
 
-//! Run the scenario
-void Scenario::run( string filenameEnding ){
+/*! \brief Run the scenario
+* \param filenameEnding The string to add to the end of the debug output file for uniqueness.
+* \return Whether all model runs solved successfully.
+*/
+bool Scenario::run( string filenameEnding ){
 
     Configuration* conf = Configuration::getInstance();
     ofstream xmlDebugStream;
@@ -219,22 +220,21 @@ void Scenario::run( string filenameEnding ){
     Tabs tabs;
     marketplace->initPrices(); // initialize prices
     toDebugXMLOpen( xmlDebugStream, &tabs );
+    bool success = true;
 
     // Loop over time steps and operate model
     for ( int per = 0; per < modeltime->getmaxper(); per++ ) {	
-
         // Write out some info.
         cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl;
         logfile << "Period:  " << per << "  Year:  " << modeltime->getper_to_yr(per) << endl;
 
         // Run the iteration of the model.
-        marketplace->nullDemands( per ); // initialize market demand to null
-        marketplace->nullSupplies( per ); // initialize market supply to null
+        marketplace->nullSuppliesAndDemands( per ); // initialize market demand to null
         marketplace->storeto_last( per ); // save last period's info to stored variables
         marketplace->init_to_last( per ); // initialize to last period's info
         world->initCalc( per ); // call to initialize anything that won't change during calc
         world->calc( per ); // call to calculate initial supply and demand
-        solve( per ); // solution uses Bisect and NR routine to clear markets
+        success &= solve( per ); // solution uses Bisect and NR routine to clear markets
         world->updateSummary( per ); // call to update summaries for reporting
         world->emiss_ind( per ); // call to calculate global emissions
 
@@ -266,6 +266,7 @@ void Scenario::run( string filenameEnding ){
     logfile << endl << "Finished with CLIMAT()" << endl;
 #endif
     xmlDebugStream.close();
+    return success;
 }
 
 /*! \brief A function which print dependency graphs showing fuel usage by sector.
@@ -279,7 +280,6 @@ void Scenario::run( string filenameEnding ){
 * The output format can be changed, see the dot documentation for further information.
 *
 * \param period The period to print graphs for.
-* \return void
 */
 void Scenario::printGraphs( const int period ) const {
 
@@ -340,30 +340,35 @@ const map<const string,const Curve*> Scenario::getEmissionsPriceCurves( const st
 * The solve method calls the solve method of the instance of the Solver object 
 * that was created in the constructor. This method then checks for any errors that occurred while solving
 * and reports the errors if it is the last period. 
-*
+* \return Whether all model periods solved successfully.
 * \param period Period of the model to solve.
 * \todo Fix the return codes. 
 */
 
-void Scenario::solve( const int period ){
+bool Scenario::solve( const int period ){
     // Solve the marketplace. If the retcode is zero, add it to the unsolved periods. 
     if( !solver->solve( period ) ) {
         unsolvedPeriods.push_back( period );
     }
-
+    // TODO: This should be added to the db. Using a logger would remove the dual writes.
     // If it was the last period print the ones that did not solve.
     if( modeltime->getmaxper() - 1 == period  ){
         if( static_cast<int>( unsolvedPeriods.size() ) == 0 ) {
             cout << "All model periods solved correctly." << endl;
+            logfile << "All model periods solved correctly." << endl;
+            return true;
         }
-        else {
-            cout << "The following model periods did not solve: ";
-            for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
-                cout << *i << ", ";
-            }
-            cout << endl;
+        cout << "The following model periods did not solve: ";
+        logfile << "The following model periods did not solve: ";
+        for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
+            cout << *i << ", ";
+            logfile << *i << ", ";
         }
+        cout << endl;
+        logfile << endl;
+        return false;
     }
+    return true; // The error will be sent after the last iteration.
 }
 
 //! Output Scenario members to a CSV file.

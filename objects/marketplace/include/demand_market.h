@@ -39,7 +39,8 @@ public:
     virtual double getSupply() const;
     virtual double getSupplyForChecking() const;
     virtual void addToSupply( const double supplyIn );
-
+    
+    virtual bool meetsSpecialSolutionCriteria() const;
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
 

@@ -31,7 +31,7 @@ const string GHGPolicy::XML_NAME = "ghgpolicy";
 GHGPolicy::GHGPolicy( const string nameIn, const string unitIn, const string marketIn, const bool isFixedTaxIn )
 : name( nameIn ), unit( unitIn ), market( marketIn ), isFixedTax( isFixedTaxIn ) {
     const int maxper = scenario->getModeltime()->getmaxper();
-    constraint.resize( maxper );
+    constraint.resize( maxper, -1 );
     fixedTaxes.resize( maxper );
 }
 
@@ -52,38 +52,24 @@ string GHGPolicy::getName() const {
 */
 void GHGPolicy::setMarket( const string& regionName ) {
     Marketplace* marketplace = scenario->getMarketplace();
-    bool marketCreated = marketplace->createMarket( regionName, market, name, Marketplace::GHG );
+    bool marketCreated = marketplace->createMarket( regionName, market, name, Market::GHG );
     
     // Put the taxes in the market as the market prices if it is a fixed tax policy.
     // And the market has not previously been initialized.
     // This allows the taxes to be set in a single region and used in all.
-    if( isFixedTax ){
-        if( marketCreated ){
-            marketplace->setPriceVector( name, regionName, fixedTaxes );
-        }
+    if( isFixedTax && marketCreated ){
+        marketplace->setPriceVector( name, regionName, fixedTaxes );
     } 
     // Otherwise solve the market, given the read-in constraint.
-    else {
+    else if( !isFixedTax ){
         const Modeltime* modeltime = scenario->getModeltime();
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
-            marketplace->setMarketToSolve ( name, regionName, per );
+            if( constraint[ per ] != -1 ){
+                marketplace->setMarketToSolve( name, regionName, per );
+                marketplace->addToSupply( name, regionName, constraint[ per ], per );
+            }
         }
     }
-}
-
-/*! \brief Add the allowed amount of the GHG to the market created for it.
-* \details This function will add the amount specified in the read in constraint
-* to the supply for the specific greenhouse gas within the market. If this policy
-* is a fixed tax, the market will not be solved the amount add here has no effect, 
-* although it should be zero. 
-*
-* \author Josh Lurz
-* \param regionName The region name
-* \param period Period in which to add the supply.
-*/
-void GHGPolicy::addGHGSupply( const string& regionName, const int period ) const {
-    Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToSupply( name, regionName, constraint[ period ], period );	
 }
 
 /*! \brief Convert a policy from a constraint based policy to a fixed tax policy.
@@ -97,21 +83,23 @@ void GHGPolicy::addGHGSupply( const string& regionName, const int period ) const
 void GHGPolicy::changePolicyToFixedTax( const string& regionName ) {
     
     // First remove the constraints. This is not strictly neccessary but is clearer.
+    // This does not actually remove supplies, although that has no effect.
     const int maxPeriod = scenario->getModeltime()->getmaxdataper();
     constraint.clear();
-    constraint.resize( maxPeriod, 0 );
+    constraint.resize( maxPeriod, -1 );
     
     // Now set the tax to 0 for all periods.
     fixedTaxes.clear();
-    fixedTaxes.resize( maxPeriod, 0 );
+    fixedTaxes.resize( maxPeriod );
     
     // Set the internal variable noting that this is a fixed tax policy.
     isFixedTax = true;
     
     // Set the market not to solve.
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->unsetMarketToSolve( name, regionName );
-    
+    for( int per = 0; per < maxPeriod; ++per ){
+        marketplace->unsetMarketToSolve( name, regionName, per );
+    }
     // Set the fixed tax to zero for all periods. 
     marketplace->setPriceVector( name, regionName, fixedTaxes );
 }
@@ -136,8 +124,8 @@ void GHGPolicy::setFixedTaxes( const string& regionName, const vector<double>& t
     // Set the value. If the fixedTaxes vector is larger than the taxes vector,
     // use the last input tax found. 
     double lastInputTax = 0;
-    for( int i = 0; i < static_cast<int>( fixedTaxes.size() ); i++ ){
-        if( static_cast<int>( taxes.size() ) > i ){
+    for( unsigned int i = 0; i < fixedTaxes.size(); i++ ){
+        if( taxes.size() > i ){
             lastInputTax = taxes[ i ];
         }
         fixedTaxes[ i ] = lastInputTax;
@@ -162,10 +150,6 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
 
     // get the name attribute.
     name = XMLHelper<string>::getAttrString( node, "name" );
-
-#if( _DEBUG )
-    cout << "\t Greenhouse gas market name set as " << name << endl;
-#endif
 
     // get all child nodes.
     nodeList = node->getChildNodes();
@@ -206,7 +190,7 @@ void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
     
     const Modeltime* modeltime = scenario->getModeltime();    
     for( int i = 0; i < scenario->getModeltime()->getmaxper(); i++ ){
-        XMLWriteElementCheckDefault( constraint[ i ], "constraint", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( constraint[ i ], "constraint", out, tabs, -1.0, modeltime->getper_to_yr( i ) );
         XMLWriteElementCheckDefault( fixedTaxes[ i ], "fixedTax", out, tabs, 0.0, modeltime->getper_to_yr( i ) );    
     }
     // finished writing xml for the class members.

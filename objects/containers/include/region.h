@@ -59,8 +59,8 @@ public:
     void completeInit();
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	const std::string& getXMLName() const;
-	static const std::string& getXMLNameStatic();
+    const std::string& getXMLName() const;
+    static const std::string& getXMLNameStatic();
     std::string getName() const;
     void calc( const int period, const bool doCalibrations );
     bool isDemandAllCalibrated( const int period ) const;
@@ -96,7 +96,7 @@ private:
     std::vector<Resource*> resources; //!< vector of pointers toresource objects
     std::vector<SupplySector*> supplySector; //!< vector of pointers to supply sector objects
     std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects
-    std::vector<GHGPolicy*> ghgMarket; //!< vector of pointers to ghg market objects, container for constraints and emissions
+    std::vector<GHGPolicy*> mGhgPolicies; //!< vector of pointers to ghg market objects, container for constraints and emissions
     std::vector<double> iElasticity; //!< income elasticity
     std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
     std::vector<double> priceSer; //!< aggregate price for demand services
@@ -106,13 +106,13 @@ private:
     std::map<std::string,int> resourceNameMap; //!< Map of resource name to integer position in vector. 
     std::map<std::string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector. 
     std::map<std::string,int> demandSectorNameMap; //!< Map of demandsector name to integer position in vector. 
-    std::map<std::string,int> ghgMarketNameMap; //!< Map of ghgmarket name to integer position in vector. 
+    std::map<std::string,int> mGhgPoliciesNameMap; //!< Map of GhgPolicy name to integer position in vector. 
     std::vector<Emcoef_ind> emcoefInd; //!< vector of objects containing indirect emissions coefficients
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
     std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
-	 double getFixedDemand( const int period, const std::string& goodName, bool printValues = false );
-	 void adjustCalibrations( const int period );
-	 bool inputsAllFixed( const int period, const std::string& goodName ) const;
+    double getFixedDemand( const int period, const std::string& goodName, bool printValues = false );
+    void adjustCalibrations( const int period );
+    bool inputsAllFixed( const int period, const std::string& goodName ) const;
     std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
     typedef std::vector<SupplySector*>::iterator SupplySectorIterator;
     typedef std::vector<SupplySector*>::const_iterator CSupplySectorIterator;
@@ -127,7 +127,6 @@ private:
     bool sortSectorsByDependency();
     bool isRegionOrderedCorrectly() const;
     void calcGDP( const int period );
-    void setGhgSupply( const int period );
     void calcResourceSupply( const int period );
     void calcFinalSupplyPrice( const int period );
     void calcEndUsePrice( const int period );

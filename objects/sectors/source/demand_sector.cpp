@@ -198,8 +198,10 @@ void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
     XMLWriteElement( techChangeCumm[ period ], "techChangeCumm", out, tabs );
     
     // Now write out own members.
+    XMLWriteElement( outputsAllFixed( period ), "OutputAllFixed", out, tabs );
     XMLWriteElement( finalEngyCons[ period ], "finalEngyCons", out, tabs );
     XMLWriteElement( service[ period ], "service", out, tabs );
+    XMLWriteElement( getCalOutput( period ), "TotalCalOutput", out, tabs );
     XMLWriteElement( servicePreTechChange[ period ], "servicePreTechChange", out, tabs );
     XMLWriteElement( iElasticity[ period ], "iElasticity", out, tabs );
     XMLWriteElement( pElasticity[ period ], "pElasticity", out, tabs );

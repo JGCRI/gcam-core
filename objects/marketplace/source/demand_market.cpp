@@ -70,6 +70,10 @@ void DemandMarket::addToSupply( const double supplyIn ) {
    demMktSupply += supplyIn; // Store Raw supply value to check later
 }
 
+bool DemandMarket::meetsSpecialSolutionCriteria() const {
+    return Market::meetsSpecialSolutionCriteria();
+}
+
 bool DemandMarket::shouldSolve() const {
     return Market::shouldSolve();
 }

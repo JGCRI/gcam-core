@@ -29,7 +29,7 @@ public:
     ScenarioRunner(){};
     virtual ~ScenarioRunner(){};
     virtual bool setupScenario( Timer& timer, const std::string aName = std::string(), const std::list<std::string> aScenComponents = std::list<std::string>() ) = 0;
-    virtual void runScenario( Timer& timer ) = 0;
+    virtual bool runScenario( Timer& timer ) = 0;
     virtual void printOutput( Timer& timer, const bool aCloseDB = true ) const = 0;
 protected:
     };

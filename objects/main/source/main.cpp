@@ -98,16 +98,17 @@ int main( int argc, char *argv[] ) {
     runner->setupScenario( timer );
     
     // Run the scenario.
-    runner->runScenario( timer );
+    bool success = runner->runScenario( timer );
 
     // Print the output.
     runner->printOutput( timer );
 
-    // Cleanup Xerces.
+    // Cleanup Xerces. This should be encapsulated with an initializer object to ensure against leakage.
     XMLHelper<void>::cleanupParser();
     LoggerFactory::cleanUp();
     cout << "Model exiting successfully." << endl;
-    return 0;
+    // Return exit code based on whether the model succeeded(Non-zero is failure by convention).
+    return 0 ? 1 : success; 
 }
 
 //! Function to parse the arguments.

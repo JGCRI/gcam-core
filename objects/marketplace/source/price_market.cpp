@@ -79,6 +79,10 @@ void PriceMarket::addToSupply( const double supplyIn ) {
     demandMarketPointer->addToSupply( supplyIn );
 }
 
+bool PriceMarket::meetsSpecialSolutionCriteria() const {
+    return Market::meetsSpecialSolutionCriteria();
+}
+
 bool PriceMarket::shouldSolve() const {
     return Market::shouldSolve();
 }

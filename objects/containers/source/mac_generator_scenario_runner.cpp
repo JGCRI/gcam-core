@@ -100,25 +100,30 @@ bool MACGeneratorScenarioRunner::setupScenario( Timer& aTimer, const string aNam
 * the scenario regularly, outputs all data, and then calls scenario several more times 
 * and calculates the abatement cost.
 * \param aTimer The timer used to print out the amount of time spent performing operations.
+* \return Whether all model runs solved successfully.
 * \author Josh Lurz
 */
-void MACGeneratorScenarioRunner::runScenario( Timer& aTimer ) {
+bool MACGeneratorScenarioRunner::runScenario( Timer& aTimer ) {
     // Run the base scenario.
-    mSingleScenario->runScenario( aTimer );
+    bool success = mSingleScenario->runScenario( aTimer );
 
     // Print the output now before it is overwritten.
     mSingleScenario->printOutput( aTimer, false );
 
     // Now calculate the abatement curves.
-    calculateAbatementCostCurve();
+    success &= calculateAbatementCostCurve();
+
+    // Return whether the initial run and all datapoint calculations completed successfully.
+    return success;
 }
 
 /*! \brief Function to create a cost curve for the mitigation policy.
 * \details This function performs multiple calls to scenario.run() with 
 * varied fixed carbon taxes in order to determine an abatement cost curve.
+* \return Whether all model runs solved successfully.
 * \author Josh Lurz
 */
-void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
+bool MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     // Set the size of the emissions curve vectors to the number of trials plus 1 for the base.
     mEmissionsQCurves.resize( mNumPoints + 1 );
     mEmissionsTCurves.resize( mNumPoints + 1 );
@@ -128,13 +133,16 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     mEmissionsTCurves[ mNumPoints ] = scenario->getEmissionsPriceCurves( mGhgName );
     
     // Run the trials and store the cost curves.
-    runTrials();
+    bool success = runTrials();
     
     // Create a cost curve for each period and region.
     createCostCurvesByPeriod();
 
     // Create a cost curve for each region and find regional and global costs.
     createRegionalCostCurves();
+
+    // Return whether all trials completed successfully.
+    return success;
 }
 
 /*! \brief Run a trial for each point and store the abatement curves.
@@ -143,19 +151,19 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
 * distributed from 0 to the full carbon tax for each period. It then calculates and 
 * sets the fixed tax for each year. The scenario is then run, and the emissions and 
 * tax curves are stored for each region.
+* \return Whether all model runs completed successfully.
 * \author Josh Lurz
 */
-void MACGeneratorScenarioRunner::runTrials(){
+bool MACGeneratorScenarioRunner::runTrials(){
     // Get the number of max periods.
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxPeriod = modeltime->getmaxper();
     World* world = scenario->getWorld();
-
+    bool success = true;
     // Loop through for each point.
     for( unsigned int currPoint = 0; currPoint < mNumPoints; currPoint++ ){
         // Determine the fraction of the full tax this tax will be.
         const double fraction = static_cast<double>( currPoint ) / static_cast<double>( mNumPoints );
-
         // Iterate through the regions to set different taxes for each if neccessary.
         // Currently this will set the same for all of them.
         for( CRegionCurvesIterator rIter = mEmissionsTCurves[ mNumPoints ].begin(); rIter != mEmissionsTCurves[ mNumPoints ].end(); ++rIter ){
@@ -172,12 +180,13 @@ void MACGeneratorScenarioRunner::runTrials(){
         }
 
         // Create an ending for the output files using the run number.
-        scenario->run( util::toString( currPoint ) );
+        success &= scenario->run( util::toString( currPoint ) );
 
         // Save information.
         mEmissionsQCurves[ currPoint ] = scenario->getEmissionsQuantityCurves( mGhgName );
         mEmissionsTCurves[ currPoint ] = scenario->getEmissionsPriceCurves( mGhgName );
-    }   
+    }
+    return success;
 }
 
 /*! \brief Create a cost curve for each period and region.
@@ -191,6 +200,9 @@ void MACGeneratorScenarioRunner::createCostCurvesByPeriod() {
     const int maxPeriod = modeltime->getmaxper();
     mPeriodCostCurves.resize( maxPeriod );
     
+    // Whether to print abatement in absolute terms or percent abatement.
+    // const bool usePercentReduction = Configuration::getInstance()->getBool( "usePercentReduction", false );
+    const bool usePercentReduction = false; // Hiding this option because it makes total costs non-sensical.
     for( int per = 0; per < maxPeriod; per++ ){
         const int year = modeltime->getper_to_yr( per );
         // Iterate over each region.
@@ -199,7 +211,14 @@ void MACGeneratorScenarioRunner::createCostCurvesByPeriod() {
             const string region = rIter->first;
             // Iterate over each trial.
             for( unsigned int trial = 0; trial < mNumPoints + 1; trial++ ){
-                const double reduction = rIter->second->getY( year ) - mEmissionsQCurves[ trial ][ region ]->getY( year );
+                double reduction;
+                
+                if( usePercentReduction ){
+                    reduction = ( rIter->second->getY( year ) - mEmissionsQCurves[ trial ][ region ]->getY( year ) ) / rIter->second->getY( year );
+                }
+                else {
+                    reduction = rIter->second->getY( year ) - mEmissionsQCurves[ trial ][ region ]->getY( year );
+                }
                 const double tax = mEmissionsTCurves[ trial ][ region ]->getY( year );
                 XYDataPoint* currPoint = new XYDataPoint( reduction, tax );
                 currPoints->addPoint( currPoint );
@@ -249,8 +268,7 @@ void MACGeneratorScenarioRunner::createRegionalCostCurves() {
         mRegionalCostCurves[ *rNameIter ] = regCostCurve;
         mRegionalCosts[ *rNameIter ] = regionalCost;
         mRegionalDiscountedCosts[ *rNameIter ] = discountedRegionalCost;
-
-        // Check if we are double summing globalcost!
+    
         mGlobalCost += regionalCost;
         mGlobalDiscountedCost += discountedRegionalCost;
     }

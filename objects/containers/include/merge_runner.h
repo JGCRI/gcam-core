@@ -32,7 +32,7 @@ public:
     MergeRunner();
     ~MergeRunner();
     bool setupScenario( Timer& timer, const std::string aName, const std::list<std::string> aScenComponents = std::list<std::string>() );
-    void runScenario( Timer& timer );
+    bool runScenario( Timer& timer );
     void printOutput( Timer& timer, const bool aCloseDB = true ) const;
 protected:
     std::auto_ptr<Scenario> mScenario;

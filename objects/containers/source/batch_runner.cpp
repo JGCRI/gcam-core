@@ -60,12 +60,13 @@ bool BatchRunner::setupScenario( Timer& aTimer, const string aName, const list<s
 * of the ComponentSets and runs a Scenario for each. 
 * \param aTimer The timer used to print out the amount of time spent performing operations.
 * \todo Handle duplicate names. Print a warning at least.
+* \return Whether all model runs solved successfully.
 */
-void BatchRunner::runScenario( Timer& aTimer ){
+bool BatchRunner::runScenario( Timer& aTimer ){
     // Quick error checking for empty readin.
     if( mComponentSet.empty() ){
         cout << "Error: No scenario sets to run!" << endl;
-        return;
+        return false;
     }
 
     // Initialize each components iterator to the beginning of the vector. 
@@ -74,6 +75,7 @@ void BatchRunner::runScenario( Timer& aTimer ){
     }
     
     bool shouldExit = false;
+    bool success = true;
     while( !shouldExit ){
         // Perform the currently setup run.
         // Create the list of addons.
@@ -85,7 +87,7 @@ void BatchRunner::runScenario( Timer& aTimer ){
             fileSetsToRun.mName += currSet->mFileSetIterator->mName;
         }
         // Run it.
-        runSingleScenario( fileSetsToRun, aTimer );
+        success &= runSingleScenario( fileSetsToRun, aTimer );
 
         // Loop forward to find a position to increment.
         for( ComponentSet::iterator outPos = mComponentSet.begin(); outPos != mComponentSet.end(); ++outPos ){
@@ -107,13 +109,26 @@ void BatchRunner::runScenario( Timer& aTimer ){
             }
         }
     }
+    return success;
 }
 
-/*! \brief Print the BatchRunner output. This currently does nothing.
+/*! \brief Print the BatchRunner output.
 * \param aTimer The timer used to print out the amount of time spent performing operations.
 * \param aCloseDB Whether to close the database and output variable IDs. Defaults to true.
 */
 void BatchRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
+    // Print out any scenarios that did not solve.
+    if( mUnsolvedNames.empty() ){
+        cout << "All model runs completed successfully." << endl;
+        logfile << "All model runs completed successfully." << endl;
+    }
+    else {
+        cout << "Model runs that did not solve correctly: " << endl;
+        for( vector<string>::const_iterator name = mUnsolvedNames.begin(); name != mUnsolvedNames.end(); ++name ){
+            cout << *name << endl;
+            logfile << *name << endl;
+        }
+    }
 }
 
 /*! \brief Helper function which runs a single scenario created by the BatchRunner.
@@ -124,6 +139,7 @@ void BatchRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
 * It then runs the Scenario and prints its output.
 * \param aComponents A map of FileSets which is expanded to create the list of scenario components to read in.
 * \param aTimer The timer used to print out the amount of time spent performing operations.
+* \return Whether the model run solved successfully.
 */
 bool BatchRunner::runSingleScenario( const Component aComponents, Timer& aTimer ){
     // Expand the file sets into a flat list and a scenario information string.
@@ -151,12 +167,14 @@ bool BatchRunner::runSingleScenario( const Component aComponents, Timer& aTimer 
     mInternalRunner->setupScenario( aTimer, aComponents.mName, components );
 
     // Run the scenario.
-    mInternalRunner->runScenario( aTimer );
-
+    bool success = mInternalRunner->runScenario( aTimer );
+    
     // Print the output.
     mInternalRunner->printOutput( aTimer );
-
-    return true;
+    
+    // If the run failed, add to the list of failed runs.
+    mUnsolvedNames.push_back( aComponents.mName );
+    return success;
 }
 
 /*! \brief Function which parses the XML BatchRunner configuration file.

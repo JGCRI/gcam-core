@@ -24,6 +24,7 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
+#include "marketplace/include/market.h"
 #include "resources/include/resource.h"
 #include "resources/include/renewable_subresource.h"
 
@@ -204,7 +205,7 @@ void Resource::setMarket( const string& regionName ) {
     Marketplace* marketplace = scenario->getMarketplace();
     const Modeltime* modeltime = scenario->getModeltime();
     // name is resource name
-    if ( marketplace->createMarket( regionName, market, name, Marketplace::NORMAL ) ) {
+    if ( marketplace->createMarket( regionName, market, name, Market::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, rscprc );
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
             marketplace->setMarketToSolve( name, regionName, per );

@@ -37,9 +37,11 @@ public:
     virtual double getDemand() const;
 
     virtual void nullSupply();
+    virtual void nullDemand();
     virtual double getSupply() const;
     virtual double getSupplyForChecking() const;
     virtual void addToSupply( const double supplyIn );
+    virtual bool meetsSpecialSolutionCriteria() const;
 
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;

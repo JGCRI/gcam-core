@@ -32,16 +32,18 @@ string GHGMarket::getType() const {
 * or supply, to determine how to initialize the price. If supply is 0, price is set to 0. If the supply 
 * is greater than 0, the price is initialized to 1.
 * \author Josh Lurz
+* \todo Some of these changes for the carbon market might be beneficial to the general market, or end up being the same.
 */
 void GHGMarket::initPrice() {
     // If price is near zero it needs to be initialized.
     if( price < util::getSmallNumber() ){
-        // If supply is 0 price should be 0.
-        if( supply < util::getSmallNumber() ){
-            price = 0;
-        }
-        else {
+        // If this market should be solved price should be set to 1.
+        if( solveMarket ){
             price = 1;
+        }
+        // The market will not be solved so it should be zero'd out. 
+        else {
+            price = 0;
         }
     }
 }
@@ -55,13 +57,13 @@ void GHGMarket::setPrice( const double priceIn ) {
 * 0. If it is, then it checks if the constraint in the current period is greater than 0. In this case price is 
 * set to 1 as this is the initial constrained period. Otherwise price is set to the previous period's price as
 * is done in the normal market.
-* \param lastPrice Previous period's price. 
+* \param lastPrice Previous period's price. This should have already been set in store to last!!
 * \author Josh Lurz
 */
 void GHGMarket::setPriceFromLast( const double lastPrice ) {
-    // If the price is zero and a constraint is set, we should initialize the price.
-    if( price < util::getSmallNumber() && supply > util::getSmallNumber() ){
-        // If the last price is 0, we should set the price to 0.
+    // If the price is zero and the solve flag is set so a constraint exists. 
+    if( price < util::getSmallNumber() && solveMarket ){
+        // If the last price is 0, we should set the price to 1.
         if( lastPrice < util::getSmallNumber() ){
             price = 1;
         }
@@ -70,6 +72,7 @@ void GHGMarket::setPriceFromLast( const double lastPrice ) {
             price = lastPrice;
         }
     }
+    // There is no else here becuase we do not want to override prices in the case of a fixed tax.
 }
 
 double GHGMarket::getPrice() const {
@@ -84,8 +87,8 @@ double GHGMarket::getDemand() const {
     return Market::getDemand();
 }
 
+//! The supply in GHGMarket is the constraint, it should not be removed by calls to nullSupply
 void GHGMarket::nullSupply() {
-   Market::nullSupply();
 }
 
 double GHGMarket::getSupply() const {
@@ -108,9 +111,8 @@ void GHGMarket::addToSupply( const double supplyIn ) {
 * \author Sonny Kim
 */
 bool GHGMarket::shouldSolve() const {
-
-   // Don't solve if  there is no constraint
-   return ( solveMarket && supply > 1E-6 );
+    // I think this is the default.
+   return ( solveMarket );
 }
 
 /* \brief This method determines whether to solve a GHGMarket with the NR solution mechanism.
@@ -132,4 +134,19 @@ bool GHGMarket::shouldSolveNR() const {
    }
 
    return doSolveMarket;
+}
+
+//! Check whether the market meets market specific solution criteris.
+bool GHGMarket::meetsSpecialSolutionCriteria() const {
+    // If there is no constraint, this market is solved.
+    if( !solveMarket ){
+        return true;
+    }
+
+    // If price is zero demand cannot be driven any higher.
+    // The constraint is still higher than the demand, so this market is solved.
+    if( ( price < util::getSmallNumber() ) && ( supply > demand ) ){
+        return true;
+    }
+    return false;
 }

@@ -10,6 +10,7 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include "marketplace/include/calibration_market.h"
+#include "util/base/include/util.h"
 
 using namespace std;
 
@@ -53,6 +54,10 @@ double CalibrationMarket::getDemand() const {
     return Market::getDemand();
 }
 
+// Do nothing, as constraints should not be cleared.
+void CalibrationMarket::nullDemand() {
+}
+
 void CalibrationMarket::nullSupply() {
     Market::nullSupply();
 }
@@ -76,3 +81,9 @@ bool CalibrationMarket::shouldSolve() const {
 bool CalibrationMarket::shouldSolveNR() const {
     return Market::shouldSolveNR();
 }
+
+bool CalibrationMarket::meetsSpecialSolutionCriteria() const {
+    // Check if the market was set to solve without a constraint.
+    return ( demand < util::getSmallNumber() );
+}
+

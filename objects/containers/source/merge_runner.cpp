@@ -86,8 +86,13 @@ bool MergeRunner::setupScenario( Timer& timer, const string aName, const list<st
 
     return true;
 }
-//! Run
-void MergeRunner::runScenario( Timer& timer ){
+/*! \brief Does nothing, needed for interface.
+* \return Always returns true.
+* \author Josh Lurz
+*/
+
+bool MergeRunner::runScenario( Timer& timer ){
+    return true;
 }
 
 void MergeRunner::printOutput( Timer& timer, const bool aCloseDB ) const {

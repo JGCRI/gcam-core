@@ -33,7 +33,7 @@ public:
     MACGeneratorScenarioRunner( const std::string aGhgName, const unsigned int aNumPoints );
     virtual ~MACGeneratorScenarioRunner();
     virtual bool setupScenario( Timer& timer, const std::string aName = "", const std::list<std::string> aScenComponents = std::list<std::string>() );
-    virtual void runScenario( Timer& timer );
+    virtual bool runScenario( Timer& timer );
     virtual void printOutput( Timer& timer, const bool aCloseDB = true ) const;
 private:
     double mGlobalCost;
@@ -56,8 +56,8 @@ private:
     VectorRegionCurves mPeriodCostCurves;
     RegionCurves mRegionalCostCurves;
 
-    void calculateAbatementCostCurve();
-    void runTrials();
+    bool calculateAbatementCostCurve();
+    bool runTrials();
     void createCostCurvesByPeriod();
     void createRegionalCostCurves();
     };

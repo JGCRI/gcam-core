@@ -51,7 +51,7 @@ public:
 	void toDebugXMLOpen( std::ostream& out, Tabs* tabs ) const;
 	void toDebugXMLClose( std::ostream& out, Tabs* tabs ) const;
 	std::string getName() const;
-	void run( std::string filenameEnding = "" );
+	bool run( std::string filenameEnding = "" );
 	const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
 	const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     void csvOutputFile() const;
@@ -68,8 +68,7 @@ private:
 	std::vector<int> unsolvedPeriods; //!< Unsolved periods. 
 	void printGraphs( const int period ) const;
 	void printSectorDependencies() const;
-	void clear();
-	void solve( const int period );
+	bool solve( const int period );
     static void openDebugXMLFile( std::ofstream& xmlDebugStream, const std::string& fileNameEnding );
 };
 

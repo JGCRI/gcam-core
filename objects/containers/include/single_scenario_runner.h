@@ -33,7 +33,7 @@ public:
     SingleScenarioRunner();
     virtual ~SingleScenarioRunner();
     virtual bool setupScenario( Timer& timer, const std::string aName = "", const std::list<std::string> aScenComponents = std::list<std::string>() );
-    virtual void runScenario( Timer& timer );
+    virtual bool runScenario( Timer& timer );
     virtual void printOutput( Timer& timer, const bool aCloseDB = true ) const;
 protected:
     std::auto_ptr<Scenario> mScenario; //!< Autopointer to the main scenario.

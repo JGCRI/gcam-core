@@ -16,6 +16,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <algorithm>
+#include <memory>
 
 #include "containers/include/region.h"
 #include "containers/include/gdp.h"
@@ -70,16 +71,19 @@ Region::~Region() {
 
 //! Clear member variables and initialize elemental members.
 void Region::clear(){
-    for ( SupplySectorIterator secIter = supplySector.begin(); secIter != supplySector.end(); secIter++ ) {
+    for ( SupplySectorIterator secIter = supplySector.begin(); secIter != supplySector.end(); ++secIter ) {
         delete *secIter;
     }
 
-    for ( DemandSectorIterator demIter = demandSector.begin(); demIter != demandSector.end(); demIter++ ) {
+    for ( DemandSectorIterator demIter = demandSector.begin(); demIter != demandSector.end(); ++demIter ) {
         delete *demIter;
     }
 
-    for ( ResourceIterator rescIter = resources.begin(); rescIter != resources.end(); rescIter++ ) {
+    for ( ResourceIterator rescIter = resources.begin(); rescIter != resources.end(); ++rescIter ) {
         delete *rescIter;
+    }
+    for( GHGPolicyIterator policyIter = mGhgPolicies.begin(); policyIter != mGhgPolicies.end(); ++policyIter ){
+        delete *policyIter;
     }
 }
 
@@ -166,7 +170,7 @@ void Region::XMLParse( const DOMNode* node ){
             }
         }
         else if( nodeName == GHGPolicy::getXMLNameStatic() ){
-            parseContainerNode( curr, ghgMarket, ghgMarketNameMap, new GHGPolicy() );
+            parseContainerNode( curr, mGhgPolicies, mGhgPoliciesNameMap, new GHGPolicy() );
         }
         // regional economic data
         else if( nodeName == "calibrationdata" ){
@@ -229,8 +233,10 @@ void Region::completeInit() {
     Configuration* conf = Configuration::getInstance();
     
     // Initialize the GDP
-    gdp->initData( population.get() );
-    
+    if( gdp.get() ){
+        gdp->initData( population.get() );
+    }
+
     for( SupplySectorIterator supplySectorIter = supplySector.begin(); supplySectorIter != supplySector.end(); ++supplySectorIter ) {
         ( *supplySectorIter )->completeInit();
         (*supplySectorIter)->setMarket();
@@ -240,7 +246,9 @@ void Region::completeInit() {
 
     if( conf->getBool( "agSectorActive" ) ){
         agSector->setGNP( calcFutureGDP() );
-        agSector->setPop( population->getTotalPopVec() );
+        if( population.get() ){
+            agSector->setPop( population->getTotalPopVec() );
+        }
         agSector->setMarket( name );
     }
     for( ResourceIterator resourceIter = resources.begin(); resourceIter != resources.end(); ++resourceIter ) {
@@ -252,7 +260,7 @@ void Region::completeInit() {
         (*currSector)->completeInit();
     }
 
-    for( GHGPolicyIterator ghgPolicy = ghgMarket.begin(); ghgPolicy != ghgMarket.end(); ++ghgPolicy ){
+    for( GHGPolicyIterator ghgPolicy = mGhgPolicies.begin(); ghgPolicy != mGhgPolicies.end(); ++ghgPolicy ){
         (*ghgPolicy)->setMarket( name );
     }
 
@@ -280,8 +288,8 @@ void Region::completeInit() {
 
 /*! \brief Initialize the calibration markets. */
 void Region::setupCalibrationMarkets() {
-    if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
-        gdp->setupCalibrationMarkets( name );
+    if( Configuration::getInstance()->getBool( "CalibrationActive" ) && gdp.get() ){
+        gdp->setupCalibrationMarkets( name, calibrationGDPs );
     }
 }
 
@@ -480,8 +488,8 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
 		tabs->writeTabs( out );
 		out << "<agsector/>" << endl;
 	}
-    // write out ghgMarket objects.
-    for( CGHGPolicyIterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
+    // write out mGhgPolicies objects.
+    for( CGHGPolicyIterator l = mGhgPolicies.begin(); l != mGhgPolicies.end(); l++ ){
         ( *l )->toInputXML( out, tabs );
     }
     
@@ -533,13 +541,22 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write out basic datamembers
-    XMLWriteElement( static_cast<unsigned int>( ghgMarket.size() ), "noGhg", out, tabs );
+    XMLWriteElement( static_cast<unsigned int>( mGhgPolicies.size() ), "noGhg", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( resources.size() ), "numResources", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( supplySector.size() ), "noSSec", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( demandSector.size() ), "noDSec", out, tabs );
     XMLWriteElement( calibrationGDPs[ period ], "calibrationGDPs", out, tabs );
     XMLWriteElement( priceSer[ period ], "priceSer", out, tabs );
     XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
+    XMLWriteElement( TFEcalb[ period ], "TFECalb", out, tabs );
+    double actTFE = 0;
+    if ( !isDemandAllCalibrated( period ) ) {
+        // Calculate total final energy demand for all demand sectors
+        for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
+            actTFE += demandSector[ i ]->getInput( period );
+        }
+    }
+    XMLWriteElement( actTFE, "TotalFinalEnergy", out, tabs );
 
     // Write out the Co2 Coefficients. 
     for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
@@ -575,8 +592,8 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // Write out the single agSector object.
     // agSector->toDebugXML( period, out );
 
-    // write out ghgMarket objects.
-    for( CGHGPolicyIterator currPolicy = ghgMarket.begin(); currPolicy != ghgMarket.end(); ++currPolicy ){
+    // write out mGhgPolicies objects.
+    for( CGHGPolicyIterator currPolicy = mGhgPolicies.begin(); currPolicy != mGhgPolicies.end(); ++currPolicy ){
         (*currPolicy)->toDebugXML( period, out, tabs );
     }
 
@@ -627,13 +644,11 @@ void Region::calc( const int period, const bool doCalibrations ) {
     
     // Write back calibrated values to the member variables.
     // These are still trial values.
-    if( calibrationActive ) {
+    if( calibrationActive && gdp.get() ) {
        gdp->writeBackCalibratedValues( name, period );
     }
     // calculate regional GDP
     calcGDP( period );
-    // set regional GHG constraint to market supply
-    setGhgSupply( period );
     // determine supply of primary resources
     calcResourceSupply( period );
     // determine prices of refined fuels and electricity
@@ -667,18 +682,8 @@ void Region::calcAgSector( const int period ) {
     agSector->carbLand( period, name );
 }
 
-/*! \brief Set regional ghg constraint from input data to market supply.
-*
-* \param period Model time period
-*/
-void Region::setGhgSupply( const int period ) {
-    for ( unsigned int i = 0; i < ghgMarket.size(); i++ ) {
-        ghgMarket[i]->addGHGSupply( name, period );
-    }
-}
-
 /*! Calculates annual supply of primay resources.
-*
+* \todo Move this functionality into resources. 
 * \param period Model time period
 */
 void Region::calcResourceSupply( const int period ){
@@ -688,7 +693,7 @@ void Region::calcResourceSupply( const int period ){
 }
 
 /*! Calculate prices of refined fuels and electricity.
-*
+* \todo Move this functionality into sector.
 * \param period Model time period
 */
 void Region::calcFinalSupplyPrice( const int period ) {
@@ -698,7 +703,7 @@ void Region::calcFinalSupplyPrice( const int period ) {
 }
 
 /*! Calculates supply of final energy and other goods.
-*
+* \todo Move functionality into sector
 * \param period Model time period
 */
 void Region::setFinalSupply( const int period ) {
@@ -719,7 +724,9 @@ void Region::setFinalSupply( const int period ) {
 * \param period Model time period
 */
 void Region::calcGDP( const int period ) {
-	 gdp->initialGDPcalc( period, population->getTotal( period ) );
+    if( gdp.get() && population.get() ){
+	    gdp->initialGDPcalc( period, population->getTotal( period ) );
+    }
 }
 
 /*! Calculate forward-looking gdp (without feedbacks) for AgLU use
@@ -737,11 +744,13 @@ const vector<double> Region::calcFutureGDP() const {
 	const Modeltime* modeltime = scenario->getModeltime();
 	vector<double> gdps;
 	gdps.resize( modeltime->getmaxper() );
-   
-	for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
-		gdp->initialGDPcalc( period, population->getTotal( period ) );
-		gdps[ period ] = gdp->getApproxScaledGDPperCap( period );
-	}
+    
+    if( gdp.get() && population.get() ){
+	    for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
+		    gdp->initialGDPcalc( period, population->getTotal( period ) );
+		    gdps[ period ] = gdp->getApproxScaledGDPperCap( period );
+	    }
+    }
 	return gdps;
 }
 
@@ -784,8 +793,9 @@ void Region::adjustGDP( const int period ) {
 	if ( period > modeltime->getyr_to_per(1990) ) {
 		tempratio = priceSer[period]/priceSer[period-1];
 	}
-
-	 gdp->adjustGDP( period, tempratio );
+    if( gdp.get() ){
+	    gdp->adjustGDP( period, tempratio );
+    }
 }
 
 //! Do regional calibration
@@ -819,16 +829,11 @@ void Region::calibrateRegion( const bool doCalibrations, const int period ) {
         }
     }
 
-    // Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.
-    // Insert the newly calculated values into the calibration markets. 
-    if( static_cast<int>( calibrationGDPs.size() ) > period && calibrationGDPs[ period ] > 0 ){ 
+    // TODO: Move this into GDP object.
+    if( calibrationGDPs[ period ] > 0 && gdp.get() ){
         const string goodName = "GDP";
         Marketplace* marketplace = scenario->getMarketplace();
-        marketplace->addToDemand( goodName, name, calibrationGDPs[ period ], period );
         marketplace->addToSupply( goodName, name, gdp->getGDP( period ), period );
-        if( period > 0 ){
-            marketplace->setMarketToSolve( goodName, name );
-        }
     }
 }
 
@@ -932,68 +937,70 @@ void Region::initCalc( const int period )
 * \todo need to impliment "calonly" runmode for world.calc() so that can look at full chain of supplies and demands, working through the sector order.
 */
 void Region::adjustCalibrations( const int period ) {
-   Configuration* conf = Configuration::getInstance();
-   bool debugChecking = conf->getBool( "debugChecking" );
+    Configuration* conf = Configuration::getInstance();
+    if( conf->getBool( "CalibrationActive" ) ){
+        bool debugChecking = conf->getBool( "debugChecking" );
 
-    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-      string goodName = supplySector[ i ]->getName();
-      if ( inputsAllFixed( period, goodName ) ) {
-         
-         // First find the total calibrated or fixed supply of this good         
-         double calSupply = supplySector[ i ]->getCalOutput( period );  // total calibrated output
-         calSupply += supplySector[ i ]->getFixedOutput( period );  // total fixed output
-            
-         // now find total fixed inputs demanded for this good
-         double calDemand = getFixedDemand( period, goodName );
-            
-         // if calibrated output and demand are not equal, then scale demand so that they match
-         if ( !util::isEqual( calSupply, calDemand ) && ( calDemand != 0 ) && supplySector[ i ]->outputsAllFixed( period ) ) {
-            logfile << "Inputs and Outputs all fixed for " << goodName << endl;
-            
-            logfile << "Cal difference in region " << name << " sector: " << goodName;
-            logfile << " Supply: " << calSupply << " S-D: " << calSupply-calDemand;
-            logfile << " ("<<(calSupply-calDemand)*100/calSupply<<"%)"<<endl;
+        for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
+            string goodName = supplySector[ i ]->getName();
+            if ( inputsAllFixed( period, goodName ) ) {
 
-            // Get calibrated inputs, only scale those, not fixed demands (if any)
-            double fixedCalInputs = 0;
-            for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-               fixedCalInputs += demandSector[ j ]->getFixedInputs( period, goodName, false ); 
+                // First find the total calibrated or fixed supply of this good         
+                double calSupply = supplySector[ i ]->getCalOutput( period );  // total calibrated output
+                calSupply += supplySector[ i ]->getFixedOutput( period );  // total fixed output
+
+                // now find total fixed inputs demanded for this good
+                double calDemand = getFixedDemand( period, goodName );
+
+                // if calibrated output and demand are not equal, then scale demand so that they match
+                if ( !util::isEqual( calSupply, calDemand ) && ( calDemand != 0 ) && supplySector[ i ]->outputsAllFixed( period ) ) {
+                    logfile << "Inputs and Outputs all fixed for " << goodName << endl;
+
+                    logfile << "Cal difference in region " << name << " sector: " << goodName;
+                    logfile << " Supply: " << calSupply << " S-D: " << calSupply-calDemand;
+                    logfile << " ("<<(calSupply-calDemand)*100/calSupply<<"%)"<<endl;
+
+                    // Get calibrated inputs, only scale those, not fixed demands (if any)
+                    double fixedCalInputs = 0;
+                    for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
+                        fixedCalInputs += demandSector[ j ]->getFixedInputs( period, goodName, false ); 
+                    }
+
+                    double ScaleValue = 1 + ( calSupply-calDemand )/fixedCalInputs;
+                    for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
+                        demandSector[ j ]->scaleCalibratedValues( period, goodName, ScaleValue ); 
+                    }
+                } else {
+                    if ( calDemand != 0 ) {
+                        logfile << ", ****Outputs are NOT all fixed." << endl;
+                    } else {
+                        logfile << ", fixed demand is zero or indirect." << endl;
+                    }
+                }
+
+                calDemand = getFixedDemand( period, goodName ); // get new demand to check if ok
+                // if calibrated demand is less than calibrated supply, even if supply is not all calibrated, issue warning
+                // This would cause a problem if not all supply was calibrated, but what was calibrated was > calibrated demand
+                // If debugchecking flag is on extra information is printed
+                if ( debugChecking ) {
+                    if ( ( calSupply - calDemand ) > util::getSmallNumber() ) {
+                        logfile << "WARNING: Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
+                        cout << "WARNING: Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
+                        cout << "   supply all fixed values : " << supplySector[ i ]->outputsAllFixed( period ) << endl;
+                        cout << "   demand all fixed : " << inputsAllFixed( period, goodName ) << endl;
+                        cout << "   fixedDemandsTot: " << calDemand << "  "; calDemand = getFixedDemand( period, goodName, true ); cout << endl;
+                        cout << "   fixedSupplyTot: " << calSupply<< "  "; 
+                        calSupply = supplySector[ i ]->getFixedOutput( period , true ); cout << endl;
+                    }
+                }
+            } // if allfixed
+            else {   // if not all fixed
+                if ( supplySector[ i ]->outputsAllFixed( period ) ) {
+                    logfile << "Inputs NOT ALL fixed for " << goodName << ", but supplies ARE all fixed" << endl;
+                }
             }
-            
-            double ScaleValue = 1 + ( calSupply-calDemand )/fixedCalInputs;
-            for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-               demandSector[ j ]->scaleCalibratedValues( period, goodName, ScaleValue ); 
-            }
-         } else {
-            if ( calDemand != 0 ) {
-               logfile << ", ****Outputs are NOT all fixed." << endl;
-            } else {
-               logfile << ", fixed demand is zero or indirect." << endl;
-            }
-         }
-         
-         calDemand = getFixedDemand( period, goodName ); // get new demand to check if ok
-         // if calibrated demand is less than calibrated supply, even if supply is not all calibrated, issue warning
-         // This would cause a problem if not all supply was calibrated, but what was calibrated was > calibrated demand
-          // If debugchecking flag is on extra information is printed
-         if ( ( calSupply - calDemand ) > util::getSmallNumber() ) {
-            logfile << "WARNING: Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
-            cout << "WARNING: Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
-            if ( debugChecking ) {
-               cout << "   supply all fixed values : " << supplySector[ i ]->outputsAllFixed( period ) << endl;
-               cout << "   demand all fixed : " << inputsAllFixed( period, goodName ) << endl;
-               cout << "   fixedDemandsTot: " << calDemand << "  "; calDemand = getFixedDemand( period, goodName, true ); cout << endl;
-               cout << "   fixedSupplyTot: " << calSupply<< "  "; 
-               calSupply = supplySector[ i ]->getFixedOutput( period , true ); cout << endl;
-            }
-         }
-      } // if allfixed
-      else {   // if not all fixed
-         if ( supplySector[ i ]->outputsAllFixed( period ) ) {
-         logfile << "Inputs NOT ALL fixed for " << goodName << ", but supplies ARE all fixed" << endl;
-         }
-      }
-    } // for block
+        } // for block
+    }
 }
 
 /*! \brief Returns true if all inputs for the selected good are fixed.
@@ -1107,9 +1114,12 @@ void Region::csvOutputFile() const {
         string var4name,string var5name,string uname,vector<double> dout);
 
     // write population results to database
-    population->csvOutputFile( name );
-    gdp->csvOutputFile( name );
-
+    if( population.get() ){
+        population->csvOutputFile( name );
+    }
+    if( gdp.get() ){
+        gdp->csvOutputFile( name );
+    }
     // regional total carbon taxes paid
     fileoutput3(name," "," "," ","C tax revenue","Mil90$",carbonTaxPaid);
 
@@ -1143,9 +1153,12 @@ void Region::dbOutput() const {
         string uname,vector<double> dout);
 
     // write population results to database
-    population->dbOutput( name );
-    gdp->dbOutput( name );
-
+    if( population.get() ){
+        population->dbOutput( name );
+    }
+    if( gdp.get() ){
+        gdp->dbOutput( name );
+    }
     // regional total carbon taxes paid
     dboutput4(name,"General","CarbonTax","revenue","90US$",carbonTaxPaid);
 
@@ -1497,11 +1510,11 @@ void Region::printSectorDependencies( Logger* logger ) const {
 void Region::setFixedTaxes( const std::string& policyName, const std::string& marketName, const vector<double>& taxes ){
     bool foundPolicy = false;
 
-    for( int i = 0; i < static_cast<int>( ghgMarket.size() ); i++ ){
-        if( ghgMarket[ i ]->getName() == policyName ){
+    for( unsigned int i = 0; i < mGhgPolicies.size(); i++ ){
+        if( mGhgPolicies[ i ]->getName() == policyName ){
             foundPolicy = true;
-            ghgMarket[ i ]->changePolicyToFixedTax( name );
-            ghgMarket[ i ]->setFixedTaxes( name, taxes );
+            mGhgPolicies[ i ]->changePolicyToFixedTax( name );
+            mGhgPolicies[ i ]->setFixedTaxes( name, taxes );
             break;
         }
     }
@@ -1510,7 +1523,7 @@ void Region::setFixedTaxes( const std::string& policyName, const std::string& ma
         GHGPolicy* policy = new GHGPolicy( policyName, "", marketName , true );
         policy->setFixedTaxes( name, taxes );
         policy->setMarket( name );
-        ghgMarket.push_back( policy );
+        mGhgPolicies.push_back( policy );
     }
 }
 
@@ -1526,14 +1539,14 @@ const Curve* Region::getEmissionsQuantityCurve( const string& ghgName ) const {
     /*! \pre The run has been completed. */
     const Modeltime* modeltime = scenario->getModeltime();
     
-    ExplicitPointSet* emissionsPoints = new ExplicitPointSet();
+    auto_ptr<ExplicitPointSet> emissionsPoints( new ExplicitPointSet() );
     
     for( int i = 0; i < scenario->getModeltime()->getmaxper(); i++ ) {
         XYDataPoint* currPoint = new XYDataPoint( modeltime->getper_to_yr( i ), summary[ i ].get_emissmap_second( ghgName ) );
         emissionsPoints->addPoint( currPoint );
     }
     
-    Curve* emissionsCurve = new PointSetCurve( emissionsPoints );
+    Curve* emissionsCurve = new PointSetCurve( emissionsPoints.release() );
     emissionsCurve->setTitle( ghgName + " emissions curve" );
     emissionsCurve->setXAxisLabel( "year" );
     emissionsCurve->setYAxisLabel( "emissions quantity" );
@@ -1555,14 +1568,14 @@ const Curve* Region::getEmissionsPriceCurve( const string& ghgName ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     const Marketplace* marketplace = scenario->getMarketplace();
 
-    ExplicitPointSet* emissionsPoints = new ExplicitPointSet();
+    auto_ptr<ExplicitPointSet> emissionsPoints( new ExplicitPointSet() );
     
     for( int i = 0; i < modeltime->getmaxper(); i++ ) {
         XYDataPoint* currPoint = new XYDataPoint( modeltime->getper_to_yr( i ), marketplace->getPrice( ghgName, name, i ) );
         emissionsPoints->addPoint( currPoint );
     }
     
-    Curve* emissionsCurve = new PointSetCurve( emissionsPoints );
+    Curve* emissionsCurve = new PointSetCurve( emissionsPoints.release() );
     emissionsCurve->setTitle( ghgName + " emissions tax curve" );
     emissionsCurve->setXAxisLabel( "year" );
     emissionsCurve->setYAxisLabel( "emissions tax" );

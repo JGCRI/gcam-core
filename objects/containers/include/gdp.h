@@ -64,7 +64,7 @@ public:
 	const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
 	void initData( const Population* regionalPop );
-	void setupCalibrationMarkets( const std::string& regionName );
+    void setupCalibrationMarkets( const std::string& regionName, const std::vector<double> aCalibrationGDPs );
 	void writeBackCalibratedValues( const std::string& regionName, const int period );
 	double getTotalLaborProductivity( const int period ) const;
 	double getLaborForce( const int per ) const;    

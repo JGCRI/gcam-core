@@ -22,6 +22,7 @@ class Region;
 class Logger;
 class Curve;
 class Tabs;
+class CalcCounter;
 
 /*! 
 * \ingroup Objects
@@ -61,6 +62,8 @@ public:
     void setFixedTaxes( const std::string& policyName, const std::string& marketName, const std::vector<double> taxes, const std::vector<std::string>& regionsToSet = std::vector<std::string>( 0 ) );
     const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
+    void setCalcCounter( CalcCounter* calcCounter );
+
 private:
     typedef std::vector<Region*>::iterator RegionIterator;
     typedef std::vector<Region*>::const_iterator ConstRegionIterator;
@@ -69,12 +72,11 @@ private:
     std::vector<std::map<std::string,double> > ghgs; //!< maps containing ghg emissions
     std::vector<std::string> primaryFuelList; //!< vector of names of primary fuels. 
     bool doCalibrations; //!< turn on or off calibration routines
+    CalcCounter* calcCounter;
 	static const std::string XML_NAME; //!< node name for toXML methods
-    
     void initAgLu(); 
     void clear();
     const std::vector<int> getRegionIndexesToCalculate( const std::vector<std::string>& regionsToSolve );
 };
 
 #endif // _WORLD_H_
-
