@@ -55,7 +55,7 @@ Variable ID,,,,,,,
 21,,,,,,,
 Second WRE path (in global tons carbon) to try -- difference in shapes defines family of paths,,,,,,,
 1990,2005,2020,2035,2050,2065,2080,2095
--1,-1,100,100,100,100,100,100
+-1,-1,100,50,50,50,50,50
 
 
 Source:,,,,,,,

@@ -182,7 +182,7 @@ Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E 
 6,pet_sys        ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0.067287721,-1,-1,,fix bad base year prod data for eEU,,,,,,
 7,landfills      ,2.18E-05,-1,9.03E-06,-1,-1,9.03E-06,9.03E-06,9.03E-06,9.03E-06,9.03E-06,9.03E-06,9.03E-06,-1,9.03E-06,,US and WEUR -> 20% redux. -- deving + REF -> WEUR long run,,,,,,
 8,wastewater     ,-1,-1,-1,-1,-1,3.49E-06,3.49E-06,3.49E-06,3.49E-06,3.49E-06,3.49E-06,3.49E-06,-1,3.49E-06,,deving -> devped avg,,,,,,
-10,landuse        ,-1,-1,-1,-1,0.010028614,-1,-1,-1,-1,-1,-1,-1,-1,-1,,fix a&nz,,,,,,
+10,landuse        ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,,fix a&nz,,,,,,
 11,enteric        ,-1,-1,-1,-1,-1,-1,-1,-1,0.00012467,0.00012467,-1,-1,-1,-1,,fix outliers,,,,,,
 12,manure         ,-1,-1,-1,-1,-1,-1,5.06E-05,6.68E-05,8.07E-05,7.31E-05,8.35E-05,-1,4.54E-05,8.86E-05,,"uses avg dev regions as base, up to 2x base coef for hot regions (temps below)",,,,,,
 
@@ -203,7 +203,7 @@ Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E 
 6,soils          ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,,none,,
 7,manure         ,-1,-1,-1,-1,-1,-1,3.08E-06,-1,3.08E-06,3.08E-06,3.08E-06,-1,3.08E-06,3.08E-06,,deving -> devped,,
 8,biomass        ,0.00337791,0.00337791,0.00337791,0.00337791,0.00337791,0.00337791,0.00337791,0.00337791,0.00337791,0.00337791,0.00337791,0.00337791,0.00337791,0.00337791,,all -> glbl avg,,
-10,landuse        ,-1,-1,-1,-1,0.000132428,-1,-1,-1,-1,-1,-1,-1,-1,-1,,fix a&nz,,
+10,landuse        ,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,,fix a&nz,,
 11,unmgd_manure   ,-1,-1,-1,-1,-1,-1,-1,6.62E-06,6.62E-06,6.62E-06,6.62E-06,-1,-1,6.62E-06,,deving (except east asia) -> devped,,
 
 
