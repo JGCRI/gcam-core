@@ -2,52 +2,182 @@
  * Method definition for World class						*
  * Coded by Sonny Kim 2/21/01								*/
 
-//** Database Headers *****
-#include <afxdisp.h>
-#include <dbdao.h>
-#include <dbdaoerr.h>
-//** Other Headers ********
+#include "Definitions.h"
+#include <ctime>
 #include <string>
-#include <stdlib.h>
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include <cassert>
+#include <vector>
+#include <map>
+#include <functional>
+#include <algorithm>
+
+// xml headers
+#include "xmlHelper.h"
+#include <xercesc/util/XMLString.hpp>
+#include <xercesc/dom/DOM.hpp>
+
 
 using namespace std; // enables elimination of std::
 
 #include "world.h"
-#include "str_indexname.h" // get index and name from database
 #include "modeltime.h"
+#include "Market.h"
+#include "Marketplace.h"
+
+extern "C" { void _stdcall AG2INITC( double[14][12] ); };
 // global variables defined in main
-extern const char* dbfile;
-extern const char* dbtdrsc;
-extern const char* dbtsupsec;
-extern const char* dbtdemsec;
-extern const char* dbtgen;
-extern const char* dbtout;
 extern ofstream bugoutfile,outfile, sdfile;	
-extern clock_t start, intermediate, finish, afterdata;
-extern bool timestamp;
-extern bool Minicam;  // run Minicam(true) or full CGE(false)
 extern Modeltime modeltime;
-extern CdbRecordset regidrst,catidrst,subcatidrst,varidrst,subvaridrst;
+extern Marketplace marketplace;
 
-// function protocols
-int countdbrec(string fdname,const char* dbname,const char* dbtname);
-void indbrec(str_indexname* str_temp,string index,string name,int ns,const char* dbname,
-					  const char* dbtname);
+// global map of region names
+map<string,int> regionMap;
 
-// World class method definition
-World::World(void) // default constructor
-{
+//! Default constructor.
+World::World() {
+	// initialize elemental datamembers.
+	noreg = 0;
 }
 
-World::~World(void) // default constructor
-{
-	cout << "Deleting the World object...\n";
+//! Initialize member variables.
+void World::clear(){
+	noreg = 0;
+	region.clear();
+	population.clear();
+	crudeoilrsc.clear();
+	unconvoilrsc.clear();
+	natgasrsc.clear();
+	coalrsc.clear();
+	uranrsc.clear();
+	ghgs.clear();
 }
 
-// set size of global arrays depending on MaxPer 
-void World::initper(void)
+//! parses World xml object
+void World::XMLParse( const DOMNode* node ){
+	
+	string nodeName;
+	DOMNode* curr = 0;
+	Region* tempRegion = 0; // tempory region object
+	
+	// assume we are passed a valid node.
+	assert( node );
+
+	// get all the children.
+	DOMNodeList* nodeList = node->getChildNodes();
+	
+	for( int i = 0; i < nodeList->getLength(); i++ ){
+		curr = nodeList->item( i );
+		nodeName = XMLString::transcode( curr->getNodeName() );
+		
+		if( nodeName == "region" ){
+			tempRegion = new Region();
+			tempRegion->initperXML(); // initialize size of arrays to max period
+			tempRegion->setCO2coef(); // sets default CO2 emissions coefficients
+			tempRegion->XMLParse( curr );
+			region.push_back( tempRegion ); // resizes vector of region objects
+		}
+	}
+	noreg = region.size();
+	
+	// Initialize AgLU
+	// initAgLu();
+}
+
+//! Initialize the AgLu model.
+void World::initAgLu() {
+	
+	double prices[ 14 ][ 12 ]; 
+	
+	vector<double> tempVec( 12 );
+
+#ifdef WIN32		
+	AG2INITC( prices ); // not implimented for non-PC's at this time
+#endif
+	
+	for ( int j = 0; j < noreg; j++ ) {
+		for ( int k = 0; k < numAgMarkets; k++ ) {
+			tempVec[ k ] = prices[ j ][ k ];
+		}
+		region[ j ]->initializeAgMarketPrices( tempVec );
+	}
+}
+
+//! Write out datamembers to XML output stream.
+void World::toXML( ostream& out ) const {
+	
+	// write the beginning tag.
+	Tabs::writeTabs( out );
+	out << "<world>" << endl;
+	
+	// increase the indent.
+	Tabs::increaseIndent();
+
+	// write the xml for the class members.
+	// for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
+	// won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
+
+	for( vector<Region*>::const_iterator i = region.begin(); i != region.end(); i++ ){
+	//for( vector<Region>::const_iterator i = region.begin(); i <= region.begin(); i++ ){
+		( *i )->toXML( out );
+	}
+	// finished writing xml for the class members.
+	
+	// decrease the indent.
+	Tabs::decreaseIndent();
+	
+	// write the closing tag.
+	Tabs::writeTabs( out );
+	out << "</world>" << endl;
+
+}
+
+//! Write out XML for debugging purposes.
+void World::toDebugXML( const int period, ostream& out ) const {
+	
+	// write the beginning tag.
+	Tabs::writeTabs( out );
+	out << "<world period=\"" << period << "\">" << endl;
+	
+	// increase the indent.
+	Tabs::increaseIndent();
+	
+	// write the xml for the class members.
+
+	XMLWriteElement( noreg, "numberOfRegions", out );
+	XMLWriteElement( population[ period ], "globalPopulation", out );
+	XMLWriteElement( crudeoilrsc[ period ], "globalCrudeOil", out );
+	XMLWriteElement( unconvoilrsc[ period ], "globalUnconventionalOil", out );
+	XMLWriteElement( natgasrsc[ period ], "globalNaturalGas", out );
+	XMLWriteElement( coalrsc[ period ], "globalCoal", out );
+	XMLWriteElement( uranrsc[ period ], "globalUranium", out );
+
+	// for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
+	// won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
+	marketplace.toDebugXML( period, out );
+
+	for( vector<Region*>::const_iterator i = region.begin(); i == region.begin(); i++ ) { 
+	//for( vector<Region>::const_iterator i = region.begin(); i != region.end(); i++ ) { 
+		( *i )->toDebugXML( period, out );
+	}
+
+	for( vector<str_ghgss>::const_iterator j = ghgs.begin(); j != ghgs.end(); j++ ) {
+		// j->toDebugXML( out ); // not yet implemented.
+	}
+	// finished writing xml for the class members.
+	
+	// decrease the indent.
+	Tabs::decreaseIndent();
+	
+	// write the closing tag.
+	Tabs::writeTabs( out );
+	out << "</world>" << endl;
+}
+
+//! set size of global arrays depending on MaxPer 
+void World::initper()
 {
 	int maxper = modeltime.getmaxper();
 	population.resize(maxper); // total global population
@@ -59,143 +189,97 @@ void World::initper(void)
 	ghgs.resize(maxper+2); // structure containing ghg emissions
 }
 
-// World class method definition
-void World::setregion(void) // set number of regions in World
-{
-	str_indexname* str_in; // structure with name and index
-	
-	noreg = countdbrec("Region",dbfile,dbtgen); // returns # of regions from gen table
-	//noreg = 1; // just do USA for now
-	region.resize(noreg); // create array of region objects
-	str_in = new str_indexname[noreg]; // create array of index and name objects
-
-	try {
-		indbrec(str_in,"Region","RegionName",noreg,dbfile,dbtgen);
-	}
-	catch(...) {
-		cerr <<"\nproblem while calling indbrec()\n";
-	}
-		
-	for (int i=0;i<noreg;i++) {
-		// set region name and index, create region method
-		region[i].setlabel(str_in[i].name,str_in[i].index);
-		// initialize size of arrays to max period
-		region[i].initper();
-		// set default CO2 emissions coefficients
-		region[i].setCO2coef();
-		// set size of population and labor productivity
-		region[i].setpop();	
-		// read in carbon tax from database for each region
-		region[i].setcarbontax();	
-		// set number ghg for market solution for each region
-		region[i].setghgobj();	
-		// sets number of depletable resources
-		region[i].setdepresource(); 
-		// sets number of supply sectors
-		region[i].setsupsector(); 
-		// sets number of demand sectors
-		region[i].setdemsector(); 
-	}	
-	// delete structure for setting name and index
-	delete [] str_in; 
-}
-
-// initialize all regions
-// all data inputs are read in here
-void World::initregion(void)
-{
-	for (int i=0;i<noreg;i++) {
-		region[i].initpop();	// init population and labor productivity data
-		region[i].economics();// initialize economic data for region
-		region[i].rscinitialize();// initialize data for resources
-		region[i].supinitialize();// initialize data for supply sectors
-		region[i].deminitialize();// initialize data for demand sectors
-		region[i].settechghg(); // sets number of ghgs in technology
-	}	
-}
-
-// calculate regional gnps
+//! calculate regional gnps
 void World::gnp(int per)
 {
 	for (int i=0;i<noreg;i++) {
 		// calculate gnp
-		region[i].calc_gnp(per);
+		//region[i].calc_gnp(per);
+		// calculate GNP using labor force participation and labor productivity rates
+		region[i]->calcGNPlfp(per);
 	}
 }
 
-// calculate supply and demand and emissions for all regions
+//! calculate supply and demand and emissions for all regions
+/*! This is the main action loop for the model. 
+ Uses "MiniCAM" style logic where primary costs are calculated, 
+ then prices of refined fuels, end-use costs, end-use, etc. */
 void World::calc(int per)
 {
 	for (int i=0;i<noreg;i++) {
 		// apply carbon taxes to appropriate technologie
-		region[i].applycarbontax(per);
+		region[i]->applycarbontax(per);
 		// set regional GHG constraint to market supply
-		region[i].setghgsupply(per);
+		region[i]->setghgsupply(per);
 		// set regional GHG tax to individual technologies
-		region[i].addghgtax(per);
+		region[i]->addghgtax(per);
 		// determine supply of primary resources
-		region[i].rscsupply(per);
+		region[i]->rscsupply(per);
 		//sdfile<<"\n"; // supply & demand info.
 		// determine prices of refined fuels and electricity
-		region[i].finalsupplyprc(per);
+		region[i]->finalsupplyprc(per);
 		// calculate enduse service price
-		region[i].calc_enduseprice(per);
+		region[ i ]->calcEndUsePrice( per );
 		// adjust gnp for energy cost changes
-		region[i].adjust_gnp(per);
+		region[i]->adjust_gnp(per);
 		// determine end-use demand for energy and other goods
-		region[i].endusedemand(per);
+		region[i]->endusedemand(per);
 		//sdfile<<"\n"; // supply & demand info.
 		// determine supply of final energy and other goods based on demand
-		region[i].finalsupply(per);
-		//sdfile<<"\n"; // supply & demand info.
-		// for intermediate goods market set supply = cost and demand = solution price
-		if(!Minicam)
-			region[i].override_mrks(per);
+		region[i]->finalsupply(per);
+
+// 		region[i]->calcAgSector(per);
 		// calculate GHG emissions for region by technology
-		region[i].emission(per);
+		region[i]->emission(per);
 		// set regional GHG emissions as market demand
-		region[i].setghgdemand(per);
+		region[i]->setghgdemand(per);
+
+		
 	}	
 }
 
-// sum population from each region for global total
-void World::sumpop(int per)
+//! sum population from each region for global total
+void World::sumpop( int per )
 {
 	population[per] = 0.0;
 	// divide by 1000 to get millions
-	for (int i=0;i<noreg;i++)
-		population[per] += region[i].showpop(per)/1000;
+	for ( int i = 0; i < noreg; i++ ) {
+		population[per] += region[i]->showpop(per)/1000;
+	}
 }
 
-// sum regional resources for global total
-void World::sumrsc(int per)
+//! sum regional resources for global total
+void World::sumrsc( int per )
 {
 	crudeoilrsc[per] = 0.0;
 	unconvoilrsc[per] = 0.0;
 	natgasrsc[per] = 0.0;
 	coalrsc[per] = 0.0;
 	uranrsc[per] = 0.0;
-	for (int i=0;i<noreg;i++) {
-		crudeoilrsc[per] += region[i].showsubrsc(1,1,per);
-		unconvoilrsc[per] += region[i].showsubrsc(1,2,per);
-		natgasrsc[per] += region[i].showrsc(2,per);
-		coalrsc[per] += region[i].showrsc(3,per);
-		uranrsc[per] += region[i].showrsc(4,per);
+	
+	for ( int i = 0; i < noreg; i++ ) {
+		crudeoilrsc[per] += region[i]->showsubrsc( "crude oil", "crude oil", per );
+		unconvoilrsc[per] += region[i]->showsubrsc( "crude oil", "unconventional oil", per );
+		natgasrsc[per] += region[i]->showrsc( "natural gas",per );
+		coalrsc[per] += region[i]->showrsc( "coal" ,per );
+		uranrsc[per] += region[i]->showrsc( "uranium", per );
 	}
 }
 
-// calculate indirect emissions for each region
+//! calculate indirect emissions for each region
 void World::emiss_ind(int per)
 {
 	for (int i=0;i<noreg;i++) {
-		region[i].emiss_ind(per); // calculate indirect emissions
+		region[i]->emiss_ind(per); // calculate indirect emissions
 	}
 }
 
-// set global emissions for all GHG for climat
-void World::emiss_all(void)
+//! set global emissions for all GHG for climat
+void World::emiss_all()
 {
 	int maxper = modeltime.getmaxdataper();
+        int  per;
+        
 	ifstream gasfile2;
 	//gasfile2.open("gas2.emk",ios::in); // open input file for reading
 	gasfile2.open("gas2.emk"); // open input file for reading
@@ -204,7 +288,7 @@ void World::emiss_all(void)
 	int skiplines = 5;
 	for (int i=0;i<skiplines;i++)
 		gasfile2.ignore(80,'\n'); // skip lines
-	for (int per=1;per<maxper;per++) {
+	for (per=1;per<maxper;per++) {
 		gasfile2.ignore(80,','); // skip year column
 		gasfile2.ignore(80,','); // skip CO2 column
 		gasfile2 >> ghgs[per].CO2ag;
@@ -243,57 +327,32 @@ void World::emiss_all(void)
 	gasfile2.close();
 }
 
-// write results for all regions to database
-void World::outputdb(void)
-{
-	int maxper = modeltime.getmaxper();
-	vector<double> temp(maxper);
-	// function protocol
-	void dboutput2(string varreg,string var1name,string var2name,string var3name,
-			  string var4name,vector<double> dout,string uname);
-
-	// write global population results to database
-	dboutput2("zGlobal","demographics"," "," ","population",population,"Millions");
-
-	// write total emissions for World
-	for (int m=0;m<maxper;m++)
-		temp[m] = ghgs[m].CO2;
-	dboutput2("Global","CO2 Emiss","by fuel","zTotal","CO2 emissions",temp,"MTC");
-	dboutput2("Global","resource","crude oil"," ","conv resource",crudeoilrsc,"EJ");
-	dboutput2("Global","resource","crude oil"," ","unconv resource",unconvoilrsc,"EJ");
-	dboutput2("Global","resource","natural gas"," ","all resources",natgasrsc,"EJ");
-	dboutput2("Global","resource","coal"," ","all resources",coalrsc,"EJ");
-	dboutput2("Global","resource","uranium"," ","all resources",uranrsc,"EJ");
-	for (int i=0;i<noreg;i++)
-		region[i].outputdb();
-}
-
-// write results for all regions to file
+//! write results for all regions to file
 void World::outputfile(void)
 {
 	int maxper = modeltime.getmaxper();
 	vector<double> temp(maxper);
 	// function protocol
-	void fileoutput3(int regno,string var1name,string var2name,string var3name,
+	void fileoutput3(string var1name,string var2name,string var3name,
 				  string var4name,string var5name,string uname,vector<double> dout);
 
 	// write global population results to database
-	fileoutput3(0,"global"," "," "," ","population","Millions",population);
+	fileoutput3("global"," "," "," ","population","Millions",population);
 
 	// write total emissions for World
 	for (int m=0;m<maxper;m++)
 		temp[m] = ghgs[m].CO2;
-	fileoutput3(0,"global"," "," "," ","CO2 emiss","MTC",temp);
-	fileoutput3(0,"global"," "," "," ","c.oil resource(conv)","EJ",crudeoilrsc);
-	fileoutput3(0,"global"," "," "," ","c.oil resource(unconv)","EJ",unconvoilrsc);
-	fileoutput3(0,"global"," "," "," ","n.gas resource","EJ",natgasrsc);
-	fileoutput3(0,"global"," "," "," ","coal resource","EJ",coalrsc);
-	fileoutput3(0,"global"," "," "," ","uran resource","EJ",uranrsc);
+	fileoutput3( "global"," "," "," ","CO2 emiss","MTC",temp);
+	fileoutput3( "global"," "," "," ","c.oil resource(conv)","EJ",crudeoilrsc);
+	fileoutput3( "global"," "," "," ","c.oil resource(unconv)","EJ",unconvoilrsc);
+	fileoutput3( "global"," "," "," ","n.gas resource","EJ",natgasrsc);
+	fileoutput3( "global"," "," "," ","coal resource","EJ",coalrsc);
+	fileoutput3( "global"," "," "," ","uran resource","EJ",uranrsc);
 	for (int i=0;i<noreg;i++)
-		region[i].outputfile();
+		region[i]->outputfile();
 }
 
-// MiniCAM style output to file
+//! MiniCAM style output to database
 void World::MCoutput(void)
 {
 	int maxper = modeltime.getmaxper();
@@ -305,8 +364,10 @@ void World::MCoutput(void)
 	// write global population results to database
 	//dboutput4("global","General","Population","zTotal","thous",population);
 
-	for (int i=0;i<noreg;i++)
-		region[i].MCoutput();
+	// call regional output
+	for (int i=0;i<noreg;i++) {
+		region[i]->MCoutput();
+	}
 }
 
 double World::showCO2(int per) // return global emissions for period
@@ -382,4 +443,11 @@ double World::showHFC245ca(int per) // return global emissions for period
 double World::showSF6(int per) // return global emissions for period
 {
 	return ghgs[per].SF6;
+}
+
+void World::createRegionMap(void) // create map of region names
+{
+	for (int i=0;i<noreg;i++) {
+		regionMap[region[i]->getName()] = i+1; // start index from 1
+	}
 }

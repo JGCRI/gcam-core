@@ -4,27 +4,37 @@
  * 										*
  * SHK  10/18/01								*/
 
+#ifndef _GHG_MRK_H_
+#define _GHG_MRK_H_
+#pragma once
+
 #include <vector>
+#include <xercesc/dom/DOM.hpp>
+
 using namespace std;
+using namespace xercesc;
 
 // ghg_mrk class (Greenhouse gas)
 class ghg_mrk
 {
 private:
-	char name[20]; // ghg name
-	char* unit; // ghg unit
-	int no; // ghg number
+	string name; // ghg name
+	string unit; // ghg unit
+	string market; // added by jpl
 	vector<double> constraint; // emissions constraint by year(tgC or MTC)
 	vector<double> emission; // emissions by year(tgC or MTC)
 
 public:
-	ghg_mrk(void); //default construtor
-	~ghg_mrk(void); // destructor
-	void initper(void); // resize vector to max period
-	void setconstraint(int reg,int var1); // set emissions constraint from database
-	char* showname(void); // show emissions name
-	int showghgno(void); // show emissions number
-	void setemission(double amount,int per); // set emissions
-	double showconstraint(int per); // return emissions constraint
-	double showemission(int per); // return emissions
+	ghg_mrk(); //default construtor
+	void clear();
+	void XMLParse( const DOMNode* node );
+	void toXML( ostream& out ) const; // write out xml.
+	void toDebugXML( const int period, ostream& out ) const;
+	void setMarket( const string& regname ); // creates markets
+	string getName() const; // show emissions name
+	void setEmission( const double amount, const int per ); // set emissions
+	double getConstraint( const int per ) const; // return emissions constraint
+	double getEmission( const int per ) const; // return emissions
 };
+
+#endif // _GHG_MRK_H_

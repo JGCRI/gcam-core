@@ -3,77 +3,79 @@
  * Summany contains variables for reporting.	*
  *												*
  * SHK  7/25/02									*/
-
+#include "Definitions.h"
 #include "summary.h"
 
 
 // summary class method definition
-Summary::Summary(void) // default constructor
-{
+Summary::Summary() { // default constructor
 }
 
-Summary::~Summary(void)
-{
+
+void Summary::initfuelcons( const string& fname, const double value ){
+
+	fuelcons[ fname ] += value;
+	fuelcons[ "zTotal" ] += value;
 }
 
-void Summary::initfuelcons(string fname, double value)
-{
-	fuelcons[fname] += value;
-	fuelcons["zTotal"] += value;
+void Summary::initpeprod( const string& fname, const double value ){
+
+	peprod[ fname ] += value;
+	peprod[ "zTotal" ] += value;
 }
 
-void Summary::initpeprod(string fname, double value)
+void Summary::initemission( const string& ghgname, const double value)
 {
-	peprod[fname] += value;
-	peprod["zTotal"] += value;
+	emission[ ghgname ] += value;
+	emission[ "zTotal" ] += value;
 }
 
-void Summary::initemission(string ghgname, double value)
-{
-	emission[ghgname] += value;
-	emission["zTotal"] += value;
-}
-
-map<string, double> Summary::getfuelcons(void)
-{
+map<string, double> Summary::getfuelcons() const {
+	
 	return fuelcons;
 }
 
-map<string, double> Summary::getpecons(void)
-{
+map<string, double> Summary::getpecons() const {
+	
 	return pecons;
 }
 
-map<string, double> Summary::getpetrade(void)
-{
+map<string, double> Summary::getpetrade() const {
 	return petrade;
 }
 
-map<string, double> Summary::getemission(void)
-{
+map<string, double> Summary::getemission() const {
+	
 	return emission;
 }
 
-map<string, double> Summary::getemfuelmap(void)
-{
+map<string, double> Summary::getemfuelmap() const {
+	
 	return emissfuel;
 }
 
-map<string, double> Summary::getemindmap(void)
-{
+map<string, double> Summary::getemindmap() const {
+
 	return emissind;
 }
 
-void Summary::updatefuelcons(map<string, double> fuelinfo)
-{
+//! Add the passed fuelmap to the summary fuelinfo map 
+/* The consumption values in the fuelinfo map that is passed are added 
+to the summary object maps fuelcons and pecons.
+
+The iterator fmap is used to traverse the fuelinfo map.
+*/ 
+void Summary::updatefuelcons( const map<string, double>& fuelinfo ) {
+	
 	string str;
 	typedef map<string,double>:: const_iterator CI;
-
+        CI fmap;
+        
 	// map all primary and secondary fuel consumption
-	for (CI fmap=fuelinfo.begin(); fmap!=fuelinfo.end(); ++fmap) {
-		str = fmap->first;
-		double test = fmap->second;
-		fuelcons[fmap->first] += fmap->second;
+	for (fmap=fuelinfo.begin(); fmap!=fuelinfo.end(); ++fmap) {	// iterate to one less than the end
+		str = fmap->first;	// for debugging, first is the key (to the map)
+		double test = fmap->second; //  for debugging, second is the value
+		fuelcons[fmap->first] += fmap->second; // Add values from the passed map to fuelcons
 	}
 
 	// map primary energy consumption only
@@ -104,110 +106,84 @@ void Summary::updatefuelcons(map<string, double> fuelinfo)
 	}	
 }
 
-void Summary::updatepetrade(void)
-{
-	string str;
-	typedef map<string,double>:: const_iterator CI;
+void Summary::updatepetrade() {
 
 	// map all primary and secondary fuel consumption
-	for (CI fmap=peprod.begin(); fmap!=peprod.end(); ++fmap) {
-		str = fmap->first;
-		petrade[fmap->first]=peprod[fmap->first]-pecons[fmap->first];
+	for ( map<string,double>::const_iterator fmap = peprod.begin(); fmap != peprod.end(); ++fmap ) {
+		petrade[ fmap->first ] = peprod[ fmap->first ] - pecons[ fmap->first ];
 	}
 }
 
-void Summary::updateemiss(map<string, double> ghginfo)
-{
-	string str;
-	typedef map<string,double>:: const_iterator CI;
-
+void Summary::updateemiss( const map<string, double>& ghginfo ) {
+	
 	// map all primary and secondary fuel consumption
-	for (CI fmap=ghginfo.begin(); fmap!=ghginfo.end(); ++fmap) {
-		str = fmap->first;
-		double test = fmap->second;
-		emission[fmap->first] += fmap->second;
+	for ( map<string,double>::const_iterator fmap = ghginfo.begin(); fmap != ghginfo.end(); ++fmap){
+		emission[ fmap->first ] += fmap->second;
 	}
 }
 
-void Summary::updateemfuelmap(map<string, double> ghginfo)
-{
-	string str;
-	typedef map<string,double>:: const_iterator CI;
+void Summary::updateemfuelmap( const map<string, double>& ghginfo ) {
 
 	// map all primary and secondary fuel consumption
-	for (CI fmap=ghginfo.begin(); fmap!=ghginfo.end(); ++fmap) {
-		str = fmap->first;
-		double test = fmap->second;
-		emissfuel[fmap->first] += fmap->second;
+	for ( map<string,double>::const_iterator fmap = ghginfo.begin(); fmap != ghginfo.end(); ++fmap ) {
+		emissfuel[ fmap->first ] += fmap->second;
 	}
 }
 
-void Summary::updateemindmap(map<string, double> ghginfo)
-{
-	string str;
-	typedef map<string,double>:: const_iterator CI;
+void Summary::updateemindmap( const map<string, double>& ghginfo ) {
 
 	// map all primary and secondary fuel consumption
-	for (CI fmap=ghginfo.begin(); fmap!=ghginfo.end(); ++fmap) {
-		str = fmap->first;
-		double test = fmap->second;
-		emissind[fmap->first] += fmap->second;
+	for ( map<string,double>::const_iterator fmap = ghginfo.begin(); fmap != ghginfo.end(); ++fmap ) {
+		emissind[ fmap->first ] += fmap->second;
 	}
 }
 
-void Summary::clearfuelcons(void)
-{
+void Summary::clearfuelcons() {
+	
 	fuelcons.clear();
 	pecons.clear();
 }
 
-void Summary::clearpeprod(void)
-{
+void Summary::clearpeprod() {
+
 	peprod.clear();
 	petrade.clear();
 }
 
-void Summary::clearemiss(void)
-{
+void Summary::clearemiss() {
+
 	emission.clear();
 }
 
-void Summary::clearemfuelmap(void)
-{
+void Summary::clearemfuelmap() {
+	
 	emissfuel.clear();
 }
 
-void Summary::clearemindmap(void)
-{
+void Summary::clearemindmap() {
 	emissind.clear();
 }
 
-double Summary::get_fmap_second(string str)
-{
-	return fuelcons[str];
+double Summary::get_fmap_second( const string& name ) const {
+	return ( fuelcons.find( name ) )->second;
 }
 
-double Summary::get_pemap_second(string str)
-{
-	return pecons[str];
+double Summary::get_pemap_second( const string& name ) const {
+	return ( pecons.find( name ) )->second;
 }
 
-double Summary::get_petrmap_second(string str)
-{
-	return petrade[str];
+double Summary::get_petrmap_second( const string& name ) const {
+	return ( petrade.find( name ) )->second;
 }
 
-double Summary::get_peprodmap_second(string str)
-{
-	return peprod[str];
+double Summary::get_peprodmap_second( const string& name ) const {
+	return ( peprod.find( name ) )->second;
 }
 
-double Summary::get_emissmap_second(string str)
-{
-	return emission[str];
+double Summary::get_emissmap_second( const string& name ) const {
+	return ( emission.find( name ) )->second;
 }
 
-double Summary::get_emindmap_second(string str)
-{
-	return emissind[str];
+double Summary::get_emindmap_second( const string& name ) const {
+	return ( emissind.find( name ) )->second;
 }

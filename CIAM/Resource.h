@@ -1,51 +1,67 @@
-/* resource.h								*
- * resources for each region				*
- * resource is a class						*
- * that contains resource subsectors 		*/
+/* Resource.h								*
+ * Resources for each region				*
+ * Resource is a class						*
+ * that contains Resource subsectors 		*/
+
+#ifndef _RESOURCE_H_
+#define _RESOURCE_H_
+#pragma once
 
 #include "subrsrc.h"
+#include <xercesc/dom/DOM.hpp>
 
-// struct for index and name
+using namespace xercesc;
 
-class resource
+class Resource
 {
-private:
-	//char *name; // resource name
-	char name[20]; // resource name
-	int no; // resource number
-	int nosubrsrc; // number of subsectors for each resource
-	vector<subrsrc> depsubrsrc; // subsector objects for each resource
-	vector<double> rscprc; // resource price
-	vector<double> available; // total resource availabl
-	vector<double> annualprod; // annual production rate of resource
-	vector<double> cummprod; // cummulative production of resource
+protected:
+	string name; //! Resource name
+	string market; //! regional market
+	int nosubrsrc; //! number of subsectors for each Resource
+	vector<subrsrc*> depsubrsrc; //! subsector objects for each Resource
+	vector<double> rscprc; //! Resource price
+	vector<double> available; //! total Resource available
+	vector<double> annualprod; //! annual production rate of Resource
+	vector<double> cummprod; //! cummulative production of Resource
 public:
-	resource(void); // default construtor
-	resource(const char* nstr,int rno); // constructor
-	~resource(void); // destructor
-	int index(void); // return resource no
-	char *showname(void); // return resource name
-	void setlabel(const char *nstr,int rno); // reads in sectors from database
-	void setlabel2(void); // reads in sectors from database
-	void setlabel3(int rno);
-	void initper(void); //set vector size
-	void setdepsubrsrc(int iss,int* tgrade); // sets number of subsectors
-	void initialize(char* region,int tregno); // reads in subsector information
+	Resource(); // default construtor
+	virtual ~Resource();
+	virtual string getType() const = 0;
+	void clear();
+	void XMLParse( const DOMNode* node );
+	void toXML( ostream& out ) const;
+	void toDebugXML( const int period, ostream &out ) const;
+	string getName() const; 
+	void setMarket( const string& regionName );
 	double price(int per); 
 	void cummsupply(double prc,int per); // calculative cummulative supply from supply curve
 	double showcummprod(int per); // returns cummulative supply
 	// calculates annual supply or production
 	void annualsupply(int per,double gnp1,double gnp2,double price1,double price2);
-	double showannualprod(int per); // returns annnual production of resource
-	double showavailable(int per); // returns total available resource
-	double showsubavail(int subrscno,int per); // returns total available subresource
+	double showannualprod(int per); // returns annnual production of Resource
+	double showavailable(int per); // returns total available Resource
+	double showsubavail( const string& subResourceName, const int per); // returns total available subResource
 	int shownosubrsrc(void); // returns total number of subsectors
-	void show(void); // shows resource name and subresources
-	// output to database table
-	void outputdb(const char *regname,int reg); 
+	void show(void); // shows Resource name and subResources
 	// MiniCAM style output to database table
-	void MCoutput(const char *regname,int reg); 
+	void MCoutput( const string& regname ); 
 	// output to file
-	void outputfile(const char *regname,int reg); 
+	void outputfile( const string& regname ); 
 };
 
+class DepletableResource: public Resource {
+public: 
+	virtual string getType() const;
+};
+
+class FixedResource: public Resource {
+public: 
+	virtual string getType() const;
+};
+
+class RenewableResource: public Resource {
+public: 
+	virtual string getType() const;
+};
+
+#endif // _RESOURCE_H_

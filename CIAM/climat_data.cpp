@@ -4,10 +4,11 @@
  * Coded by Sonny Kim 1/20/02									*/
 
 // standard library
+#include "Definitions.h"
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <time.h> // to use clock and time functions
+#include <ctime> // to use clock and time functions
 // user defined headers
 #include "world.h"
 #include "modeltime.h"
@@ -22,12 +23,13 @@ extern Modeltime modeltime;
 void climat_data(void)
 {
 	int maxper = modeltime.getmaxdataper();
-
+        int per;
+    
 	gasfile << "10\n Scenario B2-550\n\n\n\n";
 	gasfile.setf(ios::right, ios::adjustfield);
 	gasfile.setf(ios::fixed, ios::floatfield);
 	gasfile.setf(ios::showpoint);
-	for(int per=1;per<maxper;per++) {
+	for(per=1;per<maxper;per++) {
 		gasfile << setw(4)
 				<< 1975+(per*15) <<","
 				<< setw(7) << setprecision(2) << world.showCO2(per)/1000 <<","

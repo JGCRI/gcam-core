@@ -4,8 +4,9 @@
  * Each class contains a map object of emissions	*
  * coefficients, and each emisscoef_ind object is	*
  * used to represent the secondary energy sector.	*
- * SHK  11/13/02									*/
-
+ * SHK  11/13/02	
+								*/
+#include "Definitions.h"
 #include "Emcoef_ind.h"
 
 Emcoef_ind::Emcoef_ind(void) //default construtor

@@ -4,90 +4,76 @@
  *											*
  * SHK  7/7/00								*/
 
+#ifndef _SECTOR_H_
+#define _SECTOR_H_
+#pragma once
 
-// sector class
-/* get errors if this is included
-//** Database Headers *****
-#include <afxdisp.h>
-#include <dbdao.h>
-#include <dbdaoerr.h>
-*/
-//#include <vector>
-
+#include <vector>
+#include <xercesc/dom/DOM.hpp>
 #include "subsector.h" // generic technology class
 
 using namespace std; // enables elimination of std::
+using namespace xercesc;
 
 class sector
 {
-private:
-	char name[20]; // sector name
-	char* unit; // unit of final product from sector
-	int no; // sector number
-	int nosubsec; // number of subsectors in each sector
-	vector<subsector> subsec; // subsector objects
-	vector<double> sectorprice; // sector price for all periods
-	vector<double> pe_cons; // sectoral primary energy consumption
-	vector<double> input; // sector total energy consumption
-	vector<double> output; // total amount of final output from sector
-	double tax; // sector tax or subsidy
-	vector<double> carbontaxpaid; // total sector carbon taxes paid
 protected:
-	vector<Summary> summary; // summary for reporting
+	string name; //! sector name
+	string unit; //! unit of final product from sector
+	string market; //! regional market
+	int nosubsec; //! number of subsectors in each sector
+	double tax; //! sector tax or subsidy
+	vector<subsector*> subsec; //! subsector objects
+	vector<double> sectorprice; //! sector price for all periods
+	vector<double> pe_cons; //! sectoral primary energy consumption
+	vector<double> input; //! sector total energy consumption
+	vector<double> output; //! total amount of final output from sector
+	vector<double> fixedOutput; //! total amount of fixed output from sector
+	vector<double> carbontaxpaid; //! total sector carbon taxes paid
+	vector<Summary> summary; //! summary for reporting
+	virtual void initElementalMembers();
+
 public:
-	sector(void); //default construtor
-	sector(const char* nstr,int sno,double ttax);//constructor
-	~sector(void); // destructor
-	int index(void); // return sector number (secno)
-	void setlabel(const char* nstr,int sno); // sets sector name and index
-	char* showname(void); // return name of sector
-	int showno(void); // return sector no
-	void initper(void); //set vector size
-	// sets the number of subsectors for each sector and region
-	void set_subsec(int iss,int* ttech); // sets number of subsectors 
-	// sets the number of ghg for technologies
-	void settechghg(int regionno);
-	// reads in subsector info from supply recordset
-	void init_Ssubsec(char* region,const char* rstname);
-	// reads in subsector info from demand recordset
-	void init_Dsubsec(char* region,const char* rstname);
-	// calls technology initialization
-	void init_stech(char* region,int tregno); 
-	void init_dtech(char* region,int tregno); 
+	sector(); //default construtor
+	virtual ~sector();
+	virtual void clear();
+	string getName(); // return name of sector
+	virtual void XMLParse( const DOMNode* node );
+	virtual void toXML( ostream& out ) const;
+	virtual void toDebugXML( const int period, ostream& out ) const;
+	virtual void setMarket( const string& regname ); //create markets
 	void applycarbontax(double tax,int per); // passes along regional carbon tax
-	void addghgtax(int ghgno,char* ghgname,int country_id,int per); // sets ghg tax to technologies
-	void calc_share(char* varcountry,int country_id,int per); // calculates and noralizes shares
+	void addghgtax( const string ghgname, const string regionName, const int per); // sets ghg tax to technologies
+	void calc_share( const string regionName, const int per ); // calculates and noralizes shares
 	void price(int per); // calculates sector price
-	void production(char* varcountry,int country_id,int per); // calculates production using mrk prices
-	void setoutput(char* varcountry,int country_id,double dmd, int per); // sets demand to totoutput and output
+	void production( const string& regionName,int per); // calculates production using mrk prices
+	void setoutput(const string& regionName, double dmd, int per); // sets demand to totoutput and output
 	void sumoutput(int per); // sum subsector outputs
 	void set_ser_dmd(double dmd, int per); // sets end-use sector service demand
-	void supply(char* varcountry,int country_id,int per); // calculates supply from each subsector
-	void show(void);
+	void supply( const string regionName, const int per ); // calculates supply from each subsector
+	void show();
 	void showsubsec(int per, const char* ofile); // shows all subsectors in the sector
 	void showlabel(const char* ofile); // show sector label
-	void setbaseser(char* region,const char* dbtname); // reads in sector base service from database
-	void setbaseshr(char* region,const char* dbtname); // reads in sector base share from database
 	int shownosubsec(void);
-	char* showsubsecname(int iss);
+	string showsubsecname(int iss);
 	double getoutput(int per); // returns sector output 
+	double getFixedOutput(int per); // returns sector output 
 	double showprice(int per); // returns sector aggregate price
 	void emission(int per); // sum subsector emissions
 	void indemission(int per); // sum subsector indirect emissions
 	double showpe_cons(int per); // return sector primary energy consumption
 	void suminput(int per); // sums subsector primary and final energy consumption
 	double showinput(int per); // return sector energy consumption
-	void outputdb(const char* regname,int reg); // write out sector result to database
-	virtual void outputfile(const char* regname,int reg); // write out sector result to file
-	void MCoutput_subsec(const char* regname,int reg); // calls write for subsector 
-	virtual void MCoutput(const char* regname,int reg); // write out sector result to file
-	void subsec_outfile(const char* regname,int reg);  // call fn to write subsector output
+	virtual void outputfile(const string& regname ); // write out sector result to file
+	void MCoutput_subsec(const string& regname ); // calls write for subsector 
+	virtual void MCoutput(const string& regname ); // write out sector result to file
+	void subsec_outfile(const string& regname );  // call fn to write subsector output
 	double showcarbontaxpaid(int per); // return total sector carbon taxes paid
 	map<string, double> getfuelcons(int per); // get fuel consumption map
 	double getfuelcons_second(int per,string key); // get second of fuel consumption map
 	void clearfuelcons(int per);  //  clears the fuelcons map in summary
 	map<string, double> getemission(int per);// get ghg emissions map in summary object 
-	map<string, double> getemfuelmap(int per);// get ghg emissions map in summary object 
+	map<string, double> getemfuelmap(int per);// get ghg emissions map in summary object
 };
 
 
@@ -95,15 +81,22 @@ public:
 class demsector : public sector
 {
 private:
+	int perCapitaBased; // demand equation based on per capita GNP, true or false
 	vector<double> fe_cons; // end-use sector final energy consumption
 	vector<double> service; // total end-use sector service 
-	double ielasticity; // income elasticity 
-	double aeei; // autonomous end-use energy intensity parameter
+	vector<double> iElasticity; // income elasticity 
+	vector<double> pElasticity; // price elasticity.
+	vector<double> aeei; // autonomous end-use energy intensity parameter
 public:
-	void initper_ds(void); //set vector size
+	virtual void clear();
+	virtual void XMLParse(const DOMNode* node);
+	virtual void toXML( ostream& out ) const;
+	virtual void toDebugXML( const int period, ostream& out ) const;
+	virtual void setMarket( const string& regname ); //create markets
 	// aggregate demand for service
-	void aggdemand(char* varcountry,int country_id,double prc,double x,double ie,
-		int per); 
-	void outputfile(const char* regname,int reg); // write out sector result to file
-	void MCoutput(const char* regname,int reg); // write out sector result to file
+	void aggdemand( const string& regionName,double gnp_cap,double gnp,int per); 
+	virtual void outputfile( const string& regionName ); // write out sector result to file
+	virtual void MCoutput( const string& regionName ); // write out sector result to file
 };
+
+#endif // _SECTOR_H_

@@ -1,0 +1,13 @@
+Autogen control file (ag)
+A1C-550
+14
+
+agcase.csv
+text outputfile
+
+
+INPUT_TABLE
+..\input\AgLU\AGIN_14.csv
+
+INPUT_TABLE
+..\input\AgLU\Catchup_AgTechChange.csv

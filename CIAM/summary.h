@@ -4,6 +4,10 @@
  *												*
  * SHK  7/25/02									*/
 
+#ifndef _SUMMARY_H_
+#define _SUMMARY_H_
+#pragma once
+
 #include <map>
 #include <string> 
 
@@ -20,31 +24,32 @@ private:
 	map<string, double> emissfuel;  // map of ghg emissions implicit in fuel
 	map<string, double> emissind;  // map of indirect ghg emissions
 public:
-	Summary(void); // default construtor
-	~Summary(void); // destructor
-	void initfuelcons(string fname, double value);
-	void initpeprod(string fname, double value);
-	void initemission(string ghgname, double value);
-	map<string, double> getfuelcons(void);
-	map<string, double> getpecons(void);
-	map<string, double> getpetrade(void);
-	map<string, double> getemission(void);
-	map<string, double> getemfuelmap(void);
-	map<string, double> getemindmap(void);
-	void updatefuelcons(map<string, double> fuelinfo);
-	void updatepetrade(void);
-	void updateemiss(map<string, double> ghginfo);
-	void updateemfuelmap(map<string, double> ghginfo);
-	void updateemindmap(map<string, double> ghginfo);
-	void clearfuelcons(void);
-	void clearpeprod(void);
-	void clearemiss(void);
-	void clearemfuelmap(void);
-	void clearemindmap(void);
-	double get_fmap_second(string str);
-	double get_pemap_second(string str);
-	double get_petrmap_second(string str);
-	double get_peprodmap_second(string str);
-	double get_emissmap_second(string str);
-	double get_emindmap_second(string str);
+	Summary(); // default construtor
+	void initfuelcons( const string& fname, const double value );
+	void initpeprod( const string& fname, const double value );
+	void initemission( const string& ghgname, const double value );
+	map<string, double> getfuelcons() const;
+	map<string, double> getpecons() const;
+	map<string, double> getpetrade() const;
+	map<string, double> getemission() const;
+	map<string, double> getemfuelmap() const;
+	map<string, double> getemindmap() const;
+	void updatefuelcons( const map<string, double>& fuelinfo);
+	void updatepetrade();
+	void updateemiss( const map<string, double>& ghginfo );
+	void updateemfuelmap( const map<string, double>& ghginfo );
+	void updateemindmap( const map<string, double>& ghginfo );
+	void clearfuelcons();
+	void clearpeprod();
+	void clearemiss();
+	void clearemfuelmap();
+	void clearemindmap();
+	double get_fmap_second( const string& name ) const;
+	double get_pemap_second( const string& name ) const;
+	double get_petrmap_second( const string& name ) const;
+	double get_peprodmap_second( const string& name ) const;
+	double get_emissmap_second( const string& name ) const;
+	double get_emindmap_second( const string& name ) const;
 };
+
+#endif // _SUMMARY_H_

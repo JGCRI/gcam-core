@@ -3,18 +3,33 @@
  * the scenario class.								*
  * SHK  3/12/02										*/
 
+#ifndef _SCENARIO_H_
+#define _SCENARIO_H_
+#pragma once
 
-// scenario class
+#include <xercesc/dom/DOM.hpp>
+#include <string>
+#include <iostream>
+
+using namespace std;
+using namespace xercesc;
+
+// Scenario class
 class Scenario
 {
 private:
-	int id; // scenario id
-	char name[20]; // scenario name
+	string name; //! Scenario name.
+	string scenarioSummary;
+
 public:
-	Scenario(void); // default construtor
-	~Scenario(void); // destructor
-	void setall(void); // sets all scenario parameters
-	// ****** return name and id ******
-	char* getname(void); // return scenario name
-	int getid(void); // return fuel number
+	Scenario(); // default construtor
+	void clear();
+	void XMLParse( const DOMNode* node );
+	void toXML( ostream& out ) const;
+	void toDebugXMLOpen( const int period, ostream& out ) const;
+	void toDebugXMLClose( const int period, ostream& out ) const;
+	string getName() const; // return scenario name
+	string XMLCreateDate( const time_t& time ) const;
 };
+
+#endif // _SCENARIO_H_

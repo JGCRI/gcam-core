@@ -6,6 +6,10 @@
  * used to represent the secondary energy sector.	*
  * SHK  11/13/02									*/
  
+#ifndef _EMCOEF_IND_H_
+#define _EMCOEF_IND_H_
+#pragma once
+
 #include <string>
 #include <map>
 using namespace std; // enables elimination of std::
@@ -24,3 +28,5 @@ public:
 	string getname(void);
 	double getemcoef(string gasname);
 };
+
+#endif // _EMCOEF_IND_H_

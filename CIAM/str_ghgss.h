@@ -2,6 +2,10 @@
  * structure for greenhouse gases	*
  * from supply and demand sectors.	*/
 
+#ifndef _STR_GHGSS_H_
+#define _STR_GHGSS_H_
+#pragma once
+
 // Struct for the collection of Greenhouse gases.
 // Stores emissions for each gas for region, sector, subsector
 // and technology totals.
@@ -31,3 +35,4 @@ struct str_ghgss
 	double SF6; // for magicc/climat
 };
 
+#endif // _STR_GHGSS_H_

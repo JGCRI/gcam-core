@@ -2,396 +2,390 @@
  * Method definition for sector class						*
  * Coded by Sonny Kim 7/13/00								*/
 
-//** Database Headers *****
-#include <afxdisp.h>
-#include <dbdao.h>
-#include <dbdaoerr.h>
-//** Other Headers ********
+#include "Definitions.h"
 #include <string>
-#include <stdlib.h>
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include <math.h>
+#include <cmath>
+#include <cassert>
+
 #include "market.h"
-#include "str_indexname.h" // get index and name from database
-using namespace std; // enables elimination of std::
 #include "modeltime.h"
 #include "sector.h"
+#include "Marketplace.h"
+
+// xml headers
+#include "xmlHelper.h"
+#include <xercesc/util/XMLString.hpp>
+#include <xercesc/dom/DOM.hpp>
+
+using namespace std; // enables elimination of std::
 
 extern Marketplace marketplace;
 extern Modeltime modeltime;
-extern const char *dbfile;
-extern bool Minicam;  // run Minicam(true) or full CGE(false)
 
-extern CdbDBEngine dben;
-extern CdbDatabase db;
-extern CdbRecordset suprst,suprst_ss,suprst_ct,demrst,demrst_ss,demrst_ct;
-extern CdbRecordset regidrst,catidrst,subcatidrst,varidrst,subvaridrst;
-extern ofstream outfile;	
+extern ofstream outfile, bugoutfile;
 
-// function protocols
-int count_subsec(string region,string fdname,int is,const char* dbtname);
-int countdbrec2(string fdname,int is,const char* dbname,const char* dbtname);
-void label_subsec(str_indexname* str_temp,string region,string index,string name,
-					  int is,int ns,const char* dbtname);
-
-// sector class method definition
-sector::sector(void) // default constructor
-{
+//! Default constructor
+sector::sector() {
+	initElementalMembers();
 }
 
-sector::sector(const char* nstr,int sno,double ttax)
-{
-	//name = new char [strlen(nstr)+1];
-	strcpy(name,nstr);
-	no = sno;
-	tax = ttax;
+//! Default destructor.
+sector::~sector() {
+	for( vector<subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
+		delete *subSecIter;
+	}
 }
 
-sector::~sector(void)
-{
+//! Clear member variables
+void sector::clear(){
+	initElementalMembers();
+	name = "";
+	unit = "";
+	market = "";
+	subsec.clear();
+	sectorprice.clear();
+	pe_cons.clear();
+	input.clear();
+	output.clear();
+	carbontaxpaid.clear();
+	summary.clear();
 }
 
-// return sector index
-int sector::index(void)
-{
-	return no;
+//! Initialize elemental data members.
+void sector::initElementalMembers(){
+	nosubsec = 0;
+	tax = 0;
 }
 
-void sector::setlabel(const char* nstr, int sno)
-{
-	strcpy(name, nstr);
-	no = sno;
-}
-
-char* sector::showname(void)
+//! Return sector name.
+string sector::getName()
 {
 	return name;
 }
 
-int sector::showno(void)
-{
-	return no;
-}
+//! Set data members from XML input.
+void sector::XMLParse( const DOMNode* node ){
+	
+	DOMNode* curr = 0;
+	DOMNodeList* nodeList = 0;
+	string nodeName;
+	subsector* tempSubSector = 0;
 
-// set vector size
-void sector::initper(void)
-{
+	//! \pre make sure we were passed a valid node.
+	assert( node );
+	
+	// get the name attribute.
+	name = XMLHelper<string>::getAttrString( node, "name" );
+	
+	#if( _DEBUG )
+		cout << "\tSector name set as " << name << endl;
+	#endif
+	
+	// get all child nodes.
+	nodeList = node->getChildNodes();
+
+	// loop through the child nodes.
+	for( int i = 0; i < nodeList->getLength(); i++ ){
+		curr = nodeList->item( i );
+		nodeName = XMLString::transcode( curr->getNodeName() );
+
+		if( nodeName == "market" ){
+			market = XMLHelper<string>::getValueString( curr ); // only one market element.
+		}
+		else if( nodeName == "price" ){
+			sectorprice.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+		else if( nodeName == "output" ) {
+			output.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+		else if( nodeName == "subsector" ){
+			tempSubSector = new subsector();
+			tempSubSector->XMLParse( curr );
+			subsec.push_back( tempSubSector );
+		}	
+	}
+	nosubsec = subsec.size();
+	// resize vectors not read in
 	int maxper = modeltime.getmaxper();
-
-	sectorprice.resize(maxper); // sector price for all periods
-	pe_cons.resize(maxper); // sectoral primary energy consumption
-	input.resize(maxper); // sector total energy consumption
-	output.resize(maxper); // total amount of final output from sector
-	carbontaxpaid.resize(maxper); // total sector carbon taxes paid
-	summary.resize(maxper); // object containing summaries
+	pe_cons.resize( maxper ); // sectoral primary energy consumption
+	input.resize( maxper ); // sector total energy consumption
+	// output.resize( maxper ); // total amount of final output from sector
+	carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
+	summary.resize( maxper ); // object containing summaries
 }
 
-// set number of subsectors and technologies for each sector and region
-void sector::set_subsec(int iss,int* ttech) 
-{
-	nosubsec = iss; 
-	subsec.resize(nosubsec);
-
-	for (int i=0;i<nosubsec;i++) {
-		subsec[i].initper();
-		int it = *(ttech+i);
-		subsec[i].settech(it);
-	}	
-}
-
-// set number of ghg for technologies
-void sector::settechghg(int regionno) 
-{
-	int sectorno = no;
-	for (int i=0;i<nosubsec;i++) {
-		subsec[i].settechghg(regionno,sectorno);
-	}	
-}
-
-void sector::init_Ssubsec(char* region,const char *rstname)
-{
-	char bufis[20];
-	int i=0;
-	string str;
-
-	// convert integer to string for sql (radix 10)
-	// bufis,bufiss contains converted string
-	_itoa(no,bufis,10);
-
-	str = "RegionName = '";
-	str = str + region + "' AND Sector = " + bufis ;
-	//suprst.FindFirst(str.c_str());
-	no = suprst_ss.GetField("Sector").intVal;
-	strcpy(name,suprst_ss.GetField("SectorName").pcVal);
-
-	// NOTE!!!!
-	// if there are multiple technologies in the subsector, the share weights 
-	// and logit exponential for the first technology are used for the subsector
-
-	// create an array of daorsetbing struct
-	// table binding: (assign the field lengths and types)
-	// Using suprst_ss recordset which has different field index than 
-	// original table
-	DAORSETBINDING	Bindings[] = {
-	//Index Type    Fld	Type	  Offset			 Size
-	{dbBindIndexINT, 6, dbBindR8, offsetof(str_ssec,tcaplim), sizeof(double)},
-	{dbBindIndexINT, 7, dbBindR8, offsetof(str_ssec,tshrwts), sizeof(double)},
-	{dbBindIndexINT, 8, dbBindR8, offsetof(str_ssec,tlexp), sizeof(double)}
-	};
-
-	// run C++ GetRowsEx 
-	int dper = modeltime.getmaxdataper();
-	int	maxrecords = dper*nosubsec; // number of rows is the number of periods
-	// these structures won't work; create subsector share weight and logit exponential 
-	// structure
-	lpstr_ssec pstr_ssecRows = new str_ssec[maxrecords];
-	LONG lNumRecords, lYear;
-	// cannot use maxrecords because not const int
-	TCHAR pBuf[100 * 20]; // buffer for use with variable length text fields only
+//! Write object to xml output stream.
+void sector::toXML( ostream& out ) const {
 	
-	lNumRecords = suprst_ss.GetRowsEx(pstr_ssecRows, sizeof(str_ssec),
-		  &Bindings[0], sizeof(Bindings) / sizeof(DAORSETBINDING),
-		  pBuf, sizeof(pBuf), maxrecords); // get year rows for each subsector
+	// write the beginning tag.
+	Tabs::writeTabs( out );
+	out << "<supplysector name=\"" << name << "\">"<< endl;
 	
-	// Step through the returned rows and assign to subsector
-	for (i=0;i<nosubsec;i++) {
-		for (lYear = 0; lYear < dper; lYear++) {
-  		    // pstr_ssecRows is a variant
-			subsec[i].setall(&pstr_ssecRows[(i*dper)+lYear],lYear);
-		}
-		// initialize for periods greater than last data period
-		// last model period for last data per
-		int m1=modeltime.getdata_to_mod(dper-1);
-		if(modeltime.getendyr() > modeltime.getper_to_yr(m1)) {
-			for (int j=m1+1;j<modeltime.getmaxper();j++)
-				subsec[i].copytolast(j);
-		}
-	}
-	suprst_ss.MoveNext(); // row is last record so move to next row
-	delete [] pstr_ssecRows; // free memory
-}
+	// increase the indent.
+	Tabs::increaseIndent();
 
-// same as above except for the demand recordset
-void sector::init_Dsubsec(char* region,const char* rstname)
-{
-	char bufis[20];
-	int i=0;
-	string str;
-
-	// convert integer to string for sql (radix 10)
-	// bufis,bufiss contains converted string
-	_itoa(no,bufis,10);
-
-	str = "RegionName = '";
-	str = str + region + "' AND Sector = " + bufis ;
-	//demrst.FindFirst(str.c_str());
-	no = demrst_ss.GetField("Sector").intVal;
-	strcpy(name,demrst_ss.GetField("SectorName").pcVal);
-
-	// NOTE!!!!
-	// if there are multiple technologies in the subsector, the share weights 
-	// and logit exponential for the first technology are used for the subsector
-
-	// create an array of daorsetbing struct
-	// table binding: (assign the field lengths and types)
-	// Using recordset that has different field index than original table
-	DAORSETBINDING	Bindings[] = {
-	//Index Type    Fld	Type	  Offset			 Size
-	{dbBindIndexINT, 6, dbBindR8, offsetof(str_ssec,tshrwts), sizeof(double)},
-	{dbBindIndexINT, 7, dbBindR8, offsetof(str_ssec,tlexp), sizeof(double)}
-	};
-
-	// run C++ GetRowsEx 
-	int dper = modeltime.getmaxdataper();
-	int	maxrecords = dper*nosubsec; // number of rows is the number of periods
-	// these structures won't work; create subsector share weight and logit exponential 
-	// structure
-	lpstr_ssec pstr_ssecRows = new str_ssec[maxrecords];
-	LONG lNumRecords, lYear;
-	// cannot use maxrecords because not const int
-	TCHAR pBuf[100 * 20]; // buffer for use with variable length text fields only
+	// write the xml for the class members.
+	// write out the market string.
+	XMLWriteElement( market, "market", out );
+	XMLWriteElement( unit, "unit", out );
 	
-	lNumRecords = demrst_ss.GetRowsEx(pstr_ssecRows, sizeof(str_ssec),
-		  &Bindings[0], sizeof(Bindings) / sizeof(DAORSETBINDING),
-		  pBuf, sizeof(pBuf), maxrecords); // get year rows for each subsector
-
-	// Step through the returned rows and assign to subsector
-	for (i=0;i<nosubsec;i++) {
-		for (lYear = 0; lYear < dper; lYear++) {
-  		    // pstr_ssecRows is a variant
-			subsec[i].setall(&pstr_ssecRows[(i*dper)+lYear],lYear);
-		}
-		// initialize for periods greater than last data period
-		// last model period for last data per
-		int m1=modeltime.getdata_to_mod(dper-1);
-		if(modeltime.getendyr() > modeltime.getper_to_yr(m1)) {
-			for (int j=m1+1;j<modeltime.getmaxper();j++)
-				subsec[i].copytolast(j);
-		}
+	for( int i = 0; i < static_cast<int>( sectorprice.size() ); i++ ){
+		XMLWriteElement( sectorprice[ i ], "price", out, modeltime.getper_to_yr( i ) );
 	}
-	demrst_ss.MoveNext(); // row is last record so move to next row
-	delete [] pstr_ssecRows; // free memory
+	
+	for( int j = 0; j < static_cast<int>( output.size() ); j++ ){
+		XMLWriteElement( output[ j ], "output", out, modeltime.getper_to_yr( j ) );
+	}
+
+	// write out the subsector objects.
+	for( vector<subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
+		( *k )->toXML( out );
+	}
+
+	// finished writing xml for the class members.
+	
+	// decrease the indent.
+	Tabs::decreaseIndent();
+	
+	// write the closing tag.
+	Tabs::writeTabs( out );
+	out << "</supplysector>" << endl;
 }
 
-void sector::init_stech(char* region,int tregno)
+//! Write object to xml output stream.
+void sector::toDebugXML( const int period, ostream& out ) const {
+	
+	// write the beginning tag.
+	Tabs::writeTabs( out );
+	out << "<supplysector name=\"" << name << "\">"<< endl;
+	
+	// increase the indent.
+	Tabs::increaseIndent();
+
+	// write the xml for the class members.
+	// write out the market string.
+	XMLWriteElement( market, "market", out );
+	XMLWriteElement( unit, "unit", out );
+	
+	// Write out the data in the vectors for the current period.
+	XMLWriteElement( sectorprice[ period ], "sectorprice", out );
+	XMLWriteElement( pe_cons[ period ], "pe_cons", out );
+	XMLWriteElement( input[ period ], "input", out );
+	XMLWriteElement( output[ period ], "output", out );
+	XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out );
+	
+	// Write out the summary
+	// summary[ period ].toDebugXML( period, out );
+
+	// write out the subsector objects.
+	for( vector<subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
+		( *j )->toDebugXML( period, out );
+	}
+
+	// finished writing xml for the class members.
+	
+	// decrease the indent.
+	Tabs::decreaseIndent();
+	
+	// write the closing tag.
+	Tabs::writeTabs( out );
+	out << "</supplysector>" << endl;
+}
+
+//! Create a market for the sector.
+void sector::setMarket( const string& regionName )
 {
-	// set number of technologies and initialize technology data
-	for (int i=0;i<nosubsec;i++) {
-		subsec[i].dbreadstech(region,no);
+	// marketplace is a global object
+	// name is resource name
+        // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
+	if( marketplace.setMarket( regionName, market, name, Market::NORMAL ) ) {
+		marketplace.setPriceVector( name, regionName, sectorprice );
 	}
+	/* The above is not quite right becuase there could be many sectors within the 
+           same market, this would result in the prices being reset each time. But little
+           practical effect -- see notes for demsector::setMarket.
+	*/
 }
 
-void sector::init_dtech(char* region,int tregno)
-{
-	// set number of technologies and initialize technology data
-	for (int i=0;i<nosubsec;i++) {
-		subsec[i].dbreaddtech(region,no);
-	}
-}
-
-// pass along carbon taxes
+//! Pass along carbon taxes.
 void sector::applycarbontax(double tax, int per)
 {
 	int i=0;
 	for (i=0;i<nosubsec;i++) {
-		subsec[i].applycarbontax(tax,per);
+		subsec[i]->applycarbontax(tax,per);
 	}
 }
 
-// sets ghg tax to technologies
-void sector::addghgtax(int ghgno,char* ghgname,int country_id,int per)
+//! Set ghg tax to technologies.
+void sector::addghgtax( const string ghgname, const string regionName, const int per)
 {
 	for (int i=0;i<nosubsec;i++) {
-		subsec[i].addghgtax(ghgno,ghgname,country_id,per);
+		subsec[i]->addghgtax(ghgname,regionName,per);
 	}
 }
 
-// calculate subsector shares
-void sector::calc_share(char* varcountry,int country_id,int per)
+//! Calculat subsector shares.
+void sector::calc_share( const string regionName, const int per )
 {
 	int i=0;
 	double sum = 0.0;
 	for (i=0;i<nosubsec;i++) {
 		// determine subsector shares based on technology shares
-		subsec[i].calc_share(varcountry,country_id,per);
-		sum += subsec[i].showshare(per);
+		subsec[i]->calc_share( regionName, per );
+		sum += subsec[i]->showshare(per);
 	}
 	// normalize subsector shares to total 100 %
 	for (i=0;i<nosubsec;i++)
-		subsec[i].norm_share(sum, per);	
+		subsec[i]->norm_share(sum, per);	
 }
 
+//! Calculate weighted average price of subsectors.
 void sector::price(int per)
 {
 	sectorprice[per]=0.0;
-	for (int i=0;i<nosubsec;i++)
-		// calculate weighted average price of subsectors
-		// price is calculated when calc_share() is called
-		sectorprice[per] += subsec[i].showshare(per)*subsec[i].showprice(per);
+	for (int i=0;i<nosubsec;i++)		
+		sectorprice[per] += subsec[i]->showshare(per) * subsec[i]->showprice(per);
 }
 
+//! return sector price
 double sector::showprice(int per)
 {
 	return sectorprice[per];
 }
 
-// sets demand to output and output
-void sector::setoutput(char* varcountry,int country_id,double dmd, int per)
+//! Set output for sector (ONLY USED FOR energy service demand at present).
+/*! Demand from the "dmd" parameter (could be energy or energy service) is passed to subsectors.
+    This is then shared out at the technology level.
+        In the case of demand, what is passed here is the energy service demand. 
+        The technologies convert this to an energy demand.
+    The demand is then summed at the subsector level (subsec[i].sumoutput) then
+    later at the sector level (in region via supplysector[j].sumoutput(per))
+    to equal the total sector output.
+*/
+void sector::setoutput( const string& regionName,double dmd, int per)
 {
 	carbontaxpaid[per] = 0; // initialize carbon taxes paid
-
+        int i;
+        
 	// clears subsector fuel consumption map
-	for (int i=0;i<nosubsec;i++) 
-		subsec[i].clearfuelcons(per);
+	for ( i=0;i<nosubsec;i++) 
+		subsec[i]->clearfuelcons(per);
 	// clears sector fuel consumption map
 	summary[per].clearfuelcons();
 
 	for (i=0;i<nosubsec;i++) {
 		// set subsector output from sector demand
-		subsec[i].setoutput(varcountry,country_id,dmd,per);
-		subsec[i].sumoutput(per);
-		carbontaxpaid[per] += subsec[i].showcarbontaxpaid(per);
+		subsec[i]->setoutput( regionName,dmd,per);
+		subsec[i]->sumoutput(per);
+		carbontaxpaid[per] += subsec[i]->showcarbontaxpaid(per);
 		// sum subsector fuel consumption for demand sector fuel consumption
-		summary[per].updatefuelcons(subsec[i].getfuelcons(per)); 
+		summary[per].updatefuelcons(subsec[i]->getfuelcons(per)); 
 	}
 }
 
-// sum subsector outputs
+//! Sum subsector outputs.
 void sector::sumoutput(int per)
 {
 	output[per] = 0;
 	for (int i=0;i<nosubsec;i++) {
-		output[per] += subsec[i].getoutput(per);
+		output[per] += subsec[i]->getoutput(per);
 	}
 }
 
-// set supply sector total output and technology output
-void sector::supply(char* varcountry,int country_id,int per)
-{	
+//! Set supply sector output.
+/*! This routine takes the market demand and propagates that through the supply sub-sectors
+    where it is shared out (and subsequently passed to the technology level within each sub-sector
+     to be shared out) */
+void sector::supply( const string regionName, const int per)
+{
+	double mrkprice, mrkdmd;
+        int i;
+        int bug = 1;
+        
 	carbontaxpaid[per] = 0; // initialize carbon taxes paid
-	double mrkprice = marketplace.showprice(no,country_id,per);
-	//double mrkdmd = marketplace.showdemand(no,country_id,per);
-	double mrkdmd = marketplace.showdemand_good(no,country_id,per);
+	
+	mrkprice = marketplace.showprice( name, regionName, per ); // price for the good produced by this sector
+	mrkdmd = marketplace.showdemand( name, regionName, per ); // demand for the good produced by this sector
 
-	if(!Minicam) {  // solve marketplace for intermediate goods
-		if (per==0)
-			mrkdmd = marketplace.showdemand_good(no,country_id,per);
-		else
-			mrkdmd = marketplace.showprice_d(no,country_id,per); // actually trial demand
-	}
-
-	for (int i=0;i<nosubsec;i++) // clears subsector fuel consumption map
-		subsec[i].clearfuelcons(per);
+         if (mrkdmd < 0) {
+            cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;
+        }
+        
+	for (i=0;i<nosubsec;i++) // clear subsector fuel consumption map
+		subsec[i]->clearfuelcons(per);
 
 	summary[per].clearfuelcons(); // clears sector fuel consumption map
 
-	// calculate output from technologies that are exogenously driven
-	// such as hydro electricity
-	double exog_prod = 0;
+	// calculate output from technologies that have fixed outputs such as hydro electric
+	double totalFixedSupply = 0;
+        double temp;
+        double varShareTot = 0; // sum of shares without fixed supply   
+        double Sharetotal = 0; // sum of shares without fixed supply   
+       
+        // Determine total fixed production and total var shares
+        // Need to change the exog_supply function once new, general fixed supply method is available
 	for (i=0;i<nosubsec;i++) {
-		exog_prod += subsec[i].exog_supply(per);
+            temp = subsec[i]->exog_supply(per);
+            totalFixedSupply += temp;
+            if (temp == 0) varShareTot += subsec[i]->showshare(per);
+            Sharetotal += subsec[i]->showshare(per);
 	}
 
-	mrkdmd -= exog_prod; // subtract from total demand the exogenous portion
-
+        // Adjust shares for any fixed output
+	if (totalFixedSupply > 0)
+            for (i=0;i<nosubsec;i++) {
+                subsec[i]->adjShares( mrkdmd, varShareTot, totalFixedSupply, per ); 
+            }
+                
 	for (i=0;i<nosubsec;i++) {
 		// set subsector output from sector demand
-		subsec[i].setoutput(varcountry,country_id,mrkdmd,per);
-		subsec[i].sumoutput(per);
-		carbontaxpaid[per] += subsec[i].showcarbontaxpaid(per);
+		subsec[i]->setoutput( regionName, mrkdmd, per ); // CHANGED JPL
+		subsec[i]->sumoutput( per );
+		carbontaxpaid[per] += subsec[i]->showcarbontaxpaid( per );
 		// sum subsector fuel consumption for supply sector fuel consumption
-		summary[per].updatefuelcons(subsec[i].getfuelcons(per)); 
+		summary[per].updatefuelcons(subsec[i]->getfuelcons( per )); 
 	}
+    
+        if (bug) {
+            sumoutput(per); // Sum output just so its available below
+            double mrksupply = getoutput(per);
+            if (per > 0 && abs(mrksupply - mrkdmd) > 0.01) {
+                mrksupply = mrksupply * 1.0000001;
+                cout << "Market Supply and demand are not equal";
+            }
+        }
 }
 
-void sector::show(void)
+void sector::show()
 {
 	int i=0;
 	int m=0; // per = 0
 	//write to file or database later
-	cout << no <<"Sector: " << name<<"\n";
-	cout << "Number of Subsectors: " << nosubsec <<"\n";
+	cout << "Sector: " << name<< endl;
+	cout << "Number of Subsectors: " << nosubsec << endl;
 	for (i=0;i<nosubsec;i++)
-		cout<<"Share["<<i<<"] "<<subsec[i].showshare(m)<<"\n";
-	cout <<"Total Sector Output: " << output[m] <<"\n";
+		cout<<"Share["<<i<<"] "<<subsec[i]->showshare(m)<< endl;
+	cout <<"Total Sector Output: " << output[m] << endl;
 
 }
 
-// shows all technologies in each subsector
+//! Prints to outputfile all technologies in each subsector.
 void sector::showsubsec(int per, const char *ofile)
 {
 	int i=0;
 
 	for (i=0;i<nosubsec;i++) {
 		// shows subsector label (name and index)
-		subsec[i].showlabel(ofile);
+		subsec[i]->showlabel(ofile);
 		// write technology info in each subsector to file
-		subsec[i].showtechs(per, ofile);
+		subsec[i]->showtechs(per, ofile);
 	}
 }
 
-// shows sector label (name and index)
+//! Prints to outputfile sector label (name and index).
 void sector::showlabel(const char* ofile)
 {
 	ofstream outfile;
@@ -404,26 +398,9 @@ void sector::showlabel(const char* ofile)
 			exit(-1);
 		}
 
-	outfile << "Sector: " << no << " " << name << "\n";
-	outfile << "Number of Subsectors: " << nosubsec << "\n";
+	outfile << "Sector: " << name << endl;
+	outfile << "Number of Subsectors: " << nosubsec << endl;
 	outfile.close();
-}
-
-void sector::setbaseser(char* region,const char* dbtname)
-{
-	// function protocol
-	void dbmodelread(double* temp,string region,string var1name,string var2name);
-	double tmpval[1];
-
-	// reads in data for sectors
-	dbmodelread(tmpval,region,name,"base");
-	output[0] = tmpval[0]; // base year is per=0
-}
-
-void sector::setbaseshr(char* region,const char* dbtname)
-{	
-	for (int i=0;i<nosubsec;i++)
-		subsec[i].setbaseshr(region,name,dbtname);
 }
 
 int sector::shownosubsec(void)
@@ -431,125 +408,101 @@ int sector::shownosubsec(void)
 	return nosubsec;
 }
 
-char* sector::showsubsecname(int iss)
+string sector::showsubsecname(int iss)
 {
-	return subsec[iss].showname();
+	return subsec[iss]->showname();
 }
 
+//! returns sector output
 double sector::getoutput(int per)
 {
-	return output[per]; // returns sector output
+	return output[per]; 
 }
 
-// calculate GHG emissions for each sector from subsectors
+
+//! Calculate GHG emissions for each sector from subsectors.
 void sector::emission(int per)
 {
 	summary[per].clearemiss(); // clear emissions map
-	summary[per].clearemfuelmap(); // clear emissions map
+	summary[per].clearemfuelmap(); // clear emissions fuel map
 	for (int i=0;i<nosubsec;i++) {
-		subsec[i].emission(per,name);
-		summary[per].updateemiss(subsec[i].getemission(per));
-		summary[per].updateemfuelmap(subsec[i].getemfuelmap(per));
+		subsec[i]->emission(per,name);
+		summary[per].updateemiss(subsec[i]->getemission(per));
+		summary[per].updateemfuelmap(subsec[i]->getemfuelmap(per));
 	}
 }
 
-// calculate indirect GHG emissions for each sector from subsectors
+//! Calculate indirect GHG emissions for each sector from subsectors.
 void sector::indemission(int per)
 {
 	summary[per].clearemindmap(); // clear emissions map
 	for (int i=0;i<nosubsec;i++) {
-		subsec[i].indemission(per);
-		summary[per].updateemindmap(subsec[i].getemindmap(per));
+		subsec[i]->indemission(per);
+		summary[per].updateemindmap(subsec[i]->getemindmap(per));
 	}
 }
 
-// returns sectoral primary energy consumption
+//! Return sectoral primary energy consumption.
 double sector::showpe_cons(int per)
 {
 	pe_cons[per] = 0;
 	for (int i=0;i<nosubsec;i++) {
-		pe_cons[per] += subsec[i].showpe_cons(per);
+		pe_cons[per] += subsec[i]->showpe_cons(per);
 	}
 	return pe_cons[per];
 }
 
-// sums subsector primary and final energy consumption
+//! Sums subsector primary and final energy consumption.
 void sector::suminput(int per)
 {
 	input[per] = 0;
 	for (int i=0;i<nosubsec;i++)
-		input[per] += subsec[i].showinput(per);
+		input[per] += subsec[i]->showinput(per);
 }
 
-// returns sectoral energy consumption
+//! Returns sectoral energy consumption.
 double sector::showinput(int per)
 {
 	return input[per];
 }
 
-// write sector output to database
-void sector::outputdb(const char* regname,int reg)
+//! Write sector output to database.
+void sector::outputfile( const string& regname)
 {
 	// function protocol
-	void dboutput2(string varreg,string var1name,string var2name,string var3name,
-			  string var4name,vector<double> dout,string uname);
-
-	// function arguments are variable name, double array, db name, table name
-	// the function writes all years
-	// total sector output
-	dboutput2(regname,name,"all subsectors"," ","production",output,"EJ");
-	// total sector eneryg input
-	dboutput2(regname,name,"all subsectors"," ","energy input",input,"EJ");
-	// sector price
-	dboutput2(regname,name,"all subsectors"," ","ave cost",sectorprice,"$/Service");
-	// sector carbon taxes paid
-	dboutput2(regname,name,"all subsectors"," ","carbon taxes paid",carbontaxpaid,"Mil90$");
-	
-	// do for all subsectors in the sector
-	for (int i=0;i<nosubsec;i++) {
-		// output or demand for each technology
-		subsec[i].outputdb(regname,reg,name);
-	}
-}
-
-// write sector output to database
-void sector::outputfile(const char *regname,int reg)
-{
-	// function protocol
-	void fileoutput3(int regno,string var1name,string var2name,string var3name,
+	void fileoutput3(string var1name,string var2name,string var3name,
 				  string var4name,string var5name,string uname,vector<double> dout);
 	
 	// function arguments are variable name, double array, db name, table name
 	// the function writes all years
 	// total sector output
-	fileoutput3(reg,regname,name," "," ","production","EJ",output);
+	fileoutput3(regname,name," "," ","production","EJ",output);
 	// total sector eneryg input
-	fileoutput3(reg,regname,name," "," ","consumption","EJ",input);
+	fileoutput3( regname,name," "," ","consumption","EJ",input);
 	// sector price
-	fileoutput3(reg,regname,name," "," ","price","$/GJ",sectorprice);
+	fileoutput3( regname,name," "," ","price","$/GJ",sectorprice);
 	// sector carbon taxes paid
-	fileoutput3(reg,regname,name," "," ","C tax paid","Mil90$",carbontaxpaid);
+	fileoutput3( regname,name," "," ","C tax paid","Mil90$",carbontaxpaid);
 }
 
-// for writing out subsector results from demand sector
-void sector::MCoutput_subsec(const char *regname,int reg)	
+//! Write out subsector results from demand sector.
+void sector::MCoutput_subsec( const string& regname )	
 {	// do for all subsectors in the sector
 	for (int i=0;i<nosubsec;i++) {
 		// output or demand for each technology
-		subsec[i].MCoutputB(regname,reg,name);
-		subsec[i].MCoutputC(regname,reg,name);
+		subsec[i]->MCoutputB(regname,name);
+		subsec[i]->MCoutputC(regname,name);
 	}
 }
 
-// write MiniCAM style sector output to database
-void sector::MCoutput(const char *regname,int reg)
+//! Write MiniCAM style sector output to database.
+void sector::MCoutput(const string& regname )
 {
 	// function protocol
-	void fileoutput4(string var1name,string var2name,string var3name,string var4name,
-			         vector<double> dout);
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
 			   string uname,vector<double> dout);
-	
+	int m;
+        
 	// total sector output
 	dboutput4(regname,"Secondary Energy Prod","by Sector",name,"EJ",output);
 	dboutput4(regname,"Secondary Energy Prod",name,"zTotal","EJ",output);
@@ -579,7 +532,7 @@ void sector::MCoutput(const char *regname,int reg)
 		dboutput4(regname,"Emissions",str,gmap->first,"MTC",temp);
 	}
 	// CO2 emissions by sector
-	for (int m=0;m<maxper;m++) {
+	for (m=0;m<maxper;m++) {
 		temp[m] = summary[m].get_emissmap_second("CO2");
 	}
 	dboutput4(regname,"CO2 Emiss","by Sector",name,"MTC",temp);
@@ -600,18 +553,18 @@ void sector::MCoutput(const char *regname,int reg)
 	// do for all subsectors in the sector
 	for (int i=0;i<nosubsec;i++) {
 		// output or demand for each technology
-		subsec[i].MCoutputA(regname,reg,name);
-		subsec[i].MCoutputC(regname,reg,name);
+		subsec[i]->MCoutputA(regname,name);
+		subsec[i]->MCoutputC(regname,name);
 	}
 }
 	
-// write subsector output to database
-void sector::subsec_outfile(const char *regname,int reg)
+//! Write subsector output to database.
+void sector::subsec_outfile( const string& regname )
 {
 	// do for all subsectors in the sector
 	for (int i=0;i<nosubsec;i++) {
 		// output or demand for each technology
-		subsec[i].outputfile(regname,reg,name);
+		subsec[i]->outputfile(regname,name);
 	}
 }
 
@@ -620,96 +573,338 @@ void sector::set_ser_dmd(double dmd, int per)
 	output[per] = dmd;
 }
 
-// returns total sector carbon taxes paid
+//! Return total sector carbon taxes paid.
 double sector::showcarbontaxpaid(int per)
 {
 	return carbontaxpaid[per];
 }
 
-//  gets fuel consumption map in summary object
+//! Get the fuel consumption map in summary object.
 map<string, double> sector::getfuelcons(int per) 
 {
 	return summary[per].getfuelcons();
 }
 
-//  gets second of fuel consumption map in summary object
+//!  Get the second fuel consumption map in summary object.
 double sector::getfuelcons_second(int per,string key) 
 {
 	return summary[per].get_fmap_second(key);
 }
 
-// clears fuel consumption map in summary object
+//! Clear fuel consumption map in summary object.
 void sector::clearfuelcons(int per) 
 {
 	summary[per].clearfuelcons();
 }
 
-//  get ghg emissions map in summary object
+//!  Get the ghg emissions map in summary object.
 map<string, double> sector::getemission(int per) 
 {
 	return summary[per].getemission();
 }
 
-//  get ghg emissions map in summary object
+//! Get ghg emissions map in summary object.
 map<string, double> sector::getemfuelmap(int per) 
 {
 	return summary[per].getemfuelmap();
 }
 
+
 //**********************************
 // demand sector method definitions
 //**********************************
 
-// set vector size
-void demsector::initper_ds(void)
-{
+//! Clear member variables.
+void demsector::clear(){
+	
+	// call super clear
+	sector::clear();
+	
+	// now clear own data.
+	fe_cons.clear();
+	service.clear();
+	iElasticity.clear();
+	pElasticity.clear();
+}
+
+//! Set data members from XML input.
+void demsector::XMLParse( const DOMNode* node ){
+	
+	DOMNode* curr = 0;
+	DOMNodeList* nodeList = 0;
+	string nodeName;
+	subsector* tempSubSector = 0;
+
+	//! \pre Make sure we were passed a valid node.
+	assert( node );
+	
+	// get the name attribute.
+	name = XMLHelper<string>::getAttrString( node, "name" );
+
+	// get the perCapitaBased attribute.
+	perCapitaBased = XMLHelper<int>::getAttr( node, "perCapitaBased" );
+
+	#if( _DEBUG )
+		cout << "\tSector name set as " << name << endl;
+	#endif
+	
+	// get all child nodes.
+	nodeList = node->getChildNodes();
+
+	// loop through the child nodes.
+	for( int i = 0; i < nodeList->getLength(); i++ ){
+		curr = nodeList->item( i );
+		nodeName = XMLString::transcode( curr->getNodeName() );
+
+		if( nodeName == "market" ){
+			market = XMLHelper<string>::getValueString( curr ); // only one market element.
+		}
+		else if( nodeName == "price" ){
+			sectorprice.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+		else if( nodeName == "serviceoutput" ){
+			service.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+		else if( nodeName == "energyconsumption" ){
+			fe_cons.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+		else if( nodeName == "priceelasticity" ){
+			pElasticity.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+		else if( nodeName == "incomeelasticity" ){
+			iElasticity.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+		else if( nodeName == "output" ) {
+			output.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+		else if( nodeName == "aeei" ) {
+			aeei.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+		else if( nodeName == "subsector" ){
+			tempSubSector = new subsector();
+			tempSubSector->XMLParse( curr );
+			subsec.push_back( tempSubSector );
+			
+		}
+	
+	}
+	
+	nosubsec = subsec.size();
+	
+	// resize vectors not read in
 	int maxper = modeltime.getmaxper();
+	pe_cons.resize( maxper ); // sectoral primary energy consumption
+	input.resize( maxper ); // sector total energy consumption
+	// output.resize( maxper ); // total amount of final output from sector
+	carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
+	summary.resize( maxper ); // object containing summaries
 	fe_cons.resize(maxper); // end-use sector final energy consumption
 	service.resize(maxper); // total end-use sector service 
 }
 
-// aggrgate sector demand function
-void demsector::aggdemand(char* varcountry,int country_id,double prc,double x,double ie,
-						  int per)
+//! Write object to xml output stream.
+void demsector::toXML( ostream& out ) const {
+	
+	int i = 0;
+
+	// write the beginning tag.
+	Tabs::writeTabs( out );
+	out << "<demandsector name=\"" << name << "\">" << endl;
+	
+	// increase the indent.
+	Tabs::increaseIndent();
+
+	// write the xml for the class members.
+	// write out the market string.
+	XMLWriteElement( market, "market", out );
+	XMLWriteElement( unit, "unit", out );
+	
+	for( i = 0; i < static_cast<int>( sectorprice.size() ); i++ ){
+		XMLWriteElement( sectorprice[ i ], "price", out, modeltime.getper_to_yr( i ) );
+	}
+	
+	for( i = 0; i < static_cast<int>( output.size() ); i++ ){
+		XMLWriteElement( output[ i ], "output", out, modeltime.getper_to_yr( i ) );
+	}
+
+	for( i = 0; i < static_cast<int>( service.size() ); i++ ){
+		XMLWriteElement( service[ i ], "serviceoutput", out, modeltime.getper_to_yr( i ) );
+	}
+
+	for( i = 0; i < static_cast<int>( fe_cons.size() ); i++ ){
+		XMLWriteElement( fe_cons[ i ], "energyconsumption", out, modeltime.getper_to_yr( i ) );
+	}
+	
+	for( i = 0; i < static_cast<int>( iElasticity.size() ); i++ ){
+		XMLWriteElement( iElasticity[ i ], "incomeelasticity", out, modeltime.getper_to_yr( i ) );
+	}
+
+	for( i = 0; i < static_cast<int>( pElasticity.size() ); i++ ){
+		XMLWriteElement( pElasticity[ i ], "priceelasticity", out, modeltime.getper_to_yr( i ) );
+	}
+	
+	for( i = 0; i < static_cast<int>( aeei.size() ); i++ ){
+		XMLWriteElement( aeei[ i ], "aeei", out, modeltime.getper_to_yr( i ) );
+	}
+
+	// does aeei need to be written?
+	
+
+	// write out the subsector objects.
+	for( vector<subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
+		( *j )->toXML( out );
+	}
+
+	// finished writing xml for the class members.
+	
+	// decrease the indent.
+	Tabs::decreaseIndent();
+	
+	// write the closing tag.
+	Tabs::writeTabs( out );
+	out << "</demandsector>" << endl;
+}
+
+//! Write object to debugging xml output stream.
+void demsector::toDebugXML( const int period, ostream& out ) const {
+	
+	// write the beginning tag.
+	Tabs::writeTabs( out );
+	out << "<demandsector name=\"" << name << "\" perCapitaBased=\""
+		<< perCapitaBased << "\">" << endl;
+	
+	// increase the indent.
+	Tabs::increaseIndent();
+
+	// write the xml for the class members.
+	// write out the market string.
+	XMLWriteElement( market, "market", out );
+	XMLWriteElement( unit, "unit", out );
+
+	// Write out the data in the vectors for the current period.
+	// First write out inherited members.
+	XMLWriteElement( sectorprice[ period ], "sectorprice", out );
+	XMLWriteElement( pe_cons[ period ], "pe_cons", out );
+	XMLWriteElement( input[ period ], "input", out );
+	XMLWriteElement( output[ period ], "output", out );
+	XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out );
+	
+	// Now write out own members.
+	if ( period < fe_cons.size() ){
+		XMLWriteElement( fe_cons[ period ], "fe_cons", out );
+	}
+	else {
+		XMLWriteElement( 0, "fe_cons", out );
+	}
+
+	if ( period < service.size() ) {
+		XMLWriteElement( service[ period ], "service", out );
+	}
+	else {
+		XMLWriteElement( 0, "service", out );
+	}
+
+	if ( period < iElasticity.size() ) {
+		XMLWriteElement( iElasticity[ period ], "iElasticity", out );
+	}
+	else {
+		XMLWriteElement( 0, "iElasticity", out );
+	}
+
+	if ( period < pElasticity.size() ) {
+		XMLWriteElement( pElasticity[ period ], "pElasticity", out );
+	}
+	else {
+		XMLWriteElement( 0, "pElasticity", out );
+	}
+	if ( period < aeei.size() ) {
+		XMLWriteElement( aeei[ period ], "aeei", out );
+	}
+	else {
+		XMLWriteElement( 0, "aeei", out );
+	}
+	
+	// Write out the summary
+	// summary[ period ].toDebugXML( period, out );
+
+	// write out the subsector objects.
+	for( vector<subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
+		( *j )->toDebugXML( period, out );
+	}
+
+	// finished writing xml for the class members.
+	
+	// decrease the indent.
+	Tabs::decreaseIndent();
+	
+	// write the closing tag.
+	Tabs::writeTabs( out );
+	out << "</demandsector>" << endl;
+}
+
+//! Create a market for the sector.
+void demsector::setMarket( const string& regionName )
+{
+	// marketplace is a global object
+	// name is resource name
+	if( marketplace.setMarket( regionName, market, name, Market::NORMAL
+         ) ) {
+		marketplace.setPriceVector( name, regionName, sectorprice );
+                /* The above initilaizes prices with any values that are read-in. 
+                   This only affects the base period, which is not currently solved.
+                   Any prices not initialized by read-in, are set by initXMLPrices(). */
+  	}
+
+	/* The above is not quite right becuase there could be many sectors within the same market, this would result 
+	in the prices being reset each time.
+	*/
+}
+
+//! Aggrgate sector energy service demand function.
+void demsector::aggdemand( const string& regionName,double gnp_cap,double gnp,int per)
 {
 	double ser_dmd, base, ser_dmd_adj;
 	double pelasticity = -0.9;
 	
-	//ielasticity = 1.0;
-	ielasticity = 0.5;
-	//ielasticity = 0.7;
-	//aeei = 0.1;
-	aeei = 0.05;
 	base = getoutput(0);
 
-	// demand function for each sector
+	// normalize prices to 1990 base
+	int normPeriod = modeltime.getyr_to_per(1990);
+	double priceRatio = sectorprice[per]/sectorprice[normPeriod];
+
 	// demand for service
 	if (per == 0) 
-		ser_dmd = base; // output is already initialized
-	//	ser_dmd = base*pow(prc,pelasticity)*pow(x,ielasticity);
+		ser_dmd = base; // base output is initialized by data
 	else {
-		//ser_dmd = base*pow(prc,pelasticity)*pow(x,ielasticity);
-		ser_dmd = base*pow(prc,pelasticity)*pow(x,ie);
+		// perCapitaBased is true or false
+		if (perCapitaBased) { // demand based on per capita GNP
+			ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp_cap,iElasticity[per]);
+		}
+		else { // demand based on scale of GNP
+			ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp,iElasticity[per]);
+			int stop =1;
+		}
 	}
 
+	// adjust demand for AEEI, autonomous end-use energy intensity
+	ser_dmd_adj = ser_dmd/pow(1+aeei[per],modeltime.gettimestep(per));
 	// demand sector output is total end-use sector demand for service
-	service[per] = ser_dmd; 
-	ser_dmd_adj = ser_dmd/pow(1+aeei,modeltime.gettimestep(per));
+	service[per] = ser_dmd_adj; 
 
-	set_ser_dmd(ser_dmd,per); // sets the output
+	set_ser_dmd(ser_dmd_adj,per); // sets the output
 	// sets subsector outputs, technology outputs, and market demands
-	setoutput(varcountry,country_id,ser_dmd,per);
+	setoutput( regionName,ser_dmd_adj,per);
 	sumoutput(per);
 }
 
-// write sector output to database
-void demsector::outputfile(const char *regname,int reg)
+//! Write sector output to database.
+void demsector::outputfile(const string& regionName )
 {
 	int maxper = modeltime.getmaxper();
 	int m=0;
 	vector<double> temp(maxper);
 	// function protocol
-	void fileoutput3(int regno,string var1name,string var2name,string var3name,
+	void fileoutput3( string var1name,string var2name,string var3name,
 				  string var4name,string var5name,string uname,vector<double> dout);
 	
 	// function arguments are variable name, double array, db name, table name
@@ -717,43 +912,42 @@ void demsector::outputfile(const char *regname,int reg)
 	// total sector output
 	for (m=0;m<maxper;m++)
 		temp[m] = sector::getoutput(m);
-	fileoutput3(reg,regname,showname()," "," ","prodution","SerUnit",temp);
+	fileoutput3(regionName,getName()," "," ","prodution","SerUnit",temp);
 	// total sector eneryg input
 	for (m=0;m<maxper;m++)
 		temp[m] = sector::showinput(m);
-	fileoutput3(reg,regname,showname()," "," ","consumption","EJ",temp);
+	fileoutput3(regionName,getName()," "," ","consumption","EJ",temp);
 	// sector price
 	for (m=0;m<maxper;m++)
 		temp[m] = sector::showprice(m);
-	fileoutput3(reg,regname,showname()," "," ","price","$/Service",temp);
+	fileoutput3(regionName,getName()," "," ","price","$/Service",temp);
 	// sector carbon taxes paid
 	for (m=0;m<maxper;m++)
 		temp[m] = sector::showcarbontaxpaid(m);
-	fileoutput3(reg,regname,showname()," "," ","C tax paid","Mil90$",temp);
+	fileoutput3(regionName,getName()," "," ","C tax paid","Mil90$",temp);
 	
 }
 
-// write MiniCAM style demand sector output to database
-void demsector::MCoutput(const char *regname,int reg)
+//! Write MiniCAM style demand sector output to database.
+void demsector::MCoutput( const string& regionName )
 {
 	int maxper = modeltime.getmaxper();
 	vector<double> temp(maxper);
-
+        int m;
+        
 	// function protocol
-	void fileoutput4(string var1name,string var2name,string var3name,string var4name,
-			         vector<double> dout);
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
 			   string uname,vector<double> dout);
 	
-	string secname = sector::showname();
+	string secname = sector::getName();
 	string str; // temporary string
 
 	// total sector output
-	for (int m=0;m<maxper;m++) {
+	for (m=0;m<maxper;m++) {
 		temp[m] = sector::getoutput(m);
 	}
-	dboutput4(regname,"End-Use Service","by Sector",secname,"Ser Unit",temp);
-	dboutput4(regname,"End-Use Service",secname,"zTotal","Ser Unit",temp);
+	dboutput4(regionName,"End-Use Service","by Sector",secname,"Ser Unit",temp);
+	dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",temp);
 	
 	// sector fuel consumption by fuel type
 	typedef map<string,double>:: const_iterator CI;
@@ -762,7 +956,7 @@ void demsector::MCoutput(const char *regname,int reg)
 		for (m=0;m<maxper;m++) {
 			temp[m] = sector::getfuelcons_second(m,fmap->first);
 		}
-		dboutput4(regname,"Fuel Consumption",secname,fmap->first,"EJ",temp);
+		dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
 	}
 
 	// sector emissions for all greenhouse gases
@@ -773,34 +967,34 @@ void demsector::MCoutput(const char *regname,int reg)
 		}
 		str = "Sec: "; // sector heading
 		str+= secname; // sector name
-		dboutput4(regname,"Emissions",str,gmap->first,"MTC",temp);
+		dboutput4(regionName,"Emissions",str,gmap->first,"MTC",temp);
 	}
 
 	// CO2 emissions by sector
 	for (m=0;m<maxper;m++) {
 		temp[m] = summary[m].get_emissmap_second("CO2");
 	}
-	dboutput4(regname,"CO2 Emiss","by Sector",secname,"MTC",temp);
-	dboutput4(regname,"CO2 Emiss",secname,"zTotal","MTC",temp);
+	dboutput4(regionName,"CO2 Emiss","by Sector",secname,"MTC",temp);
+	dboutput4(regionName,"CO2 Emiss",secname,"zTotal","MTC",temp);
 
 	// CO2 indirect emissions by sector
 	for (m=0;m<maxper;m++) {
 		temp[m] = summary[m].get_emindmap_second("CO2");
 	}
-	dboutput4(regname,"CO2 Emiss(ind)",secname,"zTotal","MTC",temp);
+	dboutput4(regionName,"CO2 Emiss(ind)",secname,"zTotal","MTC",temp);
 
 	// sector price
 	for (m=0;m<maxper;m++) {
 		temp[m] = sector::showprice(m);
 	}
-	dboutput4(regname,"Price",secname,"zSectorAvg","$/Ser",temp);
-	dboutput4(regname,"Price","by End-Use Sector",secname,"$/Ser",temp);
+	dboutput4(regionName,"Price",secname,"zSectorAvg","$/Ser",temp);
+	dboutput4(regionName,"Price","by End-Use Sector",secname,"$/Ser",temp);
 	// sector carbon taxes paid
 	for (m=0;m<maxper;m++) {
 		temp[m] = sector::showcarbontaxpaid(m);
 	}
-	dboutput4(regname,"General","CarbonTaxPaid",secname,"$",temp);
+	dboutput4(regionName,"General","CarbonTaxPaid",secname,"$",temp);
 	// do for all subsectors in the sector
-	MCoutput_subsec(regname,reg);
+	MCoutput_subsec( regionName );
 }
 	

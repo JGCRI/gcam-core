@@ -4,37 +4,44 @@
  *											*
  * SHK  2/20/01								*/
 
+#ifndef _WORLD_H_
+#define _WORLD_H_
+#pragma once
 
-
-// World class includes the following headers
 #include "region.h" // generic region class
 #include "str_ghgss.h" // structure for ghgs
+#include <xercesc/dom/DOM.hpp>
+
+using namespace xercesc;
+
 class World
 {
 private:
-	int noreg; // number of regions
-	vector<Region> region; // array of pointers to Region objects
+	int noreg; //! number of regions
+	vector<Region*> region; //! array of pointers to Region objects
 	// **** sum of regional values ****
-	vector<double> population; // total global population
-	vector<double> crudeoilrsc; // global conventional crude oil resource
-	vector<double> unconvoilrsc; // global unconventional crude oil resource
-	vector<double> natgasrsc; // global natural gas resource
-	vector<double> coalrsc; // global coal resource
-	vector<double> uranrsc; // global uranium resource
-	vector<str_ghgss> ghgs; // structure containing ghg emissions
+	vector<double> population; //! total global population
+	vector<double> crudeoilrsc; //! global conventional crude oil resource
+	vector<double> unconvoilrsc; //! global unconventional crude oil resource
+	vector<double> natgasrsc; //! global natural gas resource
+	vector<double> coalrsc; //! global coal resource
+	vector<double> uranrsc; //! global uranium resource
+	vector<str_ghgss> ghgs; //! structure containing ghg emissions
+	void initAgLu(); 
+
 public:
-	World(void); // default construtor
-	~World(void); // destructor
+	World(); // default construtor
+	void clear();
+	void XMLParse( const DOMNode* node );
+	void toXML( ostream& out ) const;
+	void toDebugXML( const int period, ostream& out ) const;
 	void initper(void); // sets number of periods in World
-	void setregion(void); // sets number of regions in World
-	void initregion(void); // initialize each region
 	void gnp(int per); // gnp calculation for each region
 	void calc(int per); // model calculation for each region
 	void sumpop(int per); // sum global population
 	void sumrsc(int per); // sum regional resources for global total
 	void emiss_ind(int per); // calculate indirect emissions
 	void emiss_all(void); // set global emissions for all GHG for climat
-	void outputdb(void); // write output to database table
 	void outputfile(void); // write output to file
 	void MCoutput(void); // write MiniCAM output to file
 	double showCO2(int per); // return global emissions for period
@@ -52,4 +59,7 @@ public:
 	double showHFC227ea(int per); // return global emissions for period
 	double showHFC245ca(int per); // return global emissions for period
 	double showSF6(int per); // return global emissions for period
+	void createRegionMap(void); // create map of region names
 };
+
+#endif

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Josh Lurz (PNNL) -->
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:\cvs\Code\EXE\Configuration.xsd">
+	<Files>
+		<Value name="erbInputFileName">../input/erbinput2.csv</Value>
+		<Value name="outFileName">outFile.csv</Value>
+		<Value name="bugOutFileName">bugoutfile.csv</Value>
+		<Value name="logOutFileName">logfile.csv</Value>
+		<Value name="climatFileName">gas.emk</Value>
+		<Value name="xmlInputFileName">../CIAM/reference.xml</Value>
+		<Value name="xmlOutputFileName">output.xml</Value>
+		<Value name="xmlDebugFileName">debug.xml</Value>
+		<Value name="sdCurveFileName">sdcurve.csv</Value>
+		<Value name="sdFileName">sdall.csv</Value>
+		<Value name="dbOutFileName">dbout.csv</Value>
+		<Value name="dbFileName">../input/erbdb.mdb</Value>
+	</Files>
+	<Strings/>
+	<Bools>
+		<Value name="minicam">1</Value>
+		<Value name="timestamp">0</Value>
+	</Bools>
+	<Ints/>
+	<Doubles/>
+</Configuration>

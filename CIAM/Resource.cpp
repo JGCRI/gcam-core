@@ -2,137 +2,216 @@
  * Method definition for resource class						*
  * Coded by Sonny Kim 9/13/00								*/
 
-//** Database Headers *****
-#include <afxdisp.h>
-#include <dbdao.h>
-#include <dbdaoerr.h>
+#include "Definitions.h"
 
-//** Other Headers ********
 #include <string>
-#include <stdlib.h>
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include <time.h> // to use clock and time functions
+#include <ctime> // to use clock and time functions
 #include <vector>
-using namespace std; // enables elimination of std::
+#include <cassert>
 
-#include "resource.h"
-#include "str_indexname.h" // get index and name from database
+// xml headers
+#include <xercesc/util/XMLString.hpp>
+#include <xercesc/dom/DOM.hpp>
+
+// class headers
+#include "xmlHelper.h"
 #include "modeltime.h"
+#include "resource.h"
+#include "market.h"
+#include "Marketplace.h"
 
-extern const char* dbfile;
-extern const char* dbtdrsc;
-extern const char* dbtgen;
-extern const char* dbtout;
-extern CdbRecordset drscrst,drscrst_ct;
-extern CdbRecordset regidrst,catidrst,subcatidrst,varidrst,subvaridrst;
+using namespace std; // enables elimination of std:
+
 extern ofstream bugoutfile,outfile;	
-
-extern CdbDBEngine dben;
-extern CdbDatabase db;
-extern clock_t start, intermediate, finish, afterdata;
-extern bool timestamp;
 extern Modeltime modeltime;
+extern Marketplace marketplace;
 
-// function protocols
-int countdbrec2(string fdname,int is,const char *dbname,const char *dbtname);
-int count_subsec(string region,string fdname,int is,const char *dbtname);
-void label_subsec(str_indexname* str_temp,string region,string index,string name,
-					  int is,int ns,const char *dbtname);
-
-// resource class method definition
-resource::resource(void) // default constructor
-{
+//! Default constructor.
+Resource::Resource(){
+	nosubrsrc = 0;
 }
 
-resource::resource(const char* nstr,int rno)
-{
-	//name = new char [strlen(nstr)+1];
-	strcpy(name,nstr);
-	no = rno;
+//! Destructor.
+Resource::~Resource() {
+
+	for ( vector<subrsrc*>::iterator iter = depsubrsrc.begin(); iter != depsubrsrc.end(); iter++ ) {
+		delete *iter;
+	}
 }
 
-resource::~resource(void)
-{
+//! Clear data members.
+void Resource::clear(){
+	name = "";
+	market = "";
+	nosubrsrc = 0;
+	rscprc.clear();
+	depsubrsrc.clear();
+	available.clear();
+	annualprod.clear();
+	cummprod.clear();
 }
 
-void resource::setlabel(const char *nstr, int rno)
-{
-	//name = new char [strlen(nstr+1)];
-	strcpy(name, nstr);
-	no = rno;
-}
+//! Set data members from XML input.
+void Resource::XMLParse( const DOMNode* node ){
+	
+	string nodeName;
+	DOMNodeList* nodeList = 0;
+	DOMNode* curr = 0;
+	subrsrc* tempSubResource = 0;
 
-void resource::setlabel2(void)
-{
-	strcpy(name, drscrst.GetField("SectorName").pcVal);
-	no = drscrst.GetField("Sector").intVal;
-}
+	// make sure we were passed a valid node.
+	assert( node );
+	
+	// get the name attribute.
+	name = XMLHelper<string>::getAttrString( node, "name" );
+	
+	#if( _DEBUG )
+		cout << "\tResource name set as " << name << endl;
+	#endif
 
-void resource::setlabel3(int rno)
-{
-	no = rno;
-}
+	// get all child nodes.
+	nodeList = node->getChildNodes();
 
-void resource::initper(void)
-{
+	// loop through the child nodes.
+	for( int i = 0; i < nodeList->getLength(); i++ ){
+		curr = nodeList->item( i );
+		nodeName = XMLString::transcode( curr->getNodeName() );
+
+		if( nodeName == "market" ){
+			market = XMLHelper<string>::getValueString( curr ); // only one market element.
+		}
+		else if( nodeName == "price" ){
+			rscprc.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+		else if( nodeName == "subresource" ){
+			tempSubResource = new subrsrc();
+			tempSubResource->XMLParse( curr );
+			depsubrsrc.push_back( tempSubResource );
+		}
+	}
+
+	nosubrsrc = depsubrsrc.size();
+
+	// resize vectors not read in
 	int maxper = modeltime.getmaxper();
-	rscprc.resize(maxper); // resource price
 	available.resize(maxper); // total resource availabl
 	annualprod.resize(maxper); // annual production rate of resource
 	cummprod.resize(maxper); // cummulative production of resource
 }
 
-// set number of subsecsectors for each depletable resource
-void resource::setdepsubrsrc(int iss,int* tgrade) 
-{
-	nosubrsrc = iss; 
-	depsubrsrc.resize(nosubrsrc);
-	for (int i=0;i<nosubrsrc;i++) {
-		depsubrsrc[i].initper(); // counts number of grades and creates objects
-		int ig = *(tgrade+i); // gives number of grades in subresource
-		depsubrsrc[i].setgrades2(ig); // counts number of grades and creates objects
-	}	
+//! Write datamembers to datastream in XML format.
+void Resource::toXML( ostream& out ) const {
+	
+	// write the beginning tag.
+	Tabs::writeTabs( out );
+	out << "<" << getType() << " name=\"" << name << "\">"<< endl;
+	
+	// increase the indent.
+	Tabs::increaseIndent();
+
+	// write the xml for the class members.
+	// write out the market string.
+	XMLWriteElement( market, "market", out );
+
+	// write out resource prices for all periods
+	for(int m = 0; m < static_cast<int>(rscprc.size()); m++ ) {
+		XMLWriteElement( rscprc[m], "price", out, modeltime.getper_to_yr(m));
+	}
+		
+	// write out the depresource objects.
+	for( vector<subrsrc*>::const_iterator i = depsubrsrc.begin(); i != depsubrsrc.end(); i++ ){
+		( *i )->toXML( out );
+	}
+
+	// finished writing xml for the class members.
+	
+	// decrease the indent.
+	Tabs::decreaseIndent();
+	
+	// write the closing tag.
+	Tabs::writeTabs( out );
+	out << "</" << getType() << ">" << endl;
+
 }
 
-// initializes subsector information from database
-void resource::initialize(char* region,int tregno)
+//! Write datamembers to datastream in XML format for debugging.
+void Resource::toDebugXML( const int period, ostream& out ) const {
+	
+	// write the beginning tag.
+	Tabs::writeTabs( out );
+		out << "<" << getType() << " name=\"" << name << "\">"<< endl;
+	
+	// increase the indent.
+	Tabs::increaseIndent();
+
+	// Write the xml for the class members.
+	
+	// Write out the market string.
+	XMLWriteElement( market, "market", out );
+
+	// Write out resource prices for debugging period.
+	XMLWriteElement( rscprc[ period ], "rscprc", out );
+		
+	// Write out available resources for debugging period.
+	XMLWriteElement( available[ period ], "available", out );
+	
+	// Write out annualprod for debugging period.
+	XMLWriteElement( annualprod[ period ], "annualprod", out );
+	
+	// Write out cumulative prod for debugging period.
+	XMLWriteElement( cummprod[ period ], "cummprod", out );
+	
+	// Write out the number of depletable resources.
+	XMLWriteElement( nosubrsrc, "nosubrsrc", out );
+
+	// Write out the depresource objects.
+	for( vector<subrsrc*>::const_iterator i = depsubrsrc.begin(); i != depsubrsrc.end(); i++ ){
+		( *i )->toDebugXML( period, out );
+	}
+
+	// finished writing xml for the class members.
+	
+	// decrease the indent.
+	Tabs::decreaseIndent();
+	
+	// write the closing tag.
+	Tabs::writeTabs( out );
+	out << "</" << getType() << ">" << endl;
+}
+
+//! Create markets
+void Resource::setMarket( const string& regionName )
 {
-	int i=0;
-	no = drscrst.GetField("Sector").intVal;
-	strcpy(name,drscrst.GetField("SectorName").pcVal);
-	for (i=0;i<nosubrsrc;i++) {
-		depsubrsrc[i].dbreadgrade(tregno,no); // reads grade data
-		depsubrsrc[i].dbreadgen(region,depsubrsrc[i].showname(),dbtgen);
+	// marketplace is a global object
+	// name is resource name
+	if ( marketplace.setMarket( regionName, market, name, Market::NORMAL ) ) {
+		marketplace.setPriceVector( name, regionName, rscprc );
+                marketplace.setMarketToSolve (name, regionName);
 	}
 }
 
-// return resource index
-int resource::index(void)
-{
-	return no;
-}
-
-// return resource name
-char* resource::showname(void)
-{
+//! Return resource name.
+string Resource::getName() const {
 	return name;
 }
 
-double resource::price(int per)
+double Resource::price(int per) // huh? 
 {
-	int i=0;
 	rscprc[per] = 0.0;
 
 	return rscprc[per] ;
 }
 
-int resource::shownosubrsrc(void) // returns total number of subsectors
+//! Returns total number of subsectors.
+int Resource::shownosubrsrc() 
 {
 	return nosubrsrc;
 }
 
-void resource::cummsupply(double prc,int per)
+void Resource::cummsupply(double prc,int per)
 {	
 	int i=0;
 	cummprod[per]=0.0;
@@ -140,101 +219,86 @@ void resource::cummsupply(double prc,int per)
 	rscprc[per] = prc;
 	// sum cummulative production of each subsector
 	for (i=0;i<nosubrsrc;i++) {
-		depsubrsrc[i].cummsupply(prc,per);
-		cummprod[per] += depsubrsrc[i].showcummprod(per);
+		depsubrsrc[i]->cummsupply(prc,per);
+		cummprod[per] += depsubrsrc[i]->showcummprod(per);
 	}
 }
 
-double resource::showcummprod(int per)
+double Resource::showcummprod(int per)
 {
 	return cummprod[per];
 }
 
-// calculates annual production
-void resource::annualsupply(int per,double gnp1,double gnp2,double price1,double price2)
+
+//! Calculate annual production
+void Resource::annualsupply(int per,double gnp,double prev_gnp,double price,double prev_price)
 {	
 	int i=0;
 	annualprod[per]=0.0;
 	available[per]=0.0;
-
+       
+         // First calculate cumulative supply, needed by the calculation below for depletable resources
+        cummsupply(price,per);
+    
 	// sum annual production of each subsector
 	for (i=0;i<nosubrsrc;i++) {
-		depsubrsrc[i].annualsupply(per,gnp1,gnp2,price1,price2);
-		annualprod[per] += depsubrsrc[i].showannualprod(per);
-		available[per] += depsubrsrc[i].showavailable(per);
+		depsubrsrc[i]->annualsupply(per,gnp,prev_gnp,price,prev_price);
+		annualprod[per] += depsubrsrc[i]->showannualprod(per);
+		available[per] += depsubrsrc[i]->showavailable(per);
 	}
 }
 
-// returns annual production of resources
-double resource::showannualprod(int per)
+
+//! Return annual production of resources.
+double Resource::showannualprod(int per)
 {
 	return annualprod[per];
 }
 
-// returns resource available from all subsectors
-double resource::showavailable(int per)
+//! Return resource available from all subsectors.
+double Resource::showavailable(int per)
 {
-	return available[per];
+	return available[ per ];
 }
 
-// returns resource available from each subsectors
-double resource::showsubavail(int subrscno,int per)
-{
+//! Return resource available from each subsectors.
+double Resource::showsubavail( const string& subResourceName, const int per ) {
 	for (int i=0;i<nosubrsrc;i++) {
-		if (depsubrsrc[i].index() == subrscno)
-			return depsubrsrc[i].showavailable(per);
+		if (depsubrsrc[i]->getName() == subResourceName )
+			return depsubrsrc[i]->showavailable(per);
 	}
 	return 0;
 }
 
-void resource::show(void)
+void Resource::show()
 {
 	int i=0;
 	//write to file or database later
-	cout << no <<"  " << name<<"\n";
+	cout << name << endl;
 	cout << "Number of Subsectors: " << nosubrsrc <<"\n";
 	for (i=0;i<nosubrsrc;i++)
-		cout<<depsubrsrc[i].showname()<<"\n";
+		cout<<depsubrsrc[i]->getName()<<"\n";
 }
 
-// write resource output to database
-void resource::outputdb(const char* regname,int reg)
+//! Write resource output to file.
+void Resource::outputfile( const string& regname )
 {
 	// function protocol
-	void dboutput2(string varreg,string var1name,string var2name,string var3name,
-			  string var4name,vector<double> dout,string uname);
-
-	// function arguments are variable name, double array, db name, table name
-	// the function writes all years
-	// total sector output
-	dboutput2(regname,name,"all subresources"," ","production",annualprod,"EJ");
-
-	// do for all subsectors in the sector
-	for (int i=0;i<nosubrsrc;i++)
-		depsubrsrc[i].outputdb(regname,reg,name);
-}
-
-// write resource output to file
-void resource::outputfile(const char *regname,int reg)
-{
-	// function protocol
-	void fileoutput3(int regno,string var1name,string var2name,string var3name,
+	void fileoutput3( string var1name,string var2name,string var3name,
 				  string var4name,string var5name,string uname,vector<double> dout);
 	
 	// function arguments are variable name, double array, db name, table name
 	// the function writes all years
 	// total sector output
-	fileoutput3(reg,regname,name," "," ","production","EJ",annualprod);
+	fileoutput3( regname,name," "," ","production","EJ",annualprod);
 
 	// do for all subsectors in the sector
 	for (int i=0;i<nosubrsrc;i++)
-		depsubrsrc[i].outputfile(regname,reg,name);
+		depsubrsrc[i]->outputfile(regname ,name);
 }
 
-// write resource output to database
-void resource::MCoutput(const char* regname,int reg)
-{
-	int m=0;
+//! Write resource output to database.
+void Resource::MCoutput( const string& regname ) {
 	int maxper = modeltime.getmaxper();
 	vector<double> temp(maxper);
 	// function protocol
@@ -250,6 +314,21 @@ void resource::MCoutput(const char* regname,int reg)
 
 	// do for all subsectors in the sector
 	for (int i=0;i<nosubrsrc;i++)
-		depsubrsrc[i].MCoutput(regname,reg,name);
+		depsubrsrc[i]->MCoutput(regname,name);
+}
+
+//! Returns the type of the Resource.
+string DepletableResource::getType() const {
+	return "Depletable";
+}
+
+//! Returns the type of the Resource.
+string FixedResource::getType() const {
+	return "Fixed";
+}
+
+//! Returns the type of the Resource.
+string RenewableResource::getType() const {
+	return "Renewable";
 }
 

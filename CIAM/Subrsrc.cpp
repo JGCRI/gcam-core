@@ -2,214 +2,208 @@
  * Method definition for subrsrc class						*
  * Coded by Sonny Kim 9/13/00								*/
 
-//** Database Headers *****
-#include <afxdisp.h>
-#include <dbdao.h>
-#include <dbdaoerr.h>
+#include "Definitions.h"
+
 //** Other Headers ********
+#include <vector>
 #include <string>
-#include <stdlib.h>
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include <math.h>
-#include <time.h> // to use clock and time functions
-using namespace std; // enables elimination of std::
-
+#include <cmath>
+#include <ctime> // to use clock and time functions
+#include <cassert>
 #include "modeltime.h"
 #include "subrsrc.h"
+#include "xmlHelper.h"
 
-extern CdbDBEngine dben;
-extern CdbDatabase db;
-extern CdbRecordset drscrst,drscrst_ct;
-extern CdbRecordset regidrst,catidrst,subcatidrst,varidrst,subvaridrst;
+using namespace std; // enables elimination of std::
+
 extern ofstream bugoutfile, outfile;	
-
-extern clock_t start, intermediate, finish, afterdata;
-extern bool timestamp;
 extern Modeltime modeltime;
 
-int countdbrec3(string fdname,int is,int iss,const char *dbname,const char *dbtname);
-int count_tech(string region,string fdname,int is,int iss,const char *dbtname);
-
-// subrsrc class method definition
-subrsrc::subrsrc(void) // default constructor
-{
+//! Default constructor.
+subrsrc::subrsrc() {
+	nograde = 0;
+	min_annualprod = 0;
 }
 
-subrsrc::subrsrc(const char*nstr,int rno)
-{
-	//name = new char [strlen(nstr)+1];
-	strcpy(name,nstr);
-	no = rno;
+//! Destructor.
+subrsrc::~subrsrc() {
+
+	for ( vector< vector< grade* > >::iterator outerIter = depgrade.begin(); outerIter != depgrade.end(); outerIter++ ) {
+		for( vector< grade* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
+			delete *innerIter;
+		}
+	}
 }
 
-subrsrc::~subrsrc(void)
-{
+//! Clear member variables
+void subrsrc::clear(){
+	name = ""; // MSVC is missing String::Clear();
+	nograde = 0;
+	min_annualprod = 0;
+	depgrade.clear();
+	rscprc.clear();
+	available.clear();
+	annualprod.clear();
+	cummprod.clear();
 }
 
-// return subrsrc index
-int subrsrc::index(void)
-{
-	return no;
-}
-
-// return subrsrc name
-char* subrsrc::showname(void)
-{
+//! return subrsrc name
+string subrsrc::getName() const {
 	return name;
 }
 
+//! Initialize member variables from xml data
+void subrsrc::XMLParse( const DOMNode* node )
+{	
+	DOMNodeList* nodeList = 0;
+	DOMNodeList* childNodeList = 0;
+	DOMNode* curr = 0;
+	DOMNode* currChild = 0;
+	string nodeName;
+	string childNodeName;
+	vector<grade*> tempGradesVec;
+	grade* tempGrade = 0;
 
-void subrsrc::setlabel(const char *nstr, int rno)
-{
-	//name = new char [strlen(nstr+1)];
-	strcpy(name, nstr);
-	no = rno;
-}
-
-void subrsrc::setlabel2()
-{
-	strcpy(name, drscrst.GetField("SubsectorName").pcVal);
-	no = drscrst.GetField("Subsector").intVal;
-}
-
-void subrsrc::setlabel3(int rno)
-{
-	no = rno;
-}
-
-void subrsrc::initper(void) //set vector size
-{
-	int maxper = modeltime.getmaxper();
-	rscprc.resize(maxper); // subresource price
-	available.resize(maxper); // total available resource
-	annualprod.resize(maxper); // annual production of subrsrc
-	cummprod.resize(maxper); // cummulative production of subrsrc
-}
-
-void subrsrc::setgrades2(int igrade)
-{
-	int maxper = modeltime.getmaxper();
-	nograde = igrade; // set private member
-	depgrade.resize(nograde); // depgrade is 2-dim vector of grade obj
-	for (int i=0;i<depgrade.size();i++) depgrade[i].resize(maxper);
-}
-
-void subrsrc::dbreadgrade(int treg,int tsec)
-{
-	char reg[20], sec[20], ssec[20];
-
-	_itoa(treg,reg,10);
-	_itoa(tsec,sec,10);
-	_itoa(no,ssec,10);
-
-	string str = "Region = ";
-	str += reg;
-	str += " AND Sector = ";
-	str += sec;
-	str += " AND Subsector = ";
-	str += ssec;
-	//drscrst.FindFirst(str.c_str()); // go to first record for region and sector
-
-	no = drscrst.GetField("Subsector").intVal;
-	strcpy(name,drscrst.GetField("SubsectorName").pcVal);
-
-	// create an array of daorsetbing struct
-	// table binding: (assign the field lengths and types)
-	DAORSETBINDING	Bindings[] = 
-	{
-	//Index Type    Fld	Type	  Offset			 Size
-	{dbBindIndexINT, 7, dbBindI2, offsetof(rsctech,rno), sizeof(long)},
-	{dbBindIndexINT, 8, dbBindLPSTRING, offsetof(rsctech,rname), sizeof(TCHAR *)},
-	{dbBindIndexINT, 9, dbBindI2, offsetof(rsctech,yr), sizeof(long)},
-	{dbBindIndexINT, 10, dbBindR8, offsetof(rsctech,tavailable), sizeof(double)},
-	{dbBindIndexINT, 11, dbBindR8, offsetof(rsctech,textcost), sizeof(double)},
-	{dbBindIndexINT, 12, dbBindR8, offsetof(rsctech,tenvcost), sizeof(double)},
-	{dbBindIndexINT, 13, dbBindR8, offsetof(rsctech,ttax), sizeof(double)},
-	{dbBindIndexINT, 14, dbBindR8, offsetof(rsctech,ttechch), sizeof(double)},
-	};
-
-	// run C++ GetRowsEx 
-	// number of rows is the number of grades times periods 
-	int maxper = modeltime.getmaxper();
-	int maxdataper = modeltime.getmaxdataper();
-	int	maxrecords = nograde*maxdataper; 
-	lprsctech prsctechRows = new rsctech[maxrecords];
-	LONG lNumRecords, lYear;
-	// cannot use maxrecords because not const int
-	TCHAR pBuf[100 * 20]; // buffer for use with variable length text fields only
+	// make sure we were passed a valid node.
+	assert( node );
 	
-	// get yr rows for each technology
-	lNumRecords = drscrst.GetRowsEx(prsctechRows, sizeof(rsctech),
-		  &Bindings[0], sizeof(Bindings) / sizeof(DAORSETBINDING),
-		  pBuf, sizeof(pBuf), maxrecords); 
+	// get the name attribute.
+	name = XMLHelper<string>::getAttrString( node, "name" );
 
-	// initialize total resource available
-	available[0] = 0;
+	#if ( _DEBUG )
+		cout << "\t\tSubResource name set as " << name << endl;
+	#endif
+	
+	// get all child nodes.
+	nodeList = node->getChildNodes();
 
-	int k=0;
-	for (int i=0;i<nograde;i++) {
-		// Step through the returned rows and assign to technology
-		for (lYear = 0; lYear < maxdataper; lYear++) {
-			// find model period from data year
-			int modelper = modeltime.getyr_to_per(prsctechRows[lYear].yr);
-  			// prscgradeRows is a variant
-			depgrade[i][modelper].setall(&prsctechRows[(i*maxdataper)+lYear]); 
-			// fill periods not read in from data with previous per data
-			for (int j=k; j<modelper; j++) {
-				depgrade[i][j] = depgrade[i][j-1];
+	// loop through the child nodes.
+	for( int i = 0; i < nodeList->getLength(); i++ ){
+		curr = nodeList->item( i );
+		nodeName = XMLString::transcode( curr->getNodeName() );
+		
+		if( nodeName == "grade" ){
+			childNodeList = curr->getChildNodes();
+			
+			// loop through grades children.
+			for( int j = 0; j < childNodeList->getLength(); j++ ){
+
+				currChild = childNodeList->item( j );
+				childNodeName = XMLString::transcode( currChild->getNodeName() );
+
+				if( childNodeName == "period" ){
+					tempGrade = new grade();
+					tempGrade->XMLParse( currChild );
+					tempGradesVec.push_back( tempGrade );
+				}
 			}
-			k = modelper+1; // initialize for next time
+			depgrade.push_back( tempGradesVec );
+			tempGradesVec.clear(); // clears vector, size is 0
 		}
-	
-		// initialize for periods greater than last data period
-		// last model period for last data per
-		int m1=modeltime.getdata_to_mod(maxdataper-1);
-		if(modeltime.getendyr() > modeltime.getper_to_yr(m1)) {
-			for (int j=m1+1;j<modeltime.getmaxper();j++)
-				depgrade[i][j] = depgrade[i][j-1];
+		else if( nodeName == "annualprod" ){
+			annualprod.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+		else if( nodeName == "min_annualprod" ){
+			min_annualprod = XMLHelper<double>::getValue( curr );
 		}
 
-		// set base year extraction cost to rest of the periods
-		for (lYear = 1; lYear < maxper; lYear++) {
-			depgrade[i][lYear].setextcost(depgrade[i][0].getextcost());
-		}
-		// add total available in each grade
-		available[0] += depgrade[i][0].showavail();
 	}
-	// row is last record so move to next row
-	// mainly done to get to EOF when last region resource is read in
-	drscrst.MoveNext(); 
-	
-	delete [] prsctechRows; // free memory
+	// completed parsing.
+
+	nograde = depgrade.size(); // number of grades for each subresource
+	// resize vectors not read in
+	int maxper = modeltime.getmaxper();
+	rscprc.resize( maxper ); // subresource price
+	available.resize( maxper ); // total available resource
+	cummprod.resize( maxper ); // cummulative production of subrsrc
+	updateAvailable( 0 ); 
 }
 
-void subrsrc::dbreadgen(char* region,const char *nstr,const char *dbtname)
-{
-	// function protocol
-	void dbmodelread(double *temp,string region,string var1name,string var2name);
+void subrsrc::toXML( ostream& out ) const {
 	
-	int i=0;
-	double tmpval[1];
+	// write the beginning tag.
+	Tabs::writeTabs( out );
+	out << "<subresource name=\"" << name << "\">"<< endl;
+	
+	// increase the indent.
+	Tabs::increaseIndent();
 
-	// reads in data for resources
-	dbmodelread(tmpval,region,"resource",nstr);
-	annualprod[0] = tmpval[0];
-	// reads in data for minimum annual production of resource
-	dbmodelread(tmpval,region,"min_annualprod",nstr);
-	min_annualprod = tmpval[0];
+	// write the xml for the class members.
 	
+	// write out the grade objects.
+	for( vector< vector<grade*> >::const_iterator i = depgrade.begin(); i != depgrade.end(); i++ ){	
+		Tabs::writeTabs( out );
+		out << "<grade>" << endl;
+		Tabs::increaseIndent();
+		for( vector<grade*>::const_iterator j = i->begin(); j != i->end(); j++ ){
+			( *j )->toXML( out );
+		}
+		Tabs::decreaseIndent();
+		Tabs::writeTabs( out );
+		out << "</grade>" << endl;
+	}
+
+	for(int m = 0; m < static_cast<int>(annualprod.size() ); m++ ) {
+		XMLWriteElement(annualprod[m],"annualprod",out,modeltime.getper_to_yr(m));
+	}
+	
+	XMLWriteElement(min_annualprod,"min_annualprod",out);
+
+	// finished writing xml for the class members.
+	
+	// decrease the indent.
+	Tabs::decreaseIndent();
+	
+	// write the closing tag.
+	Tabs::writeTabs( out );
+	out << "</subresource>" << endl;
+}
+
+void subrsrc::toDebugXML( const int period, ostream& out ) const {
+	
+	// write the beginning tag.
+	Tabs::writeTabs( out );
+	out << "<subresource name=\"" << name << "\">"<< endl;
+	
+	// increase the indent.
+	Tabs::increaseIndent();
+
+	// write the xml for the class members.
+	XMLWriteElement( nograde, "nograde", out );
+	XMLWriteElement( min_annualprod, "min_annualprod", out );
+
+	// Write out data for the period we are in from the vectors.
+	XMLWriteElement( rscprc[ period ], "rscprc", out );
+	XMLWriteElement( available[ period ], "available", out );
+	XMLWriteElement( annualprod[ period ], "annualprod", out );
+	XMLWriteElement( cummprod[ period ], "cummprod", out );
+
+	// write out the grade objects.
+	for( int i = 0; i < static_cast<int>( depgrade.size() ); i++ ){	
+		depgrade[ i ][ period ]->toDebugXML( period, out );
+	}
+
+	// finished writing xml for the class members.
+	
+	// decrease the indent.
+	Tabs::decreaseIndent();
+	
+	// write the closing tag.
+	Tabs::writeTabs( out );
+	out << "</subresource>" << endl;
 }
 
 double subrsrc::price(int per)
 {
-	int i=0;
 	rscprc[per] = 0.0;
 
 	return rscprc[per] ;
 }
 
-int subrsrc::maxgrade(void) // returns total number of grades
+int subrsrc::maxgrade() // returns total number of grades
 {
 	return nograde;
 }
@@ -227,7 +221,7 @@ void subrsrc::cummsupply(double prc,int per)
 
 	// calculate total extraction cost for each grade
 	for (int gr=0; gr<nograde; gr++) {
-		depgrade[gr][per].cost(per);
+		depgrade[gr][per]->cost(per);
 	}
 
 	if (per == 0) cummprod[per] = 0.0;
@@ -235,30 +229,30 @@ void subrsrc::cummsupply(double prc,int per)
 	// Case 1
 	// if market price is less than cost of first grade, then zero cummulative 
 	// production
-	if (prc <= depgrade[0][per].getcost()) 
+	if (prc <= depgrade[0][per]->getCost()) 
 		cummprod[per] = cummprod[per-1];
 
 	// Case 2
 	// if market price is in between cost of first and last grade, then calculate 
 	// cummulative production in between those grades
-	if (prc > depgrade[0][per].getcost() && prc <= depgrade[maxgrd][per].getcost()) {
+	if (prc > depgrade[0][per]->getCost() && prc <= depgrade[maxgrd][per]->getCost()) {
 		int iL=0,iU=0;
-		while (depgrade[i][per].getcost() < prc) {
+		while (depgrade[i][per]->getCost() < prc) {
 			iL=i; i++; iU=i;
 		}
 		// add subrsrcs up to the lower grade
-		for (i=0;i<=iL;i++) cummprod[per]+=depgrade[i][0].showavail();
+		for (i=0;i<=iL;i++) cummprod[per]+=depgrade[i][0]->getAvail();
 		// price must reach upper grade cost to produce all of lower grade
-		slope = depgrade[iL][0].showavail()
-			  / (depgrade[iU][per].getcost() - depgrade[iL][per].getcost());
-		cummprod[per] -= slope * (depgrade[iU][per].getcost() - prc);
+		slope = depgrade[iL][0]->getAvail()
+			  / (depgrade[iU][per]->getCost() - depgrade[iL][per]->getCost());
+		cummprod[per] -= slope * (depgrade[iU][per]->getCost() - prc);
 	}
 
 	// Case 3
 	// if market price greater than the cost of the last grade, then
 	// cummulative production is the amount in all grades
-	if (prc > depgrade[maxgrd][per].getcost())
-		for (i=0;i<nograde;i++) cummprod[per]+=depgrade[i][0].showavail();
+	if (prc > depgrade[maxgrd][per]->getCost())
+		for (i=0;i<nograde;i++) cummprod[per]+=depgrade[i][0]->getAvail();
 	}
 	//available[per]=available[0]-cummprod[per];
 }
@@ -268,7 +262,14 @@ double subrsrc::showcummprod(int per)
 	return cummprod[per];
 }
 
-void subrsrc::annualsupply(int per,double gnp1,double gnp2,double price1,double price2)
+void subrsrc::updateAvailable( const int period ){
+	available[ period ] = 0;
+	for ( int i = 0; i < nograde; i++ ) {
+		available[ period ] += depgrade[ i ][ period ]->getAvail();
+	}
+}
+
+void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,double prev_price)
 {	
 	// for per = 0 use initial annual supply
 	// cummulative production is 0 for per = 0
@@ -285,10 +286,10 @@ void subrsrc::annualsupply(int per,double gnp1,double gnp2,double price1,double 
 			// min_annualprod is defined in object and read in from database
 			double prc_elas = 1; //read in value set to 1
 			double cur_annualprod = 0;
-			double max_annualprod = annualprod[per-1]*gnp1/gnp2;
+			double max_annualprod = annualprod[per-1]*gnp/prev_gnp;
 			if(min_annualprod < max_annualprod) cur_annualprod = max_annualprod;
 			else cur_annualprod = min_annualprod;
-			cur_annualprod*=pow((price1/price2),prc_elas);
+			cur_annualprod *= pow((price/prev_price),prc_elas);
 			if(cur_annualprod < annualprod[per]) {
 				cummprod[per] = cummprod[per-1]+(cur_annualprod+annualprod[per-1])
 				            *modeltime.gettimestep(per)/2.0;
@@ -301,61 +302,22 @@ void subrsrc::annualsupply(int per,double gnp1,double gnp2,double price1,double 
 					  /2*modeltime.gettimestep(per));
 		if (available[per]<=0) available[per] = 0;
 	}
-
 }
+
 
 double subrsrc::showannualprod(int per)
 {
 	return annualprod[per];
 }
 
-// show available resource for period
+//! show available resource for period
 double subrsrc::showavailable(int per)
 {
 	return available[per];
 }
 
-// write subrsrc output to database
-void subrsrc::outputdb(const char *regname,int reg,const char *sname)
-{
-	// function protocol
-	void dboutput2(string varreg,string var1name,string var2name,string var3name,
-			  string var4name,vector<double> dout,string uname);
-	
-	int i=0, m=0;
-	int maxper = modeltime.getmaxper();
-	vector<double> temp(maxper);
-	
-	// function arguments are variable name, double array, db name, table name
-	// the function writes all years
-	// total subsector output
-	dboutput2(regname,sname,name,"all grades","production",annualprod,"EJ");
-	dboutput2(regname,sname,name,"all grades","available",available,"EJ");
-
-/*	// do for all grades in the sector
-	for (i=0;i<nograde;i++) {
-		// output or demand for each grade
-		for (m=0;m<maxper;m++)
-			temp[m] = depgrade[i][m].showavail();
-		dboutput2(regname,sname,name,"supply",depgrade[i][0].showname(),temp,"EJ");
-		// grade cost
-		for (m=0;m<maxper;m++)
-			temp[m] = depgrade[i][m].getcost();
-		dboutput2(regname,sname,name,"cost",depgrade[i][0].showname(),temp,"$/GJ");
-		// grade efficiency
-		for (m=0;m<maxper;m++)
-			temp[m] = depgrade[i][m].getextcost();
-		dboutput2(regname,sname,name,"ext cost",depgrade[i][0].showname(),temp,"$/GJ");
-		// grade environmental cost
-		for (m=0;m<maxper;m++)
-			temp[m] = depgrade[i][m].getenvcost();
-		dboutput2(regname,sname,name,"env cost",depgrade[i][0].showname(),temp,"$/GJ");
-	}
-  */
-}
-
-// write subrsrc output to database
-void subrsrc::MCoutput(const char *regname,int reg,const char *secname)
+//! write subrsrc output to database
+void subrsrc::MCoutput( const string &regname, const string& secname )
 {
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
@@ -377,57 +339,56 @@ void subrsrc::MCoutput(const char *regname,int reg,const char *secname)
 
 	// do for all grades in the sector
 	for (i=0;i<nograde;i++) {
-		str = tssname + "_" + depgrade[i][0].showname();
+		str = tssname + "_" + depgrade[i][0]->getName();
 		// grade cost
 		for (m=0;m<maxper;m++)
-			temp[m] = depgrade[i][m].getcost();
+			temp[m] = depgrade[i][m]->getCost();
 		dboutput4(regname,"Price",secname,str,"$/GJ",temp);
 		// grade extraction cost
 		for (m=0;m<maxper;m++)
-			temp[m] = depgrade[i][m].getextcost();
+			temp[m] = depgrade[i][m]->getExtCost();
 		dboutput4(regname,"Price ExtCost",secname,str,"$/GJ",temp);
 		// grade environmental cost
 		for (m=0;m<maxper;m++)
-			temp[m] = depgrade[i][m].getenvcost();
+			temp[m] = depgrade[i][m]->getEnvCost();
 		dboutput4(regname,"Price EnvCost",secname,str,"$/GJ",temp);
 	}
 }
 
-// write subrsrc output to file
-void subrsrc::outputfile(const char *regname,int reg,const char *sname)
+//! write subrsrc output to file
+void subrsrc::outputfile( const string &regname, const string& sname)
 {
 	// function protocol
-	void fileoutput3(int regno,string var1name,string var2name,string var3name,
+	void fileoutput3( string var1name,string var2name,string var3name,
 				  string var4name,string var5name,string uname,vector<double> dout);
 	
-	int i=0, m=0;
 	int maxper = modeltime.getmaxper();
 	vector<double> temp(maxper);
 	
 	// function arguments are variable name, double array, db name, table name
 	// the function writes all years
 	// total subsector output
-	fileoutput3(reg,regname,sname,name," ","production","EJ",annualprod);
-	fileoutput3(reg,regname,sname,name," ","resource","EJ",available);
+	fileoutput3( regname,sname,name," ","production","EJ",annualprod);
+	fileoutput3( regname,sname,name," ","resource","EJ",available);
 
 /*	// do for all grades in the sector
 	for (i=0;i<nograde;i++) {
 		// output or demand for each grade
 		for (m=0;m<maxper;m++)
 			temp[m] = depgrade[i][m].showavail();
-		fileoutput2(reg,regname,sname,name,"supply",depgrade[i][0].showname(),temp,"EJ");
+		fileoutput2(reg,regname,sname,name,"supply",depgrade[i][0].getname(),temp,"EJ");
 		// grade cost
 		for (m=0;m<maxper;m++)
 			temp[m] = depgrade[i][m].getcost();
-		fileoutput2(reg,regname,sname,name,"cost",depgrade[i][0].showname(),temp,"$/GJ");
+		fileoutput2(reg,regname,sname,name,"cost",depgrade[i][0].getname(),temp,"$/GJ");
 		// grade efficiency
 		for (m=0;m<maxper;m++)
 			temp[m] = depgrade[i][m].getextcost();
-		fileoutput2(reg,regname,sname,name,"ext cost",depgrade[i][0].showname(),temp,"$/GJ");
+		fileoutput2(reg,regname,sname,name,"ext cost",depgrade[i][0].getname(),temp,"$/GJ");
 		// grade environmental cost
 		for (m=0;m<maxper;m++)
 			temp[m] = depgrade[i][m].getenvcost();
-		fileoutput2(reg,regname,sname,name,"env cost",depgrade[i][0].showname(),temp,"$/GJ");
+		fileoutput2(reg,regname,sname,name,"env cost",depgrade[i][0].getname(),temp,"$/GJ");
 	}
 */
 }

@@ -1,0 +1,4 @@
+namespace std {
+  template<class T> class vector { public: T element; };
+  template<class Key, class Value> class map { public: Key key; Value value; };
+}

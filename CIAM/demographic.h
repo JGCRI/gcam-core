@@ -4,8 +4,15 @@
  *											*
  * SHK  8/21/00								*/
 
+#ifndef _DEMOGRAPHIC_H_
+#define _DEMOGRAPHIC_H_
+#pragma once
+
 #include <vector>
+#include <xercesc/dom/DOM.hpp>
+
 using namespace std; // enables elimination of std::
+using namespace xercesc;
 
 // demographic class
 class demographic
@@ -20,21 +27,24 @@ private:
 	vector<double> laborforce_p; // labor force participation percent
 	vector<double> laborforce; // actual labor force
 public:
-	demographic(void); //default construtor
-	demographic(int per,double mpop,double fpop);//constructor
-	~demographic(void); // destructor
+	demographic(); //default construtor
+	demographic( int per, double mpop, double fpop ); //constructor
+	void clear();
+	void XMLParse( const DOMNode* node );
+	void toXML( ostream& out ) const;
+	void toDebugXML( const int period, ostream& out ) const;
+	void initData();
 	// set size of population and labor productivity variables to max period
-	void set(void);
-	void initialize(char* region); // reads in database
-	double labor(int per); // return labor productivity growthrate
-	double total(int per); // return total population
+	double labor( const int per ) const; // return labor productivity growthrate
+	double total( const int per ) const; // return total population
+	const vector<double>& getTotalPopVec() const; 
 	// return labor force (actual working)
-	double getlaborforce(int per);
+	double getlaborforce( const int per ) const;
 	void show(int per);
-	// outputs to database
-	void outputdb(const char *regname,int reg); 
 	// outputs to file
-	void outputfile(const char *regname,int reg); 
+	void outputfile(const string& regname ); 
 	// MiniCAM outputs to file
-	void MCoutput(const char *regname,int reg); 
+	void MCoutput(const string& regname ); 
 };
+
+#endif // _DEMOGRAPHIC_H_

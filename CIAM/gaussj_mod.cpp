@@ -1,10 +1,12 @@
-#include <math.h>
+#include "Definitions.h"
+#include <cmath>
 //#include "MatrixC.h"
 #include <vector>
 #include <iostream>
+#include <algorithm>
+
 using namespace std; // enables elimination of std::
 
-#define SWAP(a,b) {double temp=(a);(a)=(b);(b)=temp;}
 
 //void gaussj(Matrix& a,int n,Matrix& b,int m)
 void gaussj(double** a,int n,double** b,int m)
@@ -36,8 +38,12 @@ void gaussj(double** a,int n,double** b,int m)
 				}
 		++(ipiv[icol]);
 		if (irow != icol) {
-			for (l=0;l<n;l++) SWAP(a[irow][l],a[icol][l])
-			for (l=0;l<m;l++) SWAP(b[irow][l],b[icol][l])
+			for (l=0;l<n;l++) {
+				swap(a[irow][l],a[icol][l]);
+			}
+			for (l=0;l<m;l++){
+				swap(b[irow][l],b[icol][l]);
+			}
 		}
 		indxr[i]=irow;
 		indxc[i]=icol;
@@ -57,11 +63,9 @@ void gaussj(double** a,int n,double** b,int m)
 	for (l=(n-1);l>=0;l--) {
 		if (indxr[l] != indxc[l])
 			for (k=0;k<n;k++)
-				SWAP(a[k][indxr[l]],a[k][indxc[l]]);
+				swap(a[k][indxr[l]],a[k][indxc[l]]);
 	}
 	//free_ivector(ipiv,1,n);
 	//free_ivector(indxr,1,n);
 	//free_ivector(indxc,1,n);
 }
-
-#undef SWAP

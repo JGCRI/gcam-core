@@ -4,13 +4,17 @@
  *       											*
  * Coded by: Sonny Kim and Marshall Wise 10/09/02	*/
 
-
+#include "Definitions.h"
 #include <string>
+#include <iostream>
 #include <map>
 #include <vector>
-#include <math.h>
+#include <cmath>
+#include <cassert>
 #include "ghg.h"
 #include "Emcoef_ind.h" // indirect greenhouse gas emissions coefficient class
+#include "xmlHelper.h"
+
 using namespace std; // enables elimination of std::
 
 // map of CO2 emissions coefficient for primary fuel only
@@ -22,57 +26,137 @@ extern map<string, double> co2coefall;
 extern map<string, double> co2coefind; 
 extern vector<Emcoef_ind> emcoef_ind;
 
-Ghg::Ghg(void) //default construtor
-{
-}
-	
-Ghg::~Ghg(void) // destructor
-{
-}
-
-// set name, unit, remove fraction, gwp, and emiss coefficient of gas
-void Ghg::init(string gasname,string gasunit,double frac,double emcoef,double tgwp) 
-{
-	name = gasname;
-	unit = gasunit;
-	rmfrac = frac;
-	emiss_coef = emcoef;
-	gwp = tgwp;
-}
-	
-// initial all attributes from data
-void Ghg::initialize(strGhg strghg) 
-{
-	// strghg is a temporary structure
-	name = strghg.tname;
-	unit = strghg.tunit;
-	emiss_coef = strghg.temiss_coef;
+Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, const double gwpIn, const double emissionIn ){
+	name = nameIn;
+	unit = unitIn;
+	rmfrac = rmfracIn;
+	gwp = gwpIn;
+	emission = emissionIn;
+	seq_emiss = 0;
+	emiss_gwp = 0;
+	emiss_coef = 0;
+	emiss_fuel = 0;
+	emiss_ind = 0;
 }
 
-// initial all attributes from data using pointers
-void Ghg::initializeptr(lpstrGhg lpstrghg) 
-{
-	// strghg is a temporary structure
-	name = lpstrghg->tname;
-	unit = lpstrghg->tunit;
-	emiss_coef = lpstrghg->temiss_coef;
+//! Clear member variables.
+void Ghg::clear(){
+
+	// clear elemental data.
+	rmfrac = 0;
+	gwp = 0;
+	emission = 0;
+	seq_emiss = 0;
+	emiss_gwp = 0;
+	emiss_coef = 0;
+	emiss_fuel = 0;
+	emiss_ind = 0;
+	name = "";
+	unit = "";
 }
 
-// set emissions coefficient from data
-void Ghg::setcoef(double em_coef)
-{
+//! Set emissions coefficient from data
+void Ghg::setcoef( const double em_coef ) {
 	emiss_coef = em_coef; // set attribute
 }
 
-// set remove fraction from data
-void Ghg::setrmfrac(double trmfrac)
-{
+//! initialize Ghg object with xml data
+void Ghg::XMLParse(const DOMNode* node)
+{	
+	DOMNode* curr = 0;
+	DOMNodeList* nodeList;
+	string nodeName;
+
+	//! \pre Assume we are passed a valid node.
+	assert( node );
+	
+	// get the name attribute.
+	// name of the GHG
+	name = XMLHelper<string>::getAttrString( node, "name" );
+	
+	#if ( _DEBUG )
+		//cout << "\t\t\t\tGHG name set as " << name << endl;
+	#endif
+
+	nodeList = node->getChildNodes();
+	
+	for( int i = 0; i < nodeList->getLength(); i++ ) {
+		curr = nodeList->item( i );
+		nodeName = XMLString::transcode( curr->getNodeName() );		
+		
+		if( nodeName == "unit"){
+			unit = XMLHelper<string>::getValueString( curr );
+		}
+
+		else if( nodeName == "emisscoef" ){
+			emiss_coef = XMLHelper<double>::getValue( curr );
+		}
+
+		else if( nodeName == "removefrac" ){
+			rmfrac = XMLHelper<double>::getValue( curr );
+		}
+
+		else if( nodeName == "GWP" ){
+			gwp = XMLHelper<double>::getValue( curr );
+		}
+	}
+}
+
+//! Writes datamembers to datastream in XML format.
+void Ghg::toXML( ostream& out ) const {
+	
+	Tabs::writeTabs( out );
+	out << "<GHG name=\"" << name << "\">" << endl;
+	
+	Tabs::increaseIndent();
+	
+	// write xml for data members
+	XMLWriteElement( unit, "unit", out );
+	XMLWriteElement( emiss_coef, "emisscoef", out );
+	XMLWriteElement( rmfrac, "removefrac", out );
+	XMLWriteElement( gwp, "GWP", out );
+	// done writing xml for data members.
+
+	Tabs::decreaseIndent();
+
+	Tabs::writeTabs( out );
+	out << "</GHG>" << endl;
+}
+
+//! Writes datamembers to debugging datastream in XML format.
+void Ghg::toDebugXML( const int period, ostream& out ) const {
+	
+	Tabs::writeTabs( out );
+	out << "<GHG name=\"" << name << "\">" << endl;
+	
+	Tabs::increaseIndent();
+	
+	// write xml for data members
+	XMLWriteElement( unit, "unit", out );
+	XMLWriteElement( rmfrac, "removefrac", out );
+	XMLWriteElement( gwp, "GWP", out );
+	XMLWriteElement( emission, "emission", out );
+	XMLWriteElement( seq_emiss, "seq_emiss", out );
+	XMLWriteElement( emiss_gwp, "emiss_gwp", out );
+	XMLWriteElement( emiss_coef, "emisscoef", out );
+	XMLWriteElement( emiss_fuel, "emiss_fuel", out );
+	XMLWriteElement( emiss_ind, "emiss_ind", out );
+	// done writing xml for data members.
+
+	Tabs::decreaseIndent();
+
+	Tabs::writeTabs( out );
+	out << "</GHG>" << endl;
+}
+
+//! Set remove fraction from data.
+
+void Ghg::setrmfrac( const double trmfrac ) {
 	rmfrac = trmfrac;	
 }
 
-//convert carbon tax to energy tax
-double Ghg::taxcnvrt(string fuelname)
-{
+//! Convert carbon tax to energy tax.
+double Ghg::taxcnvrt( const string& fuelname ) const {
 	double conversion; 
 	if (name == "CO2") {
 		// use map object for coefficient
@@ -86,9 +170,9 @@ double Ghg::taxcnvrt(string fuelname)
 	}
 	return conversion;
 }
-	//calculate Ghg emissions
-void Ghg::calc_emiss(string fuelname,double input,string prodname,double output)
-{
+
+//! Calculate Ghg emissions.
+void Ghg::calc_emiss( const string& fuelname, const double input, const string& prodname, const double output ) {
 	// for CO2 use default emissions coefficient by fuel
 	// remove fraction only applicable for CO2
 	if (name == "CO2") {
@@ -120,17 +204,14 @@ void Ghg::calc_emiss(string fuelname,double input,string prodname,double output)
 	}
 }
 
-// calculate emissions alternative
-void Ghg::calc_emiss2(double activity,double gamma,double* cntl) 
-{
-	emission = pow((emiss_coef*activity),gamma)
-			  * (1 - cntl[1]) * (1 - cntl[2]) * (1 - cntl[3]);
+//! Calculate emissions alternative.
+void Ghg::calc_emiss2( const double activity, const double gamma, const double* cntl ) {
+	emission = pow((emiss_coef*activity),gamma) * (1 - cntl[1]) * (1 - cntl[2]) * (1 - cntl[3]);
 }
 	
-// calculates emissions associated with the use of secondary
-// energy, get indirect emissions coefficient from map object
-void Ghg::calc_emiss_ind(double input,string fuelname) 
-{
+//! calculates emissions associated with the use of secondary energy
+/*! get indirect emissions coefficient from map object */
+void Ghg::calc_emiss_ind( const double input, const string& fuelname ) {
 	emiss_ind = 0; // to initialize
 	for (int i=0;i<emcoef_ind.size();i++) {
 		if (emcoef_ind[i].getname() == fuelname) { // sector name
@@ -140,44 +221,37 @@ void Ghg::calc_emiss_ind(double input,string fuelname)
 	}
 }
 
-// return name of ghg
-string Ghg::getname(void)
-{
+//! Return name of Ghg.
+string Ghg::getname() const {
 	return name;
 }
 
-// return unit for ghg
-string Ghg::getunit(void)
-{
+//! Return unit for Ghg.
+string Ghg::getunit() const {
 	return unit;
 }
 
-// return ghg emissions
-double Ghg::getemission(void)
-{
+//! Return Ghg emissions.
+double Ghg::getemission() const {
 	return emission;
 }
 
-// return sequestered ghg emissions
-double Ghg::getseq_emiss(void)
-{
+//! Return sequestered ghg emissions.
+double Ghg::getseq_emiss() const {
 	return seq_emiss;
 }
 
-// return ghg emissions inplicit in fuel
-double Ghg::getemiss_fuel(void)
-{
+//! Return ghg emissions inplicit in fuel.
+double Ghg::getemiss_fuel() const {
 	return emiss_fuel;
 }
 
-// return indirect ghg emissions
-double Ghg::getemiss_ind(void)
-{
+//! Return indirect ghg emissions.
+double Ghg::getemiss_ind() const {
 	return emiss_ind;
 }
 
-// return ghg emissions coefficient
-double Ghg::getemiss_coef(void)
-{
+//! Return ghg emissions coefficient.
+double Ghg::getemiss_coef() const{
 	return emiss_coef;
 }

@@ -6,126 +6,99 @@
  * description of technology.						*
  * SHK  5/17/00										*/
 
+#ifndef _TECHNOLOGY_H_
+#define _TECHNOLOGY_H_
+#pragma once
 
+// Standard Library headers.
 #include <vector>
 #include <map>
 #include <string>
+
+// xerces xml headers
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/util/XMLString.hpp>
+
+// User headers.
 #include "ghg.h" // ghg object
-
-// struct for reading in inputs from database
-typedef struct
-{
-	const char *tname;  // technology name
-	long tno; // technology number
-	int yr; // year or vintage
-	int ftype; // fuel type
-	const char *fname;  // fuel name
-	double shrs; // logit share weight
-	double teff;  // energy intensity
-	double tnecost;  // all non-energy cost (levelized)
-	double ttax; // utility tax
-	double tlexp; // logit exponential
-	double ttech; // technical change
-} strtech, *lpstrtech;
-
-// struct for reading in hydroelectricity inputs from database
-typedef struct
-{
-	const char* tname;  // technology name
-	long tno; // technology number
-	int yr; // year or vintage
-	int ftype; // fuel type
-	const char* fname;  // fuel name
-	double shrs; // logit share weight
-	double teff;  // energy intensity
-	double tnecost;  // all non-energy cost (levelized)
-	double ttax; // utility tax
-	double tlexp; // logit exponential
-	double ttech; // technical change
-	double tresource; // available hydro resource in energy units
-	double tA; // logit function shape parameter
-	double tB; // logit function shape parameter
-} strtech2, *lpstrtech2;
+using namespace xercesc;
 
 // technology class
 class technology
 {
-private:
-	char name[20]; // technology name
-	int no; // technology number
-	const char* unit; // unit of final product from technology
-	char fuelname[20]; // name of fuel used
-	int fueltype; // fuel number
-	int year; // period year or vintage
-	double shrwts; //logit share weight
-	double eff; // energy intensity
-	double necost; // all non-fuel costs (levelized)
-	double techcost; // total cost of technology
-	double tax; // utility tax
-	double carbontax; // carbon tax in $/TC
-	double carbontaxgj; // carbon tax in $/GJ
-	double carbontaxpaid; // total carbon taxes paid
-	double lexp; // logit exponential
-	double share; // technology shares
-	double input; // total fuel input (fossil and uranium)
-	double output; // technology output
-	double techchange;  // technical change in %/year
-	vector<Ghg> ghg; // suite of greenhouse gases
-	map<string,double> emissmap; // map of ghg emissions
-	map<string,double> emfuelmap; // map of ghg emissions implicit in fuel
-	map<string,double> emindmap; // map of indirect ghg emissions
-	// attributes for hydroelectricity only!
-	double resource; // available hydro resource in energy units
-	double A; // logit function shape parameter
-	double B; // logit function shape parameter
+protected:
+	int fueltype; //! fuel number
+	int year; //! period year or vintage
+	double shrwts; //!logit share weight
+	double eff; //! energy intensity
+	double necost; //! all non-fuel costs (levelized)
+	double techcost; //! total cost of technology
+	double tax; //! utility tax
+	double carbontax; //! carbon tax in $/TC
+	double carbontaxgj; //! carbon tax in $/GJ
+	double carbontaxpaid; //! total carbon taxes paid
+	double lexp; //! logit exponential
+	double share; //! technology shares
+	double input; //! total fuel input (fossil and uranium)
+	double output; //! technology output
+	double techchange;  //! technical change in %/year
+	string name; //! technology name
+	string unit; //! unit of final product from technology
+	string fuelname; //! name of fuel used
+	vector<Ghg*> ghg; //! suite of greenhouse gases
+	map<string,double> emissmap; //! map of ghg emissions
+	map<string,double> emfuelmap; //! map of ghg emissions implicit in fuel
+	map<string,double> emindmap; //! map of indirect ghg emissions
+        double FixedOutputVal;
+        
+	//! attributes for hydroelectricity only!
+	double resource; //! available hydro resource in energy units
+	double A; //! logit function shape parameter
+	double B; //! logit function shape parameter
 public:
-	technology(void); // default construtor
-	technology(const char* nstr,const char* ustr,int yr,double ef);// constructor
-	~technology(void); // destructor
-	void setall(lpstrtech temp); // sets all technology parameters
-	virtual void setall3(lpstrtech2 temp); // sets all technology parameters
-	void setall2(strtech temp); // sets all technology parameters (alternative)
-	void setghg(void); // set number of greenhouse gases for each technology
-	// set number of greenhouse gases for each technology
-	void settechghg(int regionno,int sectorno,int subsecno); 
+	technology(); // default construtor
+	virtual ~technology();
+	virtual void clear();
+	void initElementalMembers();
+	virtual void XMLParse( const DOMNode* tempnode ); // initialize technology with xml data
+	virtual void toXML( ostream& out ) const;
+	virtual void toDebugXML( const int period, ostream& out ) const;
 	void applycarbontax(double tax); // apply carbon tax to appropriate technology
 	// sets ghg tax to technologies
-	void addghgtax(int ghgno,char* ghgname,int country_id,int per); 
-	void addghgtax2(int ghgno,char* ghgname,int country_id,int per); 
-	double cost(int country_id,int per); // calculates and returns cost of technology
+	void addghgtax( const string ghgname, const string regionName, const int per ); 
+	double cost( const string regionName, const int per); // calculates and returns cost of technology
 	// uses logit function to calculate technology share
-	void calc_share(int country_id,int per); 
+	void calc_share( const string regionName, const int per); 
 	void norm_share(double sum); // normalize technology share
 	//void production(double dmd); // calculates fuel input and technology output
 	virtual void production(double dmd,int per); // calculates fuel input and technology output
-	void emission(char* prodname); // calculates GHG emissions from technology
+	void emission( const string prodname); // calculates GHG emissions from technology
 	void indemission(void); // calculates indirect GHG emissions from technology use
-	// write information on technology to screen or file
-	void show_tech(void); // write technology information to screen
-	void show_techf(const char* ofile); // write technology information to file
+	void printTech( const string& outFile = "" ) const; // write technology information to file or screen
 	// ****** return names and values ******
-	char* showname(void); // return technology name
-	char* getfname(void); // return fuel name
-	int showfuelno(void); // return fuel number
-	double showeff(void); // return fuel efficiency
-	double showshare(void); // return normalized share
-	double showinput(void); // return fuel input amount
-	double showoutput(void); // return technology output
-	double showtechcost(void); // return total technology cost
-	double shownecost(void); // return non-fuel cost
-	double showcarbontax(void); // return carbon taxes in $/TC
-	double showcarbontaxgj(void); // return carbon taxes in $/GJ
-	double showcarbontaxpaid(void); // return carbon taxes paid
-	double getCO2(void); // return actual CO2 emissions from technology
-	map<string,double> getemissmap(void); // return map of all ghg emissions
-	map<string,double> getemfuelmap(void); // return map of all ghg emissions
-	map<string,double> getemindmap(void); // return map of all ghg emissions
-	vector<Ghg> getGhg(void); // return Ghg object for initialization
-	double get_emissmap_second(string str); // return value for ghg
-	void setGhg(vector<Ghg> tempghg); // initialize Ghg object from argument 
-	double getlexp(void); // return logit exponential for the technology
-	void setinput(double in); // set input exogenously
-	void setoutput(double out); // set output exogenously
+	string showname() const; // return technology name
+	string getfname() const; // return fuel name
+	int showfuelno() const; // return fuel number
+	double showeff() const; // return fuel efficiency
+	double showshare() const; // return normalized share
+	double showinput() const; // return fuel input amount
+	double showoutput() const; // return technology output
+	double showtechcost() const; // return total technology cost
+	double shownecost() const; // return non-fuel cost
+	double showcarbontax() const; // return carbon taxes in $/TC
+	double showcarbontaxgj() const; // return carbon taxes in $/GJ
+	double showcarbontaxpaid() const; // return carbon taxes paid
+	double getCO2() const; // return actual CO2 emissions from technology
+	map<string,double> getemissmap() const; // return map of all ghg emissions
+	map<string,double> getemfuelmap() const; // return map of all ghg emissions
+	map<string,double> getemindmap() const; // return map of all ghg emissions
+	double get_emissmap_second( const string& str ) const; // return value for ghg
+	double getlexp() const; // return logit exponential for the technology
+	void setinput( const double in ); // set input exogenously
+	void setoutput( const double out ); // set output exogenously
+        void adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per);
+        double getFixedSupply(int per);
+
 };
 
 // hydroelectricity class inherited from technology class
@@ -137,6 +110,9 @@ private:
 	double B; // logit function shape parameter
 
 public:
-	void setall3(lpstrtech2 temp); // sets all technology parameters
+	hydro_tech();
+	void clear();
 	void production(double dmd,int per); // calculates fuel input and technology output
 };
+
+#endif // _TECHNOLOGY_H_
