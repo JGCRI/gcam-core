@@ -12,6 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <cassert>
+#include <ctime>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
@@ -36,7 +37,7 @@ void writeClimatData(void); // function to write data for climat
 extern "C" { void _stdcall CLIMAT(void); };
 #endif
 
-extern time_t ltime;
+time_t ltime;
 extern ofstream logfile, outFile;
 
 const string Scenario::XML_NAME = "scenario";
@@ -50,6 +51,9 @@ Scenario::Scenario() {
 
     // Create the solver and initialize with a pointer to the Marketplace.
     solver.reset( new BisectionNRSolver( marketplace.get() ) );
+
+    // Get time and date before model run
+    time( &ltime ); 
 }
 
 //! Destructor
@@ -118,7 +122,7 @@ void Scenario::XMLParse( const DOMNode* node ){
                 modeltime->XMLParse( curr );
                 modeltime->set(); // This call cannot be delayed until completeInit() because it is needed first. 
             }
-            else {
+            else if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
                 cout << "Modeltime information cannot be modified in a scenario add-on." << endl;
             }
         }
@@ -246,15 +250,20 @@ void Scenario::run( string filenameEnding ){
     runCompleted = true;
 
     toDebugXMLClose( xmlDebugStream, &tabs ); // Close the xml debugging tag.
-
-    // calling fortran subroutine climat/magicc
+    logfile << "Model run completed" << endl;
+    logfile << "Calculating emissions totals." << endl;
     world->calculateEmissionsTotals();
+    logfile << "Writing CLIMAT() input file." << endl;
     writeClimatData(); // writes the input text file
 
 #if(__HAVE_FORTRAN__)
-    cout << endl << "Calling CLIMAT() "<< endl;
+    cout << endl << "Calling the climate model..."<< endl;
+    logfile << endl << "Calling CLIMAT"<< endl;
     CLIMAT();
-    cout << "Finished with CLIMAT()" << endl;
+    if ( conf->getBool( "debugChecking" ) ) {
+        cout << "Finished with CLIMAT()" << endl;
+    }
+    logfile << endl << "Finished with CLIMAT()" << endl;
 #endif
     xmlDebugStream.close();
 }
@@ -391,7 +400,9 @@ void Scenario::openDebugXMLFile( ofstream& xmlDebugStream, const string& fileNam
     string debugFileName = conf->getFile( "xmlDebugFileName", "debug.xml" );
     size_t dotPos = debugFileName.find_last_of( "." );
     debugFileName = debugFileName.insert( dotPos, fileNameEnding );
-    cout << "Debugging information for this run in: " << debugFileName << endl;
+    if ( conf->getBool( "debugChecking" ) ) { 
+        cout << "Debugging information for this run in: " << debugFileName << endl;
+    }
     xmlDebugStream.open( debugFileName.c_str(), ios::out );
     util::checkIsOpen( xmlDebugStream, debugFileName );
 }

@@ -13,7 +13,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <ctime>
 #include <memory>
 #include <list>
 
@@ -42,7 +41,6 @@ using namespace xercesc;
 ofstream bugoutfile, outFile, logfile;	
 
 Scenario* scenario = 0; // model scenario info
-time_t ltime;
 XercesDOMParser* XMLHelper<void>::parser;
 ErrorHandler* XMLHelper<void>::errHandler;
 
@@ -50,7 +48,6 @@ void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFac
 
 //! Main program. 
 int main( int argc, char *argv[] ) {
-
     // Use a smart pointer for configuration so that if the main is exited before the end the memory is freed.
     string configurationArg = "configuration.xml";
     string loggerFactoryArg = "logger_factory.xml";
@@ -66,9 +63,6 @@ int main( int argc, char *argv[] ) {
     Timer timer;
     timer.start();
 
-    // Get time and date before model run
-    time( &ltime ); 
-
     // Initialize the LoggerFactory
     XercesDOMParser* parser = XMLHelper<void>::getParser();
     DOMNode* root = XMLHelper<void>::parseXML( loggerFileName, parser );
@@ -78,6 +72,7 @@ int main( int argc, char *argv[] ) {
     auto_ptr<ScenarioRunner> runner;
     
     // Parse configuration file.
+    cout << "Parsing input files..." << endl;
     root = XMLHelper<void>::parseXML( configurationFileName, parser );
     auto_ptr<Configuration> conf( Configuration::getInstance() );
     conf->XMLParse( root );
@@ -112,6 +107,7 @@ int main( int argc, char *argv[] ) {
     // Cleanup Xerces.
     XMLHelper<void>::cleanupParser();
     LoggerFactory::cleanUp();
+    cout << "Model exiting successfully." << endl;
     return 0;
 }
 
