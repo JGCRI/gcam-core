@@ -35,8 +35,8 @@ class GDP;
 class technology
 {
 private:
-	static const std::string XML_NAME1D; //!< tag name for toInputXML
-	static const std::string XML_NAME2D; //!< tag name for toInputXML
+    static const std::string XML_NAME1D; //!< tag name for toInputXML
+    static const std::string XML_NAME2D; //!< tag name for toInputXML
 protected:
     std::string name; //!< technology name
     std::string unit; //!< unit of final product from technology
@@ -55,9 +55,7 @@ protected:
     double tax; //!< utility tax
     double fMultiplier; //!< multiplier on fuel cost or price
     double pMultiplier; //!< multiplier on total cost or price
-    double carbontax; //!< carbon tax in $/TC
-    double carbontaxgj; //!< carbon tax in $/GJ
-    double carbonValue; //!< the value of carbon, tax + any storage cost, in $/GJ
+    double totalGHGCost; //!< the value of GHG tax + any storage cost, in $/GJ
     double carbontaxpaid; //!< total carbon taxes paid
     double lexp; //!< logit exponential
     double share; //!< technology shares
@@ -75,13 +73,13 @@ protected:
     std::map<std::string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
     std::map<std::string,double> emindmap; //!< map of indirect ghg emissions
     std::string note; //!< input data notation for this technology
-	 
+
     // attributes for hydroelectricity only!
     double resource; //!< available hydro resource in energy units
     double A; //!< logit function shape parameter
     double B; //!< logit function shape parameter
     std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
-    
+    void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per ); 
 public:
     technology(); // default construtor
     technology( const technology& techIn ); // copy constructor.
@@ -96,15 +94,13 @@ public:
     void completeInit();
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	virtual const std::string& getXMLName1D() const;
-	static const std::string& getXMLNameStatic1D();
-	virtual const std::string& getXMLName2D() const;
-	static const std::string& getXMLNameStatic2D();
+    virtual const std::string& getXMLName1D() const;
+    static const std::string& getXMLNameStatic1D();
+    virtual const std::string& getXMLName2D() const;
+    static const std::string& getXMLNameStatic2D();
     void initCalc( );
-    // sets ghg tax to technologies
-    void addGhgTax( const std::string ghgname, const std::string regionName, const std::string sectorName, const int per ); 
-    virtual void calcCost( const std::string regionName, const int per); 
-    virtual void calcShare( const std::string regionName, const int per); 
+    virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per ); 
+    virtual void calcShare( const std::string& regionName, const int per); 
     void normShare(double sum); // normalize technology share
     void calcfixedOutput(int per); // calculate fixed supply
     void resetfixedOutput(int per); // reset fixed supply to max value
@@ -114,7 +110,6 @@ public:
     virtual void production(const std::string& regionName,const std::string& prodName,double dmd, const GDP* gdp, const int per);
     void calcEmission( const std::string prodname); // calculates GHG emissions from technology
     void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
-    // ****** return names and values ******
     std::string getName() const; // return technology name
     std::string getFuelName() const; // return fuel name
     double getEff() const; // return fuel efficiency
@@ -130,50 +125,26 @@ public:
     double getFuelcost() const; // return fuel cost only
     double getTechcost() const; // return total technology cost
     double getNecost() const; // return non-fuel cost
-    double getCarbontax() const; // return carbon taxes in $/TC
-    double getCarbontaxgj() const; // return carbon taxes in $/GJ
-    double getCarbonValue() const; // return carbon tax and storage cost added to tech in $/TC
+    double getTotalGHGCost() const; // return carbon tax and storage cost added to tech in $/TC
     double getCarbontaxpaid() const; // return carbon taxes paid
-    double getCO2() const; // return actual CO2 emissions from technology
-	 void technology::copyGHGParameters( const Ghg* prevGHG );
-	 Ghg* technology::getGHGPointer( const std::string& ghgName );
+    void technology::copyGHGParameters( const Ghg* prevGHG );
+    Ghg* technology::getGHGPointer( const std::string& ghgName );
     const std::vector<std::string> getGHGNames() const;
     double getGHGEmissionCoef( const std::string& ghgName ) const;
-	 bool getEmissionsInputStatus( const std::string& ghgName ) const;
-	 void setEmissionsInputStatus( const std::string& ghgName );
-	bool getEmissionsCoefInputStatus( const std::string& ghgName ) const;
-	 void setEmissionsCoefInputStatus( const std::string& ghgName );
-	 void setGHGEmissionCoef( const std::string& ghgName, const double emissionsCoef );
+    bool getEmissionsInputStatus( const std::string& ghgName ) const;
+    void setEmissionsInputStatus( const std::string& ghgName );
+    bool getEmissionsCoefInputStatus( const std::string& ghgName ) const;
+    void setEmissionsCoefInputStatus( const std::string& ghgName );
+    void setGHGEmissionCoef( const std::string& ghgName, const double emissionsCoef );
     std::map<std::string,double> getemissmap() const; // return map of all ghg emissions
     std::map<std::string,double> getemfuelmap() const; // return map of all ghg emissions
     std::map<std::string,double> getemindmap() const; // return map of all ghg emissions
     double get_emissmap_second( const std::string& str ) const; // return value for ghg
     double getlexp() const; // return logit exponential for the technology
     double getFixedOutput() const; // return fixed output
-	 double technology::getFixedInput() const; // return fixed input
-	 int technology::getNumbGHGs()  const; // number of GHG objects in this technology
+    double getFixedInput() const; // return fixed input
+    int getNumbGHGs()  const; // number of GHG objects in this technology
     void setYear( const int yearIn );
 };
-
-/*! 
-* \ingroup CIAM
-* \brief Hydroelectricity technology class derived from the technology class.
-* \author Sonny Kim
-* \date $ Date $
-* \version $ Revision $
-*/
-class hydro_tech : public technology
-{
-private:
-    double resource; //!< available hydro resource in energy units
-    double A; //!< logit function shape parameter
-    double B; //!< logit function shape parameter
-    
-public:
-    hydro_tech();
-    void clear();
-    void production(double dmd,int per); // calculates fuel input and technology output
-};
-
 #endif // _TECHNOLOGY_H_
 

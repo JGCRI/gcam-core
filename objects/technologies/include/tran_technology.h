@@ -38,8 +38,8 @@ public:
     virtual tranTechnology* clone() const;
     virtual void clear();
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
-    virtual void calcCost( const std::string regionName, const int per); 
-    virtual void calcShare( const std::string regionName, const int per); 
+    virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per );
+    virtual void calcShare( const std::string& regionName, const int per); 
     // calculates fuel input and technology output
     virtual void production( const std::string& regionName, const std::string& prodName,double dmd, const GDP* gdp, const int per);    
     virtual double getIntensity(const int per) const; // return fuel intensity
