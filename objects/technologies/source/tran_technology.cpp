@@ -75,7 +75,7 @@ void tranTechnology::XMLDerivedClassParse( const string nodeName, const DOMNode*
 }
 
 //! define technology fuel cost and total cost
-void tranTechnology::calcCost( const string regionName, const int per ) 
+void tranTechnology::calcCost( const string& regionName, const string& sectorName, const int per ) 
 {
     Marketplace* marketplace = scenario->getMarketplace();
     const Modeltime* modeltime = scenario->getModeltime();
@@ -90,15 +90,15 @@ void tranTechnology::calcCost( const string regionName, const int per )
     // 75$/GJ 
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const double JperBTU = 1055.0; // 1055 Joules per BTU
-    
-    fuelcost = ( (fuelprice * fMultiplier) + carbonValue ) * intensity/techChangeCumm
+    calcTotalGHGCost( regionName, sectorName, per );
+    fuelcost = ( (fuelprice * fMultiplier) + totalGHGCost ) * intensity/techChangeCumm
              * JperBTU/(1.0E9)*CVRT90;
     techcost = ( fuelcost + necost ) * pMultiplier;
 }
 
 
 //! calculate technology shares
-void tranTechnology::calcShare( const string regionName, const int per)
+void tranTechnology::calcShare( const string& regionName, const int per)
 {
     // original technology share calculation
     share = shrwts * pow(techcost,lexp);
@@ -149,7 +149,7 @@ void tranTechnology::production(const string& regionName,const string& prodName,
     // total carbon taxes paid for reporting only
     // carbontax and carbontaxpaid is null for technologies that do not consume fossil fuels
     // input(EJ), carbonValue(90$/GJ), carbontaxpaid(90$Mil)
-    carbontaxpaid = input*carbonValue*1e+3;
+    carbontaxpaid = input * totalGHGCost * 1e+3;
     
     // calculate emissions for each gas after setting input and output amounts
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {

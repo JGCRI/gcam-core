@@ -78,8 +78,6 @@ void technology::copy( const technology& techIn ) {
     tax = techIn.tax;
     fMultiplier = techIn.fMultiplier;
     pMultiplier = techIn.pMultiplier;
-    carbontax = techIn.carbontax;
-    carbontaxgj = techIn.carbontaxgj;
     carbontaxpaid = techIn.carbontaxpaid;
     lexp = techIn.lexp;
     share = techIn.share;
@@ -98,7 +96,7 @@ void technology::copy( const technology& techIn ) {
     emissmap = techIn.emissmap; 
     emfuelmap = techIn.emfuelmap; 
     emindmap = techIn.emindmap; 
-    carbonValue = techIn.carbonValue;
+    totalGHGCost = techIn.totalGHGCost;
     resource = techIn.resource;
     A = techIn.A;
     B = techIn.B;
@@ -138,8 +136,6 @@ void technology::initElementalMembers(){
     tax = 0;
     fMultiplier = 1; 
     pMultiplier = 1; 
-    carbontax = 0;
-    carbontaxgj = 0;
     carbontaxpaid = 0;
     lexp = -6; 
     share = 0;
@@ -155,7 +151,7 @@ void technology::initElementalMembers(){
     doCalOutput = false;
     calInputValue = 0;
     calOutputValue = 0;
-    carbonValue = 0;
+    totalGHGCost = 0;
 }
 
 /*! \brief initialize technology with xml data
@@ -339,8 +335,6 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     XMLWriteElement( tax, "tax", out, tabs );
     XMLWriteElement( fMultiplier, "fMultiplier", out, tabs );
     XMLWriteElement( pMultiplier, "pMultiplier", out, tabs );
-    XMLWriteElement( carbontax, "carbontax", out, tabs );
-    XMLWriteElement( carbontaxgj, "carbontaxgj", out, tabs );
     XMLWriteElement( carbontaxpaid, "carbontaxpaid", out, tabs );
     XMLWriteElement( lexp, "logitexp", out, tabs );
     XMLWriteElement( share, "share", out, tabs );
@@ -424,20 +418,23 @@ void technology::initCalc( ) {
    }
 }
 
-//! sets ghg tax to technologies
-/*! does not get called if there are no markets for ghgs */
-void technology::addGhgTax( const string ghgname, const string regionName, const string sectorName, const int per ) {
-    Marketplace* marketplace = scenario->getMarketplace();
-    // returns coef for primary fuels only
-    // carbontax has value for primary fuels only
-    carbonValue = 0; // initialize
-    carbontax = marketplace->getPrice(ghgname,regionName,per);
-    // add to previous ghg tax if more than one ghg
-    // carbonValue and carbontax must be in same unit as fuel price
-    for(int i=0;i< static_cast<int>( ghg.size() );i++) {
-        carbonValue += ghg[i]->getGHGValue( regionName, fuelname, sectorName, eff, per);
+/*! \brief This function calculates the sum of the Carbon Values for all GHG's in this technology.
+* \detailed The function first checks if a carbon tax exists for the technology, and 
+* if it does loops through all GHGs to calculate a sum carbon value. The GHG function which
+* it calls, getGHGValue() calculates the carbon equivalent of all GHG's contained in this technology.
+* The totalGHGCost attribute of the technology is then set to this new value.
+* \author Sonny Kim, Josh Lurz
+* \param regionName The region containing this technology.
+* \param sectorName The sector containing this technology.
+* \param per The period to calculate this value for.
+* \note At one time this code may have worked for multiple GHG markets. This is not currently the case.
+*/
+void technology::calcTotalGHGCost( const string& regionName, const string& sectorName, const int period ) {
+    totalGHGCost = 0; // initialize
+    // totalGHGCost and carbontax must be in same unit as fuel price
+    for( unsigned int i = 0; i < ghg.size(); i++ ){
+        totalGHGCost += ghg[i]->getGHGValue( regionName, fuelname, sectorName, eff, period );
     }
-    // need to add taxes from all ghgs
 }
 
 /*! \brief Calculate technology fuel cost and total cost.
@@ -453,8 +450,7 @@ void technology::addGhgTax( const string ghgname, const string regionName, const
 * \param period Model regionName
 * \param period Model per
 */
-void technology::calcCost( const string regionName, const int per ) 
-{
+void technology::calcCost( const string& regionName, const string& sectorName, const int per ) {
     Marketplace* marketplace = scenario->getMarketplace();
 
 	 // code specical case where there is no fuel input. sjs
@@ -471,17 +467,18 @@ void technology::calcCost( const string regionName, const int per )
 	// fMultiplier and pMultiplier are initialized to 1 for those not read in
 	fuelcost = ( fuelprice * fMultiplier ) / eff;
 	techcost = ( fuelcost + necost ) * pMultiplier;
-	techcost += carbonValue;
+    calcTotalGHGCost( regionName, sectorName, per );
+	techcost += totalGHGCost;
     
     /* \post fuelcost and techcost are greater than or equal to 0. */
 	if(fuelcost < 0){
 		cout << "fuelcost < 0"<<endl;
-		cout << regionName <<","<<name <<","<<fuelname<<","<<fuelprice<<","<<fMultiplier<<","<<carbonValue<<endl;
+		cout << regionName <<","<<name <<","<<fuelname<<","<<fuelprice<<","<<fMultiplier<<","<<totalGHGCost<<endl;
 		cout << "CO2EmFactor  "<< marketplace->getMarketInfo(fuelname,regionName,per,"CO2EmFactor")<<endl;
 	}
 	else if(techcost <= 0){
 		cout << "techcost <= 0"<<endl;
-		cout << regionName <<","<<name <<","<<fuelname<<","<<fuelprice<<","<<fMultiplier<<","<<carbonValue<<endl;
+		cout << regionName <<","<<name <<","<<fuelname<<","<<fuelprice<<","<<fMultiplier<<","<<totalGHGCost<<endl;
 		cout << "CO2EmFactor  "<< marketplace->getMarketInfo(fuelname,regionName,per,"CO2EmFactor")<<endl;
 	}
 	assert( fuelcost >= 0 );
@@ -496,8 +493,7 @@ void technology::calcCost( const string regionName, const int per )
 * \param regionName region name
 * \param per model period
 */
-void technology::calcShare( const string regionName, const int per)
-{
+void technology::calcShare( const string& regionName, const int per) {
     share = shrwts * pow(techcost,lexp);
 }
 
@@ -684,7 +680,7 @@ void technology::production(const string& regionName,const string& prodName,
     // total carbon taxes paid for reporting only
     // carbontax and carbontaxpaid is null for technologies that do not consume fossil fuels
     // input(EJ), carbontax(90$/GJ), carbontaxpaid(90$Mil)
-    carbontaxpaid = input*carbonValue*1e+3;
+    carbontaxpaid = input*totalGHGCost*1e+3;
     
     // calculate emissions for each gas after setting input and output amounts
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
@@ -841,32 +837,15 @@ double technology::getNecost() const {
     return necost;
 }
 
-//! return carbon taxes applied to technology
-double technology::getCarbontax() const {
-    // ($/TC)
-    return carbontax;
-}
-
-//! return carbon taxes applied to technology
-double technology::getCarbontaxgj() const {
-    // ($/GJ)
-    return carbontaxgj;
-}
-
 //! return any carbon tax and storage cost applied to technology
-double technology::getCarbonValue() const {
+double technology::getTotalGHGCost() const {
     // (75$/GJ)
-    return carbonValue;
+    return totalGHGCost;
 }
 
 //! return carbon taxes paid by technology
 double technology::getCarbontaxpaid() const {
     return carbontaxpaid;
-}
-
-//! returns actual CO2 emissions from technology, alternate
-double technology::getCO2()  const {
-    return ghg[0]->getEmission(); // index 0 is for CO2
 }
 
 /*! \brief Return a vector listing the names of all the GHGs within the Technology.
@@ -1025,36 +1004,4 @@ int technology::getNumbGHGs()  const {
 	} else {
 		return 0;
 	}
-}
-
-
-
-//  ******* method definition for hydro_tech
-
-//! Default constructor
-hydro_tech::hydro_tech(): technology() {
-    resource = 0;
-    A = 0;
-    B = 0;
-}
-
-//! Clear all member variables.
-void hydro_tech::clear(){
-    technology::clear();
-    resource = 0;
-    A = 0;
-    B = 0;
-}
-
-//! calculates hydroelectricity output based on logit function
-void hydro_tech::production(double dmd,int per) 
-{
-    int T = per*scenario->getModeltime()->gettimestep(per);
-    double tempOutput;
-    // resource and logit function 
-    double fact = exp(A+B*T);
-    tempOutput = resource*fact/(1+fact);
-    tempOutput = min(tempOutput,fixedOutputVal);
-    output = tempOutput;
-    input = 0; // no fuel input for hydro
 }
