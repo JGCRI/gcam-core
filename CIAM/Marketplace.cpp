@@ -54,7 +54,7 @@ Marketplace::Marketplace() {
    VERY_SMALL_NUM = 1e-8;
    bugTracking = false;
    bugMinimal = false;
-   trackED = true;
+   trackED =false;
    TotIter = 0;
 }
 
@@ -1060,7 +1060,7 @@ int Marketplace::Bracket( const double solutionTolerance, const double excessDem
             if ( !sol[ i ].bracketed ) {
                
                // If ED at X and L are the same sign.
-               if ( sign( sol[ i ].ED ) == sign( sol[ i ].EDL ) ) {
+               if ( std::sign( sol[ i ].ED ) == std::sign( sol[ i ].EDL ) ) {
                   
                   // If Supply > Demand at point X. Price needs to decrease.
                   if ( sol[ i ].ED < 0 ) { 
@@ -1070,7 +1070,7 @@ int Marketplace::Bracket( const double solutionTolerance, const double excessDem
                      sol[ i ].EDL = sol[ i ].ED;
                      
                      // If L and R do not span solution.
-                     if ( sign( sol[ i ].EDL ) == sign( sol[ i ].EDR ) ) {
+                     if ( std::sign( sol[ i ].EDL ) == std::sign( sol[ i ].EDR ) ) {
                         
                         // Decrease X.
                         
@@ -1089,7 +1089,7 @@ int Marketplace::Bracket( const double solutionTolerance, const double excessDem
                            assert( false );
                         }
                         
-                     } // if ( sign( sol[ i ].EDL ) == sign( sol[ i ].EDR ) )
+                     } // if ( std::sign( sol[ i ].EDL ) == std::sign( sol[ i ].EDR ) )
                      
                      // If L and R span solution.
                      else {
@@ -1107,7 +1107,7 @@ int Marketplace::Bracket( const double solutionTolerance, const double excessDem
                      sol[ i ].EDR = sol[ i ].ED;
                      
                      // If L and R do not span solution.
-                     if ( sign( sol[ i ].EDL ) == sign( sol[ i ].EDR ) ) {
+                     if ( std::sign( sol[ i ].EDL ) == std::sign( sol[ i ].EDR ) ) {
                         
                         // Increase X.
                         
@@ -1147,7 +1147,7 @@ int Marketplace::Bracket( const double solutionTolerance, const double excessDem
                      sol[ i ].EDL = sol[ i ].ED;
                      
                      // If L and R do not span solution.
-                     if ( sign( sol[ i ].EDL ) == sign( sol[ i ].EDR ) ) {
+                     if ( std::sign( sol[ i ].EDL ) == std::sign( sol[ i ].EDR ) ) {
                         
                         // Decrease X.
                         
@@ -1180,7 +1180,7 @@ int Marketplace::Bracket( const double solutionTolerance, const double excessDem
                      sol[ i ].EDR = sol[ i ].ED; 
                      
                      // If L and R do not span solution.
-                     if ( sign( sol[ i ].EDL ) == sign( sol[ i ].EDR ) ) {
+                     if ( std::sign( sol[ i ].EDL ) == std::sign( sol[ i ].EDR ) ) {
                         
                         // Increase X.
                         

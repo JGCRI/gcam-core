@@ -17,10 +17,12 @@
 	</Files>
 	<Strings/>
 	<Bools>
+		<Value name="DebugChecking">1</Value> <!-- Turns on various internal checks -->
 		<Value name="minicam">1</Value>
 		<Value name="timestamp">0</Value>
 		<Value name="agSectorActive">0</Value>
 		<Value name="simulActive">0</Value>
+		<Value name="trackMaxED">0</Value> <!-- Writes out the worst ED to screen as solution proceeds -->
 	</Bools>
 	<Ints/>
 	<Doubles/>

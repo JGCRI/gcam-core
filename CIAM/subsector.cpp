@@ -119,7 +119,7 @@ void subsector::XMLParse( const DOMNode* node ) {
 			capLimit.push_back( XMLHelper<double>::getValue( curr ) );
 		}
 		else if( nodeName == "sharewt" ){
-			if(name=="wind") { // Change this to "wind" to turn wind shares down
+			if(name=="windxxx") { // Change this to "wind" to turn wind shares down
 				shrwts.push_back(0.001);
 			}
 			else {
