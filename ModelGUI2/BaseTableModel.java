@@ -1,9 +1,9 @@
 import java.util.*;
 import javax.swing.table.AbstractTableModel;
 import org.w3c.dom.*;
-import javax.swing.table.*;
-import javax.swing.JTable;
-import java.awt.Component;
+//import javax.swing.table.*;
+//import javax.swing.JTable;
+//import java.awt.Component;
 import javax.swing.JScrollPane;
 import javax.swing.*;
 import java.awt.*;
@@ -140,7 +140,6 @@ public abstract class BaseTableModel extends AbstractTableModel {
 			items[i] = currNode.getNodeName();
 		}
 	}
-	//String[] items = { "one", "two", "three", "four" };
 	final JList list = new JList(items);
 	list.setSelectionMode(DefaultListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     
@@ -204,37 +203,9 @@ public abstract class BaseTableModel extends AbstractTableModel {
 			activeRows = new Vector();
 		}
 		final int oldNumRows = activeRows.size();
-		/*
-		final Vector oldActiveRows = activeRows;
-		activeRows = new Vector();
-		for (int i = 0; i < rows.size(); i++) {
-			activeRows.addElement(new Integer(i));
-		}
-		*/
 		currKeys = new String[0];
 		final Map tempFilterMaps = (Map)((LinkedHashMap)tableFilterMaps).clone();
-		/*
-		final Vector possibleKeys = new Vector();
-		final boolean tempIsCondensed = isCondensed;
-		String title;
-		if (isCondensed) {
-			for (int i = 0; i < cols.size(); i++) {
-				if (((String)cols.get(i)).matches("^region.*$")) {
-					possibleKeys.add(cols.get(i));
-				} else if (((String)cols.get(i)).matches("^.*year$")) {
-					possibleKeys.add(cols.get(i));
-				}
-			}
-			title = "Filter Results";
-		} else {
-			title = "Filter Table";
-			if(tableType == NORMAL_TABLE) {
-				possibleKeys.addAll(cols.subList(0,cols.size()-1));
-			} else if (tableType == DEMAND_COMPONENTS_TABLE ) {
-				possibleKeys.addAll(cols.subList(0,cols.size()-6));
-			}
-		}*/
-		//possibleKeys = new Vector(filters.keySet());
+
 		final Vector possibleKeys = new Vector(tempFilterMaps.keySet());
 		currFilter = possibleKeys.size()-1;
 		String title = "Filter Table";

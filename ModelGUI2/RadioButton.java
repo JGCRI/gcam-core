@@ -2,11 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-/*
- * ListDialog.java is a 1.4 class meant to be used by programs such as
- * ListDialogRunner.  It requires no additional files.
- */
-
 public class RadioButton extends JDialog
 						implements ActionListener {
 	private static RadioButton dialog;
