@@ -24,14 +24,13 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
-#include "marketplace/include/market.h"
+#include "marketplace/include/imarket_type.h"
 #include "resources/include/resource.h"
 #include "resources/include/renewable_subresource.h"
 
 using namespace std;
 using namespace xercesc;
 
-extern ofstream bugoutfile;	
 extern Scenario* scenario;
 // static initialize.
 const string DepletableResource::XML_NAME = "depresource";
@@ -205,7 +204,7 @@ void Resource::setMarket( const string& regionName ) {
     Marketplace* marketplace = scenario->getMarketplace();
     const Modeltime* modeltime = scenario->getModeltime();
     // name is resource name
-    if ( marketplace->createMarket( regionName, market, name, Market::NORMAL ) ) {
+    if ( marketplace->createMarket( regionName, market, name, IMarketType::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, rscprc );
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
             marketplace->setMarketToSolve( name, regionName, per );
