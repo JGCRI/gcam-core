@@ -84,7 +84,7 @@ void World::XMLParse( const DOMNode* node ){
 	// get all the children.
 	DOMNodeList* nodeList = node->getChildNodes();
 	
-	for( int i = 0; static_cast<int>( i < nodeList->getLength() ); i++ ){
+	for( int i = 0;  i < static_cast<int>( nodeList->getLength() ); i++ ){
 		curr = nodeList->item( i );
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
@@ -103,7 +103,7 @@ void World::XMLParse( const DOMNode* node ){
 			   tempRegion = new Region();
 			   tempRegion->XMLParse( curr );
 			   region.push_back( tempRegion ); // resizes vector of region objects
-			   regionNamesToNumbers[ tempRegion->getName() ] = region.size() - 1;
+			   regionNamesToNumbers[ tempRegion->getName() ] = static_cast<int>( region.size() ) - 1;
          }
 		}
       else if( nodeName == "primaryFuelName" ) {
@@ -125,7 +125,7 @@ void World::XMLParse( const DOMNode* node ){
 void World::completeInit() {
    
    // Set the number of regions.
-   noreg = region.size();
+   noreg = static_cast<int>( region.size() );
 
    // Finish initializing all the regions.
    for( vector<Region*>::iterator regionIter = region.begin(); regionIter != region.end(); regionIter++ ) {
@@ -318,7 +318,7 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
       }
 
 	}
-
+    // pointless!
    Marketplace* marketplace = scenario->getMarketplace();
 }
 
@@ -375,9 +375,11 @@ void World::emiss_all() {
 	int  per;
 
 	ifstream gasfile2;
-	//gasfile2.open("gas2.emk",ios::in); // open input file for reading
-	gasfile2.open("gas2.emk"); // open input file for reading
-   util::checkIsOpen( gasfile2 );
+	const string gasFileName = Configuration::getInstance()->getFile( "GHGInputFileName" );
+	gasfile2.open( gasFileName.c_str(), ios::in ); // open input file for reading
+
+   util::checkIsOpen( gasfile2, gasFileName );
+
 	// read in all other gases except CO2 from fossil fuels
 	// CO2 from fossil fuels comes from model
 	int skiplines = 5;
