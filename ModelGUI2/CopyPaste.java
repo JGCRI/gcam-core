@@ -98,6 +98,19 @@ public class CopyPaste implements ActionListener{
    	
    	public boolean areOfTheSameType( String oldStr, String newStr ){
    		try{
+   			double oldDouble = Double.parseDouble(oldStr); //old is a double
+   			try{
+   				double newDouble = Double.parseDouble(newStr); //new is also an double :)
+   				return true;
+   			}catch(NumberFormatException nfe2){ // double, not double :(
+   				return false;
+   			}
+   		}catch(NumberFormatException nfe1){ // oldStr is NOT an double, must be a string
+			return true;
+   		}
+   		
+   		/*
+    		try{
    			int oldInt = Integer.parseInt(oldStr); //old is an int
    			try{
    				int newInt = Integer.parseInt(newStr); //new is also an int :)
@@ -118,6 +131,7 @@ public class CopyPaste implements ActionListener{
    				return true; // i guess we can just return true
    			}
    		}
+   		*/
    	}
 }
 

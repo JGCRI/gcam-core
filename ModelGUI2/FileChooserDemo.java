@@ -395,19 +395,22 @@ public class FileChooserDemo extends JFrame
 	   menuItem.addMouseListener(new MouseListener() {
 		   public void mouseReleased(MouseEvent e) {
 			if (!jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
+
 				RadioButton.showDialog(frame, null, "", "Choose Table Viewing Type", names,"");
+
 				JScrollPane tableView = RadioButton.createSelection(selectedPath, doc, thisFrame);
+
 				if(tableView == null) {
 					return;
 				}
 	  			splitPane.setRightComponent(tableView);
-	  		        menuTableFilter.setEnabled(true);
+	  		    menuTableFilter.setEnabled(true);
 				tableMenu = makePopupTableMenu();
-	   			((JTable)tableView.getViewport().getView()).addMouseListener(new MouseAdapter() {
+				((JTable)tableView.getViewport().getView()).addMouseListener(new MouseAdapter() {
 		   			public void mousePressed(MouseEvent e) {
 			   			maybeShowPopup(e);
 		   			}
-		   			public void mouseReleased(MouseEvent e) {
+		  			public void mouseReleased(MouseEvent e) {
 			   			maybeShowPopup(e);
 		   			}
 		   			private void maybeShowPopup(MouseEvent e) {
@@ -422,8 +425,8 @@ public class FileChooserDemo extends JFrame
 				  			}
 				  			tableMenu.show(e.getComponent(), e.getX(), e.getY());
 			   			}
-		   			}
-	   			});
+		  			}
+				});
 			}
 
 		   }
@@ -1064,6 +1067,5 @@ public class FileChooserDemo extends JFrame
 	}
 	return true;
   }
-
 }
 

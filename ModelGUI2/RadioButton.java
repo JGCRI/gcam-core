@@ -44,7 +44,6 @@ public class RadioButton extends JDialog implements ActionListener {
 		//Create and initialize the buttons.
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(this);
-		//
 		final JButton setButton = new JButton("Select");
 		setButton.setActionCommand("Select");
 		setButton.addActionListener(this);
@@ -64,7 +63,6 @@ public class RadioButton extends JDialog implements ActionListener {
 		listScroller.setPreferredSize(new Dimension(250, 80));
 		listScroller.setMinimumSize(new Dimension(250, 80));
 		listScroller.setAlignmentX(LEFT_ALIGNMENT);
-
 
 		JPanel listPane = new JPanel();
 		listPane.setLayout(new BoxLayout(listPane, BoxLayout.Y_AXIS));
