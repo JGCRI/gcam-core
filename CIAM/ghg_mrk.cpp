@@ -81,7 +81,7 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
 	nodeList = node->getChildNodes();
 
 	// loop through the child nodes.
-	for( int i = 0; i < nodeList->getLength(); i++ ){
+	for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
 		curr = nodeList->item( i );
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
@@ -93,7 +93,7 @@ void ghg_mrk::XMLParse( const DOMNode* node ){
 			childNodeList = curr->getChildNodes();
 			
 			// loop through the periods children.
-			for( int j = 0; j < childNodeList->getLength(); j++ ){
+			for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
 				currChild = childNodeList->item( j );
 				childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
 

@@ -67,7 +67,7 @@ void demographic::XMLParse( const DOMNode* node ){
 	
 	nodeList = node->getChildNodes();
 	
-	for( int i = 0; i < nodeList->getLength(); i++ ){
+	for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
 		curr = nodeList->item( i );
 		
 		// get the name of the node.

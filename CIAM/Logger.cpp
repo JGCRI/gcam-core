@@ -267,7 +267,7 @@ void Logger::XMLParse( const DOMNode* node ) {
 	nodeList = node->getChildNodes();
 
 	// loop through the children
-	for ( int i = 0; i < nodeList->getLength(); i++ ){
+	for ( int i = 0; i < static_cast<int> ( nodeList->getLength() ); i++ ){
 		curr = nodeList->item( i );
 
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
@@ -342,7 +342,7 @@ void Logger::toDebugXML( ostream& out ) const {
 //! Parses the header of a log file replacing special strings.
 void Logger::parseHeader( string& headerIn ) {
 	
-	static const basic_string <char>::size_type npos = -1;
+	static const basic_string <char>::size_type npos = static_cast<char>( -1 );
 	int offset = 0;
 	int leftBracket = 0;
 	int rightBracket = 0;
@@ -351,7 +351,7 @@ void Logger::parseHeader( string& headerIn ) {
 	string replaceWithString;
 
 	// Loop through the string.
-	while( offset < headerIn.size() && offset != npos ){
+	while( offset < static_cast<int>( headerIn.size() ) && offset != npos ){
 		
 		// Find the first left bracket.
 		leftBracket = headerIn.find_first_of( "{", offset );

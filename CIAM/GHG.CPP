@@ -83,7 +83,7 @@ void Ghg::XMLParse(const DOMNode* node)
 
 	nodeList = node->getChildNodes();
 	
-	for( int i = 0; i < nodeList->getLength(); i++ ) {
+	for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ) {
 		curr = nodeList->item( i );
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
 		
@@ -216,9 +216,8 @@ void Ghg::calc_emiss2( const double activity, const double gamma, const double* 
 /*! get indirect emissions coefficient from map object */
 void Ghg::calc_emiss_ind( const double input, const string& fuelname ) {
 	emiss_ind = 0; // to initialize
-	for (int i=0;i<emcoef_ind.size();i++) {
+	for (int i=0;i< static_cast<int>( emcoef_ind.size() );i++) {
 		if (emcoef_ind[i].getName() == fuelname) { // sector name
-			double temp = emcoef_ind[i].getemcoef(name);
 			emiss_ind = emcoef_ind[i].getemcoef(name) * input;
 		}
 	}
