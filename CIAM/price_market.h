@@ -23,11 +23,10 @@
 
 class PriceMarket: public Market {
 public:
-    PriceMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
-    PriceMarket( const Market& marketIn );
+    PriceMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn, Market* demandMarketIn );
+    PriceMarket( const Market& marketIn, Market* demandMarketIn );
     virtual void derivedToDebugXML( std::ostream& out ) const;
     virtual std::string getType() const;
-    virtual void setCompanionMarketPointer( Market* pointerIn );
 
     virtual void initPrice();
     virtual void setPrice( const double priceIn );
