@@ -1434,7 +1434,7 @@ void Region::dbOutput() const {
     dboutput4(name,"End-Use Service","by Sector w/o TC","zTotal","Ser Unit",temp);
 
     // TFE for this region
-    for (int m=0;m<maxper;m++) {
+    for (m=0;m<maxper;m++) {
         temp[m] = getTotFinalEnergy(m);
     }
     dboutput4(name,"Final Energy Cons","total","","EJ",temp);
@@ -1442,7 +1442,7 @@ void Region::dbOutput() const {
     // regional fuel consumption (primary and secondary) by fuel type
     map<string,double> tfuelmap = summary[0].getfuelcons();
     for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
-        for (int m=0;m<maxper;m++) {
+        for (m=0;m<maxper;m++) {
             temp[m] = summary[m].get_fmap_second(fmap->first);
         }
         dboutput4(name,"Fuel Consumption","by fuel",fmap->first,"EJ",temp);
@@ -1462,7 +1462,7 @@ void Region::dbOutput() const {
     map<string,double> tpemap = summary[0].getpecons();
     CI pmap;
     for (pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
-        for (int m=0;m<maxper;m++) {
+        for (m=0;m<maxper;m++) {
             temp[m] = summary[m].get_pemap_second(pmap->first);
         }
         dboutput4(name,"Pri Energy","Consumption by fuel",pmap->first,"EJ",temp);
@@ -1471,7 +1471,7 @@ void Region::dbOutput() const {
     // region primary energy trade by fuel type
     tpemap = summary[0].getpetrade();
     for (pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
-        for (int m=0;m<maxper;m++) {
+        for (m=0;m<maxper;m++) {
             temp[m] = summary[m].get_petrmap_second(pmap->first);
         }
         dboutput4(name,"Pri Energy","Trade by fuel",pmap->first,"EJ",temp);
