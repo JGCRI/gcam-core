@@ -664,7 +664,8 @@ xercesc::XercesDOMParser* XMLHelper<T>::getParser() {
 */
 template<class T>
 void XMLHelper<T>::cleanupParser(){
-    // Cleanup Xerces.
+    mErrHandler.release();
+    mParser.release();
     xercesc::XMLPlatformUtils::Terminate();
 }
 
