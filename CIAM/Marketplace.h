@@ -59,7 +59,7 @@ private:
    bool bugTracking; //!< Turn on to enable bugout tracking in various solution routines
    bool bugMinimal; //!< Turn on minimal tracking of solution results
    bool trackED; //!< Turn on solution mechanism tracking (to cout)
-   int totIter; //!< Cumulative number of interations
+   double totIter; //!< Cumulative number of interations
    vector< vector<Market*> > markets; //!< no of market objects by period
    vector<int> markets_isol; //!< index look up for markets that require solving
    vector<int> markets_isol_NR; //!< index look up for markets for Newton-Rhapson
@@ -67,16 +67,16 @@ private:
    map<string,int> regionToMarketMap; //!< map of market lookup from good and region names
    
    // Private Functions
-   int NR_Ron( const double tolerance, const double excessDemandSolutionFloor, vector<solinfo>& sol, int& n, const int per );
-   int NewtRap( const double tolerance,  const double excessDemandSolutionFloor, vector<solinfo>& sol, int& n, const int per );
-   void Derivatives( vector<double> prices, Matrix& JFDM, Matrix& JFSM, int& n, const int per );
-   void JFunction( vector<double> prices, Matrix& JFDM, int& n, int const per );
-   int Secant_all( const double tolerance,vector<solinfo>& sol,int& n, const int per );
-   int FalsePos_all( const double tolerance,vector<solinfo>& sol,int& n, const int per );
-   int Bisection_i( const int i, const double tolerance, vector<solinfo>& sol,int& n, const int per );
-   int Bisection_all( const double tolerance, const double excessDemandSolutionFloor, const int IterLimit, vector<solinfo>& sol, int& n, const int per );
+   int NR_Ron( const double tolerance, const double excessDemandSolutionFloor, vector<solinfo>& sol,double& worldCalcCount, const int per );
+   int NewtRap( const double tolerance,  const double excessDemandSolutionFloor, vector<solinfo>& sol,double& worldCalcCount, const int per );
+   void Derivatives( vector<double> prices, Matrix& JFDM, Matrix& JFSM,double& worldCalcCount, const int per );
+   void JFunction( vector<double> prices, Matrix& JFDM,double& worldCalcCount, int const per );
+   int Secant_all( const double tolerance,vector<solinfo>& sol, double& worldCalcCount, const int per );
+   int FalsePos_all( const double tolerance,vector<solinfo>& sol, double& worldCalcCount, const int per );
+   int Bisection_i( const int i, const double tolerance, vector<solinfo>& sol, double& worldCalcCount, const int per );
+   int Bisection_all( const double tolerance, const double excessDemandSolutionFloor, const int IterLimit, vector<solinfo>& sol,double& worldCalcCount, const int per );
    void CheckBracket( const double tolerance, const double excessDemandSolutionFloor, vector<solinfo>& sol, bool& allbracketed );
-   int Bracket( const double solutionTolerance, const double excessDemandSolutionFloor, const double bracketInterval, vector<solinfo>& sol, bool& allbracketed, bool& firsttime,int& worldCalcCount, const int per );
+   int Bracket( const double solutionTolerance, const double excessDemandSolutionFloor, const double bracketInterval, vector<solinfo>& sol, bool& allbracketed, bool& firsttime, double& worldCalcCount, const int per );
    int getMarketNumber( const string& goodName, const string& regionName ) const; // get the market number
    double marketDemand( const int mktNumber, const int period);
    double checkSupply( const string& goodName, const string& regionName, const int period ) const;
@@ -95,6 +95,9 @@ private:
    const vector<double> getExcessDemands( const vector<int>& indices, const int period ) const;
    const vector<double> getLogExcessDemands( const vector<int>& indices, const int period ) const; 
    const vector<double> getDemands( const vector<int>& indices, const int per ) const;
+   const vector<double> getDemands( const int per ) const;
+   const vector<double> getSupplies( const vector<int>& indices, const int per ) const;
+   const vector<double> getSupplies( const int per ) const;
    const vector<double> getLogDemands( const vector<int>& indices, const int period ) const;
    
    const vector<double> getLogSupplies( const vector<int>& indices, const int period ) const;
@@ -121,7 +124,6 @@ public:
    void nulldem( const string& goodName, const string& regionName, const int period ); // set one market demand to 0
    void nullsup( const int period ); // initialize all market supplies to 0
    void nullsup( const string& goodName, const string& regionName, const int period ); // set one market supply to 0
-      
    void showmrks( const int period ) const; // show market information
       
    // set market price
