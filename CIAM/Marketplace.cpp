@@ -1,18 +1,19 @@
-#include "Definitions.h"
-
-#include <iostream>
-#include <fstream>
-#include <cmath>
-#include <algorithm>
-
 #if defined(_MSC_VER)
 #pragma warning( disable: 4275 )
+#pragma warning( disable: 4786 )
 #endif
 
 #include <mtl/matrix.h>
 #include <mtl/mtl.h>
 #include <mtl/utils.h>
 #include <mtl/lu.h>
+
+#include "Definitions.h"
+
+#include <iostream>
+#include <fstream>
+#include <cmath>
+#include <algorithm>
 
 #include "Market.h"
 #include "Marketplace.h"
@@ -605,8 +606,8 @@ void Marketplace::logED( const int per )
 			mrk[i][per].lexdmd = 0; // logs may not be calculated exactly
 		}
 		else {
-			mrk[i][per].lexdmd = log10(std::max( mrk[i][per].demand, SMALLNUM )) 
-				- log10(std::max(mrk[i][per].supply,SMALLNUM)); 
+			mrk[i][per].lexdmd = log10(max( mrk[i][per].demand, SMALLNUM )) 
+				- log10(max(mrk[i][per].supply,SMALLNUM)); 
 		}
 	}
 }
@@ -615,7 +616,7 @@ void Marketplace::logED( const int per )
 void Marketplace::logDem( const int per ) 
 {
 	for (int i=0;i<nomrks;i++) {
-		mrk[i][per].ldem = log(std::max( mrk[i][per].demand ,SMALLNUM )); 
+		mrk[i][per].ldem = log(max( mrk[i][per].demand ,SMALLNUM )); 
 	}
 }
 
@@ -623,7 +624,7 @@ void Marketplace::logDem( const int per )
 void Marketplace::logSup( const int per ) 
 {
 	for (int i=0;i<nomrks;i++)
-		mrk[i][per].lsup = log(std::max(mrk[i][per].supply,SMALLNUM));
+		mrk[i][per].lsup = log(max(mrk[i][per].supply,SMALLNUM));
 }
 
 //! Check to see that all markets actually solved.
@@ -1950,8 +1951,8 @@ int Marketplace::NR_Ron( const double Tol, vector<solinfo>& sol, Matrix& JF, int
 		KS =  showlogSup_NR(per); // return log of supply
 		for (i=0; i<m; ++i) {
 			for (int j=0; j<m; ++j) {
-				KD[i] -= (log(std::max(Xtemp[j],SMALLNUM))*JFDM[i][j]);
-				KS[i] -= (log(std::max(Xtemp[j],SMALLNUM))*JFSM[i][j]);
+				KD[i] -= (log(max(Xtemp[j],SMALLNUM))*JFDM[i][j]);
+				KS[i] -= (log(max(Xtemp[j],SMALLNUM))*JFSM[i][j]);
 			}
 			KDS[i] = KD[i] - KS[i];
 		}
