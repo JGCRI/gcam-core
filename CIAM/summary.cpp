@@ -7,8 +7,8 @@
 #include "summary.h"
 
 
-// summary class method definition
-Summary::Summary() { // default constructor
+//! Default constructor
+Summary::Summary() {
 }
 
 
@@ -69,7 +69,7 @@ void Summary::updatefuelcons( const map<string, double>& fuelinfo ) {
 	
 	string str;
 	typedef map<string,double>:: const_iterator CI;
-        CI fmap;
+    CI fmap;
         
 	// map all primary and secondary fuel consumption
 	for (fmap=fuelinfo.begin(); fmap!=fuelinfo.end(); ++fmap) {	// iterate to one less than the end
