@@ -38,6 +38,7 @@
 		<Value name="PrintPrices">0</Value>
 		<Value name="createCostCurve">0</Value>
 		<Value name="ShowNullPaths">0</Value>
+		<Value name="mergeFilesOnly">0</Value>
 	</Bools>
 	<Ints>
 		<Value name="numMarketsToFindSD">3</Value>
