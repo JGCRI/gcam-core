@@ -54,6 +54,7 @@ public:
 	virtual void aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per); 
 	virtual void outputfile( const string& regionName );
 	virtual void MCoutput( const string& regionName );
+	virtual void calibrateSector( const string regionName, const int per ); // sets demand to totoutput and output
 	double getService(const int per);
 };
 

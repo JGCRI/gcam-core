@@ -60,6 +60,8 @@ protected:
     vector<bool> calibrationStatus; // Set true if sector or any tech is calibrated
     vector<Summary> summary; //!< summary for reporting
     
+   void shareWeightScale( const int per ); // Consistantly adjust share weights
+
 public:
     subsector();
     ~subsector();
@@ -72,9 +74,10 @@ public:
     virtual void calcPrice( const string regionName, const int period); // maw
     double getPrice( const int period ) const;
     void initCalc( const int per ); // Consistantly adjust share weights
-    bool getCalibrationStatus( const int period ) const;
-    void setCalibrationStatus( const int period );
-    double getfuelprice( const int period ) const; 
+	 bool getCalibrationStatus( const int period ) const;
+	 void setCalibrationStatus( const int period );
+    void scaleCalibrationInput( const int period, const double scaleFactor ); // scale calibration values
+   double getfuelprice( const int period ) const; 
     double getwtfuelprice( const int period ) const;
     double getCapacityLimit( const int period ) const;
     void applycarbontax( const double tax, const int period );
@@ -91,8 +94,11 @@ public:
     // calculates exogenous supply
     double exogSupply( const int period );
     void scaleFixedSupply( const double scaleRatio, const int per );
+    double getFixedSupply( const int per ) const;
+    void resetFixedSupply( const int per );
     void show_subsec() const;
     double getShare( const int period ) const;
+    double getTotalCalOutputs( const int period ) const;
     void showtechs( const int period, const string ofile ) const;
     void showlabel( const string& ofile ) const;
     void outputfile( const string& regionName, const string& sectorName) const; 
@@ -116,7 +122,6 @@ public:
     map<string, double> getemindmap( const int period ) const;// get ghg emissions map in summary object 
     void adjShares( const double dmd, const double varSectorSharesTot, const double totalFixedSupply, const int period);
     void updateSummary(const int per);
-    void adjustForCalibration( double secDmd, double& subsecdmd, double calOutputValue, const int period ); // Adjust for calibration
-    void shareWeightScale( const int per ); // Consistantly adjust share weights
+    void adjustForCalibration( double sectorDemand, double totalFixedSupply, double totalCalOutputs, const int period ); // Do sub-sector calibration
 };
 #endif // _SUBSECTOR_H_

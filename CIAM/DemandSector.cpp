@@ -329,6 +329,24 @@ void demsector::price(int per)
 	}
 }
 
+//! Calibrate sector output
+/* This performes supply sector technology and sub-sector output/input calibration
+*/
+void demsector::calibrateSector( const string regionName, const int per )
+{
+   double totalFixedSupply = 0; // no fixed supply for demand sectors
+   double mrkdmd;
+   double totalCalOutputs = getCalOutput( per );
+   
+	mrkdmd = getService( per ); // demand for the good produced by this sector
+
+	for (int i=0; i<nosubsec; i++ ) {
+      if ( subsec[i]->getCalibrationStatus( per ) ) {
+		   subsec[i]->adjustForCalibration( mrkdmd, totalFixedSupply, totalCalOutputs, per );
+      }
+	}
+}
+
 //! Calculate end-use service price elasticity
 void demsector::calc_pElasticity(int per)
 {
@@ -347,7 +365,8 @@ void demsector::calc_pElasticity(int per)
 //! Aggrgate sector energy service demand function.
 void demsector::aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per) {
 	const Modeltime* modeltime = scenario->getModeltime();
-	double ser_dmd, base, ser_dmd_adj;
+	double ser_dmd;
+	double base;
 	// double pelasticity = -0.9;
 	double pelasticity = pElasticity[per];
 	
@@ -381,16 +400,14 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
 		techChangeCumm[per] = techChangeCumm[per-1]*pow(1+aeei[per],modeltime->gettimestep(per));
 	}
 
-	// adjust demand using cummulative technical change
-	ser_dmd_adj = ser_dmd/techChangeCumm[per];
 	// demand sector output is total end-use sector demand for service
-	//service[per] = ser_dmd_adj; 
-	service[per] = ser_dmd; 
+	// adjust demand using cummulative technical change
+	service[ per ] = ser_dmd/techChangeCumm[per];
 
-	set_ser_dmd(ser_dmd_adj,per); // sets the output
+	set_ser_dmd( service[ per ], per ); // sets the output
 	// sets subsector outputs, technology outputs, and market demands
-	sector::setoutput(regionName,ser_dmd_adj,per);
-	sector::sumoutput(per);
+	sector::setoutput( regionName, service[ per ], per );
+	sector::sumoutput( per );
 }
 
 //! Write sector output to database.

@@ -257,9 +257,29 @@ void sector::calc_share( const string regionName, const int per, const double gn
 	for (i=0;i<nosubsec;i++) {
 		subsec[i]->normShare(sum, per);	
 	}
+
+ // TEMP -sjs
+ if (regionName == "USA" && name == "electricity"  && 1==2) {
+     cout << " 4 Share: " ;
+ 	  for (i=0;i<nosubsec;i++) {
+          cout << i << " : " << subsec[i]->getShare( per ) << " ";
+      }
+      cout << endl;
+	}
+	            
    
     // Now adjust for capacity limits
-      adjSharesCapLimit( per );
+      adjSharesCapLimit( regionName, per );
+
+ // TEMP -sjs
+ if (regionName == "USA" && name == "electricity"  && 1==2) {
+     cout << " 5 Share: " ;
+ 	  for (i=0;i<nosubsec;i++) {
+          cout << i << " : " << subsec[i]->getShare( per ) << " ";
+      }
+      cout << endl;
+	}
+	            
       
 }
 
@@ -285,7 +305,7 @@ void sector::calc_share( const string regionName, const int per, const double gn
  * \warning The routine assumes that shares are already normalized.
  * \param per Model period
  */
-void sector::adjSharesCapLimit( const int per )
+void sector::adjSharesCapLimit( const string regionName, const int per )
 {
     double tempCapacityLimit;
     double tempSubSectShare;
@@ -350,8 +370,13 @@ void sector::adjSharesCapLimit( const int per )
             if ( fabs(sumshares - 1) > 1e-6 ) {
                 cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << endl;
             }
-        }
-        
+         }
+    
+      // Check to make sure shares still equal 1
+      if ( debugChecking ) {
+         checkShareSum( regionName, per );
+      }
+    
     } // end for loop
     
     // if have exited and still capacity limited, then report error
@@ -359,6 +384,23 @@ void sector::adjSharesCapLimit( const int per )
         cerr << "Capacity limit not resolved" << endl;
     }
 }
+
+//! Check that sum of shares is equal to one
+void sector::checkShareSum( const string regionName, int per ) {
+   double sumshares = 0;
+   for ( int i=0; i<nosubsec; i++ ) {
+      // Check the validity of shares.
+      double tempshare = subsec[i]->getShare(per);
+      assert( tempshare == tempshare ); // This checks for NaN since NaN != NaN.
+      assert( tempshare != std::numeric_limits<double>::infinity() ); // Checks for infinity. 
+
+      sumshares += subsec[i]->getShare(per) ;
+   }
+   if ( fabs(sumshares - 1) > 1e-6 ) {
+      cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << " in sector " << name << endl;
+   }
+}
+
 
 
 //! Calculate weighted average price of subsectors.
@@ -385,7 +427,7 @@ double sector::showprice(int per)
     later at the sector level (in region via supplysector[j].sumoutput(per))
     to equal the total sector output.
 */
-void sector::setoutput(const string& regionName,double dmd, int per)
+void sector::setoutput(const string& regionName, double dmd, int per)
 {
     int i;
 	carbontaxpaid[per] = 0; // initialize carbon taxes paid
@@ -398,12 +440,31 @@ void sector::setoutput(const string& regionName,double dmd, int per)
 	}
 }
 
-//! Scale share weights after sub-sector or technology calibration
-void sector::initCalc( const int per )
-{
-	for ( int i=0; i<nosubsec; i++ ) {
-		subsec[ i ]->initCalc( per );
-	}
+//! Perform any initializations needed for each period
+void sector::initCalc( const string& regionName, const int per ) {
+   double calOutput;
+   double sectorOutput;
+   
+   // do any sub-sector initializations
+   for ( int i=0; i<nosubsec; i++ ) {
+      subsec[ i ]->initCalc( per );
+   }
+   
+   // check to see if previous period's calibrations were set ok
+   // Not sure if this works. Didn't seem to for demand sector
+   if ( per > 0 ) {
+	   for ( int i=0; i<nosubsec; i++ ) {
+         if ( subsec[ i ]->getCalibrationStatus( per - 1 ) ) {
+            calOutput = subsec[ i ]->getTotalCalOutputs( per - 1 );
+            sectorOutput = subsec[ i ]->getFixedSupply( per - 1 );
+            if ( calOutput < sectorOutput * 0.99999 ) {
+               cerr << "WARNING: calibrated output < sector output for " 
+                    << name << " subSect " << subsec[ i ]->getName()
+                    << " in region " << regionName << endl;
+            }
+         }
+ 	   }
+   }
 }
 
 //! Sum subsector outputs.
@@ -415,6 +476,45 @@ void sector::sumoutput(int per)
 	}
 }
 
+//! Return subsector fixed Supply.
+double sector::getFixedSupply( int per ) const {
+	double totalFixedSupply = 0;
+	for ( int i=0; i<nosubsec; i++ ) {
+		totalFixedSupply += subsec[ i ]->getFixedSupply( per );
+	}
+   return totalFixedSupply;
+}
+
+//! Return subsector fixed Supply.
+double sector::getCalOutput( int per ) const {
+	double totalCalOutput = 0;
+	for ( int i=0; i<nosubsec; i++ ) {
+		totalCalOutput += subsec[ i ]->getTotalCalOutputs( per );
+	}
+   return totalCalOutput;
+}
+
+//! Calibrate sector output
+/* This performes supply sector technology and sub-sector output/input calibration
+*/
+void sector::calibrateSector( const string regionName, const int per )
+{
+	Marketplace* marketplace = scenario->getMarketplace();
+   double totalFixedSupply;
+   double totalCalOutputs;
+   double mrkdmd;
+   
+   totalFixedSupply = getFixedSupply( per ); 
+	mrkdmd = marketplace->showdemand( name, regionName, per ); // demand for the good produced by this sector
+   totalCalOutputs = getCalOutput( per );
+   
+	for (int i=0; i<nosubsec; i++ ) {
+      if ( subsec[i]->getCalibrationStatus( per ) ) {
+		   subsec[i]->adjustForCalibration( mrkdmd, totalFixedSupply, totalCalOutputs, per );
+      }
+	}
+} 
+
 //! Set supply sector output.
 /*! This routine takes the market demand and propagates that through the supply sub-sectors
     where it is shared out (and subsequently passed to the technology level within each sub-sector
@@ -423,11 +523,10 @@ void sector::supply( const string regionName, const int per) {
 	Marketplace* marketplace = scenario->getMarketplace();
 
 	double mrkprice, mrkdmd;
-    int i;
+   int i;
 	double totalFixedSupply = 0; 
-    double fixedSupply = 0;
-    double shareVariable = 0; // original sum of shares of non-fixed subsectors   
-    double shareVariableNew = 0; // new sum of shares of non-fixed subsectors   
+   double shareVariable = 0; // original sum of shares of non-fixed subsectors   
+   double shareVariableNew = 0; // new sum of shares of non-fixed subsectors   
 	double shareRatio;  // ratio for adjusting shares of non-fixed subsectors
 
 	carbontaxpaid[per] = 0; // initialize carbon taxes paid
@@ -435,22 +534,43 @@ void sector::supply( const string regionName, const int per) {
 	mrkprice = marketplace->showprice( name, regionName, per ); // price for the good produced by this sector
 	mrkdmd = marketplace->showdemand( name, regionName, per ); // demand for the good produced by this sector
 
-    if (mrkdmd < 0) {
+   if (mrkdmd < 0) {
         cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;
-    }
-            
+   }
+
+  // TEMP -sjs
+ if (regionName == "USA" && name == "electricity"  && 1==2) {
+     cout << " 2 Share: " ;
+ 	  for (i=0;i<nosubsec;i++) {
+          cout << i << " : " << subsec[i]->getShare( per ) << " ";
+      }
+      cout << endl;
+	}
+	            
 	// calculate output from technologies that have fixed outputs such as hydro electricity
-    // Determine total fixed production and total var shares
-    // Need to change the exog_supply function once new, general fixed supply method is available
+   // Determine total fixed production and total var shares
+   // Need to change the exog_supply function once new, general fixed supply method is available
+   totalFixedSupply = 0;
 	for (i=0;i<nosubsec;i++) {
-        fixedSupply = subsec[i]->exogSupply(per);
+      double fixedSupply = 0;
+      subsec[i]->resetFixedSupply( per );
+      fixedSupply = subsec[ i ]->getFixedSupply( per );
 		// add up subsector shares without fixed output
-        if (fixedSupply == 0) { 
-			shareVariable += subsec[i]->getShare(per);
+      if (fixedSupply == 0) { 
+			shareVariable += subsec[ i ]->getShare( per );
 		}
-        totalFixedSupply += fixedSupply;
+      totalFixedSupply += fixedSupply;
 	}
 
+  // TEMP -sjs
+ if (regionName == "USA" && name == "electricity"  && 1==2) {
+     cout << " 2a Share: " ;
+ 	  for (i=0;i<nosubsec;i++) {
+          cout << i << " : " << subsec[i]->getShare( per ) << " ";
+      }
+      cout << endl;
+	}
+	            
 	// Scale down fixed output if its greater than actual demand
 	if ( totalFixedSupply > mrkdmd ) {
 		for (i=0;i<nosubsec;i++) {
@@ -458,6 +578,15 @@ void sector::supply( const string regionName, const int per) {
 		}
 	}
 
+  // TEMP -sjs
+ if (regionName == "USA" && name == "electricity"  && 1==2) {
+     cout << " 2b Share: " ;
+ 	  for (i=0;i<nosubsec;i++) {
+          cout << i << " : " << subsec[i]->getShare( per ) << " ";
+      }
+      cout << endl;
+	}
+	            
     // Adjust shares for any fixed output
     if (totalFixedSupply > 0) {
 		if (totalFixedSupply > mrkdmd) {
@@ -480,6 +609,15 @@ void sector::supply( const string regionName, const int per) {
             subsec[i]->adjShares( mrkdmd, shareRatio, totalFixedSupply, per ); 
         }
 	}
+
+ // TEMP -sjs
+ if (regionName == "USA" && name == "electricity"  && 1==2) {
+     cout << " 1 Share: " ;
+ 	  for (i=0;i<nosubsec;i++) {
+          cout << i << " : " << subsec[i]->getShare( per ) << " ";
+      }
+      cout << endl;
+	}
 	
 	// This is where subsector and technology outputs are set
 	for (i=0;i<nosubsec;i++) {
@@ -488,6 +626,11 @@ void sector::supply( const string regionName, const int per) {
 		subsec[i]->sumoutput( per );
 		// for reporting only
 		carbontaxpaid[per] += subsec[i]->showcarbontaxpaid( per );
+      
+      if (regionName == "USA" && name == "electricity"  && 1==2) {
+          cout << " out: " << subsec[i]->getoutput( per );
+      }
+
 	}
     
     if (debugChecking) {

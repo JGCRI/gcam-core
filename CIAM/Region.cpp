@@ -599,6 +599,7 @@ void Region::finalsupply(int per) {
 	int j = 0;
 	double mrksupply;
 
+
 	// loop through all sectors once to get total output
 	for (i=0;i<nossec;i++) {
 	// start with last supply sector
@@ -607,12 +608,23 @@ void Region::finalsupply(int per) {
 		j = nossec - (i+1);
 		
 		goodName = supplysector[j]->getName();		
+      
+     if (name == "USA" && goodName == "electricity" && 1==2) {
+          cout << ".";
+      }
+
 		// name is country/region name
 		supplysector[j]->supply( name, per );
 		supplysector[j]->sumoutput(per);
+      double sectorOutput = supplysector[j]->getoutput(per);
+      
+     if (name == "USA" && goodName == "electricity"  && 1==2) {
+          cout << "out: " << sectorOutput;
+      }
+
 		carbontaxpaid[per] += supplysector[j]->showcarbontaxpaid(per);
 	}
-			
+	
 	// loop through supply sectors and assign supplies to marketplace and update fuel consumption map
 	// the supplies in the market sector are, at present, not used except to double check 
 	// that the output of the supply sectors does equal supply
@@ -624,6 +636,9 @@ void Region::finalsupply(int per) {
 		goodName = supplysector[i]->getName();
 		mrksupply = supplysector[i]->getoutput(per);
 		
+      if (name == "USA" && goodName == "electricity"   && 1==2) {
+          cout << ".";
+      }
 		// set market supply of intermediate goods
 		marketplace->setsupply(goodName,name,mrksupply,per);
 	}
@@ -783,16 +798,35 @@ void Region::writeBackCalibratedValues( const int period ) {
    population->writeBackCalibratedValues( name, period );
 }
 
-//! Insert the newly calculated values into the calibration markets. 
-void Region::doCalibration( const int per ) {
-    // Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.
-    if( calibrationGNPs.size() > per && calibrationGNPs[ per ] > 0 ){ 
-        const string goodName = "GDP";
-        Marketplace* marketplace = scenario->getMarketplace();
-        marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
-        marketplace->setsupply( goodName, name, gnp_dol[ per ], per );
-        marketplace->setMarketToSolve( goodName, name );
-    }
+//! Do regional calibration
+/*! Must be done after demands are calculated
+*/
+void Region::doCalibration( const bool doCalibrations, const int per ) {
+   int i;
+
+	// Do subsector and technology level energy calibration
+   // can only turn off calibrations that do not involve markets
+   if ( doCalibrations ) {
+      // Calibrate demand sectors
+	   for ( i=0;i<nodsec;i++) {
+		   demandsector[ i ]->calibrateSector( name, per );
+ 	   }
+
+      // Calibrate supply sectors
+	   for ( i=0;i<nossec;i++) {
+		   supplysector[ i ]->calibrateSector( name, per );
+	   }
+   }
+   
+	// Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.
+   // Insert the newly calculated values into the calibration markets. 
+	if( calibrationGNPs.size() > per && calibrationGNPs[ per ] > 0 ){ 
+      const string goodName = "GDP";
+      Marketplace* marketplace = scenario->getMarketplace();
+		marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
+		marketplace->setsupply( goodName, name, gnp_dol[ per ], per );
+		marketplace->setMarketToSolve( goodName, name );
+	}
 }
 
 //! Call any initializations that are only done once per period
@@ -801,11 +835,11 @@ void Region::initCalc( const int per )
    int i;
    
 	for ( i=0;i<nodsec;i++) {
-		demandsector[ i ]->initCalc( per ); 
+		demandsector[ i ]->initCalc( name, per ); 
 	}
 
 	for ( i=0;i<nossec;i++) {
-		supplysector[ i ]->initCalc( per ); 
+		supplysector[ i ]->initCalc( name, per ); 
 	}
 }
 

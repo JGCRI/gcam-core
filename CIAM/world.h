@@ -42,7 +42,8 @@ private:
 	vector<double> uranrsc; //!< global uranium resource
 	vector<str_ghgss> ghgs; //!< structure containing ghg emissions
 	void initAgLu(); 
-
+   bool doCalibrations; //!< turn on or off calibration routines
+   
 public:
 	void setupCalibrationMarkets();
 	World(); // default construtor
@@ -76,6 +77,9 @@ public:
 	double showHFC245ca(int per); // return global emissions for period
 	double showSF6(int per); // return global emissions for period
 	void createRegionMap(void); // create map of region names
+	void turnCalibrationsOn(); // turn on calibrations
+	void turnCalibrationsOff(); // turn off calibrations
+	bool getCalibrationSetting(); // return calibration setting
 };
 
 #endif

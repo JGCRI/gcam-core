@@ -60,9 +60,11 @@ public:
 	void addghgtax( const string ghgname, const string regionName, const int per); // sets ghg tax to technologies
 	virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 ); // calculates and normalizes shares 
 	virtual void price(int per); // calculates sector price
-    void adjSharesCapLimit( const int per ); // adjust for capacity limit
-   void initCalc( const int per ); // Consistantly adjust share weights
+   void adjSharesCapLimit( const string regionName, const int per ); // adjust for capacity limit
+   void checkShareSum( const string regionName, const int per ); // check that shares sum to unity
+   void initCalc( const string& regionName, const int per ); // Perform initializations
 	void production( const string& regionName,int per); // calculates production using mrk prices
+	virtual void calibrateSector( const string regionName, const int per ); // sets demand to totoutput and output
 	void setoutput(const string& regionName, double dmd, int per); // sets demand to totoutput and output
 	void sumoutput(int per); // sum subsector outputs
 	void set_ser_dmd(double dmd, int per); // sets end-use sector service demand
@@ -72,7 +74,8 @@ public:
 	void showlabel(const char* ofile); // show sector label
 	int shownosubsec(void);
 	double getoutput(int per); // returns sector output 
-	double getFixedOutput(int per); // returns sector output 
+	double getFixedSupply(int per) const; // returns sector output 
+	double getCalOutput(int per) const; // returns sector output 
 	double showprice(int per); // returns sector aggregate price
 	void emission(int per); // sum subsector emissions
 	void indemission(int per); // sum subsector indirect emissions

@@ -1892,7 +1892,7 @@ int Marketplace::NR_Ron( const double solutionTolerance, const double excessDema
             cout <<" ... "; 
          }
          
-         // Recalculate Jacobian matrix, returns JF matrix
+          // Recalculate Jacobian matrix, returns JF matrix
          Derivatives( tempPrices, JFDM, JFSM, worldCalcCount, per ); 
          numDerivativeCalcs++; // increment count of derivative calculation
          
@@ -1953,7 +1953,7 @@ int Marketplace::NR_Ron( const double solutionTolerance, const double excessDema
       }
       
       world->calc( per ); // call world object to recalculate supply and demand
-      
+
       if ( bugTracking ) {
          bugoutfile << endl << "--after .calc "<< iter;  
          prices_to_bugout( per );
@@ -2064,6 +2064,7 @@ int Marketplace::NR_Ron( const double solutionTolerance, const double excessDema
 
 //! Solution method for all markets for one period
 void Marketplace::solve( const int per ) {
+   World* world = scenario->getWorld();
    bool allbracketed = false;
    bool prod_not_null = false;
    const bool useBisect = false;
@@ -2083,6 +2084,7 @@ void Marketplace::solve( const int per ) {
    //double solTolerance = 0.1; // tolerance for solution criteria
    double maxSolVal; // temporary maximum value of equality condition			 
    vector<double> X,ED,logEDVec; // price, excess demand and log of excess demand vectors
+   bool calibrationStatus = world->getCalibrationSetting();
 
    const double BRACKET_INTERVAL = 0.5;
 
@@ -2234,7 +2236,14 @@ void Marketplace::solve( const int per ) {
          maxSolVal = maxED( markets_isol, excessDemandSolutionFloor, per ); // Max returns largest ED[i]
          
          if( !solved && maxSolVal < 1500 ) {
+         
+            // turn end-use calibrations off for NR
+            world->turnCalibrationsOff();
             solved = NR_Ron( solTolerance, excessDemandSolutionFloor, sol, worldCalcCount, per );
+            if ( calibrationStatus ) { // turn end-use calibrations back on if were on originally
+               world->turnCalibrationsOn();
+            }  
+
             if ( bugMinimal ) { 
                bugoutfile << "After Ron_NR "<< worldCalcCount;
             }

@@ -421,24 +421,25 @@ void subsector::calcTechShares( const string& regionName, const int per ) {
 
 //! calculate subsector share numerator 
 void subsector::calcShare( const string& regionName, const int per, const double gnp_cap )
-{        
-    // call function to compute technology shares
-    subsector::calcTechShares(regionName, per);
-    
-    // calculate and return subsector share; uses above price function
-    // calc_price() uses normalized technology shares calculated above
-    // Logit exponential should not be zero
-    
-    // compute subsector weighted average price of technologies
-    subsector::calcPrice( regionName,per);
-    
-    // subsector logit exponential
-    if(lexp[per]==0) cerr << "SubSec Logit Exponential is 0." << endl;
-    
-    if(subsectorprice[per]==0) {
-        share[per] = 0;
-    }
-    else {
+{
+	
+     // call function to compute technology shares
+	subsector::calcTechShares(regionName, per);
+
+	// calculate and return subsector share; uses above price function
+	// calc_price() uses normalized technology shares calculated above
+	// Logit exponential should not be zero
+
+	// compute subsector weighted average price of technologies
+	subsector::calcPrice( regionName,per);
+	
+	// subsector logit exponential
+	if(lexp[per]==0) cerr << "SubSec Logit Exponential is 0." << endl;
+
+	if(subsectorprice[per]==0) {
+		share[per] = 0;
+	}
+       else {
         // this logic doesn't work now, but does no harm
         if (fuelPrefElasticity.empty()) { // supply subsector
             share[per] = shrwts[per]*pow(subsectorprice[per],lexp[per]);
@@ -446,18 +447,19 @@ void subsector::calcShare( const string& regionName, const int per, const double
         else { // demand subsector
             share[per] = shrwts[per]*pow(subsectorprice[per],lexp[per])*pow(gnp_cap,fuelPrefElasticity[per]);
         }
-        
-    }
-    
-    if (shrwts[per]  > 1e8) {
-        cout << "WARNING: Huge shareweight for " << name << " : " << shrwts[per] << endl;
-    }
-    
-    if (share[per] < 0) {
-        cerr << "Share is < 0 for " << name << " in " << regionName << endl;
-        cout << "subsectorprice[per]: " << subsectorprice[per] << endl;
-        cout << "shrwts[per]: " << shrwts[per] << endl;
-    }
+
+	}
+   
+   if (shrwts[per]  > 1e4) {
+    cout << "WARNING: Huge shareweight for " << name << " : " << shrwts[per] 
+         << " in region " << regionName <<endl;
+   }
+      
+   if (share[per] < 0) {
+     cerr << "Share is < 0 for " << name << " in " << regionName << endl;
+     cout << "subsectorprice[per]: " << subsectorprice[per] << endl;
+     cout << "shrwts[per]: " << shrwts[per] << endl;
+   }
 }
 
 //! normalizes shares to 100%
@@ -500,16 +502,21 @@ void subsector::limitShares( const double multiplier, const int per) {
 
 //! Return the total exogenously fixed technology output
 /*! Since the calls below set output, this call must be done before
-calls to technology production with non-zero demand . */
-double subsector::exogSupply( const int per ) {
-    double fixedOutput = 0;
-    for ( int i=0 ;i<notech; i++ ) {
-        techs[i][per]->resetFixedSupply(per); // eliminate any previous down-scaleing
-        techs[i][per]->calcFixedSupply(per); // eliminate any previous down-scaleing
-        
-        fixedOutput += techs[i][per]->getFixedSupply();
-    }
-    return fixedOutput;
+    \todo elimiate calcFixedSupply calls below
+    */
+double subsector::getFixedSupply( const int per ) const {
+	double fixedOutput = 0;
+	for ( int i=0 ;i<notech; i++ ) {
+		fixedOutput += techs[i][per]->getFixedSupply();
+	}
+	return fixedOutput;
+}
+
+//! Reset fixed supply for each technology
+void subsector::resetFixedSupply( const int per ) {
+	for ( int i=0 ;i<notech; i++ ) {
+		techs[ i ][per]->resetFixedSupply(per); // eliminate any previous down-scaleing
+ 	}
 }
 
 //! Scale down fixed supply if the total fixed production is greater than the actual demand 
@@ -561,14 +568,14 @@ void subsector::shareWeightInterp( const int beginPeriod,  const int endPeriod )
 // model period
 void subsector::adjShares( const double dmd, double shareRatio, 
                           const double totalFixedSupply, const int per) {
-    double sumFixedSupply = 0; // total subsector fixed supply
+    double sumSubsectFixedSupply = 0; // total subsector fixed supply
     double fixedSupply = 0; // fixed supply for each technology
     double varShareTot = 0; // sum of shares without fixed supply
     double subsecdmd; // subsector demand adjusted with new shares
     // add up the fixed supply and share of non-fixed supply
     for ( int i=0 ;i<notech; i++ ) {
         fixedSupply = techs[i][per]->getFixedSupply();
-        sumFixedSupply += fixedSupply;
+        sumSubsectFixedSupply += fixedSupply;
         if (fixedSupply == 0) varShareTot += techs[i][per]->getShare();
     }
     
@@ -579,100 +586,120 @@ void subsector::adjShares( const double dmd, double shareRatio,
     
     // totalFixedSupply is the sector total
     if(totalFixedSupply > 0) {
-        if (sumFixedSupply > 0) {	// This subsector has a fixed supply
+        if (sumSubsectFixedSupply > 0) {	// This subsector has a fixed supply
             if (dmd > 0) {
-                share[per] = sumFixedSupply/dmd; 
+                share[per] = sumSubsectFixedSupply/dmd; 
             }
             else { // no fixed share if no demand
-                share[per] = 0; 
-            }
-        }
-        else {	// This subsector does not have fixed supply
-            if (dmd > 0) {
-                share[per] = share[per] * shareRatio; 
-            }
-            else {
-                share[per] = 0; // Maybe not correct
-            }  
-        } 
-    }
-    
-    // then adjust technology shares to be consistent
-    subsecdmd = share[per]*dmd; // share is subsector level
-    for (int j=0;j<notech;j++) {
-        // adjust tech shares 
-        techs[j][per]->adjShares(subsecdmd, fixedSupply, varShareTot, per);
-    }
+				share[per] = 0; 
+			}
+		}
+		else {	// This subsector does not have fixed supply
+			if (dmd > 0) {
+				share[per] = share[per] * shareRatio; 
+			}
+			else {
+				share[per] = 0; // Maybe not correct
+			}  
+		} 
+	}
+	
+	// then adjust technology shares to be consistent
+	subsecdmd = share[per]*dmd; // share is subsector level
+	for (int j=0;j<notech;j++) {
+		// adjust tech shares 
+      // TEMP sjs -- see what happens if remove this
+		techs[j][per]->adjShares(subsecdmd, sumSubsectFixedSupply, varShareTot, per);
+	}
 }
 
 //! sets demand to output and output
 /* Demand from the "dmd" parameter (could be energy or energy service) is passed to technologies.
 *  This is then shared out at the technology level.
 *  See explanation for sector::setoutput. 
-*  The output of this subsector can also be calibrated. 
-* \todo Need to change this to be able to set output as well (particularly for demand sectors).
 */
 void subsector::setoutput( const string& regionName, const string& prodName, const double dmd, const int per) {
-    int i=0;
-    input[per] = 0; // initialize subsector total fuel input 
-    carbontaxpaid[per] = 0; // initialize subsector total carbon taxes paid 
-    bool techOutputCal = false;
-    double newOutput = 0; // sum of technology outputs in case needed for calibration
-    
-    // output is in service unit when called from demand sectors
-    double subsecdmd = share[per]*dmd; // share is subsector level
-    
-    // reset parameters, including subsecdmd, if are calibrating
-    if ( doCalibration[ per ] ) {
-        adjustForCalibration( dmd, subsecdmd, calOutputValue[ per ], per );
-    }
-    
-    for ( i=0; i<notech; i++ ) {
-        // calculate technology output and fuel input from subsector output
-        techs[i][per]->production( regionName, prodName, subsecdmd, per );
-        
-        // total energy input into subsector, must call after tech production
-        input[per] += techs[i][per]->getInput();
-        // sum total carbon tax paid for subsector
-        carbontaxpaid[per] += techs[i][per]->getCarbontaxpaid();
-        newOutput =+ techs[i][per]->getOutput();
-        
-        if ( techs[i][per]->getCalibrationStatus( )) {
-            techOutputCal = true;
-        }
-    }
-    
-    // Adjust share weight if technologies were calibrated as well
-    if ( techOutputCal ) {
-        adjustForCalibration( dmd, subsecdmd, newOutput, per );
-        if ( doCalibration[ per ] ) { // opps, both sub-sector and technologies were calibrated
-            cerr << "WARNING in  Subsect: "  << name;
-            cerr <<  " both technology and sub-sector have calibration values." << endl;
-        }
-    }
+	int i=0;
+	input[per] = 0; // initialize subsector total fuel input 
+	carbontaxpaid[per] = 0; // initialize subsector total carbon taxes paid 
+   
+   // output is in service unit when called from demand sectors
+   double subsecdmd = share[per]*dmd; // share is subsector level
+
+   for ( i=0; i<notech; i++ ) {
+		// calculate technology output and fuel input from subsector output
+		techs[i][per]->production( regionName, prodName, subsecdmd, per );
+
+		// total energy input into subsector, must call after tech production
+		input[per] += techs[i][per]->getInput();
+		// sum total carbon tax paid for subsector
+		carbontaxpaid[per] += techs[i][per]->getCarbontaxpaid();
+	}
+   
 }
 
 //! Adjusts share weights and subsector demand to be consistant with calibration value
 /* Share weights are scaled to be consistant with the calibration value.
-* subector demand is also set equal to calibration value in order to pass down to technologies.
-* \warning If calvalue is larger than sector demand nothing is done
-* \warning The value of subsecdmd is changed (for sub-sector output calibration)
-* \todo add in pre-period run a check to see if everything was calibrated
-*/
-void subsector::adjustForCalibration( double sectorDemand, double& subsecdmd, double calOutputValue, const int period ) {
-    double shareScaleValue = 0;
-    
-    // if cal value is greater than sector demand then cannot calibrate
-    if ( ( subsecdmd > 0 ) && ( calOutputValue < sectorDemand*1.001 ) ) {
-        shareScaleValue = calOutputValue / subsecdmd;
-        if ( shrwts[ period ]  == 0 ) {
-            shrwts[ period ]  = 1;
-        }
-        
-        shrwts[ period ]  = shrwts[ period ]  * shareScaleValue;
-        subsecdmd = calOutputValue;
+ * subector demand is also set equal to calibration value in order to pass down to technologies.
+ * \warning If calvalue is larger than sector demand nothing is done
+ * \warning The value of subsecdmd is changed (for sub-sector output calibration)
+ * \todo add in pre-period run a check to see if everything was calibrated
+ */
+void subsector::adjustForCalibration( double sectorDemand, double totalFixedSupply, double totalCalOutputs, const int period ) {
+   double shareScaleValue = 0;
+   double availableDemand;
+   double subSectorDemand;
+
+   // total calibration outputs for this sector
+   double calOutputSubsect = getTotalCalOutputs( period );
+
+   // Adjust calibration value if too large
+   availableDemand = sectorDemand - totalFixedSupply;
+   if ( availableDemand < 0 ) {
+      availableDemand = 0;
+   }
+   
+   if ( calOutputSubsect > availableDemand ) {
+     // adjust cal value, but leave a slight bit of headroom, taking into account other cal outputs
+      calOutputSubsect = (calOutputSubsect/totalCalOutputs) * availableDemand * 0.95;
+   }
+   
+    // make sure share weights aren't zero or else cann't calibrate
+    if ( shrwts[ period ]  == 0 && ( calOutputSubsect > 0 ) ) {
+        shrwts[ period ]  = 1;
     }
-    
+
+   subSectorDemand = share[ period ] * sectorDemand;
+   if ( subSectorDemand > 0 ) {
+      shareScaleValue = calOutputSubsect / subSectorDemand;
+      shrwts[ period ]  = shrwts[ period ]  * shareScaleValue;
+    }
+      
+ }
+  
+//! returns total calibrated output values
+double subsector::getTotalCalOutputs( const int per ) const {
+	double sumCalValues = 0;
+
+   if ( doCalibration[ per ] ) {
+      sumCalValues += calOutputValue[ per ];
+   } 
+   else {
+   	for ( int i=0; i<notech; i++ ) {
+         if ( techs[ i ][ per ]->getCalibrationStatus( ) ) {
+            sumCalValues += techs[ i ][ per ]->getCalibrationOutput( );
+         }
+      }
+   }
+   
+   return sumCalValues;
+}
+
+//! scale calibration values
+void subsector::scaleCalibrationInput( const int per, const double scaleFactor ) {
+   for ( int i=0; i<notech; i++ ) {
+	   techs[ i ][ per ]->scaleCalibrationInput( scaleFactor );
+	}
 }
 
 //! calculates fuel input and subsector output

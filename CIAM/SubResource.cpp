@@ -27,6 +27,9 @@ using namespace std;
 extern ofstream bugoutfile, outfile;	
 extern Scenario* scenario;
 
+const double SCALE_FACTOR_DEFAULT = 1;
+const double GDP_EXPANS_DEFAULT = 1;
+
 //! Default constructor.
 SubResource::SubResource() {
     nograde = 0;
@@ -88,7 +91,8 @@ void SubResource::XMLParse( const DOMNode* node )
     severanceTax.resize( maxper ); // subresource severance tax
     available.resize( maxper ); // total available resource
     cumulprod.resize( maxper ); // cumulative production of subrsrc
-    gdpExpans.resize( maxper, 1.0 ); // cumulative production of subrsrc
+    gdpExpans.resize( maxper, GDP_EXPANS_DEFAULT ); // cumulative production of subrsrc
+    scaleFactor.resize( maxper, SCALE_FACTOR_DEFAULT ); // cumulative production of subrsrc
     updateAvailable( 0 ); 
     
     // make sure we were passed a valid node.
@@ -158,6 +162,11 @@ void SubResource::XMLParse( const DOMNode* node )
             int period = modeltime->getyr_to_per(year);
             gdpExpans[period] =  XMLHelper<double>::getValue( curr );
         }
+		else if( nodeName == "scaleFactor" ){
+			int year = XMLHelper<int>::getAttr( curr, "year" );
+			int period = modeltime->getyr_to_per(year);
+			scaleFactor[period] =  XMLHelper<double>::getValue( curr );
+		}
         else {
             XMLDerivedClassParse( nodeName, curr );
         }
@@ -224,6 +233,12 @@ void SubResource::toXML( ostream& out ) const {
         XMLWriteElement(severanceTax[m],"severanceTax",out,modeltime->getper_to_yr(m));
     }
     
+	for(m = 0; m < static_cast<int>(scaleFactor.size() ); m++ ) {
+	   if ( scaleFactor[m] != SCALE_FACTOR_DEFAULT ) {  
+         XMLWriteElement(scaleFactor[m],"scaleFactor",out,modeltime->getper_to_yr(m));
+      }
+	}
+
     XMLWriteElement(minShortTermSLimit,"minShortTermSLimit",out);
     XMLWriteElement(priceElas,"priceElas",out);
     
@@ -263,6 +278,9 @@ void SubResource::toDebugXML( const int period, ostream& out ) const {
     XMLWriteElement( techChange[ period ], "techChange", out );
     XMLWriteElement( environCost[ period ], "environCost", out );
     XMLWriteElement( severanceTax[ period ], "severanceTax", out );
+   if ( scaleFactor[ period ] != SCALE_FACTOR_DEFAULT ) {  
+         XMLWriteElement( scaleFactor[ period ], "scaleFactor", out );
+   }
     
     // write out the grade objects.
     for( int i = 0; i < static_cast<int>( grade.size() ); i++ ){	
@@ -359,6 +377,20 @@ void SubResource::cumulsupply(double prc,int per)
             }
         }
     }
+
+   // This doesn't seem to work for dep resource. sjs
+   if ( scaleFactor[ per ] != 1 ) {
+     cout << "scale factor: " << scaleFactor[ per ] << " cumulprod[ per ] : " << cumulprod[ per ]  
+     << " cumulprod[ per-1 ]: " << cumulprod[ per-1 ] << endl;
+   }
+   // multiply change in cumulative produciton by the adjustement scale factor
+   cumulprod[ per ] = cumulprod[ per-1 ] + (cumulprod[ per ] - cumulprod[ per-1 ]) * scaleFactor[ per ];
+   
+   if ( scaleFactor[ per ] != 1 ) {
+     cout << " new cumul prod: " << cumulprod[ per ] << endl;
+   }
+
+   //available is adjusted in annualsupply
     //available[per]=available[0]-cumulprod[per];
 }
 

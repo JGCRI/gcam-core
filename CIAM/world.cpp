@@ -48,6 +48,8 @@ World::World() {
 	// initialize elemental datamembers.
 	noreg = 0;
 
+   doCalibrations = true;
+   
    // We can resize all the arrays because we are garunteed by the schema that the modeltime object is parsed first.
    const int maxper = scenario->getModeltime()->getmaxper();
 	population.resize(maxper); // total global population
@@ -279,7 +281,7 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
 
       // Adjust the calibration values with the new gnps.
       if( conf->getBool( "CalibrationActive" ) ) {
-         region[ *i ]->doCalibration( per );
+         region[ *i ]->doCalibration( doCalibrations, per );
       }
 
 	}	
@@ -423,6 +425,24 @@ void World::MCoutput() {
 	for (int i=0;i<noreg;i++) {
 		region[i]->MCoutput();
 	}
+}
+
+//! turn on calibrations
+void World::turnCalibrationsOn()
+{
+	doCalibrations = true;
+}
+
+//! turn off calibrations
+void World::turnCalibrationsOff()
+{
+	doCalibrations = false;
+}
+
+//! return calibration setting
+bool World::getCalibrationSetting()
+{
+	return doCalibrations;
 }
 
 double World::showCO2(int per) // return global emissions for period

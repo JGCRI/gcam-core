@@ -371,15 +371,15 @@ void technology::scaleFixedSupply(const double scaleRatio)
 }
 
 //! Adjusts shares to be consistant with any fixed production 
-/*! This version will probalby not work if more than one technology within each sector 
+/*! This version may not work if more than one technology within each sector 
 has a fixed supply */
-void technology::adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per)
+void technology::adjShares(double subsecdmd, double subsecFixedSupply, double varShareTot, int per)
 {
     double remainingDemand = 0;
     double fixedSupply = 0;
     
-    if(totalFixedSupply > 0) {
-        remainingDemand = subsecdmd - totalFixedSupply;
+    if(subsecFixedSupply > 0) {
+        remainingDemand = subsecdmd - subsecFixedSupply;
         if (remainingDemand < 0) {
             remainingDemand = 0;
         }
@@ -390,8 +390,8 @@ void technology::adjShares(double subsecdmd, double totalFixedSupply, double var
                 share = fixedSupply/subsecdmd;
                 // Set value of fixed supply
                 if (fixedSupply > subsecdmd) {
-                    fixedOutputVal = totalFixedSupply; // downgrade output if > fixedsupply
-                }  
+                    fixedOutputVal = subsecFixedSupply; // downgrade output if > fixedsupply
+				}  
                 else {
                     fixedOutputVal = fixedSupply; 
                 }
@@ -416,38 +416,23 @@ void technology::adjShares(double subsecdmd, double totalFixedSupply, double var
 /*! Adds demands for fuels and ghg emissions to markets in the marketplace
 */
 void technology::production(const string& regionName,const string& prodName,
-                            double dmd,const int per) {
-    string hydro = "hydro";
-    Marketplace* marketplace = scenario->getMarketplace();
-    
-    // dmd is total subsector demand
-    if(name != hydro) {
-        output = share * dmd; // use share to get output for each technology
-    }
-    else { // do for hydroelectricity
-        //output = fixedOutputVal;
-        output = fixedOutputVal = dmd;
-    }
-    
-    // ***** SHK Comments:  A calibration switch for every technology for every
-    // period is too difficult to keep track of.  One has to check the data for each
-    // and must remove the data to turn off calibration.
-    // A single switch higher up in the hierarchy would be better.  For instance in 
-    // the world class as Josh has done.  The only code that needs to be changed is 
-    // to remove the doCalibration = true in the xmlparse and pass the doCalibration 
-    // boolean down to the technology level.
-    // If a calibration value was read in, then set output from that instead.
-    if ( doCalibration ) {
-        output = calInputValue * eff;
-        if (dmd != 0) { // note that dmd could be < 0 for non-energy markets
-            share = output / dmd;
-        }
-    }
-    
-    // eliminated renewable branch for input calc, since code was the same. sjs
-    // non renewable technologies previously had
-    //input = output/eff/pow(1+techchange,timestep);
-    input = output/eff;
+							double dmd,const int per) {
+	string hydro = "hydro";
+	Marketplace* marketplace = scenario->getMarketplace();
+   
+	// dmd is total subsector demand
+	if(name != hydro) {
+		output = share * dmd; // use share to get output for each technology
+	}
+	else { // do for hydroelectricity
+		//output = fixedOutputVal;
+		output = fixedOutputVal = dmd;
+	}
+	
+   // eliminated renewable branch for input calc, since code was the same. sjs
+   // non renewable technologies previously had
+   //input = output/eff/pow(1+techchange,timestep);
+	input = output/eff;
 	   
     if (input < 0) {
         cerr << "ERROR: Output value < 0 for technology " << name << endl;
@@ -615,6 +600,22 @@ double technology::getFuelcost( ) const {
     return fuelcost;
 }
 
+//! return technology calibration value
+double technology::getCalibrationInput( ) const {
+	return calInputValue;
+}
+
+//! return technology calibration value
+void technology::scaleCalibrationInput( const double scaleFactor ) {
+	if ( scaleFactor != 0 ) {
+      calInputValue = calInputValue / scaleFactor;
+   }
+}
+
+//! return technology calibration value
+double technology::getCalibrationOutput( ) const {
+	return calInputValue * eff;
+}
 
 //! return the cost of technology
 double technology::getTechcost() const {

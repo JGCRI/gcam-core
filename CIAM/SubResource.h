@@ -41,6 +41,7 @@ protected:
     vector<double> annualprod; //!< annual production of SubResource
     vector<double> cumulprod; //!< cumulative production of SubResource
     vector<double> gdpExpans; //!< short-term supply limit expansion elasticity w/ gdp
+	vector<double> scaleFactor; //!< Knob to control regional resource production. Default == 1.
     vector<double> cumulativeTechChange; //!< Cumulative Technical Change for this sub-sector
     // Cumulative technical change needs to be in sub-resource sector 
     vector< vector<Grade*> > grade; //!< amount of SubResource for each grade

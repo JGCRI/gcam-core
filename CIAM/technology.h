@@ -69,8 +69,9 @@ protected:
     double resource; //!< available hydro resource in energy units
     double A; //!< logit function shape parameter
     double B; //!< logit function shape parameter
+    
 public:
-    technology(); // default construtor
+   technology(); // default construtor
     virtual ~technology();
     virtual void clear();
     void initElementalMembers();
@@ -87,7 +88,7 @@ public:
     void normShare(double sum); // normalize technology share
     void calcFixedSupply(int per); // calculate fixed supply
     void resetFixedSupply(int per); // reset fixed supply to max value
-    void adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per);
+   void adjShares(double subsecdmd, double subsecFixedSupply, double varShareTot, int per);
     void scaleFixedSupply(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
     virtual void production(const string& regionName,const string& prodName,double dmd,const int per);
@@ -101,6 +102,9 @@ public:
     double getEff() const; // return fuel efficiency
     double getShare() const; // return normalized share
     bool getCalibrationStatus( ) const; // return true if technology has calibration value
+    void scaleCalibrationInput( const double scaleFactor ); // scale calibration value
+	 double getCalibrationInput() const; // return calibration input value
+	 double getCalibrationOutput() const; // return calibration output value
     double getInput() const; // return fuel input amount
     double getOutput() const; // return technology output
     double getFuelcost() const; // return fuel cost only
