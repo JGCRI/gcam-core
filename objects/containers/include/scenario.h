@@ -25,6 +25,7 @@ class Marketplace;
 class World;
 class Curve;
 class Tabs;
+class Solver;
 
 /*!
 * \ingroup CIAM
@@ -55,12 +56,15 @@ private:
     Modeltime* modeltime; //!< The modeltime for the scenario
     World* world; //!< The world object
     Marketplace* marketplace; //!< The goods and services marketplace.
+    Solver* solver; //!< Pointer to a solution mechanism.
     std::string name; //!< Scenario name.
     std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
     bool runCompleted; //!< A boolean which can be used internally to check if a run has been completed.
+    std::vector<int> unsolvedPeriods; //!< Unsolved periods. 
     void printGraphs( const int period ) const;
     void printSectorDependencies() const;
     void clear();
+    void solve( const int period );
 };
 
 #endif // _SCENARIO_H_

@@ -25,6 +25,8 @@
 #include "util/logger/include/logger_factory.h"
 #include "util/logger/include/logger.h"
 #include "util/curves/include/curve.h"
+#include "solution/solvers/include/solver.h"
+#include "solution/solvers/include/bisection_nr_solver.h"
 
 using namespace std;
 using namespace xercesc;
@@ -38,11 +40,16 @@ extern time_t ltime;
 extern ofstream logfile;
 
 //! Default construtor
+/*! \todo Implement a factory method which chooses solvers to abstract this further. -JPL
+*/
 Scenario::Scenario() {
     world = 0;
     modeltime = 0;
     runCompleted = false;
     marketplace = new Marketplace();
+
+    // Create the solver and initialize with a pointer to the Marketplace.
+    solver = new BisectionNRSolver( marketplace );
 }
 
 //! Destructor
@@ -55,6 +62,9 @@ void Scenario::clear() {
     delete world;
     delete modeltime;
     delete marketplace;
+
+    // Delete the solution mechanism.
+    delete solver;
 }
 
 //! Return a reference to the modeltime->
@@ -271,7 +281,7 @@ void Scenario::run( string filenameEnding ){
 		marketplace->init_to_last( per ); // initialize to last period's info
 		world->initCalc( per ); // call to initialize anything that won't change during calc
 		world->calc( per ); // call to calculate initial supply and demand
-		marketplace->solve( per ); // solution uses Bisect and NR routine to clear markets
+		solve( per ); // solution uses Bisect and NR routine to clear markets
 		world->updateSummary( per ); // call to update summaries for reporting
 		world->emiss_ind( per ); // call to calculate global emissions
 		
@@ -367,4 +377,35 @@ const map<const string, const Curve*> Scenario::getEmissionsQuantityCurves( cons
 const map<const string,const Curve*> Scenario::getEmissionsPriceCurves( const string& ghgName ) const {
     /*! \pre The run has been completed. */
     return world->getEmissionsPriceCurves( ghgName );
+}
+
+/*! \brief Solve the marketplace using the Solver for a given period. 
+*
+* The solve method calls the solve method of the instance of the Solver object 
+* that was created in the constructor. This method then checks for any errors that occurred while solving
+* and reports the errors if it is the last period. 
+*
+* \param period Period of the model to solve.
+* \todo Fix the return codes. 
+*/
+
+void Scenario::solve( const int period ){
+    // Solve the marketplace. If the retcode is zero, add it to the unsolved periods. 
+    if( !solver->solve( period ) ) {
+        unsolvedPeriods.push_back( period );
+    }
+
+    // If it was the last period print the ones that did not solve.
+    if( modeltime->getmaxper() - 1 == period  ){
+        if( static_cast<int>( unsolvedPeriods.size() ) == 0 ) {
+            cout << "All model periods solved correctly." << endl;
+        }
+        else {
+            cout << "The following model periods did not solve: ";
+            for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
+                cout << *i << ", ";
+            }
+            cout << endl;
+        }
+    }
 }

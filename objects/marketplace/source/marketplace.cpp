@@ -10,6 +10,7 @@
 #include "util/base/include/definitions.h"
 
 #include <iostream>
+#include <algorithm>
 #include <fstream>
 #include <vector>
 #include <map>
@@ -29,8 +30,6 @@
 #include "containers/include/world.h"
 #include "util/logger/include/logger_factory.h"
 #include "util/logger/include/logger.h"
-#include "solution/solvers/include/solver.h"
-#include "solution/solvers/include/bisection_nr_solver.h"
 #include "util/base/include/supply_demand_curve.h"
 
 using namespace std;
@@ -50,13 +49,11 @@ extern Scenario* scenario;
 Marketplace::Marketplace() {
     uniqueNo = 0;
     numMarkets = 0;
-    solver = new BisectionNRSolver( this );
 }
 
 /*! \brief Destructor
 *
-* Destructor for the marketplace which first deletes all the markets and then
-* deletes the solution mechanism.
+* Destructor for the marketplace which deletes all the markets.
 */
 Marketplace::~Marketplace() {
 
@@ -64,40 +61,6 @@ Marketplace::~Marketplace() {
     for ( vector< vector< Market* > >::iterator outerIter = markets.begin(); outerIter != markets.end(); outerIter++ ) {
         for( vector< Market* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
             delete *innerIter;
-        }
-    }
-
-    // Delete the solution mechanism.
-    delete solver;
-}
-
-/*! \brief Solve the marketplace using the Solver.
-*
-* The solve method calls the solve method of the instance of the Solver object 
-* that was created in the constructor. This method then clears the market.
-*
-* \param period Period of the model to solve.
-* \todo <strike>Error checking return codes for solve.</strike>
-*/
-
-void Marketplace::solve( const int period ){
-    // Solve the marketplace. If the retcode is zero, add it to the unsolved periods. 
-    if( !solver->solve( period ) ) {
-        unsolvedPeriods.push_back( period );
-    }
-
-    // If it was the last period print the ones that did not solve.
-    const Modeltime* modeltime = scenario->getModeltime();
-    if( modeltime->getmaxper() - 1 == period  ){
-        if( static_cast<int>( unsolvedPeriods.size() ) == 0 ) {
-            cout << "All model periods solved correctly." << endl;
-        }
-        else {
-            cout << "The following model periods did not solve: ";
-            for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
-                cout << *i << ", ";
-            }
-            cout << endl;
         }
     }
 }
