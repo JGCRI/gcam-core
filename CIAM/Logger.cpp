@@ -121,7 +121,8 @@ int Logger::receiveCharFromUnderStream( int ch ) {
 
 	if( ch == '\n' ) {
 		string buffer;
-		buf >> buffer;
+		buffer = buf.str();
+        buf.clear();
 		printToScreenIfConfigured( currentLine, currentFile, currentWarningLevel, buffer );
 		logCompleteMessage( currentLine, currentFile, currentWarningLevel, buffer );
 	}
