@@ -17,7 +17,7 @@ class SubResource;
 
 // xerces xml headers
 #include <xercesc/dom/DOM.hpp>
-
+#include "SubResource.h"
 using namespace xercesc;
 
 
