@@ -491,7 +491,8 @@
 !  READ CO2 CONCENTRATION HISTORY
 !
       lun = 42   ! spare logical unit no.
-      open(unit=lun,file='..\magicc2\co2hist.IN',status='OLD')
+      ! open(unit=lun,file='..\magicc2\co2hist.IN',status='OLD')
+	  open(unit=lun,file='..\objects\magicc\inputs\CO2hist.IN',status='OLD')
       DO ICO2=0,226
       READ(LUN,4444)COBS(ICO2)
       END DO
@@ -502,7 +503,7 @@
 !  READ PARAMETERS FROM MAG3GAS.CFG
 !
       lun = 42   ! spare logical unit no.
-      open(unit=lun,file='..\magicc2\MAG3GAS.CFG',status='OLD')
+      open(unit=lun,file='..\objects\magicc\inputs\MAG3GAS.CFG',status='OLD')
 !
         READ(LUN,4240) LEVCO2
         READ(LUN,4241) DUSER
@@ -533,7 +534,7 @@
 !  READ PARAMETERS FROM MAG3MOD.CFG
 !
       lun = 42   ! spare logical unit no.
-      open(unit=lun,file='..\magicc2\MAG3MOD.CFG',status='OLD')
+      open(unit=lun,file='..\objects\magicc\inputs\MAG3MOD.CFG',status='OLD')
 !
         READ(LUN,4240) MODEL
         READ(LUN,4241) ADJUST
@@ -589,7 +590,7 @@
 !  READ PARAMETERS FROM MAG3RUN.CFG
 !
       lun = 42   ! spare logical unit no.
-      open(unit=lun,file='..\magicc2\MAG3RUN.CFG',status='OLD')
+      open(unit=lun,file='..\objects\magicc\inputs\MAG3RUN.CFG',status='OLD')
 !
         READ(LUN,4240) ISCENGEN
         READ(LUN,4240) KYRREF
@@ -605,7 +606,7 @@
 !  READ PARAMETERS FROM MAG3XTRA.CFG
 !
       lun = 42   ! spare logical unit no.
-      open(unit=lun,file='..\magicc2\MAG3XTRA.CFG',status='OLD')
+      open(unit=lun,file='..\objects\magicc\inputs\MAG3XTRA.CFG',status='OLD')
 !
         READ(LUN,4240) IOLDTZ
         READ(LUN,4241) DT
@@ -663,7 +664,7 @@
 !
 !  OPEN MAIN OUTPUT FILE (MAG.OUT).
 !
-      OPEN(UNIT=8,FILE='..\magicc2\MAG.OUT',STATUS='UNKNOWN')
+      OPEN(UNIT=8,FILE='..\objects\magicc\inputs\MAG.OUT',STATUS='UNKNOWN')
 !
 !  ************************************************************
 !
@@ -676,7 +677,7 @@
 !  THE SECOND COLUMN CONTAINS THE STRATO3 FORCING
 !
       lun = 42   ! spare logical unit no.
-      open(unit=lun,file='..\magicc2\QHALOS.IN',status='OLD')
+      open(unit=lun,file='..\objects\magicc\inputs\QHALOS.IN',status='OLD')
 !
       READ(LUN,4446)IHALO1
 !
@@ -1792,7 +1793,7 @@
 !
 !  WRITE TEMPERATURES TO MAG DISPLAY FILE
 !
-      open(unit=9,file='..\magicc2\temps.dis',status='UNKNOWN')
+      open(unit=9,file='..\objects\magicc\inputs\temps.dis',status='UNKNOWN')
 !
         WRITE (9,213)
 !
@@ -1816,7 +1817,7 @@
 !
 !  WRITE SEALEVEL CHANGES TO MAG DISPLAY FILE
 !
-      open(unit=9,file='..\magicc2\sealev.dis',status='UNKNOWN')
+      open(unit=9,file='..\objects\magicc\inputs\sealev.dis',status='UNKNOWN')
 !
         WRITE (9,214)
 !
@@ -1870,7 +1871,7 @@
 !
 !  WRITE EMISSIONS TO MAG DISPLAY FILE
 !
-      open(unit=9,file='..\magicc2\emiss.dis',status='UNKNOWN')
+      open(unit=9,file='..\objects\magicc\inputs\emiss.dis',status='UNKNOWN')
 !
         WRITE (9,212)
 !
@@ -2008,7 +2009,7 @@
 !
 !  WRITE CONCENTRATIONS TO MAG DISPLAY FILE
 !
-      open(unit=9,file='..\magicc2\concs.dis',status='UNKNOWN')
+      open(unit=9,file='..\objects\magicc\inputs\concs.dis',status='UNKNOWN')
 !
         WRITE (9,211)
 !
@@ -2106,7 +2107,7 @@
 !
 !  WRITE FORCING CHANGES FROM MID-1990 TO MAG DISPLAY FILE
 !
-      open(unit=9,file='..\magicc2\forcings.dis',status='UNKNOWN')
+      open(unit=9,file='..\objects\magicc\inputs\forcings.dis',status='UNKNOWN')
 !
         WRITE (9,215)
 !

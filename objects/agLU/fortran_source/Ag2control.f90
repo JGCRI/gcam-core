@@ -21,7 +21,7 @@ DATA TABLEMRK/'INPUT_TABLE'/
 INFILES=0
 INDIC = 0
 
-OPEN(1,FILE='../input/AgLU/Ag2control.csv')
+OPEN(1,FILE='../objects/agLU/input_files/Ag2control.csv')
 
 CALL NEXTTABLE(TABLEMRK,INDIC)
 
