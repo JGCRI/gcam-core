@@ -465,6 +465,11 @@ void Marketplace::initprices(void)
 		dbmodelread(tmpval,"USA","price",mrk[i][0].name);
 		mrk[i][0].price = tmpval[0]; // set base year prices to all periods
 	}
+	// initialize the rest of the markets to 1 (supply sectors and ghg markets)
+	for (i=nodrscmrks;i<nomrks;i++) {
+		mrk[i][0].price = 1;
+	}
+	// overrides ghg markets to 0
 	// initialize ghg prices to zero if ghg markets exist
 	for (i=0;i<noghgmrks;i++) {
 		int j = nomrks - i - 1;

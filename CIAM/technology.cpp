@@ -176,6 +176,7 @@ void technology::applycarbontax(double tax)
 	// if fuel does not contain carbon, emissions coefficient
 	// is zero and so is the carbon tax
 	// units: tax (90$/TC), CO2coef (MTC/EJ), carbontax (75$/GJ)
+	carbontaxgj = 0; // initialize
 	carbontax = tax;
 
 	// returns emissions coefficient only if fuels are primary fuels
@@ -192,6 +193,7 @@ void technology::addghgtax(int ghgno,char* ghgname,int country_id,int per)
 {
 	// returns coef for primary fuels only
 	// carbontax has value for primary fuels only
+	carbontaxgj = 0; // initialize
 	carbontax = marketplace.showprice(ghgno,country_id,per);
 	// add to previous ghg tax if more than one ghg
 	for(int i=0;i<ghg.size();i++) {

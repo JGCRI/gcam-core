@@ -25,13 +25,16 @@ using namespace std; // enables elimination of std::
 
 // define variables with global scope
 //     define and initialize path and file names
-const char *file = "..\\input\\erbinput2.csv";
+//const char *file = "..\\input\\erbinput2.csv";
+const char *file = "C:\\PNNL\\CIAM\\input\\erbinput2.csv";
 const char *ofile = "outfile.csv";
 const char *ofile2 = "outfile2.csv";
 const char *ofile4 = "dbout.csv";
 const char *bugofile = "bugoutfile.csv";
 const char *logofile = "logfile.csv";
-const char *dbfile = "..\\input\\erbdb.mdb";
+//const char *dbfile = "..\\input\\erbdb.mdb";
+// full path required for profiling and for calling from Java
+const char *dbfile = "C:\\PNNL\\CIAM\\input\\erbdb.mdb";
 const char *climatfile = "gas.emk";
 
 // define some switches
@@ -220,7 +223,7 @@ int main(void)
 	climat_data(); // writes the input text file
 	gasfile.close(); // close input file for climat
 	cout << "\n\ncalling CLIMAT()\n";
-//	CLIMAT();
+	//CLIMAT();
 	cout << "finished with CLIMAT()\n";
 
 	// compute data read in time
