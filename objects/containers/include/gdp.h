@@ -14,7 +14,6 @@
 */
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
-#include <cmath>
 class Population;
 class Tabs;
 
@@ -73,8 +72,8 @@ public:
 	void dbOutput( const std::string& regionName ) const;
 	void initialGDPcalc( const int period, const double population);
 	void adjustGDP( const int period, const double priceratio );
-   double getApproxGDPperCap( const int period ) const;
-   double getApproxScaledGDPperCap( const int period ) const;
+    double getApproxGDPperCap( const int period ) const;
+    double getApproxScaledGDPperCap( const int period ) const;
 	double getApproxScaledGDP( const int period ) const;
 	double getScaledGDPperCap( const int period ) const;
 	double getGDPperCap( const int period ) const;
@@ -82,8 +81,8 @@ public:
 	double getGDP( const int period ) const;
 	double getApproxGDP( const int period ) const;
 	double getBestScaledGDPperCap( const int period ) const;
-   double getGDPNotAdjusted( const int period ) const;
-   double getGDPPerCapitaNotAdjusted( const int period ) const;
+    double getGDPNotAdjusted( const int period ) const;
+    double getGDPPerCapitaNotAdjusted( const int period ) const;
 
  };
 
