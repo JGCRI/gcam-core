@@ -127,22 +127,18 @@ public:
     /*!
     * \brief Binary function used to order Sector* pointers by input dependency. 
     * \author Josh Lurz
-    *
-    * The DependencyOrdering struct is used by the region class in the stl sort to compare
-    * two Sector pointers and order them by dependency. It is a strict weak ordering.
-    * The algorithm checks if the rhs  Sector depends on the lhs Sector with a non-simul. If this is true, it returns true as the 
-    * lhs is needed before the rhs, but when a simul market exists, the ordering between two sectors is trivial.
-    * Otherwise, the operator returns false. This is done so that unrelated sectors are equivalent.
+    * \detailed This function checks if the right hand side sector has an input dependency
+    * on the left hand side Sector. If it does, the right hand side should go after the left
+    * hand side, and so is greater than the left hand side, and this operator returns true. 
     */   
     struct DependencyOrdering : public std::binary_function<Sector*, Sector*, bool>
     {
         //! \brief The () operator, which is used for sorting two Sector pointers. 
-
         bool operator()( const Sector* lhs, const Sector* rhs ) const {
             // First cache a copy of the dependsList
             std::vector<std::string> rhsDependsList = rhs->getDependsList();
             
-            // Check if the left Sector depends on the right Sector.
+            // Check if the right Sector depends on the left Sector.
             return std::binary_search( rhsDependsList.begin(), rhsDependsList.end(), lhs->getName() );
         }
     };

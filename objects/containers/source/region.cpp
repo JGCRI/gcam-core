@@ -407,7 +407,7 @@ bool Region::sortSectorsByDependency() {
         // Compare this position with every other. 
         for( SectorIterator innerPosition = outerPosition + 1; innerPosition != supplySector.end(); ++innerPosition ){
             // Check if the outer position sector depends on the inner position sector, and so should 
-            // be before the outerposition sector.
+            // be after the innerposition sector.
             if( orderingOperator( *innerPosition, *outerPosition ) ){
                 // Create a temporary copy of the pointer to the sector which will be moved.
                 SupplySector* sectorToMove = *innerPosition;
