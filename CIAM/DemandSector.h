@@ -17,9 +17,6 @@
 #include <xercesc/dom/DOM.hpp>
 #include "sector.h"
 
-// Forward declaration
-class subsector;
-
 /*! 
 * \ingroup CIAM
 * \brief A class which defines a single demand sector.
