@@ -84,18 +84,17 @@ SolverComponent::ReturnCode LogNewtonRaphsonSaveDeriv::calculateDerivatives( Sol
       copy( JFDM, *JFDMSave );
       copy( JFSM, *JFSMSave );
       savedMatrixSize = solverSet.getNumSolvable();
-      
-// Otherwise restore from saved values
+
+      // Otherwise restore from saved values
    } else {
-         if ( solverSet.getNumSolvable() != savedMatrixSize ) {
-            logfile << "ERROR: Matrix sizes changed " << solverSet.getNumSolvable() << ", "<< savedMatrixSize << endl;
-            int code = FAILURE_SOLUTION_SIZE_CHANGED;
-            return code;
-         }
-         copy( *JFSave, JF );
-         copy( *JFDMSave, JFDM );
-         copy( *JFSMSave, JFSM );
+       if ( solverSet.getNumSolvable() != savedMatrixSize ) {
+           logfile << "ERROR: Matrix sizes changed " << solverSet.getNumSolvable() << ", "<< savedMatrixSize << endl;
+           return FAILURE_SOLUTION_SIZE_CHANGED;
+       }
+       copy( *JFSave, JF );
+       copy( *JFDMSave, JFDM );
+       copy( *JFSMSave, JFSM );
    }
-           
-      return SUCCESS;
+
+   return SUCCESS;
 }
