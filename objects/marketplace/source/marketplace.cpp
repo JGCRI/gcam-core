@@ -645,13 +645,13 @@ void Marketplace::dbOutput() const {
     }
 }
 
-/*! \brief Write out the market information to a file.
+/*! \brief Write out market information to a file.
 *
 * This function is used to perform a data writeout to a plain text file.
 *
 * \note This will be replaced by toXMLOutput
 */
-void Marketplace::csvOutputFile() const {
+void Marketplace::csvOutputFile( string marketsToPrint ) const {
 
     const Modeltime* modeltime = scenario->getModeltime();
 
@@ -671,6 +671,7 @@ void Marketplace::csvOutputFile() const {
 
     // write market prices and supply (or demand)
     for ( unsigned int i=0;i<numMarkets;i++) {
+      if ( marketsToPrint == "" || markets[i][0]->getRegionName() == marketsToPrint ) {
         for (j=0;j<maxPeriod;j++) {
             temp[j] = markets[i][j]->getRawPrice();
         }
@@ -679,9 +680,6 @@ void Marketplace::csvOutputFile() const {
             temp[j] = markets[i][j]->getRawSupply();
         }
         fileoutput3(markets[i][0]->getRegionName(),"market",markets[i][0]->getGoodName()," ","supply","EJ",temp);
-        for (j=0;j<maxPeriod;j++) {
-            temp[j] = markets[i][j]->getRawDemand();
-        }
-        fileoutput3(markets[i][0]->getRegionName(),"market",markets[i][0]->getGoodName()," ","demand","EJ",temp);
+      }
     }
 }

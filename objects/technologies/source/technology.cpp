@@ -440,16 +440,6 @@ void technology::initCalc( ) {
         ghg[i]->initCalc( );
     }
    
-   derivedTechInitCalc();
-}
-
-/*! \brief Perform initializations for any derived technology classes.
-*
-* \author Steve Smith
-*/
-void technology::derivedTechInitCalc() {
-	// Do nothing in the base class
-   // Put any inintializations needed for a derived class in here
 }
 
 /*! \brief This function calculates the sum of the Carbon Values for all GHG's in this technology.

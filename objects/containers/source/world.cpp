@@ -278,14 +278,22 @@ void World::calculateEmissionsTotals() {
 
 //! write results for all regions to file
 void World::csvOutputFile() const {
+
+    // Write global data
+    csvGlobalDataFile();
+    
+    for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
+        ( *i )->csvOutputFile();
+    }
+}
+
+//! write global results to file
+void World::csvGlobalDataFile() const {
     const int maxper = scenario->getModeltime()->getmaxper();
     vector<double> temp(maxper);
     // function protocol
     void fileoutput3(string var1name,string var2name,string var3name,
         string var4name,string var5name,string uname,vector<double> dout);
-
-    // write global population results to database
-    // fileoutput3("global"," "," "," ","population","Millions",population);
 
     // write total emissions for World
     for ( int m = 0; m < maxper; m++ ){
@@ -298,9 +306,6 @@ void World::csvOutputFile() const {
     }
     fileoutput3( "global"," "," "," ","CO2 emiss","MTC",temp);
 
-    for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->csvOutputFile();
-    }
 }
 
 //! MiniCAM style output to database

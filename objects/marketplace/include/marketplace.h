@@ -46,7 +46,7 @@ public:
     void init_to_last( const int period );
     void storeto_last( const int period );
     void dbOutput() const; 
-    void csvOutputFile() const; 
+    void csvOutputFile( std::string marketsToPrint = "" ) const; 
     void resetToPriceMarket( const std::string& goodName, const std::string& regionName );
     void setMarketToSolve( const std::string& goodName, const std::string& regionName, const int period );
     void unsetMarketToSolve( const std::string& goodName, const std::string& regionName, const int period );

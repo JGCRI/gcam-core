@@ -46,6 +46,7 @@ protected:
     std::string unit; //!< unit of final product from subsector
     std::string fueltype; //!< each subsector has one fueltype
     int notech; //!< number of technologies in each subsector
+    int scaleYear; //!< year to scale share weights to after calibration
     double tax; //!< subsector tax or subsidy
     double basesharewt; //! subsector base year consumption share weight
     double CO2EmFactor; //! CO2 emissions factor, calculated based on fuel input and share

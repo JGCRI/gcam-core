@@ -78,6 +78,7 @@ private:
     void initAgLu(); 
     void clear();
     const std::vector<int> getRegionIndexesToCalculate( const std::vector<std::string>& regionsToSolve );
+    void csvGlobalDataFile() const; 
 };
 
 #endif // _WORLD_H_

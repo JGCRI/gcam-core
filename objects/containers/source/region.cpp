@@ -1276,7 +1276,7 @@ void Region::csvOutputFile() const {
     for (int m=0;m<maxper;m++)
         temp[m] = summary[m].get_emissmap_second("CO2");
     fileoutput3(name," "," "," ","CO2 emiss","MTC",temp);
-    // write depletable resource results to file
+    // write resource results to file
     for ( unsigned int i = 0; i < resources.size(); i++ ) 
         resources[i]->csvOutputFile( name );
     // write supply sector results to file
@@ -1419,7 +1419,7 @@ void Region::dbOutput() const {
     }
     dboutput4(name,"Pri Energy","Production by Sector","zTotal","EJ",temp);
 
-    // write depletable resource results to database
+    // write resource results to database
     for ( unsigned int i = 0; i < resources.size(); i++ ) {
         resources[i]->dbOutput( name );
     }

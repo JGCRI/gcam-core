@@ -36,7 +36,7 @@ extern "C" { void _stdcall CLIMAT(void); };
 #endif
 
 time_t ltime;
-extern ofstream outfile;
+extern ofstream outFile;
 const string Scenario::XML_NAME = "scenario";
 
 //! Default construtor
@@ -375,7 +375,6 @@ void Scenario::csvOutputFile() const {
     // Open the output file.
     const Configuration* conf = Configuration::getInstance();
     const string outFileName = conf->getFile( "outFileName" );
-    ofstream outFile;
     outFile.open( outFileName.c_str(), ios::out );
     util::checkIsOpen( outFile, outFileName ); 
     
@@ -387,6 +386,11 @@ void Scenario::csvOutputFile() const {
         outFile << modeltime->getper_to_yr( t ) <<",";
     }
     outFile << "Date,Notes" << endl;
+
+    // Write global market info to file
+    marketplace->csvOutputFile( "global" );
+
+    // Write world and regional info
     world->csvOutputFile();
     outFile.close();
 }

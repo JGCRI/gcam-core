@@ -76,6 +76,7 @@ Subsector::Subsector( const string regionName, const string sectorName ){
     calibrationStatus.resize( maxper, false );
     fixedShare.resize( maxper );
     capLimited.resize( maxper, false );
+    scaleYear = modeltime->getendyear(); // default year to scale share weight to after calibration
 }
 
 /*! \brief Default destructor.
@@ -151,6 +152,9 @@ void Subsector::XMLParse( const DOMNode* node ) {
         else if( nodeName == "basesharewt" ){
             basesharewt = XMLHelper<double>::getValue( curr );
             share[0] = basesharewt;
+        }
+        else if( nodeName == "scaleYear" ){
+            scaleYear = XMLHelper<double>::getValue( curr );
         }
 
         else if( nodeName == technology::getXMLNameStatic1D() ){
@@ -897,23 +901,22 @@ void Subsector::scalefixedOutput( const double scaleRatio, const int period ) {
 * If the sector share weight in the previous period was changed due to calibration, 
 * then adjust next few shares so that there is not a big jump in share weights.
 *
+* Can turn this feature off by setting the scaleYear before the calibration year (e.g., 1975 -- must be >= model start year)
+*
+* If scaleYear is set to be the calibration year then shareweights are kept constant
+*
 * \author Steve Smith
 * \param period Model period
 * \todo Make end period year more general from data read-in.
 */
 void Subsector::shareWeightScale( const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
-    
-    // ***** SHK comments: I don't like the idea of having hardcoded numbers in the model
-    // I don't think we can arbitrarily set a year here without knowing what
-    // the input data is.  You use 2050 because shareWeights are the same after that.
-    // Also this does not allow flexibility in the time step.
-    
+
     // if previous period was calibrated, then adjust future shares
-    if ( period > modeltime->getyr_to_per( 1990 ) ) {
-        if ( calibrationStatus[ period - 1 ] ) {
-            //int endPeriod = modeltime->getyr_to_per( 2050 );
-            int endPeriod = modeltime->getyr_to_per( 2095 );
+     if ( ( period > modeltime->getyr_to_per( 1990 ) ) && calibrationStatus[ period - 1 ] ) {
+        // Only scale shareweights if after 1990 and scaleYear is after this period
+        int endPeriod = modeltime->getyr_to_per( scaleYear );
+        if  ( endPeriod >= ( period - 1) ) {
             shareWeightInterp( period - 1, endPeriod );
         }
     }
@@ -927,13 +930,21 @@ void Subsector::shareWeightScale( const int period ) {
 * \param endPeriod Period in which to end the interpolation.
 */
 void Subsector::shareWeightInterp( const int beginPeriod,  const int endPeriod ) {
+const Modeltime* modeltime = scenario->getModeltime();
+double shareIncrement = 0;
     
     if ( endPeriod > beginPeriod ) {
-        double shareIncrement = ( shrwts[ endPeriod ] - shrwts[ beginPeriod ] ) / 
-            ( endPeriod - beginPeriod );
-        for ( int period = beginPeriod + 1 ;period<endPeriod ; period++ ) {
-            shrwts[ period ] = shrwts[ period - 1 ] + shareIncrement;
-        }
+        shareIncrement = ( shrwts[ endPeriod ] - shrwts[ beginPeriod ] ) / ( endPeriod - beginPeriod );
+    }
+    
+    int loopPeriod = endPeriod;
+    // If end period equals the begining period then this is a flag to keep the weights the same, so loop over rest of periods
+    if ( endPeriod == beginPeriod ) {
+        loopPeriod = modeltime->getmaxper();  
+    }
+        
+    for ( int period = beginPeriod + 1; period < loopPeriod; period++ ) {
+        shrwts[ period ] = shrwts[ period - 1 ] + shareIncrement;
     }
 }
 

@@ -80,7 +80,7 @@ protected:
     double A; //!< logit function shape parameter
     double B; //!< logit function shape parameter
     std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
-    void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per );
+    virtual void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per );
     virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
@@ -103,7 +103,6 @@ public:
     static const std::string& getXMLNameStatic1D();
     static const std::string& getXMLNameStatic2D();
     void initCalc( );
-    virtual void derivedTechInitCalc();
     virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per ); 
     virtual void calcShare( const std::string& regionName, const GDP* gdp, const int per ); 
     void normShare(double sum); // normalize technology share
@@ -113,8 +112,8 @@ public:
     void scalefixedOutput(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
     virtual void production(const std::string& regionName,const std::string& prodName,double dmd, const GDP* gdp, const int per);
-    void calcEmission( const std::string prodname); // calculates GHG emissions from technology
-    void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
+    virtual void calcEmission( const std::string prodname); // calculates GHG emissions from technology
+    virtual void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
     std::string getName() const; // return technology name
     std::string getFuelName() const; // return fuel name
     double getEff() const; // return fuel efficiency
