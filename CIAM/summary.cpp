@@ -77,7 +77,6 @@ void Summary::updatefuelcons( const map<string, double>& fuelinfo ) {
 	// map all primary and secondary fuel consumption
 	for (fmap=fuelinfo.begin(); fmap!=fuelinfo.end(); ++fmap) {	// iterate to one less than the end
 		str = fmap->first;	// for debugging, first is the key (to the map)
-		double test = fmap->second; //  for debugging, second is the value
 		fuelcons[fmap->first] += fmap->second; // Add values from the passed map to fuelcons
 	}
 

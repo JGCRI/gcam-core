@@ -96,7 +96,7 @@ void Scenario::XMLParse( const DOMNode* node ){
 	nodeList = node->getChildNodes();
 	
 	// loop through the children
-	for ( int i = 0; i < nodeList->getLength(); i++ ){
+	for ( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
 		curr = nodeList->item( i );
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
