@@ -306,7 +306,7 @@
 
 ! src 14 : ag_residue
 
-	  OGACT(ICH4,14,L,M) = SUM(saveland(4:7,L,M)) ! ag2 total crop area
+	  OGACT(ICH4,14,L,M) = SUM(saveland(1:1,L,M)) ! ag2 total crop area
 
 
 
@@ -394,7 +394,7 @@
 
 ! src 9 : ag_residue
 
-	OGACT(IN2O,9,L,M) = SUM(saveland(4:7,L,M))  ! ag2 total crop area
+	OGACT(IN2O,9,L,M) = SUM(saveland(1:1,L,M))  ! ag2 total crop area
 
 	
 
@@ -648,7 +648,7 @@
 
 ! src 24: agricultural waste
 
-	OGACT(INOx,24,L,M) = SUM(saveland(4:7,L,M)) 	! total ag land
+	OGACT(INOx,24,L,M) = SUM(saveland(1:1,L,M)) 	! total ag land
 
 
 
@@ -776,7 +776,7 @@
 
 ! src 18: agricultural waste
 
-	OGACT(ICO,18,L,M) =  SUM(saveland(4:7,L,M)) 	! total ag land
+	OGACT(ICO,18,L,M) =  SUM(saveland(1:1,L,M)) 	! total ag land
 
 
 
@@ -924,7 +924,7 @@
 
 ! src 19: agricultural waste
 
-	OGACT(IVOC,19,L,M) =  SUM(saveland(4:7,L,M)) 	! total ag land
+	OGACT(IVOC,19,L,M) =  SUM(saveland(1:1,L,M)) 	! total ag land
 
 
 
@@ -1058,7 +1058,7 @@
 
 ! src 18: agricultural waste
 
-	OGACT(IBC,18,L,M) =  SUM(saveland(4:7,L,M)) 	! total ag land
+	OGACT(IBC,18,L,M) =  SUM(saveland(1:1,L,M)) 	! total ag land
 
 
 
@@ -1206,7 +1206,7 @@
 
 ! src 18: agricultural waste
 
-	OGACT(IOC,18,L,M) =  SUM(saveland(4:7,L,M)) 	! total ag land
+	OGACT(IOC,18,L,M) =  SUM(saveland(1:1,L,M)) 	! total ag land
 
 
 
