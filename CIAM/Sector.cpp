@@ -948,7 +948,9 @@ void sector::updateSummary( const int per )
         // sum subsector fuel consumption for sector fuel consumption
         summary[per].updatefuelcons(subsec[i]->getfuelcons(per)); 
     }
-    
+    // set input to total fuel consumed by sector
+    // input in sector is used for reporting purposes only
+    input[per] = summary[per].get_fmap_second("zTotal");
 }
 
 
