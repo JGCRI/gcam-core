@@ -257,7 +257,7 @@ string XMLHelper<T>::getAttrString( const DOMNode* node, const string attrName )
 * The latter version is used to create an XMLCh* string. This must still be done with XMLString::transcode. 
 * Be very careful to free memory when doing so.
 
-* \param XMLCh* string to be converted to a standard string.
+* \param toTranscode string to be converted to a standard string.
 * \return An STL string equivalent to the XMLCh* string passed into the function.
 */
 
@@ -278,6 +278,7 @@ string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
 * \param elementName Name of the element.
 * \param out Stream to print to.
 * \param year Optional year value to print as an attribute.
+* \param name Optional name value to print as an attribute.
 * \return void
 */
 
