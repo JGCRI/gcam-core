@@ -51,23 +51,23 @@ map<string, double> co2coefind;
 
 //! Default constructor
 Region::Region() {
-	agSector = 0;
-   population = 0;
-   initElementalMembers();
-
-   // Resize all vectors of period information.
-   const int maxper = scenario->getModeltime()->getmaxper();
-	gnp.resize( maxper ); // normalized regional gross national product
-	gnp_adj.resize( maxper ); // regional gross national product adjusted for energy
-	gnp_cap.resize( maxper ); // regional gross national product per capita
-	gnp_dol.resize( maxper ); 
-	input.resize( maxper ); // total fuel and energy consumption
-	price_ser.resize( maxper ); // aggregate price for demand services
-	carbontaxpaid.resize( maxper ); // total regional carbon taxes paid
-	summary.resize( maxper ); // summary for reporting
-   carbontax.resize( maxper );
-	calibrationGNPs.resize( maxper );
-   i_elas.resize( maxper );
+    agSector = 0;
+    population = 0;
+    initElementalMembers();
+    
+    // Resize all vectors of period information.
+    const int maxper = scenario->getModeltime()->getmaxper();
+    gnp.resize( maxper ); // normalized regional gross national product
+    gnp_adj.resize( maxper ); // regional gross national product adjusted for energy
+    gnp_cap.resize( maxper ); // regional gross national product per capita
+    gnp_dol.resize( maxper ); 
+    input.resize( maxper ); // total fuel and energy consumption
+    price_ser.resize( maxper ); // aggregate price for demand services
+    carbontaxpaid.resize( maxper ); // total regional carbon taxes paid
+    summary.resize( maxper ); // summary for reporting
+    carbontax.resize( maxper );
+    calibrationGNPs.resize( maxper );
+    i_elas.resize( maxper );
 }
 
 Region::~Region() {
@@ -785,27 +785,27 @@ void Region::writeBackCalibratedValues( const int period ) {
 
 //! Insert the newly calculated values into the calibration markets. 
 void Region::doCalibration( const int per ) {
-	// Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.
-	if( calibrationGNPs.size() > per && calibrationGNPs[ per ] > 0 ){ 
-      const string goodName = "GDP";
-      Marketplace* marketplace = scenario->getMarketplace();
-		marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
-		marketplace->setsupply( goodName, name, gnp_dol[ per ], per );
-		marketplace->setMarketToSolve( goodName, name );
-	}
+    // Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.
+    if( calibrationGNPs.size() > per && calibrationGNPs[ per ] > 0 ){ 
+        const string goodName = "GDP";
+        Marketplace* marketplace = scenario->getMarketplace();
+        marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
+        marketplace->setsupply( goodName, name, gnp_dol[ per ], per );
+        marketplace->setMarketToSolve( goodName, name );
+    }
 }
 
 //! Call any initializations that are only done once per period
-void Region::init_calc( const int per ) 
+void Region::initCalc( const int per ) 
 {
    int i;
    
 	for ( i=0;i<nodsec;i++) {
-		demandsector[ i ]->init_calc( per ); 
+		demandsector[ i ]->initCalc( per ); 
 	}
 
 	for ( i=0;i<nossec;i++) {
-		supplysector[ i ]->init_calc( per ); 
+		supplysector[ i ]->initCalc( per ); 
 	}
 }
 
