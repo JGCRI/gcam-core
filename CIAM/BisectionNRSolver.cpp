@@ -53,7 +53,6 @@ bool BisectionNRSolver::solve( const int period ) {
    const double solTolerance = 0.001; // tolerance for solution criteria
    const double excessDemandSolutionFloor = 0.01; // minimum value below which solution is assumed to be found.
    double maxSolVal; // temporary maximum value of equality condition			 
-   bool calibrationStatus = world->getCalibrationSetting();
    
    const double BRACKET_INTERVAL = 0.5;
    
@@ -125,13 +124,7 @@ bool BisectionNRSolver::solve( const int period ) {
          maxSolVal = SolverLibrary::findMaxExcessDemand( sol, excessDemandSolutionFloor, worstMarketIndex, period );
          
          if( !solved && maxSolVal < 1500 ) {
-            
-            // turn end-use calibrations off for NR
-            world->turnCalibrationsOff();
             solved = NR_Ron( solTolerance, excessDemandSolutionFloor, sol, worldCalcCount, period );
-            if ( calibrationStatus ) { // turn end-use calibrations back on if were on originally
-               world->turnCalibrationsOn();
-            }  
             
             if ( bugMinimal ) { 
                bugoutfile << "After Ron_NR "<< worldCalcCount;
@@ -144,7 +137,6 @@ bool BisectionNRSolver::solve( const int period ) {
          }
       }
       
-      // make sure that ED, NOT Log of ED, is checked against tolerance
       int worstMarketIndex = 0;
       maxSolVal =  SolverLibrary::findMaxExcessDemand( sol, excessDemandSolutionFloor, worstMarketIndex, period );
       
@@ -655,7 +647,10 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
    if ( trackED ) { 
       cout << "NR_Ron begin "; 
    }
-   
+
+   bool calibrationStatus = world->getCalibrationSetting();
+   world->turnCalibrationsOff();
+
    Matrix JF( marketsToSolve, marketsToSolve );
    Matrix JFDM( marketsToSolve, marketsToSolve );
    Matrix JFSM( marketsToSolve, marketsToSolve );
@@ -776,12 +771,13 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
             cout << "Exit Newton-Raphson function maxSolVal > 25" << endl;
          }
 
-         for ( i = 0; i < static_cast<int>( sol.size() ); i++ ) {
-            if ( fabs( sol[ i ].ED ) > maxSolVal / 100 ) {
+        for ( i = 0; i < static_cast<int>( sol.size() ); i++ ) {
+             double relativeED = SolverLibrary::getRelativeED( sol[ i ].ED, sol[ i ].demand, sol[ i ].supply );
+            if ( fabs( relativeED ) > maxSolVal / 20 ) {
                if ( trackED ) {
-                  cout << "ED: (" << sol[ i ].marketName + sol[ i ].marketGood  << ") - " << sol[ i ].ED << endl;
+                   cout << "RED: (" << sol[ i ].marketName + sol[ i ].marketGood  << ") - " << relativeED << endl;
                }
-            logfile << ",,,Due to market " << sol[ i ].getName()<< " - ED: " << sol[ i ].ED << endl;
+            logfile << ",,,Due to market " << sol[ i ].getName()<< " - RED: " << relativeED << endl;
             }
          }
          return 0; 
@@ -804,6 +800,10 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
    
    worldCalcCount += iter - 1;
    logfile << ",Number of Newton-Raphson iterations: n =" << iter << endl;
+   
+   if ( calibrationStatus ) { // turn end-use calibrations back on if were on originally
+        world->turnCalibrationsOn();
+   }  
    
    return code;
 }
