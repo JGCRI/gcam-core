@@ -1799,7 +1799,13 @@
 !		END IF
 
 
+	   CASE(811)  !gwp's differing by period
+!	------ overwrites gwp's from case 800, which must already be read ----
+		DO I = 1, NOGMax
+			READ (IUNIT,*) IDUM, tempStr, (OGGWP(I,KK),KK=2,NM)		
+		END DO
 
+		
 
 ! ------------------------------------------------------------------
 !     read in 1990 end-use energy demand for calibration
