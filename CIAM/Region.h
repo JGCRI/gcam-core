@@ -7,6 +7,8 @@
 #include "sector.h"
 #include "AgSector.h"
 #include "ghg_mrk.h"
+// #include "TransSector.h" // Transportation sector class class  maw
+
 #include <string>
 
 using namespace std;
@@ -23,28 +25,29 @@ using namespace xercesc;
 class Region
 {
 private:
-	string name; //!< Region name
-	int noghg; //!< number of ghg for market solution in each region
-	int numResources; //!< number of depletable resources in each region
-	int nossec; //!< number of supply sectors in each region
-	int nodsec; //!< number of demand sectors in each region
-	int noregmrks; //!< number of markets in each region
-	double EnergyGNPElas; //!< elasticity for energy price feedback on GNP
-	demographic population; //!< demographic object
-	vector<Resource*> resources; //!< vector of resource objects
-	vector<sector*> supplysector; //!< array of pointers to supply sector objects
-	vector<demsector*> demandsector; //!< array of pointers to demand sector objects
-	AgSector* agSector; //!< Agricultural sector.
-	vector<ghg_mrk*> ghgmarket; //!< array of pointers to ghg market objects
-	vector<double> i_elas; //!< income elasticity
-	vector<double> gnp_dol; //!< regional gross national product
-	vector<double> gnp; //!< normalized regional gross national product
-	vector<double> gnp_adj; //!< regional gross national product adjusted for energy
-	vector<double> input; //!< total fuel and energy consumption
-	vector<double> price_ser; //!< aggregate price for demand services
-	vector<double> carbontax; //!< regional carbon tax
-	vector<double> carbontaxpaid; //!< total regional carbon taxes paid
-	vector<Summary> summary; //!< summary for reporting
+	string name; //! Region name
+	int noghg; //! number of ghg for market solution in each region
+	int numResources; //! number of depletable resources in each region
+	int nossec; //! number of supply sectors in each region
+	int nodsec; //! number of demand sectors in each region
+	int noregmrks; //! number of markets in each region
+	double EnergyGNPElas; //! elasticity for energy price feedback on GNP
+	demographic population; //! demographic object
+	vector<Resource*> resources; //! vector of resource objects
+	vector<sector*> supplysector; //! array of pointers to supply sector objects
+	vector<demsector*> demandsector; //! array of pointers to demand sector objects
+	AgSector* agSector; //! Agricultural sector.
+	vector<ghg_mrk*> ghgmarket; //! array of pointers to ghg market objects
+	vector<double> i_elas; //! income elasticity
+	vector<double> gnp_dol; //! regional gross national product
+	vector<double> gnp; //! normalized regional gross national product
+	vector<double> gnp_adj; //! regional gross national product adjusted for energy
+	vector<double> gnp_cap; //! regional gross national product per capita
+	vector<double> input; //! total fuel and energy consumption
+	vector<double> price_ser; //! aggregate price for demand services
+	vector<double> carbontax; //! regional carbon tax
+	vector<double> carbontaxpaid; //! total regional carbon taxes paid
+	vector<Summary> summary; //! summary for reporting
 public:
 	Region(); // default construtor
 	~Region(); 

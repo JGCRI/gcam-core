@@ -13,6 +13,8 @@
 #include "modeltime.h"
 #include "world.h"
 #include "xmlHelper.h"
+#include <ctime> // to use clock and time functions
+
 
 using namespace std; // enables elimination of std::
 

@@ -76,6 +76,7 @@ void Region::clear(){
 	gnp_dol.clear();
 	gnp.clear();
 	gnp_adj.clear();
+	gnp_cap.clear();
 	input.clear();
 	price_ser.clear();
 	carbontax.clear();
@@ -108,6 +109,7 @@ void Region::XMLParse( const DOMNode* node ){
 	Resource* tempResource = 0;
 	sector* tempSupSector = 0;
 	demsector* tempDemSector = 0;
+	//	TransSector* tempTransSector = 0;  //maw
 	ghg_mrk* tempGhgMrk = 0;
 	
 	// make sure we were passed a valid node.
@@ -153,13 +155,18 @@ void Region::XMLParse( const DOMNode* node ){
 			tempSupSector = new sector();
 			tempSupSector->XMLParse( curr );
 			supplysector.push_back( tempSupSector );
-			
 		}
 		else if( nodeName == "demandsector" ){
 			tempDemSector = new demsector();
 			tempDemSector->XMLParse( curr );
 			demandsector.push_back( tempDemSector );
 		}
+		/*		// maw
+		else if( nodeName == "transsector" ){
+		tempTransSector = new TransSector();
+		tempTransSector->XMLParse( curr );
+		demandsector.push_back( tempTransSector );
+	} */
 		else if( nodeName == "agsector" ) {
 			//agSector = new AgSector();
 			//agSector->XMLParse( curr );	
@@ -421,6 +428,7 @@ void Region::initperXML()
 	int maxper = modeltime.getmaxper();
 	gnp.resize(maxper); // normalized regional gross national product
 	gnp_adj.resize(maxper); // regional gross national product adjusted for energy
+	gnp_cap.resize(maxper); // regional gross national product per capita
 	input.resize(maxper); // total fuel and energy consumption
 	price_ser.resize(maxper); // aggregate price for demand services
 	carbontaxpaid.resize(maxper); // total regional carbon taxes paid
@@ -516,8 +524,8 @@ void Region::rscsupply(int per)
 		// calculate annual supply from cummulative production
 		resources[i]->cummsupply(price,per);
 		resources[i]->annualsupply(per,gnp[per],prev_gdp,price,prev_price);
-	
-                // set market supply of resources used for solution mechanism
+		
+		// set market supply of resources used for solution mechanism
 		marketplace.setsupply(goodName,regionName,resources[i]->showannualprod(per),per);		
 		
 		summary[per].initpeprod(resources[i]->getName(),resources[i]->showannualprod(per));
@@ -549,9 +557,12 @@ void Region::finalsupply(int per)
 	int i = 0;
 	int j = 0;
 	double mrksupply;
-	int bug = 0;
-        double mrkdmd, mrkdmd1,mrkdmd2,mrkdmd3,mrkdmd4,mrkdmd5;
-
+	
+	// These debugging statements will help diagnose if there is a simultunaety problem of
+	// the sort where a demand is set and later is added to elsewhere.
+	const int bug = 0;
+	double mrkdmd, mrkdmd1,mrkdmd2,mrkdmd3,mrkdmd4,mrkdmd5;
+	
 	// loop through all sectors once to get total output
 	//marketplace.storeInfo(per); // market info from end-use demand
 	for (i=0;i<nossec;i++) {
@@ -559,35 +570,35 @@ void Region::finalsupply(int per)
 		// need demand for all intermediate and final energy to
 		// determine need for primary energy
 		j = nossec - (i+1);
-                
-                goodName = supplysector[j]->getName();
-                if (bug && "electricity" == goodName) {
-                    mrkdmd1 = marketplace.showdemand( goodName,name, per ); 
-                }
-                
+		
+		goodName = supplysector[j]->getName();
+		if (bug && "electricity" == goodName) {
+			mrkdmd1 = marketplace.showdemand( goodName,name, per ); 
+		}
+		
 		// name is country/region name
 		supplysector[j]->supply( name, per );
-                if (bug && "electricity" == goodName) {
-                    mrkdmd2 = marketplace.showdemand( goodName,name, per ); 
-                }
-
+		if (bug && "electricity" == goodName) {
+			mrkdmd2 = marketplace.showdemand( goodName,name, per ); 
+		}
+		
 		supplysector[j]->sumoutput(per);
 		carbontaxpaid[per] += supplysector[j]->showcarbontaxpaid(per);
-
-                if (bug && "electricity" == goodName) {
-                    mrkdmd3 = marketplace.showdemand( goodName,name, per ); 
-                }
+		
+		if (bug && "electricity" == goodName) {
+			mrkdmd3 = marketplace.showdemand( goodName,name, per ); 
+		}
 	}
-
-   mrkdmd4 = marketplace.showdemand( "electricity" ,name, per ); 
-                
-
-	//sdfile<<"\n"; //supply & demand info
-	//marketplace.restoreinfo(per); // restore info from end-use demand
 	
-        // loop through supply sectors and assign supplies to marketplace and update fuel consumption map
-        // the supplies in the market sector are, at present, not used except to double check 
-        // that the output of the supply sectors does equal supply
+	if (bug)  { mrkdmd4 = marketplace.showdemand( "electricity" ,name, per ); }
+	
+	
+	//sdfile<<"\n"; //supply & demand info
+	//marketplace.restoreInfo(per); // restore info from end-use demand
+	
+	// loop through supply sectors and assign supplies to marketplace and update fuel consumption map
+	// the supplies in the market sector are, at present, not used except to double check 
+	// that the output of the supply sectors does equal supply
 	for (i=0;i<nossec;i++) {
 		// name is country/region name
 		//supplysector[j].supply(name,no,per);
@@ -595,11 +606,11 @@ void Region::finalsupply(int per)
 		goodName = supplysector[i]->getName();
 		mrksupply = supplysector[i]->getoutput(per);
 		// set market supply of intermediate goods
-                if (bug && "electricity" == goodName) {
-                    mrkdmd5 = marketplace.showdemand( goodName,name, per ); 
-                }
+		if (bug && "electricity" == goodName) {
+			mrkdmd5 = marketplace.showdemand( goodName,name, per ); 
+		}
 		marketplace.setsupply(goodName,name,mrksupply,per);
-                
+		
         if (bug && "electricity" == goodName) {
             mrkdmd = marketplace.showdemand( goodName,name, per ); 
             if ( abs(mrkdmd - mrksupply) > 0.01 ) {
@@ -607,7 +618,7 @@ void Region::finalsupply(int per)
                 cout <<" - sector::supply mrkdmd: " << mrkdmd << " diff: " << mrkdmd-mrksupply<<endl;
             }
         }
-                
+		
 		// update fuel consumption (primary and secondary) for supply sector
 		summary[per].updatefuelcons(supplysector[i]->getfuelcons(per)); 
 	}
@@ -639,6 +650,9 @@ void Region::calc_gnp(int per)
 				<< "  pop2: " << pop2 << "  lab: " << tlab << "\n";
 		}
 	}
+	// gnp per capita normalized
+	// correct using energy adjusted gnp*****
+	gnp_cap[per] = gnp[per]*population.total(0)/population.total(per);
 }
 
 //! Calculate a forward looking gnp.
@@ -691,6 +705,10 @@ void Region::calcGNPlfp(int per)
 				<< "  labor productivity: " << tlabprd << "\n";
 		}
 	}
+	// gnp per capita normalized
+	// correct using energy adjusted gnp*****
+	gnp_cap[per] = gnp[per]*population.total(0)/population.total(per);
+	
 }
 
 //! Calculate demand sector aggregate price.
@@ -699,7 +717,7 @@ void Region::calcEndUsePrice( const int period ) {
 	price_ser[ period ] = 0;
 	
 	for ( int i = 0; i < nodsec; i++ ) {
-		demandsector[ i ]->calc_share( name, period );		
+		demandsector[ i ]->calc_share( name, period, gnp_cap[period] );		
 		
 		// calculate service price for each demand sector
 		demandsector[ i ]->price( period );
@@ -737,7 +755,8 @@ void Region::endusedemand(int per)
 {
 	carbontaxpaid[per] = 0; // initialize total regional carbon taxes paid
 	
-	double gnp_cap = gnp_adj[per]*population.total(0)/population.total(per);
+	// gnp_cap using energy adjusted gnp
+	gnp_cap[per] = gnp_adj[per]*population.total(0)/population.total(per);
 	
 	summary[per].clearfuelcons();
 	
@@ -745,7 +764,7 @@ void Region::endusedemand(int per)
 		// calculate aggregate demand for end-use sector services
 		// set fuel demand from aggregate demand for services
 		// name is region or country name
-		demandsector[ i ]->aggdemand( name, gnp_cap, gnp_adj[per], per ); 
+		demandsector[ i ]->aggdemand( name, gnp_cap[per], gnp_adj[per], per ); 
 		carbontaxpaid[ per ] += demandsector[ i ]->showcarbontaxpaid( per );
 		
 		// update fuel consumption (primary and secondary) for demand sector

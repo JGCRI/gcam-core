@@ -31,7 +31,7 @@ using namespace xercesc;
 * \brief A basic class which is a container for a static variable containing the current level of indention in the xml being written.
 * \author Josh Lurz
 * \date $Date$
-* \version $Revision&
+* \version $Revision$
 */
 
 class Tabs {
@@ -62,7 +62,7 @@ public:
 * \brief A helper class of functions used to parse XML DOM trees.
 * \author Josh Lurz
 * \date $Date$
-* \version $Version$
+* \version $Revision$
 */
 
 template<class T>

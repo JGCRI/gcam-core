@@ -22,7 +22,6 @@ using namespace xercesc;
 * \date $ Date $
 * \version $ Revision $
 */
-=======
 
 // xerces xml headers
 #include <xercesc/dom/DOM.hpp>

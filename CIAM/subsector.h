@@ -22,7 +22,7 @@ using namespace xercesc;
 
 class subsector
 {
-private:
+protected:
 	string name; //!< subsector name
 	string unit; //!< unit of final product from subsector
 	string fueltype; //!< each subsector has one fueltype
@@ -39,13 +39,14 @@ private:
 	vector<double> subsectorprice; //!< subsector price for all periods
 	vector<double> output; //!< total amount of final output from subsector
 	vector<double> carbontaxpaid; //!< total subsector carbon taxes paid
+	vector<double> iElasticity; //!< Income elasticity
 	vector<Summary> summary; //!< summary for reporting
+
 public:
 	subsector(); // default construtor
 	~subsector();
-	void clear();
+	virtual void clear();
 	string showname(void); // return name of subsector
-	void initper(void); //set vector size
 	void XMLParse( const DOMNode* tempNode ); // initialize subsector with xml data
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream& out ) const;
@@ -53,14 +54,16 @@ public:
 	void settech(int itech); // sets number of technology objects
 	void set_hydrotech(int itech); // sets number of exogenously driven tech
 	// calculates and returns subsector price
-	double price( const string regionName, const int per); 
+	virtual void calc_price( const string regionName, const int per); // maw
 	double showprice(int per); // returns subsector price
 	void applycarbontax(double tax, int per); // passes along carbon tax
 	// applies ghg tax to technologies
 	void addghgtax( const string ghgname, const string regionName, const int per ); 
 	// calculate shares and sum of shares
-	void calc_share( const string regionName, const int per ); 
+	virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 ); 
 	void norm_share(double sum, int per); // normalizes shares to 100%
+	// maw compute tech shares within subsector in seperate method
+	void calc_tech_shares ( const string regionName, const int per );
 	// sets demand to output and output
 	void setoutput( const string& regionName, const double dmd, const int per); 
 	void sumoutput(int per); // sums technology output

@@ -98,7 +98,6 @@ public:
 	void setoutput( const double out ); // set output exogenously
     void adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per);
     double getFixedSupply(int per);
-
 };
 
 /*! 

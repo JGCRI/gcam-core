@@ -19,7 +19,6 @@ using namespace xercesc;
 class ghg_mrk
 {
 private:
-<<<<<<< ghg_mrk.h
 	string name; //!< GHG name
 	string unit; //!< GHG unit
 	string market; //!< Name of the market

@@ -2,10 +2,6 @@
 #define _DEMOGRAPHIC_H_
 #pragma once
 
-#ifndef _DEMOGRAPHIC_H_
-#define _DEMOGRAPHIC_H_
-#pragma once
-
 #include <vector>
 #include <xercesc/dom/DOM.hpp>
 

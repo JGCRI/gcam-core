@@ -64,4 +64,10 @@ return ( x > y ? x : y);
 #define _stdcall
 #endif
 
+//! Helper function to determine the sign of a number.
+template <class T>
+const int sign( const T number ) {
+	return ( number < 0 )?(-1):(1);
+}
+
 #endif // _DEFINITIONS_H_

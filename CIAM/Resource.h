@@ -16,6 +16,7 @@ using namespace xercesc;
 */
 
 class Resource
+
 {
 protected:
 	string name; //!< Resource name
@@ -26,6 +27,7 @@ protected:
 	vector<double> available; //!< total Resource available
 	vector<double> annualprod; //!< annual production rate of Resource
 	vector<double> cummprod; //!< cummulative production of Resource
+
 public:
 	Resource(); // default construtor
 	virtual ~Resource();

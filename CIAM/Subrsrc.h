@@ -24,6 +24,7 @@ using namespace xercesc;
 class subrsrc
 {
 private:
+
 	string name; //!< subrsrc name
 	int nograde; //!< number of grades of each subrsrc
 	double min_annualprod; //!< minimum annual production of subrsrc
@@ -32,6 +33,10 @@ private:
 	vector<double> available; //!< total available resource
 	vector<double> annualprod; //!< annual production of subrsrc
 	vector<double> cummprod; //!< cummulative production of subrsrc
+	vector<double> gdpExpans; //!< short-term supply limit expansion elasticity w/ gdp
+    double prc_elas; //!< price elasticity for short-term supply limit
+	double minShortTermSLimit; //!< short-term supply limit.
+
 public:
 	subrsrc(); //default construtor
 	~subrsrc();

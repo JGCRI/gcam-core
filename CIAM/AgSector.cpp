@@ -316,5 +316,4 @@ void AgSector::initMarketPrices( const string& regionName, const vector<double>&
  	for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end(); i++ ) {
 		marketplace.setprice( *i, regionName, pricesIn[ nameToIndiceMap[ *i ] ], 0 );
 	}
-
 }

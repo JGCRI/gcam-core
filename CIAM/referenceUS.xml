@@ -1,5 +1,6 @@
 <!-- edited with XMLSPY v5 rel. 2 U (http://www.xmlspy.com) by Son H. Kim (PNNL) -->
-<scenario name="">
+<scenario name="" date="2003-01-11T09:30:47-05:00">
+	<summary>"SRES B2 Scenario is used for this Reference Scenario"</summary>
 	<modeltime>
 		<startyear>1975</startyear>
 		<interyear1>2005</interyear1>

@@ -5,13 +5,12 @@
 #include <string>
 
 using namespace std;
-
 /*!
 * \ingroup CIAM
 * \brief A class which defines a single market object.
 * \author Sonny Kim
 * \date $Date$
-* \version $Revision&
+* \version $Revision$
 */
 
 class Market

@@ -48,7 +48,7 @@ public:
 	virtual void setMarket( const string& regname ); //create markets
 	void applycarbontax(double tax,int per); // passes along regional carbon tax
 	void addghgtax( const string ghgname, const string regionName, const int per); // sets ghg tax to technologies
-	void calc_share( const string regionName, const int per ); // calculates and noralizes shares
+	virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 ); // calculates and normalizes shares 
 	void price(int per); // calculates sector price
 	void production( const string& regionName,int per); // calculates production using mrk prices
 	void setoutput(const string& regionName, double dmd, int per); // sets demand to totoutput and output
@@ -91,21 +91,24 @@ public:
 
 class demsector : public sector
 {
-private:
+protected:
 	int perCapitaBased; //!< demand equation based on per capita GNP, true or false
 	vector<double> fe_cons; //!< end-use sector final energy consumption
 	vector<double> service; //!< total end-use sector service 
 	vector<double> iElasticity; //!< income elasticity 
 	vector<double> pElasticity; //!< price elasticity.
 	vector<double> aeei; //!< autonomous end-use energy intensity parameter
+
 public:
 	virtual void clear();
 	virtual void XMLParse(const DOMNode* node);
 	virtual void toXML( ostream& out ) const;
 	virtual void toDebugXML( const int period, ostream& out ) const;
 	virtual void setMarket( const string& regname ); //create markets
+	virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 ); // calculates and normalizes shares 
+
 	// aggregate demand for service
-	void aggdemand( const string& regionName,double gnp_cap,double gnp,int per); 
+	virtual void aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per); 
 	virtual void outputfile( const string& regionName ); // write out sector result to file
 	virtual void MCoutput( const string& regionName ); // write out sector result to file
 };

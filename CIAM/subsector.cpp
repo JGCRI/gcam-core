@@ -52,6 +52,7 @@ void subsector::clear(){
 	caplim.clear();
 	shrwts.clear();
 	lexp.clear();
+	iElasticity.clear();
 	share.clear();
 	input.clear();
 	pe_cons.clear();
@@ -67,21 +68,6 @@ string subsector::showname()
 	return name;
 }
 
-//! Set all vector sizes to the maximum number of periods.
-void subsector::initper(){
-	int maxper = modeltime.getmaxper();
-
-	caplim.resize(maxper); // subsector capacity limit
-	shrwts.resize(maxper); // subsector logit share weights
-	lexp.resize(maxper); // subsector logit exponential
-	share.resize(maxper); // subsector shares
-	input.resize(maxper); // subsector energy input
-	pe_cons.resize(maxper); // subsector primary energy consumption
-	subsectorprice.resize(maxper); // subsector price for all periods
-	output.resize(maxper); // total amount of final output from subsector
-	carbontaxpaid.resize(maxper); // total subsector carbon taxes paid
-	summary.resize(maxper); // object containing summaries
-}
 
 //! Initialize subsector with xml data
 void subsector::XMLParse( const DOMNode* node )
@@ -149,6 +135,7 @@ void subsector::XMLParse( const DOMNode* node )
 
 	// resize vectors not read in, therefore not sized by XML input
 	int maxper = modeltime.getmaxper();
+	iElasticity.resize(maxper); // elasticity for subsector preference based on income
 	share.resize(maxper); // subsector shares
 	input.resize(maxper); // subsector energy input
 	pe_cons.resize(maxper); // subsector primary energy consumption
@@ -278,10 +265,11 @@ void subsector::set_hydrotech(int itech)
 	hydro.resize(maxper);
 }
 
-//! Returns weighted cost of all technologies in subsector
+//! Computes weighted cost of all technologies in subsector
 /*! price function called below in calc_share after technology shares are determined.
-  price function separated to allow different weighting for subsector price */
-double subsector::price( const string regionName, const int per )
+  price function separated to allow different weighting for subsector price
+	changed to void return maw */
+void subsector::calc_price( const string regionName, const int per )
 {
 	int i=0;
 
@@ -291,7 +279,6 @@ double subsector::price( const string regionName, const int per )
 		subsectorprice[per] += techs[i][per]->showshare()*
 			techs[i][per]->cost( regionName, per );
 	}
-	return subsectorprice[per];
 }
 
 //! returns subsector price 
@@ -316,8 +303,9 @@ void subsector::addghgtax( const string ghgname, const string regionName, const 
 	}
 }
 
-//! calculate technology shares
-void subsector::calc_share( const string regionName, const int per )
+
+// maw  calculate technology shares within subsector
+void subsector::calc_tech_shares( const string regionName, const int per )
 {
 	int i=0;
 	double sum = 0;
@@ -334,15 +322,31 @@ void subsector::calc_share( const string regionName, const int per )
 		// one technology
 		if(notech>1 && techs[i][per]->getlexp()>=0) cerr << "Tech Logit Exponential is invalid." << endl;
 	}
+}	
+	
+
+//! calculate subsector share numerator 
+void subsector::calc_share( const string regionName, const int per, const double gnp_cap )
+{
+	// call function to compute technology shares
+	calc_tech_shares(regionName, per);
+
 	// calculate and return subsector share; uses above price function
-	// price() uses normalized shares calculated above
+	// calc_price() uses normalized technology shares calculated above
 	// Logit exponential should not be zero
+
+	//compute subsector weighted average price of technologies
+	calc_price( regionName,per);
+	
+	// not read in just yet so use default
+	iElasticity[per] = 1;
 	if(lexp[per]==0) cerr << "SubSec Logit Exponential is 0." << endl;
-	if(price( regionName,per)==0) 
+	if(subsectorprice[per]==0) 
 		share[per] = 0;
 	else
-		share[per] = shrwts[per]*pow(price( regionName, per ),lexp[per]);
+		share[per] = shrwts[per]*pow(subsectorprice[per],lexp[per])*pow(gnp_cap,iElasticity[per]);
 }
+
 
 void subsector::norm_share(double sum, int per)
 {

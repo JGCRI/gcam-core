@@ -118,8 +118,8 @@ SUBROUTINE AG2INITC( P )
 	INOILCROPS = 10 	! Oil Crops
 	INMISCCROPS = 11	! Misc Crops
 	INPAST = 12 		! Pasture
-    
-    MC_CALP = 0_8
+
+    MC_CALP = 0.0_8
 
 	! Initialize YLM for Mkt_GDP function within Ag2init
 	do i=1, NLP

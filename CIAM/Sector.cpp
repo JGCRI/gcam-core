@@ -228,7 +228,7 @@ void sector::addghgtax( const string ghgname, const string regionName, const int
 }
 
 //! Calculat subsector shares.
-void sector::calc_share( const string regionName, const int per )
+void sector::calc_share( const string regionName, const int per, const double gnp_cap )
 {
 	int i=0;
 	double sum = 0.0;
@@ -860,8 +860,25 @@ void demsector::setMarket( const string& regionName )
 	*/
 }
 
+//! Calculate subsector shares.
+void demsector::calc_share( const string regionName, const int per, const double gnp_cap )
+{
+	int i=0;
+	double sum = 0.0;
+	for (i=0;i<nosubsec;i++) {
+		// determine subsector shares based on technology shares
+		subsec[i]->calc_share( regionName, per, gnp_cap );
+		sum += subsec[i]->showshare(per);
+	}
+	// normalize subsector shares to total 100 %
+	for (i=0;i<nosubsec;i++)
+		subsec[i]->norm_share(sum, per);	
+}
+
+
+
 //! Aggrgate sector energy service demand function.
-void demsector::aggdemand( const string& regionName,double gnp_cap,double gnp,int per)
+void demsector::aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per)
 {
 	double ser_dmd, base, ser_dmd_adj;
 	double pelasticity = -0.9;

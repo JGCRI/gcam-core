@@ -233,7 +233,18 @@ void World::calc(int per)
 		region[i]->emission(per);
 		// set regional GHG emissions as market demand
 		region[i]->setghgdemand(per);
-
+                
+                // Optional routine to check if prices have any dependancies. Compare outputs
+                // to see if they have changed in-between calls. Haven't yet, could automate this
+                // if it turns out to be a problem. Probably good idea to check if model inputs
+                // are significantly re-structured.
+                const int check = 0;
+                if (check==1 && per == 7) {
+                    // vector<double> sectorprice
+                    bugoutfile << "1st,"; marketplace.prices_to_bugout(per);
+                    region[i]->finalsupplyprc(per);
+                    bugoutfile << "2nd,"; marketplace.prices_to_bugout(per);
+                }
 		
 	}	
 }

@@ -65,4 +65,3 @@ void Market::toDebugXML( const int period, ostream& out ) const {
 	Tabs::writeTabs( out );
 	out << "</Market>" << endl;
 }
-
