@@ -285,7 +285,12 @@ void AgSector::runModel( const int period, const string& regionName ) {
    int tempPeriod = period;
    
    for( int l = 0; l < numAgMarkets; l++ ){
-      prices[ period ][ l ] = marketplace->getPrice( indiceToNameMap[ l ], regionName, period );
+       if( marketplace->doesMarketExist( indiceToNameMap[ l ], regionName, period ) ){
+            prices[ period ][ l ] = marketplace->getPrice( indiceToNameMap[ l ], regionName, period );
+       }
+       else {
+           prices[ period ][ l ] = 0;
+       }
    }
    
    for( int i = 0; i < numAgMarkets; i++ ) {
@@ -302,8 +307,10 @@ void AgSector::runModel( const int period, const string& regionName ) {
    
    // set the market supplies and demands.
    for ( vector<string>::iterator k = marketNameVector.begin(); k != marketNameVector.end(); k++ ) {
-      marketplace->addToDemand( *k, regionName, demands[ period ][ nameToIndiceMap[ *k ] ], period );
-      marketplace->addToSupply( *k, regionName, supplies[ period ][ nameToIndiceMap[ *k ] ], period );
+       if( marketplace->doesMarketExist( *k, regionName, period ) ){
+            marketplace->addToDemand( *k, regionName, demands[ period ][ nameToIndiceMap[ *k ] ], period );
+            marketplace->addToSupply( *k, regionName, supplies[ period ][ nameToIndiceMap[ *k ] ], period );
+       }
    }
    
    // set biomass supply
@@ -361,6 +368,8 @@ void AgSector::initMarketPrices( const string& regionName, const vector<double>&
    
    // Initialize prices.
    for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end(); i++ ) {
-      marketplace->setPrice( *i, regionName, pricesIn[ nameToIndiceMap[ *i ] ], 0 );
+       if( marketplace->doesMarketExist( *i, regionName, 0 ) ){
+            marketplace->setPrice( *i, regionName, pricesIn[ nameToIndiceMap[ *i ] ], 0 );
+       }
    }
 }
