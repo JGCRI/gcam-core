@@ -9,8 +9,6 @@
 		<!--END User Modifiable variables-->
 		<!--START Developer Only Modifiable Variables-->
 		<Value name="outFileName">outFile.csv</Value>
-		<Value name="bugOutFileName">bugoutfile.csv</Value>
-		<Value name="logOutFileName">logfile.csv</Value>
 		<Value name="climatFileName">gas.emk</Value>
 		<Value name="xmlDebugFileName">debug.xml</Value>
 		<Value name="dbFileName">../output/output.mdb</Value>
@@ -47,9 +45,6 @@
 		<Value name="agSectorActive">1</Value>
 		<Value name="agBioMarketSet">0</Value>
 		<Value name="simulActive">1</Value>
-		<Value name="trackMaxED">0</Value>
-		<Value name="bugMinimal">0</Value>
-		<Value name="bugTracking">0</Value>
 		<Value name="PrintDependencyGraphs">0</Value>
 		<Value name="PrintValuesOnGraphs">0</Value>
 		<Value name="debugFindSD">0</Value>
@@ -69,6 +64,8 @@
 	<Doubles>
 		<!--START User Modifiable Variables-->
 		<Value name="discountRate">0.05</Value>
+		<Value name="SolutionTolerance">0.001</Value>
+		<Value name="SolutionFloor">0.01</Value>
 		<!--END User Modifiable variables-->
 	</Doubles>
 </Configuration>
