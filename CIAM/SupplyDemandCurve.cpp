@@ -35,6 +35,17 @@ SupplyDemandCurve::~SupplyDemandCurve() {
 }
 
 /*! \brief Calculate given number of supply and demand points.
+*
+* This function first determines a series of price ratios to use to determine the prices to 
+* create SupplyDemandPoints for. It then saves the original marketplace information, and perturbs the price
+* as specified by the price ratios. Using this new perturbed price, it call World::Calc to determine supply and 
+* demand for the market. It saves that point for printing later, and continues to perform this process for each price.
+* Finally it restores the original market information.
+*
+* \param numPoints The number of points to calculate.
+* \param world The World object to use for World::calc
+* \param marketplace The marketplace to use to store and restore information.
+* \param period The period to perform the calculations on.
 * \todo It would be good if this used a similiar logic to SolverLibrary::derivatives to save time.
 */
 
@@ -95,10 +106,17 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
     }  
 }
 
-//! Print the curve.
+/*! \brief Print the supply demand curve.
+*
+* This function prints the vector of SupplyDemandPoints created during the calculatePoints function.
+* It creates a copy of points and sorts them before printing them. This was done so that the printing function
+* could remain constant. The points are printed to the Logger passed as an argument.
+*
+* \param sdLog Logger to print the points to.
+*/
 void SupplyDemandCurve::print( Logger* sdLog ) const {
-    LOG( sdLog, Logger::WARNING_LEVEL ) << "Supply and Demand curves for: " << market->getName() << endl;
-    LOG( sdLog, Logger::WARNING_LEVEL ) << "Price,Demand,Supply," << endl;
+    LOG( sdLog, Logger::NOTICE_LEVEL ) << "Supply and Demand curves for: " << market->getName() << endl;
+    LOG( sdLog, Logger::NOTICE_LEVEL ) << "Price,Demand,Supply," << endl;
 
     // Create a copy of the points vector so that we can sort it while keeping the print function constant.
     // Since the vector contains pointers to SupplyDemandPoints, this is relatively inexpensive.
@@ -110,7 +128,7 @@ void SupplyDemandCurve::print( Logger* sdLog ) const {
         ( *i )->print( sdLog );
     }
 
-    LOG( sdLog, Logger::WARNING_LEVEL ) << endl;
+    LOG( sdLog, Logger::NOTICE_LEVEL ) << endl;
 }
 
 //! Constructor
@@ -118,13 +136,23 @@ SupplyDemandCurve::SupplyDemandPoint::SupplyDemandPoint( const double priceIn, c
 : price( priceIn ), demand( demandIn ), supply( supplyIn ){
 }
 
-//! Get the price
+/*! \brief Get the price.
+*
+* Return the price contained in the point. This is needed for sorting.
+*
+* \return The price saved within the point.
+*/
 double SupplyDemandCurve::SupplyDemandPoint::getPrice() const {
     return price;
 }
 
-// Print the point in a csv format.
+/*! \brief Print the point in a csv format.
+*
+* Print the point in a csv format to the specified logger.
+*
+* \param sdLog The Logger to print to.
+*/
 void SupplyDemandCurve::SupplyDemandPoint::print( Logger* sdLog ) const {
-    LOG( sdLog, Logger::WARNING_LEVEL ) << price << "," << demand << "," << supply << endl;
+    LOG( sdLog, Logger::NOTICE_LEVEL ) << price << "," << demand << "," << supply << endl;
 }
 
