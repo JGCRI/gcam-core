@@ -1044,61 +1044,66 @@ public class ControlPanel extends javax.swing.JFrame {
         Vector header = new Vector();
         Vector lefter = new Vector();
         
-        if (listTableBox.getSelectedIndex() == LIST){
+        if (listTableBox.getSelectedIndex() == LIST) {
             String regionName;
             Object[] regions = regionBox.getSelectedValues();
+            currRootPointer = (AdapterNode)rootPointers.elementAt(0);
             
             //for each region
             for (int j = 0; j < regions.length; j++) {
                 regionName = regions[j].toString();
-                currRootPointer = (AdapterNode)rootPointers.elementAt(0);
-                AdapterNode currNode = currRootPointer.getChild("region", regionName);
-                
                 header.addElement(regionName);
+                AdapterNode currNode = currRootPointer.getChild("region", regionName);
                 
                 String nodeName;
                 String attribVal = "";
                 JComboBox temp;
-                //System.out.println("Hello 1");
+                
                 //get the path of the variable desired by user
-                int pathLength = querryControls.size() - 1;
+                int pathLength = querryControls.size() - 1; //the last control's entries will be handled later
                 temp = (JComboBox)querryControls.lastElement();
                 if (temp.getSelectedItem().toString().equals(DEFAULT_SELECTION_STRING)) pathLength--;
-                //System.out.println("Hello 2");
-                //start at one because zeroth control is regionBox, end before the very last component
+                
+                //fo through all intermediate controls, start at 1 because zeroth control is regionBox
                 for (int k = 1; k < pathLength; k++) {
-                    //System.out.println("Hello 5");
-                    temp = (JComboBox)querryControls.elementAt(pathLength);
-                    //System.out.println("Hello 5.1");
+                    temp = (JComboBox)querryControls.elementAt(k);
                     nodeName = temp.getSelectedItem().toString();
-                    //System.out.println("Hello 5.2");
-                    if (!attributeControls.isEmpty() && attributeControls.elementAt(pathLength) != null) {
-                        //System.out.println("Hello 5.3");
-                        temp = (JComboBox)attributeControls.elementAt(pathLength);
+                    if (!attributeControls.isEmpty() && attributeControls.elementAt(k) != null) {
+                        //get the "name" attribute if appropriate
+                        temp = (JComboBox)attributeControls.elementAt(k);
                         attribVal = temp.getSelectedItem().toString();
                         if (attribVal.equals(DEFAULT_SELECTION_STRING)) attribVal = "";
                     }
-                    System.out.println("Hello 6, NodeName = " + nodeName + "attribVal = " + attribVal);
-                    java.util.List nodes = currNode.getChildren(nodeName, attribVal);
-                    Iterator it = nodes.iterator();
-                    while (it.hasNext()) {
-                        System.out.println("Hello 7");
-                        currNode = (AdapterNode)it.next();
-                        System.out.println("got currNode - " + currNode + ", " + currNode.getText());
-                        if (showNames) {
-                            values.addElement(currNode.getAttributeValue("name"));
-                        } else {
-                            values.addElement(currNode);
-                            System.out.println("really did add " + currNode);
-                            /*attribVal = currNode.getAttributeValue("year");
-                            if (attribVal != null) {
-                                if (lefter.isEmpty()) lefter.addElement(attribVal);
-                                else if (!lefter.contains(attribVal)) lefter.addElement(attribVal);
-                            }*/
+                    
+                    currNode = currNode.getChild(nodeName, attribVal);
+                }
+                
+                temp = (JComboBox)querryControls.elementAt(pathLength);
+                nodeName = temp.getSelectedItem().toString();
+                if (!attributeControls.isEmpty() && attributeControls.elementAt(pathLength) != null) {
+                    temp = (JComboBox)attributeControls.elementAt(pathLength);
+                    attribVal = temp.getSelectedItem().toString();
+                    if (attribVal.equals(DEFAULT_SELECTION_STRING)) attribVal = "";
+                }
+                
+                java.util.List nodes = currNode.getChildren(nodeName, attribVal);
+                Iterator it = nodes.iterator();
+                while (it.hasNext()) {
+                    currNode = (AdapterNode)it.next();
+                    if (showNames) {
+                        values.addElement(currNode.getAttributeValue("name"));
+                        System.out.println("really did add " + currNode);
+                    } else {
+                        values.addElement(currNode);
+                        attribVal = currNode.getAttributeValue("year");
+                        if (attribVal != null) {
+                            if (lefter.isEmpty()) lefter.addElement(attribVal);
+                            else if (!lefter.contains(attribVal)) lefter.addElement(attribVal);
                         }
                     }
+                    
                 }
-                //System.out.println("Hello 8");
+                
                 TableViewModel model = new TableViewModel(values, header, showNames);
                 table = new JTable(model);
                 
@@ -1107,13 +1112,17 @@ public class ControlPanel extends javax.swing.JFrame {
                 tempPanel.setLayout(new BorderLayout());
                 tempPanel.add(table.getTableHeader(), BorderLayout.NORTH);
                 tempPanel.add(table, BorderLayout.CENTER);
-                if (!lefter.isEmpty()) {
-                    //JPanel lefterPanel = makeLefter(lefter);
-                    //tempPanel.add(lefterPanel, BorderLayout.WEST);
-                }
                 
+                JPanel tempPanel2 = new JPanel();
+                tempPanel2.setLayout(new BorderLayout());
+                if (!lefter.isEmpty()) {
+                    JPanel lefterPanel = makeLefter(lefter);
+                    tempPanel2.add(lefterPanel, BorderLayout.WEST);
+                }
+                tempPanel2.add(tempPanel, BorderLayout.CENTER);
+                                
                 dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
-                dataPanel.add(tempPanel);
+                dataPanel.add(tempPanel2);
                 
                 pack();
             }
