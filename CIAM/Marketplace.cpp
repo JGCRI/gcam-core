@@ -590,6 +590,7 @@ void Marketplace::excessdemand( const int per )
 //! calculates log of excess demand for all markets
 void Marketplace::logED( const int per ) 
 {
+	int breakout = 0;
 	for (int i=0;i<nomrks;i++) {
 		mrk[i][per].lexdmd = log10(max( mrk[i][per].demand, smnum )) 
 			- log10(max(mrk[i][per].supply,smnum)); 
@@ -635,7 +636,8 @@ int Marketplace::setMarketsToSolve( const int period ) {
 	for( int i = 0; i < static_cast<int>( mrk.size() ); i++ ) {
 		// Check if this market is supposed to be solved & if a significant demand exists
 		solvemkt =  mrk[ i ][ period ].solveMarket;
-		if (smalltest) solvemkt =solvemkt && mrk[i][period].demand > smnum;
+		
+		// if (smalltest) solvemkt =solvemkt && mrk[i][period].demand > smnum;
 		
 		// But don't solve if its a GHG market and there is no constraint
 		if ( solvemkt && mrk[ i ][ period ].type == Market::GHG && mrk[ i ][ period ].supply < 0 ) {
@@ -660,11 +662,21 @@ int Marketplace::setMarketsToSolveNR( const int period ){
 	nomrks_t_NR = 0;
 	mrk_isol_NR.clear();
 	
+	
 	for( int i = 0; i < static_cast<int>( mrk.size() ); i++ ) {
+		// double tempDemand = mrk[ i ][ period ].demand;
+		// double tempSupply = mrk[ i ][ period ].supply;
+		cout << mrk[ i ][ period ].name << ": Supply: " << mrk[ i ][ period ].supply << " Demand: " << mrk[ i ][ period ].demand << " SM: " << mrk[ i ][ period ].solveMarket << endl;
+		solvemkt = false;
 		// Check if this market is supposed to be solved & if a significant demand exists
-		solvemkt =  mrk[ i ][ period ].solveMarket;
-		if (smalltest) solvemkt =solvemkt && mrk[i][period].demand > smnum;
-		
+		// solvemkt =  mrk[ i ][ period ].solveMarket;
+		// if (smalltest ) solvemkt =solvemkt && mrk[i][period].demand > smnum;
+		if ( smalltest 
+			&& mrk[ i ][ period ].solveMarket 
+			&& mrk[ i ][ period ].supply > smnum 
+			&& mrk[ i ][ period ].demand > smnum ) {
+			solvemkt = true;
+		}
 		// But if its a GHG market .... 
 		if ( solvemkt && mrk[ i ][ period ].type == Market::GHG ){
 			//  don't solve if there is no constraint 
@@ -2059,7 +2071,7 @@ void Marketplace::solve( const int per ) {
 	int bn=0; // counter for bisection routine
 	int Code = 2; // Code that reports success 1 or failure 0
 	int solved = 0; // Code that reports success 1 or failure 0
-	//double solTolerance = 0.0001; // Tolerance for solution criteria
+	// double solTolerance = 0.0001; // Tolerance for solution criteria
 	// Extra high tolerance to get to solution faster
 	//double solTolerance = 0.1; // Tolerance for solution criteria
 	double M; // temporary maximum value of equality condition			 
