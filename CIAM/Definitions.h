@@ -27,6 +27,7 @@ public:
 static msVC6_4786WorkAround emptyStatic;
 #endif
 
+#include <limits>
 // VC 6.0 does not define min and max in <algorithm>
 #if defined(_MSC_VER) && _MSC_VER < 1300
 
@@ -75,6 +76,12 @@ template <class T>
    const int sign( const T number ) {
       return ( number < 0 )?(-1):(1);
    }
+
+template <class T>
+//! Helper function to check for validity of numbers. 
+const bool isValidNumber( const T number ) {
+   return ( ( number == number ) && ( number != std::numeric_limits<T>::infinity() ) );
+}
 }
 
 #endif // _DEFINITIONS_H_
