@@ -61,6 +61,8 @@ class Marketplace
    void resetToPriceMarket( const std::string& goodName, const std::string& regionName );
    void setMarketToSolve ( const std::string& goodName, const std::string& regionName, const int period = -1 );
    bool checkMarketSolution( const double soltoleranceerance,  const double excessDemandSolutionFloor, const int period );
+   void storeinfo( const int period );
+   void restoreinfo( const int period );
 
 private:
    
@@ -97,8 +99,6 @@ private:
    const std::vector<double> getDemands( const int per ) const;
   
    void findAndPrintSD( std::vector<Market*>& unsolved, const int period );
-   void storeinfo( const int period );
-   void restoreinfo( const int period );
 };
 
 #endif

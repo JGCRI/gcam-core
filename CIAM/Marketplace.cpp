@@ -455,13 +455,7 @@ void Marketplace::resetToPriceMarket( const string& goodName, const string& regi
             assert( newDemandMarket );
 
             // Create a new price market from the old market.
-            newPriceMarket = new PriceMarket( *markets[ marketNumber ][ per ] );
-
-            // Set the demand market's pointer to the price market.
-            newDemandMarket->setCompanionMarketPointer( newPriceMarket );
-
-            // Set the price market's pointer to a demand market.
-            newPriceMarket->setCompanionMarketPointer( newDemandMarket );
+            newPriceMarket = new PriceMarket( *markets[ marketNumber ][ per ], newDemandMarket );
 
             // Delete the old market.
             delete markets[ marketNumber ][ per ];
@@ -580,7 +574,7 @@ void Marketplace::addToDemand( const string& goodName, const string& regionName,
     const int marketNumber = getMarketNumber( goodName, regionName );
 
     if (value < 0 && goodName != "CO2" ) {
-        cerr << "ERROR in setdemand: Demand value < 0 for market " << goodName << " in region " << regionName << endl;
+        cerr << "ERROR in addToDemand: Demand value < 0 for market " << goodName << " in region " << regionName << endl;
     }
 
     if ( marketNumber != -1 ) {
@@ -708,7 +702,7 @@ void Marketplace::findAndPrintSD( vector<Market*>& unsolved, const int period ) 
     Logger* sdLog = LoggerFactory::getLogger( logName );
     World* world = scenario->getWorld();
 
-    // Remove any unsolved markets.
+    // Remove any markets that should not be solved. 
     for( vector<Market*>::iterator removeIter = unsolved.begin(); removeIter != unsolved.end(); ) {
         if ( !( *removeIter )->shouldSolve() ) {
             removeIter = unsolved.erase( removeIter );
@@ -734,7 +728,7 @@ void Marketplace::findAndPrintSD( vector<Market*>& unsolved, const int period ) 
     // Now determine supply and demand curves for each.
     for ( vector<Market*>::iterator iter = unsolved.begin(); iter != unsolved.end(); iter++ ) {
         SupplyDemandCurve sdCurve( *iter );
-        sdCurve.calculatePoints( numPointsForSD, world, period );
+        sdCurve.calculatePoints( numPointsForSD, world, this, period );
         sdCurve.print( sdLog );
     }
 
@@ -819,7 +813,6 @@ const vector<double> Marketplace::getSupplies( const int per ) const {
     for ( int i = 0; i < numMarkets; i++ ) {
         supplies[ i ] = markets[ i ][ per ]->getRawSupply();
     }
-
     return supplies;
 }
 
