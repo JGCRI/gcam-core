@@ -15,7 +15,7 @@ for( vector<object>::iterator <i>i</i> = <i>objectVector</i>.begin(); i != <i>ob
 }
 </code>
 
-Example of using an iterator to iteratoe over a container of pointers to objects:<br>
+Example of using an iterator to iterator over a container of pointers to objects:<br>
 <code>
 for( vector<object*>::iterator <i>i</i> = <i>pointerVector</i>.begin(); i != <i>pointerVector</i>.end(); i++ ) {
 	<i>( *i )</i>-><i>doSomething()</i>;
@@ -47,6 +47,13 @@ the memory location of the variable, so the original variable can be used in the
 passing by value. This is only effective if the object is non-elemental, or not an int, float, bool, etc. In this case, make sure to declare
 the argument const to prevent accidental modification.
 </ol>
+
+\subsection faqitem3 What does <code>virtual void <i>function name</i> = 0 </code>mean?
+When any function in a header file is declared with an = 0 after the definition, the class is an abstract class. An abstract class cannot 
+be instantiated, it is instead used as a base class for other classes. Abstract base classes may have code and member variables. Any function 
+which is defined with an =0 in the base class must be defined in the derived class, or the compiler will report an error. Abstract functions
+in base classes may have code, but the code is not called by default. It may be called from within the derived function using the syntax
+<code><i>BaseClassName</i>::</i>FunctionName()</i></code>.
 
 \section modelques Model Questions
 
