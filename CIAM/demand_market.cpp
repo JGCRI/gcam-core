@@ -18,23 +18,14 @@ using namespace std;
 DemandMarket::DemandMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
 Market( goodNameIn, regionNameIn, periodIn ) {
    demMktSupply = 0;
-   priceMarketPointer = 0;
 }
 
 void DemandMarket::derivedToDebugXML( ostream& out ) const {
    XMLWriteElement( demMktSupply, "DemandMarketSupply", out );
-   if ( priceMarketPointer != 0 ) {
-      XMLWriteElement( priceMarketPointer->getName(), "LinkedPriceMarket", out );
-   }
 }
 
 string DemandMarket::getType() const {
    return "DemandMarket";
-}
-
-void DemandMarket::setCompanionMarketPointer( Market* pointerIn ) {
-   assert( pointerIn );
-   priceMarketPointer = pointerIn;
 }
 
 void DemandMarket::initPrice() {

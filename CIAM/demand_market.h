@@ -26,7 +26,6 @@ public:
     DemandMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
     virtual void derivedToDebugXML( std::ostream& out ) const;
     virtual std::string getType() const;
-    virtual void setCompanionMarketPointer( Market* pointerIn );
 
     virtual void initPrice();
     virtual void setPrice( const double priceIn );
@@ -45,7 +44,6 @@ public:
     virtual bool shouldSolveNR() const;
 
 private:
-    Market* priceMarketPointer; //!< A pointer to the companion PriceMarket.
     double demMktSupply; //!< Raw supply
 };
 
