@@ -1012,12 +1012,14 @@ void Subsector::interpolateShareWeights( const int period ) {
         }
         if  ( endPeriod >= ( period - 1) ) {
             // If begining share weight is zero, then it wasn't changed by calibration so do not scale
-              if ( shrwts[ period - 1 ] > 0 ) {
+           // sjsTEMP. Change this to > zero once other share interps are changed. This was a mistake in the original vers.
+               if ( shrwts[ period - 1 ] >= 0 ) {
                 shareWeightLinearInterpFn( period - 1, endPeriod );
             }
         }
         
-        adjustTechnologyShareWeights( period );
+        // sjsTEMP. Turn this on once data is updated
+   //     adjustTechnologyShareWeights( period );
     }
 }
 
@@ -1585,9 +1587,10 @@ double Subsector::getShareWeight( const int period ) const {
 * \param scaleValue Multipliciatve scale factor for shareweight
 */
 void Subsector::scaleShareWeight( const double scaleValue, const int period ) {
-    
+
+    // sjsTEMP. Turn this on once data is updated
     if ( scaleValue != 0 ) {
-        shrwts[ period ] *= scaleValue;
+       // shrwts[ period ] *= scaleValue;
     }
 }
 /*! \brief returns share for this Subsector

@@ -395,7 +395,8 @@ void Sector::normalizeShareWeights( const int period ) {
                 }
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::DEBUG );
-                mainLog << "Shareweights normalized for sector " << name << " in region " << regionName << endl;
+                    // sjsTEMP. Turn this on once data is updated. Also move notice to separate log.
+             //   mainLog << "Shareweights normalized for sector " << name << " in region " << regionName << endl;
             }
         }
     }
