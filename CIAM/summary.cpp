@@ -87,6 +87,12 @@ void Summary::updatefuelcons( const map<string, double>& fuelinfo ) {
 		pecons[fmap->first] += fmap->second;
 		pecons["zTotal"] += fmap->second;
 	}
+   fmap=fuelinfo.find("shale oil");
+	if(fmap!=fuelinfo.end()) {
+		pecons[fmap->first] += fmap->second;
+		pecons["zTotal"] += fmap->second;
+	}
+
 	fmap=fuelinfo.find("natural gas");
 	if(fmap!=fuelinfo.end()) {
 		pecons[fmap->first] += fmap->second;
