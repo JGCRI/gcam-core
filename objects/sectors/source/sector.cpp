@@ -23,7 +23,6 @@
 #include "util/base/include/xml_helper.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
-#include "sectors/include/cpriceSubsector.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
@@ -139,9 +138,6 @@ void Sector::XMLParse( const DOMNode* node ){
         }
 		else if( nodeName == Subsector::getXMLNameStatic() ){
             parseContainerNode( curr, subsec, subSectorNameMap, new Subsector( regionName, name ) );
-        }
-		else if( nodeName == Cpricesubsector::getXMLNameStatic() ){
-            parseContainerNode( curr, subsec, subSectorNameMap, new Cpricesubsector( regionName, name ) );
         }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
         }
