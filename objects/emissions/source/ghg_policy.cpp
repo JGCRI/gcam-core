@@ -33,28 +33,11 @@ GHGPolicy::GHGPolicy( const string nameIn, const string unitIn, const string mar
     const int maxper = scenario->getModeltime()->getmaxper();
     constraint.resize( maxper );
     fixedTaxes.resize( maxper );
-    emissions.resize( maxper );
-}
-
-//! Clear member variables.
-void GHGPolicy::clear(){
-    name = "";
-    unit = "";
-    market = "";
-    isFixedTax = false;
-    constraint.clear();
-    fixedTaxes.clear();
-    emissions.clear();
 }
 
 //! Get the ghg policy name. 
 string GHGPolicy::getName() const {
     return name;
-}
-
-//! Set GHG emissions. Do we need this here?
-void GHGPolicy::setEmission( const double emission, const int period ) {
-    emissions[ period ] = emission;
 }
 
 /*! \brief Create a market for this GHG policy.
@@ -81,7 +64,10 @@ void GHGPolicy::setMarket( const string& regionName ) {
     } 
     // Otherwise solve the market, given the read-in constraint.
     else {
-        marketplace->setMarketToSolve ( name, regionName );
+        const Modeltime* modeltime = scenario->getModeltime();
+        for( int per = 1; per < modeltime->getmaxper(); ++per ){
+            marketplace->setMarketToSolve ( name, regionName, per );
+        }
     }
 }
 
@@ -221,10 +207,8 @@ void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();    
     for( int i = 0; i < scenario->getModeltime()->getmaxper(); i++ ){
         XMLWriteElementCheckDefault( constraint[ i ], "constraint", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-        XMLWriteElementCheckDefault( fixedTaxes[ i ], "fixedTax", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-        XMLWriteElementCheckDefault( emissions[ i ], "emissions", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( fixedTaxes[ i ], "fixedTax", out, tabs, 0.0, modeltime->getper_to_yr( i ) );    
     }
-
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
@@ -248,9 +232,6 @@ void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
     // Write out the fixed tax for the current year.
     XMLWriteElement( fixedTaxes[ period ], "fixedTax", out, tabs );
-    
-    // Write out the emissions for the periods.
-    XMLWriteElement( emissions[ period ], "emissions", out, tabs );
     
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), out, tabs );

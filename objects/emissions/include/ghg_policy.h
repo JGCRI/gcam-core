@@ -27,9 +27,7 @@ class Tabs;
 class GHGPolicy {
 public:
     GHGPolicy( const std::string nameIn = "", const std::string unitIn = "", const std::string marketIn = "", const bool isFixedTaxIn = false );
-    void clear();
     std::string getName() const;
-    void setEmission( const double emission, const int period );
     void setMarket( const std::string& regname );
     void addGHGSupply( const std::string& regionName, const int period ) const;
     void changePolicyToFixedTax( const std::string& regionName );
@@ -47,7 +45,6 @@ private:
     bool isFixedTax; //!< boolean to use fixed tax or constraint
     std::vector<double> constraint; //!< Emissions constraint by year(tgC or MTC)
     std::vector<double> fixedTaxes; //!< Fixed tax on Emissions by year($/TC)
-    std::vector<double> emissions; //!< Emissions by year(tgC or MTC)
 };
 
 #endif // _GHG_POLICY_H_
