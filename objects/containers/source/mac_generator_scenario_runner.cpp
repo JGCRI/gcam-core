@@ -84,7 +84,9 @@ void MACGeneratorScenarioRunner::runScenario( Timer& timer ) {
     if( conf->getBool( "createCostCurve", false ) ){
         calculateAbatementCostCurve();
     }
-
+    
+	// close MS Access database
+    closeDB();
 }
 
 /*! \brief Function to create a cost curve for the mitigation policy.
@@ -237,12 +239,19 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
 
 	XMLWriteClosingTag( "RegionalCostCurvesByPeriod", ccOut, &tabs ); 
     /*! \todo discounting and output */
+    const double cvrt90 = 2.212; //  convert '75 price to '90 price
+	void dboutput4(string var1name,string var2name,string var3name,string var4name,
+			   string uname,vector<double> dout);
+	vector<double> tempOutVec(maxPeriod);
 
     // Write out undiscounted costs by region.
 	XMLWriteOpeningTag( "RegionalUndiscountedCosts", ccOut, &tabs );
     typedef map<const string,double>::const_iterator constDoubleMapIter;
     for( constDoubleMapIter iter = regionalCosts.begin(); iter != regionalCosts.end(); iter++ ){
         XMLWriteElement( iter->second, "UndiscountedCost", ccOut, &tabs, 0, iter->first );
+	    // regional total cost of policy
+		tempOutVec[maxPeriod-1] = iter->second * cvrt90;
+		dboutput4(iter->first,"General","PolicyCostUndisc","AllYears","(millions)90US$",tempOutVec);
     }
 	XMLWriteClosingTag( "RegionalUndiscountedCosts", ccOut, &tabs );
     // End of writing undiscounted costs by region.
@@ -252,6 +261,9 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     typedef map<const string,double>::const_iterator constDoubleMapIter;
     for( constDoubleMapIter iter = regionalDiscountedCosts.begin(); iter != regionalDiscountedCosts.end(); iter++ ){
         XMLWriteElement( iter->second, "DiscountedCost", ccOut, &tabs, 0, iter->first );
+	    // regional total cost of policy
+		tempOutVec[maxPeriod-1] = iter->second * cvrt90;
+		dboutput4(iter->first,"General","PolicyCostDisc","AllYears","(millions)90US$",tempOutVec);
     }
 	XMLWriteClosingTag( "RegionalDiscountedCosts", ccOut, &tabs );
     // End of writing undiscounted costs by region.
@@ -334,6 +346,4 @@ void MACGeneratorScenarioRunner::printOutput() const {
     scenario->getMarketplace()->dbOutput(); // write global market info to database
     createMCvarid(); // create MC variable id's     
     
-    // close MS Access database
-    closeDB();
 }
