@@ -76,7 +76,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private AdapterNode currRootPointer;
     private boolean tableExistsFlag;
     
-    private final JFileChooser fc = new JFileChooser();
+    private final JFileChooser fc = new JFileChooser( "." );
     //private PopupListener popupListener;
     
     private static int LIST = 0;
@@ -671,15 +671,18 @@ public class ControlPanel extends javax.swing.JFrame {
                     addAttributeControl((Component)e.getSource(), name, index);
                 } else {    //node does not have "name", only children
                     AdapterNode newPointer = currRootPointer.getChild(name, "");
-
-                    //replace root pointer if it already exists or add new one if it does not
-                    if (rootPointers.size() > index+1) {
-                        //if the combo box already exists, change the pointer to its contents
-                        rootPointers.setElementAt(newPointer, index+1);
-                    } else {
-                        rootPointers.addElement(newPointer);
-                    }
-                    addQueryControl((Component)e.getSource(), index+1);
+					
+					// Need to check that the node has children.
+					if( newPointer != null ) {
+                    	//replace root pointer if it already exists or add new one if it does not
+                    	if (rootPointers.size() > index+1) {
+                        	//if the combo box already exists, change the pointer to its contents
+                        	rootPointers.setElementAt(newPointer, index+1);
+                    	} else {
+                        	rootPointers.addElement(newPointer);
+                    	}
+                    	addQueryControl((Component)e.getSource(), index+1);
+					}
                 }
             }
         });
@@ -819,7 +822,7 @@ public class ControlPanel extends javax.swing.JFrame {
         JPanel lefterPanel = new JPanel();
         
         Rectangle buttonSize = table.getCellRect(0, 0, true);
-        buttonSize = new Rectangle((int)buttonSize.getWidth()+200, (int)buttonSize.getHeight());
+        buttonSize = new Rectangle((int)buttonSize.getWidth()+400, (int)buttonSize.getHeight());
         Rectangle blankSize = new Rectangle((int)buttonSize.getWidth(), (int)buttonSize.getHeight()+4);
         lefterPanel.setLayout(new BoxLayout(lefterPanel, BoxLayout.Y_AXIS));
         
@@ -935,7 +938,7 @@ public class ControlPanel extends javax.swing.JFrame {
                     //remember the name of the parent of the node whose value
                     //  will be displayed in the left-side header
                     
-                    String lefterName = regionName + " " + currNode.toString();
+                    String lefterName = currNode.toLefterString();
                     String prevName;
                     if (!lefter.isEmpty()) {
                         prevName = (String)lefter.lastElement();
@@ -943,9 +946,10 @@ public class ControlPanel extends javax.swing.JFrame {
                     } else lefter.add(lefterName);
                     
                     //for nodes directly under a period node
-                    int index1 = lefterName.indexOf('<');
-                    int index2 = lefterName.indexOf('>');
-                    if (lefterName.substring(index1+1, index2).equals("period")) {
+                    String oldName = currNode.toString();
+                    int index1 = oldName.indexOf('<');
+                    int index2 = oldName.indexOf('>');
+                    if (oldName.substring(index1+1, index2).equals("period")) {
                         //remember the last index in values that contains confirmed entry
                         int lastValIndex = values.size();
                         
@@ -1076,7 +1080,7 @@ public class ControlPanel extends javax.swing.JFrame {
         table = new JTable(model);
         table.setCellSelectionEnabled(true);
         table.setTransferHandler(new TableTransferHandler());
-        
+        table.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
         //use panels to place the table appropriately
         JPanel tempPanel = new JPanel();
         tempPanel.setLayout(new BorderLayout());
