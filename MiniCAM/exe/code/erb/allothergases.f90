@@ -852,10 +852,10 @@
 	REAL*8 DefroR
 	INTEGER L,M
     
+	DefroR = 0
 	If (M.gt.1) then
-	Saveland(5,L,1)=HistLand(L,9)
-	DefroR = (Saveland(5,L,M-1)-Saveland(5,L,M))/15
-	if (DefroR.lt.0.0) DefroR=0.0
+		if (EmPart(4,L) .gt. 0) DefroR = EmPart(4,L)
+		if (EmPart(5,L) .gt. 0) DefroR = DefroR + EmPart(5,L)
     endif
 
 
