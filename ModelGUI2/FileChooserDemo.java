@@ -600,19 +600,29 @@ public class FileChooserDemo extends JFrame
   public void tableChanged(TableModelEvent e) {
 	  int row = e.getFirstRow();
 	  int column = e.getColumn();
-	  DataTableModel model = (DataTableModel)e.getSource();
-	  String columnName = model.getColumnName(column);
-	  Object data = model.getValueAtNew(row, column);
+	  //DataTableModel model = (DataTableModel)e.getSource();
+	  String columnName = tableModel.getColumnName(column);
+	  Object newValue = tableModel.getValueAtNew(row, column);
 
 	  //System.out.println("printing out -- data: " + data);
 	  System.out.println("row is: " + row + " and col is: " + column);
-		System.out.println("data is " + data + "!!! yay!!!!!!! :)");
+		System.out.println("newValue is " + newValue + "!!! yay!!!!!!! :)");
 	  System.out.println("printing out columnName " + columnName);
 	  
 	  System.out.println("time to alter the tree.... dun dun dun");
 	  
-	  
-	  // *** HERE! *********************************************************
+	  System.out.println("printing out 'treepath': " + tableModel.getValueAt(row, tableModel.getColumnCount()));
+	  TreePath pathAltered = ((TreePath)tableModel.getValueAt(row, tableModel.getColumnCount()));
+	  jtree.setSelectionPath(pathAltered);
+	  Node parent = ((DOMmodel.DOMNodeAdapter)pathAltered.getLastPathComponent()).getNode();
+	  //System.out.println(child.getParentNode());
+	  NodeList children = parent.getChildNodes();
+	  for(int i=0; i < children.getLength(); i++){
+		if ( children.item(i).getNodeType() == Element.TEXT_NODE ){
+			children.item(i).setNodeValue( (String)newValue );
+			jtree.setSelectionPath(pathAltered.pathByAddingChild( ((DOMmodel)jtree.getModel()).getAdapterNode(children.item(i))) );
+		}
+	  }
   }
   
 
@@ -639,9 +649,9 @@ public class FileChooserDemo extends JFrame
 		  path = new Vector();
 		  tempVector = new Vector();
 		  tempVector = recBuildParentList(tempNode, tempVector, path);
-		  tempVector.addElement(new TreePath(path));
-		  for (int i = 0; i < tempVector.size() -1; i++) {
-	                  if (filterMaps.containsKey(cols.get(i))) {
+		  tempVector.addElement(new TreePath(path.toArray()));
+		  for (int i = 0; i < tempVector.size() -2; i++) {
+	           if (filterMaps.containsKey(cols.get(i))) {
 	                          tempMap = (HashMap)filterMaps.get(cols.get(i));
                           } else {
                                   tempMap = new HashMap();
@@ -650,7 +660,7 @@ public class FileChooserDemo extends JFrame
                           	tempMap.put(tempVector.get(i), new Boolean(true));
                           	filterMaps.put(cols.get(i), tempMap);
 			  }
-                  }
+          }
 		  rows.addElement(tempVector);
 	  }
 	  tableModel = new DataTableModel(cols, rows, filterMaps, this);

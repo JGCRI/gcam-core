@@ -53,10 +53,13 @@ public class DataTableModel extends AbstractTableModel {
 
 	public Object getValueAt(int row, int column) {
 		Object ret = ((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).get(column);
+		return ret;
+		/*
 		if (checkClass(ret) == Double.class) {
 			return new Double((String)ret);
 		}
 		return ret;
+		*/
 		//return ((Vector)rows.get(((Integer)activeRows.get(row)).intValue())).get(column);
 	}
 
@@ -93,7 +96,8 @@ public class DataTableModel extends AbstractTableModel {
 	}
 
 	public Class getColumnClass(int column) {
-		return checkClass((((Vector)rows.get(0)).get(column)));
+		return String.class;
+		//return checkClass((((Vector)rows.get(0)).get(column)));
 	}
 
 	private int currFilter;
