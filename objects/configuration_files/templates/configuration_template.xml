@@ -17,6 +17,7 @@
 		<Value name="supplyDemandOutputFileName">SDCurves.csv</Value>
 		<Value name="GHGInputFileName">../cvs/objects/magicc/inputs/input_gases.emk</Value>
 		<Value name="dependencyGraphName">DependencyGraph</Value>
+		<Value name="costCurvesOutputFileName">cost_curves.xml</Value>
 		<!--END Developer Only Modifiable Variables-->
 	</Files>
 	<ScenarioComponents>
@@ -28,6 +29,9 @@
 		<!--START User Modifiable Variables-->
 		<Value name="scenarioName"></Value>
 		<!--END User Modifiable variables-->
+		<!--START Developer Only Modifiable Variables-->
+		<Value name="AbatedGasForCostCurves">CO2</Value>
+		<!--END Developer Only Modifiable Variables-->
 	</Strings>
 	<Bools>
 		<!--START User Modifiable Variables-->
@@ -42,6 +46,8 @@
 		<Value name="agBioMarketSet">0</Value>
 		<Value name="simulActive">1</Value>
 		<Value name="trackMaxED">0</Value>
+		<Value name="bugMinimal">0</Value>
+		<Value name="bugTracking">0</Value>
 		<Value name="PrintDependencyGraphs">0</Value>
 		<Value name="PrintValuesOnGraphs">0</Value>
 		<Value name="debugFindSD">0</Value>
@@ -58,5 +64,9 @@
 		<Value name="numPointsForCO2CostCurve">5</Value>
 		<!--END Developer Only Modifiable Variables-->
 	</Ints>
-	<Doubles/>
+	<Doubles>
+		<!--START User Modifiable Variables-->
+		<Value name="discountRate">0.05</Value>
+		<!--END User Modifiable variables-->
+	</Doubles>
 </Configuration>
