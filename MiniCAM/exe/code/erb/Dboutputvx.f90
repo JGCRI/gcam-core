@@ -673,6 +673,7 @@ END IF
 	DBAR(vl(ct,sct,3),:) = EDRIKLM(INCOAL,KH2,L,2:NM)
 	DBAR(vl(ct,sct,4),:) = EDRIKLM(IBMASS,KH2,L,2:NM)
 	DBAR(vl(ct,sct,5),:) = ESHILM(JHELCTRO,L,2:NM)*GHILM(JHELCTRO,2:NM)
+
 !	H2 PROD BY FUEL
 	sct = 02
 	sctstr(ct,sct) = 'H2 Prod'
@@ -685,7 +686,7 @@ END IF
       IF(vp)CALL ivid(0,ct,sct,7,'New H2 tech 2','EJ/yr')     
       IF(vp)CALL ivid(0,ct,sct,9,'Total','EJ/yr')     
 	DBAR(vl(ct,sct,1),:) =  &
-                       ESHILM(INOIL,L,2:NM)+ESHILM(INOIL+NH2,L,2:NM)
+                       ESHILM(INOIL,L,2:NM)+ESHILM(INOIL+NH2,L,2:NM)	! Scrubbed + non scrubbed
 	DBAR(vl(ct,sct,2),:) =  &
                        ESHILM(INGAS,L,2:NM)+ESHILM(INGAS+NH2,L,2:NM)
 	DBAR(vl(ct,sct,3),:) =  &
@@ -732,6 +733,7 @@ END IF
 	DBAR(vl(ct,sct,11),:) = SUM(SYNFUEL(2:4,1,L,2:NM),DIM=1)
 	DBAR(vl(ct,sct,12),:) = SUM(SYNLoss(:,2,L,2:NM),DIM=1)
 	DBAR(vl(ct,sct,13),:) = SUM(SYNLoss(:,1,L,2:NM),DIM=1)
+
 !	SYNFUEL PROD EFF (%)
 	sct = 12
 	sctstr(ct,sct) = 'SynProd Eff'
@@ -764,8 +766,34 @@ END IF
 	DBAR(vl(ct,sct,6),:) = CSEQbyFuel(3,2,L,2:NM)
 	DBAR(vl(ct,sct,7),:) = CSEQbyFuel(3,3,L,2:NM)
 
-
-
+!	Total conversion losses by fuel
+	sct = 18
+	sctstr(ct,sct) = 'ConvLosses'
+      IF(vp)CALL ivid(0,ct,sct,1,'Oil','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,2,'Gas','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,3,'Coal','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,4,'Biomass','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,5,'H2->Elec','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,6,'Elec->H2','EJ/yr')
+      IF(vp)CALL ivid(0,ct,sct,7,'Total','EJ/yr')
+ 	DBAR(vl(ct,sct,1),:) =	(EDRIKLM(INOIL,1,L,2:NM)-ESUILM(INOIL,L,2:NM)) + &	! elec gen
+ 							(EDRIKLM(JUOSCRUB,1,L,2:NM)-(ESUILM(JUOSCRUB,L,2:NM)*GUILM(JUOSCRUB,L,2:NM))) + &	! elec gen - scrubbed
+  							(EDRIKLM(INOIL,KH2,L,2:NM)-(ESHILM(INOIL,L,2:NM)+ESHILM(INOIL+NH2,L,2:NM))) + &	! H2 gen
+ 	DBAR(vl(ct,sct,2),:) =	(EDRIKLM(INGAS,1,L,2:NM)-ESUILM(INGAS,L,2:NM)) + &	! elec gen
+ 							(EDRIKLM(JUGSCRUB,1,L,2:NM)-(ESUILM(JUGSCRUB,L,2:NM)*GUILM(JUGSCRUB,L,2:NM))) + &	! elec gen - scrubbed
+ 							(SYNINPUT(INGAS,L,2:NM)-SYNFUEL(INGAS,1,L,2:NM)) + &	! syn gas-liq
+  							(EDRIKLM(INGAS,KH2,L,2:NM)-(ESHILM(INGAS,L,2:NM)+ESHILM(INGAS+NH2,L,2:NM))) + &	! H2 gen
+ 	DBAR(vl(ct,sct,3),:) =	(EDRIKLM(INCOAL,1,L,2:NM)-ESUILM(INCOAL,L,2:NM)) + &	! elec gen
+							(EDRIKLM(JUCSCRUB,1,L,2:NM)-(ESUILM(JUCSCRUB,L,2:NM)*GUILM(JUCSCRUB,L,2:NM))) + &	! elec gen - scrubbed
+  							(SYNINPUT(INCOAL,L,2:NM)-(SYNFUEL(3,1,L,2:NM)+SYNFUEL(3,2,L,2:NM))) + &	! syn COAL-gas&liq
+  							(EDRIKLM(INCOAL,KH2,L,2:NM)-(ESHILM(INCOAL,L,2:NM)+ESHILM(INCOAL+NH2,L,2:NM))) + &	! H2 gen
+	DBAR(vl(ct,sct,4),:) =	(EDRIKLM(IBMASS,1,L,2:NM)-ESUILM(7,L,2:NM)) + &	! elec gen
+ 							(SYNINPUT(IBMASS,L,2:NM)-(SYNFUEL(4,1,L,2:NM)+SYNFUEL(4,2,L,2:NM))) + &	! syn Biomass-gas&liq
+  							(EDRIKLM(IBMASS,KH2,L,2:NM)-ESHILM(IBMASS,L,2:NM)) + &	! H2 gen
+	DBAR(vl(ct,sct,5),:) =	(EDRIKLM(JUH2GEN,1,L,2:NM)-ESUILM(11,L,2:NM))	! Elec gen from H2
+	DBAR(vl(ct,sct,6),:) =	ESHILM(JHELCTRO,L,2:NM)*(GHILM(JHELCTRO,2:NM)-1.d0)	! H2 gen by Electrolysis
+	DBAR(vl(ct,sct,7),:) =	DBAR(vl(ct,sct,1),:) + DBAR(vl(ct,sct,2),:) + DBAR(vl(ct,sct,3),:) + &
+							DBAR(vl(ct,sct,4),:) + DBAR(vl(ct,sct,5),:) + DBAR(vl(ct,sct,6),:)
 !	REFINERY DEMAND FOR FUELS
 	sct = 20
 	sctstr(ct,sct) = 'Ref Demand'
@@ -779,6 +807,7 @@ END IF
 	DBAR(vl(ct,sct,3),:) = EDRILM(3,L,2:NM)
 	DBAR(vl(ct,sct,4),:) = EDRILM(IBMASS,L,2:NM)
 	DBAR(vl(ct,sct,99),:) = EDRLM(L,2:NM)
+
 !	Fossil Production
 	sct = 30
 	sctstr(ct,sct) = 'Cumulative Production'
@@ -790,6 +819,7 @@ END IF
 	DBAR(vl(ct,sct,2),:) = QISLM(2,L,2:NM)
 	DBAR(vl(ct,sct,3),:) = QISLM(3,L,2:NM)
 	DBAR(vl(ct,sct,4),:) = QISLM(4,L,2:NM)
+
 !	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	IF (WRITENEWTRAN) THEN
 !	****** New Tranportation Module
