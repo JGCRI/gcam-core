@@ -473,6 +473,7 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \param period Model period
 */
 void Subsector::initCalc( const int period ) {
+   const Modeltime* modeltime = scenario->getModeltime();
     
     int i = 0;
     // Set any fixed demands
@@ -502,7 +503,7 @@ void Subsector::initCalc( const int period ) {
     }
 
    // Pass forward any emissions coefficients
-    for ( i=0 ;i<notech && period > 0 && period < 8; i++ ) {
+    for ( i=0 ;i<notech && period > 0 && period < modeltime->getmaxper() ; i++ ) {
 		std::vector<std::string> ghgNames;
 		ghgNames = techs[i][period]->getGHGNames();
 		
