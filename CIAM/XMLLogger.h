@@ -28,7 +28,7 @@
 */
 
 class XMLLogger: public Logger {
-	friend LoggerFactory;
+	friend class LoggerFactory;
 private:
 	
 	//! The filestream to which data is written.
@@ -42,4 +42,5 @@ public:
 	virtual void logCompleteMessage( const int line, const string& file, const WarningLevel warningLevel, const string& message );	
 };
 
-#endif _XML_LOGGER_H_
+#endif // _XML_LOGGER_H_
+

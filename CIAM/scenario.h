@@ -53,8 +53,9 @@ public:
 	void toDebugXMLOpen( const int period, ostream& out ) const;
 	void toDebugXMLClose( const int period, ostream& out ) const;
 	string getName() const;
-	string static XMLCreateDate( const time_t& time );
+   static string XMLCreateDate( const time_t& time );
 	void run();
 };
 
 #endif // _SCENARIO_H_
+

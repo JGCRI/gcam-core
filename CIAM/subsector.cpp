@@ -113,7 +113,7 @@ void subsector::XMLParse( const DOMNode* node ) {
     DOMNode* currChild = 0;
     string nodeName;
     string childNodeName;
-    vector<technology*> techVec( modeltime->getmaxper(), 0 );
+    vector<technology*> techVec( modeltime->getmaxper() );
     technology* tempTech = 0;
     
     //! \pre Make sure we were passed a valid node.

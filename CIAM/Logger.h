@@ -40,7 +40,7 @@ class Logger;
 
 class PassToParentStreamBuf: streambuf {
 	
-	friend Logger;
+	friend class Logger;
 	
 public:
 	
@@ -77,7 +77,7 @@ class LoggerFactory;
 class Logger: public ostream {
 	
 	//! Friend declaration to allow LoggerFactory to create Loggers.
-	friend LoggerFactory;
+	friend class LoggerFactory;
 	
 public:
 	
@@ -183,7 +183,7 @@ protected:
 	
 	void printToScreenIfConfigured( const int line, const string& file, const WarningLevel warningLevel, const string& message );
 	
-	void static parseHeader( string& headerIn );
+	static void parseHeader( string& headerIn );
 	
 private:
 	
@@ -197,3 +197,4 @@ private:
 };
 
 #endif // _LOGGER_H_
+

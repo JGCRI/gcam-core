@@ -68,7 +68,7 @@ void tranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
     DOMNodeList* childNodeList = 0;
     DOMNode* currChild = 0;
     string childNodeName;
-    vector<technology*> techVec( modeltime->getmaxper(), 0 );
+    vector<technology*> techVec( modeltime->getmaxper() );
     tranTechnology* tempTech = 0;
     
     // additional read in for transportation
