@@ -398,18 +398,6 @@ void Sector::setMarket() {
     Any prices not initialized by read-in, are set by initXMLPrices(). */
 }
 
-/*! \brief Sets ghg tax from the market to individual technologies.
-*
-* \author Sonny Kim, Josh Lurz
-* \param ghgname name of the ghg to apply tax to
-* \param period model period
-*/
-void Sector::addGhgTax( const string& ghgname, const int period ) {    
-    for ( int i = 0; i < nosubsec; i++ ) {
-        subsec[ i ]->addGhgTax( ghgname, period );
-    }
-}
-
 /*!
 * \brief  Calculate subsector shares, adjusting for capacity limits.
 
@@ -655,6 +643,18 @@ void Sector::calcPrice( const int period ) {
 	}
 }
 
+/*! \brief Calculate the final supply price.
+* \detailed Calculates shares for the sector, then sets the price of the good
+* into the marketplace.
+*/
+void Sector::calcFinalSupplyPrice( const GDP* gdp, const int period ){
+    calcShare( period, gdp );
+    double goodPrice = getPrice( period );
+    // set market price of intermediate goods
+    Marketplace* marketplace = scenario->getMarketplace();
+    marketplace->setPrice( name, regionName, sectorprice[ period ], period );
+}
+
 /*! \brief returns the Sector price.
 *
 * Returns the weighted price. 
@@ -715,6 +715,17 @@ bool Sector::isCapacityLimitsInSector( const int period ) const {
         }
     }
     return anyCapacityLimits;
+}
+
+/*! \brief Adds final supply for the sector to the marketplace.
+*/
+void Sector::setFinalSupply( const int period ){
+    // supply and demand for intermediate and final good are set equal
+    double marketSupply = getOutput( period );
+
+    // set market supply of intermediate goods
+    Marketplace* marketplace = scenario->getMarketplace();
+    marketplace->addToSupply( name, regionName, marketSupply, period );
 }
 
 //! Set output for Sector (ONLY USED FOR energy service demand at present).
@@ -1353,6 +1364,7 @@ void Sector::updateSummary( const int period ) {
     }
     // set input to total fuel consumed by Sector
     // input in Sector is used for reporting purposes only
+    /*!\todo Something is very wrong here, input is calculated two very different ways */
     input[ period ] = summary[ period ].get_fmap_second("zTotal");
 }
 
