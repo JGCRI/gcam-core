@@ -22,7 +22,8 @@
 	IVOC = 6
 	IBC = 7
 	IOC = 8
-	
+	ICemt = 9
+
 	! If any of these are changed, change also in MagLink
 	IH245 = 10	! HFC245fa equiv
 	IH134 = 11	! HFC134a equiv
@@ -91,6 +92,27 @@
  
 ! Ag model: fraction of beef (in value terms) that is grain fed (as opposed to pasture)  mj 11/02
 	FBeefFrac = 1.0 - PASTOUT(L,M) * price(10,L) / price(3,L)
+
+! New CO2 Driver code for cement -JPL
+    CmtGamma = 3;
+    CementGDPperCap = 1000*GNPPPP(L,M)/ZLM(L,M) /8
+
+    if( CementGDPperCap > 0.0_8 ) then
+        CementDenom = CementGDPperCap**CmtGamma + CementGDPperCap**(-CmtGamma)
+    else
+        write( *, * ) "GDP Per capita 0 in cement emissions calculation. L: ", L, " M: ", M
+        CementDenom = 1_8
+    endif
+
+! src 1 : cement demand driver for low GDP
+    if( CementGDPperCap > 0.0_8 ) then
+        OGACT(ICemt,1,L,M) = CementGDPperCap * CementGDPperCap**(-CmtGamma) /CementDenom
+    else 
+        OGACT(ICemt,1,L,M) = 0.0_8
+    endif
+
+! src 2 : cement demand driver for high GDP
+	OGACT(ICemt,2,L,M) = ZLM(L,M) * CementGDPperCap**(CmtGamma) /CementDenom
 
 
 ! ****************************************************************************************
