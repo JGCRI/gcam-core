@@ -35,6 +35,8 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+// static initialize.
+const string Cpricesubsector::XML_NAME = "cpricesubsector";
 
 /*! \brief Default constructor.
 *
@@ -42,13 +44,9 @@ extern Scenario* scenario;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-const int LOGIT_EXP_DEFAULT = -3;
-
 Cpricesubsector::Cpricesubsector( const string regionName, const string sectorName )
 		:Subsector (regionName,  sectorName ) {
-	
 }
-
 
 /*! \brief calculate Subsector unnormalized shares including GHG tax
 *
@@ -110,3 +108,27 @@ void Cpricesubsector::calcShare(const int period, const GDP* gdp ) {
    }   
 }
 
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& Cpricesubsector::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& Cpricesubsector::getXMLNameStatic() {
+	return XML_NAME;
+}

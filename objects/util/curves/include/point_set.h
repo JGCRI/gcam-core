@@ -41,7 +41,6 @@ public:
     virtual PointSet* clone() const = 0;
     static const std::string& getXMLNameStatic();
     virtual const std::string& getXMLName() const;
-    virtual void toXML( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void XMLParse( const xercesc::DOMNode* node ) = 0;
     static PointSet* getPointSet( const std::string& type );
     virtual double getY( const double xValue ) const = 0;
@@ -61,6 +60,7 @@ public:
     virtual double getNearestXAbove( const double x ) const = 0;
     virtual double getNearestYBelow( const double x ) const = 0;
     virtual double getNearestYAbove( const double x ) const = 0;
+    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void invertAxises() = 0;
 protected:
     static const std::string XML_NAME; //!< The name of the XML tag associated with this object.

@@ -300,8 +300,8 @@ double PointSetCurve::getDiscountedValue( const double lowDomain, const double h
 }
 
 //! Print out the curve to an XML File
-void PointSetCurve::toXMLDerived( ostream& out, Tabs* tabs ) const {
-    pointSet->toXML( out, tabs );
+void PointSetCurve::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
+    pointSet->toInputXML( out, tabs );
 }
 
 //! Parse a curve from a DOM tree.

@@ -33,6 +33,9 @@ class Tabs;
 
 class technology
 {
+private:
+	static const std::string XML_NAME1D; //!< tag name for toInputXML
+	static const std::string XML_NAME2D; //!< tag name for toInputXML
 protected:
     std::string name; //!< technology name
     std::string unit; //!< unit of final product from technology
@@ -89,8 +92,12 @@ public:
     virtual void XMLParse( const xercesc::DOMNode* tempnode ); // initialize technology with xml data
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
     void completeInit();
-    virtual void toXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+	virtual const std::string& getXMLName1D() const;
+	static const std::string& getXMLNameStatic1D();
+	virtual const std::string& getXMLName2D() const;
+	static const std::string& getXMLNameStatic2D();
     void initCalc( );
     // sets ghg tax to technologies
     void addGhgTax( const std::string ghgname, const std::string regionName, const std::string sectorName, const int per ); 

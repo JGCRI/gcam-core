@@ -36,7 +36,7 @@ protected:
 public: 
     SubRenewableResource();
     virtual std::string getType() const; 
-    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
+    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
     virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
     virtual void toOutputXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
     virtual void initializeResource(); 

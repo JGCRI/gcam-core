@@ -6,7 +6,7 @@
 
 /*! 
 * \file ghg.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Ghg class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -21,7 +21,7 @@ class Emcoef_ind;
 class Tabs;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Ghg class describes a single gas with
 * attributes of gas name, unit, emissions coefficients,
 * and the calculated emissions.
@@ -37,8 +37,10 @@ public:
     virtual ~Ghg();
     void clear();
     void XMLParse( const xercesc::DOMNode* tempnode );
-    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+	virtual const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
     double getGHGValue( const std::string& regionName, const std::string& fuelName, const std::string& prodName, const double efficiency, const int period) const;
     virtual void calcEmission( const std::string& regionName, const std::string& fuelname, const double input, const std::string& prodname, const double output );
     void calcIndirectEmission( const double input, const std::string& fuelname, const std::vector<Emcoef_ind>& emcoef_ind  );
@@ -51,14 +53,14 @@ public:
     double getEmissInd() const;
     double getEmissCoef() const;
     void setEmissCoef( const double emissCoefIn );
-	 bool getEmissionsInputStatus() const;
-	 void setEmissionsInputStatus();
+	bool getEmissionsInputStatus() const;
+	void setEmissionsInputStatus();
 protected:
     std::string name; //!< name of ghg gas
     std::string unit; //!< unit for ghg gas
     std::string storageName; //!< name of ghg gas storage 
     double rmfrac; //!< fraction of carbon removed from fuel
-	 bool isGeologicSequestration; //!< is geologic sequestration, true or false
+	bool isGeologicSequestration; //!< is geologic sequestration, true or false
     double storageCost; //!< storage cost associated with the remove fraction
     double gwp; //!< global warming poential
     double emission; //!< emissions (calculated)
@@ -69,9 +71,10 @@ protected:
     double emissCoefPrev; //!< emissions coefficient passed forward from previous period
     double emissFuel; //!< implied emissions from total fuel consumption
     double emissInd; //!< indirect emissions
-	 double inputEmissions;  //!< input emissions for this object
-	 bool emissionsWereInput;  //!< toggle to indicate that emissions were input for this object
-
+	double inputEmissions;  //!< input emissions for this object
+	bool emissionsWereInput;  //!< toggle to indicate that emissions were input for this object
+private:
+	const static std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _GHG_H_

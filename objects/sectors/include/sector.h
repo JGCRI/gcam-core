@@ -74,14 +74,17 @@ public:
     virtual ~Sector();
     virtual void clear();
     std::string getName() const;
+	virtual const std::string& getXMLName() const = 0;
     virtual void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
-    virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual void XMLDerivedClassParseAttr( const xercesc::DOMNode* node );
-    virtual void toXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
+    virtual void XMLDerivedClassParseAttr( const xercesc::DOMNode* node ) = 0; // Remove me after fixing input files.
+    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toXMLDerivedClass( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
+    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
+	virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     virtual void setMarket();
     void addGhgTax( const std::string& ghgname, const int period );
     virtual void calcShare( const int period, const GDP* gdp );
@@ -103,9 +106,9 @@ public:
     void emission( const int period );
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period );
-    virtual void outputfile() const;
+    virtual void csvOutputFile() const;
     void MCoutput_subsec() const;
-    virtual void MCoutput() const;
+    virtual void dbOutput() const;
     void subsec_outfile() const;
     double getTotalCarbonTaxPaid( const int period ) const;
     std::map<std::string, double> getfuelcons( const int period ) const;

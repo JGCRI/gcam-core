@@ -22,10 +22,12 @@
 #include "containers/include/world.h"
 #include "marketplace/include/marketplace.h"
 
-extern Scenario* scenario;
-
 using namespace std;
 using namespace xercesc;
+
+extern Scenario* scenario;
+// static initialize.
+const string Ghg::XML_NAME = "GHG";
 
 Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, const double gwpIn, const double emissCoefIn ){
     name = nameIn;
@@ -129,13 +131,10 @@ void Ghg::XMLParse(const DOMNode* node)
 }
 
 //! Writes datamembers to datastream in XML format.
-void Ghg::toXML( ostream& out, Tabs* tabs ) const {
+void Ghg::toInputXML( ostream& out, Tabs* tabs ) const {
 
-    tabs->writeTabs( out );
-    out << "<GHG name=\"" << name << "\">" << endl;
-
-    tabs->increaseIndent();
-
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+    
     // write xml for data members
     XMLWriteElement( unit, "unit", out, tabs );
     if( emissionsWereInput ) {
@@ -149,19 +148,13 @@ void Ghg::toXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 0.0 );
     // done writing xml for data members.
 
-    tabs->decreaseIndent();
-
-    tabs->writeTabs( out );
-    out << "</GHG>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Writes datamembers to debugging datastream in XML format.
 void Ghg::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    tabs->writeTabs( out );
-    out << "<GHG name=\"" << name << "\">" << endl;
-
-    tabs->increaseIndent();
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
     // write xml for data members
     XMLWriteElement( unit, "unit", out, tabs );
@@ -178,10 +171,32 @@ void Ghg::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( emissInd, "emissInd", out, tabs );
     // done writing xml for data members.
 
-    tabs->decreaseIndent();
+	XMLWriteClosingTag( getXMLName(), out, tabs );
+}
 
-    tabs->writeTabs( out );
-    out << "</GHG>" << endl;
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& Ghg::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& Ghg::getXMLNameStatic() {
+	return XML_NAME;
 }
 
 /*! Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients

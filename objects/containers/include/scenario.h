@@ -45,7 +45,7 @@ public:
     World* getWorld();
     void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
-    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLOpen( const int period, std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLClose( const int period, std::ostream& out, Tabs* tabs ) const;
     std::string getName() const;
@@ -53,6 +53,7 @@ public:
     const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
 private:
+    const static std::string XML_NAME; //!< node name for toXML methods
     Modeltime* modeltime; //!< The modeltime for the scenario
     World* world; //!< The world object
     Marketplace* marketplace; //!< The goods and services marketplace.

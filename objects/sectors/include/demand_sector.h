@@ -40,6 +40,8 @@ class GDP;
 
 class DemandSector: public Sector
 {
+private:
+	static const std::string XML_NAME; //!< node name for toXML methods
 protected:
     bool perCapitaBased; //!< demand equation based on per capita GNP, true or false.
     double pElasticityBase; //!< base year energy price elasticity
@@ -52,7 +54,6 @@ protected:
     std::vector<double> pElasticity; //!< price elasticity.
     std::vector<double> aeei; //!< autonomous end-use energy intensity parameter
     std::vector<double> techChangeCumm; //!< cummulative technical change on end-use service
-    virtual void calcPrice( const int period );
     virtual void printStyle( std::ostream& outStream ) const;
 
 public:
@@ -61,16 +62,15 @@ public:
     virtual void clear();
     virtual void XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
     virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
-    virtual void toXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toXMLDerivedClass( std::ostream& out, Tabs* tabs ) const;
-    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void setMarket();
-    virtual void calcShare( const int period, const GDP* gdp );
+    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+	virtual const std::string& getXMLName() const; 
+	static const std::string& getXMLNameStatic();
     virtual void calc_pElasticity( const int period );
     virtual void aggdemand( const GDP* gdp, const int period ); 
-    virtual void outputfile() const;
-    virtual void MCoutput() const;
+    virtual void csvOutputFile() const;
+    virtual void dbOutput() const;
     virtual void calibrateSector( const int period );
     double getService( const int period ) const;
     double getServiceWoTC( const int period ) const;

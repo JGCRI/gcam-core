@@ -26,7 +26,8 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-
+// static initialize.
+const string SubResource::XML_NAME = "subresource";
 const double SCALE_FACTOR_DEFAULT = 1;
 const double GDP_EXPANS_DEFAULT = 1;
 
@@ -54,7 +55,6 @@ SubResource::SubResource() {
 
 //! Destructor.
 SubResource::~SubResource() {
-    
     for ( vector<Grade*>::iterator outerIter = grade.begin(); outerIter != grade.end(); outerIter++ ) {
         delete *outerIter;
     }
@@ -77,8 +77,7 @@ void SubResource::clear(){
 }
 
 //! Initialize member variables from xml data
-void SubResource::XMLParse( const DOMNode* node )
-{	
+void SubResource::XMLParse( const DOMNode* node ){	
     DOMNodeList* nodeList = 0;
     DOMNode* curr = 0;
     string nodeName;
@@ -103,8 +102,7 @@ void SubResource::XMLParse( const DOMNode* node )
         if( nodeName == "#text" ) {
             continue;
         }
-        
-        else if( nodeName == "grade" ){
+		else if( nodeName == Grade::getXMLNameStatic() ){
             parseContainerNode( curr, grade, gradeNameMap, new Grade() );
         }
         else if( nodeName == "annualprod" ){
@@ -134,9 +132,11 @@ void SubResource::XMLParse( const DOMNode* node )
         else if( nodeName == "scaleFactor" ){
             XMLHelper<double>::insertValueIntoVector( curr, scaleFactor, modeltime );
         }
-        else {
-            XMLDerivedClassParse( nodeName, curr );
+        else if( XMLDerivedClassParse( nodeName, curr ) ){
         }  
+         else {
+            cout << "Unrecognized text string: " << nodeName << " found while parsing SubResource." << endl;
+        }
     }
     
 }
@@ -159,19 +159,15 @@ void SubResource::initializeResource( ) {
 }	
 
 //! Write datamembers to datastream in XML format for replicating input file.
-void SubResource::toXML( ostream& out, Tabs* tabs ) const {
+void SubResource::toInputXML( ostream& out, Tabs* tabs ) const {
     
     const Modeltime* modeltime = scenario->getModeltime();
     int m = 0;
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<subresource name=\"" << name << "\">"<< endl;
-    
-    // increase the indent.
-    tabs->increaseIndent();
+
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     // write the xml for the class members.
-    
+
     for(m = 0; m < static_cast<int>(environCost.size() ); m++ ) {
         XMLWriteElementCheckDefault(environCost[m],"environCost",out, tabs, 0.0 ,modeltime->getper_to_yr(m));
     }
@@ -201,15 +197,10 @@ void SubResource::toXML( ostream& out, Tabs* tabs ) const {
     
     // write out the grade objects.
     for( vector<Grade*>::const_iterator i = grade.begin(); i != grade.end(); i++ ){	
-        ( *i )->toXML( out, tabs );
+        ( *i )->toInputXML( out, tabs );
     }
     
-    // decrease the indent.
-    tabs->decreaseIndent();
-    
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</subresource>" << endl;
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write datamembers to datastream in XML format for outputting results
@@ -217,18 +208,14 @@ void SubResource::toOutputXML( ostream& out, Tabs* tabs ) const {
     
     const Modeltime* modeltime = scenario->getModeltime();
     int m = 0;
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<subresource name=\"" << name << "\">"<< endl;
-    
-    // increase the indent.
-    tabs->increaseIndent();
+
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     // write the xml for the class members.
     
     // write out the grade objects.
     for( vector<Grade*>::const_iterator i = grade.begin(); i != grade.end(); i++ ){	
-        ( *i )->toXML( out, tabs );
+        ( *i )->toInputXML( out, tabs );
     }
     
     for(m = 0; m < static_cast<int>(annualprod.size() ); m++ ) {
@@ -265,23 +252,13 @@ void SubResource::toOutputXML( ostream& out, Tabs* tabs ) const {
     // write out anything specific to the derived classes
     toXMLforDerivedClass( out, tabs );
     
-    // decrease the indent.
-    tabs->decreaseIndent();
-    
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</subresource>" << endl;
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 
 void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<subresource name=\"" << name << "\">"<< endl;
-    
-    // increase the indent.
-    tabs->increaseIndent();
+    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     // write the xml for the class members.
     XMLWriteElement( nograde, "nograde", out, tabs );
@@ -311,32 +288,48 @@ void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
     // write out anything specific to the derived classes
     toXMLforDerivedClass( out, tabs );
     
-    // decrease the indent.
-    tabs->decreaseIndent();
-    
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</subresource>" << endl;
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& SubResource::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& SubResource::getXMLNameStatic() {
+	return XML_NAME;
+}
 
 //! return SubResource name
 string SubResource::getName() const {
     return name;
 }
 
-double SubResource::getPrice(int per)
-{
+double SubResource::getPrice(int per){
     return rscprc[per] ;
 }
 
-int SubResource::getMaxGrade() // returns total number of grades
-{
+int SubResource::getMaxGrade() { // returns total number of grades
     return nograde;
 }
 
-void SubResource::cumulsupply(double prc,int per)
-{	
+void SubResource::cumulsupply(double prc,int per){	
     const Modeltime* modeltime = scenario->getModeltime();
     int i=0,maxgrd;
     double slope=0;
@@ -418,8 +411,7 @@ void SubResource::cumulsupply(double prc,int per)
     //available[per]=available[0]-cumulprod[per];
 }
 
-double SubResource::getCumulProd(int per)
-{
+double SubResource::getCumulProd(int per){
     return cumulprod[per];
 }
 
@@ -495,20 +487,17 @@ void SubResource::annualsupply( int per, const GDP* gdp, double price, double pr
 }
 
 //! return annual production for period
-double SubResource::getAnnualProd(int per)
-{
+double SubResource::getAnnualProd(int per){
     return annualprod[per];
 }
 
 //! return available resource for period
-double SubResource::getAvailable(int per)
-{
+double SubResource::getAvailable(int per){
     return available[per];
 }
 
 //! write SubResource output to database
-void SubResource::MCoutput( const string &regname, const string& secname )
-{
+void SubResource::dbOutput( const string &regname, const string& secname ){
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
@@ -552,7 +541,7 @@ void SubResource::MCoutput( const string &regname, const string& secname )
 }
 
 //! write SubResource output to file
-void SubResource::outputfile( const string &regname, const string& sname) {
+void SubResource::csvOutputFile( const string &regname, const string& sname) {
     const Modeltime* modeltime = scenario->getModeltime();
     // function protocol
     void fileoutput3( string var1name,string var2name,string var3name,
@@ -575,20 +564,12 @@ void SubResource::outputfile( const string &regname, const string& sname) {
 // Since these are very small changes, keep in same file for simplicity
 // ************************************************************
 
-//! Returns the type of the Resource.
-string SubDepletableResource::getType() const {
-    return "Depletable";
+//! Parses any input variables specific to this derived class
+bool SubDepletableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
+    return false;
 }
 
 //! Parses any input variables specific to this derived class
-void SubDepletableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
-}
-
-//! Returns the type of the Resource.
-string SubFixedResource::getType() const {
-    return "Fixed";
-}
-
-//! Parses any input variables specific to this derived class
-void SubFixedResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
+bool SubFixedResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
+    return false;
 }

@@ -57,6 +57,7 @@ private:
     std::vector<int> popPeriodToYear; //!< Index of population timesteps.
     std::map<int,int> yearToModelPeriod; //!< Year to model period map object.
     std::map<int,int> yearToPopPeriod; //!< Year to population period map object.
+	static const std::string XML_NAME; //!< node name for toXML methods
 
     // member functions
     void initElementalMembers();
@@ -65,8 +66,10 @@ public:
     Modeltime();
     void clear();
     void XMLParse( const xercesc::DOMNode* node );
-    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+	const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
     void set(); // calculates parameters
     int getstartyr() const { return startYear; }
     int getendyr() const { return endYear; }

@@ -30,10 +30,12 @@ extern "C" { double _stdcall AG2CO2EMISSIONS( int&, int& ); };
 extern "C" { void _stdcall AG2LINKOUT( void ); };
 #endif
 
-extern Scenario* scenario;
-
 using namespace std;
 using namespace xercesc;
+
+extern Scenario* scenario;
+// static initialize.
+const string AgSector::XML_NAME = "agsector";
 
 int AgSector::regionCount = 0;
 const int AgSector::numAgMarkets = 12;
@@ -129,76 +131,54 @@ void AgSector::XMLParse( const DOMNode* node ) {
 }
 
 //! Output the results in XML format.
-void AgSector::toXML( ostream& out, Tabs* tabs ) const {
-   const Modeltime* modeltime = scenario->getModeltime();
-   int iter = 0;
-   
-   // write the beginning tag.
-   tabs->writeTabs( out );
-   out << "<agsector name=\"" << name << "\">"<< endl;
-   
-   // increase the indent.
-   tabs->increaseIndent();
+void AgSector::toInputXML( ostream& out, Tabs* tabs ) const {
+   XMLWriteOpeningTag( getXMLName(), out, tabs, name );
    
    // write the xml for the class members.
-   // write out the market string.
    XMLWriteElement( regionNumber, "regionNumber", out, tabs );
    XMLWriteElement( numAgMarkets, "numAgMarkets", out, tabs );
    
-   for( iter = 0; iter < static_cast<int>( gdp.size() ); ++iter ){
+   const Modeltime* modeltime = scenario->getModeltime();
+   for( unsigned int iter = 0; iter < gdp.size(); ++iter ){
       XMLWriteElement( gdp[ iter ], "gdp", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    
-   for( iter= 0; iter < static_cast<int>( population.size() ); ++iter ) {
+   for( unsigned int iter = 0; iter < population.size(); iter++ ) {
       XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getPopPeriodToYear( iter ) );
    }
    
    XMLWriteElement( biomassPrice, "biomassprice", out, tabs );
-   
-   // finished writing xml for the class members.
-   
-   // decrease the indent.
-   tabs->decreaseIndent();
-   
-   // write the closing tag.
-   tabs->writeTabs( out );
-   out << "</agsector>" << endl;
+   XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Print the internal variables to XML output.
 void AgSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-   int iter = 0;
    int tempRegion = regionNumber; // Needed b/c function is constant.
    const Modeltime* modeltime = scenario->getModeltime();
    
-   // write the beginning tag.
-   tabs->writeTabs( out );
-   out << "<agsector name=\"" << name << "\">"<< endl;
-   
-   // increase the indent.
-   tabs->increaseIndent();
+   XMLWriteOpeningTag( getXMLName(), out, tabs, name );
    
    // write the xml for the class members.
    // write out the market string.
    XMLWriteElement( regionNumber, "regionNumber", out, tabs );
    XMLWriteElement( numAgMarkets, "numAgMarkets", out, tabs );
    
-   for( iter = 0; iter < static_cast<int>( gdp.size() ); iter++ ){
+   for( int iter = 0; iter < static_cast<int>( gdp.size() ); iter++ ){
       XMLWriteElement( gdp[ iter ], "gdp", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    
    #if(__HAVE_FORTRAN__)
-   for ( iter = 0; iter < modeltime->getmaxper(); iter++ ){
+   for ( int iter = 0; iter < modeltime->getmaxper(); iter++ ){
       XMLWriteElement( GETGNP( tempRegion, iter ), "gdpFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    #endif
    
-   for( iter = 0; iter < static_cast<int>( population.size() ); iter++ ) {
+   for( int iter = 0; iter < static_cast<int>( population.size() ); iter++ ) {
       XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getPopPeriodToYear( iter ) );
    }
    
    #if(__HAVE_FORTRAN__)
-   for ( iter = 1; iter < modeltime->getmaxpopdata(); iter++ ){
+   for ( int iter = 1; iter < modeltime->getmaxpopdata(); iter++ ){
       XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, tabs, modeltime->getPopPeriodToYear( iter ) );
    }
    #endif
@@ -209,24 +189,44 @@ void AgSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    XMLWriteElement( GETBIOMASSPRICE(), "biomasspriceFromFortran", out, tabs );
    #endif
    
-   for( iter = 0; iter < static_cast<int>( prices[ period ].size() ); iter++ ) {
+   for( int iter = 0; iter < static_cast<int>( prices[ period ].size() ); iter++ ) {
       XMLWriteElement( prices[ period ][ iter ], "prices", out, tabs, modeltime->getper_to_yr( period ) );
    }
    
-   for( iter = 0; iter < static_cast<int>( supplies[ period ].size() ); iter++ ) {
+   for( int iter = 0; iter < static_cast<int>( supplies[ period ].size() ); iter++ ) {
       XMLWriteElement( supplies[ period ][ iter ], "supplies", out, tabs, modeltime->getper_to_yr( period ) );
    }	
-   for( iter = 0; iter < static_cast<int>( demands[ period ].size() ); iter++ ) {
+   for( int iter = 0; iter < static_cast<int>( demands[ period ].size() ); iter++ ) {
       XMLWriteElement( demands[ period ][ iter ], "demands", out, tabs, modeltime->getper_to_yr( period ) );
    }
    // finished writing xml for the class members.
    
-   // decrease the indent.
-   tabs->decreaseIndent();
-   
-   // write the closing tag.
-   tabs->writeTabs( out );
-   out << "</agsector>" << endl;
+   XMLWriteClosingTag( getXMLName(), out, tabs );
+}
+
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& AgSector::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& AgSector::getXMLNameStatic() {
+	return XML_NAME;
 }
 
 //! Set the AgLU gdps from the regional gdp data.

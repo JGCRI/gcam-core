@@ -18,7 +18,7 @@
 // Forward declarations.
 class Population;
 class Resource;
-class Sector;
+class SupplySector;
 class DemandSector;
 class AgSector;
 class GHGPolicy;
@@ -54,8 +54,10 @@ public:
     void initElementalMembers();
     void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
-    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+	virtual const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
     std::string getName() const;
     void writeBackCalibratedValues( const int period );
     void setupCalibrationMarkets();
@@ -77,8 +79,8 @@ public:
     void emission( const int period );
     void calcEmissFuel( const int period );
     void emissionInd( const int period );
-    void outputFile() const;
-    void MCoutput() const;
+    void csvOutputFile() const;
+    void dbOutput() const;
     void findSimul( const int period );
     void calcAgSector( const int period );
     void initializeAgMarketPrices( const std::vector<double>& pricesIn );
@@ -94,6 +96,7 @@ public:
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
 
 private:
+    const static std::string XML_NAME; //!< node name for toXML method.
     std::string name; //!< Region name
     int noGhg; //!< number of ghg for market solution in each region
     int numResources; //!< number of resources in each region
@@ -104,7 +107,7 @@ private:
     Population* population; //!< Population object
     GDP* gdp; //!< GDP object.
     std::vector<Resource*> resources; //!< vector of pointers toresource objects
-    std::vector<Sector*> supplySector; //!< vector of pointers to supply sector objects
+    std::vector<SupplySector*> supplySector; //!< vector of pointers to supply sector objects
     std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects
     AgSector* agSector; //!< Agricultural sector
     std::vector<GHGPolicy*> ghgMarket; //!< vector of pointers to ghg market objects, container for constraints and emissions

@@ -41,7 +41,7 @@ using namespace xercesc;
 
 // define file (ofstream) objects for outputs, debugging and logs
 /* \todo Finish removing globals-JPL */
-ofstream bugoutfile, outfile, logfile;	
+ofstream bugoutfile, outFile, logfile;	
 
 Scenario* scenario = 0; // model scenario info
 time_t ltime;

@@ -35,34 +35,20 @@ MarketInfo::~MarketInfo(){
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void MarketInfo::toDebugXML( ostream& out, Tabs* tabs ) const {
-   // write the beginning tag.
-   tabs->writeTabs( out );
-   out << "<MarketInfo>" << endl;
-   
-   // increase the indent.
-   tabs->increaseIndent();
+	XMLWriteOpeningTag( "MarketInfo", out, tabs );
   
    // Write out all the name value pairs.
    for( map<string,double>::const_iterator iter = infoMap.begin(); iter != infoMap.end(); iter++ ){
-       tabs->writeTabs( out );
-       out << "<Pair>" << endl;
-       
-       tabs->increaseIndent();
+       XMLWriteOpeningTag( "Pair", out, tabs );
+	   
        XMLWriteElement( iter->first, "key", out, tabs );
        XMLWriteElement( iter->second, "value", out, tabs );
-       tabs->decreaseIndent();
 
-       tabs->writeTabs( out );
-       out << "</Pair>" << endl;
+	   XMLWriteClosingTag( "Pair", out, tabs );
    }
    // finished writing xml for the class members.
    
-   // decrease the indent.
-   tabs->decreaseIndent();
-   
-   // write the closing tag.
-   tabs->writeTabs( out );
-   out << "</MarketInfo>" << endl;
+   XMLWriteClosingTag( "MarketInfo", out, tabs );
 }
 
 /*! \brief Set a name and value for a piece of information related to the market.

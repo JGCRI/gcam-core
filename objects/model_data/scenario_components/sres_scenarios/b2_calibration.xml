@@ -2,6 +2,19 @@
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Son H. Kim (PNNL) -->
 <scenario name="B2 Reference" date="2003-01-11T09:30:47-05:00">
 	<summary>"SRES B2 Scenario is used for this Reference Scenario"</summary>
+	<modeltime>
+		<startyear>1975</startyear>
+		<interyear1>2005</interyear1>
+		<interyear2>2020</interyear2>
+		<endyear>2095</endyear>
+		<startReportYear>1990</startReportYear>
+		<timestep1>15</timestep1>
+		<timestep2>15</timestep2>
+		<timestep3>15</timestep3>
+		<popbegin>1960</popbegin>
+		<dataend>2095</dataend>
+		<datatimestep>15</datatimestep>
+	</modeltime>
 	<world>
 		<region name="USA">
 			<calibrationdata>

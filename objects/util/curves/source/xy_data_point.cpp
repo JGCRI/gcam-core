@@ -83,8 +83,8 @@ void XYDataPoint::print( ostream& out ) const {
 }
 
 //! Print the datapoint to an XML stream.
-void XYDataPoint::toXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( DataPoint::getXMLNameStatic(), out, tabs, 0, "", getXMLName() );
+void XYDataPoint::toInputXML( ostream& out, Tabs* tabs ) const {
+    XMLWriteOpeningTag( DataPoint::getXMLNameStatic(), out, tabs, "", 0, getXMLName() );
     XMLWriteElement( x, "x", out, tabs );
     XMLWriteElement( y, "y", out, tabs );
     XMLWriteClosingTag( DataPoint::getXMLNameStatic(), out, tabs );

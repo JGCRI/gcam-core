@@ -440,7 +440,7 @@ void XMLWriteElement( const T value, const std::string elementName, std::ostream
 * \param year Optional year value to print as an attribute.
 * \param type Optional type name to print as an attribute. 
 */
-inline void XMLWriteOpeningTag( const std::string& elementName, std::ostream& out, Tabs* tabs,  const int year = 0, const std::string& name = "", const std::string& type = "" ) {
+inline void XMLWriteOpeningTag( const std::string& elementName, std::ostream& out, Tabs* tabs, const std::string& name = "", const int year = 0, const std::string& type = "" ) {
 
     tabs->writeTabs( out );
     out << "<" << elementName;
@@ -653,7 +653,7 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
               delete newNode;
           } else {
             newNode->XMLParse( node );
-            insertToVector.push_back( newNode );
+			insertToVector.push_back( newNode );
             corrMap[ newNode->getName() ] = static_cast<int>( insertToVector.size() ) - 1;
           }
     }

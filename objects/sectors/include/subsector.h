@@ -36,6 +36,8 @@ class GDP;
 
 class Subsector
 {
+private:
+	static const std::string XML_NAME; //!< node name for toXML methods
 protected:
     bool debugChecking; //!< General toggle to turn on various checks
     std::string name; //!< subsector name
@@ -81,9 +83,11 @@ public:
     void XMLParse( const xercesc::DOMNode* tempNode );
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     void completeInit();
-    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+	virtual const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
     virtual void calcPrice( const int period );
     double getPrice( const int period ) const;
     double getCO2EmFactor(int period) const;
@@ -113,7 +117,7 @@ public:
     double getFixedSupply( const int period ) const;
     void resetFixedSupply( const int period );
     double getTotalCalOutputs( const int period ) const;
-    void outputfile() const; 
+    void csvOutputFile() const; 
     void MCoutputA() const; 
     void MCoutputB() const; 
     void MCoutputC() const; 

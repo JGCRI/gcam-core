@@ -6,7 +6,7 @@
 
 /*! 
 * \file world.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The World class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -24,7 +24,7 @@ class Curve;
 class Tabs;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which contains all the model's regions.
 * \author Sonny Kim
 */
@@ -37,15 +37,17 @@ public:
     void setupCalibrationMarkets();
     void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
-    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+	const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
     void initCalc( const int period ); 
     void calc( const int period, const std::vector<std::string>& regionsToSolve = std::vector<std::string>( 0 ) );
     void updateSummary( const int period ); 
     void emiss_ind( const int period );
     void calculateEmissionsTotals();
-    void outputfile() const; 
-    void MCoutput() const; 
+    void csvOutputFile() const; 
+    void dbOutput() const; 
     double getGHGEmissions( const std::string& ghgName, const int period ) const;
     const std::map<std::string,int> getOutputRegionMap() const;
     const std::vector<std::string> getRegionVector() const;
@@ -66,6 +68,7 @@ private:
     std::vector<std::map<std::string,double> > ghgs; //!< maps containing ghg emissions
     std::vector<std::string> primaryFuelList; //!< vector of names of primary fuels. 
     bool doCalibrations; //!< turn on or off calibration routines
+	static const std::string XML_NAME; //!< node name for toXML methods
     
     void initAgLu(); 
     void clear();

@@ -35,6 +35,7 @@ private:
     static std::map<std::string, int> nameToIndiceMap; //! Converts market name into market indice.
     static std::vector<std::string> marketNameVector; //! Contains the names of all agLu markets.
     static std::map<int, std::string> indiceToNameMap; //! Contains a mapping of indice to name.
+	const static std::string XML_NAME; //!< node name for toXML methods
 
     std::string name; //!< Name of the agricultural sector.
     int regionNumber; //!< The region number of the container region.
@@ -51,8 +52,10 @@ public:
     void clear();
     void XMLParse( const xercesc::DOMNode* node );
     static int getNumAgMarkets();
-    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+	const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
     void setGNP( const std::vector<double>& gnpsIn );
     void setPop( const std::vector<double>& popsIn );
     void setBiomassPrice( const double bioPriceIn );

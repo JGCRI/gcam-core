@@ -29,6 +29,9 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+// static initialize.
+const string technology::XML_NAME1D = "technology";
+const string technology::XML_NAME2D = "period";
 
 // Technology class method definition
 
@@ -248,7 +251,7 @@ void technology::XMLParse( const DOMNode* node )
         else if( nodeName == "B" ){
             B = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "GHG" ){
+		else if( nodeName == Ghg::getXMLNameStatic() ){
             parseContainerNode( curr, ghg, ghgNameMap, new Ghg() );
         }
         else if( nodeName == "GHG_OUTPUT" ){
@@ -293,13 +296,9 @@ void technology::completeInit() {
 
 
 //! write object to xml output stream
-void technology::toXML( ostream& out, Tabs* tabs ) const {
+void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     
-    tabs->writeTabs( out );
-    out << "<period year=\"" << year << "\">" << endl;
-    
-    tabs->increaseIndent();
-    
+	XMLWriteOpeningTag( getXMLName2D(), out, tabs, "", year );
     // write the xml for the class members.
     
     XMLWriteElement( name, "name", out, tabs );
@@ -327,24 +326,18 @@ void technology::toXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteElementCheckDefault( note, "note", out, tabs );
     
     for( vector<Ghg*>::const_iterator ghgIter = ghg.begin(); ghgIter != ghg.end(); ghgIter++ ){
-        ( *ghgIter )->toXML( out, tabs );
+        ( *ghgIter )->toInputXML( out, tabs );
     }
     
     // finished writing xml for the class members.
     
-    tabs->decreaseIndent();
-    
-    tabs->writeTabs( out );
-    out << "</period>" << endl;
+    XMLWriteClosingTag( getXMLName2D(), out, tabs );
 }
 
 //! write object to xml debugging output stream
 void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-    tabs->writeTabs( out );
-    out << "<technology name=\"" << name << "\" year=\"" << year << "\">" << endl;
-    
-    tabs->increaseIndent();
+	XMLWriteOpeningTag( getXMLName1D(), out, tabs, name, year );
     // write the xml for the class members.
     
     XMLWriteElement( unit, "unit", out, tabs );
@@ -382,10 +375,57 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     
     // finished writing xml for the class members.
     
-    tabs->decreaseIndent();
-    
-    tabs->writeTabs( out );
-    out << "</technology>" << endl;
+    XMLWriteClosingTag( getXMLName1D(), out, tabs );
+}
+
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& technology::getXMLName1D() const {
+	return XML_NAME1D;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& technology::getXMLNameStatic1D() {
+	return XML_NAME1D;
+}
+
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& technology::getXMLName2D() const {
+	return XML_NAME2D;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& technology::getXMLNameStatic2D() {
+	return XML_NAME2D;
 }
 
 //! Perform initializations that only need to be done once per period

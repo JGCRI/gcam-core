@@ -24,23 +24,26 @@
 
 class Population
 {
+public:
+    Population(); //default construtor
+    void clear();
+    void XMLParse( const xercesc::DOMNode* node );
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+	const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
+    void initData();
+    double getTotal( const int per, const bool isPopPeriod = false ) const;
+    const std::vector<double>& getTotalPopVec() const; 
+    void csvOutputFile( const std::string& regionName ) const; 
+    void dbOutput( const std::string& regionName ) const; 
 private:
     // vector of time period 
     // population has 1 more historical period 
     std::vector<double> malepop; //!< Total male population
     std::vector<double> femalepop; //!< Total female population.
     std::vector<double> totalpop; //!< Total population
-public:
-    Population(); //default construtor
-    void clear();
-    void XMLParse( const xercesc::DOMNode* node );
-    void toXML( std::ostream& out, Tabs* tabs ) const;
-    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    void initData();
-    double getTotal( const int per, const bool isPopPeriod = false ) const;
-    const std::vector<double>& getTotalPopVec() const; 
-    void outputfile( const std::string& regionName ) const; 
-    void MCoutput( const std::string& regionName ) const; 
+	static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _POPULATION_H_

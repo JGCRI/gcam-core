@@ -80,12 +80,7 @@ Marketplace::~Marketplace() {
 */
 void Marketplace::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<Marketplace>" << endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+    XMLWriteOpeningTag( "Marketplace", out, tabs );
 
     // write the xml for the class members.
     XMLWriteElement( numMarkets, "numberOfMarkets", out, tabs );
@@ -97,12 +92,7 @@ void Marketplace::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 
     // finished writing xml for the class members.
 
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</Marketplace>" << endl;
+	XMLWriteClosingTag( "Marketplace", out, tabs );
 }
 
 /*! \brief Function to create market key from a region name and a good name.
@@ -1177,7 +1167,7 @@ const vector<double> Marketplace::getSupplies( const int per ) const {
 *
 * \note This will be replaced by toXMLOutput
 */
-void Marketplace::MCoutput() const {
+void Marketplace::dbOutput() const {
 
     const Modeltime* modeltime = scenario->getModeltime();
 
@@ -1212,7 +1202,7 @@ void Marketplace::MCoutput() const {
 *
 * \note This will be replaced by toXMLOutput
 */
-void Marketplace::outputfile() const {
+void Marketplace::csvOutputFile() const {
 
     const Modeltime* modeltime = scenario->getModeltime();
 

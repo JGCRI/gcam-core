@@ -18,8 +18,14 @@
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/market.h"
 #include "marketplace/include/market_info.h"
+#include "containers/include/scenario.h"
 
 using namespace std;
+
+extern Scenario* scenario;
+
+// static initialize.
+const string Market::XML_NAME = "market";
 
 /*! \brief Default constructor
 * 
@@ -57,16 +63,10 @@ Market::~Market() {
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-   // write the beginning tag.
-   tabs->writeTabs( out );
-   out << "<Market name=\""<< getName() << "\" type=\"" << getType() << "\">" << endl;
-   
-   // increase the indent.
-   tabs->increaseIndent();
-   
+   const Modeltime* modeltime = scenario->getModeltime();
+   XMLWriteOpeningTag( getXMLName(), out, tabs, getName(), modeltime->getper_to_yr( period ) , getType() );
    XMLWriteElement( good, "MarketGoodOrFuel", out, tabs );
    XMLWriteElement( region, "MarketRegion", out, tabs );
-   XMLWriteElement( period, "period", out, tabs );
    XMLWriteElement( price, "price", out, tabs );
    XMLWriteElement( storedPrice, "storedPrice", out, tabs );
    XMLWriteElement( demand, "demand", out, tabs );
@@ -81,13 +81,32 @@ void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    derivedToDebugXML( out, tabs );
    
    // finished writing xml for the class members.
-   
-   // decrease the indent.
-   tabs->decreaseIndent();
-   
-   // write the closing tag.
-   tabs->writeTabs( out );
-   out << "</Market>" << endl;
+   XMLWriteClosingTag( getXMLName(), out, tabs );
+}
+
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& Market::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& Market::getXMLNameStatic() {
+	return XML_NAME;
 }
 
 /*! \brief Add a region to the list of contained regions.

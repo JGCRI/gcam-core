@@ -27,6 +27,8 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+// static initialize.
+const string Population::XML_NAME = "demographics";
 
 //! Default constructor
 Population::Population(){
@@ -78,29 +80,19 @@ void Population::XMLParse( const DOMNode* node ){
 }
 
 //! Writes datamembers to datastream in XML format.
-void Population::toXML( ostream& out, Tabs* tabs ) const {
+void Population::toInputXML( ostream& out, Tabs* tabs ) const {
 
     const Modeltime* modeltime = scenario->getModeltime();
     int iter;
 
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<demographics>" << endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+	XMLWriteOpeningTag( getXMLName(), out, tabs );
 
     // write the xml for the class members.
     for( iter = 0; iter < static_cast<int>( totalpop.size() ); iter++ ){
         XMLWriteElement( totalpop[ iter ], "population", out, tabs, modeltime->getPopPeriodToYear( iter ) );
     }
 
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</demographics>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Writes datamembers to debugging datastream in XML format.
@@ -112,12 +104,7 @@ void Population::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     // call modeltime for proper offset
     int pop_period = modeltime->getmod_to_pop(period);
 
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<demographics>" << endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+    XMLWriteOpeningTag( getXMLName(), out, tabs );
 
     // Write the xml for the class members.
     XMLWriteElement( malepop[ pop_period ], "malepop", out, tabs );
@@ -127,12 +114,32 @@ void Population::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     XMLWriteElement( totalpop[ pop_period ], "totalpop", out, tabs );
     // Done writing XML for the class members.
 
-    // decrease the indent.
-    tabs->decreaseIndent();
+	XMLWriteClosingTag( getXMLName(), out, tabs );
+}
 
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</demographics>" << endl;
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& Population::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& Population::getXMLNameStatic() {
+	return XML_NAME;
 }
 
 //! return total population vector
@@ -155,7 +162,7 @@ double Population::getTotal( const int per, const bool isPopPeriod ) const {
 }
 
 //! outputing population info to file
-void Population::outputfile( const string& regionName ) const {
+void Population::csvOutputFile( const string& regionName ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxPeriod = modeltime->getmaxper();
     vector<double> temp( maxPeriod );
@@ -175,7 +182,7 @@ void Population::outputfile( const string& regionName ) const {
 }
 
 //! MiniCAM output to file
-void Population::MCoutput( const string& regionName ) const {
+void Population::dbOutput( const string& regionName ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxPeriod = modeltime->getmaxper();
     vector<double> temp( maxPeriod );

@@ -6,7 +6,7 @@
 
 /*! 
 * \file ghg_policy.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The GHGPolicy class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -20,22 +20,11 @@
 class Tabs;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief Class which defines greenhouse has mitigation policy. 
 * \author Sonny Kim
 */
-
-class GHGPolicy
-{
-private:
-    std::string name; //!< GHG name
-    std::string unit; //!< GHG unit
-    std::string market; //!< Name of the market
-    bool isFixedTax; //!< boolean to use fixed tax or constraint
-    std::vector<double> constraint; //!< Emissions constraint by year(tgC or MTC)
-    std::vector<double> fixedTaxes; //!< Fixed tax on Emissions by year($/TC)
-    std::vector<double> emissions; //!< Emissions by year(tgC or MTC)
-
+class GHGPolicy {
 public:
     GHGPolicy( const std::string nameIn = "", const std::string unitIn = "", const std::string marketIn = "", const bool isFixedTaxIn = false );
     void clear();
@@ -46,8 +35,19 @@ public:
     void changePolicyToFixedTax( const std::string& regionName );
     void setFixedTaxes( const std::string& regionName, const std::vector<double>& taxes );
     void XMLParse( const xercesc::DOMNode* node );
-    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    virtual const std::string& getXMLName() const;
+    static const std::string& getXMLNameStatic();
+private:
+    static const std::string XML_NAME; //!< node name for toXML methods
+    std::string name; //!< GHG name
+    std::string unit; //!< GHG unit
+    std::string market; //!< Name of the market
+    bool isFixedTax; //!< boolean to use fixed tax or constraint
+    std::vector<double> constraint; //!< Emissions constraint by year(tgC or MTC)
+    std::vector<double> fixedTaxes; //!< Fixed tax on Emissions by year($/TC)
+    std::vector<double> emissions; //!< Emissions by year(tgC or MTC)
 };
 
 #endif // _GHG_POLICY_H_

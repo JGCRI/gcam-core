@@ -27,25 +27,29 @@
 
 class Grade
 {
-private:
-    std::string name; //!< Grade name
-    double available; //!< amount of Grade for each Grade
-    double extractCost; //!< extraction cost of each Grade
-    std::vector<double> totalCost; //!< total cost
 public:
     Grade();
     Grade( const std::string nameIn, const int noIn );
     void clear();
     void initElementalMembers();
     void XMLParse( const xercesc::DOMNode* tempnode );
-    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+	const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
     void calcCost( const double tax, const double cumTechChange, const double environCost, const int per );
     double getAvail() const;
     double getCost( const int per ) const;
     double getExtCost() const;
     std::string getName() const;
+private:
+	static const std::string XML_NAME; //!< node name for toXML methods
+    std::string name; //!< Grade name
+    double available; //!< amount of Grade for each Grade
+    double extractCost; //!< extraction cost of each Grade
+    std::vector<double> totalCost; //!< total cost
+
 };
 
 #endif // _GRADE_H_

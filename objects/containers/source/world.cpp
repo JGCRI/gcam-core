@@ -37,6 +37,8 @@ using namespace xercesc;
 
 extern "C" { void _stdcall AG2INITC( double[14][12] ); };
 extern Scenario* scenario;
+// static initialize.
+const string World::XML_NAME = "world";
 
 //! Default constructor.
 World::World() {
@@ -53,7 +55,6 @@ World::~World(){
 
 //! Helper member function for the destructor. Performs memory deallocation. 
 void World::clear(){
-
     for ( vector<Region*>::iterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
         delete *regionIter;
     }
@@ -79,7 +80,7 @@ void World::XMLParse( const DOMNode* node ){
             continue;
         }
 
-        else if( nodeName == "region" ){
+        else if( nodeName == Region::getXMLNameStatic() ){
             parseContainerNode( curr, regions, regionNamesToNumbers, new Region() );
         }
         else if( nodeName == "primaryFuelName" ) {
@@ -133,58 +134,37 @@ void World::initAgLu() {
 }
 
 //! Write out datamembers to XML output stream.
-void World::toXML( ostream& out, Tabs* tabs ) const {
+void World::toInputXML( ostream& out, Tabs* tabs ) const {
 
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<world>" << endl;
-    /*! \todo Use the new XML helper function to write out all opening tags.
-    * \todo Use the new XML helper function to write out all closing tags.
-    * \todo Implement static function for each class named getXMLTagName(). This 
-    * would return a constant string which is the name of the XML tag. This would replace
-    * the hardcoded strings we have everywhere.
-    */
-    // increase the indent.
-    tabs->increaseIndent();
+    XMLWriteOpeningTag ( getXMLName(), out, tabs );
 
     // write the xml for the class members.
-    // for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
+    // for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toInputXML ), out ) );
     // won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
     for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
         XMLWriteElement( *fuelIter, "primaryFuelName", out, tabs );
     }
 
     for( vector<Region*>::const_iterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->toXML( out, tabs );
+        ( *i )->toInputXML( out, tabs );
     }
     // finished writing xml for the class members.
 
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</world>" << endl;
-
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write out XML for debugging purposes.
-/*! \warning This only call Region::toXML for the US. */
+/*! \warning This only call Region::toInputXML for the US. */
 void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<world period=\"" << period << "\">" << endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+	XMLWriteOpeningTag ( getXMLName(), out, tabs, "", period );
 
     // write the xml for the class members.
     for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
         XMLWriteElement( *fuelIter, "primaryFuelName", out, tabs );
     }
 
-    // for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toXML ), out ) );
+    // for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toInputXML ), out ) );
     // won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
     scenario->getMarketplace()->toDebugXML( period, out, tabs );
 
@@ -198,12 +178,32 @@ void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     }
     // finished writing xml for the class members.
 
-    // decrease the indent.
-    tabs->decreaseIndent();
+    XMLWriteClosingTag( getXMLName(), out, tabs );
+}
 
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</world>" << endl;
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& World::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& World::getXMLNameStatic() {
+	return XML_NAME;
 }
 
 //! initialize anything that won't change during the calcuation
@@ -316,7 +316,7 @@ void World::calculateEmissionsTotals() {
 }
 
 //! write results for all regions to file
-void World::outputfile() const {
+void World::csvOutputFile() const {
     const int maxper = scenario->getModeltime()->getmaxper();
     vector<double> temp(maxper);
     // function protocol
@@ -338,15 +338,15 @@ void World::outputfile() const {
     fileoutput3( "global"," "," "," ","CO2 emiss","MTC",temp);
 
     for( vector<Region*>::const_iterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->outputFile();
+        ( *i )->csvOutputFile();
     }
 }
 
 //! MiniCAM style output to database
-void World::MCoutput() const {
+void World::dbOutput() const {
     // call regional output
     for( vector<Region*>::const_iterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->MCoutput();
+        ( *i )->dbOutput();
     }
 }
 

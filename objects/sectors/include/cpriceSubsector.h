@@ -5,28 +5,16 @@
 #endif
 
 /*! 
-* \file subsector.h
-* \ingroup CIAM
-* \brief The subsector class header file.
+* \file cpriceSubsector.h
+* \ingroup 
+* \brief The Cpricesubsector class header file.
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
 */
 
-#include <vector>
-#include <map>
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/subsector.h"
-
-// Forward declarations
-class Summary;
-class technology;
-class hydro_tech;
-class Emcoef_ind;
-class Tabs;
-class GDP;
-
 
 /*! 
 * \ingroup CIAM
@@ -41,11 +29,12 @@ class GDP;
 */
 
 class Cpricesubsector: public Subsector {
-
-protected:
- 
 public:
      Cpricesubsector( const std::string regionName, const std::string sectorName );
      void calcShare( const int period, const GDP* gdp ); 
+	 const std::string& getXMLName() const;
+	 static const std::string& getXMLNameStatic();
+private:
+	static const std::string XML_NAME; //!< node name for toXML methods
 };
 #endif // _CPRICESUBSECTOR_H_

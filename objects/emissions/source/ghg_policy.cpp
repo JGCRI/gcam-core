@@ -24,6 +24,8 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+// static initialize.
+const string GHGPolicy::XML_NAME = "ghgpolicy";
 
 //! Default construtor.
 GHGPolicy::GHGPolicy( const string nameIn, const string unitIn, const string marketIn, const bool isFixedTaxIn )
@@ -183,15 +185,14 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
     nodeList = node->getChildNodes();
 
     // loop through the child nodes.
-    for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
+    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
         curr = nodeList->item( i );
         nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
         if( nodeName == "#text" ) {
             continue;
         }
-
-        else if( nodeName == "market" ){
+		else if( nodeName == "market" ){
             market = XMLHelper<string>::getValueString( curr ); // should be only one market
         }
         else if( nodeName == "isFixedTax" ) {
@@ -210,60 +211,28 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
 }
 
 //! Writes datamembers to datastream in XML format.
-void GHGPolicy::toXML( ostream& out, Tabs* tabs ) const {
+void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
 
-	int m = 0;
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<ghgmarket name=\"" << name << "\">" << endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
-
-    // write the xml for the class members.
+    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     XMLWriteElement( unit, "unit", out, tabs );
-    // write out the market string.
     XMLWriteElement( market, "market", out, tabs );
     XMLWriteElement( isFixedTax, "isFixedTax", out, tabs );
     
+    const Modeltime* modeltime = scenario->getModeltime();    
     for( int i = 0; i < scenario->getModeltime()->getmaxper(); i++ ){
-        tabs->increaseIndent();
-        tabs->writeTabs( out );
-
-        out << "<period>" << endl;
-
-        tabs->increaseIndent();
-        XMLWriteElementCheckDefault( constraint[ i ], "constraint", out, tabs, 0.0 );
-        XMLWriteElementCheckDefault( fixedTaxes[ i ], "fixedTax", out, tabs, 0.0 );
-        XMLWriteElementCheckDefault( emissions[ i ], "emissions", out, tabs, 0.0 );
-        tabs->decreaseIndent();
-        
-        tabs->writeTabs( out );
-        out << "</period>" << endl;	
-        tabs->decreaseIndent();
+        XMLWriteElementCheckDefault( constraint[ i ], "constraint", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( fixedTaxes[ i ], "fixedTax", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( emissions[ i ], "emissions", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
 
     // finished writing xml for the class members.
-
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</ghgmarket>" << endl;
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Writes datamembers to datastream in XML format.
 void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<ghgmarket name=\"" << name << "\">" << endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
     // Write the xml for the class members.
     XMLWriteElement( unit, "unit", out, tabs );
@@ -284,11 +253,30 @@ void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( emissions[ period ], "emissions", out, tabs );
     
     // finished writing xml for the class members.
+    XMLWriteClosingTag( getXMLName(), out, tabs );
+}
 
-    // decrease the indent.
-    tabs->decreaseIndent();
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& GHGPolicy::getXMLName() const {
+	return XML_NAME;
+}
 
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</ghgmarket>" << endl;
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& GHGPolicy::getXMLNameStatic() {
+	return XML_NAME;
 }

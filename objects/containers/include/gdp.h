@@ -47,8 +47,9 @@ private:
 	double baseGDP; //!< Base-year value (constant dollars) for regional GDP
 	double EnergyGDPElas; //!< Energy service price feedback elasticity for GDP
 	double PPPConversionFact; //!< 1990 Ratio of PPP to Market GDP
+    double PPPDelta; //!< Internal exponent variable for PPP conversion
 	bool VariablePPPConvert; //!< Flag to turn on dynamic ratio of PPP to Market GDP
-	double PPPDelta; //!< Internal exponent variable for PPP conversion
+	static const std::string XML_NAME; //!< node name for toXML methods
 
 	void calculatePPP( const int period,const double marketGDPperCap ); // function to calculate PPP values
 
@@ -56,16 +57,18 @@ public:
 	GDP();
 	~GDP();
 	void XMLParse( const xercesc::DOMNode* node );
-	void toXML( std::ostream& out, Tabs* tabs ) const;
+	void toInputXML( std::ostream& out, Tabs* tabs ) const;
 	void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+	const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
 	void initData( const Population* regionalPop );
 	void setupCalibrationMarkets( const std::string& regionName );
 	void writeBackCalibratedValues( const std::string& regionName, const int period );
 	double getTotalLaborProductivity( const int period ) const;
 	double getLaborForce( const int per ) const;    
 	double getLaborProdGR( const int per ) const;
-	void outputfile( const std::string& regionName ) const;
-	void MCoutput( const std::string& regionName ) const;
+	void csvOutputFile( const std::string& regionName ) const;
+	void dbOutput( const std::string& regionName ) const;
 	void initialGDPcalc( const int period, const double population);
 	void adjustGDP( const int period, const double priceratio );
 	double getAproxScaledGDPperCap( const int period ) const;

@@ -57,8 +57,8 @@ class Marketplace
    double getDemand( const std::string& goodName, const std::string& regionName, const int period ) const;
    void init_to_last( const int period );
    void storeto_last( const int period );
-   void MCoutput() const; 
-   void outputfile() const; 
+   void dbOutput() const; 
+   void csvOutputFile() const; 
    void resetToPriceMarket( const std::string& goodName, const std::string& regionName );
    void setMarketToSolve( const std::string& goodName, const std::string& regionName, const int period = -1 );
    void unsetMarketToSolve( const std::string& goodName, const std::string& regionName, const int period = -1 );

@@ -101,7 +101,7 @@ void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
                 if( childNodeName == "#text" ){
                     continue;
                 }
-                else if( childNodeName == "period" ){
+                else if( childNodeName == technology::getXMLNameStatic2D() ){
                     int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
                     techs[ techMapIter->second ][ thisPeriod ]->XMLParse( currChild );
                 }
@@ -118,7 +118,7 @@ void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
                 currChild = childNodeList->item( j );
                 childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
                 
-                if( childNodeName == "period" ){
+                if( childNodeName == technology::getXMLNameStatic2D() ){
                     tempTech = new tranTechnology();
                     tempTech->XMLParse( currChild );
                     int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );

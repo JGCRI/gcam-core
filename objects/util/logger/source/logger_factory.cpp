@@ -119,12 +119,7 @@ void LoggerFactory::toDebugXML( ostream& out, Tabs* tabs ) {
 	for( map<string,Logger*>::const_iterator logIter = loggers.begin(); logIter != loggers.end(); logIter++ ){
 		logIter->second->toDebugXML( out, tabs );
 	}
-	
-	// decrease the indent.
-	tabs->decreaseIndent();
-	
-	// write the closing tag.
-	tabs->writeTabs( out );
-	out << "</LoggerFactory>" << endl;
+
+	XMLWriteClosingTag( "LoggerFactory", out, tabs );
 }
 

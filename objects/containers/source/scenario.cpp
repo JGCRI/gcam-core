@@ -39,6 +39,8 @@ extern "C" { void _stdcall CLIMAT(void); };
 extern time_t ltime;
 extern ofstream logfile;
 
+const string Scenario::XML_NAME = "scenario";
+
 //! Default construtor
 /*! \todo Implement a factory method which chooses solvers to abstract this further. -JPL
 */
@@ -121,7 +123,7 @@ void Scenario::XMLParse( const DOMNode* node ){
             scenarioSummary = XMLHelper<string>::getValueString( curr );
         }
 
-        else if ( nodeName == "modeltime" ){
+		else if ( nodeName == Modeltime::getXMLNameStatic() ){
             if( modeltime == 0 ) {
                 modeltime = new Modeltime();
                 modeltime->XMLParse( curr );
@@ -131,7 +133,7 @@ void Scenario::XMLParse( const DOMNode* node ){
                 cout << "Modeltime information cannot be modified in a scenario add-on." << endl;
             }
         }
-        else if ( nodeName == "world" ){
+		else if ( nodeName == World::getXMLNameStatic() ){
             if( world == 0 ) {
                 world = new World();
             }
@@ -152,7 +154,7 @@ void Scenario::completeInit() {
 }
 
 //! Write object to xml output stream.
-void Scenario::toXML( ostream& out, Tabs* tabs ) const {
+void Scenario::toInputXML( ostream& out, Tabs* tabs ) const {
     
     // write heading for XML input file
     bool header = true;
@@ -164,7 +166,7 @@ void Scenario::toXML( ostream& out, Tabs* tabs ) const {
     }
 
     string dateString = util::XMLCreateDate( ltime );
-    out << "<scenario xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"";
+    out << "<" << XML_NAME << " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"";
     out << " xsi:noNamespaceSchemaLocation=\"C:\\PNNL\\CIAM\\CVS\\CIAM\\Ciam.xsd\"";
     out << " name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
     // increase the indent.
@@ -175,17 +177,11 @@ void Scenario::toXML( ostream& out, Tabs* tabs ) const {
     out << "<summary>\"SRES B2 Scenario is used for this Reference Scenario\"</summary>" << endl;
 
     // write the xml for the class members.
-    modeltime->toXML( out, tabs );
-    world->toXML( out, tabs );
+    modeltime->toInputXML( out, tabs );
+    world->toInputXML( out, tabs );
     // finished writing xml for the class members.
 
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</scenario>" << endl;
-
+	XMLWriteClosingTag( XML_NAME, out, tabs );
 }
 
 //! Write out object to output stream for debugging.
@@ -193,7 +189,7 @@ void Scenario::toDebugXMLOpen( const int period, ostream& out, Tabs* tabs ) cons
 
     tabs->writeTabs( out );
     string dateString = util::XMLCreateDate( ltime );
-    out << "<scenario name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
+    out << "<" << XML_NAME << " name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
 
     tabs->increaseIndent();
     tabs->writeTabs( out );
@@ -203,18 +199,11 @@ void Scenario::toDebugXMLOpen( const int period, ostream& out, Tabs* tabs ) cons
     modeltime->toDebugXML( period, out, tabs );
     world->toDebugXML( period, out, tabs );
     // finished writing xml for the class members.
-
 }
 
 //! Write out close scenario tag to output stream for debugging.
 void Scenario::toDebugXMLClose( const int period, ostream& out, Tabs* tabs ) const {
-
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</scenario>" << endl;
+    XMLWriteClosingTag( XML_NAME, out, tabs );
 }
 
 //! Return scenario name.
@@ -249,7 +238,6 @@ void Scenario::run( string filenameEnding ){
 	
 	// Write scenario root element for the debugging.
     Tabs* tabs = new Tabs();
-	// toDebugXMLOpen( per, xmlDebugStream, tabs );
 	
     world->initCalc( per ); // call to initialize anything that won't change during calc
 	world->calc( per ); // Calculate supply and demand

@@ -22,6 +22,8 @@ class GDP;
 // transportation demand sector class derived from demsector class
 class TranSector : public DemandSector
 {
+private:
+	static const std::string XML_NAME; //!< node name for toXML methods
 protected:
     std::vector<double> percentLicensed; //!< Percent of population licensed
     double baseScaler; //!< constant scaler to scale base output
@@ -33,6 +35,8 @@ public:
     virtual void clear();
     virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void aggdemand(  const GDP* gdp, const int period  ); 
+	virtual const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
 };
 
 #endif // _TRANSSECTOR_H_

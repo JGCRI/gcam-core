@@ -23,6 +23,8 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+// static initialize.
+const string Grade::XML_NAME = "grade";
 
 //! Default constructor
 Grade::Grade() {
@@ -79,27 +81,18 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
 }
 
 //! Write datamembers to datastream in XML format for replicating input file.
-void Grade::toXML( ostream& out, Tabs* tabs ) const {
-    
-    tabs->writeTabs( out );
-    out << "<grade name=\"" << name << "\">" << endl;
-    tabs->increaseIndent();
-
+void Grade::toInputXML( ostream& out, Tabs* tabs ) const {
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     XMLWriteElementCheckDefault( available, "available", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( extractCost, "extractioncost", out, tabs, 0.0 );
-        
-    tabs->decreaseIndent();
-    tabs->writeTabs( out );
-    out << "</grade>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write datamembers to datastream in XML format for outputting results
 void Grade::toOutputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     
-    tabs->writeTabs( out );
-    out << "<grade name=\"" << name << "\">" << endl;
-    tabs->increaseIndent();
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
     XMLWriteElement( available, "available", out, tabs );
     XMLWriteElement( extractCost, "extractioncost", out, tabs );
@@ -108,25 +101,44 @@ void Grade::toOutputXML( ostream& out, Tabs* tabs ) const {
         XMLWriteElement( totalCost[ i ], "totalcost", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
-    tabs->decreaseIndent();
-    tabs->writeTabs( out );
-    out << "</grade>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write datamembers to debugging datastream in XML format.
 void Grade::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-    tabs->writeTabs( out );
-    out << "<Grade name=\"" << name << "\">" << endl;
-    tabs->increaseIndent();
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     XMLWriteElement( available, "available", out, tabs );
     XMLWriteElement( extractCost, "extractioncost", out, tabs );
     XMLWriteElement( totalCost[period], "totalcost", out, tabs );
     
-    tabs->decreaseIndent();
-    tabs->writeTabs( out );
-    out << "</Grade>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
+}
+
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& Grade::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& Grade::getXMLNameStatic() {
+	return XML_NAME;
 }
 
 //! Total cost of each grade.

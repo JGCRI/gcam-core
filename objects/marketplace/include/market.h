@@ -40,6 +40,8 @@ public:
     * \param tabs A tabs object responsible for printing the correct number of tabs. 
     */ 
     virtual void derivedToDebugXML( std::ostream& out, Tabs* tabs ) const = 0;
+	const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
     void addRegion( const std::string& regionNameIn );
     const std::vector<std::string> getContainedRegions() const;
 
@@ -109,6 +111,9 @@ protected:
     double storedSupply; //!< The stored supply.
     std::vector <std::string> containedRegionNames; //!< Vector of names of all regions contained within this market.
     MarketInfo marketInfo; //!< Object containing information related to the market. 
+
+private:
+	const static std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _MARKET_H_

@@ -161,10 +161,10 @@ void Sector::XMLParse( const DOMNode* node ){
         else if( nodeName == "unit" ) {
             unit = XMLHelper<string>::getValueString( curr );
         }
-        else if( nodeName == "subsector" ){
+		else if( nodeName == Subsector::getXMLNameStatic() ){
             parseContainerNode( curr, subsec, subSectorNameMap, new Subsector( regionName, name ) );
         }
-        else if( nodeName == "cpricesubsector" ){
+		else if( nodeName == Cpricesubsector::getXMLNameStatic() ){
             parseContainerNode( curr, subsec, subSectorNameMap, new Cpricesubsector( regionName, name ) );
         }
         else {
@@ -195,51 +195,18 @@ void Sector::completeInit() {
     }
 }
 
-/*! \brief Parses any child nodes specific to derived classes
-*
-* Method parses any input data from child nodes that are specific to the classes derived from this class. Since Sector is the generic base class, there are no values here.
-*
-* \author Josh Lurz, Steve Smith
-* \param nodeName name of current node
-* \param curr pointer to the current node in the XML input tree
-*/
-void Sector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    // do nothing
-    // defining method here even though it does nothing so that we do not
-    // create an abstract class.
-    cout << "Unrecognized text string: " << nodeName << " found while parsing Sector." << endl;
-}
-
-
-/*! \brief Parses any attributes specific to derived classes
-*
-* Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class. Since Sector is the generic base class, there are no values here.
-*
-* \author Josh Lurz, Steve Smith
-* \param node pointer to the current node in the XML input tree
-*/
-void Sector::XMLDerivedClassParseAttr( const DOMNode* node ) {
-    // do nothing
-    // defining method here even though it does nothing so that we do not
-    // create an abstract class.
-}
-
 /*! \brief Write object to xml output stream
 *
 * Method writes the contents of this object to the XML output stream.
 *
 * \author Josh Lurz
 * \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
-void Sector::toXML( ostream& out, Tabs* tabs ) const {
+void Sector::toInputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<supplysector name=\"" << name << "\">"<< endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
     // write out the market string.
@@ -250,26 +217,20 @@ void Sector::toXML( ostream& out, Tabs* tabs ) const {
         XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
 
-    for( int j = 0; modeltime->getper_to_yr( j ) <= 1990; j++ ){
-        XMLWriteElement( output[ j ], "output", out, tabs, modeltime->getper_to_yr( j ) );
-    }
-
-    // write out the subsector objects.
-    for( vector<Subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
-        ( *k )->toXML( out, tabs );
+    for( int i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
+        XMLWriteElement( output[ i ], "output", out, tabs, modeltime->getper_to_yr( i ) );
     }
 
     // write out variables for derived classes
-    toXMLDerivedClass( out, tabs );
+    toInputXMLDerived( out, tabs );
 
-    // finished writing xml for the class members.
+	// write out the subsector objects.
+    for( vector<Subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
+        ( *k )->toInputXML( out, tabs );
+    }
 
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</supplysector>" << endl;
+	// finished writing xml for the class members.
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 
@@ -279,17 +240,13 @@ void Sector::toXML( ostream& out, Tabs* tabs ) const {
 *
 * \author Josh Lurz
 * \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs.
 * \todo josh to update documentation on this method ..
 */
 void Sector::toOutputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<supplysector name=\"" << name << "\">"<< endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
     // write out the market string.
@@ -300,39 +257,21 @@ void Sector::toOutputXML( ostream& out, Tabs* tabs ) const {
         XMLWriteElement( sectorprice[ i ], "price", out, tabs, modeltime->getper_to_yr( i ) );
     }
 
-    for( int j = 0; j < static_cast<int>( output.size() ); j++ ){
-        XMLWriteElement( output[ j ], "output", out, tabs, modeltime->getper_to_yr( j ) );
-    }
-
-    // write out the subsector objects.
-    for( vector<Subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
-        ( *k )->toXML( out, tabs );
+    for( int i = 0; i < static_cast<int>( output.size() ); i++ ){
+        XMLWriteElement( output[ i ], "output", out, tabs, modeltime->getper_to_yr( i ) );
     }
 
     // write out variables for derived classes
-    toXMLDerivedClass( out, tabs );
+    toOutputXMLDerived( out, tabs );
+	
+	// write out the subsector objects.
+    for( vector<Subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
+        ( *k )->toInputXML( out, tabs );
+    }
 
     // finished writing xml for the class members.
-
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</supplysector>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
-
-/*! \brief XML output stream for derived classes
-*
-* Function writes output due to any variables specific to derived classes to XML
-*
-* \author Steve Smith, Josh Lurz
-* \param out reference to the output stream
-*/
-void Sector::toXMLDerivedClass( ostream& out, Tabs* tabs ) const {  
-    // do nothing
-}	
-
 
 /*! \brief Write information useful for debugging to XML output stream
 *
@@ -341,15 +280,11 @@ void Sector::toXMLDerivedClass( ostream& out, Tabs* tabs ) const {
 * \author Josh Lurz
 * \param period model period
 * \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs.
 */
 void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<supplysector name=\"" << name << "\">"<< endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
     // write out the market string.
@@ -363,7 +298,9 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( output[ period ], "output", out, tabs );
     XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
 
-    // Write out the summary
+	toDebugXMLDerived (period, out, tabs);
+
+	// Write out the summary
     // summary[ period ].toDebugXML( period, out );
 
     // write out the subsector objects.
@@ -373,12 +310,7 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     // finished writing xml for the class members.
 
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</supplysector>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -425,19 +357,21 @@ void Sector::initCalc( const int period ) {
 
 /*! \brief Create new market for this Sector
 *
-* Sets up the appropriate market within the marketplace for this Sector. Note that the type of market is NORMAL -- signifying that this market is a normal market that is solved (if necessary).
+* Sets up the appropriate market within the marketplace for this Sector. Note that the type of market is NORMAL -- 
+* signifying that this market is a normal market that is solved (if necessary).
 *
 * \author Sonny Kim, Josh Lurz, Steve Smith
 */
-void Sector::setMarket() {
-
+void Sector::setMarket() {	
     Marketplace* marketplace = scenario->getMarketplace();
     // name is Sector name (name of good supplied or demanded)
     // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
-
     if( marketplace->createMarket( regionName, market, name, Marketplace::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, sectorprice );
     }
+	/* The above initilaizes prices with any values that are read-in. 
+    This only affects the base period, which is not currently solved.
+    Any prices not initialized by read-in, are set by initXMLPrices(). */
 }
 
 /*! \brief Sets ghg tax from the market to individual technologies.
@@ -681,7 +615,7 @@ void Sector::checkShareSum( const int period ) const {
 *
 * weighted price is put into sectorprice variable
 *
-* \author Sonny Kim, Josh Lurz
+* \author Sonny Kim, Josh Lurz, James Blackwood
 * \param period Model period
 */
 void Sector::calcPrice( const int period ) {
@@ -692,7 +626,9 @@ void Sector::calcPrice( const int period ) {
         sectorprice[ period ] += subsec[ i ]->getShare( period ) * subsec[ i ]->getPrice( period );
         CO2EmFactor += subsec[ i ]->getShare( period ) * subsec[ i ]->getCO2EmFactor( period );
     }
-	marketplace->setMarketInfo(name,regionName,period,"CO2EmFactor",CO2EmFactor);
+	if (marketplace->doesMarketExist( name, regionName, period )) {
+	    marketplace->setMarketInfo(name,regionName,period,"CO2EmFactor",CO2EmFactor);
+	}
 }
 
 /*! \brief returns the Sector price.
@@ -854,8 +790,7 @@ Determines total amount of calibrated and fixed output and passes that down to t
 * \author Steve Smith
 * \param period Model period
 */
-void Sector::calibrateSector( const int period )
-{
+void Sector::calibrateSector( const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
     double totalFixedSupply;
     double totalCalOutputs;
@@ -1082,8 +1017,7 @@ double Sector::getOutput( const int period ) {
 * \author Sonny Kim
 * \param period Model period
 */
-void Sector::emission( const int period )
-{
+void Sector::emission( const int period ) {
     summary[ period ].clearemiss(); // clear emissions map
     summary[ period ].clearemfuelmap(); // clear emissions fuel map
     for ( int i = 0;i<nosubsec;i++) {
@@ -1099,8 +1033,7 @@ void Sector::emission( const int period )
 * \param period Model period
 * \param emcoef_ind Vector of indirect emissions objects. 
 */
-void Sector::indemission( const int period, const vector<Emcoef_ind>& emcoef_ind )
-{
+void Sector::indemission( const int period, const vector<Emcoef_ind>& emcoef_ind ) {
     summary[ period ].clearemindmap(); // clear emissions map
     for ( int i = 0; i<nosubsec;i++) {
         subsec[ i ]->indemission( period, emcoef_ind );
@@ -1115,8 +1048,7 @@ void Sector::indemission( const int period, const vector<Emcoef_ind>& emcoef_ind
 * \author Sonny Kim, Josh Lurz
 * \param period Model period
 */
-void Sector::sumInput( const int period )
-{
+void Sector::sumInput( const int period ) {
     input[ period ] = 0;
     for (int i=0;i<nosubsec;i++) {
         input[ period ] += subsec[ i ]->getInput( period );
@@ -1138,27 +1070,26 @@ double Sector::getInput( const int period ) {
 }
 
 //! Write Sector output to database.
-void Sector::outputfile() const
-{
+void Sector::csvOutputFile() const {
     // function protocol
-    void fileoutput3(string var1name,string var2name,string var3name,
+    void fileoutput3( string var1name,string var2name,string var3name,
         string var4name,string var5name,string uname,vector<double> dout);
 
     // function arguments are variable name, double array, db name, table name
     // the function writes all years
     // total Sector output
-    fileoutput3(regionName,name," "," ","production","EJ",output);
+    fileoutput3( regionName, name, " ", " ", "production", "EJ",output);
     // total Sector eneryg input
-    fileoutput3( regionName,name," "," ","consumption","EJ",input);
+    fileoutput3( regionName, name, " ", " ", "consumption", "EJ",input);
     // Sector price
-    fileoutput3( regionName,name," "," ","price","$/GJ",sectorprice);
+    fileoutput3( regionName, name, " ", " ", "price", "$/GJ", sectorprice);
     // Sector carbon taxes paid
-    fileoutput3( regionName,name," "," ","C tax paid","Mil90$",carbonTaxPaid);
+    fileoutput3( regionName, name, " ", " ", "C tax paid", "Mil90$", carbonTaxPaid);
 }
 
 //! Write out subsector results from demand Sector.
-void Sector::MCoutput_subsec() const 	
-{	// do for all subsectors in the Sector
+void Sector::MCoutput_subsec() const {
+	// do for all subsectors in the Sector
     for (int i=0;i<nosubsec;i++) {
         // output or demand for each technology
         subsec[ i ]->MCoutputB();
@@ -1167,7 +1098,7 @@ void Sector::MCoutput_subsec() const
 }
 
 //! Write MiniCAM style Sector output to database.
-void Sector::MCoutput() const {
+void Sector::dbOutput() const {
     const Modeltime* modeltime = scenario->getModeltime();
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
@@ -1238,12 +1169,11 @@ void Sector::MCoutput() const {
 }
 
 //! Write subsector output to database.
-void Sector::subsec_outfile() const
-{
+void Sector::subsec_outfile() const {
     // do for all subsectors in the Sector
     for (int i=0;i<nosubsec;i++) {
         // output or demand for each technology
-        subsec[ i ]->outputfile();
+        subsec[ i ]->csvOutputFile();
     }
 }
 
@@ -1255,8 +1185,7 @@ void Sector::subsec_outfile() const
 * \param demand Total service demand
 * \param period Model period
 */
-void Sector::setServiceDemand( const double demand, const int period )
-{
+void Sector::setServiceDemand( const double demand, const int period ) {
     output[ period ] = demand;
 }
 
@@ -1278,8 +1207,7 @@ double Sector::getTotalCarbonTaxPaid( const int period ) const {
 * \todo Input change name of this and other methods here to proper capitilization
 * \return fuel consumption map
 */
-map<string, double> Sector::getfuelcons( const int period ) const
-{
+map<string, double> Sector::getfuelcons( const int period ) const {
     return summary[ period ].getfuelcons();
 }
 

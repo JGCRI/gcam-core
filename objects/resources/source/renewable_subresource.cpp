@@ -37,13 +37,17 @@ SubRenewableResource::SubRenewableResource(){
 //void SubRenewableResource::updateAvailable( const int period ){
 
 //! Performs XML read-in that is specific to this derived class
-void SubRenewableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
-   if( nodeName == "maxSubResource" ){
-      maxSubResource = XMLHelper<double>::getValue( node );
-   }
-   else if( nodeName == "gdpSupplyElast" ){
-      gdpSupplyElasticity = XMLHelper<double>::getValue( node );
-   }
+bool SubRenewableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
+    bool didParse = false;
+    if( nodeName == "maxSubResource" ){
+        maxSubResource = XMLHelper<double>::getValue( node );
+        didParse = true;
+    }
+    else if( nodeName == "gdpSupplyElast" ){
+        gdpSupplyElasticity = XMLHelper<double>::getValue( node );
+        didParse = true;
+    }
+    return didParse;
 }
 
 //! Do any initializations needed for this resource

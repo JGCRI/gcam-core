@@ -27,32 +27,18 @@ class GDP;
 */
 
 class Resource {
-    
-protected:
-    std::string name; //!< Resource name
-    std::string market; //!< regional market
-    int nosubrsrc; //!< number of subsectors for each Resource
-    std::vector<SubResource*> subResource; //!< subsector objects for each Resource
-    std::vector<double> rscprc; //!< Resource price
-    std::vector<double> available; //!< total Resource available
-    std::vector<double> annualprod; //!< annual production rate of Resource
-    std::vector<double> cummprod; //!< cummulative production of Resource
-    std::map<std::string,int> subResourceNameMap; //!< Map of subResource name to integer position in vector. 
-	 void printStyle( std::ostream& outStream ) const;
-    
 public:
     Resource(); // default construtor
     virtual ~Resource();
-    virtual const std::string getType() const = 0;
-    virtual const std::string getXMLType() const = 0;
+    virtual const std::string& getXMLName() const = 0;
     void clear();
-    virtual void XMLParse( const xercesc::DOMNode* node );
-    void completeInit();
-    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node ) = 0; // the = 0 makes this an abstract method
-    void toXML( std::ostream& out, Tabs* tabs ) const;
+    void XMLParse( const xercesc::DOMNode* node );
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0; // the = 0 makes this an abstract method
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream &out, Tabs* tabs ) const;
     std::string getName() const; 
+    void completeInit();
     void setMarket( const std::string& regionName );
     double getPrice(int per); 
     void cumulsupply(double prc,int per);
@@ -63,9 +49,20 @@ public:
     double getSubAvail( const std::string& subResourceName, const int per);
     int getNoSubrsrc();
     void show();
-    void MCoutput( const std::string& regname ); 
-    void outputfile( const std::string& regname ); 
-	 void addToDependencyGraph( std::ostream& outStream, const int period ) const;
+    void dbOutput( const std::string& regname ); 
+    void csvOutputFile( const std::string& regname ); 
+    void addToDependencyGraph( std::ostream& outStream, const int period ) const;
+protected:
+    std::string name; //!< Resource name
+    std::string market; //!< regional market
+    int nosubrsrc; //!< number of subsectors for each Resource
+    std::vector<SubResource*> subResource; //!< subsector objects for each Resource
+    std::vector<double> rscprc; //!< Resource price
+    std::vector<double> available; //!< total Resource available
+    std::vector<double> annualprod; //!< annual production rate of Resource
+    std::vector<double> cummprod; //!< cummulative production of Resource
+    std::map<std::string,int> subResourceNameMap; //!< Map of subResource name to integer position in vector. 
+    void printStyle( std::ostream& outStream ) const;
 };
 
 /*! 
@@ -77,13 +74,15 @@ public:
 */
 class DepletableResource: public Resource {
 public: 
-    virtual const std::string getType() const;
-    virtual const std::string getXMLType() const;
-    virtual void XMLDerivedClassParse( const std::string nodename, const xercesc::DOMNode* node );
+    const std::string& getXMLName() const;
+    static const std::string& getXMLNameStatic();
+    bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
+private:
+    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a FixedResource object, which is a container for multiple Subresource objects.
 * \author Josh Lurz
 * \date $ Date $
@@ -91,13 +90,15 @@ public:
 */
 class FixedResource: public Resource {
 public: 
-    virtual const std::string getType() const;
-    virtual const std::string getXMLType() const;
-    virtual void XMLDerivedClassParse( const std::string nodename, const xercesc::DOMNode* node );
+    const std::string& getXMLName() const;
+    static const std::string& getXMLNameStatic();
+    bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
+private:
+    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a RenewableResource object, which is a container for multiple Subresource objects.
 * \author Josh Lurz
 * \date $ Date $
@@ -105,9 +106,11 @@ public:
 */
 class RenewableResource: public Resource {
 public: 
-    virtual const std::string getType() const;
-    virtual const std::string getXMLType() const;
-    virtual void XMLDerivedClassParse( const std::string nodename, const xercesc::DOMNode* node );
+    const std::string& getXMLName() const;
+    static const std::string& getXMLNameStatic();
+    bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
+private:
+    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _RESOURCE_H_

@@ -42,6 +42,8 @@ public:
     PointSetCurve* clone() const;
     static const std::string& getXMLNameStatic();
     const std::string& getXMLName() const;
+    void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    bool XMLParseDerived( const xercesc::DOMNode* node );
     double getY( const double xValue ) const;
     double getX( const double yValue ) const;
     bool setY( const double xValue, const double yValue );
@@ -54,8 +56,6 @@ public:
     std::vector<std::pair<double,double> > getSortedPairs( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX, const int minPoints = 0 ) const;
     double getIntegral( const double lowDomain, const double highDomain ) const;
     double getDiscountedValue( const double lowDomain, const double highDomain, const double discountRate ) const;
-    void toXMLDerived( std::ostream& out, Tabs* tabs ) const;
-    bool XMLParseDerived( const xercesc::DOMNode* node );
     void invertAxises();
 protected:
     static const std::string XML_NAME; //!< The name of the XML tag associated with this object.

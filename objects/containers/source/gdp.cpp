@@ -25,6 +25,8 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+// static initialize.
+const string GDP::XML_NAME = "GDP";
 
 //! Default Constructor
 GDP::GDP() {
@@ -103,17 +105,12 @@ void GDP::XMLParse( const DOMNode* node ){
 }
 
 //! Writes datamembers to datastream in XML format.
-void GDP::toXML( ostream& out, Tabs* tabs ) const {
+void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
 
 	const Modeltime* modeltime = scenario->getModeltime();
 	int iter;
 
-	// write the beginning tag.
-	tabs->writeTabs( out );
-	out << "<GDP>" << endl;
-
-	// increase the indent.
-	tabs->increaseIndent();
+	XMLWriteOpeningTag( getXMLName(), out, tabs );
 
 	// GDP to PPP conversion factor
 	XMLWriteElementCheckDefault( PPPConversionFact, "PPPConvert", out, tabs, 0.0 );
@@ -143,12 +140,7 @@ void GDP::toXML( ostream& out, Tabs* tabs ) const {
 		//     XMLWriteElementCheckDefault( gdpValueAdjustedPPP[ m ], "GDP(PPP)", out, tabs, 0, modeltime->getper_to_yr( m ) );
 	}
 
-	// decrease the indent.
-	tabs->decreaseIndent();
-
-	// write the closing tag.
-	tabs->writeTabs( out );
-	out << "</GDP>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Writes datamembers to debugging datastream in XML format.
@@ -157,12 +149,7 @@ void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	const Modeltime* modeltime = scenario->getModeltime();
 	int popPeriod = modeltime->getmod_to_pop( period );
 
-	// write the beginning tag.
-	tabs->writeTabs( out );
-	out << "<GDP>" << endl;
-
-	// increase the indent.
-	tabs->increaseIndent();
+	XMLWriteOpeningTag( getXMLName(), out, tabs );
 
 	// GDP to PPP conversion factor
 	XMLWriteElementCheckDefault( PPPConversionFact, "PPPConvert", out, tabs, 0.0 );
@@ -190,12 +177,32 @@ void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 		XMLWriteElementCheckDefault( gdpValueAdjustedPPP[ m ], "GDP(PPP)", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
 	}
 
-	// decrease the indent.
-	tabs->decreaseIndent();
+	XMLWriteClosingTag( getXMLName(), out, tabs );
+}
 
-	// write the closing tag.
-	tabs->writeTabs( out );
-	out << "</GDP>" << endl;
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& GDP::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& GDP::getXMLNameStatic() {
+	return XML_NAME;
 }
 
 //! Initialize the labor force.
@@ -264,28 +271,28 @@ double GDP::getLaborForce( const int per ) const {
 }
 
 //! Write GDP info to text file
-void GDP::outputfile( const string& regionName ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
-	const int maxPeriod = modeltime->getmaxper();
-	vector<double> temp( maxPeriod );
+void GDP::csvOutputFile( const string& regionName ) const {
+   const Modeltime* modeltime = scenario->getModeltime();
+   const int maxPeriod = modeltime->getmaxper();
+   vector<double> temp( maxPeriod );
 
-	// function protocol
-	void fileoutput3( string var1name,string var2name,string var3name,
-		string var4name,string var5name,string uname,vector<double> dout);
+   // function protocol
+   void fileoutput3( string var1name,string var2name,string var3name,
+        string var4name,string var5name,string uname,vector<double> dout);
 
-	// write gdp to temporary array since not all will be sent to output
-	for ( int i = 0; i < maxPeriod; i++ ) {
-		temp[ i ] = laborProdGrowthRate[ modeltime->getmod_to_pop( i ) ];
-	}
-	fileoutput3( regionName," "," "," ", "labor prod", "%/yr", temp );	
-
+   // write gdp to temporary array since not all will be sent to output
+   for ( int i = 0; i < maxPeriod; i++ ) {
+        temp[ i ] = laborProdGrowthRate[ modeltime->getmod_to_pop( i ) ];
+   }
+   fileoutput3( regionName," "," "," ", "labor prod", "%/yr", temp );	
+	
 	// write gdp and adjusted gdp for region
 	fileoutput3(regionName," "," "," ","GDP","Mil90US$",gdpValueAdjusted);
 	fileoutput3(regionName," "," "," ","GDPperCap","thousand90US$",gdpPerCapita);
 }
 
 //! MiniCAM output to file
-void GDP::MCoutput( const string& regionName ) const {
+void GDP::dbOutput( const string& regionName ) const {
 	const Modeltime* modeltime = scenario->getModeltime();
 	const int maxPeriod = modeltime->getmaxper();
 	vector<double> temp( maxPeriod );

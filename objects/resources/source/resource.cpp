@@ -32,6 +32,10 @@ using namespace xercesc;
 
 extern ofstream bugoutfile;	
 extern Scenario* scenario;
+// static initialize.
+const string DepletableResource::XML_NAME = "depresource";
+const string FixedResource::XML_NAME = "fixedresource";
+const string RenewableResource::XML_NAME = "renewresource";
 
 //! Default constructor.
 Resource::Resource(){
@@ -43,14 +47,14 @@ Resource::Resource(){
     annualprod.resize(maxper); // annual production rate of resource
     cummprod.resize(maxper); // cummulative production of resource
     rscprc.resize( maxper ); 
-    }
+}
 
 //! Destructor.
 Resource::~Resource() {
     for ( vector<SubResource*>::iterator iter = subResource.begin(); iter != subResource.end(); iter++ ) {
         delete *iter;
-        }
     }
+}
 
 //! Clear data members.
 void Resource::clear(){
@@ -63,7 +67,7 @@ void Resource::clear(){
     annualprod.clear();
     cummprod.clear();
     rscprc.clear();
-    }
+}
 
 //! Set data members from XML input.
 void Resource::XMLParse( const DOMNode* node ){
@@ -89,19 +93,21 @@ void Resource::XMLParse( const DOMNode* node ){
 
         if( nodeName == "#text" ) {
             continue;
-            }
+        }
 
         else if( nodeName == "market" ){
             market = XMLHelper<string>::getValueString( curr ); // only one market element.
-            }
+        }
         else if( nodeName == "price" ){
             XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );
-            }
+        }
+        else if( XMLDerivedClassParse( nodeName, curr ) ){
+        }
         else {
-            XMLDerivedClassParse( nodeName, curr );
-            }
+            cout << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
         }
     }
+}
 
 //! Complete the initialization.
 void Resource::completeInit() {
@@ -109,52 +115,34 @@ void Resource::completeInit() {
 
     for( vector<SubResource*>::iterator subResIter = subResource.begin(); subResIter != subResource.end(); subResIter++ ) {
         ( *subResIter )->completeInit();
-        }
     }
+}
 
 //! Write datamembers to datastream in XML format for replicating input file.
-void Resource::toXML( ostream& out, Tabs* tabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<" << getXMLType() << " name=\"" << name << "\">"<< endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+void Resource::toInputXML( ostream& out, Tabs* tabs ) const {
+    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
-    // write out the market string.
     XMLWriteElement( market, "market", out, tabs );
 
     // write out resource prices for base period only
-    int m = 0;
-    XMLWriteElement( rscprc[m], "price", out, tabs, modeltime->getper_to_yr(m));
+    const Modeltime* modeltime = scenario->getModeltime();
+    XMLWriteElement( rscprc[ 0 ], "price", out, tabs, modeltime->getper_to_yr( 0 ) );
 
     // write out the depresource objects.
     for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
-        ( *i )->toXML( out, tabs );
+        ( *i )->toInputXML( out, tabs );
     }
 
     // finished writing xml for the class members.
-
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</" << getXMLType() << ">" << endl;
-
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write datamembers to datastream in XML format for outputting results.
 void Resource::toOutputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<" << getXMLType() << " name=\"" << name << "\">"<< endl;
 
-    // increase the indent.
-    tabs->increaseIndent();
+    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
     // write out the market string.
@@ -167,32 +155,20 @@ void Resource::toOutputXML( ostream& out, Tabs* tabs ) const {
 
     // write out the depresource objects.
     for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
-        ( *i )->toXML( out, tabs );
+        ( *i )->toInputXML( out, tabs );
     }
 
     // finished writing xml for the class members.
 
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</" << getXMLType() << ">" << endl;
-
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write datamembers to datastream in XML format for debugging.
 void Resource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<" << getXMLType() << " name=\"" << name << "\">"<< endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
     // Write the xml for the class members.
-
     // Write out the market string.
     XMLWriteElement( market, "market", out, tabs );
 
@@ -218,12 +194,7 @@ void Resource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     // finished writing xml for the class members.
 
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</" << getXMLType() << ">" << endl;
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 
@@ -235,28 +206,28 @@ void Resource::setMarket( const string& regionName ) {
     if ( marketplace->createMarket( regionName, market, name, Marketplace::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, rscprc );
         marketplace->setMarketToSolve (name, regionName);
-        }
     }
+}
 
 //! Return resource name.
 string Resource::getName() const {
     return name;
-    }
+}
 
 //! Return resource price.
 double Resource::getPrice(int per)
-    {
+{
     return rscprc[per] ;
-    }
+}
 
 //! Returns total number of subsectors.
 int Resource::getNoSubrsrc() 
-    {
+{
     return nosubrsrc;
-    }
+}
 
 void Resource::cumulsupply(double prc,int per)
-    {	
+{	
     int i=0;
     cummprod[per]=0.0;
 
@@ -265,18 +236,18 @@ void Resource::cumulsupply(double prc,int per)
     for (i=0;i<nosubrsrc;i++) {
         subResource[i]->cumulsupply(prc,per);
         cummprod[per] += subResource[i]->getCumulProd(per);
-        }
     }
+}
 
 double Resource::getCummProd(int per)
-    {
+{
     return cummprod[per];
-    }
+}
 
 
 //! Calculate annual production
 void Resource::annualsupply( int per, const GDP* gdp, double price, double prev_price )
-    {	
+{	
     int i=0;
     annualprod[per]=0.0;
     available[per]=0.0;
@@ -289,45 +260,45 @@ void Resource::annualsupply( int per, const GDP* gdp, double price, double prev_
         subResource[i]->annualsupply( per, gdp, price, prev_price );
         annualprod[per] += subResource[i]->getAnnualProd(per);
         available[per] += subResource[i]->getAvailable(per);
-        }
     }
+}
 
 
 //! Return annual production of resources.
 double Resource::getAnnualProd(int per)
-    {
+{
     return annualprod[per];
-    }
+}
 
 //! Return resource available from all subsectors.
 double Resource::getAvailable(int per)
-    {
+{
     return available[ per ];
-    }
+}
 
 //! Return resource available from each subsector.
 double Resource::getSubAvail( const string& subResourceName, const int per ) {
     for (int i=0;i<nosubrsrc;i++) {
         if (subResource[i]->getName() == subResourceName )
             return subResource[i]->getAvailable(per);
-        }
-return 0;
     }
+    return 0;
+}
 
 void Resource::show()
-    {
+{
     int i=0;
     //write to file or database later
     cout << name << endl;
     cout << "Number of Subsectors: " << nosubrsrc <<"\n";
     for (i=0;i<nosubrsrc;i++) {
         cout<<subResource[i]->getName()<<"\n";
-        }
     }
+}
 
 //! Write resource output to file.
-void Resource::outputfile( const string& regname )
-    {
+void Resource::csvOutputFile( const string& regname )
+{
     // function protocol
     void fileoutput3( string var1name,string var2name,string var3name,
         string var4name,string var5name,string uname,vector<double> dout);
@@ -339,37 +310,37 @@ void Resource::outputfile( const string& regname )
 
     // do for all subsectors in the sector
     for (int i=0;i<nosubrsrc;i++) {
-        subResource[i]->outputfile(regname ,name);
-        }
+        subResource[i]->csvOutputFile(regname ,name);
     }
+}
 
 //! Write resource output to database.
-void Resource::MCoutput( const string& regname ) {
-   const Modeltime* modeltime = scenario->getModeltime();
-   const int maxper = modeltime->getmaxper();
-   vector<double> temp(maxper);
-   // function protocol
-   void dboutput4(string var1name,string var2name,string var3name,string var4name,
-			   string uname,vector<double> dout);
-   
-   // function arguments are variable name, double array, db name, table name
-   // the function writes all years
-   // total sector output
-   dboutput4(regname,"Pri Energy","Production by Sector",name,"EJ",annualprod);
-   // resource price
-   dboutput4(regname,"Price","by Sector",name,"$/GJ",rscprc);
-   // do for all subsectors in the sector
-   for (int m=0;m<maxper;m++) {
-	   for (int i=0;i<nosubrsrc;i++) {
-		  temp[m] += subResource[i]->getCumulProd(m);
-	   }
-   }
-   dboutput4(regname,"Resource","CummProd "+name,"zTotal","EJ",temp);
-   
-   // do for all subsectors in the sector
-   for (int i=0;i<nosubrsrc;i++) {
-      subResource[i]->MCoutput(regname,name);
-   }
+void Resource::dbOutput( const string& regname ) {
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    vector<double> temp(maxper);
+    // function protocol
+    void dboutput4(string var1name,string var2name,string var3name,string var4name,
+        string uname,vector<double> dout);
+
+    // function arguments are variable name, double array, db name, table name
+    // the function writes all years
+    // total sector output
+    dboutput4(regname,"Pri Energy","Production by Sector",name,"EJ",annualprod);
+    // resource price
+    dboutput4(regname,"Price","by Sector",name,"$/GJ",rscprc);
+    // do for all subsectors in the sector
+    for (int m=0;m<maxper;m++) {
+        for (int i=0;i<nosubrsrc;i++) {
+            temp[m] += subResource[i]->getCumulProd(m);
+        }
+    }
+    dboutput4(regname,"Resource","CummProd "+name,"zTotal","EJ",temp);
+
+    // do for all subsectors in the sector
+    for (int i=0;i<nosubrsrc;i++) {
+        subResource[i]->dbOutput(regname,name);
+    }
 }
 
 /*! \brief A function to add the resource sectors to an existing graph.
@@ -381,7 +352,7 @@ void Resource::MCoutput( const string& regname ) {
 * \param period The period to print graphs for.
 */
 void Resource::addToDependencyGraph( ostream& outStream, const int period ) const {
-    
+
     // Print out the style for the Sector.
     printStyle( outStream );
 }
@@ -398,13 +369,13 @@ void Resource::printStyle( ostream& outStream ) const {
 
     // Make sure the output stream is open.
     assert( outStream );
-    
-    // Get the sector name.
-   string sectorName = getName();
-   util::replaceSpaces( sectorName );
 
-   // output sector coloring here.
-   outStream << "\t" << sectorName << " [shape=box, style=filled, color=indianred1 ];" << endl;
+    // Get the sector name.
+    string sectorName = getName();
+    util::replaceSpaces( sectorName );
+
+    // output sector coloring here.
+    outStream << "\t" << sectorName << " [shape=box, style=filled, color=indianred1 ];" << endl;
 }
 
 // ************************************************************
@@ -415,15 +386,30 @@ void Resource::printStyle( ostream& outStream ) const {
 // *******************************************************************
 // DepletableResource Class
 // *******************************************************************
-//! Returns the type of the Resource.
-const string DepletableResource::getType() const {
-    return "Depletable";
-    }
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& DepletableResource::getXMLName() const {
+    return XML_NAME;
+}
 
-//! Returns the XML type of the Resource.
-const string DepletableResource::getXMLType() const {
-    return "depresource";
-    }
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& DepletableResource::getXMLNameStatic() {
+    return XML_NAME;
+}
 
 //! 
 /*! In this case, this read-in just substantiates the appropriate type of subResource */
@@ -434,31 +420,44 @@ const string DepletableResource::getXMLType() const {
 * \author Steve Smith
 * \param node pointer to the current node in the XML input tree
 * \param nodeName name of the current node 
-* \todo better to change the error message to boolean that is returned so that the base class can parse more objects if necessary
+* \return Whether an element was parsed.
+* \todo In the input file, *SubResources should be read in as such, not silently converted here.
 */
-void DepletableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {   
-    SubResource* tempSubResource = 0;
-
-    if( nodeName == "subresource" ){
+bool DepletableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
+    if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubDepletableResource::getXMLNameStatic() ){
         parseContainerNode( node, subResource, subResourceNameMap, new SubDepletableResource() );
-        }
-		else {
-			cout << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
-		}
+        return true;
     }
+    return false;
+}
 
 // *******************************************************************
 // FixedResource Class
 // *******************************************************************
-//! Returns the type of the Resource.
-const string FixedResource::getType() const {
-    return "Fixed";
-    }
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& FixedResource::getXMLName() const {
+    return XML_NAME;
+}
 
-//! Returns the XML type of the Resource.
-const string FixedResource::getXMLType() const {
-    return "fixedresource";
-    }
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& FixedResource::getXMLNameStatic() {
+    return XML_NAME;
+}
 
 //! 
 /*! In this case, this read-in just substantiates the appropriate type of subResource */
@@ -469,30 +468,42 @@ const string FixedResource::getXMLType() const {
 * \author Steve Smith
 * \param node pointer to the current node in the XML input tree
 * \param nodeName name of the current node 
-* \todo better to change the error message to boolean that is returned so that the base class can parse more objects if necessary
+* \return Whether an element was parsed.
 */
-void FixedResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
-    SubResource* tempSubResource = 0;
-    if( nodeName == "subresource" ){
+bool FixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
+    if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubFixedResource::getXMLNameStatic() ){
         parseContainerNode( node, subResource, subResourceNameMap, new SubFixedResource() );
-	  }
-		else {
-			cout << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
-		}
-	}
-	
+        return true;
+    }
+    return false;
+}
 // *******************************************************************
 // RenewableResource Class
 // *******************************************************************
-//! Returns the type of the Resource.
-const string RenewableResource::getType() const {
-    return "Renewable";
-    }
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& RenewableResource::getXMLName() const {
+    return XML_NAME;
+}
 
-//! Returns the XML type of the Resource.
-const string RenewableResource::getXMLType() const {
-    return "renewresource";
-    }
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& RenewableResource::getXMLNameStatic() {
+    return XML_NAME;
+}
 
 //! 
 /*! In this case, this read-in just substantiates the appropriate type of subResource */
@@ -503,14 +514,13 @@ const string RenewableResource::getXMLType() const {
 * \author Steve Smith
 * \param node pointer to the current node in the XML input tree
 * \param nodeName name of the current node 
-* \todo better to change the error message to boolean that is returned so that the base class can parse more objects if necessary
+* \return Whether an element was parsed.
 */
-void RenewableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
-    if( nodeName == "subresource" ){
+bool RenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
+    if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubRenewableResource::getXMLNameStatic() ){
         parseContainerNode( node, subResource, subResourceNameMap, new SubRenewableResource() );
-        }
-    else {
-        cout << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
-        }
+        return true;
     }
+    return false;
+}
 

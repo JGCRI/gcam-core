@@ -37,7 +37,7 @@ extern void openDB();
 extern void createMCvarid();
 extern void closeDB();
 
-extern ofstream bugoutfile, logfile, outfile;
+extern ofstream bugoutfile, logfile, outFile;
 
 /*! \brief Constructor
 * \param scenarioIn A pointer to the scenario which will be run.
@@ -103,15 +103,14 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     // Get the name of an output file.
     const string ccOutputFileName = conf->getFile( "costCurvesOutputFileName", "cost_curves.xml" );
 
-    // Open the outputfile.
+    // Open the output file.
     ofstream ccOut;
     ccOut.open( ccOutputFileName.c_str(), ios::out );
     util::checkIsOpen( ccOut, ccOutputFileName );
     
     // Create a root tag.
     Tabs tabs;
-    ccOut << "<CostCurvesInfo>" << endl;
-    tabs.increaseIndent();
+	XMLWriteOpeningTag( "CostCurvesInfo", ccOut, &tabs ); 
 
     typedef map<const string, const Curve*>::const_iterator RegionIter;
     // Create vectors of emissions quantities and costs.
@@ -162,18 +161,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
         // Save information.
         emissionsQCurves[ currPoint ] = scenario->getEmissionsQuantityCurves( GHG_NAME );
         emissionsTCurves[ currPoint ] = scenario->getEmissionsPriceCurves( GHG_NAME );
-
-        // TEMP WRITOUT
-        emissionsQCurves[ currPoint ][ "USA" ]->toXML( ccOut, &tabs );
-        emissionsTCurves[ currPoint ][ "USA" ]->toXML( ccOut, &tabs );
     }   
-    
-    // TEMP
-    emissionsQCurves[ numPoints ][ "USA" ]->toXML( ccOut, &tabs );
-    emissionsTCurves[ numPoints ][ "USA" ]->toXML( ccOut, &tabs );
-
-    // TEMP
-    XMLWriteClosingTag( "USARegionCurves", ccOut, &tabs );
     
     // Create curves for each period based on all trials.
     vector<map<const string, Curve*> > periodCostCurves( maxPeriod );
@@ -181,7 +169,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     XMLWriteOpeningTag( "PeriodCostCurves", ccOut, &tabs );
     for( int per = 0; per < maxPeriod; per++ ){
         const int year = modeltime->getper_to_yr( per );
-        XMLWriteOpeningTag( "CostCurves", ccOut, &tabs, per );
+        XMLWriteOpeningTag( "CostCurves", ccOut, &tabs, "", per );
         // Iterate over each region.
         for( RegionIter rIter = emissionsQCurves[ 0 ].begin(); rIter != emissionsQCurves[ 0 ].end(); rIter++ ){
             ExplicitPointSet* currPoints = new ExplicitPointSet();
@@ -199,7 +187,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
             
             // Only write out USA data for now. 
             if( region == "USA" ){
-                perCostCurve->toXML( ccOut, &tabs );
+                perCostCurve->toInputXML( ccOut, &tabs );
             }
             periodCostCurves[ per ][ region ] = perCostCurve;
         }
@@ -218,9 +206,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     map<const string, double> regionalCosts;
     map<const string, double> regionalDiscountedCosts;
 
-    tabs.writeTabs( ccOut );
-    ccOut << "<RegionalCostCurvesByPeriod>" << endl;
-    tabs.increaseIndent();
+	XMLWriteOpeningTag( "RegionalCostCurvesByPeriod", ccOut, &tabs );
     const double discountRate = conf->getDouble( "discountRate", 0.05 );
 
     for( RNameIter rNameIter = regions.begin(); rNameIter != regions.end(); rNameIter++ ){
@@ -235,7 +221,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
         }
         Curve* regCostCurve = new PointSetCurve( costPoints );
         regCostCurve->setTitle( *rNameIter );
-        regCostCurve->toXML( ccOut, &tabs );
+        regCostCurve->toInputXML( ccOut, &tabs );
         const double regionalCost = regCostCurve->getIntegral( modeltime->getper_to_yr( 1 ), modeltime->getendyr() );
 
         // Temporary hardcoding of start year.
@@ -249,44 +235,32 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
         globalDiscountedCost += discountedRegionalCost;
     }
 
-    tabs.decreaseIndent();
-    tabs.writeTabs( ccOut );
-    ccOut << "</RegionalCostCurvesByPeriod>" << endl;
+	XMLWriteClosingTag( "RegionalCostCurvesByPeriod", ccOut, &tabs ); 
     /*! \todo discounting and output */
 
     // Write out undiscounted costs by region.
-    tabs.writeTabs( ccOut );
-    ccOut << "<RegionalUndiscountedCosts>" << endl;
-    tabs.increaseIndent();
+	XMLWriteOpeningTag( "RegionalUndiscountedCosts", ccOut, &tabs );
     typedef map<const string,double>::const_iterator constDoubleMapIter;
     for( constDoubleMapIter iter = regionalCosts.begin(); iter != regionalCosts.end(); iter++ ){
         XMLWriteElement( iter->second, "UndiscountedCost", ccOut, &tabs, 0, iter->first );
     }
-    tabs.decreaseIndent();
-    tabs.writeTabs( ccOut );
-    ccOut << "</RegionalUndiscountedCosts>" << endl;
+	XMLWriteClosingTag( "RegionalUndiscountedCosts", ccOut, &tabs );
     // End of writing undiscounted costs by region.
      
     // Write out discounted costs by region.
-    tabs.writeTabs( ccOut );
-    ccOut << "<RegionalDiscountedCosts>" << endl;
-    tabs.increaseIndent();
+	XMLWriteOpeningTag( "RegionalDiscountedCosts", ccOut, &tabs );
     typedef map<const string,double>::const_iterator constDoubleMapIter;
     for( constDoubleMapIter iter = regionalDiscountedCosts.begin(); iter != regionalDiscountedCosts.end(); iter++ ){
         XMLWriteElement( iter->second, "DiscountedCost", ccOut, &tabs, 0, iter->first );
     }
-    tabs.decreaseIndent();
-    tabs.writeTabs( ccOut );
-    ccOut << "</RegionalDiscountedCosts>" << endl;
+	XMLWriteClosingTag( "RegionalDiscountedCosts", ccOut, &tabs );
     // End of writing undiscounted costs by region.
 
     // Write out the total cost.
     XMLWriteElement( globalCost, "GlobalUndiscountedTotalCost", ccOut, &tabs );
     XMLWriteElement( globalDiscountedCost, "GlobalDiscountedCost", ccOut, &tabs );
 
-    tabs.decreaseIndent();
-    tabs.writeTabs( ccOut );
-    ccOut << "</CostCurvesInfo>" << endl;
+	XMLWriteClosingTag( "CostCurvesInfo", ccOut, &tabs );
     ccOut.close();
 
     // Clean up memory.
@@ -325,7 +299,7 @@ void MACGeneratorScenarioRunner::printOutput() const {
     util::checkIsOpen( xmlOut, xmlOutFileName );
     
     Tabs* tabs = new Tabs();
-    scenario->toXML( xmlOut, tabs );
+    scenario->toInputXML( xmlOut, tabs );
     delete tabs;
 
     // Close the output file. 
@@ -334,19 +308,19 @@ void MACGeneratorScenarioRunner::printOutput() const {
    
     // Open the output file.
     const string outFileName = conf->getFile( "outFileName" );
-    outfile.open( outFileName.c_str(), ios::out );
-    util::checkIsOpen( outfile, outFileName ); 
+    outFile.open( outFileName.c_str(), ios::out );
+    util::checkIsOpen( outFile, outFileName ); 
     
     // Write results to the output file.
     // Minicam style output.
-    outfile << "Region,Sector,Subsector,Technology,Variable,Units,";
+    outFile << "Region,Sector,Subsector,Technology,Variable,Units,";
     
     for ( int t = 0; t < scenario->getModeltime()->getmaxper(); t++ ) { 
-        outfile << scenario->getModeltime()->getper_to_yr( t ) <<",";
+        outFile << scenario->getModeltime()->getper_to_yr( t ) <<",";
     }
-    outfile << "Date,Notes" << endl;
-    scenario->getWorld()->outputfile();
-    outfile.close();
+    outFile << "Date,Notes" << endl;
+    scenario->getWorld()->csvOutputFile();
+    outFile.close();
     
     // Write out the ag sector data.
     if( conf->getBool( "agSectorActive" ) ){
@@ -356,8 +330,8 @@ void MACGeneratorScenarioRunner::printOutput() const {
     // Perform the database output. 
     openDB(); // Open MS Access database
     createDBout(); // create main database output table before calling output routines
-    scenario->getWorld()->MCoutput(); // MiniCAM style output to database
-    scenario->getMarketplace()->MCoutput(); // write global market info to database
+    scenario->getWorld()->dbOutput(); // MiniCAM style output to database
+    scenario->getMarketplace()->dbOutput(); // write global market info to database
     createMCvarid(); // create MC variable id's     
     
     // close MS Access database

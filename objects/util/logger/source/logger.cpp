@@ -338,12 +338,7 @@ void Logger::toDebugXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteElement( printLogFileName, "printLogFileName", out, tabs );
 	XMLWriteElement( printLogFullPath, "printLogFullPath", out, tabs );
 
-	// decrease the indent.
-	tabs->decreaseIndent();
-	
-	// write the closing tag.
-	tabs->writeTabs( out );
-	out << "</Logger>" << endl;
+	XMLWriteClosingTag( "Logger", out, tabs );
 }
 
 //! Parses the header of a log file replacing special strings.

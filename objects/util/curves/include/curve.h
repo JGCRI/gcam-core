@@ -44,8 +44,8 @@ public:
     static Curve* getCurve( const std::string& type );
     static const std::string& getXMLNameStatic();
     virtual const std::string& getXMLName() const;
-    void toXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     void XMLParse( const xercesc::DOMNode* node );
     virtual bool XMLParseDerived( const xercesc::DOMNode* node ) = 0;
     virtual void invertAxises() = 0;

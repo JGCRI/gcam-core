@@ -32,7 +32,7 @@ extern CdbRecordset DBoutrst;
 #endif
 
 extern time_t ltime;
-extern ofstream outfile;
+extern ofstream outFile;
 extern Scenario* scenario;
 
 /*! Output single records to file.
@@ -44,12 +44,12 @@ extern Scenario* scenario;
 
 void fileoutput3( string var1name,string var2name,string var3name,
 			  string var4name,string var5name,string uname,vector<double> dout) {
-	outfile <<var1name<<","<<var2name<<","<<var3name<<","
+	outFile <<var1name<<","<<var2name<<","<<var3name<<","
 			<<var4name<<","<<var5name<<","<<uname<<",";
 	for (int i=0;i< static_cast<int>( dout.size() );i++) {
-		outfile << dout[i]<<",";
+		outFile << dout[i]<<",";
 	}
-	outfile <<ctime(&ltime);
+	outFile <<ctime(&ltime);
 }
 
 /*! Output single records MiniCAM style to the database. 

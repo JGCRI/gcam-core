@@ -33,6 +33,8 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+// static initialize.
+const string Subsector::XML_NAME = "subsector";
 
 /*! \brief Default constructor.
 *
@@ -184,7 +186,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
             share[0] = basesharewt;
         }
         
-        else if( nodeName == "technology" ){
+		else if( nodeName == technology::getXMLNameStatic1D() ){
             map<string,int>::const_iterator techMapIter = techNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
             if( techMapIter != techNameMap.end() ) {
                 // technology already exists.
@@ -199,7 +201,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
                     if( childNodeName == "#text" ){
                         continue;
                     }
-                    else if( childNodeName == "period" ){
+					else if( childNodeName == technology::getXMLNameStatic2D() ){
                         int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
                         techs[ techMapIter->second ][ thisPeriod ]->XMLParse( currChild );
                     }
@@ -217,7 +219,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
                     currChild = childNodeList->item( j );
                     childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
                     
-                    if( childNodeName == "period" ){
+                    if( childNodeName == technology::getXMLNameStatic2D() ){
                         tempTech = new technology();
                         tempTech->XMLParse( currChild );
                         int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
@@ -272,16 +274,11 @@ void Subsector::completeInit() {
 }
 
 //! Output the Subsector member variables in XML format.
-void Subsector::toXML( ostream& out, Tabs* tabs ) const {
+void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     int i;
     
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<subsector name=\"" << name << "\">"<< endl;
-    
-    // increase the indent.
-    tabs->increaseIndent();
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     // write the xml for the class members.
     for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
@@ -310,33 +307,22 @@ void Subsector::toXML( ostream& out, Tabs* tabs ) const {
     
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
-        tabs->writeTabs( out );
         
         // If we have an empty vector this won't work, but that should never happen.
         assert( j->begin() != j->end() );
-        
-        out << "<technology name=\"" << ( * ( j->begin() ) )->getName() << "\">" << endl;
-        
-        tabs->increaseIndent();
+        const technology* firstTech = *( j->begin() ); // Get pointer to first element in row. 
+		XMLWriteOpeningTag( firstTech->getXMLName1D(), out, tabs, firstTech->getName() );
         
         for( vector<technology*>::const_iterator k = j->begin(); k != j->end(); k++ ){
-            ( *k )->toXML( out, tabs );
+            ( *k )->toInputXML( out, tabs );
         }
         
-        tabs->decreaseIndent();
-        
-        tabs->writeTabs( out );
-        out << "</technology>" << endl;
+		XMLWriteClosingTag( firstTech->getXMLName1D(), out, tabs );
     }
     
     // finished writing xml for the class members.
     
-    // decrease the indent.
-    tabs->decreaseIndent();
-    
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</subsector>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! XML output for viewing.
@@ -344,12 +330,7 @@ void Subsector::toOutputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     int i;
     
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<subsector name=\"" << name << "\">"<< endl;
-    
-    // increase the indent.
-    tabs->increaseIndent();
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     // write the xml for the class members.
     for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
@@ -378,33 +359,22 @@ void Subsector::toOutputXML( ostream& out, Tabs* tabs ) const {
     
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
-        tabs->writeTabs( out );
         
         // If we have an empty vector this won't work, but that should never happen.
         assert( j->begin() != j->end() );
-        
-        out << "<technology name=\"" << ( * ( j->begin() ) )->getName() << "\">" << endl;
-        
-        tabs->increaseIndent();
+        const technology* firstTech = *( j->begin() ); // Get pointer to first element in row. 
+		XMLWriteOpeningTag( firstTech->getXMLName1D(), out, tabs, firstTech->getName() );
         
         for( vector<technology*>::const_iterator k = j->begin(); k != j->end(); k++ ){
-            ( *k )->toXML( out, tabs );
+            ( *k )->toInputXML( out, tabs );
         }
-        
-        tabs->decreaseIndent();
-        
-        tabs->writeTabs( out );
-        out << "</technology>" << endl;
+      
+		XMLWriteClosingTag( firstTech->getXMLName1D(), out, tabs );
     }
     
     // finished writing xml for the class members.
     
-    // decrease the indent.
-    tabs->decreaseIndent();
-    
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</subsector>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Write information useful for debugging to XML output stream
@@ -417,12 +387,7 @@ void Subsector::toOutputXML( ostream& out, Tabs* tabs ) const {
 */
 void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<subsector name=\"" << name << "\">"<< endl;
-    
-    // increase the indent.
-    tabs->increaseIndent();
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     // Write the xml for the class members.
     XMLWriteElement( unit, "unit", out, tabs );
@@ -456,12 +421,32 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
     // finished writing xml for the class members.
     
-    // decrease the indent.
-    tabs->decreaseIndent();
-    
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</subsector>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
+}
+
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& Subsector::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& Subsector::getXMLNameStatic() {
+	return XML_NAME;
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -1255,7 +1240,7 @@ const double tinyNumber = util::getVerySmallNumber();
 }
 
 //! write Subsector output to database
-void Subsector::outputfile() const {
+void Subsector::csvOutputFile() const {
     // function protocol
     void fileoutput3( string var1name,string var2name,string var3name,
         string var4name,string var5name,string uname,vector<double> dout);
@@ -1278,7 +1263,7 @@ void Subsector::outputfile() const {
     fileoutput3( regionName,sectorName,name," ","C tax paid","Mil90$",carbontaxpaid);
     fileoutput3( regionName,sectorName,name," ","CO2 emiss","MTC",temp);
 
-// sjs -- bad coding here, hard-wired period. But is only for csv outputfile.
+// sjs -- bad coding here, hard-wired period. But is only for csvOutputFile.
 		int numberOfGHGs =  techs[ i ][ 2 ]->getNumbGHGs();
 		if (numberOfGHGs > 1 ) {
 		   std::vector<std::string> ghgNames;

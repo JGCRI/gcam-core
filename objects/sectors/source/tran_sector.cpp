@@ -25,6 +25,8 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+// static initialize.
+const string TranSector::XML_NAME = "tranSector";
 
 //! Default constructor
 TranSector::TranSector( const string regionName ): DemandSector( regionName ) {
@@ -63,7 +65,6 @@ void TranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cu
     else if( nodeName == "tranSubsector" ){
         parseContainerNode( curr, subsec, subSectorNameMap, new TranSubsector( regionName, name ) );
     }	
-    
 }
 
 
@@ -135,4 +136,29 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
     // sets subsector outputs, technology outputs, and market demands
     setoutput( service[ period ], period );
     sumOutput(period);
+}
+
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& TranSector::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& TranSector::getXMLNameStatic() {
+	return XML_NAME;
 }

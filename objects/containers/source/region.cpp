@@ -21,6 +21,7 @@
 #include "containers/include/gdp.h"
 #include "util/base/include/summary.h"
 #include "sectors/include/sector.h"
+#include "sectors/include/supply_sector.h"
 #include "sectors/include/demand_sector.h"
 #include "sectors/include/tran_sector.h"
 #include "resources/include/resource.h"
@@ -46,6 +47,8 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+// static initialize.
+const string Region::XML_NAME = "region";
 
 //! Default constructor
 Region::Region() {
@@ -73,7 +76,7 @@ Region::~Region() {
 void Region::clear(){
     
     // Free memory.
-    for ( vector<Sector*>::iterator secIter = supplySector.begin(); secIter != supplySector.end(); secIter++ ) {
+    for ( vector<SupplySector*>::iterator secIter = supplySector.begin(); secIter != supplySector.end(); secIter++ ) {
         delete *secIter;
     }
 
@@ -118,9 +121,6 @@ string Region::getName() const {
 * \todo Change the diagnosic "assert( node );" to fail with a more informative error (file, previous node?, location?)
 */
 void Region::XMLParse( const DOMNode* node ){
-
-    int i;
-    int j;
     string nodeName;
     string nodeNameChild;
     DOMNode* curr = 0;
@@ -143,52 +143,51 @@ void Region::XMLParse( const DOMNode* node ){
     DOMNodeList* nodeList = node->getChildNodes();
 
     // loop through the child nodes.
-    for( i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
+    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
         curr = nodeList->item( i );
         nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
         if( nodeName == "#text" ) {
             continue;
         }
-
         else if( nodeName == "PrimaryFuelCO2Coef" ) {
             primaryFuelCO2Coef[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "CarbonTaxFuelCoef" ) {
             carbonTaxFuelCoef[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "demographics" ){
+		else if( nodeName == Population::getXMLNameStatic() ){
             if( population == 0 ) {
                 population = new Population();
             }
             population->XMLParse( curr ); // only one demographics object.
         }
-        else if( nodeName == "GDP" ){
+		else if( nodeName == GDP::getXMLNameStatic() ){
             if( gdp == 0 ){
                 gdp = new GDP();
             }
             gdp->XMLParse( curr );
         }
-        else if( nodeName == "depresource" ){
+		else if( nodeName == DepletableResource::getXMLNameStatic() ){
             parseContainerNode( curr, resources, resourceNameMap, new DepletableResource() );
         }
-        else if( nodeName == "fixedresource" ){
+		else if( nodeName == FixedResource::getXMLNameStatic() ){
             parseContainerNode( curr, resources, resourceNameMap, new FixedResource() );
         }
-        else if( nodeName == "renewresource" ){
+		else if( nodeName == RenewableResource::getXMLNameStatic() ){
             parseContainerNode( curr, resources, resourceNameMap, new RenewableResource() );
         }
-        else if( nodeName == "supplysector" ){
-            parseContainerNode( curr, supplySector, supplySectorNameMap, new Sector( name ) );
+		else if( nodeName == SupplySector::getXMLNameStatic() ){
+            parseContainerNode( curr, supplySector, supplySectorNameMap, new SupplySector( name ) );
         }
-        else if( nodeName == "demandsector" ){
+		else if( nodeName == DemandSector::getXMLNameStatic() ){
             parseContainerNode( curr, demandSector, demandSectorNameMap, new DemandSector( name ) );
         }
         // transportation sector is contained in demandSector
-        else if( nodeName == "tranSector" ){
+		else if( nodeName == TranSector::getXMLNameStatic() ){
             parseContainerNode( curr, demandSector, demandSectorNameMap, new TranSector( name ) );
         } 
-        else if( nodeName == "agsector" ) {
+		else if( nodeName == AgSector::getXMLNameStatic() ) {
             if( Configuration::getInstance()->getBool( "agSectorActive" ) ){
                 if( agSector == 0 ) {
                     agSector = new AgSector();
@@ -196,32 +195,15 @@ void Region::XMLParse( const DOMNode* node ){
                 }
             }
         }
-        else if( nodeName == "ghgpolicy" ){
+        else if( nodeName == GHGPolicy::getXMLNameStatic() ){
             parseContainerNode( curr, ghgMarket, ghgMarketNameMap, new GHGPolicy() );
-        }
-        // regional taxes
-        else if( nodeName == "taxes" ){
-            // get all child nodes.
-            nodeListChild = curr->getChildNodes();
-            // loop through the child nodes.
-            for(j = 0; j < static_cast<int>( nodeListChild->getLength() ); j++ ){
-                currChild= nodeListChild->item( j );
-                nodeNameChild = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-
-                if( nodeNameChild == "#text" ) {
-                    continue;
-                }
-                else {
-                    cout << "Unrecognized text string: " << nodeNameChild << " found while parsing region->taxes." << endl;
-                }
-            }
         }
         // regional economic data
         else if( nodeName == "calibrationdata" ){
             // get all child nodes.
             nodeListChild = curr->getChildNodes();
             // loop through the child nodes.
-            for(j = 0; j < static_cast<int>( nodeListChild->getLength() ); j++ ){
+            for( unsigned int j = 0; j < nodeListChild->getLength(); j++ ){
                 currChild = nodeListChild->item( j );
                 nodeNameChild = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
 
@@ -241,7 +223,6 @@ void Region::XMLParse( const DOMNode* node ){
 
             }
         }
-
         else {
             cout << "Unrecognized text string: " << nodeName << " found while parsing region." << endl;
         }
@@ -264,7 +245,7 @@ void Region::completeInit() {
     noGhg = static_cast<int>( ghgMarket.size() );
     
     // Need to perform the resize by iteratively adding each one so we can set the sector name. 
-    for( vector<Sector*>::const_iterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ){
+    for( vector<SupplySector*>::iterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ){
         Emcoef_ind temp( ( *sectorIter )->getName() );
         emcoefInd.push_back( temp );
     }
@@ -305,7 +286,7 @@ void Region::completeInit() {
         ( *resourceIter )->completeInit();
     }
 
-    for( vector<Sector*>::iterator supplySectorIter = supplySector.begin(); supplySectorIter != supplySector.end(); supplySectorIter++ ) {
+    for( vector<SupplySector*>::iterator supplySectorIter = supplySector.begin(); supplySectorIter != supplySector.end(); supplySectorIter++ ) {
         ( *supplySectorIter )->completeInit();
 
     }
@@ -319,7 +300,7 @@ void Region::completeInit() {
     findSimul( 0 );
 
     // Setup each sector for sorting. 
-    for( vector<Sector*>::iterator supplySectorSortIter = supplySector.begin(); supplySectorSortIter != supplySector.end(); supplySectorSortIter++ ){
+    for( vector<SupplySector*>::iterator supplySectorSortIter = supplySector.begin(); supplySectorSortIter != supplySector.end(); supplySectorSortIter++ ){
         ( *supplySectorSortIter )->setupForSort( this );
     }
 
@@ -333,18 +314,8 @@ void Region::completeInit() {
 * \note 
 * \ref faqitem1 
 */
-void Region::toXML( ostream& out, Tabs* tabs ) const {
-
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    int m;
-
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<region name=\"" << name << "\">"<< endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+void Region::toInputXML( ostream& out, Tabs* tabs ) const {
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // Write out the Co2 Coefficients. 
     for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
@@ -356,65 +327,56 @@ void Region::toXML( ostream& out, Tabs* tabs ) const {
     }
     // write the xml for the class members.
     // write out the single population object.
-    population->toXML( out, tabs );
+    population->toInputXML( out, tabs );
     
-    gdp->toXML( out, tabs );
+    gdp->toInputXML( out, tabs );
 
     // write out the resources objects.
     for( vector<Resource*>::const_iterator i = resources.begin(); i != resources.end(); i++ ){
-        ( *i )->toXML( out, tabs );
+        ( *i )->toInputXML( out, tabs );
     }
 
     // write out supply sector objects.
-    for( vector<Sector*>::const_iterator j = supplySector.begin(); j != supplySector.end(); j++ ){
-        ( *j )->toXML( out, tabs );
+    for( vector<SupplySector*>::const_iterator j = supplySector.begin(); j != supplySector.end(); j++ ){
+        ( *j )->toInputXML( out, tabs );
     }
 
     // write out demand sector objects.
     for( vector<DemandSector*>::const_iterator k = demandSector.begin(); k != demandSector.end(); k++ ){
-        ( *k )->toXML( out, tabs );
+        ( *k )->toInputXML( out, tabs );
     }
-
-    tabs->writeTabs( out );
-    out << "<agsector/>" << endl;
 
     if( agSector != 0 ){
-        agSector->toXML( out, tabs );
+        agSector->toInputXML( out, tabs );
     }
+	else {
+		tabs->writeTabs( out );
+		out << "<agsector/>" << endl;
+	}
     // write out ghgMarket objects.
     for( vector<GHGPolicy*>::const_iterator l = ghgMarket.begin(); l != ghgMarket.end(); l++ ){
-        ( *l )->toXML( out, tabs );
+        ( *l )->toInputXML( out, tabs );
     }
 
     // Write out regional economic data
-    tabs->writeTabs( out );
-    out << "<calibrationdata>" << endl;
-
-    tabs->increaseIndent();
+	XMLWriteOpeningTag( "calibrationdata", out, tabs ); 
 
     // write out calibration GDP
-    for( m = 0; m < static_cast<int>( calibrationGDPs.size() ); m++ ){
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( unsigned int m = 0; m < calibrationGDPs.size(); m++ ){
         XMLWriteElementCheckDefault( calibrationGDPs[ m ], "GDPcal", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
     }
 
      // write out TFE calibration values
-    for( m = 0; m < static_cast<int>( TFEcalb.size() ); m++ ) {
+    for( unsigned int m = 0; m < TFEcalb.size(); m++ ) {
         XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
     }
 
-    tabs->decreaseIndent();
-    tabs->writeTabs( out );
-    out << "</calibrationdata>" << endl;
+	XMLWriteClosingTag( "calibrationdata", out, tabs );
     // End write out regional economic data
 
     // finished writing xml for the class members.
-
-    // decrease the indent.
-    tabs->decreaseIndent();
-
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</region>" << endl;
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Write datamembers to datastream in XML format for debugging purposes.  
@@ -427,12 +389,7 @@ void Region::toXML( ostream& out, Tabs* tabs ) const {
 */
 void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<region name=\"" << name << "\">"<< endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
+	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write out basic datamembers
     XMLWriteElement( noGhg, "noGhg", out, tabs );
@@ -465,7 +422,7 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     }
 
     // write out supply sector objects.
-    for( vector<Sector*>::const_iterator j = supplySector.begin(); j != supplySector.end(); j++ ){
+    for( vector<SupplySector*>::const_iterator j = supplySector.begin(); j != supplySector.end(); j++ ){
         ( *j )->toDebugXML( period, out, tabs );
     }
 
@@ -487,12 +444,32 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
 	// Finished writing xml for the class members.
 
-    // decrease the indent.
-    tabs->decreaseIndent();
+	XMLWriteClosingTag( getXMLName(), out, tabs );
+}
 
-    // write the closing tag.
-    tabs->writeTabs( out );
-    out << "</region>" << endl;
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& Region::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& Region::getXMLNameStatic() {
+	return XML_NAME;
 }
 
 //! Initialize calibration markets.
@@ -604,7 +581,7 @@ void Region::finalSupply( const int period ) {
 
 
     // loop through all sectors once to get total output
-    for ( vector<Sector*>::reverse_iterator ri = supplySector.rbegin(); ri != supplySector.rend(); ri++ ) {
+    for ( vector<SupplySector*>::reverse_iterator ri = supplySector.rbegin(); ri != supplySector.rend(); ri++ ) {
 
         goodName = ( *ri )->getName();		
 
@@ -905,7 +882,7 @@ void Region::setGhgDemand( const int period )
 }	
 
 //! Write all outputs to file.
-void Region::outputFile() const {
+void Region::csvOutputFile() const {
     const Modeltime* modeltime = scenario->getModeltime();
     int i=0;
     const int maxper = modeltime->getmaxper();
@@ -915,8 +892,8 @@ void Region::outputFile() const {
         string var4name,string var5name,string uname,vector<double> dout);
 
     // write population results to database
-    population->outputfile( name );
-    gdp->outputfile( name );
+    population->csvOutputFile( name );
+    gdp->csvOutputFile( name );
 
     // regional total carbon taxes paid
     fileoutput3(name," "," "," ","C tax revenue","Mil90$",carbonTaxPaid);
@@ -927,22 +904,22 @@ void Region::outputFile() const {
     fileoutput3(name," "," "," ","CO2 emiss","MTC",temp);
     // write depletable resource results to file
     for (i=0;i<numResources;i++) 
-        resources[i]->outputfile( name );
+        resources[i]->csvOutputFile( name );
     // write supply sector results to file
     for (i=0;i<noSSec;i++) {
-        supplySector[i]->outputfile();
+        supplySector[i]->csvOutputFile();
         supplySector[i]->subsec_outfile();
     }
     // write end-use sector demand results to file
     for (i=0;i<noDSec;i++) {
-        demandSector[i]->outputfile();	
+        demandSector[i]->csvOutputFile();	
         demandSector[i]->subsec_outfile();	
     }
 
 }
 
 //! Write MiniCAM style outputs to file.
-void Region::MCoutput() const {
+void Region::dbOutput() const {
     const Modeltime* modeltime = scenario->getModeltime();
     int i=0, m=0;
     const int maxper = modeltime->getmaxper();
@@ -952,8 +929,8 @@ void Region::MCoutput() const {
         string uname,vector<double> dout);
 
     // write population results to database
-    population->MCoutput( name );
-    gdp->MCoutput( name );
+    population->dbOutput( name );
+    gdp->dbOutput( name );
 
     // regional total carbon taxes paid
     dboutput4(name,"General","CarbonTax","revenue","90US$",carbonTaxPaid);
@@ -1068,15 +1045,15 @@ void Region::MCoutput() const {
 
     // write depletable resource results to database
     for (i=0;i<numResources;i++) {
-        resources[i]->MCoutput( name );
+        resources[i]->dbOutput( name );
     }
     // write supply sector results to database
     for (i=0;i<noSSec;i++) {
-        supplySector[i]->MCoutput();
+        supplySector[i]->dbOutput();
     }
     // write end-use sector demand results to database
     for (i=0;i<noDSec;i++) {
-        demandSector[i]->MCoutput();
+        demandSector[i]->dbOutput();
     }
 }
 
@@ -1284,7 +1261,7 @@ vector<string> Region::getSectorDependencies( const string& sectorName ) const {
 */
 void Region::printSectorDependencies( Logger* logger ) const {
     LOG( logger, Logger::DEBUG_LEVEL ) << name << ",Sector,Dependencies ->," << endl;
-    for( vector<Sector*>::const_iterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); sectorIter++ ) {
+    for( vector<SupplySector*>::const_iterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); sectorIter++ ) {
         ( *sectorIter )->printSectorDependencies( logger );
     }
     LOG( logger, Logger::DEBUG_LEVEL ) << endl;
