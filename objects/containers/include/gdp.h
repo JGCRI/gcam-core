@@ -72,7 +72,7 @@ public:
 	double getAproxScaledGDP( const int period ) const;
 	double getScaledGDPperCap( const int period ) const;
 	double getGDPperCap( const int period ) const;
-	double getPPP_GDPperCap( const int period ) const;
+	double getPPPGDPperCap( const int period ) const;
 	double getGDP( const int period ) const;
 	double getApproxGDP( const int period ) const;
 	double getBestScaledGDPperCap( const int period ) const;
