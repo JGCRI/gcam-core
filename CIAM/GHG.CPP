@@ -17,14 +17,12 @@
 #include "ghg.h"
 #include "Emcoef_ind.h" // indirect greenhouse gas emissions coefficient class
 #include "xmlHelper.h"
+#include "Scenario.h"
+#include "World.h"
+
+extern Scenario* scenario;
 
 using namespace std;
-
-// map of CO2 emissions coefficient for primary fuel only
-extern map<string, double> co2coefpri;
-// map of CO2 emissions coefficient for all fossil fuels
-extern map<string, double> co2coefall;
-// indirect CO2 emissions coefficient
 
 Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, const double gwpIn, const double emissionIn ){
 	name = nameIn;
@@ -163,11 +161,14 @@ void Ghg::setrmfrac( const double trmfrac ) {
 }
 
 //! Convert carbon tax to energy tax.
-double Ghg::taxcnvrt( const string& fuelname ) const {
-	double conversion; 
+double Ghg::taxcnvrt( const string& regionName, const string& fuelname ) const {
+	
+   const World* world = scenario->getWorld();
+
+   double conversion; 
 	if (name == "CO2") {
 		// use map object for coefficient
-		conversion = (1.0 - rmfrac) * gwp * co2coefpri[fuelname];
+		conversion = (1.0 - rmfrac) * gwp * world->getCarbonTaxCoef( regionName, fuelname );
 	}
 	// for all other gases used read-in emissions coefficient
 	else {
@@ -179,27 +180,29 @@ double Ghg::taxcnvrt( const string& fuelname ) const {
 }
 
 //! Calculate Ghg emissions.
-void Ghg::calc_emiss( const string& fuelname, const double input, const string& prodname, const double output ) {
-	// for CO2 use default emissions coefficient by fuel
+void Ghg::calc_emiss( const string& regionName, const string& fuelname, const double input, const string& prodname, const double output ) {
+	
+   const World* world = scenario->getWorld();
+   
+   // for CO2 use default emissions coefficient by fuel
 	// remove fraction only applicable for CO2
 	if (name == "CO2") {
-		// use map object for coefficient
+		const double coefFuel = world->getPrimaryFuelCO2Coef( regionName, fuelname );
+      const double coefProduct = world->getPrimaryFuelCO2Coef( regionName, prodname );
+
 		// 100% efficiency and same coefficient, no emissions
-		if (input==output && co2coefall[fuelname]==co2coefall[prodname]) {
+		if (input==output && coefFuel == coefProduct ) {
 			emission = 0;
 			emiss_gwp = 0;
 			seq_emiss = 0;
-			emiss_fuel = (1.0-rmfrac)*input*co2coefall[fuelname];
+			emiss_fuel = (1.0-rmfrac)*input* coefFuel;
 		}
 		else {
 			// sequestered emissions
-			seq_emiss = rmfrac * ((input*co2coefall[fuelname])
-			                       - (output*co2coefall[prodname]));
-			emission = (1.0 - rmfrac) * ((input*co2coefall[fuelname])
-			                       - (output*co2coefall[prodname]));
-			emiss_gwp = (1.0 - rmfrac) * gwp * ((input*co2coefall[fuelname])
-			                              - (output*co2coefall[prodname]));
-			emiss_fuel = (1.0-rmfrac)*input*co2coefall[fuelname];
+			seq_emiss = rmfrac * ( (input * coefFuel ) - ( output * coefProduct ) );
+			emission = ( 1.0 - rmfrac ) * ( ( input* coefFuel ) - ( output* coefProduct ) );
+			emiss_gwp = ( 1.0 - rmfrac ) * gwp * ( ( input * coefFuel ) - ( output * coefProduct ) );
+			emiss_fuel = (1.0-rmfrac) * input* coefFuel;
 		}
 	}
 	// for all other gases used read-in emissions coefficient

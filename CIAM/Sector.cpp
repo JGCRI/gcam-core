@@ -321,10 +321,10 @@ void sector::setMarket( const string& regionName ) {
 }
 
 //! Pass along carbon taxes.
-void sector::applycarbontax(double tax, int per) {
+void sector::applycarbontax( const string& regionName, double tax, int per ) {
     int i=0;
     for (i=0;i<nosubsec;i++) {
-        subsec[i]->applycarbontax(tax,per);
+        subsec[i]->applycarbontax( regionName, tax, per );
     }
 }
 

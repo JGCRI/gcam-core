@@ -492,9 +492,9 @@ double subsector::getwtfuelprice(int per) const
 }
 
 //! passes carbon tax to technology
-void subsector::applycarbontax( const double tax, const int period ) {
+void subsector::applycarbontax( const string& regionName, const double tax, const int period ) {
     for ( int i=0 ;i<notech; i++ ) {
-        techs[i][ period ]->applycarbontax(tax);
+        techs[i][ period ]->applycarbontax( regionName, tax );
     }
 }
 

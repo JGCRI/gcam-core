@@ -13,9 +13,11 @@
 
 #include <map>
 #include <vector>
+#include <string>
 #include <xercesc/dom/DOM.hpp>
 
 using namespace xercesc;
+using namespace std;
 
 // Forward declarations
 class Region;
@@ -84,6 +86,8 @@ public:
 	void turnCalibrationsOff(); // turn off calibrations
 	bool getCalibrationSetting() const; // return calibration setting
    const vector<string> getPrimaryFuelList() const;
+   double getPrimaryFuelCO2Coef( const string& regionName, const string& fuelName ) const;
+   double getCarbonTaxCoef( const string& regionName, const string& fuelName ) const;
 };
 
 #endif

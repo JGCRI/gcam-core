@@ -83,7 +83,7 @@ public:
     double getfuelprice( const int period ) const; 
     double getwtfuelprice( const int period ) const;
     double getCapacityLimit( const int period ) const;
-    void applycarbontax( const double tax, const int period );
+    void applycarbontax( const string& regionName, const double tax, const int period );
     void addghgtax( const string& ghgname, const string& regionName, const int period ); 
     virtual void calcShare( const string& regionName, const int period, const double gnp_cap = 1 ); 
     void shareWeightInterp( const int beginPeriod,  const int endPeriod );

@@ -277,7 +277,7 @@ void technology::toDebugXML( const int period, ostream& out ) const {
 }
 
 //! apply carbon tax to appropriate technology
-void technology::applycarbontax(double tax)
+void technology::applycarbontax( const string& regionName, const double tax )
 {
     // convert tax from $/carbon unit to $/energy unit
     // if fuel does not contain carbon, emissions coefficient
@@ -290,7 +290,7 @@ void technology::applycarbontax(double tax)
     // crude oil, natural gas and coal
     // add to previous ghg tax if more than one ghg
     for(int i=0;i< static_cast<int>( ghg.size() );i++) {
-        carbontaxgj += carbontax*ghg[i]->taxcnvrt(fuelname)*1e-3;
+        carbontaxgj += carbontax*ghg[i]->taxcnvrt( regionName, fuelname)*1e-3;
     }
 }
 
@@ -304,7 +304,7 @@ void technology::addghgtax( const string ghgname, const string regionName, const
     carbontax = marketplace->showprice(ghgname,regionName,per);
     // add to previous ghg tax if more than one ghg
     for(int i=0;i< static_cast<int>( ghg.size() );i++) {
-        carbontaxgj += carbontax*ghg[i]->taxcnvrt(fuelname)*1e-3;
+        carbontaxgj += carbontax*ghg[i]->taxcnvrt( regionName, fuelname)*1e-3;
     }
     // need to add taxes from all ghgs
 }
@@ -466,7 +466,7 @@ void technology::production(const string& regionName,const string& prodName,
     
     // calculate emissions for each gas after setting input and output amounts
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
-        ghg[i]->calc_emiss(fuelname,input,prodName,output);
+        ghg[i]->calc_emiss(regionName, fuelname,input,prodName,output);
         // set emissions as demand side of gas market
         marketplace->setdemand(ghg[i]->getname(),regionName,ghg[i]->getemission(),per);		
     }

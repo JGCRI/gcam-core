@@ -66,6 +66,9 @@ private:
    map<string,int> demandSectorNameMap; //!< Map of demandsector name to integer position in vector. 
    map<string,int> ghgMarketNameMap; //!< Map of ghgmarket name to integer position in vector. 
    vector<Emcoef_ind> emcoef_ind; //!< vector of objects containing indirect emissions coefficients
+   map<string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuel only
+   map<string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
+
 public:
 	
 	Region(); // default construtor
@@ -81,7 +84,6 @@ public:
    void setupCalibrationMarkets();
    void doCalibration( const bool doCalibrations, const int per );
    void initCalc( const int per ); // Call sectors to consistantly adjust share weights
-	void setCO2coef(void); // set default CO2 emissions coefficients
 	void setghgsupply(int per); // sets ghg constraint to market supply
 	void setghgdemand(int per); // sets ghg emissions to market demand
 	void addghgtax(int per); // sets ghg tax to technologies
@@ -112,6 +114,8 @@ public:
 	double showrsc( const string resourceName, const int per );
 	double showsubrsc( const string resourceName, const string& subResourceName, const int per );
 	void updateSummary( const int period ); // update regional summary for reporting
+   double getPrimaryFuelCO2Coef( const string& fuelName ) const;
+   double getCarbonTaxCoef( const string& fuelName ) const;
 };
 
 #endif // _REGION_H_

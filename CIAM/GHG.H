@@ -54,8 +54,8 @@ public:
 	void toXML( ostream& out ) const; // write out xml.
 	void toDebugXML( const int period, ostream& out ) const;
 	void setrmfrac( const double trmfrac ); // set remove fraction from data
-	double taxcnvrt( const string& fuelname ) const; // conversion for carbon tax to energy equivalent
-	void calc_emiss( const string& fuelname, const double input, const string& prodname, const double output ); // calculate emissions
+	double taxcnvrt( const string& regionName, const string& fuelname ) const; // conversion for carbon tax to energy equivalent
+	void calc_emiss( const string& regionName, const string& fuelname, const double input, const string& prodname, const double output ); // calculate emissions
 	void calc_emiss2( const double activity, const double gamma, const double* cntl); // calculate emissions alternative
 	void calc_emiss_ind( const double input, const string& fuelname, const vector<Emcoef_ind>& emcoef_ind  ); // calculate ind emissions
 	string getname() const; // return name of ghg

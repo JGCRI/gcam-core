@@ -40,11 +40,6 @@ using namespace std;
 extern Scenario* scenario;
 extern ofstream outfile, sdfile;	
 
-//! map of CO2 emissions coefficient for primary fuel only
-map<string, double> co2coefpri;
-//! map of CO2 emissions coefficient for all fossil fuels
-map<string, double> co2coefall;
-
 //! Default constructor
 Region::Region() {
    agSector = 0;
@@ -172,6 +167,13 @@ void Region::XMLParse( const DOMNode* node ){
 
       else if( nodeName == "e_GNP_elas" ){
          EnergyGNPElas = XMLHelper<double>::getValue( curr ); 
+      }
+
+      else if( nodeName == "PrimaryFuelCO2Coef" ) {
+         primaryFuelCO2Coef[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
+      }
+      else if( nodeName == "CarbonTaxFuelCoef" ) {
+         carbonTaxFuelCoef[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
       }
       else if( nodeName == "demographics" ){
          if( population == 0 ) {
@@ -367,6 +369,7 @@ void Region::completeInit() {
 
    for( vector<sector*>::iterator supplySectorIter = supplysector.begin(); supplySectorIter != supplysector.end(); supplySectorIter++ ) {
       ( *supplySectorIter )->completeInit();
+
    }
    
    for( vector<demsector*>::iterator demandSectorIter = demandsector.begin(); demandSectorIter != demandsector.end(); demandSectorIter++ ) {
@@ -394,6 +397,15 @@ void Region::toXML( ostream& out ) const {
    
    // Write out gnp energy elasticity.
    XMLWriteElementCheckDefault( EnergyGNPElas, "e_GNP_elas", out, 0 );
+
+   // Write out the Co2 Coefficients. 
+   for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
+      XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, 0, coefAllIter->first );
+   }
+   
+   for( map<string,double>::const_iterator coefPriIter = carbonTaxFuelCoef.begin(); coefPriIter != carbonTaxFuelCoef.end(); coefPriIter++ ) {
+      XMLWriteElement( coefPriIter->second, "CarbonTaxFuelCoef", out, 0, coefPriIter->first );
+   }
    // write the xml for the class members.
    // write out the single population object.
    population->toXML( out );
@@ -433,12 +445,12 @@ void Region::toXML( ostream& out ) const {
    
    // write out GNP
    for( m = 0; m < static_cast<int>( gnp_dol.size() ); m++ ){
-      XMLWriteElement( gnp_dol[ m ], "GNP", out, modeltime->getper_to_yr( m ) );
+      XMLWriteElementCheckDefault( gnp_dol[ m ], "GNP", out, 0, modeltime->getper_to_yr( m ) );
    }
    
    // write out income elasticity
    for( m = 0; m < static_cast<int>( i_elas.size() ); m++ ) {
-      XMLWriteElement( i_elas[ m ],"incomeelasticity", out, modeltime->getper_to_yr( m ) );
+      XMLWriteElementCheckDefault( i_elas[ m ],"incomeelasticity", out, 0, modeltime->getper_to_yr( m ) );
    }
    
    Tabs::decreaseIndent();
@@ -453,7 +465,7 @@ void Region::toXML( ostream& out ) const {
    
    // Write out regional fixed taxes
    for( m = 0; m < static_cast<int>( carbontax.size() ); m++ ){
-      XMLWriteElement( carbontax[ m ],"carbontax", out, modeltime->getper_to_yr( m ) );			
+      XMLWriteElementCheckDefault( carbontax[ m ],"carbontax", out, 0, modeltime->getper_to_yr( m ) );			
    }
    
    Tabs::decreaseIndent();
@@ -495,7 +507,17 @@ void Region::toDebugXML( const int period, ostream& out ) const {
    XMLWriteElement( input[ period ], "input", out );
    XMLWriteElement( price_ser[ period ], "price_ser", out );
    XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out );
+   // Write out gnp energy elasticity.
+   XMLWriteElement( EnergyGNPElas, "e_GNP_elas", out );
+
+   // Write out the Co2 Coefficients. 
+   for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
+      XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, 0, coefAllIter->first );
+   }
    
+   for( map<string,double>::const_iterator coefPriIter = carbonTaxFuelCoef.begin(); coefPriIter != carbonTaxFuelCoef.end(); coefPriIter++ ) {
+      XMLWriteElement( coefPriIter->second, "CarbonTaxFuelCoef", out, 0, coefPriIter->first );
+   }
    // write the xml for the class members.
    // write out the single population object.
    population->toDebugXML( period, out );
@@ -569,42 +591,6 @@ void Region::toDebugXML( const int period, ostream& out ) const {
 void Region::setupCalibrationMarkets() {
    population->setupCalibrationMarkets( name );
 }
-
-//! Set default emissions coefficient for CO2.
-//  Must find another way to set emissions coefficients rather than
-//  hardcoding it here. shk
-void Region::setCO2coef()
-{
-   // initialize map (tgC/EJ) or (MTC/EJ)
-   // apply carbon taxes to primary fuels
-   /*	co2coefpri["crude oil"] = 18.4; 
-   co2coefpri["natural gas"] = 14.2;
-   co2coefpri["coal"] = 27.3;
-   */
-   // setting emissions coefficients to these fuels
-   // applies carbon taxes to secondary fuels
-   //co2coefpri["refined oil"] = 18.9;
-   co2coefpri["refined oil"] = 19.6;
-   co2coefpri["delivered gas"] = 14.2;
-   co2coefpri["delivered coal"] = 27.3;
-   
-   // initialize map (tgC/EJ) or (MTC/EJ)
-//   co2coefall["crude oil"] = 18.9; 
-//   co2coefall["crude oil regional"] = 18.9; 
-//   co2coefall["refined oil"] = 18.9;
-   co2coefall["crude oil"] = 19.6; 
-   co2coefall["crude oil regional"] = 19.6; 
-   co2coefall["refined oil"] = 19.6;
-   co2coefall["natural gas"] = 14.2;
-   co2coefall["natural gas regional"] = 14.2;
-   co2coefall["delivered gas"] = 14.2;
-   co2coefall["coal"] = 27.3;
-   co2coefall["coal regional"] = 27.3;
-   co2coefall["delivered coal"] = 27.3;
-   co2coefall["shale oil"] = 27.9;
-   co2coefall["shale oil regional"] = 27.9;
-}
-
 
 //! Run the agLu Model and determine CO2 emitted.
 void Region::calcAgSector( const int period ) {
@@ -708,19 +694,11 @@ void Region::finalsupply(int per) {
 		j = nossec - (i+1);
 		
 		goodName = supplysector[j]->getName();		
-      
-     if (name == "USA" && goodName == "electricity" && 1==2) {
-          cout << ".";
-      }
 
 		// name is country/region name
 		supplysector[j]->supply( name, per );
 		supplysector[j]->sumoutput(per);
       double sectorOutput = supplysector[j]->getoutput(per);
-      
-     if (name == "USA" && goodName == "electricity"  && 1==2) {
-          cout << "out: " << sectorOutput;
-      }
 
 		carbontaxpaid[per] += supplysector[j]->showcarbontaxpaid(per);
 	}
@@ -736,9 +714,6 @@ void Region::finalsupply(int per) {
 		goodName = supplysector[i]->getName();
 		mrksupply = supplysector[i]->getoutput(per);
 		
-      if (name == "USA" && goodName == "electricity"   && 1==2) {
-          cout << ".";
-      }
 		// set market supply of intermediate goods
 		marketplace->setsupply(goodName,name,mrksupply,per);
 	}
@@ -981,9 +956,9 @@ void Region::applycarbontax(int per)
    int i=0;
    // apply carbon taxes by period to primary fossil fuel user only
    for (i=0;i<nossec;i++)
-      supplysector[i]->applycarbontax(carbontax[per],per);
+      supplysector[i]->applycarbontax( name, carbontax[per],per);
    for (i=0;i<nodsec;i++)
-      demandsector[i]->applycarbontax(carbontax[per],per);
+      demandsector[i]->applycarbontax( name, carbontax[per],per);
 }
 
 //! Return regional population->
@@ -1039,7 +1014,7 @@ void Region::calcEmissFuel(int per)
    const vector<string> primaryFuelList = scenario->getWorld()->getPrimaryFuelList();
    
    for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
-      fuelemiss[ *fuelIter ] = summary[per].get_pemap_second( *fuelIter ) * co2coefall[ *fuelIter ];
+      fuelemiss[ *fuelIter ] = summary[per].get_pemap_second( *fuelIter ) * primaryFuelCO2Coef[ *fuelIter ];
    }
    
    summary[per].updateemiss(fuelemiss); // add CO2 emissions by fuel
@@ -1328,4 +1303,30 @@ void Region::updateSummary( const int per ) {
    }
    // update primary energy trade from consumption and production amounts
    summary[per].updatepetrade(); 
+}
+
+//! Return the primaryFuelCO2Coef for a specific  fuel.
+double Region::getPrimaryFuelCO2Coef( const string& fuelName ) const {
+   
+   // Determine the correct fuel.
+   double coef = 0;
+   map<string,double>::const_iterator coefIter = primaryFuelCO2Coef.find( fuelName );
+   if( coefIter != primaryFuelCO2Coef.end() ) {
+      coef = coefIter->second;
+   }
+
+   return coef;
+}
+
+//! Return the carbonTaxCoef for a specific  fuel.
+double Region::getCarbonTaxCoef( const string& fuelName ) const {
+   
+   // Determine the correct fuel.
+   double coef = 0;
+   map<string,double>::const_iterator coefIter = carbonTaxFuelCoef.find( fuelName );
+   if( coefIter != carbonTaxFuelCoef.end() ) {
+      coef = coefIter->second;
+   }
+
+   return coef;
 }

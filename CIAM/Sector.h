@@ -63,7 +63,7 @@ public:
     virtual void toXMLDerivedClass( ostream& out ) const;
     virtual void toDebugXML( const int period, ostream& out ) const;
     virtual void setMarket( const string& regname ); //create markets
-    void applycarbontax(double tax,int per); // passes along regional carbon tax
+    void applycarbontax( const string& regionName, double tax,int per); // passes along regional carbon tax
     void addghgtax( const string ghgname, const string regionName, const int per); // sets ghg tax to technologies
     virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 ); // calculates and normalizes shares 
     virtual void price(int per); // calculates sector price

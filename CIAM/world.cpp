@@ -138,7 +138,6 @@ void World::completeInit() {
 
    // Finish initializing all the regions.
    for( vector<Region*>::iterator regionIter = region.begin(); regionIter != region.end(); regionIter++ ) {
-      ( *regionIter )->setCO2coef(); // sets default CO2 emissions coefficients
       ( *regionIter )->completeInit();
    }
 
@@ -591,4 +590,30 @@ vector<string> World::getRegionVector() const {
 //! Return the list of primary fuels. 
 const vector<string> World::getPrimaryFuelList() const {
    return primaryFuelList;
+}
+
+//! Return the primaryFuelCO2Coef for a specific region and fuel.
+double World::getPrimaryFuelCO2Coef( const string& regionName, const string& fuelName ) const {
+   
+   // Determine the correct region.
+   double coef = 0;
+   map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( regionName );
+   if( regionIter != regionNamesToNumbers.end() ) {
+      coef = region[ regionIter->second ]->getPrimaryFuelCO2Coef( fuelName );
+   }
+
+   return coef;
+}
+
+//! Return the carbonTaxCoef for a specific region and fuel.
+double World::getCarbonTaxCoef( const string& regionName, const string& fuelName ) const {
+   
+   // Determine the correct region.
+   double coef = 0;
+   map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( regionName );
+   if( regionIter != regionNamesToNumbers.end() ) {
+      coef = region[ regionIter->second ]->getCarbonTaxCoef( fuelName );
+   }
+
+   return coef;
 }

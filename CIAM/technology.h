@@ -80,7 +80,7 @@ public:
     void completeInit();
     virtual void toXML( ostream& out ) const;
     virtual void toDebugXML( const int period, ostream& out ) const;
-    void applycarbontax(double tax); // apply carbon tax to appropriate technology
+    void applycarbontax( const string& regionName, const double tax); // apply carbon tax to appropriate technology
     // sets ghg tax to technologies
     void addghgtax( const string ghgname, const string regionName, const int per ); 
     // calculates fuel and total cost of technology
