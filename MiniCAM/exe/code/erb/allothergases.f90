@@ -238,12 +238,14 @@
 !	13	HFC-43-10
 !	14	SF6 
 
-	DO II = 1, 14
+! sjs -- do not use unless SRES emissions are read in
+    IF  (SUM(HGWPREAD(3,:,:)) .gt. 0) THEN
+	  DO II = 1, 14
 		OGACT(10+II,1,L,M) = HGWPREAD(II,L,M)/1000  ! convert from thousand tons to million tons
-! sjs -- eliminate these now that emissions are read in
-!		OGINPUT(10+II,1,L) = 1 ! set coefficient to 1 since we are passing emissions directly
-!		OGREPORT(10+II,1) = 1
-	END DO
+		OGINPUT(10+II,1,L) = 1 ! set coefficient to 1 since we are passing emissions directly
+		OGREPORT(10+II,1) = 1
+	  END DO
+    END IF
 
 ! ***************************************************
 !        Activities for NOx
