@@ -14,7 +14,6 @@
 */
 
 #include "marketplace/include/market.h"
-
 class Tabs;
 
 /*!
@@ -49,7 +48,6 @@ public:
 
 private:
     Market* demandMarketPointer; //!< A pointer to the companion DemandMarket
-    double priceMultiplier; //!< Price multiplier.
 };
 
 #endif // _PRICE_MARKET_H_
