@@ -5,6 +5,7 @@
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
+* \todo Fix the naming issue between the two ghg markets. 
 */
 
 #include "Definitions.h"
