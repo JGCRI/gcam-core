@@ -13,6 +13,8 @@
 #include <iomanip>
 #include <fstream>
 #include <ctime>
+#include <string>
+
 // user defined headers
 #include "scenario.h"
 #include "world.h"
@@ -26,52 +28,39 @@ extern ofstream gasfile;
 
 //! Write the input text file for the climate model.
 void climat_data() {
-	const Modeltime* modeltime = scenario->getModeltime();
-	World* world = scenario->getWorld();
-
-	int maxper = modeltime->getmaxdataper();
-        int per;
-    
-	gasfile << "10\n Scenario B2-550\n\n\n\n";
-	gasfile.setf(ios::right, ios::adjustfield);
-	gasfile.setf(ios::fixed, ios::floatfield);
-	gasfile.setf(ios::showpoint);
-	for(per=1;per<maxper;per++) {
-		gasfile << setw(4)
-				<< 1975+(per*15) <<","
-				<< setw(7) << setprecision(2) << world->showCO2(per)/1000 <<","
-				<< setw(7) << setprecision(2) << world->showCO2ag(per) <<","
-				<< setw(7) << setprecision(2) << world->showCH4(per) <<","
-				<< setw(7) << setprecision(2) << world->showN2O(per) <<","
-				<< setw(7) << setprecision(2) << world->showSOXreg1(per) <<","
-				<< setw(7) << setprecision(2) << world->showSOXreg2(per) <<","
-				<< setw(7) << setprecision(2) << world->showSOXreg3(per) <<","
-				<< setw(7) << setprecision(2) << world->showCF4(per) <<","
-				<< setw(7) << setprecision(2) << world->showC2F6(per) <<","
-				<< setw(7) << setprecision(2) << world->showHFC125(per) <<","
-				<< setw(7) << setprecision(2) << world->showHFC134a(per) <<","
-				<< setw(7) << setprecision(2) << world->showHFC143a(per) <<","
-				<< setw(7) << setprecision(2) << world->showHFC227ea(per) <<","
-				<< setw(7) << setprecision(2) << world->showHFC245ca(per) <<","
-				<< setw(7) << setprecision(2) << world->showSF6(per) <<",\n";
-	}
-	for(per=maxper;per<maxper+2;per++) {
-		gasfile << setw(4)
-				<< 2150+((per-maxper)*140) <<","
-				<< setw(7) << setprecision(2) << -3.18 <<","
-				<< setw(7) << setprecision(2) << world->showCO2ag(per) <<","
-				<< setw(7) << setprecision(2) << world->showCH4(per) <<","
-				<< setw(7) << setprecision(2) << world->showN2O(per) <<","
-				<< setw(7) << setprecision(2) << world->showSOXreg1(per) <<","
-				<< setw(7) << setprecision(2) << world->showSOXreg2(per) <<","
-				<< setw(7) << setprecision(2) << world->showSOXreg3(per) <<","
-				<< setw(7) << setprecision(2) << world->showCF4(per) <<","
-				<< setw(7) << setprecision(2) << world->showC2F6(per) <<","
-				<< setw(7) << setprecision(2) << world->showHFC125(per) <<","
-				<< setw(7) << setprecision(2) << world->showHFC134a(per) <<","
-				<< setw(7) << setprecision(2) << world->showHFC143a(per) <<","
-				<< setw(7) << setprecision(2) << world->showHFC227ea(per) <<","
-				<< setw(7) << setprecision(2) << world->showHFC245ca(per) <<","
-				<< setw(7) << setprecision(2) << world->showSF6(per) <<",\n";
-	}
+   const Modeltime* modeltime = scenario->getModeltime();
+   World* world = scenario->getWorld();
+   const int maxper = modeltime->getmaxdataper();
+   const string scenarioString = "10\n Scenario B2-550\n\n\n";
+   
+   gasfile << scenarioString << endl;
+   gasfile.setf( ios::right, ios::adjustfield );
+   gasfile.setf( ios::fixed, ios::floatfield );
+   gasfile.setf( ios::showpoint );
+   
+   for( int per = 1; per < maxper + 2; per++ ) {
+      if( per < maxper ) {
+         gasfile << setw(4) << 1975 + ( per * 15 ) << ","
+            << setw(7) << setprecision(2) << world->getGHGEmissions( "CO2", per ) / 1000 << ",";
+      }
+      else {
+         gasfile << setw(4) << 2150 + ( ( per - maxper ) * 140) << ","
+            << setw(7) << setprecision(2) << -3.18 <<",";
+      }
+      
+      gasfile << setw(7) << setprecision(2) << world->getGHGEmissions( "CO2ag", per ) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "CH4", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "N2O", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "SOXreg1", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "SOXreg2", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "SOXreg3", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "CF4", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "C2F6", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "HFC125", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "HFC134a", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "HFC143a", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "HFC227ea", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "HFC245ca", per) <<","
+         << setw(7) << setprecision(2) << world->getGHGEmissions( "SF6", per) << endl;
+   }
 }
