@@ -27,7 +27,7 @@ class AgSector;
 class GHGPolicy;
 class Summary;
 class Emcoef_ind;
-class Logger;
+class ILogger;
 class GDP;
 class Curve;
 class Tabs;
@@ -80,7 +80,7 @@ public:
     double getCarbonTaxCoef( const std::string& fuelName ) const;
     const Summary getSummary( const int period ) const;
     std::vector<std::string> getSectorDependencies( const std::string& sectorName ) const;
-    void printSectorDependencies( Logger* logger ) const;
+    void printSectorDependencies( ILogger& aLog ) const;
     void setFixedTaxes( const std::string& policyName, const std::string& marketName, const std::vector<double>& taxes );
     const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
@@ -111,7 +111,7 @@ private:
     std::vector<Emcoef_ind> emcoefInd; //!< vector of objects containing indirect emissions coefficients
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
     std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
-    double getFixedDemand( const int period, const std::string& goodName, bool printValues = false );
+    double getFixedDemand( const int period, const std::string& goodName );
     bool anySupplyFixedOutput( const int sectorNumber ) const;
     void adjustCalibrations( const int period );
     void checkSectorCalData( const int period );
