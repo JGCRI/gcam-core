@@ -162,7 +162,7 @@ public class ControlPanel extends javax.swing.JFrame {
     
     private void frameResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_frameResized
         if (evt.getID() == ComponentEvent.COMPONENT_RESIZED) {
-            if (treePanel != null && treePanel.isShowing()) {
+           /* if (treePanel != null && treePanel.isShowing()) {
                 treePanel.setPreferredSize(treePanel.getSize());
             }
             //appears to be unnecessary
@@ -233,17 +233,6 @@ public class ControlPanel extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jBbrowseActionPerformed
-    
-    private void saveChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        //AdapterNode currNode = (AdapterNode)tree.getLastSelectedPathComponent();
-        //String newVal = valuePane.getText();
-        
-        //currNode.setText(newVal);
-        
-        if (tableExistsFlag) {
-            System.out.println("would save");
-        }
-    }
     
     private void saveAllButtonActionPerformed(java.awt.event.ActionEvent evt) {
         XMLOutputter outputter = new XMLOutputter();
@@ -351,24 +340,26 @@ public class ControlPanel extends javax.swing.JFrame {
         // Build left-side view
         JScrollPane treeView = new JScrollPane(tree);
         treeView.setPreferredSize(new Dimension(leftWidth, windowHeight));
+        treeView.setMinimumSize(new Dimension(leftWidth, windowHeight));
         
         // Build right-side view
         // start with text field to show values of nodes in tree
         valuePane = new JTextField();
         valuePane.setEditable(true);
         valuePane.setPreferredSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
+        valuePane.setMinimumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
         valuePane.setMaximumSize(new Dimension(2000, DEFAULT_COMPONENT_HEIGHT));
-            /*valuePane.getDocument().addDocumentListener(new DocumentListener() {
-                public void insertUpdate(DocumentEvent e) {
-                    treeValueChanged((javax.swing.text.Document)e.getDocument());
-                }
-                public void removeUpdate(DocumentEvent e) {
-                    treeValueChanged((javax.swing.text.Document)e.getDocument());
-                }
-                public void changedUpdate(DocumentEvent e) {
-                    treeValueChanged((javax.swing.text.Document)e.getDocument());
-                }
-            });*/
+        valuePane.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //when user hits enter after updating content of valuePane, the new value will be saved into the tree node
+                AdapterNode currNode = (AdapterNode)tree.getLastSelectedPathComponent();
+                String newVal = valuePane.getText();
+        
+                currNode.setText(newVal);
+                nodeValueChangedFlag = true;
+            }
+        });
+
         JPanel tempValPanel = new JPanel();
         tempValPanel.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
         tempValPanel.setLayout(new BoxLayout(tempValPanel, BoxLayout.X_AXIS));
@@ -386,14 +377,6 @@ public class ControlPanel extends javax.swing.JFrame {
         bigDataPane.add(tempValPanel, BorderLayout.NORTH);
         //bidDataPanel.add(Box.createRigidArea(new Dimension(0,10)));
         
-        //Finish right-side view by putting the various panels together
-        /*dataPanel = new JPanel();
-        dataPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
-        dataPanel.add(tempValPanel);
-        dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
-         */
-        
         dataPanel = new JPanel();
         dataPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
@@ -401,6 +384,7 @@ public class ControlPanel extends javax.swing.JFrame {
         JScrollPane dataView = new JScrollPane(dataPanel);
         //JScrollPane dataView = new JScrollPane
         dataView.setPreferredSize(new Dimension(rightWidth, windowHeight));
+        dataView.setMinimumSize(new Dimension(rightWidth, windowHeight));
         
         bigDataPane.add(dataView);
         
@@ -429,6 +413,7 @@ public class ControlPanel extends javax.swing.JFrame {
         splitPane.setContinuousLayout(true);
         splitPane.setDividerLocation(leftWidth);
         splitPane.setPreferredSize(new Dimension(windowWidth + 10, windowHeight+10));
+        splitPane.setMinimumSize(new Dimension(windowWidth + 10, windowHeight+10));
         splitPane.setMaximumSize(new Dimension(2000, 1500));
         
         //create the selection button
@@ -438,15 +423,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 selectNodesButtonActionPerformed(evt);
             }
         });
-        
-        //create the save button
-        JButton saveChangesButton = new JButton("Save");
-        saveChangesButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveChangesButtonActionPerformed(evt);
-            }
-        });
-        
+                
         JButton saveAllButton = new JButton("Save All");
         saveAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -459,10 +436,10 @@ public class ControlPanel extends javax.swing.JFrame {
         treePanel.add(Box.createRigidArea(new Dimension(0,5)));
         treePanel.add(selectNodesButton);
         treePanel.add(Box.createRigidArea(new Dimension(0,5)));
-        treePanel.add(saveChangesButton);
-        treePanel.add(Box.createRigidArea(new Dimension(0,5)));
         treePanel.add(saveAllButton);
         pack();
+        //treePanel.revalidate();
+        //repaint();
     }
     
     private void makeQueryPanel(boolean firstAttempt) {
@@ -552,7 +529,9 @@ public class ControlPanel extends javax.swing.JFrame {
         //put back the horizontal glue to make sure componenets of queryPanel are left justified
         queryPanel.add(Box.createHorizontalGlue());
         
-        pack();
+        //pack();
+        queryPanel.revalidate();
+        repaint();
     }
     
     /*
@@ -565,8 +544,6 @@ public class ControlPanel extends javax.swing.JFrame {
         Component[] comps = parent.getComponents();
         boolean remove = false;
         
-System.out.println("Used to have " + parent.getComponentCount() + " components");
-        
         //remove components from the panel
         for (int j = 0; j < comps.length; j++) {
             if (remove) {
@@ -577,15 +554,12 @@ System.out.println("Used to have " + parent.getComponentCount() + " components")
             }
         }
 
-System.out.println("Now have " + parent.getComponentCount() + " components");     
-
         repaint();
         
         //remove components from the control arrays (add one because indexes start at 0)
         if (rootPointers != null && rootPointers.size() > index+2) rootPointers.setSize(index+2);
         if (queryControls != null && queryControls.size() > index+1) queryControls.setSize(index+1);
         if (attributeControls != null && attributeControls.size() > index+1) attributeControls.setSize(index+1);
-        
     }
     
     private void addQueryControl(Component predecessor, int index) {
@@ -595,8 +569,8 @@ System.out.println("Now have " + parent.getComponentCount() + " components");
 //System.out.println("predecessor = " + predecessor.getName() + "|");
 
         //check if combo box already exists, remove all traces of it
-        if (queryControls.size() > index || attributeControls.size() >= index) {
-            removeComponents(queryPanel, predecessor, index);
+        if (queryControls.size() > index) {
+            removeComponents(queryPanel, predecessor, index-1);
         } else {    //just elliminate that Horizontal glue that's the last component
             queryPanel.remove(queryPanel.getComponents().length-1);
         }
@@ -624,10 +598,6 @@ System.out.println("Now have " + parent.getComponentCount() + " components");
                 JComboBox temp = (JComboBox)e.getSource();
                 String name = temp.getSelectedItem().toString();
                 int index = queryControls.indexOf(temp);
-
-System.out.println("index = " + index);
-System.out.println("roots: " + rootPointers.toString());
-System.out.println("conponents: " + queryControls.toString());
                 
                 //check in corresponding node has an attribute name
                 currRootPointer = (AdapterNode)rootPointers.elementAt(index);
@@ -657,7 +627,9 @@ System.out.println("conponents: " + queryControls.toString());
         queryPanel.add(new JLabel("  of  "));
         queryPanel.add(comboBox);
         queryPanel.add(Box.createHorizontalGlue()); 
-        pack();
+
+        queryPanel.revalidate();
+        repaint();
     }
     
     private void addAttributeControl(Component predecessor, String nodeName, int index){
@@ -680,7 +652,7 @@ System.out.println("conponents: " + queryControls.toString());
         JComboBox comboBox;
         
         //check if combo box already exists and remove all of its successors if necessary
-        if (attributeControls.size() > index) {
+        if (attributeControls.size() > index || attributeControls.size() >= index) {
             removeComponents(queryPanel, predecessor, index);
         } else {
             //remove the horizontal glue to display components adjecently
@@ -697,9 +669,6 @@ System.out.println("conponents: " + queryControls.toString());
                 String attribVal = temp.getSelectedItem().toString();
                 int index = attributeControls.indexOf(temp);
                 
-System.out.println("index = " + index);
-System.out.println("roots: " + rootPointers.toString());
-                
                 //get the name of that node
                 temp = (JComboBox)queryControls.elementAt(index);
                 String nodeName = temp.getModel().getSelectedItem().toString();
@@ -711,11 +680,12 @@ System.out.println("roots: " + rootPointers.toString());
                 if (!newPointer.isLeaf()) {
                     //create new component with the nodes's set of chilren
                     //replace root pointer if it already exists or add new one if it does not
-                        if (rootPointers.size() > index+1) { 
-                            rootPointers.setElementAt(newPointer, index+1);
-                        } else { 
-                            rootPointers.addElement(newPointer);
-                        }
+                    if (rootPointers.size() > index+1) { 
+                        rootPointers.setElementAt(newPointer, index+1);
+                    } else { 
+                        rootPointers.addElement(newPointer);
+                    }
+                    //removeComponents(queryPanel, (Component)e.getSource(), index);
                     addQueryControl((Component)e.getSource(), index+1);
                 }          
             }
@@ -729,7 +699,9 @@ System.out.println("roots: " + rootPointers.toString());
         queryPanel.add(Box.createRigidArea(new Dimension(5,0)));
         queryPanel.add(comboBox);
         queryPanel.add(Box.createHorizontalGlue());
-        pack();
+
+        queryPanel.revalidate();
+        repaint();
     }
     
     /*
@@ -1042,16 +1014,6 @@ System.out.println("roots: " + rootPointers.toString());
         return name;
     }
     
-    public void treeValueChanged(javax.swing.text.Document doc) {
-        //nodeValueChangedFlag = true;
-    }
-    
-    public void saveTableValueOf(TableViewModel source, int row, int col) {
-        
-        //AdapterNode node = source.getNodeAt(row, col);
-        //System.out.println("Parent = " + node.getParent());
-    }
-    
     private JPanel makeLefter(Vector headings, String varName) {
         //create vertical table labels
         JPanel temp = new JPanel();
@@ -1193,7 +1155,8 @@ System.out.println("roots: " + rootPointers.toString());
             
             tableExistsFlag = true;
 
-            pack();
+            dataPanel.revalidate();
+            repaint();
         }
     }
     
