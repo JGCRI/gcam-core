@@ -17,6 +17,11 @@
 * \version $Revision$
 */
 
+// Configuration constants. To turn off Fortran code or databases uncomment these lines.
+// #define __HAVE_FORTRAN__ 0
+// #define __HAVE_DB__ 0
+// End of configuration constants.
+
 // In VC 6.0 turn off warning 4786. 
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning( disable : 4786 )  
