@@ -254,7 +254,7 @@ void subsector::toXML( ostream& out ) const {
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
         Tabs::writeTabs( out );
-        out << "<technology>" << endl;
+        out << "<technology name=\"" << ( * ( j->begin() ) )->getName() << "\">" << endl;
         
         Tabs::increaseIndent();
         

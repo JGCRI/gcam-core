@@ -187,7 +187,7 @@ void technology::completeInit() {
 void technology::toXML( ostream& out ) const {
     
     Tabs::writeTabs( out );
-    out << "<period>" << endl;
+    out << "<period year=\"" << year << "\">" << endl;
     
     Tabs::increaseIndent();
     
