@@ -25,7 +25,6 @@ using namespace xercesc;
 * \ingroup CIAM
 * \brief Technologies representing a Grade for each resource.
 *
-=======
 * grade is an object that contains technologies that characterize each grade.
 *
 * \author Sonny Kim
@@ -46,13 +45,10 @@ public:
     void XMLParse( const DOMNode* tempnode );
     void toXML( ostream& out ) const;
     void toDebugXML( const int period, ostream& out ) const;
-    void printGrade() const;
     void calcCost( const double tax, const double cumTechChange, const double environCost, const int per );
     double getAvail() const;
-    void setAvail( double availableVal );
     double getCost( const int per ) const;
     double getExtCost() const;
-    void setExtCost( const double ecost );
     string getName() const;
 };
 

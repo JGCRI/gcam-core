@@ -26,6 +26,9 @@ extern Scenario* scenario;
 //! Default constructor
 Grade::Grade() {
     initElementalMembers();
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    totalCost.resize( maxper );
 }
 
 //! Clear member variables
@@ -37,11 +40,8 @@ void Grade::clear() {
 
 //! Initialize elemental members
 void Grade::initElementalMembers() {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
     available = 0;
-    extractCost = 0;
-    totalCost.resize( maxper );
+    extractCost = 0; 
 }
 
 //! Initialize data members from XML.
@@ -61,12 +61,19 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
         tNode = tempNodeLst->item( i );
         tNodeName = XMLHelper<string>::safeTranscode( tNode->getNodeName() );
         
-        if( tNodeName == "available" ){
+        if( tNodeName == "#text" ) {
+           continue;
+        }
+        
+        else if( tNodeName == "available" ){
             available = XMLHelper<double>::getValue( tNode );
         }
         else if( tNodeName == "extractioncost" ){
             extractCost = XMLHelper<double>::getValue( tNode );
         }
+         else {
+            cout << "Unrecognized text string: " << tNodeName << " found while parsing grade." << endl;
+         }
     }
 }
 
@@ -75,14 +82,20 @@ void Grade::toXML( ostream& out ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     
     Tabs::writeTabs( out );
-    
+    out << "<Grade name=\"" << name << "\">" << endl;
+    Tabs::increaseIndent();
+
     XMLWriteElement( name, "name", out );
     XMLWriteElement( available, "available", out );
     XMLWriteElement( extractCost, "extractioncost", out );
-    for(int i = 0; i < static_cast<int>( totalCost.size() ); i++ ){
+    
+    for( int i = 0; i < static_cast<int>( totalCost.size() ); i++ ){
         XMLWriteElement( totalCost[ i ], "totalcost", out, modeltime->getper_to_yr( i ) );
     }
     
+    Tabs::decreaseIndent();
+    Tabs::writeTabs( out );
+    out << "</Grade>" << endl;
 }
 
 //! Write datamembers to debugging datastream in XML format.
@@ -101,15 +114,6 @@ void Grade::toDebugXML( const int period, ostream& out ) const {
     out << "</Grade>" << endl;
 }
 
-//! Print technology info.
-void Grade::printGrade() const
-{
-    // write to file or database later
-    cout << name << endl;
-    cout << "Available: " << available << endl;
-    cout << "Extraction Cost: " << extractCost << endl;
-}
-
 //! Total cost of each grade.
 void Grade::calcCost(  const double tax, const double cumTechChange, const double environCost, const int per ) {
     totalCost[per] = ( extractCost + environCost ) / cumTechChange + tax;
@@ -120,11 +124,6 @@ double Grade::getAvail() const {
     return available;
 }
 
-//! Return available amount in each Grade.
-void Grade::setAvail( double availableVal ) {
-    available = availableVal;
-}
-
 //! Return the total cost.
 double Grade::getCost(const int per) const {
     return totalCost[per];
@@ -133,11 +132,6 @@ double Grade::getCost(const int per) const {
 //! Return the extraction cost.
 double Grade::getExtCost() const {
     return extractCost;
-}
-
-//! Set the extraction cost.
-void Grade::setExtCost( const double eCost ) {
-    extractCost = eCost;
 }
 
 //! Get the name.
