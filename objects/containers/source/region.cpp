@@ -1409,7 +1409,7 @@ void Region::dbOutput() const {
     typedef map<string,double>:: const_iterator CI;
     map<string,double> temissmap = summary[0].getemission(); // get gases for period 0
     for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
-        for (int m=0;m<maxper;m++) {
+        for (m=0;m<maxper;m++) {
             temp[m] = summary[m].get_emissmap_second(gmap->first);
         }
         dboutput4(name,"Emissions","by gas",gmap->first,"MTC",temp);
@@ -1445,7 +1445,13 @@ void Region::dbOutput() const {
         for (m=0;m<maxper;m++) {
             temp[m] = summary[m].get_fmap_second(fmap->first);
         }
-        dboutput4(name,"Fuel Consumption","by fuel",fmap->first,"EJ",temp);
+        if( fmap->first == "" ){
+            cout << "Error: Empty fuel name." << endl;
+            dboutput4(name,"Fuel Consumption","by fuel","No Fuelname","EJ",temp);
+        }
+        else {
+            dboutput4(name,"Fuel Consumption","by fuel",fmap->first,"EJ",temp);
+        }
     }
 
     /*	summary does not contain fuel consumption by sector	

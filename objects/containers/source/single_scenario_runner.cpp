@@ -80,15 +80,15 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
     // Iterate over the vector.
     typedef list<string>::const_iterator ScenCompIter;
     ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::NOTICE );
-
     for( ScenCompIter currComp = scenComponents.begin(); currComp != scenComponents.end(); ++currComp ) {
+        mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Parsing " << *currComp << " scenario component." << endl;
         root = XMLHelper<void>::parseXML( *currComp, parser );
         overrideName += XMLHelper<string>::getAttrString( root, "name" );
         mScenario->XMLParse( root );
     }
- 
+    
+    mainLog.setLevel( ILogger::NOTICE );
     mainLog << "XML parsing complete." << endl;
     
     // If the name was not set from the level above or the configuration, set it to the combination
@@ -98,7 +98,7 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
     }
     // Print data read in time.
     timer.save();
-    mainLog.setLevel( ILogger::NOTICE );
+    mainLog.setLevel( ILogger::DEBUG );
     timer.print( mainLog, "XML Readin Time:" );
     return true;
 }

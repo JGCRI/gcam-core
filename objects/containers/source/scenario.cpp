@@ -252,6 +252,7 @@ bool Scenario::run( string filenameEnding ){
     runCompleted = true;
 
     toDebugXMLClose( xmlDebugStream, &tabs ); // Close the xml debugging tag.
+    mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Model run completed." << endl;
     mainLog << "Calculating emissions totals." << endl;
     world->calculateEmissionsTotals();
