@@ -68,6 +68,12 @@ map<string, double> Summary::getemindmap() const {
 	return emissind;
 }
 
+//! return map of sequestered amount of emissions
+map<string, double> Summary::getSequesteredAmountMap() const {
+
+	return sequesteredAmount;
+}
+
 //! Add the passed fuelmap to the summary fuelinfo map 
 /* The consumption values in the fuelinfo map that is passed are added 
 to the summary object maps fuelcons and pecons.
@@ -130,6 +136,15 @@ void Summary::updateemindmap( const map<string, double>& ghginfo ) {
 	}
 }
 
+//! update the map of sequestered amount of emissions
+void Summary::updateSequesteredAmountMap( const map<string, double>& ghginfo ) {
+
+	// map sequestered amount of CO2 for secondary fuels and zTotal
+	for ( map<string,double>::const_iterator fmap = ghginfo.begin(); fmap != ghginfo.end(); ++fmap ) {
+		sequesteredAmount[ fmap->first ] += fmap->second;
+	}
+}
+
 void Summary::clearfuelcons() {
 	
 	fuelcons.clear();
@@ -156,6 +171,11 @@ void Summary::clearemindmap() {
 	emissind.clear();
 }
 
+//! clear out map of sequestered amount
+void Summary::clearSequesteredAmountMap() {
+	sequesteredAmount.clear();
+}
+
 double Summary::get_fmap_second( const string& name ) const {
 	return ( fuelcons.find( name ) )->second;
 }
@@ -176,6 +196,11 @@ double Summary::get_emissmap_second( const string& name ) const {
 	return ( emission.find( name ) )->second;
 }
 
+//! return the sequestered amount which is second part of the map
+double Summary::getSequesteredAmount( const string& name ) const {
+	return ( sequesteredAmount.find( name ) )->second;
+}
+
 double Summary::get_emissfuelmap_second( const string& name ) const {
 	return ( emissfuel.find( name ) )->second;
 }
@@ -183,3 +208,4 @@ double Summary::get_emissfuelmap_second( const string& name ) const {
 double Summary::get_emindmap_second( const string& name ) const {
 	return ( emissind.find( name ) )->second;
 }
+

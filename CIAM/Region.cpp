@@ -1204,7 +1204,7 @@ void Region::MCoutput() const {
     const Modeltime* modeltime = scenario->getModeltime();
     int i=0, m=0;
     const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
+    vector<double> temp(maxper),temptot(maxper);
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
@@ -1222,20 +1222,30 @@ void Region::MCoutput() const {
     dboutput4(name,"General","CarbonTax","revenue","90US$",carbonTaxPaid);
 
 
-    // emissions by fuel
+    // CO2 emissions by fuel
     const vector<string> primaryFuelList = scenario->getWorld()->getPrimaryFuelList();
 
     for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
         for (m=0;m<maxper;m++) {
             temp[m] = summary[m].get_emissfuelmap_second( *fuelIter );
+            temptot[m] += temp[m];
         }
         dboutput4(name,"CO2 Emiss","by Fuel",*fuelIter,"MTC",temp);
     }
+    // add total sequested amount to emissions by fuel
+    for (m=0;m<maxper;m++) {
+        // note the negative value for sequestered amount
+        temp[m] = - summary[m].get_emissmap_second( "CO2sequestered" );
+        temptot[m] += temp[m];
+    }
+    dboutput4(name,"CO2 Emiss","by Fuel","sequestered","MTC",temp);
 
-    // total emission by fuel for region
-    for (m=0;m<maxper;m++)
+    // total emissions by sector for region
+    for (m=0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second("CO2");
-    dboutput4(name,"CO2 Emiss","by Fuel","zTotal","MTC",temp);
+    }
+    // CO2 emissions by fuel and sector totals use same value
+    dboutput4(name,"CO2 Emiss","by Fuel","zTotal","MTC",temptot);
     dboutput4(name,"CO2 Emiss","by Sector","zTotal","MTC",temp);
 
     // regional emissions for all greenhouse gases

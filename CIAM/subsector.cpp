@@ -1455,7 +1455,7 @@ void Subsector::MCoutputC() const {
         //str = tssname + techs[i][mm].showname();
         str = techs[i][mm]->getName();
         //		if(notech>1) {  // write out if more than one technology
-        if(notech>0) {  // write out if more than one technology
+        if(notech>0) {  // write out for all technology
             // technology CO2 emission
             for (m=0;m<maxper;m++) {
                 // this gives Subsector total CO2 emissions
@@ -1463,7 +1463,8 @@ void Subsector::MCoutputC() const {
                 // get CO2 emissions for each technology
                 temp[m] = techs[i][m]->get_emissmap_second("CO2");
             }
-            dboutput4(regionName,"CO2 Emiss",sectorName,str,"MTC",temp);
+            //dboutput4(regionName,"CO2 Emiss",sectorName,str,"MTC",temp);
+            dboutput4(regionName,"CO2 Emiss",sectorName,name,"MTC",temp);
             // technology indirect CO2 emission
             for (m=0;m<maxper;m++) {
                 temp[m] = summary[m].get_emindmap_second("CO2");

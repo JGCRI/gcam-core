@@ -32,7 +32,7 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     gwp = gwpIn;
     emission = emissionIn;
     storageCost = 0;
-    seq_emiss = 0;
+    sequesteredAmount = 0;
     emiss_gwp = 0;
     emiss_coef = 0;
     emiss_fuel = 0;
@@ -47,7 +47,7 @@ void Ghg::clear(){
     storageCost = 0;
     gwp = 0;
     emission = 0;
-    seq_emiss = 0;
+    sequesteredAmount = 0;
     emiss_gwp = 0;
     emiss_coef = 0;
     emiss_fuel = 0;
@@ -148,7 +148,7 @@ void Ghg::toDebugXML( const int period, ostream& out ) const {
     XMLWriteElement( rmfrac, "removefrac", out );
     XMLWriteElement( gwp, "GWP", out );
     XMLWriteElement( emission, "emission", out );
-    XMLWriteElement( seq_emiss, "seq_emiss", out );
+    XMLWriteElement( sequesteredAmount, "sequesteredAmount", out );
     XMLWriteElement( emiss_gwp, "emiss_gwp", out );
     XMLWriteElement( emiss_coef, "emisscoef", out );
     XMLWriteElement( emiss_fuel, "emiss_fuel", out );
@@ -249,13 +249,15 @@ void Ghg::calc_emiss( const string& regionName, const string& fuelname, const do
         if (input==output && coefFuel == coefProduct ) {
             emission = 0;
             emiss_gwp = 0;
-            seq_emiss = 0;
+            sequesteredAmount = 0;
             emiss_fuel = (1.0-rmfrac)*input* coefFuel;
             // Note: The primary fuel emissions will not be correct if sequestered emissions occur down the line.
         }
         else {
             // sequestered emissions
-            seq_emiss = rmfrac * ( (input * coefFuel ) - ( output * coefProduct ) );
+            if (rmfrac > 0) {
+                sequesteredAmount = rmfrac * ( (input * coefFuel ) - ( output * coefProduct ) );
+            }
             // Note that negative emissions can occur here since biomass has a coef of 0. 
             emission = ( 1.0 - rmfrac ) * ( ( input* coefFuel ) - ( output* coefProduct ) );
             emiss_gwp = ( 1.0 - rmfrac ) * gwp * ( ( input * coefFuel ) - ( output * coefProduct ) );
@@ -264,7 +266,10 @@ void Ghg::calc_emiss( const string& regionName, const string& fuelname, const do
     }
     // for all other gases used read-in emissions coefficient
     else {
-        seq_emiss = rmfrac * (input-output) * emiss_coef;
+        // sequestered emissions
+        if (rmfrac > 0) {
+            sequesteredAmount = rmfrac * (input-output) * emiss_coef;
+        }
         emission = (1.0 - rmfrac) * (input-output) * emiss_coef;
         emiss_gwp = (1.0 - rmfrac) * gwp * (input-output) * emiss_coef;
         emiss_fuel = (1.0 - rmfrac) * input * emiss_coef;
@@ -298,8 +303,8 @@ double Ghg::getemission() const {
 }
 
 //! Return sequestered ghg emissions.
-double Ghg::getseq_emiss() const {
-    return seq_emiss;
+double Ghg::getSequesteredAmount() const {
+    return sequesteredAmount;
 }
 
 //! Return ghg emissions inplicit in fuel.

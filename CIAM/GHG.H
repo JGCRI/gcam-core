@@ -37,7 +37,7 @@ private:
     double storageCost; //!< storage cost associated with the remove fraction
     double gwp; //!< global warming poential
     double emission; //!< emissions (calculated)
-    double seq_emiss; //!< sequestered emissions (calculated)
+    double sequesteredAmount; //!< sequestered emissions (calculated)
     double emiss_gwp; //!< gwp emissions (calculated)
     double emiss_coef; //!< emissions coefficient
     double emiss_fuel; //!< implied emissions from total fuel consumption
@@ -57,7 +57,7 @@ public:
     std::string getname() const;
     std::string getunit() const;
     double getemission() const;
-    double getseq_emiss() const;
+    double getSequesteredAmount() const;
     double getemiss_fuel() const;
     double getemiss_ind() const;
     double getemiss_coef() const;
