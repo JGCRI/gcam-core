@@ -157,7 +157,7 @@ void technology::XMLParse( const DOMNode* node )
     
     nodeList = node->getChildNodes();
     
-    for( int i = 0; i < nodeList->getLength(); i++ ) {
+    for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ) {
         curr = nodeList->item( i );
         nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
         
@@ -230,7 +230,7 @@ void technology::XMLParse( const DOMNode* node )
                 tempGhg = new Ghg();
                 tempGhg->XMLParse( curr );
                 ghg.push_back( tempGhg );
-                ghgNameMap[ tempGhg->getname() ] = ghg.size() - 1;
+                ghgNameMap[ tempGhg->getname() ] = static_cast<int>( ghg.size() ) - 1;
             }
         }
         // parse derived classes
