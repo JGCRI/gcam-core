@@ -21,6 +21,7 @@
 	ISO2 = 3
 	INOx = 4
 	ICO  = 5
+	IVOC = 6
 
 	basegwp = (/21.0, 310.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, &
 	9200.0, 7000.0, 6500.0, 2800.0, 1300.0, 3800.0, 140.0, 2900.0, 11700.0, &
@@ -237,9 +238,8 @@
 	END DO
 
 ! ***************************************************
-!        Activities for NOx (added by Jigme)
-! ***************************************************
-
+!        Activities for NOx
+!
 ! src 1 : conventional coal used for electric utility generation
     OGACT(INOx,1,L,M) = EDRIKL(INCOAL,1,L) * (1-TotAdvCoal) 
 
@@ -313,15 +313,14 @@
 	OGACT(INOx,22,L,M) = 1 !set to some arbitary constant
 
 ! src 23: deforestation
-	OGACT(INOx,23,L,M) = 1
+	OGACT(INOx,23,L,M) = DefroR(L,M)
 
 ! src 24: agricultural waste
-	OGACT(INOx,24,L,M) = 1
+	OGACT(INOx,24,L,M) = ArPro(L,M) + PasPro(L,M)
 
-
-! ***************************************************
-!        Activities for CO (added by Jigme)
-! ***************************************************
+!---------------------------------
+!       Activities for CO
+!---------------------------------
 
 ! src 1 : conventional coal used for electric utility generation
     OGACT(ICO,1,L,M) = EDRIKL(INCOAL,1,L)
@@ -378,13 +377,86 @@
 	OGACT(ICO,16,L,M) = 1 !set to some arbitary constant
 
 ! src 17: deforestation
-	OGACT(ICO,17,L,M) = 1
+	OGACT(ICO,17,L,M) = DefroR(L,M)
 
 ! src 18: agricultural waste
-	OGACT(ICO,18,L,M) = 1
+	OGACT(ICO,18,L,M) = ArPro(L,M) + PasPro(L,M)
 
-!***********************************************************
-! End of addition by Jigme
+! --------------------------------
+! Activities and drivers for NMVOCs
+! -------------------------------------------
+!
+! src 1 : conventional coal used for electric utility generation
+    OGACT(IVOC,1,L,M) = EDRIKL(INCOAL,1,L)
+
+! src 2 : petroleum oil used for conventional electric utility generation
+	OGACT(IVOC,2,L,M) = EDRIKL(INOIL,1,L)
+
+! src 3 : natural gas used for conventional electric utility generation
+	OGACT(IVOC,3,L,M) = EDRIKL(INGAS,1,L)
+
+! src 4 : coal used for industrial purposes
+	OGACT(IVOC,4,L,M) = FJKL(3,2,L)
+
+! src 5 : petroleum oil used for industrial purposes
+!	OGACT(INOx,8,L,M) = FJKL(1,2,L)
+! Correction for uncombusted oil for industrial sector
+	J = 1 ! Oil 
+	ISEC= 2 ! Industrial sector
+	EOilTot = SUM(FJKLM(1,:,L,2)) !Here M is set to 2 (base year)
+	EOil_NE_Fract = SFEDIL(J,L)*EOilTot/FJKLM(J,ISEC,L,2)     ! Adjust SFEDIL from fract of total to fract o industrial use
+	OGACT(IVOC,5,L,M) = FJKL(1,2,L)*(1-EOil_NE_Fract)
+
+! src 6 : natural gas used for industrial purposes
+	OGACT(IVOC,6,L,M) = FJKL(2,2,L)
+
+! src 7 : wood used for industrial purposes
+	OGACT(IVOC,7,L,M) = EDILM(IBMASS,L,M)
+
+! src 8 : coal used for building/commercial purposes
+	OGACT(IVOC,8,L,M) = FJKL(3,1,L)
+
+! src 9: petroleum oil used for building/commercial purposes
+	OGACT(IVOC,9,L,M) = FJKL(1,1,L)
+
+! src 10: natural gas used for building/commercial purposes
+	OGACT(IVOC,10,L,M) = FJKL(2,1,L)
+
+! src 11: wood used for building/commercial
+	OGACT(IVOC,11,L,M) = EDILM(IBMASS,L,M)
+
+! src 12: coal used for transportation
+	OGACT(IVOC,12,L,M) = FJKL(3,3,L)
+
+! src 13: gasoline/diesel used for transportation
+	OGACT(IVOC,13,L,M) = FJKL(1,3,L)
+
+! src 14: LPG/Gas used for transportation
+	OGACT(IVOC,14,L,M) = FJKL(2,3,L)
+
+! src 15: Fossil fuel production: oil
+    
+	OilCons=EDRIKL(INOIL,1,L)+FJKL(1,2,L)+FJKL(1,1,L)+FJKL(1,3,L)
+	GasCons=EDRIKL(INGAS,1,L)+FJKL(2,2,L)+FJKL(2,1,L)+FJKL(2,3,L)
+	ToTCons=OilCons+GasCons
+	ToTProd=ESIL(INCOAL,L)+ESIL(INOIL,L)+ESIL(INGAS,L)
+
+	OGACT(IVOC,15,L,M) = (TotCons+TotProd)/2
+
+! src 16: non-combustion industrial processes
+	OGACT(IVOC,16,L,M) = GNPMRKT(L,M)**0.25
+
+! src 17: savannah burning
+	OGACT(IVOC,17,L,M) = 1 !set to some arbitary constant
+
+! src 18: deforestation
+	OGACT(IVOC,18,L,M) = DefroR(L,M)
+	write(1001,*) DefroR(L,M),L,M
+
+! src 19: agricultural waste
+	OGACT(IVOC,19,L,M) = ArPro(L,M) + PasPro(L,M)
+!
+!
 !***********************************************************
 !
 
@@ -493,5 +565,24 @@
 	
 	PasPro = AgP(3,L,M)   
 	
+	RETURN
+	END
+!
+!-------------------------
+!  activity level for deforestation
+
+	FUNCTION DefroR(L,M)
+
+	USE Ag2Global8
+	
+	REAL*8 DefroR
+	INTEGER L,M
+    
+	If (M.gt.1) then
+	Saveland(5,L,1)=HistLand(L,9)
+	DefroR = (Saveland(5,L,M-1)-Saveland(5,L,M))/15
+	if (DefroR.lt.0.0) DefroR=0.0
+    endif
+
 	RETURN
 	END
