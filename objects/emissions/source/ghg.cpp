@@ -659,7 +659,7 @@ void Ghg::setEmissionsInputStatus() {
 }
 
 /*! \brief performs the calculations that solve the control function in the current period
-/* \detailed The control function is an inverse exponential funciton.  It approaches 0 for values of gdpCap much less
+* \detailed The control function is an inverse exponential funciton.  It approaches 0 for values of gdpCap much less
 * than gdp0, and approaches fMax for values of gdpCap much greater than gdp0. CLOGIT is a constant equal
 * to 2 times the natural log of 9, such that fControl is equal to 1/2 fMax at gdp0.  
 * the function returns the value of 0 in the case that either gdp0 or tau are not input, or are equal to 0.
