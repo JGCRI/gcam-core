@@ -17,6 +17,7 @@
 #include "modeltime.h" 
 #include "XMLHelper.h"
 #include "Market.h"
+#include "SavePoint.h"
 
 using namespace std;
 
@@ -47,6 +48,14 @@ Market::Market( const string& goodNameIn, const string& regionNameIn, const int 
    logOfDemand = 0;
    logOfSupply = 0;
    solveMarket = false;
+}
+
+//! Destructor
+Market::~Market() {
+
+   for ( vector<SavePoint*>::iterator iter2 = sdPoints.begin(); iter2 != sdPoints.end(); iter2++ ) {
+      delete *iter2;
+   }
 }
 
 /*! \brief Write out XML for debugging purposes.
@@ -88,7 +97,7 @@ void Market::toDebugXML( const int period, ostream& out ) const {
    for( vector<string>::const_iterator i = containedRegionNames.begin(); i != containedRegionNames.end(); i++ ) {
       XMLWriteElement( *i, "ContainedRegion", out );
    }
-   
+
    derivedToDebugXML( out );
    
    // finished writing xml for the class members.
@@ -588,6 +597,37 @@ void Market::print( ostream& out ) const {
    out << "Market Price: " << price << endl;
    out << "Market Supply: " << supply << endl;
    out << "Market Demand: " << demand << endl << endl;
+}
+
+//! Create create stored Supply-Demand point which can be printed later.
+void Market::createSDPoint() {
+   SavePoint* newSavePoint = new SavePoint( price, demand, supply );
+   sdPoints.push_back( newSavePoint );
+}
+
+//! Clear the current vector of SD points.
+void Market::clearSDPoints() {
+
+   for ( vector<SavePoint*>::iterator iter = sdPoints.begin(); iter != sdPoints.end(); iter++ ) {
+      delete *iter;
+   }
+
+   sdPoints.clear();
+}
+
+//! Print supply and demand curved created for debugging.
+void Market::printSupplyDemandDebuggingCurves( ostream& out ) {
+
+   out << "Supply and Demand curves for: " << getName() << endl;
+   out << "Price,Demand,Supply," << endl;
+   
+   // Sort the vector and print it.
+   sort( sdPoints.begin(), sdPoints.end(), std::less<SavePoint*>() );
+   for ( vector<SavePoint*>::const_iterator i = sdPoints.begin(); i != sdPoints.end(); i++ ) {
+      ( *i )->print( out );
+   }
+
+   out << endl;
 }
 
 // Other markets here temp

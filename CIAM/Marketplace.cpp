@@ -52,6 +52,8 @@ Marketplace::Marketplace() {
    numMarkets = 0;
    SMALL_NUM = 1e-6;
    VERY_SMALL_NUM = 1e-8;
+   newSDCurvesStream.open( Configuration::getInstance()->getFile( "supplyDemandOutputFileName" ).c_str(), ios::out );
+   assert( newSDCurvesStream );
    solver = new BisectionNRSolver( this );
 }
 
@@ -64,6 +66,8 @@ Marketplace::~Marketplace() {
          delete *innerIter;
       }
    }
+
+   newSDCurvesStream.close();
    // Delete the solution mechanism.
    delete solver;
 }
@@ -735,17 +739,137 @@ void Marketplace::logSup( const int period ) {
 }
 
 //! Check to see that all markets Rawly solved.
-bool Marketplace::checkMarketSolution( const double solTolerance, const double excessDemandSolutionFloor, const int period ) const {
+bool Marketplace::checkMarketSolution( const double solTolerance, const double excessDemandSolutionFloor, const int period ) {
+   
+   const Configuration* conf = Configuration::getInstance();
+   const bool debugChecking = conf->getBool( "debugChecking" );
+   const bool debugFindSD = conf->getBool( "debugFindSD" );
+
    bool solvedOK = true;
+   vector<Market*> unsolved;
    
    for( int i = 0; i < static_cast<int>( markets.size() ); i++ ) {
       if ( !SolverLibrary::isWithinTolerance( markets[ i ][ period ]->getRawDemand() - markets[ i ][ period ]->getRawSupply(), markets[ i ][ period ]->getRawDemand(), solTolerance, excessDemandSolutionFloor ) ) {
-         solvedOK = false;
-         cout << "Market "<< i << " ("<< markets[ i ][ period ]->getName() << ") S: "<< markets[ i ][ period ]->getRawSupply() << " D: " << markets[ i ][ period ]->getRawDemand() << endl;
+         unsolved.push_back( markets[ i ][ period ] );
       }
    }
    
+   if( !unsolved.empty() ) {
+      solvedOK = false;
+      cout << "Unsolved markets: " << endl;
+   }
+   
+   for ( vector<Market*>::const_iterator iter = unsolved.begin(); iter != unsolved.end(); iter++ ) {
+      cout << "Market (" << ( *iter )->getName() << ") S: "<< ( *iter )->getRawSupply() << " D: " << ( *iter )->getRawDemand() << endl;
+   }
+   
+   if ( debugFindSD && !unsolved.empty() ) {
+      newSDCurvesStream << "Supply and demand curves for markets that did not solve in period: " << period << endl;
+      findAndPrintSD( unsolved, period );
+   }
+
    return solvedOK;
+}
+
+//! Find Supply and Demand curves for bad markets and print them.
+void Marketplace::findAndPrintSD( vector<Market*>& unsolved, const int period ) {
+
+   const Configuration* conf = Configuration::getInstance();
+   const int numMarketsToFindSD = conf->getInt( "numMarketsToFindSD", 5 );
+   const int numPointsForSD = conf->getInt( "numPointsForSD", 5 );
+   
+   vector<double> priceMults;
+   Marketplace* marketplace = scenario->getMarketplace();
+   World* world = scenario->getWorld();
+
+   // store the original market information.
+   storeinfo( period );
+   
+   // Remove any unsolved markets.
+   for( vector<Market*>::iterator removeIter = unsolved.begin(); removeIter != unsolved.end(); ) {
+      if ( !( *removeIter )->shouldSolve() ) {
+         removeIter = unsolved.erase( removeIter );
+      }
+      else {
+         removeIter++;
+      }
+   }
+
+   // If there aren't any markets left return.
+   if( unsolved.empty() ) {
+      return;
+   }
+
+   // Sort the vector so the worst markets are first and remove the rest.
+   sort( unsolved.begin(), unsolved.end(), std::greater<Market*>() );
+
+   // Truncate vector if neccessary.
+   if( static_cast<int>( unsolved.size() ) > numMarketsToFindSD ) { 
+      unsolved.resize( numMarketsToFindSD );
+   }
+
+   // Determine price ratios.
+   const int middle = floor( double( numPointsForSD ) / double( 2 ) );
+
+   for( int pointNumber = 0; pointNumber < numPointsForSD; pointNumber++ ) {
+      
+      if( pointNumber < middle ) {
+         priceMults.push_back( 1 - double( 1 ) / double( middle - fabs( middle - pointNumber ) + 2 ) );
+      }
+      else if( pointNumber == middle ) {
+         priceMults.push_back( 1 );
+      }
+      else {
+         priceMults.push_back( 1 + double( 1 ) / double( middle - fabs( middle - pointNumber ) + 2 ) );
+      }
+   }
+      
+   // Now determine supply and demand curves for each.
+   for ( vector<Market*>::iterator iter = unsolved.begin(); iter != unsolved.end(); iter++ ) {
+      
+      cout << "Determining SD for market: " << ( *iter )->getName() << endl;
+      // get the base price of the market.
+      const double basePrice = ( *iter )->getRawPrice();
+      
+      // Save the original point as price 1.
+      // ( *iter )->createSDPoint();
+      
+      // iterate through the points and determine supply and demand.
+      for ( int pointNumber2 = 0; pointNumber2 < numPointsForSD; pointNumber2++ ) {
+         
+         // We have a priceMult of 1, which we have already solved for.
+         // if ( fabs( priceMults[ pointNumber2 ] - 1 ) < SMALL_NUM ) {
+         //    continue;
+         // }
+         
+         // clear demands and supplies.
+         nulldem( period );
+         nullsup( period );
+         
+         // set the price to the current point.
+         // ( *iter )->setRawPrice( priceMults[ pointNumber2 ] * basePrice );
+         ( *iter )->setRawPrice( pointNumber2 * ( double( 10 ) / double( numPointsForSD - 1 ) ) );
+
+         // calculate the world.
+         world->calc( period );
+         
+         // Store the results of the current point.
+         ( *iter )->createSDPoint();
+      
+      } // Completed iterating through all price points.
+
+      // restore the original market price.
+      ( *iter )->setRawPrice( basePrice );
+
+      // print the results.
+      ( *iter )->printSupplyDemandDebuggingCurves( newSDCurvesStream );
+      
+      // Clear the internal vector of SD points.
+      ( *iter )->clearSDPoints();
+   }
+   
+   // Restore the original market information.
+   restoreinfo( period );
 }
 
 //! Select markets to solve.
@@ -896,9 +1020,3 @@ void Marketplace::outputfile() const {
       fileoutput3(markets[i][0]->getRegionName(),"market",markets[i][0]->getGoodName()," ","demand","EJ",temp);
    }
 }
-
-
-
-
-
-

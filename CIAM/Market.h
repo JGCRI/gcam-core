@@ -13,8 +13,12 @@
 
 #include <string>
 #include <vector>
+#include <functional>
 
 using namespace std;
+
+class SavePoint;
+
 /*!
 * \ingroup CIAM
 * \brief A class which defines a single market object.
@@ -26,7 +30,8 @@ class Market
 public:
 
    Market( const string& goodNameIn, const string& regionNameIn, const int periodIn );
-	
+   ~Market();
+
    void toDebugXML( const int period, ostream& out ) const;
    virtual void derivedToDebugXML( ostream& out ) const;
    void addRegion( const string& regionNameIn );
@@ -83,8 +88,10 @@ public:
    virtual bool shouldSolve() const;
    virtual bool shouldSolveNR( const double SMALL_NUM ) const;
    virtual string getType() const;
+   void createSDPoint();
+   void clearSDPoints();
    void print( ostream& out ) const;
-	
+   void printSupplyDemandDebuggingCurves( ostream& out );
 protected:
    string good;  //!< market good or fuel
 	string region;  //!< market region
@@ -103,6 +110,7 @@ protected:
 	double logOfDemand; //!< log of demand for each market
 	double logOfSupply; //!< log of supply for each market
    vector <string> containedRegionNames; //! Vector of names of all regions within this vector.
+   vector< SavePoint* > sdPoints; //! Save SD points used for print Supply-Demand curves.
 };
 
 class DemandMarket;
@@ -181,5 +189,13 @@ public:
    virtual void setPriceToLast( const double lastPriceIn );
 };
 
+template <>
+struct std::greater<Market*>
+{
+  bool operator()( const Market* lhs, const Market* rhs ) const
+  {   
+       return lhs->getRelativeExcessDemand() > rhs->getRelativeExcessDemand();
+  }
+};
 
 #endif // _MARKET_H_

@@ -18,6 +18,8 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iostream>
+#include <fstream>
 #include <mtl/matrix.h>
 
 using namespace std;
@@ -47,6 +49,7 @@ private:
    vector< vector<Market*> > markets; //!< no of market objects by period
    map<string,int> marketMap; //!< map of unique market id from good and market-region names
    map<string,int> regionToMarketMap; //!< map of market lookup from good and region names
+   mutable ofstream newSDCurvesStream; //!< Filestream to print debugging supply and demand curves to.
    Solver* solver; //!< Pointer to a solution mechanism.
    
    // Private Functions
@@ -80,7 +83,8 @@ private:
    double checkSupply( const int marketNumber, const int period ) const;
    const vector<double> getSupplies( const int per ) const;
    const vector<double> getDemands( const int per ) const;
-   
+  
+   void findAndPrintSD( vector<Market*>& unsolved, const int period );
    void excessdemand( const int period ); // calculates excess demand for all markets
    void logED( const int period ); // calculates log of excess demand for all markets
    void logDem( const int period ); // calculates log of demand for all markets
@@ -133,7 +137,7 @@ public:
    void outputfile() const; 
    void resetToPriceMarket( const string& goodName, const string& regionName );
    void setMarketToSolve ( const string& goodName, const string& regionName, const int period = -1 );
-   bool checkMarketSolution( const double soltoleranceerance,  const double excessDemandSolutionFloor, const int period ) const;
+   bool checkMarketSolution( const double soltoleranceerance,  const double excessDemandSolutionFloor, const int period );
 };
 
 #endif
