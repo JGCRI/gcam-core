@@ -925,7 +925,7 @@ void technology::setYear( const int yearIn ) {
 int technology::getNumbGHGs()  const {
 	std::vector<std::string> ghgNames = getGHGNames();
 
-	return ghgNames.size();
+	return static_cast<int>( ghgNames.size() );
 }
 
 
