@@ -129,10 +129,22 @@ int main() {
 	scenario->XMLParse( root );
 	
    if( conf->getBool( "runningNonReference" ) ) {
-      // Now read in scenario specific information.
-      cout << "Reading in additional scenario file." << endl;
-      root = XMLHelper<void>::parseXML( conf->getFile( "scenarioXmlInputFileName" ), parser );
-      scenario->XMLParse( root );
+      const int numAddFiles = conf->getInt( "NumberOfScenarioAddOnFiles" );
+      cout << "Number of additional scenario files: " << numAddFiles << endl;
+      for( int fileNum = 1; fileNum <= numAddFiles; fileNum++ ) {
+         // Now read in scenario specific information.
+         cout << "Reading in additional scenario file number: " << fileNum << "." << endl;
+         stringstream fileNameStream;
+         fileNameStream << "scenarioXmlInputFileName" << fileNum;
+         string xmlFileName;
+         fileNameStream >> xmlFileName;
+         string addOnFileName = conf->getFile( xmlFileName );
+         
+         if( addOnFileName != "" ) {
+            root = XMLHelper<void>::parseXML( addOnFileName, parser );
+            scenario->XMLParse( root );
+         }
+      }  
    }
 
 	cout << "XML parsing complete." << endl;

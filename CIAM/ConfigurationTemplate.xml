@@ -14,7 +14,7 @@
 		<Value name="sdFileName">sdall.csv</Value>
 		<Value name="dbOutFileName">dbout.csv</Value>
 		<Value name="dbFileName">../input/erbdb.mdb</Value>
-		<Value name="scenarioXmlInputFileName">../CIAM/scenarioAddOn.xml</Value>
+		<Value name="scenarioXmlInputFileName1">../CIAM/scenarioAddOn.xml</Value>
 	</Files>
 	<Strings/>
 	<Bools>
@@ -27,6 +27,8 @@
 		<Value name="trackMaxED">0</Value> <!-- Writes out the worst ED to screen as solution proceeds -->
 		<Value name="runningNonReference">0</Value>
 	</Bools>
-	<Ints/>
+	<Ints>
+		<Value name="NumberOfScenarioAddOnFiles">1</Value>
+	</Ints>
 	<Doubles/>
 </Configuration>
