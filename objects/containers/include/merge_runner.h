@@ -13,7 +13,6 @@
 * \version $Revision$
 */
 
-#include <iostream>
 #include <memory>
 #include <string>
 #include <list>
