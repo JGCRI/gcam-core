@@ -44,7 +44,6 @@ class Marketplace
    void toDebugXML( const int period, std::ostream& out ) const;
    bool createMarket( const std::string& regionName, const std::string& marketName, const std::string& goodName, const NewMarketType typeIn );
    void initPrices();
-   void nullPrices( const int period );
    void nullDemands( const int period );
    void nullSupplies( const int period );
    void setPrice( const std::string& goodName, const std::string& regionName, const double value , const int period );

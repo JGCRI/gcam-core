@@ -40,7 +40,6 @@ public:
     const std::vector<std::string> getContainedRegions() const;
 
     virtual void initPrice() = 0;
-    void nullPrice();
     virtual void setPrice( const double priceIn ) = 0;
     void setRawPrice( const double priceIn );
     virtual void setPriceFromLast( const double lastPrice ) = 0;

@@ -129,12 +129,6 @@ void Market::initPrice() {
    }
 }
 
-/*! \brief Set the price to zero.
-*/
-void Market::nullPrice() {
-   price = 0;
-}
-
 /*! \brief Sets the price variable to the value specified.
 *
 * This method is used when it is neccessary to set the price variable to a value regardless of the type of the market.

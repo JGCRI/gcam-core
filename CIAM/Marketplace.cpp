@@ -691,18 +691,6 @@ void Marketplace::setMarketToSolve ( const string& goodName, const string& regio
     }
 }
 
-/*! \brief Initialize all market prices for the given period.
-* 
-* This function iterates through the markets and nulls the price of each market
-* in the given period.
-*
-* \param period Period in which to null the prices. 
-*/
-void Marketplace::nullPrices( const int period ) {
-    for ( int i = 0; i < numMarkets; i++ )
-        markets[ i ][ period ]->nullPrice();
-}
-
 /*! \brief Initialize all market demands for the given period.
 * 
 * This function iterates through the markets and nulls the demand of each market
@@ -855,14 +843,6 @@ double Marketplace::checkSupply( const string& goodName, const string& regionNam
     }
 }
 
-//! return supply for use in checking solution, including Raw supply for demand market
-/*! Used to double-check solution. Should not use otherwise. */
-/*
-double Marketplace::checkSupply( const int marketNumber, const int per ) const {
-    return markets[ marketNumber ][ per ]->getSupplyForChecking();
-}
-*/
-
 /*! \brief Return the market demand. 
 *
 * This function uses a market type dependent function to find the demand for a market determined by the goodName and regionName.
@@ -916,7 +896,8 @@ bool Marketplace::checkMarketSolution( const double solTolerance, const double e
     }
 
     for ( vector<Market*>::const_iterator iter = unsolved.begin(); iter != unsolved.end(); iter++ ) {
-        cout << "Market (" << ( *iter )->getName() << ") S: "<< ( *iter )->getRawSupply() << " D: " << ( *iter )->getRawDemand() << endl;
+        cout << "Market (" << ( *iter )->getName() << ") S: "<< ( *iter )->getRawSupply() << " D: " << ( *iter )->getRawDemand();
+        cout << " P: " << ( *iter )->getRawPrice() << " Solve: " << ( *iter )->shouldSolve() << " SolveNR: " << ( *iter )->shouldSolveNR() << endl;
     }
 
     if ( debugFindSD && !unsolved.empty() ) {
