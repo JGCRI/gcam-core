@@ -22,9 +22,9 @@ Index,Label,GWP,Input Type,fmax,gdp0,tau,techchange,
 5,CO,0,1,0,10,10,0.001,":-- Timescale - ""catchup"" to current development"
 6,VOC,0,1,0,10,10,0.001,":-- Timescale - ""catchup"" to current development"
 7,BC,0,1,0,8,8,0.001,
-8,,0,1,0,15,10,0.001,
-9,,0,1,0,15,10,0.001,
-10,,0,1,0,15,10,0.001,
+8,not-used,0,1,0,15,10,0.001,
+9,not-used,0,1,0,15,10,0.001,
+10,not-used,0,1,0,15,10,0.001,
 11,C2F6,9200,0,0,15,10,0.001,
 12,C4F10,7000,0,0,15,10,0.001,
 13,CF4 ,6500,0,0,15,10,0.001,
@@ -39,7 +39,7 @@ Index,Label,GWP,Input Type,fmax,gdp0,tau,techchange,
 22,HFC-32,650,0,0,15,10,0.001
 23,HFC-43-10,1300,0,0,15,10,0.001
 24,SF6 ,23900,0,0,15,10,0.001
-25,,0,1,0,15,10,
+25,not-used,0,1,0,15,10,0.001
 
 
 
