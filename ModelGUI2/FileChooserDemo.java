@@ -516,7 +516,6 @@ public class FileChooserDemo extends JFrame
 			   		buildRegionYearTable(treePathtoXPath(selectedPath, temp, 1)); 
 				}
 			   }
-			   System.out.println(tables.size());
 			   MultiTableModel multiTable = new MultiTableModel(tables);
 			   jTable = new JTable(multiTable);
 			   jTable.getColumnModel().getColumn(0).setCellRenderer(multiTable.getCellRenderer(0,0));
@@ -944,45 +943,11 @@ public class FileChooserDemo extends JFrame
 	  TreeSet regions = new TreeSet();
 	  TreeSet years = new TreeSet();
 	  //TreeMap data = new TreeMap();
-	  String old3DVar = null;
+	  //String old3DVar = null;
 	  TreeMap thrdDimToData = new TreeMap();
 	  //try {
 	  	while ((tempNode = res.iterateNext()) != null) {
 			regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode());
-			/*
-			if(old3DVar != null && !((String)regionAndYear[2]).equals(old3DVar)) {
-	  			NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), old3DVar, data);
-	  			jTable = new JTable(tM);
-	  			jTable.getModel().addTableModelListener(this);
-
-	  			//jTable = new JTable(tableModel);
-	  			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-	  
-	  			jTable.setCellSelectionEnabled(true);
-
-	  			javax.swing.table.TableColumn col;
-	  			Iterator i = regions.iterator();
-	  			int j = 0;
-	  			while(i.hasNext()) {
-		  		col = jTable.getColumnModel().getColumn(j);
-		  			col.setPreferredWidth(((String)i.next()).length()*5+30);
-		  			j++;
-	  			}
-	  			JScrollPane tableView = new JScrollPane(jTable);
-	  			if(tables == null) {
-		  			tables = new Vector();
-	  			}
-	  			tables.add(tableView);
-	  			regions = new TreeSet();
-	  			years = new TreeSet();
-	  			data = new TreeMap();
-				old3DVar = (String)regionAndYear[2];
-			}
-			if(old3DVar == null) {
-				old3DVar = (String)regionAndYear[2];
-			}
-			*/
-
 			regions.add(regionAndYear[0]);
 			years.add(regionAndYear[1]);
 			//data.put((String)regionAndYear[0]+(String)regionAndYear[1], tempNode);
@@ -1007,7 +972,7 @@ public class FileChooserDemo extends JFrame
 	  		Iterator i = regions.iterator();
 	  		int j = 0;
 	  		while(i.hasNext()) {
-		  	col = jTable.getColumnModel().getColumn(j);
+		  		col = jTable.getColumnModel().getColumn(j);
 		  		col.setPreferredWidth(((String)i.next()).length()*5+30);
 		  		j++;
 	  		}
@@ -1047,9 +1012,11 @@ public class FileChooserDemo extends JFrame
   }
 
   private Object[] getRegionAndYearFromNode(Node n) {
+	  /*
 	  Node temp;
 	  String region = null;
 	  String year = null;
+	  */
 	  Vector ret = new Vector(3,0);
 	  do {
 		  if(n.getNodeName().equals((String)wild.get(2))) {
@@ -1059,7 +1026,7 @@ public class FileChooserDemo extends JFrame
 			  ret.add(0,getOneAttrVal(n));
 		  }
 		  n = n.getParentNode();
-	  } while(n.getNodeType() != Node.DOCUMENT_NODE && (region == null || year == null));
+	  } while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
 	  return ret.toArray();
   }
 
@@ -1628,7 +1595,7 @@ public class FileChooserDemo extends JFrame
   }
 
   private Vector getAttrsNoRegionYear(Node node) {
-	  if( ((((String)wild.get(0)).matches(".*Sector") || ((String)wild.get(1)).matches(".*Sector")) || ((String)wild.get(1)).matches(".*Sector")) && node.getNodeName().equals("subsector") ) {
+	  if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector")) || ((String)wild.get(2)).matches(".*[Ss]ector")) && node.getNodeName().equals("subsector") ) {
 		  return new Vector();
 	  }
 
@@ -1666,7 +1633,7 @@ class MyTreeModelListener implements TreeModelListener {
 			//System.out.println(jtree.getLeadSelectionPath());
 			if(jTable != null) {
 				Node node = ((DOMmodel.DOMNodeAdapter)e.getTreePath().getLastPathComponent()).getNode();
-				((DataTableModel)((TableSorter)jTable.getModel()).getTableModel()).setValueAt(node.getNodeValue(), e.getTreePath());
+				//((DataTableModel)((TableSorter)jTable.getModel()).getTableModel()).setValueAt(node.getNodeValue(), e.getTreePath());
 			}
 
 			 /*
