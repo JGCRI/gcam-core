@@ -194,6 +194,9 @@ DO L = 1,numregions !REGION DO LOOP
   IF(vp)CALL ivid(GenRelease,ct,sct,1,'CarbEmiss','TgC')
   DBAR(vl(ct,sct,1),:) = CarbEmiss(L,2:NM)
 
+  IF(vp)CALL ivid(GenRelease,ct,sct,2,'harvEnergy','EJ')
+  DBAR(vl(ct,sct,2),:) = deforEnergy(L,2:NM)
+
 
 !  AG CH4 EMISSIONS ("base" data, not actual emissions)
   sct = 16
