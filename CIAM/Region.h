@@ -4,17 +4,17 @@
  *											*
  * SHK  7/28/00								*/
 
-// region class includes the following headers
+// Region class includes the following headers
 #include "demographic.h" // generic demographic class
 #include "resource.h" // generic resource class, includes str_ghgs
 #include "sector.h" // generic supply sector class
 #include "ghg_mrk.h" // generic ghg market class
 
-class region
+class Region
 {
 private:
-	char name[20]; // region name
-	int no; // region number
+	char name[20]; // Region name
+	int no; // Region number
 	int noghg; // number of ghg for market solution in each region
 	int nodrsc; // number of depletable resources in each region
 	int nossec; // number of supply sectors in each region
@@ -35,8 +35,8 @@ private:
 	vector<double> carbontaxpaid; // total regional carbon taxes paid
 	vector<Summary> summary; // summary for reporting
 public:
-	region(void); // default construtor
-	~region(void); // destructor
+	Region(void); // default construtor
+	~Region(void); // destructor
 	void setlabel(const char* nstr,int sno); // set region name and index
 	void initper(void); // set array size to max period
 	void setCO2coef(void); // set default CO2 emissions coefficients

@@ -1,5 +1,5 @@
 /* region.cpp											*
- * Method definition for region class						*
+ * Method definition for Region class						*
  * Coded by Sonny Kim 7/29/00								*/
 
 #include <afxdisp.h>
@@ -48,22 +48,22 @@ void label_sec(str_indexname* str_temp,string region,string index,string name,in
 					  const char* dbtname);
 
 // region class method definition
-region::region(void) // default constructor
+Region::Region(void) // default constructor
 {
 }
 
-region::~region(void) // destructor
+Region::~Region(void) // destructor
 {
 }
 
-void region::setlabel(const char* nstr, int rno)
+void Region::setlabel(const char* nstr, int rno)
 {
 	strcpy(name, nstr);
 	no = rno;
 }
 
 // set array size to max period
-void region::initper(void)
+void Region::initper(void)
 {
 	int maxper = modeltime.getmaxper();
 	i_elas.resize(maxper); // income elasticity
@@ -78,7 +78,7 @@ void region::initper(void)
 }
 
 // set default emissions coefficient for CO2
-void region::setCO2coef(void)
+void Region::setCO2coef(void)
 {
 	// initialize map (tgC/EJ) or (MTC/EJ)
 	// apply carbon taxes to primary fuels
@@ -101,19 +101,19 @@ void region::setCO2coef(void)
 }
 
 // set size of population and labor productivity variable to max period
-void region::setpop(void)
+void Region::setpop(void)
 {
 	population.set();
 }
 
 // read population and labor productivity info from database
-void region::initpop(void)
+void Region::initpop(void)
 {
 	population.initialize(name); // region name
 }
 
 // read in carbon tax from database
-void region::setcarbontax(void)
+void Region::setcarbontax(void)
 {
 	// function protocol
 	void dbgenread2(vector<double>& temp,string region,string var1name,string var2name,int maxper);
@@ -138,7 +138,7 @@ void region::setcarbontax(void)
 }
 
 // region class method definition
-void region::setghgobj(void) // set number of greenhouse gases
+void Region::setghgobj(void) // set number of greenhouse gases
 {
 	int ghgcount=0;
 	int ghgno[10];
@@ -163,7 +163,7 @@ void region::setghgobj(void) // set number of greenhouse gases
 }
 	
 // set regional ghg constraint to market supply
-void region::setghgsupply(int per)
+void Region::setghgsupply(int per)
 {
 	int ghgno;
 	double ghgtarget;
@@ -176,7 +176,7 @@ void region::setghgsupply(int per)
 }
 	
 // set regional ghg tax to individual technologies
-void region::addghgtax(int per)
+void Region::addghgtax(int per)
 {
 	int ghgno;
 	char* ghgname;
@@ -192,7 +192,7 @@ void region::addghgtax(int per)
 }
 	
 // region class method definition
-void region::setdepresource(void) // set number of depletable resources
+void Region::setdepresource(void) // set number of depletable resources
 {
 	int seccount=0,subseccount=0,gradecount=0;
 	int secno,subsecno,gradeno;
@@ -245,7 +245,7 @@ void region::setdepresource(void) // set number of depletable resources
 }
 	
 // region class method definition
-void region::setsupsector(void) // set number of supply sectors
+void Region::setsupsector(void) // set number of supply sectors
 {
 	int seccount=0,subseccount=0,techcount=0;
 	int secno,subsecno,techno;
@@ -303,7 +303,7 @@ void region::setsupsector(void) // set number of supply sectors
 }
 	
 // region class method definition
-void region::setdemsector(void) // set number of demand sectors
+void Region::setdemsector(void) // set number of demand sectors
 {
 	int seccount=0,subseccount=0,techcount=0;
 	int secno,subsecno,techno;
@@ -357,7 +357,7 @@ void region::setdemsector(void) // set number of demand sectors
 }
 
 // set number of ghg objects for supply and demand technologies
-void region::settechghg(void) 
+void Region::settechghg(void) 
 {
 	// set number of ghg for supply technologies
 	int regionno = no;
@@ -372,7 +372,7 @@ void region::settechghg(void)
 }
 
 // set economic data for each region
-void region::economics(void)
+void Region::economics(void)
 {
 	// function protocol
 	void dbgenread2(vector<double>& temp,string region,string var1name,string var2name,int maxper);
@@ -419,7 +419,7 @@ void region::economics(void)
 }
 	
 // region class method definition
-void region::rscinitialize(void) // initialize each resource
+void Region::rscinitialize(void) // initialize each resource
 {
 	// reads in data for all grades in sector and subsector
 	for (int i=0;i<nodrsc;i++)
@@ -427,7 +427,7 @@ void region::rscinitialize(void) // initialize each resource
 }
 
 // region class method definition
-void region::supinitialize(void) // initialize each supply sector
+void Region::supinitialize(void) // initialize each supply sector
 {
 	int i=0;
 	// reads in data for each technology in sector and subsector
@@ -438,7 +438,7 @@ void region::supinitialize(void) // initialize each supply sector
 }
 
 // region class method definition
-void region::deminitialize(void) // initialize each demand sector
+void Region::deminitialize(void) // initialize each demand sector
 {
 	// reads in data for each technology in sector and subsector
 	for (int i=0;i<nodsec;i++) {
@@ -448,7 +448,7 @@ void region::deminitialize(void) // initialize each demand sector
 }
 
 // calculates annual supply of primay resources
-void region::rscsupply(int per) 
+void Region::rscsupply(int per) 
 {
 	char* mrkname;
 	int rscno;
@@ -478,7 +478,7 @@ void region::rscsupply(int per)
 }
 
 // calculate prices of refined fuels and electricity
-void region::finalsupplyprc(int per)
+void Region::finalsupplyprc(int per)
 {
 	char* mrkname;
 	int sectorid;
@@ -502,7 +502,7 @@ void region::finalsupplyprc(int per)
 }
 
 // calculates supply of final energy and other goods
-void region::finalsupply(int per) 
+void Region::finalsupply(int per) 
 {
 	char* mrkname;
 	int sectorid;
@@ -547,7 +547,7 @@ void region::finalsupply(int per)
 }
 
 // for intermediate goods override supply and demand with prices
-void region::override_mrks(int per) 
+void Region::override_mrks(int per) 
 {
 	int sectorid;
 	int i=0;
@@ -569,7 +569,7 @@ void region::override_mrks(int per)
 }
 
 // calculates regional gnp
-void region::calc_gnp(int per) 
+void Region::calc_gnp(int per) 
 {
 	double labprd=0;
 
@@ -595,7 +595,7 @@ void region::calc_gnp(int per)
 }
 
 // calculates demand sector aggregate price 
-void region::calc_enduseprice(int per) 
+void Region::calc_enduseprice(int per) 
 {
 	price_ser[per] = 0.0;
 	for (int i=0;i<nodsec;i++) {
@@ -617,7 +617,7 @@ void region::calc_enduseprice(int per)
 }
 
 // adjusts regional gnp for energy
-void region::adjust_gnp(int per) 
+void Region::adjust_gnp(int per) 
 {
 	double tempratio;
 	double e_gnp_elas = -0.15;
@@ -640,7 +640,7 @@ void region::adjust_gnp(int per)
 }
 
 // calculates regional demand for energy and other goods for all sectors
-void region::endusedemand(int per) 
+void Region::endusedemand(int per) 
 {
 	double price_n=0;
 	carbontaxpaid[per] = 0; // initialize total regional carbon taxes paid
@@ -665,7 +665,7 @@ void region::endusedemand(int per)
 }
 
 // show all supply sector information
-void region::showsupsector(int per, const char *ofile) 
+void Region::showsupsector(int per, const char *ofile) 
 {
 	for (int i=0;i<nossec;i++) {
 		supplysector[i].showlabel(ofile);
@@ -674,7 +674,7 @@ void region::showsupsector(int per, const char *ofile)
 }
 
 // show all demand sector information
-void region::showdemsector(int per, const char* ofile) 
+void Region::showdemsector(int per, const char* ofile) 
 {
 	for (int i=0;i<nodsec;i++) {
 		demandsector[i].showlabel(ofile);
@@ -683,7 +683,7 @@ void region::showdemsector(int per, const char* ofile)
 }
 
 // apply carbon taxes to appropriate sectors
-void region::applycarbontax(int per)
+void Region::applycarbontax(int per)
 {
 	int i=0;
 	// apply carbon taxes by period to primary fossil fuel user only
@@ -694,13 +694,13 @@ void region::applycarbontax(int per)
 }
 
 // return regional population
-double region::showpop(int per)
+double Region::showpop(int per)
 {
 	return population.total(per);
 }
 
 // return regional available resource
-double region::showrsc(int rscno,int per)
+double Region::showrsc(int rscno,int per)
 {
 	for (int i=0;i<nodrsc;i++) {
 		if (depresource[i].index() == rscno)
@@ -710,7 +710,7 @@ double region::showrsc(int rscno,int per)
 }
 
 // return regional available subresource
-double region::showsubrsc(int rscno,int subrscno,int per)
+double Region::showsubrsc(int rscno,int subrscno,int per)
 {
 	for (int i=0;i<nodrsc;i++) {
 		if (depresource[i].index() == rscno)
@@ -720,7 +720,7 @@ double region::showsubrsc(int rscno,int subrscno,int per)
 }
 
 // calculate regional emissions from resources
-void region::emission(int per)
+void Region::emission(int per)
 {
 	int i=0;
 	map<string, double> fuelemiss; // tempory emissions by fuel
@@ -749,7 +749,7 @@ void region::emission(int per)
 }
 
 // calculate regional indirect emissions from intermediate and final demand sectors
-void region::emiss_ind(int per)
+void Region::emiss_ind(int per)
 {
 	// calculate indirect GHG emissions
 	for (int i=0;i<nossec;i++)
@@ -759,7 +759,7 @@ void region::emiss_ind(int per)
 }
 
 // set regional GHG emissions as market demand
-void region::setghgdemand(int per)
+void Region::setghgdemand(int per)
 {
 	int ghgno;
 	double ghgemiss;
@@ -782,7 +782,7 @@ void region::setghgdemand(int per)
 }	
 
 // place all outputs to database here
-void region::outputdb(void)
+void Region::outputdb(void)
 {
 	int i=0;
 	int maxper = modeltime.getmaxper();
@@ -819,7 +819,7 @@ void region::outputdb(void)
 }
 
 // place all outputs to file here
-void region::outputfile(void)
+void Region::outputfile(void)
 {
 	int i=0;
 	int maxper = modeltime.getmaxper();
@@ -860,7 +860,7 @@ void region::outputfile(void)
 }
 
 // MiniCAM outputs to file
-void region::MCoutput(void)
+void Region::MCoutput(void)
 {
 	int i=0, m=0;
 	int maxper = modeltime.getmaxper();
@@ -954,13 +954,13 @@ void region::MCoutput(void)
 }
 
 // return number of depletable resources
-int region::shownodrsc(void)
+int Region::shownodrsc(void)
 {
 	return nodrsc;
 }
 
 // return number of supply sectors
-int region::shownossec(void)
+int Region::shownossec(void)
 {
 	return nossec;
 }

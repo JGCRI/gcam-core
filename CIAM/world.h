@@ -13,7 +13,7 @@ class World
 {
 private:
 	int noreg; // number of regions
-	vector<region> country; // array of pointers to region objects
+	vector<Region> region; // array of pointers to Region objects
 	// **** sum of regional values ****
 	vector<double> population; // total global population
 	vector<double> crudeoilrsc; // global conventional crude oil resource

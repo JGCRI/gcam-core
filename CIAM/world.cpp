@@ -66,7 +66,7 @@ void World::setregion(void) // set number of regions in World
 	
 	noreg = countdbrec("Region",dbfile,dbtgen); // returns # of regions from gen table
 	//noreg = 1; // just do USA for now
-	country.resize(noreg); // create array of region objects
+	region.resize(noreg); // create array of region objects
 	str_in = new str_indexname[noreg]; // create array of index and name objects
 
 	try {
@@ -78,23 +78,23 @@ void World::setregion(void) // set number of regions in World
 		
 	for (int i=0;i<noreg;i++) {
 		// set region name and index, create region method
-		country[i].setlabel(str_in[i].name,str_in[i].index);
+		region[i].setlabel(str_in[i].name,str_in[i].index);
 		// initialize size of arrays to max period
-		country[i].initper();
+		region[i].initper();
 		// set default CO2 emissions coefficients
-		country[i].setCO2coef();
+		region[i].setCO2coef();
 		// set size of population and labor productivity
-		country[i].setpop();	
+		region[i].setpop();	
 		// read in carbon tax from database for each region
-		country[i].setcarbontax();	
+		region[i].setcarbontax();	
 		// set number ghg for market solution for each region
-		country[i].setghgobj();	
+		region[i].setghgobj();	
 		// sets number of depletable resources
-		country[i].setdepresource(); 
+		region[i].setdepresource(); 
 		// sets number of supply sectors
-		country[i].setsupsector(); 
+		region[i].setsupsector(); 
 		// sets number of demand sectors
-		country[i].setdemsector(); 
+		region[i].setdemsector(); 
 	}	
 	// delete structure for setting name and index
 	delete [] str_in; 
@@ -105,12 +105,12 @@ void World::setregion(void) // set number of regions in World
 void World::initregion(void)
 {
 	for (int i=0;i<noreg;i++) {
-		country[i].initpop();	// init population and labor productivity data
-		country[i].economics();// initialize economic data for region
-		country[i].rscinitialize();// initialize data for resources
-		country[i].supinitialize();// initialize data for supply sectors
-		country[i].deminitialize();// initialize data for demand sectors
-		country[i].settechghg(); // sets number of ghgs in technology
+		region[i].initpop();	// init population and labor productivity data
+		region[i].economics();// initialize economic data for region
+		region[i].rscinitialize();// initialize data for resources
+		region[i].supinitialize();// initialize data for supply sectors
+		region[i].deminitialize();// initialize data for demand sectors
+		region[i].settechghg(); // sets number of ghgs in technology
 	}	
 }
 
@@ -119,7 +119,7 @@ void World::gnp(int per)
 {
 	for (int i=0;i<noreg;i++) {
 		// calculate gnp
-		country[i].calc_gnp(per);
+		region[i].calc_gnp(per);
 	}
 }
 
@@ -128,33 +128,33 @@ void World::calc(int per)
 {
 	for (int i=0;i<noreg;i++) {
 		// apply carbon taxes to appropriate technologie
-		country[i].applycarbontax(per);
+		region[i].applycarbontax(per);
 		// set regional GHG constraint to market supply
-		country[i].setghgsupply(per);
+		region[i].setghgsupply(per);
 		// set regional GHG tax to individual technologies
-		country[i].addghgtax(per);
+		region[i].addghgtax(per);
 		// determine supply of primary resources
-		country[i].rscsupply(per);
+		region[i].rscsupply(per);
 		//sdfile<<"\n"; // supply & demand info.
 		// determine prices of refined fuels and electricity
-		country[i].finalsupplyprc(per);
+		region[i].finalsupplyprc(per);
 		// calculate enduse service price
-		country[i].calc_enduseprice(per);
+		region[i].calc_enduseprice(per);
 		// adjust gnp for energy cost changes
-		country[i].adjust_gnp(per);
+		region[i].adjust_gnp(per);
 		// determine end-use demand for energy and other goods
-		country[i].endusedemand(per);
+		region[i].endusedemand(per);
 		//sdfile<<"\n"; // supply & demand info.
 		// determine supply of final energy and other goods based on demand
-		country[i].finalsupply(per);
+		region[i].finalsupply(per);
 		//sdfile<<"\n"; // supply & demand info.
 		// for intermediate goods market set supply = cost and demand = solution price
 		if(!Minicam)
-			country[i].override_mrks(per);
+			region[i].override_mrks(per);
 		// calculate GHG emissions for region by technology
-		country[i].emission(per);
+		region[i].emission(per);
 		// set regional GHG emissions as market demand
-		country[i].setghgdemand(per);
+		region[i].setghgdemand(per);
 	}	
 }
 
@@ -164,7 +164,7 @@ void World::sumpop(int per)
 	population[per] = 0.0;
 	// divide by 1000 to get millions
 	for (int i=0;i<noreg;i++)
-		population[per] += country[i].showpop(per)/1000;
+		population[per] += region[i].showpop(per)/1000;
 }
 
 // sum regional resources for global total
@@ -176,11 +176,11 @@ void World::sumrsc(int per)
 	coalrsc[per] = 0.0;
 	uranrsc[per] = 0.0;
 	for (int i=0;i<noreg;i++) {
-		crudeoilrsc[per] += country[i].showsubrsc(1,1,per);
-		unconvoilrsc[per] += country[i].showsubrsc(1,2,per);
-		natgasrsc[per] += country[i].showrsc(2,per);
-		coalrsc[per] += country[i].showrsc(3,per);
-		uranrsc[per] += country[i].showrsc(4,per);
+		crudeoilrsc[per] += region[i].showsubrsc(1,1,per);
+		unconvoilrsc[per] += region[i].showsubrsc(1,2,per);
+		natgasrsc[per] += region[i].showrsc(2,per);
+		coalrsc[per] += region[i].showrsc(3,per);
+		uranrsc[per] += region[i].showrsc(4,per);
 	}
 }
 
@@ -188,7 +188,7 @@ void World::sumrsc(int per)
 void World::emiss_ind(int per)
 {
 	for (int i=0;i<noreg;i++) {
-		country[i].emiss_ind(per); // calculate indirect emissions
+		region[i].emiss_ind(per); // calculate indirect emissions
 	}
 }
 
@@ -265,7 +265,7 @@ void World::outputdb(void)
 	dboutput2("Global","resource","coal"," ","all resources",coalrsc,"EJ");
 	dboutput2("Global","resource","uranium"," ","all resources",uranrsc,"EJ");
 	for (int i=0;i<noreg;i++)
-		country[i].outputdb();
+		region[i].outputdb();
 }
 
 // write results for all regions to file
@@ -290,7 +290,7 @@ void World::outputfile(void)
 	fileoutput3(0,"global"," "," "," ","coal resource","EJ",coalrsc);
 	fileoutput3(0,"global"," "," "," ","uran resource","EJ",uranrsc);
 	for (int i=0;i<noreg;i++)
-		country[i].outputfile();
+		region[i].outputfile();
 }
 
 // MiniCAM style output to file
@@ -306,7 +306,7 @@ void World::MCoutput(void)
 	//dboutput4("global","General","Population","zTotal","thous",population);
 
 	for (int i=0;i<noreg;i++)
-		country[i].MCoutput();
+		region[i].MCoutput();
 }
 
 double World::showCO2(int per) // return global emissions for period
