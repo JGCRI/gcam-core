@@ -54,7 +54,7 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     emAdjust = 0;
     fMax = 1;
     fControl = 0;
-    techCh = 0;
+    techDiff = 0;
     mac = 0;
     gdp0 = 0;
     finalEmissCoef = 0;
@@ -103,7 +103,7 @@ void Ghg::copy( const Ghg& other ){
     emAdjust = other.emAdjust;
     fMax = other.fMax;
     fControl = other.fControl;
-    techCh = other.techCh;
+    techDiff = other.techDiff;
     mac = other.mac;
     gdp0 = other.gdp0;
     finalEmissCoef = other.finalEmissCoef;
@@ -161,8 +161,8 @@ void Ghg::XMLParse(const DOMNode* node) {
             finalEmissCoef = XMLHelper<double>::getValue( curr );
             finalEmissCoefWasInput = true;
         }
-        else if( nodeName == "techCh"){
-            techCh = XMLHelper<double>::getValue( curr );
+        else if( nodeName == "techDiff"){
+            techDiff = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "emisscoef" ){
             emissCoef = XMLHelper<double>::getValue( curr );
@@ -229,7 +229,7 @@ void Ghg::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( gdp0, "gdp0", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( tau, "tau", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( finalEmissCoef, "finalEmissCoef", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( techCh, "techCh", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( techDiff, "techDiff", out, tabs, 0.0 );
     // Write out the GHGMAC
     if( ghgMac.get() ){
         ghgMac->toInputXML( out, tabs );
@@ -267,7 +267,7 @@ void Ghg::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( gdp0, "gdp0", out, tabs );
     XMLWriteElement( tau, "tau", out, tabs );
     XMLWriteElement( finalEmissCoef, "finalEmissCoef", out, tabs );
-    XMLWriteElement( techCh, "techCh", out, tabs );
+    XMLWriteElement( techDiff, "techDiff", out, tabs );
      // Write out the GHGMAC
     if( ghgMac.get() ){
         ghgMac->toDebugXML( period, out, tabs );
@@ -328,8 +328,8 @@ void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
    unit = prevGHG->unit;
 
 	// Copy values that could change, so only copy if these are still zero (and, thus, were never read-in)
-   if ( !techCh ) { 
-		techCh = prevGHG->techCh; // only copy if GWP has not changed
+   if ( !techDiff ) { 
+		techDiff = prevGHG->techDiff; // only copy if GWP has not changed
 	}
    if ( !gwp ) { 
 		gwp = prevGHG->gwp; // only copy if GWP has not changed
@@ -475,7 +475,7 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
 */
 void Ghg::findControlFunction( const double gdpCap, const double emissDrive, const int period ){
     double gdp0Adj = gdp0;
-    if (techCh !=0){
+    if (techDiff !=0){
         gdp0Adj = calcTechChange(period);
     }
     if ( finalEmissCoefWasInput ){
@@ -508,8 +508,8 @@ void Ghg::findControlFunction( const double gdpCap, const double emissDrive, con
 }
 
 // Adjusts the value of gdp0, based on technological change, returns that adjusted value.
-/* The Variable TechCh represents the percent reduction in gdp0 per year, due to technological change and diffusion.
-* The overall reduciton in gdp0 is 1 + the techCh percentage raised to the power of the number of years after 
+/* The Variable techDiff represents the percent reduction in gdp0 per year, due to technological change and diffusion.
+* The overall reduciton in gdp0 is 1 + the techDiff percentage raised to the power of the number of years after 
 * the base year.  When applied to the control funciton, this will allow emissions controls to approach fMax sooner.
 *\ Author Nick Fernandez
 * param period the current period where calculations occur
@@ -519,7 +519,7 @@ double Ghg::calcTechChange( const int period ){
     double gdpAdj; // adjusted gdp0 based on technological change;
     int year = modeltime->getper_to_yr( period ); 
     year -=  modeltime->getper_to_yr(1); // subtracts off base year to find number of years after base year
-    gdpAdj = gdp0 / pow(1 + (techCh / 100), year );
+    gdpAdj = gdp0 / pow(1 + (techDiff / 100), year );
     return gdpAdj;
 }
 

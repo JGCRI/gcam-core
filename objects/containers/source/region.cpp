@@ -858,24 +858,28 @@ bool Region::isDemandAllCalibrated( const int period ) const {
 * \param period Model period
 * \return Boolean true if calibration is ok.
 */
-bool Region::isAllCalibrated( const int period ) const {
-   const double TFE_CAL_TOLLERANCE = 1e-3;
+bool Region::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
    
    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-      if ( !demandSector[ i ]->isAllCalibrated( period, false ) ) {
+      if ( !demandSector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
          return false;
       }
    }
 
    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-      if ( !supplySector[ i ]->isAllCalibrated( period, false ) ) {
+      if ( !supplySector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
          return false;
       }
    }
    
    // Check Regional TFE calibration if exists
    if ( !isDemandAllCalibrated( period ) && TFEcalb[ period ]  > 0 ) {
-      if ( fabs( calcTFEscaleFactor( period ) - 1.0 ) > TFE_CAL_TOLLERANCE ) {
+      if ( fabs( calcTFEscaleFactor( period ) - 1.0 ) > calAccuracy ) {
+         if ( printWarnings ) {
+            cerr << "WARNING: " << " TFE Calibration is off by: ";
+            cerr << calcTFEscaleFactor( period ) << " in yr " <<  scenario->getModeltime()->getper_to_yr( period );
+            cerr << " in region: " << name << endl;
+         }
          return false;
       }
    }
@@ -909,7 +913,7 @@ void Region::calibrateTFE( const int period ) {
 * \param period Model period
 * \return Double ratio TFE in model to calibrated value.
 */
-double Region::calcTFEscaleFactor( const int period ) {
+double Region::calcTFEscaleFactor( const int period ) const {
 
    if ( TFEcalb[ period ]  > 0 ) {
       // Calculate total final energy demand for all demand sectors
@@ -1416,11 +1420,31 @@ void Region::findSimul(const int period) {
         
         // Now also check if this sector has any fixed capacity. In this case, this market also needs to be set as a simultunaety
         // This is because resolution of fixed capacity requires a trial value for demand. sjs. 10/04
-         if ( supplySector[isec]->getFixedOutput( period ) != 0 ) {
+         if ( anySupplyFixedOutput( isec ) != 0 ) {
             supplySector[ isec ]->addSimul( supplySector[ isec ]->getName() );
             marketplace->resetToPriceMarket( OuterSectorName, name );
         } 
     }
+}
+
+/*! \brief Utility function -- returns true if there is any fixed output for any period
+*
+* this is necessary because markets are set only once per model run
+* 
+* \author Steve Smith
+* \param sectorNumber Sector Number to check
+* \todo Change this function (and the one that uses it)  if markets are generalized to change
+* \return boolean True if there is fixed output for any period in sector sectorNumber
+*/
+bool Region::anySupplyFixedOutput( const int sectorNumber ) const { 
+	const Modeltime* modeltime = scenario->getModeltime();
+   
+   for( int i = 0; i < modeltime->getmaxper(); i++ ){
+      if ( supplySector[ sectorNumber ]->getFixedOutput( i ) != 0 ) {
+         return true;
+      }
+    }
+    return false;
 }
 
 //! Initialize the market prices for the agricultural products.

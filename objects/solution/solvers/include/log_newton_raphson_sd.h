@@ -33,6 +33,12 @@ protected:
     const std::string& getName() const;
     static const std::string SOLVER_NAME;
     virtual ReturnCode calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period );
+
+    bool derivativesCalculated;
+    std::auto_ptr <Matrix> JFSave;
+    std::auto_ptr <Matrix> JFDMSave;
+    std::auto_ptr <Matrix> JFSMSave;
+    int savedMatrixSize;
 };
 
 #endif // _NEWTON_RAPHSON_SD_H_

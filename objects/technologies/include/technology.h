@@ -99,6 +99,7 @@ public:
     virtual const std::string& getXMLName2D() const;
     static const std::string& getXMLNameStatic2D();
     void initCalc( );
+    virtual void derivedTechInitCalc();
     virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per ); 
     virtual void calcShare( const std::string& regionName, const int per); 
     void normShare(double sum); // normalize technology share

@@ -336,10 +336,10 @@ bool World::getCalibrationSetting() const {
 * \param period Model period
 * \return Boolean true if calibration is ok.
 */
-bool World::isAllCalibrated( const int period ) const {
+bool World::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
     
-   for( RegionIterator i = regions.begin(); i != regions.end(); i++ ){
-      if ( !( *i )->isAllCalibrated( period ) ) {
+   for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
+      if ( !( *i )->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
          return false;
       }
    }

@@ -91,7 +91,7 @@ protected:
     double tau; //!< User inputed timescale parameter in control function
     double fControl; //!< value derived from control function
     double mac;
-    double techCh; //!< technological change parameter- represents percent reduction in gdp0 per year;
+    double techDiff; //!< technological change parameter- represents percent reduction in gdp0 per year;
     double finalEmissCoef; //!< user input final emissions factor that is approached asymptotically
     double emissDriver; //!< the amount of fuel that governs emissions levels for various GHGs
     std::auto_ptr<GhgMAC> ghgMac; //!< Marginal Abatement Cost Curve Object

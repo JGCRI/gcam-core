@@ -175,7 +175,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
             }
 
             else {
-                // create a new vector of techs.
+                // technology does not exist, create a new vector of techs.
                 /*! \todo Clean this up and make it work with the deletion of objects. */
                 DOMNodeList* childNodeList = curr->getChildNodes();
                 vector<technology*> techVec( modeltime->getmaxper() );
@@ -447,10 +447,15 @@ void Subsector::initCalc( const int period ) {
     shareWeightScale( period ); 
     fixedShare[ period ] = 0;
     
-    // Prevent pathological situation were share is zero where a fixed capacity is present.
+    // Prevent pathological situation where share is zero where a fixed capacity is present.
     // This can happen at begining of an initialization. Share will be set properly within secotr::calcShare 
     if ( ( getFixedOutput( period ) > 0 ) && ( fixedShare[ period ] == 0 ) ) {
        fixedShare[ period ] = 0.1;
+    }
+   
+    // Prevent pathological situation where a calibration value is present but a capacity limit is imposed. This will not work correctly.
+    if ( ( getTotalCalOutputs( period ) > 0 ) && ( capLimit[ period ] < 1 ) ) {
+       capLimit[ period ] = 1.0;
     }
    
    // check to see if input fuel has changed
@@ -1102,6 +1107,15 @@ void Subsector::adjustForCalibration( double sectorDemand, double totalfixedOutp
          }
       }
    }
+   
+    // Report if share weight gets extremely large
+    bool watchSubSector = ( name == "oil" && sectorName == "electricity" && regionName == "Canadaxx");
+    if ( debugChecking && (shrwts[ period ] > 1e4 || watchSubSector) ) {
+       if ( !watchSubSector ) {
+          cout << "In calibration for sub-sector: " << name;
+          cout << " in sector: "<< sectorName << " in region: " << regionName << endl;
+       } else { cout << " ||" ; }
+    }
 }
   
 /*! \brief returns the total of technologies available this period

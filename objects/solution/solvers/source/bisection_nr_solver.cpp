@@ -66,7 +66,10 @@ bool BisectionNRSolver::solve( const int period ) {
     SolverComponent::ReturnCode code = SolverComponent::ORIGINAL_STATE;
 
     // Constants. Make these configuration variables.
-    static const double SOLUTION_TOLERANCE = 0.001; // tolerance for solution criteria
+    static const double SOLUTION_TOLERANCE = 0.001; // relative tolerance for solution criteria
+    const double CALIBRATION_ACCURACY = SOLUTION_TOLERANCE * 4 ; // relative tolerance for calibrations
+    // Adds significant time if CALIBRATION_ACCURACY = SOLUTION_TOLERANCE. If CALIBRATION_ACCURACY > SOLUTION_TOLERANCE then speeds things up quite a bit.
+    // The calibration numbers are generally not good to this accuracy in any event, so having a slightly higher CALIBRATION_ACCURACY should be ok.
     static const double ED_SOLUTION_FLOOR = 0.01; // minimum value below which solution is assumed to be found.
     static const double BRACKET_INTERVAL = 0.5;
     static const double MAX_REL_ED_FOR_NR = 10000;
@@ -75,7 +78,7 @@ bool BisectionNRSolver::solve( const int period ) {
     static const int MAX_CALCS_BISECT_ALL = 25;
     static const int MAX_CALCS_BISECT_ONE = 35;
     static const int MAX_CALCS_NR = 500; // Should be based on number of markets.
-
+    static const unsigned int CAL_REPEAT_LIMIT = 20;
     Configuration* conf = Configuration::getInstance();
     trackED = conf->getBool( "trackMaxED" ); //!< Get parameter to turn on (or not) solution mechanism tracking (to cout)
 
@@ -200,19 +203,17 @@ bool BisectionNRSolver::solve( const int period ) {
     } while ( ( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ) 
                && calcCounter.getPeriodCount() < MAX_CALCS );
 
-   // Make sure calibration was achieved
-   if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) && !world->isAllCalibrated( period ) ){
-      const int CAL_REPEAT_LIMIT = 20;
-      int calCount = 1;
-      do {
-         logfile << "Repeating to calibrate. N = " << calcCounter.getPeriodCount() <<  endl;
-         world->calc( period );
-         logNewtonRaphsonSaveDeriv->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_NR, sol, period );
-         calCount ++;
-      } while ( !world->isAllCalibrated( period ) && calCount < CAL_REPEAT_LIMIT && sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) );
-   }
+    // Make sure calibration was achieved
+    // The use of the logNewtonRaphsonSaveDeriv solution component significantly cuts down on the time it takes to achieve final calibration
+    unsigned int calCount = 0;
+    while( ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false ) || !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ) && calCount < CAL_REPEAT_LIMIT ){
+        logfile << "Repeating to calibrate. N = " << calcCounter.getPeriodCount() <<  endl;
+        world->calc( period );
+        logNewtonRaphsonSaveDeriv->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_NR, sol, period );
+        ++calCount;
+    }
    
-   if ( !world->isAllCalibrated( period ) ) {
+   if ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false) ) {
         cout << "Model did not calibrate sucesfully in period: " << period << endl;
         logfile << "Model did not calibrate sucesfully in period: " << period << endl;
    }
@@ -220,7 +221,7 @@ bool BisectionNRSolver::solve( const int period ) {
     if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
         cout << "Model solved normally. Iterations this period: " << calcCounter.getPeriodCount() << ". Total iterations: "<< calcCounter.getTotalCount() << endl;
         logfile << ",Model solved normally: worldCalcCount = " << calcCounter.getPeriodCount() << "; Cumulative = "<< calcCounter.getTotalCount() << endl;
-        return true;
+        return world->isAllCalibrated( period, CALIBRATION_ACCURACY, true); // print out calibration warnings this time.
     }
     else { // SolverComponent::FAILURE:
         cout << "Model did not solve within set iteration " << calcCounter.getPeriodCount() << endl;
@@ -237,6 +238,7 @@ bool BisectionNRSolver::solve( const int period ) {
             LOG( sdLog, Logger::WARNING_LEVEL ) << "Supply and demand curves for markets that did not solve in period: " << period << endl;
             sol.findAndPrintSD( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, world, marketplace, period, sdLog );
         }
+        world->isAllCalibrated( period, CALIBRATION_ACCURACY, true); // print out calibration warnings.
         return false;
     }
 }

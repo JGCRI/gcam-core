@@ -345,9 +345,10 @@ void Sector::initCalc( const int period ) {
 	 // to make sure share weights have been adjusted to be consistant with final solution prices
 	 //
 	 // If debugchecking flag is on extra information is printed
-    if ( Configuration::getInstance()->getBool( "debugChecking" ) && period > 0 ) { 
-       isAllCalibrated( period - 1 , true );
-    }
+   // if ( Configuration::getInstance()->getBool( "debugChecking" ) && period > 0 ) { 
+   //    isAllCalibrated( period - 1 , true );
+   //  }
+   // THIS CALL now takes place in the solver
 }
 
 /*! \brief Perform any sector level calibration data consistancy checks
@@ -367,11 +368,10 @@ void Sector::checkSectorCalData( const int period ) {
 *
 * \author Steve Smith
 * \param period Model period
-* \param printWarming if true prints a warning
+* \param printWarnings if true prints a warning
 * \return Boolean true if calibration is ok.
 */
-bool Sector::isAllCalibrated( const int period, const bool printWarming ) const {	
-   const double CAL_CHECK_VAL = 0.001; // tollerance for calibration check (somewhat arbitrary)
+bool Sector::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {	
    const bool PRINT_DETAILS = false; // toggle for more detailed debugging output
         
    bool checkCalResult = true; 
@@ -381,12 +381,12 @@ bool Sector::isAllCalibrated( const int period, const bool printWarming ) const 
       double calDiff =  totalFixed - getOutput( period );
 
       // Two cases to check for. If outputs are all fixed, then calDiff should be small in either case.
-      // Even if outputs are not all fixed, then calDiff shouldn't be > CAL_CHECK_VAL (i.e., totalFixedOutputs > actual output)
+      // Even if outputs are not all fixed, then calDiff shouldn't be > calAccuracy (i.e., totalFixedOutputs > actual output)
       if ( calOutputs > 0 ) {
          double diffFraction = calDiff/calOutputs;
-         if ( ( calDiff > CAL_CHECK_VAL ) || ( ( abs(diffFraction) > CAL_CHECK_VAL ) && outputsAllFixed( period ) ) ) {
+         if ( ( calDiff > calAccuracy ) || ( ( abs(diffFraction) > calAccuracy ) && outputsAllFixed( period ) ) ) {
             checkCalResult = false;
-            if ( printWarming ) {
+            if ( printWarnings ) {
                cerr << "WARNING: " << name << " " << getXMLName() << " in " << regionName << " != cal+fixed vals (";
                cerr << totalFixed << " )" << " in yr " <<  scenario->getModeltime()->getper_to_yr( period );
                cerr << " by: " << calDiff << " (" << calDiff*100/calOutputs << "%) " << endl;
@@ -404,7 +404,7 @@ bool Sector::isAllCalibrated( const int period, const bool printWarming ) const 
                   cout << endl;
                }
             }
-         } // calDiff > CAL_CHECK_VAL branch
+         } // calDiff > calAccuracy branch
       }
    }
    return checkCalResult;
@@ -752,7 +752,7 @@ bool Sector::isCapacityLimitsInSector( const int period ) const {
 */
 void Sector::setFinalSupply( const int period ){
     // supply and demand for intermediate and final good are set equal
-    double marketSupply = getOutput( period );
+    double marketSupply = updateAndGetOutput( period );
 
     // set market supply of intermediate goods
     Marketplace* marketplace = scenario->getMarketplace();
@@ -1067,7 +1067,7 @@ void Sector::supply( const int period, const GDP* gdp ) {
         // If the model is working correctly this should never give an error
         // An error here means that the supply summed up from the supply sectors 
         // is not equal to the demand that was passed in 
-        double mrksupply = getOutput( period );
+        double mrksupply = updateAndGetOutput( period ); // debugChecking modifying values is dangerous.
 
         // if demand identically = 1 then must be in initial iteration so is not an error
         if ( period > 0 && fabs(mrksupply - mrkdmd) > 0.01 && mrkdmd != 1 ) {
@@ -1076,7 +1076,7 @@ void Sector::supply( const int period, const GDP* gdp ) {
             cout << fabs(mrksupply - mrkdmd) << ": ";
             cout << "S: " << mrksupply << "  D: " << mrkdmd << endl;
 
-            if ( 1 == 2 ) { // detailed debugging output
+            if ( 0 ) { // detailed debugging output
                 for (int i=0;i<nosubsec;i++) {
                     cout << subsec[ i ]->getName() << " Share:";
                     cout << subsec[ i ]->getShare( period ) << " Output:";
@@ -1099,10 +1099,10 @@ void Sector::sumOutput( const int period ) {
         double temp = subsec[ i ]->getOutput( period );
         output[ period ] += temp;
 
-        // error check
-        if ( temp != temp ) {
+        // error check. Move this before += and do not add.
+        if ( !util::isValidNumber( temp ) ){
             cerr << "output for subSector "<< i << "(" << subsec[ i ]->getName() << ")" <<" is not valid, with value " << temp;
-				cerr << " in Sector: " << name << " Region: " << regionName << endl;
+            cerr << " in Sector: " << name << " Region: " << regionName << endl;
         }
     }
 }
@@ -1118,7 +1118,7 @@ void Sector::sumOutput( const int period ) {
 * \todo make year 1975 regular model year so that logic below can be removed
 * \return total output
 */
-double Sector::getOutput( const int period ) {
+double Sector::updateAndGetOutput( const int period ) {
 
     // this is needed because output for 1975 is hard coded at the Sector level for some sectors,
     // in which case do not want to sum.
@@ -1128,6 +1128,20 @@ double Sector::getOutput( const int period ) {
     return output[ period ]; 
 }
 
+/*! \brief returns Sector output.
+*
+* Returns the total amount of the Sector. 
+* 
+* Routine now incorporates sumOutput so that output is automatically correct.
+*
+* \author Sonny Kim
+* \param period Model period
+* \todo make year 1975 regular model year so that logic below can be removed
+* \return total output
+*/
+double Sector::getOutput( const int period ) const {
+    return output[ period ]; 
+}
 
 /*! \brief Calculate GHG emissions for each Sector from subsectors.
 *

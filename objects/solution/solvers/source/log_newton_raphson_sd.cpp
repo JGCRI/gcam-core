@@ -34,6 +34,7 @@ extern ofstream logfile, bugoutfile;
 
 //! Default Constructor. Need to call constructor of class next up in heigharcy. Constructs the base class. 
 LogNewtonRaphsonSaveDeriv::LogNewtonRaphsonSaveDeriv( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):LogNewtonRaphson( marketplaceIn, worldIn, calcCounterIn ) {
+   savedMatrixSize = 0;
 }
 
 //! Default Destructor. Currently does nothing.
@@ -42,9 +43,7 @@ LogNewtonRaphsonSaveDeriv::~LogNewtonRaphsonSaveDeriv(){
 
 //! Init method.  
 void LogNewtonRaphsonSaveDeriv::init() {
-   calcDerivativeDefault = true;
    derivativesCalculated = false;
-   savedMatrixSize = 0;
 }
 
 //! Get the name of the SolverComponent
@@ -60,8 +59,8 @@ const string& LogNewtonRaphsonSaveDeriv::getName() const {
 //! Calculate derivatives
 SolverComponent::ReturnCode LogNewtonRaphsonSaveDeriv::calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period ) {
            
-   // Always calculated if derivativesCalculated is true. Otherwise, only calculated once.
-   if ( calcDerivativeDefault || (!calcDerivativeDefault && !derivativesCalculated ) ) {
+   // Only calculated once.
+   if ( !derivativesCalculated ) {
       derivativesCalculated = true;
                
       // Calculate derivatives.
@@ -76,27 +75,27 @@ SolverComponent::ReturnCode LogNewtonRaphsonSaveDeriv::calculateDerivatives( Sol
       // Update the JF, JFDM, and JFSM matrices
       SolverLibrary::updateMatrices( solverSet, JFSM, JFDM, JF );
       SolverLibrary::invertMatrix( JF );
-               
+      
       // Save matricies
-      if ( !calcDerivativeDefault ) {
-         JFSave.reset( new Matrix( solverSet.getNumSolvable(), solverSet.getNumSolvable() ) );
-         JFDMSave.reset( new Matrix( solverSet.getNumSolvable(), solverSet.getNumSolvable() ) );
-         JFSMSave.reset( new Matrix( solverSet.getNumSolvable(), solverSet.getNumSolvable() ) );
-         copy( JF, *JFSave );
-         copy( JFDM, *JFDMSave );
-         copy( JFSM, *JFSMSave );
-         savedMatrixSize = solverSet.getNumSolvable();
-      }
-      // If not calculating derivatives then restore from saved values
-      } else {
+      JFSave.reset( new Matrix( solverSet.getNumSolvable(), solverSet.getNumSolvable() ) );
+      JFDMSave.reset( new Matrix( solverSet.getNumSolvable(), solverSet.getNumSolvable() ) );
+      JFSMSave.reset( new Matrix( solverSet.getNumSolvable(), solverSet.getNumSolvable() ) );
+      copy( JF, *JFSave );
+      copy( JFDM, *JFDMSave );
+      copy( JFSM, *JFSMSave );
+      savedMatrixSize = solverSet.getNumSolvable();
+      
+// Otherwise restore from saved values
+   } else {
          if ( solverSet.getNumSolvable() != savedMatrixSize ) {
             logfile << "ERROR: Matrix sizes changed " << solverSet.getNumSolvable() << ", "<< savedMatrixSize << endl;
-            return FAILURE_SOLUTION_SIZE_CHANGED;
+            int code = FAILURE_SOLUTION_SIZE_CHANGED;
+            return code;
          }
          copy( *JFSave, JF );
          copy( *JFDMSave, JFDM );
          copy( *JFSMSave, JFSM );
-      }
+   }
            
       return SUCCESS;
 }

@@ -339,7 +339,7 @@ void DemandSector::aggdemand( const GDP* gdp, const int period ) {
     double ser_dmd;
     // double pelasticity = -0.9;
     double pelasticity = pElasticity[period];
-    const double base = getOutput(0);
+    const double base = updateAndGetOutput(0);
      
     // demand for service
     if (period == 0) {

@@ -100,9 +100,10 @@ public:
     void setFinalSupply( const int period );
     void setoutput( const double demand, const int period, const GDP* gdp ); 
     void adjustForFixedOutput( const double marketDemand, const int period );
-    bool isAllCalibrated( const int period, const bool printWarming ) const;
+    bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void supply( const int period, const GDP* gdp );
-    double getOutput( const int period );
+    double updateAndGetOutput( const int period );
+    double getOutput( const int period ) const;
     void calcFinalSupplyPrice( const GDP* gdp, const int period );
     double getFixedOutput( const int period, bool printValues = false ) const; 
     bool outputsAllFixed( const int period ) const;
