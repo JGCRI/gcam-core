@@ -143,7 +143,7 @@ Gas,NumSources,Nregions,DataType,,,,,,,,,,,,
 6,1,1,0,(Base-year emissions coefficient Tg C eJ-1),,,,,,,,,,,
 0,0,1,,,,,,,,,,,,,
 Src Index,Label,USA,,
-18,deforest,0.5,,
+18,deforest,0.0005,,
 
 
 INPUT_TABLE,,,,
