@@ -41,6 +41,56 @@ technology::~technology() {
     }
 }
 
+// ! Deep copy and return of technology object
+technology* technology::clone() const {
+    technology* newtech = new technology();
+
+    newtech->year = year; //!< period year or vintage
+    newtech->shrwts = shrwts; //!< logit share weight
+    newtech->eff = eff; //!< energy intensity
+    newtech->necost = necost; //!< all non-fuel costs (levelized)
+    newtech->fuelcost = fuelcost; //!< fuel cost only
+    newtech->techcost = techcost; //!< total cost of technology
+    newtech->tax = tax; //!< utility tax
+    newtech->fMultiplier = fMultiplier; //!< multiplier on fuel cost or price
+    newtech->pMultiplier = pMultiplier; //!< multiplier on total cost or price
+    newtech->carbontax = carbontax; //!< carbon tax in $/TC
+    newtech->carbontaxgj = carbontaxgj; //!< carbon tax in $/GJ
+    newtech->carbontaxpaid = carbontaxpaid; //!< total carbon taxes paid
+    newtech->lexp = lexp; //!< logit exponential
+    newtech->share = share; //!< technology shares
+    newtech->input = input; //!< total fuel input (fossil and uranium)
+    newtech->output = output; //!< technology output
+    newtech->techchange = techchange;  //!< technical change in %/year
+    newtech->fixedSupply = fixedSupply; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
+    newtech->fixedOutputVal = fixedOutputVal; //!< A fixed amount of output.
+    newtech->name = name; //!< technology name
+    newtech->unit = unit; //!< unit of final product from technology
+    newtech->fuelname = fuelname; //!< name of fuel used
+    newtech->doCalibration = doCalibration; // Flag set if calibration value is read-in
+    newtech->calInputValue = calInputValue; // Calibration value
+    newtech->emissmap = emissmap; //!< map of ghg emissions
+    newtech->emfuelmap = emfuelmap; //!< map of ghg emissions implicit in fuel
+    newtech->emindmap = emindmap; //!< map of indirect ghg emissions
+    
+    // attributes for hydroelectricity only!
+    newtech->resource = resource; //!< available hydro resource in energy units
+    newtech->A = A; //!< logit function shape parameter
+    newtech->B = B; //!< logit function shape parameter
+    newtech->ghgNameMap = ghgNameMap; //!< Map of ghg name to integer position in vector. 
+    
+    for (vector<Ghg*>::const_iterator iter = ghg.begin(); iter != ghg.end(); iter++) {
+        newtech->ghg.push_back(new Ghg( **iter ) ); //!< suite of greenhouse gases
+    }
+ 
+ /*   for (int i=0; i<ghg.size(); i++) {
+        newtech->ghg.push_back(ghg[i]); //!< suite of greenhouse gases
+    }
+   */ 
+    return newtech;
+}
+
+
 //! Clear member variables.
 void technology::clear(){
     initElementalMembers();

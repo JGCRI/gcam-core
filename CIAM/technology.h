@@ -74,6 +74,7 @@ public:
    technology(); // default construtor
     virtual ~technology();
     virtual void clear();
+    virtual technology* clone() const; // returns a clone of the technology object
     void initElementalMembers();
     virtual void XMLParse( const DOMNode* tempnode ); // initialize technology with xml data
     void completeInit();

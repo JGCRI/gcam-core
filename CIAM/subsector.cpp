@@ -106,6 +106,7 @@ const string subsector::getName() const {
 void subsector::XMLParse( const DOMNode* node ) {	
     
     const Modeltime* modeltime = scenario->getModeltime();
+    const int maxperiod = modeltime->getmaxper();
     DOMNodeList* nodeList = 0;
     DOMNodeList* childNodeList = 0;
     DOMNode* curr = 0;
@@ -194,6 +195,18 @@ void subsector::XMLParse( const DOMNode* node ) {
                      tempTech->XMLParse( currChild );
                      int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
                      techVec[ thisPeriod ] = tempTech;
+                    
+                    // boolean to fill out the readin value to all the periods
+                    const bool fillout = XMLHelper<bool>::getAttr( currChild, "fillout" );
+
+                    // copy technology object for one period to all the periods
+                    if (fillout) {
+                        // will not do if period is already last period or maxperiod
+                        for (int i = thisPeriod+1; i < maxperiod; i++) {
+                            techVec[ i ] =  techVec[ thisPeriod ]->clone();
+                        }
+                    }
+
                   }
                }
                techs.push_back( techVec );
@@ -202,7 +215,18 @@ void subsector::XMLParse( const DOMNode* node ) {
                techVec.resize( modeltime->getmaxper(), 0 );
             }
         }
+        // parsed derived classes
+        else {
+            XMLDerivedClassParse( nodeName, curr );
+        }
     }
+}
+
+//! Parses any input variables specific to derived classes
+void subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+    // do nothing
+    // defining method here even though it does nothing so that we do not
+    // create an abstract class.
 }
 
 //! Complete the initialization.
@@ -998,7 +1022,7 @@ void subsector::MCoutputB( const string& regname, const string& secname ) const 
     vector<double> temp(maxper);
     
     // total subsector output
-    dboutput4(regname,"End-Use Service",secname,name,"Ser Unit",output);
+    dboutput4(regname,"End-Use Service",secname+"_bySubsec",name,"Ser Unit",output);
     // subsector price
     dboutput4(regname,"Price",secname,name,"75$/Ser",subsectorprice);
     
@@ -1012,7 +1036,7 @@ void subsector::MCoutputB( const string& regname, const string& secname ) const 
             // output or demand for each technology
             for (m=0;m<maxper;m++)
                 temp[m] = techs[i][m]->getOutput();
-            dboutput4(regname,"End-Use Service",secname,str,"Ser Unit",temp);
+            dboutput4(regname,"End-Use Service",secname+"_byTech",str,"Ser Unit",temp);
             // technology cost
             for (m=0;m<maxper;m++)
                 temp[m] = techs[i][m]->getTechcost();

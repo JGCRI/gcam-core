@@ -61,14 +61,15 @@ protected:
     vector<bool> calibrationStatus; // Set true if sector or any tech is calibrated
     vector<Summary> summary; //!< summary for reporting
     map<string,int> techNameMap; //!< Map of technology name to integer position in vector. 
-   void shareWeightScale( const int pmer ); // Consistantly adjust share weights
-
+    void shareWeightScale( const int pmer ); // Consistantly adjust share weights
+    
 public:
     subsector();
     virtual ~subsector();
     virtual void clear();
     const string getName() const;
     void XMLParse( const DOMNode* tempNode );
+    virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* curr ); // for derived classes
     void completeInit();
     void toXML( ostream& out ) const;
     virtual void toOutputXML( ostream& out ) const;
@@ -77,8 +78,8 @@ public:
     virtual void calcPrice( const string regionName, const int period); // maw
     double getPrice( const int period ) const;
     void initCalc( const int per ); // Consistantly adjust share weights
-	 bool getCalibrationStatus( const int period ) const;
-	 void setCalibrationStatus( const int period );
+    bool getCalibrationStatus( const int period ) const;
+    void setCalibrationStatus( const int period );
     void scaleCalibrationInput( const int period, const double scaleFactor ); // scale calibration values
     double getfuelprice( const int period ) const; 
     double getwtfuelprice( const int period ) const;
