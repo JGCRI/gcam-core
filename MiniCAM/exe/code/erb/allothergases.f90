@@ -143,7 +143,7 @@
 	  OGACT(ICH4,9,L,M) = FJKL(JSBMASS,1,L)  ! buildings biomass
 
 ! src 10 : landuse
-	  OGACT(ICH4,10,L,M) = MAX(1.0d0,CarbEmiss(L,M))  ! land use emissions (positive)
+	  OGACT(ICH4,10,L,M) = grassland(L,M) !drive by amount of grassland
 
 ! src 11 : enteric
 	  OGACT(ICH4,11,L,M) = qsup(3,L,M)  ! ag2 beef/mutton
@@ -159,6 +159,9 @@
 
 ! src 15 : forestfires
 	  OGACT(ICH4,15,L,M) = saveland(3,L,M) ! forest land
+
+! src 16 : deforestation
+	  OGACT(ICH4,16,L,M) = DefroR(bioprice, gdpcap, L,M)
 
 
 ! ****************************************************************************************
@@ -201,8 +204,8 @@
 ! src 9 : ag_residue
 	OGACT(IN2O,9,L,M) = saveland(1,L,M)  ! ag2 total crop area
 	
-! src 10 : landuse
-	OGACT(IN2O,10,L,M) = MAX(1.0d0,CarbEmiss(L,M))  ! land use emissions (positive)
+! src 10 : savannah burning
+	OGACT(IN2O,10,L,M) = grassland(L,M) !drive by amount of grassland
 
 ! src 11 : unmanaged manure
 	OGACT(IN2O,11,L,M) = (1-FBeefFrac)*qsup(3,L,M)  ! fraction of beef/mutton not managed (e.g. in pastures)
@@ -210,6 +213,8 @@
 ! src 12 : forestfires
 	OGACT(IN2O,12,L,M) = saveland(3,L,M) ! forest land
 
+! src 13 : deforestation
+	OGACT(IN2O,13,L,M) = DefroR(bioprice, gdpcap, L,M)
 
 
 
