@@ -52,7 +52,7 @@ Marketplace::Marketplace() {
    numMarkets = 0;
    SMALL_NUM = 1e-6;
    VERY_SMALL_NUM = 1e-8;
-   newSDCurvesStream.open( Configuration::getInstance()->getFile( "supplyDemandOutputFileName" ).c_str(), ios::out );
+   newSDCurvesStream.open( Configuration::getInstance()->getFile( "supplyDemandOutputFileName", "SDCurves.csv" ).c_str(), ios::out );
    assert( newSDCurvesStream );
    solver = new BisectionNRSolver( this );
 }
