@@ -33,11 +33,12 @@ void grade::clear(){
 void grade::initElementalMembers(){
 	year = 0;
 	available = 0;
-	extCost = 0;
-	envCost = 0;
-	techCh = 0;
+	extractCost = 0;
+	environCost = 0;
+	techChange = 0;
+	techChangeCumm = 1;
 	tax = 0;
-	tCost = 0;
+	totalCost = 0;
 }
 
 //! Initialize data members from XML.
@@ -69,16 +70,16 @@ void grade::XMLParse( const DOMNode* tempNode )
 			available = XMLHelper<double>::getValue( tNode );
 		}
 		else if( tNodeName == "extractioncost" ){
-			extCost = XMLHelper<double>::getValue( tNode );
+			extractCost = XMLHelper<double>::getValue( tNode );
 		}
 		else if( tNodeName == "environmentalcost" ){
-			envCost = XMLHelper<double>::getValue( tNode );
+			environCost = XMLHelper<double>::getValue( tNode );
 		}
 		else if( tNodeName == "severencetax" ){
 			tax = XMLHelper<double>::getValue( tNode );
 		}
 		else if( tNodeName == "techchange" ){
-			techCh = XMLHelper<double>::getValue( tNode );
+			techChange = XMLHelper<double>::getValue( tNode );
 		}
 	}
 }
@@ -94,11 +95,11 @@ void grade::toXML( ostream& out ) const {
 	XMLWriteElement( name, "name", out );
 	XMLWriteElement( year, "year", out );
 	XMLWriteElement( available, "available", out );
-	XMLWriteElement( extCost, "extractioncost", out );
-	XMLWriteElement( envCost, "environmentalcost", out );
+	XMLWriteElement( extractCost, "extractioncost", out );
+	XMLWriteElement( environCost, "environmentalcost", out );
 	XMLWriteElement( tax, "severencetax", out );
-	XMLWriteElement( techCh, "techchange", out );
-	// XMLWriteElement( tCost, "totalcost", out );
+	XMLWriteElement( techChange, "techchange", out );
+	// XMLWriteElement( totalCost, "totalcost", out );
 	
 	Tabs::decreaseIndent();
 
@@ -114,11 +115,11 @@ void grade::toDebugXML( const int period, ostream& out ) const {
 	Tabs::increaseIndent();
 
 	XMLWriteElement( available, "available", out );
-	XMLWriteElement( extCost, "extractioncost", out );
-	XMLWriteElement( envCost, "environmentalcost", out );
-	XMLWriteElement( techCh, "techchange", out );
+	XMLWriteElement( extractCost, "extractioncost", out );
+	XMLWriteElement( environCost, "environmentalcost", out );
+	XMLWriteElement( techChange, "techchange", out );
 	XMLWriteElement( tax, "severencetax", out );
-	XMLWriteElement( tCost, "totalcost", out );
+	XMLWriteElement( totalCost, "totalcost", out );
 	
 	Tabs::decreaseIndent();
 	Tabs::writeTabs( out );
@@ -132,19 +133,27 @@ void grade::printGrade() const
 	cout << name << endl;
 	cout << "Year: " << year << endl;
 	cout << "Available: " << available << endl;
-	cout << "Extraction Cost: " << extCost << endl;
-	cout << "Environmental Cost: " << envCost << endl;
-	cout << "Technical Change: " << techCh << endl;
+	cout << "Extraction Cost: " << extractCost << endl;
+	cout << "Environmental Cost: " << environCost << endl;
+	cout << "Technical Change: " << techChange << endl;
 	cout << "Severance Tax: "<< tax << endl << endl;
 }
 
-//! Total cost of each grade.
-void grade::cost( const int per ) 
+//! Calculate cummulative technical change for each grade.
+void grade::calcTechChangeCumm( const int per ) 
 {
-	double tech;
+	// total years from base year to current year
+	int years = modeltime.getper_to_yr(per) - modeltime.getstartyr();
 
-	tech = pow( ( 1.0 + techCh ),modeltime.gettimestep( per ) );
-	tCost = ( extCost + envCost ) / tech + tax;
+	// works like the MiniCAM only because techChange is a constant
+	// for all periods
+	techChangeCumm = pow( ( 1.0 + techChange ), years );
+}
+
+//! Total cost of each grade.
+void grade::calcCost( const int per ) 
+{
+	totalCost = ( extractCost + environCost ) / techChangeCumm + tax;
 }
 
 //! Return available amount in each grade.
@@ -155,22 +164,22 @@ double grade::getAvail() const
 
 double grade::getCost() const
 {
-	return tCost;
+	return totalCost;
 }
 
 double grade::getExtCost() const
 {
-	return extCost;
+	return extractCost;
 }
 
 double grade::getEnvCost() const
 {
-	return envCost;
+	return environCost;
 }
 
 void grade::setExtCost( const double eCost ) 
 {
-	extCost = eCost;
+	extractCost = eCost;
 }
 
 string grade::getName() const 

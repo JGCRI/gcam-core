@@ -44,9 +44,9 @@ public:
 	void XMLParse( const DOMNode* node );
 	void toXML( ostream& out ) const;
 	void toDebugXML( const int period, ostream &out ) const;
-	string getName() const; 
+	string getName() const; // return resource name
 	void setMarket( const string& regionName );
-	double price(int per); 
+	double getPrice(int per); // return resource price
 	void cummsupply(double prc,int per); // calculative cummulative supply from supply curve
 	double showcummprod(int per); // returns cummulative supply
 	// calculates annual supply or production

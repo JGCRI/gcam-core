@@ -957,7 +957,8 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
 	// adjust demand using cummulative technical change
 	ser_dmd_adj = ser_dmd/techChangeCumm[per];
 	// demand sector output is total end-use sector demand for service
-	service[per] = ser_dmd_adj; 
+	//service[per] = ser_dmd_adj; 
+	service[per] = ser_dmd; 
 
 	set_ser_dmd(ser_dmd_adj,per); // sets the output
 	// sets subsector outputs, technology outputs, and market demands

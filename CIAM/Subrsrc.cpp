@@ -241,16 +241,20 @@ void subrsrc::cummsupply(double prc,int per)
 	
 	// calculate total extraction cost for each grade
 	for (int gr=0; gr<nograde; gr++) {
-		depgrade[gr][per]->cost(per);
+		depgrade[gr][per]->calcTechChangeCumm(per);
+		depgrade[gr][per]->calcCost(per);
 	}
 	
-	if (per == 0) cummprod[per] = 0.0;
+	if (per == 0) {
+		cummprod[per] = 0.0;
+	}
 	else {
 		// Case 1
 		// if market price is less than cost of first grade, then zero cummulative 
 		// production
-		if (prc <= depgrade[0][per]->getCost()) 
+		if (prc <= depgrade[0][per]->getCost()) {
 			cummprod[per] = cummprod[per-1];
+		}
 		
 		// Case 2
 		// if market price is in between cost of first and last grade, then calculate 
@@ -261,7 +265,9 @@ void subrsrc::cummsupply(double prc,int per)
 				iL=i; i++; iU=i;
 			}
 			// add subrsrcs up to the lower grade
-			for (i=0;i<=iL;i++) cummprod[per]+=depgrade[i][0]->getAvail();
+			for (i=0;i<=iL;i++) {
+				cummprod[per] += depgrade[i][0]->getAvail();
+			}
 			// price must reach upper grade cost to produce all of lower grade
 			slope = depgrade[iL][0]->getAvail()
 				/ (depgrade[iU][per]->getCost() - depgrade[iL][per]->getCost());
@@ -271,8 +277,11 @@ void subrsrc::cummsupply(double prc,int per)
 		// Case 3
 		// if market price greater than the cost of the last grade, then
 		// cummulative production is the amount in all grades
-		if (prc > depgrade[maxgrd][per]->getCost())
-			for (i=0;i<nograde;i++) cummprod[per]+=depgrade[i][0]->getAvail();
+		if (prc > depgrade[maxgrd][per]->getCost()) {
+			for (i=0;i<nograde;i++) {
+				cummprod[per] += depgrade[i][0]->getAvail();
+			}
+		}
 	}
 	//available[per]=available[0]-cummprod[per];
 }
@@ -289,7 +298,7 @@ void subrsrc::updateAvailable( const int period ){
 	}
 }
 
-//! return annual supply
+//! calculate annual supply
 /*! Takes into account short-term capacity limits.
 Note that cummsupply() must be called before calling this function. */
 void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,double prev_price)
@@ -315,9 +324,11 @@ void subrsrc::annualsupply(int per,double gnp,double prev_gnp,double price,doubl
 			// check to see if base short-term capacity (supply) limit is smaller than the minimum
 			double max_annualprod = annualprod[per-1]*pow(gnp/prev_gnp,gdpExpans[per]);
 			if(minShortTermSLimit < max_annualprod) { 
-				cur_annualprod = max_annualprod; }
+				cur_annualprod = max_annualprod; 
+			}
 			else { 
-				cur_annualprod = minShortTermSLimit; }
+				cur_annualprod = minShortTermSLimit; 
+			}
 			
 			// adjust short-term capacity limit for price effects
 			cur_annualprod *= pow((price/prev_price),prc_elas);

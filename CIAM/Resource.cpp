@@ -198,10 +198,9 @@ string Resource::getName() const {
 	return name;
 }
 
-double Resource::price(int per) // huh? 
+//! Return resource price.
+double Resource::getPrice(int per)
 {
-	rscprc[per] = 0.0;
-
 	return rscprc[per] ;
 }
 
@@ -237,9 +236,6 @@ void Resource::annualsupply(int per,double gnp,double prev_gnp,double price,doub
 	annualprod[per]=0.0;
 	available[per]=0.0;
        
-         // First calculate cumulative supply, needed by the calculation below for depletable resources
-        cummsupply(price,per);
-    
 	// sum annual production of each subsector
 	for (i=0;i<nosubrsrc;i++) {
 		depsubrsrc[i]->annualsupply(per,gnp,prev_gnp,price,prev_price);
