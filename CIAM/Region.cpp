@@ -651,8 +651,10 @@ void Region::finalsupply(int per)
 void Region::calc_gnp(int per) 
 {
 	double labprd=0;
+	int baseYear = modeltime.getstartyr();
+	int basePer = modeltime.getyr_to_per(baseYear);
 	
-	if (per<=modeltime.getyr_to_per(1990)) {
+	if (per == modeltime.getyr_to_per(baseYear)) {
 		gnp[per] = 1.0; // normalize to 1975
 	}
 	else {
@@ -673,7 +675,7 @@ void Region::calc_gnp(int per)
 	}
 	// gnp per capita normalized
 	// correct using energy adjusted gnp*****
-	gnp_cap[per] = gnp[per]*population.total(0)/population.total(per);
+	gnp_cap[per] = gnp[per]*population.total(basePer)/population.total(per);
 }
 
 //! Calculate a forward looking gnp.
@@ -719,6 +721,7 @@ void Region::calcGNPlfp(int per)
 {
 	double labprd=0;
 	int baseYear = modeltime.getstartyr();
+	int basePer = modeltime.getyr_to_per(baseYear);
 	if (per==modeltime.getyr_to_per(baseYear)) {
 		gnp[per] = 1.0;
 	}
@@ -738,7 +741,7 @@ void Region::calcGNPlfp(int per)
 	}
 	// gnp per capita normalized
 	// correct using energy adjusted gnp*****
-	gnp_cap[per] = gnp[per]*population.total(0)/population.total(per);
+	gnp_cap[per] = gnp[per]*population.total(basePer)/population.total(per);
 	
 }
 
@@ -757,6 +760,7 @@ void Region::calcEndUsePrice( const int period ) {
 		price_ser[ period ] += demandsector[ i ]->getoutput( 0 ) * demandsector[ i ]->showprice( period );
 		
 		// calculate service price elasticity for each demand sector
+		// use read in value
 		demandsector[ i ]->calc_pElasticity( period );
 		
 	}
@@ -980,6 +984,7 @@ void Region::MCoutput()
 	dboutput4(name,"General","GDP 90$","GDP(90mer)","90US$",gnp_dol);
 	dboutput4(name,"General","GDP","norm","unitless",gnp);
 	dboutput4(name,"General","GDP","energy adj","unitless",gnp_adj);
+	dboutput4(name,"General","GDP","per cap","unitless",gnp_cap);
 	// regional carbon taxes
 	dboutput4(name,"General","CarbonTax","Fos Fuel","90US$",carbontax);
 	// regional total carbon taxes paid

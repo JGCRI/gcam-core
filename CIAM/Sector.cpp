@@ -47,6 +47,7 @@ void sector::clear(){
 	market = "";
 	subsec.clear();
 	sectorprice.clear();
+	price_norm.clear();
 	pe_cons.clear();
 	input.clear();
 	output.clear();
@@ -110,6 +111,7 @@ void sector::XMLParse( const DOMNode* node ){
 	nosubsec = subsec.size();
 	// resize vectors not read in
 	int maxper = modeltime.getmaxper();
+	price_norm.resize( maxper ); // sector price normalized to base year
 	pe_cons.resize( maxper ); // sectoral primary energy consumption
 	input.resize( maxper ); // sector total energy consumption
 	// output.resize( maxper ); // total amount of final output from sector
@@ -246,8 +248,9 @@ void sector::calc_share( const string regionName, const int per, const double gn
 void sector::price(int per)
 {
 	sectorprice[per]=0.0;
-	for (int i=0;i<nosubsec;i++)		
+	for (int i=0;i<nosubsec;i++) {	
 		sectorprice[per] += subsec[i]->showshare(per) * subsec[i]->getprice(per);
+	}
 }
 
 //! return sector price
@@ -267,12 +270,13 @@ double sector::showprice(int per)
 */
 void sector::setoutput( const string& regionName,double dmd, int per)
 {
+    int i;
 	carbontaxpaid[per] = 0; // initialize carbon taxes paid
-        int i;
         
 	// clears subsector fuel consumption map
-	for ( i=0;i<nosubsec;i++) 
+	for ( i=0;i<nosubsec;i++) {
 		subsec[i]->clearfuelcons(per);
+	}
 	// clears sector fuel consumption map
 	summary[per].clearfuelcons();
 
@@ -638,6 +642,7 @@ void demsector::clear(){
 	service.clear();
 	iElasticity.clear();
 	pElasticity.clear();
+	techChangeCumm.clear();
 }
 
 //! Set data members from XML input.
@@ -647,7 +652,21 @@ void demsector::XMLParse( const DOMNode* node ){
 	DOMNodeList* nodeList = 0;
 	string nodeName;
 	subsector* tempSubSector = 0;
-
+	
+	// resize vectors not read in
+	int maxper = modeltime.getmaxper();
+	pe_cons.resize( maxper ); // sectoral primary energy consumption
+	input.resize( maxper ); // sector total energy consumption
+	// output.resize( maxper ); // total amount of final output from sector
+	pElasticity.resize( maxper ); // price elasticity for each period
+	carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
+	summary.resize( maxper ); // object containing summaries
+	fe_cons.resize(maxper); // end-use sector final energy consumption
+	service.resize(maxper); // total end-use sector service 
+	sectorfuelprice.resize(maxper); // total end-use sector service 
+	techChangeCumm.resize(maxper); // cummulative technical change
+		
+	
 	//! \pre Make sure we were passed a valid node.
 	assert( node );
 	
@@ -673,7 +692,13 @@ void demsector::XMLParse( const DOMNode* node ){
 			market = XMLHelper<string>::getValueString( curr ); // only one market element.
 		}
 		else if( nodeName == "priceelasticity" ) {
-			pElasticityBase = XMLHelper<double>::getValue( curr );
+			int year = XMLHelper<int>::getAttr( curr, "year" );
+			if (year == modeltime.getstartyr()) {
+				pElasticityBase = XMLHelper<double>::getValue( curr );
+			}
+			int period = modeltime.getyr_to_per(year);
+			pElasticity[period] =  XMLHelper<double>::getValue( curr );
+			//pElasticity.push_back( XMLHelper<double>::getValue( curr ) );
 		}
 		else if( nodeName == "price" ){
 			sectorprice.push_back( XMLHelper<double>::getValue( curr ) );
@@ -704,17 +729,6 @@ void demsector::XMLParse( const DOMNode* node ){
 	
 	nosubsec = subsec.size();
 	
-	// resize vectors not read in
-	int maxper = modeltime.getmaxper();
-	pe_cons.resize( maxper ); // sectoral primary energy consumption
-	input.resize( maxper ); // sector total energy consumption
-	// output.resize( maxper ); // total amount of final output from sector
-	pElasticity.resize( maxper ); // price elasticity for each period
-	carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
-	summary.resize( maxper ); // object containing summaries
-	fe_cons.resize(maxper); // end-use sector final energy consumption
-	service.resize(maxper); // total end-use sector service 
-	sectorfuelprice.resize(maxper); // total end-use sector service 
 }
 
 //! Write object to xml output stream.
@@ -807,6 +821,7 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out );
 
 	XMLWriteElement( sectorfuelprice[ period ], "sectorfuelprice", out );
+	XMLWriteElement( techChangeCumm[ period ], "techChangeCumm", out );
 	
 
 	// Now write out own members.
@@ -922,11 +937,15 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
 
 	// normalize prices to 1990 base
 	int normPeriod = modeltime.getyr_to_per(1990);
+	//price_norm[per] = sectorprice[per]/sectorprice[normPeriod];
+	//double priceRatio = price_norm[per];
 	double priceRatio = sectorprice[per]/sectorprice[normPeriod];
 
 	// demand for service
-	if (per == 0) 
+	if (per == 0) {
 		ser_dmd = base; // base output is initialized by data
+		techChangeCumm[per] = 1; // base year technical change
+	}
 	else {
 		// perCapitaBased is true or false
 		if (perCapitaBased) { // demand based on per capita GNP
@@ -936,12 +955,13 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
 		else { // demand based on scale of GNP
 			//ser_dmd = base*pow(priceRatio,pElasticity[per])*pow(gnp,iElasticity[per]);
 			ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp,iElasticity[per]);
-			int stop =1;
 		}
+		// calculate cummulative technical change using AEEI, autonomous end-use energy intensity
+		techChangeCumm[per] = techChangeCumm[per-1]*pow(1+aeei[per],modeltime.gettimestep(per));
 	}
 
-	// adjust demand for AEEI, autonomous end-use energy intensity
-	ser_dmd_adj = ser_dmd/pow(1+aeei[per],modeltime.gettimestep(per));
+	// adjust demand using cummulative technical change
+	ser_dmd_adj = ser_dmd/techChangeCumm[per];
 	// demand sector output is total end-use sector demand for service
 	service[per] = ser_dmd_adj; 
 
@@ -985,9 +1005,9 @@ void demsector::outputfile(const string& regionName )
 //! Write MiniCAM style demand sector output to database.
 void demsector::MCoutput( const string& regionName )
 {
+    int m;
 	int maxper = modeltime.getmaxper();
 	vector<double> temp(maxper);
-        int m;
         
 	// function protocol
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,

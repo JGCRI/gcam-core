@@ -1486,10 +1486,10 @@ int Marketplace::Bisection_all( const double Tol, const int IterLimit, vector<so
 			if (getType(j,per) == Market::PRICE && sol[i].XL < getRawDemand(j,per) ) {
 				sol[i].XL = getRawDemand(j,per)* 1.5;
 				// print out to remind us to re-do this correctly
-				if (per == 8) {
-					cout << "   Shifted XL for market " << j << " ("<< getName(j)<< "-"
-						<< getGoodName(j)<< ")" << endl;
-				}
+				//if (per == 8) {
+				//	cout << "   Shifted XL for market " << j << " ("<< getName(j)<< "-"
+				//		<< getGoodName(j)<< ")" << endl;
+				//}
 			}
                         
             // debugging code that tracks ED
@@ -1918,7 +1918,7 @@ int Marketplace::NR_Ron( const double Tol,vector<solinfo>& sol, double** JF, dou
 		logDem(per); // calculate log of demand
 		logSup(per); // calculate log of supply
 		
-		if ((iNRdx < 2) && (per < modeltime.getmaxper())) { // control no of times derivatives are calculated
+		if ((iNRdx < 5) && (per < modeltime.getmaxper())) { // control no of times derivatives are calculated
             if (trackED) { cout <<" ... "; }
 			Derivatives(Xtemp,JFDM,JFSM,n,per); //recalculate Jacobian matrix, returns JF matrix
 			for(i=0;i<m;++i) {
@@ -2231,8 +2231,8 @@ void Marketplace::solve( const int per ) {
 		// Use Newton-Raphson only if all markets are bracketed
 		// and production is not zero.
 		if (allbracketed && useNR) {
-			//int maxIter = 30;
-			int maxIter = 15;
+			int maxIter = 30;
+			//int maxIter = 15;
 			solved = Bisection_all(solTolerance,maxIter,sol,n,per);
 			logfile <<",Number of iterations: n = "<<n<<"\n";
 			maxSolVal =  maxED(per); // Max returns largest ED[i]
@@ -2247,8 +2247,8 @@ void Marketplace::solve( const int per ) {
 		
 		// Ron's version of the NR routine
 		if ( allbracketed && useNR_Ron ) {
-			//int maxIter = 30;
-			int maxIter = 15;
+			int maxIter = 30;
+			//int maxIter = 15;
 			solved = Bisection_all( solTolerance, maxIter, sol, n, per );
 			logfile << ",Number of iterations: n = " << n << endl;
 			maxSolVal =  maxED(per); // Max returns largest ED[i]

@@ -28,7 +28,8 @@ protected:
 	int nosubsec; //!< number of subsectors in each sector
 	double tax; //!< sector tax or subsidy
 	vector<subsector*> subsec; //!< subsector objects
-	vector<double> sectorprice; //!< sector price for all periods
+	vector<double> sectorprice; //!< sector price in $/service
+	vector<double> price_norm; //!< sector price normalized to base year
 	vector<double> pe_cons; //!< sectoral primary energy consumption
 	vector<double> input; //!< sector total energy consumption
 	vector<double> output; //!< total amount of final output from sector
@@ -100,6 +101,7 @@ protected:
 	vector<double> iElasticity; //!< income elasticity 
 	vector<double> pElasticity; //!< price elasticity.
 	vector<double> aeei; //!< autonomous end-use energy intensity parameter
+	vector<double> techChangeCumm; //!< cummulative technical change on end-use service
 
 public:
 	demsector(); //default construtor
