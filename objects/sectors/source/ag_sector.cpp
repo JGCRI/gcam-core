@@ -15,6 +15,7 @@
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/scenario.h"
+#include "util/base/include/configuration.h"
 
 // Fortran calls.
 #if(__HAVE_FORTRAN__)
@@ -324,14 +325,20 @@ void AgSector::carbLand( const int period, const string& regionName ) {
 }
 
 //! Create a market for the sector.
+// sjs -- added option agBioMarketSet in config file so that biomass market is not altered (so regional markets can be set elsewhere)
 void AgSector::setMarket( const string& regionName ) {
-   
+	Configuration* conf = Configuration::getInstance();
+	bool setAgBioMarket = Configuration::getInstance()->getBool( "agBioMarketSet" );
+	 
    Marketplace* marketplace = scenario->getMarketplace();
    
    // Add all global markets.
    for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end() - 1; i++ ) {
-      marketplace->createMarket( regionName, "global", *i, Marketplace::NORMAL );
-      marketplace->setMarketToSolve ( *i, regionName );
+		// check if should set ag bio market
+		if ( ( *i != "biomass") || setAgBioMarket ) {
+			marketplace->createMarket( regionName, "global", *i, Marketplace::NORMAL );
+			marketplace->setMarketToSolve ( *i, regionName );
+		}
    }
    
    // Add the regional markets.
