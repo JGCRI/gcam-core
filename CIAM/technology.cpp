@@ -9,13 +9,9 @@
 
 // Standard Library headers
 #include "Definitions.h"
-#include <cstdlib>
 #include <string>
-#include <fstream>
 #include <iostream>
-#include <algorithm>
-#include <functional>
-#include <cmath>
+#include <fstream>
 #include <cassert>
 
 // User headers
@@ -271,7 +267,7 @@ void technology::applycarbontax(double tax)
     // returns emissions coefficient only if fuels are primary fuels
     // crude oil, natural gas and coal
     // add to previous ghg tax if more than one ghg
-    for(int i=0;i<ghg.size();i++) {
+    for(int i=0;i< static_cast<int>( ghg.size() );i++) {
         carbontaxgj += carbontax*ghg[i]->taxcnvrt(fuelname)*1e-3;
     }
 }
@@ -285,7 +281,7 @@ void technology::addghgtax( const string ghgname, const string regionName, const
     carbontaxgj = 0; // initialize
     carbontax = marketplace->showprice(ghgname,regionName,per);
     // add to previous ghg tax if more than one ghg
-    for(int i=0;i<ghg.size();i++) {
+    for(int i=0;i< static_cast<int>( ghg.size() );i++) {
         carbontaxgj += carbontax*ghg[i]->taxcnvrt(fuelname)*1e-3;
     }
     // need to add taxes from all ghgs
@@ -447,7 +443,7 @@ void technology::production(const string& regionName,const string& prodName,
     carbontaxpaid = input*carbontaxgj*1e+3;
     
     // calculate emissions for each gas after setting input and output amounts
-    for (int i=0; i<ghg.size(); i++) {
+    for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
         ghg[i]->calc_emiss(fuelname,input,prodName,output);
         // set emissions as demand side of gas market
         marketplace->setdemand(ghg[i]->getname(),regionName,ghg[i]->getemission(),per);		
@@ -459,7 +455,7 @@ void technology::emission( const string prodname ) {
     // alternative ghg emissions calculation
     emissmap.clear(); // clear emissions map
     emfuelmap.clear(); // clear emissions map
-    for (int i=0; i<ghg.size(); i++) {
+    for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
         // emissions by gas name only
         emissmap[ghg[i]->getname()] = ghg[i]->getemission();
         // emissions by gas and fuel names combined
@@ -473,7 +469,7 @@ void technology::emission( const string prodname ) {
 void technology::indemission()
 {
     emindmap.clear(); // clear emissions map
-    for (int i=0; i<ghg.size(); i++) {
+    for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
         ghg[i]->calc_emiss_ind(input,fuelname);
         emindmap[ghg[i]->getname()] = ghg[i]->getemiss_ind();
     }
