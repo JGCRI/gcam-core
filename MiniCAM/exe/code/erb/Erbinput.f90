@@ -1334,6 +1334,11 @@
 	      READ(IUNIT,*) L, SO2_Cntrl_TechChange(L)
           END DO
                                
+	   CASE(530)	! Per-capita cooling demand
+		DO IITER = 1,NLP
+	      READ(IUNIT,*) L, CoolDemand(L)
+        END DO
+                               
                 
          CASE(571)
 !      -------------------------------------------------------------------
