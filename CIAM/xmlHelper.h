@@ -293,7 +293,7 @@ void XMLHelper<T>::insertValueIntoVector( const DOMNode* node, vector<T>& insert
    // Check that the period is less than the size of the vector.
    assert( period < static_cast<int>( insertToVector.size() ) );
    
-   insertToVector[ period ] =  XMLHelper<double>::getValue( node );
+   insertToVector[ period ] =  XMLHelper<T>::getValue( node );
    
    
 }
