@@ -79,11 +79,12 @@
 		IF (ITER .EQ.3 .and. (CUMTARG(LG) .LT. TARGVAL) ) THEN
 			ITER = MAXITER + 1
 			Write(97,*) "***************************"
-			Write(97,*) "TARGET CANNOT BE MET"
+			Write(97,*) "TARGET CANNOT BE MET (case.csv written)"
 			Write(97,'(a,f6.1,a)') "Target lower than lower bound path by:",  100*DIFF,"%"
-			Write(*,*) "TARGET CANNOT BE MET"
+			Write(*,*) "TARGET CANNOT BE MET  (case.csv written)"
 			Write(*,'(a,f6.1,a)') "Target lower than lower bound path by:",  100*DIFF,"%"
 			Close(97)
+			Call FULLOUT(1,0,0)
 			STOP
 		END IF
 	END DO
