@@ -38,26 +38,26 @@ using namespace xercesc;
 */
 
 class Tabs {
-	
+    
 private:
-	static int numTabs; //!< Current number of tabs to write out in order to properly format xml.
+    static int numTabs; //!< Current number of tabs to write out in order to properly format xml.
 public:
-	//! Increase the current level of indentation.
-	static void increaseIndent(){ numTabs++; }
-	
-	//! Decrease the current level of indentation. 
-	static void decreaseIndent(){ numTabs--; }
-	
-	//! Write out the contained number of tabs to the specified output stream.
-	/*!
-	\param out Stream to which to write the tabs.
-	\return void
-	*/
-	static void writeTabs( ostream& out ){
-		for ( int i = 0; i < numTabs; i++ ){
-			out << "\t";
-		}
-	}
+    //! Increase the current level of indentation.
+    static void increaseIndent(){ numTabs++; }
+    
+    //! Decrease the current level of indentation. 
+    static void decreaseIndent(){ numTabs--; }
+    
+    //! Write out the contained number of tabs to the specified output stream.
+    /*!
+    \param out Stream to which to write the tabs.
+    \return void
+    */
+    static void writeTabs( ostream& out ){
+        for ( int i = 0; i < numTabs; i++ ){
+            out << "\t";
+        }
+    }
 };
 
 /*! 
@@ -68,16 +68,16 @@ public:
 
 template<class T>
 class XMLHelper {
-	
+    
 public:
-	static T getValue( const DOMNode* node );
-	static string getValueString( const DOMNode* node );
-	static T getAttr( const DOMNode* node, const string attrName );
-	static string getAttrString( const DOMNode* node, const string attrName );
-	static string safeTranscode( const XMLCh* toTranscode );
-   static void insertValueIntoVector( const DOMNode* node, vector<T>& insertToVector, const Modeltime* modeltime, const bool isPopulationData = false );
-   static int getNodePeriod ( const DOMNode* node, const Modeltime* modeltime, const bool isPopulationData = false );
-	static DOMNode* parseXML( const string& xmlFile, XercesDOMParser* parser );
+    static T getValue( const DOMNode* node );
+    static string getValueString( const DOMNode* node );
+    static T getAttr( const DOMNode* node, const string attrName );
+    static string getAttrString( const DOMNode* node, const string attrName );
+    static string safeTranscode( const XMLCh* toTranscode );
+    static void insertValueIntoVector( const DOMNode* node, vector<T>& insertToVector, const Modeltime* modeltime, const bool isPopulationData = false );
+    static int getNodePeriod ( const DOMNode* node, const Modeltime* modeltime, const bool isPopulationData = false );
+    static DOMNode* parseXML( const string& xmlFile, XercesDOMParser* parser );
 };
 
 //! Returns the data value associated with the element node.
@@ -97,29 +97,29 @@ public:
 
 template<class T>
 T XMLHelper<T>::getValue( const DOMNode* node ){
-	
-	T retValue; // Variable of requested type which will hold the return value.
-	
-	DOMNode* curr = 0; // Node pointer which will point to the node containing the value of the element passed.
-	
-	// make sure we were passed a valid node reference which is an element.
-	assert( node ); 
-	assert( node->getNodeType() == DOMNode::ELEMENT_NODE );
-	
-	// get the first child, which should contain the value.
-	curr = node->getFirstChild();
-	
-	// make sure that the above returned a TEXT_NODE, otherwise value will not be correct.
-	if ( !curr || curr->getNodeType() != DOMNode::TEXT_NODE ){
-		return T();
-	}
-	
-	else {
-		// convert the returned string to the return type.
-		istringstream target( safeTranscode( curr->getNodeValue() ) );
-		target >> retValue;
-		return retValue;
-	}
+    
+    T retValue; // Variable of requested type which will hold the return value.
+    
+    DOMNode* curr = 0; // Node pointer which will point to the node containing the value of the element passed.
+    
+    // make sure we were passed a valid node reference which is an element.
+    assert( node ); 
+    assert( node->getNodeType() == DOMNode::ELEMENT_NODE );
+    
+    // get the first child, which should contain the value.
+    curr = node->getFirstChild();
+    
+    // make sure that the above returned a TEXT_NODE, otherwise value will not be correct.
+    if ( !curr || curr->getNodeType() != DOMNode::TEXT_NODE ){
+        return T();
+    }
+    
+    else {
+        // convert the returned string to the return type.
+        istringstream target( safeTranscode( curr->getNodeValue() ) );
+        target >> retValue;
+        return retValue;
+    }
 }
 
 //! Returns the string value associated with the element node.
@@ -139,23 +139,23 @@ T XMLHelper<T>::getValue( const DOMNode* node ){
 
 template<class T>
 string XMLHelper<T>::getValueString( const DOMNode* node ) {
-	DOMNode* curr = 0; // Node pointer which will point to the node containing the value of the element passed.
-	
-	// make sure we were passed a valid node reference which is an element.
-	assert( node ); 
-	assert( node->getNodeType() == DOMNode::ELEMENT_NODE );
-	
-	// get the first child, which should contain the value.
-	curr = node->getFirstChild();
-	
-	// make sure that the above returned a TEXT_NODE, otherwise value will not be correct.
-	if ( !curr || curr->getNodeType() != DOMNode::TEXT_NODE ){
-		return "";
-	}
-	
-	else {
-		return safeTranscode( curr->getNodeValue() );
-	}
+    DOMNode* curr = 0; // Node pointer which will point to the node containing the value of the element passed.
+    
+    // make sure we were passed a valid node reference which is an element.
+    assert( node ); 
+    assert( node->getNodeType() == DOMNode::ELEMENT_NODE );
+    
+    // get the first child, which should contain the value.
+    curr = node->getFirstChild();
+    
+    // make sure that the above returned a TEXT_NODE, otherwise value will not be correct.
+    if ( !curr || curr->getNodeType() != DOMNode::TEXT_NODE ){
+        return "";
+    }
+    
+    else {
+        return safeTranscode( curr->getNodeValue() );
+    }
 }
 
 //! Returns the requested attribute of the element node passed to the function.
@@ -178,33 +178,33 @@ string XMLHelper<T>::getValueString( const DOMNode* node ) {
 
 template<class T>
 T XMLHelper<T>::getAttr( const DOMNode* node, const string attrName ) {
-	
-	T retValue; // Variable of requested type which will hold the return value.
-	
-	/*! \pre Make sure we were passed a valid node reference. */
-	assert( node );
-	
-	/*! \pre Make sure it is an element before we cast, if function is used correctly it will be. */
-	assert( node->getNodeType() == DOMNode::ELEMENT_NODE );
-	
-	// need to cast node to an element.
-	const DOMElement* element = static_cast<const DOMElement*>( node );
-	
-	// get the attribute with the name which was passed in.
-
-	XMLCh* nameChars =  XMLString::transcode( attrName.c_str() );
-	DOMAttr* nameAttr = element->getAttributeNode( nameChars );
-	XMLString::release( &nameChars );
-	if( !nameAttr ){
-		return T();
-	} 
-	
-	else {
-		// convert the returned string to the return type
-		istringstream target( safeTranscode( nameAttr->getValue() ) );
-		target >> retValue;
-		return retValue;
-	}
+    
+    T retValue; // Variable of requested type which will hold the return value.
+    
+    /*! \pre Make sure we were passed a valid node reference. */
+    assert( node );
+    
+    /*! \pre Make sure it is an element before we cast, if function is used correctly it will be. */
+    assert( node->getNodeType() == DOMNode::ELEMENT_NODE );
+    
+    // need to cast node to an element.
+    const DOMElement* element = static_cast<const DOMElement*>( node );
+    
+    // get the attribute with the name which was passed in.
+    
+    XMLCh* nameChars =  XMLString::transcode( attrName.c_str() );
+    DOMAttr* nameAttr = element->getAttributeNode( nameChars );
+    XMLString::release( &nameChars );
+    if( !nameAttr ){
+        return T();
+    } 
+    
+    else {
+        // convert the returned string to the return type
+        istringstream target( safeTranscode( nameAttr->getValue() ) );
+        target >> retValue;
+        return retValue;
+    }
 }
 
 //! Returns the requested attribute of the element node passed to the function.
@@ -224,33 +224,34 @@ T XMLHelper<T>::getAttr( const DOMNode* node, const string attrName ) {
 */
 template<class T>
 string XMLHelper<T>::getAttrString( const DOMNode* node, const string attrName ) {
-	
-	//! \pre Make sure we were passed a valid node reference.
-	assert( node );
-	
-	//! \pre Make sure it is an element before we cast, if function is used correctly it will be.
-	assert( node->getNodeType() == DOMNode::ELEMENT_NODE );
-	
-	// need to cast node to an element.
-	const DOMElement* element = static_cast<const DOMElement*>( node );
-	
-	// get the attribute with the name which was passed in.
-	XMLCh* tempChars = XMLString::transcode( attrName.c_str() ); 
-	DOMAttr* nameAttr = element->getAttributeNode( tempChars );
-	XMLString::release( &tempChars );
-	
-	if( !nameAttr ){
-		return "";
-	} 
-	
-	else {
-		return safeTranscode( nameAttr->getValue() );
-	}
+    
+    //! \pre Make sure we were passed a valid node reference.
+    assert( node );
+    
+    //! \pre Make sure it is an element before we cast, if function is used correctly it will be.
+    assert( node->getNodeType() == DOMNode::ELEMENT_NODE );
+    
+    // need to cast node to an element.
+    const DOMElement* element = static_cast<const DOMElement*>( node );
+    
+    // get the attribute with the name which was passed in.
+    XMLCh* tempChars = XMLString::transcode( attrName.c_str() ); 
+    DOMAttr* nameAttr = element->getAttributeNode( tempChars );
+    XMLString::release( &tempChars );
+    
+    if( !nameAttr ){
+        return "";
+    } 
+    
+    else {
+        return safeTranscode( nameAttr->getValue() );
+    }
 }
 
 /*! 
 * \brief Function which takes a node and inserts its value into the correct position 
 * in an argument vector based on the year attribute.
+* \updated to fill out for the rest of the time period if the fillout attribute is true
 *
 * This function when passed a node, vector and modeltime object will first extract the year attribute and lookup
 * the corresponding period from the modeltime object. It will then insert the item in that position in the vector.
@@ -264,38 +265,48 @@ string XMLHelper<T>::getAttrString( const DOMNode* node, const string attrName )
 
 template<class T>
 void XMLHelper<T>::insertValueIntoVector( const DOMNode* node, vector<T>& insertToVector, const Modeltime* modeltime, const bool isPopulationData ) {
-   
-   //! \pre Make sure we were passed a valid node reference.
-   assert( node );
-   
-   const int year = XMLHelper<int>::getAttr( node, "year" );
-   
-   // Check to make sure the year attribute returned non-zero. 
-   assert( year != 0 );
-   
-   int period = 0;
-   
-   if( isPopulationData == false ) {   
-      period = modeltime->getyr_to_per( year );
-      
-      
-      // Check that the period returned correctly.
-      assert( ( period >= 0 ) && ( period <= modeltime->getmaxper() ) );
-   }
-   else {
-      period = modeltime->convertYearToPopPeriod( year );
-      
-      // Check that the period returned correctly.
-      assert( ( period >= 0 ) && ( period <= modeltime->getmaxpopdata() ) );
-      
-   }
-   
-   // Check that the period is less than the size of the vector.
-   assert( period < static_cast<int>( insertToVector.size() ) );
-   
-   insertToVector[ period ] =  XMLHelper<T>::getValue( node );
-   
-   
+    
+    //! \pre Make sure we were passed a valid node reference.
+    assert( node );
+    
+    const int year = XMLHelper<int>::getAttr( node, "year" );
+    // boolean to fill out the readin value to all the periods
+    const bool fillout = XMLHelper<bool>::getAttr( node, "fillout" );
+    
+    // Check to make sure the year attribute returned non-zero. 
+    assert( year != 0 );
+    
+    int period = 0;
+    const int maxperiod = modeltime->getmaxper();
+    
+    if( isPopulationData == false ) {   
+        period = modeltime->getyr_to_per( year );
+        
+        
+        // Check that the period returned correctly.
+        assert( ( period >= 0 ) && ( period <= modeltime->getmaxper() ) );
+    }
+    else {
+        period = modeltime->convertYearToPopPeriod( year );
+        
+        // Check that the period returned correctly.
+        assert( ( period >= 0 ) && ( period <= modeltime->getmaxpopdata() ) );
+        
+    }
+    
+    // Check that the period is less than the size of the vector.
+    assert( period < static_cast<int>( insertToVector.size() ) );
+    insertToVector[ period ] =  XMLHelper<double>::getValue( node );
+    
+    if (fillout) {
+        // Check that the max period is equal to the size of the vector.
+        assert( maxperiod == static_cast<int>(insertToVector.size()) );
+        // will not do if period is already last period or maxperiod
+        for (int i = period+1; i < maxperiod; i++) {
+            insertToVector[ i ] =  insertToVector[ period ];
+        }
+    }
+    
 }
 
 /*! 
@@ -311,33 +322,33 @@ void XMLHelper<T>::insertValueIntoVector( const DOMNode* node, vector<T>& insert
 
 template<class T>
 int XMLHelper<T>::getNodePeriod ( const DOMNode* node, const Modeltime* modeltime, const bool isPopulationData ) {
-   
-   //! \pre Make sure we were passed a valid node reference.
-   assert( node );
-   
-   const int year = XMLHelper<int>::getAttr( node, "year" );
-   
-   // Check to make sure the year attribute returned non-zero. 
-   assert( year != 0 );
-   
-   int period = 0;
-   
-   if( isPopulationData == false ) {   
-      period = modeltime->getyr_to_per( year );
-      
-      // Check that the period returned correctly.
-      assert( ( period >= 0 ) && ( period <= modeltime->getmaxper() ) );
-   }
-   else {
-      period = modeltime->convertYearToPopPeriod( year );
-      
-      // Check that the period returned correctly.
-      assert( ( period >= 0 ) && ( period <= modeltime->getmaxpopdata() ) );
-      
-   }
-   
-   return period;
-   
+    
+    //! \pre Make sure we were passed a valid node reference.
+    assert( node );
+    
+    const int year = XMLHelper<int>::getAttr( node, "year" );
+    
+    // Check to make sure the year attribute returned non-zero. 
+    assert( year != 0 );
+    
+    int period = 0;
+    
+    if( isPopulationData == false ) {   
+        period = modeltime->getyr_to_per( year );
+        
+        // Check that the period returned correctly.
+        assert( ( period >= 0 ) && ( period <= modeltime->getmaxper() ) );
+    }
+    else {
+        period = modeltime->convertYearToPopPeriod( year );
+        
+        // Check that the period returned correctly.
+        assert( ( period >= 0 ) && ( period <= modeltime->getmaxpopdata() ) );
+        
+    }
+    
+    return period;
+    
 }
 
 //! Function which converts XMLCh* to a string without leaking memory.
@@ -348,22 +359,22 @@ int XMLHelper<T>::getNodePeriod ( const DOMNode* node, const Modeltime* modeltim
 * convert the buffer into a string and free the buffer. This function should always be used instead
 * of the XMLString::transcode( XMLCh* ).
 
-* \warning Always use this function instead of XMLString::transcode( XMLCh* ) otherwise memory will leak.
-* \warning This function replaces XMLString::transcode( XMLCh* ) but not XMLString::transcode( char* ). 
-* The latter version is used to create an XMLCh* string. This must still be done with XMLString::transcode. 
-* Be very careful to free memory when doing so.
-
-* \param toTranscode string to be converted to a standard string.
-* \return An STL string equivalent to the XMLCh* string passed into the function.
+  * \warning Always use this function instead of XMLString::transcode( XMLCh* ) otherwise memory will leak.
+  * \warning This function replaces XMLString::transcode( XMLCh* ) but not XMLString::transcode( char* ). 
+  * The latter version is used to create an XMLCh* string. This must still be done with XMLString::transcode. 
+  * Be very careful to free memory when doing so.
+  
+    * \param toTranscode string to be converted to a standard string.
+    * \return An STL string equivalent to the XMLCh* string passed into the function.
 */
 
 template<class T>
 string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
-	
-	char* transcoded = XMLString::transcode( toTranscode );
-	string retString = transcoded;
-	XMLString::release( &transcoded );
-	return retString;
+    
+    char* transcoded = XMLString::transcode( toTranscode );
+    string retString = transcoded;
+    XMLString::release( &transcoded );
+    return retString;
 }
 
 //! Function to write the argument element to xml in proper format.
@@ -380,25 +391,25 @@ string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
 
 template<class T>
 void XMLWriteElement( const T value, const string elementName, ostream& out, const int year = 0, const string name = "" ) {
-	
-	Tabs::writeTabs( out );
-	
-	out << "<" << elementName;
-	
-	if ( name != "" ) {
-		out << " name=\"" << name << "\"";
-	}
-	
-	
-	if( year != 0 ){
-		out << " year=\"" << year << "\"";
-	}
-	
-	out << ">";
-	
-	out << value;
-	
-	out << "</" << elementName << ">" << endl;
+    
+    Tabs::writeTabs( out );
+    
+    out << "<" << elementName;
+    
+    if ( name != "" ) {
+        out << " name=\"" << name << "\"";
+    }
+    
+    
+    if( year != 0 ){
+        out << " year=\"" << year << "\"";
+    }
+    
+    out << ">";
+    
+    out << value;
+    
+    out << "</" << elementName << ">" << endl;
 }
 /*!
 * \brief Function to parse an XML file, returning a pointer to the root.
@@ -412,33 +423,33 @@ void XMLWriteElement( const T value, const string elementName, ostream& out, con
 
 template <class T>
 DOMNode* XMLHelper<T>::parseXML( const string& xmlFile, XercesDOMParser* parser ) {
-	
-	DOMDocument* doc = 0;
-
-	try {
-		const unsigned long startMillis = XMLPlatformUtils::getCurrentMillis();
-		parser->parse( xmlFile.c_str() );
-		const unsigned long endMillis = XMLPlatformUtils::getCurrentMillis();
-		long parseTime = endMillis - startMillis;
-		cout << "Parsing took " << parseTime / 1000.0 << " seconds." << endl;
-	} catch ( const XMLException& toCatch ) {
-		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
-		cout << "Exception message is:" << endl << message << endl;
-		return 0;
-	} catch ( const DOMException& toCatch ) {
-		string message = XMLHelper<string>::safeTranscode( toCatch.msg );
-		cout << "Exception message is:" << endl << message << endl;
-		return 0;
-	} catch ( const SAXException& toCatch ){
-		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
-		cout << "Exception message is:" << endl << message << endl;
-		return 0;
-	} catch (...) {
-		cout << "Unexpected Exception." << endl;
-		return 0;
-	}
-	
-	doc = parser->getDocument();
-	return doc->getDocumentElement();
+    
+    DOMDocument* doc = 0;
+    
+    try {
+        const unsigned long startMillis = XMLPlatformUtils::getCurrentMillis();
+        parser->parse( xmlFile.c_str() );
+        const unsigned long endMillis = XMLPlatformUtils::getCurrentMillis();
+        long parseTime = endMillis - startMillis;
+        cout << "Parsing took " << parseTime / 1000.0 << " seconds." << endl;
+    } catch ( const XMLException& toCatch ) {
+        string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
+        cout << "Exception message is:" << endl << message << endl;
+        return 0;
+    } catch ( const DOMException& toCatch ) {
+        string message = XMLHelper<string>::safeTranscode( toCatch.msg );
+        cout << "Exception message is:" << endl << message << endl;
+        return 0;
+    } catch ( const SAXException& toCatch ){
+        string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
+        cout << "Exception message is:" << endl << message << endl;
+        return 0;
+    } catch (...) {
+        cout << "Unexpected Exception." << endl;
+        return 0;
+    }
+    
+    doc = parser->getDocument();
+    return doc->getDocumentElement();
 }
 #endif // _XML_HELPER_H_
