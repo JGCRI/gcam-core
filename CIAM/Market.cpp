@@ -623,7 +623,7 @@ void Market::printSupplyDemandDebuggingCurves( Logger* sdLog ) {
    LOG( sdLog, Logger::WARNING_LEVEL ) << "Price,Demand,Supply," << endl;
    
    // Sort the vector and print it.
-   sort( sdPoints.begin(), sdPoints.end(), std::less<SavePoint*>() );
+   sort( sdPoints.begin(), sdPoints.end(), SavePoint::LesserPrice() );
    for ( vector<SavePoint*>::const_iterator i = sdPoints.begin(); i != sdPoints.end(); i++ ) {
       ( *i )->print( sdLog );
    }

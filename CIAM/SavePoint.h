@@ -26,33 +26,31 @@ class Logger;
 
 class SavePoint
 {
-
+   
 public:
    SavePoint( const double priceIn = 0, const double demandIn = 0, const double supplyIn = 0 ) : price( priceIn ), demand( demandIn ), supply( supplyIn ){}
    double getPrice() const;
    void toDebugXML( std::ostream& out ) const;
    void print( Logger* sdLog ) const;
-
-private:
-   double price;
-   double demand;
-   double supply;
-};
-
-namespace std {
-   /*! \ingroup CIAM
-* \brief Specialization of the std::greater struct on Savepoint pointers to allow sorting of Savepoints by
-* price.
+   
+/*!
+* \brief Binary comparison operator used for SavePoint pointers to order by increasing price. 
 * \author Josh Lurz
 */  
-   template <>
-   struct greater<SavePoint*>
+   struct LesserPrice : public std::binary_function<SavePoint*,SavePoint*,bool>
    {
       //! Operator which performs comparison. 
       bool operator()( const SavePoint* lhs, const SavePoint* rhs ) const
       {   
-         return lhs->getPrice() > rhs->getPrice();
+         return lhs->getPrice() < rhs->getPrice();
       }
    };
-}
+
+   private:
+      double price;
+      double demand;
+      double supply;
+};
+
+
 #endif // _SAVE_POINT_H_

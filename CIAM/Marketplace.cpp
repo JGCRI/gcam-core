@@ -789,7 +789,7 @@ void Marketplace::findAndPrintSD( vector<Market*>& unsolved, const int period ) 
    }
 
    // Sort the vector so the worst markets are first and remove the rest.
-   sort( unsolved.begin(), unsolved.end(), std::greater<Market*>() );
+   sort( unsolved.begin(), unsolved.end(), Market::greaterRelativeExcessDemand() );
 
    // Truncate vector if neccessary.
    if( static_cast<int>( unsolved.size() ) > numMarketsToFindSD ) { 

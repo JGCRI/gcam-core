@@ -27,16 +27,16 @@ class Logger;
 class Market
 {
 public:
-
+   
    Market( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
    virtual ~Market();
-
+   
    void toDebugXML( const int period, std::ostream& out ) const;
    virtual void derivedToDebugXML( std::ostream& out ) const;
    void addRegion( const std::string& regionNameIn );
    const std::vector<std::string>& getContainedRegions();
    virtual void setCompanionMarketPointer( Market* pointerIn );
-
+   
    virtual void initPrice();
    void nullPrice();
    virtual void setPrice( const double priceIn );
@@ -47,7 +47,7 @@ public:
    void restorePrice();
    double getChangeInPrice() const;
    double getLogChangeInPrice( const double SMALL_NUM ) const;
-
+   
    void nullDemand();
    void setRawDemand( const double value );
    virtual void setDemand( const double demandIn );
@@ -58,7 +58,7 @@ public:
    double getLogDemand() const;
    double getChangeInDemand() const;
    double getLogChangeInDemand( const double SMALL_NUM ) const;
-
+   
    virtual void nullSupply();
    double getRawSupply() const;
    void setRawSupply( const double supplyIn );
@@ -76,7 +76,7 @@ public:
    void calcLogExcessDemand( const double SMALL_NUM );
    double getLogExcessDemand() const;
    double getRelativeExcessDemand() const;
-
+   
    std::string getName() const;
    std::string getRegionName() const;
    std::string getGoodName() const;
@@ -92,26 +92,40 @@ public:
    void clearSDPoints();
    void print( std::ostream& out ) const;
    void printSupplyDemandDebuggingCurves( Logger* sdLog );
-protected:
+   
+   /*!
+   * \brief Binary function used to order Market* pointers by decreasing relative excess demand. 
+   * \author Josh Lurz
+   */   
+   struct greaterRelativeExcessDemand : public std::binary_function<Market*, Market*, bool>
+   {
+      //! Operator which performs comparison. 
+      bool operator()( const Market* lhs, const Market* rhs ) const
+      {   
+         return lhs->getRelativeExcessDemand() > rhs->getRelativeExcessDemand();
+      }
+   };
 
-   std::string good;  //!< market good or fuel
-	std::string region;  //!< market region
-	bool solveMarket; //!< Toggle for markets that should be solved
-	int period; //!< Model period
-	double price;  //!< market price
-	double storedPrice;  //!< store market price
-	double demand; //!<demand for market solution
-	double storedDemand; //!< store previous demand
-	double supply; //!< supply for market solution
-	double storedSupply; //!< store previous supply
-	double excessDemand; //!< excess demand for each market
-	double logOfExcessDemand; //!< log of excess demand for each market
-	double storedExcessDemand; //!< store excess demand
-	double derivativeOfExcessDemand; //!< derivative of excess demand
-	double logOfDemand; //!< log of demand for each market
-	double logOfSupply; //!< log of supply for each market
-   std::vector <std::string> containedRegionNames; //! Vector of names of all regions within this vector.
-   std::vector< SavePoint* > sdPoints; //! Save SD points used for print Supply-Demand curves.
+   protected:
+      
+      std::string good;  //!< market good or fuel
+      std::string region;  //!< market region
+      bool solveMarket; //!< Toggle for markets that should be solved
+      int period; //!< Model period
+      double price;  //!< market price
+      double storedPrice;  //!< store market price
+      double demand; //!<demand for market solution
+      double storedDemand; //!< store previous demand
+      double supply; //!< supply for market solution
+      double storedSupply; //!< store previous supply
+      double excessDemand; //!< excess demand for each market
+      double logOfExcessDemand; //!< log of excess demand for each market
+      double storedExcessDemand; //!< store excess demand
+      double derivativeOfExcessDemand; //!< derivative of excess demand
+      double logOfDemand; //!< log of demand for each market
+      double logOfSupply; //!< log of supply for each market
+      std::vector <std::string> containedRegionNames; //! Vector of names of all regions within this vector.
+      std::vector< SavePoint* > sdPoints; //! Save SD points used for print Supply-Demand curves.
 };
 
 class DemandMarket;
@@ -135,7 +149,7 @@ public:
    virtual double getSupply() const;
    virtual void setDemand( const double demandIn );
    virtual double getDemand() const;
-
+   
 private:
    Market* demandMarketPointer; //!< A pointer to the companion DemandMarket
    int priceMultiplier; //!< Price Multiplier.
@@ -190,21 +204,4 @@ public:
    virtual void setPriceToLast( const double lastPriceIn );
 };
 
-namespace std {
-
-/*! \ingroup CIAM
-* \brief Specialization of the std::greater struct on Market pointers to allow sorting of markets by
-* worst excess demand.
-* \author Josh Lurz
-*/   
-    template <>
-    struct greater<Market*>
-    {
-       //! Operator which performs comparison. 
-      bool operator()( const Market* lhs, const Market* rhs ) const
-        {   
-               return lhs->getRelativeExcessDemand() > rhs->getRelativeExcessDemand();
-                 }
-        };
-}
 #endif // _MARKET_H_
