@@ -35,14 +35,15 @@ private:
 	std::vector<double> laborProdGrowthRate; //!< labor productivity growth rate
 	std::vector<double> laborForceParticipationPercent; //!< labor force participation percent
 	std::vector<double> laborForce; //!< actual labor force
-	std::vector<double> gdpValue; //!< approximate regional gross domestic product in constant dollars, not adjusted for energy price
+	std::vector<double> gdpValue; //!< approximate regional gross domestic product in constant dollars, not adjusted for energy price for this period
 	std::vector<double> gdpPerCapita; //!< regional gross domestic product per capita in constant dollars ($)
 	std::vector<double> gdpValueAdjusted; //!< regional gross domestic product adjusted for energy price feedback
-	std::vector<double> gdpValueNotAdjusted; //!< regional gross domestic product without any adjustments for energy price feedback
-	std::vector<double> gdpPerCapitaNotAdjusted; //!< regional GDP per cap without any adjustments for energy price feedback
+	std::vector<double> gdpValueNotAdjusted; //!< regional gross domestic product without any adjustments for energy price feedback in any period
+	std::vector<double> gdpPerCapitaNotAdjusted; //!< regional GDP per cap without any adjustments for energy price feedback in any period
 	std::vector<double> gdpValueAdjustedPPP; //!< regional adjusted GDP in PPP terms
 	std::vector<double> gdpPerCapitaAdjusted; //!< regional gross domestic product per capita in constant dollars ($)
 	std::vector<double> gdpPerCapitaAdjustedPPP; //!< regional gross domestic product per capita in constant dollars ($)
+	std::vector<double> gdpPerCapitaApproxPPP; //!< approxlimate regional GDP per capita PPP terms (before energy price adjustment)
 	std::vector<bool> gdpAdjustedFlag; //!< flag to tell if GDPs have been adjusted yet
 	std::vector<double> calibrationGDPs; //!< Calibration values for GDP (constant dollars)
 	double baseGDP; //!< Base-year value (constant dollars) for regional GDP
@@ -52,7 +53,8 @@ private:
 	bool constRatio; //!< Flag to turn on dynamic ratio of PPP to Market GDP
 	static const std::string XML_NAME; //!< node name for toXML methods
 
-	void calculatePPP( const int period,const double marketGDPperCap ); // function to calculate PPP values
+	double calculatePPPPerCap( const int period,const double marketGDPperCap ); // function to calculate PPP values
+    double getPPPMERRatio( const int period, const double marketGDPperCap ); // function to calculate PPP/MER ratio
 
 public:
 	GDP();
@@ -83,7 +85,7 @@ public:
 	double getBestScaledGDPperCap( const int period ) const;
     double getGDPNotAdjusted( const int period ) const;
     double getGDPPerCapitaNotAdjusted( const int period ) const;
-
+    double getApproxPPPperCap( const int period ) const;
  };
 
 #endif // _GDP_H_

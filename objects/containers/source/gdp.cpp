@@ -45,6 +45,7 @@ GDP::GDP() {
 	gdpValueAdjusted.resize( maxper );
 	gdpPerCapitaAdjusted.resize( maxper );
 	gdpPerCapitaAdjustedPPP.resize( maxper );
+    gdpPerCapitaApproxPPP.resize( maxper );
 	gdpAdjustedFlag.resize( maxper );
 	calibrationGDPs.resize( maxper );
     gdpValueNotAdjusted.resize( maxper );
@@ -376,6 +377,10 @@ void GDP::initialGDPcalc( const int period, const double population ) {
    // Temporary values so that if requested a real value is returned (with error warning)
     gdpPerCapitaAdjusted[ period ] = gdpPerCapita[ period ]; 
     gdpPerCapitaAdjustedPPP[ period ] = gdpValue[ period ] / population;
+    
+    // Determine approximate PPP-based GDP per capita
+    gdpPerCapitaApproxPPP[ period ] = calculatePPPPerCap( period, gdpPerCapita[ period ] );
+
 }
 
 /*! Adjust regional gdp for energy service price effect
@@ -387,22 +392,41 @@ void GDP::initialGDPcalc( const int period, const double population ) {
 * \param priceRatio Energy service price ratio
 */
 void GDP::adjustGDP( const int period, const double priceRatio ) {
-	const Modeltime* modeltime = scenario->getModeltime();
+    const Modeltime* modeltime = scenario->getModeltime();
 
-	if ( period > modeltime->getyr_to_per(1990) ) {
-		// adjust gdp using energy cost changes and energy to gdp feedback elasticity
-		try {
-			gdpValueAdjusted[ period ] = gdpValue[ period ]*pow( priceRatio, EnergyGDPElas );
-			gdpPerCapitaAdjusted[ period ] = gdpPerCapita[ period ] * gdpValueAdjusted[ period ] / gdpValue[ period ];
-			gdpAdjustedFlag[ period ] = true;
-		} catch(...) {
-			cerr << "Error calculating gdpAdj in gdp.adjustGDP()"<<endl;
-		}
-   }
-   calculatePPP( period, gdpPerCapitaAdjusted[ period ]);
+    if ( period > modeltime->getyr_to_per(1990) ) {
+        // adjust gdp using energy cost changes and energy to gdp feedback elasticity
+        gdpValueAdjusted[ period ] = gdpValue[ period ]*pow( priceRatio, EnergyGDPElas );
+        if ( !util::isValidNumber( gdpValueAdjusted[ period ] ) ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+			mainLog << "Error calculating gdpAdj in gdp.adjustGDP(). " << endl;
+            
+            // Reset value so as not to propogate error further.
+            gdpValueAdjusted[ period ]  = gdpValue[ period ];
+        }
+        gdpPerCapitaAdjusted[ period ] = gdpPerCapita[ period ] * gdpValueAdjusted[ period ] / gdpValue[ period ];
+        gdpAdjustedFlag[ period ] = true;
+    }
+    gdpPerCapitaAdjustedPPP[ period ] = calculatePPPPerCap( period, gdpPerCapitaAdjusted[ period ] );
 }
 
 /*! Calculate GDP on a PPP basis
+* 
+* This uses the conversion factor from getPPPMERRatio to convert Market Exchange Rate basis GDP values into PPP values
+*
+* \author Steve Smith
+* \param period Model time period
+* \param marketGDPperCapAdj Adjusted GDP per capita (market basis)
+*/
+double GDP::calculatePPPPerCap( const int period, const double marketGDPperCap ) {
+    
+    return getPPPMERRatio( period, marketGDPperCap ) * marketGDPperCap;
+
+}
+
+
+/*! Return the ratio of PPP to MER GDP
 * 
 * This routine performs a logarithmic conversion between market exchange rate (MER) and PPP based GDP. 
 * This conversion simulates the process of a developing economy transforming to a market economy where
@@ -413,41 +437,47 @@ void GDP::adjustGDP( const int period, const double priceRatio ) {
 * after which values are equal.  
 * See Smith et al. (2004), "Future SO2 Emissions" paper for a full description of the conversion.
 *
+* NOTE, this routine uses the value passed in for "marketGDPperCap" to calculate the conversion. 
+* In this way the same routine can be used to calculate both the approximate PPP and the exact PPP
+* 
 * \author Steve Smith
 * \param period Model time period
-* \param marketGDPperCapAdj Adjusted GDP per capita (market basis)
 */
-void GDP::calculatePPP( const int period, const double marketGDPperCapAdj ) {
-	const Modeltime* modeltime = scenario->getModeltime();
+double GDP::getPPPMERRatio( const int period, const double marketGDPperCap ) {
+    const Modeltime* modeltime = scenario->getModeltime();
 	const double CROSSOVER_POINT = 15.0; // Point at which PPP and Market values are equal ($15,000 per capita)
  
+    double conversionFactor;
+    
 	// Don't do variable conversion if turned off for this region or if is before conversion data exist (before 1990)
    // Also don't do conversion is PPPConversionFact is < 1 since this is not defined!
 	if ( constRatio || ( period < modeltime->getyr_to_per( BASE_PPP_YEAR ) || ( PPPConversionFact < 1 ) ) ) {
-		gdpPerCapitaAdjustedPPP[ period ] = PPPConversionFact * marketGDPperCapAdj ;
+		conversionFactor = PPPConversionFact;
 	} else {
 		// Only calculate this parameter in 1990 since won't change after that
 		if  ( period == modeltime->getyr_to_per( BASE_PPP_YEAR ) )  {
 			try { 
-				PPPDelta = log( PPPConversionFact ) / log( marketGDPperCapAdj / CROSSOVER_POINT );
+				PPPDelta = log( PPPConversionFact ) / log( marketGDPperCap / CROSSOVER_POINT );
 			} catch(...) {
 				cerr << "Error calculating PPPDelta. "<< "PPPConversionFact = "<< PPPConversionFact;
-				cerr << "; marketGDPperCapAdj = "<< marketGDPperCapAdj << endl;
+				cerr << "; marketGDPperCap = "<< marketGDPperCap << endl;
 			}
 		}
 
 		// Now do the conversion. 
-		if ( marketGDPperCapAdj > CROSSOVER_POINT ) { // If GDP/cap is > crossover point then set equal.
-			gdpPerCapitaAdjustedPPP[ period ] = marketGDPperCapAdj ;
+		if ( marketGDPperCap > CROSSOVER_POINT ) { // If GDP/cap is > crossover point then set equal.
+			conversionFactor = 1.0;
 		} else {
          try {
-            double conversionFact =  pow( marketGDPperCapAdj / CROSSOVER_POINT , PPPDelta );
-            gdpPerCapitaAdjustedPPP[ period ] = marketGDPperCapAdj * conversionFact;
+            conversionFactor =  pow( marketGDPperCap / CROSSOVER_POINT , PPPDelta );
          } catch(...) {
-            cerr << "Error calculating PPP basis GDP in gdp.calculatePPP()" << endl;
+            conversionFactor = 1.0;
+            cerr << "Error calculating PPP basis GDP in gdp.calculatePPPPerCap()" << endl;
          }
       }
 	}
+    
+    return conversionFactor;
 }
 
 /*! Return approximate GDP per capita scaled to base year
@@ -462,6 +492,18 @@ double GDP::getApproxScaledGDPperCap( const int period ) const {
 	const Modeltime* modeltime = scenario->getModeltime();
 	const int baseYear = modeltime->getstartyr();
 	return gdpPerCapita[ period ] / gdpPerCapita[ modeltime->getyr_to_per( baseYear )  ];
+}
+
+/*! Return approximate PPP per capita
+* 
+* This routine should be used only in the case where PPP-based GDP per capita is needed before energy prices are available.
+*
+* \author Steve Smith
+* \param period Model time period
+*/
+double GDP::getApproxPPPperCap( const int period ) const {
+
+	return gdpPerCapitaApproxPPP[ period ];
 }
 
 /*! Return approximate GDP scaled to base year
