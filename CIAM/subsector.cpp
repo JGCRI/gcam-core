@@ -115,7 +115,12 @@ void subsector::XMLParse( const DOMNode* node )
 			caplim.push_back( XMLHelper<double>::getValue( curr ) );
 		}
 		else if( nodeName == "sharewt" ){
-			shrwts.push_back( XMLHelper<double>::getValue( curr ) );
+			if(name=="wind") {
+				shrwts.push_back(0.001);
+			}
+			else {
+				shrwts.push_back( XMLHelper<double>::getValue( curr ) );
+			}
 		}
 
 		else if( nodeName == "logitexp" ){
@@ -385,12 +390,12 @@ void subsector::norm_share( const double sum, const int per) {
 //! call technology production, only exogenously driven technology gives an output
 /*! Since the calls below set output, this call must be done before
     calls to technology production with non-zero demand . g*/
-double subsector::exog_supply( const int per ) {
+double subsector::exog_supply( const string& regionName, const string& prodName, const int per ) {
 	double subsecdmd = 0; // no subsector demand
 	double tprod=0;
 	for (int i=0;i<notech;i++) {
 		// calculate technology output and fuel input from subsector output
-		techs[i][per]->production(subsecdmd,per);
+		techs[i][per]->production(regionName,prodName,subsecdmd,per);
 		tprod += techs[i][per]->showoutput();
 	}
 	return tprod;
@@ -452,7 +457,7 @@ void subsector::adjShares( const double dmd, double varSectorSharesTot, const do
 /* Demand from the "dmd" parameter (could be energy or energy service) is passed to technologies.
     This is then shared out at the technology level.
     See explanation for sector::setoutput. */
-void subsector::setoutput( const string& regionName, const double dmd, const int per) {
+void subsector::setoutput( const string& regionName, const string& prodName, const double dmd, const int per) {
 	string goodName;
 	int i=0;
 	string tname; // temporary string
@@ -468,7 +473,7 @@ void subsector::setoutput( const string& regionName, const double dmd, const int
 		tinput = techs[i][per]->showinput();
 
 		// calculate technology output and fuel input from subsector output
-		techs[i][per]->production(subsecdmd,per);
+		techs[i][per]->production(regionName,prodName,subsecdmd,per);
 
 		// total energy input into subsector, must call after tech production
 		input[per] += techs[i][per]->showinput();
@@ -487,6 +492,7 @@ void subsector::sumoutput( const int per ) {
 	}
 }
 
+/*
 //! set supply subsector total output and technology output
 double subsector::supply( const string& regionName, const int per ) {	
 	double dmd=0;
@@ -496,12 +502,12 @@ double subsector::supply( const string& regionName, const int per ) {
 	// this demand does not account for simultaneity
 
 	// this function pertains to the same subsector
-	setoutput( regionName, dmd, per);
+	setoutput( regionName, name, dmd, per);
 	sumoutput(per);
 
 	return dmd;
 }
-
+*/
 //! write subsector info to screen
 void subsector::show_subsec() const {
 	int i=0;

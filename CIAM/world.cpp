@@ -228,7 +228,6 @@ void World::calc(int per)
 		region[i]->addghgtax(per);
 		// determine supply of primary resources
 		region[i]->rscsupply(per);
-		//sdfile<<"\n"; // supply & demand info.
 		// determine prices of refined fuels and electricity
 		region[i]->finalsupplyprc(per);
 		// calculate enduse service price
@@ -237,29 +236,11 @@ void World::calc(int per)
 		region[i]->adjust_gnp(per);
 		// determine end-use demand for energy and other goods
 		region[i]->endusedemand(per);
-		//sdfile<<"\n"; // supply & demand info.
 		// determine supply of final energy and other goods based on demand
 		region[i]->finalsupply(per);
 		
 		if( conf->getBool( "agSectorActive" ) ){
 			region[i]->calcAgSector(per);
-		}
-		
-		// calculate GHG emissions for region by technology
-		region[i]->emission(per);
-		// set regional GHG emissions as market demand
-		region[i]->setghgdemand(per);
-		
-		// Optional routine to check if prices have any dependancies. Compare outputs
-		// to see if they have changed in-between calls. Haven't yet, could automate this
-		// if it turns out to be a problem. Probably good idea to check if model inputs
-		// are significantly re-structured.
-		const int check = 0;
-		if (check==1 && per == 7) {
-			// vector<double> sectorprice
-			bugoutfile << "1st,"; marketplace.prices_to_bugout(per);
-			region[i]->finalsupplyprc(per);
-			bugoutfile << "2nd,"; marketplace.prices_to_bugout(per);
 		}
 	}	
 }
@@ -269,6 +250,7 @@ void World::calc(int per)
 void World::updateSummary( int per )
 {
 	for (int i=0;i<noreg;i++) {
+		region[i]->emission(per);
 		region[i]->updateSummary(per);
 		region[i]->calcEmissFuel(per);
 	}

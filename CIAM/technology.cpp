@@ -363,9 +363,11 @@ void technology::adjShares(double subsecdmd, double totalFixedSupply, double var
 }
 
 //! calculates fuel input and technology output
-void technology::production(double dmd,int per) 
+void technology::production(const string& regionName,const string& prodName,
+							double dmd,const int per) 
 {
 	string hydro = "hydro";
+	
 	// dmd is total subsector demand
 	if(name != hydro) {
 		output = share * dmd; // use share to get output for each technology
@@ -390,6 +392,13 @@ void technology::production(double dmd,int per)
 	// carbontax is null for technologies that do not consume fossil fuels
 	// input(EJ), carbontax(90$/GJ), carbontaxpaid(90$Mil)
 	carbontaxpaid = input*carbontaxgj*1e+3;
+	
+	// calculate emissions for each gas after setting input and output amounts
+	for (int i=0; i<ghg.size(); i++) {
+		ghg[i]->calc_emiss(fuelname,input,prodName,output);
+		// set emissions as demand side of gas market
+		marketplace.setdemand(ghg[i]->getname(),regionName,ghg[i]->getemission(),per);		
+	}
 }
 
 //! calculate GHG emissions from technology use
@@ -399,7 +408,7 @@ void technology::emission( const string prodname ) {
 	emissmap.clear(); // clear emissions map
 	emfuelmap.clear(); // clear emissions map
 	for (int i=0; i<ghg.size(); i++) {
-		ghg[i]->calc_emiss(fuelname,input,prodname,output);
+		//ghg[i]->calc_emiss(fuelname,input,prodname,output);
 		// emissions by gas name only
 		emissmap[ghg[i]->getname()] = ghg[i]->getemission();
 		// emissions by gas and fuel names combined

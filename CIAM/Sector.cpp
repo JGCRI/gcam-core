@@ -270,14 +270,14 @@ double sector::showprice(int per)
     later at the sector level (in region via supplysector[j].sumoutput(per))
     to equal the total sector output.
 */
-void sector::setoutput( const string& regionName,double dmd, int per)
+void sector::setoutput(const string& regionName,double dmd, int per)
 {
     int i;
 	carbontaxpaid[per] = 0; // initialize carbon taxes paid
  
 	for (i=0;i<nosubsec;i++) {
 		// set subsector output from sector demand
-		subsec[i]->setoutput( regionName,dmd,per);
+		subsec[i]->setoutput(regionName,name,dmd,per);
 		subsec[i]->sumoutput(per);
 		carbontaxpaid[per] += subsec[i]->showcarbontaxpaid(per);
 	}
@@ -319,7 +319,7 @@ void sector::supply( const string regionName, const int per)
     // Determine total fixed production and total var shares
     // Need to change the exog_supply function once new, general fixed supply method is available
 	for (i=0;i<nosubsec;i++) {
-        fixedSupply = subsec[i]->exog_supply(per);
+        fixedSupply = subsec[i]->exog_supply(regionName,name,per);
         if (fixedSupply == 0) { 
 			varShareTot += subsec[i]->showshare(per);
 		}
@@ -336,7 +336,7 @@ void sector::supply( const string regionName, const int per)
                 
 	for (i=0;i<nosubsec;i++) {
 		// set subsector output from sector demand
-		subsec[i]->setoutput( regionName, mrkdmd, per ); // CHANGED JPL
+		subsec[i]->setoutput( regionName, name, mrkdmd, per ); // CHANGED JPL
 		subsec[i]->sumoutput( per );
 		carbontaxpaid[per] += subsec[i]->showcarbontaxpaid( per );
 	}
@@ -969,7 +969,7 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
 
 	set_ser_dmd(ser_dmd_adj,per); // sets the output
 	// sets subsector outputs, technology outputs, and market demands
-	setoutput( regionName,ser_dmd_adj,per);
+	setoutput(regionName,ser_dmd_adj,per);
 	sumoutput(per);
 }
 

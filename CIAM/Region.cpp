@@ -923,12 +923,10 @@ void Region::setghgdemand(int per)
 		if(ghgname == "CO2") {
 			ghgemiss = summary[per].get_emissmap_second("CO2");
 			ghgmarket[i]->setEmission(ghgemiss,per);
-			marketplace.setdemand(ghgname, name ,ghgemiss,per);		
 		}
 		else if(ghgname == "CH4") {
 			ghgemiss = summary[per].get_emissmap_second("CH4");
 			ghgmarket[i]->setEmission(ghgemiss,per);
-			marketplace.setdemand(ghgname, name, ghgemiss, per );		
 		}
 	}
 }	

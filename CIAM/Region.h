@@ -46,7 +46,7 @@ private:
 	vector<sector*> supplysector; //! array of pointers to supply sector objects
 	vector<demsector*> demandsector; //! array of pointers to demand sector objects
 	AgSector* agSector; //! Agricultural sector.
-	vector<ghg_mrk*> ghgmarket; //! array of pointers to ghg market objects
+	vector<ghg_mrk*> ghgmarket; //! array of pointers to ghg market objects, container for constraints and emissions
 	vector<double> i_elas; //! income elasticity
 	vector<double> gnp_dol; //! regional gross national product
 	vector<double> gnp; //! normalized regional gross national product

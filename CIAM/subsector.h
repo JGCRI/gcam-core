@@ -72,10 +72,10 @@ public:
 	// maw compute tech shares within subsector in seperate method
 	void calc_tech_shares ( const string& regionName, const int period );
 	// sets demand to output and output
-	void setoutput( const string& regionName, const double dmd, const int period ); 
+	void setoutput( const string& regionName, const string& prodName, const double dmd, const int period ); 
 	void sumoutput( const int period );
-	double supply( const string& regionName, const int period ); // calculates supply by technology
-	double exog_supply( const int period ); // calculates exogenous supply
+	//double supply( const string& regionName, const int period ); // calculates supply by technology
+	double exog_supply( const string& regionName, const string& prodName, const int period ); // calculates exogenous supply
 	void show_subsec() const;
 	double showshare( const int period ) const;
 	void showtechs( const int period, const string ofile ) const;

@@ -83,8 +83,8 @@ public:
 	// uses logit function to calculate technology share
 	void calc_share( const string regionName, const int per); 
 	void norm_share(double sum); // normalize technology share
-	//void production(double dmd); // calculates fuel input and technology output
-	virtual void production(double dmd,int per); // calculates fuel input and technology output
+	 // calculates fuel input and technology output
+	virtual void production(const string& regionName,const string& prodName,double dmd,const int per);
 	void emission( const string prodname); // calculates GHG emissions from technology
 	void indemission(void); // calculates indirect GHG emissions from technology use
 	void printTech( const string& outFile = "" ) const; // write technology information to file or screen
