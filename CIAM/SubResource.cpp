@@ -114,7 +114,7 @@ void SubResource::XMLParse( const DOMNode* node )
             tempGrade = new Grade();
             tempGrade->XMLParse( curr );
             grade.push_back( tempGrade );
-            gradeNameMap[ tempGrade->getName() ] = grade.size() - 1;
+            gradeNameMap[ tempGrade->getName() ] = static_cast<int>( grade.size() ) - 1;
          }
       }
       else if( nodeName == "annualprod" ){
@@ -149,7 +149,7 @@ void SubResource::XMLParse( const DOMNode* node )
 
 //! Complete initialization.
 void SubResource::completeInit() {
-   nograde = grade.size(); // number of grades for each subresource   
+   nograde = static_cast<int>( grade.size() ); // number of grades for each subresource   
    initializeResource(); // Do any initializations needed for this resource
 }
 

@@ -164,7 +164,7 @@ void subsector::XMLParse( const DOMNode* node ) {
                 childNodeList = curr->getChildNodes();
                 
                 // loop through technologies children.
-                for( int j = 0; j < childNodeList->getLength(); j++ ){
+                for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
                     
                     currChild = childNodeList->item( j );
                     childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
@@ -184,7 +184,7 @@ void subsector::XMLParse( const DOMNode* node ) {
                 childNodeList = curr->getChildNodes();
                 
                 // loop through technologies children.
-                for( int j = 0; j < childNodeList->getLength(); j++ ){
+                for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
                     
                     currChild = childNodeList->item( j );
                     childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
@@ -210,7 +210,7 @@ void subsector::XMLParse( const DOMNode* node ) {
                     }
                 }
                 techs.push_back( techVec );
-                techNameMap[ techVec[ 0 ]->getName() ] = techs.size() - 1;
+                techNameMap[ techVec[ 0 ]->getName() ] = static_cast<int>( techs.size() ) - 1;
                 techVec.clear();
                 techVec.resize( modeltime->getmaxper(), 0 );
             }
@@ -233,7 +233,7 @@ void subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr
 //! Complete the initialization.
 void subsector::completeInit() {
     // Initialize any arrays that have non-zero default value
-    notech = techs.size();
+    notech = static_cast<int>( techs.size() );
     
     for ( vector< vector< technology* > >::iterator outerIter = techs.begin(); outerIter != techs.end(); outerIter++ ) {
         for( vector< technology* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
