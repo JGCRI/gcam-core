@@ -9,6 +9,7 @@
 
 #include "util/base/include/definitions.h"
 #include "util/base/include/summary.h"
+#include "util/base/include/util.h"
 #include "containers/include/world.h"
 #include "containers/include/scenario.h"
 #include <vector>
@@ -17,7 +18,11 @@ using namespace std;
 
 extern Scenario* scenario;
 
+
 //! Default constructor
+/*! \todo This class needs to be documented.
+*   \todo Redesign using a map of maps or other improved datastructure.
+*/
 Summary::Summary() {
 }
 
@@ -177,34 +182,34 @@ void Summary::clearSequesteredAmountMap() {
 }
 
 double Summary::get_fmap_second( const string& name ) const {
-	return ( fuelcons.find( name ) )->second;
+    return util::searchForValue( fuelcons, name );
 }
 
 double Summary::get_pemap_second( const string& name ) const {
-	return ( pecons.find( name ) )->second;
+	return util::searchForValue( pecons, name );
 }
 
 double Summary::get_petrmap_second( const string& name ) const {
-	return ( petrade.find( name ) )->second;
+	return util::searchForValue( petrade, name );
 }
 
 double Summary::get_peprodmap_second( const string& name ) const {
-	return ( peprod.find( name ) )->second;
+	return util::searchForValue( peprod, name );
 }
 
 double Summary::get_emissmap_second( const string& name ) const {
-	return ( emission.find( name ) )->second;
+	return util::searchForValue( emission,name );
 }
 
 //! return the sequestered amount which is second part of the map
 double Summary::getSequesteredAmount( const string& name ) const {
-	return ( sequesteredAmount.find( name ) )->second;
+	return util::searchForValue( sequesteredAmount, name );
 }
 
 double Summary::get_emissfuelmap_second( const string& name ) const {
-	return ( emissfuel.find( name ) )->second;
+	return util::searchForValue( emissfuel, name );
 }
 
 double Summary::get_emindmap_second( const string& name ) const {
-	return ( emissind.find( name ) )->second;
+	return util::searchForValue( emissind, name );
 }
