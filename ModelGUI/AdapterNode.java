@@ -95,14 +95,14 @@ public class AdapterNode {
         Element kid;
         List children = node.getChildren();
         Iterator it = children.iterator();
-        int periodEncounters = 0;
+        //int periodEncounters = 0;
         while (it.hasNext()) {
             kid = (Element)it.next();
             if (nodeName.equals(kid.getName())) {
-                if (nodeName.equals("period") && periodEncounters < 8) {
+                /*if (nodeName.equals("period") && periodEncounters < 8) {
                     periodEncounters++;
                     continue;
-                }
+                }*/
                 if (attribVal.equals("") || attribVal.equals(kid.getAttributeValue("name"))) {
                     return new AdapterNode(kid);
                 }
@@ -147,6 +147,10 @@ public class AdapterNode {
     
     public int getIndex() {
         return levelIndex;
+    }
+    
+    public AdapterNode getParent() {
+        return new AdapterNode(node.getParent());
     }
     
     public String getText() {

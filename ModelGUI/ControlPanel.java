@@ -883,27 +883,66 @@ public class ControlPanel extends javax.swing.JFrame {
                         String lefterName = regionName + " " + currNode.toString();
                         String prevName;
                         
-                        if (attribVal.equals(DEFAULT_PLURAL_STRING)) attribVal = "";
-                        childNodes = currNode.getChildren(nodeName, attribVal);
-                        Iterator it = childNodes.iterator();
-                        while (it.hasNext()) {
-                            currNode = (AdapterNode)it.next();
-                            if (showNames) {
-                                values.addElement(currNode.getAttributeValue("name"));
-                            } else {
+                        //for nodes directly under period nodes                        
+                        int index1, index2; 
+                        //Vector newQueue = new Vector();
+                        index1 = lefterName.indexOf('<');
+                        index2 = lefterName.indexOf('>');
+                        if (lefterName.substring(index1+1, index2).equals("period")) {
+                            //get a list of all period nodes in that subtree
+                            AdapterNode parent = currNode.getParent();
+System.out.println("I think period's parent is: " + parent);
+                            childNodes = parent.getChildren("period", "");
+                            Iterator it = childNodes.iterator();
+                            while (it.hasNext()) {
+                                //for each period node, get the value of the "final node" under it, 
+                                //  remember the period node's year attribute
+                                parent = (AdapterNode)it.next();
+//System.out.println("I think the period node is: " + parent);
+                                currNode = parent.getChild(nodeName, "");
+                                //if (showNames) {
+                                //    values.addElement(currNode.getAttributeValue("name"));
+                                //} else {
                                 values.addElement(currNode);
-                                
-                                attribVal = currNode.getAttributeValue("year");
+System.out.println("Just added " + currNode);
+
+                                attribVal = parent.getAttributeValue("year");
                                 if (attribVal != null) {
                                     if (header.isEmpty()) header.addElement(attribVal);
                                     else if (!header.contains(attribVal)) header.addElement(attribVal);
                                 }
+                                //}
+                                lefterName = regionName + "< >";
+                                if (!lefter.isEmpty()) {
+                                    prevName = (String)lefter.lastElement();
+                                    if (!(prevName.equals(lefterName))) lefter.add(lefterName);
+                                } else lefter.add(lefterName);
                             }
-                            
-                            if (!lefter.isEmpty()) {
-                                prevName = (String)lefter.lastElement();
-                                if (!(prevName.equals(lefterName))) lefter.add(lefterName);
-                            } else lefter.add(lefterName);
+                           
+                        }
+                        else {
+                            if (attribVal.equals(DEFAULT_PLURAL_STRING)) attribVal = "";
+                            childNodes = currNode.getChildren(nodeName, attribVal);
+                            Iterator it = childNodes.iterator();
+                            while (it.hasNext()) {
+                                currNode = (AdapterNode)it.next();
+                                if (showNames) {
+                                    values.addElement(currNode.getAttributeValue("name"));
+                                } else {
+                                    values.addElement(currNode);
+
+                                    attribVal = currNode.getAttributeValue("year");
+                                    if (attribVal != null) {
+                                        if (header.isEmpty()) header.addElement(attribVal);
+                                        else if (!header.contains(attribVal)) header.addElement(attribVal);
+                                    }
+                                }
+
+                                if (!lefter.isEmpty()) {
+                                    prevName = (String)lefter.lastElement();
+                                    if (!(prevName.equals(lefterName))) lefter.add(lefterName);
+                                } else lefter.add(lefterName);
+                            }
                         }
                     } else {
                         if(attribVal.equals(DEFAULT_PLURAL_STRING)) {
