@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Josh Lurz (PNNL) -->
-<LoggerFactory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:\cvs\Code\EXE\LoggerFactory.xsd">
+<LoggerFactory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="LoggerFactory.xsd">
 	<Logger name="Basic" type="PlainTextLogger">
 		<FileName>Log.txt</FileName>
 		<printLogNest>1</printLogNest>
