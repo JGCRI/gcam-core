@@ -109,7 +109,9 @@ void Ghg::copy( const Ghg& other ){
     finalEmissCoef = other.finalEmissCoef;
     tau = other.tau;
     // Perform a deep copy on the GhgMac.
-    ghgMac.reset( other.ghgMac->clone() );
+    if( ghgMac.get() ){
+        ghgMac.reset( other.ghgMac->clone() );
+    }
 }
 
 //! Clone function which returns a deep copy of the Ghg.
