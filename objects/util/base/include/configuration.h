@@ -15,7 +15,7 @@
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <map>
-
+#include <list>
 class Tabs;
 
 /*! 
@@ -35,6 +35,17 @@ class Tabs;
 
 class Configuration {
 
+public:
+	static Configuration* getInstance();
+	~Configuration();
+	void XMLParse( const xercesc::DOMNode* tempnode );
+	void toDebugXML( std::ostream& out, Tabs* tabs ) const;
+	const std::string& getFile( const std::string& key, const std::string& defaultValue = "" ) const;
+	const std::string& getString( const std::string& key, const std::string& defaultValue = "" ) const;
+	bool getBool( const std::string& key, const bool defaultValue = false ) const;
+	int getInt( const std::string& key, const int defaultValue = 0 ) const;
+	double getDouble( const std::string& key, const double defaultValue = 0 ) const;
+    const std::list<std::string>& getScenarioComponents() const;
 private:
 	static bool confExists; //!< Flag which indicates if the instace has been created.
 	static Configuration* instance; //!< A pointer to the static singleton instance.
@@ -43,25 +54,15 @@ private:
 	std::map<std::string, bool> boolMap; //!< A map of the bools the program uses.
 	std::map<std::string, int> intMap;  //!< A map of the ints the program uses.
 	std::map<std::string, double> doubleMap;  //!< A map of the doubles the program uses.
-
+    std::list<std::string> scenarioComponents; //!< An ordered list of add-on files. 
 	Configuration();
 
 	//! Private undefined constructor to prevent a programmer from creating a second object.
 	Configuration( const Configuration& );
 
 	//! Private undefined assignment operator to prevent a programmer from creating a second object.
-	Configuration& operator= ( const Configuration& );
+	Configuration& operator=( const Configuration& );
 
-public:
-	static Configuration* getInstance();
-	~Configuration();
-	void XMLParse( const xercesc::DOMNode* tempnode );
-	void toDebugXML( std::ostream& out, Tabs* tabs ) const;
-	std::string getFile( const std::string& key, const std::string& defaultValue = "" ) const;
-	std::string getString( const std::string& key, const std::string& defaultValue = "" ) const;
-	bool getBool( const std::string& key, const bool defaultValue = false ) const;
-	int getInt( const std::string& key, const int defaultValue = 0 ) const;
-	double getDouble( const std::string& key, const double defaultValue = 0 ) const;
 
 };
 
