@@ -494,7 +494,7 @@ bool Region::isRegionOrderedCorrectly() const {
 /*! 
 * \brief Write datamembers to datastream in XML format. Calls XMLWriteElement function from the XMLHelper class for the actual writing.
 * \param out Output file in XML format.
-* \note 
+* \param tabs Tabs object used to track the number of tabs to print.
 * \ref faqitem1 
 */
 void Region::toInputXML( ostream& out, Tabs* tabs ) const {
@@ -580,11 +580,11 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
 
 /*! \brief Write datamembers to datastream in XML format for debugging purposes.  
 * Calls XMLWriteElement function from the XMLHelper class for the actual writing.
-*  Calls debug functions in other contained objects. 
+* Calls debug functions in other contained objects. 
 *
 * \param period Model time period
 * \param out Output file for debugging purposes in XML format
-*
+* \param tabs Tabs object used to track the number of tabs to print.
 */
 void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
@@ -810,7 +810,6 @@ void Region::calcGDP( const int period ){
 * without use of the energy price feedback.
 *
 * \author Steve Smith, Josh Lurz
-* \param period Model time period
 * \warning this will interfere with the normal gdp calculation if this is used after model calc starts
 * \todo check to see if this works with AgLU. Not sure about conversions.
 */
@@ -1733,7 +1732,7 @@ vector<string> Region::getSectorDependencies( const string& sectorName ) const {
 /*! \brief A function to print a csv file including the final sector ordering, and all sectors and their dependencies.
 * 
 * \author Josh Lurz
-* \param logger The to which to print the dependencies. 
+* \param aLog The to which to print the dependencies. 
 */
 void Region::printSectorDependencies( ILogger& aLog ) const {
     typedef CSupplySectorIterator CSupplySectorIterator;
@@ -1787,7 +1786,7 @@ void Region::setFixedTaxes( const std::string& policyName, const std::string& ma
 * containing a time period and an amount of gas emissions. These values are retrieved from the emissions.
 * \note The user is responsible for deallocating the memory in the returned Curve.
 * \author Josh Lurz
-* \param The name of the ghg to create a curve for.
+* \param ghgName The name of the ghg to create a curve for.
 * \return A Curve object representing ghg emissions quantity by time period.
 */
 const Curve* Region::getEmissionsQuantityCurve( const string& ghgName ) const {
@@ -1814,8 +1813,7 @@ const Curve* Region::getEmissionsQuantityCurve( const string& ghgName ) const {
 * containing a time period and the price gas emissions. These values are retrieved from the marketplace. 
 * \note The user is responsible for deallocating the memory in the returned Curve.
 * \author Josh Lurz
-* \param The name of the ghg to create a curve for.
-* \param The region to use to determine the market.
+* \param ghgName The name of the ghg to create a curve for.
 * \return A Curve object representing the price of ghg emissions by time period. 
 */
 const Curve* Region::getEmissionsPriceCurve( const string& ghgName ) const {

@@ -315,7 +315,7 @@ void Scenario::printSectorDependencies() const {
 * with each datapoint containing a time period and an amount of gas emissions.
 * \note The user is responsible for deallocating the memory in the returned Curves.
 * \author Josh Lurz
-* \param The name of the ghg to create a set of curves for.
+* \param ghgName The name of the ghg to create a set of curves for.
 * \return A vector of Curve objects representing ghg emissions quantity by time period by region.
 */
 const map<const string, const Curve*> Scenario::getEmissionsQuantityCurves( const string& ghgName ) const {
@@ -328,7 +328,7 @@ const map<const string, const Curve*> Scenario::getEmissionsQuantityCurves( cons
 * with each datapoint containing a time period and the price gas emissions. 
 * \note The user is responsible for deallocating the memory in the returned Curves.
 * \author Josh Lurz
-* \param The name of the ghg to create a set of curves for.
+* \param ghgName The name of the ghg to create a set of curves for.
 * \return A vector of Curve objects representing the price of ghg emissions by time period by Region. 
 */
 const map<const string,const Curve*> Scenario::getEmissionsPriceCurves( const string& ghgName ) const {

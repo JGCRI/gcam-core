@@ -35,7 +35,7 @@ public:
     const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
 	void XMLParse( const xercesc::DOMNode* node );
-	double findReduction( const std::string& region, const int period );
+	double findReduction( const std::string& regionName, const int period );
 	void toInputXML( std::ostream& out, Tabs* tabs ) const;
 	void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 private:

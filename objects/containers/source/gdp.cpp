@@ -339,6 +339,7 @@ void GDP::dbOutput( const string& regionName ) const {
 *
 * \author Steve Smith, Sonny Kim, Josh Lurz(?),
 * \param period Model time period
+* \param population Population for this period to use to initialize the GDP object.
 */
 void GDP::initialGDPcalc( const int period, const double population ) {
 
@@ -383,7 +384,7 @@ void GDP::initialGDPcalc( const int period, const double population ) {
 * 
 * \author Steve Smith, Sonny Kim, Josh Lurz(?),
 * \param period Model time period
-* \param priceratio Energy service price ratio
+* \param priceRatio Energy service price ratio
 */
 void GDP::adjustGDP( const int period, const double priceRatio ) {
 	const Modeltime* modeltime = scenario->getModeltime();

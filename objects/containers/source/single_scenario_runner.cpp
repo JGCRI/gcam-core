@@ -41,7 +41,7 @@ SingleScenarioRunner::~SingleScenarioRunner(){
 }
 
 /*! \brief Setup the Scenario to be run.
-* \detailed This function opens the various output files, reads in the base input file and the 
+* \details This function opens the various output files, reads in the base input file and the 
 * list of scenario components from the configuration file and passed in, and sets the name 
 * of the Scenario.
 * \param aTimer The timer used to print out the amount of time spent performing operations.
@@ -104,10 +104,10 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
 }
 
 /*! \brief Run a single Scenario.
-* \detailed This function completes the initialization and runs the Scenario.
+* \details This function completes the initialization and runs the Scenario.
 * \param aTimer The timer used to print out the amount of time spent performing operations.
 */
-bool SingleScenarioRunner::runScenario( Timer& timer ){
+bool SingleScenarioRunner::runScenario( Timer& aTimer ){
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Starting a model run." << endl;
@@ -119,9 +119,9 @@ bool SingleScenarioRunner::runScenario( Timer& timer ){
     bool success = mScenario->run();
 
     // Compute model run time.
-    timer.save();
+    aTimer.save();
     mainLog.setLevel( ILogger::DEBUG );
-    timer.print( mainLog, "Data Readin & Initial Model Run Time:" );
+    aTimer.print( mainLog, "Data Readin & Initial Model Run Time:" );
 
     // Return whether the scenario ran correctly. 
     return success;

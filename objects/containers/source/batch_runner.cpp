@@ -38,7 +38,7 @@ BatchRunner::~BatchRunner(){
 }
 
 /*! \brief Setup the batch runner.
-* \detailed Initialize the batch runner by parsing the XML batch configuration file. This function
+* \details Initialize the batch runner by parsing the XML batch configuration file. This function
 * does not initialize the individual runs.
 * \param aTimer The timer used to print out the amount of time spent performing operations.
 * \param aScenComponents A list of scenario add on files to read in, ignored by the BatchRunner.
@@ -56,7 +56,7 @@ bool BatchRunner::setupScenario( Timer& aTimer, const string aName, const list<s
 }
 
 /*! \brief Run the set of Scenarios as instructed by the batch configuration file.
-* \detailed This is the main function of the BatchRunner which determines all permutations
+* \details This is the main function of the BatchRunner which determines all permutations
 * of the ComponentSets and runs a Scenario for each. 
 * \param aTimer The timer used to print out the amount of time spent performing operations.
 * \todo Handle duplicate names. Print a warning at least.
@@ -134,7 +134,7 @@ void BatchRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
 }
 
 /*! \brief Helper function which runs a single scenario created by the BatchRunner.
-* \detailed This function expans the list of FileSets into a list of scenario components files
+* \details This function expans the list of FileSets into a list of scenario components files
 * to parse. The scenario name is created by combining the names of all the filesets with the name
 * read from the configruration file. The function selects the appropriate type of ScenarioRunner 
 * from the configuration file, and initializes it with the list of scenario components. 
@@ -184,7 +184,7 @@ bool BatchRunner::runSingleScenario( const Component aComponents, Timer& aTimer 
 }
 
 /*! \brief Function which parses the XML BatchRunner configuration file.
-* \detailed This function searches for base level XML tags and dispatches them
+* \details This function searches for base level XML tags and dispatches them
 * to the correct helper function to be parsed. Currently only parses "ComponentSet" tags.
 * \param aRoot Root node of the DOM tree.
 */
@@ -216,7 +216,7 @@ void BatchRunner::XMLParse( const DOMNode* aRoot ){
 }
 
 /*! \brief Helper function to parse a single scenario set element.
-* \detailed This function parses a single ComponentSet and adds it to the BatchRunner's list 
+* \details This function parses a single ComponentSet and adds it to the BatchRunner's list 
 * of ComponentSets. It dispatches any FileSets it finds to the XMLParseFileSet helper function.
 * \param aNode DOM node corresponding to the current ComponentSet.
 */
@@ -255,10 +255,10 @@ void BatchRunner::XMLParseComponentSet( const DOMNode* aNode ){
 }
 
 /*! \brief Helper function to parse a single FileSet element.
-* \detailed This function parses a single FileSet and adds it to the passed in ComponentSet's
+* \details This function parses a single FileSet and adds it to the passed in ComponentSet's
 * list of FileSets. 
 * \param aNode DOM node corresponding to the current FileSet.
-* \param aCurrComponentSet The ComponentSet to add this FileSet to.
+* \param aCurrComponent The ComponentSet to add this FileSet to.
 */
 void BatchRunner::XMLParseFileSet( const DOMNode* aNode, Component& aCurrComponent ){
     // assume we were passed a valid node.

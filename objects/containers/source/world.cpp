@@ -551,7 +551,7 @@ void World::setCalcCounter( CalcCounter* calcCounter ){
 
 /*! \brief Protected function which takes a listing of region names to calculate and returns a list
 * of region indexes to calculate. 
-* \detailed This function translates a passed in list of region names to solve to a vector of valid
+* \details This function translates a passed in list of region names to solve to a vector of valid
 * region numbers to solve. If passed an empty list, it will return the full list of region numbers to solve,
 * this is the default. It checks whether the region name is valid, but does not check for duplicates.
 * \param regionsToSolve A vector of region names to solve.

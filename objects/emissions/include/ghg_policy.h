@@ -28,7 +28,7 @@ class GHGPolicy {
 public:
     GHGPolicy( const std::string nameIn = "", const std::string unitIn = "", const std::string marketIn = "", const bool isFixedTaxIn = false );
     std::string getName() const;
-    void setMarket( const std::string& regname );
+    void setMarket( const std::string& regionName );
     void changePolicyToFixedTax( const std::string& regionName );
     void setFixedTaxes( const std::string& regionName, const std::vector<double>& taxes );
     void XMLParse( const xercesc::DOMNode* node );
