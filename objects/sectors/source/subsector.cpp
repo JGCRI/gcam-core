@@ -154,7 +154,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
             share[0] = basesharewt;
         }
         else if( nodeName == "scaleYear" ){
-            scaleYear = XMLHelper<double>::getValue( curr );
+            scaleYear = XMLHelper<int>::getValue( curr );
         }
 
         else if( nodeName == technology::getXMLNameStatic1D() ){
