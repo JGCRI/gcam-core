@@ -36,7 +36,7 @@ private:
 	//! The filestream to which data is written.
 	ofstream logFile;
 	
-	PlainTextLogger();
+	PlainTextLogger( const string& loggerName ="" );
 
 public:
 	virtual void open( const char[] = 0 );

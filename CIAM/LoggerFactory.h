@@ -12,15 +12,17 @@
 */
 
 #include "Definitions.h"
+#include <map>
 #include "Logger.h"
 
 using namespace std;
+using namespace xercesc;
 
 /*! 
 * \ingroup CIAM
 * \brief This is a factory class which is used to instantiate create loggers.
 *
-* The LoggerFactory class itself cannot be instantiated, the only method which may be used is getLogger()
+*
 *
 * \author Josh Lurz
 * \date $Date$
@@ -30,18 +32,23 @@ using namespace std;
 */
 
 class LoggerFactory {
-public:
-	//! Returns an instance of the Logger class selected in the Configuration file.
-	static Logger* getLogger();
 
-	//! Returns whether the Logger is complete and ready to be used.
-	static bool loggerIsReady();
+
+public:
+	//! Initialize the LoggerFactory
+	static void initialize( XercesDOMParser* parser );
+
+	//! Returns an instance of the Logger class selected in the Configuration file.
+	static Logger* getLogger( const string& loggerName );
 	
 	//! Resets its state and deletes the logger.
 	static void cleanUp();
+	
+	void toDebugXML( ostream& out ) const;
 
 private:
-	static Logger* logger; //!< Pointer to the contained logger class.
+	static map<string,Logger*> loggers; //!< Map of logger names to loggers.
+
 	static bool loggerCreated; //!< Flag which tells whether the logger has already been created.
 
 	//! Private constructor to prevent a programmer from creating a LoggerFactory.
@@ -52,7 +59,8 @@ private:
 
 	//! Private assignment operator to prevent a programmer from copying a LoggerFactory.
 	LoggerFactory& operator= ( const LoggerFactory& loggerFactoryIn ){ return *this; };
-
+	
+	static void XMLParse( const DOMNode* root );
 };
 
 #endif // _LOGGER_FACTORY_H_

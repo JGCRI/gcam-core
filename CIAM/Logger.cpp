@@ -4,10 +4,15 @@
 #include <iostream>
 #include <sstream>
 #include <cassert>
+#include <xercesc/util/XMLString.hpp>
+#include <xercesc/dom/DOM.hpp>
+
 #include "Logger.h"
 #include "Configuration.h"
+#include "xmlHelper.h"
 
 using namespace std;
+using namespace xercesc;
 
 //! Default Constructor
 PassToParentStreamBuf::PassToParentStreamBuf() {
@@ -38,37 +43,38 @@ void PassToParentStreamBuf::setParent( Logger* parentIn ) {
 }
 
 //! Constructor which reads in values from configuration file.
-Logger::Logger() : ostream( &underStream ) {
+Logger::Logger( const string& fileNameIn ) : ostream( &underStream ) {
 	
 	// Initialize all variables which are not set by Configuration values.
 	currentNestLevel = 0;
 	currentWarningLevel = DEBUG_LEVEL;
 	currentLine = 0;
-
-	// Get an instance of the Configuration class.
-	const Configuration* conf = Configuration::getInstance();
 	
 	// Set the understream's parent to this Logger.
 	underStream.setParent( this );
 
-	// Read in the configuration information from the Configuration file.
-	minLogWarningLevel = conf->getInt( "minLogWarningLevel" );
+	// Initialize the attributes to default values.
+	fileName = fileNameIn;
+
+	minLogWarningLevel = 0;
 	
-	logTabSize = conf->getInt( "logTabSize" );
+	minToScreenWarningLevel = 5;
+
+	logTabSize = 3;
 	
-	printLogNest = conf->getBool( "printLogNest" );
+	printLogNest = false;
 	
-	printLogWarningLevel = conf->getBool( "printLogWarningLevel" );
+	printLogWarningLevel = false;
 
-	printLogTimeStamp = conf->getBool( "printLogTimeStamp" );
+	printLogTimeStamp = false;
 
-	printLogDateStamp = conf->getBool( "printLogDateStamp" );
+	printLogDateStamp = false;
 
-	printLogLineNumber = conf->getBool( "printLogLineNumber" );
+	printLogLineNumber = false;
 
-	printLogFileName = conf->getBool( "printLogFileName" );
+	printLogFileName = false;
 
-	printLogFullPath = conf->getBool( "printLogFullPath" );
+	printLogFullPath = false;
 }
 
 //! Virtual destructor
@@ -115,7 +121,7 @@ int Logger::receiveCharFromUnderStream( int ch ) {
 }
 
 //! Get the current date as a string
-const string Logger::getDateString() const {
+const string Logger::getDateString() {
 	time_t currTime;
 	stringstream buffer;
 	string retString;
@@ -146,7 +152,7 @@ const string Logger::getDateString() const {
 }
 
 //! Get the current time as a string.
-const string Logger::getTimeString() const {
+const string Logger::getTimeString() {
 	time_t currTime;
 	stringstream buffer;
 	string retString;
@@ -177,7 +183,141 @@ const string Logger::getTimeString() const {
 }
 
 //! Shorten the full path into the file name.
-const string Logger::getFileNameFromPath( const string& fullPath ) const {
+const string Logger::getFileNameFromPath( const string& fullPath ) {
 	int position = fullPath.rfind( "\\" ); // find the last /. This may need modification for unix.
 	return fullPath.substr( position ); // return all characters past the last /.
+}
+
+void Logger::XMLParse( const DOMNode* node ) {
+	DOMNode* curr = 0;
+	DOMNodeList* nodeList;
+	string nodeName;
+
+	// assume we were passed a valid node.
+	assert( node );
+	
+	name = XMLHelper<string>::getAttrString( node, "name" );
+	type = XMLHelper<string>::getAttrString( node, "type" );
+	// get the children of the node.
+	nodeList = node->getChildNodes();
+
+	// loop through the children
+	for ( int i = 0; i < nodeList->getLength(); i++ ){
+		curr = nodeList->item( i );
+
+		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+		
+		if ( nodeName == "FileName" ){
+			fileName = XMLHelper<string>::getValueString( curr );
+		}
+		else if ( nodeName == "printLogNest" ) {
+			printLogNest = XMLHelper<bool>::getValue( curr );
+		}
+		else if ( nodeName == "printLogTimeStamp" ) {
+			printLogTimeStamp = XMLHelper<bool>::getValue( curr );
+		}
+		else if ( nodeName == "printLogDateStamp" ) {
+			printLogDateStamp = XMLHelper<bool>::getValue( curr );
+		}
+		else if ( nodeName == "printLogLineNumber" ) {
+			printLogLineNumber = XMLHelper<bool>::getValue( curr );
+		}
+		else if ( nodeName == "printLogWarningLevel" ) {
+			printLogWarningLevel = XMLHelper<bool>::getValue( curr );
+		}
+		else if ( nodeName == "printLogFileName" ) {
+			printLogFileName = XMLHelper<bool>::getValue( curr );
+		}
+		else if ( nodeName == "printLogFullPath" ) {
+			printLogFullPath = XMLHelper<bool>::getValue( curr );
+		}
+		else if ( nodeName == "minLogWarningLevel" ) {
+			minLogWarningLevel = XMLHelper<int>::getValue( curr );
+		}
+		else if ( nodeName == "minToScreenWarningLevel" ) {
+			minToScreenWarningLevel = XMLHelper<int>::getValue( curr );
+		}
+		else if ( nodeName == "logTabSize" ) {
+			logTabSize = XMLHelper<int>::getValue( curr );
+		}
+		else if ( nodeName == "headerMessage" ) {
+			headerMessage = XMLHelper<string>::getValueString( curr );
+		}
+	}
+}
+
+void Logger::toDebugXML( ostream& out ) const {
+	
+	// write out the root tag.
+	out << "<Logger name=\"" << name << "\" type=\"" << type << "\" >" << endl;
+
+	// increase the indent.
+	Tabs::increaseIndent();
+
+	XMLWriteElement( fileName, "fileName", out );
+	XMLWriteElement( minLogWarningLevel, "minLogWarningLevel", out );
+	XMLWriteElement( minToScreenWarningLevel, "minToScreenWarningLevel", out );
+	XMLWriteElement( logTabSize, "logTabSize", out );
+	XMLWriteElement( printLogNest, "printLogNest", out );
+	XMLWriteElement( printLogWarningLevel, "printLogWarningLevel", out );
+	XMLWriteElement( printLogTimeStamp, "printLogTimeStamp", out );
+	XMLWriteElement( printLogDateStamp, "printLogDateStamp", out );
+	XMLWriteElement( printLogLineNumber, "printLogLineNumber", out );
+	XMLWriteElement( printLogFileName, "printLogFileName", out );
+	XMLWriteElement( printLogFullPath, "printLogFullPath", out );
+
+	// decrease the indent.
+	Tabs::decreaseIndent();
+	
+	// write the closing tag.
+	Tabs::writeTabs( out );
+	out << "</Logger>" << endl;
+}
+
+//! Parses the header of a log file replacing special strings.
+void Logger::parseHeader( string& headerIn ) {
+	
+	static const basic_string <char>::size_type npos = -1;
+	int offset = 0;
+	int leftBracket = 0;
+	int rightBracket = 0;
+	string command;
+	string toReplaceString;
+	string replaceWithString;
+
+	// Loop through the string.
+	while( offset < headerIn.size() && offset != npos ){
+		
+		// Find the first left bracket.
+		leftBracket = headerIn.find_first_of( "{", offset );
+		offset = leftBracket;
+
+		// Exit if we do not find it.
+		if( leftBracket == npos ){
+			break;
+		}
+		
+		rightBracket = headerIn.find_first_of( "}", offset );
+		offset = rightBracket;
+
+		// Exit if we do not find it.
+		if( rightBracket == npos ){
+			break;
+		}
+
+		command = headerIn.substr( leftBracket + 1, rightBracket - leftBracket - 1 );
+		toReplaceString = command;
+
+		if( command == "date" ) {
+			replaceWithString = getDateString();
+		}
+		else if( command == "time" ) {
+			replaceWithString = getTimeString();
+		}
+		else {
+			continue;
+		}
+
+		headerIn.replace( leftBracket, rightBracket - leftBracket + 1, replaceWithString );
+	}
 }

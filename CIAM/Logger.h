@@ -16,8 +16,10 @@
 #include <fstream>
 #include <sstream>
 #include <streambuf>
+#include <xercesc/dom/DOM.hpp>
 
 using namespace std;
+using namespace xercesc;
 
 //! Macro used to insert the line and file into a logging command.
 #define LOG( logger, level ) logger->setLevel( level ); logger->setLine( __LINE__ ); logger->setFile( __FILE__ ); *logger
@@ -49,7 +51,8 @@ public:
 	int overflow( int ch );
 	int underflow( int ch );
 	void setParent( Logger* parentIn );
-	
+	void toDebugXML( ostream& out ) const;
+
 private:
 
 	//! A pointer to the parent logger which will receive all data. 
@@ -112,17 +115,27 @@ public:
 	
 	void setFile( const string& fileIn );
 	
+	void toDebugXML( ostream& out ) const;
+
 protected:
+	//! Logger name
+	string name;
+
+	//! Logger type
+	string type;
 	
-	//! Buffer which contains characters waiting to be printed.
-	stringstream buf;
+	//! File name of the file it uses.
+	string fileName;
 	
-	//! Underlying ofstream
-	PassToParentStreamBuf underStream;
-	
+	//! Header message to print at the beginning of the log.
+	string headerMessage;
+
 	//! Defines the minimum level of warnings which should be omitted.
 	int minLogWarningLevel;
 	
+	//! Defines the mininum level of warnings to print to the console.
+	int minToScreenWarningLevel;
+
 	//! Defines the current warning level.
 	WarningLevel currentWarningLevel;
 	
@@ -135,7 +148,6 @@ protected:
 	//! Defines the current level of nesting. May be ignored by subclass.
 	int currentNestLevel;
 	
-
 	//! Defines the tab size
 	int logTabSize;
 	
@@ -160,18 +172,29 @@ protected:
 	//! Defines whether to print the full path
 	bool printLogFullPath;
 	
-	Logger();
+	Logger( const string& fileNameIn = "" );
 	
-	const string getDateString() const;
+	static const string getDateString();
 	
-	const string getTimeString() const;
+	static const string getTimeString();
 	
-	const string getFileNameFromPath( const string& fullPath ) const;
+	// make static
+	static const string getFileNameFromPath( const string& fullPath );
 	
 	//! Log a message with the given warning level.
 	virtual void logCompleteMessage( const int line, const string& file, const WarningLevel warningLevel, const string& message ) = 0;
 	
+	void static parseHeader( string& headerIn );
+
+private:
+
+	//! Buffer which contains characters waiting to be printed.
+	stringstream buf;
 	
+	//! Underlying ofstream
+	PassToParentStreamBuf underStream;
+
+	void XMLParse( const DOMNode* node );
 };
 
 #endif // _LOGGER_H_
