@@ -354,6 +354,77 @@ public class FileChooserDemo extends JFrame
 		dispose();
 	}
   }
+  
+  // newest table stuff ...
+  public ArrayList chooseTableHeaders( TreePath path ){
+	final ArrayList selected = new ArrayList();
+
+	final Object[] itemsObjs = path.getPath();
+	String[] items = new String[ itemsObjs.length ];
+	for(int i=0; i<itemsObjs.length; i++){
+		items[i] = ((DOMmodel.DOMNodeAdapter)itemsObjs[i]).getNode().getNodeName();	
+	}
+	//String[] items = { "one", "two", "three", "four" };
+	final JList list = new JList(items);
+	list.setSelectionMode(DefaultListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    
+	JScrollPane scrollingList = new JScrollPane(list);
+    		
+	final JDialog filterDialog = new JDialog(this, "Please choose two headers:", true);
+	filterDialog.setSize(500,400);
+	filterDialog.setLocation(100,100);
+	filterDialog.setResizable(false);
+	
+	final JButton nextButton = new JButton(" Finished With Selection ");
+	nextButton.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("pushed next button");
+			int[] selectedIndices = list.getSelectedIndices();
+			if( selectedIndices.length == 2 ){
+				selected.add( itemsObjs[ selectedIndices[0] ] );
+				selected.add( itemsObjs[ selectedIndices[1] ] );
+				filterDialog.dispose();
+			}else{
+				// make user try again ..
+				JOptionPane.showMessageDialog(null, "Error: You must choose exactly two (2)!");
+			}
+		}
+	});
+
+	JPanel buttonPane = new JPanel();
+	buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+	buttonPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	buttonPane.add(Box.createHorizontalGlue());
+	buttonPane.add(nextButton);
+	buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
+
+	final JLabel listLabel = new JLabel();
+	listLabel.setHorizontalAlignment(JLabel.LEFT);
+
+	JPanel listPane = new JPanel();
+	listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
+	listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	listPane.add(Box.createVerticalGlue());
+	listPane.add(listLabel);
+	listPane.add(Box.createVerticalStrut(10));
+	JScrollPane listScroll = new JScrollPane(list);
+	listScroll.setPreferredSize(new Dimension(150, 750));
+	listPane.add(listScroll);
+	listPane.add(Box.createVerticalStrut(10));
+	listPane.add(new JSeparator(SwingConstants.HORIZONTAL));
+
+	Container filterContent = filterDialog.getContentPane();
+	//filterContent.add(new JSeparator(SwingConstants.HORIZONTAL));
+	filterContent.add(listPane, BorderLayout.CENTER);
+	filterContent.add(buttonPane, BorderLayout.PAGE_END);
+	filterDialog.setContentPane(filterContent);
+	filterDialog.show();
+   		
+  	return selected; //arraylist with the two selected nodes
+  }
+  // end newest table stuff
+
+
 
   // This "helper method" makes a menu item and then
   // registers this object as a listener to it.
@@ -1387,8 +1458,6 @@ class MyTreeModelListener implements TreeModelListener {
 	
 		return newNode;
 	}
-
-
 
   boolean openXMLFile(){
 

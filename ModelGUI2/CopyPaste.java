@@ -82,7 +82,7 @@ public class CopyPaste implements ActionListener{
 							String oldStr = myJTable.getValueAt( startRow+i, startCol+j ).toString();
 							if ( areOfTheSameType( oldStr, onePiece )){
 								myJTable.setValueAt(onePiece, startRow+i, startCol+j);
-				  	 			System.out.println("Putting "+ onePiece + "at row=" + startRow+i + "column=" + startCol+j );
+				  	 			System.out.println("Putting "+ onePiece + "at row =" + startRow+i + "column =" + startCol+j );
 							}else{
 								System.out.println("NOT of the same type: " + oldStr + " and " + onePiece);
 							}
