@@ -125,6 +125,9 @@ void SubResource::XMLParse( const DOMNode* node )
       }
       else if( nodeName == "priceElas" ){
          priceElas = XMLHelper<double>::getValue( curr );
+         if ( priceElas == 0 ) {
+            cerr << "WARNING: priceElas = 0 in sub-resource: " << name << endl;
+         }
       }
       else if( nodeName == "techChange" ){
          XMLHelper<double>::insertValueIntoVector( curr, techChange, modeltime );

@@ -487,7 +487,6 @@ void sector::addghgtax( const string& ghgname, const string& regionName, const i
 * \param gnpPerCap GDP per capita (scaled to base year)
 
 * \author Sonny Kim, Steve Smith, Josh Lurz
-* \todo add cap limit code to demand sector calcShare method.
 * \todo add warnings to sub-sector and technology (?) that fixed capacity has to be >0
 * \warning model with fixed capacity in sectors where demand is not a solved market may not solve
 */
@@ -591,7 +590,7 @@ void sector::calcShare( const string& regionName, const int per, const double gn
 */
 void sector::adjSharesCapLimit( const string& regionName, const int per )
 {
-    const double SMALL_NUM =  1e-6;
+    const double SMALL_NUM = util::getSmallNumber();
     double tempCapacityLimit;
     double tempSubSectShare;
     double totalFixedShares = 0;
@@ -609,13 +608,25 @@ void sector::adjSharesCapLimit( const string& regionName, const int per )
         
         //  Check for capacity limits and calculate sums, looping through each subsector
         for ( i=0; i<nosubsec; i++ ) {
-            tempCapacityLimit = subsec[ i ]->getCapacityLimit( per ); // call once, store these locally
+            double actualCapacityLimit = subsec[ i ]->getCapacityLimit( per ); // call once, store these locally
             tempSubSectShare = subsec[ i ]->getShare( per ) ;
+            
+            // if sector has been cap limited, then return limit, otherwise transform
+            // this is needed because can only do the transform once
+            if ( subsec[ i ]->getCapLimitStatus( per ) ) {
+               tempCapacityLimit = subsec[ i ]->getShare( per );
+            } else {
+               tempCapacityLimit = capLimitTransform( actualCapacityLimit, tempSubSectShare );
+            }
             
             // if there is a capacity limit and are over then set flag and count excess shares
             if ( tempSubSectShare - tempCapacityLimit > SMALL_NUM ) {
                 capLimited = true;
                 sumSharesOverLimit += tempSubSectShare - tempCapacityLimit;
+                
+    //           cout << "Cap limit changed from " << actualCapacityLimit << " to " << tempCapacityLimit;
+    //  cout << " in sub-sector: " << subsec[ i ]->getName() << endl;
+
             }
             
             // also sum shares under limit (but not those just at their limits)
@@ -644,7 +655,7 @@ void sector::adjSharesCapLimit( const string& regionName, const int per )
             else { // If there are no sectors without limits and there are still shares to be re-distributed
                 if ( sumSharesOverLimit > 0 ) {
                     // if there is no shares left then too much was limited!
-                    cerr << regionName << ": Insufficient capacity to meet demand" << endl;
+                    cerr << regionName << ": Insufficient capacity to meet demand in sector " << name << endl;
                 }
             }
             
@@ -654,7 +665,7 @@ void sector::adjSharesCapLimit( const string& regionName, const int per )
     
     // if have exited and still capacity limited, then report error
     if ( capLimited ) {
-        cerr << "Capacity limit not resolved" << endl;
+        cerr << "Capacity limit not resolved in sector " << name << endl;
     }
 }
 
@@ -668,7 +679,7 @@ void sector::adjSharesCapLimit( const string& regionName, const int per )
 * \param per Model period
 */
 void sector::checkShareSum( const string& regionName, int per ) {
-    const double SMALL_NUM =  1e-6;
+    const double SMALL_NUM = util::getSmallNumber();
     double sumshares = 0;
     int i;
     
@@ -689,6 +700,31 @@ void sector::checkShareSum( const string& regionName, int per ) {
 }
 
 
+/*! \brief Transform share to smoothly impliment capacity limit.
+*
+* Function transformes the original share value into one that smoothly approaches the capacity limit.
+* Returns the original orgShare when share << capLimit and returns capLimit when orgShare is large by using a logistic transformation.
+* 
+*
+* \author Steve Smith
+* \param capLimit capacity limit (share)
+* \param orgShare original share for sector
+* \return transfomred share value
+*/
+ double sector::capLimitTransform( double capLimit, double orgShare )
+{
+   const double SMALL_NUM = util::getSmallNumber();
+   const double exponentValue =  2;
+   const double mult =  1.4;
+   double newShare = capLimit ;
+
+   if ( capLimit < ( 1 - SMALL_NUM ) ) {
+      double factor = exp( pow( mult * orgShare/capLimit , exponentValue ) );
+      newShare = orgShare * factor/( 1 + ( orgShare/capLimit ) * factor);
+   }
+   
+   return newShare;
+}
 
 /*! \brief Calculate weighted average price of subsectors.
 *
@@ -831,7 +867,7 @@ double sector::getFixedShare( const std::string& regionName, const int sectorNum
          if ( mktDmd > 0 && ( world->getCalibrationSetting() || 1==1 ) ) {
             fixedShare = subsec[ sectorNum ]->getFixedSupply( per )/mktDmd;
          }
-       //  fixedShare = 0.1;
+    //     fixedShare = 0.1;
       }
       return fixedShare;
    } else {
@@ -946,7 +982,7 @@ void sector::adjustForFixedSupply( const double mrkdmd, const string& regionName
     // sjs TEMP -- this check generally spits out a few inocuous warnings.
     // If simultunaeities are resolved then this should only happen a couple times per iteration.
     if ( debugChecking && world->getCalibrationSetting()) {
-         if ( fabs(fixedShareSavedVal - totalFixedSupply/mrkdmd) > 1e-5 && fixedShareSavedVal != 0 ) {
+         if ( abs(fixedShareSavedVal - totalFixedSupply/mrkdmd) > 1e-5 && fixedShareSavedVal != 0 ) {
             cerr << "Fixed share changed from " << fixedShareSavedVal << " to ";
             cerr << totalFixedSupply/mrkdmd << endl;
          }
@@ -1002,10 +1038,6 @@ void sector::supply( const string& regionName, const int per) {
         cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;
     }
     
-    bool watchSector = (name == "electricity" && regionName == "USAxx");
-    if ( watchSector ) {
-      cout << " elec mktdmd: " << mrkdmd << endl;
-    }
     // Adjust shares for fixed supply
    if ( anyFixedCapacity ) {
       adjustForFixedSupply( mrkdmd, regionName, per);
@@ -1025,6 +1057,12 @@ void sector::supply( const string& regionName, const int per) {
         // is not equal to the demand that was passed in 
         double mrksupply = getOutput( per );
         
+         bool watchSector = (name == "electricity" && regionName == "USAxxx");
+         if ( watchSector ) {
+            cout << "sector:supply elec mktdmd: " << mrkdmd;
+            cout << " supply: " << mrksupply << endl;
+         }
+
         // if demand identically = 1 then must be in initial iteration so is not an error
         if ( per > 0 && fabs(mrksupply - mrkdmd) > 0.01 && mrkdmd != 1.0000 ) {
             mrksupply = mrksupply * 1.000000001;

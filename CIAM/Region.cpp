@@ -1053,6 +1053,7 @@ void Region::calibrateTFE( const int per ) {
 }
 
 //! Call any initializations that are only done once per period
+// \todo put somewhere (maybe not here) a check for prev period to see how well calibrations worked
 void Region::initCalc( const int per ) 
 {
    int i;

@@ -18,6 +18,7 @@
 #include "subsector.h"
 #include "technology.h"
 #include "scenario.h"
+#include "sector.h"
 #include "modeltime.h"
 #include "xmlHelper.h"
 #include "marketplace.h"
@@ -691,7 +692,7 @@ void subsector::calcTechShares( const string& regionName, const int per ) {
 * \author Sonny Kim, Josh Lurz
 * \param regionName region name
 * \param per model period
-* \param gnp_cap GDP per capita (absolute or relative?)
+* \param gnp_cap GDP per capita, relative to base year
 * \warning technologies can not independently have fixed outputs
 */
 void subsector::calcShare( const string& regionName, const int per, const double gnp_cap )
@@ -769,19 +770,50 @@ void subsector::normShare( const double sum, const int per) {
 * \param per Model period
 */
 void subsector::limitShares( const double multiplier, const int per ) {
-    if ( multiplier == 0 ) {
-        share[per] = 0;
-    }
-    else {		
-        if ( share[per] >= capLimit[per]) {
-            setShare( capLimit[per], per );
+   if ( multiplier == 0 ) {
+      share[per] = 0;
+   }
+   else {	
+      double capLimitValue = capLimitTransform( capLimit[per], share[per]  );
+      if ( share[per] >= capLimitValue ) {
+         // Only adjust if not already capacity limited
+         // need this because can't transform more than once, see capLimitTransform
+         if ( !capLimited[ per ] ) {
+            setShare( capLimitValue, per );
             setCapLimitStatus( true, per ); // set status to true
-        } else {
-           if ( fixedShare[ per ] == 0 ) { // don't change if fixed
-               setShare( share[per] * multiplier, per );
-           }
-        }
-    }
+         }
+      } else {
+         if ( fixedShare[ per ] == 0 ) { // don't change if fixed
+            setShare( share[per] * multiplier, per );
+         }
+      }
+   }
+}
+
+/*!
+* \brief Transform share to smoothly impliment capacity limit.
+*
+* Function returns the original orgShare when share << capLimit and returns capLimit
+* when orgShare is large
+*
+* \author Steve Smith
+* \param capLimit capacity limit (share)
+* \param orgShare original share for sector
+* \return new share value
+*/
+ double subsector::capLimitTransform( double capLimit, double orgShare )
+{
+   const double SMALL_NUM = util::getSmallNumber();
+   const double exponentValue =  2;
+   const double mult =  1.4;
+   double newShare = capLimit ;
+
+   if ( capLimit < ( 1 - SMALL_NUM ) ) {
+      double factor = exp( pow( mult * orgShare/capLimit , exponentValue ) );
+      newShare = orgShare * factor/( 1 + ( orgShare/capLimit ) * factor);
+   }
+   
+   return newShare;
 }
 
 /*! \brief Return the total exogenously fixed technology output for this sector.
@@ -1002,7 +1034,6 @@ void subsector::setoutput( const string& regionName, const string& prodName, con
         // sum total carbon tax paid for subsector
         carbontaxpaid[per] += techs[i][per]->getCarbontaxpaid();
     }
-    
 }
 
 /*! \brief Adjusts share weights and subsector demand to be consistant with calibration value.
@@ -1059,8 +1090,8 @@ void subsector::adjustForCalibration( double sectorDemand, double totalFixedSupp
      shrwts[ period ] = 1;
    }
 
-   bool watchSector = (name=="biomass" && sectorName == "building" && regionName == "USAxx");
-   if ( debugChecking && shrwts[ period ] > 1e4 || watchSector ) {
+   bool watchSector = (name=="gas" && sectorName == "building" && regionName == "USAxx");
+   if ( debugChecking && (shrwts[ period ] > 1e4 || watchSector) ) {
       if ( !watchSector ) {
          cout << "In calibration for sub-sector: " << name;
          cout << " in sector: "<< sectorName << " in region: " << regionName << endl;
@@ -1564,17 +1595,9 @@ double subsector::getInput( const int per ) const {
 */
 void subsector::sumOutput( const int per ) {
     output[per] = 0;
-    bool watchSector = (name=="coal" && sectorName == "electricity" && regionName == "USAxx");
-   if (watchSector) {cout << "(";}
     for ( int i=0 ;i<notech; i++ ) {
         output[per] += techs[i][per]->getOutput();
-         if (watchSector) {
-            cout << " S:"<< techs[i][per]->getShare();
-            cout << " O:"<< techs[i][per]->getOutput();
-            cout << " I:"<< techs[i][per]->getInput();         
-         }
     }
-   if (watchSector) {cout << ")";}
 }
 
 /*! \brief returns subsector output
@@ -1588,15 +1611,9 @@ void subsector::sumOutput( const int per ) {
 */
 double subsector::getOutput( const int per ) {
     /*! \pre per is less than or equal to max period. */
-    assert( per <= scenario->getModeltime()->getmaxper() );
-    sumOutput( per );
-    
-    bool watchSector = (name=="biomass" && sectorName == "electricity" && regionName == "USAxx");
-     watchSector = (name=="coal" && sectorName == "electricity" && regionName == "USAxx");
-    // cout << "N: " << name  << " Sect: " << sectorName  << " reg: " << regionName << endl;
-   if (watchSector) { 
-   cout << " Out: "<< output[per], ", ";}
-    return output[per];
+   assert( per <= scenario->getModeltime()->getmaxper() );
+   sumOutput( per );
+   return output[per];
 }
 
 /*! \brief returns total subsector carbon taxes paid

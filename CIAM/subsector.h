@@ -100,6 +100,7 @@ public:
     void normShare( const double sum, const int period );
     double getShare( const int period ) const;
     void limitShares( const double sum, const int period );
+    double capLimitTransform( double capLimit, double orgShare );
     void setCapLimitStatus( const bool value, const int period );
     bool getCapLimitStatus( const int period ) const;
     void calcTechShares ( const std::string& regionName, const int period );

@@ -124,8 +124,7 @@ bool BisectionNRSolver::solve( const int period ) {
          maxSolVal = SolverLibrary::findMaxExcessDemand( sol, excessDemandSolutionFloor, worstMarketIndex, period );
          
          if( !solved && maxSolVal < 1500 ) {
-            solved = NR_Ron( solTolerance, excessDemandSolutionFloor, sol, worldCalcCount, period );
-            
+            solved = NR_Ron( solTolerance, excessDemandSolutionFloor, sol, worldCalcCount, period );            
             if ( bugMinimal ) { 
                bugoutfile << "After Ron_NR "<< worldCalcCount;
             }
@@ -209,8 +208,16 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
    const int numCurrMarkets = static_cast<int>( sol.size() ); // number of markets to solve
    int numIterations = 0; // number of iterations
    int code = 2; // code that reports success 1 or failure 0
+   Configuration* conf = Configuration::getInstance();
+   bool debugChecking = conf->getBool( "debugChecking" );
+   bool calibrationStatus = world->getCalibrationSetting();
    
-   cout << "Entering bracketing..." << endl;
+   if ( debugChecking ) {
+      cout << "Entering bracketing..." << endl;
+   }
+   
+   // sjs -- turn off calibration to let bracketing operate faster. Let calibrations happen in Bisection
+   world->turnCalibrationsOff();    
    
    // Loop is done at least once.
    do {
@@ -429,6 +436,9 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
    } while ( ++numIterations < 30 && !allbracketed );	
    code = ( allbracketed ? 1 : 0 );	// Report success, 1 or failure, 0
    
+   if ( calibrationStatus ) {
+      world->turnCalibrationsOn();	// sjs -- turn calibration back on if it was on before
+   }
    worldCalcCount += numIterations - 1;
    return code;
 }
@@ -723,8 +733,8 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
             // first get largest derivitive
             double maxDerVal = 0; double maxKDSval = 0;
             for ( int j = 0; j < marketsToSolve; j++ ) {
-               maxKDSval = max(maxKDSval, fabs(KDS[ j ]) );
-               maxDerVal = max(maxDerVal, fabs(JF[ i ][ j ]) );
+               maxKDSval = max(maxKDSval, abs(KDS[ j ]) );
+               maxDerVal = max(maxDerVal, abs(JF[ i ][ j ]) );
             }
             cout << "Max KDS: " << maxKDSval << ", Max Derivitive: " << maxDerVal;
             cout << " Prev Price?: " << prevprice << endl;

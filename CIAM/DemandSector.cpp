@@ -26,7 +26,12 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-//! Default constructor
+/*! \brief Default constructor.
+*
+* Constructor initializes member variables with default values, sets vector sizes, and sets value of debug flag.
+*
+* \author Sonny Kim, Steve Smith, Josh Lurz
+*/
 demsector::demsector() {
     perCapitaBased = 0;
     pElasticityBase = 0;
@@ -45,7 +50,7 @@ demsector::demsector() {
     servicePreTechChange.resize( maxper );
 }
 
-//! Destructor
+//! Default destructor
 demsector::~demsector() {
 }
 
@@ -67,13 +72,26 @@ void demsector::clear(){
     servicePreTechChange.clear();
 }
 
-//! Parses any attributes specific to derived classes
+/*! \brief Parses any child nodes specific to derived classes
+*
+* Method parses any input data from child nodes that are specific to the classes derived from this class. 
+*
+* \author Josh Lurz, Steve Smith, Sonny Kim
+* \param nodeName name of current node
+* \param node pointer to the current node in the XML input tree
+*/
 void demsector::XMLDerivedClassParseAttr( const DOMNode* node ) {
     // get the perCapitaBased attribute for the demand sector
     perCapitaBased = XMLHelper<bool>::getAttr( node, "perCapitaBased" );
 }
 
-//! Parses any input variables specific to derived classes
+/*! \brief Parses any attributes specific to derived classes
+*
+* Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class.
+*
+* \author Josh Lurz, Steve Smith
+* \param node pointer to the current node in the XML input tree
+*/
 void demsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     
     const Modeltime* modeltime = scenario->getModeltime();
@@ -158,7 +176,13 @@ void demsector::toXML( ostream& out ) const {
     out << "</demandsector>" << endl;
 }
 
-//! XML output stream for derived classes
+/*! \brief XML output stream for derived classes
+*
+* Function writes output due to any variables specific to derived classes to XML
+*
+* \author Steve Smith, Josh Lurz
+* \param out reference to the output stream
+*/
 void demsector::toXMLDerivedClass( ostream& out ) const {  
     
 }	
@@ -288,7 +312,13 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
     out << "</demandsector>" << endl;
 }
 
-//! Create a market for the sector.
+/*! \brief Create new market for this sector
+*
+* Sets up the appropriate market within the marketplace for this sector. Note that the type of market is NORMAL -- signifying that this market is a normal market that is solved (if necessary).
+*
+* \author Sonny Kim, Josh Lurz, Steve Smith
+* \param regionName region name
+*/
 void demsector::setMarket( const string& regionName ) {
     Marketplace* marketplace = scenario->getMarketplace();
     
@@ -297,16 +327,20 @@ void demsector::setMarket( const string& regionName ) {
         /* The above initilaizes prices with any values that are read-in. 
         This only affects the base period, which is not currently solved.
         Any prices not initialized by read-in, are set by initXMLPrices(). */
-    }
-    
-    /* The above is not quite right becuase there could be many sectors within the same market, this would result 
-    in the prices being reset each time.
-    */
-    
-    // The above problem has been fixed.
+    }    
 }
 
-//! Calculate subsector shares.
+/*!
+* \brief  Calculate subsector shares, adjusting for capacity limits.
+
+* This routine calls subsector::calcShare for each subsector, which calculated an unnormalized share, and then calls normShare to normalize the shares for each subsector.
+
+* \param regionName Region name
+* \param per model period
+* \param gnpPerCap GDP per capita (scaled to base year)
+
+* \author Sonny Kim, Steve Smith, Josh Lurz
+*/
 void demsector::calcShare( const string regionName, const int per, const double gnp_cap )
 {
     int i=0;
@@ -320,7 +354,12 @@ void demsector::calcShare( const string regionName, const int per, const double 
     for (i=0;i<nosubsec;i++) {
         subsec[i]->normShare(sum, per);
    }
-   
+
+    // Now adjust for capacity limits, if any are present
+    if ( capLimitsPresent[ per ] ) {
+       adjSharesCapLimit( regionName , per );
+    }
+       
        if ( regionName == "USAxxx" && name == "building" ) {
          cout << "¥¥Shares: ";
         for ( i=0; i<nosubsec; i++ ) {
@@ -332,7 +371,17 @@ void demsector::calcShare( const string regionName, const int per, const double 
 
 }
 
-//! Calculate weighted average price of subsectors.
+/*! \brief Calculate weighted average price of subsectors.
+*
+* weighted price is put into sectorprice variable
+*
+* Note that the demand sector price uses the previous period's share to calucate the price.
+* Since this is only used for a feedback term its not a large error. But is there a way around this?
+*
+* \author Sonny Kim, Josh Lurz
+* \param per Model period
+* \todo consider if there is a way to use the current sector share so that this is not different from the supply sector function.
+*/
 void demsector::calcPrice(int per)
 {
     sectorprice[per]=0.0;
@@ -359,6 +408,9 @@ void demsector::calcPrice(int per)
    
    If all subsector demands are calibrated (or zero) then also adjusts AEEI in order to be 
    consistent with calibrated values.
+* \author Steve Smith
+* \param regionName region name
+* \param per Model period
 */
 void demsector::calibrateSector( const string regionName, const int per )
 {
@@ -390,6 +442,9 @@ void demsector::calibrateSector( const string regionName, const int per )
     \warning For derived demand sectors, some version of this routine needs to be included
     in order for the output of that sector to be able to be calibrated.
     sjs
+* \author Steve Smith
+* \param scaleFactor amount by which to scale output from this sector
+* \param per Model period
 */
 void demsector::scaleOutput( int per, double scaleFactor ) {
    const Modeltime* modeltime = scenario->getModeltime();
@@ -410,7 +465,14 @@ void demsector::scaleOutput( int per, double scaleFactor ) {
    }
 }
 
-//! Calculate end-use service price elasticity
+/*! \brief Calculate end-use service price elasticity
+*
+*
+* \author Sonny Kim
+* \param regionName region name
+* \param per Model period
+* \todo Sonny to add more to this description
+*/
 void demsector::calc_pElasticity(int per) {
     pElasticityBase = pElasticity[ 0 ]; // base year read in value
     pElasticity[per]=0.0;
@@ -423,7 +485,19 @@ void demsector::calc_pElasticity(int per) {
     pElasticity[per] = pElasticityBase*tmpPriceRatio;
 }
 
-//! Aggrgate sector energy service demand function.
+/*! \brief Aggrgate sector energy service demand function
+*
+* Function calculates the aggregate demand for energy services and passes that down to the sub-sectors. 
+* Demand is proportional to either GNP (to a power) or GDNP per capita (to a power) times population.
+*
+* \author Sonny Kim
+* \param gnp GNP (relative or absolute?)
+* \param gnp_cap GDP per capita, relative to base year
+* \param regionName region name
+* \param per Model period
+* \todo Sonny to add more to this description if necessary
+* \pre Sector price attribute must have been previously calculated and set (via calcPrice)
+*/
 void demsector::aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per) {
     const Modeltime* modeltime = scenario->getModeltime();
     const Marketplace* marketplace = scenario->getMarketplace();
@@ -435,7 +509,6 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
     base = getOutput(0);
     
     // normalize prices to 1990 base
-    //  priceRatio = getPrice[ per ]/getPrice[ normPeriod ]; -- replaced with call to market sjs
     int normPeriod = modeltime->getyr_to_per(1990);
     priceRatio =	getPrice( per ) / getPrice( normPeriod );
      
@@ -468,11 +541,12 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
     service[ per ] = ser_dmd/techChangeCumm[per];
     
     set_ser_dmd( service[ per ], per ); // sets the output
+
     // sets subsector outputs, technology outputs, and market demands
     sector::setoutput( regionName, service[ per ], per );
    
    // sector::sumOutput( per );
-   // this call now included in setOutput -- although sector outputs at this point are NaN!
+   // this call now included in setOutput -- although sector outputs at this point are NaN! ????
 }
 
 //! Write sector output to database.
@@ -488,20 +562,20 @@ void demsector::outputfile(const string& regionName ) {
     // function arguments are variable name, double array, db name, table name
     // the function writes all years
     // total sector output
-    for (m=0;m<maxper;m++)
-        temp[m] = sector::getOutput(m);
+    for (m=0;m<maxper;m++) {
+        temp[m] = sector::getOutput(m); }
     fileoutput3(regionName,getName()," "," ","prodution","SerUnit",temp);
     // total sector eneryg input
-    for (m=0;m<maxper;m++)
-        temp[m] = sector::getInput(m);
+    for (m=0;m<maxper;m++) {
+        temp[m] = sector::getInput(m); }
     fileoutput3(regionName,getName()," "," ","consumption","EJ",temp);
     // sector price
-    for (m=0;m<maxper;m++)
-        temp[m] = sector::getPrice(m);
+    for (m=0;m<maxper;m++) {
+        temp[m] = sector::getPrice(m); }
     fileoutput3(regionName,getName()," "," ","price","$/Service",temp);
     // sector carbon taxes paid
-    for (m=0;m<maxper;m++)
-        temp[m] = sector::getTotalCarbonTaxPaid(m);
+    for (m=0;m<maxper;m++) {
+        temp[m] = sector::getTotalCarbonTaxPaid(m); }
     fileoutput3(regionName,getName()," "," ","C tax paid","Mil90$",temp);
     
 }
@@ -613,12 +687,25 @@ void demsector::MCoutput( const string& regionName ) {
     MCoutput_subsec( regionName );
 }
 
-//! Return demand sector service
+/*! \brief returns the demand sector service supplied.
+*
+*
+* \author Sonny Kim
+* \param per Model period
+* \return amount of energy service supplied by this sector
+*/
 double demsector::getService(const int per) {
     return service[per];
 }
 
-//! Return demand sector service
+/*! \brief returns the demand sector service before tech change is applied.
+*
+* This is useful for debugging and output, but is not used by the model itself at this point
+*
+* \author Sonny Kim
+* \param per Model period
+* \return energy service demand before technological change is applied
+*/
 double demsector::getServiceWoTC(const int per) {
     return servicePreTechChange[per];
 }
