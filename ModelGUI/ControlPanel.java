@@ -17,6 +17,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
+import javax.swing.text.*;
 import javax.swing.tree.*;
 import java.io.*;
 import java.lang.*;
@@ -43,10 +44,12 @@ public class ControlPanel extends javax.swing.JFrame {
     private JPanel tableHeaderPanel;
     
     private JDialog addChildDialog;
+    private JDialog cloneNodeDialog;
+    private JLabel infoLabel;
     private JTextField nameField;
     private JTextField attribField;
     private JTextField valueField;
-    private JPanel locationPanel;
+    //private JPanel locationPanel;
     
     private JButton displayButton;
     private JButton selectNodesButton;
@@ -56,7 +59,7 @@ public class ControlPanel extends javax.swing.JFrame {
     private ModelTime modelTime;
     
     private JTree tree;
-    private Document document;
+    private org.jdom.Document document;
     private java.util.List ansestorNodes;
     private JPopupMenu treeMenu;
     private TreePath selectedPath;
@@ -64,10 +67,9 @@ public class ControlPanel extends javax.swing.JFrame {
     private JTable table;
     private int tableFlag;
     private JButton showTableButton;
-    private String selection1;
-    private String selection2;
+    private JPopupMenu tableMenu;
     
-    private boolean nodeValueChangedFlag;
+    static boolean nodeValueChangedFlag;
     
     private boolean showNames;
     private JComboBox listTableBox;
@@ -78,7 +80,8 @@ public class ControlPanel extends javax.swing.JFrame {
     private Vector mapPointers;
     private boolean tableExistsFlag;
     
-    private final JFileChooser fc = new JFileChooser( "." );
+    private static JFileChooser fc;
+    static Toolkit toolkit;
     
     private static int LIST = 0;
     private static int TABLE = 1;
@@ -93,6 +96,8 @@ public class ControlPanel extends javax.swing.JFrame {
         //initialize global flags
         tableExistsFlag = false;
         nodeValueChangedFlag = false;
+        fc = new JFileChooser( "." );
+        toolkit = this.getToolkit();
         
         this.getContentPane().setLayout(new BorderLayout());
         
@@ -131,6 +136,10 @@ public class ControlPanel extends javax.swing.JFrame {
         treePanel.add(displayButton);
         
         this.getContentPane().add(treePanel, BorderLayout.CENTER);
+        
+        //let the window listener handle closing operations -
+        //  this allowes user to select Cancel from the Save-before-closing dialog
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         
         pack();
     }
@@ -171,18 +180,15 @@ public class ControlPanel extends javax.swing.JFrame {
      *  to be displayed and clicks on the corresponding displayButton
      */
     private void displayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayButtonActionPerformed
-        if (evt.getSource() == displayButton) {
-            //increase the size of the panel to make room for the JTree
-            //this.getContentPane().setPreferredSize(panelSize);
-            
+          
             //attempt to read in the XML file into
             //  the private org.w3c.dom.Document document
-            boolean success = readXMLFile(jTFfileName.getText());
+        String fileName = jTFfileName.getText();
+            boolean success = readXMLFile(fileName);
             if (success) {
+                fc.setCurrentDirectory(new File(fileName));
                 displayTree();
-                //selectNodesButton.setEnabled(true);
             }
-        }
     }//GEN-LAST:event_displayButtonActionPerformed
     
     
@@ -208,23 +214,11 @@ public class ControlPanel extends javax.swing.JFrame {
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         if (nodeValueChangedFlag == true) {
             int answer = JOptionPane.showConfirmDialog(this.getContentPane(), "Do you want to save changes to the XML file?");
-            if (answer == JOptionPane.YES_OPTION) {
-                XMLOutputter outputter = new XMLOutputter();
-                
-                int returnVal = fc.showSaveDialog(this.getContentPane());
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    File file = fc.getSelectedFile();
-                    //jTFfileName.setText(file.getAbsolutePath());
-                    try {
-                        outputter.output(document, new FileOutputStream(file));
-                        nodeValueChangedFlag = false;
-                    } catch (Exception e) {
-                        System.err.println(e);
-                    }
-                }
-                
-            }
-        }
+            if (answer == JOptionPane.CANCEL_OPTION) return;
+            else if (answer == JOptionPane.YES_OPTION) {
+                saveFile();
+            } 
+        } 
         System.exit(0);
     }//GEN-LAST:event_exitForm
     
@@ -375,13 +369,13 @@ public class ControlPanel extends javax.swing.JFrame {
         
         //make button that will display the table
         showTableButton = new JButton("Show Query Result");
-        showTableButton.setAlignmentX(Box.LEFT_ALIGNMENT);
-        showTableButton.setAlignmentY(Box.TOP_ALIGNMENT);
+        //showTableButton.setAlignmentX(Box.LEFT_ALIGNMENT);
+        //showTableButton.setAlignmentY(Box.TOP_ALIGNMENT);
         showTableButton.setMaximumSize(new Dimension(150, DEFAULT_COMPONENT_HEIGHT));
         showTableButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //try {
-                showTable();
+                readTableData();
                 /*} catch (Exception ex) {
                     System.out.println("I've failed miserably");
                     System.out.println(ex);
@@ -390,7 +384,10 @@ public class ControlPanel extends javax.swing.JFrame {
         });
         showTableButton.setEnabled(false);
         dataPanel.add(Box.createRigidArea(new Dimension(0,5)));
-        dataPanel.add(showTableButton);
+        JPanel p = new JPanel(new BorderLayout());
+        p.add(showTableButton, BorderLayout.EAST);
+        p.setMaximumSize(new Dimension(2000, DEFAULT_COMPONENT_HEIGHT));
+        dataPanel.add(p);
         dataPanel.add(Box.createVerticalGlue());
         dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
         
@@ -402,8 +399,9 @@ public class ControlPanel extends javax.swing.JFrame {
         splitPane.setMinimumSize(new Dimension(windowWidth + 10, windowHeight+10));
         splitPane.setMaximumSize(new Dimension(2000, 1500));
         
-        // Build the pop-up menu that's displayed by right-clicking on tree panel
-        treeMenu = makePopupMenu();        
+        // Build the pop-up menus that are displayed by right-clicking
+        treeMenu = makePopupTreeMenu();     
+        tableMenu = makePopupTableMenu();
         
         JButton saveAllButton = new JButton("Save File");
         saveAllButton.addActionListener(new java.awt.event.ActionListener() {
@@ -418,14 +416,15 @@ public class ControlPanel extends javax.swing.JFrame {
         treePanel.add(saveAllButton);
         
         //create the dialog for adding new node children, but leave invisible
-        makeAddChildPanel();
+        makeAddChildDialog();
+        makeCloneNodeDialog();
         
         pack();
         //treePanel.revalidate();
         //repaint();
     }
     
-    private JPopupMenu makePopupMenu() {
+    private JPopupMenu makePopupTreeMenu() {
         treeMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem("Add Child");
         menuItem.addMouseListener(new MouseListener() {
@@ -433,6 +432,20 @@ public class ControlPanel extends javax.swing.JFrame {
                 tree.setSelectionPath(selectedPath);
                 
                 showAddChildDialog();
+            }
+            public void mouseClicked(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {}
+        });
+        treeMenu.add(menuItem);
+        
+        /*menuItem = new JMenuItem("Clone Node");
+        menuItem.addMouseListener(new MouseListener() {
+            public void mouseReleased(MouseEvent e) {
+                tree.setSelectionPath(selectedPath);
+                
+                cloneNode();
             }
             public void mouseClicked(MouseEvent e) {}
             public void mousePressed(MouseEvent e) {}
@@ -486,6 +499,36 @@ public class ControlPanel extends javax.swing.JFrame {
         treeMenu.add(menuItem);
         
         return treeMenu;
+    }
+    
+    private JPopupMenu makePopupTableMenu() {
+        tableMenu = new JPopupMenu();
+        //JMenuItem menuItem = new JMenuItem("Copy");
+        JMenuItem menuItem = new JMenuItem(new DefaultEditorKit.CopyAction());
+        menuItem.setText("Copy");
+
+        menuItem.addMouseListener(new MouseListener() {
+            public void mouseReleased(MouseEvent e) {  
+System.out.println("copy requested");
+
+            /*InputMap imap = this.getInputMap();
+    imap.put(KeyStroke.getKeyStroke("ctrl X"),
+        TransferHandler.getCutAction().getValue(Action.NAME));
+    imap.put(KeyStroke.getKeyStroke("ctrl C"),
+        TransferHandler.getCopyAction().getValue(Action.NAME));
+    imap.put(KeyStroke.getKeyStroke("ctrl V"),
+        TransferHandler.getPasteAction().getValue(Action.NAME));*/
+
+                //copyTableCells();
+            }
+            public void mouseClicked(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {}
+        });
+        tableMenu.add(menuItem);
+                
+        return tableMenu;
     }
     
     private void makeQueryPanel(boolean firstAttempt) {
@@ -835,7 +878,7 @@ public class ControlPanel extends javax.swing.JFrame {
     /*
      * Functioned used to create and make visible the table node values
      */
-    public void showTable() {
+    public void readTableData() {
         Vector values = new Vector();
         Vector header = new Vector();
         Vector lefter = new Vector();
@@ -846,7 +889,7 @@ public class ControlPanel extends javax.swing.JFrame {
         String attribVal = "";
         JComboBox currComboBox;
         java.util.List childNodes;
-        int rowCount = 0;
+        //int rowCount = 0;
         boolean timeInterval = false;
         Integer lastYear = new Integer(modelTime.getStart());
         
@@ -898,7 +941,7 @@ public class ControlPanel extends javax.swing.JFrame {
                     //remember the name of the parent of the node whose value
                     //  will be displayed in the left-side header
                     
-                    rowCount++;
+                    //rowCount++;
                     String lefterName = currNode.toLefterString();
                     String prevName;
                     if (!lefter.isEmpty()) {
@@ -906,11 +949,14 @@ public class ControlPanel extends javax.swing.JFrame {
                         if (!(prevName.equals(lefterName))) lefter.add(lefterName);
                     } else lefter.add(lefterName);
                     
-                    //for nodes directly under a period node
+                    //extrac just the name of the node, without attributes or <>
                     String oldName = currNode.toString();
                     int index1 = oldName.indexOf('<');
                     int index2 = oldName.indexOf('>');
-                    if (oldName.substring(index1+1, index2).equals("period")) {
+                    String parentName = oldName.substring(index1+1, index2);
+                    
+                    //for nodes directly under a period node
+                    if (parentName.equals("period")) {
                         //remember the last index in values that contains confirmed entry
                         int lastValIndex = values.size();
                         
@@ -929,11 +975,15 @@ public class ControlPanel extends javax.swing.JFrame {
                         AdapterNode parent = currNode.getParent();
                         childNodes = parent.getChildren("period", "");
                         Iterator it = childNodes.iterator();
+//System.out.println("final node name = " + finalNodeName);
                         while (it.hasNext()) {
                             //for each period node, get the value of the "final node" under it,
                             //  remember the period node's year attribute
                             parent = (AdapterNode)it.next();
-                            currNode = parent.getChild(nodeName, "");
+//System.out.println("parent = " + parent);
+                            currNode = parent.getChild(finalNodeName, "");
+                            if (currNode == null) continue;
+//System.out.println("got throught the break with " + currNode);
                             
                             attribVal = parent.getAttributeValue("year");
                             offset = modelTime.getYearIndex(attribVal);
@@ -944,7 +994,40 @@ public class ControlPanel extends javax.swing.JFrame {
                             }
                         }
                         
-                    } else {        //if parent of desired node(s) isn't "period"
+                    } else if (parentName.equals("grade")) {    
+                        //code that allowes grade to be a column header
+                        
+                        index = currNode.getIndex() - 1;
+                        //find which grade is to be displayed
+                        currComboBox = (JComboBox)attributeControls.elementAt(index);
+                        attribVal = currComboBox.getSelectedItem().toString();
+                        
+                        if (!attribVal.equals(DEFAULT_PLURAL_STRING)) {
+                            //save grade name to the header
+                            if (header.isEmpty()) header.addElement(attribVal);
+                            else if (!header.contains(attribVal)) header.addElement(attribVal);
+                            
+                            //add the new value
+                            currNode = currNode.getChild(finalNodeName, "");
+                            values.addElement(currNode);
+                            
+                        } else {
+                            AdapterNode child, parent = currNode.getParent();
+                            childNodes = parent.getChildren("grade", "");
+                            Iterator it = childNodes.iterator();
+                            while (it.hasNext()) {
+                                currNode = (AdapterNode)it.next();
+                                attribVal = currNode.getAttributeValue("name");
+                                if (header.isEmpty()) header.addElement(attribVal);
+                                else if (!header.contains(attribVal)) header.addElement(attribVal);
+                                
+                                currNode = currNode.getChild(finalNodeName, "");
+                                if (currNode != null) values.addElement(currNode);
+                                else values.addElement(new AdapterNode());
+                            }                           
+                        }
+                        
+                    } else {        //if parent of desired node(s) isn't "period" or "grade"
                        
                         Vector years = modelTime.getTimeIntervals();
                         Iterator yearIt = years.iterator();
@@ -985,15 +1068,15 @@ public class ControlPanel extends javax.swing.JFrame {
                                         else if (!header.contains(attribVal)) header.addElement(attribVal);
                                     } else {
                                         timeInterval = true;
-                                        //if node has year, make sure that values are saved under proper year
+                                        //if node has year, make sure that values are saved under proper year column
                                         Integer attribYear = new Integer(attribVal);
                                         Integer currYear = (Integer)yearIt.next();
                                         
                                         //special case - rows above current only had one column,
                                         //  but this row is time interval, so will add more columns
-                                        //  therefore, add blank values to put values in place
+                                        //  therefore, add blank values to put new values in place
                                         int numVals = values.size();
-                                        int targetVals = (rowCount-1) * modelTime.getNumOfSteps();  
+                                        int targetVals = (lefter.size()-1) * modelTime.getNumOfSteps();  
                                         for (int q = numVals; q < targetVals; q++) {
                                             values.addElement(new AdapterNode());
                                         }
@@ -1009,8 +1092,7 @@ public class ControlPanel extends javax.swing.JFrame {
                                         else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
                                         lastYear = currYear;
                                     }
-                                }
-                                
+                                }                                 
                                 values.addElement(currNode);
                             }
                         }
@@ -1030,6 +1112,10 @@ public class ControlPanel extends javax.swing.JFrame {
                             currNode = (AdapterNode)it.next();
                             currNode.setIndex(index+1);
                             queue.addElement(currNode);
+                            
+                            //don't enqueue all grade nodes, the first one is enough
+                            //  the rest will be handled by a while look alsewhere in this function
+                            if (currNode.getName().equals("grade")) break;
                         }
                     } else {
                         //get child with target name attribute and add it to the queue for examination
@@ -1043,13 +1129,18 @@ public class ControlPanel extends javax.swing.JFrame {
             } //belongs to while (!queue.isEmpty())
         } //belongs to for each region
         
+        showTable(values, header, lefter, finalNodeName);
+    }
+    
+    private void showTable(Vector values, Vector header, Vector lefter, String varName) {
+        
 //System.out.println("values  = " + values.size() + " header = " + header.size() + " lefter = " + lefter.size());
         
         TableViewModel model = new TableViewModel(values, header, lefter, showNames);
         table = new JTable(model);
         table.setCellSelectionEnabled(true);
         table.setTransferHandler(new TableTransferHandler());
-	  table.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
+	table.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
         
         //use panels to place the table appropriately
         JPanel tempPanel = new JPanel();
@@ -1059,7 +1150,7 @@ public class ControlPanel extends javax.swing.JFrame {
         
         if (!lefter.isEmpty()) {
             lefter = model.getTableLefter();
-            JPanel lefterPanel = makeLefter(lefter, finalNodeName);
+            JPanel lefterPanel = makeLefter(lefter, varName);
             lefterPanel.setPreferredSize(new Dimension(150, 10));
             lefterPanel.setMinimumSize(new Dimension(10, 10));
             
@@ -1070,6 +1161,20 @@ public class ControlPanel extends javax.swing.JFrame {
         } else {
             dataPanel.add(tempPanel);
         }
+        
+        table.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                maybeShowPopup(e);
+            }
+            public void mouseReleased(MouseEvent e) {
+                maybeShowPopup(e);
+            }
+            private void maybeShowPopup(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    tableMenu.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
+        });
        
         tableExistsFlag = true;
         
@@ -1077,10 +1182,28 @@ public class ControlPanel extends javax.swing.JFrame {
         repaint();
     }
     
-    public void makeAddChildPanel() {
-        addChildDialog = new JDialog(this, "Add child node", true);
-        addChildDialog.getContentPane().setLayout(new BoxLayout(addChildDialog.getContentPane(), BoxLayout.X_AXIS));
-        
+    public void makeAddChildDialog() {
+        addChildDialog = new JDialog(this, "Add Child Node", true);
+        Container content = addChildDialog.getContentPane();
+        content.setLayout(new BoxLayout(addChildDialog.getContentPane(), BoxLayout.X_AXIS));
+
+        content.add(makeAddNodePanel());
+        content.add(new JSeparator(SwingConstants.VERTICAL));
+        content.add(makeAddChildButtonPanel());
+    }
+    
+    public void makeCloneNodeDialog() {
+        /*cloneNodeDialog = new JDialog(this, "Duplicate Node", true);
+        Container content = addChildDialog.getContentPane();
+        content.setLayout(new BoxLayout(addChildDialog.getContentPane(), BoxLayout.X_AXIS));
+
+        content.add(makeAddNodePanel());
+        content.add(new JSeparator(SwingConstants.VERTICAL));
+        //content.add(makeAddChildButtonPanel());*/
+    }
+    
+    private JPanel makeAddNodePanel() {
+        infoLabel = new JLabel(".");
         nameField = new JTextField();
         attribField = new JTextField();
         valueField = new JTextField();
@@ -1089,32 +1212,31 @@ public class ControlPanel extends javax.swing.JFrame {
         childPanel.setLayout(new BoxLayout(childPanel, BoxLayout.Y_AXIS));
         childPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 5, 5));
         
+        childPanel.add(infoLabel);
+        childPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        
         JLabel nameLabel = new JLabel("Node Name (required): ");
         childPanel.add(nameLabel);
-        childPanel.add(Box.createRigidArea(new Dimension(0, 3)));
+        childPanel.add(Box.createRigidArea(new Dimension(0, 2)));
         childPanel.add(nameField);
-        childPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        childPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         
         JLabel attribLabel = new JLabel("Node Attribute(s) (optional list in the form name=node name, year=1975");
         childPanel.add(attribLabel);
-        childPanel.add(Box.createRigidArea(new Dimension(0, 3)));
+        childPanel.add(Box.createRigidArea(new Dimension(0, 2)));
         childPanel.add(attribField);
-        childPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        childPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         
         JLabel valueLabel = new JLabel("Node Value ");
         childPanel.add(valueLabel);
-        childPanel.add(Box.createRigidArea(new Dimension(0, 3)));
+        childPanel.add(Box.createRigidArea(new Dimension(0, 2)));
         childPanel.add(valueField);
-        childPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        childPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         
-        addChildDialog.getContentPane().add(childPanel);
+        return childPanel;
+    }
         
-        
-        locationPanel = new JPanel();
-        locationPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        addChildDialog.getContentPane().add(locationPanel);
-        
-        
+    private JPanel makeAddChildButtonPanel() {   
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0,1,5,5));
         //buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -1127,13 +1249,6 @@ public class ControlPanel extends javax.swing.JFrame {
             }
         });
         
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                hideAddChildDialog();
-            }
-        });
-        
         JButton addAllButton = new JButton("Add Everywhere");
         addAllButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -1142,10 +1257,18 @@ public class ControlPanel extends javax.swing.JFrame {
             }
         });
         
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                hideAddChildDialog();
+            }
+        });
+        
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         buttonPanel.add(addNodeButton);
-        buttonPanel.add(cancelButton);
         buttonPanel.add(addAllButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        buttonPanel.add(cancelButton);
         buttonPanel.add(Box.createVerticalGlue());
         
         JPanel tempPanel = new JPanel();
@@ -1153,7 +1276,7 @@ public class ControlPanel extends javax.swing.JFrame {
         tempPanel.add(new JSeparator(SwingConstants.VERTICAL));
         tempPanel.add(buttonPanel);
         
-        addChildDialog.getContentPane().add(tempPanel);
+        return buttonPanel;
     }
     
     private AdapterNode extractNewChild() {
@@ -1203,6 +1326,10 @@ public class ControlPanel extends javax.swing.JFrame {
         model.insertNodeInto(newChild, selectedPath, 0);
     }
     
+    /* 
+     * This function creates the dialog that will be displayed when user chooses
+     * to add a new child node or duplicate an existing node
+     */
     private void addChildrenNodes() {
         //build the new child from info entered into Add Child dialog
         AdapterNode newNode = extractNewChild();
@@ -1263,6 +1390,9 @@ public class ControlPanel extends javax.swing.JFrame {
     
     //display the add dialog box
     private void showAddChildDialog() {
+        AdapterNode currParent = (AdapterNode)selectedPath.getLastPathComponent();
+        infoLabel.setText("Adding child to " + currParent.toString());
+        
         nameField.setText("");
         attribField.setText("");
         valueField.setText("");
@@ -1339,35 +1469,58 @@ public class ControlPanel extends javax.swing.JFrame {
 
                     index++;            
                 }
-                if (currNode.getText() != null) showTable();
+                if (currNode.getText() != null) readTableData();
             }
             
         };
         newThread.start();
     }
     
+    private void cloneNode() {
+        AdapterNode currNode = (AdapterNode)selectedPath.getLastPathComponent();
+        
+        nameField.setText(currNode.getName());
+        attribField.setText(currNode.getAttributes());
+        valueField.setText(currNode.getText());
+        
+        //display possible locations where to add node
+        
+        
+        addChildDialog.pack();
+        //center above the main window
+        addChildDialog.setLocationRelativeTo(addChildDialog.getParent());
+        addChildDialog.show();
+    }
+    
     private void saveFile() {
         XMLOutputter outputter = new XMLOutputter();
-        
+                
         int returnVal = fc.showSaveDialog(this.getContentPane());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
-            
-            /*//determine whether the file is to be an xml or zip
+            //jTFfileName.setText(file.getAbsolutePath());
+            try {
+                outputter.output(document, new FileOutputStream(file));
+                nodeValueChangedFlag = false;
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }            
+           /* //determine whether the file is to be an xml or zip
             String fileName = file.toString();
             boolean zipping = false;
             int index = fileName.lastIndexOf('.');
             if (index > 0) {
                 if (fileName.substring(index+1).equals("zip")) zipping = true;
-            }*/
+            }
             
             try {
-                //if (!zipping) {
+                if (!zipping) {
                     outputter.output(document, new FileOutputStream(file));
                     //nodeValueChangedFlag = false;
-                //} else {*/
+                } else {
 
-/*                    byte[] buf = new byte[1024];
+                    byte[] buf = new byte[1024];
                     int len;
                     ZipEntry zipEntry = new ZipEntry(file.toString());
                     FileInputStream fin = new FileInputStream(file);
@@ -1382,15 +1535,15 @@ public class ControlPanel extends javax.swing.JFrame {
                     zipEntry.setSize(file.length());
                     zos.closeEntry();
                     //Close the input stream.
-                    in.close();*/
+                    in.close();
 
 
                     nodeValueChangedFlag = false;
-                //}
+                }
             } catch (Exception e) {
                 System.err.println(e);
             }
-        }
+        }*/
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
