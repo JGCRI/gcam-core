@@ -37,7 +37,7 @@ public:
     */ 
     virtual void derivedToDebugXML( std::ostream& out ) const = 0;
     void addRegion( const std::string& regionNameIn );
-    const std::vector<std::string>& getContainedRegions();
+    const std::vector<std::string> getContainedRegions() const;
     virtual void setCompanionMarketPointer( Market* pointerIn ) = 0;
 
     virtual void initPrice() = 0;
@@ -79,7 +79,6 @@ public:
     virtual bool shouldSolve() const = 0;
     virtual bool shouldSolveNR() const = 0;
     virtual std::string getType() const = 0;
-    void print( std::ostream& out ) const;
     /*!
     * \brief Binary function used to order Market* pointers by decreasing relative excess demand. 
     * \author Josh Lurz
@@ -94,17 +93,17 @@ public:
     };
 
 protected:
-    std::string good;  //!< market good or fuel
-    std::string region;  //!< market region
-    bool solveMarket; //!< Toggle for markets that should be solved
-    int period; //!< Model period
-    double price;  //!< market price
-    double storedPrice;  //!< store market price
-    double demand; //!<demand for market solution
-    double storedDemand; //!< store previous demand
-    double supply; //!< supply for market solution
-    double storedSupply; //!< store previous supply
-    std::vector <std::string> containedRegionNames; //!< Vector of names of all regions within this vector.
+    std::string good;  //!< The good the market represents
+    std::string region;  //!< The region of the market.
+    bool solveMarket; //!< Whether to solve the market given other constraints are satisfied.
+    int period; //!< The period the market is valid in.
+    double price;  //!< The market price.
+    double storedPrice;  //!< The stored market price.
+    double demand; //!< The market demand.
+    double storedDemand; //!< The stored demand.
+    double supply; //!< The market supply.
+    double storedSupply; //!< The stored supply.
+    std::vector <std::string> containedRegionNames; //!< Vector of names of all regions contained within this market.
 };
 
 #endif // _MARKET_H_
