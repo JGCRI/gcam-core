@@ -66,6 +66,7 @@ class Marketplace
    void restoreinfo( const int period );
    void setMarketInfo( const std::string& goodName, const std::string& regionName, const int period, const std::string itemName, const double itemValue );
    double getMarketInfo( const std::string& goodName, const std::string& regionName, const int period, const std::string& itemName ) const;
+   bool doesMarketExist( const std::string& goodName, const std::string& regionName, const int period ) const;
 private:
    int uniqueNo; //!< number for creating markets
    int numMarkets;  //!< number of markets

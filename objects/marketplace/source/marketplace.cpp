@@ -1110,7 +1110,7 @@ void Marketplace::setMarketInfo( const string& goodName, const string& regionNam
     }
 }
 
-   /*! \brief Gets an information value for associated key from the market for the
+/*! \brief Gets an information value for associated key from the market for the
 * specified goodName, regionName and period.
 * \detailed This functions gets extra Market information which needs to be
 * explicitally associated with a Market. 
@@ -1132,6 +1132,25 @@ double Marketplace::getMarketInfo( const string& goodName, const string& regionN
         return 0;
     }
 }
+
+/*! \brief Returns whether a Market specified by a goodName and regionName currently exists.
+* \author Josh Lurz
+* \param goodName The good name to use to search for a market.
+* \param regionName The region name to use to search for a market.
+* \param period The period to use to search for a market. This is currently not used but inserted for future expansion.
+* \return Whether the market exists.
+*/
+bool Marketplace::doesMarketExist( const std::string& goodName, const std::string& regionName, const int period ) const {
+    bool retValue;
+    if( getMarketNumber( goodName, regionName ) == -1 ) {
+        retValue = false;
+    }
+    else {
+        retValue = true;
+    }
+    return retValue;
+}
+
 
 /*! \brief Returns a vector of raw market demands for all markets.
 *
