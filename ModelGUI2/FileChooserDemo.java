@@ -443,7 +443,8 @@ public class FileChooserDemo extends JFrame
 			if (!jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
 			   Node temp = ((DOMmodel.DOMNodeAdapter)jtree.getLastSelectedPathComponent()).getNode();
 			   // HERE TO DISABLE TABLE remark function call
-			   buildTable(treePathtoXPath(selectedPath, temp)); 
+			   //buildTable(treePathtoXPath(selectedPath, temp)); 
+			   buildRegionYearTable(treePathtoXPath(selectedPath, temp, 1)); 
 			   //jtree.setSelectionPath(selectedPath);
                System.out.println("RIGHT CLICKED DISPLAY TABLE!");
 			   //showAddChildDialog();
@@ -650,25 +651,85 @@ public class FileChooserDemo extends JFrame
 
    }
 
- private XPathExpression treePathtoXPath(TreePath tp, Node currNode) {
+ private ArrayList wild;
+ private XPathExpression treePathtoXPath(TreePath tp, Node currNode, int flag) {
+	   wild = chooseTableHeaders(tp);
+	   wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
+	   wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
            XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(doc);
            String pathStr = "";
            Object[] path = tp.getPath();
            Node tempNode;
            for (int i = 0; i < path.length-1; i++) {
 	           tempNode= ((DOMmodel.DOMNodeAdapter)path[i]).getNode();
-                   pathStr = pathStr + tempNode.getNodeName() + "/";
+		   if(flag == 0) {
+                   	pathStr = pathStr + tempNode.getNodeName() + "/";
+		   } else if(flag == 1) {
+                   	   pathStr = pathStr + tempNode.getNodeName(); 
+			   Vector attrs = getAttrsNoRegionYear(tempNode);
+			   if(attrs.size() > 0) {
+				   pathStr = pathStr + "[";
+			   }
+			   for(int j=0; j < attrs.size(); j++) {
+				   pathStr = pathStr + "@" + ((Node)attrs.get(j)).getNodeName()+"='"+((Node)attrs.get(j)).getNodeValue()+"'";
+				   if(j < attrs.size()-1) {
+					   pathStr = pathStr + ",";
+				   }
+			   }
+			   if(attrs.size() >0) {
+			   	pathStr = pathStr + "]/";
+			   } else {
+				   pathStr = pathStr+ "/";
+			   }
+		   }
            }
            pathStr = "//" + pathStr + currNode.getNodeName();
            if (currNode.hasAttributes() && !getTextData(currNode).equals("")) {
-                   pathStr = pathStr + "[@" + getOneAttrVal(currNode) + "]";
+		   if(flag == 0) {
+                   	pathStr = pathStr + "[@" + getOneAttrVal(currNode) + "]";
+		   } else if(flag == 1) {
+			   Vector attrs = getAttrsNoRegionYear(currNode);
+			   if(attrs.size() > 0) {
+				   pathStr = pathStr + "[";
+			   }
+			   for(int j=0; j < attrs.size(); j++) {
+				   pathStr = pathStr + "@" + ((Node)attrs.get(j)).getNodeName()+"='"+((Node)attrs.get(j)).getNodeValue()+"'";
+				   if(j < attrs.size()-1) {
+					   pathStr = pathStr + ",";
+				   }
+			   }
+			   if(attrs.size() >0) {
+			   	pathStr = pathStr + "]/";
+			   } else {
+				   pathStr = pathStr+ "/";
+			   }
+		   }
            }
            else if (currNode.hasAttributes()) {
-                   pathStr = pathStr + "[@" + getOneAttrVal(currNode) + "]/node()";
+		   if (flag == 0) {
+                   	pathStr = pathStr + "[@" + getOneAttrVal(currNode) + "]/node()";
+		   } else if(flag == 1) {
+			   Vector attrs = getAttrsNoRegionYear(currNode);
+			   if(attrs.size() > 0) {
+				   pathStr = pathStr + "[";
+			   }
+			   for(int j=0; j < attrs.size(); j++) {
+				   pathStr = pathStr + "@" + ((Node)attrs.get(j)).getNodeName()+"='"+((Node)attrs.get(j)).getNodeValue()+"'";
+				   if(j < attrs.size()-1) {
+					   pathStr = pathStr + ",";
+				   }
+			   }
+			   if(attrs.size() >0) {
+			   	pathStr = pathStr + "]/node()";
+			   } else {
+				   pathStr = pathStr+ "/node()";
+			   }
+		   }
            }
            else {
                    pathStr = pathStr + "/node()";
            }
+	   System.out.println(pathStr);
            return xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(currNode));
  }
 
@@ -762,6 +823,78 @@ public class FileChooserDemo extends JFrame
 	  */
   }
   
+  private void buildRegionYearTable(XPathExpression xpe) {
+	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+	  xpe = null;
+	  Node tempNode;
+	  Object[] regionAndYear;
+	  TreeSet regions = new TreeSet();
+	  TreeSet years = new TreeSet();
+	  TreeMap data = new TreeMap();
+	  //try {
+	  	while ((tempNode = res.iterateNext()) != null) {
+			System.out.println("here");
+			regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode());
+			System.out.println("here2");
+			regions.add(regionAndYear[0]);
+			years.add(regionAndYear[1]);
+			data.put((String)regionAndYear[0]+(String)regionAndYear[1], tempNode);
+			System.out.println("here3");
+			System.out.println(regionAndYear[0]+"--"+regionAndYear[1]+"--"+tempNode);
+		}
+	  NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), data);
+	  jTable = new JTable(tM);
+
+	  jTable.getModel().addTableModelListener(this);
+
+	  //jTable = new JTable(tableModel);
+	  jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	  
+	  jTable.setCellSelectionEnabled(true);
+
+	  javax.swing.table.TableColumn col;
+	  Iterator i = regions.iterator();
+	  int j = 0;
+	  while(i.hasNext()) {
+		  col = jTable.getColumnModel().getColumn(j);
+		  col.setPreferredWidth(((String)i.next()).length()*5+30);
+		  j++;
+	  }
+
+	  /*
+	  for (int i = 0; i < regions.size(); i++) {
+		  col = jTable.getColumnModel().getColumn(i);
+		  col.setPreferredWidth(((String)cols.get(i)).length()*5+30);
+	  }
+	  */
+	  JScrollPane tableView = new JScrollPane(jTable);
+	  splitPane.setRightComponent(tableView);
+	  menuTableFilter.setEnabled(true);
+	  /*} catch(Exception e) {
+		  if(e.getMessage() == null) {
+		  	System.out.println("Error Building table by region and year:"+e);
+		  } else {
+		  	System.out.println(e.getMessage());
+		  }
+	  }*/
+  }
+
+  private Object[] getRegionAndYearFromNode(Node n) {
+	  Node temp;
+	  String region = null;
+	  String year = null;
+	  Vector ret = new Vector(2,0);
+	  do {
+	  	System.out.println(n);
+		  if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
+			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
+			  ret.add(getOneAttrVal(n));
+		  }
+		  n = n.getParentNode();
+		  System.out.println("here4 "+Node.DOCUMENT_NODE+" "+n.getNodeType());
+	  } while(n.getNodeType() != Node.DOCUMENT_NODE && (region == null || year == null));
+	  return ret.toArray();
+  }
 
   private void buildTable(XPathExpression xpe){
 	  jTable = null;
@@ -1325,6 +1458,22 @@ public class FileChooserDemo extends JFrame
 	  NamedNodeMap nodeMap = node.getAttributes();
 	  return nodeMap.item(0).getNodeName() +"="+ nodeMap.item(0).getNodeValue();
 	  //return ((Element)node).getAttribute(nodeMap.item(0).getNodeValue());
+  }
+
+  private Vector getAttrsNoRegionYear(Node node) {
+	  if(node.getNodeName().equals((String)wild.get(0)) || node.getNodeName().equals((String)wild.get(1)) ) {
+		 return new Vector();
+	  }
+	  NamedNodeMap nodeMap = node.getAttributes();
+	  Node tempNode;
+	  Vector ret = new Vector();
+	  for(int i = 0; i < nodeMap.getLength(); i++) {
+		  tempNode = nodeMap.item(i);
+	  	  if(!tempNode.getNodeName().equals("year")) {
+			  ret.add(tempNode);
+		  }
+	  }
+	  return ret;
   }
 
   private String getTextData(Node node) {
