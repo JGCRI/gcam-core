@@ -218,3 +218,29 @@ END IF
 
 RETURN
 END
+
+
+Subroutine WriteMagExtra()
+
+      USE COMMON
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      COMMON/BCOC/FBC1990, FOC1990	! Used only in maglink
+
+      Real*8 SO2Hist(2,200), BCOCFOrcing(200)
+      INTEGER NHist, II
+
+      OPEN (99, FILE='SO2Hist.csv')
+      READ (99,*)
+	  READ (99,*) NHist
+
+	  DO II = 1,NHist
+	    READ (99,*) SO2Hist(0,II), SO2Hist(1,II)
+      END DO
+
+	  CLOSE (99)
+
+RETURN
+END
+
+
+	  
