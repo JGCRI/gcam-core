@@ -27,14 +27,12 @@
 #include "containers/include/scenario.h"
 #include "containers/include/scenario_runner.h"
 #include "containers/include/mac_generator_scenario_runner.h"
+#include "containers/include/single_scenario_runner.h"
+#include "containers/include/merge_runner.h"
+#include "containers/include/batch_runner.h"
 #include "util/logger/include/logger_factory.h"
 #include "util/logger/include/logger.h"
 #include "util/base/include/timer.h"
-
-#if( BUILD_TESTS )
-// Unit test prototype
-int runTests();
-#endif
 
 using namespace std;
 using namespace xercesc;
@@ -45,8 +43,8 @@ ofstream bugoutfile, outFile, logfile;
 
 Scenario* scenario = 0; // model scenario info
 time_t ltime;
-XercesDOMParser* XMLHelper<void>::parser = 0;
-ErrorHandler* XMLHelper<void>::errHandler = 0;
+XercesDOMParser* XMLHelper<void>::parser;
+ErrorHandler* XMLHelper<void>::errHandler;
 
 void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFacArg );
 
@@ -54,17 +52,12 @@ void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFac
 int main( int argc, char *argv[] ) {
 
     // Use a smart pointer for configuration so that if the main is exited before the end the memory is freed.
-    auto_ptr<Configuration> conf( Configuration::getInstance() );
     string configurationArg = "configuration.xml";
     string loggerFactoryArg = "logger_factory.xml";
-    
+
     // Parse any command line arguments. 
     parseArgs( argc, argv, configurationArg, loggerFactoryArg );
-    
-    // Initialize the XML Parser.
-    XercesDOMParser* parser = XMLHelper<void>::getParser();
-    DOMNode* root = 0;
-    
+
     // Add OS dependent prefixes to the arguments.
     const string configurationFileName = string( __ROOT_PREFIX__ ) + configurationArg;
     const string loggerFileName = string( __ROOT_PREFIX__ ) + loggerFactoryArg;
@@ -72,99 +65,53 @@ int main( int argc, char *argv[] ) {
     // Initialize the timer.
     Timer timer;
     timer.start();
-    
+
     // Get time and date before model run
-    time(&ltime); 
+    time( &ltime ); 
 
     // Initialize the LoggerFactory
-    root = XMLHelper<void>::parseXML( loggerFileName, parser );
+    XercesDOMParser* parser = XMLHelper<void>::getParser();
+    DOMNode* root = XMLHelper<void>::parseXML( loggerFileName, parser );
     LoggerFactory::XMLParse( root );
 
+    // Create an auto_ptr to the scenario runner. This will automatically deallocate memory.
+    auto_ptr<ScenarioRunner> runner;
+    
     // Parse configuration file.
     root = XMLHelper<void>::parseXML( configurationFileName, parser );
+    auto_ptr<Configuration> conf( Configuration::getInstance() );
     conf->XMLParse( root );
-
-    // Open various files.
-    const string logFileName = conf->getFile( "logOutFileName" );
-    logfile.open( logFileName.c_str(), ios::out );
-    util::checkIsOpen( logfile, logFileName  );
-
-    const string bugOutFileName = conf->getFile( "bugOutFileName" );
-    bugoutfile.open( bugOutFileName.c_str(), ios::out );
-    util::checkIsOpen( bugoutfile, bugOutFileName );
     
-    // Parse the input file.
-    root = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), parser );
-
-    // Use a smart pointer for scenario so that if the main program exits before the end the memory is freed correctly. 
-    auto_ptr<Scenario> scenarioPtr( new Scenario() );
-    scenario = scenarioPtr.get(); // Need to set the global pointer.
-    scenarioPtr->XMLParse( root );
-    
-
-    // Fetch the listing of Scenario Components.
-    const list<string> scenComponents = conf->getScenarioComponents();
-    
-    // Iterate over the vector.
-    typedef list<string>::const_iterator ScenCompIter;
-    for( ScenCompIter currComp = scenComponents.begin(); currComp != scenComponents.end(); ++currComp ) {
-        cout << "Parsing " << *currComp << " scenario component." << endl;
-        root = XMLHelper<void>::parseXML( *currComp, parser );
-        scenario->XMLParse( root );
+    // Determine the correct type of ScenarioRunner to create.
+    if( conf->getBool( "BatchMode" ) ){
+        // Create the batch runner.
+        const string batchFile = conf->getFile( "BatchFile" );
+        runner.reset( new BatchRunner( batchFile ) );
+    }
+    else if( conf->getBool( "mergeFilesOnly" ) ) {
+        runner.reset( new MergeRunner() );
+    }
+    else if( conf->getBool( "createCostCurve" ) ){
+        const string abatedGas = conf->getString( "AbatedGasForCostCurves", "CO2" );
+        const unsigned int numPoints = conf->getInt( "numPointsForCO2CostCurve", 5 );
+        runner.reset( new MACGeneratorScenarioRunner( abatedGas, numPoints ) );
+    }
+    else { // Run a standard scenario.
+        runner.reset( new SingleScenarioRunner() );
     }
 
-    cout << "XML parsing complete." << endl;
-    logfile << "XML parsing complete." << endl;
+    // Setup the scenario.
+    runner->setupScenario( timer );
+    
+    // Run the scenario.
+    runner->runScenario( timer );
+
+    // Print the output.
+    runner->printOutput( timer );
 
     // Cleanup Xerces.
     XMLHelper<void>::cleanupParser();
-	
-    // Check if merging operation only is required.
-	if ( conf->getBool( "mergeFilesOnly" ) ) {
-		// Print output xml file.
-		const string xmlOutFileName = conf->getFile( "xmlOutputFileName" );
-		ofstream xmlOut;
-		xmlOut.open( xmlOutFileName.c_str(), ios::out );
-		util::checkIsOpen( xmlOut, xmlOutFileName );
-    
-		Tabs tabs;
-		scenarioPtr->toInputXML( xmlOut, &tabs );
-
-		// Close the output file. 
-		xmlOut.close();
-	} 
-	else {
-		// Override scenario name from data file with that from configuration file
-		string overrideName = conf->getString( "scenarioName" );
-		if ( overrideName != "") {
-			scenario->setName(overrideName);
-		}
-
-		// Finish initialization.
-		scenarioPtr->completeInit();
-
-	    // Print data read in time.
-		timer.save();
-		timer.print( cout, "XML Readin Time:" );
-		timer.print( logfile, "XML Readin Time:" );
-
-		// Create a scenario runner to handle running the scenario.
-		// and possibly creating a cost curve. 
-		auto_ptr<ScenarioRunner> scenRunner( new MACGeneratorScenarioRunner( scenarioPtr.get() ) );
-    
-		// Run the initial scenario.
-		scenRunner->runScenario( timer );
-	}
-
-    cout << endl << "Date & Time: " << ctime( &ltime ) << endl;
-    logfile << endl << "Date & Time: " << ctime( &ltime ) << endl;
-
-    // Close All Text Files
-    bugoutfile.close();
-    logfile.close();
-
     LoggerFactory::cleanUp();
-
     return 0;
 }
 

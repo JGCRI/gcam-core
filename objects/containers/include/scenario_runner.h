@@ -6,16 +6,13 @@
 
 /*! 
 * \file scenario_runner.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The ScenarioRunner class header file.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$
 */
-
-#include <iostream>
-
-class Scenario;
+#include <list>
 class Timer;
 
 /*! 
@@ -28,10 +25,11 @@ class Timer;
 */
 class ScenarioRunner {
 public:
-    ScenarioRunner( Scenario* scenarioIn );
-    virtual ~ScenarioRunner();
+    ScenarioRunner(){};
+    virtual ~ScenarioRunner(){};
+    virtual bool setupScenario( Timer& timer, const std::string aName = "", const std::list<std::string> aScenComponents = std::list<std::string>() ) = 0;
     virtual void runScenario( Timer& timer ) = 0;
+    virtual void printOutput( Timer& timer, const bool aCloseDB = true ) const = 0;
 protected:
-    Scenario* scenario;
     };
 #endif // _SCENARIO_RUNNER_H_
