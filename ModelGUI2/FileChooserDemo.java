@@ -936,43 +936,48 @@ public class FileChooserDemo extends JFrame
 	  TreeSet regions = new TreeSet();
 	  TreeSet years = new TreeSet();
 	  TreeMap data = new TreeMap();
+	  String old3DVar = null;
 	  //try {
 	  	while ((tempNode = res.iterateNext()) != null) {
 			regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode());
+			if(old3DVar !+ null && !(String)regionAndYear[2].equals(old3DVar)) {
+				old3DVar = (String)regionAndYear[2];
+	  			NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), data);
+	  			jTable = new JTable(tM);
+	  			jTable.getModel().addTableModelListener(this);
+
+	  			//jTable = new JTable(tableModel);
+	  			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	  
+	  			jTable.setCellSelectionEnabled(true);
+
+	  			javax.swing.table.TableColumn col;
+	  			Iterator i = regions.iterator();
+	  			int j = 0;
+	  			while(i.hasNext()) {
+		  		col = jTable.getColumnModel().getColumn(j);
+		  			col.setPreferredWidth(((String)i.next()).length()*5+30);
+		  			j++;
+	  			}
+	  			JScrollPane tableView = new JScrollPane(jTable);
+	  			if(tables == null) {
+		  			tables = new Vector();
+	  			}
+	  			tables.add(tableView);
+			}
+
 			regions.add(regionAndYear[0]);
 			years.add(regionAndYear[1]);
 			data.put((String)regionAndYear[0]+(String)regionAndYear[1], tempNode);
 		}
-	  NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), data);
-	  jTable = new JTable(tM);
 
-	  jTable.getModel().addTableModelListener(this);
-
-	  //jTable = new JTable(tableModel);
-	  jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-	  
-	  jTable.setCellSelectionEnabled(true);
-
-	  javax.swing.table.TableColumn col;
-	  Iterator i = regions.iterator();
-	  int j = 0;
-	  while(i.hasNext()) {
-		  col = jTable.getColumnModel().getColumn(j);
-		  col.setPreferredWidth(((String)i.next()).length()*5+30);
-		  j++;
-	  }
 
 	  //Container c = new Container();
-	  JScrollPane tableView = new JScrollPane(jTable);
 	  //c.add(tableView);
 	  //JScrollPane tableView = (JScrollPane)splitPane.getRightComponent();
-	  if(tables == null) {
-		  tables = new Vector();
-	  }
-	  tables.add(tableView);
 	  if(tableView == null) {
 		  System.out.println("HERe1");
-		  tableView = new JScrollPane(jTable);
+		  //tableView = new JScrollPane(jTable);
 	  } else {
 		  System.out.println("HERe2");
 	  	//tableView.add(jTable);
