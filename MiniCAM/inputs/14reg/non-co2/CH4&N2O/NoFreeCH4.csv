@@ -1,0 +1,9 @@
+IFREEREDUX
+INPUT_TABLE
+Variable ID
+707
+IFREEREDUX
+"0 = no free reductions unless IOTHGASTOG > 0, 1 = always free reductions"
+0
+
+EoF
