@@ -234,7 +234,14 @@ void GDP::writeBackCalibratedValues( const string& regionName, const int period 
    // Only need to write back calibrated values for the current period.
    double totalLaborProd = marketplace->getPrice( goodName, regionName, period );
 
-   laborProdGrowthRate[ modeltime->getmod_to_pop( period ) ] = pow( totalLaborProd, double( 1 ) / double( modeltime->gettimestep( period ) ) ) - 1;
+	int  popPeriod = modeltime->getmod_to_pop( period ); 
+   laborProdGrowthRate[ popPeriod ] = pow( totalLaborProd, double( 1 ) / double( modeltime->gettimestep( period ) ) ) - 1;
+	
+	// sjs -- put in check for illegal growth rate so that NaN does not occur
+	if ( laborProdGrowthRate[ popPeriod ] <= -1 ) {
+		cout << "ERROR: laborProd Growth Rate reset from " << laborProdGrowthRate[ popPeriod ]  << endl;
+		laborProdGrowthRate[ popPeriod ]  = -0.99;
+	}
 }
 
 //! return labor productivity
@@ -330,8 +337,8 @@ void GDP::initialGDPcalc( const int period, const double population ) {
         double lastLF = getLaborForce( period - 1 );
         double tlab = getTotalLaborProductivity( period );
         gdpValue[ period ] = gdpValueAdjusted[ period - 1 ] * tlab * ( currentLF / lastLF );
-		gdpValueAdjusted[ period ] = gdpValue[ period ]; // Temporary value so that is never zero
-        if (gdpValue[period] == 0) {
+		  gdpValueAdjusted[ period ] = gdpValue[ period ]; // Temporary value so that is never zero
+        if ( gdpValue[period] == 0 ) {
             cerr << "error in GDP (GDP = 0) :  currentLF: " << currentLF
                 << "  lastLF: " << lastLF << "  lab: " << tlab << endl;
         }
