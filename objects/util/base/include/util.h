@@ -177,6 +177,37 @@ namespace util {
       const double LARGE_NUM = 1e+6;
       return LARGE_NUM;
    }
+  /* \brief Function which returns a vector of keys from a map.
+   * \detailed This function takes a map as an argument and returns a vector 
+   * of all the keys of the map. It uses the same order as the map iterator returns.
+   * \param aMap A map to return all keys for.
+   * \return A vector of all keys from the map in the same order as the map iterator returns.
+   */
+   template<class T, class U>
+       const std::vector<const T> getKeys( const std::map<T,U> aMap ){
+        typedef std::map<T,U>::const_iterator ConstMapIterator;
+        std::vector<const T> keys;
+        for( ConstMapIterator mapIter = aMap.begin(); mapIter != aMap.end(); mapIter++ ){
+            keys.push_back( ( *mapIter ).first );
+        }
+        return keys;
+       }
+    
+   /* \brief Function which returns a vector of values from a map.
+   * \detailed This function takes a map as an argument and returns a vector 
+   * of all the values of the map. It uses the same order as the map iterator returns.
+   * \param aMap A map to return all values for.
+   * \return A vector of all values from the map in the same order as the map iterator returns.
+   */
+   template<class T, class U>
+       const std::vector<const U> getValues( const std::map<T,U> aMap ){
+        typedef std::map<T,U>::const_iterator ConstMapIterator;
+        std::vector<const U> values;
+        for( ConstMapIterator mapIter = aMap.begin(); mapIter != aMap.end(); mapIter++ ){
+            values.push_back( ( *mapIter ).second );
+        }
+        return values;
+       }
 
     /*! \brief Function which creates an XML compliant date time string.
     *
