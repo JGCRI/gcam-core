@@ -63,11 +63,6 @@ END IF
 	
 	! Need to be the same as in Allothergases
 	
-	! Need to put this into common block
-	basegwp = (/21.0, 310.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, &
-	790.0, 1300.0, 2800.0, 3800.0, 22200.0, 11900.0, 5700.0, 0.0 , 0.0, &
-	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 /)
-
 	IH245 = 10	! HFC245fa equiv
 	IH134 = 11	! HFC134a equiv
 	IH125 = 12	! HFC125 equiv (including HFC227ea)
@@ -75,16 +70,17 @@ END IF
 	IHSF6 = 14	! SF6 equiv
 	IHC2F6 = 15	! C2F6 equiv
 	IHCF4 = 16	! CF4 equiv
+	! Conver to kt for MAGICC
 		do MM = 2, NLoop
-			HGWPMAG(1,MM) = SUM(OGEMISS(IHCF4,:,:,MM)) !CF4
-			HGWPMAG(2,MM) = SUM(OGEMISS(IHC2F6,:,:,MM)) !C2F6
-			HGWPMAG(3,MM) = SUM(OGEMISS(IH125,:,:,MM)) !HFC125
-			HGWPMAG(4,MM) = SUM(OGEMISS(IH134,:,:,MM)) !HFC134a
-			HGWPMAG(5,MM) = SUM(OGEMISS(IH143,:,:,MM)) !HFC143a
+			HGWPMAG(1,MM) = SUM(OGEMISS(IHCF4,:,:,MM))*1000. !CF4
+			HGWPMAG(2,MM) = SUM(OGEMISS(IHC2F6,:,:,MM))*1000. !C2F6
+			HGWPMAG(3,MM) = SUM(OGEMISS(IH125,:,:,MM))*1000. !HFC125
+			HGWPMAG(4,MM) = SUM(OGEMISS(IH134,:,:,MM))*1000. !HFC134a
+			HGWPMAG(5,MM) = SUM(OGEMISS(IH143,:,:,MM))*1000. !HFC143a
 			HGWPMAG(6,MM) = 0.0 !HFC227ea
 			! convert to HFC245ca since this is what MAGICC expects
-			HGWPMAG(7,MM) = SUM(OGEMISS(IH245,:,:,MM)) * 640/basegwp(IH245) !HFC245ca
-			HGWPMAG(8,MM) = SUM(OGEMISS(IHSF6,:,:,MM)) !SF6
+			HGWPMAG(7,MM) = SUM(OGEMISS(IH245,:,:,MM)) * 640/basegwp(IH245)*1000. !HFC245ca
+			HGWPMAG(8,MM) = SUM(OGEMISS(IHSF6,:,:,MM))*1000. !SF6
 		end do
 	end if
 	
