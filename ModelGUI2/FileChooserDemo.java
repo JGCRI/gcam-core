@@ -749,6 +749,11 @@ public class FileChooserDemo extends JFrame
 	  JScrollPane tableView = new JScrollPane(jTable);
 	  splitPane.setRightComponent(tableView);
 	  menuTableFilter.setEnabled(true);
+	  
+	  // TRYING OUT COPY AND PASTE STUFF HERE *********************
+	  CopyPaste copyPaste = new CopyPaste(jTable); 
+	  // **
+	  
   }
 
   private void buildDemandComponents() {
