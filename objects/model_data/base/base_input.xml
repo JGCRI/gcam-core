@@ -24,6 +24,7 @@
 		<primaryFuelName>uranium</primaryFuelName>
 		<primaryFuelName>biomass</primaryFuelName>
 		<primaryFuelName>traditional biomass</primaryFuelName>
+		<primaryFuelName>renewable</primaryFuelName>
 		<region name="USA">
 			<PrimaryFuelCO2Coef name="biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="coal">27.3</PrimaryFuelCO2Coef>
