@@ -115,6 +115,69 @@ void demsector::toXML( ostream& out ) const {
     // write out the market string.
     XMLWriteElement( market, "market", out );
     XMLWriteElement( unit, "unit", out );
+    XMLWriteElementCheckDefault( pElasticityBase, "pElasticityBase", out, 0 );
+    
+    for( i = 0; modeltime->getper_to_yr( i ) < 1990; i++ ){
+        XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, 0, modeltime->getper_to_yr( i ) );
+    }
+    
+    for( i = 0; i < static_cast<int>( pElasticity.size() ); i++ ){
+        XMLWriteElementCheckDefault( pElasticity[ i ], "priceelasticity", out, 0, modeltime->getper_to_yr( i ) );
+    }
+
+    for( i = 0; i < static_cast<int>( service.size() ); i++ ){
+        XMLWriteElementCheckDefault( service[ i ], "serviceoutput", out, 0, modeltime->getper_to_yr( i ) );
+    }
+    
+    for( i = 0; i < static_cast<int>( fe_cons.size() ); i++ ){
+        XMLWriteElementCheckDefault( fe_cons[ i ], "energyconsumption", out, 0, modeltime->getper_to_yr( i ) );
+    }
+    
+    for( i = 0; i < static_cast<int>( iElasticity.size() ); i++ ){
+        XMLWriteElementCheckDefault( iElasticity[ i ], "incomeelasticity", out, 0, modeltime->getper_to_yr( i ) );
+    }
+    
+    for( i = 0; i < static_cast<int>( aeei.size() ); i++ ){
+        XMLWriteElementCheckDefault( aeei[ i ], "aeei", out, 0, modeltime->getper_to_yr( i ) );
+    }
+    
+    // write out the subsector objects.
+    for( vector<subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
+        ( *j )->toXML( out );
+    }
+    
+    // finished writing xml for the class members.
+    
+    // decrease the indent.
+    Tabs::decreaseIndent();
+    
+    // write the closing tag.
+    Tabs::writeTabs( out );
+    out << "</demandsector>" << endl;
+}
+
+//! XML output stream for derived classes
+void demsector::toXMLDerivedClass( ostream& out ) const {  
+    
+}	
+
+
+//! XML output for viewing.
+void demsector::toOutputXML( ostream& out ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    int i = 0;
+    
+    // write the beginning tag.
+    Tabs::writeTabs( out );
+    out << "<demandsector name=\"" << name << "\">" << endl;
+    
+    // increase the indent.
+    Tabs::increaseIndent();
+    
+    // write the xml for the class members.
+    // write out the market string.
+    XMLWriteElement( market, "market", out );
+    XMLWriteElement( unit, "unit", out );
     XMLWriteElement( pElasticityBase, "pElasticityBase", out );
     
     for( i = 0; i < static_cast<int>( sectorprice.size() ); i++ ){
@@ -166,12 +229,6 @@ void demsector::toXML( ostream& out ) const {
     Tabs::writeTabs( out );
     out << "</demandsector>" << endl;
 }
-
-//! XML output stream for derived classes
-void demsector::toXMLDerivedClass( ostream& out ) const {  
-    
-}	
-
 
 //! Write object to debugging xml output stream.
 void demsector::toDebugXML( const int period, ostream& out ) const {

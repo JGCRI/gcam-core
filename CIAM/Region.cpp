@@ -121,6 +121,7 @@ void Region::initElementalMembers(){
    nossec = 0;
    nodsec = 0;
    noregmrks = 0;
+   EnergyGNPElas = 0;
 }
 
 //! Return the region name.
@@ -391,6 +392,8 @@ void Region::toXML( ostream& out ) const {
    // increase the indent.
    Tabs::increaseIndent();
    
+   // Write out gnp energy elasticity.
+   XMLWriteElementCheckDefault( EnergyGNPElas, "e_GNP_elas", out, 0 );
    // write the xml for the class members.
    // write out the single population object.
    population->toXML( out );

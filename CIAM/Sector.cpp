@@ -194,6 +194,44 @@ void sector::toXML( ostream& out ) const {
     XMLWriteElement( market, "market", out );
     XMLWriteElement( unit, "unit", out );
     
+    for( int i = 0; modeltime->getper_to_yr( i ) < 1990; i++ ){
+        XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, 0, modeltime->getper_to_yr( i ) );
+    }
+    
+    // write out the subsector objects.
+    for( vector<subsector*>::const_iterator k = subsec.begin(); k != subsec.end(); k++ ){
+        ( *k )->toXML( out );
+    }
+
+    // write out variables for derived classes
+    toXMLDerivedClass( out );
+    
+    // finished writing xml for the class members.
+    
+    // decrease the indent.
+    Tabs::decreaseIndent();
+    
+    // write the closing tag.
+    Tabs::writeTabs( out );
+    out << "</supplysector>" << endl;
+}
+
+//! XML output for viewing.
+void sector::toOutputXML( ostream& out ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    
+    // write the beginning tag.
+    Tabs::writeTabs( out );
+    out << "<supplysector name=\"" << name << "\">"<< endl;
+    
+    // increase the indent.
+    Tabs::increaseIndent();
+    
+    // write the xml for the class members.
+    // write out the market string.
+    XMLWriteElement( market, "market", out );
+    XMLWriteElement( unit, "unit", out );
+    
     for( int i = 0; i < static_cast<int>( sectorprice.size() ); i++ ){
         XMLWriteElement( sectorprice[ i ], "price", out, modeltime->getper_to_yr( i ) );
     }

@@ -65,12 +65,13 @@ protected:
 
 public:
     subsector();
-    ~subsector();
+    virtual ~subsector();
     virtual void clear();
     const string getName() const;
     void XMLParse( const DOMNode* tempNode );
     void completeInit();
     void toXML( ostream& out ) const;
+    virtual void toOutputXML( ostream& out ) const;
     void toDebugXML( const int period, ostream& out ) const;
     void copytolast( const int period );
     virtual void calcPrice( const string regionName, const int period); // maw
@@ -79,7 +80,7 @@ public:
 	 bool getCalibrationStatus( const int period ) const;
 	 void setCalibrationStatus( const int period );
     void scaleCalibrationInput( const int period, const double scaleFactor ); // scale calibration values
-   double getfuelprice( const int period ) const; 
+    double getfuelprice( const int period ) const; 
     double getwtfuelprice( const int period ) const;
     double getCapacityLimit( const int period ) const;
     void applycarbontax( const double tax, const int period );

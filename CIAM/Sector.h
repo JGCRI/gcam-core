@@ -59,6 +59,7 @@ public:
     virtual void XMLDerivedClassParse( const string nodeName, const DOMNode* curr ); // for derived classes
     virtual void XMLDerivedClassParseAttr( const DOMNode* node ); // for derived classes
     virtual void toXML( ostream& out ) const;
+    virtual void toOutputXML( ostream& out ) const;
     virtual void toXMLDerivedClass( ostream& out ) const;
     virtual void toDebugXML( const int period, ostream& out ) const;
     virtual void setMarket( const string& regname ); //create markets

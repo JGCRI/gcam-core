@@ -283,6 +283,74 @@ void subsector::toXML( ostream& out ) const {
     out << "</subsector>" << endl;
 }
 
+//! XML output for viewing.
+void subsector::toOutputXML( ostream& out ) const {
+       const Modeltime* modeltime = scenario->getModeltime();
+    int i;
+    
+    // write the beginning tag.
+    Tabs::writeTabs( out );
+    out << "<subsector name=\"" << name << "\">"<< endl;
+    
+    // increase the indent.
+    Tabs::increaseIndent();
+    
+    // write the xml for the class members.
+    for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
+        XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, 1, modeltime->getper_to_yr( i ) );
+    }
+    
+    for( i = 0; i < static_cast<int>( calOutputValue.size() ); i++ ){
+        if ( doCalibration[ i ] ) {
+            XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, 0, modeltime->getper_to_yr( i ) );
+        }
+    }
+    
+    for( i = 0; i < static_cast<int>( shrwts.size() ); i++ ){
+        XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, 1, modeltime->getper_to_yr( i ) );
+    }
+    
+    for( i = 0; i < static_cast<int>( lexp.size() ); i++ ){
+        XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, 0, modeltime->getper_to_yr( i ) );
+    }
+    
+    for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
+        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, 0, modeltime->getper_to_yr( i ) );
+    }
+    
+    XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, 0, modeltime->getstartyr( ) );
+    
+    // write out the technology objects.
+    for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
+        Tabs::writeTabs( out );
+
+        // If we have an empty vector this won't work, but that should never happen.
+        assert( j->begin() != j->end() );
+
+        out << "<technology name=\"" << ( * ( j->begin() ) )->getName() << "\">" << endl;
+        
+        Tabs::increaseIndent();
+        
+        for( vector<technology*>::const_iterator k = j->begin(); k != j->end(); k++ ){
+            ( *k )->toXML( out );
+        }
+        
+        Tabs::decreaseIndent();
+        
+        Tabs::writeTabs( out );
+        out << "</technology>" << endl;
+    }
+    
+    // finished writing xml for the class members.
+    
+    // decrease the indent.
+    Tabs::decreaseIndent();
+    
+    // write the closing tag.
+    Tabs::writeTabs( out );
+    out << "</subsector>" << endl;
+}
+
 //! Write out the state of all member variables to the debug xml output stream.
 void subsector::toDebugXML( const int period, ostream& out ) const {
     
