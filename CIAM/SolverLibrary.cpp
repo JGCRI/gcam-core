@@ -403,7 +403,7 @@ void SolverLibrary::invertMatrix( Matrix& A ) {
 ???? what does this mean?*/
 void SolverLibrary::checkBracket( const double solutionTolerance, const double excessDemandSolutionFloor, vector<SolverLibrary::SolutionInfo>& sol, bool& allbracketed ){
    
-   const int numCurrMarkets = sol.size(); // number of markets to solve
+   const int numCurrMarkets = static_cast<int>( sol.size() ); // number of markets to solve
    // try rebracketing by setting bracketed array to false
    
    for( int i = 0; i < numCurrMarkets; i++ ) {
