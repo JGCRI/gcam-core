@@ -95,6 +95,7 @@ fractAgSavannah(NLP),		& ! see Ag2GetData.f90
 fractPotentialAgSavannah(NLP),	& ! see Ag2GetData.f90
 gdppercap_point(NLP),		& ! see Ag2GetData.f90
 landUseReductionFract,		& ! see Ag2GetData.f90
+deforEnergy(NLP,NMP),       & ! Energy context of deforested biomass (as used)
 
 AG2CH4(4,NLP,NMP),			& ! Methane Emissions
 AG2N2O(4,NLP,NMP),			& ! Nitrous oxide Emissions

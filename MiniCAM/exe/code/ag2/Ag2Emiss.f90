@@ -184,9 +184,25 @@ END SUBROUTINE SoilDecay
 
 !
 !-------------------------
-! Function returns amount of deforested biomass that is used for fuel
+! Function returns amount of deforested biomass that is used for fuel or logged
 
 	FUNCTION deforBioUseFract(biomassprice, gdppercap, L,M)
+
+	UseFract = deforBioUseFract_part1(biomassprice, gdppercap, L,M)
+	
+    UseFract = UseFract + loggedFract(L)
+	UseFract = min(UseFract,maxUse)
+
+	deforBioUseFract = UseFract
+
+	RETURN
+	END
+
+!
+!-------------------------
+! Function returns amount of deforested biomass that is used for fuel, not including logged fraction
+
+	FUNCTION deforBioUseFract_part1(biomassprice, gdppercap, L,M)
 
 	USE Ag2Global8
 	
@@ -215,16 +231,47 @@ END SUBROUTINE SoilDecay
 	
 	If (DeforBioUse .eq. 0) UseFract = 0
 
-    UseFract = UseFract + loggedFract(L)
-	UseFract = min(UseFract,maxUse)
+! Also calculate the energy content of biomass and store that
+	REAL*8 CarbDensity, EnergyDensity, UseFract1
+	REAL*8 gdpFact, orgDefor
+    
+    CarbDensity = 0.5 ! Assume half of biomass weight is carbon
+    EnergyDensity = 17.5 ! GJ/Tonne
+    
+	If (M.gt.1) then
+		if (EmPart(4,L) .gt. 0) DefroR = EmPart(4,L)
+		if (EmPart(5,L) .gt. 0) DefroR = DefroR + EmPart(5,L)
+    endif
 
-	deforBioUseFract = UseFract
+	! Deforested biomass in energy terms
+	orgDefor = DefroR/CarbDensity * EnergyDensity / 1000d0
+
+	! Now adjust for amount harvested for energy, assuming logging takes precidence
 	
-	if (L .eq. 100) then
-		write(97,'(3I6,10(f6.2,", "))') M,L,DeforBioUse,UseFract, gdpFact, priceFactor, recovForestFrac(L)
-	!	write(97,'("  -- Pbio,Pop",10(f6.2,", "))') biomassprice, popu(10,m)
-		write(97,*) "GDP per cap",gdppercap
-	endif
+	UseFract1 = UseFract - loggedFract(L)
+	UseFract1 = max( 0d0, UseFract1) 
+	
+	deforEnergy(L,M) = orgDefor * (1d0 - UseFract1)
+
+! Return fraction used for energy or logging
+	deforBioUseFract_part1 = UseFract
+
+	
 	RETURN
 	END
 
+
+!
+!-------------------------
+! Return amount of energy contained in harvested above ground deforested biomass
+! Does not include logging
+
+	FUNCTION deforBioEnergy(L,M)
+
+	USE Ag2Global8
+	
+	deforBioEnergy = deforEnergy(L,M)
+	
+	RETURN
+	END
+	
