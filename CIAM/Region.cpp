@@ -520,7 +520,6 @@ void Region::rscsupply(int per)
 	double prev_price = 0;
 	double prev_gdp = 0;
 	double price = 0;
-	summary[per].clearpeprod();
 	//for (int i=0;i<numResources-1;i++) {
 	for (int i=0;i<numResources;i++) {
 		goodName = resources[i]->getName();
@@ -539,9 +538,7 @@ void Region::rscsupply(int per)
 		resources[i]->annualsupply(per,gnp[per],prev_gdp,price,prev_price);
 		
 		// set market supply of resources used for solution mechanism
-		marketplace.setsupply(goodName,regionName,resources[i]->showannualprod(per),per);		
-		
-		summary[per].initpeprod(resources[i]->getName(),resources[i]->showannualprod(per));
+		marketplace.setsupply(goodName,regionName,resources[i]->showannualprod(per),per);				
 	}
 }
 
@@ -639,12 +636,8 @@ void Region::finalsupply(int per)
                 cout <<" - sector::supply mrkdmd: " << mrkdmd << " diff: " << mrkdmd-mrksupply<<endl;
             }
         }
-		
-		// update fuel consumption (primary and secondary) for supply sector
-		summary[per].updatefuelcons(supplysector[i]->getfuelcons(per)); 
+			
 	}
-	// update primary energy trade from consumption and production amounts
-	summary[per].updatepetrade(); 
 }
 
 //! Calculate regional gnp.
@@ -760,8 +753,13 @@ void Region::calcEndUsePrice( const int period ) {
 		price_ser[ period ] += demandsector[ i ]->getoutput( 0 ) * demandsector[ i ]->showprice( period );
 		
 		// calculate service price elasticity for each demand sector
-		// use read in value
-		demandsector[ i ]->calc_pElasticity( period );
+		// or use read in value, temporary code
+		bool useReadinData = true;
+		// do nothing if false
+		if (!useReadinData) {
+			demandsector[ i ]->calc_pElasticity( period );
+		}
+
 		
 	}
 }
@@ -797,17 +795,12 @@ void Region::endusedemand(int per)
 	// gnp_cap using energy adjusted gnp
 	gnp_cap[per] = gnp_adj[per]*population.total(0)/population.total(per);
 	
-	summary[per].clearfuelcons();
-	
 	for (int i=0;i<nodsec;i++) {
 		// calculate aggregate demand for end-use sector services
 		// set fuel demand from aggregate demand for services
 		// name is region or country name
 		demandsector[ i ]->aggdemand( name, gnp_cap[per], gnp_adj[per], per ); 
 		carbontaxpaid[ per ] += demandsector[ i ]->showcarbontaxpaid( per );
-		
-		// update fuel consumption (primary and secondary) for demand sector
-		summary[ per ].updatefuelcons( demandsector[ i ]->getfuelcons( per ) ); 
 	}
 }
 
@@ -1124,3 +1117,33 @@ void Region::findSimul(const int per) const {
 void Region::initializeAgMarketPrices( const vector<double>& pricesIn ) { 
 	agSector->initMarketPrices( name, pricesIn );
 }
+
+
+//! update regional summaries for reporting
+void Region::updateSummary( const int per ) { 
+
+	int i = 0;
+
+	summary[per].clearpeprod();
+	summary[per].clearfuelcons();
+	
+	for (i=0;i<numResources;i++) {
+		summary[per].initpeprod(resources[i]->getName(),resources[i]->showannualprod(per));
+	}
+	for (i=0;i<nodsec;i++) {
+		// call update for demand sector
+		demandsector[i]->updateSummary( per );
+		// update regional fuel consumption (primary and secondary) for demand sector
+		summary[ per ].updatefuelcons( demandsector[ i ]->getfuelcons( per ) ); 
+	}
+	for (i=0;i<nossec;i++) {
+		// call update for supply sector
+		supplysector[i]->updateSummary( per );
+		// update regional fuel consumption (primary and secondary) for supply sector
+		summary[per].updatefuelcons(supplysector[i]->getfuelcons(per)); 
+	}
+	// update primary energy trade from consumption and production amounts
+	summary[per].updatepetrade(); 
+}
+
+

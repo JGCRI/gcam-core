@@ -81,7 +81,6 @@ void grade::XMLParse( const DOMNode* tempNode )
 			techCh = XMLHelper<double>::getValue( tNode );
 		}
 	}
-
 }
 
 //! Write datamembers to datastream in XML format.

@@ -272,21 +272,12 @@ void sector::setoutput( const string& regionName,double dmd, int per)
 {
     int i;
 	carbontaxpaid[per] = 0; // initialize carbon taxes paid
-        
-	// clears subsector fuel consumption map
-	for ( i=0;i<nosubsec;i++) {
-		subsec[i]->clearfuelcons(per);
-	}
-	// clears sector fuel consumption map
-	summary[per].clearfuelcons();
-
+ 
 	for (i=0;i<nosubsec;i++) {
 		// set subsector output from sector demand
 		subsec[i]->setoutput( regionName,dmd,per);
 		subsec[i]->sumoutput(per);
 		carbontaxpaid[per] += subsec[i]->showcarbontaxpaid(per);
-		// sum subsector fuel consumption for demand sector fuel consumption
-		summary[per].updatefuelcons(subsec[i]->getfuelcons(per)); 
 	}
 }
 
@@ -321,14 +312,7 @@ void sector::supply( const string regionName, const int per)
     if (mrkdmd < 0) {
         cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;
     }
-        
-	for (i=0;i<nosubsec;i++) { // clear subsector fuel consumption map
-		subsec[i]->clearfuelcons(per);
-	}
-
-	summary[per].clearfuelcons(); // clears sector fuel consumption map
-
-    
+            
 	// calculate output from technologies that have fixed outputs such as hydro electric
     // Determine total fixed production and total var shares
     // Need to change the exog_supply function once new, general fixed supply method is available
@@ -353,8 +337,6 @@ void sector::supply( const string regionName, const int per)
 		subsec[i]->setoutput( regionName, mrkdmd, per ); // CHANGED JPL
 		subsec[i]->sumoutput( per );
 		carbontaxpaid[per] += subsec[i]->showcarbontaxpaid( per );
-		// sum subsector fuel consumption for supply sector fuel consumption
-		summary[per].updatefuelcons(subsec[i]->getfuelcons( per )); 
 	}
     
     if (bug) {
@@ -615,6 +597,24 @@ map<string, double> sector::getemission(int per)
 map<string, double> sector::getemfuelmap(int per) 
 {
 	return summary[per].getemfuelmap();
+}
+
+//! update summaries for reporting
+void sector::updateSummary( const int per )
+{
+	int i = 0;
+	// clears sector fuel consumption map
+	summary[per].clearfuelcons();
+
+	for (i=0;i<nosubsec;i++) {
+		// clears subsector fuel consumption map
+		subsec[i]->clearfuelcons(per);
+		// call update summary for subsector
+		subsec[i]->updateSummary(per);
+		// sum subsector fuel consumption for sector fuel consumption
+		summary[per].updatefuelcons(subsec[i]->getfuelcons(per)); 
+	}
+
 }
 
 

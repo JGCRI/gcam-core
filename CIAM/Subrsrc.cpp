@@ -128,7 +128,9 @@ void subrsrc::XMLParse( const DOMNode* node )
 	
 	//Temporary code until this variable is read in (might, for some reason, want to make this var zero)
 	for( int k = 0; k < static_cast<int>( gdpExpans.size() ); k++ ){
-		if (gdpExpans[ k ] == 0) { gdpExpans[ k ] = 1; }
+		if (gdpExpans[ k ] == 0) { 
+			gdpExpans[ k ] = 1; 
+		}
 	}
 	
 }
@@ -359,17 +361,17 @@ void subrsrc::MCoutput( const string &regname, const string& secname )
 	int i=0, m=0;
 	int maxper = modeltime.getmaxper();
 	vector<double> temp(maxper);
-	
+	string tssname = name; // tempory subsector name
+	string str; // tempory string
+	str = name + "Total";
+
 	// function arguments are variable name, double array, db name, table name
 	// the function writes all years
 	// total subsector output
 	dboutput4(regname,"Pri Energy Production",secname,name,"EJ",annualprod);
-	dboutput4(regname,"Resource",secname,name,"EJ",available);
+	dboutput4(regname,"Resource",secname,str,"EJ",available);
 	dboutput4(regname,"Price",secname,name,"$/GJ",rscprc);
-	
-	string tssname = name; // tempory subsector name
-	string str; // tempory string
-	
+		
 	// do for all grades in the sector
 	for (i=0;i<nograde;i++) {
 		str = tssname + "_" + depgrade[i][0]->getName();
@@ -385,6 +387,10 @@ void subrsrc::MCoutput( const string &regname, const string& secname )
 		for (m=0;m<maxper;m++)
 			temp[m] = depgrade[i][m]->getEnvCost();
 		dboutput4(regname,"Price EnvCost",secname,str,"$/GJ",temp);
+		// available resource for each grade
+		for (m=0;m<maxper;m++)
+			temp[m] = depgrade[i][0]->getAvail();
+		dboutput4(regname,"Resource",secname,str,"EJ",temp);
 	}
 }
 

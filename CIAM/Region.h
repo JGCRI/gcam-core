@@ -87,6 +87,7 @@ public:
 	void initializeAgMarketPrices( const vector<double>& pricesIn );
 	double showrsc( const string resourceName, const int per );
 	double showsubrsc( const string resourceName, const string& subResourceName, const int per );
+	void updateSummary( const int period ); // update regional summary for reporting
 };
 
 #endif // _REGION_H_

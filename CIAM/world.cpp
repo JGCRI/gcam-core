@@ -264,6 +264,15 @@ void World::calc(int per)
 	}	
 }
 
+//! Update all summary information for reporting
+// Orginally in world.calc, removed to call only once after solved
+void World::updateSummary( int per )
+{
+	for (int i=0;i<noreg;i++) {
+		region[i]->updateSummary(per);
+	}
+}
+
 //! sum population from each region for global total
 void World::sumpop( int per )
 {

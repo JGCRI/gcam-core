@@ -99,6 +99,7 @@ public:
 	map<string, double> getemfuelmap(int per);// get ghg emissions map in summary object 
 	map<string, double> getemindmap(int per);// get ghg emissions map in summary object 
     void adjShares(double dmd, double varSectorSharesTot, double totalFixedSupply, int per);
+	void updateSummary(const int per);  // update summaries for reporting
 };
 
 #endif // _SUBSECTOR_H_

@@ -41,6 +41,7 @@ public:
 	void initper(void); // sets number of periods in World
 	void gnp(int per); // gnp calculation for each region
 	void calc(int per); // model calculation for each region
+	void updateSummary(int per); // update summaries for reporting
 	void sumpop(int per); // sum global population
 	void sumrsc(int per); // sum regional resources for global total
 	void emiss_ind(int per); // calculate indirect emissions

@@ -77,6 +77,7 @@ public:
 	void clearfuelcons(int per);  //  clears the fuelcons map in summary
 	map<string, double> getemission(int per);// get ghg emissions map in summary object 
 	map<string, double> getemfuelmap(int per);// get ghg emissions map in summary object
+	void updateSummary(const int per);  //  update summaries for reporting
 };
 
 

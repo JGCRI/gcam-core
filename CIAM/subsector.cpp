@@ -498,7 +498,6 @@ void subsector::setoutput( const string& regionName, const double dmd, const int
 
 		// total energy input into subsector, must call after tech production
 		input[per] += techs[i][per]->showinput();
-		summary[per].initfuelcons(goodName,techs[i][per]->showinput());
 
 		// sets subsector fuel demand
 		marketplace.setdemand(goodName, regionName,techs[i][per]->showinput(),per);
@@ -889,7 +888,6 @@ double subsector::showcarbontaxpaid(int per)
 //!  gets fuel consumption map in summary object
 map<string, double> subsector::getfuelcons(int per) 
 {
-	map<string, double> test = summary[per].getfuelcons();
 	return summary[per].getfuelcons();
 }
 
@@ -916,3 +914,16 @@ map<string, double> subsector::getemindmap(int per)
 {
 	return summary[per].getemindmap();
 }
+
+//! update summaries for reporting
+void subsector::updateSummary(const int per)
+{
+	int i = 0;
+	string goodName;
+
+	for (i=0;i<notech;i++) {
+		goodName = techs[i][0]->getfname();
+		summary[per].initfuelcons(goodName,techs[i][per]->showinput());
+	}
+}
+

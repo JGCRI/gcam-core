@@ -238,6 +238,7 @@ int main()
 	
 	world.gnp(per); // call to calculate regional gnps
 	world.calc(per); // call to calculate supply and demand
+	world.updateSummary(per); // call to update summaries for reporting
 	world.sumpop(per); // call to calculate global population
 	world.emiss_ind(per); // call to calculate global emissions
 	world.sumrsc(per); // call to calculate global depletable resources
@@ -248,7 +249,6 @@ int main()
 	
 	// Loop over time steps and operate model
 	for (per=1;per<modeltime.getmaxper();per++)
-	// for ( per = 1; per == 1; per++ )
 	{	
 		cout << endl << "Period " << per <<": "<< modeltime.getper_to_yr(per) << endl;
 		logfile<< "Period:  " << per << endl;
@@ -267,6 +267,7 @@ int main()
 		world.gnp(per); // call to calculate regional gnps
 		world.calc(per); // call to calculate supply and demand
 		marketplace.solve(per); // solution uses Bisect and NR routine to clear markets
+		world.updateSummary(per); // call to update summaries for reporting
 		world.sumpop(per); // call to calculate global population
 		world.emiss_ind(per); // call to calculate global emissions
 		world.sumrsc(per); // call to calculate global depletable resources
