@@ -129,7 +129,7 @@ void technology::initElementalMembers(){
     carbontax = 0;
     carbontaxgj = 0;
     carbontaxpaid = 0;
-    lexp = 1; // initialied to 1 
+    lexp = -6; // initialied to -6 
     share = 0;
     input = 0;
     output = 0;
