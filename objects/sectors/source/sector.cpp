@@ -348,7 +348,7 @@ void Sector::initCalc( const int period ) {
 	 // to make sure share weights have been adjusted to be consistant with final solution prices
 	 //
 	 // If debugchecking flag is on extra information is printed
-    double CAL_CHECK_VAL = 0.001; // tollerance for calibration check (somewhat arbitrary)
+    const double CAL_CHECK_VAL = 0.01; // tollerance for calibration check (somewhat arbitrary)
     if ( period > 0 ) {
       double calOutputs = getCalOutput( period - 1 );
       double totalFixed = calOutputs + getFixedOutput( period - 1 );
@@ -356,26 +356,28 @@ void Sector::initCalc( const int period ) {
 		
 		// Two cases to check for. If outputs are all fixed, then calDiff should be small in either case.
 		// Even if outputs are not all fixed, then calDiff shouldn't be > CAL_CHECK_VAL (i.e., totalFixedOutputs > actual output)
- 		if ( ( ( calDiff > CAL_CHECK_VAL ) || ( ( calDiff < -CAL_CHECK_VAL ) && outputsAllFixed( period - 1 ) ) )
-			&& ( calOutputs > 0 ) ) {
-			cerr << "WARNING: " << name << " " << getXMLName() << " in " << regionName << " != cal+fixed vals (";
-			cerr << totalFixed << " )" << " in yr " <<  modeltime->getper_to_yr( period - 1 );
-			cerr << " by: " << calDiff << " (" << calDiff*100/calOutputs << "%) " << endl;
-			if ( debugChecking ) {
-				cout << "   fixedSupplies: " << "  "; 
-				for ( int i=0; i<nosubsec; i++ ) {
-					double fixedSubSectorOut =  subsec[ i ]->getTotalCalOutputs( period - 1 ) + subsec[ i ]->getFixedOutput( period - 1 );
-					cout << "sSubSec["<<i<<"] "<< fixedSubSectorOut << ", ";
-				} 
-				cout << endl;
-				cout << "   Production: " << "  "; 
-				for ( int i=0; i<nosubsec; i++ ) {
-					cout << "sSubSec["<<i<<"] "<< subsec[ i ]->getOutput( period - 1 ) << ", ";
-				} 
-				cout << endl;
-			}
-
-		}
+ 		const bool printDetails = false;
+      if ( calOutputs > 0 ) {
+         double diffFraction = calDiff/calOutputs;
+         if ( ( calDiff > CAL_CHECK_VAL ) || ( ( abs(diffFraction) > CAL_CHECK_VAL ) && outputsAllFixed( period - 1 ) ) ) {
+            cerr << "WARNING: " << name << " " << getXMLName() << " in " << regionName << " != cal+fixed vals (";
+            cerr << totalFixed << " )" << " in yr " <<  modeltime->getper_to_yr( period - 1 );
+            cerr << " by: " << calDiff << " (" << calDiff*100/calOutputs << "%) " << endl;
+            if ( debugChecking && printDetails) {
+               cout << "   fixedSupplies: " << "  "; 
+               for ( int i=0; i<nosubsec; i++ ) {
+                  double fixedSubSectorOut =  subsec[ i ]->getTotalCalOutputs( period - 1 ) + subsec[ i ]->getFixedOutput( period - 1 );
+                  cout << "ss["<<i<<"] "<< fixedSubSectorOut << ", ";
+               } 
+               cout << endl;
+               cout << "   Production: " << "  "; 
+               for ( int i=0; i<nosubsec; i++ ) {
+                  cout << "ss["<<i<<"] "<< subsec[ i ]->getOutput( period - 1 ) << ", ";
+               } 
+               cout << endl;
+            }
+         } // calDiff branch
+      }
     }
 }
 
