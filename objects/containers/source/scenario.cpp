@@ -23,11 +23,9 @@
 #include "containers/include/world.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
-#include "util/logger/include/logger_factory.h"
-#include "util/logger/include/logger.h"
+#include "util/logger/include/ilogger.h"
 #include "util/curves/include/curve.h"
 #include "solution/solvers/include/solver.h"
-#include "solution/solvers/include/bisection_nr_solver.h"
 
 using namespace std;
 using namespace xercesc;
@@ -38,8 +36,7 @@ extern "C" { void _stdcall CLIMAT(void); };
 #endif
 
 time_t ltime;
-extern ofstream logfile, outFile;
-
+extern ofstream outfile;
 const string Scenario::XML_NAME = "scenario";
 
 //! Default construtor
@@ -125,14 +122,15 @@ void Scenario::XMLParse( const DOMNode* node ){
             world->XMLParse( curr );
         }
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing scenario." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing scenario." << endl;
         }
     }
 }
 
 //! Sets the name of the scenario. 
 void Scenario::setName(string newName) {
-
     // Used to override the read-in scenario name.
     name = newName;
 }
@@ -145,8 +143,8 @@ void Scenario::completeInit() {
     world->completeInit();
     
     // Create the solver and initialize with a pointer to the Marketplace and World.
-    solver.reset( new BisectionNRSolver( marketplace.get(), world.get() ) );
-
+    const string solverName = Configuration::getInstance()->getString( "SolverName" );
+    solver = Solver::getSolver( solverName, marketplace.get(), world.get() );
     // Complete the init of the solution object.
     solver->init();
 }
@@ -223,10 +221,12 @@ bool Scenario::run( string filenameEnding ){
     bool success = true;
 
     // Loop over time steps and operate model
-    for ( int per = 0; per < modeltime->getmaxper(); per++ ) {	
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::NOTICE );
+    for( int per = 0; per < modeltime->getmaxper(); per++ ) {	
         // Write out some info.
-        cout << endl << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl;
-        logfile << "Period:  " << per << "  Year:  " << modeltime->getper_to_yr(per) << endl;
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl;
 
         // Run the iteration of the model.
         marketplace->nullSuppliesAndDemands( per ); // initialize market demand to null
@@ -244,26 +244,27 @@ bool Scenario::run( string filenameEnding ){
         if( conf->getBool( "PrintDependencyGraphs" ) ) {
             printGraphs( per ); // Print out dependency graphs.
         }
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << endl;
     }
 
     // Denote the run has been performed. 
     runCompleted = true;
 
     toDebugXMLClose( xmlDebugStream, &tabs ); // Close the xml debugging tag.
-    logfile << "Model run completed" << endl;
-    logfile << "Calculating emissions totals." << endl;
+    mainLog << "Model run completed." << endl;
+    mainLog << "Calculating emissions totals." << endl;
     world->calculateEmissionsTotals();
-    logfile << "Writing CLIMAT() input file." << endl;
+    mainLog.setLevel( ILogger::DEBUG );
+    mainLog << "Writing CLIMAT() input file." << endl;
     writeClimatData(); // writes the input text file
 
 #if(__HAVE_FORTRAN__)
-    cout << endl << "Calling the climate model..."<< endl;
-    logfile << endl << "Calling CLIMAT"<< endl;
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Calling the climate model..."<< endl;
     CLIMAT();
-    if ( conf->getBool( "debugChecking" ) ) {
-        cout << "Finished with CLIMAT()" << endl;
-    }
-    logfile << endl << "Finished with CLIMAT()" << endl;
+    mainLog.setLevel( ILogger::DEBUG );
+    mainLog << "Finished with CLIMAT()" << endl;
 #endif
     xmlDebugStream.close();
     return success;
@@ -282,16 +283,14 @@ bool Scenario::run( string filenameEnding ){
 * \param period The period to print graphs for.
 */
 void Scenario::printGraphs( const int period ) const {
-
     Configuration* conf = Configuration::getInstance();
-    string fileName;
-    ofstream graphStream;
     stringstream fileNameBuffer;
-
     // Create the filename.
     fileNameBuffer << conf->getFile( "dependencyGraphName", "graph" ) << "_" << period << ".dot";
+    string fileName;
     fileNameBuffer >> fileName;
-
+    
+    ofstream graphStream;
     graphStream.open( fileName.c_str() );
     util::checkIsOpen( graphStream, fileName );
 
@@ -305,7 +304,8 @@ void Scenario::printGraphs( const int period ) const {
 * \author Josh Lurz
 */
 void Scenario::printSectorDependencies() const {
-    Logger* logger = LoggerFactory::getLogger( "SectorDependencies.csv" );
+    ILogger& logger = ILogger::getLogger( "sector_dependencies" );
+    logger.setLevel( ILogger::DEBUG );
     world->printSectorDependencies( logger );
 }
 
@@ -353,19 +353,17 @@ bool Scenario::solve( const int period ){
     // TODO: This should be added to the db. Using a logger would remove the dual writes.
     // If it was the last period print the ones that did not solve.
     if( modeltime->getmaxper() - 1 == period  ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
         if( static_cast<int>( unsolvedPeriods.size() ) == 0 ) {
-            cout << "All model periods solved correctly." << endl;
-            logfile << "All model periods solved correctly." << endl;
+            mainLog << "All model periods solved correctly." << endl;
             return true;
         }
-        cout << "The following model periods did not solve: ";
-        logfile << "The following model periods did not solve: ";
+        mainLog << "The following model periods did not solve: ";
         for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
-            cout << *i << ", ";
-            logfile << *i << ", ";
+            mainLog << *i << ", ";
         }
-        cout << endl;
-        logfile << endl;
+        mainLog << endl;
         return false;
     }
     return true; // The error will be sent after the last iteration.
@@ -377,6 +375,7 @@ void Scenario::csvOutputFile() const {
     // Open the output file.
     const Configuration* conf = Configuration::getInstance();
     const string outFileName = conf->getFile( "outFileName" );
+    ofstream outFile;
     outFile.open( outFileName.c_str(), ios::out );
     util::checkIsOpen( outFile, outFileName ); 
     
@@ -405,9 +404,9 @@ void Scenario::openDebugXMLFile( ofstream& xmlDebugStream, const string& fileNam
     string debugFileName = conf->getFile( "xmlDebugFileName", "debug.xml" );
     size_t dotPos = debugFileName.find_last_of( "." );
     debugFileName = debugFileName.insert( dotPos, fileNameEnding );
-    if ( conf->getBool( "debugChecking" ) ) { 
-        cout << "Debugging information for this run in: " << debugFileName << endl;
-    }
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::DEBUG );
+    mainLog << "Debugging information for this run in: " << debugFileName << endl;
     xmlDebugStream.open( debugFileName.c_str(), ios::out );
     util::checkIsOpen( xmlDebugStream, debugFileName );
 }
