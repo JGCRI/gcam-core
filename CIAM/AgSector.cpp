@@ -5,6 +5,8 @@
 #include "Marketplace.h"
 #include "modeltime.h"
 #include <cassert>
+#include <iostream>
+#include <fstream>
 
 // Fortran calls.
 extern "C" { void _stdcall SETGNP( int&, double[] ); };
@@ -22,6 +24,14 @@ extern Marketplace marketplace;
 
 using namespace std;
 
+int AgSector::regionCount = 0;
+const int AgSector::numAgMarkets = 12;
+bool AgSector::init = false;
+map<string, int> AgSector::nameToIndiceMap;
+vector<string> AgSector::marketNameVector;
+map<int, string> AgSector::indiceToNameMap;
+vector< vector< double > > AgSector::readGDPS;
+vector<double> AgSector::bPriceVector;
 //! Constructor
 AgSector::AgSector() {
 
@@ -29,7 +39,14 @@ AgSector::AgSector() {
 	regionCount++;
 	biomassPrice = 0;
 	
-	
+	if( !init ){
+		staticInitialize();
+	}
+}
+
+//! Initialize static data members.
+void AgSector::staticInitialize(){
+	init = true;
 	// Initialize marketNameVector(Really should be static)
 	marketNameVector.push_back( "wood" );
 	marketNameVector.push_back( "forward wood" );
@@ -38,7 +55,7 @@ AgSector::AgSector() {
 	marketNameVector.push_back( "oil crops" );
 	marketNameVector.push_back( "misc crops" );
 	marketNameVector.push_back( "pasture" );
-
+	
 	// Initialize nameToIndiceMap
 	nameToIndiceMap[ "wood" ] = 5;
 	nameToIndiceMap[ "forward wood" ] = 6;
@@ -47,7 +64,7 @@ AgSector::AgSector() {
 	nameToIndiceMap[ "oil crops" ] = 9;
 	nameToIndiceMap[ "misc crops" ] = 10;
 	nameToIndiceMap[ "pasture" ] = 11;
-
+	
 	indiceToNameMap[ 0 ] = "crude oil";
 	indiceToNameMap[ 1 ] = "natural gas";
 	indiceToNameMap[ 2 ] = "coal";
@@ -60,7 +77,40 @@ AgSector::AgSector() {
 	indiceToNameMap[ 9 ] = "oil crops";
 	indiceToNameMap[ 10 ] = "misc crops";
 	indiceToNameMap[ 11 ] = "pasture";
+	
+	bPriceVector.push_back( 1 ); // fake base year price.
+	bPriceVector.push_back( 6.8187 );
+	bPriceVector.push_back( 7.0215 );
+	bPriceVector.push_back( 7.2822 );
+	bPriceVector.push_back( 7.2238 );
+	bPriceVector.push_back( 6.9027 );
+	bPriceVector.push_back( 7.4417 );
+	bPriceVector.push_back( 8.5279 );
+	bPriceVector.push_back( 8.5581 );
+	
+	// this happens once for every region but this is temporary.
+	ifstream gdpFile;
+	gdpFile.open( "gdps.txt" );
+	int regionNumber;
+	
+	for( int i = 0; i <= 14; i++ ) {
+		vector<double> tempVector( 9 );
+		for( int j = 0; j < 9; j++ ) {
+			if( j == 0 ){
+				gdpFile >> regionNumber;
+				tempVector[ j ] = 1;
+			}
+			else {
+				gdpFile >> tempVector[ j ];
+			}
+		}
+		if( i != 0 ){
+			readGDPS.push_back( tempVector );
+		}
+	}
+	gdpFile.close();
 }
+
 
 //! Helper function to transpose an array.
 void AgSector::transposeArray( double array[][14], int dimension1, int dimension2 ) {
@@ -210,6 +260,7 @@ void AgSector::setGNP( const vector<double>& gnpsToFortran ) {
 	
 	for ( int i = 0; i < static_cast<int>( gnpsToFortran.size() ); i++ ) {
 		toFortran[ i ] = gnpsToFortran[ i ];
+		// toFortran[ i ] = readGDPS[ regionNumber ][ i ];
 	}
 
 	SETGNP( regionNumber, toFortran );
@@ -237,7 +288,7 @@ void AgSector::setBiomassPrice( const double bioPriceIn ) {
 	double* biomassPriceArray = new double[ 1 ];
 	biomassPriceArray[ 0 ] = bioPriceIn;
 
-	SETBIOMASSPRICE( biomassPriceArray );
+	// SETBIOMASSPRICE( biomassPriceArray ); // new
 }
 
 //! Run the underlying AgLU model.
@@ -258,13 +309,19 @@ void AgSector::runModel( const int period, const string& regionName ) {
 	}
 
 	// Temporarily zero biomass price
-	priceArray[ 3 ] = 0;
+	priceArray[ 3 ] = bPriceVector[ period ]; // new for bmass
 
 	AG2RUN( priceArray, tempRegionNumber, tempPeriod, demandArray, supplyArray );
 	
 	for( int j = 0; j < numAgMarkets; j++ ) {
-		demands[ period ][ j ] = demandArray[ j ];
-		supplies[ period ][ j ] = supplyArray[ j ];
+		if( j == 3 ){ // new for bmass
+			demands[ period ][ j ] = 0;
+			supplies[ period ][ j ]  = 0;
+		}
+		else {
+			demands[ period ][ j ] = demandArray[ j ];
+			supplies[ period ][ j ] = supplyArray[ j ];
+		}
 	}
 	
 	// set the market supplies and demands.

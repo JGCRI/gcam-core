@@ -20,9 +20,6 @@
 using namespace std;
 using namespace xercesc;
 
-static int regionCount = 0; //!< Tracks how many AgSectors have been instantiated.
-static const int numAgMarkets = 12; //!<Number of internally solved ag markets.
-
 /*! 
 * \ingroup CIAM
 * \brief A class which defines the agricultural sector of a region. 
@@ -34,6 +31,15 @@ static const int numAgMarkets = 12; //!<Number of internally solved ag markets.
 class AgSector {
 	
 private:
+	static int regionCount; //!< Tracks how many AgSectors have been instantiated.
+	static const int numAgMarkets; //!<Number of internally solved ag markets.
+	static bool init; //!< Whether the static data has been initialized.
+	static map<string, int> nameToIndiceMap; //! Converts market name into market indice.
+	static vector<string> marketNameVector; //! Contains the names of all agLu markets.
+	static map<int, string> indiceToNameMap; //! Contains a mapping of indice to name.
+	static vector< vector< double > > readGDPS; //! Contains read-in GDP's
+	static vector<double> bPriceVector; //!< Biomass prices from minicam.
+	
 	string name; //!< Name of the agricultural sector.
 	int regionNumber; //!< The region number of the container region.
 	vector<double> gnp; //!< Contains the gnps passed to the AgLu model.
@@ -43,10 +49,7 @@ private:
 	vector< vector<double> > prices; //! Market prices passed into the agLU model.
 	vector< vector<double> > supplies; //! Market supplies returned from the AgLu model.
 	vector< vector<double> > demands; //! Market demands returned from the AgLu model.
-	map<string, int> nameToIndiceMap; //! Converts market name into market indice.
-	vector<string> marketNameVector; //! Contains the names of all agLu markets.
-	map<int, string> indiceToNameMap; //! Contains a mapping of indice to name.
-	
+	static void staticInitialize();
 public:
 	AgSector();
 	void clear();
