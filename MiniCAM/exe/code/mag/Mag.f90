@@ -16,6 +16,7 @@
 !
 ! Revision history:
 
+! 012605  *  Added output of total Kyoto forcing to MiniCAM
 ! 030526  *  Revised to work with MiniCAM 5/2003 mrj
 ! changes based on those by sjs and hmp in prior MAGICC version
 ! Major changes:
@@ -265,7 +266,8 @@
      ednet(226:iTp+1),DUSER,FUSER,CORRUSER,CORRMHI,CORRMMID,CORRMLO
 !
       COMMON /FORCE/qco2(0:iTp),qm(0:iTp),qn(0:iTp),QCFC(0:iTp), &
-     QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp) 
+     QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp), &
+     QCH4H2O(0:iTp)
 !
       COMMON /METH2/LEVCH4,ch4bar90,QQQN2O
 !
@@ -2326,6 +2328,7 @@ END IF !IWrite
         QQRKYMAG = (QKYMAG(226)   +QKYMAG(225))   /2.
         QQRMONT  = (QMONT(226)    +QMONT(225))    /2.
         QQROTHER = (QOTHER(226)   +QOTHER(225))   /2.
+        QQCH4H2O = (QCH4H2O(226)  +QCH4H2O(225)) /2.	! sjs
 !
 !   PRINT OUT DELTA-Q FROM MID 1990 TO MAG.OUT
 !
@@ -2617,7 +2620,7 @@ IF(IWrite.eq.1)THEN
       'FcCO2,FcCH4,FcN2O,FcHALOS,FcTROPO3,', &
       'FcSO4DIR,FcSO4IND,FcBIOAER,', &
       'FcTOTAL,FOSSCO2,NETDEFOR,CH4Em,N2OEm,SO2-REG1,SO2-REG2,SO2-REG3,', &
-      'SeaLevel,')
+      'SeaLevel,FcKyoto,FcHFC,FcCFC+SF6,FcCH4H2O')
 
 	IF (IWrite .eq. 1) WRITE(9,101)  !header row
 
@@ -2655,15 +2658,46 @@ IF(IWrite.eq.1)THEN
           DELMONT  = (QMONT(IYR)  +QMONT(IYRP))   /2.-QQRMONT
           DELOTHER = (QOTHER(IYR) +QOTHER(IYRP))  /2.-QQROTHER
           DELKYOTO = DELKYMAG+DELOTHER
+
+! SJS -- Repeat code from above to get proper total forcing
+        QQQSO2 = 0.0
+        QQQDIR = 0.0
+        IF(K.GT.1860)THEN
+          QQQSO2 = (QSO2SAVE(IYR)+QSO2SAVE(IYRP))/2.
+          QQQDIR = (QDIRSAVE(IYR)+QDIRSAVE(IYRP))/2.
+        ENDIF
+        QQQIND = QQQSO2-QQQDIR
+!
+        QQQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.
+        QQQM   = (QM(IYR)+QM(IYRP))/2.
+        QQQN   = (QN(IYR)+QN(IYRP))/2.
+        QQQCFC = (QCFC(IYR)+QCFC(IYRP))/2.
+        QQQOZ  = (QOZ(IYR)+QOZ(IYRP))/2.
+        QQQFOC = (QFOC(IYR)+QFOC(IYRP))/2.
+
+!
+! NOTE SPECIAL CASE FOR QOZ BECAUSE OF NONLINEAR CHANGE OVER 1990
+!
+        IF(IYR.EQ.226)QQQOZ=QOZ(IYR)
+!
+        QQQBIO = (QBIO(IYR)+QBIO(IYRP))/2.
+        QQQTOT = QQQCO2+QQQM+QQQN+QQQCFC+QQQSO2+QQQBIO+QQQOZ
+
+! Halocarbon forcing
+       QHCFC1 = Q245_ar(IYR)+Q134A_ar(IYR)+Q125_ar(IYR)+Q227_ar(IYR)+ &
+				Q143A_ar(IYR)+QOTHER(IYR)
+	   QLong1 = QCF4_ar(IYR)+QC2F6_ar(IYR)+qSF6_ar(IYR)
+       QHCFC2 = Q245_ar(IYRP)+Q134A_ar(IYRP)+Q125_ar(IYRP)+ &
+				Q227_ar(IYRP)+Q143A_ar(IYRP)+QOTHER(IYRP)
+	   QLong2 = QCF4_ar(IYRP)+QC2F6_ar(IYRP)+qSF6_ar(IYRP)
+	   
+! Add Kyoto total forcing output to MC Array
+          DELCH4H2O = (QCH4H2O(IYR)+QCH4H2O(IYRP))/2. ! rel to preindustrial
+          QKyotoTot = DELQCO2 + DELQM - DELCH4H2O + DELQN + DELKYOTO
+! Add back in offsets so this is relative to preindustrial
+          QKyotoTot = QKyotoTot + QQQCO2R + (QQQMR-QQQMO3R) + QQQNR + QQRKYMAG + QQROTHER
+
 !*** end MAGICC code block
-
-! now we can write stuff out
-
-		IF (IWrite .eq. 1)  &
-          WRITE (9,100) K,TEMUSER(IYR)+TGAV(226),CO2(IYR),CH4(IYR),CN2O(IYR), &
-          DELQCO2,DELQM,DELQN,DELQCFC,DELQOZ, &
-          DELQD,DELQIND,DELQBIO,QGLOBE(IYR),EF(IYR),EDNET(IYR),ECH4(IYR), &
-          EN2O(IYR),ESO21(IYR)-ES1990,ESO22(IYR)-ES1990,ESO23(IYR)-ES1990,SLUSER(IYR)
 
 ! code to pass these items to MiniCAM in Results array
 
@@ -2672,15 +2706,15 @@ IF(IWrite.eq.1)THEN
 	 MAGICCCResults(2,(K-1990)/IIPRT+1) = CO2(IYR)
 	 MAGICCCResults(3,(K-1990)/IIPRT+1) = CH4(IYR)
 	 MAGICCCResults(4,(K-1990)/IIPRT+1) = CN2O(IYR)
-	 MAGICCCResults(5,(K-1990)/IIPRT+1) = DELQCO2
-	 MAGICCCResults(6,(K-1990)/IIPRT+1) = DELQM
-	 MAGICCCResults(7,(K-1990)/IIPRT+1) = DELQN
-	 MAGICCCResults(8,(K-1990)/IIPRT+1) = DELQCFC
-	 MAGICCCResults(9,(K-1990)/IIPRT+1) = DELQOZ
-	 MAGICCCResults(10,(K-1990)/IIPRT+1) = DELQD
-	 MAGICCCResults(11,(K-1990)/IIPRT+1) = DELQIND
-	 MAGICCCResults(12,(K-1990)/IIPRT+1) = DELQBIO
-	 MAGICCCResults(13,(K-1990)/IIPRT+1) = QGLOBE(IYR)	! sjs -- changed to reflect actual forcing including qextra & any other mods
+	 MAGICCCResults(5,(K-1990)/IIPRT+1) = DELQCO2+QQQCO2R
+	 MAGICCCResults(6,(K-1990)/IIPRT+1) = DELQM + (QQQMR-QQQMO3R)
+	 MAGICCCResults(7,(K-1990)/IIPRT+1) = DELQN + QQQNR
+	 MAGICCCResults(8,(K-1990)/IIPRT+1) = DELQCFC + QQQCFCR
+	 MAGICCCResults(9,(K-1990)/IIPRT+1) = QOZMID + QQQMO3R
+	 MAGICCCResults(10,(K-1990)/IIPRT+1) = DELQD + QQQDIRR
+	 MAGICCCResults(11,(K-1990)/IIPRT+1) = DELQIND + (QQQSO2R - QQQDIRR)
+	 MAGICCCResults(12,(K-1990)/IIPRT+1) = DELQBIO + QQQBIOR
+	 MAGICCCResults(13,(K-1990)/IIPRT+1) = QQQTOT	! sjs -- changed to reflect actual forcing including qextra & any other mods
 	 MAGICCCResults(14,(K-1990)/IIPRT+1) = EF(IYR)
 	 MAGICCCResults(15,(K-1990)/IIPRT+1) = EDNET(IYR)
 	 MAGICCCResults(16,(K-1990)/IIPRT+1) = ECH4(IYR)
@@ -2689,6 +2723,16 @@ IF(IWrite.eq.1)THEN
 	 MAGICCCResults(19,(K-1990)/IIPRT+1) = ESO22(IYR)-ES1990
 	 MAGICCCResults(20,(K-1990)/IIPRT+1) = ESO23(IYR)-ES1990
 	 MAGICCCResults(21,(K-1990)/IIPRT+1) = SLUSER(IYR)
+	 MAGICCCResults(22,(K-1990)/IIPRT+1) = QKyotoTot	! Added 1/26/05
+	 MAGICCCResults(23,(K-1990)/IIPRT+1) = (QHCFC1+QHCFC2)/2.	! Added 1/26/05
+	 MAGICCCResults(24,(K-1990)/IIPRT+1) = (QLong1+QLong2)/2.	! Added 1/26/05
+	 MAGICCCResults(25,(K-1990)/IIPRT+1) = DELCH4H2O	! Added 1/26/05
+
+! now we can write stuff out
+
+		IF (IWrite .eq. 1)  &
+          WRITE (9,100) K,MAGICCCResults(1:25,(K-1990)/IIPRT+1)
+
 	END DO
 
 	IF (IWrite .eq. 1) WRITE(9,*)
@@ -2952,7 +2996,9 @@ IF(IWrite.eq.1)THEN
      QSO2(0:iTp+1),QDIR(0:iTp+1)
 !
       COMMON /FORCE/qco2(0:iTp),qm(0:iTp),qn(0:iTp),QCFC(0:iTp), &
-     QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp) 
+     QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp), &
+     QCH4H2O(0:iTp)
+ 
 !
       common /Sulph/S90DIR,S90IND,S90BIO,ENAT,ES1990,ECO90,FOC90,IFOC
       COMMON /VARW/Z(40),W(2),DW(2),TO0(2),TP0(2),WNH(iTp),WSH(iTp), &
@@ -3898,7 +3944,9 @@ IF(IWrite.eq.1)THEN
      ednet(226:iTp+1),DUSER,FUSER,CORRUSER,CORRMHI,CORRMMID,CORRMLO
 !
       COMMON /FORCE/qco2(0:iTp),qm(0:iTp),qn(0:iTp),QCFC(0:iTp), &
-     QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp)
+     QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp), &
+     QCH4H2O(0:iTp)
+
 !
       COMMON /METH2/LEVCH4,ch4bar90,QQQN2O
 !
@@ -4344,6 +4392,7 @@ IF(IWrite.eq.1)THEN
 !   CORRECTION TERM IS TO MAKE THE CHANGE RELATIVE TO MID 1765.
 !
       QH2O=STRATH2O*QCH4
+      QCH4H2O(J) = QH2O
 !
 !  QCH4OZ IS THE TROP OZONE FORCING FROM CH4 CHANGES.
 !   HISTORY : USE THE TAR LOGARITHMIC RELATIONSHIP, SCALED TO
