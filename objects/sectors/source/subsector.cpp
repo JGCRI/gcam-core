@@ -1395,11 +1395,11 @@ void Subsector::csvOutputFile() const {
         fileoutput3( regionName,sectorName,name,techs[i][mm]->getName(),"CO2 emiss(ind)","MTC",temp);
     }
     
-    csvDerivedClassOutput( );
+    csvDerivedClassOutput();
 }
 
 //! Outputs any variables specific to derived classes
-void Subsector::csvDerivedClassOutput( ) {
+void Subsector::csvDerivedClassOutput() const {
     // do nothing
 }
 
@@ -1643,7 +1643,7 @@ void Subsector::MCoutputAllSectors() const {
 }
 
 //! Outputs any variables specific to derived classes
-void Subsector::MCDerivedClassOutput( ) {
+void Subsector::MCDerivedClassOutput( ) const {
     // do nothing
 }
 

@@ -205,12 +205,11 @@ void TranSubsector::setoutput( const double demand, const int period, const GDP*
     
 }
 
-
 /*! \brief Writes variables specific to transportation class to database.
 *
 * \author Steve Smith
 */
-void TranSubsector::MCDerivedClassOutput( ) {
+void TranSubsector::MCDerivedClassOutput() const {
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);

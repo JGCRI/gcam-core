@@ -36,7 +36,7 @@ class GDP;
 class Subsector
 {
 private:
-	static const std::string XML_NAME; //!< node name for toXML methods
+    static const std::string XML_NAME; //!< node name for toXML methods
 protected:
     bool debugChecking; //!< General toggle to turn on various checks
     std::string name; //!< subsector name
@@ -71,8 +71,9 @@ protected:
     void shareWeightScale( const int pmer ); // Consistantly adjust share weights
     void sumOutput( const int period );
     void shareWeightInterp( const int beginPeriod,  const int endPeriod );
-	 bool techHasInput( const technology* thisTech, const std::string& goodName ) const;
-
+    bool techHasInput( const technology* thisTech, const std::string& goodName ) const;
+    virtual void MCDerivedClassOutput() const;
+    virtual void csvDerivedClassOutput() const;
 public:
     Subsector( const std::string regionName, const std::string sectorName );
     virtual ~Subsector();
@@ -84,8 +85,8 @@ public:
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	virtual const std::string& getXMLName() const;
-	static const std::string& getXMLNameStatic();
+    virtual const std::string& getXMLName() const;
+    static const std::string& getXMLNameStatic();
     virtual void calcPrice( const int period );
     double getPrice( const int period ) const;
     double getCO2EmFactor(int period) const;
@@ -110,18 +111,16 @@ public:
     void calcTechShares ( const int period );
     virtual void setoutput( const double demand, const int period, const GDP* gdp ); 
     double exogSupply( const int period );
-	 bool inputsAllFixed( const int period, const std::string& goodName ) const;
+    bool inputsAllFixed( const int period, const std::string& goodName ) const;
     void scalefixedOutput( const double scaleRatio, const int period );
     double getFixedOutput( const int period ) const;
     void resetfixedOutput( const int period );
     double getTotalCalOutputs( const int period ) const;
     double getFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const;
     void csvOutputFile() const; 
-    virtual void csvDerivedClassOutput( );
     void MCoutputSupplySector() const; 
     void MCoutputDemandSector() const; 
     void MCoutputAllSectors() const; 
-    virtual void MCDerivedClassOutput( );
     void emission( const int period );
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period )  const;
@@ -135,6 +134,6 @@ public:
     void adjShares( const double demand, const double shareRatio, const double totalfixedOutput, const int period );
     void updateSummary( const int period );
     void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
-	 void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
+    void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
 };
 #endif // _SUBSECTOR_H_
