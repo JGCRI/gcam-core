@@ -8,6 +8,3 @@ text outputfile
 
 INPUT_TABLE
 ..\input\AgLU\AGIN_14.csv
-
-INPUT_TABLE
-..\input\AgLU\Catchup_AgTechChange.csv
