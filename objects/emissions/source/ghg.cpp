@@ -373,19 +373,11 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
     const World* world = scenario->getWorld();
     const Marketplace* marketplace = scenario->getMarketplace();
     
-    // Check if there is a tax. If not, return.
-    // Note: This function does not work correctly if the CarbonTax is assumed to be zero
-    // and this early return is removed. May indicate a problem.
-    if ( !marketplace->doesMarketExist( name, regionName, period ) ){
-        return 0;
-    }
-    
     // Constants
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const double SMALL_NUM = util::getSmallNumber();
     const double CVRT_tg_MT = 1e-3; // to get teragrams of carbon per EJ to metric tons of carbon per GJ
     
-    double GHGTax = marketplace->getPrice(name,regionName,period);
     // get carbon storage cost from the market
     double marketStorageCost = 0;
     if ( marketplace->doesMarketExist( storageName, regionName, period ) ) {
@@ -396,9 +388,13 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
         // market does not exist, use default or read in storage cost
         marketStorageCost = storageCost;
     }
-
-    // if tax is 0 or small, turn off sequestration technology by increasing storage cost
-    if (GHGTax < SMALL_NUM) {
+    
+    double GHGTax = 0;
+    if ( marketplace->doesMarketExist( name, regionName, period ) ){
+        GHGTax = marketplace->getPrice( name, regionName, period );
+    }
+    else {
+        // If there is no tax market, turn off sequestration technology by increasing storage cost
         marketStorageCost = util::getLargeNumber();
     }
 
