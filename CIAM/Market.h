@@ -1,6 +1,8 @@
 #ifndef _MARKET_H_
 #define _MARKET_H_
+#if( _MSC_VER_ )
 #pragma once
+#endif
 
 /*! 
 * \file Market.h
@@ -30,7 +32,7 @@ class Market
 public:
 
    Market( const string& goodNameIn, const string& regionNameIn, const int periodIn );
-   ~Market();
+   virtual ~Market();
 
    void toDebugXML( const int period, ostream& out ) const;
    virtual void derivedToDebugXML( ostream& out ) const;
