@@ -53,7 +53,8 @@ protected:
     std::vector<double> aeei; //!< autonomous end-use energy intensity parameter
     std::vector<double> techChangeCumm; //!< cummulative technical change on end-use service
     virtual void calcPrice(int per);
-    
+    virtual void printStyle( std::ostream& outStream ) const;
+
 public:
     demsector();
     virtual ~demsector();

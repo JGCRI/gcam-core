@@ -708,3 +708,16 @@ double demsector::getServiceWoTC(const int per) {
     return servicePreTechChange[per];
 }
 
+void demsector::printStyle( ostream& outStream ) const {
+
+    // Make sure the output stream is open.
+    assert( outStream );
+    
+    // Get the sector name.
+   string sectorName = getName();
+   util::replaceSpaces( sectorName );
+
+   // output sector coloring here.
+   outStream << "\t" << sectorName << " [style=filled, color=steelblue1 ];" << endl;
+}
+
