@@ -302,7 +302,6 @@ public class MapNode {
     }
     
     public boolean hasPossibleNames() {
-System.out.println(names);
         if (names.size() > 0) return true;
         else return false;
     }

@@ -121,7 +121,6 @@ public class ControlPanel extends javax.swing.JFrame {
         
         this.getContentPane().add(browsePanel, BorderLayout.NORTH);
         
-        
         displayButton = new JButton("Show XML Tree");
         displayButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,23 +214,6 @@ public class ControlPanel extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jBbrowseActionPerformed
-    
-    private void saveAllButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        /*XMLOutputter outputter = new XMLOutputter();
-        
-        int returnVal = fc.showSaveDialog(this.getContentPane());
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            try {
-                outputter.output(document, new FileOutputStream(file));
-                nodeValueChangedFlag = false;
-            } catch (Exception e) {
-                System.err.println(e);
-            }
-        }*/
-        
-        saveFile();
-    }
     
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
@@ -371,14 +353,13 @@ public class ControlPanel extends javax.swing.JFrame {
         tempValPanel.add(valuePane);
         
         //More right-side view
-        // build panel that'll house query for the table view
+        // build panel that'll house query line for the table view
         makeQueryPanel(true);
         
         JPanel bigDataPane = new JPanel();
         bigDataPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         bigDataPane.setLayout(new BorderLayout());
         bigDataPane.add(tempValPanel, BorderLayout.NORTH);
-        //bidDataPanel.add(Box.createRigidArea(new Dimension(0,10)));
         
         dataPanel = new JPanel();
         dataPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
@@ -438,7 +419,7 @@ public class ControlPanel extends javax.swing.JFrame {
         JButton saveAllButton = new JButton("Save File");
         saveAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveAllButtonActionPerformed(evt);
+                saveFile();
             }
         });
         
@@ -458,10 +439,6 @@ public class ControlPanel extends javax.swing.JFrame {
     private JPopupMenu makePopupMenu() {
         treeMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem("Add Child");
-        /*menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });*/
         menuItem.addMouseListener(new MouseListener() {
             public void mouseReleased(MouseEvent e) {
                 tree.setSelectionPath(selectedPath);
@@ -524,18 +501,12 @@ public class ControlPanel extends javax.swing.JFrame {
     
     private void makeQueryPanel(boolean firstAttempt) {
         if (firstAttempt) {
-            firstAttempt = false;
             
             queryPanel = new JPanel();
             queryPanel.setLayout(new BoxLayout(queryPanel, BoxLayout.X_AXIS));
             
             queryPanel.add(new JLabel("View a table of  "));
-            /*String[] array = {"List ", "Table "};
-            listTableBox = new JComboBox(array);
-            listTableBox.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
-            queryPanel.add(listTableBox);*/
             
-            //queryPanel.add(new JLabel("  of  "));
             String[] array2 = {DEFAULT_SELECTION_STRING, "Names", "Values"};
             JComboBox box = new JComboBox(array2);
             box.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
@@ -562,8 +533,7 @@ public class ControlPanel extends javax.swing.JFrame {
         if (!rootTreeNode.hasChild("region")){
             findRoot(rootTreeNode, "region");
         }
-        //rootPointers = new Vector();
-        //rootPointers.addElement(currRootPointer);
+       
         mapPointers = new Vector();
         mapPointers.addElement(rootMapNode.getDescendant("world"));
                 
@@ -584,15 +554,6 @@ public class ControlPanel extends javax.swing.JFrame {
                     showTableButton.setEnabled(true);
                     
                     JList temp = (JList)e.getSource();
-                    //int index = temp.getMinSelectionIndex();
-                    //String regionName = temp.getModel().getElementAt(index).toString();
-                    
-                    //currRootPointer = (AdapterNode)rootPointers.elementAt(0);
-                    //rootPointers.addElement(currRootPointer.getChild("region", regionName));
-                    //MapNode mp = (MapNode)mapPointers.elementAt(0);
-                    //mapPointers.addElement(mp.getDescendant("region"));
-                    
-                    //if (rootPointers.size() < 3) addQueryControl(temp, 1);
                     if (mapPointers.size() < 3) addQueryControl(temp, 1);
                 }
             }
@@ -642,8 +603,6 @@ public class ControlPanel extends javax.swing.JFrame {
     
     private void addQueryControl(Component predecessor, int index) {
         //get the parent of the nodes whose names will populate the new combo box
-        //currRootPointer = (AdapterNode)rootPointers.elementAt(index);
-        //MapNode currNodePointer = rootMapNode.getDescendant(currRootPointer.getName());
         MapNode mp = (MapNode)mapPointers.elementAt(index);
         boolean hasAttribute = false;
         if (mp.hasPossibleNames()) hasAttribute = true; 
@@ -655,7 +614,6 @@ public class ControlPanel extends javax.swing.JFrame {
             queryPanel.remove(queryPanel.getComponents().length-1);
         }
         
-        //if (currNodePointer.isLeaf()) {
         //if node is leaf, no additional boxes need to be added
         if (!mp.hasChildren()) {
             queryPanel.add(Box.createHorizontalGlue());
@@ -687,12 +645,6 @@ public class ControlPanel extends javax.swing.JFrame {
                 JComboBox temp = (JComboBox)e.getSource();
                 String name = temp.getSelectedItem().toString();
                 int index = queryControls.indexOf(temp);
-System.out.println("index = " + index + " of " + queryControls.size());
-System.out.println(mapPointers);
-                
-                //check in corresponding node has an attribute name
-                //currRootPointer = (AdapterNode)rootPointers.elementAt(index);
-                //if (currRootPointer.hasChildWithAttribute(name, "name")) {
                 
                 MapNode parent = (MapNode)mapPointers.elementAt(index);
                 MapNode mp = parent.getChild(name);
@@ -702,29 +654,11 @@ System.out.println(mapPointers);
                     mapPointers.addElement(mp);
                 }
 
+                //check if node has an attribute name
                 if (mp.hasPossibleNames()) {
                     addAttributeControl((Component)e.getSource(), name, index);
-                } else {    //node does not have "name", only children
-                    //AdapterNode newPointer = currRootPointer.getChild(name, "");
-                    MapNode child = mp.getChild(name);
-
-                    // Need to check that the node has children.
-                    //if( child != null ) {
-                    	//replace root pointer if it already exists or add new one if it does not
-                    	/*if (rootPointers.size() > index+1) {
-                        	//if the combo box already exists, change the pointer to its contents
-                        	rootPointers.setElementAt(newPointer, index+1);
-                    	} else {
-                        	rootPointers.addElement(newPointer);
-                    	}*/
-                        /*if (mapPointers.size() > index+1) {
-                            mapPointers.setElementAt(mp, index+1);
-                        } else {
-                            mapPointers.addElement(mp);
-                        }*/
-                                            
-                    	addQueryControl((Component)e.getSource(), index+1);
-                    //}
+                } else {    //node does not have "name", only children                                         
+                    addQueryControl((Component)e.getSource(), index+1);
                 }
             }
         });
@@ -739,15 +673,11 @@ System.out.println(mapPointers);
         
         queryPanel.revalidate();
         repaint();
-        //notifyAll();
     }
     
     private void addAttributeControl(Component predecessor, String nodeName, int index){
-        //get the parent of the nodes whose names will populate the new combo box
-        //currRootPointer = (AdapterNode)rootPointers.elementAt(index);
-        
+        //get the parent of the nodes whose names will populate the new combo box        
         JComboBox tempBox = (JComboBox)queryControls.elementAt(index);
-        //MapNode currMapPointer = rootMapNode.getDescendant(tempBox.getSelectedItem().toString());
         MapNode mp = (MapNode)mapPointers.elementAt(index+1);
         
         Vector names = new Vector();
@@ -792,17 +722,9 @@ System.out.println(mapPointers);
                 //currRootPointer = (AdapterNode)rootPointers.elementAt(index);
                 MapNode mp = (MapNode)mapPointers.elementAt(index);
                 MapNode newPointer = mp.getChild(nodeName);
-                //if (attribVal.equals(DEFAULT_PLURAL_STRING)) attribVal = "";
-                //AdapterNode newPointer = currRootPointer.getChild(nodeName, attribVal);
+
                 if (!newPointer.isLeaf()) {
                     //create new component with the nodes's set of chilren
-                    //replace root pointer if it already exists or add new one if it does not
-                    /*if (rootPointers.size() > index+1) {
-                        rootPointers.setElementAt(newPointer, index+1);
-                    } else {
-                        rootPointers.addElement(newPointer);
-                    }*/
-                    //removeComponents(queryPanel, (Component)e.getSource(), index);
                     addQueryControl((Component)e.getSource(), index+1);
                 }
                 
@@ -869,7 +791,7 @@ System.out.println(mapPointers);
         JPanel lefterPanel = new JPanel();
         
         Rectangle buttonSize = table.getCellRect(0, 0, true);
-        buttonSize = new Rectangle((int)buttonSize.getWidth()+200, (int)buttonSize.getHeight());
+        buttonSize = new Rectangle((int)buttonSize.getWidth()+500, (int)buttonSize.getHeight());
         Rectangle blankSize = new Rectangle((int)buttonSize.getWidth(), (int)buttonSize.getHeight()+4);
         lefterPanel.setLayout(new BoxLayout(lefterPanel, BoxLayout.Y_AXIS));
         
@@ -897,6 +819,7 @@ System.out.println(mapPointers);
             lefters[j].setPreferredSize(buttonSize.getSize());
             lefters[j].setMaximumSize(buttonSize.getSize());
             lefters[j].setName(String.valueOf(j));
+            lefters[j].setHorizontalAlignment(SwingConstants.RIGHT);
             /*lefters[j].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     JButton button = (JButton)e.getSource();
@@ -934,6 +857,9 @@ System.out.println(mapPointers);
         String attribVal = "";
         JComboBox currComboBox;
         java.util.List childNodes;
+        int rowCount = 0;
+        boolean timeInterval = false;
+        Integer lastYear = new Integer(modelTime.getStart());
         
         if (tableExistsFlag) {
             int compCount = dataPanel.getComponentCount();
@@ -948,8 +874,6 @@ System.out.println(mapPointers);
         //if (listTableBox.getSelectedIndex() == LIST) {
         String regionName;
         Object[] regions = regionBox.getSelectedValues();
-        //currRootPointer = (AdapterNode)rootPointers.elementAt(0);
-        boolean timeInterval = false;
         
         //perform a bredth-first traversal of the tree looking for nodes that fit a path
         //  described by the array of query and attribute controls
@@ -985,6 +909,7 @@ System.out.println(mapPointers);
                     //remember the name of the parent of the node whose value
                     //  will be displayed in the left-side header
                     
+                    rowCount++;
                     String lefterName = currNode.toLefterString();
                     String prevName;
                     if (!lefter.isEmpty()) {
@@ -997,6 +922,7 @@ System.out.println(mapPointers);
                     int index1 = oldName.indexOf('<');
                     int index2 = oldName.indexOf('>');
                     if (oldName.substring(index1+1, index2).equals("period")) {
+System.out.println("inside period");
                         //remember the last index in values that contains confirmed entry
                         int lastValIndex = values.size();
                         
@@ -1031,8 +957,7 @@ System.out.println(mapPointers);
                         }
                         
                     } else {        //if parent of desired node(s) isn't "period"
-                        
-                        Integer lastYear = new Integer(modelTime.getStart());
+                       
                         Vector years = modelTime.getTimeIntervals();
                         Iterator yearIt = years.iterator();
                         boolean demographics = false;
@@ -1052,14 +977,19 @@ System.out.println(mapPointers);
                         if (!it.hasNext()) {
                             if (timeInterval) {
                                 int numPeriods = modelTime.getNumOfSteps();
+int ct4 = 0;
                                 for (int k = 0; k < numPeriods; k++) {
                                     values.addElement(new AdapterNode());
+ct4++;
                                 }
-                            } else
+System.out.println("added " + ct4 + " values (4)");
+                            } else {
                                 values.addElement(new AdapterNode());
+System.out.println("added values (5)");
+                            }
                         }
                         
-                        timeInterval = false;
+                        //timeInterval = false;
                         
                         while (it.hasNext()) {
                             currNode = (AdapterNode)it.next();
@@ -1077,13 +1007,29 @@ System.out.println(mapPointers);
                                         Integer attribYear = new Integer(attribVal);
                                         Integer currYear = (Integer)yearIt.next();
                                         
+                                        //special case - rows above current only had one column,
+                                        //  but this row is time interval, so will add more columns
+                                        //  therefore, add blank values to put values in place
+                                        int numVals = values.size();
+                                        int targetVals = (rowCount-1) * modelTime.getNumOfSteps();  
+//System.out.println("rowCount = " + rowCount + " steps = " + modelTime.getNumOfSteps());
+System.out.println("numVals = " + numVals + " targetVals = " + targetVals);
+int ct1 = 0;
+                                        for (int q = numVals; q < targetVals; q++) {
+                                            values.addElement(new AdapterNode());
+ct1++;
+                                        }
+System.out.println("added " + ct1 + "values (1)");
+int ct2 = 0;
                                         while (!attribYear.equals(currYear)) {
+ct2++;
                                             if (header.isEmpty()) header.addElement(currYear.toString());
                                             else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
                                             values.addElement(new AdapterNode());
                                             if (yearIt.hasNext())currYear = (Integer)yearIt.next();
                                             else break;
                                         }
+System.out.println("added " + ct2 + "values (2)");
                                         
                                         if (header.isEmpty()) header.addElement(currYear.toString());
                                         else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
@@ -1092,14 +1038,20 @@ System.out.println(mapPointers);
                                 }
                                 
                                 values.addElement(currNode);
+System.out.println("adding " + currNode);
+System.out.println("inserted into position " + values.size());
                             }
                         }
+int ct = 0;
                         while (timeInterval && !lastYear.equals(new Integer(modelTime.getEnd()))) {
+//System.out.println("adding filler");
+                            ct++;
                             lastYear = (Integer)yearIt.next();
                             if (header.isEmpty()) header.addElement(lastYear.toString());
                             else if (!header.contains(lastYear.toString())) header.addElement(lastYear.toString());
                             values.addElement(new AdapterNode());
                         }
+System.out.println("added " + ct + " fillers (3) to " + regionName + currNode);
                     }
                 } else {    //current node is an intermediate step along the tree
                     if(attribVal.equals(DEFAULT_PLURAL_STRING)) {
@@ -1114,14 +1066,16 @@ System.out.println(mapPointers);
                     } else {
                         //get child with target name attribute and add it to the queue for examination
                         currNode = currNode.getChild(nodeName, attribVal);
-                        currNode.setIndex(index+1);
-                        queue.addElement(currNode);
+                        if (currNode != null) {
+                           currNode.setIndex(index+1);
+                           queue.addElement(currNode);
+                        }
                     }
                 }
             } //belongs to while (!queue.isEmpty())
         } //belongs to for each region
         
-//System.out.println("values  = " + values.size() + " header = " + header.size() + " lefter = " + lefter.size());
+System.out.println("values  = " + values.size() + " header = " + header.size() + " lefter = " + lefter.size());
         
         TableViewModel model = new TableViewModel(values, header, lefter, showNames);
         table = new JTable(model);
@@ -1135,24 +1089,24 @@ System.out.println(mapPointers);
         tempPanel.add(table.getTableHeader(), BorderLayout.NORTH);
         tempPanel.add(table, BorderLayout.CENTER);
         
-        JPanel tempPanel2 = new JPanel();
-        tempPanel2.setLayout(new BorderLayout());
         if (!lefter.isEmpty()) {
-            //JPanel lefterPanel = makeLefter(lefter, nodeName);
             lefter = model.getTableLefter();
             JPanel lefterPanel = makeLefter(lefter, finalNodeName);
-            tempPanel2.add(lefterPanel, BorderLayout.WEST);
+            lefterPanel.setPreferredSize(new Dimension(150, 10));
+            lefterPanel.setMinimumSize(new Dimension(10, 10));
+            
+            JSplitPane splitTableView = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, lefterPanel, tempPanel);
+            JPanel tempPanel2 = new JPanel(new BorderLayout());
+            tempPanel2.add(splitTableView, BorderLayout.CENTER);
+            dataPanel.add(tempPanel2);
+        } else {
+            dataPanel.add(tempPanel);
         }
-        tempPanel2.add(tempPanel, BorderLayout.CENTER);
-        
-        //dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
-        dataPanel.add(tempPanel2);
-        
+       
         tableExistsFlag = true;
         
         dataPanel.revalidate();
         repaint();
-        //}
     }
     
     public void makeAddChildPanel() {
@@ -1198,8 +1152,6 @@ System.out.println(mapPointers);
         //buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         
         JButton addNodeButton = new JButton("Add Node");
-        //addNodeButton.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
-        //addNodeButton.setPreferredSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
         addNodeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 addChildNode();
@@ -1208,10 +1160,6 @@ System.out.println(mapPointers);
         });
         
         JButton cancelButton = new JButton("Cancel");
-        //cancelButton.setMaximumSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
-        //cancelButton.setPreferredSize(new Dimension(100, DEFAULT_COMPONENT_HEIGHT));
-        //cancelButton.setPreferredSize(new Dimension(100, 25));
-        //cancelButton.setMinimumSize(new Dimension(100, 25));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 hideAddChildDialog();
@@ -1228,7 +1176,6 @@ System.out.println(mapPointers);
         
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         buttonPanel.add(addNodeButton);
-        //buttonPanel.add(Box.createRigidArea(new Dimension(5,5)));
         buttonPanel.add(cancelButton);
         buttonPanel.add(addAllButton);
         buttonPanel.add(Box.createVerticalGlue());
@@ -1237,7 +1184,6 @@ System.out.println(mapPointers);
         tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
         tempPanel.add(new JSeparator(SwingConstants.VERTICAL));
         tempPanel.add(buttonPanel);
-        //tempPanel.add(Box.createVerticalGlue());
         
         addChildDialog.getContentPane().add(tempPanel);
     }
@@ -1449,15 +1395,11 @@ System.out.println(mapPointers);
             
             try {
                 //if (!zipping) {
-//System.out.println("saving");
                     outputter.output(document, new FileOutputStream(file));
                     //nodeValueChangedFlag = false;
                 //} else {*/
-/*System.out.println("writing 1 " + file.toString());
 
-
-                    
-                    byte[] buf = new byte[1024];
+/*                    byte[] buf = new byte[1024];
                     int len;
                     ZipEntry zipEntry = new ZipEntry(file.toString());
                     FileInputStream fin = new FileInputStream(file);
@@ -1476,7 +1418,6 @@ System.out.println(mapPointers);
 
 
                     nodeValueChangedFlag = false;
-//System.out.println("done");
                 //}
             } catch (Exception e) {
                 System.err.println(e);
