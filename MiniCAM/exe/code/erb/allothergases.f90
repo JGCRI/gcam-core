@@ -620,7 +620,7 @@
 
 ! HFC245fa equiv
 ! src 1 : foams
-    OGACT(IH245,1,L,M) = GNPMRKT(L,M)/1e6
+    OGACT(IH245,1,L,M) = GNPPPP(L,M)/1e6
     
 
 ! HFC134a equiv
@@ -628,7 +628,7 @@
     OGACT(IH134,1,L,M) = ZLM(L,M)/1e6
     
 ! src 2 : Solvents
-    OGACT(IH134,2,L,M) = GNPMRKT(L,M)/1e6
+    OGACT(IH134,2,L,M) = GNPPPP(L,M)/1e6
     
 ! src 3 : Transport AC
     OGACT(IH134,3,L,M) = sum(FJKL(1:NNJ,3,L))/1e4	! could replace this with transportation service demand
@@ -667,14 +667,14 @@
 
 ! C2F6 equiv
 ! src 1 : Semiconductors
-    OGACT(IHC2F6,1,L,M) = SUM(GNPMRKT(:,M))/1e9
+    OGACT(IHC2F6,1,L,M) = SUM(GNPPPP(:,M))/1e9
     
 ! CF4 equiv
 ! src 1 : Aluminum & Magnesium Smelting
-    OGACT(IHCF4,1,L,M) = GNPMRKT(L,M)/1e6
+    OGACT(IHCF4,1,L,M) = GNPPPP(L,M)/1e6
     
 ! src 2 : Solvents
-    OGACT(IHCF4,2,L,M) = GNPMRKT(L,M)/1e6
+    OGACT(IHCF4,2,L,M) = GNPPPP(L,M)/1e6
 
 !
 !
