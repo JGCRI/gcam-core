@@ -17,10 +17,14 @@
 #include "solution/solvers/include/log_newton_raphson_sd.h"
 #include "solution/solvers/include/bisect_all.h"
 #include "solution/solvers/include/bisect_one.h"
+#include "solution/solvers/include/bisect_policy.h"
 #include "util/base/include/configuration.h"
 #include "solution/util/include/calc_counter.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/util.h"
+// Temporarily put Solver factory method here.
+#include "solution/solvers/include/bisection_nr_solver.h"
+#include "solution/solvers/include/bisect_policy_nr_solver.h"
 
 using namespace std;
 
@@ -32,10 +36,6 @@ using namespace std;
 * \param calcCounterIn A pointer to the object which tracks calls to world.calc()
 */
 SolverComponent::SolverComponent( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ): marketplace( marketplaceIn ), world( worldIn ), calcCounter( calcCounterIn ){
-    const Configuration* conf = Configuration::getInstance();
-    bugTracking = conf->getBool( "bugTracking" );
-    bugMinimal = conf->getBool( "bugMinimal" );
-    trackED = conf->getBool( "trackMaxED" );
 }
 
 //! Default Destructor.
@@ -69,8 +69,11 @@ auto_ptr<SolverComponent> SolverComponent::getSolverComponent( const string& sol
     else if( solverName == BisectOne::getNameStatic() ){
         return auto_ptr<SolverComponent>( new BisectOne( marketplace, world, calcCounter ) );
     }
+    else if( solverName == BisectPolicy::getNameStatic() ){
+        return auto_ptr<SolverComponent>( new BisectPolicy( marketplace, world, calcCounter ) );
+    }
     else {
-        cout << "Error: Invalid solver component name. " << solverName << endl;
+        cout << "Error: Invalid solver component name: " << solverName << endl;
         return auto_ptr<SolverComponent>();
     }
 }
@@ -104,7 +107,7 @@ bool SolverComponent::isImproving( const unsigned int aNumIter ) const {
             ++numBetter;
         }
     }
-    return( static_cast<double>( numBetter ) / ( aNumIter -1 ) > 0.25 );
+    return( static_cast<double>( numBetter ) / ( aNumIter - 1 ) > 0.25 );
 }
 
 void SolverComponent::startMethod(){
@@ -114,5 +117,16 @@ void SolverComponent::startMethod(){
     mPastIters.clear();
 }
 
+// Temporarily put solver class definitions here.
+// TODO: Determine if a source file is neccessary.
+//! Factory method.
+std::auto_ptr<Solver> Solver::getSolver( const string& aSolverName, Marketplace* aMarketplace, World* aWorld ){
+    if( aSolverName == BisectPolicyNRSolver::getName() ){
+        return std::auto_ptr<Solver>( new BisectPolicyNRSolver( aMarketplace, aWorld ) );
+    }
+    else {
+        return std::auto_ptr<Solver>( new BisectionNRSolver( aMarketplace, aWorld ) );
+    }
+}
 
 
