@@ -77,11 +77,26 @@ Marketplace::~Marketplace() {
 * that was created in the constructor. This method then clears the market.
 *
 * \param period Period of the model to solve.
-* \todo Error checking return codes for solve.
+* \todo <s>Error checking return codes for solve.</s>
 */
 
 void Marketplace::solve( const int period ){
-    solver->solve( period );
+    // Solve the marketplace. If the retcode is zero, add it to the unsolved periods. 
+    if( !solver->solve( period ) ) {
+        unsolvedPeriods.push_back( period );
+    }
+    
+    // If it was the last period print the ones that did not solve.
+    if( static_cast<int>( unsolvedPeriods.size() ) == 0 ) {
+        cout << "All model periods solved correctly." << endl;
+    }
+    else {
+        cout << "The following model periods did not solve: ";
+        for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
+            cout << *i << ", ";
+        }
+        cout << endl;
+    }
 }
 
 /*! \brief Write out XML for debugging purposes.

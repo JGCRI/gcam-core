@@ -69,6 +69,7 @@ private:
    int uniqueNo; //!< number for creating markets
    int numMarkets;  //!< number of markets
    std::vector< std::vector<Market*> > markets; //!< no of market objects by period
+   std::vector<int> unsolvedPeriods; //!< Unsolved periods. 
    std::map<std::string,int> marketMap; //!< map of unique market id from good and market-region names
    std::map<std::string,int> regionToMarketMap; //!< map of market lookup from good and region names
    Solver* solver; //!< Pointer to a solution mechanism.
