@@ -59,11 +59,16 @@ void GHGMarket::setPrice( const double priceIn ) {
 * \author Josh Lurz
 */
 void GHGMarket::setPriceFromLast( const double lastPrice ) {
-    if( lastPrice < util::getSmallNumber() && supply > util::getSmallNumber() ){
-        price = 1;
-    }
-    else {
-        price = lastPrice;
+    // If the price is zero and a constraint is set, we should initialize the price.
+    if( price < util::getSmallNumber() && supply > util::getSmallNumber() ){
+        // If the last price is 0, we should set the price to 0.
+        if( lastPrice < util::getSmallNumber() ){
+            price = 1;
+        }
+        // Otherwise set the price to the previous period's price.
+        else {
+            price = lastPrice;
+        }
     }
 }
 
