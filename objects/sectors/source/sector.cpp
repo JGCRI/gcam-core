@@ -525,7 +525,7 @@ void Sector::calcShare( const int period, const double gnpPerCap ) {
         if ( subsec[ i ]->getFixedSupply( period ) == 0) {
             // normalize subsector shares that are not fixed
             if ( fixedSum < 1 ) {
-                subsec[ i ]->normShare( sum / ( 1 - fixedSum ) , period );	
+					subsec[ i ]->normShare( sum / ( 1 - fixedSum ) , period );	
             } else {
                 subsec[ i ]->normShare( sum / util::getTinyNumber() , period );	// if all fixed supply, eliminate other shares
             }
@@ -540,7 +540,7 @@ void Sector::calcShare( const int period, const double gnpPerCap ) {
         }
     }
     fixedShareSavedVal = fixedSum; // save share value for debugging check
-
+   
     // Now adjust for capacity limits
     // on 10/22/03 adding this check saves about 1/40 of the model run time.
     if ( capLimitsPresent[ period ] ) {
@@ -927,14 +927,22 @@ void Sector::adjustForFixedSupply( const double marketDemand, const int period )
         totalFixedSupply = marketDemand;
     }
 
-    // debuging check
-    // sjs TEMP -- this check generally spits out a few inocuous warnings.
+    // debugging check
+    // sjs TEMP -- this check generally spits out a few innocuous warnings.
+    // As of ver 1.0, this happens only in Latin America when fixed supply has temporarily
+    // exceeded demand and has been scaled back.  (found by putting cout statement in Sector::getFixedShare)
+    // Code has been left in just in case something seems to be going wrong
     // If simultunaeities are resolved then this should only happen a couple times per iteration.
-    if ( debugChecking && world->getCalibrationSetting()) {
+    if ( debugChecking && world->getCalibrationSetting() && 1==2) {
         if ( fabs(fixedShareSavedVal - totalFixedSupply/marketDemand) > 1e-5 && fixedShareSavedVal != 0 ) {
             cerr << "Fixed share changed from " << fixedShareSavedVal << " to ";
             cerr << totalFixedSupply/marketDemand << endl;
-        }
+            cout << "  -- in region: " << regionName << " sector: " << name << endl;
+            if (regionName == "Latin America" ) {
+               cout << "    totalFixedSupply: " << totalFixedSupply;
+               cout << "    marketDemand: " << marketDemand << endl;
+            }
+      }
     }
 
     // Adjust shares for any fixed output

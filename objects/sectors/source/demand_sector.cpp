@@ -48,6 +48,7 @@ DemandSector::DemandSector( const string regionName ): Sector( regionName ){
     aeei.resize( maxper );
     techChangeCumm.resize( maxper ); // cummulative technical change
     servicePreTechChange.resize( maxper );
+    capLimitsPresent.resize( maxper, false ); // flag for presence of capacity limits
 }
 
 //! Default destructor
@@ -348,6 +349,10 @@ void DemandSector::calcShare( const int period, const double gnp_cap ) {
         // determine subsector shares based on technology shares
         subsec[i]->calcShare( period, gnp_cap );
         sum += subsec[i]->getShare(period);
+
+        // initialize cap limit status as false
+        // (will be changed in adjSharesCapLimit if necessary)
+        subsec[ i ]->setCapLimitStatus( false , period );
     }
     // normalize subsector shares to total 100 %
     for (i=0;i<nosubsec;i++) {

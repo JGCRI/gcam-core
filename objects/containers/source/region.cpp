@@ -401,7 +401,7 @@ void Region::completeInit() {
     }
 
     // Now sort the sectors by dependency.
-    std::sort( supplySector.begin(), supplySector.end(), Sector::DependencyOrdering() );
+//    std::sort( supplySector.begin(), supplySector.end(), Sector::DependencyOrdering() );
 }
 
 /*! 

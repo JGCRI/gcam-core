@@ -12,6 +12,7 @@
 #if(__HAVE_DB__)
 #include <afxdisp.h>
 #include <dbdao.h>
+#include <comdef.h>
 #endif
 
 #include <string>
@@ -22,7 +23,6 @@
 #include <ctime>
 #include "containers/include/scenario.h" 
 #include "containers/include/world.h"
-#include <comdef.h>
 
 using namespace std;
 
