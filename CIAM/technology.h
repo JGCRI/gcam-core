@@ -23,6 +23,9 @@ class Emcoef_ind;
 /*! 
 * \ingroup CIAM
 * \brief This technology class is based on the MiniCAM description of technology.
+*
+* The technology class is where all fuels are either consumed or transformed. The default technology class is based on a MiniCAM-style logit representation. This class has options for capacity limits, calibration, and fixed output technologies (for supply sectors) -- although these capabilities depend on interaction with the sub-sector and sector classes. 
+*
 * \author Sonny Kim
 */
 
@@ -95,7 +98,6 @@ public:
     virtual void production(const std::string& regionName,const std::string& prodName,double dmd,const int per);
     void emission( const std::string prodname); // calculates GHG emissions from technology
     void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
-    void printTech( const std::string& outFile = "" ) const; // write technology information to file or screen
     // ****** return names and values ******
     std::string getName() const; // return technology name
     std::string getFName() const; // return fuel name

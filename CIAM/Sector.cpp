@@ -395,9 +395,9 @@ void sector::initCalc( const string& regionName, const int per ) {
     
     // do any sub-sector initializations
     for ( int i=0; i<nosubsec; i++ ) {
-        subsec[ i ]->initCalc( per );
         subsec[ i ]->setRegionName( regionName );
         subsec[ i ]->setSectorName( name );
+        subsec[ i ]->initCalc( per );
     }
     
     // set flag if there are any fixed supplies
@@ -691,7 +691,8 @@ void sector::checkShareSum( const string& regionName, int per ) {
         sumshares += subsec[ i ]->getShare( per ) ;
     }
     if ( fabs(sumshares - 1) > SMALL_NUM ) {
-        cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << " in sector " << name << endl;
+        cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << " in sector " << name;
+        cerr << ", region: " << regionName << endl;
         cout << "Shares: ";
         for ( i=0; i<nosubsec; i++ ) {
          cout << subsec[ i ]->getShare( per ) << ", ";

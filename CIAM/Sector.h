@@ -136,23 +136,28 @@ public:
         //! \brief The () operator, which is used for sorting two sector pointers. 
 
         bool operator()( const sector* lhs, const sector* rhs ) const {
-            
+ using namespace std;
+           
             // First cache copies of the list.
             std::vector<std::string> simulList = lhs->getSimulList();
             std::vector<std::string> inputList = lhs->getInputList();
             
+            cout << "lhs: " << lhs->getName() << ", rhs: " << rhs->getName();
             // Check for a simul.
             if ( std::binary_search( simulList.begin(), simulList.end(), rhs->getName() ) ) {
                 // If a simul exists we want to order alphabetically. 
+                cout << "       --- alpha(simul)" << endl;
                 return( lhs->getName() < rhs->getName() );
             }
 
             // Now check if sector uses another sector. If so the other sector needs to be first. 
             else if( std::binary_search( inputList.begin(), inputList.end(), rhs->getName() ) ) {
+                cout << "       --- dependant" << endl;
                 return false;
             }
             // Finally order alphabetically if no dependency exists between the two sectors.
             else {
+                cout << "       --- alpha"<< endl;
                 return( lhs->getName() < rhs->getName() );
             }
         }

@@ -579,87 +579,29 @@ void technology::indemission( const vector<Emcoef_ind>& emcoef_ind )
     }
 }
 
-//! show technology info
-void technology::printTech( const string& outFile ) const {
-    bool toScreen = false;
-    
-    ofstream outStream;
-    if( outFile == "" ){
-        toScreen = true; ;
-    }
-    else {
-        outStream.open( outFile.c_str(), ios::app );
-        if ( !outStream ) { //open failed
-            cerr << "Cannot open file for output" << endl;
-            exit( -1 );
-        }
-    }
-    
-    if( toScreen ) {
-        cout << "Technology: " << name << endl;
-    }
-    else {
-        outStream << "Technology: " << name << endl;
-    }
-    if( toScreen ) {
-        cout << "Year: "<< year << endl;
-    }
-    else {
-        outStream << "Year: "<< year << endl;
-    }
-    if( toScreen ) {
-        cout << "Share Weights: "<< shrwts << endl;
-    }
-    else {
-        outStream << "Share Weights: "<< shrwts << endl;
-    }
-    if( toScreen ) {
-        cout << "Energy Efficiency: "<< eff << endl;
-    }
-    else {
-        outStream << "Energy Efficiency: "<< eff << endl;
-    }
-    if ( toScreen ) {
-        cout << "Non-Energy Cost: "<< necost << endl;
-    }
-    else {
-        outStream << "Non-Energy Cost: "<< necost << endl;
-    }
-    if ( toScreen ) {
-        cout << "Tax: "<< tax << endl;
-    }
-    else {
-        outStream << "Tax: "<< tax << endl;
-    }
-    if ( toScreen ) {
-        cout << "Logit Exponential: "<< lexp << endl;
-    }
-    else {
-        outStream << "Logit Exponential: "<< lexp << endl;
-    }
-    if ( toScreen ) {
-        cout << "Technical Change: "<< techchange << endl;
-    }
-    else {
-        outStream << "Technical Change: "<< techchange << endl;
-    }
-    
-    if( outStream != cout ) {
-        outStream.close();
-    }
-}
-
-//! return technology name
+/*! \brief Returns technology name
+*
+* \author Sonny Kim
+* \return sector name as a string
+*/
 string technology::getName() const {
     return name;
 }
 
-//! return fuel name
+/*! \brief Returns name of the fuel consumed by this technology
+*
+* \author Sonny Kim
+* \return fuel name as a string
+*/
 string technology::getFName() const {
     return fuelname;
 }
 
-//! return fuel efficiency
+/*! \brief Returns the ratio of output to input for this technology
+*
+* \author Sonny Kim
+* \return efficiency (out/In) of this technology
+*/
 double technology::getEff() const {
     return eff;
 }
@@ -669,12 +611,23 @@ double technology::getIntensity(const int per) const {
     return intensity;
 }
 
-//! return technology share
+/*! \brief returns share for this technology
+*
+* \author Sonny Kim
+* \pre calcShare
+* \return share value
+*/
 double technology::getShare() const {
     return share;
 }
 
-//! returns true if this technoloy is calibrated for this period
+/*! \brief Returns calibration status for this technoloy
+*
+* This is true if a calibration value has been read in for this technology.
+* 
+* \author Steve Smith
+* \return Boolean that is true if technoloy is calibrated
+*/
 bool technology::getCalibrationStatus( ) const {
     return doCalibration;
 }

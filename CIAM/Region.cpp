@@ -415,7 +415,8 @@ void Region::completeInit() {
    }
 
    // Now sort the sectors by dependency.
-   std::sort( supplySector.begin(), supplySector.end(), sector::DependencyOrdering() );
+   // Turn off for now
+   // std::sort( supplySector.begin(), supplySector.end(), sector::DependencyOrdering() );
 }
 
 /*! 
@@ -737,6 +738,7 @@ void Region::finalSupplyPrc(int per) {
    
    for (int i=0;i<noSSec;i++) {
       goodName = supplySector[i]->getName();
+      if (name == "Canada"&&per==0) { cout << "Sector "<< i << ": " << goodName << endl; }
       // name is region or country name
       supplySector[i]->calcShare( name, per );
       goodPrice = supplySector[ i ]->getPrice( per );

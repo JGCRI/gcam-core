@@ -478,6 +478,17 @@ void subsector::initCalc( const int period ) {
     if ( ( getFixedSupply( period ) > 0 ) && ( fixedShare[ period ] == 0 ) ) {
        fixedShare[ period ] = 0.1;
     }
+   
+   // check to see if input fuel has changed
+    for ( int i=0 ;i<notech && period > 0; i++ ) {
+      std::string orgFuel = techs[i][ period-1 ]->getFName();
+      if ( orgFuel != techs[i][ period ]->getFName() ) {
+         cerr << "WARNING: Type of fuel "<< orgFuel << " changed in period " << period << ", tech: ";
+         cerr << techs[i][ period ]->getName();
+         cerr << ", sub-s: "<< name << ", sect: " << sectorName << ", region: " << regionName << endl;
+      }
+    }
+
 }
 
 /*! \brief Computes weighted cost of all technologies in subsector.
