@@ -16,6 +16,8 @@
 #include <vector>
 #include <functional>
 
+class MarketInfo;
+
 /*!
 * \ingroup CIAM
 * \brief A class which defines a single market object.
@@ -69,6 +71,8 @@ public:
     std::string getName() const;
     std::string getRegionName() const;
     std::string getGoodName() const;
+    void setMarketInfo( const std::string& itemName, const double itemValue );
+    double getMarketInfo( const std::string& itemName ) const;
     void storeInfoFromLast( const double lastDemand, const double lastSupply, const double lastPrice );
     void storeInfo();
     void restoreInfo();
@@ -102,6 +106,7 @@ protected:
     double supply; //!< The market supply.
     double storedSupply; //!< The stored supply.
     std::vector <std::string> containedRegionNames; //!< Vector of names of all regions contained within this market.
+    MarketInfo* marketInfo; //!< Object containing information related to the market. 
 };
 
 #endif // _MARKET_H_

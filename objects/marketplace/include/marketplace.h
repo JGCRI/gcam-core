@@ -24,6 +24,7 @@ class SolverLibrary;
 * \ingroup CIAM
 * \brief A class which describes the single global marketplace.
 * \author Sonny Kim
+* \todo The naming of get(set)MarketInfo and the (re)storeInfo needs fixing. 
 */
 
 class Marketplace
@@ -58,13 +59,14 @@ class Marketplace
    void MCoutput() const; 
    void outputfile() const; 
    void resetToPriceMarket( const std::string& goodName, const std::string& regionName );
-   void setMarketToSolve ( const std::string& goodName, const std::string& regionName, const int period = -1 );
+   void setMarketToSolve( const std::string& goodName, const std::string& regionName, const int period = -1 );
+   void unsetMarketToSolve( const std::string& goodName, const std::string& regionName, const int period = -1 );
    bool checkMarketSolution( const double soltoleranceerance,  const double excessDemandSolutionFloor, const int period );
    void storeinfo( const int period );
    void restoreinfo( const int period );
-
+   void setMarketInfo( const std::string& goodName, const std::string& regionName, const int period, const std::string itemName, const double itemValue );
+   double getMarketInfo( const std::string& goodName, const std::string& regionName, const int period, const std::string& itemName );
 private:
-   
    int uniqueNo; //!< number for creating markets
    int numMarkets;  //!< number of markets
    std::vector< std::vector<Market*> > markets; //!< no of market objects by period
