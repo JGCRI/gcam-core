@@ -1,9 +1,10 @@
-/* TransSector.cpp									*
-* Method definition for Transportation sector      *
-* and Subsector classes					        *
-* Initiated by MAW  3/14/2003                      *
-* Revised to work with latest code                 *
-* SHK 6/30/03
+/*! 
+* \file tran_subsector.cpp
+* \ingroup Objects
+* \brief transporation technology class source file.
+* \author Marshall Wise, Sonny Kim, Josh Lurz
+* \date $Date$
+* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -27,7 +28,7 @@ using namespace std;
 using namespace xercesc;
 	
 extern Scenario* scenario;
-
+const string TranSubsector::XML_NAME = "tranSubsector";
 
 /*  Begin TranSubsector Method Definitions */
 
@@ -46,18 +47,35 @@ TranSubsector::TranSubsector( const string regionName, const string sectorName )
     baseScaler = 0;
 }
 
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& TranSubsector::getXMLName() const {
+	return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& TranSubsector::getXMLNameStatic() {
+	return XML_NAME;
+}
+
 //! Parses any input variables specific to derived classes
-void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxperiod = modeltime->getmaxper();
-    DOMNodeList* childNodeList = 0;
-    DOMNode* currChild = 0;
-    string childNodeName;
-    vector<technology*> techVec( modeltime->getmaxper() );
-    tranTechnology* tempTech = 0;
-    
+void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {    
     // additional read in for transportation
+    const Modeltime* modeltime = scenario->getModeltime();
     if( nodeName == "speed" ){
         XMLHelper<double>::insertValueIntoVector( curr, speed, modeltime );
     }
@@ -67,20 +85,22 @@ void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
     else if( nodeName == "loadFactor" ){
         XMLHelper<double>::insertValueIntoVector( curr, loadFactor, modeltime );
     }
+    // Is this going to conflict with parsing output? 
     else if( nodeName == "serviceoutput" ){
         XMLHelper<double>::insertValueIntoVector( curr, output, modeltime );
-    }    
-    else if( nodeName == "tranTechnology" ){
+    }
+    // Todo: Rework this to use the subsector parsing.
+    else if( nodeName == TranTechnology::getXMLNameStatic1D() ){
         map<string,int>::const_iterator techMapIter = techNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
         if( techMapIter != techNameMap.end() ) {
             // technology already exists.
-            childNodeList = curr->getChildNodes();
+            DOMNodeList* childNodeList = curr->getChildNodes();
             
             // loop through technologies children.
-            for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
+            for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
                 
-                currChild = childNodeList->item( j );
-                childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+                DOMNode* currChild = childNodeList->item( j );
+                string childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
                 
                 if( childNodeName == "#text" ){
                     continue;
@@ -93,17 +113,18 @@ void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
         }
         
         else {
+            vector<technology*> techVec( modeltime->getmaxper() );
             // create a new vector of techs.
-            childNodeList = curr->getChildNodes();
+            DOMNodeList* childNodeList = curr->getChildNodes();
             
             // loop through technologies children.
-            for( int j = 0; j < static_cast<int>( childNodeList->getLength() ); j++ ){
+            for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
                 
-                currChild = childNodeList->item( j );
-                childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
+                DOMNode* currChild = childNodeList->item( j );
+                string childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
                 
-                if( childNodeName == technology::getXMLNameStatic2D() ){
-                    tempTech = new tranTechnology();
+                if( childNodeName == technology::getXMLNameStatic2D() ){ // this is "period"
+                    TranTechnology* tempTech = new TranTechnology();
                     tempTech->XMLParse( currChild );
                     int thisPeriod = XMLHelper<int>::getNodePeriod( currChild, modeltime );
                     techVec[ thisPeriod ] = tempTech;
@@ -114,8 +135,13 @@ void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
                     // copy technology object for one period to all the periods
                     if (fillout) {
                         // will not do if period is already last period or maxperiod
-                        for (int i = thisPeriod+1; i < maxperiod; i++) {
-                            techVec[ i ] = new tranTechnology( *tempTech );
+                        for (int i = thisPeriod+1; i < modeltime->getmaxper(); i++) {
+                            // Check that a technology does not already exist.
+                            if( techVec[ i ] ){
+                                cout << "Warning: Removing duplicate technology." << endl;
+                                delete techVec[ i ];
+                            }
+                            techVec[ i ] = new TranTechnology( *tempTech );
                             techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
                         }
                     }
@@ -131,6 +157,58 @@ void TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
     // completed parsing.
 }
 
+/*! \brief XML output stream for derived classes
+*
+* Function writes output due to any variables specific to derived classes to XML
+* \author Josh Lurz
+* \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
+*/
+void TranSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( unsigned int i = 0; i < speed.size(); ++i ){
+        XMLWriteElementCheckDefault( speed[ i ], "speed", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    }
+    for( unsigned int i = 0; i < popDenseElasticity.size(); ++i ){
+        XMLWriteElementCheckDefault( popDenseElasticity[ i ], "popDenseElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    }
+    for( unsigned int i = 0; i < loadFactor.size(); ++i ){
+        XMLWriteElementCheckDefault( loadFactor[ i ], "loadFactor", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    }
+    for( unsigned int i = 0; i < output.size(); ++i ){
+        XMLWriteElementCheckDefault( output[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    }
+}	
+
+//! XML output for viewing.
+void TranSubsector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( unsigned int i = 0; i < speed.size(); ++i ){
+        XMLWriteElementCheckDefault( speed[ i ], "speed", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    }
+    for( unsigned int i = 0; i < popDenseElasticity.size(); ++i ){
+        XMLWriteElementCheckDefault( popDenseElasticity[ i ], "popDenseElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    }
+    for( unsigned int i = 0; i < loadFactor.size(); ++i ){
+        XMLWriteElementCheckDefault( loadFactor[ i ], "loadFactor", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    }
+    for( unsigned int i = 0; i < output.size(); ++i ){
+        XMLWriteElementCheckDefault( output[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    }
+}
+
+//! Write object to debugging xml output stream.
+void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
+    XMLWriteElement( speed[ period ], "speed", out, tabs );
+    XMLWriteElement( popDenseElasticity[ period ], "popDenseElasticity", out, tabs );
+    XMLWriteElement( loadFactor[ period ], "loadFactor", out, tabs );
+    XMLWriteElement( output[ period ], "serviceoutput", out, tabs );
+    XMLWriteElement( servicePrice[ period ], "servicePrice", out, tabs );
+    XMLWriteElement( timeValue[ period ], "timeValue", out, tabs );
+    XMLWriteElement( generalizedCost[ period ], "generalizedCost", out, tabs );
+    XMLWriteElement( popDensity, "popDensity", out, tabs );
+    XMLWriteElement( baseScaler, "baseScaler", out, tabs );
+}	
 
 //! calculate subsector share numerator
 void TranSubsector::calcShare( const int period, const GDP* gdp )

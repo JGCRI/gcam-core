@@ -69,9 +69,8 @@ const std::string& SupplySector::getXMLNameStatic() {
 * \param nodeName name of current node
 * \param curr pointer to the current node in the XML input tree
 */
-void SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    // do nothing
-    cout << "Unrecognized text string: " << nodeName << " found while parsing Sector." << endl;
+bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
+    return false;
 }
 
 
@@ -82,6 +81,6 @@ void SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
 * \author Josh Lurz, Steve Smith
 * \param node pointer to the current node in the XML input tree
 */
-void SupplySector::XMLDerivedClassParseAttr( const DOMNode* node ) {
-    // do nothing
+bool SupplySector::XMLDerivedClassParseAttr( const DOMNode* node ) {
+    return false;
 }

@@ -1,8 +1,10 @@
-/* tran_sector.cpp										*
-* Method definition for Transportation sector.         *
-* Initiated by MAW  3/14/2003                          *
-* Revised to work with latest code                     *
-* SHK 6/30/03                                          *
+/*! 
+* \file tran_sector.cpp
+* \ingroup Objects
+* \brief transporation technology class source file.
+* \author Marshall Wise, Sonny Kim, Josh Lurz
+* \date $Date$
+* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -30,41 +32,89 @@ const string TranSector::XML_NAME = "tranSector";
 
 //! Default constructor
 TranSector::TranSector( const string regionName ): DemandSector( regionName ) {
-    // resize vectors
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    percentLicensed.resize( maxper ); // percentage of population licensed
+    percentLicensed.resize( scenario->getModeltime()->getmaxper() );
 }
 
 //! Destructor.
-TranSector::~TranSector() {
+TranSector::~TranSector(){
 }
 
-//! Clear member variables.
-void TranSector::clear() {
-    
-    // call super clear
-    DemandSector::clear();
-    
-    // now clear own data.
-    percentLicensed.clear();
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overriden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const std::string& TranSector::getXMLName() const {
+	return XML_NAME;
 }
 
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& TranSector::getXMLNameStatic() {
+	return XML_NAME;
+}
 
 //! Parses any input variables specific to derived classes
-void TranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
+bool TranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
+    // call the demand sector XML parse to fill demand sector attributes
+    if( DemandSector::XMLDerivedClassParse( nodeName, curr ) ){
+    }
+    else if( nodeName == "percentLicensed" ) {
+        XMLHelper<double>::insertValueIntoVector( curr, percentLicensed, scenario->getModeltime() );
+    } 
+    else if( nodeName == TranSubsector::getXMLNameStatic() ){
+        parseContainerNode( curr, subsec, subSectorNameMap, new TranSubsector( regionName, name ) );
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+
+/*! \brief XML output stream for derived classes
+*
+* Function writes output due to any variables specific to derived classes to XML
+* \author Josh Lurz
+* \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
+*/
+void TranSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
+    // Write out parent class information.
+    DemandSector::toInputXMLDerived( out, tabs );
     
     const Modeltime* modeltime = scenario->getModeltime();
+    for( unsigned int i = 0; i < percentLicensed.size(); i++ ){
+        XMLWriteElementCheckDefault( percentLicensed[ i ], "percentLicensed", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    }
+}	
+
+
+//! XML output for viewing.
+void TranSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
+    // Write out parent class information.
+    DemandSector::toOutputXMLDerived( out, tabs );
     
-    // call the demand sector XML parse to fill demand sector attributes
-    DemandSector::XMLDerivedClassParse( nodeName, curr );
-    
-    if( nodeName == "percentLicensed" ) {
-        XMLHelper<double>::insertValueIntoVector( curr, percentLicensed,modeltime );
-    } 
-    else if( nodeName == "tranSubsector" ){
-        parseContainerNode( curr, subsec, subSectorNameMap, new TranSubsector( regionName, name ) );
-    }	
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( unsigned int i = 0; i < percentLicensed.size(); i++ ){
+        XMLWriteElementCheckDefault( percentLicensed[ i ], "percentLicensed", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    }
+}	
+
+//! Write object to debugging xml output stream.
+void TranSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
+    // Write out parent class information.
+    DemandSector::toDebugXMLDerived( period, out, tabs );
+    XMLWriteElement( percentLicensed[ period ], "percentLicensed", out, tabs );
 }
 
 /*! \brief Perform any sector level calibration data consistancy checks
@@ -81,7 +131,8 @@ void TranSector::checkSectorCalData( const int period ) {
   if ( inputsAllFixed( period, "allInputs" ) ) {
       double scaleFactor = getCalOutput( period ) / service[0];
       service[0] = scaleFactor * service[0];
-      logfile << "Calibrated Demand Scaled by " << scaleFactor << " in Region " << regionName << " sector: " << name << endl;
+      ILogger& mainLog = ILogger::getLogger( "main_log" );
+      mainLog << "Calibrated Demand Scaled by " << scaleFactor << " in region " << regionName << " sector " << name << endl;
    }
 }
 
@@ -156,27 +207,3 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
     
 }
 
-/*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME.
-*/
-const std::string& TranSector::getXMLName() const {
-	return XML_NAME;
-}
-
-/*! \brief Get the XML node name in static form for comparison when parsing XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* The "==" operator that is used when parsing, required this second function to return static.
-* \note A function cannot be static and virtual.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME as a static.
-*/
-const std::string& TranSector::getXMLNameStatic() {
-	return XML_NAME;
-}

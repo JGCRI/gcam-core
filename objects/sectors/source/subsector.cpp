@@ -252,35 +252,33 @@ void Subsector::completeInit() {
 //! Output the Subsector member variables in XML format.
 void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
-    int i;
-    
 	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     // write the xml for the class members.
-    for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
+    for( unsigned i = 0; i < capLimit.size(); i++ ){
         XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
     
-    for( i = 0; i < static_cast<int>( calOutputValue.size() ); i++ ){
+    for( unsigned i = 0; i < calOutputValue.size(); i++ ){
         if ( doCalibration[ i ] ) {
             XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
         }
     }
     
-    for( i = 0; i < static_cast<int>( shrwts.size() ); i++ ){
+    for( unsigned i = 0; i < shrwts.size(); i++ ){
         XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
     
-    for( i = 0; i < static_cast<int>( lexp.size() ); i++ ){
+    for( unsigned i = 0; i < lexp.size(); i++ ){
         XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, tabs, LOGIT_EXP_DEFAULT, modeltime->getper_to_yr( i ) );
     }
     
-    for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
+    for( unsigned i = 0; i < fuelPrefElasticity.size(); i++ ){
         XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelprefElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
     XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, tabs, 0.0, modeltime->getstartyr( ) );
-    
+    toInputXMLDerived( out, tabs );
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
         
@@ -304,35 +302,34 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
 //! XML output for viewing.
 void Subsector::toOutputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
-    int i;
-    
 	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     // write the xml for the class members.
-    for( i = 0; i < static_cast<int>( capLimit.size() ); i++ ){
+    for( unsigned i = 0; i < capLimit.size(); i++ ){
         XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
     
-    for( i = 0; i < static_cast<int>( calOutputValue.size() ); i++ ){
+    for( unsigned i = 0; i < calOutputValue.size(); i++ ){
         if ( doCalibration[ i ] ) {
             XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
         }
     }
     
-    for( i = 0; i < static_cast<int>( shrwts.size() ); i++ ){
+    for( unsigned i = 0; i < shrwts.size(); i++ ){
         XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
     
-    for( i = 0; i < static_cast<int>( lexp.size() ); i++ ){
+    for( unsigned i = 0; i < lexp.size(); i++ ){
         XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
-    for( i = 0; i < static_cast<int>( fuelPrefElasticity.size() ); i++ ){
+    for( unsigned i = 0; i < fuelPrefElasticity.size(); i++ ){
         XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelPrefElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     
     XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, tabs, 0.0, modeltime->getstartyr( ) );
-    
+    toOutputXMLDerived( out, tabs );
+
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
         
@@ -383,7 +380,7 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( subsectorprice[ period ], "subsectorprice", out, tabs );
     XMLWriteElement( output[ period ], "output", out, tabs );
     XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out, tabs );
-    
+    toDebugXMLDerived( period, out, tabs );
     // Write out the summary object.
     // summary[ period ].toDebugXML( period, out );
     // write out the technology objects.
