@@ -28,6 +28,9 @@ public class DataTableModel extends BaseTableModel{
 			activeRows.addElement(new Integer(i));
 		}
 	}
+	public void flip(int row, int col) {
+		throw new UnsupportedOperationException();
+	}
   	protected void buildTable(XPathExpression xpe){
 	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 	  xpe = null;

@@ -28,6 +28,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		this.doc = doc;
 	}
 	
+	public abstract void flip(int row, int col);
 	protected abstract void buildTable(XPathExpression xpe);
  	protected XPathExpression treePathtoXPath(TreePath tp, Node currNode, int flag) {
            XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(doc);

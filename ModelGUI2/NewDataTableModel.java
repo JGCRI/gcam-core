@@ -84,7 +84,7 @@ public class NewDataTableModel extends BaseTableModel{
 		ind2Name = set2Name;
 	}
 
-	public void flip() {
+	public void flip(int row, int col) {
 		Vector tempArr = indCol;
 		indCol = indRow;
 		indRow = tempArr;

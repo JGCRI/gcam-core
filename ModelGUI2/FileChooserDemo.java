@@ -424,6 +424,30 @@ public class FileChooserDemo extends JFrame
 				JScrollPane tableView = RadioButton.createSelection(selectedPath, doc, thisFrame);
 	  			splitPane.setRightComponent(tableView);
 	  		        menuTableFilter.setEnabled(true);
+				tableMenu = makePopupTableMenu();
+	   			((JTable)tableView.getViewport().getView()).addMouseListener(new MouseAdapter() {
+		   public void mousePressed(MouseEvent e) {
+			   maybeShowPopup(e);
+		   }
+		   public void mouseReleased(MouseEvent e) {
+			   maybeShowPopup(e);
+		   }
+		   private void maybeShowPopup(MouseEvent e) {
+			   if (e.isPopupTrigger()) {
+				   //selectedPath = jtree.getClosestPathForLocation(e.getX(), e.getY());
+				  MenuElement[] me = tableMenu.getSubElements();
+					  for (int i = 0; i < me.length; i++) {
+					  if (((JMenuItem)me[i]).getText().equals("Flip")) {
+							System.out.println("Flip menu activated");
+							System.out.println("flipped original x and y are " + e.getX() + " " + e.getY());
+							lastFlipX = e.getX();
+							lastFlipY = e.getY();
+					  }
+				  }
+				  tableMenu.show(e.getComponent(), e.getX(), e.getY());
+			   }
+		   }
+	   });
 			}
 
 			// ****** THIS IS WHERE YOU SPLIT INTO THREE DIFFERENT TABLE CALLS ******
@@ -559,12 +583,13 @@ public class FileChooserDemo extends JFrame
 				System.out.println("RIGHT CLICKED FLIP!, do stuff HERE...");
 				e.translatePoint( lastFlipX, lastFlipY );
 				Point p = e.getPoint();
+				JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
 				int row = jTable.rowAtPoint( p );
 				int col = jTable.columnAtPoint( p );
 				System.out.println("Source: "+e.getSource()+" Point:"+p+" row: "+row+" col: "+col);
 				
-				((NewDataTableModel)((JTable)((JScrollPane)jTable.getValueAt(row, col)).getViewport().getView()).getModel()).flip();
-				((NewDataTableModel)((JTable)((JScrollPane)jTable.getValueAt(row, col)).getViewport().getView()).getModel()).flip();
+				((BaseTableModel)jTable.getModel()).flip(row, col);
+				//((NewDataTableModel)((JTable)((JScrollPane)jTable.getValueAt(row, col)).getViewport().getView()).getModel()).flip();
 				// CALL FLIP METHOD HERE !!!!!
 			}
 			public void mouseClicked(MouseEvent e) {
@@ -810,32 +835,12 @@ public class FileChooserDemo extends JFrame
 	 */
   }
 
-  // DO WE NEED THIS
 class MyTreeModelListener implements TreeModelListener {
 		public void treeNodesChanged(TreeModelEvent e) {
 			try {
 				BaseTableModel bt = (BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel();
 				bt.fireTableRowsUpdated(0,bt.getRowCount());
 			} catch(Exception ex) {}
-			System.out.println("treenodes have changed!");
-			//jtree.setSelectionPath(e.getTreePath());
-			//System.out.println(jtree.getSelectionPath());
-			//System.out.println(jtree.getLeadSelectionPath());
-			if(jTable != null) {
-				Node node = ((DOMmodel.DOMNodeAdapter)e.getTreePath().getLastPathComponent()).getNode();
-				//((DataTableModel)((TableSorter)jTable.getModel()).getTableModel()).setValueAt(node.getNodeValue(), e.getTreePath());
-			}
-
-			 /*
-			try {
-				int index = e.getChildIndices()[0];
-				System.out.println("index is " + index);
-				node = ((Node)(jtree.getModel().getChild(node, index)));
-			} catch (Exception exc) {
-				System.out.println("exception: "+exc);
-			}*/
-
-			System.out.println("The user has finished editing the node!!!!!!!!!!!!");
 		}
 
 		public void treeNodesInserted(TreeModelEvent e) {

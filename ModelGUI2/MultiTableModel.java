@@ -64,6 +64,10 @@ public class MultiTableModel extends BaseTableModel{
 			activeRows.add(new Integer(i));
 		}
 	}
+	public void flip(int row, int col) {
+				((NewDataTableModel)((JTable)((JScrollPane)getValueAt(row, col)).getViewport().getView()).getModel()).flip(row, col);
+	}
+
   	protected void buildTable(XPathExpression xpe) {
 	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 	  xpe = null;
