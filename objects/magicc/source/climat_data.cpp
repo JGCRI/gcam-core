@@ -39,7 +39,6 @@ void writeClimatData() {
     ifstream gasfile2;
     const string gasFileName = Configuration::getInstance()->getFile( "GHGInputFileName" );
     gasfile2.open( gasFileName.c_str(), ios::in ); // open input file for reading
-
     util::checkIsOpen( gasfile2, gasFileName );
 
     // read in all other gases except CO2 from fossil fuels
