@@ -341,15 +341,20 @@ public class FileChooserDemo extends JFrame
 	}
 	else if (command.equals("Filter")) {
 		try {
-			((BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel()).filterData(this);
-			if(((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel() instanceof MultiTableModel) {
-				// NOT THE BEST WAY TO SET ROW HEIGHT
-				int j = 1;
-				JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
-				while( j < jTable.getRowCount()) {
-					jTable.setRowHeight(j-1,16);
-					jTable.setRowHeight(j,200);
-					j += 2;
+			if(((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel() instanceof TableSorter) {
+
+				((BaseTableModel)((TableSorter)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel()).getTableModel()).filterData(this);
+			} else {
+				((BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel()).filterData(this);
+				if(((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel() instanceof MultiTableModel) {
+					// NOT THE BEST WAY TO SET ROW HEIGHT
+					int j = 1;
+					JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
+					while( j < jTable.getRowCount()) {
+						jTable.setRowHeight(j-1,16);
+						jTable.setRowHeight(j,200);
+						j += 2;
+					}
 				}
 			}
 		} catch (UnsupportedOperationException uoe) {
@@ -478,7 +483,11 @@ public class FileChooserDemo extends JFrame
 				int row = jTable.rowAtPoint( p );
 				int col = jTable.columnAtPoint( p );
 				
-				((BaseTableModel)jTable.getModel()).flip(row, col);
+				if(jTable.getModel() instanceof TableSorter) {
+					((BaseTableModel)((TableSorter)jTable.getModel()).getTableModel()).flip(row, col);
+				} else {
+					((BaseTableModel)jTable.getModel()).flip(row, col);
+				}
 			}
 			public void mouseClicked(MouseEvent e) {
 				//shouldn't the action go here
@@ -635,7 +644,12 @@ public class FileChooserDemo extends JFrame
 		public void treeNodesChanged(TreeModelEvent e) {
 			try {
 				if(e.getSource() instanceof DOMmodel) {
-					BaseTableModel bt = (BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel();
+					BaseTableModel bt;
+					if(((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel() instanceof TableSorter) {
+						bt = (BaseTableModel)((TableSorter)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel()).getTableModel();
+					} else {
+						bt = (BaseTableModel)((JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView()).getModel();
+					}
 					bt.fireTableRowsUpdated(0,bt.getRowCount());
 				}
 			} catch(Exception ex) {}
