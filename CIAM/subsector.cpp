@@ -254,6 +254,10 @@ void subsector::toXML( ostream& out ) const {
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
         Tabs::writeTabs( out );
+
+        // If we have an empty vector this won't work, but that should never happen.
+        assert( j->begin() != j->end() );
+
         out << "<technology name=\"" << ( * ( j->begin() ) )->getName() << "\">" << endl;
         
         Tabs::increaseIndent();
