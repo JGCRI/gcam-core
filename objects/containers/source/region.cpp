@@ -55,10 +55,12 @@ Region::Region() {
     // Resize all vectors to maximum period
     const int maxper = scenario->getModeltime()->getmaxper();
     TFEcalb.resize( maxper ); // Total Final Energy calibration value
+    TFEPerCapcalb.resize( maxper ); // Total Final Energy per capita calibration value. This is converted to total TFE using population.
     priceSer.resize( maxper ); // aggregate price for demand services
     carbonTaxPaid.resize( maxper ); // total regional carbon taxes paid
     summary.resize( maxper ); // summary object for reporting
     calibrationGDPs.resize( maxper ); // GDPs for calibration
+    GDPcalPerCapita.resize( maxper ); // GDP per capita for calibration. This is converted to an absolute GDP using population.
 }
 
 //! Default destructor destroys sector, demsector, Resource, agSector, and population objects.
@@ -184,8 +186,16 @@ void Region::XMLParse( const DOMNode* node ){
                 else if( nodeNameChild == "GDPcal" ) { // TODO: MOVE TO GDP
                     XMLHelper<double>::insertValueIntoVector( currChild, calibrationGDPs, modeltime );
                 }
+                // Per-capita value -- is converted to total GDP using population
+                else if( nodeNameChild == "GDPcalPerCapita" ) { // TODO: MOVE TO GDP
+                    XMLHelper<double>::insertValueIntoVector( currChild, GDPcalPerCapita, modeltime );
+                }
                 else if(nodeNameChild == "TFEcalb") {
                     XMLHelper<double>::insertValueIntoVector( currChild, TFEcalb, modeltime );
+                }
+                // Per-capita value -- is converted to total TFE using population
+                else if(nodeNameChild == "TFEPerCapcalb") {
+                    XMLHelper<double>::insertValueIntoVector( currChild, TFEPerCapcalb, modeltime );
                 }
                 else {
                     mainLog << "Unrecognized text string: " << nodeNameChild << " found while parsing region->calibrationdata." << endl;
@@ -228,7 +238,22 @@ void Region::completeInit() {
     if( gdp.get() ){
         gdp->initData( population.get() );
     }
-
+    
+    const Modeltime* modeltime = scenario->getModeltime();
+    // Change per capita calibration values into absolute values
+    for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
+        // Change per capita calibration values into absolute values
+        if ( TFEPerCapcalb [ period ] != 0 &&  population.get() ) {
+            if ( TFEcalb[ period ] != 0 ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Both TFEcalb and TFEPerCapcalb read in region " << name << ". TFEperCap used." << endl;
+            }
+            // Convert from GJ/cap to EJ. Pop is in 1000's, so need an additional 1e6 scale to get from GJ to EJ 
+            TFEcalb [ period ]  = TFEPerCapcalb [ period ]  * population->getTotal( period ) / 1e6;
+        }
+    }
+    
     for( SupplySectorIterator supplySectorIter = supplySector.begin(); supplySectorIter != supplySector.end(); ++supplySectorIter ) {
         ( *supplySectorIter )->completeInit();
         (*supplySectorIter)->setMarket();
@@ -274,13 +299,31 @@ void Region::completeInit() {
     }
 }
 
-/*! \brief Initialize the calibration markets. */
+/*! \brief Initialize the calibration markets. 
+
+* \todo Move GDP calibration parameters into GDP object
+*/
 void Region::setupCalibrationMarkets() {
+
     if( !gdp.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "GDP object has not been created before GDP calibration. Check for an region name mismatch." << endl;
         return;
+    }
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    // Change per capita calibration values into absolute values
+    for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
+        if ( GDPcalPerCapita [ period ] != 0 &&  population.get() ) {
+            if ( calibrationGDPs[ period ] != 0 ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "WARNING: Both GDPcal and GDPcalPerCapita read in region " << name << ". GDPcalPerCapita used." << endl;
+            }
+            // Convert from GDP/cap ($) to millions of dollars GDP total. Pop is in 1000's, so need an additional 1e3 scale to convert to millions
+            calibrationGDPs [ period ]  = GDPcalPerCapita [ period ]  * population->getTotal( period )/1e3;
+        }
     }
 
     if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
@@ -556,14 +599,8 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( priceSer[ period ], "priceSer", out, tabs );
     XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
     XMLWriteElement( TFEcalb[ period ], "TFECalb", out, tabs );
-    double actTFE = 0;
-    if ( !isDemandAllCalibrated( period ) ) {
-        // Calculate total final energy demand for all demand sectors
-        for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-            actTFE += demandSector[ i ]->getInput( period );
-        }
-    }
-    XMLWriteElement( actTFE, "TotalFinalEnergy", out, tabs );
+ 
+    XMLWriteElement( getTotFinalEnergy ( period ) , "TotalFinalEnergy", out, tabs );
 
     // Write out the Co2 Coefficients. 
     for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
@@ -976,6 +1013,23 @@ void Region::calibrateTFE( const int period ) {
     }
 }
 
+/*! \brief Return TFE for all demand sectors
+*
+* \author Steve Smith
+* \param period Model period
+* \return Double total final energy for all demand sectors
+*/
+double Region::getTotFinalEnergy( const int period ) const {
+
+    // Calculate total final energy demand for all demand sectors
+    double totalFinalEnergy = 0;
+    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
+        totalFinalEnergy += demandSector[ i ]->getEnergyInput( period );
+    }
+
+   return totalFinalEnergy;
+}
+
 /*! \brief Return ratio of TFE and calibrated value
 *
 * Returns 0 if TFE calib value is zero, which indicate there is no calibration
@@ -988,10 +1042,7 @@ double Region::calcTFEscaleFactor( const int period ) const {
 
    if ( TFEcalb[ period ]  > 0 ) {
       // Calculate total final energy demand for all demand sectors
-      double totalFinalEnergy = 0;
-      for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-         totalFinalEnergy += demandSector[ i ]->getEnergyInput( period );
-      }
+      double totalFinalEnergy = getTotFinalEnergy( period );
 
       if ( totalFinalEnergy > util::getVerySmallNumber() ) {
          return TFEcalb[ period ] / totalFinalEnergy;
@@ -1059,6 +1110,7 @@ void Region::initCalc( const int period )
 * \param period Model period
 * \warning the current version cheats and assumes sub-sector names are equal to the supply sector fuel names.
 * \todo need to impliment "calonly" runmode for world.calc() so that can look at full chain of supplies and demands, working through the sector order.
+* \todo need to generalize outputsAllFixed routine that works for all sectors once we have multiple outputs
 */
 void Region::adjustCalibrations( const int period ) {
     Configuration* conf = Configuration::getInstance();
@@ -1272,6 +1324,12 @@ void Region::csvOutputFile() const {
     // regional total carbon taxes paid
     fileoutput3(name," "," "," ","C tax revenue","Mil90$",carbonTaxPaid);
 
+    // TFE for this region
+    for (int m=0;m<maxper;m++) {
+        temp[m] = getTotFinalEnergy(m);
+    }
+    fileoutput3(name," "," "," ","TFE","EJ",temp);
+    
     // write total emissions for region
     for (int m=0;m<maxper;m++)
         temp[m] = summary[m].get_emissmap_second("CO2");
@@ -1375,6 +1433,12 @@ void Region::dbOutput() const {
     }
     dboutput4(name,"End-Use Service","by Sector w/o TC","zTotal","Ser Unit",temp);
 
+    // TFE for this region
+    for (int m=0;m<maxper;m++) {
+        temp[m] = getTotFinalEnergy(m);
+    }
+    dboutput4(name,"Final Energy Cons","total","","EJ",temp);
+    
     // regional fuel consumption (primary and secondary) by fuel type
     map<string,double> tfuelmap = summary[0].getfuelcons();
     for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {

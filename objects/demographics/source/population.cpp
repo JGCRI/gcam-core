@@ -141,6 +141,7 @@ const vector<double>& Population::getTotalPopVec() const {
 
 //! return total population
 // Todo: Remove the second parameter and always pass in the model period.
+// returns population in 1000's -- sjs
 double Population::getTotal( const int per, const bool isPopPeriod ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     

@@ -100,9 +100,11 @@ private:
     std::vector<GHGPolicy*> mGhgPolicies; //!< vector of pointers to ghg market objects, container for constraints and emissions
     std::vector<double> iElasticity; //!< income elasticity
     std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
+    std::vector<double> GDPcalPerCapita; //!< GDP per capita to calibrate to
     std::vector<double> priceSer; //!< aggregate price for demand services
     std::vector<double> carbonTaxPaid; //!< total regional carbon taxes paid
     std::vector<double> TFEcalb;  //!< Total Final Energy Calibration value (cannot be equal to 0)
+    std::vector<double> TFEPerCapcalb;  //!< Total Final Energy per Capita Calibration GJ/cap (cannot be equal to 0)
     std::vector<Summary> summary; //!< summary values and totals for reporting
     std::map<std::string,int> resourceNameMap; //!< Map of resource name to integer position in vector. 
     std::map<std::string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector. 
@@ -115,6 +117,7 @@ private:
     bool anySupplyFixedOutput( const int sectorNumber ) const;
     void adjustCalibrations( const int period );
     void checkSectorCalData( const int period );
+    double getTotFinalEnergy( const int period ) const;
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
     std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
     typedef std::vector<SupplySector*>::iterator SupplySectorIterator;

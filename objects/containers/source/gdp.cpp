@@ -55,6 +55,7 @@ GDP::GDP() {
 	PPPConversionFact = 1;
     PPPDelta = 0;
 	constRatio = false;
+    baseGDP = 0;
 }
 
 //! Destructor
@@ -249,6 +250,18 @@ void GDP::setupCalibrationMarkets( const string& regionName, const vector<double
             marketplace->setMarketToSolve( goodName, regionName, per );
         }
     }
+    
+    // Check for consistency with baseGDP attribute    
+	const int basePer = modeltime->getyr_to_per( modeltime->getstartyr() );
+	if ( aCalibrationGDPs[ basePer ] != 0 ) {
+		if ( baseGDP != aCalibrationGDPs[ basePer ]  && baseGDP != 0 ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "baseGDP overwritten with CalibrationGDPs value in " << regionName << endl;
+        }
+        baseGDP= aCalibrationGDPs[ basePer ];
+	}
+
 }
 
 //! Write back the calibrated values from the marketplace to the member variables.
