@@ -60,31 +60,8 @@ SubResource::~SubResource() {
     }
 }
 
-//! Clear member variables
-void SubResource::clear(){
-    name = ""; // MSVC is missing String::Clear();
-    nograde = 0;
-    minShortTermSLimit = 0;
-    priceElas = 1;
-    grade.clear();
-    rscprc.clear();
-    techChange.clear();
-    environCost.clear();
-    severanceTax.clear();
-    available.clear();
-    annualprod.clear();
-    cumulprod.clear();
-}
-
 //! Initialize member variables from xml data
 void SubResource::XMLParse( const DOMNode* node ){	
-    DOMNodeList* nodeList = 0;
-    DOMNode* curr = 0;
-    string nodeName;
-    string childNodeName;
-     
-    const Modeltime* modeltime = scenario->getModeltime();
-    
     // make sure we were passed a valid node.
     assert( node );
     
@@ -92,12 +69,13 @@ void SubResource::XMLParse( const DOMNode* node ){
     name = XMLHelper<string>::getAttrString( node, "name" );
     
     // get all child nodes.
-    nodeList = node->getChildNodes();
-    
+    DOMNodeList* nodeList = node->getChildNodes();
+    const Modeltime* modeltime = scenario->getModeltime();
+
     // loop through the child nodes.
     for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        DOMNode* curr = nodeList->item( i );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         
         if( nodeName == "#text" ) {
             continue;
@@ -147,7 +125,7 @@ void SubResource::completeInit() {
     initializeResource(); // Do any initializations needed for this resource
     // update the available resource for period 0
     // this function must be called after all the grades have been parsed and nograde set
-    updateAvailable( 0 ); 
+    updateAvailable( 0 );
 }
 
 //! Blank definition so that don't have to define in derived classes if there is nothing to write out
