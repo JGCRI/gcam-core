@@ -164,6 +164,12 @@ void Marketplace::setRawPrice( const string& marketName, const string& goodName,
    if ( marketNumber != -1 ) {
       markets[ marketNumber ][ period ]->setRawPrice( priceIn );
    }
+   
+      if ( priceIn > 1e10) {
+      cerr << "This is wrong! " << goodName<<" Price. in "<<marketName <<" is being set to: " << priceIn << endl;
+      
+   }
+
 }
 
 
@@ -617,6 +623,7 @@ double Marketplace::getPrice( const string& goodName, const string& regionName, 
       // the "renewable" fuel depends on the returned price being zero
       if ( goodName != "renewable" ) {
          logfile << "Market not found for " << goodName << " in region " << regionName << endl;
+         cerr << "Market not found for " << goodName << " in region " << regionName << endl;
          return 1e12;
       } else {
          return 0;

@@ -316,10 +316,9 @@ void World::calc( const int per, const vector<string>& regionsToSolve ) {
       if( conf->getBool( "CalibrationActive" ) ) {
          region[ *i ]->calibrateRegion( doCalibrations, per );
       }
-
+   
 	}
-    // pointless!
-   Marketplace* marketplace = scenario->getMarketplace();
+   
 }
 
 //! Update all summary information for reporting

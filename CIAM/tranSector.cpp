@@ -51,7 +51,7 @@ void tranSector::clear() {
 
 
 //! Parses any input variables specific to derived classes
-void tranSector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+void tranSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     
     const Modeltime* modeltime = scenario->getModeltime();
     tranSubsector* tempSubSector = 0;
@@ -134,5 +134,5 @@ void tranSector::aggdemand( const string& regionName, const double gnp_cap, cons
     output[per] = service[per];
     // sets subsector outputs, technology outputs, and market demands
     setoutput( regionName,service[per],per);
-    sumoutput(per);
+    sumOutput(per);
 }

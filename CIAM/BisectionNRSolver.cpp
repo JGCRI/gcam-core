@@ -48,10 +48,10 @@ bool BisectionNRSolver::solve( const int period ) {
    int bn = 0; // counter for bisection routine
    int code = 2; // code that reports success 1 or failure 0
    int solved = 0; // code that reports success 1 or failure 0
+   // Extra high tolerance to get to solution faster
+   // const double solTolerance = 0.1; // tolerance for solution criteria
    const double solTolerance = 0.001; // tolerance for solution criteria
    const double excessDemandSolutionFloor = 0.01; // minimum value below which solution is assumed to be found.
-   // Extra high tolerance to get to solution faster
-   //double solTolerance = 0.1; // tolerance for solution criteria
    double maxSolVal; // temporary maximum value of equality condition			 
    bool calibrationStatus = world->getCalibrationSetting();
    
@@ -96,6 +96,7 @@ bool BisectionNRSolver::solve( const int period ) {
    
    // Loop is done at least once.
    do {
+      
       if ( !allbracketed ) {
          Bracket( solTolerance, excessDemandSolutionFloor, BRACKET_INTERVAL, sol,allbracketed,firsttime,worldCalcCount,period );
       }
@@ -117,7 +118,7 @@ bool BisectionNRSolver::solve( const int period ) {
       // Ron's version of the NR routine
       if ( allbracketed  ) {
          const int maxIter = 30;
-         solved = Bisection_all( solTolerance, excessDemandSolutionFloor, maxIter, sol, worldCalcCount, period );
+          solved = Bisection_all( solTolerance, excessDemandSolutionFloor, maxIter, sol, worldCalcCount, period );
          
          logfile << ",Number of iterations: worldCalcCount = " << worldCalcCount << endl;
          int worstMarketIndex = 0;
@@ -719,8 +720,28 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
             assert( util::isValidNumber( NP[ i ] ) );
          }
          
+         double prevprice = sol[ i ].X;
          sol[ i ].X = exp( NP[ i ] ); // new price
          
+         if ( sol[ i ].X > 1e10) {
+            cerr << " Large price in market: " << sol[ i ].getName() << endl;
+            // first get largest derivitive
+            double maxDerVal = 0; double maxKDSval = 0;
+            for ( int j = 0; j < marketsToSolve; j++ ) {
+               maxKDSval = max(maxKDSval, abs(KDS[ j ]) );
+               maxDerVal = max(maxDerVal, abs(JF[ i ][ j ]) );
+            }
+            cout << "Max KDS: " << maxKDSval << ", Max Derivitive: " << maxDerVal;
+            cout << " Prev Price?: " << prevprice << endl;
+            cout << "Large derivitives against: " << endl;
+            for ( int j = 0; j < marketsToSolve; j++ ) {
+               if ( abs(JF[ i ][ j ]) > maxDerVal/100 ) {
+                 cout << "   Market: " << sol[ j ].getName() << ", Value: "<< JF[ i ][ j ] << endl;
+               }
+            }
+         }
+   
+
          // Check the validity of the price.
          assert( util::isValidNumber( sol[ i ].X ) );
       }

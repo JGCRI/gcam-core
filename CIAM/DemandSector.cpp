@@ -74,7 +74,7 @@ void demsector::XMLDerivedClassParseAttr( const DOMNode* node ) {
 }
 
 //! Parses any input variables specific to derived classes
-void demsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+void demsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     
     const Modeltime* modeltime = scenario->getModeltime();
     
@@ -256,7 +256,7 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
     XMLWriteElement( pe_cons[ period ], "pe_cons", out );
     XMLWriteElement( input[ period ], "input", out );
     XMLWriteElement( output[ period ], "output", out );
-    XMLWriteElement( carbontaxpaid[ period ], "carbontaxpaid", out );
+    XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out );
     
     XMLWriteElement( sectorFuelCost[ period ], "sectorFuelCost", out );
     XMLWriteElement( techChangeCumm[ period ], "techChangeCumm", out );
@@ -307,7 +307,7 @@ void demsector::setMarket( const string& regionName ) {
 }
 
 //! Calculate subsector shares.
-void demsector::calc_share( const string regionName, const int per, const double gnp_cap )
+void demsector::calcShare( const string regionName, const int per, const double gnp_cap )
 {
     int i=0;
     double sum = 0.0;
@@ -317,12 +317,23 @@ void demsector::calc_share( const string regionName, const int per, const double
         sum += subsec[i]->getShare(per);
     }
     // normalize subsector shares to total 100 %
-    for (i=0;i<nosubsec;i++)
-        subsec[i]->normShare(sum, per);	
+    for (i=0;i<nosubsec;i++) {
+        subsec[i]->normShare(sum, per);
+   }
+   
+       if ( regionName == "USAxxx" && name == "building" ) {
+         cout << "¥¥Shares: ";
+        for ( i=0; i<nosubsec; i++ ) {
+         cout << subsec[ i ]->getShare( per ) << ", ";
+       }
+       cout << endl;
+   }
+   
+
 }
 
 //! Calculate weighted average price of subsectors.
-void demsector::price(int per)
+void demsector::calcPrice(int per)
 {
     sectorprice[per]=0.0;
     for (int i=0;i<nosubsec;i++) {	
@@ -415,18 +426,19 @@ void demsector::calc_pElasticity(int per) {
 //! Aggrgate sector energy service demand function.
 void demsector::aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per) {
     const Modeltime* modeltime = scenario->getModeltime();
+    const Marketplace* marketplace = scenario->getMarketplace();
     double ser_dmd;
     double base;
     // double pelasticity = -0.9;
     double pelasticity = pElasticity[per];
     
-    base = getoutput(0);
+    base = getOutput(0);
     
     // normalize prices to 1990 base
+    //  priceRatio = getPrice[ per ]/getPrice[ normPeriod ]; -- replaced with call to market sjs
     int normPeriod = modeltime->getyr_to_per(1990);
-    priceRatio = sectorprice[per]/sectorprice[normPeriod];
-    //priceRatio = 1;
-    
+    priceRatio =	getPrice( per ) / getPrice( normPeriod );
+     
     // demand for service
     if (per == 0) {
         ser_dmd = base; // base output is initialized by data
@@ -435,14 +447,12 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
     else {
         // perCapitaBased is true or false
         if (perCapitaBased) { // demand based on per capita GNP
-            //ser_dmd = base*pow(priceRatio,pElasticity[per])*pow(gnp_cap,iElasticity[per]);
             ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp_cap,iElasticity[per]);
             // need to multiply above by population ratio (current population/base year
             // population).  The gnp ratio provides the population ratio.
             ser_dmd *= gnp/gnp_cap;
         }
         else { // demand based on scale of GNP
-            //ser_dmd = base*pow(priceRatio,pElasticity[per])*pow(gnp,iElasticity[per]);
             ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp,iElasticity[per]);
         }
         
@@ -460,7 +470,9 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
     set_ser_dmd( service[ per ], per ); // sets the output
     // sets subsector outputs, technology outputs, and market demands
     sector::setoutput( regionName, service[ per ], per );
-    sector::sumoutput( per );
+   
+   // sector::sumOutput( per );
+   // this call now included in setOutput -- although sector outputs at this point are NaN!
 }
 
 //! Write sector output to database.
@@ -477,7 +489,7 @@ void demsector::outputfile(const string& regionName ) {
     // the function writes all years
     // total sector output
     for (m=0;m<maxper;m++)
-        temp[m] = sector::getoutput(m);
+        temp[m] = sector::getOutput(m);
     fileoutput3(regionName,getName()," "," ","prodution","SerUnit",temp);
     // total sector eneryg input
     for (m=0;m<maxper;m++)
@@ -485,11 +497,11 @@ void demsector::outputfile(const string& regionName ) {
     fileoutput3(regionName,getName()," "," ","consumption","EJ",temp);
     // sector price
     for (m=0;m<maxper;m++)
-        temp[m] = sector::showprice(m);
+        temp[m] = sector::getPrice(m);
     fileoutput3(regionName,getName()," "," ","price","$/Service",temp);
     // sector carbon taxes paid
     for (m=0;m<maxper;m++)
-        temp[m] = sector::showcarbontaxpaid(m);
+        temp[m] = sector::getTotalCarbonTaxPaid(m);
     fileoutput3(regionName,getName()," "," ","C tax paid","Mil90$",temp);
     
 }
@@ -531,7 +543,7 @@ void demsector::MCoutput( const string& regionName ) {
     // or write out in subsector
     /*	for (fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
     for (m=0;m<maxper;m++) {
-    temp[m] = sector::getfuelcons_second(m,fmap->first);
+    temp[m] = sector::getConsByFuel(m,fmap->first);
     }
     string strtemp = fmap->first;
     dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
@@ -547,7 +559,7 @@ void demsector::MCoutput( const string& regionName ) {
     // Write out total (zTotal) fuel consumption for each sector only
     fmap = --tfuelmap.end();
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::getfuelcons_second(m,fmap->first);
+        temp[m] = sector::getConsByFuel(m,fmap->first);
     }
     dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
     dboutput4(regionName,"Fuel Consumption","by End-Use Sector",secname,"EJ",temp);
@@ -581,19 +593,19 @@ void demsector::MCoutput( const string& regionName ) {
     
     // sector price (not normalized)
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::showprice(m);
+        temp[m] = sector::getPrice(m);
     }
     dboutput4(regionName,"Price",secname,"zSectorAvg","75$/Ser",temp);
     
     // sector price normalized to base price
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::showprice(m)/sector::showprice(0);
+        temp[m] = sector::getPrice(m)/sector::getPrice(0);
     }
     dboutput4(regionName,"Price","by End-Use Sector",secname,"Norm75",temp);
     
     // sector carbon taxes paid
     for (m=0;m<maxper;m++) {
-        temp[m] = sector::showcarbontaxpaid(m);
+        temp[m] = sector::getTotalCarbonTaxPaid(m);
     }
     dboutput4(regionName,"General","CarbonTaxPaid",secname,"$",temp);
     

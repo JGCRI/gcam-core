@@ -467,9 +467,9 @@ double technology::getFixedSupply() const {
 //! Use a ratio of total demand to total fixed supply
 void technology::scaleFixedSupply(const double scaleRatio)
 {
-    string FixedTech = "hydro";
+  //  string FixedTech = "hydro";
     // dmd is total subsector demand
-    if(name == FixedTech) {
+    if( fixedOutputVal != 0 ) {
         output *= scaleRatio;
         fixedOutputVal *= scaleRatio;
     }

@@ -27,7 +27,7 @@ public:
    tranSector();
    virtual ~tranSector();
    virtual void clear();
-   virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); 
+   virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
    virtual void aggdemand( const std::string& regionName, const double gnp_cap, const double gnp, const int per); 
 };
 

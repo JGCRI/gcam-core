@@ -52,20 +52,20 @@ protected:
     std::vector<double> pElasticity; //!< price elasticity.
     std::vector<double> aeei; //!< autonomous end-use energy intensity parameter
     std::vector<double> techChangeCumm; //!< cummulative technical change on end-use service
+    virtual void calcPrice(int per);
     
 public:
     demsector();
     virtual ~demsector();
     virtual void clear();
     virtual void XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
-    virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); 
+    virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toXML( std::ostream& out ) const;
     virtual void toOutputXML( std::ostream& out ) const;
     virtual void toXMLDerivedClass( std::ostream& out ) const;
     virtual void toDebugXML( const int period, std::ostream& out ) const;
     virtual void setMarket( const std::string& regname );
-    virtual void calc_share( const std::string regionName, const int per, const double gnp_cap = 1 );
-    virtual void price(int per);
+    virtual void calcShare( const std::string regionName, const int per, const double gnp_cap = 1 );
     virtual void calc_pElasticity( const int per );
     virtual void aggdemand( const std::string& regionName, const double gnp_cap, const double gnp, const int per); 
     virtual void outputfile( const std::string& regionName );

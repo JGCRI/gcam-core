@@ -79,8 +79,7 @@ private:
     std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
 
 public:
-
-    Region();
+   Region();
     ~Region(); 
     void clear();
     void initElementalMembers();

@@ -121,6 +121,12 @@ namespace util {
       return VERY_SMALL_NUM;
    }
 
+   //! Static function which returns VERY_SMALL_NUM. This avoids initialization problems. 
+   static inline double getTinyNumber() {
+      const double VERY_SMALL_NUM = 1e-16;
+      return VERY_SMALL_NUM;
+   }
+
     /*! \brief Function which creates an XML compliant date time string.
     *
     * This function takes as an argument a time_t object and returns a string containing the date and time in the following format:

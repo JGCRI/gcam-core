@@ -295,7 +295,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<
    // This code will sum up the additive value for each market over all regions.
    // These sums are then checked against the original global supplies and demands.
    if( Configuration::getInstance()->getBool( "debugChecking" ) ) {
-      cout << "Checking sums..." << endl;
+      // cout << "Checking sums..." << endl;
       // Compute the sum of the regional supplies and demands.
       vector<double> suppliesSum( numMarkets, 0.0 );
       vector<double> demandsSum( numMarkets, 0.0 );
@@ -307,20 +307,31 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<
          }
       }
       
+      double ErrorCount = 0;
       // Check if the sum adds up to the total. 
       for( int marketCheckIter = 0; marketCheckIter < numMarkets; marketCheckIter++ ) {
          if( fabs( originalSupplies[ marketCheckIter ] - suppliesSum[ marketCheckIter ] ) > 1E-5 ){
-            cout << "Error in derivative Calculation. Unequal sums: ";
-            cout << " S Difference: " << originalSupplies[ marketCheckIter ] - suppliesSum[ marketCheckIter ];
-            cout << endl;
+            if ( ErrorCount < 0 ) {
+               cout << "Error in derivative Calc. Unequal sums: ";
+               cout << " S Difference: " << originalSupplies[ marketCheckIter ] - suppliesSum[ marketCheckIter ];
+               cout << endl;
+            }
+            ErrorCount += 1;
          }
          if ( fabs( originalDemands[ marketCheckIter ] - demandsSum[ marketCheckIter ] ) > 1E-5 ) {
-            cout << "Error in derivative Calculation. Unequal sums: ";
-            cout << " D Difference: " << originalDemands[ marketCheckIter ] - demandsSum[ marketCheckIter ];
-            cout << endl;
+            if ( ErrorCount < 0 ) {
+               cout << "Error in derivative Calc. Unequal sums: ";
+               cout << " D Difference: " << originalDemands[ marketCheckIter ] - demandsSum[ marketCheckIter ];
+               cout << endl;
+            }
+            ErrorCount += 1;
          }
+       } 
+      if ( ErrorCount > 0 ) {
+         cout << "Warning - " << ErrorCount << " supply & demand sums not equal in derivative Calc. " << endl;
       }
    }
+
    // Sums checking complete.
    // Done creating additive matrices.
    // Now calculate derivatives for each market.
