@@ -662,9 +662,9 @@ void Subsector::applycarbontax( const double tax, const int period ) {
 * \param ghgname name of the ghg to apply tax to
 * \param period model period
 */
-void Subsector::addghgtax( const string& ghgname, const int period ) {
+void Subsector::addGhgTax( const string& ghgname, const int period ) {
     for ( int i=0 ;i<notech; i++ ) {
-        techs[ i ][ period ]->addghgtax( ghgname, regionName, period );
+        techs[ i ][ period ]->addGhgTax( ghgname, regionName, period );
     }
 }
 

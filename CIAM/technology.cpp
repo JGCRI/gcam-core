@@ -254,6 +254,8 @@ void technology::XMLDerivedClassParse( const string nodeName, const DOMNode* cur
 //! Complete initialization
 void technology::completeInit() {
     if( ghg.empty() ) {
+        // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
+        // for CO2 this emissions coefficient is not used
         Ghg* CO2 = new Ghg( "CO2", "MTC", 0, 1, 0 ); // at least CO2 must be present
         ghg.push_back( CO2 );
         ghgNameMap[ "CO2" ] = 0;
@@ -384,11 +386,10 @@ void technology::applycarbontax( const string& regionName, const double tax )
 
 //! sets ghg tax to technologies
 /*! does not get called if there are no markets for ghgs */
-void technology::addghgtax( const string ghgname, const string regionName, const int per ) {
+void technology::addGhgTax( const string ghgname, const string regionName, const int per ) {
     Marketplace* marketplace = scenario->getMarketplace();
     // returns coef for primary fuels only
     // carbontax has value for primary fuels only
-    carbontaxgj = 0; // initialize
     carbonValue = 0; // initialize
     carbontax = marketplace->getPrice(ghgname,regionName,per);
     // add to previous ghg tax if more than one ghg
@@ -595,7 +596,7 @@ void technology::production(const string& regionName,const string& prodName,
     // total carbon taxes paid for reporting only
     // carbontax and carbontaxpaid is null for technologies that do not consume fossil fuels
     // input(EJ), carbontax(90$/GJ), carbontaxpaid(90$Mil)
-    carbontaxpaid = input*carbontaxgj*1e+3;
+    carbontaxpaid = input*carbonValue*1e+3;
     
     // calculate emissions for each gas after setting input and output amounts
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {

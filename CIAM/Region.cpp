@@ -671,10 +671,10 @@ void Region::addGhgTax( const int period ) {
     for (i=0;i<noGhg;i++) {
         ghgname = ghgMarket[i]->getName();
         for (j=0;j<noSSec;j++) {
-            supplySector[j]->addghgtax( ghgname, period );
+            supplySector[j]->addGhgTax( ghgname, period );
         }
         for (k=0;k<noDSec;k++) {
-            demandSector[k]->addghgtax( ghgname, period );
+            demandSector[k]->addGhgTax( ghgname, period );
         }
     }
 }

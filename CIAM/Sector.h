@@ -82,7 +82,7 @@ public:
     virtual void toDebugXML( const int period, std::ostream& out ) const;
     virtual void setMarket();
     void applycarbontax( double tax, const int period );
-    void addghgtax( const std::string& ghgname, const int period );
+    void addGhgTax( const std::string& ghgname, const int period );
     virtual void calcShare( const int period, const double gnp_cap = 1 );
     void adjSharesCapLimit( const int period ); 
     void checkShareSum( const int period ) const;

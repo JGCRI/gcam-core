@@ -43,7 +43,7 @@ private:
     double emiss_fuel; //!< implied emissions from total fuel consumption
     double emiss_ind; //!< indirect emissions
 public:
-    Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 0, const double emissionIn = 0 );
+    Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 0, const double emissCoefIn = 0 );
     void clear();
     void setcoef( const double em_coef );
     void XMLParse( const xercesc::DOMNode* tempnode );

@@ -88,7 +88,7 @@ public:
     void initCalc( );
     void applycarbontax( const std::string& regionName, const double tax); // apply carbon tax to appropriate technology
     // sets ghg tax to technologies
-    void addghgtax( const std::string ghgname, const std::string regionName, const int per ); 
+    void addGhgTax( const std::string ghgname, const std::string regionName, const int per ); 
     virtual void calcCost( const std::string regionName, const int per); 
     virtual void calcShare( const std::string regionName, const int per); 
     void normShare(double sum); // normalize technology share

@@ -463,9 +463,9 @@ void Sector::applycarbontax( const double tax, const int period ) {
 * \param ghgname name of the ghg to apply tax to
 * \param period model period
 */
-void Sector::addghgtax( const string& ghgname, const int period ) {
+void Sector::addGhgTax( const string& ghgname, const int period ) {
     for ( int i = 0; i < nosubsec; i++ ) {
-        subsec[ i ]->addghgtax( ghgname, period );
+        subsec[ i ]->addGhgTax( ghgname, period );
     }
 }
 

@@ -86,7 +86,7 @@ void tranTechnology::calcCost( const string regionName, const int per )
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const double JperBTU = 1055.0; // 1055 Joules per BTU
     
-    fuelcost = ( (fuelprice * fMultiplier) + carbontaxgj ) * intensity/techChangeCumm
+    fuelcost = ( (fuelprice * fMultiplier) + carbonValue ) * intensity/techChangeCumm
              * JperBTU/(1.0E9)*CVRT90;
     techcost = ( fuelcost + necost ) * pMultiplier;
 }
@@ -122,7 +122,6 @@ void tranTechnology::production(const string& regionName,const string& prodName,
         output = share * dmd; // use share to get output for each tranTechnology
     }
     else { // do for hydroelectricity
-        //output = fixedOutputVal;
         output = fixedOutputVal = dmd;
     }
     
@@ -145,8 +144,8 @@ void tranTechnology::production(const string& regionName,const string& prodName,
     
     // total carbon taxes paid for reporting only
     // carbontax and carbontaxpaid is null for technologies that do not consume fossil fuels
-    // input(EJ), carbontax(90$/GJ), carbontaxpaid(90$Mil)
-    carbontaxpaid = input*carbontaxgj*1e+3;
+    // input(EJ), carbonValue(90$/GJ), carbontaxpaid(90$Mil)
+    carbontaxpaid = input*carbonValue*1e+3;
     
     // calculate emissions for each gas after setting input and output amounts
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {

@@ -25,12 +25,13 @@ extern Scenario* scenario;
 using namespace std;
 using namespace xercesc;
 
-Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, const double gwpIn, const double emissionIn ){
+Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, const double gwpIn, const double emissCoefIn ){
     name = nameIn;
     unit = unitIn;
     rmfrac = rmfracIn;
     gwp = gwpIn;
-    emission = emissionIn;
+    emiss_coef = emissCoefIn;
+    emission = 0;
     storageCost = 0;
     sequesteredAmount = 0;
     emiss_gwp = 0;
