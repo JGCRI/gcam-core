@@ -406,7 +406,7 @@ std::string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
 * \param name Optional name value to print as an attribute.
 */
 template<class T>
-void XMLWriteElement( const T value, const std::string elementName, std::ostream& out, const Tabs* tabs, const int year = 0, const std::string name = "" ) {
+void XMLWriteElement( const T value, const std::string elementName, std::ostream& out, const Tabs* tabs, const int year = 0, const std::string name = "", const bool fillout = false ) {
    
    tabs->writeTabs( out );
    
@@ -419,7 +419,9 @@ void XMLWriteElement( const T value, const std::string elementName, std::ostream
    if( year != 0 ){
       out << " year=\"" << year << "\"";
    }
-   
+   if( fillout ){
+       out << " fillout=\"" << 1 << "\"";
+   }
    out << ">";
    
    out << value;
@@ -513,14 +515,62 @@ inline void XMLWriteClosingTag( const std::string& elementName, std::ostream& ou
 * \param defaultValue Default value to compare the value to. 
 * \param year Optional year value to print as an attribute.
 * \param name Optional name value to print as an attribute.
+* \param fillout Optional boolean whether to add the fillout attribute with a true value.
 */
 template<class T>
-void XMLWriteElementCheckDefault( const T value, const std::string elementName, std::ostream& out, const Tabs* tabs, const T defaultValue = T(), const int year = 0, const std::string name = "" ) {
-   
+void XMLWriteElementCheckDefault( const T value, const std::string elementName, std::ostream& out, const Tabs* tabs, const T defaultValue = T(), const int year = 0, const std::string name = "", const bool fillout = false ) {
    if( !util::isEqual( value, defaultValue ) ) {
-       XMLWriteElement( value, elementName, out, tabs, year, name );
+       XMLWriteElement( value, elementName, out, tabs, year, name, fillout );
    }
 }
+
+/*! 
+* \brief Function which writes out the values contained in a vector. 
+* \detailed This function is used to write out the values of a vector in XML format, along with their year tag.
+* The function will also avoid writing out elements if they have default values, and will collapse consecutive 
+* equal values into one element with a fillout attribute. The function also correctly determines the year for 
+* population data, assuming the flag is passed in. 
+* \param outputVector The vector of values to write out.
+* \param elementName The elementName to write out for each value.
+* \param out Stream to print to.
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
+* \param modeltime A pointer to the global modeltime object. 
+* \param defaultValue Default value for items in this vector. 
+* \param isPopulationData A flag which tells the function the vector is a Populations vector.
+*/
+template<class T>
+void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elementName, std::ostream& out, Tabs* tabs, const Modeltime* modeltime, const T defaultValue = T(), const bool isPopulationData = false ) {
+
+    for( unsigned int i = 0; i < outputVector.size(); i++ ){
+        unsigned int year = 0;
+        // Determine the correct year. 
+        if( isPopulationData ){
+            year = modeltime->getPopPeriodToYear( i );
+        }
+        else {
+            year = modeltime->getper_to_yr( i );
+        }
+
+        // Determine if we can use fillout.
+        unsigned int canSkip = 0;
+        for( unsigned int j = i + 1; j < outputVector.size(); j++ ){
+            if( util::isEqual( outputVector.at( i ), outputVector.at( j ) ) ){
+                canSkip++;
+            }
+            else {
+                break;
+            }
+        }
+        if( canSkip > 0 ){
+            XMLWriteElementCheckDefault( outputVector.at( i ), elementName, out, tabs, defaultValue, year, "", true );
+            i += canSkip;
+        } else {
+            // Can't skip any. write normally.
+            XMLWriteElementCheckDefault( outputVector.at( i ), elementName, out, tabs, defaultValue, year );
+        }
+    }
+}
+
 /*!
 * \brief Function to parse an XML file, returning a pointer to the root.
 * 
