@@ -121,13 +121,16 @@ void Region::initElementalMembers(){
    EnergyGNPElas = 0;
 }
 
-//! Return the region name.
+/*! Return the region name.
+* \return The string name of the region is returned.
+*/
 string Region::getName() const {
    return name;
 }
 
 /*! 
 * \brief Sets the data members from the XML input.  This function parses all XML data from Region down to the lowest set of objects.
+*  As the XML data is parsed, new objects are continually added to the object container using the push_back routine.
 *
 * \param node XML DOM node of the region
 */
@@ -343,7 +346,9 @@ void Region::XMLParse( const DOMNode* node ){
    }
 }
 
-//! Complete the initialization.
+/*! Complete the initialization.  Get the size of vectors, initialize AGLU, create all markets, call complete initialization 
+*  functions for nested objects, update the fuel map, and find simultaneities.
+*/
 void Region::completeInit() {
    
    int i = 0;
@@ -405,7 +410,7 @@ void Region::completeInit() {
 }
 
 /*! 
-* \brief Write datamembers to datastream in XML format. 
+* \brief Write datamembers to datastream in XML format. Calls XMLWriteElement function from the XMLHelper class for the actual writing.
 * \param out Output file in XML format.
 * \note 
 * \ref faqitem1 
@@ -518,7 +523,13 @@ void Region::toXML( ostream& out ) const {
    out << "</region>" << endl;
 }
 
-//! Write datamembers to datastream in XML format.
+/*! Write datamembers to datastream in XML format for debugging purposes.  Calls XMLWriteElement function from the XMLHelper class for the actual writing.
+*  Calls debug functions in other contained objects. 
+*
+* \param period Model time period
+* \param out Output file for debugging purposes in XML format
+*
+*/
 void Region::toDebugXML( const int period, ostream& out ) const {
    
    // write the beginning tag.
@@ -627,13 +638,18 @@ void Region::setupCalibrationMarkets() {
    population->setupCalibrationMarkets( name );
 }
 
-//! Run the agLu Model and determine CO2 emitted.
+/*! Run the agLu Model and determine CO2 emitted.
+* \param period Model time period
+*/
 void Region::calcAgSector( const int period ) {
    agSector->runModel( period, name );
    agSector->carbLand( period, name );
 }
 
-//! Set regional ghg constraint to market supply.
+/*! \brief Set regional ghg constraint from input data to market supply.
+*
+* \param period Model time period
+*/
 void Region::setGhgSupply( int per ) {
    Marketplace* marketplace = scenario->getMarketplace();
    
@@ -647,7 +663,10 @@ void Region::setGhgSupply( int per ) {
    }
 }
 
-//! Set regional ghg tax to individual technologies.
+/*! Set regional ghg tax to individual technologies.
+*
+* \param period Model time period
+*/
 void Region::addGhgTax( int per ) {
    string ghgname;
    int i,j,k;
@@ -664,7 +683,10 @@ void Region::addGhgTax( int per ) {
 }
 
 
-//! Calculates annual supply of primay resources.
+/*! Calculates annual supply of primay resources.
+*
+* \param period Model time period
+*/
 void Region::rscSupply(int per)  {
    Marketplace* marketplace = scenario->getMarketplace();
    string goodName;
@@ -693,7 +715,10 @@ void Region::rscSupply(int per)  {
    }
 }
 
-//! Calculate prices of refined fuels and electricity.
+/*! Calculate prices of refined fuels and electricity.
+*
+* \param period Model time period
+*/
 void Region::finalSupplyPrc(int per) {
    Marketplace* marketplace = scenario->getMarketplace();
    string goodName;
@@ -711,7 +736,10 @@ void Region::finalSupplyPrc(int per) {
    }
 }
 
-//! Calculates supply of final energy and other goods.
+/*! Calculates supply of final energy and other goods.
+*
+* \param period Model time period
+*/
 void Region::finalSupply(int per) {
    
    Marketplace* marketplace = scenario->getMarketplace();
@@ -757,7 +785,10 @@ void Region::finalSupply(int per) {
    }
 }
 
-//! Calculate regional gnp.
+/*! Calculate regional gnp.
+*
+* \param period Model time period
+*/
 void Region::calcGnp( int per ) {
    
    const Modeltime* modeltime = scenario->getModeltime();
@@ -823,7 +854,10 @@ const vector<double> Region::calcFutureGNP() const {
    return gnps;
 }
 
-//! Calculate regional GNP using laborforce participation and labor productivity.
+/*! Calculate regional GNP using laborforce participation and labor productivity.
+*
+* \param period Model time period
+*/
 void Region::calcGNPlfp(int per) {
    const Modeltime* modeltime = scenario->getModeltime();
    double labprd=0;
@@ -852,7 +886,10 @@ void Region::calcGNPlfp(int per) {
    
 }
 
-//! Calculate demand sector aggregate price.
+/*! Calculate demand sector aggregate price.
+*
+* \param period Model time period
+*/
 void Region::calcEndUsePrice( const int period ) {
    
    priceSer[ period ] = 0;
@@ -878,7 +915,10 @@ void Region::calcEndUsePrice( const int period ) {
    }
 }
 
-//! Adjust regional gnp for energy.
+/*! Adjust regional gnp for energy.
+*
+* \param period Model time period
+*/
 void Region::adjustGnp(int per) {
    const Modeltime* modeltime = scenario->getModeltime();
    
@@ -904,7 +944,10 @@ void Region::adjustGnp(int per) {
    }
 }
 
-//! Write back the calibrated values from the marketplace into the member variables. 
+/*! Write back the calibrated values from the marketplace into the member variables. 
+*
+* \param period Model time period
+*/
 void Region::writeBackCalibratedValues( const int period ) {
    population->writeBackCalibratedValues( name, period );
 }
@@ -915,8 +958,10 @@ Two levels of calibration are possible.
 First at the sector or technology level (via. calibrateSector method),
 or, 
 at the level of total final energy demand (via
+*
+* \param doCalibrations Boolean for running or not running calibration routine
+* \param period Model time period
 */
-
 void Region::calibrateRegion( const bool doCalibrations, const int per ) {
    int i;
    
@@ -955,7 +1000,10 @@ void Region::calibrateRegion( const bool doCalibrations, const int per ) {
    }
 }
 
-//! Returns true if all demand sectors are calibrated (or fixed)
+/*! Returns true if all demand sectors are calibrated (or fixed)
+*
+* \param period Model time period
+*/
 bool Region::demandAllCalibrated( const int per ) {
    bool allCalibrated = true;
    
