@@ -67,25 +67,13 @@ void BisectPolicyNRSolver::init() {
 * \return Whether the markets all solved.
 */
 bool BisectPolicyNRSolver::solve( const int period ) {
-    bool solved = false; // whether the model has solved.
-    SolverComponent::ReturnCode code = SolverComponent::ORIGINAL_STATE;
-
-       // Constants. Make these configuration variables.
+    // Constants. Make these configuration variables.
     // relative tolerance for solution criteria
     static const double SOLUTION_TOLERANCE = Configuration::getInstance()->getDouble( "SolutionTolerance", 0.001 );
     
-    // relative tolerance for calibrations
-    const double CALIBRATION_ACCURACY = SOLUTION_TOLERANCE * 4 ;
-    // Adds significant time if CALIBRATION_ACCURACY = SOLUTION_TOLERANCE. If CALIBRATION_ACCURACY > SOLUTION_TOLERANCE then speeds things up quite a bit.
-    // The calibration numbers are generally not good to this accuracy in any event, so having a slightly higher CALIBRATION_ACCURACY should be ok.
-    
     // minimum value below which solution is assumed to be found.
     static const double ED_SOLUTION_FLOOR = Configuration::getInstance()->getDouble( "SolutionFloor", 0.01 );
-    static const double BRACKET_INTERVAL = 0.5;
-    static const double MAX_REL_ED_FOR_NR = 10000000;
-    static const double MIN_ED_FOR_BISECT_ALL = 1;
     static const int MAX_CALCS = 5000;
-    static const int MAX_CALCS_BISECT_ALL = 25;
     static const int MAX_CALCS_BISECT_ONE = 35;
     static const int MAX_CALCS_NR = 1000; // Should be based on number of markets.
     static unsigned int MAX_BISECT_ONE_MARKETS = 100;
@@ -173,7 +161,7 @@ bool BisectPolicyNRSolver::solve( const int period ) {
     
     mainLog.setLevel( ILogger::NOTICE );
     if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
-        mainLog << "Model solved normally. Iterations period "<< period << " : " << mCalcCounter->getPeriodCount() << ". Total iterations: "<< mCalcCounter->getTotalCount() << endl;
+        mainLog << "Model solved normally. Iterations period "<< period << ": " << mCalcCounter->getPeriodCount() << ". Total iterations: "<< mCalcCounter->getTotalCount() << endl;
         return true;
     }
    

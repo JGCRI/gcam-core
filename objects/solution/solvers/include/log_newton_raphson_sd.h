@@ -38,7 +38,7 @@ protected:
     std::auto_ptr <Matrix> JFSave;
     std::auto_ptr <Matrix> JFDMSave;
     std::auto_ptr <Matrix> JFSMSave;
-    int savedMatrixSize;
+    unsigned int savedMatrixSize;
 };
 
 #endif // _NEWTON_RAPHSON_SD_H_

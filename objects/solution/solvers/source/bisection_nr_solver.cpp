@@ -65,8 +65,6 @@ void BisectionNRSolver::init() {
 * \return Whether the markets all solved.
 */
 bool BisectionNRSolver::solve( const int period ) {
-    SolverComponent::ReturnCode code = SolverComponent::ORIGINAL_STATE;
-
     // Constants. Make these configuration variables.
     // relative tolerance for solution criteria
     static const double SOLUTION_TOLERANCE = Configuration::getInstance()->getDouble( "SolutionTolerance", 0.001 );
@@ -217,7 +215,7 @@ bool BisectionNRSolver::solve( const int period ) {
     }
     // Determine whether the model was successful.
     if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
-        mainLog << "Model solved normally. Iterations period "<< period << " : " << mCalcCounter->getPeriodCount() << ". Total iterations: "<< mCalcCounter->getTotalCount() << endl;
+        mainLog << "Model solved normally. Iterations period "<< period << ": " << mCalcCounter->getPeriodCount() << ". Total iterations: "<< mCalcCounter->getTotalCount() << endl;
         return true;
     }
 
