@@ -39,6 +39,7 @@ map<string, double> co2coefind;
 
 //! Default constructor
 Region::Region() {
+	agSector = 0;
 	initElementalMembers();
 }
 
@@ -56,7 +57,9 @@ Region::~Region() {
 		delete *rescIter;
 	}
 	
-	delete agSector;	
+	if ( agSector != 0 ) {
+		delete agSector;	
+	}
 }
 
 //! Clear member variables.
@@ -171,6 +174,7 @@ void Region::XMLParse( const DOMNode* node ){
 	} */
 		else if( nodeName == "agsector" ) {
 			if( conf->getBool( "agSectorActive" ) ){
+				cout << "Creating the AgSector" << endl;
 				agSector = new AgSector();
 				agSector->XMLParse( curr );	
 			}
@@ -220,6 +224,7 @@ void Region::XMLParse( const DOMNode* node ){
 	
 	// Finish initializing agLu
 	if( conf->getBool( "agSectorActive" ) ){
+		cout << "Initializing the AgSector for this region." << endl;
 		agSector->setGNP( calcFutureGNP() );
 		agSector->setPop( population.getTotalPopVec() );
 	}
@@ -250,6 +255,7 @@ void Region::XMLParse( const DOMNode* node ){
 	
 	// Create AgLU markets
 	if( conf->getBool( "agSectorActive" ) ){
+		cout << "Creating ag markets for this region." << endl;
 		agSector->setMarket( name );
 	}
 }
