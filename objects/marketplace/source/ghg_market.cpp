@@ -27,7 +27,7 @@ string GHGMarket::getType() const {
 }
 
 /* \brief Initialize the GHGMarket price.
-* \detailed This method checks first if the price has already been initialized.
+* \details This method checks first if the price has already been initialized.
 * If it has been initialized, the price is left unchanged. Otherwise the method checks the value of the constraint,
 * or supply, to determine how to initialize the price. If supply is 0, price is set to 0. If the supply 
 * is greater than 0, the price is initialized to 1.
@@ -51,7 +51,7 @@ void GHGMarket::setPrice( const double priceIn ) {
 }
 
 /* \brief Initialize the GHGMarket price from last period's price.
-* \detailed This method first checks if the lastPrice was 0. This would mean that last period's constraint was 
+* \details This method first checks if the lastPrice was 0. This would mean that last period's constraint was 
 * 0. If it is, then it checks if the constraint in the current period is greater than 0. In this case price is 
 * set to 1 as this is the initial constrained period. Otherwise price is set to the previous period's price as
 * is done in the normal market.
@@ -101,7 +101,7 @@ void GHGMarket::addToSupply( const double supplyIn ) {
 }
 
 /* \brief This method determines whether to solve a GHGMarket with the solution mechanism.
-* \detailed This method only returns that the solution mechanism should attempt to solve the market
+* \details This method only returns that the solution mechanism should attempt to solve the market
 * if the supply is positive. This prevents the solution mechanism from trying to solve unconstrained 
 * time periods.
 * \return Whether to solve the market.
@@ -114,7 +114,7 @@ bool GHGMarket::shouldSolve() const {
 }
 
 /* \brief This method determines whether to solve a GHGMarket with the NR solution mechanism.
-* \detailed This method only returns that the NR solution mechanism should attempt to solve the market
+* \details This method only returns that the NR solution mechanism should attempt to solve the market
 * if the supply and demand is positive, and the excess demand is not miniscule. 
 * \todo This needs a more detailed explanation, but the logic is convoluded.
 * \return Whether to solve the market in NR.

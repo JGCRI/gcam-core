@@ -21,7 +21,7 @@ class Scenario;
 /*! 
 * \ingroup CIAM
 * \brief A ScenarioRunner that runs a scenario multiple times in order to generate a MAC curve for each time period.
-* \detailed This class runs a scenario multiple times while varying a fixed carbon price,
+* \details This class runs a scenario multiple times while varying a fixed carbon price,
 * to determine the MAC curve for the scenario.
 * \author Josh Lurz
 */

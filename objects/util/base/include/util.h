@@ -28,7 +28,7 @@
 namespace util {
 
     /*! \brief Returns the value within this map associated with a given key. 
-    * \detailed This function takes as its input a map and a key to search for. 
+    * \details This function takes as its input a map and a key to search for. 
     * It will return the value associated with the key, or the default value for the class
     * of the object if the key is not found.
     * \note Use this function instead of recoding a map search, as this function should be more efficient and 
@@ -135,7 +135,7 @@ namespace util {
     }
 
     /*! \brief Static function which returns SMALL_NUM. 
-    * \detailed This is a static function which is used to find the value of the constant SMALL_NUM.
+    * \details This is a static function which is used to find the value of the constant SMALL_NUM.
     * This avoids the initialization problems of static variables. This function should be used instead
     * of defining this constant in multiple locations in the code.
     * \return The constant SMALL_NUM.
@@ -146,7 +146,7 @@ namespace util {
    }
 
     /*! \brief Static function which returns VERY_SMALL_NUM. 
-    * \detailed This is a static function which is used to find the value of the constant VERY_SMALL_NUM.
+    * \details This is a static function which is used to find the value of the constant VERY_SMALL_NUM.
     * This avoids the initialization problems of static variables. This function should be used instead
     * of defining this constant in multiple locations in the code.
     * \return The constant VERY_SMALL_NUM.
@@ -157,7 +157,7 @@ namespace util {
    }
 
     /*! \brief Static function which returns EXTREMELY_SMALL_NUM. 
-    * \detailed This is a static function which is used to find the value of the constant EXTREMELY_SMALL_NUM.
+    * \details This is a static function which is used to find the value of the constant EXTREMELY_SMALL_NUM.
     * This avoids the initialization problems of static variables. This function should be used instead
     * of defining this constant in multiple locations in the code.
     * \return The constant EXTREMELY_SMALL_NUM.
@@ -168,7 +168,7 @@ namespace util {
    }
 
     /*! \brief Static function which returns LARGE_NUM. 
-    * \detailed This is a static function which is used to find the value of the constant LARGE_NUM.
+    * \details This is a static function which is used to find the value of the constant LARGE_NUM.
     * This avoids the initialization problems of static variables. This function should be used instead
     * of defining this constant in multiple locations in the code.
     * \return The constant LARGE_NUM.

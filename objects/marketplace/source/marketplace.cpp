@@ -1095,7 +1095,7 @@ void Marketplace::restoreinfo( const int period) {
 
 /*! \brief Adds an information value and an associated key to the market for the
 * specified goodName, regionName and period.
-* \detailed This functions adds to the Market extra information which needs to be
+* \details This functions adds to the Market extra information which needs to be
 * explicitally associated with a Market. 
 * \author Josh Lurz
 * \warning The function is UNRELATED to storeinfo and restoreinfo.
@@ -1118,7 +1118,7 @@ void Marketplace::setMarketInfo( const string& goodName, const string& regionNam
 
 /*! \brief Gets an information value for associated key from the market for the
 * specified goodName, regionName and period.
-* \detailed This functions gets extra Market information which needs to be
+* \details This functions gets extra Market information which needs to be
 * explicitally associated with a Market. 
 * \author Josh Lurz
 * \warning The function is UNRELATED to storeinfo and restoreinfo.

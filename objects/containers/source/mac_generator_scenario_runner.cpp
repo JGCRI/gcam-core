@@ -52,7 +52,7 @@ MACGeneratorScenarioRunner::~MACGeneratorScenarioRunner(){
 
 /*! \brief Function which handles running the scenario and optionally
 * computing a cost curve.
-* \detailed This function wraps around the scenario so that scenario can be called
+* \details This function wraps around the scenario so that scenario can be called
 * multiple times if neccessary to create an abatement cost curve. This function first calls
 * the scenario regularly, outputs all data, and then determines whether to create the cost curve.
 * A helper function performs those calculations if neccessary.
@@ -88,7 +88,7 @@ void MACGeneratorScenarioRunner::runScenario( Timer& timer ) {
 }
 
 /*! \brief Function to create a cost curve for the mitigation policy.
-* \detailed This function performs multiple calls to scenario.run() with 
+* \details This function performs multiple calls to scenario.run() with 
 * varied fixed carbon taxes in order to determine an abatement cost curve.
 * \note This code could be readily modified to deal with other gasses at this level. 
 * \todo Break this function up into several smaller more intelligent ones. Its too long. -JPL
@@ -309,7 +309,7 @@ void MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
 }
 
 /*! \brief Function to perform both file and database output. 
-* \detailed This function write out the XML, file and database output.
+* \details This function write out the XML, file and database output.
 * All file names are defined by the configuration file. All file handles
 * are closed when the function completes.
 */

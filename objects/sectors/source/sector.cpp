@@ -68,7 +68,7 @@ Sector::Sector( const string regionNameIn ) {
 }
 
 /*! \brief Destructor
-* \detailed Deletes all subsector objects associated  with this Sector.
+* \details Deletes all subsector objects associated  with this Sector.
 * \author Josh Lurz
 */
 Sector::~Sector() {

@@ -65,7 +65,7 @@ void MarketInfo::toDebugXML( ostream& out, Tabs* tabs ) const {
 }
 
 /*! \brief Set a name and value for a piece of information related to the market.
-* \detailed This function will check the marketInfo map for the associated key, if it exists
+* \details This function will check the marketInfo map for the associated key, if it exists
 * it will update the associated value to itemValue, otherwise it will create a new name value pair.
 * \param itemName The string to use as the key for this information value.
 * \param itemValue The value to be associated with this key. 
@@ -85,7 +85,7 @@ void MarketInfo::addItem( const string& itemName, const double itemValue ){
 }
 
 /*! \brief Get the value of the information stored with itemName as the key.
-* \detailed This function will query the infoMap for the value 
+* \details This function will query the infoMap for the value 
 * associated with the key itemName. If the itemName does not exist, it will return 0.
 * It will also print a warning if this occurs. 
 * \author Josh Lurz

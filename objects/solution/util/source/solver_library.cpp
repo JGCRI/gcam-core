@@ -46,7 +46,7 @@ SolverLibrary::SolutionInfo::SolutionInfo( const string& marketNameIn, const str
 
 /*! \brief Return the name of the SolutionInfo object.
 * \author Josh Lurz
-* \detailedReturns the name created by combining the marketName with the marketGood.
+* \detailsReturns the name created by combining the marketName with the marketGood.
 * \return The name of the market the SolutionInfo is connected to.
 */
 string SolverLibrary::SolutionInfo::getName() const {
@@ -55,7 +55,7 @@ string SolverLibrary::SolutionInfo::getName() const {
 
 /*! \brief Creates and returns a solution vector of markets that require solving.
 * \author Josh Lurz
-* \detailed This function requests a list of markets from the marketplace that require solving. This list is contingent on whether
+* \details This function requests a list of markets from the marketplace that require solving. This list is contingent on whether
 * we are currently solving with an NR method. The markets to solve are returned as a vector of market name and market goods. These are used
 * to create the vector of SolutionInfo objects.
 * \param marketplace The marketplace to request markets to solve from.
@@ -86,7 +86,7 @@ vector<SolverLibrary::SolutionInfo> SolverLibrary::getMarketsToSolve( const Mark
 
 /*! \brief Sets the prices contained in the solution vector into their corresponding markets.
 * \author Josh Lurz
-* \detailed This function sets the market prices in the marketplace from the prices within the corresponding markets in the solutionVector.
+* \details This function sets the market prices in the marketplace from the prices within the corresponding markets in the solutionVector.
 * \param marketplace Marketplace to set prices into.
 * \param solutionVector The vector of SolutionInfo objects from which prices are fetched.
 * \param period The period in which to set prices. 
@@ -100,7 +100,7 @@ void SolverLibrary::setPricesToMarkets( Marketplace* marketplace, const vector<S
 
 /*! \brief Get the demands, supplies, prices and excess demands from the markets and set them into their corresponding places in the solution vector.
 * \author Josh Lurz
-* \detailed This function gets the price, supply and demand out of each market to be solved and sets those values into the corresponding SolutionInfo
+* \details This function gets the price, supply and demand out of each market to be solved and sets those values into the corresponding SolutionInfo
 * object. This function also updates the ED value to one based on the retrieved supply and demand.
 * \param solutionVector The vector of SolutionVector objects to set price, supply and demand into.
 * \param period The period for which to retrieve the values.
@@ -116,7 +116,7 @@ void SolverLibrary::update( Marketplace* marketplace, vector<SolverLibrary::Solu
 }
 
 /*! \brief Determines if any price or demand markets have been unbracketed and attempts to restore them to a bracketed state. 
-* \detailed This function checks for any market that is a PriceMarket or DemandMarket and is unbracketed. It then adjust the brackets
+* \details This function checks for any market that is a PriceMarket or DemandMarket and is unbracketed. It then adjust the brackets
 * to attempt to bring the market into a bracketed state.
 * \note This was originally a kludge and has never been replaced.
 * \author Josh Lurz
@@ -141,7 +141,7 @@ void SolverLibrary::adjustPriceAndDemandMarkets( const Marketplace* marketplace,
 
 /*! \brief Finds and returns the maximum excess demand in a SolutionObject vector.
 * \author Josh Lurz
-* \detailed This function determines the SolutionObject within the vector which has the largest relative excess demand as defined by
+* \details This function determines the SolutionObject within the vector which has the largest relative excess demand as defined by
 * getRelativeED. 
 * \param solutionVector Vector in which to search for the largest excess demand.
 * \param excessDemandSolutionFloor Value of ED below which the market should be considered solved. 
@@ -167,7 +167,7 @@ double SolverLibrary::findMaxExcessDemand( const vector<SolverLibrary::SolutionI
 
 /*! \brief Calculate and return a relative excess demand.
 * \author Josh Lurz
-* \detailed This function determines the excess demand relative to the demand. This helps to determine which market is truely
+* \details This function determines the excess demand relative to the demand. This helps to determine which market is truely
 * the worst. This function returns 0 if the ED value is below the excessDemandFloor as the market is considered solved.
 * Otherwise, relative excess demand is determined to be the absolute value of excess demand divided by demand multiplied by 100.
 * \param excessDemand The excess demand.
@@ -199,7 +199,7 @@ double SolverLibrary::getRelativeED( const double excessDemand, const double dem
 
 /*! \brief Determine whether a market is within the solution tolerance. 
 * \author Josh Lurz
-* \detailed This function determines if a market is solved to within the solution tolerance. It does this by checking if the 
+* \details This function determines if a market is solved to within the solution tolerance. It does this by checking if the 
 * relative excess demand is less than the solution tolerance. 
 * \param excessDemand The excess demand.
 * \param demand The market demand.
@@ -212,7 +212,7 @@ bool SolverLibrary::isWithinTolerance( const double excessDemand, const double d
 
 /*! \brief Calculate demand elasticities.
 * \author Sonny Kim
-* \detailed Calculate the elasticities of demand for all markets in the sol vector relative to the market at the index marketSolutionNumber. 
+* \details Calculate the elasticities of demand for all markets in the sol vector relative to the market at the index marketSolutionNumber. 
 * If the price is 0 this function will return a very small number.
 * \todo Avoid passing the index.
 * \param marketplace Marketplace to calculatate demand elasticities for.
@@ -245,7 +245,7 @@ const vector<double> SolverLibrary::calcDemandElas( const Marketplace* marketpla
 
 /*! \brief Calculate supply elasticities.
 * \author Sonny Kim
-* \detailed Calculate the elasticities of supply for all markets in the sol vector relative to the market at the index marketSolutionNumber. 
+* \details Calculate the elasticities of supply for all markets in the sol vector relative to the market at the index marketSolutionNumber. 
 * If the price is 0 this function will return a very small number.
 * \todo Avoid passing the index.
 * \param marketplace Marketplace to calculatate supply elasticities for.
@@ -464,7 +464,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<
 
 /*! \brief Calculate the inverse of a matrix using an LU factorization.
 * \author Josh Lurz
-* \detailed This function uses an LU decomposition to determine the inverse of the matrix. The matrix which was passed in
+* \details This function uses an LU decomposition to determine the inverse of the matrix. The matrix which was passed in
 * is then set to its inverse.
 * \param A matrix to invert.
 */
@@ -507,7 +507,7 @@ void SolverLibrary::checkBracket( const double solutionTolerance, const double e
 /*! \brief Calculate the log change in raw demand for an index in the sol vector.
 * \author Josh Lurz
 * \todo Make these functions just take a SolutionInfo object instead of the whole vector.
-* \detailed This function determines the change in the log of the demand and the stored demand.
+* \details This function determines the change in the log of the demand and the stored demand.
 * It will return a very small number if either demand is zero.
 * \param marketplace Marketplace to get the demand and raw demand from.
 * \param sol Vector to get the SolutionInfo object out of.
@@ -542,7 +542,7 @@ double SolverLibrary::getLogChangeInRawDemand( const Marketplace* marketplace, c
 /*! \brief Calculate the log change in raw supply for an index in the sol vector.
 * \author Josh Lurz
 * \todo Make these functions just take a SolutionInfo object instead of the whole vector.
-* \detailed This function determines the change in the log of the supply and the stored supply.
+* \details This function determines the change in the log of the supply and the stored supply.
 * It will return a very small number if either supply is zero.
 * \param marketplace Marketplace to get the supply and raw supply from.
 * \param sol Vector to get the SolutionInfo object out of.
@@ -577,7 +577,7 @@ double SolverLibrary::getLogChangeInRawSupply( const Marketplace* marketplace, c
 /*! \brief Calculate the log change in raw price for an index in the sol vector.
 * \author Josh Lurz
 * \todo Make these functions just take a SolutionInfo object instead of the whole vector.
-* \detailed This function determines the change in the log of the price and the stored price.
+* \details This function determines the change in the log of the price and the stored price.
 * It will return a very small number if either price is zero.
 * \param marketplace Marketplace to get the price and raw price from.
 * \param sol Vector to get the SolutionInfo object out of.

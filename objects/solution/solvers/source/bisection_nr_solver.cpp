@@ -38,7 +38,7 @@ BisectionNRSolver::~BisectionNRSolver() {
 }
 
 /*! \brief Solution method to solve all markets for one period.
-* \detailed This is the main solution function called from within the Marketplace. It is called once for each period to clear all 
+* \details This is the main solution function called from within the Marketplace. It is called once for each period to clear all 
 * markets which should be solved. This solve method first brackets the markets, then uses several iterations of bisection_all to move 
 * the prices into the range of the solution, and then uses Newton-Rhaphson to clear the markets.
 * \param period The period to solve.

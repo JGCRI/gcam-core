@@ -344,7 +344,7 @@ void Scenario::printSectorDependencies() const {
 }
 
 /*! \brief A function to generate a series of ghg emissions quantity curves based on an already performed model run.
-* \detailed This function used the information stored in it to create a series of curves, one for each region,
+* \details This function used the information stored in it to create a series of curves, one for each region,
 * with each datapoint containing a time period and an amount of gas emissions.
 * \note The user is responsible for deallocating the memory in the returned Curves.
 * \author Josh Lurz
@@ -357,7 +357,7 @@ const map<const string, const Curve*> Scenario::getEmissionsQuantityCurves( cons
 }
 
 /*! \brief A function to generate a series of ghg emissions price curves based on an already performed model run.
-* \detailed This function used the information stored in it to create a series of curves, one for each period,
+* \details This function used the information stored in it to create a series of curves, one for each period,
 * with each datapoint containing a time period and the price gas emissions. 
 * \note The user is responsible for deallocating the memory in the returned Curves.
 * \author Josh Lurz

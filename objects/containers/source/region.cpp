@@ -1440,7 +1440,7 @@ void Region::printSectorDependencies( Logger* logger ) const {
 }
 
 /*! \brief This function will set the tax policy with the given name to a fixed tax policy.
-* \detailed This function searches for a GHGPolicy with the name policyName. If it finds it, it will
+* \details This function searches for a GHGPolicy with the name policyName. If it finds it, it will
 * reset it to a fixed tax policy using the taxes in the taxes vector. Otherwise, it will create a new
 * fixed tax policy with policyName.
 * \author Josh Lurz
@@ -1469,7 +1469,7 @@ void Region::setFixedTaxes( const std::string& policyName, const std::string& ma
 }
 
 /*! \brief A function to generate a ghg emissions quantity curve based on an already performed model run.
-* \detailed This function used the information stored in it to create a curve, with each datapoint 
+* \details This function used the information stored in it to create a curve, with each datapoint 
 * containing a time period and an amount of gas emissions. These values are retrieved from the emissions.
 * \note The user is responsible for deallocating the memory in the returned Curve.
 * \author Josh Lurz
@@ -1496,7 +1496,7 @@ const Curve* Region::getEmissionsQuantityCurve( const string& ghgName ) const {
 }
 
 /*! \brief A function to generate a ghg emissions price curve based on an already performed model run.
-* \detailed This function used the information stored in it to create a curve, with each datapoint 
+* \details This function used the information stored in it to create a curve, with each datapoint 
 * containing a time period and the price gas emissions. These values are retrieved from the marketplace. 
 * \note The user is responsible for deallocating the memory in the returned Curve.
 * \author Josh Lurz

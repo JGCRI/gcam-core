@@ -404,7 +404,7 @@ void World::setupCalibrationMarkets() {
 }
 
 /* \brief This function returns a vector of all region names which exist in the world.
-* \detailed This function creates a vector of region names in the same order as they exist 
+* \details This function creates a vector of region names in the same order as they exist 
 * in the world.
 * \todo There are still several functions returning region names.
 * \return A constant vector of region names.
@@ -480,7 +480,7 @@ void World::printSectorDependencies( Logger* logger ) const {
 }
 
 /*! \brief A function which sets a fixed tax for each specified region on a specific gas.
-* \detailed This function sets a fixed tax for each region in the regionsToSet vector.
+* \details This function sets a fixed tax for each region in the regionsToSet vector.
 * Each region will handle resetting the market to a fixed tax market and removing previous constraints.
 * \author Josh Lurz
 * \param policyName The name of the existing policy to turn into a fixed tax, or to create if it does not exist.
@@ -499,7 +499,7 @@ void World::setFixedTaxes( const string& policyName, const string& marketName, c
 }
 
 /*! \brief A function to generate a series of ghg emissions quantity curves based on an already performed model run.
-* \detailed This function used the information stored in it to create a series of curves, one for each region,
+* \details This function used the information stored in it to create a series of curves, one for each region,
 * with each datapoint containing a time period and an amount of gas emissions.
 * \note The user is responsible for deallocating the memory in the returned Curves.
 * \author Josh Lurz
@@ -529,7 +529,7 @@ const map<const string,const Curve*> World::getEmissionsQuantityCurves( const st
 }
 
 /*! \brief A function to generate a series of ghg emissions price curves based on an already performed model run.
-* \detailed This function used the information stored in it to create a series of curves, one for each period,
+* \details This function used the information stored in it to create a series of curves, one for each period,
 * with each datapoint containing a time period and the price gas emissions. 
 * \note The user is responsible for deallocating the memory in the returned Curves.
 * \author Josh Lurz

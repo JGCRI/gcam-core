@@ -560,7 +560,7 @@ void XMLHelper<T>::initParser() {
 }
 
 /*! \brief Function which returns a pointer to a XercesDOMParser*.
-* \detailed This function first checks if the parser has already been initialized.
+* \details This function first checks if the parser has already been initialized.
 * If it hasn't, it initializes the parser. It then returns a pointer to the parser.
 * \author Josh Lurz
 * \warning The user must call cleanupParser after the parser is finished being used 
@@ -579,7 +579,7 @@ xercesc::XercesDOMParser* XMLHelper<T>::getParser() {
 }
 
 /*! \brief Function which cleans up the memory used by the XML Parser.
-* \detailed This function deletes the parser, errorhandler, and instructs
+* \details This function deletes the parser, errorhandler, and instructs
 * the XMLPlatform to free its memory.
 * \author Josh Lurz
 * \warning This function must be called if getParser is ever called.
@@ -593,7 +593,7 @@ void XMLHelper<T>::cleanupParser(){
 }
 
 /*! \brief Function which parses a node containing model-children, such as a region, and determines what to do with it.
-* \detailed This function will look at the name and delete attributes of the node to determine if the model node which 
+* \details This function will look at the name and delete attributes of the node to determine if the model node which 
 * corresponds to the input should be added, modified, or deleted. After it determines this it will make this change 
 * to the model tree. 
 * \param node The node pointing to the container node in the XML tree. 

@@ -15,7 +15,7 @@
 using namespace std;
 
 /*! \brief Constructor
-* \detailed This is the default constructor for the XYDataPoint. The parameters are used
+* \details This is the default constructor for the XYDataPoint. The parameters are used
 * to specify the initial x and y values. They default to 0.
 * \param xIn The initial x value. Defaults to 0.
 * \param yIn The initial y value. Defaults to 0.

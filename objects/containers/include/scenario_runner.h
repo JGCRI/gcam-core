@@ -21,7 +21,7 @@ class Timer;
 /*! 
 * \ingroup CIAM
 * \brief A class which is responsible for running a scenario or set of scenarios.
-* \detailed This is an abstract base class from which all scenario runner's are derived.
+* \details This is an abstract base class from which all scenario runner's are derived.
 * A ScenarioRunner is defined as a method of running a scenario several times, varying a variable
 * or set of variables. A scenario runner must inherit the run function. 
 * \author Josh Lurz

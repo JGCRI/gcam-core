@@ -26,14 +26,14 @@ Timer::~Timer(){
 }
         
 /*! \brief Start the timer. 
-* \detailed This function starts the timer. All times will be relative to this time.
+* \details This function starts the timer. All times will be relative to this time.
 */     
 void Timer::start(){
     startTime = clock();
 }
 
 /*! \brief Save the current time for printing. 
-* \detailed This function saves a time for printing. This time will be used 
+* \details This function saves a time for printing. This time will be used 
 * for all call to print() until the next call to this function.  
 */
 void Timer::save(){
@@ -41,7 +41,7 @@ void Timer::save(){
 }
         
 /*! \brief Print the stored time.
-* \detailed This function prints the time between the last call to save and the time
+* \details This function prints the time between the last call to save and the time
 * start() was called.
 * \param out The output stream to print to.
 * \param label The label to print in front of the time. Defaults to 'Time: '

@@ -21,7 +21,7 @@ class Tabs;
 * \ingroup CIAM
 * \brief This class defines an object which contains the GDP information for a single region
 * along with function which can be used to access the GDP in various ways.
-* \detailed This class all controls the read-in and initialization of this data along with calibration
+* \details This class all controls the read-in and initialization of this data along with calibration
 * of GDP.
 * \note This class is constructed of code that was formerly in several classes throughout the model. 
 * \author Josh Lurz, Sonny Kim

@@ -397,7 +397,7 @@ string Market::getGoodName() const {
 }
 
 /*! \brief Set a name and value for a piece of information related to the market.
-* \detailed This function will add the item and value to the MarketInfo object,
+* \details This function will add the item and value to the MarketInfo object,
 * which if itemName already exists will reset the current value, otherwise it will
 * create a new key value pair. 
 * \author Josh Lurz
@@ -409,7 +409,7 @@ void Market::setMarketInfo( const std::string& itemName, const double itemValue 
 }
 
 /*! \brief Get the value of the information stored with itemName as the key.
-* \detailed This function will query the market's MarketInfo object for the value 
+* \details This function will query the market's MarketInfo object for the value 
 * associated with the key itemName. If the itemName does not exist, it will return 0.
 * The MarketInfo object will also emit a warning if this occurs. 
 * \author Josh Lurz
