@@ -1,5 +1,3 @@
-
-
 #ifndef _SECTOR_H_
 #define _SECTOR_H_
 #pragma once
@@ -104,7 +102,8 @@ protected:
 	vector<double> techChangeCumm; //!< cummulative technical change on end-use service
 
 public:
-	demsector(); //default construtor
+	demsector();
+	virtual ~demsector();
 	virtual void clear();
 	virtual void XMLParse(const DOMNode* node);
 	virtual void toXML( ostream& out ) const;

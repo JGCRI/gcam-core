@@ -103,7 +103,7 @@ void sector::XMLParse( const DOMNode* node ){
 			output.push_back( XMLHelper<double>::getValue( curr ) );
 		}
 		else if( nodeName == "subsector" ){
-			tempSubSector = new subsector();
+			tempSubSector = new subsector(); // memory leak
 			tempSubSector->XMLParse( curr );
 			subsec.push_back( tempSubSector );
 		}	
@@ -116,7 +116,7 @@ void sector::XMLParse( const DOMNode* node ){
 	input.resize( maxper ); // sector total energy consumption
 	// output.resize( maxper ); // total amount of final output from sector
 	carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
-	summary.resize( maxper ); // object containing summaries
+	summary.resize( maxper ); // object containing summaries // memory leak
 }
 
 //! Write object to xml output stream.
@@ -628,6 +628,12 @@ demsector::demsector() {
 	pElasticityBase = 0;
 }
 
+//! Default destructor.
+demsector::~demsector() {
+	for( vector<subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
+		delete *subSecIter;
+	}
+}
 
 //! Clear member variables.
 void demsector::clear(){
@@ -660,7 +666,7 @@ void demsector::XMLParse( const DOMNode* node ){
 	// output.resize( maxper ); // total amount of final output from sector
 	pElasticity.resize( maxper ); // price elasticity for each period
 	carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
-	summary.resize( maxper ); // object containing summaries
+	summary.resize( maxper ); // object containing summaries // memory leak
 	fe_cons.resize(maxper); // end-use sector final energy consumption
 	service.resize(maxper); // total end-use sector service 
 	sectorfuelprice.resize(maxper); // total end-use sector service 
@@ -719,7 +725,7 @@ void demsector::XMLParse( const DOMNode* node ){
 			aeei.push_back( XMLHelper<double>::getValue( curr ) );
 		}
 		else if( nodeName == "subsector" ){
-			tempSubSector = new subsector();
+			tempSubSector = new subsector(); // memory leak.
 			tempSubSector->XMLParse( curr );
 			subsec.push_back( tempSubSector );
 			
@@ -930,7 +936,7 @@ void demsector::calc_pElasticity(int per)
 void demsector::aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per)
 {
 	double ser_dmd, base, ser_dmd_adj;
-	//double pelasticity = -0.9;
+	// double pelasticity = -0.9;
 	double pelasticity = pElasticity[per];
 	
 	base = getoutput(0);
