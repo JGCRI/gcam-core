@@ -13,7 +13,7 @@
 #include <fstream>
 
 #include "solution/solvers/include/solver_component.h"
-#include "solution/solvers/include/log_newton_raphson_SD.h"
+#include "solution/solvers/include/log_newton_raphson_sd.h"
 #include "solution/util/include/calc_counter.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/world.h"

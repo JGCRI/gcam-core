@@ -14,7 +14,7 @@
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/log_newton_raphson.h"
-#include "solution/solvers/include/log_newton_raphson_SD.h"
+#include "solution/solvers/include/log_newton_raphson_sd.h"
 #include "solution/solvers/include/bisect_all.h"
 #include "solution/solvers/include/bisect_one.h"
 #include "util/base/include/configuration.h"
