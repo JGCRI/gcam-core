@@ -6,7 +6,8 @@
 	INTEGER RunID, VarID
 	PARAMETER (NUMVARS = 21, NUMROWS = 8)
 	CHARACTER*20 labels(1:NUMVARS), units(1:NUMVARS)
-
+	Real*8 TempOut(1:NLPMax)
+	
 	labels= (/'Temp    ','CO2Conc ','CH4Conc ','N2OConc ','FcCO2   ', &
 	          'FcCH4   ','FcN2O   ','FcHalos ','FcTropO3','FcSO4Dir', &
 			  'FcSO4Ind','FcBioAer','FcTOTAL ','FossCO2 ','NetDefor', &
@@ -24,7 +25,13 @@
 
 	DO II = 1,NUMVARS
 	  WRITE(108,200) 950101+II,'MAGICC','Summary',labels(II),units(II)
-	  WRITE(110,100) RunID,0,950101+II,MAGICCCResults(II,1:NM-1)
+	  
+	  DO IV = 2,NLPMax
+	   	MagInt = 15/INT(MAGICCCResults(0,2)-MAGICCCResults(0,1))*(IV - 1)
+	   	TempOut(IV) = MAGICCCResults(II,MagInt)
+	  END DO
+
+	  WRITE(110,100) RunID,0,950101+II,TempOut(2:NLPMax)
 	END DO
       
     RETURN

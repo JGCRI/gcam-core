@@ -44,10 +44,13 @@
 			CEMTARGS(1:NLP,MM) = WREPATH(MM)/NLP ! assign 1/nlp emiss to each region (assume global trading)
 		END DO
 		CALL MCAMMAIN(1) ! call the model
+		! Hard code target year to be 2095, unless 2100 data is available, then use 2100
+ 	    MagInt = 15/INT(MAGICCCResults(0,2)-MAGICCCResults(0,1))*(9 - 1)
+ 	    if (INT(MAGICCCResults(0,2)-MAGICCCResults(0,1)) .eq. 5) MagInt = MagInt + 1
 
-		IF (WHICHTARG(LG) .EQ. 2) TARGVAL = MAGICCCResults(2,8)
-		IF (WHICHTARG(LG) .EQ. 3) TARGVAL = MAGICCCResults(1,8)
-		IF (WHICHTARG(LG) .EQ. 4) TARGVAL = MAXVAL(MAGICCCResults(2,1:8))
+		IF (WHICHTARG(LG) .EQ. 2) TARGVAL = MAGICCCResults(2,MagInt)
+		IF (WHICHTARG(LG) .EQ. 3) TARGVAL = MAGICCCResults(1,MagInt)
+		IF (WHICHTARG(LG) .EQ. 4) TARGVAL = MAXVAL(MAGICCCResults(2,1:MagInt))
 
 		DIFF = (TARGVAL - CUMTARG(LG)) / CUMTARG(LG)
 		WRITE(*,*) "val, targ, diff",TARGVAL, CUMTARG(LG), DIFF
