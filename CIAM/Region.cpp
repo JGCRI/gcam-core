@@ -31,6 +31,7 @@
 #include "modeltime.h" 
 #include "Marketplace.h"
 #include "Configuration.h"
+#include "Util.h"
 
 using namespace std;
 using namespace xercesc;
@@ -196,7 +197,7 @@ void Region::XMLParse( const DOMNode* node ){
             tempResource = new DepletableResource();
             tempResource->XMLParse( curr );
             resources.push_back( tempResource );
-            resourceNameMap[ tempResource->getName() ] = resources.size() - 1;
+            resourceNameMap[ tempResource->getName() ] = static_cast<int>( resources.size() ) - 1;
          }
       }
       else if( nodeName == "fixedresource" ){
@@ -210,7 +211,7 @@ void Region::XMLParse( const DOMNode* node ){
             tempResource = new FixedResource();
             tempResource->XMLParse( curr );
             resources.push_back( tempResource );
-            resourceNameMap[ tempResource->getName() ] = resources.size() - 1;
+            resourceNameMap[ tempResource->getName() ] = static_cast<int>( resources.size() ) - 1;
          }
       }
       else if( nodeName == "renewresource" ){
@@ -223,10 +224,10 @@ void Region::XMLParse( const DOMNode* node ){
             tempResource = new RenewableResource();
             tempResource->XMLParse( curr );
             resources.push_back( tempResource );
-            resourceNameMap[ tempResource->getName() ] = resources.size() - 1;
+            resourceNameMap[ tempResource->getName() ] = static_cast<int>( resources.size() ) - 1;
          }
       }
-      else if( nodeName == "supplySector" ){
+      else if( nodeName == "supplysector" ){
          map<string,int>::const_iterator supplySectorIter = supplySectorNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
          if( supplySectorIter != supplySectorNameMap.end() ) {
             // The supply sector already exists.
@@ -236,10 +237,10 @@ void Region::XMLParse( const DOMNode* node ){
             tempSupSector = new sector();
             tempSupSector->XMLParse( curr );
             supplySector.push_back( tempSupSector );
-            supplySectorNameMap[ tempSupSector->getName() ] = supplySector.size() - 1;
+            supplySectorNameMap[ tempSupSector->getName() ] = static_cast<int>( supplySector.size() ) - 1;
          }
       }
-      else if( nodeName == "demandSector" ){
+      else if( nodeName == "demandsector" ){
          map<string,int>::const_iterator demandSectorIter = demandSectorNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
          if( demandSectorIter != demandSectorNameMap.end() ) {
             // The demand sector already exists.
@@ -249,7 +250,7 @@ void Region::XMLParse( const DOMNode* node ){
             tempDemSector = new demsector();
             tempDemSector->XMLParse( curr );
             demandSector.push_back( tempDemSector );
-            demandSectorNameMap[ tempDemSector->getName() ] = demandSector.size() - 1;
+            demandSectorNameMap[ tempDemSector->getName() ] = static_cast<int>( demandSector.size() ) - 1;
          }
       }
       // transportation sector is contained in demandSector
@@ -263,7 +264,7 @@ void Region::XMLParse( const DOMNode* node ){
             tempTranSector = new tranSector();
             tempTranSector->XMLParse( curr );
             demandSector.push_back( tempTranSector );
-            demandSectorNameMap[ tempTranSector->getName() ] = demandSector.size() - 1;
+            demandSectorNameMap[ tempTranSector->getName() ] = static_cast<int>( demandSector.size() ) - 1;
          }
       } 
       else if( nodeName == "agsector" ) {
@@ -284,7 +285,7 @@ void Region::XMLParse( const DOMNode* node ){
             tempGhgMrk = new ghg_mrk();
             tempGhgMrk->XMLParse( curr );
             ghgMarket.push_back( tempGhgMrk );
-            ghgMarketNameMap[ tempGhgMrk->getName() ] = ghgMarket.size() - 1;
+            ghgMarketNameMap[ tempGhgMrk->getName() ] = static_cast<int>( ghgMarket.size() ) - 1;
          }
       }
       // regional taxes
@@ -351,10 +352,10 @@ void Region::completeInit() {
    
    gnpDol[ 0 ] = calibrationGNPs[ 0 ];
    
-   numResources = resources.size();
-   noSSec = supplySector.size();
-   noDSec = demandSector.size();
-   noGhg = ghgMarket.size();
+   numResources = static_cast<int>( resources.size() );
+   noSSec = static_cast<int>( supplySector.size() );
+   noDSec = static_cast<int>( demandSector.size() );
+   noGhg = static_cast<int>( ghgMarket.size() );
    
    emcoefInd.resize( noSSec ); // indirect GHG coef object for every supply sector
    
@@ -945,7 +946,7 @@ void Region::calibrateRegion( const bool doCalibrations, const int per ) {
    
    // Set up the GDP calibration. Need to do it each time b/c of nullsup call in marketplace.
    // Insert the newly calculated values into the calibration markets. 
-   if( calibrationGNPs.size() > per && calibrationGNPs[ per ] > 0 ){ 
+   if( static_cast<int>( calibrationGNPs.size() ) > per && calibrationGNPs[ per ] > 0 ){ 
       const string goodName = "GDP";
       Marketplace* marketplace = scenario->getMarketplace();
       marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
@@ -1395,19 +1396,15 @@ void Region::updateSummary( const int per ) {
 *
 * \param outStream An output stream to write to which was previously created.
 * \param period The period to print graphs for.
-* \return void
 */
 void Region::printGraphs( ostream& outStream, const int period ) const {
-   
-   
-   string tempName;
 
    // Make sure the outputstream is open.
    assert( outStream );
    
    // Remove spaces from the region name.
-   tempName = name;
-   replaceSpaces( tempName );
+   string tempName = name;
+   util::replaceSpaces( tempName );
 
    // Print the graph header.
    outStream << "digraph " << tempName << " {" << endl;
@@ -1426,25 +1423,6 @@ void Region::printGraphs( ostream& outStream, const int period ) const {
 
    // Now close the graph
    outStream << "}" << endl << endl;
-}
-
-/*! A function to replace spaces with underscores.
-*
-* This function is used by the graph creating functions to replace spaces with underscores,
-* as spaces in names are not legal in the dot language.
-*
-* \param stringIn The string to modify.
-* \return void
-* \sa printGraphs
-*/
-void Region::replaceSpaces( string& stringIn ) {
-   static const basic_string <char>::size_type npos = -1;
-   basic_string <char>::size_type index;
-
-   while( stringIn.find_first_of( " " ) != npos ) {
-      index = stringIn.find_first_of( " " );
-      stringIn.replace( index, 1, "_" );
-   }
 }
 
 //! Return the primaryFuelCO2Coef for a specific  fuel.

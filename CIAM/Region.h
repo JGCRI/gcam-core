@@ -77,9 +77,9 @@ private:
     std::vector<Emcoef_ind> emcoefInd; //!< vector of objects containing indirect emissions coefficients
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
     std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
-    
+
 public:
-    
+
     Region();
     ~Region(); 
     void clear();
@@ -124,7 +124,6 @@ public:
     double getSubRsc( const std::string resourceName, const std::string& subResourceName, const int per );
     void updateSummary( const int period );
     void printGraphs( std::ostream& outStream, const int period ) const;
-    static void replaceSpaces( std::string& stringIn );
     double getPrimaryFuelCO2Coef( const std::string& fuelName ) const;
     double getCarbonTaxCoef( const std::string& fuelName ) const;
 };
