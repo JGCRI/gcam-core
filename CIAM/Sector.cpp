@@ -352,29 +352,8 @@ void sector::calc_share( const string regionName, const int per, const double gn
         subsec[i]->normShare(sum, per);	
     }
     
-    // TEMP -sjs
-    if (regionName == "USA" && name == "electricity"  && 1==2) {
-        cout << " 4 Share: " ;
-        for (i=0;i<nosubsec;i++) {
-            cout << i << " : " << subsec[i]->getShare( per ) << " ";
-        }
-        cout << endl;
-    }
-    
-    
     // Now adjust for capacity limits
     adjSharesCapLimit( regionName, per );
-    
-    // TEMP -sjs
-    if (regionName == "USA" && name == "electricity"  && 1==2) {
-        cout << " 5 Share: " ;
-        for (i=0;i<nosubsec;i++) {
-            cout << i << " : " << subsec[i]->getShare( per ) << " ";
-        }
-        cout << endl;
-    }
-    
-    
 }
 
 
@@ -677,15 +656,6 @@ void sector::supply( const string regionName, const int per) {
         }
     }
     
-    // TEMP -sjs
-    if (regionName == "USA" && name == "electricity"  && 1==2) {
-        cout << " 1 Share: " ;
-        for (i=0;i<nosubsec;i++) {
-            cout << i << " : " << subsec[i]->getShare( per ) << " ";
-        }
-        cout << endl;
-    }
-    
     // This is where subsector and technology outputs are set
     for (i=0;i<nosubsec;i++) {
         // set subsector output from sector demand
@@ -693,11 +663,6 @@ void sector::supply( const string regionName, const int per) {
         subsec[i]->sumoutput( per );
         // for reporting only
         carbontaxpaid[per] += subsec[i]->showcarbontaxpaid( per );
-        
-        if (regionName == "USA" && name == "electricity"  && 1==2) {
-            cout << " out: " << subsec[i]->getoutput( per );
-        }
-        
     }
     
     if (debugChecking) {
@@ -705,7 +670,7 @@ void sector::supply( const string regionName, const int per) {
         // If the model is working correctly this should never give an error
         // An error here means that the supply summed up from the supply sectors is not equal to the demand that was passed in 
         double mrksupply = getoutput(per);
-        if (per > 0 && fabs(mrksupply - mrkdmd) > 0.01 && (regionName == "USA")) {
+        if (per > 0 && fabs(mrksupply - mrkdmd) > 0.01 ) {
             mrksupply = mrksupply * 1.000000001;
             cout << regionName << " Market "<<  name<< " demand and derived supply are not equal by: ";
             cout << fabs(mrksupply - mrkdmd) << ": ";
