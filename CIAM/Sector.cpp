@@ -1348,39 +1348,64 @@ void Sector::updateSummary( const int period ) {
 * \param period The period to print graphs for.
 */
 void Sector::addToDependencyGraph( ostream& outStream, const int period ) const {
-    Configuration* conf = Configuration::getInstance();
-    string sectorName;
-    string fuelName;
-    map<string, double> sectorsUsed;  
-    typedef map<string,double>:: const_iterator CI;
-    CI fuelIter;
-
+    const double DISPLAY_THRESHOLD = 0.00001; // Do not show links with values below this.
+    const int DISPLAY_PRECISION = 2; // Number of digits to print of the value on the graph.
+    
+    // Values at which to switch the type of line used to display the link.
+    const double DOTTED_LEVEL = 1.0;
+    const double DASHED_LEVEL = 5.0;
+    const double LINE_LEVEL = 10.0;
+    
     // Make sure the outputstream is open.
     assert( outStream );
-    // Get the supply Sector name.
-    sectorName = getName();
+    
+    // Get the supply Sector name and replace spaces in it with underscores. 
+    string sectorName = getName();
     util::replaceSpaces( sectorName );
-
-    sectorsUsed = getfuelcons( period );
 
     // Print out the style for the Sector.
     printStyle( outStream );
+    
+    // Set whether to print prices or quantities on the graph. 
+    const Configuration* conf = Configuration::getInstance();
+    const Marketplace* marketplace = 0;
+    const bool printPrices = conf->getBool( "PrintPrices", 0 );
+    if( printPrices ){
+        marketplace = scenario->getMarketplace();
+    }
 
     // Now loop through the fuel map.
-    for( fuelIter = sectorsUsed.begin(); fuelIter != sectorsUsed.end(); fuelIter++ ) {
+    typedef map<string,double>:: const_iterator CI;
+    map<string, double> sectorsUsed = getfuelcons( period );
+    string fuelName;
+
+    for( CI fuelIter = sectorsUsed.begin(); fuelIter != sectorsUsed.end(); fuelIter++ ) {
         fuelName = fuelIter->first;
-        if( fuelName != "zTotal" && ( fuelIter->second > 0.00001 || conf->getBool( "ShowNullPaths", 0 ) ) ) {
+        
+        // Skip zTotal
+        if( fuelName == "zTotal" ){
+            continue;
+        }
+
+        // Initialize the value of the line to a price or quantity.
+        double graphValue = 0;
+        if( printPrices ){
+            graphValue = marketplace->getPrice( fuelIter->first, regionName, period );
+        } else {
+            graphValue = fuelIter->second;
+        }
+
+        if( ( graphValue >  DISPLAY_THRESHOLD ) || conf->getBool( "ShowNullPaths", 0 ) ) {
             util::replaceSpaces( fuelName );
-            // outStream << "\t" << fuelName << " -> " << sectorName << " [label=\"" << fuelIter->second << "\"];" << endl;
             outStream << "\t" << fuelName << " -> " << sectorName;
             outStream << " [style=\"";
-            if( fuelIter->second < 1.0 ) {
+            if( graphValue < DOTTED_LEVEL ) {
                 outStream << "dotted";
             }
-            else if ( fuelIter->second < 5.0 ) {
+            else if ( graphValue < DASHED_LEVEL ) {
                 outStream << "dashed";
             }
-            else if ( fuelIter->second < 10.0 ) {
+            else if ( graphValue < LINE_LEVEL ) {
                 outStream << "";
             }
             else {
@@ -1388,11 +1413,11 @@ void Sector::addToDependencyGraph( ostream& outStream, const int period ) const 
             }
 
             outStream << "\"";
-
+            
             if( conf->getBool( "PrintValuesOnGraphs" ) ) {
                 outStream << ",label=\"";
-                outStream << setiosflags( ios::fixed | ios::showpoint ) << setprecision( 2 );
-                outStream << fuelIter->second;
+                outStream << setiosflags( ios::fixed | ios::showpoint ) << setprecision( DISPLAY_PRECISION );
+                outStream << graphValue;
                 outStream << "\"";
             }
             outStream << "];" << endl;
