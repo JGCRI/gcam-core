@@ -155,7 +155,6 @@ public class MapNode {
         if (parentName == null) return null;
         
         MapNode child = (MapNode)parentNode.getChildren().elementAt(0);
-        System.out.println("getDescendant is returning " + child);
         return child;
     }
         
@@ -286,23 +285,28 @@ public class MapNode {
         return true;
     }
     
+    public boolean hasChildren() {
+        if (children.size() > 0) return true;
+        else return false;
+    }
+    
+    public boolean hasPossibleNames() {
+        if (names.size() > 0) return true;
+        else return false;
+    }
+    
     private Vector merge(List v1, List v2) {
-//System.out.println("merging");
         Vector newVector = new Vector();
         newVector.addAll(v1);
 
-//System.out.println("m1");
         Object item;
         Iterator it = v2.iterator();
         while (it.hasNext()) {
-//System.out.println("m2");
             item = it.next();
             if (!newVector.contains(item)) {
-//System.out.println("m3 - adding");
                 newVector.addElement(item);
             }
         }
-//System.out.println("m4");
         return newVector;
     }      
     

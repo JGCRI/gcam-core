@@ -129,9 +129,9 @@ public class ControlPanel extends javax.swing.JFrame {
         treePanel.setLayout(new BoxLayout(treePanel, BoxLayout.Y_AXIS));
         treePanel.setBorder(BorderFactory.createEmptyBorder(0,5,5,5));
         treePanel.add(displayButton);
-
+        
         this.getContentPane().add(treePanel, BorderLayout.CENTER);
-
+        
         pack();
     }
     
@@ -307,7 +307,7 @@ public class ControlPanel extends javax.swing.JFrame {
         int rightWidth = 350;
         int windowHeight = 500;
         int windowWidth = leftWidth + rightWidth;
-               
+        
         tree = new JTree(new JDomToTreeModelAdapter(document));
         //allow multiple nodes to be selected simultaneously
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -354,7 +354,7 @@ public class ControlPanel extends javax.swing.JFrame {
         JScrollPane treeView = new JScrollPane(tree);
         treeView.setPreferredSize(new Dimension(leftWidth, windowHeight));
         treeView.setMinimumSize(new Dimension(50, 50));
-      
+        
         // Build right-side view
         // start with text field to show values of nodes in tree
         valuePane = new JTextField();
@@ -403,7 +403,7 @@ public class ControlPanel extends javax.swing.JFrame {
         
         //make button that will display the table
         showTableButton = new JButton("Show Query Result");
-        showTableButton.setAlignmentX(Box.CENTER_ALIGNMENT);
+        showTableButton.setAlignmentX(Box.LEFT_ALIGNMENT);
         showTableButton.setAlignmentY(Box.TOP_ALIGNMENT);
         showTableButton.setMaximumSize(new Dimension(150, DEFAULT_COMPONENT_HEIGHT));
         showTableButton.addActionListener(new ActionListener() {
@@ -441,7 +441,7 @@ public class ControlPanel extends javax.swing.JFrame {
         treeMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem("Add Child");
         /*menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { 
+            public void actionPerformed(ActionEvent e) {
             }
         });*/
         menuItem.addMouseListener(new MouseListener() {
@@ -461,7 +461,7 @@ public class ControlPanel extends javax.swing.JFrame {
         menuItem.addMouseListener(new MouseListener() {
             public void mouseReleased(MouseEvent e) {
                 tree.setSelectionPath(selectedPath);
-                
+         
                 System.out.println("Node's path is " + selectedPath);
             }
             public void mouseClicked(MouseEvent e) {}
@@ -485,7 +485,6 @@ public class ControlPanel extends javax.swing.JFrame {
             public void mouseExited(MouseEvent e) {}
         });
         treeMenu.add(menuItem);
-        
         
         
         JButton saveAllButton = new JButton("Save File");
@@ -566,23 +565,24 @@ public class ControlPanel extends javax.swing.JFrame {
                 if (e.getValueIsAdjusting() == false) {
                     showTableButton.setEnabled(true);
                     
-                    JList temp = (JList)e.getSource(); //(JList)queryControls.elementAt(0);
+                    JList temp = (JList)e.getSource();
                     int index = temp.getMinSelectionIndex();
                     String regionName = temp.getModel().getElementAt(index).toString();
                     
                     //remove any existing query components
-                    removeComponents(queryPanel, temp, 0);
-                    queryPanel.add(Box.createHorizontalGlue());
+                    //removeComponents(queryPanel, temp, 0);
+                    //queryPanel.add(Box.createHorizontalGlue());
                     
                     currRootPointer = (AdapterNode)rootPointers.elementAt(0);
                     rootPointers.addElement(currRootPointer.getChild("region", regionName));
-                    addQueryControl(temp, 1);
+                    
+                    if (rootPointers.size() < 3) addQueryControl(temp, 1);
                 }
             }
         });
         
-        attributeControls = new Vector();
-        queryControls = new Vector();
+        if (attributeControls == null) attributeControls = new Vector();
+        if (queryControls == null) queryControls = new Vector();
         queryControls.addElement(regionBox);
         
         queryPanel.add(regionBox);
@@ -590,7 +590,6 @@ public class ControlPanel extends javax.swing.JFrame {
         //put back the horizontal glue to make sure componenets of queryPanel are left justified
         queryPanel.add(Box.createHorizontalGlue());
         
-        //pack();
         queryPanel.revalidate();
         repaint();
     }
@@ -627,14 +626,24 @@ public class ControlPanel extends javax.swing.JFrame {
         //get the parent of the nodes whose names will populate the new combo box
         currRootPointer = (AdapterNode)rootPointers.elementAt(index);
         MapNode currNodePointer = rootMapNode.getDescendant(currRootPointer.getName());
+        boolean hasAttribute = false;
+        if (currNodePointer.hasPossibleNames()) hasAttribute = true;
         
         //check if combo box already exists, remove all traces of it
-        if (queryControls.size() > index) {
-            removeComponents(queryPanel, predecessor, index-1);
+        if ((queryControls.size() > index) || (!hasAttribute && attributeControls.size() > index-1)) {
+            removeComponents(queryPanel, predecessor, index-1); 
         } else {    //just elliminate that Horizontal glue that's the last component
             queryPanel.remove(queryPanel.getComponents().length-1);
         }
-
+        
+        if (currRootPointer.isLeaf()) {
+            queryPanel.add(Box.createHorizontalGlue());
+            queryPanel.revalidate();
+            repaint();
+        
+            return;
+        }
+        
         Vector names = new Vector();
         MapNode kid;
         names.addElement(DEFAULT_SELECTION_STRING);
@@ -661,18 +670,16 @@ public class ControlPanel extends javax.swing.JFrame {
                 if (currRootPointer.hasChildWithAttribute(name, "name")) {
                     addAttributeControl((Component)e.getSource(), name, index);
                 } else {    //node does not have "name", only children
-                    //System.out.println("entered kid territory");
                     AdapterNode newPointer = currRootPointer.getChild(name, "");
-                    if (!newPointer.isLeaf()) { //create new component with the nodes's set of chilren
-                        //replace root pointer if it already exists or add new one if it does not
-                        if (rootPointers.size() > index+1) {
-                            //if the combo box already exists, change the pointer to its contents
-                            rootPointers.setElementAt(newPointer, index+1);
-                        } else {
-                            rootPointers.addElement(newPointer);
-                        }
-                        addQueryControl((Component)e.getSource(), index+1);
+
+                    //replace root pointer if it already exists or add new one if it does not
+                    if (rootPointers.size() > index+1) {
+                        //if the combo box already exists, change the pointer to its contents
+                        rootPointers.setElementAt(newPointer, index+1);
+                    } else {
+                        rootPointers.addElement(newPointer);
                     }
+                    addQueryControl((Component)e.getSource(), index+1);
                 }
             }
         });
@@ -702,13 +709,13 @@ public class ControlPanel extends javax.swing.JFrame {
             if (tempBox != null) {
                 //String parentName = tempBox.getSelectedItem().toString();
                 names = currMapPointer.getPossibleNames(tempBox.getSelectedItem().toString());
-            } 
+            }
         } else {
             names = currMapPointer.getPossibleNames(false);
         }
-           
+        
         if (names.size() != 1) names.insertElementAt(DEFAULT_PLURAL_STRING, 0);
-        names.insertElementAt(DEFAULT_SELECTION_STRING, 0);       
+        names.insertElementAt(DEFAULT_SELECTION_STRING, 0);
         
         JComboBox comboBox;
         
@@ -893,8 +900,8 @@ public class ControlPanel extends javax.swing.JFrame {
         Object[] regions = regionBox.getSelectedValues();
         currRootPointer = (AdapterNode)rootPointers.elementAt(0);
         boolean timeInterval = false;
-
-        //perform a bredth-first traversal of the tree looking for nodes that fit a path 
+        
+        //perform a bredth-first traversal of the tree looking for nodes that fit a path
         //  described by the array of query and attribute controls
         //for each region, place the appropriate nodes in the queue
         //  remove nodes from the begining of the queue and add all appropriate children to the end of the queue
@@ -903,42 +910,42 @@ public class ControlPanel extends javax.swing.JFrame {
             AdapterNode currNode = currRootPointer.getChild("region", regionName);
             currNode.setIndex(1);
             queue.addElement(currNode);
-
+            
             while (!queue.isEmpty()) {
                 currNode = (AdapterNode)queue.remove(0);
                 index = currNode.getIndex();
-
+                
                 //get the name of the current node
                 currComboBox = (JComboBox)queryControls.elementAt(index);
                 nodeName = currComboBox.getSelectedItem().toString();
-
+                
                 //get the desired attribute name of the current node, if any
                 attribVal = "";
-                if (!attributeControls.isEmpty() && attributeControls.size() > index 
-                            && attributeControls.elementAt(index) != null) {
+                if (!attributeControls.isEmpty() && attributeControls.size() > index
+                && attributeControls.elementAt(index) != null) {
                     //get the "name" attribute if appropriate
                     currComboBox = (JComboBox)attributeControls.elementAt(index);
                     attribVal = currComboBox.getSelectedItem().toString();
                     if (attribVal.equals(DEFAULT_SELECTION_STRING)) attribVal = "";
                 }
-
-                //after obtaining the node name and name attribute of the current node, 
+                
+                //after obtaining the node name and name attribute of the current node,
                 //  decide it is an intermediate node or an end target whoes values are to be displayed
                 if(nodeName.equals(finalNodeName)) {
-                    //remember the name of the parent of the node whose value 
+                    //remember the name of the parent of the node whose value
                     //  will be displayed in the left-side header
-
+                    
                     String lefterName = regionName + " " + currNode.toString();
                     String prevName;
                     if (!lefter.isEmpty()) {
                         prevName = (String)lefter.lastElement();
                         if (!(prevName.equals(lefterName))) lefter.add(lefterName);
                     } else lefter.add(lefterName);
-
-                    //for nodes directly under a period node                        
+                    
+                    //for nodes directly under a period node
                     int index1 = lefterName.indexOf('<');
                     int index2 = lefterName.indexOf('>');
-                    if (lefterName.substring(index1+1, index2).equals("period")) {                        
+                    if (lefterName.substring(index1+1, index2).equals("period")) {
                         //remember the last index in values that contains confirmed entry
                         int lastValIndex = values.size();
                         
@@ -950,7 +957,7 @@ public class ControlPanel extends javax.swing.JFrame {
                             attribVal = modelTime.getYear(k);
                             if (header.isEmpty()) header.addElement(attribVal);
                             else if (!header.contains(attribVal)) header.addElement(attribVal);
-                        }            
+                        }
                         
                         //get a list of all period nodes in that subtree
                         int offset = 0;
@@ -958,7 +965,7 @@ public class ControlPanel extends javax.swing.JFrame {
                         childNodes = parent.getChildren("period", "");
                         Iterator it = childNodes.iterator();
                         while (it.hasNext()) {
-                            //for each period node, get the value of the "final node" under it, 
+                            //for each period node, get the value of the "final node" under it,
                             //  remember the period node's year attribute
                             parent = (AdapterNode)it.next();
                             currNode = parent.getChild(nodeName, "");
@@ -971,20 +978,27 @@ public class ControlPanel extends javax.swing.JFrame {
                                 values.setElementAt(currNode, lastValIndex+offset);
                             }
                         }
-
+                        
                     } else {        //if parent of desired node(s) isn't "period"
-
+                        
                         Integer lastYear = new Integer(modelTime.getStart());
                         Vector years = modelTime.getTimeIntervals();
                         Iterator yearIt = years.iterator();
+                        boolean demographics = false;
                         
                         if (attribVal.equals(DEFAULT_PLURAL_STRING)) attribVal = "";
                         childNodes = currNode.getChildren(nodeName, attribVal);
-System.out.println("childNodes: " + childNodes);
                         Iterator it = childNodes.iterator();
-
+                        
+                        //SPECIAL CASE: nodes under demographics begin with year=1960, not 1975
+                        //assume that all values are present
+                        if (currNode.getName().equals("demographics")) {
+                            demographics = true;
+                        }
+                        
+                        //adds blank values for nodes are not present in a subtree
+                        //  but whose parent's name is already added to lefter
                         if (!it.hasNext()) {
-System.out.println("timeInterval = " + timeInterval);
                             if (timeInterval) {
                                 int numPeriods = modelTime.getNumOfSteps();
                                 for (int k = 0; k < numPeriods; k++) {
@@ -997,32 +1011,36 @@ System.out.println("timeInterval = " + timeInterval);
                         timeInterval = false;
                         
                         while (it.hasNext()) {
-                            //timeInterval = false;
                             currNode = (AdapterNode)it.next();
                             if (showNames) {
                                 values.addElement(currNode.getAttributeValue("name"));
                             } else {
                                 attribVal = currNode.getAttributeValue("year");
                                 if (attribVal != null) {
-                                    timeInterval = true;
-                                    //if node has year, make sure that values are saved under proper year
-                                    Integer attribYear = new Integer(attribVal);
-                                    Integer currYear = (Integer)yearIt.next();
-                                    while (!attribYear.equals(currYear)) {
+                                    if (demographics) {
+                                        if (header.isEmpty()) header.addElement(attribVal);
+                                        else if (!header.contains(attribVal)) header.addElement(attribVal);
+                                    } else {
+                                        timeInterval = true;
+                                        //if node has year, make sure that values are saved under proper year
+                                        Integer attribYear = new Integer(attribVal);
+                                        Integer currYear = (Integer)yearIt.next();
+                                        
+                                        while (!attribYear.equals(currYear)) {
+                                            if (header.isEmpty()) header.addElement(currYear.toString());
+                                            else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
+                                            values.addElement(new AdapterNode());
+                                            if (yearIt.hasNext())currYear = (Integer)yearIt.next();
+                                            else break;
+                                        }
+                                        
                                         if (header.isEmpty()) header.addElement(currYear.toString());
                                         else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
-                                        values.addElement(new AdapterNode());
-                                        currYear = (Integer)yearIt.next();
+                                        lastYear = currYear;
                                     }
-                                    if (header.isEmpty()) header.addElement(currYear.toString());
-                                    else if (!header.contains(currYear.toString())) header.addElement(currYear.toString());
-                                    lastYear = currYear;
-                                    //if (header.isEmpty()) header.addElement(attribVal);
-                                    //else if (!header.contains(attribVal)) header.addElement(attribVal);
-                                    
                                 }
                                 
-                                values.addElement(currNode);  
+                                values.addElement(currNode);
                             }
                         }
                         while (timeInterval && !lastYear.equals(new Integer(modelTime.getEnd()))) {
@@ -1030,8 +1048,8 @@ System.out.println("timeInterval = " + timeInterval);
                             if (header.isEmpty()) header.addElement(lastYear.toString());
                             else if (!header.contains(lastYear.toString())) header.addElement(lastYear.toString());
                             values.addElement(new AdapterNode());
-                        }                          
-                    }                    
+                        }
+                    }
                 } else {    //current node is an intermediate step along the tree
                     if(attribVal.equals(DEFAULT_PLURAL_STRING)) {
                         //get all chidren and add to the queue for examination
@@ -1051,20 +1069,20 @@ System.out.println("timeInterval = " + timeInterval);
                 }
             } //belongs to while (!queue.isEmpty())
         } //belongs to for each region
-       
+        
 //System.out.println("values  = " + values.size() + " header = " + header.size() + " lefter = " + lefter.size());
         
         TableViewModel model = new TableViewModel(values, header, lefter, showNames);
         table = new JTable(model);
         table.setCellSelectionEnabled(true);
         table.setTransferHandler(new TableTransferHandler());
-
+        
         //use panels to place the table appropriately
         JPanel tempPanel = new JPanel();
         tempPanel.setLayout(new BorderLayout());
         tempPanel.add(table.getTableHeader(), BorderLayout.NORTH);
         tempPanel.add(table, BorderLayout.CENTER);
-
+        
         JPanel tempPanel2 = new JPanel();
         tempPanel2.setLayout(new BorderLayout());
         if (!lefter.isEmpty()) {
@@ -1074,12 +1092,12 @@ System.out.println("timeInterval = " + timeInterval);
             tempPanel2.add(lefterPanel, BorderLayout.WEST);
         }
         tempPanel2.add(tempPanel, BorderLayout.CENTER);
-
+        
         //dataPanel.add(Box.createRigidArea(new Dimension(0,10)));
         dataPanel.add(tempPanel2);
-
+        
         tableExistsFlag = true;
-
+        
         dataPanel.revalidate();
         repaint();
         //}
@@ -1119,7 +1137,7 @@ System.out.println("timeInterval = " + timeInterval);
         
         
         locationPanel = new JPanel();
-        locationPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));     
+        locationPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         addChildDialog.getContentPane().add(locationPanel);
         
         
@@ -1159,7 +1177,7 @@ System.out.println("timeInterval = " + timeInterval);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         buttonPanel.add(addNodeButton);
         //buttonPanel.add(Box.createRigidArea(new Dimension(5,5)));
-        buttonPanel.add(cancelButton); 
+        buttonPanel.add(cancelButton);
         buttonPanel.add(addAllButton);
         buttonPanel.add(Box.createVerticalGlue());
         
@@ -1230,7 +1248,7 @@ System.out.println("timeInterval = " + timeInterval);
         
         //Vector queue = new Vector();
         Vector addedPaths = new Vector();
-
+        
         //get a string representation of the path with just node names, not attributes
         String targetNodeNames = "";
         String targetLastName = "";
@@ -1315,7 +1333,7 @@ System.out.println("timeInterval = " + timeInterval);
         model.removeNodeFrom(selectedPath);
         
     }
-
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
