@@ -279,9 +279,12 @@
       COMMON /DSENS/IXLAM,XLAML,XLAMO,ADJUST
       COMMON /VARW/Z(40),W(2),DW(2),TO0(2),TP0(2),WNH(iTp),WSH(iTp), &
      TW0NH,TW0SH,IVARW,KEYDW
+
+	  Real*8 FDecline	! sjs
       COMMON /QSPLIT/QNHO,QNHL,QSHO,QSHL,QGLOBE(0:iTp), &
      QQNHO(0:iTp),QQNHL(0:iTp),QQSHO(0:iTp),QQSHL(0:iTp), &
-     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), IConstForcing     ! sjs
+     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), &
+     IConstForcing, FDecline     ! sjs
 !
       COMMON /ICE/TAUI,DTSTAR,DTEND,BETAG,BETA1,BETA2,DB3,ZI0, &
      NVALUES,MANYTAU,TAUFACT,ZI0BIT(100),SIPBIT(100),SIBIT(100)
@@ -407,7 +410,7 @@
         READ(LUN,4241) OZVOC
         READ(LUN,4240) ICH4FEED
         READ(LUN,4240) IConstForcing  
-
+        READ(LUN,4241) FDecline 
 !
       close(lun)
 !
@@ -3120,9 +3123,12 @@ IF(IWrite.eq.1)THEN
 !
       COMMON /VARW/Z(40),W(2),DW(2),TO0(2),TP0(2),WNH(iTp),WSH(iTp), &
      TW0NH,TW0SH,IVARW,KEYDW
+
+	  Real*8 FDecline	! sjs
       COMMON /QSPLIT/QNHO,QNHL,QSHO,QSHL,QGLOBE(0:iTp), &
      QQNHO(0:iTp),QQNHL(0:iTp),QQSHO(0:iTp),QQSHL(0:iTp), &
-     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), IConstForcing     ! sjs
+     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), &
+     IConstForcing, FDecline     ! sjs
 !
       COMMON /ICE/TAUI,DTSTAR,DTEND,BETAG,BETA1,BETA2,DB3,ZI0, &
      NVALUES,MANYTAU,TAUFACT,ZI0BIT(100),SIPBIT(100),SIBIT(100)
@@ -3273,9 +3279,12 @@ IF(IWrite.eq.1)THEN
       COMMON /DSENS/IXLAM,XLAML,XLAMO,ADJUST
       COMMON /VARW/Z(40),W(2),DW(2),TO0(2),TP0(2),WNH(iTp),WSH(iTp), &
      TW0NH,TW0SH,IVARW,KEYDW
+
+	  Real*8 FDecline	! sjs
       COMMON /QSPLIT/QNHO,QNHL,QSHO,QSHL,QGLOBE(0:iTp), &
      QQNHO(0:iTp),QQNHL(0:iTp),QQSHO(0:iTp),QQSHL(0:iTp), &
-     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), IConstForcing     ! sjs, IConstForcing     ! sjs
+     QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), &
+     IConstForcing, FDecline     ! sjs     ! sjs, IConstForcing     ! sjs
       COMMON /AREAS/FNO,FNL,FSO,FSL
 !
       COMMON /QADD/IQREAD,JQFIRST,JQLAST,QEX(0:iTp),QEXNH(0:iTp), &
@@ -3343,6 +3352,26 @@ IF(IWrite.eq.1)THEN
 !   FORCING AT START (0) AND END (1) OF YEAR, AND AT START OF
 !   PREVIOUS YEAR (P).
 !
+
+! sjs - added option to freeze (or steadily decrease) forcing after specified year
+!		do this by overwriting values in each forcing category
+
+	  IF (IConstForcing .gt. 0) THEN
+		Iinc_temp = IConstForcing - 1990
+		IConstVal_temp = 226 + Iinc_temp
+		IF (JC .GT. IConstVal_temp) THEN
+		    QGH(JC)  = QGH(IConstVal_temp) 
+	        QBIO(JC) = QBIO(IConstVal_temp)
+			QDIR(JC) = QDIR(IConstVal_temp)
+			QSO2(JC) = QSO2(IConstVal_temp)
+			QOZ(JC)  = QOZ(IConstVal_temp)
+		    QGH(JC)  = QGH(JC -1 ) + FDecline
+			if (QGH(JC) .lt. QGH(IConstVal_temp)/2d0) THEN
+				QGH(JC) = QGH(IConstVal_temp)/2d0
+			ENDIF
+		ENDIF
+	  ENDIF
+
       JPREV=0
       IF(JC.GE.2)JPREV=JC-2
 !
@@ -3367,6 +3396,7 @@ IF(IWrite.eq.1)THEN
       QINDP  =QSO2(JPREV)-QDIRP
       QIND0  =QSO2(JC-1)-QDIR0
       QIND1  =QSO2(JC)-QDIR1
+
 !
 !  ***********************************************************
 !
@@ -3534,14 +3564,6 @@ IF(IWrite.eq.1)THEN
       FSHO=QQQSHO(JC)*FSO
       QGLOBE(JC)=FNHL+FNHO+FSHL+FSHO
 
-! sjs - added option to freeze forcing after specified year
-	  IF (IConstForcing .gt. 0) THEN
-		Iinc_temp = IConstForcing - 1990
-		IConstVal_temp = 226 + Iinc_temp
-		IF (JC .GT. IConstVal_temp) THEN
-			QGLOBE(JC) = QGLOBE(JC-1)
-		ENDIF
-	  ENDIF
       TEQU(JC)=TE*QGLOBE(JC)/Q2X
 !
 !  CALCULATE FORCING INCREMENTS OVER YEAR IN WHICH TIME STEP LIES.
