@@ -28,9 +28,11 @@ Configuration::~Configuration() {
 	confExists = false;
 }
 
-//! Get a pointer to the instance of the Configuration object..
-/*! If the static instance of the Configuration class has not been created, get Instance() will create it.
+/*! \brief Get a pointer to the instance of the Configuration object.
+*
+* If the static instance of the Configuration class has not been created, get Instance() will create it.
 * Otherwise getInstance will return a pointer to the instance of the Configuration class.
+*
 * \warning The user is responsible for deleting the instance when they are finished with it.
 * \return A pointer to the single instance of the Configuration class.
 */
@@ -45,7 +47,7 @@ Configuration* Configuration::getInstance() {
 	return instance;
 }
 
-//! Initialize Configuration object with xml data
+//! Initialize Configuration object with xml data.
 void Configuration::XMLParse( const DOMNode* root ) {	
 	
 	DOMNode* currSectionNode = 0;
@@ -202,8 +204,23 @@ void Configuration::toDebugXML( ostream& out ) const {
 	out << "</Configuration>" << endl;
 }
 
-//! Fetch a filename from the configuration object.
-string Configuration::getFile( const string& key ) const {
+
+/*! 
+* \brief Fetch a filename from the Configuration object.
+* 
+* This method is used to get filename values read from the configuration file,
+* in the filenames section. A filename is a type of string, seperated only for clarity.
+* If the key is not found, the function will log a warning message
+* and return the default value argument if one is passed. Otherwise, it will return the default value 
+* defined in Configuration.h.
+* 
+* \warning The xmlParse function must be called before this function, otherwise the Configuration object will be empty.
+* \param key Key to lookup, as specified in the Configuration.xml file as a name value.
+* \param defaultValue Optional default argument which will be returned if the key is not found.
+* \return Returns the value found in the map for the specified key, or if none is found the default value.
+*/
+
+string Configuration::getFile( const string& key, const string& defaultValue ) const {
 
 	map<string,string>::const_iterator found = fileMap.find( key );
 
@@ -214,12 +231,26 @@ string Configuration::getFile( const string& key ) const {
 	else {
 		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
 		LOG( log, Logger::WARNING_LEVEL ) << "Could not find file: " << key << endl;
-		return "";
+		return defaultValue;
 	}
 }
 
-//! Fetch a string from the configuration object.
-string Configuration::getString( const string& key ) const {
+
+/*! 
+* \brief Fetch a string from the Configuration object.
+* 
+* This method is used to get string values read from the configuration file,
+* in the strings section. If the key is not found, the function will log a warning message
+* and return the default value argument if one is passed. Otherwise, it will return the default value 
+* defined in Configuration.h.
+* 
+* \warning The xmlParse function must be called before this function, otherwise the Configuration object will be empty.
+* \param key Key to lookup, as specified in the Configuration.xml file as a name value.
+* \param defaultValue Optional default argument which will be returned if the key is not found.
+* \return Returns the value found in the map for the specified key, or if none is found the default value.
+*/
+
+string Configuration::getString( const string& key, const string& defaultValue ) const {
 
 	map<string,string>::const_iterator found = stringMap.find( key );
 
@@ -230,12 +261,26 @@ string Configuration::getString( const string& key ) const {
 	else {
 		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
 		LOG( log, Logger::WARNING_LEVEL ) << "Could not find String: " << key << endl;
-		return "";
+		return defaultValue;
 	}
 }
 
-//! Fetch a bool from the configuration object.
-bool Configuration::getBool( const string& key ) const {
+
+/*! 
+* \brief Fetch a bool from the Configuration object.
+* 
+* This method is used to get double values read from the configuration file,
+* in the bools section. If the key is not found, the function will log a warning message
+* and return the default value argument if one is passed. Otherwise, it will return the default value 
+* defined in Configuration.h.
+* 
+* \warning The xmlParse function must be called before this function, otherwise the Configuration object will be empty.
+* \param key Key to lookup, as specified in the Configuration.xml file as a name value.
+* \param defaultValue Optional default argument which will be returned if the key is not found.
+* \return Returns the value found in the map for the specified key, or if none is found the default value.
+*/
+
+bool Configuration::getBool( const string& key, const bool defaultValue ) const {
 
 	map<string,bool>::const_iterator found = boolMap.find( key );
 
@@ -246,12 +291,26 @@ bool Configuration::getBool( const string& key ) const {
 	else {
 		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
 		LOG( log, Logger::WARNING_LEVEL ) << "Could not find bool: " << key << endl;
-		return false;
+		return defaultValue;
 	}
 }
 
-//! Fetch an int from the configuration object.
-int Configuration::getInt( const string& key ) const {
+
+/*! 
+* \brief Fetch an int from the Configuration object.
+* 
+* This method is used to get double values read from the configuration file,
+* in the ints section. If the key is not found, the function will log a warning message
+* and return the default value argument if one is passed. Otherwise, it will return the default value 
+* defined in Configuration.h.
+* 
+* \warning The xmlParse function must be called before this function, otherwise the Configuration object will be empty.
+* \param key Key to lookup, as specified in the Configuration.xml file as a name value.
+* \param defaultValue Optional default argument which will be returned if the key is not found.
+* \return Returns the value found in the map for the specified key, or if none is found the default value.
+*/
+
+int Configuration::getInt( const string& key, const int defaultValue ) const {
 
 	map<string,int>::const_iterator found = intMap.find( key );
 
@@ -262,12 +321,25 @@ int Configuration::getInt( const string& key ) const {
 	else {
 		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
 		LOG( log, Logger::WARNING_LEVEL ) << "Could not find int: " << key << endl;
-		return 0;
+		return defaultValue;
 	}
 }
 
-//! Fetch a double from the configuration object.
-double Configuration::getDouble( const string& key ) const {
+/*! 
+* \brief Fetch a double from the Configuration object.
+* 
+* This method is used to get double values read from the configuration file,
+* in the doubles section. If the key is not found, the function will log a warning message
+* and return the default value argument if one is passed. Otherwise it will return the default value 
+* defined in Configuration.h.
+* 
+* \warning The xmlParse function must be called before this function, otherwise the Configuration object will be empty.
+* \param key Key to lookup, as specified in the Configuration.xml file as a name value.
+* \param defaultValue Optional default argument which will be returned if the key is not found.
+* \return Returns the value found in the map for the specified key, or if none is found the default value.
+*/
+
+double Configuration::getDouble( const string& key, const double defaultValue ) const {
 
 	map<string,double>::const_iterator found = doubleMap.find( key );
 
@@ -278,6 +350,6 @@ double Configuration::getDouble( const string& key ) const {
 	else {
 		Logger* log = LoggerFactory::getLogger( "ConfLogger" );
 		LOG( log, Logger::WARNING_LEVEL ) << "Could not find double: " << key << endl;
-		return 0;
+		return defaultValue;
 	}
 }

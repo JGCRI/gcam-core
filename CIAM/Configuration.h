@@ -58,11 +58,11 @@ public:
 	~Configuration();
 	void XMLParse( const DOMNode* tempnode ); // initialize with xml data
 	void toDebugXML( ostream& out ) const;
-	string getFile( const string& key ) const;
-	string getString( const string& key ) const;
-	bool getBool( const string& key ) const;
-	int getInt( const string& key ) const;
-	double getDouble( const string& key ) const;
+	string getFile( const string& key, const string& defaultValue = "" ) const;
+	string getString( const string& key, const string& defaultValue = "" ) const;
+	bool getBool( const string& key, const bool defaultValue = false ) const;
+	int getInt( const string& key, const int defaultValue = 0 ) const;
+	double getDouble( const string& key, const double defaultValue = 0 ) const;
 
 };
 
