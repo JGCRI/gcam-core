@@ -135,8 +135,8 @@ void technology::initElementalMembers(){
     neCostPenalty = 0;
     techcost = 0;
     tax = 0;
-    fMultiplier = 1; 
-    pMultiplier = 1; 
+    fMultiplier = 1;
+    pMultiplier = 1;
     carbontaxpaid = 0;
     lexp = -6; 
     share = 0;
@@ -985,7 +985,7 @@ map<string,double> technology::getemindmap() const {
 
 //! return value for ghg
 double technology::get_emissmap_second( const string& str) const {
-    return ( emissmap.find( str ) )->second;
+    return util::searchForValue( emissMap, str );
 }
 
 //! returns technology logit exponential
