@@ -22,6 +22,19 @@ public class NewDataTableModel extends AbstractTableModel {
 		flipped = false;
 	}
 
+	public void flip() {
+		Vector tempArr = indCol;
+		indCol = indRow;
+		indRow = tempArr;
+		indRow.remove(0);
+		String tempStr = ind1Name;
+		ind1Name = ind2Name;
+		ind2Name= tempStr;
+		indCol.add(0, ind2Name);
+		flipped = !flipped;
+		fireTableStructureChanged();
+	}
+
 	public int getColumnCount() {
 		return indCol.size();
 	}

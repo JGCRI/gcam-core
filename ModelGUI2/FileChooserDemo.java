@@ -63,6 +63,7 @@ public class FileChooserDemo extends JFrame
 
   //DOMTreeBuilder tree = new DOMTreeBuilder();
   DataTableModel tableModel;
+  private Vector tables = null;
 
   static final int windowHeight = 460;
   static final int leftWidth = 300;
@@ -498,7 +499,53 @@ public class FileChooserDemo extends JFrame
 			   Node temp = ((DOMmodel.DOMNodeAdapter)jtree.getLastSelectedPathComponent()).getNode();
 			   // HERE TO DISABLE TABLE remark function call
 			   //buildTable(treePathtoXPath(selectedPath, temp)); 
-			   buildRegionYearTable(treePathtoXPath(selectedPath, temp, 1)); 
+			   tables = null;
+			   Object[] path = selectedPath.getPath();
+	   		   wild = chooseTableHeaders(selectedPath);
+	   		   wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
+	   		   wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
+			   wild.add(null);
+			   for(int i = 0; i < path.length; i++) {
+				String curr = ((DOMmodel.DOMNodeAdapter)path[i]).getNode().getNodeName();
+				if( ((DOMmodel.DOMNodeAdapter)path[i]).getNode().hasAttributes() && 
+					!curr.equals((String)wild.get(0)) && !curr.equals((String)wild.get(1))) {
+					wild.set(2, curr);
+			   		buildRegionYearTable(treePathtoXPath(selectedPath, temp, 1)); 
+				}
+			   }
+			   System.out.println(tables.size());
+			   MultiTableModel multiTable = new MultiTableModel(tables);
+			   jTable = new JTable(multiTable);
+			   jTable.getColumnModel().getColumn(0).setCellRenderer(multiTable.getCellRenderer(0,0));
+			   jTable.getColumnModel().getColumn(0).setCellEditor(multiTable.getCellEditor(0,0));
+			   jTable.setRowHeight(200);
+			   //jTable.setPreferredScrollableViewportSize(jTable.getPreferredScrollableViewportSize());
+	  // putting flip code here
+		tableMenu = makePopupTableMenu();
+
+		//	listen for right click on the table
+	   jTable.addMouseListener(new MouseAdapter() {
+		   public void mousePressed(MouseEvent e) {
+			   maybeShowPopup(e);
+		   }
+		   public void mouseReleased(MouseEvent e) {
+			   maybeShowPopup(e);
+		   }
+		   private void maybeShowPopup(MouseEvent e) {
+			   if (e.isPopupTrigger()) {
+				   //selectedPath = jtree.getClosestPathForLocation(e.getX(), e.getY());
+				  MenuElement[] me = tableMenu.getSubElements();
+					  for (int i = 0; i < me.length; i++) {
+					  if (((JMenuItem)me[i]).getText().equals("Flip")) {
+							System.out.println("Flip menu activated");
+					  }
+				  }
+				  tableMenu.show(e.getComponent(), e.getX(), e.getY());
+			   }
+		   }
+	   });
+			   JScrollPane tableView = new JScrollPane(jTable);
+	  		   splitPane.setRightComponent(tableView);
 			   //jtree.setSelectionPath(selectedPath);
                System.out.println("RIGHT CLICKED DISPLAY TABLE!");
 			   //showAddChildDialog();
@@ -557,6 +604,11 @@ public class FileChooserDemo extends JFrame
 		menuItem.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
 				System.out.println("RIGHT CLICKED FLIP!, do stuff HERE...");
+				Point p = e.getPoint();
+				int row = jTable.rowAtPoint(p);
+				int col = jTable.columnAtPoint(p);
+				System.out.println("Source: "+e.getSource()+" Point:"+p+" row: "+row+" col: "+col);
+				((NewDataTableModel)((JTable)((JScrollPane)jTable.getValueAt(row, col)).getViewport().getView()).getModel()).flip();
 				// CALL FLIP METHOD HERE !!!!!
 			}
 			public void mouseClicked(MouseEvent e) {
@@ -567,8 +619,7 @@ public class FileChooserDemo extends JFrame
 			public void mouseExited(MouseEvent e) {}
 		});
 		tableMenu.add(menuItem);
-		return tableMenu;
-	}
+		return tableMenu; }
   // end new code for flip ..
   
   
@@ -729,9 +780,6 @@ public class FileChooserDemo extends JFrame
 
  private ArrayList wild;
  private XPathExpression treePathtoXPath(TreePath tp, Node currNode, int flag) {
-	   wild = chooseTableHeaders(tp);
-	   wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
-	   wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
            XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(doc);
            String pathStr = "";
            Object[] path = tp.getPath();
@@ -747,16 +795,14 @@ public class FileChooserDemo extends JFrame
 				   pathStr = pathStr + "[";
 			   }
 			   for(int j=0; j < attrs.size(); j++) {
-				   pathStr = pathStr + "@" + ((Node)attrs.get(j)).getNodeName()+"='"+((Node)attrs.get(j)).getNodeValue()+"'";
+				   pathStr = pathStr + "(@" + ((Node)attrs.get(j)).getNodeName()+"='"+((Node)attrs.get(j)).getNodeValue()+"')";
 				   if(j < attrs.size()-1) {
-					   pathStr = pathStr + ",";
+					   pathStr = pathStr + " and ";
+				   } else { 
+					   pathStr = pathStr + "]";
 				   }
 			   }
-			   if(attrs.size() >0) {
-			   	pathStr = pathStr + "]/";
-			   } else {
-				   pathStr = pathStr+ "/";
-			   }
+			   pathStr = pathStr + "/";
 		   }
            }
            pathStr = "//" + pathStr + currNode.getNodeName();
@@ -765,20 +811,10 @@ public class FileChooserDemo extends JFrame
                    	pathStr = pathStr + "[@" + getOneAttrVal(currNode) + "]";
 		   } else if(flag == 1) {
 			   Vector attrs = getAttrsNoRegionYear(currNode);
-			   if(attrs.size() > 0) {
-				   pathStr = pathStr + "[";
-			   }
 			   for(int j=0; j < attrs.size(); j++) {
-				   pathStr = pathStr + "@" + ((Node)attrs.get(j)).getNodeName()+"='"+((Node)attrs.get(j)).getNodeValue()+"'";
-				   if(j < attrs.size()-1) {
-					   pathStr = pathStr + ",";
-				   }
+				   pathStr = pathStr + "[@" + ((Node)attrs.get(j)).getNodeName()+"='"+((Node)attrs.get(j)).getNodeValue()+"']";
 			   }
-			   if(attrs.size() >0) {
-			   	pathStr = pathStr + "]/";
-			   } else {
-				   pathStr = pathStr+ "/";
-			   }
+			   pathStr = pathStr+ "/node()";
 		   }
            }
            else if (currNode.hasAttributes()) {
@@ -786,20 +822,10 @@ public class FileChooserDemo extends JFrame
                    	pathStr = pathStr + "[@" + getOneAttrVal(currNode) + "]/node()";
 		   } else if(flag == 1) {
 			   Vector attrs = getAttrsNoRegionYear(currNode);
-			   if(attrs.size() > 0) {
-				   pathStr = pathStr + "[";
-			   }
 			   for(int j=0; j < attrs.size(); j++) {
 				   pathStr = pathStr + "@" + ((Node)attrs.get(j)).getNodeName()+"='"+((Node)attrs.get(j)).getNodeValue()+"'";
-				   if(j < attrs.size()-1) {
-					   pathStr = pathStr + ",";
-				   }
 			   }
-			   if(attrs.size() >0) {
-			   	pathStr = pathStr + "]/node()";
-			   } else {
-				   pathStr = pathStr+ "/node()";
-			   }
+			   pathStr = pathStr+ "/node()";
 		   }
            }
            else {
@@ -843,6 +869,9 @@ public class FileChooserDemo extends JFrame
   // ********* newly added **************
   // for the tablechangedmodel listener
   public void tableChanged(TableModelEvent e) {
+	  if(1==1) {
+	  	return;
+	  }
 	  System.out.println("!!! "+e);
 	  System.out.println("Source: "+e.getSource()+" type: "+e.getType()+" update: "+TableModelEvent.UPDATE);
 	  if(e.getType() != TableModelEvent.UPDATE) {
@@ -909,14 +938,10 @@ public class FileChooserDemo extends JFrame
 	  TreeMap data = new TreeMap();
 	  //try {
 	  	while ((tempNode = res.iterateNext()) != null) {
-			System.out.println("here");
 			regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode());
-			System.out.println("here2");
 			regions.add(regionAndYear[0]);
 			years.add(regionAndYear[1]);
 			data.put((String)regionAndYear[0]+(String)regionAndYear[1], tempNode);
-			System.out.println("here3");
-			System.out.println(regionAndYear[0]+"--"+regionAndYear[1]+"--"+tempNode);
 		}
 	  NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), data);
 	  jTable = new JTable(tM);
@@ -937,15 +962,24 @@ public class FileChooserDemo extends JFrame
 		  j++;
 	  }
 
-	  /*
-	  for (int i = 0; i < regions.size(); i++) {
-		  col = jTable.getColumnModel().getColumn(i);
-		  col.setPreferredWidth(((String)cols.get(i)).length()*5+30);
-	  }
-	  */
+	  //Container c = new Container();
 	  JScrollPane tableView = new JScrollPane(jTable);
-	  splitPane.setRightComponent(tableView);
-	  menuTableFilter.setEnabled(true);
+	  //c.add(tableView);
+	  //JScrollPane tableView = (JScrollPane)splitPane.getRightComponent();
+	  if(tables == null) {
+		  tables = new Vector();
+	  }
+	  tables.add(tableView);
+	  if(tableView == null) {
+		  System.out.println("HERe1");
+		  tableView = new JScrollPane(jTable);
+	  } else {
+		  System.out.println("HERe2");
+	  	//tableView.add(jTable);
+		//tableView.validate();
+	  }
+	  //splitPane.setRightComponent(tableView);
+	  //menuTableFilter.setEnabled(true);
 	  /*} catch(Exception e) {
 		  if(e.getMessage() == null) {
 		  	System.out.println("Error Building table by region and year:"+e);
@@ -955,30 +989,6 @@ public class FileChooserDemo extends JFrame
 	  }*/
 	  
 	  
-	  // putting flip code here
-		tableMenu = makePopupTableMenu();
-
-		//	listen for right click on the table
-	   jTable.addMouseListener(new MouseAdapter() {
-		   public void mousePressed(MouseEvent e) {
-			   maybeShowPopup(e);
-		   }
-		   public void mouseReleased(MouseEvent e) {
-			   maybeShowPopup(e);
-		   }
-		   private void maybeShowPopup(MouseEvent e) {
-			   if (e.isPopupTrigger()) {
-				   //selectedPath = jtree.getClosestPathForLocation(e.getX(), e.getY());
-				  MenuElement[] me = tableMenu.getSubElements();
-					  for (int i = 0; i < me.length; i++) {
-					  if (((JMenuItem)me[i]).getText().equals("Flip")) {
-							System.out.println("Flip menu activated");
-					  }
-				  }
-				  tableMenu.show(e.getComponent(), e.getX(), e.getY());
-			   }
-		   }
-	   });
 	   
   }
 
@@ -988,13 +998,12 @@ public class FileChooserDemo extends JFrame
 	  String year = null;
 	  Vector ret = new Vector(2,0);
 	  do {
-	  	System.out.println(n);
-		  if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
+		  if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))
+				  /* || n.getNodeName().equals((String)wild.get(2))*/ ) {
 			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
 			  ret.add(getOneAttrVal(n));
 		  }
 		  n = n.getParentNode();
-		  System.out.println("here4 "+Node.DOCUMENT_NODE+" "+n.getNodeType());
 	  } while(n.getNodeType() != Node.DOCUMENT_NODE && (region == null || year == null));
 	  return ret.toArray();
   }
@@ -1564,7 +1573,12 @@ public class FileChooserDemo extends JFrame
   }
 
   private Vector getAttrsNoRegionYear(Node node) {
-	  if(node.getNodeName().equals((String)wild.get(0)) || node.getNodeName().equals((String)wild.get(1)) ) {
+	  if( ((((String)wild.get(0)).matches(".*Sector") || ((String)wild.get(1)).matches(".*Sector"))) /* || ((String)wild.get(1)).matches(".*Sector")) */ && node.getNodeName().equals("subsector") ) {
+		  return new Vector();
+	  }
+
+	  if(node.getNodeName().equals((String)wild.get(0)) || node.getNodeName().equals((String)wild.get(1)) 
+			  /* || node.getNodeName().equals((String)wild.get(2) */ ) {
 		 return new Vector();
 	  }
 	  NamedNodeMap nodeMap = node.getAttributes();
@@ -1572,9 +1586,9 @@ public class FileChooserDemo extends JFrame
 	  Vector ret = new Vector();
 	  for(int i = 0; i < nodeMap.getLength(); i++) {
 		  tempNode = nodeMap.item(i);
-	  	  if(!tempNode.getNodeName().equals("year")) {
+	  	  //if(!tempNode.getNodeName().equals("year")) {
 			  ret.add(tempNode);
-		  }
+		  //}
 	  }
 	  return ret;
   }
