@@ -46,6 +46,8 @@
 using namespace std;
 using namespace xercesc;
 
+extern ofstream logfile;
+
 extern Scenario* scenario;
 // static initialize.
 const string Region::XML_NAME = "region";
@@ -154,7 +156,7 @@ void Region::XMLParse( const DOMNode* node ){
         else if( nodeName == "CarbonTaxFuelCoef" ) {
             carbonTaxFuelCoef[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
         }
-		else if( nodeName == Population::getXMLNameStatic() ){
+	else if( nodeName == Population::getXMLNameStatic() ){
             if( population == 0 ) {
                 population = new Population();
             }
@@ -824,7 +826,7 @@ const vector<double> Region::calcFutureGDP() const {
    
 	for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
 		gdp->initialGDPcalc( period, population->getTotal( period ) );
-		gdps[ period ] = gdp->getAproxScaledGDPperCap( period );
+		gdps[ period ] = gdp->getApproxScaledGDPperCap( period );
 	}
 	return gdps;
 }
@@ -934,7 +936,7 @@ bool Region::isDemandAllCalibrated( const int period ) const {
     bool allCalibrated = true;
 
     for ( int i = 0; i < noDSec; i++ && allCalibrated ) {
-        if ( !demandSector[ i ]->isAllCalibrated( period ) ) {
+        if ( !demandSector[ i ]->outputsAllFixed( period ) ) {
             allCalibrated = false;
         }
     }
@@ -965,27 +967,162 @@ void Region::calibrateTFE( const int period ) {
 
         //   cout << name << ":  TFE Calib: " << TFEcalb[ period ] << "; TFE: " << totalFinalEnergy << endl;
 
-        // Scale each sector's output to appraoch calibration value
+        // Scale each sector's output to approach calibration value
         for ( i=0;i<noDSec;i++) {
-            if ( !demandSector[ i ]->isAllCalibrated( period ) ) {
+            if ( !demandSector[ i ]->outputsAllFixed( period ) ) {
                 demandSector[ i ]->scaleOutput( period , scaleFactor );
             }
         }
     }
 }
 
-//! Call any initializations that are only done once per period
-// \todo put somewhere (maybe not here) a check for prev period to see how well calibrations worked
+
+/*! \brief Perform checks on consistancy of the input data.
+*
+* At present this checks constancy of calibrated supply and demand sectors.
+*
+* \author Steve Smith
+* \param period Model period
+*/
+void Region::checkData( const int period ) {
+	 adjustCalibrations( period );	 
+}
+
+/*! \brief Call any initializations that are only done once per period.
+*
+* This simply calls the initcalc functions of the supply and demand sectors.
+*
+* \author Steve Smith
+* \param period Model period
+*/
 void Region::initCalc( const int period ) 
 {
-    int i;
-    for ( i=0;i<noDSec;i++) {
+    const Modeltime* modeltime = scenario->getModeltime();
+
+    for ( int i=0;i<noDSec;i++) {
         demandSector[ i ]->initCalc( period ); 
     }
 
-    for ( i=0;i<noSSec;i++) {
+    for ( int i=0;i<noSSec;i++) {
         supplySector[ i ]->initCalc( period ); 
-    }
+    }	 
+}
+
+/*! \brief Adjusts calibrated demands to be consistant with calibrated supply.
+*
+* For each supply sector that is completely calibrated, this routine adjusts calibrated demands, 
+* if they are all calibrated, to exactly match supplies. 
+* The adjustments are written to the log file.
+*
+* If a calibration value is missing for a subsector or technology then the calibration check will not run and warnings may appear
+* 
+* \author Steve Smith
+* \param period Model period
+* \warning the current version cheats and assumes sub-sector names are equal to the supply sector fuel names.
+* \todo need to impliment "calonly" runmode for world.calc() so that can look at full chain of supplies and demands, working through the sector order.
+*/
+void Region::adjustCalibrations( const int period ) {
+   Configuration* conf = Configuration::getInstance();
+   bool debugChecking = conf->getBool( "debugChecking" );
+
+    for ( int i=0;i<noSSec;i++) {
+      string goodName = supplySector[ i ]->getName();
+      
+      if ( inputsAllFixed( period, goodName ) ) {
+         logfile << "Inputs all fixed for " << goodName;
+         
+         // First find the total calibrated or fixed supply of this good         
+         double calSupply = supplySector[ i ]->getCalOutput( period );  // total calibrated output
+         calSupply += supplySector[ i ]->getFixedOutput( period );  // total fixed output
+            
+         // now find total fixed inputs demanded for this good
+         double calDemand = getFixedDemand( period, goodName );
+            
+         // if calibrated output and demand are not equal, then scale demand so that they match
+         if ( !util::isEqual( calSupply, calDemand ) && ( calDemand != 0 ) && supplySector[ i ]->outputsAllFixed( period ) ) {
+            logfile << ", Outputs also all fixed." << endl;
+            
+            logfile << "Cal difference in region " << name << " sector: " << goodName;
+            logfile << " Supply: " << calSupply << " S-D: " << calSupply-calDemand;
+            logfile << " ("<<(calSupply-calDemand)*100/calSupply<<"%)"<<endl;
+
+            // Get calibrated inputs, only scale those, not fixed demands (if any)
+            double fixedCalInputs = 0;
+            for ( int j=0; j<noDSec; j++ ) {
+               fixedCalInputs += demandSector[ j ]->getFixedInputs( period, goodName, false ); 
+            }
+            
+            double ScaleValue = 1 + ( calSupply-calDemand )/fixedCalInputs;
+            for ( int j=0; j<noDSec; j++ ) {
+               demandSector[ j ]->scaleCalibratedValues( period, goodName, ScaleValue ); 
+            }
+         } else {
+            if ( calDemand != 0 ) {
+               logfile << ", ****Outputs are NOT all fixed." << endl;
+            } else {
+               logfile << ", fixed demand is zero or indirect." << endl;
+            }
+         }
+         
+         calDemand = getFixedDemand( period, goodName ); // get new demand to check if ok
+         // if calibrated demand is less than calibrated supply, even if supply is not all calibrated, issue warning
+         // This would cause a problem if not all supply was calibrated, but what was calibrated was > calibrated demand
+          // If debugchecking flag is on extra information is printed
+         if ( ( calSupply - calDemand ) > util::getSmallNumber() ) {
+            logfile << "WARNING: Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
+            cout << "WARNING: Calibrated Demand < Fixed Supply in Region " << name << " sector: " << goodName << endl;
+            if ( debugChecking ) {
+               cout << "   supply all fixed values : " << supplySector[ i ]->outputsAllFixed( period ) << endl;
+               cout << "   demand all fixed : " << inputsAllFixed( period, goodName ) << endl;
+               cout << "   fixedDemandsTot: " << calDemand << "  "; calDemand = getFixedDemand( period, goodName, true ); cout << endl;
+               cout << "   fixedSupplyTot: " << calSupply<< "  "; 
+               calSupply = supplySector[ i ]->getFixedOutput( period , true ); cout << endl;
+            }
+         }
+      } // if allfixed
+      else {   // if not all fixed
+         if ( supplySector[ i ]->outputsAllFixed( period ) ) {
+         logfile << "Inputs NOT ALL fixed for " << goodName << ", but supplies ARE all fixed" << endl;
+         }
+      }
+    } // for block
+}
+
+/*! \brief Returns true if all inputs for the selected good are fixed.
+*
+* Fixed inputs can be by either fixedCapacity, calibration, or zero share
+*
+*
+* \author Steve Smith
+* \param period Model period
+* \param goodName market good to return inputs for
+*/
+bool Region::inputsAllFixed( const int period, const std::string& goodName ) const {
+   
+   for ( int j=0; j<noDSec; j++ ) {
+      if ( ! demandSector[ j ]->inputsAllFixed( period, goodName ) ) {
+         return false; 
+      }
+   }
+   return true;
+}
+
+/*! \brief Returns total fixed demand for the specified good
+*
+* Can be either calibrated demand or fixed input
+*
+* \author Steve Smith
+* \param period Model period
+* \param goodName market good to return demand for
+* \param printValues Optional toggle to print out each value for debugging (default false)
+*/
+double Region::getFixedDemand( const int period, const std::string& goodName, bool printValues ) {
+   double calDemand = 0;
+   for ( int j=0; j<noDSec; j++ ) {
+      calDemand += demandSector[ j ]->getFixedInputs( period, goodName ); 
+      if ( printValues ) { cout << "dsec["<<j<<"] "<< demandSector[ j ]->getFixedInputs( period, goodName ) << ", "; }
+   }
+   return calDemand;
 }
 
 //! Calculate regional demand for energy and other goods for all sectors.
@@ -1003,6 +1140,7 @@ void Region::enduseDemand( const int period ) {
         // sjs -- moved to getInput ( but that may never be called! Don't think input var is ever used.)
         // demandSector[ i ]->sumInput( period );
     }
+    
 }
 
 //! Calculate regional emissions from resources.

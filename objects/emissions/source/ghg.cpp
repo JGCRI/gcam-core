@@ -299,6 +299,50 @@ const std::string& Ghg::getXMLNameStatic() {
     return XML_NAME;
 }
 
+/*! \brief Copies parameters such as Tau, GDP0, and MAC curve that should only be specified once
+* \detailed Certain parameters for GHG emissions should only be specified once so that they are
+* consistent for all years (and also to simplify input). Given that GHG objects are embedded in 
+* technology objects this means that these parameters need to be copied from object to object.
+* This method copies any needed parameters from the previous year's GHG object.
+*
+* \author Steve Smith
+* \param prevGHG pointer to previous period's GHG object
+*/
+void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
+
+   assert( prevGHG ); // Make sure valid pointer was passed
+   
+   // Copy values that always need to be the same for all periods.
+	// Note that finalEmissCoef is not copied, since fmax has already been set appropriately
+	fMax = prevGHG->fMax;
+	gdp0 = prevGHG->gdp0;
+	tau = prevGHG->tau;
+   unit = prevGHG->unit;
+
+	// Copy values that could change, so only copy if these are still zero (and, thus, were never read-in)
+   if ( !techCh ) { 
+		techCh = prevGHG->techCh; // only copy if GWP has not changed
+	}
+   if ( !gwp ) { 
+		gwp = prevGHG->gwp; // only copy if GWP has not changed
+	}
+   if ( !emissCoef ) {
+		emissCoef = prevGHG->emissCoef; // only copy if emissCoef has not changed
+	}
+
+	// If an emissions value was input last period, and none was input this period, then copy emissions coefficient
+	if (  !valueWasInput && prevGHG->valueWasInput ) {
+		emissCoef = prevGHG->emissCoef;
+		setEmissionsInputStatus();	// Set valueWasInput to true so that the next GHG object will get this coefficient passed on to it
+	}
+
+	// If Mac curve was input then copy it, as long as one was not read in for this period
+	if ( !ghgMac.get() && prevGHG->ghgMac.get() ) {
+		ghgMac.reset( prevGHG->ghgMac->clone() );
+	}
+}
+
+
 /*! Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients
 *   and return the value or cost of the tax and storage for the GHG.
 *   Apply taxes only if emissions occur.  Emissions occur if there is a difference in the emissions

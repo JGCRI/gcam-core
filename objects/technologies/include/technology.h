@@ -64,7 +64,7 @@ protected:
     double input; //!< total fuel input (fossil and uranium)
     double output; //!< technology output
     double techchange;  //!< technical change in %/year
-    double fixedSupply; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
+    double fixedOutput; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
     double fixedOutputVal; //!< The actual fixed output value
     bool doCalibration; // Flag set if calibration value is read-in
     bool doCalOutput; // Flag set if calibration value is read-in
@@ -106,17 +106,17 @@ public:
     virtual void calcCost( const std::string regionName, const int per); 
     virtual void calcShare( const std::string regionName, const int per); 
     void normShare(double sum); // normalize technology share
-    void calcFixedSupply(int per); // calculate fixed supply
-    void resetFixedSupply(int per); // reset fixed supply to max value
-    void adjShares(double subsecdmd, double subsecFixedSupply, double varShareTot, int per);
-    void scaleFixedSupply(const double scaleRatio); // scale fixed supply
+    void calcfixedOutput(int per); // calculate fixed supply
+    void resetfixedOutput(int per); // reset fixed supply to max value
+    void adjShares(double subsecdmd, double subsecfixedOutput, double varShareTot, int per);
+    void scalefixedOutput(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
     virtual void production(const std::string& regionName,const std::string& prodName,double dmd, const GDP* gdp, const int per);
     void calcEmission( const std::string prodname); // calculates GHG emissions from technology
     void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
     // ****** return names and values ******
     std::string getName() const; // return technology name
-    std::string getFName() const; // return fuel name
+    std::string getFuelName() const; // return fuel name
     double getEff() const; // return fuel efficiency
     virtual double getIntensity(const int per) const; // return fuel intensity
     double getShare() const; // return normalized share
@@ -135,6 +135,8 @@ public:
     double getCarbonValue() const; // return carbon tax and storage cost added to tech in $/TC
     double getCarbontaxpaid() const; // return carbon taxes paid
     double getCO2() const; // return actual CO2 emissions from technology
+	 void technology::copyGHGParameters( const Ghg* prevGHG );
+	 Ghg* technology::getGHGPointer( const std::string& ghgName );
     const std::vector<std::string> getGHGNames() const;
     double getGHGEmissionCoef( const std::string& ghgName ) const;
 	 bool getEmissionsInputStatus( const std::string& ghgName ) const;
@@ -147,7 +149,8 @@ public:
     std::map<std::string,double> getemindmap() const; // return map of all ghg emissions
     double get_emissmap_second( const std::string& str ) const; // return value for ghg
     double getlexp() const; // return logit exponential for the technology
-    double getFixedSupply() const; // return fixed supply
+    double getFixedOutput() const; // return fixed output
+	 double technology::getFixedInput() const; // return fixed input
 	 int technology::getNumbGHGs()  const; // number of GHG objects in this technology
     void setYear( const int yearIn );
 };

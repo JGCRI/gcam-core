@@ -322,6 +322,9 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \param period Model period
 */
 void Sector::initCalc( const int period ) {
+	const Modeltime* modeltime = scenario->getModeltime();
+   Configuration* conf = Configuration::getInstance();
+   bool debugChecking = conf->getBool( "debugChecking" );
     
     // do any sub-Sector initializations
     for ( int i=0; i<nosubsec; i++ ) {
@@ -329,7 +332,7 @@ void Sector::initCalc( const int period ) {
     }
 
     // set flag if there are any fixed supplies
-    if ( getFixedSupply( period ) > 0 ) {
+    if ( getFixedOutput( period ) > 0 ) {
         anyFixedCapacity = true;
     }
 
@@ -337,21 +340,42 @@ void Sector::initCalc( const int period ) {
     capLimitsPresent[ period ] = isCapacityLimitsInSector( period );
 
     // check to see if previous period's calibrations were set ok
-    // Not sure if this works. Didn't seem to for demand Sector
-    double calOutput;
-    double sectorOutput;
+    // If this portion of the code spits out a warning if all supplies and demand
+	 //  are calibrated but not equal
+	 // A common cause for this warnbing is if a calibration value was left out of an add-on file
+	 // 
+	 // Accurate calibration of base-year values requires a few extra world->Calc()'s after solving 
+	 // to make sure share weights have been adjusted to be consistant with final solution prices
+	 //
+	 // If debugchecking flag is on extra information is printed
+    double CAL_CHECK_VAL = 0.001; // tollerance for calibration check (somewhat arbitrary)
     if ( period > 0 ) {
-        for ( int i=0; i<nosubsec; i++ ) {
-            if ( subsec[ i ]->getCalibrationStatus( period - 1 ) ) {
-                calOutput = subsec[ i ]->getTotalCalOutputs( period - 1 );
-                sectorOutput = subsec[ i ]->getFixedSupply( period - 1 );
-                if ( calOutput < sectorOutput * 0.99999 ) {
-                    cerr << "WARNING: calibrated output < Sector output for " 
-                        << name << " subSect " << subsec[ i ]->getName()
-                        << " in region " << regionName << endl;
-                }
-            }
-        }
+      double calOutputs = getCalOutput( period - 1 );
+      double totalFixed = calOutputs + getFixedOutput( period - 1 );
+      double calDiff =  totalFixed - getOutput( period - 1 );
+		
+		// Two cases to check for. If outputs are all fixed, then calDiff should be small in either case.
+		// Even if outputs are not all fixed, then calDiff shouldn't be > CAL_CHECK_VAL (i.e., totalFixedOutputs > actual output)
+ 		if ( ( ( calDiff > CAL_CHECK_VAL ) || ( ( calDiff < -CAL_CHECK_VAL ) && outputsAllFixed( period - 1 ) ) )
+			&& ( calOutputs > 0 ) ) {
+			cerr << "WARNING: " << name << " " << getXMLName() << " in " << regionName << " != cal+fixed vals (";
+			cerr << totalFixed << " )" << " in yr " <<  modeltime->getper_to_yr( period - 1 );
+			cerr << " by: " << calDiff << " (" << calDiff*100/calOutputs << "%) " << endl;
+			if ( debugChecking ) {
+				cout << "   fixedSupplies: " << "  "; 
+				for ( int i=0; i<nosubsec; i++ ) {
+					double fixedSubSectorOut =  subsec[ i ]->getTotalCalOutputs( period - 1 ) + subsec[ i ]->getFixedOutput( period - 1 );
+					cout << "sSubSec["<<i<<"] "<< fixedSubSectorOut << ", ";
+				} 
+				cout << endl;
+				cout << "   Production: " << "  "; 
+				for ( int i=0; i<nosubsec; i++ ) {
+					cout << "sSubSec["<<i<<"] "<< subsec[ i ]->getOutput( period - 1 ) << ", ";
+				} 
+				cout << endl;
+			}
+
+		}
     }
 }
 
@@ -445,7 +469,7 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
     // Now normalize shares
     for ( unsigned int i = 0; i < subsec.size(); i++ ) {
 
-		if ( subsec[ i ]->getFixedSupply( period ) == 0 ) {
+		if ( subsec[ i ]->getFixedOutput( period ) == 0 ) {
 			// normalize subsector shares that are not fixed
 			if ( fixedSum < 1 ) {
 	 			subsec[ i ]->normShare( sum / ( 1 - fixedSum ) , period );	
@@ -461,7 +485,7 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
             
             subsec[ i ]->setShareToFixedValue( period );
             if ( currentShare > 0 ) { 
-                subsec[ i ]->scaleFixedSupply( fixedShare/currentShare, period ); 
+                subsec[ i ]->scalefixedOutput( fixedShare/currentShare, period ); 
             }
             subsec[ i ]->setShareToFixedValue( period );
 		}
@@ -646,27 +670,28 @@ double Sector::getPrice( const int period ) {
 
 /*! \brief Returns true if all sub-Sector outputs are fixed or calibrated.
 *
-* Routine loops through all the subsectors in the current Sector. If output is calibrate, assigned a fixed output, or set to zero (by setting the share weight to zero) then true is returned. If all ouptput is not fixed, then the Sector has at least some capacity to respond to a change in prices.
+* Routine loops through all the subsectors in the current Sector. If output is calibrated, 
+* assigned a fixed output, or set to zero (because share weight is zero) then true is returned. 
+* If all ouptput is not fixed, then the Sector has at least some capacity to respond to a change in prices.
 *
 * \author Steve Smith
 * \param period Model period
 * \return Boolean that is true if entire Sector is calibrated or has fixed output
 */
-bool Sector::isAllCalibrated( const int period ) const {
-    bool allCalibrated = true;
+bool Sector::outputsAllFixed( const int period ) const {
 
-    if ( period < 0 ) {
-        allCalibrated = false;
-    } 
+	if ( period < 0 ) {
+		return false;
+	} 
 	else {
-        for ( int i=0; i<nosubsec; i++ ) {
-            if ( !(subsec[ i ]->allOuputFixed( period )) ) {
-                allCalibrated = false;
-            }
-        }
-    }
+		for ( int i=0; i<nosubsec; i++ ) {
+			if ( !(subsec[ i ]->allOuputFixed( period )) ) {
+					return false;
+			}
+		}
+	}
 
-    return allCalibrated;
+    return true;
 }
 
 /*! \brief Returns true if any sub-sectors have capacity limits.
@@ -722,14 +747,16 @@ void Sector::setoutput( const double demand, const int period, const GDP* gdp ) 
 *
 * \author Steve Smith
 * \param period Model period
+* \param printValues Toggle to print out each value for debugging (default false)
 * \return total fixed supply
 */
-double Sector::getFixedSupply( const int period ) const {
-    double totalFixedSupply = 0;
+double Sector::getFixedOutput( const int period, bool printValues ) const {
+    double totalfixedOutput = 0;
     for ( int i=0; i<nosubsec; i++ ) {
-        totalFixedSupply += subsec[ i ]->getFixedSupply( period );
+        totalfixedOutput += subsec[ i ]->getFixedOutput( period );
+		  if ( printValues ) { cout << "sSubSec["<<i<<"] "<< subsec[ i ]->getFixedOutput( period ) << ", "; } 
     }
-    return totalFixedSupply;
+    return totalfixedOutput;
 }
 
 /*! \brief Returns the share of fixed supply from the given subsector using a particular logic, depending on model setup.
@@ -738,14 +765,14 @@ double Sector::getFixedSupply( const int period ) const {
 *
 * \author Steve Smith
 * \todo This function should be in subsector, not sector-JPL
-* \param sectorNum Subsector number
+* \param subsectorNum Subsector number
 * \param period Model period
 * \return total fixed supply
 * \warning Not sure how well using market demand will work if multiple sectors are adding demands. 
 */
 double Sector::getFixedShare( const int subsectorNum, const int period ) const {
     Marketplace* marketplace = scenario->getMarketplace();
-    World* world = scenario->getWorld();
+ //   World* world = scenario->getWorld();
 
     if ( subsectorNum >= 0 && subsectorNum < nosubsec ) {
         double fixedShare = subsec[ subsectorNum ]->getFixedShare( period );
@@ -753,7 +780,7 @@ double Sector::getFixedShare( const int subsectorNum, const int period ) const {
             // if demand is available through marketplace then use this instead of lagged value
             double mktDmd = marketplace->getDemand( name, regionName, period );
             if ( mktDmd > 0 ) {
-                fixedShare = subsec[ subsectorNum ]->getFixedSupply( period ) / mktDmd;
+                fixedShare = subsec[ subsectorNum ]->getFixedOutput( period ) / mktDmd;
             }
         }
         return fixedShare;
@@ -766,7 +793,8 @@ double Sector::getFixedShare( const int subsectorNum, const int period ) const {
 
 /*! \brief Return subsector total calibrated outputs.
 *
-* Returns the total calibrated outputs from all subsectors and technologies. Note that any calibrated input values are converted to outputs and are included.
+* Returns the total calibrated outputs from all subsectors and technologies. 
+* Note that any calibrated input values are converted to outputs and are included.
 *
 * \author Steve Smith
 * \param period Model period
@@ -778,6 +806,58 @@ double Sector::getCalOutput( const int period  ) const {
         totalCalOutput += subsec[ i ]->getTotalCalOutputs( period );
     }
     return totalCalOutput;
+}
+
+/*! \brief Return subsector total fixed or calibrated inputs.
+*
+* Returns the total fixed inputs from all subsectors and technologies. 
+* Note that any calibrated output values are converted to inputs and are included.
+*
+* \author Steve Smith
+* \param period Model period
+* \param goodName market good to return inputs for
+* \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
+* \return total fixed inputs
+*/
+double Sector::getFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const {
+    double totalFixedInput = 0;
+    for ( int i=0; i<nosubsec; i++ ) {
+        totalFixedInput += subsec[ i ]->getFixedInputs( period, goodName, bothVals );
+    }
+    return totalFixedInput;
+}
+
+/*! \brief Returns true if all subsector inputs for the the specified good are fixed.
+*
+* Fixed inputs can be by either fixedCapacity, calibration, or zero share. 
+*
+* \author Steve Smith
+* \param period Model period
+* \return total calibrated inputs
+*/
+bool Sector::inputsAllFixed( const int period, const std::string& goodName ) const {
+	
+		for ( int i=0; i<nosubsec; i++ ) {
+        if ( !(subsec[ i ]->inputsAllFixed( period, goodName ) ) ){
+			return false;
+		}
+	}
+	return true;
+}
+
+/*! \brief Scales calibrated values for the specified good.
+*
+* \author Steve Smith
+* \param period Model period
+* \param goodName market good to return inputs for
+* \param scaleValue multipliciative scaler for calibrated values 
+* \return total calibrated inputs
+*/
+void Sector::scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue ) {
+	
+	for ( int i=0; i<nosubsec; i++ ) {
+		subsec[ i ]->scaleCalibratedValues( period, goodName, scaleValue );
+	}
 }
 
 /*! \brief Calibrate Sector output.
@@ -792,17 +872,17 @@ Determines total amount of calibrated and fixed output and passes that down to t
 */
 void Sector::calibrateSector( const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
-    double totalFixedSupply;
+    double totalfixedOutput;
     double totalCalOutputs;
     double mrkdmd;
 
-    totalFixedSupply = getFixedSupply( period ); 
+    totalfixedOutput = getFixedOutput( period ); 
     mrkdmd = marketplace->getDemand( name, regionName, period ); // demand for the good produced by this Sector
     totalCalOutputs = getCalOutput( period );
 
     for (int i=0; i<nosubsec; i++ ) {
         if ( subsec[ i ]->getCalibrationStatus( period ) ) {
-            subsec[ i ]->adjustForCalibration( mrkdmd, totalFixedSupply, totalCalOutputs, period );
+            subsec[ i ]->adjustForCalibration( mrkdmd, totalfixedOutput, totalCalOutputs, period );
         }
     }
 } 
@@ -816,10 +896,9 @@ void Sector::calibrateSector( const int period ) {
 * \param period Model period
 * \warning fixed supply must be > 0 (to obtain 0 supply, set share weight to zero)
 */
-void Sector::adjustForFixedSupply( const double marketDemand, const int period ) {
-    World* world = scenario->getWorld();
+void Sector::adjustForFixedOutput( const double marketDemand, const int period ) {
     int i;
-    double totalFixedSupply = 0; 
+    double totalfixedOutput = 0; 
     double variableShares = 0; // original sum of shares of non-fixed subsectors   
     double variableSharesNew = 0; // new sum of shares of non-fixed subsectors   
     double shareRatio;  // ratio for adjusting shares of non-fixed subsectors
@@ -828,11 +907,11 @@ void Sector::adjustForFixedSupply( const double marketDemand, const int period )
 
     // Determine total fixed production and total var shares
     // Need to change the exog_supply function once new, general fixed supply method is available
-    totalFixedSupply = 0;
+    totalfixedOutput = 0;
     for ( i=0; i<nosubsec; i++ ) {
-        double fixedSupply = 0;
-        subsec[ i ]->resetFixedSupply( period );
-        fixedSupply = subsec[ i ]->getFixedSupply( period );
+        double fixedOutput = 0;
+        subsec[ i ]->resetfixedOutput( period );
+        fixedOutput = subsec[ i ]->getFixedOutput( period );
 
         // initialize property to zero every time just in case fixed share property changes 
         // (shouldn't at the moment, but that could allways change)
@@ -841,27 +920,27 @@ void Sector::adjustForFixedSupply( const double marketDemand, const int period )
         // add up subsector shares without fixed output
         // sjs -- Tried treating capacity limited sub-sectors differently, here and in adjShares,
         //     -- but that didn't give capacity limits exactly.
-        if ( fixedSupply == 0 ) { 
+        if ( fixedOutput == 0 ) { 
             variableShares += subsec[ i ]->getShare( period );
         } 
 		else {
             if ( marketDemand != 0 ) {
-                double shareVal = fixedSupply / marketDemand;
+                double shareVal = fixedOutput / marketDemand;
                 if ( shareVal > 1 ) { 
                     shareVal = 1; // Eliminates warning message since this conditionshould be fixed below
                 } 
                 subsec[ i ]->setFixedShare( period, shareVal ); // set fixed share property
             }
         }
-        totalFixedSupply += fixedSupply;
+        totalfixedOutput += fixedOutput;
     }
 
     // Scale down fixed output if its greater than actual demand
-    if ( totalFixedSupply > marketDemand ) {
+    if ( totalfixedOutput > marketDemand ) {
         for ( i = 0; i < nosubsec; i++ ) {
-            subsec[ i ]->scaleFixedSupply( marketDemand / totalFixedSupply, period ); 
+            subsec[ i ]->scalefixedOutput( marketDemand / totalfixedOutput, period ); 
         }
-        totalFixedSupply = marketDemand;
+        totalfixedOutput = marketDemand;
     }
 
     /*// debugging check
@@ -871,25 +950,25 @@ void Sector::adjustForFixedSupply( const double marketDemand, const int period )
     // Code has been left in just in case something seems to be going wrong
     // If simultunaeities are resolved then this should only happen a couple times per iteration.
     if ( debugChecking && world->getCalibrationSetting() && 1==2) {
-        if ( fabs(fixedShareSavedVal - totalFixedSupply/marketDemand) > 1e-5 && fixedShareSavedVal != 0 ) {
+        if ( fabs(fixedShareSavedVal - totalfixedOutput/marketDemand) > 1e-5 && fixedShareSavedVal != 0 ) {
             cerr << "Fixed share changed from " << fixedShareSavedVal << " to ";
-            cerr << totalFixedSupply/marketDemand << endl;
+            cerr << totalfixedOutput/marketDemand << endl;
             cout << "  -- in region: " << regionName << " sector: " << name << endl;
             if (regionName == "Latin America" ) {
-               cout << "    totalFixedSupply: " << totalFixedSupply;
+               cout << "    totalfixedOutput: " << totalfixedOutput;
                cout << "    marketDemand: " << marketDemand << endl;
             }
       }
     }
     */
     // Adjust shares for any fixed output
-    if (totalFixedSupply > 0) {
-        if (totalFixedSupply > marketDemand ) {            
+    if (totalfixedOutput > 0) {
+        if (totalfixedOutput > marketDemand ) {            
             variableSharesNew = 0; // should be no variable shares in this case
         }
         else {
             assert( marketDemand != 0); // check for 0 so that variableSharesNew does not blow up
-            variableSharesNew = 1 - (totalFixedSupply/ marketDemand );
+            variableSharesNew = 1 - (totalfixedOutput/ marketDemand );
         }
 
         if (variableShares == 0) {
@@ -902,7 +981,7 @@ void Sector::adjustForFixedSupply( const double marketDemand, const int period )
         // now that parameters are set, adjust shares for all sub-sectors
         for ( i=0; i<nosubsec; i++ ) {
             // shareRatio = 0 is okay, sets all non-fixed shares to 0
-            subsec[ i ]->adjShares( marketDemand, shareRatio, totalFixedSupply, period ); 
+            subsec[ i ]->adjShares( marketDemand, shareRatio, totalfixedOutput, period ); 
         }
     }
 }
@@ -913,7 +992,7 @@ void Sector::adjustForFixedSupply( const double marketDemand, const int period )
 where it is shared out (and subsequently passed to the technology level within each sub-Sector
 to be shared out).
 
-Routine also calls adjustForFixedSupply which adjusts shares, if necessary, for any fixed output sub-sectors.
+Routine also calls adjustForFixedOutput which adjusts shares, if necessary, for any fixed output sub-sectors.
 
 * \author Sonny Kim
 \param period Model period
@@ -931,7 +1010,7 @@ void Sector::supply( const int period, const GDP* gdp ) {
 
     // Adjust shares for fixed supply
     if ( anyFixedCapacity ) {
-        adjustForFixedSupply( mrkdmd, period );
+        adjustForFixedOutput( mrkdmd, period );
     }
 
     // This is where subsector and technology outputs are set

@@ -73,7 +73,7 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
       
     double gdp_cap = gdp->getBestScaledGDPperCap(period); 
 			 
-	double gdp1 = gdp->getAproxScaledGDP(period); //gdp->getGDP(period); 
+	double gdp1 = gdp->getApproxScaledGDP(period); //gdp->getGDP(period); 
 	
     const Modeltime* modeltime = scenario->getModeltime();
     double ser_dmd;

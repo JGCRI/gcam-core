@@ -42,11 +42,12 @@ technology::technology() {
     initElementalMembers();
 }
 
-// ! Destructor
+//! Destructor
 technology::~technology() {
     clear();
 }
 
+//! Copy constructor
 technology::technology( const technology& techIn ) {
     copy( techIn );
 }
@@ -85,7 +86,7 @@ void technology::copy( const technology& techIn ) {
     input = techIn.input;
     output = techIn.output;
     techchange = techIn.techchange;
-    fixedSupply = techIn.fixedSupply;
+    fixedOutput = techIn.fixedOutput;
     fixedOutputVal = techIn.fixedOutputVal;
     name = techIn.name;
     unit = techIn.unit;
@@ -148,7 +149,7 @@ void technology::initElementalMembers(){
     A = 0;
     B = 0;
     resource = 0;
-    fixedSupply = 0; // initialize to no fixed supply
+    fixedOutput = 0; // initialize to no fixed supply
     fixedOutputVal = 0;
     doCalibration = false;
     doCalOutput = false;
@@ -527,7 +528,7 @@ void technology::normShare(double sum)
 * \author Sonny Kim, Steve Smith
 * \param per model period
 */
-void technology::calcFixedSupply(int per)
+void technology::calcfixedOutput(int per)
 {
     const Modeltime* modeltime = scenario->getModeltime();
     const string FIXED_TECH = "hydro";
@@ -538,36 +539,54 @@ void technology::calcFixedSupply(int per)
         // resource and logit function 
         const double fact = exp( A + B * T );
         output = fixedOutputVal = resource * fact / ( 1 + fact );
-        fixedSupply = fixedOutputVal;
+        fixedOutput = fixedOutputVal;
     }
     
     // Data-driven specification
-    if ( fixedSupply > 0 ) {
-        fixedOutputVal = fixedSupply;
+    if ( fixedOutput > 0 ) {
+        fixedOutputVal = fixedOutput;
     }
 }
 
 
 /*! \brief This function resets the value of fixed supply to the maximum value
-* See calcFixedSupply
+* See calcfixedOutput
 *
 * \author Steve Smith
 * \param per model period
 */
-void technology::resetFixedSupply( int per ) {
-    fixedOutputVal = fixedSupply;
+void technology::resetfixedOutput( int per ) {
+    fixedOutputVal = fixedOutput;
 }
 
-/*! \brief Return fixed technology supply
+/*! \brief Return fixed technology output
 * 
-* returns the current value of fixedSupply. This may differ from the variable fixedSupply due to scale down if demand is less than the value of fixedSupply.
+* returns the current value of fixed output. This may differ from the variable fixedOutput due to scale down if demand is less than the value of fixedOutput.
 *
 * \author Steve Smith
 * \param per model period
 * \return value of fixed output for this technology
 */
-double technology::getFixedSupply() const {
+double technology::getFixedOutput() const {
     return fixedOutputVal;
+}
+
+/*! \brief Return fixed technology input
+* 
+* returns the current value of fixed input.
+* This may differ from the variable fixedOutput/eff due to scale down if demand is less than 
+* the value of fixed Output.
+*
+* \author Steve Smith
+* \param per model period
+* \return value of fixed input for this technology
+*/
+double technology::getFixedInput() const {
+    if ( eff != 0 ) {
+		return fixedOutputVal / eff;
+	} else {
+		return 0;
+	}
 }
 
 /*! \brief Scale fixed technology supply
@@ -577,7 +596,7 @@ double technology::getFixedSupply() const {
 * \author Steve Smith
 * \param scaleRatio multipliciative value to scale fixed supply
 */
-void technology::scaleFixedSupply(const double scaleRatio)
+void technology::scalefixedOutput(const double scaleRatio)
 {
   //  string FixedTech = "hydro";
     // dmd is total subsector demand
@@ -593,18 +612,18 @@ void technology::scaleFixedSupply(const double scaleRatio)
 *
 * \author Steve Smith
 * \param subsecdmd subsector demand
-* \param subsecFixedSupply total amount of fixed supply in this subsector
+* \param subsecfixedOutput total amount of fixed supply in this subsector
 * \param varShareTot Sum of shares that are not fixed
 * \param per model period
 * \warning This version may not work if more than one (or not all) technologies within each sector 
 has a fixed supply
 */
-void technology::adjShares(double subsecdmd, double subsecFixedSupply, double varShareTot, int per)
+void technology::adjShares(double subsecdmd, double subsecfixedOutput, double varShareTot, int per)
 {
     double remainingDemand = 0;
     
-    if(subsecFixedSupply > 0) {
-        remainingDemand = subsecdmd - subsecFixedSupply;
+    if(subsecfixedOutput > 0) {
+        remainingDemand = subsecdmd - subsecfixedOutput;
         if (remainingDemand < 0) {
             remainingDemand = 0;
         }
@@ -614,7 +633,7 @@ void technology::adjShares(double subsecdmd, double subsecFixedSupply, double va
                 share = fixedOutputVal/subsecdmd;
                 // Set value of fixed supply
                 if (fixedOutputVal > subsecdmd) {
-                    fixedOutputVal = subsecFixedSupply; // downgrade output if > fixedsupply
+                    fixedOutputVal = subsecfixedOutput; // downgrade output if > fixedOutput
                 }  
             }
             else {
@@ -661,7 +680,7 @@ void technology::production(const string& regionName,const string& prodName,
     
     // set demand for fuel in marketplace
     marketplace->addToDemand(fuelname,regionName,input,per);
-    
+	 
     // total carbon taxes paid for reporting only
     // carbontax and carbontaxpaid is null for technologies that do not consume fossil fuels
     // input(EJ), carbontax(90$/GJ), carbontaxpaid(90$Mil)
@@ -723,7 +742,7 @@ string technology::getName() const {
 * \author Sonny Kim
 * \return fuel name as a string
 */
-string technology::getFName() const {
+string technology::getFuelName() const {
     return fuelname;
 }
 
@@ -771,7 +790,7 @@ bool technology::getCalibrationStatus( ) const {
 bool technology::ouputFixed( ) const {
     bool outputFixed = false;
 
-   if ( doCalibration || ( fixedSupply != 0 ) ) {
+   if ( doCalibration || ( fixedOutput != 0 ) || ( shrwts == 0 ) ) {
       outputFixed = true;  // this sector has fixed output
    } 
    
@@ -799,10 +818,11 @@ double technology::getCalibrationInput( ) const {
     return calInputValue;
 }
 
-//! return technology calibration value
+//! scale technology calibration value
 void technology::scaleCalibrationInput( const double scaleFactor ) {
     if ( scaleFactor != 0 ) {
-        calInputValue = calInputValue / scaleFactor;
+        calInputValue = calInputValue * scaleFactor;
+		  calOutputValue = calInputValue * eff;
     }
 }
 
@@ -882,6 +902,30 @@ double technology::getGHGEmissionCoef( const std::string& ghgName ) const {
         emissCoef = ghg[ ghgIndex ]->getEmissCoef();
     }
     return emissCoef;
+}
+
+/*! \brief Copies parameters across periods for a specific GHG 
+* \param prevGHG Pointer to the previous GHG object that needs to be passed to the corresponding object this period.
+* \warning Assumes there is only one GHG object with any given name
+*/
+void technology::copyGHGParameters( const Ghg* prevGHG ) {
+	const int ghgIndex = util::searchForValue( ghgNameMap, prevGHG->getName() );
+
+	if ( prevGHG ) {
+		ghg[ ghgIndex ]->copyGHGParameters( prevGHG );
+	}
+	 
+}
+
+/*! \brief Returns the pointer to a specific GHG 
+* \param ghgName Name of GHG 
+* \warning Assumes there is only one GHG object with any given name
+*/
+Ghg* technology::getGHGPointer( const std::string& ghgName ) {
+    const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
+
+	return ghg[ ghgIndex ];
+	 
 }
 
 /*! \brief sets the emissions coefficient for a GHG specified byname.

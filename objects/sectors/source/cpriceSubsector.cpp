@@ -78,7 +78,7 @@ void Cpricesubsector::calcShare(const int period, const GDP* gdp ) {
     if(lexp[period]==0) cerr << "SubSec Logit Exponential is 0." << endl;
 
 	 // Get fuel used by technology (assume only one technology)
-	 string fuelName = techs[ 0 ][ period ]->getFName();
+	 string fuelName = techs[ 0 ][ period ]->getFuelName();
 	 
 	 // Add carbon price to subsector price here
 	 double ghgCost = 0;

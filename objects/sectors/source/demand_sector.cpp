@@ -250,7 +250,7 @@ const std::string& DemandSector::getXMLNameStatic() {
 * \param period Model period
 */
 void DemandSector::calibrateSector( const int period ) {
-    double totalFixedSupply = 0; // no fixed supply for demand sectors
+    double totalfixedOutput = 0; // no fixed supply for demand sectors
     double mrkdmd;
     double totalCalOutputs = getCalOutput( period );
     
@@ -258,11 +258,11 @@ void DemandSector::calibrateSector( const int period ) {
     
     for (int i=0; i<nosubsec; i++ ) {
         if ( subsec[i]->getCalibrationStatus( period ) ) {
-            subsec[i]->adjustForCalibration( mrkdmd, totalFixedSupply, totalCalOutputs, period );
+            subsec[i]->adjustForCalibration( mrkdmd, totalfixedOutput, totalCalOutputs, period );
         }
     }
 
-    if ( isAllCalibrated( period ) ) {
+    if ( outputsAllFixed( period ) ) {
        scaleOutput( period , totalCalOutputs/service[ period ] );
        if ( service[ period ] == 0 ) {
           cout << "ERROR: service = 0 in " << regionName << ":" << name << endl;
@@ -353,6 +353,8 @@ void DemandSector::aggdemand( const GDP* gdp, const int period ) {
         // perCapitaBased is true or false
 		  
 		  double gdpRatio = gdp->getGDP( period ) / gdp->getGDP( basePer );
+		  // If perCapitaBased, service_demand = B * P^r * GDPperCap^r * Population.
+		  // All values are relative to the base year
         if ( perCapitaBased ) { // demand based on per capita GDP
 				double scaledGDPperCap = gdp->getScaledGDPperCap( period );
             ser_dmd = base*pow(priceRatio,pelasticity)*pow(scaledGDPperCap,iElasticity[period]);
@@ -361,6 +363,7 @@ void DemandSector::aggdemand( const GDP* gdp, const int period ) {
             ser_dmd *= gdpRatio/scaledGDPperCap;
 				
         }
+		  // If not perCapitaBased, service_demand = B * P^r * GDP^r
         else { // demand based on scale of GDP    
 
             ser_dmd = base*pow( priceRatio, pelasticity )*pow( gdpRatio, iElasticity[period] );

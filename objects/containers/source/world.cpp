@@ -213,6 +213,7 @@ const std::string& World::getXMLNameStatic() {
 void World::initCalc( const int period ) {	
     for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ){
         ( *i )->initCalc( period );
+        ( *i )->checkData( period );
     }
 }
 

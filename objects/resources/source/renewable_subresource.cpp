@@ -144,13 +144,13 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
    
    //! \todo perhaps turn production into a function -- arguments period, gdp, price;
    
-	double currentAproxGDP = gdp->getApproxGDP( period );
+	double currentApproxGDP = gdp->getApproxGDP( period );
 	
    // To save time without doing the loop, check first to see if price is above max price point
    if ( price > grade[ nograde - 1 ]->getCost(period) ) {
       gradeFraction = grade[ nograde - 1 ]->getAvail();
       annualprod[ period ] = grade[ nograde - 1 ]->getAvail() 
-         * maxSubResource  * pow( currentAproxGDP / baseGDP, gdpSupplyElasticity );
+         * maxSubResource  * pow( currentApproxGDP / baseGDP, gdpSupplyElasticity );
    }
    else {
       bool pricePointFound = false;
@@ -169,7 +169,7 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
                gradeFraction * ( gradeAvail - prevGradeAvail ); 
             
             // now convert to absolute value of production
-            annualprod[ period ] *= maxSubResource * pow( currentAproxGDP/baseGDP, gdpSupplyElasticity ); 
+            annualprod[ period ] *= maxSubResource * pow( currentApproxGDP/baseGDP, gdpSupplyElasticity ); 
             
             pricePointFound = true; // can exit loop now
          } 

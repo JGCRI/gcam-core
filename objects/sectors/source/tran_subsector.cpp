@@ -175,14 +175,18 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
     // add cost of time spent on travel by converting gdp/cap into
     // an hourly wage and multipling by average speed
     servicePrice[period] = subsectorprice[period]/loadFactor[period] ;
+
     // calculate time value based on hours worked per year
-    // gdp_cap is normalized, need GDP per capita in $/person, fix when available
+
+ 	 // Convert GDPperCap into dollars (instead of 1000's of $'s)
+    // GDP value at this point in the code does not include energy feedback calculation for this year, so is, therefore, approximate
+    timeValue[period] = gdp->getApproxGDPperCap( period ) * 1000 /(hoursPerWeek*weeksPerYear)/speed[period] ;
+
     const double dollarGDP75 = 3.46985e+12;
     const double population75 = 2.16067e+8;
-	double tempGDP = gdp_cap*(dollarGDP75/population75);
-	double tempGDP2 = gdp->getApproxGDP(period);
-    timeValue[period] = gdp_cap*(dollarGDP75/population75)/(hoursPerWeek*weeksPerYear)/speed[period] ;
-
+    double temp = gdp_cap*(dollarGDP75/population75)/(hoursPerWeek*weeksPerYear)/speed[period] ;
+    cout << (timeValue[period]-temp) << " : " << timeValue[period] << endl;
+	 
     generalizedCost[period] = servicePrice[period] + timeValue[period] ;
     
     /*!  Compute calibrating scaler if first period, otherwise use computed

@@ -289,7 +289,7 @@ void GDP::dbOutput( const string& regionName ) const {
 
 	// write gdp and adjusted gdp for region
 	dboutput4(regionName,"General","GDP90$","GDP(90mer)","Mil90US$", gdpValueAdjusted );
-	dboutput4(regionName,"General","GDP90$","GDPAprox(90mer)","Mil90US$", gdpValue );
+	dboutput4(regionName,"General","GDP90$","GDPApprox(90mer)","Mil90US$", gdpValue );
 	dboutput4(regionName,"General","GDP","perCap","thousand90US$", gdpPerCapitaAdjusted );
 	dboutput4(regionName,"General","GDP90$","perCAP_PPP","thousand90US$", gdpPerCapitaAdjustedPPP );
 }
@@ -419,7 +419,7 @@ void GDP::calculatePPP( const int period, const double marketGDPperCapAdj ) {
 * \author Steve Smith
 * \param period Model time period
 */
-double GDP::getAproxScaledGDPperCap( const int period ) const {
+double GDP::getApproxScaledGDPperCap( const int period ) const {
 
 	const Modeltime* modeltime = scenario->getModeltime();
 	const int baseYear = modeltime->getstartyr();
@@ -433,16 +433,27 @@ double GDP::getAproxScaledGDPperCap( const int period ) const {
 * \author Sonny Kim
 * \param period Model time period
 */
-double GDP::getAproxScaledGDP( const int period ) const {
+double GDP::getApproxScaledGDP( const int period ) const {
 
 	const Modeltime* modeltime = scenario->getModeltime();
 	const int baseYear = modeltime->getstartyr();
 	return gdpValue[ period ] / gdpValue[ modeltime->getyr_to_per( baseYear )  ];
 }
 
+/*! Return approximate GDP per capita (1000's of dollars/cap)
+* 
+* This routine should be used only in the case where GDP per cap is needed before energy prices are available.
+*
+* \author Steve Smith
+* \param period Model time period
+*/
+double GDP::getApproxGDPperCap( const int period ) const {
+	return gdpPerCapita[ period ];
+}
+
 /*! Return adjusted GDP scaled to base year
 * 
-* This routine should be used in preference to getAproxScaledGDPperCap() above
+* This routine should be used in preference to getApproxScaledGDPperCap() above
 *
 * \author Steve Smith
 * \param period Model time period
@@ -518,7 +529,7 @@ double GDP::getGDP( const int period ) const {
 */
 double GDP::getBestScaledGDPperCap( const int period ) const {
 	if ( !gdpAdjustedFlag[ period ] ) {
-		return getAproxScaledGDPperCap( period );
+		return getApproxScaledGDPperCap( period );
 	} 
 	else {
 		return getScaledGDPperCap( period );

@@ -464,7 +464,7 @@ void Subsector::initCalc( const int period ) {
     // Set any fixed demands
     for ( i=0 ;i<notech; i++ ) {        
         techs[i][ period ]->initCalc( );
-        techs[i][ period ]->calcFixedSupply( period );
+        techs[i][ period ]->calcfixedOutput( period );
     }
     
     setCalibrationStatus( period );
@@ -473,21 +473,21 @@ void Subsector::initCalc( const int period ) {
     
     // Prevent pathological situation were share is zero where a fixed capacity is present.\
     // This can happen at begining of an initialization. Share will be set properly within secotr::calcShare 
-    if ( ( getFixedSupply( period ) > 0 ) && ( fixedShare[ period ] == 0 ) ) {
+    if ( ( getFixedOutput( period ) > 0 ) && ( fixedShare[ period ] == 0 ) ) {
        fixedShare[ period ] = 0.1;
     }
    
    // check to see if input fuel has changed
     for ( i=0 ;i<notech && period > 0; i++ ) {
-      std::string orgFuel = techs[i][ period-1 ]->getFName();
-      if ( orgFuel != techs[i][ period ]->getFName() ) {
-         cerr << "WARNING: Type of fuel "<< orgFuel << " changed in period " << period << ", tech: ";
+      string prevFuel = techs[i][ period-1 ]->getFuelName();
+      if ( prevFuel != techs[i][ period ]->getFuelName() ) {
+         cerr << "WARNING: Type of fuel "<< prevFuel << " changed in period " << period << ", tech: ";
          cerr << techs[i][ period ]->getName();
          cerr << ", sub-s: "<< name << ", sect: " << sectorName << ", region: " << regionName << endl;
       }
     }
 
-   // Pass forward any emissions coefficients
+   // Pass forward any emissions information
     for ( i=0 ;i<notech && period > 0 && period < modeltime->getmaxper() ; i++ ) {
 		std::vector<std::string> ghgNames;
 		ghgNames = techs[i][period]->getGHGNames();
@@ -499,14 +499,19 @@ void Subsector::initCalc( const int period ) {
 			cerr << techs[i][ period ]->getName();
 			cerr << ", sub-s: "<< name << ", sect: " << sectorName << ", region: " << regionName << endl;
 		}
-		for ( int j=0 ; j<numberOfGHGs && period > 0; j++ ) {
-			if ( techs[i][ period - 1 ]->getEmissionsInputStatus( ghgNames[j] ) ) {
-				techs[i][ period ]->setGHGEmissionCoef( ghgNames[j] , techs[i][ period - 1 ]->getGHGEmissionCoef( ghgNames[j] ) );
-				techs[i][ period ]->setEmissionsInputStatus( ghgNames[j] ); // Need to set this flag so that all future ghg objects get emissions coef passed to them
-				
-				} // End if
-			} // End For
-		} // End For
+		// If number of GHG's decreased, then copy GHG objects
+		if ( numberOfGHGs < techs[i][ period - 1 ]->getNumbGHGs() ) {
+			// Not sure if to impliment this or not
+		}
+		
+		// New method
+		if ( period > 1 ) { // Note the hard coded base period
+         for ( int j=0 ; j<numberOfGHGs; j++ ) {
+            techs[i][ period ]->copyGHGParameters( techs[i][ period - 1]->getGHGPointer( ghgNames[j]  ) );
+         } // End For
+		}
+      
+	} // End For
 }
 
 /*! \brief Computes weighted cost of all technologies in Subsector.
@@ -537,7 +542,7 @@ void Subsector::calcPrice( const int period ) {
             techs[i][period]->getFuelcost();
         // calculate share weighted average CO2 emissions factor
         CO2EmFactor += techs[i][period]->getShare()*
-			world->getPrimaryFuelCO2Coef(regionName, techs[i][period]->getFName());
+			world->getPrimaryFuelCO2Coef(regionName, techs[i][period]->getFuelName());
     }
 }
 
@@ -729,7 +734,7 @@ void Subsector::calcTechShares( const int period ) {
 void Subsector::calcShare(const int period, const GDP* gdp ) {
     // call function to compute technology shares
     calcTechShares( period );
-    
+    double gdp_cap;
     // calculate and return Subsector share; uses above price function
     // calc_price() uses normalized technology shares calculated above
     // Logit exponential should not be zero
@@ -744,7 +749,7 @@ void Subsector::calcShare(const int period, const GDP* gdp ) {
         share[period] = 0;
     }
     else {
-		double gdp_cap = gdp->getBestScaledGDPperCap( period );
+		gdp_cap = gdp->getBestScaledGDPperCap( period );
 		share[period] = shrwts[period]*pow(subsectorprice[period],lexp[period])*pow(gdp_cap,fuelPrefElasticity[period]);
 	}
 	
@@ -758,6 +763,7 @@ void Subsector::calcShare(const int period, const GDP* gdp ) {
      cerr << "    subsectorprice[period]: " << subsectorprice[period] << endl;
      cerr << "    shrwts[period]: " << shrwts[period] << endl;
    }   
+	
 }
 
 /*! \brief normalizes Subsector shares
@@ -844,17 +850,17 @@ void Subsector::limitShares( const double multiplier, const int period ) {
 * \param period model period
 * \pre calc shares must be called first
 */
-double Subsector::getFixedSupply( const int period ) const {
+double Subsector::getFixedOutput( const int period ) const {
     double fixedOutput = 0;
     for ( int i=0 ;i<notech; i++ ) {
-        fixedOutput += techs[i][period]->getFixedSupply();
+        fixedOutput += techs[i][period]->getFixedOutput();
     }
     return fixedOutput;
 }
 
 /*!\brief Return the share from this sub-sector that is fixed supply
 * Enables communication of fixed share to other classes. 
-*This is necessary since, while the amount of fixed supply is available (via getFixedSupply), the total output of a sector is not always known. So this function enables the amount of fixed supply in terms of the sector share to be communicated. 
+*This is necessary since, while the amount of fixed supply is available (via getFixedOutput), the total output of a sector is not always known. So this function enables the amount of fixed supply in terms of the sector share to be communicated. 
 *
 * \author Steve Smith
 * \param period Model period
@@ -871,7 +877,6 @@ double Subsector::getFixedShare( const int period ) const {
 \param share sector share that is fixed supply
 */
 void Subsector::setFixedShare( const int period, const double share ) {
-    World* world = scenario->getWorld();
 
     // option to turn this off during calibration
     // This does not work correctly, shares will not sum to one. -JPL
@@ -903,23 +908,23 @@ void Subsector::setShareToFixedValue( const int period ) {
 *\author Steve Smith
 *\param period Model period
 */
-void Subsector::resetFixedSupply( const int period ) {
+void Subsector::resetfixedOutput( const int period ) {
     for ( int i=0 ;i<notech; i++ ) {
-        techs[ i ][period]->resetFixedSupply(period); // eliminate any previous down-scaleing
+        techs[ i ][period]->resetfixedOutput(period); // eliminate any previous down-scaleing
     }
 }
 
 /*! \brief Scale down fixed supply
-* This is use dif the total fixed production is greater than the actual demand. See scaleFixedSupply.
+* This is use dif the total fixed production is greater than the actual demand. See scalefixedOutput.
 *
 * \author Steve Smith
 * \param period Model period
 * \param scaleRatio multiplicative scale factor by which to scale fixed supply
 */
-void Subsector::scaleFixedSupply( const double scaleRatio, const int period ) {
+void Subsector::scalefixedOutput( const double scaleRatio, const int period ) {
     // scale fixed technology output down
     for ( int i=0 ;i<notech; i++ ) {
-        techs[ i ][ period ]->scaleFixedSupply( scaleRatio );
+        techs[ i ][ period ]->scalefixedOutput( scaleRatio );
     }
     setFixedShare( period, fixedShare[ period ] * scaleRatio ); 
 }
@@ -972,25 +977,25 @@ void Subsector::shareWeightInterp( const int beginPeriod,  const int endPeriod )
 /*! This routine does two things. 
 
 If this sub-sector has a fixed supply, it sets the share to be consistant with the fixed supply
-If this sub-sector does not have a fixed supply, it adjusts the share to be consistant with all the fixed supplies of all other sub-sectors (totalFixedSupply)
+If this sub-sector does not have a fixed supply, it adjusts the share to be consistant with all the fixed supplies of all other sub-sectors (totalfixedOutput)
 
 \param dmd total demand for all sectors
 \param shareRatio amount variable shares need to be adjusted to be consistant with fixed supply
-\param totalFixedSupply total fixed supply from all sub-sectors
+\param totalfixedOutput total fixed supply from all sub-sectors
 \param period model period
 */
 void Subsector::adjShares( const double demand, double shareRatio, 
-                          const double totalFixedSupply, const int period ) {
-    double sumSubsectFixedSupply = 0; // total Subsector fixed supply
-    double fixedSupply = 0; // fixed supply for each technology
+                          const double totalfixedOutput, const int period ) {
+    double sumSubsectfixedOutput = 0; // total Subsector fixed supply
+    double fixedOutput = 0; // fixed supply for each technology
     double varShareTot = 0; // sum of shares without fixed supply
     double subsecdmd; // Subsector demand adjusted with new shares
 
     // add up the fixed supply and share of non-fixed supply
     for ( int i=0 ;i<notech; i++ ) {
-        fixedSupply = techs[i][period]->getFixedSupply();
-        sumSubsectFixedSupply += fixedSupply;
-        if (fixedSupply == 0) { 
+        fixedOutput = techs[i][period]->getFixedOutput();
+        sumSubsectfixedOutput += fixedOutput;
+        if (fixedOutput == 0) { 
            varShareTot += techs[i][period]->getShare();
         }
     }
@@ -1000,11 +1005,11 @@ void Subsector::adjShares( const double demand, double shareRatio,
     // fixed production or all variable. Would need to amend the logic below
     // to take care of other cases.
     
-    // totalFixedSupply is the sector total
-    if(totalFixedSupply > 0) {
-        if (sumSubsectFixedSupply > 0) {	// This Subsector has a fixed supply
+    // totalfixedOutput is the sector total
+    if(totalfixedOutput > 0) {
+        if (sumSubsectfixedOutput > 0) {	// This Subsector has a fixed supply
             if ( demand > 0 ) {
-                setShare( sumSubsectFixedSupply/demand, period ); 
+                setShare( sumSubsectfixedOutput/demand, period ); 
             }
             else { // no fixed share if no demand
                 share[period] = 0; 
@@ -1024,7 +1029,7 @@ void Subsector::adjShares( const double demand, double shareRatio,
     subsecdmd = share[period]*demand; // share is Subsector level
     for (int j=0;j<notech;j++) {
         // adjust tech shares 
-        techs[j][period]->adjShares(subsecdmd, sumSubsectFixedSupply, varShareTot, period);
+        techs[j][period]->adjShares(subsecdmd, sumSubsectfixedOutput, varShareTot, period);
     }
     
 }
@@ -1071,13 +1076,13 @@ void Subsector::setoutput( const double demand, const int period, const GDP* gdp
 *
 * \author Steve Smith
 * \param sectorDemand total demand for this sector
-* \param totalFixedSupply total amount of fixed supply for this sector
+* \param totalfixedOutput total amount of fixed supply for this sector
 * \param totalCalOutputs total amount of calibrated outputs for this sector
 * \param period Model period
 * \warning If calvalue is larger than sector demand nothing is done
 * \warning The value of subsecdmd is changed (for sub-sector output calibration)
 */
-void Subsector::adjustForCalibration( double sectorDemand, double totalFixedSupply, double totalCalOutputs, const int period ) {
+void Subsector::adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const int period ) {
    double shareScaleValue = 0;
    double availableDemand;
    double subSectorDemand;
@@ -1086,7 +1091,7 @@ void Subsector::adjustForCalibration( double sectorDemand, double totalFixedSupp
    double calOutputSubsect = getTotalCalOutputs( period );
 
    // Determine available demand that can be shared out (subtract sub-sectors with fixed supply)
-   availableDemand = sectorDemand - totalFixedSupply;
+   availableDemand = sectorDemand - totalfixedOutput;
    if ( availableDemand < 0 ) {
       availableDemand = 0;
    }
@@ -1115,15 +1120,19 @@ void Subsector::adjustForCalibration( double sectorDemand, double totalFixedSupp
      shrwts[ period ] = 1;
    }
 
-   bool watchSector = (name=="gas" && sectorName == "building" && regionName == "USAxx");
+
+   // Debugging code useful for when something is amiss with base-year calibrations
+   bool watchSector = ( name == "oil" && sectorName == "building" && regionName == "USAxx");
    if ( debugChecking && (shrwts[ period ] > 1e4 || watchSector) ) {
       if ( !watchSector ) {
          cout << "In calibration for sub-sector: " << name;
          cout << " in sector: "<< sectorName << " in region: " << regionName << endl;
       } else { cout << " ||" ; }
+		cout << "Sector: "<< sectorName << " subsector: "<< name << "  subSector CalOut: " << getTotalCalOutputs( period );
+		cout << "  CalIn: " << getFixedInputs( period, name, true ) << endl;
       cout << "  shrwts = " << shrwts[ period ] << ", sub-sec share = " << share[ period ]  << endl;
-      cout << "  AvailD, totCal, calOutSect, subSectD, scaleVal: " << availableDemand << ", "; 
-      cout <<  totalCalOutputs << ", " <<  calOutputSubsect << ", " ; 
+      cout << "  AvailD, totFix, totCal, calOutSect, subSectD, scaleVal: " << availableDemand << ", "; 
+      cout <<  totalfixedOutput << ", " << totalCalOutputs << ", " <<  calOutputSubsect << ", " ; 
       cout << subSectorDemand << ", " << shareScaleValue << endl;
    }
 }
@@ -1160,6 +1169,100 @@ double Subsector::getTotalCalOutputs( const int period ) const {
    }
    
    return sumCalValues;
+}
+
+/*! \brief returns the total calibrated or fixed input from this sector for the specified good.
+*
+* Routine adds up calibrated or fixed input values from all technologies.
+*
+* \author Steve Smith
+* \param period Model period
+* \param goodName market good to return inputs for
+* \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
+* \return Total calibrated input for this Subsector
+*/
+double Subsector::getFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const {
+	double sumCalInputValues = 0;
+
+	for ( int i=0; i<notech; i++ ) {
+		if ( techHasInput( techs[ i ][ period ], goodName ) ) {
+			if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
+				sumCalInputValues += techs[ i ][ period ]->getCalibrationInput( );
+			} 
+			else if ( techs[ i ][ period ]->ouputFixed( ) && bothVals ) {
+				sumCalInputValues += techs[ i ][ period ]->getFixedInput( );
+			}
+		}
+   }
+   return sumCalInputValues;
+}
+
+/*! \brief returns the total calibrated or fixed input from this sector for the specified good.
+*
+* Routine adds up calibrated or fixed input values from all technologies.
+*
+* \author Steve Smith
+* \param period Model period
+* \param goodName market good to return inputs for
+* \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
+* \return Total calibrated input for this Subsector
+*/
+bool Subsector::inputsAllFixed( const int period, const std::string& goodName ) const {
+	bool allInputsFixed = false;
+	
+	// test for each method of fixing output, if none of these are true then demand is not all fixed
+	for ( int i=0; i<notech; i++ ) {
+		if ( techHasInput( techs[ i ][ period ], goodName ) ) {
+			if ( ( techs[ i ][ period ]->getCalibrationStatus( ) ) ) {
+				allInputsFixed = true;
+			} 
+			else if ( techs[ i ][ period ]->ouputFixed( ) != 0 ) {
+				allInputsFixed =  true;
+			} else if ( shrwts[ period ] == 0) {
+				allInputsFixed = true;
+			} else {
+				return false;
+			}
+		}
+   }
+   
+   return true;
+}
+
+/*! \brief checks to see if technology demands the specified good
+*
+* Routine adds up calibrated or fixed input values from all technologies.
+*
+* \author Steve Smith
+* \warning This routine depends on technologies being named for their fuel type. This works currently for electricity, but will not for other techs. Need to impliment a more robust method of checking calibrations.
+* \param goodName market good to check for
+* \param pointer to technology to consider
+* \return True if the specified technology has goodname as input
+* \todo Need a more robust way of doing this check (requires a more fundamental change to the way calibrated inputs and outputs are found)
+*/
+bool Subsector::techHasInput( const technology* thisTech, const std::string& goodName ) const {
+	
+	return ( thisTech->getName() == goodName );
+	
+}
+
+/*! \brief Scales calibrated values for the specified good.
+*
+* \author Steve Smith
+* \param period Model period
+* \param goodName market good to return inputs for
+* \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
+* \return Total calibrated input for this Subsector
+*/
+void Subsector::scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue ) {
+
+	for ( int i=0; i<notech; i++ ) {
+		if ( techHasInput( techs[ i ][ period ], goodName ) ) {
+			if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
+				techs[ i ][ period ]->scaleCalibrationInput( scaleValue );
+			} 
+		}
+   }
 }
 
 /*! \brief returns true if all output is either fixed or calibrated.
@@ -1200,7 +1303,6 @@ bool Subsector::allOuputFixed( const int period ) const {
 /*! \brief scale calibration values.
 *
 * Scale calibration values in each technology by specified amount. 
-* Calibration values are not permanantly changed, only for this iteration
 *
 * \author Steve Smith
 * \param period Model period
@@ -1536,7 +1638,7 @@ void Subsector::MCoutputC() const {
             for (m=0;m<maxper;m++) {
                 temp[m] = techs[i][m]->getInput();
             }
-            dboutput4(regionName,"Fuel Consumption",sectorName,techs[i][0]->getFName(),"EJ",temp);
+            dboutput4(regionName,"Fuel Consumption",sectorName,techs[i][0]->getFuelName(),"EJ",temp);
         }
         
         
@@ -1714,7 +1816,7 @@ void Subsector::updateSummary( const int period ) {
     summary[period].clearfuelcons();
     
     for (i=0;i<notech;i++) {
-        goodName = techs[i][0]->getFName();
+        goodName = techs[i][0]->getFuelName();
         summary[period].initfuelcons(goodName,techs[i][period]->getInput());
     }
 }
