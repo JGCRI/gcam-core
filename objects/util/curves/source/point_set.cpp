@@ -47,4 +47,3 @@ PointSet* PointSet::getPointSet( const string& type ) {
     }
     return pointSet;
 }
-        

@@ -371,3 +371,4 @@ void Scenario::openDebugXMLFile( ofstream& xmlDebugStream, const string& fileNam
     xmlDebugStream.open( debugFileName.c_str(), ios::out );
     util::checkIsOpen( xmlDebugStream, debugFileName );
 }
+
