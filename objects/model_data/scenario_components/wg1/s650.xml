@@ -4,8 +4,8 @@
    <summary>"S650 Scenario"</summary>
    <world>
       <region name="USA">
-         <ghgpolicy name="CO2">
-            <market>global</market>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
             <constraint year="2005">6459</constraint>
             <constraint year="2020">7508</constraint>
             <constraint year="2035">8597</constraint>
@@ -13,72 +13,72 @@
             <constraint year="2065">10129</constraint>
             <constraint year="2080">10330</constraint>
             <constraint year="2095">10206</constraint>
-         </ghgpolicy>
+         </constraint-policy>
       </region>
       <region name="Canada">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="Western Europe">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="Japan">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="Australia_NZ">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="Former Soviet Union">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="China">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="Middle East">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="Africa">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="Latin America">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="Southeast Asia">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="Eastern Europe">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="Korea">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
       <region name="India">
-         <ghgpolicy name="CO2">
-            <market>global</market>
-         </ghgpolicy>
+         <constraint-policy name="CO2">
+	    <market year="2005" fillout="1">global</market>
+         </constraint-policy>
       </region>
    </world>
 </scenario>
