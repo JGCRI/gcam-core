@@ -92,7 +92,7 @@ void demsector::XMLParse( const DOMNode* node ){
 	nodeList = node->getChildNodes();
 
 	// loop through the child nodes.
-	for( int i = 0; i < nodeList->getLength(); i++ ){
+	for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
 		curr = nodeList->item( i );
 		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
@@ -228,39 +228,11 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
 	
 
 	// Now write out own members.
-	if ( period < fe_cons.size() ){
-		XMLWriteElement( fe_cons[ period ], "fe_cons", out );
-	}
-	else {
-		XMLWriteElement( 0, "fe_cons", out );
-	}
-
-	if ( period < service.size() ) {
-		XMLWriteElement( service[ period ], "service", out );
-	}
-	else {
-		XMLWriteElement( 0, "service", out );
-	}
-
-	if ( period < iElasticity.size() ) {
-		XMLWriteElement( iElasticity[ period ], "iElasticity", out );
-	}
-	else {
-		XMLWriteElement( 0, "iElasticity", out );
-	}
-
-	if ( period < pElasticity.size() ) {
-		XMLWriteElement( pElasticity[ period ], "pElasticity", out );
-	}
-	else {
-		XMLWriteElement( 0, "pElasticity", out );
-	}
-	if ( period < aeei.size() ) {
-		XMLWriteElement( aeei[ period ], "aeei", out );
-	}
-	else {
-		XMLWriteElement( 0, "aeei", out );
-	}
+	XMLWriteElement( fe_cons[ period ], "fe_cons", out );
+	XMLWriteElement( service[ period ], "service", out );
+	XMLWriteElement( iElasticity[ period ], "iElasticity", out );
+	XMLWriteElement( pElasticity[ period ], "pElasticity", out );
+	XMLWriteElement( aeei[ period ], "aeei", out );
 	
 	// Write out the summary
 	// summary[ period ].toDebugXML( period, out );
