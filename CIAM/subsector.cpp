@@ -23,6 +23,7 @@
 #include "xmlHelper.h"
 #include "marketplace.h"
 #include "summary.h"
+#include "Emcoef_ind.h"
 
 using namespace std;
 
@@ -1077,12 +1078,12 @@ void subsector::emission( const int per, const string& prodname ){
 }
 
 //! calculate indirect GHG emissions from annual production of subresource
-void subsector::indemission(const int per) {
+void subsector::indemission(const int per, const vector<Emcoef_ind>& emcoef_ind ) {
     //! \pre per is less than or equal to max period.
     assert( per <= scenario->getModeltime()->getmaxper() );
     summary[per].clearemindmap(); // clear emissions map
     for ( int i=0 ;i<notech; i++ ) {
-        techs[i][per]->indemission();
+        techs[i][per]->indemission( emcoef_ind );
         summary[per].updateemindmap(techs[i][per]->getemindmap());
     }
 }

@@ -20,6 +20,9 @@
 using namespace std;
 using namespace xercesc;
 
+// Forward declaration
+class Emcoef_ind;
+
 /*! 
 * \ingroup CIAM
 * \brief The Ghg class describes a single gas with
@@ -54,7 +57,7 @@ public:
 	double taxcnvrt( const string& fuelname ) const; // conversion for carbon tax to energy equivalent
 	void calc_emiss( const string& fuelname, const double input, const string& prodname, const double output ); // calculate emissions
 	void calc_emiss2( const double activity, const double gamma, const double* cntl); // calculate emissions alternative
-	void calc_emiss_ind( const double input, const string& fuelname ); // calculate ind emissions
+	void calc_emiss_ind( const double input, const string& fuelname, const vector<Emcoef_ind>& emcoef_ind  ); // calculate ind emissions
 	string getname() const; // return name of ghg
 	string getunit() const; // return unit for ghg
 	double getemission() const; // return ghg emissions

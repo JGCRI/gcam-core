@@ -25,7 +25,7 @@ using namespace xercesc;
 
 // Forward declaration
 class Ghg;
-
+class Emcoef_ind;
 /*! 
 * \ingroup CIAM
 * \brief This technology class is based on the MiniCAM description of technology.
@@ -95,7 +95,7 @@ public:
     // calculates fuel input and technology output
     virtual void production(const string& regionName,const string& prodName,double dmd,const int per);
     void emission( const string prodname); // calculates GHG emissions from technology
-    void indemission(void); // calculates indirect GHG emissions from technology use
+    void indemission( const vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
     void printTech( const string& outFile = "" ) const; // write technology information to file or screen
     // ****** return names and values ******
     string getName() const; // return technology name

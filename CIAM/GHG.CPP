@@ -25,9 +25,6 @@ extern map<string, double> co2coefpri;
 // map of CO2 emissions coefficient for all fossil fuels
 extern map<string, double> co2coefall;
 // indirect CO2 emissions coefficient
-// coefficients for secondary energy only
-extern map<string, double> co2coefind; 
-extern vector<Emcoef_ind> emcoef_ind;
 
 Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, const double gwpIn, const double emissionIn ){
 	name = nameIn;
@@ -221,7 +218,7 @@ void Ghg::calc_emiss2( const double activity, const double gamma, const double* 
 	
 //! calculates emissions associated with the use of secondary energy
 /*! get indirect emissions coefficient from map object */
-void Ghg::calc_emiss_ind( const double input, const string& fuelname ) {
+void Ghg::calc_emiss_ind( const double input, const string& fuelname, const vector<Emcoef_ind>& emcoef_ind ) {
 	emiss_ind = 0; // to initialize
 	for (int i=0;i< static_cast<int>( emcoef_ind.size() );i++) {
 		if (emcoef_ind[i].getName() == fuelname) { // sector name

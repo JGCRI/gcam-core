@@ -21,6 +21,7 @@
 #include "xmlHelper.h"
 #include "modeltime.h"
 #include "Marketplace.h"
+#include "Emcoef_ind.h"
 
 using namespace std;
 
@@ -483,11 +484,11 @@ void technology::emission( const string prodname ) {
 }
 
 //! calculate indirect GHG emissions from technology use
-void technology::indemission()
+void technology::indemission( const vector<Emcoef_ind>& emcoef_ind )
 {
     emindmap.clear(); // clear emissions map
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
-        ghg[i]->calc_emiss_ind(input,fuelname);
+        ghg[i]->calc_emiss_ind(input,fuelname, emcoef_ind );
         emindmap[ghg[i]->getname()] = ghg[i]->getemiss_ind();
     }
 }

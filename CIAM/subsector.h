@@ -26,6 +26,7 @@ using namespace xercesc;
 class Summary;
 class technology;
 class hydro_tech;
+class Emcoef_ind;
 
 /*! 
 * \ingroup CIAM
@@ -108,7 +109,7 @@ public:
     void MCoutputC( const string& regionName, const string& sectorName ) const; 
     int shownotech() const;
     void emission( const int period, const string& productName );
-    void indemission( const int period);
+    void indemission( const int period, const vector<Emcoef_ind>& emcoef_ind );
     double showCO2( const int period ) const;
     double showCO2ind( const int period ) const; // returns indirect CO2 emissions
     double showCO2fuel( const int period ) const; // returns equivalent CO2 emissions from fuel input
