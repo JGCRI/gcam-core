@@ -63,25 +63,15 @@ Logger::Logger( const string& fileNameIn ) : ostream( &underStream ) {
 
 	// Initialize the attributes to default values.
 	fileName = fileNameIn;
-
 	minLogWarningLevel = 0;
-	
 	minToScreenWarningLevel = 5;
-
 	logTabSize = 3;
-	
 	printLogNest = false;
-	
 	printLogWarningLevel = false;
-
 	printLogTimeStamp = false;
-
 	printLogDateStamp = false;
-
 	printLogLineNumber = false;
-
 	printLogFileName = false;
-
 	printLogFullPath = false;
 }
 
@@ -133,7 +123,6 @@ int Logger::receiveCharFromUnderStream( int ch ) {
     else {
         buf << (char)ch;
     }
-
 	return ch;
 }
 
@@ -345,18 +334,18 @@ void Logger::toDebugXML( ostream& out, Tabs* tabs ) const {
 void Logger::parseHeader( string& headerIn ) {
 	
 	static const basic_string <char>::size_type npos = static_cast<char>( -1 );
-	int offset = 0;
-	int leftBracket = 0;
-	int rightBracket = 0;
+	unsigned int offset = 0;
+	unsigned int leftBracket = 0;
+	unsigned int rightBracket = 0;
 	string command;
 	string toReplaceString;
 	string replaceWithString;
 
 	// Loop through the string.
-	while( offset < static_cast<int>( headerIn.size() ) && offset != npos ){
+	while( offset < headerIn.size() && offset != npos ){
 		
 		// Find the first left bracket.
-		leftBracket = static_cast<int>( headerIn.find_first_of( "{", offset ) );
+		leftBracket = static_cast<unsigned int>( headerIn.find_first_of( "{", offset ) );
 		offset = leftBracket;
 
 		// Exit if we do not find it.
@@ -364,7 +353,7 @@ void Logger::parseHeader( string& headerIn ) {
 			break;
 		}
 		
-		rightBracket = static_cast<int>( headerIn.find_first_of( "}", offset ) );
+		rightBracket = static_cast<unsigned int>( headerIn.find_first_of( "}", offset ) );
 		offset = rightBracket;
 
 		// Exit if we do not find it.

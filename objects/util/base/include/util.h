@@ -41,7 +41,8 @@ namespace util {
     template <class K, class V>
     const V searchForValue( const std::map<K,V>& currMap, const K& key ){
         V retValue;
-        std::map<K,V>::const_iterator iter = currMap.find( key );
+        typedef typename std::map<K,V>::const_iterator CMapIterator;
+        CMapIterator iter = currMap.find( key );
         if( iter != currMap.end() ){
             retValue = iter->second;
         } else {
@@ -140,10 +141,10 @@ namespace util {
     * \param stringIn The string in which spaces should be replaced by underscores.
     */
     inline void replaceSpaces( std::string& stringIn ) {
-        static const std::basic_string<char>::size_type npos = -1;
+        // static const std::basic_string<char>::size_type npos = -1;
         std::basic_string <char>::size_type index;
 
-        while( stringIn.find_first_of( " " ) != npos ) {
+        while( stringIn.find_first_of( " " ) != std::basic_string<char>::npos ) {
             index = stringIn.find_first_of( " " );
             stringIn.replace( index, 1, "_" );
         }
@@ -200,7 +201,7 @@ namespace util {
    */
    template<class T, class U>
        const std::vector<T> getKeys( const std::map<T,U> aMap ){
-        typedef std::map<T,U>::const_iterator ConstMapIterator;
+        typedef typename std::map<T,U>::const_iterator ConstMapIterator;
         std::vector<T> keys;
         for( ConstMapIterator mapIter = aMap.begin(); mapIter != aMap.end(); mapIter++ ){
             keys.push_back( ( *mapIter ).first );
@@ -216,7 +217,7 @@ namespace util {
    */
    template<class T, class U>
         const std::vector<U> getValues( const std::map<T,U> aMap ){
-        typedef std::map<T,U>::const_iterator ConstMapIterator;
+        typedef typename std::map<T,U>::const_iterator ConstMapIterator;
         std::vector<U> values;
         for( ConstMapIterator mapIter = aMap.begin(); mapIter != aMap.end(); mapIter++ ){
             values.push_back( ( *mapIter ).second );

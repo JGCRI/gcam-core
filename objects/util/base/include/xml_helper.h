@@ -639,7 +639,8 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
 
     // First determine if the node exists. 
     const std::string objName = XMLHelper<std::string>::getAttrString( node, "name" );
-    std::map<std::string,int>::const_iterator iter = corrMap.find( objName );
+    typedef std::map<std::string,int> NameMap;
+    NameMap::const_iterator iter = corrMap.find( objName );
    
     // Determine if we should be deleting a node. 
     bool shouldDelete = XMLHelper<bool>::getAttr( node, "delete" );
@@ -656,7 +657,8 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
             std::cout << "Deleting node " << objName << endl;
             
             // Create an iterator which points at the location which should be deleted.
-            std::vector<U>::iterator delIter = insertToVector.begin() + iter->second;
+            typedef typename std::vector<U>::iterator VectorIterator;
+            VectorIterator delIter = insertToVector.begin() + iter->second;
             // Clean up the memory the vector points at.
             delete *delIter;
             // Remove the pointer from the vector. 

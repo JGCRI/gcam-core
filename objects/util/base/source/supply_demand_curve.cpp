@@ -77,7 +77,7 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
     marketplace->storeinfo( period );
 
     // get the base price of the market.
-    const double basePrice = market->getRawPrice();
+    // const double basePrice = market->getRawPrice();
 
     // Save the original point as price 1.
     // ( *iter )->createSDPoint();

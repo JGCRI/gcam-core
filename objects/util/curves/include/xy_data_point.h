@@ -35,7 +35,7 @@ class XYDataPoint: public DataPoint {
         static const std::string& getXMLNameStatic();
         bool operator==( const XYDataPoint& rhs ) const;
         bool operator!=( const XYDataPoint& rhs ) const;
-	    DataPoint* XYDataPoint::clone() const;
+	    DataPoint* clone() const;
         double getX() const;
         double getY() const;
         void setX( const double xValue );

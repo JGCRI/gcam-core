@@ -119,7 +119,6 @@ void tranTechnology::production(const string& regionName,const string& prodName,
                                 double dmd, const GDP* gdp, const int per ) {
     string hydro = "hydro";
     Marketplace* marketplace = scenario->getMarketplace();
-    const Modeltime* modeltime = scenario->getModeltime();
     
     // dmd is total subsector demand
     if(name != hydro) {
