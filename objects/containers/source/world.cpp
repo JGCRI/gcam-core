@@ -119,17 +119,15 @@ void World::completeInit() {
 
 //! Initialize the AgLu model.
 void World::initAgLu() {
-
     cout << "Initializing agLU" << endl;
     double prices[ 14 ][ 12 ]; 
 
     vector<double> tempVec( 12 );
 
-#if(__HAVE_FORTRAN__)		
-    AG2INITC( prices ); // not implimented for non-PC's at this time
+#if(__HAVE_FORTRAN__)
+    AG2INITC( prices );
 #endif
-
-    for ( unsigned int j = 0; j < regions.size(); j++ ) {
+    for ( int j = 0; j < static_cast<int>( regions.size() ); j++ ) {
         for ( int k = 0; k < AgSector::getNumAgMarkets(); k++ ) {
             tempVec[ k ] = prices[ j ][ k ];
         }
