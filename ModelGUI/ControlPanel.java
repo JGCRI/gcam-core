@@ -235,10 +235,14 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jBbrowseActionPerformed
     
     private void saveChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        AdapterNode currNode = (AdapterNode)tree.getLastSelectedPathComponent();
-        String newVal = valuePane.getText();
+        //AdapterNode currNode = (AdapterNode)tree.getLastSelectedPathComponent();
+        //String newVal = valuePane.getText();
         
-        currNode.setText(newVal);
+        //currNode.setText(newVal);
+        
+        if (tableExistsFlag) {
+            System.out.println("would save");
+        }
     }
     
     private void saveAllButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,9 +251,8 @@ public class ControlPanel extends javax.swing.JFrame {
         int returnVal = fc.showSaveDialog(this.getContentPane());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
-            //jTFfileName.setText(file.getAbsolutePath());
             try {
-                outputter.output(document, new FileOutputStream("C:/test1.xml"));
+                outputter.output(document, new FileOutputStream(file));
             }
             catch (Exception e) {
                 System.err.println(e);
@@ -562,19 +565,20 @@ public class ControlPanel extends javax.swing.JFrame {
         Component[] comps = parent.getComponents();
         boolean remove = false;
         
+System.out.println("Used to have " + parent.getComponentCount() + " components");
+        
         //remove components from the panel
         for (int j = 0; j < comps.length; j++) {
-//System.out.println(j + "-component: " + comps[j]);
             if (remove) {
-//System.out.println("removing component # " + j + " of " + comps.length);
                 parent.remove(comps[j]);
             }
             if (!remove && curr.equals(comps[j])) {
                 remove = true;
-//System.out.println("curr turned out to equal comps-" + j);
             }
         }
-        
+
+System.out.println("Now have " + parent.getComponentCount() + " components");     
+
         repaint();
         
         //remove components from the control arrays (add one because indexes start at 0)
@@ -620,6 +624,10 @@ public class ControlPanel extends javax.swing.JFrame {
                 JComboBox temp = (JComboBox)e.getSource();
                 String name = temp.getSelectedItem().toString();
                 int index = queryControls.indexOf(temp);
+
+System.out.println("index = " + index);
+System.out.println("roots: " + rootPointers.toString());
+System.out.println("conponents: " + queryControls.toString());
                 
                 //check in corresponding node has an attribute name
                 currRootPointer = (AdapterNode)rootPointers.elementAt(index);
@@ -671,7 +679,7 @@ public class ControlPanel extends javax.swing.JFrame {
         
         JComboBox comboBox;
         
-        //check if combo box already exists
+        //check if combo box already exists and remove all of its successors if necessary
         if (attributeControls.size() > index) {
             removeComponents(queryPanel, predecessor, index);
         } else {
@@ -688,6 +696,9 @@ public class ControlPanel extends javax.swing.JFrame {
                 JComboBox temp = (JComboBox)e.getSource();
                 String attribVal = temp.getSelectedItem().toString();
                 int index = attributeControls.indexOf(temp);
+                
+System.out.println("index = " + index);
+System.out.println("roots: " + rootPointers.toString());
                 
                 //get the name of that node
                 temp = (JComboBox)queryControls.elementAt(index);
@@ -1159,6 +1170,7 @@ public class ControlPanel extends javax.swing.JFrame {
             TableViewModel model = new TableViewModel(values, header, lefter, showNames);
             table = new JTable(model);
             table.setCellSelectionEnabled(true);
+            table.setTransferHandler(new TableTransferHandler());
 
             //use panels to place the table appropriately
             JPanel tempPanel = new JPanel();
