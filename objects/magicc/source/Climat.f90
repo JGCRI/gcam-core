@@ -1,4 +1,3 @@
-
 ! CLIMAT.FOR
 !
 ! Revision history:
@@ -491,8 +490,8 @@
 !  READ CO2 CONCENTRATION HISTORY
 !
       lun = 42   ! spare logical unit no.
-      ! open(unit=lun,file='..\magicc2\co2hist.IN',status='OLD')
-	  open(unit=lun,file='..\cvs\objects\magicc\inputs\CO2hist.IN',status='OLD')
+      ! open(unit=lun,file='..\\magicc2\\co2hist.IN',status='OLD')
+	  open(unit=lun,file='..\\cvs\\objects\\magicc\\inputs\\CO2hist.IN',status='OLD')
       DO ICO2=0,226
       READ(LUN,4444)COBS(ICO2)
       END DO
@@ -503,7 +502,7 @@
 !  READ PARAMETERS FROM MAG3GAS.CFG
 !
       lun = 42   ! spare logical unit no.
-      open(unit=lun,file='..\cvs\objects\magicc\inputs\MAG3GAS.CFG',status='OLD')
+      open(unit=lun,file='..\\cvs\\objects\\magicc\\inputs\\MAG3GAS.CFG',status='OLD')
 !
         READ(LUN,4240) LEVCO2
         READ(LUN,4241) DUSER
@@ -534,7 +533,7 @@
 !  READ PARAMETERS FROM MAG3MOD.CFG
 !
       lun = 42   ! spare logical unit no.
-      open(unit=lun,file='..\cvs\objects\magicc\inputs\MAG3MOD.CFG',status='OLD')
+      open(unit=lun,file='..\\cvs\\objects\\magicc\\inputs\\MAG3MOD.CFG',status='OLD')
 !
         READ(LUN,4240) MODEL
         READ(LUN,4241) ADJUST
@@ -590,7 +589,7 @@
 !  READ PARAMETERS FROM MAG3RUN.CFG
 !
       lun = 42   ! spare logical unit no.
-      open(unit=lun,file='..\cvs\objects\magicc\inputs\MAG3RUN.CFG',status='OLD')
+      open(unit=lun,file='..\\cvs\\objects\\magicc\\inputs\\MAG3RUN.CFG',status='OLD')
 !
         READ(LUN,4240) ISCENGEN
         READ(LUN,4240) KYRREF
@@ -606,7 +605,7 @@
 !  READ PARAMETERS FROM MAG3XTRA.CFG
 !
       lun = 42   ! spare logical unit no.
-      open(unit=lun,file='..\cvs\objects\magicc\inputs\MAG3XTRA.CFG',status='OLD')
+      open(unit=lun,file='..\\cvs\\objects\\magicc\\inputs\\MAG3XTRA.CFG',status='OLD')
 !
         READ(LUN,4240) IOLDTZ
         READ(LUN,4241) DT
@@ -664,7 +663,7 @@
 !
 !  OPEN MAIN OUTPUT FILE (MAG.OUT).
 !
-      OPEN(UNIT=8,FILE='..\cvs\objects\magicc\inputs\MAG.OUT',STATUS='UNKNOWN')
+      OPEN(UNIT=8,FILE='..\\cvs\\objects\\magicc\\inputs\\MAG.OUT',STATUS='UNKNOWN')
 !
 !  ************************************************************
 !
@@ -677,7 +676,7 @@
 !  THE SECOND COLUMN CONTAINS THE STRATO3 FORCING
 !
       lun = 42   ! spare logical unit no.
-      open(unit=lun,file='..\cvs\objects\magicc\inputs\QHALOS.IN',status='OLD')
+      open(unit=lun,file='..\\cvs\\objects\\magicc\\inputs\\QHALOS.IN',status='OLD')
 !
       READ(LUN,4446)IHALO1
 !
@@ -1070,9 +1069,10 @@
 !  FIRST PRINT OUTS TO MAG.OUT
 !  PRINT OUT DATE HEADER (WILL THIS WORK AFTER Y2K ???)
 !
-      call getdat(myr,imon,iday)
-      write(8,87) mnem,iday,month(imon),myr
-  87  format(' Emissions profile: ',a20,20x,' Date: ',i2,1x,a3,1x,i4)
+!      call getdat(myr,imon,iday)
+!
+!     write(8,87) mnem,iday,month(imon),myr
+!  87  format(' Emissions profile: ',a20,20x,' Date: ',i2,1x,a3,1x,i4)
 !
 !  PRINT OUT CO2, CH4 AND SO4 AEROSOL CHOICES
 !
@@ -1793,7 +1793,7 @@
 !
 !  WRITE TEMPERATURES TO MAG DISPLAY FILE
 !
-      open(unit=9,file='..\cvs\objects\magicc\inputs\temps.dis',status='UNKNOWN')
+      open(unit=9,file='..\\cvs\\objects\\magicc\\inputs\\temps.dis',status='UNKNOWN')
 !
         WRITE (9,213)
 !
@@ -1817,7 +1817,7 @@
 !
 !  WRITE SEALEVEL CHANGES TO MAG DISPLAY FILE
 !
-      open(unit=9,file='..\cvs\objects\magicc\inputs\sealev.dis',status='UNKNOWN')
+      open(unit=9,file='..\\cvs\\objects\\magicc\\inputs\\sealev.dis',status='UNKNOWN')
 !
         WRITE (9,214)
 !
@@ -1871,7 +1871,7 @@
 !
 !  WRITE EMISSIONS TO MAG DISPLAY FILE
 !
-      open(unit=9,file='..\cvs\objects\magicc\inputs\emiss.dis',status='UNKNOWN')
+      open(unit=9,file='..\\cvs\\objects\\magicc\\inputs\\emiss.dis',status='UNKNOWN')
 !
         WRITE (9,212)
 !
@@ -2009,7 +2009,7 @@
 !
 !  WRITE CONCENTRATIONS TO MAG DISPLAY FILE
 !
-      open(unit=9,file='..\cvs\objects\magicc\inputs\concs.dis',status='UNKNOWN')
+      open(unit=9,file='..\\cvs\\objects\\magicc\\inputs\\concs.dis',status='UNKNOWN')
 !
         WRITE (9,211)
 !
@@ -2107,7 +2107,7 @@
 !
 !  WRITE FORCING CHANGES FROM MID-1990 TO MAG DISPLAY FILE
 !
-      open(unit=9,file='..\cvs\objects\magicc\inputs\forcings.dis',status='UNKNOWN')
+      open(unit=9,file="..\\cvs\\objects\\magicc\\inputs\\forcings.dis",status='UNKNOWN')
 !
         WRITE (9,215)
 !
@@ -2412,9 +2412,9 @@
  806  FORMAT (1X,'METHANE OXIDATION TERM INCLUDED IN EMISSIONS')
  807  FORMAT (1X,'METHANE OXIDATION TERM NOT INCLUDED IN EMISSIONS')
  808  FORMAT (/1X,'*** ERROR : D80SIN SET TOO LOW AT',F7.3, &
-      ' : RESET AT'F7.3,' ***')
+      ' : RESET AT,F7.3, ***')
  809  FORMAT (/1X,'*** ERROR : D80SIN SET TOO HIGH AT',F7.3, &
-      ' : RESET AT'F7.3,' ***')
+      ' : RESET AT,F7.3, ***')
  810  FORMAT (/77X,'ENDYEAR')
  811  FORMAT (/77X,'MIDYEAR')
  812  FORMAT (1X,'YEAR ETOTAL  EFOSS CH4OXN   NETD GROSSD  OFLUX', &
@@ -3404,7 +3404,7 @@
       IF(KC.GT.KP)CALL TSLCALC(KC)
 !
       IF(T.GE.TEND)RETURN
-      GO TO  11
+      GOTO  11
       END
 !
 !  *******************************************************************
@@ -4868,7 +4868,7 @@
 !
 !  TEST DIFF TO DECIDE WHETHER TO END ITERATION LOOP
 !
-      IF(ABS(DIFF(I)).LT.DIFFLIM)GO TO 2
+      IF(ABS(DIFF(I)).LT.DIFFLIM) GOTO 2
 !
       IF(I.GE.2)THEN
         DD=DIFF(I)*DIFF(I-1)
