@@ -13,10 +13,7 @@ public class ComboTableModel extends BaseTableModel{
 	// new stuff
 	Vector TreeMapVector = new Vector();
 	Vector leftSideVector = new Vector();
-	Vector leftHeaderVector = new Vector();
-
-	Vector activeData;
-	Vector activeLeft;
+	Vector leftHeaderVector;
 
 	Vector indCol;
 	Vector indRow;
@@ -28,19 +25,32 @@ public class ComboTableModel extends BaseTableModel{
 
 	public ComboTableModel(TreePath tp, Document doc, JFrame parentFrame) {
 		super(tp, doc, parentFrame);
+		leftHeaderVector = null;
 		wild = chooseTableHeaders(tp, parentFrame);
-			wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
-			wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
+		wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
+		wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
 		buildTable(treePathtoXPath(tp, doc.getDocumentElement(), 0));
-		activeData = new Vector( leftSideVector.size() * indRow.size() );
-		activeLeft = new Vector( leftSideVector.size() * indRow.size() );
+		activeRows = new Vector( leftSideVector.size() * indRow.size() );
 		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
-			activeData.add(new Integer(i));
-			activeLeft.add(new Integer(i));
+			activeRows.add(new Integer(i));
 		}
 		indCol.add(0, "");
 	}
 	public void flip(int row, int col) {
+		Vector tempArr = indCol;
+		indCol = indRow;
+		indRow = tempArr;
+		indRow.remove(0);
+		String tempStr = ind1Name;
+		ind1Name = ind2Name;
+		ind2Name= tempStr;
+		indCol.add(0, "");
+		flipped = !flipped;
+		activeRows = new Vector( leftSideVector.size() * indRow.size() );
+		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
+			activeRows.add(new Integer(i));
+		}
+		fireTableStructureChanged();
 				//((NewDataTableModel)((JTable)((JScrollPane)getValueAt(row, col)).getViewport().getView()).getModel()).flip(row, col);
 	}
 
@@ -102,7 +112,7 @@ public class ComboTableModel extends BaseTableModel{
 		  return tempMap;
 	  }
 	  if(currNode.hasAttributes() && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
-		String attr = currNode.getNodeName()+":"+getOneAttrVal(currNode);
+		String attr = currNode.getNodeName()+"@"+getOneAttrVal(currNode);
 		if(!tempMap.containsKey(attr)) {
 			tempMap.put(attr, new TreeMap());
 		}
@@ -113,18 +123,15 @@ public class ComboTableModel extends BaseTableModel{
 
   private void recAddTables(TreeMap dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String title) {
 	Iterator it = dataTree.entrySet().iterator();
-	while(it.hasNext()) {
-		
+	while(it.hasNext()) {	
 		Map.Entry me = (Map.Entry)it.next();
-		System.out.println("me is " + me);
 		if(me.getValue() instanceof Node) {
 
-			System.out.println( "printing out treemap !!!!!!!!!!!!! " + parent );
 			TreeMapVector.add( (TreeMap)parent.getValue() );
 			
 			// create a left side 2d vector, add it to LeftSideVector
 			
-			String lineToParse = title+'/'+(String)parent.getKey();
+			String lineToParse = title+'/';
 			System.out.println("about to parse " + lineToParse);
 			
 			// example:		/populationSGMRate:year=1985/gender:type=female/
@@ -135,24 +142,35 @@ public class ComboTableModel extends BaseTableModel{
 			StringTokenizer st = new StringTokenizer( lineToParse, "/", false);
 			int numberOfThem = st.countTokens();
 			
-			Vector onerow = new Vector();
+			Vector onerow = new Vector( numberOfThem );
+			Vector tempVector = new Vector();
 			while( st.hasMoreTokens() ){
-				onerow = new Vector( numberOfThem );
+				//onerow = new Vector( numberOfThem );
 				String allNodeInfo = st.nextToken(); // first one
-				// 		populationSGMRate:year=1985
-				StringTokenizer innerSt = new StringTokenizer( allNodeInfo, ":", false);
+				// 		populationSGMRate@year=1985
+				StringTokenizer innerSt = new StringTokenizer( allNodeInfo, "@", false);
 				if( innerSt.countTokens() != 2 ){
 					System.out.println("BIG PROBLEM, COUNT TOKENS ISN'T 2!!!!!!!!!!");
 					return;
 				}
 				String firstHalf = innerSt.nextToken(); //	populationSGMRate
-				leftHeaderVector.add( firstHalf );
+				if(leftHeaderVector == null){
+					tempVector.add( firstHalf );
+				}
 				String secHalf = innerSt.nextToken(); //	year=1985
 				onerow.add( secHalf );
 			}
+			if(leftHeaderVector == null) {
+				leftHeaderVector = tempVector;
+			}
+			for(int j=0; j < onerow.size(); j++) {
+				System.out.print("onoerow: "+onerow.get(j)+" ");
+			}
+			System.out.println();
 			if( ! onerow.isEmpty() ){
 				leftSideVector.add( onerow );
 			}
+			return;
 		}else{
 			recAddTables((TreeMap)me.getValue(), me, regions, years, title+'/'+(String)me.getKey());
 		}
@@ -189,9 +207,9 @@ public class ComboTableModel extends BaseTableModel{
   
   private String getKey (int row, int col) {
 	  if(flipped) {
-		  return (String)indRow.get(row % (indRow.size()-1))+";"+(String)indCol.get(col - leftHeaderVector.size()-1);
+		  return (String)indRow.get(row % (indRow.size()))+";"+(String)indCol.get(col - leftHeaderVector.size());
 	  }
-	  return (String)indCol.get(col- leftHeaderVector.size()-1)+";"+(String)indRow.get(row % (indRow.size()-1));
+	  return (String)indCol.get(col- leftHeaderVector.size())+";"+(String)indRow.get(row % (indRow.size()));
   }
 
   
@@ -199,14 +217,29 @@ public class ComboTableModel extends BaseTableModel{
 		return leftHeaderVector.size() + indCol.size();
 	}
 	public int getRowCount() {
-		return activeData.size();
+		return activeRows.size();
 	}
 	public Object getValueAt(int row, int col) {
+		//try{
+		//System.out.println( "row and col are " + row + " " + col );
 		if( col < leftHeaderVector.size() ){
-			return ((Vector)activeLeft.get( row % (indRow.size()-1) )).get( col );
+			//System.out.println( "part1 " + ((Integer)activeLeft.get( row )).intValue() / (indRow.size()));
+			//System.out.println("part2 "+((Vector)leftSideVector.get( ((Integer)activeLeft.get( row )).intValue()/ (indRow.size()) )).get(col));
+			return ((Vector)leftSideVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( col );
+		}else if( col == leftHeaderVector.size() ){
+			return indRow.get( ((Integer)activeRows.get( row )).intValue() % (indRow.size()) );
 		}else{
-			return ((TreeMap)activeData.get( row % (indRow.size()-1) )).get( getKey( row, col ) );
+			
+			//System.out.println( "2ndpart1 " + ((Integer)activeLeft.get( row )).intValue() / (indRow.size()));
+			//System.out.println("2ndpart2 "+((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) ));
+			return ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue();
 		}
+		/*
+	} catch(Exception e) {
+		System.out.println( "row and col are " + row + " " + col );
+	}
+	return null;*/
+		
 
 		//return tables.get(((Integer)activeRows.get(row)).intValue());
 	}
@@ -214,7 +247,7 @@ public class ComboTableModel extends BaseTableModel{
 		if( col < leftHeaderVector.size() ){
 			return (String)leftHeaderVector.get( col );
 		}else{
-			return (String)indCol.get( col );
+			return (String)indCol.get( col - leftHeaderVector.size() );
 		}
 	}
 	public boolean isCellEditable(int row, int col) {
@@ -226,40 +259,38 @@ public class ComboTableModel extends BaseTableModel{
 	}
 
 	protected void doFilter(Vector possibleFilters) {
-		String regex = "^/";
-		for(int i = possibleFilters.size()-1; i >= 0; i--) {
-			Iterator it = ((HashMap)tableFilterMaps.get(possibleFilters.get(i))).entrySet().iterator();
-			if(it.hasNext()) {
-				regex += (String)possibleFilters.get(i)+":(";
-				while(it.hasNext()) {
-					Map.Entry me = (Map.Entry)it.next();
-					if(((Boolean)me.getValue()).booleanValue()) {
-						regex += me.getKey()+"|";
+			activeRows = new Vector();
+			for (int i = 0; i < getColumnCount(); i++) {
+				activeRows.addElement(new Integer(i));
+			}
+			Integer rowPos = new Integer(-1);
+
+			for (int i = 0; i < possibleFilters.size(); i++) {
+				if (((String)possibleFilters.get(i)).equals("")) {
+					continue;
+				}
+				System.out.println(" table filter maps " + tableFilterMaps.get((String)possibleFilters.get(i)));
+				currKeys = (String[])((Map)tableFilterMaps.get((String)possibleFilters.get(i))).keySet().toArray(new String[0]);
+				//for (Iterator it = activeRows.iterator(); it.hasNext(); rowPos = (Integer)it.next()) {
+				Iterator it = activeRows.iterator();
+				while (it.hasNext()) {
+					rowPos = (Integer)it.next();
+					for (int j = 0; j < currKeys.length; j++) {
+						//System.out.println("At row: "+rowPos.intValue()+" with key: "+currKeys[j]);
+						if (!((Boolean)((Map)tableFilterMaps.get((String)possibleFilters.get(i))).get(currKeys[j])).booleanValue() && 
+							((String)((Vector)leftSideVector.get(rowPos.intValue() / (indRow.size()) )).get(i)).equals(currKeys[j])) {
+							//System.out.println("Going to Remove "+rowPos.intValue());
+							it.remove();
+							break;
+						}
 					}
 				}
-				if(regex.endsWith("|")) {
-					regex = regex.substring(0,regex.length()-1)+")/";
-				} else {
-					regex += ")/";
-				}
-			} else {
-				regex += (String)possibleFilters.get(i)+"/";
 			}
-		}
-		regex += "$";
-		Vector tempActive = new Vector();
-		for(int i = 0; i < tables.size(); i+=2) {
-			if(((String)tables.get(i)).matches(regex)) {
-				tempActive.add(new Integer(i));
-				tempActive.add(new Integer(i+1));
-			}
-		}
-		activeRows = tempActive;
 	}
 	
 	public void setValueAt(Object val, int row, int col) {
 		
-		TreeMap data = ((TreeMap)TreeMapVector.get( row % (indRow.size()-1)));
+		TreeMap data = ((TreeMap)TreeMapVector.get( row / (indRow.size())));
 
 		Node n = (Node)data.get(getKey(row,col));
 		if( n != null ){

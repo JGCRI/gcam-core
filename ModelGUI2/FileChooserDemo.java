@@ -1024,7 +1024,7 @@ public class FileChooserDemo extends JFrame
 	// specify output formating properties
 	OutputFormat format = new OutputFormat(theDoc);
 	format.setEncoding("UTF-8");
-	format.setLineSeparator("\n");
+	format.setLineSeparator("\r\n");
 	format.setIndenting(true);
 	format.setIndent(3);
 	format.setLineWidth(0);
