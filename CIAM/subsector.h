@@ -13,12 +13,13 @@
 
 #include <vector>
 #include <string>
-#include "technology.h"
-#include "summary.h"
+#include <map>
+
 // xerces xml headers
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/util/XMLString.hpp>
 
+using namespace std;
 using namespace xercesc;
 
 // Forward declarations

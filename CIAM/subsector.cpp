@@ -17,11 +17,12 @@
 #include <vector>
 
 #include "subsector.h"
+#include "technology.h"
 #include "scenario.h"
-#include "market.h"
 #include "modeltime.h"
 #include "xmlHelper.h"
 #include "marketplace.h"
+#include "summary.h"
 
 using namespace std;
 
@@ -259,11 +260,9 @@ void subsector::toDebugXML( const int period, ostream& out ) const {
 	
 	// Write the data for the current period within the vector.
 	XMLWriteElement( capLimit[ period ], "capLimit", out );
-	XMLWriteElement( shrwts[ period ], "sharewts", out );
+	XMLWriteElement( shrwts[ period ], "sharewt", out );
 	XMLWriteElement( lexp[ period ], "lexp", out );
-	if ( ! fuelPrefElasticity.empty() ) {
-		XMLWriteElement( fuelPrefElasticity[ period ], "fuelprefElasticity", out );
-	}
+	XMLWriteElement( fuelPrefElasticity[ period ], "fuelprefElasticity", out );
 	XMLWriteElement( share[ period ], "share", out );
 	XMLWriteElement( basesharewt, "basesharewt", out );
 	XMLWriteElement( input[ period ], "input", out );
@@ -466,7 +465,7 @@ void subsector::normShare( const double sum, const int per) {
  *
  * \author Steve Smith
  * \warning The routine assumes that shares are already normalized.
- * \param mult Multiplier by which to scale shares of all non-capacity limited sub-sectors
+ * \param multiplier Multiplier by which to scale shares of all non-capacity limited sub-sectors
  * \param per Model period
  */
 void subsector::limitShares( const double multiplier, const int per) {
