@@ -115,6 +115,7 @@
 	IMPLICIT NONE
 
 	INTEGER period, availpd, fullpd, ipoint, numpoints, phasein, zpoint
+	INTEGER tempPeriod
 	REAL*8 curvetax(15), curveredux(15), shiftper, tax
 	REAL*8 curvetaxin(15), curvereduxin(15), gwpadjust, enprdelta, tc1, tc2, taxin
 
@@ -149,8 +150,15 @@
 	! Note that it is not proportional(could of course code it to be proportional but this
 	! seemed better for now so low tax levels don't get moved too much)
 
-	curveredux = 1 - (1-tc2)**(15*(period-2)) * (1-curveredux)
+    ! org version
+	!curveredux = 1 - (1-tc2)**(15*(period-2)) * (1-curveredux)
 
+    ! new version, sjs 11/03. Make relative to 2005 and come in slower.
+    ! The choice of 2.2 as the exponent makes a tc2 of 0.01 reduce the unmitagatable emissions by about 1/2 by 2095
+    tempPeriod = period
+    if (period .lt. 3) tempPeriod = 3    
+	curveredux = 1 - (1-tc2)**((tempPeriod^2.2-3^2.2)) * (1-curveredux)
+    
 	! the next part moves the curve up or down based on the "available" and "full"
 	! period.  In the available period the curve is moved up so that the 0 redux
 	! point coincides with the 0 tax point.  It moves linearly until the full period
