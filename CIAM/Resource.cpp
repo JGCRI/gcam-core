@@ -121,7 +121,7 @@ void Resource::toXML( ostream& out ) const {
    const Modeltime* modeltime = scenario->getModeltime();
    // write the beginning tag.
    Tabs::writeTabs( out );
-   out << "<" << getType() << " name=\"" << name << "\">"<< endl;
+   out << "<" << getXMLType() << " name=\"" << name << "\">"<< endl;
    
    // increase the indent.
    Tabs::increaseIndent();
@@ -147,7 +147,7 @@ void Resource::toXML( ostream& out ) const {
    
    // write the closing tag.
    Tabs::writeTabs( out );
-   out << "</" << getType() << ">" << endl;
+   out << "</" << getXMLType() << ">" << endl;
    
 }
 
@@ -156,7 +156,7 @@ void Resource::toDebugXML( const int period, ostream& out ) const {
    
    // write the beginning tag.
    Tabs::writeTabs( out );
-   out << "<" << getType() << " name=\"" << name << "\">"<< endl;
+   out << "<" << getXMLType() << " name=\"" << name << "\">"<< endl;
    
    // increase the indent.
    Tabs::increaseIndent();
@@ -193,7 +193,7 @@ void Resource::toDebugXML( const int period, ostream& out ) const {
    
    // write the closing tag.
    Tabs::writeTabs( out );
-   out << "</" << getType() << ">" << endl;
+   out << "</" << getXMLType() << ">" << endl;
 }
 
 //! Create markets
@@ -343,8 +343,13 @@ void Resource::MCoutput( const string& regname ) {
 // DepletableResource Class
 // *******************************************************************
 //! Returns the type of the Resource.
-string DepletableResource::getType() const {
+const string DepletableResource::getType() const {
    return "Depletable";
+}
+
+//! Returns the XML type of the Resource.
+const string DepletableResource::getXMLType() const {
+   return "depresource";
 }
 
 //! Performs XML read-in that is specific to this derived class
@@ -370,8 +375,13 @@ void DepletableResource::XMLDerivedClassParse( const string nodeName, const DOMN
 // FixedResource Class
 // *******************************************************************
 //! Returns the type of the Resource.
-string FixedResource::getType() const {
+const string FixedResource::getType() const {
    return "Fixed";
+}
+
+//! Returns the XML type of the Resource.
+const string FixedResource::getXMLType() const {
+   return "fixedresource";
 }
 
 //! Performs XML read-in that is specific to this derived class
@@ -397,8 +407,13 @@ void FixedResource::XMLDerivedClassParse( const string nodeName, const DOMNode* 
 // RenewableResource Class
 // *******************************************************************
 //! Returns the type of the Resource.
-string RenewableResource::getType() const {
+const string RenewableResource::getType() const {
    return "Renewable";
+}
+
+//! Returns the XML type of the Resource.
+const string RenewableResource::getXMLType() const {
+   return "renewresource";
 }
 
 //! Performs XML read-in that is specific to this derived class

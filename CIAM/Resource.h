@@ -41,7 +41,8 @@ protected:
 public:
     Resource(); // default construtor
     virtual ~Resource();
-    virtual string getType() const = 0; // Any one = 0 anywhere makes this an abstract class
+    virtual const string getType() const = 0; // Any one = 0 anywhere makes this an abstract class
+    virtual const string getXMLType() const = 0;
     void clear();
     virtual void XMLParse( const DOMNode* node );
     void completeInit();
@@ -76,7 +77,8 @@ public:
 */
 class DepletableResource: public Resource {
 public: 
-    virtual string getType() const;
+    virtual const string getType() const;
+    virtual const string getXMLType() const;
     virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
 };
 
@@ -89,7 +91,8 @@ public:
 */
 class FixedResource: public Resource {
 public: 
-    virtual string getType() const;
+    virtual const string getType() const;
+    virtual const string getXMLType() const;
     virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
 };
 
@@ -102,7 +105,8 @@ public:
 */
 class RenewableResource: public Resource {
 public: 
-    virtual string getType() const;
+    virtual const string getType() const;
+    virtual const string getXMLType() const;
     virtual void XMLDerivedClassParse( const string nodename, const DOMNode* node );
 };
 
