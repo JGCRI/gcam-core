@@ -2,7 +2,7 @@
 * \file ghg_output.cpp
 * \ingroup CIAM
 * \brief Ghg class source file.
-* \author Sonny Kim
+* \author Steve Smith
 * \date $Date$
 * \version $Revision$
 */
@@ -14,7 +14,7 @@
 
 using namespace std;
 
-//! Calculate Ghg emissions.
+//! Calculate Ghg emissions based on the outptt value. 
 void GhgOutput::calcEmission( const string& regionName, const string& fuelname, const double input, const string& prodname, const double output ) {
 	
 	if ( emissionsWereInput ) {
@@ -30,6 +30,5 @@ void GhgOutput::calcEmission( const string& regionName, const string& fuelname, 
 		emissFuel =  emission;
 	}
 	emissGwp = gwp * emission;
-	
 }
 
