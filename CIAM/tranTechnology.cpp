@@ -141,7 +141,7 @@ void tranTechnology::production(const string& regionName,const string& prodName,
     }
     
     // set demand for fuel in marketplace
-    marketplace->setdemand(fuelname,regionName,input,per);
+    marketplace->addToDemand(fuelname,regionName,input,per);
     
     // total carbon taxes paid for reporting only
     // carbontax and carbontaxpaid is null for technologies that do not consume fossil fuels
@@ -152,7 +152,7 @@ void tranTechnology::production(const string& regionName,const string& prodName,
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
         ghg[i]->calc_emiss(regionName, fuelname,input,prodName,output);
         // set emissions as demand side of gas market
-        marketplace->setdemand(ghg[i]->getname(),regionName,ghg[i]->getemission(),per);		
+        marketplace->addToDemand(ghg[i]->getname(),regionName,ghg[i]->getemission(),per);		
     }
 }
 

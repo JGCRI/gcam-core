@@ -224,9 +224,9 @@ void Scenario::run(){
 	   world->setupCalibrationMarkets();
    }
 
-	marketplace->initXMLPrices(); // initialize prices
-	marketplace->nulldem( per ); // null market demands
-	marketplace->nullsup( per ); // null market supply
+	marketplace->initPrices(); // initialize prices
+	marketplace->nullDemands( per ); // null market demands
+	marketplace->nullSupplies( per ); // null market supply
 	
 	// Write scenario root element for the debugging.
 	toDebugXMLOpen( per, xmlDebugStream );
@@ -256,8 +256,8 @@ void Scenario::run(){
 		sdcurvefile << "Market,Name,Price,Supply,Demand," << endl;
 		
 		// Run the iteration of the model.
-		marketplace->nulldem( per ); // initialize market demand to null
-		marketplace->nullsup( per ); // initialize market supply to null
+		marketplace->nullDemands( per ); // initialize market demand to null
+		marketplace->nullSupplies( per ); // initialize market supply to null
 		marketplace->storeto_last( per ); // save last period's info to stored variables
 		marketplace->init_to_last( per ); // initialize to last period's info
 		world->initCalc( per ); // call to initialize anything that won't change during calc

@@ -292,7 +292,7 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
 void demsector::setMarket( const string& regionName ) {
     Marketplace* marketplace = scenario->getMarketplace();
     
-    if( marketplace->setMarket( regionName, market, name, Marketplace::NORMAL ) ) {
+    if( marketplace->createMarket( regionName, market, name, Marketplace::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, sectorprice );
         /* The above initilaizes prices with any values that are read-in. 
         This only affects the base period, which is not currently solved.

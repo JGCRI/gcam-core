@@ -42,15 +42,15 @@ class Marketplace
    ~Marketplace();
    void solve( const int per );
    void toDebugXML( const int period, std::ostream& out ) const;
-   bool setMarket( const std::string& regionName, const std::string& marketName, const std::string& goodName, const NewMarketType typeIn );
-   void initXMLPrices();
-   void nullprc( const int period );
-   void nulldem( const int period );
-   void nullsup( const int period );
-   void setprice( const std::string& goodName, const std::string& regionName, const double value , const int period );
+   bool createMarket( const std::string& regionName, const std::string& marketName, const std::string& goodName, const NewMarketType typeIn );
+   void initPrices();
+   void nullPrices( const int period );
+   void nullDemands( const int period );
+   void nullSupplies( const int period );
+   void setPrice( const std::string& goodName, const std::string& regionName, const double value , const int period );
    void setPriceVector( const std::string& goodName, const std::string& regionName, const std::vector<double>& prices );
-   void setsupply( const std::string& goodName, const std::string& regionName, const double value, const int period );
-   void setdemand( const std::string& goodName, const std::string& regionName, const double value, const int period );
+   void addToSupply( const std::string& goodName, const std::string& regionName, const double value, const int period );
+   void addToDemand( const std::string& goodName, const std::string& regionName, const double value, const int period );
    double getPrice( const std::string& goodName, const std::string& regionName, const int period ) const;
    double getSupply( const std::string& goodName, const std::string& regionName, const int period ) const;
    double getDemand( const std::string& goodName, const std::string& regionName, const int period ) const;
@@ -71,7 +71,7 @@ private:
    std::map<std::string,int> regionToMarketMap; //!< map of market lookup from good and region names
    Solver* solver; //!< Pointer to a solution mechanism.
    
-   static std::string createMarketKey( const std::string& regionName, const std::string& goodName );
+   static std::string createMarketKey( const std::string& marketName, const std::string& goodName );
    int getMarketNumberFromNameAndGood( const std::string& marketName, const std::string& goodName ) const;
    std::vector< std::pair< std::string, std::string > > getMarketsToSolve( const int period, const bool isNR ) const;
    bool isPriceOrDemandMarket( const std::string& marketName, const std::string& goodName, const int period ) const;

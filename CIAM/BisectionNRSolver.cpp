@@ -224,8 +224,8 @@ int BisectionNRSolver::Bracket( const double solutionTolerance, const double exc
    do {
       
       SolverLibrary::setPricesToMarkets( marketplace, sol, per ); // set new prices
-      marketplace->nulldem( per );	// null demand
-      marketplace->nullsup( per ); // null supply
+      marketplace->nullDemands( per );	// null demand
+      marketplace->nullSupplies( per ); // null supply
       
       world->calc( per ); // call world object to recalculate supply and demand
       
@@ -525,8 +525,8 @@ int BisectionNRSolver::Bisection_all( const double solutionTolerance, const doub
       }
       
       SolverLibrary::setPricesToMarkets( marketplace, sol, per );
-      marketplace->nulldem(per);	// null demand
-      marketplace->nullsup(per); // null supply
+      marketplace->nullDemands(per);	// null demand
+      marketplace->nullSupplies(per); // null supply
       
       world->calc(per); // call world object to recalculate supply and demand
       SolverLibrary::update( marketplace, sol, per );
@@ -747,8 +747,8 @@ int BisectionNRSolver::NR_Ron( const double solutionTolerance, const double exce
       }
       
       SolverLibrary::setPricesToMarkets( marketplace, sol, per );
-      marketplace->nulldem( per ); // null demand
-      marketplace->nullsup( per ); // null supply
+      marketplace->nullDemands( per ); // null demand
+      marketplace->nullSupplies( per ); // null supply
       
       world->calc( per ); // call world object to recalculate supply and demand
       

@@ -437,7 +437,7 @@ void sector::setMarket( const string& regionName ) {
     // name is sector name (name of good supplied or demanded)
     // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
     
-    if( marketplace->setMarket( regionName, market, name, Marketplace::NORMAL ) ) {
+    if( marketplace->createMarket( regionName, market, name, Marketplace::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, sectorprice );
     }
 }

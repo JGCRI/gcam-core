@@ -659,7 +659,7 @@ void Region::setGhgSupply( int per ) {
    for (int i=0;i<noGhg;i++) {
       ghgName = ghgMarket[i]->getName();
       ghgtarget = ghgMarket[i]->getConstraint(per);
-      marketplace->setsupply(ghgName,name,ghgtarget,per);		
+      marketplace->addToSupply(ghgName,name,ghgtarget,per);		
    }
 }
 
@@ -711,7 +711,7 @@ void Region::rscSupply(int per)  {
       resources[i]->annualsupply(per,gnp[per],prev_gdp,price,prev_price);
       
       // set market supply of resources used for solution mechanism
-      marketplace->setsupply(goodName,regionName,resources[i]->getAnnualProd(per),per);
+      marketplace->addToSupply(goodName,regionName,resources[i]->getAnnualProd(per),per);
 
    }
 }
@@ -732,7 +732,7 @@ void Region::finalSupplyPrc(int per) {
       goodPrice = supplySector[ i ]->getPrice( per );
       // set market price of intermediate goods
       // name is region or country name
-      marketplace->setprice( goodName, name, goodPrice, per );
+      marketplace->setPrice( goodName, name, goodPrice, per );
    }
 }
 
@@ -777,7 +777,7 @@ void Region::finalSupply(int per) {
       mrksupply = supplySector[i]->getOutput(per);
       
       // set market supply of intermediate goods
-      marketplace->setsupply(goodName,name,mrksupply,per);
+      marketplace->addToSupply(goodName,name,mrksupply,per);
       
       // update sector input
       // supplySector[ i ]->sumInput( per );
@@ -996,8 +996,8 @@ void Region::calibrateRegion( const bool doCalibrations, const int per ) {
    if( static_cast<int>( calibrationGNPs.size() ) > per && calibrationGNPs[ per ] > 0 ){ 
       const string goodName = "GDP";
       Marketplace* marketplace = scenario->getMarketplace();
-      marketplace->setdemand( goodName, name, calibrationGNPs[ per ], per );
-      marketplace->setsupply( goodName, name, gnpDol[ per ], per );
+      marketplace->addToDemand( goodName, name, calibrationGNPs[ per ], per );
+      marketplace->addToSupply( goodName, name, gnpDol[ per ], per );
       marketplace->setMarketToSolve( goodName, name );
    }
 }

@@ -301,12 +301,12 @@ void AgSector::runModel( const int period, const string& regionName ) {
    
    // set the market supplies and demands.
    for ( vector<string>::iterator k = marketNameVector.begin(); k != marketNameVector.end(); k++ ) {
-      marketplace->setdemand( *k, regionName, demands[ period ][ nameToIndiceMap[ *k ] ], period );
-      marketplace->setsupply( *k, regionName, supplies[ period ][ nameToIndiceMap[ *k ] ], period );
+      marketplace->addToDemand( *k, regionName, demands[ period ][ nameToIndiceMap[ *k ] ], period );
+      marketplace->addToSupply( *k, regionName, supplies[ period ][ nameToIndiceMap[ *k ] ], period );
    }
    
    // set biomass supply
-   marketplace->setsupply( "biomass", regionName, supplies[ period ][ nameToIndiceMap[ "biomass" ] ], period );
+   marketplace->addToSupply( "biomass", regionName, supplies[ period ][ nameToIndiceMap[ "biomass" ] ], period );
    
    delete priceArray;
    delete demandArray;
@@ -330,12 +330,12 @@ void AgSector::setMarket( const string& regionName ) {
    
    // Add all global markets.
    for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end() - 1; i++ ) {
-      marketplace->setMarket( regionName, "global", *i, Marketplace::NORMAL );
+      marketplace->createMarket( regionName, "global", *i, Marketplace::NORMAL );
       marketplace->setMarketToSolve ( *i, regionName );
    }
    
    // Add the regional markets.
-   marketplace->setMarket( regionName, regionName, marketNameVector[ 6 ], Marketplace::NORMAL );
+   marketplace->createMarket( regionName, regionName, marketNameVector[ 6 ], Marketplace::NORMAL );
    marketplace->setMarketToSolve ( marketNameVector[ 6 ], regionName );
    // Initialize prices at a later point.
 }
@@ -354,6 +354,6 @@ void AgSector::initMarketPrices( const string& regionName, const vector<double>&
    
    // Initialize prices.
    for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end(); i++ ) {
-      marketplace->setprice( *i, regionName, pricesIn[ nameToIndiceMap[ *i ] ], 0 );
+      marketplace->setPrice( *i, regionName, pricesIn[ nameToIndiceMap[ *i ] ], 0 );
    }
 }

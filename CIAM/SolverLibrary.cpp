@@ -223,11 +223,13 @@ const vector<double> SolverLibrary::calcSupplyElas( const Marketplace* marketpla
 * <li> Return the partial demand matrices of supply and demand. </li>
 * </ol>
 *
+* \param marketplace The marketplace to perform derivative calculations on.
+* \param world The world object which is used for calls to World::calc
+* \param sol The vector of SolutionInfo objects which store the current prices, supplies and demands. 
 * \param JFDM A matrix of partial derivatives of demands. This matrix is modified by the function and returned by reference.
 * \param JFSM A matrix of partial derivatives of supplies. This matrix is modified by the function and returned by reference.
 * \param worldCalcCount The current number of iterations of World::calc. This value is modified by the function and returned by reference.
 * \param per The current model period.
-* \return void
 * \sa NR_Ron
 */
 void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<SolverLibrary::SolutionInfo>& sol, Matrix& JFDM, Matrix& JFSM, double& worldCalcCount, const int per ) {
@@ -257,8 +259,8 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<
    vector<double> prevDemands( numMarkets, 0.0 );
    
    // clear demands and supplies.
-   marketplace->nulldem( per );
-   marketplace->nullsup( per );
+   marketplace->nullDemands( per );
+   marketplace->nullSupplies( per );
    
    // iterate over regions and calculate additional supplies and demands for each region for the current prices. 
    for ( vector<string>::const_iterator regionIter = regionNames.begin(); regionIter != regionNames.end(); regionIter++ ) {

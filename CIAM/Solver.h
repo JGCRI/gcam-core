@@ -7,9 +7,7 @@
 /*! 
 * \file Solver.h
 * \ingroup CIAM
-* \brief An abstract solver.
-*
-* This is the header file for the solver class.
+* \brief This is the header file for the solver class.
 *
 * \author Josh Lurz
 * \date $Date$
