@@ -987,7 +987,8 @@ public class FileChooserDemo extends JFrame
 	  		if(tables == null) {
 		  		tables = new Vector();
 	  		}
-			tables.add(title+"/"+(String)me.getKey());
+			//tables.add(title+"/"+(String)me.getKey());
+			tables.add(title+"/");
 	  		tables.add(tableView);
 			return;
 		} else {
@@ -996,7 +997,7 @@ public class FileChooserDemo extends JFrame
 	}
   }
 
-  private HashMap filterMaps; // for now HERE
+  private LinkedHashMap filterMaps; // for now HERE
   private void buildRegionYearTable(XPathExpression xpe) {
 	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 	  xpe = null;
@@ -1004,7 +1005,7 @@ public class FileChooserDemo extends JFrame
 	  Object[] regionAndYear;
 	  TreeSet regions = new TreeSet();
 	  TreeSet years = new TreeSet();
-	  filterMaps = new HashMap();
+	  filterMaps = new LinkedHashMap();
 	  //TreeMap data = new TreeMap();
 	  //String old3DVar = null;
 	  TreeMap dataTree = new TreeMap();
@@ -1083,7 +1084,7 @@ public class FileChooserDemo extends JFrame
 	   
   }
 
-  private Object[] getRegionAndYearFromNode(Node n, HashMap filterMaps) {
+  private Object[] getRegionAndYearFromNode(Node n, Map filterMaps) {
 	  /*
 	  Node temp;
 	  String region = null;

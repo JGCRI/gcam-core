@@ -49,8 +49,8 @@ public class MultiTableModel extends AbstractTableModel {
 	Vector activeRows;
 	TableRenderer tableRenderer;
 	TableEditor tableEditor;
-	HashMap tableFilterMaps;
-	public MultiTableModel (Vector tablesIn, HashMap filters) {
+	Map tableFilterMaps;
+	public MultiTableModel (Vector tablesIn, Map filters) {
 		tableFilterMaps = filters;
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
@@ -114,11 +114,10 @@ public class MultiTableModel extends AbstractTableModel {
 			}
 			*/
 			currKeys = new String[0];
-			final HashMap tempFilterMaps = (HashMap)tableFilterMaps.clone();
+			final Map tempFilterMaps = (Map)((LinkedHashMap)tableFilterMaps).clone();
 			/*
 			final Vector possibleKeys = new Vector();
 			final boolean tempIsCondensed = isCondensed;
-			currFilter = 0;
 			String title;
 			if (isCondensed) {
 				for (int i = 0; i < cols.size(); i++) {
@@ -139,6 +138,7 @@ public class MultiTableModel extends AbstractTableModel {
 			}*/
 			//possibleKeys = new Vector(filters.keySet());
 			final Vector possibleKeys = new Vector(tempFilterMaps.keySet());
+			currFilter = possibleKeys.size()-1;
 			String title = "Filter Table";
 			if (possibleKeys.isEmpty()) {
 				return;
@@ -187,13 +187,15 @@ public class MultiTableModel extends AbstractTableModel {
 		    backButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					updateFilters(tempFilterMaps, list, (String)possibleKeys.get(currFilter));
-					currFilter--;
+					//currFilter--;
+					currFilter++;
 					updateList(list, listLabel, (String)possibleKeys.get(currFilter), tempFilterMaps);
 					if (!nextButton.isEnabled()) {
 						nextButton.setEnabled(true);
 						cancelButton.setText(cancelTitle);
 					}
-					if (currFilter == 0) {
+					//if (currFilter == 0) {
+					if (currFilter == possibleKeys.size()-1) {
 						backButton.setEnabled(false);
 					}
 				}
@@ -202,12 +204,14 @@ public class MultiTableModel extends AbstractTableModel {
 		    nextButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					updateFilters(tempFilterMaps, list, (String)possibleKeys.get(currFilter));
-					currFilter++;
+					//currFilter++;
+					currFilter--;
 					updateList(list, listLabel, (String)possibleKeys.get(currFilter), tempFilterMaps);
 					if (!backButton.isEnabled()) {
 						backButton.setEnabled(true);
 					}
-					if (currFilter == possibleKeys.size()-1) {
+					//if (currFilter == possibleKeys.size()-1) {
+					if (currFilter == 0) {
 						nextButton.setEnabled(false);
 						cancelButton.setText("Finished");
 					}
@@ -248,7 +252,7 @@ public class MultiTableModel extends AbstractTableModel {
 			filterDialog.setContentPane(filterContent);
 			filterDialog.show();
 	}
-	private void updateFilters(HashMap tempFilterMaps, JList list, String key) {
+	private void updateFilters(Map tempFilterMaps, JList list, String key) {
 		int[] selectedKeys = list.getSelectedIndices();
 		int j = 0;
 		for (int i = 0; i < currKeys.length; i++) {
@@ -266,7 +270,7 @@ public class MultiTableModel extends AbstractTableModel {
 			}
 		}
 	}
-	private void updateList(JList list, JLabel listLabel, String key, HashMap tempFilterMaps) {
+	private void updateList(JList list, JLabel listLabel, String key, Map tempFilterMaps) {
 		HashMap tempMap = (HashMap)tempFilterMaps.get(key);
 		Vector tempVector = new Vector();
 		listLabel.setText("Filter "+key);
@@ -286,5 +290,34 @@ public class MultiTableModel extends AbstractTableModel {
 		list.setSelectedIndices(selected);
 	}
 	private void doFilter(Vector possibleFilters) {
+		String regex = "^/";
+		for(int i = possibleFilters.size()-1; i >= 0; i--) {
+			Iterator it = ((HashMap)tableFilterMaps.get(possibleFilters.get(i))).entrySet().iterator();
+			if(it.hasNext()) {
+				regex += (String)possibleFilters.get(i)+":(";
+				while(it.hasNext()) {
+					Map.Entry me = (Map.Entry)it.next();
+					if(((Boolean)me.getValue()).booleanValue()) {
+						regex += me.getKey()+"|";
+					}
+				}
+				regex = regex.substring(0,regex.length()-1)+")/";
+			} else {
+				regex += (String)possibleFilters.get(i)+"/";
+			}
+		}
+		regex += "$";
+		//System.out.println("Regex: "+regex);
+		Vector tempActive = new Vector();
+		for(int i = 0; i < tables.size(); i+=2) {
+			if(((String)tables.get(i)).matches(regex)) {
+				//System.out.println("match: "+tables.get(i));
+				tempActive.add(new Integer(i));
+				tempActive.add(new Integer(i+1));
+			} /*else {
+				System.out.println("didn't match: "+tables.get(i));
+			}*/
+		}
+		activeRows = tempActive;
 	}
 }
