@@ -901,6 +901,21 @@ void Region::initCalc( const int period )
     for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
         (*currSector)->initCalc( period ); 
     }
+    // Make sure TFE is same as calibrated values
+    if ( isDemandAllCalibrated( period ) ) {
+      double totalFinalEnergy = 0;
+      for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
+        totalFinalEnergy += demandSector[ i ]->getFixedInputs( period, "allInputs" );
+      }
+      if ( TFEcalb[ period ] != 0 ) {
+         double scaleFactor = totalFinalEnergy / TFEcalb[ period ];
+         if ( abs( scaleFactor - 1 ) > util::getSmallNumber() ) {
+            logfile << "TFE in region " << name << " scaled by: "<< scaleFactor << endl;
+            TFEcalb[ period ] = totalFinalEnergy; 
+         }
+      }
+    } 
+
 }
 
 /*! \brief Adjusts calibrated demands to be consistant with calibrated supply.
@@ -923,7 +938,6 @@ void Region::adjustCalibrations( const int period ) {
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
       string goodName = supplySector[ i ]->getName();
       if ( inputsAllFixed( period, goodName ) ) {
-         logfile << "Inputs all fixed for " << goodName;
          
          // First find the total calibrated or fixed supply of this good         
          double calSupply = supplySector[ i ]->getCalOutput( period );  // total calibrated output
@@ -934,7 +948,7 @@ void Region::adjustCalibrations( const int period ) {
             
          // if calibrated output and demand are not equal, then scale demand so that they match
          if ( !util::isEqual( calSupply, calDemand ) && ( calDemand != 0 ) && supplySector[ i ]->outputsAllFixed( period ) ) {
-            logfile << ", Outputs also all fixed." << endl;
+            logfile << "Inputs and Outputs all fixed for " << goodName << endl;
             
             logfile << "Cal difference in region " << name << " sector: " << goodName;
             logfile << " Supply: " << calSupply << " S-D: " << calSupply-calDemand;

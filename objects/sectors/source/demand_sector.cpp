@@ -258,7 +258,7 @@ void DemandSector::calibrateSector( const int period ) {
     
     for (int i=0; i<nosubsec; i++ ) {
         if ( subsec[i]->getCalibrationStatus( period ) ) {
-            subsec[i]->adjustForCalibration( mrkdmd, totalfixedOutput, totalCalOutputs, period );
+            subsec[i]->adjustForCalibration( mrkdmd, totalfixedOutput, totalCalOutputs, outputsAllFixed( period ), period );
         }
     }
 

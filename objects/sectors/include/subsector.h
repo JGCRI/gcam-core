@@ -132,7 +132,7 @@ public:
     std::map<std::string, double> getemindmap( const int period ) const;
     void adjShares( const double demand, const double shareRatio, const double totalfixedOutput, const int period );
     void updateSummary( const int period );
-    void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const int period );
+    void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
 	 void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
 };
 #endif // _SUBSECTOR_H_

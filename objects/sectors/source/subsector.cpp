@@ -1027,23 +1027,29 @@ void Subsector::setoutput( const double demand, const int period, const GDP* gdp
     }
 }
 
-/*! \brief Adjusts share weights and Subsector demand to be consistant with calibration value.
-* Calibration is performed by scaling share weights to be consistant with the calibration value. Calibration is, therefore, performed as part of the iteration process. Since this can change derivitives, best to turn calibration off when using N-R solver.
-* 
-* Subector demand is also set equal to calibration value in order to pass down to technologies.
-* This routine takes total demand into account so that total calibrated outputs cannot exceed demand.
-* Also takes into account fixed supply, which is assumed to take presidence over calibration values
-* Note that this routine doesn't notice if the calibration is at the technology or sub-sector level, this is taken care of by routine getTotalCalOutputs.
+/*! \brief Adjusts share weights and Subsector demand to be consistent with calibration value.
+* Calibration is performed by scaling share weights to be consistent with the calibration value. 
+* Calibration is, therefore, performed as part of the iteration process. 
+* Since this can change derivatives, best to turn calibration off when using N-R solver.
+*
+* This routine adjusts shareweights so that relative shares are correct for each subsector.
+* Note that all calibration values are scaled (up or down) according to total sectorDemand 
+* -- getting the overall scale correct is the job of the TFE calibration
+*
+* Routine takes into account fixed supply, which is assumed to take precedence over calibration values
+* Note that this routine doesn't notice if the calibration is at the technology or sub-sector level, 
+* this is taken care of by routine getTotalCalOutputs.
 *
 * \author Steve Smith
 * \param sectorDemand total demand for this sector
 * \param totalfixedOutput total amount of fixed supply for this sector
 * \param totalCalOutputs total amount of calibrated outputs for this sector
+* \param allFixedOutput flag if all outputs from this sector are calibrated
 * \param period Model period
 * \warning If calvalue is larger than sector demand nothing is done
 * \warning The value of subsecdmd is changed (for sub-sector output calibration)
 */
-void Subsector::adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const int period ) {
+void Subsector::adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period ) {
    double shareScaleValue = 0;
    double availableDemand;
    double subSectorDemand;
@@ -1051,50 +1057,46 @@ void Subsector::adjustForCalibration( double sectorDemand, double totalfixedOutp
    // total calibrated outputs for this sub-sector
    double calOutputSubsect = getTotalCalOutputs( period );
 
+    // make sure share weights aren't zero or else cann't calibrate
+    if ( shrwts[ period ]  == 0 && ( calOutputSubsect > 0 ) ) {
+        shrwts[ period ]  = 1;
+    }
+   
    // Determine available demand that can be shared out (subtract sub-sectors with fixed supply)
    availableDemand = sectorDemand - totalfixedOutput;
    if ( availableDemand < 0 ) {
       availableDemand = 0;
    }
    
-   // If total sector caloutputs are larger than available demand, then adjust all sub-sector cal values
-   if ( totalCalOutputs > availableDemand ) {
-     // adjust cal value, but leave a slight bit of headroom, taking into account other cal outputs
-     // In this case all demand will be supplied by cal outputs, so divide proportionately.
-      calOutputSubsect = (calOutputSubsect/totalCalOutputs) * availableDemand;
+   // Next block adjusts calibration values if total cal + fixed demands for this sector 
+   // are different from total sector demand passed in.   
+   // Do this in all cases, unless calvalues < available demand and all outputs are NOT fixed
+   // (if all outputs are not fixed, then the sectors that are not fixed can take up the remaining demand)
+   if ( !( ( totalCalOutputs < availableDemand ) && !allFixedOutput ) ) {
+     calOutputSubsect = calOutputSubsect * ( availableDemand  / totalCalOutputs );
    }
    
-    // make sure share weights aren't zero or else cann't calibrate
-    if ( shrwts[ period ]  == 0 && ( calOutputSubsect > 0 ) ) {
-        shrwts[ period ]  = 1;
-    }
-    
+   // Adjust share weights
    subSectorDemand = share[ period ] * sectorDemand;
    if ( subSectorDemand > 0 ) {
       shareScaleValue = calOutputSubsect / subSectorDemand;
-      shrwts[ period ]  = shrwts[ period ]  * shareScaleValue;
-    }
+      shrwts[ period ]  = shrwts[ period ] * shareScaleValue;
+   }
     
+   // Check to make sure share weights are not less than zero (and reset if they are)
    if ( shrwts[ period ] < 0 ) {
      cerr << "Share Weight is < 0 in Subsector " << name << endl;
      cerr << "    shrwts[period]: " << shrwts[ period ] << " (reset to 1)" << endl;
      shrwts[ period ] = 1;
    }
 
-
-   // Debugging code useful for when something is amiss with base-year calibrations
-   bool watchSector = ( name == "oil" && sectorName == "building" && regionName == "USAxx");
-   if ( debugChecking && (shrwts[ period ] > 1e4 || watchSector) ) {
-      if ( !watchSector ) {
+   // Report if share weight gets extremely large
+   bool watchSubSector = ( name == "oil" && sectorName == "electricity" && regionName == "Canadaxx");
+   if ( debugChecking && (shrwts[ period ] > 1e4 || watchSubSector) ) {
+      if ( !watchSubSector ) {
          cout << "In calibration for sub-sector: " << name;
          cout << " in sector: "<< sectorName << " in region: " << regionName << endl;
       } else { cout << " ||" ; }
-		cout << "Sector: "<< sectorName << " subsector: "<< name << "  subSector CalOut: " << getTotalCalOutputs( period );
-		cout << "  CalIn: " << getFixedInputs( period, name, true ) << endl;
-      cout << "  shrwts = " << shrwts[ period ] << ", sub-sec share = " << share[ period ]  << endl;
-      cout << "  AvailD, totFix, totCal, calOutSect, subSectD, scaleVal: " << availableDemand << ", "; 
-      cout <<  totalfixedOutput << ", " << totalCalOutputs << ", " <<  calOutputSubsect << ", " ; 
-      cout << subSectorDemand << ", " << shareScaleValue << endl;
    }
 }
   
@@ -1138,7 +1140,7 @@ double Subsector::getTotalCalOutputs( const int period ) const {
 *
 * \author Steve Smith
 * \param period Model period
-* \param goodName market good to return inputs for
+* \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
 * \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
 * \return Total calibrated input for this Subsector
 */
@@ -1146,7 +1148,7 @@ double Subsector::getFixedInputs( const int period, const std::string& goodName,
 	double sumCalInputValues = 0;
 
 	for ( int i=0; i<notech; i++ ) {
-		if ( techHasInput( techs[ i ][ period ], goodName ) ) {
+		if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
 			if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
 				sumCalInputValues += techs[ i ][ period ]->getCalibrationInput( );
 			} 

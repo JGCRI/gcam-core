@@ -325,7 +325,7 @@ void Sector::initCalc( const int period ) {
 	const Modeltime* modeltime = scenario->getModeltime();
    Configuration* conf = Configuration::getInstance();
    bool debugChecking = conf->getBool( "debugChecking" );
-    
+   
     // do any sub-Sector initializations
     for ( int i=0; i<nosubsec; i++ ) {
         subsec[ i ]->initCalc( period );
@@ -827,7 +827,7 @@ double Sector::getCalOutput( const int period  ) const {
 *
 * \author Steve Smith
 * \param period Model period
-* \param goodName market good to return inputs for
+* \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
 * \param bothVals optional parameter that specifies if both calibration and fixed values are returned (default is both)
 * \return total fixed inputs
 */
@@ -894,7 +894,7 @@ void Sector::calibrateSector( const int period ) {
 
     for (int i=0; i<nosubsec; i++ ) {
         if ( subsec[ i ]->getCalibrationStatus( period ) ) {
-            subsec[ i ]->adjustForCalibration( mrkdmd, totalfixedOutput, totalCalOutputs, period );
+            subsec[ i ]->adjustForCalibration( mrkdmd, totalfixedOutput, totalCalOutputs, outputsAllFixed( period ), period );
         }
     }
 } 
