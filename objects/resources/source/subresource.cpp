@@ -442,11 +442,13 @@ void SubResource::annualsupply( int per, const GDP* gdp, double price, double pr
                 *pow(gdpRatio,gdpExpans[per])
                 *pow((1+techChange[per]),modeltime->gettimestep(per));
             
-            if(minShortTermSLimit < max_annualprod) { 
+            // Allow the resource to produce up to the greater of the minimum short 
+            // term supply and the previous period's production.
+            if( max_annualprod > max( minShortTermSLimit, annualprod[ per - 1 ] )  ) {
                 cur_annualprod = max_annualprod; 
             }
             else { 
-                cur_annualprod = minShortTermSLimit; 
+                cur_annualprod = max( minShortTermSLimit, annualprod[ per - 1 ] );
             }
             
             // adjust short-term capacity limit for price effects
