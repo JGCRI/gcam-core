@@ -7,11 +7,6 @@
 * \version $Revision$
 */
 
-#if defined(_MSC_VER)
-#pragma warning( disable: 4275 )
-#pragma warning( disable: 4786 )
-#endif
-
 #include <mtl/matrix.h>
 #include <mtl/mtl.h>
 #include <mtl/utils.h>
@@ -30,7 +25,7 @@
 #include "util/base/include/util.h"
 #include "solution/util/include/solver_info.h"
 #include "solution/util/include/solver_info_set.h"
-#include "marketplace/include/market.h"
+#include "util/logger/include/ilogger.h"
 
 #include <mtl/matrix.h>
 #include <mtl/mtl.h>
@@ -39,7 +34,7 @@
 using namespace std;
 using namespace mtl;
 
-extern ofstream bugoutfile;
+#define NO_REGIONAL_DERIVATIVES 0
 
 /*! \brief Calculate and return a relative excess demand.
 * \author Josh Lurz
@@ -123,17 +118,20 @@ bool SolverLibrary::isWithinTolerance( const double excessDemand, const double d
 */
 
 void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverInfoSet& solverSet, const int per ) {
-    
+
     const double DELTAP = 1e-5;
     const bool doDebugChecks = Configuration::getInstance()->getBool( "debugChecking" );
-    if( Configuration::getInstance()->getBool( "trackMaxED" ) ){
-        cout << endl << "Begin derivative calculation..." << endl;
-    }
+    ILogger& mainLog = ILogger::getLogger( "solver_log" );
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Starting derivative calculation" << endl;
+
     // Initial call to world.calc to fix problems with calibration.
     marketplace->nullSuppliesAndDemands( per );
     world->calc( per );
     solverSet.updateFromMarkets();
+    solverSet.updateSolvable( true );
 
+#if( !NO_REGIONAL_DERIVATIVES )
     // Save original global supplies and demands for error checking.
     const vector<double>& originalSupplies = solverSet.getSupplies();
     const vector<double>& originalDemands = solverSet.getDemands();
@@ -145,7 +143,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverI
         doRegionalValuesSum( sdDifferences.supplies , originalSupplies, true );
         doRegionalValuesSum( sdDifferences.demands, originalDemands, true );
     }
-
+#endif
     // Retain the original values. 
     solverSet.storeValues();
 
@@ -154,9 +152,14 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverI
         solverSet.getSolvable( j ).increaseX( DELTAP, DELTAP );
         solverSet.updateToMarkets();
 
+#if( NO_REGIONAL_DERIVATIVES )
+        marketplace->nullSuppliesAndDemands( per );
+        world->calc( per );
+#else
+
         // Now remove additive supplies and demands.
         // Iterate over all regions within the market.
-        const vector<string> containedRegions = solverSet.getSolvable( j ).getContainedRegions();
+        vector<string> containedRegions = solverSet.getSolvable( j ).getContainedRegions();
         for ( RegionIterator regionIter = containedRegions.begin(); regionIter != containedRegions.end(); ++regionIter ) {
             // Find the vectors contains supply and demand reductions for this region.
             const vector<double> supplyReductions = util::searchForValue( sdDifferences.supplies, *regionIter );
@@ -170,6 +173,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverI
         }
 
         world->calc( per, containedRegions );
+#endif
         solverSet.updateFromMarkets();
 
         solverSet.getSolvable( j ).calcDemandElas( solverSet );
@@ -214,59 +218,65 @@ void SolverLibrary::calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& J
     NP.resize( solverSet.getNumSolvable() );
     KDS.resize( solverSet.getNumSolvable() );
 
-        // initialize KD and KS as logs of original demand and supply
-        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
-            KD[ i ] = log( max( solverSet.getSolvable( i ).getDemand(), util::getSmallNumber() ) );
-            KS[ i ] = log( max( solverSet.getSolvable( i ).getSupply(), util::getSmallNumber() ) );
-        }
-    
-        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
-            for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
-                double tempValue = log( max( solverSet.getSolvable( j ).getPrice(), util::getSmallNumber() ) );
-                KD[ i ] -= tempValue * JFDM[ i ][ j ];
-                KS[ i ] -= tempValue * JFSM[ i ][ j ];
-                assert( util::isValidNumber( KD[ i ] ) );
-                assert( util::isValidNumber( KS[ i ] ) );
-            }
+    // initialize KD and KS as logs of original demand and supply
+    for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
+        KD[ i ] = log( max( solverSet.getSolvable( i ).getDemand(), util::getSmallNumber() ) );
+        KS[ i ] = log( max( solverSet.getSolvable( i ).getSupply(), util::getSmallNumber() ) );
+    }
 
-            KDS[ i ] = KD[ i ] - KS[ i ];
-            assert( util::isValidNumber( KDS[ i ] ) );
+    for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
+        for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
+            double tempValue = log( max( solverSet.getSolvable( j ).getPrice(), util::getSmallNumber() ) );
+            KD[ i ] -= tempValue * JFDM[ i ][ j ];
+            KS[ i ] -= tempValue * JFSM[ i ][ j ];
+            assert( util::isValidNumber( KD[ i ] ) );
+            assert( util::isValidNumber( KS[ i ] ) );
         }
 
-        // Calculate new log price based on NR
-        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
-            NP[ i ] = 0;
-            for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
-                assert( util::isValidNumber( JF[ i ][ j ] ) );
-                NP[ i ] += JF[ i ][ j ] * KDS[ j ];
-                assert( util::isValidNumber( NP[ i ] ) );
-            }
-            
-            // Set the new price with the exponent of the correction vector.
-            solverSet.getSolvable( i ).setPrice( exp( NP[ i ] ) );
-            assert( util::isValidNumber( solverSet.getSolvable( i ).getPrice() ) );
-            
-            // Debugging output.
-            if( debugChecking ){
-                if ( solverSet.getSolvable( i ).getPrice() > 1e10) {
-                    cerr << " Large price in market: " << solverSet.getSolvable( i ).getName() << endl;
-                    // first get largest derivitive
-                    double maxDerVal = 0; 
-                    double maxKDSval = 0;
-                    for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
-                        maxKDSval = max( maxKDSval, fabs( KDS[ j ] ) );
-                        maxDerVal = max( maxDerVal, fabs( JF[ i ][ j ]) );
-                    }
-                    cout << "Max KDS: " << maxKDSval << ", Max Derivitive: " << maxDerVal;
-                    cout << "Large derivitives against: " << endl;
-                    for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
-                        if ( fabs( JF[ i ][ j ]) > maxDerVal / 100 ) {
-                            cout << "   Market: " << solverSet.getSolvable( j ).getName() << ", Value: "<< JF[ i ][ j ] << endl;
-                        }
+        KDS[ i ] = KD[ i ] - KS[ i ];
+        assert( util::isValidNumber( KDS[ i ] ) );
+    }
+
+    // Calculate new log price based on NR
+    for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
+        NP[ i ] = 0;
+        for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
+            assert( util::isValidNumber( JF[ i ][ j ] ) );
+            NP[ i ] += JF[ i ][ j ] * KDS[ j ];
+            assert( util::isValidNumber( NP[ i ] ) );
+        }
+
+        // Set the new price with the exponent of the correction vector.
+        double newPrice = exp( NP[ i ] );
+        if( !util::isValidNumber( newPrice ) ){
+            cout << "Invalid price after correction." << endl;
+            solverSet.getSolvable( i ).setPrice( 0 );
+        }
+        else {
+            solverSet.getSolvable( i ).setPrice( newPrice );
+        }
+
+        // Debugging output.
+        if( debugChecking ){
+            if ( solverSet.getSolvable( i ).getPrice() > 1e10) {
+                cerr << " Large price in market: " << solverSet.getSolvable( i ).getName() << endl;
+                // first get largest derivitive
+                double maxDerVal = 0; 
+                double maxKDSval = 0;
+                for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
+                    maxKDSval = max( maxKDSval, fabs( KDS[ j ] ) );
+                    maxDerVal = max( maxDerVal, fabs( JF[ i ][ j ]) );
+                }
+                cout << "Max KDS: " << maxKDSval << ", Max Derivitive: " << maxDerVal;
+                cout << "Large derivitives against: " << endl;
+                for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
+                    if ( fabs( JF[ i ][ j ]) > maxDerVal / 100 ) {
+                        cout << "   Market: " << solverSet.getSolvable( j ).getName() << ", Value: "<< JF[ i ][ j ] << endl;
                     }
                 }
             }
         }
+    }
 }
 
 /*! \brief Calculate the inverse of a matrix using an LU factorization.
@@ -404,10 +414,10 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
     int numIterations = 0;
     bool code = false;
     Configuration* conf = Configuration::getInstance();
-    static bool debugChecking = conf->getBool( "debugChecking" );
+    const static bool debugChecking = conf->getBool( "debugChecking" );
     bool calibrationStatus = world->getCalibrationSetting();
     static const double LOWER_BOUND = util::getSmallNumber();
-
+    static const int MAX_ITERATIONS = 30;
     // Make sure the markets are up to date before starting.
     solverSet.updateToMarkets();
     marketplace->nullSuppliesAndDemands( period );
@@ -415,17 +425,16 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
     solverSet.updateFromMarkets();
     solverSet.updateSolvable( false );
     solverSet.checkAndResetBrackets();
-    bugoutfile << "Starting bracketing" << endl;
-    bugoutfile << solverSet << endl;
 
-    // This is not the correct flag to check.
-    if ( conf->getBool( "trackMaxED" ) ) {
-        cout << "Entering bracketing..." << endl;
-    }
+    ILogger& solverLog = ILogger::getLogger( "solver_log" );
+    solverLog.setLevel( ILogger::NOTICE );
+    solverLog << "Entering bracketing" << endl;
+    solverLog.setLevel( ILogger::DEBUG );
+    solverLog << solverSet << endl;
 
     // sjs -- turn off calibration to let bracketing operate faster. Let calibrations happen in Bisection
     world->turnCalibrationsOff();    
-    
+
     // Loop is done at least once.
     do {        
         // Iterate through each market.
@@ -452,7 +461,7 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
                             currSol.increaseX( bracketInterval, LOWER_BOUND );
                         }
                         else {
-                              currSol.setBracketed();
+                            currSol.setBracketed();
                         }
                     }
                 }
@@ -495,10 +504,14 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
         world->calc( period );
         solverSet.updateFromMarkets();
         solverSet.updateSolvable( false );
-        bugoutfile << "Completed an iteration of bracket." << endl;
-        bugoutfile << solverSet << endl;
-    } while ( ++numIterations < 30 && !solverSet.isAllBracketed() );
+        solverLog.setLevel( ILogger::NOTICE );
+        solverLog << "Completed an iteration of bracket." << endl;
+    } while ( ++numIterations < MAX_ITERATIONS && !solverSet.isAllBracketed() );
     code = ( solverSet.isAllBracketed() ? true : false );	
+
+    solverLog.setLevel( ILogger::DEBUG );
+    solverLog << "Solution Info Set before leaving bracket: " << endl;
+    solverLog << solverSet << endl;
 
     if ( calibrationStatus ) {
         world->turnCalibrationsOn();	// sjs -- turn calibration back on if it was on before
@@ -506,4 +519,110 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
     return code;
 }
 
+//! Bracketing function only
+/* Function finds bracket interval for a single market. 
+* \author Josh Lurz
+* \param per Model period
+*/
+bool SolverLibrary::bracketOne( Marketplace* marketplace, World* world, SolverInfoSet& aSolSet, SolverInfo& aSol, const int period ) {
+    // Turn off calibration.
+    const bool calibrationStatus = world->getCalibrationSetting();
+    world->turnCalibrationsOff();    
 
+    // Constants.
+    static const unsigned int MAX_ITERATIONS = 100;
+    const double LOWER_BOUND = 0.5;
+    const double BRACKET_MULT = 0.5;
+    //  world->calc( period );
+    aSolSet.updateFromMarkets();
+    aSolSet.updateSolvable( false );
+
+    // Logging
+    ILogger& solverLog = ILogger::getLogger( "solver_log" );
+    solverLog.setLevel( ILogger::NOTICE );
+    solverLog << "Entering single market bracketing for market " << aSol.getName() << "." << endl;
+    solverLog.setLevel( ILogger::DEBUG );
+    solverLog << "Solution info set prior to bracket one." << endl;
+    solverLog << aSolSet << endl;
+
+    aSol.resetBrackets();
+    unsigned int numIterations = 0;
+
+    // Loop is done at least once.
+    do {        
+        // If ED at X and L are the same sign.
+        if ( util::sign( aSol.getED() ) == util::sign( aSol.getEDLeft() ) ) {
+            // If Supply > Demand at point X.
+            if ( aSol.getED() < 0 ) { 
+                aSol.moveLeftBracketToX();
+                if( !aSol.isCurrentlyBracketed() ){
+                    aSol.decreaseX( BRACKET_MULT, LOWER_BOUND );
+                } 
+                else {
+                    aSol.setBracketed();
+                }
+            }
+            else { // If Supply <= Demand. Price needs to increase.
+                aSol.moveRightBracketToX();
+                if( !aSol.isCurrentlyBracketed() ){
+                    aSol.increaseX( BRACKET_MULT, LOWER_BOUND );
+                }
+                else {
+                    aSol.setBracketed();
+                }
+            }
+        }
+        else {  // ED at X and R are the same sign.
+            if ( aSol.getED() < 0 ) { // If Supply > Demand at X. 
+                aSol.moveLeftBracketToX();
+                if( !aSol.isCurrentlyBracketed() ){
+                    aSol.decreaseX( BRACKET_MULT, LOWER_BOUND );
+                }
+                else {
+                    aSol.setBracketed();
+                }
+            }
+            else { // If Supply <= Demand at X. Prices need to increase.
+                aSol.moveRightBracketToX();
+                if( !aSol.isCurrentlyBracketed() ){
+                    aSol.increaseX( BRACKET_MULT, LOWER_BOUND );
+                }
+                else {
+                    aSol.setBracketed();
+                }
+            }
+        }
+        // Check if the market is actually solved.
+        // Small number here and below should actually be the solution tolerance or floor.
+        if( aSol.isWithinTolerance( util::getVerySmallNumber(), util::getVerySmallNumber() ) ){
+            aSol.setBracketed();
+        }
+        // Check if the market is unbracketable. Move this check into updateSolvable.-JPL
+        else if( ( aSol.getPrice() < util::getVerySmallNumber() ) && ( aSol.getED() < 0 ) ) {
+            // aSol.setPrice( 0 );
+            // aSol.resetBrackets();
+            aSol.setBracketed();
+        }
+
+        aSolSet.updateToMarkets();
+        marketplace->nullSuppliesAndDemands( period );
+        world->calc( period );
+        aSolSet.updateFromMarkets();
+        aSolSet.updateSolvable( false );
+        solverLog.setLevel( ILogger::NOTICE );
+        solverLog << "Completed an iteration of bracketOne." << endl;
+        solverLog << aSol << endl;
+    } while ( ++numIterations < MAX_ITERATIONS && !aSol.isBracketed() );
+
+    solverLog.setLevel( ILogger::NOTICE );
+    solverLog << "Exiting single market bracketing." << endl;
+    solverLog.setLevel( ILogger::DEBUG );
+    solverLog << "Solution info set after bracket one." << endl;
+    solverLog << aSolSet << endl;
+
+    // turn calibration back on if it was on before
+    if ( calibrationStatus ) {
+        world->turnCalibrationsOn();
+    }
+    return aSol.isBracketed();
+}
