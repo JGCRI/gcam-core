@@ -13,6 +13,7 @@
 #include <cassert>
 #include <vector>
 #include <algorithm>
+#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/configuration.h"
 #include "sectors/include/subsector.h"
@@ -841,6 +842,7 @@ void Subsector::limitShares( const double multiplier, const int period ) {
 double Subsector::getFixedSupply( const int period ) const {
     double fixedOutput = 0;
     for ( int i=0 ;i<notech; i++ ) {
+        techs[ i ][ period ]->calcFixedSupply( period );
         fixedOutput += techs[i][period]->getFixedSupply();
     }
     return fixedOutput;
