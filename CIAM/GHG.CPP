@@ -82,7 +82,7 @@ void Ghg::XMLParse(const DOMNode* node)
 	
 	for( int i = 0; i < nodeList->getLength(); i++ ) {
 		curr = nodeList->item( i );
-		nodeName = XMLString::transcode( curr->getNodeName() );		
+		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
 		
 		if( nodeName == "unit"){
 			unit = XMLHelper<string>::getValueString( curr );

@@ -73,6 +73,7 @@ public:
 	static string getValueString( const DOMNode* node );
 	static T getAttr( const DOMNode* node, const string attrName );
 	static string getAttrString( const DOMNode* node, const string attrName );
+	static string safeTranscode( const XMLCh* toTranscode );  
 };
 
 //! Returns the data value associated with the element node.
@@ -111,7 +112,7 @@ T XMLHelper<T>::getValue( const DOMNode* node ){
 	
 	else {
 		// convert the returned string to the return type.
-		istringstream target( XMLString::transcode( curr->getNodeValue() ) );
+		istringstream target( safeTranscode( curr->getNodeValue() ) );
 		target >> retValue;
 		return retValue;
 	}
@@ -149,7 +150,7 @@ string XMLHelper<T>::getValueString( const DOMNode* node ) {
 	}
 	
 	else {
-		return XMLString::transcode( curr->getNodeValue() );
+		return safeTranscode( curr->getNodeValue() );
 	}
 }
 
@@ -186,14 +187,17 @@ T XMLHelper<T>::getAttr( const DOMNode* node, const string attrName ) {
 	const DOMElement* element = static_cast<const DOMElement*>( node );
 	
 	// get the attribute with the name which was passed in.
-	DOMAttr* nameAttr = element->getAttributeNode( XMLString::transcode( attrName.c_str() ) );
+
+	XMLCh* nameChars =  XMLString::transcode( attrName.c_str() );
+	DOMAttr* nameAttr = element->getAttributeNode( nameChars );
+	XMLString::release( &nameChars );
 	if( !nameAttr ){
 		return T();
 	} 
 	
 	else {
 		// convert the returned string to the return type
-		istringstream target( XMLString::transcode( nameAttr->getValue() ) );
+		istringstream target( safeTranscode( nameAttr->getValue() ) );
 		target >> retValue;
 		return retValue;
 	}
@@ -227,15 +231,26 @@ string XMLHelper<T>::getAttrString( const DOMNode* node, const string attrName )
 	const DOMElement* element = static_cast<const DOMElement*>( node );
 	
 	// get the attribute with the name which was passed in.
-	DOMAttr* nameAttr = element->getAttributeNode( XMLString::transcode( attrName.c_str() ) );
+	XMLCh* tempChars = XMLString::transcode( attrName.c_str() ); 
+	DOMAttr* nameAttr = element->getAttributeNode( tempChars );
+	XMLString::release( &tempChars );
 	
 	if( !nameAttr ){
 		return "";
 	} 
 	
 	else {
-		return XMLString::transcode( nameAttr->getValue() );
+		return safeTranscode( nameAttr->getValue() );
 	}
+}
+// document me
+template<class T>
+string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
+	
+	char* transcoded = XMLString::transcode( toTranscode );
+	string retString = transcoded;
+	XMLString::release( &transcoded );
+	return retString;
 }
 
 //! Function to write the argument element to xml in proper format.

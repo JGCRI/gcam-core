@@ -54,7 +54,7 @@ void grade::XMLParse( const DOMNode* tempNode )
 
 	for( int i = 0; i < tempNodeLst->getLength(); i++ ) {
 		tNode = tempNodeLst->item( i );
-		tNodeName = XMLString::transcode( tNode->getNodeName() );
+		tNodeName = XMLHelper<string>::safeTranscode( tNode->getNodeName() );
 		
 		if( tNodeName == "name" ){
 			name = XMLHelper<string>::getValueString( tNode );

@@ -84,7 +84,7 @@ void subrsrc::XMLParse( const DOMNode* node )
 	// loop through the child nodes.
 	for( int i = 0; i < nodeList->getLength(); i++ ){
 		curr = nodeList->item( i );
-		nodeName = XMLString::transcode( curr->getNodeName() );
+		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
 		if( nodeName == "grade" ){
 			childNodeList = curr->getChildNodes();
@@ -93,7 +93,7 @@ void subrsrc::XMLParse( const DOMNode* node )
 			for( int j = 0; j < childNodeList->getLength(); j++ ){
 				
 				currChild = childNodeList->item( j );
-				childNodeName = XMLString::transcode( currChild->getNodeName() );
+				childNodeName = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
 				
 				if( childNodeName == "period" ){
 					tempGrade = new grade();

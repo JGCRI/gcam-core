@@ -91,7 +91,7 @@ void sector::XMLParse( const DOMNode* node ){
 	// loop through the child nodes.
 	for( int i = 0; i < nodeList->getLength(); i++ ){
 		curr = nodeList->item( i );
-		nodeName = XMLString::transcode( curr->getNodeName() );
+		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
 		if( nodeName == "market" ){
 			market = XMLHelper<string>::getValueString( curr ); // only one market element.
@@ -680,7 +680,7 @@ void demsector::XMLParse( const DOMNode* node ){
 	// loop through the child nodes.
 	for( int i = 0; i < nodeList->getLength(); i++ ){
 		curr = nodeList->item( i );
-		nodeName = XMLString::transcode( curr->getNodeName() );
+		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
 		if( nodeName == "market" ){
 			market = XMLHelper<string>::getValueString( curr ); // only one market element.

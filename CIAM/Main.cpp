@@ -33,6 +33,8 @@ JGCRI
 #include "scenario.h" // model scenario info
 #include "AgSector.h"
 #include "Marketplace.h"
+// #include "LoggerFactory.h"
+// #include "Logger.h"
 
 using namespace std; // enables elimination of std::
 
@@ -86,7 +88,7 @@ int main()
 	{
 		XMLPlatformUtils::Initialize();
 	} catch ( const XMLException& toCatch ) {
-		string message = XMLString::transcode( toCatch.getMessage() );
+		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
 		cout << "Error during initialization!"<< endl << message << endl;
 		return -1;
 	}
@@ -113,15 +115,15 @@ int main()
 		long parseTime = endMillis - startMillis;
 		cout << "Parsing took " << parseTime / float( 1000 ) << " seconds." << endl;
 	} catch ( const XMLException& toCatch ) {
-		string message = XMLString::transcode( toCatch.getMessage() );
+		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
 		cout << "Exception message is:" << endl << message << endl;
 		return -1;
 	} catch ( const DOMException& toCatch ) {
-		string message = XMLString::transcode( toCatch.msg );
+		string message = XMLHelper<string>::safeTranscode( toCatch.msg );
 		cout << "Exception message is:" << endl << message << endl;
 		return -1;
 	} catch ( const SAXException& toCatch ){
-		string message = XMLString::transcode( toCatch.getMessage() );
+		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
 		cout << "Exception message is:" << endl << message << endl;
 		return -1;
 	} catch (...) {
@@ -132,6 +134,10 @@ int main()
 	doc = parser->getDocument();
 	root = doc->getDocumentElement();
 	conf->XMLParse( root );
+
+	// Open then new log file
+	// Logger* logger = LoggerFactory::getLogger();
+	// LOG( logger, Logger::DEBUG_LEVEL ) << "Test " << endl;
 
         // Open log file
 	logfile.open( conf->getFile( "logOutFileName" ).c_str(), ios::out );
@@ -185,15 +191,15 @@ int main()
 		long parseTime = endMillis - startMillis;
 		cout << "Parsing took " << parseTime / float( 1000 ) << " seconds." << endl;
 	} catch ( const XMLException& toCatch ) {
-		string message = XMLString::transcode( toCatch.getMessage() );
+		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
 		cout << "Exception message is:" << endl << message << endl;
 		return -1;
 	} catch ( const DOMException& toCatch ) {
-		string message = XMLString::transcode( toCatch.msg );
+		string message = XMLHelper<string>::safeTranscode( toCatch.msg );
 		cout << "Exception message is:" << endl << message << endl;
 		return -1;
 	} catch ( const SAXException& toCatch ){
-		string message = XMLString::transcode( toCatch.getMessage() );
+		string message = XMLHelper<string>::safeTranscode( toCatch.getMessage() );
 		cout << "Exception message is:" << endl << message << endl;
 		return -1;
 	} catch (...) {
@@ -244,7 +250,7 @@ int main()
 	world.sumrsc(per); // call to calculate global depletable resources
 	cout << endl << "Period " << per <<": "<< modeltime.getper_to_yr(per) << endl;
 	cout << "Period 0 not solved" << endl;
-	logfile<< "Period:  " << per << endl;
+	logfile << "Period:  " << per << endl;
 	//***** End First Period
 	
 	// Loop over time steps and operate model
@@ -341,6 +347,7 @@ int main()
 	delete conf;
 	extern void closeDB(); // fuction protocol
     closeDB(); // close MS Access database
+	// LoggerFactory::cleanUp();
 	//********
 	
 	return 0;

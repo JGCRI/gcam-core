@@ -54,7 +54,7 @@ void Configuration::XMLParse( const DOMNode* root ) {
 	for( int i = 0; i < nodeSectionList->getLength(); i++ ) {
 		
 		currSectionNode = nodeSectionList->item( i );
-		sectionName = XMLString::transcode( currSectionNode->getNodeName() );		
+		sectionName = XMLHelper<string>::safeTranscode( currSectionNode->getNodeName() );		
 		nodeValueList = currSectionNode->getChildNodes();
 		
 		for( int j = 0; j < nodeValueList->getLength(); j++ ) {

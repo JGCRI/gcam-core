@@ -133,7 +133,7 @@ void Region::XMLParse( const DOMNode* node ){
 	// loop through the child nodes.
 	for(i = 0; i < nodeList->getLength(); i++ ){
 		curr = nodeList->item( i );
-		nodeName = XMLString::transcode( curr->getNodeName() );
+		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
 		if( nodeName == "e_GNP_elas" ){
 			EnergyGNPElas = XMLHelper<double>::getValue( curr ); 
@@ -191,7 +191,7 @@ void Region::XMLParse( const DOMNode* node ){
 			// loop through the child nodes.
 			for(j = 0; j < nodeListChild->getLength(); j++ ){
 				currChild= nodeListChild->item( j );
-				nodeNameChild = XMLString::transcode( currChild->getNodeName() );
+				nodeNameChild = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
 				if(nodeNameChild == "carbontax") {
 					carbontax.push_back( XMLHelper<double>::getValue( currChild ) );
 				}
@@ -204,7 +204,7 @@ void Region::XMLParse( const DOMNode* node ){
 			// loop through the child nodes.
 			for(j = 0; j < nodeListChild->getLength(); j++ ){
 				currChild = nodeListChild->item( j );
-				nodeNameChild = XMLString::transcode( currChild->getNodeName() );
+				nodeNameChild = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
 				if(nodeNameChild == "GNP") {
 					gnp_dol.push_back( XMLHelper<double>::getValue( currChild ) );
 				}

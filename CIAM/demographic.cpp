@@ -55,7 +55,7 @@ void demographic::XMLParse( const DOMNode* node ){
 		curr = nodeList->item( i );
 		
 		// get the name of the node.
-		nodeName = XMLString::transcode( curr->getNodeName() );
+		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		// total population 
 		if( nodeName == "population" ){
 			totalpop.push_back( XMLHelper<double>::getValue( curr ) );

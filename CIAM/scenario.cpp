@@ -13,10 +13,10 @@
 #include "modeltime.h"
 #include "world.h"
 #include "xmlHelper.h"
-#include <ctime> // to use clock and time functions
+#include <ctime>
 
 
-using namespace std; // enables elimination of std::
+using namespace std;
 
 extern Modeltime modeltime;
 extern World world;
@@ -52,7 +52,7 @@ void Scenario::XMLParse( const DOMNode* node ){
 	// loop through the children
 	for ( int i = 0; i < nodeList->getLength(); i++ ){
 		curr = nodeList->item( i );
-		nodeName = XMLString::transcode( curr->getNodeName() );
+		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
 		if ( nodeName == "summary" ){
 			scenarioSummary = XMLHelper<string>::getValueString( curr );

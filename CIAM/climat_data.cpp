@@ -8,7 +8,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <ctime> // to use clock and time functions
+#include <ctime>
 // user defined headers
 #include "world.h"
 #include "modeltime.h"
@@ -20,7 +20,7 @@ extern World world;
 extern ofstream gasfile;
 extern Modeltime modeltime;
 
-void climat_data(void)
+void climat_data()
 {
 	int maxper = modeltime.getmaxdataper();
         int per;
