@@ -13,12 +13,12 @@ public:
 	SO2Emissions();
 	~SO2Emissions();
     SO2Emissions* clone() const;
-    const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
-	bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+protected:
+    const std::string& getXMLName() const;
+    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 	void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-protected:
     static const std::string XML_NAME; //!< node name for toXML methods
     double ashRetention; //!< percentage of output that remains in ash form
 	double percentSulfur; //!< sulfur content of input (percentage)  
