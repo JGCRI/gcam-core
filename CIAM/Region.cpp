@@ -658,7 +658,7 @@ void Region::calcAgSector( const int period ) {
 
 /*! \brief Set regional ghg constraint from input data to market supply.
 *
-* \param period Model time period
+* \param per Model time period
 */
 void Region::setGhgSupply( int per ) {
    Marketplace* marketplace = scenario->getMarketplace();
@@ -675,7 +675,7 @@ void Region::setGhgSupply( int per ) {
 
 /*! Set regional ghg tax to individual technologies.
 *
-* \param period Model time period
+* \param per Model time period
 */
 void Region::addGhgTax( int per ) {
    string ghgname;
@@ -695,7 +695,7 @@ void Region::addGhgTax( int per ) {
 
 /*! Calculates annual supply of primay resources.
 *
-* \param period Model time period
+* \param per Model time period
 */
 void Region::rscSupply(int per)  {
    Marketplace* marketplace = scenario->getMarketplace();
@@ -728,7 +728,7 @@ void Region::rscSupply(int per)  {
 
 /*! Calculate prices of refined fuels and electricity.
 *
-* \param period Model time period
+* \param per Model time period
 */
 void Region::finalSupplyPrc(int per) {
    Marketplace* marketplace = scenario->getMarketplace();
@@ -748,7 +748,7 @@ void Region::finalSupplyPrc(int per) {
 
 /*! Calculates supply of final energy and other goods.
 *
-* \param period Model time period
+* \param per Model time period
 */
 void Region::finalSupply(int per) {
    
@@ -792,7 +792,7 @@ void Region::finalSupply(int per) {
 
 /*! Calculate regional gnp.
 *
-* \param period Model time period
+* \param per Model time period
 */
 void Region::calcGnp( int per ) {
    
@@ -861,7 +861,7 @@ const vector<double> Region::calcFutureGNP() const {
 
 /*! Calculate regional GNP using laborforce participation and labor productivity.
 *
-* \param period Model time period
+* \param per Model time period
 */
 void Region::calcGNPlfp(int per) {
    const Modeltime* modeltime = scenario->getModeltime();
@@ -920,7 +920,7 @@ void Region::calcEndUsePrice( const int period ) {
 
 /*! Adjust regional gnp for energy.
 *
-* \param period Model time period
+* \param per Model time period
 */
 void Region::adjustGnp(int per) {
    const Modeltime* modeltime = scenario->getModeltime();
@@ -966,7 +966,7 @@ First at the sector or technology level (via. calibrateSector method),
 or, at the level of total final energy demand (via calibrateTFE)
 *
 * \param doCalibrations Boolean for running or not running calibration routine
-* \param period Model time period
+* \param per Model time period
 */
 void Region::calibrateRegion( const bool doCalibrations, const int per ) {
    int i;
@@ -1008,7 +1008,7 @@ void Region::calibrateRegion( const bool doCalibrations, const int per ) {
 
 /*! Returns true if all demand sectors are calibrated (or fixed)
 *
-* \param period Model time period
+* \param period Model time per
 */
 bool Region::demandAllCalibrated( const int per ) {
    bool allCalibrated = true;

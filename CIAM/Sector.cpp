@@ -201,7 +201,7 @@ void sector::completeInit() {
 *
 * \author Josh Lurz, Steve Smith
 * \param nodeName name of current node
-* \param node pointer to the current node in the XML input tree
+* \param curr pointer to the current node in the XML input tree
 */
 void sector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     // do nothing
@@ -787,6 +787,8 @@ later at the sector level (in region via supplysector[j].sumOutput( per ))
 to equal the total sector output.
 *
 * \author Sonny Kim, Josh Lurz, Steve Smith
+* \param regionName Region the sector is contained in.
+* \param dmd Demand to be passed to the subsectors. (Sonny check this)
 * \param per Model period
 */
 void sector::setoutput(const string& regionName, double dmd, int per)
@@ -823,7 +825,7 @@ double sector::getFixedSupply( int per ) const {
 *
 * \author Steve Smith
 * \param regionName Region name
-* \param SectorNum Sector number
+* \param sectorNum Sector number
 * \param per Model period
 * \return total fixed supply
 * \warning Not sure how well using market demand will work if multiple sectors are adding demands. 
@@ -1134,6 +1136,7 @@ void sector::emission( int per )
 *
 * \author Sonny Kim
 * \param per Model period
+* \param emcoef_ind Vector of indirect emissions objects. 
 */
 void sector::indemission( const int per, const vector<Emcoef_ind>& emcoef_ind )
 {
@@ -1304,10 +1307,10 @@ void sector::set_ser_dmd(double dmd, int per)
 * Extremely useful for debugging!
 *
 * \author Steve Smith
-* \param nameStr Name of region
+* \param regionNameIn Name of region
 */
-void sector::setRegionName( const string& nameStr ) {
-    regionName = nameStr;
+void sector::setRegionName( const string& regionNameIn ) {
+    regionName = regionNameIn;
 }
 
 /*! \brief Returns total carbon tax paid by sector.

@@ -79,7 +79,7 @@ public:
     virtual void toOutputXML( std::ostream& out ) const;
     virtual void toXMLDerivedClass( std::ostream& out ) const;
     virtual void toDebugXML( const int period, std::ostream& out ) const;
-    virtual void setMarket( const std::string& regname );
+    virtual void setMarket( const std::string& regionName );
     void applycarbontax( const std::string& regionName, double tax,int per);
     void addghgtax( const std::string& ghgname, const std::string& regionName, const int per);
     virtual void calcShare( const std::string& regionName, const int per, const double gnp_cap = 1 );
@@ -114,7 +114,7 @@ public:
     std::map<std::string, double> getemfuelmap(int per) const;
     void updateSummary(const int per);
     void addToDependencyGraph( std::ostream& outStream, const int period );
-    void setRegionName(const std::string& regname);
+    void setRegionName(const std::string& regionNameIn );
     void addSimul( const std::string sectorName );
     void setupForSort();
     const std::vector<std::string> getSimulList() const;

@@ -130,10 +130,10 @@ public:
     std::map<std::string, double> getemission( const int period) const;
     std::map<std::string, double> getemfuelmap( const int period) const; 
     std::map<std::string, double> getemindmap( const int period ) const;
-    void adjShares( const double dmd, const double varSectorSharesTot, const double totalFixedSupply, const int period);
+    void adjShares( const double dmd, const double shareRatio, const double totalFixedSupply, const int period);
     void updateSummary(const int per);
     void adjustForCalibration( double sectorDemand, double totalFixedSupply, double totalCalOutputs, const int period );
-    void setRegionName(const std::string& regname);
-    void setSectorName(const std::string& sectorName);
+    void setRegionName(const std::string& regionNameIn );
+    void setSectorName(const std::string& sectorNameIn );
 };
 #endif // _SUBSECTOR_H_

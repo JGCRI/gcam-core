@@ -77,7 +77,6 @@ void demsector::clear(){
 * Method parses any input data from child nodes that are specific to the classes derived from this class. 
 *
 * \author Josh Lurz, Steve Smith, Sonny Kim
-* \param nodeName name of current node
 * \param node pointer to the current node in the XML input tree
 */
 void demsector::XMLDerivedClassParseAttr( const DOMNode* node ) {
@@ -90,7 +89,7 @@ void demsector::XMLDerivedClassParseAttr( const DOMNode* node ) {
 * Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class.
 *
 * \author Josh Lurz, Steve Smith
-* \param node pointer to the current node in the XML input tree
+* \param curr pointer to the current node in the XML input tree
 */
 void demsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     
@@ -337,7 +336,7 @@ void demsector::setMarket( const string& regionName ) {
 
 * \param regionName Region name
 * \param per model period
-* \param gnpPerCap GDP per capita (scaled to base year)
+* \param gnp_cap GDP per capita (scaled to base year)
 
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
@@ -469,7 +468,6 @@ void demsector::scaleOutput( int per, double scaleFactor ) {
 *
 *
 * \author Sonny Kim
-* \param regionName region name
 * \param per Model period
 * \todo Sonny to add more to this description
 */

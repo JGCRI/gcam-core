@@ -459,8 +459,7 @@ void subsector::toDebugXML( const int period, ostream& out ) const {
 * Any initializations or calcuations that only need to be done once per period (instead of every iteration) should be placed in this function.
 *
 * \author Steve Smith
-* \param regionName region name
-* \param per Model period
+* \param period Model period
 */
 void subsector::initCalc( const int period ) {
     
@@ -513,7 +512,7 @@ void subsector::calcPrice( const string regionName, const int per ) {
 * Returns the weighted price from sectorprice variable. See also price method.
 *
 * \author Sonny Kim
-* \param per Model period
+* \param period Model period
 */
 double subsector::getPrice( const int period ) const {
     return subsectorprice[ period ];
@@ -572,6 +571,7 @@ double subsector::getCapacityLimit( const int period ) const {
 * capLimited is true when the sector has pegged at its capacity limit
 *
 * \author Steve Smith
+* \param value This variable should be renamed and documented.
 * \param period Model period
 */
 void subsector::setCapLimitStatus( const bool value, const int period ) {
@@ -660,7 +660,7 @@ void subsector::addghgtax( const string& ghgname, const string& regionName, cons
 *
 * \author Marshall Weise, Josh Lurz
 * \param regionName region name
-* \param period model period
+* \param per model period
 * \warning technologies can not independently have fixed outputs at this point
 */
 void subsector::calcTechShares( const string& regionName, const int per ) {
@@ -835,7 +835,7 @@ double subsector::getFixedSupply( const int per ) const {
 *This is necessary since, while the amount of fixed supply is available (via getFixedSupply), the total output of a sector is not always known. So this function enables the amount of fixed supply in terms of the sector share to be communicated. 
 *
 * \author Steve Smith
-* \param per Model period
+* \param period Model period
 */
 double subsector::getFixedShare( const int period ) const {
     return fixedShare[ period ];
@@ -845,7 +845,7 @@ double subsector::getFixedShare( const int period ) const {
 * Enables communication of fixed share to other classes. See documentation for getFixedShare.
 *
 * \author Steve Smith
-\param per Model period
+\param period Model period
 \param share sector share that is fixed supply
 */
 void subsector::setFixedShare( const int period, const double share ) {
@@ -878,7 +878,7 @@ void subsector::setShareToFixedValue( const int period ) {
 * Doing this allows the price and calibration routines to operate with an appropriate share.
 *
 *\author Steve Smith
-*\param period Model period
+*\param per Model period
 */
 void subsector::resetFixedSupply( const int per ) {
     for ( int i=0 ;i<notech; i++ ) {
@@ -930,7 +930,8 @@ void subsector::shareWeightScale( const int period ) {
 * Utility function to linearly scale share weights between two specified points.
 *
 * \author Steve Smith
-* \param period Model period
+* \param beginPeriod Period in which to begin the interpolation.
+* \param endPeriod Period in which to end the interpolation.
 */
 void subsector::shareWeightInterp( const int beginPeriod,  const int endPeriod ) {
     
@@ -1203,6 +1204,7 @@ double subsector::getShare( const int per ) const {
 * Use this function to set the share at any time where shares are supposed to be normalized
 *
 * \author Steve Smith
+* \param shareVal Value to which to set the share.
 * \param per Model period
 */
 void subsector::setShare( const double shareVal, const int per ) {
@@ -1219,10 +1221,10 @@ const double tinyNumber = util::getVerySmallNumber();
 * Extremely useful for debugging!
 *
 * \author Steve Smith
-* \param nameStr Name of region
+* \param regionNameIn Name of region
 */
-void subsector::setRegionName( const string& nameStr ) {
-    regionName = nameStr;
+void subsector::setRegionName( const string& regionNameIn ) {
+    regionName = regionNameIn;
 }
 
 /*! \brief Set name of sector that contains this sub-sector
@@ -1230,10 +1232,10 @@ void subsector::setRegionName( const string& nameStr ) {
 * Extremely useful for debugging!
 *
 * \author Steve Smith
-* \param nameStr Name of region
+* \param sectorNameIn Name of the sector containing this subsector. 
 */
-void subsector::setSectorName( const string& nameStr ) {
-    sectorName = nameStr;
+void subsector::setSectorName( const string& sectorNameIn ) {
+    sectorName = sectorNameIn;
 }
 
 

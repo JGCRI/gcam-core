@@ -225,17 +225,17 @@ const vector<double> SolverLibrary::calcSupplyElas( const Marketplace* marketpla
 *
 * \param marketplace The marketplace to perform derivative calculations on.
 * \param world The world object which is used for calls to World::calc
-* \param sol The vector of SolutionInfo objects which store the current prices, supplies and demands. 
+* \param solutionVector The vector of SolutionInfo objects which store the current prices, supplies and demands. 
 * \param JFDM A matrix of partial derivatives of demands. This matrix is modified by the function and returned by reference.
 * \param JFSM A matrix of partial derivatives of supplies. This matrix is modified by the function and returned by reference.
 * \param worldCalcCount The current number of iterations of World::calc. This value is modified by the function and returned by reference.
 * \param per The current model period.
 * \sa NR_Ron
 */
-void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<SolverLibrary::SolutionInfo>& sol, Matrix& JFDM, Matrix& JFSM, double& worldCalcCount, const int per ) {
+void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<SolverLibrary::SolutionInfo>& solutionVector, Matrix& JFDM, Matrix& JFSM, double& worldCalcCount, const int per ) {
    
    cout << endl << "Begin derivative calculation..." << endl;
-   const int marketsToSolve = static_cast<int>( sol.size() );
+   const int marketsToSolve = static_cast<int>( solutionVector.size() );
    const double DELTAP = 1e-10; // Orginal, What is the proper value for delta?
    vector<double> tmpJFD( marketsToSolve );
    vector<double> tmpJFS( marketsToSolve );
@@ -338,27 +338,27 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<
    // Done creating additive matrices.
    // Now calculate derivatives for each market.
    
-   update( marketplace, sol, per );
+   update( marketplace, solutionVector, per );
    for ( int j = 0; j < marketsToSolve; j++ ) {	// j is column index
       
       // Store the original price.
-      double storedPrice = sol[ j ].X;
+      double storedPrice = solutionVector[ j ].X;
 
       // Price is near zero.
-      if( sol[ j ].X < DELTAP ) {
-         sol[ j ].X = DELTAP;
+      if( solutionVector[ j ].X < DELTAP ) {
+         solutionVector[ j ].X = DELTAP;
       }
       
       // Price is positive.
       else {
-         sol[ j ].X *= ( 1 + DELTAP ); // add price times deltap
+        solutionVector[ j ].X *= ( 1 + DELTAP ); // add price times deltap
       }
       
-      setPricesToMarkets( marketplace, sol, per ); // set new price for one market
+      setPricesToMarkets( marketplace, solutionVector, per ); // set new price for one market
       
       // Now remove additive supplies and demands.
       // Iterate over all regions within the market.
-      const vector<string> containedRegions = marketplace->getContainedRegions( sol[ j ].marketName, sol[ j ].marketGood, per );
+      const vector<string> containedRegions = marketplace->getContainedRegions( solutionVector[ j ].marketName, solutionVector[ j ].marketGood, per );
 
       for ( vector<string>::const_iterator regionIter2 = containedRegions.begin(); regionIter2 != containedRegions.end(); regionIter2++ ) {
          // Remove supply.
@@ -370,8 +370,8 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<
       world->calc( per, containedRegions );
       worldCalcCount += ( static_cast<double>( containedRegions.size() ) / static_cast<double> ( regionNames.size() ) );
       
-      tmpJFD =  calcDemandElas( marketplace, sol, j, per ); // calculate demand elasticities
-      tmpJFS =  calcSupplyElas( marketplace, sol, j, per ); // calculate supply elasticities
+      tmpJFD =  calcDemandElas( marketplace, solutionVector, j, per ); // calculate demand elasticities
+      tmpJFS =  calcSupplyElas( marketplace, solutionVector, j, per ); // calculate supply elasticities
       
       for ( int i = 0; i < marketsToSolve; i++ ) {// copy column vector to Jacobian Matrix
          JFDM[ i ][ j ] = tmpJFD[ i ]; // i is row index
@@ -379,7 +379,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<
       }
       
       marketplace->restoreinfo( per ); // restore market supplies and demands.
-      sol[ j ].X = storedPrice; //  restore perturbed market price
+      solutionVector[ j ].X = storedPrice; //  restore perturbed market price
    }
 }
 
