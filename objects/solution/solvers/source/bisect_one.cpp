@@ -76,7 +76,7 @@ SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, co
     solverLog.setLevel( ILogger::NOTICE );
     solverLog << "BisectOne function called on market " << worstSol.getName() << "." << endl;
     unsigned int numIterations = 0;
-    worstSol.expandBracket( 1.025 ); // I'm not sure about this.
+    SolverLibrary::bracketOne( marketplace, world, solverSet, worstSol, period );
     do {
         solverSet.printMarketInfo( "Bisect One" + worstSol.getName(), calcCounter->getPeriodCount(), singleLog );
 
