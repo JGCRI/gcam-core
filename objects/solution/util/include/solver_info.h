@@ -71,7 +71,7 @@ public:
     double getDemandElasWithRespectTo( const unsigned int aMarketNumber ) const;
     double getSupplyElasWithRespectTo( const unsigned int aMarketNumber ) const;
     const std::vector<std::string> getContainedRegions() const;
-    void printTrackED() const;
+    void printTrackED( bool printEOL = true ) const;
     SupplyDemandCurve createSDCurve();
     /*!
     * \brief Binary function used to order SolverInfo* pointers by decreasing relative excess demand. 

@@ -44,6 +44,7 @@ public:
    static bool isWithinTolerance( const double excessDemand, const double demand, const double solutionTolerance, const double excessDemandSolutionFloor );
    static void derivatives( Marketplace* marketplace, World* world, SolverInfoSet& solutionVector, const int per );
    static void invertMatrix( Matrix& A );
+	
    static void updateMatrices( SolverInfoSet& sol, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
    static bool bracket( Marketplace* marketplace, World* world, const double bracketInterval, SolverInfoSet& sol, const int period );
 private:

@@ -109,6 +109,8 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     // addIteration( worstSol.getName(), worstSol.getRelativeED( edSolutionFloor ) );
 
     do {
+        solverSet.printMarketInfo( "Begin logNR", calcCounter->getPeriodCount() );
+
         // Declare matrices here due to resize bug.
         Matrix JF( solverSet.getNumSolvable(), solverSet.getNumSolvable() );
         Matrix JFDM( solverSet.getNumSolvable(), solverSet.getNumSolvable() );

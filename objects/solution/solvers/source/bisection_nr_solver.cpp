@@ -86,7 +86,8 @@ bool BisectionNRSolver::solve( const int period ) {
     sol.updateSolvable( false );
 
     logfile << ",Starting Solution. Solving for " << sol.getNumSolvable() << " markets." << endl;
-
+    sol.printMarketInfo( "Begin Solve", calcCounter.getPeriodCount() );
+    
     // if no markets to solve, break out of solution.
     if ( sol.getNumSolvable() == 0 ) {
         cout << "Model solved with last period's prices"; 
@@ -211,3 +212,4 @@ bool BisectionNRSolver::solve( const int period ) {
         return false;
     }
 }
+

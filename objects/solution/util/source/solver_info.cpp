@@ -454,9 +454,15 @@ void SolverInfo::print( ostream& out ) const {
     out << getName() << "," << X << "," << XL << "," << XR << ","<< getED() << "," << EDL <<","<< EDR << "," << bracketed << "," << demand << "," << supply;
 }
 
-//! Print out information for tracking.
-void SolverInfo::printTrackED() const {
-    cout << getName() << " X: " << X << " ED: " << getED() << " RED: " << getRelativeED( 0 ) << " S: " << supply << " D: " << demand << endl;
+/*! \brief Print out information for tracking
+* \author Josh Lurz, Steve Smith
+* \param printEOL optional parameter to control printing of linefeed (default true).
+*/
+void SolverInfo::printTrackED( bool printEOL ) const {
+    cout << getName() << " X: " << X << " ED: " << getED() << " RED: " << getRelativeED( 0 ) << " S: " << supply << " D: " << demand;
+    if ( printEOL ) {
+      cout << endl;
+   }
 }
 
 SupplyDemandCurve SolverInfo::createSDCurve(){

@@ -105,6 +105,7 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
         if (bugMinimal) {
             bugoutfile << " Bisect " << numIterations;
         }
+        solverSet.printMarketInfo( "Begin Bisect All", calcCounter->getPeriodCount() );
 
         for ( unsigned int i = 0; i < solverSet.getNumSolvable(); ++i ) {
             SolverInfo& currSol = solverSet.getSolvable( i );

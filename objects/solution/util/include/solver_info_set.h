@@ -63,6 +63,7 @@ public:
     bool isAllSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR );
     void printUnsolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR );
     void findAndPrintSD( const double aEDTolerance, const double aDemandFloor, World* aWorld, Marketplace* aMarketplace, const int aPeriod, Logger* aLogger );
+    void printMarketInfo( const std::string& comment, const double worldCalcCount ) const;
 private:
     unsigned int period;
     Marketplace* marketplace;

@@ -974,7 +974,7 @@ void Region::adjustCalibrations( const int period ) {
                     if ( calDemand != 0 ) {
                         logfile << ", ****Outputs are NOT all fixed." << endl;
                     } else {
-                        logfile << ", fixed demand is zero or indirect." << endl;
+                      //  logfile << ", fixed demand is zero or indirect." << endl;
                     }
                 }
 

@@ -342,6 +342,41 @@ void SolverInfoSet::print( ostream& out ) const {
     */
 }
 
+/*! \brief Utility function to print out market information for a specified market.
+*
+* Function useful for debugging. A series of these printouts for a specified market 
+* can be turned on from the configuration file
+*
+* \author Steve Smith
+* \param comment string to print after information
+* \param worldCalcCount iteration count
+*/
+void SolverInfoSet::printMarketInfo( const string& comment, const double worldCalcCount ) const {
+   Configuration* conf = Configuration::getInstance();
+   std::string monitorMktGood = conf->getString( "monitorMktGood" );
+   if ( monitorMktGood != "" ) {
+      monitorMktGood = conf->getString( "monitorMktName" ) + monitorMktGood;
+      for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
+         if ( iter->getName() == monitorMktGood ) {
+            cout << "Iter: " << worldCalcCount << ".  "; 
+            iter->printTrackED( false );
+            cout << "  << at " << comment << endl;
+            return;
+         }
+      } // end for loop
+
+      for( ConstSetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
+         if ( iter->getName() == monitorMktGood ) {
+            cout << "Iter: " << worldCalcCount << ".  "; 
+            iter->printTrackED();
+            cout << "  << at " << comment << endl;
+            return;
+         }
+      } // end for loop
+         
+   } // end monitorMktGood != "" check
+}
+
 /*! \brief Find and print supply-demand curves for unsolved markets.
 *
 * This function determines the n worst markets, where n is defined by the configuration file, 

@@ -423,3 +423,4 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
     return code;
 }
 
+
