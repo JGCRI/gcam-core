@@ -16,10 +16,10 @@ Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E 
 5,inds_oil       ,0.002,0.002,0.002,0.002,0.002,0.002,0.002,0.002,0.002,0.002,0.002,0.002,0.002,0.002
 6,inds_gas       ,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
 7,inds_biom      ,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065,0.065
-8,boc_coal       ,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
-9,boc_oil        ,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003
-10,boc_gas        ,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
-11,boc_biom       ,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8
+8,bldg_coal       ,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+9,bldg_oil        ,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003
+10,bldg_gas        ,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+11,bldg_biom       ,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8
 12,trans_coal     ,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02
 13,trans_oil      ,1.3,1.3,1.3,1.3,1.3,1.3,1.3,1.3,1.3,1.3,1.3,1.3,1.3,1.3
 14,trans_gas      ,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
@@ -43,10 +43,10 @@ Src Index,Label,US,,Emission Factor for US derived from US EPA emission with Min
 5,inds_oil,0.00228406,,
 6,inds_gas,0.00859637,,
 7,inds_biom,0.01812543,,
-8,boc_coal,0.00575384,,
-9,boc_oil,0.00142938,,
-10,boc_gas,0.00088501,,
-11,boc_biom,0.25651418,
+8,bldg_coal,0.00575384,,
+9,bldg_oil,0.00142938,,
+10,bldg_gas,0.00088501,,
+11,bldg_biom,0.25651418,
 12,trans_coal,0,
 13,trans_oil,0.36236177,
 14,trans_gas,0,
@@ -93,7 +93,7 @@ Gas,NumSources,Nregions,DataType,,,,,,,,,,,
 0,0,2,3,4,5,6,7,8,9,10,11,12,13,14
 Src Index,Label,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E ASIA,EEUR,KOR,INDIA
 7,inds_biom,0,0,0,0,0,0.028,0.002,0.072,0.292,0.189,0,0,0.042
-11,boc_biom,0.031,0.219,0.003,0.008,0.804,6.064,0.277,4.833,0.94,4.659,0.107,0.032,5.174
+11,bldg_biom,0.031,0.219,0.003,0.008,0.804,6.064,0.277,4.833,0.94,4.659,0.107,0.032,5.174
 13,trans_oil,1.169,6.864,2.303,0.778,9.58,1.213,1.474,1.179,3.287,2.353,1.031,0.347,0.933,
 15,fosfu_prod,0.9,1.98,0.046,0.491,7.397,1.176,7.725,4.286,3.351,1.358,0.411,0.003,0.377,
 16,inds_proc,0.494,5.242,2.282,0.235,2.643,1.388,0.374,0.764,1.502,1.266,0.878,0.232,0.544,
@@ -104,7 +104,7 @@ Src Index,Label,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E ASI
 EoF,,,,,,,,,,,,,,,
 
 INPUT_TABLE,,,,,,,,,,,,,,,
-Variable ID,,CONVERGENCE TEST TABLE --  this makes the emissions coefficient converge for all regions (to the US coeff),,,,,,,,,,,,,
+Variable ID,,CONVERGENCE TABLE --  this makes the emissions coefficient converge for all regions to specified value,,,,,,,,,,,,,
 810,,,,,,,,,,,,,,,
 Source Inputs,,"Enter the desired coefficient (check OG_COEFFS.CSV for the implied coefficients if base year emissions are entered), -1 turns off convergence for that cell",,,,,,,,,,,,,
 Gas,NumSources,Nregions,,,,,,,,,,,,,
@@ -118,10 +118,10 @@ Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E 
 5,inds_oil,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
 6,inds_gas,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
 7,inds_biom,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-8,boc_coal,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-9,boc_oil,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-10,boc_gas,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-11,boc_biom,-1,-1,-1,-1,-1,0.2,0.2,0.2,0.2,-1,0.2,0.2,0.2,0.2
+8,bldg_coal,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+9,bldg_oil,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+10,bldg_gas,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+11,bldg_biom,0.2,-1,-1,-1,-1,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
 12,trans_coal,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
 13,trans_oil,-1,0.36,0.36,0.36,0.36,0.36,0.36,0.36,0.36,0.36,0.36,0.36,0.36,0.36
 14,trans_gas,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
@@ -131,4 +131,29 @@ Src Index,Label,US,CANADA,WEUR,JAPAN,AUS&NZ,FSU,ACENP,MIDEAST,AFRICA,L AMER,S&E 
 18,deforest,0.00002166,0.00002166,0.00002166,0.00002166,0.00002166,0.00002166,0.00002166,0.00002166,0.00002166,0.00002166,0.00002166,0.00002166,0.00002166,0.00002166
 19,agri_was,0.00000001,0.00000001,0.00000001,0.00000001,0.00000001,0.00000001,0.00000001,0.00000001,0.00000001,0.00000001,0.00000001,0.00000001,0.00000001,0.00000001
 
-EoF,,,,,,,,,,,,,,,
+**************************,,,,,,,,,,,,,,,
+Correction of mis-matched input data for a few regions -- resulting in huge emissions factors where there are small emissions,,,,,,,,,,,,,,,
+**************************,,,,,,,,,,,,,,,
+
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,
+801,,,,,,,,,,,,,,,
+Source Inputs,,,,,,,,,,,,,,,
+Gas,NumSources,Nregions,DataType,,,,,,,,,,,,
+4,1,1,0,(Base-year emissions coefficient Tg C eJ-1),,,,,,,,,,,
+0,0,1,,,,,,,,,,,,,
+Src Index,Label,USA,,
+18,deforest,0.5,,
+
+
+INPUT_TABLE,,,,
+Variable ID,,,,
+801,,,,
+Source Inputs,,,,
+Gas,NumSources,Nregions,DataType,
+4,1,1,0,(Base-year emissions coefficient Tg C eJ-1)
+0,0,8,,
+Src Index,Label,MIDEAST,,
+11,bldg_biom,0.5,,
+
+EoF,,,,
