@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Son H. Kim (PNNL) -->
-<scenario name="WRE550">
-	<summary>"WRE 550 Scenario"</summary>
+<scenario name="WRE450">
+	<summary>"WRE 450 Scenario"</summary>
 	<world>
 		<region name="USA">
 			<ghgpolicy name="CO2">
