@@ -16,6 +16,7 @@
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
 #include <algorithm>
+#include <map>
 
 // Forward declarations
 class Subsector;
@@ -24,6 +25,7 @@ class Emcoef_ind;
 class Region;
 class Logger;
 class GDP;
+class Tabs;
 
 /*! 
 * \ingroup CIAM
