@@ -67,14 +67,22 @@ protected:
     void sumInput( const int period ); // private function, sum taken care of automatically
     double getFixedShare( const int sectorNum, const int period ) const; // utility function 
     virtual void calcPrice( const int period );
+    void production( const int period );
+    void adjustForFixedSupply( const double marketDemand, const int period );
+    void setServiceDemand( const double demand, const int period );
+    void setoutput( const double demand, const int period ); 
+    void adjSharesCapLimit( const int period ); 
+    void checkShareSum( const int period ) const;
+    double getFixedSupply( const int period ) const; 
+    bool isCapacityLimitsInSector( const int period ) const;
     virtual void printStyle( std::ostream& outStream ) const;
 
 public:
-    Sector( std::string regionName );
+    explicit Sector( std::string regionName );
     virtual ~Sector();
     virtual void clear();
     std::string getName() const;
-	virtual const std::string& getXMLName() const = 0;
+    virtual const std::string& getXMLName() const = 0;
     virtual void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
     virtual void XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
@@ -82,30 +90,26 @@ public:
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
-	virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     virtual void setMarket();
-    void addGhgTax( const std::string& ghgname, const int period );
-    virtual void calcShare( const int period, const GDP* gdp );
-    void adjSharesCapLimit( const int period ); 
-    void checkShareSum( const int period ) const;
     void initCalc( const int period );
-    void production( const int period );
     virtual void calibrateSector( const int period ); 
+    void setFinalSupply( const int period );
     void setoutput( const double demand, const int period, const GDP* gdp ); 
-    void setServiceDemand( const double demand, const int period );
     void adjustForFixedOutput( const double marketDemand, const int period );
     void supply( const int period, const GDP* gdp );
     double getOutput( const int period );
+    void calcFinalSupplyPrice( const GDP* gdp, const int period );
     double getFixedOutput( const int period, bool printValues = false ) const; 
     bool outputsAllFixed( const int period ) const;
-    bool isCapacityLimitsInSector( const int period ) const;
-    double getCalOutput( const int period ) const;
-	 bool inputsAllFixed( const int period, const std::string& goodName ) const;
-	 double getFixedInputs( const int period, const std::string& goodName, const bool bothVals=true ) const;
-	 void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
+    bool inputsAllFixed( const int period, const std::string& goodName ) const;
+    double getFixedInputs( const int period, const std::string& goodName, const bool bothVals=true ) const;
+    void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
     double getPrice( const int period );
+    double getCalOutput( const int period ) const;
+    virtual void calcShare( const int period, const GDP* gdp );
     void emission( const int period );
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period );
@@ -126,7 +130,7 @@ public:
     std::vector<std::string> getInputDependencies( const Region* parentRegion ) const;
     const std::vector<std::string>& getDependsList() const;
     void printSectorDependencies( Logger* logger ) const;
-    
+
     /*!
     * \brief Binary function used to order Sector* pointers by input dependency. 
     * \author Josh Lurz
@@ -140,7 +144,7 @@ public:
         bool operator()( const Sector* lhs, const Sector* rhs ) const {
             // First cache a copy of the dependsList
             std::vector<std::string> rhsDependsList = rhs->getDependsList();
-            
+
             // Check if the right Sector depends on the left Sector.
             return std::binary_search( rhsDependsList.begin(), rhsDependsList.end(), lhs->getName() );
         }

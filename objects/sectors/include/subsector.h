@@ -20,7 +20,6 @@
 // Forward declarations
 class Summary;
 class technology;
-class hydro_tech;
 class Emcoef_ind;
 class Tabs;
 class GDP;
@@ -49,8 +48,7 @@ protected:
     double tax; //!< subsector tax or subsidy
     double basesharewt; //! subsector base year consumption share weight
     double CO2EmFactor; //! CO2 emissions factor, calculated based on fuel input and share
-    std::vector<std::vector<technology*> > techs; //!< array of pointers to technology objects for each period
-    std::vector<hydro_tech> hydro; //!< array of hydroelectricity by period
+    std::vector<std::vector<technology*> > techs; //!< vector of technology by period
     std::vector<double> capLimit; //!< subsector capacity limit
     std::vector<bool> capLimited; //!< true if subsector has hit its capacity limit
     std::vector<double> fixedShare; //!< share of this sub-sector that is fixed capacity -- set in sector
@@ -69,7 +67,7 @@ protected:
     std::vector<bool> calibrationStatus; // Set true if sector or any tech is calibrated
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> techNameMap; //!< Map of technology name to integer position in vector. 
-
+    void clear();
     void shareWeightScale( const int pmer ); // Consistantly adjust share weights
     void sumOutput( const int period );
     void shareWeightInterp( const int beginPeriod,  const int endPeriod );
@@ -78,7 +76,6 @@ protected:
 public:
     Subsector( const std::string regionName, const std::string sectorName );
     virtual ~Subsector();
-    virtual void clear();
     static double capLimitTransform( double capLimit, double orgShare ); 
     const std::string getName() const;
     void XMLParse( const xercesc::DOMNode* tempNode );
@@ -103,7 +100,6 @@ public:
     double getfuelprice( const int period ) const; 
     double getwtfuelprice( const int period ) const;
     double getCapacityLimit( const int period ) const;
-    void addGhgTax( const std::string& ghgname, const int period ); 
     virtual void calcShare( const int period, const GDP* gdp ); 
     void setShare( const double shareVal, const int period );
     void normShare( const double sum, const int period );

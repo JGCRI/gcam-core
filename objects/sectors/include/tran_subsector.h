@@ -35,7 +35,6 @@ protected:
     
 public:
     TranSubsector( std::string regionName, std::string sectorName );
-    virtual void clear();
     virtual void XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
     virtual void calcShare( const int period, const GDP* gdp ); 
     virtual void setoutput( const double demand, const int period, const GDP* gdp );
