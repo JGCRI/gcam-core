@@ -56,6 +56,9 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     fControl = 0;
     techCh = 0;
     mac = 0;
+    gdp0 = 0;
+    finalEmissCoef = 0;
+    tau = 0;
 }
 
 //! Destructor
@@ -102,6 +105,9 @@ void Ghg::copy( const Ghg& other ){
     fControl = other.fControl;
     techCh = other.techCh;
     mac = other.mac;
+    gdp0 = other.gdp0;
+    finalEmissCoef = other.finalEmissCoef;
+    tau = other.tau;
     // Perform a deep copy on the GhgMac.
     ghgMac.reset( other.ghgMac->clone() );
 }
@@ -359,16 +365,25 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
 
     const World* world = scenario->getWorld();
     const Marketplace* marketplace = scenario->getMarketplace();
+    
+    // Check if there is a tax. If not, return.
+    // Note: This function does not work correctly if the CarbonTax is assumed to be zero
+    // and this early return is removed. May indicate a problem.
+    if ( !marketplace->doesMarketExist( name, regionName, period ) ){
+        return 0;
+    }
+    
+    // Constants
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const double SMALL_NUM = util::getSmallNumber();
     const double CVRT_tg_MT = 1e-3; // to get teragrams of carbon per EJ to metric tons of carbon per GJ
-    // name is GHG name
+    
     double GHGTax = marketplace->getPrice(name,regionName,period);
     // get carbon storage cost from the market
     double marketStorageCost = 0;
     if ( marketplace->doesMarketExist( storageName, regionName, period ) ) {
         // market exists, use market storage cost
-        marketStorageCost = marketplace->getPrice(storageName,regionName,period);
+        marketStorageCost = marketplace->getPrice( storageName, regionName, period );
     }
     else {
         // market does not exist, use default or read in storage cost
@@ -472,7 +487,7 @@ void Ghg::findControlFunction( const double gdpCap, const double emissDrive, con
                 // cannot divide by 0 
                 fMax = 100 * (1 - ( finalEmissCoef / (emissCoef)));
             }
-            else{
+            else {
                 fMax = 0;
                 cout << "Warning: emissCoef = 0, control function set to 0"<< endl;
             }
