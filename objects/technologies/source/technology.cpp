@@ -89,12 +89,12 @@ void technology::copy( const technology& techIn ) {
     fuelname = techIn.fuelname;
     doCalibration = techIn.doCalibration;
     calInputValue = techIn.calInputValue;
+    doCalOutput = techIn.doCalOutput;
+    calOutputValue = techIn.calOutputValue;
     emissmap = techIn.emissmap; 
     emfuelmap = techIn.emfuelmap; 
     emindmap = techIn.emindmap; 
-    calInputValue = techIn.calInputValue;
     carbonValue = techIn.carbonValue;
-    
     resource = techIn.resource;
     A = techIn.A;
     B = techIn.B;
@@ -156,6 +156,7 @@ void technology::initElementalMembers(){
     doCalibration = false;
     doCalOutput = false;
     calInputValue = 0;
+    calOutputValue = 0;
     carbonValue = 0;
 }
 
