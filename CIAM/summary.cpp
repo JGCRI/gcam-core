@@ -11,7 +11,6 @@
 Summary::Summary() {
 }
 
-
 void Summary::initfuelcons( const string& fname, const double value ){
 
 	fuelcons[ fname ] += value;
