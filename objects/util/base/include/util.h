@@ -89,22 +89,23 @@ namespace util {
     * \return Whether or not the two values are equal.
     */
     template<class T>
-    bool isEqual( const T firstValue, const T secondValue ) {
+    inline bool isEqual( const T firstValue, const T secondValue ) {
         return ( firstValue == secondValue );
     }
     /*! \brief A function to determine if two doubles are equal.
     *
     * Due to inaccuracies in machine arithmatic, it is virtually impossible for two doubles with decimal values
     * that are calculated with different methods to be exactly equal. This function checks if the two values
-    * are within a very small threshhold. 
+    * are within a very small threshhold. This an explicit template specialization for doubles which allows
+    * isEqual to act differently for doubles. These function had to be declared inline to avoid linker errors.
     *
     * \warning Do not compare two doubles using the == operator. Use this function instead. 
     * \param firstNumber The first double to compare.
     * \param secondNumber The second double to compare.
     * \return Whether the two doubles are within SMALL_NUM of equivalence. 
     */
-    template<double>
-    bool isEqual( const double firstNumber, const double secondNumber ) {
+    template<>
+    inline bool isEqual<double>( const double firstNumber, const double secondNumber ) {
         const static double SMALL_NUM = 1E-10;
         return ( fabs( firstNumber - secondNumber ) < SMALL_NUM );
     }
