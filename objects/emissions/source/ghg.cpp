@@ -334,7 +334,7 @@ void Ghg::calcEmission( const string& regionName, const string& fuelname, const 
 		if ( emissionsWereInput ) {
 			emission = inputEmissions;
 			emissFuel = inputEmissions;
-			if ( input == output ) {
+			if ( input != output ) {
 				emissCoef = inputEmissions / ( (1.0 - rmfrac) * (input-output) );
 			} else {
 				emissCoef = 0;
@@ -406,4 +406,8 @@ void Ghg::setEmissCoef( const double emissCoefIn ) {
 //! Return flag that indicates if emissions were input for this technology
 bool Ghg::getEmissionsInputStatus() const {
 	return emissionsWereInput;
+}
+//! Set the flag that indicates that emissions were input for this technology
+void Ghg::setEmissionsInputStatus() {
+	emissionsWereInput = true;
 }

@@ -128,6 +128,7 @@ public:
     const std::vector<std::string> getGHGNames() const;
     double getGHGEmissionCoef( const std::string& ghgName ) const;
 	 bool getEmissionsInputStatus( const std::string& ghgName ) const;
+	 void setEmissionsInputStatus( const std::string& ghgName );
 	 void setGHGEmissionCoef( const std::string& ghgName, const double emissionsCoef );
     std::map<std::string,double> getemissmap() const; // return map of all ghg emissions
     std::map<std::string,double> getemfuelmap() const; // return map of all ghg emissions

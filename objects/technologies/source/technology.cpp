@@ -159,7 +159,12 @@ void technology::initElementalMembers(){
     carbonValue = 0;
 }
 
-//! initialize technology with xml data
+/*! \brief initialize technology with xml data
+*
+* \author Josh Lurz
+* \param node current node
+* \todo Add Warning when addin files add new containers (regions, sectors, technologies, etc.)
+*/
 void technology::XMLParse( const DOMNode* node )
 {	
     Ghg* tempGhg = 0;
@@ -889,6 +894,22 @@ bool technology::getEmissionsInputStatus( const std::string& ghgName ) const {
 	 return ghg[ ghgIndex ]->getEmissionsInputStatus();
 }
 
+/*! \brief Set the flag that indicates that a GHG had an emissions coefficient read in 
+* This function searches the mapping of GHG names to values and
+* returns the appropriate flag,
+* or -1 if there is not a GHG with the given name.
+* \todo Eliminate this function and getGHGNames when technology is converted to a multi-timeperiod structure.
+* \param ghgName The name of a GHG to return the emissions coefficient for.
+* \warning Assumes there is only one GHG object with any given name
+* \warning No error checking is possible for this function. Error checking is done in function getGHGEmissionCoef.
+* \return A boolean that indicates if the GHG with the given name had an emissions read-in.
+*/
+void technology::setEmissionsInputStatus( const std::string& ghgName ){
+    const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
+	 
+	 return ghg[ ghgIndex ]->setEmissionsInputStatus();
+}
+
 //! return map of all ghg emissions
 map<string,double> technology::getemissmap() const {
     return emissmap;
@@ -928,8 +949,11 @@ void technology::setYear( const int yearIn ) {
 */
 int technology::getNumbGHGs()  const {
 	std::vector<std::string> ghgNames = getGHGNames();
-
-	return static_cast<int>( ghgNames.size() );
+   if ( ghgNames[0] != "" ) {
+		return static_cast<int>( ghgNames.size() ); 
+	} else {
+		return 0;
+	}
 }
 
 

@@ -52,6 +52,7 @@ public:
     double getEmissCoef() const;
     void setEmissCoef( const double emissCoefIn );
 	 bool getEmissionsInputStatus() const;
+	 void setEmissionsInputStatus();
 protected:
     std::string name; //!< name of ghg gas
     std::string unit; //!< unit for ghg gas

@@ -507,15 +507,20 @@ void Subsector::initCalc( const int period ) {
 		std::vector<std::string> ghgNames;
 		ghgNames = techs[i][period]->getGHGNames();
 		
-		int numberOfGHGs = static_cast<int>( ghgNames.size() ) ;
+		int numberOfGHGs =  techs[ i ][ period ]->getNumbGHGs();
+		if (numberOfGHGs > 1 ) {
+			cout << "have extra GHGs" << endl;
+		}
+
 		if ( numberOfGHGs != techs[i][ period - 1 ]->getNumbGHGs() ) {
 			cerr << "WARNING: Number of GHG objects changed in period " << period << ", tech: ";
 			cerr << techs[i][ period ]->getName();
 			cerr << ", sub-s: "<< name << ", sect: " << sectorName << ", region: " << regionName << endl;
 		}
 		for ( int j=0 ; j<numberOfGHGs && period > 0; j++ ) {
-			if ( techs[i][ period ]->getEmissionsInputStatus( ghgNames[j] ) ) {
-				techs[i][ period + 1 ]->setGHGEmissionCoef( ghgNames[j] , techs[i][ period ]->getGHGEmissionCoef( ghgNames[j] ) );
+			if ( techs[i][ period - 1 ]->getEmissionsInputStatus( ghgNames[j] ) ) {
+				techs[i][ period ]->setGHGEmissionCoef( ghgNames[j] , techs[i][ period - 1 ]->getGHGEmissionCoef( ghgNames[j] ) );
+				techs[i][ period ]->setEmissionsInputStatus( ghgNames[j] ); // Need to set this flag so that all future ghg objects get emissions coef passed to them
 			}
 		}
     }
@@ -1269,11 +1274,15 @@ void Subsector::outputfile() const {
     fileoutput3( regionName,sectorName,name," ","production","EJ",output);
     // Subsector price
     fileoutput3( regionName,sectorName,name," ","price","$/GJ(ser)",subsectorprice);
+    // Subsector carbon taxes paid
     for (m=0;m<maxper;m++)
         temp[m] = summary[m].get_emissmap_second("CO2");
-    fileoutput3( regionName,sectorName,name," ","CO2 emiss","MTC",temp);
-    // Subsector carbon taxes paid
     fileoutput3( regionName,sectorName,name," ","C tax paid","Mil90$",carbontaxpaid);
+    fileoutput3( regionName,sectorName,name," ","CO2 emiss","MTC",temp);
+
+    for (m=0;m<maxper;m++)
+        temp[m] = summary[m].get_emissmap_second("NOx");
+    fileoutput3( regionName,sectorName,name," ","NOx emiss","Tg",temp);
     
     // do for all technologies in the Subsector
     for (i=0;i<notech;i++) {
