@@ -247,7 +247,7 @@ void sector::price(int per)
 {
 	sectorprice[per]=0.0;
 	for (int i=0;i<nosubsec;i++)		
-		sectorprice[per] += subsec[i]->showshare(per) * subsec[i]->showprice(per);
+		sectorprice[per] += subsec[i]->showshare(per) * subsec[i]->getprice(per);
 }
 
 //! return sector price
@@ -659,6 +659,9 @@ void demsector::XMLParse( const DOMNode* node ){
 		if( nodeName == "market" ){
 			market = XMLHelper<string>::getValueString( curr ); // only one market element.
 		}
+		else if( nodeName == "priceelasticity" ) {
+			pElasticityBase = XMLHelper<double>::getValue( curr );
+		}
 		else if( nodeName == "price" ){
 			sectorprice.push_back( XMLHelper<double>::getValue( curr ) );
 		}
@@ -667,9 +670,6 @@ void demsector::XMLParse( const DOMNode* node ){
 		}
 		else if( nodeName == "energyconsumption" ){
 			fe_cons.push_back( XMLHelper<double>::getValue( curr ) );
-		}
-		else if( nodeName == "priceelasticity" ){
-			pElasticity.push_back( XMLHelper<double>::getValue( curr ) );
 		}
 		else if( nodeName == "incomeelasticity" ){
 			iElasticity.push_back( XMLHelper<double>::getValue( curr ) );
@@ -696,6 +696,7 @@ void demsector::XMLParse( const DOMNode* node ){
 	pe_cons.resize( maxper ); // sectoral primary energy consumption
 	input.resize( maxper ); // sector total energy consumption
 	// output.resize( maxper ); // total amount of final output from sector
+	pElasticity.resize( maxper ); // price elasticity for each period
 	carbontaxpaid.resize( maxper ); // total sector carbon taxes paid
 	summary.resize( maxper ); // object containing summaries
 	fe_cons.resize(maxper); // end-use sector final energy consumption
@@ -718,6 +719,7 @@ void demsector::toXML( ostream& out ) const {
 	// write out the market string.
 	XMLWriteElement( market, "market", out );
 	XMLWriteElement( unit, "unit", out );
+	XMLWriteElement( pElasticityBase, "pElasticityBase", out );
 	
 	for( i = 0; i < static_cast<int>( sectorprice.size() ); i++ ){
 		XMLWriteElement( sectorprice[ i ], "price", out, modeltime.getper_to_yr( i ) );
@@ -780,6 +782,7 @@ void demsector::toDebugXML( const int period, ostream& out ) const {
 	// write out the market string.
 	XMLWriteElement( market, "market", out );
 	XMLWriteElement( unit, "unit", out );
+	XMLWriteElement( pElasticityBase, "pElasticityBase", out );
 
 	// Write out the data in the vectors for the current period.
 	// First write out inherited members.
@@ -875,6 +878,17 @@ void demsector::calc_share( const string regionName, const int per, const double
 		subsec[i]->norm_share(sum, per);	
 }
 
+//! Calculate end-use service price elasticity
+void demsector::calc_pElasticity(int per)
+{
+	pElasticity[per]=0.0;
+	double sectorfuelprice = 0; // using basesharewts, for p elasticity only
+	for (int i=0;i<nosubsec;i++) {
+		sectorfuelprice += subsec[i]->getwtfuelprice(per);
+	}
+	pElasticity[per] = pElasticityBase*sectorprice[per]/sectorfuelprice;
+}
+
 
 
 //! Aggrgate sector energy service demand function.
@@ -895,10 +909,10 @@ void demsector::aggdemand( const string& regionName, const double gnp_cap, const
 	else {
 		// perCapitaBased is true or false
 		if (perCapitaBased) { // demand based on per capita GNP
-			ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp_cap,iElasticity[per]);
+			ser_dmd = base*pow(priceRatio,pElasticity[per])*pow(gnp_cap,iElasticity[per]);
 		}
 		else { // demand based on scale of GNP
-			ser_dmd = base*pow(priceRatio,pelasticity)*pow(gnp,iElasticity[per]);
+			ser_dmd = base*pow(priceRatio,pElasticity[per])*pow(gnp,iElasticity[per]);
 			int stop =1;
 		}
 	}

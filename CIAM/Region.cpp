@@ -564,18 +564,21 @@ void Region::finalsupply(int per)
 	int i = 0;
 	int j = 0;
 	double mrksupply;
+
 	
 	// These debugging statements will help diagnose if there is a simultunaety problem of
 	// the sort where a demand is set and later is added to elsewhere.
-	const int bug = 0;
+
+	const bool bug = false;
 	double mrkdmd, mrkdmd1,mrkdmd2,mrkdmd3,mrkdmd4,mrkdmd5;
 	
+
 	// loop through all sectors once to get total output
 	//marketplace.storeInfo(per); // market info from end-use demand
 	for (i=0;i<nossec;i++) {
-		// start with last supply sector
-		// need demand for all intermediate and final energy to
-		// determine need for primary energy
+	// start with last supply sector
+	// need demand for all intermediate and final energy to
+	// determine need for primary energy
 		j = nossec - (i+1);
 		
 		goodName = supplysector[j]->getName();
@@ -597,7 +600,9 @@ void Region::finalsupply(int per)
 		}
 	}
 	
-	if (bug)  { mrkdmd4 = marketplace.showdemand( "electricity" ,name, per ); }
+	if (bug)  { 
+		mrkdmd4 = marketplace.showdemand( "electricity" ,name, per ); 
+	}
 	
 	
 	//sdfile<<"\n"; //supply & demand info
@@ -606,6 +611,7 @@ void Region::finalsupply(int per)
 	// loop through supply sectors and assign supplies to marketplace and update fuel consumption map
 	// the supplies in the market sector are, at present, not used except to double check 
 	// that the output of the supply sectors does equal supply
+
 	for (i=0;i<nossec;i++) {
 		// name is country/region name
 		//supplysector[j].supply(name,no,per);
@@ -613,9 +619,11 @@ void Region::finalsupply(int per)
 		goodName = supplysector[i]->getName();
 		mrksupply = supplysector[i]->getoutput(per);
 		// set market supply of intermediate goods
+
 		if (bug && "electricity" == goodName) {
 			mrkdmd5 = marketplace.showdemand( goodName,name, per ); 
 		}
+
 		marketplace.setsupply(goodName,name,mrksupply,per);
 		
         if (bug && "electricity" == goodName) {
@@ -638,7 +646,7 @@ void Region::calc_gnp(int per)
 {
 	double labprd=0;
 	
-	if (per==modeltime.getyr_to_per(1975)) {
+	if (per<=modeltime.getyr_to_per(1990)) {
 		gnp[per] = 1.0; // normalize to 1975
 	}
 	else {
@@ -741,6 +749,10 @@ void Region::calcEndUsePrice( const int period ) {
 		
 		// calculate aggregate service price for region
 		price_ser[ period ] += demandsector[ i ]->getoutput( 0 ) * demandsector[ i ]->showprice( period );
+		
+		// calculate service price elasticity for each demand sector
+		demandsector[ i ]->calc_pElasticity( period );
+		
 	}
 }
 
@@ -1086,8 +1098,7 @@ void Region::findSimul(const int per) const {
 							cout << "  ***Sector " << InnerSectorName << " uses " << InnerFuelName << endl; 
 						}
                     }
-                    else
-                    {
+                    else {
                         if (WriteOut) { 
 							cout << "     Sector " << InnerSectorName << " also uses " << InnerFuelName << endl; 
 						}

@@ -197,9 +197,9 @@ void World::gnp(int per)
 {
 	for (int i=0;i<noreg;i++) {
 		// calculate gnp
-		//region[i].calc_gnp(per);
+		region[i]->calc_gnp(per);
 		// calculate GNP using labor force participation and labor productivity rates
-		region[i]->calcGNPlfp(per);
+		//region[i]->calcGNPlfp(per);
 	}
 }
 
@@ -254,7 +254,6 @@ void World::calc(int per)
 			region[i]->finalsupplyprc(per);
 			bugoutfile << "2nd,"; marketplace.prices_to_bugout(per);
 		}
-		
 	}	
 }
 

@@ -18,8 +18,7 @@ class Marketplace
 {	
 	
 private:
-	
-	//! A structure containing information neccessary to obtain the solution of a single market.
+	//! Structure which contains the solution information for a single market.
 	struct solinfo {
 		double X;		//!< unknown, prices
 		double ED;		//!< excess demand for X
@@ -34,6 +33,7 @@ private:
 		double EDR_org;	//!< original excess demand for right bracket
 		int bracketed;	//!< 1 or 0 for bracketed or unbrackted. bool?
 	};
+	
 	private:
 		int uniqueNo; //!< number for creating markets
 		int nomrks;  //!< number of markets
@@ -88,6 +88,7 @@ private:
 		const vector<double> showlogSup_NR( const int period ) const; // returns vector of log of supply
 		void setPRC( const vector<double>& prices, const int period ); // sets solution prices for all markets
 		void setPRC_NR( const vector<double>& prices, const int period ); // sets solution prices for all markets
+		
 	public:
 		Marketplace();
 		void solve( const int per );

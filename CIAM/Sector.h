@@ -96,6 +96,7 @@ protected:
 	vector<double> fe_cons; //!< end-use sector final energy consumption
 	vector<double> service; //!< total end-use sector service 
 	vector<double> iElasticity; //!< income elasticity 
+	double pElasticityBase; //!< base year energy price elasticity
 	vector<double> pElasticity; //!< price elasticity.
 	vector<double> aeei; //!< autonomous end-use energy intensity parameter
 
@@ -104,13 +105,12 @@ public:
 	virtual void XMLParse(const DOMNode* node);
 	virtual void toXML( ostream& out ) const;
 	virtual void toDebugXML( const int period, ostream& out ) const;
-	virtual void setMarket( const string& regname ); //create markets
-	virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 ); // calculates and normalizes shares 
-
-	// aggregate demand for service
+	virtual void setMarket( const string& regname );
+	virtual void calc_share( const string regionName, const int per, const double gnp_cap = 1 );
+	virtual void calc_pElasticity( const int per );
 	virtual void aggdemand( const string& regionName, const double gnp_cap, const double gnp, const int per); 
-	virtual void outputfile( const string& regionName ); // write out sector result to file
-	virtual void MCoutput( const string& regionName ); // write out sector result to file
+	virtual void outputfile( const string& regionName );
+	virtual void MCoutput( const string& regionName );
 };
 
 #endif // _SECTOR_H_

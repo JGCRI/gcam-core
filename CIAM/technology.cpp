@@ -1,8 +1,8 @@
 /* technology.cpp									*
- * Method definition for the technology class.		*
- * This technology class is based on the MiniCAM	*
- * description of technology.						*
- * SHK  6/12/00										*/
+* Method definition for the technology class.		*
+* This technology class is based on the MiniCAM	*
+* description of technology.						*
+* SHK  6/12/00										*/
 
 // Standard Library headers
 #include "Definitions.h"
@@ -71,7 +71,7 @@ void technology::initElementalMembers(){
 	A = 0;
 	B = 0;
 	resource = 0;
-        FixedOutputVal = 0;
+    fixedOutputVal = 0;
 }
 
 //! initialize technology with xml data
@@ -81,22 +81,22 @@ void technology::XMLParse( const DOMNode* node )
 	DOMNode* curr = 0;
 	string nodeName;
 	DOMNodeList* nodeList;
-
+	
 	//! \pre Assume we are passed a valid node.
 	assert( node );
 	
 	nodeList = node->getChildNodes();
-
+	
 	for( int i = 0; i < nodeList->getLength(); i++ ) {
 		curr = nodeList->item( i );
 		nodeName = XMLString::transcode( curr->getNodeName() );		
-
+		
 		if( nodeName == "name" ) {
 			name = XMLHelper<string>::getValueString( curr );
 			
-			#if( _DEBUG )
-				// cout << "\t\t\tTechnology name set as " << name << endl;
-			#endif
+#if( _DEBUG )
+			// cout << "\t\t\tTechnology name set as " << name << endl;
+#endif
 		} 
 		else if ( nodeName == "fueltype" ){
 			fueltype = XMLHelper<int>::getValue( curr );
@@ -170,7 +170,7 @@ void technology::toXML( ostream& out ) const {
 	XMLWriteElement( resource, "resource", out );
 	XMLWriteElement( A, "A", out );
 	XMLWriteElement( B, "B", out );
-
+	
 	for( vector<Ghg*>::const_iterator ghgIter = ghg.begin(); ghgIter != ghg.end(); ghgIter++ ){
 		( *ghgIter )->toXML( out );
 	}
@@ -178,7 +178,7 @@ void technology::toXML( ostream& out ) const {
 	// finished writing xml for the class members.
 	
 	Tabs::decreaseIndent();
-
+	
 	Tabs::writeTabs( out );
 	out << "</period>" << endl;
 }
@@ -188,7 +188,7 @@ void technology::toDebugXML( const int period, ostream& out ) const {
 	
 	Tabs::writeTabs( out );
 	out << "<technology name=\"" << name << "\" year=\"" << year << "\">" << endl;
-		
+	
 	Tabs::increaseIndent();
 	// write the xml for the class members.
 	
@@ -218,7 +218,7 @@ void technology::toDebugXML( const int period, ostream& out ) const {
 	// finished writing xml for the class members.
 	
 	Tabs::decreaseIndent();
-
+	
 	Tabs::writeTabs( out );
 	out << "</technology>" << endl;
 }
@@ -232,7 +232,7 @@ void technology::applycarbontax(double tax)
 	// units: tax (90$/TC), CO2coef (MTC/EJ), carbontax (75$/GJ)
 	carbontaxgj = 0; // initialize
 	carbontax = tax;
-
+	
 	// returns emissions coefficient only if fuels are primary fuels
 	// crude oil, natural gas and coal
 	// add to previous ghg tax if more than one ghg
@@ -248,7 +248,7 @@ void technology::addghgtax( const string ghgname, const string regionName, const
 	// returns coef for primary fuels only
 	// carbontax has value for primary fuels only
 	carbontaxgj = 0; // initialize
-		carbontax = marketplace.showprice(ghgname,regionName,per);
+	carbontax = marketplace.showprice(ghgname,regionName,per);
 	// add to previous ghg tax if more than one ghg
 	for(int i=0;i<ghg.size();i++) {
 		carbontaxgj += carbontax*ghg[i]->taxcnvrt(fuelname)*1e-3;
@@ -256,24 +256,23 @@ void technology::addghgtax( const string ghgname, const string regionName, const
 	// need to add taxes from all ghgs
 }
 
-//! define and return technology cost
-double technology::cost( const string regionName, const int per ) 
+//! define technology fuel cost and total cost
+void technology::cost( const string regionName, const int per ) 
 {
 	double fuelprice = 0;
-	
 	
 	fuelprice = marketplace.showprice(fuelname,regionName,per);
 	
 	//techcost = fprice/eff/pow(1+techchange,modeltime.gettimestep(per)) + necost;
-	techcost = (fuelprice+carbontaxgj)/eff + necost;
-	return techcost;
+	fuelcost = (fuelprice+carbontaxgj)/eff;
+	techcost = fuelcost + necost;
 }
 
 //! calculate technology shares
 void technology::calc_share( const string regionName, const int per)
 {
 	// use pow(x,y) == x**y in fortran, x and y are double, need math.h
-	share = shrwts * pow(cost( regionName,per),lexp);
+	share = shrwts * pow(techcost,lexp);
 }
 
 //! normalize technology shares
@@ -287,7 +286,7 @@ void technology::norm_share(double sum)
 
 //! calculates fuel input and technology output
 /*! This function sets the value of fixed supply. At present this does so only for Hydro 
-    acccording to the MiniCAM formula. In the future, this will be superseeded by read-in values. */
+acccording to the MiniCAM formula. In the future, this will be superseeded by read-in values. */
 double technology::getFixedSupply(int per)
 {
 	string hydro = "hydro";
@@ -300,41 +299,46 @@ double technology::getFixedSupply(int per)
 		// resource and logit function 
 		double fact = exp(A+B*T);
 		output = resource*fact/(1+fact);
-                return output;
+		return output;
 	}
 }
 
 //! Adjusts shares to be consistant with any fixed production 
 /*! This version will probalby not work if more than one technology within each sector 
-    has a fixed supply */
+has a fixed supply */
 void technology::adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per)
 {
-    double RemainingDemand;
-    double FixedSupply;
+    double remainingDemand;
+    double fixedSupply;
     
     if(totalFixedSupply != 0) {
-        RemainingDemand = subsecdmd - totalFixedSupply;
-        if (RemainingDemand < 0) RemainingDemand = 0;       
-        FixedSupply = getFixedSupply(per); 
+        remainingDemand = subsecdmd - totalFixedSupply;
+        if (remainingDemand < 0) {
+			remainingDemand = 0;
+		}
+        fixedSupply = getFixedSupply(per); 
         
-        if (FixedSupply != 0) {	// This tech has a fixed supply
+        if ( fixedSupply != 0 ) {	// This tech has a fixed supply
             if (subsecdmd != 0) {
-                share = FixedSupply/subsecdmd;
+                share = fixedSupply/subsecdmd;
                 // Set value of fixed supply
-                if (FixedSupply > subsecdmd) {
-                    FixedOutputVal = totalFixedSupply; }  // downgrade output if > fixedsupply
+                if (fixedSupply > subsecdmd) {
+                    fixedOutputVal = totalFixedSupply; }  // downgrade output if > fixedsupply
                 else {
-                    FixedOutputVal = FixedSupply; }
+                    fixedOutputVal = fixedSupply; }
             }
             else {
-                share = 0; }
+                share = 0;
+			}
         }
         else {	// This tech does not have fixed supply
             if (subsecdmd != 0 && varShareTot != 0) {
-                share = share * (RemainingDemand/subsecdmd)/varShareTot; }
+                share = share * (remainingDemand/subsecdmd)/varShareTot;
+			}
             else {
-                 // Maybe not correct, but if other params are zero then something else is wrong
-                share = 0; }
+				// Maybe not correct, but if other params are zero then something else is wrong
+                share = 0; 
+			}
         }
     }    
 }
@@ -348,20 +352,20 @@ void technology::production(double dmd,int per)
 		output = share * dmd; // use share to get output for each technology
 	}
 	else { // do for hydroelectricity
-		output = FixedOutputVal;
+		output = fixedOutputVal;
 	}
-
+	
 	if (fueltype == 0) // fueltye=0 reserved for renewables
 		input = output/eff;
 	else {// demand for fossil, uranium and secondary energy
 		//input = output/eff/pow(1+techchange,timestep);
 		input = output/eff;
 	}
-
-        if (input < 0) {
-            cerr << "ERROR: Output value < 0 for technology " << name << endl;
-        }
-
+	
+	if (input < 0) {
+		cerr << "ERROR: Output value < 0 for technology " << name << endl;
+	}
+	
 	// total carbon taxes paid
 	// carbontax is null for technologies that do not consume fossil fuels
 	// input(EJ), carbontax(90$/GJ), carbontaxpaid(90$Mil)
@@ -394,7 +398,7 @@ void technology::indemission()
 //! show technology info
 void technology::printTech( const string& outFile ) const {
 	bool toScreen = false;
-
+	
 	ofstream outStream;
 	if( outFile == "" ){
 		toScreen = true; ;
@@ -461,7 +465,7 @@ void technology::printTech( const string& outFile ) const {
 	else {
 		outStream << "Technical Change: "<< techchange << endl;
 	}
-
+	
 	if( outStream != cout ) {
 		outStream.close();
 	}
@@ -502,13 +506,19 @@ double technology::showoutput() const {
 	return output;
 }
 
+//! return technology fuel cost only
+double technology::getfuelcost( ) const {
+	return fuelcost;
+}
+
+
 //! return the cost of technology
-double technology::showtechcost() const {
+double technology::gettechcost() const {
 	return techcost;
 }
 
 //! return the non-energy cost of the technology
-double technology::shownecost() const {
+double technology::getnecost() const {
 	return necost;
 }
 
@@ -559,17 +569,6 @@ double technology::getlexp()  const {
 	return lexp;
 }
 
-//! set input from inherited objects
-void technology::setinput( const double in) {
-	input = in;
-}
-
-//! set output from inherited objects
-void technology::setoutput( const double out ) {
-	output = out;
-}
-
-
 //  ******* method definition for hydro_tech
 
 //! Default constructor
@@ -591,11 +590,11 @@ void hydro_tech::clear(){
 void hydro_tech::production(double dmd,int per) 
 {
 	int T = per*modeltime.gettimestep(per);
-        double tempOutput;
+	double tempOutput;
 	// resource and logit function 
 	double fact = exp(A+B*T);
-        tempOutput = resource*fact/(1+fact);
-        tempOutput = min(tempOutput,FixedOutputVal);
-	technology::setoutput(tempOutput);
-	technology::setinput(0); // no fuel input for hydro
+	tempOutput = resource*fact/(1+fact);
+	tempOutput = min(tempOutput,fixedOutputVal);
+	output = tempOutput;
+	input = 0; // no fuel input for hydro
 }

@@ -42,6 +42,7 @@ subsector::~subsector() {
 void subsector::clear(){
 	notech = 0;
 	tax = 0;
+	basesharewt = 0;
 	name = "";
 	unit = "";
 	fueltype = "";
@@ -52,7 +53,7 @@ void subsector::clear(){
 	caplim.clear();
 	shrwts.clear();
 	lexp.clear();
-	iElasticity.clear();
+	fuelprefElasticity.clear();
 	share.clear();
 	input.clear();
 	pe_cons.clear();
@@ -80,6 +81,18 @@ void subsector::XMLParse( const DOMNode* node )
 	string childNodeName;
 	vector<technology*> techVec;
 	technology* tempTech = 0;
+
+	// resize vectors not read in, therefore not sized by XML input
+	int maxper = modeltime.getmaxper();
+	share.resize(maxper); // subsector shares
+	input.resize(maxper); // subsector energy input
+	fuelprefElasticity.resize(0); // resize to 0 if not readin
+	pe_cons.resize(maxper); // subsector primary energy consumption
+	subsectorprice.resize(maxper); // subsector price for all periods
+	fuelprice.resize(maxper); // subsector fuel price for all periods
+	output.resize(maxper); // total amount of final output from subsector
+	carbontaxpaid.resize(maxper); // total subsector carbon taxes paid
+	summary.resize(maxper); // object containing summaries
 
 	//! \pre Make sure we were passed a valid node.
 	assert( node );
@@ -110,6 +123,16 @@ void subsector::XMLParse( const DOMNode* node )
 			lexp.push_back( XMLHelper<double>::getValue( curr ) );
 		}
 
+		else if( nodeName == "fuelprefElasticity" ){
+			fuelprefElasticity.push_back( XMLHelper<double>::getValue( curr ) );
+		}
+
+		// basesharewt is not a vector but a single value
+		else if( nodeName == "basesharewt" ){
+			basesharewt = XMLHelper<double>::getValue( curr );
+			int stop =1;
+		}
+
 		else if( nodeName == "technology" ){
 			childNodeList = curr->getChildNodes();
 			
@@ -133,16 +156,6 @@ void subsector::XMLParse( const DOMNode* node )
 
 	notech = techs.size();
 
-	// resize vectors not read in, therefore not sized by XML input
-	int maxper = modeltime.getmaxper();
-	iElasticity.resize(maxper); // elasticity for subsector preference based on income
-	share.resize(maxper); // subsector shares
-	input.resize(maxper); // subsector energy input
-	pe_cons.resize(maxper); // subsector primary energy consumption
-	subsectorprice.resize(maxper); // subsector price for all periods
-	output.resize(maxper); // total amount of final output from subsector
-	carbontaxpaid.resize(maxper); // total subsector carbon taxes paid
-	summary.resize(maxper); // object containing summaries
 }
 
 void subsector::toXML( ostream& out ) const {
@@ -167,6 +180,12 @@ void subsector::toXML( ostream& out ) const {
 	for( i = 0; i < static_cast<int>( lexp.size() ); i++ ){
 		XMLWriteElement( lexp[ i ], "logitexp", out, modeltime.getper_to_yr( i ) );
 	}
+
+	for( i = 0; i < static_cast<int>( fuelprefElasticity.size() ); i++ ){
+		XMLWriteElement( fuelprefElasticity[ i ], "fuelprefElasticity", out, modeltime.getper_to_yr( i ) );
+	}
+
+	XMLWriteElement( basesharewt, "basesharewt", out, modeltime.getstartyr( ) );
 
 	// write out the technology objects.
 	for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
@@ -214,7 +233,9 @@ void subsector::toDebugXML( const int period, ostream& out ) const {
 	XMLWriteElement( caplim[ period ], "caplim", out );
 	XMLWriteElement( shrwts[ period ], "sharewts", out );
 	XMLWriteElement( lexp[ period ], "lexp", out );
+	//XMLWriteElement( fuelprefElasticity[ period ], "fuelprefElasticity", out );
 	XMLWriteElement( share[ period ], "share", out );
+	XMLWriteElement( basesharewt, "basesharewt", out );
 	XMLWriteElement( input[ period ], "input", out );
 	XMLWriteElement( pe_cons[ period ], "pe_cons", out );
 	XMLWriteElement( subsectorprice[ period ], "subsectorprice", out );
@@ -275,16 +296,32 @@ void subsector::calc_price( const string regionName, const int per )
 
 	subsectorprice[per]=0.0;
 	for (i=0;i<notech;i++) {
-		// calculate weighted average price of electricity
+		// calculate weighted average price for subsector
 		subsectorprice[per] += techs[i][per]->showshare()*
-			techs[i][per]->cost( regionName, per );
+			techs[i][per]->gettechcost();
+		// calculate weighted average price of fuel only
+		// technology shares are based on total cost
+		fuelprice[per] += techs[i][per]->showshare()*
+			techs[i][per]->getfuelcost();
 	}
 }
 
 //! returns subsector price 
-double subsector::showprice(int per)
+double subsector::getprice(int per)
 {
 	return subsectorprice[per];
+}
+
+//! returns subsector fuel price 
+double subsector::getfuelprice(int per)
+{
+	return fuelprice[per];
+}
+
+//! returns subsector base share weighted fuel price 
+double subsector::getwtfuelprice(int per)
+{
+	return basesharewt*fuelprice[per];
 }
 
 //! passes carbon tax to technology
@@ -311,6 +348,8 @@ void subsector::calc_tech_shares( const string regionName, const int per )
 	double sum = 0;
 
 	for (i=0;i<notech;i++) {
+		// calculate technology cost
+		techs[i][per]->cost( regionName, per );
 		// determine shares based on technology costs
 		techs[i][per]->calc_share( regionName,per );
 		sum += techs[i][per]->showshare();
@@ -328,6 +367,7 @@ void subsector::calc_tech_shares( const string regionName, const int per )
 //! calculate subsector share numerator 
 void subsector::calc_share( const string regionName, const int per, const double gnp_cap )
 {
+	double iprefElasticity = 0; // income based preference elasticity
 	// call function to compute technology shares
 	calc_tech_shares(regionName, per);
 
@@ -339,12 +379,20 @@ void subsector::calc_share( const string regionName, const int per, const double
 	calc_price( regionName,per);
 	
 	// not read in just yet so use default
-	iElasticity[per] = 1;
 	if(lexp[per]==0) cerr << "SubSec Logit Exponential is 0." << endl;
-	if(subsectorprice[per]==0) 
+	if(subsectorprice[per]==0) {
 		share[per] = 0;
-	else
-		share[per] = shrwts[per]*pow(subsectorprice[per],lexp[per])*pow(gnp_cap,iElasticity[per]);
+	}
+	else {
+		if (fuelprefElasticity.size()==0) {
+			iprefElasticity = 0;
+		}
+		else {
+			iprefElasticity = fuelprefElasticity[per];
+		}
+
+		share[per] = shrwts[per]*pow(subsectorprice[per],lexp[per])*pow(gnp_cap,iprefElasticity);
+	}
 }
 
 
@@ -563,7 +611,7 @@ void subsector::outputfile( const string& regname, const string& secname)
 		}
 		// technology cost
 		for (m=0;m<maxper;m++)
-			temp[m] = techs[i][m]->showtechcost();
+			temp[m] = techs[i][m]->gettechcost();
 		fileoutput3( regname,secname,name,techs[i][mm]->showname(),"price","$/GJ",temp);
 		// ghg tax applied to technology
 		for (m=0;m<maxper;m++)
@@ -583,7 +631,7 @@ void subsector::outputfile( const string& regname, const string& secname)
 		fileoutput3( regname,secname,name,techs[i][mm]->showname(),"efficiency","%",temp);
 		// technology non-energy cost
 		for (m=0;m<maxper;m++)
-			temp[m] = techs[i][m]->shownecost();
+			temp[m] = techs[i][m]->getnecost();
 		fileoutput3( regname,secname,name,techs[i][mm]->showname(),"non-energy cost","$/GJ",temp);
 		// technology CO2 emission
 		for (m=0;m<maxper;m++)
@@ -622,7 +670,7 @@ void subsector::MCoutputA( const string & regname, const string& secname ){
 		str2 = techs[i][mm]->showname();
 		// technology non-energy cost
 		for (m=0;m<maxper;m++)
-			temp[m] = techs[i][m]->shownecost();
+			temp[m] = techs[i][m]->getnecost();
 		dboutput4(regname,"Price NE Cost",secname,str2,"$/GJ",temp);
 		// secondary energy and price output by tech
 		// output or demand for each technology
@@ -631,7 +679,7 @@ void subsector::MCoutputA( const string & regname, const string& secname ){
 		dboutput4(regname,"Secondary Energy Prod",str1,str2,"EJ",temp);
 		// technology cost
 		for (m=0;m<maxper;m++)
-			temp[m] = techs[i][m]->showtechcost();
+			temp[m] = techs[i][m]->gettechcost();
 		dboutput4(regname,"Price",str1,str2,"$/GJ",temp);
 	}
 }
@@ -667,12 +715,12 @@ void subsector::MCoutputB( const string & regname, const string& secname )
 			dboutput4(regname,"End-Use Service",secname,str,"Ser Unit",temp);
 			// technology cost
 			for (m=0;m<maxper;m++)
-				temp[m] = techs[i][m]->showtechcost();
+				temp[m] = techs[i][m]->gettechcost();
 			dboutput4(regname,"Price",secname,str,"$/Ser",temp);
 		}
 		// technology non-energy cost
 		for (m=0;m<maxper;m++)
-			temp[m] = techs[i][m]->shownecost();
+			temp[m] = techs[i][m]->getnecost();
 		dboutput4(regname,"Price NE Cost",secname,str,"$/Ser",temp);
 	}
 }

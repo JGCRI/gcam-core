@@ -32,6 +32,7 @@ protected:
 	double shrwts; //!< logit share weight
 	double eff; //!< energy intensity
 	double necost; //!< all non-fuel costs (levelized)
+	double fuelcost; //!< fuel cost only
 	double techcost; //!< total cost of technology
 	double tax; //!< utility tax
 	double carbontax; //!< carbon tax in $/TC
@@ -42,6 +43,7 @@ protected:
 	double input; //!< total fuel input (fossil and uranium)
 	double output; //!< technology output
 	double techchange;  //!< technical change in %/year
+	double fixedOutputVal; //!< A fixed amount of output.
 	string name; //!< technology name
 	string unit; //!< unit of final product from technology
 	string fuelname; //!< name of fuel used
@@ -49,7 +51,6 @@ protected:
 	map<string,double> emissmap; //!< map of ghg emissions
 	map<string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
 	map<string,double> emindmap; //!< map of indirect ghg emissions
-    double FixedOutputVal; //!< A fixed amount of output.
         
 	// attributes for hydroelectricity only!
 	double resource; //!< available hydro resource in energy units
@@ -66,7 +67,8 @@ public:
 	void applycarbontax(double tax); // apply carbon tax to appropriate technology
 	// sets ghg tax to technologies
 	void addghgtax( const string ghgname, const string regionName, const int per ); 
-	double cost( const string regionName, const int per); // calculates and returns cost of technology
+	// calculates fuel and total cost of technology
+	void cost( const string regionName, const int per); 
 	// uses logit function to calculate technology share
 	void calc_share( const string regionName, const int per); 
 	void norm_share(double sum); // normalize technology share
@@ -83,8 +85,9 @@ public:
 	double showshare() const; // return normalized share
 	double showinput() const; // return fuel input amount
 	double showoutput() const; // return technology output
-	double showtechcost() const; // return total technology cost
-	double shownecost() const; // return non-fuel cost
+	double getfuelcost() const; // return fuel cost only
+	double gettechcost() const; // return total technology cost
+	double getnecost() const; // return non-fuel cost
 	double showcarbontax() const; // return carbon taxes in $/TC
 	double showcarbontaxgj() const; // return carbon taxes in $/GJ
 	double showcarbontaxpaid() const; // return carbon taxes paid
@@ -94,10 +97,9 @@ public:
 	map<string,double> getemindmap() const; // return map of all ghg emissions
 	double get_emissmap_second( const string& str ) const; // return value for ghg
 	double getlexp() const; // return logit exponential for the technology
-	void setinput( const double in ); // set input exogenously
-	void setoutput( const double out ); // set output exogenously
     void adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per);
     double getFixedSupply(int per);
+
 };
 
 /*! 

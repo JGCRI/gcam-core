@@ -28,6 +28,7 @@ protected:
 	string fueltype; //!< each subsector has one fueltype
 	int notech; //!< number of technologies in each subsector
 	double tax; //!< subsector tax or subsidy
+	double basesharewt; //! subsector base year consumption share weight
 	vector<vector<technology*> > techs; //!< array of pointers to technology objects for each period
 	vector<hydro_tech> hydro; //!< array of hydroelectricity by period
 	vector<double> caplim; //!< subsector capacity limit
@@ -37,13 +38,13 @@ protected:
 	vector<double> input; //!< subsector energy input
 	vector<double> pe_cons; //!< subsector primary energy consumption
 	vector<double> subsectorprice; //!< subsector price for all periods
+	vector<double> fuelprice; //! subsector fuel price only for all periods
 	vector<double> output; //!< total amount of final output from subsector
 	vector<double> carbontaxpaid; //!< total subsector carbon taxes paid
-	vector<double> iElasticity; //!< Income elasticity
+	vector<double> fuelprefElasticity; //!< Fuel Preference elasticity
 	vector<Summary> summary; //!< summary for reporting
-
 public:
-	subsector(); // default construtor
+	subsector();
 	~subsector();
 	virtual void clear();
 	string showname(void); // return name of subsector
@@ -55,7 +56,9 @@ public:
 	void set_hydrotech(int itech); // sets number of exogenously driven tech
 	// calculates and returns subsector price
 	virtual void calc_price( const string regionName, const int per); // maw
-	double showprice(int per); // returns subsector price
+	double getprice(int per); // returns subsector price
+	double getfuelprice(int per); // returns subsector fuel price
+	double getwtfuelprice(int per); // returns subsector fuel price
 	void applycarbontax(double tax, int per); // passes along carbon tax
 	// applies ghg tax to technologies
 	void addghgtax( const string ghgname, const string regionName, const int per ); 
@@ -95,7 +98,7 @@ public:
 	map<string, double> getemission(int per);// get ghg emissions map in summary object 
 	map<string, double> getemfuelmap(int per);// get ghg emissions map in summary object 
 	map<string, double> getemindmap(int per);// get ghg emissions map in summary object 
-        void adjShares(double dmd, double varSectorSharesTot, double totalFixedSupply, int per);
+    void adjShares(double dmd, double varSectorSharesTot, double totalFixedSupply, int per);
 };
 
 #endif // _SUBSECTOR_H_
