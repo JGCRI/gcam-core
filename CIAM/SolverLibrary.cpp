@@ -421,7 +421,7 @@ double SolverLibrary::getLogChangeInRawDemand( const Marketplace* marketplace, c
    
    double storedDemand = marketplace->getStoredRawDemand( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
    double demand = marketplace->getRawDemand( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
-   double change;
+   double change = 0;
 
    // Case 1: Demand or Previous Demand is zero.
    if( storedDemand == 0 || demand == 0 ) {
@@ -435,7 +435,6 @@ double SolverLibrary::getLogChangeInRawDemand( const Marketplace* marketplace, c
    
    // Case 3: Demand or Previous Demand is negative. This should not occur.
    else {
-      change = 0; // This avoids a compiler warning.
       assert( false );
    }
    
@@ -447,7 +446,7 @@ double SolverLibrary::getLogChangeInRawSupply( const Marketplace* marketplace, c
    
    double storedSupply = marketplace->getStoredRawSupply( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
    double supply = marketplace->getRawSupply( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
-   double change;
+   double change = 0;
 
    // Case 1: supply or Previous supply is zero.
    if( storedSupply == 0 || supply == 0 ) {
@@ -461,7 +460,6 @@ double SolverLibrary::getLogChangeInRawSupply( const Marketplace* marketplace, c
    
    // Case 3: supply or Previous supply is negative. This should not occur.
    else {
-      change = 0; // This avoids a compiler warning.
       assert( false );
    }
    
@@ -473,7 +471,7 @@ double SolverLibrary::getLogChangeInRawPrice( const Marketplace* marketplace, co
    
    double storedPrice = marketplace->getStoredRawPrice( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
    double price = marketplace->getRawPrice( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
-   double change;
+   double change = 0;
 
    // Case 1: price or Previous price is zero.
    if( storedPrice == 0 || price == 0 ) {
@@ -487,7 +485,6 @@ double SolverLibrary::getLogChangeInRawPrice( const Marketplace* marketplace, co
    
    // Case 3: price or Previous price is negative. This should not occur.
    else {
-      change = 0; // This avoids a compiler warning.
       assert( false );
    }
    
