@@ -54,8 +54,7 @@ void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFac
 int main( int argc, char *argv[] ) {
 
     // Use a smart pointer for configuration so that if the main is exited before the end the memory is freed.
-    auto_ptr<Configuration> confPtr( Configuration::getInstance() );
-    Configuration* conf = confPtr.get();
+    auto_ptr<Configuration> conf( Configuration::getInstance() );
     string configurationArg = "configuration.xml";
     string loggerFactoryArg = "logger_factory.xml";
     
@@ -99,10 +98,10 @@ int main( int argc, char *argv[] ) {
 
     // Use a smart pointer for scenario so that if the main program exits before the end the memory is freed correctly. 
     auto_ptr<Scenario> scenarioPtr( new Scenario() );
-    scenario = scenarioPtr.get();
-
-    scenario->XMLParse( root );
+    scenario = scenarioPtr.get(); // Need to set the global pointer.
+    scenarioPtr->XMLParse( root );
     
+
     // Fetch the listing of Scenario Components.
     const list<string> scenComponents = conf->getScenarioComponents();
     
@@ -119,28 +118,42 @@ int main( int argc, char *argv[] ) {
 
     // Cleanup Xerces.
     XMLHelper<void>::cleanupParser();
-
-    // Finish initialization.
-    scenario->completeInit();
-
-    // Print data read in time.
-    timer.save();
-    timer.print( cout, "XML Readin Time:" );
-    timer.print( logfile, "XML Readin Time:" );
-
-    // Create a scenario runner to handle running the scenario.
-    // and possibly creating a cost curve. 
-    ScenarioRunner* scenRunner = new MACGeneratorScenarioRunner( scenario );
+	
+    // Check if merging operation only is required.
+	if ( conf->getBool( "mergeFilesOnly" ) ) {
+		// Print output xml file.
+		const string xmlOutFileName = conf->getFile( "xmlOutputFileName" );
+		ofstream xmlOut;
+		xmlOut.open( xmlOutFileName.c_str(), ios::out );
+		util::checkIsOpen( xmlOut, xmlOutFileName );
     
-    // Run the initial scenario.
-    scenRunner->runScenario( timer );
+		Tabs tabs;
+		scenarioPtr->toInputXML( xmlOut, &tabs );
+
+		// Close the output file. 
+		xmlOut.close();
+	} 
+	else {
+		// Finish initialization.
+		scenarioPtr->completeInit();
+
+	    // Print data read in time.
+		timer.save();
+		timer.print( cout, "XML Readin Time:" );
+		timer.print( logfile, "XML Readin Time:" );
+
+		// Create a scenario runner to handle running the scenario.
+		// and possibly creating a cost curve. 
+		auto_ptr<ScenarioRunner> scenRunner( new MACGeneratorScenarioRunner( scenarioPtr.get() ) );
     
-    delete scenRunner;
-    
+		// Run the initial scenario.
+		scenRunner->runScenario( timer );
+	}
+
     cout << endl << "Date & Time: " << ctime( &ltime ) << endl;
     logfile << endl << "Date & Time: " << ctime( &ltime ) << endl;
 
-    //******** Close All Text Files
+    // Close All Text Files
     bugoutfile.close();
     logfile.close();
 
