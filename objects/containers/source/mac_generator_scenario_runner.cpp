@@ -28,6 +28,7 @@
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
+#include "util/curves/include/explicit_point_set.h"
 
 using namespace std;
 

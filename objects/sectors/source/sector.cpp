@@ -98,8 +98,6 @@ void Sector::clear(){
 void Sector::initElementalMembers(){
     nosubsec = 0;
     tax = 0;
-    prevVal = 0;
-    prevPer = -1;
     anyFixedCapacity = false;
 	CO2EmFactor = 0;
 }
@@ -469,20 +467,19 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
     // and can cause an oscillation. With the demand for this Sector in the marketplace, however, the
     // fixed capacity converges as the trial value for demand converges.
     
-    int i=0;
-    double sum = 0.0;
-    double fixedSum = 0.0;
+    double sum = 0;
+    double fixedSum = 0;
 	 
     // first loop through all subsectors to get the appropriate sums
-    for ( i=0; i<nosubsec; i++ ) {
+    for ( unsigned int i = 0; i < subsec.size(); i++ ) {
 		// calculate subsector shares (based on technology shares)
 		subsec[ i ]->calcShare( period, gdp );
 
 		// sum fixed capacity separately, but don't bother with the extra code if this Sector has none
 		// Calculation re-ordered to eliminate subtraction of fixed share from sum which eliminated 
 		// a share <> 1 warning when initial (non-fixed) sum was extremely small (2/04 - sjs)
-		double fixedShare = 0.0;
-		if ( anyFixedCapacity) {
+		double fixedShare = 0;
+		if ( anyFixedCapacity ) {
 			fixedShare = getFixedShare( i , period );
 			fixedSum += fixedShare; // keep track of total fixed shares
 		}
@@ -497,29 +494,33 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
     }
 
     // Take care of case where fixed share is > 1
-    double scaleFixedShare = 1.0;
-    if ( fixedSum > 1.0 ) {
+    double scaleFixedShare = 1;
+    if ( fixedSum > 1 ) {
         scaleFixedShare = 1/fixedSum;
-        fixedSum = 1.0;
+        fixedSum = 1;
     }
 
     // Now normalize shares
-    for ( i=0; i<nosubsec; i++ ) {
+    for ( unsigned int i = 0; i < subsec.size(); i++ ) {
 
-		if ( subsec[ i ]->getFixedSupply( period ) == 0) {
+		if ( subsec[ i ]->getFixedSupply( period ) == 0 ) {
 			// normalize subsector shares that are not fixed
 			if ( fixedSum < 1 ) {
 	 			subsec[ i ]->normShare( sum / ( 1 - fixedSum ) , period );	
 			} else {
 				subsec[ i ]->normShare( sum / util::getTinyNumber() , period );	// if all fixed supply, eliminate other shares
+                // Could this overflow if sum was large?-JPL
 			}
 
 		// reset share of sectors with fixed supply to their appropriate value
 		} else {
             double fixedShare = getFixedShare( i , period ) * scaleFixedShare;
             double currentShare = subsec[ i ]->getFixedShare( period );
+            
             subsec[ i ]->setShareToFixedValue( period );
-            if ( currentShare > 0 ) { subsec[ i ]->scaleFixedSupply( fixedShare/currentShare, period ); }
+            if ( currentShare > 0 ) { 
+                subsec[ i ]->scaleFixedSupply( fixedShare/currentShare, period ); 
+            }
             subsec[ i ]->setShareToFixedValue( period );
 		}
     }
@@ -792,28 +793,29 @@ double Sector::getFixedSupply( const int period ) const {
 * This function returns either the saved sub-Sector share, or the share as derived from the marketplace demand, if available.
 *
 * \author Steve Smith
-* \param sectorNum Sector number
+* \todo This function should be in subsector, not sector-JPL
+* \param sectorNum Subsector number
 * \param period Model period
 * \return total fixed supply
 * \warning Not sure how well using market demand will work if multiple sectors are adding demands. 
 */
-double Sector::getFixedShare( const int sectorNum, const int period ) const {
+double Sector::getFixedShare( const int subsectorNum, const int period ) const {
     Marketplace* marketplace = scenario->getMarketplace();
     World* world = scenario->getWorld();
 
-    if ( sectorNum >= 0 && sectorNum < nosubsec ) {
-        double fixedShare = subsec[ sectorNum ]->getFixedShare( period );
+    if ( subsectorNum >= 0 && subsectorNum < nosubsec ) {
+        double fixedShare = subsec[ subsectorNum ]->getFixedShare( period );
         if ( fixedShare > 0) {
             // if demand is available through marketplace then use this instead of lagged value
             double mktDmd = marketplace->getDemand( name, regionName, period );
-            if ( mktDmd > 0 && world->getCalibrationSetting() ) {
-                fixedShare = subsec[ sectorNum ]->getFixedSupply( period ) / mktDmd;
+            if ( mktDmd > 0 ) {
+                fixedShare = subsec[ subsectorNum ]->getFixedSupply( period ) / mktDmd;
             }
         }
         return fixedShare;
     } 
 	else {
-        cerr << "Illegal Sector number: " << sectorNum << endl;
+        cerr << "Illegal Subector number: " << subsectorNum << endl;
         return 0;
     }
 }
@@ -919,7 +921,7 @@ void Sector::adjustForFixedSupply( const double marketDemand, const int period )
         totalFixedSupply = marketDemand;
     }
 
-    // debugging check
+    /*// debugging check
     // sjs TEMP -- this check generally spits out a few innocuous warnings.
     // As of ver 1.0, this happens only in Latin America when fixed supply has temporarily
     // exceeded demand and has been scaled back.  (found by putting cout statement in Sector::getFixedShare)
@@ -936,7 +938,7 @@ void Sector::adjustForFixedSupply( const double marketDemand, const int period )
             }
       }
     }
-
+    */
     // Adjust shares for any fixed output
     if (totalFixedSupply > 0) {
         if (totalFixedSupply > marketDemand ) {            

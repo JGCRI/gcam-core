@@ -885,15 +885,16 @@ double Subsector::getFixedShare( const int period ) const {
 \param share sector share that is fixed supply
 */
 void Subsector::setFixedShare( const int period, const double share ) {
-World* world = scenario->getWorld();
+    World* world = scenario->getWorld();
 
-    // option to turn this off during calibration -- but doesn't seem to help
-   if ( world->getCalibrationSetting() || 1==1) {
-   fixedShare[ period ] = share;
-   if ( share > 1 ) {
-     cerr << "Share set to value > 1. Value = " << share << endl;
-   }
-   }
+    // option to turn this off during calibration
+    // This does not work correctly, shares will not sum to one. -JPL
+    // if ( world->getCalibrationSetting() ) {
+        fixedShare[ period ] = share;
+        if ( share > 1 ) {
+            cerr << "Share set to value > 1. Value = " << share << endl;
+        }
+    // }
 }
 
 /*! \brief Set the share from this sub-sector to that saved for fixed supply

@@ -145,12 +145,12 @@ void AgSector::toXML( ostream& out, Tabs* tabs ) const {
    XMLWriteElement( regionNumber, "regionNumber", out, tabs );
    XMLWriteElement( numAgMarkets, "numAgMarkets", out, tabs );
    
-   for( iter = 0; iter < static_cast<int>( gdp.size() ); iter++ ){
+   for( iter = 0; iter < static_cast<int>( gdp.size() ); ++iter ){
       XMLWriteElement( gdp[ iter ], "gdp", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    
-   for( iter= 0; iter < static_cast<int>( population.size() ); iter++ ) {
-      XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getper_to_yr( iter ) );
+   for( iter= 0; iter < static_cast<int>( population.size() ); ++iter ) {
+      XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getPopPeriodToYear( iter ) );
    }
    
    XMLWriteElement( biomassPrice, "biomassprice", out, tabs );

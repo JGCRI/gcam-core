@@ -14,7 +14,7 @@
 #include <vector>
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
-#include "subsector.h"
+#include "sectors/include/subsector.h"
 // Forward declarations
 class GDP;
 

@@ -58,9 +58,6 @@ protected:
     std::vector<std::string> simulList; //!< List of all sectors with simuls to this one. 
     std::vector<std::string> dependsList; //!< List of all dependencies of this Sector. 
     bool anyFixedCapacity; //!< flag set to true if any fixed capacity is present in this Sector
-    double fixedShareSavedVal; //!< debugging value
-    double prevVal;
-    double prevPer;
     double CO2EmFactor; //! CO2 emissions factor, calculated based on fuel input and share
 
     virtual void initElementalMembers();

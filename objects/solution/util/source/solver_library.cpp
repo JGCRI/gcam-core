@@ -32,16 +32,16 @@ using namespace mtl;
 
 //! Constructor.
 SolverLibrary::SolutionInfo::SolutionInfo( const string& marketNameIn, const string& marketGoodIn ) : marketName( marketNameIn ), marketGood( marketGoodIn ) {
-      X = 0;
-      ED = 0;
-      demand = 0;
-      supply = 0;
-      dX = 0;
-      XL = 0;
-      XR = 0;
-      EDL = 0;
-      EDR = 0;
-      bracketed = false;
+    X = 0;
+    ED = 0;
+    demand = 0;
+    supply = 0;
+    dX = 0;
+    XL = 0;
+    XR = 0;
+    EDL = 0;
+    EDR = 0;
+    bracketed = false;
 }
 
 /*! \brief Return the name of the SolutionInfo object.
@@ -50,7 +50,7 @@ SolverLibrary::SolutionInfo::SolutionInfo( const string& marketNameIn, const str
 * \return The name of the market the SolutionInfo is connected to.
 */
 string SolverLibrary::SolutionInfo::getName() const {
-   return ( marketName + marketGood );
+    return ( marketName + marketGood );
 }
 
 /*! \brief Creates and returns a solution vector of markets that require solving.
@@ -64,24 +64,24 @@ string SolverLibrary::SolutionInfo::getName() const {
 * \return A vector of SolutionInfo objects, one for each market that should be solved.
 */
 vector<SolverLibrary::SolutionInfo> SolverLibrary::getMarketsToSolve( const Marketplace* marketplace, const int period, const bool isNR ) {
-   
-   vector<SolverLibrary::SolutionInfo> solutionVector;
 
-   // Get the markets to solve from the marketplace.
-   const vector< pair< string,string > > marketsToSolve = marketplace->getMarketsToSolve( period, isNR );
-   
-   // new create the solution structs.
-   for ( vector< pair< string, string > >::const_iterator iter = marketsToSolve.begin(); iter != marketsToSolve.end(); iter++ ) {
-      
-      // Create the new SolutionInfo object. 
-      SolutionInfo newSol( iter->first, iter->second );
+    vector<SolverLibrary::SolutionInfo> solutionVector;
 
-      // Add it to the new solution vector.
-      solutionVector.push_back( newSol );
-   }
+    // Get the markets to solve from the marketplace.
+    const vector< pair< string,string > > marketsToSolve = marketplace->getMarketsToSolve( period, isNR );
 
-   // return the new solution vector to the solver.
-   return solutionVector;
+    // new create the solution structs.
+    for ( vector< pair< string, string > >::const_iterator iter = marketsToSolve.begin(); iter != marketsToSolve.end(); iter++ ) {
+
+        // Create the new SolutionInfo object. 
+        SolutionInfo newSol( iter->first, iter->second );
+
+        // Add it to the new solution vector.
+        solutionVector.push_back( newSol );
+    }
+
+    // return the new solution vector to the solver.
+    return solutionVector;
 }
 
 /*! \brief Sets the prices contained in the solution vector into their corresponding markets.
@@ -93,9 +93,9 @@ vector<SolverLibrary::SolutionInfo> SolverLibrary::getMarketsToSolve( const Mark
 */
 void SolverLibrary::setPricesToMarkets( Marketplace* marketplace, const vector<SolverLibrary::SolutionInfo>& solutionVector, const int period ) {
 
-   for ( vector<SolverLibrary::SolutionInfo>::const_iterator iter = solutionVector.begin(); iter != solutionVector.end(); iter++ ) {
-      marketplace->setRawPrice( iter->marketName, iter->marketGood, iter->X, period );
-   }
+    for ( vector<SolverLibrary::SolutionInfo>::const_iterator iter = solutionVector.begin(); iter != solutionVector.end(); iter++ ) {
+        marketplace->setRawPrice( iter->marketName, iter->marketGood, iter->X, period );
+    }
 }
 
 /*! \brief Get the demands, supplies, prices and excess demands from the markets and set them into their corresponding places in the solution vector.
@@ -106,13 +106,13 @@ void SolverLibrary::setPricesToMarkets( Marketplace* marketplace, const vector<S
 * \param period The period for which to retrieve the values.
 */
 void SolverLibrary::update( Marketplace* marketplace, vector<SolverLibrary::SolutionInfo>& solutionVector, const int period ) {
- 
-   for ( vector<SolverLibrary::SolutionInfo>::iterator iter = solutionVector.begin(); iter != solutionVector.end(); iter++ ) {
-      iter->demand = marketplace->getRawDemand( iter->marketName, iter->marketGood, period );
-      iter->supply = marketplace->getRawSupply( iter->marketName, iter->marketGood, period );
-      iter->ED = iter->demand - iter->supply;
-      iter->X = marketplace->getRawPrice( iter->marketName, iter->marketGood, period );
-   }
+
+    for ( vector<SolverLibrary::SolutionInfo>::iterator iter = solutionVector.begin(); iter != solutionVector.end(); iter++ ) {
+        iter->demand = marketplace->getRawDemand( iter->marketName, iter->marketGood, period );
+        iter->supply = marketplace->getRawSupply( iter->marketName, iter->marketGood, period );
+        iter->ED = iter->demand - iter->supply;
+        iter->X = marketplace->getRawPrice( iter->marketName, iter->marketGood, period );
+    }
 }
 
 /*! \brief Determines if any price or demand markets have been unbracketed and attempts to restore them to a bracketed state. 
@@ -125,18 +125,18 @@ void SolverLibrary::update( Marketplace* marketplace, vector<SolverLibrary::Solu
 * \param period The period in which to adjust the brackets. 
 */
 void SolverLibrary::adjustPriceAndDemandMarkets( const Marketplace* marketplace, vector<SolverLibrary::SolutionInfo>& solutionVector, const int period ) {
-   for ( vector<SolverLibrary::SolutionInfo>::iterator iter =  solutionVector.begin(); iter != solutionVector.end(); iter++ ) {
-      if( marketplace->isPriceOrDemandMarket( iter->marketName, iter->marketGood, period ) ) {
-         double rawDemand = marketplace->getRawDemand( iter->marketName, iter->marketGood, period );
-         
-         if( iter->XL < rawDemand ) {
-            iter->XL = rawDemand * 1.5;
-         }
-         if( iter->XR > rawDemand ) {
-            iter->XR = rawDemand / 1.5;
-         }
-      }
-   }
+    for ( vector<SolverLibrary::SolutionInfo>::iterator iter =  solutionVector.begin(); iter != solutionVector.end(); iter++ ) {
+        if( marketplace->isPriceOrDemandMarket( iter->marketName, iter->marketGood, period ) ) {
+            double rawDemand = marketplace->getRawDemand( iter->marketName, iter->marketGood, period );
+
+            if( iter->XL < rawDemand ) {
+                iter->XL = rawDemand * 1.5;
+            }
+            if( iter->XR > rawDemand ) {
+                iter->XR = rawDemand / 1.5;
+            }
+        }
+    }
 }
 
 /*! \brief Finds and returns the maximum excess demand in a SolutionObject vector.
@@ -149,20 +149,20 @@ void SolverLibrary::adjustPriceAndDemandMarkets( const Marketplace* marketplace,
 * \param period Period. Currently does nothing. Is this needed?
 */
 double SolverLibrary::findMaxExcessDemand( const vector<SolverLibrary::SolutionInfo>& solutionVector, const double excessDemandSolutionFloor, int& worstMarketIndex, const int period ) {
-   
-   worstMarketIndex = 0;
-   double largest = 0;
 
-   for ( int i = 0; i < static_cast<int>( solutionVector.size() ); i++ ) {
+    worstMarketIndex = 0;
+    double largest = 0;
 
-      const double relativeED = getRelativeED( solutionVector[ i ].ED, solutionVector[ i ].demand, excessDemandSolutionFloor );
-      
-      if ( ( fabs( solutionVector[ i ].X ) > util::getSmallNumber() ) && ( relativeED > largest ) ) {
-         worstMarketIndex = i;
-         largest = relativeED;
-      }
-   }
-   return largest;
+    for ( int i = 0; i < static_cast<int>( solutionVector.size() ); i++ ) {
+
+        const double relativeED = getRelativeED( solutionVector[ i ].ED, solutionVector[ i ].demand, excessDemandSolutionFloor );
+
+        if ( ( fabs( solutionVector[ i ].X ) > util::getSmallNumber() ) && ( relativeED > largest ) ) {
+            worstMarketIndex = i;
+            largest = relativeED;
+        }
+    }
+    return largest;
 }
 
 /*! \brief Calculate and return a relative excess demand.
@@ -176,25 +176,25 @@ double SolverLibrary::findMaxExcessDemand( const vector<SolverLibrary::SolutionI
 * \return The relative excess demand, excess demand as a percentage of demand. 
 */
 double SolverLibrary::getRelativeED( const double excessDemand, const double demand, const double excessDemandFloor ) {
-   
-   double retValue;
-   double tempDemand = demand;
-   
-   if( tempDemand < util::getSmallNumber() ) {
-      tempDemand = util::getSmallNumber();
-   }
-   
-   // Check if the ED is below a minimal value. 
-   if( fabs( excessDemand ) < excessDemandFloor ) {
-      retValue = 0;
-   }
-   
-   // Find the ratio of excess demand to demand.
-   else {
-      retValue = fabs( excessDemand ) / tempDemand * 100;
-   }
-   
-   return retValue;
+
+    double retValue;
+    double tempDemand = demand;
+
+    if( tempDemand < util::getSmallNumber() ) {
+        tempDemand = util::getSmallNumber();
+    }
+
+    // Check if the ED is below a minimal value. 
+    if( fabs( excessDemand ) < excessDemandFloor ) {
+        retValue = 0;
+    }
+
+    // Find the ratio of excess demand to demand.
+    else {
+        retValue = fabs( excessDemand ) / tempDemand * 100;
+    }
+
+    return retValue;
 }
 
 /*! \brief Determine whether a market is within the solution tolerance. 
@@ -207,7 +207,7 @@ double SolverLibrary::getRelativeED( const double excessDemand, const double dem
 * \param excessDemandFloor Absolute value of ED below which the market should be considered solved.
 */
 bool SolverLibrary::isWithinTolerance( const double excessDemand, const double demand, const double solutionTolerance, const double excessDemandSolutionFloor ) {
-   return ( getRelativeED( excessDemand, demand, excessDemandSolutionFloor ) < solutionTolerance );
+    return ( getRelativeED( excessDemand, demand, excessDemandSolutionFloor ) < solutionTolerance );
 }
 
 /*! \brief Calculate demand elasticities.
@@ -222,25 +222,25 @@ bool SolverLibrary::isWithinTolerance( const double excessDemand, const double d
 * \return A vector of demand elasticities relative to the market referenced by marketSolutionNumber, one for each market within sol.
 */
 const vector<double> SolverLibrary::calcDemandElas( const Marketplace* marketplace, const vector<SolverLibrary::SolutionInfo>& sol, const int marketSolutionNumber, const int per ) {
-   
-   double ddemand;
-   double dprice;
-   vector<double> JFD( sol.size() );
-   
-   for ( int i = 0; i < static_cast<int>( sol.size() ); i++ ) {
-      
-      ddemand = getLogChangeInRawDemand( marketplace, sol, i, per );
-      dprice = getLogChangeInRawPrice( marketplace, sol, marketSolutionNumber, per );
-      
-      if( dprice == 0 ){
-         dprice = util::getSmallNumber();
-      }
-      
-      JFD[ i ] = ddemand / dprice;
-      assert( util::isValidNumber( JFD[ i ] ) );
-   }
-   
-   return JFD;
+
+    double ddemand;
+    double dprice;
+    vector<double> JFD( sol.size() );
+
+    for ( int i = 0; i < static_cast<int>( sol.size() ); i++ ) {
+
+        ddemand = getLogChangeInRawDemand( marketplace, sol, i, per );
+        dprice = getLogChangeInRawPrice( marketplace, sol, marketSolutionNumber, per );
+
+        if( dprice == 0 ){
+            dprice = util::getSmallNumber();
+        }
+
+        JFD[ i ] = ddemand / dprice;
+        assert( util::isValidNumber( JFD[ i ] ) );
+    }
+
+    return JFD;
 }
 
 /*! \brief Calculate supply elasticities.
@@ -255,25 +255,25 @@ const vector<double> SolverLibrary::calcDemandElas( const Marketplace* marketpla
 * \return A vector of supply elasticities relative to the market referenced by marketSolutionNumber, one for each market within sol.
 */
 const vector<double> SolverLibrary::calcSupplyElas( const Marketplace* marketplace, const vector<SolverLibrary::SolutionInfo>& sol, const int marketSolutionNumber, const int per ) {
-   
-   double dsupply;
-   double dprice;
-   
-   vector<double> JFS( sol.size() );
-   
-   for ( int i = 0; i < static_cast<int>( sol.size() ); i++ ) {
-      
-      dsupply = getLogChangeInRawSupply( marketplace, sol, i, per );
-      dprice = getLogChangeInRawPrice( marketplace, sol, marketSolutionNumber, per );
-      
-      if( dprice == 0 ){
-         dprice = util::getSmallNumber();
-      }
-      
-      JFS[ i ] = dsupply / dprice;
-      assert( util::isValidNumber( JFS[ i ] ) );
-   }
-   return JFS;
+
+    double dsupply;
+    double dprice;
+
+    vector<double> JFS( sol.size() );
+
+    for ( int i = 0; i < static_cast<int>( sol.size() ); i++ ) {
+
+        dsupply = getLogChangeInRawSupply( marketplace, sol, i, per );
+        dprice = getLogChangeInRawPrice( marketplace, sol, marketSolutionNumber, per );
+
+        if( dprice == 0 ){
+            dprice = util::getSmallNumber();
+        }
+
+        JFS[ i ] = dsupply / dprice;
+        assert( util::isValidNumber( JFS[ i ] ) );
+    }
+    return JFS;
 }
 
 /*! \brief Function to calculate partial derivatives for Newton-Rhaphson method, NR_Ron()
@@ -312,154 +312,162 @@ const vector<double> SolverLibrary::calcSupplyElas( const Marketplace* marketpla
 * \sa NR_Ron
 */
 void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<SolverLibrary::SolutionInfo>& solutionVector, Matrix& JFDM, Matrix& JFSM, double& worldCalcCount, const int per ) {
-   
-   cout << endl << "Begin derivative calculation..." << endl;
-   const int marketsToSolve = static_cast<int>( solutionVector.size() );
-   const double DELTAP = 1e-10; // Orginal, What is the proper value for delta?
-   vector<double> tmpJFD( marketsToSolve );
-   vector<double> tmpJFS( marketsToSolve );
-   
-   // Create additive matrices.
-   
-   // Get the region names from the world.
-   const vector<string> regionNames = world->getRegionVector();
-   
-   // Save original global supplies and demands for error checking.
-   vector<double> originalSupplies = marketplace->getSupplies( per );
-   vector<double> originalDemands = marketplace->getDemands( per );
-   int numMarkets = static_cast<int>( originalSupplies.size() );
+    
+    // Extra call to world.calc using the current shares so derivatives work correctly.
+    setPricesToMarkets( marketplace, solutionVector, per );
+    marketplace->nullDemands( per );
+    marketplace->nullSupplies( per );
+    world->calc( per );
+    update( marketplace, solutionVector, per );
 
-   // Additive matrices, indexed by region name and market number.
-   map< string, vector< double > > additionalSupplies;
-   map< string, vector< double > > additionalDemands;
-   
-   // Supplies and demands saved from previous region during calculation of additive matrices. 
-   vector<double> prevSupplies( numMarkets, 0.0 );
-   vector<double> prevDemands( numMarkets, 0.0 );
-   
-   // clear demands and supplies.
-   marketplace->nullDemands( per );
-   marketplace->nullSupplies( per );
-   
-   // iterate over regions and calculate additional supplies and demands for each region for the current prices. 
-   for ( vector<string>::const_iterator regionIter = regionNames.begin(); regionIter != regionNames.end(); regionIter++ ) {
-      vector<double> currSupplies;
-      vector<double> currDemands;
-      vector<double> diffInSupplies( numMarkets, 0.0 );
-      vector<double> diffInDemands( numMarkets, 0.0 );
-      
-      // Call world->calc() for this region only. 
-      world->calc( per, vector<string>( 1, *regionIter ) );
-      worldCalcCount += ( 1.0 / static_cast<double> ( regionNames.size() ) );
-      
-      currSupplies = marketplace->getSupplies( per );
-      currDemands = marketplace->getDemands( per );
-      
-      // calculate differences between previous supply and supply after calculating supply and demand for this region.
-      for( int k = 0; k < numMarkets; k++ ) {
-         diffInSupplies[ k ] = currSupplies[ k ] - prevSupplies[ k ];
-         diffInDemands[ k ] = currDemands[ k ] - prevDemands[ k ];
-      }
-      
-      // save the current supplies and demands.
-      prevSupplies = currSupplies;
-      prevDemands = currDemands;
-      
-      // Insert this regions additional supplies and demands into the additive matrices. 
-      additionalSupplies[ *regionIter ] = diffInSupplies;
-      additionalDemands[ *regionIter ] = diffInDemands;
-   }
-   
-   marketplace->storeinfo( per ); // store original market info before perturbing price
-   
-   // Perform optional error checking.
-   // This code will sum up the additive value for each market over all regions.
-   // These sums are then checked against the original global supplies and demands.
-   if( Configuration::getInstance()->getBool( "debugChecking" ) ) {
-      // cout << "Checking sums..." << endl;
-      // Compute the sum of the regional supplies and demands.
-      vector<double> suppliesSum( numMarkets, 0.0 );
-      vector<double> demandsSum( numMarkets, 0.0 );
-      
-      for ( vector<string>::const_iterator checkIter = regionNames.begin(); checkIter != regionNames.end(); checkIter++ ) {
-         for ( int currMarkIter = 0; currMarkIter < numMarkets; currMarkIter++ ) {
-            suppliesSum[ currMarkIter ] += additionalSupplies[ *checkIter ][ currMarkIter ];
-            demandsSum[ currMarkIter ] += additionalDemands[ *checkIter ][ currMarkIter ];
-         }
-      }
-      
-      double ErrorCount = 0;
-      // Check if the sum adds up to the total. 
-      for( int marketCheckIter = 0; marketCheckIter < numMarkets; marketCheckIter++ ) {
-         if( fabs( originalSupplies[ marketCheckIter ] - suppliesSum[ marketCheckIter ] ) > 1E-5 ){
-            if ( ErrorCount > 0 ) {
-               cout << "Error in derivative Calc. Unequal sums: ";
-               cout << " S Difference: " << originalSupplies[ marketCheckIter ] - suppliesSum[ marketCheckIter ];
-               cout << endl;
+    cout << endl << "Begin derivative calculation..." << endl;
+    const int marketsToSolve = static_cast<int>( solutionVector.size() );
+    const double DELTAP = 1e-10; // Orginal, What is the proper value for delta?
+    vector<double> tmpJFD( marketsToSolve );
+    vector<double> tmpJFS( marketsToSolve );
+
+    // Create additive matrices.
+
+    // Get the region names from the world.
+    const vector<string> regionNames = world->getRegionVector();
+
+    // Save original global supplies and demands for error checking.
+    vector<double> originalSupplies = marketplace->getSupplies( per );
+    vector<double> originalDemands = marketplace->getDemands( per );
+    int numMarkets = static_cast<int>( originalSupplies.size() );
+
+    // Additive matrices, indexed by region name and market number.
+    map< string, vector< double > > additionalSupplies;
+    map< string, vector< double > > additionalDemands;
+
+    // Supplies and demands saved from previous region during calculation of additive matrices. 
+    vector<double> prevSupplies( numMarkets );
+    vector<double> prevDemands( numMarkets );
+
+    // clear demands and supplies.
+    marketplace->nullDemands( per );
+    marketplace->nullSupplies( per );
+
+    // iterate over regions and calculate additional supplies and demands for each region for the current prices. 
+    for ( vector<string>::const_iterator regionIter = regionNames.begin(); regionIter != regionNames.end(); regionIter++ ) {
+        vector<double> currSupplies;
+        vector<double> currDemands;
+        vector<double> diffInSupplies( numMarkets );
+        vector<double> diffInDemands( numMarkets );
+
+        // Call world->calc() for this region only. 
+        world->calc( per, vector<string>( 1, *regionIter ) );
+        worldCalcCount += ( 1.0 / static_cast<double> ( regionNames.size() ) );
+
+        currSupplies = marketplace->getSupplies( per );
+        currDemands = marketplace->getDemands( per );
+
+        // calculate differences between previous supply and supply after calculating supply and demand for this region.
+        for( int k = 0; k < numMarkets; k++ ) {
+            diffInSupplies[ k ] = currSupplies[ k ] - prevSupplies[ k ];
+            diffInDemands[ k ] = currDemands[ k ] - prevDemands[ k ];
+        }
+
+        // save the current supplies and demands.
+        prevSupplies = currSupplies;
+        prevDemands = currDemands;
+
+        // Insert this regions additional supplies and demands into the additive matrices. 
+        additionalSupplies[ *regionIter ] = diffInSupplies;
+        additionalDemands[ *regionIter ] = diffInDemands;
+    }
+
+    marketplace->storeinfo( per ); // store original market info before perturbing price
+
+    // Perform optional error checking.
+    // This code will sum up the additive value for each market over all regions.
+    // These sums are then checked against the original global supplies and demands.
+    if( Configuration::getInstance()->getBool( "debugChecking" ) ) {
+        // cout << "Checking sums..." << endl;
+        // Compute the sum of the regional supplies and demands.
+        vector<double> suppliesSum( numMarkets );
+        vector<double> demandsSum( numMarkets );
+
+        for ( vector<string>::const_iterator checkIter = regionNames.begin(); checkIter != regionNames.end(); checkIter++ ) {
+            for ( int currMarkIter = 0; currMarkIter < numMarkets; currMarkIter++ ) {
+                suppliesSum[ currMarkIter ] += additionalSupplies[ *checkIter ][ currMarkIter ];
+                demandsSum[ currMarkIter ] += additionalDemands[ *checkIter ][ currMarkIter ];
             }
-            ErrorCount += 1;
-         }
-         if ( fabs( originalDemands[ marketCheckIter ] - demandsSum[ marketCheckIter ] ) > 1E-5 ) {
-            if ( ErrorCount > 0 ) {
-               cout << "Error in derivative Calc. Unequal sums: ";
-               cout << " D Difference: " << originalDemands[ marketCheckIter ] - demandsSum[ marketCheckIter ];
-               cout << endl;
+        }
+
+        double ErrorCount = 0;
+        // Check if the sum adds up to the total. 
+        for( int marketCheckIter = 0; marketCheckIter < numMarkets; marketCheckIter++ ) {
+            if( fabs( originalSupplies[ marketCheckIter ] - suppliesSum[ marketCheckIter ] ) > 1E-5 ){
+                if ( ErrorCount > 0 ) {
+                    cout << "Error in derivative Calc. Unequal sums: ";
+                    cout << " S Difference: " << originalSupplies[ marketCheckIter ] - suppliesSum[ marketCheckIter ];
+                    cout << endl;
+                }
+                ErrorCount += 1;
             }
-            ErrorCount += 1;
-         }
-       } 
-      if ( ErrorCount > 0 ) {
-         cout << "Warning - " << ErrorCount << " supply & demand sums not equal in derivative Calc. " << endl;
-      }
-   }
+            if ( fabs( originalDemands[ marketCheckIter ] - demandsSum[ marketCheckIter ] ) > 1E-5 ) {
+                if ( ErrorCount > 0 ) {
+                    cout << "Error in derivative Calc. Unequal sums: ";
+                    cout << " D Difference: " << originalDemands[ marketCheckIter ] - demandsSum[ marketCheckIter ];
+                    cout << endl;
+                }
+                ErrorCount += 1;
+            }
+        } 
+        if ( ErrorCount > 0 ) {
+            cout << "Warning - " << ErrorCount << " supply & demand sums not equal in derivative Calc. " << endl;
+        }
+    }
 
-   // Sums checking complete.
-   // Done creating additive matrices.
-   // Now calculate derivatives for each market.
-   
-   update( marketplace, solutionVector, per );
-   for ( int j = 0; j < marketsToSolve; j++ ) {	// j is column index
-      
-      // Store the original price.
-      double storedPrice = solutionVector[ j ].X;
+    // Sums checking complete.
+    // Done creating additive matrices.
+    // Now calculate derivatives for each market.
 
-      // Price is near zero.
-      if( solutionVector[ j ].X < DELTAP ) {
-         solutionVector[ j ].X = DELTAP;
-      }
-      
-      // Price is positive.
-      else {
-        solutionVector[ j ].X *= ( 1 + DELTAP ); // add price times deltap
-      }
-      
-      setPricesToMarkets( marketplace, solutionVector, per ); // set new price for one market
-      
-      // Now remove additive supplies and demands.
-      // Iterate over all regions within the market.
-      const vector<string> containedRegions = marketplace->getContainedRegions( solutionVector[ j ].marketName, solutionVector[ j ].marketGood, per );
+    update( marketplace, solutionVector, per );
+    for ( int j = 0; j < marketsToSolve; j++ ) {	// j is column index
 
-      for ( vector<string>::const_iterator regionIter2 = containedRegions.begin(); regionIter2 != containedRegions.end(); regionIter2++ ) {
-         // Remove supply.
-         marketplace->removeFromRawSupplies( additionalSupplies[ *regionIter2 ], per );
-         // Remove demand
-         marketplace->removeFromRawDemands( additionalDemands[ *regionIter2 ], per );
-      }
-      
-      world->calc( per, containedRegions );
-      worldCalcCount += ( static_cast<double>( containedRegions.size() ) / static_cast<double> ( regionNames.size() ) );
-      
-      tmpJFD =  calcDemandElas( marketplace, solutionVector, j, per ); // calculate demand elasticities
-      tmpJFS =  calcSupplyElas( marketplace, solutionVector, j, per ); // calculate supply elasticities
-      
-      for ( int i = 0; i < marketsToSolve; i++ ) {// copy column vector to Jacobian Matrix
+        // Store the original price.
+        double storedPrice = solutionVector[ j ].X;
+
+        // Price is near zero.
+        if( solutionVector[ j ].X < DELTAP ) {
+            solutionVector[ j ].X = DELTAP;
+        }
+
+        // Price is positive.
+        else {
+            solutionVector[ j ].X *= ( 1 + DELTAP ); // add price times deltap
+        }
+
+        setPricesToMarkets( marketplace, solutionVector, per ); // set new price for one market
+
+        // Now remove additive supplies and demands.
+        // Iterate over all regions within the market.
+        const vector<string> containedRegions = marketplace->getContainedRegions( solutionVector[ j ].marketName, solutionVector[ j ].marketGood, per );
+
+        for ( vector<string>::const_iterator regionIter2 = containedRegions.begin(); regionIter2 != containedRegions.end(); regionIter2++ ) {
+            // Remove supply.
+            marketplace->removeFromRawSupplies( additionalSupplies[ *regionIter2 ], per );
+            // Remove demand
+            marketplace->removeFromRawDemands( additionalDemands[ *regionIter2 ], per );
+        }
+
+        world->calc( per, containedRegions );
+        worldCalcCount += ( static_cast<double>( containedRegions.size() ) / static_cast<double> ( regionNames.size() ) );
+        
+
+        tmpJFD =  calcDemandElas( marketplace, solutionVector, j, per ); // calculate demand elasticities
+        tmpJFS =  calcSupplyElas( marketplace, solutionVector, j, per ); // calculate supply elasticities
+        
+        for ( int i = 0; i < marketsToSolve; i++ ) {// copy column vector to Jacobian Matrix
          JFDM[ i ][ j ] = tmpJFD[ i ]; // i is row index
          JFSM[ i ][ j ] = tmpJFS[ i ]; // i is row index
-      }
-      
-      marketplace->restoreinfo( per ); // restore market supplies and demands.
-      solutionVector[ j ].X = storedPrice; //  restore perturbed market price
-   }
+        }
+        
+        marketplace->restoreinfo( per ); // restore market supplies and demands.
+        solutionVector[ j ].X = storedPrice; //  restore perturbed market price
+    }
 }
 
 /*! \brief Calculate the inverse of a matrix using an LU factorization.
@@ -469,17 +477,17 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, vector<
 * \param A matrix to invert.
 */
 void SolverLibrary::invertMatrix( Matrix& A ) {
-   
-   // create LU decomposition
-   Matrix LU( A.nrows(), A.ncols() );
-   
-   dense1D<int> pvector( A.nrows() );
-   
-   copy(A, LU);
-   lu_factor( LU, pvector );
-   
-   // solve
-   lu_inverse( LU, pvector, A );
+
+    // create LU decomposition
+    Matrix LU( A.nrows(), A.ncols() );
+
+    dense1D<int> pvector( A.nrows() );
+
+    copy(A, LU);
+    lu_factor( LU, pvector );
+
+    // solve
+    lu_inverse( LU, pvector, A );
 }
 
 /*! \brief This function checks for any SolutionInfo objects that are converging too slowly.
@@ -490,18 +498,18 @@ void SolverLibrary::invertMatrix( Matrix& A ) {
 * \param allbracketed Whether all markets are bracketed.
 */
 void SolverLibrary::checkBracket( const double solutionTolerance, const double excessDemandSolutionFloor, vector<SolverLibrary::SolutionInfo>& sol, bool& allbracketed ){
-   
-   const int numCurrMarkets = static_cast<int>( sol.size() ); // number of markets to solve
-   // try rebracketing by setting bracketed array to false
-   
-   for( int i = 0; i < numCurrMarkets; i++ ) {
-      if ( fabs( sol[ i ].dX ) < util::getSmallNumber() ) {
-         allbracketed = false;
-         sol[ i ].bracketed = false;
-         sol[ i ].XL = sol[ i ].XR = sol[ i ].X; 
-         sol[ i ].EDL = sol[ i ].EDR = sol[ i ].ED; 
-      }
-   }
+
+    const int numCurrMarkets = static_cast<int>( sol.size() ); // number of markets to solve
+    // try rebracketing by setting bracketed array to false
+
+    for( int i = 0; i < numCurrMarkets; i++ ) {
+        if ( fabs( sol[ i ].dX ) < util::getSmallNumber() ) {
+            allbracketed = false;
+            sol[ i ].bracketed = false;
+            sol[ i ].XL = sol[ i ].XR = sol[ i ].X; 
+            sol[ i ].EDL = sol[ i ].EDR = sol[ i ].ED; 
+        }
+    }
 }
 
 /*! \brief Calculate the log change in raw demand for an index in the sol vector.
@@ -516,27 +524,27 @@ void SolverLibrary::checkBracket( const double solutionTolerance, const double e
 * \return The change in the logs of the demand and stored demand.
 */
 double SolverLibrary::getLogChangeInRawDemand( const Marketplace* marketplace, const vector<SolverLibrary::SolutionInfo>& sol, const int solNumber, const int per ) {
-   
-   double storedDemand = marketplace->getStoredRawDemand( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
-   double demand = marketplace->getRawDemand( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
-   double change = 0;
 
-   // Case 1: Demand or Previous Demand is zero.
-   if( storedDemand == 0 || demand == 0 ) {
-      change = util::getVerySmallNumber();
-   }
-   
-   // Case 2: Demand and Previous Demand are both positive.
-   else if( ( demand > 0 ) && ( storedDemand > 0 ) ) {
-      change = log( demand ) - log( storedDemand );
-   }
-   
-   // Case 3: Demand or Previous Demand is negative. This should not occur.
-   else {
-      assert( false );
-   }
-   
-   return change;
+    double storedDemand = marketplace->getStoredRawDemand( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
+    double demand = marketplace->getRawDemand( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
+    double change = 0;
+
+    // Case 1: Demand or Previous Demand is zero.
+    if( storedDemand == 0 || demand == 0 ) {
+        change = util::getVerySmallNumber();
+    }
+
+    // Case 2: Demand and Previous Demand are both positive.
+    else if( ( demand > 0 ) && ( storedDemand > 0 ) ) {
+        change = log( demand ) - log( storedDemand );
+    }
+
+    // Case 3: Demand or Previous Demand is negative. This should not occur.
+    else {
+        assert( false );
+    }
+
+    return change;
 }
 
 /*! \brief Calculate the log change in raw supply for an index in the sol vector.
@@ -551,27 +559,27 @@ double SolverLibrary::getLogChangeInRawDemand( const Marketplace* marketplace, c
 * \return The change in the logs of the supply and stored supply.
 */
 double SolverLibrary::getLogChangeInRawSupply( const Marketplace* marketplace, const vector<SolverLibrary::SolutionInfo>& sol, const int solNumber, const int per ) {
-   
-   double storedSupply = marketplace->getStoredRawSupply( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
-   double supply = marketplace->getRawSupply( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
-   double change = 0;
 
-   // Case 1: supply or Previous supply is zero.
-   if( storedSupply == 0 || supply == 0 ) {
-      change = util::getVerySmallNumber();
-   }
-   
-   // Case 2: supply and Previous supply are both positive.
-   else if( ( supply > 0 ) && ( storedSupply > 0 ) ) {
-      change = log( supply ) - log( storedSupply );
-   }
-   
-   // Case 3: supply or Previous supply is negative. This should not occur.
-   else {
-      assert( false );
-   }
-   
-   return change;
+    double storedSupply = marketplace->getStoredRawSupply( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
+    double supply = marketplace->getRawSupply( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
+    double change = 0;
+
+    // Case 1: supply or Previous supply is zero.
+    if( storedSupply == 0 || supply == 0 ) {
+        change = util::getVerySmallNumber();
+    }
+
+    // Case 2: supply and Previous supply are both positive.
+    else if( ( supply > 0 ) && ( storedSupply > 0 ) ) {
+        change = log( supply ) - log( storedSupply );
+    }
+
+    // Case 3: supply or Previous supply is negative. This should not occur.
+    else {
+        assert( false );
+    }
+
+    return change;
 }
 
 /*! \brief Calculate the log change in raw price for an index in the sol vector.
@@ -586,25 +594,25 @@ double SolverLibrary::getLogChangeInRawSupply( const Marketplace* marketplace, c
 * \return The change in the logs of the price and stored price.
 */
 double SolverLibrary::getLogChangeInRawPrice( const Marketplace* marketplace, const vector<SolverLibrary::SolutionInfo>& sol, const int solNumber, const int per ) {
-   
-   double storedPrice = marketplace->getStoredRawPrice( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
-   double price = marketplace->getRawPrice( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
-   double change = 0;
 
-   // Case 1: price or Previous price is zero.
-   if( storedPrice == 0 || price == 0 ) {
-      change = util::getVerySmallNumber();
-   }
-   
-   // Case 2: price and Previous price are both positive.
-   else if( ( price > 0 ) && ( storedPrice > 0 ) ) {
-      change = log( price ) - log( storedPrice );
-   }
-   
-   // Case 3: price or Previous price is negative. This should not occur.
-   else {
-      assert( false );
-   }
-   
-   return change;
+    double storedPrice = marketplace->getStoredRawPrice( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
+    double price = marketplace->getRawPrice( sol[ solNumber ].marketName, sol[ solNumber ].marketGood, per );
+    double change = 0;
+
+    // Case 1: price or Previous price is zero.
+    if( storedPrice == 0 || price == 0 ) {
+        change = util::getVerySmallNumber();
+    }
+
+    // Case 2: price and Previous price are both positive.
+    else if( ( price > 0 ) && ( storedPrice > 0 ) ) {
+        change = log( price ) - log( storedPrice );
+    }
+
+    // Case 3: price or Previous price is negative. This should not occur.
+    else {
+        assert( false );
+    }
+
+    return change;
 }
