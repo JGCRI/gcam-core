@@ -247,6 +247,7 @@ void sector::calc_share( const string regionName, const int per, const double gn
 {
 	int i=0;
 	double sum = 0.0;
+   
 	for (i=0;i<nosubsec;i++) {
 		// determine subsector shares based on technology shares
 		subsec[i]->calcShare( regionName, per );
@@ -256,9 +257,10 @@ void sector::calc_share( const string regionName, const int per, const double gn
 	for (i=0;i<nosubsec;i++) {
 		subsec[i]->normShare(sum, per);	
 	}
-
+   
     // Now adjust for capacity limits
       adjSharesCapLimit( per );
+      
 }
 
 

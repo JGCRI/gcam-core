@@ -368,7 +368,7 @@ void Marketplace::setdemand( const string& goodName, const string& regionName, c
    // The following condition used to be here, don't think this is needed any more
    //	if( goodName != "renewable" ){ // just a guess
    
-   if (value < 0) {
+   if ( ( value < 0 ) && ( goodName != "CO2" ) ) {
       cerr << "ERROR: Demand value < 0 for market " << goodName << " in region " << regionName << endl;
    }
    
@@ -378,13 +378,21 @@ void Marketplace::setdemand( const string& goodName, const string& regionName, c
 }
 
 //! return market price
-/* If the market does not exist, return an extremely large price.*/
+/*! If the market does not exist, return an extremely large price.
+\todo do something else about "renewable"
+*/
 double Marketplace::showprice( const string& goodName, const string& regionName, const int per ) const {
    
    const int marketNumber = getMarketNumber( goodName, regionName );
    
+   // the "renewable" fuel depends on the returned price being zero
    if( marketNumber == -1 ) {
-      return 1e12;
+      if ( goodName != "renewable" ) {
+         logfile << "Market not found for " << goodName << " in region " << regionName << endl;
+         return 1e12;
+      } else {
+         return 0;
+      }
    }
    else {
       return markets[ marketNumber ][ per ]->getPrice();

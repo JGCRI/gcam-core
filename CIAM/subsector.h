@@ -60,7 +60,7 @@ protected:
    vector<bool> calibrationStatus; // Set true if sector or any tech is calibrated
 	vector<Summary> summary; //!< summary for reporting
    
-   void adjustForCalibration( double& subsecdmd, double calOutputValue, const int period ); // Adjust for calibration
+   void adjustForCalibration( double secDmd, double& subsecdmd, double calOutputValue, const int period ); // Adjust for calibration
    void shareWeightScale( const int per ); // Consistantly adjust share weights
    
 public:

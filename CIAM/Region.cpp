@@ -485,25 +485,25 @@ void Region::setCO2coef()
 	// initialize map (tgC/EJ) or (MTC/EJ)
 	// apply carbon taxes to primary fuels
 	/*	co2coefpri["crude oil"] = 18.4; 
-	co2coefpri["natural gas"] = 15.0;
-	co2coefpri["coal"] = 25.3;
+	co2coefpri["natural gas"] = 14.2;
+	co2coefpri["coal"] = 27.3;
 	*/
 	// setting emissions coefficients to these fuels
 	// applies carbon taxes to secondary fuels
-	co2coefpri["refined oil"] = 18.4;
-	co2coefpri["delivered gas"] = 15.0;
-	co2coefpri["delivered coal"] = 25.3;
+	co2coefpri["refined oil"] = 19.9691;
+	co2coefpri["delivered gas"] = 14.2;
+	co2coefpri["delivered coal"] = 27.3;
 	
 	// initialize map (tgC/EJ) or (MTC/EJ)
-	co2coefall["crude oil"] = 18.4; 
-	co2coefall["crude oil regional"] = 18.4; 
-	co2coefall["refined oil"] = 18.4;
-	co2coefall["natural gas"] = 15.0;
-	co2coefall["natural gas regional"] = 15.0;
-	co2coefall["delivered gas"] = 15.0;
-	co2coefall["coal"] = 25.3;
-	co2coefall["coal regional"] = 25.3;
-	co2coefall["delivered coal"] = 25.3;
+	co2coefall["crude oil"] = 19.9691; 
+	co2coefall["crude oil regional"] = 19.9691; 
+	co2coefall["refined oil"] = 19.9691;
+	co2coefall["natural gas"] = 14.2;
+	co2coefall["natural gas regional"] = 14.2;
+	co2coefall["delivered gas"] = 14.2;
+	co2coefall["coal"] = 27.3;
+	co2coefall["coal regional"] = 27.3;
+	co2coefall["delivered coal"] = 27.3;
 }
 
 

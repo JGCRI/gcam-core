@@ -79,6 +79,7 @@ void technology::initElementalMembers(){
 	A = 0;
 	B = 0;
 	resource = 0;
+   fixedSupply = 0; // initialize to no fixed supply
    fixedOutputVal = 0;
    doCalibration = false;
    calInputValue = 0;
@@ -319,18 +320,36 @@ void technology::norm_share(double sum)
 	}
 }
 
-/*! This function sets the value of fixed supply. At present this does so only for Hydro 
-acccording to the MiniCAM formula. In the future, this will be superseeded by read-in values. */
+//! This function sets the value of fixed supply
+/*! This needs to be called only once per period. Sets the amount of fixed supply to either the read-in value or the "MiniCAM-style" formula used for hydro. 
+ * A == Minicam HYDRO(1,L)
+ * A == Minicam HYDRO(2,L)
+ * resource == Minicam HYDRO(3,L)
+ */
 void technology::calcFixedSupply(int per)
 {
 	const Modeltime* modeltime = scenario->getModeltime();
 	string FixedTech = "hydro";
+
+   // MiniCAM style hydro specification
 	if(name == FixedTech) {
 		int T = per*modeltime->gettimestep(per);
 		// resource and logit function 
 		double fact = exp(A+B*T);
 		output = fixedOutputVal = resource*fact/(1+fact);
+      fixedSupply = fixedOutputVal;
 	}
+   
+   // Data-driven specification
+   if (fixedSupply > 0) {
+      fixedOutputVal = fixedSupply;
+   }
+}
+
+//! This function resets the value of fixed supply to the maximum value 
+void technology::resetFixedSupply(int per)
+{
+   fixedOutputVal = fixedSupply;
 }
 
 //! Get fixed technology supply

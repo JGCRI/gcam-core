@@ -302,6 +302,11 @@ void subsector::copytolast( const int period ) {
 //! Perform initializations that only need to be done once per period
 void subsector::init_calc( const int period ) {
 
+   // Set any fixed demands
+   for ( int i=0 ;i<notech; i++ ) {
+		techs[i][ period ]->calcFixedSupply( period );
+	}
+
    setCalibrationStatus( period );
    
    shareWeightScale( period ); 
@@ -416,7 +421,8 @@ void subsector::calcTechShares( const string& regionName, const int per ) {
 //! calculate subsector share numerator 
 void subsector::calcShare( const string& regionName, const int per, const double gnp_cap )
 {
-	// call function to compute technology shares
+	
+     // call function to compute technology shares
 	subsector::calcTechShares(regionName, per);
 
 	// calculate and return subsector share; uses above price function
@@ -433,6 +439,7 @@ void subsector::calcShare( const string& regionName, const int per, const double
 		share[per] = 0;
 	}
 	else {
+      // this logic doesn't work now, but does no harm
 		if (fuelPrefElasticity.empty()) { // supply subsector
 			share[per] = shrwts[per]*pow(subsectorprice[per],lexp[per]);
 		}
@@ -441,6 +448,16 @@ void subsector::calcShare( const string& regionName, const int per, const double
 		}
 
 	}
+   
+   if (shrwts[per]  > 1e8) {
+    cout << "WARNING: Huge shareweight for " << name << " : " << shrwts[per] << endl;
+   }
+      
+   if (share[per] < 0) {
+     cerr << "Share is < 0 for " << name << " in " << regionName << endl;
+     cout << "subsectorprice[per]: " << subsectorprice[per] << endl;
+     cout << "shrwts[per]: " << shrwts[per] << endl;
+   }
 }
 
 //! normalizes shares to 100%
@@ -481,13 +498,15 @@ void subsector::limitShares( const double multiplier, const int per) {
     }
 }
 
-//! call technology production, only exogenously driven technology gives an output
+//! Return the total exogenously fixed technology output
 /*! Since the calls below set output, this call must be done before
-    calls to technology production with non-zero demand . g*/
+    calls to technology production with non-zero demand . */
 double subsector::exogSupply( const int per ) {
 	double fixedOutput = 0;
 	for ( int i=0 ;i<notech; i++ ) {
-		techs[i][per]->calcFixedSupply(per);
+		techs[i][per]->resetFixedSupply(per); // eliminate any previous down-scaleing
+		techs[i][per]->calcFixedSupply(per); // eliminate any previous down-scaleing
+      
 		fixedOutput += techs[i][per]->getFixedSupply();
 	}
 	return fixedOutput;
@@ -600,7 +619,7 @@ void subsector::setoutput( const string& regionName, const string& prodName, con
 
    // reset parameters, including subsecdmd, if are calibrating
    if ( doCalibration[ per ] ) {
-      adjustForCalibration( subsecdmd, calOutputValue[ per ], per );
+      adjustForCalibration( dmd, subsecdmd, calOutputValue[ per ], per );
    }
    
 	for ( i=0; i<notech; i++ ) {
@@ -620,7 +639,8 @@ void subsector::setoutput( const string& regionName, const string& prodName, con
    
    // Adjust share weight if technologies were calibrated as well
    if ( techOutputCal ) {
-      adjustForCalibration( subsecdmd, newOutput, per );
+   
+      adjustForCalibration( dmd, subsecdmd, newOutput, per );
       if ( doCalibration[ per ] ) { // opps, both sub-sector and technologies were calibrated
          cerr << "WARNING in  Subsect: "  << name;
          cerr <<  " both technology and sub-sector have calibration values." << endl;
@@ -631,23 +651,25 @@ void subsector::setoutput( const string& regionName, const string& prodName, con
 //! Adjusts share weights and subsector demand to be consistant with calibration value
 /* Share weights are scaled to be consistant with the calibration value.
  * subector demand is also set equal to calibration value in order to pass down to technologies.
- * \warning The value of subsecdmd is changed.
+ * \warning If calvalue is larger than sector demand nothing is done
+ * \warning The value of subsecdmd is changed (for sub-sector output calibration)
+ * \todo add in pre-period run a check to see if everything was calibrated
  */
-void subsector::adjustForCalibration( double& subsecdmd, double calOutputValue, const int period ) {
+void subsector::adjustForCalibration( double sectorDemand, double& subsecdmd, double calOutputValue, const int period ) {
    double shareScaleValue = 0;
 
-   if ( subsecdmd > 0 ) {
+   // if cal value is greater than sector demand then cannot calibrate
+   if ( ( subsecdmd > 0 ) && ( calOutputValue < sectorDemand*1.001 ) ) {
       shareScaleValue = calOutputValue / subsecdmd;
       if ( shrwts[ period ]  == 0 ) {
          shrwts[ period ]  = 1;
-         }
+      }
+
+      shrwts[ period ]  = shrwts[ period ]  * shareScaleValue;
+      subsecdmd = calOutputValue;
    }
       
-   // Tests with only one cal value set indicate that setting the demand value 
-   // here has little additional effect on the solution speed. Need to test more.
-   shrwts[ period ]  = shrwts[ period ]  * shareScaleValue;
-   subsecdmd = calOutputValue;
-}
+ }
   
 //! calculates fuel input and subsector output
 void subsector::sumoutput( const int per ) {

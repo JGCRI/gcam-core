@@ -53,7 +53,8 @@ protected:
 	double input; //!< total fuel input (fossil and uranium)
 	double output; //!< technology output
 	double techchange;  //!< technical change in %/year
-	double fixedOutputVal; //!< A fixed amount of output.
+	double fixedSupply; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
+	double fixedOutputVal; //!< The actual amount  of fixed output
 	string name; //!< technology name
 	string unit; //!< unit of final product from technology
 	string fuelname; //!< name of fuel used
@@ -84,8 +85,9 @@ public:
 	// uses logit function to calculate technology share
 	void calc_share( const string regionName, const int per); 
 	void norm_share(double sum); // normalize technology share
-    void calcFixedSupply(int per); // calculate fixed supply
-    void adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per);
+   void calcFixedSupply(int per); // calculate fixed supply
+   void resetFixedSupply(int per); // reset fixed supply to max value
+   void adjShares(double subsecdmd, double totalFixedSupply, double varShareTot, int per);
 	void scaleFixedSupply(const double scaleRatio); // scale fixed supply
 	 // calculates fuel input and technology output
 	virtual void production(const string& regionName,const string& prodName,double dmd,const int per);
