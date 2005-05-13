@@ -176,7 +176,7 @@ Marketplace* marketplace = scenario->getMarketplace();
     double floorSpace = dmd; 
     
     input = shrwts * getDemandFnPrefix( regionName, period ) * floorSpace + getEffectiveInternalGains( regionName, period );
-
+    
     output = input = max( input, 0.0 ); // Make sure internal gains do not drive service less than zero
     
     // set demand for fuel in marketplace

@@ -1117,9 +1117,9 @@ void Region::initCalc( const int period )
       if ( TFEcalb[ period ] != 0 ) {
          double scaleFactor = totalFinalEnergy / TFEcalb[ period ];
          if ( abs( scaleFactor - 1 ) > util::getSmallNumber() ) {
-            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-            calibrationLog.setLevel( ILogger::DEBUG );
-            calibrationLog << "TFE in region " << name << " scaled by: "<< scaleFactor << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << "TFE in region " << name << " scaled by: "<< scaleFactor << endl;
             TFEcalb[ period ] = totalFinalEnergy; 
          }
       }
@@ -1303,11 +1303,10 @@ bool Region::setImpliedCalInputs( const int period ) {
                 requiredOutput -= totalCalOutputs;
  
                 if ( debugChecking ) {
-                    ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
-                    dependenciesLog.setLevel( ILogger::NOTICE );
-                    dependenciesLog << "  Transitive demand for " << newFixedDemandInputName  
-                            << " in sector " << sectorName
-                            << " in region " << name << " added with value " << requiredOutput << endl; 
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::DEBUG );
+                    mainLog << "  Transitive demand for " << newFixedDemandInputName  
+                            << " in sector " << sectorName << " added with value " << requiredOutput << endl; 
                 }
                 
                 supplySector[ jsec ]->setImpliedFixedInput( period, newFixedDemandInputName, requiredOutput );
@@ -1348,10 +1347,7 @@ bool Region::setImpliedCalInputs( const int period ) {
                 if ( sectorCalDemand > 0 ) {
                     ILogger& mainLog = ILogger::getLogger( "main_log" );
                     mainLog.setLevel( ILogger::WARNING );
-                    ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
-                    dependenciesLog.setLevel( ILogger::NOTICE );
                     mainLog <<" WARNING: Couldn't calculate transitive demand for input "<< newFixedDemandInputName <<" sector: " <<  sectorName << " region: " << name << endl;
-                    dependenciesLog <<" WARNING: Couldn't calculate transitive demand for input "<< newFixedDemandInputName <<" sector: " <<  sectorName << " region: " << name << endl;
                     // If can't calculate this demand then reset so that nothing is scaled
                     marketplace->setMarketInfo( newFixedDemandInputName, name , period, "calDemand", MKT_NOT_ALL_FIXED );
                 }
@@ -1414,11 +1410,8 @@ void Region::scaleCalInputs( const int period ) {
                 
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::DEBUG );
-                mainLog << "    Scaling cal values by " <<  ScaleValue << " for fuels "; 
-                ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-                calibrationLog.setLevel( ILogger::DEBUG );
-                calibrationLog << "    Scaling cal values by " <<  ScaleValue << " for fuels "; 
-           
+                mainLog << "    Scaling by " <<  ScaleValue << " for fuels "; 
+            
                 // Repeat for all fuels derived from this one
                 vector<string> dependentFuels = (*fuelRelationshipMap)[ fuelIter->first ];
                  
@@ -1433,7 +1426,6 @@ void Region::scaleCalInputs( const int period ) {
                     }
                     
                     mainLog  << fuelName <<", "; 
-                    calibrationLog  << fuelName <<", "; 
                     for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
                         demandSector[ j ]->scaleCalibratedValues( period, fuelName, ScaleValue ); 
                     }
@@ -1442,7 +1434,6 @@ void Region::scaleCalInputs( const int period ) {
                     }
                 } // dependentFuels loop
                mainLog << " in region " << name << endl ; 
-               calibrationLog << " in region " << name << endl ; 
              } // end scaling loop
         } // end zTotal check loop
     } // end fuelCons loop

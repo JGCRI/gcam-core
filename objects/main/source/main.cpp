@@ -47,19 +47,13 @@ void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFac
 
 //! Main program. 
 int main( int argc, char *argv[] ) {
-
     // Use a smart pointer for configuration so that if the main is exited before the end the memory is freed.
     string configurationArg = "configuration.xml";
     string loggerFactoryArg = "log_conf.xml";
 
     // Parse any command line arguments. 
     parseArgs( argc, argv, configurationArg, loggerFactoryArg );
-    cout << "after parseArgs " << endl;
 
-    char* p = new char[500]; // sjsTEMP
-    getcwd(p, 499);
-    cout << "cwd in ObjECTS MAIN: " << p << endl;
-    
     // Add OS dependent prefixes to the arguments.
     const string configurationFileName = string( __ROOT_PREFIX__ ) + configurationArg;
     const string loggerFileName = string( __ROOT_PREFIX__ ) + loggerFactoryArg;
@@ -71,7 +65,6 @@ int main( int argc, char *argv[] ) {
     // Initialize the LoggerFactory
     auto_ptr<LoggerFactoryWrapper> loggerFactoryWrapper( new LoggerFactoryWrapper() );
     XMLHelper<void>::parseXML( loggerFileName, loggerFactoryWrapper.get() );
-    cout << "after loggerFactoryWrapper " << endl;
 
     // Create an auto_ptr to the scenario runner. This will automatically deallocate memory.
     auto_ptr<ScenarioRunner> runner;
@@ -83,7 +76,6 @@ int main( int argc, char *argv[] ) {
     mainLog << "Parsing input files..." << endl;
     auto_ptr<Configuration> conf( Configuration::getInstance() );
     XMLHelper<void>::parseXML( configurationFileName, conf.get() );
-    cout << "after parseXML( configurationFileName " << endl;
     
     // Determine the correct type of ScenarioRunner to create.
     // todo: Consider a factory method.

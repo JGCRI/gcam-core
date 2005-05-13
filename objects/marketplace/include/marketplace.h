@@ -60,17 +60,11 @@ private:
     unsigned int uniqueNo; //!< number for creating markets
     unsigned int numMarkets;  //!< number of markets
     std::vector< std::vector<Market*> > markets; //!< no of market objects by period
-    typedef std::pair<const size_t, const size_t> MarketHashKey;
-    typedef std::map<MarketHashKey,int> MarketMap;
-    typedef MarketMap::iterator MarketMapIterator;
-    typedef MarketMap::const_iterator CMarketMapIterator;
-    MarketMap marketMap; //!< map of unique market id from good and market-region names
-    MarketMap regionToMarketMap; //!< map of market lookup from good and region names
+    std::map<std::string,int> marketMap; //!< map of unique market id from good and market-region names
+    std::map<std::string,int> regionToMarketMap; //!< map of market lookup from good and region names
 
-    static const Marketplace::MarketHashKey createMarketKey( const std::string& aMarketName,
-        const std::string& aGoodName );
+    static std::string createMarketKey( const std::string& marketName, const std::string& goodName );
     int getMarketNumber( const std::string& goodName, const std::string& regionName ) const;
-    size_t static hash( const std::string& aString );
 };
 
 #endif

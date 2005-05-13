@@ -231,8 +231,6 @@ bool Scenario::run( string filenameEnding ){
 
     // Loop over time steps and operate model
     ILogger& mainLog = ILogger::getLogger( "main_log" );
-    ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-    calibrationLog.setLevel( ILogger::DEBUG );
     mainLog.setLevel( ILogger::NOTICE );
     ILogger& worstMarketLog = ILogger::getLogger( "worst_market_log" );
     for( int per = 0; per < modeltime->getmaxper(); per++ ) {	
@@ -241,7 +239,6 @@ bool Scenario::run( string filenameEnding ){
         mainLog << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl;
         worstMarketLog.setLevel( ILogger::DEBUG );
         worstMarketLog << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl;
-        calibrationLog << "Period " << per <<": "<< modeltime->getper_to_yr( per ) << endl << endl;
 
         // Run the iteration of the model.
         marketplace->nullSuppliesAndDemands( per ); // initialize market demand to null

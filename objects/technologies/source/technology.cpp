@@ -554,10 +554,8 @@ void technology::calcfixedOutput(int per)
     const Modeltime* modeltime = scenario->getModeltime();
     const string FIXED_TECH = "hydro";
     
-    // sjs -- added check for non zero value for coefficient below
-    //        (so that if this is not input, this will work with fixedOutput input instead)
     // MiniCAM style hydro specification
-    if( name == FIXED_TECH && A != 0 ) {
+    if( name == FIXED_TECH ) {
         const int T = per * modeltime->gettimestep( per );
         // resource and logit function 
         const double fact = exp( A + B * T );

@@ -74,7 +74,7 @@ const std::string& BuildingCoolingDmdTechnology::getXMLNameStatic1D() {
 void BuildingCoolingDmdTechnology::initCalc( const MarketInfo* aSubsectorInfo ) {
 
     coolingDegreeDays = aSubsectorInfo->getItemValue( "coolingDegreeDays" );
-    BuildingHeatCoolDmdTechnology::initCalc( aSubsectorInfo );    
+    BuildingGenericDmdTechnology::initCalc( aSubsectorInfo );    
 }
 
 /*! \brief Determine sign of internal gains
@@ -96,7 +96,7 @@ double BuildingCoolingDmdTechnology::getInternalGainsSign() const {
 */
 double BuildingCoolingDmdTechnology::getDemandFnPrefix( const string& regionName, const int period )  {
 Marketplace* marketplace = scenario->getMarketplace();
-    
+
     double priceRatio = ( period > 1 ) ? 
         marketplace->getPrice( fuelname, regionName, period ) / 
         marketplace->getPrice( fuelname, regionName, period - 1 ) : 1;

@@ -88,12 +88,11 @@ void Marketplace::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 * good name.
 *
 * \author Josh Lurz
-* \param aMarketName The market region.
-* \param aGoodName The market good.
-* \return The hash key for this pair.
+* \param marketName The market region.
+* \param goodName The market good.
 */
-const Marketplace::MarketHashKey Marketplace::createMarketKey( const string& aMarketName, const string& aGoodName ) {
-    return make_pair( hash( aMarketName ), hash( aGoodName ) );
+string Marketplace::createMarketKey( const string& marketName, const string& goodName ) {
+    return ( marketName + goodName );
 }
 
 /*! \brief This function creates a market of the specified type for a given market region and good if it does not already exist.
@@ -116,7 +115,7 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
     bool retValue;
 
     // create unique markets from distinct good and market region names
-    MarketHashKey key = createMarketKey( goodName, marketName );
+    string key = createMarketKey( goodName, marketName );
 
     if ( marketMap.find( key ) != marketMap.end() ) { // market exists, no unique number
         retValue = false;
@@ -150,7 +149,7 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
     }
     // market lookup from good and region names
     // marketsNo may not be unique
-    regionToMarketMap[ createMarketKey( goodName, regionName ) ] = marketsNo;
+    regionToMarketMap[ goodName + regionName ] = marketsNo;
     return retValue;
 }
 
@@ -163,12 +162,14 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
 * \return The market number if the lookup is successful, -1 otherwise.
 */
 int Marketplace::getMarketNumber( const string& goodName, const string& regionName ) const {
-    CMarketMapIterator findIter = regionToMarketMap.find( createMarketKey( goodName, regionName ) );
+    map <string, int> :: const_iterator findIter = regionToMarketMap.find( goodName + regionName );
 
     if( findIter == regionToMarketMap.end() ) {
         return -1;
     }
-    return findIter->second;
+    else {
+        return findIter->second;
+    }
 }
 
 /*! \brief Restructures a market to account for simultaneities.
@@ -246,9 +247,9 @@ void Marketplace::resetToPriceMarket( const string& goodName, const string& regi
 void Marketplace::setPriceVector( const string& goodName, const string& regionName, const vector<double>& prices ){
 
     // determine what market the region and good are in.
-    const int marketNumber = regionToMarketMap[ createMarketKey( goodName, regionName ) ];
+    const int marketNumber = regionToMarketMap[ goodName + regionName ];
 
-    for( unsigned int i = 0; i < markets[ marketNumber ].size() && i < prices.size(); i++ ){
+    for( int i = 0; i < static_cast<int>( markets[ marketNumber ].size() ) && i < static_cast<int>( prices.size() ); i++ ){
         markets[ marketNumber ][ i ]->setRawPrice( prices[ i ] );
     }
 }
@@ -609,17 +610,6 @@ bool Marketplace::doesMarketExist( const std::string& goodName, const std::strin
         return false;
     }
     return true;
-}
-
-//! Rotating hash function
-size_t Marketplace::hash( const std::string& aString ){
-    const size_t PRIME_NUMBER = 1500127; // Randomly chosen large prime.
-    const size_t length = aString.size();
-    size_t hash = length;
-    for( unsigned int i = 0; i < length; ++i ){
-        hash = ( hash << 4 ) ^ ( hash >> 28 ) ^ aString[ i ];
-    }
-    return ( hash % PRIME_NUMBER );
 }
 
 /*! \brief Write out the market information to the database.

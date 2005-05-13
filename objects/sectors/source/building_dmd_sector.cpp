@@ -42,7 +42,6 @@ BuildingDemandSector::BuildingDemandSector( const string regionName ): DemandSec
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
 
-    baseScaler = -1;
     baseService.resize( maxper, -1 );
     
 }
@@ -90,7 +89,7 @@ void BuildingDemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
    
     DemandSector::toInputXMLDerived( out, tabs );
-    XMLWriteVector( baseService, "baseservice", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( baseService, "baseService", out, tabs, modeltime, 0.0 );
 }	
 
 
@@ -101,13 +100,13 @@ void BuildingDemandSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const 
     DemandSector::toOutputXMLDerived( out, tabs );
 
     // write the xml for the class members.
-   XMLWriteVector( baseService, "baseservice", out, tabs, modeltime, 0.0 );
+   XMLWriteVector( baseService, "baseService", out, tabs, modeltime, 0.0 );
 }
 
 //! Write object to debugging xml output stream.
 void BuildingDemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     
-    XMLWriteElement( baseService[ period ], "baseservice", out, tabs );
+    XMLWriteElement( baseService[ period ], "baseService", out, tabs );
     DemandSector::toDebugXMLDerived( period, out, tabs );
 
 }
@@ -148,15 +147,6 @@ void BuildingDemandSector::initCalc( const int period, const MarketInfo* aRegion
     mSectorInfo->addItem( "heatingDegreeDays", aRegionInfo->getItemValue( "heatingDegreeDays" ) );
     mSectorInfo->addItem( "coolingDegreeDays", aRegionInfo->getItemValue( "coolingDegreeDays" ) );
 
-    if ( baseScaler < 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "WARNING: Building sector base demand service not set in period " << period 
-                << " sector " << name << " region " << regionName 
-                << ".  baseScaler being set to 1." << endl;
-        baseScaler = 1;
-    }
-    
     Sector::initCalc( period, aRegionInfo );
 
 }

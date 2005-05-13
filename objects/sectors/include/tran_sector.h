@@ -39,7 +39,6 @@ protected:
     double baseScaler; //!< constant scaler to scale base output
     double baseScalerNotLic; //!< constant scaler to scale base unlicensed output
     double priceRatioNotLic;//!< price ratio for unlicensed population
-    bool legacyDemand; //!< flag to turn on legacy demand calcuation
     
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
