@@ -236,10 +236,9 @@ void DemandSector::setMarket() {
 /* This performs supply sector technology and sub-sector output/input calibration. 
    Determines total amount of calibrated and fixed output and passes that down to the subsectors.
    
-   The first part of this code is identical to that for the supply sectors. 
+   The first part of this code is similar to that for the supply sectors. 
    The second portion is specific to demand sectors. 
-   (could be made for supply sectors too but that is not needed at present and 
-    would require a consistency check between demand and supply.)
+   For demand sectors, the aggregate output is assured to be the same as the summed calibrated output from the technologies
    
    If all subsector demands are calibrated (or zero) then also adjusts AEEI in order to be 
    consistent with calibrated values.
@@ -252,7 +251,12 @@ void DemandSector::calibrateSector( const int period ) {
     double mrkdmd;
     double totalCalOutputs = getCalOutput( period );
     
-    mrkdmd = getService( period ); // demand for the good produced by this sector
+    if ( outputsAllFixed( period ) ) {
+        mrkdmd = getCalOutput( period ); // If all outputs are calibrated, then make demand equal to calibrated outputs for consistancy
+    }
+    else {
+        mrkdmd = getService( period ); // demand for the good produced by this sector
+    }
     
     for (int i=0; i<nosubsec; i++ ) {
         if ( subsec[i]->getCalibrationStatus( period ) ) {
@@ -260,12 +264,23 @@ void DemandSector::calibrateSector( const int period ) {
         }
     }
 
+    // If outputs are all fixed then scale AEEI for aggregate demand function to match this output so that all parameters 
+    // are consistent. This can happen many times during the calculation.
     if ( outputsAllFixed( period ) ) {
-       scaleOutput( period , totalCalOutputs/service[ period ] );
-       if ( service[ period ] == 0 ) {
-          cout << "ERROR: service = 0 in " << regionName << ":" << name << endl;
-         }
-     //  cout << "scaled output for " << regionName << ":" << name <<" by " << totalCalOutputs/service[ period ] << endl;
+        if ( getService( period ) == 0 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "ERROR: service = 0 in " << regionName << ":" << name << endl;
+        } 
+        else {
+            double scaleFactor = totalCalOutputs/getService( period );
+            scaleOutput( period , scaleFactor );
+            if ( abs( scaleFactor - 1 ) > util::getSmallNumber() ) {
+                ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+                calibrationLog.setLevel( ILogger::DEBUG );
+                calibrationLog << "scaled demand sector output for " << regionName << ":" << name <<" by " << totalCalOutputs/service[ period ] << endl;
+            }
+        }
     }
 }
 
@@ -274,8 +289,7 @@ void DemandSector::calibrateSector( const int period ) {
     The routine then calculates the necessary change in the AEEI. 
     
     \warning For derived demand sectors, some version of this routine needs to be included
-    in order for the output of that sector to be able to be calibrated.
-    sjs
+    in order for the output of that sector to be able to be calibrated. sjs
 * \author Steve Smith
 * \param scaleFactor amount by which to scale output from this sector
 * \param period Model period
@@ -451,6 +465,7 @@ void DemandSector::dbOutput() const {
     map<string,double> tfuelmap = Sector::getfuelcons(m=0);
     CI fmap; // define fmap
     // Write out total (zTotal) fuel consumption for each sector only
+    // sjs -- This causes a silent crash if (I think) fuelmap is empty. sjs
     fmap = --tfuelmap.end();
     for (m=0;m<maxper;m++) {
         temp[m] = Sector::getConsByFuel(m,fmap->first);

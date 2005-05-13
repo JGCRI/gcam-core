@@ -813,7 +813,7 @@ void Subsector::calcShare(const int period, const GDP* gdp ) {
 	}
 		
    if (shrwts[period]  > 1e4) {
-    cout << "WARNING: Huge shareweight for sub-sector " << name << " : " << shrwts[period] 
+    cout << "WARNING: Huge shareweight for sector: " << sectorName << ", sub-sector " << name << " : " << shrwts[period] 
          << " in region " << regionName <<endl;
    }
       
@@ -1012,14 +1012,12 @@ void Subsector::interpolateShareWeights( const int period ) {
         }
         if  ( endPeriod >= ( period - 1) ) {
             // If begining share weight is zero, then it wasn't changed by calibration so do not scale
-           // sjsTEMP. Change this to > zero once other share interps are changed. This was a mistake in the original vers.
-               if ( shrwts[ period - 1 ] >= 0 ) {
+             if ( shrwts[ period - 1 ] > 0 ) {
                 shareWeightLinearInterpFn( period - 1, endPeriod );
             }
         }
         
-        // sjsTEMP. Turn this on once data is updated
-   //     adjustTechnologyShareWeights( period );
+        adjustTechnologyShareWeights( period );
     }
 }
 
@@ -1066,9 +1064,9 @@ double shareIncrement = 0;
         shrwts[ period ] = shrwts[ period - 1 ] + shareIncrement;
     }
 
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::DEBUG );
-    mainLog << "Shareweights interpolated for subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
+    ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+    calibrationLog.setLevel( ILogger::DEBUG );
+    calibrationLog << "Shareweights interpolated for subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
 
 }
 
@@ -1103,9 +1101,9 @@ double shareIncrement = 0;
             for ( int period = beginPeriod + 1; period < loopPeriod; period++ ) {
                  techs[ i ][ period ]->setShareWeight( techs[ i ][ period - 1 ]->getShareWeight() + shareIncrement );
             }
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Shareweights interpolated for technologies in subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
+            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+            calibrationLog.setLevel( ILogger::DEBUG );
+            calibrationLog << "Shareweights interpolated for technologies in subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
         }
     }
 }
@@ -1113,7 +1111,9 @@ double shareIncrement = 0;
 /*! \brief Scales technology share weights so that they equal number of subsectors.
 *
 * This is needed so that 1) share weights can be easily interpreted (> 1 means favored) and so that
-* future share weights can be consistently applied relative to calibrated years.
+* future share weights can be consistently applied relative to calibrated years. This is particularly useful
+* when new technologies are added. They can always be added with share weights relative to one no matter how
+* many other technologies are present.
 *
 * \author Steve Smith
 * \param period Model period
@@ -1134,14 +1134,14 @@ void Subsector::normalizeTechShareWeights( const int period ) {
     if ( shareWeightTotal < util::getTinyNumber() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "ERROR: in subsector " << name << " Shareweights sum to zero." << endl;
+        mainLog << "ERROR: in subsector " << name << " (" << regionName << ") Shareweights sum to zero." << endl;
     } else {
         for ( int i=0; i<notech; i++ ) {
              techs[ i ][ period ]->scaleShareWeight( numberNonzeroTechs / shareWeightTotal );
         }
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Shareweights normalized for technologies in subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
+        ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+        calibrationLog.setLevel( ILogger::DEBUG );
+        calibrationLog << "Shareweights normalized for technologies in subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
     }
 }
 
@@ -1282,7 +1282,7 @@ void Subsector::adjustForCalibration( double sectorDemand, double totalfixedOutp
    // Do this in all cases, unless calvalues < available demand and all outputs are NOT fixed
    // (if all outputs are not fixed, then the sectors that are not fixed can take up the remaining demand)
    if ( !( ( totalCalOutputs < availableDemand ) && !allFixedOutput ) ) {
-     calOutputSubsect = calOutputSubsect * ( availableDemand  / totalCalOutputs );
+        calOutputSubsect = calOutputSubsect * ( availableDemand  / totalCalOutputs );
    }
    
    // Adjust share weights
@@ -1291,7 +1291,14 @@ void Subsector::adjustForCalibration( double sectorDemand, double totalfixedOutp
       shareScaleValue = calOutputSubsect / subSectorDemand;
       shrwts[ period ]  = shrwts[ period ] * shareScaleValue;
    }
-    
+
+// sjsTEMP -- REMOVE THIS -- debugging code for calibration problem    
+    if ( regionName == "USA" && name == "electricity" && sectorName == "building" && false ) {
+        cout << "Sector " << sectorName << ":"<< name << " sectorDemand: " << sectorDemand;
+        if ( totalfixedOutput != 0 ) { cout << " totalfixedOutput: " <<  totalfixedOutput;}
+        cout << " calOutputSubsect: " << calOutputSubsect << " subSectorDemand: " << subSectorDemand 
+            << " shareScaleValue: " << shareScaleValue << endl;
+    }
    // Check to make sure share weights are not less than zero (and reset if they are)
    if ( shrwts[ period ] < 0 ) {
      cerr << "Share Weight is < 0 in Subsector " << name << endl;
@@ -1593,6 +1600,7 @@ void Subsector::scaleShareWeight( const double scaleValue, const int period ) {
        // shrwts[ period ] *= scaleValue;
     }
 }
+
 /*! \brief returns share for this Subsector
 *
 * \author Sonny Kim, Josh Lurz

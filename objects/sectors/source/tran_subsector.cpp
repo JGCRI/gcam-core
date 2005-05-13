@@ -15,6 +15,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
+#include "util/base/include/configuration.h"
 #include "sectors/include/tran_subsector.h"
 #include "technologies/include/tran_technology.h"
 #include "containers/include/scenario.h"
@@ -169,10 +170,21 @@ void TranSubsector::initCalc( const int period, const MarketInfo* aSectorInfo ) 
     
 }
 
-//! calculate subsector share numerator
-void TranSubsector::calcShare( const int period, const GDP* gdp )
-{
-    const double scaledGdpPerCapita = gdp->getBestScaledGDPperCap(period);
+//! 
+/*! \brief Calculate Transportation subsector share numerator using generalized price.
+*
+* The transportation subsector share includes a generalized price based on time value
+*
+* Changed to use PPP-based GDP 2/17/05. sjs
+*
+* \author Steve Smith
+* \param period Model period
+*/
+void TranSubsector::calcShare( const int period, const GDP* gdp ) {
+    const Modeltime* modeltime = scenario->getModeltime();
+
+    const double scaledGdpPerCapita =   gdp->getApproxPPPperCap( period ) / 
+                                        gdp->getApproxPPPperCap( modeltime->getyr_to_per( modeltime->getstartyr() ) );
 
     // call function to compute technology shares
     calcTechShares( gdp, period );
@@ -199,20 +211,25 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
     // calculate time value based on hours worked per year
  	 // Convert GDPperCap into dollars (instead of 1000's of $'s)
     // GDP value at this point in the code does not include energy feedback calculation for this year, so is, therefore, approximate
-    timeValue[period] = gdp->getApproxGDPperCap( period ) * 1000 /(hoursPerWeek*weeksPerYear)/speed[period];
+    timeValue[period] = gdp->getApproxPPPperCap( period ) * 1000 /(hoursPerWeek*weeksPerYear)/speed[period];
 	 
     generalizedCost[period] = servicePrice[period] + timeValue[period] ;
     
     /*  Compute calibrating scaler if first period, otherwise use computed
     scaler in subsequent periods */
-    
-    if(period==0) {
-        baseScaler = output[0] / shrwts[period] * pow(generalizedCost[period], -lexp[period])
-            * pow( scaledGdpPerCapita, -fuelPrefElasticity[period]) * pow(popDensity, -popDenseElasticity[period]);
-    }
 
-    share[period] = baseScaler * shrwts[period] * pow(generalizedCost[period], lexp[period])
-        * pow( scaledGdpPerCapita, fuelPrefElasticity[period]) * pow(popDensity, popDenseElasticity[period]);
+    if( subsectorprice[period]==0) {
+        share[period] = 0;
+    }
+    else {
+        if(period==0) {
+            baseScaler = output[0] / shrwts[period] * pow(generalizedCost[period], -lexp[period])
+                * pow( scaledGdpPerCapita, -fuelPrefElasticity[period]) * pow(popDensity, -popDenseElasticity[period]);
+        }
+
+        share[period] = baseScaler * shrwts[period] * pow(generalizedCost[period], lexp[period])
+            * pow( scaledGdpPerCapita, fuelPrefElasticity[period]) * pow(popDensity, popDenseElasticity[period]);
+    }
 }
 
 //! sets demand to output and output
@@ -234,6 +251,7 @@ void TranSubsector::setoutput( const double demand, const int period, const GDP*
         // total energy input into subsector, must call after tech production
         input[period] += techs[i][period]->getInput();
     }
+
 }
 
 /*! \brief Writes variables specific to transportation class to database.
@@ -251,5 +269,33 @@ void TranSubsector::MCDerivedClassOutput() const {
     dboutput4( regionName, "General", "TimeValue", sectorName + name, "$/pass(ton)-mi", timeValue );
     // Subsector speed
     dboutput4( regionName, "General", "Speed", sectorName + name, "Miles/hr", speed );
+}
+
+/*! \brief returns share weight for this Subsector - modified to incorporate baseScaler 
+*
+* Needed so that share weights can be scaled by sector
+*
+* \author Steve Smith
+* \param period Model period
+* \return share weight
+*/
+double TranSubsector::getShareWeight( const int period ) const {
+    // This is the effective share weight for the transportation subsector
+    return baseScaler * shrwts[ period ];
+}
+
+/*! \brief Scales share weight for this Subsector -- modified so that baseScaler is incorporated into the shareweight
+*
+* \author Steve Smith
+* \param period Model period
+* \param scaleValue Multipliciatve scale factor for shareweight
+*/
+void TranSubsector::scaleShareWeight( const double scaleValue, const int period ) {
+    
+    if ( scaleValue != 0 ) {
+        shrwts[ period ] *= scaleValue;
+        shrwts[ period ] *= baseScaler;
+        baseScaler = 1;
+    }
 }
 

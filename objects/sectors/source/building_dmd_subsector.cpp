@@ -51,7 +51,7 @@ BuildingDemandSubSector::BuildingDemandSubSector( const string regionName, const
     dayLighting.resize( maxper, 0 );
     nonEnergyCost.resize( maxper, 0 );
     aveInsulation.resize( maxper, 0 );
-    floorToSurfaceArea.resize( maxper, 1 );
+    floorToSurfaceArea.resize( maxper, 0 );
     
 }
 
@@ -270,6 +270,19 @@ void BuildingDemandSubSector::calcPrice( const int period ) {
 void BuildingDemandSubSector::initCalc( const int period, const MarketInfo* aSectorInfo ) {
 const Modeltime* modeltime = scenario->getModeltime();
 
+    if ( aveInsulation[ period ] == 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "WARNING: Input variable aveInsulation = 0. Reset to 1." << endl;
+        aveInsulation[ period ] = 1;
+    }
+    if ( floorToSurfaceArea[ period ] == 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "WARNING: Input variable floorToSurfaceArea = 0. Reset to 1." << endl;
+        floorToSurfaceArea[ period ] = 1;
+    }
+
     // Add items from sectorInfo
     mSubsectorInfo->addItem( "heatingDegreeDays", aSectorInfo->getItemValue( "heatingDegreeDays" ) );
     mSubsectorInfo->addItem( "coolingDegreeDays", aSectorInfo->getItemValue( "coolingDegreeDays" ) );
@@ -408,11 +421,22 @@ double BuildingDemandSubSector::getOutput( const int period ) {
 * \author Steve Smith
 */
 void BuildingDemandSubSector::MCDerivedClassOutput( ) const {
+Marketplace* marketplace = scenario->getMarketplace();
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    vector<double> temp(maxper);
+
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
 
     dboutput4( regionName, "Price", sectorName + " NE Cost", name, "75$/Ser", nonEnergyCost );
+    
+    string intGainsMarketName = INTERNAL_GAINS_MKT + sectorName + name;
+    for ( int m=0;m<maxper;m++) {
+            temp[m] =  marketplace->getPrice( intGainsMarketName, regionName, m );
+    }
+     dboutput4( regionName, "General", sectorName + " internalGains", name, "??", temp );
 }
 
 

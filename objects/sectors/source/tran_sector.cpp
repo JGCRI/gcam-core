@@ -32,7 +32,8 @@ const string TranSector::XML_NAME = "tranSector";
 
 //! Default constructor
 TranSector::TranSector( const string regionName ): DemandSector( regionName ) {
-    percentLicensed.resize( scenario->getModeltime()->getmaxper() );
+    percentLicensed.resize( scenario->getModeltime()->getmaxper(), 1.0 );
+    legacyDemand = true;
 }
 
 //! Destructor.
@@ -94,7 +95,7 @@ void TranSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     
     const Modeltime* modeltime = scenario->getModeltime();
     for( unsigned int i = 0; i < percentLicensed.size(); i++ ){
-        XMLWriteElementCheckDefault( percentLicensed[ i ], "percentLicensed", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( percentLicensed[ i ], "percentLicensed", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
 }	
 
@@ -106,7 +107,7 @@ void TranSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
     
     const Modeltime* modeltime = scenario->getModeltime();
     for( unsigned int i = 0; i < percentLicensed.size(); i++ ){
-        XMLWriteElementCheckDefault( percentLicensed[ i ], "percentLicensed", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+        XMLWriteElementCheckDefault( percentLicensed[ i ], "percentLicensed", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
     }
 }	
 
@@ -129,9 +130,10 @@ void TranSector::checkSectorCalData( const int period ) {
 
    // Adjust aggregate demand to match calibrated outputs of all inputs to this sector are calibrated
   if ( inputsAllFixed( period, "allInputs" ) ) {
-      service[0] = getCalOutput( period );
-      double scaleFactor = getCalOutput( period ) / service[0];
+      double scaleFactor = getCalOutput( period ) / service[ period ];
+      service[ period ] = getCalOutput( period );
       ILogger& mainLog = ILogger::getLogger( "main_log" );
+      mainLog.setLevel( ILogger::DEBUG );
       mainLog << "Calibrated Demand Scaled by " << scaleFactor << " in region " << regionName << " sector " << name << endl;
    }
 }
@@ -157,27 +159,27 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
         
         // calculate base year scalers
         if (perCapitaBased) { // demand based on per capita GDP
-            baseScaler = service[0]* percentLicensed[period] * pow(priceRatio,-pElasticity[period])
-                * pow(scaledGdpPerCapita,-iElasticity[period]);
-            baseScalerNotLic = service[0]* (1 - percentLicensed[period]) * pow(priceRatioNotLic,-pElasticity[period])
-                * pow(scaledGdpPerCapita,-iElasticity[period]);
+            baseScaler = service[ period ]* percentLicensed[period] 
+                * pow(scaledGdpPerCapita,-iElasticity[period])/(gdp1/scaledGdpPerCapita);
+            baseScalerNotLic = service[ period ]* (1 - percentLicensed[period]) 
+                * pow(scaledGdpPerCapita,-iElasticity[period])/(gdp1/scaledGdpPerCapita);
         }
         else {
-            baseScaler = service[0]* percentLicensed[period] * pow(priceRatio,-pElasticity[period])
+            baseScaler = service[ period ]* percentLicensed[period] * pow(priceRatio,-pElasticity[period])
                 * pow(gdp1,-iElasticity[period]);
-            baseScalerNotLic = service[0]* (1 - percentLicensed[period]) * pow(priceRatioNotLic,-pElasticity[period])
+            baseScalerNotLic = service[ period ]* (1 - percentLicensed[period]) * pow(priceRatioNotLic,-pElasticity[period])
                 * pow(gdp1,-iElasticity[period]);
         }
         // base output is initialized by data
-        ser_dmd = service[0]; 
+        ser_dmd = service[ period ]; 
 
         // Save the service demand without technical change applied for comparison with miniCAM.
         servicePreTechChange[ period ] = ser_dmd;
-        service[period] = service[0];
+        service[period] = service[ period ];
     }
     else {
         // for non-base year
-        // note normalized to previous year not base year
+          // note normalized to previous year not base year
         // has implications for how technical change is applied
            priceRatio = sectorprice[period]/sectorprice[period-1];
            priceRatioNotLic = sectorprice[period]/sectorprice[period-1];
@@ -188,6 +190,7 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
             // need to multiply above by population ratio (current population/base year
             // population).  The gdp ratio provides the population ratio.
             ser_dmd *= gdp1/scaledGdpPerCapita;
+
         }
         else { // demand based on scale of GDP
             ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gdp1,iElasticity[period]);

@@ -85,7 +85,8 @@ namespace std {
 
 #if !defined(__ROOT_PREFIX__)
 #  if defined( __MACH__ )
-#     define __ROOT_PREFIX__ "/"
+//#     define __ROOT_PREFIX__ "../../../"
+#     define __ROOT_PREFIX__ 
 #  else
 #     define __ROOT_PREFIX__
 #  endif

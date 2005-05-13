@@ -28,6 +28,8 @@ extern Scenario* scenario;
 
 //! Default constructor.
 BuildingHeatCoolDmdTechnology::BuildingHeatCoolDmdTechnology() {
+    aveInsulation = 0;
+    floorToSurfaceArea = 0;
     fractionOfYearActive = 0;
 }
 

@@ -72,11 +72,11 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     ReturnCode code = SolverComponent::ORIGINAL_STATE;
       
     // Constants
-    const static double EXIT_VALUE = 100; // Value of Relative Excess Demand above which NR will quit.
+    const static double EXIT_VALUE = 100; // Value of Relative Excess Demand above which NR will quit. (NOT USED) sjs
     const static int MAX_ITER_NO_IMPROVEMENT = 7; // Maximum number of iterations without improvement.
     // Update the SolutionVector for the correct markets to solve.
     solverSet.updateFromMarkets();
-    SolverInfoSet::UpdateCode solvableChanged = solverSet.updateSolvable( true );
+    SolverInfoSet::UpdateCode solvableChanged = solverSet.updateSolvable( true ); //  (NOT USED) sjs
 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
@@ -97,7 +97,6 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
 
 
     do {
-        singleLog.setLevel( ILogger::DEBUG );
         solverSet.printMarketInfo( "Begin logNR", calcCounter->getPeriodCount(), singleLog );
 
         // Declare matrices here due to a resize bug.

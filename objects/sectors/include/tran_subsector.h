@@ -33,6 +33,8 @@ public:
     void calcShare( const int period, const GDP* gdp ); 
     void setoutput( const double demand, const int period, const GDP* gdp );
     static const std::string& getXMLNameStatic();
+    double getShareWeight( const int period ) const;
+    void scaleShareWeight( const double scaleValue, const int period );
     void initCalc( const int period, const MarketInfo* aSectorInfo );
 protected:
     std::vector<double> speed; // Speed of Mode in Miles/hour
