@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Son H. Kim (PNNL) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<xs:element name="scenario" type="scenarioType">
 		<xs:annotation>
 			<xs:documentation>This is the scenario class</xs:documentation>
@@ -13,7 +13,7 @@
 			<xs:element name="world" type="worldType"/>
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="date" type="xs:dateTime" use="required"/>
+		<xs:attribute name="date" type="xs:string" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="modeltimeType">
 		<xs:sequence>
@@ -21,6 +21,7 @@
 			<xs:element name="interyear1" type="xs:integer"/>
 			<xs:element name="interyear2" type="xs:integer"/>
 			<xs:element name="endyear" type="xs:integer"/>
+			<xs:element name="startReportYear" type="xs:integer"/>
 			<xs:element name="timestep1" type="xs:integer"/>
 			<xs:element name="timestep2" type="xs:integer"/>
 			<xs:element name="timestep3" type="xs:integer"/>
