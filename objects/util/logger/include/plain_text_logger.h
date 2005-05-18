@@ -6,7 +6,7 @@
 
 /*! 
 * \file plain_text_logger.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The PlainTextLogger class header file.
 * \author Josh Lurz
 * \date $Date$
@@ -17,7 +17,7 @@
 #include "util/logger/include/logger.h"
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This is a class which implements the Logger interface.. 
 *
 * This Logger is very simple and prints log messages to a file in a plain text format.

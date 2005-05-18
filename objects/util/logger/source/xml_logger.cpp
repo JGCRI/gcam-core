@@ -1,6 +1,6 @@
 /*! 
 * \file xml_logger.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief XMLLogger class source file.
 * \author Josh Lurz
 * \date $Date$

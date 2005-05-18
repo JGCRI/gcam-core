@@ -1,6 +1,6 @@
 /*! 
 * \file plain_text_logger.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief PlainTextLogger class source file.
 * \author Josh Lurz
 * \date $Date$

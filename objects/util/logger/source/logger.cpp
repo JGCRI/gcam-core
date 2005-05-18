@@ -1,6 +1,6 @@
 /*! 
 * \file logger.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief Logger class source file.
 * \author Josh Lurz
 * \date $Date$

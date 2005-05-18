@@ -16,7 +16,7 @@
 #include "util/logger/include/logger.h"
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This is a class which implements the Logger interface.. 
 *
 * This Logger prints message to a log file in an XML format as defined by the XMLLog schema..

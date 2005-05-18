@@ -6,7 +6,7 @@
 
 /*! 
 * \file logger.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Logger class header file.
 * \author Josh Lurz
 * \date $Date$
@@ -23,7 +23,7 @@ class Logger;
 class Tabs;
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This is an overridden streambuffer class used by the Logger class.
 * 
 * This is a very simple class which contains a pointer to its parent Logger.
@@ -52,7 +52,7 @@ private:
 class LoggerFactory;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This is an abstract class which defines the interface to a Logger. 
 *
 * Loggers may come in many different forms, but must use the defined interface.
