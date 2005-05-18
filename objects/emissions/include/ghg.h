@@ -23,6 +23,7 @@ class Emcoef_ind;
 class Tabs;
 class GDP;
 class GhgMAC;
+class Input;
 /*! 
 * \ingroup Objects
 * \brief The Ghg class describes a single gas with
@@ -36,7 +37,7 @@ class GhgMAC;
 class Ghg
 { 
 public:
-    Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 0, const double emissCoefIn = 0 );
+    Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 1, const double emissCoefIn = 0 );
     virtual ~Ghg();
     Ghg( const Ghg& other );
     virtual Ghg& operator=( const Ghg& other );
@@ -44,18 +45,29 @@ public:
     virtual Ghg* clone() const;
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    static const std::string& getXMLNameStatic();
-	void copyGHGParameters( const Ghg* prevGHG );
-    double getGHGValue( const std::string& regionName, const std::string& fuelName, const std::string& prodName, const double efficiency, const int period) const;
-    virtual void calcEmission( const std::string& regionName, const std::string& fuelname, const double input, const std::string& prodname, const double output, const GDP* gdp, const int period );
-    void calcIndirectEmission( const double input, const std::string& fuelname, const std::vector<Emcoef_ind>& emcoef_ind  );
-    std::string getName() const;
-    std::string getUnit() const;
-    double getEmission() const;
+
+	virtual const std::string& getXMLName() const;
+	static const std::string& getXMLNameStatic();
+    void copyGHGParameters( const Ghg* prevGHG );
+    double getGHGValue( const Input* aInput, const std::string& aRegionName, const std::string& aProdName,
+                        const int aPeriod ) const;
+    virtual void calcEmission( const std::vector<Input*> aInputs, const std::string& aRegionName,
+                               const std::string& aGoodName, const double aOutput, const int aPeriod );
+    double getGHGValue( const std::string& regionName, const std::string& fuelName, const std::string& prodName,
+                        const double efficiency, const int period) const;
+    virtual void calcEmission( const std::string& regionName, const std::string& fuelname, const double input,
+                               const std::string& prodname, const double output, const GDP* aGDP, const int aPeriod );
+    void calcIndirectEmission( const double input, const std::string& fuelname,
+                               const std::vector<Emcoef_ind>& emcoef_ind  );
+    const std::string& getName() const;
+    const std::string& getUnit() const;
+    double getEmission( const int aPeriod ) const;
+
+    // These two should be one function!
     double getSequestAmountGeologic() const;
     double getSequestAmountNonEngy() const;
-    double getEmissFuel() const;
     double getEmissInd() const;
+    double getEmissFuel( const int aPeriod ) const;
     double getEmissCoef() const;
     void setEmissCoef( const double emissCoefIn );
     bool getEmissionsInputStatus() const;
@@ -66,6 +78,7 @@ public:
     void initCalc();
 
 protected:
+    double calcInputEmissions( const std::vector<Input*>& aInputs, const std::string& aRegionName, const int aPeriod ) const;
     std::string name; //!< name of ghg gas
     std::string unit; //!< unit for ghg gas
     std::string storageName; //!< name of ghg gas storage 
@@ -77,12 +90,12 @@ protected:
     double rmfrac; //!< fraction of carbon removed from fuel
     double storageCost; //!< storage cost associated with the remove fraction
     double gwp; //!< global warming poential
-    double emission; //!< emissions (calculated)
+    std::vector<double> mEmissions; //!< emissions (calculated)
+    std::vector<double> mEmissionsByFuel; //!< Emissions by primary fuel.
     double sequestAmountGeologic; //!< geologic sequestered emissions (calculated)
     double sequestAmountNonEngy; //!< sequestered in non-energy form (calculated)
     double emissCoef; //!< emissions coefficient
     double emissCoefPrev; //!< emissions coefficient passed forward from previous period
-    double emissFuel; //!< implied emissions from total fuel consumption
     double emissInd; //!< indirect emissions
     double inputEmissions;  //!< input emissions for this object
     double emAdjust; //!< User inputed adjustment to emissions values(0 to 1)
@@ -96,7 +109,6 @@ protected:
     double emissDriver; //!< the amount of fuel that governs emissions levels for various GHGs
     std::auto_ptr<GhgMAC> ghgMac; //!< Marginal Abatement Cost Curve Object
 
-    virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
