@@ -1,6 +1,6 @@
 /*! 
 * \file model_time.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief modeltime class source file.
 * \author Sonny Kim
 * \date $Date$
@@ -21,6 +21,7 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -33,30 +34,12 @@ Modeltime::Modeltime(){
 	initElementalMembers();
 }
 
-//! Clear all datamembers.
-void Modeltime::clear(){
-
-	// First clear all the integer members.
-	initElementalMembers();
-	
-	// Now initialize all the maps and vectors.
-	periodToTimeStep.clear();
-	dataPeriodToModelPeriod.clear();
-	modelPeriodToPopPeriod.clear();
-	popDataToVariable.clear();
-	dataOffset.clear();
-	modelPeriodToYear.clear();
-	yearToModelPeriod.clear();
-}
-
 //! Initialize elemental type datamembers.
 void Modeltime::initElementalMembers(){
 	startYear = 0;
 	interYear1 = 0;
 	interYear2 = 0;
 	endYear = 0;
-	startReportYear = 0;
-	popStartYear = 0;
 	dataEndYear = 0;
 	maxPeriod = 0;
 	maxDataPeriod = 0;
@@ -74,63 +57,55 @@ void Modeltime::initElementalMembers(){
 
 //! Set the data members from the XML input.
 void Modeltime::XMLParse( const DOMNode* node ) {
-	DOMNode* curr = 0;
-	DOMNodeList* nodeList; 
-	string nodeName;
-	
-	// assume node is valid.
-	assert( node );
+    // assume node is valid.
+    assert( node );
 
-	// get all children of the node.
-	nodeList = node->getChildNodes();
-	
-	// loop through the children
-	for ( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-		curr = nodeList->item( i );
-		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-		
-		// select the type of node.
-      if( nodeName == "#text" ) {
-         continue;
-      }
+    // get all children of the node.
+    DOMNodeList* nodeList = node->getChildNodes();
 
-		else if ( nodeName == "startyear" ){
-			startYear = XMLHelper<int>::getValue( curr );
-		} 
-		else if ( nodeName == "interyear1" ){
-			interYear1 = XMLHelper<int>::getValue( curr );
-		} 
-		else if ( nodeName == "interyear2" ){
-			interYear2 = XMLHelper<int>::getValue( curr );
-		} 
-		else if ( nodeName == "endyear" ){
-			endYear = XMLHelper<int>::getValue( curr );
-		} 
-		else if ( nodeName == "startReportYear" ){
-			startReportYear = XMLHelper<int>::getValue( curr );
-		} 
-		else if ( nodeName == "timestep1" ){
-			timeStep1 = XMLHelper<int>::getValue( curr );
-		} 
-		else if ( nodeName == "timestep2" ){
-			timeStep2 = XMLHelper<int>::getValue( curr );
-		} 
-		else if ( nodeName == "timestep3" ){
-			timeStep3 = XMLHelper<int>::getValue( curr );
-		} 
-		else if ( nodeName == "popbegin" ){
-			popStartYear = XMLHelper<int>::getValue( curr );
-		} 
-		else if ( nodeName == "dataend" ){
-			dataEndYear = XMLHelper<int>::getValue( curr );
-		} 
-		else if ( nodeName == "datatimestep" ){
-			dataTimeStep = XMLHelper<int>::getValue( curr );
-		}
-      else {
-         cout << "Unrecognized text string: " << nodeName << " found while parsing modeltime." << endl;
-      }
-	}
+    // loop through the children
+    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
+        DOMNode* curr = nodeList->item( i );
+        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+
+        // select the type of node.
+        if( nodeName == "#text" ) {
+            continue;
+        }
+
+        else if ( nodeName == "startyear" ){
+            startYear = XMLHelper<int>::getValue( curr );
+        } 
+        else if ( nodeName == "interyear1" ){
+            interYear1 = XMLHelper<int>::getValue( curr );
+        } 
+        else if ( nodeName == "interyear2" ){
+            interYear2 = XMLHelper<int>::getValue( curr );
+        } 
+        else if ( nodeName == "endyear" ){
+            endYear = XMLHelper<int>::getValue( curr );
+        } 
+        else if ( nodeName == "timestep1" ){
+            timeStep1 = XMLHelper<int>::getValue( curr );
+        } 
+        else if ( nodeName == "timestep2" ){
+            timeStep2 = XMLHelper<int>::getValue( curr );
+        } 
+        else if ( nodeName == "timestep3" ){
+            timeStep3 = XMLHelper<int>::getValue( curr );
+        } 
+        else if ( nodeName == "dataend" ){
+            dataEndYear = XMLHelper<int>::getValue( curr );
+        } 
+        else if ( nodeName == "datatimestep" ){
+            dataTimeStep = XMLHelper<int>::getValue( curr );
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing modeltime." << endl;
+        }
+    }
 }
 
 //! Write data members to datastream in XML format.
@@ -142,11 +117,9 @@ void Modeltime::toInputXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteElement( interYear1, "interyear1", out, tabs );
 	XMLWriteElement( interYear2, "interyear2", out, tabs );
 	XMLWriteElement( endYear, "endyear", out, tabs );
-    XMLWriteElement( startReportYear, "startReportYear", out, tabs );
 	XMLWriteElement( timeStep1, "timestep1", out, tabs );
 	XMLWriteElement( timeStep2, "timestep2", out, tabs );
 	XMLWriteElement( timeStep3, "timestep3", out, tabs );
-	XMLWriteElement( popStartYear, "popbegin", out, tabs );
 	XMLWriteElement( dataEndYear, "dataend", out, tabs );
 	XMLWriteElement( dataTimeStep, "datatimestep", out, tabs );
 	
@@ -162,11 +135,9 @@ void Modeltime::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	XMLWriteElement( interYear1, "interyear1", out, tabs );
 	XMLWriteElement( interYear2, "interyear2", out, tabs );
 	XMLWriteElement( endYear, "endyear", out, tabs );
-    XMLWriteElement( startReportYear, "startReportYear", out, tabs );
 	XMLWriteElement( timeStep1, "timestep1", out, tabs );
 	XMLWriteElement( timeStep2, "timestep2", out, tabs );
 	XMLWriteElement( timeStep3, "timestep3", out, tabs );
-	XMLWriteElement( popStartYear, "popbegin", out, tabs );
 	XMLWriteElement( dataEndYear, "dataend", out, tabs );
 	XMLWriteElement( dataTimeStep, "datatimestep", out, tabs );
 	XMLWriteElement( periodToTimeStep[ period ], "periodToTimeStep", out, tabs );
@@ -174,7 +145,6 @@ void Modeltime::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	// Write out the three vectors associated with the model period.
 	XMLWriteElement( dataOffset[ period ], "dataOffset", out, tabs );
 	XMLWriteElement( modelPeriodToYear[ period ], "modelPeriodToYear", out, tabs );
-	XMLWriteElement( modelPeriodToPopPeriod[ period ], "modelPeriodToPopPeriod", out, tabs );
 
 	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
@@ -221,43 +191,45 @@ void Modeltime::set() {
 	
 	if(rem1 != 0) {
 		numberOfPeriods1a++; // one more for remainder year
-		cout<<"first time interval not divisible timeStep1\n"; 
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+		mainLog << "first time interval not divisible timeStep1" << endl; 
 	}
 	if(rem2 != 0) {
 		numberOfPeriods2a++; // one more for remainder year
-		cout<<"second time interval not divisible timeStep2\n"; 
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Second time interval not divisible timeStep2" << endl; 
 	}
 	if(rem3 != 0) {
 		numberOfPeriods3a++; // one more for remainder year
-		cout<<"third time interval not divisible timeStep3\n"; 
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+		mainLog << "Third time interval not divisible timeStep3" << endl; 
 	}
 	maxPeriod = numberOfPeriods1a + numberOfPeriods2a + numberOfPeriods3a; // calculate total number of periods
 	// number of periods for general data
 	maxDataPeriod = (dataEndYear - startYear)/dataTimeStep+1; // +1 for first year
-	// number of periods for population data (one more than general data)
-	maxPopData = (dataEndYear - popStartYear)/dataTimeStep+1; // +1 for first year
 	// initialize per_timeStep vector
 	// retrieve timeStep for each modeling period
 	periodToTimeStep.resize(maxPeriod);
 
-    int i;	//Need to define "i" outside loops in order to work with strict c++ definitions of gcc
-
-	for(i=0;i<numberOfPeriods1;i++){
+	for( int i=0;i<numberOfPeriods1;i++){
 		periodToTimeStep[i]=timeStep1;
 	}
-	for(i=numberOfPeriods1;i<numberOfPeriods1a;i++){
+	for( int i=numberOfPeriods1;i<numberOfPeriods1a;i++){
 		periodToTimeStep[i]=rem1;
 	}
-	for(i=numberOfPeriods1a;i<(numberOfPeriods1a+numberOfPeriods2);i++) { 
+	for( int i=numberOfPeriods1a;i<(numberOfPeriods1a+numberOfPeriods2);i++) { 
 		periodToTimeStep[i]=timeStep2;
 	}
-	for(i=(numberOfPeriods1a+numberOfPeriods2);i<(numberOfPeriods1a+numberOfPeriods2a);i++) { 
+	for( int i=(numberOfPeriods1a+numberOfPeriods2);i<(numberOfPeriods1a+numberOfPeriods2a);i++) { 
 		periodToTimeStep[i]=rem2;
 	}
-	for(i=(numberOfPeriods1a+numberOfPeriods2a);i<(numberOfPeriods1a+numberOfPeriods2a+numberOfPeriods3);i++){
+	for( int i=(numberOfPeriods1a+numberOfPeriods2a);i<(numberOfPeriods1a+numberOfPeriods2a+numberOfPeriods3);i++){
 		periodToTimeStep[i]=timeStep3;
 	}
-	for(i=(numberOfPeriods1a+numberOfPeriods2a+numberOfPeriods3);i<(numberOfPeriods1a+numberOfPeriods2a+numberOfPeriods3a);i++){
+	for( int i=(numberOfPeriods1a+numberOfPeriods2a+numberOfPeriods3);i<(numberOfPeriods1a+numberOfPeriods2a+numberOfPeriods3a);i++){
 		periodToTimeStep[i]=rem3;
 	}
 	
@@ -269,24 +241,17 @@ void Modeltime::set() {
 		
 	modelPeriodToYear[0] = baseyr;
 	
-	for (i=1;i<maxPeriod;i++) {
+	for ( int i=1;i<maxPeriod;i++) {
 		yearToModelPeriod[baseyr + periodToTimeStep[i]] = i;
 		modelPeriodToYear[i] = baseyr + periodToTimeStep[i];
 		// set years between two time periods to correspond to the
 		// second time period
 		if(periodToTimeStep[i]>1) {
-			for(int y=1;y<periodToTimeStep[i];y++)
+            for(int y=1;y<periodToTimeStep[i];y++){
 				yearToModelPeriod[baseyr + y] = i;
+            }
 		} 
 		baseyr += periodToTimeStep[i];
-	}
-	
-	popPeriodToYear.resize( maxPopData );
-	int currYear = popStartYear;
-	for( i = 0; i < maxPopData; i++ ){
-      yearToPopPeriod[ currYear ] = i;
-		popPeriodToYear[ i ] = currYear;
-		currYear += dataTimeStep;
 	}
 
 	// number of model periods to reach each data period
@@ -294,22 +259,42 @@ void Modeltime::set() {
 	// retrieve model period from data period
 	dataPeriodToModelPeriod.resize(maxDataPeriod);
 	
-	for (i=0;i<maxDataPeriod;i++) {
+	for ( int i=0;i<maxDataPeriod;i++) {
 		int m = yearToModelPeriod[startYear + i*dataTimeStep];
-		dataOffset[i] = dataTimeStep/periodToTimeStep[m];
+		if (maxDataPeriod == maxPeriod) {
+			dataOffset[i] = 0;
+		}
+		else {
+			dataOffset[i] = dataTimeStep/periodToTimeStep[m];
+		}
 		dataPeriodToModelPeriod[i] = m;
 	}
+}
 
-	// retrieve population period from model period
-	modelPeriodToPopPeriod.resize(maxPeriod);
-	for (i=0;i<maxPeriod;i++) {
-		int m = i+dataOffset[0]; //offset by first timeStep only
-		modelPeriodToPopPeriod[i] = m;
-	}
-	// retrieve pop variable index from pop data period
-	popDataToVariable.resize(maxPopData);
-	popDataToVariable[0] = 0; 
-	for (i=0;i<maxDataPeriod;i++) {
-		popDataToVariable[i+1] = dataPeriodToModelPeriod[i]+dataOffset[0];
-	}
+//! Get the base period
+int Modeltime::getBasePeriod() const {
+    return getyr_to_per( startYear );
+}
+
+//! Get the start year.
+int Modeltime::getStartYear() const {
+    return startYear;
+}
+
+//! Get the end year.
+int Modeltime::getEndYear() const {
+    return endYear;
+}
+
+//! Convert a year to a period.
+int Modeltime::getyr_to_per( const int year ) const {
+    map<int,int>::const_iterator iter = yearToModelPeriod.find( year );
+    // Check for an invalid time period.
+    if( iter == yearToModelPeriod.end() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Invalid year: " << year << " passed to Modeltime::getyr_to_per. " << endl;
+        return 0;
+    }
+    return iter->second; 
 }
