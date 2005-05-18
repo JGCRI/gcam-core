@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Son H. Kim (PNNL) -->
-<scenario name="B2 Reference" date="2003-01-11T09:30:47-05:00">
+<scenario name="B2 Reference" date="2003-01-11T09:30:47-05:00" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/b2_calibration.xsd">
 	<summary>"SRES B2 Scenario is used for this Reference Scenario"</summary>
 	<modeltime>
 		<startyear>1975</startyear>
@@ -18,14 +18,6 @@
 	<world>
 		<region name="USA">
 			<calibrationdata>
-				<TFEcalb year="1990">61.582</TFEcalb>
-				<TFEcalb year="2005">77.100</TFEcalb>
-				<TFEcalb year="2020">86.645</TFEcalb>
-				<TFEcalb year="2035">95.575</TFEcalb>
-				<TFEcalb year="2050">101.610</TFEcalb>
-				<TFEcalb year="2065">107.275</TFEcalb>
-				<TFEcalb year="2080">113.249</TFEcalb>
-				<TFEcalb year="2095">119.592</TFEcalb>
 				<GDPcal year="1975">3469850</GDPcal>
 				<GDPcal year="1990">5519600</GDPcal>
 				<GDPcal year="2005">8559839</GDPcal>
@@ -35,6 +27,14 @@
 				<GDPcal year="2065">20308123</GDPcal>
 				<GDPcal year="2080">24299173</GDPcal>
 				<GDPcal year="2095">29086532</GDPcal>
+				<TFEcalb year="1990">61.582</TFEcalb>
+				<TFEcalb year="2005">77.100</TFEcalb>
+				<TFEcalb year="2020">86.645</TFEcalb>
+				<TFEcalb year="2035">95.575</TFEcalb>
+				<TFEcalb year="2050">101.610</TFEcalb>
+				<TFEcalb year="2065">107.275</TFEcalb>
+				<TFEcalb year="2080">113.249</TFEcalb>
+				<TFEcalb year="2095">119.592</TFEcalb>
 			</calibrationdata>
 		</region>
 		<region name="Canada">
