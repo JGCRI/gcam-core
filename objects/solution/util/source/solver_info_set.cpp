@@ -220,7 +220,7 @@ double SolverInfoSet::getMaxAbsoluteExcessDemand() const{
 * \param ED_SOLUTION_FLOOR Value of ED below which the market should be considered solved. 
 * \return The SolverInfo with the largest relative excess demand. 
 */
-SolverInfo& SolverInfoSet::getWorstSolverInfo( const double aEDSolutionFloor, const bool aIgnoreBisected ) {
+SolverInfo* SolverInfoSet::getWorstSolverInfo( const double aEDSolutionFloor, const bool aIgnoreBisected ) {
 
     SetIterator worstMarket = solvable.begin();
     double largest = -1;
@@ -236,7 +236,7 @@ SolverInfo& SolverInfoSet::getWorstSolverInfo( const double aEDSolutionFloor, co
             largest = relativeED;
         }
     }
-    return *worstMarket;
+    return &*worstMarket;
 }
 
 /*! \brief Returns the best unsolved solver info. 
@@ -247,11 +247,11 @@ SolverInfo& SolverInfoSet::getWorstSolverInfo( const double aEDSolutionFloor, co
 * \param aIgnoreBisected Whether to ignore already bisected markets.
 * \return The SolverInfo with the smallest unsolved relative excess demand. 
 */
-SolverInfo& SolverInfoSet::getWorstSolverInfoReverse( const double aTolerance, const double aEDSolutionFloor, const bool aIgnoreBisected ) {
+SolverInfo* SolverInfoSet::getWorstSolverInfoReverse( const double aTolerance, const double aEDSolutionFloor, const bool aIgnoreBisected ) {
     
     // Find the worst one. 
-    SolverInfo worstMarket = getWorstSolverInfo( aEDSolutionFloor, aIgnoreBisected );
-    double smallest = worstMarket.getRelativeED( aEDSolutionFloor );
+    SolverInfo* worstMarket = getWorstSolverInfo( aEDSolutionFloor, aIgnoreBisected );
+    double smallest = worstMarket->getRelativeED( aEDSolutionFloor );
     SetIterator bestUnsolved = solvable.begin();
 
     for ( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ) {
@@ -268,34 +268,34 @@ SolverInfo& SolverInfoSet::getWorstSolverInfoReverse( const double aTolerance, c
             smallest = relativeED;
         }
     }
-    return *bestUnsolved;
+    return &*bestUnsolved;
 }
 /*! \brief Find the policy solver info, or the worst if there is no policy.
 * \author Josh Lurz
 * \details This function determines the SolverInfo within the set which has the largest relative excess demand as defined by
 * getRelativeED. 
-* \param ED_SOLUTION_FLOOR Value of ED below which the market should be considered solved. 
+* \param aEDSolutionFloor Value of ED below which the market should be considered solved. 
 * \return The SolverInfo for the policy, or the worst one if that does not exist.
 */
-SolverInfo& SolverInfoSet::getPolicyOrWorstSolverInfo( const double ED_SOLUTION_FLOOR ) {
+SolverInfo* SolverInfoSet::getPolicyOrWorstSolverInfo( const double aTolerance, const double aEDSolutionFloor) {
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++ iter ){
         // TODO: Find a more generic method. 
-        if( iter->getName() == "globalCO2" ){
-            return *iter;
+        if( iter->getName() == "globalCO2" && !iter->isSolved( aTolerance, aEDSolutionFloor ) ){
+            return &*iter;
         }
     }
 
     double largest = -1;
     SetIterator worstMarket = solvable.begin();
     for ( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ) {
-        const double relativeED = iter->getRelativeED( ED_SOLUTION_FLOOR );
+        const double relativeED = iter->getRelativeED( aEDSolutionFloor );
 
         if ( relativeED > largest ) {
             worstMarket = iter;
             largest = relativeED;
         }
     }
-    return *worstMarket;
+    return &*worstMarket;
 }
 //! Return whether all currently solvable markets are bracketed.
 bool SolverInfoSet::isAllBracketed() const {

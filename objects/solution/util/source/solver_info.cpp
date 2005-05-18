@@ -409,10 +409,7 @@ bool SolverInfo::isCurrentlyBracketed() const {
 }
 
 //! Check if the market has correctly solved.
-bool SolverInfo::isSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR ) {
-    // Make sure all values are updated.
-    updateFromMarket();
-    
+bool SolverInfo::isSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR ) const {
     bool solved = false;
     // Check if either the market is within tolerance
     if( isWithinTolerance( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){

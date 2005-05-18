@@ -68,7 +68,7 @@ public:
     void moveLeftBracketToX();
     void resetBrackets();
     bool isCurrentlyBracketed() const;
-    bool isSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR );
+    bool isSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR ) const;
     double getDemandElasWithRespectTo( const unsigned int aMarketNumber ) const;
     double getSupplyElasWithRespectTo( const unsigned int aMarketNumber ) const;
     bool isUnsolvedAndSingular( const double aSolTolerance, const double aSolFloor );

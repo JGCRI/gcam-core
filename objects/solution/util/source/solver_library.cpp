@@ -1,6 +1,6 @@
 /*! 
 * \file solver_library.cpp
-* \ingroup objects
+* \ingroup Objects
 * \brief SolverLibrary class source file.
 * \author Josh Lurz
 * \date $Date$
@@ -110,16 +110,14 @@ bool SolverLibrary::isWithinTolerance( const double excessDemand, const double d
 * \param marketplace The marketplace to perform derivative calculations on.
 * \param world The world object which is used for calls to World::calc
 * \param solverSet The vector of SolutionInfo objects which store the current prices, supplies and demands. 
-* \param JFDM A matrix of partial derivatives of demands. This matrix is modified by the function and returned by reference.
-* \param JFSM A matrix of partial derivatives of supplies. This matrix is modified by the function and returned by reference.
-* \param worldCalcCount The current number of iterations of World::calc. This value is modified by the function and returned by reference.
+* \param Delta to use when changing prices.
 * \param per The current model period.
 * \todo Move this function into SolverInfoSet.
 */
 
-void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverInfoSet& solverSet, const int per ) {
+void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverInfoSet& solverSet,
+                                 const double aDeltaPrice, const int per ) {
 
-    const double DELTAP = 1e-5;
     const bool doDebugChecks = Configuration::getInstance()->getBool( "debugChecking" );
     ILogger& mainLog = ILogger::getLogger( "solver_log" );
     mainLog.setLevel( ILogger::NOTICE );
@@ -149,7 +147,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverI
 
     // Calculate derivatives for each market.
     for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
-        solverSet.getSolvable( j ).increaseX( DELTAP, DELTAP );
+        solverSet.getSolvable( j ).increaseX( aDeltaPrice, aDeltaPrice );
         solverSet.updateToMarkets();
 
 #if( NO_REGIONAL_DERIVATIVES )
@@ -403,19 +401,22 @@ const SolverLibrary::RegionalSDDifferences SolverLibrary::calcRegionalSDDifferen
     return regionalDifferences;
 }
 
-//! Bracketing function only
-/* Function finds bracket interval for each market and puts this information into solverSet vector
+/*! \brief Bracket a set of markets.
+* \details Function finds bracket interval for each market and puts this
+*          information into solverSet vector
 * \author Sonny Kim, Josh Lurz, Steve Smith
-* \param SOLUTION_TOLERANCE Target value for maximum relative solution for worst market 
-* \param ED_SOLUTION_FLOOR *Absolute value* beneath which market is ignored 
-* \param bracketInterval Relative multipliciatve interval by which trail values are moved
+* \param aSolutionTolerance Target value for maximum relative solution for worst
+*        market 
+* \param aSolutionFloor Absolute value beneath which market is ignored 
+* \param bracketInterval Relative multipliciatve interval by which trail values
+*        are moved
 * \param solverSet Vector of market solution information 
-* \param allbracketed Boolean that holds bracketing state 
-* \param firsttime Boolean that marks first time bracket is performed 
-* \param worldCalcCount Counter for number of worldcalc model calls 
-* \param per Model period
+* \param period Model period
+* \return Whether bracketing of all markets completed successfully.
 */
-bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const double bracketInterval, SolverInfoSet& solverSet, const int period ) {
+bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const double bracketInterval,
+                                const double aSolutionTolerance, const double aSolutionFloor,
+                                SolverInfoSet& solverSet, const int period ) {
     int numIterations = 0;
     bool code = false;
     Configuration* conf = Configuration::getInstance();
@@ -526,17 +527,24 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
 //! Bracketing function only
 /* Function finds bracket interval for a single market. 
 * \author Josh Lurz
-* \param per Model period
+* \param aBracketInterval Multiplier to use when adjusting the bracket size.
+* \param aSolutionTolerance Solution Tolerance
+* \param aSolutionFloor Solution Floor
+* \param period Model period
+* \return Whether the market was successfully bracketed.
 */
-bool SolverLibrary::bracketOne( Marketplace* marketplace, World* world, SolverInfoSet& aSolSet, SolverInfo& aSol, const int period ) {
+bool SolverLibrary::bracketOne( Marketplace* marketplace, World* world, const double aBracketInterval,
+                                const double aSolutionTolerance, const double aSolutionFloor,
+                                SolverInfoSet& aSolSet, SolverInfo* aSol, const int period )
+{
     // Turn off calibration.
     const bool calibrationStatus = world->getCalibrationSetting();
     world->turnCalibrationsOff();    
 
+    static const double LOWER_BOUND = util::getSmallNumber();
+
     // Constants.
     static const unsigned int MAX_ITERATIONS = 100;
-    const double LOWER_BOUND = 0.5;
-    const double BRACKET_MULT = 0.5;
     //  world->calc( period );
     aSolSet.updateFromMarkets();
     aSolSet.updateSolvable( false );
@@ -544,68 +552,61 @@ bool SolverLibrary::bracketOne( Marketplace* marketplace, World* world, SolverIn
     // Logging
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
-    solverLog << "Entering single market bracketing for market " << aSol.getName() << "." << endl;
+    solverLog << "Entering single market bracketing for market " << aSol->getName() << "." << endl;
     solverLog.setLevel( ILogger::DEBUG );
     solverLog << "Solution info set prior to bracket one." << endl;
     solverLog << aSolSet << endl;
 
-    aSol.resetBrackets();
+    aSol->resetBrackets();
     unsigned int numIterations = 0;
 
     // Loop is done at least once.
     do {        
         // If ED at X and L are the same sign.
-        if ( util::sign( aSol.getED() ) == util::sign( aSol.getEDLeft() ) ) {
+        if ( util::sign( aSol->getED() ) == util::sign( aSol->getEDLeft() ) ) {
             // If Supply > Demand at point X.
-            if ( aSol.getED() < 0 ) { 
-                aSol.moveLeftBracketToX();
-                if( !aSol.isCurrentlyBracketed() ){
-                    aSol.decreaseX( BRACKET_MULT, LOWER_BOUND );
+            if ( aSol->getED() < 0 ) { 
+                aSol->moveLeftBracketToX();
+                if( !aSol->isCurrentlyBracketed() ){
+                    aSol->decreaseX( aBracketInterval, LOWER_BOUND );
                 } 
                 else {
-                    aSol.setBracketed();
+                    aSol->setBracketed();
                 }
             }
             else { // If Supply <= Demand. Price needs to increase.
-                aSol.moveRightBracketToX();
-                if( !aSol.isCurrentlyBracketed() ){
-                    aSol.increaseX( BRACKET_MULT, LOWER_BOUND );
+                aSol->moveRightBracketToX();
+                if( !aSol->isCurrentlyBracketed() ){
+                    aSol->increaseX( aBracketInterval, LOWER_BOUND );
                 }
                 else {
-                    aSol.setBracketed();
+                    aSol->setBracketed();
                 }
             }
         }
         else {  // ED at X and R are the same sign.
-            if ( aSol.getED() < 0 ) { // If Supply > Demand at X. 
-                aSol.moveLeftBracketToX();
-                if( !aSol.isCurrentlyBracketed() ){
-                    aSol.decreaseX( BRACKET_MULT, LOWER_BOUND );
+            if ( aSol->getED() < 0 ) { // If Supply > Demand at X. 
+                aSol->moveLeftBracketToX();
+                if( !aSol->isCurrentlyBracketed() ){
+                    aSol->decreaseX( aBracketInterval, LOWER_BOUND );
                 }
                 else {
-                    aSol.setBracketed();
+                    aSol->setBracketed();
                 }
             }
             else { // If Supply <= Demand at X. Prices need to increase.
-                aSol.moveRightBracketToX();
-                if( !aSol.isCurrentlyBracketed() ){
-                    aSol.increaseX( BRACKET_MULT, LOWER_BOUND );
+                aSol->moveRightBracketToX();
+                if( !aSol->isCurrentlyBracketed() ){
+                    aSol->increaseX( aBracketInterval, LOWER_BOUND );
                 }
                 else {
-                    aSol.setBracketed();
+                    aSol->setBracketed();
                 }
             }
         }
         // Check if the market is actually solved.
-        // Small number here and below should actually be the solution tolerance or floor.
-        if( aSol.isWithinTolerance( util::getVerySmallNumber(), util::getVerySmallNumber() ) ){
-            aSol.setBracketed();
-        }
-        // Check if the market is unbracketable. Move this check into updateSolvable.-JPL
-        else if( ( aSol.getPrice() < util::getVerySmallNumber() ) && ( aSol.getED() < 0 ) ) {
-            // aSol.setPrice( 0 );
-            // aSol.resetBrackets();
-            aSol.setBracketed();
+        if( aSol->isSolved( aSolutionTolerance, aSolutionFloor ) ){
+            aSol->setBracketed();
         }
 
         aSolSet.updateToMarkets();
@@ -615,8 +616,8 @@ bool SolverLibrary::bracketOne( Marketplace* marketplace, World* world, SolverIn
         aSolSet.updateSolvable( false );
         solverLog.setLevel( ILogger::NOTICE );
         solverLog << "Completed an iteration of bracketOne." << endl;
-        solverLog << aSol << endl;
-    } while ( ++numIterations < MAX_ITERATIONS && !aSol.isBracketed() );
+        solverLog << *aSol << endl;
+    } while ( ++numIterations < MAX_ITERATIONS && !aSol->isBracketed() );
 
     solverLog.setLevel( ILogger::NOTICE );
     solverLog << "Exiting single market bracketing." << endl;
@@ -628,5 +629,5 @@ bool SolverLibrary::bracketOne( Marketplace* marketplace, World* world, SolverIn
     if ( calibrationStatus ) {
         world->turnCalibrationsOn();
     }
-    return aSol.isBracketed();
+    return aSol->isBracketed();
 }

@@ -48,9 +48,9 @@ public:
     void storeValues();
     void restoreValues();
     bool checkAndResetBrackets();
-    SolverInfo& getWorstSolverInfo( const double aEDSolutionFloor, const bool aIgnoreBisected = false );
-    SolverInfo& getWorstSolverInfoReverse( const double aTolerance, const double aEDSolutionFloor, const bool aIgnoreBisected = false );
-    SolverInfo& getPolicyOrWorstSolverInfo( const double ED_SOLUTION_FLOOR );
+    SolverInfo* getWorstSolverInfo( const double aEDSolutionFloor, const bool aIgnoreBisected = false );
+    SolverInfo* getWorstSolverInfoReverse( const double aTolerance, const double aEDSolutionFloor, const bool aIgnoreBisected = false );
+    SolverInfo* getPolicyOrWorstSolverInfo( const double aTolerance, const double aEDSolutionFloor );
     double getMaxRelativeExcessDemand( const double ED_SOLUTION_FLOOR ) const;
     double getMaxAbsoluteExcessDemand() const;
     bool isAllBracketed() const;
