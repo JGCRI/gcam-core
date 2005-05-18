@@ -1,7 +1,21 @@
 /*!
-* \file main.cpp															 
-* \brief This is the Main program file which controls the initialization,
-*  model looping over time steps, and outputs results  for the model.
+* \file main.cpp
+* \todo Update this documentation.
+* \brief This is the Main program file which controls initialization of run 
+* parameters and sets up scenarios to run from input file names in the 
+* Configuration file.
+*
+* The program reads in parameters and file names stored in the 
+* configuration file and assigns them to the configuration object.  It creates 
+* a scenario object and triggers a read-in of all input data by calling XMLParse.
+* If there are scenario components (ScenComponents), then these are read next.
+* 
+* A switch is checked for the program to run in a mode that just merges files
+* into one xml input file rather than running the model (mergeFilesOnly).
+* 
+* If the model is to be run, it is triggered by the ScenarioRunner class object, which 
+* calls runScenario() to trigger running of the complete model for all periods.
+*
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
@@ -40,25 +54,26 @@ using namespace xercesc;
 /* \todo Finish removing globals-JPL */
 ofstream outFile;
 
-Scenario* scenario = 0; // model scenario info
+// Initialize time and set some pointers to null.
+// Declared outside Main to make global.
+Scenario* scenario; // model scenario info
 auto_ptr<ErrorHandler> XMLHelper<void>::mErrHandler;
 auto_ptr<XercesDOMParser> XMLHelper<void>::mParser;
 void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFacArg );
 
 //! Main program. 
 int main( int argc, char *argv[] ) {
-    // Use a smart pointer for configuration so that if the main is exited before the end the memory is freed.
+	// identify default file names for control input and logging controls
     string configurationArg = "configuration.xml";
     string loggerFactoryArg = "log_conf.xml";
-
-    // Parse any command line arguments. 
+    // Parse any command line arguments.  Can override defaults with command lone args
     parseArgs( argc, argv, configurationArg, loggerFactoryArg );
-
+    
     // Add OS dependent prefixes to the arguments.
     const string configurationFileName = string( __ROOT_PREFIX__ ) + configurationArg;
     const string loggerFileName = string( __ROOT_PREFIX__ ) + loggerFactoryArg;
 
-    // Initialize the timer.
+    // Initialize the timer.  Create an object of the Timer class.
     Timer timer;
     timer.start();
 
@@ -95,7 +110,6 @@ int main( int argc, char *argv[] ) {
     else { // Run a standard scenario.
         runner.reset( new SingleScenarioRunner() );
     }
-
     // Setup the scenario.
     runner->setupScenario( timer );
 
@@ -107,8 +121,7 @@ int main( int argc, char *argv[] ) {
     mainLog << "Model exiting successfully." << endl;
     // Cleanup Xerces. This should be encapsulated with an initializer object to ensure against leakage.
     XMLHelper<void>::cleanupParser();
-    // sleep(10000000); // Un-comment to use OSX memory analysis tool. sjs
-    
+	
     // Return exit code based on whether the model succeeded(Non-zero is failure by convention).
     return 0 ? 1 : success; 
 }

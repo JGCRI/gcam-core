@@ -1,6 +1,6 @@
 /*! 
 * \file climat_data.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This file contains the function that writes the input text file for the CLIMAT model.	
 * \author Sonny Kim
 * \date $Date$
