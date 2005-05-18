@@ -5,7 +5,7 @@
 #endif
 /*! 
 * \file marketplace.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Marketplace class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -19,32 +19,38 @@
 #include "marketplace/include/imarket_type.h"
 class Tabs;
 class Market;
+class MarketLocator;
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which describes the single global marketplace.
 * \author Sonny Kim
 * \todo The naming of get(set)MarketInfo and the (re)storeInfo needs fixing. 
 */
 
 class Marketplace
-{	
+{
 public:
     Marketplace();
     ~Marketplace();
     void solve( const int per );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    bool createMarket( const std::string& regionName, const std::string& marketName, const std::string& goodName, const IMarketType::Type aMarketType );
+    bool createMarket( const std::string& regionName, const std::string& marketName,
+                       const std::string& goodName, const IMarketType::Type aMarketType );
     void initPrices();
     void nullSuppliesAndDemands( const int period );
-    void setPrice( const std::string& goodName, const std::string& regionName, const double value , const int period );
-    void setPriceVector( const std::string& goodName, const std::string& regionName, const std::vector<double>& prices );
-    void addToSupply( const std::string& goodName, const std::string& regionName, const double value, const int period );
-    void addToDemand( const std::string& goodName, const std::string& regionName, const double value, const int period );
-    double getPrice( const std::string& goodName, const std::string& regionName, const int period ) const;
+    void setPrice( const std::string& goodName, const std::string& regionName, const double value,
+                   const int period, bool aMustExist = true );
+    void setPriceVector( const std::string& goodName, const std::string& regionName,
+                         const std::vector<double>& prices );
+    void addToSupply( const std::string& goodName, const std::string& regionName, const double value,
+                      const int period, bool aMustExist = true );
+    void addToDemand( const std::string& goodName, const std::string& regionName, const double value,
+                      const int period, bool aMustExist = true );
+    double getPrice( const std::string& goodName, const std::string& regionName, const int period,
+                     bool aMustExist = true ) const;
     double getSupply( const std::string& goodName, const std::string& regionName, const int period ) const;
     double getDemand( const std::string& goodName, const std::string& regionName, const int period ) const;
     void init_to_last( const int period );
-    void storeto_last( const int period );
     void dbOutput() const; 
     void csvOutputFile( std::string marketsToPrint = "" ) const; 
     void resetToPriceMarket( const std::string& goodName, const std::string& regionName );
@@ -52,19 +58,16 @@ public:
     void unsetMarketToSolve( const std::string& goodName, const std::string& regionName, const int period );
     void storeinfo( const int period );
     void restoreinfo( const int period );
-    void setMarketInfo( const std::string& goodName, const std::string& regionName, const int period, const std::string itemName, const double itemValue );
-    double getMarketInfo( const std::string& goodName, const std::string& regionName, const int period, const std::string& itemName ) const;
-    bool doesMarketExist( const std::string& goodName, const std::string& regionName, const int period ) const;
+    void setMarketInfo( const std::string& goodName, const std::string& regionName, const int period,
+                        const std::string& itemName, const double itemValue, bool aMustExist = true );
+    double getMarketInfo( const std::string& goodName, const std::string& regionName, const int period,
+                          const std::string& itemName, bool aMustExist = true ) const;
+    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     std::vector<Market*> getMarketsToSolve( const int period ) const;
+    const static double NO_MARKET_PRICE; //!< The price to return if no market exists.
 private:
-    unsigned int uniqueNo; //!< number for creating markets
-    unsigned int numMarkets;  //!< number of markets
     std::vector< std::vector<Market*> > markets; //!< no of market objects by period
-    std::map<std::string,int> marketMap; //!< map of unique market id from good and market-region names
-    std::map<std::string,int> regionToMarketMap; //!< map of market lookup from good and region names
-
-    static std::string createMarketKey( const std::string& marketName, const std::string& goodName );
-    int getMarketNumber( const std::string& goodName, const std::string& regionName ) const;
+    std::auto_ptr<MarketLocator> mMarketLocator; //!< An object which determines the correct market number.
 };
 
 #endif

@@ -1,6 +1,6 @@
 /*! 
 * \file calibration_market.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief CalibrationMarket class source file.
 * \author Josh Lurz
 * \date $Date$

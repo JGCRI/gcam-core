@@ -1,6 +1,6 @@
 /*! 
 * \file market_info.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief MarketInfo class source file.
 * \author Josh Lurz
 * \date $Date$
@@ -22,10 +22,6 @@ using namespace std;
 MarketInfo::MarketInfo(){
 }
 
-//! Destructor
-MarketInfo::~MarketInfo(){
-}
-
 /*! \brief Write out XML for debugging purposes.
 *
 * This method is called by the Market::toDebugXML method to write out information for the MarketInformation object.
@@ -38,7 +34,7 @@ void MarketInfo::toDebugXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag( "MarketInfo", out, tabs );
   
    // Write out all the name value pairs.
-   for( map<string,double>::const_iterator iter = infoMap.begin(); iter != infoMap.end(); iter++ ){
+   for( CInfoIterator iter = mInfoMap.begin(); iter != mInfoMap.end(); iter++ ){
        XMLWriteOpeningTag( "Pair", out, tabs );
 	   
        XMLWriteElement( iter->first, "key", out, tabs );
@@ -54,20 +50,20 @@ void MarketInfo::toDebugXML( ostream& out, Tabs* tabs ) const {
 /*! \brief Set a name and value for a piece of information related to the market.
 * \details This function will check the marketInfo map for the associated key, if it exists
 * it will update the associated value to itemValue, otherwise it will create a new name value pair.
-* \param itemName The string to use as the key for this information value.
-* \param itemValue The value to be associated with this key. 
+* \param aName The string to use as the key for this information value.
+* \param aValue The value to be associated with this key. 
 */
-void MarketInfo::addItem( const string& itemName, const double itemValue ){
+void MarketInfo::addItem( const string& aName, const double aValue ){
 
     // First check for the value.
-    map<string,double>::iterator iter = infoMap.find( itemName );
-    if( iter != infoMap.end() ){
+    InfoIterator iter = mInfoMap.find( aName );
+    if( iter != mInfoMap.end() ){
         // Update the value to itemValue.
-        iter->second = itemValue;
+        iter->second = aValue;
     }
     else {
         // Add the pair.
-        infoMap[ itemName ] = itemValue;
+        mInfoMap.insert( make_pair( aName, aValue ) );
     }
 }
 
@@ -76,25 +72,25 @@ void MarketInfo::addItem( const string& itemName, const double itemValue ){
 * associated with the key itemName. If the itemName does not exist, it will return 0.
 * It will also print a warning if this occurs. 
 * \author Josh Lurz
-* \param itemName The key for the value to be queried.
+* \param aName The key for the value to be queried.
+* \param aMustExist Whether it is an error if the item is missing.
 * \return The value associated with itemName if it exists, 0 otherwise.
 * \todo Is zero the best return value for a non-existant key?
 */
-double MarketInfo::getItemValue( const string& itemName ) const {
-    // First check for the value.
-    double retValue;
-
-    map<string,double>::const_iterator iter = infoMap.find( itemName );
-    if( iter != infoMap.end() ){
-        // Set the return value to this key's value.
-        retValue = iter->second;
+double MarketInfo::getItemValue( const string& aName, bool aMustExist ) const {
+    // Search for the value.
+    CInfoIterator iter = mInfoMap.find( aName );
+    if( iter != mInfoMap.end() ){
+        // Return the value associated with this key.
+        return iter->second;
     }
-    else {
-        // Set the return value to the default.
+
+    // Report an error if this value was required to equist.
+    if( aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << itemName << " was not found in the market's information store." << endl;
-        retValue = 0;
+        mainLog << aName << " was not found in the market's information store." << endl;
     }
-    return retValue;
+    // Return 0 as the default value
+    return 0;
 }

@@ -1,6 +1,6 @@
 /*! 
 * \file ghg_market.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief GHGMarket class source file.
 * \author Sonny Kim
 * \date $Date$

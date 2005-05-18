@@ -1,6 +1,6 @@
 /*! 
 * \file normal_market.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief NormalMarket class source file.
 * \author Sonny Kim
 * \date $Date$

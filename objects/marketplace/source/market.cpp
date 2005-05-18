@@ -1,6 +1,6 @@
 /*! 
 * \file market.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief Market class source file.
 * \author Sonny Kim
 * \date $Date$
@@ -46,15 +46,16 @@ const string Market::XML_NAME = "market";
 */
 Market::Market( const string& goodNameIn, const string& regionNameIn, const int periodIn )
 : good( goodNameIn ), 
-region( regionNameIn ), 
+region( regionNameIn ),
+solveMarket( false ),
 period( periodIn ),
 price( 0 ),
 storedPrice( 0 ),
 demand( 0 ),
 storedDemand( 0 ),
 supply( 0 ),
-storedSupply( 0 ),
-solveMarket( false ){
+storedSupply( 0 )
+{
 }
 
 //! Destructor
@@ -506,31 +507,23 @@ void Market::setMarketInfo( const std::string& itemName, const double itemValue 
 * associated with the key itemName. If the itemName does not exist, it will return 0.
 * The MarketInfo object will also emit a warning if this occurs. 
 * \author Josh Lurz
-* \param itemName The key for the value to be queried.
+* \param aItemName The key for the value to be queried.
+* \param aMustExist Whether it is an error if the item is missing.
 * \return The value associated with itemName if it exists, 0 otherwise.
 * \todo Is zero the best return value for a non-existant key?
 */
-double Market::getMarketInfo( const std::string& itemName ) const {
+double Market::getMarketInfo( const std::string& aItemName, bool aMustExist ) const {
     if( mMarketInfo.get() ){
-        return mMarketInfo->getItemValue( itemName );
+        return mMarketInfo->getItemValue( aItemName, aMustExist );
+    }
+
+    // Report an error if it was supposed to exist and there is no market information object.
+    if( aMustExist ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << aItemName << " was not found in the market's information store." << endl;
     }
     return 0;
-}
-
-/*! \brief Store info from last period into the market's stored variables.
-*
-* This function takes a demand, supply and price from the last period and sets those values
-* to the markets respective stored variables.
-*
-* \todo Is this neccessary??
-* \param lastDemand Demand from the last period.
-* \param lastSupply Supply from the last period.
-* \param lastPrice Price from the last period.
-*/
-void Market::storeInfoFromLast( const double lastDemand, const double lastSupply, const double lastPrice ) {
-   storedDemand = lastDemand;
-   storedSupply = lastSupply;
-   storedPrice = lastPrice;
 }
 
 /*! \brief Store the current demand, supply, and price.
@@ -589,7 +582,8 @@ bool Market::shouldSolve() const {
 * \return Whether or not to solve the market for Newton-Rhaphson.
 */
 bool Market::shouldSolveNR() const {
-   return ( solveMarket && demand > util::getSmallNumber() && supply > util::getSmallNumber() );
+    // Is this correct?
+    return ( solveMarket && price > util::getSmallNumber() && demand > util::getSmallNumber() && supply > util::getSmallNumber() );
 }
 
 /*! \brief Return whether a market is solved according to market type specific conditions.
@@ -599,6 +593,3 @@ bool Market::shouldSolveNR() const {
 bool Market::meetsSpecialSolutionCriteria() const {
     return false;
 }
-
-
-

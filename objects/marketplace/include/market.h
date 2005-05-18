@@ -6,7 +6,7 @@
 
 /*! 
 * \file market.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Market class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -21,7 +21,7 @@ class MarketInfo;
 class Tabs;
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a single market object.
 * \author Sonny Kim
 */
@@ -75,8 +75,7 @@ public:
     std::string getRegionName() const;
     std::string getGoodName() const;
     void setMarketInfo( const std::string& itemName, const double itemValue );
-    double getMarketInfo( const std::string& itemName ) const;
-    void storeInfoFromLast( const double lastDemand, const double lastSupply, const double lastPrice );
+    double getMarketInfo( const std::string& aItemName, bool aMustExist = true ) const;
     void storeInfo();
     void restoreInfo();
 

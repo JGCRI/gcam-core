@@ -6,7 +6,7 @@
 
 /*! 
 * \file normal_market.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The NormalMarket class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -16,7 +16,7 @@
 #include "marketplace/include/market.h"
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines the normal supply-demand type market.
 * \author Sonny Kim
 */

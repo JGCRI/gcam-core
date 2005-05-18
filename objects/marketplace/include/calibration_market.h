@@ -6,7 +6,7 @@
 
 /*! 
 * \file calibration_market.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The CalibrationMarket class header file.
 * \author Josh Lurz
 * \date $Date$
@@ -16,7 +16,7 @@
 #include "marketplace/include/market.h"
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a CalibrationMarket object for use in solving calibration markets.
 * \author Josh Lurz
 */

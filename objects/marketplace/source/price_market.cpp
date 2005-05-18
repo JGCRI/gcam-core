@@ -1,6 +1,6 @@
 /*! 
 * \file price_market.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief PriceMarket class source file.
 * \author Steve Smith
 * \date $Date$

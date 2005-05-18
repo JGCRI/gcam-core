@@ -6,7 +6,7 @@
 
 /*! 
 * \file ghg_market.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The GHGMarket class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -16,7 +16,7 @@
 #include "marketplace/include/market.h"
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a GHGMarket object which is used for GHG constraint markets. 
 * \author Sonny Kim
 */

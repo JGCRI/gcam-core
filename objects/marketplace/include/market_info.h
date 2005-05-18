@@ -6,7 +6,7 @@
 
 /*! 
 * \file market_info.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The MarketInfo class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -17,7 +17,7 @@
 class Tabs;
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This class contains a set of information related to a particular market.
 * \author Josh Lurz
 */
@@ -26,12 +26,13 @@ class MarketInfo
 {
 public:
     MarketInfo();
-    ~MarketInfo();
     void toDebugXML( std::ostream& out, Tabs* tabs ) const;
-    void addItem( const std::string& itemName, const double itemValue );
-    double getItemValue( const std::string& itemName ) const;
+    void addItem( const std::string& aName, const double aValue );
+    double getItemValue( const std::string& aName, bool aMustExist ) const;
 private:
-    std::map<std::string,double> infoMap; //!< Internal storage mapping item names to item values.
+    std::map<std::string, double> mInfoMap; //!< Internal storage mapping item names to item values.
+    typedef std::map<std::string, double>::iterator InfoIterator;
+    typedef std::map<std::string, double>::const_iterator CInfoIterator;
 };
 
 #endif // _MARKET_INFO_H_

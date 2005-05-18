@@ -1,6 +1,6 @@
 /*! 
 * \file demand_market.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief DemandMarket class source file.
 * \author Steve Smith
 * \date $Date$

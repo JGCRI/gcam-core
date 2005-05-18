@@ -6,7 +6,7 @@
 
 /*! 
 * \file price_market.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The PriceMarket class header file.
 * \author Steve Smith
 * \date $Date$
@@ -17,7 +17,7 @@
 class Tabs;
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A derived class which defines a single PriceMarket object for use in solving simultinaity markets.
 * \author Steve Smith
 */

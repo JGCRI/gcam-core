@@ -6,7 +6,7 @@
 
 /*! 
 * \file demand_market.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The DemandMarket class header file.
 * \author Steve Smith
 * \date $Date$
@@ -16,7 +16,7 @@
 #include "marketplace/include/market.h"
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a DemandMarket object for use in solving simultinaity markets.
 * \author Steve Smith
 */
