@@ -6,7 +6,7 @@
 
 /*! 
 * \file ghg_output.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The GhgOutput class header file.
 * \author Steve Smith
 * \date $Date$
@@ -15,9 +15,8 @@
 
 #include <string>
 #include "emissions/include/ghg.h"
-
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A type of GHG which drives emissions from the output value. 
 * \author Steve Smith
 */

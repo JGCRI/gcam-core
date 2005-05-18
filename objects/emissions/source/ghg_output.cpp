@@ -1,6 +1,6 @@
 /*! 
 * \file ghg_output.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief Ghg class source file.
 * \author Steve Smith
 * \date $Date$
@@ -8,7 +8,6 @@
 */
 
 #include "util/base/include/definitions.h"
-#include "emissions/include/ghg.h"
 #include "emissions/include/ghg_output.h"
 
 using namespace std;

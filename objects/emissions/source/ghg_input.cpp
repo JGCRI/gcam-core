@@ -1,6 +1,6 @@
 /*! 
 * \file ghg_input.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief GhgInput class source file.
 * \author Steve Smith
 * \date $Date$

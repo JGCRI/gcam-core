@@ -1,6 +1,6 @@
 /*! 
 * \file indirect_emiss_coef.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This file contains methods for the indirect Greenhouse gas emissions coefficients(EMcoef_ind) class.
 * \author Sonny Kim
 * \date $Date$

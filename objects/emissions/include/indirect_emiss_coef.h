@@ -6,7 +6,7 @@
 
 /*! 
 * \file indirect_emiss_coef.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Emcoef_ind class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -17,7 +17,7 @@
 #include <string>
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This class contains the indirect Greenhouse gas emissions coefficients.
 *
 * Each object contains a map object of emissions

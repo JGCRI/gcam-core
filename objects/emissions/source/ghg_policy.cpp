@@ -1,6 +1,6 @@
 /*! 
 * \file ghg_policy.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief GHGPolicy class source file.
 * \author Sonny Kim
 * \date $Date$
