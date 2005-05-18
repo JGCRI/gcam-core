@@ -31,8 +31,11 @@ using namespace std;
 const string LogNewtonRaphsonSaveDeriv::SOLVER_NAME = "LogNewtonRaphsonSaveDeriv";
 
 //! Default Constructor. Need to call constructor of class next up in heigharcy. Constructs the base class. 
-LogNewtonRaphsonSaveDeriv::LogNewtonRaphsonSaveDeriv( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):LogNewtonRaphson( marketplaceIn, worldIn, calcCounterIn ) {
-    savedMatrixSize = 0;
+LogNewtonRaphsonSaveDeriv::LogNewtonRaphsonSaveDeriv( Marketplace* aMarketplaceIn, World* aWorld,
+                                                      CalcCounter* aCalcCounter, double aDeltaPrice ):
+LogNewtonRaphson( aMarketplaceIn, aWorld, aCalcCounter, aDeltaPrice ),
+savedMatrixSize( 0 )
+{
 }
 
 //! Default Destructor. Currently does nothing.
@@ -55,14 +58,16 @@ const string& LogNewtonRaphsonSaveDeriv::getName() const {
 }
 
 //! Calculate derivatives
-SolverComponent::ReturnCode LogNewtonRaphsonSaveDeriv::calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period ) {
-
+SolverComponent::ReturnCode LogNewtonRaphsonSaveDeriv::calculateDerivatives( SolverInfoSet& solverSet,
+                                                                             Matrix& JFSM, Matrix& JFDM,
+                                                                             Matrix& JF, int period )
+{
     // Only calculated once.
     if ( !derivativesCalculated ) {
         derivativesCalculated = true;
 
         // Calculate derivatives.
-        SolverLibrary::derivatives( marketplace, world, solverSet, period ); 
+        SolverLibrary::derivatives( marketplace, world, solverSet, mDeltaPrice, period ); 
 
         ILogger& solverLog = ILogger::getLogger( "solver_log" );
         solverLog.setLevel( ILogger::NOTICE );

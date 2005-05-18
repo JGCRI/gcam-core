@@ -51,12 +51,15 @@ const string& BisectPolicy::getNameStatic() {
 * \param solverSet Object which contains a set of objects with information on each market.
 * \param period Model periodiod
 */
-SolverComponent::ReturnCode BisectPolicy::solve( const double solutionTolerance, const double edSolutionFloor, const int maxIterations, SolverInfoSet& solverSet, const int period ){
+SolverComponent::ReturnCode BisectPolicy::solve( const double solutionTolerance, const double edSolutionFloor,
+                                                 const unsigned int maxIterations, SolverInfoSet& solverSet,
+                                                 const int period )
+{
     startMethod();
 
     // Constants.
     const static unsigned int MAX_ITER_NO_IMPROVEMENT = 8; // Maximum number of iterations without improvement.
-
+    const static double BRACKET_INTERVAL = 0.1;
     // Setup logging.
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
@@ -70,31 +73,32 @@ SolverComponent::ReturnCode BisectPolicy::solve( const double solutionTolerance,
     solverSet.updateSolvable( false );
 
     // Select the worst market.
-    SolverInfo& worstSol = solverSet.getPolicyOrWorstSolverInfo( edSolutionFloor );
-    worstSol.setBisectedFlag();
+    SolverInfo* worstSol = solverSet.getPolicyOrWorstSolverInfo( solutionTolerance, edSolutionFloor );
+    worstSol->setBisectedFlag();
     unsigned int numIterations = 0;
-    if( !worstSol.isSolved( solutionTolerance, edSolutionFloor ) ){
-        SolverLibrary::bracketOne( marketplace, world, solverSet, worstSol, period );
-        if( !worstSol.isSolved( solutionTolerance, edSolutionFloor ) ){
+    if( !worstSol->isSolved( solutionTolerance, edSolutionFloor ) ){
+        SolverLibrary::bracketOne( marketplace, world, BRACKET_INTERVAL, solutionTolerance,
+                                   edSolutionFloor, solverSet, worstSol, period );
+        if( !worstSol->isSolved( solutionTolerance, edSolutionFloor ) ){
             do {
-                solverSet.printMarketInfo( "BisectPolicy" + worstSol.getName(), calcCounter->getPeriodCount(), singleLog );
+                solverSet.printMarketInfo( "BisectPolicy" + worstSol->getName(), calcCounter->getPeriodCount(), singleLog );
 
                 // Move the left bracket in if Supply > Demand
-                if ( worstSol.getED() < 0 ) {
-                    worstSol.moveLeftBracketToX();
+                if ( worstSol->getED() < 0 ) {
+                    worstSol->moveLeftBracketToX();
                 }
                 // Move the right bracket in if Demand >= Supply
                 else {
-                    worstSol.moveRightBracketToX();
+                    worstSol->moveRightBracketToX();
                 }
                 // Set new trial value to center
-                worstSol.setPriceToCenter();
+                worstSol->setPriceToCenter();
 
                 // price=0 and supply>demand. only true for constraint case
                 // other markets cannot have supply>demand as price->0
                 // Another condition that should be moved. 
-                if ( fabs( worstSol.getPrice() ) < util::getSmallNumber() && worstSol.getED() < 0 ) { 
-                    worstSol.setPrice( 0 ); 
+                if ( fabs( worstSol->getPrice() ) < util::getSmallNumber() && worstSol->getED() < 0 ) { 
+                    worstSol->setPrice( 0 ); 
                 } 
 
                 solverSet.updateToMarkets();
@@ -103,15 +107,17 @@ SolverComponent::ReturnCode BisectPolicy::solve( const double solutionTolerance,
                 world->calc( period );
                 solverSet.updateFromMarkets();
                 solverSet.updateSolvable( false );
-                addIteration( worstSol.getName(), worstSol.getRelativeED( edSolutionFloor ) );
-                worstMarketLog << "BisectPolicy-MaxRelED: "  << worstSol << endl;
+                addIteration( worstSol->getName(), worstSol->getRelativeED( edSolutionFloor ) );
+                worstMarketLog << "BisectPolicy-MaxRelED: "  << *worstSol << endl;
             } // end do loop		
-            while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) && ++numIterations < static_cast<unsigned int>( maxIterations ) && !worstSol.isWithinTolerance( solutionTolerance, edSolutionFloor ) );
+            while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) &&
+                ( ++numIterations < maxIterations ) &&
+                !worstSol->isWithinTolerance( solutionTolerance, edSolutionFloor ) );
         }
     }
     // Report results.
     solverLog.setLevel( ILogger::NOTICE );
-    if( numIterations >= static_cast<unsigned int>( maxIterations ) ){
+    if( numIterations >= maxIterations ){
         solverLog << "Exiting BisectPolicy due to reaching max iterations." << endl;
     }
     else if( !isImproving( MAX_ITER_NO_IMPROVEMENT ) ){

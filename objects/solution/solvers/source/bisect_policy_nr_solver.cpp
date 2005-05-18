@@ -76,7 +76,7 @@ bool BisectPolicyNRSolver::solve( const int period ) {
     static const int MAX_CALCS = 5000;
     static const int MAX_CALCS_BISECT_ONE = 35;
     static const int MAX_CALCS_NR = 1000; // Should be based on number of markets.
-    static unsigned int MAX_BISECT_ONE_MARKETS = 100;
+    static unsigned int MAX_BISECT_ONE_MARKETS = 2;
     // Create and initialize the SolutionInfoSet. 
     // This will fetch the markets to solve and update the prices, supplies and demands.
     SolverInfoSet sol( marketplace );

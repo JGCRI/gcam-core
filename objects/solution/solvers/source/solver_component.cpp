@@ -55,16 +55,20 @@ SolverComponent::~SolverComponent(){
 * \param calcCounter A pointer to the calcCounter object used to track calls to World.calc()
 * \return An auto_ptr to the SolverComponent named solverName, null if it does not exist.
 */
-auto_ptr<SolverComponent> SolverComponent::getSolverComponent( const string& solverName, Marketplace* marketplace, World* world, CalcCounter* calcCounter ){
+auto_ptr<SolverComponent> SolverComponent::getSolverComponent( const string& solverName, Marketplace* marketplace,
+                                                               World* world, CalcCounter* calcCounter )
+{
     // Check the name against possible components. 
     if( solverName == LogNewtonRaphson::getNameStatic() ){
-        return auto_ptr<SolverComponent>( new LogNewtonRaphson( marketplace, world, calcCounter ) );
+        double deltaPrice = Configuration::getInstance()->getDouble( "DeltaPrice", 1e-5 );
+        return auto_ptr<SolverComponent>( new LogNewtonRaphson( marketplace, world, calcCounter, deltaPrice ) );
     }
     else if( solverName == BisectAll::getNameStatic() ){
         return auto_ptr<SolverComponent>( new BisectAll( marketplace, world, calcCounter ) );
     }
     else if( solverName == LogNewtonRaphsonSaveDeriv::getNameStatic() ){
-        return auto_ptr<SolverComponent>( new LogNewtonRaphsonSaveDeriv( marketplace, world, calcCounter ) );
+        double deltaPrice = Configuration::getInstance()->getDouble( "DeltaPrice", 1e-5 );
+        return auto_ptr<SolverComponent>( new LogNewtonRaphsonSaveDeriv( marketplace, world, calcCounter, 1e-5 ) );
     }
     else if( solverName == BisectOne::getNameStatic() ){
         return auto_ptr<SolverComponent>( new BisectOne( marketplace, world, calcCounter ) );

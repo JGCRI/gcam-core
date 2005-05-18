@@ -30,12 +30,11 @@ using namespace std;
 const string LogNewtonRaphson::SOLVER_NAME = "LogNewtonRaphson";
 
 //! Default Constructor. Constructs the base class. 
-LogNewtonRaphson::LogNewtonRaphson( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn )
-:SolverComponent( marketplaceIn, worldIn, calcCounterIn ) {
-}
-
-//! Default Destructor. Currently does nothing.
-LogNewtonRaphson::~LogNewtonRaphson(){
+LogNewtonRaphson::LogNewtonRaphson( Marketplace* aMarketplace,
+                                    World* aWorld, CalcCounter* aCalcCounter, double aDeltaPrice ):
+SolverComponent( aMarketplace, aWorld, aCalcCounter ),
+mDeltaPrice( aDeltaPrice )
+{
 }
 
 //! Init method.
@@ -66,14 +65,16 @@ const string& LogNewtonRaphson::getName() const {
 * \param solverSet An object containing the set of MarketInfo objects representing all markets.
 * \param period Model period
 */
-SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolerance, const double edSolutionFloor, const int maxIterations, SolverInfoSet& solverSet, const int period ){
+SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolerance, const double edSolutionFloor,
+                                                     const unsigned int maxIterations, SolverInfoSet& solverSet,
+                                                     const int period ){
     startMethod();
-    const int nrCalcsStart = calcCounter->getMethodCount( SOLVER_NAME );
+    const unsigned int nrCalcsStart = calcCounter->getMethodCount( SOLVER_NAME );
     ReturnCode code = SolverComponent::ORIGINAL_STATE;
       
     // Constants
     const static double EXIT_VALUE = 100; // Value of Relative Excess Demand above which NR will quit.
-    const static int MAX_ITER_NO_IMPROVEMENT = 7; // Maximum number of iterations without improvement.
+    const static unsigned int MAX_ITER_NO_IMPROVEMENT = 7; // Maximum number of iterations without improvement.
     // Update the SolutionVector for the correct markets to solve.
     solverSet.updateFromMarkets();
     SolverInfoSet::UpdateCode solvableChanged = solverSet.updateSolvable( true );
@@ -125,11 +126,11 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
         solverSet.updateFromMarkets();
 
         // Add to the iteration list.
-        SolverInfo& currWorstSol = solverSet.getWorstSolverInfo( edSolutionFloor );
-        addIteration( currWorstSol.getName(), currWorstSol.getRelativeED( edSolutionFloor ) );
+        SolverInfo* currWorstSol = solverSet.getWorstSolverInfo( edSolutionFloor );
+        addIteration( currWorstSol->getName(), currWorstSol->getRelativeED( edSolutionFloor ) );
 
         worstMarketLog.setLevel( ILogger::NOTICE );
-        worstMarketLog << "NR-maxRelED: " << currWorstSol << endl;
+        worstMarketLog << "NR-maxRelED: " << *currWorstSol << endl;
         solverLog.setLevel( ILogger::DEBUG );
         solverLog << "Solution after " << calcCounter->getMethodCount( SOLVER_NAME ) - nrCalcsStart << " iterations in NR_RON: " << endl;
         solverLog << solverSet << endl;
@@ -138,7 +139,9 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
 
         solverSet.printMarketInfo( "NR routine ", calcCounter->getPeriodCount(), singleLog );
     } // end do loop	
-    while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) && calcCounter->getMethodCount( SOLVER_NAME ) - nrCalcsStart < maxIterations && solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) >= solutionTolerance );
+    while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) && 
+        calcCounter->getMethodCount( SOLVER_NAME ) - nrCalcsStart < maxIterations && 
+        solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) >= solutionTolerance );
 
     // Update the return code. 
     code = ( solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) < solutionTolerance ? SUCCESS : FAILURE_ITER_MAX_REACHED );
@@ -169,7 +172,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
 //! Calculate derivatives
 SolverComponent::ReturnCode LogNewtonRaphson::calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period ) {
     // Calculate derivatives.
-    SolverLibrary::derivatives( marketplace, world, solverSet, period ); 
+    SolverLibrary::derivatives( marketplace, world, solverSet, mDeltaPrice, period ); 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
     solverLog << "Derivatives calculated" << endl;

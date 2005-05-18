@@ -68,12 +68,15 @@ const string& BisectAll::getName() const {
 * \param solverSet Object which contains a set of objects with information on each market.
 * \param period Model periodiod
 */
-SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, const double edSolutionFloor, const int maxIterations, SolverInfoSet& solverSet, const int period ){
+SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, const double edSolutionFloor,
+                                              const unsigned int maxIterations, SolverInfoSet& solverSet,
+                                              const int period )
+{
     startMethod();
 
-    int numIterations = 0; // number of iterations
+    unsigned int numIterations = 0; // number of iterations
     ReturnCode code = ORIGINAL_STATE; // code that reports success 1 or failure 0
-    const static int MAX_ITER_NO_IMPROVEMENT = 10; // Maximum number of iterations without improvement.
+    const static unsigned int MAX_ITER_NO_IMPROVEMENT = 10; // Maximum number of iterations without improvement.
     
     // Setup Logging.
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
@@ -86,7 +89,7 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
     solverSet.updateSolvable( false );
     
     // Select the worst market.
-    SolverInfo& worstSol = solverSet.getWorstSolverInfo( edSolutionFloor );
+    SolverInfo* worstSol = solverSet.getWorstSolverInfo( edSolutionFloor );
     // solve all markets
     ILogger& singleLog = ILogger::getLogger( "single_market_log" );
     singleLog.setLevel( ILogger::DEBUG );
@@ -130,11 +133,13 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
         // is needed more often and can be done simply.
         solverSet.adjustBrackets();
         
-        const SolverInfo maxSol = solverSet.getWorstSolverInfo( edSolutionFloor );
-        addIteration( maxSol.getName(), maxSol.getRelativeED( edSolutionFloor ) );
-        worstMarketLog << "BisectAll-maxRelED: " << maxSol << endl;
+        const SolverInfo* maxSol = solverSet.getWorstSolverInfo( edSolutionFloor );
+        addIteration( maxSol->getName(), maxSol->getRelativeED( edSolutionFloor ) );
+        worstMarketLog << "BisectAll-maxRelED: " << *maxSol << endl;
     } // end do loop		
-    while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) && ++numIterations < maxIterations && !solverSet.isAllSolved( solutionTolerance, edSolutionFloor ) );
+    while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) 
+            && ++numIterations < maxIterations 
+            && !solverSet.isAllSolved( solutionTolerance, edSolutionFloor ) );
 
     // Set the return code. 
     code = ( solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) < solutionTolerance ? SUCCESS : FAILURE_ITER_MAX_REACHED ); // report success, or failure

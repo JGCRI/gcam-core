@@ -67,7 +67,8 @@ void BisectionNRSolver::init() {
 bool BisectionNRSolver::solve( const int period ) {
     // Constants. Make these configuration variables.
     // relative tolerance for solution criteria
-    static const double SOLUTION_TOLERANCE = Configuration::getInstance()->getDouble( "SolutionTolerance", 0.001 );
+    const Configuration* conf = Configuration::getInstance();
+    static const double SOLUTION_TOLERANCE = conf->getDouble( "SolutionTolerance", 0.001 );
     
     // relative tolerance for calibrations
     const double CALIBRATION_ACCURACY = SOLUTION_TOLERANCE * 4 ;
@@ -75,9 +76,11 @@ bool BisectionNRSolver::solve( const int period ) {
     // The calibration numbers are generally not good to this accuracy in any event, so having a slightly higher CALIBRATION_ACCURACY should be ok.
     
     // minimum value below which solution is assumed to be found.
-    static const double ED_SOLUTION_FLOOR = Configuration::getInstance()->getDouble( "SolutionFloor", 0.01 );
+    static const double ED_SOLUTION_FLOOR = conf->getDouble( "SolutionFloor", 0.01 );
     
-    static const double BRACKET_INTERVAL = 0.5;
+    // Read in the bracket interval until MiniCAM and SGM can consistently solve
+    // with the same one.
+    static const double BRACKET_INTERVAL = conf->getDouble( "bracket-interval", 0.5 );
     static const double MAX_REL_ED_FOR_NR = 10000;
     static const double MIN_ED_FOR_BISECT_ALL = 1;
     static const int MAX_CALCS = 1000;
@@ -140,7 +143,8 @@ bool BisectionNRSolver::solve( const int period ) {
         // Check if the solution is bracketed.
         if ( !sol.isAllBracketed() ) {
             singleLog << "Begin Bracketing" << mCalcCounter->getPeriodCount() << endl;
-            SolverLibrary::bracket( marketplace, world, BRACKET_INTERVAL, sol, period );
+            SolverLibrary::bracketAll( marketplace, world, BRACKET_INTERVAL, SOLUTION_TOLERANCE,
+                                       ED_SOLUTION_FLOOR, sol, period );
             singleLog << "End Bracketing" << mCalcCounter->getPeriodCount() << endl;
             // If its not all bracketed, jump to the top of the loop.
             if ( !sol.isAllBracketed() ){
@@ -169,9 +173,11 @@ bool BisectionNRSolver::solve( const int period ) {
             solverLog << sol << endl;
         }
         
-        // Try bisecting a single market.
+        // Try bisecting a single market. Added the loop for SGM, see if it can be removed.
         if( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
-            mBisectOne->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_BISECT_ONE, sol, period );
+            for( unsigned int k = 0; k < 3; ++k ){
+                mBisectOne->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_CALCS_BISECT_ONE, sol, period );
+            }
         }
         
         // If we are near the solution, call NR.
@@ -199,7 +205,8 @@ bool BisectionNRSolver::solve( const int period ) {
     if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
         // Make sure calibration was achieved
         unsigned int calCount = 0;
-        while( ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false ) || !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ) && calCount < CAL_REPEAT_LIMIT ){
+        while( ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false ) ||
+            !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ) && calCount < CAL_REPEAT_LIMIT ){
             solverLog.setLevel( ILogger::NOTICE );
             solverLog << "Repeating to calibrate. N = " << mCalcCounter->getPeriodCount() <<  endl;
             world->calc( period );
