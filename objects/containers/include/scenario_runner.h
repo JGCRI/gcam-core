@@ -7,7 +7,7 @@
 /*! 
 * \file scenario_runner.h
 * \ingroup Objects
-* \brief The ScenarioRunner class header file.
+* \brief The ScenarioRunner abstract base class header file.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$
@@ -17,11 +17,13 @@
 class Timer;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which is responsible for running a scenario or set of scenarios.
-* \details This is an abstract base class from which all scenario runner's are derived.
-* A ScenarioRunner is defined as a method of running a scenario several times, varying a variable
-* or set of variables. A scenario runner must inherit the run function. 
+* \details This is an abstract base class from which specific types of scenario_runner must be derived.
+* A ScenarioRunner is an object that defines a method of running a scenario several times, varying a variable
+* or set of variables.  
+* Each specific derived scenario_runner must define its own run function (runScenario) since it is not 
+* defined in this ScenarioRunner abstract base class.
 * \author Josh Lurz
 */
 class ScenarioRunner {

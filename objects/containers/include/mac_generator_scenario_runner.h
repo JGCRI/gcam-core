@@ -23,7 +23,8 @@ class Curve;
 
 /*! 
 * \ingroup Objects
-* \brief A ScenarioRunner that runs a scenario multiple times in order to generate a MAC curve for each time period.
+* \brief A derived ScenarioRunner class that runs a scenario multiple times in order to generate a 
+*  marginal abatement cost (MAC) curve for each time period.
 * \details This class runs a scenario multiple times while varying a fixed carbon price,
 * to determine the MAC curve and total cost for the scenario.
 * \author Josh Lurz
