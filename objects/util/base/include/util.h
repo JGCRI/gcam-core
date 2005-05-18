@@ -6,7 +6,7 @@
 
 /*! 
 * \file util.h  
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A set of commonly used functions.
 * 
 * This is a set of functions which are frequently needed within the program.
@@ -17,7 +17,6 @@
 
 #include "util/base/include/definitions.h"
 #include <limits>
-#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -211,8 +210,9 @@ namespace util {
       const double LARGE_NUM = 1e+6;
       return LARGE_NUM;
    }
-  /* \brief Function which returns a vector of keys from a map.
-   * \details This function takes a map as an argument and returns a vector 
+
+   /* \brief Function which returns a vector of keys from a map.
+   * \detailed This function takes a map as an argument and returns a vector 
    * of all the keys of the map. It uses the same order as the map iterator returns.
    * \param aMap A map to return all keys for.
    * \return A vector of all keys from the map in the same order as the map iterator returns.
@@ -242,21 +242,20 @@ namespace util {
         }
         return values;
        }
-    
     //! Convert a value to a string using the built in stringstream.
-    template<class T>
-        std::string toString( const T& value ){
-        std::stringstream converter;
+    template<class T> std::string toString( const T& value ){
+        static std::stringstream converter;
         converter << value;
         std::string output;
         converter >> output;
+        converter.clear();
         return output;
-        }
+    }
     /*! \brief Function which creates an XML compliant date time string.
     *
-    * This function takes as an argument a time_t object and returns a string containing the date and time in the following format:
-    * yyyy-mm-dd-Thh:mm-GMTOFFSET
-    * ie: 2003-01-11T09:30:47-05:00
+    * This function takes as an argument a time_t object and returns a string
+    * containing the date and time in the following format:
+    * yyyy-mm-dd-Thh:mm-GMTOFFSET ie: 2003-01-11T09:30:47-05:00
     * \param time time_t to convert to XML string form.
     * \return string The time converted to XML date string format.
     * \bug GMT offset does not work properly.
