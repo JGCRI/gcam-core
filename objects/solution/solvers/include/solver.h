@@ -6,9 +6,8 @@
 
 /*! 
 * \file solver.h
-* \ingroup objects
+* \ingroup Objects
 * \brief This is the header file for the solver class.
-*
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$
@@ -20,7 +19,7 @@
 #include "solution/util/include/calc_counter.h" 
 class Marketplace;
 class World;
-/*! 
+/*!
 * \ingroup objects
 * \brief Solver is an abstract class which defines a very basic interface to an object which solves the 
 * marketplace. A Solver object must define an init() method for setup, and a solve market which attempts
@@ -34,7 +33,8 @@ public:
     virtual ~Solver(){};
     virtual void init() = 0;
     virtual bool solve( const int period ) = 0;
-    static std::auto_ptr<Solver> getSolver( const std::string& aSolverName, Marketplace* aMarketplace, World* aWorld );
+    static std::auto_ptr<Solver> getSolver( const std::string& aSolverName, Marketplace* aMarketplace,
+                                            World* aWorld );
 protected:
     Marketplace* marketplace; //<! The marketplace to solve. 
     World* world; //!< The world to call calc on.

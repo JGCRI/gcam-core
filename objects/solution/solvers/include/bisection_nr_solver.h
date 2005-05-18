@@ -13,7 +13,6 @@
 * \file bisection_nr_solver.h
 * \ingroup Objects
 * \brief The BisectionNRSolver class header file. 
-*
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$

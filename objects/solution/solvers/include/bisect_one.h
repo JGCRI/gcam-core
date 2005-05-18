@@ -31,7 +31,8 @@ public:
     BisectOne( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
     void init();
     static const std::string& getNameStatic();
-    ReturnCode solve( const double solutionTolerance, const double edSolutionFloor, const int maxIterations, SolverInfoSet& solverSet, const int period );
+    ReturnCode solve( const double solutionTolerance, const double edSolutionFloor,
+                      const unsigned int maxIterations, SolverInfoSet& solverSet, const int period );
 
 protected:
     const std::string& getName() const;
