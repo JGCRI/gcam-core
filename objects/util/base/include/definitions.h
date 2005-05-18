@@ -6,20 +6,23 @@
 
 /*! 
 * \file definitions.h	
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A set of standard definitions which should be included in all files.
-* 
-* This is a set of definitions, used mainly to work around platform
-* and compiler specific bugs. The intention is to hide many of the hacks
-* used to avoid compiler bugs.
+* \details This is a set of definitions, used mainly to work around platform
+* and compiler specific bugs. The intention is to hide many of the hacks used to
+* avoid compiler bugs.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$
 */
 
-// Configuration constants. To turn off Fortran code or databases uncomment these lines.
-#define __HAVE_FORTRAN__ 1 //!< A flag which tells whether to attempt linking of fortran portions.
-#define __HAVE_DB__ 1 //!< A flag which turns on or off compilation of database code. 
+// Configuration constants.
+
+//! A flag which tells whether to attempt linking of fortran portions.
+#define __HAVE_FORTRAN__ 1
+
+//! A flag which turns on or off compilation of database code. 
+#define __HAVE_DB__ 1
 // End of configuration constants.
 
 // In VC 6.0 turn off warning 4786. 
