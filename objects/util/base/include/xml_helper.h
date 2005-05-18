@@ -85,8 +85,9 @@ public:
    static T getAttr( const xercesc::DOMNode* node, const std::string attrName );
    static std::string getAttrString( const xercesc::DOMNode* node, const std::string attrName );
    static std::string safeTranscode( const XMLCh* toTranscode );
-   static void insertValueIntoVector( const xercesc::DOMNode* node, std::vector<T>& insertToVector, const Modeltime* modeltime, const bool isPopulationData = false );
-   static int getNodePeriod ( const xercesc::DOMNode* node, const Modeltime* modeltime, const bool isPopulationData = false );
+   static void insertValueIntoVector( const xercesc::DOMNode* node, std::vector<T>& insertToVector,
+                                      const Modeltime* modeltime );
+   static int getNodePeriod ( const xercesc::DOMNode* node, const Modeltime* modeltime );
    static bool parseXML( const std::string& aXMLFile, IParsable* aModelElement );
    static const std::string& text();
    static const std::string& name();
@@ -256,7 +257,7 @@ std::string XMLHelper<T>::getAttrString( const xercesc::DOMNode* node, const std
 */
 
 template<class T>
-void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vector<T>& insertToVector, const Modeltime* modeltime, const bool isPopulationData ) {
+void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vector<T>& insertToVector, const Modeltime* modeltime ) {
    
    /*! \pre Make sure we were passed a valid node reference. */
    assert( node );
@@ -265,25 +266,15 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
    // boolean to fill out the readin value to all the periods
    const bool fillout = XMLHelper<bool>::getAttr( node, "fillout" );
    
-   // Check to make sure the year attribute returned non-zero. 
+   // Check to make sure the year attribute returned non-zero.
+   // This should probably return failure, not abort.
    assert( year != 0 );
    
-   int period = 0;
    const int maxperiod = modeltime->getmaxper();
-   
-   if( isPopulationData == false ) {   
-      period = modeltime->getyr_to_per( year );
-      
-      // Check that the period returned correctly.
-      assert( ( period >= 0 ) && ( period <= modeltime->getmaxper() ) );
-   }
-   else {
-      period = modeltime->convertYearToPopPeriod( year );
-      
-      // Check that the period returned correctly.
-      assert( ( period >= 0 ) && ( period <= modeltime->getmaxpopdata() ) );
-      
-   }
+   int period = modeltime->getyr_to_per( year );
+
+   // Check that the period returned correctly.
+   assert( ( period >= 0 ) && ( period < modeltime->getmaxper() ) );
    
    // Check that the period is less than the size of the vector.
    assert( period < static_cast<int>( insertToVector.size() ) );
@@ -297,7 +288,6 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
          insertToVector[ i ] =  insertToVector[ period ];
       }
    }
-   
 }
 
 /*! 
@@ -310,32 +300,20 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
 */
 
 template<class T>
-int XMLHelper<T>::getNodePeriod ( const xercesc::DOMNode* node, const Modeltime* modeltime, const bool isPopulationData ) {
-   
-   /*! \pre Make sure we were passed a valid node reference. */
-   assert( node );
-   
-   const int year = XMLHelper<int>::getAttr( node, "year" );
-   
-   // Check to make sure the year attribute returned non-zero.
-   // This should be a run time error, not an assert.
-   assert( year != 0 );
-   
-   int period = 0;
-   if( isPopulationData == false ) {   
-      period = modeltime->getyr_to_per( year );
-      
-      // Check that the period returned correctly.
-      assert( ( period >= 0 ) && ( period <= modeltime->getmaxper() ) );
-   }
-   else {
-      period = modeltime->convertYearToPopPeriod( year );
-      
-      // Check that the period returned correctly.
-      assert( ( period >= 0 ) && ( period <= modeltime->getmaxpopdata() ) );
-      
-   }
-   return period;
+int XMLHelper<T>::getNodePeriod ( const xercesc::DOMNode* node, const Modeltime* modeltime ) {
+    /*! \pre Make sure we were passed a valid node reference. */
+    assert( node );
+
+    const int year = XMLHelper<int>::getAttr( node, "year" );
+
+    // Check to make sure the year attribute returned non-zero. 
+    assert( year != 0 );
+
+    int period = modeltime->getyr_to_per( year );
+
+    // Check that the period returned correctly.
+    assert( ( period >= 0 ) && ( period <= modeltime->getmaxper() ) );
+    return period;
 }
 
 /*! \brief Function which converts XMLCh* to a string without leaking memory.
@@ -508,14 +486,8 @@ template<class T>
 void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elementName, std::ostream& out, Tabs* tabs, const Modeltime* modeltime, const T defaultValue = T(), const bool isPopulationData = false ) {
 
     for( unsigned int i = 0; i < outputVector.size(); i++ ){
-        unsigned int year = 0;
         // Determine the correct year. 
-        if( isPopulationData ){
-            year = modeltime->getPopPeriodToYear( i );
-        }
-        else {
-            year = modeltime->getper_to_yr( i );
-        }
+        unsigned int year = modeltime->getper_to_yr( i );
 
         // Determine if we can use fillout.
         unsigned int canSkip = 0;
@@ -656,6 +628,20 @@ void XMLHelper<T>::cleanupParser(){
     xercesc::XMLPlatformUtils::Terminate();
 }
 
+/*! \brief Reset the name to number mapping for a vector to the current names and numbers of the map.
+* \details This function is used to reset and update a map to contain the correct name to index mapping for a
+* vector of items.
+* \note T must support the getName function.
+* \author Josh Lurz
+*/
+template<class T>
+static void resetMapIndices( const std::vector<T>& aItems, std::map<std::string, int>& aIndiceMap ){
+    aIndiceMap.clear();
+    for( int i = 0; i < static_cast<int>( aItems.size() ); ++i ){
+        aIndiceMap[ aItems[ i ]->getName() ] = i;
+    }  
+} 
+
 /*! \brief Function which parses a node containing model-children, such as a region, and determines what to do with it.
 * \details This function will look at the name and delete attributes of the node to determine if the model node which 
 * corresponds to the input should be added, modified, or deleted. After it determines this it will make this change 
@@ -667,15 +653,16 @@ void XMLHelper<T>::cleanupParser(){
 * \return A pointer to the model-node modified by the function, 0 if the node was deleted. 
 */
 template<class T, class U> 
-void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToVector, std::map<std::string,int>& corrMap, T* newNode ) {
+void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToVector, 
+                         std::map<std::string,int>& corrMap, T* newNode, const std::string& attrName = "name" )
+{
     assert( node );
     // Have an auto_ptr keep the new memory.
     std::auto_ptr<T> newNodePtr( newNode );
 
     // First determine if the node exists. 
-    const std::string objName = XMLHelper<std::string>::getAttrString( node, XMLHelper<void>::name() );
-    typedef std::map<std::string,int> NameMap;
-    NameMap::const_iterator iter = corrMap.find( objName );
+	const std::string objName = XMLHelper<std::string>::getAttrString( node, attrName );
+    std::map<std::string,int>::const_iterator iter = corrMap.find( objName );
    
     // Determine if we should be deleting a node. 
     bool shouldDelete = XMLHelper<bool>::getAttr( node, "delete" );
@@ -699,12 +686,9 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
             insertToVector.erase( delIter );
 
             // Now reset the map. There is probably a more efficient way to do this.
-            corrMap.clear();
-            for( int i = 0; i < static_cast<int>( insertToVector.size() ); i++ ){
-                corrMap[ insertToVector[ i ]->getName() ] = i;
-                }  
-            } 
-            // Otherwise modify node. 
+            resetMapIndices( insertToVector, corrMap );
+        }
+        // Otherwise modify node. 
         else {
            insertToVector[ iter->second ]->XMLParse( node );
         }
@@ -728,4 +712,3 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
 }
 
 #endif // _XML_HELPER_H_
-
