@@ -24,7 +24,8 @@
 
 class LogNewtonRaphsonSaveDeriv: public LogNewtonRaphson {
 public:
-    LogNewtonRaphsonSaveDeriv( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
+    LogNewtonRaphsonSaveDeriv( Marketplace* aMarketplaceIn, World* aWorld, CalcCounter* aCalcCounter,
+                               double aDeltaPrice );
     ~LogNewtonRaphsonSaveDeriv();
     static const std::string& getNameStatic();
     void init();
@@ -32,12 +33,14 @@ public:
 protected:
     const std::string& getName() const;
     static const std::string SOLVER_NAME;
-    virtual ReturnCode calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period );
+
+    virtual ReturnCode calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF,
+                                             int period );
 
     bool derivativesCalculated;
-    std::auto_ptr <Matrix> JFSave;
-    std::auto_ptr <Matrix> JFDMSave;
-    std::auto_ptr <Matrix> JFSMSave;
+    std::auto_ptr<Matrix> JFSave;
+    std::auto_ptr<Matrix> JFDMSave;
+    std::auto_ptr<Matrix> JFSMSave;
     unsigned int savedMatrixSize;
 };
 

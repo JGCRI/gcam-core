@@ -30,16 +30,19 @@ class SolverInfoSet;
 
 class LogNewtonRaphson: public SolverComponent {
 public:
-    LogNewtonRaphson( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
-    virtual ~LogNewtonRaphson();
+    LogNewtonRaphson( Marketplace* aMarketplace, World* aWorld, CalcCounter* aCalcCount, double aDeltaPrice );
+    virtual ~LogNewtonRaphson(){};
     virtual void init();
     static const std::string& getNameStatic();
-    ReturnCode solve( const double solutionTolerance, const double edSolutionFloor, const int maxIterations, SolverInfoSet& solverSet, const int period );
+    ReturnCode solve( const double solutionTolerance, const double edSolutionFloor,
+                      const unsigned int maxIterations, SolverInfoSet& solverSet, const int period );
     
 protected:
     static const std::string SOLVER_NAME;
     virtual const std::string& getName() const;
     virtual ReturnCode calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period );
+
+    double mDeltaPrice; //!< The amount to adjust prices by when calculation derivatives.
 };
 
 #endif // _NEWTON_RAPHSON_H_
