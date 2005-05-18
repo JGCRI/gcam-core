@@ -6,7 +6,7 @@
 
 /*! 
 * \file supply_demand_curve.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The SupplyDemandCurve class header file.
 * \author Josh Lurz
 * \date $Date$
@@ -22,7 +22,7 @@ class World;
 class Marketplace; 
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a single supply and demand curve. 
 * \author Josh Lurz
 */
@@ -38,7 +38,7 @@ private:
    Market* market; //!< Pointer to the market which the curve is calculating for.
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a single supply and demand point. 
 * \author Josh Lurz
 */

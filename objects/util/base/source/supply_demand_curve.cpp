@@ -1,6 +1,6 @@
 /*! 
 * \file supply_demand_curve.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief SupplyDemandCurve class source file.
 * \author Josh Lurz
 * \date $Date$
