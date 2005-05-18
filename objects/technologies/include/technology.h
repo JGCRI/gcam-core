@@ -6,7 +6,7 @@
 
 /*! 
 * \file technology.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The technology class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -25,7 +25,7 @@ class GDP;
 class MarketInfo;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This technology class is based on the MiniCAM description of technology.
 *
 * The technology class is where all fuels are either consumed or transformed. The default technology class is based on a MiniCAM-style logit representation. This class has options for capacity limits, calibration, and fixed output technologies (for supply sectors) -- although these capabilities depend on interaction with the sub-sector and sector classes. 
@@ -112,8 +112,10 @@ public:
     void scalefixedOutput(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
     virtual void production(const std::string& regionName,const std::string& prodName,double dmd, const GDP* gdp, const int per);
-    virtual void calcEmission( const std::string prodname); // calculates GHG emissions from technology
     virtual void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
+    virtual void calcEmission( const std::string& aGoodName, const int aPeriod ); // calculates GHG emissions from technology
+
+    // ****** return names and values ******
     std::string getName() const; // return technology name
     std::string getFuelName() const; // return fuel name
     double getEff() const; // return fuel efficiency
@@ -157,4 +159,3 @@ public:
     void tabulateFixedDemands( const std::string regionName, const int period );
 };
 #endif // _TECHNOLOGY_H_
-
