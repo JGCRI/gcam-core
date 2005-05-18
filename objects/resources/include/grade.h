@@ -6,7 +6,7 @@
 
 /*! 
 * \file grade.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Grade class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -17,7 +17,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief Technologies representing a Grade for each resource.
 *
 * grade is an object that contains technologies that characterize each grade.
