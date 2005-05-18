@@ -6,7 +6,7 @@
 
 /*! 
 * \file sector.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Sector class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -17,6 +17,12 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <algorithm>
 #include <map>
+#include <memory>
+#include <iosfwd>
+
+#include "containers/include/national_account.h" // lets use an auto_ptr instead.
+#include "reporting/include/output_container.h"
+#include "reporting/include/sector_report.h"
 
 // Forward declarations
 class Subsector;
@@ -27,9 +33,14 @@ class ILogger;
 class GDP;
 class Tabs;
 class MarketInfo;
+class Demographic;
+class NationalAccount;
+class MoreSectorInfo;
+class SocialAccountingMatrix;
+class OutputContainer;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This class represents a single good that is produced, transformed, or consumed.
 
 * All production, consumption, and transformation (other than resource extraction) is contained within the Sector class. Each Sector represents a distinct good that can either be supplied or demanded. The demand Sector derived from this class contains a few classes where changes are necessary, although most of the basic mechanisms are unchanged.
@@ -39,21 +50,20 @@ class MarketInfo;
 
 class Sector
 {
-private:
-    void clear();
+    friend class SocialAccountingMatrix;
+    friend class DemandComponentsTable;
+    friend class SectorReport;
+    friend class SGMGenTable;
 protected:
     std::string name; //!< Sector name
     std::string regionName; //!< region name
-    std::string unit; //!< unit of final product from Sector
     std::string market; //!< regional market
-    int nosubsec; //!< number of subsectors in each Sector
-    double tax; //!< Sector tax or subsidy
-    bool debugChecking; //!< General toggle to turn on various checks
+    double mBaseOutput; //!< Read in base year output.
     std::auto_ptr<MarketInfo> mSectorInfo; //!< Pointer to the sector's information store.
     std::vector<Subsector*> subsec; //!< subsector objects
+    typedef std::vector<Subsector*>::iterator SubsectorIterator;
+    typedef std::vector<Subsector*>::const_iterator CSubsectorIterator;
     std::vector<double> sectorprice; //!< Sector price in $/service
-    std::vector<double> input; //!< Sector total energy consumption
-    std::vector<double> output; //!< total amount of final output from sector
     std::vector<double> fixedOutput; //!< total amount of fixed output from Sector
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
@@ -61,13 +71,10 @@ protected:
     std::vector<std::string> simulList; //!< List of all sectors with simuls to this one. 
     std::vector<std::string> dependsList; //!< List of all dependencies of this Sector. 
     bool anyFixedCapacity; //!< flag set to true if any fixed capacity is present in this Sector
-    double CO2EmFactor; //! CO2 emissions factor, calculated based on fuel input and share
+	std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
 
-    virtual void initElementalMembers();
     void normalizeShareWeights( const int period );
-    void sumOutput( const int period ); // private function, sum taken care of automatically
-    void sumInput( const int period ); // private function, sum taken care of automatically
-    double getFixedShare( const int sectorNum, const int period ) const; // utility function 
+    double getFixedShare( const unsigned int sectorNum, const int period ) const; // utility function 
     virtual void calcPrice( const int period );
     void production( const int period );
     void adjustForFixedSupply( const double marketDemand, const int period );
@@ -76,7 +83,6 @@ protected:
     void checkShareSum( const int period ) const;
     double getFixedSupply( const int period ) const; 
     bool isCapacityLimitsInSector( const int period ) const;
-    virtual void setMarket() = 0;
     virtual void printStyle( std::ostream& outStream ) const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
@@ -84,25 +90,25 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node ) = 0; // Remove me after fixing input files.
     virtual const std::string& getXMLName() const = 0;
+    virtual void setMarket() = 0;
 public:
     explicit Sector( std::string regionName );
     virtual ~Sector();
     std::string getName() const;
     virtual void XMLParse( const xercesc::DOMNode* node );
-    void completeInit();
+    virtual void completeInit();
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void initCalc( const int period, const MarketInfo* aRegionInfo );
+    void addGhgTax( const std::string& ghgname, const int period );
+    virtual void initCalc( const int period, const MarketInfo* aRegionInfo,
+                           NationalAccount& nationalAccount, Demographic* aDemographics );
     virtual void calibrateSector( const int period ); 
     virtual void checkSectorCalData( const int period );
-    void setFinalSupply( const int period );
     void adjustForFixedOutput( const double marketDemand, const int period );
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void supply( const int period, const GDP* gdp );
-    double updateAndGetOutput( const int period );
-    double getOutput( const int period ) const;
-    void calcFinalSupplyPrice( const GDP* gdp, const int period );
+    virtual double getOutput( const int period ) const = 0;
     double getFixedOutput( const int period, bool printValues = false ) const; 
     bool outputsAllFixed( const int period ) const;
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
@@ -113,9 +119,10 @@ public:
     double getPrice( const int period );
     double getCalOutput( const int period ) const;
     virtual void calcShare( const int period, const GDP* gdp );
+    void calcFinalSupplyPrice( const GDP* gdp, const int period );
     void emission( const int period );
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
-    double getInput( const int period );
+    double getInput( const int period ) const;
     virtual double getEnergyInput( const int period );
     virtual void csvOutputFile() const;
     virtual void dbOutput() const;
@@ -134,7 +141,12 @@ public:
     const std::vector<std::string>& getDependsList() const;
     void printSectorDependencies( ILogger& aLog ) const;
     void tabulateFixedDemands( const int period );
-
+    virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;	void updateMarketplace( const int period );
+    virtual void finalizePeriod( const int aPeriod );
+    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+	friend void OutputContainer::updateSector( const Sector* sector );
+	friend void SectorReport::updateSector( const Sector* sector );
+	virtual void updateOutputContainer( OutputContainer * outputContainer, const int period ) const;
     /*!
     * \brief Binary function used to order Sector* pointers by input dependency. 
     * \author Josh Lurz
@@ -153,6 +165,8 @@ public:
             return std::binary_search( rhsDependsList.begin(), rhsDependsList.end(), lhs->getName() );
         }
     };
+    private:
+        void clear();
 };
 
 #endif // _SECTOR_H_

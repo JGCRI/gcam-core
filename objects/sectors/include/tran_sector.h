@@ -32,8 +32,10 @@ public:
     TranSector( const std::string regionName );
     virtual ~TranSector();
     virtual void aggdemand( const GDP* gdp, const int period );
-	 static const std::string& getXMLNameStatic();
+    static const std::string& getXMLNameStatic();
     virtual void checkSectorCalData( const int period );
+    virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
+        const int aPeriod ){}; // Passing demographic here is not good.
 protected:
     std::vector<double> percentLicensed; //!< Percent of population licensed
     double baseScaler; //!< constant scaler to scale base output

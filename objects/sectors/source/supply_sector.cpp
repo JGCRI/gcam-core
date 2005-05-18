@@ -20,8 +20,10 @@
 #include "sectors/include/sector.h"
 #include "sectors/include/supply_sector.h"
 #include "containers/include/scenario.h"
-#include "marketplace/include/imarket_type.h"
 #include "marketplace/include/marketplace.h"
+#include "sectors/include/subsector.h"
+#include "util/logger/include/ilogger.h"
+#include "marketplace/include/imarket_type.h"
 
 using namespace std;
 using namespace xercesc;
@@ -34,8 +36,35 @@ const string SupplySector::XML_NAME = "supplysector";
 SupplySector::SupplySector ( const string regionNameIn ) : Sector ( regionNameIn ) {
 }
 
-//! Default destructor
-SupplySector::~SupplySector() {
+/*! \brief returns Sector output.
+*
+* Returns the total amount of the SupplySector. 
+*
+* \author Sonny Kim
+* \param period Model period
+* \todo make year 1975 regular model year so that logic below can be removed
+* \return total output
+*/
+double SupplySector::getOutput( const int aPeriod ) const {
+    double output = 0;
+    for ( unsigned int i = 0; i < subsec.size(); ++i ) {
+        double subsecOutput = subsec[ i ]->getOutput( aPeriod );
+        // error check.
+        if ( !util::isValidNumber( subsecOutput ) ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Output for subsector " << subsec[ i ]->getName() << " in Sector " << name 
+                    << " in region " << regionName <<" is not valid." << endl;
+            continue;
+        }
+        output += subsecOutput;
+    }
+    
+    // In the base period return a read in output if there is none.
+    if( aPeriod == 0 && output == 0 ){
+        return mBaseOutput;
+    }
+    return output;
 }
 
 /*! \brief Get the XML node name for output to XML.

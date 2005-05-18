@@ -19,6 +19,8 @@
 
 // Forward declarations
 class GDP;
+class NationalAccount;
+class Demographics;
 
 /*! 
 * \ingroup CIAM
@@ -37,7 +39,8 @@ public:
     BuildingDemandSector( const std::string regionName );
     ~BuildingDemandSector();
 	static const std::string& getXMLNameStatic();
-    void initCalc( const int period, const MarketInfo* aRegionInfo );
+    void initCalc( const int period, const MarketInfo* aRegionInfo,
+                   NationalAccount& nationalAccount, Demographic* aDemographics );
     void aggdemand( const GDP* gdp, const int period );
 protected:
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 

@@ -39,7 +39,8 @@ class BuildingDemandSubSector : public Subsector
 public:
     BuildingDemandSubSector( const std::string regionName, const std::string sectorName );
     static const std::string& getXMLNameStatic();
-    void initCalc( const int period, const MarketInfo* aSectorInfo );
+    void initCalc( const MarketInfo* aSectorInfo, NationalAccount& aNationalAccount,
+        Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo, const int aPeriod );
     void setCalibrationStatus( const int period );
     void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
     void calcPrice( const int period );
@@ -57,7 +58,7 @@ protected:
     technology* createChild( const std::string& nodename ) const;
     void adjustTechnologyShareWeights( const int period );
     void MCDerivedClassOutput( ) const;
-
+    std::vector<double> output; //!< Output of the building demand sector.
     std::vector<double> dayLighting; //!< amount of lighting need provided by daylighting
     std::vector<double> aveInsulation; //!< average insulation value (J/s-m^2) for this building type
     std::vector<double> floorToSurfaceArea; //!< conversion from floor space to surface area for this building type

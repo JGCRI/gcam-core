@@ -6,7 +6,7 @@
 
 /*! 
 * \file subsector.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The subsector class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -15,7 +15,9 @@
 
 #include <vector>
 #include <map>
+#include <list>
 #include <xercesc/dom/DOMNode.hpp>
+#include "investment/include/iinvestable.h"
 
 // Forward declarations
 class Summary;
@@ -24,54 +26,67 @@ class Emcoef_ind;
 class Tabs;
 class GDP;
 class MarketInfo;
+class BaseTechnology;
+class NationalAccount;
+class Demographic;
+class MoreSectorInfo;
+class OutputContainer;
+class IExpectedProfitRateCalculator;
+class TechnologyType;
+class IDistributor;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a single Subsector of the model.
 
-* The subsector contains a group of technology objects, which produce or consume commodities in the marketplace. Each sub-sector has attributes such as share, share weight, logit expoential, fixed capacity, and capacity limits. 
-
+* \details The subsector contains a group of technology objects, which produce or consume commodities in the marketplace.
+* Each sub-sector has attributes such as share, share weight, logit expoential, fixed capacity, and capacity limits. 
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 
-class Subsector
+class Subsector: public IInvestable
 {
+    friend class SocialAccountingMatrix;
+    friend class DemandComponentsTable;
+    friend class SectorReport;
+    friend class SGMGenTable;
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
     void clear();
 protected:
-    bool debugChecking; //!< General toggle to turn on various checks
     std::string name; //!< subsector name
     std::string regionName; //!< region name
     std::string sectorName; //!< sector name
-    std::string unit; //!< unit of final product from subsector
-    std::string fueltype; //!< each subsector has one fueltype
-    int notech; //!< number of technologies in each subsector
     int scaleYear; //!< year to scale share weights to after calibration
     int techScaleYear; //!< year to scale technology share weights to after calibration
-    double tax; //!< subsector tax or subsidy
     double basesharewt; //! subsector base year consumption share weight
-    double CO2EmFactor; //! CO2 emissions factor, calculated based on fuel input and share
     std::auto_ptr<MarketInfo> mSubsectorInfo; //!< The subsector's information store.
     std::vector<std::vector<technology*> > techs; //!< vector of technology by period
+
+    double mExpectedProfitRate; //!< Expected profit for this subsector in the current period. Should we save this? 
     std::vector<double> capLimit; //!< subsector capacity limit
-    std::vector<bool> capLimited; //!< true if subsector has hit its capacity limit
     std::vector<double> fixedShare; //!< share of this sub-sector that is fixed capacity -- set in sector
     std::vector<double> shrwts; //!< subsector logit share weights
     std::vector<double> lexp; //!< subsector logit exponential
     std::vector<double> share; //!< subsector shares
-    std::vector<double> input; //!< subsector energy input
     std::vector<double> subsectorprice; //!< subsector price for all periods
     std::vector<double> fuelprice; //! subsector fuel price only for all periods
-    std::vector<double> output; //!< total amount of final output from subsector
     std::vector<double> fuelPrefElasticity; //!< Fuel preference elasticity
-    std::vector<double> calOutputValue; // Calibration value
+    std::vector<double> calOutputValue; //!< Calibration value
+    std::vector<double> mInvestments; //!< Investment by period.
+    std::vector<double> mFixedInvestments; //!< Input fixed subsector level investment by period.
+    std::vector<bool> capLimited; //!< true if subsector has hit its capacity limit
     std::vector<bool> doCalibration; // Flag set if calibration value is read-in
     std::vector<bool> calibrationStatus; // Set true if sector or any tech is calibrated
     std::vector<Summary> summary; //!< summary for reporting
+    std::vector<BaseTechnology*> baseTechs; // for the time being
+    std::map<std::string, TechnologyType*> mTechTypes; //!< Mapping from technology name to group of technology vintages.
     std::map<std::string,int> techNameMap; //!< Map of technology name to integer position in vector. 
     void interpolateShareWeights( const int period ); // Consistantly adjust share weights
-    void sumOutput( const int period );
+    std::map<std::string,int> baseTechNameMap; //!< Map of base technology name to integer position in vector. 
+    typedef std::vector<BaseTechnology*>::const_iterator CBaseTechIterator;
+    typedef std::vector<BaseTechnology*>::iterator BaseTechIterator;
+    void shareWeightScale( const int pmer ); // Consistantly adjust share weights
     void shareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
     bool techHasInput( const technology* thisTech, const std::string& goodName ) const;
     virtual void MCDerivedClassOutput() const;
@@ -84,6 +99,7 @@ protected:
     void normalizeTechShareWeights( const int period );
     virtual void adjustTechnologyShareWeights( const int period );
     void techShareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
+    void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* newTech );
     virtual bool isNameOfChild  ( const std::string& nodename ) const;
     virtual technology* createChild( const std::string& nodename ) const;
 public:
@@ -92,16 +108,15 @@ public:
     static double capLimitTransform( double capLimit, double orgShare ); 
     const std::string getName() const;
     void XMLParse( const xercesc::DOMNode* tempNode );
+    virtual void initCalc( const MarketInfo* aSectorInfo, NationalAccount& aNationalAccount,
+        Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo, const int aPeriod );
     virtual void completeInit();
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
+    void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void calcPrice( const int period );
     double getPrice( const int period ) const;
-    double getCO2EmFactor(int period) const;
-    virtual void initCalc( const int period, const MarketInfo* aSectorInfo );
-    virtual void checkSubSectorCalData( const int period );
     bool getCalibrationStatus( const int period ) const;
     virtual void setCalibrationStatus( const int period );
     void scaleCalibrationInput( const int period, const double scaleFactor );
@@ -137,8 +152,18 @@ public:
     void MCoutputAllSectors() const; 
     void emission( const int period );
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
-    double getInput( const int period )  const;
-    virtual double getOutput( const int period );
+    double getInput( const int period ) const;
+    double getOutput( const int period ) const;
+    double getAnnualInvestment( const int aPeriod ) const;
+
+    double distributeInvestment( const IDistributor* aDistributor,
+                                 NationalAccount& aNationalAccount,
+                                 const IExpectedProfitRateCalculator* aExpProfitRateCalc,
+                                 const std::string& aRegionName,
+                                 const std::string& aSectorName,
+                                 const double aNewInvestment,
+                                 const int aPeriod );
+
     double getTotalCarbonTaxPaid( const int period ) const;
     std::map<std::string, double> getfuelcons( const int period ) const; 
     void clearfuelcons( const int period );
@@ -151,5 +176,27 @@ public:
     void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
     int getNumberAvailTechs( const int period ) const;
     void tabulateFixedDemands( const int period );
+    void adjustForCalibration( double sectorDemand, double totalFixedSupply, double totalCalOutputs, const int period );
+    
+    double getExpectedProfitRate( const NationalAccount& aNationalAccount,
+                                  const std::string& aRegionName,
+                                  const std::string& aSectorName,
+                                  const IExpectedProfitRateCalculator* aExpProfitRateCalc,
+                                  const double aInvestmentLogitExp,
+                                  const bool aIsShareCalc,
+                                  const int aPeriod ) const;
+    
+    double getCapitalOutputRatio( const std::string& aRegionName,
+                                  const std::string& aSectorName,
+                                  const int aPeriod ) const;
+
+	void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
+                  const MoreSectorInfo* aMoreSectorInfo, const bool isNewVintageMode, const int aPeriod );
+	
+    void updateMarketplace( const int period );
+    void finalizePeriod( const int aPeriod );
+    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+	void updateOutputContainer( OutputContainer* outputContainer, const int period ) const;
+    double getFixedInvestment( const int aPeriod ) const;
 };
 #endif // _SUBSECTOR_H_

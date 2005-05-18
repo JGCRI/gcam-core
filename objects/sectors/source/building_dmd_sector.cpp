@@ -141,13 +141,14 @@ const std::string& BuildingDemandSector::getXMLNameStatic() {
 *
 * \author Steve Smith
 */
-void BuildingDemandSector::initCalc( const int period, const MarketInfo* aRegionInfo ) {
-
+void BuildingDemandSector::initCalc( const int period, const MarketInfo* aRegionInfo,
+                                     NationalAccount& nationalAccount, Demographic* aDemographic )
+{
     // Add items from sectorInfo -- this needs to be done before control is passed to Sector:initCalc() so that information is available to subsector and technology initCalc() routines
-    mSectorInfo->addItem( "heatingDegreeDays", aRegionInfo->getItemValue( "heatingDegreeDays" ) );
-    mSectorInfo->addItem( "coolingDegreeDays", aRegionInfo->getItemValue( "coolingDegreeDays" ) );
+    mSectorInfo->addItem( "heatingDegreeDays", aRegionInfo->getItemValue( "heatingDegreeDays", true ) );
+    mSectorInfo->addItem( "coolingDegreeDays", aRegionInfo->getItemValue( "coolingDegreeDays", true ) );
 
-    Sector::initCalc( period, aRegionInfo );
+    Sector::initCalc( period, aRegionInfo, nationalAccount, aDemographic );
 
 }
 
@@ -203,12 +204,9 @@ void BuildingDemandSector::aggdemand( const GDP* gdp, const int period ) {
         }
     }
     
-    servicePreTechChange[ period ] = ser_dmd;
     service[period] = ser_dmd;
-    setServiceDemand( service[ period ], period ); // sets the output
 
     // sets subsector outputs, technology outputs, and market demands
     setoutput( service[ period ], period, gdp );
-    sumOutput(period);
 }
 

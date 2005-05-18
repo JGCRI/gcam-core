@@ -20,7 +20,8 @@
 
 // Forward declarations
 class GDP;
-
+class MoreSectorInfo;
+class Demographic;
 /*! 
 * \ingroup Objects
 * \brief A derived subsector representing a mode of transportation.
@@ -33,14 +34,18 @@ public:
     void calcShare( const int period, const GDP* gdp ); 
     void setoutput( const double demand, const int period, const GDP* gdp );
     static const std::string& getXMLNameStatic();
-    void initCalc( const int period, const MarketInfo* aSectorInfo );
+    void initCalc( const MarketInfo* aSectorInfo, NationalAccount& aNationalAccount,
+                   Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo,
+                   const int aPeriod );
 protected:
+    std::vector<double> mServiceOutput;
     std::vector<double> speed; // Speed of Mode in Miles/hour
     std::vector<double> popDenseElasticity; // Population Density Elasticity of mode
     std::vector<double> servicePrice; // subsector price converted to $/pass-mi or $/ton-mi
     std::vector<double> timeValue; // time value of average modal speed
     std::vector<double> generalizedCost; // subsector price adjusted for value of time, scaled by pd.
     std::vector<double> loadFactor; //Load factor, persons or tons per vehicle (pass./freight)
+    std::vector<double> mServiceOutputs; //!< Service output by period.
     double popDensity; // population density per land area
     double baseScaler; // constant scaler to scale base output
     void MCDerivedClassOutput() const;

@@ -47,7 +47,7 @@ BuildingDemandSubSector::BuildingDemandSubSector( const string regionName, const
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-
+    output.resize( maxper );
     dayLighting.resize( maxper, 0 );
     nonEnergyCost.resize( maxper, 0 );
     aveInsulation.resize( maxper, 0 );
@@ -248,7 +248,7 @@ void BuildingDemandSubSector::calcPrice( const int period ) {
     fuelprice[period] = 0; // initialize to 0 for summing
     // There is no fuel price as this sector does not directly consume fuels
     
-    for ( int i=0; i<notech; i++ ) {
+    for ( unsigned int i=0; i< techs.size(); i++ ) {
         // calculate sum of all energy service costs
         subsectorprice[period] += techs[i][period]->getTechcost();
       }
@@ -264,27 +264,31 @@ void BuildingDemandSubSector::calcPrice( const int period ) {
 * \author Steve Smith
 * \todo MarketInfo needs to be updated to handle string values so that internal gain market name can be passed and not specified in the input data
 * \param period Model period
-* \param period Model period
 * \warning Function getFuelName will need to be changed once multiple inputs are implimented
 */
-void BuildingDemandSubSector::initCalc( const int period, const MarketInfo* aSectorInfo ) {
-const Modeltime* modeltime = scenario->getModeltime();
+void BuildingDemandSubSector::initCalc( const MarketInfo* aSectorInfo,
+                                        NationalAccount& aNationalAccount,
+                                        Demographic* aDemographics,
+                                        const MoreSectorInfo* aMoreSectorInfo,
+                                        const int aPeriod )
+{
+    const Modeltime* modeltime = scenario->getModeltime();
 
     // Add items from sectorInfo
-    mSubsectorInfo->addItem( "heatingDegreeDays", aSectorInfo->getItemValue( "heatingDegreeDays" ) );
-    mSubsectorInfo->addItem( "coolingDegreeDays", aSectorInfo->getItemValue( "coolingDegreeDays" ) );
+    mSubsectorInfo->addItem( "heatingDegreeDays", aSectorInfo->getItemValue( "heatingDegreeDays", true ) );
+    mSubsectorInfo->addItem( "coolingDegreeDays", aSectorInfo->getItemValue( "coolingDegreeDays", true  ));
 
     // Add subsector data items
-    mSubsectorInfo->addItem( "dayLighting", dayLighting[ period ] );
-    mSubsectorInfo->addItem( "aveInsulation", aveInsulation[ period ] );
-    mSubsectorInfo->addItem( "floorToSurfaceArea", floorToSurfaceArea[ period ] );
+    mSubsectorInfo->addItem( "dayLighting", dayLighting[ aPeriod ] );
+    mSubsectorInfo->addItem( "aveInsulation", aveInsulation[ aPeriod ] );
+    mSubsectorInfo->addItem( "floorToSurfaceArea", floorToSurfaceArea[ aPeriod ] );
 
     // Pass the name of the internal gains market to each demand technology  
     // TODO -- this needs to be implimented once marketInfo can handle strings
     // TODO -- also add check in appropriate place that each supply is unique to a building subsector
     string internGainsMktName = INTERNAL_GAINS_MKT + sectorName + name;
-    for ( int j = 0; j < notech; j++ ) {
-        string demandSectorName = techs[j][period]->getFuelName( );
+    for ( unsigned int j = 0; j < techs.size(); j++ ) {
+        string demandSectorName = techs[j][aPeriod]->getFuelName( );
     //    marketplace->setMarketInfo( demandSectorName, regionName, period, "internalGainMarketName", internGainsMktName );
     }
     
@@ -292,20 +296,20 @@ const Modeltime* modeltime = scenario->getModeltime();
     // This needs to be set before Subsector::initCalc() is called since that is where share weights are interpolated
     
     // print warning to log if a value was read in
-    if ( techScaleYear != modeltime->getendyr() ) {
+    if ( techScaleYear != modeltime->getEndYear() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "techScaleYear was read in for building subsector " << name << ". Value ignored. " << endl;        
     }
     
-    if ( period > modeltime->getyr_to_per( modeltime->getstartyr() ) ) {
-        techScaleYear = modeltime->getper_to_yr( period - 1 );
+    if ( aPeriod > modeltime->getyr_to_per( modeltime->getStartYear() ) ) {
+        techScaleYear = modeltime->getper_to_yr( aPeriod - 1 );
     }
     else {
-        techScaleYear = modeltime->getstartyr();
+        techScaleYear = modeltime->getStartYear();
     }
 
-    Subsector::initCalc( period, aSectorInfo );
+    Subsector::initCalc( aSectorInfo, aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
     
 }
 
@@ -349,7 +353,7 @@ void BuildingDemandSubSector::adjustForCalibration( double sectorDemand, double 
     // not have to access the sectorInfo object.
     mSubsectorInfo->addItem( "floorSpace", sectorDemand );
     
-    for (int j=0;j<notech;j++) {
+    for ( unsigned int j = 0; j < techs.size(); j++ ) {
         // calibrate buildingServiceDemands
         string demandSectorName = techs[j][period]->getFuelName( );
         double calOutput = marketplace->getMarketInfo( demandSectorName, regionName, period, "calOutput" );
@@ -375,7 +379,7 @@ void BuildingDemandSubSector::adjustForCalibration( double sectorDemand, double 
 * \param period Model period
 */
 void BuildingDemandSubSector::setCalibrationStatus( const int period ) {
-    for (int i=0; i<notech; i++ ) {
+    for ( unsigned int i=0; i < techs.size(); i++ ) {
         Marketplace* marketplace = scenario->getMarketplace();
         
         string inputName = techs[ i ][ period ]->getFuelName( );
@@ -430,8 +434,6 @@ void BuildingDemandSubSector::setoutput( const double demand, const int period, 
     
     Subsector::setoutput( demand, period, gdp );
     
-    // Set input to zero since this is also meaningless at the subsector level
-    input[period] = 0;
 }
 
 

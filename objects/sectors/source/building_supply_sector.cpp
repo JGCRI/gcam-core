@@ -95,7 +95,9 @@ bool BuildingSupplySector::XMLDerivedClassParse( const string& nodeName, const D
 * \author Steve Smith
 * \param period Model period
 */
-void BuildingSupplySector::initCalc( const int period, const MarketInfo* aRegionInfo ) {
+void BuildingSupplySector::initCalc( const int period, const MarketInfo* aRegionInfo,
+                                     NationalAccount& nationalAccount, Demographic* aDemographic )
+{
     Marketplace* marketplace = scenario->getMarketplace();
 
     double calOutput = getCalOutput( period  );
@@ -103,6 +105,6 @@ void BuildingSupplySector::initCalc( const int period, const MarketInfo* aRegion
 
     // Add items from regionInfo -- this needs to be done before control is passed to Sector:initCalc() so that information is available to subsector and technology initCalc() routines
 
-    SupplySector::initCalc( period, aRegionInfo );
+    SupplySector::initCalc( period, aRegionInfo, nationalAccount, aDemographic );
 }
 

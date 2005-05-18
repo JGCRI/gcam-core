@@ -1,6 +1,6 @@
 /*! 
 * \file ag_sector.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief AgSector class source file.
 * \author Josh Lurz
 * \date $Date$
@@ -150,7 +150,7 @@ void AgSector::toInputXML( ostream& out, Tabs* tabs ) const {
    }
    
    for( unsigned int iter = 0; iter < population.size(); iter++ ) {
-      XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getPopPeriodToYear( iter ) );
+       XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    
    XMLWriteElement( biomassPrice, "biomassprice", out, tabs );
@@ -177,14 +177,14 @@ void AgSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    for ( int iter = 0; iter < modeltime->getmaxper(); iter++ ){
       XMLWriteElement( GETGNP( tempRegion, iter ), "gdpFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
    }
-   for ( int iter = 1; iter < modeltime->getmaxpopdata(); iter++ ){
-      XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, tabs, modeltime->getPopPeriodToYear( iter ) );
+   for ( int iter = 1; iter < modeltime->getmaxper(); iter++ ){
+      XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    XMLWriteElement( GETBIOMASSPRICE(), "biomasspriceFromFortran", out, tabs );
    #endif
    
    for( int iter = 0; iter < static_cast<int>( population.size() ); iter++ ) {
-      XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getPopPeriodToYear( iter ) );
+      XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getper_to_yr( iter ) );
    }
    
    XMLWriteElement( biomassPrice, "biomassprice", out, tabs );
@@ -296,11 +296,12 @@ void AgSector::runModel( const int period, const string& regionName ) {
    double* supplyArray = new double[ numAgMarkets ];
 
    for( int l = 0; l < numAgMarkets; l++ ){
-       if( marketplace->doesMarketExist( indiceToNameMap[ l ], regionName, period ) ){
-            prices[ period ][ l ] = marketplace->getPrice( indiceToNameMap[ l ], regionName, period );
+       double price = marketplace->getPrice( indiceToNameMap[ l ], regionName, period, false );
+       if( price == Marketplace::NO_MARKET_PRICE ){
+            prices[ period ][ l ] = 0;
        }
        else {
-           prices[ period ][ l ] = 0;
+           prices[ period ][ l ] = price;
        }
    }
    
@@ -320,10 +321,8 @@ void AgSector::runModel( const int period, const string& regionName ) {
    
    // set the market supplies and demands.
    for ( vector<string>::iterator k = marketNameVector.begin(); k != marketNameVector.end(); k++ ) {
-       if( marketplace->doesMarketExist( *k, regionName, period ) ){
-            marketplace->addToDemand( *k, regionName, demands[ period ][ nameToIndiceMap[ *k ] ], period );
-            marketplace->addToSupply( *k, regionName, supplies[ period ][ nameToIndiceMap[ *k ] ], period );
-       }
+        marketplace->addToDemand( *k, regionName, demands[ period ][ nameToIndiceMap[ *k ] ], period, false );
+        marketplace->addToSupply( *k, regionName, supplies[ period ][ nameToIndiceMap[ *k ] ], period, false );
    }
    
    // set biomass supply
@@ -384,8 +383,6 @@ void AgSector::initMarketPrices( const string& regionName, const vector<double>&
    
    // Initialize prices.
    for( vector<string>::iterator i = marketNameVector.begin(); i != marketNameVector.end(); i++ ) {
-       if( marketplace->doesMarketExist( *i, regionName, 0 ) ){
-            marketplace->setPrice( *i, regionName, pricesIn[ nameToIndiceMap[ *i ] ], 0 );
-       }
+        marketplace->setPrice( *i, regionName, pricesIn[ nameToIndiceMap[ *i ] ], 0, false );
    }
 }

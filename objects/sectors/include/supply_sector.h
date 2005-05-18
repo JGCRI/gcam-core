@@ -14,6 +14,7 @@
 */
 #include <string>
 #include "sectors/include/sector.h"
+class NationalAccount;
 
 /*! 
 * \ingroup Objects
@@ -24,10 +25,13 @@ class SupplySector: public Sector
 {
 public:
 	explicit SupplySector( const std::string regionNameIn );
-	virtual ~SupplySector();
+    virtual ~SupplySector(){};
     static const std::string& getXMLNameStatic();
-    virtual void setMarket();
+    double getOutput( const int aPeriod ) const;
+    virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
+                          const int aPeriod ){}; // Passing demographic here is not good.
 protected:
+    virtual void setMarket();
     virtual bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};

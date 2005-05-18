@@ -6,7 +6,7 @@
 
 /*! 
 * \file demand_sector.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The DemandSector class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -19,9 +19,11 @@
 
 // Forward declarations
 class GDP;
+class NationalAccount;
+class Demographic;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a single demand sector.
 *
 *  The demand sector is derived from the sector class.  The demand sector
@@ -41,25 +43,26 @@ class GDP;
 class DemandSector: public Sector
 {
 public:
-    DemandSector( const std::string regionName );
+    DemandSector( const std::string aRegionName );
     virtual ~DemandSector();
 	static const std::string& getXMLNameStatic();
-    virtual void calc_pElasticity( const int period );
+    virtual void completeInit();
+    virtual void calcPriceElasticity( const int period );
     virtual void aggdemand( const GDP* gdp, const int period ); 
+    virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
+                          const int aPeriod ){}; // Passing demographic here is not good.
     virtual void csvOutputFile() const;
     virtual void dbOutput() const;
     virtual void calibrateSector( const int period );
     double getService( const int period ) const;
+    double getOutput( const int aPeriod ) const;
     double getServiceWoTC( const int period ) const;
     void scaleOutput( const int period, double scaleFactor );
 protected:
     bool perCapitaBased; //!< demand equation based on per capita GNP, true or false.
     double pElasticityBase; //!< base year energy price elasticity
-    double priceRatio; //!< temp price ratio
-    std::vector<double> sectorFuelCost; // !< fuel cost portion of the total cost
     std::vector<double> finalEngyCons; //!< end-use sector final energy consumption
     std::vector<double> service; //!< total end-use sector service
-    std::vector<double> servicePreTechChange; //!< total end-use sector service before cummulative technical change is applied.
     std::vector<double> iElasticity; //!< income elasticity 
     std::vector<double> pElasticity; //!< price elasticity.
     std::vector<double> aeei; //!< autonomous end-use energy intensity parameter
@@ -73,7 +76,7 @@ protected:
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
  	virtual const std::string& getXMLName() const; 
-    void setServiceDemand( const double demand, const int period );
+    void setoutput( const double demand, const int period, const GDP* gdp );
 private:
 	static const std::string XML_NAME; //!< node name for toXML methods
 };

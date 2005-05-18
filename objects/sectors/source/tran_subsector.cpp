@@ -37,11 +37,13 @@ TranSubsector::TranSubsector( const string regionName, const string sectorName )
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
+    mServiceOutput.resize( maxper );
     speed.resize( maxper ); // average speed of mode
     popDenseElasticity.resize( maxper );
-    servicePrice.resize( maxper ); // price converted by loadfactor
-    timeValue.resize( maxper ); // time value of mode
-    generalizedCost.resize( maxper ); // price adjusted by time value
+    servicePrice.resize( maxper );
+    timeValue.resize( maxper );
+    generalizedCost.resize( maxper );
+    mServiceOutputs.resize( maxper );
     popDensity = 1; // initialize to 1 for now
     baseScaler = 0;
 }
@@ -83,7 +85,7 @@ bool TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
     }
     // Is this going to conflict with parsing output? 
     else if( nodeName == "serviceoutput" ){
-        XMLHelper<double>::insertValueIntoVector( curr, output, modeltime );
+        XMLHelper<double>::insertValueIntoVector( curr, mServiceOutputs, modeltime );
     }
     else {
         return false;
@@ -116,8 +118,8 @@ void TranSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     for( unsigned int i = 0; i < popDenseElasticity.size(); ++i ){
         XMLWriteElementCheckDefault( popDenseElasticity[ i ], "popDenseElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
-    for( unsigned int i = 0; i < output.size(); ++i ){
-        XMLWriteElementCheckDefault( output[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    for( unsigned int i = 0; i < mServiceOutputs.size(); ++i ){
+        XMLWriteElementCheckDefault( mServiceOutputs[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }	
 }
 
@@ -130,8 +132,8 @@ void TranSubsector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
     for( unsigned int i = 0; i < popDenseElasticity.size(); ++i ){
         XMLWriteElementCheckDefault( popDenseElasticity[ i ], "popDenseElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
-    for( unsigned int i = 0; i < output.size(); ++i ){
-        XMLWriteElementCheckDefault( output[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
+    for( unsigned int i = 0; i < mServiceOutputs.size(); ++i ){
+        XMLWriteElementCheckDefault( mServiceOutputs[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
 }
 
@@ -139,7 +141,7 @@ void TranSubsector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
 void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( speed[ period ], "speed", out, tabs );
     XMLWriteElement( popDenseElasticity[ period ], "popDenseElasticity", out, tabs );
-    XMLWriteElement( output[ period ], "serviceoutput", out, tabs );
+    XMLWriteElement( mServiceOutputs[ period ], "serviceoutput", out, tabs );
     XMLWriteElement( servicePrice[ period ], "servicePrice", out, tabs );
     XMLWriteElement( timeValue[ period ], "timeValue", out, tabs );
     XMLWriteElement( generalizedCost[ period ], "generalizedCost", out, tabs );
@@ -155,18 +157,18 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
 * \author Steve Smith
 * \param period Model period
 */
-void TranSubsector::initCalc( const int period, const MarketInfo* aSectorInfo ) {
-
+void TranSubsector::initCalc( const MarketInfo* aSectorInfo, NationalAccount& aNationalAccount,
+                              Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo,
+                              const int aPeriod )
+{
     // Check if illegal values have been read in
-    if ( speed[period] == 0 ) {
-        speed[period] = 1;
+    if ( speed[ aPeriod ] == 0 ) {
+        speed[ aPeriod ] = 1;
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "ERROR: speed was zero in subsector: " << name << " in region " << regionName << "." << endl;
     }
-
-    Subsector::initCalc( period, aSectorInfo );
-    
+    Subsector::initCalc( aSectorInfo, aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
 }
 
 //! calculate subsector share numerator
@@ -207,8 +209,9 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
     scaler in subsequent periods */
     
     if(period==0) {
-        baseScaler = output[0] / shrwts[period] * pow(generalizedCost[period], -lexp[period])
-            * pow( scaledGdpPerCapita, -fuelPrefElasticity[period]) * pow(popDensity, -popDenseElasticity[period]);
+        baseScaler = mServiceOutput[0] / shrwts[period] * pow(generalizedCost[period], -lexp[period])
+            * pow(scaledGdpPerCapita, -fuelPrefElasticity[period])
+            * pow(popDensity, -popDenseElasticity[period]);
     }
 
     share[period] = baseScaler * shrwts[period] * pow(generalizedCost[period], lexp[period])
@@ -221,18 +224,12 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
 *  See explanation for sector::setoutput. 
 */
 void TranSubsector::setoutput( const double demand, const int period, const GDP* gdp ) {
-
-    input[period] = 0; // initialize subsector total fuel input 
-    
     // output is in service unit when called from demand sectors
     double subsecdmd = share[period]* demand; // share is subsector level
     
-    for ( int i=0; i<notech; i++ ) {
+    for( unsigned int i = 0; i < techs.size(); ++i ){
         // calculate technology output and fuel input from subsector output
         techs[i][period]->production( regionName, sectorName, subsecdmd, gdp, period );
-        
-        // total energy input into subsector, must call after tech production
-        input[period] += techs[i][period]->getInput();
     }
 }
 

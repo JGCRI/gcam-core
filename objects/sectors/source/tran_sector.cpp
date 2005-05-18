@@ -138,23 +138,23 @@ void TranSector::checkSectorCalData( const int period ) {
 
 //! Aggrgate sector energy service demand function.
 void TranSector::aggdemand( const GDP* gdp, const int period ) { 
-      
+
     double scaledGdpPerCapita = gdp->getBestScaledGDPperCap(period); 
-			 
-	double gdp1 = gdp->getApproxScaledGDP(period); //gdp->getGDP(period); 
-	
+
+    double gdp1 = gdp->getApproxScaledGDP(period); //gdp->getGDP(period); 
+
     const Modeltime* modeltime = scenario->getModeltime();
-    double ser_dmd;
-    
+    double serviceDemand;
+    double priceRatio;
     /*!  Compute calibrating scaler if first period, otherwise use computed
     scaler in subsequent periods */
-    
+
     // demand for service
     // reading in period 1 data so calibrate scaler to same for both periods
     if (period == 0 || period == 1) {
-        priceRatio=1.0;
-        priceRatioNotLic=1.0;
-        
+        priceRatio = 1;
+        priceRatioNotLic = 1;
+
         // calculate base year scalers
         if (perCapitaBased) { // demand based on per capita GDP
             baseScaler = service[0]* percentLicensed[period] * pow(priceRatio,-pElasticity[period])
@@ -169,40 +169,36 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
                 * pow(gdp1,-iElasticity[period]);
         }
         // base output is initialized by data
-        ser_dmd = service[0]; 
-
-        // Save the service demand without technical change applied for comparison with miniCAM.
-        servicePreTechChange[ period ] = ser_dmd;
-        service[period] = service[0];
+        service[ period ] = serviceDemand = service[0];
+        techChangeCumm[period] = 1; // base year technical change
     }
     else {
         // for non-base year
         // note normalized to previous year not base year
         // has implications for how technical change is applied
-           priceRatio = sectorprice[period]/sectorprice[period-1];
-           priceRatioNotLic = sectorprice[period]/sectorprice[period-1];
+        priceRatio = sectorprice[period]/sectorprice[period-1];
+        priceRatioNotLic = sectorprice[period]/sectorprice[period-1];
         // perCapitaBased is true or false
         if (perCapitaBased) { // demand based on per capita GDP
-            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(scaledGdpPerCapita,iElasticity[period])
+            serviceDemand = baseScaler*pow(priceRatio,pElasticity[period])*pow(scaledGdpPerCapita,iElasticity[period])
                 + baseScalerNotLic*pow(priceRatioNotLic,pElasticity[period])*pow(scaledGdpPerCapita,iElasticity[period]);
             // need to multiply above by population ratio (current population/base year
             // population).  The gdp ratio provides the population ratio.
-            ser_dmd *= gdp1/scaledGdpPerCapita;
+            serviceDemand *= gdp1/scaledGdpPerCapita;
         }
         else { // demand based on scale of GDP
-            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(gdp1,iElasticity[period]);
+            serviceDemand = baseScaler*pow(priceRatio,pElasticity[period])*pow(gdp1,iElasticity[period]);
         }
-        // Save the service demand without technical change applied for comparison with miniCAM.
-        servicePreTechChange[ period ] = ser_dmd;
 
         // adjust demand for AEEI, autonomous end-use energy intensity
-        // note: not using cummulative technical change
-        service[period] = ser_dmd/pow(1+aeei[period],modeltime->gettimestep(period));
+        // note: not using cummulative technical change.
+        // Storing tech change in techChangeCumm so that service without technical
+        // change can be correctly backed out later.
+        techChangeCumm[ period ] = pow( 1 + aeei[ period ], modeltime->gettimestep( period ) );
+        service[period] = serviceDemand / techChangeCumm[ period ];
     }
-    
-    output[period] = service[period];
+
     // sets subsector outputs, technology outputs, and market demands
     setoutput( service[ period ], period, gdp );
-    sumOutput(period);
 }
 

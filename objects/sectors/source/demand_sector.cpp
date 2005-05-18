@@ -1,6 +1,6 @@
 /*! 
 * \file demand_sector.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief DemandSector class source file.
 * \author Sonny Kim
 * \date $Date$
@@ -35,22 +35,19 @@ const string DemandSector::XML_NAME = "demandsector";
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-DemandSector::DemandSector( const string regionName ): Sector( regionName ){
-    perCapitaBased = 0;
+DemandSector::DemandSector( const string aRegionName ): Sector( aRegionName ){
+    perCapitaBased = false;
     pElasticityBase = 0;
-    priceRatio = 1;
     
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    sectorFuelCost.resize( maxper ); // total end-use sector service .
-    finalEngyCons.resize( maxper ); // end-use sector final energy consumption.
-    service.resize( maxper ); // total end-use sector service 
+    finalEngyCons.resize( maxper );
+    service.resize( maxper );
     iElasticity.resize( maxper );
-    pElasticity.resize( maxper ); // price elasticity for each period
+    pElasticity.resize( maxper );
     aeei.resize( maxper );
-    techChangeCumm.resize( maxper ); // cummulative technical change
-    servicePreTechChange.resize( maxper );
+    techChangeCumm.resize( maxper, 1 );
 }
 
 //! Default destructor
@@ -141,35 +138,31 @@ void DemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 
 //! XML output for viewing.
 void DemandSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    int i = 0;
-    
     XMLWriteElement( pElasticityBase, "pElasticityBase", out, tabs );
-    
-    for( i = 0; i < static_cast<int>( service.size() ); i++ ){
+    const Modeltime* modeltime = scenario->getModeltime();   
+    for( unsigned int i = 0; i < service.size(); ++i ){
         XMLWriteElement( service[ i ], "serviceoutput", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
-    for( i = 0; i < static_cast<int>( servicePreTechChange.size() ); i++ ){
-        XMLWriteElement( servicePreTechChange[ i ], "servicePreTechChange", out, tabs, modeltime->getper_to_yr( i ) );
+    for( unsigned int i = 0; i < service.size(); ++i ){
+        XMLWriteElement( service[ i ] * techChangeCumm[ i ], "servicePreTechChange", out, tabs, modeltime->getper_to_yr( i ) );
     }
 
-    for( i = 0; i < static_cast<int>( finalEngyCons.size() ); i++ ){
+    for( unsigned int i = 0; i < finalEngyCons.size(); ++i ){
         XMLWriteElement( finalEngyCons[ i ], "energyconsumption", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
-    for( i = 0; i < static_cast<int>( iElasticity.size() ); i++ ){
+    for( unsigned int i = 0; i < iElasticity.size(); ++i ){
         XMLWriteElement( iElasticity[ i ], "incomeelasticity", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
-    for( i = 0; i < static_cast<int>( pElasticity.size() ); i++ ){
+    for( unsigned int i = 0; i < pElasticity.size(); ++i ){
         XMLWriteElement( pElasticity[ i ], "priceelasticity", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
-    for( i = 0; i < static_cast<int>( aeei.size() ); i++ ){
+    for( unsigned int i = 0; i < aeei.size(); ++i ){
         XMLWriteElement( aeei[ i ], "aeei", out, tabs, modeltime->getper_to_yr( i ) );
     } 
-    // does aeei need to be written?
 }
 
 //! Write object to debugging xml output stream.
@@ -178,10 +171,7 @@ void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
     // write the xml for the class members.
     // write out the market string.
     XMLWriteElement( pElasticityBase, "pElasticityBase", out, tabs );
-    XMLWriteElement( priceRatio, "priceRatio", out, tabs );
 	XMLWriteElementCheckDefault( perCapitaBased, "perCapitaBased", out, tabs, false );
-    
-    XMLWriteElement( sectorFuelCost[ period ], "sectorFuelCost", out, tabs );
     XMLWriteElement( techChangeCumm[ period ], "techChangeCumm", out, tabs );
     
     // Now write out own members.
@@ -189,7 +179,7 @@ void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
     XMLWriteElement( finalEngyCons[ period ], "finalEngyCons", out, tabs );
     XMLWriteElement( service[ period ], "service", out, tabs );
     XMLWriteElement( getCalOutput( period ), "TotalCalOutput", out, tabs );
-    XMLWriteElement( servicePreTechChange[ period ], "servicePreTechChange", out, tabs );
+    XMLWriteElement( service[ period ] * techChangeCumm[ period ], "servicePreTechChange", out, tabs );
     XMLWriteElement( iElasticity[ period ], "iElasticity", out, tabs );
     XMLWriteElement( pElasticity[ period ], "pElasticity", out, tabs );
     XMLWriteElement( aeei[ period ], "aeei", out, tabs );
@@ -248,24 +238,45 @@ void DemandSector::setMarket() {
 * \param period Model period
 */
 void DemandSector::calibrateSector( const int period ) {
-    double totalfixedOutput = 0; // no fixed supply for demand sectors
-    double mrkdmd;
     double totalCalOutputs = getCalOutput( period );
-    
-    mrkdmd = getService( period ); // demand for the good produced by this sector
-    
-    for (int i=0; i<nosubsec; i++ ) {
+    double marketDemand = getService( period ); // demand for the good produced by this sector
+
+    for ( unsigned int i = 0; i < subsec.size(); ++i ) {
         if ( subsec[i]->getCalibrationStatus( period ) ) {
-            subsec[i]->adjustForCalibration( mrkdmd, totalfixedOutput, totalCalOutputs, outputsAllFixed( period ), period );
+            subsec[i]->adjustForCalibration( marketDemand, 0, totalCalOutputs, outputsAllFixed( period ), period );
         }
     }
 
     if ( outputsAllFixed( period ) ) {
-       scaleOutput( period , totalCalOutputs/service[ period ] );
-       if ( service[ period ] == 0 ) {
-          cout << "ERROR: service = 0 in " << regionName << ":" << name << endl;
-         }
-     //  cout << "scaled output for " << regionName << ":" << name <<" by " << totalCalOutputs/service[ period ] << endl;
+        if ( service[ period ] <= 0 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Service less than or equal to zero in demand sector " << name << " in region " << regionName << endl;
+        }
+        else {
+            scaleOutput( period, totalCalOutputs / service[ period ] );
+        }
+    }
+}
+
+//! Set output for Sector (ONLY USED FOR energy service demand at present).
+/*! Demand from the "dmd" parameter (could be energy or energy service) is passed to subsectors.
+This is then shared out at the technology level.
+In the case of demand, what is passed here is the energy service demand. 
+The technologies convert this to an energy demand.
+The demand is then summed at the subsector level (subsec::sumOutput) then
+later at the Sector level (in region via supplysector[j].sumOutput( per ))
+to equal the total Sector output.
+*
+* \author Sonny Kim, Josh Lurz, Steve Smith
+* \param demand Demand to be passed to the subsectors. (Sonny check this)
+* \param period Model period
+* \param gdp GDP object uses to calculate various types of GDPs.
+*/
+void DemandSector::setoutput( const double demand, const int period, const GDP* gdp ) {
+    for ( unsigned int i = 0; i < subsec.size(); ++i ){
+        // set subsector output from Sector demand
+        subsec[ i ]->setoutput( demand, period, gdp );
     }
 }
 
@@ -299,6 +310,13 @@ void DemandSector::scaleOutput( int period, double scaleFactor ) {
    }
 }
 
+/*! \brief Complete the initialization of a demand sector.
+*/
+void DemandSector::completeInit() {
+    Sector::completeInit();
+    pElasticityBase = pElasticity[ 0 ]; // Store the base year price elasticity.
+}
+
 /*! \brief Calculate end-use service price elasticity
 *
 *
@@ -306,16 +324,15 @@ void DemandSector::scaleOutput( int period, double scaleFactor ) {
 * \param period Model period
 * \todo Sonny to add more to this description
 */
-void DemandSector::calc_pElasticity(int period) {
-    pElasticityBase = pElasticity[ 0 ]; // base year read in value
-    pElasticity[period]=0.0;
-    sectorFuelCost[period] = 0;
-    double tmpPriceRatio = 0; // ratio of total price to fuel price
-    for (int i=0;i<nosubsec;i++) {
-        sectorFuelCost[period] += subsec[i]->getwtfuelprice(period);
+void DemandSector::calcPriceElasticity( int period ){
+    if( period > 0 ){
+        double sectorFuelCost = 0;
+        for ( unsigned int i = 0; i < subsec.size(); ++i ) {
+            sectorFuelCost += subsec[ i ]->getwtfuelprice( period );
+        }
+        double tmpPriceRatio = sectorprice[ period ] / sectorFuelCost;
+        pElasticity[ period ] = pElasticityBase * tmpPriceRatio;
     }
-    tmpPriceRatio = sectorprice[period]/sectorFuelCost[period];
-    pElasticity[period] = pElasticityBase*tmpPriceRatio;
 }
 
 /*! \brief Aggrgate sector energy service demand function
@@ -331,58 +348,52 @@ void DemandSector::calc_pElasticity(int period) {
 */
 void DemandSector::aggdemand( const GDP* gdp, const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
-    double ser_dmd;
-    // double pelasticity = -0.9;
+    double serviceDemand;
     double pelasticity = pElasticity[period];
-    const double base = updateAndGetOutput(0);
-     
+    const double base = getOutput(0);
+    double priceRatio;
     // demand for service
     if (period == 0) {
         priceRatio = 0;
 
-        ser_dmd = base; // base output is initialized by data
+        serviceDemand = base; // base output is initialized by data
         techChangeCumm[period] = 1; // base year technical change
     }
     else {
         const int normPeriod = modeltime->getyr_to_per(1990);
-        const int basePer = modeltime->getyr_to_per( modeltime->getstartyr() );
+        const int basePer = modeltime->getBasePeriod();
         priceRatio = getPrice( period ) / getPrice( normPeriod );
         // perCapitaBased is true or false
-		  
-		  double gdpRatio = gdp->getGDP( period ) / gdp->getGDP( basePer );
-		  // If perCapitaBased, service_demand = B * P^r * GDPperCap^r * Population.
-		  // All values are relative to the base year
+
+        double gdpRatio = gdp->getGDP( period ) / gdp->getGDP( basePer );
+        // If perCapitaBased, service_demand = B * P^r * GDPperCap^r * Population.
+        // All values are relative to the base year
         if ( perCapitaBased ) { // demand based on per capita GDP
             double scaledGDPperCap = gdp->getScaledGDPperCap( period );
-            ser_dmd = base*pow(priceRatio,pelasticity)*pow(scaledGDPperCap,iElasticity[period]);
+            serviceDemand = base*pow(priceRatio,pelasticity)*pow(scaledGDPperCap,iElasticity[period]);
             // need to multiply above by population ratio (current population/base year
             // population).  This ratio provides the population ratio.
-            ser_dmd *= gdpRatio/scaledGDPperCap;
-				
+            serviceDemand *= gdpRatio/scaledGDPperCap;
+
         }
-		  // If not perCapitaBased, service_demand = B * P^r * GDP^r
+        // If not perCapitaBased, service_demand = B * P^r * GDP^r
         else { // demand based on scale of GDP    
 
-            ser_dmd = base*pow( priceRatio, pelasticity )*pow( gdpRatio, iElasticity[period] );
+            serviceDemand = base*pow( priceRatio, pelasticity )*pow( gdpRatio, iElasticity[period] );
         }
-        
+
         // calculate cummulative technical change using AEEI, autonomous end-use energy intensity
+        // it would be much faster to calculate this in initCalc if we knew aeei was not changing.
         techChangeCumm[period] = techChangeCumm[period-1]*pow(1+aeei[period],modeltime->gettimestep(period));
     }
     
-    // Save the service demand without technical change applied for comparison with miniCAM.
-    servicePreTechChange[ period ] = ser_dmd;
-    
     // demand sector output is total end-use sector demand for service
     // adjust demand using cummulative technical change
-    service[ period ] = ser_dmd/techChangeCumm[period];
+    assert( techChangeCumm[ period ] > 0 );
+    service[ period ] = serviceDemand / techChangeCumm[ period ];
     
-    setServiceDemand( service[ period ], period ); // sets the output
-
     // sets subsector outputs, technology outputs, and market demands
-    Sector::setoutput( service[ period ], period, gdp );
-    // sums output of technologies and subsectors
-    Sector::sumOutput( period );
+    setoutput( service[ period ], period, gdp );
 }
 
 //! Write sector output to database.
@@ -394,30 +405,22 @@ void DemandSector::csvOutputFile() const {
     // function arguments are variable name, double array, db name, table name
     // the function writes all years
     // total Sector output
-    fileoutput3( regionName, getName(), " ", " ", "production", "SerUnit", output);
-    // total Sector eneryg input
-    fileoutput3( regionName, getName(), " ", " ", "consumption", "EJ", input);
-    // Sector price
-    fileoutput3( regionName, getName(), " ", " ", "price", "$/Service", sectorprice);
-    // Sector carbon taxes paid
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     vector<double> temp(maxper);
+    fileoutput3( regionName, getName(), " ", " ", "production", "SerUnit", service );
+    // total Sector eneryg input
+    for( int per = 0; per < maxper; ++per ){
+        temp[ per ] = getInput( per );
+    }
+    fileoutput3( regionName, getName(), " ", " ", "consumption", "EJ", temp );
+    // Sector price
+    fileoutput3( regionName, getName(), " ", " ", "price", "$/Service", sectorprice);
+    // Sector carbon taxes paid
     for( int per = 0; per < maxper; ++per ){
         temp[ per ] = getTotalCarbonTaxPaid( per );
     }
     fileoutput3( regionName, getName(), " ", " ", "C tax paid", "Mil90$", temp );
-}
-
-/*! \brief Sets output of Sector, used for demand sectors
-*
-* For demand sectors, the output of the Sector, which is the total service demand, is set directly, instead of summing up from subsectors.
-* \author Sonny Kim
-* \param demand Total service demand
-* \param period Model period
-*/
-void DemandSector::setServiceDemand( const double demand, const int period ) {
-    output[ period ] = demand;
 }
 
 //! Write MiniCAM style demand sector output to database.
@@ -438,8 +441,10 @@ void DemandSector::dbOutput() const {
     dboutput4(regionName,"End-Use Service","by Sector",secname,"Ser Unit",service);
     dboutput4(regionName,"End-Use Service",secname,"zTotal","Ser Unit",service);
     dboutput4(regionName,"End-Use Service",secname+"_bySubsec","zTotal","Ser Unit",service);
-
-    dboutput4(regionName,"End-Use Service","by Sector w/o TC",secname,"Ser Unit",servicePreTechChange);
+    for ( int i = 0; i < maxper; i++ ) {
+        temp[ i ] = service[ i ] * techChangeCumm[ i ];
+    }
+    dboutput4(regionName,"End-Use Service","by Sector w/o TC",secname,"Ser Unit", temp );
 
     // End-use service price elasticity
     dboutput4(regionName,"End-Use Service","Elasticity",secname + "_price"," ",pElasticity);
@@ -508,7 +513,7 @@ void DemandSector::dbOutput() const {
 //! Write out subsector results from demand Sector.
 void DemandSector::MCoutput_subsec() const {
 	// do for all subsectors in the Sector
-    for (int i=0;i<nosubsec;i++) {
+    for ( unsigned int i = 0; i < subsec.size(); ++i ){
         // output or demand for each technology
         subsec[ i ]->MCoutputDemandSector();
         subsec[ i ]->MCoutputAllSectors();
@@ -526,6 +531,19 @@ double DemandSector::getService( const int period ) const {
     return service[period];
 }
 
+/*! \brief Get the output for the demand sector, which is equivalent to the demand.
+* \param aPeriod Period to get the output for.
+* \return Output for the period.
+* \authod Josh Lurz
+*/
+double DemandSector::getOutput( int aPeriod ) const {
+    // In the base period return a read in output if there is none.
+    if( aPeriod == 0 && service[ aPeriod ] == 0 ){
+        return mBaseOutput;
+    }
+    return service[ aPeriod ];
+}
+
 /*! \brief returns the demand sector service before tech change is applied.
 *
 * This is useful for debugging and output, but is not used by the model itself at this point
@@ -535,7 +553,7 @@ double DemandSector::getService( const int period ) const {
 * \return energy service demand before technological change is applied
 */
 double DemandSector::getServiceWoTC( const int period ) const {
-    return servicePreTechChange[ period ];
+    return service[ period ] * techChangeCumm[ period ];
 }
 
 /*! \brief A function to add the Sector coloring and style to the dependency graph.
