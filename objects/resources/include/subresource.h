@@ -6,7 +6,7 @@
 
 /*! 
 * \file subresource.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The SubResource class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -17,7 +17,7 @@
 class Grade;
 class GDP;
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief SubResource is a class that contains grades.
 * \author Sonny Kim
 */
@@ -73,7 +73,7 @@ private:
 
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a SubDepletableResource object, which is a container for multiple grade objects.
 * \author Steve Smith
 * \date $ Date $
@@ -84,7 +84,7 @@ class SubDepletableResource: public SubResource {
 };
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a SubFixedResource object, which is a container for multiple grade objects.
 * \author Steve Smith
 * \date $ Date $

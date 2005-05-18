@@ -1,6 +1,6 @@
 /*! 
 * \file renewable_subresource.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief SubRenewableResource class source file.
 * \author Steve Smith
 * \date $Date$

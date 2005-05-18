@@ -1,6 +1,6 @@
 /*! 
 * \file subresource.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief SubResource class source file.
 * \author Sonny Kim
 * \date $Date$

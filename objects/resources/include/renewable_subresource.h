@@ -6,7 +6,7 @@
 
 /*! 
 * \file renewable_subresource.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The SubRenewableResource class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -21,7 +21,7 @@ class SubResource;
 class Tabs;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a SubRenewableResource object, which is a container for multiple grade objects.
 * \author Steve Smith
 * \date $ Date $

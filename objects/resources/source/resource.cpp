@@ -1,6 +1,6 @@
 /*! 
 * \file resource.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief Resource class source file.
 * \author Sonny Kim
 * \date $Date$
@@ -116,7 +116,7 @@ void Resource::XMLParse( const DOMNode* node ){
 * \author Josh Lurz
 * \warning markets are not necesarilly set when completeInit is called
 */
-void Resource::completeInit( const string& regionName ) {
+void Resource::completeInit( const string& aRegionName ) {
     nosubrsrc = static_cast<int>( subResource.size() );
 
     for( vector<SubResource*>::iterator subResIter = subResource.begin(); subResIter != subResource.end(); subResIter++ ) {
@@ -124,7 +124,7 @@ void Resource::completeInit( const string& regionName ) {
     }
 
     // Set markets for this sector
-    setMarket( regionName );
+    setMarket( aRegionName );
 }
 
 //! Write datamembers to datastream in XML format for replicating input file.
@@ -222,7 +222,7 @@ void Resource::setMarket( const string& regionName ) {
 }
 
 //! Return resource name.
-string Resource::getName() const {
+const string& Resource::getName() const {
     return name;
 }
 

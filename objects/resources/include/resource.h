@@ -6,7 +6,7 @@
 
 /*! 
 * \file resource.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Resource, DepletableResource, FixedResource, and RenewableResource classes header file.
 * \author Sonny Kim
 * \date $Date$
@@ -21,7 +21,7 @@ class SubResource;
 class GDP;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief An abstract class which defines a Resource object, which is a container for multiple Subresource objects.
 * \author Sonny Kim
 */
@@ -37,8 +37,8 @@ public:
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream &out, Tabs* tabs ) const;
-    std::string getName() const; 
-    void completeInit( const std::string& regionName );
+    const std::string& getName() const; 
+    void completeInit( const std::string& aRegionName );
     double getPrice(int per);
     void calcSupply( const std::string& regionName, const GDP* gdp, const int period );
     double getAnnualProd(int per);
@@ -64,7 +64,7 @@ protected:
 };
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a DepletableResource object, which is a container for multiple Subresource objects.
 * \author Josh Lurz
 * \date $ Date $
