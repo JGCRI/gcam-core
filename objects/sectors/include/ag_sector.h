@@ -6,7 +6,7 @@
 
 /*! 
 * \file ag_sector.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The AgSector class header file.
 * \author Josh Lurz
 * \date $Date$
@@ -21,7 +21,7 @@
 class Tabs;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines the agricultural sector of a region. 
 * \author Josh Lurz
 */
@@ -49,6 +49,7 @@ private:
     std::vector< std::vector<double> > supplies; //!< Market supplies returned from the AgLu model.
     std::vector< std::vector<double> > demands; //!< Market demands returned from the AgLu model.
     static void staticInitialize();
+    const std::string& getXMLName() const;
 public:
     AgSector();
     ~AgSector();
@@ -57,7 +58,6 @@ public:
     static int getNumAgMarkets();
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
     void completeInit( const std::string& regionName );
     void setGNP( const std::vector<double>& gnpsIn );
