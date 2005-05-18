@@ -25,20 +25,20 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
-#include "sectors/include/accelerator.h"
+#include "investment/include/accelerator.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
-#include "sectors/include/investment_utils.h"
+#include "investment/include/investment_utils.h"
 #include "util/base/include/util.h"
-#include "sectors/include/simple_expected_profit_calculator.h"
-#include "sectors/include/levelized_cost_calculator.h"
-#include "sectors/include/rate_logit_distributor.h"
+#include "investment/include/simple_expected_profit_calculator.h"
+#include "investment/include/levelized_cost_calculator.h"
+#include "investment/include/rate_logit_distributor.h"
 
 // Replace these with a factory method.
-#include "sectors/include/igrowth_calculator.h"
-#include "sectors/include/investment_growth_calculator.h"
-#include "sectors/include/output_growth_calculator.h"
+#include "investment/include/igrowth_calculator.h"
+#include "investment/include/investment_growth_calculator.h"
+#include "investment/include/output_growth_calculator.h"
 
 extern Scenario* scenario;
 

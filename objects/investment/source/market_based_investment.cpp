@@ -26,13 +26,13 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/xml_helper.h"
-#include "sectors/include/market_based_investment.h"
+#include "investment/include/market_based_investment.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/imarket_type.h"
-#include "sectors/include/investment_utils.h"
-#include "sectors/include/levelized_cost_calculator.h"
-#include "sectors/include/rate_logit_distributor.h"
+#include "investment/include/investment_utils.h"
+#include "investment/include/levelized_cost_calculator.h"
+#include "investment/include/rate_logit_distributor.h"
 
 using namespace std;
 using namespace xercesc;

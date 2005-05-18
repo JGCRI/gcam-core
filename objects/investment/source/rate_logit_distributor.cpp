@@ -22,10 +22,10 @@
 #include <cassert>
 #include <cmath>
 #include <iostream> // remove when we have logging.
-#include "sectors/include/rate_logit_distributor.h"
-#include "sectors/include/iinvestable.h"
-#include "sectors/include/iexpected_profit_calculator.h"
-#include "sectors/include/investment_utils.h"
+#include "investment/include/rate_logit_distributor.h"
+#include "investment/include/iinvestable.h"
+#include "investment/include/iexpected_profit_calculator.h"
+#include "investment/include/investment_utils.h"
 #include "util/base/include/util.h"
 
 using namespace std;

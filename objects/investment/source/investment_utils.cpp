@@ -23,8 +23,8 @@
 #include <cassert>
 #include <numeric>
 
-#include "sectors/include/investment_utils.h"
-#include "sectors/include/iinvestable.h"
+#include "investment/include/investment_utils.h"
+#include "investment/include/iinvestable.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/util.h"

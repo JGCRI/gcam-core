@@ -12,10 +12,10 @@
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
-#include "sectors/include/investment_growth_calculator.h"
+#include "investment/include/investment_growth_calculator.h"
 #include "util/base/include/xml_helper.h"
 #include "demographics/include/demographic.h"
-#include "sectors/include/investment_utils.h"
+#include "investment/include/investment_utils.h"
 
 using namespace std;
 

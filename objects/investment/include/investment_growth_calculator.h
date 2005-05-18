@@ -24,7 +24,7 @@
 * \version $Revision$
 */
 #include <string>
-#include "sectors/include/igrowth_calculator.h"
+#include "investment/include/igrowth_calculator.h"
 
 class Tabs;
 class Demographic;

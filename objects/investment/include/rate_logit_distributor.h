@@ -27,7 +27,7 @@
 class IInvestable;
 class IExpectedProfitRateCalc;
 
-#include "sectors/include/idistributor.h"
+#include "investment/include/idistributor.h"
 #include <vector>
 
 /*! 
