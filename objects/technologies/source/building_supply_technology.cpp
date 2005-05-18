@@ -143,6 +143,4 @@ void BuildingSupplyTechnology::production(const string& regionName,const string&
     double internalGains = marketplace->getMarketInfo( intGainsMarketName, regionName, period, "calInternalGains" );
     internalGains += calInputValue * internalLoadFraction;
     marketplace->setMarketInfo( intGainsMarketName, regionName, period, "calInternalGains", internalGains );
-
 }
-
