@@ -1,6 +1,6 @@
 /*! 
 * \file timer.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief Timer class source file.
 * \author Josh Lurz
 * \date $Date$
@@ -17,35 +17,37 @@ using namespace std;
 
 //! Constructor
 Timer::Timer(){
-    startTime = 0;
-    savedTime = 0;
-}
-        
-//! Destructor.
-Timer::~Timer(){
+    mStartTime = 0;
+    mStopTime = 0;
 }
         
 /*! \brief Start the timer. 
 * \details This function starts the timer. All times will be relative to this time.
 */     
 void Timer::start(){
-    startTime = clock();
+    mStartTime = clock();
 }
 
-/*! \brief Save the current time for printing. 
-* \details This function saves a time for printing. This time will be used 
-* for all call to print() until the next call to this function.  
+/*! \brief Stop the timer.
+* \details This functions stops the timer so that the amount of time that has passed
+* may be fetched or printed.
 */
-void Timer::save(){
-    savedTime = clock();
+void Timer::stop(){
+    mStopTime = clock();
 }
-        
-/*! \brief Print the stored time.
-* \details This function prints the time between the last call to save and the time
-* start() was called.
-* \param out The output stream to print to.
-* \param label The label to print in front of the time. Defaults to 'Time: '
+
+/*! \brief Get the differential between the start time and stop time.
+* \return The difference between the stop and start time.
 */
-void Timer::print( std::ostream& out, const string label ) const {
-    out << label << " " << (double)( savedTime - startTime ) / CLOCKS_PER_SEC << " seconds. " << std::endl; 
+double Timer::getTimeDifference() const {
+    return (double)( mStopTime - mStartTime ) / CLOCKS_PER_SEC;
+}
+/*! \brief Print the stored time.
+* \details This function prints the time between the last call to stop() and the time
+* start() was called.
+* \param aOut The output stream to print to.
+* \param aLabel The label to print in front of the time. Defaults to 'Time: '
+*/
+void Timer::print( std::ostream& aOut, const string& aLabel ) const {
+    aOut << aLabel << " " << getTimeDifference() << " seconds. " << endl; 
 }

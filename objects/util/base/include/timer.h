@@ -6,7 +6,7 @@
 
 /*! 
 * \file timer.h  
-* \ingroup CIAM
+* \ingroup Objects
 * \brief Header file for the timer class.
 * \author Josh Lurz
 * \date $Date$
@@ -17,21 +17,21 @@
 #include <string>
 #include <ctime>
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A very basic class which times and prints events.
 * \author Josh Lurz
 */
 class Timer {
 private:
-    clock_t startTime;
-    clock_t savedTime;
+    clock_t mStartTime; //!< Time the timer started
+    clock_t mStopTime; //!< Time the timer stopped
 
 public:
     Timer();        
-    ~Timer();
     void start();
-    void save();
-    void print( std::ostream& out, const std::string title = "Time: " ) const;
+    void stop();
+    double getTimeDifference() const;
+    void print( std::ostream& aOut, const std::string& aTitle = "Time: " ) const;
     };
 
 #endif // _TIMER_H_
