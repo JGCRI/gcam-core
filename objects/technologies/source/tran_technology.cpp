@@ -204,12 +204,10 @@ void TranTechnology::production(const string& regionName,const string& prodName,
     Marketplace* marketplace = scenario->getMarketplace();    
     // set demand for fuel in marketplace
     marketplace->addToDemand(fuelname,regionName,input,per);
-    
+    // Don't need to add to supply because this is a service good.
     // calculate emissions for each gas after setting input and output amounts
     for ( unsigned int i = 0; i < ghg.size(); ++i ) {
         ghg[i]->calcEmission(regionName, fuelname,input,prodName,output, gdp, per );
-        // set emissions as demand side of gas market
-        marketplace->addToDemand(ghg[i]->getName(),regionName,ghg[i]->getEmission(),per);		
     }    
 }
 
