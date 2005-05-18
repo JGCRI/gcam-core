@@ -26,7 +26,18 @@ class CalcCounter;
 
 /*! 
 * \ingroup Objects
-* \brief A class which contains all the model's regions.
+* \brief A class which contains all the model's regions.  These regions may be MiniCAM (partial
+* eqilibrium) regions or SGM (general equilibrium) regions as they are derived from the Region
+* base class.
+*
+* The World class object is contained by the Scenario class object.  The world object controls
+* the calling of the regions which it has been told to solve (passed in an argument of the
+* method world.calc()) by calling region.calc() to run the model for one iteration for these
+* regions.
+*
+* The world object includes a switch for running the model in calibration mode, methods for 
+* determining the chain of sector dependecies (necessary for solving partial equilibrium model),
+* and the methods for setting global fixed GHG taxes.
 * \author Sonny Kim
 */
 
@@ -64,7 +75,9 @@ public:
     const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     void setCalcCounter( CalcCounter* calcCounter );
-
+    void finalizePeriod( const int aPeriod );	
+    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    void csvSGMGenFile( std::ostream& aFile, const int aPeriod ) const;
 private:
     typedef std::vector<Region*>::iterator RegionIterator;
     typedef std::vector<Region*>::const_iterator ConstRegionIterator;

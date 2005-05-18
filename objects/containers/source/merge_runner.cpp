@@ -62,7 +62,7 @@ bool MergeRunner::setupScenario( Timer& timer, const string aName, const list<st
     mainLog << "XML parsing complete." << endl;
 
     // Print data read in time.
-    timer.save();
+    timer.stop();
     mainLog.setLevel( ILogger::DEBUG );
     timer.print( mainLog, "XML Readin Time:" );
     return true;

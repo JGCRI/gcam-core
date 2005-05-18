@@ -1,6 +1,6 @@
 /*! 
 * \file mac_generator_scenario_runner.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief MACGeneratorScenarioRunner class source file.
 * \author Josh Lurz
 * \date $Date$
@@ -131,7 +131,7 @@ bool MACGeneratorScenarioRunner::runScenario( Timer& aTimer ) {
 bool MACGeneratorScenarioRunner::calculateAbatementCostCurve() {
     // If there is no policy market, the model will not create cost curves and 
     // will leave mRanCosts as false. This will prevent the cost curves from printing.
-    if( !scenario->getMarketplace()->doesMarketExist( mGhgName, "USA", 1 ) ){
+    if( scenario->getMarketplace()->getPrice( mGhgName, "USA", 1 ) == Marketplace::NO_MARKET_PRICE ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Skipping cost curve calculations for non-policy model run." << endl;
@@ -279,10 +279,10 @@ void MACGeneratorScenarioRunner::createRegionalCostCurves() {
         }
         Curve* regCostCurve = new PointSetCurve( costPoints );
         regCostCurve->setTitle( *rNameIter );
-        const double regionalCost = regCostCurve->getIntegral( modeltime->getper_to_yr( 1 ), modeltime->getendyr() );
+        const double regionalCost = regCostCurve->getIntegral( modeltime->getper_to_yr( 1 ), modeltime->getEndYear() );
 
         // Temporary hardcoding of start year.
-        const double discountedRegionalCost = regCostCurve->getDiscountedValue( modeltime->getper_to_yr( 1 ), modeltime->getendyr(), discountRate );
+        const double discountedRegionalCost = regCostCurve->getDiscountedValue( modeltime->getper_to_yr( 1 ), modeltime->getEndYear(), discountRate );
         mRegionalCostCurves[ *rNameIter ] = regCostCurve;
         mRegionalCosts[ *rNameIter ] = regionalCost;
         mRegionalDiscountedCosts[ *rNameIter ] = discountedRegionalCost;

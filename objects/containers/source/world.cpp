@@ -1,6 +1,6 @@
 /*! 
 * \file world.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief world class source file.
 * \author Sonny Kim
 * \date $Date$
@@ -20,6 +20,7 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/world.h"
 #include "containers/include/region.h"
+#include "containers/include/region_cge.h"
 #include "sectors/include/ag_sector.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
@@ -46,7 +47,7 @@ const string World::XML_NAME = "world";
 //! Default constructor.
 World::World() {
     // initialize elemental datamembers.
-    doCalibrations = true;
+    doCalibrations = true; // This is misleading.
     calcCounter = 0;
 
     // We can resize all the arrays because we are garunteed by the schema that the modeltime object is parsed first.
@@ -80,9 +81,13 @@ void World::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
-
+		// MiniCAM regions
         else if( nodeName == Region::getXMLNameStatic() ){
             parseContainerNode( curr, regions, regionNamesToNumbers, new Region() );
+        }
+		// SGM regions
+        else if( nodeName == RegionCGE::getXMLNameStatic() ){
+            parseContainerNode( curr, regions, regionNamesToNumbers, new RegionCGE() );
         }
         else if( nodeName == "primaryFuelName" ) {
             // Get the fuel name.
@@ -230,7 +235,14 @@ void World::initCalc( const int period ) {
 
     // Reset the calc counter.
     calcCounter->startNewPeriod();
-    for( RegionIterator i = regions.begin(); i != regions.end(); i++ ){
+    for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ){
+        // Add supplies and demands to the marketplace in the base year for checking data consistency
+	    // and for getting demand and supply totals.
+	    // Need to update markets here after markets have been null by scenario.
+        // TODO: This should be combined with check data.
+        if( period == 0 ){
+            ( *i )->updateMarketplace( period );
+        }
         ( *i )->initCalc( period );
         ( *i )->checkData( period );
     }
@@ -257,8 +269,7 @@ void World::checkCalConsistancy( const int period ) {
     Configuration* conf = Configuration::getInstance();
     if( conf->getBool( "CalibrationActive" ) ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
-
+        mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Starting world calibration consistency check " << endl;
         
         //Setup for checking by adding up all fixed supplies and demands
@@ -292,7 +303,6 @@ void World::checkCalConsistancy( const int period ) {
         }
         
     }
-
 }
 
 //! calculate supply and demand and emissions for all regions
@@ -323,6 +333,7 @@ void World::updateSummary( const int period ) {
         ( *i )->calcEmissions( period );
         ( *i )->updateSummary( period );
         ( *i )->calcEmissFuel( period );
+        ( *i )->updateAllOutputContainers( period );
     }
 }
 
@@ -646,5 +657,30 @@ const vector<int> World::getRegionIndexesToCalculate( const vector<string>& regi
         }
     }
     return regionNumbersToSolve;
+}
+
+/*! \brief Function to finalize objects after a period is solved.
+* \details This function is used to calculate and store variables which are only needed after the current
+* period is complete. 
+* \param aPeriod The period to finalize.
+* \author Josh Lurz
+*/
+void World::finalizePeriod( const aPeriod ){
+    // Finalize sectors.
+    for( vector<Region*>::iterator region = regions.begin(); region != regions.end(); ++region ){
+        (*region)->finalizePeriod( aPeriod );
+    }
+}
+
+void World::csvSGMOutputFile( ostream& aFile, const int period ) const {
+	for( vector<Region*>::const_iterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
+		( *rIter )->csvSGMOutputFile( aFile, period );
+	}
+}
+
+void World::csvSGMGenFile( ostream& aFile, const int aPeriod ) const {
+	for( vector<Region*>::const_iterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
+		( *rIter )->csvSGMGenFile( aFile, aPeriod );
+	}
 }
 

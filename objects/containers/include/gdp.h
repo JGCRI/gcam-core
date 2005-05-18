@@ -6,7 +6,7 @@
 
 /*! 
 * \file gdp.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The GDP class header file.
 * \author Josh Lurz
 * \date $Date$
@@ -14,11 +14,11 @@
 */
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
-class Population;
+class Demographic;
 class Tabs;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This class defines an object which contains the GDP information and calcuations for a single region
 * along with function which can be used to access the GDP in various ways.
 * \details This class all controls the read-in and initialization of this data along with calibration
@@ -52,27 +52,23 @@ private:
     double PPPDelta; //!< Internal exponent variable for PPP conversion
 	bool constRatio; //!< Flag to turn on dynamic ratio of PPP to Market GDP
 	static const std::string XML_NAME; //!< node name for toXML methods
-
 	double calculatePPPPerCap( const int period,const double marketGDPperCap ); // function to calculate PPP values
     double getPPPMERRatio( const int period, const double marketGDPperCap ); // function to calculate PPP/MER ratio
-
-public:
-	GDP();
-	~GDP();
-	void XMLParse( const xercesc::DOMNode* node );
-	void toInputXML( std::ostream& out, Tabs* tabs ) const;
-	void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	const std::string& getXMLName() const;
-	static const std::string& getXMLNameStatic();
-	void initData( const Population* regionalPop );
-    void setupCalibrationMarkets( const std::string& regionName, const std::vector<double> aCalibrationGDPs );
-	void writeBackCalibratedValues( const std::string& regionName, const int period );
 	double getTotalLaborProductivity( const int period ) const;
 	double getLaborForce( const int per ) const;    
 	double getLaborProdGR( const int per ) const;
+public:
+	GDP();
+	void XMLParse( const xercesc::DOMNode* node );
+	void toInputXML( std::ostream& out, Tabs* tabs ) const;
+	void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    void initData( const Demographic* regionalPop );
+    void initialGDPcalc( const int period, const double population);
+	static const std::string& getXMLNameStatic();
+    void setupCalibrationMarkets( const std::string& regionName, const std::vector<double> aCalibrationGDPs  );
+	void writeBackCalibratedValues( const std::string& regionName, const int period );
 	void csvOutputFile( const std::string& regionName ) const;
 	void dbOutput( const std::string& regionName ) const;
-	void initialGDPcalc( const int period, const double population);
 	void adjustGDP( const int period, const double priceratio );
     double getApproxGDPperCap( const int period ) const;
     double getApproxScaledGDPperCap( const int period ) const;

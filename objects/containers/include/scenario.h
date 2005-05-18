@@ -6,7 +6,7 @@
 
 /*! 
 * \file scenario.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Scenario class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -16,7 +16,6 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <iosfwd>
 #include <vector>
-#include <string>
 #include <map>
 #include <memory>
 #include "util/base/include/iparsable.h"
@@ -30,8 +29,17 @@ class Tabs;
 class Solver;
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines a model scenario.
+*
+* The Scenario class object is the outermost container for all the data, parameters, and results that define
+* a complete model run.  A scenario object contains the World object (which itself contains regions, and so on)
+* the Marketplace object, the Modeltime object, the Solver object, and the FunctionManager object.
+*
+* The Scenario class contains the highest levels methods for initializing data and running the model, which
+* trigger methods defined at more detailed levels inside container relationships.  As such, the scenario
+* object has special importance, and is defined globally (for now), as it is the primary interface between
+* key controlling parts of the model (like the Main program and Solver) and the model details.
 * \author Sonny Kim
 */
 
@@ -57,6 +65,8 @@ public:
 	const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     void csvOutputFile() const;
     void dbOutput() const;
+	void csvSGMOutputFile( std::ostream& aFile, const int aPeriod );
+	void csvSGMGenFile( std::ostream& aFile, const int aPeriod ) const;
 private:
 	const static std::string XML_NAME; //!< node name for toXML methods
     std::auto_ptr<Modeltime> modeltime; //!< The modeltime for the scenario

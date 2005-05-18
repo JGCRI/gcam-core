@@ -6,7 +6,7 @@
 
 /*! 
 * \file region.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The Region class header file.
 * \author Sonny Kim
 * \date $Date$
@@ -17,11 +17,15 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <memory>
+
+#include "containers/include/national_account.h"
 
 // Forward declarations.
 class Population;
+class Demographic;
 class Resource;
-class SupplySector;
+class Sector;
 class DemandSector;
 class AgSector;
 class GHGPolicy;
@@ -34,7 +38,7 @@ class Tabs;
 class MarketInfo;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief This class defines a single region of the model and contains other regional information such as demographics, resources, supply and demand sectors, and GDPs.
 *
 * The classes contained in the Region are the Populations, Resource, Sector, Demsector.  Since this particular implementation of the model is based on a partial equilibrium concept,
@@ -52,21 +56,25 @@ class MarketInfo;
 
 class Region
 {
+    friend class InputOutputTable;
+    friend class SocialAccountingMatrix;
+    friend class DemandComponentsTable;
+    friend class SectorReport;
+    friend class SGMGenTable;
 public:
     Region();
-    ~Region(); 
+    virtual ~Region(); 
     void initElementalMembers();
     void XMLParse( const xercesc::DOMNode* node );
-    void completeInit();
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
+    virtual void completeInit(); // is this what we want to do, virtual?
     std::string getName() const;
-    void calc( const int period, const bool doCalibrations );
+    virtual void calc( const int period, const bool doCalibrations );
     bool isDemandAllCalibrated( const int period ) const;
     void calibrateTFE( const int period ); 
-    void initCalc( const int period );
+    virtual void initCalc( const int period );
     void calcEmissions( const int period );
     void calcEmissFuel( const int period );
     void emissionInd( const int period );
@@ -75,7 +83,7 @@ public:
     void dbOutput() const;
     void findSimul( const int period );
     void initializeAgMarketPrices( const std::vector<double>& pricesIn );
-    void updateSummary( const int period );
+    virtual void updateSummary( const int period );
     void printGraphs( std::ostream& outStream, const int period ) const;
     double getPrimaryFuelCO2Coef( const std::string& fuelName ) const;
     double getCarbonTaxCoef( const std::string& fuelName ) const;
@@ -91,16 +99,25 @@ public:
     void setCalSuppliesAndDemands( const int period );
     bool setImpliedCalInputs( const int period );
     void scaleCalInputs( const int period );
-
-private:
+    virtual void updateAllOutputContainers( const int period );
+	virtual void updateMarketplace( const int period );
+    virtual void finalizePeriod( const int aPeriod );
+	virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+	virtual void csvSGMGenFile( std::ostream& aFile, const int period ) const;
+protected:
+    virtual const std::string& getXMLName() const;
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+	std::vector<NationalAccount> nationalAccount; //!< 
     const static std::string XML_NAME; //!< node name for toXML method.
     std::string name; //!< Region name
-    std::auto_ptr<Population> population; //!< Population object
+	std::auto_ptr<Demographic> demographic; //!< Population object
     std::auto_ptr<GDP> gdp; //!< GDP object.
     std::auto_ptr<AgSector> agSector; //!< Agricultural sector
     std::auto_ptr<MarketInfo> mRegionInfo; //!< The region's information store.
     std::vector<Resource*> resources; //!< vector of pointers toresource objects
-    std::vector<SupplySector*> supplySector; //!< vector of pointers to supply sector objects
+    std::vector<Sector*> supplySector; //!< vector of pointers to supply sector objects
     std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects
     std::vector<GHGPolicy*> mGhgPolicies; //!< vector of pointers to ghg market objects, container for constraints and emissions
     std::vector<double> iElasticity; //!< income elasticity
@@ -125,8 +142,6 @@ private:
     void initializeCalValues( const int period );
     double getTotFinalEnergy( const int period ) const;
     std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
-    typedef std::vector<SupplySector*>::iterator SupplySectorIterator;
-    typedef std::vector<SupplySector*>::const_iterator CSupplySectorIterator;
     typedef std::vector<DemandSector*>::iterator DemandSectorIterator;
     typedef std::vector<DemandSector*>::const_iterator CDemandSectorIterator;
     typedef std::vector<Resource*>::iterator ResourceIterator;
@@ -135,10 +150,13 @@ private:
     typedef std::vector<GHGPolicy*>::const_iterator CGHGPolicyIterator;
     typedef std::map<std::string, std::vector<std::string> > FuelRelationshipMap; //!< map for fuel relationships
     std::auto_ptr<FuelRelationshipMap> fuelRelationshipMap; //!< ptr to map of fuel relationships used for calibration consistency adjustments
-    void clear();
+    typedef std::vector<Sector*>::iterator SectorIterator;
+    typedef std::vector<Sector*>::reverse_iterator SectorReverseIterator;
+    typedef std::vector<Sector*>::const_iterator CSectorIterator;
     bool reorderSectors( const std::vector<std::string>& orderList );
     bool sortSectorsByDependency();
     bool isRegionOrderedCorrectly() const;
+
     void calcGDP( const int period );
     void calcResourceSupply( const int period );
     void calcFinalSupplyPrice( const int period );
@@ -150,6 +168,8 @@ private:
     void calibrateRegion( const bool doCalibrations, const int period );
     double calcTFEscaleFactor( const int period ) const;
     const std::vector<double> calcFutureGDP() const;
+private:
+    void clear();
 };
 
 #endif // _REGION_H_

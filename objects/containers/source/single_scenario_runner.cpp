@@ -57,12 +57,6 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
     // Parse the input file.
     const Configuration* conf = Configuration::getInstance();
     XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
-    
-    // Override scenario name from data file with that from configuration file
-    const string overrideName = conf->getString( "scenarioName" ) + aName;
-    if ( overrideName != "" ) {
-        mScenario->setName( overrideName );
-    }
 
     // Fetch the listing of Scenario Components.
     list<string> scenComponents = conf->getScenarioComponents();
@@ -81,11 +75,17 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
         XMLHelper<void>::parseXML( *currComp, mScenario.get() );
     }
     
+    // Override scenario name from data file with that from configuration file
+    const string overrideName = conf->getString( "scenarioName" ) + aName;
+    if ( overrideName != "" ) {
+        mScenario->setName( overrideName );
+    }
+
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "XML parsing complete." << endl;
 
     // Print data read in time.
-    timer.save();
+    timer.stop();
     mainLog.setLevel( ILogger::DEBUG );
     timer.print( mainLog, "XML Readin Time:" );
     return true;
@@ -107,7 +107,7 @@ bool SingleScenarioRunner::runScenario( Timer& aTimer ){
     bool success = mScenario->run();
 
     // Compute model run time.
-    aTimer.save();
+    aTimer.stop();
     mainLog.setLevel( ILogger::DEBUG );
     aTimer.print( mainLog, "Data Readin & Initial Model Run Time:" );
 
@@ -154,7 +154,7 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
     }
 
      // Print the timestamps.
-    aTimer.save();
+    aTimer.stop();
     mainLog.setLevel( ILogger::DEBUG );
     aTimer.print( mainLog, "Data Readin, Model Run & Write Time:" );
     mainLog.setLevel( ILogger::NOTICE );

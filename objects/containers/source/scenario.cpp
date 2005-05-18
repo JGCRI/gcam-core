@@ -1,6 +1,6 @@
 /*! 
 * \file scenario.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief Scenario class source file.
 * \author Sonny Kim
 * \date $Date$
@@ -16,7 +16,6 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
-// User headers
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
@@ -26,6 +25,8 @@
 #include "util/logger/include/ilogger.h"
 #include "util/curves/include/curve.h"
 #include "solution/solvers/include/solver.h"
+#include "reporting/include/output_container.h"
+#include "reporting/include/sgm_gen_table.h"
 
 using namespace std;
 using namespace xercesc;
@@ -84,10 +85,8 @@ bool Scenario::XMLParse( const DOMNode* node ){
     // assume we were passed a valid node.
     assert( node );
 
-    // set the scenario name. Note this can be overridden.
-    if( name == "" ){
-        name = XMLHelper<string>::getAttrString( node, "name" );
-    }
+    // set the scenario name.
+    name = XMLHelper<string>::getAttrString( node, "name" );
 
     // get the children of the node.
     DOMNodeList* nodeList = node->getChildNodes();
@@ -172,7 +171,7 @@ void Scenario::toInputXML( ostream& out, Tabs* tabs ) const {
 
     string dateString = util::XMLCreateDate( ltime );
     out << "<" << XML_NAME << " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"";
-    out << " xsi:noNamespaceSchemaLocation=\"C:\\PNNL\\CIAM\\CVS\\CIAM\\Ciam.xsd\"";
+    out << " xsi:noNamespaceSchemaLocation=\"C:\\PNNL\\Objects\\CVS\\Objects\\Objects.xsd\"";
     out << " name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
     // increase the indent.
     tabs->increaseIndent();
@@ -222,11 +221,17 @@ bool Scenario::run( string filenameEnding ){
     // and name as it now prints sector ordering as well. 
     if( conf->getBool( "PrintSectorDependencies", false ) ){
         printSectorDependencies();
-    }
+	}
 
     Tabs tabs;
     marketplace->initPrices(); // initialize prices
     toDebugXMLOpen( xmlDebugStream, &tabs );
+    // sgm output file for debugging
+    const string sgmOutFileName = conf->getFile( "ObjectSGMFileName", "ObjectSGMout.csv" );
+    ofstream sgmOutFile;
+	sgmOutFile.open( sgmOutFileName.c_str() ) ;
+	util::checkIsOpen( sgmOutFile, sgmOutFileName );
+    
     bool success = true;
 
     // Loop over time steps and operate model
@@ -242,16 +247,23 @@ bool Scenario::run( string filenameEnding ){
 
         // Run the iteration of the model.
         marketplace->nullSuppliesAndDemands( per ); // initialize market demand to null
-        marketplace->storeto_last( per ); // save last period's info to stored variables
         marketplace->init_to_last( per ); // initialize to last period's info
         world->initCalc( per ); // call to initialize anything that won't change during calc
+        // SGM Period 0 needs to clear out the supplies and demands put in by initCalc.
+        if( per == 0 ){
+            marketplace->nullSuppliesAndDemands( per );
+        }
         world->calc( per ); // call to calculate initial supply and demand
         success &= solve( per ); // solution uses Bisect and NR routine to clear markets
+        world->finalizePeriod( per );
         world->updateSummary( per ); // call to update summaries for reporting
         world->emiss_ind( per ); // call to calculate global emissions
 
         // Write out the results for debugging.
         world->toDebugXML( per, xmlDebugStream, &tabs );
+
+		// SGM csv output
+		csvSGMOutputFile( sgmOutFile, per );
 
         if( conf->getBool( "PrintDependencyGraphs" ) ) {
             printGraphs( per ); // Print out dependency graphs.
@@ -272,6 +284,7 @@ bool Scenario::run( string filenameEnding ){
     mainLog << "Writing CLIMAT() input file." << endl;
     writeClimatData(); // writes the input text file
 
+
 #if(__HAVE_FORTRAN__)
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Calling the climate model..."<< endl;
@@ -280,6 +293,7 @@ bool Scenario::run( string filenameEnding ){
     mainLog << "Finished with CLIMAT()" << endl;
 #endif
     xmlDebugStream.close();
+    sgmOutFile.close();
     return success;
 }
 
@@ -428,3 +442,26 @@ void Scenario::openDebugXMLFile( ofstream& xmlDebugStream, const string& fileNam
     util::checkIsOpen( xmlDebugStream, debugFileName );
 }
 
+/*! \brief Write SGM results to csv text file.
+*/
+void Scenario::csvSGMOutputFile( ostream& aFile, const int aPeriod ) {
+	aFile <<  "**********************" << endl;
+	aFile <<  "RESULTS FOR PERIOD:  " << aPeriod << endl;
+	aFile <<  "**********************" << endl << endl;
+	marketplace->csvSGMOutputFile( aFile, aPeriod );
+	world->csvSGMOutputFile( aFile, aPeriod );
+}
+
+/*! \brief Write SGM general results for all periods to csv text file.
+*/
+void Scenario::csvSGMGenFile( ostream& aFile, const int aPeriod ) const {
+	
+    // write to SGM general output. This doesn't do anything?
+	auto_ptr<OutputContainer> generalOutput( new SGMGenTable( "GENERAL", "General Table", getModeltime() ) );
+
+    // Write out the file header.
+	aFile << "SGM General Output " << endl;
+	aFile << "Date & Time: " << ctime( &ltime ) << endl;
+
+	world->csvSGMGenFile( aFile, aPeriod );
+}
