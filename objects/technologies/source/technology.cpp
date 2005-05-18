@@ -1,6 +1,6 @@
 /*! 
 * \file technology.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief technology class source file.
 * \author Sonny Kim
 * \date $Date$
@@ -486,14 +486,13 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
 	 // code specical case where there is no fuel input. sjs
 	 // used now to drive non-CO2 GHGs
     double fuelprice;
-    if ( fuelname != "none" ) {
-        fuelprice = marketplace->getPrice(fuelname,regionName,per);
-    } else {
+    if ( fuelname == "none" || fuelname == "renewable" ) {
         fuelprice = 0;
     }
+    else {
+        fuelprice = marketplace->getPrice( fuelname, regionName, per );
+    } 
 	 
-	// code for integrating technical change
-	//techcost = fprice/eff/pow(1+techchange,modeltime->gettimestep(per)) + necost;
 	// fMultiplier and pMultiplier are initialized to 1 for those not read in
 	fuelcost = ( fuelprice * fMultiplier ) / eff;
 	techcost = ( fuelcost + necost ) * pMultiplier;
@@ -682,33 +681,36 @@ void technology::adjShares(double subsecdmd, double subsecfixedOutput, double va
 */
 void technology::production(const string& regionName,const string& prodName,
                             double dmd, const GDP* gdp, const int per) {
-    string hydro = "hydro";
-    Marketplace* marketplace = scenario->getMarketplace();
-    
     // dmd is total subsector demand
-    if(name != hydro) {
-        output = share * dmd; // use share to get output for each technology
-    }
-    else { // do for hydroelectricity
+    const static string HYDRO = "hydro";
+    if( name == HYDRO ) {
         output = fixedOutputVal = dmd;
     }
-    
-    input = output/eff;
-	   
-    if (input < 0) {
-        cerr << "ERROR: Output value < 0 for technology " << name << endl;
+    else {
+        output = share * dmd; // use share to get output for each technology
+    }
+    	   
+    if ( output < 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Output value less than zero for technology " << name << endl;
     }
     
+    // Calculate input demand.
+    input = output / eff;
+
+    Marketplace* marketplace = scenario->getMarketplace();
     // set demand for fuel in marketplace
-    marketplace->addToDemand(fuelname,regionName,input,per);
-    
+    if( ( fuelname != "renewable" ) && ( fuelname != "none" ) ){ 
+        marketplace->addToDemand( fuelname, regionName, input, per );
+    }
+    // Set the supply of the good to the marketplace.
+    // Market doesn't exist for demand goods.
+    marketplace->addToSupply( prodName, regionName, output, per, false );
+
     // calculate emissions for each gas after setting input and output amounts
-    for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
-        ghg[i]->calcEmission(regionName, fuelname,input,prodName,output, gdp, per );
-        // set emissions as demand side of gas market
-        marketplace->addToDemand(ghg[i]->getName(),regionName,ghg[i]->getEmission(),per);		
-        // set sequestered amount as demand side of carbon storage market
-        marketplace->addToDemand("carbon storage",regionName,ghg[i]->getSequestAmountGeologic(),per);		
+    for ( unsigned int i = 0; i < ghg.size(); ++i ) {
+        ghg[ i ]->calcEmission( regionName, fuelname, input, prodName, output, gdp, per );
     }
 }
 
@@ -763,16 +765,16 @@ void technology::adjustForCalibration( double subSectorDemand, const string& reg
 }
 
 //! calculate GHG emissions from technology use
-void technology::calcEmission( const string prodname ) {
+void technology::calcEmission( const string& aGoodName, const int aPeriod ) {
     // alternative ghg emissions calculation
     emissmap.clear(); // clear emissions map
     emfuelmap.clear(); // clear emissions map
     for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
         // emissions by gas name only
-        emissmap[ghg[i]->getName()] = ghg[i]->getEmission();
+        emissmap[ghg[i]->getName()] = ghg[i]->getEmission( aPeriod );
         // emissions by gas and fuel names combined
         // used to calculate emissions by fuel
-        emissmap[ghg[i]->getName() + fuelname] = ghg[i]->getEmission();
+        emissmap[ghg[i]->getName() + fuelname] = ghg[i]->getEmission( aPeriod );
         // add sequestered amount to emissions map
         // used to calculate emissions by fuel
         emissmap[ghg[i]->getName() + "sequestGeologic"] = ghg[i]->getSequestAmountGeologic();
@@ -780,7 +782,7 @@ void technology::calcEmission( const string prodname ) {
         
         // emfuelmap[ghg[i]->getName()] = ghg[i]->getEmissFuel();
         // This really should include the GHG name as well.
-        emfuelmap[fuelname] = ghg[i]->getEmissFuel();
+        emfuelmap[fuelname] = ghg[i]->getEmissFuel( aPeriod );
     }
 }
 
@@ -1130,7 +1132,7 @@ void technology::tabulateFixedDemands( const string regionName, const int period
     Marketplace* marketplace = scenario->getMarketplace();
 
     // Checking for market existence here avoids emitting a warning (which happens for fuel "renewable")
-    if ( marketplace->doesMarketExist( fuelname, regionName, period ) ) {
+    if ( marketplace->getPrice( fuelname, regionName, period, false ) != Marketplace::NO_MARKET_PRICE ) {
         if ( doCalibration || ( fixedOutput != 0 ) || ( shrwts == 0 ) ) {
             double fixedInput = 0;
             // this sector has fixed output
