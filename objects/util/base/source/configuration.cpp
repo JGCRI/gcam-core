@@ -20,16 +20,10 @@ using namespace std;
 using namespace xercesc;
 
 // Static initializations.
-bool Configuration::confExists;
-Configuration* Configuration::instance;
+std::auto_ptr<Configuration> Configuration::gInstance;
 
 //! Private constructor to prevent a programmer from creating a second object.
 Configuration::Configuration(): mLogFile( "main_log" ){
-}
-	
-//! Destructor
-Configuration::~Configuration() {
-	confExists = false;
 }
 
 /*! \brief Get a pointer to the instance of the Configuration object.
@@ -41,13 +35,10 @@ Configuration::~Configuration() {
 * \return A pointer to the single instance of the Configuration class.
 */
 Configuration* Configuration::getInstance() {
-
-	if ( !confExists ) {
-		confExists = true;
-		instance = new Configuration();
-	}
-
-	return instance;
+    if( !gInstance.get() ){
+        gInstance.reset( new Configuration() );
+    }
+    return gInstance.get();
 }
 
 //! Initialize Configuration object with xml data.
@@ -239,7 +230,6 @@ bool Configuration::getBool( const string& key, const bool defaultValue ) const 
 		return defaultValue;
 	}
 }
-
 
 /*! 
 * \brief Fetch an int from the Configuration object.

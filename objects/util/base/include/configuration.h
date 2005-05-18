@@ -16,6 +16,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <map>
 #include <list>
+#include <memory>
 #include "util/base/include/iparsable.h"
 
 class Tabs;
@@ -39,7 +40,6 @@ class Configuration: public IParsable {
 
 public:
 	static Configuration* getInstance();
-	~Configuration();
 	bool XMLParse( const xercesc::DOMNode* tempnode );
 	void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 	const std::string& getFile( const std::string& key, const std::string& defaultValue = "" ) const;
@@ -49,9 +49,8 @@ public:
 	double getDouble( const std::string& key, const double defaultValue = 0 ) const;
     const std::list<std::string>& getScenarioComponents() const;
 private:
-	static bool confExists; //!< Flag which indicates if the instace has been created.
-	static Configuration* instance; //!< A pointer to the static singleton instance.
     const std::string mLogFile; //!< The name of the log to use.
+    static std::auto_ptr<Configuration> gInstance; //!< The static instance of the Configuration class.
 	std::map<std::string, std::string> fileMap; //!< A map of the file names the program uses.
 	std::map<std::string, std::string> stringMap; //!< A map of the strings the program uses.
 	std::map<std::string, bool> boolMap; //!< A map of the bools the program uses.
