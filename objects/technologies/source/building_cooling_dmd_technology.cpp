@@ -73,7 +73,7 @@ const std::string& BuildingCoolingDmdTechnology::getXMLNameStatic1D() {
 */
 void BuildingCoolingDmdTechnology::initCalc( const MarketInfo* aSubsectorInfo ) {
 
-    coolingDegreeDays = aSubsectorInfo->getItemValue( "coolingDegreeDays" );
+    coolingDegreeDays = aSubsectorInfo->getItemValue( "coolingDegreeDays", true );
     BuildingGenericDmdTechnology::initCalc( aSubsectorInfo );    
 }
 

@@ -84,8 +84,8 @@ void BuildingHeatCoolDmdTechnology::toDebugXMLDerived( const int period, ostream
 */
 void BuildingHeatCoolDmdTechnology::initCalc( const MarketInfo* aSubsectorInfo ) {
 
-    aveInsulation = aSubsectorInfo->getItemValue( "aveInsulation" );
-    floorToSurfaceArea = aSubsectorInfo->getItemValue( "floorToSurfaceArea" );
+    aveInsulation = aSubsectorInfo->getItemValue( "aveInsulation", true );
+    floorToSurfaceArea = aSubsectorInfo->getItemValue( "floorToSurfaceArea", true );
  
     BuildingGenericDmdTechnology::initCalc( aSubsectorInfo );    
 }
@@ -121,7 +121,7 @@ void BuildingHeatCoolDmdTechnology::adjustForCalibration( double subSectorDemand
     // Production is equal to: unitDemand * saturation *(any other parameters) * dmd
     
     // Amount of service supplied is unitDemand times floorspace
-    double floorSpace = aSubsectorInfo->getItemValue( "floorSpace" );
+    double floorSpace = aSubsectorInfo->getItemValue( "floorSpace", true );
     double effectiveDemand = unitDemand * floorSpace;
     
     // Now adjust for internal gains
