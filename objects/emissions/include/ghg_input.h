@@ -6,17 +6,17 @@
 
 /*! 
 * \file ghg_input.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The GhgInput class header file.
 * \author Steve Smith
 * \date $Date$
 * \version $Revision$
 */
-
+#include <string>
 #include "emissions/include/ghg.h"
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A type of GHG which drives emissions the input value.
 * \author Steve Smith
 */
