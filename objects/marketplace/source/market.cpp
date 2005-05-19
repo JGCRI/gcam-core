@@ -591,5 +591,6 @@ bool Market::shouldSolveNR() const {
 * \author Josh Lurz
 */
 bool Market::meetsSpecialSolutionCriteria() const {
-    return false;
+    // This is a normal market which should not be solved in the base period.
+    return ( period == 0 );
 }

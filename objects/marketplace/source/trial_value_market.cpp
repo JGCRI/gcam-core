@@ -77,7 +77,9 @@ void TrialValueMarket::addToSupply( const double supplyIn ) {
 }
 
 bool TrialValueMarket::meetsSpecialSolutionCriteria() const {
-    return Market::meetsSpecialSolutionCriteria();
+    // Trial value markets must be solved in all periods including the base
+    // period.
+    return false;
 }
 
 bool TrialValueMarket::shouldSolve() const {
