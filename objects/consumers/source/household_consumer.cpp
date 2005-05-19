@@ -469,9 +469,16 @@ void HouseholdConsumer::calcIncome( NationalAccount& nationalAccount, const stri
   //      - socialSecurityTax );
     
     // savings and social securtity tax are added expenditure as they are calculated
+    // Set the trial values for the personal income and social security taxes
+    // into the marketplace. This is to resolve ordering problems between the
+    // household consumer and government consumer. The government consumer will
+    // have setup these markets.
+    marketplace->addToDemand( "personal-income-tax", regionName, directTaxes, period );
+    marketplace->addToDemand( "social-security-tax", regionName, socialSecurityTax, period );
 
 	// add to National Accounts
 	nationalAccount.addToAccount( NationalAccount::SOCIAL_SECURITY_TAX, socialSecurityTax );
+
 	nationalAccount.addToAccount( NationalAccount::PERSONAL_INCOME_TAXES, directTaxes );
 	nationalAccount.addToAccount( NationalAccount::GNP, consumption );
 	nationalAccount.addToAccount( NationalAccount::CONSUMPTION, consumption );

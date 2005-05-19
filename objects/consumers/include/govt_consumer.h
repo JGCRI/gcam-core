@@ -62,7 +62,8 @@ protected:
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;
 private:
-	void calcTotalTax( NationalAccount& nationalAccount );
+    void calcTotalTax( NationalAccount& aNationalAccount, const std::string& aRegionName,
+                       const int aPeriod );
 	void calcTransfer( NationalAccount& nationalAccount, const Demographic* demographics, 
         const std::string& regionName, int period );
 	void constrainDemand( double budgetScale, const std::string& aRegionName, const int aPeriod  );

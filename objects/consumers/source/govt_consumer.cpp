@@ -26,6 +26,7 @@
 #include "demographics/include/demographic.h"
 #include "reporting/include/output_container.h"
 #include "functions/include/function_utils.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -96,11 +97,37 @@ void GovtConsumer::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
 }
 
 //! Complete the initializations.
-void GovtConsumer::completeInit( const string& regionName ) {
+void GovtConsumer::completeInit( const string& aRegionName ) {
 	prodDmdFnType = "GovtDemandFn";
-	BaseTechnology::completeInit( regionName );
+	BaseTechnology::completeInit( aRegionName );
     assert( mRho != 1 );
 	mSigma.init( 1 / ( 1 - mRho ) );
+    
+    const Modeltime* modeltime = scenario->getModeltime();
+
+    // Only the base year government consumer should setup the markets.
+    if( modeltime->getyr_to_per( year ) == modeltime->getBasePeriod() ){
+
+        // Setup a trial value market for personal income tax so that the
+        // ordering of the government and household consumer does not matter.
+        // This will always be a regional market. Also need to setup a market
+        // for social security taxes.
+        Marketplace* marketplace = scenario->getMarketplace();
+        const static string PERSONAL_INCOME_TAX_MARKET_NAME = "personal-income-tax";
+        marketplace->createMarket( aRegionName, aRegionName, PERSONAL_INCOME_TAX_MARKET_NAME,
+                                   IMarketType::TRIAL_VALUE );
+
+        const static string SOCIAL_SECURITY_TAX_MARKET_NAME = "social-security-tax";
+        marketplace->createMarket( aRegionName, aRegionName, SOCIAL_SECURITY_TAX_MARKET_NAME,
+                                   IMarketType::TRIAL_VALUE );
+        // Set both markets to solve. They may have already been set to solve,
+        // but that will not cause an error. Note that they are being solved in
+        // the base period.
+        for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
+            marketplace->setMarketToSolve( PERSONAL_INCOME_TAX_MARKET_NAME, aRegionName, period );
+            marketplace->setMarketToSolve( SOCIAL_SECURITY_TAX_MARKET_NAME, aRegionName, period );
+        }
+    }
 }
 
 //! initialize anything that won't change during the calcuation
@@ -146,14 +173,30 @@ void GovtConsumer::calcDeficit( const string& aRegionName, int aPeriod ) {
     capInput->setDemandCurrency( deficit, aRegionName, name, aPeriod  );
 }
 
-//! calculate total taxes
-void GovtConsumer::calcTotalTax( NationalAccount& nationalAccount ){
-	mTaxCorporate.set( nationalAccount.getAccountValue( NationalAccount::CORPORATE_INCOME_TAXES ) );
-	mTaxIBT.set( nationalAccount.getAccountValue( NationalAccount::INDIRECT_BUSINESS_TAX ) );
-	double totalTax = nationalAccount.getAccountValue( NationalAccount::CORPORATE_INCOME_TAXES )
-		+ nationalAccount.getAccountValue( NationalAccount::PERSONAL_INCOME_TAXES )
-		+ nationalAccount.getAccountValue( NationalAccount::SOCIAL_SECURITY_TAX )
-		+ nationalAccount.getAccountValue( NationalAccount::INDIRECT_BUSINESS_TAX );
+/*! \brief Calculate total taxes.
+* \param aNationalAccount The container of national accouting values.
+* \param aRegionName The name of the region.
+* \param aPeriod The period in which to calculate taxes.
+*/
+void GovtConsumer::calcTotalTax( NationalAccount& aNationalAccount, const string& aRegionName,
+                                 const int aPeriod )
+{
+    // Use a trial value for the personal income tax and social security tax as
+    // the household consumer may not have calculated them yet. This will be
+    // done in the base period as well.
+    const Marketplace* marketplace = scenario->getMarketplace();
+    double trialPersonalIncomeTaxes = marketplace->getPrice( "personal-income-tax", aRegionName,
+                                                              aPeriod, true );
+    double trialSocialSecurityTaxes = marketplace->getPrice( "social-security-tax", aRegionName,
+                                                              aPeriod, true );
+    
+    // Now calcualte the governments total taxes, or income.
+	mTaxCorporate.set( aNationalAccount.getAccountValue( NationalAccount::CORPORATE_INCOME_TAXES ) );
+	mTaxIBT.set( aNationalAccount.getAccountValue( NationalAccount::INDIRECT_BUSINESS_TAX ) );
+	double totalTax = aNationalAccount.getAccountValue( NationalAccount::CORPORATE_INCOME_TAXES )
+		+ trialPersonalIncomeTaxes
+		+ trialSocialSecurityTaxes
+		+ aNationalAccount.getAccountValue( NationalAccount::INDIRECT_BUSINESS_TAX );
 		// carbon tax, txpro, txadd ...
 	
 	expenditure.setType( Expenditure::INCOME, totalTax );
@@ -176,7 +219,7 @@ void GovtConsumer::calcTransfer( NationalAccount& nationalAccount, const Demogra
 void GovtConsumer::calcIncome( NationalAccount& nationalAccount, const Demographic* aDemographics, 
                               const string& regionName, int period )
 {
-	calcTotalTax( nationalAccount );
+	calcTotalTax( nationalAccount, regionName, period );
 	calcTransfer( nationalAccount, aDemographics, regionName, period );
 	calcDeficit( regionName, period );
 	calcSubsidy( nationalAccount, regionName, period );
@@ -217,7 +260,6 @@ void GovtConsumer::operate( NationalAccount& nationalAccount, const Demographic*
 		// calculate consumption demands for each final good or service
         // Government consumers don't shutdown.
         const double SHUTDOWN_COEF = 1;
-		//calcInputDemand( expenditure.getValue( Expenditure::CONSUMPTION ), aRegionName, aSectorName, aPeriod );
 	    mOutputs[ aPeriod ] = prodDmdFn ? prodDmdFn->calcDemand( input, expenditure.getValue( Expenditure::CONSUMPTION ),
 			                  aRegionName, aSectorName, SHUTDOWN_COEF,
                               aPeriod, 0, 0, mSigma, 0 ) : 0;
