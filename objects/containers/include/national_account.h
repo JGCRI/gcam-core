@@ -47,7 +47,7 @@ class Tabs;
 
 class NationalAccount
 {
-    friend OutputContainer;
+    friend class OutputContainer;
 public:
     enum AccountType {
         GDP,

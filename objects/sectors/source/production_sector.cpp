@@ -233,7 +233,8 @@ void ProductionSector::calcInvestment( const Demographic* aDemographic,
                                        const int period )
 {
     // Calculate and distribute investment to the subsectors of this sector.
-    mInvestor->calcAndDistributeInvestment( InvestmentUtils::convertToInvestables( subsec ),
+    vector<IInvestable*> investableSubsecs = InvestmentUtils::convertToInvestables( subsec );
+    mInvestor->calcAndDistributeInvestment( investableSubsecs,
                                             aNationalAccount,
                                             aDemographic,
                                             period );

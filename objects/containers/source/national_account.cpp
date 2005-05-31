@@ -166,40 +166,40 @@ void NationalAccount::reset() {
 void NationalAccount::csvSGMOutputFile( ostream& aFile, const int period ) const {
 	// write headers
 	aFile << "GNP Accounts" << endl;
-	aFile << enumToName( AccountType::GNP ) << ',';
-	aFile << enumToName( AccountType::CONSUMPTION ) << ',';
-	aFile << enumToName( AccountType::GOVERNMENT ) << ',';
-	aFile << enumToName( AccountType::INVESTMENT ) << ',';
-	aFile << enumToName( AccountType::NET_EXPORT ) << ',';
+	aFile << enumToName( GNP ) << ',';
+	aFile << enumToName( CONSUMPTION ) << ',';
+	aFile << enumToName( GOVERNMENT ) << ',';
+	aFile << enumToName( INVESTMENT ) << ',';
+	aFile << enumToName( NET_EXPORT ) << ',';
 	aFile << endl;
 	// write data
-	aFile << getAccountValue( AccountType::GNP ) << ',';
-	aFile << getAccountValue( AccountType::CONSUMPTION ) << ',';
-	aFile << getAccountValue( AccountType::GOVERNMENT ) << ',';
-	aFile << getAccountValue( AccountType::INVESTMENT ) << ',';
-	aFile << getAccountValue( AccountType::NET_EXPORT ) << ',';
+	aFile << getAccountValue( GNP ) << ',';
+	aFile << getAccountValue( CONSUMPTION ) << ',';
+	aFile << getAccountValue( GOVERNMENT ) << ',';
+	aFile << getAccountValue( INVESTMENT ) << ',';
+	aFile << getAccountValue( NET_EXPORT ) << ',';
 	aFile << endl << endl;
 	// write tax accounts
 	aFile << "National Tax Accounts" << endl;
 	// write headers
-	aFile << enumToName( AccountType::CORPORATE_INCOME_TAXES ) << ',';
-	aFile << enumToName( AccountType::INDIRECT_BUSINESS_TAX ) << ',';
-	aFile << enumToName( AccountType::SOCIAL_SECURITY_TAX ) << ',';
-	aFile << enumToName( AccountType::PERSONAL_INCOME_TAXES ) << ',';
-	aFile << enumToName( AccountType::INVESTMENT_TAX_CREDIT ) << ',';
+	aFile << enumToName( CORPORATE_INCOME_TAXES ) << ',';
+	aFile << enumToName( INDIRECT_BUSINESS_TAX ) << ',';
+	aFile << enumToName( SOCIAL_SECURITY_TAX ) << ',';
+	aFile << enumToName( PERSONAL_INCOME_TAXES ) << ',';
+	aFile << enumToName( INVESTMENT_TAX_CREDIT ) << ',';
 	aFile << "Total Taxes";
 	aFile << endl;
 	// write data
-	aFile << getAccountValue( AccountType::CORPORATE_INCOME_TAXES ) << ',';
-	aFile << getAccountValue( AccountType::INDIRECT_BUSINESS_TAX ) << ',';
-	aFile << getAccountValue( AccountType::SOCIAL_SECURITY_TAX ) << ',';
-	aFile << getAccountValue( AccountType::PERSONAL_INCOME_TAXES ) << ',';
-	aFile << getAccountValue( AccountType::INVESTMENT_TAX_CREDIT ) << ',';
-	aFile << getAccountValue( AccountType::CORPORATE_INCOME_TAXES )
-			+ getAccountValue( AccountType::INDIRECT_BUSINESS_TAX )
-			+ getAccountValue( AccountType::SOCIAL_SECURITY_TAX )
-			+ getAccountValue( AccountType::PERSONAL_INCOME_TAXES )
-			+ getAccountValue( AccountType::INVESTMENT_TAX_CREDIT );
+	aFile << getAccountValue( CORPORATE_INCOME_TAXES ) << ',';
+	aFile << getAccountValue( INDIRECT_BUSINESS_TAX ) << ',';
+	aFile << getAccountValue( SOCIAL_SECURITY_TAX ) << ',';
+	aFile << getAccountValue( PERSONAL_INCOME_TAXES ) << ',';
+	aFile << getAccountValue( INVESTMENT_TAX_CREDIT ) << ',';
+	aFile << getAccountValue( CORPORATE_INCOME_TAXES )
+			+ getAccountValue( INDIRECT_BUSINESS_TAX )
+			+ getAccountValue( SOCIAL_SECURITY_TAX )
+			+ getAccountValue( PERSONAL_INCOME_TAXES )
+			+ getAccountValue( INVESTMENT_TAX_CREDIT );
 	aFile << endl << endl;
 
 }

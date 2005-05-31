@@ -2118,8 +2118,9 @@ double Subsector::distributeInvestment( const IDistributor* aDistributor,
     }
 
     // Set the investment amount for the subsector to the quantity actually distributed.
+    vector<IInvestable*> investmentTechs = InvestmentUtils::convertToInvestables( baseTechs );
     mInvestments[ aPeriod ] = aDistributor->distribute( aExpProfitRateCalc,
-                                                        InvestmentUtils::convertToInvestables( baseTechs ),
+                                                        investmentTechs,
                                                         aNationalAccount,
                                                         aRegionName,
                                                         aSectorName,
