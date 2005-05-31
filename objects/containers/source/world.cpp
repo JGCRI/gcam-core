@@ -665,7 +665,7 @@ const vector<int> World::getRegionIndexesToCalculate( const vector<string>& regi
 * \param aPeriod The period to finalize.
 * \author Josh Lurz
 */
-void World::finalizePeriod( const aPeriod ){
+void World::finalizePeriod( const int aPeriod ){
     // Finalize sectors.
     for( vector<Region*>::iterator region = regions.begin(); region != regions.end(); ++region ){
         (*region)->finalizePeriod( aPeriod );
