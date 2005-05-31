@@ -36,7 +36,7 @@ public:
 	void toInputXML( std::ostream& out, Tabs* tabs ) const;
 	void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 	void completeInit();
-	virtual void initCalc();
+    void initCalc();
 	
 	static const std::string& getXMLNameStatic();
 
@@ -53,7 +53,7 @@ public:
     int getLowerAgeBound() const;
     int getUpperAgeBound() const;
 protected:
-	virtual const std::string& getXMLName() const;
+    const std::string& getXMLName() const;
 	static const std::string XML_NAME; //!< node name for toXML methods
 
 	std::string ageGroup; //!< age group name
