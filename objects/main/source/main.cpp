@@ -89,8 +89,8 @@ int main( int argc, char *argv[] ) {
     
     // Parse configuration file.
     mainLog << "Parsing input files..." << endl;
-    auto_ptr<Configuration> conf( Configuration::getInstance() );
-    XMLHelper<void>::parseXML( configurationFileName, conf.get() );
+    Configuration* conf = Configuration::getInstance();
+    XMLHelper<void>::parseXML( configurationFileName, conf );
     
     // Determine the correct type of ScenarioRunner to create.
     // todo: Consider a factory method.
