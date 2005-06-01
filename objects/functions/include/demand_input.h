@@ -18,10 +18,7 @@
 /*! 
 * \file demand_input.h
 * \ingroup Objects
-* \brief Demand Input class header file.
-*
-*  Detailed description.
-*
+* \brief DemandInput class header file.
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$
@@ -39,13 +36,12 @@ class OutputContainer;
 
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
+* \brief Defines a single input to a demand function.
+* \note Not all demand functions use DemandInputs, as some are modified
+*       production functions.
+* \details TODO
 * \author Pralit Patel, Sonny Kim
 */
-
 class DemandInput : public Input
 {
 public:
@@ -68,9 +64,11 @@ protected:
 	void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 	const std::string& getXMLName() const;
 private:
-	Value mIncomeElasticity; //!< Income Elasticity
-	Value mPriceElasticity; //!< Price Elasticity
+    //! Income Elasticity
+	Value mIncomeElasticity;
+
+    //! Price Elasticity
+	Value mPriceElasticity;
 };
 
 #endif // _DEMAND_INPUT_H_
-

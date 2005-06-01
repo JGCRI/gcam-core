@@ -35,14 +35,11 @@ class Input;
 
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
+* \brief Defines a common base class for all demand functions.
+* \details TODO
 * \author Pralit Patel, Sonny Kim, Josh Lurz
 * \todo Clean up default arguments and make the input vector constant where possible.
 */
-
 class ADemandFunction: public IFunction {
 public:
     // Functions derived classes redefine.
@@ -139,6 +136,12 @@ public:
         }
 };
 
+/*! 
+* \ingroup Objects
+* \brief Defines the HouseholdConsumer demand function.
+* \details TODO
+* \author Pralit Patel, Sonny Kim, Josh Lurz
+*/
 class HouseholdDemandFn : public ADemandFunction {
 public:
 	double calcDemand( std::vector<Input*>& input, double consumption,const std::string& regionName,
@@ -150,6 +153,12 @@ public:
         const std::string& sectorName, int period, double sigma = 0, double IBT = 0, double capitalStock = 0 ) const;
 };
 
+/*! 
+* \ingroup Objects
+* \brief Defines the GovernmentConsumer demand function.
+* \details TODO
+* \author Pralit Patel, Sonny Kim, Josh Lurz
+*/
 class GovtDemandFn : public ADemandFunction {
 public:
 	double calcDemand( std::vector<Input*>& input, double consumption, const std::string& regionName,
@@ -161,6 +170,12 @@ public:
         const std::string& sectorName, int period, double sigma = 0, double IBT = 0, double capitalStock = 0 ) const;
 };
 
+/*! 
+* \ingroup Objects
+* \brief Defines the TradeConsumer demand function.
+* \details TODO
+* \author Pralit Patel, Sonny Kim, Josh Lurz
+*/
 class TradeDemandFn : public ADemandFunction {
 public:
 	double calcDemand( std::vector<Input*>& input, double consumption, const std::string& regionName,
@@ -171,6 +186,12 @@ public:
         const std::string& sectorName, int period, double sigma = 0, double IBT = 0, double capitalStock = 0 ) const;
 };
 
+/*! 
+* \ingroup Objects
+* \brief Defines the InvestmentConsumer demand function.
+* \details TODO
+* \author Pralit Patel, Sonny Kim, Josh Lurz
+*/
 class InvestDemandFn : public ADemandFunction {
 public:
 	double calcDemand( std::vector<Input*>& input, double consumption, const std::string& regionName,
@@ -181,6 +202,12 @@ public:
         const std::string& sectorName, int period, double sigma = 0, double IBT = 0, double capitalStock = 0 ) const;
 };
 
+/*! 
+* \ingroup Objects
+* \brief Defines a common base class for all production functions.
+* \details TODO
+* \author Pralit Patel, Sonny Kim, Josh Lurz
+*/
 class AProductionFunction: public IFunction {
 public:
 	virtual double calcDemand( std::vector<Input*>& input, double consumption, const std::string& regionName,
@@ -239,6 +266,12 @@ protected:
         double capitalStock ) const = 0;
 };
 
+/*! 
+* \ingroup Objects
+* \brief Defines the CES production function.
+* \details TODO
+* \author Pralit Patel, Sonny Kim, Josh Lurz
+*/
 class CESProductionFn : public AProductionFunction {
 public:
 	double calcDemand( std::vector<Input*>& input, double consumption, const std::string& regionName,
@@ -300,6 +333,14 @@ private:
         double sigma ) const;
 };
 
+/*! 
+* \ingroup Objects
+* \brief Defines the Leontief production function.
+* \details TODO
+* \todo Evaluate if CES production functions with zero elasticies could replace
+*       this class.
+* \author Pralit Patel, Sonny Kim, Josh Lurz
+*/
 class LeontiefProductionFn : public AProductionFunction {
 public:
 	double calcDemand( std::vector<Input*>& input, double consumption, const std::string& regionName,

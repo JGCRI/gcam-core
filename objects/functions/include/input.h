@@ -16,14 +16,10 @@
 */
 
 /*! 
-* \file Input.h
+* \file input.h
 * \ingroup Objects
 * \brief Input class header file.
-*
-*  Detailed description.
-*
-* \author Pralit Patel
-* \author Sonny Kim
+* \author Pralit Patel, Sonny Kim
 * \date $Date$
 * \version $Revision$
 */
@@ -37,15 +33,13 @@ class OutputContainer;
 class DemandInput;
 class ProductionInput;
 class OutputContainer;
+
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
-* \author Pralit Patel, Sonny Kim
+* \brief Defines a single input to a production or demand function.
+* \details TODO
+* \author Pralit Patel, Sonny Kim, Josh Lurz
 */
-
 class Input
 {
     friend class SocialAccountingMatrix;

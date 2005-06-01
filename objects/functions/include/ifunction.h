@@ -18,10 +18,7 @@
 /*! 
 * \file ifunction.h
 * \ingroup Objects
-* \brief Interface to the AProductionDemandFunction
-*
-*  Detailed description.
-*
+* \brief IFunction class header file.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$
@@ -31,13 +28,36 @@
 #include <vector>
 #include "functions/include/input.h"
 
+/*! \brief A structure which groups the types of technical change a technology
+*          may define.
+* \details A technology may define none of these types, in which case only input
+*          level technical change will apply, it may define some of these types,
+*          or it may define all of these types. Input level technical change
+*          will override material or energy technical change. Hicks neutral
+*          technical change will always be applied.
+* \note TechChange is defined here instead of BaseTechnology to avoid IFunction
+*       including BaseTechnology.
+* \author Josh Lurz
+* \ingroup Objects
+*/
 struct TechChange {
     TechChange():mMaterialTechChange( 0 ), mEnergyTechChange( 0 ), mHicksTechChange( 0 ){}
-    double mMaterialTechChange; //!< Technical change rate for the materials.
-    double mEnergyTechChange; //!< Technical change rate for energy usage.
-    double mHicksTechChange; //!< Hicks neutral technical change(applies to all inputs together)
+    
+    //! Technical change rate for the materials.
+    double mMaterialTechChange;
+    
+    //! Technical change rate for energy usage.
+    double mEnergyTechChange;
+    
+    //! Hicks neutral technical change(applies to all inputs together)
+    double mHicksTechChange;
 };
 
+/*! \brief The interface to a generic production or demand function.
+* \details TODO
+* \author Sonny Kim, Josh Lurz
+* \ingroup Objects
+*/
 class IFunction {
 public:
 	virtual double calcDemand( std::vector<Input*>& aInputs, double aConsumption, 

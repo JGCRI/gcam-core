@@ -16,13 +16,9 @@
 */
 
 /*! 
-* \file FunctionManager.h
+* \file function_manager.h
 * \ingroup Objects
-* \brief Function Manager class header file.
-*
-*  Static class which will hold a pointer to each function, and will be mapped by
-*  the name of the class.
-*
+* \brief FunctionManager class header file.
 * \author Pralit Patel
 * \author Josh Lurz
 * \date $Date$
@@ -37,20 +33,27 @@ class IFunction;
 
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
+* \brief A static class used to access production and demand functions.
+* \details The FunctionManager contains a mapping of function name to instances
+*          of production and demand functions. Each production and demand
+*          function is only instantiated once in the model. All technologies and
+*          consumers contain a reference to these same functions. The
+*          FunctionManager is responsible for instantiating these function
+*          objects, distributing them to technologies and consumers, and
+*          deallocating them at the end of the model run. The FunctionManager
+*          cannot be directly instantiated as it is a static class, the only
+*          access to the it is through the static getFunction method.
 * \author Pralit Patel, Josh Lurz
 */
-
 class FunctionManager {
 public:
 	static const IFunction* getFunction( const std::string& aFunctionName );
 private:
     FunctionManager();
 	~FunctionManager();
-	std::map<std::string, IFunction*> mFunctions; //!< Maps the function's name to the pointer to the funtion
+
+    //! Maps the function's name to the pointer to the funtion
+	std::map<std::string, IFunction*> mFunctions;
 	typedef std::map<std::string, IFunction*>::iterator FunctionsIterator;
 };
 

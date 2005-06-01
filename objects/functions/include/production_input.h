@@ -18,10 +18,7 @@
 /*! 
 * \file production_input.h
 * \ingroup Objects
-* \brief Production Input class header file.
-*
-*  Detailed description.
-*
+* \brief ProductionInput class header file.
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$
@@ -38,13 +35,11 @@ class Tabs;
 
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
+* \brief Defines a single input to a production function.
+* \details TODO
+* \note Some demand functions also use production inputs.
 * \author Pralit Patel, Sonny Kim
 */
-
 class ProductionInput : public Input
 {
 public:
