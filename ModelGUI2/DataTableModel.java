@@ -1,18 +1,24 @@
 //import javax.swing.table.AbstractTableModel;
+package ModelGUI2;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.*;
 import javax.swing.*;
-//import java.awt.*;
 import javax.swing.tree.TreePath;
+
+import org.jfree.chart.JFreeChart;
 import org.w3c.dom.*;
-//import org.apache.xpath.domapi.*;
 import org.w3c.dom.xpath.*;
-//import java.awt.event.*;
 
 /**
  * Not used anymore, was the first table, but was decided that it wasn't useful. The Code hasn't been
  * updated in a while so it will need some work to get it working again with the changes to BaseTableModel
  */
 public class DataTableModel extends BaseTableModel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Vector cols;
 	private Vector rows;
 	private short tableType;
@@ -22,7 +28,7 @@ public class DataTableModel extends BaseTableModel{
 	public static final short SAM = 2;
 
 	public DataTableModel(TreePath tp, Document doc, JFrame parentFrame) {
-		super(tp, doc, parentFrame);
+		super(tp, doc, parentFrame, "Data Table");
 		cols = new Vector();
 		rows = new Vector();
 		activeRows = new Vector();
@@ -227,6 +233,9 @@ public class DataTableModel extends BaseTableModel{
 
 	public void updateDataFilter(JFrame parentFrame) {
 		filterData(parentFrame);
+	}
+	public JFreeChart createChart(){
+		throw new UnsupportedOperationException();
 	}
 }
 

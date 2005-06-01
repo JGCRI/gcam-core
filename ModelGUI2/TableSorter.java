@@ -1,3 +1,4 @@
+package ModelGUI2;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -61,7 +62,12 @@ import javax.swing.table.*;
  */
 
 public class TableSorter extends AbstractTableModel {
-    protected TableModel tableModel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	protected TableModel tableModel;
 
     public static final int DESCENDING = -1;
     public static final int NOT_SORTED = 0;

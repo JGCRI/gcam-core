@@ -1,16 +1,38 @@
-import javax.swing.table.AbstractTableModel;
-import java.util.*;
-import org.w3c.dom.*;
+package ModelGUI2;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.StringTokenizer;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
+
 import javax.swing.JFrame;
-//import javax.swing.*;
-//import java.awt.*;
-//import java.awt.event.*;
+import javax.swing.JOptionPane;
 import javax.swing.tree.TreePath;
-import org.apache.xpath.domapi.*;
-import org.w3c.dom.xpath.*;
-import javax.swing.*;
+
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.xpath.XPathExpression;
+import org.w3c.dom.xpath.XPathResult;
 
 public class NewDataTableModel extends BaseTableModel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Vector indCol;
 	Vector indRow;
 	String ind1Name;
@@ -435,5 +457,68 @@ public class NewDataTableModel extends BaseTableModel{
 			//System.out.println(" n is " + n.getNodeName());
 		}
 		fireTableCellUpdated(row, col);
+	}
+
+	public JFreeChart createChart() {
+		// Start by creating an XYSeriesSet to contain the series.
+		XYSeriesCollection chartData = new XYSeriesCollection();
+		// Loop through the rows and create a data series for each.
+		for( int row = 0; row < getRowCount(); ++row ){
+			// Row name is at element zero.
+			String rowNameFull = (String)getValueAt(row,0);
+			
+			// Split out the name attribute if it contains it.
+			String rowName;
+			if( rowNameFull.contains("=")){
+				rowName = rowNameFull.split("=")[ 1 ];
+			}
+			else {
+				rowName = rowNameFull;
+			}
+			XYSeries currSeries = new XYSeries(rowName);
+			// Skip column 1 because it contained the label.
+			for( int col = 1; col < getColumnCount(); ++col ){
+				double yValue = Double.parseDouble( (String)getValueAt(row, col) );
+				String fullColumn = getColumnName(col);
+				// Get the year part of it.
+				int year = Integer.parseInt( fullColumn.split("=")[1] );
+				currSeries.add( year, yValue);
+			}
+			// Add the series to the set.
+			chartData.addSeries(currSeries);
+		}
+		// Done adding series, create the chart.
+		// Create the domain axis label.
+		// TODO: Improve naming.
+		NumberAxis xAxis = new NumberAxis("Year");
+		
+		// Use the parent element name as the name of the axis.
+		NumberAxis yAxis = new NumberAxis(ind2Name);
+		
+		// This turns off always including zero in the domain.
+		xAxis.setAutoRangeIncludesZero(false);
+		
+		// This turns on automatic resizing of the domain..
+		xAxis.setAutoRange(true);
+		
+		// This makes the X axis use integer tick units.
+		xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+		
+		// This turns on automatic resizing of the range.
+		yAxis.setAutoRange(true);
+		
+		// Create the plot.
+		XYPlot xyPlot = new XYPlot( chartData, xAxis, yAxis, new XYLineAndShapeRenderer());
+		
+		// Draw the zero line.
+		xyPlot.setZeroRangeBaselineVisible(true);
+		
+		// Create the chart.
+		JFreeChart chart = new JFreeChart( xyPlot );
+		
+		// Create a title for the chart.
+		TextTitle title = new TextTitle(ind2Name);
+		chart.setTitle(title);
+		return chart;
 	}
 }

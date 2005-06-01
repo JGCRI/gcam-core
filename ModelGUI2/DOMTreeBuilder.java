@@ -7,7 +7,7 @@
 *	\date $Date$
 *	\version $Revision$
 */
-
+package ModelGUI2;
 import java.io.FileWriter;
 import java.util.*;
 import org.w3c.dom.*;

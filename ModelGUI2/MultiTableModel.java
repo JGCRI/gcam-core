@@ -1,15 +1,25 @@
+package ModelGUI2;
 
 import java.util.*;
+
+import org.jfree.chart.JFreeChart;
 import org.w3c.dom.*;
 import javax.swing.table.*;
 import javax.swing.JTable;
 import java.awt.Component;
-import javax.swing.JScrollPane;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import org.w3c.dom.xpath.*;
 
 public class MultiTableModel extends BaseTableModel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	// used to be able to edit tables in a cell
 	// don't really know what to do here
 	// it seems to work, but obviously this isn't correct
@@ -324,5 +334,8 @@ public class MultiTableModel extends BaseTableModel{
 			}
 		}
 		activeRows = tempActive;
+	}
+	public JFreeChart createChart() {
+		throw new UnsupportedOperationException();
 	}
 }

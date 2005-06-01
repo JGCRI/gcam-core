@@ -1,4 +1,5 @@
 //import javax.swing.event.TreeModelEvent;
+package ModelGUI2;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
@@ -81,13 +82,19 @@ public class DOMmodel implements TreeModel {
 			int counter = 0;
 			NodeList childlist = ((DOMNodeAdapter)parent).getNode().getChildNodes();
 			while(counter < childlist.getLength()){
-				if (childlist.item(counter).getNodeType() == Node.TEXT_NODE
+				// Skip comment nodes.
+				if( childlist.item(counter).getNodeType() == Node.COMMENT_NODE){
+					// do nothing.
+				}
+				else if (childlist.item(counter).getNodeType() == Node.TEXT_NODE
 					  && ((DOMNodeAdapter)child).getNode().getNodeType() == Node.TEXT_NODE) {
 					if (childlist.item(counter).getNodeValue().equals(((DOMNodeAdapter)child).getNode().getNodeValue())) {
 						return counter;
 					}
 				}
-				else if (((DOMNodeAdapter)child).getNode().getNodeType() != Node.TEXT_NODE && DOMTreeBuilder.compareHelper( ((Element)childlist.item(counter)),
+				else if (((DOMNodeAdapter)child).getNode().getNodeType() != Node.TEXT_NODE && 
+						((DOMNodeAdapter)child).getNode().getNodeType() == Node.ELEMENT_NODE 
+						&& DOMTreeBuilder.compareHelper( ((Element)childlist.item(counter)),
 					((Element)((DOMNodeAdapter)child).getNode() ))){
 					return counter;
 				}
@@ -179,8 +186,12 @@ public class DOMmodel implements TreeModel {
 			String ret;
 			ret = n.getNodeName();
 			NamedNodeMap attrs = n.getAttributes();
-			for (int i =0; i < attrs.getLength(); i++) {
-				ret = ret+" "+attrs.item(i).getNodeName() + " = " + ((Element)n).getAttribute(attrs.item(i).getNodeName());
+			// Node may not be an element so we need to check
+			// if it has attributes.
+			if(attrs != null){
+				for (int i =0; i < attrs.getLength(); i++) {
+					ret = ret+" "+attrs.item(i).getNodeName() + " = " + ((Element)n).getAttribute(attrs.item(i).getNodeName());
+				}
 			}
 			return ret;
 		}

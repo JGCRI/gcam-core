@@ -1,3 +1,4 @@
+package ModelGUI2;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -5,6 +6,10 @@ import javax.swing.tree.TreePath;
 import org.w3c.dom.Document;
 
 public class RadioButton extends JDialog implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static RadioButton dialog;
 	private static String value = "";
 	private JList list;

@@ -1,4 +1,4 @@
-import javax.swing.*;
+package ModelGUI2;
 import java.io.*;
 
 public class CSVFilter extends javax.swing.filechooser.FileFilter

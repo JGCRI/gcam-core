@@ -1,15 +1,15 @@
+package ModelGUI2;
+
 import java.util.*;
 import javax.swing.table.AbstractTableModel;
 import org.w3c.dom.*;
-//import javax.swing.table.*;
-//import javax.swing.JTable;
-//import java.awt.Component;
-import javax.swing.JScrollPane;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.tree.TreePath;
 import java.awt.event.*;
+
 import org.apache.xpath.domapi.*;
+import org.jfree.chart.JFreeChart;
 import org.w3c.dom.xpath.*;
 
 public abstract class BaseTableModel extends AbstractTableModel {
@@ -43,6 +43,12 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		this.parentFrame = parentFrame;
 		this.tableTypeString = tableTypeString;
 	}
+	
+	/** 
+	 * Creates a chart from the data in the table.
+	 * @author jlurz
+	 */
+	public abstract JFreeChart createChart();
 	
 	/**
 	 * abstract the deriving class needs to implement this for flip functionality, params used mostly for MultiTable to know which table to pass the call on to

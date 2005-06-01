@@ -1,4 +1,4 @@
-import javax.swing.*;
+package ModelGUI2;
 import java.io.*;
 
 public class XMLFilter extends javax.swing.filechooser.FileFilter

@@ -1,15 +1,20 @@
+package ModelGUI2;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.*;
+
+import org.jfree.chart.JFreeChart;
 import org.w3c.dom.*;
-import javax.swing.table.*;
-import javax.swing.JTable;
-import java.awt.Component;
-import javax.swing.JScrollPane;
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import org.w3c.dom.xpath.*;
 
 public class ComboTableModel extends BaseTableModel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// new stuff
 	Vector TreeMapVector = new Vector();
 	Vector leftSideVector = new Vector();
@@ -507,5 +512,9 @@ public class ComboTableModel extends BaseTableModel{
 
 		// fireOffSomeListeners?
 
+	}
+
+	public JFreeChart createChart() {
+		throw new UnsupportedOperationException();
 	}
 }
