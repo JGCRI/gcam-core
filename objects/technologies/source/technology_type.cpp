@@ -9,12 +9,12 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include <cassert>
-#include <iostream>
 
 #include "util/base/include/util.h"
 #include "technologies/include/technology_type.h"
 #include "technologies/include/base_technology.h"
 #include "investment/include/investment_utils.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
@@ -25,13 +25,17 @@ TechnologyType::TechnologyType(){
 /*! \brief Add a vintage to the technology type.
 * \param aTech A pointer to a BaseTechnology.
 * \return Whether the BaseTechnology was successfully added.
-* \note The TechnologyType object does NOT assume ownership over the technologies.
+* \note The TechnologyType object does NOT assume ownership over the
+*       technologies.
 * \author Josh Lurz
 */
 bool TechnologyType::addVintage( BaseTechnology* aTech ){
     // Check if a vintage already exists for the year.
     if( util::searchForValue( mVintages, aTech->getYear() ) != 0 ){
-        cout << "Error: A vintage already exists with year: " << aTech->getYear() << " of the Technology Type: " << aTech->getName() << "." << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "A vintage already exists with year: " << aTech->getYear() 
+                << " of the Technology Type: " << aTech->getName() << "." << endl;
         return false;
     }
 
@@ -48,7 +52,8 @@ bool TechnologyType::addVintage( BaseTechnology* aTech ){
 double TechnologyType::getTotalCapitalStock( const int aUpToYear ) const {
     double totalStock = 0;
     for( CVintageIterator cVintage = mVintages.begin(); cVintage != mVintages.end(); ++cVintage ){
-        // Check if the year of the technology is less than or equal to the top year.
+        // Check if the year of the technology is less than or equal to the top
+        // year.
         if( cVintage->first <= aUpToYear ){
             totalStock += cVintage->second->getCapital();
         }
@@ -56,32 +61,39 @@ double TechnologyType::getTotalCapitalStock( const int aUpToYear ) const {
     return totalStock;
 }
 
-/*! \brief Initialize technologies earlier than the given year with the technology from the given year.
+/*! \brief Initialize technologies earlier than the given year with the
+*          technology from the given year.
 * \param aBaseYear Year to use as the base.
 * \author Josh Lurz
-*/ 
+*/
 void TechnologyType::initializeTechsFromBase( const int aBaseYear ){
     // Find the base technology.
     const BaseTechnology* baseTech = util::searchForValue( mVintages, aBaseYear );
     if( !baseTech ){
-        cout << "Error: Invalid base year. Cannot initialize previous base technologies." << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Invalid base year. Cannot initialize previous base technologies." << endl;
         return;
     }
 
     // Initialize any previous vintages. 
     for( VintageIterator cVintage = mVintages.begin(); cVintage != mVintages.end(); ++cVintage ){
-        // Check if the year of the technology is less than or equal to the base year
+        // Check if the year of the technology is less than or equal to the base
+        // year
         if( cVintage->first < aBaseYear ){
             cVintage->second->copyParam( baseTech );
         }
     }
 }
 
-/*! \brief Either initialize or create a technology for the given year with an existing base technology.
+/*! \brief Either initialize or create a technology for the given year with an
+*          existing base technology.
 * \param aNewTechYear The year of the technology to initialize or create.
-* \param aCurrTechYear The year of a technology to use to initialize the new technology.
+* \param aCurrTechYear The year of a technology to use to initialize the new
+*        technology.
 * \return A pointer to the newly created technology, null otherwise. 
-* \note The callee must take care of the dynamically allocated memory possibly returned by this function.
+* \note The callee must take care of the dynamically allocated memory possibly
+*       returned by this function.
 * \author Josh Lurz
 */
 BaseTechnology* TechnologyType::initOrCreateTech( const int aNewTechYear, const int aCurrTechYear ){
@@ -90,7 +102,9 @@ BaseTechnology* TechnologyType::initOrCreateTech( const int aNewTechYear, const 
     // Find the base technology.
     const BaseTechnology* baseTech = util::searchForValue( mVintages, aCurrTechYear );
     if( !baseTech ){
-        cout << "Error: Invalid current technology year. Cannot initialize current technology." << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Invalid current technology year. Cannot initialize current technology." << endl;
         return 0;
     }
 
@@ -108,10 +122,13 @@ BaseTechnology* TechnologyType::initOrCreateTech( const int aNewTechYear, const 
     return newTech;
 }
 
-/*! \brief Set total investment for the given year and a level of annual investment at that year.
+/*! \brief Set total investment for the given year and a level of annual
+*          investment at that year.
 * \param aPrevYear The year of the previous investment to interpolate from.
-* \param aCurrentYear The year of the technology to set the investment level for. 
-* \param aAnnualInvestment The annual investment in this technology type at the current year.
+* \param aCurrentYear The year of the technology to set the investment level
+*        for. 
+* \param aAnnualInvestment The annual investment in this technology type at the
+*        current year.
 * \param aPeriod The period in which to set the investment.
 * \return The total amount of annual investment that occurred.
 * \author Josh Lurz
@@ -120,9 +137,13 @@ BaseTechnology* TechnologyType::initOrCreateTech( const int aNewTechYear, const 
 double TechnologyType::setTotalInvestment( const string& aRegionName, const int aPrevYear, const int aCurrentYear,
                                            const double aAnnualInvestment, const int aPeriod )
 {
-    /*! \pre The year of the previous technology to use for interpolation is less than the new technology.*/
+    /*! \pre The year of the previous technology to use for interpolation is
+    *        less than the new technology.
+    */
     assert( aPrevYear < aCurrentYear );
-    /*! \pre The annual investment passed to the technology type is a valid number and greater than zero. */
+    /*! \pre The annual investment passed to the technology type is a valid
+    *        number and greater than zero. 
+    */
     assert( util::isValidNumber( aAnnualInvestment ) );
     assert( aAnnualInvestment > 0 );
 
@@ -142,6 +163,7 @@ double TechnologyType::setTotalInvestment( const string& aRegionName, const int 
     assert( util::isValidNumber( totalInvestment ) );
     assert( totalInvestment > 0 );
 
-    // Set the new technologies investment level and return the amount actually invested.
+    // Set the new technologies investment level and return the amount actually
+    // invested.
     return currTech->setInvestment( aRegionName, aAnnualInvestment, totalInvestment, aPeriod );
 }
