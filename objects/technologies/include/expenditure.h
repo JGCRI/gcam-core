@@ -19,9 +19,6 @@
 * \file expenditure.h
 * \ingroup Objects
 * \brief Expenditure class header file.
-*
-*  Detailed description.
-*
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$
@@ -35,16 +32,14 @@ class Tabs;
 
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
+* \brief A class to track various types of expenditures by Consumers or
+*        ProductionTechnologies.
 * \author Pralit Patel, Sonny Kim
 */
-
 class Expenditure
 {
 public:
+    //! An enumeration of all possible types of expenditure.
     enum ExpenditureType {
         SOCIAL_SECURITY_TAX,
         SAVINGS,
@@ -72,6 +67,7 @@ public:
 		COSTS,
         END
     };
+
 	Expenditure();
 	void reset();
 	void setType( const ExpenditureType aType, const double aValue );
@@ -81,9 +77,8 @@ public:
 	void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
 	const std::string& enumToName( const ExpenditureType aType ) const;
 private:
-    //! Map relating expenditures by type to value.
+    //! Vector of expenditures indexed by type.
     std::vector<double> mExpenditures;
 };
 
 #endif // _EXPENDITURE_H_
-

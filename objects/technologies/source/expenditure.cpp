@@ -10,7 +10,7 @@
 */
 
 /*! 
-* \file Expenditure.cpp
+* \file expenditure.cpp
 * \ingroup Objects
 * \brief The Expenditure class source file.
 *

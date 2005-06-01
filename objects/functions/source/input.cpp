@@ -10,12 +10,9 @@ use of this software.
 */
 
 /*! 
-* \file Input.cpp
+* \file input.cpp
 * \ingroup Objects
 * \brief The Input class source file.
-*
-*  Detailed description.
-*
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$

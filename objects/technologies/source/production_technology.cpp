@@ -10,12 +10,9 @@
 */
 
 /*! 
-* \file ProductionTechnology.cpp
+* \file production_technology.cpp
 * \ingroup Objects
 * \brief The ProductionTechnology class source file.
-*
-*  Detailed Description.
-*
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$

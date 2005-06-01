@@ -1,9 +1,12 @@
-/* population.cpp
- * Demographics model that calculates population by gender and 
- * age cohort.
- * Coded by Son H. Kim  Date: 7/17/2003
+/*! 
+* \file population_sgm_rate.cpp
+* \ingroup Objects
+* \brief PopulationSGMRate class source file.
+* \author Sonny Kim
+* \author Katherine Chung
+* \date $Date$
+* \version $Revision$
 */
-
 #include <vector>
 #include <fstream>
 #include <iostream>

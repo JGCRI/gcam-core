@@ -5,9 +5,9 @@
 #endif
 
 /*! 
-* \file sector_investment.h
+* \file accelerator.h
 * \ingroup Objects
-* \brief The SectorInvestment class header file.
+* \brief The Accelerator class header file.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$

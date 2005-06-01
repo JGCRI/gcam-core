@@ -16,12 +16,9 @@
 */
 
 /*! 
-* \file householdConsumer.h
+* \file household_consumer.h
 * \ingroup Objects
 * \brief HouseholdConsumer class header file.
-*
-*  Detailed description.
-*
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$
@@ -41,10 +38,8 @@ class OutputContainer;
 
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
+* \brief An object representing a set of households.
+* \details TODO
 * \author Pralit Patel, Sonny Kim
 */
 
@@ -137,8 +132,8 @@ private:
     
     double mInitialSavings;
 
-	double workingAgePopMale; //!< population of working age males, read in should get from demographics
-	double workingAgePopFemale; //!< population of working age females, read in should get from demographics
+	double workingAgePopMale; //!< population of working age males(from Demographics)
+	double workingAgePopFemale; //!< population of working age females(from Demographics)
 
 	void copy( const HouseholdConsumer& householdConsumerIn );
 };

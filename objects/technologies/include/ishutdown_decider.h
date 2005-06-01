@@ -16,9 +16,9 @@
 */
 
 /*! 
-* \file iexpected_profit_calculator.h
+* \file ishutdown_decider.h
 * \ingroup Objects
-* \brief The IExpectedProfitCalculator interface header file.
+* \brief The IShutdownDecider interface header file.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$

@@ -4,6 +4,15 @@
 #pragma once
 #endif
 
+/*! 
+* \file so2_emissions.h
+* \ingroup Objects
+* \brief SO2Emissions class header file.
+* \author
+* \date $Date$
+* \version $Revision$
+*/
+
 #include "emissions/include/ghg.h"
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>

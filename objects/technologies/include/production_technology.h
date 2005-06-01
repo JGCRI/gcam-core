@@ -16,12 +16,9 @@
 */
 
 /*! 
-* \file ProductionTechnology.h
+* \file production_technology.h
 * \ingroup Objects
 * \brief ProductionTechnology class header file.
-*
-*  Detailed description.
-*
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$

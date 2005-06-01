@@ -22,12 +22,15 @@ class Marketplace;
 class SolverInfoSet;
 class World;
 
-/*! \brief An abstract class defining an interface to an independent component of a Solver.
-* \detailed A SolverComponent is an independent object which takes a Marketplace and attempts
-* to clear all markets to a given relative excess demand tolerance within a given number of iterations.
-* SolverComponents may use static functions within the SolverLibrary class, they may not however use
-* other SolverComponents. This is the role of the Solver object. The main method within a SolverComponent
-* is the solve method, which attempts to clear the markets.
+/*! \brief An abstract class defining an interface to an independent component
+*          of a Solver.
+* \detailed A SolverComponent is an independent object which takes a Marketplace
+*           and attempts to clear all markets to a given relative excess demand
+*           tolerance within a given number of iterations. SolverComponents may
+*           use static functions within the SolverLibrary class, they may not
+*           however use other SolverComponents. This is the role of the Solver
+*           object. The main method within a SolverComponent is the solve
+*           method, which attempts to clear the markets.
 * \author Josh Lurz
 */
 class SolverComponent {
@@ -57,12 +60,19 @@ protected:
    World* world; //<! World to call calc on.
    CalcCounter* calcCounter; //<! Tracks the number of calls to world.calc
    
+   //! A structure used to track maximum relative excess demand over many
+   //! iterations.
    struct IterationInfo {
    public:
+       //! Name of the SolverComponent active in the iteration.
        std::string mName;
+
+       //! Maximum relative excess demand in the iteration.
        double mRED;
+
        IterationInfo( const std::string& aName = std::string(), const double aRED = 0 );
    };
+
    std::vector<IterationInfo> mPastIters;
    virtual const std::string& getName() const = 0;
    void addIteration( const std::string& aSolName, const double aRED );

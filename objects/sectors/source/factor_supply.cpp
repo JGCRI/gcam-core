@@ -10,12 +10,9 @@
 */
 
 /*! 
-* \file FactorSupply.cpp
+* \file factor_supply.cpp
 * \ingroup Objects
-* \brief The Factor Supply class source file.
-*
-*  Detailed description.
-*
+* \brief The FactorSupply class source file.
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$

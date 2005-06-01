@@ -5,12 +5,9 @@
 #endif
 
 /*! 
-* \file expenditure.h
+* \file output_container.h
 * \ingroup Objects
 * \brief OutputContainer class header file.
-*
-*  Detailed description.
-*
 * \author Pralit Patel, Katherine Chung
 * \date $Date$
 * \version $Revision$

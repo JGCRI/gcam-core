@@ -16,12 +16,9 @@
 */
 
 /*! 
-* \file FactorSupply.h
+* \file factor_supply.h
 * \ingroup Objects
 * \brief Factor Supply class header file.
-*
-*  Detailed description.
-*
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$

@@ -1,7 +1,7 @@
 /*! 
 * \file population_sgm_fixed.cpp
 * \ingroup Objects
-* \brief population_sgm_fixed class source file.
+* \brief PopulationSGMFixed class source file.
 * \author Sonny Kim
 * \author Katherine Chung
 * \date $Date$
@@ -9,7 +9,6 @@
 */
 
 #include <vector>
-#include <fstream>
 #include <iostream>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>

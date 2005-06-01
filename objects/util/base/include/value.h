@@ -20,8 +20,6 @@
 * \ingroup Objects
 * \brief Value class header file.
 *
-*  Detailed description.
-*
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$
@@ -32,10 +30,10 @@
 
 /*! 
 * \ingroup Objects
-* \brief Change
-* \details CHANGE
-*
-* \note CHANGE
+* \brief A class containing a single value in the model.
+* \details Tracks a value, whether it has been initialized, and an associated
+*          unit.
+* \todo This is only a skeleton, much more to do.
 * \author Josh Lurz
 */
 

@@ -10,12 +10,9 @@
 */
 
 /*! 
-* \file householdConsumer.cpp
+* \file household_consumer.cpp
 * \ingroup Objects
 * \brief The HouseholdConsumer class source file.
-*
-*  Detailed Description.
-*
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$

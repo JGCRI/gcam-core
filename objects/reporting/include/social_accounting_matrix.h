@@ -16,12 +16,9 @@
 */
 
 /*! 
-* \file expenditure.h
+* \file social_accounting_matrix.h
 * \ingroup Objects
-* \brief Expenditure class header file.
-*
-*  Detailed description.
-*
+* \brief SocialAccountingMatrix class header file.
 * \author Pralit Patel
 * \author Katherine Chung
 * \date $Date$
@@ -33,14 +30,7 @@
 #include <iosfwd>
 #include "reporting/include/output_container.h"
 
-/*! 
-* \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
-* \author Pralit Patel, Katherine Chung
-*/
+
 
 class Region;
 class Sector;
@@ -55,6 +45,12 @@ class FactorSupply;
 class Input;
 class StorageTable;
 
+/*! 
+* \ingroup Objects
+* \brief An object which outputs a social accounting matrix.
+* \details TODO
+* \author Pralit Patel, Katherine Chung
+*/
 class SocialAccountingMatrix : public OutputContainer {
 public:
     SocialAccountingMatrix( const std::string& aRegionName );
@@ -88,4 +84,3 @@ private:
 };
 
 #endif // _SOCIAL_ACCOUNTING_MATRIX_H_
-
