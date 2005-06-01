@@ -54,11 +54,6 @@ public:
 	static void scaleCoefficientInputs( std::vector<Input*>& input,
                                         double scaler );
     
-    static void scaleDemandInputs( std::vector<Input*>& input,
-                                   double scaler,
-                                   const std::string& aRegionName,
-                                   const int aPeriod );
-    
     static double getDemandSum( const std::vector<Input*>& aInputs );
     
     static double getCoefSum( const std::vector<Input*>& input );

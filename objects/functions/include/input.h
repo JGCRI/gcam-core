@@ -76,7 +76,6 @@ public:
     double getPriceReceived( const std::string& aRegionName, const int aPeriod ) const;
 	void setDemandCurrency( const double aDemand, const std::string& aRegionName, 
         const std::string& aSectorName, int aPeriod );
-	virtual void scaleDemand( double scaleValue, const std::string& aRegionName, const int aPeriod );
 	virtual void scaleCoefficient( double scaleValue );
 	double getCoefficient() const;
 	void setCoefficient( double coef );

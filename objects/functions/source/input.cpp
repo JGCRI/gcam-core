@@ -282,19 +282,6 @@ double Input::getCoefficient() const {
 	return mCoefficient;
 }
 
-//! Virtual function to scale demand
-void Input::scaleDemand( double scaleValue, const string& aRegionName, const int aPeriod ) {
-	// assumes that scalable demandCurrency exists
-	// assumes that demand has been added to the marketplace by setDemandCurrency
-	//assert( mDemandCurrency > 0 );
-    Marketplace* marketplace = scenario->getMarketplace();
-	// store existing demandCurrency that was added to marketplace
-	double existingMarketDemand = mDemandCurrency;
-    mDemandCurrency.set( mDemandCurrency * scaleValue );
-	// add the difference of scaled demandCurrency and existing demandCurrency to marketplace
-	marketplace->addToDemand( mName, aRegionName, mDemandCurrency - existingMarketDemand, aPeriod );
-}
-
 //! Virtual function to scale the coefficient
 void Input::scaleCoefficient( double aScaleValue ) {
     assert( aScaleValue != 0 ); // cant scale coefs to zero.

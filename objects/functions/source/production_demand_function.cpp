@@ -116,7 +116,8 @@ double HouseholdDemandFn::calcCoefficient( vector<Input*>& input, double consump
 	return 0; // return null for CES AlphaZero only
 }
 
-double GovtDemandFn::calcDemand( vector<Input*>& input, double consumption, const string& regionName, 
+double GovtDemandFn::calcDemand( vector<Input*>& input, double consumption,
+                                 const string& regionName, 
                                  const string& sectorName,
                                  const double aShutdownCoef,
                                  int period, double capitalStock, 
@@ -139,7 +140,6 @@ double GovtDemandFn::calcDemand( vector<Input*>& input, double consumption, cons
     }
     double rho = FunctionUtils::getRho( sigma );
 	double govtPrefScaler = consumption * pow( totalUnscaledDemand, sigma*(rho-1) );
-	assert( govtPrefScaler > 0 );
 
 	double totalDemand = 0; // total final demand
 	for( unsigned int i = 0; i < input.size(); ++i ){

@@ -45,17 +45,6 @@ void FunctionUtils::scaleCoefficientInputs( vector<Input*>& input, double scaler
 	}
 }
 
-//! Scale Demand Inputs
-void FunctionUtils::scaleDemandInputs( vector<Input*>& input,
-                                       double scaler,
-                                       const string& aRegionName,
-                                       const int aPeriod )
-{
-	for ( unsigned int i = 0; i < input.size(); ++i ) {
-		input[i]->scaleDemand( scaler, aRegionName, aPeriod ); // scale total demand
-	}
-}
-
 //! Function to return sum of all demand inputs
 double FunctionUtils::getDemandSum( const std::vector<Input*>& aInputs ) {
     double sum = 0;
