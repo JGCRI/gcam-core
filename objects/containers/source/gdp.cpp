@@ -55,10 +55,6 @@ GDP::GDP() {
     baseGDP = 0;
 }
 
-//! Destructor
-GDP::~GDP(){
-}
-
 //! parses Population xml object
 void GDP::XMLParse( const DOMNode* node ){
 	// make sure we were passed a valid node.
