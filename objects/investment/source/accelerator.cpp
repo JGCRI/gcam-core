@@ -62,10 +62,11 @@ Accelerator::~Accelerator(){
 
 /*! \brief Complete the initialization of the Accelerator before it is used.
 * \details This function stores the region and sector name internally, and then
-* creates default growth and profit calculation objects if they were not read
-* in. The default growth calculator is the InvestmentGrowthCalculator and the
-* default profit rate calculator is the SimpleExpectedProfitRateCalculator.
-* These objects are created with their default parameters.
+*          creates default growth and profit calculation objects if they were
+*          not read in. The default growth calculator is the
+*          InvestmentGrowthCalculator and the default profit rate calculator is
+*          the SimpleExpectedProfitRateCalculator. These objects are created
+*          with their default parameters.
 * \param aRegionName Name of the region containing the accelerator.
 * \param aSectorName Name of the sector containing the accelerator.
 */
