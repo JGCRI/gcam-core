@@ -82,8 +82,8 @@ HouseholdConsumer::HouseholdConsumer() {
 	laborSupplyMale = 0;
 	laborSupplyFemale = 0;
 
-	workingAgePopMale = 0;
-	workingAgePopFemale = 0;
+	workingAgePopMale = -1;
+	workingAgePopFemale = -1;
 
     mInitialSavings = 0;
 }
@@ -139,16 +139,9 @@ bool HouseholdConsumer::XMLDerivedClassParse( const string &nodeName, const DOMN
 	if ( nodeName == "baseLandDemandPerHH" ) {
 		baseLandDemandPerHH = XMLHelper<double>::getValue( curr );
 	}
-	/*
-	else if ( nodeName == "baseScalerLand" ) {
-		baseScalerLand = XMLHelper<double>::getValue( curr );
-	}*/
 	else if (nodeName == "baseLaborDemandPerHH" ) {
 		baseLaborDemandPerHH = XMLHelper<double>::getValue( curr );
-	}/*
-	else if ( nodeName == "baseScalerLabor" ) {
-		baseScalerLabor = XMLHelper<double>::getValue( curr );
-	}*/
+	}
 	else if (nodeName == "socialSecurityTaxRate" ) {
 		socialSecurityTaxRate = XMLHelper<double>::getValue( curr );
 	}
@@ -192,12 +185,6 @@ bool HouseholdConsumer::XMLDerivedClassParse( const string &nodeName, const DOMN
 	}
 	else if ( nodeName == "fixedLaborSupplyFrac" ) {
 		fixedLaborSupplyFrac = XMLHelper<double>::getValue( curr );
-	}
-	else if ( nodeName == "workingAgePopMale" ) {
-		workingAgePopMale = XMLHelper<double>::getValue( curr );
-	}
-	else if ( nodeName == "workingAgePopFemale" ) {
-		workingAgePopFemale = XMLHelper<double>::getValue( curr );
 	}
 	else {
 		return false;
@@ -260,13 +247,41 @@ void HouseholdConsumer::toDebugXMLDerived( const int period, ostream& out, Tabs*
 
 // complete init only sets up the production demand function, can't do much because
 // the markets are not set up yet
-void HouseholdConsumer::completeInit( const string& regionName ) {
-	prodDmdFnType = "HouseholdDemandFn";
-	BaseTechnology::completeInit( regionName );
+void HouseholdConsumer::completeInit( const string& aRegionName ) {
+    prodDmdFnType = "HouseholdDemandFn";
+    BaseTechnology::completeInit( aRegionName );
+    
+    // Only the base year consumer should setup the market, future consumers
+    // will use it.
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( modeltime->getyr_to_per( year ) == modeltime->getBasePeriod() ){
+        // Setup a trial value market for consumer's budget. This will always be
+        // a regional market, and made unique per consumer type.
+        Marketplace* marketplace = scenario->getMarketplace();
+        if( !marketplace->createMarket( aRegionName, aRegionName, getBudgetMarketName(),
+            IMarketType::NORMAL ) )
+        {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Budget trial value market already existed." << endl;
+        }
+        
+        // Set the market to solve. Note that it is also solving the base
+        // period. It might help to set a reasonable initial price in the base
+        // period. Future periods will use the last period's price as a starting
+        // point, which should be reasonable.
+        for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
+            marketplace->setMarketToSolve( getBudgetMarketName(), aRegionName, period );
+        }
+    }
 }
 
 // Init calc only runs in the base period, used to calculate all of the base year coefficients
-void HouseholdConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName, const string& aSectorName, NationalAccount& nationalAccount , Demographic* aDemographics, const double aCapitalStock, const int aPeriod ) {
+void HouseholdConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
+                                  const string& aSectorName, NationalAccount& nationalAccount,
+                                  Demographic* aDemographics, const double aCapitalStock,
+                                  const int aPeriod )
+{
     if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
         Marketplace* marketplace = scenario->getMarketplace();
 
@@ -274,14 +289,23 @@ void HouseholdConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const s
         BaseTechnology::calcPricePaid(aMoreSectorInfo, aRegionName, aSectorName, aPeriod);
 
         if( aPeriod == 0 ) {
+            assert( baseLandSupply > 0 );
             double baseLandPrice = marketplace->getDemand("Land", aRegionName, 0) / baseLandSupply;
-            double baseLaborPrice = marketplace->getDemand("Labor", aRegionName, 0) / baseLaborSupply;
-            if (baseLandPrice == 0) {
+            if( baseLandPrice == 0 ){
                 baseLandPrice = 1;
             }
-            if(baseLaborPrice == 0) {
+
+            assert( baseLaborSupply > 0 );
+            double baseLaborPrice = marketplace->getDemand("Labor", aRegionName, 0) / baseLaborSupply;
+            if( baseLaborPrice == 0 ) {
                 baseLaborPrice = 1;
             }
+            
+            // Set the working age populations from the demographics.
+            assert( aDemographics );
+		    workingAgePopMale = aDemographics->getWorkingAgePopulationMales( aPeriod );
+		    workingAgePopFemale = aDemographics->getWorkingAgePopulationFemales( aPeriod );
+            
             // call income calculation once in the base year to calculate consumption
             calcIncome( nationalAccount, aRegionName, aPeriod );
             // does not have the right consumption income because dividends are not calculated from production sectors
@@ -290,15 +314,6 @@ void HouseholdConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const s
         // Apply technical change to input coefficients.
         prodDmdFn->applyTechnicalChange( input, TechChange(), aRegionName, aSectorName, aPeriod, 0, 0 );
     }
-}
-
-//! constrain demand
-void HouseholdConsumer::constrainDemand( double budgetScale, const string& aRegionName, const int aPeriod ) {
-    FunctionUtils::scaleDemandInputs( input, budgetScale, aRegionName, aPeriod );
-    
-    // readjust consumption total with budgetScale
-    // Todo: Replace this with a solved equation.
-    mOutputs[ aPeriod ] *= budgetScale;
 }
 
 //! calculate factor supply
@@ -326,17 +341,15 @@ void HouseholdConsumer::calcFactorDemand( const string& regionName, int period )
     Marketplace* marketplace = scenario->getMarketplace();
 	marketplace->addToDemand( "Land", regionName, landDemand, period );
 	householdLandDemand = landDemand * marketplace->getMarketInfo( "Land", regionName, period, "pricePaid" ); // this was price paid in the UML
-	//householdLandDemand = landDemand * getPricePaid( "Land" );
+
 	// *******  Labor  *******
-	laborDemand = ( laborSupplyMale + laborSupplyFemale )/*marketplace->getSupply( "Labor", regionName, period )*/ * baseLaborDemandPerHH;
+	laborDemand = ( laborSupplyMale + laborSupplyFemale ) * baseLaborDemandPerHH;
     assert( laborDemand >= 0 );
     assert( util::isValidNumber( laborDemand ) );
 	marketplace->addToDemand( "Labor", regionName, laborDemand, period );
 	householdLaborDemand = laborDemand * marketplace->getMarketInfo( "Labor", regionName, period, "pricePaid" ); // this was price paid in the UML
     assert( util::isValidNumber( householdLaborDemand ) );
     assert( householdLaborDemand >= 0 );
-
-	//householdLaborDemand = laborDemand * getPricePaid( "Labor" ); 
 }
 
 //! calculate social security tax
@@ -344,7 +357,7 @@ double HouseholdConsumer::calcSocialSecurityTax( NationalAccount& nationalAccoun
 	Marketplace* marketplace = scenario->getMarketplace();
 	double socialSecurityTax = socialSecurityTaxRate * marketplace->getPrice( "Labor", regionName, period ) 
 		                       * ( laborSupplyMale + laborSupplyFemale );
-	//double socialSecurityTax = socialSecurityTaxRate * nationalAccount.getAccountValue( NationalAccount::LABOR_WAGES );
+
     expenditure.setType( Expenditure::SOCIAL_SECURITY_TAX, socialSecurityTax );
 	return socialSecurityTax;
 }
@@ -374,7 +387,12 @@ void HouseholdConsumer::calcLandSupply( const string& regionName, int period ) {
 // calculate labor supply
 void HouseholdConsumer::calcLaborSupply( const string& regionName, int period ) {
 	Marketplace* marketplace = scenario->getMarketplace();
-	// alternative labor supply calculation based on fixed fraction
+	// alternative labor supply calculation based on fixed fraction.
+    /*! \pre Working age population variables have been set from the
+    *        demographics object. 
+    */
+    assert( workingAgePopMale != -1 );
+    assert( workingAgePopFemale != -1 );
 	if(fixedLaborSupplyFrac != 0) {
 		laborSupplyMale = workingAgePopMale * fixedLaborSupplyFrac;
 		laborSupplyFemale = workingAgePopFemale * fixedLaborSupplyFrac;
@@ -393,7 +411,7 @@ void HouseholdConsumer::calcLaborSupply( const string& regionName, int period ) 
 }
 
 // is this guaranteed to be called after calculation
-double HouseholdConsumer::getLaborSupply() const{
+double HouseholdConsumer::getLaborSupply() const {
 	return laborSupplyMale + laborSupplyFemale;
 }
 //! calculate income
@@ -419,18 +437,13 @@ void HouseholdConsumer::calcIncome( NationalAccount& nationalAccount, const stri
 		calcBaseLandDemandPerHH( regionName, period );
     }
 	double socialSecurityTax = calcSocialSecurityTax( nationalAccount, regionName, period );
-	// for debugging
-	double tempDividends = nationalAccount.getAccountValue( NationalAccount::DIVIDENDS );
+
 	Marketplace* marketplace = scenario->getMarketplace();
-	double tempLaborWages = marketplace->getPrice( "Labor", regionName, period ) 
-		* ( laborSupplyMale + laborSupplyFemale );
-	//double tempLaborWages = nationalAccount.getAccountValue( NationalAccount::LABOR_WAGES );
-	//double tempLaborWagesLessSocialSecurityTax = nationalAccount.getAccountValue( NationalAccount::LABOR_WAGES ) - socialSecurityTax;
-	double tempLaborWagesLessSocialSecurityTax = tempLaborWages - socialSecurityTax;
-	double tempLandRents = nationalAccount.getAccountValue( NationalAccount::LAND_RENTS );
-	// end debugging
+	double laborWages = marketplace->getPrice( "Labor", regionName, period ) 
+		                * ( laborSupplyMale + laborSupplyFemale );
+
 	double taxableIncome = nationalAccount.getAccountValue( NationalAccount::DIVIDENDS ) +
-		tempLaborWages - socialSecurityTax + 
+		laborWages - socialSecurityTax + 
         nationalAccount.getAccountValue( NationalAccount::LAND_RENTS );
 
 	// There are no demands for land and household should not get any land rents, but
@@ -450,14 +463,12 @@ void HouseholdConsumer::calcIncome( NationalAccount& nationalAccount, const stri
 		calcBaseScalerSavings( regionName, period );
 	}
 	calcSavings(disposableIncome, regionName, period );
-	// for debugging
-	double tempSavings = expenditure.getValue( Expenditure::SAVINGS );
 	double consumption = disposableIncome - expenditure.getValue( Expenditure::SAVINGS );
 	assert( consumption >= 0 );
 	// total gross income for households
 	double income = disposableIncome + directTaxes + socialSecurityTax;
 	// add expenditures to the expenditure map for storage
-	expenditure.setType( Expenditure::WAGES, tempLaborWages );
+	expenditure.setType( Expenditure::WAGES, laborWages );
     expenditure.setType( Expenditure::TAXABLE_INCOME, taxableIncome );
 	expenditure.setType( Expenditure::DIRECT_TAXES, directTaxes );
 	expenditure.setType( Expenditure::TRANSFERS, transfer );
@@ -465,16 +476,13 @@ void HouseholdConsumer::calcIncome( NationalAccount& nationalAccount, const stri
 						nationalAccount.getAccountValue( NationalAccount::DIVIDENDS ) );
     expenditure.setType( Expenditure::CONSUMPTION, consumption );
     expenditure.setType( Expenditure::INCOME, income );
-  //  expenditure.setType( Expenditure::WAGES, nationalAccount.getAccountValue( NationalAccount::LABOR_WAGES )
-  //      - socialSecurityTax );
     
-    // savings and social securtity tax are added expenditure as they are calculated
-    // Set the trial values for the personal income and social security taxes
-    // into the marketplace. This is to resolve ordering problems between the
-    // household consumer and government consumer. The government consumer will
-    // have setup these markets.
-    marketplace->addToDemand( "personal-income-tax", regionName, directTaxes, period );
-    marketplace->addToDemand( "social-security-tax", regionName, socialSecurityTax, period );
+    // savings and social securtity tax are added to expenditure as they are
+    // calculated Set the trial values for the total household taxes into the
+    // marketplace. This is to resolve ordering problems between the household
+    // consumer and government consumer. The government consumer will have setup
+    // this markets.
+    marketplace->addToDemand( "household-taxes", regionName, directTaxes + socialSecurityTax, period );
 
 	// add to National Accounts
 	nationalAccount.addToAccount( NationalAccount::SOCIAL_SECURITY_TAX, socialSecurityTax );
@@ -486,14 +494,16 @@ void HouseholdConsumer::calcIncome( NationalAccount& nationalAccount, const stri
 
 //! calculate demand
 void HouseholdConsumer::operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
-                       const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName, 
-                       const string& aSectorName, const bool aIsNewVintageMode, int aPeriod ) 
+                                 const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName, 
+                                 const string& aSectorName, const bool aIsNewVintageMode, int aPeriod ) 
 {
-	// since subsector needs to run operate for previous years also for the production side
-	// we need to make sure that this householdConsumer is really supposed to operate in this period
+	// since subsector needs to run operate for previous years also for the
+	// production side we need to make sure that this householdConsumer is
+    // really supposed to operate in this period
 	if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
         expenditure.reset();
-		// calcIncome is already run in the base period by initCalc
+		
+        // calcIncome is already run in the base period by initCalc
 		// use setType in expenditure to override and ensure that marketplace supplies
 		// and demands are nulled
 		workingAgePopMale = aDemographics->getWorkingAgePopulationMales( aPeriod );
@@ -503,39 +513,57 @@ void HouseholdConsumer::operate( NationalAccount& aNationalAccount, const Demogr
 		BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
 
 		calcIncome( aNationalAccount, aRegionName, aPeriod );
-		// calculate consumption demands for each final good or service
-		calcInputDemand( expenditure.getValue( Expenditure::CONSUMPTION ), aRegionName, aSectorName, 
-            aPeriod );
+		// calculate consumption demands for each final good or service. Use the
+        // trial value for the budget since the household land and labor demands
+        // are not yet known. This is explicitally solving the Consumption =
+        // Budget equation. The reason this cannot be directly solved for is
+        // that households may demand land and labor, which would increase their
+        // income, and increase their budget.
+        Marketplace* marketplace = scenario->getMarketplace();
+        double trialBudget = marketplace->getPrice( getBudgetMarketName(),
+                                                    aRegionName, aPeriod );
+		calcInputDemand( trialBudget, aRegionName, aSectorName, aPeriod );
+        
+        // Add output, or demand as the supply of the budget equation. This is
+        // because as personal income increases the demand will increase, which
+        // is the assumed movement of the supply side of the market.
+        marketplace->addToSupply( getBudgetMarketName(), aRegionName, mOutputs[ aPeriod ], aPeriod );
 
-		calcNoHouseholds( *aDemographics, aPeriod );
-		// household's factor demands are calculated after total supplies are known
-		// number of household must be calculated before factor demand can be calculated
+		calcNoHouseholds( aDemographics, aPeriod );
+		// household's factor demands are calculated after total supplies are
+		// known number of household must be calculated before factor demand can
+        // be calculated
 		calcFactorDemand( aRegionName, aPeriod );
-		//calcBudget takes our household land and labor demand
-		// this budget is used to scale down all household demands
-		calcBudget();
-		double tempScale = expenditure.getValue( Expenditure::BUDGET ) / mOutputs[ aPeriod ];
-		constrainDemand( tempScale, aRegionName, aPeriod );
+		
+        // calcBudget adjusts consumption for land and labor demands.
+		calcBudget( aRegionName, aPeriod );
+		
         calcEmissions( aSectorName, aRegionName, aPeriod );
 	}
 }
 
 
 //! calculate number of households
-void HouseholdConsumer::calcNoHouseholds( const Demographic& demographics, int period ) {
-	if( period == scenario->getModeltime()->getBasePeriod() ) {
-		personsPerHousehold = demographics.getTotal( period ) / numberOfHouseholds;
+void HouseholdConsumer::calcNoHouseholds( const Demographic* aDemographics, int aPeriod ) {
+    assert( aDemographics );
+	if( aPeriod == scenario->getModeltime()->getBasePeriod() ) {
+        assert( numberOfHouseholds > 0 );
+		personsPerHousehold = aDemographics->getTotal( aPeriod ) / numberOfHouseholds;
 	}
-	numberOfHouseholds = demographics.getTotal( period ) / personsPerHousehold;
+    assert( personsPerHousehold > 0 );
+	numberOfHouseholds = aDemographics->getTotal( aPeriod ) / personsPerHousehold;
 }
 
 //! calculate budget
-void HouseholdConsumer::calcBudget() {
+void HouseholdConsumer::calcBudget( const string& aRegionName, const int aPeriod ) {
 	// subtract household's land and labor expenditure from cosumption to get budget
 	// available for consumption.  However, the origianl consumption amount is used in
 	// the demand equation.
     double budget = expenditure.getValue( Expenditure::CONSUMPTION ) - householdLandDemand - householdLaborDemand;
     expenditure.setType( Expenditure::BUDGET, budget );
+    // Set the budget as the demand in the budget constraint equation.
+    Marketplace* marketplace = scenario->getMarketplace();
+    marketplace->addToDemand( getBudgetMarketName(), aRegionName, budget, aPeriod );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -577,9 +605,17 @@ void HouseholdConsumer::calcBaseScalerLand( const string& regionName, const int 
 
 //! Calculate base scaler labor male
 void HouseholdConsumer::calcBaseScalerLaborMale( const string& regionName, const int& period ) {
-	Marketplace* marketplace = scenario->getMarketplace();
+
+    /*! \pre Working age population variables have been set from the
+    *        demographics object. 
+    */
+    assert( workingAgePopMale != -1 );
+    assert( workingAgePopFemale != -1 );
+    
     // Assert on divide by zeros.
     assert( ( maxLaborSupplyFracMale * ( workingAgePopMale + workingAgePopFemale ) ) > 0 );
+    
+    Marketplace* marketplace = scenario->getMarketplace();
     assert( marketplace->getPrice( "Labor", regionName, period ) > 0 );
 	baseScalerLaborMale = log( 1 - baseLaborSupply / ( maxLaborSupplyFracMale * ( workingAgePopMale + workingAgePopFemale ) ) ) /
 		marketplace->getPrice( "Labor", regionName, period );
@@ -587,8 +623,14 @@ void HouseholdConsumer::calcBaseScalerLaborMale( const string& regionName, const
 
 //! Calculate base scaler labor female
 void HouseholdConsumer::calcBaseScalerLaborFemale( const string& regionName, const int period ) {
-	Marketplace* marketplace = scenario->getMarketplace();
+    /*! \pre Working age population variables have been set from the
+    *        demographics object. 
+    */
+    assert( workingAgePopMale != -1 );
+    assert( workingAgePopFemale != -1 );
+
 	assert( maxLaborSupplyFracFemale * ( workingAgePopMale + workingAgePopFemale ) > 0 );
+    Marketplace* marketplace = scenario->getMarketplace();
     assert( marketplace->getPrice( "Labor", regionName, period ) > 0 );
     baseScalerLaborFemale = log( 1 - baseLaborSupply / ( maxLaborSupplyFracFemale * ( workingAgePopMale + workingAgePopFemale ) ) ) /
 		marketplace->getPrice( "Labor", regionName, period );
@@ -608,38 +650,54 @@ void HouseholdConsumer::calcBaseScalerSavings( const string& regionName, const i
 
 //! Calculate base labor demand per household
 void HouseholdConsumer::calcBaseLaborDemandPerHH( const string& regionName, const int period ) {
-    // If the Labor input does not exist.
-    if( !util::hasValue( inputNameToNo, string( "Labor" ) ) ){
-        return;
+    const Input* laborInput = FunctionUtils::getInput( input, "Labor" );
+    // If there is no labor demand set the base labor demand per household to
+    // zero.
+    if( !laborInput ){
+        baseLaborDemandPerHH = 0;
     }
-
-    unsigned int laborIndex = util::searchForValue( inputNameToNo, string( "Labor" ) );
-    Marketplace* marketplace = scenario->getMarketplace();
-     // if use get demand currency do we need to get price...
-    assert( ( laborSupplyMale + laborSupplyFemale ) * marketplace->getPrice( "Labor", regionName, period ) > 0 );
-    baseLaborDemandPerHH = input[ laborIndex ]->getDemandCurrency() / ( ( laborSupplyMale + laborSupplyFemale ) * marketplace->getPrice( "Labor", regionName, period ) );
+    else {
+        double laborPrice = laborInput->getPrice( regionName, period );
+        if( laborPrice > 0 && laborSupplyMale + laborSupplyFemale > 0 ){
+            // if use get demand currency do we need to get price...
+            baseLaborDemandPerHH = laborInput->getDemandCurrency() 
+                                   / ( laborSupplyMale + laborSupplyFemale ) * laborPrice;
+        }
+        else {
+            baseLaborDemandPerHH = 0;
+        }
+    }
 }
 
 //! Calculate base land demand per household
-void HouseholdConsumer::calcBaseLandDemandPerHH( const string& regionName, const int period ) {
-    // If the Land input does not exist.
-    if( !util::hasValue( inputNameToNo, string( "Land" ) ) ){
+void HouseholdConsumer::calcBaseLandDemandPerHH( const string& aRegionName, const int aPeriod ) {
+    const Input* landInput = FunctionUtils::getInput( input, "Land" );
+    // If the Land input does not exist set the base land demand per household
+    // to zero.
+    if( !landInput ){
         baseLandDemandPerHH = 0;
-        return;
-    }
-
-    Marketplace* marketplace = scenario->getMarketplace();
-    double landPrice = marketplace->getPrice( "Land", regionName, period );
-
-    if( landSupply > 0 && landPrice > 0 ){
-        // not sure if this is the correct price
-        unsigned int landIndex = util::searchForValue( inputNameToNo, string( "Land" ) );
-        baseLandDemandPerHH = input[ landIndex ]->getDemandCurrency() / 
-            ( landSupply * landPrice );
     }
     else {
-        baseLandDemandPerHH = 0;
+        double landPrice = landInput->getPrice( aRegionName, aPeriod );
+        
+        // Check that there is a positive land supply and land price.
+        if( landSupply > 0 && landPrice > 0 ){
+            // not sure if this is the correct price
+            baseLandDemandPerHH = landInput->getDemandCurrency()
+                                  / ( landSupply * landPrice );
+        }
+        else {
+            baseLandDemandPerHH = 0;
+        }
     }
+}
+
+/*! \brief Return the name of the market used to solve the budget equation for this consumer.
+* \return The name of the budget market.
+* \author Josh Lurz
+*/
+const string HouseholdConsumer::getBudgetMarketName() const {
+    return getName() + "-budget";
 }
 
 /*! \brief For outputing SGM data to a flat csv File

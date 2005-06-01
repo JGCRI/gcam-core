@@ -66,7 +66,6 @@ private:
                        const int aPeriod );
 	void calcTransfer( NationalAccount& nationalAccount, const Demographic* demographics, 
         const std::string& regionName, int period );
-	void constrainDemand( double budgetScale, const std::string& aRegionName, const int aPeriod  );
 	void calcBaseCoef( NationalAccount& nationalAccount, const Demographic* aDemographics );
 	void calcGovtTaxOrSubsidy( const std::string& regionName, int period );
 	void calcGovtCapitalDemand( const std::string& regionName, int period ); // not currently used

@@ -88,7 +88,6 @@ private:
 	void calcBaseScalerSavings( const std::string& regionName, const int period );
 	void calcBaseLaborDemandPerHH( const std::string& regionName, const int period );
 	void calcBaseLandDemandPerHH( const std::string& regionName, const int period );
-	void constrainDemand( double budgetScale, const std::string& aRegionName, const int aPeriod  );
 	void calcFactorDemand( const std::string& regionName, int period );
 	void calcFactorSupply( const std::string& regionName, int period );
 	double calcSocialSecurityTax( NationalAccount& nationalAccount, const std::string& regionName, int period );
@@ -96,8 +95,9 @@ private:
 	void calcLandSupply( const std::string& regionName, int period );
 	void calcLaborSupply( const std::string& regionName, int period );
 	void calcIncome( NationalAccount& nationalAccount, const std::string& regionName, int period );
-	void calcNoHouseholds( const Demographic& demographics, int period );
-	void calcBudget();
+	void calcNoHouseholds( const Demographic* aDemographics, int aPeriod );
+    void calcBudget( const std::string& aRegionName, const int aPeriod );
+    const std::string getBudgetMarketName() const;
 
     // corresponds to S2, R1, L1
 	double baseScalerLand; //!< base land scaler
