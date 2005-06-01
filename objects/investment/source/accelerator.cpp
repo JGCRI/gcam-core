@@ -31,6 +31,7 @@
 #include "util/base/include/model_time.h"
 #include "investment/include/investment_utils.h"
 #include "util/base/include/util.h"
+#include "util/logger/include/ilogger.h"
 #include "investment/include/simple_expected_profit_calculator.h"
 #include "investment/include/levelized_cost_calculator.h"
 #include "investment/include/rate_logit_distributor.h"
@@ -84,8 +85,10 @@ void Accelerator::completeInit( const string& aRegionName, const string& aSector
 
     // Warn if fixed investment for the base period was read in, as it will be ignored.
     if( mFixedInvestments[ 0 ] != -1 ){
-        cout << "Warning: Will ignore fixed investment in the base period for sector "
-            << mSectorName << " in region " << mRegionName << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Will ignore fixed investment in the base period for sector "
+                << mSectorName << " in region " << mRegionName << endl;
     }
 }
 
@@ -178,8 +181,10 @@ void Accelerator::XMLParse( const xercesc::DOMNode* aCurr ) {
         // Add other types of growth calculators here for now until we have a
         // factory method.
         else {
-            cout << "Unrecognized node " << nodeName << " found while parsing " << getXMLNameStatic() 
-                << "." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized node " << nodeName << " found while parsing " << getXMLNameStatic() 
+                    << "." << endl;
         }
     }
 }
@@ -287,9 +292,11 @@ double Accelerator::calcAndDistributeInvestment( vector<IInvestable*>& aInvestab
 
     // Check that total investment and distributed investment are equal.
     if( !util::isEqual( newInvestment, mInvestments[ aPeriod ] ) ){
-        cout << "Warning: " << fabs( newInvestment - mInvestments[ aPeriod ] )
-             << " difference between desired investment and distributed investment in "
-             << mSectorName << " in " << mRegionName << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Warning: " << fabs( newInvestment - mInvestments[ aPeriod ] )
+                << " difference between desired investment and distributed investment in "
+                << mSectorName << " in " << mRegionName << endl;
     }
     // Return the total amount of investment actually distributed
     return mInvestments[ aPeriod ];
@@ -332,7 +339,9 @@ double Accelerator::calcNewInvestment( vector<IInvestable*>& aInvestables,
         double childSumFixed = InvestmentUtils::calcFixedInvestment( aInvestables, aPeriod );
         if( childSumFixed > mFixedInvestments[ aPeriod ] ){
             newInvestment = childSumFixed;
-            cout << "Warning: Overriding parent level investment with child level investment sum. " << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::NOTICE );
+            mainLog << "Overriding parent level investment with child level investment sum. " << endl;
         }
         return newInvestment;
     }
