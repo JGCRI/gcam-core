@@ -81,6 +81,12 @@ void Accelerator::completeInit( const string& aRegionName, const string& aSector
         mProfitRateCalculator.reset( new SimpleExpectedProfitCalculator() );
         mProfitRateCalculatorType = SimpleExpectedProfitCalculator::getXMLNameStatic();
     }
+
+    // Warn if fixed investment for the base period was read in, as it will be ignored.
+    if( mFixedInvestments[ 0 ] != -1 ){
+        cout << "Warning: Will ignore fixed investment in the base period for sector "
+            << mSectorName << " in region " << mRegionName << endl;
+    }
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -250,11 +256,6 @@ double Accelerator::calcAndDistributeInvestment( vector<IInvestable*>& aInvestab
         // Don't need to determine investment for the base period.
         mInvestments[ aPeriod ] = InvestmentUtils::sumInvestment( aInvestables, aPeriod );
         assert( mInvestments[ aPeriod ] >= 0 );
-        // Warn if fixed investment for the period was read in, as it will be ignored.
-        if( mFixedInvestments[ aPeriod ] != -1 ){
-            cout << "Warning: Ignoring fixed investment in the base period for sector "
-                 << mSectorName << " in region " << mRegionName << endl;
-        }
         return mInvestments[ aPeriod ];
     }
         
