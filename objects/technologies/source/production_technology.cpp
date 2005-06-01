@@ -751,7 +751,8 @@ double ProductionTechnology::calcShutdownCoef( const string& aRegionName,
 * \param aPeriod The current period.
 * \return Whether the technology is new investment in the period.
 * \warning This function is slower than the cached version and should only be
-*          used to setup the cache.
+*          used to setup the cache or by the optimized version of the function
+*          when the cached value is not available for a period.
 * \sa isNewInvestment
 * \author Josh Lurz
 */
@@ -764,7 +765,8 @@ bool ProductionTechnology::calcIsNewInvestment( const int aPeriod ) const {
 * \param aPeriod The current period.
 * \return Whether the technology has been retired.
 * \warning This function is slower than the cached version and should only be
-*          used to setup the cache.
+*          used to setup the cache or by the optimized version of the function
+*          when the cached value is not available for a period.
 * \sa isRetired
 * \author Josh Lurz
 */
@@ -780,7 +782,8 @@ bool ProductionTechnology::calcIsRetired( const int aPeriod ) const {
 * \param aPeriod The current period.
 * \return Whether the technology has gone online.
 * \warning This function is slower than the cached version and should only be
-*          used to setup the cache.
+*          used to setup the cache or by the optimized version of the function
+*          when the cached value is not available for a period.
 * \sa isAvailable
 * \author Josh Lurz
 */
