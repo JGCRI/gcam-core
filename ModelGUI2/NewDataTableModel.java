@@ -469,7 +469,7 @@ public class NewDataTableModel extends BaseTableModel{
 			
 			// Split out the name attribute if it contains it.
 			String rowName;
-			if( rowNameFull.contains("=")){
+			if( rowNameFull.indexOf('=') != -1 ){
 				rowName = rowNameFull.split("=")[ 1 ];
 			}
 			else {

@@ -87,7 +87,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 	
 	private JFrame chartWindow = null;
 	
-	private JLabel labelChart = null;
+	//private JLabel labelChart = null;
 	
 	XMLFilter xmlFilter = new XMLFilter();
 
@@ -99,13 +99,14 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 
 	JFileChooser globalFC; // for saving last current directory
 
-	static final int windowHeight = 460;
+	// removed static final because they will change now
+	int windowHeight = 460;
 
-	static final int leftWidth = 300;
+	int leftWidth = 300;
 
-	static final int rightWidth = 340;
+	//static final int rightWidth = 340;
 
-	static final int windowWidth = leftWidth + rightWidth;
+	int windowWidth = 640;
 
 	static String[] names = { "Single Table", "Multi Tables", "Combo Tables" };
 
@@ -156,7 +157,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		thisFrame = this;
 
 		globalFC = new JFileChooser();
-		//globalFC.setCurrentDirectory( new File(".") );
+		globalFC.setCurrentDirectory( new File(".") );
 
 		try {
 			System.setProperty(DOMImplementationRegistry.PROPERTY,
@@ -203,14 +204,71 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 				globalFC.setCurrentDirectory(new File(pathDirectory));
 			}
 
-		} catch (Exception e) {
-			//System.out.println("exception " + e);
-			//System.out.println("so that hopefully means no file, so i'll just
-			// use default");
-			globalFC.setCurrentDirectory(new File("."));
+			res = (XPathResult)xpeImpl.createExpression("//recent/lastHeight/node()", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 
-			Node aNode = lastDoc.createElement("lastDirectory");
-			aNode.appendChild(lastDoc.createTextNode("."));
+			if( (tempNode = res.iterateNext()) ==  null ){
+				throw new Exception();
+			} else {
+				windowHeight = Integer.parseInt( tempNode.getNodeValue() );
+			}
+			/*
+			   while( (tempNode = res.iterateNext()) != null){
+			   windowHeight = Integer.parseInt( tempNode.getNodeValue() );
+			   }
+			   */
+
+			res = (XPathResult)xpeImpl.createExpression("//recent/lastWidth", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+
+			while( (tempNode = res.iterateNext()) != null) {
+				if( ((Element)tempNode).getAttribute( "pane" ).equals( "leftPane" )) {
+					leftWidth = Integer.parseInt( tempNode.getFirstChild().getNodeValue() );
+				} else if( ((Element)tempNode).getAttribute( "pane" ).equals( "totalPane" )) {
+					windowWidth = Integer.parseInt( tempNode.getFirstChild().getNodeValue() );
+				}
+			}
+
+		} catch (java.io.FileNotFoundException fe) {
+
+			System.out.println("File exception " + fe);
+			System.out.println("so that hopefully means no file, so i'll just use default");
+
+			Element aNode = lastDoc.createElement("lastDirectory");
+			aNode.appendChild( lastDoc.createTextNode(globalFC.getCurrentDirectory().toString()) );
+			lastDoc.getDocumentElement().appendChild(aNode);
+
+			aNode = lastDoc.createElement( "lastHeight" );
+			aNode.appendChild( lastDoc.createTextNode( "460" ));
+			lastDoc.getDocumentElement().appendChild(aNode);
+
+			aNode = lastDoc.createElement( "lastWidth" );
+			aNode.appendChild( lastDoc.createTextNode( "300" ));
+			aNode.setAttribute( "pane", "leftPane" );
+			lastDoc.getDocumentElement().appendChild(aNode);
+
+			aNode = lastDoc.createElement( "lastWidth" );
+			aNode.appendChild( lastDoc.createTextNode( "640" ));
+			aNode.setAttribute( "pane", "totalPane" );
+			lastDoc.getDocumentElement().appendChild(aNode);
+		} catch (Exception e) {
+
+			// because heights and widths were added after need to check for old version of
+			// recent.xml then update it to include heights and widths
+
+			System.out.println("exception " + e);
+			System.out.println("so that hopefully means no h and w, so i'll just use default");
+
+			Element aNode = lastDoc.createElement( "lastHeight" );
+			aNode.appendChild( lastDoc.createTextNode( "460" ));
+			lastDoc.getDocumentElement().appendChild(aNode);
+
+			aNode = lastDoc.createElement( "lastWidth" );
+			aNode.appendChild( lastDoc.createTextNode( "300" ));
+			aNode.setAttribute( "pane", "leftPane" );
+			lastDoc.getDocumentElement().appendChild(aNode);
+
+			aNode = lastDoc.createElement( "lastWidth" );
+			aNode.appendChild( lastDoc.createTextNode( "640" ));
+			aNode.setAttribute( "pane", "totalPane" );
 			lastDoc.getDocumentElement().appendChild(aNode);
 		}
 
@@ -279,16 +337,22 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		mb.add(tableMenu);
 
 		setJMenuBar(mb);
-		setSize(800, 800);
+		setSize(windowWidth, windowHeight);
 		
 		// Create a window to display the chart in.
 		chartWindow = new JFrame();
+		chartWindow.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				//chartWindow.getContentPane().removeAll();
+			}
+		});
 		
 		// Create a label for the chart.
-		labelChart = new JLabel();
+		//labelChart = new JLabel();
 		
 		// Add the label containing the chart to the window.
-		chartWindow.add( labelChart );
+		//chartWindow.getContentPane().add( labelChart );
+		//chartWindow.add( labelChart );
 		// Add adapter to catch window closing event.
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -384,7 +448,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		JScrollPane tableView = new JScrollPane(/* jTable */);
 		//tableView.setPreferredScrollableViewportSize( new Dimension (
 		// rightWidth, windowHeight ));
-		tableView.setPreferredSize(new Dimension(rightWidth, windowHeight));
+		tableView.setPreferredSize(new Dimension(windowWidth - leftWidth, windowHeight));
 
 		// Build split-pane view
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeView,
@@ -489,20 +553,33 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 	}
 
 	/**
-	 * Updates recentDoc with most current globalFC
-	 */
-	public void updateRecentDoc() {
+	 * Updates recentDoc with most current globalFC and last Height and Widths
+	 */ 
+	public void updateRecentDoc(){ 
 		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(lastDoc);
-		XPathResult res = (XPathResult) xpeImpl.createExpression(
-				"//recent/lastDirectory/node()",
-				xpeImpl.createNSResolver(lastDoc.getDocumentElement()))
-				.evaluate(lastDoc.getDocumentElement(),
-						XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		XPathResult res = (XPathResult)xpeImpl.createExpression("//recent/lastDirectory/node()", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 
 		Node tempNode;
-		while ((tempNode = res.iterateNext()) != null) {
-			tempNode.setNodeValue(globalFC.getCurrentDirectory().toString());
-			//System.out.println("just updated the recent doc!");
+		while( (tempNode = res.iterateNext()) != null ){
+			tempNode.setNodeValue( globalFC.getCurrentDirectory().toString() );
+		}
+
+		res = (XPathResult)xpeImpl.createExpression("//recent/lastHeight/node()", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+
+		tempNode = res.iterateNext();
+		tempNode.setNodeValue( (new Integer( this.getHeight() )).toString() );
+
+		res = (XPathResult)xpeImpl.createExpression("//recent/lastWidth", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+
+		while( (tempNode = res.iterateNext()) != null) {
+			if( ((Element)tempNode).getAttribute( "pane" ).equals( "leftPane" )) {
+				if( splitPane != null ) {
+					leftWidth = splitPane.getDividerLocation();
+				}
+				tempNode.getFirstChild().setNodeValue( (new Integer( leftWidth )).toString() );
+			} else if( ((Element)tempNode).getAttribute( "pane" ).equals( "totalPane" )) {
+				tempNode.getFirstChild().setNodeValue( (new Integer( this.getWidth() )).toString() );
+			}
 		}
 	}
 
@@ -700,12 +777,21 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			public void mouseReleased(MouseEvent e) {
 				JTable jTable = (JTable) ((JScrollPane) splitPane
 						.getRightComponent()).getViewport().getView();
-				JFreeChart chart = ((BaseTableModel) jTable.getModel())
+				JFreeChart chart;
+				if( jTable.getModel() instanceof TableSorter) {
+					chart = ((BaseTableModel) ((TableSorter)jTable.getModel()).getTableModel()).createChart();
+				} else {
+				chart = ((BaseTableModel) jTable.getModel())
 						.createChart();
+				}
 				// Turn the chart into an image.
 				BufferedImage chartImage = chart.createBufferedImage(500, 500);
 				
+				JLabel labelChart = new JLabel();
 				labelChart.setIcon(new ImageIcon(chartImage));
+				chartWindow.getContentPane().add(labelChart);
+				labelChart.setIcon(new ImageIcon(chartImage));
+				chartWindow.getContentPane().add(labelChart);
 				chartWindow.pack();
 				chartWindow.setVisible(true);
 			}

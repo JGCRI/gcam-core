@@ -4,6 +4,13 @@ import java.awt.geom.Rectangle2D;
 import java.util.*;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.w3c.dom.*;
 import javax.swing.*;
 import javax.swing.tree.TreePath;
@@ -515,6 +522,68 @@ public class ComboTableModel extends BaseTableModel{
 	}
 
 	public JFreeChart createChart() {
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
+		// Start by creating an XYSeriesSet to contain the series.
+		XYSeriesCollection chartData = new XYSeriesCollection();
+		// Loop through the rows and create a data series for each.
+		for( int row = 0; row < getRowCount(); ++row ){
+			// Row name is at element zero.
+			//String rowNameFull = (String)getValueAt(row,0);
+			String rowNameFull = (String)indRow.get( ((Integer)activeRows.get( row )).intValue() % (indRow.size()) );
+			
+			// Split out the name attribute if it contains it.
+			String rowName;
+			if( rowNameFull.indexOf('=') != -1 ){
+				rowName = rowNameFull.split("=")[ 1 ];
+			}
+			else {
+				rowName = rowNameFull;
+			}
+			XYSeries currSeries = new XYSeries(rowName);
+			// Skip column 1 because it contained the label.
+			for( int col = leftHeaderVector.size() + 1; col < getColumnCount(); ++col ){
+				System.out.println(col+" = "+getValueAt(row, col) );
+				double yValue = ( (Double)getValueAt(row, col) ).doubleValue();
+				String fullColumn = getColumnName(col);
+				// Get the year part of it.
+				int year = Integer.parseInt( fullColumn.split("=")[1] );
+				currSeries.add( year, yValue);
+			}
+			// Add the series to the set.
+			chartData.addSeries(currSeries);
+		}
+		// Done adding series, create the chart.
+		// Create the domain axis label.
+		// TODO: Improve naming.
+		NumberAxis xAxis = new NumberAxis("Year");
+		
+		// Use the parent element name as the name of the axis.
+		NumberAxis yAxis = new NumberAxis(ind2Name);
+		
+		// This turns off always including zero in the domain.
+		xAxis.setAutoRangeIncludesZero(false);
+		
+		// This turns on automatic resizing of the domain..
+		xAxis.setAutoRange(true);
+		
+		// This makes the X axis use integer tick units.
+		xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+		
+		// This turns on automatic resizing of the range.
+		yAxis.setAutoRange(true);
+		
+		// Create the plot.
+		XYPlot xyPlot = new XYPlot( chartData, xAxis, yAxis, new XYLineAndShapeRenderer());
+		
+		// Draw the zero line.
+		xyPlot.setZeroRangeBaselineVisible(true);
+		
+		// Create the chart.
+		JFreeChart chart = new JFreeChart( xyPlot );
+		
+		// Create a title for the chart.
+		TextTitle title = new TextTitle(ind2Name);
+		chart.setTitle(title);
+		return chart;
 	}
 }
