@@ -82,6 +82,8 @@ ProductionTechnology::~ProductionTechnology(){
 
 //! Copy constructor. Check and make sure this works.
 ProductionTechnology::ProductionTechnology( const ProductionTechnology& aOther ){
+    // Resize the cached value to the number of types in the CacheValue enum.
+    mCachedValues.resize( END );
     aOther.copyParamsInto( *this );
 }
 
