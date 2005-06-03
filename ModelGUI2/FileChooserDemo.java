@@ -455,8 +455,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 				tableView);
 		splitPane.setContinuousLayout(true);
 		splitPane.setDividerLocation(leftWidth);
-		splitPane.setPreferredSize(new Dimension(windowWidth + 10,
-				windowHeight + 10));
+		splitPane.setPreferredSize(new Dimension(windowWidth + 10, windowHeight + 10));
 		// Add GUI components
 		contentPane.add("Center", splitPane);
 
@@ -620,7 +619,15 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 					if (tableView == null) {
 						return;
 					}
+
+					// maybe this will solve the resizing of the left component
+					//tableView.setPreferredSize(new Dimension(windowWidth - leftWidth, windowHeight));
+
+					// don't know why but it is moving the divider all of a sudden, so will
+					// force it to be where it was
+					int divLoc = splitPane.getDividerLocation();
 					splitPane.setRightComponent(tableView);
+					splitPane.setDividerLocation(divLoc);
 					tableMenu = makePopupTableMenu();
 					// add the listener for right click which currently only
 					// handles flip
@@ -788,8 +795,6 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 				BufferedImage chartImage = chart.createBufferedImage(500, 500);
 				
 				JLabel labelChart = new JLabel();
-				labelChart.setIcon(new ImageIcon(chartImage));
-				chartWindow.getContentPane().add(labelChart);
 				labelChart.setIcon(new ImageIcon(chartImage));
 				chartWindow.getContentPane().add(labelChart);
 				chartWindow.pack();

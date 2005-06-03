@@ -108,10 +108,8 @@ public class RadioButton extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if ("Select".equals(e.getActionCommand())) {
 			RadioButton.value = (String)(list.getSelectedValue());
-			System.out.println("button selected!!!!! it's " + list.getSelectedValue().toString());
 		} else {
 			System.out.println("Got cancel");
-			RadioButton.value = "";
 		}
 		RadioButton.dialog.setVisible(false);
 	}

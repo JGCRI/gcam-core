@@ -89,7 +89,7 @@ public class MultiTableModel extends BaseTableModel{
 	 *        col not really important since we only have 1 col
 	 */
 	public void flip(int row, int col) {
-				((NewDataTableModel)((JTable)((JScrollPane)getValueAt(row, col)).getViewport().getView()).getModel()).flip(row, col);
+		((NewDataTableModel)((JTable)((JScrollPane)getValueAt(row, col)).getViewport().getView()).getModel()).flip(row, col);
 	}
 
 	/**
@@ -336,6 +336,8 @@ public class MultiTableModel extends BaseTableModel{
 		activeRows = tempActive;
 	}
 	public JFreeChart createChart() {
+		//would do something like  this..
+		//return ((NewDataTableModel)((JTable)((JScrollPane)getValueAt(row, col)).getViewport().getView()).getModel()).flip(row, col);
 		throw new UnsupportedOperationException();
 	}
 }
