@@ -542,7 +542,6 @@ public class ComboTableModel extends BaseTableModel{
 			XYSeries currSeries = new XYSeries(rowName);
 			// Skip column 1 because it contained the label.
 			for( int col = leftHeaderVector.size() + 1; col < getColumnCount(); ++col ){
-				System.out.println(col+" = "+getValueAt(row, col) );
 				double yValue = ( (Double)getValueAt(row, col) ).doubleValue();
 				String fullColumn = getColumnName(col);
 				// Get the year part of it.

@@ -364,6 +364,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		((JScrollPane)chartWindow.getContentPane()).setPreferredSize(new Dimension(520,530));
 		chartWindow.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
+				chartPanel.removeAll();
 				//chartWindow.getContentPane().removeAll();
 			}
 		});
