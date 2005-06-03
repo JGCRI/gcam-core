@@ -8,6 +8,7 @@ import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.domapi.*;
 import org.jfree.chart.JFreeChart;
 import org.w3c.dom.xpath.*;
+
 import javax.swing.event.*;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -87,6 +88,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 	
 	private JFrame chartWindow = null;
 	
+	private JPanel chartPanel = null;
 	//private JLabel labelChart = null;
 	
 	XMLFilter xmlFilter = new XMLFilter();
@@ -341,18 +343,29 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		
 		// Create a window to display the chart in.
 		chartWindow = new JFrame();
+		chartPanel = new JPanel();
+		
+		// Allow the chart panel to scroll if the user selects it.
+		chartPanel.setAutoscrolls(true);
+		chartPanel.addMouseMotionListener(new MouseMotionListener(){
+		    public void mouseDragged(MouseEvent aEvent) {
+		        // Use the drag even to force a scroll to the event position.
+		        Rectangle currRect = new Rectangle(aEvent.getX(), aEvent.getY(), 1, 1);
+		        chartPanel.scrollRectToVisible(currRect);
+		    }
+
+			public void mouseMoved(MouseEvent aEvent) {
+				// Ignore mouse movement if not dragging.
+			}
+		}
+		);
+		chartWindow.setContentPane(new JScrollPane(chartPanel));
 		chartWindow.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				//chartWindow.getContentPane().removeAll();
 			}
 		});
 		
-		// Create a label for the chart.
-		//labelChart = new JLabel();
-		
-		// Add the label containing the chart to the window.
-		//chartWindow.getContentPane().add( labelChart );
-		//chartWindow.add( labelChart );
 		// Add adapter to catch window closing event.
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -782,23 +795,30 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		final JMenuItem chartItem = new JMenuItem("Chart");
 		chartItem.addMouseListener( new MouseListener(){
 			public void mouseReleased(MouseEvent e) {
-				JTable jTable = (JTable) ((JScrollPane) splitPane
-						.getRightComponent()).getViewport().getView();
-				JFreeChart chart;
-				if( jTable.getModel() instanceof TableSorter) {
-					chart = ((BaseTableModel) ((TableSorter)jTable.getModel()).getTableModel()).createChart();
-				} else {
-				chart = ((BaseTableModel) jTable.getModel())
-						.createChart();
-				}
-				// Turn the chart into an image.
-				BufferedImage chartImage = chart.createBufferedImage(500, 500);
-				
-				JLabel labelChart = new JLabel();
-				labelChart.setIcon(new ImageIcon(chartImage));
-				chartWindow.getContentPane().add(labelChart);
-				chartWindow.pack();
-				chartWindow.setVisible(true);
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						JTable jTable = (JTable) ((JScrollPane) splitPane
+								.getRightComponent()).getViewport().getView();
+						JFreeChart chart;
+						if (jTable.getModel() instanceof TableSorter) {
+							chart = ((BaseTableModel) ((TableSorter) jTable
+									.getModel()).getTableModel()).createChart();
+						} else {
+							chart = ((BaseTableModel) jTable.getModel())
+									.createChart();
+						}
+						// Turn the chart into an image.
+						BufferedImage chartImage = chart.createBufferedImage(
+								500, 500);
+
+						JLabel labelChart = new JLabel();
+						labelChart.setIcon(new ImageIcon(chartImage));
+						chartPanel.add(labelChart);
+
+						chartWindow.pack();
+						chartWindow.setVisible(true);
+					}
+				});
 			}
 			public void mouseClicked(MouseEvent e) {
 			}
