@@ -48,7 +48,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	 * Creates a chart from the data in the table.
 	 * @author jlurz
 	 */
-	public abstract JFreeChart createChart();
+	public abstract JFreeChart createChart(int rowAt, int colAt);
 	
 	/**
 	 * abstract the deriving class needs to implement this for flip functionality, params used mostly for MultiTable to know which table to pass the call on to

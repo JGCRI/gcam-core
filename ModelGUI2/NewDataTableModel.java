@@ -459,7 +459,7 @@ public class NewDataTableModel extends BaseTableModel{
 		fireTableCellUpdated(row, col);
 	}
 
-	public JFreeChart createChart() {
+	public JFreeChart createChart(int rowAt, int colAt) {
 		// Start by creating an XYSeriesSet to contain the series.
 		XYSeriesCollection chartData = new XYSeriesCollection();
 		// Loop through the rows and create a data series for each.

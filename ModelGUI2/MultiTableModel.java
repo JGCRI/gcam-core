@@ -335,9 +335,8 @@ public class MultiTableModel extends BaseTableModel{
 		}
 		activeRows = tempActive;
 	}
-	public JFreeChart createChart() {
-		//would do something like  this..
-		//return ((NewDataTableModel)((JTable)((JScrollPane)getValueAt(row, col)).getViewport().getView()).getModel()).flip(row, col);
-		throw new UnsupportedOperationException();
+	public JFreeChart createChart(int rowAt, int colAt) {
+		return ((NewDataTableModel)((JTable)((JScrollPane)getValueAt(rowAt, colAt)).getViewport().getView()).getModel()).createChart(rowAt, colAt);
+		//throw new UnsupportedOperationException();
 	}
 }

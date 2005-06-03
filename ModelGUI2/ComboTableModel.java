@@ -521,7 +521,7 @@ public class ComboTableModel extends BaseTableModel{
 
 	}
 
-	public JFreeChart createChart() {
+	public JFreeChart createChart(int rowAt, int colAt) {
 		//throw new UnsupportedOperationException();
 		// Start by creating an XYSeriesSet to contain the series.
 		XYSeriesCollection chartData = new XYSeriesCollection();

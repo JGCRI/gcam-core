@@ -797,17 +797,28 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		final JMenuItem chartItem = new JMenuItem("Chart");
 		chartItem.addMouseListener( new MouseListener(){
 			public void mouseReleased(MouseEvent e) {
+				final MouseEvent me = e;
 				SwingUtilities.invokeLater(new Runnable() {
 					public void run() {
 						JTable jTable = (JTable) ((JScrollPane) splitPane
 								.getRightComponent()).getViewport().getView();
+
+						// get the correct row and col which only matters for
+						// mulitablemodel
+						// then be sure to pass on the call to the correct table
+						// model
+						me.translatePoint(lastFlipX, lastFlipY);
+						Point p = me.getPoint();
+						int row = jTable.rowAtPoint(p);
+						int col = jTable.columnAtPoint(p);
+
 						JFreeChart chart;
 						if (jTable.getModel() instanceof TableSorter) {
 							chart = ((BaseTableModel) ((TableSorter) jTable
-									.getModel()).getTableModel()).createChart();
+									.getModel()).getTableModel()).createChart(row, col);
 						} else {
 							chart = ((BaseTableModel) jTable.getModel())
-									.createChart();
+									.createChart(row, col);
 						}
 						// Turn the chart into an image.
 						BufferedImage chartImage = chart.createBufferedImage(
