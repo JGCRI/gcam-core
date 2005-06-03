@@ -44,7 +44,6 @@ class VariableCostShutdownDecider: public IShutdownDecider
 {
 public:
     VariableCostShutdownDecider();
-    VariableCostShutdownDecider* clone() const;
     double calcShutdownCoef( const ProductionFunctionInfo& aFuncInfo,
                              const std::string& aRegionName,
                              const std::string& aSectorName,

@@ -80,13 +80,6 @@ ProductionTechnology::ProductionTechnology() {
 ProductionTechnology::~ProductionTechnology(){
 }
 
-//! Copy constructor. Check and make sure this works.
-ProductionTechnology::ProductionTechnology( const ProductionTechnology& aOther ){
-    // Resize the cached value to the number of types in the CacheValue enum.
-    mCachedValues.resize( END );
-    aOther.copyParamsInto( *this );
-}
-
 void ProductionTechnology::copyParam( const BaseTechnology* baseTech ) {
     BaseTechnology::copyParam( baseTech );
     baseTech->copyParamsInto( *this );
@@ -105,7 +98,6 @@ void ProductionTechnology::copyParamsInto( ProductionTechnology& prodTechIn ) co
 	 prodTechIn.periodIniInvest = periodIniInvest;
 	 prodTechIn.periodInvestUnallowed = periodInvestUnallowed;
      prodTechIn.currSigma = currSigma; // not sure
-     prodTechIn.mShutdownDecider.reset( mShutdownDecider->clone() );
 }
 
 ProductionTechnology* ProductionTechnology::clone() const {
@@ -223,8 +215,6 @@ void ProductionTechnology::toDebugXMLDerived( const int period, ostream& out, Ta
 void ProductionTechnology::completeInit( const string& regionName ) {
     prodDmdFnType = "CES";
     currSigma = sigma1;
-    mShutdownDecider.reset( new ProfitShutdownDecider );
-    // mShutdownDecider.reset( new VariableCostShutdownDecider );
 	BaseTechnology::completeInit(regionName);
 }
 
@@ -740,7 +730,10 @@ double ProductionTechnology::calcShutdownCoef( const string& aRegionName,
     // Could optimize by storing the shutdown coef.
     // Create the structure of info for the production function.
     ProductionFunctionInfo prodFunc = { input, prodDmdFn, currSigma, alphaZeroScaler, capital };
-    double shutdownCoef = mShutdownDecider->calcShutdownCoef( prodFunc, aRegionName,
+
+    // Create a new shutdown decider.
+    auto_ptr<IShutdownDecider> shutdownDecider( new ProfitShutdownDecider );
+    double shutdownCoef = shutdownDecider->calcShutdownCoef( prodFunc, aRegionName,
                                                               aSectorName, aPeriod );
     return shutdownCoef;
 }

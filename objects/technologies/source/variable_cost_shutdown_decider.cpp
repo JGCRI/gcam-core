@@ -34,16 +34,6 @@ extern Scenario* scenario;
 VariableCostShutdownDecider::VariableCostShutdownDecider(){
 }
 
-/*! \brief Function which creates a duplicate of this object.
-* \details Cloning is neccessary so that this object can be copied without knowing its type.
-* \return A copy of this object.
-* \warning The caller is responsible for memory allocated by this function.
-* \author Josh Lurz
-*/
-VariableCostShutdownDecider* VariableCostShutdownDecider::clone() const {
-    return new VariableCostShutdownDecider( *this );
-}
-
 /*! \brief Calculate the coefficient which will scale and eventually shutdown
 *          unprofitable production.
 * \details FIX THIS COMMENT! This function returns a scaling factor which is

@@ -29,16 +29,6 @@ using namespace std;
 ProfitShutdownDecider::ProfitShutdownDecider(){
 }
 
-/*! \brief Function which creates a duplicate of this object.
-* \details Cloning is neccessary so that this object can be copied without knowing its type.
-* \return A copy of this object.
-* \warning The caller is responsible for memory allocated by this function.
-* \author Josh Lurz
-*/
-ProfitShutdownDecider* ProfitShutdownDecider::clone() const {
-    return new ProfitShutdownDecider( *this );
-}
-
 /*! \brief Calculate the coefficient which will scale and eventually shutdown
 *          unprofitable production.
 * \details This function returns a scaling factor which is used to decrease and

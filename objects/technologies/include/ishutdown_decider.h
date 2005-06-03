@@ -38,7 +38,6 @@ class IShutdownDecider
 public:
     inline IShutdownDecider();
 	inline virtual ~IShutdownDecider();
-    virtual IShutdownDecider* clone() const = 0;
     virtual double calcShutdownCoef( const ProductionFunctionInfo& aFuncInfo,
                                      const std::string& aRegionName,
                                      const std::string& aSectorName,

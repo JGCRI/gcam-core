@@ -58,7 +58,6 @@ public:
 	ProductionTechnology();
 	ProductionTechnology* clone() const;
 	~ProductionTechnology();
-    ProductionTechnology( const ProductionTechnology& aOther );
     void copyParam( const BaseTechnology* baseTech );
 	void copyParamsInto( ProductionTechnology& prodTechIn ) const;
 
@@ -116,9 +115,6 @@ private:
 
     //! Total profits stored by period.
     std::vector<double> mProfits;
-    
-    //! Object responsible for the shutdown decision.
-    std::auto_ptr<IShutdownDecider> mShutdownDecider;
     
     //! Structure containing types of technological change.
     TechChange mTechChange;
