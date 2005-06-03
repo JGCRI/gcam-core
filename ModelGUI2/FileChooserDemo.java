@@ -344,6 +344,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		// Create a window to display the chart in.
 		chartWindow = new JFrame();
 		chartPanel = new JPanel();
+		chartPanel.setLayout( new BoxLayout(chartPanel, BoxLayout.Y_AXIS));
 		
 		// Allow the chart panel to scroll if the user selects it.
 		chartPanel.setAutoscrolls(true);
@@ -360,6 +361,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		}
 		);
 		chartWindow.setContentPane(new JScrollPane(chartPanel));
+		((JScrollPane)chartWindow.getContentPane()).setPreferredSize(new Dimension(520,530));
 		chartWindow.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				//chartWindow.getContentPane().removeAll();
@@ -814,6 +816,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 						JLabel labelChart = new JLabel();
 						labelChart.setIcon(new ImageIcon(chartImage));
 						chartPanel.add(labelChart);
+						chartPanel.add(Box.createVerticalStrut(10));
 
 						chartWindow.pack();
 						chartWindow.setVisible(true);
