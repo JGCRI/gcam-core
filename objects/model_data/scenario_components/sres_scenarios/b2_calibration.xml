@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Son H. Kim (PNNL) -->
-<scenario name="B2 Reference" date="2003-01-11T09:30:47-05:00" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/b2_calibration.xsd">
+<scenario name="B2 Reference" date="2003-01-11T09:30:47-05:00">
 	<summary>"SRES B2 Scenario is used for this Reference Scenario"</summary>
 	<modeltime>
 		<startyear>1975</startyear>
@@ -18,16 +18,8 @@
 	<world>
 		<region name="USA">
 			<calibrationdata>
-				<GDPcal year="1975">3469850</GDPcal>
-				<GDPcal year="1990">5519600</GDPcal>
-				<GDPcal year="2005">8559839</GDPcal>
-				<GDPcal year="2020">11704628</GDPcal>
-				<GDPcal year="2035">14474230</GDPcal>
-				<GDPcal year="2050">17219996</GDPcal>
-				<GDPcal year="2065">20308123</GDPcal>
-				<GDPcal year="2080">24299173</GDPcal>
-				<GDPcal year="2095">29086532</GDPcal>
 				<TFEcalb year="1990">61.582</TFEcalb>
+				<TFEPerCapcalb year="1990">247</TFEPerCapcalb>
 				<TFEcalb year="2005">77.100</TFEcalb>
 				<TFEcalb year="2020">86.645</TFEcalb>
 				<TFEcalb year="2035">95.575</TFEcalb>
@@ -35,6 +27,16 @@
 				<TFEcalb year="2065">107.275</TFEcalb>
 				<TFEcalb year="2080">113.249</TFEcalb>
 				<TFEcalb year="2095">119.592</TFEcalb>
+				<GDPcal year="1975">3469850</GDPcal>
+				<GDPcal year="1990">5519600</GDPcal>
+				<GDPcalPerCapita year="1990">22166</GDPcalPerCapita>
+				<GDPcal year="2005">8559839</GDPcal>
+				<GDPcal year="2020">11704628</GDPcal>
+				<GDPcal year="2035">14474230</GDPcal>
+				<GDPcal year="2050">17219996</GDPcal>
+				<GDPcal year="2065">20308123</GDPcal>
+				<GDPcal year="2080">24299173</GDPcal>
+				<GDPcal year="2095">29086532</GDPcal>
 			</calibrationdata>
 		</region>
 		<region name="Canada">
@@ -271,14 +273,14 @@
 		<region name="Korea">
 			<calibrationdata>
 				<GDPcal year="1975">23360</GDPcal>
-				<GDPcal year="1990">251866</GDPcal>
-				<GDPcal year="2005">610203</GDPcal>
-				<GDPcal year="2020">1278211</GDPcal>
-				<GDPcal year="2035">1798483</GDPcal>
-				<GDPcal year="2050">2082721</GDPcal>
-				<GDPcal year="2065">2031009</GDPcal>
-				<GDPcal year="2080">2031009</GDPcal>
-				<GDPcal year="2095">1851225</GDPcal>
+				<GDPcalPerCapita year="1990">5880.</GDPcalPerCapita>
+				<GDPcalPerCapita year="2005">12570.</GDPcalPerCapita>
+				<GDPcalPerCapita year="2020">24630.</GDPcalPerCapita>
+				<GDPcalPerCapita year="2035">33950.</GDPcalPerCapita>
+				<GDPcalPerCapita year="2050">40620.</GDPcalPerCapita>
+				<GDPcalPerCapita year="2065">42450.</GDPcalPerCapita>
+				<GDPcalPerCapita year="2080">43880.</GDPcalPerCapita>
+				<GDPcalPerCapita year="2095">45110.</GDPcalPerCapita>
 				<TFEcalb year="1990">3.198</TFEcalb>
 				<TFEcalb year="2005">7.844</TFEcalb>
 				<TFEcalb year="2020">8.973</TFEcalb>
