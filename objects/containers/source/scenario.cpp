@@ -278,6 +278,15 @@ bool Scenario::run( string filenameEnding ){
     // Denote the run has been performed. 
     runCompleted = true;
 
+    // main output file for sgm, general results
+    const string sgmGenFileName = Configuration::getInstance()->getFile( "ObjectSGMGenFileName", "ObjectSGMGen.csv" );
+	ofstream sgmGenFile;
+    sgmGenFile.open( sgmGenFileName.c_str() ) ;
+	util::checkIsOpen( sgmGenFile, sgmGenFileName );
+	// SGM csv general output, writes for all periods.
+   	csvSGMGenFile( sgmGenFile, 0 );
+    sgmGenFile.close();
+
     toDebugXMLClose( xmlDebugStream, &tabs ); // Close the xml debugging tag.
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Model run completed." << endl;
@@ -458,10 +467,6 @@ void Scenario::csvSGMOutputFile( ostream& aFile, const int aPeriod ) {
 /*! \brief Write SGM general results for all periods to csv text file.
 */
 void Scenario::csvSGMGenFile( ostream& aFile, const int aPeriod ) const {
-	
-    // write to SGM general output. This doesn't do anything?
-	auto_ptr<OutputContainer> generalOutput( new SGMGenTable( "GENERAL", "General Table", getModeltime() ) );
-
     // Write out the file header.
 	aFile << "SGM General Output " << endl;
 	aFile << "Date & Time: " << ctime( &ltime ) << endl;
