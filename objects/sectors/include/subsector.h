@@ -82,7 +82,7 @@ protected:
     std::vector<BaseTechnology*> baseTechs; // for the time being
     std::map<std::string, TechnologyType*> mTechTypes; //!< Mapping from technology name to group of technology vintages.
     std::map<std::string,int> techNameMap; //!< Map of technology name to integer position in vector. 
-    void interpolateShareWeights( const int period ); // Consistantly adjust share weights
+    virtual void interpolateShareWeights( const int period ); // Consistantly adjust share weights
     std::map<std::string,int> baseTechNameMap; //!< Map of base technology name to integer position in vector. 
     typedef std::vector<BaseTechnology*>::const_iterator CBaseTechIterator;
     typedef std::vector<BaseTechnology*>::iterator BaseTechIterator;
@@ -131,8 +131,8 @@ public:
     void setShare( const double shareVal, const int period );
     void normShare( const double sum, const int period );
     double getShare( const int period ) const;
-    double getShareWeight( const int period ) const;
-    void scaleShareWeight( const double scaleValue, const int period );
+    virtual double getShareWeight( const int period ) const;
+    virtual void scaleShareWeight( const double scaleValue, const int period );
     void limitShares( const double sum, const int period );
     void setCapLimitStatus( const bool value, const int period );
     bool getCapLimitStatus( const int period ) const;

@@ -39,6 +39,8 @@ private:
     std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
     std::auto_ptr<SolverComponent> mBisectOne; //!< BisectOne solver component.
     std::auto_ptr<SolverComponent> mLogNewtonRaphsonSaveDeriv; //!< LogNewtonRaphsonSaveDerivatives solver component.
+    void NRandSingleBisect( const double solTol, const double edSolFloor, const double maxNRRelED,  
+                            const int maxCalcsNR, const int maxCalcsBisectOne, SolverInfoSet& sol, const int period );
 };
 
 #endif // _BISECTION_NR_SOLVER_

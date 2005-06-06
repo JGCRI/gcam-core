@@ -18,6 +18,7 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <string>
 #include "util/base/include/iparsable.h"
 
 // Forward declarations

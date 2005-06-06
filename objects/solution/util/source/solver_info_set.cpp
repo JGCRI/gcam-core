@@ -102,7 +102,7 @@ const SolverInfoSet::UpdateCode SolverInfoSet::updateSolvable( const bool isNR )
             
             // Print a debugging log message.
             solverLog << iter->getName() << " was removed from the solvable set." << endl;
-            
+             
             solvable.erase( iter );
             iter = prev;
 
@@ -385,7 +385,7 @@ bool SolverInfoSet::hasSingularUnsolved( const double aSolTolerance, const doubl
     }
     return false;
 }
-//! Check if every SolverInfo is solved.
+//! Check if every SolverInfo is solved. Gets information from the markets.
 bool SolverInfoSet::isAllSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR ){
     // Check solvable first
     for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){

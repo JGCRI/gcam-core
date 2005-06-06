@@ -154,7 +154,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverI
         marketplace->nullSuppliesAndDemands( per );
         world->calc( per );
 #else
-
+ 
         // Now remove additive supplies and demands.
         // Iterate over all regions within the market.
         vector<string> containedRegions = solverSet.getSolvable( j ).getContainedRegions();
@@ -190,6 +190,7 @@ void SolverLibrary::updateMatrices( SolverInfoSet& solverSet, Matrix& JFSM, Matr
             assert( util::isValidNumber( JF[ i ][ j ] ) );
         }
     }
+
 }
 
 /*! \brief Calculate and set new market prices based on Log NR  mechanism
@@ -239,6 +240,8 @@ void SolverLibrary::calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& J
     for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
         NP[ i ] = 0;
         for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
+            // An error at this assert means that something happened to the JF matrix during inversion (since there is an assert checking for valid numbers when JF is created)
+            // This is probably a singular matrix where some market has zero derivative for supply and demand
             assert( util::isValidNumber( JF[ i ][ j ] ) );
             NP[ i ] += JF[ i ][ j ] * KDS[ j ];
             assert( util::isValidNumber( NP[ i ] ) );
@@ -419,7 +422,6 @@ bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const do
                                 SolverInfoSet& solverSet, const int period ) {
     int numIterations = 0;
     bool code = false;
-    Configuration* conf = Configuration::getInstance();
     bool calibrationStatus = world->getCalibrationSetting();
     static const double LOWER_BOUND = util::getSmallNumber();
     static const int MAX_ITERATIONS = 30;

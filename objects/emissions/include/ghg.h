@@ -86,7 +86,6 @@ protected:
     bool emissionsWereInput;  //!< toggle to indicate that emissions were input for this object
     bool valueWasInput; //!< Flag to indicate if the emissions were input for the previous period 
     bool fMaxWasInput;//!< Flag indicating whether fMax was input for use in calculating control function
-    bool finalEmissCoefWasInput; //!< Flag indicating whether finalEmissCoef was input
     double rmfrac; //!< fraction of carbon removed from fuel
     double storageCost; //!< storage cost associated with the remove fraction
     double gwp; //!< global warming poential

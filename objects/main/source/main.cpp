@@ -63,12 +63,13 @@ void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFac
 
 //! Main program. 
 int main( int argc, char *argv[] ) {
+
 	// identify default file names for control input and logging controls
     string configurationArg = "configuration.xml";
     string loggerFactoryArg = "log_conf.xml";
     // Parse any command line arguments.  Can override defaults with command lone args
     parseArgs( argc, argv, configurationArg, loggerFactoryArg );
-    
+
     // Add OS dependent prefixes to the arguments.
     const string configurationFileName = string( __ROOT_PREFIX__ ) + configurationArg;
     const string loggerFileName = string( __ROOT_PREFIX__ ) + loggerFactoryArg;
@@ -80,7 +81,7 @@ int main( int argc, char *argv[] ) {
     // Initialize the LoggerFactory
     auto_ptr<LoggerFactoryWrapper> loggerFactoryWrapper( new LoggerFactoryWrapper() );
     XMLHelper<void>::parseXML( loggerFileName, loggerFactoryWrapper.get() );
-
+    
     // Create an auto_ptr to the scenario runner. This will automatically deallocate memory.
     auto_ptr<ScenarioRunner> runner;
     // Get the main log file.

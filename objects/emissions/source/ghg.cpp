@@ -48,14 +48,13 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     emissionsWereInput = false;
     valueWasInput = false;
     fMaxWasInput = false;
-    finalEmissCoefWasInput = false;
     emAdjust = 0;
     fMax = 1;
     fControl = 0;
     techDiff = 0;
     mac = 0;
     gdp0 = 0;
-    finalEmissCoef = 0;
+    finalEmissCoef = -1;
     tau = 0;
     // this is inefficient as it is greater than the lifetime
     // but much simpler than converting period to liftime period 
@@ -99,7 +98,6 @@ void Ghg::copy( const Ghg& other ){
     emissionsWereInput = other.emissionsWereInput;
     valueWasInput = other.valueWasInput;
     fMaxWasInput = other.fMaxWasInput;
-    finalEmissCoefWasInput = other.finalEmissCoefWasInput;
     emAdjust = other.emAdjust;
     fMax = other.fMax;
     fControl = other.fControl;
@@ -160,13 +158,14 @@ void Ghg::XMLParse( const DOMNode* node ) {
         }
         else if( nodeName == "finalEmissCoef" ){
             finalEmissCoef = XMLHelper<double>::getValue( curr );
-            finalEmissCoefWasInput = true;
         }
         else if( nodeName == "techDiff"){
             techDiff = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "emisscoef" ){
             emissCoef = XMLHelper<double>::getValue( curr );
+            emissionsWereInput = false;
+            valueWasInput = false;
         }
         else if( nodeName == "removefrac" ){
             rmfrac = XMLHelper<double>::getValue( curr );
@@ -218,8 +217,9 @@ void Ghg::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( unit, "unit", out, tabs );
     if( emissionsWereInput ) {
         XMLWriteElement( inputEmissions, "inputEmissions", out, tabs );
+        XMLWriteElement( emissCoef, "emisscoef", out, tabs );
     } else {
-        XMLWriteElementCheckDefault( emissCoef, "emisscoef", out, tabs, 0.0 );
+        XMLWriteElement( emissCoef, "emisscoef", out, tabs );
     }
     XMLWriteElementCheckDefault( rmfrac, "removefrac", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( isGeologicSequestration, "isGeologicSequestration", out, tabs, true );
@@ -229,7 +229,7 @@ void Ghg::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( fMax, "fMax", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( gdp0, "gdp0", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( tau, "tau", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( finalEmissCoef, "finalEmissCoef", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( finalEmissCoef, "finalEmissCoef", out, tabs, -1.0 );
     XMLWriteElementCheckDefault( techDiff, "techDiff", out, tabs, 0.0 );
     // Write out the GHGMAC
     if( ghgMac.get() ){
@@ -462,7 +462,7 @@ void Ghg::findControlFunction( const double gdpCap, const double emissDrive, con
     if (techDiff !=0){
         gdp0Adj = calcTechChange(period);
     }
-    if ( finalEmissCoefWasInput ){
+    if ( finalEmissCoef >= 0 ){
         if ( emissionsWereInput ){
             const double multiplier = emissDrive * (1 - emAdjust) * (1 - mac);
             const double B = (1/controlFunction(1,tau,gdp0Adj,gdpCap));

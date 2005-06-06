@@ -73,11 +73,11 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     ReturnCode code = SolverComponent::ORIGINAL_STATE;
       
     // Constants
-    const static double EXIT_VALUE = 100; // Value of Relative Excess Demand above which NR will quit.
-    const static unsigned int MAX_ITER_NO_IMPROVEMENT = 7; // Maximum number of iterations without improvement.
+    const static int MAX_ITER_NO_IMPROVEMENT = 7; // Maximum number of iterations without improvement.
     // Update the SolutionVector for the correct markets to solve.
     solverSet.updateFromMarkets();
-    SolverInfoSet::UpdateCode solvableChanged = solverSet.updateSolvable( true );
+    // Need to update solvable status before starting solution (Ignore return code)
+    solverSet.updateSolvable( true );
 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );

@@ -418,6 +418,7 @@ bool World::getCalibrationSetting() const {
 *
 * \author Steve Smith
 * \param period Model period
+* \param printWarnings flag to turn on logging of warnings if calibrations are not accurate
 * \return Boolean true if calibration is ok.
 */
 bool World::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {

@@ -34,7 +34,6 @@ const string BuildingSupplyTechnology::XML_NAME1D = "buildingsupplytech";
 //! Default constructor.
 BuildingSupplyTechnology::BuildingSupplyTechnology() {
     internalLoadFraction = 1;
-    internalGain = 0;
 }
 
 //! Destructor
@@ -95,22 +94,22 @@ bool BuildingSupplyTechnology::XMLDerivedClassParse( const string nodeName, cons
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void BuildingSupplyTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
-    XMLWriteElementCheckDefault( internalLoadFraction, "internalLoadFraction", out, tabs, 0.0 );
+    XMLWriteElement( internalLoadFraction, "internalLoadFraction", out, tabs);
     XMLWriteElement( intGainsMarketName, "intGainsMarketName", out, tabs );
 }	
 
 //! XML output for viewing.
 void BuildingSupplyTechnology::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElementCheckDefault( internalLoadFraction, "internalLoadFraction", out, tabs, 0.0 );
+    XMLWriteElement( internalLoadFraction, "internalLoadFraction", out, tabs);
     XMLWriteElement( intGainsMarketName, "intGainsMarketName", out, tabs );
-    XMLWriteElement( internalGain, "internalGain", out, tabs );
+    XMLWriteElement( input * internalLoadFraction, "internalGain", out, tabs );
 }
 
 //! Write object to debugging xml output stream.
 void BuildingSupplyTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 
     XMLWriteElement( internalLoadFraction, "internalLoadFraction", out, tabs );
     XMLWriteElement( intGainsMarketName, "intGainsMarketName", out, tabs );
-    XMLWriteElement( internalGain, "internalGain", out, tabs );
+    XMLWriteElement( input * internalLoadFraction, "internalGain", out, tabs );
 }	
 
 //! Calculates fuel input and technology output.
@@ -131,7 +130,7 @@ void BuildingSupplyTechnology::production(const string& regionName,const string&
     // Call the normal production function
     technology::production( regionName, prodName, dmd, gdp, period );
 
-    internalGain = 0;
+    double internalGain = 0;
     // Now, if an internal gains market has been set, calculate internal gains and add to that market 
     if ( internalLoadFraction > 0 && !intGainsMarketName.empty() ) {
         marketplace->addToDemand( intGainsMarketName, regionName, input * internalLoadFraction, period );

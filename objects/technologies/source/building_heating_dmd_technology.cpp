@@ -28,7 +28,7 @@ const string BuildingHeatingDmdTechnology::XML_NAME1D = "heatingservice";
 
 //! Default constructor.
 BuildingHeatingDmdTechnology::BuildingHeatingDmdTechnology() {
-    fractionOfYearActive = 0;
+    heatingDegreeDays = 0;
 }
 
 //! Clone Function. Returns a deep copy of the current technology.

@@ -401,10 +401,9 @@ void Sector::normalizeShareWeights( const int period ) {
                 for ( int unsigned i=0; i< subsec.size(); i++ ) {
                     subsec[ i ]->scaleShareWeight( numberNonzeroSubSectors / shareWeightTotal, period - 1 );
                 }
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::DEBUG );
-                    // sjsTEMP. Turn this on once data is updated. Also move notice to separate log.
-             //   mainLog << "Shareweights normalized for sector " << name << " in region " << regionName << endl;
+                ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+                calibrationLog.setLevel( ILogger::DEBUG );
+                calibrationLog << "Shareweights normalized for sector " << name << " in region " << regionName << endl;
             }
         }
     }
@@ -419,7 +418,7 @@ void Sector::normalizeShareWeights( const int period ) {
 *
 * \author Steve Smith
 * \param period Model period
-* \calAccuracy Accuracy to check if calibrations are within.
+* \calAccuracy Accuracy (fraction) to check if calibrations are within.
 * \param printWarnings if true prints a warning
 * \return Boolean true if calibration is ok.
 */
@@ -431,19 +430,19 @@ bool Sector::isAllCalibrated( const int period, double calAccuracy, const bool p
       double calOutputs = getCalOutput( period );
       double totalFixed = calOutputs + getFixedOutput( period );
       double calDiff =  totalFixed - getOutput( period );
-
+      
       // Two cases to check for. If outputs are all fixed, then calDiff should be small in either case.
       // Even if outputs are not all fixed, then calDiff shouldn't be > calAccuracy (i.e., totalFixedOutputs > actual output)
       if ( calOutputs > 0 ) {
          double diffFraction = calDiff/calOutputs;
-         if ( ( calDiff > calAccuracy ) || ( ( abs(diffFraction) > calAccuracy ) && outputsAllFixed( period ) ) ) {
+         if ( ( ( calDiff > calAccuracy * totalFixed ) && !outputsAllFixed( period ) ) || ( ( abs(diffFraction) > calAccuracy ) && outputsAllFixed( period ) ) ) {
             checkCalResult = false;
             if ( printWarnings ) {
                ILogger& mainLog = ILogger::getLogger( "main_log" );
                mainLog.setLevel( ILogger::WARNING );
                mainLog << "WARNING: " << name << " " << " in " << regionName << " != cal+fixed vals (";
                mainLog << totalFixed << " )" << " in yr " <<  scenario->getModeltime()->getper_to_yr( period );
-               mainLog << " by: " << calDiff << " (" << calDiff*100/calOutputs << "%) " << endl;
+               mainLog << " by: " << calDiff << " (" << diffFraction*100 << "%) " << endl;
                if ( PRINT_DETAILS) {
                   cout << "   fixedSupplies: " << "  "; 
                   for ( unsigned int i=0; i< subsec.size() ; i++ ) {

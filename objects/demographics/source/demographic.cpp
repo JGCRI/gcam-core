@@ -205,7 +205,7 @@ void Demographic::dbOutput( const string& regionName ) const {
 
     // write population to temporary array since not all will be sent to output
     for ( int i = 0; i < maxPeriod; i++ ){
-		temp[ i ] = population[ i ]->getTotal();
+		temp[ i ] = population[ convertPeriodToPopulationIndex( i )  ]->getTotal();
     }
     // function arguments are variable name, double array, db name, table name
     // the function writes all years
@@ -224,7 +224,7 @@ void Demographic::csvOutputFile( const string& regionName ) const {
 
     // write population to temporary array since not all will be sent to output
     for ( int i = 0; i < maxPeriod; i++ ){
-		temp[i] = population[ i ]->getTotal();
+		temp[i] = population[ convertPeriodToPopulationIndex( i ) ]->getTotal();
     }
 
     // function arguments are variable name, double array, db name, table name

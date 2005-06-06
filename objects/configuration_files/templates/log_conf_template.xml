@@ -11,21 +11,21 @@
 	<Logger name="worst_market_log" type="PlainTextLogger">
 		<FileName>logs/worst_market_log.txt</FileName>
 		<printLogWarningLevel>0</printLogWarningLevel>
-		<minLogWarningLevel>6</minLogWarningLevel>
+		<minLogWarningLevel>0</minLogWarningLevel>
 		<minToScreenWarningLevel>6</minToScreenWarningLevel>
 		<headerMessage>{date}:{time}</headerMessage>
 	</Logger>
 	<Logger name="single_market_log" type="PlainTextLogger">
 		<FileName>logs/single_market_log.txt</FileName>
 		<printLogWarningLevel>0</printLogWarningLevel>
-		<minLogWarningLevel>6</minLogWarningLevel>
+		<minLogWarningLevel>0</minLogWarningLevel>
 		<minToScreenWarningLevel>6</minToScreenWarningLevel>
 		<headerMessage>{date}:{time}</headerMessage>
 	</Logger>
 	<Logger name="solver_log" type="PlainTextLogger">
 		<FileName>logs/solver_log.txt</FileName>
 		<printLogWarningLevel>0</printLogWarningLevel>
-		<minLogWarningLevel>6</minLogWarningLevel>
+		<minLogWarningLevel>0</minLogWarningLevel>
 		<minToScreenWarningLevel>6</minToScreenWarningLevel>
 		<headerMessage>{date}:{time}</headerMessage>
 	</Logger>
@@ -34,6 +34,13 @@
 		<printLogWarningLevel>0</printLogWarningLevel>
 		<minLogWarningLevel>5</minLogWarningLevel>
 		<minToScreenWarningLevel>6</minToScreenWarningLevel>
+		<headerMessage>{date}:{time}</headerMessage>
+	</Logger>
+	<Logger name="calibration_log" type="PlainTextLogger">
+		<FileName>logs/calibration_log.txt</FileName>
+		<printLogWarningLevel>0</printLogWarningLevel>
+		<minLogWarningLevel>0</minLogWarningLevel>
+		<minToScreenWarningLevel>5</minToScreenWarningLevel>
 		<headerMessage>{date}:{time}</headerMessage>
 	</Logger>
 </LoggerFactory>
