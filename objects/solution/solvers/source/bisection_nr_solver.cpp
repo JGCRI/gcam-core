@@ -221,10 +221,12 @@ bool BisectionNRSolver::solve( const int period ) {
 
     // Determine whether the model was successful.
     if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
+		mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Model solved normally. Iterations period "<< period << ": " << mCalcCounter->getPeriodCount() << ". Total iterations: "<< mCalcCounter->getTotalCount() << endl;
         return true;
     }
 
+	mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Model did not solve within set iteration " << mCalcCounter->getPeriodCount() << endl;
     solverLog << "Printing solution information after failed attempt to solve." << endl;
     solverLog << sol << endl;
