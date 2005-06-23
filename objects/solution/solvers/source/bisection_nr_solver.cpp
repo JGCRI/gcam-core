@@ -71,7 +71,7 @@ bool BisectionNRSolver::solve( const int period ) {
     static const double SOLUTION_TOLERANCE = conf->getDouble( "SolutionTolerance", 0.001 );
     
     // relative tolerance for calibrations
-    const double CALIBRATION_ACCURACY = max( 0.0001, SOLUTION_TOLERANCE * 5);
+    const double CALIBRATION_ACCURACY = max( 0.0001, SOLUTION_TOLERANCE * 5 );
     // Note, adds significant time if CALIBRATION_ACCURACY = SOLUTION_TOLERANCE. If CALIBRATION_ACCURACY > SOLUTION_TOLERANCE then speeds things up quite a bit. sjs
     // Set calibration accuracy to 0.01%, which is arbitrary, but generally achievable by the model. Max function used in case that solution tolerance is set particularly high.
     // The calibration numbers are generally not good to this accuracy in any event, so having a slightly higher CALIBRATION_ACCURACY should be ok.
@@ -91,7 +91,7 @@ bool BisectionNRSolver::solve( const int period ) {
     static const int CAL_LOOP_LIMIT = 30; // Max number of iterations to allow inner loop to run for calibration fix (this does not have to be terribly small, since loop will exit once model does not solve)
     static const int MAX_CAL_ATTEMPTS = 15; // Number of times to try to fix calibration
     
-    int MaxTotalCalcs = MAX_CALCS; // put this into a variable so can be reset by calibration adjustement if necessary
+    int maxTotalCalcs = MAX_CALCS; // put this into a variable so can be reset by calibration adjustement if necessary
     int calFixAttempts = 0;
     
     // Create and initialize the SolutionInfoSet. 
@@ -164,18 +164,20 @@ bool BisectionNRSolver::solve( const int period ) {
         }
 
         // Sequence for calling NR and they try bisecting a single market if not solved.
-        NRandSingleBisect( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_REL_ED_FOR_NR, MAX_CALCS_NR, MAX_CALCS_BISECT_ONE, sol, period );
+        NRandSingleBisect( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_REL_ED_FOR_NR, MAX_CALCS_NR, MAX_CALCS_BISECT_ONE, sol, 3, period );
         
         // Repeat this solution sequence once to allow for bisect one to occur and newton-rhapson to try to solve 
         // again before the top of the loop is reached and potentially bracket_all
-        NRandSingleBisect( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_REL_ED_FOR_NR, MAX_CALCS_NR, MAX_CALCS_BISECT_ONE, sol, period );
+        NRandSingleBisect( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_REL_ED_FOR_NR, MAX_CALCS_NR, MAX_CALCS_BISECT_ONE, sol, 1, period );
 
         // If model has solved, then check to see if calibrated -- if not, run world.calc once to move toward calibration
         // This check is inside main solver loop so that full solver routine is available for this stage. If the attempt at calibration fails, this 
         // returns to the main solution loop to solve -- this way this should always exit solved, even if not calibrated. 
         // Note -- only do this if maximum sol count has not been exceeded. This way the model will still solve, if perhaps not calibrate.
 
-        if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) && mCalcCounter->getPeriodCount() < MaxTotalCalcs && calFixAttempts < MAX_CAL_ATTEMPTS ){
+        if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR )
+            && mCalcCounter->getPeriodCount() < maxTotalCalcs && calFixAttempts < MAX_CAL_ATTEMPTS )
+        {
             // Make sure calibration was achieved
             int calInnerLoopCount = 0;
             // As long as solution is solved, but not calibrated, then repeat this loop to try and calibrate
@@ -194,24 +196,25 @@ bool BisectionNRSolver::solve( const int period ) {
                     world->calc( period );
                     sol.updateFromMarkets();
                 }
-                NRandSingleBisect( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_REL_ED_FOR_NR, MAX_CALCS_NR, MAX_CALCS_BISECT_ONE, sol, period );
+                NRandSingleBisect( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_REL_ED_FOR_NR, MAX_CALCS_NR, MAX_CALCS_BISECT_ONE, sol, 3, period );
                 ++calInnerLoopCount;
                 
                 // If ended up exceeding maximum calculation limit then add one to that so that solver can go back and solve
-                if ( mCalcCounter->getPeriodCount() > MaxTotalCalcs ) { 
-                    MaxTotalCalcs = mCalcCounter->getPeriodCount() + 1;
+                if ( mCalcCounter->getPeriodCount() > maxTotalCalcs ) { 
+                    maxTotalCalcs = mCalcCounter->getPeriodCount() + 1;
                     calInnerLoopCount = CAL_LOOP_LIMIT; // If past count then exit the calibration loop
                 }
             }
 
-            calFixAttempts ++;
+            ++calFixAttempts;
             if ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false ) ) {
                 solverLog << "Model calibration procedure did not succeed, returning to full solution loop." << endl;
             }
         }
 
         // Determine if the model has solved. 
-    } while ( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) && mCalcCounter->getPeriodCount() < MaxTotalCalcs );
+    } while ( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR )
+              && mCalcCounter->getPeriodCount() < maxTotalCalcs );
     
     mainLog.setLevel( ILogger::ERROR );
     if ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, true ) ) {
@@ -252,11 +255,13 @@ bool BisectionNRSolver::solve( const int period ) {
 * \param maxCalcsNR Maximum number of calcs for NR routine
 * \param maxCalcsBisectOne Maximum number of calcs for bisect one market routine
 * \param sol The solution object
+* \param aNumBisectOneCalls Number of times to call the bisect one function.
 * \param period The period to solve
 * \author Steven Smith
 */
 void BisectionNRSolver::NRandSingleBisect( const double solTol, const double edSolFloor, const double maxNRRelED, 
-                                             const int maxCalcsNR, const int maxCalcsBisectOne, SolverInfoSet& sol, const int period) {
+                                             const int maxCalcsNR, const int maxCalcsBisectOne, SolverInfoSet& sol,
+                                             const unsigned int aNumBisectOneCalls, const int period) {
 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
 
@@ -274,9 +279,10 @@ void BisectionNRSolver::NRandSingleBisect( const double solTol, const double edS
         solverLog << sol << endl;
     }
 
-    // If not solved OR not calibrated, try bisecting a single market. Added the loop for SGM, see if it can be removed.
+    // If not solved OR not calibrated, try bisecting a single market. Added the
+    // loop for SGM, see if it can be removed.
     if( !sol.isAllSolved( solTol, edSolFloor ) ){
-        for( unsigned int k = 0; k < 3; ++k ){
+        for( unsigned int k = 0; k < aNumBisectOneCalls; ++k ){
             mBisectOne->solve( solTol, edSolFloor, maxCalcsBisectOne, sol, period );
         }
     }
