@@ -272,6 +272,11 @@ void World::checkCalConsistancy( const int period ) {
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Starting world calibration consistency check " << endl;
         
+        //Setup for checking by initializing fixed supplies and demands counter to null value
+         for( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
+            ( *i )->initializeCalValues( period );
+        }
+
         //Setup for checking by adding up all fixed supplies and demands
          for( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
             ( *i )->setCalSuppliesAndDemands( period );

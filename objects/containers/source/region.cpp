@@ -1179,8 +1179,6 @@ void Region::setCalSuppliesAndDemands( const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
     const double MKT_NOT_ALL_FIXED = -1;
     
-    initializeCalValues( period );
-            
     // Check for fully calibrated/fixed supplies
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
         string goodName = supplySector[ i ]->getName();

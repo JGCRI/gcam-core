@@ -97,6 +97,7 @@ public:
     void setupCalibrationMarkets();
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void setCalSuppliesAndDemands( const int period );
+    void initializeCalValues( const int period );
     bool setImpliedCalInputs( const int period );
     void scaleCalInputs( const int period );
     virtual void updateAllOutputContainers( const int period );
@@ -139,7 +140,6 @@ protected:
     double coolingDegreeDays; //!< coolingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
     bool anySupplyFixedOutput( const int sectorNumber ) const;
     void checkSectorCalData( const int period );
-    void initializeCalValues( const int period );
     double getTotFinalEnergy( const int period ) const;
     std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
     typedef std::vector<DemandSector*>::iterator DemandSectorIterator;
