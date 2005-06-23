@@ -316,7 +316,7 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( neCostBase, "nonenergycost", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( neCostPenalty, "fuelprefElasticity", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( fuelPrefElasticity, "fuelprefElasticity", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( tax, "tax", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
