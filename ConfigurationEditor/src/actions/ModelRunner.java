@@ -109,8 +109,9 @@ public class ModelRunner implements Runnable {
 			
 			mModelRunning = true;
 			// Create another process which will print the output to a dialog box.
-			Thread outputWatcher = new Thread( new Runnable(){
+			Thread outputWatcher = new Thread() {
 				public void run(){
+					setPriority(Thread.MIN_PRIORITY);
 					// Create a new dialog box.
 					JDialog outputDialog = new JDialog(mParentEditor, Messages.getString("ModelRunner.2"), false); //$NON-NLS-1$
 					outputDialog.setPreferredSize(new Dimension(400,400));
@@ -130,6 +131,11 @@ public class ModelRunner implements Runnable {
 					while (mModelRunning) {
 						// Attempt to read first from the output stream
 						// and then from the error stream. Is this threadsafe?
+						try {
+							sleep(100);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 						try {
 							if (mModelOutput.available() > 0) {
 								int bytesRead = mModelOutput.read(buffer, 0,
@@ -154,7 +160,7 @@ public class ModelRunner implements Runnable {
 						}
 					}
 				}
-			});
+			};
 			outputWatcher.start();
 			// Wait on this thread for the model to complete.
 			modelProcess.waitFor();
