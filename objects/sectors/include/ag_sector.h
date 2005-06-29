@@ -53,7 +53,6 @@ private:
 public:
     AgSector();
     ~AgSector();
-    void clear();
     void XMLParse( const xercesc::DOMNode* node );
     static int getNumAgMarkets();
     void toInputXML( std::ostream& out, Tabs* tabs ) const;

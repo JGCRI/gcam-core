@@ -56,19 +56,6 @@ Resource::~Resource() {
     }
 }
 
-//! Clear data members.
-void Resource::clear(){
-    name = "";
-    market = "";
-    nosubrsrc = 0;
-    rscprc.clear();
-    subResource.clear();
-    available.clear();
-    annualprod.clear();
-    cummprod.clear();
-    rscprc.clear();
-}
-
 //! Set data members from XML input.
 void Resource::XMLParse( const DOMNode* node ){
 
@@ -399,7 +386,7 @@ void Resource::setCalibratedSupplyInfo( const int period, const std::string& reg
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -447,7 +434,7 @@ bool DepletableResource::XMLDerivedClassParse( const string& nodeName, const DOM
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -493,7 +480,7 @@ bool FixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode*
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */

@@ -30,10 +30,7 @@ class Resource {
 public:
     Resource(); // default construtor
     virtual ~Resource();
-    virtual const std::string& getXMLName() const = 0;
-    void clear();
     void XMLParse( const xercesc::DOMNode* node );
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0; // the = 0 makes this an abstract method
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream &out, Tabs* tabs ) const;
@@ -46,7 +43,6 @@ public:
     void csvOutputFile( const std::string& regname ); 
     void addToDependencyGraph( std::ostream& outStream, const int period ) const;
     void setCalibratedSupplyInfo( const int period, const std::string& regionName );
-    
 protected:
     std::string name; //!< Resource name
     std::string market; //!< regional market
@@ -57,10 +53,12 @@ protected:
     std::vector<double> annualprod; //!< annual production rate of Resource
     std::vector<double> cummprod; //!< cummulative production of Resource
     std::map<std::string,int> subResourceNameMap; //!< Map of subResource name to integer position in vector. 
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0;
+    virtual const std::string& getXMLName() const = 0;
+    void setMarket( const std::string& aRegionName );
     void annualsupply( int per, const GDP* gdp, double price, double prev_price );
     void cumulsupply( double prc, int per );
     void printStyle( std::ostream& outStream ) const;
-    void setMarket( const std::string& regionName );
 };
 
 /*! 

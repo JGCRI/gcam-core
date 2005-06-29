@@ -35,15 +35,11 @@ TranSector::TranSector( const string regionName ): DemandSector( regionName ) {
     percentLicensed.resize( scenario->getModeltime()->getmaxper() );
 }
 
-//! Destructor.
-TranSector::~TranSector(){
-}
-
 /*! \brief Get the XML node name for output to XML.
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -123,17 +119,18 @@ void TranSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs )
 * 
 * \author Steve Smith
 * \param period Model period
+* \bug This does not check calibration status.
 */
 void TranSector::checkSectorCalData( const int period ) {
-// For any periods where inputs are calibrated, must make sure that read-in calibration is equal to service demand. 
-
-   // Adjust aggregate demand to match calibrated outputs of all inputs to this sector are calibrated
-  if ( inputsAllFixed( period, "allInputs" ) ) {
-      service[0] = getCalOutput( period );
-      double scaleFactor = getCalOutput( period ) / service[0];
-      ILogger& mainLog = ILogger::getLogger( "main_log" );
-      mainLog << "Calibrated Demand Scaled by " << scaleFactor << " in region " << regionName << " sector " << name << endl;
-   }
+    // For any periods where inputs are calibrated, must make sure that read-in calibration is equal to service demand. 
+    // Adjust aggregate demand to match calibrated outputs of all inputs to this sector are calibrated
+    if ( inputsAllFixed( period, "allInputs" ) ) {
+        service[0] = getCalOutput( period );
+        double scaleFactor = getCalOutput( period ) / service[0];
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::DEBUG );
+        mainLog << "Calibrated Demand Scaled by " << scaleFactor << " in region " << regionName << " sector " << name << endl;
+    }
 }
 
 //! Aggrgate sector energy service demand function.
