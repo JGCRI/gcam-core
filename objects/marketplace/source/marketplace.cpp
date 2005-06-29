@@ -149,7 +149,7 @@ void Marketplace::resetToPriceMarket( const string& goodName, const string& regi
     else if( markets[ marketNumber][ 0 ]->getType() != "NormalMarket" ){
         ILogger& mainLog = ILogger::getLogger( "mainLog" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Cannot reset market type other than normal to a price market.";
+        mainLog << "Cannot reset market type other than normal to a price market." << endl;
     }
     else {
         // Setup the coresponding demand markets
