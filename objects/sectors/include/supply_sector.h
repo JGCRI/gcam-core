@@ -16,6 +16,7 @@
 #include "sectors/include/sector.h"
 class NationalAccount;
 
+class DependencyFinder;
 /*! 
 * \ingroup Objects
 * \brief This class represents a single supply sector.
@@ -27,6 +28,8 @@ public:
 	explicit SupplySector( const std::string regionNameIn );
     virtual ~SupplySector(){};
     static const std::string& getXMLNameStatic();
+    virtual void completeInit( DependencyFinder* aDependencyFinder );
+    void setCalibratedSupplyInfo( const int aPeriod ) const;
     double getOutput( const int aPeriod ) const;
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                           const int aPeriod ){}; // Passing demographic here is not good.

@@ -35,25 +35,32 @@ class ILogger;
 class GDP;
 class Curve;
 class Tabs;
+class DependencyFinder;
 class MarketInfo;
-
 /*! 
 * \ingroup Objects
-* \brief This class defines a single region of the model and contains other regional information such as demographics, resources, supply and demand sectors, and GDPs.
-*
-* The classes contained in the Region are the Populations, Resource, Sector, Demsector.  Since this particular implementation of the model is based on a partial equilibrium concept,
-* it is not mandatory to instantiate all of these classes.  The region can contain just one of these objects or any combination of each of these objects.  The demand sector object, however, requires Populations
-* information to drive the demand for goods and services.  An agriculture class is included in the Region class, but the agriculture class is an interface to the Fortran based AGLU module.
-* The Region class also contains the GhgMarket class which is instantiated only when a market for ghg emissions is needed.
-*
-* Member functions of the Region class call functions of contained objects and trigger a series of events cascading down to the lowest set of classes.  The sequences of
-* calls to other functions of the contained objects are likely to important in each of these member functions. 
+* \brief This class defines a single region of the model and contains other
+*        regional information such as demographics, resources, supply and demand
+*        sectors, and GDPs. The classes contained in the Region are the
+*        Populations, Resource, Sector, DemandSector.  Since this particular
+*        implementation of the model is based on a partial equilibrium concept,
+*        it is not mandatory to instantiate all of these classes.  The region
+*        can contain just one of these objects or any combination of each of
+*        these objects.  The demand sector object, however, requires Populations
+*        information to drive the demand for goods and services.  An agriculture
+*        class is included in the Region class, but the agriculture class is an
+*        interface to the Fortran based AGLU module. The Region class also
+*        contains the GhgMarket class which is instantiated only when a market
+*        for ghg emissions is needed. Member functions of the Region class call
+*        functions of contained objects and trigger a series of events cascading
+*        down to the lowest set of classes.  The sequences of calls to other
+*        functions of the contained objects are likely to important in each of
+*        these member functions. 
 *
 * \author Sonny Kim
-* \todo Change the way fixed carbon taxes are implemented by using the ghgMarket.  A market for the gas and the tax is created but market does not need to be solved.  
-* The applycarbontax function can be removed once this is completed.
 */
 
+#define SORT_TESTING 0
 class Region
 {
     friend class InputOutputTable;
@@ -81,15 +88,12 @@ public:
     void calcTotalCarbonTaxPaid( const int period );
     void csvOutputFile() const;
     void dbOutput() const;
-    void findSimul( const int period );
     void initializeAgMarketPrices( const std::vector<double>& pricesIn );
     virtual void updateSummary( const int period );
     void printGraphs( std::ostream& outStream, const int period ) const;
     double getPrimaryFuelCO2Coef( const std::string& fuelName ) const;
     double getCarbonTaxCoef( const std::string& fuelName ) const;
     const Summary getSummary( const int period ) const;
-    std::vector<std::string> getSectorDependencies( const std::string& sectorName ) const;
-    void printSectorDependencies( ILogger& aLog ) const;
     void setFixedTaxes( const std::string& policyName, const std::string& marketName, const std::vector<double>& taxes );
     const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
@@ -128,6 +132,9 @@ protected:
     std::vector<double> carbonTaxPaid; //!< total regional carbon taxes paid
     std::vector<double> TFEcalb;  //!< Total Final Energy Calibration value (cannot be equal to 0)
     std::vector<double> TFEPerCapcalb;  //!< Total Final Energy per Capita Calibration GJ/cap (cannot be equal to 0)
+#if SORT_TESTING
+    std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
+#endif
     std::vector<Summary> summary; //!< summary values and totals for reporting
     std::map<std::string,int> resourceNameMap; //!< Map of resource name to integer position in vector. 
     std::map<std::string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector. 
@@ -139,9 +146,9 @@ protected:
     double heatingDegreeDays; //!< heatingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
     double coolingDegreeDays; //!< coolingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
     bool anySupplyFixedOutput( const int sectorNumber ) const;
+
     void checkSectorCalData( const int period );
     double getTotFinalEnergy( const int period ) const;
-    std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
     typedef std::vector<DemandSector*>::iterator DemandSectorIterator;
     typedef std::vector<DemandSector*>::const_iterator CDemandSectorIterator;
     typedef std::vector<Resource*>::iterator ResourceIterator;
@@ -154,9 +161,6 @@ protected:
     typedef std::vector<Sector*>::reverse_iterator SectorReverseIterator;
     typedef std::vector<Sector*>::const_iterator CSectorIterator;
     bool reorderSectors( const std::vector<std::string>& orderList );
-    bool sortSectorsByDependency();
-    bool isRegionOrderedCorrectly() const;
-
     void calcGDP( const int period );
     void calcResourceSupply( const int period );
     void calcFinalSupplyPrice( const int period );

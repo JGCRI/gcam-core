@@ -79,7 +79,6 @@ private:
 	bool runCompleted; //!< A boolean which can be used internally to check if a run has been completed.
 	std::vector<int> unsolvedPeriods; //!< Unsolved periods. 
 	void printGraphs( const int period ) const;
-	void printSectorDependencies() const;
 	bool solve( const int period );
     static void openDebugXMLFile( std::ofstream& xmlDebugStream, const std::string& fileNameEnding );
 };

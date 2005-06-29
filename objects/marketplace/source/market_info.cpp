@@ -85,7 +85,7 @@ double MarketInfo::getItemValue( const string& aName, bool aMustExist ) const {
         return iter->second;
     }
 
-    // Report an error if this value was required to equist.
+    // Report an error if this value was required to exist.
     if( aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );

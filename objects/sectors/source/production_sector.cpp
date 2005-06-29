@@ -123,9 +123,11 @@ void ProductionSector::toDebugXMLDerived( const int period, std::ostream& out, T
 }
 
 //! Complete the initialization of this object.
-void ProductionSector::completeInit(){
+void ProductionSector::completeInit( DependencyFinder* aDependencyFinder ){
     // Call parent class complete init.
-    Sector::completeInit();
+    Sector::completeInit( aDependencyFinder );
+	// Set the market.
+	setMarket();
     // Initialize the investment object to the default if one has not been read in.
     if( !mInvestor.get() ){
         cout << "Warning: Creating default investment type for sector " << name << "." << endl;

@@ -26,6 +26,7 @@ class Emcoef_ind;
 class Tabs;
 class GDP;
 class MarketInfo;
+class DependencyFinder;
 class BaseTechnology;
 class NationalAccount;
 class Demographic;
@@ -107,10 +108,9 @@ public:
     virtual ~Subsector();
     static double capLimitTransform( double capLimit, double orgShare ); 
     const std::string getName() const;
-    void XMLParse( const xercesc::DOMNode* tempNode );
+    void XMLParse( const xercesc::DOMNode* tempNode );    virtual void completeInit( DependencyFinder* aDependencyFinder );
     virtual void initCalc( const MarketInfo* aSectorInfo, NationalAccount& aNationalAccount,
         Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo, const int aPeriod );
-    virtual void completeInit();
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
@@ -120,7 +120,7 @@ public:
     bool getCalibrationStatus( const int period ) const;
     virtual void setCalibrationStatus( const int period );
     void scaleCalibrationInput( const int period, const double scaleFactor );
-    bool allOuputFixed( const int period ) const;
+    bool allOutputFixed( const int period ) const;
     double getFixedShare( const int period ) const;
     void setFixedShare( const int period, const double share );
     void setShareToFixedValue( const int period );
@@ -166,7 +166,6 @@ public:
 
     double getTotalCarbonTaxPaid( const int period ) const;
     std::map<std::string, double> getfuelcons( const int period ) const; 
-    void clearfuelcons( const int period );
     std::map<std::string, double> getemission( const int period ) const;
     std::map<std::string, double> getemfuelmap( const int period ) const; 
     std::map<std::string, double> getemindmap( const int period ) const;

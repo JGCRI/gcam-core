@@ -202,7 +202,7 @@ void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -532,17 +532,6 @@ double World::getCarbonTaxCoef( const string& regionName, const string& fuelName
     }
 
     return coef;
-}
-
-/*! \brief A function to print a csv file including the list of all regions their sector dependencies.
-* 
-* \author Josh Lurz
-* \param logger The to which to print the dependencies. 
-*/
-void World::printSectorDependencies( ILogger& aLog ) const {
-    for( ConstRegionIterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
-        ( *regionIter )->printSectorDependencies( aLog );
-    }
 }
 
 /*! \brief A function which sets a fixed tax for each specified region on a specific gas.

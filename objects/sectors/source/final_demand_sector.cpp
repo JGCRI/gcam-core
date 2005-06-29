@@ -103,3 +103,10 @@ void FinalDemandSector::initCalc( const int period, const MarketInfo* aMarketInf
                               moreSectorInfo.get(), period );
     }
 }
+
+/*! \brief Complete the initialization of the final demand sector.
+* \param aDependencyFinder Region's dependency finder, should be null for CGE regions.
+*/
+void FinalDemandSector::completeInit( DependencyFinder* aDependencyFinder ){
+    Sector::completeInit( aDependencyFinder );
+}

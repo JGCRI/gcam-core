@@ -22,8 +22,8 @@ class Ghg;
 class Emcoef_ind;
 class Tabs;
 class GDP;
+class DependencyFinder;
 class MarketInfo;
-
 /*! 
 * \ingroup Objects
 * \brief This technology class is based on the MiniCAM description of technology.
@@ -40,7 +40,6 @@ private:
     void clear();
 protected:
     std::string name; //!< technology name
-    std::string unit; //!< unit of final product from technology
     std::string fuelname; //!< name of fuel used
     int year; //!< period year or vintage
     double shrwts; //!< logit share weight
@@ -80,7 +79,7 @@ protected:
     double A; //!< logit function shape parameter
     double B; //!< logit function shape parameter
     std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
-    virtual void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per );
+    void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per );
     virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
@@ -96,7 +95,7 @@ public:
     virtual ~technology();
     virtual void XMLParse( const xercesc::DOMNode* tempnode ); // initialize technology with xml data
      // for derived classes
-    void completeInit();
+    void completeInit( const std::string& aSectorName, DependencyFinder* aDepFinder );
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName1D() const;
@@ -129,7 +128,7 @@ public:
     virtual double getCalibrationOutput() const; // return calibration output value
     virtual void adjustForCalibration( double subSectorDemand, const std::string& regionName, const MarketInfo* aSubsectorInfo, const int period ); // Adjust share weights for calibration
     bool techAvailable( ) const; // Return available status (re: calibration)
-    bool ouputFixed() const; // return calibration output value
+    bool outputFixed() const; // return calibration output value
     double getInput() const; // return fuel input amount
     double getOutput() const; // return technology output
     double getFuelcost() const; // return fuel cost only

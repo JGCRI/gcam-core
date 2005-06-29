@@ -32,7 +32,6 @@
 #include "emissions/include/indirect_emiss_coef.h"
 #include "containers/include/world.h"
 #include "util/base/include/util.h"
-#include "containers/include/region.h"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/market_info.h"
 #include "util/logger/include/logger.h"
@@ -84,7 +83,7 @@ void Sector::clear(){
 * \author Sonny Kim
 * \return Sector name as a string
 */
-string Sector::getName() const {
+const string& Sector::getName() const {
     return name;
 }
 
@@ -155,7 +154,7 @@ void Sector::XMLParse( const DOMNode* node ){
 * \author Josh Lurz
 * \warning markets are not necesarilly set when completeInit is called
 */
-void Sector::completeInit() {
+void Sector::completeInit( DependencyFinder* aDepFinder ) {
     // Allocate the sector info.
     mSectorInfo.reset( new MarketInfo() );
     
@@ -166,12 +165,10 @@ void Sector::completeInit() {
         mainLog << "No marketname set in " << regionName << "->" << name << ". Defaulting to regional market." << endl;
         market = regionName;
     }
-    // Setup the market
-    setMarket();
 
     // Complete the subsector initializations. 
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
-        ( *subSecIter )->completeInit();
+        ( *subSecIter )->completeInit( aDepFinder );
     }
 }
 
@@ -270,6 +267,7 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // write the xml for the class members.
     // write out the market string.
     XMLWriteElement( market, "market", out, tabs );
+
     // Write out the data in the vectors for the current period.
     XMLWriteElement( sectorprice[ period ], "sectorprice", out, tabs );
     XMLWriteElement( getInput( period ), "input", out, tabs );
@@ -362,7 +360,6 @@ void Sector::checkSectorCalData( const int period ) {
 * \param period Model period
 */
 void Sector::tabulateFixedDemands( const int period ) {
-
     for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
         ( *j )->tabulateFixedDemands( period );
     }
@@ -581,10 +578,6 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
 * \param period Model period
 */
 void Sector::adjSharesCapLimit( const int period ) {
-
-    const double SMALL_NUM = util::getSmallNumber();
-    double tempCapacityLimit;
-    double tempSubSectShare;
     double totalFixedShares = 0;
     bool capLimited = true; // true if any sub-sectors are over their capacity limit
     //bool capLimited = false; // set to false to turn cap limits off for testing
@@ -599,26 +592,23 @@ void Sector::adjSharesCapLimit( const int period ) {
 
         //  Check for capacity limits and calculate sums, looping through each subsector
         for ( unsigned int i = 0; i < subsec.size(); ++i ){
-            double actualCapacityLimit = subsec[ i ]->getCapacityLimit( period ); // call once, store these locally
-            tempSubSectShare = subsec[ i ]->getShare( period ) ;
+            double tempSubSectShare = subsec[ i ]->getShare( period ) ;
 
             // if Sector has been cap limited, then return limit, otherwise transform
             // this is needed because can only do the transform once
+            double tempCapacityLimit;
             if ( subsec[ i ]->getCapLimitStatus( period ) ) {
                 tempCapacityLimit = subsec[ i ]->getShare( period );
             } 
 			else {
-                tempCapacityLimit = Subsector::capLimitTransform( actualCapacityLimit, tempSubSectShare );
+                tempCapacityLimit = Subsector::capLimitTransform( subsec[ i ]->getCapacityLimit( period ),
+                                                                  tempSubSectShare );
             }
 
             // if there is a capacity limit and are over then set flag and count excess shares
-            if ( tempSubSectShare - tempCapacityLimit > SMALL_NUM ) {
+            if ( tempSubSectShare - tempCapacityLimit > util::getSmallNumber() ) {
                 capLimited = true;
                 sumSharesOverLimit += tempSubSectShare - tempCapacityLimit;
-
-                //           cout << "Cap limit changed from " << actualCapacityLimit << " to " << tempCapacityLimit;
-                //  cout << " in sub-Sector: " << subsec[ i ]->getName() << endl;
-
             }
 
             // also sum shares under limit (but not those just at their limits)
@@ -644,11 +634,10 @@ void Sector::adjSharesCapLimit( const int period ) {
                     subsec[ i ]->limitShares( multiplier, period );
                 }
             }
-            else { // If there are no sectors without limits and there are still shares to be re-distributed
-                if ( sumSharesOverLimit > 0 ) {
-                    // if there is no shares left then too much was limited!
-                    cerr << regionName << ": Insufficient capacity to meet demand in Sector " << name << endl;
-                }
+            // If there are no sectors without limits and there are still shares to be re-distributed
+            else if ( sumSharesOverLimit > 0 ) {
+                // if there is no shares left then too much was limited!
+                cerr << regionName << ": Insufficient capacity to meet demand in Sector " << name << endl;
             }
         }
     } // end for loop
@@ -668,7 +657,6 @@ void Sector::adjSharesCapLimit( const int period ) {
 * \param period Model period
 */
 void Sector::checkShareSum( const int period ) const {
-    const double SMALL_NUM = util::getSmallNumber();
     double sumshares = 0;
 
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
@@ -676,7 +664,7 @@ void Sector::checkShareSum( const int period ) const {
         assert( util::isValidNumber( subsec[ i ]->getShare( period ) ) );
         sumshares += subsec[ i ]->getShare( period ) ;
     }
-    if ( fabs(sumshares - 1) > SMALL_NUM ) {
+    if ( fabs(sumshares - 1) > util::getSmallNumber() ) {
         cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << " in Sector " << name;
         cerr << ", region: " << regionName << endl;
         cout << "Shares: ";
@@ -738,16 +726,14 @@ double Sector::getPrice( const int period ) {
 * \return Boolean that is true if entire Sector is calibrated or has fixed output
 */
 bool Sector::outputsAllFixed( const int period ) const {
-
     if ( period < 0 ) {
         return false;
     } 
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        if ( !(subsec[ i ]->allOuputFixed( period )) ) {
+        if ( !(subsec[ i ]->allOutputFixed( period )) ) {
             return false;
         }
     }
-
     return true;
 }
 
@@ -1300,15 +1286,6 @@ double Sector::getConsByFuel( const int period, const std::string& fuelName ) co
     return summary[ period ].get_fmap_second( fuelName );
 }
 
-/*! \brief Clear fuel consumption map for this Sector
-*
-* \author Sonny Kim
-* \param period Model period
-*/
-void Sector::clearfuelcons( const int period ) {
-    summary[ period ].clearfuelcons();
-}
-
 /*! \brief Return the ghg emissions map for this Sector
 *
 * \author Sonny Kim
@@ -1454,109 +1431,6 @@ void Sector::printStyle( ostream& outStream ) const {
     util::replaceSpaces( sectorName );
 
     // output Sector coloring here.
-}
-
-/*! \brief A function to add the name of a Sector the current Sector has a simul with. 
-*
-* This function adds the name of the Sector to the simulList vector, if the name
-* does not already exist within the vector. This vector is 
-* then used to sort the sectors by fuel dependencies so that calculations are always 
-* consistent. 
-*
-* \author Josh Lurz
-* \param sectorName The name of the Sector the current Sector has a simul with. 
-*/
-void Sector::addSimul( const string sectorName ) {
-    if( std::find( simulList.begin(), simulList.end(), sectorName ) == simulList.end() ) {
-        simulList.push_back( sectorName );
-    }
-}
-
-/*! \brief This function sets up the Sector for sorting. 
-*
-* This function uses the recursive function getInputDependencies to 
-* find the full list of dependencies for the Sector, including 
-* transative dependencies. It then sorts that list of dependencies
-* for rapid searching.
-*
-* \author Josh Lurz
-* \param parentRegion A pointer to the parent region.
-*/
-void Sector::setupForSort( const Region* parentRegion ) {
-
-    // Setup the internal dependencies vector.
-    dependsList = getInputDependencies( parentRegion );
-
-    // Now sort the list.
-    sort( dependsList.begin(), dependsList.end() );
-}
-
-/*! \brief This gets the full list of input dependencies including transative dependencies. 
-*
-* This function recursively determines the input dependencies for the Sector. To do this
-* correctly, it must also recursively find all the input dependencies for its direct inputs.
-* This can result in a long list of dependencies. Dependencies already accounted for by simuls
-* are not included in this list. 
-*
-* \author Josh Lurz
-* \param parentRegion A pointer to the parent region.
-* \return The full list of input dependencies including transative ones. 
-*/
-vector<string> Sector::getInputDependencies( const Region* parentRegion ) const {
-    // Setup the vector we will return.
-    vector<string> depVector;
-
-    // Setup an input vector.
-    map<string,double> tempMap = getfuelcons( 0 );
-
-    for( map<string, double>::const_iterator fuelIter = tempMap.begin(); fuelIter != tempMap.end(); fuelIter++ ) {
-        string depSectorName = fuelIter->first;
-
-        // Check for zTotal, which is not a Sector name and simuls which are not dependencies. 
-        if( depSectorName != "zTotal" && ( find( simulList.begin(), simulList.end(), depSectorName ) == simulList.end() ) ) {
-            // First add the dependency.
-            depVector.push_back( depSectorName );
-
-            // Now get the Sector's dependencies.
-            vector<string> tempDepVector = parentRegion->getSectorDependencies( depSectorName );
-
-            // Add the dependencies if they are unique.
-            for( vector<string>::const_iterator tempVecIter = tempDepVector.begin(); tempVecIter != tempDepVector.end(); tempVecIter++ ) {
-                // If the Sector is not already in the dep vector, add it. 
-                if( find( depVector.begin(), depVector.end(), *tempVecIter ) == depVector.end() ){
-                    depVector.push_back( *tempVecIter );
-                }
-            }
-        }
-    } // End input list loop
-    // Return the list of dependencies. 
-    return depVector;
-}
-
-/*! This function returns a copy of the list of dependencies of the Sector
-*
-* This function returns a vector of strings created during setupForSort.
-* It lists the names of all inputs the Sector uses. These inputs are also sectors. 
-*
-* \author Josh Lurz
-* \return A vector of Sector names which are inputs the Sector uses. 
-*/
-const vector<string>& Sector::getDependsList() const {
-    return dependsList;
-}
-
-/*! \brief A function to print a csv file including a Sector's name and all it's dependencies. 
-* 
-* \author Josh Lurz
-* \pre setupForSort function has been called to initialize the dependsList. 
-* \param aLog The to which to print the dependencies. 
-*/
-void Sector::printSectorDependencies( ILogger& aLog ) const {
-    aLog << "," << name << ",";
-    for( vector<string>::const_iterator depIter = dependsList.begin(); depIter != dependsList.end(); depIter++ ) {
-        aLog << *depIter << ",";
-    }
-    aLog << endl;
 }
 
 /*! \brief Initialize the marketplaces in the base year to get initial demands from each technology in subsector

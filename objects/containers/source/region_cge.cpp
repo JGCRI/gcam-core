@@ -238,7 +238,9 @@ void RegionCGE::toDebugXMLDerived( const int period, std::ostream& out, Tabs* ta
 void RegionCGE::completeInit() {
 	Region::completeInit();
 	for( unsigned int i = 0; i < finalDemandSector.size(); i++) {
-		finalDemandSector[i]->completeInit();
+        // Pass null for the dependency finder argument as CGE regions don't
+        // have dependencies.
+		finalDemandSector[i]->completeInit( 0 );
 	}
 	for( unsigned int i = 0; i < factorSupply.size(); i++) {
 		factorSupply[i]->completeInit( name );

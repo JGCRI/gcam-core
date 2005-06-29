@@ -192,7 +192,7 @@ void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -332,9 +332,10 @@ void DemandSector::scaleOutput( int period, double scaleFactor ) {
 }
 
 /*! \brief Complete the initialization of a demand sector.
+* \param The region's dependency finder.
 */
-void DemandSector::completeInit() {
-    Sector::completeInit();
+void DemandSector::completeInit( DependencyFinder* aDependencyFinder ) {
+    Sector::completeInit( aDependencyFinder );
     pElasticityBase = pElasticity[ 0 ]; // Store the base year price elasticity.
 }
 

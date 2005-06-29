@@ -19,6 +19,7 @@
 
 // Forward declarations
 class GDP;
+class DependencyFinder;
 
 /*! 
 * \ingroup CIAM
@@ -46,7 +47,7 @@ public:
     void calcPrice( const int period );
     double getOutput( const int period );
     void setoutput( const double demand, const int period, const GDP* gdp );
-    void completeInit( );
+    void completeInit( DependencyFinder* aDependencyFinder );
 protected:
     virtual const std::string& getXMLName() const;
     bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );

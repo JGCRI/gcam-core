@@ -23,6 +23,7 @@ class Demographic;
 class NationalAccount;
 class GDP;
 class MarketInfo;
+class DependencyFinder;
 
 /*! 
 * \ingroup Objects
@@ -36,12 +37,13 @@ public:
 	ProductionSector ( const std::string& aRegionName );
 	virtual ~ProductionSector();
     static const std::string& getXMLNameStatic();
-    virtual void completeInit();
+    virtual void completeInit( DependencyFinder* aDependencyFinder );
     double getOutput( const int aPeriod ) const;
     virtual void initCalc( const int period, const MarketInfo* aMarketInfo, 
                            NationalAccount& nationalAccount, Demographic* aDemographics );
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, const int aPeriod ); // Passing demographic here is not good.
     virtual void updateOutputContainer( OutputContainer* aOutputContainer, const int aPeriod ) const;
+    virtual void setCalibratedSupplyInfo( const int aPeriod ) const {};
 protected:
 	std::map<std::string,double> ghgEmissCoefMap; //! Map of ghg name to emission coefficent
     void setMarket();

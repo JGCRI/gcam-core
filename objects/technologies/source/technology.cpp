@@ -28,6 +28,7 @@
 #include "containers/include/gdp.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
+#include "containers/include/dependency_finder.h"
 #include "marketplace/include/market_info.h"
 
 using namespace std;
@@ -89,7 +90,6 @@ void technology::copy( const technology& techIn ) {
     fixedOutput = techIn.fixedOutput;
     fixedOutputVal = techIn.fixedOutputVal;
     name = techIn.name;
-    unit = techIn.unit;
     fuelname = techIn.fuelname;
     doCalibration = techIn.doCalibration;
     calInputValue = techIn.calInputValue;
@@ -281,7 +281,7 @@ bool technology::XMLDerivedClassParse( const string nodeName, const DOMNode* cur
 * \author Josh Lurz
 * \warning markets are not necesarilly set when completeInit is called
 */
-void technology::completeInit() {
+void technology::completeInit( const std::string& aSectorName, DependencyFinder* aDepFinder ) {
     const string CO2_NAME = "CO2";
     if( !util::hasValue( ghgNameMap, CO2_NAME ) ) {
         // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
@@ -294,6 +294,11 @@ void technology::completeInit() {
 	eff = effBase * (1 - effPenalty); // reduces efficiency by penalty
 	necost = neCostBase * (1 + neCostPenalty); // increases cost by penalty
 
+    // Add the input dependency to the dependency finder if there is one. There
+    // will not be one if this is a transportation technology.
+    if( aDepFinder ){
+        aDepFinder->addDependency( aSectorName, fuelname );
+    }
 }
 
 //! write object to xml output stream
@@ -343,7 +348,6 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
 	XMLWriteOpeningTag( getXMLName1D(), out, tabs, name, year );
     // write the xml for the class members.
     
-    XMLWriteElement( unit, "unit", out, tabs );
     XMLWriteElement( fuelname, "fuelname", out, tabs );
     XMLWriteElement( shrwts, "sharewt", out, tabs );
     if (doCalibration) {
@@ -382,7 +386,7 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -407,7 +411,7 @@ const std::string& technology::getXMLNameStatic1D() {
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -436,16 +440,15 @@ void technology::initCalc( const MarketInfo* aSubsectorInfo ) {
     }
 
     if ( calInputValue < 0 ) {
-        if( Configuration::getInstance()->getBool( "debugChecking" ) ){
-            cerr << "Calibration value < 0 for tech " << name << ". Calibration removed" << endl;
-        }
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::DEBUG );
+        mainLog << "Negative calibration value for technology " << name << ". Calibration removed." << endl;
         doCalibration = false;
     }
 
     for( unsigned int i = 0; i < ghg.size(); i++ ){
         ghg[i]->initCalc( );
     }
-   
 }
 
 /*! \brief This function calculates the sum of the Carbon Values for all GHG's in this technology.
@@ -734,21 +737,16 @@ void technology::adjustForCalibration( double subSectorDemand, const string& reg
    double calOutput = getCalibrationOutput( );
 
     // make sure share weights aren't zero or else can't calibrate
-    if ( shrwts  == 0 && ( calOutput > 0 ) ) {
+    if ( shrwts == 0 && ( calOutput > 0 ) ) {
         shrwts  = 1;
     }
    
-   // Next block adjusts calibration values if total cal + fixed demands for this subsector 
-//   if ( !( totalCalOutputs > subSectorDemand ) ) {
- //    calOutput = calOutput * ( subSectorDemand  / totalCalOutputs );
- //  }
-   
-   // Adjust share weights
-   double technologyDemand = share * subSectorDemand;
-   if ( technologyDemand > 0 ) {
-      double shareScaleValue = calOutput / technologyDemand;
-      shrwts  = shrwts * shareScaleValue;
-   }
+    // Adjust share weights
+    double technologyDemand = share * subSectorDemand;
+    if ( technologyDemand > 0 ) {
+        double shareScaleValue =  calOutput / technologyDemand;
+        shrwts  = shrwts * shareScaleValue;
+    }
     
    // Check to make sure share weights are not less than zero (and reset if they are)
    if ( shrwts < 0 ) {
@@ -758,11 +756,11 @@ void technology::adjustForCalibration( double subSectorDemand, const string& reg
    }
 
    Configuration* conf = Configuration::getInstance();
-   bool debugChecking = conf->getBool( "debugChecking" );
-   
-  // Report if share weight gets extremely large
+   const static bool debugChecking = conf->getBool( "debugChecking" );
+
+   // Report if share weight gets extremely large
    if ( debugChecking && (shrwts > 1e4 ) ) {
-         cout << "Large share weight in calibration for technology: " << name << endl;
+       cout << "Large share weight in calibration for technology: " << name << endl;
    }
 }
 
@@ -884,14 +882,8 @@ bool technology::getCalibrationStatus( ) const {
 }
 
 //! returns true if all output is either fixed or calibrated
-bool technology::ouputFixed( ) const {
-    bool outputFixed = false;
-
-   if ( doCalibration || ( fixedOutput != 0 ) || ( shrwts == 0 ) ) {
-      outputFixed = true;  // this sector has fixed output
-   } 
-   
-   return outputFixed;
+bool technology::outputFixed( ) const {
+    return ( doCalibration || ( fixedOutput != 0 ) || ( shrwts == 0 ) );
 }
 
 /*! \brief Returns true if this technology is available for production and not fixed
@@ -1135,7 +1127,7 @@ void technology::tabulateFixedDemands( const string regionName, const int period
 
     // Checking for market existence here avoids emitting a warning (which happens for fuel "renewable")
     if ( marketplace->getPrice( fuelname, regionName, period, false ) != Marketplace::NO_MARKET_PRICE ) {
-        if ( doCalibration || ( fixedOutput != 0 ) || ( shrwts == 0 ) ) {
+        if ( outputFixed() ) {
             double fixedInput = 0;
             // this sector has fixed output
             if ( doCalibration ) {

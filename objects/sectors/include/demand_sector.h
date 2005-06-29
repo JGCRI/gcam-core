@@ -21,6 +21,7 @@
 class GDP;
 class NationalAccount;
 class Demographic;
+class DependencyFinder;
 
 /*! 
 * \ingroup Objects
@@ -46,7 +47,7 @@ public:
     DemandSector( const std::string aRegionName );
     virtual ~DemandSector();
 	static const std::string& getXMLNameStatic();
-    virtual void completeInit();
+    virtual void completeInit( DependencyFinder* aDependencyFinder );
     virtual void calcPriceElasticity( const int period );
     virtual void aggdemand( const GDP* gdp, const int period ); 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
@@ -58,6 +59,7 @@ public:
     double getOutput( const int aPeriod ) const;
     double getServiceWoTC( const int period ) const;
     void scaleOutput( const int period, double scaleFactor );
+    void setCalibratedSupplyInfo( const int aPeriod ) const {}
 protected:
     bool perCapitaBased; //!< demand equation based on per capita GNP, true or false.
     double pElasticityBase; //!< base year energy price elasticity

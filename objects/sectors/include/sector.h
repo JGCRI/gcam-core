@@ -15,7 +15,6 @@
 
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
-#include <algorithm>
 #include <map>
 #include <memory>
 #include <iosfwd>
@@ -28,11 +27,11 @@
 class Subsector;
 class Summary;
 class Emcoef_ind;
-class Region;
 class ILogger;
 class GDP;
 class Tabs;
 class MarketInfo;
+class DependencyFinder;
 class Demographic;
 class NationalAccount;
 class MoreSectorInfo;
@@ -68,8 +67,6 @@ protected:
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
     std::vector<bool> capLimitsPresent; //!< Flag if any capacity limits are present 
-    std::vector<std::string> simulList; //!< List of all sectors with simuls to this one. 
-    std::vector<std::string> dependsList; //!< List of all dependencies of this Sector. 
     bool anyFixedCapacity; //!< flag set to true if any fixed capacity is present in this Sector
 	std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
 
@@ -94,17 +91,17 @@ protected:
 public:
     explicit Sector( std::string regionName );
     virtual ~Sector();
-    std::string getName() const;
+    const std::string& getName() const;
     virtual void XMLParse( const xercesc::DOMNode* node );
-    virtual void completeInit();
+    virtual void completeInit( DependencyFinder* aDepFinder ) = 0;
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    void addGhgTax( const std::string& ghgname, const int period );
     virtual void initCalc( const int period, const MarketInfo* aRegionInfo,
                            NationalAccount& nationalAccount, Demographic* aDemographics );
     virtual void calibrateSector( const int period ); 
     virtual void checkSectorCalData( const int period );
+    virtual void setCalibratedSupplyInfo( const int aPeriod ) const = 0;
     void adjustForFixedOutput( const double marketDemand, const int period );
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void supply( const int period, const GDP* gdp );
@@ -130,43 +127,21 @@ public:
     double getTotalCarbonTaxPaid( const int period ) const;
     std::map<std::string, double> getfuelcons( const int period ) const;
     double getConsByFuel( const int period, const std::string& key) const;
-    void clearfuelcons( const int period );
     std::map<std::string, double> getemission( const int period ) const;
     std::map<std::string, double> getemfuelmap( const int period ) const;
     void updateSummary( const int period );
     void addToDependencyGraph( std::ostream& outStream, const int period ) const;
-    void addSimul( const std::string sectorName );
-    void setupForSort( const Region* parentRegion );
-    std::vector<std::string> getInputDependencies( const Region* parentRegion ) const;
-    const std::vector<std::string>& getDependsList() const;
-    void printSectorDependencies( ILogger& aLog ) const;
     void tabulateFixedDemands( const int period );
+
     virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;	void updateMarketplace( const int period );
     virtual void finalizePeriod( const int aPeriod );
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
 	friend void OutputContainer::updateSector( const Sector* sector );
 	friend void SectorReport::updateSector( const Sector* sector );
 	virtual void updateOutputContainer( OutputContainer * outputContainer, const int period ) const;
-    /*!
-    * \brief Binary function used to order Sector* pointers by input dependency. 
-    * \author Josh Lurz
-    * \details This function checks if the right hand side sector has an input dependency
-    * on the left hand side Sector. If it does, the right hand side should go after the left
-    * hand side, and so is greater than the left hand side, and this operator returns true. 
-    */   
-    struct DependencyOrdering : public std::binary_function<Sector*, Sector*, bool>
-    {
-        //! \brief The () operator, which is used for sorting two Sector pointers. 
-        bool operator()( const Sector* lhs, const Sector* rhs ) const {
-            // First cache a copy of the dependsList
-            std::vector<std::string> rhsDependsList = rhs->getDependsList();
 
-            // Check if the right Sector depends on the left Sector.
-            return std::binary_search( rhsDependsList.begin(), rhsDependsList.end(), lhs->getName() );
-        }
-    };
-    private:
-        void clear();
+private:
+    void clear();
 };
 
 #endif // _SECTOR_H_

@@ -70,7 +70,6 @@ public:
     const std::vector<std::string> getPrimaryFuelList() const;
     double getPrimaryFuelCO2Coef( const std::string& regionName, const std::string& fuelName ) const;
     double getCarbonTaxCoef( const std::string& regionName, const std::string& fuelName ) const;
-    void printSectorDependencies( ILogger& aLog ) const;
     void setFixedTaxes( const std::string& policyName, const std::string& marketName, const std::vector<double> taxes, const std::vector<std::string>& regionsToSet = std::vector<std::string>( 0 ) );
     const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;

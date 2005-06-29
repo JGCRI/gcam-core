@@ -75,7 +75,7 @@ public:
     std::string getRegionName() const;
     std::string getGoodName() const;
     void setMarketInfo( const std::string& itemName, const double itemValue );
-    double getMarketInfo( const std::string& aItemName, bool aMustExist = true ) const;
+    double getMarketInfo( const std::string& aItemName, bool aMustExist ) const;
     void storeInfo();
     void restoreInfo();
 

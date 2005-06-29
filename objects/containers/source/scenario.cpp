@@ -217,12 +217,6 @@ bool Scenario::run( string filenameEnding ){
     ofstream xmlDebugStream;
     openDebugXMLFile( xmlDebugStream, filenameEnding );
 
-    // Print the sector dependencies. This may need a better spot 
-    // and name as it now prints sector ordering as well. 
-    if( conf->getBool( "PrintSectorDependencies", false ) ){
-        printSectorDependencies();
-	}
-
     Tabs tabs;
     marketplace->initPrices(); // initialize prices
     toDebugXMLOpen( xmlDebugStream, &tabs );
@@ -336,16 +330,6 @@ void Scenario::printGraphs( const int period ) const {
     world->printGraphs( graphStream, period );
 
     graphStream.close();
-}
-
-/*! \brief A function to print a csv file including the list of all regions and their sector dependencies.
-* 
-* \author Josh Lurz
-*/
-void Scenario::printSectorDependencies() const {
-    ILogger& logger = ILogger::getLogger( "sector_dependencies" );
-    logger.setLevel( ILogger::DEBUG );
-    world->printSectorDependencies( logger );
 }
 
 /*! \brief A function to generate a series of ghg emissions quantity curves based on an already performed model run.

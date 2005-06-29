@@ -185,20 +185,19 @@ void BuildingDemandSubSector::toDebugXMLDerived( const int period, ostream& out,
 *
 * This routine is only called once per model run
 *
-* \author Josh Lurz
+* \author Steve Smith
+* \param aDependencyFinder The regional dependency finder.
 * \warning markets are not necesarilly set when completeInit is called
 */
-void BuildingDemandSubSector::completeInit() {
-    
-    Subsector::completeInit();
-    
+void BuildingDemandSubSector::completeInit( DependencyFinder* aDependencyFinder ) {
+    Subsector::completeInit( aDependencyFinder );
     setUpSubSectorMarkets();
-    
 }
 
 /*! \brief Set up the internal gain market for this building type
 *
-* The internal gain market is a trail value market used so that the internal gain values are always available
+* The internal gain market is a trial value market used so that the internal
+* gain values are always available
 *
 * \author Steve Smith
 */
@@ -209,7 +208,8 @@ void BuildingDemandSubSector::setUpSubSectorMarkets() {
 
     vector<double> initValues;
     initValues.resize( maxPeriod, 0 );
-    // name is of this market is  prefix plus sector name and subsector name. This will always be unique to a region.
+    // name is of this market is  prefix plus sector name and subsector name.
+    // This will always be unique to a region.
     string intGainsMarketName = INTERNAL_GAINS_MKT + sectorName + name;
     
     // always make internal gains trail markets regional

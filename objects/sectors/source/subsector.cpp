@@ -374,7 +374,7 @@ bool Subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr
 * \author Josh Lurz
 * \warning markets are not necesarilly set when completeInit is called
 */
-void Subsector::completeInit() {
+void Subsector::completeInit( DependencyFinder* aDependencyFinder ) {
     mSubsectorInfo.reset( new MarketInfo() );
     
 	for( unsigned int i = 0; i < baseTechs.size(); i++) {
@@ -390,7 +390,7 @@ void Subsector::completeInit() {
     for ( vector< vector< technology* > >::iterator outerIter = techs.begin(); outerIter != techs.end(); outerIter++ ) {
         for( vector< technology* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
             assert( *innerIter ); // Make sure the technology has been defined.
-            ( *innerIter )->completeInit();
+            ( *innerIter )->completeInit( sectorName, aDependencyFinder );
         }
     }
 }
@@ -573,7 +573,7 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -1138,20 +1138,20 @@ void Subsector::adjustTechnologyShareWeights( const int period ) {
 * \param endPeriod Period in which to end the interpolation.
 */
 void Subsector::shareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod ) {
-const Modeltime* modeltime = scenario->getModeltime();
-double shareIncrement = 0;
-    
+    const Modeltime* modeltime = scenario->getModeltime();
+    double shareIncrement = 0;
+
     int loopPeriod = endPeriod;
     if ( endPeriod > beginPeriod ) {
         shareIncrement = ( shrwts[ endPeriod ] - shrwts[ beginPeriod ] ) / ( endPeriod - beginPeriod );
-    } else
-    if ( endPeriod == beginPeriod ) {
+    } 
+    else if ( endPeriod == beginPeriod ) {
         // If end period equals the begining period then this is a flag to keep the weights the same, so make increment zero
         // and loop over rest of periods
         loopPeriod = modeltime->getmaxper();  
         shareIncrement = 0;
     }
-        
+
     for ( int period = beginPeriod + 1; period < loopPeriod; period++ ) {
         shrwts[ period ] = shrwts[ period - 1 ] + shareIncrement;
     }
@@ -1168,6 +1168,7 @@ double shareIncrement = 0;
 * \author Steve Smith
 * \param beginPeriod Period in which to begin the interpolation.
 * \param endPeriod Period in which to end the interpolation.
+* \bug shareIncrement is never initialized if endPeriod < beginPeriod
 */
 void Subsector::techShareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod ) {
     const Modeltime* modeltime = scenario->getModeltime();
@@ -1437,19 +1438,16 @@ double Subsector::getTotalCalOutputs( const int period ) const {
     else {
         for( unsigned int i = 0; i < techs.size(); ++i ){
             if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
-                const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
-                if ( debugChecking ) {
-                    if ( techs[ i ][ period ]->getCalibrationOutput( ) < 0 ) {
-                        cerr << "calibration < 0 for tech " << techs[ i ][ period ]->getName() 
-                            << " in Subsector " << name << endl;
-                    }
+                if ( techs[ i ][ period ]->getCalibrationOutput( ) < 0 ) {
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::DEBUG );
+                    mainLog << "calibration < 0 for tech " << techs[ i ][ period ]->getName() 
+                        << " in Subsector " << name << endl;
                 }
-
                 sumCalValues += techs[ i ][ period ]->getCalibrationOutput( );
             }
         }
     }
-
     return sumCalValues;
 }
 
@@ -1472,7 +1470,7 @@ double Subsector::getCalAndFixedInputs( const int period, const std::string& goo
             if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
                 sumCalInputValues += techs[ i ][ period ]->getCalibrationInput( );
             } 
-            else if ( techs[ i ][ period ]->ouputFixed( ) && bothVals ) {
+            else if ( techs[ i ][ period ]->outputFixed( ) && bothVals ) {
                 sumCalInputValues += techs[ i ][ period ]->getFixedInput( );
             }
         }
@@ -1498,7 +1496,7 @@ double Subsector::getCalAndFixedOutputs( const int period, const std::string& go
             if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
                 sumCalOutputValues += techs[ i ][ period ]->getCalibrationOutput( );
             } 
-            else if ( techs[ i ][ period ]->ouputFixed( ) && bothVals ) {
+            else if ( techs[ i ][ period ]->outputFixed( ) && bothVals ) {
                 sumCalOutputValues += techs[ i ][ period ]->getFixedOutput( );
             }
         }
@@ -1542,6 +1540,7 @@ bool Subsector::setImpliedFixedInput( const int period, const std::string& goodN
 * \param period Model period
 * \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
 * \return boolean true if inputs of specified good are fixed
+* \bug The allInputsFixed variable isn't actually returned.
 */
 bool Subsector::inputsAllFixed( const int period, const std::string& goodName ) const {
     bool allInputsFixed = false;
@@ -1552,7 +1551,7 @@ bool Subsector::inputsAllFixed( const int period, const std::string& goodName ) 
             if ( ( techs[ i ][ period ]->getCalibrationStatus( ) ) ) {
                 allInputsFixed = true;
             } 
-            else if ( techs[ i ][ period ]->ouputFixed( ) != 0 ) {
+            else if ( techs[ i ][ period ]->outputFixed( ) != 0 ) {
                 allInputsFixed =  true;
             } else if ( shrwts[ period ] == 0) {
                 allInputsFixed = true;
@@ -1576,9 +1575,7 @@ bool Subsector::inputsAllFixed( const int period, const std::string& goodName ) 
 * \todo Need a more robust way of doing this check (requires a more fundamental change to the way calibrated inputs and outputs are found)
 */
 bool Subsector::techHasInput( const technology* thisTech, const std::string& goodName ) const {
-	
 	return ( thisTech->getFuelName() == goodName );
-	
 }
 
 /*! \brief Scales calibrated values for the specified good.
@@ -1590,7 +1587,6 @@ bool Subsector::techHasInput( const technology* thisTech, const std::string& goo
 * \return Total calibrated input for this Subsector
 */
 void Subsector::scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue ) {
-
 	for ( unsigned int i=0; i< techs.size(); i++ ) {
 		if ( techHasInput( techs[ i ][ period ], goodName ) ) {
 			if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
@@ -1608,30 +1604,18 @@ void Subsector::scaleCalibratedValues( const int period, const std::string& good
 * \param period Model period
 * \return Total calibrated output for this Subsector
 */
-bool Subsector::allOuputFixed( const int period ) const {
-    bool oneNotFixed = false;
-    bool outputFixed = false;
-
-    if ( doCalibration[ period ] ) {
-        outputFixed = true;  // this sector has fixed output
+bool Subsector::allOutputFixed( const int period ) const {
+    // Check if subsector level output is fixed.
+    if ( doCalibration[ period ] || shrwts[ period ] == 0 ) {
+        return true;
     } 
-    else  if ( shrwts[ period ] == 0 ) {
-        outputFixed = true; // this sector has no output, so is also fixed
-    }
     // if not fixed at sub-sector level, then check at the technology level
-    else {
-        for( unsigned int i = 0; i < techs.size(); ++i ){
-            if ( !( techs[ i ][ period ]->ouputFixed( ) ) ) {
-                oneNotFixed = true;
-            }
+    for( unsigned int i = 0; i < techs.size(); ++i ){
+        if ( !( techs[ i ][ period ]->outputFixed( ) ) ) {
+            return false;
         }
     }
-
-    if ( outputFixed ) {
-        return true;
-    } else {
-        return !oneNotFixed;
-    }
+    return true;
 }
 
 /*! \brief scale calibration values.
@@ -1667,7 +1651,6 @@ double Subsector::getShareWeight( const int period ) const {
 * \param scaleValue Multipliciatve scale factor for shareweight
 */
 void Subsector::scaleShareWeight( const double scaleValue, const int period ) {
-
     if ( scaleValue != 0 ) {
         shrwts[ period ] *= scaleValue;
     }
@@ -2165,15 +2148,6 @@ map<string, double> Subsector::getfuelcons( const int period ) const {
     assert( period <= scenario->getModeltime()->getmaxper() );
     
     return summary[period].getfuelcons();
-}
-
-/*! \brief clears fuel consumption map for this sub-sector
-*
-* \author Sonny Kim, Josh Lurz
-* \param period Model period
-*/
-void Subsector::clearfuelcons( const int period ) {
-    summary[ period ].clearfuelcons();
 }
 
 /*! \brief returns GHG emissions map for this sub-sector

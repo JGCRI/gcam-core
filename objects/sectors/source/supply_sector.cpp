@@ -21,6 +21,7 @@
 #include "sectors/include/supply_sector.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
+#include "containers/include/dependency_finder.h"
 #include "sectors/include/subsector.h"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/imarket_type.h"
@@ -67,11 +68,51 @@ double SupplySector::getOutput( const int aPeriod ) const {
     return output;
 }
 
+//! Complete the initialization of the supply sector.
+void SupplySector::completeInit( DependencyFinder* aDependencyFinder ){
+    Sector::completeInit( aDependencyFinder );
+    setMarket();
+
+    // Check if this sector has any fixed capacity. If it does, add a price market
+    // because resolution of fixed capacity requires a trial value for demand. When markets
+    // become dynamic this can be optimized by moving it to initCalc.
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int i = 0; i < modeltime->getmaxper(); i++ ){
+        if ( getFixedOutput( i ) > 0 ) {
+            scenario->getMarketplace()->resetToPriceMarket( name, regionName );
+        }
+    }
+}
+
+/*! \brief Set the calibrated supply info into the marketplace.
+* \details This routine adds calibrated supply and demand values to the
+*          associated marketInfo variables. Values are added only if all outputs
+*          for that variable are fixed or calibrated.
+* \todo -- Steve to fix potential inconsistency with global markets.
+* \param aPeriod Period to add the information for.
+*/
+void SupplySector::setCalibratedSupplyInfo( const int aPeriod ) const {
+    const double MKT_NOT_ALL_FIXED = -1;
+    Marketplace* marketplace = scenario->getMarketplace();
+    if ( outputsAllFixed( aPeriod )  ) {
+        // If supply of this good has not been elimiated from the search and output is fixed then add to fixed supply value
+        double calSupply = getCalOutput( aPeriod );  // total calibrated output
+        calSupply += getFixedOutput( aPeriod );  // total fixed output
+
+        double existingCalSupply = max( marketplace->getMarketInfo( name, regionName, aPeriod, "calSupply" ), 0.0 );
+        marketplace->setMarketInfo( name, regionName, aPeriod, "calSupply", existingCalSupply + calSupply );
+    } 
+    else {
+        // If supply of this good is not fixed then set flag to eliminate this from other searches
+        marketplace->setMarketInfo( name, regionName, aPeriod, "calSupply", MKT_NOT_ALL_FIXED );
+    }
+}
+
 /*! \brief Get the XML node name for output to XML.
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -133,4 +174,3 @@ void SupplySector::setMarket() {
 	/* The above initilaizes prices with any values that are read-in. 
     This only affects the base period, which is not currently solved. */
 }
-

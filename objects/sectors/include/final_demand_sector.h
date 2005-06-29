@@ -36,6 +36,8 @@
 
 class Tabs;
 class MarketInfo;
+class DependencyFinder;
+
 class FinalDemandSector : public Sector
 {
 public:
@@ -47,6 +49,8 @@ public:
 	static const std::string& getXMLNameStatic();
     virtual void initCalc( const int period, const MarketInfo* aMarketInfo,
                            NationalAccount& nationalAccount, Demographic* aDemographics );
+    virtual void completeInit( DependencyFinder* aDependencyFinder );
+    virtual void setCalibratedSupplyInfo( const int aPeriod ) const {};
 protected:
     virtual void setMarket();
     virtual const std::string& getXMLName() const;
