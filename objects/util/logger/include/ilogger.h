@@ -13,7 +13,7 @@
 * \version $Revision$
 */
 
-#include <iosfwd>
+#include <iostream>
 #include <string>
 /*! 
 * \ingroup objects

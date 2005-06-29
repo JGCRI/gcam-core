@@ -175,7 +175,7 @@ const vector<string>& DependencyFinder::getOrdering() const {
 * \param aSector Sector index for which to remove the dependency.
 * \param aDependency Dependency index to remove.
 */
-void DependencyFinder::removeDependency( const unsigned int aSector, const unsigned int aDependency ){
+void DependencyFinder::removeDependency( const size_t aSector, const size_t aDependency ){
     // Remove the dependency, or edge.
     assert( mDependencyMatrix.size() > aSector );
     assert( mDependencyMatrix[ aSector ].size() > aDependency );
