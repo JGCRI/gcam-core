@@ -39,7 +39,6 @@
 #include "technologies/include/technology_type.h"
 #include "functions/include/function_utils.h"
 #include "technologies/include/profit_shutdown_decider.h"
-#include "technologies/include/variable_cost_shutdown_decider.h"
 
 using namespace std;
 using namespace xercesc;
