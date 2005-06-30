@@ -1,7 +1,7 @@
 /*! 
 * \file supply_sector.cpp
 * \ingroup Objects
-* \brief ExportSector class source file.
+* \brief SupplySector class source file.
 * \author James Blackwood
 * \date $Date$
 * \version $Revision$
@@ -13,12 +13,10 @@
 
 // xml headers
 #include <xercesc/dom/DOMNode.hpp>
-
 #include "util/base/include/xml_helper.h"
 #include "sectors/include/supply_sector.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
-#include "containers/include/dependency_finder.h"
 #include "sectors/include/subsector.h"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/imarket_type.h"
@@ -35,7 +33,7 @@ const string SupplySector::XML_NAME = "supplysector";
 /* \brief Constructor
 * \param aRegionName The name of the region.
 */
-SupplySector::SupplySector ( const string& aRegionName ) : Sector ( aRegionName ) {
+SupplySector::SupplySector( const string& aRegionName ) : Sector ( aRegionName ) {
 }
 
 /*! \brief returns Sector output.
@@ -308,7 +306,7 @@ void SupplySector::adjustForFixedOutput( const double aMarketDemand, const int a
             variableSharesNew = 0; // should be no variable shares in this case
         }
         else {
-            assert( marketDemand != 0); // check for 0 so that variableSharesNew does not blow up
+            assert( aMarketDemand != 0); // check for 0 so that variableSharesNew does not blow up
             variableSharesNew = 1 - (totalfixedOutput/ aMarketDemand );
         }
 		
