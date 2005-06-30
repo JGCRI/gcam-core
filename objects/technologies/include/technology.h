@@ -156,5 +156,6 @@ public:
     int getNumbGHGs()  const; // number of GHG objects in this technology
     void setYear( const int yearIn );
     void tabulateFixedDemands( const std::string regionName, const int period );
+	void setTechShare(const double shareIn);
 };
 #endif // _TECHNOLOGY_H_

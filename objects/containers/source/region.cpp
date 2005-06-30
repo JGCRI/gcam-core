@@ -47,6 +47,7 @@
 #include "util/curves/include/xy_data_point.h"
 #include "util/curves/include/point_set.h"
 #include "util/curves/include/explicit_point_set.h"
+#include "sectors/include/interm_supply_sector.h"
 #include "containers/include/dependency_finder.h"
 #include "reporting/include/output_container.h"
 #include "containers/include/national_account.h"
@@ -173,6 +174,10 @@ void Region::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == SupplySector::getXMLNameStatic() ){
             parseContainerNode( curr, supplySector, supplySectorNameMap, new SupplySector( name ) );
+        }
+        // Intermittent supply sector is contained in supplySector
+		else if( nodeName == IntermittentSupplySector::getXMLNameStatic() ){
+            parseContainerNode( curr, supplySector, supplySectorNameMap, new IntermittentSupplySector( name ) );
         }
 		else if( nodeName == ProductionSector::getXMLNameStatic() ){
 			parseContainerNode( curr, supplySector, supplySectorNameMap, new ProductionSector( name ) );

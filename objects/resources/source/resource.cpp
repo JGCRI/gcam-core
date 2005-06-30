@@ -39,61 +39,61 @@ const string RenewableResource::XML_NAME = "renewresource";
 
 //! Default constructor.
 Resource::Resource(){
-    nosubrsrc = 0;
-    // resize vectors not read in
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    available.resize(maxper); // total resource availabl
-    annualprod.resize(maxper); // annual production rate of resource
-    cummprod.resize(maxper); // cummulative production of resource
-    rscprc.resize( maxper ); 
+	nosubrsrc = 0;
+	// resize vectors not read in
+	const Modeltime* modeltime = scenario->getModeltime();
+	const int maxper = modeltime->getmaxper();
+	available.resize(maxper); // total resource availabl
+	annualprod.resize(maxper); // annual production rate of resource
+	cummprod.resize(maxper); // cummulative production of resource
+	rscprc.resize( maxper ); 
 }
 
 //! Destructor.
 Resource::~Resource() {
-    for ( vector<SubResource*>::iterator iter = subResource.begin(); iter != subResource.end(); iter++ ) {
-        delete *iter;
-    }
+	for ( vector<SubResource*>::iterator iter = subResource.begin(); iter != subResource.end(); iter++ ) {
+		delete *iter;
+	}
 }
 
 //! Set data members from XML input.
 void Resource::XMLParse( const DOMNode* node ){
 
-    const Modeltime* modeltime = scenario->getModeltime();
-    string nodeName;
-    DOMNodeList* nodeList = 0;
-    DOMNode* curr = 0;
+	const Modeltime* modeltime = scenario->getModeltime();
+	string nodeName;
+	DOMNodeList* nodeList = 0;
+	DOMNode* curr = 0;
 
-    // make sure we were passed a valid node.
-    assert( node );
+	// make sure we were passed a valid node.
+	assert( node );
 
-    // get the name attribute.
-    name = XMLHelper<string>::getAttrString( node, "name" );
+	// get the name attribute.
+	name = XMLHelper<string>::getAttrString( node, "name" );
 
-    // get all child nodes.
-    nodeList = node->getChildNodes();
+	// get all child nodes.
+	nodeList = node->getChildNodes();
 
-    // loop through the child nodes.
-    for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+	// loop through the child nodes.
+	for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
+		curr = nodeList->item( i );
+		nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-        if( nodeName == "#text" ) {
-            continue;
-        }
+		if( nodeName == "#text" ) {
+			continue;
+		}
 
-        else if( nodeName == "market" ){
-            market = XMLHelper<string>::getValueString( curr ); // only one market element.
-        }
-        else if( nodeName == "price" ){
-            XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );
-        }
-        else if( XMLDerivedClassParse( nodeName, curr ) ){
-        }
-        else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
-        }
-    }
+		else if( nodeName == "market" ){
+			market = XMLHelper<string>::getValueString( curr ); // only one market element.
+		}
+		else if( nodeName == "price" ){
+			XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );
+		}
+		else if( XMLDerivedClassParse( nodeName, curr ) ){
+		}
+		else {
+			cout << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
+		}
+	}
 }
 
 /*! \brief Complete the initialization
@@ -103,12 +103,13 @@ void Resource::XMLParse( const DOMNode* node ){
 * \author Josh Lurz
 * \warning markets are not necesarilly set when completeInit is called
 */
+
 void Resource::completeInit( const string& aRegionName ) {
     nosubrsrc = static_cast<int>( subResource.size() );
 
-    for( vector<SubResource*>::iterator subResIter = subResource.begin(); subResIter != subResource.end(); subResIter++ ) {
-        ( *subResIter )->completeInit();
-    }
+	for( vector<SubResource*>::iterator subResIter = subResource.begin(); subResIter != subResource.end(); subResIter++ ) {
+		( *subResIter )->completeInit();
+	}
 
     // Set markets for this sector
     setMarket( aRegionName );
@@ -116,99 +117,100 @@ void Resource::completeInit( const string& aRegionName ) {
 
 //! Write datamembers to datastream in XML format for replicating input file.
 void Resource::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
-    // write the xml for the class members.
-    XMLWriteElement( market, "market", out, tabs );
+	// write the xml for the class members.
+	XMLWriteElement( market, "market", out, tabs );
 
-    // write out resource prices for base period only
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteElement( rscprc[ 0 ], "price", out, tabs, modeltime->getper_to_yr( 0 ) );
+	// write out resource prices for base period only
+	const Modeltime* modeltime = scenario->getModeltime();
+	XMLWriteElement( rscprc[ 0 ], "price", out, tabs, modeltime->getper_to_yr( 0 ) );
 
-    // write out the depresource objects.
-    for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
-        ( *i )->toInputXML( out, tabs );
-    }
+	// write out the depresource objects.
+	for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
+		( *i )->toInputXML( out, tabs );
+	}
 
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
+	// finished writing xml for the class members.
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write datamembers to datastream in XML format for outputting results.
 void Resource::toOutputXML( ostream& out, Tabs* tabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
+	const Modeltime* modeltime = scenario->getModeltime();
 
-    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
-    // write the xml for the class members.
-    // write out the market string.
-    XMLWriteElement( market, "market", out, tabs );
+	// write the xml for the class members.
+	// write out the market string.
+	XMLWriteElement( market, "market", out, tabs );
 
-    // write out resource prices for all periods
-    for(int m = 0; m < static_cast<int>(rscprc.size()); m++ ) {
-        XMLWriteElement( rscprc[m], "price", out, tabs, modeltime->getper_to_yr(m));
-    }
+	// write out resource prices for all periods
+	for(int m = 0; m < static_cast<int>(rscprc.size()); m++ ) {
+		XMLWriteElement( rscprc[m], "price", out, tabs, modeltime->getper_to_yr(m));
+	}
 
-    // write out the depresource objects.
-    for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
-        ( *i )->toInputXML( out, tabs );
-    }
+	// write out the depresource objects.
+	for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
+		( *i )->toInputXML( out, tabs );
+	}
 
-    // finished writing xml for the class members.
+	// finished writing xml for the class members.
 
-    XMLWriteClosingTag( getXMLName(), out, tabs );
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write datamembers to datastream in XML format for debugging.
 void Resource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
-    // Write the xml for the class members.
-    // Write out the market string.
-    XMLWriteElement( market, "market", out, tabs );
+	// Write the xml for the class members.
+	// Write out the market string.
+	XMLWriteElement( market, "market", out, tabs );
 
-    // Write out resource prices for debugging period.
-    XMLWriteElement( rscprc[ period ], "rscprc", out, tabs );
+	// Write out resource prices for debugging period.
+	XMLWriteElement( rscprc[ period ], "rscprc", out, tabs );
 
-    // Write out available resources for debugging period.
-    XMLWriteElement( available[ period ], "available", out, tabs );
+	// Write out available resources for debugging period.
+	XMLWriteElement( available[ period ], "available", out, tabs );
 
-    // Write out annualprod for debugging period.
-    XMLWriteElement( annualprod[ period ], "annualprod", out, tabs );
+	// Write out annualprod for debugging period.
+	XMLWriteElement( annualprod[ period ], "annualprod", out, tabs );
 
-    // Write out cumulative prod for debugging period.
-    XMLWriteElement( cummprod[ period ], "cummprod", out, tabs );
+	// Write out cumulative prod for debugging period.
+	XMLWriteElement( cummprod[ period ], "cummprod", out, tabs );
 
-    // Write out the number of sub-resources.
-    XMLWriteElement( nosubrsrc, "nosubrsrc", out, tabs );
+	// Write out the number of sub-resources.
+	XMLWriteElement( nosubrsrc, "nosubrsrc", out, tabs );
 
-    // Write out the depresource objects.
-    for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
-        ( *i )->toDebugXML( period, out, tabs );
-    }
+	// Write out the depresource objects.
+	for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
+		( *i )->toDebugXML( period, out, tabs );
+	}
 
-    // finished writing xml for the class members.
+	// finished writing xml for the class members.
 
-    XMLWriteClosingTag( getXMLName(), out, tabs );
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 
 //! Create markets
 void Resource::setMarket( const string& regionName ) {
 
-    Marketplace* marketplace = scenario->getMarketplace();
-    const Modeltime* modeltime = scenario->getModeltime();
-    // name is resource name
-    if ( marketplace->createMarket( regionName, market, name, IMarketType::NORMAL ) ) {
-        marketplace->setPriceVector( name, regionName, rscprc );
-        for( int per = 1; per < modeltime->getmaxper(); ++per ){
-            marketplace->setMarketToSolve( name, regionName, per );
-        }
-    }
+	Marketplace* marketplace = scenario->getMarketplace();
+	const Modeltime* modeltime = scenario->getModeltime();
+	// name is resource name
+	if ( marketplace->createMarket( regionName, market, name, IMarketType::NORMAL ) ) {
+		marketplace->setPriceVector( name, regionName, rscprc );
+		for( int per = 1; per < modeltime->getmaxper(); ++per ){
+			marketplace->setMarketToSolve( name, regionName, per );
+		}
+	}
 }
 
 //! Return resource name.
+
 const string& Resource::getName() const {
     return name;
 }
@@ -216,113 +218,112 @@ const string& Resource::getName() const {
 //! Return resource price.
 double Resource::getPrice(int per)
 {
-    return rscprc[per] ;
+	return rscprc[per] ;
 }
 
 //! Calculate total resource supply for a period.
 void Resource::calcSupply( const string& regionName, const GDP* gdp, const int period ){
-    // This code is moved down from Region
-    Marketplace* marketplace = scenario->getMarketplace();
+	// This code is moved down from Region
+	Marketplace* marketplace = scenario->getMarketplace();
 
-    double price = marketplace->getPrice( name, regionName, period );
-    double lastPeriodPrice;
+	double price = marketplace->getPrice( name, regionName, period );
+	double lastPeriodPrice;
 
-    if ( period == 0 ) {
-        lastPeriodPrice = price;
-    }
-    else {
-        lastPeriodPrice = marketplace->getPrice( name, regionName, period - 1 );
-    }
+	if ( period == 0 ) {
+		lastPeriodPrice = price;
+	}
+	else {
+		lastPeriodPrice = marketplace->getPrice( name, regionName, period - 1 );
+	}
 
-    // calculate annual supply
-    annualsupply( period, gdp, price, lastPeriodPrice );
-
-    // set market supply of resource
-    marketplace->addToSupply( name, regionName, annualprod[ period ], period );
+	// calculate annual supply
+	annualsupply( regionName, period, gdp, price, lastPeriodPrice ); 
+	// set market supply of resource
+	marketplace->addToSupply( name, regionName, annualprod[ period ], period );
 }
 
 void Resource::cumulsupply(double prc,int per)
 {	
-    int i=0;
-    cummprod[per]=0.0;
+	int i=0;
+	cummprod[per]=0.0;
 
-    rscprc[per] = prc;
-    // sum cummulative production of each subsector
-    for (i=0;i<nosubrsrc;i++) {
-        subResource[i]->cumulsupply(prc,per);
-        cummprod[per] += subResource[i]->getCumulProd(per);
-    }
+	rscprc[per] = prc;
+	// sum cumulative production of each subsector
+	for (i=0;i<nosubrsrc;i++) {
+		subResource[i]->cumulsupply(prc,per);
+		cummprod[per] += subResource[i]->getCumulProd(per);
+	}
 }
 
 //! Calculate annual production
-void Resource::annualsupply( int per, const GDP* gdp, double price, double prev_price )
+void Resource::annualsupply( const std::string& regionName, int per, const GDP* gdp, double price, double prev_price )
 {	
-    int i=0;
-    annualprod[per]=0.0;
-    available[per]=0.0;
+	int i=0;
+	annualprod[per]=0.0;
+	available[per]=0.0;
 
-    // calculate cummulative production
-    cumulsupply(price,per);
+	// calculate cummulative production
+	cumulsupply(price,per);
 
-    // sum annual production of each subsector
-    for (i=0;i<nosubrsrc;i++) {
-        subResource[i]->annualsupply( per, gdp, price, prev_price );
-        annualprod[per] += subResource[i]->getAnnualProd(per);
-        available[per] += subResource[i]->getAvailable(per);
-    }
+	// sum annual production of each subsector
+	for (i=0;i<nosubrsrc;i++) {
+		subResource[i]->annualsupply( per, gdp, price, prev_price );
+		annualprod[per] += subResource[i]->getAnnualProd(per);
+		available[per] += subResource[i]->getAvailable(per);
+	}
 }
 
 
 //! Return annual production of resources.
 double Resource::getAnnualProd(int per) {
-    return annualprod[per];
+	return annualprod[per];
 }
 
 //! Write resource output to file.
 void Resource::csvOutputFile( const string& regname )
 {
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
+	// function protocol
+	void fileoutput3( string var1name,string var2name,string var3name,
+		string var4name,string var5name,string uname,vector<double> dout);
 
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total sector output
-    fileoutput3( regname,name," "," ","production","EJ",annualprod);
+	// function arguments are variable name, double array, db name, table name
+	// the function writes all years
+	// total sector output
+	fileoutput3( regname,name," "," ","production","EJ",annualprod);
 
-    // do for all subsectors in the sector
-    for (int i=0;i<nosubrsrc;i++) {
-        subResource[i]->csvOutputFile(regname ,name);
-    }
+	// do for all subsectors in the sector
+	for (int i=0;i<nosubrsrc;i++) {
+		subResource[i]->csvOutputFile(regname ,name);
+	}
 }
 
 //! Write resource output to database.
 void Resource::dbOutput( const string& regname ) {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
+	const Modeltime* modeltime = scenario->getModeltime();
+	const int maxper = modeltime->getmaxper();
+	vector<double> temp(maxper);
+	// function protocol
+	void dboutput4(string var1name,string var2name,string var3name,string var4name,
+		string uname,vector<double> dout);
 
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total sector output
-    dboutput4(regname,"Pri Energy","Production by Sector",name,"EJ",annualprod);
-    // resource price
-    dboutput4(regname,"Price","by Sector",name,"$/GJ",rscprc);
-    // do for all subsectors in the sector
-    for (int m=0;m<maxper;m++) {
-        for (int i=0;i<nosubrsrc;i++) {
-            temp[m] += subResource[i]->getCumulProd(m);
-        }
-    }
-    dboutput4(regname,"Resource","CummProd "+name,"zTotal","EJ",temp);
+	// function arguments are variable name, double array, db name, table name
+	// the function writes all years
+	// total sector output
+	dboutput4(regname,"Pri Energy","Production by Sector",name,"EJ",annualprod);
+	// resource price
+	dboutput4(regname,"Price","by Sector",name,"$/GJ",rscprc);
+	// do for all subsectors in the sector
+	for (int m=0;m<maxper;m++) {
+		for (int i=0;i<nosubrsrc;i++) {
+			temp[m] += subResource[i]->getCumulProd(m);
+		}
+	}
+	dboutput4(regname,"Resource","CummProd "+name,"zTotal","EJ",temp);
 
-    // do for all subsectors in the sector
-    for (int i=0;i<nosubrsrc;i++) {
-        subResource[i]->dbOutput(regname,name);
-    }
+	// do for all subsectors in the sector
+	for (int i=0;i<nosubrsrc;i++) {
+		subResource[i]->dbOutput(regname,name);
+	}
 }
 
 /*! \brief A function to add the resource sectors to an existing graph.
@@ -335,8 +336,8 @@ void Resource::dbOutput( const string& regname ) {
 */
 void Resource::addToDependencyGraph( ostream& outStream, const int period ) const {
 
-    // Print out the style for the Sector.
-    printStyle( outStream );
+	// Print out the style for the Sector.
+	printStyle( outStream );
 }
 
 
@@ -349,15 +350,15 @@ void Resource::addToDependencyGraph( ostream& outStream, const int period ) cons
 */
 void Resource::printStyle( ostream& outStream ) const {
 
-    // Make sure the output stream is open.
-    assert( outStream );
+	// Make sure the output stream is open.
+	assert( outStream );
 
-    // Get the sector name.
-    string sectorName = getName();
-    util::replaceSpaces( sectorName );
+	// Get the sector name.
+	string sectorName = getName();
+	util::replaceSpaces( sectorName );
 
-    // output sector coloring here.
-    outStream << "\t" << sectorName << " [shape=box, style=filled, color=indianred1 ];" << endl;
+	// output sector coloring here.
+	outStream << "\t" << sectorName << " [shape=box, style=filled, color=indianred1 ];" << endl;
 }
 
 /*! \brief Set marketInfo for fixed supplies for this resources.
@@ -368,10 +369,10 @@ void Resource::printStyle( ostream& outStream ) const {
 * \param period model period.
 */
 void Resource::setCalibratedSupplyInfo( const int period, const std::string& regionName ) {
-    const double MKT_NOT_ALL_FIXED = -1;
-    Marketplace* marketplace = scenario->getMarketplace();
-    
-    marketplace->setMarketInfo( name, regionName, period, "calSupply", MKT_NOT_ALL_FIXED );
+	const double MKT_NOT_ALL_FIXED = -1;
+	Marketplace* marketplace = scenario->getMarketplace();
+
+	marketplace->setMarketInfo( name, regionName, period, "calSupply", MKT_NOT_ALL_FIXED );
 }
 
 // ************************************************************
@@ -391,7 +392,7 @@ void Resource::setCalibratedSupplyInfo( const int period, const std::string& reg
 * \return The constant XML_NAME.
 */
 const std::string& DepletableResource::getXMLName() const {
-    return XML_NAME;
+	return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -404,7 +405,7 @@ const std::string& DepletableResource::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& DepletableResource::getXMLNameStatic() {
-    return XML_NAME;
+	return XML_NAME;
 }
 
 //! 
@@ -420,11 +421,11 @@ const std::string& DepletableResource::getXMLNameStatic() {
 * \todo In the input file, *SubResources should be read in as such, not silently converted here.
 */
 bool DepletableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
-    if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubDepletableResource::getXMLNameStatic() ){
-        parseContainerNode( node, subResource, subResourceNameMap, new SubDepletableResource() );
-        return true;
-    }
-    return false;
+	if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubDepletableResource::getXMLNameStatic() ){
+		parseContainerNode( node, subResource, subResourceNameMap, new SubDepletableResource() );
+		return true;
+	}
+	return false;
 }
 
 // *******************************************************************
@@ -439,7 +440,7 @@ bool DepletableResource::XMLDerivedClassParse( const string& nodeName, const DOM
 * \return The constant XML_NAME.
 */
 const std::string& FixedResource::getXMLName() const {
-    return XML_NAME;
+	return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -452,7 +453,7 @@ const std::string& FixedResource::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& FixedResource::getXMLNameStatic() {
-    return XML_NAME;
+	return XML_NAME;
 }
 
 //! 
@@ -467,15 +468,23 @@ const std::string& FixedResource::getXMLNameStatic() {
 * \return Whether an element was parsed.
 */
 bool FixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
-    if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubFixedResource::getXMLNameStatic() ){
-        parseContainerNode( node, subResource, subResourceNameMap, new SubFixedResource() );
-        return true;
-    }
-    return false;
+	if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubFixedResource::getXMLNameStatic() ){
+		parseContainerNode( node, subResource, subResourceNameMap, new SubFixedResource() );
+		return true;
+	}
+	return false;
 }
 // *******************************************************************
 // RenewableResource Class
 // *******************************************************************
+
+//! \brief set the size for the resourceVariance member
+RenewableResource::RenewableResource(){
+	resourceVariance.resize( scenario->getModeltime()->getmaxper() );
+	resourceCapacityFactor.resize( scenario->getModeltime()->getmaxper() );
+}
+
+
 /*! \brief Get the XML node name for output to XML.
 *
 * This public function accesses the private constant string, XML_NAME.
@@ -485,7 +494,7 @@ bool FixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode*
 * \return The constant XML_NAME.
 */
 const std::string& RenewableResource::getXMLName() const {
-    return XML_NAME;
+	return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -498,7 +507,7 @@ const std::string& RenewableResource::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& RenewableResource::getXMLNameStatic() {
-    return XML_NAME;
+	return XML_NAME;
 }
 
 //! 
@@ -513,11 +522,56 @@ const std::string& RenewableResource::getXMLNameStatic() {
 * \return Whether an element was parsed.
 */
 bool RenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
-    if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubRenewableResource::getXMLNameStatic() ){
-        parseContainerNode( node, subResource, subResourceNameMap, new SubRenewableResource() );
-        return true;
-    }
-    return false;
+	if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubRenewableResource::getXMLNameStatic() ){
+		parseContainerNode( node, subResource, subResourceNameMap, new SubRenewableResource() );
+		return true;
+	}
+	return false;
 }
+
+//! Calculate annual production
+/*! \brief Adds to the base Resource::annualsupply by computing a weighted-average
+*  variance of the resource based on the variance of the subresources.
+*
+* \author Steve Smith.  Mod for intermittent by Marshall Wise
+*/
+void RenewableResource::annualsupply( const std::string& regionName, int per, const GDP* gdp, double price, double prev_price )
+{
+
+	// calculate cummulative production
+	cumulsupply(price,per);
+
+    // clear out sums for this iteration
+	annualprod[per]=0.0;
+	available[per]=0.0;
+	resourceVariance[per]=0.0;
+	resourceCapacityFactor[per] = 0.0;
+
+	// sum annual production of each subsector
+	for (int i=0;i<nosubrsrc;i++) {
+		subResource[i]->annualsupply( per, gdp, price, prev_price );
+		annualprod[per] += subResource[i]->getAnnualProd(per);
+		available[per] += subResource[i]->getAvailable(per);
+		// and compute weighted average variance
+		resourceVariance[per] += subResource[i]->getAnnualProd(per) * subResource[i]->getVariance();
+		// and compute weighted average capacityfactor
+		resourceCapacityFactor[per] += subResource[i]->getAnnualProd(per) * subResource[i]->getAverageCapacityFactor();
+	}
+
+	// check for annual production = 0  util::getsmallnumber
+	if (annualprod[per] > util::getSmallNumber()) {
+		resourceVariance[per] /= annualprod[per];
+		resourceCapacityFactor[per] /= annualprod[per];
+	}
+
+	// add variance to marketinfo
+	Marketplace* marketplace = scenario->getMarketplace();
+	marketplace->setMarketInfo(name,regionName,per,"resourceVariance",resourceVariance[per]);
+
+	// add capacity factor to marketinfo
+	marketplace->setMarketInfo(name,regionName,per,"resourceCapacityFactor",resourceCapacityFactor[per]);
+
+}
+
 
 

@@ -30,17 +30,24 @@ class Tabs;
 class SubRenewableResource: public SubResource {
 
 protected:
-   double maxSubResource;
-   double baseGDP;
-   double gdpSupplyElasticity;
+    double maxSubResource;
+	double baseGDP;
+	double gdpSupplyElasticity;
+	//! subresource variance now read in rather than computed
+	double subResourceVariance;
+	//! read in average capacity factor for each subresource
+	double subResourceCapacityFactor;  
+ 
 public: 
-    SubRenewableResource();
-    virtual std::string getType() const; 
-    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
-    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
-    virtual void toOutputXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
-    virtual void initializeResource(); 
-    virtual void cumulsupply(double prc,int per);
-    virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
+	SubRenewableResource();
+	virtual std::string getType() const; 
+	virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
+	virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
+	virtual void toOutputXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
+	void initializeResource(); 
+	void cumulsupply(double prc,int per);
+	void annualsupply( int per, const GDP* gdp, double price1, double price2 );
+	double getVariance() const;
+	double getAverageCapacityFactor() const;
 };
 #endif // _RENEWABLE_SUBRESOURCE_H_

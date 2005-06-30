@@ -447,16 +447,16 @@ void SubResource::annualsupply( int per, const GDP* gdp, double price, double pr
             double max_annualprod = annualprod[per-1]
                 *pow(gdpRatio,gdpExpans[per])
                 *pow((1+techChange[per]),modeltime->gettimestep(per));
-            
-            // Allow the resource to produce up to the greater of the minimum short 
-            // term supply and the previous period's production.
-            if( max_annualprod > max( minShortTermSLimit, annualprod[ per - 1 ] )  ) {
-                cur_annualprod = max_annualprod; 
+
+
+		   if( max_annualprod > max( minShortTermSLimit, annualprod[ per - 1 ] )  ) {
+                cur_annualprod = max_annualprod;
             }
-            else { 
+            else {
                 cur_annualprod = max( minShortTermSLimit, annualprod[ per - 1 ] );
             }
-            
+
+
             // adjust short-term capacity limit for price effects
             cur_annualprod *= pow((price/prev_price),priceElas);
             
@@ -560,4 +560,19 @@ bool SubDepletableResource::XMLDerivedClassParse( const string nodeName, const D
 //! Parses any input variables specific to this derived class
 bool SubFixedResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
     return false;
+}
+//! get variance
+/*! do nothing here.  Applies to derived subrenewableresource
+* \author Marshall Wise
+*/
+double SubResource::getVariance() const {
+	return 0.0;
+}
+
+//! get resource capacity factor
+/*! do nothing here.  Applies to derived subrenewableresource
+* \author Marshall Wise
+*/
+double SubResource::getAverageCapacityFactor() const {
+	return 0.0;
 }

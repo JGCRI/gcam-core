@@ -1144,3 +1144,12 @@ void technology::tabulateFixedDemands( const string regionName, const int period
         }
     }
 }
+/*! \brief sets a tech share to an input amount
+*
+*
+* \author Marshall Wise
+*/
+
+void technology::setTechShare(const double shareIn) {
+	share = shareIn;
+}

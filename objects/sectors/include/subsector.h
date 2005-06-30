@@ -136,7 +136,7 @@ public:
     void limitShares( const double sum, const int period );
     void setCapLimitStatus( const bool value, const int period );
     bool getCapLimitStatus( const int period ) const;
-    void calcTechShares ( const GDP* gdp, const int period );
+    virtual void calcTechShares ( const GDP* gdp, const int period );
     virtual void setoutput( const double demand, const int period, const GDP* gdp ); 
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
     void scalefixedOutput( const double scaleRatio, const int period );
@@ -147,7 +147,7 @@ public:
     double getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals ) const;
     bool setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
     void csvOutputFile() const; 
-    void MCoutputSupplySector() const; 
+    virtual void MCoutputSupplySector() const; 
     void MCoutputDemandSector() const; 
     void MCoutputAllSectors() const; 
     void emission( const int period );

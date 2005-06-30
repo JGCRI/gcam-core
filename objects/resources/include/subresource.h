@@ -48,6 +48,8 @@ public:
     void dbOutput( const std::string& regname, const std::string& secname); 
     void csvOutputFile(const std::string &regname, const std::string& sname); 
     void updateAvailable( const int period );
+	virtual double getVariance() const;
+	virtual double getAverageCapacityFactor() const;
 protected:
     std::string name; //!< SubResource name
     int nograde; //!< number of grades of each SubResource
