@@ -132,7 +132,6 @@ const string& Expenditure::enumToName( const ExpenditureType aType ) const {
             "Taxable Income",
             "Direct Taxes",
             "Transfers",
-            "Dividends",
             "Disposable Income",
             "Consumption",
             "Income",
@@ -152,7 +151,6 @@ const string& Expenditure::enumToName( const ExpenditureType aType ) const {
             "Sales",
             "Costs" 
     };
-
     // Index into the array to find the right name.
     return names[ aType ];
 }

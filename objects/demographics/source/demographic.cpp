@@ -10,8 +10,6 @@
 
 #include <vector>
 #include <map>
-#include <fstream>
-#include <iostream>
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
@@ -33,9 +31,6 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-// static initialize.
-const string Demographic::XML_NAME = "demographics";
-
 //! Default constructor.
 Demographic::Demographic() {
 }
@@ -54,66 +49,72 @@ void Demographic::clear(){
 
 //! parses Demographics xml object
 void Demographic::XMLParse( const xercesc::DOMNode* node ){
-    // make sure we were passed a valid node.
-    assert( node );
+	// make sure we were passed a valid node.
+	assert( node );
 
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
+	// get all child nodes.
+	DOMNodeList* nodeList = node->getChildNodes();
 
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+	// loop through the child nodes.
+	for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
+		DOMNode* curr = nodeList->item( i );
+		string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-        if( nodeName == "#text" ) {
-            continue;
-        }
+		if( nodeName == "#text" ) {
+			continue;
+		}
 		else if( nodeName == PopulationMiniCAM::getXMLNameStatic() ) {
-            parseContainerNode( curr, population, yearToMapIndex, new PopulationMiniCAM(), "year" );
-        }
+			parseContainerNode( curr, population, yearToMapIndex, new PopulationMiniCAM(), "year" );
+		}
 		else if( nodeName == PopulationSGMFixed::getXMLNameStatic() ){
-            parseContainerNode( curr, population, yearToMapIndex, new PopulationSGMFixed(), "year" );
+			parseContainerNode( curr, population, yearToMapIndex, new PopulationSGMFixed(), "year" );
 		}
 		else if( nodeName == PopulationSGMRate::getXMLNameStatic() ){
-            parseContainerNode( curr, population, yearToMapIndex, new PopulationSGMRate(), "year" );
+			parseContainerNode( curr, population, yearToMapIndex, new PopulationSGMRate(), "year" );
 		}
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing demographics." << endl;
-        }
-    }
+		else {
+			ILogger& mainLog = ILogger::getLogger( "main_log" );
+			mainLog.setLevel( ILogger::WARNING );
+			mainLog << "Unrecognized text string: " << nodeName << " found while parsing demographics." << endl;
+		}
+	}
 }
 
 //! Write out datamembers to XML output stream.
 void Demographic::toInputXML( ostream& out, Tabs* tabs ) const{
 	XMLWriteOpeningTag ( getXMLName(), out, tabs );
-	
-	for( vector<Population*>::const_iterator i = population.begin(); i != population.end(); i++){
+
+	for( CPopulationIterator i = population.begin(); i != population.end(); ++i ){
 		( *i )->toInputXML( out, tabs );
 	}
 
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
+	// finished writing xml for the class members.
+	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write out XML for debugging purposes.
 void Demographic::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag ( getXMLName(), out, tabs );
-	population[ convertPeriodToPopulationIndex( period ) ]->toDebugXML( out, tabs ); 
+	// Convert the period into an index into the demographics object.
+	int index = convertPeriodToPopulationIndex( period );
+	// Check if the conversion into an index failed.
+	if( index != -1 ){
+		population[ index ]->toDebugXML( out, tabs );
+	}
 	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Complete the initialization.
 void Demographic::completeInit(){
-	for( vector<Population*>::iterator popIter = population.begin(); popIter != population.end(); ++popIter ) {
+	for( PopulationIterator popIter = population.begin(); popIter != population.end(); ++popIter ) {
 		if( popIter == population.begin() ){
 			( *popIter )->completeInit();
 		}
 		else {
-            ( *popIter )->completeInit( (*(popIter - 1))->getSurvFemalePop(), (*( popIter - 1 ))->getSurvMalePop()  );
+			// Initialize each population with the surviving population from the previous period.
+			( *popIter )->completeInit( (*(popIter - 1))->getSurvFemalePop(), (*( popIter - 1 ))->getSurvMalePop()  );
 		}
-    }
+	}
 }
 
 //! initialize anything that won't change during the calcuation
@@ -129,7 +130,7 @@ void Demographic::initCalc(){
 * \return The constant XML_NAME.
 */
 const string& Demographic::getXMLName() const{
-	return XML_NAME;
+	return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -142,52 +143,108 @@ const string& Demographic::getXMLName() const{
 * \return The constant XML_NAME as a static.
 */
 const string& Demographic::getXMLNameStatic(){
+	const static string XML_NAME = "demographics";
 	return XML_NAME;
 }
 
 //! return total population
 double Demographic::getTotal( const int per ) const {
-	return population[ convertPeriodToPopulationIndex( per ) ]->getTotal();
+	// Convert the period into an index into the demographics object.
+	int index = convertPeriodToPopulationIndex( per );
+	// Check if the conversion into an index failed.
+	if( index == -1 ){
+		return 0;
+	}
+	return population[ index ]->getTotal();
 }
 
 //! return the male working age population
 double Demographic::getWorkingAgePopulationMales( const int per ) const {
-	return population[ convertPeriodToPopulationIndex( per ) ]->getWorkingAgePopMale();
+	// Convert the period into an index into the demographics object.
+	int index = convertPeriodToPopulationIndex( per );
+	// Check if the conversion into an index failed.
+	if( index == -1 ){
+		return 0;
+	}
+	return population[ index ]->getWorkingAgePopMale();
 }
 
 //! return the female working age population
 double Demographic::getWorkingAgePopulationFemales( const int per ) const {
-	return population[ convertPeriodToPopulationIndex( per ) ]->getWorkingAgePopFemale();
+	// Convert the period into an index into the demographics object.
+	int index = convertPeriodToPopulationIndex( per );
+	// Check if the conversion into an index failed.
+	if( index == -1 ){
+		return 0;
+	}
+	return population[ index ]->getWorkingAgePopFemale();
 }
 
 //! return total working age population (male and female)
 double Demographic::getWorkingAgePopulation( const int per ) const {
-    return population[ convertPeriodToPopulationIndex( per ) ]->getWorkingAgePop();
+	// Convert the period into an index into the demographics object.
+	int index = convertPeriodToPopulationIndex( per );
+	// Check if the conversion into an index failed.
+	if( index == -1 ){
+		return 0;
+	}
+	return population[ index  ]->getWorkingAgePop();
 }
 
 //! Translate a period into the index within the demographic object of the population.
 int Demographic::convertPeriodToPopulationIndex( int aPeriod ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    assert( aPeriod >= 0 && aPeriod < modeltime->getmaxper() );
+	const Modeltime* modeltime = scenario->getModeltime();
+	assert( aPeriod >= 0 && aPeriod < modeltime->getmaxper() );
 
 	int year = modeltime->getper_to_yr( aPeriod ); // get year from model period
 
 	// print out error if year doesn't exist
 	CYearMapIterator iter = yearToMapIndex.find( util::toString( year ) );
-    if( iter == yearToMapIndex.end() ){
-		cout << "Error: In convertPeriodToPopulationIndex, Year " << year 
-             << " corresponding to period " << aPeriod << " doesn't exist." << endl;
-		return 0;
+	if( iter == yearToMapIndex.end() ){
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::ERROR );
+		mainLog << "In convertPeriodToPopulationIndex, Year " << year 
+			    << " corresponding to period " << aPeriod << " doesn't exist." << endl;
+		return -1;
 	}
-    return iter->second;
+	return iter->second;
 }
 
-//! return a vector of total population 
-const vector<double> Demographic::getTotalPopVec() const{
-	vector<double> newTotalVector;
-	newTotalVector.resize( population.size() );
-	for ( unsigned int i = 0; i < population.size(); i++ ){
-		newTotalVector[ i ] = population[ i ]->getTotal();
+/*! \brief Return a vector of total population.
+* \return A vector of population data.
+* \note This is for the Fortran AgLU only and should be removed when that
+*       component is no longer used.
+*/
+const vector<double> Demographic::getTotalPopVec() const {
+	// Create a vector with one slot per model period. Add an extra
+	// slot for the population period before the base period.
+	const Modeltime* modeltime = scenario->getModeltime();
+	vector<double> newTotalVector( modeltime->getmaxper() + 1 );
+	
+	// Add the extra earlier period's value. The year for this will be base year
+    // minus timestep. This can't be done with the helper function because 
+	// modeltime will not handle period -1.
+	int prevYear = modeltime->getStartYear() - modeltime->gettimestep( 0 );
+	CYearMapIterator iter = yearToMapIndex.find( util::toString( prevYear ) );
+
+	// If the year was not found print a warning and leave the value as zero.
+	if( iter == yearToMapIndex.end() ){
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::ERROR );
+		mainLog << "There is no population object corresponding to " << prevYear << endl;
+	}
+	else {
+		// Set the initial spot.
+		newTotalVector[ 0 ] = population[ iter->second ]->getTotal();
+	}
+
+	// Fill in the vector with the total population for each period.
+	for ( int i = 0; i < modeltime->getmaxper(); ++i ){
+		int index = convertPeriodToPopulationIndex( i );
+		// Check for invalid indices.
+		if( index != -1 ){
+			newTotalVector[ i + 1 ] = population[ index ]->getTotal();
+		}
 	}
 	return newTotalVector;
 }
@@ -195,56 +252,66 @@ const vector<double> Demographic::getTotalPopVec() const{
 
 //! MiniCAM output to file
 void Demographic::dbOutput( const string& regionName ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp( maxPeriod );
+	const Modeltime* modeltime = scenario->getModeltime();
+	const int maxPeriod = modeltime->getmaxper();
+	vector<double> temp( maxPeriod );
 
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
+	// function protocol
+	void dboutput4(string var1name,string var2name,string var3name,string var4name,
+		string uname,vector<double> dout);
 
-    // write population to temporary array since not all will be sent to output
-    for ( int i = 0; i < maxPeriod; i++ ){
-		temp[ i ] = population[ convertPeriodToPopulationIndex( i )  ]->getTotal();
-    }
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    dboutput4( regionName, "General", "Population", "Total", "thous", temp );
+	// write population to temporary array since not all will be sent to output
+	for ( int i = 0; i < maxPeriod; i++ ){
+		int index = convertPeriodToPopulationIndex( i );
+		// Check for invalid indices.
+		if( index != -1 ){
+			temp[ i ] = population[ index ]->getTotal();
+		}
+	}
+	// function arguments are variable name, double array, db name, table name
+	// the function writes all years
+	dboutput4( regionName, "General", "Population", "Total", "thous", temp );
 }
 
 //! outputing population info to file
 void Demographic::csvOutputFile( const string& regionName ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp( maxPeriod );
+	const Modeltime* modeltime = scenario->getModeltime();
+	const int maxPeriod = modeltime->getmaxper();
+	vector<double> temp( maxPeriod );
 
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
+	// function protocol
+	void fileoutput3( string var1name,string var2name,string var3name,
+		string var4name,string var5name,string uname,vector<double> dout);
 
-    // write population to temporary array since not all will be sent to output
-    for ( int i = 0; i < maxPeriod; i++ ){
-		temp[i] = population[ convertPeriodToPopulationIndex( i ) ]->getTotal();
-    }
+	// write population to temporary array since not all will be sent to output
+	for ( int i = 0; i < maxPeriod; i++ ){
+		int index = convertPeriodToPopulationIndex( i );
+		// Check for invalid indices.
+		if( index != -1 ){
+			temp[i] = population[ index ]->getTotal();
+		}
+	}
 
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    fileoutput3( regionName," "," "," ","population","1000s",temp);
+	// function arguments are variable name, double array, db name, table name
+	// the function writes all years
+	fileoutput3( regionName," "," "," ","population","1000s",temp);
 }
 
 void Demographic::csvSGMOutputFile( ostream& aFile, const int period ) const {
-	 aFile << "Demographic Data for Labor Force and Government Transfers" << endl << endl;
-	 aFile << getTotal( period ) << ',' << "Total Population" << endl;
-	 aFile << getWorkingAgePopulationMales( period ) << ',' << "Working Age Pop. Male" << endl;
-	 aFile << getWorkingAgePopulationFemales( period ) << ',' << "Working Age Pop. Females" << endl;
-	 aFile << endl;
-     const string year = util::toString( scenario->getModeltime()->getper_to_yr( period ) );
-	 population[ util::searchForValue( yearToMapIndex, year ) ]->csvSGMOutputFile( aFile, period );
+	aFile << "Demographic Data for Labor Force and Government Transfers" << endl << endl;
+	aFile << getTotal( period ) << ',' << "Total Population" << endl;
+	aFile << getWorkingAgePopulationMales( period ) << ',' << "Working Age Pop. Male" << endl;
+	aFile << getWorkingAgePopulationFemales( period ) << ',' << "Working Age Pop. Females" << endl;
+	aFile << endl;
+
+	int index = convertPeriodToPopulationIndex( period );
+	// Check for invalid indices.
+	if( index != -1 ){
+		population[ index ]->csvSGMOutputFile( aFile, period );
+	}
 }
 
 // for reporting
 void Demographic::updateOutputContainer( OutputContainer* outputContainer, const int aPeriod ) const{
 	outputContainer->updateDemographic( this, aPeriod );
 }
-
-

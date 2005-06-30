@@ -34,12 +34,14 @@ public:
     static std::auto_ptr<Market> createMarket( const IMarketType::Type aMarketType, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
-    /*! \brief Add additional information to the debug xml stream for derived classes.
-    *
-    * This method is inherited from by derived class if they which to add any additional information to the printout of the class.
+    /*! \brief Add additional information to the debug xml stream for derived
+    *          classes.
+    * \details This method is inherited from by derived class if they which to
+    *          add any additional information to the printout of the class.
     * \param out Output stream to print to.
-    * \param tabs A tabs object responsible for printing the correct number of tabs. 
-    */ 
+    * \param tabs A tabs object responsible for printing the correct number of
+    *        tabs. 
+    */
     virtual void derivedToDebugXML( std::ostream& out, Tabs* tabs ) const = 0;
 	const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
@@ -86,21 +88,45 @@ public:
     virtual std::string getType() const = 0;
 protected:
     Market( const Market& aMarket );
-    std::string good;  //!< The good the market represents
-    std::string region;  //!< The region of the market.
-    bool solveMarket; //!< Whether to solve the market given other constraints are satisfied.
-    int period; //!< The period the market is valid in.
-    double price;  //!< The market price.
-    double storedPrice;  //!< The stored market price.
-    double demand; //!< The market demand.
-    double storedDemand; //!< The stored demand.
-    double supply; //!< The market supply.
-    double storedSupply; //!< The stored supply.
-    std::vector <std::string> containedRegionNames; //!< Vector of names of all regions contained within this market.
-    std::auto_ptr<MarketInfo> mMarketInfo; //!< Object containing information related to the market. 
+	//! The good the market represents
+    std::string good;
+	
+	//! The region of the market.
+    std::string region;
+	
+	//! Whether to solve the market given other constraints are satisfied.
+    bool solveMarket;
+	
+	//! The period the market is valid in.
+    int period;
+	
+	//! The market price.
+    double price;
+	
+	//! The stored market price.
+    double storedPrice;
+	
+	//! The market demand.
+    double demand;
+	
+	//! The stored demand.
+    double storedDemand;
+    
+	//! The market supply.
+	double supply;
+	
+	//! The stored supply.
+    double storedSupply;
+	
+	//! Vector of names of all regions contained within this market.
+    std::vector <std::string> containedRegionNames;
+	
+	//! Object containing information related to the market.
+    std::auto_ptr<MarketInfo> mMarketInfo; 
 
 private:
-	const static std::string XML_NAME; //!< node name for toXML methods
+	//! Node name for toXML methods
+	const static std::string XML_NAME;
 };
 
 #endif // _MARKET_H_

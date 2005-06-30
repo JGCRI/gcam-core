@@ -25,14 +25,16 @@ class DependencyFinder;
 class SupplySector: public Sector
 {
 public:
-	explicit SupplySector( const std::string regionNameIn );
+	explicit SupplySector( const std::string& aRegionName );
     virtual ~SupplySector(){};
     static const std::string& getXMLNameStatic();
     virtual void completeInit( DependencyFinder* aDependencyFinder );
     void setCalibratedSupplyInfo( const int aPeriod ) const;
     double getOutput( const int aPeriod ) const;
+	virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
+	virtual void supply( const int aPeriod, const GDP* aGDP );
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
-                          const int aPeriod ){}; // Passing demographic here is not good.
+                          const int aPeriod ){};
 protected:
     virtual void setMarket();
     virtual bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
@@ -41,6 +43,7 @@ protected:
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
 	virtual const std::string& getXMLName() const;
+	void adjustForFixedOutput( const double aMarketDemand, const int aPeriod );
 private:
 	const static std::string XML_NAME; //!< node name for toXML methods	
 };

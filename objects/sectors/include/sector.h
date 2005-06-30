@@ -56,7 +56,6 @@ class Sector
 protected:
     std::string name; //!< Sector name
     std::string regionName; //!< region name
-    std::string market; //!< regional market
     double mBaseOutput; //!< Read in base year output.
     std::auto_ptr<MarketInfo> mSectorInfo; //!< Pointer to the sector's information store.
     std::vector<Subsector*> subsec; //!< subsector objects
@@ -80,6 +79,8 @@ protected:
     void checkShareSum( const int period ) const;
     double getFixedSupply( const int period ) const; 
     bool isCapacityLimitsInSector( const int period ) const;
+	double getCalOutput( const int period ) const;
+	double getFixedOutput( const int period, bool printValues = false ) const; 
     virtual void printStyle( std::ostream& outStream ) const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
@@ -104,9 +105,9 @@ public:
     virtual void setCalibratedSupplyInfo( const int aPeriod ) const = 0;
     void adjustForFixedOutput( const double marketDemand, const int period );
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
-    void supply( const int period, const GDP* gdp );
+    virtual void supply( const int aPeriod, const GDP* aGDP ) = 0;
     virtual double getOutput( const int period ) const = 0;
-    double getFixedOutput( const int period, bool printValues = false ) const; 
+
     bool outputsAllFixed( const int period ) const;
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
     double getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals = true ) const;
@@ -114,9 +115,9 @@ public:
     void setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
     void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
     double getPrice( const int period );
-    double getCalOutput( const int period ) const;
+
     virtual void calcShare( const int period, const GDP* gdp );
-    void calcFinalSupplyPrice( const GDP* gdp, const int period );
+    virtual void calcFinalSupplyPrice( const GDP* aGdp, const int aPeriod ) = 0;
     void emission( const int period );
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period ) const;

@@ -9,10 +9,8 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 #include <fstream>
 #include <cassert>
-#include <ctime>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
@@ -25,8 +23,6 @@
 #include "util/logger/include/ilogger.h"
 #include "util/curves/include/curve.h"
 #include "solution/solvers/include/solver.h"
-#include "reporting/include/output_container.h"
-#include "reporting/include/sgm_gen_table.h"
 
 using namespace std;
 using namespace xercesc;
@@ -111,7 +107,9 @@ bool Scenario::XMLParse( const DOMNode* node ){
                 modeltime->set(); // This call cannot be delayed until completeInit() because it is needed first. 
             }
             else if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
-                cout << "Modeltime information cannot be modified in a scenario add-on." << endl;
+				ILogger& mainLog = ILogger::getLogger( "main_log" );
+				mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Modeltime information cannot be modified in a scenario add-on." << endl;
             }
         }
 		else if ( nodeName == World::getXMLNameStatic() ){
@@ -147,9 +145,15 @@ void Scenario::completeInit() {
     }
 
     // Complete the init of the world object.
-    assert( world.get() );
-    world->completeInit();
-    
+	if( world.get() ){
+		world->completeInit();
+	}
+	else {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "No world container was parsed from the input files." << endl;
+	}
+
     // Create the solver and initialize with a pointer to the Marketplace and World.
     const string solverName = Configuration::getInstance()->getString( "SolverName" );
     solver = Solver::getSolver( solverName, marketplace.get(), world.get() );

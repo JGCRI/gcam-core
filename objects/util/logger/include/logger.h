@@ -54,10 +54,10 @@ class LoggerFactory;
 /*! 
 * \ingroup Objects
 * \brief This is an abstract class which defines the interface to a Logger. 
-*
-* Loggers may come in many different forms, but must use the defined interface.
-* Each error message is given a priority, and the user may set the level of log messages they wish to print.
-* Loggers are singletons and can only be instantiated by the LoggerFactory class.
+* \details Loggers may come in many different forms, but must use the defined
+*          interface. Each error message is given a priority, and the user may
+*          set the level of log messages they wish to print. Loggers are
+*          singletons and can only be instantiated by the LoggerFactory class.
 *
 * \author Josh Lurz
 * \date $Date$
@@ -78,27 +78,47 @@ public:
     void setLevel( const ILogger::WarningLevel newLevel );
     void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 protected:
-    std::string mName; //!< Logger name
-    std::string mType; //!< Logger type
-    std::string mFileName; //!< File name of the file it uses.
-    std::string mHeaderMessage; //!< Header message to print at the beginning of the log.
-    ILogger::WarningLevel mMinLogWarningLevel; //!< Defines the minimum level of messages which should be printed.
-    ILogger::WarningLevel mMinToScreenWarningLevel; //!< Defines the mininum level of warnings to print to the console.
-    ILogger::WarningLevel mCurrentWarningLevel; //!< Defines the current warning level.
-    bool mPrintLogWarningLevel; //!< Defines whether to print the warning level.
+	//! Logger name
+    std::string mName;
+
+	//! Logger type
+    std::string mType;
+
+	//! File name of the file it uses.
+    std::string mFileName;
+
+	//! Header message to print at the beginning of the log.
+    std::string mHeaderMessage;
+
+	//! Defines the minimum level of messages which should be printed.
+    ILogger::WarningLevel mMinLogWarningLevel;
+
+	//! Defines the mininum level of warnings to print to the console.
+	ILogger::WarningLevel mMinToScreenWarningLevel;
+
+	//! Defines the current warning level.
+    ILogger::WarningLevel mCurrentWarningLevel;
+
+	//! Defines whether to print the warning level.
+    bool mPrintLogWarningLevel;
     Logger( const std::string& aFileName = "" );
-    //! Log a message with the given warning level.
+    
+	//! Log a message with the given warning level.
     virtual void logCompleteMessage( const std::string& aMessage ) = 0;
     void printToScreenIfConfigured( const std::string& aMessage );
     static void parseHeader( std::string& aHeader );
     const static int MAX_LINE_SIZE = 1000;
+	static const std::string& convertLevelToString( ILogger::WarningLevel aLevel );
 private:
-    std::stringstream mBuf; //!< Buffer which contains characters waiting to be printed.
-    PassToParentStreamBuf mUnderStream; //!< Underlying ofstream
+	 //! Buffer which contains characters waiting to be printed.
+    std::stringstream mBuf;
+
+	 //! Underlying ofstream
+    PassToParentStreamBuf mUnderStream;
+
     void XMLParse( const xercesc::DOMNode* node );
     static const std::string getTimeString();
     static const std::string getDateString();
-
 };
 
 #endif // _LOGGER_H_

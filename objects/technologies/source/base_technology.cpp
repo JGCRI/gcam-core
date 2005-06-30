@@ -189,7 +189,9 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
             parseContainerNode( curr, mGhgs, mGhgNameMap, new Ghg() );
         }
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
-            cout << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
+			ILogger& mainLog = ILogger::getLogger( "main_log" );
+			mainLog.setLevel( ILogger::WARNING );
+			mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
 		}
 	}
 }

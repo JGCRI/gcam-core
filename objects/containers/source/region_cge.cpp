@@ -207,6 +207,9 @@ bool RegionCGE::XMLDerivedClassParse( const string& nodeName, const DOMNode* cur
 	else if( nodeName == FactorSupply::getXMLNameStatic() ){
 		parseContainerNode( curr, factorSupply, factorSupplyNameMap, new FactorSupply() );
 	}
+	else if( nodeName == ProductionSector::getXMLNameStatic() ){
+		parseContainerNode( curr, supplySector, supplySectorNameMap, new ProductionSector( name ) );
+	}
 	else {
 		return false;
 	}

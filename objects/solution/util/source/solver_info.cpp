@@ -224,14 +224,7 @@ bool SolverInfo::isWithinTolerance( const double SOLUTION_TOLERANCE, const doubl
 
 //! Determine whether a SolverInfo is solvable for the current method.
 bool SolverInfo::shouldSolve( const bool isNR ) const {
-    bool shouldSolve;
-    if( isNR ){
-        shouldSolve = linkedMarket->shouldSolveNR();
-    }
-    else {
-        shouldSolve = linkedMarket->shouldSolve();
-    }
-    return shouldSolve;
+	return isNR ? linkedMarket->shouldSolveNR() : linkedMarket->shouldSolve();
 }
 
 /*! \brief Calculate the log change in raw price.
@@ -410,23 +403,17 @@ bool SolverInfo::isCurrentlyBracketed() const {
 
 //! Check if the market has correctly solved.
 bool SolverInfo::isSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR ) const {
-    bool solved = false;
-    // Check if either the market is within tolerance
-    if( isWithinTolerance( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
-        solved = true;
-    }
-    // Check for a special market type dependent solution condition.
-    else if( linkedMarket->meetsSpecialSolutionCriteria() ){
-        solved = true;
-    }
-    return solved;
+    // Check if either the market is within tolerance or for a special market
+    // type dependent solution condition.
+    return ( isWithinTolerance( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR )
+		     || linkedMarket->meetsSpecialSolutionCriteria() );
 }
 
 //! Get the demand elasticity of this market with respect to another market.
 // This should be replaced with a map and market name.
 double SolverInfo::getDemandElasWithRespectTo( const unsigned int aMarketNumber ) const {
     if( aMarketNumber > demandElasticities.size() ){
-       ILogger& mainLog = ILogger::getLogger( "solver_log" );
+        ILogger& mainLog = ILogger::getLogger( "solver_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Invalid market number in SolverInfo::getDemandElasWithRespectTo of : " << aMarketNumber << endl;
         return 0;

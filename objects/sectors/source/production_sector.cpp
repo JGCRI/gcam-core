@@ -130,7 +130,9 @@ void ProductionSector::completeInit( DependencyFinder* aDependencyFinder ){
 	setMarket();
     // Initialize the investment object to the default if one has not been read in.
     if( !mInvestor.get() ){
-        cout << "Warning: Creating default investment type for sector " << name << "." << endl;
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Creating default investment type for sector " << name << "." << endl;
         mInvestor.reset( new Accelerator() );
     }
 
@@ -139,9 +141,8 @@ void ProductionSector::completeInit( DependencyFinder* aDependencyFinder ){
 
 void ProductionSector::setMarket() {	
     Marketplace* marketplace = scenario->getMarketplace();
-    // name is Sector name (name of good supplied or demanded)
-    // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
-    if( marketplace->createMarket( regionName, market, name, IMarketType::NORMAL ) ) {
+	// Create a regional market for the supply sector.
+    if( marketplace->createMarket( regionName, regionName, name, IMarketType::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, sectorprice );
         for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
             // MarketInfo needs to be set in period 0, but the market should never be set to solve 

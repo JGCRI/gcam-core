@@ -46,6 +46,8 @@ class DemandSector: public Sector
 public:
     DemandSector( const std::string aRegionName );
     virtual ~DemandSector();
+	void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
+	void supply( const int aPeriod, const GDP* aGDP );
 	static const std::string& getXMLNameStatic();
     virtual void completeInit( DependencyFinder* aDependencyFinder );
     virtual void calcPriceElasticity( const int period );

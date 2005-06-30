@@ -47,7 +47,9 @@ void Gender::XMLParse( const DOMNode* node ) {
 			mSurvivalRate = XMLHelper<double>::getValue( curr );
 		}
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
-            cout << "Unrecognized text string " << nodeName << " encountered while parsing " << getXMLName() << endl;
+			ILogger& mainLog = ILogger::getLogger( "main_log" );
+			mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string " << nodeName << " encountered while parsing " << getXMLName() << endl;
 		}
 	}
 }

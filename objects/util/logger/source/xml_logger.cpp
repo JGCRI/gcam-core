@@ -53,7 +53,7 @@ void XMLLogger::logCompleteMessage( const string& aMessage ){
 		mLogFile << "\t<LogEntry>" << endl;
 		
 		// Print the warning level
-		mLogFile << "\t\t<WarningLevel>" << mCurrentWarningLevel << "</WarningLevel>" << endl;
+		mLogFile << "\t\t<WarningLevel>" << convertLevelToString( mCurrentWarningLevel ) << "</WarningLevel>" << endl;
 
 		// Print the message
 		mLogFile << "\t\t<Message>" << aMessage << "</Message>" << endl;

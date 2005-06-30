@@ -100,17 +100,24 @@ bool SingleScenarioRunner::runScenario( Timer& aTimer ){
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Starting a model run." << endl;
     
-    // Finish initialization.
-    mScenario->completeInit();
+	bool success = false;
+	if( mScenario.get() ){
+		// Finish initialization.
+		mScenario->completeInit();
 
-    // Perform the initial run of the scenario.
-    bool success = mScenario->run();
+		// Perform the initial run of the scenario.
+		success = mScenario->run();
 
-    // Compute model run time.
-    aTimer.stop();
-    mainLog.setLevel( ILogger::DEBUG );
-    aTimer.print( mainLog, "Data Readin & Initial Model Run Time:" );
-
+		// Compute model run time.
+		aTimer.stop();
+		mainLog.setLevel( ILogger::DEBUG );
+		aTimer.print( mainLog, "Data Readin & Initial Model Run Time:" );
+	}
+	else {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "No scenario container was parsed from the input files. Aborting scenario run!" << endl;
+	}
     // Return whether the scenario ran correctly. 
     return success;
 }

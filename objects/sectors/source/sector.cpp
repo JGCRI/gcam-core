@@ -115,9 +115,6 @@ void Sector::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
-        else if( nodeName == "market" ){
-            market = XMLHelper<string>::getValueString( curr ); // only one market element.
-        }
         else if( nodeName == "price" ){
             XMLHelper<double>::insertValueIntoVector( curr, sectorprice, modeltime );
         }
@@ -157,14 +154,6 @@ void Sector::XMLParse( const DOMNode* node ){
 void Sector::completeInit( DependencyFinder* aDepFinder ) {
     // Allocate the sector info.
     mSectorInfo.reset( new MarketInfo() );
-    
-    // Check if the market string is blank, if so default to the region name.
-    if( market == "" ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "No marketname set in " << regionName << "->" << name << ". Defaulting to regional market." << endl;
-        market = regionName;
-    }
 
     // Complete the subsector initializations. 
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
@@ -186,8 +175,6 @@ void Sector::toInputXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
-    // write out the market string.
-    XMLWriteElement( market, "market", out, tabs );
 
     for( int i = 0; modeltime->getper_to_yr( i ) <= 1975; i++ ){
         XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
@@ -229,8 +216,6 @@ void Sector::toOutputXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
-    // write out the market string.
-    XMLWriteElement( market, "market", out, tabs );
     for( unsigned int i = 0; i < sectorprice.size(); ++i ){
         XMLWriteElement( sectorprice[ i ], "price", out, tabs, modeltime->getper_to_yr( i ) );
     }
@@ -265,9 +250,6 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
-    // write out the market string.
-    XMLWriteElement( market, "market", out, tabs );
-
     // Write out the data in the vectors for the current period.
     XMLWriteElement( sectorprice[ period ], "sectorprice", out, tabs );
     XMLWriteElement( getInput( period ), "input", out, tabs );
@@ -687,19 +669,6 @@ void Sector::calcPrice( const int period ) {
     for ( unsigned int i = 0; i < subsec.size(); ++i ){	
         sectorprice[ period ] += subsec[ i ]->getShare( period ) * subsec[ i ]->getPrice( period );
     }
-    // Set the price into the market.
-    Marketplace* marketplace = scenario->getMarketplace();
-    // Special case demand sectors.
-    marketplace->setPrice( name, regionName, sectorprice[ period ], period, false );
-}
-
-/*! \brief Calculate the final supply price.
-* \details Calculates shares for the sector, then sets the price of the good
-* into the marketplace.
-*/
-void Sector::calcFinalSupplyPrice( const GDP* gdp, const int period ){
-    calcShare( period, gdp );
-    calcPrice( period );
 }
 
 /*! \brief returns the Sector price.
@@ -937,133 +906,6 @@ void Sector::calibrateSector( const int period ) {
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         if ( subsec[ i ]->getCalibrationStatus( period ) ) {
             subsec[ i ]->adjustForCalibration( mrkdmd, totalfixedOutput, totalCalOutputs, outputsAllFixed( period ), period );
-        }
-    }
-} 
-
-/*! \brief Adjust shares to be consistant with fixed supply
-*
-* This routine determines the total amount of fixed supply in this Sector and adjusts other shares to be consistant with the fixed supply.  If fixed supply exceeds demand then the fixed supply is reduced. An internal variable with the Sector share of fixed supply for each sub-Sector is set so that this information is available to other routines.
-
-* \author Steve Smith
-* \param marketDemand demand for the good produced by this Sector
-* \param period Model period
-* \warning fixed supply must be > 0 (to obtain 0 supply, set share weight to zero)
-*/
-void Sector::adjustForFixedOutput( const double marketDemand, const int period ) {
-    double totalfixedOutput = 0; 
-    double variableShares = 0; // original sum of shares of non-fixed subsectors   
-    double variableSharesNew = 0; // new sum of shares of non-fixed subsectors   
-    double shareRatio;  // ratio for adjusting shares of non-fixed subsectors
-
-    // set output from technologies that have fixed outputs such as hydro electricity
-
-    // Determine total fixed production and total var shares
-    // Need to change the exog_supply function once new, general fixed supply method is available
-    totalfixedOutput = 0;
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
-        double fixedOutput = 0;
-        subsec[ i ]->resetfixedOutput( period );
-        fixedOutput = subsec[ i ]->getFixedOutput( period );
-
-        // initialize property to zero every time just in case fixed share property changes 
-        // (shouldn't at the moment, but that could allways change)
-        subsec[ i ]->setFixedShare( period, 0 ); 
-
-        // add up subsector shares without fixed output
-        // sjs -- Tried treating capacity limited sub-sectors differently, here and in adjShares,
-        //     -- but that didn't give capacity limits exactly.
-        if ( fixedOutput == 0 ) { 
-            variableShares += subsec[ i ]->getShare( period );
-        } 
-		else {
-            if ( marketDemand != 0 ) {
-                double shareVal = fixedOutput / marketDemand;
-                if ( shareVal > 1 ) { 
-                    shareVal = 1; // Eliminates warning message since this conditionshould be fixed below
-                } 
-                subsec[ i ]->setFixedShare( period, shareVal ); // set fixed share property
-            }
-        }
-        totalfixedOutput += fixedOutput;
-    }
-
-    // Scale down fixed output if its greater than actual demand
-    if ( totalfixedOutput > marketDemand ) {
-        for( unsigned int i = 0; i < subsec.size(); ++i ){
-            subsec[ i ]->scalefixedOutput( marketDemand / totalfixedOutput, period ); 
-        }
-        totalfixedOutput = marketDemand;
-    }
-
-    // Adjust shares for any fixed output
-    if (totalfixedOutput > 0) {
-        if (totalfixedOutput > marketDemand ) {            
-            variableSharesNew = 0; // should be no variable shares in this case
-        }
-        else {
-            assert( marketDemand != 0); // check for 0 so that variableSharesNew does not blow up
-            variableSharesNew = 1 - (totalfixedOutput/ marketDemand );
-        }
-
-        if (variableShares == 0) {
-            shareRatio = 0; // in case all subsectors are fixed output, unlikely
-        }
-        else {
-            shareRatio = variableSharesNew/variableShares;
-        }
-
-        // now that parameters are set, adjust shares for all sub-sectors
-        for( unsigned int i = 0; i < subsec.size(); ++i ){
-            // shareRatio = 0 is okay, sets all non-fixed shares to 0
-            subsec[ i ]->adjShares( marketDemand, shareRatio, totalfixedOutput, period ); 
-        }
-    }
-}
-
-/*! \brief Set supply Sector output
-*
-* This routine takes the market demand and propagates that through the supply sub-sectors
-where it is shared out (and subsequently passed to the technology level within each sub-Sector
-to be shared out).
-
-Routine also calls adjustForFixedOutput which adjusts shares, if necessary, for any fixed output sub-sectors.
-
-* \author Sonny Kim
-* \param period Model period
-* \param gdp GDP object uses to calculate various types of GDPs.
-*/
-void Sector::supply( const int period, const GDP* gdp ) {
-    Marketplace* marketplace = scenario->getMarketplace();
-    double mrkdmd = marketplace->getDemand( name, regionName, period ); // demand for the good produced by this Sector
-
-    if ( mrkdmd < 0 ) {
-        cerr << "ERROR: Demand value < 0 for good " << name << " in region " << regionName << endl;
-    }
-
-    // Adjust shares for fixed supply
-    if ( anyFixedCapacity ) {
-        adjustForFixedOutput( mrkdmd, period );
-    }
-
-    // This is where subsector and technology outputs are set
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
-        // set subsector output from Sector demand
-        subsec[ i ]->setoutput( mrkdmd, period, gdp );
-    }    
-    
-    const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
-    if ( debugChecking ) {
-        // If the model is working correctly this should never give an error
-        // An error here means that the supply summed up from the supply sectors 
-        // is not equal to the demand that was passed in 
-        double mrksupply = getOutput( period );
-
-        // if demand identically = 1 then must be in initial iteration so is not an error
-        if ( period > 0 && fabs(mrksupply - mrkdmd) > 0.01 && mrkdmd != 1 ) {
-            cout << regionName << " Market "<<  name<< " demand and derived supply are not equal by: ";
-            cout << fabs(mrksupply - mrkdmd) << ": ";
-            cout << "S: " << mrksupply << "  D: " << mrkdmd << endl;
         }
     }
 }

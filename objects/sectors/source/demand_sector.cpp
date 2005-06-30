@@ -54,6 +54,23 @@ DemandSector::DemandSector( const string aRegionName ): Sector( aRegionName ){
 DemandSector::~DemandSector() {
 }
 
+/*! \brief Override the calculation of the final supply price to do nothing currently.
+* \details Does not do anything.
+* \param aGDP The regional GDP container.
+* \param aPeriod The period in which to calculate the final supply price.
+*/
+void DemandSector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
+}
+
+/*! \brief Override the setting of supply to not produce any output.
+* \details Demand sectors to do not produce any output.
+* \author Josh Lurz
+* \param aPeriod Model period
+* \param aGDP GDP object uses to calculate various types of GDPs.
+*/
+void DemandSector::supply( const int aPeriod, const GDP* aGDP ) {
+}
+
 /*! \brief Parses any child nodes specific to derived classes
 *
 * Method parses any input data from child nodes that are specific to the classes derived from this class. 

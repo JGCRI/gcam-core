@@ -93,9 +93,9 @@ void Logger::printToScreenIfConfigured( const string& aMessage ){
 	if ( mCurrentWarningLevel >= mMinToScreenWarningLevel ) {
 		// Print the warning level
 		if ( mPrintLogWarningLevel ) {
-            cerr << "Level " << mCurrentWarningLevel << ":";
+            cout << convertLevelToString( mCurrentWarningLevel ) << ":";
 		}
-		cerr << aMessage << endl;
+		cout << aMessage << endl;
 	}
 }
 
@@ -119,6 +119,7 @@ void Logger::XMLParse( const DOMNode* aNode ){
 		else if ( nodeName == "printLogWarningLevel" ) {
 			mPrintLogWarningLevel = XMLHelper<bool>::getValue( curr );
 		}
+		// These casts are unsafe.
 		else if ( nodeName == "minLogWarningLevel" ) {
 			mMinLogWarningLevel = static_cast<WarningLevel>( XMLHelper<int>::getValue( curr ) );
 		}
@@ -146,17 +147,12 @@ void Logger::parseHeader( string& aHeader ) {
 	
 	static const basic_string <char>::size_type npos = static_cast<char>( -1 );
 	unsigned int offset = 0;
-	unsigned int leftBracket = 0;
-	unsigned int rightBracket = 0;
-	string command;
-	string toReplaceString;
-	string replaceWithString;
 
 	// Loop through the string.
 	while( offset < aHeader.size() && offset != npos ){
 		
 		// Find the first left bracket.
-		leftBracket = static_cast<unsigned int>( aHeader.find_first_of( "{", offset ) );
+		unsigned int leftBracket = static_cast<unsigned int>( aHeader.find_first_of( "{", offset ) );
 		offset = leftBracket;
 
 		// Exit if we do not find it.
@@ -164,7 +160,7 @@ void Logger::parseHeader( string& aHeader ) {
 			break;
 		}
 		
-		rightBracket = static_cast<unsigned int>( aHeader.find_first_of( "}", offset ) );
+		unsigned int rightBracket = rightBracket = static_cast<unsigned int>( aHeader.find_first_of( "}", offset ) );
 		offset = rightBracket;
 
 		// Exit if we do not find it.
@@ -172,9 +168,9 @@ void Logger::parseHeader( string& aHeader ) {
 			break;
 		}
 
-		command = aHeader.substr( leftBracket + 1, rightBracket - leftBracket - 1 );
-		toReplaceString = command;
-
+		const string command = aHeader.substr( leftBracket + 1, rightBracket - leftBracket - 1 );
+		
+		string replaceWithString;
 		if( command == "date" ) {
 			replaceWithString = getDateString();
 		}
@@ -192,14 +188,11 @@ void Logger::parseHeader( string& aHeader ) {
 //! Get the current date as a string
 const string Logger::getDateString(){
 	time_t currTime;
-	stringstream buffer;
-	string retString;
-	struct tm* timeInfo;
-	
 	time( &currTime );
-	timeInfo = localtime( &currTime );
+	struct tm* timeInfo = localtime( &currTime );
 
 	// Create the string
+	stringstream buffer;
 	buffer << ( timeInfo->tm_year + 1900 ); // Set the year
 	buffer << "-";
 	
@@ -215,6 +208,7 @@ const string Logger::getDateString(){
 	}
 	buffer << ( timeInfo->tm_mon + 1 ); // Month's in ctime range from 0-11
 	
+	string retString;
 	buffer >> retString;
 
 	return retString;
@@ -222,14 +216,10 @@ const string Logger::getDateString(){
 
 //! Get the current time as a string.
 const string Logger::getTimeString() {
-	time_t currTime;
-	stringstream buffer;
-	string retString;
-	struct tm* timeInfo;
-	
+	time_t currTime;	
 	time( &currTime );
-	timeInfo = localtime( &currTime );
-	
+	struct tm* timeInfo = localtime( &currTime );
+	stringstream buffer;	
 	if( timeInfo->tm_hour < 10 ){
 		buffer << "0";
 	}
@@ -247,6 +237,21 @@ const string Logger::getTimeString() {
 	}
 	buffer << timeInfo->tm_sec;
 	
+	string retString;	
 	buffer >> retString;
 	return retString;
+}
+
+/*! \brief Convert a warning level enum into the corresponding string.
+* \param aLevel Warning level to convert.
+* \return A string describing the warning level.
+*/
+const string& Logger::convertLevelToString( WarningLevel aLevel ){
+	// Create a static array of warning level strings in the order
+	// of the enum.
+	const static string levelDescriptions[] = 
+	{ "Debug", "Notice", "Warning", "Error", "Severe Error" };
+
+	// Use the enum to index into the array.
+	return levelDescriptions[ aLevel ];
 }

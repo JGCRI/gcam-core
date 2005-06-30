@@ -58,11 +58,18 @@ private:
     void clear();
     int convertPeriodToPopulationIndex( int aPeriod ) const;
     const std::string& getXMLName() const;
-	std::vector<Population*> population; //!< array of pointers to Population objects
-    std::map<std::string,int> yearToMapIndex; //!< Map of year to indice
+	
+	//! Vector of Population objects by period.
+	std::vector<Population*> population;
+    
+	//! Mapping of year to index in the population vector. The years are stored
+    //! as strings to work around a limitation in the XML parsing helper
+    //! routines.
+	std::map<std::string,int> yearToMapIndex;
+
     typedef std::map<std::string,int>::const_iterator CYearMapIterator;
 	typedef std::vector<Population*>::iterator PopulationIterator;
-	static const std::string XML_NAME; //!< node name for toXML methods
+	typedef std::vector<Population*>::const_iterator CPopulationIterator;
 };
 
 #endif // _DEMOGRAPHIC_H_

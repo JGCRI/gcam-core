@@ -219,12 +219,12 @@ void Ghg::toInputXML( ostream& out, Tabs* tabs ) const {
         XMLWriteElement( inputEmissions, "inputEmissions", out, tabs );
         XMLWriteElement( emissCoef, "emisscoef", out, tabs );
     } else {
-        XMLWriteElement( emissCoef, "emisscoef", out, tabs );
+        XMLWriteElementCheckDefault( emissCoef, "emisscoef", out, tabs, 0.0 );
     }
     XMLWriteElementCheckDefault( rmfrac, "removefrac", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( isGeologicSequestration, "isGeologicSequestration", out, tabs, true );
     XMLWriteElementCheckDefault( storageCost, "storageCost", out, tabs, util::getLargeNumber() );
-    XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( emAdjust, "emAdjust", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fMax, "fMax", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( gdp0, "gdp0", out, tabs, 0.0 );

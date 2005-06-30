@@ -29,7 +29,7 @@
 #include "sectors/include/building_dmd_sector.h"
 #include "sectors/include/building_supply_sector.h"
 #include "resources/include/resource.h"
-#include "sectors/include/ag_sector.h"
+#include "sectors/include/export_sector.h"
 #include "demographics/include/demographic.h" // changed from population
 #include "emissions/include/ghg_policy.h"
 #include "util/base/include/xml_helper.h"
@@ -179,12 +179,12 @@ void Region::XMLParse( const DOMNode* node ){
 		else if( nodeName == IntermittentSupplySector::getXMLNameStatic() ){
             parseContainerNode( curr, supplySector, supplySectorNameMap, new IntermittentSupplySector( name ) );
         }
-		else if( nodeName == ProductionSector::getXMLNameStatic() ){
-			parseContainerNode( curr, supplySector, supplySectorNameMap, new ProductionSector( name ) );
-		}
 		else if( nodeName == BuildingSupplySector::getXMLNameStatic() ){
             parseContainerNode( curr, supplySector, supplySectorNameMap, new BuildingSupplySector( name ) );
         }
+		else if( nodeName == ExportSector::getXMLNameStatic() ){
+            parseContainerNode( curr, supplySector, supplySectorNameMap, new ExportSector( name ) );
+        } 
 		else if( nodeName == DemandSector::getXMLNameStatic() ){
             parseContainerNode( curr, demandSector, demandSectorNameMap, new DemandSector( name ) );
         }
@@ -194,7 +194,7 @@ void Region::XMLParse( const DOMNode* node ){
         // transportation sector is contained in demandSector
         else if( nodeName == TranSector::getXMLNameStatic() ){
             parseContainerNode( curr, demandSector, demandSectorNameMap, new TranSector( name ) );
-        } 
+        }
         else if( nodeName == AgSector::getXMLNameStatic() ) {
             if( Configuration::getInstance()->getBool( "agSectorActive" ) ){
                 if( !agSector.get() ){

@@ -127,21 +127,6 @@ void AgSector::XMLParse( const DOMNode* node ) {
 //! Output the results in XML format.
 void AgSector::toInputXML( ostream& out, Tabs* tabs ) const {
    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
-   
-   // write the xml for the class members.
-   XMLWriteElement( regionNumber, "regionNumber", out, tabs );
-   XMLWriteElement( numAgMarkets, "numAgMarkets", out, tabs );
-   
-   const Modeltime* modeltime = scenario->getModeltime();
-   for( unsigned int iter = 0; iter < gdp.size(); ++iter ){
-      XMLWriteElement( gdp[ iter ], "gdp", out, tabs, modeltime->getper_to_yr( iter ) );
-   }
-   
-   for( unsigned int iter = 0; iter < population.size(); iter++ ) {
-       XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getper_to_yr( iter ) );
-   }
-   
-   XMLWriteElement( biomassPrice, "biomassprice", out, tabs );
    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 

@@ -36,6 +36,8 @@ class ProductionSector: public Sector
 public:
 	ProductionSector ( const std::string& aRegionName );
 	virtual ~ProductionSector();
+	void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){};
+	void supply( const int aPeriod, const GDP* aGDP ){};
     static const std::string& getXMLNameStatic();
     virtual void completeInit( DependencyFinder* aDependencyFinder );
     double getOutput( const int aPeriod ) const;

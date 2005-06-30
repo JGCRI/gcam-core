@@ -43,6 +43,8 @@ class FinalDemandSector : public Sector
 public:
 	FinalDemandSector( const std::string& aRegionName );
 	virtual ~FinalDemandSector();
+	virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){};
+	virtual void supply( const int aPeriod, const GDP* aGDP ){};
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, 
         const int aPeriod );
     double getOutput( const int aPeriod ) const { return 0; }

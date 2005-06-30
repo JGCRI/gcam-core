@@ -216,8 +216,8 @@ bool BisectionNRSolver::solve( const int period ) {
     } while ( !sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR )
               && mCalcCounter->getPeriodCount() < maxTotalCalcs );
     
-    mainLog.setLevel( ILogger::ERROR );
     if ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, true ) ) {
+		mainLog.setLevel( ILogger::ERROR );
         solverLog << "Model did not calibrate successfully in period " << period << endl;
         mainLog << "Model did not calibrate successfully in period " << period << endl;
     }
@@ -228,8 +228,8 @@ bool BisectionNRSolver::solve( const int period ) {
         mainLog << "Model solved normally. Iterations period "<< period << ": " << mCalcCounter->getPeriodCount() << ". Total iterations: "<< mCalcCounter->getTotalCount() << endl;
         return true;
     }
-
-	mainLog.setLevel( ILogger::NOTICE );
+	
+	mainLog.setLevel( ILogger::ERROR );
     mainLog << "Model did not solve within set iteration " << mCalcCounter->getPeriodCount() << endl;
     solverLog << "Printing solution information after failed attempt to solve." << endl;
     solverLog << sol << endl;

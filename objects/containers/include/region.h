@@ -145,7 +145,6 @@ protected:
     std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
     double heatingDegreeDays; //!< heatingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
     double coolingDegreeDays; //!< coolingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
-    bool anySupplyFixedOutput( const int sectorNumber ) const;
 
     void checkSectorCalData( const int period );
     double getTotFinalEnergy( const int period ) const;
