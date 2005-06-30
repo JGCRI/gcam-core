@@ -9,14 +9,12 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 #include <cassert>
 
 // xml headers
 #include <xercesc/dom/DOMNode.hpp>
 
 #include "util/base/include/xml_helper.h"
-#include "sectors/include/sector.h"
 #include "sectors/include/supply_sector.h"
 #include "containers/include/scenario.h"
 #include "sectors/include/interm_supply_sector.h"

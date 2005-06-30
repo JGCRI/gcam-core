@@ -9,20 +9,15 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 #include <cassert>
 #include <vector>
-#include <algorithm>
 #include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
-#include "sectors/include/subsector.h"
 #include "technologies/include/technology.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
-#include "containers/include/gdp.h"
 #include "sectors/include/interm_subsector.h"
 #include "marketplace/include/market_info.h"
 
