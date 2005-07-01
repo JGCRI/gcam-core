@@ -62,6 +62,9 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
         mInvestor.reset( new MarketBasedInvestor() );
         mInvestor->XMLParse( curr );
     }
+	else if( nodeName == "market" ){
+		mMarketName = XMLHelper<string>::getValueString( curr );
+	}
     // Note: This behavior is either on or off, not by period currently.
     else if( nodeName == "FixedPricePath" ){
         mIsFixedPrice = XMLHelper<bool>::getValue( curr );
@@ -101,6 +104,8 @@ void ProductionSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const 
     if( mInvestor.get() ){
         mInvestor->toInputXML( out, tabs );
     }
+	// write out the market string.
+    XMLWriteElement( mMarketName, "market", out, tabs );
     XMLWriteElementCheckDefault( mIsFixedPrice, "FixedPricePath", out, tabs );
     XMLWriteElementCheckDefault( mIsEnergyGood, "IsEnergyGood", out, tabs );
 
@@ -113,7 +118,10 @@ void ProductionSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const 
 void ProductionSector::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     if( mInvestor.get() ){
         mInvestor->toDebugXML( period, out, tabs );
-    }
+	}
+	
+	// write out the market string.
+    XMLWriteElement( mMarketName, "market", out, tabs );
     XMLWriteElement( mIsFixedPrice, "FixedPricePath", out, tabs, false );
     XMLWriteElement( mIsEnergyGood, "IsEnergyGood", out, tabs );
 
@@ -139,10 +147,17 @@ void ProductionSector::completeInit( DependencyFinder* aDependencyFinder ){
     mInvestor->completeInit( regionName, name );
 }
 
-void ProductionSector::setMarket() {	
+void ProductionSector::setMarket() {
+	// Check if the market name was not read-in
+	if( mMarketName.empty()  ){
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::NOTICE );
+		mainLog << "Market name for export sector was not read-in. Defaulting to region name." << endl;
+		mMarketName = regionName;
+	}
     Marketplace* marketplace = scenario->getMarketplace();
 	// Create a regional market for the supply sector.
-    if( marketplace->createMarket( regionName, regionName, name, IMarketType::NORMAL ) ) {
+    if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, sectorprice );
         for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
             // MarketInfo needs to be set in period 0, but the market should never be set to solve 

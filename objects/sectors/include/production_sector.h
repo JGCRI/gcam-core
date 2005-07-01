@@ -56,6 +56,9 @@ protected:
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:
+	//! The market region into which the sector is exporting.
+	std::string mMarketName;
+
     bool mIsFixedPrice; //!< Whether this sector is on a fixed price path.
     bool mIsEnergyGood; //!< If the sector has an energy product.
     bool mIsPrimaryEnergyGood; //!< If the sector has a primary energy product.
