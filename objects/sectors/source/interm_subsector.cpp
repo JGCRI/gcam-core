@@ -104,7 +104,6 @@ bool IntermittentSubsector::XMLDerivedClassParseAttr( const DOMNode* node ) {
 */
 void IntermittentSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     // Write out parent class information.
-    Subsector::toInputXMLDerived( out, tabs );
     XMLWriteElement( backupTechNumber, "backupTechNumber", out, tabs);
     XMLWriteElement( resourceTechNumber, "resourceTechNumber", out, tabs);
     XMLWriteElement( electricSectorName, "electricSectorName", out, tabs);
@@ -114,7 +113,6 @@ void IntermittentSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const 
 //! XML output for viewing.
 void IntermittentSubsector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
     // Write out parent class information.
-    Subsector::toOutputXMLDerived( out, tabs );
     XMLWriteElement( backupTechNumber, "backupTechNumber", out, tabs);
     XMLWriteElement( resourceTechNumber, "resourceTechNumber", out, tabs);
     XMLWriteElement( electricSectorName, "electricSectorName", out, tabs);
@@ -123,7 +121,6 @@ void IntermittentSubsector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const
 //! Write object to debugging xml output stream.
 void IntermittentSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     // Write out parent class information.
-    Subsector::toDebugXMLDerived( period, out, tabs );
     XMLWriteElement( backupTechNumber, "backupTechNumber", out, tabs);
     XMLWriteElement( resourceTechNumber, "resourceTechNumber", out, tabs);
     XMLWriteElement( electricSectorName, "electricSectorName", out, tabs);
@@ -138,7 +135,7 @@ void IntermittentSubsector::toDebugXMLDerived( const int period, ostream& out, T
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& IntermittentSubsector::getXMLName() const {
+const string& IntermittentSubsector::getXMLName() const {
     return XML_NAME;
 }
 
@@ -151,7 +148,7 @@ const std::string& IntermittentSubsector::getXMLName() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& IntermittentSubsector::getXMLNameStatic() {
+const string& IntermittentSubsector::getXMLNameStatic() {
     return XML_NAME;
 }
 
@@ -177,8 +174,8 @@ void IntermittentSubsector::initCalc(const MarketInfo* aSectorInfo,
     Subsector::initCalc( aSectorInfo, aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
 }
 
-/*! \brief set tech shares based on backup energy needs
-* for an intermittent resource
+/*! \brief set tech shares based on backup energy needs for an intermittent
+*          resource
 *
 *  \author Marshall Wise
 * \param period model period
@@ -214,8 +211,7 @@ void IntermittentSubsector::calcTechShares( const GDP* gdp, const int period ) {
 
 
 
-/*! \brief compute backup share needed
-* for an intermittent resource
+/*! \brief compute backup share needed for an intermittent resource
 *
 *  \author Marshall Wise
 *
@@ -226,7 +222,7 @@ void IntermittentSubsector::calcBackupFraction(const int per) {
     const int HOURS_PER_YEAR = 8760;   //number of hours in a year
     
     // Get resource name from fuel name of technology
-	std::string resourceName = techs[resourceTechNumber][per]->getFuelName();
+	string resourceName = techs[resourceTechNumber][per]->getFuelName();
 
     // get variance of resource from marketinfo
     Marketplace* marketplace = scenario->getMarketplace();
@@ -333,7 +329,7 @@ void IntermittentSubsector::MCoutputSupplySector() const {
     // Intermittent Resource Subsector and Backup Capacity in GW
     for (int m=0;m<maxper;m++) {
         // Get resource name from fuel name of technology
-	    std::string resourceName = techs[resourceTechNumber][m]->getFuelName();
+	    string resourceName = techs[resourceTechNumber][m]->getFuelName();
         // get resource capacity factor from market info
         double resourceCapacityFactor = marketplace->getMarketInfo(resourceName,regionName,m,"resourceCapacityFactor");
         if (resourceCapacityFactor > util::getSmallNumber()) {
