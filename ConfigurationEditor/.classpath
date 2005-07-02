@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="elall.jar"/>
+	<classpathentry kind="lib" path="elcore.jar"/>
+	<classpathentry kind="lib" path="explicit.jar"/>
+	<classpathentry kind="lib" path="xalan.jar"/>
+	<classpathentry kind="lib" path="xercesImpl.jar"/>
+	<classpathentry kind="lib" path="xml-apis.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

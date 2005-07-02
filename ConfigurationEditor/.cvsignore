@@ -2,7 +2,5 @@ configuration_editor.properties
 configuration_temp.xml
 .settings
 bin
-.classpath
-.project
 configuration_template.xml
 main_log
