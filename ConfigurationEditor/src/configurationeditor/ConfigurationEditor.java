@@ -53,6 +53,8 @@ import actions.SaveAction;
 import actions.ShowPreferencesAction;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
@@ -65,6 +67,8 @@ import javax.swing.event.ChangeListener;
  * @author Josh Lurz
  */
 public class ConfigurationEditor extends JFrame {
+    // TODO: Finish documenting these variables.
+    // TODO: Work out where invokeLater should be used.
     /**
 	 * Automatically generated unique class identifier.
 	 */
@@ -110,7 +114,7 @@ public class ConfigurationEditor extends JFrame {
 
     private JButton mNewButton = null;
 
-    private JButton mOpenButton = null;
+    private JButton mLoadButton = null;
 
     private JButton mRunButton = null;
 
@@ -118,7 +122,7 @@ public class ConfigurationEditor extends JFrame {
 
     private JMenuItem mNewMenuItem = null;
 
-    private JMenuItem mOpenMenuItem = null;
+    private JMenuItem mLoadMenuItem = null;
 
     private JMenuItem mSaveMenuItem = null;
 
@@ -184,53 +188,90 @@ public class ConfigurationEditor extends JFrame {
     }
 
     /**
-     * This method initializes this
+     * This method initializes the ConfigurationEditor.
      * 
      */
     private void initialize() {
-    	mTextFieldFactory = new DOMTextFieldFactory();
-    	mFileListPanelFactory = new DOMListPanelFactory();
-        this.setJMenuBar(getMainMenuBar());
-        this.setName(Messages.getString("ConfigurationEditor.0")); //$NON-NLS-1$
-        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.addWindowListener(new QuitAction(this));
-        this.setContentPane(getMainWindow());
-        this.setTitle(Messages.getString("ConfigurationEditor.1")); //$NON-NLS-1$
+        // Create the component factories.
+        mTextFieldFactory = new DOMTextFieldFactory();
+        mFileListPanelFactory = new DOMListPanelFactory();
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                getTopLevelUI().setJMenuBar(getMainMenuBar());
+                getTopLevelUI().setName(
+                        Messages.getString("ConfigurationEditor.0")); //$NON-NLS-1$
+                getTopLevelUI().setDefaultCloseOperation(
+                        WindowConstants.DO_NOTHING_ON_CLOSE);
+                getTopLevelUI().addWindowListener(
+                        new QuitAction((ConfigurationEditor) getTopLevelUI()));
+                getTopLevelUI().setContentPane(getMainWindow());
+                getTopLevelUI().setTitle(
+                        Messages.getString("ConfigurationEditor.1")); //$NON-NLS-1$
+            }
+        });
     }
 
     /**
+     * Return the top level UI window.
+     * @return The top level window.
+     * TODO: Try to remove this, check for a duplicate function.
+     */
+    private JFrame getTopLevelUI() {
+        return this;
+    }
+    
+    /**
      * Ask the user what action they would like to take to begin using the
-     * editor.
+     * editor. This is called from main.
      * 
      */
     public void askForInitialAction() {
         // First need to check if the preferences have been initializes.
-        File prefFile = new File(PropertiesInfo.PROPERTY_FILE);
-        if(!prefFile.canRead()) {
-            // Need to initialize the preferences window.
-            new ShowPreferencesAction(this).actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "ShowPreferences")); //$NON-NLS-1$
-        }
-        Object[] options = { Messages.getString("ConfigurationEditor.58"), //$NON-NLS-1$
-                Messages.getString("ConfigurationEditor.59"), Messages.getString("ConfigurationEditor.60") }; //$NON-NLS-1$ //$NON-NLS-2$
-        String message = Messages.getString("ConfigurationEditor.61"); //$NON-NLS-1$
-        int rv = JOptionPane.showOptionDialog(this, message, Messages.getString("ConfigurationEditor.62"), //$NON-NLS-1$
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                options, options[0]);
-        if (rv == 0) {
-            new NewAction(this).actionPerformed(
-                    new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "New")); //$NON-NLS-1$
-        } else if (rv == 1) {
-            new LoadAction(this).actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Load")); //$NON-NLS-1$
-        } 
-        
-        // Check if for any reason the document is still not set and 
-        // warn the user that action is prevented until they load a 
-        // document or create a new one.
-        if( mCurrentDocument == null ) {
-            String warnMessage = Messages.getString("ConfigurationEditor.64"); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(this, warnMessage, Messages.getString("ConfigurationEditor.65"), //$NON-NLS-1$
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        final File prefFile = new File(PropertiesInfo.PROPERTY_FILE);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                if (!prefFile.canRead()) {
+                    // Need to initialize the preferences window.
+                    new ShowPreferencesAction(
+                            (ConfigurationEditor) getTopLevelUI())
+                            .actionPerformed(new ActionEvent(getTopLevelUI(),
+                                    ActionEvent.ACTION_PERFORMED,
+                                    "ShowPreferences")); //$NON-NLS-1$
+                }
+                Object[] options = {
+                        Messages.getString("ConfigurationEditor.58"), //$NON-NLS-1$
+                        Messages.getString("ConfigurationEditor.59"), Messages.getString("ConfigurationEditor.60") }; //$NON-NLS-1$ //$NON-NLS-2$
+                String message = Messages.getString("ConfigurationEditor.61"); //$NON-NLS-1$
+
+                int rv = JOptionPane
+                        .showOptionDialog(getTopLevelUI(), message, Messages
+                                .getString("ConfigurationEditor.62"), //$NON-NLS-1$
+                                JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.QUESTION_MESSAGE, null, options,
+                                options[0]);
+                if (rv == 0) {
+                    new NewAction(((ConfigurationEditor) getTopLevelUI()))
+                            .actionPerformed(new ActionEvent(getTopLevelUI(),
+                                    ActionEvent.ACTION_PERFORMED, "New")); //$NON-NLS-1$
+                } else if (rv == 1) {
+                    new LoadAction(((ConfigurationEditor) getTopLevelUI()))
+                            .actionPerformed(new ActionEvent(getTopLevelUI(),
+                                    ActionEvent.ACTION_PERFORMED, "Load")); //$NON-NLS-1$
+                }
+
+                // Check if for any reason the document is still not set and
+                // warn the user that action is prevented until they load a
+                // document or create a new one.
+                if (mCurrentDocument == null) {
+                    String warnMessage = Messages
+                            .getString("ConfigurationEditor.64"); //$NON-NLS-1$
+                    JOptionPane.showMessageDialog(getTopLevelUI(), warnMessage,
+                            Messages.getString("ConfigurationEditor.65"), //$NON-NLS-1$
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
     }
     
     /**
@@ -240,6 +281,11 @@ public class ConfigurationEditor extends JFrame {
      *            The document to set as the current.
      */
     public void setDocument(Document aNewDocument) {
+        // Check for a blank document.
+        if(aNewDocument == null) {
+            Logger.global.log(Level.WARNING, "Tried to set a blank document.");
+            return;
+        }
         mCurrentDocument = aNewDocument;
         // Add an event handler which will listen for the document being
         // changed and set that the document needs to be saved.
@@ -249,16 +295,32 @@ public class ConfigurationEditor extends JFrame {
                 // This doesn't recursively send another event,
                 // not sure why but it works.
                 mCurrentDocument.getDocumentElement().setAttribute("needs-save", "true"); //$NON-NLS-1$ //$NON-NLS-2$
-                // Enable the save menu item.
-                getSaveMenuItem().setEnabled(true);
+                // Update the user interface. Check if this is necessary.
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        // Enable the save menu item.
+                        getSaveMenuItem().setEnabled(true);
+                        getSaveButton().setEnabled(true);
+                    }
+                });
             }
         }, true );
+        
+        // Set the document into the factories. This will
+        // cause them to update the objects they created.
         mTextFieldFactory.setDocument(aNewDocument);
         mFileListPanelFactory.setDocument(aNewDocument);
-        // Update the user interface.
+
+        // Update the user interface. Check if this is necessary.
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 enableBatchInputFields(mDoBatchModeCheckBox.isSelected());
+                // Enable the run menu and button now that there is a document.
+                getRunMenuItem().setEnabled(true);
+                getRunButton().setEnabled(true);
+                
+                // Enable the save as menu item now that there is a document.
+                getSaveAsMenuItem().setEnabled(true);
                 repaint();
             }
         });
@@ -274,7 +336,7 @@ public class ConfigurationEditor extends JFrame {
     }
     
     /**
-     * This method initializes mMainWindow
+     * This method initializes the main window.
      * 
      * @return The main window.
      */
@@ -314,7 +376,7 @@ public class ConfigurationEditor extends JFrame {
     }
 
     /**
-     * This method initializes mConfPanel
+     * This method initializes the configuration panel.
      * 
      * @return The configuration panel.
      */
@@ -408,9 +470,9 @@ public class ConfigurationEditor extends JFrame {
     }
 
     /**
-     * This method initializes doCalibration
+     * This method initializes the do calibration checkbox.
      * 
-     * @return javax.swing.JCheckBox
+     * @return The do calibration checkbox.
      */
     private JCheckBox getDoCalibrationCheckBox() {
         if (mDoCalibrationCheckBox == null) {
@@ -479,7 +541,7 @@ public class ConfigurationEditor extends JFrame {
                     .getString("ConfigurationEditor.19")); //$NON-NLS-1$
             mMainToolBar.setName(Messages.getString("ConfigurationEditor.131")); //$NON-NLS-1$
             mMainToolBar.add(getNewButton());
-            mMainToolBar.add(getOpenButton());
+            mMainToolBar.add(getLoadButton());
             mMainToolBar.add(getSaveButton());
             mMainToolBar.add(getRunButton());
         }
@@ -518,7 +580,7 @@ public class ConfigurationEditor extends JFrame {
             
             // Add the menu items.
             mFileMenu.add(getNewMenuItem());
-            mFileMenu.add(getOpenMenuItem());
+            mFileMenu.add(getLoadMenuItem());
             mFileMenu.add(getSaveMenuItem());
             mFileMenu.add(getSaveAsMenuItem());
             mFileMenu.add(getRunMenuItem());
@@ -541,14 +603,16 @@ public class ConfigurationEditor extends JFrame {
             mSaveButton.setToolTipText(Messages
                     .getString("ConfigurationEditor.29")); //$NON-NLS-1$
             mSaveButton.setText(Messages.getString("ConfigurationEditor.30")); //$NON-NLS-1$
+            // Initially disable the save button until a change has been made.
+            mSaveButton.setEnabled(false);
         }
         return mSaveButton;
     }
 
     /**
-     * This method initializes mNewButton
+     * This method initializes the new button.
      * 
-     * @return javax.swing.JButton
+     * @return The new button.
      */
     private JButton getNewButton() {
         if (mNewButton == null) {
@@ -564,26 +628,26 @@ public class ConfigurationEditor extends JFrame {
     }
 
     /**
-     * This method initializes mOpenButton
+     * This method initializes the load button.
      * 
-     * @return javax.swing.JButton
+     * @return The load button.
      */
-    private JButton getOpenButton() {
-        if (mOpenButton == null) {
-            mOpenButton = new JButton();
-            mOpenButton.setAction(new LoadAction(this));
-            mOpenButton.setText(Messages.getString("ConfigurationEditor.36")); //$NON-NLS-1$
-            mOpenButton.setToolTipText(Messages
+    private JButton getLoadButton() {
+        if (mLoadButton == null) {
+            mLoadButton = new JButton();
+            mLoadButton.setAction(new LoadAction(this));
+            mLoadButton.setText(Messages.getString("ConfigurationEditor.36")); //$NON-NLS-1$
+            mLoadButton.setToolTipText(Messages
                     .getString("ConfigurationEditor.37")); //$NON-NLS-1$
-            mOpenButton.setMnemonic(KeyEvent.VK_O);
+            mLoadButton.setMnemonic(KeyEvent.VK_O);
         }
-        return mOpenButton;
+        return mLoadButton;
     }
 
     /**
-     * This method initializes mRunButton
+     * This method initializes the run button.
      * 
-     * @return javax.swing.JButton
+     * @return The run button.
      */
     private JButton getRunButton() {
         if (mRunButton == null) {
@@ -593,14 +657,16 @@ public class ConfigurationEditor extends JFrame {
             mRunButton.setText(Messages.getString("ConfigurationEditor.38")); //$NON-NLS-1$
             mRunButton.setToolTipText(Messages
                     .getString("ConfigurationEditor.39")); //$NON-NLS-1$
+            // Disable the run button until a document is loaded.
+            mRunButton.setEnabled(false);
         }
         return mRunButton;
     }
 
     /**
-     * This method initializes mQuitMenuItem
+     * This method initializes the quit menu item.
      * 
-     * @return javax.swing.JMenuItem
+     * @return The quit menu item.
      */
     private JMenuItem getQuitMenuItem() {
         if (mQuitMenuItem == null) {
@@ -616,7 +682,7 @@ public class ConfigurationEditor extends JFrame {
     }
 
     /**
-     * This method initializes mNewMenuItem
+     * This method initializes the new menu item.
      * 
      * @return The new menu item.
      */
@@ -634,27 +700,27 @@ public class ConfigurationEditor extends JFrame {
     }
 
     /**
-     * This method initializes mOpenMenuItem
+     * This method initializes the load menu item.
      * 
-     * @return javax.swing.JMenuItem
+     * @return The load menu item.
      */
-    private JMenuItem getOpenMenuItem() {
-        if (mOpenMenuItem == null) {
-            mOpenMenuItem = new JMenuItem();
-            mOpenMenuItem.setActionCommand("Load"); //$NON-NLS-1$
-            mOpenMenuItem.setAction(new LoadAction(this));
-            mOpenMenuItem.setText(Messages.getString("ConfigurationEditor.48")); //$NON-NLS-1$
-            mOpenMenuItem.setToolTipText(Messages
+    private JMenuItem getLoadMenuItem() {
+        if (mLoadMenuItem == null) {
+            mLoadMenuItem = new JMenuItem();
+            mLoadMenuItem.setActionCommand("Load"); //$NON-NLS-1$
+            mLoadMenuItem.setAction(new LoadAction(this));
+            mLoadMenuItem.setText(Messages.getString("ConfigurationEditor.48")); //$NON-NLS-1$
+            mLoadMenuItem.setToolTipText(Messages
                     .getString("ConfigurationEditor.49")); //$NON-NLS-1$
-            mOpenMenuItem.setMnemonic(KeyEvent.VK_O);
+            mLoadMenuItem.setMnemonic(KeyEvent.VK_O);
         }
-        return mOpenMenuItem;
+        return mLoadMenuItem;
     }
 
     /**
-     * This method initializes mSaveMenuItem
+     * This method initializes the save menu item.
      * 
-     * @return javax.swing.JMenuItem
+     * @return The save menu item.
      */
     private JMenuItem getSaveMenuItem() {
         if (mSaveMenuItem == null) {
@@ -671,9 +737,9 @@ public class ConfigurationEditor extends JFrame {
     }
 
     /**
-     * This method initializes mSaveAsMenuItem
+     * This method initializes the save as menu item.
      * 
-     * @return javax.swing.JMenuItem
+     * @return The save as menu item.
      */
     private JMenuItem getSaveAsMenuItem() {
         if (mSaveAsMenuItem == null) {
@@ -685,32 +751,37 @@ public class ConfigurationEditor extends JFrame {
                     .getString("ConfigurationEditor.54")); //$NON-NLS-1$
             mSaveAsMenuItem.setActionCommand("SaveAs"); //$NON-NLS-1$
             mSaveAsMenuItem.setMnemonic(KeyEvent.VK_A);
+            // Initially disable the save as menu item until the user
+            // loads a file.
+            mSaveAsMenuItem.setEnabled(false);
         }
         return mSaveAsMenuItem;
     }
 
     /**
-     * This method initializes mRunMenuItem
+     * This method initializes the run menu item.
      * 
-     * @return javax.swing.JMenuItem
+     * @return The run menu item.
      */
     private JMenuItem getRunMenuItem() {
         if (mRunMenuItem == null) {
             mRunMenuItem = new JMenuItem();
-            mRunMenuItem.setActionCommand("Run"); //$NON-NLS-1$
             mRunMenuItem.setAction(new RunAction(this));
             mRunMenuItem.setText(Messages.getString("ConfigurationEditor.56")); //$NON-NLS-1$
             mRunMenuItem.setToolTipText(Messages
                     .getString("ConfigurationEditor.57")); //$NON-NLS-1$
             mRunMenuItem.setMnemonic(KeyEvent.VK_R);
+            // Initially disable the run menu item until the user
+            // loads a file.
+            mRunMenuItem.setEnabled(false);
         }
         return mRunMenuItem;
     }
 
     /**
-     * This method initializes mEditMenu
+     * This method initializes the edit menu.
      * 
-     * @return javax.swing.JMenu
+     * @return The edit menu.
      */
     private JMenu getEditMenu() {
         if (mEditMenu == null) {
@@ -725,9 +796,9 @@ public class ConfigurationEditor extends JFrame {
     }
 
     /**
-     * This method initializes mPreferencesMenuItem
+     * This method initializes the preferences menu item.
      * 
-     * @return javax.swing.JMenuItem
+     * @return The preferences menu item.
      */
     private JMenuItem getPreferencesMenuItem() {
         if (mPreferencesMenuItem == null) {
@@ -742,9 +813,9 @@ public class ConfigurationEditor extends JFrame {
     }
 
     /**
-     * This method initializes mEditLogsMenuItem
+     * This method initializes the edit logs menu item.
      * 
-     * @return javax.swing.JMenuItem
+     * @return The edit logs menu item.
      */
     private JMenuItem getEditLogsMenuItem() {
         if (mEditLogsMenuItem == null) {
@@ -759,7 +830,7 @@ public class ConfigurationEditor extends JFrame {
     }
     
     /**
-     * This method initializes mBatchPane
+     * This method initializes the batch editor pane.
      * 
      * @return The pane containing all batch configuration information.
      */

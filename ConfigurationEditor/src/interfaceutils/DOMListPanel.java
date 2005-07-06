@@ -467,6 +467,7 @@ public class DOMListPanel extends JPanel {
 		    			e.printStackTrace();
 		    		}
 		        }
+                // What thread are we on?
 		        getList().setSelectedIndex(getListModel().size() - 1);
 		    }
 		}

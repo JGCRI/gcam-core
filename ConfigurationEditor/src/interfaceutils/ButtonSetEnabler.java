@@ -4,6 +4,7 @@ package interfaceutils;
 
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
@@ -122,20 +123,30 @@ public class ButtonSetEnabler implements ListSelectionListener, ActionListener, 
      * <li>The down button is enabled if the index is set and not the end of the list.</li>
      * </ul>
 	 */
-	private void updateButtonStates(){
-		// Enable the add button if there is a root node.
-		mAdd.setEnabled( ((DOMListModel)mList.getModel()).canAddElements() );
-		
-		int listSize = mList.getModel().getSize();
-		int index = mList.getSelectedIndex();
-		
-		// Enable the delete button if the size is greater than zero and an element is selected.
-		mDelete.setEnabled( index != -1 && listSize > 0 );
-		
-		// Enable the up button if the selected element is greater than 0.
-		mUp.setEnabled( index > 0 );
-		
-		// Enable the down button if the selected element is not the last.
-		mDown.setEnabled( index != -1 && index < listSize - 1 );
-	}
+	private void updateButtonStates() {
+        // Check if this is necessary.
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                // Enable the add button if there is a root node.
+                mAdd.setEnabled(((DOMListModel) mList.getModel())
+                        .canAddElements());
+
+                int listSize = mList.getModel().getSize();
+                int index = mList.getSelectedIndex();
+
+                // Enable the delete button if the size is greater than zero and
+                // an
+                // element is selected.
+                mDelete.setEnabled(index != -1 && listSize > 0);
+
+                // Enable the up button if the selected element is greater than
+                // 0.
+                mUp.setEnabled(index > 0);
+
+                // Enable the down button if the selected element is not the
+                // last.
+                mDown.setEnabled(index != -1 && index < listSize - 1);
+            }
+        });
+    }
 }

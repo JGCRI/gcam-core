@@ -161,7 +161,6 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel {
 	 * @return The XPath which points at the node containing the value for this button.
 	 */
 	private String getXPath(){
-        // TODO: Fix hardcoding.
 		return "/" + ConfigurationEditor.ROOT_ELEMENT_NAME + "/Bools/Value[@name='" + mValueName + "']"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 }

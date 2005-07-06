@@ -6,6 +6,7 @@ package configurationeditor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 /**
@@ -27,9 +28,13 @@ public class Main {
                     Messages.getString("Main.0")); //$NON-NLS-1$
         }
         // Create the configuration editor main window and show it.
-        ConfigurationEditor mainWindow = new ConfigurationEditor();
-        mainWindow.pack();
-        mainWindow.setVisible(true);
+        final ConfigurationEditor mainWindow = new ConfigurationEditor();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                mainWindow.pack();
+                mainWindow.setVisible(true);
+            }
+        });
         mainWindow.askForInitialAction();
     }
 

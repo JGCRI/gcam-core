@@ -99,7 +99,6 @@ public class DOMListModel extends DefaultListModel implements ListSelectionListe
      * @param aDocument The new document.
      */
 	public void setDocument(Document aDocument){
-        //TODO: Remove this debugging code.
         mDocument = aDocument;
         mRoot = null;
 		
@@ -117,6 +116,7 @@ public class DOMListModel extends DefaultListModel implements ListSelectionListe
             }
             mRoot = result;
         }
+        // Does this need to be on the Swing thread?
         fireContentsChanged(this, 0, getSize() - 1 );
     }
 	

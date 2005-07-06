@@ -8,6 +8,8 @@ import interfaceutils.Util;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
@@ -86,6 +88,7 @@ public class RunAction extends AbstractAction {
             JOptionPane.showMessageDialog(mParentEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE );
             return;
         }
+
         // Check if the executable path points to a valid location.
         File executable = new File(executableFile);
         if( !executable.exists()) {
@@ -94,9 +97,9 @@ public class RunAction extends AbstractAction {
             JOptionPane.showMessageDialog(mParentEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE );
             return;
         }
-        
         // Serialize the document to a temporary location.
         File tempConfFile = new File(mTempConfigurationFile);
+        assert(mParentEditor.getDocument() != null);
         Util.setDocumentFile(mParentEditor.getDocument(), tempConfFile);
         
         Util.serializeDocument(mParentEditor.getDocument(), mParentEditor);
@@ -121,6 +124,7 @@ public class RunAction extends AbstractAction {
      * @param aIsRunning Whether the model is running.
      */
     synchronized void setModelRunning(boolean aIsRunning){
+        Logger.global.log(Level.INFO, "Setting model running to:" + aIsRunning);
     	mModelRunning = aIsRunning;
     }
 }
