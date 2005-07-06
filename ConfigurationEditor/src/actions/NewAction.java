@@ -17,6 +17,7 @@ import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 
 import configurationeditor.ConfigurationEditor;
+import configurationeditor.PropertiesInfo;
 
 /**
  * This class defines the action which occurs when the user attempts to create a
@@ -35,11 +36,6 @@ public class NewAction extends AbstractAction {
      * commands.
      */
     private ConfigurationEditor mParentEditor = null;
-    
-    /**
-     * The name of the attribute which stores the configuration template path.
-     */
-    private final String mConfigurationTemplateProperty = "template-path"; //$NON-NLS-1$
     
     /**
      * Constructor which sets the name of the Action and stores the parent editor.
@@ -78,7 +74,7 @@ public class NewAction extends AbstractAction {
         
         // Get the path to the configuration template from the preferences.
         Properties props = Util.getInitializedProperties(mParentEditor);
-        String currentFile = props.getProperty(mConfigurationTemplateProperty);
+        String currentFile = props.getProperty(PropertiesInfo.CONFIGURATION_TEMPLATE_PROPERTY);
         
         // Check if the configuration template path has been initialized.
         if( currentFile == null) {

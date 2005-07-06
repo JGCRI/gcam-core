@@ -3,8 +3,10 @@
  */
 package interfaceutils;
 
-import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -20,12 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import org.w3c.dom.Document;
-
-import com.zookitec.layout.ComponentEF;
-import com.zookitec.layout.ContainerEF;
-import com.zookitec.layout.ExplicitConstraints;
-import com.zookitec.layout.ExplicitLayout;
-import com.zookitec.layout.GroupEF;
 
 import interfaceutils.ButtonSetEnabler;
 
@@ -113,7 +109,7 @@ public class DOMListPanel extends JPanel {
 	 */
 	public DOMListPanel(String aElementName, String aContainerName,
             String aPanelLabel, boolean aChildrenAreLeaves) {
-		super(new ExplicitLayout());
+		super(new GridBagLayout());
 		assert(aElementName != null);
 		mElementName = aElementName;
         mContainerName = aContainerName;
@@ -138,52 +134,87 @@ public class DOMListPanel extends JPanel {
         setBorder(BorderFactory.createEtchedBorder());
 		// Setup the frame.
         
+        // Create a grid bag constraint.
+        GridBagConstraints cons = new GridBagConstraints();
+        
+        // Create a border around the entire panel.
+        cons.insets = new Insets(5, 5, 5, 5);
+        
+        // Use internal spacing between components.
+        cons.ipadx = 5;
+        cons.ipady = 5;
+        
+        // Start at (0,0).
+        cons.gridx = 0;
+        cons.gridy = 0;
+        cons.gridwidth = 2;
+        // Don't fill empty space.
+        cons.fill = GridBagConstraints.NONE;
+        
+        // Put the label in the center.
+        cons.anchor = GridBagConstraints.CENTER;
+        
         // Add a label at the top.
         JLabel panelLabel = new JLabel(mPanelLabel);
-        add(panelLabel,
-                new ExplicitConstraints(panelLabel,
-                        ContainerEF.centerX(this).subtract(ComponentEF.widthFraction(panelLabel, 0.5)), 
-                        ContainerEF.top(this).add(5)));
+        add(panelLabel, cons);
         
+        // Put the scroll pane at (0,1)
+        cons.gridx = 0;
+        cons.gridy = 1;
+        
+        // Make the scroll pane absorb 4 cells.
+        cons.gridheight = 4;
+        
+        // The scroll pane should absorb extra space.
+        cons.weightx = 1;
+        cons.weighty = 1;
+        cons.fill = GridBagConstraints.BOTH;
+        
+        // Center the scroll pane.
+        cons.anchor = GridBagConstraints.CENTER;
         // Add the list scroll pane.
-        add(getListScrollPane(),
-                new ExplicitConstraints(getListScrollPane(), 
-                ContainerEF.left(this).add(10), 
-                ComponentEF.bottom(panelLabel).add(5)));
+        add(getListScrollPane(), cons);
+        
+
+        // Don't allow buttons to absorb space.
+        cons.fill = GridBagConstraints.NONE;
+        cons.weightx = 0;
+        cons.weighty = 0;
+        
+        // Only take up one cell.
+        cons.gridheight = 1;
+        cons.gridwidth = 1;
         
         // Add the up button.
-        add(getUpButton(), 
-                new ExplicitConstraints(getUpButton(), 
-                ComponentEF.right(getListScrollPane()).add(5), 
-                ComponentEF.centerY(getListScrollPane()).subtract(ComponentEF.height(getUpButton()).add(2))));
+        // Put the up button at (3,3)
+        cons.gridx = 3;
+        cons.gridy = 3;
+        
+        // Put the down button in the lower left side of
+        // the cell.
+        cons.anchor = GridBagConstraints.CENTER;
+        add(getUpButton(), cons);
         
         // Add the down button.
-        add(getDownButton(), 
-                new ExplicitConstraints(getDownButton(), 
-                ComponentEF.right(getListScrollPane()).add(5), 
-                ComponentEF.centerY(getListScrollPane()).add(2)));
+        // Put the down button at (4,4) in the upper left side
+        // of the cell.
+        cons.anchor = GridBagConstraints.CENTER;
+        cons.gridy = 4;
+        add(getDownButton(), cons);
         
         // Add the add button.
-        add(getAddButton(), 
-                new ExplicitConstraints(getAddButton(), 
-                ComponentEF.left(getListScrollPane()), 
-                ComponentEF.bottom(getListScrollPane()).add(5)));
+        // Put the add button at (0,4)
+        // Center the add and delete button.
+        cons.anchor = GridBagConstraints.CENTER;
+        cons.gridx = 0;
+        cons.gridy = 5;
+        
+        add(getAddButton(), cons);
         
         // Add the delete button.
-        add(getDeleteButton(), 
-                new ExplicitConstraints(getDeleteButton(), 
-                ComponentEF.right(getAddButton()).add(5),
-                ComponentEF.bottom(getListScrollPane()).add(5)));
-        // Calculate the preferred width and height.
-        // TODO: This could be slightly more accurate.
-        Component widthComponents[] = { getListScrollPane(), getDownButton() };
-        double width = GroupEF.preferredWidthSum(widthComponents).getValue((ExplicitLayout)getLayout());
-        width += 25;
-        
-        Component heightComponents[] = { panelLabel, getListScrollPane(), getAddButton() };
-        double height = GroupEF.preferredHeightSum(heightComponents).getValue((ExplicitLayout)getLayout());
-        height += 25;
-        setPreferredSize(new Dimension((int)Math.round(width), (int)Math.round(height)));
+        // Put the delete button at (1,4)
+        cons.gridx = 1;
+        add(getDeleteButton(), cons);
 	}
 	
 	/**
@@ -222,7 +253,7 @@ public class DOMListPanel extends JPanel {
     private JScrollPane getListScrollPane() {
         if (mListScrollPane == null) {
         	mListScrollPane = new JScrollPane();
-        	mListScrollPane.setPreferredSize(new Dimension(165,180));
+            mListScrollPane.setPreferredSize(new Dimension(100,200));
         	mListScrollPane.setViewportView(getList());
         }
         return mListScrollPane;

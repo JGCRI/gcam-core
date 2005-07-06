@@ -45,8 +45,8 @@ public class WindowCloseListener implements WindowListener {
                 // They closed the dialog, they want to continue.
                 return;
             }
-            aEvent.getWindow().dispose();
         }
+        aEvent.getWindow().dispose();
 	}
 
 	/* (non-Javadoc)

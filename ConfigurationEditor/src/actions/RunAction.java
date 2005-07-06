@@ -13,6 +13,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
 import configurationeditor.ConfigurationEditor;
+import configurationeditor.PropertiesInfo;
 
 /**
  * This action is called when a user tries to run the model. It saves the configuration
@@ -76,7 +77,7 @@ public class RunAction extends AbstractAction {
         Properties props = Util.getInitializedProperties(mParentEditor);
         
         // Get the path to the executable.
-        String executableFile = props.getProperty(ConfigurationEditor.EXE_PATH_PROPERTY_NAME);
+        String executableFile = props.getProperty(PropertiesInfo.EXE_PATH_PROPERTY);
         
         // Check if the executable path has been initialized.
         if( executableFile == null) {

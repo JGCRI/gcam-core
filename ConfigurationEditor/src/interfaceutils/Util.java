@@ -35,6 +35,7 @@ import org.w3c.dom.xpath.XPathResult;
 import actions.Messages;
 
 import configurationeditor.ConfigurationEditor;
+import configurationeditor.PropertiesInfo;
 
 /**
  * Static utility class with helper functions.
@@ -142,7 +143,7 @@ final public class Util {
 		// Get the executable path from the properties file.
 		Properties props = new Properties();
 		try {
-			FileInputStream inputStream = new FileInputStream(ConfigurationEditor.PROPERTY_FILE_NAME);
+			FileInputStream inputStream = new FileInputStream(PropertiesInfo.PROPERTY_FILE);
 			props.loadFromXML(inputStream);
 			inputStream.close();
 		} catch (FileNotFoundException e) {
@@ -169,7 +170,7 @@ final public class Util {
         // Properties shouldn't be null.
         assert( aProperties != null);
         try {
-            FileOutputStream saveStream = new FileOutputStream(ConfigurationEditor.PROPERTY_FILE_NAME);
+            FileOutputStream saveStream = new FileOutputStream(PropertiesInfo.PROPERTY_FILE);
             aProperties.storeToXML( saveStream, Messages.getString("ShowPreferencesAction.2") ); //$NON-NLS-1$
             saveStream.close();
         } catch( Exception e ) {

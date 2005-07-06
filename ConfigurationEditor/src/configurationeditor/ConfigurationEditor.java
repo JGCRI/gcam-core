@@ -152,17 +152,6 @@ public class ConfigurationEditor extends JFrame {
     private JMenu mHelpMenu = null;
     
     /**
-     * The name of the properties file.
-     */
-    public static final String PROPERTY_FILE_NAME = "configuration_editor.properties"; //$NON-NLS-1$
-    
-    /**
-     * The name of the executable path property.
-     * This field is currently duplicated in RunAction.
-     */
-    public static final String EXE_PATH_PROPERTY_NAME = "executable-path"; //$NON-NLS-1$
-    
-    /**
      * The name of the root element which contains information
      * in the DOM tree about this object.
      */
@@ -216,7 +205,7 @@ public class ConfigurationEditor extends JFrame {
      */
     public void askForInitialAction() {
         // First need to check if the preferences have been initializes.
-        File prefFile = new File(ConfigurationEditor.PROPERTY_FILE_NAME);
+        File prefFile = new File(PropertiesInfo.PROPERTY_FILE);
         if(!prefFile.canRead()) {
             // Need to initialize the preferences window.
             new ShowPreferencesAction(this).actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "ShowPreferences")); //$NON-NLS-1$

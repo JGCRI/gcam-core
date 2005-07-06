@@ -65,7 +65,6 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel {
 		// If there isn't a document return right away. We can't get
 		// the state from a DOM that doesn't exist.
 		if (document == null) {
-			Logger.global.log(Level.INFO, Messages.getString("DOMButtonModel.0")); //$NON-NLS-1$
 			return false;
 		}
 		

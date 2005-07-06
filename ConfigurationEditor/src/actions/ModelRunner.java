@@ -219,6 +219,7 @@ public class ModelRunner implements Runnable {
                     // Set the model and the output watcher 
                     // to stop when there is a chance.
                     mModelRunning = false;
+                    mModelProcess.destroy();
                 }
                 
             });
