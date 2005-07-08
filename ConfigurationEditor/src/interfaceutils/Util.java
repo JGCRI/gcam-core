@@ -1,9 +1,9 @@
 /*
- * Created on Jan 9, 2005
  */
 package interfaceutils;
 
 import java.awt.Container;
+import java.awt.Window;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -135,11 +134,10 @@ final public class Util {
 	/**
 	 * Initialize a properties object with read in data.
 	 * 
-	 * @param aEditor
-	 *            The top level editor.
+	 * @param aWindow A window over which to display error messages.
 	 * @return An initialized properties object.
 	 */
-	public static Properties getInitializedProperties(ConfigurationEditor aEditor){
+	public static Properties getInitializedProperties(Window aWindow){
 		// Get the executable path from the properties file.
 		Properties props = new Properties();
 		try {
@@ -151,11 +149,11 @@ final public class Util {
 			// is an error because it should have already been created.
             String errorMessage = Messages.getString("RunAction.3"); //$NON-NLS-1$
             String errorTitle = Messages.getString("RunAction.4"); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(aEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog(aWindow, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE );
 		} catch (IOException e) {
 			String errorMessage = Messages.getString("RunAction.5") + e.getMessage() + "."; //$NON-NLS-1$ //$NON-NLS-2$
 			String errorTitle = Messages.getString("RunAction.7"); //$NON-NLS-1$
-			JOptionPane.showMessageDialog(aEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE );
+			JOptionPane.showMessageDialog(aWindow, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE );
 			// This is an unexpected error, log the error.
 			Logger.global.log(Level.SEVERE, e.getStackTrace().toString());
 		}
@@ -166,7 +164,7 @@ final public class Util {
      * Save the properties to the file.
      * @param aProperties The properties object to save.
      */
-    public static void saveProperties( Properties aProperties) {
+    public static void saveProperties(Properties aProperties) {
         // Properties shouldn't be null.
         assert( aProperties != null);
         try {
@@ -180,10 +178,10 @@ final public class Util {
     
 	/**
 	 * Get an initialized document builder.
-	 * @param aFrame A frame used to center error messages, allowed to be null.
+	 * @param aWindow A window used to center error messages, allowed to be null.
 	 * @return An initialized document builder.
 	 */
-	public static DocumentBuilder getDocumentBuilder(JFrame aFrame) {
+	public static DocumentBuilder getDocumentBuilder(Window aWindow) {
 		// Create the document builder.
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
 				.newInstance();
@@ -197,7 +195,7 @@ final public class Util {
 			String errorMessage = Messages.getString("Util.7") //$NON-NLS-1$
 					+ e.getMessage() + "."; //$NON-NLS-1$
 			String errorTitle = Messages.getString("Util.9"); //$NON-NLS-1$
-			JOptionPane.showMessageDialog(aFrame, errorMessage,
+			JOptionPane.showMessageDialog(aWindow, errorMessage,
 					errorTitle, JOptionPane.ERROR_MESSAGE);
 		}
 		return docBuilder;

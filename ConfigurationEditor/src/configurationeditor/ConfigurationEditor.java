@@ -11,6 +11,9 @@ import interfaceutils.XMLFileFilter;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -37,10 +40,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
-
-import com.zookitec.layout.ContainerEF;
-import com.zookitec.layout.ExplicitConstraints;
-import com.zookitec.layout.ExplicitLayout;
 
 import batchcreator.BatchFileEditor;
 
@@ -383,60 +382,91 @@ public class ConfigurationEditor extends JFrame {
     private JPanel getConfPanel() {
         if (mConfPanel == null) {
             mConfPanel = new JPanel();
-            mConfPanel.setPreferredSize(new Dimension(915, 325));
-            mConfPanel.setLayout(new ExplicitLayout());
+            mConfPanel.setLayout(new GridBagLayout());
             mConfPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
             
-            mConfPanel.add(getDoCalibrationCheckBox(),
-                    new ExplicitConstraints(getDoCalibrationCheckBox(), 
-                    ContainerEF.left(this).add(ContainerEF.left(this)).add(10), 
-                    ContainerEF.top(this).add(10)));
+            // Now setup the layout constraints.
+            GridBagConstraints cons = new GridBagConstraints();
             
-            mConfPanel.add(getRunCostCurvesCheckBox(),
-                           new ExplicitConstraints(getRunCostCurvesCheckBox(), 
-                           ContainerEF.left(this).add(10), 
-                           ContainerEF.top(this).add(40)));
+            // Layout the items top to bottom, left to right.
+            // Position the checkboxes in the first column.
+            cons.gridx = 0;
+            
+            // Position components on the left side of their cells.
+            cons.anchor = GridBagConstraints.WEST;
+            
+            // Add panels in increasing rows.
+            cons.gridy = 0;
+            
+            // Put a border of 5 around the entire panel.
+            cons.insets = new Insets(5, 5, 5, 5);
+            
+            mConfPanel.add(getDoCalibrationCheckBox(), cons);
+            
+            cons.gridy = GridBagConstraints.RELATIVE;
+            mConfPanel.add(getRunCostCurvesCheckBox(), cons);
+            
+            // Now add the labels in column 1.
+            cons.gridx = 1;
+            cons.gridy = 0;
             
             // Create a label for the scenario name field.
             JLabel scenNameLabel = new JLabel(Messages.getString("ConfigurationEditor.112")); //$NON-NLS-1$
-            mConfPanel.add(scenNameLabel, new ExplicitConstraints(
-                    scenNameLabel, ContainerEF.left(this).add(250), ContainerEF.top(this).add(10)));
+            mConfPanel.add(scenNameLabel, cons);
+            
+            // Put the labels in increasing rows.
+            cons.gridy = GridBagConstraints.RELATIVE;
+            
+            // Create a label for the input file field.
+            JLabel inputFileLabel = new JLabel(Messages.getString("ConfigurationEditor.115")); //$NON-NLS-1$
+            mConfPanel.add(inputFileLabel, cons);
+            
+            // Create a label for the output file field.
+            JLabel outputFileLabel = new JLabel(Messages.getString("ConfigurationEditor.118")); //$NON-NLS-1$
+            mConfPanel.add(outputFileLabel, cons);
+            
+            // Add the text fields in column 2.
+            cons.gridx = 2;
+            cons.gridy = 0;
+            
+            // Allow the text field to resize with the items.
+            cons.weightx = 1;
+            cons.fill = GridBagConstraints.HORIZONTAL;
             
             // Add the scenario name field.
             JTextField scenNameField = mTextFieldFactory.createTextField(
                     "Strings", "scenarioName"); //$NON-NLS-1$ //$NON-NLS-2$
             scenNameField.setPreferredSize(new Dimension(200,20));
-            mConfPanel.add(scenNameField, new ExplicitConstraints(
-                    scenNameField, ContainerEF.left(this).add(350), ContainerEF.top(this).add(10)));
+            mConfPanel.add(scenNameField, cons);
             
-            // Create a label for the input file field.
-            JLabel inputFileLabel = new JLabel(Messages.getString("ConfigurationEditor.115")); //$NON-NLS-1$
-            mConfPanel.add(inputFileLabel, new ExplicitConstraints(
-                    inputFileLabel, ContainerEF.left(this).add(250), ContainerEF.top(
-                                    this).add(40)));
+            // Put the fields in increasing rows.
+            cons.gridy = GridBagConstraints.RELATIVE;
             
             // Add the input field.
             JTextField inputFileField = mTextFieldFactory.createTextField(
                     "Files", "xmlInputFileName"); //$NON-NLS-1$ //$NON-NLS-2$
             inputFileField.setPreferredSize(new Dimension(200,20));
-            mConfPanel.add(inputFileField, new ExplicitConstraints(
-                    inputFileField, ContainerEF.left(this).add(350), ContainerEF.top(this).add(40)));
-            
-            // Create a label for the output file field.
-            JLabel outputFileLabel = new JLabel(Messages.getString("ConfigurationEditor.118")); //$NON-NLS-1$
-            mConfPanel.add(outputFileLabel, new ExplicitConstraints(
-                    outputFileLabel, ContainerEF.left(this).add(250), ContainerEF.top(this).add(70)));
+            mConfPanel.add(inputFileField, cons);
             
             // Add the output file field.
             JTextField outputFileField = mTextFieldFactory.createTextField("Files", "xmlOutputFileName"); //$NON-NLS-1$ //$NON-NLS-2$
             outputFileField.setPreferredSize(new Dimension(200,20));
-            mConfPanel.add(outputFileField, new ExplicitConstraints(
-                    outputFileField, ContainerEF.left(this).add(350), ContainerEF.top(this).add(70)));
+            mConfPanel.add(outputFileField, cons);
+            
+            // Put the list panel in column 3.
+            cons.gridx = 3;
+            cons.gridy = 0;
+            // Make the panel absorb 4 rows.
+            cons.gridheight = 4;
+            cons.weightx = 1;
+            // Make the panel take up the entire height.
+            cons.fill = GridBagConstraints.BOTH;
+            // Make the panel absorb vertical space.
+            cons.weighty = 1;
             
             // Add the list panel.
             mListPanel = mFileListPanelFactory.createDOMFileListPanel("/Configuration/ScenarioComponents", "ScenarioComponent", Messages.getString("ConfigurationEditor.151"), true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            mConfPanel.add(mListPanel, new ExplicitConstraints(
-                            mListPanel, ContainerEF.left(this).add(600), ContainerEF.top(this).add(10)));
+            mConfPanel.add(mListPanel, cons);
         }
         return mConfPanel;
     }

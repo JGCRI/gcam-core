@@ -9,18 +9,13 @@ import interfaceutils.Util;
 import javax.swing.JFrame;
 import org.w3c.dom.Document;
 
-import com.zookitec.layout.ComponentEF;
-import com.zookitec.layout.ContainerEF;
-import com.zookitec.layout.ExplicitConstraints;
-import com.zookitec.layout.ExplicitLayout;
-import com.zookitec.layout.GroupEF;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -166,83 +161,78 @@ public class BatchFileEditor extends JFrame {
      */
     private JPanel getMainContentPane() {
         if (mMainContentPane == null) {
-            mMainContentPane = new JPanel(new ExplicitLayout());
+            mMainContentPane = new JPanel(new GridBagLayout());
             mMainContentPane.setToolTipText(Messages.getString("BatchFileEditor.7")); //$NON-NLS-1$
-            mMainContentPane.add(getLeftPanel(), 
-                    new ExplicitConstraints(getLeftPanel(),
-                            ContainerEF.left(this).add(5), 
-                            ContainerEF.top(this).add(5)));
             
-            mMainContentPane.add(getMiddlePanel(), 
-                    new ExplicitConstraints(getMiddlePanel(),
-                            ComponentEF.right(getLeftPanel()).add(5), 
-                            ContainerEF.top(this).add(5)));
+            GridBagConstraints cons = new GridBagConstraints();
+            // Set that the panels should grow to fit the cells.
+            cons.fill = GridBagConstraints.BOTH;
             
-            mMainContentPane.add(getRightPanel(), 
-                    new ExplicitConstraints(getRightPanel(),
-                            ComponentEF.right(getMiddlePanel()).add(5),
-                            ContainerEF.top(this).add(5)));
+            // Position the panels in increasing columns.
+            cons.gridx = GridBagConstraints.RELATIVE;
+            
+            // Add panels in the first row.
+            cons.gridy = 0;
+            
+            // Put a border of 5 around the entire panel.
+            cons.insets = new Insets(5, 5, 5, 5);
+            
+            // Weight the panels so they grow when the window is resized horizontally
+            // but not vertically.
+            cons.weightx = 1;
+            
+            // Center the panels in their cells.
+            cons.anchor = GridBagConstraints.CENTER;
+            
+            mMainContentPane.add(getLeftPanel(), cons);
+            
+            mMainContentPane.add(getMiddlePanel(), cons);
+            
+            // Put the right pane in 2 cells to help
+            // position the buttons.
+            cons.gridwidth = 2;
+            mMainContentPane.add(getRightPanel(), cons);
+            
             // Add okay and cancel buttons to the content pane.
-            addOKCancelButtons();
+            // Don't allow the buttons to fill the cells.
             
-            // Calculate the width to be the width of all the panels.
-            Component panels[] = { getLeftPanel(), getMiddlePanel(), getRightPanel() };
-            double width = GroupEF.preferredWidthSum(panels).getValue((ExplicitLayout)mMainContentPane.getLayout());
-            // Add some space for gaps.
-            width += 25;
+            // Add an OK button.
+            cons.gridx = 3;
+            cons.gridy = 1;
+            cons.weightx = 0;
+            cons.fill = GridBagConstraints.NONE;
+            cons.gridwidth = 1;
+            cons.anchor = GridBagConstraints.EAST;
             
-            // Calculate the height to be the max height of the panels plus the OK button.
-            double height = GroupEF.preferredHeightMax(panels).getValue((ExplicitLayout)mMainContentPane.getLayout());
-            height += GroupEF.preferredHeightMax( new Component[]{ mOKButton, mCancelButton }).getValue((ExplicitLayout)mMainContentPane.getLayout());
-            height += 55; // TODO: Remove this hack.
-            setPreferredSize(new Dimension((int)Math.round(width), (int)Math.round(height)));
+            mOKButton = new JButton();
+            mOKButton.setToolTipText(Messages.getString("BatchFileEditor.10")); //$NON-NLS-1$
+            mOKButton.setText(Messages.getString("BatchFileEditor.11")); //$NON-NLS-1$
+            
+            // Add a listener which will save the batch file and close the
+            // window.
+            mOKButton.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent aEvent) {
+                            // Save the batch file document.
+                            Util.serializeDocument(mDocument, getMainWindow());
+                            getMainWindow().dispose();
+                        }
+                    });
+            mMainContentPane.add(mOKButton, cons);
+
+            mCancelButton = new JButton();
+            mCancelButton.setToolTipText(Messages.getString("BatchFileEditor.8") ); //$NON-NLS-1$
+            mCancelButton.setText(Messages.getString("BatchFileEditor.9")); //$NON-NLS-1$
+            
+            // Add a listener which will close the window.
+            mCancelButton.addActionListener(new ActionListener() { 
+                        public void actionPerformed(ActionEvent aEvent) {
+                            getMainWindow().dispose();
+                        }
+                    });
+            cons.gridx = 4;
+            mMainContentPane.add(mCancelButton, cons);
         }
         return mMainContentPane;
-    }
-
-    /**
-     * Add OK and Cancel buttons to the batch editor which will
-     * save or discard any changes to the fields. Only call from
-     * inside getMainContentPane.
-     *
-     */
-    private void addOKCancelButtons() {
-        // Add a cancel button. Cancel button is added first so the 
-        // OK button can position itself based on the cancel button.
-        mCancelButton = new JButton();
-        mCancelButton.setToolTipText(Messages.getString("BatchFileEditor.8") ); //$NON-NLS-1$
-        mCancelButton.setText(Messages.getString("BatchFileEditor.9")); //$NON-NLS-1$
-        // Add a listener which will close the window.
-        mCancelButton.addActionListener(new ActionListener() { 
-                    public void actionPerformed(ActionEvent aEvent) {
-                        getMainWindow().dispose();
-                    }
-                });
-        mMainContentPane.add(mCancelButton,
-                new ExplicitConstraints(mCancelButton,
-                        ComponentEF.right(getRightPanel()).subtract(ComponentEF.width(mCancelButton).add(2)),
-                        ComponentEF.bottom(getRightPanel()).add(5)));
-        
-        // Add an OK button.
-        mOKButton = new JButton();
-        mOKButton.setToolTipText(Messages.getString("BatchFileEditor.10")); //$NON-NLS-1$
-        mOKButton.setText(Messages.getString("BatchFileEditor.11")); //$NON-NLS-1$
-        
-        // Add a listener which will save the batch file and close the
-        // window.
-        mOKButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent aEvent) {
-                        // Save the batch file document.
-                        Util.serializeDocument(mDocument, getMainWindow());
-                        getMainWindow().dispose();
-                    }
-                });
-        mMainContentPane.add(mOKButton,
-                new ExplicitConstraints( mOKButton,
-                        ComponentEF.left(mCancelButton).subtract( ComponentEF.width(mOKButton).add(5)),
-                        ComponentEF.bottom(getRightPanel()).add(5)));
-
-
     }
     
     /**
