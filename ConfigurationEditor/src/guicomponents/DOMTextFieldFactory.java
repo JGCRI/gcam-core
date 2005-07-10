@@ -1,4 +1,5 @@
-package interfaceutils;
+package guicomponents;
+
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -12,6 +13,9 @@ import javax.swing.JTextField;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import utils.Messages;
+import utils.Util;
 
 import configurationeditor.ConfigurationEditor;
 

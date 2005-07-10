@@ -3,11 +3,10 @@
  */
 package configurationeditor;
 
-import interfaceutils.DOMButtonModel;
-import interfaceutils.DOMListPanel;
-import interfaceutils.DOMListPanelFactory;
-import interfaceutils.DOMTextFieldFactory;
-import interfaceutils.XMLFileFilter;
+import guicomponents.DOMButtonModel;
+import guicomponents.DOMListPanel;
+import guicomponents.DOMListPanelFactory;
+import guicomponents.DOMTextFieldFactory;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -41,6 +40,8 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
+import utils.XMLFileFilter;
+
 import batchcreator.BatchFileEditor;
 
 import actions.EditLogSettingsAction;
@@ -65,7 +66,7 @@ import javax.swing.event.ChangeListener;
  * The class which creates the UI to edit a configuration file. 
  * @author Josh Lurz
  */
-public class ConfigurationEditor extends JFrame {
+public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
     // TODO: Finish documenting these variables.
     // TODO: Work out where invokeLater should be used.
     /**
@@ -289,21 +290,7 @@ public class ConfigurationEditor extends JFrame {
         // Add an event handler which will listen for the document being
         // changed and set that the document needs to be saved.
         EventTarget target = (EventTarget)mCurrentDocument.getDocumentElement();
-        target.addEventListener("DOMSubtreeModified", new EventListener() { //$NON-NLS-1$
-            public void handleEvent(Event aEvent) {
-                // This doesn't recursively send another event,
-                // not sure why but it works.
-                mCurrentDocument.getDocumentElement().setAttribute("needs-save", "true"); //$NON-NLS-1$ //$NON-NLS-2$
-                // Update the user interface. Check if this is necessary.
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        // Enable the save menu item.
-                        getSaveMenuItem().setEnabled(true);
-                        getSaveButton().setEnabled(true);
-                    }
-                });
-            }
-        }, true );
+        target.addEventListener("DOMSubtreeModified", new ConfigurationDocumentMutationListener(), true );
         
         // Set the document into the factories. This will
         // cause them to update the objects they created.
@@ -851,7 +838,7 @@ public class ConfigurationEditor extends JFrame {
         if (mEditLogsMenuItem == null) {
         	mEditLogsMenuItem = new JMenuItem();
         	mEditLogsMenuItem.setActionCommand("EditLogs"); //$NON-NLS-1$
-        	mEditLogsMenuItem.setAction(new EditLogSettingsAction(this));
+        	mEditLogsMenuItem.setAction(new EditLogSettingsAction());
         	mEditLogsMenuItem.setText(Messages.getString("ConfigurationEditor.136")); //$NON-NLS-1$
         	mEditLogsMenuItem.setToolTipText(Messages.getString("ConfigurationEditor.137")); //$NON-NLS-1$
         	mEditLogsMenuItem.setMnemonic(KeyEvent.VK_L);
@@ -1059,6 +1046,28 @@ public class ConfigurationEditor extends JFrame {
     	}
     	return mBatchFileEditButton;
     }
-
+    
+    /**
+     * This mutation listener watches for events which change the underlying document.
+     * When a mutation event is received the dirty attribute is set on the document
+     * and the save menu and button are activated.
+     * TODO: Use this elsewhere.
+     * @author Josh Lurz
+     */
+    private final class ConfigurationDocumentMutationListener implements EventListener {
+        public void handleEvent(Event aEvent) {
+            // This doesn't recursively send another event,
+            // not sure why but it works.
+            mCurrentDocument.getDocumentElement().setAttribute("needs-save", "true"); //$NON-NLS-1$ //$NON-NLS-2$
+            // Update the user interface. Check if this is necessary.
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    // Enable the save menu item.
+                    getSaveMenuItem().setEnabled(true);
+                    getSaveButton().setEnabled(true);
+                }
+            });
+        }
+    }
 } // @jve:decl-index=0:visual-constraint="50,28"
 

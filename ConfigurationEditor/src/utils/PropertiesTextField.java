@@ -1,7 +1,7 @@
 /**
  * 
  */
-package interfaceutils;
+package utils;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

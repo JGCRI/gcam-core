@@ -1,4 +1,4 @@
-package interfaceutils;
+package utils;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -14,7 +14,7 @@ public class Messages {
     /**
      * The name of the resource bundle file.
      */
-    private static final String BUNDLE_NAME = "interfaceutils.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "utils.messages"; //$NON-NLS-1$
     
     /**
      * The resource bundle containing all strings.

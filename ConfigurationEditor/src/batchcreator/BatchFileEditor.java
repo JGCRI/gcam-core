@@ -2,12 +2,16 @@
  */
 package batchcreator;
 
-import interfaceutils.DOMListPanel;
-import interfaceutils.DOMListPanelFactory;
-import interfaceutils.Util;
+import guicomponents.DOMListPanel;
+import guicomponents.DOMListPanelFactory;
 
 import javax.swing.JFrame;
 import org.w3c.dom.Document;
+
+import utils.Util;
+import utils.WindowCloseListener;
+
+import configurationeditor.DOMDocumentEditor;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -29,7 +33,7 @@ import java.util.logging.Logger;
  * and cancel buttons.
  * @author Josh Lurz
  */
-public class BatchFileEditor extends JFrame {
+public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
     /**
 	 * Automatically generated unique class identifier.
 	 */

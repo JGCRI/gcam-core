@@ -1,7 +1,7 @@
 /**
  * 
  */
-package interfaceutils;
+package utils;
 
 import java.io.File;
 

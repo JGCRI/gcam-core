@@ -1,8 +1,7 @@
 /*
  */
-package batchcreator;
+package utils;
 
-import interfaceutils.Util;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -10,6 +9,8 @@ import java.awt.event.WindowListener;
 import javax.swing.JOptionPane;
 
 import org.w3c.dom.Document;
+
+import configurationeditor.DOMDocumentEditor;
 
 /**
  * This class implements a window close listener which ensures
@@ -30,12 +31,12 @@ public class WindowCloseListener implements WindowListener {
 	 */
 	public void windowClosing(WindowEvent aEvent) {
         // Get the document from the editor.
-        Document document = ((BatchFileEditor)aEvent.getWindow()).getDocument();
+        Document document = ((DOMDocumentEditor)aEvent.getWindow()).getDocument();
         // Check if the document needs to be saved.
         if(Util.isDirty(document)) {
-            final String message = Messages.getString("WindowCloseListener.0"); //$NON-NLS-1$
+            final String message = "Would you like to save the current file?";
             int rv = JOptionPane.showConfirmDialog(aEvent.getWindow(), message,
-                        Messages.getString("WindowCloseListener.1"), JOptionPane.YES_NO_CANCEL_OPTION); //$NON-NLS-1$
+                        "Save Dialog", JOptionPane.YES_NO_CANCEL_OPTION); //$NON-NLS-1$
             // The user wants to save.
             if (rv == JOptionPane.YES_OPTION) {
                 Util.serializeDocument(document, aEvent.getWindow());

@@ -3,7 +3,6 @@
  */
 package actions;
 
-import interfaceutils.Util;
 
 import java.awt.event.ActionEvent;
 import java.util.Properties;
@@ -15,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 
 import org.w3c.dom.Document;
+
+import utils.Util;
 
 import configurationeditor.ConfigurationEditor;
 import configurationeditor.PropertiesInfo;

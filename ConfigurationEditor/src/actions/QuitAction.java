@@ -3,7 +3,6 @@
  */
 package actions;
 
-import interfaceutils.Util;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
@@ -11,13 +10,17 @@ import java.awt.event.WindowListener;
 
 import javax.swing.AbstractAction;
 
+import utils.Util;
+
 import configurationeditor.ConfigurationEditor;
 
 /**
  * This action object is called whenever the user calls quit. This can be called
- * by clicking the quit button, selecting it from the window, or closing the window.
- * The action will determine if a save is needed and dispatch it if needed, and offers
- * the user an opportunity to cancel the quit.
+ * by clicking the quit button, selecting it from the window, or closing the
+ * window. The action will determine if a save is needed and dispatch it if
+ * needed, and offers the user an opportunity to cancel the quit.
+ * TODO: Can this use the generic interface utils window listener?
+ * 
  * @author Josh Lurz
  */
 public class QuitAction extends AbstractAction implements WindowListener {
@@ -25,6 +28,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
      * Identifier used for serializing.
      */
     private static final long serialVersionUID = -8436856241489036508L;
+
     /**
      * A reference to the top level editor from which this action is receiving
      * commands.
@@ -32,7 +36,9 @@ public class QuitAction extends AbstractAction implements WindowListener {
     private ConfigurationEditor mParentEditor = null;
 
     /**
-     * Constructor which sets the name of the Action and stores the parent editor.
+     * Constructor which sets the name of the Action and stores the parent
+     * editor.
+     * 
      * @param aParentEditor
      *            The top level editor.
      */
@@ -71,7 +77,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
         // The file is not modified or has been saved, let them exit.
         mParentEditor.dispose();
     }
-    
+
     public void windowOpened(WindowEvent arg0) {
         // Ignore window opened event.
     }

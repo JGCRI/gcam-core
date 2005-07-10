@@ -1,6 +1,8 @@
 /*
  */
-package interfaceutils;
+package utils;
+
+import guicomponents.DOMListModel;
 
 import javax.swing.JButton;
 import javax.swing.JList;

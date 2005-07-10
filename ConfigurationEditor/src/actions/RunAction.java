@@ -3,7 +3,6 @@
  */
 package actions;
 
-import interfaceutils.Util;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -13,6 +12,8 @@ import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+
+import utils.Util;
 
 import configurationeditor.ConfigurationEditor;
 import configurationeditor.PropertiesInfo;

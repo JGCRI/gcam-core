@@ -1,7 +1,7 @@
 /*
  * Created on Jan 9, 2005
  */
-package interfaceutils;
+package utils;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

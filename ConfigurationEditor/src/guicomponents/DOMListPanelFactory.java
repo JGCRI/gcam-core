@@ -1,4 +1,6 @@
-package interfaceutils;
+package guicomponents;
+
+
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -7,6 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.w3c.dom.Document;
+
+import utils.Messages;
 
 /**
  * A factory class which creates DOMFileListPanels which are initialized

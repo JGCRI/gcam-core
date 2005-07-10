@@ -3,8 +3,6 @@
  */
 package actions;
 
-import interfaceutils.PropertiesTextField;
-import interfaceutils.Util;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -23,6 +21,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import utils.PropertiesTextField;
+import utils.Util;
 import configurationeditor.ConfigurationEditor;
 import configurationeditor.PropertiesInfo;
 

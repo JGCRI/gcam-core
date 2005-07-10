@@ -1,7 +1,8 @@
 /*
  * Created on Jan 9, 2005
  */
-package interfaceutils;
+package guicomponents;
+
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,6 +12,9 @@ import javax.swing.DefaultButtonModel;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import utils.Messages;
+import utils.Util;
 
 import configurationeditor.ConfigurationEditor;
 

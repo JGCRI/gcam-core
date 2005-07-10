@@ -1,6 +1,7 @@
 /*
  */
-package interfaceutils;
+package guicomponents;
+
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,6 +14,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.w3c.dom.*;
+
+import utils.Messages;
+import utils.NodeWrapper;
+import utils.Util;
 /**
  * The DOMListModel is an implementation of a list which has 
  * content dependent on an underlying DOM tree.
