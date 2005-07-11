@@ -709,6 +709,7 @@ void technology::production(const string& regionName,const string& prodName,
     if( ( fuelname != "renewable" ) && ( fuelname != "none" ) ){ 
         marketplace->addToDemand( fuelname, regionName, input, per );
     }
+
     // Set the supply of the good to the marketplace.
     // Market doesn't exist for demand goods.
     marketplace->addToSupply( prodName, regionName, output, per, false );
