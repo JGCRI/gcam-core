@@ -27,11 +27,6 @@
 using namespace std;
 using namespace xercesc;
 
-void writeClimatData(void); // function to write data for climat
-#if(__HAVE_FORTRAN__)
-extern "C" { void _stdcall CLIMAT(void); };
-#endif
-
 time_t ltime;
 extern ofstream outFile;
 const string Scenario::XML_NAME = "scenario";
@@ -275,6 +270,8 @@ bool Scenario::run( string filenameEnding ){
 
     // Denote the run has been performed. 
     runCompleted = true;
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Model run completed." << endl;
 
     // main output file for sgm, general results
     const string sgmGenFileName = Configuration::getInstance()->getFile( "ObjectSGMGenFileName", "ObjectSGMGen.csv" );
@@ -286,22 +283,10 @@ bool Scenario::run( string filenameEnding ){
     sgmGenFile.close();
 
     toDebugXMLClose( xmlDebugStream, &tabs ); // Close the xml debugging tag.
-    mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Model run completed." << endl;
-    mainLog << "Calculating emissions totals." << endl;
-    world->calculateEmissionsTotals();
-    mainLog.setLevel( ILogger::DEBUG );
-    mainLog << "Writing CLIMAT() input file." << endl;
-    writeClimatData(); // writes the input text file
 
+    // Run the climate model.
+    world->runClimateModel();
 
-#if(__HAVE_FORTRAN__)
-    mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Calling the climate model..."<< endl;
-    CLIMAT();
-    mainLog.setLevel( ILogger::DEBUG );
-    mainLog << "Finished with CLIMAT()" << endl;
-#endif
     xmlDebugStream.close();
     sgmOutFile.close();
     return success;
