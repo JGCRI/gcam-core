@@ -17,6 +17,7 @@ import utils.WindowCloseListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -243,6 +244,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
     /**
      * Private helper which returns the main window.
      * TODO: Is there a cleaner way?
+     * @return The top level window.
      */
     private JFrame getMainWindow() {
         return this;
@@ -311,7 +313,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
         // Set the document into the lists.
         mListPanelFactory.setDocument(mDocument);
         // Don't use the default closer.
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowCloseListener());
         this.setContentPane(getMainContentPane());
         

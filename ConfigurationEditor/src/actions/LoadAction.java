@@ -57,8 +57,13 @@ public class LoadAction extends AbstractAction {
         mParentEditor = aParentEditor;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Method called when an action is performed which triggers
+     * the load action.
+     * 
+     * The method checks first if the file needs to be saved and then
+     * queries the user for a new file to load. The file is loaded
+     * and set as the document of the ConfigurationEditor.
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */

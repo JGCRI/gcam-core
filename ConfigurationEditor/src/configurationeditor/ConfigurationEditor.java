@@ -79,12 +79,24 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
      */
     private Document mCurrentDocument = null;
     
+    /**
+     * The main window of the configuration editor.
+     */
     private JPanel mMainWindow = null;
 
+    /**
+     * The container which holds the various tabs of the configuration editor.
+     */
     private JTabbedPane mMainTabContainer = null;
 
+    /**
+     * The panel which contains the interface elements to modify the main configuration options.
+     */
     private JPanel mConfPanel = null;
 
+    /**
+     * The panel which contains the interface elements to modify the advanced configuration settings.
+     */
     private JPanel mAdvancedPanel = null;
 
     /**
@@ -102,34 +114,81 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
      */
     private JCheckBox mDoBatchModeCheckBox = null;
     
+    /**
+     * The toolbad which contains buttons to execute the available actions.
+     */
     private JToolBar mMainToolBar = null;
 
+    /**
+     * The menu bar containing the File, Edit and Help menus.
+     */
     private JMenuBar mMainMenuBar = null;
 
+    /**
+     * The File menu.
+     */
     private JMenu mFileMenu = null;
     
-    private DOMListPanel mListPanel = null;
+    /**
+     * The panel which contains user interface elements for modifying the add on files.
+     */
+    private DOMListPanel mAddOnFilesPanel = null;
 
+    /**
+     * The button on the toolbar which triggers the save action.
+     */
     private JButton mSaveButton = null;
-
+    
+    /**
+     * The button on the toolbar which triggers the new action.
+     */
     private JButton mNewButton = null;
 
+    /**
+     * The button on the toolbar which triggers the load action.
+     */
     private JButton mLoadButton = null;
 
+    /**
+     * The button on the toolbar which triggers the run action.
+     */
     private JButton mRunButton = null;
 
+    /**
+     * The Quit file menu item.
+     */
     private JMenuItem mQuitMenuItem = null;
 
+    /**
+     * The New file menu item.
+     */
     private JMenuItem mNewMenuItem = null;
 
+    /**
+     * The Load file menu item.
+     */
     private JMenuItem mLoadMenuItem = null;
 
+    /**
+     * The Save file menu item.
+     */
     private JMenuItem mSaveMenuItem = null;
 
+    /**
+     * The Save As file menu item.
+     */
     private JMenuItem mSaveAsMenuItem = null;
 
+    /**
+     * The Run file menu item.
+     */
     private JMenuItem mRunMenuItem = null;
 
+    /**
+     * The file menu item which triggers the merge action.
+     */
+    private JMenuItem mMergeMenuItem = null;
+    
     /**
      * The top level edit menu.
      */
@@ -151,8 +210,9 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
      */
     private JPanel mBatchPane = null;
 
-    private JMenuItem mMergeMenuItem = null;
-
+    /**
+     * The menu containing help options.
+     */
     private JMenu mHelpMenu = null;
     
     /**
@@ -161,12 +221,25 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
      */
     public static final String ROOT_ELEMENT_NAME = "Configuration"; //$NON-NLS-1$
     
+    /**
+     * The label for the batch file field.
+     * TODO: Make this a local variable.
+     */
     private JLabel mBatchFileLabel = null;
 
+    /**
+     * The text field containing the location of the batch file.
+     */
     private JTextField mBatchFileField = null;
 
+    /**
+     * The button which allows selection of the location of the batch file field.
+     */
     private JButton mBatchFileSelectButton = null;
 
+    /**
+     * The button which opens an editor to modify the batch file.
+     */
     private JButton mBatchFileEditButton = null;
     
     /**
@@ -174,8 +247,14 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
      */
     private JButton mBatchFileNewButton = null;
     
+    /**
+     * A factory which creates and tracks text fields based on the current document.
+     */
     private DOMTextFieldFactory mTextFieldFactory = null;
     
+    /**
+     * A factory which creates list panels based on the current document.
+     */
     private DOMListPanelFactory mFileListPanelFactory = null;
     
     // @jve:decl-index=0:visual-constraint=""
@@ -452,8 +531,8 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
             cons.weighty = 1;
             
             // Add the list panel.
-            mListPanel = mFileListPanelFactory.createDOMFileListPanel("/Configuration/ScenarioComponents", "ScenarioComponent", Messages.getString("ConfigurationEditor.151"), true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            mConfPanel.add(mListPanel, cons);
+            mAddOnFilesPanel = mFileListPanelFactory.createDOMFileListPanel("/Configuration/ScenarioComponents", "ScenarioComponent", Messages.getString("ConfigurationEditor.151"), true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            mConfPanel.add(mAddOnFilesPanel, cons);
         }
         return mConfPanel;
     }
@@ -1055,6 +1134,10 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
      * @author Josh Lurz
      */
     private final class ConfigurationDocumentMutationListener implements EventListener {
+    	/**
+    	 * Method called when mutation events from the configuration document are received.
+    	 * @param aEvent The mutation event received.
+    	 */
         public void handleEvent(Event aEvent) {
             // This doesn't recursively send another event,
             // not sure why but it works.

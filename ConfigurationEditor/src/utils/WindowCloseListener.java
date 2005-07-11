@@ -18,16 +18,12 @@ import configurationeditor.DOMDocumentEditor;
  * @author Josh Lurz
  */
 public class WindowCloseListener implements WindowListener {
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.WindowListener#windowOpened(java.awt.event.WindowEvent)
-	 */
-	public void windowOpened(WindowEvent aEvent) {
-        // Ignore window opened event.
-	}
-
-	/* (non-Javadoc)
+	
+	/**
+	 * Method called when the window is closing which checks if the document
+	 * needs saving and queries the user.
 	 * @see java.awt.event.WindowListener#windowClosing(java.awt.event.WindowEvent)
+	 * @param aEvent The window event received.
 	 */
 	public void windowClosing(WindowEvent aEvent) {
         // Get the document from the editor.
@@ -50,39 +46,65 @@ public class WindowCloseListener implements WindowListener {
         aEvent.getWindow().dispose();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
+	/**
+	 * Method called when a window is opened, implemented to do nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
 	 */
-	public void windowClosed(WindowEvent arg0) {
-        // Ignore window closed event.
+	public void windowOpened(WindowEvent aEvent) {
+		// Do nothing
+	}
+	
+	/**
+	 * Method called when a window is closed, implemented to do nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
+	 */
+	public void windowClosed(WindowEvent aEvent) {
+		// Do nothing
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.WindowListener#windowIconified(java.awt.event.WindowEvent)
+	/**
+	 * Method called when a window is iconified, implemented to do nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
 	 */
-	public void windowIconified(WindowEvent arg0) {
-        // Ignore window iconified event.
+	public void windowIconified(WindowEvent aEvent) {
+		// Do nothing
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.WindowListener#windowDeiconified(java.awt.event.WindowEvent)
+	/**
+	 * Method called when a window is deiconified, implemented to do
+	 * nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
 	 */
-	public void windowDeiconified(WindowEvent arg0) {
-        // Ignore window deiconified event.
+	public void windowDeiconified(WindowEvent aEvent) {
+		// Do nothing
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.WindowListener#windowActivated(java.awt.event.WindowEvent)
+	/**
+	 * Method called when a window is activated, implemented to do nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
 	 */
-	public void windowActivated(WindowEvent arg0) {
-        // Ignore window activated event.
+	public void windowActivated(WindowEvent aEvent) {
+		// Do nothing
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.WindowListener#windowDeactivated(java.awt.event.WindowEvent)
+	/**
+	 * Method called when a window is deactivated, implemented to do
+	 * nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
 	 */
-	public void windowDeactivated(WindowEvent arg0) {
-        // Ignore window deactivated event.
+	public void windowDeactivated(WindowEvent aEvent) {
+		// Do nothing
 	}
-
 }

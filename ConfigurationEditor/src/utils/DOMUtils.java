@@ -347,6 +347,7 @@ public final class DOMUtils {
     /**
      * Helper function to find a single item in the list.
      * 
+     * @param aParent Parent who's list to search.
      * @param aObject
      *            A list item to find.
      * @return The index into the DOM of the item, -1 if an error occurs or the

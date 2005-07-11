@@ -47,9 +47,12 @@ public class QuitAction extends AbstractAction implements WindowListener {
         mParentEditor = aParentEditor;
     }
 
-    /*
-     * (non-Javadoc) @param aEvent The event received.
+    /**
+     * Method called when the quit action is activated which calls
+     * the internal doQuit method to check if the file should be saved
+     * before quitting.
      * 
+     * @param aEvent The event received.
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent aEvent) {
@@ -78,32 +81,76 @@ public class QuitAction extends AbstractAction implements WindowListener {
         mParentEditor.dispose();
     }
 
-    public void windowOpened(WindowEvent arg0) {
-        // Ignore window opened event.
-    }
-
-    public void windowClosing(WindowEvent aWindowEvent) {
+    /**
+     * Method called when the window is closing which allows
+     * the user to choose whether to save the file before
+     * quitting.
+     * @param aEvent The window event received.
+     */
+    public void windowClosing(WindowEvent aEvent) {
         // Call the internal helper method.
         doQuit();
     }
 
-    public void windowClosed(WindowEvent arg0) {
-        // Ignore window closed event.
-    }
+	/**
+	 * Method called when a window is opened, implemented to do nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
+	 */
+	public void windowOpened(WindowEvent aEvent) {
+		// Do nothing
+	}
+	
+	/**
+	 * Method called when a window is closed, implemented to do nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
+	 */
+	public void windowClosed(WindowEvent aEvent) {
+		// Do nothing
+	}
 
-    public void windowIconified(WindowEvent arg0) {
-        // Ignore window iconified event.
-    }
+	/**
+	 * Method called when a window is iconified, implemented to do nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
+	 */
+	public void windowIconified(WindowEvent aEvent) {
+		// Do nothing
+	}
 
-    public void windowDeiconified(WindowEvent arg0) {
-        // Ignore window deiconified event.
-    }
+	/**
+	 * Method called when a window is deiconified, implemented to do
+	 * nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
+	 */
+	public void windowDeiconified(WindowEvent aEvent) {
+		// Do nothing
+	}
 
-    public void windowActivated(WindowEvent arg0) {
-        // Ignore window activated event.
-    }
+	/**
+	 * Method called when a window is activated, implemented to do nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
+	 */
+	public void windowActivated(WindowEvent aEvent) {
+		// Do nothing
+	}
 
-    public void windowDeactivated(WindowEvent arg0) {
-        // Ignore window deactivated event.
-    }
+	/**
+	 * Method called when a window is deactivated, implemented to do
+	 * nothing.
+	 * 
+	 * @param aEvent
+	 *            The window event received.
+	 */
+	public void windowDeactivated(WindowEvent aEvent) {
+		// Do nothing
+	}
 }

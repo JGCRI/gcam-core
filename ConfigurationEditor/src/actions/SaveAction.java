@@ -46,8 +46,10 @@ public class SaveAction extends AbstractAction {
         mParentEditor = aParentEditor;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Method called when the save action is activated which queries the user 
+     * for a filename to save the configuration document to if necessary and 
+     * performs the save.
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */

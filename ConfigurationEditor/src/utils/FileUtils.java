@@ -30,6 +30,7 @@ final public class FileUtils {
 	 * Check if a document is dirty or needs to be saved by checking 
 	 * an attribute on the root element of the document.
 	 * @param aDocument The document to check if it needs to be saved.
+	 * @return Whether the document needs to be saved.
 	 */
 	static public boolean isDirty(Document aDocument){
 		return ( ( aDocument != null ) 
@@ -39,6 +40,7 @@ final public class FileUtils {
 	/**
 	 * Get the document name from the document as a File.
 	 * @param aDocument The document of which to get the name.
+	 * @return The file name of the document.
 	 */
 	static public File getDocumentFile(Document aDocument){
         String uri = (aDocument != null) ? aDocument.getDocumentURI() : null;
@@ -63,6 +65,7 @@ final public class FileUtils {
 	 * Get the selected files from a file chooser. This method handles multiple
 	 * or single selected items correctly.
 	 * @param aChooser The file chooser from which to get the selected files.
+	 * @return The list of selected files.
 	 */
 	static public File[] getSelectedFiles(JFileChooser aChooser){
 		// First try to get multiple items. If there is only one
