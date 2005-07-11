@@ -23,7 +23,7 @@ import utils.DOMUtils;
  * DOM tree. The factory creates the combo boxes with the correct values, and
  * adds listeners to them to update the DOM when their values are changed.
  * 
- * @authod Josh Lurz
+ * @author Josh Lurz
  */
 public class SingleDOMValueComboBoxFactory {
     /**
