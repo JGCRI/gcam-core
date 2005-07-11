@@ -137,9 +137,6 @@ void Region::XMLParse( const DOMNode* node ){
         else if( nodeName == "PrimaryFuelCO2Coef" ) {
             primaryFuelCO2Coef[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "CarbonTaxFuelCoef" ) {
-            carbonTaxFuelCoef[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
-        }
 		else if( nodeName == Demographic::getXMLNameStatic() ){
             if( !demographic.get() ){
                 demographic.reset( new Demographic() );
@@ -378,7 +375,7 @@ void Region::setupCalibrationMarkets() {
                 if ( calibrationGDPs[ period ] != 0 ) {
                     ILogger& mainLog = ILogger::getLogger( "main_log" );
                     mainLog.setLevel( ILogger::WARNING );
-                    mainLog << "WARNING: Both GDPcal and GDPcalPerCapita read in region " << name << ". GDPcalPerCapita used." << endl;
+                    mainLog << "Both GDPcal and GDPcalPerCapita read in region " << name << ". GDPcalPerCapita used." << endl;
                 }
                 // Convert from GDP/cap ($) to millions of dollars GDP total. Pop is in 1000's, so need an additional 1e3 scale to convert to millions
                 calibrationGDPs [ period ]  = GDPcalPerCapita [ period ] * demographic->getTotal( period )/1e3;
@@ -1054,9 +1051,19 @@ void Region::initCalc( const int period )
     for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
         (*currSector)->initCalc( period, mRegionInfo.get(), nationalAccount[ period ], demographic.get()  ); 
     }
+    
+	// Add CO2 coefficients to the marketplace.
+    const static string CO2COEF = "CO2Coef";
+    Marketplace* marketplace = scenario->getMarketplace();
+    for( map<string, double>::const_iterator coef = primaryFuelCO2Coef.begin();
+        coef != primaryFuelCO2Coef.end(); ++coef )
+    {
+            marketplace->setMarketInfo( coef->first, name, period, CO2COEF, coef->second, false );
+    }
 
     // Make sure TFE is same as calibrated values
     if ( isDemandAllCalibrated( period ) ) {
+
         double totalFinalEnergy = 0;
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
             totalFinalEnergy += demandSector[ i ]->getCalAndFixedInputs( period, "allInputs" );
@@ -1412,6 +1419,12 @@ void Region::calcEmissions( const int period ) {
         demandSector[i]->emission(period);
         summary[period].updateemiss(demandSector[i]->getemission(period));
     }
+    // Add CO2 emissions from the agsector.
+    if( agSector.get() ){
+        map<string,double> agEmissions;
+        agEmissions[ "CO2NetLandUse" ] = agSector->getLandUseEmissions( period );
+        summary[ period ].updateemiss( agEmissions );
+    }
 }
 
 /*! \brief Calculate regional emissions by fuel for reporting
@@ -1472,9 +1485,16 @@ void Region::csvOutputFile() const {
 
     // write total emissions for region
     for (int m=0;m<maxper;m++) {
-        temp[m] = summary[m].get_emissmap_second("CO2"); }
+        temp[m] = summary[m].get_emissmap_second("CO2"); 
+    }
     fileoutput3(name," "," "," ","CO2 emiss","MTC",temp);
-
+    
+    // write ag emissions for region
+    for (int m=0;m<maxper;m++) {
+        temp[m] = summary[m].get_emissmap_second( "CO2NetLandUse" ); 
+    }
+    fileoutput3(name," "," "," ","Net Land Use CO2 emiss","MTC",temp);
+    
     // TFE for this region
     for (int m=0;m<maxper;m++) {
         temp[m] = getTotFinalEnergy(m);
@@ -1516,7 +1536,6 @@ void Region::csvOutputFile() const {
 //! Write MiniCAM style outputs to file.
 void Region::dbOutput() const {
     const Modeltime* modeltime = scenario->getModeltime();
-    int m=0;
     const int maxper = modeltime->getmaxper();
     vector<double> temp(maxper),temptot(maxper);
     // function protocol
@@ -1537,7 +1556,7 @@ void Region::dbOutput() const {
     const vector<string> primaryFuelList = scenario->getWorld()->getPrimaryFuelList();
 
     for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_emissfuelmap_second( *fuelIter );
             temptot[m] += temp[m];
         }
@@ -1545,7 +1564,7 @@ void Region::dbOutput() const {
     }
     // add amount of geologic sequestration to emissions by fuel
 	// todo change hardcoded category name
-    for (m=0;m<maxper;m++) {
+    for ( int m=0;m<maxper;m++) {
         // note the negative value for sequestered amount
         temp[m] = - summary[m].get_emissmap_second( "CO2sequestGeologic" );
         temptot[m] += temp[m];
@@ -1554,7 +1573,7 @@ void Region::dbOutput() const {
 
     // add amount of sequestration from non-energy use to emissions by fuel
 	// todo change hardcoded category name
-    for (m=0;m<maxper;m++) {
+    for ( int m=0;m<maxper;m++) {
         // note the negative value for sequestered amount
         temp[m] = - summary[m].get_emissmap_second( "CO2sequestNonEngy" );
         temptot[m] += temp[m];
@@ -1562,25 +1581,31 @@ void Region::dbOutput() const {
     dboutput4(name,"CO2 Emiss","by Fuel","non-energy use","MTC",temp);
 
     // total emissions by sector for region
-    for (m=0;m<maxper;m++) {
+    for ( int m=0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second("CO2");
     }
     // CO2 emissions by fuel and sector totals use same value
     dboutput4(name,"CO2 Emiss","by Fuel","zTotal","MTC",temptot);
     dboutput4(name,"CO2 Emiss","by Sector","zTotal","MTC",temp);
+    
+    // total ag sector emissions by sector for region
+    for ( int m=0;m<maxper;m++) {
+        temp[m] = summary[m].get_emissmap_second( "CO2NetLandUse" );
+    }
+    dboutput4(name, "CO2 Emiss", "Net Land Use", "total", "MTC", temp );
 
     // regional emissions for all greenhouse gases
     typedef map<string,double>:: const_iterator CI;
     map<string,double> temissmap = summary[0].getemission(); // get gases for period 0
     for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_emissmap_second(gmap->first);
         }
         dboutput4(name,"Emissions","by gas",gmap->first,"MTC",temp);
     }
 
     // regional total end-use service demand for all demand sectors
-    for (m=0;m<maxper;m++) {
+    for ( int m=0;m<maxper;m++) {
         temp[m] = 0; // initialize temp to 0 for each period
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) { // sum for all period and demand sectors
             temp[m] += demandSector[i]->getService( m );
@@ -1589,7 +1614,7 @@ void Region::dbOutput() const {
     dboutput4(name,"End-Use Service","by Sector","zTotal","Ser Unit",temp);
 
     // regional total end-use service demand without Tech Change for all demand sectors
-    for (m=0;m<maxper;m++) {
+    for ( int m=0;m<maxper;m++) {
         temp[m] = 0; // initialize temp to 0 for each period
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) { // sum for all period and demand sectors
             temp[m] += demandSector[i]->getServiceWoTC( m );
@@ -1598,7 +1623,7 @@ void Region::dbOutput() const {
     dboutput4(name,"End-Use Service","by Sector w/o TC","zTotal","Ser Unit",temp);
 
     // TFE for this region
-    for (m=0;m<maxper;m++) {
+    for ( int m=0;m<maxper;m++) {
         temp[m] = getTotFinalEnergy(m);
     }
     dboutput4(name,"Final Energy Cons","total","total","EJ",temp);
@@ -1606,7 +1631,7 @@ void Region::dbOutput() const {
     // regional fuel consumption (primary and secondary) by fuel type
     map<string,double> tfuelmap = summary[0].getfuelcons();
     for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_fmap_second(fmap->first);
         }
         if( fmap->first == "" ){
@@ -1621,7 +1646,7 @@ void Region::dbOutput() const {
     // region primary energy consumption by fuel type
     map<string,double> tpemap = summary[0].getpecons();
     for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_pemap_second(pmap->first);
         }
         dboutput4(name,"Pri Energy","Consumption by fuel",pmap->first,"EJ",temp);
@@ -1630,14 +1655,14 @@ void Region::dbOutput() const {
     // region primary energy trade by fuel type
     tpemap = summary[0].getpetrade();
     for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
-        for (m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_petrmap_second(pmap->first);
         }
         dboutput4(name,"Pri Energy","Trade by fuel",pmap->first,"EJ",temp);
     }
 
     // regional Pri Energy Production Total
-    for (m=0;m<maxper;m++) {
+    for ( int m=0;m<maxper;m++) {
         temp[m] = summary[m].get_peprodmap_second("zTotal");
     }
     dboutput4(name,"Pri Energy","Production by Sector","zTotal","EJ",temp);
@@ -1726,32 +1751,6 @@ void Region::printGraphs( ostream& outStream, const int period ) const {
 
     // Now close the graph
     outStream << "}" << endl << endl;
-}
-
-//! Return the primaryFuelCO2Coef for a specific  fuel.
-double Region::getPrimaryFuelCO2Coef( const string& fuelName ) const {
-
-    // Determine the correct fuel.
-    double coef = 0;
-    map<string,double>::const_iterator coefIter = primaryFuelCO2Coef.find( fuelName );
-    if( coefIter != primaryFuelCO2Coef.end() ) {
-        coef = coefIter->second;
-    }
-
-    return coef;
-}
-
-//! Return the carbonTaxCoef for a specific  fuel.
-double Region::getCarbonTaxCoef( const string& fuelName ) const {
-
-    // Determine the correct fuel.
-    double coef = 0;
-    map<string,double>::const_iterator coefIter = carbonTaxFuelCoef.find( fuelName );
-    if( coefIter != carbonTaxFuelCoef.end() ) {
-        coef = coefIter->second;
-    }
-
-    return coef;
 }
 
 //! Return the summary object for the given period.
