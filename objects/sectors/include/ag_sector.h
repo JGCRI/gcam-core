@@ -63,9 +63,9 @@ public:
     void setPop( const std::vector<double>& popsIn );
     void setBiomassPrice( const double bioPriceIn );
     void carbLand( const int period, const std::string& regionName );
+    double getLandUseEmissions( const int aPeriod ) const;
     void runModel( const int period, const std::string& regionName );
     void initMarketPrices( const std::string& regionName, const std::vector<double>& pricesIn );
     static void internalOutput();
-    static void transposeArray( double array[][14], int dimension1, int dimension2 );
 };
 #endif // _AG_SECTOR_H_

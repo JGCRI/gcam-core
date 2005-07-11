@@ -316,6 +316,11 @@ void AgSector::carbLand( const int period, const string& regionName ) {
    #endif
 }
 
+//! Get land use change emissions.
+double AgSector::getLandUseEmissions( const int aPeriod ) const {
+    return CO2Emissions[ aPeriod ];
+}
+
 //! Create a market for the sector.
 // sjs -- added option agBioMarketSet in config file so that biomass market is not altered (so regional markets can be set elsewhere)
 void AgSector::setMarket( const string& regionName ) {
