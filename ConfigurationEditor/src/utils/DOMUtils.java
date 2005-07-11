@@ -68,6 +68,11 @@ public final class DOMUtils {
      * @return The last node added.
      */
     public static Node addNodesForXPath(Document aDocument, String aXPath) {
+    	// Check for a null document.
+    	if(aDocument == null){
+    		Logger.global.log(Level.WARNING, "Cannot add nodes for a null document.");
+    		return null;
+    	}
         // Split the string around the slashes.
         String[] comps = aXPath.split("/+"); //$NON-NLS-1$
 
@@ -181,7 +186,11 @@ public final class DOMUtils {
      */
     public static boolean serializeDocument(Document aDocument,
             Container aContainer) {
-        assert (aDocument != null);
+    	// Check for a null document.
+    	if(aDocument == null){
+    		Logger.global.log(Level.WARNING, "Cannot serialize a null document.");
+    		return false;
+    	}
         // Create the implementation which is needed for serializing.
         System.setProperty(DOMImplementationRegistry.PROPERTY,
                 "org.apache.xerces.dom.DOMImplementationSourceImpl"); //$NON-NLS-1$

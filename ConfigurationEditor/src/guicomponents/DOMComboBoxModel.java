@@ -3,11 +3,12 @@
  */
 package guicomponents;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractListModel;
-import javax.swing.ComboBoxModel;
 import javax.swing.MutableComboBoxModel;
 
 import org.w3c.dom.Document;
@@ -25,8 +26,7 @@ import utils.NodeWrapper;
  * @author Josh Lurz
  * 
  */
-public class DOMComboBoxModel extends AbstractListModel implements
-		ComboBoxModel, MutableComboBoxModel {
+public class DOMComboBoxModel extends AbstractListModel implements MutableComboBoxModel {
 	/**
 	 * Unique identifier used for serialization.
 	 */
@@ -64,6 +64,11 @@ public class DOMComboBoxModel extends AbstractListModel implements
 	private String mItemName = null;
 
 	/**
+	 * Map of cached node wrappers.
+	 */
+	private Map<Node,Object> mCachedNodeWrappers = null;
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @param aDocument
@@ -84,9 +89,11 @@ public class DOMComboBoxModel extends AbstractListModel implements
 		mParentXPath = aParentXPath;
 		mElementName = aElementName;
 		mItemName = aItemName;
-
+		mCachedNodeWrappers = new HashMap<Node, Object>();
 		// Set the root node now that all information is known.
 		mRoot = getRootNode();
+		
+		mSelectedItem = getElementAt(0);
 	}
 
 	/**
@@ -103,10 +110,23 @@ public class DOMComboBoxModel extends AbstractListModel implements
 		// the child element to return.
 		int DOMIndex = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
 		if (DOMIndex != -1) {
-			Object element = NodeWrapper.createProxy(mRoot.getChildNodes()
-					.item(DOMIndex));
-			Logger.global.log(Level.INFO, "RETURNING: " + element.toString());
-			return element;
+			Node elementNode = mRoot.getChildNodes().item(DOMIndex);
+			
+			// Check if the node has already had a wrapper created for it.
+			Object wrapper = mCachedNodeWrappers.get(elementNode);
+			
+			// If the wrapper is null than one must be created for the
+			// element node and cached. This is so a wrappers of the same
+			// element node will always be equal.
+			if(wrapper == null ){
+				System.out.println("Creating wrapper for: " + elementNode.toString());
+				wrapper = NodeWrapper.createProxy(elementNode);
+				mCachedNodeWrappers.put(elementNode, wrapper);
+			}
+			
+			// Return the wrapper.
+			Logger.global.log(Level.INFO, "RETURNING: " + wrapper.toString());
+			return wrapper;
 		}
 		Logger.global
 				.log(
@@ -140,11 +160,17 @@ public class DOMComboBoxModel extends AbstractListModel implements
 	 */
 	public void setSelectedItem(Object aSelectedItem) {
 		Logger.global.log(Level.INFO, "****setSelectedItem");
-		// Check if this is a valid item in the list or the null
+		// Check if this is a valid item in the list but not the null
 		// element used to clear selection.
-		if (aSelectedItem == null
-				|| DOMUtils.getDOMIndexOfObject(mRoot, aSelectedItem) == -1) {
+		if (aSelectedItem != null
+				&& DOMUtils.getDOMIndexOfObject(mRoot, aSelectedItem) == -1) {
 			// Specification says to do nothing in this case.
+			return;
+		}
+
+		// Check if the item is already selected to avoid firing a 
+		// contents changed event.
+		if(aSelectedItem == mSelectedItem){
 			return;
 		}
 		mSelectedItem = aSelectedItem;
@@ -162,7 +188,7 @@ public class DOMComboBoxModel extends AbstractListModel implements
 	 * @return The stored selected item.
 	 */
 	public Object getSelectedItem() {
-		Logger.global.log(Level.INFO, "getSelectedItem");
+		Logger.global.log(Level.INFO, "getSelectedItem" + mSelectedItem);
 		return mSelectedItem;
 	}
 
@@ -281,7 +307,11 @@ public class DOMComboBoxModel extends AbstractListModel implements
 
 		// Add the new child to the list.
 		mRoot.insertBefore(newElement, nextNode);
-
+		
+		// Check if this was the first element added to the list.
+		if(getSize() == 1){
+			setSelectedItem(getElementAt(0));
+		}
 		// Notify that the list changed, which is required for GUI updates.
 		// Is this right?
 		fireIntervalAdded(this, aPosition, aPosition);
@@ -304,6 +334,13 @@ public class DOMComboBoxModel extends AbstractListModel implements
 			return;
 		}
 
+		// Check if the item removed was the selected item.
+		if(getElementAt(aPosition) == mSelectedItem){
+			// Get the element before position or the first element
+			// if the removed position is zero. If the first position
+			// is empty, this will set the selected item to null.
+			mSelectedItem = getElementAt(aPosition == 0 ? 1 : aPosition - 1 );
+		}
 		// Remove the object.
 		mRoot.removeChild(mRoot.getChildNodes().item(domIndex));
 

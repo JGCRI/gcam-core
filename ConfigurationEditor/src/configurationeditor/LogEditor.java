@@ -45,7 +45,7 @@ import utils.WindowCloseListener;
  * logs used by the model. The log editor contains two panes, one to select the
  * log to modify and the second to modify the settings. The log editor also
  * allows the creation of new logs and the deletion of old ones.
- * 
+ * TODO: Handle the type attribute of the logger.
  * @author Josh Lurz
  * 
  */
@@ -113,34 +113,39 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 	private Document mDocument = null;
 
 	/**
-	 * The name of the root element of a log conf file. TODO: Check if this is
-	 * right.
+	 * The name of the root element of a log conf file.
 	 */
-	final static String LOG_CONF_ROOT = "Loggers";
+	final static String LOG_CONF_ROOT_STRING = "LoggerFactory";
 
 	/**
-	 * The element name for a single logger. TODO: Check this.
+	 * The element name for a single logger.
 	 */
-	final static String SINGLE_LOGGER_NAME = "Logger";
+	final static String SINGLE_LOGGER_STRING = "Logger";
 
 	/**
 	 * The strings representing each warning level in ascending order of
 	 * severity.
 	 */
-	final private static String[] LEVELS = { "Debug", "Notice", "Warning",
-			"Error", "Severe" };
+	final private static String[] LEVEL_STRINGS = { "Debug", "Notice",
+			"Warning", "Error", "Severe" };
 
 	/**
 	 * The node name of the log attribute which specifies the minimum level of
 	 * message to send to the screen.
 	 */
-	private static final String MIN_TO_SCREEN_WARNING_LEVEL = "minToScreenWarningLevel";
+	private static final String MIN_TO_SCREEN_WARNING_LEVEL_STRING = "minToScreenWarningLevel";
 
 	/**
 	 * The node name of the log attribute which specifies the minimum level of
 	 * message to record.
 	 */
-	private static final String MIN_LOG_WARNING_LEVEL = "minLogWarningLevel";
+	private static final String MIN_LOG_WARNING_LEVEL_STRING = "minLogWarningLevel";
+
+	/**
+	 * The name of the node that contains the boolean value representing whether
+	 * to print the warning level as part of each log message.
+	 */
+	private static final String PRINT_LOG_WARNING_LEVEL_STRING = "printLogWarningLevel";
 
 	/**
 	 * Constructor
@@ -161,7 +166,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 	private void initialize() {
 		addWindowListener(new WindowCloseListener());
 		mSingleValueComboBoxFactory = new SingleDOMValueComboBoxFactory(
-				mDocument, LOG_CONF_ROOT, SINGLE_LOGGER_NAME);
+				mDocument, LOG_CONF_ROOT_STRING, SINGLE_LOGGER_STRING);
 		setContentPane(getLogPanel());
 	}
 
@@ -219,7 +224,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 			mLogModificationPanel.add(getMinLogToScreenWarningLevelComboBox(),
 					null);
 			mLogModificationPanel.add(getPrintLogWarningLevelCheckBox(), null);
-
+			
 			// Check if there are any loggers currently.
 			if (getLoggerSelectorComboBox().getModel().getSize() > 0) {
 				// Set the selected item to be the first logger.
@@ -302,8 +307,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 		if (mLoggerSelectorComboBox == null) {
 			// Create the logger selecter combo box.
 			mLoggerSelectorComboBox = new JComboBox(new DOMComboBoxModel(
-					mDocument, null, "Loggers", null));
-
+					mDocument, null, LOG_CONF_ROOT_STRING, null));
 			// Add a selection listener which will update the other two combo
 			// boxes.
 			// TODO: UI needs an update here I bet.
@@ -350,7 +354,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 	private JComboBox getMinLogWarningLevelComboBox() {
 		if (mMinLogWarningLevel == null) {
 			mMinLogWarningLevel = mSingleValueComboBoxFactory.createComboBox(
-					LEVELS, MIN_LOG_WARNING_LEVEL);
+					LEVEL_STRINGS, MIN_LOG_WARNING_LEVEL_STRING);
 			mMinLogWarningLevel.setToolTipText(Messages
 					.getString("ConfigurationEditor.87")); //$NON-NLS-1$
 		}
@@ -365,7 +369,8 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 	private JComboBox getMinLogToScreenWarningLevelComboBox() {
 		if (mMinLogToScreenWarningLevel == null) {
 			mMinLogToScreenWarningLevel = mSingleValueComboBoxFactory
-					.createComboBox(LEVELS, MIN_TO_SCREEN_WARNING_LEVEL);
+					.createComboBox(LEVEL_STRINGS,
+							MIN_TO_SCREEN_WARNING_LEVEL_STRING);
 			mMinLogToScreenWarningLevel.setToolTipText(Messages
 					.getString("ConfigurationEditor.92")); //$NON-NLS-1$
 		}
@@ -440,7 +445,8 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 		}
 
 		// Check if this is a log configuration document.
-		if (!mDocument.getDocumentElement().getNodeName().equals(LOG_CONF_ROOT)) {
+		if (!mDocument.getDocumentElement().getNodeName().equals(
+				LOG_CONF_ROOT_STRING)) {
 			final String message = "Selected document is not a log configuration document.";
 			final String messageTitle = "Incorrect document";
 			Logger.global.log(Level.SEVERE, message);
