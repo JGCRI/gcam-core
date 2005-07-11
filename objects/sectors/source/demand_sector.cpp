@@ -42,7 +42,6 @@ DemandSector::DemandSector( const string aRegionName ): Sector( aRegionName ){
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    finalEngyCons.resize( maxper );
     service.resize( maxper );
     iElasticity.resize( maxper );
     pElasticity.resize( maxper );
@@ -102,9 +101,6 @@ bool DemandSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
     else if( nodeName == "serviceoutput" ){
         XMLHelper<double>::insertValueIntoVector( curr, service, modeltime );
     }
-    else if( nodeName == "energyconsumption" ){
-        XMLHelper<double>::insertValueIntoVector( curr, finalEngyCons, modeltime );
-    }
     else if( nodeName == "incomeelasticity" ){
         XMLHelper<double>::insertValueIntoVector( curr, iElasticity, modeltime );
     }
@@ -132,7 +128,6 @@ void DemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
    
     // write the xml for the class members.
-    XMLWriteElementCheckDefault( pElasticityBase, "pElasticityBase", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( perCapitaBased, "perCapitaBased", out, tabs, false );
 
     for( unsigned int i = 0; i < pElasticity.size(); i++ ){
@@ -140,9 +135,6 @@ void DemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     }
     for( int i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
         XMLWriteElementCheckDefault( service[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
-    for( unsigned int i = 0; i < finalEngyCons.size(); i++ ){
-        XMLWriteElementCheckDefault( finalEngyCons[ i ], "energyconsumption", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
     for( unsigned int i = 0; i < iElasticity.size(); i++ ){
         XMLWriteElementCheckDefault( iElasticity[ i ], "incomeelasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
@@ -163,10 +155,6 @@ void DemandSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
     
     for( unsigned int i = 0; i < service.size(); ++i ){
         XMLWriteElement( service[ i ] * techChangeCumm[ i ], "servicePreTechChange", out, tabs, modeltime->getper_to_yr( i ) );
-    }
-
-    for( unsigned int i = 0; i < finalEngyCons.size(); ++i ){
-        XMLWriteElement( finalEngyCons[ i ], "energyconsumption", out, tabs, modeltime->getper_to_yr( i ) );
     }
     
     for( unsigned int i = 0; i < iElasticity.size(); ++i ){
@@ -193,7 +181,6 @@ void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
     
     // Now write out own members.
     XMLWriteElement( outputsAllFixed( period ), "OutputAllFixed", out, tabs );
-    XMLWriteElement( finalEngyCons[ period ], "finalEngyCons", out, tabs );
     XMLWriteElement( service[ period ], "service", out, tabs );
     XMLWriteElement( getCalOutput( period ), "TotalCalOutput", out, tabs );
     XMLWriteElement( service[ period ] * techChangeCumm[ period ], "servicePreTechChange", out, tabs );
