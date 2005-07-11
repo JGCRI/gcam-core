@@ -22,7 +22,7 @@ public class XMLFileFilter extends FileFilter {
 		if (aFile.isDirectory()) {
 	    	return true;
 	    }
-	    String ext = Util.getExtension(aFile);
+	    String ext = FileUtils.getExtension(aFile);
 		return ( ext != null ) ? ext.equals("xml") : false; //$NON-NLS-1$
 	}
 

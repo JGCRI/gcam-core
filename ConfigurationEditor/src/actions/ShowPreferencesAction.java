@@ -22,8 +22,9 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import utils.Messages;
 import utils.PropertiesTextField;
-import utils.Util;
+import utils.FileUtils;
 import configurationeditor.ConfigurationEditor;
 import configurationeditor.PropertiesInfo;
 
@@ -210,7 +211,7 @@ public class ShowPreferencesAction extends AbstractAction {
             // window.
             mOKButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent aEvent) {
-                    Util.saveProperties(mProperties);
+                    FileUtils.saveProperties(mProperties);
                     getPreferenceDialog().dispose();
                 }
             });

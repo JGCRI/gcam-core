@@ -15,7 +15,9 @@ import javax.xml.parsers.DocumentBuilder;
 
 import org.w3c.dom.Document;
 
-import utils.Util;
+import utils.DOMUtils;
+import utils.Messages;
+import utils.FileUtils;
 
 import configurationeditor.ConfigurationEditor;
 import configurationeditor.PropertiesInfo;
@@ -60,21 +62,21 @@ public class NewAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent aEvent) {
         // Check if the file should be saved before creating a new one.
-        if (!Util.askForSave(mParentEditor)) {
+        if (!FileUtils.askForSave(mParentEditor)) {
             // The user does not want to continue.
             return;
         }
         // Create the document builder.
-        DocumentBuilder docBuilder = Util.getDocumentBuilder(mParentEditor);
+        DocumentBuilder docBuilder = DOMUtils.getDocumentBuilder(mParentEditor);
         
         // Return early if we couldn't create a document builder. An error
-        // message will have been printed by the Util function.
+        // message will have been printed by the FileUtils function.
         if(docBuilder == null){
         	return;
         }
         
         // Get the path to the configuration template from the preferences.
-        Properties props = Util.getInitializedProperties(mParentEditor);
+        Properties props = FileUtils.getInitializedProperties(mParentEditor);
         String currentFile = props.getProperty(PropertiesInfo.CONFIGURATION_TEMPLATE_PROPERTY);
         
         // Check if the configuration template path has been initialized.
@@ -104,7 +106,7 @@ public class NewAction extends AbstractAction {
         mParentEditor.setDocument(loadedDocument);
         
         // Set the file containing the document to blank.
-        Util.setDocumentFile(loadedDocument, null);
+        FileUtils.setDocumentFile(loadedDocument, null);
 
         // Put up a message telling the user that a new file was created,
         // otherwise there is no feedback for this action.

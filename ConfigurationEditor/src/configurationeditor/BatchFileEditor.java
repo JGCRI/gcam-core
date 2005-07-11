@@ -1,6 +1,6 @@
 /*
  */
-package batchcreator;
+package configurationeditor;
 
 import guicomponents.DOMListPanel;
 import guicomponents.DOMListPanelFactory;
@@ -8,10 +8,11 @@ import guicomponents.DOMListPanelFactory;
 import javax.swing.JFrame;
 import org.w3c.dom.Document;
 
-import utils.Util;
+import utils.DOMUtils;
+import utils.Messages;
+import utils.FileUtils;
 import utils.WindowCloseListener;
 
-import configurationeditor.DOMDocumentEditor;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -111,13 +112,13 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
      */
     private void createNewDocument(String aFileName) {
         // Create a new document.
-        mDocument = Util.getDocumentBuilder(this).newDocument();
+        mDocument = DOMUtils.getDocumentBuilder(this).newDocument();
        
         // Add the root element onto it.
         mDocument.appendChild(mDocument.createElement(ROOT_ELEMENT_NAME));
         
         // Set the name of the file into the document.
-        Util.setDocumentFile(mDocument, new File(aFileName));
+        FileUtils.setDocumentFile(mDocument, new File(aFileName));
         
         // Put up a message telling the user that a new file was created,
         // otherwise there is no feedback for this action.
@@ -145,8 +146,8 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
                         JOptionPane.ERROR_MESSAGE);
                 return;
         	}
-            mDocument = Util.getDocumentBuilder(this).parse(aFileName);
-            Util.setDocumentFile(mDocument, newFile );
+            mDocument = DOMUtils.getDocumentBuilder(this).parse(aFileName);
+            FileUtils.setDocumentFile(mDocument, newFile );
         } catch (Exception e) {
         	// Report the error to the user.
             String message = Messages.getString("BatchFileEditor.5") + e.getMessage(); //$NON-NLS-1$
@@ -217,7 +218,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
             mOKButton.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent aEvent) {
                             // Save the batch file document.
-                            Util.serializeDocument(mDocument, getMainWindow());
+                            DOMUtils.serializeDocument(mDocument, getMainWindow());
                             getMainWindow().dispose();
                         }
                     });

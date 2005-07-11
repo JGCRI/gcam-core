@@ -13,8 +13,8 @@ import javax.swing.DefaultButtonModel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import utils.DOMUtils;
 import utils.Messages;
-import utils.Util;
 
 import configurationeditor.ConfigurationEditor;
 
@@ -73,7 +73,7 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel {
 		}
 		
 		// Perform the query.
-		Node resultNode = Util.getResultNodeFromQuery(document, getXPath());
+		Node resultNode = DOMUtils.getResultNodeFromQuery(document, getXPath());
 
 		// If the node is null it means that there were no results. If a value
 		// does not exist this should return false as it is unset.
@@ -106,14 +106,14 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel {
 			}
 			
 			// Perform the query.
-			Node resultNode = Util.getResultNodeFromQuery(document, getXPath());
+			Node resultNode = DOMUtils.getResultNodeFromQuery(document, getXPath());
 
 			boolean previousValue = false;
 			// If the node is null it means that there were no results.
 			if (resultNode == null) {
 				Logger.global.log(Level.INFO, Messages.getString("DOMButtonModel.3") + mValueName); //$NON-NLS-1$
 				// Create a position in the DOM tree to store the value.
-				resultNode = Util.addNodesForXPath(document, getXPath());
+				resultNode = DOMUtils.addNodesForXPath(document, getXPath());
                 if(resultNode == null) {
                     Logger.global.log(Level.SEVERE, Messages.getString("DOMButtonModel.4")); //$NON-NLS-1$
                 }

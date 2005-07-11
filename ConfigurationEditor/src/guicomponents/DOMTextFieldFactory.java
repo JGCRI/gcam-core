@@ -14,8 +14,8 @@ import javax.swing.JTextField;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import utils.DOMUtils;
 import utils.Messages;
-import utils.Util;
 
 import configurationeditor.ConfigurationEditor;
 
@@ -60,7 +60,7 @@ public class DOMTextFieldFactory {
 		while(currPath.hasNext()){
 			String xPath = currPath.next();
 			// Query the DOM for a value for this XPath.
-			Node result = Util.getResultNodeFromQuery(aDocument, xPath);
+			Node result = DOMUtils.getResultNodeFromQuery(aDocument, xPath);
 			String newValue = null;
 			if(result != null && result.getTextContent() != null){
 				newValue = result.getTextContent();
@@ -100,7 +100,7 @@ public class DOMTextFieldFactory {
 		// Set an initial value for the field. Query the DOM for a value
 		// for this XPath. If there is not a value in the DOM the field
 		// will be initialized to empty.
-		Node result = Util.getResultNodeFromQuery(mDocument, xPath);
+		Node result = DOMUtils.getResultNodeFromQuery(mDocument, xPath);
 		if(result != null && result.getTextContent() != null){
 			newField.setText( result.getTextContent() );
 		}
@@ -159,7 +159,7 @@ public class DOMTextFieldFactory {
             }
             
             // Perform the query.
-            Node resultNode = Util.getResultNodeFromQuery(mDocument, mXPath);
+            Node resultNode = DOMUtils.getResultNodeFromQuery(mDocument, mXPath);
             String newContent = ((JTextField)aEvent.getSource()).getText();
             // If the node is null it means that there were no results. Don't create a new
             // node if the value which will be set in is blank. This avoid adding unnecessary
@@ -167,7 +167,7 @@ public class DOMTextFieldFactory {
             if (resultNode == null && newContent.length() > 0) {
                 Logger.global.log(Level.INFO, Messages.getString("DOMTextFieldFactory.1") + mXPath); //$NON-NLS-1$
                 // Create a position in the DOM tree to store the value.
-                resultNode = Util.addNodesForXPath( mDocument, mXPath);
+                resultNode = DOMUtils.addNodesForXPath( mDocument, mXPath);
             }
             // Check if the text was unchanged. This prevents the DOM from
             // being modified unneccessarily.

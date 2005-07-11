@@ -10,7 +10,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.AbstractAction;
 
-import utils.Util;
+import utils.FileUtils;
 
 import configurationeditor.ConfigurationEditor;
 
@@ -70,7 +70,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
      */
     private void doQuit() {
         // Check if the file should be saved before loading a new one.
-        if (!Util.askForSave(mParentEditor)) {
+        if (!FileUtils.askForSave(mParentEditor)) {
             // The user does not want to continue.
             return;
         }

@@ -16,7 +16,7 @@ import javax.swing.JComboBox;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import utils.Util;
+import utils.DOMUtils;
 
 /**
  * A class which creates combo boxes which update their values from a node in a
@@ -86,7 +86,7 @@ public class SingleDOMValueComboBoxFactory {
             final String xPath = createXPath(currChildName);
 
             // Query the DOM for a value for this XPath.
-            Node result = Util.getResultNodeFromQuery(mDocument, xPath);
+            Node result = DOMUtils.getResultNodeFromQuery(mDocument, xPath);
             int newValue = -1;
             if (result != null && result.getTextContent() != null) {
                 newValue = Integer.parseInt(result.getTextContent());
@@ -183,7 +183,7 @@ public class SingleDOMValueComboBoxFactory {
 
             // Perform the query.
             final String xPath = createXPath(mItemName);
-            Node resultNode = Util.getResultNodeFromQuery(mDocument, xPath);
+            Node resultNode = DOMUtils.getResultNodeFromQuery(mDocument, xPath);
             int newIndex = ((JComboBox) aEvent.getSource()).getSelectedIndex();
             // If the node is null it means that there were no results. Don't
             // create a new
@@ -193,7 +193,7 @@ public class SingleDOMValueComboBoxFactory {
             if (resultNode == null && newIndex != -1) {
                 Logger.global.log(Level.INFO, xPath);
                 // Create a position in the DOM tree to store the value.
-                resultNode = Util.addNodesForXPath(mDocument, xPath);
+                resultNode = DOMUtils.addNodesForXPath(mDocument, xPath);
             }
             // Check if the text was unchanged. This prevents the DOM from
             // being modified unneccessarily.

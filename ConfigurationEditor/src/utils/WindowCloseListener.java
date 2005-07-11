@@ -33,13 +33,13 @@ public class WindowCloseListener implements WindowListener {
         // Get the document from the editor.
         Document document = ((DOMDocumentEditor)aEvent.getWindow()).getDocument();
         // Check if the document needs to be saved.
-        if(Util.isDirty(document)) {
+        if(FileUtils.isDirty(document)) {
             final String message = "Would you like to save the current file?";
             int rv = JOptionPane.showConfirmDialog(aEvent.getWindow(), message,
                         "Save Dialog", JOptionPane.YES_NO_CANCEL_OPTION); //$NON-NLS-1$
             // The user wants to save.
             if (rv == JOptionPane.YES_OPTION) {
-                Util.serializeDocument(document, aEvent.getWindow());
+                DOMUtils.serializeDocument(document, aEvent.getWindow());
             } else if (rv == JOptionPane.NO_OPTION) {
                 // They don't want to save, so allow the quit.
             } else {

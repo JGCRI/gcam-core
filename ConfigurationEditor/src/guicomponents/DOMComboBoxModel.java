@@ -3,18 +3,19 @@
  */
 package guicomponents;
 
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import javax.swing.MutableComboBoxModel;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import utils.DOMUtils;
+import utils.Messages;
 import utils.NodeWrapper;
-import utils.Util;
 
 /**
  * A combo box model which has as its list of values the element node children
@@ -25,7 +26,7 @@ import utils.Util;
  * 
  */
 public class DOMComboBoxModel extends AbstractListModel implements
-        ComboBoxModel {
+        ComboBoxModel, MutableComboBoxModel {
     /**
      * Unique identifier used for serialization.
      */
@@ -40,7 +41,7 @@ public class DOMComboBoxModel extends AbstractListModel implements
      * The root node of the combo box.
      */
 
-    private Node mRootNode = null;
+    private Node mRoot = null;
 
     /**
      * The stored selected item.
@@ -85,7 +86,7 @@ public class DOMComboBoxModel extends AbstractListModel implements
         mItemName = aItemName;
 
         // Set the root node now that all information is known.
-        mRootNode = getRootNode();
+        mRoot = getRootNode();
     }
 
     /**
@@ -98,41 +99,14 @@ public class DOMComboBoxModel extends AbstractListModel implements
      *            in the list to return the element at.
      */
     public Object getElementAt(int aPosition) {
-        if (!canAccessDOM()) {
-            Logger.global.log(Level.WARNING,
-                    "Get element at failed because DOM is inaccessable.");
-            return null;
-        }
-        if (aPosition < 0) {
-            Logger.global.log(Level.WARNING,
-                    "Get element at failed because position is invalid.");
-            return null;
-        }
-
-        if (mRootNode == null) {
-            Logger.global.log(Level.WARNING, "Root node of combo box is null.");
-            return null;
-        }
-        // Find the actual position ignoring non element nodes.
-        NodeList children = mRootNode.getChildNodes();
-        if (children != null) {
-            int trueNumber = -1;
-            for (int i = 0; i < children.getLength(); ++i) {
-                // Increment the actual child count if this location
-                // contains an element node.
-                if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                    ++trueNumber;
-                }
-
-                // Check if the actual position is the desired position. This
-                // will only be true for element nodes given that trueNumber is
-                // initialized to negative 1.
-                if (trueNumber == aPosition) {
-                    // Return a wrapped DOM node which overrides the toString
-                    // method so it reports the correct value to the list.
-                    return NodeWrapper.createProxy(children.item(i));
-                }
-            }
+        // Convert the list index into a DOM index to determine
+        // the child element to return.
+        int DOMIndex = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
+        if (DOMIndex != -1) {
+            Object element = NodeWrapper
+            .createProxy(mRoot.getChildNodes().item(DOMIndex));
+            Logger.global.log(Level.INFO, "RETURNING: " + element.toString());
+            return element;
         }
         Logger.global
                 .log(
@@ -153,16 +127,8 @@ public class DOMComboBoxModel extends AbstractListModel implements
                     "Returning size of zero because the DOM is inaccessable.");
             return 0;
         }
-
-        // Count the child nodes which are elements.
-        int size = 0;
-        NodeList childNodes = mRootNode.getChildNodes();
-        for (int i = 0; i < childNodes.getLength(); ++i) {
-            if (childNodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                ++size;
-            }
-        }
-        return size;
+        Logger.global.log(Level.INFO, "Returning from getSize: " + DOMUtils.getNumberOfElementChildren(mRoot));
+        return DOMUtils.getNumberOfElementChildren(mRoot);
     }
 
     /**
@@ -172,62 +138,22 @@ public class DOMComboBoxModel extends AbstractListModel implements
      *            The item selected by the user.
      */
     public void setSelectedItem(Object aSelectedItem) {
-        Logger.global.log(Level.INFO, "setSelectedItem");
+        Logger.global.log(Level.INFO, "****setSelectedItem");
+        // Check if this is a valid item in the list or the null
+        // element used to clear selection.
+        if(aSelectedItem == null || DOMUtils.getDOMIndexOfObject(mRoot, aSelectedItem) == -1) {
+            // Specification says to do nothing in this case.
+            return;
+        }
         mSelectedItem = aSelectedItem;
-        
+
         // Call the default list models set selected item
-        // to notify listeners.
-        int changedIndex = getListIndex(aSelectedItem);
-        fireContentsChanged(this, changedIndex, changedIndex );
+        // to notify listeners. Set the range of items that have
+        // changed to (-1,-1) to signal that the selection has changed
+        // and not the contents.
+        fireContentsChanged(this, -1, -1);
     }
 
-    /**
-     * Get the list index of the specific object. This is the position
-     * in the combo-box, not in the DOM.
-     * @param aObject The object for which to search the DOM.
-     * @return The list index of the object.
-     */
-    public int getListIndex(Object aObject) {
-        if (!canAccessDOM()) {
-            Logger.global.log(Level.WARNING,
-                    "Get list index failed because DOM is inaccessable.");
-            return -1;
-        }
-        if (aObject == null) {
-            Logger.global.log(Level.WARNING,
-                    "Get list index failed because object is null.");
-            return -1;
-        }
-
-        if (mRootNode == null) {
-            Logger.global.log(Level.WARNING, "Root node of combo box is null.");
-            return -1;
-        }
-        // Find the actual position ignoring non element nodes.
-        NodeList children = mRootNode.getChildNodes();
-        if (children != null) {
-            int trueNumber = -1;
-            for (int i = 0; i < children.getLength(); ++i) {
-                // Increment the actual child count if this location
-                // contains an element node.
-                if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                    ++trueNumber;
-                }
-                else {
-                    continue;
-                }
-                // Check if the node is equal to the requested node.
-                if(aObject.toString() == Util.getNameAttrValue(children.item(i))){
-                    return trueNumber;
-                }
-            }
-        }
-        Logger.global
-                .log(
-                        Level.WARNING,
-                        "getElement failed because the requested position was greater than the number of elements.");
-        return -1;
-    }
     /**
      * Get the currently selected item.
      * 
@@ -244,7 +170,7 @@ public class DOMComboBoxModel extends AbstractListModel implements
      * @return Whether the DOM is accessable.
      */
     boolean canAccessDOM() {
-        return (mDocument != null && mRootNode != null);
+        return (mDocument != null && mRoot != null);
     }
 
     /**
@@ -253,13 +179,13 @@ public class DOMComboBoxModel extends AbstractListModel implements
      * @return The root node.
      */
     Node getRootNode() {
-        Node rootNode = Util.getResultNodeFromQuery(mDocument, getXPath());
+        Node rootNode = DOMUtils.getResultNodeFromQuery(mDocument, getXPath());
         // Create the root node if there is not one present in the DOM.
         if (rootNode == null) {
             Logger.global.log(Level.INFO,
                     "Creating new root node for combo box model with XPath: "
                             + getXPath());
-            rootNode = Util.addNodesForXPath(mDocument, getXPath());
+            rootNode = DOMUtils.addNodesForXPath(mDocument, getXPath());
             // Check for failure adding nodes to the tree.
             if (rootNode == null) {
                 Logger.global.log(Level.WARNING,
@@ -283,5 +209,96 @@ public class DOMComboBoxModel extends AbstractListModel implements
             XPath += "[@name='" + mItemName + "']"; //$NON-NLS-1$ //$NON-NLS-2$
         }
         return XPath;
+    }
+
+    /**
+     * Add an element to the combo box.
+     * @param aObject The object to add.
+     */
+    public void addElement(Object aObject) {
+        // Call insert element at with a position one past the end
+        // to cause the element to be added at the end.
+        insertElementAt(aObject, getSize());
+    }
+
+    /**
+     * Remove a list element from the list.
+     * 
+     * @param aObject
+     *            The list object to remove.
+     */
+    public void removeElement(Object aObject) {
+        // Find the list index of the object.
+        int listIndex = DOMUtils.getListIndexOfObject(mRoot, aObject);
+        
+
+        // Check if the item could not be found.
+        if (listIndex == -1) {
+            Logger.global.log(Level.WARNING,
+                    "Could not find the object to remove from the combo box.");
+            return;
+        }
+        // Allow removeElementAt to do the rest of the work
+        // including notifying the listeners.
+        removeElementAt(listIndex);
+    }
+
+    /**
+     * Insert an element at a specific position.
+     * @param aObject Object to insert.
+     * @param aPosition List position to insert the object.
+     */
+    public void insertElementAt(Object aObject, int aPosition) {
+        // Create a new element and add a name attribute which is the
+        // value of the object. This has to be done before the uniqueness
+        // check so that searching for the item is easier.
+        Element newElement = DOMUtils.createElement(mRoot, mElementName, aObject, false);
+        
+        // Check if the element is unique. This will fail if the createElement
+        // function failed and returned a null element.
+        if (DOMUtils.getDOMIndexOfObject(mRoot, newElement) != -1) {
+            // This interface limits our ability to return errors. The caller
+            // should have checked uniqueness before requesting the add
+            // operation.
+            Logger.global.log(Level.WARNING, Messages
+                    .getString("DOMListModel.9")); //$NON-NLS-1$
+            return;
+        }
+        
+        // Find the node to insert before.
+        int positionAfter = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
+        Node nextNode = mRoot.getChildNodes().item(positionAfter);
+        
+        // Add the new child to the list.
+        mRoot.insertBefore(newElement, nextNode);
+
+        // Notify that the list changed, which is required for GUI updates.
+        // Is this right?
+        fireIntervalAdded(this, aPosition, aPosition);
+    }
+
+    /**
+     * Remove a list element at a specified position.
+     * 
+     * @param aPosition
+     *            The list position to remove the element at.
+     */
+    public void removeElementAt(int aPosition) {
+        // Find the index within the DOM of the list item.
+        int domIndex = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
+
+        // Check if the item could not be found.
+        if (domIndex == -1) {
+            Logger.global.log(Level.WARNING,
+                    "Could not remove element because position was invalid.");
+            return;
+        }
+
+        // Remove the object.
+        mRoot.removeChild(mRoot.getChildNodes().item(domIndex));
+
+        // Alert the list that part of it changed. Uses list indexes,
+        // not DOM indexes.
+        fireIntervalRemoved(this, aPosition, aPosition);
     }
 }

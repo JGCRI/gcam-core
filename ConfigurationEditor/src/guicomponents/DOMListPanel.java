@@ -25,7 +25,7 @@ import org.w3c.dom.Document;
 
 import utils.ButtonSetEnabler;
 import utils.Messages;
-import utils.Util;
+import utils.FileUtils;
 import utils.XMLFileFilter;
 
 
@@ -340,7 +340,7 @@ public class DOMListPanel extends JPanel {
             mDeleteButton.addActionListener(new ActionListener() {
             	public void actionPerformed(ActionEvent aEvent) {
                             getListModel().removeElement(getList().getSelectedValue());
-                            getList().setSelectedIndex(getListModel().size() - 1);
+                            getList().setSelectedIndex(getListModel().getSize() - 1);
                         }
                     });
         }
@@ -452,7 +452,7 @@ public class DOMListPanel extends JPanel {
 		    int rv = chooser.showOpenDialog(getUIRoot());
 		    if (rv == JFileChooser.APPROVE_OPTION) {
 		    	// Get the list of selected files.
-		    	File[] newFiles = Util.getSelectedFiles(chooser);
+		    	File[] newFiles = FileUtils.getSelectedFiles(chooser);
 		    	for (int i = 0; i < newFiles.length; i++) {
 		    		try {
 		    			String newFile = newFiles[i].getCanonicalPath();
@@ -472,7 +472,7 @@ public class DOMListPanel extends JPanel {
 		    		}
 		        }
                 // What thread are we on?
-		        getList().setSelectedIndex(getListModel().size() - 1);
+		        getList().setSelectedIndex(getListModel().getSize() - 1);
 		    }
 		}
 	}

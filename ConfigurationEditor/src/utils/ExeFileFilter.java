@@ -22,7 +22,7 @@ public class ExeFileFilter extends FileFilter {
         if (aFile.isDirectory()) {
             return true;
         }
-        String ext = Util.getExtension(aFile);
+        String ext = FileUtils.getExtension(aFile);
         return (ext != null) ? ext.equals("exe") : false; //$NON-NLS-1$
     }
 

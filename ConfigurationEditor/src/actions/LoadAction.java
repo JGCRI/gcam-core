@@ -17,7 +17,9 @@ import javax.xml.parsers.DocumentBuilder;
 
 import org.w3c.dom.Document;
 
-import utils.Util;
+import utils.DOMUtils;
+import utils.Messages;
+import utils.FileUtils;
 import utils.XMLFileFilter;
 
 import configurationeditor.ConfigurationEditor;
@@ -62,13 +64,13 @@ public class LoadAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent aEvent) {
         // Check if the file should be saved before loading a new one.
-        if (!Util.askForSave(mParentEditor)) {
+        if (!FileUtils.askForSave(mParentEditor)) {
             // The user does not want to continue.
             return;
         }
         
         // Find the most recent file the user opened from the properties.
-        Properties props = Util.getInitializedProperties(mParentEditor);
+        Properties props = FileUtils.getInitializedProperties(mParentEditor);
         String recentFile = props.getProperty(mRecentFileProperty);
         
         // Ask the user for a file to load.
@@ -84,10 +86,10 @@ public class LoadAction extends AbstractAction {
             return;
         }
         // Create the document builder.
-        DocumentBuilder docBuilder = Util.getDocumentBuilder(mParentEditor);
+        DocumentBuilder docBuilder = DOMUtils.getDocumentBuilder(mParentEditor);
         
         // Return early if we couldn't create a document builder. An error
-        // message will have been printed by the Util function.
+        // message will have been printed by the FileUtils function.
         if(docBuilder == null){
         	return;
         }
@@ -121,10 +123,10 @@ public class LoadAction extends AbstractAction {
         // TODO: The parent model doesn't update immediately.
         
         // Set the current file into the configuration editor.
-        Util.setDocumentFile(loadedDocument, currentFile);
+        FileUtils.setDocumentFile(loadedDocument, currentFile);
         
         // Save the file as the most recent document.
         props.setProperty(mRecentFileProperty, currentFile.getAbsolutePath());
-        Util.saveProperties(props);
+        FileUtils.saveProperties(props);
     }
 }

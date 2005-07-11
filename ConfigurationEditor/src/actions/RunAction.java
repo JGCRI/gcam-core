@@ -13,7 +13,9 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
-import utils.Util;
+import utils.DOMUtils;
+import utils.Messages;
+import utils.FileUtils;
 
 import configurationeditor.ConfigurationEditor;
 import configurationeditor.PropertiesInfo;
@@ -77,7 +79,7 @@ public class RunAction extends AbstractAction {
             return;
     	}
         // Get the executable path from the properties file.
-        Properties props = Util.getInitializedProperties(mParentEditor);
+        Properties props = FileUtils.getInitializedProperties(mParentEditor);
         
         // Get the path to the executable.
         String executableFile = props.getProperty(PropertiesInfo.EXE_PATH_PROPERTY);
@@ -101,9 +103,9 @@ public class RunAction extends AbstractAction {
         // Serialize the document to a temporary location.
         File tempConfFile = new File(mTempConfigurationFile);
         assert(mParentEditor.getDocument() != null);
-        Util.setDocumentFile(mParentEditor.getDocument(), tempConfFile);
+        FileUtils.setDocumentFile(mParentEditor.getDocument(), tempConfFile);
         
-        Util.serializeDocument(mParentEditor.getDocument(), mParentEditor);
+        DOMUtils.serializeDocument(mParentEditor.getDocument(), mParentEditor);
         
         // Create a new thread to run the process on which will handle updating 
         // a dialog box containing the output of the model.

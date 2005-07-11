@@ -13,7 +13,8 @@ import javax.swing.JFileChooser;
 
 import org.w3c.dom.Document;
 
-import utils.Util;
+import utils.DOMUtils;
+import utils.FileUtils;
 import utils.XMLFileFilter;
 
 import configurationeditor.ConfigurationEditor;
@@ -53,7 +54,7 @@ public class SaveAction extends AbstractAction {
     public void actionPerformed(ActionEvent aEvent) {
         if (aEvent.getActionCommand().equals("Save")) { //$NON-NLS-1$
         	// Get the document file from the editor.
-        	File confFile = Util.getDocumentFile(mParentEditor.getDocument());
+        	File confFile = FileUtils.getDocumentFile(mParentEditor.getDocument());
             // If there is not a file name, call the save as method.
             if (confFile == null) {
                 doSaveAs();
@@ -75,7 +76,7 @@ public class SaveAction extends AbstractAction {
         assert(curr != null);
         
         // Serialize the document to the file.
-        Util.serializeDocument(curr, mParentEditor);
+        DOMUtils.serializeDocument(curr, mParentEditor);
     }
 
     /**
@@ -89,7 +90,7 @@ public class SaveAction extends AbstractAction {
         if (rv == JFileChooser.APPROVE_OPTION) {
         	File currFile = chooser.getSelectedFile();
         	// Set the file into the editor where doSave will find it.
-        	Util.setDocumentFile(mParentEditor.getDocument(), currFile);
+        	FileUtils.setDocumentFile(mParentEditor.getDocument(), currFile);
             doSave();
         }
     }

@@ -40,9 +40,9 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
+import utils.Messages;
 import utils.XMLFileFilter;
 
-import batchcreator.BatchFileEditor;
 
 import actions.EditLogSettingsAction;
 import actions.LoadAction;

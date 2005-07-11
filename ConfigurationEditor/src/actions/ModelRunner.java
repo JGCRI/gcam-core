@@ -28,6 +28,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import utils.Messages;
+
 import configurationeditor.ConfigurationEditor;
 
 /**
