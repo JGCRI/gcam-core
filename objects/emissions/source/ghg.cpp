@@ -19,7 +19,6 @@
 #include "emissions/include/indirect_emiss_coef.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
-#include "containers/include/world.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/gdp.h"
 #include "emissions/include/ghg_mac.h"
@@ -214,7 +213,7 @@ void Ghg::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
     // write xml for data members
-    XMLWriteElement( unit, "unit", out, tabs );
+    XMLWriteElementCheckDefault( unit, "unit", out, tabs, string("") );
     if( emissionsWereInput ) {
         XMLWriteElement( inputEmissions, "inputEmissions", out, tabs );
         XMLWriteElement( emissCoef, "emisscoef", out, tabs );
@@ -368,7 +367,6 @@ void Ghg::initCalc( ) {
 */
 double Ghg::getGHGValue( const string& regionName, const string& fuelName, const string& prodName, const double efficiency, const int period ) const {
 
-    const World* world = scenario->getWorld();
     const Marketplace* marketplace = scenario->getMarketplace();
     
     // Constants
@@ -396,8 +394,8 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
 
     // units for generalized cost is in 75$/gj
     double generalizedCost = 0; 
-    const double coefFuel = world->getPrimaryFuelCO2Coef( regionName, fuelName );
-    const double coefProduct = world->getPrimaryFuelCO2Coef( regionName, prodName );
+    const double coefFuel = marketplace->getMarketInfo( fuelName, regionName, period, "CO2Coef", false );
+    const double coefProduct = marketplace->getMarketInfo( prodName, regionName, period, "CO2Coef", false );
 
     if (name == "CO2") {
         // if remove fraction is greater than zero and storage cost is required
@@ -585,9 +583,9 @@ void Ghg::calcEmission( const string& regionName, const string& fuelname, const 
     // for CO2 use default emissions coefficient by fuel
     // remove fraction only applicable for CO2
     if (name == "CO2") {
-        const World* world = scenario->getWorld();
-        const double coefFuel = world->getPrimaryFuelCO2Coef( regionName, fuelname );
-        const double coefProduct = world->getPrimaryFuelCO2Coef( regionName, prodname );
+        const Marketplace* marketplace = scenario->getMarketplace();
+        const double coefFuel = marketplace->getMarketInfo( fuelname, regionName, aPeriod, "CO2Coef", false );
+        const double coefProduct = marketplace->getMarketInfo( prodname, regionName, aPeriod, "CO2Coef", false );
 
         // 100% efficiency and same coefficient, no emissions
         if (input==output && coefFuel == coefProduct ) {
@@ -635,6 +633,7 @@ void Ghg::calcEmission( const string& regionName, const string& fuelname, const 
             mEmissionsByFuel[ aPeriod ] =  mEmissions[ aPeriod ];
         }
     }
+
     // set emissions as demand side of gas market
     Marketplace* marketplace = scenario->getMarketplace();
     // Optimize special case of no-emission ghg.
