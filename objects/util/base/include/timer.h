@@ -7,7 +7,7 @@
 /*! 
 * \file timer.h  
 * \ingroup Objects
-* \brief Header file for the timer class.
+* \brief Header file for the Timer class.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$
@@ -22,16 +22,15 @@
 * \author Josh Lurz
 */
 class Timer {
-private:
-    clock_t mStartTime; //!< Time the timer started
-    clock_t mStopTime; //!< Time the timer stopped
-
 public:
     Timer();        
     void start();
     void stop();
     double getTimeDifference() const;
     void print( std::ostream& aOut, const std::string& aTitle = "Time: " ) const;
-    };
+private:
+    clock_t mStartTime; //!< Time the timer started
+    clock_t mStopTime; //!< Time the timer stopped
+};
 
 #endif // _TIMER_H_
