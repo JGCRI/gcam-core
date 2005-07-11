@@ -376,7 +376,9 @@
 !-------------------------------------------------------------------------------
 !
       SUBROUTINE CLIMAT
+! Expose subroutine climat to users of this DLL
 !
+!DEC$ ATTRIBUTES DLLEXPORT::climat
 !   THIS IS THE CLIMATE MODEL MODULE.
 !
       parameter (iTp =740)
@@ -4900,3 +4902,23 @@
 !
       RETURN
       END
+
+ 
+      FUNCTION co2Conc( inYear )
+! Expose subroutine co2Conc to users of this DLL
+!DEC$ATTRIBUTES DLLEXPORT::co2conc
+      parameter (iTp=740)
+
+      COMMON/CARB/CCO2(4,224:iTp),EDGROSS(4,226:iTp),EF(226:iTp+1), &
+      REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
+      TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
+      FOC(4,226:iTp),co2(0:iTp)
+
+      REAL*8 co2Conc
+
+      IYR = inYear-1990+226
+
+      co2Conc = CO2( IYR )
+
+      RETURN
+      END 
