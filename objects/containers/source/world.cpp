@@ -35,6 +35,9 @@
 #include "util/curves/include/xy_data_point.h"
 #include "solution/util/include/calc_counter.h"
 #include "util/logger/include/ilogger.h"
+#include "climate/include/iclimate_model.h"
+// Could hide with a factory method.
+#include "climate/include/magicc_model.h"
 
 using namespace std;
 using namespace xercesc;
@@ -45,13 +48,11 @@ extern Scenario* scenario;
 const string World::XML_NAME = "world";
 
 //! Default constructor.
-World::World() {
-    // initialize elemental datamembers.
-    doCalibrations = true; // This is misleading.
-    calcCounter = 0;
-
-    // We can resize all the arrays because we are garunteed by the schema that the modeltime object is parsed first.
-    ghgs.resize( scenario->getModeltime()->getmaxper() ); // structure containing ghg emissions
+World::World():
+doCalibrations( true ),
+calcCounter( 0 ),
+mClimateModel( new MagiccModel( scenario->getModeltime() ) )
+{
 }
 
 //! World destructor. 
@@ -188,10 +189,6 @@ void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     for( ConstRegionIterator i = regions.begin(); i == regions.begin(); i++ ) { 
         // for( ConstRegionIterator i = region.begin(); i != region.end(); i++ ) {
         ( *i )->toDebugXML( period, out, tabs );
-    }
-
-    for( vector<map<string,double> >::const_iterator j = ghgs.begin(); j != ghgs.end(); j++ ) {
-        // j->toDebugXML( out ); // not yet implemented.
     }
     // finished writing xml for the class members.
 
@@ -349,16 +346,27 @@ void World::emiss_ind( const int period ) {
     }
 }
 
-//! Calculates the global emissions. Currently only CO2 exists.
-/* \todo This function needs to be generalized to work for all ghgs.
+/*! Calculates the global emissions.
 */
-void World::calculateEmissionsTotals() {
-    for( RegionIterator iter = regions.begin(); iter != regions.end(); iter++ ) {
-        for( int i = 0; i < scenario->getModeltime()->getmaxper(); i++ ){
-            Summary tempSummary = ( *iter )->getSummary( i );
-            ghgs[ i ][ "CO2" ] += tempSummary.get_emissmap_second( "CO2" );
+void World::runClimateModel() {
+    mClimateModel->completeInit( scenario->getName() );
+    // The Climate model reads in data for the base period, so skip passing it in.
+    for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period){
+        // Sum emissions by period.
+        double industrialCO2EmissionsSum = 0;
+        double netLandUseCO2EmSum = 0;
+        for( RegionIterator iter = regions.begin(); iter != regions.end(); ++iter ) {
+            // This interface needs to be fixed.
+            industrialCO2EmissionsSum += ( *iter )->getSummary( period ).get_emissmap_second( "CO2" );
+            netLandUseCO2EmSum += (*iter )->getSummary( period ).get_emissmap_second( "CO2NetLandUse" );
         }
+        // Set the emissions for the period.
+        const double MMT_TO_TG = 1000;
+        mClimateModel->setEmissions( "CO2", period, industrialCO2EmissionsSum / MMT_TO_TG );
+        mClimateModel->setEmissions( "CO2NetLandUse", period, netLandUseCO2EmSum / MMT_TO_TG );
     }
+    // Run the model.
+    mClimateModel->runModel();
 }
 
 //! write results for all regions to file
@@ -382,19 +390,22 @@ void World::csvGlobalDataFile() const {
 
     // write total emissions for World
     for ( int m = 0; m < maxper; m++ ){
-        map<string,double>::const_iterator ghgValue = ghgs[m].find( "CO2" );
-        if( ghgValue != ghgs[ m ].end() ){
-            temp[m] = ghgValue->second;
-        } else {
-            temp[m] = 0;
+        // Sum emissions by period.
+        for( ConstRegionIterator iter = regions.begin(); iter != regions.end(); ++iter ) {
+            // This interface needs to be fixed.
+            temp[ m ] += ( *iter )->getSummary( m ).get_emissmap_second( "CO2" );
         }
     }
     fileoutput3( "global"," "," "," ","CO2 emiss","MTC",temp);
 
+    // Write out concentrations.
+    mClimateModel->printFileOutput();
 }
 
 //! MiniCAM style output to database
 void World::dbOutput() const {
+    // Write out concentrations
+    mClimateModel->printDBOutput();
     // call regional output
     for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
         ( *i )->dbOutput();
@@ -423,7 +434,8 @@ bool World::getCalibrationSetting() const {
 *
 * \author Steve Smith
 * \param period Model period
-* \param printWarnings flag to turn on logging of warnings if calibrations are not accurate
+* \param printWarnings flag to turn on logging of warnings if calibrations are
+*        not accurate
 * \return Boolean true if calibration is ok.
 */
 bool World::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
@@ -435,26 +447,12 @@ bool World::isAllCalibrated( const int period, double calAccuracy, const bool pr
     return true;
 }
 
-//! Return the amount of the given GHG in the given period.
-double World::getGHGEmissions( const std::string& ghgName, const int period ) const {
-    assert( period < static_cast<int>( ghgs.size() ) );
-
-    map<string,double>::const_iterator iter = ghgs[ period ].find( ghgName );
-
-    if( iter != ghgs[ period ].end() ) {
-        return iter->second;
-    }
-    else {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "GHG: " << ghgName << " was not found for period " << period << "." << endl;
-        return 0;
-    }
-}
-/*! \brief This function returns a special mapping of strings to ints for use in the outputs. 
-* \details This map is created such that global maps to zero, region 0 maps to 1, etc
-* It is similiar to the regionNamesToNumbers map but has the global element and each region number in the 
-* regionMap is 1 + the number in the regionNamesToNumbers map.
+/*! \brief This function returns a special mapping of strings to ints for use in
+*          the outputs. 
+* \details This map is created such that global maps to zero, region 0 maps to
+*          1, etc. It is similiar to the regionNamesToNumbers map but has the
+*          global element and each region number in the regionMap is 1 + the
+*          number in the regionNamesToNumbers map.
 * \warning This function should only be used by the database output functions. 
 * \return The map of region names to numbers.
 */
@@ -506,32 +504,6 @@ void World::printGraphs( ostream& outStream, const int period ) const {
 //! Return the list of primary fuels. 
 const vector<string> World::getPrimaryFuelList() const {
     return primaryFuelList;
-}
-
-//! Return the primaryFuelCO2Coef for a specific region and fuel.
-double World::getPrimaryFuelCO2Coef( const string& regionName, const string& fuelName ) const {
-
-    // Determine the correct region.
-    double coef = 0;
-    map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( regionName );
-    if( regionIter != regionNamesToNumbers.end() ) {
-        coef = regions[ regionIter->second ]->getPrimaryFuelCO2Coef( fuelName );
-    }
-
-    return coef;
-}
-
-//! Return the carbonTaxCoef for a specific region and fuel.
-double World::getCarbonTaxCoef( const string& regionName, const string& fuelName ) const {
-
-    // Determine the correct region.
-    double coef = 0;
-    map<string,int>::const_iterator regionIter = regionNamesToNumbers.find( regionName );
-    if( regionIter != regionNamesToNumbers.end() ) {
-        coef = regions[ regionIter->second ]->getCarbonTaxCoef( fuelName );
-    }
-
-    return coef;
 }
 
 /*! \brief A function which sets a fixed tax for each specified region on a specific gas.
