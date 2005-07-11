@@ -91,8 +91,6 @@ public:
     void initializeAgMarketPrices( const std::vector<double>& pricesIn );
     virtual void updateSummary( const int period );
     void printGraphs( std::ostream& outStream, const int period ) const;
-    double getPrimaryFuelCO2Coef( const std::string& fuelName ) const;
-    double getCarbonTaxCoef( const std::string& fuelName ) const;
     const Summary getSummary( const int period ) const;
     void setFixedTaxes( const std::string& policyName, const std::string& marketName, const std::vector<double>& taxes );
     const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
