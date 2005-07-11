@@ -85,10 +85,10 @@ void SubRenewableResource::initializeResource( ) {
 //! Write out to XML variables specific to this derived class
 void SubRenewableResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
 
-	XMLWriteElement( maxSubResource, "maxSubResource", out, tabs );
-	XMLWriteElement( gdpSupplyElasticity, "gdpSupplyElast", out, tabs );
-	XMLWriteElement( subResourceVariance, "subResourceVariance", out, tabs );
-	XMLWriteElement( subResourceCapacityFactor, "subResourceCapacityFactor", out, tabs );
+	XMLWriteElementCheckDefault( maxSubResource, "maxSubResource", out, tabs, 0.0 );
+	XMLWriteElementCheckDefault( gdpSupplyElasticity, "gdpSupplyElast", out, tabs, GDP_SUPPLY_ELASTICITY_DEFAULT );
+	XMLWriteElementCheckDefault( subResourceVariance, "subResourceVariance", out, tabs, 0.0 );
+	XMLWriteElementCheckDefault( subResourceCapacityFactor, "subResourceCapacityFactor", out, tabs, 1.0 );
 }   
 
 //! Write out to XML variables specific to this derived class
