@@ -65,7 +65,6 @@ public:
 protected:
     bool perCapitaBased; //!< demand equation based on per capita GNP, true or false.
     double pElasticityBase; //!< base year energy price elasticity
-    std::vector<double> finalEngyCons; //!< end-use sector final energy consumption
     std::vector<double> service; //!< total end-use sector service
     std::vector<double> iElasticity; //!< income elasticity 
     std::vector<double> pElasticity; //!< price elasticity.
