@@ -146,7 +146,7 @@ void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
 
 	// GDP to PPP conversion factor
-	XMLWriteElementCheckDefault( PPPConversionFact, "PPPConvert", out, tabs, 0.0 );
+	XMLWriteElement( PPPConversionFact, "PPPConvert", out, tabs );
 
 	// Write out base-year GDP
 	XMLWriteElement( baseGDP, "baseGDP", out, tabs);
@@ -162,7 +162,7 @@ void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	// Done writing XML for the class members.
 
 	// write out MER-based GDP
-    XMLWriteElementCheckDefault( gdpValueAdjusted[ period ], "GDP_MER", out, tabs, 0.0 );
+    XMLWriteElement( gdpValueAdjusted[ period ], "GDP_MER", out, tabs );
 
 	XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
