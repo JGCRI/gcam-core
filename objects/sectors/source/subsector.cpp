@@ -888,13 +888,9 @@ void Subsector::calcShare(const int period, const GDP* gdp ) {
     calcTechShares( gdp, period );
     // calculate and return Subsector share; uses above price function
     // calc_price() uses normalized technology shares calculated above
-    // Logit exponential should not be zero
     
     // compute Subsector weighted average price of technologies
     calcPrice( period );
-
-    // Subsector logit exponential check
-    if(lexp[period]==0) cerr << "SubSec Logit Exponential is 0." << endl;
     
     if( subsectorprice[period]==0) {
         share[period] = 0;
@@ -925,12 +921,12 @@ void Subsector::calcShare(const int period, const GDP* gdp ) {
 * \warning sum must be correct sum of shares
 * \pre calc shares must be called first
 */
-void Subsector::normShare( const double sum, const int period) {
-    if ( sum==0 ) {
-        share[period]=0;
+void Subsector::normShare( const double sum, const int period ) {
+    if( sum > 0 ){ // this could overflow.
+        setShare( share[ period ] / sum, period );
     }
     else {
-        setShare( share[period] / sum, period );
+        setShare( 0, period );
     }
 }
 
@@ -1009,10 +1005,12 @@ double Subsector::getFixedOutput( const int period ) const {
     return fixedOutput;
 }
 
-/*!\brief Return the share from this sub-sector that is fixed supply
-* Enables communication of fixed share to other classes. 
-*This is necessary since, while the amount of fixed supply is available (via getFixedOutput), the total output of a sector is not always known. So this function enables the amount of fixed supply in terms of the sector share to be communicated. 
-*
+/*! \brief Return the share from this sub-sector that is fixed supply
+* \details Enables communication of fixed share to other classes. 
+* This is necessary since, while the amount of fixed supply is available (via
+* getFixedOutput), the total output of a sector is not always known. So this
+* function enables the amount of fixed supply in terms of the sector share to be
+* communicated.
 * \author Steve Smith
 * \param period Model period
 */
@@ -1021,11 +1019,11 @@ double Subsector::getFixedShare( const int period ) const {
 }
 
 /*! \brief Save the share from this sub-sector that is fixed supply
-* Enables communication of fixed share to other classes. See documentation for getFixedShare.
-*
+* \details Enables communication of fixed share to other classes.
 * \author Steve Smith
-\param period Model period
-\param share sector share that is fixed supply
+* \sa getFixedShare
+* \param period Model period
+* \param share sector share that is fixed supply
 */
 void Subsector::setFixedShare( const int period, const double share ) {
     // option to turn this off during calibration
@@ -1039,12 +1037,12 @@ void Subsector::setFixedShare( const int period, const double share ) {
 }
 
 /*! \brief Set the share from this sub-sector to that saved for fixed supply
-* This function changes the share to the share previously saved for the fixed supply.
-* This is done instead of using a function to directly set the share in general. 
-* Doing this allows the price and calibration routines to operate with an appropriate share.
-*
-*\author Steve Smith
-*\param period Model period
+* \details This function changes the share to the share previously saved for the
+*          fixed supply. This is done instead of using a function to directly
+*          set the share in general. Doing this allows the price and calibration
+*          routines to operate with an appropriate share.
+* \author Steve Smith
+* \param period Model period
 */
 void Subsector::setShareToFixedValue( const int period ) {
    setShare( fixedShare[ period ], period );
