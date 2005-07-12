@@ -14,6 +14,10 @@ import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+import javax.xml.parsers.DocumentBuilder;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import utils.DOMUtils;
 import utils.Messages;
@@ -102,12 +106,29 @@ public class RunAction extends AbstractAction {
             JOptionPane.showMessageDialog(mParentEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE );
             return;
         }
-        // Serialize the document to a temporary location.
-        File tempConfFile = new File(mTempConfigurationFile);
         assert(mParentEditor.getDocument() != null);
-        FileUtils.setDocumentFile(mParentEditor.getDocument(), tempConfFile);
         
-        DOMUtils.serializeDocument(mParentEditor.getDocument(), mParentEditor);
+        // Clone the document before serializing to a different name to 
+        // preserve all state.
+        DocumentBuilder builder = DOMUtils.getDocumentBuilder(mParentEditor);
+        Document clonedDoc = builder.newDocument();
+        
+        // Perform a deep clone on the document which will copy all nodes
+        // and their children.
+        Node clonedRoot = (mParentEditor.getDocument().getDocumentElement().cloneNode(true));
+        
+        // Move the cloned node and its children from the configuration document 
+        // which created it to the cloned document.
+        clonedDoc.adoptNode(clonedRoot);
+        
+        // Set the cloned tree as the root element.
+        clonedDoc.appendChild(clonedRoot);
+        
+        // Serialize the cloend document to a temporary location.
+        File tempConfFile = new File(mTempConfigurationFile);
+        FileUtils.setDocumentFile(clonedDoc, tempConfFile);
+        
+        DOMUtils.serializeDocument(clonedDoc, mParentEditor);
         
         // Create a new thread to run the process on which will handle updating 
         // a dialog box containing the output of the model.
