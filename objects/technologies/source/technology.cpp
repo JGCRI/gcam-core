@@ -147,7 +147,7 @@ void technology::initElementalMembers(){
     A = 0;
     B = 0;
     resource = 0;
-    fixedOutput = 0; // initialize to no fixed supply
+    fixedOutput = getFixedOutputDefault(); // initialize to no fixed supply
     fixedOutputVal = 0;
     doCalibration = false;
     doCalOutput = false;
@@ -155,6 +155,13 @@ void technology::initElementalMembers(){
     calOutputValue = 0;
     totalGHGCost = 0;
     fuelPrefElasticity = 0;
+}
+
+/*! \brief Default value for fixedOutput;
+* \author Steve Smith
+*/
+double technology::getFixedOutputDefault() {
+    return -1.0;
 }
 
 /*! \brief initialize technology with xml data
@@ -225,8 +232,6 @@ void technology::XMLParse( const DOMNode* node ) {
         }
         else if( nodeName == "fixedOutput" ){
             fixedOutput = XMLHelper<double>::getValue( curr );
-            // need to initialize this here (needs to be available for setting simul markets before init() is called)
-            fixedOutputVal = fixedOutput; 
         }
         else if( nodeName == "techchange" ){
             techchange = XMLHelper<double>::getValue( curr );
@@ -290,6 +295,7 @@ void technology::completeInit( const std::string& aSectorName, DependencyFinder*
         ghg.push_back( CO2 );
         ghgNameMap[ CO2_NAME ] = static_cast<int>( ghg.size() ) - 1;
     }
+
 	// calculate effective efficiency
 	eff = effBase * (1 - effPenalty); // reduces efficiency by penalty
 	necost = neCostBase * (1 + neCostPenalty); // increases cost by penalty
@@ -298,6 +304,11 @@ void technology::completeInit( const std::string& aSectorName, DependencyFinder*
     // will not be one if this is a transportation technology.
     if( aDepFinder ){
         aDepFinder->addDependency( aSectorName, fuelname );
+    }
+
+    // initialize fixedOutputVal
+    if ( fixedOutput >= 0 ) {
+        fixedOutputVal = fixedOutput; 
     }
 }
 
@@ -326,7 +337,7 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, LOGIT_EXP_DEFAULT );
-    XMLWriteElementCheckDefault( fixedOutput, "fixedOutput", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( fixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
     XMLWriteElementCheckDefault( techchange, "techchange", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( resource, "resource", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( A, "A", out, tabs, 0.0 );
@@ -568,7 +579,7 @@ void technology::calcfixedOutput(int per)
     }
     
     // Data-driven specification
-    if ( fixedOutput > 0 ) {
+    if ( fixedOutput >= 0 ) {
         fixedOutputVal = fixedOutput;
     }
 }
@@ -581,7 +592,9 @@ void technology::calcfixedOutput(int per)
 * \param per model period
 */
 void technology::resetfixedOutput( int per ) {
-    fixedOutputVal = fixedOutput;
+    if ( fixedOutput >= 0 ) {
+        fixedOutputVal = fixedOutput;
+    }
 }
 
 /*! \brief Return fixed technology output
@@ -624,7 +637,7 @@ double technology::getFixedInput() const {
 void technology::scalefixedOutput(const double scaleRatio)
 {
     // dmd is total subsector demand
-    if( fixedOutputVal != 0 ) {
+    if( fixedOutputVal >= 0 ) {
         output *= scaleRatio;
         fixedOutputVal *= scaleRatio;
     }
@@ -652,7 +665,7 @@ void technology::adjShares(double subsecdmd, double subsecfixedOutput, double va
             remainingDemand = 0;
         }
         
-        if ( fixedOutputVal > 0 ) {	// This tech has a fixed supply
+        if ( fixedOutputVal >= 0 ) {	// This tech has a fixed supply
             if (subsecdmd > 0) {
                 share = fixedOutputVal/subsecdmd;
                 // Set value of fixed supply
@@ -884,7 +897,7 @@ bool technology::getCalibrationStatus( ) const {
 
 //! returns true if all output is either fixed or calibrated
 bool technology::outputFixed( ) const {
-    return ( doCalibration || ( fixedOutput != 0 ) || ( shrwts == 0 ) );
+    return ( doCalibration || ( fixedOutput >= 0 ) || ( shrwts == 0 ) );
 }
 
 /*! \brief Returns true if this technology is available for production and not fixed
@@ -895,7 +908,7 @@ bool technology::outputFixed( ) const {
 * \return Boolean that is true if technology is available
 */
 bool technology::techAvailable( ) const {
-   if ( !doCalibration && ( fixedOutput != 0  ||  shrwts == 0 ) ) {
+   if ( !doCalibration && ( fixedOutput >= 0  ||  shrwts == 0 ) ) {
       return false;  // this sector is not available to produce variable output
    } 
    return true;
@@ -1133,7 +1146,7 @@ void technology::tabulateFixedDemands( const string regionName, const int period
             // this sector has fixed output
             if ( doCalibration ) {
                 fixedInput = getCalibrationInput();
-            } else if ( fixedOutput != 0 ) {
+            } else if ( fixedOutput >= 0 ) {
                 fixedInput = getFixedInput();
             }
             // set demand for fuel in marketInfo counter

@@ -64,28 +64,29 @@ protected:
     double techchange;  //!< technical change in %/year
     double fixedOutput; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
     double fixedOutputVal; //!< The actual fixed output value
-    bool doCalibration; // Flag set if calibration value is read-in
-    bool doCalOutput; // Flag set if calibration value is read-in
     double calInputValue; // Calibration value
     double calOutputValue; // Calibration value
+    // attributes for hydroelectricity only!
+    double resource; //!< available hydro resource in energy units
+    double A; //!< logit function shape parameter
+    double B; //!< logit function shape parameter
+    bool doCalibration; // Flag set if calibration value is read-in
+    bool doCalOutput; // Flag set if calibration value is read-in
     std::vector<Ghg*> ghg; //!< suite of greenhouse gases
     std::map<std::string,double> emissmap; //!< map of ghg emissions
     std::map<std::string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
     std::map<std::string,double> emindmap; //!< map of indirect ghg emissions
     std::string note; //!< input data notation for this technology
 
-    // attributes for hydroelectricity only!
-    double resource; //!< available hydro resource in energy units
-    double A; //!< logit function shape parameter
-    double B; //!< logit function shape parameter
     std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
-    void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per );
     virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
     virtual void copy( const technology& techIn );
     void initElementalMembers();
+    static double getFixedOutputDefault();
     virtual const std::string& getXMLName2D() const;
 public:
     technology(); // default construtor
