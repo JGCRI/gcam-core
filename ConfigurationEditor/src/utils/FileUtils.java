@@ -58,7 +58,7 @@ final public class FileUtils {
 	 * @param aFile The file to set as the path to the document.
 	 */
 	static public void setDocumentFile(Document aDocument, File aFile){
-		aDocument.setDocumentURI(aFile != null ? aFile.getAbsolutePath() : Messages.getString("FileUtils.4")); //$NON-NLS-1$
+		aDocument.setDocumentURI(aFile != null ? aFile.getAbsolutePath() : ""); //$NON-NLS-1$
 	}
 	
 	/**

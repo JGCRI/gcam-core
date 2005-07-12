@@ -65,20 +65,19 @@ public class NodeWrapper implements InvocationHandler {
             // Get the name attr.
             NamedNodeMap attrs = mInternalNode.getAttributes();
             if (attrs == null) {
-            	System.out.println("Called to string on a wrapper with null attributes!");
                 return ""; // we've got trouble. //$NON-NLS-1$
             }
             Node nameAttr = attrs.getNamedItem("name"); //$NON-NLS-1$
             if (nameAttr == null) {
-            	System.out.println("Called to string on a wrapper with no name attribute!");
                 return ""; // also trouble; //$NON-NLS-1$
             }
-            System.out.println("Returning name: " + nameAttr.getNodeValue());
             return nameAttr.getNodeValue();
         }
-        else if(aMethod.getName().equals("equals")){
-        	System.out.println("Returning " + (this == aArgs[0]) );
-        	return this == aArgs[0];
+        if(aMethod.getName().equals("equals")){
+        	return new Boolean(aProxy == aArgs[0]);
+        }
+        if(aMethod.getName().equals("hashCode")){
+            return new Integer(System.identityHashCode(aProxy));
         }
         // Dispatch all methods other than toString to the internal node object.
         Object result = null;

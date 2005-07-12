@@ -107,6 +107,16 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
     }
     
     /**
+     * Returns that the user does not need to be asked before
+     * the file is saved.
+     * @return false, meaning that the user does not need to be 
+     * asked before saving the file.
+     */
+    public boolean askBeforeSaving() {
+        return false;
+    }
+    
+    /**
      * Create a new document and set it is the current document.
      * @param aFileName The name to save the document as.
      *
@@ -153,6 +163,15 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
         	// Report the error to the user.
             String message = Messages.getString("BatchFileEditor.5") + e.getMessage(); //$NON-NLS-1$
             String messageTitle = Messages.getString("BatchFileEditor.6"); //$NON-NLS-1$
+            Logger.global.log(Level.SEVERE, message);
+            JOptionPane.showMessageDialog(this, message, messageTitle,
+                    JOptionPane.ERROR_MESSAGE);
+            mDocument = null;
+        }
+        // Check if this has any chance at being a valid batch file.
+        if(mDocument != null && !mDocument.getDocumentElement().getNodeName().equals(ROOT_ELEMENT_NAME)) {
+            String message = "The selected document is not a valid batch file.";
+            String messageTitle = "Invalid Document";
             Logger.global.log(Level.SEVERE, message);
             JOptionPane.showMessageDialog(this, message, messageTitle,
                     JOptionPane.ERROR_MESSAGE);

@@ -173,7 +173,6 @@ public class SingleDOMValueComboBoxFactory {
          *            The item event.
          */
         public void itemStateChanged(ItemEvent aEvent) {
-            System.out.println("ITEM STATE CHANGED! " + aEvent.toString());
             // Check for the invalid condition when there isn't a document.
             if (mDocument == null) {
                 Logger.global.log(Level.WARNING,
@@ -197,10 +196,19 @@ public class SingleDOMValueComboBoxFactory {
             }
             // Check if the text was unchanged. This prevents the DOM from
             // being modified unneccessarily.
-            if ((resultNode != null)
-                    && (Integer.parseInt(resultNode.getTextContent()) != newIndex)) {
-                // Store the combo box index as the value of the node.
-                resultNode.setTextContent(Integer.toString(newIndex));
+            if (resultNode != null){
+                boolean isSameValue = false;
+                try {
+                    isSameValue = (Integer.parseInt(resultNode.getTextContent()) == newIndex);
+                }
+                catch(NumberFormatException e) {
+                    // The value in the DOM wasn't a number which is
+                    // incorrect, so allow it to be reset.
+                }
+                if(!isSameValue) {
+                    // Store the combo box index as the value of the node.
+                    resultNode.setTextContent(Integer.toString(newIndex));
+                }
             }
         }
     }

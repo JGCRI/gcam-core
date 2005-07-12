@@ -88,9 +88,11 @@ public class SaveAction extends AbstractAction {
         Logger.global.entering("DoSaveAs", "Entering"); //$NON-NLS-1$ //$NON-NLS-2$
         JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new XMLFileFilter());
+        chooser.setMultiSelectionEnabled(false);
         int rv = chooser.showSaveDialog(mParentEditor);
         if (rv == JFileChooser.APPROVE_OPTION) {
         	File currFile = chooser.getSelectedFile();
+            // TODO: Overwrite warning.
         	// Set the file into the editor where doSave will find it.
         	FileUtils.setDocumentFile(mParentEditor.getDocument(), currFile);
             doSave();

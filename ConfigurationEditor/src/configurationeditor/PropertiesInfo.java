@@ -26,5 +26,5 @@ public class PropertiesInfo {
     /**
      * The name of the property which stores the location of the log configuration file.
      */
-    public static final String LOG_CONF_PROPERTY = "template-path"; //$NON-NLS-1$
+    public static final String LOG_CONF_PROPERTY = "log-conf-path"; //$NON-NLS-1$
 }

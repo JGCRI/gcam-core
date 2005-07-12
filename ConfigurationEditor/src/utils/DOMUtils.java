@@ -73,6 +73,7 @@ public final class DOMUtils {
     		Logger.global.log(Level.WARNING, "Cannot add nodes for a null document.");
     		return null;
     	}
+        System.out.println("Adding nodes for: " + aXPath );
         // Split the string around the slashes.
         String[] comps = aXPath.split("/+"); //$NON-NLS-1$
 
@@ -571,5 +572,29 @@ public final class DOMUtils {
         }
         // The item was not found.
         return -1;
+    }
+
+    /**
+     * Helper method which checks if the text content of a node is 1 or 0.
+     * @param aNode Node of which to check the text value.
+     * @return Whether the text node child of this node is 1.
+     */
+    public static boolean isTextContentTrue(Node aNode) {
+    	// Check if the node does not have a text value.
+    	if (aNode.getTextContent() == null) {
+    		Logger.global.log(Level.WARNING, "No text content for node.");
+    		return false;
+    	}
+    	// Otherwise check the text value. Currently the node will contain a
+    	// 1 or a 0, so this needs to be converted to a true false.
+    	if (aNode.getTextContent().equals("1")) { //$NON-NLS-1$
+    	    return true;
+        }
+    	if (aNode.getTextContent().equals("0")) { //$NON-NLS-1$
+    		return false;
+    	}
+    	// Check for unknown values. Warn that these exist and return false.
+    	Logger.global.log(Level.WARNING, "Unknown text value contained in node.");
+    	return false;
     }
 }

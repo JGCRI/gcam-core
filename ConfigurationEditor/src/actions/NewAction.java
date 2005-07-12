@@ -101,7 +101,18 @@ public class NewAction extends AbstractAction {
                     errorTitle, JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
+        // Check if this is a valid configuration document.
+        // This is admittedly not a complete check which 
+        // would require schema validation.
+        if(!loadedDocument.getDocumentElement().getNodeName().equals(ConfigurationEditor.ROOT_ELEMENT_NAME)) {
+            // This isn't a configuration document.
+            final String errorMessage = "Configuration template file is not valid.";
+            final String errorTitle = "Invalid Document";
+            Logger.global.log(Level.WARNING, errorMessage);
+            JOptionPane.showMessageDialog(mParentEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         // Set the document into the model.
         mParentEditor.setDocument(loadedDocument);
         

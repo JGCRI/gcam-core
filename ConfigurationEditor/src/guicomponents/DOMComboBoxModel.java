@@ -119,13 +119,11 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 			// element node and cached. This is so a wrappers of the same
 			// element node will always be equal.
 			if(wrapper == null ){
-				System.out.println("Creating wrapper for: " + elementNode.toString());
 				wrapper = NodeWrapper.createProxy(elementNode);
 				mCachedNodeWrappers.put(elementNode, wrapper);
 			}
 			
 			// Return the wrapper.
-			Logger.global.log(Level.INFO, "RETURNING: " + wrapper.toString());
 			return wrapper;
 		}
 		Logger.global
@@ -147,8 +145,6 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 					"Returning size of zero because the DOM is inaccessable.");
 			return 0;
 		}
-		Logger.global.log(Level.INFO, "Returning from getSize: "
-				+ DOMUtils.getNumberOfElementChildren(mRoot));
 		return DOMUtils.getNumberOfElementChildren(mRoot);
 	}
 
@@ -159,7 +155,6 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 	 *            The item selected by the user.
 	 */
 	public void setSelectedItem(Object aSelectedItem) {
-		Logger.global.log(Level.INFO, "****setSelectedItem");
 		// Check if this is a valid item in the list but not the null
 		// element used to clear selection.
 		if (aSelectedItem != null
@@ -188,7 +183,6 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 	 * @return The stored selected item.
 	 */
 	public Object getSelectedItem() {
-		Logger.global.log(Level.INFO, "getSelectedItem" + mSelectedItem);
 		return mSelectedItem;
 	}
 
