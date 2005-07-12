@@ -4,6 +4,8 @@
 package actions;
 
 
+import guicomponents.ModelRunner;
+
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Properties;
@@ -118,7 +120,7 @@ public class RunAction extends AbstractAction {
      * variable to protect against race conditions.
      * @return Whether the model is running.
      */
-    synchronized boolean isModelRunning(){
+    synchronized public boolean isModelRunning(){
     	return mModelRunning;
     }
     
@@ -126,7 +128,7 @@ public class RunAction extends AbstractAction {
      * Set that the model is either running or not running.
      * @param aIsRunning Whether the model is running.
      */
-    synchronized void setModelRunning(boolean aIsRunning){
+    synchronized public void setModelRunning(boolean aIsRunning){
         Logger.global.log(Level.INFO, "Setting model running to:" + aIsRunning);
     	mModelRunning = aIsRunning;
     }

@@ -82,7 +82,6 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel {
     public DOMButtonModel(DOMDocumentEditor aEditor, String aParentXPath,
             String aElementName, String aItemName, boolean aParentHasName) {
         super();
-        Logger.global.log(Level.INFO, "Creating DOM button model.");
         mEditor = aEditor;
         mParentXPath = aParentXPath;
         mElementName = aElementName;

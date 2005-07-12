@@ -56,14 +56,8 @@ public class QuitAction extends AbstractAction implements WindowListener {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent aEvent) {
-        // Determine which action to take.
-        if (aEvent.getActionCommand().equals("Quit")) { //$NON-NLS-1$
-            // Call the internal quit method.
-            doQuit();
-        } else {
-            // We should have had the Quit action.
-            assert (false);
-        }
+    	// Call the internal quit method.
+    	doQuit();
     }
 
     /**

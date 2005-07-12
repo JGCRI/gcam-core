@@ -65,6 +65,9 @@ public class SaveAction extends AbstractAction {
             }
         } else if (aEvent.getActionCommand().equals("SaveAs")) { //$NON-NLS-1$
             doSaveAs();
+        } else {
+        	// Should not get another action command here.
+        	assert(false);
         }
     }
     /**

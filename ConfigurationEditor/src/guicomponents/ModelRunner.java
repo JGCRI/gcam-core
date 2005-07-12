@@ -1,7 +1,7 @@
 /**
  * 
  */
-package actions;
+package guicomponents;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -27,6 +27,8 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+
+import actions.RunAction;
 
 import utils.Messages;
 

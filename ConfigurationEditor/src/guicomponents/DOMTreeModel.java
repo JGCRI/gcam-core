@@ -12,11 +12,10 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import utils.DOMUtils;
-import utils.NodeWrapper;
+import utils.TreeNodeWrapper;
 
 /**
  * @author Josh Lurz
@@ -24,10 +23,9 @@ import utils.NodeWrapper;
  */
 public class DOMTreeModel implements TreeModel {
     /**
-     * The Document containing the tree. This may be changed
-     * by calls to set document.
+     * The immutable root node of the tree.
      */
-    Document mDocument = null;
+    Node mRoot = null;
     
     /**
      * A list of tree event listeners.
@@ -46,43 +44,15 @@ public class DOMTreeModel implements TreeModel {
     
     /**
      * Constructor which initializes the root node in the tree.
-     * @param aDocument The document containing the tree.
+     * @param aRootNode The root node of the tree.
      * @param aLeafName The name of leaves in the tree.
      */
-    public DOMTreeModel(Document aDocument, String aLeafName) {
+    public DOMTreeModel(Node aRootNode, String aLeafName) {
         super();
-        mDocument = aDocument;
+        mRoot = aRootNode;
         mLeafName = aLeafName;
         mCachedNodeWrappers = new HashMap<Node, Object>();
         mListeners = new Vector<TreeModelListener>();
-    }
-
-    /**
-     * Set the document containing the tree.
-     * @param aDocument The new document.
-     */
-    public void setDocument(Document aDocument) {
-        // Store the root so we can use it to dispatch a tree node
-        // removed event.
-        Object oldRoot = getRoot();
-        
-        // Set the document.
-        mDocument = aDocument;
-        
-        // Clear the cached list of nodes.
-        mCachedNodeWrappers.clear();
-        
-        // Fire event that the root is removed if there was an existing root.
-        // This may not be enough.
-        if(oldRoot != null) {
-            fireTreeNodesRemoved(new TreeModelEvent(this, new TreePath(oldRoot), new int[] {0}, new Object[]{oldRoot} ));
-        }
-        // Fire event that a new root was added if there is a new one.
-        // This may not be enough.
-        Object newRoot = getRoot();
-        if(newRoot != null) {
-            fireTreeNodesInserted(new TreeModelEvent(this, new TreePath(newRoot), new int[] {0}, new Object[]{newRoot} ));
-        }
     }
     
     /**
@@ -90,10 +60,7 @@ public class DOMTreeModel implements TreeModel {
      * @see javax.swing.tree.TreeModel#getRoot()
      */
     public Object getRoot() {
-        if(mDocument == null) {
-            return null;
-        }
-        return getOrCreateWrapper(mDocument.getDocumentElement());
+        return getOrCreateWrapper(mRoot);
     }
 
     /**
@@ -128,6 +95,7 @@ public class DOMTreeModel implements TreeModel {
 
     /**
      * Returns whether the node is a leaf.
+     * @param aNode Node to determine if it is a leaf.
      * @return Whether the node is a leaf.
      */
     public boolean isLeaf(Object aNode) {
@@ -144,19 +112,24 @@ public class DOMTreeModel implements TreeModel {
     public void valueForPathChanged(TreePath aPath, Object aNewValue) {
         // Path items are nodes, so just find the last item and check its 
         // value.
-        Node lastNode = (Node)aPath.getLastPathComponent();
-        
-        // Check if the current content is equal to the new content.
-        if(lastNode.getTextContent().equals(aNewValue)) {
-            // Don't notify the listeners.
-            return;
+        Node oldNode = (Node)aPath.getLastPathComponent();
+        Node newNode = (Node)aNewValue;
+        if(oldNode.equals(newNode)){
+        	System.out.println("NOT MODIFIED!");
+        	return;
         }
-        // Set the new content and notify the listeners.
-        String newValue = aNewValue != null ? aNewValue.toString():"";
-        lastNode.setTextContent(newValue);
-        // Notify listeners.
-        int DOMIndex = DOMUtils.getDOMIndexOfObject(lastNode.getParentNode(), lastNode);
-        fireTreeNodesChanged(new TreeModelEvent(this, aPath, new int[] {DOMIndex}, new Object[]{lastNode} ));
+        
+        // Check if the old and new nodes are the same node but modified.
+        if(oldNode.isSameNode(newNode)){
+        	System.out.println("IS SAME NODE!");
+        	// Notify listeners that the node changed.
+        	int listIndex = DOMUtils.getListIndexOfObject(newNode.getParentNode(), newNode);
+        	fireTreeNodesChanged(new TreeModelEvent(this, aPath, new int[] {listIndex}, new Object[]{getOrCreateWrapper(newNode)} ));
+        }
+        // Otherwise a node was added.
+        else {
+        	fireTreeStructureChanged(new TreeModelEvent(getOrCreateWrapper(newNode.getParentNode()), aPath));
+        }
     }
 
     /**
@@ -206,7 +179,7 @@ public class DOMTreeModel implements TreeModel {
         // element node and cached. This is so a wrappers of the same
         // element node will always be equal.
         if(wrapper == null ){
-            wrapper = NodeWrapper.createProxy(aNode);
+            wrapper = TreeNodeWrapper.createProxy(aNode);
             mCachedNodeWrappers.put(aNode, wrapper);
         }
         
@@ -228,7 +201,8 @@ public class DOMTreeModel implements TreeModel {
      * Fire a tree nodes inserted event.
      * @param aEvent The tree model event.
      */
-    private void fireTreeNodesInserted(TreeModelEvent aEvent) {
+    @SuppressWarnings("unused")
+	private void fireTreeNodesInserted(TreeModelEvent aEvent) {
         // Iterate over the listeners and notify each.
         for(int i = 0; i < mListeners.size(); ++i) {
             mListeners.get(i).treeNodesInserted(aEvent);
@@ -239,10 +213,22 @@ public class DOMTreeModel implements TreeModel {
      * Fire a tree nodes changed event.
      * @param aEvent The tree model event.
      */
-    private void fireTreeNodesRemoved(TreeModelEvent aEvent) {
+    @SuppressWarnings("unused")
+	private void fireTreeNodesRemoved(TreeModelEvent aEvent) {
         // Iterate over the listeners and notify each.
         for(int i = 0; i < mListeners.size(); ++i) {
             mListeners.get(i).treeNodesRemoved(aEvent);
+        }
+    }
+    
+    /**
+     * Fire a tree structure changed event.
+     * @param aEvent The tree model event.
+     */
+    private void fireTreeStructureChanged(TreeModelEvent aEvent) {
+        // Iterate over the listeners and notify each.
+        for(int i = 0; i < mListeners.size(); ++i) {
+            mListeners.get(i).treeStructureChanged(aEvent);
         }
     }
 }

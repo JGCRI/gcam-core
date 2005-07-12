@@ -10,15 +10,15 @@ import java.lang.reflect.Proxy;
 import org.w3c.dom.Node;
 
 /**
- * A class which wraps a DOM node and replaces the toString function with one
- * which returns the value of the name attribute. This class uses a proxy method
- * so that all function calls other than toString automatically are forwarded to
- * the underlying node.
+ * A class which wraps a DOM node for a JTree and replaces the toString function
+ * with one which returns the element name and the value of the name attribute.
+ * This class uses a proxy method so that all function calls other than toString
+ * automatically are forwarded to the underlying node.
  * 
  * @author Josh Lurz
  * 
  */
-public class NodeWrapper implements InvocationHandler {
+public class TreeNodeWrapper implements InvocationHandler {
 
 	/**
 	 * Create an instance of this wrapper class with a node to wrap.
@@ -29,7 +29,7 @@ public class NodeWrapper implements InvocationHandler {
 	 */
 	public static Object createProxy(Node aNode) {
 		return Proxy.newProxyInstance(aNode.getClass().getClassLoader(), aNode
-				.getClass().getInterfaces(), new NodeWrapper(aNode));
+				.getClass().getInterfaces(), new TreeNodeWrapper(aNode));
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class NodeWrapper implements InvocationHandler {
 	 * @param aNodeToWrap
 	 *            The node to forward all function calls to except toString.
 	 */
-	private NodeWrapper(Node aNodeToWrap) {
+	private TreeNodeWrapper(Node aNodeToWrap) {
 		mInternalNode = aNodeToWrap;
 	}
 
@@ -65,10 +65,32 @@ public class NodeWrapper implements InvocationHandler {
 	 */
 	public Object invoke(Object aProxy, Method aMethod, Object[] aArgs)
 			throws Throwable {
-		// Special case the toString method to return the value of the name
+		// Special case the toString method to return the element name plus the
+		// value of the name
 		// child.
 		if (aMethod.getName().equals("toString")) { //$NON-NLS-1$
-			return DOMUtils.getNameAttrValue(mInternalNode);
+			// Return a string that looks like <element name="name">value</element>
+			// for child node or <element> for parent nodes.
+			String nameAttr = DOMUtils.getNameAttrValue(mInternalNode);
+			
+			StringBuilder displayString = new StringBuilder();
+			displayString.append("<");
+			displayString.append(mInternalNode.getNodeName());
+			// Don't print empty name attributes.
+			if(nameAttr != null && nameAttr != ""){
+				displayString.append(" name=\"").append(nameAttr).append("\"");
+			}
+			displayString.append(">");
+			
+			// Now append the value if this is a child node. 
+			if(DOMUtils.getNumberOfElementChildren(mInternalNode) <= 0 ){
+				displayString.append(mInternalNode.getTextContent());
+			
+				// Append the closing tag for child nodes only.
+				displayString.append("<").append(mInternalNode.getNodeName()).append(">");
+			}
+			// Return the entire string.
+			return displayString.toString();
 		}
 		if (aMethod.getName().equals("equals")) {
 			return new Boolean(aProxy == aArgs[0]);

@@ -355,6 +355,18 @@ public final class DOMUtils {
     }
 
     /**
+     * Set the value of the name attribute of a specific node.
+     * @param aNode The node of which to modify the name attribute.
+     * @param aNewValue The new value of the name attribute.
+     */
+    public static void setNameAttrValue(Node aNode, String aNewValue){
+        // Add the attribute.
+        Attr newAttr = aNode.getOwnerDocument().createAttribute("name");
+        newAttr.setNodeValue(aNewValue);
+        aNode.getAttributes().setNamedItem(newAttr);
+    }
+    
+    /**
      * Helper function to find a single item in the list.
      * 
      * @param aParent Parent who's list to search.
