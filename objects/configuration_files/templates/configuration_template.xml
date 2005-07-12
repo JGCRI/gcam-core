@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Josh Lurz (PNNL) -->
-<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:\cvs\Code\Ciam\Configuration.xsd">
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/cvs/Code/Ciam/Configuration.xsd">
 	<Files>
 		<!--START User Modifiable Variables-->
-		<Value name="xmlInputFileName">..\cvs\objects\model_data\base\base_input.xml</Value>
-		<Value name="xmlOutputFileName">..\output\output.xml</Value>
+		<Value name="xmlInputFileName">../cvs/objects/model_data/base/base_input.xml</Value>
+		<Value name="xmlOutputFileName">../output/output.xml</Value>
 		<Value name="BatchFileName">BatchFile.xml</Value>
 		<!--END User Modifiable variables-->
 		<!--START Developer Only Modifiable Variables-->
@@ -20,7 +20,7 @@
 	</Files>
 	<ScenarioComponents>
 		<!--START User Modifiable Variables-->
-		<Value name="B2Calibration">..\cvs\objects\model_data\scenario_components\sres_scenarios\b2_calibration.xml</Value>
+		<Value name="B2Calibration">../cvs/objects/model_data/scenario_components/sres_scenarios/b2_calibration.xml</Value>
 		<!--END User Modifiable variables-->
 	</ScenarioComponents>
 	<Strings>
