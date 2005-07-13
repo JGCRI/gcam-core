@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<files>
+	<data file="input.xml" />
+	<region file="inputR.xml" />
+	<output file="out.xml" />
+</files>

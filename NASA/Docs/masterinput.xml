@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<input resolution="0">
+	<file type="txt" tagged="true">
+		<name value="testTxt2.txt" />
+	</file>
+	<file type= "txt" tagged="false">
+		<data value="Emissions" />
+		<date value="2000" />
+		<res value="1" />
+		<average value="True" />
+		<format value="scientific" />
+		<name value="SO2_2000_Hi.txt" />
+	</file>
+	<file type= "1x1" tagged="false">
+		<data value="CO2" />
+		<date value="1995" />
+		<average value="true" />
+		<format value="scientific" />
+		<name value="b1095co2.1x1" />
+	</file>
+	<file type="netcdf">
+		<data value="Barley" />
+		<date value="1995" />
+		<res value=".5" />
+		<average value="True" />
+		<variable value="farea" />
+		<name value="barley_0.5.nc" />
+	</file>
+</input>

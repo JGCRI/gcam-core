@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<commands>
+	<variable name="my2D" type="data">
+		<dimension value="2" />
+		<size x="3" y="2" />
+		<data x="0" y="0" value="1" />
+		<data x="1" y="0" value="2" />
+		<data x="2" y="0" value="3" />
+		<data x="0" y="1" value="4" />
+		<data x="1" y="1" value="5" />
+		<data x="2" y="1" value="6" />
+	</variable>
+	<variable name="US" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Emissions" />
+		<time value="2000.0" />
+		<comment value="reference of the US" />
+	</variable>
+	<variable name="Russa" type="reference">
+		<region value="Russa" />
+		<field value="Emissions" />
+		<time value="2000.0" />
+	</variable>
+	<variable name="myGroup1" type="group">
+		<fill value="time" />
+		<members>
+			<region value="USAcontiguous" />
+			<field value="Barley" />
+		</members>
+	</variable>
+	<variable name="myGroup2" type="group">
+		<fill value="subregions" />
+		<members>
+			<region value="USAcontiguous" />
+			<field value="Barley" />
+			<time value="1995.0" />
+		</members>
+	</variable>
+	<variable name="myGroup3" type="group">
+		<fill value="subregions" />
+		<members variable="US" />
+	</variable>
+	<variable name="myGroup4" type="group">
+		<fill value="explicit" />
+		<members>
+			<variable value="US" />
+			<variable value="Russia" />
+		</members>
+	</variable>
+	<extractSubRegion>
+		<target name="USagain" />
+		<source name="world" />
+		<shape value="UScontiguous" />
+	</extractSubRegion>
+	<getChildVariable>
+		<target name="newChild" />
+		<source name="play" />
+		<child name="Alaska" />
+	</getChildVariable>
+	<aggregateVariables>
+		<target name="world" />
+		<argument name="US" />
+		<argument name="Russia />
+	</aggregateVariables>
+	<comment>
+		<variable value="US" />
+		<text value="this is just a test of adding one to all values in USAcontiguous for Emissions" />
+	</comment>
+	<setReference>
+		<variable value="US" />
+		<text value="Vincent Nibali, 2005. You get the idea." />
+	</setReference>
+	<setUnits>
+		<variable value="US" />
+		<text value="km/g" />
+	</setUnits>
+	
+	<add>
+		<target name="my2D" />
+		<argument name="my2D" />
+		<argument name="my2D2" />
+	</add>
+	<addScalar>
+		<target name="US1" />
+		<argument name="US" />
+		<scalar value="1" />
+	</addScalar>
+	<addScalar>
+		<target name="US2" />
+		<argument name="US" />
+		<scalar name="num2" />
+	</addScalar>
+	<subtract>
+		<target name="USminusUS" />
+		<argument name="US1" />
+		<argument name="US" />
+	</subtract>
+	<multiply>
+		<target name="my2D" />
+		<argument name="my2D" />
+		<argument name="my2D2" />
+	</multiply>
+	<multiplyScalar>
+		<target name="US2" />
+		<argument name="US" />
+		<scalar name="num2" />
+	</multiplyScalar>
+	<divide>
+		<target name="my2D" />
+		<argument name="my2D" />
+		<argument name="my2D2" />
+	</divide>
+	<divideScalar>
+		<target name="US2" />
+		<argument name="US" />
+		<scalar name="2" />
+	</divideScalar>
+	<largestValue>
+		<target name="big" />
+		<argument name="US" />
+	</largestValue>
+	<smallestValue>
+		<target name="small" />
+		<argument name="US" />
+	</smallestValue>
+	<countGreaterThan>
+		<target name="num1" />
+		<argument name="US1" />
+		<limit value="1" />
+	</countGreaterThan>
+	<countLessThan>
+		<target name="num2" />
+		<argument name="US1" />
+		<mask name="US" />
+	</countLessThan>
+	<countElements>
+		<target name="num3" />
+		<argument name="US" />
+	</countElements>
+	<parseGreaterThan>
+		<target name="US1" />
+		<argument name="US1" />
+		<limit value="1" />
+	</parseGreaterThan>
+	<parseLessThan>
+		<target name="holdMe" />
+		<argument name="US1" />
+		<mask name="US" />
+	</parseLessThan>
+	<aggregateValues>
+		<target name="UStotal" />
+		<argument name="US" />
+	</aggregateValues>
+	<sumValues>
+		<target name="USsum" />
+		<argument name="US" />
+	</sumValues>
+	<avgOverRegion>
+		<target name="USavg" />
+		<argument name="US" />
+	</avgOverRegion>
+	<avgOverRegionByArea>
+		<target name="USareaAvg" />
+		<argument name="US" />
+	</avgOverRegionByArea>
+	<avgVariables>
+		<target name="UShalf" />
+		<argument name="US" />
+		<argument name="US1" />
+	</avgVariables>
+	<avgVariablesOverRegion>
+		<target name="UShalfnum" />
+		<argument name="US" />
+		<argument name="US1" />
+	</avgVariablesOverRegion>
+	<avgVariablesOverRegionByArea>
+		<target name="UShalfArea" />
+		<argument name="US" />
+		<argument name="US1" />
+	</avgVariablesOverRegionByArea>
+	<weight>
+		<target name="USweighted" />
+		<argument name="US" />
+		<scale name="US1">
+			<minimum value="1" />
+			<maximum value="2" />
+		</scale>
+		<minimumWeight value="0" />
+		<maximumWeight value="1" />
+	</weight>
+	
+	<print variable="US" />
+	<printVerbose variable="US1" />
+	<plot variable="USminusUS" />
+	<createDataSet>
+		<file name="datatest.txt" />
+		<source name="world" />
+		<tag value="true">
+			<fieldName value="added" />
+			<time value="2000" />
+		</tag>
+	</createDataSet>
+</commands>

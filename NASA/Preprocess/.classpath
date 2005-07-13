@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Workspace/NASA/Preprocess/Jama-1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jwsdp1.5/sjsxp/lib/jsr173_api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jwsdp1.5/sjsxp/lib/sjsxp.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/NASA/Preprocess/netcdf-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jwsdp1.5/sjsxp/lib/jsr173_1.0_api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jwsdp1.5/sjsxp/lib/grib.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jwsdp1.5/jdom/jdom.jar"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

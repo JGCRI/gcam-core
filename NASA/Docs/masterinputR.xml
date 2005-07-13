@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<input>
+	<file type="netcdf">
+		<res value="1" />
+		<region num="17">		 
+			<RID key='Algeria' value='30100' />	   
+			<RID key='Angola' value='30200' />	   
+			<RID key='Benin' value='30300' />	   
+			<RID key='Botswana' value='30400' />	   
+			<RID key='Burkina Faso' value='30500' />	   
+			<RID key='Burundi' value='30600' />	   
+			<RID key='cameroon' value='30700' />	   
+			<RID key='Central African Republic' value='30800' />	   
+			<RID key='Chad' value='30900' />	   
+			<RID key='Congo' value='31000' />	   
+			<RID key='Djibouti' value='31100' />	   
+			<RID key='Egypt' value='31200' />	   
+			<RID key='Equatorial Guinea' value='31300' />	   
+			<RID key='Eritrea' value='31400' />	   
+			<RID key='Ethiopia' value='31500' />	   
+			<RID key='Gabon' value='31600' />	   
+			<RID key='Gambia' value='31700' />	   
+			<RID key='Ghana' value='31800' />	   
+			<RID key='Guinea' value='31900' />	   
+			<RID key='Guinea-Bissau' value='32000' />	   
+			<RID key='Ivory Coast' value='32100' />	   
+			<RID key='Kenya' value='32200' />	   
+			<RID key='Lesotho' value='32300' />	   
+			<RID key='Liberia' value='32400' />	   
+			<RID key='libya' value='32500' />	   
+			<RID key='Madagascar' value='32600' />	   
+			<RID key='Malawi' value='32700' />	   
+			<RID key='Mali' value='32800' />	   
+			<RID key='Mauritania' value='32900' />	   
+			<RID key='Morocco' value='33000' />	   
+			<RID key='Mozambique' value='33100' />	   
+			<RID key='Namibia' value='33200' />	   
+			<RID key='Niger' value='33300' />	   
+			<RID key='Nigeria' value='33400' />	   
+			<RID key='Rwanda' value='33500' />	   
+			<RID key='Senegal' value='33600' />	   
+			<RID key='Sierra-Leone' value='33700' />	   
+			<RID key='Somalia' value='33800' />	   
+			<RID key='South-Africa' value='33900' />	   
+			<RID key='Sudan' value='34000' />	   
+			<RID key='Swaziland' value='34100' />	   
+			<RID key='tanzania' value='34200' />	   
+			<RID key='Togo' value='34300' />	   
+			<RID key='Tunisia' value='34400' />	   
+			<RID key='Uganda' value='34500' />	   
+			<RID key='Western-Sahara' value='34600' />	   
+			<RID key='Zaire' value='34700' />	   
+			<RID key='Zambia' value='34800' />	   
+			<RID key='Zimbabwe' value='34900' />	    
+			<RID key='Australian Capital Territory' value='50101' />	   
+			<RID key='Brunei' value='50200' />	   
+			<RID key='Indonesia' value='50300' />	   
+			<RID key='Malaysia' value='50400' />	   
+			<RID key='New South Wales' value='50102' />	   
+			<RID key='New Zealand' value='50500' />	   
+			<RID key='Northern Territory' value='50103' />	   
+			<RID key='Papua New Guinea' value='50600' />	   
+			<RID key='Philippines' value='50700' />	   
+			<RID key='Queensland' value='50104' />	   
+			<RID key='South Australia' value='50105' />	   
+			<RID key='Tasmania' value='50106' />	   
+			<RID key='Victoria' value='50107' />	   
+			<RID key='Western Australia' value='50108' />	   
+			<RID key='Afghanistan' value='40100' />	   
+			<RID key='Albania' value='40200' />	   
+			<RID key='Andaman and Nicobar Is' value='42901' />	   
+			<RID key='Andhra Pradesh' value='42903' />	   
+			<RID key='Andorra' value='40300' />	   
+			<RID key='Anhui' value='41501' />	   
+			<RID key='Armenia' value='40400' />	   
+			<RID key='Arunachal Pradesh' value='42902' />	   
+			<RID key='Assam' value='42904' />	   
+			<RID key='Austria' value='40500' />	   
+			<RID key='Azerbaijan' value='40600' />	   
+			<RID key='Bahrain' value='40700' />	   
+			<RID key='Bangladesh' value='40800' />	   
+			<RID key='Beijing' value='41502' />	   
+			<RID key='Belgium' value='40900' />	   
+			<RID key='Bhutan' value='41000' />	   
+			<RID key='Bihar' value='42905' />	   
+			<RID key='Bosnia and Herzegovina' value='41100' />	   
+			<RID key='Bulgaria' value='41200' />	   
+			<RID key='Belarus' value='41300' />	   
+			<RID key='Cambodia' value='41400' />	   
+			<RID key='Croatia' value='41600' />	   
+			<RID key='Cyprus' value='41700' />	   
+			<RID key='Czech Republic' value='41800' />	   
+			<RID key='Dadra and Nagar Haveli' value='42908' />	   
+			<RID key='Delhi' value='42909' />	   
+			<RID key='Denmark' value='41900' />	   
+			<RID key='Estonia' value='42000' />	   
+			<RID key='Finland' value='42100' />	   
+			<RID key='France' value='42200' />	   
+			<RID key='Fujian' value='41503' />	   
+			<RID key='Gansu' value='41504' />	   
+			<RID key='Gaza Strip' value='42300' />	   
+			<RID key='Georgia' value='42400' />	   
+			<RID key='Germany' value='42500' />	   
+			<RID key='Goa' value='42907' />	   
+			<RID key='Greece' value='42600' />	   
+			<RID key='Guangdong' value='41505' />	   
+			<RID key='Guangxi' value='41506' />	   
+			<RID key='Guizhou' value='41507' />	   
+			<RID key='Gujarat' value='42910' />	   
+			<RID key='Haryana' value='42906' />	   
+			<RID key='Hebei' value='41508' />	   
+			<RID key='Heilongjiang' value='41510' />	   
+			<RID key='Henan' value='41509' />	   
+			<RID key='Himachal Pradesh' value='42911' />	   
+			<RID key='Hubei' value='41511' />	   
+			<RID key='Hunan' value='41512' />	   
+			<RID key='Hungary' value='42700' />	   
+			<RID key='Iceland' value='42800' />	   
+			<RID key='Iran' value='43000' />	   
+			<RID key='Iraq' value='43100' />	   
+			<RID key='Ireland' value='43200' />	   
+			<RID key='Israel' value='43300' />	   
+			<RID key='Italy' value='43400' />	   
+			<RID key='Jammu & Kashmir' value='42912' />	   
+			<RID key='Japan' value='43500' />	   
+			<RID key='Jiangsu' value='41515' />	   
+			<RID key='Jiangxi' value='41514' />	   
+			<RID key='Jilin' value='41513' />	   
+			<RID key='Jordan' value='43600' />	   
+			<RID key='Karnataka' value='42914' />	   
+			<RID key='Kazakhstan' value='43700' />	   
+			<RID key='Kerala' value='42913' />	   
+			<RID key='Kuwait' value='43800' />	   
+			<RID key='Kyrgyzstan' value='43900' />	   
+			<RID key='Laos' value='44000' />	   
+			<RID key='Latvia' value='44100' />	   
+			<RID key='Lebanon' value='44200' />	   
+			<RID key='Liaoning' value='41516' />	   
+			<RID key='Liechtenstein' value='44300' />	   
+			<RID key='Lithuania' value='44400' />	   
+			<RID key='Macedonia' value='44500' />	   
+			<RID key='Madhya Pradesh' value='42918' />	   
+			<RID key='Maharashtra' value='42916' />	   
+			<RID key='Malaysia' value='44600' />	   
+			<RID key='Manipur' value='42917' />	   
+			<RID key='Meghalaya' value='42915' />	   
+			<RID key='Mizoram' value='42919' />	   
+			<RID key='Moldova' value='44700' />	   
+			<RID key='Mongolia' value='44800' />	   
+			<RID key='Myanmar' value='45000' />	   
+			<RID key='Nagaland' value='42920' />	   
+			<RID key='Nei Mongol' value='41517' />	   
+			<RID key='Ningxia' value='41518' />	   
+			<RID key='North Korea' value='45300' />	   
+			<RID key='Norway' value='45400' />	   
+			<RID key='Oman' value='45500' />	   
+			<RID key='Orissa' value='42921' />	   
+			<RID key='Pakistan' value='45600' />	   
+			<RID key='Poland' value='45700' />	   
+			<RID key='Pondicherry' value='42922' />	   
+			<RID key='Portugal' value='45800' />	   
+			<RID key='Punjab (I)' value='42923' />	   
+			<RID key='Qatar' value='45900' />	   
+			<RID key='Qinghai' value='41519' />	   
+			<RID key='Rajasthan' value='42924' />	   
+			<RID key='Romania' value='46000' />	   
+			<RID key='Russia' value='46100' />	   
+			<RID key='San Marino' value='46200' />	   
+			<RID key='Saudi Arabia' value='46300' />	   
+			<RID key='Shaanxi' value='41521' />	   
+			<RID key='Shandong' value='41522' />	   
+			<RID key='Shanghai' value='41523' />	   
+			<RID key='Shanxi' value='41524' />	   
+			<RID key='Sichuan' value='41520' />	   
+			<RID key='Sikkim' value='42925' />	   
+			<RID key='Singapore' value='46400' />	   
+			<RID key='Slovakia' value='46500' />	   
+			<RID key='Slovenia' value='46600' />	   
+			<RID key='South Korea' value='46700' />	   
+			<RID key='Spain' value='46800' />	   
+			<RID key='Sri Lanka' value='46900' />	   
+			<RID key='Sweden' value='47000' />	   
+			<RID key='Switzerland' value='47100' />	   
+			<RID key='Syria' value='47200' />	   
+			<RID key='Taiwan' value='47300' />	   
+			<RID key='Tajikistan' value='47400' />	   
+			<RID key='Tamil Nadu' value='42926' />	   
+			<RID key='Thailand' value='47500' />	   
+			<RID key='Tianjin' value='41525' />	   
+			<RID key='Tripura' value='42927' />	   
+			<RID key='Turkey' value='47600' />	   
+			<RID key='Turkmenistan' value='47700' />	   
+			<RID key='Ukraine' value='47800' />	   
+			<RID key='United Arab Emirates' value='47900' />	   
+			<RID key='United Kingdom' value='48000' />	   
+			<RID key='Uttar Pradesh' value='42928' />	   
+			<RID key='Uzbekistan' value='48100' />	   
+			<RID key='Vietnam' value='48200' />	   
+			<RID key='West Bank' value='48300' />	   
+			<RID key='West Bengal' value='42929' />	   
+			<RID key='Xinjiang' value='41526' />	   
+			<RID key='Xizang' value='41527' />	   
+			<RID key='Yemen' value='48400' />	   
+			<RID key='Yugoslavia' value='44900' />	   
+			<RID key='Yunnan' value='41528' />	   
+			<RID key='Zhejiang' value='41529' />	   
+			<RID key='Aguascalientes' value='11105' />	   
+			<RID key='Alabama' value='11501' />	   
+			<RID key='Alaska' value='11502' />	   
+			<RID key='Alberta' value='10205' />	   
+			<RID key='Arizona' value='11504' />	   
+			<RID key='Arkansas' value='11503' />	   
+			<RID key='Baja California' value='11101' />	   
+			<RID key='Baja California Sur' value='11102' />	   
+			<RID key='Belize' value='10100' />	   
+			<RID key='British Columbia' value='10207' />	   
+			<RID key='California' value='11505' />	   
+			<RID key='Campeche' value='11115' />	   
+			<RID key='Chiapas' value='11122' />	   
+			<RID key='Chihuahua' value='11124' />	   
+			<RID key='Coahuila' value='11125' />	   
+			<RID key='Colima' value='11112' />	   
+			<RID key='Colorado' value='11507' />	   
+			<RID key='Connecticut' value='11506' />	   
+			<RID key='Costa Rica' value='10300' />	   
+			<RID key='Cuba' value='10400' />	   
+			<RID key='Delaware' value='11508' />	   
+			<RID key='District of Columbia' value='11509' />	   
+			<RID key='Distrito Federal (M)' value='11111' />	   
+			<RID key='Dominican Republic' value='10500' />	   
+			<RID key='Durango' value='11127' />	   
+			<RID key='El Salvador' value='10600' />	   
+			<RID key='Florida (US)' value='11510' />	   
+			<RID key='Georgia' value='11511' />	   
+			<RID key='Guanajuato' value='11106' />	   
+			<RID key='Guatemala' value='10700' />	   
+			<RID key='Guerrero' value='11119' />	   
+			<RID key='Haiti' value='10800' />	   
+			<RID key='Hidalgo' value='11108' />	   
+			<RID key='Honduras' value='10900' />	   
+			<RID key='Idaho' value='11512' />	   
+			<RID key='Illinois' value='11513' />	   
+			<RID key='Indiana' value='11514' />	   
+			<RID key='Iowa' value='11515' />	   
+			<RID key='Jalisco' value='11104' />	   
+			<RID key='Jamaica' value='11000' />	   
+			<RID key='Kansas' value='11516' />	   
+			<RID key='Kentucky' value='11517' />	   
+			<RID key='Louisiana' value='11518' />	   
+			<RID key='Maine' value='11519' />	   
+			<RID key='Manitoba' value='10211' />	   
+			<RID key='Maryland (US)' value='11524' />	   
+			<RID key='Massachusetts' value='11526' />	   
+			<RID key='Mexico' value='11110' />	   
+			<RID key='Michigan' value='11520' />	   
+			<RID key='Michoacan' value='11109' />	   
+			<RID key='Minnesota' value='11521' />	   
+			<RID key='Mississippi' value='11525' />	   
+			<RID key='Missouri' value='11523' />	   
+			<RID key='Montana' value='11522' />	   
+			<RID key='Morelos' value='11113' />	   
+			<RID key='Nayarit' value='11103' />	   
+			<RID key='Nebraska' value='11529' />	   
+			<RID key='Nevada' value='11530' />	   
+			<RID key='New Brunswick' value='10208' />	   
+			<RID key='New Hampshire' value='11531' />	   
+			<RID key='New Jersey' value='11532' />	   
+			<RID key='New Mexico' value='11533' />	   
+			<RID key='New York' value='11534' />	   		
+			<RID key='Newfoundland' value='10206' />	   
+			<RID key='Nicaragua' value='11200' />	   
+			<RID key='North Carolina' value='11527' />	   
+			<RID key='North Dakota' value='11528' />	   
+			<RID key='Northwest Territories' value='10202' />	   
+			<RID key='Nova Scotia' value='10203' />	   	
+			<RID key='Nuevo Leon' value='11130' />	   
+			<RID key='Oaxaca' value='11120' />	   
+			<RID key='Ohio' value='11535' />	   
+			<RID key='Oklahoma' value='11536' />	   
+			<RID key='Ontario' value='10212' />	   	
+			<RID key='Oregon' value='11537' />	   
+			<RID key='Panama' value='11300' />	   
+			<RID key='Pennsylvania' value='11538' />	   
+			<RID key='Prince Edward Island' value='10209' />	   
+			<RID key='Puebla' value='11116' />	   
+			<RID key='Puerto Rico' value='11400' />	   
+			<RID key='Quebec' value='10201' />	   
+			<RID key='Queretaro' value='11107' />	   
+			<RID key='Quintana Roo' value='11117' />	   
+			<RID key='Rhode Island' value='11539' />	   
+			<RID key='San Luis Potosi' value='11129' />	   
+			<RID key='Saskatchewan' value='10204' />	   
+			<RID key='Sinaloa' value='11126' />	   
+			<RID key='Sonora' value='11123' />	   
+			<RID key='South Carolina' value='11540' />	   
+			<RID key='South Dakota' value='11541' />	   
+			<RID key='Tabasco' value='11121' />	   
+			<RID key='Tamaulipas' value='11131' />	   
+			<RID key='Tennessee' value='11543' />	   
+			<RID key='Texas' value='11542' />	   
+			<RID key='Tlaxcala' value='11118' />	   
+			<RID key='Utah' value='11544' />	   
+			<RID key='Veracruz' value='11132' />	   
+			<RID key='Vermont' value='11546' />	   
+			<RID key='Virginia' value='11545' />	   
+			<RID key='Washington' value='11548' />	   
+			<RID key='West Virginia' value='11549' />	   
+			<RID key='Wisconsin' value='11547' />	   
+			<RID key='Wyoming' value='11550' />	   
+			<RID key='Yucatan' value='11114' />	   
+			<RID key='Yukon Territory' value='10210' />	   
+			<RID key='Zacatecas' value='11128' />	   
+			<RID key='Acre' value='20301' />	   
+			<RID key='Alagoas' value='20302' />	   
+			<RID key='Amapa' value='20303' />	   
+			<RID key='Amazonas (B)' value='20304' />	   
+			<RID key='Bahia' value='20305' />	   
+			<RID key='Bolivia' value='20200' />	   
+			<RID key='Buenos Aires' value='20101' />	   
+			<RID key='Catamarca' value='20106' />	   
+			<RID key='Ceara' value='20306' />	   
+			<RID key='Chaco (A)' value='20102' />	   
+			<RID key='Chile' value='20400' />	   
+			<RID key='Chubut' value='20103' />	   
+			<RID key='Colombia' value='20500' />	   
+			<RID key='Cordoba (A)' value='20104' />	   
+			<RID key='Corrientes' value='20105' />	   
+			<RID key='Distrito Federal (A)' value='20107' />	   
+			<RID key='Distrito Federal (B)' value='20307' />	   
+			<RID key='Ecuador' value='20600' />	   
+			<RID key='Entre Rios' value='20108' />	   
+			<RID key='Espirito Santo' value='20308' />	   
+			<RID key='Formosa' value='20109' />	   
+			<RID key='French Guiana' value='20700' />	   
+			<RID key='Goias' value='20309' />	   
+			<RID key='Guyana' value='20800' />	   
+			<RID key='Jujuy' value='20110' />	   
+			<RID key='La Pampa' value='20111' />	   
+			<RID key='La Rioja' value='20112' />	   
+			<RID key='Maranhao' value='20313' />	   
+			<RID key='Mato Grosso' value='20312' />	   
+			<RID key='Mato Grosso do Sul' value='20310' />	   
+			<RID key='Mendoza' value='20113' />	   
+			<RID key='Minas Gerais' value='20311' />	   
+			<RID key='Misiones (A)' value='20114' />	   
+			<RID key='Neuquen' value='20115' />	   
+			<RID key='Para' value='20316' />	   
+			<RID key='Paraguay' value='20900' />	   
+			<RID key='Paraiba' value='20314' />	   
+			<RID key='Parana' value='20315' />	   
+			<RID key='Pernambuco' value='20318' />	   
+			<RID key='Peru' value='21000' />	   
+			<RID key='Piaui' value='20317' />	   
+			<RID key='Rio de Janeiro' value='20319' />	   
+			<RID key='Rio Grande do Norte' value='20320' />	   
+			<RID key='Rio Grande do Sul' value='20321' />	   
+			<RID key='Rio Negro' value='20116' />	   
+			<RID key='Rondonia' value='20322' />	   
+			<RID key='Roraima' value='20323' />	   
+			<RID key='Salta' value='20117' />	   
+			<RID key='San Juan' value='20121' />	   
+			<RID key='San Luis' value='20122' />	   
+			<RID key='Santa Catarina' value='20324' />	   
+			<RID key='Santa Cruz' value='20118' />	   
+			<RID key='Santa Fe' value='20120' />	   
+			<RID key='Santiago del Estero' value='20119' />	   
+			<RID key='Sao Paulo' value='20325' />	   
+			<RID key='Sergipe' value='20326' />	   
+			<RID key='Suriname' value='21100' />	   
+			<RID key='Tierra del Fuego' value='20124' />	   
+			<RID key='Tocantins' value='20327' />	   
+			<RID key='Trinidad and Tobago' value='21200' />
+			<RID key='Tucuman' value='20123' />
+			<RID key='Uruguay' value='21300' />
+			<RID key='Venezuela' value='21400' />
+		</region>
+		<variable value="ctry" />
+		<name value="glctry_1.0.nc" />
+	</file>
+	<file type= "txt" tagged="false">
+		<res value="1" />
+		<region num="17">
+			<RID key="1" value="US" />
+			<RID key="2" value="Canada" />
+			<RID key="3" value="Australia" />
+			<RID key="4" value="Britain" />
+			<RID key="5" value="Egypt" />
+			<RID key="6" value="Germany" />
+			<RID key="7" value="France" />
+			<RID key="8" value="Spain" />
+			<RID key="9" value="Mexico" />
+			<RID key="10" value="Ecuador" />
+			<RID key="11" value="Italy" />
+			<RID key="12" value="Brazil" />
+			<RID key="13" value="Portugal" />
+			<RID key="14" value="China" />
+			<RID key="15" value="Japan" />
+			<RID key="16" value="Russia" />
+			<RID key="17" value="India" />
+		</region>
+		<name value="17regmask.txt" />
+	</file>
+</input>

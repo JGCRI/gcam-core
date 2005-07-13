@@ -1,0 +1,74 @@
+INPUT
+	Grid Data
+		variable data slots (variable storage)
+	Reference Data
+		country masks, boundry definitions
+		how define area shapes?
+	Data Definitions
+		defining necessary data in the grid (validity check?)
+	Output Definitions
+		xml struture
+			depth, resolution, completeness
+		data manipulation
+			define bank of functions seperately? (in data definitions?)
+
+OUTPUT
+	XML Output - Based on Output Definitions
+	Output Options
+		Map
+		Excel
+		NetCDF
+		ASCII
+
+ISSUES
+	Scalable Grid Resolutions
+		Data Structure: PR-quadtree variation?
+		user choice for output and input?
+	Method of Defining Operations
+		regular expression interpretation
+		define in Output Definition?
+	Repeated use
+		save data in xml form? read in data as existing structure?
+		multilevel quadtree or quadtrie?
+			tree- would not have additional computation time for different resolutions
+			trie- would take much less space and, for creating the structure, much less time
+				updates to the trie would propogate when? on load on on next use of structure
+		single run vs multirun
+			single run- could build a goal specific structure, no need to store information beyond desired resolution
+			multirun- could have one large preprocessing run, subsequently generate results much quicker
+	
+Structures
+	NEEDS
+		-various undefined resolutions
+		-fast subregion extraction
+		-combining and 'splitting' of regions (pretty much suggests a tree structure)
+	ASSUMPTIONS
+		-no regions overlap
+	QUESTIONS
+		-block heirarchy vs region heirarchy
+			should the parent of a region be its logical parent region, or its spatial parent?
+		-ordered on blocks vs ordered on regions (sortof the same question)
+			should boundaries be region boundaries or predetermined quadtree boundaries?
+		-quadtree vs pyramid ordering
+			pyramid stores general information of children
+			combine the two? quadtree ordering with summary or averaged information in parents?
+	PR Quadtree (region based)
+		regular rules apply except use the idea from PM-1 Quadtree regarding line segments laying in different blocks
+		each block can contain only one region or part thereof
+		block boundaries are not closed
+		***would have infinite or near infinite splitting to fit regions
+	Regiontree (i might be inventing this which is probably bad)
+		each node is a region, which is either a leaf region or has 2 or more child regions
+		the sum of a region's children is itself
+		leaf regions contain all data on as specific a level as possible (trie)
+			*how can we do fast searches? once in a region, use region bounds, but to find that region would be linear time
+	Region Quadtree (what i refered to as a region based PRQuadtree, but i actually found a definition)
+		operates on the assumption that there is some delimitation on resolution (can we do that?)
+		also assumes that resolution operates on some similar scale
+			***how to reconcile 1/10 deg with 1/12 deg? have to go to 1/60 deg scale?
+		requires a block to be completely filled by a region
+	Quad Regiontree (another thing im making up)
+			kindof like a B+ of order 4
+		like a region quadtree, except allows up to 4 regions to lie in one block
+		allows higher resolution with less blocks
+	
