@@ -60,7 +60,7 @@ public class ModelRunner implements Runnable {
     /**
      * The run action which started this run.
      */
-    private final transient RunAction mInitiatingRunAction;
+    private final transient RunAction mSourceAction;
 
     /**
      * Private boolean which tells whether the model is running so that the
@@ -96,7 +96,7 @@ public class ModelRunner implements Runnable {
         mExecutableFile = aExecutableFile;
         mTempConfLocation = aTempConfLocation;
         mParentEditor = aParentEditor;
-        mInitiatingRunAction = aRunAction;
+        mSourceAction = aRunAction;
     }
 
     /**
@@ -107,7 +107,7 @@ public class ModelRunner implements Runnable {
      */
     public void run() {
         // Set that the model is now running.
-        mInitiatingRunAction.setModelRunning(true);
+        mSourceAction.setModelRunning(true);
         // Need to get the location to run the executable from.
         final String parentDirectory = mExecutableFile.getParent();
 
@@ -168,7 +168,7 @@ public class ModelRunner implements Runnable {
                     .getString("ModelRunner.5") + e.getMessage()); //$NON-NLS-1$
         }
         // Always set that the model is no longer running on completion.
-        mInitiatingRunAction.setModelRunning(false);
+        mSourceAction.setModelRunning(false);
     }
 
     /**

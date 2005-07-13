@@ -92,7 +92,6 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 		mCachedWrappers = new HashMap<Node, Object>();
 		// Set the root node now that all information is known.
 		mRoot = getRootNode();
-		
 		mSelectedItem = getElementAt(0);
 	}
 
@@ -162,10 +161,10 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 			// Specification says to do nothing in this case.
 			return;
 		}
-
+		
 		// Check if the item is already selected to avoid firing a 
 		// contents changed event.
-		if(aSelectedItem.equals(mSelectedItem)){
+		if(aSelectedItem != null && aSelectedItem.equals(mSelectedItem)){
 			return;
 		}
 		mSelectedItem = aSelectedItem;

@@ -50,7 +50,7 @@ final public class FileUtils {
 	 * @return The file name of the document.
 	 */
 	static public File getDocumentFile(final Document aDocument){
-        final String uri = (aDocument == null) ? null : aDocument.getDocumentURI();
+        final String uri = (aDocument == null) ? "" : aDocument.getDocumentURI();
         if(uri == null || uri.equals("")) { //$NON-NLS-1$
             return null;
         }

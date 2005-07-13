@@ -40,15 +40,15 @@ public class Main {
             Logger.global.log(Level.WARNING,
                     Messages.getString("Main.0")); //$NON-NLS-1$
         }
-        // Create the configuration editor main window and show it.
-        final ConfigurationEditor mainWindow = new ConfigurationEditor();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+                // Create the configuration editor main window and show it.
+                final ConfigurationEditor mainWindow = new ConfigurationEditor();
                 mainWindow.pack();
                 mainWindow.setVisible(true);
+                mainWindow.askForInitialAction();
             }
         });
-        mainWindow.askForInitialAction();
     }
 
 }

@@ -389,7 +389,7 @@ public final class DOMUtils {
         if (nameAttr == null) {
             return null;
         }
-        return nameAttr.getNodeValue() == "" ? null : nameAttr.getNodeValue(); //$NON-NLS-1$
+        return nameAttr.getNodeValue();
     }
 
     /**

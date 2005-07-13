@@ -35,7 +35,7 @@ public class DOMTreeModel implements TreeModel {
     /**
      * Map of cached node wrappers.
      */
-    private transient final Map<Node,Object> mCachedNodeWrappers;
+    private transient final Map<Node,Object> mWrappers;
     
     /**
      * The name of leaf elements in the DOM.
@@ -51,7 +51,7 @@ public class DOMTreeModel implements TreeModel {
         super();
         mRoot = aRootNode;
         mLeafName = aLeafName;
-        mCachedNodeWrappers = new HashMap<Node, Object>();
+        mWrappers = new HashMap<Node, Object>();
         mListeners = new ArrayList<TreeModelListener>();
     }
     
@@ -171,14 +171,14 @@ public class DOMTreeModel implements TreeModel {
      */
     private Object getOrCreateWrapper(final Node aNode) {
         // Check if the node has already had a wrapper created for it.
-        Object wrapper = mCachedNodeWrappers.get(aNode);
+        Object wrapper = mWrappers.get(aNode);
         
         // If the wrapper is null than one must be created for the
         // element node and cached. This is so a wrappers of the same
         // element node will always be equal.
         if(wrapper == null ){
             wrapper = TreeNodeWrapper.createProxy(aNode);
-            mCachedNodeWrappers.put(aNode, wrapper);
+            mWrappers.put(aNode, wrapper);
         }
         
         // Return the wrapper.

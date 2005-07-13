@@ -50,7 +50,7 @@ public class DOMListModel extends AbstractListModel implements
 	/**
 	 * A string containing the XPath to the parent node.
 	 */
-	private transient String mParentSelectedItemXPath = null;
+	private transient String mParentXPath = null;
 
 	/**
 	 * The name of the element containing the list. TODO: Is this needed?
@@ -94,11 +94,20 @@ public class DOMListModel extends AbstractListModel implements
 		// TODO: FIX and comment.
 		mContainerList = aContainerList;
 		mContainerElementName = aContainerName;
-		mParentSelectedItemXPath = mContainerElementName;
+		mParentXPath = mContainerElementName;
 		mElementName = aElementName;
 		mLeafChildren = aLeafChildren;
 	}
 
+	/**
+	 * Get the parent list.
+	 * TODO: This is bad.
+	 * @return The parent list.
+	 */
+	public JList getParentList(){
+		return mContainerList;
+	}
+	
 	/**
 	 * Set the parent list of the list.
 	 * 
@@ -121,17 +130,17 @@ public class DOMListModel extends AbstractListModel implements
 
 		// If the parent XPath starts with / this is a root level node
 		// and can set its content now.
-		if (mParentSelectedItemXPath.charAt(0) == '/' && (mDocument != null)) { //$NON-NLS-1$
+		if (mParentXPath.charAt(0) == '/' && (mDocument != null)) { //$NON-NLS-1$
 			// Set the value for the field. Query the DOM for a value
 			// for this XPath. If there is not a value in the DOM the list
 			// will be initialized to empty.
 			Node result = DOMUtils.getResultNodeFromQuery(mDocument,
-					mParentSelectedItemXPath);
+					mParentXPath);
 
 			// Create the node for the list if there isn't one already.
 			if (result == null) {
 				result = DOMUtils.addNodesForXPath(mDocument,
-						mParentSelectedItemXPath);
+						mParentXPath);
 			}
 			mRoot = result;
 		}
@@ -383,7 +392,7 @@ public class DOMListModel extends AbstractListModel implements
 	 * TODO: I think this is wrong, is aElementIndex a DOM index.
 	 */
 	public String getSelectedXPath(final int aElementIndex) {
-		return mParentSelectedItemXPath + "/" + mElementName + "[@name='" //$NON-NLS-1$ //$NON-NLS-2$
+		return mParentXPath + "/" + mElementName + "[@name='" //$NON-NLS-1$ //$NON-NLS-2$
 				+ DOMUtils.getNameAttrValue((Node) getElementAt(aElementIndex))
 				+ "']"; //$NON-NLS-1$
 	}
@@ -439,19 +448,19 @@ public class DOMListModel extends AbstractListModel implements
 	 *            The index now selected.
 	 */
 	private void update(final int aNewIndex) {
-		mParentSelectedItemXPath = ((DOMListModel) mParentList.getModel())
+		mParentXPath = ((DOMListModel) mParentList.getModel())
 				.getSelectedXPath(aNewIndex);
 
 		// Set the value for the field. Query the DOM for a value
 		// for this XPath. If there is not a value in the DOM the list
 		// will be initialized to empty.
 		Node result = DOMUtils.getResultNodeFromQuery(mDocument,
-				mParentSelectedItemXPath);
+				mParentXPath);
 
 		// Create the node for the list if there isn't one already.
 		if (result == null) {
 			result = DOMUtils.addNodesForXPath(mDocument,
-					mParentSelectedItemXPath);
+					mParentXPath);
 		}
 		mRoot = result;
 		fireContentsChanged(this, 0, getSize() - 1);
