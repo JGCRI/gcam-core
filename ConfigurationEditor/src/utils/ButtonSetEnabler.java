@@ -27,27 +27,27 @@ public class ButtonSetEnabler implements ListSelectionListener, ActionListener, 
     /**
      * The master list which controls the four dependent buttons.
      */
-    private JList mList = null;
+    private transient final JList mList;
     
     /**
      * A reference to the add button associated with the master list.
      */
-	private JButton mAdd = null;
+	private transient final JButton mAdd;
     
     /**
      * A reference to the delete button associated with the master list.
      */
-	private JButton mDelete = null;
+	private transient final JButton mDelete;
 	
     /**
      * A reference to the up button associated with the master list.
      */
-    private JButton mUp = null;
+    private transient final JButton mUp;
 	
     /**
      * A reference to the down button associated with the master list.
      */
-    private JButton mDown = null;
+    private transient final JButton mDown;
 
     
     /**
@@ -60,7 +60,8 @@ public class ButtonSetEnabler implements ListSelectionListener, ActionListener, 
      * @param aDown The down button.
      */
 	public ButtonSetEnabler(JList aList, JButton aAdd, JButton aDelete, JButton aUp, JButton aDown){
-		mList = aList;
+		super();
+        mList = aList;
 		mAdd = aAdd;
 		mDelete = aDelete;
 		mUp = aUp;
@@ -73,7 +74,7 @@ public class ButtonSetEnabler implements ListSelectionListener, ActionListener, 
      * @param aEvent The event received.
 	 * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
 	 */
-	public void valueChanged(ListSelectionEvent aEvent) {
+	public void valueChanged(final ListSelectionEvent aEvent) {
 		// Really need to do event checking.
 		updateButtonStates();
 	}
@@ -82,7 +83,7 @@ public class ButtonSetEnabler implements ListSelectionListener, ActionListener, 
      * Method called when an action is performed on the List.
      * @param aEvent The event receieved.
      */
-	public void actionPerformed(ActionEvent aEvent){
+	public void actionPerformed(final ActionEvent aEvent){
 		// Really need to event checking.
 		updateButtonStates();
 	}
@@ -91,7 +92,7 @@ public class ButtonSetEnabler implements ListSelectionListener, ActionListener, 
      * Method called when an interval is added to the list.
      * @param aEvent The event received.
      */
-    public void intervalAdded(ListDataEvent aEvent) {
+    public void intervalAdded(final ListDataEvent aEvent) {
         updateButtonStates();
      }
     
@@ -99,7 +100,7 @@ public class ButtonSetEnabler implements ListSelectionListener, ActionListener, 
       * Method called when an interval is removed from the list.
       * @param aEvent The event received.
       */
-     public void intervalRemoved(ListDataEvent aEvent) {
+     public void intervalRemoved(final ListDataEvent aEvent) {
          updateButtonStates();
      }
 
@@ -107,7 +108,7 @@ public class ButtonSetEnabler implements ListSelectionListener, ActionListener, 
       * Method called when the contents of a list change.
       * @param aEvent The event received.
       */
-     public void contentsChanged(ListDataEvent aEvent) {
+     public void contentsChanged(final ListDataEvent aEvent) {
          updateButtonStates();
      }
      
@@ -133,8 +134,8 @@ public class ButtonSetEnabler implements ListSelectionListener, ActionListener, 
                 mAdd.setEnabled(((DOMListModel) mList.getModel())
                         .canAddElements());
 
-                int listSize = mList.getModel().getSize();
-                int index = mList.getSelectedIndex();
+                final int listSize = mList.getModel().getSize();
+                final int index = mList.getSelectedIndex();
 
                 // Enable the delete button if the size is greater than zero and
                 // an

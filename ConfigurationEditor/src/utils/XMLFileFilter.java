@@ -11,19 +11,19 @@ import javax.swing.filechooser.FileFilter;
  * @author Josh Lurz
  */
 public class XMLFileFilter extends FileFilter {
-
 	/**
 	 * Decides whether a given file is acceptable. A file is acceptable
 	 * if it is a directory, or an XML file.
 	 * @return Whether the file is acceptable.
 	 * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
 	 */
-    @Override public boolean accept(File aFile) {
+    @Override public boolean accept(final File aFile) {
 		if (aFile.isDirectory()) {
 	    	return true;
 	    }
-	    String ext = FileUtils.getExtension(aFile);
-		return ( ext != null ) ? ext.equals("xml") : false; //$NON-NLS-1$
+	    
+        final String ext = FileUtils.getExtension(aFile);
+		return ( ext == null ) ? false : ext.equals("xml"); //$NON-NLS-1$
 	}
 
 	/**

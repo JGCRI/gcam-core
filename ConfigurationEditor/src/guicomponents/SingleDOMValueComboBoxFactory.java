@@ -30,27 +30,27 @@ public class SingleDOMValueComboBoxFactory {
      * The DOM document which contains the information pertaining to the combo
      * box.
      */
-    private Document mDocument = null;
+    private transient Document mDocument = null;
 
     /**
      * The root element name for the document.
      */
-    private String mRootElementName = null;
+    private transient String mRootElementName = null;
 
     /**
      * The element name for the parent nodes of the combo boxes.
      */
-    private String mParentNodeName = null;
+    private transient String mParentNodeName = null;
 
     /**
      * The name of the current parent element node.
      */
-    private String mCurrentParentName = null;
+    private transient String mCurrParentName = null;
 
     /**
      * Mapping of combo box name to combo box.
      */
-    Map<String, JComboBox> mComboBoxes = null;
+    private transient Map<String, JComboBox> mComboBoxes = null;
 
     /**
      * Constructor
@@ -64,6 +64,7 @@ public class SingleDOMValueComboBoxFactory {
      */
     public SingleDOMValueComboBoxFactory(Document aDocument,
             String aRootElementName, String aParentNodeName) {
+        super();
         mDocument = aDocument;
         mRootElementName = aRootElementName;
         mParentNodeName = aParentNodeName;
@@ -77,16 +78,16 @@ public class SingleDOMValueComboBoxFactory {
      * @param aNewNodeName
      *            The name of the new parent node.
      */
-    public void setParentName(String aNewNodeName) {
-        mCurrentParentName = aNewNodeName;
+    public void setParentName(final String aNewNodeName) {
+        mCurrParentName = aNewNodeName;
         // Iterate through any children combo boxes and reset their values.
-        Iterator<String> currChild = mComboBoxes.keySet().iterator();
+        final Iterator<String> currChild = mComboBoxes.keySet().iterator();
         while (currChild.hasNext()) {
             final String currChildName = currChild.next();
             final String xPath = createXPath(currChildName);
 
             // Query the DOM for a value for this XPath.
-            Node result = DOMUtils.getResultNodeFromQuery(mDocument, xPath);
+            final Node result = DOMUtils.getResultNodeFromQuery(mDocument, xPath);
             int newValue = -1;
             if (result != null && result.getTextContent() != null) {
                 newValue = Integer.parseInt(result.getTextContent());
@@ -94,7 +95,7 @@ public class SingleDOMValueComboBoxFactory {
             // Set the value into the current combo box. If there was not a
             // value returned from the DOM this will set null into the field
             // which needs to occur to erase an old value.
-            JComboBox currComboBox = mComboBoxes.get(currChildName);
+            final JComboBox currComboBox = mComboBoxes.get(currChildName);
             currComboBox.setSelectedIndex(newValue);
         }
     }
@@ -108,7 +109,7 @@ public class SingleDOMValueComboBoxFactory {
      *            The name of the item's corresponding node.
      * @return A newly created JComboBox.
      */
-    public JComboBox createComboBox(String[] aValues, String aItemName) {
+    public JComboBox createComboBox(final String[] aValues, final String aItemName) {
         // Check if the name already exists in the map. There
         // can't be duplicate elements.
         if (mComboBoxes.containsKey(aItemName)) {
@@ -118,7 +119,7 @@ public class SingleDOMValueComboBoxFactory {
         }
 
         // Create the combo box with the values and add it to the map.
-        JComboBox newComboBox = new JComboBox(aValues);
+        final JComboBox newComboBox = new JComboBox(aValues);
         // Don't initialize it now, this can't happen until the parent
         // node is known.
 
@@ -135,9 +136,9 @@ public class SingleDOMValueComboBoxFactory {
      *            The name of the item for which to create an XPath.
      * @return The XPath to this item.
      */
-    private String createXPath(String aItemName) {
+    private String createXPath(final String aItemName) {
         return "/" + mRootElementName + "/" + mParentNodeName + "[@name='"
-                + mCurrentParentName + "']/" + aItemName;
+                + mCurrParentName + "']/" + aItemName;
     }
 
     /**
@@ -152,7 +153,7 @@ public class SingleDOMValueComboBoxFactory {
         /**
          * The name of the node in the DOM.
          */
-        private String mItemName = null;
+        private transient final String mItemName;
 
         /**
          * Constructor which sets the XPath.
@@ -161,6 +162,7 @@ public class SingleDOMValueComboBoxFactory {
          *            The name of the node in the DOM.
          */
         public ComboBoxItemListener(String aItemName) {
+            super();
             mItemName = aItemName;
         }
 
@@ -172,7 +174,7 @@ public class SingleDOMValueComboBoxFactory {
          * @param aEvent
          *            The item event.
          */
-        public void itemStateChanged(ItemEvent aEvent) {
+        public void itemStateChanged(final ItemEvent aEvent) {
             // Check for the invalid condition when there isn't a document.
             if (mDocument == null) {
                 Logger.global.log(Level.WARNING,
@@ -183,7 +185,7 @@ public class SingleDOMValueComboBoxFactory {
             // Perform the query.
             final String xPath = createXPath(mItemName);
             Node resultNode = DOMUtils.getResultNodeFromQuery(mDocument, xPath);
-            int newIndex = ((JComboBox) aEvent.getSource()).getSelectedIndex();
+            final int newIndex = ((JComboBox) aEvent.getSource()).getSelectedIndex();
             // If the node is null it means that there were no results. Don't
             // create a new
             // node if the value which will be set in is blank. This avoid
@@ -202,6 +204,7 @@ public class SingleDOMValueComboBoxFactory {
                     isSameValue = (Integer.parseInt(resultNode.getTextContent()) == newIndex);
                 }
                 catch(NumberFormatException e) {
+                    Logger.global.log(Level.WARNING, "Number format caught while setting DOM value for combo box.");
                     // The value in the DOM wasn't a number which is
                     // incorrect, so allow it to be reset.
                 }

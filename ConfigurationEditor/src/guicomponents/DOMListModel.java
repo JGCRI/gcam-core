@@ -35,44 +35,44 @@ public class DOMListModel extends AbstractListModel implements
 	 * The root node of the list, the children of which are displayed as list
 	 * items.
 	 */
-	private Node mRoot = null;
+	private transient Node mRoot = null;
 
 	/**
 	 * The document the list is contained in.
 	 */
-	private Document mDocument = null;
+	private transient Document mDocument = null;
 
 	/**
 	 * The name of the elements which are considered list items.
 	 */
-	private String mElementName = null;
+	private final transient String mElementName;
 
 	/**
 	 * A string containing the XPath to the parent node.
 	 */
-	private String mParentSelectedItemXPath = null;
+	private transient String mParentSelectedItemXPath = null;
 
 	/**
 	 * The name of the element containing the list. TODO: Is this needed?
 	 */
-	private String mContainerElementName = null;
+	private final transient String mContainerElementName;
 
 	/**
 	 * Whether the children of this list are leaves of the DOM tree, if not they
 	 * have children with child nodes. This determines whether the text content
 	 * of nodes are set to the value of the list item.
 	 */
-	private boolean mChildrenAreLeaves = false;
+	private final transient boolean mLeafChildren;
 
 	/**
 	 * A list which this list is the child of. TODO: More docs here.
 	 */
-	private JList mParentList = null;
+	private transient JList mParentList = null;
 
 	/**
 	 * A list which this model is containing the data for.
 	 */
-	private JList mContainerList = null;
+	private final transient JList mContainerList;
 
 	/**
 	 * Constructor which sets the child element names.
@@ -81,22 +81,22 @@ public class DOMListModel extends AbstractListModel implements
 	 *            The list for which this model is containing information.
 	 * @param aElementName
 	 *            The name of the elements which are considered list items.
-	 * @param aContainerElementName
+	 * @param aContainerName
 	 *            The name of the container element for the list.
-	 * @param aChildrenAreLeaves
+	 * @param aLeafChildren
 	 *            Whether the elements of this list are leaves, if false they
 	 *            have node children. This determines whether the text content
 	 *            of the nodes should be set.
 	 */
 	public DOMListModel(JList aContainerList, String aElementName,
-			String aContainerElementName, boolean aChildrenAreLeaves) {
+			String aContainerName, boolean aLeafChildren) {
+        super();
 		// TODO: FIX and comment.
 		mContainerList = aContainerList;
-		mContainerElementName = aContainerElementName;
+		mContainerElementName = aContainerName;
 		mParentSelectedItemXPath = mContainerElementName;
 		mElementName = aElementName;
-		mContainerElementName = aContainerElementName;
-		mChildrenAreLeaves = aChildrenAreLeaves;
+		mLeafChildren = aLeafChildren;
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class DOMListModel extends AbstractListModel implements
 	 * @param aParentList
 	 *            The parent list.
 	 */
-	public void setParentList(JList aParentList) {
+	public void setParentList(final JList aParentList) {
 		mParentList = aParentList;
 	}
 
@@ -115,13 +115,13 @@ public class DOMListModel extends AbstractListModel implements
 	 * @param aDocument
 	 *            The new document.
 	 */
-	public void setDocument(Document aDocument) {
+	public void setDocument(final Document aDocument) {
 		mDocument = aDocument;
 		mRoot = null;
 
 		// If the parent XPath starts with / this is a root level node
 		// and can set its content now.
-		if (mParentSelectedItemXPath.startsWith("/") && (mDocument != null)) { //$NON-NLS-1$
+		if (mParentSelectedItemXPath.charAt(0) == '/' && (mDocument != null)) { //$NON-NLS-1$
 			// Set the value for the field. Query the DOM for a value
 			// for this XPath. If there is not a value in the DOM the list
 			// will be initialized to empty.
@@ -162,13 +162,13 @@ public class DOMListModel extends AbstractListModel implements
 	 *            An object for which to search the DOM.
 	 * @return Whether the item exists in the DOM.
 	 */
-	public boolean contains(Object aMatchObject) {
+	public boolean contains(final Object aMatchObject) {
 		// Create a new element and add a name attribute which is the
 		// value of the object. This has to be done before the uniqueness
 		// check so that searching for the item is easier. This will
 		// perform error checking on the match object and the root.
-		Element newElement = DOMUtils.createElement(mRoot, mElementName,
-				aMatchObject, mChildrenAreLeaves);
+		final Element newElement = DOMUtils.createElement(mRoot, mElementName,
+				aMatchObject, mLeafChildren);
 
 		// Search the DOM for the item.
 		return (DOMUtils.getDOMIndexOfObject(mRoot, newElement) != -1);
@@ -183,10 +183,10 @@ public class DOMListModel extends AbstractListModel implements
 	 * @param aPosition
 	 *            in the list to return the element at.
 	 */
-	public Object getElementAt(int aPosition) {
+	public Object getElementAt(final int aPosition) {
 		// Convert the list index into a DOM index to determine
 		// the child element to return.
-		int DOMIndex = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
+		final int DOMIndex = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
 		if (DOMIndex != -1) {
 			return NodeWrapper
 					.createProxy(mRoot.getChildNodes().item(DOMIndex));
@@ -208,12 +208,12 @@ public class DOMListModel extends AbstractListModel implements
 	 * @param aObject
 	 *            New list item to add to the list.
 	 */
-	public void addElement(Object aObject) {
+	public void addElement(final Object aObject) {
 		// Create a new element and add a name attribute which is the
 		// value of the object. This has to be done before the uniqueness
 		// check so that searching for the item is easier.
-		Element newElement = DOMUtils.createElement(mRoot, mElementName,
-				aObject, mChildrenAreLeaves);
+		final Element newElement = DOMUtils.createElement(mRoot, mElementName,
+				aObject, mLeafChildren);
 		// Check if the name is unique. This will fail if the createElement
 		// function failed and returned a null element.
 		if (DOMUtils.getDOMIndexOfObject(mRoot, newElement) != -1) {
@@ -229,9 +229,9 @@ public class DOMListModel extends AbstractListModel implements
 		mRoot.appendChild(newElement);
 
 		// Notify that the list changed, which is required for GUI updates.
-		int addedItemListIndex = DOMUtils.getListIndexOfObject(mRoot,
+		final int index = DOMUtils.getListIndexOfObject(mRoot,
 				newElement);
-		fireIntervalAdded(this, addedItemListIndex, addedItemListIndex);
+		fireIntervalAdded(this, index, index);
 	}
 
 	/**
@@ -250,10 +250,10 @@ public class DOMListModel extends AbstractListModel implements
 	 *            Object to remove from the list.
 	 * @return Whether the item was successfully removed.
 	 */
-	public boolean removeElement(Object aObject) {
+	public boolean removeElement(final Object aObject) {
 		// Find the index within the DOM of the item. This function
 		// will check for a null object.
-		int domIndex = DOMUtils.getDOMIndexOfObject(mRoot, aObject);
+		final int domIndex = DOMUtils.getDOMIndexOfObject(mRoot, aObject);
 
 		// TODO: Evaluate if better return values could be found for errors.
 		// Check if the item could not be found.
@@ -266,7 +266,7 @@ public class DOMListModel extends AbstractListModel implements
 		}
 
 		// Remove the object.
-		int removedListIndex = DOMUtils.getListIndexOfObject(mRoot, aObject);
+		final int removedListIndex = DOMUtils.getListIndexOfObject(mRoot, aObject);
 		mRoot.removeChild(mRoot.getChildNodes().item(domIndex));
 
 		// Alert the list that part of it changed. Uses list indexes,
@@ -282,9 +282,9 @@ public class DOMListModel extends AbstractListModel implements
 	 *            Element to move back in the list.
 	 * @return The new index of the element.
 	 */
-	public int moveElementBack(Object aObject) {
+	public int moveElementBack(final Object aObject) {
 		// Find the index within the DOM of the item.
-		int domIndex = DOMUtils.getDOMIndexOfObject(mRoot, aObject);
+		final int domIndex = DOMUtils.getDOMIndexOfObject(mRoot, aObject);
 
 		// Check if the item could not be found.
 		// TODO: Evaluate if better return values could be found for errors.
@@ -304,9 +304,9 @@ public class DOMListModel extends AbstractListModel implements
 		}
 
 		// Move the item back.
-		NodeList children = mRoot.getChildNodes();
+		final NodeList children = mRoot.getChildNodes();
 		Node curr = children.item(domIndex);
-		Node prev = DOMUtils.getItemBefore(mRoot, curr);
+		final Node prev = DOMUtils.getItemBefore(mRoot, curr);
 		curr = mRoot.removeChild(curr);
 		mRoot.insertBefore(curr, prev);
 
@@ -328,9 +328,9 @@ public class DOMListModel extends AbstractListModel implements
 	 *            Element to move up in the list.
 	 * @return The new index of the element.
 	 */
-	public int moveElementForward(Object aObject) {
+	public int moveElementForward(final Object aObject) {
 		// Find the index within the DOM of the item.
-		int domIndex = DOMUtils.getDOMIndexOfObject(mRoot, aObject);
+		final int domIndex = DOMUtils.getDOMIndexOfObject(mRoot, aObject);
 
 		// Check if the item could not be found.
 		if (domIndex == -1) {
@@ -347,12 +347,12 @@ public class DOMListModel extends AbstractListModel implements
 					.getString("DOMListModel.0")); //$NON-NLS-1$
 			return 0;
 		}
-		NodeList children = mRoot.getChildNodes();
+		final NodeList children = mRoot.getChildNodes();
 		Node curr = children.item(domIndex);
 		// Find a node to insert this item before. If its the second to
 		// last item, the item to insert before is null because there
 		// won't be an item after it.
-		Node prev = DOMUtils.getItemAfter(mRoot, DOMUtils.getItemAfter(mRoot,
+		final Node prev = DOMUtils.getItemAfter(mRoot, DOMUtils.getItemAfter(mRoot,
 				curr));
 		curr = mRoot.removeChild(curr);
 		mRoot.insertBefore(curr, prev);
@@ -382,7 +382,7 @@ public class DOMListModel extends AbstractListModel implements
 	 * @return The XPath for the selected item.
 	 * TODO: I think this is wrong, is aElementIndex a DOM index.
 	 */
-	public String getSelectedXPath(int aElementIndex) {
+	public String getSelectedXPath(final int aElementIndex) {
 		return mParentSelectedItemXPath + "/" + mElementName + "[@name='" //$NON-NLS-1$ //$NON-NLS-2$
 				+ DOMUtils.getNameAttrValue((Node) getElementAt(aElementIndex))
 				+ "']"; //$NON-NLS-1$
@@ -394,7 +394,7 @@ public class DOMListModel extends AbstractListModel implements
 	 * @param aEvent
 	 *            The even received.
 	 */
-	public void valueChanged(ListSelectionEvent aEvent) {
+	public void valueChanged(final ListSelectionEvent aEvent) {
 		mContainerList.setSelectedIndex(-1);
 		update(((JList) aEvent.getSource()).getSelectedIndex());
 	}
@@ -405,7 +405,7 @@ public class DOMListModel extends AbstractListModel implements
 	 * @param aEvent
 	 *            The event received.
 	 */
-	public void intervalAdded(ListDataEvent aEvent) {
+	public void intervalAdded(final ListDataEvent aEvent) {
 		// update(-1);
 	}
 
@@ -415,7 +415,7 @@ public class DOMListModel extends AbstractListModel implements
 	 * @param aEvent
 	 *            aEvent The event received.
 	 */
-	public void intervalRemoved(ListDataEvent aEvent) {
+	public void intervalRemoved(final ListDataEvent aEvent) {
 		// update(-1);
 	}
 
@@ -425,7 +425,7 @@ public class DOMListModel extends AbstractListModel implements
 	 * @param aEvent
 	 *            The event received.
 	 */
-	public void contentsChanged(ListDataEvent aEvent) {
+	public void contentsChanged(final ListDataEvent aEvent) {
 		mContainerList.setSelectedIndex(-1);
 		update(((DOMListModel) aEvent.getSource()).mContainerList
 				.getSelectedIndex());
@@ -438,7 +438,7 @@ public class DOMListModel extends AbstractListModel implements
 	 * @param aNewIndex
 	 *            The index now selected.
 	 */
-	private void update(int aNewIndex) {
+	private void update(final int aNewIndex) {
 		mParentSelectedItemXPath = ((DOMListModel) mParentList.getModel())
 				.getSelectedXPath(aNewIndex);
 

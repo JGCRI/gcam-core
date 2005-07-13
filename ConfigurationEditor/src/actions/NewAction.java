@@ -38,7 +38,7 @@ public class NewAction extends AbstractAction {
      * A reference to the top level editor from which this action is receiving
      * commands.
      */
-    private ConfigurationEditor mParentEditor = null;
+    private final transient ConfigurationEditor mParentEditor;
     
     /**
      * Constructor which sets the name of the Action and stores the parent editor.
@@ -60,14 +60,14 @@ public class NewAction extends AbstractAction {
      *            The event which triggered the action.
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(ActionEvent aEvent) {
+    public void actionPerformed(final ActionEvent aEvent) {
         // Check if the file should be saved before creating a new one.
         if (!FileUtils.askForSave(mParentEditor)) {
             // The user does not want to continue.
             return;
         }
         // Create the document builder.
-        DocumentBuilder docBuilder = DOMUtils.getDocumentBuilder(mParentEditor);
+        final DocumentBuilder docBuilder = DOMUtils.getDocumentBuilder(mParentEditor);
         
         // Return early if we couldn't create a document builder. An error
         // message will have been printed by the FileUtils function.
@@ -76,13 +76,13 @@ public class NewAction extends AbstractAction {
         }
         
         // Get the path to the configuration template from the preferences.
-        Properties props = FileUtils.getInitializedProperties(mParentEditor);
-        String currentFile = props.getProperty(PropertiesInfo.CONFIGURATION_TEMPLATE_PROPERTY);
+        final Properties props = FileUtils.getInitializedProperties(mParentEditor);
+        final String currentFile = props.getProperty(PropertiesInfo.CONF_TMPL);
         
         // Check if the configuration template path has been initialized.
         if( currentFile == null) {
-            String errorMessage = Messages.getString("NewAction.1"); //$NON-NLS-1$
-            String errorTitle =  Messages.getString("NewAction.2"); //$NON-NLS-1$
+            final String errorMessage = Messages.getString("NewAction.1"); //$NON-NLS-1$
+            final String errorTitle =  Messages.getString("NewAction.2"); //$NON-NLS-1$
             JOptionPane.showMessageDialog(mParentEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE );
             return;
         }
@@ -94,9 +94,9 @@ public class NewAction extends AbstractAction {
         } catch (Exception e) {
            // Unexpected error parsing the document.
             Logger.global.log(Level.SEVERE, e.getStackTrace().toString());
-            String errorMessage = Messages.getString("NewAction.3") //$NON-NLS-1$
+            final String errorMessage = Messages.getString("NewAction.3") //$NON-NLS-1$
                     + e.getMessage() + "."; //$NON-NLS-1$
-            String errorTitle = Messages.getString("NewAction.5"); //$NON-NLS-1$
+            final String errorTitle = Messages.getString("NewAction.5"); //$NON-NLS-1$
             JOptionPane.showMessageDialog(mParentEditor, errorMessage,
                     errorTitle, JOptionPane.ERROR_MESSAGE);
             return;
@@ -122,11 +122,10 @@ public class NewAction extends AbstractAction {
         // Put up a message telling the user that a new file was created,
         // otherwise there is no feedback for this action.
         Logger.global.log(Level.INFO, Messages.getString("NewAction.6")); //$NON-NLS-1$
-        String message = Messages.getString("NewAction.7"); //$NON-NLS-1$
-        String messageTitle = Messages.getString("NewAction.8"); //$NON-NLS-1$
+        final String message = Messages.getString("NewAction.7"); //$NON-NLS-1$
+        final String messageTitle = Messages.getString("NewAction.8"); //$NON-NLS-1$
         JOptionPane.showMessageDialog(mParentEditor, message, messageTitle,
                 JOptionPane.INFORMATION_MESSAGE);
-        return;
     }
 
 }

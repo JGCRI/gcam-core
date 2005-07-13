@@ -18,7 +18,6 @@ import configurationeditor.DOMDocumentEditor;
  * @author Josh Lurz
  */
 public class WindowCloseListener implements WindowListener {
-
     /**
      * Method called when the window is closing which checks if the document
      * needs saving and queries the user.
@@ -27,31 +26,29 @@ public class WindowCloseListener implements WindowListener {
      * @param aEvent
      *            The window event received.
      */
-    public void windowClosing(WindowEvent aEvent) {
-        DOMDocumentEditor sourceEditor = ((DOMDocumentEditor) aEvent
+    public void windowClosing(final WindowEvent aEvent) {
+        final DOMDocumentEditor sourceEditor = ((DOMDocumentEditor) aEvent
                 .getWindow());
         // Get the document from the editor.
-        Document document = sourceEditor.getDocument();
+        final Document document = sourceEditor.getDocument();
         // Check if the document needs to be saved.
         if (FileUtils.isDirty(document)) {
             // Check if the user must be asked before the file is saved.
             if (sourceEditor.askBeforeSaving()) {
                 final String message = "Would you like to save the current file?";
-                int rv = JOptionPane.showConfirmDialog(aEvent.getWindow(),
+                final int returnValue = JOptionPane.showConfirmDialog(aEvent.getWindow(),
                         message,
                         "Save Dialog", JOptionPane.YES_NO_CANCEL_OPTION); //$NON-NLS-1$
                 // The user wants to save.
-                if (rv == JOptionPane.YES_OPTION) {
-                    DOMUtils.serializeDocument(document, aEvent.getWindow());
-                } else if (rv == JOptionPane.NO_OPTION) {
-                    // They don't want to save, so allow the quit.
-                } else {
+                if (returnValue == JOptionPane.YES_OPTION) {
+                    DOMUtils.serialize(document, aEvent.getWindow());
+                } else if (returnValue == JOptionPane.CANCEL_OPTION) {
                     // They closed the dialog, they want to continue.
                     return;
                 }
             } else {
                 // Save the document without the user's intervention.
-                DOMUtils.serializeDocument(document, aEvent.getWindow());
+                DOMUtils.serialize(document, aEvent.getWindow());
             }
         }
         aEvent.getWindow().dispose();
@@ -63,7 +60,7 @@ public class WindowCloseListener implements WindowListener {
      * @param aEvent
      *            The window event received.
      */
-    public void windowOpened(WindowEvent aEvent) {
+    public void windowOpened(final WindowEvent aEvent) {
         // Do nothing
     }
 
@@ -73,7 +70,7 @@ public class WindowCloseListener implements WindowListener {
      * @param aEvent
      *            The window event received.
      */
-    public void windowClosed(WindowEvent aEvent) {
+    public void windowClosed(final WindowEvent aEvent) {
         // Do nothing
     }
 
@@ -83,7 +80,7 @@ public class WindowCloseListener implements WindowListener {
      * @param aEvent
      *            The window event received.
      */
-    public void windowIconified(WindowEvent aEvent) {
+    public void windowIconified(final WindowEvent aEvent) {
         // Do nothing
     }
 
@@ -93,7 +90,7 @@ public class WindowCloseListener implements WindowListener {
      * @param aEvent
      *            The window event received.
      */
-    public void windowDeiconified(WindowEvent aEvent) {
+    public void windowDeiconified(final WindowEvent aEvent) {
         // Do nothing
     }
 
@@ -103,7 +100,7 @@ public class WindowCloseListener implements WindowListener {
      * @param aEvent
      *            The window event received.
      */
-    public void windowActivated(WindowEvent aEvent) {
+    public void windowActivated(final WindowEvent aEvent) {
         // Do nothing
     }
 
@@ -113,7 +110,7 @@ public class WindowCloseListener implements WindowListener {
      * @param aEvent
      *            The window event received.
      */
-    public void windowDeactivated(WindowEvent aEvent) {
+    public void windowDeactivated(final WindowEvent aEvent) {
         // Do nothing
     }
 }

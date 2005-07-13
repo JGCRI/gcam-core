@@ -41,18 +41,18 @@ public class RunAction extends AbstractAction {
     /**
      * The temporary file to write the document to before the executable is run.
      */
-    private final String mTempConfigurationFile = "configuration_temp.xml"; //$NON-NLS-1$
+    private static final String mTempConfFile = "configuration_temp.xml"; //$NON-NLS-1$
 
     /**
      * A reference to the top level editor from which this action is receiving
      * commands.
      */
-    private ConfigurationEditor mParentEditor = null;
+    private final transient ConfigurationEditor mParentEditor;
     
     /**
      * Whether an instance of the model is currently running.
      */
-    private boolean mModelRunning = false;
+    private transient boolean mModelRunning = false;
     
     /**
      * Constructor which sets the name of the Action and stores the parent editor.
@@ -75,34 +75,34 @@ public class RunAction extends AbstractAction {
      * @param aEvent Event that triggered this action.
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(ActionEvent aEvent) {
+    public void actionPerformed(final ActionEvent aEvent) {
     	// First check if an instance of the model is already running.
     	if(isModelRunning()){
     		// Warn the user that this isn't possible to do and return.
-    		String errorMessage = Messages.getString("RunAction.7"); //$NON-NLS-1$
-    		String errorTitle = Messages.getString("RunAction.6"); //$NON-NLS-1$
+    		final String errorMessage = Messages.getString("RunAction.7"); //$NON-NLS-1$
+    		final String errorTitle = Messages.getString("RunAction.6"); //$NON-NLS-1$
             JOptionPane.showMessageDialog(mParentEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE );
             return;
     	}
         // Get the executable path from the properties file.
-        Properties props = FileUtils.getInitializedProperties(mParentEditor);
+        final Properties props = FileUtils.getInitializedProperties(mParentEditor);
         
         // Get the path to the executable.
-        String executableFile = props.getProperty(PropertiesInfo.EXE_PATH_PROPERTY);
+        final String executableFile = props.getProperty(PropertiesInfo.EXE_PATH);
         
         // Check if the executable path has been initialized.
         if( executableFile == null) {
-            String errorMessage = Messages.getString("RunAction.8"); //$NON-NLS-1$
-            String errorTitle = Messages.getString("RunAction.9"); //$NON-NLS-1$
+            final String errorMessage = Messages.getString("RunAction.8"); //$NON-NLS-1$
+            final String errorTitle = Messages.getString("RunAction.9"); //$NON-NLS-1$
             JOptionPane.showMessageDialog(mParentEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE );
             return;
         }
 
         // Check if the executable path points to a valid location.
-        File executable = new File(executableFile);
+        final File executable = new File(executableFile);
         if( !executable.exists()) {
-            String errorMessage = Messages.getString("RunAction.10"); //$NON-NLS-1$
-            String errorTitle = Messages.getString("RunAction.11"); //$NON-NLS-1$
+            final String errorMessage = Messages.getString("RunAction.10"); //$NON-NLS-1$
+            final String errorTitle = Messages.getString("RunAction.11"); //$NON-NLS-1$
             JOptionPane.showMessageDialog(mParentEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE );
             return;
         }
@@ -110,12 +110,12 @@ public class RunAction extends AbstractAction {
         
         // Clone the document before serializing to a different name to 
         // preserve all state.
-        DocumentBuilder builder = DOMUtils.getDocumentBuilder(mParentEditor);
-        Document clonedDoc = builder.newDocument();
+        final DocumentBuilder builder = DOMUtils.getDocumentBuilder(mParentEditor);
+        final Document clonedDoc = builder.newDocument();
         
         // Perform a deep clone on the document which will copy all nodes
         // and their children.
-        Node clonedRoot = (mParentEditor.getDocument().getDocumentElement().cloneNode(true));
+        final Node clonedRoot = (mParentEditor.getDocument().getDocumentElement().cloneNode(true));
         
         // Move the cloned node and its children from the configuration document 
         // which created it to the cloned document.
@@ -125,14 +125,14 @@ public class RunAction extends AbstractAction {
         clonedDoc.appendChild(clonedRoot);
         
         // Serialize the cloend document to a temporary location.
-        File tempConfFile = new File(mTempConfigurationFile);
+        final File tempConfFile = new File(mTempConfFile);
         FileUtils.setDocumentFile(clonedDoc, tempConfFile);
         
-        DOMUtils.serializeDocument(clonedDoc, mParentEditor);
+        DOMUtils.serialize(clonedDoc, mParentEditor);
         
         // Create a new thread to run the process on which will handle updating 
         // a dialog box containing the output of the model.
-        Thread runnerThread = new Thread(new ModelRunner( executable, tempConfFile, mParentEditor, this));
+        final Thread runnerThread = new Thread(new ModelRunner( executable, tempConfFile, mParentEditor, this));
         runnerThread.start();
     }
     
@@ -141,16 +141,20 @@ public class RunAction extends AbstractAction {
      * variable to protect against race conditions.
      * @return Whether the model is running.
      */
-    synchronized public boolean isModelRunning(){
-    	return mModelRunning;
+    public boolean isModelRunning(){
+        synchronized(this) {
+            return mModelRunning;
+        }
     }
     
     /**
      * Set that the model is either running or not running.
      * @param aIsRunning Whether the model is running.
      */
-    synchronized public void setModelRunning(boolean aIsRunning){
+    public void setModelRunning(final boolean aIsRunning){
         Logger.global.log(Level.INFO, "Setting model running to:" + aIsRunning);
-    	mModelRunning = aIsRunning;
+        synchronized(this) {
+            mModelRunning = aIsRunning;
+        }
     }
 }

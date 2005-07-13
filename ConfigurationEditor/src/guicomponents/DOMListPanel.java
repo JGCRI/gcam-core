@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -43,64 +44,64 @@ public class DOMListPanel extends JPanel {
 	/**
 	 * The label to title this panel with.
 	 */
-	private String mPanelLabel = null;
+	private transient final String mPanelLabel;
 	
     /**
      * The name of elements of this list.
      */
-    private String mElementName = null;
+    private transient final String mElementName;
     
     /**
      * The name of the element which contains this list.
      */
-    private String mContainerName = null;
+    private transient final String mContainerName;
     
 	/**
 	 * The add button.
 	 */
-	private JButton mAddButton = null;
+	private transient JButton mAddButton = null;
 	
 	/**
 	 * The delete button.
 	 */
-	private JButton mDeleteButton = null;
+	private transient JButton mDeleteButton = null;
 	
 	/**
 	 * The up button.
 	 */
-	private JButton mUpButton = null;
+	private transient JButton mUpButton = null;
 	
 	/**
 	 * The down button.
 	 */
-	private JButton mDownButton = null;
+	private transient JButton mDownButton = null;
 	
 	/**
 	 * The list of files.
 	 */
-	private JList mList = null;
+	private transient JList mList = null;
 	
 	/**
 	 * The file list model.
 	 */
-	private DOMListModel mListModel = null;
+	private transient DOMListModel mListModel = null;
 	
 	/**
 	 * The scroll pane containing the file list.
 	 */
-	private JScrollPane mListScrollPane = null;
+	private transient JScrollPane mListScrollPane = null;
 	
 	/**
 	 * The controller for enabling and disabling the set of buttons.
 	 */
-    private ButtonSetEnabler mFileListEnabler = null;
+    private transient ButtonSetEnabler mFileListEnabler = null;
     
 	/**
 	 * Whether the children of this list are leaves of the DOM tree, if 
 	 * not they have children with child nodes. This determines whether 
 	 * the items in the list are files or nodes.
 	 */
-	private boolean mChildrenAreLeaves = false;
+	private transient final boolean mLeafChildren;
 	
 	/**
 	 * Constructor which calls the default JPanel constructor. This
@@ -108,25 +109,25 @@ public class DOMListPanel extends JPanel {
 	 * @param aElementName The name of elements in the list.
      * @param aContainerName The name of the container element for the list.
 	 * @param aPanelLabel The label to put at the top of the panel.
-	 * @param aChildrenAreLeaves Whether the elements of this list are leaves. Leaf lists
+	 * @param aLeafChildren Whether the elements of this list are leaves. Leaf lists
 	 * will add new files as new items, node lists will add elements as new items.
 	 */
 	public DOMListPanel(String aElementName, String aContainerName,
-            String aPanelLabel, boolean aChildrenAreLeaves) {
+            String aPanelLabel, boolean aLeafChildren) {
 		super(new GridBagLayout());
 		assert(aElementName != null);
 		mElementName = aElementName;
         mContainerName = aContainerName;
 		mPanelLabel = aPanelLabel;
-		mChildrenAreLeaves = aChildrenAreLeaves;
-		initialize();
+		mLeafChildren = aLeafChildren;
+		editorInitialize();
 	}
 	
     /**
      * Set the underlying document.
      * @param aDocument The new document.
      */
-    public void setDocument(Document aDocument){
+    public void setDocument(final Document aDocument){
         getListModel().setDocument(aDocument);
         getButtonEnabler().valueChanged(null);
     }
@@ -134,12 +135,12 @@ public class DOMListPanel extends JPanel {
 	 * Initialize the panel before viewing.
 	 *
 	 */
-	private void initialize(){
+	private final void editorInitialize(){
         setBorder(BorderFactory.createEtchedBorder());
 		// Setup the frame.
         
         // Create a grid bag constraint.
-        GridBagConstraints cons = new GridBagConstraints();
+        final GridBagConstraints cons = new GridBagConstraints();
         
         // Create a border around the entire panel.
         cons.insets = new Insets(5, 5, 5, 5);
@@ -159,7 +160,7 @@ public class DOMListPanel extends JPanel {
         cons.anchor = GridBagConstraints.CENTER;
         
         // Add a label at the top.
-        JLabel panelLabel = new JLabel(mPanelLabel);
+        final JLabel panelLabel = new JLabel(mPanelLabel);
         add(panelLabel, cons);
         
         // Put the scroll pane at (0,1)
@@ -244,7 +245,7 @@ public class DOMListPanel extends JPanel {
 	public DOMListModel getListModel() {
 		if (mListModel == null) {
 			assert(mList != null);
-			mListModel = new DOMListModel(mList, mContainerName, mElementName, mChildrenAreLeaves );
+			mListModel = new DOMListModel(mList, mContainerName, mElementName, mLeafChildren );
 		}
 		return mListModel;
 	}
@@ -304,13 +305,13 @@ public class DOMListPanel extends JPanel {
             mAddButton.addActionListener(getButtonEnabler());
             
             // Decide how new items will be added.
-            if(mChildrenAreLeaves){
+            if(mLeafChildren){
             	// Add an action listener which will prompt the user to select a
             	// file and to add it.
             	mAddButton.addActionListener(new AddFileButtonActionListener());
             }
             else {
-            	// Add an action listener which will prompt the user to type a 
+            	// Add an action listener which will prompt the user to type a
             	// new item and add it.
             	mAddButton.addActionListener(new AddItemButtonActionListener());
             }
@@ -364,9 +365,9 @@ public class DOMListPanel extends JPanel {
             mUpButton.addActionListener(getButtonEnabler());
             
             // Add an action listener which will move the item up in the list.
-            mUpButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    int newPos = getListModel().moveElementBack(getList().getSelectedValue());
+            mUpButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent aEvent) {
+                    final int newPos = getListModel().moveElementBack(getList().getSelectedValue());
                     getList().setSelectedIndex(newPos);
                 }
             });
@@ -389,8 +390,8 @@ public class DOMListPanel extends JPanel {
             mDownButton.addActionListener(getButtonEnabler());
             mDownButton
                     .addActionListener( new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            int newPos = getListModel().moveElementForward(getList().getSelectedValue());
+                        public void actionPerformed(ActionEvent aEvent) {
+                            final int newPos = getListModel().moveElementForward(getList().getSelectedValue());
                             getList().setSelectedIndex(newPos);
                         }
                     });
@@ -405,13 +406,20 @@ public class DOMListPanel extends JPanel {
 	 *
 	 */
 	private final class AddItemButtonActionListener implements ActionListener {
+        /**
+         * Constructor
+         */
+        AddItemButtonActionListener(){
+            super();
+        }
+        
 		/**
 		 * Method called when an action is performed.
 		 * @param aEvent The event causing this action.
 		 */
-        public void actionPerformed(ActionEvent aEvent) {
+        public void actionPerformed(final ActionEvent aEvent) {
             final String message = Messages.getString("DOMListPanel.9"); //$NON-NLS-1$
-            String newItem = JOptionPane.showInputDialog(
+            final String newItem = JOptionPane.showInputDialog(
                     getUIRoot(), message, Messages.getString("DOMListPanel.10"), //$NON-NLS-1$
                     JOptionPane.PLAIN_MESSAGE);
             // Check if the value cannot be added because it is
@@ -419,8 +427,8 @@ public class DOMListPanel extends JPanel {
             // TODO: Consolidate duplicate code between this and the other
             // action listener
             if(getListModel().contains(newItem)) {
-                String errorTitle = Messages.getString("DOMListPanel.11"); //$NON-NLS-1$
-                String errorMessage = Messages.getString("DOMListPanel.12"); //$NON-NLS-1$
+                final String errorTitle = Messages.getString("DOMListPanel.11"); //$NON-NLS-1$
+                final String errorMessage = Messages.getString("DOMListPanel.12"); //$NON-NLS-1$
                 // TODO: Find a better container for the error message.
                 JOptionPane.showMessageDialog(null, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE);
             }
@@ -440,36 +448,43 @@ public class DOMListPanel extends JPanel {
 	 */
 	private final class AddFileButtonActionListener implements ActionListener {
 		/**
+         * Constructor
+		 */
+        AddFileButtonActionListener(){
+            super();
+        }
+        
+        /**
 		 * Method called when an action is performed.
 		 * @param aEvent The event causing this action.
 		 */
-		public void actionPerformed(ActionEvent aEvent) {
+		public void actionPerformed(final ActionEvent aEvent) {
 			// Create a file chooser and add an XML filter.
-		    JFileChooser chooser = new JFileChooser();
+		    final JFileChooser chooser = new JFileChooser();
 		    chooser.setFileFilter(new XMLFileFilter());
 		    
 		    // Show the file chooser.
-		    int rv = chooser.showOpenDialog(getUIRoot());
-		    if (rv == JFileChooser.APPROVE_OPTION) {
+		    final int returnValue = chooser.showOpenDialog(getUIRoot());
+		    if (returnValue == JFileChooser.APPROVE_OPTION) {
 		    	// Get the list of selected files.
-		    	File[] newFiles = FileUtils.getSelectedFiles(chooser);
+		    	final File[] newFiles = FileUtils.getSelectedFiles(chooser);
 		    	for (int i = 0; i < newFiles.length; i++) {
 		    		try {
-		    			String newFile = newFiles[i].getCanonicalPath();
+		    			final String newFile = newFiles[i].getCanonicalPath();
                         // Check if the value cannot be added because it is
                         // not unique and report an error to the user.
                         if(getListModel().contains(newFile)) {
-                            String errorTitle = Messages.getString("DOMListPanel.13"); //$NON-NLS-1$
-                            String errorMessage = Messages.getString("DOMListPanel.14"); //$NON-NLS-1$
+                            final String errorTitle = Messages.getString("DOMListPanel.13"); //$NON-NLS-1$
+                            final String errorMessage = Messages.getString("DOMListPanel.14"); //$NON-NLS-1$
                             // TODO: Find a better container for the error message.
                             JOptionPane.showMessageDialog(null, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE);
                         }
                         else {
                             getListModel().addElement(newFile);
                         }
-		    		} catch(IOException e){
-		    			e.printStackTrace();
-		    		}
+		    		} catch(IOException aException){
+                        // TODO: Error dialog.
+                        Logger.global.throwing("actionPerformed", "AddFileButtonActionListener", aException);		    		}
 		        }
                 // What thread are we on?
 		        getList().setSelectedIndex(getListModel().getSize() - 1);

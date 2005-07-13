@@ -41,473 +41,564 @@ import configurationeditor.ConfigurationEditor;
  * @author Josh Lurz
  */
 public class ModelRunner implements Runnable {
-	/**
-	 * Path to the executable.
-	 */
-	private File mExecutableFile = null;
+    /**
+     * Path to the executable.
+     */
+    private final transient File mExecutableFile;
 
-	/**
-	 * File containing the location of the temporary configuration file.
-	 */
-	private File mTempConfLocation = null;
+    /**
+     * File containing the location of the temporary configuration file.
+     */
+    private final transient File mTempConfLocation;
 
-	/**
-	 * A reference to the parent editor.
-	 * 
-	 */
-	private ConfigurationEditor mParentEditor = null;
+    /**
+     * A reference to the parent editor.
+     * 
+     */
+    private final transient ConfigurationEditor mParentEditor;
 
-	/**
-	 * The run action which started this run.
-	 */
-	private RunAction mInitiatingRunAction = null;
+    /**
+     * The run action which started this run.
+     */
+    private final transient RunAction mInitiatingRunAction;
 
-	/**
-	 * The output stream of the model(STDOUT).
-	 */
-	private InputStream mModelOutput = null;
+    /**
+     * Private boolean which tells whether the model is running so that the
+     * output watching thread knows when to stop.
+     */
+    private transient boolean mModelRunning = false;
 
-	/**
-	 * The error stream of the model(STDERR).
-	 */
-	private InputStream mModelError = null;
+    /**
+     * The exit code of the model. This is checked by the output watching
+     * thread.
+     */
+    private transient int mModelExitCode;
 
-	/**
-	 * Private boolean which tells whether the model is running so that the
-	 * output watching thread knows when to stop.
-	 */
-	private boolean mModelRunning = false;
+    /**
+     * The process which is running the model executable.
+     */
+    // private transient Process mModelProcess = null;
+    /**
+     * Constructor which initializes variables needed to run the model.
+     * 
+     * @param aExecutableFile
+     *            The absolute path to the model executable.
+     * @param aTempConfLocation
+     *            The location of the temporary configuration file.
+     * @param aParentEditor
+     *            A reference to the top level editor window.
+     * @param aRunAction
+     *            The run action which initiated this model run.
+     */
+    public ModelRunner(File aExecutableFile, File aTempConfLocation,
+            ConfigurationEditor aParentEditor, RunAction aRunAction) {
+        super();
+        mExecutableFile = aExecutableFile;
+        mTempConfLocation = aTempConfLocation;
+        mParentEditor = aParentEditor;
+        mInitiatingRunAction = aRunAction;
+    }
 
-	/**
-	 * The exit code of the model. This is checked by the output watching
-	 * thread.
-	 */
-	private int mModelExitCode = 0;
+    /**
+     * Executes the model and dispatches a second thread to read output from the
+     * model.
+     * 
+     * @see java.lang.Runnable#run()
+     */
+    public void run() {
+        // Set that the model is now running.
+        mInitiatingRunAction.setModelRunning(true);
+        // Need to get the location to run the executable from.
+        final String parentDirectory = mExecutableFile.getParent();
 
-	/**
-	 * The process which is running the model executable.
-	 */
-	private Process mModelProcess = null;
+        Logger.global
+                .log(
+                        Level.INFO,
+                        Messages.getString("RunAction.12") + mExecutableFile.getAbsolutePath() //$NON-NLS-1$
+                                + " -C" + mTempConfLocation.getAbsolutePath() + Messages.getString("ModelRunner.0") + parentDirectory); //$NON-NLS-1$ //$NON-NLS-2$
+        final ProcessBuilder procBuilder = new ProcessBuilder(mExecutableFile
+                .getAbsolutePath(), "-C" + mTempConfLocation.getAbsolutePath()); //$NON-NLS-1$
+        // Set the working directory.
+        procBuilder.directory(new File(parentDirectory));
+        try {
+            // Start the model. This will occur in a seperate thread.
+            final Process modelProcess = procBuilder.start();
 
-	/**
-	 * Constructor which initializes variables needed to run the model.
-	 * 
-	 * @param aExecutableFile
-	 *            The absolute path to the model executable.
-	 * @param aTempConfLocation
-	 *            The location of the temporary configuration file.
-	 * @param aParentEditor
-	 *            A reference to the top level editor window.
-	 * @param aRunAction
-	 *            The run action which initiated this model run.
-	 */
-	public ModelRunner(File aExecutableFile, File aTempConfLocation,
-			ConfigurationEditor aParentEditor, RunAction aRunAction) {
-		super();
-		mExecutableFile = aExecutableFile;
-		mTempConfLocation = aTempConfLocation;
-		mParentEditor = aParentEditor;
-		mInitiatingRunAction = aRunAction;
-	}
+            // Hookup to the model input and output streams.
+            final InputStream modelOutput = new BufferedInputStream(
+                    modelProcess.getInputStream());
+            final InputStream modelError = new BufferedInputStream(modelProcess
+                    .getErrorStream());
 
-	/**
-	 * Executes the model and dispatches a second thread to read output from the
-	 * model.
-	 * 
-	 * @see java.lang.Runnable#run()
-	 */
-	public void run() {
-		// Set that the model is now running.
-		mInitiatingRunAction.setModelRunning(true);
-		// Need to get the location to run the executable from.
-		String parentDirectory = mExecutableFile.getParent();
+            // Set a flag indicating the model is currently running
+            // to prevent the user from running the model twice.
+            mModelRunning = true;
 
-		Logger.global
-				.log(
-						Level.INFO,
-						Messages.getString("RunAction.12") + mExecutableFile.getAbsolutePath() //$NON-NLS-1$
-								+ " -C" + mTempConfLocation.getAbsolutePath() + Messages.getString("ModelRunner.0") + parentDirectory); //$NON-NLS-1$ //$NON-NLS-2$
-		ProcessBuilder procBuilder = new ProcessBuilder(mExecutableFile
-				.getAbsolutePath(), "-C" + mTempConfLocation.getAbsolutePath()); //$NON-NLS-1$
-		// Set the working directory.
-		procBuilder.directory(new File(parentDirectory));
-		try {
-			// Start the model. This will occur in a seperate thread.
-			mModelProcess = procBuilder.start();
+            // Create another process which will print the output to a dialog
+            // box.
+            final Thread outputWatcher = new OutputWatcher(modelProcess,
+                    modelOutput, modelError);
+            // Start the output watching process.
+            outputWatcher.start();
 
-			// Hookup to the model input and output streams.
-			mModelOutput = new BufferedInputStream(mModelProcess
-					.getInputStream());
-			mModelError = new BufferedInputStream(mModelProcess
-					.getErrorStream());
+            // Wait on this thread for the model to complete.
+            modelProcess.waitFor();
 
-			// Set a flag indicating the model is currently running
-			// to prevent the user from running the model twice.
-			mModelRunning = true;
+            // Get the exit code of the process.
+            mModelExitCode = modelProcess.exitValue();
 
-			// Create another process which will print the output to a dialog
-			// box.
-			Thread outputWatcher = new OutputWatcher();
-			// Start the output watching process.
-			outputWatcher.start();
+            // Forcibly clean up the process.
+            modelProcess.destroy();
 
-			// Wait on this thread for the model to complete.
-			mModelProcess.waitFor();
+            // Log that the model has completed running.
+            Logger.global.log(Level.INFO,
+                    Messages.getString("ModelRunner.3") + mModelExitCode + "."); //$NON-NLS-1$ //$NON-NLS-2$
+            // Stop the output watching thread by setting that the model is no
+            // longer running.
+            mModelRunning = false;
 
-			// Get the exit code of the process.
-			mModelExitCode = mModelProcess.exitValue();
+        } catch (IOException e) {
+            // Run failed.
+            final String errorTitle = Messages.getString("RunAction.15"); //$NON-NLS-1$
+            final String errorMessage = Messages.getString("RunAction.16") + e.getMessage() + "."; //$NON-NLS-1$ //$NON-NLS-2$
+            JOptionPane.showMessageDialog(mParentEditor, errorMessage,
+                    errorTitle, JOptionPane.ERROR_MESSAGE);
+        } catch (InterruptedException e) {
+            Logger.global.log(Level.WARNING, Messages
+                    .getString("ModelRunner.5") + e.getMessage()); //$NON-NLS-1$
+        }
+        // Always set that the model is no longer running on completion.
+        mInitiatingRunAction.setModelRunning(false);
+    }
 
-			// Forcibly clean up the process.
-			mModelProcess.destroy();
+    /**
+     * A class which watches the output of the executable and dumps it onto a
+     * window for the user.
+     * 
+     * @author Josh Lurz
+     */
+    private final class OutputWatcher extends Thread {
+        /**
+         * The process from which it is watching for output.
+         */
+        private transient final Process mProcess;
 
-			// Log that the model has completed running.
-			Logger.global.log(Level.INFO,
-					Messages.getString("ModelRunner.3") + mModelExitCode + "."); //$NON-NLS-1$ //$NON-NLS-2$
-			// Stop the output watching thread by setting that the model is no
-			// longer running.
-			mModelRunning = false;
+        /**
+         * The output stream being watched(STDOUT).
+         */
+        private transient final InputStream mModelOutput;
 
-		} catch (IOException e) {
-			// Run failed.
-			String errorTitle = Messages.getString("RunAction.15"); //$NON-NLS-1$
-			String errorMessage = Messages.getString("RunAction.16") + e.getMessage() + "."; //$NON-NLS-1$ //$NON-NLS-2$
-			JOptionPane.showMessageDialog(mParentEditor, errorMessage,
-					errorTitle, JOptionPane.ERROR_MESSAGE);
-		} catch (InterruptedException e) {
-			Logger.global.log(Level.WARNING, Messages
-					.getString("ModelRunner.5") + e.getMessage()); //$NON-NLS-1$
-		}
-		// Always set that the model is no longer running on completion.
-		mInitiatingRunAction.setModelRunning(false);
-	}
+        /**
+         * The error stream being watched(STDERR).
+         */
+        private transient final InputStream mModelError;
 
-	/**
-	 * A class which watches the output of the executable and dumps it onto a
-	 * window for the user.
-	 * 
-	 * @author Josh Lurz
-	 */
-	private final class OutputWatcher extends Thread {
-		/**
-		 * Method which the Thread initiates when it starts. The thread creates
-		 * a new window and a displays output from the executable into a text
-		 * area in the window.
-		 */
-		@Override
-		public void run() {
-			// Create a new dialog box to display the output.
-			JDialog outputDialog = new JDialog(mParentEditor, Messages
-					.getString("ModelRunner.2"), false); //$NON-NLS-1$
-			outputDialog.setLayout(new BoxLayout(outputDialog.getContentPane(),
-					BoxLayout.Y_AXIS));
+        /**
+         * Constructor
+         * 
+         * @param aProcess
+         *            The process from which it is watching for output.
+         * @param aModelOutput
+         *            The output stream being watched(STDOUT).
+         * @param aModelError
+         *            The error stream being watched(STDERR).
+         */
+        public OutputWatcher(Process aProcess, InputStream aModelOutput,
+                InputStream aModelError) {
+            super();
+            mProcess = aProcess;
+            mModelOutput = aModelOutput;
+            mModelError = aModelError;
+        }
 
-			// Stop the model if the user closes the window.
-			outputDialog
-					.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-			outputDialog.addWindowListener(new OutputWindowCloseListener());
-			outputDialog.setPreferredSize(new Dimension(400, 400));
+        /**
+         * Method which the Thread initiates when it starts. The thread creates
+         * a new window and a displays output from the executable into a text
+         * area in the window.
+         */
+        @Override
+        public void run() {
+            // Create the GUI components.
+            final JDialog outputDialog = createOutputDialog();
+            final JTextArea outputArea = createOutputArea();
+            final JScrollPane outputScrollPane = createOutputScrollPane(outputArea);
 
-			// Create a text area to contain the output.
-			final JTextArea outputArea = new JTextArea();
+            // Add the scroll pane at the center of the window.
+            outputDialog.add(outputScrollPane);
+            outputDialog.add(createTerminateButton());
 
-			// Don't allow the user to edit model output.
-			outputArea.setEditable(false);
+            // TODO: Save button?
 
-			// Put the output area into a scroll pane.
-			final JScrollPane outputScrollPane = new JScrollPane(outputArea,
-					ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            // Display the dialog.
+            outputDialog.pack();
+            outputDialog.setVisible(true);
 
-			// Setup the scroll pane to automatically scroll as content
-			// is added.
-			outputScrollPane.setAutoscrolls(true);
-			outputScrollPane.addMouseMotionListener(new ScrollPaneScroller());
+            // Lower the priority on the current thread because this will
+            // become the output watcher.
+            setPriority(Thread.MIN_PRIORITY);
 
-			// Add the scroll pane at the center of the window.
-			outputDialog.add(outputScrollPane);
+            // Create a buffer to read data from the model. This is
+            // much faster than reading character by character.
+            final int BUFFER_SIZE = 100;
+            final byte buffer[] = new byte[BUFFER_SIZE];
 
-			// Add a button at the bottom which will stop the model.
-			JButton terminateButton = new JButton();
-			terminateButton.setText("Terminate");
-			terminateButton.setToolTipText("Terminate the model run.");
-			terminateButton.setPreferredSize(new Dimension(50, 40));
-			terminateButton.addActionListener(new ActionListener() {
-				/**
-				 * Method called when the button is clicked which will terminate
-				 * the model
-				 * 
-				 * @param aEvent
-				 *            The event received.
-				 */
-				public void actionPerformed(ActionEvent aEvent) {
-					Logger.global
-							.log(Level.INFO,
-									"Terminate button pressed, attempting to stop the model.");
-					// Set the model and the output watcher
-					// to stop when there is a chance.
-					mModelRunning = false;
-					mModelProcess.destroy();
-				}
+            // Setup a loop which will continue until the model stops running
+            // which adds output to the text area.
+            while (mModelRunning) {
+                // Sleep so the model has a chance to produce
+                // some output.
+                try {
+                    sleep(100); // Tweak this.
+                    // Should we explicitly yield here?
+                } catch (InterruptedException aException) {
+                    // This could be caused legitimately by the Cancel
+                    // button.
+                    Logger.global.throwing("Interrupted Exception",
+                            "ModelRunner", aException);
+                    // If we were interrupted the user tried to cancel
+                    // the model run, so stop the loop.
+                    mModelRunning = false;
+                }
+                try {
+                    updateOutputWindow(outputArea, outputScrollPane,
+                            mModelOutput, buffer);
+                    updateOutputWindow(outputArea, outputScrollPane,
+                            mModelError, buffer);
 
-			});
-			outputDialog.add(terminateButton);
+                } catch (IOException aException) {
+                    Logger.global.throwing("Interrupted Exception",
+                            "ModelRunner", aException);
+                    // An error occurred, cancel the model run.
+                    mModelRunning = false;
+                    mProcess.destroy();
+                }
+            }
+            // Loop exited
+            Logger.global.log(Level.INFO,
+                    "Output watching loop exited. Thread finished.");
+        }
 
-			// TODO: Save button?
+        /**
+         * Read from the given input stream and pass the output to an object
+         * which will update the text area and scroll panel.
+         * 
+         * @param aOutputArea
+         *            The output area to update.
+         * @param aOutputScrollPane
+         *            The output scroll pane to update.
+         * @param aStream
+         *            The stream from which to read.
+         * @param aBuffer
+         *            The temporary buffer to use.
+         * @throws IOException
+         *             Exception thrown when reading fails.
+         */
+        private void updateOutputWindow(final JTextArea aOutputArea,
+                final JScrollPane aOutputScrollPane, final InputStream aStream,
+                final byte[] aBuffer) throws IOException {
+            // Check if there is any data available from
+            // the model output stream.
+            if (aStream.available() > 0) {
+                final int bytesRead = aStream.read(aBuffer, 0, aBuffer.length);
+                if (bytesRead > 0) {
+                    final String newOutput = new String(aBuffer, 0, bytesRead);
+                    // Update the interface on the GUI thread.
+                    // Using invoke and wait to avoid a race condition
+                    // with the string buffer.
+                    SwingUtilities.invokeLater(new ScreenPrinter(
+                            aOutputScrollPane, aOutputArea, newOutput));
+                }
+            }
+        }
 
-			// Display the dialog.
-			outputDialog.pack();
-			outputDialog.setVisible(true);
+        /**
+         * Creates a button which can terminate the model process.
+         * 
+         * @return A button which can terminate the model process.
+         */
+        private JButton createTerminateButton() {
+            // Add a button at the bottom which will stop the model.
+            final JButton terminateButton = new JButton("Terminate");
+            terminateButton.setToolTipText("Terminate the model run.");
+            terminateButton.addActionListener(new TerminateButtonListener());
+            return terminateButton;
+        }
 
-			// Lower the priority on the current thread because this will
-			// become the output watcher.
-			setPriority(Thread.MIN_PRIORITY);
+        /**
+         * An output scroll pane which has auto scroll activated and a mouse
+         * listener to scroll the pane.
+         * 
+         * @param aOutputArea
+         *            The output area to contain in the scroll pane.
+         * @return A scroll pane wrapping the output area.
+         */
+        private JScrollPane createOutputScrollPane(final JTextArea aOutputArea) {
+            // Put the output area into a scroll pane.
+            final JScrollPane outputScrollPane = new JScrollPane(aOutputArea,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-			// Create a buffer to read data from the model. This is
-			// much faster than reading character by character.
-			final int BUFFER_SIZE = 100;
-			byte buffer[] = new byte[BUFFER_SIZE];
+            // Setup the scroll pane to automatically scroll as content
+            // is added.
+            outputScrollPane.setAutoscrolls(true);
+            outputScrollPane.addMouseMotionListener(new ScrollPaneScroller());
+            return outputScrollPane;
+        }
 
-			// Setup a loop which will continue until the model stops running
-			// which adds output to the text area.
-			while (mModelRunning) {
-				// Sleep so the model has a chance to produce
-				// some output.
-				try {
-					sleep(100); // Tweak this.
-					// Should we explicitly yield here?
-				} catch (InterruptedException e) {
-					// This could be caused legitimately by the Cancel
-					// button.
-					e.printStackTrace();
-					// If we were interrupted the user tried to cancel
-					// the model run, so stop the loop.
-					mModelRunning = false;
-				}
-				try {
-					// Check if there is any data available from
-					// the model output stream.
-					if (mModelOutput.available() > 0) {
-						int bytesRead = mModelOutput.read(buffer, 0,
-								BUFFER_SIZE);
-						if (bytesRead > 0) {
-							final String newOutput = new String(buffer, 0,
-									bytesRead);
-							// Update the interface on the GUI thread.
-							// Using invoke and wait to avoid a race condition
-							// with the string buffer.
-							SwingUtilities.invokeLater(new Runnable() {
-								/**
-								 * Method called from the GUI thread to update
-								 * the output area.
-								 */
-								public void run() {
-									// Add the output to the output area.
-									outputArea.append(newOutput);
-									// Scroll the output window.
-									// Get the bounds of the output area so we
-									// can
-									// determine its bottom.
-									Rectangle bottom = outputArea.getBounds();
+        /**
+         * Creates a text area to display output from the model.
+         * @return An output area to display output.
+         */
+        private JTextArea createOutputArea() {
+            // Create a text area to contain the output.
+            final JTextArea outputArea = new JTextArea();
 
-									// Get the viewable rectangle currently of
-									// the scroll pane so that the viewable
-									// window
-									// doesn't adjust horizontally.
-									Rectangle currView = outputScrollPane
-											.getViewportBorderBounds();
+            // Don't allow the user to edit model output.
+            outputArea.setEditable(false);
+            return outputArea;
+        }
 
-									// Create a rectangle to scroll to which is
-									// located at the
-									// bottom the output area in the same
-									// horizontal position as it
-									// was before the move. The last two
-									// parameters, the width and height
-									// of the rectangle, do not matter.
-									Rectangle lowerBound = new Rectangle(
-											bottom.y + bottom.height,
-											currView.x, 1, 1);
-									outputScrollPane
-											.scrollRectToVisible(lowerBound);
-								}
-							});
-						}
-					}
+        /**
+         * Creates a dialog which will display output from the model.
+         * @return An output dialog to contain output from the model.
+         */
+        private JDialog createOutputDialog() {
+            // Create a new dialog box to display the output.
+            final JDialog outputDialog = new JDialog(mParentEditor, Messages
+                    .getString("ModelRunner.2"), false); //$NON-NLS-1$
+            outputDialog.setLayout(new BoxLayout(outputDialog.getContentPane(),
+                    BoxLayout.Y_AXIS));
 
-					// Check if there is any data available from
-					// the model error stream. Send this to standard
-					// output.
-					if (mModelError.available() > 0) {
-						int bytesRead = mModelError
-								.read(buffer, 0, BUFFER_SIZE);
-						// if (bytesRead > 0) {
-						// Logger.global.log(Level.WARNING, new String(buffer,
-						// 0,bytesRead) );
-						// }
-						// TODO: Remove this once the model writes only to cout.
-						if (bytesRead > 0) {
-							final String newOutput = new String(buffer, 0,
-									bytesRead);
-							// Update the interface on the GUI thread.
-							// Using invoke and wait to avoid a race condition
-							// with the string buffer.
-							SwingUtilities.invokeLater(new Runnable() {
-								/**
-								 * Method called from the GUI thread to update
-								 * the output area.
-								 */
-								public void run() {
-									// Add the output to the output area.
-									outputArea.append(newOutput);
-									// Scroll the output window.
-									// Get the bounds of the output area so we
-									// can
-									// determine its bottom.
-									Rectangle bottom = outputArea.getBounds();
+            // Stop the model if the user closes the window.
+            outputDialog
+                    .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+            outputDialog.addWindowListener(new OutputWindowCloseListener(
+                    mProcess));
+            outputDialog.setPreferredSize(new Dimension(400, 400));
+            return outputDialog;
+        }
 
-									// Get the viewable rectangle currently of
-									// the scroll pane so that the viewable
-									// window
-									// doesn't adjust horizontally.
-									Rectangle currView = outputScrollPane
-											.getViewportBorderBounds();
+        /**
+         * Listener which terminates the model run.
+         * 
+         * @author Josh Lurz
+         */
+        private final class TerminateButtonListener implements ActionListener {
+            /**
+             * Method called when the button is clicked which will terminate the
+             * model
+             * 
+             * @param aEvent
+             *            The event received.
+             */
+            public void actionPerformed(final ActionEvent aEvent) {
+                Logger.global
+                        .log(Level.INFO,
+                                "Terminate button pressed, attempting to stop the model.");
+                // Set the model and the output watcher
+                // to stop when there is a chance.
+                mModelRunning = false;
+                mProcess.destroy();
+            }
+        }
 
-									// Create a rectangle to scroll to which is
-									// located at the
-									// bottom the output area in the same
-									// horizontal position as it
-									// was before the move. The last two
-									// parameters, the width and height
-									// of the rectangle, do not matter.
-									Rectangle lowerBound = new Rectangle(
-											bottom.y + bottom.height,
-											currView.x, 1, 1);
-									outputScrollPane
-											.scrollRectToVisible(lowerBound);
-								}
-							});
-						}
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-					// An error occurred, cancel the model run.
-					mModelRunning = false;
-					mModelProcess.destroy();
-				}
-			}
-			// Loop exited
-			Logger.global.log(Level.INFO,
-					"Output watching loop exited. Thread finished.");
-		}
+        /**
+         * Appends a given output string to a text area contained in a scroll
+         * pane. Scrolls the pane to keep the last line of output on the screen.
+         * 
+         * @author Josh Lurz
+         */
+        private final class ScreenPrinter implements Runnable {
+            /**
+             * The scroll pane to which the printer is adding output.
+             */
+            private transient final JScrollPane mPane;
 
-		/**
-		 * Object which scrolls a JScrollPane when the user moves the mouse.
-		 * 
-		 * @author Josh Lurz
-		 * 
-		 */
-		private final class ScrollPaneScroller extends MouseMotionAdapter {
-			/**
-			 * Method called when the mouse is dragged.
-			 * 
-			 * @param aEvent
-			 *            The mouse event received. TODO: Move to interface
-			 *            utils.
-			 */
-			@Override
-			public void mouseDragged(MouseEvent aEvent) {
-				Rectangle r = new Rectangle(aEvent.getX(), aEvent.getY(), 1, 1);
-				((JScrollPane) aEvent.getSource()).scrollRectToVisible(r);
-			}
-		}
-	}
+            /**
+             * The text area to which the printer is adding output.
+             */
+            private transient final JTextArea mArea;
 
-	/**
-	 * A window listener which will stop the model executable and the output
-	 * watching thread at the first chance.
-	 * 
-	 * @author Josh Lurz
-	 */
-	private final class OutputWindowCloseListener implements WindowListener {
-		/**
-		 * Method called when the output window is closing which ensures that
-		 * the model executable is stopped.
-		 * 
-		 * @param aEvent
-		 *            The window event received.
-		 */
-		public void windowClosing(WindowEvent aEvent) {
-			Logger.global.log(Level.INFO,
-					"Output window closed, attempting to stop the model.");
-			// Stop the loop and from that the model
-			// and output thread when there is a chance.
-			mModelRunning = false;
-			mModelProcess.destroy();
+            /**
+             * The output the screen printer is adding.
+             */
+            private transient final String mOutput;
 
-			// Close the window.
-			((JDialog) aEvent.getSource()).setVisible(false);
-		}
-		
-		/**
-		 * Method called when a window is opened, implemented to do nothing.
-		 * 
-		 * @param aEvent
-		 *            The window event received.
-		 */
-		public void windowOpened(WindowEvent aEvent) {
-			// Do nothing
-		}
-		
-		/**
-		 * Method called when a window is closed, implemented to do nothing.
-		 * 
-		 * @param aEvent
-		 *            The window event received.
-		 */
-		public void windowClosed(WindowEvent aEvent) {
-			// Do nothing
-		}
+            /**
+             * Constructor
+             * 
+             * @param aPane
+             *            The scroll pane to which the printer is adding output.
+             * @param aArea
+             *            The text area to which the printer is adding output.
+             * @param aOutput
+             *            The output the screen printer is adding.
+             */
+            public ScreenPrinter(JScrollPane aPane, JTextArea aArea,
+                    String aOutput) {
+                super();
+                mPane = aPane;
+                mArea = aArea;
+                mOutput = aOutput;
+            }
 
-		/**
-		 * Method called when a window is iconified, implemented to do nothing.
-		 * 
-		 * @param aEvent
-		 *            The window event received.
-		 */
-		public void windowIconified(WindowEvent aEvent) {
-			// Do nothing
-		}
+            /**
+             * Method called from the GUI thread to update the output area.
+             */
+            public void run() {
+                // Add the output to the output area.
+                mArea.append(mOutput);
+                // Scroll the output window.
+                // Get the bounds of the output area so we
+                // can
+                // determine its bottom.
+                final Rectangle bottom = mArea.getBounds();
 
-		/**
-		 * Method called when a window is deiconified, implemented to do
-		 * nothing.
-		 * 
-		 * @param aEvent
-		 *            The window event received.
-		 */
-		public void windowDeiconified(WindowEvent aEvent) {
-			// Do nothing
-		}
+                // Get the viewable rectangle currently of
+                // the scroll pane so that the viewable
+                // window
+                // doesn't adjust horizontally.
+                final Rectangle currView = mPane.getViewportBorderBounds();
 
-		/**
-		 * Method called when a window is activated, implemented to do nothing.
-		 * 
-		 * @param aEvent
-		 *            The window event received.
-		 */
-		public void windowActivated(WindowEvent aEvent) {
-			// Do nothing
-		}
+                // Create a rectangle to scroll to which is
+                // located at the
+                // bottom the output area in the same
+                // horizontal position as it
+                // was before the move. The last two
+                // parameters, the width and height
+                // of the rectangle, do not matter.
+                final Rectangle lowerBound = new Rectangle(bottom.y
+                        + bottom.height, currView.x, 1, 1);
+                mPane.scrollRectToVisible(lowerBound);
+            }
+        }
 
-		/**
-		 * Method called when a window is deactivated, implemented to do
-		 * nothing.
-		 * 
-		 * @param aEvent
-		 *            The window event received.
-		 */
-		public void windowDeactivated(WindowEvent aEvent) {
-			// Do nothing
-		}
-	}
+        /**
+         * Object which scrolls a JScrollPane when the user moves the mouse.
+         * 
+         * @author Josh Lurz
+         * 
+         */
+        private final class ScrollPaneScroller extends MouseMotionAdapter {
+            /**
+             * Method called when the mouse is dragged.
+             * 
+             * @param aEvent
+             *            The mouse event received. TODO: Move to interface
+             *            utils.
+             */
+            @Override
+            public void mouseDragged(final MouseEvent aEvent) {
+                final Rectangle rect = new Rectangle(aEvent.getX(), aEvent
+                        .getY(), 1, 1);
+                ((JScrollPane) aEvent.getSource()).scrollRectToVisible(rect);
+            }
+        }
+    }
+
+    /**
+     * A window listener which will stop the model executable and the output
+     * watching thread at the first chance.
+     * 
+     * @author Josh Lurz
+     */
+    private final class OutputWindowCloseListener implements WindowListener {
+        /**
+         * The model process to close when the window is closed.
+         */
+        private final transient Process mProcess;
+
+        /**
+         * Constructor
+         * 
+         * @param aProcess
+         *            Process to close when the window is closed.
+         */
+        public OutputWindowCloseListener(Process aProcess) {
+            super();
+            mProcess = aProcess;
+        }
+
+        /**
+         * Method called when the output window is closing which ensures that
+         * the model executable is stopped.
+         * 
+         * @param aEvent
+         *            The window event received.
+         */
+        public void windowClosing(final WindowEvent aEvent) {
+            Logger.global.log(Level.INFO,
+                    "Output window closed, attempting to stop the model.");
+            // Stop the loop and from that the model
+            // and output thread when there is a chance.
+            mModelRunning = false;
+            mProcess.destroy();
+
+            // Close the window.
+            ((JDialog) aEvent.getSource()).setVisible(false);
+        }
+
+        /**
+         * Method called when a window is opened, implemented to do nothing.
+         * 
+         * @param aEvent
+         *            The window event received.
+         */
+        public void windowOpened(final WindowEvent aEvent) {
+            // Do nothing
+        }
+
+        /**
+         * Method called when a window is closed, implemented to do nothing.
+         * 
+         * @param aEvent
+         *            The window event received.
+         */
+        public void windowClosed(final WindowEvent aEvent) {
+            // Do nothing
+        }
+
+        /**
+         * Method called when a window is iconified, implemented to do nothing.
+         * 
+         * @param aEvent
+         *            The window event received.
+         */
+        public void windowIconified(final WindowEvent aEvent) {
+            // Do nothing
+        }
+
+        /**
+         * Method called when a window is deiconified, implemented to do
+         * nothing.
+         * 
+         * @param aEvent
+         *            The window event received.
+         */
+        public void windowDeiconified(final WindowEvent aEvent) {
+            // Do nothing
+        }
+
+        /**
+         * Method called when a window is activated, implemented to do nothing.
+         * 
+         * @param aEvent
+         *            The window event received.
+         */
+        public void windowActivated(final WindowEvent aEvent) {
+            // Do nothing
+        }
+
+        /**
+         * Method called when a window is deactivated, implemented to do
+         * nothing.
+         * 
+         * @param aEvent
+         *            The window event received.
+         */
+        public void windowDeactivated(final WindowEvent aEvent) {
+            // Do nothing
+        }
+    }
 
 }

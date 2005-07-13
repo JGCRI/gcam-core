@@ -39,13 +39,13 @@ public class LoadAction extends AbstractAction {
     /**
      * The name of the attribute which stores the most recently opened file.
      */
-    private final String mRecentFileProperty = "most-recent-file"; //$NON-NLS-1$
+    private static final String mRecentFile = "most-recent-file"; //$NON-NLS-1$
     
     /**
      * A reference to the top level editor from which this action is receiving
      * commands.
      */
-    private ConfigurationEditor mParentEditor = null;
+    private transient final ConfigurationEditor mParentEditor;
 
     /**
      * Constructor which sets the name of the Action and stores the parent editor.
@@ -67,7 +67,7 @@ public class LoadAction extends AbstractAction {
      * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(ActionEvent aEvent) {
+    public void actionPerformed(final ActionEvent aEvent) {
         // Check if the file should be saved before loading a new one.
         if (!FileUtils.askForSave(mParentEditor)) {
             // The user does not want to continue.
@@ -75,23 +75,23 @@ public class LoadAction extends AbstractAction {
         }
         
         // Find the most recent file the user opened from the properties.
-        Properties props = FileUtils.getInitializedProperties(mParentEditor);
-        String recentFile = props.getProperty(mRecentFileProperty);
+        final Properties props = FileUtils.getInitializedProperties(mParentEditor);
+        final String recentFile = props.getProperty(mRecentFile);
         
         // Ask the user for a file to load.
-        JFileChooser chooser = new JFileChooser(recentFile);
+        final JFileChooser chooser = new JFileChooser(recentFile);
         chooser.setFileFilter(new XMLFileFilter());
 
-        int rv = chooser.showOpenDialog(mParentEditor);
+        final int returnValue = chooser.showOpenDialog(mParentEditor);
         File currentFile = null;
-        if (rv == JFileChooser.APPROVE_OPTION) {
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
             currentFile = chooser.getSelectedFile();
         } else {
             // Leave the existing document.
             return;
         }
         // Create the document builder.
-        DocumentBuilder docBuilder = DOMUtils.getDocumentBuilder(mParentEditor);
+        final DocumentBuilder docBuilder = DOMUtils.getDocumentBuilder(mParentEditor);
         
         // Return early if we couldn't create a document builder. An error
         // message will have been printed by the FileUtils function.
@@ -106,9 +106,9 @@ public class LoadAction extends AbstractAction {
         } catch (Exception e) {
            // Unexpected error parsing the document.
             Logger.global.log(Level.SEVERE, e.getStackTrace().toString());
-            String errorMessage = Messages.getString("LoadAction.1") //$NON-NLS-1$
+            final String errorMessage = Messages.getString("LoadAction.1") //$NON-NLS-1$
                     + e.getMessage() + "."; //$NON-NLS-1$
-            String errorTitle = Messages.getString("LoadAction.3"); //$NON-NLS-1$
+            final String errorTitle = Messages.getString("LoadAction.3"); //$NON-NLS-1$
             JOptionPane.showMessageDialog(mParentEditor, errorMessage,
                     errorTitle, JOptionPane.ERROR_MESSAGE);
             return;
@@ -117,8 +117,8 @@ public class LoadAction extends AbstractAction {
         // Check if the root element is a configuration element.
         // TODO: Unhardcode configuration.
         if(!loadedDocument.getDocumentElement().getNodeName().equals("Configuration")) { //$NON-NLS-1$
-            String errorTitle = Messages.getString("LoadAction.5"); //$NON-NLS-1$
-            String errorMessage = Messages.getString("LoadAction.6"); //$NON-NLS-1$
+            final String errorTitle = Messages.getString("LoadAction.5"); //$NON-NLS-1$
+            final String errorMessage = Messages.getString("LoadAction.6"); //$NON-NLS-1$
             Logger.global.log(Level.SEVERE, errorMessage);
             JOptionPane.showMessageDialog(mParentEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE);
             return;
@@ -131,7 +131,7 @@ public class LoadAction extends AbstractAction {
         FileUtils.setDocumentFile(loadedDocument, currentFile);
         
         // Save the file as the most recent document.
-        props.setProperty(mRecentFileProperty, currentFile.getAbsolutePath());
+        props.setProperty(mRecentFile, currentFile.getAbsolutePath());
         FileUtils.saveProperties(props);
     }
 }

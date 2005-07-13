@@ -34,34 +34,34 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel {
     /**
      * The XPath of the parent of this combo box.
      */
-    private String mParentXPath = null;
+    private transient final String mParentXPath;
 
     /**
      * The name of the element for this button.
      */
-    private String mElementName = null;
+    private transient final String mElementName;
 
     /**
      * The name of this item.
      */
-    private String mItemName = null;
+    private transient final String mItemName;
 
     /**
      * The name of the parent of this item.
      */
-    private String mParentName = null;
+    private transient String mParentName = null;
 
     /**
      * Whether to put the name attribute on the lowest level node or the parent.
      * TODO: Add a way to pass in an object which determines the XPath.
      */
-    private boolean mParentHasName = false;
+    private transient final boolean mParentHasName;
 
     /**
      * The DOM editor containing this button. TODO: Might be better to
      * explicitly store the document and node.
      */
-    private DOMDocumentEditor mEditor = null;
+    private transient final DOMDocumentEditor mEditor;
 
     /**
      * Constructor.
@@ -97,7 +97,7 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel {
     @Override
     public boolean isSelected() {
         // Get the current document from the editor.
-        Document document = mEditor.getDocument();
+        final Document document = mEditor.getDocument();
 
         // If there isn't a document return right away. We can't get
         // the state from a DOM that doesn't exist.
@@ -106,7 +106,8 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel {
         }
 
         // Perform the query.
-        Node resultNode = DOMUtils.getResultNodeFromQuery(document, getXPath());
+        final Node resultNode = DOMUtils.getResultNodeFromQuery(document,
+                getXPath());
 
         // If the node is null it means that there were no results. If a value
         // does not exist this should return false as it is unset.
@@ -127,12 +128,12 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel {
      *            The new state of the button.
      */
     @Override
-    public void setArmed(boolean aArmed) {
+    public void setArmed(final boolean aArmed) {
         // Ignore the the setArmed when the value is false as this is the user
         // releasing the mouse.
         if (aArmed) {
             // Get the current document from the editor.
-            Document document = mEditor.getDocument();
+            final Document document = mEditor.getDocument();
 
             // If there isn't a document return right away. This should not be
             // possible.
@@ -162,7 +163,7 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel {
                 previousValue = DOMUtils.isTextContentTrue(resultNode);
             }
             // Flip the state of the button and store the value in the tree.
-            String nodeValue = !previousValue ? "1" : "0"; //$NON-NLS-1$ //$NON-NLS-2$
+            final String nodeValue = previousValue ? "0" : "1"; //$NON-NLS-1$ //$NON-NLS-2$
             resultNode.setTextContent(nodeValue);
         }
         // Set the underlying button state last as this will notify any
@@ -176,35 +177,31 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel {
      * @param aParentName
      *            The name of the current parent element.
      */
-    public void setParent(String aParentName) {
+    public void setParent(final String aParentName) {
         mParentName = aParentName;
     }
 
     /**
      * Function to return the XPath for the node containing the value for this
-     * button model.
-     * TODO: This is hackfest.
+     * button model. TODO: This is hackfest.
+     * 
      * @return The XPath string which will locate the node which contains the
      *         information for this button model.
      */
     private String getXPath() {
-        String XPath = "";
+        final StringBuilder XPath = new StringBuilder();
         if (mParentXPath != null) {
-            XPath += mParentXPath;
-        }
-        
-        if (mParentHasName) {
-            if (mParentName != null && !mParentName.equals("")) {
-                XPath += "[@name='" + mParentName + "']"; //$NON-NLS-1$ //$NON-NLS-2$
-            }
+            XPath.append(mParentXPath);
         }
 
-        XPath += "/" + mElementName;
-        if (!mParentHasName) {
-            if (mItemName != null && !mItemName.equals("")) {
-                XPath += "[@name='" + mItemName + "']"; //$NON-NLS-1$ //$NON-NLS-2$
-            }
+        if (mParentHasName && mParentName != null && !mParentName.equals("")) {
+            XPath.append("[@name='").append(mParentName).append("']"); //$NON-NLS-1$ //$NON-NLS-2$
         }
-        return XPath;
+
+        XPath.append("/").append(mElementName);
+        if (!mParentHasName && mItemName != null && !mItemName.equals("")) {
+            XPath.append("[@name='").append(mItemName).append("']"); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+        return XPath.toString();
     }
 }

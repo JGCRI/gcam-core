@@ -37,23 +37,23 @@ public class PropertiesTextField extends JPanel {
     /**
      * The label to use for the text field.
      */
-    private String mLabelText = null;
+    private final transient String mLabelText;
 
     /**
      * The identifier of the property in the properties map.
      */
-    private String mPropertyID = null;
+    private final transient String mPropertyID;
 
     /**
      * The properties map to set and query.
      */
-    private Properties mProperties = null;
+    private final transient Properties mProperties;
 
     /**
      * The file type of the item being selected. If this is null, a select
      * button is not added.
      */
-    private String mFileType = null;
+    private final transient String mFileType;
 
     /**
      * Constructor.
@@ -134,7 +134,7 @@ public class PropertiesTextField extends JPanel {
             final JPanel parent = this;
             selectButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent aEvent) {
-                    JFileChooser fileChooser = new JFileChooser();
+                    final JFileChooser fileChooser = new JFileChooser();
                     // Select the type of file filter to use.
                     FileFilter filter = null;
                     if( mFileType == "exe") {
@@ -148,12 +148,12 @@ public class PropertiesTextField extends JPanel {
                     }
                     
                     fileChooser.setFileFilter(filter);
-                    int rv = fileChooser.showDialog(parent, "Select");
-                    if (rv == JFileChooser.APPROVE_OPTION) {
-                        File selectedFile = fileChooser.getSelectedFile();
+                    final int returnValue = fileChooser.showDialog(parent, "Select");
+                    if (returnValue == JFileChooser.APPROVE_OPTION) {
+                        final File selectedFile = fileChooser.getSelectedFile();
                         if (selectedFile != null) {
                             // Set the text field and the property.
-                            String selectedPath = selectedFile
+                            final String selectedPath = selectedFile
                                     .getAbsolutePath();
                             textField.setText(selectedPath);
                             mProperties.setProperty(mPropertyID, selectedPath);

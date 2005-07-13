@@ -31,7 +31,7 @@ public class DOMTextFieldFactory {
 	/**
 	 * Reference to the top level document.
 	 */
-	private Document mDocument;
+	private transient Document mDocument;
 	
 	/**
 	 * A mapping of XPaths to the related JTextFields created by this factory.
@@ -39,12 +39,13 @@ public class DOMTextFieldFactory {
 	 * when the Document changes.
 	 *
 	 */
-	private Map<String,JTextField> mChildTextFields = null;
+	private transient Map<String,JTextField> mChildTextFields = null;
 	
 	/**
 	 * Constructor
 	 */
 	public DOMTextFieldFactory() {
+        super();
 		mChildTextFields = new HashMap<String,JTextField>();
 	}
 	
@@ -53,14 +54,14 @@ public class DOMTextFieldFactory {
 	 * will use to set their values into the DOM.
 	 * @param aDocument
 	 */
-	public void setDocument(Document aDocument){
+	public void setDocument(final Document aDocument){
 		mDocument = aDocument;
 		// Iterate through any children text fields and reset their values.
-		Iterator<String> currPath = mChildTextFields.keySet().iterator();
+        final Iterator<String> currPath = mChildTextFields.keySet().iterator();
 		while(currPath.hasNext()){
-			String xPath = currPath.next();
+            final String xPath = currPath.next();
 			// Query the DOM for a value for this XPath.
-			Node result = DOMUtils.getResultNodeFromQuery(aDocument, xPath);
+            final Node result = DOMUtils.getResultNodeFromQuery(aDocument, xPath);
 			String newValue = null;
 			if(result != null && result.getTextContent() != null){
 				newValue = result.getTextContent();
@@ -68,7 +69,7 @@ public class DOMTextFieldFactory {
 			// Set the value into the current field. If there was not a
 			// value returned from the DOM this will set null into the field
 			// which needs to occur to erase an old value.
-			JTextField currField = mChildTextFields.get(xPath);
+            final JTextField currField = mChildTextFields.get(xPath);
 			currField.setText(newValue);
 		}
 	}
@@ -82,9 +83,9 @@ public class DOMTextFieldFactory {
 	 * @param aValueName The name of the Value where the text field will be stored.
 	 * @return An initialized text field.
 	 */
-	public JTextField createTextField(String aCategory, String aValueName){
+	public JTextField createTextField(final String aCategory, final String aValueName){
 		// Create the xpath for this text field.
-		String xPath = createXPath(aCategory, aValueName);
+        final String xPath = createXPath(aCategory, aValueName);
 		// Check if the XPath already exists in the map. There can't be multiple
 		// text fields mapping to the same node in the DOM.
 		if(mChildTextFields.containsKey(xPath)){
@@ -94,13 +95,13 @@ public class DOMTextFieldFactory {
 		}
 		
 		// Create the text field and add it into the map.
-		JTextField newField = new JTextField();
+        final JTextField newField = new JTextField();
 		mChildTextFields.put(xPath, newField);
 		
 		// Set an initial value for the field. Query the DOM for a value
 		// for this XPath. If there is not a value in the DOM the field
 		// will be initialized to empty.
-		Node result = DOMUtils.getResultNodeFromQuery(mDocument, xPath);
+        final Node result = DOMUtils.getResultNodeFromQuery(mDocument, xPath);
 		if(result != null && result.getTextContent() != null){
 			newField.setText( result.getTextContent() );
 		}
@@ -117,7 +118,7 @@ public class DOMTextFieldFactory {
 	 * @param aValueName The name of the Value where the text field will be stored.
 	 * @return The XPath to this item.
 	 */
-	private static String createXPath(String aCategory, String aValueName){
+	private static String createXPath(final String aCategory, final String aValueName){
 		return "/" + ConfigurationEditor.ROOT_ELEMENT_NAME 
                    + "/" + aCategory +"/Value[@name='" + aValueName + "']"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                    
@@ -134,13 +135,14 @@ public class DOMTextFieldFactory {
         /**
          * The XPath for the text field the focus listener is attached to.
          */
-        private String mXPath = null;
+        private transient final String mXPath;
         
         /**
          * Constructor which sets the XPath.
          * @param aXPath The XPath for the text field the focus listener is attached to.
          */
-        public DOMTextFieldFocusListener(String aXPath){
+        public DOMTextFieldFocusListener(final String aXPath){
+            super();
             mXPath = aXPath;
         }
         
@@ -149,7 +151,7 @@ public class DOMTextFieldFactory {
          * method will save the value into the DOM tree.
          * @param aEvent The focus event.
          */
-        public void focusLost(FocusEvent aEvent){
+        public void focusLost(final FocusEvent aEvent){
             // When focus is received save the item to the current document. This
             // chunk of code could use a utility method.
             // If there isn't a document return right away. This should not be possible.
@@ -160,7 +162,7 @@ public class DOMTextFieldFactory {
             
             // Perform the query.
             Node resultNode = DOMUtils.getResultNodeFromQuery(mDocument, mXPath);
-            String newContent = ((JTextField)aEvent.getSource()).getText();
+            final String newContent = ((JTextField)aEvent.getSource()).getText();
             // If the node is null it means that there were no results. Don't create a new
             // node if the value which will be set in is blank. This avoid adding unnecessary
             // nodes to the DOM.
@@ -182,7 +184,7 @@ public class DOMTextFieldFactory {
          * to be acted on.
          * @param aEvent The focus event.
          */
-        public void focusGained(FocusEvent aEvent){
+        public void focusGained(final FocusEvent aEvent){
             // Don't do anything when focus is received.
         }
     }

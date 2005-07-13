@@ -16,11 +16,11 @@ public interface DOMDocumentEditor {
      * Get the editor's document.
      * @return The editor's document.
      */
-    public Document getDocument();
+    Document getDocument();
     
     /**
      * Returns whether to ask the user before saving or automatically saving.
      * @return Whether to ask the user before saving.
      */
-    public boolean askBeforeSaving();
+    boolean askBeforeSaving();
 }

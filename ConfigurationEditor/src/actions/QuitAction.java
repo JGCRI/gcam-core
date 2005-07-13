@@ -33,7 +33,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
      * A reference to the top level editor from which this action is receiving
      * commands.
      */
-    private ConfigurationEditor mParentEditor = null;
+    private final transient ConfigurationEditor mParentEditor;
 
     /**
      * Constructor which sets the name of the Action and stores the parent
@@ -55,7 +55,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
      * @param aEvent The event received.
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(ActionEvent aEvent) {
+    public void actionPerformed(final ActionEvent aEvent) {
     	// Call the internal quit method.
     	doQuit();
     }
@@ -81,7 +81,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
      * quitting.
      * @param aEvent The window event received.
      */
-    public void windowClosing(WindowEvent aEvent) {
+    public void windowClosing(final WindowEvent aEvent) {
         // Call the internal helper method.
         doQuit();
     }
@@ -92,7 +92,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
 	 * @param aEvent
 	 *            The window event received.
 	 */
-	public void windowOpened(WindowEvent aEvent) {
+	public void windowOpened(final WindowEvent aEvent) {
 		// Do nothing
 	}
 	
@@ -102,7 +102,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
 	 * @param aEvent
 	 *            The window event received.
 	 */
-	public void windowClosed(WindowEvent aEvent) {
+	public void windowClosed(final WindowEvent aEvent) {
 		// Do nothing
 	}
 
@@ -112,7 +112,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
 	 * @param aEvent
 	 *            The window event received.
 	 */
-	public void windowIconified(WindowEvent aEvent) {
+	public void windowIconified(final WindowEvent aEvent) {
 		// Do nothing
 	}
 
@@ -123,7 +123,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
 	 * @param aEvent
 	 *            The window event received.
 	 */
-	public void windowDeiconified(WindowEvent aEvent) {
+	public void windowDeiconified(final WindowEvent aEvent) {
 		// Do nothing
 	}
 
@@ -133,7 +133,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
 	 * @param aEvent
 	 *            The window event received.
 	 */
-	public void windowActivated(WindowEvent aEvent) {
+	public void windowActivated(final WindowEvent aEvent) {
 		// Do nothing
 	}
 
@@ -144,7 +144,7 @@ public class QuitAction extends AbstractAction implements WindowListener {
 	 * @param aEvent
 	 *            The window event received.
 	 */
-	public void windowDeactivated(WindowEvent aEvent) {
+	public void windowDeactivated(final WindowEvent aEvent) {
 		// Do nothing
 	}
 }

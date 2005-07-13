@@ -35,9 +35,9 @@ public class EditLogSettingsAction extends AbstractAction {
      *            The event received.
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(ActionEvent aEvent) {
+    public void actionPerformed(final ActionEvent aEvent) {
         // TODO: Get a location for this dialog.
-        JDialog editLogsDialog = new LogEditor(null);
+        final JDialog editLogsDialog = new LogEditor(null);
         editLogsDialog.pack();
         editLogsDialog.setVisible(true);
     }

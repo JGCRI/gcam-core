@@ -27,19 +27,19 @@ public class Messages {
      *
      */
     private Messages() {
-        // Empty constructor
+        super();
     }
 
     /**
      * Get a string from the resource bundle.
-     * @param key Key for which to fetch the string.
+     * @param aKey Key for which to fetch the string.
      * @return The resource associated with the string.
      */
-    public static String getString(String key) {
+    public static String getString(final String aKey) {
         try {
-            return RESOURCE_BUNDLE.getString(key);
-        } catch (MissingResourceException e) {
-            return '!' + key + '!';
+            return RESOURCE_BUNDLE.getString(aKey);
+        } catch (final MissingResourceException aException) {
+            return '!' + aKey + '!';
         }
     }
 }

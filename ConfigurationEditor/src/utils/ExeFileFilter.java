@@ -18,12 +18,12 @@ public class ExeFileFilter extends FileFilter {
 	 * @return Whether the file is acceptable.
 	 * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
 	 */
-    @Override public boolean accept(File aFile) {
+    @Override public boolean accept(final File aFile) {
         if (aFile.isDirectory()) {
             return true;
         }
-        String ext = FileUtils.getExtension(aFile);
-        return (ext != null) ? ext.equals("exe") : false; //$NON-NLS-1$
+        final String ext = FileUtils.getExtension(aFile);
+        return (ext == null) ? false : ext.equals("exe"); //$NON-NLS-1$
     }
 
 	/**

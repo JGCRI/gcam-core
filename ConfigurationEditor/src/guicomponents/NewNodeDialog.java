@@ -38,17 +38,17 @@ public class NewNodeDialog extends JDialog {
 	/**
 	 * Document mDocument The document used to create new nodes.
 	 */
-	private Document mDocument = null;
+	private final transient Document mDocument;
 
 	/**
 	 * The selected node, null if the user pressed cancel or did not select one.
 	 */
-	private Node mSelectedNode = null;
+	private transient Node mSelectedNode = null;
 
 	/**
 	 * The element name of value nodes.
 	 */
-	private static final String VALUE_ELEMENT_NAME = "Value";
+	private static final String VALUE_NAME = "Value";
 
 	/**
 	 * Constructor
@@ -102,7 +102,7 @@ public class NewNodeDialog extends JDialog {
 
 		// Add OK and cancel buttons.
 		{
-			JButton okButton = new JButton("OK");
+            final JButton okButton = new JButton("OK");
 			okButton.setMnemonic(KeyEvent.VK_O);
 			// Accelerator?
 			// Add an action listener which will create a new node with
@@ -118,11 +118,16 @@ public class NewNodeDialog extends JDialog {
 				 */
 				public void actionPerformed(ActionEvent aEvent) {
 					// Check if the name and value are not null.
-					String name = nameField.getText();
-					String value = valueField.getText();
-					if (name != null && value != null) {
-						Node newNode = mDocument
-								.createElement(VALUE_ELEMENT_NAME);
+                    final String name = nameField.getText();
+                    final String value = valueField.getText();
+                    if(name == null || value == null) {
+                        final String message = "Cannot create node with null name or value.";
+                        final String title = "Invalid entries";
+                        JOptionPane.showMessageDialog(getTopLevelUI(), message, title, JOptionPane.ERROR_MESSAGE);
+                    }
+                    else {
+                        final Node newNode = mDocument
+								.createElement(VALUE_NAME);
 						// Set the name attribute.
 						DOMUtils.setNameAttrValue(newNode, name);
 						// Set the text content as the value.
@@ -132,12 +137,6 @@ public class NewNodeDialog extends JDialog {
 						// Close the window.
 						setVisible(false);
 					}
-					else {
-						String message = "Cannot create node with null name or value.";
-						String title = "Invalid entries";
-						JOptionPane.showMessageDialog(getTopLevelUI(), message, title, JOptionPane.ERROR_MESSAGE);
-					}
-
 				}
 			});
 			// Add the ok button to the dialog.
@@ -146,7 +145,7 @@ public class NewNodeDialog extends JDialog {
 		}
 		{
 			// Add a cancel button.
-			JButton cancelButton = new JButton("Cancel");
+            final JButton cancelButton = new JButton("Cancel");
 			cancelButton.setMnemonic(KeyEvent.VK_C);
 			// Accelerator?
 			// Add an action listener which will close the dialog.

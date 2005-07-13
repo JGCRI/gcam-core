@@ -3,7 +3,7 @@
  */
 package actions;
 
-
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -25,7 +25,6 @@ import javax.swing.JPanel;
 import utils.Messages;
 import utils.PropertiesTextField;
 import utils.FileUtils;
-import configurationeditor.ConfigurationEditor;
 import configurationeditor.PropertiesInfo;
 
 /**
@@ -48,43 +47,23 @@ public class ShowPreferencesAction extends AbstractAction {
      * A reference to the top level editor from which this action is receiving
      * commands.
      */
-    private ConfigurationEditor mParentEditor = null;
-
-    /**
-     * The preferences dialog.
-     */
-    private JDialog mPreferenceDialog = null;
-
-    /**
-     * The content frame of the preferences dialog.
-     */
-    private JPanel mPreferencesDialogFrame = null;
+    private final transient Frame mParentFrame;
 
     /**
      * Properties object.
      */
-    private Properties mProperties = null;
-
-    /**
-     * The cancel button.
-     */
-    private JButton mCancelButton = null;
-
-    /**
-     * The OK button.
-     */
-    private JButton mOKButton = null;
+    private transient Properties mProperties = null;
 
     /**
      * Constructor which sets the name of the Action and stores the parent
      * editor.
      * 
-     * @param aParentEditor
-     *            The top level editor.
+     * @param aParentFrame
+     *            The top level window.
      */
-    public ShowPreferencesAction(ConfigurationEditor aParentEditor) {
+    public ShowPreferencesAction(Frame aParentFrame) {
         super("ShowPreferencesAction"); //$NON-NLS-1$
-        mParentEditor = aParentEditor;
+        mParentFrame = aParentFrame;
     }
 
     /**
@@ -94,10 +73,10 @@ public class ShowPreferencesAction extends AbstractAction {
      *            The event.
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
-    public void actionPerformed(ActionEvent aEvent) {
+    public void actionPerformed(final ActionEvent aEvent) {
         // Initialize the properties object before setting up the input fields.
         initializeProperties();
-        JDialog preferenceDialog = getPreferenceDialog();
+        final JDialog preferenceDialog = createPreferencesDialog();
         preferenceDialog.pack();
         preferenceDialog.setVisible(true);
     }
@@ -114,7 +93,7 @@ public class ShowPreferencesAction extends AbstractAction {
         mProperties = new Properties();
 
         try {
-            FileInputStream inputStream = new FileInputStream(
+            final FileInputStream inputStream = new FileInputStream(
                     PropertiesInfo.PROPERTY_FILE);
             mProperties.loadFromXML(inputStream);
             inputStream.close();
@@ -125,9 +104,11 @@ public class ShowPreferencesAction extends AbstractAction {
             return;
         } catch (IOException e) {
             // The preferences file exists but it can't be read.
-            String errorMessage = Messages.getString("ShowPreferencesAction.2") + e.getMessage() + "."; //$NON-NLS-1$ //$NON-NLS-2$
-            String errorTitle = Messages.getString("ShowPreferencesAction.0"); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(mParentEditor, errorMessage,
+            final String errorMessage = Messages
+                    .getString("ShowPreferencesAction.2") + e.getMessage() + "."; //$NON-NLS-1$ //$NON-NLS-2$
+            final String errorTitle = Messages
+                    .getString("ShowPreferencesAction.0"); //$NON-NLS-1$
+            JOptionPane.showMessageDialog(mParentFrame, errorMessage,
                     errorTitle, JOptionPane.ERROR_MESSAGE);
             Logger.global.log(Level.SEVERE, errorMessage);
             return;
@@ -135,117 +116,109 @@ public class ShowPreferencesAction extends AbstractAction {
     }
 
     /**
-     * This method initializes the preferences dialog frame.
+     * This method creates and initializes the preferences dialog frame.
      * 
      * @return The preferences dialog.
      */
-    private JDialog getPreferenceDialog() {
-        if (mPreferenceDialog == null) {
-            mPreferenceDialog = new JDialog(mParentEditor, Messages
+    private JDialog createPreferencesDialog() {
+        final JDialog prefDialog = new JDialog(mParentFrame, Messages
                     .getString("ShowPreferencesAction.3"), true); //$NON-NLS-1$
-            mPreferenceDialog.setContentPane(getPreferencesDialogFrame());
-        }
-        return mPreferenceDialog;
+        prefDialog.setContentPane(createPreferencesDialogFrame(prefDialog));
+        return prefDialog;
     }
 
     /**
      * This method initializes the preferences dialog.
-     * 
+     * @param aParentDialog The dialog which is creating this frame.
      * @return The preferences dialog frame.
      */
-    private JPanel getPreferencesDialogFrame() {
-        if (mPreferencesDialogFrame == null) {
-            mPreferencesDialogFrame = new JPanel(new GridBagLayout());
-            // Now setup the layout constraints. The components will be layed
-            // out on a 3x4 grid with the field panels in the left column
-            // and the ok and cancel buttons in the 2nd and 3rd columns in
-            // the last row.
-            GridBagConstraints cons = new GridBagConstraints();
+    private JPanel createPreferencesDialogFrame(final JDialog aParentDialog) {
+        final JPanel prefDialog = new JPanel(new GridBagLayout());
+        // Now setup the layout constraints. The components will be layed
+        // out on a 3x4 grid with the field panels in the left column
+        // and the ok and cancel buttons in the 2nd and 3rd columns in
+        // the last row.
+        final GridBagConstraints cons = new GridBagConstraints();
 
-            // Set that the panels should grow to fit the cells.
-            cons.fill = GridBagConstraints.BOTH;
+        // Set that the panels should grow to fit the cells.
+        cons.fill = GridBagConstraints.BOTH;
 
-            // Position the panels in the 1st column.
-            cons.gridx = 0;
+        // Position the panels in the 1st column.
+        cons.gridx = 0;
 
-            // Add panels in increasing rows.
-            cons.gridy = GridBagConstraints.RELATIVE;
+        // Add panels in increasing rows.
+        cons.gridy = GridBagConstraints.RELATIVE;
 
-            // Add 5 units of spacing on the y axis.
-            cons.ipady = 5;
+        // Add 5 units of spacing on the y axis.
+        cons.ipady = 5;
 
-            // Put a border of 5 around the entire panel.
-            cons.insets = new Insets(5, 5, 5, 5);
+        // Put a border of 5 around the entire panel.
+        cons.insets = new Insets(5, 5, 5, 5);
 
-            // Weight the panels so they grow when the window is resized
-            // horizontally
-            // but not vertically.
-            cons.weightx = 1;
+        // Weight the panels so they grow when the window is resized
+        // horizontally
+        // but not vertically.
+        cons.weightx = 1;
 
-            // Add the fields to select the executable.
-            JPanel exeSelectionFields = new PropertiesTextField(
-                    "Executable File", PropertiesInfo.EXE_PATH_PROPERTY,
-                    mProperties, "exe");
-            mPreferencesDialogFrame.add(exeSelectionFields, cons);
+        // Add the fields to select the executable.
+        final JPanel exeSelectFields = new PropertiesTextField(
+                "Executable File", PropertiesInfo.EXE_PATH, mProperties, "exe");
+        prefDialog.add(exeSelectFields, cons);
 
-            // Add the fields to select the configuration template file.
-            JPanel confTemplateSelectionFields = new PropertiesTextField(
-                    "Configuration Template",
-                    PropertiesInfo.CONFIGURATION_TEMPLATE_PROPERTY,
-                    mProperties, "xml");
-            mPreferencesDialogFrame.add(confTemplateSelectionFields, cons);
+        // Add the fields to select the configuration template file.
+        final JPanel templateFields = new PropertiesTextField(
+                "Configuration Template", PropertiesInfo.CONF_TMPL,
+                mProperties, "xml");
+        prefDialog.add(templateFields, cons);
 
-            // Add the fields to select the log configuration file.
-            JPanel logSelectionFields = new PropertiesTextField(
-                    "Log File Location", PropertiesInfo.LOG_CONF_PROPERTY,
-                    mProperties, "xml");
-            mPreferencesDialogFrame.add(logSelectionFields, cons);
+        // Add the fields to select the log configuration file.
+        final JPanel logSelectFields = new PropertiesTextField(
+                "Log File Location", PropertiesInfo.LOG_CONF, mProperties,
+                "xml");
+        prefDialog.add(logSelectFields, cons);
 
-            // Add ok and cancel buttons.
-            mOKButton = new JButton();
-            mOKButton.setText(Messages.getString("ShowPreferencesAction.19")); //$NON-NLS-1$
-            mOKButton.setToolTipText(Messages
-                    .getString("ShowPreferencesAction.10")); //$NON-NLS-1$
+        // Add ok and cancel buttons.
+        final JButton okButton = new JButton(Messages
+                .getString("ShowPreferencesAction.19")); //$NON-NLS-1$
+        okButton.setToolTipText(Messages.getString("ShowPreferencesAction.10")); //$NON-NLS-1$
 
-            // Add a listener which will save the preferences and close the
-            // window.
-            mOKButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent aEvent) {
-                    FileUtils.saveProperties(mProperties);
-                    getPreferenceDialog().dispose();
-                }
-            });
-            // Set that the buttons should remain their default size
-            // and be in the lower right corner of the grid.
-            cons.fill = GridBagConstraints.NONE;
-            cons.gridy = 4;
-            cons.gridx = 2;
+        // Add a listener which will save the preferences and close the
+        // window.
+        okButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent aEvent) {
+                FileUtils.saveProperties(mProperties);
+                aParentDialog.dispose();
+            }
+        });
+        // Set that the buttons should remain their default size
+        // and be in the lower right corner of the grid.
+        cons.fill = GridBagConstraints.NONE;
+        cons.gridy = 4;
+        cons.gridx = 2;
 
-            // Don't allow the buttons to take up extra space.
-            cons.weightx = 0;
+        // Don't allow the buttons to take up extra space.
+        cons.weightx = 0;
 
-            // Anchor the button to the north west side of the cell.
-            cons.anchor = GridBagConstraints.NORTHWEST;
+        // Anchor the button to the north west side of the cell.
+        cons.anchor = GridBagConstraints.NORTHWEST;
 
-            mPreferencesDialogFrame.add(mOKButton, cons);
-            // Add a cancel button.
-            mCancelButton = new JButton();
-            mCancelButton.setText(Messages
-                    .getString("ShowPreferencesAction.18")); //$NON-NLS-1$
-            mCancelButton.setToolTipText(Messages
-                    .getString("ShowPreferencesAction.13")); //$NON-NLS-1$
-            // Add a listener which will save the preferences and close the
-            // window.
-            mCancelButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent aEvent) {
-                    getPreferenceDialog().dispose();
-                }
-            });
-            // The cancel button should be directly to the right
-            // of the ok button.
-            cons.gridx = GridBagConstraints.RELATIVE;
-            mPreferencesDialogFrame.add(mCancelButton, cons);
-        }
-        return mPreferencesDialogFrame;
+        prefDialog.add(okButton, cons);
+        // Add a cancel button.
+        final JButton cancelButton = new JButton();
+        cancelButton.setText(Messages.getString("ShowPreferencesAction.18")); //$NON-NLS-1$
+        cancelButton.setToolTipText(Messages
+                .getString("ShowPreferencesAction.13")); //$NON-NLS-1$
+        // Add a listener which will save the preferences and close the
+        // window.
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent aEvent) {
+                aParentDialog.dispose();
+            }
+        });
+        // The cancel button should be directly to the right
+        // of the ok button.
+        cons.gridx = GridBagConstraints.RELATIVE;
+        prefDialog.add(cancelButton, cons);
+        return prefDialog;
     }
 }

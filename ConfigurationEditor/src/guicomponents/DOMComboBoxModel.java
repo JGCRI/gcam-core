@@ -35,38 +35,38 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 	/**
 	 * The underlying document.
 	 */
-	private Document mDocument = null;
+	private transient final Document mDocument;
 
 	/**
 	 * The root node of the combo box.
 	 */
 
-	private Node mRoot = null;
+	private transient final Node mRoot;
 
 	/**
 	 * The stored selected item.
 	 */
-	private Object mSelectedItem = null;
+	private transient Object mSelectedItem = null;
 
 	/**
 	 * The XPath of the parent of this combo box.
 	 */
-	private String mParentXPath = null;
+	private transient final String mParentXPath;
 
 	/**
 	 * The name of the element for this combo box.
 	 */
-	private String mElementName = null;
+	private transient final String mElementName;
 
 	/**
 	 * The name of this item.
 	 */
-	private String mItemName = null;
+	private transient final String mItemName;
 
 	/**
 	 * Map of cached node wrappers.
 	 */
-	private Map<Node,Object> mCachedNodeWrappers = null;
+	private transient final Map<Node,Object> mCachedWrappers;
 	
 	/**
 	 * Constructor.
@@ -89,7 +89,7 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 		mParentXPath = aParentXPath;
 		mElementName = aElementName;
 		mItemName = aItemName;
-		mCachedNodeWrappers = new HashMap<Node, Object>();
+		mCachedWrappers = new HashMap<Node, Object>();
 		// Set the root node now that all information is known.
 		mRoot = getRootNode();
 		
@@ -105,22 +105,22 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 	 * @param aPosition
 	 *            in the list to return the element at.
 	 */
-	public Object getElementAt(int aPosition) {
+	public final Object getElementAt(final int aPosition) {
 		// Convert the list index into a DOM index to determine
 		// the child element to return.
-		int DOMIndex = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
+		final int DOMIndex = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
 		if (DOMIndex != -1) {
-			Node elementNode = mRoot.getChildNodes().item(DOMIndex);
+			final Node elementNode = mRoot.getChildNodes().item(DOMIndex);
 			
 			// Check if the node has already had a wrapper created for it.
-			Object wrapper = mCachedNodeWrappers.get(elementNode);
+			Object wrapper = mCachedWrappers.get(elementNode);
 			
 			// If the wrapper is null than one must be created for the
 			// element node and cached. This is so a wrappers of the same
 			// element node will always be equal.
 			if(wrapper == null ){
 				wrapper = NodeWrapper.createProxy(elementNode);
-				mCachedNodeWrappers.put(elementNode, wrapper);
+				mCachedWrappers.put(elementNode, wrapper);
 			}
 			
 			// Return the wrapper.
@@ -154,7 +154,7 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 	 * @param aSelectedItem
 	 *            The item selected by the user.
 	 */
-	public void setSelectedItem(Object aSelectedItem) {
+	public void setSelectedItem(final Object aSelectedItem) {
 		// Check if this is a valid item in the list but not the null
 		// element used to clear selection.
 		if (aSelectedItem != null
@@ -165,7 +165,7 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 
 		// Check if the item is already selected to avoid firing a 
 		// contents changed event.
-		if(aSelectedItem == mSelectedItem){
+		if(aSelectedItem.equals(mSelectedItem)){
 			return;
 		}
 		mSelectedItem = aSelectedItem;
@@ -200,7 +200,7 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 	 * 
 	 * @return The root node.
 	 */
-	Node getRootNode() {
+	private final Node getRootNode() {
 		Node rootNode = DOMUtils.getResultNodeFromQuery(mDocument, getXPath());
 		// Create the root node if there is not one present in the DOM.
 		if (rootNode == null) {
@@ -225,15 +225,15 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 	 *         information for this combo box model.
 	 */
 	private String getXPath() {
-		String XPath = "";
+		final StringBuilder XPath = new StringBuilder();
 		if (mParentXPath != null) {
-			XPath += mParentXPath;
+			XPath.append(mParentXPath);
 		}
-		XPath += "/" + mElementName;
+		XPath.append("/").append(mElementName);
 		if (mItemName != null) {
-			XPath += "[@name='" + mItemName + "']"; //$NON-NLS-1$ //$NON-NLS-2$
+			XPath.append("[@name='").append(mItemName).append("']"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		return XPath;
+		return XPath.toString();
 	}
 
 	/**
@@ -242,7 +242,7 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 	 * @param aObject
 	 *            The object to add.
 	 */
-	public void addElement(Object aObject) {
+	public void addElement(final Object aObject) {
 		// Call insert element at with a position one past the end
 		// to cause the element to be added at the end.
 		insertElementAt(aObject, getSize());
@@ -254,9 +254,9 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 	 * @param aObject
 	 *            The list object to remove.
 	 */
-	public void removeElement(Object aObject) {
+	public void removeElement(final Object aObject) {
 		// Find the list index of the object.
-		int listIndex = DOMUtils.getListIndexOfObject(mRoot, aObject);
+		final int listIndex = DOMUtils.getListIndexOfObject(mRoot, aObject);
 
 		// Check if the item could not be found.
 		if (listIndex == -1) {
@@ -277,11 +277,11 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 	 * @param aPosition
 	 *            List position to insert the object.
 	 */
-	public void insertElementAt(Object aObject, int aPosition) {
+	public void insertElementAt(final Object aObject, final int aPosition) {
 		// Create a new element and add a name attribute which is the
 		// value of the object. This has to be done before the uniqueness
 		// check so that searching for the item is easier.
-		Element newElement = DOMUtils.createElement(mRoot, mElementName,
+		final Element newElement = DOMUtils.createElement(mRoot, mElementName,
 				aObject, false);
 
 		// Check if the element is unique. This will fail if the createElement
@@ -296,8 +296,8 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 		}
 
 		// Find the node to insert before.
-		int positionAfter = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
-		Node nextNode = mRoot.getChildNodes().item(positionAfter);
+		final int positionAfter = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
+		final Node nextNode = mRoot.getChildNodes().item(positionAfter);
 
 		// Add the new child to the list.
 		mRoot.insertBefore(newElement, nextNode);
@@ -317,9 +317,9 @@ public class DOMComboBoxModel extends AbstractListModel implements MutableComboB
 	 * @param aPosition
 	 *            The list position to remove the element at.
 	 */
-	public void removeElementAt(int aPosition) {
+	public void removeElementAt(final int aPosition) {
 		// Find the index within the DOM of the list item.
-		int domIndex = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
+		final int domIndex = DOMUtils.getDOMIndexForListIndex(mRoot, aPosition);
 
 		// Check if the item could not be found.
 		if (domIndex == -1) {

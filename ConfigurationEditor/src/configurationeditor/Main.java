@@ -19,9 +19,18 @@ import utils.Messages;
 public class Main {
 
     /**
-     * @param args
+     * Prevent the main class from being instantiated as it 
+     * only contains a static method.
      */
-    public static void main(String[] args) {
+    private Main() {
+        super();
+    }
+    
+    /**
+     * @param aArgs Arguments to the main method,
+     */
+    public static void main(final String[] aArgs) {
+
         // Setup the main application.
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

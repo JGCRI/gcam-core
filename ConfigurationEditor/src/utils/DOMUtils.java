@@ -35,20 +35,26 @@ import org.w3c.dom.xpath.XPathResult;
  */
 public final class DOMUtils {
     /**
+     * Private constructor to prevent creation of the static class.
+     */
+    private DOMUtils() {
+        super();
+    }
+    /**
      * Get the number of element nodes which are the children of a node.
      * 
      * @param aNode
      *            Node for which to count the number of element children.
      * @return The number of children of the node which are elements.
      */
-    public static int getNumberOfElementChildren(Node aNode) {
+    public static int getNumberOfElementChildren(final Node aNode) {
         if(aNode == null) {
             Logger.global.log(Level.WARNING, "Cannot count the number of children of a null element.");
             return 0;
         }
         // Count the child nodes which are elements.
         int size = 0;
-        NodeList childNodes = aNode.getChildNodes();
+        final NodeList childNodes = aNode.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); ++i) {
             if (childNodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 ++size;
@@ -67,72 +73,97 @@ public final class DOMUtils {
      *            Path for which to create the nodes.
      * @return The last node added.
      */
-    public static Node addNodesForXPath(Document aDocument, String aXPath) {
+    public static Node addNodesForXPath(final Document aDocument, final String aXPath) {
     	// Check for a null document.
     	if(aDocument == null){
     		Logger.global.log(Level.WARNING, "Cannot add nodes for a null document.");
     		return null;
     	}
-        System.out.println("Adding nodes for: " + aXPath );
+        
         // Split the string around the slashes.
-        String[] comps = aXPath.split("/+"); //$NON-NLS-1$
+        final String[] comps = aXPath.split("/+"); //$NON-NLS-1$
 
-        // Get the root node of the document.
-        Node current = aDocument.getDocumentElement();
-
-        for (int i = 0; i < comps.length; ++i) {
-            // Skip "node()" and blank items.
-            if (comps[i].equals("node()") || comps[i].length() == 0) { //$NON-NLS-1$
-                continue;
-            }
-            boolean foundNode = false;
-
-            // Construct a new node even if we dont need to
-            // add it later so we can use the equals method.
-            Node newNode = DOMUtils.constructNode(aDocument, comps[i]);
-            // If the new node is null return immediately.
-            if (newNode == null) {
-                return null;
-            }
-            // Skip the root node. TODO: Improve this hack.
-            if (newNode.getNodeName().equals(
-                    aDocument.getDocumentElement().getNodeName())) {
-                continue;
-            }
-            // Search for the node in the list of children of the current node.
-            NodeList children = current.getChildNodes();
-            for (int j = 0; j < children.getLength(); ++j) {
-                Node currChild = children.item(j);
-                // Skip non-element nodes.
-                if (currChild.getNodeType() != Node.ELEMENT_NODE) {
-                    continue;
+        // Create the XPath evaluator.
+        final XPathEvaluatorImpl xPathEvaluator = new XPathEvaluatorImpl(aDocument);
+        
+        // Store the parent of the current query.
+        Node parent = null;
+        
+        // Iterate over each section of the XPath and determine if it 
+        // exists already. If it does not, attempt to create it.
+        final StringBuilder query = new StringBuilder();
+        for(int i = 0; i < comps.length; ++i) {
+            // Add the node to the query string.
+            query.append("/").append(comps[i]);
+            
+            // Perform an XPath query on the tree. If this proves too slow
+            // we could do the search initially and store the node.
+            final XPathResult result = executeQuery(aDocument, query.toString(), xPathEvaluator);
+            
+            // Check the number of results.
+            final Node firstResult = result.iterateNext();
+            // If there isn't a result the node must be created.
+            if(firstResult == null) {
+                // Create the new node.
+                final Node newNode = constructNode(aDocument, comps[i]);
+                
+                // Check if construction failed.
+                if(newNode == null) {
+                    break;
                 }
-                // Check if the node names match.
-                if (currChild.getNodeName().equals(newNode.getNodeName())) {
-                    // Check if the attributes match.
-                    String currChildNameAttr = DOMUtils
-                            .getNameAttrValue(currChild);
-                    String newNodeNameAttr = DOMUtils.getNameAttrValue(newNode);
-                    // Check if both have null names or the names match.
-                    if (((currChildNameAttr == null) && (newNodeNameAttr == null))
-                            || ((currChildNameAttr != null) && currChildNameAttr
-                                    .equals(newNodeNameAttr))) {
-                        current = currChild;
-                        foundNode = true;
-                        break;
-                    }
+                // If the parent is null than there is no document element.
+                if(parent == null) {
+                    aDocument.appendChild(newNode);
                 }
+                // Otherwise add it to the parent.
+                else {
+                    parent.appendChild(newNode);
+                }
+                // Set the parent to the result.
+                parent = newNode;
             }
-            // If the node wasn't found we need to add it.
-            if (!foundNode) {
-                current.appendChild(newNode);
-                current = newNode;
+            else {
+                // Check for multiple results.
+                final Node secondResult = result.iterateNext();
+                if(secondResult == null) {
+                    // Set the parent to the single result.
+                    parent = firstResult;
+                }
+                else {
+                    // Multiple results.
+                    Logger.global.log(Level.WARNING, "Cannot add nodes for XPath with multiple results.");
+                    break;
+                }
             }
         }
-        // Return the last node in the path.
-        return current;
+        
+        // Check if the process was successful by executing the entire
+        // query.
+        final XPathResult result = executeQuery(aDocument, aXPath, xPathEvaluator);
+        
+        // Unneccessary to check for multiple results here as they were 
+        // checked for at every level.
+        return result.iterateNext();
     }
-
+    
+    /**
+     * Execute an XPath query on a document.
+     * 
+     * @param aDocument Document to perform the query on.
+     * @param aXPath Query to execute.
+     * @param xPathEvaluator Evaluator to use to execute.
+     * @return The result of the query.
+     */
+    private static XPathResult executeQuery(final Document aDocument, final String aXPath, final XPathEvaluatorImpl xPathEvaluator) {
+        return (XPathResult) xPathEvaluator
+                .createExpression(
+                        aXPath,
+                        xPathEvaluator.createNSResolver(aDocument
+                                .getDocumentElement())).evaluate(
+                        aDocument.getDocumentElement(),
+                        XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+    }
+    
     /**
      * Construct a node from a single part of an XPath string.
      * 
@@ -143,23 +174,23 @@ public final class DOMUtils {
      *            single node.
      * @return A newly constructed node.
      */
-    static Node constructNode(Document aDocument, String aPartialPath) {
+    static Node constructNode(final Document aDocument, final String aPartialPath) {
         // Find the node portion of the path before the bracket.
-        String[] compParts = aPartialPath.split("\\["); //$NON-NLS-1$
+        final String[] compParts = aPartialPath.split("\\["); //$NON-NLS-1$
 
-        Node newNode = aDocument.createElement(compParts[0]);
+        final Node newNode = aDocument.createElement(compParts[0]);
 
         // See if we need to add an attribute.
         if (compParts.length > 1) {
             // The name of the attribute is between the @ and the =.
-            int atLocation = compParts[1].indexOf('@');
-            int equalsLocation = compParts[1].indexOf('=');
-            String attrName = compParts[1].substring(atLocation + 1,
+            final int atLocation = compParts[1].indexOf('@');
+            final int equalsLocation = compParts[1].indexOf('=');
+            final String attrName = compParts[1].substring(atLocation + 1,
                     equalsLocation);
             // Now find the value.
-            int quoteLocOne = compParts[1].indexOf('=');
-            int quoteLocTwo = compParts[1].indexOf(']');
-            String attrValue = compParts[1].substring(quoteLocOne + 2,
+            final int quoteLocOne = compParts[1].indexOf('=');
+            final int quoteLocTwo = compParts[1].indexOf(']');
+            final String attrValue = compParts[1].substring(quoteLocOne + 2,
                     quoteLocTwo - 1);
             // Refuse to create names that are null.
             if (attrValue.equals("null")) { //$NON-NLS-1$
@@ -168,7 +199,7 @@ public final class DOMUtils {
                 return null;
             }
             // Add the attribute.
-            Attr newAttr = aDocument.createAttribute(attrName);
+            final Attr newAttr = aDocument.createAttribute(attrName);
             newAttr.setNodeValue(attrValue);
             newNode.getAttributes().setNamedItem(newAttr);
         }
@@ -185,13 +216,56 @@ public final class DOMUtils {
      *            A container to use as the parent frame for printing error
      *            dialogs.
      */
-    public static boolean serializeDocument(Document aDocument,
-            Container aContainer) {
+    public static boolean serialize(final Document aDocument,
+            final Container aContainer) {
     	// Check for a null document.
     	if(aDocument == null){
     		Logger.global.log(Level.WARNING, "Cannot serialize a null document.");
     		return false;
     	}
+
+
+        // Create the serialize.
+        final LSSerializer writer = getDOMSerializer(aContainer);
+        // Helper function has already sent an error.
+        if(writer == null) {
+            return false;
+        }
+        
+        // Mark that the file is no longer in need of a save so the
+        // attribute doesn't show up in output.
+        aDocument.getDocumentElement().removeAttribute("needs-save"); //$NON-NLS-1$
+
+        // Serialize the document into a string.
+        final String docContent = writer.writeToString(aDocument);
+
+        // Now attempt to write it to a file.
+        try {
+            final File outputFile = FileUtils.getDocumentFile(aDocument);
+            assert (outputFile != null);
+            final FileWriter fileWriter = new FileWriter(outputFile);
+            fileWriter.write(docContent);
+            fileWriter.close();
+        } catch (IOException e) {
+            // Unexpected error creating writing the file. Inform the user
+            // and log the error.
+            Logger.global.throwing("FileUtils", "serializeDocument", e); //$NON-NLS-1$ //$NON-NLS-2$
+            final String errorMessage = Messages.getString("DOMUtils.22") //$NON-NLS-1$
+                    + e.getMessage() + "."; //$NON-NLS-1$
+            final String errorTitle = Messages.getString("DOMUtils.24"); //$NON-NLS-1$
+            JOptionPane.showMessageDialog(aContainer, errorMessage, errorTitle,
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * The the DOM writer.
+     * @param aContainer The container to center error messages on.
+     * @return An initialized DOM writer.
+     */
+    private static LSSerializer getDOMSerializer(final Container aContainer) {
         // Create the implementation which is needed for serializing.
         System.setProperty(DOMImplementationRegistry.PROPERTY,
                 "org.apache.xerces.dom.DOMImplementationSourceImpl"); //$NON-NLS-1$
@@ -202,12 +276,12 @@ public final class DOMUtils {
             // Unexpected error creating the DOM registry. Inform the user
             // and log the error.
             Logger.global.log(Level.SEVERE, e.getStackTrace().toString());
-            String errorMessage = Messages.getString("DOMUtils.12") //$NON-NLS-1$
+            final String errorMessage = Messages.getString("DOMUtils.12") //$NON-NLS-1$
                     + e.getMessage() + "."; //$NON-NLS-1$
-            String errorTitle = Messages.getString("DOMUtils.14"); //$NON-NLS-1$
+            final String errorTitle = Messages.getString("DOMUtils.14"); //$NON-NLS-1$
             JOptionPane.showMessageDialog(aContainer, errorMessage, errorTitle,
                     JOptionPane.ERROR_MESSAGE);
-            return false;
+            return null;
         }
         DOMImplementationLS domImpl = null;
         try {
@@ -216,46 +290,16 @@ public final class DOMUtils {
             // Unexpected error creating the DOM implementation. Inform the user
             // and log the error.
             Logger.global.log(Level.SEVERE, e.getStackTrace().toString());
-            String errorMessage = Messages.getString("DOMUtils.16") //$NON-NLS-1$
+            final String errorMessage = Messages.getString("DOMUtils.16") //$NON-NLS-1$
                     + e.getMessage() + "."; //$NON-NLS-1$
-            String errorTitle = Messages.getString("DOMUtils.18"); //$NON-NLS-1$
+            final String errorTitle = Messages.getString("DOMUtils.18"); //$NON-NLS-1$
             JOptionPane.showMessageDialog(aContainer, errorMessage, errorTitle,
                     JOptionPane.ERROR_MESSAGE);
-            return false;
+            return null;
         }
-
-        // Create the serialize.
-        LSSerializer writer = domImpl.createLSSerializer();
-
-        // Mark that the file is no longer in need of a save so the
-        // attribute doesn't show up in output.
-        aDocument.getDocumentElement().removeAttribute("needs-save"); //$NON-NLS-1$
-
-        // Serialize the document into a string.
-        String serializedDocument = writer.writeToString(aDocument);
-
-        // Now attempt to write it to a file.
-        try {
-            File outputFile = FileUtils.getDocumentFile(aDocument);
-            assert (outputFile != null);
-            FileWriter fileWriter = new FileWriter(outputFile);
-            fileWriter.write(serializedDocument);
-            fileWriter.close();
-            return true;
-        } catch (IOException e) {
-            // Unexpected error creating writing the file. Inform the user
-            // and log the error.
-            e.printStackTrace();
-            Logger.global.throwing("FileUtils", "serializeDocument", e); //$NON-NLS-1$ //$NON-NLS-2$
-            String errorMessage = Messages.getString("DOMUtils.22") //$NON-NLS-1$
-                    + e.getMessage() + "."; //$NON-NLS-1$
-            String errorTitle = Messages.getString("DOMUtils.24"); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(aContainer, errorMessage, errorTitle,
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
+        return domImpl.createLSSerializer();
     }
-
+    
     /**
      * Helper method to perform an XPath query on the Document and return a
      * resulting node.
@@ -267,7 +311,7 @@ public final class DOMUtils {
      * @return The node which satisfies the query. If none are found this will
      *         be null, if multiple are found this will return the last.
      */
-    static public Node getResultNodeFromQuery(Document aDocument, String aXPath) {
+    static public Node getResultNodeFromQuery(final Document aDocument, final String aXPath) {
         // A query may be performed before the document is set, avoid attempting
         // the query.
         if (aDocument == null) {
@@ -275,31 +319,25 @@ public final class DOMUtils {
         }
         assert (aXPath != null);
         // Create the XPath evaluator.
-        XPathEvaluatorImpl xPathEvaluator = new XPathEvaluatorImpl(aDocument);
+        final XPathEvaluatorImpl xPathEvaluator = new XPathEvaluatorImpl(aDocument);
 
-        // Perform an XPath query on the tree. If this proves too slow
-        // we could do the search initially and store the node.
-        XPathResult result = (XPathResult) xPathEvaluator
-                .createExpression(
-                        aXPath,
-                        xPathEvaluator.createNSResolver(aDocument
-                                .getDocumentElement())).evaluate(
-                        aDocument.getDocumentElement(),
-                        XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+        final XPathResult result = executeQuery(aDocument, aXPath, xPathEvaluator);
 
         // Check for any results. Loop so that we always use the last node.
-        Node currResultNode = null;
         Node resultNode = null;
-        boolean valueSet = false;
-        while ((currResultNode = result.iterateNext()) != null) {
-            resultNode = currResultNode;
+        while (true) {
+            final Node newResult = result.iterateNext();
             // If we already set this once we have multiple values matching the
             // XPath. This is not illegal but merits a warning.
-            if (valueSet) {
+            if(newResult != null && resultNode != null) {
                 Logger.global.log(Level.INFO, Messages
                         .getString("DOMUtils.10") + aXPath); //$NON-NLS-1$
             }
-            valueSet = true;
+            // The last result was blank so quit searching.
+            if(newResult == null) {
+                break;
+            }
+            resultNode = newResult;
         }
         return resultNode;
     }
@@ -311,9 +349,9 @@ public final class DOMUtils {
      *            A window used to center error messages, allowed to be null.
      * @return An initialized document builder.
      */
-    public static DocumentBuilder getDocumentBuilder(Window aWindow) {
+    public static DocumentBuilder getDocumentBuilder(final Window aWindow) {
         // Create the document builder.
-        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
+        final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
                 .newInstance();
         DocumentBuilder docBuilder = null;
         try {
@@ -322,9 +360,9 @@ public final class DOMUtils {
             // Unexpected error creating the document builder. Notify
             // the user of the error and print to the log.
             Logger.global.log(Level.SEVERE, e.getStackTrace().toString());
-            String errorMessage = Messages.getString("DOMUtils.7") //$NON-NLS-1$
+            final String errorMessage = Messages.getString("DOMUtils.7") //$NON-NLS-1$
                     + e.getMessage() + "."; //$NON-NLS-1$
-            String errorTitle = Messages.getString("DOMUtils.9"); //$NON-NLS-1$
+            final String errorTitle = Messages.getString("DOMUtils.9"); //$NON-NLS-1$
             JOptionPane.showMessageDialog(aWindow, errorMessage, errorTitle,
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -338,20 +376,20 @@ public final class DOMUtils {
      *            Node to fetch the name attribute of.
      * @return The value of the name attribute for a node.
      */
-    public static String getNameAttrValue(Node aNode) {
+    public static String getNameAttrValue(final Node aNode) {
         if (aNode == null) {
             return null;
         }
         // Get the name attribute from a node.
-        NamedNodeMap attrs = aNode.getAttributes();
+        final NamedNodeMap attrs = aNode.getAttributes();
         if (attrs == null) {
             return null;
         }
-        Node nameAttr = attrs.getNamedItem("name"); //$NON-NLS-1$
+        final Node nameAttr = attrs.getNamedItem("name"); //$NON-NLS-1$
         if (nameAttr == null) {
             return null;
         }
-        return nameAttr.getNodeValue() != "" ? nameAttr.getNodeValue() : null; //$NON-NLS-1$
+        return nameAttr.getNodeValue() == "" ? null : nameAttr.getNodeValue(); //$NON-NLS-1$
     }
 
     /**
@@ -359,9 +397,9 @@ public final class DOMUtils {
      * @param aNode The node of which to modify the name attribute.
      * @param aNewValue The new value of the name attribute.
      */
-    public static void setNameAttrValue(Node aNode, String aNewValue){
+    public static void setNameAttrValue(final Node aNode, final String aNewValue){
         // Add the attribute.
-        Attr newAttr = aNode.getOwnerDocument().createAttribute("name");
+        final Attr newAttr = aNode.getOwnerDocument().createAttribute("name");
         newAttr.setNodeValue(aNewValue);
         aNode.getAttributes().setNamedItem(newAttr);
     }
@@ -375,7 +413,7 @@ public final class DOMUtils {
      * @return The index into the DOM of the item, -1 if an error occurs or the
      *         item cannot be found.
      */
-    static public int getDOMIndexOfObject(Node aParent, Object aObject) {
+    static public int getDOMIndexOfObject(final Node aParent, final Object aObject) {
         // Check if the parent is null.
         if (aParent == null) {
             Logger.global.log(Level.WARNING,
@@ -383,18 +421,18 @@ public final class DOMUtils {
             return -1;
         }
 
-        if (aObject == null || !(aObject instanceof Node)) {
+        if (!(aObject instanceof Node)) {
             Logger.global.log(Level.WARNING, Messages
                     .getString("DOMListModel.22")); //$NON-NLS-1$
             return -1;
         }
 
         // Get the name of the new object.
-        String newNodeName = getNameAttrValue((Node) aObject);
-        NodeList children = aParent.getChildNodes();
+        final String newNodeName = getNameAttrValue((Node) aObject);
+        final NodeList children = aParent.getChildNodes();
 
         for (int i = 0; i < children.getLength(); ++i) {
-            String name = getNameAttrValue(children.item(i));
+            final String name = getNameAttrValue(children.item(i));
             // Check if the child matches the requested element.
             if ((name != null) && name.equals(newNodeName)) {
                 return i;
@@ -415,7 +453,7 @@ public final class DOMUtils {
      *            The list index to convert to a DOM index.
      * @return The DOM index for a list index, -1 on failure.
      */
-    public static int getDOMIndexForListIndex(Node aParentNode, int aListIndex) {
+    public static int getDOMIndexForListIndex(final Node aParentNode, final int aListIndex) {
         if (aParentNode == null) {
             Logger.global
                     .log(Level.WARNING,
@@ -430,7 +468,7 @@ public final class DOMUtils {
         }
 
         // Find the actual position ignoring non element nodes.
-        NodeList children = aParentNode.getChildNodes();
+        final NodeList children = aParentNode.getChildNodes();
         if (children != null) {
             int elementNodes = -1;
             for (int i = 0; i < children.getLength(); ++i) {
@@ -468,8 +506,8 @@ public final class DOMUtils {
      *            the node.
      * @return A new node representing the object.
      */
-    public static Element createElement(Node aParent, String aElementName,
-            Object aObject, boolean aAddTextContent) {
+    public static Element createElement(final Node aParent, final String aElementName,
+            final Object aObject, final boolean aAddTextContent) {
         // Check if the parent is null.
         if(aParent == null) {
             Logger.global.log(Level.WARNING, "Cannot create element because the parent is null.");
@@ -481,7 +519,7 @@ public final class DOMUtils {
             Logger.global.log(Level.WARNING, "Cannot create element because the object to wrap is null.");
             return null;
         }
-        Element newElement = aParent.getOwnerDocument().createElement(
+        final Element newElement = aParent.getOwnerDocument().createElement(
                 aElementName);
         newElement.setAttribute("name", aObject.toString()); //$NON-NLS-1$
 
@@ -500,12 +538,12 @@ public final class DOMUtils {
      *            The list item to find the item before.
      * @return The previous list item, null if there is not one.
      */
-    static public Node getItemBefore(Node aParentNode, Node aItem) {
+    static public Node getItemBefore(final Node aParentNode, final Node aItem) {
         // Get the index of the node.
-        int domIndex = getDOMIndexOfObject(aParentNode, aItem);
+        final int domIndex = getDOMIndexOfObject(aParentNode, aItem);
     
         // Iterate backwards and search for a list item.
-        NodeList children = aParentNode.getChildNodes();
+        final NodeList children = aParentNode.getChildNodes();
         for (int i = domIndex - 1; i >= 0; --i) {
             // Check if the item is a element node, which represent a list item.
             if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
@@ -524,12 +562,12 @@ public final class DOMUtils {
      *            The list item to find the item after.
      * @return The next list item, null if there is not one.
      */
-    static public Node getItemAfter(Node aParentNode, Node aItem) {
+    static public Node getItemAfter(final Node aParentNode, final Node aItem) {
         // Get the index of the node.
-        int domIndex = getDOMIndexOfObject(aParentNode, aItem);
+        final int domIndex = getDOMIndexOfObject(aParentNode, aItem);
     
         // Iterate forwards and search for a list item.
-        NodeList children = aParentNode.getChildNodes();
+        final NodeList children = aParentNode.getChildNodes();
         for (int i = domIndex + 1; i < children.getLength(); ++i) {
             // Check if the item is a element node, which represent a list item.
             if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
@@ -549,7 +587,7 @@ public final class DOMUtils {
      * @return The index into the list of the item, -1 if an error occurs or the
      *         item cannot be found.
      */
-    static public int getListIndexOfObject(Node aParentNode, Object aListItem) {
+    static public int getListIndexOfObject(final Node aParentNode, final Object aListItem) {
         // Check if this operation can be performed.
         if (aParentNode == null) {
             Logger.global.log(Level.WARNING, Messages
@@ -557,14 +595,14 @@ public final class DOMUtils {
             return 0;
         }
     
-        if (aListItem == null || !(aListItem instanceof Node)) {
+        if (!(aListItem instanceof Node)) {
             Logger.global.log(Level.WARNING, Messages
                     .getString("DOMListModel.24")); //$NON-NLS-1$
         }
     
         // Get the name of the new object.
-        String newNodeName = getNameAttrValue((Node) aListItem);
-        NodeList children = aParentNode.getChildNodes();
+        final String newNodeName = getNameAttrValue((Node) aListItem);
+        final NodeList children = aParentNode.getChildNodes();
     
         // Keep track of the number of elements, or list items found.
         int listIndex = -1;
@@ -576,7 +614,7 @@ public final class DOMUtils {
                 // Don't check the names of non-element nodes.
                 continue;
             }
-            String name = getNameAttrValue(children.item(i));
+            final String name = getNameAttrValue(children.item(i));
             // Check if the child matches the requested element.
             if ((name != null) && name.equals(newNodeName)) {
                 return listIndex;
@@ -591,7 +629,7 @@ public final class DOMUtils {
      * @param aNode Node of which to check the text value.
      * @return Whether the text node child of this node is 1.
      */
-    public static boolean isTextContentTrue(Node aNode) {
+    public static boolean isTextContentTrue(final Node aNode) {
     	// Check if the node does not have a text value.
     	if (aNode.getTextContent() == null) {
     		Logger.global.log(Level.WARNING, "No text content for node.");

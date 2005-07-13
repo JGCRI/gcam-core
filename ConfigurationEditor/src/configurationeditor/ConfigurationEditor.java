@@ -67,7 +67,12 @@ import actions.ShowPreferencesAction;
  * @author Josh Lurz
  */
 public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
-	// TODO: Work out where invokeLater should be used.
+	/**
+     * 
+     */
+    private static final String ELEMENT_NAME = "Value";
+
+    // TODO: Work out where invokeLater should be used.
 	/**
 	 * Automatically generated unique class identifier.
 	 */
@@ -76,152 +81,152 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	/**
 	 * The current parsed XML document.
 	 */
-	private Document mCurrentDocument = null;
+	private transient Document mCurrentDocument = null;
 
 	/**
 	 * The main window of the configuration editor.
 	 */
-	private JPanel mMainWindow = null;
+	private transient JPanel mMainWindow = null;
 
 	/**
 	 * The container which holds the various tabs of the configuration editor.
 	 */
-	private JTabbedPane mMainTabContainer = null;
+	private transient JTabbedPane mMainTabContainer = null;
 
 	/**
 	 * The panel which contains the interface elements to modify the main
 	 * configuration options.
 	 */
-	private JPanel mConfPanel = null;
+	private transient JPanel mConfPanel = null;
 
 	/**
 	 * The panel which contains the interface elements to modify the advanced
 	 * configuration settings.
 	 */
-	private JPanel mAdvancedPanel = null;
+	private transient JPanel mAdvancedPanel = null;
 
 	/**
 	 * The tree contained by the advanced panel which contains detailed
 	 * information about the configuration file.
 	 */
-	private JTree mAdvancedTree = null;
+	private transient JTree mAdvancedTree = null;
 
 	/**
 	 * Checkbox representing whether to perform calibration.
 	 */
-	private JCheckBox mDoCalibrationCheckBox = null;
+	private transient JCheckBox mDoCalCheckBox = null;
 
 	/**
 	 * Checkbox representing whether to calculate total social cost.
 	 */
-	private JCheckBox mRunCostCurvesCheckBox = null;
+	private transient JCheckBox mRunCostsCheckBox = null;
 
 	/**
 	 * Checkbox representing whether to run the model in batch mode.
 	 */
-	private JCheckBox mDoBatchModeCheckBox = null;
+	private transient JCheckBox mDoBatchModeCheckBox = null;
 
 	/**
 	 * The toolbad which contains buttons to execute the available actions.
 	 */
-	private JToolBar mMainToolBar = null;
+	private transient JToolBar mMainToolBar = null;
 
 	/**
 	 * The menu bar containing the File, Edit and Help menus.
 	 */
-	private JMenuBar mMainMenuBar = null;
+	private transient JMenuBar mMainMenuBar = null;
 
 	/**
 	 * The File menu.
 	 */
-	private JMenu mFileMenu = null;
+	private transient JMenu mFileMenu = null;
 
 	/**
 	 * The panel which contains user interface elements for modifying the add on
 	 * files.
 	 */
-	private DOMListPanel mAddOnFilesPanel = null;
+	private transient DOMListPanel mAddOnFilesPanel = null;
 
 	/**
 	 * The button on the toolbar which triggers the save action.
 	 */
-	private JButton mSaveButton = null;
+	private transient JButton mSaveButton = null;
 
 	/**
 	 * The button on the toolbar which triggers the new action.
 	 */
-	private JButton mNewButton = null;
+	private transient JButton mNewButton = null;
 
 	/**
 	 * The button on the toolbar which triggers the load action.
 	 */
-	private JButton mLoadButton = null;
+	private transient JButton mLoadButton = null;
 
 	/**
 	 * The button on the toolbar which triggers the run action.
 	 */
-	private JButton mRunButton = null;
+	private transient JButton mRunButton = null;
 
 	/**
 	 * The Quit file menu item.
 	 */
-	private JMenuItem mQuitMenuItem = null;
+	private transient JMenuItem mQuitMenuItem = null;
 
 	/**
 	 * The New file menu item.
 	 */
-	private JMenuItem mNewMenuItem = null;
+	private transient JMenuItem mNewMenuItem = null;
 
 	/**
 	 * The Load file menu item.
 	 */
-	private JMenuItem mLoadMenuItem = null;
+	private transient JMenuItem mLoadMenuItem = null;
 
 	/**
 	 * The Save file menu item.
 	 */
-	private JMenuItem mSaveMenuItem = null;
+	private transient JMenuItem mSaveMenuItem = null;
 
 	/**
 	 * The Save As file menu item.
 	 */
-	private JMenuItem mSaveAsMenuItem = null;
+	private transient JMenuItem mSaveAsMenuItem = null;
 
 	/**
 	 * The Run file menu item.
 	 */
-	private JMenuItem mRunMenuItem = null;
+	private transient JMenuItem mRunMenuItem = null;
 
 	/**
 	 * The file menu item which triggers the merge action.
 	 */
-	private JMenuItem mMergeMenuItem = null;
+	private transient JMenuItem mMergeMenuItem = null;
 
 	/**
 	 * The top level edit menu.
 	 */
-	private JMenu mEditMenu = null;
+	private transient JMenu mEditMenu = null;
 
 	/**
 	 * The edit menu item which displays a pane for editing the preferences for
 	 * the Configuration Editor.
 	 */
-	private JMenuItem mPreferencesMenuItem = null;
+	private transient JMenuItem mPreferencesMenuItem = null;
 
 	/**
 	 * The edit menu item which displays the pane for editing log settings.
 	 */
-	private JMenuItem mEditLogsMenuItem = null;
+	private transient JMenuItem mEditLogsMenuItem = null;
 
 	/**
 	 * Pane containing all batch configuration information.
 	 */
-	private JPanel mBatchPane = null;
+	private transient JPanel mBatchPane = null;
 
 	/**
 	 * The menu containing help options.
 	 */
-	private JMenu mHelpMenu = null;
+	private transient JMenu mHelpMenu = null;
 
 	/**
 	 * The name of the root element which contains information in the DOM tree
@@ -232,39 +237,39 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	/**
 	 * The label for the batch file field. TODO: Make this a local variable.
 	 */
-	private JLabel mBatchFileLabel = null;
+	private transient JLabel mBatchFileLabel = null;
 
 	/**
 	 * The text field containing the location of the batch file.
 	 */
-	private JTextField mBatchFileField = null;
+	private transient JTextField mBatchFileField = null;
 
 	/**
 	 * The button which allows selection of the location of the batch file
 	 * field.
 	 */
-	private JButton mBatchFileSelectButton = null;
+	private transient JButton mBatchFileSelectButton = null;
 
 	/**
 	 * The button which opens an editor to modify the batch file.
 	 */
-	private JButton mBatchFileEditButton = null;
+	private transient JButton mBatchFileEditButton = null;
 
 	/**
 	 * Button which prompts the user to create a new batch file.
 	 */
-	private JButton mBatchFileNewButton = null;
+	private transient JButton mBatchFileNewButton = null;
 
 	/**
 	 * A factory which creates and tracks text fields based on the current
 	 * document.
 	 */
-	private DOMTextFieldFactory mTextFieldFactory = null;
+	private transient DOMTextFieldFactory mTextFieldFactory = null;
 
 	/**
 	 * A factory which creates list panels based on the current document.
 	 */
-	private DOMListPanelFactory mFileListPanelFactory = null;
+	private transient DOMListPanelFactory mFileListPanelFactory = null;
 
 	// @jve:decl-index=0:visual-constraint=""
 	/**
@@ -323,27 +328,27 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 				if (!prefFile.canRead()) {
 					// Need to initialize the preferences window.
 					new ShowPreferencesAction(
-							(ConfigurationEditor) getTopLevelUI())
+							getTopLevelUI())
 							.actionPerformed(new ActionEvent(getTopLevelUI(),
 									ActionEvent.ACTION_PERFORMED,
 									"ShowPreferences")); //$NON-NLS-1$
 				}
-				Object[] options = {
+				final Object[] options = {
 						Messages.getString("ConfigurationEditor.58"), //$NON-NLS-1$
 						Messages.getString("ConfigurationEditor.59"), Messages.getString("ConfigurationEditor.60") }; //$NON-NLS-1$ //$NON-NLS-2$
-				String message = Messages.getString("ConfigurationEditor.61"); //$NON-NLS-1$
+				final String message = Messages.getString("ConfigurationEditor.61"); //$NON-NLS-1$
 
-				int rv = JOptionPane
+				final int returnValue = JOptionPane
 						.showOptionDialog(getTopLevelUI(), message, Messages
 								.getString("ConfigurationEditor.62"), //$NON-NLS-1$
 								JOptionPane.DEFAULT_OPTION,
 								JOptionPane.QUESTION_MESSAGE, null, options,
 								options[0]);
-				if (rv == 0) {
+				if (returnValue == 0) {
 					new NewAction(((ConfigurationEditor) getTopLevelUI()))
 							.actionPerformed(new ActionEvent(getTopLevelUI(),
 									ActionEvent.ACTION_PERFORMED, "New")); //$NON-NLS-1$
-				} else if (rv == 1) {
+				} else if (returnValue == 1) {
 					new LoadAction(((ConfigurationEditor) getTopLevelUI()))
 							.actionPerformed(new ActionEvent(getTopLevelUI(),
 									ActionEvent.ACTION_PERFORMED, "Load")); //$NON-NLS-1$
@@ -353,7 +358,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 				// warn the user that action is prevented until they load a
 				// document or create a new one.
 				if (mCurrentDocument == null) {
-					String warnMessage = Messages
+					final String warnMessage = Messages
 							.getString("ConfigurationEditor.64"); //$NON-NLS-1$
 					JOptionPane.showMessageDialog(getTopLevelUI(), warnMessage,
 							Messages.getString("ConfigurationEditor.65"), //$NON-NLS-1$
@@ -369,7 +374,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	 * @param aNewDocument
 	 *            The document to set as the current.
 	 */
-	public void setDocument(Document aNewDocument) {
+	public void setDocument(final Document aNewDocument) {
 		// Check for a blank document.
 		if (aNewDocument == null) {
 			Logger.global.log(Level.WARNING, "Tried to set a blank document.");
@@ -378,7 +383,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		mCurrentDocument = aNewDocument;
 		// Add an event handler which will listen for the document being
 		// changed and set that the document needs to be saved.
-		EventTarget target = (EventTarget) mCurrentDocument
+		final EventTarget target = (EventTarget) mCurrentDocument
 				.getDocumentElement();
 		target.addEventListener("DOMSubtreeModified",
 				new ConfigurationDocumentMutationListener(), true);
@@ -480,7 +485,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 					.createBevelBorder(BevelBorder.RAISED));
 
 			// Now setup the layout constraints.
-			GridBagConstraints cons = new GridBagConstraints();
+			final GridBagConstraints cons = new GridBagConstraints();
 
 			// Layout the items top to bottom, left to right.
 			// Position the checkboxes in the first column.
@@ -505,7 +510,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 			cons.gridy = 0;
 
 			// Create a label for the scenario name field.
-			JLabel scenNameLabel = new JLabel(Messages
+			final JLabel scenNameLabel = new JLabel(Messages
 					.getString("ConfigurationEditor.112")); //$NON-NLS-1$
 			mConfPanel.add(scenNameLabel, cons);
 
@@ -513,12 +518,12 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 			cons.gridy = GridBagConstraints.RELATIVE;
 
 			// Create a label for the input file field.
-			JLabel inputFileLabel = new JLabel(Messages
+			final JLabel inputFileLabel = new JLabel(Messages
 					.getString("ConfigurationEditor.115")); //$NON-NLS-1$
 			mConfPanel.add(inputFileLabel, cons);
 
 			// Create a label for the output file field.
-			JLabel outputFileLabel = new JLabel(Messages
+			final JLabel outputFileLabel = new JLabel(Messages
 					.getString("ConfigurationEditor.118")); //$NON-NLS-1$
 			mConfPanel.add(outputFileLabel, cons);
 
@@ -531,7 +536,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 			cons.fill = GridBagConstraints.HORIZONTAL;
 
 			// Add the scenario name field.
-			JTextField scenNameField = mTextFieldFactory.createTextField(
+			final JTextField scenNameField = mTextFieldFactory.createTextField(
 					"Strings", "scenarioName"); //$NON-NLS-1$ //$NON-NLS-2$
 			scenNameField.setPreferredSize(new Dimension(200, 20));
 			mConfPanel.add(scenNameField, cons);
@@ -540,13 +545,13 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 			cons.gridy = GridBagConstraints.RELATIVE;
 
 			// Add the input field.
-			JTextField inputFileField = mTextFieldFactory.createTextField(
+			final JTextField inputFileField = mTextFieldFactory.createTextField(
 					"Files", "xmlInputFileName"); //$NON-NLS-1$ //$NON-NLS-2$
 			inputFileField.setPreferredSize(new Dimension(200, 20));
 			mConfPanel.add(inputFileField, cons);
 
 			// Add the output file field.
-			JTextField outputFileField = mTextFieldFactory.createTextField(
+			final JTextField outputFileField = mTextFieldFactory.createTextField(
 					"Files", "xmlOutputFileName"); //$NON-NLS-1$ //$NON-NLS-2$
 			outputFileField.setPreferredSize(new Dimension(200, 20));
 			mConfPanel.add(outputFileField, cons);
@@ -617,7 +622,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		}
 		if (mCurrentDocument != null) {
 			mAdvancedTree = new JTree(new DOMTreeModel(mCurrentDocument
-					.getDocumentElement(), "Value"));
+					.getDocumentElement(), ELEMENT_NAME));
 			mAdvancedTree.setVisible(true);
 			mAdvancedTree.setShowsRootHandles(true);
 			mAdvancedTree.setRootVisible(true);
@@ -628,7 +633,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 			// displayed on right click.
 			mAdvancedTree.addMouseListener(new PopupMenuCreatorMouseAdapter());
 			// Create a scroll pane to display the tree.
-			JScrollPane treeScroller = new JScrollPane(mAdvancedTree);
+			final JScrollPane treeScroller = new JScrollPane(mAdvancedTree);
 			treeScroller.setPreferredSize(new Dimension(600, 250));
 			mAdvancedPanel.add(treeScroller);
 		}
@@ -640,19 +645,19 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	 * @return The do calibration checkbox.
 	 */
 	private JCheckBox getDoCalibrationCheckBox() {
-		if (mDoCalibrationCheckBox == null) {
-			mDoCalibrationCheckBox = new JCheckBox();
+		if (mDoCalCheckBox == null) {
+			mDoCalCheckBox = new JCheckBox();
 			final String parentXPath = "/"
 					+ ConfigurationEditor.ROOT_ELEMENT_NAME + "/Bools";
-			mDoCalibrationCheckBox.setModel(new DOMButtonModel(this,
-					parentXPath, "Value", "CalibrationActive", false)); //$NON-NLS-1$
-			mDoCalibrationCheckBox.setMnemonic(KeyEvent.VK_C);
-			mDoCalibrationCheckBox.setText(Messages
+			mDoCalCheckBox.setModel(new DOMButtonModel(this,
+					parentXPath, ELEMENT_NAME, "CalibrationActive", false)); //$NON-NLS-1$
+			mDoCalCheckBox.setMnemonic(KeyEvent.VK_C);
+			mDoCalCheckBox.setText(Messages
 					.getString("ConfigurationEditor.13")); //$NON-NLS-1$
-			mDoCalibrationCheckBox.setToolTipText(Messages
+			mDoCalCheckBox.setToolTipText(Messages
 					.getString("ConfigurationEditor.14")); //$NON-NLS-1$
 		}
-		return mDoCalibrationCheckBox;
+		return mDoCalCheckBox;
 	}
 
 	/**
@@ -661,19 +666,19 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	 * @return The run cost curves check box.
 	 */
 	private JCheckBox getRunCostCurvesCheckBox() {
-		if (mRunCostCurvesCheckBox == null) {
-			mRunCostCurvesCheckBox = new JCheckBox();
+		if (mRunCostsCheckBox == null) {
+			mRunCostsCheckBox = new JCheckBox();
 			final String parentXPath = "/"
 					+ ConfigurationEditor.ROOT_ELEMENT_NAME + "/Bools";
-			mRunCostCurvesCheckBox.setModel(new DOMButtonModel(this,
-					parentXPath, "Value", "createCostCurve", false)); //$NON-NLS-1$
-			mRunCostCurvesCheckBox.setMnemonic(KeyEvent.VK_O);
-			mRunCostCurvesCheckBox.setText(Messages
+			mRunCostsCheckBox.setModel(new DOMButtonModel(this,
+					parentXPath, ELEMENT_NAME, "createCostCurve", false)); //$NON-NLS-1$
+			mRunCostsCheckBox.setMnemonic(KeyEvent.VK_O);
+			mRunCostsCheckBox.setText(Messages
 					.getString("ConfigurationEditor.128")); //$NON-NLS-1$
-			mRunCostCurvesCheckBox.setToolTipText(Messages
+			mRunCostsCheckBox.setToolTipText(Messages
 					.getString("ConfigurationEditor.129")); //$NON-NLS-1$
 		}
-		return mRunCostCurvesCheckBox;
+		return mRunCostsCheckBox;
 	}
 
 	/**
@@ -687,7 +692,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 			final String parentXPath = "/"
 					+ ConfigurationEditor.ROOT_ELEMENT_NAME + "/Bools";
 			mDoBatchModeCheckBox.setModel(new DOMButtonModel(this, parentXPath,
-					"Value", "BatchMode", false)); //$NON-NLS-1$
+					ELEMENT_NAME, "BatchMode", false)); //$NON-NLS-1$
 			mDoBatchModeCheckBox.setMnemonic(KeyEvent.VK_B);
 			mDoBatchModeCheckBox.setText(Messages
 					.getString("ConfigurationEditor.16")); //$NON-NLS-1$
@@ -1085,7 +1090,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	 * @param aEnable
 	 *            Whether to enable or disable.
 	 */
-	private void enableBatchInputFields(boolean aEnable) {
+	private void enableBatchInputFields(final boolean aEnable) {
 		getBatchFileLabel().setEnabled(aEnable);
 		getBatchFileField().setEnabled(aEnable);
 		getBatchFileSelectButton().setEnabled(aEnable);
@@ -1144,12 +1149,12 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 			mBatchFileSelectButton.setMnemonic(KeyEvent.VK_S);
 			mBatchFileSelectButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent aEvent) {
-					JFileChooser batchFileChooser = new JFileChooser();
+					final JFileChooser batchFileChooser = new JFileChooser();
 					batchFileChooser.setFileFilter(new XMLFileFilter());
-					int rv = batchFileChooser.showDialog(getMainWindow(),
+					final int returnValue = batchFileChooser.showDialog(getMainWindow(),
 							Messages.getString("ConfigurationEditor.144")); //$NON-NLS-1$
-					if (rv == JFileChooser.APPROVE_OPTION) {
-						File selectedFile = batchFileChooser.getSelectedFile();
+					if (returnValue == JFileChooser.APPROVE_OPTION) {
+						final File selectedFile = batchFileChooser.getSelectedFile();
 						if (selectedFile != null) {
 							// Set the text field.
 							getBatchFileField().setText(
@@ -1181,27 +1186,27 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 			mBatchFileNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent aEvent) {
 					// Create a file chooser and add an XML filter.
-					JFileChooser chooser = new JFileChooser();
+					final JFileChooser chooser = new JFileChooser();
 					chooser.setFileFilter(new XMLFileFilter());
 
 					// Show the file chooser.
-					int rv = chooser.showSaveDialog(getMainWindow());
-					if (rv == JFileChooser.APPROVE_OPTION) {
-						File newFile = chooser.getSelectedFile();
+					final int returnValue = chooser.showSaveDialog(getMainWindow());
+					if (returnValue == JFileChooser.APPROVE_OPTION) {
+						final File newFile = chooser.getSelectedFile();
 						// TODO: Check if the file already exists.
 						getBatchFileField().setText(newFile.getAbsolutePath());
 						// Check if the new file already exists.
 						if (newFile.exists()) {
-							String errorMessage = Messages
+							final String errorMessage = Messages
 									.getString("ConfigurationEditor.147"); //$NON-NLS-1$
-							String errorTitle = Messages
+							final String errorTitle = Messages
 									.getString("ConfigurationEditor.148"); //$NON-NLS-1$
 							JOptionPane.showMessageDialog(getMainWindow(),
 									errorMessage, errorTitle,
 									JOptionPane.ERROR_MESSAGE);
 							return;
 						}
-						BatchFileEditor batchEditor = new BatchFileEditor(
+						final BatchFileEditor batchEditor = new BatchFileEditor(
 								newFile.getAbsolutePath(), true);
 						batchEditor.pack();
 						batchEditor.setVisible(true);
@@ -1228,8 +1233,8 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 			mBatchFileEditButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent aEvent) {
 					// Create a new batch file editor.
-					String batchFile = getBatchFileField().getText();
-					BatchFileEditor batchEditor = new BatchFileEditor(
+					final String batchFile = getBatchFileField().getText();
+					final BatchFileEditor batchEditor = new BatchFileEditor(
 							batchFile, false);
 					batchEditor.pack();
 					batchEditor.setVisible(true);
@@ -1249,6 +1254,13 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	 */
 	private final class ConfigurationDocumentMutationListener implements
 			EventListener {
+        /**
+         * Constructor
+         */
+        ConfigurationDocumentMutationListener(){
+            super();
+        }
+        
 		/**
 		 * Method called when mutation events from the configuration document
 		 * are received.
@@ -1256,7 +1268,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		 * @param aEvent
 		 *            The mutation event received.
 		 */
-		public void handleEvent(Event aEvent) {
+		public void handleEvent(final Event aEvent) {
 			// This doesn't recursively send another event,
 			// not sure why but it works.
 			mCurrentDocument.getDocumentElement().setAttribute(

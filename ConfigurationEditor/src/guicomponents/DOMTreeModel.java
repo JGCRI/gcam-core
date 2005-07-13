@@ -5,7 +5,7 @@ package guicomponents;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
@@ -25,22 +25,22 @@ public class DOMTreeModel implements TreeModel {
     /**
      * The immutable root node of the tree.
      */
-    Node mRoot = null;
+    private final transient Node mRoot;
     
     /**
      * A list of tree event listeners.
      */
-    Vector<TreeModelListener> mListeners = null;
+    final transient ArrayList<TreeModelListener> mListeners;
     
     /**
      * Map of cached node wrappers.
      */
-    private Map<Node,Object> mCachedNodeWrappers = null;
+    private transient final Map<Node,Object> mCachedNodeWrappers;
     
     /**
      * The name of leaf elements in the DOM.
      */
-    private String mLeafName = null;
+    private transient final String mLeafName;
     
     /**
      * Constructor which initializes the root node in the tree.
@@ -52,7 +52,7 @@ public class DOMTreeModel implements TreeModel {
         mRoot = aRootNode;
         mLeafName = aLeafName;
         mCachedNodeWrappers = new HashMap<Node, Object>();
-        mListeners = new Vector<TreeModelListener>();
+        mListeners = new ArrayList<TreeModelListener>();
     }
     
     /**
@@ -71,9 +71,9 @@ public class DOMTreeModel implements TreeModel {
      * is invalid.
      * @see javax.swing.tree.TreeModel#getChild(java.lang.Object, int)
      */
-    public Object getChild(Object aParent, int aChildIndex) {
+    public Object getChild(final Object aParent, final int aChildIndex) {
         // Get the DOM index of the list index.
-        int DOMIndex = DOMUtils.getDOMIndexForListIndex((Node)aParent, aChildIndex);
+        final int DOMIndex = DOMUtils.getDOMIndexForListIndex((Node)aParent, aChildIndex);
         
         // If the DOM index is -1 than the parent or child is invalid.
         if(DOMIndex == -1) {
@@ -89,7 +89,7 @@ public class DOMTreeModel implements TreeModel {
      * @return The number of children of the node.
      * @see javax.swing.tree.TreeModel#getChildCount(java.lang.Object)
      */
-    public int getChildCount(Object aNode) {
+    public int getChildCount(final Object aNode) {
         return DOMUtils.getNumberOfElementChildren((Node)aNode);
     }
 
@@ -98,7 +98,7 @@ public class DOMTreeModel implements TreeModel {
      * @param aNode Node to determine if it is a leaf.
      * @return Whether the node is a leaf.
      */
-    public boolean isLeaf(Object aNode) {
+    public boolean isLeaf(final Object aNode) {
         return ((Node)aNode).getNodeName().equals(mLeafName);
     }
 
@@ -109,21 +109,19 @@ public class DOMTreeModel implements TreeModel {
      * @param aNewValue The new value of the specified node.
      * @see javax.swing.tree.TreeModel#valueForPathChanged(javax.swing.tree.TreePath, java.lang.Object)
      */
-    public void valueForPathChanged(TreePath aPath, Object aNewValue) {
+    public void valueForPathChanged(final TreePath aPath, final Object aNewValue) {
         // Path items are nodes, so just find the last item and check its 
         // value.
-        Node oldNode = (Node)aPath.getLastPathComponent();
-        Node newNode = (Node)aNewValue;
+        final Node oldNode = (Node)aPath.getLastPathComponent();
+        final Node newNode = (Node)aNewValue;
         if(oldNode.equals(newNode)){
-        	System.out.println("NOT MODIFIED!");
         	return;
         }
         
         // Check if the old and new nodes are the same node but modified.
         if(oldNode.isSameNode(newNode)){
-        	System.out.println("IS SAME NODE!");
         	// Notify listeners that the node changed.
-        	int listIndex = DOMUtils.getListIndexOfObject(newNode.getParentNode(), newNode);
+            final int listIndex = DOMUtils.getListIndexOfObject(newNode.getParentNode(), newNode);
         	fireTreeNodesChanged(new TreeModelEvent(this, aPath, new int[] {listIndex}, new Object[]{getOrCreateWrapper(newNode)} ));
         }
         // Otherwise a node was added.
@@ -137,7 +135,7 @@ public class DOMTreeModel implements TreeModel {
      * @return The index of the child within the parent.
      * @see javax.swing.tree.TreeModel#getIndexOfChild(java.lang.Object, java.lang.Object)
      */
-    public int getIndexOfChild(Object aParent, Object aChild) {
+    public int getIndexOfChild(final Object aParent, final Object aChild) {
         // The caller expects to receive the -1 return value
         // for invalid parents and children.
         return DOMUtils.getDOMIndexOfObject((Node)aParent, aChild);
@@ -149,7 +147,7 @@ public class DOMTreeModel implements TreeModel {
      * @param aListener The tree model listener to add.
      * @see javax.swing.tree.TreeModel#addTreeModelListener(javax.swing.event.TreeModelListener)
      */
-    public void addTreeModelListener(TreeModelListener aListener) {
+    public void addTreeModelListener(final TreeModelListener aListener) {
         // Add the listener to the end of the list.
         mListeners.add(aListener);
     }
@@ -159,7 +157,7 @@ public class DOMTreeModel implements TreeModel {
      * @param aListener The listener to remove.
      * @see javax.swing.tree.TreeModel#removeTreeModelListener(javax.swing.event.TreeModelListener)
      */
-    public void removeTreeModelListener(TreeModelListener aListener) {
+    public void removeTreeModelListener(final TreeModelListener aListener) {
         // Remove the listener.
         mListeners.remove(aListener);
     }
@@ -171,7 +169,7 @@ public class DOMTreeModel implements TreeModel {
      * @return A wrapper around the DOM node which overrides the toString
      * method to return the name attribute of the node.
      */
-    private Object getOrCreateWrapper(Node aNode) {
+    private Object getOrCreateWrapper(final Node aNode) {
         // Check if the node has already had a wrapper created for it.
         Object wrapper = mCachedNodeWrappers.get(aNode);
         
@@ -191,33 +189,10 @@ public class DOMTreeModel implements TreeModel {
      * Fire a tree nodes changed event.
      * @param aEvent The tree model event.
      */
-    private void fireTreeNodesChanged(TreeModelEvent aEvent) {
+    private void fireTreeNodesChanged(final TreeModelEvent aEvent) {
         // Iterate over the listeners and notify each.
         for(int i = 0; i < mListeners.size(); ++i) {
             mListeners.get(i).treeNodesChanged(aEvent);
-        }
-    }
-    /**
-     * Fire a tree nodes inserted event.
-     * @param aEvent The tree model event.
-     */
-    @SuppressWarnings("unused")
-	private void fireTreeNodesInserted(TreeModelEvent aEvent) {
-        // Iterate over the listeners and notify each.
-        for(int i = 0; i < mListeners.size(); ++i) {
-            mListeners.get(i).treeNodesInserted(aEvent);
-        }
-    }
-    
-    /**
-     * Fire a tree nodes changed event.
-     * @param aEvent The tree model event.
-     */
-    @SuppressWarnings("unused")
-	private void fireTreeNodesRemoved(TreeModelEvent aEvent) {
-        // Iterate over the listeners and notify each.
-        for(int i = 0; i < mListeners.size(); ++i) {
-            mListeners.get(i).treeNodesRemoved(aEvent);
         }
     }
     
@@ -225,7 +200,7 @@ public class DOMTreeModel implements TreeModel {
      * Fire a tree structure changed event.
      * @param aEvent The tree model event.
      */
-    private void fireTreeStructureChanged(TreeModelEvent aEvent) {
+    private void fireTreeStructureChanged(final TreeModelEvent aEvent) {
         // Iterate over the listeners and notify each.
         for(int i = 0; i < mListeners.size(); ++i) {
             mListeners.get(i).treeStructureChanged(aEvent);

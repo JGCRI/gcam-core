@@ -44,37 +44,37 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
     /**
      * The parsed batch file XML document.
      */
-    private Document mDocument = null;
+    private transient Document mDocument = null;
 
     /**
      * The main content pane.
      */
-    private JPanel mMainContentPane = null;
+    private transient JPanel mMainContentPane = null;
 
     /**
      * The left panel.
      */
-    private JPanel mLeftPanel = null;
+    private transient JPanel mLeftPanel = null;
 
     /**
      * The middle panel.
      */
-    private JPanel mMiddlePanel = null;
+    private transient JPanel mMiddlePanel = null;
     
     /**
      * The right panel.
      */
-    private JPanel mRightPanel = null;
+    private transient JPanel mRightPanel = null;
     
     /**
      * The cancel button.
      */
-    private JButton mCancelButton = null;
+    private transient JButton mCancelButton = null;
     
     /**
      * The OK button.
      */
-    private JButton mOKButton = null;
+    private transient JButton mOKButton = null;
     
     /**
      * The name of the batch file root element.
@@ -85,7 +85,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
     /**
      * A factory which instantiates the list panels.
      */
-    private DOMListPanelFactory mListPanelFactory = null;
+    private transient final DOMListPanelFactory mListPanelFactory;
     
     /**
      * This is the default constructor
@@ -121,7 +121,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
      * @param aFileName The name to save the document as.
      *
      */
-    private void createNewDocument(String aFileName) {
+    private void createNewDocument(final String aFileName) {
         // Create a new document.
         mDocument = DOMUtils.getDocumentBuilder(this).newDocument();
        
@@ -133,8 +133,8 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
         
         // Put up a message telling the user that a new file was created,
         // otherwise there is no feedback for this action.
-        String message = Messages.getString("BatchFileEditor.1"); //$NON-NLS-1$
-        String messageTitle = Messages.getString("BatchFileEditor.2"); //$NON-NLS-1$
+        final String message = Messages.getString("BatchFileEditor.1"); //$NON-NLS-1$
+        final String messageTitle = Messages.getString("BatchFileEditor.2"); //$NON-NLS-1$
         Logger.global.log(Level.INFO, message);
         JOptionPane.showMessageDialog(this, message, messageTitle,
                 JOptionPane.INFORMATION_MESSAGE);
@@ -144,14 +144,14 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
      * Load a document into the current document.
      * @param aFileName The path to a file to load.
      */
-    private void loadDocument(String aFileName) {
+    private void loadDocument(final String aFileName) {
         try {
-        	File newFile = new File(aFileName);
+        	final File newFile = new File(aFileName);
         	// Check if the file exists.
         	if(!newFile.exists()){
         		// Tell the user the file does not exist.
-                String message = Messages.getString("BatchFileEditor.3"); //$NON-NLS-1$
-                String messageTitle = Messages.getString("BatchFileEditor.4"); //$NON-NLS-1$
+                final String message = Messages.getString("BatchFileEditor.3"); //$NON-NLS-1$
+                final String messageTitle = Messages.getString("BatchFileEditor.4"); //$NON-NLS-1$
                 Logger.global.log(Level.SEVERE, message);
                 JOptionPane.showMessageDialog(this, message, messageTitle,
                         JOptionPane.ERROR_MESSAGE);
@@ -161,8 +161,8 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
             FileUtils.setDocumentFile(mDocument, newFile );
         } catch (Exception e) {
         	// Report the error to the user.
-            String message = Messages.getString("BatchFileEditor.5") + e.getMessage(); //$NON-NLS-1$
-            String messageTitle = Messages.getString("BatchFileEditor.6"); //$NON-NLS-1$
+            final String message = Messages.getString("BatchFileEditor.5") + e.getMessage(); //$NON-NLS-1$
+            final String messageTitle = Messages.getString("BatchFileEditor.6"); //$NON-NLS-1$
             Logger.global.log(Level.SEVERE, message);
             JOptionPane.showMessageDialog(this, message, messageTitle,
                     JOptionPane.ERROR_MESSAGE);
@@ -170,8 +170,8 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
         }
         // Check if this has any chance at being a valid batch file.
         if(mDocument != null && !mDocument.getDocumentElement().getNodeName().equals(ROOT_ELEMENT_NAME)) {
-            String message = "The selected document is not a valid batch file.";
-            String messageTitle = "Invalid Document";
+            final String message = "The selected document is not a valid batch file.";
+            final String messageTitle = "Invalid Document";
             Logger.global.log(Level.SEVERE, message);
             JOptionPane.showMessageDialog(this, message, messageTitle,
                     JOptionPane.ERROR_MESSAGE);
@@ -189,7 +189,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
             mMainContentPane = new JPanel(new GridBagLayout());
             mMainContentPane.setToolTipText(Messages.getString("BatchFileEditor.7")); //$NON-NLS-1$
             
-            GridBagConstraints cons = new GridBagConstraints();
+            final GridBagConstraints cons = new GridBagConstraints();
             // Set that the panels should grow to fit the cells.
             cons.fill = GridBagConstraints.BOTH;
             
@@ -238,7 +238,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
             mOKButton.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent aEvent) {
                             // Save the batch file document.
-                            DOMUtils.serializeDocument(mDocument, getMainWindow());
+                            DOMUtils.serialize(mDocument, getMainWindow());
                             getMainWindow().dispose();
                         }
                     });
@@ -314,7 +314,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
      * @param aFileName The name of the file to load or create.
      * @param aIsNewFile Whether the file should be created.
      */
-    private void initialize(String aFileName, boolean aIsNewFile) {
+    private void initialize(final String aFileName, final boolean aIsNewFile) {
         if(aIsNewFile){
             createNewDocument(aFileName);
         }

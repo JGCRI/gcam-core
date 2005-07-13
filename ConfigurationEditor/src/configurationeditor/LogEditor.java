@@ -58,71 +58,41 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
     private static final long serialVersionUID = -1626218404879455659L;
 
     /**
-     * The top level panel contains by the dialog. The panel contains the split
-     * pane.
-     */
-    private JPanel mLogPanel = null;
-
-    /**
-     * The split pane which seperates the panel for selecting the log to modify
-     * and the log modification panel.
-     */
-    private JSplitPane mLogSplitPane = null;
-
-    /**
      * The panel which contains the user interface elements to modify the
      * settings for a chosen log.
      */
-    private JPanel mLogModificationPanel = null;
-
-    /**
-     * The panel where the user can select the log to modify, or add and remove
-     * logs.
-     */
-    private JPanel mLogSelecterPanel = null;
+    private transient JPanel mLogModificationPanel = null;
 
     /**
      * A combo box which selects the logger to modify.
      */
-    private JComboBox mLoggerSelectorComboBox = null;
-
-    /**
-     * A combo box containing the minimum log warning level for the currently
-     * selected log.
-     */
-    private JComboBox mMinLogWarningLevel = null;
-
-    /**
-     * A combo box containing the minimul log warning level to print to screen
-     * for the currently selected log.
-     */
-    private JComboBox mMinLogToScreenWarningLevel = null;
+    private transient JComboBox mLoggerSelectorComboBox = null;
 
     /**
      * A check box which tells whether to prefix log messages with their warning
      * level for the currently selected log.
      */
-    private JCheckBox mPrintLogWarningLevelCheckBox = null;
+    private transient JCheckBox mPrintLogWarningLevelCheckBox = null;
 
     /**
      * The factory which will create the level selection combo boxes.
      */
-    private SingleDOMValueComboBoxFactory mSingleValueComboBoxFactory = null;
+    private transient SingleDOMValueComboBoxFactory mComboBoxFactory = null;
 
     /**
      * The document which contains the log configuration options.
      */
-    private Document mDocument = null;
+    private transient Document mDocument = null;
 
     /**
      * The name of the root element of a log conf file.
      */
-    final static String LOG_CONF_ROOT_STRING = "LoggerFactory";
+    final static String LOG_ROOT = "LoggerFactory";
 
     /**
      * The element name for a single logger.
      */
-    final static String SINGLE_LOGGER_STRING = "Logger";
+    final static String SINGLE_LOGGER = "Logger";
 
     /**
      * The strings representing each warning level in ascending order of
@@ -135,19 +105,19 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
      * The node name of the log attribute which specifies the minimum level of
      * message to send to the screen.
      */
-    private static final String MIN_TO_SCREEN_WARNING_LEVEL_STRING = "minToScreenWarningLevel";
+    private static final String MIN_SCREEN_LEVEL = "minToScreenWarningLevel";
 
     /**
      * The node name of the log attribute which specifies the minimum level of
      * message to record.
      */
-    private static final String MIN_LOG_WARNING_LEVEL_STRING = "minLogWarningLevel";
+    private static final String MIN_LOG_LEVEL = "minLogWarningLevel";
 
     /**
      * The name of the node that contains the boolean value representing whether
      * to print the warning level as part of each log message.
      */
-    private static final String PRINT_LOG_WARNING_LEVEL_STRING = "printLogWarningLevel";
+    private static final String PRINT_LEVEL = "printLogWarningLevel";
 
     /**
      * Constructor
@@ -159,48 +129,45 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
     public LogEditor(Frame aParentFrame) {
         super(aParentFrame, "Log Settings", true);
         loadDocument();
-        initialize();
+        editorInitialize();
     }
 
     /**
      * This method initializes the log editor dialog box.
      */
-    private void initialize() {
+    private final void editorInitialize() {
         addWindowListener(new WindowCloseListener());
-        mSingleValueComboBoxFactory = new SingleDOMValueComboBoxFactory(
-                mDocument, LOG_CONF_ROOT_STRING, SINGLE_LOGGER_STRING);
-        setContentPane(getLogPanel());
+        mComboBoxFactory = new SingleDOMValueComboBoxFactory(
+                mDocument, LOG_ROOT, SINGLE_LOGGER);
+        setContentPane(createMainPanel());
     }
 
     /**
-     * This method initializes the log panel.
+     * Create the main panel for the log editor.
      * 
-     * @return The log panel.
+     * @return The main panel for the log editor.
      */
-    private JPanel getLogPanel() {
-        if (mLogPanel == null) {
-            mLogPanel = new JPanel();
-            mLogPanel.setBorder(BorderFactory
-                    .createBevelBorder(BevelBorder.RAISED));
-            mLogPanel.setToolTipText(Messages
-                    .getString("ConfigurationEditor.80")); //$NON-NLS-1$
-            mLogPanel.add(getLogSplitPane(), null);
-        }
-        return mLogPanel;
+    private JPanel createMainPanel() {
+        final JPanel logPanel = new JPanel();
+        logPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        logPanel.setToolTipText(Messages.getString("ConfigurationEditor.80")); //$NON-NLS-1$
+        final JSplitPane splitPane = createSplitPane();
+        logPanel.add(splitPane, null);
+        return logPanel;
     }
 
     /**
-     * This method initializes the log split pane.
+     * Create the split pane which will seperate the log selecter and log
+     * modification panel.
      * 
-     * @return The log split pane.
+     * @return A split pane containing the log selecter panel and log modifier
+     *         panel.
      */
-    private JSplitPane getLogSplitPane() {
-        if (mLogSplitPane == null) {
-            mLogSplitPane = new JSplitPane();
-            mLogSplitPane.setRightComponent(getLogModificationPanel());
-            mLogSplitPane.setLeftComponent(getLogSelecterPanel());
-        }
-        return mLogSplitPane;
+    private JSplitPane createSplitPane() {
+        final JSplitPane splitPane = new JSplitPane();
+        splitPane.setRightComponent(getLogModificationPanel());
+        splitPane.setLeftComponent(createLoggerSelecterPanel());
+        return splitPane;
     }
 
     /**
@@ -214,41 +181,40 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
             mLogModificationPanel.setLayout(new BoxLayout(
                     mLogModificationPanel, BoxLayout.Y_AXIS));
 
-            JLabel minLogToScreenLabel = new JLabel(Messages
+            final JLabel minLogToScreenLabel = new JLabel(Messages
                     .getString("ConfigurationEditor.81")); //$NON-NLS-1$
             mLogModificationPanel.add(minLogToScreenLabel);
 
-            JLabel minLogWarningLevel = new JLabel(Messages
+            final JLabel minLogWarningLevel = new JLabel(Messages
                     .getString("ConfigurationEditor.84")); //$NON-NLS-1$;
             mLogModificationPanel.add(minLogWarningLevel);
 
-            mLogModificationPanel.add(getMinLogWarningLevelComboBox(), null);
-            mLogModificationPanel.add(getMinLogToScreenWarningLevelComboBox(),
-                    null);
+            mLogModificationPanel.add(createMinLogLevelCombo(), null);
+            mLogModificationPanel.add(createMinScreenLogLevelCombo(), null);
             mLogModificationPanel.add(getPrintLogWarningLevelCheckBox(), null);
 
             // Check if there are any loggers currently.
             if (getLoggerSelectorComboBox().getModel().getSize() > 0) {
                 // Set the selected item to be the first logger.
                 getLoggerSelectorComboBox().setSelectedIndex(0);
-                String parentName = getLoggerSelectorComboBox()
-                .getSelectedItem().toString();
-                mSingleValueComboBoxFactory
-                        .setParentName(parentName);
-                ((DOMButtonModel)getPrintLogWarningLevelCheckBox().getModel()).setParent(parentName);
+                final String parentName = getLoggerSelectorComboBox()
+                        .getSelectedItem().toString();
+                mComboBoxFactory.setParentName(parentName);
+                ((DOMButtonModel) getPrintLogWarningLevelCheckBox().getModel())
+                        .setParent(parentName);
             }
             // Otherwise disable the GUI elements.
             else {
-                Component logModificationUIs[] = getLogModificationPanel()
+                final Component logModUIs[] = getLogModificationPanel()
                         .getComponents();
                 // Disable the UI until the user creates a log.
-                for (int i = 0; i < logModificationUIs.length; ++i) {
-                    logModificationUIs[i].setEnabled(false);
+                for (int i = 0; i < logModUIs.length; ++i) {
+                    logModUIs[i].setEnabled(false);
                 }
             }
             // TODO: This should not be in this frame.
             // Add OK and cancel buttons.
-            JButton okButton = new JButton();
+            final JButton okButton = new JButton();
             okButton.setToolTipText("Save the current changes.");
             okButton.setText("OK");
 
@@ -257,13 +223,13 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
             okButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent aEvent) {
                     // Save the batch file document.
-                    DOMUtils.serializeDocument(mDocument, getTopLevelUI());
+                    DOMUtils.serialize(mDocument, getTopLevelUI());
                     getTopLevelUI().dispose();
                 }
             });
             mLogModificationPanel.add(okButton);
 
-            JButton cancelButton = new JButton();
+            final JButton cancelButton = new JButton();
             cancelButton.setToolTipText("Discard the current changes.");
             cancelButton.setText("Cancel");
 
@@ -292,17 +258,15 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
      * 
      * @return The log selection panel.
      */
-    private JPanel getLogSelecterPanel() {
-        if (mLogSelecterPanel == null) {
-            mLogSelecterPanel = new JPanel();
-            JLabel logSelectorLabel = new JLabel(Messages
-                    .getString("ConfigurationEditor.89")); //$NON-NLS-1$
-            logSelectorLabel.setToolTipText(Messages
-                    .getString("ConfigurationEditor.90")); //$NON-NLS-1$
-            mLogSelecterPanel.add(logSelectorLabel, null);
-            mLogSelecterPanel.add(getLoggerSelectorComboBox(), null);
-        }
-        return mLogSelecterPanel;
+    private JPanel createLoggerSelecterPanel() {
+        final JPanel loggerSelecter = new JPanel();
+        final JLabel logSelectorLabel = new JLabel(Messages
+                .getString("ConfigurationEditor.89")); //$NON-NLS-1$
+        logSelectorLabel.setToolTipText(Messages
+                .getString("ConfigurationEditor.90")); //$NON-NLS-1$
+        loggerSelecter.add(logSelectorLabel, null);
+        loggerSelecter.add(getLoggerSelectorComboBox(), null);
+        return loggerSelecter;
     }
 
     /**
@@ -314,7 +278,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
         if (mLoggerSelectorComboBox == null) {
             // Create the logger selecter combo box.
             mLoggerSelectorComboBox = new JComboBox(new DOMComboBoxModel(
-                    mDocument, null, LOG_CONF_ROOT_STRING, null));
+                    mDocument, null, LOG_ROOT, null));
             // Add a selection listener which will update the other two combo
             // boxes.
             // TODO: UI needs an update here I bet.
@@ -327,25 +291,26 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
                     // that their parent has changed.
                     // Set the parent to be the name of the currently selected
                     // log.
-                    boolean enableLogModificationUI;
+                    boolean enable;
                     String parentName;
-                    if (aEvent.getItem() != null) {
-                        parentName = aEvent.getItem().toString();
-                        enableLogModificationUI = true;
-                    } else {
+                    if (aEvent.getItem() == null) {
                         // Not sure if this is right.
                         parentName = "";
-                        enableLogModificationUI = false;
+                        enable = false;
+                    } else {
+                        parentName = aEvent.getItem().toString();
+                        enable = true;
                     }
-                    mSingleValueComboBoxFactory.setParentName(parentName);
-                    ((DOMButtonModel)getPrintLogWarningLevelCheckBox().getModel()).setParent(parentName);
+
+                    mComboBoxFactory.setParentName(parentName);
+                    ((DOMButtonModel) getPrintLogWarningLevelCheckBox()
+                            .getModel()).setParent(parentName);
                     // Enable or disable the log modification components
                     // based on whether a log is selected.
-                    Component logModificationUIs[] = getLogModificationPanel()
+                    final Component logModUIs[] = getLogModificationPanel()
                             .getComponents();
-                    for (int i = 0; i < logModificationUIs.length; ++i) {
-                        logModificationUIs[i]
-                                .setEnabled(enableLogModificationUI);
+                    for (int i = 0; i < logModUIs.length; ++i) {
+                        logModUIs[i].setEnabled(enable);
                     }
                     // Update the user interface.
                     getLogModificationPanel().repaint();
@@ -356,18 +321,17 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
     }
 
     /**
-     * This method initializes the minimum log warning level combo box.
+     * This method creates and initializes the minimum log warning level combo
+     * box.
      * 
-     * @return The minimum log warning level combo box.
+     * @return A minimum log warning level combo box.
      */
-    private JComboBox getMinLogWarningLevelComboBox() {
-        if (mMinLogWarningLevel == null) {
-            mMinLogWarningLevel = mSingleValueComboBoxFactory.createComboBox(
-                    LEVEL_STRINGS, MIN_LOG_WARNING_LEVEL_STRING);
-            mMinLogWarningLevel.setToolTipText(Messages
-                    .getString("ConfigurationEditor.87")); //$NON-NLS-1$
-        }
-        return mMinLogWarningLevel;
+    private JComboBox createMinLogLevelCombo() {
+        final JComboBox minLogLevel = mComboBoxFactory
+                .createComboBox(LEVEL_STRINGS, MIN_LOG_LEVEL);
+        minLogLevel
+                .setToolTipText(Messages.getString("ConfigurationEditor.87")); //$NON-NLS-1$
+        return minLogLevel;
     }
 
     /**
@@ -375,15 +339,12 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
      * 
      * @return The minimum log to screen combo box.
      */
-    private JComboBox getMinLogToScreenWarningLevelComboBox() {
-        if (mMinLogToScreenWarningLevel == null) {
-            mMinLogToScreenWarningLevel = mSingleValueComboBoxFactory
-                    .createComboBox(LEVEL_STRINGS,
-                            MIN_TO_SCREEN_WARNING_LEVEL_STRING);
-            mMinLogToScreenWarningLevel.setToolTipText(Messages
-                    .getString("ConfigurationEditor.92")); //$NON-NLS-1$
-        }
-        return mMinLogToScreenWarningLevel;
+    private JComboBox createMinScreenLogLevelCombo() {
+        final JComboBox minScreenLevel = mComboBoxFactory
+                .createComboBox(LEVEL_STRINGS, MIN_SCREEN_LEVEL);
+        minScreenLevel.setToolTipText(Messages
+                .getString("ConfigurationEditor.92")); //$NON-NLS-1$
+        return minScreenLevel;
     }
 
     /**
@@ -394,9 +355,9 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
     private JCheckBox getPrintLogWarningLevelCheckBox() {
         if (mPrintLogWarningLevelCheckBox == null) {
             mPrintLogWarningLevelCheckBox = new JCheckBox();
-            final String parentXPath = "/" + LOG_CONF_ROOT_STRING + "/" + SINGLE_LOGGER_STRING;
+            final String parentXPath = "/" + LOG_ROOT + "/" + SINGLE_LOGGER;
             mPrintLogWarningLevelCheckBox.setModel(new DOMButtonModel(this,
-                    parentXPath, PRINT_LOG_WARNING_LEVEL_STRING, "", true));
+                    parentXPath, PRINT_LEVEL, "", true));
             mPrintLogWarningLevelCheckBox.setMnemonic(KeyEvent.VK_W);
             mPrintLogWarningLevelCheckBox.setText(Messages
                     .getString("ConfigurationEditor.94")); //$NON-NLS-1$
@@ -416,28 +377,27 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 
         // Search the preferences information for the name of the file to open.
         // Get the executable path from the properties file.
-        Properties props = FileUtils.getInitializedProperties(this);
+        final Properties props = FileUtils.getInitializedProperties(this);
 
         // Get the path to the executable.
-        String logConfPath = props
-                .getProperty(PropertiesInfo.LOG_CONF_PROPERTY);
+        final String logConfPath = props.getProperty(PropertiesInfo.LOG_CONF);
 
         // Check if the log path has been initialized.
         if (logConfPath == null) {
-            String errorMessage = "You must set the path to the log configuration file under Edit->Preferences before you can edit the file.";
-            String errorTitle = "Log configuration file path unset";
+            final String errorMessage = "You must set the path to the log configuration file under Edit->Preferences before you can edit the file.";
+            final String errorTitle = "Log configuration file path unset";
             JOptionPane.showMessageDialog(this, errorMessage, errorTitle,
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
-            File newFile = new File(logConfPath);
+            final File newFile = new File(logConfPath);
             // Check if the file exists.
             // TODO: How does the user create a new log file?
             if (!newFile.exists()) {
                 // Tell the user the file does not exist.
-                String message = "File does not exist";
-                String messageTitle = "Incorrect path";
+                final String message = "File does not exist";
+                final String messageTitle = "Incorrect path";
                 Logger.global.log(Level.SEVERE, message);
                 JOptionPane.showMessageDialog(this, message, messageTitle,
                         JOptionPane.ERROR_MESSAGE);
@@ -447,8 +407,9 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
             FileUtils.setDocumentFile(mDocument, newFile);
         } catch (Exception e) {
             // Report the error to the user.
-            String message = "File could not be loaded: " + e.getMessage();
-            String messageTitle = "Error reading XML file";
+            final String message = "File could not be loaded: "
+                    + e.getMessage();
+            final String messageTitle = "Error reading XML file";
             Logger.global.log(Level.SEVERE, message);
             JOptionPane.showMessageDialog(this, message, messageTitle,
                     JOptionPane.ERROR_MESSAGE);
@@ -457,8 +418,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
         }
 
         // Check if this is a log configuration document.
-        if (!mDocument.getDocumentElement().getNodeName().equals(
-                LOG_CONF_ROOT_STRING)) {
+        if (!mDocument.getDocumentElement().getNodeName().equals(LOG_ROOT)) {
             final String message = "Selected document is not a log configuration document.";
             final String messageTitle = "Incorrect document";
             Logger.global.log(Level.SEVERE, message);
@@ -469,7 +429,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
         }
         // Add an event handler which will listen for the document being
         // changed and set that the document needs to be saved.
-        EventTarget target = (EventTarget) mDocument.getDocumentElement();
+        final EventTarget target = (EventTarget) mDocument.getDocumentElement();
         target.addEventListener("DOMSubtreeModified",
                 new LoggerSettingsDocumentMutationListener(), true);
     }
@@ -484,15 +444,15 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
     }
 
     /**
-     * Returns that the user does not need to be asked before
-     * the file is saved.
-     * @return False, meaning that the user does not need to be 
-     * asked before saving the file.
+     * Returns that the user does not need to be asked before the file is saved.
+     * 
+     * @return False, meaning that the user does not need to be asked before
+     *         saving the file.
      */
     public boolean askBeforeSaving() {
         return false;
     }
-    
+
     /**
      * This mutation listener watches for events which change the underlying
      * document. When a mutation event is received the dirty attribute is set on
@@ -503,13 +463,20 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
     private final class LoggerSettingsDocumentMutationListener implements
             EventListener {
         /**
+         * Constructor
+         */
+        LoggerSettingsDocumentMutationListener() {
+            super();
+        }
+
+        /**
          * The method called when a mutation event is received from the log
          * configuration document.
          * 
          * @param aEvent
          *            The mutation event received.
          */
-        public void handleEvent(Event aEvent) {
+        public void handleEvent(final Event aEvent) {
             // This doesn't recursively send another event,
             // not sure why but it works.
             mDocument.getDocumentElement().setAttribute("needs-save", "true"); //$NON-NLS-1$ //$NON-NLS-2$
