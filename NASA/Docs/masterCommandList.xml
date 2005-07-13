@@ -62,6 +62,10 @@
 		<argument name="US" />
 		<argument name="Russia />
 	</aggregateVariables>
+	<aggregateVariables>
+		<target name="world" />
+		<argument name="group1" />
+	</aggregateVariables>
 	<comment>
 		<variable value="US" />
 		<text value="this is just a test of adding one to all values in USAcontiguous for Emissions" />

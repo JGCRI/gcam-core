@@ -514,13 +514,34 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     args = command.getChildren("argument");
-    varData = new ReferenceVariable[args.size()];
-    for(int i = 0; i < args.size(); i++)
-    {
-      currInfo = (Element)args.get(i);
-      varData[i] = (ReferenceVariable)variableList.get(currInfo.getAttributeValue("name"));
-      DWcount += varData[i].data.length;
+    if(args.size() == 1)
+    { //we were given a group variable!!!! yayyayay!!!
+      currInfo = (Element)args.get(0);
+      GroupVariable grp = (GroupVariable)variableList.get(currInfo.getAttributeValue("name"));
+      varData = new ReferenceVariable[grp.data.size()];
+      int i = 0;
+      Map.Entry me;
+      Iterator it = grp.data.entrySet().iterator();
+      
+      while(it.hasNext())
+      {
+        me = (Map.Entry)it.next();
+        
+        varData[i] = (ReferenceVariable)me.getValue();
+        DWcount += varData[i].data.length;
+        i++;
+      }
+    } else
+    { //just a regular old list of variable to aggregate
+      varData = new ReferenceVariable[args.size()];
+      for(int i = 0; i < args.size(); i++)
+      {
+        currInfo = (Element)args.get(i);
+        varData[i] = (ReferenceVariable)variableList.get(currInfo.getAttributeValue("name"));
+        DWcount += varData[i].data.length;
+      }
     }
+
     //creating new datavariable to hold result
     //we are adding region stuff, need to store answer in region stuff
     VDest = new ReferenceVariable(VDname, varData[0]);
@@ -1297,29 +1318,46 @@ public class ManipulationDriver
     Element currInfo;
     
     currInfo = command.getChild("target");
-    if(variableList.containsKey(currInfo.getAttributeValue("name")))
-    {
-      VDest = (Variable)variableList.get(currInfo.getAttributeValue("name"));
-      currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
-    }
-    else
-    {
-      String VDname = currInfo.getAttributeValue("name");
-      currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
-      //creating new datavariable to hold result
-      VDest = new DataVariable();//a line of commentedness!
-      VDest.name = VDname;
+    String VDname = currInfo.getAttributeValue("name");
+    currInfo = command.getChild("argument");
+    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    //creating new datavariable to hold result
+    if(VSource.isGroup())
+    { //dealing with a group, average each member
+      VDest = new GroupVariable(VDname);
       variableList.put(VDname, VDest);
-    }
-    
-    if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
-    { //dont need to weight values
-      VDest.setData(avgOverRegion(VSource.getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
+      Map.Entry me;
+      Variable Vcurr, Nvar;
+      Iterator it = ((GroupVariable)VSource).data.entrySet().iterator();
+      
+      while(it.hasNext())
+      {
+        me = (Map.Entry)it.next();
+        Vcurr = (Variable)me.getValue();
+        
+        if((Vcurr.isReference())&&(((ReferenceVariable)Vcurr).avg))
+        { //dont need to weight values
+          Nvar = new DataVariable(Vcurr.name, avgOverRegion(Vcurr.getData(), ((ReferenceVariable)Vcurr).weight, ((ReferenceVariable)Vcurr).x, ((ReferenceVariable)Vcurr).y, ((ReferenceVariable)Vcurr).h));
+          ((GroupVariable)VDest).addData(Nvar);
+        } else
+        {
+          Nvar = new DataVariable(Vcurr.name, avgOverRegion(Vcurr.getData()));
+          ((GroupVariable)VDest).addData(Nvar);
+        }
+      }
+      
     } else
-    {
-      VDest.setData(avgOverRegion(VSource.getData()));
+    { //just one
+      VDest = new DataVariable(VDname);
+      variableList.put(VDname, VDest);
+      
+      if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
+      { //dont need to weight values
+        VDest.setData(avgOverRegion(VSource.getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
+      } else
+      {
+        VDest.setData(avgOverRegion(VSource.getData()));
+      }
     }
   }
   
@@ -1334,35 +1372,52 @@ public class ManipulationDriver
   private void avgOverRegionByAreaCommand(Element command)
   {
     Variable VDest;
-    ReferenceVariable VSource;
+    Variable VSource;
     Element currInfo;
     
     currInfo = command.getChild("target");
-    if(variableList.containsKey(currInfo.getAttributeValue("name")))
-    {
-      VDest = (Variable)variableList.get(currInfo.getAttributeValue("name"));
-      currInfo = command.getChild("argument");
-      VSource = (ReferenceVariable)variableList.get(currInfo.getAttributeValue("name"));
-    }
-    else
-    {
-      String VDname = currInfo.getAttributeValue("name");
-      currInfo = command.getChild("argument");
-      VSource = (ReferenceVariable)variableList.get(currInfo.getAttributeValue("name"));
-      //creating new datavariable to hold result
-      VDest = new DataVariable();
-      VDest.name = VDname;
+    String VDname = currInfo.getAttributeValue("name");
+    currInfo = command.getChild("argument");
+    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    //creating new datavariable to hold result
+    if(VSource.isGroup())
+    { //dealing with a group, average each member
+      VDest = new GroupVariable(VDname);
       variableList.put(VDname, VDest);
-    }
-    //this will only be called on refrencevariables... obviously
-    if((VSource).avg)
-    {
-      VDest.setData(avgOverRegionByArea(VSource.getData(), VSource.weight, VSource.x, VSource.y, VSource.w, VSource.h));
+      Map.Entry me;
+      ReferenceVariable Vcurr;
+      DataVariable Nvar;
+      Iterator it = ((GroupVariable)VSource).data.entrySet().iterator();
+      
+      while(it.hasNext())
+      {
+        me = (Map.Entry)it.next();
+        Vcurr = (ReferenceVariable)me.getValue();
+        
+        if((Vcurr).avg)
+        { //dont need to weight values
+          Nvar = new DataVariable(Vcurr.name, avgOverRegionByArea(Vcurr.getData(), Vcurr.weight, Vcurr.x, Vcurr.y, Vcurr.w, Vcurr.h));
+          ((GroupVariable)VDest).addData(Nvar);
+        } else
+        {
+          Nvar = new DataVariable(Vcurr.name, avgOverRegionByArea(VSource.getData(), Vcurr.x, Vcurr.y, Vcurr.w, Vcurr.h));
+          ((GroupVariable)VDest).addData(Nvar);
+        }
+      }
+      
     } else
-    { //no weighting if not averaged
-      VDest.setData(avgOverRegionByArea(VSource.getData(), VSource.x, VSource.y, VSource.w, VSource.h));
+    { //just one
+      VDest = new DataVariable(VDname);
+      variableList.put(VDname, VDest);
+      
+      if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
+      { //dont need to weight values
+        VDest.setData(avgOverRegionByArea(VSource.getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).w, ((ReferenceVariable)VSource).h));
+      } else
+      {
+        VDest.setData(avgOverRegionByArea(VSource.getData(), ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).w, ((ReferenceVariable)VSource).h));
+      }
     }
-    
   }
   
   /**
