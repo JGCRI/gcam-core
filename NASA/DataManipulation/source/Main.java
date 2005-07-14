@@ -29,6 +29,7 @@ package source;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.*;
 
 import org.jdom.*;
 import org.jdom.input.*;
@@ -48,6 +49,9 @@ public class Main
     Document in;
     Element root, currFile;
     String dSource, rSource, cSource;
+    Logger log = Logger.getLogger("DataManipulation");
+    Handler fHand, cHand;
+    String logLevel;
     try
     {
       SAXBuilder builder = new SAXBuilder();
@@ -60,23 +64,42 @@ public class Main
       currFile = root.getChild("command");
       cSource = currFile.getAttributeValue("file");
       
-      ManipulationDriver mainRun = new ManipulationDriver(dSource, rSource, cSource);
-      mainRun.runAll();
+      //***setting up a logger for DataManipulator
+      currFile = root.getChild("log");
+      if(currFile == null)
+      { //no given logging level, set to lowest output amount (regular use)
+        logLevel = "WARNING";
+      } else
+      { //given a logging level, use that
+        logLevel = currFile.getAttributeValue("level");
+      }
+      log.setLevel(Level.parse(logLevel));
+      log.setUseParentHandlers(false);
       
+      cHand = new ConsoleHandler();
+      cHand.setLevel(Level.WARNING);
+      log.addHandler(cHand);
+      fHand = new FileHandler("DataManip.log");
+      fHand.setLevel(Level.ALL);
+      fHand.setFormatter(new SimpleFormatter());
+      log.addHandler(fHand);
+      //***done initing DM logger
+     
+      //***********************Making Program Work*****************************
+      log.log(Level.FINE, "Creating the ManipulationDriver to run program");
+      ManipulationDriver mainRun = new ManipulationDriver(dSource, rSource, cSource);
+      log.log(Level.FINE, "Calling main MD's runall() function");
+      mainRun.runAll();
+      //***********************************************************************
     } catch(FileNotFoundException e)
     {
-      System.out.println("FileNotFound! DMfiles.xml does not exist");
+      log.log(Level.SEVERE, "FileNotFound! DMfiles.xml does not exist");
     } catch(JDOMException e)
     {
-      System.out.println("JDOM Exception! in main function");
-    }
-    catch(IOException e)
+      log.log(Level.SEVERE, "JDOM Exception! in main function");
+    }catch(IOException e)
     {
-      System.out.println("IOException! for shame! in main function");
+      log.log(Level.SEVERE, "IOException! for shame! in main function");
     }
-    
-    //((Region)bigTest.regionList.get("Alaska")).printToBits();
-    //((Region)bigTest.regionList.get("USAcontiguous")).printToBits();
-    //((Region)bigTest.regionList.get("USA")).printToBits();
   }
 }

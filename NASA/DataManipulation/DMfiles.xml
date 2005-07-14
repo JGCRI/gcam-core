@@ -3,4 +3,5 @@
 	<data file="out.xml" />
 	<region file="regionDef.xml" />
 	<command file="commands.xml" />
+	<log level="ALL" />
 </files>
