@@ -104,7 +104,7 @@ public class ModelRunner implements Runnable {
      * 
      * @see java.lang.Runnable#run()
      */
-    public void run() {
+    synchronized public void run() {
         // Set that the model is now running.
         mSourceAction.setModelRunning(true);
         // Need to get the location to run the executable from.
@@ -444,7 +444,7 @@ public class ModelRunner implements Runnable {
             /**
              * Method called from the GUI thread to update the output area.
              */
-            public void run() {
+            synchronized public void run() {
                 // Add the output to the output area.
                 mArea.append(mOutput);
                 // Scroll the output window.

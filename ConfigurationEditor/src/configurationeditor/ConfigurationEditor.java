@@ -167,9 +167,11 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		// Save the old document temporarily for the event.
 		final Document oldDocument = mCurrentDocument;
 
-		// Store the new document.
-		mCurrentDocument = aNewDocument;
-
+		synchronized(aNewDocument){
+			// Store the new document.
+			mCurrentDocument = aNewDocument;
+		}
+		
 		// Add listeners onto the document.
 		addDocumentListeners(mCurrentDocument);
 
@@ -178,7 +180,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 
 		// Update the user interface.
 		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
+			synchronized public void run() {
 				repaint();
 			}
 		});
@@ -220,7 +222,9 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	 * @return The current document.
 	 */
 	public Document getDocument() {
-		return mCurrentDocument;
+		synchronized(this){
+			return mCurrentDocument;
+		}
 	}
 
 	/**
@@ -539,7 +543,6 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		fileMenu.add(createSaveMenuItem());
 		fileMenu.add(createSaveAsMenuItem());
 		fileMenu.add(createRunMenuItem());
-		fileMenu.add(createMergeMenuItem());
 		fileMenu.add(createQuitMenuItem());
 		return fileMenu;
 	}
@@ -601,10 +604,6 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		runButton.setAction(new RunAction(this));
 		runButton.setMnemonic(KeyEvent.VK_R);
 		runButton.setToolTipText(Messages.getString("ConfigurationEditor.39")); //$NON-NLS-1$
-		// Disable the run button until a document is loaded.
-		// If we fired a null document-replaced event this would be
-		// unneccessary.
-		runButton.setEnabled(false);
 		// Add a property change listener that will enable this button
 		// when the document is non-null.
 		addPropertyChangeListener(new ComponentEnabler(runButton));
@@ -812,20 +811,6 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		batchPanel.add(newButton, null);
 
 		return batchPanel;
-	}
-
-	/**
-	 * This method initializes the merge menu item.
-	 * 
-	 * @return The merge menu item.
-	 */
-	private JMenuItem createMergeMenuItem() {
-		final JMenuItem mergeItem = new JMenuItem(Messages
-				.getString("ConfigurationEditor.98")); //$NON-NLS-1$
-		mergeItem.setToolTipText(Messages.getString("ConfigurationEditor.99")); //$NON-NLS-1$
-		mergeItem.setEnabled(false);
-		mergeItem.setMnemonic(KeyEvent.VK_M);
-		return mergeItem;
 	}
 
 	/**

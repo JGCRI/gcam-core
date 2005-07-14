@@ -38,7 +38,7 @@ final class BatchEditorCreator implements Runnable {
 	 * 
 	 * @see java.lang.Runnable#run()
 	 */
-	public void run() {
+	public synchronized void run() {
 		final BatchFileEditor batchEditor = new BatchFileEditor(mFile
 				.getAbsolutePath(), mCreateNewFile);
 		// Check if the batch file editor can be shown.

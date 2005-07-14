@@ -141,10 +141,10 @@ public class PropertiesTextField extends JPanel {
                     final JFileChooser fileChooser = new JFileChooser();
                     // Select the type of file filter to use.
                     FileFilter filter = null;
-                    if( mFileType == "exe") {
+                    if( mFileType.equals("exe")) {
                         filter = new ExeFileFilter();
                     }
-                    else if( mFileType == "xml") {
+                    else if( mFileType.equals("xml")) {
                         filter = new XMLFileFilter();
                     }
                     else {

@@ -46,8 +46,12 @@ final public class FileUtils {
 	 * @return Whether the document needs to be saved.
 	 */
 	static public boolean isDirty(final Document aDocument) {
-		return ((aDocument != null) && aDocument.getDocumentElement()
-				.getAttribute("needs-save").length() > 0); //$NON-NLS-1$
+		synchronized (aDocument) {
+			// Don't have to check for null because synchronization already
+			// checks
+			return (aDocument.getDocumentElement()
+					.getAttribute("needs-save").length() > 0); //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -58,14 +62,15 @@ final public class FileUtils {
 	 * @return The file name of the document.
 	 */
 	static public File getDocumentFile(final Document aDocument) {
-		final String uri = (aDocument == null) ? "" : aDocument
-				.getDocumentURI();
-		if (uri == null || uri.equals("")) { //$NON-NLS-1$
-			return null;
+		synchronized (aDocument) {
+			final String uri = aDocument.getDocumentURI();
+			if (uri == null || uri.equals("")) { //$NON-NLS-1$
+				return null;
+			}
+			// Strip off the file:\ the document added.
+			final String newFileName = uri.replaceFirst("file:", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			return new File(newFileName);
 		}
-		// Strip off the file:\ the document added.
-		final String newFileName = uri.replaceFirst("file:", ""); //$NON-NLS-1$ //$NON-NLS-2$
-		return new File(newFileName);
 	}
 
 	/**
@@ -78,7 +83,10 @@ final public class FileUtils {
 	 */
 	static public void setDocumentFile(final Document aDocument,
 			final File aFile) {
-		aDocument.setDocumentURI(aFile == null ? "" : aFile.getAbsolutePath()); //$NON-NLS-1$
+		synchronized (aDocument) {
+			aDocument
+					.setDocumentURI(aFile == null ? "" : aFile.getAbsolutePath()); //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -182,7 +190,7 @@ final public class FileUtils {
 	 *         initiated this request.
 	 */
 	public static boolean askForSave(final ConfigurationEditor aEditor) {
-		if (isDirty(aEditor.getDocument())) {
+		if (aEditor.getDocument() != null && isDirty(aEditor.getDocument())) {
 			final String message = Messages.getString("FileUtils.25"); //$NON-NLS-1$
 			final int returnValue = JOptionPane
 					.showConfirmDialog(

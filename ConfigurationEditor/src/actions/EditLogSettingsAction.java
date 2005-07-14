@@ -25,7 +25,7 @@ public class EditLogSettingsAction extends AbstractAction {
      * Constructor
      */
     public EditLogSettingsAction() {
-        super("EditLogSettings"); //$NON-NLS-1$
+        super("Edit Log Settings..."); //$NON-NLS-1$
     }
 
     /**

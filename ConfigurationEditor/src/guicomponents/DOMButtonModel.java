@@ -150,13 +150,6 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, I
             if (resultNode == null) {
                 // Create a position in the DOM tree to store the value.
                 resultNode = DOMUtils.addNodesForXPath(document, getXPath());
-                
-                // Failed to create a node for the model.
-                if (resultNode == null) {
-                    Logger.global.log(Level.SEVERE, Messages
-                            .getString("DOMButtonModel.4")); //$NON-NLS-1$
-                    return;
-                }
             }
             // Get the text content of the result node.
             else {
@@ -164,7 +157,16 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, I
             }
             // Flip the state of the button and store the value in the tree.
             final String nodeValue = previousValue ? "0" : "1"; //$NON-NLS-1$ //$NON-NLS-2$
-            resultNode.setTextContent(nodeValue);
+            
+            // Failed to create a node for the model.
+            if (resultNode == null) {
+                Logger.global.log(Level.SEVERE, Messages
+                        .getString("DOMButtonModel.4")); //$NON-NLS-1$
+            } 
+            
+            else {
+            	resultNode.setTextContent(nodeValue);
+            }
         }
         // Set the underlying button state last as this will notify any
         // listeners.

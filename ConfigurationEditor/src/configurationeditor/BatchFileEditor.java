@@ -137,7 +137,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 				((DOMListPanel) leftPanel).getList(null));
 		((DOMListModel)((DOMListPanel) rightPanel).getList(null).getModel()).setParentList(
 				((DOMListPanel) middlePanel).getList(null));
-		
+
 		// Put the right pane in 2 cells to help position the buttons.
 		cons.gridwidth = 2;
 		contentPane.add(rightPanel, cons);
@@ -243,6 +243,14 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 	 * TODO: Pass in the File instead of the string.
 	 */
 	private void initialize(final String aFileName, final boolean aIsNewFile) {
+		// Don't use the default closer.
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowCloseListener());
+		this.setContentPane(createContentPane());
+		this.setTitle(Messages.getString("BatchFileEditor.21")); //$NON-NLS-1$
+		
+		// Load the document after the UI is created so all the listeners
+		// are hooked up.
 		final File newFile = new File(aFileName);
 		if (aIsNewFile) {
 			mDocument = FileUtils.createDocument(this, newFile, ROOT_ELEMENT_NAME);
@@ -253,12 +261,6 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 		
 		// Fire a property changed event that the document was switched.
 		firePropertyChange("document-replaced", null, mDocument);
-		
-		// Don't use the default closer.
-		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.addWindowListener(new WindowCloseListener());
-		this.setContentPane(createContentPane());
-		this.setTitle(Messages.getString("BatchFileEditor.21")); //$NON-NLS-1$
 	}
 }
 

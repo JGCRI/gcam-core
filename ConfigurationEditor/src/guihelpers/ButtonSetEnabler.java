@@ -146,7 +146,7 @@ public class ButtonSetEnabler implements ListSelectionListener,
 	private void updateButtonStates(final JList aList) {
 			// Check if this is necessary.
 			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
+				synchronized public void run() {
 					// Enable the add button if there is a root node.
 					mButtons[ButtonType.ADD.ordinal()]
 							.setEnabled(((DOMListModel) aList.getModel())

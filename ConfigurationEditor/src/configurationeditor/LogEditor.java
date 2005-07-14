@@ -319,8 +319,6 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 				MIN_LOG_LEVEL);
 		minLogLevel
 				.setToolTipText(Messages.getString("ConfigurationEditor.87")); //$NON-NLS-1$
-		// Disable the combo box until an item is selected.
-		minLogLevel.setEnabled(false);
 		return minLogLevel;
 	}
 
@@ -337,8 +335,6 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 				MIN_SCREEN_LEVEL);
 		minScreenLevel.setToolTipText(Messages
 				.getString("ConfigurationEditor.92")); //$NON-NLS-1$
-		// Disable the combo box until an item is selected.
-		minScreenLevel.setEnabled(false);
 		return minScreenLevel;
 	}
 
@@ -356,8 +352,6 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 		printLevel.setHorizontalTextPosition(SwingConstants.LEFT);
 		printLevel.setText(Messages.getString("ConfigurationEditor.94")); //$NON-NLS-1$
 		printLevel.setToolTipText(Messages.getString("ConfigurationEditor.95")); //$NON-NLS-1$
-		// Disable the checkbox until an item is selected.
-		printLevel.setEnabled(false);
 		return printLevel;
 	}
 
@@ -366,7 +360,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 	 * 
 	 * @return The loaded document, null on failure.
 	 */
-private Document loadDocument() {
+	private Document loadDocument() {
 		Logger.global.log(Level.INFO, "Loading log configuration document.");
 		// Use the parent editor for error messages as this window
 		// will not have opened yet.
@@ -386,23 +380,28 @@ private Document loadDocument() {
 					JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		final Document newDocument = FileUtils.loadDocument(this, new File(logConfPath), LOG_ROOT);
-		if(newDocument != null){
-		// Add an event handler which will listen for the document being
-		// changed and set that the document needs to be saved.
-		final EventTarget target = (EventTarget) newDocument.getDocumentElement();
-		target.addEventListener("DOMSubtreeModified",
-				new DOMDocumentSaveSetter(newDocument), true);
-	}
+		final Document newDocument = FileUtils.loadDocument(this, new File(
+				logConfPath), LOG_ROOT);
+		if (newDocument != null) {
+			// Add an event handler which will listen for the document being
+			// changed and set that the document needs to be saved.
+			final EventTarget target = (EventTarget) newDocument
+					.getDocumentElement();
+			target.addEventListener("DOMSubtreeModified",
+					new DOMDocumentSaveSetter(newDocument), true);
+		}
 		return newDocument;
 	}
+
 	/**
 	 * Get the DOM document which stores the data this interface modifies.
 	 * 
 	 * @return The log configuration XML document tree.
 	 */
 	public Document getDocument() {
-		return mDocument;
+		synchronized(this){
+			return mDocument;
+		}
 	}
 
 	/**

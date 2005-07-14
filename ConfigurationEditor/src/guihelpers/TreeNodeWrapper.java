@@ -80,7 +80,7 @@ public class TreeNodeWrapper implements InvocationHandler {
 			displayString.append("<");
 			displayString.append(mInternalNode.getNodeName());
 			// Don't print empty name attributes.
-			if(nameAttr != null && nameAttr != ""){
+			if(nameAttr != null && !nameAttr.equals("")){
 				displayString.append(" name=\"").append(nameAttr).append("\"");
 			}
 			displayString.append(">");

@@ -262,7 +262,6 @@ public class DOMListPanel extends JPanel {
 	private JButton createAddButton(final ButtonSetEnabler aEnabler) {
 		final JButton addButton = new JButton(Messages
 				.getString("DOMListPanel.1")); //$NON-NLS-1$
-		addButton.setEnabled(false);
 		addButton.setToolTipText(Messages.getString("DOMListPanel.2"));
 
 		// Setting a preferred size so add and delete are the same size.
@@ -295,7 +294,6 @@ public class DOMListPanel extends JPanel {
 	private JButton createDeleteButton(final ButtonSetEnabler aEnabler) {
 		final JButton deleteButton = new JButton(Messages
 				.getString("DOMListPanel.4")); //$NON-NLS-1$
-		deleteButton.setEnabled(false);
 		deleteButton.setToolTipText(Messages.getString("DOMListPanel.3"));
 
 		// Setting a preferred size so add and delete are the same size.
@@ -326,7 +324,6 @@ public class DOMListPanel extends JPanel {
 	private JButton createUpButton(final ButtonSetEnabler aEnabler) {
 		final JButton upButton = new JButton(Messages
 				.getString("DOMListPanel.5")); //$NON-NLS-1$
-		upButton.setEnabled(false);
 		upButton.setToolTipText(Messages.getString("DOMListPanel.6")); //$NON-NLS-1$
 
 		// Set the preferred size so the up and down buttons are the same size.
@@ -358,7 +355,6 @@ public class DOMListPanel extends JPanel {
 		final JButton downButton = new JButton(Messages
 				.getString("DOMListPanel.7")); //$NON-NLS-1$
 		downButton.setToolTipText(Messages.getString("DOMListPanel.8")); //$NON-NLS-1$
-		downButton.setEnabled(false);
 
 		// Set the preferred size here so the up and down button have the same
 		// size.
