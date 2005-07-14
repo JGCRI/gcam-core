@@ -34,4 +34,9 @@ public class PropertiesInfo {
      * The name of the property which stores the location of the log configuration file.
      */
     public static final String LOG_CONF = "log-conf-path"; //$NON-NLS-1$
+    
+    /**
+     * The name of the attribute which stores the most recently opened file.
+     */
+    static public final String RECENT_FILE = "most-recent-file"; //$NON-NLS-1$
 }

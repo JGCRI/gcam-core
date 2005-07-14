@@ -8,8 +8,6 @@ import guihelpers.XMLFileFilter;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.logging.Logger;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
@@ -76,7 +74,6 @@ public class SaveAction extends AbstractAction {
      * 
      */
     private void doSave() {
-        Logger.global.entering("doSave", "Entering"); //$NON-NLS-1$ //$NON-NLS-2$
         // Save the document.
         final Document curr = mParentEditor.getDocument();
         assert(curr != null);
@@ -89,7 +86,6 @@ public class SaveAction extends AbstractAction {
      * Perform the save as action.
      */
     private void doSaveAs() {
-        Logger.global.entering("DoSaveAs", "Entering"); //$NON-NLS-1$ //$NON-NLS-2$
         final JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new XMLFileFilter());
         chooser.setMultiSelectionEnabled(false);

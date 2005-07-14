@@ -137,10 +137,10 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
 				options, options[0]);
 		if (returnValue == 0) {
-			new NewAction(this).actionPerformed(new ActionEvent(this,
+			new NewAction().actionPerformed(new ActionEvent(this,
 					ActionEvent.ACTION_PERFORMED, "New")); //$NON-NLS-1$
 		} else if (returnValue == 1) {
-			new LoadAction(this).actionPerformed(new ActionEvent(this,
+			new LoadAction().actionPerformed(new ActionEvent(this,
 					ActionEvent.ACTION_PERFORMED, "Load")); //$NON-NLS-1$
 		}
 
@@ -558,7 +558,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 
 		// Add a property change listener which will activate the save button
 		// when the document is modified.
-		addPropertyChangeListener(new SaveEnabler(this, saveButton));
+		addPropertyChangeListener(new SaveEnabler(saveButton));
 		return saveButton;
 	}
 
@@ -570,7 +570,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	private JButton createNewButton() {
 		final JButton newButton = new JButton(Messages
 				.getString("ConfigurationEditor.32")); //$NON-NLS-1$
-		newButton.setAction(new NewAction(this));
+		newButton.setAction(new NewAction());
 		newButton.setToolTipText(Messages.getString("ConfigurationEditor.33")); //$NON-NLS-1$
 		newButton.setMnemonic(KeyEvent.VK_N);
 		return newButton;
@@ -584,7 +584,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	private JButton createLoadButton() {
 		final JButton loadButton = new JButton(Messages
 				.getString("ConfigurationEditor.36")); //$NON-NLS-1$
-		loadButton.setAction(new LoadAction(this));
+		loadButton.setAction(new LoadAction());
 		loadButton.setToolTipText(Messages.getString("ConfigurationEditor.37")); //$NON-NLS-1$
 		loadButton.setMnemonic(KeyEvent.VK_O);
 		return loadButton;
@@ -633,7 +633,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	private JMenuItem createNewMenuItem() {
 		final JMenuItem newItem = new JMenuItem(Messages
 				.getString("ConfigurationEditor.44"));
-		newItem.setAction(new NewAction(this));
+		newItem.setAction(new NewAction());
 		newItem.setMnemonic(KeyEvent.VK_N);
 		newItem.setToolTipText(Messages.getString("ConfigurationEditor.45")); //$NON-NLS-1$
 		return newItem;
@@ -647,7 +647,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	private JMenuItem createLoadMenuItem() {
 		final JMenuItem loadItem = new JMenuItem(Messages
 				.getString("ConfigurationEditor.48"));
-		loadItem.setAction(new LoadAction(this));
+		loadItem.setAction(new LoadAction());
 		loadItem.setToolTipText(Messages.getString("ConfigurationEditor.49")); //$NON-NLS-1$
 		loadItem.setMnemonic(KeyEvent.VK_O);
 		return loadItem;
@@ -670,7 +670,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		saveItem.setText(Messages.getString("ConfigurationEditor.51")); //$NON-NLS-1$
 		// Add a property change listener which will activate the save button
 		// when the document is modified.
-		addPropertyChangeListener(new SaveEnabler(this, saveItem));
+		addPropertyChangeListener(new SaveEnabler(saveItem));
 		return saveItem;
 	}
 
@@ -848,6 +848,12 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		new SaveAction(this).actionPerformed(new ActionEvent(this,
 				ActionEvent.ACTION_PERFORMED, Messages
 						.getString("ConfigurationEditor.103"))); //$NON-NLS-1$
+		// Check if the save was completed. There are certain save as cases
+		// where the save could be cancelled.
+		// TODO: This only works if the save comes from closing the window.
+		if(!FileUtils.isDirty(mCurrentDocument)){
+			firePropertyChange("document-saved", false, true);
+		}
 	}
 
 	/**

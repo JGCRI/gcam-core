@@ -3,8 +3,8 @@
  */
 package utils;
 
+import java.awt.Component;
 import java.awt.Container;
-import java.awt.Window;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -349,7 +349,7 @@ public final class DOMUtils {
      *            A window used to center error messages, allowed to be null.
      * @return An initialized document builder.
      */
-    public static DocumentBuilder getDocumentBuilder(final Window aWindow) {
+    public static DocumentBuilder getDocumentBuilder(final Component aWindow) {
         // Create the document builder.
         final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
                 .newInstance();

@@ -8,21 +8,13 @@ import guihelpers.XMLFileFilter;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.xml.parsers.DocumentBuilder;
+import javax.swing.JComponent;
 
 import org.w3c.dom.Document;
 
-import utils.DOMUtils;
-import utils.Messages;
 import utils.FileUtils;
-
 import configurationeditor.ConfigurationEditor;
 
 /**
@@ -38,24 +30,10 @@ public class LoadAction extends AbstractAction {
     private static final long serialVersionUID = -1377726687700388463L;
 
     /**
-     * The name of the attribute which stores the most recently opened file.
+     * Constructor which sets the name of the Action.
      */
-    private static final String mRecentFile = "most-recent-file"; //$NON-NLS-1$
-    
-    /**
-     * A reference to the top level editor from which this action is receiving
-     * commands.
-     */
-    private transient final ConfigurationEditor mParentEditor;
-
-    /**
-     * Constructor which sets the name of the Action and stores the parent editor.
-     * @param aParentEditor
-     *            The top level editor.
-     */
-    public LoadAction(ConfigurationEditor aParentEditor) {
+    public LoadAction() {
         super("Load"); //$NON-NLS-1$
-        mParentEditor = aParentEditor;
     }
 
     /**
@@ -69,70 +47,34 @@ public class LoadAction extends AbstractAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(final ActionEvent aEvent) {
-        // Check if the file should be saved before loading a new one.
-        if (!FileUtils.askForSave(mParentEditor)) {
+        // Find the root window. 
+    	// TODO: Improve this to not use instance of.
+    	ConfigurationEditor parentEditor = null;
+    	if(aEvent.getSource() instanceof ConfigurationEditor){
+    		parentEditor = (ConfigurationEditor)aEvent.getSource();
+    	}
+    	else {
+    		parentEditor = (ConfigurationEditor)((JComponent)aEvent.getSource()).getTopLevelAncestor();
+    	}
+    	
+    	// Check if the file should be saved before loading a new one.
+        if (!FileUtils.askForSave(parentEditor)) {
             // The user does not want to continue.
             return;
         }
         
-        // Find the most recent file the user opened from the properties.
-        final Properties props = FileUtils.getInitializedProperties(mParentEditor);
-        final String recentFile = props.getProperty(mRecentFile);
+        // Ask the user to select the file.
+        final File currentFile = FileUtils.selectFile(parentEditor, new XMLFileFilter());
         
-        // Ask the user for a file to load.
-        final JFileChooser chooser = new JFileChooser(recentFile);
-        chooser.setFileFilter(new XMLFileFilter());
-
-        final int returnValue = chooser.showOpenDialog(mParentEditor);
-        File currentFile = null;
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            currentFile = chooser.getSelectedFile();
-        } else {
-            // Leave the existing document.
-            return;
-        }
-        // Create the document builder.
-        final DocumentBuilder docBuilder = DOMUtils.getDocumentBuilder(mParentEditor);
-        
-        // Return early if we couldn't create a document builder. An error
-        // message will have been printed by the FileUtils function.
-        if(docBuilder == null){
+        // Check if the user cancelled the action.
+        if(currentFile == null){
         	return;
         }
         
-        // Attempt to parse the document.
-        Document loadedDocument = null;
-        try {
-            loadedDocument = docBuilder.parse(currentFile);
-        } catch (Exception e) {
-           // Unexpected error parsing the document.
-            Logger.global.log(Level.SEVERE, e.getStackTrace().toString());
-            final String errorMessage = Messages.getString("LoadAction.1") //$NON-NLS-1$
-                    + e.getMessage() + "."; //$NON-NLS-1$
-            final String errorTitle = Messages.getString("LoadAction.3"); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(mParentEditor, errorMessage,
-                    errorTitle, JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        // Check if the root element is a configuration element.
-        // TODO: Unhardcode configuration.
-        if(!loadedDocument.getDocumentElement().getNodeName().equals("Configuration")) { //$NON-NLS-1$
-            final String errorTitle = Messages.getString("LoadAction.5"); //$NON-NLS-1$
-            final String errorMessage = Messages.getString("LoadAction.6"); //$NON-NLS-1$
-            Logger.global.log(Level.SEVERE, errorMessage);
-            JOptionPane.showMessageDialog(mParentEditor, errorMessage, errorTitle, JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        // Load the document.
+        final Document loadedDocument = FileUtils.loadDocument(parentEditor, currentFile, ConfigurationEditor.ROOT_ELEMENT_NAME);
+
         // Set the document into the model.
-        mParentEditor.setDocument(loadedDocument);
-        // TODO: The parent model doesn't update immediately.
-        
-        // Set the current file into the configuration editor.
-        FileUtils.setDocumentFile(loadedDocument, currentFile);
-        
-        // Save the file as the most recent document.
-        props.setProperty(mRecentFile, currentFile.getAbsolutePath());
-        FileUtils.saveProperties(props);
+        parentEditor.setDocument(loadedDocument);
     }
 }

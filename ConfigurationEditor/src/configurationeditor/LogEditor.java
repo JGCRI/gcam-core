@@ -121,14 +121,16 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 
 	/**
 	 * Create the main panel for the log editor.
-	 * @param aParentDialog The parent dialog of the panel.
+	 * 
+	 * @param aParentDialog
+	 *            The parent dialog of the panel.
 	 * @return The main panel for the log editor.
 	 */
 	private JPanel createMainPanel(final JDialog aParentDialog) {
 		// Create the main panel.
 		final JPanel logPanel = new JPanel(new GridBagLayout());
 		logPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		
+
 		// Create grid bag constraints to use to position elements.
 		final GridBagConstraints cons = new GridBagConstraints();
 		// Create a border around all elements.
@@ -136,7 +138,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 		cons.anchor = GridBagConstraints.WEST;
 		cons.gridx = GridBagConstraints.RELATIVE;
 		cons.gridy = 0;
-		
+
 		// Add a combo box which will select the log.
 		// Add the label.
 		final JLabel logSelectorLabel = new JLabel(Messages
@@ -145,24 +147,25 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 				.getString("ConfigurationEditor.90")); //$NON-NLS-1$
 		logSelectorLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		logPanel.add(logSelectorLabel, cons);
-		
+
 		// Add the combo box.
 		cons.fill = GridBagConstraints.HORIZONTAL;
 		cons.weightx = 1;
 		final JComboBox loggerSelecter = createLoggerSelecter();
 		logPanel.add(loggerSelecter, cons);
-		
+
 		// Add the second set of labels in the third column.
 		cons.weightx = 0;
 		cons.gridx = 2;
-		
+
 		// Add a label linking all fields for modifying a single logger.
 		cons.gridwidth = 2;
 		cons.anchor = GridBagConstraints.CENTER;
-		final JLabel singleLogLabel = new JLabel("Settings for the selected log");
+		final JLabel singleLogLabel = new JLabel(
+				"Settings for the selected log");
 		singleLogLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		logPanel.add(singleLogLabel);
-		
+
 		cons.anchor = GridBagConstraints.WEST;
 		cons.fill = GridBagConstraints.NONE;
 		cons.gridwidth = 1;
@@ -171,22 +174,22 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 				.getString("ConfigurationEditor.81")); //$NON-NLS-1$
 		minToScreenLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		logPanel.add(minToScreenLabel, cons);
-		
+
 		cons.gridy = 2;
 		final JLabel minWarningLevel = new JLabel(Messages
 				.getString("ConfigurationEditor.84")); //$NON-NLS-1$;
 		minWarningLevel.setHorizontalAlignment(SwingConstants.LEFT);
 		logPanel.add(minWarningLevel, cons);
-		
+
 		cons.gridy = 3;
 		cons.weightx = 1;
 		cons.fill = GridBagConstraints.HORIZONTAL;
 		final JCheckBox printLevel = createPrintLevelCheckBox();
 		// Add the checkbox model as an item listener to the log selecter
 		// to receive updates.
-		loggerSelecter.addItemListener((DOMButtonModel)printLevel.getModel());
+		loggerSelecter.addItemListener((DOMButtonModel) printLevel.getModel());
 		logPanel.add(printLevel, cons);
-		
+
 		cons.gridx = 3;
 		cons.gridy = 1;
 		// Create a factory which will create and control the dependent
@@ -197,7 +200,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 		// box.
 		loggerSelecter.addItemListener(comboFactory);
 		logPanel.add(createMinLogLevelCombo(comboFactory), cons);
-		
+
 		cons.gridy = 2;
 		logPanel.add(createMinScreenLogLevelCombo(comboFactory), cons);
 
@@ -205,8 +208,8 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 		// This is a hack to get the model to send a selection changed event.
 		// The 0th item is already selected, so it must be cleared and reset.
 		loggerSelecter.setSelectedIndex(-1);
-		loggerSelecter.setSelectedIndex(0);		
-		
+		loggerSelecter.setSelectedIndex(0);
+
 		// Add OK and cancel buttons.
 		cons.fill = GridBagConstraints.NONE;
 		cons.gridx = 2;
@@ -214,7 +217,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 		cons.anchor = GridBagConstraints.EAST;
 		final JButton okButton = createOKButton(aParentDialog);
 		logPanel.add(okButton, cons);
-		
+
 		cons.gridx = 3;
 		cons.anchor = GridBagConstraints.WEST;
 		final JButton cancelButton = createCancelButton(aParentDialog);
@@ -224,7 +227,9 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 
 	/**
 	 * Creates an OK button which will save changes to the log settings.
-	 * @param aParentDialog The parent dialog of the button.
+	 * 
+	 * @param aParentDialog
+	 *            The parent dialog of the button.
 	 * @return An OK button.
 	 */
 	private JButton createOKButton(final JDialog aParentDialog) {
@@ -246,7 +251,9 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 
 	/**
 	 * Creates a cancel button which will cancel changes to the log settings.
-	 * @param aParentDialog The parent dialog of the button.
+	 * 
+	 * @param aParentDialog
+	 *            The parent dialog of the button.
 	 * @return A cancel button.
 	 */
 	private JButton createCancelButton(final JDialog aParentDialog) {
@@ -271,27 +278,29 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 	private JComboBox createLoggerSelecter() {
 		// Create the logger selecter combo box.
 		final JComboBox loggerSelecter = new JComboBox(new DOMComboBoxModel(
-					mDocument, null, LOG_ROOT, null));
-		
+				mDocument, null, LOG_ROOT, null));
+
 		// Add a selection listener which will update the fields
 		// which modify a specific log.
 		loggerSelecter.addItemListener(new ItemListener() {
-		/** 
-	     * Method which is called when the selected item changes
-	     * which will update the UI.
-	     * @param aEvent The event received.
-		 */
-		public void itemStateChanged(ItemEvent aEvent) {
-			try {
-				// Make sure other updates occur first.
-				// TODO: This is a hack.
-				Thread.sleep(50);
+			/**
+			 * Method which is called when the selected item changes which will
+			 * update the UI.
+			 * 
+			 * @param aEvent
+			 *            The event received.
+			 */
+			public void itemStateChanged(ItemEvent aEvent) {
+				try {
+					// Make sure other updates occur first.
+					// TODO: This is a hack.
+					Thread.sleep(50);
+				} catch (InterruptedException aException) {
+					Logger.global.log(Level.WARNING,
+							"Item listener was interrupted, repainting UI.");
+				}
+				repaint();
 			}
-			catch(InterruptedException aException){
-				Logger.global.log(Level.WARNING, "Item listener was interrupted, repainting UI.");
-			}
-			repaint();
-		}
 		});
 		return loggerSelecter;
 	}
@@ -354,9 +363,10 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 
 	/**
 	 * Load a document into the current document.
+	 * 
 	 * @return The loaded document, null on failure.
 	 */
-	private Document loadDocument() {
+private Document loadDocument() {
 		Logger.global.log(Level.INFO, "Loading log configuration document.");
 		// Use the parent editor for error messages as this window
 		// will not have opened yet.
@@ -376,50 +386,16 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 					JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		Document newDocument = null;
-		try {
-			final File newFile = new File(logConfPath);
-			// Check if the file exists.
-			// TODO: How does the user create a new log file?
-			if (!newFile.exists()) {
-				// Tell the user the file does not exist.
-				final String message = "File does not exist";
-				final String messageTitle = "Incorrect path";
-				Logger.global.log(Level.SEVERE, message);
-				JOptionPane.showMessageDialog(this, message, messageTitle,
-						JOptionPane.ERROR_MESSAGE);
-				return null;
-			}
-			newDocument = DOMUtils.getDocumentBuilder(this).parse(logConfPath);
-			FileUtils.setDocumentFile(newDocument, newFile);
-		} catch (Exception e) {
-			// Report the error to the user.
-			final String message = "File could not be loaded: "
-					+ e.getMessage();
-			final String messageTitle = "Error reading XML file";
-			Logger.global.log(Level.SEVERE, message);
-			JOptionPane.showMessageDialog(this, message, messageTitle,
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-
-		// Check if this is a log configuration document.
-		if (!newDocument.getDocumentElement().getNodeName().equals(LOG_ROOT)) {
-			final String message = "Selected document is not a log configuration document.";
-			final String messageTitle = "Incorrect document";
-			Logger.global.log(Level.SEVERE, message);
-			JOptionPane.showMessageDialog(this, message, messageTitle,
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
+		final Document newDocument = FileUtils.loadDocument(this, new File(logConfPath), LOG_ROOT);
+		if(newDocument != null){
 		// Add an event handler which will listen for the document being
 		// changed and set that the document needs to be saved.
 		final EventTarget target = (EventTarget) newDocument.getDocumentElement();
 		target.addEventListener("DOMSubtreeModified",
 				new DOMDocumentSaveSetter(newDocument), true);
+	}
 		return newDocument;
 	}
-
 	/**
 	 * Get the DOM document which stores the data this interface modifies.
 	 * 

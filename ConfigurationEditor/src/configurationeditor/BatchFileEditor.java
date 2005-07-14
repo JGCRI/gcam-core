@@ -7,27 +7,23 @@ import guicomponents.DOMListPanel;
 import guicomponents.DOMListPanelFactory;
 import guihelpers.WindowCloseListener;
 
-import javax.swing.JFrame;
-import org.w3c.dom.Document;
-
-import utils.DOMUtils;
-import utils.Messages;
-import utils.FileUtils;
-
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
+import org.w3c.dom.Document;
+
+import utils.DOMUtils;
+import utils.FileUtils;
+import utils.Messages;
 
 /**
  * Creates a window which has the capability to create or edit a batch file. The
@@ -91,100 +87,6 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 	 */
 	public boolean askBeforeSaving() {
 		return false;
-	}
-
-	/**
-	 * Create a new document and set it is the current document.
-	 * 
-	 * @param aFileName
-	 *            The name to save the document as.
-	 * @param aParent
-	 *            The parent frame to use to center error messages.
-	 * @return A newly constructed batch file document with the root node set.
-	 */
-	private static Document createNewDocument(final String aFileName,
-			final Window aParent) {
-		// Check if the new file already exists.
-		final File newFile = new File(aFileName);
-		if (newFile.exists()) {
-			final String errorMessage = Messages
-					.getString("ConfigurationEditor.147"); //$NON-NLS-1$
-			final String errorTitle = Messages
-					.getString("ConfigurationEditor.148"); //$NON-NLS-1$
-			JOptionPane.showMessageDialog(aParent,
-					errorMessage, errorTitle,
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		
-		// Create a new document.
-		final Document newDocument = DOMUtils.getDocumentBuilder(aParent)
-				.newDocument();
-
-		// Add the root element onto it.
-		newDocument.appendChild(newDocument.createElement(ROOT_ELEMENT_NAME));
-
-		// Set the name of the file into the document.
-		FileUtils.setDocumentFile(newDocument, new File(aFileName));
-
-		// Put up a message telling the user that a new file was created,
-		// otherwise there is no feedback for this action.
-		final String message = Messages.getString("BatchFileEditor.1"); //$NON-NLS-1$
-		final String messageTitle = Messages.getString("BatchFileEditor.2"); //$NON-NLS-1$
-		Logger.global.log(Level.INFO, message);
-		JOptionPane.showMessageDialog(aParent, message, messageTitle,
-				JOptionPane.INFORMATION_MESSAGE);
-		return newDocument;
-	}
-
-	/**
-	 * Load a document into the current document.
-	 * 
-	 * @param aFileName
-	 *            The path to a file to load.
-	 * @param aParent
-	 *            The parent window to use to display error messages.
-	 * @return The loaded document.
-	 */
-	private static Document loadDocument(final String aFileName,
-			final Window aParent) {
-		Document newDocument = null;
-		try {
-			final File newFile = new File(aFileName);
-			// Check if the file exists.
-			if (!newFile.exists()) {
-				// Tell the user the file does not exist.
-				final String message = Messages.getString("BatchFileEditor.3"); //$NON-NLS-1$
-				final String messageTitle = Messages
-						.getString("BatchFileEditor.4"); //$NON-NLS-1$
-				Logger.global.log(Level.SEVERE, message);
-				JOptionPane.showMessageDialog(aParent, message, messageTitle,
-						JOptionPane.ERROR_MESSAGE);
-				return null;
-			}
-			newDocument = DOMUtils.getDocumentBuilder(aParent).parse(aFileName);
-			FileUtils.setDocumentFile(newDocument, newFile);
-		} catch (Exception e) {
-			// Report the error to the user.
-			final String message = Messages.getString("BatchFileEditor.5") + e.getMessage(); //$NON-NLS-1$
-			final String messageTitle = Messages.getString("BatchFileEditor.6"); //$NON-NLS-1$
-			Logger.global.log(Level.SEVERE, message);
-			JOptionPane.showMessageDialog(aParent, message, messageTitle,
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		// Check if this has any chance at being a valid batch file.
-		if (newDocument != null
-				&& !newDocument.getDocumentElement().getNodeName().equals(
-						ROOT_ELEMENT_NAME)) {
-			final String message = "The selected document is not a valid batch file.";
-			final String messageTitle = "Invalid Document";
-			Logger.global.log(Level.SEVERE, message);
-			JOptionPane.showMessageDialog(aParent, message, messageTitle,
-					JOptionPane.ERROR_MESSAGE);
-			return null;
-		}
-		return newDocument;
 	}
 
 	/**
@@ -338,13 +240,15 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 	 *            The name of the file to load or create.
 	 * @param aIsNewFile
 	 *            Whether the file should be created.
+	 * TODO: Pass in the File instead of the string.
 	 */
 	private void initialize(final String aFileName, final boolean aIsNewFile) {
+		final File newFile = new File(aFileName);
 		if (aIsNewFile) {
-			mDocument = createNewDocument(aFileName, this);
+			mDocument = FileUtils.createDocument(this, newFile, ROOT_ELEMENT_NAME);
 		} else {
 			// Try and load the document
-			mDocument = loadDocument(aFileName, this);
+			mDocument = FileUtils.loadDocument(this, newFile, ROOT_ELEMENT_NAME);
 		}
 		
 		// Fire a property changed event that the document was switched.
@@ -356,5 +260,5 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 		this.setContentPane(createContentPane());
 		this.setTitle(Messages.getString("BatchFileEditor.21")); //$NON-NLS-1$
 	}
-} // @jve:decl-index=0:visual-constraint="13,20"
+}
 
