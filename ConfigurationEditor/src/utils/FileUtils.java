@@ -215,31 +215,49 @@ final public class FileUtils {
 	 *            The window to use to display the dialog.
 	 * @param aFilter
 	 *            The file filter to use.
+	 * @param aCurrentFile A directory to start the chooser in. If it is null
+	 * than the chooser will use the most recently opened directory.
+	 * @param aIsSave Whether this is a save instead of a load operation.
 	 * @return The selected file or null if the user canceled the action.
 	 */
 	public static File selectFile(final Component aParentWindow,
-			final FileFilter aFilter) {
-		// Find the most recent file the user opened from the properties.
+			final FileFilter aFilter, final String aCurrentFile, boolean aIsSave) {
+		
+		// Get the properties.
 		final Properties props = FileUtils
-				.getInitializedProperties(aParentWindow);
-		final String recentFile = props.getProperty(PropertiesInfo.RECENT_FILE);
+		.getInitializedProperties(aParentWindow);
+		
+		// Determine in what directory the chooser should start.
+		String recentFile;
+		// First choice for the starting location of the field is the 
+		// current value of the field if there is one.
+		if(aCurrentFile != null && !aCurrentFile.equals("")){
+			recentFile = aCurrentFile;
+		}
+		else {
+		// Find the most recent file the user opened from the properties.
 
+		 	recentFile = props.getProperty(PropertiesInfo.RECENT_FILE);
+		}
+		
 		// Ask the user for a file to load.
 		final JFileChooser chooser = new JFileChooser(recentFile);
 		chooser.setFileFilter(aFilter);
+		chooser.setMultiSelectionEnabled(false);
 
-		final int returnValue = chooser.showOpenDialog(aParentWindow);
-		File currentFile = null;
+		final int returnValue = aIsSave ? chooser.showOpenDialog(aParentWindow)
+				: chooser.showOpenDialog(aParentWindow);
+		File selectedFile = null;
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
-			currentFile = chooser.getSelectedFile();
+			selectedFile = chooser.getSelectedFile();
 
 			// Save the file as the most recent document.
-			props.setProperty(PropertiesInfo.RECENT_FILE, currentFile
+			props.setProperty(PropertiesInfo.RECENT_FILE, selectedFile
 					.getAbsolutePath());
 			FileUtils.saveProperties(props);
 		}
 
-		return currentFile;
+		return selectedFile;
 	}
 
 	/**

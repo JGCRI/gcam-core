@@ -9,8 +9,6 @@ import guihelpers.XMLFileFilter;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-
 import org.w3c.dom.Document;
 
 import utils.DOMUtils;
@@ -86,12 +84,8 @@ public class SaveAction extends AbstractAction {
      * Perform the save as action.
      */
     private void doSaveAs() {
-        final JFileChooser chooser = new JFileChooser();
-        chooser.setFileFilter(new XMLFileFilter());
-        chooser.setMultiSelectionEnabled(false);
-        final int returnValue = chooser.showSaveDialog(mParentEditor);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-        	final File currFile = chooser.getSelectedFile();
+    	final File currFile = FileUtils.selectFile(mParentEditor, new XMLFileFilter(), null, true);
+    	if(currFile != null){
             // TODO: Overwrite warning.
         	// Set the file into the editor where doSave will find it.
         	FileUtils.setDocumentFile(mParentEditor.getDocument(), currFile);

@@ -30,7 +30,6 @@ import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -167,11 +166,11 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		// Save the old document temporarily for the event.
 		final Document oldDocument = mCurrentDocument;
 
-		synchronized(aNewDocument){
+		synchronized (aNewDocument) {
 			// Store the new document.
 			mCurrentDocument = aNewDocument;
 		}
-		
+
 		// Add listeners onto the document.
 		addDocumentListeners(mCurrentDocument);
 
@@ -222,7 +221,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	 * @return The current document.
 	 */
 	public Document getDocument() {
-		synchronized(this){
+		synchronized (this) {
 			return mCurrentDocument;
 		}
 	}
@@ -836,7 +835,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		// Check if the save was completed. There are certain save as cases
 		// where the save could be cancelled.
 		// TODO: This only works if the save comes from closing the window.
-		if(!FileUtils.isDirty(mCurrentDocument)){
+		if (!FileUtils.isDirty(mCurrentDocument)) {
 			firePropertyChange("document-saved", false, true);
 		}
 	}
@@ -873,18 +872,11 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		final Frame parentWindow = this;
 		selectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent aEvent) {
-				final JFileChooser batchFileChooser = new JFileChooser();
-				batchFileChooser.setFileFilter(new XMLFileFilter());
-				final int returnValue = batchFileChooser.showDialog(
-						parentWindow, Messages
-								.getString("ConfigurationEditor.144")); //$NON-NLS-1$
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					final File selectedFile = batchFileChooser
-							.getSelectedFile();
-					if (selectedFile != null) {
-						// Set the text field.
-						aFileField.setText(selectedFile.getAbsolutePath());
-					}
+				final File selectedFile = FileUtils.selectFile(parentWindow,
+						new XMLFileFilter(), aFileField.getText(), false);
+				if (selectedFile != null) {
+					// Set the text field.
+					aFileField.setText(selectedFile.getAbsolutePath());
 				}
 			}
 		});
@@ -904,21 +896,15 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		newButton.setToolTipText(Messages.getString("ConfigurationEditor.146")); //$NON-NLS-1$
 		newButton.setMnemonic(KeyEvent.VK_N);
 
-		final Frame parent = this;
+		final Frame parentWindow = this;
 		// Create an input field, dispatch the editor.
 		newButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent aEvent) {
-				// Create a file chooser and add an XML filter.
-				final JFileChooser chooser = new JFileChooser();
-				chooser.setFileFilter(new XMLFileFilter());
-
-				// Show the file chooser.
-				final int returnValue = chooser.showSaveDialog(parent);
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					// TODO: Threading here is wrong.
-					final File newFile = chooser.getSelectedFile();
-					aTextField.setText(newFile.getAbsolutePath());
-					SwingUtilities.invokeLater(new BatchEditorCreator(newFile,
+				final File selectedFile = FileUtils.selectFile(parentWindow,
+						new XMLFileFilter(), aTextField.getText(), true);
+				if(selectedFile != null){
+					aTextField.setText(selectedFile.getAbsolutePath());
+					SwingUtilities.invokeLater(new BatchEditorCreator(selectedFile,
 							true));
 				}
 			}

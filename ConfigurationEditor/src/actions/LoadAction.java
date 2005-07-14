@@ -64,7 +64,7 @@ public class LoadAction extends AbstractAction {
         }
         
         // Ask the user to select the file.
-        final File currentFile = FileUtils.selectFile(parentEditor, new XMLFileFilter());
+        final File currentFile = FileUtils.selectFile(parentEditor, new XMLFileFilter(), null, false);
         
         // Check if the user cancelled the action.
         if(currentFile == null){
