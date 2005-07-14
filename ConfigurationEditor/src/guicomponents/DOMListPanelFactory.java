@@ -1,5 +1,7 @@
 package guicomponents;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -18,7 +20,7 @@ import utils.Messages;
  * @author Josh Lurz
  * 
  */
-public class DOMListPanelFactory {
+public class DOMListPanelFactory implements PropertyChangeListener {
     /**
      * Reference to the top level document.
      */
@@ -38,23 +40,6 @@ public class DOMListPanelFactory {
     public DOMListPanelFactory() {
         super();
         mChildListPanels = new HashMap<String, DOMListPanel>();
-    }
-
-    /**
-     * Set the document which all DOMFileListPanels created by this factory will
-     * use to set their values into the DOM.
-     * 
-     * @param aDocument
-     *            The new document.
-     */
-    public void setDocument(final Document aDocument) {
-        mDocument = aDocument;
-        // Iterate through any children text fields and reset their values.
-        final Iterator<String> currPath = mChildListPanels.keySet().iterator();
-        while (currPath.hasNext()) {
-            final DOMListPanel currList = mChildListPanels.get(currPath.next());
-            currList.setDocument(aDocument);
-        }
     }
 
     /**
@@ -94,4 +79,25 @@ public class DOMListPanelFactory {
         mChildListPanels.put(aCategory, newListPanel);
         return newListPanel;
     }
+
+	/**
+	 * Method called when the editor which created the factory has a property change.
+	 * This listener listens for the DOM document being replaced and updates it children.
+	 * TODO: This list panels could listen on their own.
+	 * @param aEvent The property change event.
+	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+	 */
+	public void propertyChange(final PropertyChangeEvent aEvent) {
+		if (aEvent.getPropertyName().equals("document-replaced")) {
+			mDocument = (Document) aEvent.getNewValue();
+			// Iterate through any children text fields and reset their values.
+			final Iterator<String> currPath = mChildListPanels.keySet()
+					.iterator();
+			while (currPath.hasNext()) {
+				final DOMListPanel currList = mChildListPanels.get(currPath
+						.next());
+				currList.setDocument(mDocument);
+			}
+		}
+	}
 }

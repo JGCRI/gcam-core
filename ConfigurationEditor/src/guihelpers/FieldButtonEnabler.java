@@ -1,4 +1,4 @@
-package guicomponents;
+package guihelpers;
 
 import javax.swing.JButton;
 import javax.swing.event.DocumentEvent;

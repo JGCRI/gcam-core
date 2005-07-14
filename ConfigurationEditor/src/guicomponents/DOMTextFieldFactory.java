@@ -3,6 +3,8 @@ package guicomponents;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,7 +29,7 @@ import configurationeditor.ConfigurationEditor;
  * @author Josh Lurz
  *
  */
-public class DOMTextFieldFactory {
+public class DOMTextFieldFactory implements PropertyChangeListener {
 	/**
 	 * Reference to the top level document.
 	 */
@@ -47,31 +49,6 @@ public class DOMTextFieldFactory {
 	public DOMTextFieldFactory() {
         super();
 		mChildTextFields = new HashMap<String,JTextField>();
-	}
-	
-	/**
-	 * Set the document which all JTextFields created by this factory
-	 * will use to set their values into the DOM.
-	 * @param aDocument
-	 */
-	public void setDocument(final Document aDocument){
-		mDocument = aDocument;
-		// Iterate through any children text fields and reset their values.
-        final Iterator<String> currPath = mChildTextFields.keySet().iterator();
-		while(currPath.hasNext()){
-            final String xPath = currPath.next();
-			// Query the DOM for a value for this XPath.
-            final Node result = DOMUtils.getResultNodeFromQuery(aDocument, xPath);
-			String newValue = null;
-			if(result != null && result.getTextContent() != null){
-				newValue = result.getTextContent();
-			}
-			// Set the value into the current field. If there was not a
-			// value returned from the DOM this will set null into the field
-			// which needs to occur to erase an old value.
-            final JTextField currField = mChildTextFields.get(xPath);
-			currField.setText(newValue);
-		}
 	}
 	
 	/**
@@ -188,4 +165,36 @@ public class DOMTextFieldFactory {
             // Don't do anything when focus is received.
         }
     }
+
+	/**
+	 * Method called when a bound property of the object this factory is listening on
+	 * is changed. This will listen for the document-changed event which is called when
+	 * the source document of an editor is changed. It will replace the factory's internal
+	 * document and update all created elements.
+	 * @param aEvent The property changed event received.
+	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+	 */
+	public void propertyChange(final PropertyChangeEvent aEvent) {
+		if (aEvent.getPropertyName().equals("document-replaced")) {
+			mDocument = (Document) aEvent.getNewValue();
+			// Iterate through any children text fields and reset their values.
+			final Iterator<String> currPath = mChildTextFields.keySet()
+					.iterator();
+			while (currPath.hasNext()) {
+				final String xPath = currPath.next();
+				// Query the DOM for a value for this XPath.
+				final Node result = DOMUtils.getResultNodeFromQuery(mDocument,
+						xPath);
+				String newValue = null;
+				if (result != null && result.getTextContent() != null) {
+					newValue = result.getTextContent();
+				}
+				// Set the value into the current field. If there was not a
+				// value returned from the DOM this will set null into the field
+				// which needs to occur to erase an old value.
+				final JTextField currField = mChildTextFields.get(xPath);
+				currField.setText(newValue);
+			}
+		}
+	}
 }

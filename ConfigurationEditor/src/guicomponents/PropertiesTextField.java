@@ -1,7 +1,9 @@
 /**
  * 
  */
-package utils;
+package guicomponents;
+
+import guihelpers.XMLFileFilter;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -22,6 +24,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import utils.ExeFileFilter;
 
 /**
  * @author Josh Lurz

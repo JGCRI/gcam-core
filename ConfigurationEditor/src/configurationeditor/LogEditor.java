@@ -4,8 +4,10 @@
 package configurationeditor;
 
 import guicomponents.DOMButtonModel;
-import guicomponents.DOMComboBoxModel;
 import guicomponents.DOMComboBoxController;
+import guicomponents.DOMComboBoxModel;
+import guicomponents.DOMDocumentSaveSetter;
+import guihelpers.WindowCloseListener;
 
 import java.awt.Color;
 import java.awt.Frame;
@@ -34,14 +36,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
 import utils.DOMUtils;
 import utils.FileUtils;
 import utils.Messages;
-import utils.WindowCloseListener;
 
 /**
  * The log editor is a component used for editing the settings of the various
@@ -417,7 +416,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 		// changed and set that the document needs to be saved.
 		final EventTarget target = (EventTarget) newDocument.getDocumentElement();
 		target.addEventListener("DOMSubtreeModified",
-				new LoggerSettingsDocumentMutationListener(), true);
+				new DOMDocumentSaveSetter(newDocument), true);
 		return newDocument;
 	}
 
@@ -438,29 +437,5 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 	 */
 	public boolean askBeforeSaving() {
 		return false;
-	}
-
-	/**
-	 * This mutation listener watches for events which change the underlying
-	 * document. When a mutation event is received the dirty attribute is set on
-	 * the document.
-	 * 
-	 * @author Josh Lurz
-	 */
-	private final class LoggerSettingsDocumentMutationListener implements
-			EventListener {
-
-		/**
-		 * The method called when a mutation event is received from the log
-		 * configuration document.
-		 * 
-		 * @param aEvent
-		 *            The mutation event received.
-		 */
-		public void handleEvent(final Event aEvent) {
-			// This doesn't recursively send another event,
-			// not sure why but it works.
-			mDocument.getDocumentElement().setAttribute("needs-save", "true"); //$NON-NLS-1$ //$NON-NLS-2$
-		}
 	}
 }

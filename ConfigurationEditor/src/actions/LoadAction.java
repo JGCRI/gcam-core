@@ -4,6 +4,8 @@
 package actions;
 
 
+import guihelpers.XMLFileFilter;
+
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Properties;
@@ -20,7 +22,6 @@ import org.w3c.dom.Document;
 import utils.DOMUtils;
 import utils.Messages;
 import utils.FileUtils;
-import utils.XMLFileFilter;
 
 import configurationeditor.ConfigurationEditor;
 

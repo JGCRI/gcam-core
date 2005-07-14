@@ -2,6 +2,8 @@
  */
 package guicomponents;
 
+import guihelpers.NodeWrapper;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +18,6 @@ import org.w3c.dom.*;
 
 import utils.DOMUtils;
 import utils.Messages;
-import utils.NodeWrapper;
 
 /**
  * The DOMListModel is an implementation of a list which has content dependent

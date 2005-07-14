@@ -3,6 +3,10 @@
  */
 package guicomponents;
 
+import guihelpers.ButtonSetEnabler;
+import guihelpers.XMLFileFilter;
+import guihelpers.ButtonSetEnabler.ButtonType;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -25,11 +29,8 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import org.w3c.dom.Document;
 
-import utils.ButtonSetEnabler;
 import utils.Messages;
 import utils.FileUtils;
-import utils.XMLFileFilter;
-import utils.ButtonSetEnabler.ButtonType;
 
 /**
  * A panel which contains a list based on an underlying DOM tree, and buttons to

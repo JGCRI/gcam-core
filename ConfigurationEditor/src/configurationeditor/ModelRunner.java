@@ -1,7 +1,7 @@
 /**
  * 
  */
-package guicomponents;
+package configurationeditor;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -32,7 +32,6 @@ import actions.RunAction;
 
 import utils.Messages;
 
-import configurationeditor.ConfigurationEditor;
 
 /**
  * Runs the model executable and displays output from the executable in a

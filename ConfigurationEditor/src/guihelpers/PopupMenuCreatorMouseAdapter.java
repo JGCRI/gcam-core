@@ -1,4 +1,5 @@
-package guicomponents;
+package guihelpers;
+
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

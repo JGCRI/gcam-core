@@ -1,6 +1,6 @@
 /*
  */
-package utils;
+package guihelpers;
 
 import guicomponents.DOMListModel;
 

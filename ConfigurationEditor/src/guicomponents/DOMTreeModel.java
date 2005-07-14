@@ -3,6 +3,8 @@
  */
 package guicomponents;
 
+import guihelpers.TreeNodeWrapper;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -15,7 +17,6 @@ import javax.swing.tree.TreePath;
 import org.w3c.dom.Node;
 
 import utils.DOMUtils;
-import utils.TreeNodeWrapper;
 
 /**
  * @author Josh Lurz
@@ -30,7 +31,7 @@ public class DOMTreeModel implements TreeModel {
     /**
      * A list of tree event listeners.
      */
-    final transient ArrayList<TreeModelListener> mListeners;
+    private final transient ArrayList<TreeModelListener> mListeners;
     
     /**
      * Map of cached node wrappers.

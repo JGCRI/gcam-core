@@ -1,10 +1,13 @@
 /*
  */
-package utils;
+package guihelpers;
 
 import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
+
+import utils.FileUtils;
+import utils.Messages;
 
 /**
  * File filter which selects xml files.

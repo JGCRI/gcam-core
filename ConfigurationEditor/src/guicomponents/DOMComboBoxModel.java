@@ -3,6 +3,8 @@
  */
 package guicomponents;
 
+import guihelpers.NodeWrapper;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -16,7 +18,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import utils.DOMUtils;
 import utils.Messages;
-import utils.NodeWrapper;
 
 /**
  * A combo box model which has as its list of values the element node children

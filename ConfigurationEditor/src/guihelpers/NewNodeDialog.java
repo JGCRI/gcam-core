@@ -1,7 +1,7 @@
 /**
  * 
  */
-package guicomponents;
+package guihelpers;
 
 import java.awt.Dimension;
 import java.awt.Frame;

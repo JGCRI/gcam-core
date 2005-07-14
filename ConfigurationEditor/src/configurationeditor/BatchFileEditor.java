@@ -5,6 +5,7 @@ package configurationeditor;
 import guicomponents.DOMListModel;
 import guicomponents.DOMListPanel;
 import guicomponents.DOMListPanelFactory;
+import guihelpers.WindowCloseListener;
 
 import javax.swing.JFrame;
 import org.w3c.dom.Document;
@@ -12,7 +13,6 @@ import org.w3c.dom.Document;
 import utils.DOMUtils;
 import utils.Messages;
 import utils.FileUtils;
-import utils.WindowCloseListener;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -52,18 +52,6 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 	 * The name of the batch file root element.
 	 */
 	private static final String ROOT_ELEMENT_NAME = "ComponentSets"; //$NON-NLS-1$
-
-	// @jve:decl-index=0:
-
-	/**
-	 * A factory which instantiates the list panels.
-	 */
-	private transient final DOMListPanelFactory mListPanelFactory;
-
-	/**
-	 * Whether or not the editor is in a valid state to be displayed.
-	 */
-	private transient boolean mIsValid = true;
 	
 	/**
 	 * This is the default constructor
@@ -75,7 +63,6 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 	 */
 	public BatchFileEditor(String aInitialFile, boolean aIsNewFile) {
 		super();
-		mListPanelFactory = new DOMListPanelFactory();
 		initialize(aInitialFile, aIsNewFile);
 	}
 
@@ -84,7 +71,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 	 * @return Whether the editor is ready to be displayed.
 	 */
 	public boolean isValidEditor(){
-		return mIsValid;
+		return mDocument != null;
 	}
 	
 	/**
@@ -229,12 +216,16 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 		// Center the panels in their cells.
 		cons.anchor = GridBagConstraints.CENTER;
 		
+		// Create the list panel factory and add it as a property 
+		// change listener so it will know when the document changes.
+		final DOMListPanelFactory factory = new DOMListPanelFactory();
+		addPropertyChangeListener(factory);
 		// Initialize panels in right to left order so that
 		// the panel which depends on another panel is always created
 		// before the panel that it depends on.
-		final JPanel rightPanel = createRightPanel();
-		final JPanel middlePanel = createMiddlePanel(rightPanel);
-		final JPanel leftPanel = createLeftPanel(middlePanel);
+		final JPanel rightPanel = createRightPanel(factory);
+		final JPanel middlePanel = createMiddlePanel(rightPanel, factory);
+		final JPanel leftPanel = createLeftPanel(middlePanel, factory);
 		contentPane.add(leftPanel, cons);
 		contentPane.add(middlePanel, cons);
 		
@@ -296,10 +287,11 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 	 * This method creates and initializes the left panel.
 	 * @param aDependentPanel The panel which has values that depend on the selected
 	 * value of this panel.
+	 * @param aFactory Factory which will create the list panel.
 	 * @return The left panel.
 	 */
-	private JPanel createLeftPanel(final JPanel aDependentPanel) {
-		final DOMListPanel leftPanel = mListPanelFactory.createDOMFileListPanel(
+	private JPanel createLeftPanel(final JPanel aDependentPanel, final DOMListPanelFactory aFactory) {
+		final DOMListPanel leftPanel = aFactory.createDOMFileListPanel(
 					"/ComponentSets", "ComponentSet", "Component Sets", false); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		// TODO: This is very fragile.	
 		leftPanel.getList(null).addListSelectionListener((DOMListModel)
@@ -313,11 +305,12 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 	 * This method creates and initializes the middle panel.
 	 * @param aDependentPanel The panel which has values that depend on the selected
 	 * value of this panel.
+	 * @param aFactory Factory which will create the list panel.
 	 * @return The middle panel.
 	 */
-	private JPanel createMiddlePanel(final JPanel aDependentPanel) {
+	private JPanel createMiddlePanel(final JPanel aDependentPanel, final DOMListPanelFactory aFactory) {
 
-		final DOMListPanel middlePanel = mListPanelFactory.createDOMFileListPanel(
+		final DOMListPanel middlePanel = aFactory.createDOMFileListPanel(
 					"ComponentSet", "FileSet", "File Sets", false); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			middlePanel.getList(null).addListSelectionListener((DOMListModel)
 					((DOMListPanel)aDependentPanel).getList(null).getModel());
@@ -328,11 +321,11 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 
 	/**
 	 * This method initializes the right panel.
-	 * 
+	 * @param aFactory Factory which will create the list panel.
 	 * @return The right panel.
 	 */
-	private JPanel createRightPanel() {
-		final JPanel rightPanel = mListPanelFactory
+	private JPanel createRightPanel(final DOMListPanelFactory aFactory) {
+		final JPanel rightPanel = aFactory
 					.createDOMFileListPanel(
 							"FileSet", Messages.getString("BatchFileEditor.19"), Messages.getString("BatchFileEditor.20"), true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		return rightPanel;
@@ -353,15 +346,10 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 			// Try and load the document
 			mDocument = loadDocument(aFileName, this);
 		}
-
-		// If the document could not be loaded set that the editor
-		// should not be displayed.
-		if (mDocument == null) {
-			mIsValid = false;
-		}
-
-		// Set the document into the lists.
-		mListPanelFactory.setDocument(mDocument);
+		
+		// Fire a property changed event that the document was switched.
+		firePropertyChange("document-replaced", null, mDocument);
+		
 		// Don't use the default closer.
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowCloseListener());

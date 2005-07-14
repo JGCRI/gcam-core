@@ -4,7 +4,6 @@
 package actions;
 
 
-import guicomponents.ModelRunner;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -24,6 +23,7 @@ import utils.Messages;
 import utils.FileUtils;
 
 import configurationeditor.ConfigurationEditor;
+import configurationeditor.ModelRunner;
 import configurationeditor.PropertiesInfo;
 
 /**

@@ -1,6 +1,6 @@
 /*
  */
-package utils;
+package guihelpers;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -8,6 +8,9 @@ import java.awt.event.WindowListener;
 import javax.swing.JOptionPane;
 
 import org.w3c.dom.Document;
+
+import utils.DOMUtils;
+import utils.FileUtils;
 
 import configurationeditor.DOMDocumentEditor;
 
