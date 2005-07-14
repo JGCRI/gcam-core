@@ -55,7 +55,7 @@ public class DOMListModel extends AbstractListModel implements
 	/**
 	 * The name of the element containing the list. TODO: Is this needed?
 	 */
-	private final transient String mContainerElementName;
+	private final transient String mContainerName;
 
 	/**
 	 * Whether the children of this list are leaves of the DOM tree, if not they
@@ -93,8 +93,8 @@ public class DOMListModel extends AbstractListModel implements
         super();
 		// TODO: FIX and comment.
 		mContainerList = aContainerList;
-		mContainerElementName = aContainerName;
-		mParentXPath = mContainerElementName;
+		mContainerName = aContainerName;
+		mParentXPath = mContainerName;
 		mElementName = aElementName;
 		mLeafChildren = aLeafChildren;
 	}

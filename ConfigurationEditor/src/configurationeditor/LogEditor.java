@@ -62,7 +62,7 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 	/**
 	 * The document which contains the log configuration options.
 	 */
-	private transient Document mDocument = null;
+	final private transient Document mDocument;
 
 	/**
 	 * The name of the root element of a log conf file.
@@ -168,16 +168,16 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 		cons.fill = GridBagConstraints.NONE;
 		cons.gridwidth = 1;
 		cons.gridy = 1;
-		final JLabel minLogToScreenLabel = new JLabel(Messages
+		final JLabel minToScreenLabel = new JLabel(Messages
 				.getString("ConfigurationEditor.81")); //$NON-NLS-1$
-		minLogToScreenLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		logPanel.add(minLogToScreenLabel, cons);
+		minToScreenLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		logPanel.add(minToScreenLabel, cons);
 		
 		cons.gridy = 2;
-		final JLabel minLogWarningLevel = new JLabel(Messages
+		final JLabel minWarningLevel = new JLabel(Messages
 				.getString("ConfigurationEditor.84")); //$NON-NLS-1$;
-		minLogWarningLevel.setHorizontalAlignment(SwingConstants.LEFT);
-		logPanel.add(minLogWarningLevel, cons);
+		minWarningLevel.setHorizontalAlignment(SwingConstants.LEFT);
+		logPanel.add(minWarningLevel, cons);
 		
 		cons.gridy = 3;
 		cons.weightx = 1;
@@ -449,12 +449,6 @@ public class LogEditor extends JDialog implements DOMDocumentEditor {
 	 */
 	private final class LoggerSettingsDocumentMutationListener implements
 			EventListener {
-		/**
-		 * Constructor
-		 */
-		LoggerSettingsDocumentMutationListener() {
-			super();
-		}
 
 		/**
 		 * The method called when a mutation event is received from the log

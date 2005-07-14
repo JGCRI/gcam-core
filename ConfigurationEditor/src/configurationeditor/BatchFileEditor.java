@@ -63,7 +63,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 	/**
 	 * Whether or not the editor is in a valid state to be displayed.
 	 */
-	private boolean mIsValid = true;
+	private transient boolean mIsValid = true;
 	
 	/**
 	 * This is the default constructor
