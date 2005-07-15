@@ -36,6 +36,7 @@ package source;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.*;
 import java.awt.geom.*;
 import ucar.ma2.*;
 import ucar.nc2.*;
@@ -75,6 +76,7 @@ public class DataBuilder
   private BufferedWriter rWriter; //the writer to the output file
   private boolean init; //whether or not the dataTree has been initialized as of yet
   private boolean URes; //whether or not the User wishes to use their own resolution
+  Logger log = Logger.getLogger("Preprocess"); //log class to use for all logging output
 
 //*********************************************************
 //*****************Class Constructors**********************
@@ -90,7 +92,8 @@ public class DataBuilder
     URes = false;
     iSource = "sources.xml";
     rSource = "regions.xml";
-    outFile = "regionTrees.xml";
+    outFile = "out.xml";
+    log.log(Level.CONFIG, "DataBuilder seed files: sources.xml, regions.xml, out.xml");
     dataTree = new QuadBucketTree(-180, 180, -90, 90);
     regionList = new TreeSet();
     maskList = new TreeMap();
@@ -114,6 +117,7 @@ public class DataBuilder
     iSource = i;
     rSource = r;
     outFile = o;
+    log.log(Level.CONFIG, "DataBuilder seed files: "+i+", "+r+", "+o);
     dataTree = new QuadBucketTree(-180, 180, -90, 90);
     regionList = new TreeSet();
     maskList = new TreeMap();
@@ -140,12 +144,15 @@ public class DataBuilder
     System.in.read();
     System.out.println("...going");
     */
+    log.log(Level.FINE, "Calling makeStreams()");
     makeStreams();
     
     Element root = iDocument.getRootElement();
     Element seed = root.getChild("seed");
     if(seed != null)
     { //we have a seed tree of data, add the new data to it
+      log.log(Level.INFO, "running with seed data");
+      log.log(Level.FINE, "Calling readCurrentData()");
       readCurrentData();
       //if we have a seed tree must use that resolution
       URes = true;
@@ -153,23 +160,33 @@ public class DataBuilder
       dataTree.fillWorld(userRes);
       init = true;
       //done setting res
+      log.log(Level.FINE, "Calling buildTree()");
       buildTree();
+      log.log(Level.FINE, "Calling readMasks()");
       readMasks();
+      log.log(Level.FINE, "Calling fillRegions()");
       fillRegions();
+      log.log(Level.FINE, "Calling addNewData()");
       addNewData();
+      log.log(Level.FINE, "Calling writeAggregatedTree()");
       writeAggregatedTree();
     } else
     { //this is an original data run, output the data
+      log.log(Level.INFO, "running with NO seed data");
+      log.log(Level.FINE, "Calling buildTree()");
       buildTree();
+      log.log(Level.FINE, "Calling readMasks()");
       readMasks();
+      log.log(Level.FINE, "Calling fillRegions()");
       fillRegions();
       try
       {
         rWriter = new BufferedWriter( new java.io.FileWriter(outFile));
       } catch(IOException e)
       {
-        System.out.println("IOException in -> runall");
+        log.log(Level.SEVERE, "IOException in -> runall");
       }
+      log.log(Level.FINE, "Calling writeRegions()");
       writeRegions();
     }
   }
@@ -211,7 +228,7 @@ public class DataBuilder
         addNetCDFData(currFile);
       } else
       {
-        System.out.println("Unsupported File Type -> "+currFile.getAttributeValue(null, "type"));
+        log.log(Level.WARNING, "Unsupported File Type -> "+currFile.getAttributeValue(null, "type"));
       }
     }
     //END MAIN XML LOOP FOR TREE BUILD
@@ -263,7 +280,7 @@ public class DataBuilder
         addNetCDFRegion(currChild);
       } else
       {
-        System.out.println("Unsupported File Type -> "+currChild.getAttributeValue(null, "type"));
+        log.log(Level.WARNING, "Unsupported File Type -> "+currChild.getAttributeValue(null, "type"));
       }
     }
     //END REGION MASK READING LOOP
@@ -445,13 +462,13 @@ public class DataBuilder
       sDocument = builder.build(sSource);
     } catch(FileNotFoundException e)
     {
-      System.out.println("FileNotFound! oh noes! in -> readCurrentData");
+      log.log(Level.SEVERE, "FileNotFound! oh noes! in -> readCurrentData");
     } catch(IOException e)
     {
-      System.out.println("IOException encountered! oh noes! in -> readCurrentData");
+      log.log(Level.SEVERE, "IOException encountered! oh noes! in -> readCurrentData");
     } catch(JDOMException e)
     {
-      System.out.println("JDOM Exception! grarrrr! in -> readCurrentData");
+      log.log(Level.SEVERE, "JDOM Exception! grarrrr! in -> readCurrentData");
     }
   }
   /**
@@ -624,7 +641,7 @@ public class DataBuilder
                   currVar.addContent(toAdd);
                 } else
                 { //this time already exists! trying to add a data set which is already present!!!
-                  System.out.println("Attempted to add a data set which already existed -> "+vName+" at "+tName);
+                  log.log(Level.WARNING, "Attempted to add a data set which already existed -> "+vName+" at "+tName);
                 }
               }
             }
@@ -645,7 +662,7 @@ public class DataBuilder
     
     if(outFile.equals(sSource))
     {
-      System.out.println("Seed file equals Output file. Appending '2' to Output file name.");
+      log.log(Level.WARNING, "Seed file equals Output file. Appending '2' to Output file name.");
       int p = outFile.indexOf(".");
       outFile = outFile.substring(0, p)+"2"+outFile.substring(p,outFile.length());
     }
@@ -656,7 +673,7 @@ public class DataBuilder
       out.output(sDocument, rWriter);
     } catch(IOException e)
     {
-      System.out.println("IOException in -> writeAggregatedTree");
+      log.log(Level.SEVERE, "IOException in -> writeAggregatedTree");
     }
   }
   
@@ -669,6 +686,7 @@ public class DataBuilder
      * 'txt'- defined as 180/resolution lines of 360/resolution data elements
      * tagged or untagged - basically using this to debug program as i build it
      */
+    log.log(Level.FINER, "begin function");
     boolean readTags = true;
     boolean tagged = true;
     boolean avg = true;
@@ -722,7 +740,7 @@ public class DataBuilder
         fileName = currElem.getAttributeValue("value");
       } else
       {
-        System.out.println("Unknown File Tag -> "+currElem.getName());
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
       }
       
     }
@@ -734,7 +752,7 @@ public class DataBuilder
       input = new BufferedReader( new FileReader(fileName));
     } catch (FileNotFoundException ex) 
     {
-      System.out.println("FileNotFoundException!!!");
+      log.log(Level.SEVERE, "FileNotFoundException!!!");
     }
   //txt file opened
 
@@ -805,6 +823,8 @@ public class DataBuilder
      * '1x1'- defined as (180x360) lines of data values, each with its x and y
      * indices and value for that location in x,y,value form.
      */
+    log.log(Level.FINER, "begin function");
+    
     boolean readTags = true;
     boolean tagged = true;
     boolean avg = true;
@@ -855,7 +875,7 @@ public class DataBuilder
         fileName = currElem.getAttributeValue("value");
       } else
       {
-        System.out.println("Unknown File Tag -> "+currElem.getName());
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
       }
       
     }
@@ -867,7 +887,7 @@ public class DataBuilder
       input = new BufferedReader( new FileReader(fileName));
     } catch (FileNotFoundException ex) 
     {
-      System.out.println("FileNotFoundException!!!");
+      log.log(Level.SEVERE, "FileNotFoundException!!!");
     }
   //txt file opened
 
@@ -950,6 +970,8 @@ public class DataBuilder
      * 'netcdf'- defined as a .nc file associated with the NetCDF standard. Data
      * can be at any resolution and appears in a matrix of values and NaN's. 
      */
+    log.log(Level.FINER, "begin function");
+    
     boolean avg = true;
     String dataName = "shutup,";
     String fileName = "it is initialized thanks";
@@ -996,7 +1018,7 @@ public class DataBuilder
         fileName = currElem.getAttributeValue("value");
       } else
       {
-        System.out.println("Unknown File Tag -> "+currElem.getName());
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
       }
       
     }
@@ -1051,7 +1073,7 @@ public class DataBuilder
         i++;
       }  
     } catch (java.io.IOException e) {
-      System.out.println("Error reading NetCDF file -> "+fileName);
+      log.log(Level.SEVERE, "Error reading NetCDF file -> "+fileName);
     }
   //done reading data from file
     
@@ -1059,6 +1081,8 @@ public class DataBuilder
   
   private void addTxtRegion(Element currFile)
   {
+    log.log(Level.FINER, "begin function");
+    
     int nRegions = 0;
     int rblock;
     boolean readTags = true;
@@ -1097,7 +1121,7 @@ public class DataBuilder
         }
       } else
       {
-        System.out.println("Unknown File Tag -> "+currInfo.getName());
+        log.log(Level.WARNING, "Unknown File Tag -> "+currInfo.getName());
       }
     }
   //done getting file info from XML
@@ -1108,7 +1132,7 @@ public class DataBuilder
       input = new BufferedReader( new FileReader(fileName));
     } catch (FileNotFoundException ex) 
     {
-      System.out.println("FileNotFoundException!!!");
+      log.log(Level.SEVERE, "FileNotFoundException!!!");
     }
   //txt file opened
     
@@ -1179,7 +1203,7 @@ public class DataBuilder
       input = new BufferedReader( new FileReader(fileName));
     } catch (FileNotFoundException ex) 
     {
-      System.out.println("seriously, the file was just there, it really really shouldnt be not found");
+      log.log(Level.SEVERE, "seriously, the file was just there, it really really shouldnt be not found");
     }
   //txt file opened
     
@@ -1226,6 +1250,8 @@ public class DataBuilder
      * ok... here we go, basically just extract a 2D array from the netcdf variable in the file
      * then run through it just like in addTxtRegion, should be snap
      */
+    log.log(Level.FINER, "begin function");
+    
     boolean getName = true;
     double res = 1;
     int nRegions = 0;
@@ -1260,14 +1286,13 @@ public class DataBuilder
         for(int k = 0; k < rList.size(); k++)
         {
           currR = (Element)rList.get(k);
-          //value and key are backwards cuz i copied stuff wrong, fix that TODO
-          holdK = currR.getAttributeValue("value");
-          holdR = new RegionMask(currR.getAttributeValue("key"), res);
+          holdK = currR.getAttributeValue("key");
+          holdR = new RegionMask(currR.getAttributeValue("value"), res);
           newRegions.put(holdK, holdR);
         }
       } else
       {
-        System.out.println("Unknown File Tag in addNetCDFRegion -> "+currInfo.getName());
+        log.log(Level.WARNING, "Unknown File Tag in addNetCDFRegion -> "+currInfo.getName());
       }
     }
   //done getting file info from XML
@@ -1363,7 +1388,7 @@ public class DataBuilder
       }
       //DONE SETTING MASKS   
     } catch (java.io.IOException e) {
-      System.out.println("Error reading NetCDF file -> "+fileName);
+      log.log(Level.SEVERE, "Error reading NetCDF file -> "+fileName);
     }
     
     //adding these regions masks to the master list of masks
@@ -1389,6 +1414,8 @@ public class DataBuilder
    */
   public void makeStreams()
   {
+    log.log(Level.FINER, "begin function");
+    
     //this function initializes all of the XML stream readers
     //i will add the code for additional readers as i need them
     XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -1410,6 +1437,7 @@ public class DataBuilder
   }
   private String readWord(BufferedReader input)
   {
+    log.log(Level.FINEST, "begin function");
     //reads an entire word from an input stream rather than just a character
     //words delimited by any whitespace 'space, new line, tab'
     String build = new String();
@@ -1438,6 +1466,7 @@ public class DataBuilder
   }
   private double scientificToDouble(String sc)
   {
+    log.log(Level.FINEST, "begin function");
     //takes a string of the form #.###E+### and converts it to a double
     double mantissa, exponent, expValue;
     boolean expSignPos = false;
@@ -1475,6 +1504,7 @@ public class DataBuilder
    */
   private Element attributeInChild(Element data, String att, String val)
   {
+    log.log(Level.FINER, "begin function");
     List children = data.getChildren();
     Element currElem;
     String currVal;

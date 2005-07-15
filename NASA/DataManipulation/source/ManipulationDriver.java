@@ -27,7 +27,7 @@
 package source;
 
 /*
- * TreeMap(name)->Region->TreeMap(variable)->TreeMap(time)->Matrix(values)
+ * TreeMap(region name)->Region->TreeMap(field)->TreeMap(time)->Matrix(values)
  */
 
 import java.io.*;
@@ -37,8 +37,6 @@ import java.util.logging.Logger;
 
 import org.jdom.*;
 import org.jdom.input.*;
-
-import Jama.*;
 
 
 /**
@@ -89,7 +87,7 @@ public class ManipulationDriver
     dataRef = new TreeMap();
     dataUnits = new TreeMap();
     writeFiles = new HashSet();
-    log.log(Level.FINEST, "all TreeMap's have been initialized");
+    log.log(Level.FINEST, "all data structures have been initialized");
   }
   /**
    * Standard constructor which takes all input files as paramaters.
@@ -350,7 +348,7 @@ public class ManipulationDriver
    */
   private void newDataVariableCommand(Element command)
   {
-    log.log(Level.FINER, "newDataVariableCommand");
+    log.log(Level.FINER, "begin function");
     Element currInfo;
     List dataChildren;
     String newName = command.getAttributeValue("name");
@@ -420,7 +418,7 @@ public class ManipulationDriver
    */
   private void newReferenceVariableCommand(Element command)
   {
-    log.log(Level.FINER, "newReferenceVariableCommand");
+    log.log(Level.FINER, "begin function");
     ReferenceVariable toAdd;
     Element currInfo;
     String newName = command.getAttributeValue("name");
@@ -474,7 +472,7 @@ public class ManipulationDriver
    */
   private void newGroupVariableCommand(Element command)
   {
-    log.log(Level.FINER, "newGroupVariableCommand");
+    log.log(Level.FINER, "begin function");
     GroupVariable toAdd;
     String newName = command.getAttributeValue("name");
     Element currInfo;
@@ -534,7 +532,7 @@ public class ManipulationDriver
    */
   private void aggregateVariablesCommand(Element command)
   {
-    log.log(Level.FINER, "aggregateVariableCommand");
+    log.log(Level.FINER, "begin function");
     ReferenceVariable VDest = null;
     Element currInfo;
     List args;
@@ -665,7 +663,7 @@ public class ManipulationDriver
    */
   private void addCommand(Element command)
   {
-    log.log(Level.FINER, "addCommand");
+    log.log(Level.FINER, "begin function");
     Variable VD, V1, V2;
     List infoList;
     Element currInfo;
@@ -696,7 +694,7 @@ public class ManipulationDriver
    */
   private void subCommand(Element command)
   {
-    log.log(Level.FINER, "subCommand");
+    log.log(Level.FINER, "begin function");
     Variable VD, V1, V2;
     List infoList;
     Element currInfo;
@@ -728,7 +726,7 @@ public class ManipulationDriver
    */
   private void addScalarCommand(Element command)
   {
-    log.log(Level.FINER, "addScalarCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     double change;
@@ -762,7 +760,7 @@ public class ManipulationDriver
    */
   private void multiplyCommand(Element command)
   {
-    log.log(Level.FINER, "multiplyCommand");
+    log.log(Level.FINER, "begin function");
     Variable VD, V1, V2;
     List infoList;
     Element currInfo;
@@ -793,7 +791,7 @@ public class ManipulationDriver
    */
   private void divideCommand(Element command)
   {
-    log.log(Level.FINER, "divideCommand");
+    log.log(Level.FINER, "begin function");
     Variable VD, V1, V2;
     List infoList;
     Element currInfo;
@@ -823,7 +821,7 @@ public class ManipulationDriver
    */
   private void multiplyScalarCommand(Element command)
   {
-    log.log(Level.FINER, "multiplyScalarCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     double change;
@@ -872,7 +870,7 @@ public class ManipulationDriver
    */
   private void divideScalarCommand(Element command)
   {
-    log.log(Level.FINER, "divideScalarCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     double change;
@@ -925,7 +923,7 @@ public class ManipulationDriver
    */
   private void parseGreaterThanCommand(Element command)
   {
-    log.log(Level.FINER, "parseGreaterThanCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Variable VMask = null;
@@ -976,7 +974,7 @@ public class ManipulationDriver
    */
   private void parseLessThanCommand(Element command)
   {
-    log.log(Level.FINER, "parseLessThanCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Variable VMask = null;
@@ -1027,7 +1025,7 @@ public class ManipulationDriver
    */
   private void countGreaterThanCommand(Element command)
   {
-    log.log(Level.FINER, "countGreatThanCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Variable VMask = null;
@@ -1078,7 +1076,7 @@ public class ManipulationDriver
    */
   private void countLessThanCommand(Element command)
   {
-    log.log(Level.FINER, "countLessThanCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Variable VMask = null;
@@ -1129,7 +1127,7 @@ public class ManipulationDriver
    */
   private void countElementsCommand(Element command)
   {
-    log.log(Level.FINER, "countElementsCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Element currInfo;
@@ -1164,7 +1162,7 @@ public class ManipulationDriver
    */
   private void aggregateValuesCommand(Element command)
   {
-    log.log(Level.FINER, "aggregateValuesCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     ReferenceVariable VSource;
     Element currInfo;
@@ -1194,7 +1192,7 @@ public class ManipulationDriver
    */
   private void sumValuesCommand(Element command)
   {
-    log.log(Level.FINER, "sumValuesCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Element currInfo;
@@ -1223,7 +1221,7 @@ public class ManipulationDriver
    */
   private void largestValueCommand(Element command)
   {
-    log.log(Level.FINER, "largestValueCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Element currInfo;
@@ -1255,7 +1253,7 @@ public class ManipulationDriver
    */
   private void smallestValueCommand(Element command)
   {
-    log.log(Level.FINER, "smallestValueCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Element currInfo;
@@ -1290,7 +1288,7 @@ public class ManipulationDriver
    */
   private void avgOverRegionCommand(Element command)
   {
-    log.log(Level.FINER, "avgOverRegionCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Element currInfo;
@@ -1349,7 +1347,7 @@ public class ManipulationDriver
    */
   private void avgOverRegionByAreaCommand(Element command)
   {
-    log.log(Level.FINER, "avgOverRegionByAreaCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Element currInfo;
@@ -1407,7 +1405,7 @@ public class ManipulationDriver
    */
   private void avgVariablesCommand(Element command)
   {
-    log.log(Level.FINER, "avgVariablesCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest = null;
     Variable VSource = null;
     Element currInfo;
@@ -1454,7 +1452,7 @@ public class ManipulationDriver
    */
   private void avgVariablesOverRegionCommand(Element command)
   {
-    log.log(Level.FINER, "avgVariableOverRegionCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest = null;
     Variable VSource = null;
     Element currInfo;
@@ -1511,7 +1509,7 @@ public class ManipulationDriver
    */
   private void avgVariablesOverRegionByAreaCommand(Element command)
   {
-    log.log(Level.FINER, "avgVariablesOverRegionByAreaCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest = null;
     Variable VSource = null;
     Element currInfo;
@@ -1568,7 +1566,7 @@ public class ManipulationDriver
    */
   private void weightValuesCommand(Element command)
   {
-    log.log(Level.FINER, "weightValuesCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest = null;
     Variable VSource = null;
     Variable VScale = null;
@@ -1648,7 +1646,7 @@ public class ManipulationDriver
    */
   private void extractSubRegionCommand(Element command)
   {
-    log.log(Level.FINER, "extractSubRegionCommand");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Region VShape;
@@ -1690,7 +1688,7 @@ public class ManipulationDriver
    */
   private void getChildVariable(Element command)
   {
-    log.log(Level.FINER, "getChildVariable");
+    log.log(Level.FINER, "begin function");
     Variable VDest;
     Variable VSource;
     Variable Vchild;
@@ -1730,7 +1728,7 @@ public class ManipulationDriver
    */
   private void printCommand(Element command)
   {
-    log.log(Level.FINER, "printCommand");
+    log.log(Level.FINER, "begin function");
     Variable toPrint;
     
     if(variableList.containsKey(command.getAttributeValue("variable")))
@@ -1779,7 +1777,7 @@ public class ManipulationDriver
    */
   private void printVerboseCommand(Element command)
   {
-    log.log(Level.FINER, "printVerboseCommand");
+    log.log(Level.FINER, "begin function");
     Variable toPrint;
     
     if(variableList.containsKey(command.getAttributeValue("variable")))
@@ -1827,7 +1825,7 @@ public class ManipulationDriver
    */
   private void plotCommand(Element command)
   {
-    log.log(Level.FINER, "plotCommand");
+    log.log(Level.FINER, "begin function");
     Variable toPrint;
     
     if(variableList.containsKey(command.getAttributeValue("variable")))
@@ -1886,7 +1884,7 @@ public class ManipulationDriver
    */
   private void createDataSetCommand(Element command)
   {
-    log.log(Level.FINER, "createDataSetCommand");
+    log.log(Level.FINER, "begin function");
     Variable var;
     ReferenceVariable varR;
     String varName;
@@ -2021,7 +2019,7 @@ public class ManipulationDriver
    */
   private void commentCommand(Element command)
   {
-    log.log(Level.FINER, "commentCommand");
+    log.log(Level.FINER, "begin function");
     Variable var;
     Element currInfo;
     
@@ -2045,7 +2043,7 @@ public class ManipulationDriver
    */
   private void setReferenceCommand(Element command)
   {
-    log.log(Level.FINER, "setReferenceCommand");
+    log.log(Level.FINER, "begin function");
     Variable var;
     Element currInfo;
     
@@ -2075,7 +2073,7 @@ public class ManipulationDriver
    */
   private void setUnitsCommand(Element command)
   {
-    log.log(Level.FINER, "setUnitsCommand");
+    log.log(Level.FINER, "begin function");
     Variable var;
     Element currInfo;
     
@@ -2104,7 +2102,7 @@ public class ManipulationDriver
   
   private Wrapper[] addVar(Wrapper[] R1, Wrapper[] R2)
   {
-    log.log(Level.FINER, "addVar");
+    log.log(Level.FINER, "begin function");
     double[][] holdM1, holdM2, holdMR;
     Wrapper[] toReturn = new Wrapper[R1.length];
     
@@ -2134,9 +2132,8 @@ public class ManipulationDriver
   }
   private Wrapper[] addVar(Wrapper[] R, double change)
   {
-    log.log(Level.FINER, "addVar");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR, holdMS;
-    Matrix m1, m2, mR;
     Wrapper[] toReturn = new Wrapper[R.length];
     
     for(int i = 0; i < R.length; i++)
@@ -2164,9 +2161,8 @@ public class ManipulationDriver
   }
   private Wrapper[] subtractVar(Wrapper[] R1, Wrapper[] R2)
   {
-    log.log(Level.FINER, "subtractVar");
+    log.log(Level.FINER, "begin function");
     double[][] holdM1, holdM2, holdMR;
-    Matrix m1, m2, mR;
     Wrapper[] toReturn = new Wrapper[R1.length];
     
     for(int i = 0; i < R1.length; i++)
@@ -2195,7 +2191,7 @@ public class ManipulationDriver
   }
   private Wrapper[] multiplyVar(Wrapper[] R1, Wrapper[] R2)
   {
-    log.log(Level.FINER, "multiplyVar");
+    log.log(Level.FINER, "begin function");
     double[][] holdM1, holdM2, holdMR;
     Wrapper[] toReturn = new Wrapper[R1.length];
     
@@ -2225,9 +2221,8 @@ public class ManipulationDriver
   }
   private Wrapper[] multiplyVar(Wrapper[] R, double factor)
   {
-    log.log(Level.FINER, "multiplyVar");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR, holdMS;
-    Matrix m1, m2, mR;
     Wrapper[] toReturn = new Wrapper[R.length];
     
     for(int i = 0; i < R.length; i++)
@@ -2255,7 +2250,7 @@ public class ManipulationDriver
   }
   private Wrapper[] divideVar(Wrapper[] R1, Wrapper[] R2)
   {
-    log.log(Level.FINER, "divideVar");
+    log.log(Level.FINER, "begin function");
     double[][] holdM1, holdM2, holdMR;
     Wrapper[] toReturn = new Wrapper[R1.length];
     
@@ -2286,9 +2281,8 @@ public class ManipulationDriver
   }
   private Wrapper[] divideVar(Wrapper[] R, double factor)
   {
-    log.log(Level.FINER, "divideVar");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR, holdMS;
-    Matrix m1, m2, mR;
     Wrapper[] toReturn = new Wrapper[R.length];
     
     for(int i = 0; i < R.length; i++)
@@ -2316,7 +2310,7 @@ public class ManipulationDriver
   }
   private Wrapper[] greaterThan(Wrapper[] R, double limit)
   {
-    log.log(Level.FINER, "greaterThan");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR;
     double[][] holdMS;
     Wrapper[] toReturn = new Wrapper[R.length];
@@ -2352,7 +2346,7 @@ public class ManipulationDriver
   }
   private Wrapper[] greaterThanRegion(Wrapper[] R, Wrapper[] M)
   { 
-    log.log(Level.FINER, "greaterThanRegion");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR;
     double[][] holdMS;
     double[][] holdMM; //matrix mask
@@ -2390,7 +2384,7 @@ public class ManipulationDriver
   }
   private Wrapper[] lessThan(Wrapper[] R, double limit)
   {
-    log.log(Level.FINER, "lessThan");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR;
     double[][] holdMS;
     Wrapper[] toReturn = new Wrapper[R.length];
@@ -2426,7 +2420,7 @@ public class ManipulationDriver
   }
   private Wrapper[] lessThanRegion(Wrapper[] R, Wrapper[] M)
   {
-    log.log(Level.FINER, "lessThanRegion");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR;
     double[][] holdMS;
     double[][] holdMM; //matrix mask
@@ -2464,7 +2458,7 @@ public class ManipulationDriver
   }
   private Wrapper[] countGreaterThan(Wrapper[] R, double limit)
   {
-    log.log(Level.FINER, "countGreaterThan");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     DataWrapper[] toReturn = new DataWrapper[1];
@@ -2490,7 +2484,7 @@ public class ManipulationDriver
   }
   private Wrapper[] countGreaterThanRegion(Wrapper[] R, Wrapper[] M)
   {
-    log.log(Level.FINER, "countGreaterThanRegion");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     double[][] holdMM; //matrix mask
@@ -2517,7 +2511,7 @@ public class ManipulationDriver
   }
   private Wrapper[] countLessThan(Wrapper[] R, double limit)
   {
-    log.log(Level.FINER, "countLessThan");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     DataWrapper[] toReturn = new DataWrapper[1];
@@ -2543,7 +2537,7 @@ public class ManipulationDriver
   }
   private Wrapper[] countLessThanRegion(Wrapper[] R, Wrapper[] M)
   {
-    log.log(Level.FINER, "countLessThanRegion");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     double[][] holdMM; //matrix mask
@@ -2570,7 +2564,7 @@ public class ManipulationDriver
   }
   private Wrapper[] countElements(Wrapper[] R)
   {
-    log.log(Level.FINER, "countElements");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     DataWrapper[] toReturn = new DataWrapper[1];
@@ -2596,7 +2590,7 @@ public class ManipulationDriver
   }
   private Wrapper[] sumValues(Wrapper[] R)
   {
-    log.log(Level.FINER, "sumValues");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     DataWrapper[] toReturn = new DataWrapper[1];
@@ -2622,7 +2616,7 @@ public class ManipulationDriver
   }
   private Wrapper[] sumValues(Wrapper[] R, double[][] weight, double x, double y, double h)
   {
-    log.log(Level.FINER, "sumValues");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     int wX, wY; //the double indexs for weight
@@ -2653,7 +2647,7 @@ public class ManipulationDriver
   }
   private Wrapper[] largestValue(Wrapper[] R)
   {
-    log.log(Level.FINER, "largestValue");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     DataWrapper[] toReturn = new DataWrapper[1];
@@ -2685,7 +2679,7 @@ public class ManipulationDriver
   }
   private Wrapper[] smallestValue(Wrapper[] R)
   {
-    log.log(Level.FINER, "smallestValue");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     DataWrapper[] toReturn = new DataWrapper[1];
@@ -2720,7 +2714,7 @@ public class ManipulationDriver
   }
   private Wrapper[] avgOverRegion(Wrapper[] R)
   {
-    log.log(Level.FINER, "avgOverRegion");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     DataWrapper[] toReturn = new DataWrapper[1];
@@ -2749,7 +2743,7 @@ public class ManipulationDriver
   }
   private Wrapper[] avgOverRegion(Wrapper[] R, double[][] weight, double x, double y, double h)
   {
-    log.log(Level.FINER, "avgOverRegion");
+    log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     DataWrapper[] toReturn = new DataWrapper[1];
@@ -2783,7 +2777,7 @@ public class ManipulationDriver
   }
   private Wrapper[] avgVariables(Wrapper[][] data)
   {
-    log.log(Level.FINER, "avgVariables");
+    log.log(Level.FINER, "begin function");
     double[][] holdMS;
     Wrapper[] toReturn = new Wrapper[data[0].length];
     
@@ -2826,7 +2820,7 @@ public class ManipulationDriver
   }
   private Wrapper[] avgOverRegionByArea(Wrapper[] R, double Rx, double Ry, double Rw, double Rh)
   { //for use by avg variables because weight has already been factored in
-    log.log(Level.FINER, "avgOverRegionByArea");
+    log.log(Level.FINER, "begin function");
     double POLAR_CIRCUM = 40008.00; //these are constand but i dont know how to make constants in java...
     double EQUAT_CIRCUM = 40076.5;
     double PI = 3.1415926535;
@@ -2884,7 +2878,7 @@ public class ManipulationDriver
   }
   private Wrapper[] avgOverRegionByArea(Wrapper[] R, double[][] weight, double Rx, double Ry, double Rw, double Rh)
   {
-    log.log(Level.FINER, "avgOverRegionByArea");
+    log.log(Level.FINER, "begin function");
     double POLAR_CIRCUM = 40008.00; //these are constand but i dont know how to make constants in java...
     double EQUAT_CIRCUM = 40076.5;
     double PI = 3.1415926535;
@@ -2946,7 +2940,7 @@ public class ManipulationDriver
   }
   private Wrapper[] weightValues(Wrapper[] R1, Wrapper[] R2, double minVal, double maxVal, double minWeight, double maxWeight)
   {
-    log.log(Level.FINER, "weightValues");
+    log.log(Level.FINER, "begin function");
     double[][] holdMS, holdMW, holdMR;
     double toTest, p1, p2;
     double thisWeight;
@@ -3004,7 +2998,7 @@ public class ManipulationDriver
    */
   private void setFieldInfo(Element elem)
   {
-    log.log(Level.FINER, "setFieldInfo");
+    log.log(Level.FINER, "begin function");
     String dataName;
     boolean avg;
     String ref;
@@ -3054,7 +3048,7 @@ public class ManipulationDriver
    */
   private void addRegion(Element currRegion)
   {
-    log.log(Level.FINER, "addRegion");
+    log.log(Level.FINER, "begin function");
     //creating a new region from the passed element and adding it to the master list
     
     int sizeX, sizeY, currX, currY;
@@ -3167,7 +3161,7 @@ public class ManipulationDriver
    */
   private void addSuperRegion(Element currRegion)
   {
-    log.log(Level.FINER, "addSuperRegion");
+    log.log(Level.FINER, "begin function");
     List subRegions;
     Region sub;
     double mX, mY;
@@ -3234,7 +3228,7 @@ public class ManipulationDriver
    */
   private void makeStreams()
   {
-    log.log(Level.FINER, "makeStreams");
+    log.log(Level.FINER, "begin function");
     //this function initializes all of the XML documents
     //i will add the code for additional readers as i need them
     try
@@ -3264,7 +3258,7 @@ public class ManipulationDriver
    */
   private String readWord(BufferedReader input)
   {
-    log.log(Level.FINER, "readWord");
+    log.log(Level.FINEST, "begin function");
     //reads an entire word from an input stream rather than just a character
     //words delimited by any whitespace 'space, new line, tab'
     String build = new String();
@@ -3296,7 +3290,7 @@ public class ManipulationDriver
    */
   private double stringToDouble(String sc)
   {
-    log.log(Level.FINER, "stringToDouble");
+    log.log(Level.FINEST, "begin function");
     //takes a string of the form #.###E+### and converts it to a double
     double mantissa, exponent, expValue;
     boolean expSignPos = false;
@@ -3331,7 +3325,7 @@ public class ManipulationDriver
 
   private void fillGroupByExplicit(GroupVariable var, Element members)
   {
-    log.log(Level.FINER, "fillGroupByExplicit");
+    log.log(Level.FINER, "begin function");
     Element currMem;
     String currName;
     Variable currVar;
@@ -3355,7 +3349,7 @@ public class ManipulationDriver
   }
   private void fillGroupByTime(GroupVariable var, Element members)
   {
-    log.log(Level.FINER, "fillGroupByTime");
+    log.log(Level.FINER, "begin function");
     Element currInfo;
     String reg, field;
     Region R;
@@ -3388,7 +3382,7 @@ public class ManipulationDriver
   }
   private void fillGroupByExtraction(GroupVariable var, Element members)
   {
-    log.log(Level.FINER, "fillGroupByExtraction");
+    log.log(Level.FINER, "begin function");
     Element currInfo;
     Variable VSource;
     ReferenceVariable currVar;
@@ -3440,7 +3434,7 @@ public class ManipulationDriver
   }
   private void fillGroupByChildren(GroupVariable var, Element members)
   {
-    log.log(Level.FINER, "fillGroupByChildren");
+    log.log(Level.FINER, "begin function");
     Element currInfo;
     String reg, field, time;
     Region R;

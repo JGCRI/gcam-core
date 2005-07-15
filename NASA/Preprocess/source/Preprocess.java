@@ -47,6 +47,12 @@ package source;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -67,6 +73,9 @@ public class Preprocess
     Document in;
     Element root, currFile;
     String dSource, rSource, dOutput;
+    Logger log = Logger.getLogger("Preprocess");
+    Handler fHand, cHand;
+    String logLevel;
     try
     {
       SAXBuilder builder = new SAXBuilder();
@@ -78,20 +87,42 @@ public class Preprocess
       rSource = currFile.getAttributeValue("file");
       currFile = root.getChild("output");
       dOutput = currFile.getAttributeValue("file");
+      //***setting up a logger for DataManipulator
+      currFile = root.getChild("log");
+      if(currFile == null)
+      { //no given logging level, set to lowest output amount (regular use)
+        logLevel = "WARNING";
+      } else
+      { //given a logging level, use that
+        logLevel = currFile.getAttributeValue("level");
+      }
+      log.setLevel(Level.parse(logLevel));
+      log.setUseParentHandlers(false);
       
+      cHand = new ConsoleHandler();
+      cHand.setLevel(Level.WARNING);
+      log.addHandler(cHand);
+      fHand = new FileHandler("PPLog.log");
+      fHand.setLevel(Level.ALL);
+      fHand.setFormatter(new SimpleFormatter());
+      log.addHandler(fHand);
+      //***done initing DM logger
+      
+      log.log(Level.INFO, "creating DataBuilder to run preprocessing");
       DataBuilder mainRun = new DataBuilder(dSource, rSource, dOutput);
+      log.log(Level.INFO, "calling runAll in DataBuilder");
       mainRun.runAll();
       
     } catch(FileNotFoundException e)
     {
-      System.out.println("FileNotFound! PPfiles.xml does not exist");
+      log.log(Level.SEVERE, "FileNotFound! PPfiles.xml does not exist");
     } catch(JDOMException e)
     {
-      System.out.println("JDOM Exception! in main function");
+      log.log(Level.SEVERE, "JDOM Exception! in main function");
     }
     catch(IOException e)
     {
-      System.out.println("IOException! for shame! in main function");
+      log.log(Level.SEVERE, "IOException! for shame! in main function");
     }
     //this is gunna be silly....
     //****************testing stuff**************************

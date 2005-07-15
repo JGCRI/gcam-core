@@ -80,7 +80,7 @@ public class Main
       cHand = new ConsoleHandler();
       cHand.setLevel(Level.WARNING);
       log.addHandler(cHand);
-      fHand = new FileHandler("DataManip.log");
+      fHand = new FileHandler("DMLog.log");
       fHand.setLevel(Level.ALL);
       fHand.setFormatter(new SimpleFormatter());
       log.addHandler(fHand);

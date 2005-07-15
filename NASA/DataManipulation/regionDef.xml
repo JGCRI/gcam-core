@@ -8,6 +8,7 @@
 		<region name="Colorado" />
 		<region name="Connecticut" />
 		<region name="Delaware" />
+		<region name="District of Columbia" />
 		<region name="Florida" />
 		<region name="Georgia(US)" />
 		<region name="Idaho" />
@@ -316,7 +317,6 @@
 		<region name="South-Africa" />
 		<region name="Sudan" />
 		<region name="Swaziland" />
-		<region name="Tanganyika" />
 		<region name="Tanzania" />
 		<region name="Togo" />
 		<region name="Tunisia" />
@@ -344,6 +344,7 @@
 		<region name="Guyana" />
 		<region name="Haiti" />
 		<region name="Honduras" />
+		<region name="Jamaica" />
 		<region name="Nicaragua" />
 		<region name="Panama" />
 		<region name="Paraguay" />
@@ -358,6 +359,7 @@
 		<region name="Afghanistan" />
 		<region name="Bangladesh" />
 		<region name="Bhutan" />
+		<region name="Brunei" />
 		<region name="Pakistan" />
 		<region name="Indonesia" />
 		<region name="Malaysia (S)" />
@@ -383,6 +385,7 @@
 		<region name="Poland" />
 		<region name="Romania" />
 		<region name="Slovakia" />
+		<region name="Slovenia" />
 		<region name="Yugoslavia" />
 	</superRegion>
 	<superRegion name="Korea" level="3">
