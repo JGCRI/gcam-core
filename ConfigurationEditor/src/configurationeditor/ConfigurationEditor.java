@@ -3,51 +3,26 @@
  */
 package configurationeditor;
 
-import guicomponents.DOMButtonModel;
 import guicomponents.DOMDocumentSaveSetter;
-import guicomponents.DOMListPanelFactory;
-import guicomponents.DOMTextFieldFactory;
-import guicomponents.DOMTreeModel;
 import guihelpers.ComponentEnabler;
-import guihelpers.FieldButtonEnabler;
-import guihelpers.PopupMenuCreatorMouseAdapter;
 import guihelpers.SaveEnabler;
-import guihelpers.XMLFileFilter;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
-import javax.swing.BorderFactory;
+
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.JToolBar;
-import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
-import javax.swing.border.BevelBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.tree.TreeSelectionModel;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.events.Event;
@@ -73,7 +48,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	/**
 	 * The name of the leaf elements containing configuration information.
 	 */
-	private static final String ELEMENT_NAME = "Value";
+	static final String ELEMENT_NAME = "Value";
 
 	// TODO: Work out where invokeLater should be used.
 	/**
@@ -259,239 +234,33 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 		final JTabbedPane tabContainer = new JTabbedPane();
 		tabContainer
 				.setToolTipText(Messages.getString("ConfigurationEditor.4")); //$NON-NLS-1$
-		tabContainer
+		
+        // Create the main options panel.
+        final AbstractEditorPanel mainOptionsPanel = new MainOptionsPanel();
+        // Set it to listen for property change events.
+        addPropertyChangeListener(mainOptionsPanel);
+        
+        tabContainer
 				.addTab(
-						Messages.getString("ConfigurationEditor.5"), null, createConfPanel(), Messages.getString("ConfigurationEditor.6")); //$NON-NLS-1$ //$NON-NLS-2$
-		tabContainer
+						Messages.getString("ConfigurationEditor.5"), null, mainOptionsPanel, Messages.getString("ConfigurationEditor.6")); //$NON-NLS-1$ //$NON-NLS-2$
+		
+        // Create the batch options panel.
+        final AbstractEditorPanel batchOptionsPanel = new BatchOptionsPanel();
+        // Set it to listen for property change events.
+        addPropertyChangeListener(batchOptionsPanel);
+        tabContainer
 				.addTab(
-						Messages.getString("ConfigurationEditor.110"), null, createBatchPane(), Messages.getString("ConfigurationEditor.111")); //$NON-NLS-1$ //$NON-NLS-2$
+						Messages.getString("ConfigurationEditor.110"), null, batchOptionsPanel, Messages.getString("ConfigurationEditor.111")); //$NON-NLS-1$ //$NON-NLS-2$
 		// Whats the difference between the two strings?
+        
+        // Create the advanced panel.
+        final AbstractEditorPanel advancedPanel = new AdvancedOptionsPanel();
+        // Set it to listen for property change events.
+        addPropertyChangeListener(advancedPanel);
 		tabContainer
 				.addTab(
-						Messages.getString("ConfigurationEditor.7"), null, createAdvancedPanel(), Messages.getString("ConfigurationEditor.8")); //$NON-NLS-1$ //$NON-NLS-2$
+						Messages.getString("ConfigurationEditor.7"), null, advancedPanel, Messages.getString("ConfigurationEditor.8")); //$NON-NLS-1$ //$NON-NLS-2$
 		return tabContainer;
-	}
-
-	/**
-	 * This method initializes the configuration panel.
-	 * 
-	 * @return The configuration panel.
-	 */
-	private JPanel createConfPanel() {
-		final JPanel confPanel = new JPanel(new GridBagLayout());
-		confPanel
-				.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-
-		// Now setup the layout constraints.
-		final GridBagConstraints cons = new GridBagConstraints();
-
-		// Layout the items top to bottom, left to right.
-		// Position the checkboxes in the first column.
-		cons.gridx = 0;
-
-		// Position components on the left side of their cells.
-		cons.anchor = GridBagConstraints.WEST;
-
-		// Add panels in increasing rows.
-		cons.gridy = 0;
-
-		// Put a border of 5 around the entire panel.
-		cons.insets = new Insets(5, 5, 5, 5);
-
-		confPanel.add(createCalibrationCheckBox(), cons);
-
-		cons.gridy = GridBagConstraints.RELATIVE;
-		confPanel.add(createCalcCostCheckBox(), cons);
-
-		// Now add the labels in column 1.
-		cons.gridx = 1;
-		cons.gridy = 0;
-
-		// Create a label for the scenario name field.
-		final JLabel scenNameLabel = new JLabel(Messages
-				.getString("ConfigurationEditor.112")); //$NON-NLS-1$
-		confPanel.add(scenNameLabel, cons);
-
-		// Put the labels in increasing rows.
-		cons.gridy = GridBagConstraints.RELATIVE;
-
-		// Create a label for the input file field.
-		final JLabel inputFileLabel = new JLabel(Messages
-				.getString("ConfigurationEditor.115")); //$NON-NLS-1$
-		confPanel.add(inputFileLabel, cons);
-
-		// Create a label for the output file field.
-		final JLabel outputFileLabel = new JLabel(Messages
-				.getString("ConfigurationEditor.118")); //$NON-NLS-1$
-		confPanel.add(outputFileLabel, cons);
-
-		// Add the text fields in column 2.
-		cons.gridx = 2;
-		cons.gridy = 0;
-
-		// Allow the text field to resize with the items.
-		cons.weightx = 1;
-		cons.fill = GridBagConstraints.HORIZONTAL;
-
-		// Create a text field factory and add it as a listener on the editor.
-		final DOMTextFieldFactory textFieldFactory = new DOMTextFieldFactory();
-		addPropertyChangeListener(textFieldFactory);
-
-		// Add the scenario name field.
-		final JTextField scenNameField = textFieldFactory.createTextField(
-				"Strings", "scenarioName"); //$NON-NLS-1$ //$NON-NLS-2$
-		scenNameField.setPreferredSize(new Dimension(200, 20));
-		confPanel.add(scenNameField, cons);
-
-		// Put the fields in increasing rows.
-		cons.gridy = GridBagConstraints.RELATIVE;
-
-		// Add the input field.
-		final JTextField inputFileField = textFieldFactory.createTextField(
-				"Files", "xmlInputFileName"); //$NON-NLS-1$ //$NON-NLS-2$
-		inputFileField.setPreferredSize(new Dimension(200, 20));
-		confPanel.add(inputFileField, cons);
-
-		// Add the output file field.
-		final JTextField outputFileField = textFieldFactory.createTextField(
-				"Files", "xmlOutputFileName"); //$NON-NLS-1$ //$NON-NLS-2$
-		outputFileField.setPreferredSize(new Dimension(200, 20));
-		confPanel.add(outputFileField, cons);
-
-		// Put the list panel in column 3.
-		cons.gridx = 3;
-		cons.gridy = 0;
-		// Make the panel absorb 4 rows.
-		cons.gridheight = 4;
-		cons.weightx = 1;
-		// Make the panel take up the entire height.
-		cons.fill = GridBagConstraints.BOTH;
-		// Make the panel absorb vertical space.
-		cons.weighty = 1;
-
-		// Create the list panel factory and add it as a listener on the
-		// current editor.
-		final DOMListPanelFactory listFactory = new DOMListPanelFactory();
-		addPropertyChangeListener(listFactory);
-
-		final JPanel addOnPanel = listFactory
-				.createDOMFileListPanel(
-						"/Configuration/ScenarioComponents", "ScenarioComponent", Messages.getString("ConfigurationEditor.151"), true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		confPanel.add(addOnPanel, cons);
-		return confPanel;
-	}
-
-	/**
-	 * This method initializes the advanced preferences panel.
-	 * 
-	 * @return The advanced panel.
-	 */
-	private JPanel createAdvancedPanel() {
-		final JPanel advancedPanel = new JPanel();
-		advancedPanel.setBorder(BorderFactory
-				.createBevelBorder(BevelBorder.RAISED));
-
-		// Add a property change listener which will swap in a new
-		// tree when the document is changed.
-		addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent aEvent) {
-				// Create a new tree using a DOM based model.
-				createAdvancedTree(advancedPanel);
-			}
-		});
-
-		return advancedPanel;
-	}
-
-	/**
-	 * Create and display the advanced editing tree.
-	 * 
-	 * @param aContainingPanel
-	 *            The panel which contains the tree.
-	 */
-	private void createAdvancedTree(final JPanel aContainingPanel) {
-		// Remove the existing tree from the panel if there is one.
-		final Component[] panelComponents = aContainingPanel.getComponents();
-		for (int i = 0; i < panelComponents.length; ++i) {
-			if (panelComponents[i].getName().equals("tree-scroller")) {
-				aContainingPanel.remove(i);
-			}
-		}
-		if (mCurrentDocument != null) {
-			final JTree advancedTree = new JTree(new DOMTreeModel(
-					mCurrentDocument.getDocumentElement(), ELEMENT_NAME));
-			// TODO: Are all of these neccessary?
-			advancedTree.setVisible(true);
-			advancedTree.setShowsRootHandles(true);
-			advancedTree.setRootVisible(true);
-			advancedTree.getSelectionModel().setSelectionMode(
-					TreeSelectionModel.SINGLE_TREE_SELECTION);
-
-			// Add a mouse listener so that a menu can be
-			// displayed on right click.
-			advancedTree.addMouseListener(new PopupMenuCreatorMouseAdapter());
-			// Create a scroll pane to display the tree.
-			final JScrollPane treeScroller = new JScrollPane(advancedTree);
-			treeScroller.setPreferredSize(new Dimension(600, 250));
-			treeScroller.setName("tree-scroller");
-			aContainingPanel.add(treeScroller);
-		}
-	}
-
-	/**
-	 * This method initializes the do calibration checkbox.
-	 * 
-	 * @return The do calibration checkbox.
-	 */
-	private JCheckBox createCalibrationCheckBox() {
-		final JCheckBox calCheckBox = new JCheckBox(Messages
-				.getString("ConfigurationEditor.13")); //$NON-NLS-1$
-		final String parentXPath = "/" + ConfigurationEditor.ROOT_ELEMENT_NAME
-				+ "/Bools";
-		calCheckBox.setModel(new DOMButtonModel(this, parentXPath,
-				ELEMENT_NAME, "CalibrationActive", false)); //$NON-NLS-1$
-		calCheckBox.setMnemonic(KeyEvent.VK_C);
-		calCheckBox
-				.setToolTipText(Messages.getString("ConfigurationEditor.14")); //$NON-NLS-1$
-		return calCheckBox;
-	}
-
-	/**
-	 * This method initializes the run consts curves check box.
-	 * 
-	 * @return The run cost curves check box.
-	 */
-	private JCheckBox createCalcCostCheckBox() {
-		final JCheckBox calcCosts = new JCheckBox(Messages
-				.getString("ConfigurationEditor.128")); //$NON-NLS-1$
-
-		final String parentXPath = "/" + ConfigurationEditor.ROOT_ELEMENT_NAME
-				+ "/Bools";
-		calcCosts.setModel(new DOMButtonModel(this, parentXPath, ELEMENT_NAME,
-				"createCostCurve", false)); //$NON-NLS-1$
-		calcCosts.setMnemonic(KeyEvent.VK_O);
-		calcCosts.setToolTipText(Messages.getString("ConfigurationEditor.129")); //$NON-NLS-1$
-		return calcCosts;
-	}
-
-	/**
-	 * This method initializes the do batch mode check box.
-	 * 
-	 * @return The batch mode checkbox.
-	 */
-	private JCheckBox createBatchCheckBox() {
-		final JCheckBox batchCheckBox = new JCheckBox(Messages
-				.getString("ConfigurationEditor.16")); //$NON-NLS-1$
-
-		final String parentXPath = "/" + ConfigurationEditor.ROOT_ELEMENT_NAME
-				+ "/Bools";
-		batchCheckBox.setModel(new DOMButtonModel(this, parentXPath,
-				ELEMENT_NAME, "BatchMode", false)); //$NON-NLS-1$
-		batchCheckBox.setMnemonic(KeyEvent.VK_B);
-		batchCheckBox.setToolTipText(Messages
-				.getString("ConfigurationEditor.17")); //$NON-NLS-1$
-
-		return batchCheckBox;
 	}
 
 	/**
@@ -756,63 +525,6 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 	}
 
 	/**
-	 * This method initializes the batch editor pane.
-	 * 
-	 * @return The pane containing all batch configuration information.
-	 */
-	private JPanel createBatchPane() {
-		final JPanel batchPanel = new JPanel();
-		batchPanel.setBorder(BorderFactory
-				.createBevelBorder(BevelBorder.RAISED));
-		batchPanel
-				.setToolTipText(Messages.getString("ConfigurationEditor.138")); //$NON-NLS-1$
-		// Create all the batch file elements so the listener
-		// can access them.
-		final JLabel label = new JLabel(Messages
-				.getString("ConfigurationEditor.124")); //$NON-NLS-1$
-
-		final JTextField fileField = createBatchFileField();
-		final JButton editButton = createBatchFileEditButton(fileField);
-		// Add an action listener to enable the edit button. This
-		// has to be done outside the create method to avoid a cycle.
-		fileField.getDocument().addDocumentListener(
-				new FieldButtonEnabler(editButton));
-		final JButton selectButton = createBatchFileSelectButton(fileField);
-		final JButton newButton = createBatchFileNewButton(fileField);
-		final JCheckBox doBatchMode = createBatchCheckBox();
-
-		// Add a listener which will enable and disable the batch
-		// mode fields.
-		doBatchMode.addChangeListener(new ChangeListener() {
-			public void stateChanged(final ChangeEvent aEvent) {
-				// Enable the fields according to the value of the checkbox.
-				final boolean enabled = doBatchMode.isSelected();
-				label.setEnabled(enabled);
-				fileField.setEnabled(enabled);
-				selectButton.setEnabled(enabled);
-				newButton.setEnabled(enabled);
-				// Only enable the batch file edit button if a file name has
-				// been
-				// set.
-				editButton.setEnabled(enabled
-						&& fileField.getText().length() > 0);
-			}
-
-		});
-
-		// Add the items.
-		// TODO: Layout these.
-		batchPanel.add(doBatchMode, null);
-		batchPanel.add(label, null);
-		batchPanel.add(fileField, null);
-		batchPanel.add(selectButton, null);
-		batchPanel.add(editButton, null);
-		batchPanel.add(newButton, null);
-
-		return batchPanel;
-	}
-
-	/**
 	 * This method initializes the help menu.
 	 * 
 	 * @return The help menu.
@@ -839,102 +551,5 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
 			firePropertyChange("document-saved", false, true);
 		}
 	}
-
-	/**
-	 * This method initializes the batch file text field.
-	 * 
-	 * @return The batch file text field.
-	 */
-	private JTextField createBatchFileField() {
-		// Create a text field factory and add it as a listener on the editor.
-		final DOMTextFieldFactory textFieldFactory = new DOMTextFieldFactory();
-		addPropertyChangeListener(textFieldFactory);
-		final JTextField fileField = textFieldFactory.createTextField(
-				"Files", "BatchFileName"); //$NON-NLS-1$ //$NON-NLS-2$
-		fileField.setPreferredSize(new Dimension(200, 20));
-		fileField.setToolTipText(Messages.getString("ConfigurationEditor.141")); //$NON-NLS-1$
-		return fileField;
-	}
-
-	/**
-	 * This method initializes the batch file select button.
-	 * 
-	 * @param aFileField
-	 *            The file field for which this button is selection.
-	 * @return The batch file select button.
-	 */
-	private JButton createBatchFileSelectButton(final JTextField aFileField) {
-		final JButton selectButton = new JButton(Messages
-				.getString("ConfigurationEditor.142")); //$NON-NLS-1$
-		selectButton.setToolTipText(Messages
-				.getString("ConfigurationEditor.143")); //$NON-NLS-1$
-		selectButton.setMnemonic(KeyEvent.VK_S);
-		final Frame parentWindow = this;
-		selectButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent aEvent) {
-				final File selectedFile = FileUtils.selectFile(parentWindow,
-						new XMLFileFilter(), aFileField.getText(), false);
-				if (selectedFile != null) {
-					// Set the text field.
-					aFileField.setText(selectedFile.getAbsolutePath());
-				}
-			}
-		});
-		return selectButton;
-	}
-
-	/**
-	 * This method initializes the new batch file button.
-	 * 
-	 * @param aTextField
-	 *            Text field in which to save the new file selected.
-	 * @return The new batch file button.
-	 */
-	private JButton createBatchFileNewButton(final JTextField aTextField) {
-		final JButton newButton = new JButton(Messages
-				.getString("ConfigurationEditor.145")); //$NON-NLS-1$
-		newButton.setToolTipText(Messages.getString("ConfigurationEditor.146")); //$NON-NLS-1$
-		newButton.setMnemonic(KeyEvent.VK_N);
-
-		final Frame parentWindow = this;
-		// Create an input field, dispatch the editor.
-		newButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent aEvent) {
-				final File selectedFile = FileUtils.selectFile(parentWindow,
-						new XMLFileFilter(), aTextField.getText(), true);
-				if(selectedFile != null){
-					aTextField.setText(selectedFile.getAbsolutePath());
-					SwingUtilities.invokeLater(new BatchEditorCreator(selectedFile,
-							true));
-				}
-			}
-		});
-		return newButton;
-	}
-
-	/**
-	 * This method initializes the batch file edit button.
-	 * 
-	 * @param aTextField
-	 *            Text field in which to save the new file selected.
-	 * @return The batch file edit button.
-	 */
-	private JButton createBatchFileEditButton(final JTextField aTextField) {
-		final JButton editButton = new JButton(Messages
-				.getString("ConfigurationEditor.149")); //$NON-NLS-1$
-		editButton
-				.setToolTipText(Messages.getString("ConfigurationEditor.150")); //$NON-NLS-1$
-		editButton.setMnemonic(KeyEvent.VK_E);
-
-		editButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent aEvent) {
-				// Create a new batch file editor.
-				final File batchFile = new File(aTextField.getText());
-				SwingUtilities.invokeLater(new BatchEditorCreator(batchFile,
-						false));
-			}
-		});
-		return editButton;
-	}
-} // @jve:decl-index=0:visual-constraint="50,28"
+}
 

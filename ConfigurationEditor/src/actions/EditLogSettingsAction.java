@@ -3,9 +3,13 @@
  */
 package actions;
 
+import guihelpers.WindowCloseListener;
+
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import configurationeditor.LogEditor;
 
@@ -36,8 +40,11 @@ public class EditLogSettingsAction extends AbstractAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(final ActionEvent aEvent) {
-        // TODO: Get a location for this dialog.
-        final JDialog editLogsDialog = new LogEditor(null);
+        // TODO: This is pretty nasty.
+        final Frame parent = (Frame)((JComponent)aEvent.getSource()).getTopLevelAncestor();
+        final JDialog editLogsDialog = new JDialog(parent, "Log Settings", true);
+        editLogsDialog.addWindowListener(new WindowCloseListener());
+        editLogsDialog.setContentPane(new LogEditor());
         editLogsDialog.pack();
         editLogsDialog.setVisible(true);
     }

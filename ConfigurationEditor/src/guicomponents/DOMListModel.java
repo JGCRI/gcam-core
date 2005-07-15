@@ -54,11 +54,6 @@ public class DOMListModel extends AbstractListModel implements
 	private transient String mParentXPath = null;
 
 	/**
-	 * The name of the element containing the list. TODO: Is this needed?
-	 */
-	private final transient String mContainerName;
-
-	/**
 	 * Whether the children of this list are leaves of the DOM tree, if not they
 	 * have children with child nodes. This determines whether the text content
 	 * of nodes are set to the value of the list item.
@@ -82,20 +77,18 @@ public class DOMListModel extends AbstractListModel implements
 	 *            The list for which this model is containing information.
 	 * @param aElementName
 	 *            The name of the elements which are considered list items.
-	 * @param aContainerName
-	 *            The name of the container element for the list.
+     * @param aParentXPath The XPath of the parent node of this model.
 	 * @param aLeafChildren
 	 *            Whether the elements of this list are leaves, if false they
 	 *            have node children. This determines whether the text content
 	 *            of the nodes should be set.
 	 */
 	public DOMListModel(JList aContainerList, String aElementName,
-			String aContainerName, boolean aLeafChildren) {
+			final String aParentXPath, boolean aLeafChildren) {
         super();
 		// TODO: FIX and comment.
 		mContainerList = aContainerList;
-		mContainerName = aContainerName;
-		mParentXPath = mContainerName;
+		mParentXPath = aParentXPath;
 		mElementName = aElementName;
 		mLeafChildren = aLeafChildren;
 	}

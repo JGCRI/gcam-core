@@ -69,7 +69,9 @@ final public class FileUtils {
 			}
 			// Strip off the file:\ the document added.
 			final String newFileName = uri.replaceFirst("file:", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			return new File(newFileName);
+			
+            // TODO: Handle spaces which get turned into %20.
+            return new File(newFileName);
 		}
 	}
 
@@ -221,7 +223,7 @@ final public class FileUtils {
 	 * @return The selected file or null if the user canceled the action.
 	 */
 	public static File selectFile(final Component aParentWindow,
-			final FileFilter aFilter, final String aCurrentFile, boolean aIsSave) {
+			final FileFilter aFilter, final String aCurrentFile, final boolean aIsSave) {
 		
 		// Get the properties.
 		final Properties props = FileUtils
@@ -245,7 +247,7 @@ final public class FileUtils {
 		chooser.setFileFilter(aFilter);
 		chooser.setMultiSelectionEnabled(false);
 
-		final int returnValue = aIsSave ? chooser.showOpenDialog(aParentWindow)
+		final int returnValue = aIsSave ? chooser.showSaveDialog(aParentWindow)
 				: chooser.showOpenDialog(aParentWindow);
 		File selectedFile = null;
 		if (returnValue == JFileChooser.APPROVE_OPTION) {

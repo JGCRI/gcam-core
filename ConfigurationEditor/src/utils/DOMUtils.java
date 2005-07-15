@@ -297,7 +297,14 @@ public final class DOMUtils {
                     JOptionPane.ERROR_MESSAGE);
             return null;
         }
-        return domImpl.createLSSerializer();
+        
+        // Create the serializer.
+        final LSSerializer serializer = domImpl.createLSSerializer();
+        
+        // Turn on pretty print for readable output.
+        // serializer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
+        
+        return serializer;
     }
     
     /**

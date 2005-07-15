@@ -5,6 +5,8 @@ package guicomponents;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,8 +19,6 @@ import org.w3c.dom.Node;
 import utils.DOMUtils;
 import utils.Messages;
 
-import configurationeditor.DOMDocumentEditor;
-
 /**
  * A class which wraps a default button model and replaces call to set and get
  * whether the button is selected with calls that query and set a value into the
@@ -27,7 +27,7 @@ import configurationeditor.DOMDocumentEditor;
  * @author Josh Lurz
  * 
  */
-public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, ItemListener {
+public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, ItemListener, PropertyChangeListener {
     /**
      * Automatically generated unique class identifier.
      */
@@ -60,16 +60,15 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, I
     private transient final boolean mParentHasName;
 
     /**
-     * The DOM editor containing this button. TODO: Might be better to
-     * explicitly store the document and node.
+     * The Document containing the information for this list. This
+     * document may be changed by property change events.
      */
-    private transient final DOMDocumentEditor mEditor;
+    private transient Document mDocument = null;
 
     /**
      * Constructor.
      * 
-     * @param aEditor
-     *            The editor containing button.
+     * @param aDocument The document containing the information for this list.
      * @param aParentXPath
      *            The XPath of the parent element of this node.
      * @param aElementName
@@ -81,10 +80,10 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, I
      *            Whether to put the name attribute on the lowest level node or
      *            the parent.
      */
-    public DOMButtonModel(DOMDocumentEditor aEditor, String aParentXPath,
+    public DOMButtonModel(Document aDocument, String aParentXPath,
             String aElementName, String aItemName, boolean aParentHasName) {
         super();
-        mEditor = aEditor;
+        mDocument = aDocument;
         mParentXPath = aParentXPath;
         mElementName = aElementName;
         mItemName = aItemName;
@@ -98,16 +97,13 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, I
      */
     @Override
     public boolean isSelected() {
-        // Get the current document from the editor.
-        final Document document = mEditor.getDocument();
-
         // Check if the checkbox is in a queryable state.
-        if(!isValidState(document)){
+        if(!isValidState()){
         	return false;
         }
         
         // Perform the query.
-        final Node resultNode = DOMUtils.getResultNodeFromQuery(document,
+        final Node resultNode = DOMUtils.getResultNodeFromQuery(mDocument,
                 getXPath());
 
         // If the node is null it means that there were no results. If a value
@@ -133,23 +129,20 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, I
         // Ignore the the setArmed when the value is false as this is the user
         // releasing the mouse.
         if (aArmed) {
-            // Get the current document from the editor.
-            final Document document = mEditor.getDocument();
-
             // Check if the checkbox is in a queryable state.
-            if(!isValidState(document)){
+            if(!isValidState()){
             	return;
             }
             
             // Perform the query.
-            Node resultNode = DOMUtils.getResultNodeFromQuery(document,
+            Node resultNode = DOMUtils.getResultNodeFromQuery(mDocument,
                     getXPath());
 
             boolean previousValue = false;
             // If the node is null it means that there were no results.
             if (resultNode == null) {
                 // Create a position in the DOM tree to store the value.
-                resultNode = DOMUtils.addNodesForXPath(document, getXPath());
+                resultNode = DOMUtils.addNodesForXPath(mDocument, getXPath());
             }
             // Get the text content of the result node.
             else {
@@ -177,13 +170,12 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, I
 	 * Returns whether the model is in a queryable state. A model is 
 	 * queryable if it has a valid document and if it requires a parent
 	 * XPath has one set.
-	 * @param aDocument The document containing the model node.
 	 * @return Whether the model is in a queryable state.
 	 */
-	private boolean isValidState(final Document aDocument) {
+	private boolean isValidState() {
 		// If there isn't a document return right away. We can't get
         // the state from a DOM that doesn't exist.
-        if (aDocument == null) {
+        if (mDocument == null) {
             return false;
         }
         
@@ -221,7 +213,8 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, I
     }
 
 	/**
-	 * Method called when the parent item's state is changed.
+	 * Method called when the parent item's state is changed. This
+     * should not be called if there is not a parent item.
 	 * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
 	 * @param aEvent The event received.
 	 */
@@ -234,4 +227,20 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, I
 			setEnabled(mParentName != null && !mParentName.equals(""));
 		}
 	}
+
+    /**
+     * Method called when a property change from the parent editor 
+     * is received. If this is a document replaced event it will reset
+     * the stored document to the new one from the event. It also 
+     * enables and disables itself based on whether the document is valid.
+     * @param aEvent The property change event.
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    public void propertyChange(final PropertyChangeEvent aEvent) {
+        if(aEvent.getPropertyName().equals("document-replaced")) {
+            mDocument = (Document)aEvent.getNewValue();
+            // TODO: Enable and disable?
+        }
+        
+    }
 }

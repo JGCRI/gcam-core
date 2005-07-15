@@ -5,6 +5,7 @@ package guihelpers;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import org.w3c.dom.Document;
@@ -30,8 +31,8 @@ public class WindowCloseListener implements WindowListener {
      *            The window event received.
      */
     public void windowClosing(final WindowEvent aEvent) {
-        final DOMDocumentEditor sourceEditor = ((DOMDocumentEditor) aEvent
-                .getWindow());
+        // TODO: This is pretty bad.
+        final DOMDocumentEditor sourceEditor = (DOMDocumentEditor)((JDialog)aEvent.getWindow()).getContentPane();
         // Get the document from the editor.
         final Document document = sourceEditor.getDocument();
         // Check if the document needs to be saved.
