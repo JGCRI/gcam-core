@@ -3,7 +3,6 @@
 package utils;
 
 import java.awt.Component;
-import java.awt.Window;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -233,13 +232,12 @@ final public class FileUtils {
 		String recentFile;
 		// First choice for the starting location of the field is the 
 		// current value of the field if there is one.
-		if(aCurrentFile != null && !aCurrentFile.equals("")){
-			recentFile = aCurrentFile;
+		if(aCurrentFile == null || aCurrentFile.equals("")){
+			// Find the most recent file the user opened from the properties.
+		 	recentFile = props.getProperty(PropertiesInfo.RECENT_FILE);
 		}
 		else {
-		// Find the most recent file the user opened from the properties.
-
-		 	recentFile = props.getProperty(PropertiesInfo.RECENT_FILE);
+			recentFile = aCurrentFile;
 		}
 		
 		// Ask the user for a file to load.
@@ -332,13 +330,13 @@ final public class FileUtils {
 	 * 
 	 * @param aFile
 	 *            The file to save the document as.
-	 * @param aParent
+	 * @param aParentWindow
 	 *            The parent window to use to center error messages.
 	 * @param aRootTag
 	 *            The root element name.
 	 * @return A newly constructed batch file document with the root node set.
 	 */
-	public static Document createDocument(final Window aParent,
+	public static Document createDocument(final Component aParentWindow,
 			final File aFile, final String aRootTag) {
 		// Check if the new file already exists.
 		if (aFile.exists()) {
@@ -346,13 +344,13 @@ final public class FileUtils {
 					.getString("ConfigurationEditor.147"); //$NON-NLS-1$
 			final String errorTitle = Messages
 					.getString("ConfigurationEditor.148"); //$NON-NLS-1$
-			JOptionPane.showMessageDialog(aParent, errorMessage, errorTitle,
+			JOptionPane.showMessageDialog(aParentWindow, errorMessage, errorTitle,
 					JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 
 		// Create a new document.
-		final Document newDocument = DOMUtils.getDocumentBuilder(aParent)
+		final Document newDocument = DOMUtils.getDocumentBuilder(aParentWindow)
 				.newDocument();
 
 		// Add the root element onto it.

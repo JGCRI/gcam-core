@@ -68,12 +68,6 @@ public class ModelRunner implements Runnable {
     private transient boolean mModelRunning = false;
 
     /**
-     * The exit code of the model. This is checked by the output watching
-     * thread.
-     */
-    private transient int mModelExitCode;
-
-    /**
      * The process which is running the model executable.
      */
     // private transient Process mModelProcess = null;
@@ -144,14 +138,14 @@ public class ModelRunner implements Runnable {
             modelProcess.waitFor();
 
             // Get the exit code of the process.
-            mModelExitCode = modelProcess.exitValue();
+            final int modelExitCode = modelProcess.exitValue();
 
             // Forcibly clean up the process.
             modelProcess.destroy();
 
             // Log that the model has completed running.
             Logger.global.log(Level.INFO,
-                    Messages.getString("ModelRunner.3") + mModelExitCode + "."); //$NON-NLS-1$ //$NON-NLS-2$
+                    Messages.getString("ModelRunner.3") + modelExitCode + "."); //$NON-NLS-1$ //$NON-NLS-2$
             // Stop the output watching thread by setting that the model is no
             // longer running.
             mModelRunning = false;

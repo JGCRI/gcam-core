@@ -210,7 +210,7 @@ public class DOMListPanel extends JPanel {
 	 * @param aEnabler
 	 *            A button enabler.
 	 */
-	public JList getList(final ButtonSetEnabler aEnabler) {
+	public final JList getList(final ButtonSetEnabler aEnabler) {
 		if (mList == null) {
 			mList = new JList();
 			mList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -230,7 +230,7 @@ public class DOMListPanel extends JPanel {
 	 *            The button set enabler.
 	 * @return The list model.
 	 */
-	private ListModel createListModel(final JList aList,
+	private final ListModel createListModel(final JList aList,
 			final ButtonSetEnabler aEnabler) {
 		final ListModel listModel = new DOMListModel(aList, mContainerName,
 				mElementName, mLeafChildren);
@@ -245,7 +245,7 @@ public class DOMListPanel extends JPanel {
 	 *            The list to contain in the scroll pane.
 	 * @return The list scroll pane.
 	 */
-	private JScrollPane createListScrollPane(final JList aList) {
+	private final JScrollPane createListScrollPane(final JList aList) {
 		final JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(100, 200));
 		scrollPane.setViewportView(aList);
@@ -259,7 +259,7 @@ public class DOMListPanel extends JPanel {
 	 *            The controller of the buttons enabling.
 	 * @return The add button.
 	 */
-	private JButton createAddButton(final ButtonSetEnabler aEnabler) {
+	private final JButton createAddButton(final ButtonSetEnabler aEnabler) {
 		final JButton addButton = new JButton(Messages
 				.getString("DOMListPanel.1")); //$NON-NLS-1$
 		addButton.setToolTipText(Messages.getString("DOMListPanel.2"));
@@ -291,7 +291,7 @@ public class DOMListPanel extends JPanel {
 	 *            The controller of the buttons enabling.
 	 * @return The delete button.
 	 */
-	private JButton createDeleteButton(final ButtonSetEnabler aEnabler) {
+	private final JButton createDeleteButton(final ButtonSetEnabler aEnabler) {
 		final JButton deleteButton = new JButton(Messages
 				.getString("DOMListPanel.4")); //$NON-NLS-1$
 		deleteButton.setToolTipText(Messages.getString("DOMListPanel.3"));
@@ -321,7 +321,7 @@ public class DOMListPanel extends JPanel {
 	 *            The controller of the buttons enabling.
 	 * @return The up button.
 	 */
-	private JButton createUpButton(final ButtonSetEnabler aEnabler) {
+	private final JButton createUpButton(final ButtonSetEnabler aEnabler) {
 		final JButton upButton = new JButton(Messages
 				.getString("DOMListPanel.5")); //$NON-NLS-1$
 		upButton.setToolTipText(Messages.getString("DOMListPanel.6")); //$NON-NLS-1$
@@ -351,7 +351,7 @@ public class DOMListPanel extends JPanel {
 	 *            The controller of the buttons enabling.
 	 * @return The down button.
 	 */
-	private JButton createDownButton(final ButtonSetEnabler aEnabler) {
+	private final JButton createDownButton(final ButtonSetEnabler aEnabler) {
 		final JButton downButton = new JButton(Messages
 				.getString("DOMListPanel.7")); //$NON-NLS-1$
 		downButton.setToolTipText(Messages.getString("DOMListPanel.8")); //$NON-NLS-1$
@@ -430,9 +430,12 @@ public class DOMListPanel extends JPanel {
 		 */
 		public void actionPerformed(final ActionEvent aEvent) {
 			// Create a file chooser and add an XML filter.
+			// This uses a chooser explicitly instead of the helper function
+			// so that it can allow the user to select multiple files.
 			final JFileChooser chooser = new JFileChooser();
 			chooser.setFileFilter(new XMLFileFilter());
-
+			chooser.setMultiSelectionEnabled(true);
+			
 			// Show the file chooser.
 			final int returnValue = chooser
 					.showOpenDialog(getTopLevelAncestor());

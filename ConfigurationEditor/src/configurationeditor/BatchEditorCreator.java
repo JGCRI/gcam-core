@@ -1,6 +1,13 @@
 package configurationeditor;
 
+import guihelpers.WindowCloseListener;
+
 import java.io.File;
+
+import javax.swing.JDialog;
+import javax.swing.WindowConstants;
+
+import utils.Messages;
 
 /**
  * Runnable that creates and displays the batch file editor.
@@ -39,12 +46,21 @@ final class BatchEditorCreator implements Runnable {
 	 * @see java.lang.Runnable#run()
 	 */
 	public synchronized void run() {
-		final BatchFileEditor batchEditor = new BatchFileEditor(mFile
+		final JDialog editDialog = new JDialog();
+		// Don't use the default closer.
+		editDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		editDialog.addWindowListener(new WindowCloseListener());
+		editDialog.setTitle(Messages.getString("BatchFileEditor.21")); //$NON-NLS-1$
+		
+		// Create the editor panel.
+		final BatchFileEditor editorPanel = new BatchFileEditor(mFile
 				.getAbsolutePath(), mCreateNewFile);
+		editDialog.setContentPane(editorPanel);
+
 		// Check if the batch file editor can be shown.
-		if (batchEditor.isValidEditor()) {
-			batchEditor.pack();
-			batchEditor.setVisible(true);
+		if (editorPanel.isValidEditor()) {
+			editDialog.pack();
+			editDialog.setVisible(true);
 		}
 	}
 }

@@ -5,8 +5,6 @@ package configurationeditor;
 import guicomponents.DOMListModel;
 import guicomponents.DOMListPanel;
 import guicomponents.DOMListPanelFactory;
-import guihelpers.WindowCloseListener;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -15,10 +13,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-
 import org.w3c.dom.Document;
 
 import utils.DOMUtils;
@@ -30,10 +27,9 @@ import utils.Messages;
  * selection of the batch file is done by the ConfigurationEditor and passed to
  * this class. The class is composed of three DOMFileListPanels, along with
  * confirmation and cancel buttons.
- * TODO: Make this extend panel and not editor.
  * @author Josh Lurz
  */
-public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
+public class BatchFileEditor extends AbstractEditorPanel implements DOMDocumentEditor {
 	/**
 	 * Automatically generated unique class identifier.
 	 */
@@ -90,12 +86,10 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 	}
 
 	/**
-	 * This method initializes the main content pane.
-	 * 
-	 * @return The main content pane.
+	 * This method initializes the editor user interface elements.
 	 */
-	private JPanel createContentPane() {
-		final JPanel contentPane = new JPanel(new GridBagLayout());
+	private void initializeUI() {
+		setLayout(new GridBagLayout());
 
 		final GridBagConstraints cons = new GridBagConstraints();
 		// Set that the panels should grow to fit the cells.
@@ -128,8 +122,8 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 		final JPanel rightPanel = createRightPanel(factory);
 		final JPanel middlePanel = createMiddlePanel(rightPanel, factory);
 		final JPanel leftPanel = createLeftPanel(middlePanel, factory);
-		contentPane.add(leftPanel, cons);
-		contentPane.add(middlePanel, cons);
+		add(leftPanel, cons);
+		add(middlePanel, cons);
 		
 		// Initialize list parents.
 		// TODO: Find a better way to do this. This is incredibly ugly.
@@ -140,7 +134,7 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 
 		// Put the right pane in 2 cells to help position the buttons.
 		cons.gridwidth = 2;
-		contentPane.add(rightPanel, cons);
+		add(rightPanel, cons);
 
 		// Add okay and cancel buttons to the content pane.
 		// Don't allow the buttons to fill the cells.
@@ -160,15 +154,15 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 		// Add a listener which will save the batch file and close the
 		// window.
 		// Must be a way to avoid this.
-		final JFrame parent = this;
+		final JComponent parent = this;
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent aEvent) {
 				// Save the batch file document.
 				DOMUtils.serialize(mDocument, parent);
-				parent.dispose();
+				((JDialog)parent.getTopLevelAncestor()).dispose();
 			}
 		});
-		contentPane.add(okButton, cons);
+		add(okButton, cons);
 
 		final JButton cancelButton = new JButton();
 		cancelButton.setToolTipText(Messages.getString("BatchFileEditor.8")); //$NON-NLS-1$
@@ -177,12 +171,11 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 		// Add a listener which will close the window.
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent aEvent) {
-				parent.dispose();
+				((JDialog)parent.getTopLevelAncestor()).dispose();
 			}
 		});
 		cons.gridx = 4;
-		contentPane.add(cancelButton, cons);
-		return contentPane;
+		add(cancelButton, cons);
 	}
 
 	/**
@@ -243,20 +236,15 @@ public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
 	 * TODO: Pass in the File instead of the string.
 	 */
 	private void initialize(final String aFileName, final boolean aIsNewFile) {
-		// Don't use the default closer.
-		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.addWindowListener(new WindowCloseListener());
-		this.setContentPane(createContentPane());
-		this.setTitle(Messages.getString("BatchFileEditor.21")); //$NON-NLS-1$
-		
+		initializeUI();
 		// Load the document after the UI is created so all the listeners
 		// are hooked up.
 		final File newFile = new File(aFileName);
 		if (aIsNewFile) {
-			mDocument = FileUtils.createDocument(this, newFile, ROOT_ELEMENT_NAME);
+			mDocument = FileUtils.createDocument(getTopLevelAncestor(), newFile, ROOT_ELEMENT_NAME);
 		} else {
 			// Try and load the document
-			mDocument = FileUtils.loadDocument(this, newFile, ROOT_ELEMENT_NAME);
+			mDocument = FileUtils.loadDocument(getTopLevelAncestor(), newFile, ROOT_ELEMENT_NAME);
 		}
 		
 		// Fire a property changed event that the document was switched.

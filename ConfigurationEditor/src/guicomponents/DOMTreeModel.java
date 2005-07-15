@@ -114,10 +114,7 @@ public class DOMTreeModel implements TreeModel {
         // Path items are nodes, so just find the last item and check its 
         // value.
         final Node oldNode = (Node)aPath.getLastPathComponent();
-        final Node newNode = (Node)aNewValue;
-        if(oldNode.equals(newNode)){
-        	return;
-        }
+        final Node newNode = (Node)getOrCreateWrapper((Node)aNewValue);
         
         // Check if the old and new nodes are the same node but modified.
         if(oldNode.isSameNode(newNode)){
@@ -125,9 +122,9 @@ public class DOMTreeModel implements TreeModel {
             final int listIndex = DOMUtils.getListIndexOfObject(newNode.getParentNode(), newNode);
         	fireTreeNodesChanged(new TreeModelEvent(this, aPath, new int[] {listIndex}, new Object[]{getOrCreateWrapper(newNode)} ));
         }
-        // Otherwise a node was added.
+        // Otherwise a node was added or deleted.
         else {
-        	fireTreeStructureChanged(new TreeModelEvent(getOrCreateWrapper(newNode.getParentNode()), aPath));
+        	fireTreeStructureChanged(new TreeModelEvent(oldNode, aPath));
         }
     }
 
