@@ -30,7 +30,7 @@ import utils.Messages;
  * selection of the batch file is done by the ConfigurationEditor and passed to
  * this class. The class is composed of three DOMFileListPanels, along with
  * confirmation and cancel buttons.
- * 
+ * TODO: Make this extend panel and not editor.
  * @author Josh Lurz
  */
 public class BatchFileEditor extends JFrame implements DOMDocumentEditor {
