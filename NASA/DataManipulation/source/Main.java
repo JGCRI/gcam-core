@@ -22,7 +22,8 @@
  */
 /**
  * MASTER TODO LIST: *currently RUNNING and CORRECT but INCOMPLETE*
- * TODO: add in variableInfo reading fucntions, way to account for units? references? ...other stuff
+ * TODO: more error checking!
+ * TODO: expand general output options
  * TODO: comment private functions
  */
 package source;

@@ -16,5 +16,6 @@
 		<members variable="US" />
 	</variable>
 
-	<plot variable="play" />
+	<print variable="play" />
+	<printVerbose variable="play" file="myout.txt" />
 </commands>

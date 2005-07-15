@@ -25,6 +25,8 @@
 
 package source;
 
+import java.io.*;
+
 /**
  * Extension of Variable which stores some matrix of numbers from 0-2 dimensions.
  * This is a differentiation from the usual ReferenceVariable so that simple number
@@ -129,22 +131,27 @@ public class DataVariable extends Variable
   //******************Variable Functions***************************************
   //***************************************************************************
   
-  public void printStandard()
+  public void printStandard(BufferedWriter out) throws IOException
   {
     for(int i = 0; i < data.length; i++)
     {
-      data[i].printStandard();
+      data[i].printStandard(out);
     }
+    out.flush();
   }
-  public void printVerbose()
+  public void printVerbose(BufferedWriter out) throws IOException
   {
     System.out.println(name+":");
     if(comment != null)
-      System.out.println("\tDescription: "+comment);
+    {
+      out.write("\tDescription: "+comment);
+      out.newLine();
+    }
     for(int i = 0; i < data.length; i++)
     {
-      data[i].printStandard();
+      data[i].printStandard(out);
     }
+    out.flush();
   }
   public Wrapper[] getData()
   {

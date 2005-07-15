@@ -24,6 +24,8 @@
 
 package source;
 
+import java.io.*;
+
 /**
  * The basic unit of information to be manipulated, can be just numbers or a region.
  * This class was necessitated by the desire to make all actual manipulation functions as
@@ -118,16 +120,17 @@ public class DataWrapper extends Wrapper
     return true;
   }
   
-  public void printStandard()
+  public void printStandard(BufferedWriter out) throws IOException
   { 
+    out.newLine();
     for(int i = 0; i < data.length; i++)
     {
       System.out.print("\t");
       for(int k = 0; k < data[0].length; k++)
       {
-        System.out.print(data[i][k]+" ");
+        out.write(data[i][k]+" ");
       }
-      System.out.println();
+      out.newLine();
     }
   }
 }

@@ -21,6 +21,7 @@
  */
 package source;
 
+import java.io.*;
 
 public abstract class Wrapper
 {
@@ -65,5 +66,5 @@ public abstract class Wrapper
   
   public abstract boolean isData();
   
-  public abstract void printStandard();
+  public abstract void printStandard(BufferedWriter out) throws IOException;
 }

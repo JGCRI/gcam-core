@@ -25,6 +25,7 @@
 package source;
 
 import java.text.DecimalFormat;
+import java.io.*;
 
 /**
  * Extension of Variable which is a collection of region data and so contains shape and location.
@@ -143,7 +144,7 @@ public class ReferenceVariable extends Variable
   //******************Variable Functions***************************************
   //***************************************************************************
 
-  public void printStandard()
+  public void printStandard(BufferedWriter out) throws IOException
   {
     DecimalFormat form = new DecimalFormat("0.0");
     int offsetY, offsetX;
@@ -154,21 +155,25 @@ public class ReferenceVariable extends Variable
     //building a complete matrix of values to print from sub regions
     toPrint = buildMatrix();
     
-    System.out.println(name+":");
+    out.newLine();
+    out.write(name+":");
+    out.newLine();
     for(int i = 0; i < toPrint.length; i++)
     {
-      System.out.print("\t");
+      out.write("\t");
       for(int k = 0; k < toPrint[i].length; k++)
       {
         if(Double.isNaN(toPrint[i][k]))
-          System.out.print("NaN ");
+          out.write("NaN ");
         else
-          System.out.print(form.format(toPrint[i][k])+" ");
+          out.write(form.format(toPrint[i][k])+" ");
       }
-      System.out.println();
+      out.newLine();
+      out.flush();
     }
+    
   }
-  public void printVerbose()
+  public void printVerbose(BufferedWriter out) throws IOException
   {
     DecimalFormat form = new DecimalFormat("0.0");
     int offsetY, offsetX;
@@ -180,26 +185,40 @@ public class ReferenceVariable extends Variable
     //building a complete matrix of values to print from sub regions
     toPrint = buildMatrix();
     
-    System.out.println(name+":");
-    System.out.println("\tfrom x: "+x+" to "+(x+w)+" y: "+y+" to "+(y+h)+" at resolution: "+res);
+    out.newLine();
+    out.write(name+":");
+    out.newLine();
+    out.write("\tfrom x: "+x+" to "+(x+w)+" y: "+y+" to "+(y+h)+" at resolution: "+res);
+    out.newLine();
     if(units != null)
-      System.out.println("\tIn units of: "+units);
+    {
+      out.write("\tIn units of: "+units);
+      out.newLine();
+    }
     if(comment != null)
-      System.out.println("\tDescription: "+comment);
+    {
+      out.write("\tDescription: "+comment);
+      out.newLine();
+    }
     if(reference != null)
-      System.out.println("\tReferenced From: "+reference);
+    {
+      out.write("\tReferenced From: "+reference);
+      out.newLine();
+    }
     for(int i = 0; i < toPrint.length; i++)
     {
-      System.out.print("\t");
+      out.write("\t");
       for(int k = 0; k < toPrint[i].length; k++)
       {
         if(Double.isNaN(toPrint[i][k]))
-          System.out.print("NaN ");
+          out.write("NaN ");
         else
-          System.out.print(form.format(toPrint[i][k])+" ");
+          out.write(form.format(toPrint[i][k])+" ");
       }
-      System.out.println();
+      out.newLine();
+      out.flush();
     }
+    
   }
   public Wrapper[] getData()
   {

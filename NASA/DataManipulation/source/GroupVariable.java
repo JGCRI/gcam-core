@@ -22,6 +22,7 @@
 package source;
 
 import java.util.*;
+import java.io.*;
 
 /**
  * 
@@ -67,7 +68,7 @@ public class GroupVariable extends Variable
   //***************************************************************************
   //******************Variable Functions***************************************
   //***************************************************************************
-  public void printStandard()
+  public void printStandard(BufferedWriter out) throws IOException
   {
     Map.Entry ent;
     Variable hold;
@@ -77,25 +78,31 @@ public class GroupVariable extends Variable
     {
       ent = (Map.Entry)it.next();
       hold = (Variable)ent.getValue();
-      hold.printStandard();
+      hold.printStandard(out);
     }
   }
-  public void printVerbose()
+  public void printVerbose(BufferedWriter out) throws IOException
   {
     Map.Entry ent;
     Variable hold;
     Iterator it = data.entrySet().iterator();
     
-    System.out.println("Group: "+name);
+    out.newLine();
+    out.write("Group: "+name);
+    out.newLine();
     if(comment != null)
-      System.out.println("\tDescription: "+comment);
+    {
+      out.write("\tDescription: "+comment);
+      out.newLine();
+    }
     while(it.hasNext())
     {
       ent = (Map.Entry)it.next();
       hold = (Variable)ent.getValue();
-      hold.printVerbose();
+      hold.printVerbose(out);
     }
-    System.out.println("End of Group: "+name);
+    out.write("End of Group: "+name);
+    out.newLine();
   }  
   public Wrapper[] getData()
   {
