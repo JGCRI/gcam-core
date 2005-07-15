@@ -11,7 +11,7 @@
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -28,7 +28,8 @@
 class IInvestable;
 /*! 
 * \ingroup Objects
-* \brief This is the interface to an object responsible for calculating the levelized cost of a technology.
+* \brief This is the interface to an object responsible for calculating the
+*        levelized cost of a technology.
 * \author Josh Lurz
 */
 class LevelizedCostCalculator: public IExpectedProfitRateCalculator
