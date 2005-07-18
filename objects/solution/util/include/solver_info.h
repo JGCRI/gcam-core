@@ -35,7 +35,7 @@ public:
     SolverInfo( Market* linkedMarket );
     bool operator==( const SolverInfo& rhs ) const;
     bool operator!=( const SolverInfo& rhs ) const;
-    std::string getName() const;
+    const std::string& getName() const;
     void init();
     bool isBracketed() const;
     void setBracketed();

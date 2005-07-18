@@ -149,7 +149,7 @@ void SolverInfo::restoreValues() {
 * \author Josh Lurz
 * \return The name of the market the SolutionInfo is connected to.
 */
-string SolverInfo::getName() const {
+const string& SolverInfo::getName() const {
     return linkedMarket->getName();
 }
 
