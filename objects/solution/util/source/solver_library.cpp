@@ -127,7 +127,10 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverI
     marketplace->nullSuppliesAndDemands( per );
     world->calc( per );
     solverSet.updateFromMarkets();
-    solverSet.updateSolvable( true );
+    SolverInfoSet::UpdateCode solvableChanged = solverSet.updateSolvable( true );
+
+    // If the size of the matrix changed then the inversion will eventually fail.
+    assert( solvableChanged == SolverInfoSet::UNCHANGED );
 
 #if( !NO_REGIONAL_DERIVATIVES )
     // Save original global supplies and demands for error checking.
