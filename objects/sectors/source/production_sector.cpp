@@ -25,13 +25,17 @@
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/imarket_type.h"
 #include "reporting/include/output_container.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
 
-//! Constructor.
+/*! \brief Constructor
+* \details Initializes the Sector and initializes all characteristics flags to false.
+* \param aRegionName Name of the region containing this sector.
+*/
 ProductionSector::ProductionSector ( const string& aRegionName ) : Sector ( aRegionName ) {
     mIsFixedPrice = false;
     mIsEnergyGood = false;
@@ -39,14 +43,15 @@ ProductionSector::ProductionSector ( const string& aRegionName ) : Sector ( aReg
     mIsSecondaryEnergyGood = false;
 }
 
-//! Default destructor
+/*! \brief Default destructor
+* \note This is necessary because of the auto_ptr to the IInvestor object.
+*/
 ProductionSector::~ProductionSector() {
 }
 
-/*! \brief Parses any child nodes specific to derived classes
-*
-* Method parses any input data from child nodes that are specific to the classes derived from this class. Since Sector is the generic base class, there are no values here.
-*
+/*! \brief Parses any child nodes specific to the derived class.
+* \details Method parses any input data from this child class that is specific
+*          to this class.
 * \author Sonny Kim, Josh Lurz
 * \param nodeName name of current node
 * \param curr pointer to the current node in the XML input tree
@@ -87,10 +92,7 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
     return true;
 }
 
-/*! \brief Parses any attributes specific to derived classes
-*
-* Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class. Since Sector is the generic base class, there are no values here.
-*
+/*! \brief Parses any attributes specific to this class.
 * \author Josh Lurz, Steve Smith
 * \param node pointer to the current node in the XML input tree
 * \todo Remove this function
@@ -100,6 +102,10 @@ bool ProductionSector::XMLDerivedClassParseAttr( const DOMNode* node ) {
     return false;
 }
 
+/* \brief Write out ProductionSector specific data to the input XML file.
+* \param out Stream into which to write.
+* \tabs Object responsible for tabs in the output.
+*/
 void ProductionSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
     if( mInvestor.get() ){
         mInvestor->toInputXML( out, tabs );
@@ -114,7 +120,11 @@ void ProductionSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const 
     }
 }
 
-//! Write out debugging information.
+/* \brief Write out ProductionSector specific data to the debugging XML file.
+* \param period Period for which to write information.
+* \param out Stream into which to write.
+* \tabs Object responsible for tabs in the output.
+*/
 void ProductionSector::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     if( mInvestor.get() ){
         mInvestor->toDebugXML( period, out, tabs );
@@ -130,7 +140,12 @@ void ProductionSector::toDebugXMLDerived( const int period, std::ostream& out, T
     }
 }
 
-//! Complete the initialization of this object.
+/*! \brief Complete the initialization of the ProductionSector.
+* \details Completes the initialization of the parent Sector and initializes the
+*          IInvestor object. The sector investor is initialized to an
+*          Accelerator if a specific investor was not read in. The sector
+*          investor is then initialized.
+*/
 void ProductionSector::completeInit( DependencyFinder* aDependencyFinder ){
     // Call parent class complete init.
     Sector::completeInit( aDependencyFinder );
@@ -139,7 +154,7 @@ void ProductionSector::completeInit( DependencyFinder* aDependencyFinder ){
     // Initialize the investment object to the default if one has not been read in.
     if( !mInvestor.get() ){
 		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::NOTICE );
+		mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Creating default investment type for sector " << name << "." << endl;
         mInvestor.reset( new Accelerator() );
     }
@@ -147,16 +162,29 @@ void ProductionSector::completeInit( DependencyFinder* aDependencyFinder ){
     mInvestor->completeInit( regionName, name );
 }
 
-void ProductionSector::setMarket() {
+/*! \brief Initialize the market required by this ProductionSector.
+* \details Creates the market for the Production sector and initializes it. The
+*          market is initialized by setting the optionally read-in prices for
+*          each period into the marketplace, setting the market to solve if the
+*          ProductionSector is not a fixed-price sector, and setting the flag in
+*          the MarketInfo which tells whether the market is a fixed price
+*          market. Fixed price markets are sectors which do not have solved
+*          prices, the equalibrium price is always the initial price. This is
+*          for specifying price paths exogenously, usually for resource sectors.
+*          The read-in prices will be used as the initial prices for the Market,
+*          for fixed price path sectors this will also be the final price.
+*/
+void ProductionSector::setMarket() {	
 	// Check if the market name was not read-in
 	if( mMarketName.empty()  ){
 		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::NOTICE );
-		mainLog << "Market name for export sector was not read-in. Defaulting to region name." << endl;
+		mainLog.setLevel( ILogger::DEBUG );
+		mainLog << "Market name for production sector was not read-in. Defaulting to region name." << endl;
 		mMarketName = regionName;
 	}
+	
+	// Create the market.
     Marketplace* marketplace = scenario->getMarketplace();
-	// Create a regional market for the supply sector.
     if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, sectorprice );
         for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
@@ -171,13 +199,22 @@ void ProductionSector::setMarket() {
                 marketplace->setMarketInfo( name, regionName, period, "IsFixedPrice", 1.0 );
             }
         }
-   
     }
 }
 
-void ProductionSector::initCalc( const int period, const MarketInfo* aMarketInfo, NationalAccount& nationalAccount,
-                                 Demographic* aDemographics ) {
-	calcPriceReceived( period );
+/*! \brief Initialize the ProductionSector before a period is begun.
+* \details TODO
+* \param aPeriod Period for which to initialize the ProductionSector.
+* \param aRegionInfo Regional information object.
+* \param aNationalAccount National accounts container.
+* \param aDemographics The demographics object.
+* \
+*/
+void ProductionSector::initCalc( const int aPeriod, const MarketInfo* aRegionInfo,
+                                 NationalAccount& aNationalAccount,
+                                 Demographic* aDemographics )
+{
+	calcPriceReceived( aPeriod );
 
     // Setup the market information on the sector.
     Marketplace* marketplace = scenario->getMarketplace();
@@ -202,21 +239,20 @@ void ProductionSector::initCalc( const int period, const MarketInfo* aMarketInfo
     
     // The ITC is being read in at the sector level but set to the national level?
 	if( moreSectorInfo.get() ){
-		nationalAccount.setAccount( NationalAccount::INVESTMENT_TAX_CREDIT, 
+		aNationalAccount.setAccount( NationalAccount::INVESTMENT_TAX_CREDIT, 
 			moreSectorInfo->getValue( MoreSectorInfo::INVEST_TAX_CREDIT_RATE ) );
 	}
 
-	Sector::initCalc( period, aMarketInfo, nationalAccount, aDemographics );
+	Sector::initCalc( aPeriod, aRegionInfo, aNationalAccount, aDemographics );
 }
 
-/*! \brief returns Sector output.
-*
-* Returns the total amount of the ProductionSector. 
-*
+/*! \brief Returns the output of the ProductionSector.
+* \details Dynamically calculates and returns the sum of the output of all
+*          subsectors of this production sector. A check for the validity of
+*          each Subsector output level is performed before summing the value.
 * \author Sonny Kim
-* \param period Model period
-* \todo make year 1975 regular model year so that logic below can be removed
-* \return total output
+* \param aPeriod Model period
+* \return Total sector level output.
 */
 double ProductionSector::getOutput( const int aPeriod ) const {
     double output = 0;
@@ -234,7 +270,17 @@ double ProductionSector::getOutput( const int aPeriod ) const {
     }
     return output;
 }
-	//! Operate the capital of the sector.
+
+/*! \brief Operate the capital of the sector.
+* \details This is the main function for the sector called in each iteration.
+*          The sequence of operations it performs is:
+* <ol><li>Operate existing vintage capital stock.</li>
+* <li>Invest in new vintages.</li>
+* <li>Operate newly created capital stock.</li>
+* \param aDemographic The demographics object.
+* \param aNationalAccount The national accounts container.
+* \param aPeriod The period in which to operate capital.
+*/
 void ProductionSector::operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                                 const int aPeriod )
 {
@@ -244,8 +290,13 @@ void ProductionSector::operate( NationalAccount& aNationalAccount, const Demogra
     operateNewCapital( aDemographic, aNationalAccount, aPeriod );
 }
 
-//! Calculate new investment.
-// precondition: old vintages have calculated their output.
+/*! \brief Calculate new investment for the sector.
+* \pre operateOldCapital has already been called to set the level of output from
+*      existing capital without any new investment.
+* \param aDemographic The demographics object.
+* \param aNationalAccount The national accounts container.
+* \param aPeriod The period in which to calculate investment.
+*/
 void ProductionSector::calcInvestment( const Demographic* aDemographic,
                                        NationalAccount& aNationalAccount,
                                        const int period )
@@ -259,7 +310,13 @@ void ProductionSector::calcInvestment( const Demographic* aDemographic,
 }
     
 
-//! Operate old capital.
+/*! \brief Operate the old capital for the sector.
+* \details Operate the old investment for the sector to determine the level of
+*          output without any new investment.
+* \param aDemographic The demographics object.
+* \param aNationalAccount The national accounts container.
+* \param aPeriod The period in which to operate.
+*/
 void ProductionSector::operateOldCapital( const Demographic* aDemographic, NationalAccount& aNationalAccount,
                                           const int period )
 {
@@ -269,20 +326,28 @@ void ProductionSector::operateOldCapital( const Demographic* aDemographic, Natio
     }
 }
 
-//! Operate new capital.
+/*! \brief Operate the new capital for the sector.
+* \details Operate the new investment for the sector to determine the final
+*          output level for the sector. This is always called after investment
+*          is determined.
+* \param aDemographic The demographics object.
+* \param aNationalAccount The national accounts container.
+* \param aPeriod The period in which to operate.
+*/
 void ProductionSector::operateNewCapital( const Demographic* aDemographic, NationalAccount& aNationalAccount,
-                                          const int period )
+                                          const int aPeriod )
 {
     for( CSubsectorIterator currSub = subsec.begin(); currSub != subsec.end(); ++currSub ){
         // flag tells the subsector to operate new capital.
-        (*currSub)->operate( aNationalAccount, aDemographic, moreSectorInfo.get(), true, period );
+        (*currSub)->operate( aNationalAccount, aDemographic, moreSectorInfo.get(), true, aPeriod );
     }
 }
+
 /*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* \details This public function accesses the private constant string, XML_NAME.
+*          This way the tag is always consistent for both read-in and output and
+*          can be easily changed. This function may be virtual to be overriden
+*          by derived class pointers.
 * \author Josh Lurz, Sonny Kim
 * \return The constant XML_NAME.
 */
@@ -291,10 +356,10 @@ const std::string& ProductionSector::getXMLName() const {
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* The "==" operator that is used when parsing, required this second function to return static.
+* \details This public function accesses the private constant string, XML_NAME.
+*          This way the tag is always consistent for both read-in and output and
+*          can be easily changed. The "==" operator that is used when parsing,
+*          required this second function to return static.
 * \note A function cannot be static and virtual.
 * \author Josh Lurz, Sonny Kim
 * \return The constant XML_NAME as a static.
@@ -304,7 +369,13 @@ const std::string& ProductionSector::getXMLNameStatic() {
 	return XML_NAME;
 }
 
-//! Calculate price received
+/*! \brief Calculate the price received for the sector good.
+* \details Calculates the price received for the output good of this sector by
+*          adjusting the market price for transportation costs and taxes. This
+*          price received is then set into the MarketInfo for this sector so it
+*          can be accessed from other places in the model.
+* \param period Period for which to calculate the price received.
+*/
 void ProductionSector::calcPriceReceived( const int period ){
 
     Marketplace* marketplace = scenario->getMarketplace();
@@ -317,8 +388,17 @@ void ProductionSector::calcPriceReceived( const int period ){
 	marketplace->setMarketInfo( name, regionName, period, "priceReceived", priceReceived );
 }
 
-//! Update an OutputContainer for reporting.
-void ProductionSector::updateOutputContainer( OutputContainer* aOutputContainer, const int aPeriod ) const {
+/*! \brief Update an OutputContainer for reporting.
+* \details Updates an OutputContainer with information specific to the Sector
+*          and ProductionSector. This is done by calling a class specific method
+*          of the OutputContainer so that it can update its information
+*          pertaining to the ProductionSector.
+* \param aOutputContainer OutputContainer to update.
+* \param aPeriod Period in which to perform the update.
+*/
+void ProductionSector::updateOutputContainer( OutputContainer* aOutputContainer,
+                                              const int aPeriod ) const
+{
     // Update the base class
     Sector::updateOutputContainer( aOutputContainer, aPeriod );
     // Update the output container for the derived class.
