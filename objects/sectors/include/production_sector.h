@@ -15,7 +15,6 @@
 #include <string>
 #include <memory>
 #include <map>
-
 #include "sectors/include/sector.h"
 // There are some missing includes here!
 class IInvestor;
@@ -28,6 +27,7 @@ class DependencyFinder;
 /*! 
 * \ingroup Objects
 * \brief This class represents a single production sector.
+* \details TODO
 * \author Sonny Kim
 */
 class ProductionSector: public Sector
@@ -41,7 +41,7 @@ public:
     static const std::string& getXMLNameStatic();
     virtual void completeInit( DependencyFinder* aDependencyFinder );
     double getOutput( const int aPeriod ) const;
-    virtual void initCalc( const int period, const MarketInfo* aMarketInfo, 
+    virtual void initCalc( const int period, const MarketInfo* aRegionInfo, 
                            NationalAccount& nationalAccount, Demographic* aDemographics );
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, const int aPeriod ); // Passing demographic here is not good.
     virtual void updateOutputContainer( OutputContainer* aOutputContainer, const int aPeriod ) const;
@@ -59,11 +59,22 @@ private:
 	//! The market region into which the sector is exporting.
 	std::string mMarketName;
 
-    bool mIsFixedPrice; //!< Whether this sector is on a fixed price path.
-    bool mIsEnergyGood; //!< If the sector has an energy product.
-    bool mIsPrimaryEnergyGood; //!< If the sector has a primary energy product.
-    bool mIsSecondaryEnergyGood; //!< If the sector has a secondary energy product.
-    std::auto_ptr<IInvestor> mInvestor; //!< Investment object.
+    //! Whether this sector is on a fixed price path.
+    bool mIsFixedPrice;
+
+    //! If the sector has an energy product.
+    bool mIsEnergyGood;
+
+    //! If the sector has a primary energy product.
+    bool mIsPrimaryEnergyGood;
+
+    //! If the sector has a secondary energy product.
+    bool mIsSecondaryEnergyGood;
+
+    //! Object responsible for determining levels of investment for this sector
+    //! in its various technologies. Different types of investment objects may
+    //! be read in to change the investment behavior.
+    std::auto_ptr<IInvestor> mInvestor;
     
     void calcInvestment( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int period );
     void operateOldCapital( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int period );
