@@ -93,7 +93,6 @@ const SolverInfoSet::UpdateCode SolverInfoSet::updateSolvable( const bool isNR )
     // Iterate through the solvable markets and determine if any are now unsolvable.
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         // If it should not be solved for the current method, move it to the unsolvable vector.
-        string marketName = iter->getName();
         if( !iter->shouldSolve( isNR ) ){
             unsolvable.push_back( *iter );
             // The erase operation invalidates any iterator at or past the deletion point.
@@ -115,7 +114,6 @@ const SolverInfoSet::UpdateCode SolverInfoSet::updateSolvable( const bool isNR )
     // This will double check markets that were just added, slightly inefficient.
     for( SetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
         // If it should be solved for the current method, move it to the solvable vector.
-        string marketName = iter->getName();
         if( iter->shouldSolve( isNR ) ){
             solvable.push_back( *iter );
             // The erase operation invalidates any iterator at or past the deletion point.
