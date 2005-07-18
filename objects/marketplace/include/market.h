@@ -73,9 +73,9 @@ public:
     virtual double getSupplyForChecking() const = 0;
     virtual void addToSupply( const double supplyIn );
 
-    std::string getName() const;
-    std::string getRegionName() const;
-    std::string getGoodName() const;
+    const std::string& getName() const;
+    const std::string& getRegionName() const;
+    const std::string& getGoodName() const;
     void setMarketInfo( const std::string& itemName, const double itemValue );
     double getMarketInfo( const std::string& aItemName, bool aMustExist ) const;
     void storeInfo();
@@ -88,6 +88,10 @@ public:
     virtual std::string getType() const = 0;
 protected:
     Market( const Market& aMarket );
+
+	//! The name of the market.
+    std::string mName;
+	
 	//! The good the market represents
     std::string good;
 	

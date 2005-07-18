@@ -55,6 +55,8 @@ storedDemand( 0 ),
 supply( 0 ),
 storedSupply( 0 )
 {
+	// Store the market name so that it can be returned without any allocations.
+	mName = region + good;
 }
 
 //! Destructor
@@ -71,6 +73,7 @@ Market::~Market(){
 Market::Market( const Market& aMarket ): 
 good( aMarket.good ),
 region( aMarket.region ),
+mName( aMarket.mName ),
 solveMarket( aMarket.solveMarket ),
 period( aMarket.period ),
 price( aMarket.price ),
@@ -445,8 +448,8 @@ void Market::removeFromRawSupply( const double supplyIn ) {
 *          name plus good name.
 * \return The market name
 */
-string Market::getName() const {
-   return region + good;
+const string& Market::getName() const {
+   return mName;
 }
 
 /*! \brief Return the market region.
@@ -454,7 +457,7 @@ string Market::getName() const {
 *          the miniCAM regions, as a market region can contain several regions.
 * \return The market region.
 */
-string Market::getRegionName() const {
+const string& Market::getRegionName() const {
    return region;
 }
 
@@ -462,7 +465,7 @@ string Market::getRegionName() const {
 * \details This function returns the good that the market represents. 
 * \return The market good.
 */
-string Market::getGoodName() const {
+const string& Market::getGoodName() const {
    return good;
 }
 
