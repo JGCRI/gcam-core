@@ -102,7 +102,7 @@ public class MainOptionsPanel extends AbstractEditorPanel {
 
         // Create a text field factory and add it as a listener on the editor.
         final DOMTextFieldFactory textFieldFactory = new DOMTextFieldFactory();
-        addPropertyChangeListener(textFieldFactory);
+        addPropertyChangeListener("document-replaced", textFieldFactory);
 
         // Add the scenario name field.
         final JTextField scenNameField = textFieldFactory.createTextField(
@@ -139,7 +139,7 @@ public class MainOptionsPanel extends AbstractEditorPanel {
         // Create the list panel factory and add it as a listener on the
         // current editor.
         final DOMListPanelFactory listFactory = new DOMListPanelFactory();
-        addPropertyChangeListener(listFactory);
+        addPropertyChangeListener("document-replaced", listFactory);
 
         final JPanel addOnPanel = listFactory
                 .createDOMFileListPanel(
@@ -163,7 +163,7 @@ public class MainOptionsPanel extends AbstractEditorPanel {
         
         // Add the model as a property change listener so it will receive
         // document changed notifications.
-        addPropertyChangeListener(model);
+        addPropertyChangeListener("document-replaced", model);
         
         calCheckBox.setMnemonic(KeyEvent.VK_C);
         calCheckBox
@@ -189,7 +189,7 @@ public class MainOptionsPanel extends AbstractEditorPanel {
         
         // Add the model as a property change listener so it will receive
         // document changed notifications.
-        addPropertyChangeListener(model);
+        addPropertyChangeListener("document-replaced", model);
         
         calcCosts.setMnemonic(KeyEvent.VK_O);
         calcCosts.setToolTipText(Messages.getString("ConfigurationEditor.129")); //$NON-NLS-1$

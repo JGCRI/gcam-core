@@ -99,5 +99,8 @@ public class DOMListPanelFactory implements PropertyChangeListener {
 				currList.setDocument(mDocument);
 			}
 		}
+        else {
+            Logger.global.log(Level.WARNING, "Property change listener added for the wrong property change.");
+        }
 	}
 }

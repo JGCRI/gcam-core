@@ -21,6 +21,7 @@ import org.w3c.dom.Document;
 
 /**
  * The advanced options panel.
+ * 
  * @author Josh Lurz
  */
 public class AdvancedOptionsPanel extends AbstractEditorPanel {
@@ -37,30 +38,29 @@ public class AdvancedOptionsPanel extends AbstractEditorPanel {
         super();
         initialize();
     }
-    
+
     /**
      * This method initializes the advanced preferences panel.
      */
     private void initialize() {
-        setBorder(BorderFactory
-                .createBevelBorder(BevelBorder.RAISED));
+        setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         // Add a property change listener which will swap in a new
         // tree when the document is changed.
-        addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent aEvent) {
-                if(aEvent.getPropertyName().equals("document-replaced")) {
-                    // Create a new tree using a DOM based model.
-                    createAdvancedTree((Document)aEvent.getNewValue());
-                }
-            }
-        });
+        addPropertyChangeListener("document-replaced",
+                new PropertyChangeListener() {
+                    public void propertyChange(PropertyChangeEvent aEvent) {
+                        // Create a new tree using a DOM based model.
+                        createAdvancedTree((Document) aEvent.getNewValue());
+                    }
+                });
     }
 
     /**
      * Create and display the advanced editing tree.
      * 
-     * @param aNewDocument The new document.
+     * @param aNewDocument
+     *            The new document.
      */
     private void createAdvancedTree(final Document aNewDocument) {
         // Remove the existing tree from the panel if there is one.
@@ -71,8 +71,8 @@ public class AdvancedOptionsPanel extends AbstractEditorPanel {
             }
         }
         if (aNewDocument != null) {
-            final JTree advancedTree = new JTree(new DOMTreeModel(
-                    aNewDocument.getDocumentElement(), ConfigurationEditor.ELEMENT_NAME));
+            final JTree advancedTree = new JTree(new DOMTreeModel(aNewDocument
+                    .getDocumentElement(), ConfigurationEditor.ELEMENT_NAME));
             // TODO: Are all of these neccessary?
             advancedTree.setVisible(true);
             advancedTree.setShowsRootHandles(true);

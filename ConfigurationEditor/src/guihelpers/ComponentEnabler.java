@@ -3,6 +3,8 @@ package guihelpers;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Listener which enables a component when the document it is listening
@@ -39,5 +41,8 @@ public final class ComponentEnabler implements PropertyChangeListener {
 			// non-null.
 			mComponent.setEnabled(aEvent.getNewValue() != null);
 		}
+        else {
+            Logger.global.log(Level.WARNING, "Property change listener registered for the wrong property change.");
+        }
 	}
 }

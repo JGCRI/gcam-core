@@ -40,18 +40,21 @@ public final class SaveEnabler implements PropertyChangeListener {
 	 */
 	public void propertyChange(final PropertyChangeEvent aEvent) {
 		// Check if this is the document modified event.
+        System.out.println("PROPERTY CHANGE" + aEvent.getPropertyName());
 		if (aEvent.getPropertyName().equals("document-modified")) {
+            System.out.println("SETTING DOCUMENT MODIFED + " + aEvent.getOldValue() + " " + aEvent.getNewValue());
 			// Enable the button if it was not currently enabled and
 			// should be.
-			if (aEvent.getOldValue().equals(Boolean.FALSE)
-					&& aEvent.getNewValue().equals(Boolean.TRUE)) {
+			if (aEvent.getNewValue().equals(Boolean.TRUE)) {
 				mComponent.setEnabled(true);
 			}
 		} else if (aEvent.getPropertyName().equals("document-replaced")) {
+            System.out.println("DOCUMENT REPLACED");
 			// Disable the component as a new document was created or an old one
 			// was loaded.
 			mComponent.setEnabled(false);
 		} else if (aEvent.getPropertyName().equals("document-saved")) {
+            System.out.println("DOCUMENT SAVEd");
 			// Disable the component as a save just occurred.
 			mComponent.setEnabled(false);
 		}

@@ -115,7 +115,7 @@ public class BatchFileEditor extends AbstractEditorPanel implements DOMDocumentE
 		// Create the list panel factory and add it as a property 
 		// change listener so it will know when the document changes.
 		final DOMListPanelFactory factory = new DOMListPanelFactory();
-		addPropertyChangeListener(factory);
+		addPropertyChangeListener("document-replaced", factory);
 		// Initialize panels in right to left order so that
 		// the panel which depends on another panel is always created
 		// before the panel that it depends on.

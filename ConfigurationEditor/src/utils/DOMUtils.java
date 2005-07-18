@@ -3,7 +3,6 @@
  */
 package utils;
 
-import java.awt.Component;
 import java.awt.Container;
 import java.io.File;
 import java.io.FileWriter;
@@ -12,13 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.xerces.dom3.bootstrap.DOMImplementationRegistry;
 import org.apache.xpath.domapi.XPathEvaluatorImpl;
 import org.w3c.dom.Attr;
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -224,21 +220,30 @@ public final class DOMUtils {
     		return false;
     	}
 
-
-        // Create the serialize.
-        final LSSerializer writer = getDOMSerializer(aContainer);
-        // Helper function has already sent an error.
-        if(writer == null) {
-            return false;
+        
+        // Create the serializer.
+        DOMImplementation impl = aDocument.getImplementation();
+        DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS","3.0");
+        LSSerializer writer = implLS.createLSSerializer();
+        
+        // Turn on pretty print for readable output.
+        if(writer.getDomConfig().canSetParameter("format-pretty-print", "true")) {
+            writer.getDomConfig().setParameter("format-pretty-print", "true");
+        }
+        else {
+            Logger.global.log(Level.INFO, "DOM serializer does not support pretty-print");
         }
         
         // Mark that the file is no longer in need of a save so the
         // attribute doesn't show up in output.
+        if(!aDocument.getDocumentElement().getAttribute("needs-save").equals("true")) {
+            System.out.println("Saving an unmodified document. needs-save: " + aDocument.getDocumentElement().getAttribute("needs-save"));
+        }
         aDocument.getDocumentElement().removeAttribute("needs-save"); //$NON-NLS-1$
 
         // Serialize the document into a string.
         final String docContent = writer.writeToString(aDocument);
-
+        
         // Now attempt to write it to a file.
         try {
             final File outputFile = FileUtils.getDocumentFile(aDocument);
@@ -249,7 +254,7 @@ public final class DOMUtils {
         } catch (IOException e) {
             // Unexpected error creating writing the file. Inform the user
             // and log the error.
-            Logger.global.throwing("FileUtils", "serializeDocument", e); //$NON-NLS-1$ //$NON-NLS-2$
+            Logger.global.throwing("DOMUtils", "serialize", e); //$NON-NLS-1$ //$NON-NLS-2$
             final String errorMessage = Messages.getString("DOMUtils.22") //$NON-NLS-1$
                     + e.getMessage() + "."; //$NON-NLS-1$
             final String errorTitle = Messages.getString("DOMUtils.24"); //$NON-NLS-1$
@@ -257,54 +262,10 @@ public final class DOMUtils {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        // Add an attribute that signals that the document has been saved
+        // successfully.
+        aDocument.getDocumentElement().setAttribute("document-saved", "true");
         return true;
-    }
-
-    /**
-     * The the DOM writer.
-     * @param aContainer The container to center error messages on.
-     * @return An initialized DOM writer.
-     */
-    private static LSSerializer getDOMSerializer(final Container aContainer) {
-        // Create the implementation which is needed for serializing.
-        System.setProperty(DOMImplementationRegistry.PROPERTY,
-                "org.apache.xerces.dom.DOMImplementationSourceImpl"); //$NON-NLS-1$
-        DOMImplementationRegistry registry = null;
-        try {
-            registry = DOMImplementationRegistry.newInstance();
-        } catch (Exception e) {
-            // Unexpected error creating the DOM registry. Inform the user
-            // and log the error.
-            Logger.global.log(Level.SEVERE, e.getStackTrace().toString());
-            final String errorMessage = Messages.getString("DOMUtils.12") //$NON-NLS-1$
-                    + e.getMessage() + "."; //$NON-NLS-1$
-            final String errorTitle = Messages.getString("DOMUtils.14"); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(aContainer, errorMessage, errorTitle,
-                    JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-        DOMImplementationLS domImpl = null;
-        try {
-            domImpl = (DOMImplementationLS) registry.getDOMImplementation("LS"); //$NON-NLS-1$
-        } catch (Exception e) {
-            // Unexpected error creating the DOM implementation. Inform the user
-            // and log the error.
-            Logger.global.log(Level.SEVERE, e.getStackTrace().toString());
-            final String errorMessage = Messages.getString("DOMUtils.16") //$NON-NLS-1$
-                    + e.getMessage() + "."; //$NON-NLS-1$
-            final String errorTitle = Messages.getString("DOMUtils.18"); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(aContainer, errorMessage, errorTitle,
-                    JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-        
-        // Create the serializer.
-        final LSSerializer serializer = domImpl.createLSSerializer();
-        
-        // Turn on pretty print for readable output.
-        // serializer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
-        
-        return serializer;
     }
     
     /**
@@ -347,33 +308,6 @@ public final class DOMUtils {
             resultNode = newResult;
         }
         return resultNode;
-    }
-
-    /**
-     * Get an initialized document builder.
-     * 
-     * @param aWindow
-     *            A window used to center error messages, allowed to be null.
-     * @return An initialized document builder.
-     */
-    public static DocumentBuilder getDocumentBuilder(final Component aWindow) {
-        // Create the document builder.
-        final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
-                .newInstance();
-        DocumentBuilder docBuilder = null;
-        try {
-            docBuilder = docBuilderFactory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            // Unexpected error creating the document builder. Notify
-            // the user of the error and print to the log.
-            Logger.global.log(Level.SEVERE, e.getStackTrace().toString());
-            final String errorMessage = Messages.getString("DOMUtils.7") //$NON-NLS-1$
-                    + e.getMessage() + "."; //$NON-NLS-1$
-            final String errorTitle = Messages.getString("DOMUtils.9"); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(aWindow, errorMessage, errorTitle,
-                    JOptionPane.ERROR_MESSAGE);
-        }
-        return docBuilder;
     }
 
     /**

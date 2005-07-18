@@ -196,5 +196,8 @@ public class DOMTextFieldFactory implements PropertyChangeListener {
 				currField.setText(newValue);
 			}
 		}
+        else {
+            Logger.global.log(Level.WARNING, "Property change listener added for the wrong property change.");
+        }
 	}
 }

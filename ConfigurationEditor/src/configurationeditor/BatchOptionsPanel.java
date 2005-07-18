@@ -106,7 +106,7 @@ public class BatchOptionsPanel extends AbstractEditorPanel {
     private JTextField createBatchFileField() {
         // Create a text field factory and add it as a listener on the editor.
         final DOMTextFieldFactory textFieldFactory = new DOMTextFieldFactory();
-        addPropertyChangeListener(textFieldFactory);
+        addPropertyChangeListener("document-replaced", textFieldFactory);
         final JTextField fileField = textFieldFactory.createTextField(
                 "Files", "BatchFileName"); //$NON-NLS-1$ //$NON-NLS-2$
         fileField.setPreferredSize(new Dimension(200, 20));
@@ -211,7 +211,7 @@ public class BatchOptionsPanel extends AbstractEditorPanel {
         batchCheckBox.setModel(model); //$NON-NLS-1$
         // Add the checkbox as a listener so it will receive events
         // when the document is replaced.
-        addPropertyChangeListener(model);
+        addPropertyChangeListener("document-replaced", model);
         batchCheckBox.setMnemonic(KeyEvent.VK_B);
         batchCheckBox.setToolTipText(Messages
                 .getString("ConfigurationEditor.17")); //$NON-NLS-1$

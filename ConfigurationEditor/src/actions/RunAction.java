@@ -13,8 +13,10 @@ import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -110,8 +112,15 @@ public class RunAction extends AbstractAction {
         
         // Clone the document before serializing to a different name to 
         // preserve all state.
-        final DocumentBuilder builder = DOMUtils.getDocumentBuilder(mParentEditor);
-        final Document clonedDoc = builder.newDocument();
+        // Create a new document.
+        DOMImplementation domImpl = null;
+        try {
+            domImpl = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation();
+        } catch(ParserConfigurationException e) {
+            Logger.global.log(Level.SEVERE, "Failed to create DOM implementation necessary to create the document.");
+            return;
+        }
+        final Document clonedDoc = domImpl.createDocument(null, null, null);
         
         // Perform a deep clone on the document which will copy all nodes
         // and their children.

@@ -6,7 +6,7 @@ package configurationeditor;
 import guicomponents.DOMButtonModel;
 import guicomponents.DOMComboBoxController;
 import guicomponents.DOMComboBoxModel;
-import guicomponents.DOMDocumentSaveSetter;
+import guihelpers.DOMDocumentSaveSetter;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -33,6 +33,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
 import utils.DOMUtils;
@@ -333,7 +335,7 @@ public class LogEditor extends JPanel implements DOMDocumentEditor {
 
         // Add the model as a property change listener so it will receive
         // document changed notifications.
-        addPropertyChangeListener(model);
+        addPropertyChangeListener("document-replaced", model);
 
         printLevel.setMnemonic(KeyEvent.VK_W);
         printLevel.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -372,10 +374,17 @@ public class LogEditor extends JPanel implements DOMDocumentEditor {
         if (newDocument != null) {
             // Add an event handler which will listen for the document being
             // changed and set that the document needs to be saved.
+            addPropertyChangeListener(new DOMDocumentSaveSetter(newDocument));
+            
             final EventTarget target = (EventTarget) newDocument
                     .getDocumentElement();
-            target.addEventListener("DOMSubtreeModified",
-                    new DOMDocumentSaveSetter(newDocument), true);
+            target.addEventListener("DOMSubtreeModified", new EventListener() {
+                public void handleEvent(Event aEvent) {
+                    // Check if the document was already dirty.
+                    firePropertyChange("document-modified", FileUtils
+                            .isDirty(newDocument), true);
+                }
+            }, false);
         }
         return newDocument;
     }

@@ -241,6 +241,9 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, I
             mDocument = (Document)aEvent.getNewValue();
             // TODO: Enable and disable?
         }
+        else {
+            Logger.global.log(Level.WARNING, "Property change listener added for the wrong property change.");
+        }
         
     }
 }
