@@ -49,25 +49,17 @@ namespace util {
         }
     }
 
-    /*! \brief Returns whether a value with the given key exists.
-    * \details This function takes as its input a map and a key to search for. 
-    * It will return whether a key exists. 
-    * \note Use this function instead of recoding a map search, as this function should be more efficient and 
-    * handle errors more appropriately. 
-    * \param currMap The map within which to search for the value.
-    * \param key The key to check for the existance of.
-    * \return Whether a key exists. 
+	/*! \brief Returns whether a value with the given key exists.
+	* \details This function takes as its input a map and a key for which to
+    *          search, and returns whether the key exists. 
+	* \param aCurrMap The map within which to search for the value.
+	* \param aKey The key of which to check for the existance.
+	* \return Whether the key exists. 
     */
-    template <class K, class V>
-    const V hasValue( const std::map<K,V>& currMap, const K& key ){
-        typedef typename std::map<K,V>::const_iterator CMapIterator;
-        CMapIterator iter = currMap.find( key );
-        if( iter != currMap.end() ){
-            return true;
-        } else {
-            return false;
-        }
-    }
+	template <class K, class V> bool hasValue( const std::map<K,V>& aCurrMap, const K& aKey ){
+		return ( aCurrMap.find( aKey ) != aCurrMap.end() );
+	}
+
     /*! \brief A function to determine the sign of a number.
     * \param number A templated parameter which must be comparable to 0.
     * \return Returns -1 if the number is less than 0, +1 otherwise.
