@@ -11,7 +11,7 @@
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -32,7 +32,8 @@ class IInvestable;
 class NationalAccount;
 /*! 
 * \ingroup Objects
-* \brief This object contains the standard methodology and variables to calculate the growth of investment.
+* \brief This object contains the methodology and variables for growing
+*        investment based on a read-in growth rate and regional economic growth.
 * \author Josh Lurz
 */
 class InvestmentGrowthCalculator: public IGrowthCalculator
@@ -52,12 +53,18 @@ public:
                                            const double aInvestmentLogitExp,
                                            const int aPeriod );
 protected:
-    double mAggregateInvestmentFraction; //!< Fraction of total to use for new technologies.
-    double mInvestmentAcceleratorScalar; //!< Investment accelerator scalar.
-    double mEconomicGrowthExp; //!< The working age population ratio exponential. Rename this.
-    double mMarginalValueDollar; //!< What the marginal dollar should earn under perfect competition.
-    mutable double mTempInvScalar; //!< REMOVE ME AFTER DEBUGGING
-    mutable double mTempEconScalar; //!< REMOVE ME AFTER DEBUGGING
+    //! Fraction of total to use for new technologies.
+    double mAggregateInvestmentFraction;
+
+    //! Investment accelerator scalar.
+    double mInvestmentAcceleratorScalar;
+
+    //!< The working age population ratio exponential.
+    double mEconomicGrowthExp;
+
+    //!< Earning potential of the marginal dollar under perfect competition.
+    double mMarginalValueDollar;
+
     double calcEconomicGrowthScalar( const Demographic* aDemographic, const int aPeriod ) const;
 };
 

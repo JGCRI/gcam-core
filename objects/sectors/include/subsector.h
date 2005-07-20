@@ -185,8 +185,11 @@ public:
                                   const bool aIsShareCalc,
                                   const int aPeriod ) const;
     
-    double getCapitalOutputRatio( const std::string& aRegionName,
-                                  const std::string& aSectorName,
+    double getCapitalOutputRatio( const IDistributor* aDistributor,
+                                  const IExpectedProfitRateCalculator* aExpProfitRateCalc,
+                                  const NationalAccount& aNationalAccount,
+                                  const std::string& aRegionName,
+                                  const std::string& aSectorName, 
                                   const int aPeriod ) const;
 
 	void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,

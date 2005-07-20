@@ -2210,13 +2210,16 @@ double Subsector::getExpectedProfitRate( const NationalAccount& aNationalAccount
                                          const double aInvestmentLogitExp,
                                          const bool aIsShareCalc,
                                          const int aPeriod ) const
-{
+{   
+    assert( aExpProfitRateCalc );
+
     // Check for fixed investment.
     if( mFixedInvestments[ aPeriod ] != -1 ){
         return 0;
     }
     // Use the passed in expected profit calculator to determine the rate.
-    return aExpProfitRateCalc->calcSectorExpectedProfitRate( InvestmentUtils::convertToInvestables( baseTechs ),
+    const vector<IInvestable*> investables = InvestmentUtils::convertToInvestables( baseTechs );
+    return aExpProfitRateCalc->calcSectorExpectedProfitRate( investables,
                                                              aNationalAccount,
                                                              aRegionName,
                                                              aSectorName,
@@ -2231,27 +2234,24 @@ double Subsector::getExpectedProfitRate( const NationalAccount& aNationalAccount
 * \param aPeriod The period.
 * \return The capital output ratio.
 * \author Josh Lurz
-* \todo Getting this to work for multiple technology types will be difficult. FIX ME FIX ME!!!
-* \warning This won't work at all if there are multiple tech types. 
 */
-double Subsector::getCapitalOutputRatio( const string& aRegionName,
+double Subsector::getCapitalOutputRatio( const IDistributor* aDistributor,
+                                         const IExpectedProfitRateCalculator* aExpProfitRateCalc,
+                                         const NationalAccount& aNationalAccount,
+                                         const string& aRegionName,
                                          const string& aSectorName, 
                                          const int aPeriod ) const
 {
-    // This isn't right yet, still a work in progress. Works correctly for a single tech type.
-    double capitalOutputRatioSum = 0;
-    for( CBaseTechIterator currTech = baseTechs.begin(); currTech != baseTechs.end(); ++currTech ){
-        double currOutputRatio = (*currTech)->getCapitalOutputRatio( regionName, sectorName, aPeriod );
-        if( currOutputRatio > 0 ){
-            capitalOutputRatioSum =+ pow( currOutputRatio, 1 / lexp[ aPeriod ] );
-        }
-    }
-    if( capitalOutputRatioSum > 0 ){
-        return pow( capitalOutputRatioSum, lexp[ aPeriod ] );
-    }
-    else {
-        return 0;
-    }
+    assert( aDistributor );
+    // Use the passed in investment distributor to calculate the share weighted average
+    // capital to output ratio for the subsector.
+    const vector<IInvestable*> investables = InvestmentUtils::convertToInvestables( baseTechs );
+    const double capOutputRatio = aDistributor->calcCapitalOutputRatio( investables, aExpProfitRateCalc,
+                                                                        aNationalAccount,
+                                                                        aRegionName, aSectorName,
+                                                                        aPeriod );
+    assert( capOutputRatio >= 0 );
+    return capOutputRatio;
 }
 /*! \brief Operate the capital in the base technologies for this subsector. 
 * \author Josh Lurz
@@ -2306,6 +2306,10 @@ void Subsector::csvSGMOutputFile( ostream& aFile, const int period ) const {
 	}
 }
 
+/*! \brief Update an output container with information for the subsector.
+* \param outputContainer Container to update.
+* \param period Period in which to update.
+*/
 void Subsector::updateOutputContainer( OutputContainer* outputContainer, const int period ) const{
 	outputContainer->updateSubsector( this );
 	const Modeltime* modeltime = scenario->getModeltime();
@@ -2326,13 +2330,12 @@ double Subsector::getFixedInvestment( const int aPeriod ) const {
     if( mFixedInvestments[ aPeriod ] != -1 ){
         return mFixedInvestments[ aPeriod ];
     }
-    // Check if any children have fixed investment for this period.
-    double totalFixedTechs = 0;
-    for( unsigned int i = 0; i < baseTechs.size(); ++i ){
-        totalFixedTechs += baseTechs[ i ]->getFixedInvestment( aPeriod );
-    }
+    // Sum any fixed investment at the vintage level.
+    const vector<IInvestable*> investables = InvestmentUtils::convertToInvestables( baseTechs );
+    double totalFixedTechInvestment = InvestmentUtils::sumFixedInvestment( investables, aPeriod );
+    
     /*! \post Fixed investment must be positive */
-    assert( totalFixedTechs >= 0 );
-    return totalFixedTechs;
+    assert( totalFixedTechInvestment >= 0 );
+    return totalFixedTechInvestment;
 }
 

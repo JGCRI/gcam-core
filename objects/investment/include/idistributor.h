@@ -11,7 +11,7 @@
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -48,6 +48,13 @@ public:
                                const std::string& aSectorName,
                                const double aAmount,
                                const int aPeriod ) const = 0;
+
+    virtual double calcCapitalOutputRatio( const std::vector<IInvestable*>& aInvestables,
+                                           const IExpectedProfitRateCalculator* aExpProfitRateCalc,  
+                                           const NationalAccount& aNationalAccount,
+                                           const std::string& aRegionName,
+                                           const std::string& aSectorName,
+                                           const int aPeriod ) const = 0;
 };
 
 // Define empty inline methods.

@@ -5,7 +5,7 @@
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -295,7 +295,7 @@ double Accelerator::calcAndDistributeInvestment( vector<IInvestable*>& aInvestab
     if( !util::isEqual( newInvestment, mInvestments[ aPeriod ] ) ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Warning: " << fabs( newInvestment - mInvestments[ aPeriod ] )
+        mainLog << fabs( newInvestment - mInvestments[ aPeriod ] )
                 << " difference between desired investment and distributed investment in "
                 << mSectorName << " in " << mRegionName << endl;
     }
@@ -337,7 +337,7 @@ double Accelerator::calcNewInvestment( vector<IInvestable*>& aInvestables,
         double newInvestment = mFixedInvestments[ aPeriod ];
         // Check if total child investment is greater than this amount, as that
         // will always override this amount.
-        double childSumFixed = InvestmentUtils::calcFixedInvestment( aInvestables, aPeriod );
+        double childSumFixed = InvestmentUtils::sumFixedInvestment( aInvestables, aPeriod );
         if( childSumFixed > mFixedInvestments[ aPeriod ] ){
             newInvestment = childSumFixed;
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -365,7 +365,7 @@ double Accelerator::calcNewInvestment( vector<IInvestable*>& aInvestables,
                                  aCapDependencyScalar * pow( expProfitRate, mProfitElasExp ) : 0;
     // Determine if all subsectors have fixed investment and the total amount of
     // fixed investment.
-    double sumFixed = InvestmentUtils::calcFixedInvestment( aInvestables, aPeriod );
+    double sumFixed = InvestmentUtils::sumFixedInvestment( aInvestables, aPeriod );
     // Ensure that we always return at least the amount of fixed investment
     // regardless of the profit rate.
     return max( newInvestment, sumFixed );

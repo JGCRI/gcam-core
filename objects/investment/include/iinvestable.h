@@ -11,7 +11,7 @@
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -31,6 +31,7 @@ class IDistributor;
 * \ingroup Objects
 * \brief This the interface to a class which can be invested in.
 * \todo Much more here
+* \todo Fix argument ordering of these functions to match.
 * \author Josh Lurz
 */
 class IInvestable
@@ -50,9 +51,13 @@ public:
     virtual double getFixedInvestment( const int aPeriod ) const = 0;
     virtual double getAnnualInvestment( const int aPeriod ) const = 0;
 
-    virtual double getCapitalOutputRatio( const std::string& aRegionName,
-                                          const std::string& aSectorName,
+    virtual double getCapitalOutputRatio( const IDistributor* aDistributor,
+                                          const IExpectedProfitRateCalculator* aExpProfitRateCalc,
+                                          const NationalAccount& aNationalAccount,
+                                          const std::string& aRegionName,
+                                          const std::string& aSectorName, 
                                           const int aPeriod ) const = 0;
+
     virtual double getOutput( const int aPeriod ) const = 0;
     
     virtual double distributeInvestment( const IDistributor* aDistributor,

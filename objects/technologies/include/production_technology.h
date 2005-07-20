@@ -78,6 +78,7 @@ public:
 
     virtual double getCapital() const;
     virtual double getAnnualInvestment( const int aPeriod ) const;
+    
     double getExpectedProfitRate( const NationalAccount& aNationalAccount,
                                   const std::string& aRegionName,
                                   const std::string& aSectorName,
@@ -85,8 +86,14 @@ public:
                                   const double aInvestmentLogitExp,
                                   const bool aIsShareCalc,
                                   const int aPeriod ) const;
-    virtual double getCapitalOutputRatio( const std::string& aRegionName, const std::string& aSectorName,
+    
+    virtual double getCapitalOutputRatio( const IDistributor* aDistributor,
+                                          const IExpectedProfitRateCalculator* aExpProfitRateCalc,
+                                          const NationalAccount& aNationalAccount,
+                                          const std::string& aRegionName,
+                                          const std::string& aSectorName, 
                                           const int aPeriod ) const;
+
     double getFixedInvestment( const int aPeriod ) const;
     double distributeInvestment( const IDistributor* aDistributor, NationalAccount& aNationalAccount,
                                  const IExpectedProfitRateCalculator* aExpProfitRateCalc,

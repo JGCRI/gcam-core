@@ -5,7 +5,7 @@
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -33,10 +33,9 @@
 #include "investment/include/investment_utils.h"
 #include "investment/include/levelized_cost_calculator.h"
 #include "investment/include/rate_logit_distributor.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
-
 extern Scenario* scenario;
 
 //! Constructor
@@ -76,7 +75,17 @@ void MarketBasedInvestor::completeInit( const string& aRegionName, const string&
         }
     }
     else { // This should not occur unless there is invalid data read in.
-        cout << "Error: Multiple sectors cannot use the same trial market for investment." << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Multiple sectors cannot use the same trial market for investment." << endl;
+    }
+
+    // Warn if fixed investment for the period 0 was read in, as it will be ignored.
+    if( mFixedInvestments[ 0 ] != -1 ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING ); 
+        mainLog << "Ignoring fixed investment in the base period for sector "
+                << mSectorName << " in region " << mRegionName << endl;
     }
 }
 
@@ -99,7 +108,7 @@ const std::string& MarketBasedInvestor::getXMLNameStatic() {
 * \author Josh Lurz
 * \param aCurr pointer to the current node in the XML input tree
 */
-void MarketBasedInvestor::XMLParse( const DOMNode* aCurr ) {
+void MarketBasedInvestor::XMLParse( const xercesc::DOMNode* aCurr ) {
     /*! \pre make sure we were passed a valid node. */
     assert( aCurr );
 
@@ -121,8 +130,10 @@ void MarketBasedInvestor::XMLParse( const DOMNode* aCurr ) {
             mInvestmentLogitExp = XMLHelper<double>::getValue( curr );
         }
         else {
-            cout << "Unrecognized node " << nodeName << " found while parsing " << getXMLNameStatic() 
-                << "." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING ); 
+            mainLog << "Unrecognized node " << nodeName << " found while parsing " << getXMLNameStatic() 
+                    << "." << endl;
         }
     }
 }
@@ -195,11 +206,6 @@ double MarketBasedInvestor::calcAndDistributeInvestment( vector<IInvestable*>& a
         // Don't need to determine investment for the base period.
         mInvestments[ aPeriod ] = InvestmentUtils::sumInvestment( aInvestables, aPeriod );
         assert( mInvestments[ aPeriod ] >= 0 );
-        // Warn if fixed investment for the period was read in, as it will be ignored.
-        if( mFixedInvestments[ aPeriod ] != -1 ){
-            cout << "Warning: Ignoring fixed investment in the base period for sector "
-                << mSectorName << " in region " << mRegionName << endl;
-        }
         return mInvestments[ aPeriod ];
     }
     
@@ -218,10 +224,12 @@ double MarketBasedInvestor::calcAndDistributeInvestment( vector<IInvestable*>& a
         totalInvestment = mFixedInvestments[ aPeriod ];
         // Check if total child investment is greater than this amount, as that
         // will always override this amount.
-        double childSumFixed = InvestmentUtils::calcFixedInvestment( aInvestables, aPeriod );
+        double childSumFixed = InvestmentUtils::sumFixedInvestment( aInvestables, aPeriod );
         if( childSumFixed > mFixedInvestments[ aPeriod ] ){
             totalInvestment = childSumFixed;
-            cout << "Warning: Overriding parent level investment with child level investment sum. " << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Overriding parent level investment with child level investment sum. " << endl;
         }
     }
     // Otherwise use the solved value.
@@ -261,16 +269,18 @@ double MarketBasedInvestor::calcAndDistributeInvestment( vector<IInvestable*>& a
         marketplace->addToDemand( mMarketName, mRegionName, sectorExpProfit, aPeriod );
 
         // Determine the amount of fixed investment in the sector.
-        const double fixedInvestment = InvestmentUtils::calcFixedInvestment( aInvestables, aPeriod );
+        const double fixedInvestment = InvestmentUtils::sumFixedInvestment( aInvestables, aPeriod );
         /*! \invariant Fixed investment is positive. */
         assert( fixedInvestment >= 0 );
         
         double trialInvestment = marketplace->getPrice( mMarketName, mRegionName, aPeriod );
         // Warn if trial investment reaches zero.
         if( trialInvestment < util::getSmallNumber() ){
-            cout << "Warning: Zero trial investment for with average profit rate of " 
-                 << sectorExpProfit << " in sector " << mSectorName 
-                 << " in " << mRegionName << "." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Zero trial investment for with average profit rate of " 
+                    << sectorExpProfit << " in sector " << mSectorName 
+                    << " in " << mRegionName << "." << endl;
         }
         /*! \invariant The trial level of investment should always be zero or
         *              greater. 
@@ -300,9 +310,11 @@ double MarketBasedInvestor::calcAndDistributeInvestment( vector<IInvestable*>& a
 
     // Check that total investment and distributed investment are equal.
     if( !util::isEqual( totalInvestment, mInvestments[ aPeriod ] ) ){
-        cout << "Warning: " << totalInvestment - mInvestments[ aPeriod ]
-             << " difference between desired investment and distributed investment at the sector level in "
-             << mSectorName << " in " << mRegionName << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << totalInvestment - mInvestments[ aPeriod ]
+                << " difference between desired investment and distributed investment at the sector level in "
+                << mSectorName << " in " << mRegionName << endl;
     }
     /*! \post A positive amount of investment occurred. */
     assert( mInvestments[ aPeriod ] >= 0 );

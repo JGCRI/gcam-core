@@ -39,7 +39,6 @@
 #include "technologies/include/technology_type.h"
 #include "functions/include/function_utils.h"
 #include "technologies/include/profit_shutdown_decider.h"
-#include "technologies/include/variable_cost_shutdown_decider.h"
 
 using namespace std;
 using namespace xercesc;
@@ -578,8 +577,11 @@ double ProductionTechnology::getExpectedProfitRate( const NationalAccount& aNati
 * \return The capital output ratio.
 * \author Josh Lurz 
 */
-double ProductionTechnology::getCapitalOutputRatio( const string& aRegionName,
-                                                    const string& aSectorName,
+double ProductionTechnology::getCapitalOutputRatio( const IDistributor* aDistributor,
+                                                    const IExpectedProfitRateCalculator* aExpProfitRateCalc,
+                                                    const NationalAccount& aNationalAccount,
+                                                    const string& aRegionName,
+                                                    const string& aSectorName, 
                                                     const int aPeriod ) const
 {
     // Only new investment has a capital to output ratio.

@@ -1,3 +1,14 @@
+/*
+	This software, which is provided in confidence, was prepared by employees
+	of Pacific Northwest National Labratory operated by Battelle Memorial
+	Institute. Battelle has certain unperfected rights in the software
+	which should not be copied or otherwise disseminated outside your
+	organization without the express written authorization from Battelle. All rights to
+	the software are reserved by Battelle.  Battelle makes no warranty,
+	express or implied, and assumes no liability or responsibility for the 
+	use of this software.
+*/
+
 /*! 
 * \file investment_growth_calculator.cpp
 * \ingroup Objects
@@ -19,15 +30,13 @@
 
 using namespace std;
 
+//! Constructor which initializes all values to their defaults.
 InvestmentGrowthCalculator::InvestmentGrowthCalculator ():
 mAggregateInvestmentFraction( 0.01 ),
 mInvestmentAcceleratorScalar( 1.2 ),
 mEconomicGrowthExp( 1 ),
 mMarginalValueDollar( 1 )
 {
-    // TEMP
-    mTempInvScalar = 0;
-    mTempEconScalar = 0;
 }
 
 //! Return the XML name of this object statically.
@@ -36,9 +45,7 @@ const string& InvestmentGrowthCalculator::getXMLNameStatic(){
     return XML_NAME;
 }
 
-/*! \brief Parses all data associated with the class
-*
-*
+/*! \brief Parses all data associated with the class.
 * \author Josh Lurz
 * \param aNode pointer to the current node in the XML input tree
 */
@@ -75,21 +82,17 @@ void InvestmentGrowthCalculator::XMLParse( const xercesc::DOMNode* aNode ) {
     }
 }
 
-//! Write aOut debugging information.
+//! Write out debugging information.
 void InvestmentGrowthCalculator::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElement( mAggregateInvestmentFraction, "AggregateInvestmentFraction", aOut, aTabs );
     XMLWriteElement( mInvestmentAcceleratorScalar, "InvestmentAcceleratorScalar", aOut, aTabs );
     XMLWriteElement( mEconomicGrowthExp, "EconomicGrowthExp", aOut, aTabs );
     XMLWriteElement( mMarginalValueDollar, "MarginalValueDollar", aOut, aTabs );
-    // TEMP
-    XMLWriteElement( mTempEconScalar, "econ-growth-scalar", aOut, aTabs );
-    XMLWriteElement( mTempInvScalar, "investment-scalar", aOut, aTabs );
-
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-//! Write aOut input XML information.
+//! Write out input XML information.
 void InvestmentGrowthCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElementCheckDefault( mAggregateInvestmentFraction, "AggregateInvestmentFraction", aOut, aTabs );
@@ -99,23 +102,34 @@ void InvestmentGrowthCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const 
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-/*!\ brief Calculate an overall scalar used to grow investment from the previous aPeriod.
-* \param aSubsecs The subsectors contained in the Sector currently calculating investment.
-* \param aDemographic The Demographics object needed for calculating the increase in working age population.
-* \param aRegionName The name of the region containing the sector being invested in.
+/*! \brief Calculate an overall scalar used to grow investment from the previous
+*          aPeriod.
+* \details Calculates a scalar to grow investment which is based on several
+*          read-in parameters and the regional demographics. The parameter is
+*          calculated as the previous period's capital multiplied by the read-in
+*          growth rate, the economic growth rate, and an adjustment for the
+*          marginal value of the dollar.
+* \param aInvestables The investable children contained by the object currently
+*        calculating investment.
+* \param aDemographic The Demographics object needed for calculating the
+*        increase in working age population.
+* \param aNationalAccount The national account container.
+* \param aGoodName The name of the sector calculating investment.
+* \param aRegionName The name of the region.
 * \param aPrevInvestment Total sector investment for the previous period.
+* \param aInvestmentLogitExp The investment logit exponential.
 * \param aPeriod The aPeriod in which to calculate the scalar.
 * \return An overall scalar used to grow investment from the previous aPeriod.
 * \author Josh Lurz
 */
 double InvestmentGrowthCalculator::calcInvestmentDependencyScalar( const vector<IInvestable*>& aInvestables,
-                                                                 const Demographic* aDemographic,
-                                                                 const NationalAccount& aNationalAccount,
-                                                                 const string& aGoodName,
-                                                                 const string& aRegionName,
-                                                                 const double aPrevInvestment,
-                                                                 const double aInvestmentLogitExp,
-                                                                 const int aPeriod ) 
+                                                                   const Demographic* aDemographic,
+                                                                   const NationalAccount& aNationalAccount,
+                                                                   const string& aGoodName,
+                                                                   const string& aRegionName,
+                                                                   const double aPrevInvestment,
+                                                                   const double aInvestmentLogitExp,
+                                                                   const int aPeriod ) 
 {   
     // Calculate the starting level of investment based on the previous period.
     const double baseCapital = InvestmentUtils::calcBaseCapital( aRegionName, aPrevInvestment,
@@ -124,26 +138,27 @@ double InvestmentGrowthCalculator::calcInvestmentDependencyScalar( const vector<
     // Calculate the scalar based on economic growth. 
     const double economicGrowthScalar = calcEconomicGrowthScalar( aDemographic, aPeriod );
     assert( economicGrowthScalar > 0 );
-    // TEMP
-    mTempEconScalar = economicGrowthScalar;
 
     // Calculate the scalar for the investment.
     double invDepScalar = baseCapital * mInvestmentAcceleratorScalar * economicGrowthScalar *
                           pow( mMarginalValueDollar, -1 * aInvestmentLogitExp );
-    // TEMP
-    mTempInvScalar = invDepScalar;
     assert( invDepScalar > 0 );
     return invDepScalar;
 }
 
-/*! \brief Calculate a growth scalar based on the increase in economic activity in the region.
-* \param aDemographic The Demographic object used to calculate the change in working age population.
+/*! \brief Calculate a growth scalar based on the increase in economic activity
+*          in the region.
+* \brief Calculates a parameter to approximate economic growth in the region.
+*        This is equal to the growth rate in working age population for the
+*        region raised to a read-in exponent.
+* \param aDemographic The Demographic object used to calculate the change in
+*        working age population.
 * \param The aPeriod in which to calculate the economic growth scalar.
 * \return The economic growth scalar.
 * \author Josh Lurz
 */
 double InvestmentGrowthCalculator::calcEconomicGrowthScalar( const Demographic* aDemographic,
-                                                           const int aPeriod ) const
+                                                             const int aPeriod ) const
 {
     /*! \pre aPeriod is greater than the base aPeriod. */
     assert( aPeriod > 0 );

@@ -5,7 +5,7 @@
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -65,10 +65,9 @@ void LevelizedCostCalculator::toDebugXML( const int aPeriod, ostream& aOut, Tabs
 }
 
 /*! \brief Calculate the parent level levelized cost.
-* \details
-* \param aInvestables Children to for which to calculate an average levelized
-*        cost.
-* \param aNationalAccount National Account container.
+* \details TODO
+* \param aInvestables Children to for which to calculate a levelized cost.
+* \param aNationalAccount National accounts container.
 * \param aRegionName Name of the region in which investment is occurring.
 * \param aGoodName Name of the sector in which investment is occurring.
 * \param aInvestmentLogitExp The investment logit exponential.

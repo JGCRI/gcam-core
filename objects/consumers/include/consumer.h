@@ -19,9 +19,6 @@
 * \file consumer.h
 * \ingroup Objects
 * \brief Consumer class header file.
-*
-*  Detailed description.
-*
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$
@@ -83,7 +80,12 @@ public:
     { 
         return 0; 
     }
-    double getCapitalOutputRatio( const std::string& aRegionName, const std::string& aSectorName,
+
+    double getCapitalOutputRatio( const IDistributor* aDistributor,
+                                  const IExpectedProfitRateCalculator* aExpProfitRateCalc,
+                                  const NationalAccount& aNationalAccount,
+                                  const std::string& aRegionName,
+                                  const std::string& aSectorName, 
                                   const int aPeriod ) const
     {
         return 0;

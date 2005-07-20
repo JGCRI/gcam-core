@@ -11,7 +11,7 @@
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -34,7 +34,16 @@ class NationalAccount;
 
 /*! 
 * \ingroup Objects
-* \brief This object contains the standard methodology and variables to calculate the growth of investment.
+* \brief This object contains the standard methodology and variables to
+*        calculate the growth of investment based on an output growth rate.
+* \details This class is used to determine a scalar which when applied to the
+*          previous period's investment will grow a sector through investment to
+*          reach a proscribed level of output. This growth rate is read-in to
+*          the model and may vary by period. Note that since the trial capital
+*          required to grow output is only calculated once per period, the
+*          equalibrium level of output for this sector will not exactly equal
+*          the previous period's output times the growth rate.
+* \note This object encapsulates the DEMK functionality of Legacy-SGM.
 * \author Josh Lurz
 */
 class OutputGrowthCalculator: public IGrowthCalculator
@@ -54,9 +63,15 @@ public:
                                            const double aInvestmentLogitExp,
                                            const int aPeriod );
 protected:
+    //! The read-in per period output growth rate.
     std::vector<double> mOutputGrowthRate;
+
+    //! The cached level of trial capital per period so that it is not
+    //! recalculated in each iteration.
     mutable std::vector<double> mTrialCapital;
-    double mAggregateInvestmentFraction; //!< Fraction of total to use for new technologies.
+
+    //! Fraction of total regional investment to use for new technologies.
+    double mAggregateInvestmentFraction;
 
     double calcTrialCapital( const std::vector<IInvestable*>& aInvestables,
                              const NationalAccount& aNationalAccount,
@@ -66,17 +81,11 @@ protected:
                              const int aPeriod );
 
     double calcOutputGap( const std::vector<IInvestable*>& aInvestables,
+                          const NationalAccount& aNationalAccount,
                           const std::string& aGoodName,
                           const std::string& aRegionName,
                           const double aInvestmentLogitExp,
                           const int aPeriod ) const;
-
-    double calcSectorCapitalOutputRatio( const std::vector<IInvestable*>& aInvestables,
-                                         const NationalAccount& aNationalAccount,
-                                         const std::string& aGoodName,
-                                         const std::string& aRegionName,
-                                         const double aInvestmentLogitExp,
-                                         const int aPeriod ) const;
 };
 
 #endif // _OUTPUT_GROWTH_CALCULATOR_H_

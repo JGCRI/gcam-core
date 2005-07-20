@@ -11,7 +11,7 @@
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -31,7 +31,7 @@ class IInvestable;
 
 /*! 
 * \ingroup Objects
-* \brief A set of utility functions uses in the Investment objects.
+* \brief A set of utility functions for calculating investment.
 * \author Josh Lurz
 */
 class InvestmentUtils
@@ -53,7 +53,7 @@ public:
 
     static double normalizeShares( std::vector<double>& aShares );
 
-    static double calcFixedInvestment( const std::vector<IInvestable*>& aInvestables,
+    static double sumFixedInvestment( const std::vector<IInvestable*>& aInvestables,
                                        const int aPeriod );
 
     /*! \brief Template function which converts a vector of IInvestable subtypes

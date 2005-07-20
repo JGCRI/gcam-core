@@ -5,7 +5,7 @@
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -131,20 +131,21 @@ double InvestmentUtils::normalizeShares( vector<double>& aShares ){
         }
         // Check that the normalization was performed correctly.
         assert( util::isEqual( accumulate( aShares.begin(), aShares.end(), 0.0 ), 1.0 ) );
-        // If the shares could be normalized assume they were correclty.
+        // If the shares could be normalized assume they were correct.
         return 1;
     }
     // Return that the shares could not be normalized.
     return 0;
 }
 
-/*! \brief Return the total amount of fixed investment for the child vector.
-* \details more here.
+/*! \brief Return the total amount of fixed investment for the vector.
+* \details Calculates and returns the total amount of fixed investment in a
+*          given period for a set of investable objects.
 * \param aInvestables Child investable vector to return fixed investment for.
 * \param aPeriod Period in which to sum fixed investment.
 * \return Sum of fixed investment
 */
-double InvestmentUtils::calcFixedInvestment( const vector<IInvestable*>& aInvestables,
+double InvestmentUtils::sumFixedInvestment( const vector<IInvestable*>& aInvestables,
                                              const int aPeriod )
 {
     // Calculate the sum of fixed investments.
@@ -154,4 +155,3 @@ double InvestmentUtils::calcFixedInvestment( const vector<IInvestable*>& aInvest
     }
     return sumFixed;
 }
-

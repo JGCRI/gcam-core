@@ -19,9 +19,6 @@
 * \file base_technology.h
 * \ingroup Objects
 * \brief Base Technology class header file.
-*
-*  Detailed description.
-*
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$
@@ -114,8 +111,11 @@ public:
                                           const bool aIsShareCalc,
                                           const int aPeriod ) const = 0;
     
-    virtual double getCapitalOutputRatio( const std::string& aRegionName,
-                                          const std::string& aSectorName,
+    virtual double getCapitalOutputRatio( const IDistributor* aDistributor,
+                                          const IExpectedProfitRateCalculator* aExpProfitRateCalc,
+                                          const NationalAccount& aNationalAccount,
+                                          const std::string& aRegionName,
+                                          const std::string& aSectorName, 
                                           const int aPeriod ) const = 0;
 
     virtual double getFixedInvestment( const int aPeriod ) const = 0;
