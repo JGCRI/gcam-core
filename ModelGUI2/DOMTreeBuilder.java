@@ -127,6 +127,7 @@ public class DOMTreeBuilder {
 	}
 
 	public Document getDoc() {
+		finalize(doc.getDocumentElement());
 		return doc;
 	}
 
@@ -275,6 +276,10 @@ public class DOMTreeBuilder {
 		while(it.hasNext()) {
 			currPos = ((Integer)it.next()).intValue();
                         chName = head.getChildHeader(currPos);
+			if(chName.startsWith("#text")) {
+				parent.appendChild(doc.createTextNode(chName.substring(6)));
+				return;
+			}
 			//System.out.println(name+" --- "+chName+" --- "+head.checkChildStackFront());
 			// this indicates that the child with specify which parent it belongs under
 			if ( chName.startsWith( "*" ) && head.checkChildStackFront() != currPos) {
@@ -368,15 +373,15 @@ public class DOMTreeBuilder {
 				//System.out.println("About to use "+chName);
 				// check to see if this node exists already so as to not duplicate it, and
 				// recurse using this child as the new parent
-                        	if ((retNode = compare((Element)parent, tempNode)) == null) {
-                                	parent.appendChild(tempNode);
-                                	makeTree(tempNode, chName);
-                        	} else {
+				if ((retNode = compare((Element)parent, tempNode)) == null) {
+					parent.appendChild(tempNode);
+					makeTree(tempNode, chName);
+				} else {
 					if ((hasTextData(retNode)) != null) {
 						(hasTextData(retNode)).setNodeValue(tempText.getNodeValue());
 					}
-                                	makeTree(retNode, chName);
-                        	}
+					makeTree(retNode, chName);
+				}
 			}
                 }
         }
@@ -441,6 +446,29 @@ public class DOMTreeBuilder {
 			if(isExt) {
 				//System.out.println("Now REMOVING FROM STACK");
 				head.popChildStack();
+			}
+		}
+	}
+	private void finalize(Node curr) {
+		if(curr.getNodeName().indexOf(":") != -1 && curr.getNodeName().indexOf(":") != 0) {
+			Element temp = doc.createElement(curr.getNodeName().substring(0,curr.getNodeName().indexOf(":")));
+			NamedNodeMap nm = curr.getAttributes();
+			for(int i = 0; i < nm.getLength(); ++i) {
+				temp.setAttributeNode(((Element)curr).removeAttributeNode((Attr)nm.item(i)));
+				--i;
+			}
+			curr.getParentNode().replaceChild(temp, curr);
+			Node tempChild;
+			while((tempChild = curr.getFirstChild()) != null) {
+				temp.appendChild(curr.removeChild(tempChild));
+				finalize(tempChild);
+			}
+
+			//curr.setNodeName(curr.getNodeName().substring(0,curr.getNodeName().indexOf(":")));
+		} else {
+			NodeList nl = curr.getChildNodes();
+			for( int i = 0; i < nl.getLength(); ++i) {
+				finalize(nl.item(i));
 			}
 		}
 	}

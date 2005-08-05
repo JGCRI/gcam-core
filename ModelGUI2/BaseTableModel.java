@@ -8,6 +8,9 @@ import java.awt.*;
 import javax.swing.tree.TreePath;
 import java.awt.event.*;
 
+//import java.sql.Statement;
+import org.apache.poi.hssf.usermodel.*;
+
 import org.apache.xpath.domapi.*;
 import org.jfree.chart.JFreeChart;
 import org.w3c.dom.xpath.*;
@@ -18,6 +21,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	protected ArrayList wild;
 	protected Map tableFilterMaps;
 	protected Frame parentFrame;
+	protected String title;
 
 	// stuff for filtering
 	// can i move these somewhere
@@ -42,6 +46,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		this.doc = doc;
 		this.parentFrame = parentFrame;
 		this.tableTypeString = tableTypeString;
+		this.title = ((DOMmodel.DOMNodeAdapter)tp.getLastPathComponent()).getNode().getNodeName();
 	}
 	
 	/** 
@@ -98,7 +103,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 			   pathStr = pathStr + "/";
 		   }
            }
-           pathStr = "//" + pathStr + currNode.getNodeName();
+           pathStr = "/" + pathStr + currNode.getNodeName();
            if (flag == 1 &&currNode.hasAttributes() && !getTextData(currNode).equals("")) {
 		   if(flag == 0) {
                    	pathStr = pathStr + "[@" + getOneAttrVal(currNode) + "]";
@@ -124,6 +129,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
            else {
                    pathStr = pathStr + "/node()";
            }
+	   System.out.println(pathStr);
            return xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(currNode));
 	}
 
@@ -135,8 +141,11 @@ public abstract class BaseTableModel extends AbstractTableModel {
    */
   public String getOneAttrVal(Node node) {
 	  NamedNodeMap nodeMap = node.getAttributes();
-	  return nodeMap.item(0).getNodeName() +"="+ nodeMap.item(0).getNodeValue();
-	  //return ((Element)node).getAttribute(nodeMap.item(0).getNodeValue());
+	  if(nodeMap.item(0).getNodeName().equals("fillout")) {
+		  return getOneAttrVal(node, 1);
+	  }
+	  //return nodeMap.item(0).getNodeName() +"="+ nodeMap.item(0).getNodeValue();
+	  return /*((Element)node).getAttribute(*/nodeMap.item(0).getNodeValue()/*)*/;
   }
 
   /**
@@ -148,8 +157,8 @@ public abstract class BaseTableModel extends AbstractTableModel {
    */
   public String getOneAttrVal(Node node, int pos) {
 	  NamedNodeMap nodeMap = node.getAttributes();
-	  return nodeMap.item(pos).getNodeName() +"="+ nodeMap.item(pos).getNodeValue();
-	  //return ((Element)node).getAttribute(nodeMap.item(0).getNodeValue());
+	  //return nodeMap.item(pos).getNodeName() +"="+ nodeMap.item(pos).getNodeValue();
+	  return /*((Element)node).getAttribute(*/nodeMap.item(pos).getNodeValue()/*)*/;
   }
 
   /**
@@ -463,4 +472,6 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	 * @param possibleFilters the vector nodeNames that had valid attributes for filtering
 	 */
 	protected abstract void doFilter(Vector possibleFilters);
+
+	protected abstract void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp);
 }

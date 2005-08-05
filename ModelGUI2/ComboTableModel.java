@@ -2,6 +2,11 @@ package ModelGUI2;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
+/*
+import java.sql.Statement;
+import java.sql.SQLException;
+*/
+import org.apache.poi.hssf.usermodel.*;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -15,6 +20,11 @@ import org.w3c.dom.*;
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import org.w3c.dom.xpath.*;
+
+import com.sleepycat.dbxml.XmlValue;
+import com.sleepycat.dbxml.XmlResults;
+import com.sleepycat.dbxml.XmlException;
+
 
 public class ComboTableModel extends BaseTableModel{
 
@@ -118,11 +128,16 @@ public class ComboTableModel extends BaseTableModel{
 			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
 			  if(!n.hasAttributes()) {
 				  ret.add(n.getNodeName());
+			  } else {
+				ret.add(getOneAttrVal(n));
+			  }
+				  /*
 			  } else if(!getOneAttrVal(n).equals("fillout=1")) {
 				ret.add(getOneAttrVal(n));
 			  } else {
 					ret.add(getOneAttrVal(n, 1));
 			  }
+			  */
 
 		  } else if(n.hasAttributes()) {
 			  HashMap tempFilter;
@@ -132,9 +147,11 @@ public class ComboTableModel extends BaseTableModel{
 				  tempFilter = new HashMap();
 			  }
 			  String attr = getOneAttrVal(n);
+			  /*
 			  if(attr.equals("fillout=1")) {
 				  attr = getOneAttrVal(n, 1);
 			  }
+			  */
 			  if (!tempFilter.containsKey(attr)) {
 				tempFilter.put(attr, new Boolean(true));
 				filterMaps.put(n.getNodeName(), tempFilter);
@@ -162,9 +179,11 @@ public class ComboTableModel extends BaseTableModel{
 	  }
 	  if(currNode.hasAttributes() && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
 		String attr = getOneAttrVal(currNode);
+		/*
 		if(attr.equals("fillout=1")) {
 			attr = getOneAttrVal(currNode, 1);
 		}
+		*/
 		attr = currNode.getNodeName()+"@"+attr;
 		if(!tempMap.containsKey(attr)) {
 			tempMap.put(attr, new TreeMap());
@@ -184,16 +203,16 @@ public class ComboTableModel extends BaseTableModel{
    * @param title a string describing the path in which the data in the table is coming from
    * @see MultiTableModel#recAddTables(TreeMap, Map.Entry, TreeSet, TreeSet, String)
    */
-  private void recAddTables(TreeMap dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String title) {
+  private void recAddTables(TreeMap dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String titleStr) {
 	Iterator it = dataTree.entrySet().iterator();
 	while(it.hasNext()) {	
 		Map.Entry me = (Map.Entry)it.next();
-		if(me.getValue() instanceof Node) {
+		if(me.getValue() instanceof Node || me.getValue() instanceof Double) {
 			TreeMapVector.add( (TreeMap)parent.getValue() );
 			
 			// create a left side 2d vector, add it to LeftSideVector
 			
-			String lineToParse = title+'/';
+			String lineToParse = titleStr+'/';
 			
 			// example:		/populationSGMRate@year=1985/gender:type=female/
 	
@@ -229,7 +248,7 @@ public class ComboTableModel extends BaseTableModel{
 			}
 			return;
 		}else{
-			recAddTables((TreeMap)me.getValue(), me, regions, years, title+'/'+(String)me.getKey());
+			recAddTables((TreeMap)me.getValue(), me, regions, years, titleStr+'/'+(String)me.getKey());
 		}
 	}
   }
@@ -284,13 +303,35 @@ public class ComboTableModel extends BaseTableModel{
 				return indRow.get( ((Integer)activeRows.get( row )).intValue() % (indRow.size()) );
 			// these columns represent data
 			}else{
-				return new Double(((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue());
+				Object temp = ((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) );
+				if(temp instanceof Node) {
+					return new Double(((Node)temp).getNodeValue());
+				} else if(temp instanceof Double) {
+					return (Double)temp;
+				} else if(temp == null && doc == null) {
+					return new Double(0.0);
+				}
+				//return new Double(((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue());
 			}
 		} catch(NullPointerException e) {
 			return "";
 		} catch(NumberFormatException nf) { // if the data is not numbers
-			return ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue();
+			Object temp = ((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) );
+			if(temp instanceof Node) {
+				return ((Node)temp).getNodeValue();
+			} else {
+				nf.printStackTrace();
+				/*
+				try {
+					return ((XmlValue)temp).getNodeValue();
+				} catch(XmlException xe) {
+					xe.printStackTrace();
+				}
+				*/
+			}
+			//return ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue();
 		}
+		return "";
 	}
 
 	/**
@@ -314,6 +355,9 @@ public class ComboTableModel extends BaseTableModel{
 	 * @return true or false depeneding on if the cell is editable
 	 */
 	public boolean isCellEditable(int row, int col) {
+		if(doc == null) {
+			return false;
+		}
 		if( col <= leftHeaderVector.size() ){
 			return false;
 		}else{
@@ -380,23 +424,26 @@ public class ComboTableModel extends BaseTableModel{
 			n = doc.createTextNode( val.toString() );
 			Node updown = null;
 			Node side = null;
-			if( row > 0 ){
-				updown = (Node)data.get(getKey(row-1, col));
-				if ( col > 0 ){
-					side = (Node)data.get(getKey(row, col-1));
-				}else{ // col == 0
-					side = (Node)data.get(getKey(row, col+1));
-				}
-			}else{ // row == 0
-				updown = (Node)data.get(getKey(row+1, col));
-				if ( col > 0 ){
-					side = (Node)data.get(getKey(row, col-1));
-				}else{ // col == 0
-					side = (Node)data.get(getKey(row, col+1));
-				}
+
+			// Try to look in table for value in this column
+			for(int i = 0; i < getRowCount() && ( updown = ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( i )).intValue() / (indRow.size()))).get( getKey( i, col ) ))) /*(Node)data.get(getKey(i, col))*/ == null; ++i) {
 			}
-			ArrayList nodepath = new ArrayList();
-			Node parent = ((Node)updown.getParentNode());
+			// Try to look in this row to see if there is a value
+			for(int i = leftHeaderVector.size()+1; i < getColumnCount() && 
+					( side = (Node)data.get(getKey(row, i))) == null; ++i) {
+			}
+			// If there weren't values in the same column and row won't be 
+			// able to figure out the path down the tree to put the data
+			if( updown == null || side == null ) {
+				// throw some exception
+				System.out.println("Couldn't gather enough info to create Node");
+				JOptionPane.showMessageDialog(parentFrame, 
+						"Couldn't gather enough information to \ncreate the data",
+						"Set Value Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			ArrayList nodePath = new ArrayList();
+			Node parent = ((Node)side.getParentNode());
 			
 			
 			String headerone = ind1Name; // ex. region
@@ -405,113 +452,54 @@ public class ComboTableModel extends BaseTableModel{
 			String attributesLine = getKey( row, col );
 			String[] attributesLineArray = attributesLine.split(";", 2);
 			if(flipped) {
-				String temp = attributesLineArray[0];
+				String temp; //= attributesLineArray[0];
+				/*
 				attributesLineArray[0] = attributesLineArray[1];
 				attributesLineArray[1] = temp;
+				*/
+				temp = headerone;
+				headerone = headertwo;
+				headertwo = temp;
 			}
 
-			StringTokenizer st = new StringTokenizer( attributesLineArray[ 0 ], "=", false);
+			StringTokenizer st = new StringTokenizer( attributesLineArray[ 1 ], "=", false);
 			
 			String attrFrom1 = st.nextToken();
 			String attrTo1 = st.nextToken();
 			
-			st = new StringTokenizer( attributesLineArray[1], "=", false);
+			st = new StringTokenizer( attributesLineArray[0], "=", false);
 			String attrFrom2 = st.nextToken();
 			String attrTo2 = st.nextToken();
-			
-			int index = 0;
-			boolean stoplooking = false;
-			while( parent != null ){
-				nodepath.add( parent );
-				if ( !stoplooking && (parent.getNodeName().equals( headerone ) )){ // or headertwo
-					index = nodepath.indexOf( parent ); // gives me '5'
-						
-				}
-				parent = ((Node)parent.getParentNode());
-			}
-			
-			// index is 5, i want to split on 5+1 = 6
-			
-			Node parentOfSplit = ((Node)nodepath.get( index + 1 ));
-			Node curr = parentOfSplit; // set to default for now..
-			
-			// locate precise child... of 'world', looking for region name = USA
-			
-			NodeList splitlist = parentOfSplit.getChildNodes();
-			int splitcount = 0;
-			boolean stopsplitcount = false;
-			while( splitcount < splitlist.getLength() && !stopsplitcount ){
-				Node onechild = ((Node)splitlist.item( splitcount ));
-				if (onechild.getNodeName().equals( headerone )){
-						
-					Element elemChild = (Element)onechild;
-					NamedNodeMap attrSplit = elemChild.getAttributes();
-					String temporary;
 
-					for (int i = 0; i < attrSplit.getLength(); i++) {
-						if( attrSplit.item(i).getNodeName().equals( attrFrom2 )){
-							if( attrSplit.item(i).getNodeValue().equals( attrTo2 )){
-								curr = onechild; // move down the list
-								stopsplitcount = true;
-							}	
-						}
+			// Work our way up the until we find the tag for corrent
+			// column header which by the way the axis are chosen should 
+			// always be higher in the path
+			while( !parent.getNodeName().equals( headerone ) ) {
+				nodePath.add(parent);
+				parent = parent.getParentNode();
+			}
+
+			// Go down the path back to where the value should be
+			// if there needs to be nodes created they will be using info 
+			// from the row header, or the path info from the same row
+			parent = parent.getParentNode();
+			parent = checkPath(parent, headerone, attrFrom1, attrTo1);
+			for(int i = nodePath.size()-1; i >= 0; --i) {
+				Element temp = (Element)nodePath.get(i);
+				if(temp.getNodeName().equals(headertwo)) {
+					parent = checkPath(parent, headertwo, attrFrom2, attrTo2);
+				} else {
+					Node attrTemp = temp.getAttributes().item(0);
+					if(attrTemp == null) {
+						parent = checkPath(parent, temp.getNodeName(), null, null);
+					} else {
+						parent = checkPath(parent, temp.getNodeName(), attrTemp.getNodeName(), 
+								attrTemp.getNodeValue());
 					}
 				}
-				splitcount++;
 			}
-			
-			for(int i=0; i< nodepath.size(); i++){
-			}
-			
-			index--;
-			
-			//curr = (Node)nodepath.get( index );
-			if ( index >= 0 ){
-				for(int theRest = index; theRest >= 0; theRest-- ){
-					Node pathNext = ((Node)nodepath.get( theRest ));
-					
-					NodeList children = curr.getChildNodes(); // either find it or create it
-					int counter = 0;					
-					boolean getOutOfLoop = false;
-					while( counter < children.getLength() && !getOutOfLoop ){
-						Node child = ((Node)children.item( counter ));
-						if( child.getNodeName().equals( pathNext.getNodeName() ) ){
 
-							Element eChild = (Element)child;
-							Element ePathNext = (Element)pathNext;
-							// go through all the attributes, make sure have the same ammount and the have the same values
-							NamedNodeMap attrs1 = eChild.getAttributes();
-							NamedNodeMap attrs2 = ePathNext.getAttributes();
-							String temp;
-							if (attrs1.getLength() == attrs2.getLength()) {
-								if ( attrs1.getLength() == 0 ){
-									curr = child;
-									getOutOfLoop = true;
-								}else{
-
-									for (int i = 0; i < attrs1.getLength(); i++) {
-										temp = attrs1.item(i).getNodeName();
-										if (eChild.getAttribute(temp).equals(ePathNext.getAttribute(temp))) {
-											// found the node!
-											curr = child; // move down the list
-											getOutOfLoop = true;
-										}
-									}
-								}
-							}
-						}					
-						counter++;	
-					}
-					if( getOutOfLoop == false ){ // didn't find it, create it
-						Node createdNode = pathNext.cloneNode( false ); // clone the node and add it
-						curr.appendChild( createdNode );
-						curr = createdNode;
-					}
-				}
-			}// now index should == nodepath.size() - 1
-			
-			
-			curr.appendChild( n );
+			parent.appendChild( n );
 			data.put( getKey(row,col), n );
 		}
 		
@@ -520,6 +508,35 @@ public class ComboTableModel extends BaseTableModel{
 		// fireOffSomeListeners?
 
 	}
+
+	/** 
+	 * Used to follow the path down a tree where parent is the current parent and want to 
+	 * go under the node with the passed in node name and attributes will create the node
+	 * if it does not exsit
+	 * @param parent current node were are at in the path
+	 * @param nodeName name of the node that we want to follow
+	 * @param attrKey attribute name of the node that we want to follow
+	 * @param attrVal attribute value of the node that we want to follow
+	 * @return the pointer to the node we wanted to follow
+	 */
+	private Node checkPath(Node parent, String nodeName, String attrKey, String attrVal) {
+		NodeList nl = parent.getChildNodes();
+		for(int i = 0; i < nl.getLength(); ++i) {
+			Element temp = (Element)nl.item(i);
+			if(temp.getNodeName().equals(nodeName) && attrKey == null) {
+				return temp;
+			} else if(temp.getNodeName().equals(nodeName) && temp.getAttribute(attrKey).equals(attrVal)) {
+				return temp;
+			}
+		}
+		Element newElement = doc.createElement(nodeName);
+		if(attrKey != null) {
+			newElement.setAttribute(attrKey, attrVal);
+		}
+		parent.appendChild(newElement);
+		return newElement;
+	}
+
 
 	public JFreeChart createChart(int rowAt, int colAt) {
 		//throw new UnsupportedOperationException();
@@ -545,7 +562,10 @@ public class ComboTableModel extends BaseTableModel{
 				double yValue = ( (Double)getValueAt(row, col) ).doubleValue();
 				String fullColumn = getColumnName(col);
 				// Get the year part of it.
-				int year = Integer.parseInt( fullColumn.split("=")[1] );
+				if(fullColumn.indexOf("=") != -1) {
+					fullColumn = fullColumn.split("=")[1];
+				}
+				int year = Integer.parseInt( fullColumn );
 				currSeries.add( year, yValue);
 			}
 			// Add the series to the set.
@@ -575,14 +595,218 @@ public class ComboTableModel extends BaseTableModel{
 		XYPlot xyPlot = new XYPlot( chartData, xAxis, yAxis, new XYLineAndShapeRenderer());
 		
 		// Draw the zero line.
-		xyPlot.setZeroRangeBaselineVisible(true);
+		//xyPlot.setZeroRangeBaselineVisible(true);
 		
 		// Create the chart.
 		JFreeChart chart = new JFreeChart( xyPlot );
 		
 		// Create a title for the chart.
-		TextTitle title = new TextTitle(ind2Name);
-		chart.setTitle(title);
+		TextTitle ttitle = new TextTitle(title);
+		chart.setTitle(ttitle);
 		return chart;
 	}
+
+	protected QueryGenerator qg;
+	public ComboTableModel(QueryGenerator qgIn, Object[] regions, JFrame parentFrameIn) {
+		qg = qgIn;
+		parentFrame = parentFrameIn;
+		//title = qgIn.getVariable();
+		title = qgIn.toString();
+		buildTable(FileChooserDemo.xmlDB.createQuery(qgIn.getCompleteXPath(regions)), qgIn.isSumAll(), qgIn.getLevelValues());
+		ind2Name = qgIn.getVariable();
+		activeRows = new Vector( leftSideVector.size() * indRow.size() );
+		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
+			activeRows.add(new Integer(i));
+		}
+		indCol.add(0, ind1Name);
+	}
+	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues) {
+	  try {
+		  if(!res.hasNext()) {
+			  System.out.println("Query didn't get any results");
+			  JOptionPane.showMessageDialog(parentFrame, "Query didn't get any results", "Build Table Error",
+					  JOptionPane.ERROR_MESSAGE);
+			  // display an error on the screen
+			  return;
+		  }
+	  } catch(XmlException e) {
+		  e.printStackTrace();
+
+	  }
+	  XmlValue tempNode;
+	  Object[] regionAndYear;
+	  TreeSet regions = new TreeSet();
+	  TreeSet years = new TreeSet();
+	  tableFilterMaps = new LinkedHashMap();
+	  TreeMap dataTree = new TreeMap();
+	  try {
+		  while(res.hasNext()) {
+			  tempNode = res.next();
+			  //regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), tableFilterMaps);
+			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
+			  if(sumAll) {
+				  //regionAndYear[1] = "All "+(String)wild.get(0);
+				  regionAndYear[1] = "All "+qg.getNodeLevel();
+			  }
+			  regions.add(regionAndYear[0]);
+			  years.add(regionAndYear[1]);
+			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+			  //Map retMap = addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+			  FileChooserDemo.xmlDB.printLockStats("addToDataTree");
+			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
+			  if(ret == null) {
+				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
+			  } else {
+				  //ret += tempNode.asNumber();
+				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], 
+						  new Double(ret.doubleValue() + tempNode.asNumber()));
+			  }
+			  tempNode.delete();
+		  }
+		  res.delete();
+		  FileChooserDemo.xmlDB.printLockStats("buildTable");
+	  } catch(Exception e) {
+		  e.printStackTrace();
+	  }
+	  recAddTables(dataTree, null, regions, years, "");
+	  System.out.println("Level Selected: "+levelValues);
+	  if(!sumAll && years.size() != levelValues.length) {
+		  //indRow = new Vector(levelValues);
+		  indRow = new Vector(levelValues.length, 0);
+		  for(int i =0; i < levelValues.length; ++i) {
+			  System.out.println(levelValues[i]);
+			  indRow.add(levelValues[i]);
+		  }
+	  } else {
+		  indRow = new Vector( years );
+	  }
+	  indCol = new Vector( regions );
+	  ind1Name = qg.getNodeLevel();
+	  //ind2Name = (String)wild.get(1);
+	}
+
+  	private Object[] getRegionAndYearFromNode(XmlValue n, Map filterMaps) throws Exception {
+	  Vector ret = new Vector(2,0);
+	  XmlValue nBefore;
+	  do {
+		  if(n.getNodeName().equals((String)wild.get(0))) {
+			  ret.add(XMLDB.getAttr(n));
+		  } 
+		  if(n.getNodeName().equals((String)wild.get(1))) {
+			  ret.add(XMLDB.getAttr(n, "year"));
+			  /*
+			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
+			  if(!getOneAttrVal(n).equals("fillout=1")) {
+			  	ret.add(getOneAttrVal(n));
+			  } else {
+			        ret.add(getOneAttrVal(n, 1));
+			  }
+			  */
+
+		  } else if(XMLDB.hasAttr(n)) {
+			  HashMap tempFilter;
+	           	  if (filterMaps.containsKey(n.getNodeName())) {
+	                          tempFilter = (HashMap)filterMaps.get(n.getNodeName());
+                          } else {
+                                  tempFilter = new HashMap();
+                          }
+			  String attr = XMLDB.getAttr(n);
+			  if (!tempFilter.containsKey(attr)) {
+                          	tempFilter.put(attr, new Boolean(true));
+                          	filterMaps.put(n.getNodeName(), tempFilter);
+			  }
+		  }
+		  nBefore = n;
+		  n = n.getParentNode();
+		  nBefore.delete();
+	  } while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
+	  //} while(!n.isType(XmlValue.DOCUMENT_NODE)); // isType doesn't seem to work at least not how I thought it would
+	  //} while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
+	  n.delete();
+	  FileChooserDemo.xmlDB.printLockStats("getRegionAndYearFromNode");
+	  return ret.toArray();
+  	}
+
+  private TreeMap addToDataTree(XmlValue currNode, TreeMap dataTree) throws Exception {
+	  if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+		  currNode.delete();
+		  return dataTree;
+	  }
+	  TreeMap tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+	  // used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
+	  String w = (String)wild.get(0);
+	  //if(currNode.getNodeName().matches(".*sector") || currNode.getNodeName().equals("technology")) {
+	  if((w.equals("supplysector") && currNode.getNodeName().equals("subsector")) || (w.matches(".*sector") && currNode.getNodeName().equals("technology"))) {
+	  //if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().equals(".*[Ss]ector") ) {
+		  currNode.delete();
+		  return tempMap;
+	  }
+	  if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
+		String attr = XMLDB.getAllAttr(currNode);
+		attr = currNode.getNodeName()+"@"+attr;
+		if(!tempMap.containsKey(attr)) {
+			tempMap.put(attr, new TreeMap());
+		}
+		currNode.delete();
+		return (TreeMap)tempMap.get(attr);
+	  } 
+	  currNode.delete();
+	  return tempMap;
+  }
+  public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
+	  HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
+	  row.createCell((short)0).setCellValue(title);
+	  row = sheet.createRow(sheet.getLastRowNum()+1);
+	  for(int i = 0; i < getColumnCount(); ++i) {
+		  row.createCell((short)i).setCellValue(getColumnName(i));
+	  }
+	  for(int rowN = 0; rowN < getRowCount(); ++rowN) {
+		  row = sheet.createRow(sheet.getLastRowNum()+1);
+		  for(int col = 0; col < getColumnCount(); ++col) {
+			  Object obj = getValueAt(rowN, col);
+			  if(obj instanceof Double) {
+				  row.createCell((short)col).setCellValue(((Double)obj).doubleValue());
+			  } else {
+				  row.createCell((short)col).setCellValue(getValueAt(rowN,col).toString());
+			  }
+		  }
+	  }
+	  try {
+		  java.awt.image.BufferedImage chartImage = createChart(0,0).createBufferedImage(350,350);
+		  int where = wb.addPicture(org.jfree.chart.ChartUtilities.encodeAsPNG(chartImage), HSSFWorkbook.PICTURE_TYPE_PNG);
+		  dp.createPicture(new HSSFClientAnchor(0,0,50,50,(short)(getColumnCount()+1),
+					  1,(short)(getColumnCount()+4),getRowCount()+5), where);
+	  } catch(java.io.IOException ioe) {
+		  ioe.printStackTrace();
+	  }
+  }
+
+  /*
+  public void exportToExcel(Statement excelStatement) {
+	  try {
+		  StringBuffer sqlStr = new StringBuffer("Insert into 'Sheet1$' values(");
+		  for(int i = 0; i < getColumnCount(); ++i) {
+			  sqlStr.append(getColumnName(i));
+			  sqlStr.append(",");
+		  }
+		  sqlStr.replace(sqlStr.length()-1, sqlStr.length(), ")");
+		  //sqlStr.append(")");
+		  System.out.println(sqlStr.toString());
+		  excelStatement.executeUpdate(sqlStr.toString());
+		  sqlStr.delete(29, sqlStr.length());
+		  for(int row = 0; row < getRowCount(); ++row) {
+			  for(int col = 0; col > getColumnCount(); ++col) {
+				  sqlStr.append(getValueAt(row, col));
+				  sqlStr.append(",");
+			  }
+		  }
+		  sqlStr.replace(sqlStr.length()-1, sqlStr.length(), ")");
+		  //sqlStr.append(")");
+		  System.out.println(sqlStr.toString());
+		  excelStatement.executeUpdate(sqlStr.toString());
+	  } catch(SQLException se) {
+		  se.printStackTrace();
+	  }
+  }
+	  */
 }

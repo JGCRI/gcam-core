@@ -2,17 +2,23 @@ package ModelGUI2;
 
 import java.util.*;
 
+import org.apache.poi.hssf.usermodel.*;
+
 import org.jfree.chart.JFreeChart;
+import java.awt.image.BufferedImage;
 import org.w3c.dom.*;
 import javax.swing.table.*;
 import javax.swing.JTable;
 import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.Color;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import org.w3c.dom.xpath.*;
+
+import com.sleepycat.dbxml.*;
 
 public class MultiTableModel extends BaseTableModel{
 	/**
@@ -52,9 +58,15 @@ public class MultiTableModel extends BaseTableModel{
 		public TableRenderer () {}
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col ) {
 			if(row % 2 == 0) {
-				return (new DefaultTableCellRenderer()).getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+				Component comp = (new DefaultTableCellRenderer()).getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+				comp.setBackground(new Color(240,214,19));
+				return comp;
 			} else {
+				if(table.getRowHeight(row) != (int)((JScrollPane)value).getPreferredSize().getHeight()+10) {
+					table.setRowHeight(row, (int)((JScrollPane)value).getPreferredSize().getHeight() +10);
+				}
 				return (JScrollPane)value;
+				//return (JPanel)value;
 			}
 		}
 	}
@@ -75,6 +87,7 @@ public class MultiTableModel extends BaseTableModel{
 		wild = chooseTableHeaders(tp, parentFrame);
 	        wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
 	        wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
+		wild.add("");
 		buildTable(treePathtoXPath(tp, doc.getDocumentElement(), 0));
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
@@ -127,11 +140,14 @@ public class MultiTableModel extends BaseTableModel{
 	  do {
 		  if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
 			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
+			  ret.add(getOneAttrVal(n));
+			  /*
 			  if(!getOneAttrVal(n).equals("fillout=1")) {
 			  	ret.add(getOneAttrVal(n));
 			  } else {
 			        ret.add(getOneAttrVal(n, 1));
 			  }
+			  */
 
 		  } else if(n.hasAttributes()) {
 			  HashMap tempFilter;
@@ -141,9 +157,11 @@ public class MultiTableModel extends BaseTableModel{
                                   tempFilter = new HashMap();
                           }
 			  String attr = getOneAttrVal(n);
+			  /*
 			  if(attr.equals("fillout=1")) {
 				  attr = getOneAttrVal(n, 1);
 			  }
+			  */
 			  if (!tempFilter.containsKey(attr)) {
                           	tempFilter.put(attr, new Boolean(true));
                           	filterMaps.put(n.getNodeName(), tempFilter);
@@ -171,9 +189,11 @@ public class MultiTableModel extends BaseTableModel{
 	  }
 	  if(currNode.hasAttributes() && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
 		String attr = getOneAttrVal(currNode);
+		/*
 		if(attr.equals("fillout=1")) {
 			attr = getOneAttrVal(currNode, 1);
 		}
+		*/
 		attr = currNode.getNodeName()+"@"+attr;
 		if(!tempMap.containsKey(attr)) {
 			tempMap.put(attr, new TreeMap());
@@ -192,12 +212,21 @@ public class MultiTableModel extends BaseTableModel{
    *        years row axis attributes
    *        title a string describing the path in which the data in the table is coming from
    */
-  private void recAddTables(TreeMap dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String title) {
+  private void recAddTables(TreeMap dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String titleStr) {
 	Iterator it = dataTree.entrySet().iterator();
 	while(it.hasNext()) {
 		Map.Entry me = (Map.Entry)it.next();
-		if(me.getValue() instanceof Node) {
-	  		NewDataTableModel tM = new NewDataTableModel(regions, (String)wild.get(0), years, (String)wild.get(1), title+'/'+(String)parent.getKey(), (TreeMap)parent.getValue(), doc); 
+		if(me.getValue() instanceof Node || me.getValue() instanceof Double) {
+			NewDataTableModel tM;
+			if(me.getValue() instanceof Double) {
+				tM = new NewDataTableModel(regions, qg.getAxis1Name()/*(String)wild.get(0)*/, years, 
+						qg.getVariable(), /*titleStr+'/'+(String)parent.getKey()*/title, (TreeMap)parent.getValue(), doc); 
+			} else {
+				tM = new NewDataTableModel(regions, (String)wild.get(0), years, 
+						(String)wild.get(1), /*titleStr+'/'+(String)parent.getKey()*/title, (TreeMap)parent.getValue(), doc/*, (String)wild.get(2)*/); 
+			}
+			//BufferedImage chartImage = tM.createChart(0,0).createBufferedImage( 350, 350);
+			//tM.createChart(0,0);
 	  		JTable jTable = new JTable(tM);
 
 	  		jTable.getModel().addTableModelListener((FileChooserDemo)parentFrame);
@@ -211,7 +240,7 @@ public class MultiTableModel extends BaseTableModel{
 	  		int j = 0;
 	  		while(i.hasNext()) {
 		  		col = jTable.getColumnModel().getColumn(j);
-		  		col.setPreferredWidth(((String)i.next()).length()*5+30);
+				col.setPreferredWidth(((String)i.next()).length()*5+30);
 		  		j++;
 	  		}
 			CopyPaste copyPaste = new CopyPaste( jTable );
@@ -219,15 +248,42 @@ public class MultiTableModel extends BaseTableModel{
 			((FileChooserDemo)parentFrame).copyMenu.addActionListener(copyPaste);
 			((FileChooserDemo)parentFrame).pasteMenu.addActionListener(copyPaste);
 			*/
-	  		JScrollPane tableView = new JScrollPane(jTable);
+	  		JScrollPane tV = new JScrollPane(jTable);
+			JScrollPane tableView = tV;
+			if(me.getKey() instanceof Double) {
+			JPanel tpanel = new JPanel();
+			JSplitPane sp = new JSplitPane();
+
+						JLabel labelChart = new JLabel();
+						//labelChart.setIcon(new ImageIcon(tM.getChartImage()));
+		//BufferedImage chartImage = chart.createBufferedImage( 350, 350);
+			BufferedImage chartImage = tM.createChart(0,0).createBufferedImage( 350, 350);
+						labelChart.setIcon(new ImageIcon(chartImage));
+						//labelChart.setIcon(tM.getChartImage());
+						/*
+						tpanel.add(tV);
+						tpanel.add(Box.createHorizontalStrut(10));
+						tpanel.add(labelChart);
+						*/
+
+						sp.setLeftComponent(tV);
+						sp.setRightComponent(labelChart);
+						tableView = new JScrollPane(sp);
+						sp.setDividerLocation(((FileChooserDemo)parentFrame).getWidth()-350);
+						//tableView.setColumnHeaderView(jTable);
+			//tableView.getViewport().getView().add(Box.createHorizontalStrut(1000));
+			//tableView.getViewport().getView().add(labelChart);
+			}
+
 	  		if(tables == null) {
 		  		tables = new Vector();
 	  		}
-			tables.add(title+"/");
+			tables.add(titleStr+"/");
+	  		//tables.add(tpanel);
 	  		tables.add(tableView);
 			return;
 		} else {
-			recAddTables((TreeMap)me.getValue(), me, regions, years, title+'/'+(String)me.getKey());
+			recAddTables((TreeMap)me.getValue(), me, regions, years, titleStr+'/'+(String)me.getKey());
 		}
 	}
   }
@@ -280,7 +336,7 @@ public class MultiTableModel extends BaseTableModel{
 	 * @return heading for the column
 	 */
 	public String getColumnName(int col) {
-		return "Stuff"; // should have a more meaningful title
+		return title; 
 	}
 
 	/**
@@ -339,4 +395,189 @@ public class MultiTableModel extends BaseTableModel{
 		return ((NewDataTableModel)((JTable)((JScrollPane)getValueAt(rowAt, colAt)).getViewport().getView()).getModel()).createChart(rowAt, colAt);
 		//throw new UnsupportedOperationException();
 	}
+
+	QueryGenerator qg;
+	protected boolean isGlobal;
+	public MultiTableModel(QueryGenerator qgIn, Object[] regions, JFrame parentFrameIn) {
+		qg = qgIn;
+		/*
+		if(FileChooserDemo.xmlDB.getQueryFilter().endsWith("region/")) {
+			isGlobal = true;
+		} else {
+			isGlobal = false;
+		}
+		*/
+		parentFrame = parentFrameIn;
+		//title = qgIn.getVariable();
+		title = qgIn.toString();
+		wild = new ArrayList();
+		wild.add(qgIn.getNodeLevel());
+		wild.add(qgIn.getYearLevel());
+		System.out.println("Query is "+qgIn.getCompleteXPath(regions));
+		//FileChooserDemo.xmlDB.setQueryFunction("");
+		buildTable(FileChooserDemo.xmlDB.createQuery(qgIn.getCompleteXPath(regions)), qgIn.isSumAll(), qgIn.getLevelValues());
+		tableEditor = new TableEditor();
+		tableRenderer = new TableRenderer();
+		activeRows = new Vector(tables.size());
+		for(int i = 0; i < tables.size(); i++) {
+			activeRows.add(new Integer(i));
+		}
+		/*
+		ind2Name = qgIn.getVariable();
+		activeRows = new Vector( leftSideVector.size() * indRow.size() );
+		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
+			activeRows.add(new Integer(i));
+		}
+		indCol.add(0, ind1Name);
+		*/
+	}
+	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues) {
+	  try {
+		  if(!res.hasNext()) {
+			  System.out.println("Query didn't get any results");
+			  // display an error on the screen
+			  JOptionPane.showMessageDialog(parentFrame, "Query didn't get any results", "Build Table Error",
+					  JOptionPane.ERROR_MESSAGE);
+			  return;
+		  }
+	  } catch(XmlException e) {
+		  e.printStackTrace();
+
+	  }
+	  XmlValue tempNode;
+	  Object[] regionAndYear;
+	  TreeSet regions = new TreeSet();
+	  TreeSet years = new TreeSet();
+	  tableFilterMaps = new LinkedHashMap();
+	  TreeMap dataTree = new TreeMap();
+	  try {
+		  while(res.hasNext()) {
+			  tempNode = res.next();
+			  //regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), tableFilterMaps);
+			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
+			  if(sumAll) {
+				  //regionAndYear[1] = "All "+(String)wild.get(0);
+				  regionAndYear[1] = levelValues[0];
+			  }
+			  regions.add(regionAndYear[0]);
+			  years.add(regionAndYear[1]);
+			  //Map retMap = addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+			  FileChooserDemo.xmlDB.printLockStats("addToDataTree");
+			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
+			  if(ret == null) {
+				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
+			  } else {
+				  //ret += tempNode.asNumber();
+				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], 
+						  new Double(ret.doubleValue() + tempNode.asNumber()));
+			  }
+			  tempNode.delete();
+		  }
+		  res.delete();
+		  FileChooserDemo.xmlDB.printLockStats("buildTable");
+	  } catch(Exception e) {
+		  e.printStackTrace();
+	  }
+	  recAddTables(dataTree, null, regions, years, "");
+	  /* Figure out what to do for level selected
+	  System.out.println("Level Selected: "+levelValues);
+	  if(!sumAll && years.size() != levelValues.length) {
+		  //indRow = new Vector(levelValues);
+		  indRow = new Vector(levelValues.length, 0);
+		  for(int i =0; i < levelValues.length; ++i) {
+			  System.out.println(levelValues[i]);
+			  indRow.add(levelValues[i]);
+		  }
+	  } else {
+		  indRow = new Vector( years );
+	  //}
+	  indCol = new Vector( regions );
+	  ind1Name = (String)wild.get(0);
+	  //ind2Name = (String)wild.get(1);
+	  */
+	}
+
+	/*
+  	private Object[] getRegionAndYearFromNode(XmlValue n, Map filterMaps) throws Exception {
+	  Vector ret = new Vector(2,0);
+	  XmlValue nBefore;
+	  do {
+		  if(n.getNodeName().equals((String)wild.get(0))) {
+			  ret.add(XMLDB.getAttr(n));
+		  } else if(n.getNodeName().equals((String)wild.get(1))) {
+			  ret.add(0, XMLDB.getAttr(n, "year"));
+			  /*
+			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
+			  if(!getOneAttrVal(n).equals("fillout=1")) {
+			  	ret.add(getOneAttrVal(n));
+			  } else {
+			        ret.add(getOneAttrVal(n, 1));
+			  }
+			  // /
+
+		  } else if(XMLDB.hasAttr(n)) {
+			  HashMap tempFilter;
+	           	  if (filterMaps.containsKey(n.getNodeName())) {
+	                          tempFilter = (HashMap)filterMaps.get(n.getNodeName());
+                          } else {
+                                  tempFilter = new HashMap();
+                          }
+			  String attr = XMLDB.getAttr(n);
+			  if (!tempFilter.containsKey(attr)) {
+                          	tempFilter.put(attr, new Boolean(true));
+                          	filterMaps.put(n.getNodeName(), tempFilter);
+			  }
+		  }
+		  nBefore = n;
+		  n = n.getParentNode();
+		  nBefore.delete();
+	  } while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
+	  n.delete();
+	  FileChooserDemo.xmlDB.printLockStats("getRegionAndYearFromNode");
+	  return ret.toArray();
+  	}
+
+  private TreeMap addToDataTree(XmlValue currNode, TreeMap dataTree) throws Exception {
+	  if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+		  currNode.delete();
+		  return dataTree;
+	  }
+	  TreeMap tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+	  // used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
+	  String w = (String)wild.get(0);
+	  //if(currNode.getNodeName().matches(".*sector") || currNode.getNodeName().equals("technology")) 
+	  if((!(w.matches(".*[Ss]ector") || w.equals("technology")) && (currNode.getNodeName().matches(".*[Ss]ector") || currNode.getNodeName().equals("technology"))) 
+				  || (isGlobal && currNode.getNodeName().equals("region")) 
+				  || (w.equals("supplysector") && currNode.getNodeName().equals("subsector")) 
+				  || (w.matches(".*sector") && currNode.getNodeName().equals("technology"))) {
+	  //if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().equals(".*[Ss]ector") ) 
+		  currNode.delete();
+		  return tempMap;
+	  }
+	  if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
+		String attr = XMLDB.getAllAttr(currNode);
+		attr = currNode.getNodeName()+"@"+attr;
+		if(!tempMap.containsKey(attr)) {
+			tempMap.put(attr, new TreeMap());
+		}
+		currNode.delete();
+		return (TreeMap)tempMap.get(attr);
+	  } 
+	  currNode.delete();
+	  return tempMap;
+  }
+  */
+  public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
+	  HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
+	  row.createCell((short)0).setCellValue(getColumnName(0));
+	  for(int rowN = 0; rowN < getRowCount(); rowN +=2) {
+		  row = sheet.createRow(sheet.getLastRowNum()+1);
+		  row.createCell((short)0).setCellValue(getValueAt(rowN,0).toString());
+		  //System.out.println("Table? "+getValueAt(rowN+1,0));
+		  //((BaseTableModel)getValueAt(rowN+1,0)).exportToExcel(sheet, wb);
+		  ((NewDataTableModel)((JTable)((JScrollPane)((JSplitPane)((JScrollPane)getValueAt(rowN+1, 0)).getViewport().getView())
+		   	.getLeftComponent()).getViewport().getView()).getModel()).exportToExcel(sheet, wb, dp);
+	  }
+  }
 }

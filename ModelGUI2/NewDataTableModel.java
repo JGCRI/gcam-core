@@ -9,9 +9,14 @@ import java.util.TreeSet;
 import java.util.Vector;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.tree.TreePath;
 
+import org.apache.poi.hssf.usermodel.*;
+
+import java.awt.image.BufferedImage;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.Plot;
@@ -28,6 +33,9 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.xpath.XPathExpression;
 import org.w3c.dom.xpath.XPathResult;
 
+import com.sleepycat.dbxml.XmlValue;
+import com.sleepycat.dbxml.XmlException;
+
 public class NewDataTableModel extends BaseTableModel{
 	/**
 	 * 
@@ -40,6 +48,7 @@ public class NewDataTableModel extends BaseTableModel{
 	TreeMap data;
 	boolean flipped;
 	String w3;
+	JFreeChart chart;
 	//Document doc;
 
 	/**
@@ -103,11 +112,16 @@ public class NewDataTableModel extends BaseTableModel{
 			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
 			  if(!n.hasAttributes()) {
 				  ret.add(n.getNodeName());
+			  } else {
+				  ret.add(getOneAttrVal(n));
+			  }
+				  /*
 			  } else if(!getOneAttrVal(n).equals("fillout=1")) {
 			  	ret.add(getOneAttrVal(n));
 			  } else {
 			        ret.add(getOneAttrVal(n, 1));
 			  }
+			  */
 
 		  }  
 		  n = n.getParentNode();
@@ -141,6 +155,7 @@ public class NewDataTableModel extends BaseTableModel{
 	 */
 	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, TreeMap dataIn, Document docIn) {
 		w3 = w3In;
+		title = w3;
 		indCol = new Vector(set1);
 		indCol.add(0,set1Name);
 		indRow = new Vector(set2);
@@ -207,6 +222,25 @@ public class NewDataTableModel extends BaseTableModel{
 		if(col ==0) {
 			return indRow.get(row);
 		}
+		if(doc == null) {
+			Double ret = (Double)data.get(getKey(row,col));
+			if(ret == null) {
+				return new Double(0.0);
+			}
+			return ret;
+			/*
+			XmlValue ret = ((XmlValue)data.get(getKey(row,col)));
+			if(ret == null) {
+				return "";
+			}
+			try {
+				return ret.getNodeValue();
+			} catch(Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			*/
+		}
 		Node ret = ((Node)data.get(getKey(row,col)));
 		if(ret == null) {
 			return "";
@@ -231,6 +265,9 @@ public class NewDataTableModel extends BaseTableModel{
 	 * @return true or false depeneding on if the cell is editable
 	 */
 	public boolean isCellEditable(int row, int col) {
+		if(doc == null) {
+			return false;
+		}
 		return col > 0;
 	}
 
@@ -261,6 +298,11 @@ public class NewDataTableModel extends BaseTableModel{
 		if(!isCellEditable(row, col)) {
 			return;
 		}
+		/*
+		Object nO = data.get(getKey(row,col));
+		if(nO instanceof Node) {
+			Node n = (Node)nO;
+			*/
 		Node n = (Node)data.get(getKey(row,col));
 		if( n != null ){
 			n.setNodeValue(val.toString());
@@ -456,12 +498,29 @@ public class NewDataTableModel extends BaseTableModel{
 			//System.out.println("curr is " + curr.getNodeName());
 			//System.out.println(" n is " + n.getNodeName());
 		}
+		/*
+		} else if( nO instanceof XmlValue ) {
+			XmlValue n = (XmlValue)nO;
+			if(n != null) {
+				FileChooserDemo.xmlDB.setValue(n, (String)val);
+				createChart(0,0);
+				/*
+				   System.out.println(XmlValue.TEXT_NODE+"");
+				   XmlValue temp = new XmlValue(XmlValue.TEXT_NODE, (String)val);
+				   System.out.println(temp.getType()+" type");
+				   XmlValue.setValue(n, temp);
+				//data.put(getKey(row,col), temp);
+				System.out.println("Tried to set it's value");
+			}
+		}
+		*/
 		fireTableCellUpdated(row, col);
 	}
 
 	public JFreeChart createChart(int rowAt, int colAt) {
 		// Start by creating an XYSeriesSet to contain the series.
-		XYSeriesCollection chartData = new XYSeriesCollection();
+		//XYSeriesCollection chartData = new XYSeriesCollection();
+		org.jfree.data.xy.DefaultTableXYDataset chartData = new org.jfree.data.xy.DefaultTableXYDataset();
 		// Loop through the rows and create a data series for each.
 		for( int row = 0; row < getRowCount(); ++row ){
 			// Row name is at element zero.
@@ -475,25 +534,36 @@ public class NewDataTableModel extends BaseTableModel{
 			else {
 				rowName = rowNameFull;
 			}
-			XYSeries currSeries = new XYSeries(rowName);
+			XYSeries currSeries = new XYSeries(rowName, false, false);
 			// Skip column 1 because it contained the label.
 			for( int col = 1; col < getColumnCount(); ++col ){
-				double yValue = Double.parseDouble( (String)getValueAt(row, col) );
+				//double yValue = Double.parseDouble( (String)getValueAt(row, col) );
+				Object gotVal = getValueAt(row, col);
+				double yValue;
+				if(gotVal == null) {
+					yValue = 0;
+				} else if(gotVal instanceof Double) {
+					yValue = ((Double)gotVal ).doubleValue();
+				} else {
+					yValue = Double.parseDouble(gotVal.toString());
+				}
 				String fullColumn = getColumnName(col);
 				// Get the year part of it.
-				int year = Integer.parseInt( fullColumn.split("=")[1] );
+				if(fullColumn.indexOf('=') != -1) {
+					fullColumn = fullColumn.split("=")[1];
+				}
+				int year = Integer.parseInt( fullColumn/*.split("=")[1]*/ );
 				currSeries.add( year, yValue);
 			}
 			// Add the series to the set.
 			chartData.addSeries(currSeries);
 		}
 		// Done adding series, create the chart.
-		// Create the domain axis label.
-		// TODO: Improve naming.
-		NumberAxis xAxis = new NumberAxis("Year");
+		// Create the domain axis label.  // TODO: Improve naming.
+		NumberAxis xAxis = new NumberAxis(/*ind2Name*/"Year");
 		
 		// Use the parent element name as the name of the axis.
-		NumberAxis yAxis = new NumberAxis(ind2Name);
+		NumberAxis yAxis = new NumberAxis( ind2Name);
 		
 		// This turns off always including zero in the domain.
 		xAxis.setAutoRangeIncludesZero(false);
@@ -508,17 +578,62 @@ public class NewDataTableModel extends BaseTableModel{
 		yAxis.setAutoRange(true);
 		
 		// Create the plot.
-		XYPlot xyPlot = new XYPlot( chartData, xAxis, yAxis, new XYLineAndShapeRenderer());
+		//XYPlot xyPlot = new XYPlot( chartData, xAxis, yAxis, new XYLineAndShapeRenderer());
+		XYPlot xyPlot = new XYPlot( chartData, xAxis, yAxis, new org.jfree.chart.renderer.xy.StackedXYAreaRenderer());
 		
 		// Draw the zero line.
-		xyPlot.setZeroRangeBaselineVisible(true);
+		//xyPlot.setZeroRangeBaselineVisible(true);
 		
 		// Create the chart.
-		JFreeChart chart = new JFreeChart( xyPlot );
+		chart = new JFreeChart( xyPlot );
 		
 		// Create a title for the chart.
-		TextTitle title = new TextTitle(ind2Name);
-		chart.setTitle(title);
+		TextTitle ttitle = new TextTitle(title);
+		chart.setTitle(ttitle);
+		//indCol.add("Chart");
+
+		/*
+		System.out.println("Setting label");
+		BufferedImage chartImage = chart.createBufferedImage( 350, 350);
+		if(icon == null) {
+			icon = new ImageIcon(chartImage);
+		} else {
+			icon.setImage(chartImage);
+		}
+		*/
+
 		return chart;
 	}
+	/*
+	ImageIcon icon = null;
+	public ImageIcon getChartImage() {
+		return icon;
+	}
+	*/
+  public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
+	  HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
+	  for(int i = 0; i < getColumnCount(); ++i) {
+		  row.createCell((short)i).setCellValue(getColumnName(i));
+	  }
+	  for(int rowN = 0; rowN < getRowCount(); ++rowN) {
+		  row = sheet.createRow(sheet.getLastRowNum()+1);
+		  for(int col = 0; col < getColumnCount(); ++col) {
+			  Object obj = getValueAt(rowN, col);
+			  if(obj instanceof Double) {
+				  row.createCell((short)col).setCellValue(((Double)obj).doubleValue());
+			  } else {
+				  row.createCell((short)col).setCellValue(getValueAt(rowN,col).toString());
+			  }
+		  }
+	  }
+	  try {
+		  java.awt.image.BufferedImage chartImage = createChart(0,0).createBufferedImage(350,350);
+		  int where = wb.addPicture(org.jfree.chart.ChartUtilities.encodeAsPNG(chartImage), HSSFWorkbook.PICTURE_TYPE_PNG);
+		  System.out.println("Added to "+where);
+		  dp.createPicture(new HSSFClientAnchor(0,0,50,50,(short)(getColumnCount()+1),
+					  sheet.getLastRowNum()-getRowCount(),(short)(getColumnCount()+5),sheet.getLastRowNum()+1), where);
+	  } catch(java.io.IOException ioe) {
+		  ioe.printStackTrace();
+	  }
+  }
 }

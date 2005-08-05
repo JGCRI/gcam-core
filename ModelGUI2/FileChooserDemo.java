@@ -17,10 +17,116 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import javax.swing.tree.TreePath;
+
+import org.jfree.report.JFreeReport;
+import org.jfree.report.Group;
+import org.jfree.report.modules.gui.base.ExportPluginFactory;
+import org.jfree.report.JFreeReportBoot;
+import org.jfree.report.ElementAlignment;
+import org.jfree.report.ReportProcessingException;
+import org.jfree.report.modules.gui.base.PreviewDialog;
+//import org.jfree.report.elementfactory.TextFieldElementFactory;
+import org.jfree.report.elementfactory.DrawableFieldElementFactory;
+import org.jfree.ui.FloatDimension;
+/*
+import org.jfree.report.*;
+import org.jfree.report.content.*;
+import org.jfree.report.demo.*;
+import org.jfree.report.demo.cards.*;
+import org.jfree.report.demo.conditionalgroup.*;
+import org.jfree.report.demo.form.*;
+import org.jfree.report.demo.helper.*;
+import org.jfree.report.demo.multireport.*;
+import org.jfree.report.demo.sportscouncil.*;
+import org.jfree.report.elementfactory.*;
+import org.jfree.report.event.*;
+import org.jfree.report.filter.*;
+import org.jfree.report.filter.templates.*;
+import org.jfree.report.function.*;
+import org.jfree.report.modules.gui.base.*;
+import org.jfree.report.modules.gui.base.components.*;
+import org.jfree.report.modules.gui.base.resources.*;
+import org.jfree.report.modules.gui.config.*;
+import org.jfree.report.modules.gui.config.editor.*;
+import org.jfree.report.modules.gui.config.model.*;
+import org.jfree.report.modules.gui.config.xml.*;
+import org.jfree.report.modules.gui.config.xml.*;
+import org.jfree.report.modules.gui.converter.*;
+import org.jfree.report.modules.gui.converter.components.*;
+import org.jfree.report.modules.gui.converter.parser.*;
+import org.jfree.report.modules.gui.csv.*;
+import org.jfree.report.modules.gui.html.*;
+import org.jfree.report.modules.gui.pdf.*;
+import org.jfree.report.modules.gui.plaintext.*;
+import org.jfree.report.modules.gui.print.*;
+import org.jfree.report.modules.gui.rtf.*;
+import org.jfree.report.modules.gui.xls.*;
+import org.jfree.report.modules.misc.beanshell.*;
+import org.jfree.report.modules.misc.configstore.base.*;
+import org.jfree.report.modules.misc.configstore.filesystem.*;
+import org.jfree.report.modules.misc.referencedoc.*;
+import org.jfree.report.modules.misc.survey.*;
+import org.jfree.report.modules.misc.tablemodel.*;
+import org.jfree.report.modules.output.csv.*;
+import org.jfree.report.modules.output.meta.*;
+import org.jfree.report.modules.output.pageable.base.*;
+import org.jfree.report.modules.output.pageable.base.operations.*;
+import org.jfree.report.modules.output.pageable.base.output.*;
+import org.jfree.report.modules.output.pageable.base.pagelayout.*;
+import org.jfree.report.modules.output.pageable.graphics.*;
+import org.jfree.report.modules.output.pageable.pdf.*;
+import org.jfree.report.modules.output.pageable.plaintext.*;
+import org.jfree.report.modules.output.support.itext.*;
+import org.jfree.report.modules.output.support.pagelayout.*;
+import org.jfree.report.modules.output.table.base.*;
+import org.jfree.report.modules.output.table.csv.*;
+import org.jfree.report.modules.output.table.html.*;
+import org.jfree.report.modules.output.table.html.metaelements.*;
+import org.jfree.report.modules.output.table.html.ref.*;
+import org.jfree.report.modules.output.table.html.util.*;
+import org.jfree.report.modules.output.table.rtf.*;
+import org.jfree.report.modules.output.table.rtf.metaelements.*;
+import org.jfree.report.modules.output.table.xls.*;
+import org.jfree.report.modules.output.table.xls.metaelements.*;
+import org.jfree.report.modules.output.table.xls.util.*;
+import org.jfree.report.modules.output.xml.*;
+import org.jfree.report.modules.parser.base.*;
+import org.jfree.report.modules.parser.base.common.*;
+import org.jfree.report.modules.parser.ext.*;
+import org.jfree.report.modules.parser.ext.factory.datasource.*;
+import org.jfree.report.modules.parser.ext.factory.elements.*;
+import org.jfree.report.modules.parser.ext.factory.objects.*;
+import org.jfree.report.modules.parser.ext.factory.stylekey.*;
+import org.jfree.report.modules.parser.ext.factory.templates.*;
+import org.jfree.report.modules.parser.ext.readhandlers.*;
+import org.jfree.report.modules.parser.extwriter.*;
+import org.jfree.report.modules.parser.simple.*;
+import org.jfree.report.modules.parser.simple.readhandlers.*;
+import org.jfree.report.resourceloader.*;
+import org.jfree.report.states.*;
+import org.jfree.report.style.*;
+import org.jfree.report.util.*;
+import org.jfree.report.util.beans.*;
+import org.jfree.report.util.geom.*;
+import org.jfree.report.util.serializers.*;
+*/
+
+
+
+import org.apache.poi.hssf.usermodel.*;
+/*
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.SQLException;
+*/
+
+import com.sleepycat.dbxml.*;
 
 public class FileChooserDemo extends JFrame implements ActionListener,
 		TableModelListener {
@@ -47,6 +153,10 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 	JMenuItem menuOpenX = null;
 
 	JMenuItem menuOpenC = null;
+
+	JMenuItem menuManage = null;
+
+	JMenuItem menuExpPrn= null;
 
 	JMenuItem menuSave = null;
 
@@ -114,6 +224,8 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 
 	static JFrame frame; // goes with radio buttons
 
+	static XMLDB xmlDB;
+
 	/**
 	 * Main function, creates a new thread for the gui and runs it.
 	 */
@@ -139,9 +251,19 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 	 * Create a new instance of this class and makes it visible
 	 */
 	public static void createAndShowGUI() {
-		FileChooserDemo f = new FileChooserDemo("ModelGUI");
-		//f.pack();
-		f.setVisible(true);
+		FileChooserDemo f = null;
+		try {
+			f = new FileChooserDemo("ModelGUI");
+			//f.pack();
+			f.setVisible(true);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(f.xmlDB != null) {
+				System.out.println("FINALLY");
+				f.xmlDB.closeDB();
+			}
+		}
 	}
 
 	/**
@@ -177,8 +299,8 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			}
 			implls = (DOMImplementationLS) impl;
 			lsInput = implls.createLSInput();
-			DocumentType DOCTYPE = impl.createDocumentType("recent", "", "");
-			lastDoc = impl.createDocument("", "recent", DOCTYPE);
+			//DocumentType DOCTYPE = impl.createDocumentType("recent", "", "");
+			//lastDoc = impl.createDocument("", "recent", DOCTYPE);
 		} catch (Exception e) {
 			System.err.println("Couldn't initialize DOMImplementation: " + e);
 			JOptionPane.showMessageDialog(this,
@@ -251,6 +373,8 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			aNode.appendChild( lastDoc.createTextNode( "640" ));
 			aNode.setAttribute( "pane", "totalPane" );
 			lastDoc.getDocumentElement().appendChild(aNode);
+			aNode = lastDoc.createElement("queries");
+			lastDoc.getDocumentElement().appendChild(aNode);
 		} catch (Exception e) {
 
 			// because heights and widths were added after need to check for old version of
@@ -271,6 +395,8 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			aNode = lastDoc.createElement( "lastWidth" );
 			aNode.appendChild( lastDoc.createTextNode( "640" ));
 			aNode.setAttribute( "pane", "totalPane" );
+			lastDoc.getDocumentElement().appendChild(aNode);
+			aNode = lastDoc.createElement("queries");
 			lastDoc.getDocumentElement().appendChild(aNode);
 		}
 
@@ -303,7 +429,15 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		menuItem = new JMenuItem("CSV file");
 		menuItem.addActionListener(this);
 		submenu.add(menuItem);
+		menuItem = new JMenuItem("DB Open");
+		menuItem.addActionListener(this);
+		submenu.add(menuItem);
 		m.add(submenu);
+
+		m.add(menuManage = makeMenuItem("Manage DB"));
+		menuManage.setEnabled(false);
+		m.add(menuExpPrn = makeMenuItem("Export / Print"));
+		menuExpPrn.setEnabled(false);
 
 		m.add(menuSave = makeMenuItem("Save"));
 		menuSave.setEnabled(false); // save will first be gray since no file
@@ -342,7 +476,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		setSize(windowWidth, windowHeight);
 		
 		// Create a window to display the chart in.
-		chartWindow = new JFrame();
+		chartWindow = new JFrame( "Charts" );
 		chartPanel = new JPanel();
 		chartPanel.setLayout( new BoxLayout(chartPanel, BoxLayout.Y_AXIS));
 		
@@ -350,6 +484,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		chartPanel.setAutoscrolls(true);
 		chartPanel.addMouseMotionListener(new MouseMotionListener(){
 		    public void mouseDragged(MouseEvent aEvent) {
+			    System.out.println("Dragging");
 		        // Use the drag even to force a scroll to the event position.
 		        Rectangle currRect = new Rectangle(aEvent.getX(), aEvent.getY(), 1, 1);
 		        chartPanel.scrollRectToVisible(currRect);
@@ -375,9 +510,15 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 				dispose();
 				updateRecentDoc();
 				writeFile(recentFile, lastDoc); // NEWLY ADDED !!!!!!!!!!!
+				if(xmlDB != null) {
+					xmlDB.closeDB();
+				}
 				System.exit(0);
 			}
 		});
+
+		this.getGlassPane().addMouseListener( new MouseAdapter() {});
+		this.getGlassPane().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 	}
 
@@ -389,6 +530,12 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 	 */
 	public void displayJtree() {
 		Container contentPane = getContentPane();
+		contentPane.removeAll();
+		if(xmlDB != null) {
+			xmlDB.closeDB();
+			menuManage.setEnabled(false);
+			menuExpPrn.setEnabled(false);
+		}
 		if (splitPane != null) {
 			contentPane.remove(splitPane);
 		}
@@ -507,6 +654,40 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			}
 			displayJtree();
 			menuSave.setEnabled(true); // now save can show up
+			setTitle("["+file+"] - ModelGUI");
+
+		} else if (command.equals("DB Open")) {
+			JFileChooser fc = new JFileChooser();
+			fc.setDialogTitle("Choose XML Database");
+
+			// Choose only files, not directories
+			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+			// Start in current directory
+			fc.setCurrentDirectory(globalFC.getCurrentDirectory());
+
+			fc.setFileFilter(new javax.swing.filechooser.FileFilter() {
+				public boolean accept(File f) {
+					return f.getName().toLowerCase().endsWith(".dbxml") || f.isDirectory();
+				}
+				public String getDescription() {
+					return "BDB XML Container (*.dbxml)";
+				}
+			});
+
+			// Now open chooser
+			int result = fc.showOpenDialog(this);
+			if( result == JFileChooser.APPROVE_OPTION ) {
+				globalFC.setCurrentDirectory(fc.getCurrentDirectory());
+				menuManage.setEnabled(true);
+				menuSave.setEnabled(false);
+				copyMenu.setEnabled(false);
+				pasteMenu.setEnabled(false);
+				menuTableFilter.setEnabled(false);
+				xmlDB = new XMLDB(fc.getSelectedFile().toString(), this);
+				createTableSelector();
+				setTitle("["+fc.getSelectedFile()+"] - ModelGUI");
+			}
 
 		} else if (command.equals("CSV file")) {
 			// Open a file
@@ -521,6 +702,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			}
 			displayJtree();
 			menuSave.setEnabled(true); // now save can show up
+			setTitle("["+file+"] - ModelGUI");
 		} else if (command.equals("Save")) {
 			// Save a file
 			status = saveFile();
@@ -529,7 +711,9 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 						"IO error in saving file!!", "File Save Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
-			//remember the cancel case if stuff is added here in the future
+		} else if (command.equals("Export / Print")) {
+			System.out.println("HERE");
+			createReport();
 		} else if (command.equals("Filter")) {
 			try {
 				if (((JTable) ((JScrollPane) splitPane.getRightComponent())
@@ -560,10 +744,15 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 						"This table does not support filtering",
 						"Table Filter Error", JOptionPane.ERROR_MESSAGE);
 			}
+		} else if(command.equals("Manage DB")) {
+			manageDB();
 		} else if (command.equals("Quit")) {
 			dispose();
 			updateRecentDoc();
 			writeFile(recentFile, lastDoc); // NEWLY ADDED !!!!!!!!!!!
+			if(xmlDB != null) {
+				xmlDB.closeDB();
+			}
 		}
 	}
 
@@ -595,6 +784,11 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			} else if( ((Element)tempNode).getAttribute( "pane" ).equals( "totalPane" )) {
 				tempNode.getFirstChild().setNodeValue( (new Integer( this.getWidth() )).toString() );
 			}
+		}
+		if(queries != null) {
+			res = (XPathResult)xpeImpl.createExpression("/recent/queries", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+			tempNode = res.iterateNext();
+			tempNode.getParentNode().replaceChild(queries.getAsNode(lastDoc), tempNode);
 		}
 	}
 
@@ -1016,7 +1210,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 	 *            the event that has occured
 	 */
 	public void tableChanged(TableModelEvent e) {
-		if (e.getType() == TableModelEvent.UPDATE) {
+		if (jtree != null && e.getType() == TableModelEvent.UPDATE) {
 			((DOMmodel) jtree.getModel())
 					.fireTreeNodesChanged(new TreeModelEvent(e.getSource(),
 							selectedPath));
@@ -1186,9 +1380,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		} else if (result == JFileChooser.APPROVE_OPTION) {
 			file = fc.getSelectedFile();
 			globalFC.setCurrentDirectory(fc.getCurrentDirectory());
-			readXMLFile(file);
-
-			//textArea.setText("Opened");
+			doc = readXMLFile( file);
 		} else {
 			return false;
 		}
@@ -1246,11 +1438,6 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		return true;
 	}
 
-	/**
-	 * Use a JFileChooser in Save mode to select files to open. Use a filter for
-	 * FileFilter subclass to select for *.java files. If a file is selected,
-	 * then write the the string from the textarea into it.
-	 */
 	boolean saveFile() {
 
 		File file = null;
@@ -1259,7 +1446,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		// Start in current directory
 		fc.setCurrentDirectory(globalFC.getCurrentDirectory());
 
-		// Set filter for Java source files.
+		// Set filter for xml files.
 		fc.setFileFilter(xmlFilter); // *********************************
 
 		// Set to a default name for save.
@@ -1294,19 +1481,21 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		}
 	}
 
+
 	/**
-	 * Does the parsing of an XML file, and sets doc to it
+	 * Does the parsing of an XML file, and returns it
 	 * 
 	 * @param file
 	 *            the file that will be parsed
+	 * @return the parsed document
 	 */
-	public void readXMLFile(File file) {
+	public Document readXMLFile(File file) {
 		try {
 			lsInput.setByteStream(new FileInputStream(file));
 			lsParser = implls.createLSParser(
 					DOMImplementationLS.MODE_SYNCHRONOUS, null);
 			lsParser.setFilter(new ParseFilter());
-			doc = lsParser.parse(lsInput);
+			return lsParser.parse(lsInput);
 			//removeEmptyTextNodes(doc.getDocumentElement());
 		} catch (Exception e) {
 			System.out.println("Got Exception while creating XML document: "
@@ -1315,6 +1504,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 					"Exception while creating XML document\n" + e, "Exception",
 					JOptionPane.ERROR_MESSAGE);
 		}
+		return null;
 	}
 
 	/**
@@ -1533,6 +1723,630 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			return false;
 		}
 		return true;
+	}
+
+
+	protected Vector getScenarios() {
+		XmlValue temp;
+		Vector ret = new Vector();
+		try {
+			XmlResults res = xmlDB.createQuery("/scenario");
+			while(res.hasNext()) {
+				temp = res.next();
+				/*
+				key = "Doc Name: "+temp.asDocument().getName()+"   Scn Name: "+xmlDB.getAttr(temp, "name")+
+					"   Date: "+xmlDB.getAttr(temp, "date");
+					*/
+				//ret.add(temp.asDocument().getName()+" "+xmlDB.getAttr(temp, "name")+ " "+xmlDB.getAttr(temp, "date"));
+				XmlDocument tempDoc = temp.asDocument();
+				ret.add(tempDoc.getName()+" "+XMLDB.getAttr(temp, "name")+ " "+XMLDB.getAttr(temp, "date"));
+				tempDoc.delete();
+				temp.delete();
+			}
+			res.delete();
+		} catch(XmlException e) {
+			e.printStackTrace();
+		}
+		xmlDB.printLockStats("getScenarios");
+		return ret;
+	}
+
+	protected Vector getRegions() {
+		xmlDB.setQueryFunction("distinct-values(");
+		Vector ret = new Vector();
+		try {
+			XmlResults res = xmlDB.createQuery("/scenario/world/region/@name");
+			while(res.hasNext()) {
+				ret.add(res.next().asString());
+			}
+			res.delete();
+		} catch(XmlException e) {
+			e.printStackTrace();
+		}
+		ret.add("Global");
+		xmlDB.setQueryFunction("");
+		xmlDB.printLockStats("getRegions");
+		return ret;
+	}
+
+	protected QueryTreeModel getQueries() {
+		Vector ret = new Vector();
+		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(lastDoc);
+		XPathResult res = (XPathResult)xpeImpl.createExpression("/recent/queries", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		return new QueryTreeModel(res.iterateNext());
+	}
+
+	protected void createFilteredQuery(Vector scns, int[] scnSel/*, Vector regions, int[]regionSel*/) {
+		StringBuffer ret = new StringBuffer("/");
+		boolean added = false;
+		for(int i = 0; i < scnSel.length; ++i) {
+			String[] attrs = ((String)scns.get(scnSel[i])).split("\\s");
+			if(!added) {
+				ret.append("scenario[ ");
+				added = true;
+			} else {
+				ret.append(" or ");
+			}
+			ret.append("(@name='").append(attrs[1]).append("' and @date='").append(attrs[2]).append("')");
+		}
+		ret.append(" ]/world/");
+		System.out.println(ret);
+		xmlDB.setQueryFilter(ret.toString());
+	}
+	protected Vector scns;
+	protected JList scnList;
+	protected JList regionList;
+	protected Vector regions;
+	protected BaseTableModel bt;
+	protected JScrollPane jsp;
+	protected JSplitPane SP;
+	protected QueryTreeModel queries;
+	protected void createTableSelector() {
+		JPanel listPane = new JPanel();
+		JLabel listLabel;
+		JPanel allLists = new JPanel();
+		final JPanel all = new JPanel();
+		scns = getScenarios();
+		regions = getRegions();
+		queries = getQueries();
+		//final JList scnList = new JList(scns);
+		scnList = new JList(scns);
+		//final JList regionList = new JList(regions);
+		regionList = new JList(regions);
+		final JTree queryList = new JTree(queries);
+		queryList.setSelectionRow(0);
+		for(int i = 0; i < queryList.getRowCount(); ++i) {
+			queryList.expandRow(i);
+		}
+		//queryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		final JSplitPane sp = new JSplitPane();
+		sp.setLeftComponent(null);
+		sp.setRightComponent(null);
+
+		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
+		//listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		//listPane.add(Box.createVerticalGlue());
+		listLabel = new JLabel("Scenario");
+		listPane.add(listLabel);
+		//listPane.add(Box.createVerticalStrut(10));
+		JScrollPane listScroll = new JScrollPane(scnList);
+		listScroll.setPreferredSize(new Dimension(150, 150));
+		listPane.add(listScroll);
+		//listPane.setPreferredSize(new Dimension(150, 250));
+		//listPane.add(Box.createVerticalStrut(10));
+		//listPane.add(new JSeparator(SwingConstants.HORIZONTAL));
+
+		allLists.setLayout( new BoxLayout(allLists, BoxLayout.X_AXIS));
+		allLists.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		allLists.add(listPane);
+		//all.add(Box.createHorizontalGlue());
+		allLists.add(Box.createHorizontalStrut(10));
+
+		listPane = new JPanel();
+		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
+		//listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		//listPane.add(Box.createVerticalGlue());
+		listLabel = new JLabel("Regions");
+		listPane.add(listLabel);
+		//listPane.add(Box.createVerticalStrut(10));
+		listScroll = new JScrollPane(regionList);
+		listScroll.setPreferredSize(new Dimension(150, 150));
+		listPane.add(listScroll);
+		allLists.add(listPane);
+		allLists.add(Box.createHorizontalStrut(10));
+
+		listPane = new JPanel();
+		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
+		//listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		//listPane.add(Box.createVerticalGlue());
+		listLabel = new JLabel("Queries");
+		listPane.add(listLabel);
+		//listPane.add(Box.createVerticalStrut(10));
+		listScroll = new JScrollPane(queryList);
+		listScroll.setPreferredSize(new Dimension(150, 100));
+		listPane.add(listScroll);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout( new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+		buttonPanel.add(Box.createHorizontalGlue());
+		JButton createButton = new JButton("Create");
+		JButton removeButton = new JButton("Remove");
+		final JButton runQueryButton = new JButton("Query");
+		final JButton editButton = new JButton("Edit");
+		editButton.setEnabled(false);
+		runQueryButton.setEnabled(false);
+		buttonPanel.add(createButton);
+		buttonPanel.add(removeButton);
+		buttonPanel.add(editButton);
+		buttonPanel.add(runQueryButton);
+		listPane.add(buttonPanel);
+
+		allLists.add(listPane);
+		//all.setLayout( new BoxLayout(all, BoxLayout.PAGE_AXIS));
+		all.setLayout( new BoxLayout(all, BoxLayout.Y_AXIS));
+		//all.setOpaque(false);
+		//all.setBackground(new Color(200,200,200));
+		all.add(allLists, BorderLayout.PAGE_START);
+		JPanel ANGRY = new JPanel();
+		ANGRY.setLayout( new BoxLayout(ANGRY, BoxLayout.X_AXIS));
+		ANGRY.add(sp);
+		ANGRY.add(Box.createHorizontalGlue());
+		all.add(ANGRY);
+
+
+		queryList.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent e) {
+				if(queries.isLeaf(e.getPath().getLastPathComponent())) {
+					editButton.setEnabled(true);
+					runQueryButton.setEnabled(true);
+				} else {
+					editButton.setEnabled(false);
+					runQueryButton.setEnabled(false);
+				}
+			}
+		});
+
+		createButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(queryList.getSelectionCount() == 0) {
+					JOptionPane.showMessageDialog(thisFrame, "Please select a Query or Query Group before createing", 
+						"Create Query Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+				QueryGenerator qg = new QueryGenerator(thisFrame); 
+				if(qg.getXPath().equals("")) {
+					return;
+				} else if(qg.getXPath().equals("Query Group")) {
+					queries.add(queryList.getSelectionPath(), qg.toString());
+				} else {
+					queries.add(queryList.getSelectionPath(), qg);
+				}
+				queryList.updateUI();
+			}
+		});
+		removeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(queryList.getSelectionCount() == 0) {
+					// error none selected
+					JOptionPane.showMessageDialog(thisFrame, "Please select a Query or Query Group to Remove", 
+						"Query Remove Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					queries.remove(queryList.getSelectionPath());
+					queryList.updateUI();
+				}
+			}
+		});
+		runQueryButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int[] scnSel = scnList.getSelectedIndices();
+				int[] regionSel = regionList.getSelectedIndices();
+				if(scnSel.length == 0) {
+					// error
+					JOptionPane.showMessageDialog(thisFrame, "Please select Scenarios to run the query against", 
+						"Run Query Error", JOptionPane.ERROR_MESSAGE);
+					//batchQuery(new File("bq.xml"), new File("c:\\test.xls"));
+				} else if(regionSel.length == 0) {
+					JOptionPane.showMessageDialog(thisFrame, "Please select Regions to run the query against", 
+						"Run Query Error", JOptionPane.ERROR_MESSAGE);
+					// error
+				} else if(queryList.getSelectionCount() == 0) {
+					JOptionPane.showMessageDialog(thisFrame, "Please select a query to run", 
+						"Run Query Error", JOptionPane.ERROR_MESSAGE);
+					// error
+				} else {
+					createFilteredQuery(scns, scnSel/*, regions, regionSel*/);
+					// table stuff
+					//System.out.println(queries.get(queryList.getSelectedIndex()));
+					//QueryGenerator qg = (QueryGenerator)queries.get(queryList.getSelectedIndex());
+					QueryGenerator qg = (QueryGenerator)queryList.getSelectionPath().getLastPathComponent();
+						thisFrame.getGlassPane().setVisible(true);
+					if(qg.isGroup()) {
+						bt = new MultiTableModel(qg, regionList.getSelectedValues(), thisFrame);
+			jTable = new JTable(bt);
+	  		jTable.getModel().addTableModelListener((FileChooserDemo)thisFrame);
+
+			//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
+
+			jTable.setCellSelectionEnabled(true);
+			jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
+			jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)bt).getCellEditor(0,0));
+			int j = 1;
+			while( j < jTable.getRowCount()) {
+				jTable.setRowHeight(j,200);
+				j += 2;
+			}
+			//jTable.setRowHeight(200);
+			CopyPaste copyPaste = new CopyPaste( jTable );
+			jsp = new JScrollPane(jTable);
+			sp.setLeftComponent(jsp);
+			sp.setDividerLocation(((FileChooserDemo)thisFrame).getWidth());
+			System.out.println("Should be displaying");
+				thisFrame.setVisible(true);
+				//menuSave.setEnabled(true);
+				menuExpPrn.setEnabled(true);
+						thisFrame.getGlassPane().setVisible(false);
+						return;
+					}
+			//BaseTableModel bt = new ComboTableModel((QueryGenerator)queries.get(queryList.getSelectedIndex()), thisFrame);
+			bt = new ComboTableModel(qg, regionList.getSelectedValues(), thisFrame);
+			JFreeChart chart = bt.createChart(0,0);
+			//TableSorter sorter = new TableSorter(bt);
+			jTable = new JTable(bt);
+			// Should the listener be set like so..
+			jTable.getModel().addTableModelListener((FileChooserDemo)thisFrame);
+	  		//sorter.setTableHeader(jTable.getTableHeader());
+
+			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	 
+			jTable.setCellSelectionEnabled(true);
+
+			javax.swing.table.TableColumn col;
+			int j = 0;
+			while(j < jTable.getColumnCount()) {
+				col = jTable.getColumnModel().getColumn(j);
+				if(jTable.getColumnName(j).equals("")) {
+					col.setPreferredWidth(75);
+				} else {
+					col.setPreferredWidth(jTable.getColumnName(j).length()*5+30);
+				}
+				j++;
+			}
+						BufferedImage chartImage = chart.createBufferedImage(
+								350, 350);
+
+						JLabel labelChart = new JLabel();
+						labelChart.setIcon(new ImageIcon(chartImage));
+			//all.add(new JScrollPane(jTable));
+			//JSplitPane sp = new JSplitPane();
+						/*
+						JSplitPane tempSP = new JSplitPane();
+			tempSP.setLeftComponent(new JScrollPane(jTable));
+			tempSP.setRightComponent(labelChart);
+						tempSP.setDividerLocation(((FileChooserDemo)thisFrame).getWidth()-350-15);
+						jsp = new JScrollPane(tempSP);
+						*/
+			sp.setLeftComponent(new JScrollPane(jTable));
+			sp.setRightComponent(labelChart);
+						sp.setDividerLocation(((FileChooserDemo)thisFrame).getWidth()-350-15);
+						SP = sp;
+						//jsp = new JScrollPane(sp);
+						//all.setAlignmentY(Component.LEFT_ALIGNMENT);
+						//all.add(Box.createVerticalStrut(10));
+			//thisFrame.getContentPane().remove(all);
+						//all.add(sp, BorderLayout.CENTER);
+						/*
+			thisFrame.getContentPane().add(new JScrollPane(sp), BorderLayout.PAGE_START);
+						System.out.println(""+thisFrame.getContentPane().getComponentCount());
+						System.out.println(thisFrame.getComponent(0));
+						*/
+				thisFrame.setVisible(true);
+				//menuSave.setEnabled(true);
+				menuExpPrn.setEnabled(true);
+						thisFrame.getGlassPane().setVisible(false);
+				}
+			}
+		});
+
+		editButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(queryList.getSelectionCount() == 0) {
+					JOptionPane.showMessageDialog(thisFrame, "Please select a query to edit", 
+						"Edit Query Error", JOptionPane.ERROR_MESSAGE);
+					// error
+				} else {
+					QueryGenerator tempQG = (QueryGenerator)queryList.getSelectionPath().getLastPathComponent();
+					String oldTitle = tempQG.editDialog();
+				}
+			}
+		});
+
+
+
+
+				Container contentPane = getContentPane();
+				if (splitPane != null) {
+					contentPane.remove(splitPane);
+				}
+				contentPane.add(new JScrollPane(all), BorderLayout.PAGE_START);
+				//contentPane.add(new JScrollPane(all));
+				this.setVisible(true);
+	}
+	private void manageDB() {
+		final JDialog filterDialog = new JDialog(this, "Manage Database", true);
+		JPanel listPane = new JPanel();
+		JPanel buttonPane = new JPanel();
+		JButton addButton = new JButton("Add");
+		JButton removeButton = new JButton("Remove");
+		JButton doneButton = new JButton("Done");
+		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
+		Container contentPane = filterDialog.getContentPane();
+
+		//Vector scns = getScenarios();
+		final JList list = new JList(scns);
+
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				fc.setDialogTitle("Open XML File");
+
+				// Choose only files, not directories
+				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+				// Start in current directory
+				fc.setCurrentDirectory(globalFC.getCurrentDirectory());
+
+				// Set filter for Java source files.
+				fc.setFileFilter(xmlFilter);
+
+				// Now open chooser
+				int result = fc.showOpenDialog(thisFrame);
+
+				if (result == JFileChooser.APPROVE_OPTION) {
+					globalFC.setCurrentDirectory(fc.getCurrentDirectory());
+					thisFrame.getGlassPane().setVisible(true);
+					xmlDB.addFile(fc.getSelectedFile().toString());
+					scns = getScenarios();
+					list.setListData(scns);
+					thisFrame.getGlassPane().setVisible(false);
+				}
+			}
+		});
+		removeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Object[] remList = list.getSelectedValues();
+				for(int i = 0; i < remList.length; ++i) {
+					xmlDB.removeDoc(((String)remList[i]).substring(0, 
+							((String)remList[i]).indexOf(' ')));
+					//System.out.println(((String)remList[i]).substring(0, ((String)remList[i]).indexOf(' ')));
+				}
+				scns = getScenarios();
+				list.setListData(scns);
+			}
+		});
+		doneButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				xmlDB.addVarMetaData(thisFrame);
+				scnList.setListData(scns);
+				regions = getRegions();
+				regionList.setListData(regions);
+				filterDialog.setVisible(false);
+			}
+		});
+
+		buttonPane.setLayout( new BoxLayout(buttonPane, BoxLayout.X_AXIS));
+		buttonPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		buttonPane.add(addButton);
+		buttonPane.add(Box.createHorizontalStrut(10));
+		buttonPane.add(removeButton);
+		buttonPane.add(Box.createHorizontalStrut(10));
+		buttonPane.add(doneButton);
+		buttonPane.add(Box.createHorizontalGlue());
+
+		JScrollPane sp = new JScrollPane(list);
+		sp.setPreferredSize(new Dimension(300, 300));
+		listPane.add(new JLabel("Scenarios is Database:"));
+		listPane.add(Box.createVerticalStrut(10));
+		listPane.add(sp);
+		listPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		contentPane.add(listPane, BorderLayout.PAGE_START);
+		contentPane.add(buttonPane, BorderLayout.PAGE_END);
+		filterDialog.pack();
+		filterDialog.setVisible(true);
+	}
+	public void setEnableManageDB(boolean enable) {
+		menuManage.setEnabled(enable);
+	}
+	public void createReport() {
+		if(jTable == null || jsp == null || jTable.getRowCount() == 0) {
+			// error
+			return;
+		}
+		JFreeReportBoot.getInstance().start();
+		JFreeReport report = new JFreeReport();
+		java.awt.print.PageFormat pageFormat = new java.awt.print.PageFormat();
+		pageFormat.setOrientation(java.awt.print.PageFormat.LANDSCAPE);
+		report.setPageDefinition(new org.jfree.report.SimplePageDefinition(pageFormat));
+		DrawableFieldElementFactory factory = new DrawableFieldElementFactory();
+		Group g = new Group();
+		float div = 1;
+		int numRows = 1;
+		if(jTable.getModel() instanceof MultiTableModel) {
+			numRows = (int)jTable.getRowCount()/2;
+			div = (float)(jTable.getRowCount()/2);
+		} else {
+			jsp.getVerticalScrollBar().setMaximum((int)SP.getPreferredSize().getHeight());
+			jsp.getHorizontalScrollBar().setMaximum((int)SP.getPreferredSize().getWidth());
+			jsp.setViewportView(SP);
+		}
+		factory.setAbsolutePosition(new Point2D.Float(0, 0));
+		//factory.setMinimumSize(new FloatDimension((float)800, (float)(jTable.getPreferredSize().getHeight()/(jTable.getRowCount()/div))));
+		//factory.setMaximumSize(new FloatDimension((float)800, (float)(jTable.getPreferredSize().getHeight()/(jTable.getRowCount()/div))));
+		//System.out.println("JSP MH: "+jsp.getVerticalScrollBar().getMaximum());
+		//System.out.println("SP PF: "+SP.getPreferredSize());
+		//System.out.println("H: "+(float)((jsp.getVerticalScrollBar().getMaximum()) /div));
+		//System.out.println("Rows: "+jTable.getRowCount());
+		/*
+		System.out.println("Total Before: "+jTable.getPreferredSize());
+		System.out.println("H before: "+(float)(jTable.getPreferredSize().getHeight()/(jTable.getRowCount()/div)));
+		*/
+		factory.setMinimumSize(new FloatDimension((float)800, (float)(jsp.getVerticalScrollBar().getMaximum()/div)));
+				//		/(jTable.getRowCount()/div))));
+		factory.setMaximumSize(new FloatDimension((float)800, (float)(jsp.getVerticalScrollBar().getMaximum()/div)));
+				//		/(jTable.getRowCount()/div))));
+		factory.setFieldname("0");
+		g.addField("0");
+		g.getHeader().addElement(factory.createElement());
+		g.getHeader().setPagebreakBeforePrint(true);
+		report.addGroup(g);
+		Vector fieldList = new Vector(numRows+1);
+		fieldList.add("0");
+		for(int i = 1; i < numRows; ++i) {
+			g = new Group();
+			factory.setFieldname(String.valueOf(i));
+			fieldList.add(String.valueOf(i));
+			g.setFields(fieldList);
+			g.getHeader().addElement(factory.createElement());
+			g.getHeader().setPagebreakBeforePrint(true);
+			report.addGroup(g);
+		}
+
+
+		/*
+		Object[] cNames = {"stuff"};
+		Object[][] rowData = new Object[1][1];
+		rowData[0][0] = (new org.jfree.ui.Drawable() {
+			public void draw(java.awt.Graphics2D graphics, java.awt.geom.Rectangle2D bounds) {
+				System.out.println("Got dims: "+bounds);
+				graphics.scale(.70,.70);
+				System.out.println("Pref size: "+jTable.getPreferredSize());
+				jTable.printAll(graphics);
+				//graphics.transform(java.awt.geom.AffineTransform.getScaleInstance(.5,1));
+				System.out.println("has dims: "+graphics.getClipBounds());
+				//graphics.clipRect((int)bounds.getMinX(), (int)bounds.getMinY(), (int)bounds.getWidth(), (int)bounds.getHeight());
+			}
+		});
+		report.setData(new javax.swing.table.DefaultTableModel(rowData, cNames)); 
+		*/
+		report.setData(new javax.swing.table.AbstractTableModel() {
+			public int findColumn(String cName) {
+				return Integer.parseInt(cName);
+			}
+			public String getColumnName(int col) {
+				return String.valueOf(col);
+			}
+			public int getColumnCount() {
+				return (int)jTable.getRowCount()/2;
+			}
+			public int getRowCount() {
+				return 1;
+			}
+			public Object getValueAt(int row, int col) {
+				final int colf = col;
+				return (new org.jfree.ui.Drawable() {
+					public void draw(java.awt.Graphics2D graphics, java.awt.geom.Rectangle2D bounds) {
+						double scaleFactor = bounds.getWidth() / jsp.getHorizontalScrollBar().getMaximum();
+						//double scaleFactor = bounds.getWidth() / SP.getPreferredSize().getWidth();
+						//System.out.println("BNDS: "+bounds);
+						//System.out.println("SP PF: "+SP.getPreferredSize());
+						//System.out.println("SF: "+scaleFactor);
+						graphics.scale(scaleFactor, scaleFactor);
+							graphics.translate((double)0, 0-bounds.getHeight()*colf);
+						if(!(jTable.getModel() instanceof MultiTableModel)) {
+							System.out.println("Printing all");
+							//graphics.translate((double)0, 0-20-bounds.getHeight()*colf);
+							((JScrollPane)SP.getLeftComponent()).printAll(graphics);
+						} else {
+							jTable.printAll(graphics);
+						}
+
+						graphics.setColor(Color.WHITE);
+						graphics.fillRect(0, (int)bounds.getHeight()*(1+colf), (int)graphics.getClipBounds().getWidth(), (int)bounds.getHeight());
+					}
+				});
+			}
+		});
+
+		try {
+			report.getReportConfiguration().setConfigProperty("org.jfree.report.modules.gui.xls.Enable", "false");
+			report.getReportConfiguration().setConfigProperty("org.jfree.report.modules.gui.plaintext.Enable", "false");
+			report.getReportConfiguration().setConfigProperty("org.jfree.report.modules.gui.csv.Enable", "false");
+			report.getReportConfiguration().setConfigProperty("org.jfree.report.modules.gui.html.Enable", "false");
+			report.getReportConfiguration().setConfigProperty("org.jfree.report.modules.gui.rtf.Enable", "false");
+			report.getReportConfiguration().setConfigProperty(MyExcelExportPlugin.enableKey, "true");
+			ExportPluginFactory epf = ExportPluginFactory.getInstance();
+			MyExcelExportPlugin.bt = bt;
+			epf.registerPlugin(MyExcelExportPlugin.class, "20", MyExcelExportPlugin.enableKey);
+			PreviewDialog preview = new PreviewDialog(report, this, true);
+			preview.setTitle(getTitle()+" - Export Preview");
+			/*
+			preview.addWindowListener(new WindowAdapter() {
+				public void windowClosing(final WindowEvent e) {
+					e.getWindow().setVisible(false);
+				}
+			});
+			*/
+			preview.pack();
+			preview.setVisible(true);
+			//preview.close();
+		} catch(ReportProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	protected void batchQuery(File queryFile, File excelFile) {
+		Document queries = readXMLFile( queryFile );
+		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(queries);
+		XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		Node tempNode;
+		int[] scnSel;
+		HSSFWorkbook wb = null;
+		HSSFSheet sheet = null;
+		QueryGenerator qgTemp = null;
+		Vector tempScns = new Vector();
+		Vector tempRegions = new Vector();
+		if(excelFile.exists()) {
+			try {
+				wb = new HSSFWorkbook(new FileInputStream(excelFile));
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+				return;
+			}
+		}
+		if(wb == null) {
+			wb = new HSSFWorkbook();
+		}
+		while((tempNode = res.iterateNext()) != null) {
+			tempScns.removeAllElements();
+			tempRegions.removeAllElements();
+			NodeList nl = tempNode.getChildNodes();
+			for(int i = 0; i < nl.getLength(); ++i) {
+				Element currEl = (Element)nl.item(i);
+				if(currEl.getNodeName().equals("scenario")) {
+					tempScns.add("a "+currEl.getAttribute("name")+' '+currEl.getAttribute("date"));
+				} else if(currEl.getNodeName().equals("region")) {
+					tempRegions.add(currEl.getAttribute("name"));
+				} else {
+					qgTemp = new QueryGenerator(currEl);
+				}
+			}
+			scnSel = new int[tempScns.size()];
+			for(int i = 0; i < scnSel.length; ++i) {
+				scnSel[i] = i;
+			}
+			createFilteredQuery(tempScns, scnSel);
+			sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
+			if(qgTemp.isGroup()) {
+				(new MultiTableModel(qgTemp, tempRegions.toArray(), this)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
+			} else {
+				(new ComboTableModel(qgTemp, tempRegions.toArray(), this)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
+			}
+		}
+		try {
+			FileOutputStream fos = new FileOutputStream(excelFile);
+			wb.write(fos);
+			fos.close();
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 }
 

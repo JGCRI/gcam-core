@@ -138,9 +138,13 @@ public class RadioButton extends JDialog implements ActionListener {
 		}
 		if(RadioButton.value.equals("Single Table")) {
 			BaseTableModel bt = new NewDataTableModel(tp, doc, pf, "Single Table");
-	  		JTable jTable = new JTable(bt);
+			TableSorter sorter = new TableSorter(bt);
+	  		//JTable jTable = new JTable(bt);
+	  		JTable jTable = new JTable(sorter);
+
 			// Should the listener be set like so..
 	  		jTable.getModel().addTableModelListener((FileChooserDemo)pf);
+	  		sorter.setTableHeader(jTable.getTableHeader());
 
 	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	 
