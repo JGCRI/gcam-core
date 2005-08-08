@@ -93,6 +93,7 @@ final public class FileUtils {
      */
     static public void setDocumentFile(final Document aDocument,
             final File aFile) {
+        // TODO: Crashes on a null document here.
         synchronized (aDocument) {
             if (aFile == null) {
                 aDocument.setDocumentURI(null);

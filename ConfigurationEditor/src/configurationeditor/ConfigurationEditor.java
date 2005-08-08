@@ -89,48 +89,11 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
         addWindowListener(new QuitAction(this));
         setContentPane(createMainWindow());
         setTitle(Messages.getString("ConfigurationEditor.1")); //$NON-NLS-1$
-    }
-
-    /**
-     * Ask the user what action they would like to take to begin using the
-     * editor. This is called from main.
-     * 
-     */
-    public void askForInitialAction() {
-        // First need to check if the preferences have been initializes.
-        if (!new File(PropertiesInfo.PROPERTY_FILE).canRead()) {
-            // Need to initialize the preferences window.
-            new ShowPreferencesAction(this).actionPerformed(new ActionEvent(
-                    this, ActionEvent.ACTION_PERFORMED, "ShowPreferences")); //$NON-NLS-1$
-        }
-        final Object[] options = {
-                Messages.getString("ConfigurationEditor.58"), //$NON-NLS-1$
-                Messages.getString("ConfigurationEditor.59"), Messages.getString("ConfigurationEditor.60") }; //$NON-NLS-1$ //$NON-NLS-2$
-        final String message = Messages.getString("ConfigurationEditor.61"); //$NON-NLS-1$
-
-        final int returnValue = JOptionPane.showOptionDialog(this, message,
-                Messages.getString("ConfigurationEditor.62"), //$NON-NLS-1$
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                options, options[0]);
-        if (returnValue == 0) {
-            new NewAction().actionPerformed(new ActionEvent(this,
-                    ActionEvent.ACTION_PERFORMED, "New")); //$NON-NLS-1$
-        } else if (returnValue == 1) {
-            new LoadAction().actionPerformed(new ActionEvent(this,
-                    ActionEvent.ACTION_PERFORMED, "Load")); //$NON-NLS-1$
-        }
-
-        // Check if for any reason the document is still not set and
-        // warn the user that action is prevented until they load a
-        // document or create a new one.
-        if (mCurrentDocument == null) {
-            setDocument(null);
-            final String warnMessage = Messages
-                    .getString("ConfigurationEditor.64"); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(this, warnMessage, Messages
-                    .getString("ConfigurationEditor.65"), //$NON-NLS-1$
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        
+        // Fire a blank document replaced with a blank document so
+        // the UI can initialize itself. The old value and new value
+        // must be different for the property change to fire.
+        firePropertyChange("document-replaced", "unknown", null);
     }
 
     /**
@@ -336,6 +299,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
     private JMenu createFileMenu() {
         final JMenu fileMenu = new JMenu(Messages
                 .getString("ConfigurationEditor.24")); //$NON-NLS-1$
+        fileMenu.setName("FileMenu");
         fileMenu.setToolTipText(Messages.getString("ConfigurationEditor.25")); //$NON-NLS-1$
         fileMenu.setMnemonic(KeyEvent.VK_F);
 
@@ -358,6 +322,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
         final JButton saveButton = new JButton();
         saveButton.setActionCommand("Save"); //$NON-NLS-1$
         saveButton.setAction(new SaveAction(this));
+        saveButton.setName("SaveDocumentButton");
         saveButton.setToolTipText(Messages.getString("ConfigurationEditor.29")); //$NON-NLS-1$
         saveButton.setText(Messages.getString("ConfigurationEditor.30")); //$NON-NLS-1$
 
@@ -375,6 +340,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
     private JButton createNewButton() {
         final JButton newButton = new JButton(Messages
                 .getString("ConfigurationEditor.32")); //$NON-NLS-1$
+        newButton.setName("NewDocumentButton");
         newButton.setAction(new NewAction());
         newButton.setToolTipText(Messages.getString("ConfigurationEditor.33")); //$NON-NLS-1$
         newButton.setMnemonic(KeyEvent.VK_N);
@@ -390,6 +356,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
         final JButton loadButton = new JButton(Messages
                 .getString("ConfigurationEditor.36")); //$NON-NLS-1$
         loadButton.setAction(new LoadAction());
+        loadButton.setName("LoadDocumentButton");
         loadButton.setToolTipText(Messages.getString("ConfigurationEditor.37")); //$NON-NLS-1$
         loadButton.setMnemonic(KeyEvent.VK_O);
         return loadButton;
@@ -403,6 +370,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
     private JButton createRunButton() {
         final JButton runButton = new JButton(Messages
                 .getString("ConfigurationEditor.38")); //$NON-NLS-1$
+        runButton.setName("RunModelButton");
         runButton.setAction(new RunAction(this));
         runButton.setMnemonic(KeyEvent.VK_R);
         runButton.setToolTipText(Messages.getString("ConfigurationEditor.39")); //$NON-NLS-1$
@@ -421,6 +389,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
     private JMenuItem createQuitMenuItem() {
         final JMenuItem quitItem = new JMenuItem(Messages
                 .getString("ConfigurationEditor.41"));
+        quitItem.setName("QuitMenuItem");
         quitItem.setAction(new QuitAction(this));
         quitItem.setMnemonic(KeyEvent.VK_Q);
         quitItem.setToolTipText(Messages.getString("ConfigurationEditor.42")); //$NON-NLS-1$
@@ -435,6 +404,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
     private JMenuItem createNewMenuItem() {
         final JMenuItem newItem = new JMenuItem(Messages
                 .getString("ConfigurationEditor.44"));
+        newItem.setName("NewMenuItem");
         newItem.setAction(new NewAction());
         newItem.setMnemonic(KeyEvent.VK_N);
         newItem.setToolTipText(Messages.getString("ConfigurationEditor.45")); //$NON-NLS-1$
@@ -449,6 +419,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
     private JMenuItem createLoadMenuItem() {
         final JMenuItem loadItem = new JMenuItem(Messages
                 .getString("ConfigurationEditor.48"));
+        loadItem.setName("LoadMenuItem");
         loadItem.setAction(new LoadAction());
         loadItem.setToolTipText(Messages.getString("ConfigurationEditor.49")); //$NON-NLS-1$
         loadItem.setMnemonic(KeyEvent.VK_O);
@@ -462,6 +433,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
      */
     private JMenuItem createSaveMenuItem() {
         final JMenuItem saveItem = new JMenuItem();
+        saveItem.setName("SaveMenuItem");
         saveItem.setActionCommand("Save"); //$NON-NLS-1$
         saveItem.setMnemonic(KeyEvent.VK_S);
         saveItem.setAction(new SaveAction(this));
@@ -484,6 +456,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
      */
     private JMenuItem createSaveAsMenuItem() {
         final JMenuItem saveAsItem = new JMenuItem(); //$NON-NLS-1$
+        saveAsItem.setName("SaveAsMenuItem");
         saveAsItem.setAction(new SaveAction(this));
         saveAsItem.setToolTipText(Messages.getString("ConfigurationEditor.54")); //$NON-NLS-1$
         saveAsItem.setActionCommand("SaveAs"); //$NON-NLS-1$
@@ -507,6 +480,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
     private JMenuItem createRunMenuItem() {
         final JMenuItem runItem = new JMenuItem(Messages
                 .getString("ConfigurationEditor.56")); //$NON-NLS-1$
+        runItem.setName("RunMenuItem");
         runItem.setAction(new RunAction(this));
         runItem.setToolTipText(Messages.getString("ConfigurationEditor.57")); //$NON-NLS-1$
         runItem.setMnemonic(KeyEvent.VK_R);

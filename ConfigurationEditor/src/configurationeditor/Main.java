@@ -46,7 +46,6 @@ public class Main {
                 final ConfigurationEditor mainWindow = new ConfigurationEditor();
                 mainWindow.pack();
                 mainWindow.setVisible(true);
-                mainWindow.askForInitialAction();
             }
         });
     }
