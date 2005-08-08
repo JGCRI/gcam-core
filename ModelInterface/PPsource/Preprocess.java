@@ -45,7 +45,7 @@
  * 
  * hahaha, i think building the tree takes like... 95% of the time, soooo yeah ill def look into this
  */
-package PPsource;
+package ModelInterface.PPsource;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

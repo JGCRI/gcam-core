@@ -24,7 +24,7 @@
  * \version $Revision$
  */
 
-package DMsource;
+package ModelInterface.DMsource;
 
 /*
  * TreeMap(region name)->Region->TreeMap(field)->TreeMap(time)->Matrix(values)

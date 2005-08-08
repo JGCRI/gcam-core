@@ -20,7 +20,7 @@
  * \version $Revision$
  */
 
-package DMsource;
+package ModelInterface.DMsource;
 
 /*
  * A region is composed of a matrix of datablocks or a group of regions

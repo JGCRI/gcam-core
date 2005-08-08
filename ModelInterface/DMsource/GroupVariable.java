@@ -19,7 +19,7 @@
  * \date $Date$
  * \version $Revision$
  */
-package DMsource;
+package ModelInterface.DMsource;
 
 import java.util.*;
 import java.io.*;

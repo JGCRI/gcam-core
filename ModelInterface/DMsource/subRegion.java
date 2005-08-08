@@ -21,7 +21,7 @@
  * \version $Revision$
  */
 
-package DMsource;
+package ModelInterface.DMsource;
 
 import java.util.*;
 

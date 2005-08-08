@@ -26,7 +26,7 @@
  * TODO: expand general output options
  * TODO: comment private functions
  */
-package DMsource;
+package ModelInterface.DMsource;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

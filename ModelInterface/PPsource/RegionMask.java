@@ -27,7 +27,7 @@
  * contain a bounding box, resolution, bitmask for a region
  * this will be used to create an actual region object, to determine which data it should contain
  */
-package PPsource;
+package ModelInterface.PPsource;
 
 import java.awt.geom.*;
 

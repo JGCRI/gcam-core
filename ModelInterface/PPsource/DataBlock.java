@@ -27,7 +27,7 @@
  * a matrix of datablocks will make up a region,
  * they will store all possible variables on as small a resolution as possible
  */
-package PPsource;
+package ModelInterface.PPsource;
 
 import java.awt.geom.*;
 import java.util.*;

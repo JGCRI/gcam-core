@@ -46,7 +46,7 @@
  * 	each run of data will be created in its own QuadBucketTree. Trees will then be merged together.
  * 	Merging consists of the calling tree extracting data from the callee tree on a node by node basis
  */
-package PPsource;
+package ModelInterface.PPsource;
 
 import java.util.*;
 import java.awt.geom.*;

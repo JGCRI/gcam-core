@@ -22,7 +22,7 @@
  * \version $Revision$
  */
 
-package DMsource;
+package ModelInterface.DMsource;
 
 import java.text.DecimalFormat;
 import java.io.*;

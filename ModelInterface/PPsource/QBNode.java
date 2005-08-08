@@ -21,7 +21,7 @@
  * \date $Date$
  * \version $Revision$
  */
-package PPsource;
+package ModelInterface.PPsource;
 
 
 import java.util.*;

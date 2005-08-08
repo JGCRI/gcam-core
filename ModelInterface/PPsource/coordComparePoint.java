@@ -19,7 +19,7 @@
  * \date $Date$
  * \version $Revision$
  */
-package PPsource;
+package ModelInterface.PPsource;
 
 import java.util.Comparator;
 import java.awt.geom.*;
