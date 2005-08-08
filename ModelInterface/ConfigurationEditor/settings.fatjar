@@ -1,0 +1,13 @@
+#Fat Jar Configuration File
+#Fri Aug 05 11:40:21 EDT 2005
+onejar.license.required=false
+manifest.classpath=xalan.jar
+onejar.checkbox=true
+jarname=ConfigurationEditor.jar
+manifest.mergeall=true
+manifest.mainclass=configurationeditor.Main
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=

@@ -1,0 +1,6 @@
+configuration_editor.properties
+configuration_temp.xml
+.settings
+bin
+configuration_template.xml
+main_log
