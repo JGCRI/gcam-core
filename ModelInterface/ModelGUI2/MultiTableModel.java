@@ -1,4 +1,5 @@
-package ModelGUI2;
+//package ModelGUI2;
+package ModelInterface.ModelGUI2;
 
 import java.util.*;
 
