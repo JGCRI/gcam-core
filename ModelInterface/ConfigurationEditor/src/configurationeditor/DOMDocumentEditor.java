@@ -1,7 +1,7 @@
 /**
  * 
  */
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
 import org.w3c.dom.Document;
 

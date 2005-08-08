@@ -1,6 +1,6 @@
 /*
  */
-package guihelpers;
+package ModelInterface.ConfigurationEditor.src.guihelpers;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -10,10 +10,10 @@ import javax.swing.JOptionPane;
 
 import org.w3c.dom.Document;
 
-import utils.DOMUtils;
-import utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
 
-import configurationeditor.DOMDocumentEditor;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.DOMDocumentEditor;
 
 /**
  * This class implements a window close listener which ensures the user is

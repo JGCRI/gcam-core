@@ -1,8 +1,8 @@
 /*
  */
-package guihelpers;
+package ModelInterface.ConfigurationEditor.src.guihelpers;
 
-import guicomponents.DOMListModel;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMListModel;
 
 import javax.swing.JButton;
 import javax.swing.JList;

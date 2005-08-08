@@ -1,7 +1,7 @@
 /**
  * 
  */
-package actions;
+package ModelInterface.ConfigurationEditor.src.actions;
 
 
 import java.awt.event.ActionEvent;
@@ -14,11 +14,11 @@ import javax.swing.JOptionPane;
 
 import org.w3c.dom.Document;
 
-import utils.Messages;
-import utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
 
-import configurationeditor.ConfigurationEditor;
-import configurationeditor.PropertiesInfo;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.ConfigurationEditor;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.PropertiesInfo;
 
 /**
  * This class defines the action which occurs when the user attempts to create a

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package guicomponents;
+package ModelInterface.ConfigurationEditor.src.guicomponents;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -15,7 +15,7 @@ import javax.swing.JComboBox;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
 
 /**
  * A class which creates combo boxes which update their values from a node in a

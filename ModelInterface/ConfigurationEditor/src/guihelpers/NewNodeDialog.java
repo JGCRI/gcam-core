@@ -1,7 +1,7 @@
 /**
  * 
  */
-package guihelpers;
+package ModelInterface.ConfigurationEditor.src.guihelpers;
 
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
 
 /**
  * Displays a dialog to the user which allow them to select a new node name and

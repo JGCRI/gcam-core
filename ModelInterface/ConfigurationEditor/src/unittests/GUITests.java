@@ -1,7 +1,7 @@
 /**
  * 
  */
-package unittests;
+package ModelInterface.ConfigurationEditor.src.unittests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -1,9 +1,9 @@
 /**
  * 
  */
-package guicomponents;
+package ModelInterface.ConfigurationEditor.src.guicomponents;
 
-import guihelpers.TreeNodeWrapper;
+import ModelInterface.ConfigurationEditor.src.guihelpers.TreeNodeWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +16,7 @@ import javax.swing.tree.TreePath;
 
 import org.w3c.dom.Node;
 
-import utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
 
 /**
  * @author Josh Lurz

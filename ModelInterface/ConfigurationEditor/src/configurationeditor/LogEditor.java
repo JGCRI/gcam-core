@@ -1,12 +1,12 @@
 /**
  * 
  */
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
-import guicomponents.DOMButtonModel;
-import guicomponents.DOMComboBoxController;
-import guicomponents.DOMComboBoxModel;
-import guihelpers.DOMDocumentSaveSetter;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMButtonModel;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMComboBoxController;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMComboBoxModel;
+import ModelInterface.ConfigurationEditor.src.guihelpers.DOMDocumentSaveSetter;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -37,9 +37,9 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
-import utils.DOMUtils;
-import utils.FileUtils;
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 /**
  * The log editor is a component used for editing the settings of the various

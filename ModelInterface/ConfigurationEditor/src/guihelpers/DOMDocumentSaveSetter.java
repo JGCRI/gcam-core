@@ -1,4 +1,4 @@
-package guihelpers;
+package ModelInterface.ConfigurationEditor.src.guihelpers;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -10,10 +10,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
-import guicomponents.DOMButtonModel;
-import guicomponents.DOMTextFieldFactory;
-import guihelpers.FieldButtonEnabler;
-import guihelpers.XMLFileFilter;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMButtonModel;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMTextFieldFactory;
+import ModelInterface.ConfigurationEditor.src.guihelpers.FieldButtonEnabler;
+import ModelInterface.ConfigurationEditor.src.guihelpers.XMLFileFilter;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -25,8 +25,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import utils.FileUtils;
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 /**
  * @author Josh Lurz

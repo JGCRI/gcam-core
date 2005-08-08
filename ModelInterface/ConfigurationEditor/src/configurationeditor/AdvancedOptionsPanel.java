@@ -1,10 +1,10 @@
 /**
  * 
  */
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
-import guicomponents.DOMTreeModel;
-import guihelpers.PopupMenuCreatorMouseAdapter;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMTreeModel;
+import ModelInterface.ConfigurationEditor.src.guihelpers.PopupMenuCreatorMouseAdapter;
 
 import java.awt.Component;
 import java.awt.Dimension;

@@ -1,4 +1,4 @@
-package guihelpers;
+package ModelInterface.ConfigurationEditor.src.guihelpers;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -16,7 +16,7 @@ import javax.swing.tree.TreePath;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
 
 /**
  * A class which displays a menu of items to modify a DOM tree. TODO: Rename and

@@ -1,4 +1,4 @@
-package guicomponents;
+package ModelInterface.ConfigurationEditor.src.guicomponents;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 import org.w3c.dom.Document;
 
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 /**
  * A factory class which creates DOMFileListPanels which are initialized to the

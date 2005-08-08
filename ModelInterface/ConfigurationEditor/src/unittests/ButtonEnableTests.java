@@ -1,14 +1,14 @@
 /**
  * 
  */
-package unittests;
+package ModelInterface.ConfigurationEditor.src.unittests;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import configurationeditor.ConfigurationEditor;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.ConfigurationEditor;
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.TestHelper;

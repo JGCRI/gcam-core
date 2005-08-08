@@ -1,7 +1,7 @@
 /**
  * 
  */
-package utils;
+package ModelInterface.ConfigurationEditor.src.utils;
 
 import java.awt.Container;
 import java.io.File;

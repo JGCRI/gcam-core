@@ -1,7 +1,7 @@
 /**
  * 
  */
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

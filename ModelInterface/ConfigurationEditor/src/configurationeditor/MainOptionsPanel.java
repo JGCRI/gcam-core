@@ -1,8 +1,8 @@
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
-import guicomponents.DOMButtonModel;
-import guicomponents.DOMListPanelFactory;
-import guicomponents.DOMTextFieldFactory;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMButtonModel;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMListPanelFactory;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMTextFieldFactory;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 /**
  * 

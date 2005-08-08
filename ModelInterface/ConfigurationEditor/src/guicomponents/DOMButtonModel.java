@@ -1,7 +1,7 @@
 /*
  * Created on Jan 9, 2005
  */
-package guicomponents;
+package ModelInterface.ConfigurationEditor.src.guicomponents;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -16,8 +16,8 @@ import javax.swing.DefaultButtonModel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import utils.DOMUtils;
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 /**
  * A class which wraps a default button model and replaces call to set and get

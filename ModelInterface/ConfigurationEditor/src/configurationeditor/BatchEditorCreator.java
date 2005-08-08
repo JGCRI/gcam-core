@@ -1,13 +1,13 @@
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
-import guihelpers.WindowCloseListener;
+import ModelInterface.ConfigurationEditor.src.guihelpers.WindowCloseListener;
 
 import java.io.File;
 
 import javax.swing.JDialog;
 import javax.swing.WindowConstants;
 
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 /**
  * Runnable that creates and displays the batch file editor.

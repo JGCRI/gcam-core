@@ -1,4 +1,4 @@
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
 /**
  * 

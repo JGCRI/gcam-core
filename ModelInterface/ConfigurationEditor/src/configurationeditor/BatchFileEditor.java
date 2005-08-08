@@ -1,10 +1,10 @@
 /*
  */
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
-import guicomponents.DOMListModel;
-import guicomponents.DOMListPanel;
-import guicomponents.DOMListPanelFactory;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMListModel;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMListPanel;
+import ModelInterface.ConfigurationEditor.src.guicomponents.DOMListPanelFactory;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -18,9 +18,9 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import org.w3c.dom.Document;
 
-import utils.DOMUtils;
-import utils.FileUtils;
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 /**
  * Creates a window which has the capability to create or edit a batch file. The

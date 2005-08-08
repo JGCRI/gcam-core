@@ -1,11 +1,11 @@
 /**
  * 
  */
-package guicomponents;
+package ModelInterface.ConfigurationEditor.src.guicomponents;
 
-import guihelpers.ButtonSetEnabler;
-import guihelpers.XMLFileFilter;
-import guihelpers.ButtonSetEnabler.ButtonType;
+import ModelInterface.ConfigurationEditor.src.guihelpers.ButtonSetEnabler;
+import ModelInterface.ConfigurationEditor.src.guihelpers.XMLFileFilter;
+import ModelInterface.ConfigurationEditor.src.guihelpers.ButtonSetEnabler.ButtonType;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -29,8 +29,8 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import org.w3c.dom.Document;
 
-import utils.Messages;
-import utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
 
 /**
  * A panel which contains a list based on an underlying DOM tree, and buttons to

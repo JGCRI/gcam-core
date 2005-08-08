@@ -1,13 +1,13 @@
 /*
  */
-package guihelpers;
+package ModelInterface.ConfigurationEditor.src.guihelpers;
 
 import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
-import utils.FileUtils;
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 /**
  * File filter which selects xml files.

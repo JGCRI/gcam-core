@@ -1,7 +1,7 @@
 /**
  * 
  */
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 /**
  * Main class which instantiates and displays the ConfigurationEditor class.

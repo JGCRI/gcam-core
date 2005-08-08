@@ -1,8 +1,8 @@
 /*
  */
-package guicomponents;
+package ModelInterface.ConfigurationEditor.src.guicomponents;
 
-import guihelpers.NodeWrapper;
+import ModelInterface.ConfigurationEditor.src.guihelpers.NodeWrapper;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,8 +16,8 @@ import javax.swing.event.ListSelectionListener;
 
 import org.w3c.dom.*;
 
-import utils.DOMUtils;
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 /**
  * The DOMListModel is an implementation of a list which has content dependent

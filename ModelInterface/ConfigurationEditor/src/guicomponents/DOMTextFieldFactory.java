@@ -1,4 +1,4 @@
-package guicomponents;
+package ModelInterface.ConfigurationEditor.src.guicomponents;
 
 
 import java.awt.event.FocusEvent;
@@ -16,10 +16,10 @@ import javax.swing.JTextField;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import utils.DOMUtils;
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
-import configurationeditor.ConfigurationEditor;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.ConfigurationEditor;
 
 /**
  * A factory class which creates JTextFields which are setup with

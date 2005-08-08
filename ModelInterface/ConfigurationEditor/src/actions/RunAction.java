@@ -1,7 +1,7 @@
 /**
  * 
  */
-package actions;
+package ModelInterface.ConfigurationEditor.src.actions;
 
 
 
@@ -20,13 +20,13 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import utils.DOMUtils;
-import utils.Messages;
-import utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
 
-import configurationeditor.ConfigurationEditor;
-import configurationeditor.ModelRunner;
-import configurationeditor.PropertiesInfo;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.ConfigurationEditor;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.ModelRunner;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.PropertiesInfo;
 
 /**
  * This action is called when a user tries to run the model. It saves the configuration

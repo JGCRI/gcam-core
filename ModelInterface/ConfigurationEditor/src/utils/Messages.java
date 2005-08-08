@@ -1,4 +1,4 @@
-package utils;
+package ModelInterface.ConfigurationEditor.src.utils;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -28,9 +28,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import actions.RunAction;
+import ModelInterface.ConfigurationEditor.src.actions.RunAction;
 
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 
 /**

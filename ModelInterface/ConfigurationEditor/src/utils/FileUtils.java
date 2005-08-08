@@ -1,6 +1,6 @@
 /*
  */
-package utils;
+package ModelInterface.ConfigurationEditor.src.utils;
 
 import java.awt.Component;
 import java.io.File;
@@ -24,8 +24,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
-import configurationeditor.ConfigurationEditor;
-import configurationeditor.PropertiesInfo;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.ConfigurationEditor;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.PropertiesInfo;
 
 /**
  * Static utility class with helper functions.

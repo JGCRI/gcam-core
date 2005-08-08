@@ -1,6 +1,6 @@
 /*
  */
-package guihelpers;
+package ModelInterface.ConfigurationEditor.src.guihelpers;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -9,7 +9,7 @@ import java.lang.reflect.Proxy;
 
 import org.w3c.dom.Node;
 
-import utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
 
 /**
  * A class which wraps a DOM node for a JTree and replaces the toString function

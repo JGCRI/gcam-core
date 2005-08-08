@@ -1,11 +1,11 @@
 /**
  * 
  */
-package configurationeditor;
+package ModelInterface.ConfigurationEditor.src.configurationeditor;
 
-import guihelpers.ComponentEnabler;
-import guihelpers.DOMDocumentSaveSetter;
-import guihelpers.SaveEnabler;
+import ModelInterface.ConfigurationEditor.src.guihelpers.ComponentEnabler;
+import ModelInterface.ConfigurationEditor.src.guihelpers.DOMDocumentSaveSetter;
+import ModelInterface.ConfigurationEditor.src.guihelpers.SaveEnabler;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -31,15 +31,15 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MutationEvent;
 
-import utils.FileUtils;
-import utils.Messages;
-import actions.EditLogSettingsAction;
-import actions.LoadAction;
-import actions.NewAction;
-import actions.QuitAction;
-import actions.RunAction;
-import actions.SaveAction;
-import actions.ShowPreferencesAction;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
+import ModelInterface.ConfigurationEditor.src.actions.EditLogSettingsAction;
+import ModelInterface.ConfigurationEditor.src.actions.LoadAction;
+import ModelInterface.ConfigurationEditor.src.actions.NewAction;
+import ModelInterface.ConfigurationEditor.src.actions.QuitAction;
+import ModelInterface.ConfigurationEditor.src.actions.RunAction;
+import ModelInterface.ConfigurationEditor.src.actions.SaveAction;
+import ModelInterface.ConfigurationEditor.src.actions.ShowPreferencesAction;
 
 /**
  * The class which creates the UI to edit a configuration file. TODO: Work out

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package actions;
+package ModelInterface.ConfigurationEditor.src.actions;
 
 
 import java.awt.event.ActionEvent;
@@ -10,9 +10,9 @@ import java.awt.event.WindowListener;
 
 import javax.swing.AbstractAction;
 
-import utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
 
-import configurationeditor.ConfigurationEditor;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.ConfigurationEditor;
 
 /**
  * This action object is called whenever the user calls quit. This can be called

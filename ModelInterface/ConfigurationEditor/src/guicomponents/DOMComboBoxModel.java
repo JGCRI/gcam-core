@@ -1,9 +1,9 @@
 /**
  * 
  */
-package guicomponents;
+package ModelInterface.ConfigurationEditor.src.guicomponents;
 
-import guihelpers.NodeWrapper;
+import ModelInterface.ConfigurationEditor.src.guihelpers.NodeWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +16,8 @@ import javax.swing.MutableComboBoxModel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import utils.DOMUtils;
-import utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
 
 /**
  * A combo box model which has as its list of values the element node children

@@ -1,9 +1,9 @@
 /**
  * 
  */
-package guicomponents;
+package ModelInterface.ConfigurationEditor.src.guicomponents;
 
-import guihelpers.XMLFileFilter;
+import ModelInterface.ConfigurationEditor.src.guihelpers.XMLFileFilter;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -24,8 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import utils.ExeFileFilter;
-import utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.ExeFileFilter;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
 
 /**
  * @author Josh Lurz

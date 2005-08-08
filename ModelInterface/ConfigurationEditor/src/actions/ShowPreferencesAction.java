@@ -1,9 +1,9 @@
 /**
  * 
  */
-package actions;
+package ModelInterface.ConfigurationEditor.src.actions;
 
-import guicomponents.PropertiesTextField;
+import ModelInterface.ConfigurationEditor.src.guicomponents.PropertiesTextField;
 
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -24,9 +24,9 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import utils.Messages;
-import utils.FileUtils;
-import configurationeditor.PropertiesInfo;
+import ModelInterface.ConfigurationEditor.src.utils.Messages;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.PropertiesInfo;
 
 /**
  * Class which defines the action which occurs when the user selects edit

@@ -1,9 +1,9 @@
 /**
  * 
  */
-package actions;
+package ModelInterface.ConfigurationEditor.src.actions;
 
-import guihelpers.WindowCloseListener;
+import ModelInterface.ConfigurationEditor.src.guihelpers.WindowCloseListener;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import configurationeditor.LogEditor;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.LogEditor;
 
 /**
  * This class displays a dialog for editing log settings.

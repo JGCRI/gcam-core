@@ -1,20 +1,20 @@
 /**
  * 
  */
-package actions;
+package ModelInterface.ConfigurationEditor.src.actions;
 
 
-import guihelpers.XMLFileFilter;
+import ModelInterface.ConfigurationEditor.src.guihelpers.XMLFileFilter;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
 import org.w3c.dom.Document;
 
-import utils.DOMUtils;
-import utils.FileUtils;
+import ModelInterface.ConfigurationEditor.src.utils.DOMUtils;
+import ModelInterface.ConfigurationEditor.src.utils.FileUtils;
 
-import configurationeditor.ConfigurationEditor;
+import ModelInterface.ConfigurationEditor.src.configurationeditor.ConfigurationEditor;
 
 /**
  * Class which implements the save and save as actions.
