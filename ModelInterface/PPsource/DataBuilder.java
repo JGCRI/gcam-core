@@ -1063,24 +1063,31 @@ public class DataBuilder
       /* Read a variable named *readin* from the file, it contains the masks */
       Variable data = nc.findVariable(dataVar);
       Array ma2Array = data.read();
+      
       Index in = ma2Array.getIndex();
       int i = 0;
       int k = 0;
-      int NaN = (int)data.findAttribute("missing_value").getNumericValue().floatValue();
+      float NaN = data.findAttribute("missing_value").getNumericValue().floatValue();
 
       for(double y = (90-res); y >= -90; y-=res)
       {
         k=0;
         for(double x = -180; x < 180; x+=res)
         {
-          dataValue = new Double((double)ma2Array.getFloat(in.set(0, 0, i, k)));
-          toAdd = new DataBlock(x, y, res, res);
-          timeValue = new TreeMap();
-          timeValue.put(new Double(time), dataValue);
-          toAdd.data.put(dataName, timeValue);
+        	//System.out.println("getting "+ma2Array.getFloat(in.set(0, 0, i, k)));
+          if(ma2Array.getFloat(in.set(0, 0, i, k)) != NaN)
+          {
+            dataValue = new Double((double)ma2Array.getFloat(in.set(0, 0, i, k)));
+            toAdd = new DataBlock(x, y, res, res);
+            timeValue = new TreeMap();
+            timeValue.put(new Double(time), dataValue);
+            toAdd.data.put(dataName, timeValue);
 
-        //merging this data into the current tree
-          dataTree.addData(toAdd, avg);
+          //merging this data into the current tree
+            //System.out.println("sending "+dataValue);
+            dataTree.addData(toAdd, avg);
+          }
+          //else this value SUCKS!!!!
           
           k++;
         }

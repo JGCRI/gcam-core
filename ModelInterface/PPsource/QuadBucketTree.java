@@ -643,7 +643,7 @@ public class QuadBucketTree
               oldValue = (Double)((TreeMap)entry.data.get(varName)).get(timeName);
               newValue = new Double(oldValue.doubleValue()+(addValue.doubleValue()*weight));
               ((TreeMap)entry.data.get(varName)).put(timeName, newValue);
-              //System.out.println("\t\t\tD"+oldValue+"->"+newValue+" ");
+              //System.out.println("D"+oldValue+"->"+newValue+" ");
             } else
             { //must add time
               newValue = new Double(addValue.doubleValue()*weight);
@@ -656,7 +656,7 @@ public class QuadBucketTree
             newValue = new Double(addValue.doubleValue()*weight);
             builder.put(timeName, newValue);
             entry.data.put(varName, builder);
-            //System.out.println("\t\t\tV"+newValue+" ");
+            //System.out.println("V"+newValue+" ");
           }
         }
       }
