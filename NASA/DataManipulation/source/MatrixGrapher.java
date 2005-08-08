@@ -113,8 +113,8 @@ public class MatrixGrapher
       JLabel label1 = new JLabel(minVal+"");
       JLabel label3 = new JLabel(maxVal+"");
 
-      label1.setPreferredSize(new Dimension(100, 16));
-      label3.setPreferredSize(new Dimension(100, 16));
+      label1.setSize(new Dimension(100, 16));
+      label3.setSize(new Dimension(100, 16));
       
       pane.add(label1);
       pane.add(Box.createRigidArea(new Dimension(110,5)));
@@ -327,7 +327,7 @@ public class MatrixGrapher
     public simpleBlockCanvas(int c)
     {
         color = c;
-        setPreferredSize(new Dimension(10,10));
+        setSize(new Dimension(10,10));
     }
     
     public void paint(Graphics g) {

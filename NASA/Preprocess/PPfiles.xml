@@ -3,4 +3,5 @@
 	<data file="input.xml" />
 	<region file="inputR.xml" />
 	<output file="out.xml" />
+	<log level="INFO" />
 </files>

@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <commands>
-	<variable name="US" type="reference">
-		<region value="USA" />
-		<field value="Barley" />
-		<time value="1995.0" />
-		<comment value="reference of the US" />
-	</variable>
-	<variable name="alas" type="reference">
-		<region value="Alaska" />
-		<field value="Barley" />
-		<time value="1995.0" />
-	</variable>
-	<variable name="play" type="group">
-		<fill value="subregions" />
-		<members variable="US" />
+	<variable name="wind" type="reference">
+		<region value="USAcontiguous" />
+		<field value="WindClass" />
+		<time value="2005.0" />
 	</variable>
 
-	<print variable="play" />
-	<printVerbose variable="play" file="myout.txt" />
+	<plot variable="wind" />
 </commands>

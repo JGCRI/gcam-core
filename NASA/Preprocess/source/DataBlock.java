@@ -89,13 +89,18 @@ public class DataBlock extends Rectangle2D.Double
     width = W;
     data = new TreeMap();
   }
+  
+//*****************************************************************************
+//*************************Functions Proper************************************ 
+//***************************************************************************** 
+
   /**
    * The proportion of THIS block which overlaps the supplied block.
    * 
    * @param target Block to test against.
    * @return Decimal portion (0-1) of overlap.
    */
-  public double getOverlap(DataBlock target)
+  public double getOverlap(Rectangle2D.Double target)
   {
     /*
      * this function returns the decimal of THIS object which intersects with TARGET object

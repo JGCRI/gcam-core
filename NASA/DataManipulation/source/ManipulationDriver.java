@@ -3211,7 +3211,7 @@ public class ManipulationDriver
         }
       } else
       {
-        log.log(Level.WARNING, toAdd.name+" -> "+((Element)subRegions.get(i)).getAttributeValue("name")+" : tried to add but region WAS NOT FOUND");
+        log.log(Level.INFO, toAdd.name+" -> "+((Element)subRegions.get(i)).getAttributeValue("name")+" : tried to add but region WAS NOT FOUND");
       }
     }
     //end adding regions
@@ -3258,7 +3258,6 @@ public class ManipulationDriver
    */
   private String readWord(BufferedReader input)
   {
-    log.log(Level.FINEST, "begin function");
     //reads an entire word from an input stream rather than just a character
     //words delimited by any whitespace 'space, new line, tab'
     String build = new String();
@@ -3290,7 +3289,6 @@ public class ManipulationDriver
    */
   private double stringToDouble(String sc)
   {
-    log.log(Level.FINEST, "begin function");
     //takes a string of the form #.###E+### and converts it to a double
     double mantissa, exponent, expValue;
     boolean expSignPos = false;

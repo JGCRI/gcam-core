@@ -35,6 +35,7 @@ package source;
 
 
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 import java.util.logging.*;
 import java.awt.geom.*;
@@ -43,6 +44,12 @@ import ucar.nc2.*;
 import org.jdom.*;
 import org.jdom.input.*;
 import org.jdom.output.*;
+import org.geotools.data.*;
+import org.geotools.data.shapefile.*;
+import org.geotools.data.shapefile.shp.*;
+import org.geotools.feature.*;
+
+import com.vividsolutions.jts.geom.*;
 
 import javax.xml.stream.*;
 
@@ -199,7 +206,6 @@ public class DataBuilder
    */
   public void buildTree()
   {
-    //TODO: add new file types as needed
     Element currFile;
     Element root = iDocument.getRootElement();
     List fileChildren = root.getChildren("file");
@@ -226,6 +232,12 @@ public class DataBuilder
       } else if(currFile.getAttributeValue("type").equals("netcdf"))
       {
         addNetCDFData(currFile);
+      } else if(currFile.getAttributeValue("type").equals("pointShapefile"))
+      {
+        addPointShapeFileData(currFile);
+      } else if(currFile.getAttributeValue("type").equals("polygonShapefile"))
+      {
+        addPolyShapeFileData(currFile);
       } else
       {
         log.log(Level.WARNING, "Unsupported File Type -> "+currFile.getAttributeValue(null, "type"));
@@ -1079,6 +1091,355 @@ public class DataBuilder
     
   }
   
+  private void addPointShapeFileData(Element currFile)
+  { //use geotools to open and read from a shapefile
+    log.log(Level.FINER, "begin function");
+    
+    List infoChildren;
+    Element currElem;
+    
+    String fileName = "init";
+    String attrName = "init";
+    String dataName = "shutup,";
+    String ref = null;
+    String unit = null;
+    double time = 0;
+    double res = 1;
+    double x, y, mult;
+    boolean avg = true;
+    boolean typeWarn = false;
+    TreeMap timeValue;
+    Double dataValue;
+    DataBlock toAdd;
+    
+  //getting file info from XML
+    infoChildren = currFile.getChildren();
+    for(int i = 0; i < infoChildren.size(); i++)
+    {
+      currElem = (Element)infoChildren.get(i);
+      if(currElem.getName().equals("data"))
+      {
+        dataName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("date"))
+      {
+        time = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("res"))
+      {
+        res = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("average"))
+      {
+        avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
+      } else if(currElem.getName().equals("reference"))
+      {
+        ref = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("units"))
+      {
+        unit = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("attribute"))
+      {
+        attrName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("name"))
+      {
+        fileName = currElem.getAttributeValue("value");
+      } else
+      {
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
+      }
+    }
+  //done reading from XML file
+    
+    if(!init)
+    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+      dataTree.fillWorld(res);
+      init = true;
+    }
+    
+    //setting whether contained data is additive or averaged
+    dataAvg.put(dataName, new Boolean(avg));
+    if(ref != null)
+    {
+      dataRef.put(dataName, ref);
+    }
+    if(unit != null)
+    {
+      dataUnits.put(dataName, unit);
+    }
+    //done settign avg/add
+    
+    try
+    {
+      File shapeFile = new File(fileName);
+      URL shapeURL = shapeFile.toURL();
+      ShapefileDataStore store = new ShapefileDataStore(shapeURL);
+      String name = store.getTypeNames()[0];
+      FeatureSource source = store.getFeatureSource(name);
+      FeatureResults fsShape = source.getFeatures();
+      FeatureCollection collection = fsShape.collection();
+      Iterator iter = collection.iterator();
+      try
+      {
+        while(iter.hasNext())
+        {
+          Feature inFeature = (Feature)iter.next();
+          Geometry geom = inFeature.getDefaultGeometry();
+          Point cent = geom.getCentroid();
+          Object holdAttr = inFeature.getAttribute(attrName);
+          
+          
+          if(holdAttr instanceof Long)
+          {
+            dataValue = new Double(((Long)holdAttr).doubleValue());
+          } else if(holdAttr instanceof Double)
+          {
+            dataValue = (Double)holdAttr;
+          } else if(holdAttr instanceof Integer)
+          {
+            dataValue = new Double(((Integer)holdAttr).doubleValue());
+          } else
+          {
+            if(!typeWarn)
+            {
+              log.log(Level.WARNING, "Unknown attribute data type");
+              typeWarn = true;
+            }
+            dataValue = new Double(-1);
+          }
+          
+          x = cent.getX();
+          mult = x/res;
+          mult = Math.floor(mult);
+          x = mult*res;
+          
+          y = cent.getY();
+          mult = y/res;
+          mult = Math.floor(mult);
+          y = mult*res;
+          
+          //System.out.println(cent.getX()+" "+cent.getY()+" - "+x+" "+y);
+          
+          toAdd = new DataBlock(x, y, res, res);
+          timeValue = new TreeMap();
+          timeValue.put(new Double(time), dataValue);
+          toAdd.data.put(dataName, timeValue);
+
+          //System.out.println("new data");
+          //merging this data into the current tree
+          dataTree.addData(toAdd, avg);
+          //System.out.println(" - "+dataValue);
+        }
+      } finally
+      {
+        collection.close(iter);
+      }
+
+    } catch(ShapefileException e)
+    {
+      log.log(Level.WARNING, "That aint no ShapeFile fool! -> "+fileName);
+    } catch(IOException e)
+    {
+      log.log(Level.WARNING, "IOException dont give me none of that!! -> "+fileName);
+    }
+  }
+  
+  private void addPolyShapeFileData(Element currFile)
+  { //use geotools to open and read from a shapefile
+    log.log(Level.FINER, "begin function");
+    
+    List infoChildren;
+    Element currElem;
+    
+    String fileName = "init";
+    String attrName = "init";
+    String dataName = "shutup,";
+    String ref = null;
+    String unit = null;
+    double time = 0;
+    double res = 1;
+    double x, y, mult;
+    boolean avg = true;
+    boolean typeWarn = false;
+    TreeMap timeValue;
+    Double dataValue;
+    DataBlock toAdd;
+    
+  //getting file info from XML
+    infoChildren = currFile.getChildren();
+    for(int i = 0; i < infoChildren.size(); i++)
+    {
+      currElem = (Element)infoChildren.get(i);
+      if(currElem.getName().equals("data"))
+      {
+        dataName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("date"))
+      {
+        time = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("res"))
+      {
+        res = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("average"))
+      {
+        avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
+      } else if(currElem.getName().equals("reference"))
+      {
+        ref = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("units"))
+      {
+        unit = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("attribute"))
+      {
+        attrName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("name"))
+      {
+        fileName = currElem.getAttributeValue("value");
+      } else
+      {
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
+      }
+    }
+  //done reading from XML file
+    
+    if(!init)
+    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+      dataTree.fillWorld(res);
+      init = true;
+    }
+    
+    //setting whether contained data is additive or averaged
+    dataAvg.put(dataName, new Boolean(avg));
+    if(ref != null)
+    {
+      dataRef.put(dataName, ref);
+    }
+    if(unit != null)
+    {
+      dataUnits.put(dataName, unit);
+    }
+    //done settign avg/add
+    
+    try
+    {
+      File shapeFile = new File(fileName);
+      URL shapeURL = shapeFile.toURL();
+      ShapefileDataStore store = new ShapefileDataStore(shapeURL);
+      String name = store.getTypeNames()[0];
+      FeatureSource source = store.getFeatureSource(name);
+      FeatureResults fsShape = source.getFeatures();
+      FeatureCollection collection = fsShape.collection();
+      Iterator iter = collection.iterator();
+      try
+      {
+        while(iter.hasNext())
+        {
+          Feature inFeature = (Feature)iter.next();
+          Geometry geom = inFeature.getDefaultGeometry();
+          Geometry env = geom.getEnvelope();
+          Object holdAttr = inFeature.getAttribute(attrName);
+          
+          
+          if(holdAttr instanceof Long)
+          {
+            dataValue = new Double(((Long)holdAttr).doubleValue());
+          } else if(holdAttr instanceof Double)
+          {
+            dataValue = (Double)holdAttr;
+          } else if(holdAttr instanceof Integer)
+          {
+            dataValue = new Double(((Integer)holdAttr).doubleValue());
+          } else
+          {
+            if(!typeWarn)
+            {
+              log.log(Level.WARNING, "Unknown attribute data type");
+              typeWarn = true;
+            }
+            dataValue = new Double(-1);
+          }
+          
+          if(env instanceof Point)
+          {
+            Point area = (Point)env;
+            x = area.getX();
+            mult = x/res;
+            mult = Math.floor(mult);
+            x = mult*res;
+            
+            y = area.getY();
+            mult = y/res;
+            mult = Math.floor(mult);
+            y = mult*res;
+            
+            toAdd = new DataBlock(x, y, res, res);
+            timeValue = new TreeMap();
+            timeValue.put(new Double(time), dataValue);
+            toAdd.data.put(dataName, timeValue);
+
+            //merging this data into the current tree
+            dataTree.addData(toAdd, avg);
+          } else //env is a Polygon
+          {
+            Polygon area = (Polygon)env;
+            //TODO
+            double minX, maxX, minY, maxY;
+            Coordinate[] coords = area.getCoordinates();
+            Coordinate currP;
+            
+            minX = coords[0].x;
+            maxX = coords[0].x;
+            minY = coords[0].y;
+            maxY = coords[0].y;
+            for(int i  = 1 ; i < coords.length; i++)
+            {
+              if(coords[i].x > maxX)
+                maxX = coords[i].x;
+              if(coords[i].x < minX)
+                minX = coords[i].x;
+              if(coords[i].y > maxY)
+                maxY = coords[i].y;
+              if(coords[i].y < minY)
+                minY = coords[i].y;
+            }
+            
+            for(double X = minX; X < maxX; X+=res)
+            {
+              for(double Y = maxY; Y > minY; Y-=res)
+              {
+                //create coordinates for 4 points of a block
+                //make polygon from that
+                //use intersets from Geometry geom to test for overlap
+                //if overlaps, create datablock at normalized coordinates
+                //add datablocks to dataset
+                /*
+                 * ISSUES:
+                 * how account for normalizing edges? what rules to use
+                 * VERY likely to have overlapping value blocks if res 
+                 * doesnt hit every edge (almost no chance of this)
+                 * always shift left?
+                 */
+                
+              }
+            }
+            
+          }
+        }
+      } finally
+      {
+        collection.close(iter);
+      }
+
+    } catch(ShapefileException e)
+    {
+      log.log(Level.WARNING, "That aint no ShapeFile fool! -> "+fileName);
+    } catch(IOException e)
+    {
+      log.log(Level.WARNING, "IOException dont give me none of that!! -> "+fileName);
+    }
+  }
+  
+  private void addRasterData(Element currFile)
+  { //i hope i can do this too...
+    log.log(Level.SEVERE, "Function not implemented yet");
+  }
+  
   private void addTxtRegion(Element currFile)
   {
     log.log(Level.FINER, "begin function");
@@ -1525,6 +1886,7 @@ public class DataBuilder
     //if we get to this point the attribute value does not exist
     return null;
   }
+  
   
   //end of class!
 }

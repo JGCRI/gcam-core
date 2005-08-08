@@ -19,7 +19,9 @@
  * \version $Revision$
  */
 /**
- * MASTER TODO LIST: *currently COMPLETE, RUNNING and CORRECT to the best of my knowledge*
+ * MASTER TODO LIST: *currently COMPLETE, RUNNING but INCORRECT to the best of my knowledge*
+ * TODO: netcdf files are still reading in incorrect values even after the double adding
+ * problem was taken care of
  * TODO: look into ways to optimize memory usage, possible replace of merge operation as this doubles
  * used memory size by building a seperate tree before the merge happens (maybe implement addDate as previously discussed)
  * 

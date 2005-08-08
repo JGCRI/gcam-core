@@ -589,25 +589,45 @@ public class QuadBucketTree
   {
     if(currNode.leaf)
     {
+      //System.out.println("\tnew leaf");
       double weight; //normalizing the value for addition into entry
+      double p1, p2, p3; //proportion of overlaps
       DataBlock entry; //the current data we are working with
+      DataBlock toWeight; //the intersection of entry and its containing leaf
+      DataBlock p1block;
+      Rectangle2D.Double holdNode;
       
       for(int i = 0; i < currNode.data.size(); i++)
       {
+        weight = 0;
         entry = (DataBlock)currNode.data.get(i);
+        
+        p1block = new DataBlock();
+        holdNode = new Rectangle2D.Double(currNode.minX, currNode.minY, (currNode.maxX-currNode.minX), (currNode.maxY-currNode.minY));
+        Rectangle2D.Double.intersect(entry, holdNode, p1block);
+        p1 = entry.getOverlap(holdNode);
+        
+        p2 = p1block.getOverlap(val);
+        
         if(avg)
         {
-        	weight = entry.getOverlap(val);
+        	weight = p1*p2;
         } else //add
         {
-          weight = val.getOverlap(entry);
+          p3 = val.getOverlap(p1block);
+          weight = p1*p2*p3;
         }
+        
+        //System.out.println("\t\tnew block "+entry.x+","+entry.y+"->"+weight);
         
         if(weight > 0)
         { //then there is some overlap, add data in some way
           String varName;
           TreeMap var, builder;
           Double newValue, addValue, oldValue, timeName;
+          
+          //System.out.println(entry.x+" "+(entry.x+entry.width)+" - "+entry.y+" "+(entry.y+entry.height));
+          //System.out.println(val.x+" "+(val.x+val.width)+" - "+val.y+" "+(val.y+val.height)+"\n");
           
           varName = (String)val.data.firstKey();
           var = (TreeMap)val.data.get(varName);
@@ -621,10 +641,12 @@ public class QuadBucketTree
               oldValue = (Double)((TreeMap)entry.data.get(varName)).get(timeName);
               newValue = new Double(oldValue.doubleValue()+(addValue.doubleValue()*weight));
               ((TreeMap)entry.data.get(varName)).put(timeName, newValue);
+              //System.out.println("\t\t\tD"+oldValue+"->"+newValue+" ");
             } else
             { //must add time
               newValue = new Double(addValue.doubleValue()*weight);
               ((TreeMap)entry.data.get(varName)).put(timeName, newValue);
+              //System.out.println("\t\t\tT"+weight+" ");
             }
           } else
           { //must add variable
@@ -632,6 +654,7 @@ public class QuadBucketTree
             newValue = new Double(addValue.doubleValue()*weight);
             builder.put(timeName, newValue);
             entry.data.put(varName, builder);
+            //System.out.println("\t\t\tV"+newValue+" ");
           }
         }
       }
