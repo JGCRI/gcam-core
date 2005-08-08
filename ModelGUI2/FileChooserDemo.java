@@ -33,98 +33,10 @@ import org.jfree.report.modules.gui.base.PreviewDialog;
 //import org.jfree.report.elementfactory.TextFieldElementFactory;
 import org.jfree.report.elementfactory.DrawableFieldElementFactory;
 import org.jfree.ui.FloatDimension;
-/*
-import org.jfree.report.*;
-import org.jfree.report.content.*;
-import org.jfree.report.demo.*;
-import org.jfree.report.demo.cards.*;
-import org.jfree.report.demo.conditionalgroup.*;
-import org.jfree.report.demo.form.*;
-import org.jfree.report.demo.helper.*;
-import org.jfree.report.demo.multireport.*;
-import org.jfree.report.demo.sportscouncil.*;
-import org.jfree.report.elementfactory.*;
-import org.jfree.report.event.*;
-import org.jfree.report.filter.*;
-import org.jfree.report.filter.templates.*;
-import org.jfree.report.function.*;
-import org.jfree.report.modules.gui.base.*;
-import org.jfree.report.modules.gui.base.components.*;
-import org.jfree.report.modules.gui.base.resources.*;
-import org.jfree.report.modules.gui.config.*;
-import org.jfree.report.modules.gui.config.editor.*;
-import org.jfree.report.modules.gui.config.model.*;
-import org.jfree.report.modules.gui.config.xml.*;
-import org.jfree.report.modules.gui.config.xml.*;
-import org.jfree.report.modules.gui.converter.*;
-import org.jfree.report.modules.gui.converter.components.*;
-import org.jfree.report.modules.gui.converter.parser.*;
-import org.jfree.report.modules.gui.csv.*;
-import org.jfree.report.modules.gui.html.*;
-import org.jfree.report.modules.gui.pdf.*;
-import org.jfree.report.modules.gui.plaintext.*;
-import org.jfree.report.modules.gui.print.*;
-import org.jfree.report.modules.gui.rtf.*;
-import org.jfree.report.modules.gui.xls.*;
-import org.jfree.report.modules.misc.beanshell.*;
-import org.jfree.report.modules.misc.configstore.base.*;
-import org.jfree.report.modules.misc.configstore.filesystem.*;
-import org.jfree.report.modules.misc.referencedoc.*;
-import org.jfree.report.modules.misc.survey.*;
-import org.jfree.report.modules.misc.tablemodel.*;
-import org.jfree.report.modules.output.csv.*;
-import org.jfree.report.modules.output.meta.*;
-import org.jfree.report.modules.output.pageable.base.*;
-import org.jfree.report.modules.output.pageable.base.operations.*;
-import org.jfree.report.modules.output.pageable.base.output.*;
-import org.jfree.report.modules.output.pageable.base.pagelayout.*;
-import org.jfree.report.modules.output.pageable.graphics.*;
-import org.jfree.report.modules.output.pageable.pdf.*;
-import org.jfree.report.modules.output.pageable.plaintext.*;
-import org.jfree.report.modules.output.support.itext.*;
-import org.jfree.report.modules.output.support.pagelayout.*;
-import org.jfree.report.modules.output.table.base.*;
-import org.jfree.report.modules.output.table.csv.*;
-import org.jfree.report.modules.output.table.html.*;
-import org.jfree.report.modules.output.table.html.metaelements.*;
-import org.jfree.report.modules.output.table.html.ref.*;
-import org.jfree.report.modules.output.table.html.util.*;
-import org.jfree.report.modules.output.table.rtf.*;
-import org.jfree.report.modules.output.table.rtf.metaelements.*;
-import org.jfree.report.modules.output.table.xls.*;
-import org.jfree.report.modules.output.table.xls.metaelements.*;
-import org.jfree.report.modules.output.table.xls.util.*;
-import org.jfree.report.modules.output.xml.*;
-import org.jfree.report.modules.parser.base.*;
-import org.jfree.report.modules.parser.base.common.*;
-import org.jfree.report.modules.parser.ext.*;
-import org.jfree.report.modules.parser.ext.factory.datasource.*;
-import org.jfree.report.modules.parser.ext.factory.elements.*;
-import org.jfree.report.modules.parser.ext.factory.objects.*;
-import org.jfree.report.modules.parser.ext.factory.stylekey.*;
-import org.jfree.report.modules.parser.ext.factory.templates.*;
-import org.jfree.report.modules.parser.ext.readhandlers.*;
-import org.jfree.report.modules.parser.extwriter.*;
-import org.jfree.report.modules.parser.simple.*;
-import org.jfree.report.modules.parser.simple.readhandlers.*;
-import org.jfree.report.resourceloader.*;
-import org.jfree.report.states.*;
-import org.jfree.report.style.*;
-import org.jfree.report.util.*;
-import org.jfree.report.util.beans.*;
-import org.jfree.report.util.geom.*;
-import org.jfree.report.util.serializers.*;
-*/
 
 
 
 import org.apache.poi.hssf.usermodel.*;
-/*
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.SQLException;
-*/
 
 import com.sleepycat.dbxml.*;
 
@@ -258,12 +170,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			f.setVisible(true);
 		} catch(Exception e) {
 			e.printStackTrace();
-		} finally {
-			if(f.xmlDB != null) {
-				System.out.println("FINALLY");
-				f.xmlDB.closeDB();
-			}
-		}
+		} 
 	}
 
 	/**
