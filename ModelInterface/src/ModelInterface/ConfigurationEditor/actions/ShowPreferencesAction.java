@@ -63,7 +63,7 @@ public class ShowPreferencesAction extends AbstractAction {
      *            The top level window.
      */
     public ShowPreferencesAction(Frame aParentFrame) {
-        super("ShowPreferencesAction"); //$NON-NLS-1$
+        super("Show Preferences..."); //$NON-NLS-1$
         mParentFrame = aParentFrame;
     }
 

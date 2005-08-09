@@ -37,6 +37,7 @@ import ModelInterface.ConfigurationEditor.actions.NewAction;
 import ModelInterface.ConfigurationEditor.actions.QuitAction;
 import ModelInterface.ConfigurationEditor.actions.RunAction;
 import ModelInterface.ConfigurationEditor.actions.SaveAction;
+import ModelInterface.ConfigurationEditor.actions.ShowPreferencesAction;
 
 /**
  * The class which creates the UI to edit a configuration file. TODO: Work out
@@ -514,6 +515,7 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
         final JMenuItem prefItem = new JMenuItem(Messages
                 .getString("ConfigurationEditor.77")); //$NON-NLS-1$
         prefItem.setActionCommand("ShowPreferences"); //$NON-NLS-1$
+        prefItem.setAction(new ShowPreferencesAction(this));
         prefItem.setToolTipText(Messages.getString("ConfigurationEditor.78")); //$NON-NLS-1$
         prefItem.setMnemonic(KeyEvent.VK_P);
         return prefItem;

@@ -36,7 +36,7 @@ public class WindowCloseListener implements WindowListener {
         // Get the document from the editor.
         final Document document = sourceEditor.getDocument();
         // Check if the document needs to be saved.
-        if (FileUtils.isDirty(document)) {
+        if (document != null && FileUtils.isDirty(document)) {
             // Check if the user must be asked before the file is saved.
             if (sourceEditor.askBeforeSaving()) {
                 final String message = "Would you like to save the current file?";
