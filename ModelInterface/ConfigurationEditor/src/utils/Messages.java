@@ -14,7 +14,7 @@ public class Messages {
     /**
      * The name of the resource bundle file.
      */
-    private static final String BUNDLE_NAME = "utils.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "ModelInterface.ConfigurationEditor.src.utils.messages"; //$NON-NLS-1$
     
     /**
      * The resource bundle containing all strings.
