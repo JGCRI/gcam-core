@@ -20,6 +20,11 @@ import java.awt.BorderLayout;
 import java.awt.Cursor;
 
 public class InterfaceMain extends JFrame implements ActionListener {
+	/**
+	 * Unique identifier used for serializing.
+	 */
+	private static final long serialVersionUID = -9137748180688015902L;
+	
 	public static int FILE_MENU_POS = 0;
 	public static int EDIT_MENU_POS = 1;
 	public static int FILE_OPEN_SUBMENU_POS = 0;
