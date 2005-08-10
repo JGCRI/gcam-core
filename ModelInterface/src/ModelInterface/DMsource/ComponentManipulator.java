@@ -24,6 +24,8 @@
  */
 package ModelInterface.DMsource;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -926,4 +928,35 @@ public final class ComponentManipulator
     return toReturn;
   }
 
+//*****************************************************************************
+// just needed somewhere to put this... almost definately will never be used
+  /**
+   * Reads a whitespace delimited word from the provided {@link BufferedReader}.
+   * This is a convenience function so that input does not have to be gathered
+   * character by characer.
+   * @param input BufferedReader from which to gather a 'word' of input.
+   * @return First word residing in the passed reader.
+   */
+  public static String readWord(BufferedReader input)
+  {
+    //reads an entire word from an input stream rather than just a character
+    //words delimited by any whitespace 'space, new line, tab'
+    String build = new String();
+    int read;
+    char hold;
+    try {
+      while(((read = input.read()) != -1)&&((hold = (char)read) != ' ')&&(hold != '\n')&&(hold != '\t'))
+      {
+        build = build.concat(String.valueOf(hold));
+      }
+    } catch (IOException ex)
+    {
+      log.log(Level.SEVERE, "IOException!!!");
+    }
+
+    if(build.length() > 0)
+      return build.trim();
+    else
+      return null;
+  }
 }
