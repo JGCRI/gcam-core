@@ -68,14 +68,10 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		super(title);
 		Container contentPane = getContentPane();
 
-		// Create a user interface.
 		contentPane.setLayout(new BorderLayout());
 
 		MenuManager menuMan = new MenuManager(null);
 
-		// Use the helper method makeMenuItem
-		// for making the menu items and registering
-		// their listener.
 		JMenu m = new JMenu("File");
 		menuMan.addMenuItem(m, FILE_MENU_POS);
 		JMenu submenu;
