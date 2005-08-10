@@ -277,24 +277,21 @@ public class MatrixGrapher
       if(LOOKANDFEEL.equals("Metal"))
       {
         lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+      } else if(LOOKANDFEEL.equals("System"))
+      {
+        lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+      } else if(LOOKANDFEEL.equals("Motif"))
+      {
+        lookAndFeel = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+      } else if(LOOKANDFEEL.equals("GTK+"))
+      { // new in 1.4.2
+        lookAndFeel = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
       } else
-        if(LOOKANDFEEL.equals("System"))
-        {
-          lookAndFeel = UIManager.getSystemLookAndFeelClassName();
-        } else
-          if(LOOKANDFEEL.equals("Motif"))
-          {
-            lookAndFeel = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
-          } else
-            if(LOOKANDFEEL.equals("GTK+"))
-            { //new in 1.4.2
-              lookAndFeel = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
-            } else
-            {
-              System.err.println("Unexpected value of LOOKANDFEEL specified: "
-                  +LOOKANDFEEL);
-              lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-            }
+      {
+        System.err.println("Unexpected value of LOOKANDFEEL specified: "
+            +LOOKANDFEEL);
+        lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+      }
 
       try
       {

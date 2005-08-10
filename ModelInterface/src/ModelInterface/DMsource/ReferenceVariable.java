@@ -148,9 +148,6 @@ public class ReferenceVariable extends Variable
   public void printStandard(BufferedWriter out) throws IOException
   {
     DecimalFormat form = new DecimalFormat("0.0");
-    int offsetY, offsetX;
-    double[][] holdM;
-    ReferenceWrapper holdD;
     double[][] toPrint;
     
     //building a complete matrix of values to print from sub regions
@@ -177,9 +174,6 @@ public class ReferenceVariable extends Variable
   public void printVerbose(BufferedWriter out) throws IOException
   {
     DecimalFormat form = new DecimalFormat("0.0");
-    int offsetY, offsetX;
-    double[][] holdM;
-    ReferenceWrapper holdD;
     double[][] toPrint;
     
     

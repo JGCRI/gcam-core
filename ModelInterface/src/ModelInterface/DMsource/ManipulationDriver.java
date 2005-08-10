@@ -311,6 +311,9 @@ public class ManipulationDriver
       } else if(currCom.getName().equals("extractSubRegion"))
       {
         extractSubRegionCommand(currCom);
+      } else if(currCom.getName().equals("getChildVariable"))
+      {
+        getChildVariable(currCom);
       } else if(currCom.getName().equals("print"))
       {
         printCommand(currCom);
@@ -348,7 +351,7 @@ public class ManipulationDriver
    * contents of the passed XML node.
    * @param command XML command the variable will be based on.
    */
-  private void newDataVariableCommand(Element command)
+  private void newDataVariableCommand(Element command)  
   {
     log.log(Level.FINER, "begin function");
     Element currInfo;
@@ -412,7 +415,6 @@ public class ManipulationDriver
     log.log(Level.FINEST, "added "+newName+" to variable list");
     variableList.put(newName, toAdd);
   }
-  
   /**
    * Creates a new variable which holds a regions worth of data. Builds
    * according to the contents of the passed XML node.
@@ -464,7 +466,6 @@ public class ManipulationDriver
     }
     
   }
-  
   /**
    * Creates a new variable which holds a group of other variables. Child
    * variables can be of any type. Defined uses are for holding all time
@@ -525,7 +526,6 @@ public class ManipulationDriver
       log.log(Level.WARNING, "Command Failed: creating group variable -> "+newName);
     }
   }
-  
   /**
    * Creates a new variable as an aggregation of a list of variables.
    * Can be used only for reference variables as aggregation is undefined
@@ -657,7 +657,6 @@ public class ManipulationDriver
     
     variableList.put(VDname, VDest);
   }
-  
   /**
    * Adds the corresponding positions in the two passed variables. Requires that the
    * variables are of the same shape.
@@ -682,13 +681,12 @@ public class ManipulationDriver
       VD = V1.getShape(VDname);
       variableList.put(VDname, VD);
       
-      VD.setData(addVar(V1.getData(), V2.getData()));
+      VD.setData(ComponentManipulator.addVar(V1.getData(), V2.getData()));
     } else
     {
       log.log(Level.WARNING, "Command Failed: variables of different shapes.");
     }
   }
-  
   /**
    * Subtracts the corresponding positions in the two passed variables. Requires that the
    * variables are of the same shape.
@@ -713,14 +711,13 @@ public class ManipulationDriver
       VD = V1.getShape(VDname);
       variableList.put(VDname, VD);
       
-      VD.setData(subtractVar(V1.getData(), V2.getData()));
+      VD.setData(ComponentManipulator.subtractVar(V1.getData(), V2.getData()));
     } else
     {
       log.log(Level.WARNING, "Command Failed: variables of different shapes.");
     }
     
   }
-
   /**
    * Adds a scalar to every position in the sent variable. There is no subtract
    * scalar command as negatives can be sent to this one.
@@ -732,7 +729,6 @@ public class ManipulationDriver
     Variable VDest;
     Variable VSource;
     double change;
-    List infoList;
     Element currInfo;
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
@@ -752,9 +748,8 @@ public class ManipulationDriver
     VDest = VSource.getShape(VDname);
     variableList.put(VDname, VDest);
     
-    VDest.setData(addVar(VSource.getData(), change));
+    VDest.setData(ComponentManipulator.addVar(VSource.getData(), change));
   }
-  
   /**
    * Multiplys the corresponding positions in the two passed variables. Requires
    * that the variables are of the same shape.
@@ -779,13 +774,12 @@ public class ManipulationDriver
       VD = V1.getShape(VDname);
       variableList.put(VDname, VD);
       
-      VD.setData(multiplyVar(V1.getData(), V2.getData()));
+      VD.setData(ComponentManipulator.multiplyVar(V1.getData(), V2.getData()));
     } else
     {
       log.log(Level.WARNING, "Command Failed: variables of different shapes.");
     }
   }
-  
   /**
    * Divides the corresponding positions in the two passed variables. Requires
    * that the variables are of the same shape.
@@ -810,13 +804,12 @@ public class ManipulationDriver
       VD = V1.getShape(VDname);
       variableList.put(VDname, VD);
       
-      VD.setData(divideVar(V1.getData(), V2.getData()));
+      VD.setData(ComponentManipulator.divideVar(V1.getData(), V2.getData()));
     } else
     {
       log.log(Level.WARNING, "Command Failed: variables of different shapes.");
     }
   }
-  
   /**
    * Multiplys a scalar to every position in the sent variable.
    * @param command XML node defining the operation.
@@ -827,7 +820,6 @@ public class ManipulationDriver
     Variable VDest;
     Variable VSource;
     double change;
-    List infoList;
     Element currInfo;
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
@@ -863,9 +855,8 @@ public class ManipulationDriver
       variableList.put(VDname, VDest);
     }
     
-    VDest.setData(multiplyVar(VSource.getData(), change));
+    VDest.setData(ComponentManipulator.multiplyVar(VSource.getData(), change));
   }
-  
   /**
    * Divides every position in the sent variable by the scalar.
    * @param command XML node defining the operation.
@@ -876,7 +867,6 @@ public class ManipulationDriver
     Variable VDest;
     Variable VSource;
     double change;
-    List infoList;
     Element currInfo;
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
@@ -915,9 +905,8 @@ public class ManipulationDriver
     {
       log.log(Level.SEVERE, "Attempting to divide by a scalar of 0!");
     }
-    VDest.setData(divideVar(VSource.getData(), change));
+    VDest.setData(ComponentManipulator.divideVar(VSource.getData(), change));
   }
-  
   /**
    * Allows only values greater than either a scalar or corresponding
    * positions in another variable to remain. The rest are set to 0.
@@ -955,7 +944,7 @@ public class ManipulationDriver
         VDest = VSource.getShape(VDname);
         variableList.put(VDname, VDest);
         
-        VDest.setData(greaterThanRegion(VSource.getData(), VMask.getData()));
+        VDest.setData(ComponentManipulator.greaterThanRegion(VSource.getData(), VMask.getData()));
       } else
       {
         log.log(Level.WARNING, "Command Failed: variables of different shapes.");
@@ -965,10 +954,9 @@ public class ManipulationDriver
       VDest = VSource.getShape(VDname);
       variableList.put(VDname, VDest);
       
-      VDest.setData(greaterThan(VSource.getData(), limit));
+      VDest.setData(ComponentManipulator.greaterThan(VSource.getData(), limit));
     }
   }
-  
   /**
    * Allows only values less than either a scalar or corresponding
    * positions in another variable to remain. The rest are set to 0.
@@ -1006,7 +994,7 @@ public class ManipulationDriver
         VDest = VSource.getShape(VDname);
         variableList.put(VDname, VDest);
         
-        VDest.setData(lessThanRegion(VSource.getData(), VMask.getData()));
+        VDest.setData(ComponentManipulator.lessThanRegion(VSource.getData(), VMask.getData()));
       } else
       {
         log.log(Level.WARNING, "Command Failed: variables of different shapes.");
@@ -1016,10 +1004,9 @@ public class ManipulationDriver
       VDest = VSource.getShape(VDname);
       variableList.put(VDname, VDest);
       
-      VDest.setData(lessThan(VSource.getData(), limit));
+      VDest.setData(ComponentManipulator.lessThan(VSource.getData(), limit));
     }
   }
-  
   /**
    * Counts the occurance of elements which are greater in value than either
    * the passed scalar or the passed variable.
@@ -1057,7 +1044,7 @@ public class ManipulationDriver
         VDest = new DataVariable(VDname);
         variableList.put(VDname, VDest);
         
-        VDest.setData(countGreaterThanRegion(VSource.getData(), VMask.getData()));
+        VDest.setData(ComponentManipulator.countGreaterThanRegion(VSource.getData(), VMask.getData()));
       } else
       {
         log.log(Level.WARNING, "Command Failed: variables of different shapes.");
@@ -1067,10 +1054,9 @@ public class ManipulationDriver
       VDest = new DataVariable(VDname);
       variableList.put(VDname, VDest);
       
-      VDest.setData(countGreaterThan(VSource.getData(), limit));
+      VDest.setData(ComponentManipulator.countGreaterThan(VSource.getData(), limit));
     }
   }
-  
   /**
    * Counts the occurance of elements which are less in value than either
    * the passed scalar or the passed variable.
@@ -1108,7 +1094,7 @@ public class ManipulationDriver
         VDest = new DataVariable(VDname);
         variableList.put(VDname, VDest);
         
-        VDest.setData(countLessThanRegion(VSource.getData(), VMask.getData()));
+        VDest.setData(ComponentManipulator.countLessThanRegion(VSource.getData(), VMask.getData()));
       } else
       {
         log.log(Level.WARNING, "Command Failed: variables of different shapes.");
@@ -1118,10 +1104,9 @@ public class ManipulationDriver
       VDest = new DataVariable(VDname);
       variableList.put(VDname, VDest);
       
-      VDest.setData(countLessThan(VSource.getData(), limit));
+      VDest.setData(ComponentManipulator.countLessThan(VSource.getData(), limit));
     }
   }
-  
   /**
    * Counts the number of valid elements in the passed variable. Valid elements
    * are ones which are not defined as outside the mask of a region.
@@ -1152,9 +1137,8 @@ public class ManipulationDriver
       variableList.put(VDname, VDest);
     }
 
-    VDest.setData(countElements(VSource.getData()));
+    VDest.setData(ComponentManipulator.countElements(VSource.getData()));
   }
-  
   /**
    * Determines whether the data contained in this variable is added or averaged
    * on aggregation, then performs the correct operation with all valid
@@ -1180,13 +1164,12 @@ public class ManipulationDriver
     
     if((VSource).avg)
     { //dont need to weight values
-      VDest.setData(avgOverRegion(VSource.getData(), VSource.weight, VSource.x, VSource.y, VSource.h));
+      VDest.setData(ComponentManipulator.avgOverRegion(VSource.getData(), VSource.weight, VSource.x, VSource.y, VSource.h));
     } else
     {
-      VDest.setData(sumValues(VSource.getData()));
+      VDest.setData(ComponentManipulator.sumValues(VSource.getData()));
     }
   }
-  
   /**
    * Sums the value of all valid elements in a variable. Valid elements
    * are ones which are not defined as outside the mask of a region.
@@ -1210,14 +1193,13 @@ public class ManipulationDriver
     
     if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
     { //dont need to weight values
-      VDest.setData(sumValues(((ReferenceVariable)VSource).getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
+      VDest.setData(ComponentManipulator.sumValues(((ReferenceVariable)VSource).getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
     } else
     {
-      VDest.setData(sumValues(VSource.getData()));
+      VDest.setData(ComponentManipulator.sumValues(VSource.getData()));
     }
   }
-   
-  /**
+   /**
    * Gets the largest single value in the passed variable.
    * @param command XML node defining the operation.
    */
@@ -1246,9 +1228,8 @@ public class ManipulationDriver
       variableList.put(VDname, VDest);
     }
     
-    VDest.setData(largestValue(VSource.getData()));
+    VDest.setData(ComponentManipulator.largestValue(VSource.getData()));
   }
-  
   /**
    * Gets the smallest single value in the passed variable.
    * @param command XML node defining the operation.
@@ -1278,9 +1259,8 @@ public class ManipulationDriver
       variableList.put(VDname, VDest);
     }
     
-    VDest.setData(smallestValue(VSource.getData()));
+    VDest.setData(ComponentManipulator.smallestValue(VSource.getData()));
   }
-  
   /**
    * Gets the average of all valid elements in a varaible. Valid elements
    * are ones which are not defined as outside the mask of a region. Values
@@ -1315,11 +1295,11 @@ public class ManipulationDriver
         
         if((Vcurr.isReference())&&(((ReferenceVariable)Vcurr).avg))
         { //dont need to weight values
-          Nvar = new DataVariable(Vcurr.name, avgOverRegion(Vcurr.getData(), ((ReferenceVariable)Vcurr).weight, ((ReferenceVariable)Vcurr).x, ((ReferenceVariable)Vcurr).y, ((ReferenceVariable)Vcurr).h));
+          Nvar = new DataVariable(Vcurr.name, ComponentManipulator.avgOverRegion(Vcurr.getData(), ((ReferenceVariable)Vcurr).weight, ((ReferenceVariable)Vcurr).x, ((ReferenceVariable)Vcurr).y, ((ReferenceVariable)Vcurr).h));
           ((GroupVariable)VDest).addData(Nvar);
         } else
         {
-          Nvar = new DataVariable(Vcurr.name, avgOverRegion(Vcurr.getData()));
+          Nvar = new DataVariable(Vcurr.name, ComponentManipulator.avgOverRegion(Vcurr.getData()));
           ((GroupVariable)VDest).addData(Nvar);
         }
       }
@@ -1331,14 +1311,13 @@ public class ManipulationDriver
       
       if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
       { //dont need to weight values
-        VDest.setData(avgOverRegion(VSource.getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
+        VDest.setData(ComponentManipulator.avgOverRegion(VSource.getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
       } else
       {
-        VDest.setData(avgOverRegion(VSource.getData()));
+        VDest.setData(ComponentManipulator.avgOverRegion(VSource.getData()));
       }
     }
   }
-  
   /**
    * Gets the average of all valid elements in a varaible with respect to
    * their proportion of area. Area changes based on latitude. Valid elements
@@ -1375,11 +1354,11 @@ public class ManipulationDriver
         
         if((Vcurr).avg)
         { //dont need to weight values
-          Nvar = new DataVariable(Vcurr.name, avgOverRegionByArea(Vcurr.getData(), Vcurr.weight, Vcurr.x, Vcurr.y, Vcurr.w, Vcurr.h));
+          Nvar = new DataVariable(Vcurr.name, ComponentManipulator.avgOverRegionByArea(Vcurr.getData(), Vcurr.weight, Vcurr.x, Vcurr.y, Vcurr.w, Vcurr.h));
           ((GroupVariable)VDest).addData(Nvar);
         } else
         {
-          Nvar = new DataVariable(Vcurr.name, avgOverRegionByArea(VSource.getData(), Vcurr.x, Vcurr.y, Vcurr.w, Vcurr.h));
+          Nvar = new DataVariable(Vcurr.name, ComponentManipulator.avgOverRegionByArea(VSource.getData(), Vcurr.x, Vcurr.y, Vcurr.w, Vcurr.h));
           ((GroupVariable)VDest).addData(Nvar);
         }
       }
@@ -1391,14 +1370,13 @@ public class ManipulationDriver
       
       if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
       { //dont need to weight values
-        VDest.setData(avgOverRegionByArea(VSource.getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).w, ((ReferenceVariable)VSource).h));
+        VDest.setData(ComponentManipulator.avgOverRegionByArea(VSource.getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).w, ((ReferenceVariable)VSource).h));
       } else
       {
-        VDest.setData(avgOverRegionByArea(VSource.getData(), ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).w, ((ReferenceVariable)VSource).h));
+        VDest.setData(ComponentManipulator.avgOverRegionByArea(VSource.getData(), ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).w, ((ReferenceVariable)VSource).h));
       }
     }
   }
-  
   /**
    * Gets the average at each location of all the variable values which 
    * occur at that location in their respective variable. Valid elements
@@ -1443,9 +1421,8 @@ public class ManipulationDriver
       variableList.put(VDname, VDest);
     }
     
-    VDest.setData(avgVariables(sendData));
+    VDest.setData(ComponentManipulator.avgVariables(sendData));
   }
-  
   /**
    * Gets the average for a region of a list of overlapping variables.
    * Valid elements are ones which are not defined as outside the mask of
@@ -1493,15 +1470,14 @@ public class ManipulationDriver
     
     if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
     { //dont need to weight values
-      toSend = avgVariables(sendData);
-      VDest.setData(avgOverRegion(toSend, ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
+      toSend = ComponentManipulator.avgVariables(sendData);
+      VDest.setData(ComponentManipulator.avgOverRegion(toSend, ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
     } else
     {
-      toSend = avgVariables(sendData);
-      VDest.setData(avgOverRegion(toSend));
+      toSend = ComponentManipulator.avgVariables(sendData);
+      VDest.setData(ComponentManipulator.avgOverRegion(toSend));
     }
   }
-  
   /**
    * Gets the average for a region of a list of overlapping variables
    * accounting for area. Area changes based on latitude.
@@ -1550,15 +1526,14 @@ public class ManipulationDriver
     
     if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
     { //need to weight values
-      toSend = avgVariables(sendData);
-      VDest.setData(avgOverRegionByArea(toSend,  ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).w, ((ReferenceVariable)VSource).h));
+      toSend = ComponentManipulator.avgVariables(sendData);
+      VDest.setData(ComponentManipulator.avgOverRegionByArea(toSend,  ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).w, ((ReferenceVariable)VSource).h));
     } else
     {
-      toSend = avgVariables(sendData);
-      VDest.setData(avgOverRegionByArea(toSend, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).w, ((ReferenceVariable)VSource).h));
+      toSend = ComponentManipulator.avgVariables(sendData);
+      VDest.setData(ComponentManipulator.avgOverRegionByArea(toSend, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).w, ((ReferenceVariable)VSource).h));
     }
   }
-  
   /**
    * Weights each valid value in the variable by another mask variable's
    * coresponding positions based one value limits and weight limits.
@@ -1572,7 +1547,6 @@ public class ManipulationDriver
     Variable VDest = null;
     Variable VSource = null;
     Variable VScale = null;
-    List infoList;
     Element currInfo;
     Element minMax;
     double minWeight, maxWeight;
@@ -1632,13 +1606,12 @@ public class ManipulationDriver
       VDest = VSource.getShape(VDname);
       variableList.put(VDname, VDest);
       
-      VDest.setData(weightValues(VSource.getData(), VScale.getData(), minVal, maxVal, minWeight, maxWeight));
+      VDest.setData(ComponentManipulator.weightValues(VSource.getData(), VScale.getData(), minVal, maxVal, minWeight, maxWeight));
     } else
     {
       log.log(Level.WARNING, "Command Failed: variables of different shapes.");
     }
   }
-  
   /**
    * Extracts a subregion of the specified reference variable. The subregion
    * is defined as a region which is the whole or part of the shape of the
@@ -1652,8 +1625,6 @@ public class ManipulationDriver
     Variable VDest;
     Variable VSource;
     Region VShape;
-    double change;
-    List infoList;
     Element currInfo;
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
@@ -1678,7 +1649,6 @@ public class ManipulationDriver
     
     VDest.setData(VShape.extractRegion((ReferenceVariable)VSource));
   }
-  
   /**
    * Give the user access to a contained Child varialbe in the passed
    * Group variable. Must know the contained name of the variable to be
@@ -1695,8 +1665,6 @@ public class ManipulationDriver
     Variable VSource;
     Variable Vchild;
     String cName;
-    double change;
-    List infoList;
     Element currInfo;
     
     currInfo = command.getChild("target");
@@ -1723,7 +1691,6 @@ public class ManipulationDriver
       log.log(Level.WARNING, "Source variable: "+VSource.name+" is not a Group variable.");
     }
   }
-  
   /**
    * Prints only the actual data elements of the passed variable to the screen.
    * @param command XML node defining the operation.
@@ -1771,7 +1738,6 @@ public class ManipulationDriver
       log.log(Level.WARNING, "Variable: "+command.getAttributeValue("variable")+" is undefined.");
     }
   }
-  
   /**
    * Prints the passed variable to the screen along with additional qualifying
    * information such as name of variable, region, bounding rectangles.
@@ -1819,7 +1785,6 @@ public class ManipulationDriver
       log.log(Level.WARNING, "Variable: "+command.getAttributeValue("variable")+" is undefined.");
     }
   }
-  
   /**
    * Displays a graphical plotting of this variable. Each point is color coded
    * based on it's value. Points outside the variable are displayed as white.
@@ -1838,7 +1803,6 @@ public class ManipulationDriver
         if(toPrint.isGroup())
         {
           double min, max;
-          double[][] matrix;
           MatrixGrapher graph;
           GroupVariable grp = (GroupVariable)toPrint;
           ReferenceVariable currPrint;
@@ -1851,19 +1815,18 @@ public class ManipulationDriver
             currPrint = (ReferenceVariable)me.getValue();
             graph = new MatrixGrapher();
             
-            min = (smallestValue(currPrint.getData()))[0].data[0][0];
-            max = (largestValue(currPrint.getData()))[0].data[0][0];
+            min = (ComponentManipulator.smallestValue(currPrint.getData()))[0].data[0][0];
+            max = (ComponentManipulator.largestValue(currPrint.getData()))[0].data[0][0];
             graph.drawMatrix(currPrint.buildMatrix(), min, max, currPrint.x, currPrint.y, currPrint.res);
           }
         } else
         {
           ReferenceVariable ref = (ReferenceVariable)toPrint;
           double min, max;
-          double[][] matrix;
           MatrixGrapher graph = new MatrixGrapher();
           
-          min = (smallestValue(ref.getData()))[0].data[0][0];
-          max = (largestValue(ref.getData()))[0].data[0][0];
+          min = (ComponentManipulator.smallestValue(ref.getData()))[0].data[0][0];
+          max = (ComponentManipulator.largestValue(ref.getData()))[0].data[0][0];
           graph.drawMatrix(ref.buildMatrix(), min, max, ref.x, ref.y, ref.res);
         }
       } else
@@ -1875,7 +1838,6 @@ public class ManipulationDriver
       log.log(Level.WARNING, "Variable: "+command.getAttributeValue("variable")+" is undefined.");
     }
   }
-  
   /**
    * Creates a new 'txt' file containing this variable's data. This will allow
    * a user to perform manipulations on data, then save that data and reread
@@ -2013,7 +1975,6 @@ public class ManipulationDriver
       log.log(Level.WARNING, "Variable: "+currInfo.getAttributeValue("name")+" is undefined.");
     }
   }
-  
   /**
    * Adds a descriptive comment to a variable which will be printed with
    * that variable if the verbose option is selected.
@@ -2037,7 +1998,6 @@ public class ManipulationDriver
     }
 
   }
-  
   /**
    * Adds a reference descriptor to the variable which will be printed with the
    * printVerbose command.
@@ -2067,7 +2027,6 @@ public class ManipulationDriver
     }
 
   }
-  
   /**
    * Adds a units descriptor to the variable which will be printed with the
    * printVerbose command.
@@ -2098,896 +2057,6 @@ public class ManipulationDriver
 
   }
   
-//*****************************************************************************
-//*****************Component Manipulators**************************************
-//*****************************************************************************
-  
-  private Wrapper[] addVar(Wrapper[] R1, Wrapper[] R2)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdM1, holdM2, holdMR;
-    Wrapper[] toReturn = new Wrapper[R1.length];
-    
-    for(int i = 0; i < R1.length; i++)
-    {
-      holdM1 = R1[i].data;
-      holdM2 = R2[i].data;
-      holdMR = new double[holdM1.length][holdM1[0].length];
-      for(int iY = 0; iY < holdM1.length; iY++)
-      {
-        for(int iX = 0; iX < holdM1[0].length; iX++)
-        {
-          if((Double.isNaN(holdM1[iY][iX]))||(Double.isNaN(holdM2[iY][iX])))
-          {
-            holdMR[iY][iX] = Double.NaN;
-          } else
-          {
-            holdMR[iY][iX] = holdM1[iY][iX] + holdM2[iY][iX];
-          }
-        }
-      }
-      
-      toReturn[i] = R1[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
-  private Wrapper[] addVar(Wrapper[] R, double change)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR, holdMS;
-    Wrapper[] toReturn = new Wrapper[R.length];
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      holdMR = new double[holdMS.length][holdMS[0].length];
-      for(int iY = 0; iY < holdMR.length; iY++)
-      {
-        for(int iX = 0; iX < holdMR[0].length; iX++)
-        {
-          if(Double.isNaN(holdMS[iY][iX]))
-          {
-            holdMR[iY][iX] = Double.NaN;
-          } else
-          {
-            holdMR[iY][iX] = holdMS[iY][iX] + change;
-          }
-        }
-      }
-      
-      toReturn[i] = R[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
-  private Wrapper[] subtractVar(Wrapper[] R1, Wrapper[] R2)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdM1, holdM2, holdMR;
-    Wrapper[] toReturn = new Wrapper[R1.length];
-    
-    for(int i = 0; i < R1.length; i++)
-    {
-      holdM1 = R1[i].data;
-      holdM2 = R2[i].data;
-      holdMR = new double[holdM1.length][holdM1[0].length];
-      for(int iY = 0; iY < holdM1.length; iY++)
-      {
-        for(int iX = 0; iX < holdM1[0].length; iX++)
-        {
-          if((Double.isNaN(holdM1[iY][iX]))||(Double.isNaN(holdM2[iY][iX])))
-          {
-            holdMR[iY][iX] = Double.NaN;
-          } else
-          {
-            holdMR[iY][iX] = holdM1[iY][iX] - holdM2[iY][iX];
-          }
-        }
-      }
-      
-      toReturn[i] = R1[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
-  private Wrapper[] multiplyVar(Wrapper[] R1, Wrapper[] R2)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdM1, holdM2, holdMR;
-    Wrapper[] toReturn = new Wrapper[R1.length];
-    
-    for(int i = 0; i < R1.length; i++)
-    {
-      holdM1 = R1[i].data;
-      holdM2 = R2[i].data;
-      holdMR = new double[holdM1.length][holdM1[0].length];
-      for(int iY = 0; iY < holdM1.length; iY++)
-      {
-        for(int iX = 0; iX < holdM1[0].length; iX++)
-        {
-          if((Double.isNaN(holdM1[iY][iX]))||(Double.isNaN(holdM2[iY][iX])))
-          {
-            holdMR[iY][iX] = Double.NaN;
-          } else
-          {
-            holdMR[iY][iX] = (holdM1[iY][iX] * holdM2[iY][iX]);
-          }
-        }
-      }
-      
-      toReturn[i] = R1[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
-  private Wrapper[] multiplyVar(Wrapper[] R, double factor)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR, holdMS;
-    Wrapper[] toReturn = new Wrapper[R.length];
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      holdMR = new double[holdMS.length][holdMS[0].length];
-      for(int iY = 0; iY < holdMR.length; iY++)
-      {
-        for(int iX = 0; iX < holdMR[0].length; iX++)
-        {
-          if(Double.isNaN(holdMS[iY][iX]))
-          {
-            holdMR[iY][iX] = Double.NaN;
-          } else
-          {
-            holdMR[iY][iX] = (holdMS[iY][iX] * factor);
-          }
-        }
-      }
-      
-      toReturn[i] = R[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
-  private Wrapper[] divideVar(Wrapper[] R1, Wrapper[] R2)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdM1, holdM2, holdMR;
-    Wrapper[] toReturn = new Wrapper[R1.length];
-    
-    for(int i = 0; i < R1.length; i++)
-    {
-      holdM1 = R1[i].data;
-      holdM2 = R2[i].data;
-      holdMR = new double[holdM1.length][holdM1[0].length];
-      for(int iY = 0; iY < holdM1.length; iY++)
-      {
-        for(int iX = 0; iX < holdM1[0].length; iX++)
-        {
-          if((Double.isNaN(holdM1[iY][iX]))||(Double.isNaN(holdM2[iY][iX])))
-          {
-            holdMR[iY][iX] = Double.NaN;
-          } else
-          {
-            holdMR[iY][iX] = (holdM1[iY][iX] / holdM2[iY][iX]);
-          }
-          
-        }
-      }
-      
-      toReturn[i] = R1[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
-  private Wrapper[] divideVar(Wrapper[] R, double factor)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR, holdMS;
-    Wrapper[] toReturn = new Wrapper[R.length];
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      holdMR = new double[holdMS.length][holdMS[0].length];
-      for(int iY = 0; iY < holdMR.length; iY++)
-      {
-        for(int iX = 0; iX < holdMR[0].length; iX++)
-        {
-          if(Double.isNaN(holdMS[iY][iX]))
-          {
-            holdMR[iY][iX] = Double.NaN;
-          } else
-          {
-            holdMR[iY][iX] = (holdMS[iY][iX] / factor);
-          }
-        }
-      }
-      
-      toReturn[i] = R[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
-  private Wrapper[] greaterThan(Wrapper[] R, double limit)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR;
-    double[][] holdMS;
-    Wrapper[] toReturn = new Wrapper[R.length];
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      holdMR = new double[holdMS.length][holdMS[0].length];
-      for(int iY = 0; iY < holdMR.length; iY++)
-      {
-        for(int iX = 0; iX < holdMR[0].length; iX++)
-        {
-          if(!Double.isNaN(holdMS[iY][iX]))
-          {
-            if(holdMS[iY][iX] > limit)
-          	{
-            	holdMR[iY][iX] = holdMS[iY][iX];
-          	} else
-          	{
-            	holdMR[iY][iX] = 0;
-          	}
-          } else
-          {
-            holdMR[iY][iX] = Double.NaN;
-          }
-        }
-      }
-
-      toReturn[i] = R[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
-  private Wrapper[] greaterThanRegion(Wrapper[] R, Wrapper[] M)
-  { 
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR;
-    double[][] holdMS;
-    double[][] holdMM; //matrix mask
-    Wrapper[] toReturn = new Wrapper[R.length];
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      holdMM = M[i].data;
-      holdMR = new double[holdMS.length][holdMS[0].length];
-      for(int iY = 0; iY < holdMR.length; iY++)
-      {
-        for(int iX = 0; iX < holdMR[0].length; iX++)
-        {
-          if((!Double.isNaN(holdMS[iY][iX]))&&(!Double.isNaN(holdMM[iY][iX])))
-          {
-            if(holdMS[iY][iX] > holdMM[iY][iX])
-            {
-              holdMR[iY][iX] = holdMS[iY][iX];
-            } else
-            {
-              holdMR[iY][iX] = 0;
-            }
-          } else
-          {
-            holdMR[iY][iX] = Double.NaN;
-          }
-        }
-      }
-
-      toReturn[i] = R[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
-  private Wrapper[] lessThan(Wrapper[] R, double limit)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR;
-    double[][] holdMS;
-    Wrapper[] toReturn = new Wrapper[R.length];
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      holdMR = new double[holdMS.length][holdMS[0].length];
-      for(int iY = 0; iY < holdMR.length; iY++)
-      {
-        for(int iX = 0; iX < holdMR[0].length; iX++)
-        {
-          if(!Double.isNaN(holdMS[iY][iX]))
-          {
-            if(holdMS[iY][iX] < limit)
-          	{
-            	holdMR[iY][iX] = holdMS[iY][iX];
-          	} else
-          	{
-            	holdMR[iY][iX] = 0;
-          	}
-          } else
-          {
-            holdMR[iY][iX] = Double.NaN;
-          }
-        }
-      }
-
-      toReturn[i] = R[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
-  private Wrapper[] lessThanRegion(Wrapper[] R, Wrapper[] M)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR;
-    double[][] holdMS;
-    double[][] holdMM; //matrix mask
-    Wrapper[] toReturn = new Wrapper[R.length];
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      holdMM = M[i].data;
-      holdMR = new double[holdMS.length][holdMS[0].length];
-      for(int iY = 0; iY < holdMR.length; iY++)
-      {
-        for(int iX = 0; iX < holdMR[0].length; iX++)
-        {
-          if((!Double.isNaN(holdMS[iY][iX]))&&(!Double.isNaN(holdMM[iY][iX])))
-          {
-            if(holdMS[iY][iX] < holdMM[iY][iX])
-            {
-              holdMR[iY][iX] = holdMS[iY][iX];
-            } else
-            {
-              holdMR[iY][iX] = 0;
-            }
-          } else
-          {
-            holdMR[iY][iX] = Double.NaN;
-          }
-        }
-      }
-
-      toReturn[i] = R[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
-  private Wrapper[] countGreaterThan(Wrapper[] R, double limit)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    DataWrapper[] toReturn = new DataWrapper[1];
-    
-    holdMR[0][0] = 0;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if((holdMS[iY][iX] > limit)&&(!Double.isNaN(holdMS[iY][iX])))
-          {
-            holdMR[0][0]++;
-          }
-        }
-    }
-    
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] countGreaterThanRegion(Wrapper[] R, Wrapper[] M)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    double[][] holdMM; //matrix mask
-    DataWrapper[] toReturn = new DataWrapper[1];
-    
-    holdMR[0][0] = 0;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      holdMM = M[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if((holdMS[iY][iX] > holdMM[iY][iX])&&(!Double.isNaN(holdMS[iY][iX])))
-          {
-            holdMR[0][0]++;
-          }
-        }
-    }
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] countLessThan(Wrapper[] R, double limit)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    DataWrapper[] toReturn = new DataWrapper[1];
-    
-    holdMR[0][0] = 0;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if((holdMS[iY][iX] < limit)&&(!Double.isNaN(holdMS[iY][iX])))
-          {
-            holdMR[0][0]++;
-          }
-        }
-    }
-    
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] countLessThanRegion(Wrapper[] R, Wrapper[] M)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    double[][] holdMM; //matrix mask
-    DataWrapper[] toReturn = new DataWrapper[1];
-    
-    holdMR[0][0] = 0;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      holdMM = M[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if((holdMS[iY][iX] < holdMM[iY][iX])&&(!Double.isNaN(holdMS[iY][iX])))
-          {
-            holdMR[0][0]++;
-          }
-        }
-    }
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] countElements(Wrapper[] R)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    DataWrapper[] toReturn = new DataWrapper[1];
-    
-    holdMR[0][0] = 0;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if(!Double.isNaN(holdMS[iY][iX]))
-          {
-            holdMR[0][0]++;
-          }
-        }
-    }
-    
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] sumValues(Wrapper[] R)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    DataWrapper[] toReturn = new DataWrapper[1];
-    
-    holdMR[0][0] = 0;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if(!Double.isNaN(holdMS[iY][iX]))
-          {
-            holdMR[0][0] += holdMS[iY][iX];
-          }
-        }
-    }
-    
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] sumValues(Wrapper[] R, double[][] weight, double x, double y, double h)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    int wX, wY; //the double indexs for weight
-    DataWrapper[] toReturn = new DataWrapper[1];
-    
-    holdMR[0][0] = 0;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-      {
-        wY = (int)(((iY*R[i].getRes())+((y+h)-(R[i].getY()+R[i].getH())))/R[i].getRes());
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if(!Double.isNaN(holdMS[iY][iX]))
-          {
-            wX = (int)((((iX*R[i].getRes())+R[i].getX())-x)/R[i].getRes());
-            holdMR[0][0] += (holdMS[iY][iX]*weight[wY][wX]);
-          }
-        }
-      }
-    }
-    
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] largestValue(Wrapper[] R)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    DataWrapper[] toReturn = new DataWrapper[1];
-    
-    holdMR[0][0] = Double.NaN;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if(!Double.isNaN(holdMS[iY][iX]))
-          {
-            if(Double.isNaN(holdMR[0][0]))
-            {
-              holdMR[0][0] = holdMS[iY][iX];
-            } else if((holdMS[iY][iX] > holdMR[0][0]))
-            {
-              holdMR[0][0] = holdMS[iY][iX];
-            }
-          }
-        }
-    }
-    
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] smallestValue(Wrapper[] R)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    DataWrapper[] toReturn = new DataWrapper[1];
-    
-    holdMR[0][0] = Double.NaN;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if(!Double.isNaN(holdMS[iY][iX]))
-          {
-            if(Double.isNaN(holdMR[0][0]))
-            {
-              holdMR[0][0] = holdMS[iY][iX];
-            } else
-            {
-              if(holdMS[iY][iX] < holdMR[0][0])
-              {
-                holdMR[0][0] = holdMS[iY][iX];
-              }
-            }
-          }
-        }
-    }
-    
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] avgOverRegion(Wrapper[] R)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    DataWrapper[] toReturn = new DataWrapper[1];
-    int count = 0;
-    
-    holdMR[0][0] = 0;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if(!Double.isNaN(holdMS[iY][iX]))
-          {
-            holdMR[0][0] += holdMS[iY][iX];
-            count++;
-          }
-        }
-    }
-    holdMR[0][0] = (holdMR[0][0]/count);
-    
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] avgOverRegion(Wrapper[] R, double[][] weight, double x, double y, double h)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    DataWrapper[] toReturn = new DataWrapper[1];
-    int count = 0;
-    int wY, wX;
-    
-    holdMR[0][0] = 0;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      holdMS = R[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-      {
-        wY = (int)(((iY*R[i].getRes())+((y+h)-(R[i].getY()+R[i].getH())))/R[i].getRes());
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if(!Double.isNaN(holdMS[iY][iX]))
-          {
-            wX = (int)((((iX*R[i].getRes())+R[i].getRes())-x)/R[i].getRes());
-            holdMR[0][0] += (holdMS[iY][iX]*weight[wY][wX]);
-            count++;
-          }
-        }
-      }
-    }
-    holdMR[0][0] = (holdMR[0][0]/count);
-    
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] avgVariables(Wrapper[][] data)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMS;
-    Wrapper[] toReturn = new Wrapper[data[0].length];
-    
-    for(int i = 0; i < data.length; i++)
-    {
-      toReturn[i] = data[0][i].makeCopy();
-      toReturn[i].data = new double[data[0][i].data.length][data[0][i].data[0].length];
-    }
-    
-    for(int i = 0; i < data.length; i++)
-    { //for each variable
-      for(int k = 0; k < data[i].length; k++)
-      { //for each wrapper
-        holdMS = data[i][k].data;
-        for(int iY = 0; iY<holdMS.length; iY++)
-        {
-          for(int iX = 0; iX<holdMS[0].length; iX++)
-          {
-            if(!Double.isNaN(holdMS[iY][iX]))
-            {
-              toReturn[k].data[iY][iX] += holdMS[iY][iX];
-            }
-          }
-        }
-      }
-    }
-    
-    for(int i = 0; i < data.length; i++)
-    { //for each wrapper
-        for(int iY = 0; iY<toReturn[0].data.length; iY++)
-        {
-          for(int iX = 0; iX<toReturn[0].data[0].length; iX++)
-          {
-            toReturn[i].data[iY][iX] = (toReturn[i].data[iY][iX]/data.length);
-          }
-        }
-    }
-    
-    return toReturn;
-  }
-  private Wrapper[] avgOverRegionByArea(Wrapper[] R, double Rx, double Ry, double Rw, double Rh)
-  { //for use by avg variables because weight has already been factored in
-    log.log(Level.FINER, "begin function");
-    double POLAR_CIRCUM = 40008.00; //these are constand but i dont know how to make constants in java...
-    double EQUAT_CIRCUM = 40076.5;
-    double PI = 3.1415926535;
-    
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    DataWrapper[] toReturn = new DataWrapper[1];
-    int count = 0;
-    
-    double circumAtLat; //the circumference of the earth at a specific latitude
-    double totalWidth; //width in km of the region
-    double totalHeight; //height in km of the region
-    double blockWidth; //eidth in km of a block of data
-    double blockHeight; //height in km of a block of data
-    double totalArea; //the area of the ENTIRE region
-    double proportion; //the proportion of the whole region a block of data is
-    
-    //finding the area of the master region, for getting proportions
-    circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((Ry)*(PI/180)));
-    double lowWidth = (circumAtLat/(360/(Rw)));
-    circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((Ry+Rh)*(PI/180)));
-    double highWidth = (circumAtLat/(360/(Rw)));
-    totalHeight = (POLAR_CIRCUM/(360/(Rh)));
-    totalArea = ((highWidth+lowWidth)/2)*totalHeight;
-    //done getting that!
-    
-    holdMR[0][0] = 0;
-    
-    for(int i = 0; i < R.length; i++)
-    {
-      totalHeight = (POLAR_CIRCUM/(360/R[i].getH()));
-      blockHeight = (totalHeight/R[i].data.length);
-      
-      holdMS = R[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-      {
-        circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+(iY*R[i].getRes()))*(PI/180)));
-        totalWidth = (circumAtLat/(360/R[i].getW()));
-        blockWidth = (totalWidth/R[i].data[iY].length);
-        proportion = ((blockWidth*blockHeight)/(totalArea));
-        
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if(!Double.isNaN(holdMS[iY][iX]))
-          {
-            holdMR[0][0] += (holdMS[iY][iX]*proportion);
-          }
-        }
-      }
-    }
-    
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] avgOverRegionByArea(Wrapper[] R, double[][] weight, double Rx, double Ry, double Rw, double Rh)
-  {
-    log.log(Level.FINER, "begin function");
-    double POLAR_CIRCUM = 40008.00; //these are constand but i dont know how to make constants in java...
-    double EQUAT_CIRCUM = 40076.5;
-    double PI = 3.1415926535;
-    
-    double[][] holdMR = new double[1][1];
-    double[][] holdMS;
-    double total = 0;
-    DataWrapper[] toReturn = new DataWrapper[1];
-    int count = 0;
-    int wY, wX;
-    
-    double circumAtLat; //the circumference of the earth at a specific latitude
-    double totalWidth; //width in km of the region
-    double totalHeight; //height in km of the region
-    double blockWidth; //eidth in km of a block of data
-    double blockHeight; //height in km of a block of data
-    double totalArea; //the area of the ENTIRE region (done as a trapazoid to acount for diff widths)
-    double proportion; //the proportion of the whole region a block of data is
-    
-    //finding the area of the master region, for getting proportions
-    circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((Ry)*(PI/180)));
-    double lowWidth = (circumAtLat/(360/(Rw)));
-    circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((Ry+Rh)*(PI/180)));
-    double highWidth = (circumAtLat/(360/(Rw)));
-    totalHeight = (POLAR_CIRCUM/(360/(Rh)));
-    totalArea = ((highWidth+lowWidth)/2)*totalHeight;
-    //done getting that!
-    
-    holdMR[0][0] = 0;
-    for(int i = 0; i < R.length; i++)
-    {
-      totalHeight = (POLAR_CIRCUM/(360/(R[i].getH())));
-      blockHeight = (totalHeight/R[i].data.length);
-      
-      holdMS = R[i].data;
-      for(int iY = 0; iY < holdMS.length; iY++)
-      {
-        wY = (int)(((iY*R[i].getRes())+((Ry+Rh)-(R[i].getY()+R[i].getH())))/R[i].getRes());
-        circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+((holdMS.length-iY)*R[i].getRes()))*(PI/180)));
-        totalWidth = (circumAtLat/(360/(R[i].getW())));
-        blockWidth = (totalWidth/R[i].data[iY].length);
-        proportion = ((blockWidth*blockHeight)/(totalArea));
-        
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if(!Double.isNaN(holdMS[iY][iX]))
-          {
-            wX = (int)((((iX*R[i].getRes())+R[i].getX())-Rx)/R[i].getRes());
-            holdMR[0][0] += (holdMS[iY][iX]*proportion*weight[wY][wX]);
-          }
-        }
-      }
-    }
-    
-    total /= R.length;
-    toReturn[0] = new DataWrapper();
-    toReturn[0].data = holdMR;
-    return toReturn;
-  }
-  private Wrapper[] weightValues(Wrapper[] R1, Wrapper[] R2, double minVal, double maxVal, double minWeight, double maxWeight)
-  {
-    log.log(Level.FINER, "begin function");
-    double[][] holdMS, holdMW, holdMR;
-    double toTest, p1, p2;
-    double thisWeight;
-    double weightDiff = (maxWeight-minWeight);
-    double valDiff = (maxVal-minVal);
-    Wrapper[] toReturn = new Wrapper[R1.length];
-    
-    for(int i = 0; i < R1.length; i++)
-    {
-      holdMS = R1[i].data;
-      holdMW = R2[i].data;
-      holdMR = new double[holdMS.length][holdMS[0].length];
-      for(int iY = 0; iY < holdMS.length; iY++)
-      {
-        for(int iX = 0; iX < holdMS[0].length; iX++)
-        {
-          if(Double.isNaN(holdMS[iY][iX]))
-          {
-            holdMR[iY][iX] = Double.NaN;
-          } else
-          {
-            toTest = holdMW[iY][iX];
-            if(toTest < minVal)
-            {
-              toTest = minVal;
-            }
-            if(toTest > maxVal)
-            {
-              toTest = maxVal;
-            }
-            toTest -= minVal;
-            p1 = (toTest/valDiff);
-            p2 = (p1*weightDiff);
-            thisWeight = (p2+minWeight);
-            
-            holdMR[iY][iX] = (holdMS[iY][iX] * thisWeight);
-          }
-        }
-      }
-      
-      toReturn[i] = R1[i].makeCopy();
-      toReturn[i].data = holdMR;
-    }
-    return toReturn;
-  }
 
 //*****************************************************************************
 //*******************Component Functions***************************************
@@ -3166,7 +2235,6 @@ public class ManipulationDriver
     log.log(Level.FINER, "begin function");
     List subRegions;
     Region sub;
-    double mX, mY;
     
     superRegion toAdd = new superRegion();
     
@@ -3383,7 +2451,6 @@ public class ManipulationDriver
   private void fillGroupByExtraction(GroupVariable var, Element members)
   {
     log.log(Level.FINER, "begin function");
-    Element currInfo;
     Variable VSource;
     ReferenceVariable currVar;
     String Vname, Rname;

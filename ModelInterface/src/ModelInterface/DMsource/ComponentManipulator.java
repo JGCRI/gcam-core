@@ -769,7 +769,6 @@ public final class ComponentManipulator
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
     DataWrapper[] toReturn = new DataWrapper[1];
-    int count = 0;
     
     double circumAtLat; //the circumference of the earth at a specific latitude
     double totalWidth; //width in km of the region
@@ -828,7 +827,6 @@ public final class ComponentManipulator
     double[][] holdMS;
     double total = 0;
     DataWrapper[] toReturn = new DataWrapper[1];
-    int count = 0;
     int wY, wX;
     
     double circumAtLat; //the circumference of the earth at a specific latitude
