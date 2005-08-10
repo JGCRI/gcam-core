@@ -76,7 +76,8 @@ public class XMLDB {
 						return;
 					}
 				} else {
-					((FileChooserDemo)parentFrame).setEnableManageDB(false);
+					// want a better way to do this anyway
+					//((FileChooserDemo)parentFrame).setEnableManageDB(false);
 				}
 			}
 			XmlManagerConfig mc = new XmlManagerConfig();

@@ -35,13 +35,14 @@ import org.jfree.report.modules.gui.base.PreviewDialog;
 import org.jfree.report.elementfactory.DrawableFieldElementFactory;
 import org.jfree.ui.FloatDimension;
 
-
-
 import org.apache.poi.hssf.usermodel.*;
 
 import com.sleepycat.dbxml.*;
 
-public class FileChooserDemo extends JFrame implements ActionListener,
+import ModelInterface.InterfaceMain;
+//import ModelInterface.InterfaceMain.MenuManager;
+
+public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 		TableModelListener {
 
 	/**
@@ -49,7 +50,9 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private JFrame thisFrame;
+	static public FileChooserDemo thisDemo;
+
+	private JFrame parentFrame;
 
 	private Document doc;
 
@@ -135,13 +138,12 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 
 	static String[] names = { "Single Table", "Multi Tables", "Combo Tables" };
 
-	static JFrame frame; // goes with radio buttons
-
 	static XMLDB xmlDB;
 
 	/**
 	 * Main function, creates a new thread for the gui and runs it.
 	 */
+	/*
 	public static void main(String[] args) {
 
 		//Schedule a job for the event-dispatching thread:
@@ -159,10 +161,12 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		});
 
 	}
+	*/
 
 	/**
 	 * Create a new instance of this class and makes it visible
 	 */
+	/*
 	public static void createAndShowGUI() {
 		FileChooserDemo f = null;
 		try {
@@ -173,6 +177,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			e.printStackTrace();
 		} 
 	}
+	*/
 
 	/**
 	 * Create a frame, add menu items, and initialize the DOM stuff. Looks for
@@ -184,9 +189,11 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 	 * @param title
 	 *            The title of this frame
 	 */
-	FileChooserDemo(String title) {
-		super(title);
-		thisFrame = this;
+	public FileChooserDemo(JFrame pf) {
+		//super(title);
+		thisDemo = this;
+		//parentFrame = InterfaceMain.getInstance();
+		parentFrame = pf;
 
 		globalFC = new JFileChooser();
 		globalFC.setCurrentDirectory( new File(".") );
@@ -200,7 +207,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			if (impl == null) {
 				System.out
 						.println("Could not find a DOM3 Load-Save compliant parser.");
-				JOptionPane.showMessageDialog(this,
+				JOptionPane.showMessageDialog(parentFrame,
 						"Could not find a DOM3 Load-Save compliant parser.",
 						"Initialization Error", JOptionPane.ERROR_MESSAGE);
 				return;
@@ -211,7 +218,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			//lastDoc = impl.createDocument("", "recent", DOCTYPE);
 		} catch (Exception e) {
 			System.err.println("Couldn't initialize DOMImplementation: " + e);
-			JOptionPane.showMessageDialog(this,
+			JOptionPane.showMessageDialog(parentFrame,
 					"Couldn't initialize DOMImplementation\n" + e,
 					"Initialization Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -308,6 +315,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			lastDoc.getDocumentElement().appendChild(aNode);
 		}
 
+		/*
 		Container contentPane = getContentPane();
 
 		// Create a user interface.
@@ -328,24 +336,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		submenu = new JMenu("Open ...");
 		submenu.setMnemonic(KeyEvent.VK_S);
 
-		menuItem = new JMenuItem("XML file");
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
-				ActionEvent.ALT_MASK));
-		menuItem.addActionListener(this);
-		submenu.add(menuItem);
 
-		menuItem = new JMenuItem("CSV file");
-		menuItem.addActionListener(this);
-		submenu.add(menuItem);
-		menuItem = new JMenuItem("DB Open");
-		menuItem.addActionListener(this);
-		submenu.add(menuItem);
-		m.add(submenu);
-
-		m.add(menuManage = makeMenuItem("Manage DB"));
-		menuManage.setEnabled(false);
-		m.add(menuExpPrn = makeMenuItem("Export / Print"));
-		menuExpPrn.setEnabled(false);
 
 		m.add(menuSave = makeMenuItem("Save"));
 		menuSave.setEnabled(false); // save will first be gray since no file
@@ -365,16 +356,6 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		copyMenu.setEnabled(false);
 		pasteMenu.setEnabled(false);
 
-		JMenu tableMenu = new JMenu("Table");
-		tableMenu.add(menuTableFilter = makeMenuItem("Filter"));
-
-		// nothing for this is implemented, just something i figured should
-		// happen
-		tableMenu.add(menuTableAdd = makeMenuItem("Add Data"));
-
-		menuTableFilter.setEnabled(false);
-		menuTableAdd.setEnabled(false);
-
 		JMenuBar mb = new JMenuBar();
 		mb.add(m);
 		mb.add(editMenu);
@@ -382,6 +363,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 
 		setJMenuBar(mb);
 		setSize(windowWidth, windowHeight);
+		*/
 		
 		// Create a window to display the chart in.
 		chartWindow = new JFrame( "Charts" );
@@ -412,6 +394,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			}
 		});
 		
+		/*
 		// Add adapter to catch window closing event.
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -427,8 +410,47 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 
 		this.getGlassPane().addMouseListener( new MouseAdapter() {});
 		this.getGlassPane().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		*/
 
 	}
+
+	public void addMenuItems(InterfaceMain.MenuManager menuMan) {
+		JMenuItem menuItem = new JMenuItem("XML file");
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
+				ActionEvent.ALT_MASK));
+		menuItem.addActionListener(this);
+		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).
+			getSubMenuManager(InterfaceMain.FILE_OPEN_SUBMENU_POS).addMenuItem(menuItem, 10);
+
+		menuItem = new JMenuItem("CSV file");
+		menuItem.addActionListener(this);
+		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).
+			getSubMenuManager(InterfaceMain.FILE_OPEN_SUBMENU_POS).addMenuItem(menuItem, 20);
+		menuItem = new JMenuItem("DB Open");
+		menuItem.addActionListener(this);
+		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).
+			getSubMenuManager(InterfaceMain.FILE_OPEN_SUBMENU_POS).addMenuItem(menuItem, 30);
+
+		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuManage = makeMenuItem("Manage DB"), 10);
+		menuManage.setEnabled(false);
+		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuExpPrn = makeMenuItem("Export / Print"), 20);
+		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addSeparator(20);
+		menuExpPrn.setEnabled(false);
+
+		int addedTo;
+		//JMenu tableMenu = new JMenu("Table");
+		addedTo = menuMan.addMenuItem(new JMenu("Table"), 10);
+		menuMan.getSubMenuManager(addedTo).addMenuItem(menuTableFilter = makeMenuItem("Filter"), 0);
+
+		// nothing for this is implemented, just something i figured should
+		// happen
+		//tableMenu.add(menuTableAdd = makeMenuItem("Add Data"));
+
+		menuTableFilter.setEnabled(false);
+		//menuTableAdd.setEnabled(false);
+
+	}
+
 
 	/**
 	 * Creates a new JTree with the current doc, then sets up a splitPane to
@@ -437,7 +459,8 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 	 * be handled.
 	 */
 	public void displayJtree() {
-		Container contentPane = getContentPane();
+		System.out.println("Parent Frame: "+parentFrame);
+		Container contentPane = parentFrame.getContentPane();
 		contentPane.removeAll();
 		if(xmlDB != null) {
 			xmlDB.closeDB();
@@ -537,7 +560,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 
 		//this.show();
 		//this.pack();
-		this.setVisible(true);
+		parentFrame.setVisible(true);
 	}
 
 	/**
@@ -562,7 +585,8 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			}
 			displayJtree();
 			menuSave.setEnabled(true); // now save can show up
-			setTitle("["+file+"] - ModelGUI");
+			//setTitle("["+file+"] - ModelGUI");
+			parentFrame.setTitle("["+file+"] - ModelInterface");
 
 		} else if (command.equals("DB Open")) {
 			JFileChooser fc = new JFileChooser();
@@ -584,7 +608,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			});
 
 			// Now open chooser
-			int result = fc.showOpenDialog(this);
+			int result = fc.showOpenDialog(parentFrame);
 			if( result == JFileChooser.APPROVE_OPTION ) {
 				globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 				menuManage.setEnabled(true);
@@ -592,9 +616,10 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 				copyMenu.setEnabled(false);
 				pasteMenu.setEnabled(false);
 				menuTableFilter.setEnabled(false);
-				xmlDB = new XMLDB(fc.getSelectedFile().toString(), this);
+				xmlDB = new XMLDB(fc.getSelectedFile().toString(), parentFrame);
 				createTableSelector();
-				setTitle("["+fc.getSelectedFile()+"] - ModelGUI");
+				//setTitle("["+fc.getSelectedFile()+"] - ModelGUI");
+				parentFrame.setTitle("["+fc.getSelectedFile()+"] - ModelInterface");
 			}
 
 		} else if (command.equals("CSV file")) {
@@ -610,7 +635,8 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			}
 			displayJtree();
 			menuSave.setEnabled(true); // now save can show up
-			setTitle("["+file+"] - ModelGUI");
+			parentFrame.setTitle("["+file+"] - ModelGUI");
+			parentFrame.setTitle("["+file+"] - ModelInterface");
 		} else if (command.equals("Save")) {
 			// Save a file
 			status = saveFile();
@@ -629,11 +655,11 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 
 					((BaseTableModel) ((TableSorter) ((JTable) ((JScrollPane) splitPane
 							.getRightComponent()).getViewport().getView())
-							.getModel()).getTableModel()).filterData(this);
+							.getModel()).getTableModel()).filterData(parentFrame);
 				} else {
 					((BaseTableModel) ((JTable) ((JScrollPane) splitPane
 							.getRightComponent()).getViewport().getView())
-							.getModel()).filterData(this);
+							.getModel()).filterData(parentFrame);
 					if (((JTable) ((JScrollPane) splitPane.getRightComponent())
 							.getViewport().getView()).getModel() instanceof MultiTableModel) {
 						// NOT THE BEST WAY TO SET ROW HEIGHT
@@ -655,7 +681,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		} else if(command.equals("Manage DB")) {
 			manageDB();
 		} else if (command.equals("Quit")) {
-			dispose();
+			//dispose();
 			updateRecentDoc();
 			writeFile(recentFile, lastDoc); // NEWLY ADDED !!!!!!!!!!!
 			if(xmlDB != null) {
@@ -679,7 +705,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		res = (XPathResult)xpeImpl.createExpression("//recent/lastHeight/node()", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 
 		tempNode = res.iterateNext();
-		tempNode.setNodeValue( (new Integer( this.getHeight() )).toString() );
+		tempNode.setNodeValue( (new Integer( parentFrame.getHeight() )).toString() );
 
 		res = (XPathResult)xpeImpl.createExpression("//recent/lastWidth", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 
@@ -690,7 +716,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 				}
 				tempNode.getFirstChild().setNodeValue( (new Integer( leftWidth )).toString() );
 			} else if( ((Element)tempNode).getAttribute( "pane" ).equals( "totalPane" )) {
-				tempNode.getFirstChild().setNodeValue( (new Integer( this.getWidth() )).toString() );
+				tempNode.getFirstChild().setNodeValue( (new Integer( parentFrame.getWidth() )).toString() );
 			}
 		}
 		if(queries != null) {
@@ -729,10 +755,10 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 						jtree.getLastSelectedPathComponent())) {
 
 					// find out the type of table and create it
-					RadioButton.showDialog(/* frame */thisFrame, null, "",
+					RadioButton.showDialog(/* frame */parentFrame, null, "",
 							"Choose Table Viewing Type", names, "");
 					JScrollPane tableView = RadioButton.createSelection(
-							selectedPath, doc, thisFrame);
+							selectedPath, doc, parentFrame, thisDemo);
 
 					if (tableView == null) {
 						return;
@@ -968,7 +994,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			message += " and all of its children?";
 		}
 
-		int ans = JOptionPane.showConfirmDialog(this, message, "Delete Node",
+		int ans = JOptionPane.showConfirmDialog(parentFrame, message, "Delete Node",
 				JOptionPane.YES_NO_OPTION);
 
 		if (ans == JOptionPane.NO_OPTION)
@@ -1002,7 +1028,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 	 * add a child to an esiting node in the tree.
 	 */
 	public void makeAddChildDialog() {
-		addChildDialog = new JDialog(this, "Add Child Node", true);
+		addChildDialog = new JDialog(parentFrame, "Add Child Node", true);
 		Container content = addChildDialog.getContentPane();
 		content.setLayout(new BoxLayout(addChildDialog.getContentPane(),
 				BoxLayout.X_AXIS));
@@ -1281,7 +1307,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		fc.setFileFilter(xmlFilter);
 
 		// Now open chooser
-		int result = fc.showOpenDialog(this);
+		int result = fc.showOpenDialog(parentFrame);
 
 		if (result == JFileChooser.CANCEL_OPTION) {
 			return true;
@@ -1317,7 +1343,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		fc.setFileFilter(csvFilter);
 
 		// Now open chooser
-		int result = fc.showOpenDialog(this);
+		int result = fc.showOpenDialog(parentFrame);
 
 		if (result == JFileChooser.CANCEL_OPTION) {
 			return true;
@@ -1330,7 +1356,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			fc2.setDialogTitle("Open Headers File");
 			fc2.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			fc2.setCurrentDirectory(fc.getCurrentDirectory());
-			int result2 = fc2.showOpenDialog(this);
+			int result2 = fc2.showOpenDialog(parentFrame);
 			if (result2 == JFileChooser.CANCEL_OPTION) {
 				return true;
 			} else if (result2 == JFileChooser.APPROVE_OPTION) {
@@ -1361,7 +1387,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		fc.setSelectedFile(file);
 
 		// Open chooser dialog
-		int result = fc.showSaveDialog(this);
+		int result = fc.showSaveDialog(parentFrame);
 
 		if (result == JFileChooser.CANCEL_OPTION) {
 			return true;
@@ -1408,7 +1434,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		} catch (Exception e) {
 			System.out.println("Got Exception while creating XML document: "
 					+ e);
-			JOptionPane.showMessageDialog(this,
+			JOptionPane.showMessageDialog(parentFrame,
 					"Exception while creating XML document\n" + e, "Exception",
 					JOptionPane.ERROR_MESSAGE);
 		}
@@ -1501,7 +1527,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 								System.out
 										.println("***Couldn't find replacement for "
 												+ strToReplace + "!***");
-								JOptionPane.showMessageDialog(this,
+								JOptionPane.showMessageDialog(parentFrame,
 										"Couldn't find replacement for "
 												+ strToReplace, "Warning",
 										JOptionPane.WARNING_MESSAGE);
@@ -1512,7 +1538,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 						System.out
 								.println("*** Hashtable file formatted incorrectly ***"
 										+ e);
-						JOptionPane.showMessageDialog(this,
+						JOptionPane.showMessageDialog(parentFrame,
 								"Hashtable file formatted incorrectly\n" + e,
 								"Exception", JOptionPane.ERROR_MESSAGE);
 					}
@@ -1592,7 +1618,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			for (int i = 0; i < s.length; i++) {
 				System.out.println(s[i]);
 			}
-			JOptionPane.showMessageDialog(this,
+			JOptionPane.showMessageDialog(parentFrame,
 					"Excpetion thrown while trying to read csv and header files\n"
 							+ e, "Exception", JOptionPane.ERROR_MESSAGE);
 		}
@@ -1816,12 +1842,12 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() == 0) {
-					JOptionPane.showMessageDialog(thisFrame, "Please select a Query or Query Group before createing", 
+					JOptionPane.showMessageDialog(parentFrame, "Please select a Query or Query Group before createing", 
 						"Create Query Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 
-				QueryGenerator qg = new QueryGenerator(thisFrame); 
+				QueryGenerator qg = new QueryGenerator(parentFrame); 
 				if(qg.getXPath().equals("")) {
 					return;
 				} else if(qg.getXPath().equals("Query Group")) {
@@ -1836,7 +1862,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() == 0) {
 					// error none selected
-					JOptionPane.showMessageDialog(thisFrame, "Please select a Query or Query Group to Remove", 
+					JOptionPane.showMessageDialog(parentFrame, "Please select a Query or Query Group to Remove", 
 						"Query Remove Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					queries.remove(queryList.getSelectionPath());
@@ -1850,15 +1876,15 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 				int[] regionSel = regionList.getSelectedIndices();
 				if(scnSel.length == 0) {
 					// error
-					JOptionPane.showMessageDialog(thisFrame, "Please select Scenarios to run the query against", 
+					JOptionPane.showMessageDialog(parentFrame, "Please select Scenarios to run the query against", 
 						"Run Query Error", JOptionPane.ERROR_MESSAGE);
 					//batchQuery(new File("bq.xml"), new File("c:\\test.xls"));
 				} else if(regionSel.length == 0) {
-					JOptionPane.showMessageDialog(thisFrame, "Please select Regions to run the query against", 
+					JOptionPane.showMessageDialog(parentFrame, "Please select Regions to run the query against", 
 						"Run Query Error", JOptionPane.ERROR_MESSAGE);
 					// error
 				} else if(queryList.getSelectionCount() == 0) {
-					JOptionPane.showMessageDialog(thisFrame, "Please select a query to run", 
+					JOptionPane.showMessageDialog(parentFrame, "Please select a query to run", 
 						"Run Query Error", JOptionPane.ERROR_MESSAGE);
 					// error
 				} else {
@@ -1867,11 +1893,11 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 					//System.out.println(queries.get(queryList.getSelectedIndex()));
 					//QueryGenerator qg = (QueryGenerator)queries.get(queryList.getSelectedIndex());
 					QueryGenerator qg = (QueryGenerator)queryList.getSelectionPath().getLastPathComponent();
-						thisFrame.getGlassPane().setVisible(true);
+						parentFrame.getGlassPane().setVisible(true);
 					if(qg.isGroup()) {
-						bt = new MultiTableModel(qg, regionList.getSelectedValues(), thisFrame);
+						bt = new MultiTableModel(qg, regionList.getSelectedValues(), parentFrame);
 			jTable = new JTable(bt);
-	  		jTable.getModel().addTableModelListener((FileChooserDemo)thisFrame);
+	  		jTable.getModel().addTableModelListener(thisDemo);
 
 			//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
 
@@ -1887,21 +1913,21 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			CopyPaste copyPaste = new CopyPaste( jTable );
 			jsp = new JScrollPane(jTable);
 			sp.setLeftComponent(jsp);
-			sp.setDividerLocation(((FileChooserDemo)thisFrame).getWidth());
+			sp.setDividerLocation(parentFrame.getWidth());
 			System.out.println("Should be displaying");
-				thisFrame.setVisible(true);
+				parentFrame.setVisible(true);
 				//menuSave.setEnabled(true);
 				menuExpPrn.setEnabled(true);
-						thisFrame.getGlassPane().setVisible(false);
+						parentFrame.getGlassPane().setVisible(false);
 						return;
 					}
-			//BaseTableModel bt = new ComboTableModel((QueryGenerator)queries.get(queryList.getSelectedIndex()), thisFrame);
-			bt = new ComboTableModel(qg, regionList.getSelectedValues(), thisFrame);
+			//BaseTableModel bt = new ComboTableModel((QueryGenerator)queries.get(queryList.getSelectedIndex()), parentFrame);
+			bt = new ComboTableModel(qg, regionList.getSelectedValues(), parentFrame);
 			JFreeChart chart = bt.createChart(0,0);
 			//TableSorter sorter = new TableSorter(bt);
 			jTable = new JTable(bt);
 			// Should the listener be set like so..
-			jTable.getModel().addTableModelListener((FileChooserDemo)thisFrame);
+			jTable.getModel().addTableModelListener(thisDemo);
 	  		//sorter.setTableHeader(jTable.getTableHeader());
 
 			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -1935,7 +1961,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 						*/
 			sp.setLeftComponent(new JScrollPane(jTable));
 			sp.setRightComponent(labelChart);
-						sp.setDividerLocation(((FileChooserDemo)thisFrame).getWidth()-350-15);
+						sp.setDividerLocation(parentFrame.getWidth()-350-15);
 						SP = sp;
 						//jsp = new JScrollPane(sp);
 						//all.setAlignmentY(Component.LEFT_ALIGNMENT);
@@ -1947,10 +1973,10 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 						System.out.println(""+thisFrame.getContentPane().getComponentCount());
 						System.out.println(thisFrame.getComponent(0));
 						*/
-				thisFrame.setVisible(true);
+				parentFrame.setVisible(true);
 				//menuSave.setEnabled(true);
 				menuExpPrn.setEnabled(true);
-						thisFrame.getGlassPane().setVisible(false);
+						parentFrame.getGlassPane().setVisible(false);
 				}
 			}
 		});
@@ -1958,7 +1984,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() == 0) {
-					JOptionPane.showMessageDialog(thisFrame, "Please select a query to edit", 
+					JOptionPane.showMessageDialog(parentFrame, "Please select a query to edit", 
 						"Edit Query Error", JOptionPane.ERROR_MESSAGE);
 					// error
 				} else {
@@ -1971,16 +1997,16 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 
 
 
-				Container contentPane = getContentPane();
+				Container contentPane = parentFrame.getContentPane();
 				if (splitPane != null) {
 					contentPane.remove(splitPane);
 				}
 				contentPane.add(new JScrollPane(all), BorderLayout.PAGE_START);
 				//contentPane.add(new JScrollPane(all));
-				this.setVisible(true);
+				parentFrame.setVisible(true);
 	}
 	private void manageDB() {
-		final JDialog filterDialog = new JDialog(this, "Manage Database", true);
+		final JDialog filterDialog = new JDialog(parentFrame, "Manage Database", true);
 		JPanel listPane = new JPanel();
 		JPanel buttonPane = new JPanel();
 		JButton addButton = new JButton("Add");
@@ -2007,15 +2033,15 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 				fc.setFileFilter(xmlFilter);
 
 				// Now open chooser
-				int result = fc.showOpenDialog(thisFrame);
+				int result = fc.showOpenDialog(parentFrame);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
 					globalFC.setCurrentDirectory(fc.getCurrentDirectory());
-					thisFrame.getGlassPane().setVisible(true);
+					parentFrame.getGlassPane().setVisible(true);
 					xmlDB.addFile(fc.getSelectedFile().toString());
 					scns = getScenarios();
 					list.setListData(scns);
-					thisFrame.getGlassPane().setVisible(false);
+					parentFrame.getGlassPane().setVisible(false);
 				}
 			}
 		});
@@ -2033,7 +2059,7 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 		});
 		doneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				xmlDB.addVarMetaData(thisFrame);
+				xmlDB.addVarMetaData(parentFrame);
 				scnList.setListData(scns);
 				regions = getRegions();
 				regionList.setListData(regions);
@@ -2184,8 +2210,8 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			ExportPluginFactory epf = ExportPluginFactory.getInstance();
 			MyExcelExportPlugin.bt = bt;
 			epf.registerPlugin(MyExcelExportPlugin.class, "20", MyExcelExportPlugin.enableKey);
-			PreviewDialog preview = new PreviewDialog(report, this, true);
-			preview.setTitle(getTitle()+" - Export Preview");
+			PreviewDialog preview = new PreviewDialog(report, parentFrame, true);
+			preview.setTitle(parentFrame.getTitle()+" - Export Preview");
 			/*
 			preview.addWindowListener(new WindowAdapter() {
 				public void windowClosing(final WindowEvent e) {
@@ -2243,9 +2269,9 @@ public class FileChooserDemo extends JFrame implements ActionListener,
 			createFilteredQuery(tempScns, scnSel);
 			sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
 			if(qgTemp.isGroup()) {
-				(new MultiTableModel(qgTemp, tempRegions.toArray(), this)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
+				(new MultiTableModel(qgTemp, tempRegions.toArray(), parentFrame)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
 			} else {
-				(new ComboTableModel(qgTemp, tempRegions.toArray(), this)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
+				(new ComboTableModel(qgTemp, tempRegions.toArray(), parentFrame)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
 			}
 		}
 		try {

@@ -122,20 +122,20 @@ public class RadioButton extends JDialog implements ActionListener {
 	 * @param pf needed to create the table.
 	 * @return Returns the pane to be displayed in the right side of the splitpane
 	 */
-	public static JScrollPane createSelection(TreePath tp, Document doc, JFrame pf) {
+	public static JScrollPane createSelection(TreePath tp, Document doc, JFrame pf, FileChooserDemo fcd) {
 		if(RadioButton.value.equals("")) {
 			return null;
 		}
-	  	((FileChooserDemo)pf).menuTableFilter.setEnabled(true);
-		((FileChooserDemo)pf).copyMenu.setEnabled(true);
-		((FileChooserDemo)pf).pasteMenu.setEnabled(true);
+	  	((FileChooserDemo)fcd).menuTableFilter.setEnabled(true);
+		((FileChooserDemo)fcd).copyMenu.setEnabled(true);
+		((FileChooserDemo)fcd).pasteMenu.setEnabled(true);
 		// check to see if there were any previous listeners, if so
 		// remove them from both copy and paste
-		ActionListener[] actns = ((FileChooserDemo)pf).copyMenu.getActionListeners();
+		ActionListener[] actns = ((FileChooserDemo)fcd).copyMenu.getActionListeners();
 		if(actns.length != 0) {
-			((FileChooserDemo)pf).copyMenu.removeActionListener(actns[0]);
-			actns = ((FileChooserDemo)pf).pasteMenu.getActionListeners();
-			((FileChooserDemo)pf).pasteMenu.removeActionListener(actns[0]);
+			((FileChooserDemo)fcd).copyMenu.removeActionListener(actns[0]);
+			actns = ((FileChooserDemo)fcd).pasteMenu.getActionListeners();
+			((FileChooserDemo)fcd).pasteMenu.removeActionListener(actns[0]);
 		}
 		if(RadioButton.value.equals("Single Table")) {
 			BaseTableModel bt = new NewDataTableModel(tp, doc, pf, "Single Table");
@@ -144,7 +144,7 @@ public class RadioButton extends JDialog implements ActionListener {
 	  		JTable jTable = new JTable(sorter);
 
 			// Should the listener be set like so..
-	  		jTable.getModel().addTableModelListener((FileChooserDemo)pf);
+	  		jTable.getModel().addTableModelListener((FileChooserDemo)fcd);
 	  		sorter.setTableHeader(jTable.getTableHeader());
 
 	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -162,20 +162,20 @@ public class RadioButton extends JDialog implements ActionListener {
 		  		j++;
 	  		}
 			CopyPaste copyPaste = new CopyPaste( jTable );
-			((FileChooserDemo)pf).copyMenu.addActionListener(copyPaste);
-			((FileChooserDemo)pf).pasteMenu.addActionListener(copyPaste);
+			((FileChooserDemo)fcd).copyMenu.addActionListener(copyPaste);
+			((FileChooserDemo)fcd).pasteMenu.addActionListener(copyPaste);
 			return new JScrollPane(jTable);
 		} else if(RadioButton.value.equals("Multi Tables")) {
 			// disable the copy paste buttons becuase they try to copy/paste from all of
 			// the tables in the multitable, need to figure out how to only do it from
 			// the table that is in focus
 			// using ctrl-c, ctrl-v still works
-			((FileChooserDemo)pf).copyMenu.setEnabled(false);
-			((FileChooserDemo)pf).pasteMenu.setEnabled(false);
+			((FileChooserDemo)fcd).copyMenu.setEnabled(false);
+			((FileChooserDemo)fcd).pasteMenu.setEnabled(false);
 
 			BaseTableModel bt = new MultiTableModel(tp, doc, pf, "Multi Tables");
 			JTable jTable = new JTable(bt);
-	  		jTable.getModel().addTableModelListener((FileChooserDemo)pf);
+	  		jTable.getModel().addTableModelListener((FileChooserDemo)fcd);
 
 			//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
 
@@ -195,7 +195,7 @@ public class RadioButton extends JDialog implements ActionListener {
 			TableSorter sorter = new TableSorter(bt);
 			JTable jTable = new JTable(sorter);
 			// Should the listener be set like so..
-			jTable.getModel().addTableModelListener((FileChooserDemo)pf);
+			jTable.getModel().addTableModelListener((FileChooserDemo)fcd);
 	  		sorter.setTableHeader(jTable.getTableHeader());
 
 			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -214,8 +214,8 @@ public class RadioButton extends JDialog implements ActionListener {
 				j++;
 			}
 			CopyPaste copyPaste = new CopyPaste( jTable );
-			((FileChooserDemo)pf).copyMenu.addActionListener(copyPaste);
-			((FileChooserDemo)pf).pasteMenu.addActionListener(copyPaste);
+			((FileChooserDemo)fcd).copyMenu.addActionListener(copyPaste);
+			((FileChooserDemo)fcd).pasteMenu.addActionListener(copyPaste);
 			return new JScrollPane(jTable);		
 		}
 		return null;

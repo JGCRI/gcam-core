@@ -230,7 +230,8 @@ public class MultiTableModel extends BaseTableModel{
 			//tM.createChart(0,0);
 	  		JTable jTable = new JTable(tM);
 
-	  		jTable.getModel().addTableModelListener((FileChooserDemo)parentFrame);
+	  		//jTable.getModel().addTableModelListener((FileChooserDemo)parentFrame);
+	  		jTable.getModel().addTableModelListener(FileChooserDemo.thisDemo);
 
 	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	 
@@ -270,7 +271,7 @@ public class MultiTableModel extends BaseTableModel{
 						sp.setLeftComponent(tV);
 						sp.setRightComponent(labelChart);
 						tableView = new JScrollPane(sp);
-						sp.setDividerLocation(((FileChooserDemo)parentFrame).getWidth()-350);
+						sp.setDividerLocation(parentFrame.getWidth()-350);
 						//tableView.setColumnHeaderView(jTable);
 			//tableView.getViewport().getView().add(Box.createHorizontalStrut(1000));
 			//tableView.getViewport().getView().add(labelChart);
