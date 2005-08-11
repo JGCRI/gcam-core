@@ -229,7 +229,6 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor, Me
 		editConfMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
 				ActionEvent.CTRL_MASK));
 		// Add an action listener which will launch the configuration editor.
-		// TODO: Using a UIAction here would save initialization time.
 		editConfMenuItem.addActionListener(new ActionListener() {
 			/**
 			 * Method called when the menu item is clicked.
