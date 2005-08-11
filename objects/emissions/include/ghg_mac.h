@@ -51,7 +51,6 @@ protected:
 	double natGasBasePrice; //!< natural gas price in base year
 	double phaseIn; //!< number of periods over which phase in occurs. can be a non-integer
 	double shiftRange; //!< the initial range over which carbon price changes due to the standard range of Nat. Gas price changes
-	double macCurveOff;//!< turns off the Mac Curves if the value is 1.
 	double finalReduction; //!< Increase maximum reduction to this value (due to tech change) 
 	int finalReductionYear; //!< Year in which maximum reduction should be implimented
 	bool noBelowZero;//!< turns off reductions if carbon Price is less than 0;

@@ -34,7 +34,6 @@ GhgMAC::GhgMAC(){
     const Modeltime* modeltime = scenario->getModeltime();
 
 	phaseIn = 1;
-	macCurveOff = 0;
 	finalReduction = 0;
 	finalReductionYear = modeltime->getEndYear();
 	shiftRange = 0;
@@ -122,9 +121,6 @@ void GhgMAC::XMLParse( const xercesc::DOMNode* node ){
 		if ( nodeName == "finalReductionYear"){
 			finalReductionYear = XMLHelper<int>::getValue( curr);
  		}
-		if ( nodeName == "macCurveOff"){
-			macCurveOff = XMLHelper<double>::getValue( curr);
-		}
 		if ( nodeName == "noBelowZero"){
 			noBelowZero = XMLHelper<bool>::getValue( curr);
 		}
@@ -149,7 +145,6 @@ void GhgMAC::toInputXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag(getXMLName(), out, tabs, name );
 	
 	XMLWriteElementCheckDefault( noBelowZero, "noBelowZero", out, tabs, false);
-	XMLWriteElementCheckDefault( macCurveOff, "macCurveOff", out, tabs, 0.0 );
 	XMLWriteElementCheckDefault( shiftRange, "shiftRange", out, tabs, 0.0 );
 	XMLWriteElementCheckDefault( phaseIn, "phaseIn", out, tabs, 1.0 );
 	XMLWriteElementCheckDefault( finalReduction, "finalReduction", out, tabs, 0.0 );
@@ -167,7 +162,6 @@ void GhgMAC::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
 	XMLWriteElement( noBelowZero, "noBelowZero", out, tabs);
-	XMLWriteElement( macCurveOff, "macCurveOff", out, tabs);
 	XMLWriteElement( shiftRange, "shiftRange", out, tabs );
 	XMLWriteElement( phaseIn, "phaseIn", out, tabs);
 	XMLWriteElement( finalReduction, "finalReduction", out, tabs);
@@ -198,30 +192,25 @@ void GhgMAC::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 double GhgMAC::findReduction( const string& regionName, const int period ){
 
 	double reduction;
-	if ( macCurveOff != 1 ){
-        const Marketplace* marketplace = scenario->getMarketplace();
-        double effectiveCarbonPrice = marketplace->getPrice( "CO2", regionName, period );
-	
-		if (name == "CH4"){
-			effectiveCarbonPrice = shiftNatGas( period, regionName, effectiveCarbonPrice );
-		}
-	    reduction = macCurve->getY( effectiveCarbonPrice );
-		if ( noBelowZero && effectiveCarbonPrice < 0 ){
-			reduction = 0;
-		}
-		
-        const Modeltime* modeltime = scenario->getModeltime();
-		double maxReduction = macCurve->getY( 200 );
-		reduction *= adjustPhaseIn( period );
-		int finalReductionPeriod = modeltime->getper_to_yr( finalReductionYear );
+    const Marketplace* marketplace = scenario->getMarketplace();
+    double effectiveCarbonPrice = marketplace->getPrice( "CO2", regionName, period );
 
-		if ( finalReduction > maxReduction && finalReductionPeriod > 1 ){
-			reduction *= adjustTechCh( period, finalReductionPeriod, maxReduction );
-		}
-	}
-	else {
-		reduction = 0;
-	}
+    if (name == "CH4"){
+        effectiveCarbonPrice = shiftNatGas( period, regionName, effectiveCarbonPrice );
+    }
+    reduction = macCurve->getY( effectiveCarbonPrice );
+    if ( noBelowZero && effectiveCarbonPrice < 0 ){
+        reduction = 0;
+    }
+    
+    const Modeltime* modeltime = scenario->getModeltime();
+    double maxReduction = macCurve->getY( 200 );
+    reduction *= adjustPhaseIn( period );
+    int finalReductionPeriod = modeltime->getper_to_yr( finalReductionYear );
+
+    if ( finalReduction > maxReduction && finalReductionPeriod > 1 ){
+        reduction *= adjustTechCh( period, finalReductionPeriod, maxReduction );
+    }
 	return reduction;
 }
 /*! \brief returns a multiplier that phases in the Mac Curve.
