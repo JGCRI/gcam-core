@@ -82,6 +82,7 @@ public class DbViewer implements ActionListener {
 			}
 		});
 		File queryFile = new File("queries.xml");
+		/*
 		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		if(queryFile.exists()) {
 			queriesDoc = parser.parse(new File("queries.xml"));
@@ -90,6 +91,7 @@ public class DbViewer implements ActionListener {
 			//lastDoc = impl.createDocument("", "recent", DOCTYPE);
 			queriesDoc = parser.newDocument();
 		}
+		*/
 
 	}
 
