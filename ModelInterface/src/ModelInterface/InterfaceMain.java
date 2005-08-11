@@ -120,8 +120,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		FileChooserDemo fcd = new FileChooserDemo(this);
 		fcd.addMenuItems(menuMan);
 		*/
-		//DbViewer dbView = new DbViewer(this);
-		//dbView.addMenuItems(menuMan);
+		final MenuAdder dbView = new DbViewer(this);
+		dbView.addMenuItems(menuMan);
 
 		// Create the Configuration editor and allow it to add its menu items to the
 		// menu system.

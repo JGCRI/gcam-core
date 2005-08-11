@@ -4,6 +4,7 @@ import ModelInterface.ModelGUI2.tables.BaseTableModel;
 import ModelInterface.ModelGUI2.tables.ComboTableModel;
 import ModelInterface.ModelGUI2.tables.MultiTableModel;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
+import ModelInterface.MenuAdder;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -55,7 +56,7 @@ import com.sleepycat.dbxml.*;
 
 import ModelInterface.InterfaceMain;
 
-public class DbViewer implements ActionListener {
+public class DbViewer implements ActionListener, MenuAdder {
 	private JFrame parentFrame;
 
 	private Document queriesDoc;
@@ -82,17 +83,16 @@ public class DbViewer implements ActionListener {
 			}
 		});
 		File queryFile = new File("queries.xml");
-		/*
-		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		if(queryFile.exists()) {
-			queriesDoc = parser.parse(new File("queries.xml"));
-		} else {
-			//DocumentType DOCTYPE = impl.createDocumentType("recent", "", "");
-			//lastDoc = impl.createDocument("", "recent", DOCTYPE);
-			queriesDoc = parser.newDocument();
+		try {
+			DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			if(queryFile.exists()) {
+				queriesDoc = parser.parse(new File("queries.xml"));
+			} else {
+				queriesDoc = parser.getDOMImplementation().createDocument(null, "queries", null);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		*/
-
 	}
 
 	private JMenuItem makeMenuItem(String title) {
@@ -230,7 +230,7 @@ public class DbViewer implements ActionListener {
 	protected QueryTreeModel getQueries() {
 		Vector ret = new Vector();
 		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(queriesDoc);
-		XPathResult res = (XPathResult)xpeImpl.createExpression("/recent/queries", xpeImpl.createNSResolver(queriesDoc.getDocumentElement())).evaluate(queriesDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		XPathResult res = (XPathResult)xpeImpl.createExpression("/queries", xpeImpl.createNSResolver(queriesDoc.getDocumentElement())).evaluate(queriesDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 		return new QueryTreeModel(res.iterateNext());
 	}
 
