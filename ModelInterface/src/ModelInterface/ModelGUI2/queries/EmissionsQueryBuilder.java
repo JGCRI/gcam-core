@@ -1,5 +1,7 @@
-//package ModelGUI2;
-package ModelInterface.ModelGUI2;
+package ModelInterface.ModelGUI2.queries;
+
+import ModelInterface.ModelGUI2.DbViewer;
+import ModelInterface.ModelGUI2.XMLDB;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -21,8 +23,8 @@ import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
 public class EmissionsQueryBuilder implements QueryBuilder {
-	static Map ghgList;
-	static Map fuelList;
+	public static Map ghgList;
+	public static Map fuelList;
 	protected Map sectorList;
 	protected Map subsectorList;
 	protected Map techList;
@@ -35,8 +37,8 @@ public class EmissionsQueryBuilder implements QueryBuilder {
 		techList = null;
 	}
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
-		FileChooserDemo.xmlDB.setQueryFunction("distinct-values(");
-		FileChooserDemo.xmlDB.setQueryFilter("/scenario/world/region/");
+		DbViewer.xmlDB.setQueryFunction("distinct-values(");
+		DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedIndices();
@@ -67,8 +69,8 @@ public class EmissionsQueryBuilder implements QueryBuilder {
 		--qg.currSel;
 		createXPath();
 		qg.levelValues = list.getSelectedValues();
-		FileChooserDemo.xmlDB.setQueryFunction("");
-		FileChooserDemo.xmlDB.setQueryFilter("");
+		DbViewer.xmlDB.setQueryFunction("");
+		DbViewer.xmlDB.setQueryFilter("");
 	}
 	public void doBack(JList list, JLabel label) {
 		// doing this stuff after currSel has changed now..
@@ -314,7 +316,7 @@ public class EmissionsQueryBuilder implements QueryBuilder {
 		} else {
 			query = "supplysector/subsector/technology";
 		}
-		XmlResults res = FileChooserDemo.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name");
+		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name");
 		try {
 			while(res.hasNext()) {
 				ret.append("(@name='").append(res.next().asString()).append("') or ");
@@ -323,7 +325,7 @@ public class EmissionsQueryBuilder implements QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		FileChooserDemo.xmlDB.printLockStats("expandGroupName");
+		DbViewer.xmlDB.printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	private void createXPath() {
@@ -350,7 +352,7 @@ public class EmissionsQueryBuilder implements QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		XmlResults res = FileChooserDemo.xmlDB.createQuery(path);
+		XmlResults res = DbViewer.xmlDB.createQuery(path);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -363,7 +365,7 @@ public class EmissionsQueryBuilder implements QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		FileChooserDemo.xmlDB.printLockStats("createList");
+		DbViewer.xmlDB.printLockStats("createList");
 		return ret;
 	}
 	protected boolean isGlobal;
@@ -428,7 +430,7 @@ public class EmissionsQueryBuilder implements QueryBuilder {
 			nBefore.delete();
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
-		FileChooserDemo.xmlDB.printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
+		DbViewer.xmlDB.printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
 		return ret.toArray();
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {

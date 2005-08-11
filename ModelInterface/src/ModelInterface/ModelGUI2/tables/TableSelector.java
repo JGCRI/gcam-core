@@ -1,17 +1,16 @@
-//package ModelGUI2;
-package ModelInterface.ModelGUI2;
+package ModelInterface.ModelGUI2.tables;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.tree.TreePath;
 import org.w3c.dom.Document;
 
-public class RadioButton extends JDialog implements ActionListener {
+public class TableSelector extends JDialog implements ActionListener {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static RadioButton dialog;
+	private static TableSelector dialog;
 	private static String value = "";
 	private JList list;
 	private static Frame parentFrame;
@@ -28,7 +27,7 @@ public class RadioButton extends JDialog implements ActionListener {
 									String[] possibleValues,
 									String initialValue) {
 		Frame frame = JOptionPane.getFrameForComponent(frameComp);
-		dialog = new RadioButton(frame,
+		dialog = new TableSelector(frame,
 								locationComp,
 								labelText,
 								title,
@@ -42,7 +41,7 @@ public class RadioButton extends JDialog implements ActionListener {
 	 * Initializes some of the data and creates the list of selections, and sets up
 	 * the layout.
 	 */
-	public RadioButton(Frame frame,
+	public TabelSelector(Frame frame,
 					   Component locationComp,
 					   String labelText,
 					   String title,
@@ -108,11 +107,11 @@ public class RadioButton extends JDialog implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if ("Select".equals(e.getActionCommand())) {
-			RadioButton.value = (String)(list.getSelectedValue());
+			TableSelector.value = (String)(list.getSelectedValue());
 		} else {
 			System.out.println("Got cancel");
 		}
-		RadioButton.dialog.setVisible(false);
+		TableSelector.dialog.setVisible(false);
 	}
 	/**
 	 * Handles creating the table based on value, sets up column widths, and any 
@@ -123,9 +122,10 @@ public class RadioButton extends JDialog implements ActionListener {
 	 * @return Returns the pane to be displayed in the right side of the splitpane
 	 */
 	public static JScrollPane createSelection(TreePath tp, Document doc, JFrame pf, FileChooserDemo fcd) {
-		if(RadioButton.value.equals("")) {
+		if(TableSelector.value.equals("")) {
 			return null;
 		}
+		/*
 	  	((FileChooserDemo)fcd).menuTableFilter.setEnabled(true);
 		((FileChooserDemo)fcd).copyMenu.setEnabled(true);
 		((FileChooserDemo)fcd).pasteMenu.setEnabled(true);
@@ -137,7 +137,8 @@ public class RadioButton extends JDialog implements ActionListener {
 			actns = ((FileChooserDemo)fcd).pasteMenu.getActionListeners();
 			((FileChooserDemo)fcd).pasteMenu.removeActionListener(actns[0]);
 		}
-		if(RadioButton.value.equals("Single Table")) {
+		*/
+		if(TableSelector.value.equals("Single Table")) {
 			BaseTableModel bt = new NewDataTableModel(tp, doc, pf, "Single Table");
 			TableSorter sorter = new TableSorter(bt);
 	  		//JTable jTable = new JTable(bt);
@@ -162,16 +163,20 @@ public class RadioButton extends JDialog implements ActionListener {
 		  		j++;
 	  		}
 			CopyPaste copyPaste = new CopyPaste( jTable );
+			/*
 			((FileChooserDemo)fcd).copyMenu.addActionListener(copyPaste);
 			((FileChooserDemo)fcd).pasteMenu.addActionListener(copyPaste);
+			*/
 			return new JScrollPane(jTable);
-		} else if(RadioButton.value.equals("Multi Tables")) {
+		} else if(TableSelector.value.equals("Multi Tables")) {
 			// disable the copy paste buttons becuase they try to copy/paste from all of
 			// the tables in the multitable, need to figure out how to only do it from
 			// the table that is in focus
 			// using ctrl-c, ctrl-v still works
+			/*
 			((FileChooserDemo)fcd).copyMenu.setEnabled(false);
 			((FileChooserDemo)fcd).pasteMenu.setEnabled(false);
+			*/
 
 			BaseTableModel bt = new MultiTableModel(tp, doc, pf, "Multi Tables");
 			JTable jTable = new JTable(bt);
@@ -190,7 +195,7 @@ public class RadioButton extends JDialog implements ActionListener {
 			//jTable.setRowHeight(200);
 			CopyPaste copyPaste = new CopyPaste( jTable );
 			return new JScrollPane(jTable);
-		} else if(RadioButton.value.equals("Combo Tables")){
+		} else if(TableSelector.value.equals("Combo Tables")){
 			BaseTableModel bt = new ComboTableModel(tp, doc, pf, "Combo Tables");
 			TableSorter sorter = new TableSorter(bt);
 			JTable jTable = new JTable(sorter);
@@ -214,8 +219,10 @@ public class RadioButton extends JDialog implements ActionListener {
 				j++;
 			}
 			CopyPaste copyPaste = new CopyPaste( jTable );
+			/*
 			((FileChooserDemo)fcd).copyMenu.addActionListener(copyPaste);
 			((FileChooserDemo)fcd).pasteMenu.addActionListener(copyPaste);
+			*/
 			return new JScrollPane(jTable);		
 		}
 		return null;

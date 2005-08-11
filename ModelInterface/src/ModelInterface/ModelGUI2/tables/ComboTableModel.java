@@ -1,5 +1,10 @@
-//package ModelGUI2;
-package ModelInterface.ModelGUI2;
+package ModelInterface.ModelGUI2.tables;
+
+import ModelInterface.ModelGUI2.queries.QueryGenerator;
+import ModelInterface.ModelGUI2.DOMmodel;
+import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.DbViewer;
+
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
@@ -613,7 +618,7 @@ public class ComboTableModel extends BaseTableModel{
 		parentFrame = parentFrameIn;
 		//title = qgIn.getVariable();
 		title = qgIn.toString();
-		buildTable(FileChooserDemo.xmlDB.createQuery(qgIn.getCompleteXPath(regions)), qgIn.isSumAll(), qgIn.getLevelValues());
+		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions)), qgIn.isSumAll(), qgIn.getLevelValues());
 		ind2Name = qgIn.getVariable();
 		activeRows = new Vector( leftSideVector.size() * indRow.size() );
 		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
@@ -653,7 +658,7 @@ public class ComboTableModel extends BaseTableModel{
 			  years.add(regionAndYear[1]);
 			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
 			  //Map retMap = addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
-			  FileChooserDemo.xmlDB.printLockStats("addToDataTree");
+			  DbViewer.xmlDB.printLockStats("addToDataTree");
 			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
 			  if(ret == null) {
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
@@ -665,7 +670,7 @@ public class ComboTableModel extends BaseTableModel{
 			  tempNode.delete();
 		  }
 		  res.delete();
-		  FileChooserDemo.xmlDB.printLockStats("buildTable");
+		  DbViewer.xmlDB.printLockStats("buildTable");
 	  } catch(Exception e) {
 		  e.printStackTrace();
 	  }
@@ -724,7 +729,7 @@ public class ComboTableModel extends BaseTableModel{
 	  //} while(!n.isType(XmlValue.DOCUMENT_NODE)); // isType doesn't seem to work at least not how I thought it would
 	  //} while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
 	  n.delete();
-	  FileChooserDemo.xmlDB.printLockStats("getRegionAndYearFromNode");
+	  DbViewer.xmlDB.printLockStats("getRegionAndYearFromNode");
 	  return ret.toArray();
   	}
 

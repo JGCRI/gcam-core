@@ -23,6 +23,8 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import javax.swing.tree.TreePath;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 import org.jfree.report.JFreeReport;
 import org.jfree.report.Group;
@@ -66,25 +68,25 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 
 	int lastFlipY = 0;
 
-	JMenuItem menuOpenX = null;
+	//JMenuItem menuOpenX = null;
 
-	JMenuItem menuOpenC = null;
+	//JMenuItem menuOpenC = null;
 
-	JMenuItem menuManage = null;
+	//JMenuItem menuManage = null;
 
-	JMenuItem menuExpPrn= null;
+	//JMenuItem menuExpPrn= null;
 
-	JMenuItem menuSave = null;
+	//JMenuItem menuSave = null;
 
-	JMenuItem menuClose = null;
+	//JMenuItem menuClose = null;
 
-	JMenuItem menuTableFilter = null;
+	//JMenuItem menuTableFilter = null;
 
-	JMenuItem menuTableAdd = null;
+	//JMenuItem menuTableAdd = null;
 
-	protected JMenuItem copyMenu = null;
+	//protected JMenuItem copyMenu = null;
 
-	protected JMenuItem pasteMenu = null;
+	//protected JMenuItem pasteMenu = null;
 
 	JSplitPane splitPane;
 
@@ -214,8 +216,6 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 			}
 			implls = (DOMImplementationLS) impl;
 			lsInput = implls.createLSInput();
-			//DocumentType DOCTYPE = impl.createDocumentType("recent", "", "");
-			//lastDoc = impl.createDocument("", "recent", DOCTYPE);
 		} catch (Exception e) {
 			System.err.println("Couldn't initialize DOMImplementation: " + e);
 			JOptionPane.showMessageDialog(parentFrame,
@@ -270,6 +270,9 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 
 			System.out.println("File exception " + fe);
 			System.out.println("so that hopefully means no file, so i'll just use default");
+			
+			//DocumentType DOCTYPE = impl.createDocumentType("recent", "", "");
+			//lastDoc = impl.createDocument("", "recent", DOCTYPE);
 
 			Element aNode = lastDoc.createElement("lastDirectory");
 			aNode.appendChild( lastDoc.createTextNode(globalFC.getCurrentDirectory().toString()) );
@@ -412,6 +415,30 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 		this.getGlassPane().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		*/
 
+		final PropertyChangeListener savePropListener = new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName().equals("Document-Changed")) {
+					((InterfaceMain)parentFrame).getSaveMenu().setEnabled(true);
+				}
+			}
+		};
+		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName().equals("Control")) {
+					if(evt.getOldValue().equals("FileChooserDemo.File")) {
+						((InterfaceMain)parentFrame).getSaveMenu().removeActionListener(thisDemo);
+						((InterfaceMain)parentFrame).getSaveMenu().removePropertyChangeListener(savePropListener);
+						((InterfaceMain)parentFrame).getQuitMenu().removeActionListener(thisDemo);
+					}
+					if(evt.getNewValue().equals("FileChooserDemo.File")) {
+						((InterfaceMain)parentFrame).getSaveMenu().addActionListener(thisDemo);
+						((InterfaceMain)parentFrame).getSaveMenu().addPropertyChangeListener(savePropListener);
+						((InterfaceMain)parentFrame).getQuitMenu().addActionListener(thisDemo);
+						((InterfaceMain)parentFrame).oldControl = "FileChooserDemo.File";
+					}
+				}
+			}
+		});
 	}
 
 	public void addMenuItems(InterfaceMain.MenuManager menuMan) {
@@ -426,27 +453,67 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 		menuItem.addActionListener(this);
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).
 			getSubMenuManager(InterfaceMain.FILE_OPEN_SUBMENU_POS).addMenuItem(menuItem, 20);
+		/*
 		menuItem = new JMenuItem("DB Open");
 		menuItem.addActionListener(this);
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).
 			getSubMenuManager(InterfaceMain.FILE_OPEN_SUBMENU_POS).addMenuItem(menuItem, 30);
+			*/
 
-		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuManage = makeMenuItem("Manage DB"), 10);
-		menuManage.setEnabled(false);
-		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuExpPrn = makeMenuItem("Export / Print"), 20);
+		/*
+		final JMenuItem menuManage = makeMenuItem("Manage DB");
+		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuManage, 10);
+		//menuManage.setEnabled(false);
+		menuManage.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName().equals("Control")) {
+					if(evt.getNewValue().equals("FileChooserDemo.DB")) {
+						menuManage.setEnabled(true);
+					} else if(evt.getOldValue().equals("FileChooserDemo.DB")) {
+						menuManage.setEnabled(false);
+					}
+				}
+			}
+		});
+		final JMenuItem menuExpPrn = makeMenuItem("Export / Print");
+		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuExpPrn,  20);
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addSeparator(20);
-		menuExpPrn.setEnabled(false);
+		//menuExpPrn.setEnabled(false);
+		menuExpPrn.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName().equals("Control")) {
+					if(evt.getOldValue().equals("FileChooserDemo.DB")) {
+						menuExpPrn.setEnabled(false);
+					}
+				} else if(evt.getPropertyName().equals("Query")) {
+					menuExpPrn.setEnabled(true);
+				}
+			}
+		});
+		*/
 
 		int addedTo;
 		//JMenu tableMenu = new JMenu("Table");
 		addedTo = menuMan.addMenuItem(new JMenu("Table"), 10);
-		menuMan.getSubMenuManager(addedTo).addMenuItem(menuTableFilter = makeMenuItem("Filter"), 0);
+		final JMenuItem menuTableFilter = makeMenuItem("Filter");
+		menuMan.getSubMenuManager(addedTo).addMenuItem(menuTableFilter, 0);
+		menuTableFilter.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName().equals("Control")) {
+					if(evt.getOldValue().equals("FileChooserDemo.File")) {
+						menuTableFilter.setEnabled(false);
+					}
+				} else if(evt.getPropertyName().equals("Table")) {
+					menuTableFilter.setEnabled(true);
+				}
+			}
+		});
 
 		// nothing for this is implemented, just something i figured should
 		// happen
 		//tableMenu.add(menuTableAdd = makeMenuItem("Add Data"));
 
-		menuTableFilter.setEnabled(false);
+		//menuTableFilter.setEnabled(false);
 		//menuTableAdd.setEnabled(false);
 
 	}
@@ -459,17 +526,18 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 	 * be handled.
 	 */
 	public void displayJtree() {
-		System.out.println("Parent Frame: "+parentFrame);
 		Container contentPane = parentFrame.getContentPane();
 		contentPane.removeAll();
+		/*
 		if(xmlDB != null) {
 			xmlDB.closeDB();
-			menuManage.setEnabled(false);
-			menuExpPrn.setEnabled(false);
+			//menuManage.setEnabled(false);
+			//menuExpPrn.setEnabled(false);
 		}
 		if (splitPane != null) {
 			contentPane.remove(splitPane);
 		}
+		*/
 		// Set up the tree
 		jtree = new JTree(new DOMmodel(doc.getDocumentElement()));
 		jtree.setEditable(true);
@@ -584,7 +652,7 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 				return;
 			}
 			displayJtree();
-			menuSave.setEnabled(true); // now save can show up
+			//menuSave.setEnabled(true); // now save can show up
 			//setTitle("["+file+"] - ModelGUI");
 			parentFrame.setTitle("["+file+"] - ModelInterface");
 
@@ -611,11 +679,13 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 			int result = fc.showOpenDialog(parentFrame);
 			if( result == JFileChooser.APPROVE_OPTION ) {
 				globalFC.setCurrentDirectory(fc.getCurrentDirectory());
+				/*
 				menuManage.setEnabled(true);
-				menuSave.setEnabled(false);
-				copyMenu.setEnabled(false);
-				pasteMenu.setEnabled(false);
+				//menuSave.setEnabled(false);
+				//copyMenu.setEnabled(false);
+				//pasteMenu.setEnabled(false);
 				menuTableFilter.setEnabled(false);
+				*/
 				xmlDB = new XMLDB(fc.getSelectedFile().toString(), parentFrame);
 				createTableSelector();
 				//setTitle("["+fc.getSelectedFile()+"] - ModelGUI");
@@ -634,7 +704,7 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 				return;
 			}
 			displayJtree();
-			menuSave.setEnabled(true); // now save can show up
+			//menuSave.setEnabled(true); // now save can show up
 			parentFrame.setTitle("["+file+"] - ModelGUI");
 			parentFrame.setTitle("["+file+"] - ModelInterface");
 		} else if (command.equals("Save")) {
@@ -763,6 +833,7 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 					if (tableView == null) {
 						return;
 					}
+					parentFrame.firePropertyChange("Table", splitPane.getRightComponent(), tableView);
 
 					// maybe this will solve the resizing of the left component
 					//tableView.setPreferredSize(new Dimension(windowWidth - leftWidth, windowHeight));
@@ -1917,7 +1988,7 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 			System.out.println("Should be displaying");
 				parentFrame.setVisible(true);
 				//menuSave.setEnabled(true);
-				menuExpPrn.setEnabled(true);
+				//menuExpPrn.setEnabled(true);
 						parentFrame.getGlassPane().setVisible(false);
 						return;
 					}
@@ -1975,7 +2046,7 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 						*/
 				parentFrame.setVisible(true);
 				//menuSave.setEnabled(true);
-				menuExpPrn.setEnabled(true);
+				//menuExpPrn.setEnabled(true);
 						parentFrame.getGlassPane().setVisible(false);
 				}
 			}
@@ -2087,9 +2158,11 @@ public class FileChooserDemo /*extends JFrame*/ implements ActionListener,
 		filterDialog.pack();
 		filterDialog.setVisible(true);
 	}
+	/*
 	public void setEnableManageDB(boolean enable) {
 		menuManage.setEnabled(enable);
 	}
+	*/
 	public void createReport() {
 		if(jTable == null || jsp == null || jTable.getRowCount() == 0) {
 			// error

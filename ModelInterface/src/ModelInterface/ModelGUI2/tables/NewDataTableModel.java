@@ -1,5 +1,7 @@
-//package ModelGUI2;
-package ModelInterface.ModelGUI2;
+package ModelInterface.ModelGUI2.tables;
+
+import ModelInterface.ModelGUI2.DOMmodel;
+
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;

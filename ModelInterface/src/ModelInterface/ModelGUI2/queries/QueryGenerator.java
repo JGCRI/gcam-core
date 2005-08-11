@@ -1,5 +1,7 @@
-//package ModelGUI2;
-package ModelInterface.ModelGUI2;
+package ModelInterface.ModelGUI2.queries;
+
+import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.DbViewer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -30,7 +32,7 @@ import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
 public class QueryGenerator {
-	Frame parentFrame;
+	private Frame parentFrame;
 	String xPath;
 	String var;
 	String nodeLevel;
@@ -40,10 +42,10 @@ public class QueryGenerator {
 	boolean isSumable;
 	String title;
 	Object[] levelValues;
-	static Vector sumableList;
+	public static Vector sumableList;
 	String axis1Name;
 	String axis2Name;
-	QueryBuilder qb;
+	private QueryBuilder qb;
 	int currSel;
 	public QueryGenerator(Frame parentFrameIn) {
 		qb = null;
@@ -51,14 +53,14 @@ public class QueryGenerator {
 		xPath = "";
 		parentFrame = parentFrameIn;
 		/*
-		FileChooserDemo.xmlDB.setQueryFunction("distinct-values(");
-		FileChooserDemo.xmlDB.setQueryFilter("/scenario/world/region/");
+		DbViewer.xmlDB.setQueryFunction("distinct-values(");
+		DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		*/
 		sumAll = false;
 		getQueryDialog();
 		/*
-		FileChooserDemo.xmlDB.setQueryFunction("");
-		FileChooserDemo.xmlDB.setQueryFilter("");
+		DbViewer.xmlDB.setQueryFunction("");
+		DbViewer.xmlDB.setQueryFilter("");
 		*/
 	}
 	public QueryGenerator(Node queryIn) {
@@ -113,8 +115,8 @@ public class QueryGenerator {
 						pat = Pattern.compile("\\(@name='([\\w:[\\s]]+)'\\)");
 					}
 					Matcher mat = pat.matcher(xPath);
-					FileChooserDemo.xmlDB.setQueryFunction("distinct-values(");
-					FileChooserDemo.xmlDB.setQueryFilter("/scenario/world/region/");
+					DbViewer.xmlDB.setQueryFunction("distinct-values(");
+					DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 					int skip = 0;
 					if(nodeLevel.equals("supplysector")) {
 						currSel = 3;
@@ -137,8 +139,8 @@ public class QueryGenerator {
 							--skip;
 						}
 					} 
-					FileChooserDemo.xmlDB.setQueryFunction("");
-					FileChooserDemo.xmlDB.setQueryFilter("");
+					DbViewer.xmlDB.setQueryFunction("");
+					DbViewer.xmlDB.setQueryFilter("");
 					xPath = xpTemp;
 					levelValues = temp.toArray();
 				}
@@ -399,7 +401,7 @@ public class QueryGenerator {
 		} else {
 			query = "supplysector/subsector/technology";
 		}
-		XmlResults res = FileChooserDemo.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name");
+		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name");
 		try {
 			while(res.hasNext()) {
 				ret.append("(@name='").append(res.next().asString()).append("') or ");
@@ -408,7 +410,7 @@ public class QueryGenerator {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		FileChooserDemo.xmlDB.printLockStats("expandGroupName");
+		DbViewer.xmlDB.printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	public String getXPath() {
@@ -551,7 +553,7 @@ public class QueryGenerator {
 			nBefore.delete();
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
-		FileChooserDemo.xmlDB.printLockStats("getRegionAndYearFromNode");
+		DbViewer.xmlDB.printLockStats("getRegionAndYearFromNode");
 		return ret.toArray();
 	}
 	protected Map defaultAddToDataTree(XmlValue currNode, Map dataTree) throws Exception {

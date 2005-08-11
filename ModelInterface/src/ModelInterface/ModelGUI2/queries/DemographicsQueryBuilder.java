@@ -1,5 +1,7 @@
-//package ModelGUI2;
-package ModelInterface.ModelGUI2;
+package ModelInterface.ModelGUI2.queries;
+
+import ModelInterface.ModelGUI2.DbViewer;
+import ModelInterface.ModelGUI2.XMLDB;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -20,31 +22,51 @@ import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
-public class MarketQueryBuilder implements QueryBuilder {
+public class DemographicsQueryBuilder implements QueryBuilder {
 	public static Map varList;
-	protected Map goodList;
+	protected Map popList;
+	protected Map cohortList;
+	protected Map genderList;
 	protected QueryGenerator qg;
-	public static String xmlName = "marketQuery";
-	public MarketQueryBuilder(QueryGenerator qgIn) {
+	public static String xmlName = "demographicsQuery";
+	public DemographicsQueryBuilder(QueryGenerator qgIn) {
 		qg = qgIn;
-		varList = new LinkedHashMap();
-		varList.put("price", new Boolean(false));
-		varList.put("demand", new Boolean(false));
-		varList.put("supply", new Boolean(false));
-		goodList = null;
+		popList = new LinkedHashMap();
+		/*
+		popList.put("populationMiniCAM", new Boolean(false));
+		popList.put("populationSGMFixed", new Boolean(false));
+		popList.put("populationSGMRate", new Boolean(false));
+		*/
+		popList = null;
+		cohortList = null;
+		genderList = new LinkedHashMap();
+		genderList.put("male", new Boolean(false));
+		genderList.put("female", new Boolean(false));
+	}
+	private boolean isPopMiniCAMSelected() {
+		if(popList == null) {
+			return false;
+		}
+		Object got = popList.get("populationMiniCAM");
+		return got != null && ((Boolean)got).booleanValue();
 	}
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
-		FileChooserDemo.xmlDB.setQueryFilter("/scenario/world/Marketplace/");
-		FileChooserDemo.xmlDB.setQueryFunction("distinct-values(");
+		DbViewer.xmlDB.setQueryFilter("/scenario/world/region/demographics/");
+		DbViewer.xmlDB.setQueryFunction("distinct-values(");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedIndices();
 				if(selectedInd.length == 0 && qg.currSel != 0) {
 					nextButton.setEnabled(false);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
-				} else if(qg.currSel == 1 || qg.currSel == 2) {
-					nextButton.setEnabled(true);
-				} else if(qg.currSel == 3) {
+				} else if(qg.currSel < 5) {
+					if(((String)list.getSelectedValues()[0]).equals("populationMiniCAM") && qg.currSel == 3) {
+						nextButton.setEnabled(false);
+						cancelButton.setText("Finished");
+					} else {
+						nextButton.setEnabled(true);
+					}
+				} else if(qg.currSel == 5) {
 					nextButton.setEnabled(false);
 					cancelButton.setText("Finished");
 				}
@@ -83,6 +105,9 @@ public class MarketQueryBuilder implements QueryBuilder {
 		updateList(list, label);
 	}
 	public void doBack(JList list, JLabel label) {
+		if(qg.currSel == 3) {
+			cohortList = null;
+		}
 		updateList(list, label);
 	}
 	public void doFinish(JList list) {
@@ -90,12 +115,24 @@ public class MarketQueryBuilder implements QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		qg.levelValues = list.getSelectedValues();
-		FileChooserDemo.xmlDB.setQueryFilter("");
-		FileChooserDemo.xmlDB.setQueryFunction("");
+		if(isPopMiniCAMSelected()) {
+			qg.levelValues = list.getSelectedValues(); // doesn't make sense?
+		} else {
+			Vector temp = new Vector();
+			for(Iterator it = cohortList.entrySet().iterator(); it.hasNext(); ) {
+				Map.Entry me = (Map.Entry)it.next();
+				if(((Boolean)me.getValue()).booleanValue()) {
+					temp.add(me.getKey());
+				}
+			}
+			qg.levelValues = temp.toArray();
+		}
+
+		DbViewer.xmlDB.setQueryFilter("");
+		DbViewer.xmlDB.setQueryFunction("");
 	}
 	public boolean isAtEnd() {
-		return qg.currSel == 3;
+		return (qg.currSel == 3 && isPopMiniCAMSelected()) || qg.currSel == 5;
 	}
 	public void updateList(JList list, JLabel label) {
 		Map temp = null;
@@ -107,13 +144,29 @@ public class MarketQueryBuilder implements QueryBuilder {
 					break;
 			}
 			case 3: {
-					list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-					if(goodList == null) {
-						goodList = createList("market/MarketGoodOrFuel/text()", false);
-						goodList.putAll(createList("market/group/@name", true));
+					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+					if(popList == null) {
+						DbViewer.xmlDB.setQueryFunctionAsDistinctNames();
+						popList = createList("*", false);
+						DbViewer.xmlDB.setQueryFunction("fn:distinct-values(");
 					}
-					temp = goodList;
-					label.setText("Select Good/Fuel:");
+					temp = popList;
+					label.setText("Select Population Type:");
+					break;
+			}
+			case 4: {
+					list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+					if(cohortList == null) {
+						cohortList = createList("*/ageCohort/@ageGroup", false);
+						cohortList.putAll(createList("*/ageCohort/group/@name", true));
+					}
+					temp = cohortList;
+					label.setText("Select Age Cohorts:");
+					break;
+			}
+			case 5: {
+					temp = genderList;
+					label.setText("Select Genders: ");
 					break;
 			}
 			default: System.out.println("Error currSel: "+qg.currSel);
@@ -138,7 +191,8 @@ public class MarketQueryBuilder implements QueryBuilder {
 	public void updateSelected(JList list) {
 		Object[] selectedKeys = list.getSelectedValues();
 		Map selected = null;
-		switch(qg.currSel) { case 2: {
+		switch(qg.currSel) { 
+			case 2: {
 					return;
 			}
 			case 3: {
@@ -146,7 +200,15 @@ public class MarketQueryBuilder implements QueryBuilder {
 					break;
 			}
 			case 4: {
-					selected = goodList;
+					selected = popList;
+					break;
+			}
+			case 5: {
+					selected = cohortList;
+					break;
+			}
+			case 6: {
+					selected = genderList;
 					break;
 			}
 			default: System.out.println("Error currSel: "+qg.currSel);
@@ -160,7 +222,7 @@ public class MarketQueryBuilder implements QueryBuilder {
 	}
 	private String expandGroupName(String gName) {
 		StringBuffer ret = new StringBuffer();
-		XmlResults res = FileChooserDemo.xmlDB.createQuery("market/[child::group[@name='"+gName+"']]/@name");
+		XmlResults res = DbViewer.xmlDB.createQuery("*/ageCohort[child::group[@name='"+gName+"']]/@ageGroup");
 		try {
 			while(res.hasNext()) {
 				ret.append("(child::text()='").append(res.next().asString()).append("') or ");
@@ -169,26 +231,45 @@ public class MarketQueryBuilder implements QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		FileChooserDemo.xmlDB.printLockStats("expandGroupName");
+		DbViewer.xmlDB.printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	private void createXPath() {
 		qg.xPath = createListPath(0);
-		qg.nodeLevel = "market";
+		if(isPopMiniCAMSelected()) {
+			qg.yearLevel = "populationMiniCAM";
+			qg.nodeLevel = "region";
+		} else if(popList.get("populationSGMFixed") != null && ((Boolean)popList.get("populationSGMFixed")).booleanValue()) {
+			qg.yearLevel = "populationSGMFixed";
+			qg.nodeLevel = "ageCohort";
+		} else {
+			qg.yearLevel = "populationSGMRate";
+			qg.nodeLevel = "ageCohort";
+		}
 		// default axis1Name to nodeLevel
 		qg.axis1Name = qg.nodeLevel;
-		qg.yearLevel = "market";
 		qg.axis2Name = "Year";
 		qg.group = true;
 	}
 	public String createListPath(int level) {
-		StringBuffer ret = new StringBuffer("Marketplace/market");
+		StringBuffer ret = new StringBuffer("demographics/");
 		boolean added = false;
-		for(Iterator it = goodList.entrySet().iterator(); it.hasNext(); ) {
+		for(Iterator it = popList.entrySet().iterator(); it.hasNext(); ) {
+			Map.Entry me = (Map.Entry)it.next();
+			if(((Boolean)me.getValue()).booleanValue()) {
+				ret.append(me.getKey()).append("/");
+				break;
+			}
+		}
+		if(isPopMiniCAMSelected()) {
+			return ret.append(qg.var).append("/node()").toString();
+		}
+		ret.append("ageCohort");
+		for(Iterator it = cohortList.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry me = (Map.Entry)it.next();
 			if(((Boolean)me.getValue()).booleanValue()) {
 				if(!added) {
-					ret.append("[ child::MarketGoodOrFuel[ ");
+					ret.append("[ ");
 					added = true;
 				} else {
 					ret.append(" or ");
@@ -196,21 +277,52 @@ public class MarketQueryBuilder implements QueryBuilder {
 				if(((String)me.getKey()).startsWith("Group:")) {
 					ret.append(expandGroupName(((String)me.getKey()).substring(7)));
 				} else {
-					ret.append("(child::text()='"+me.getKey()+"')");
+					ret.append("(@ageGroup='"+me.getKey()+"')");
 				}
 			}
 		}
 		if(added) {
-			ret.append(" ] ]/");
+			ret.append(" ]/");
 		} else {
 			ret.append("/");
+		}
+		if(popList.get("populationSGMFixed") != null && ((Boolean)popList.get("populationSGMFixed")).booleanValue()) {
+			boolean mSel = ((Boolean)genderList.get("male")).booleanValue();
+			boolean fSel = ((Boolean)genderList.get("female")).booleanValue();
+			if(mSel && fSel) {
+				ret.append("*/");
+			} else if(mSel) {
+				ret.append("male/");
+			} else {
+				ret.append("female/");
+			}
+		} else {
+			added = false;
+			ret.append("gender");
+			for(Iterator it = genderList.entrySet().iterator(); it.hasNext(); ) {
+				Map.Entry me = (Map.Entry)it.next();
+				if(((Boolean)me.getValue()).booleanValue()) {
+					if(!added) {
+						ret.append("[ ");
+						added = true;
+					} else {
+						ret.append(" or ");
+					}
+					ret.append("(@type = '"+me.getKey()+"')");
+				}
+			}
+			if(added) {
+				ret.append(" ]/");
+			} else {
+				ret.append("/");
+			}
 		}
 		ret.append(qg.var).append("/node()");
 		//ret += "period/"+var+"/node()";
 		System.out.println("The xpath is: "+ret.toString());
 		return ret.toString();
 	}
-	private Map createList(String path, boolean isGroupNames) {
+	private Map createList(String path, boolean isGroupNames) { 
 		System.out.println("Query path: "+path);
 		LinkedHashMap ret = new LinkedHashMap();
 		/*
@@ -219,7 +331,7 @@ public class MarketQueryBuilder implements QueryBuilder {
 			ret.put("Group All", new Boolean(false));
 		}
 		*/
-		XmlResults res = FileChooserDemo.xmlDB.createQuery(path);
+		XmlResults res = DbViewer.xmlDB.createQuery(path);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -232,68 +344,46 @@ public class MarketQueryBuilder implements QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		FileChooserDemo.xmlDB.printLockStats("createList");
+		DbViewer.xmlDB.printLockStats("createList");
 		return ret;
 	}
-	public String getCompleteXPath(Object[] regions) {
-		StringBuffer ins = new StringBuffer();
+	protected boolean isGlobal;
+	public String getCompleteXPath(Object[] regions)  {
 		boolean added = false;
-		if(((String)regions[regions.length-1]).equals("Global")) {
-			return qg.xPath;
+		StringBuffer ret = new StringBuffer();
+		if(((String)regions[0]).equals("Global")) {
+			ret.append("region/");
+			//regionSel = new int[0]; 
+			regions = new Object[0];
+			isGlobal = true;
+		} else {
+			isGlobal = false;
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
-				ins.append(" and ContainedRegion[");
+				ret.append("region[ ");
 				added = true;
 			} else {
-				ins.append(" or ");
+				ret.append(" or ");
 			}
-			ins.append("(child::text() = '").append(regions[i]).append("')");
+			ret.append("(@name='").append(regions[i]).append("')");
 		}
 		if(added) {
-			ins.append(" ] ]/");
-			String[] spStr = qg.xPath.split("\\]/");
-			return ins.insert(0, spStr[0]).append(spStr[1]).toString();
-		} else {
-			return qg.xPath;
+			ret.append(" ]/");
 		}
+		return ret.append(qg.getXPath()).toString();
 	}
 	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Vector ret = new Vector(2, 0);
+		Vector ret = new Vector(2,0);
 		XmlValue nBefore;
 		do {
 			if(n.getNodeName().equals(qg.nodeLevel)) {
-				ret.add(XMLDB.getAttr(n, "name"));
-				/*
-				XmlValue tempNode = n.getFirstChild();
-				XmlValue delT;
-				while(tempNode != null) {
-					if(tempNode.getNodeName().equals(qg.yearLevel)) {
-						System.out.println("About to add: "+tempNode.getFirstChild().getNodeValue());
-						ret.add(0, tempNode.getFirstChild().getNodeValue());
-						tempNode.delete();
-						tempNode = null;
-					} else {
-						delT = tempNode;
-						tempNode = tempNode.getNextSibling();
-						delT.delete();
-					}
-				}
-				*/
+				ret.add(XMLDB.getAttr(n));
+			} 
 			if(n.getNodeName().equals(qg.yearLevel)) {
 				ret.add(0, XMLDB.getAttr(n, "year"));
-				/*
-				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-				if(!getOneAttrVal(n).equals("fillout=1")) {
-				ret.add(getOneAttrVal(n));
-				} else {
-				ret.add(getOneAttrVal(n, 1));
-				}
-				*/
-			}
-
 			} else if(XMLDB.hasAttr(n)) {
-				Map tempFilter;
+				HashMap tempFilter;
 				if (filterMaps.containsKey(n.getNodeName())) {
 					tempFilter = (HashMap)filterMaps.get(n.getNodeName());
 				} else {
@@ -310,7 +400,7 @@ public class MarketQueryBuilder implements QueryBuilder {
 			nBefore.delete();
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
-		FileChooserDemo.xmlDB.printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
+		DbViewer.xmlDB.printLockStats("getRegionAndYearFromNode");
 		return ret.toArray();
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
@@ -328,7 +418,14 @@ public class MarketQueryBuilder implements QueryBuilder {
 			return tempMap;
 		}
 		*/
-		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel) 
+		if(currNode.getNodeName().equals("male") || currNode.getNodeName().equals("female")) {
+			String attr = currNode.getNodeName();
+			if(!tempMap.containsKey(attr)) {
+				tempMap.put(attr, new TreeMap());
+			}
+			currNode.delete();
+			return (Map)tempMap.get(attr);
+		} else if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel) 
 				&& !currNode.getNodeName().equals(qg.yearLevel)) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;

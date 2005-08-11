@@ -1,5 +1,7 @@
-//package ModelGUI2;
 package ModelInterface.ModelGUI2;
+
+import ModelInterface.ModelGUI2.tables.BaseTableModel;
+
 import org.jfree.report.modules.gui.xls.ExcelExportPlugin;
 import org.jfree.report.modules.gui.xls.ExcelExportDialog;
 //import org.jfree.report.modules.gui.base.components.AbstractExportDialog;

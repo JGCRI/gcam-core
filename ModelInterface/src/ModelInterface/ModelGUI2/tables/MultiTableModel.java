@@ -1,5 +1,8 @@
-//package ModelGUI2;
-package ModelInterface.ModelGUI2;
+package ModelInterface.ModelGUI2.tables;
+
+import ModelInterface.ModelGUI2.DOMmodel;
+import ModelInterface.ModelGUI2.DbViewer;
+import ModelInterface.ModelGUI2.queries.QueryGenerator;
 
 import java.util.*;
 
@@ -231,7 +234,7 @@ public class MultiTableModel extends BaseTableModel{
 	  		JTable jTable = new JTable(tM);
 
 	  		//jTable.getModel().addTableModelListener((FileChooserDemo)parentFrame);
-	  		jTable.getModel().addTableModelListener(FileChooserDemo.thisDemo);
+	  		//jTable.getModel().addTableModelListener(FileChooserDemo.thisDemo);
 
 	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	 
@@ -417,7 +420,7 @@ public class MultiTableModel extends BaseTableModel{
 		wild.add(qgIn.getYearLevel());
 		System.out.println("Query is "+qgIn.getCompleteXPath(regions));
 		//FileChooserDemo.xmlDB.setQueryFunction("");
-		buildTable(FileChooserDemo.xmlDB.createQuery(qgIn.getCompleteXPath(regions)), qgIn.isSumAll(), qgIn.getLevelValues());
+		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions)), qgIn.isSumAll(), qgIn.getLevelValues());
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
 		activeRows = new Vector(tables.size());
@@ -465,7 +468,7 @@ public class MultiTableModel extends BaseTableModel{
 			  years.add(regionAndYear[1]);
 			  //Map retMap = addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
 			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
-			  FileChooserDemo.xmlDB.printLockStats("addToDataTree");
+			  DbViewer.xmlDB.printLockStats("addToDataTree");
 			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
 			  if(ret == null) {
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
@@ -477,7 +480,7 @@ public class MultiTableModel extends BaseTableModel{
 			  tempNode.delete();
 		  }
 		  res.delete();
-		  FileChooserDemo.xmlDB.printLockStats("buildTable");
+		  DbViewer.xmlDB.printLockStats("buildTable");
 	  } catch(Exception e) {
 		  e.printStackTrace();
 	  }
@@ -536,7 +539,7 @@ public class MultiTableModel extends BaseTableModel{
 		  nBefore.delete();
 	  } while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 	  n.delete();
-	  FileChooserDemo.xmlDB.printLockStats("getRegionAndYearFromNode");
+	  DbViewer.xmlDB.printLockStats("getRegionAndYearFromNode");
 	  return ret.toArray();
   	}
 

@@ -1,5 +1,4 @@
-//package ModelGUI2;
-package ModelInterface.ModelGUI2;
+package ModelInterface.ModelGUI2.tables;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;

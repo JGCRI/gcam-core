@@ -1,6 +1,7 @@
 package ModelInterface;
 
 //import ModelInterface.ModelGUI2.FileChooserDemo;
+import ModelInterface.ModelGUI2.DbViewer;
 
 import java.util.*;
 import javax.swing.JFrame;
@@ -112,14 +113,16 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		pasteMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
 				ActionEvent.CTRL_MASK));
 		menuMan.getSubMenuManager(EDIT_MENU_POS).addMenuItem(pasteMenu, EDIT_PASTE_MENUITEM_POS);
-		
-		/*
-		 * FileChooserDemo is being removed, but I will leave this here, This is
-		 * how I envision the menuitems to be added and hopefully all the
-		 * listeners would be set up correctly and we won't need to keep the
-		 * pointer to the classes around FileChooserDemo fcd = new
-		 * FileChooserDemo(this); fcd.addMenuItems(menuMan);
-		 */
+		/* FileChooserDemo is being removed, but I will leave this here, 
+		 * This is how I envision the menuitems to be added and hopefully all 
+		 * the listeners would be set up correctly and we won't need to keep 
+		 * the pointer to the classes around
+		FileChooserDemo fcd = new FileChooserDemo(this);
+		fcd.addMenuItems(menuMan);
+		*/
+		//DbViewer dbView = new DbViewer(this);
+		//dbView.addMenuItems(menuMan);
+
 		// Create the Configuration editor and allow it to add its menu items to the
 		// menu system.
 		final MenuAdder confEditor = new ConfigurationEditor();
@@ -173,6 +176,10 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	}
 	public JMenuItem getPasteMenu() {
 		return pasteMenu;
+	}
+	public void fireControlChange(String newValue) {
+		firePropertyChange("Control", oldControl, newValue);
+		oldControl = newValue;
 	}
 	public class MenuManager {
 		private JMenuItem menuValue;

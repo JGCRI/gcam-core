@@ -1,5 +1,7 @@
-//package ModelGUI2;
 package ModelInterface.ModelGUI2;
+
+import ModelInterface.ModelGUI2.queries.QueryGenerator;
+
 import java.util.ArrayList;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;

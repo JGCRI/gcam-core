@@ -1,5 +1,6 @@
-//package ModelGUI2;
-package ModelInterface.ModelGUI2;
+package ModelInterface.ModelGUI2.tables;
+
+import ModelInterface.ModelGUI2.DOMmodel;
 
 import java.util.*;
 import javax.swing.table.AbstractTableModel;
@@ -474,5 +475,5 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	 */
 	protected abstract void doFilter(Vector possibleFilters);
 
-	protected abstract void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp);
+	public abstract void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp);
 }

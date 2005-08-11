@@ -1,5 +1,4 @@
-//package ModelGUI2;
-package ModelInterface.ModelGUI2;
+package ModelInterface.ModelGUI2.queries;
 
 import javax.swing.JList;
 import javax.swing.JButton;
