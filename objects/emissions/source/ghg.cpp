@@ -630,6 +630,7 @@ double Ghg::calcInputEmissions( const vector<Input*>& aInputs, const string& aRe
 * \param output The amount of fuel consumed
 * \param period The period in which this calculation is occurring.
 * \todo PRIORITY - separate out CO2 from non-CO2 GHGs since CO2 is much simpler.
+* \todo Emissions calc will not work properly with vintaging (base-year emissions will not work, and some thought needs to be given to how emissions controls should work)
 */
 void Ghg::calcEmission( const string& regionName, const string& fuelname, const double input, 
                         const string& prodname, const double output, const GDP* gdp, const int aPeriod )
