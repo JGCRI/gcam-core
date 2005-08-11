@@ -3,12 +3,15 @@
  */
 package ModelInterface.ConfigurationEditor.configurationeditor;
 
+import ModelInterface.InterfaceMain;
+import ModelInterface.MenuAdder;
 import ModelInterface.ConfigurationEditor.guihelpers.ComponentEnabler;
 import ModelInterface.ConfigurationEditor.guihelpers.DOMDocumentSaveSetter;
 import ModelInterface.ConfigurationEditor.guihelpers.SaveEnabler;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
 
@@ -20,6 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
@@ -38,6 +42,7 @@ import ModelInterface.ConfigurationEditor.actions.QuitAction;
 import ModelInterface.ConfigurationEditor.actions.RunAction;
 import ModelInterface.ConfigurationEditor.actions.SaveAction;
 import ModelInterface.ConfigurationEditor.actions.ShowPreferencesAction;
+import ModelInterface.InterfaceMain.MenuManager;
 
 /**
  * The class which creates the UI to edit a configuration file. TODO: Work out
@@ -45,7 +50,7 @@ import ModelInterface.ConfigurationEditor.actions.ShowPreferencesAction;
  * 
  * @author Josh Lurz
  */
-public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
+public class ConfigurationEditor extends JFrame implements DOMDocumentEditor, MenuAdder {
 
     /**
      * Automatically generated unique class identifier.
@@ -62,8 +67,13 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
      * about this object.
      */
     public static final String ROOT_ELEMENT_NAME = "Configuration"; //$NON-NLS-1$
-
+	
     /**
+	 * Position of the "Configuration..." item in the Edit menu.
+	 */
+	private static int EDIT_CONFIGURATION_MENUITEM_POS = 19;
+    
+	/**
      * The current parsed XML document.
      */
     private transient Document mCurrentDocument = null;
@@ -205,7 +215,36 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor {
     public boolean askBeforeSaving() {
         return true;
     }
-
+    
+	/**
+	 * Add an item to the menu manager which will show the ConfigurationEditor window.
+	 * 
+	 * @param aMenuManager
+	 *            The menu manager to which to the menu item.
+	 */
+	public void addMenuItems(MenuManager aMenuManager) {
+		// Add a menu item to launch the configuration editor.
+		final JMenuItem editConfMenuItem = new JMenuItem(
+				"Configuration...");
+		editConfMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+				ActionEvent.CTRL_MASK));
+		// Add an action listener which will launch the configuration editor.
+		// TODO: Using a UIAction here would save initialization time.
+		editConfMenuItem.addActionListener(new ActionListener() {
+			/**
+			 * Method called when the menu item is clicked.
+			 * @param aEvent The event received.
+			 */
+			public void actionPerformed(ActionEvent aEvent) {
+				// Show the configuration editor.
+				pack();
+				setVisible(true);
+			}
+		});
+		aMenuManager.getSubMenuManager(InterfaceMain.EDIT_MENU_POS).addMenuItem(editConfMenuItem,
+				EDIT_CONFIGURATION_MENUITEM_POS);
+	}
+	
     /**
      * This method initializes the main window.
      * 
