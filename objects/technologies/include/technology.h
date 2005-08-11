@@ -141,12 +141,6 @@ public:
     void technology::copyGHGParameters( const Ghg* prevGHG );
     Ghg* technology::getGHGPointer( const std::string& ghgName );
     const std::vector<std::string> getGHGNames() const;
-    double getGHGEmissionCoef( const std::string& ghgName ) const;
-    bool getEmissionsInputStatus( const std::string& ghgName ) const;
-    void setEmissionsInputStatus( const std::string& ghgName );
-    bool getEmissionsCoefInputStatus( const std::string& ghgName ) const;
-    void setEmissionsCoefInputStatus( const std::string& ghgName );
-    void setGHGEmissionCoef( const std::string& ghgName, const double emissionsCoef );
     const std::map<std::string,double>& getemissmap() const; // return map of all ghg emissions
     const std::map<std::string,double>& getemfuelmap() const; // return map of all ghg emissions
     const std::map<std::string,double>& getemindmap() const; // return map of all ghg emissions

@@ -87,7 +87,7 @@ bool SolverLibrary::isWithinTolerance( const double excessDemand, const double d
 * The function uses the fact that changing a regional price while holding all other prices constant can only change markets within that region.
 * It first creates matrices of supply and demand which contain the amount of supply and demand added to each market by each region
 * using the unchanged prices.
-* To do this, the function steps through World::calc(), calling it seperately for each region.
+* To do this, the function steps through World::calc(), calling it separately for each region.
 * Once these matrices are completed, when calculating a derivative, supplies and demands at the base price for the regions within the market
 * for which derivatives are being calculated are subtracted from the saved global totals. Then the price of the market is perturbed,
 * and World::calc() is only called on regions contained in the market, thus adding back in supplies and demands for regions within the market

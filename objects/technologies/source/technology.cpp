@@ -458,7 +458,7 @@ void technology::initCalc( const MarketInfo* aSubsectorInfo ) {
     }
 
     for( unsigned int i = 0; i < ghg.size(); i++ ){
-        ghg[i]->initCalc( );
+        ghg[i]->initCalc();
     }
 }
 
@@ -982,31 +982,6 @@ const vector<string> technology::getGHGNames() const {
     return util::getKeys( ghgNameMap );
 }
 
-/*! \brief Return a GHG emissions coefficient for a given GHG name.
-* This function searches the mapping of GHG names to values and
-* returns the emissions coefficient from the GHG with the given name,
-* or -1 if there is not a GHG with the given name.
-* \todo Eliminate this function and getGHGNames when technology is converted to a multi-timeperiod structure.
-* \param ghgName The name of a GHG to return the emissions coefficient for.
-* \warning Assumes there is only one GHG object with any given name
-* \return The emissions coefficient of the GHG with ghgName, -1 if the GHG does not exist.
-*/
-double technology::getGHGEmissionCoef( const std::string& ghgName ) const {
-    const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
-    double emissCoef;
-
-    // Need to perform error checking b/c the searchForValue function will return 0 if the name
-    // is not found or if the correct element is at position 1. This handles the first case. 
-    if( ( ghgIndex == 0 ) && ( ( ghg.size() == 0 ) || ( ghg[ 0 ]->getName() != ghgName ) ) ){
-        // A ghg with the passed in name does not exist.
-        emissCoef = -1;
-    }
-    else {
-        emissCoef = ghg[ ghgIndex ]->getEmissCoef();
-    }
-    return emissCoef;
-}
-
 /*! \brief Copies parameters across periods for a specific GHG 
 * \param prevGHG Pointer to the previous GHG object that needs to be passed to the corresponding object this period.
 * \warning Assumes there is only one GHG object with any given name
@@ -1029,57 +1004,6 @@ Ghg* technology::getGHGPointer( const std::string& ghgName ) {
 
 	return ghg[ ghgIndex ];
 	 
-}
-
-/*! \brief sets the emissions coefficient for a GHG specified byname.
-* This function searches the mapping of GHG names to values and
-* returns the emissions coefficient from the GHG with the given name,
-* or -1 if there is not a GHG with the given name.
-* \todo Eliminate this function and getGHGNames when technology is converted to a multi-timeperiod structure.
-* \param ghgName The name of a GHG to return the emissions coefficient for.
-* \warning Assumes there is only one GHG object with any given name
-* \return The emissions coefficient of the GHG with ghgName, -1 if the GHG does not exist.
-*/
-void technology::setGHGEmissionCoef( const std::string& ghgName, const double emissionsCoef ) {
-    const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
-    // Need to perform error checking b/c the searchForValue function will return 0 if the name
-    // is not found or if the correct element is at position 1. This handles the first case. 
-    if( ( ghgIndex == 0 ) && ( ( ghg.size() == 0 ) || ( ghg[ 0 ]->getName() != ghgName ) ) ){
-        // A ghg with the passed in name does not exist.
-    }
-    else {
-        ghg[ ghgIndex ]->setEmissCoef( emissionsCoef );
-    }
-}
-
-/*! \brief Return the flag that tells if the GHG had an emissions value read in
-* This function searches the mapping of GHG names to values and
-* returns the appropriate flag,
-* or -1 if there is not a GHG with the given name.
-* \todo Eliminate this function and getGHGNames when technology is converted to a multi-timeperiod structure.
-* \param ghgName The name of a GHG to return the emissions coefficient for.
-* \warning Assumes there is only one GHG object with any given name
-* \warning No error checking is possible for this function. Error checking is done in function getGHGEmissionCoef.
-* \return A boolean that indicates if the GHG with the given name had an emissions read-in.
-*/
-bool technology::getEmissionsInputStatus( const std::string& ghgName ) const {
-    const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
-    return ghg[ ghgIndex ]->getEmissionsInputStatus();
-}
-
-/*! \brief Set the flag that indicates that a GHG had an emissions value read in
-* This function searches the mapping of GHG names to values and
-* returns the appropriate flag,
-* or -1 if there is not a GHG with the given name.
-* \todo Eliminate this function and getGHGNames when technology is converted to a multi-timeperiod structure.
-* \param ghgName The name of a GHG to return the emissions coefficient for.
-* \warning Assumes there is only one GHG object with any given name
-* \warning No error checking is possible for this function. Error checking is done in function getGHGEmissionCoef.
-* \return A boolean that indicates if the GHG with the given name had an emissions read-in.
-*/
-void technology::setEmissionsInputStatus( const std::string& ghgName ){
-    const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
-    return ghg[ ghgIndex ]->setEmissionsInputStatus();
 }
 
 //! return map of all ghg emissions

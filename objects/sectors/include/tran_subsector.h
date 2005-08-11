@@ -22,12 +22,14 @@
 class GDP;
 class MoreSectorInfo;
 class Demographic;
+
 /*! 
 * \ingroup Objects
 * \brief A derived subsector representing a mode of transportation.
 * \author Marshall Wise, Sonny Kim, Josh Lurz
 */
 class TranSubsector: public Subsector
+
 {
 public:
     TranSubsector( std::string regionName, std::string sectorName );

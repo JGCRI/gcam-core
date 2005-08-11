@@ -1931,7 +1931,7 @@ void Subsector::MCoutputAllSectors() const {
         for ( int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_emissmap_second(gmap->first);
         }
-        dboutput4( regionName, "Emissions",  "Subsec-" + sectorName + "_" + name, gmap->first, "MTC", temp );
+        dboutput4( regionName, "Emissions",  "Subsec-" + sectorName + "_" + name, gmap->first, "Tg", temp );
     }
     
     // do for all technologies in the Subsector

@@ -154,7 +154,7 @@ void Configuration::toDebugXML( ostream& out, Tabs* tabs ) const {
 * \brief Fetch a filename from the Configuration object.
 * 
 * This method is used to get filename values read from the configuration file,
-* in the filenames section. A filename is a type of string, seperated only for clarity.
+* in the filenames section. A filename is a type of string, separated only for clarity.
 * If the key is not found, the function will log a warning message
 * and return the default value argument if one is passed. Otherwise, it will return the default value 
 * defined in Configuration.h.
