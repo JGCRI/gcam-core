@@ -23,6 +23,7 @@
 #include "containers/include/gdp.h"
 #include "emissions/include/ghg_mac.h"
 #include "functions/include/input.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -42,17 +43,13 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     sequestAmountGeologic = 0;
     sequestAmountNonEngy = 0;
     emissInd = 0;
-    emissCoefPrev = 0;
-    inputEmissions = 0;
-    emissionsWereInput = false;
-    valueWasInput = false;
-    fMaxWasInput = false;
+    inputEmissions = -1;
+    valueWasInputAtSomePoint = false;
     emAdjust = 0;
-    fMax = 1;
-    fControl = 0;
+	gdpCap = 0;
+    maxCntrl = -1000;
     techDiff = 0;
-    mac = 0;
-    gdp0 = 0;
+    gdpcap0 = 0;
     finalEmissCoef = -1;
     tau = 0;
     // this is inefficient as it is greater than the lifetime
@@ -60,6 +57,8 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     // TODO: Fix this so it has one spot per active period.
     mEmissions.resize( scenario->getModeltime()->getmaxper() );
     mEmissionsByFuel.resize( scenario->getModeltime()->getmaxper() );
+	adjMaxCntrl = 1;
+	multMaxCntrl = 1;
 }
 
 //! Destructor
@@ -92,17 +91,14 @@ void Ghg::copy( const Ghg& other ){
     sequestAmountGeologic = other.sequestAmountGeologic;
     sequestAmountNonEngy = other.sequestAmountNonEngy;
     emissInd = other.emissInd;
-    emissCoefPrev = other.emissCoefPrev;
     inputEmissions = other.inputEmissions;
-    emissionsWereInput = other.emissionsWereInput;
-    valueWasInput = other.valueWasInput;
-    fMaxWasInput = other.fMaxWasInput;
+    valueWasInputAtSomePoint = other.valueWasInputAtSomePoint;
     emAdjust = other.emAdjust;
-    fMax = other.fMax;
-    fControl = other.fControl;
+    maxCntrl = other.maxCntrl;
     techDiff = other.techDiff;
-    mac = other.mac;
-    gdp0 = other.gdp0;
+    gdpcap0 = other.gdpcap0;
+	adjMaxCntrl = other.adjMaxCntrl;
+	multMaxCntrl = other.multMaxCntrl;
     finalEmissCoef = other.finalEmissCoef;
     tau = other.tau;
     mEmissions.resize( scenario->getModeltime()->getmaxper() );
@@ -118,8 +114,10 @@ Ghg* Ghg::clone() const {
     return new Ghg( *this );
 }
 
-//! initialize Ghg object with xml data
-void Ghg::XMLParse( const DOMNode* node ) {	
+/*! \brief initialize Ghg object with xml data
+*
+*/
+void Ghg::XMLParse(const DOMNode* node) {	
     /*! \pre Assume we are passed a valid node. */
     assert( node );
 
@@ -139,18 +137,16 @@ void Ghg::XMLParse( const DOMNode* node ) {
         }
         else if( nodeName == "inputEmissions" ){
             inputEmissions = XMLHelper<double>::getValue( curr );
-            emissionsWereInput = true;
-            valueWasInput = true;
+            emissCoef = 0;
         }
         else if( nodeName == "emAdjust" ){
             emAdjust = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "fMax" ){
-            fMax = XMLHelper<double>::getValue( curr );
-            fMaxWasInput = true;
-        }
-        else if( nodeName == "gdp0" ){
-            gdp0 = XMLHelper<double>::getValue( curr );
+        else if( ( nodeName == "maxCntrl" ) ){
+            maxCntrl = XMLHelper<double>::getValue( curr );
+         }
+        else if( ( nodeName == "gdpcap0" ) ){
+            gdpcap0 = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "tau" ){
             tau = XMLHelper<double>::getValue( curr );
@@ -158,17 +154,25 @@ void Ghg::XMLParse( const DOMNode* node ) {
         else if( nodeName == "finalEmissCoef" ){
             finalEmissCoef = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "techDiff"){
+        else if( nodeName == "techDiff" ){
             techDiff = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "emisscoef" ){
             emissCoef = XMLHelper<double>::getValue( curr );
-            emissionsWereInput = false;
-            valueWasInput = false;
+            inputEmissions = -1; // Reset inputEmissions to default value
         }
+		// Adjust max Control level, leaving current emissions constant
+		else if( nodeName == "adjMaxCntrl" ){
+            adjMaxCntrl = XMLHelper<double>::getValue( curr );
+		}
+		// Multiply maximum control level, changing current emissions
+		else if( nodeName == "multMaxCntrl" ){
+            multMaxCntrl = XMLHelper<double>::getValue( curr );
+		}
         else if( nodeName == "removefrac" ){
             rmfrac = XMLHelper<double>::getValue( curr );
         }
+	
         // is geologic sequestration, true or false
         else if( nodeName == "isGeologicSequestration" ){
             isGeologicSequestration = XMLHelper<bool>::getValue( curr );
@@ -182,15 +186,30 @@ void Ghg::XMLParse( const DOMNode* node ) {
             gwp = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == GhgMAC::getXMLNameStatic() ){
-            if( !ghgMac.get() ){
-                ghgMac.reset( new GhgMAC() );
-            }
-            ghgMac->XMLParse( curr );
+			// Delete the MAC if requested.
+			if( XMLHelper<int>::getAttr( curr, "delete" ) ){
+				// Check if the curve exists.
+				if( ghgMac.get() ){
+					ILogger& mainLog = ILogger::getLogger( "main_log" );
+					mainLog.setLevel( ILogger::DEBUG);
+					mainLog << "Deleting GHG MAC from GHG " << name << endl;
+					ghgMac.reset( 0 );
+				}
+			}
+			// Create and parse the MAC.
+			else {
+				if( !ghgMac.get() ){
+					ghgMac.reset( new GhgMAC() );
+				}
+				ghgMac->XMLParse( curr );
+			}
         }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
         }
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing GHG." << endl;
+			ILogger& mainLog = ILogger::getLogger( "main_log" );
+			mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing GHG." << endl;
         }
     }
 }
@@ -213,23 +232,21 @@ void Ghg::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
     // write xml for data members
-    XMLWriteElementCheckDefault( unit, "unit", out, tabs, string("") );
-    if( emissionsWereInput ) {
-        XMLWriteElement( inputEmissions, "inputEmissions", out, tabs );
-        XMLWriteElement( emissCoef, "emisscoef", out, tabs );
-    } else {
-        XMLWriteElementCheckDefault( emissCoef, "emisscoef", out, tabs, 0.0 );
-    }
+    XMLWriteElementCheckDefault( inputEmissions, "inputEmissions", out, tabs, -1.0 );
+    XMLWriteElementCheckDefault( emissCoef, "emisscoef", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( rmfrac, "removefrac", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( isGeologicSequestration, "isGeologicSequestration", out, tabs, true );
     XMLWriteElementCheckDefault( storageCost, "storageCost", out, tabs, util::getLargeNumber() );
     XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( emAdjust, "emAdjust", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( fMax, "fMax", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( gdp0, "gdp0", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( maxCntrl, "maxCntrl", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( gdpcap0, "gdpcap0", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( tau, "tau", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( finalEmissCoef, "finalEmissCoef", out, tabs, -1.0 );
+	XMLWriteElementCheckDefault( adjMaxCntrl, "adjMaxCntrl", out, tabs, 1.0 );
+	XMLWriteElementCheckDefault( multMaxCntrl, "multMaxCntrl", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( techDiff, "techDiff", out, tabs, 0.0 );
+
     // Write out the GHGMAC
     if( ghgMac.get() ){
         ghgMac->toInputXML( out, tabs );
@@ -239,6 +256,7 @@ void Ghg::toInputXML( ostream& out, Tabs* tabs ) const {
 
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
+
 
 //! Write out any inherited class specific datamembers. Since GHG is not an ABC, it must define this as a noop.
 void Ghg::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
@@ -259,13 +277,17 @@ void Ghg::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( sequestAmountGeologic, "sequestAmountGeologic", out, tabs );
     XMLWriteElement( sequestAmountNonEngy, "sequestAmountNonEngy", out, tabs );
     XMLWriteElement( emissCoef, "emisscoef", out, tabs );
+    XMLWriteElement( inputEmissions, "inputEmissions", out, tabs );
+    XMLWriteElement( mEmissionsByFuel[ period ], "emissFuel", out, tabs );
     XMLWriteElement( emissInd, "emissInd", out, tabs );
     XMLWriteElement( emAdjust, "emAdjust", out, tabs );
-    XMLWriteElement( fMax, "fMax", out, tabs );
-    XMLWriteElement( gdp0, "gdp0", out, tabs );
+    XMLWriteElement( maxCntrl, "maxCntrl", out, tabs );
+    XMLWriteElement( gdpcap0, "gdpcap0", out, tabs );
     XMLWriteElement( tau, "tau", out, tabs );
     XMLWriteElement( finalEmissCoef, "finalEmissCoef", out, tabs );
+	XMLWriteElement( adjMaxCntrl, "adjMaxCntrl", out, tabs );
     XMLWriteElement( techDiff, "techDiff", out, tabs );
+
      // Write out the GHGMAC
     if( ghgMac.get() ){
         ghgMac->toDebugXML( period, out, tabs );
@@ -306,42 +328,58 @@ const std::string& Ghg::getXMLNameStatic() {
 }
 
 /*! \brief Copies parameters such as Tau, GDP0, and MAC curve that should only be specified once
-* \details Certain parameters for GHG emissions should only be specified once so that they are
+* \detailed Certain parameters for GHG emissions should only be specified once so that they are
 * consistent for all years (and also to simplify input). Given that GHG objects are embedded in 
 * technology objects this means that these parameters need to be copied from object to object.
 * This method copies any needed parameters from the previous year's GHG object.
+* Also included in this function is code for the variable adjMaxCntrl.  The code for this varible
+* needs to be run only once, with the values at the end of the period, so it is useful to have it here
+* where those values are defined.  adjMaxCntrl has a default of 1, so if it is not input, maxCntrl will simply
+* be multiplied by 1, and the function for adjusting gdpcap0 will simplify to gdpcap0 = gdpcap0, thus keeping it
+* at the same value.  If adjMaxCntrl != 1, it will adjust gdpcap0 up or down so that the base year emissions
+* remain unchanged.  adjMaxCntrl should be input once, in the base year. 
 *
-* \author Steve Smith
+* \author Steve Smith and Nick Fernandez
 * \param prevGHG pointer to previous period's GHG object
 */
 void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
 
     assert( prevGHG ); // Make sure valid pointer was passed
+   
+   // Copy values that always need to be the same for all periods.
+	// Note that finalEmissCoef is not copied, since maxCntrl has already been set appropriately
+	maxCntrl = prevGHG->maxCntrl;
+	gdpcap0 = prevGHG->gdpcap0;
+	tau = prevGHG->tau;
 
-    // Copy values that always need to be the same for all periods.
-    // Note that finalEmissCoef is not copied, since fmax has already been set appropriately
-    fMax = prevGHG->fMax;
-    gdp0 = prevGHG->gdp0;
-    tau = prevGHG->tau;
     unit = prevGHG->unit;
-    fMaxWasInput = prevGHG->fMaxWasInput;
+	
+    adjMaxCntrl = prevGHG->adjMaxCntrl;
 
-    // Copy values that could change, so only copy if these are still zero (and, thus, were never read-in)
-    if ( !techDiff ) { 
-        techDiff = prevGHG->techDiff; // only copy if GWP has not changed
-    }
-    if ( !gwp ) { 
-        gwp = prevGHG->gwp; // only copy if GWP has not changed
-    }
+	// Adjust for maximum control level once GDP per capita is determined
+	// This could better be put into a post-calculation processing function if we implimented that in general
+	adjustMaxCntrl( prevGHG->gdpCap );
+	
+
+	// Copy values that could change, so only copy if these are still zero (and, thus, were never read-in)
+   if ( !techDiff ) { 
+		techDiff = prevGHG->techDiff; // only copy if techDiff has not changed
+	}
+ 
+   if ( !gwp ) { 
+		gwp = prevGHG->gwp; // only copy if GWP has not changed
+	}
+    
+    // Default value for emissCoef is zero, so only copy if a new value was read in
     if ( !emissCoef ) {
-        emissCoef = prevGHG->emissCoef; // only copy if emissCoef has not changed
-    }
+		emissCoef = prevGHG->emissCoef;
+	}
 
-    // If an emissions value was input last period, and none was input this period, then copy emissions coefficient
-    if ( !valueWasInput && prevGHG->valueWasInput ) {
-        emissCoef = prevGHG->emissCoef;
-        setEmissionsInputStatus();	// Set valueWasInput to true so that the next GHG object will get this coefficient passed on to it
-    }
+	// If an emissions value was input last period, and none was input this period, then copy emissions coefficient
+    // This overwrites anything that was read in
+	if (  !valueWasInputAtSomePoint && prevGHG->valueWasInputAtSomePoint ) {
+		emissCoef = prevGHG->emissCoef;
+	}
 
     // If Mac curve was input then copy it, as long as one was not read in for this period
     if ( !ghgMac.get() && prevGHG->ghgMac.get() ) {
@@ -350,10 +388,20 @@ void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
 }
 
 //! Perform initializations that only need to be done once per period
-void Ghg::initCalc( ) {    
+void Ghg::initCalc() {
+
+	maxCntrl *= multMaxCntrl;
+    // Make sure control percentage never goes above 100% so there are no negative emissions!
+	maxCntrl = min( maxCntrl, 100.0 );
+    
+    // Set flag that an emission input value was set
+    if( inputEmissions >= 0 ) {
+        valueWasInputAtSomePoint = true;
+    }
 
 }
-/*! Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients
+
+/*! \brief Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients
 *   and return the value or cost of the tax and storage for the GHG.
 *   Apply taxes only if emissions occur.  Emissions occur if there is a difference in the emissions
 *   coefficients.
@@ -361,7 +409,7 @@ void Ghg::initCalc( ) {
 *  \param regionName Name of the region for GHG
 *  \param fuelName Name of the fuel
 *  \param prodName The name of the output product.
-*  \param efficiency The efficience of the technology this ghg emitted by.
+*  \param efficiency The efficiency of the technology this ghg emitted by.
 *  \param period The period in which this calculation is occurring. 
 *  \return Generalized cost or value of the GHG
 */
@@ -420,7 +468,7 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
     }
     // for all other gases used read-in emissions coefficient
     else {
-        // apply carbon equivalent to emiss coefficienr
+        // apply carbon equivalent to emiss coefficient
         // if remove fraction is greater than zero and storage is required
         if (rmfrac > 0) {
             // add geologic sequestration cost
@@ -442,71 +490,78 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
     return generalizedCost;
 }
 
-/*! \brief Finds an appropriate value for fMax, adjusts gdp0 and sets fControl
-* \details The control function is needed in the calcEmission function and takes 4 parameters, fMax, tau, gdp0, and gdpCap.
-* tau and gdp0 are necessary inputs to the control function, fMax can either be inputed directly, or
+/*! \brief finds an appropriate value for maxCntrl and adjusts gdpcap0 as necessary
+* The control function is needed in the calcEmission function and takes 4 parameters, maxCntrl, tau, gdpcap0, and gdpCap.
+* tau and gdpcap0 are necessary inputs to the control function, maxCntrl can either be inputed directly, or
 * can be computed in this function using the input "finalEmissCoef."
-* if either tau or gdp0 are not input, or are 0, or if the emissions coefficient is 0, the function will set
-* fControl to 0, and hence, there will be no emissions adjustment due to controls. In the case that both fMax and
+* if either tau or gdpcap0 are not input, or are 0, or if the emissions coefficient is 0, the function will set
+* fControl to 0, and hence, there will be no emissions adjustment due to controls. In the case that both maxCntrl and
 * finalEmissCoef are input (which does not make sense)  only finalEmissCoef will be used.
-* The function additionally calls calcTechChange which reduces gdp0 over time to account for technological change/diffusion.
+* The function additionally calls calcTechChange which reduces gdpcap0 over time to account for technological change/diffusion.
 * \author Nick Fernandez & Steve Smith
 * \param gdpCap - The gdp per capita for the current period 
-* \param emissDrive The amount fo fuel that emissions are prortional to
-* \param period the current period where calculations are occuring
+* \param emissDrive The amount of fuel that emissions are proportional to
+* \param period the current period where calculations are occurring
+* \return adjustedGdpCap0
+* \todo let initCalc know the period so that calcTechChange calculation can be moved there and will only have to be done once per period
 */
-void Ghg::findControlFunction( const double gdpCap, const double emissDrive, const int period ){
-    double gdp0Adj = gdp0;
+double Ghg::adjustControlParameters( const double gdpCap, const double emissDrive, const double macReduction, const int period ){
+	double adjustedGdpCap0 = gdpcap0; //! gdpCap0 used by the control function- adjusted for techDiffusion
+
     if (techDiff !=0){
-        gdp0Adj = calcTechChange(period);
+        adjustedGdpCap0 = gdpcap0 / calcTechChange(period);
     }
-    if ( finalEmissCoef >= 0 ){
-        if ( emissionsWereInput ){
-            const double multiplier = emissDrive * (1 - emAdjust) * (1 - mac);
-            const double B = (1/controlFunction(1,tau,gdp0Adj,gdpCap));
-            fMax = 100 * (1 - (finalEmissCoef * ((B - 1)) / (((B * inputEmissions) / multiplier ) - finalEmissCoef)));
-            fMaxWasInput = true;
-            // method for calculating an fMax when using emissions coefficients that require fMax in their
-            // calculation.  The formula is derived by setting up equations where fMax can be eliminated through 
-            // substitution, the emissions coeffiecient can be solved for, and that expression can be substituted back in 
-            // into the expression for fMax. See formula for emission in calcEmission()
+    if ( finalEmissCoef > 0 ){
+        if ( inputEmissions >= 0 ){
+            const double multiplier = emissDrive * ( 1 - emAdjust ) * ( 1 - macReduction );
+
+            const double B = (1/controlFunction(100,tau,adjustedGdpCap0,gdpCap));
+			if ( multiplier != 0){
+				//cannot divide by zero- when no driver is present
+				maxCntrl = 100 * (1 - (finalEmissCoef * ((B - 1)) / (((B * inputEmissions) / multiplier ) - finalEmissCoef)));
+			}
+			else{
+				maxCntrl = 0;
+			}
+            // method for calculating an maxCntrl when using emissions coefficients that require maxCntrl in their
+            // calculation.  The formula is derived by setting up equations where maxCntrl can be eliminated through 
+            // substitution, the emissions coefficient can be solved for, and that expression can be substituted back in 
+            // into the expression for maxCntrl. See formula for emission in calcEmission()
         }
         else{
             if (emissCoef != 0){
                 // cannot divide by 0 
-                fMax = 100 * (1 - ( finalEmissCoef / (emissCoef)));
-                fMaxWasInput = true;
+
+                maxCntrl = 100 * (1 - ( finalEmissCoef / (emissCoef)));
+
             }
             else {
-                fMax = 0;
-                if ( finalEmissCoef != 0 ) {
-                  cout << "Warning: emissCoef = 0, control function set to 0"<< endl;
-                }
+                maxCntrl = 0;
+				ILogger& mainLog = ILogger::getLogger( "main_log" );
+				mainLog.setLevel( ILogger::WARNING );
+                mainLog << " emissCoef = 0, control function set to 0"<< endl;
+
             }
         }
-        fControl = controlFunction(fMax,tau,gdp0Adj,gdpCap);
-    }
-    else {
-        if ( fMaxWasInput ){
-            fControl = controlFunction( fMax, tau, gdp0Adj, gdpCap );
-        }
-    }
+        // Control values should never be larger than 100%.
+		maxCntrl = min( maxCntrl, 100.0 );
+	}
+	return adjustedGdpCap0;
 }
 
-/* \brief Adjusts the value of gdp0, based on technological change, returns that adjusted value.
-* \details The Variable techDiff represents the percent reduction in gdp0 per year, due to technological change and diffusion.
-* The overall reduciton in gdp0 is 1 + the techDiff percentage raised to the power of the number of years after 
-* the base year.  When applied to the control funciton, this will allow emissions controls to approach fMax sooner.
-* \author Nick Fernandez
+/*! \brief Returns the value by which to adjust gdpcap0, based on technological diffusion
+* The Variable TechCh represents the percent reduction in gdpcap0 per year, due to technological change and diffusion.
+* The overall reduction in gdpcap0 is 1 + the techCh percentage raised to the power of the number of years after 
+* the base year.  When applied to the control function, this will allow emissions controls to approach maxCntrl sooner.
+*\ Author Nick Fernandez
 * \param period the current period where calculations occur
+* \returns amount to reduce the parameter gdpCap0 by
 */
 double Ghg::calcTechChange( const int period ){
     const Modeltime* modeltime = scenario->getModeltime();
-    double gdpAdj; // adjusted gdp0 based on technological change;
     int year = modeltime->getper_to_yr( period ); 
     year -=  modeltime->getper_to_yr(1); // subtracts off base year to find number of years after base year
-    gdpAdj = gdp0 / pow(1 + (techDiff / 100), year );
-    return gdpAdj;
+    return pow(1 + (techDiff / 100), year );
 }
 
 /*! Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients
@@ -561,9 +616,9 @@ double Ghg::calcInputEmissions( const vector<Input*>& aInputs, const string& aRe
     return totalEmissions;
 }
 
-/*! \brief Calculates emissions of GHG's that use input-output as the emissions Driver
-* \details Emissions of these gases are equal to the emissions driver multiplied by the emissions coefficient (how much of the
-* chemical forming the GHG is present in the fuel) multiplied by the control function (the extent to which regions
+/*! \brief Calculates emissions of GHG's
+* \detailed Emissions of these gases are equal to the emissions driver multiplied by the emissions coefficient (how much of the
+* chemical forming the GHG is emitted per unit driver) multiplied by the control function (the extent to which regions
 * are expected to put controls on end-of-pipe emissions- based on their pppGdp) multiplied by the result of the 
 * Marginal Abatement curve, and finally by an external read-in emissions Adjustment factor(if any).  The function also
 * sets the emissions coefficient if emissions are read in.  
@@ -573,9 +628,8 @@ double Ghg::calcInputEmissions( const vector<Input*>& aInputs, const string& aRe
 * \param input The amount of fuel sent out
 * \param prodname The name of the output product
 * \param output The amount of fuel consumed
-* \param gdp GDP object used to calculate various types of GDPs.
 * \param period The period in which this calculation is occurring.
-* \todo seperate out CO2.
+* \todo PRIORITY - separate out CO2 from non-CO2 GHGs since CO2 is much simpler.
 */
 void Ghg::calcEmission( const string& regionName, const string& fuelname, const double input, 
                         const string& prodname, const double output, const GDP* gdp, const int aPeriod )
@@ -612,24 +666,32 @@ void Ghg::calcEmission( const string& regionName, const string& fuelname, const 
             mEmissionsByFuel[ aPeriod ] = ( 1.0 - rmfrac ) * input* coefFuel;
         }
     }
-    // for all other gases used read-in emissions coefficient
+    // for all other gases used read-in emissions coefficient or base-year emissions
     else {
-        const double gdpCap = gdp->getPPPGDPperCap( aPeriod );
+        double macReduction = 0;
+        gdpCap = gdp->getPPPGDPperCap( aPeriod );
+
         const double emissDriver = emissionsDriver(input, output);
         if ( ghgMac.get() ){
-            mac = ghgMac->findReduction(regionName, aPeriod);
+            macReduction = ghgMac->findReduction(regionName, aPeriod);
         }
-        findControlFunction(gdpCap, emissDriver, aPeriod);
-        if ( emissionsWereInput ) {
+
+		double fControl = 0;	
+	    double adjustedGdpCap0 = adjustControlParameters( gdpCap, emissDriver, macReduction, aPeriod );
+		if ( ( finalEmissCoef > 0 ) || ( maxCntrl > -999 ) ){
+			fControl = controlFunction( maxCntrl, tau, adjustedGdpCap0, gdpCap );
+		}
+
+        if ( inputEmissions >= 0 ) {
             mEmissions[ aPeriod ] = inputEmissions;
             mEmissionsByFuel[ aPeriod ] = inputEmissions;
-            if ( emissDriver != 0 ) {
-                emissCoef = inputEmissions / (emissDriver * (1 - emAdjust) * (1 - fControl)* ( 1 - mac ) );
+            if ( (emissDriver != 0) && (emAdjust != 1) && (fControl != 1) && (macReduction != 1)) {
+                emissCoef = inputEmissions / (emissDriver * (1 - emAdjust) * (1 - fControl)* ( 1 - macReduction ) );
             } else {
                 emissCoef = 0;
             }
         } else {
-            mEmissions[ aPeriod ] = emissDriver * emissCoef * ( 1 - emAdjust )* ( 1 - fControl ) * ( 1 - mac ) ;
+            mEmissions[ aPeriod ] = emissDriver * emissCoef * ( 1 - emAdjust )* ( 1 - fControl ) * ( 1 - macReduction ) ;
             mEmissionsByFuel[ aPeriod ] =  mEmissions[ aPeriod ];
         }
     }
@@ -648,10 +710,10 @@ void Ghg::calcEmission( const string& regionName, const string& fuelname, const 
 
 /*! \brief Calculate Ghg emissions.
 * \details Performs an activity based calculation of the emissions produced by the technology. The calculation
-* is performed by summing the total carbon contained in the inputs to the good and the substracting the carbon
+* is performed by summing the total carbon contained in the inputs to the good and the subtracting the carbon
 * contained in the physical output. The carbon contained in the output is not removed for primary fuel sectors,
 * as their inputs do not account for the carbon extracted in the fuel from the ground. This function also stores
-* the emissions of the primary fuel sectors seperately so they can be reported later for emissions by fuel.
+* the emissions of the primary fuel sectors separately so they can be reported later for emissions by fuel.
 * The emission is then converted to a global-warming-potential based emission and added to the constraint market.
 * \todo Sequestration
 * \author Josh Lurz
@@ -751,49 +813,37 @@ double Ghg::getEmissCoef() const {
     return emissCoef;
 }
 
-//! Return ghg emissions coefficient.
-void Ghg::setEmissCoef( const double emissCoefIn ) {
-    emissCoef = emissCoefIn;
-}
-
-//! Return flag that indicates if emissions were input for this technology 
-bool Ghg::getEmissionsInputStatus() const {
-    return valueWasInput;
-}
-//! Set the flag that indicates that emissions were input for this technology 
-void Ghg::setEmissionsInputStatus() {
-    valueWasInput = true;
-}
-
-/*! \brief performs the calculations that solve the control function in the current period
-* \details The control function is an inverse exponential funciton.  It approaches 0 for values of gdpCap much less
-* than gdp0, and approaches fMax for values of gdpCap much greater than gdp0. CLOGIT is a constant equal
-* to 2 times the natural log of 9, such that fControl is equal to 1/2 fMax at gdp0.  
-* the function returns the value of 0 in the case that either gdp0 or tau are not input, or are equal to 0.
+/*! \brief Returns the control level for this gas in the current period
+* \detailed The control function is a logistic exponential function.  It approaches 0 for values of gdpCap much less
+* than gdpcap0, and approaches maxCntrl for values of gdpCap much greater than gdpcap0. CLOGIT is a constant equal
+* to 2 times the natural log of 9, such that fControl is equal to 1/2 maxCntrl at gdpcap0.  
+* the function returns the value of 0 in the case that either gdpcap0 or tau are not input, or are equal to 0.
 * \author Nick Fernandez
-* \pre mac member variable was set from the MAC curve. 
-* \param fMaxIn maximum emissions reduction fraction due to controls
-* \param tauIn the range over which the control percentage goes from 10% fMax to 90% fMax
-* \param gdp0In the midpoint gdpCap value of the control curve
-* \param gdpCapIn the gdp per capita in PPP erms for the current period
+* \param maxCntrlIn maximum emissions reduction fraction due to controls
+* \param tauIn the range over which the control percentage goes from 10% maxCntrl to 90% maxCntrl
+* \param gdpcap0In the midpoint gdpCap value of the control curve
+* \param gdpCapIn the gdp per capita in PPP terms for the current period
 */
-double Ghg::controlFunction( const double fMaxIn, const double tauIn, const double gdp0In, const double gdpCapIn ){
-    if( tauIn != 0 && gdp0In != 0 ){
+double Ghg::controlFunction( const double maxCntrlIn, const double tauIn, const double gdpcap0In, const double gdpCapIn ){
+	ILogger& mainLog = ILogger::getLogger( "main_log" );
+    if( tauIn != 0 && gdpcap0In != 0 ){
         const double CLOGIT = 4.394; // See above for documentation.
-        return (fMaxIn/100) / (1 + exp( -CLOGIT * (gdpCapIn - gdp0In) / tauIn ));
+        return (maxCntrlIn/100) / (1 + exp( -CLOGIT * (gdpCapIn - gdpcap0In) / tauIn ));
     }
     else {
         if ( tauIn == 0 ){
-            cout << "Warning: control function requires an input of tau." << endl;
+			mainLog.setLevel( ILogger::WARNING );
+            mainLog << " control function requires an input of tau." << endl;
         }
-        if ( gdp0In == 0 ){
-            cout << "Warning: control function requires an input of gdp0." << endl;
+        if ( gdpcap0In == 0 ){
+			mainLog.setLevel( ILogger::WARNING );
+            mainLog << " control function requires an input of gdpcap0." << endl;
         }
         return 0;
     }
 }
 
-//! returns the emissions Driver value. This needs to be more commented.
+//! returns the emissions Driver value. emissions are proportional to input minus output.
 double Ghg::emissionsDriver( const double inputIn, const double outputIn ) const {
     return inputIn - outputIn;
 }
@@ -818,6 +868,38 @@ double Ghg::getCarbonTaxPaid( const string& aRegionName, const int aPeriod ) con
     // The carbon tax paid is the amount of the emission multiplied by the tax and the global
     // warming emission. This may be a negative in the case of a credit.
     return GHGTax * mEmissions[ aPeriod ] * gwp;
+}
+
+/*! \brief adjusts maxCntrl (and then gdpcap0 to recalibrate emissions) based on the read in multiplier adjMaxCntrl
+*\ detailed adjMaxCntrl is a read in variable that represents a multiplier to maxCntrl.
+* This is used to adjust the maximum emissions control level while leaving current emissions constant.
+* the function multiplies maxCntrl by this value, and chacks to make sure maxCntrl has not been
+* given a multiplier that makes it greater that 100.  If this happens, it sets maxCntrl to 100
+* and resets adjMaxCntrl to the value necessary to make maxCntrl 100.
+* It then solves the control function for gdpcap0, keeping the base year emissions the same,
+* so that changing maxCntrl does not mess with the base year calibrations.
+* Note also that adjustMaxCntrl is run only once, in the base year when and if adjMaxCntrl != 1
+* \author Nick Fernandez
+* \param GDPcap the previous periods GDP per capita in PPP terms for this region
+*/
+void Ghg::adjustMaxCntrl( const double GDPcap ){
+	if ( tau != 0 && gdpcap0 != 0 && adjMaxCntrl != 1 ) {
+		// Note that maxCntrl is in percentage units
+		maxCntrl *= adjMaxCntrl;
+		if ( maxCntrl > 100 ) {
+			adjMaxCntrl *= ( 100 / maxCntrl );
+			maxCntrl = 100;
+		}
+
+		const double CLOGIT = 4.394;
+		double factor1 =  1 + exp( -CLOGIT * ( GDPcap - gdpcap0 ) / tau );
+		
+		if ( adjMaxCntrl != 1 ){
+			gdpcap0 = ( tau / CLOGIT ) * log( adjMaxCntrl * factor1 - 1 ) + GDPcap;
+		}
+		// After finished adjustments, adjMaxCntrl should be set to one so is not used anymore
+		adjMaxCntrl = 1;
+	}
 }
 
         

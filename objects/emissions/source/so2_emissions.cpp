@@ -12,6 +12,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "emissions/include/so2_emissions.h"
 #include "util/base/include/xml_helper.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -23,6 +24,7 @@ SO2Emissions::SO2Emissions(){
 	ashRetention = 0;
 	percentSulfur = 0;
 	gjPerTonne = 1000;
+	finalSulfur= -1;
 	emissCoef = 1; // Note overriding default emissCoef since coef is included in driver.
 }
 
@@ -61,7 +63,7 @@ const std::string& SO2Emissions::getXMLNameStatic() {
 }
 
 /*! \brief Parses any child nodes specific to derived classes.
-* \details Method parses any input data from child nodes that are specific to the classes derived from this class.
+* \detailed Method parses any input data from child nodes that are specific to the classes derived from this class.
 * \author Nick Fernandez
 * \param nodeName name of current node
 * \param curr pointer to the current node in the XML input tree
@@ -76,6 +78,9 @@ bool SO2Emissions::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
 	else if( nodeName == "gjTonne"){
 		gjPerTonne = XMLHelper<double>::getValue( curr );
 	}
+	else if( nodeName == "finalSulfur"){
+		finalSulfur = XMLHelper<double>::getValue( curr );
+	}
     else {
         return false;
     }
@@ -87,6 +92,7 @@ void SO2Emissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( ashRetention, "ashRetention", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( percentSulfur, "percentSulfur", out, tabs, 0.0 );
 	XMLWriteElementCheckDefault( gjPerTonne, "gjTonne", out, tabs, 1000.0 );
+	XMLWriteElementCheckDefault( finalSulfur, "finalSulfur", out, tabs, -1.0 );
 }
 
 //! Write out XML elements specific to the derived class.
@@ -94,6 +100,7 @@ void SO2Emissions::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
     XMLWriteElement( ashRetention, "ashRetention", out, tabs );
     XMLWriteElement( percentSulfur, "percentSulfur", out, tabs );
 	XMLWriteElement( gjPerTonne, "gjTonne", out, tabs );
+	XMLWriteElement( finalSulfur, "finalSulfur", out, tabs );
 }
 
 /*! \brief Returns the emissions driver for SO2
@@ -108,4 +115,32 @@ void SO2Emissions::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
 */
 double SO2Emissions::emissionsDriver( const double inputIn, const double outputIn ) const {
 	return inputIn * ( 1000 / gjPerTonne ) * ( percentSulfur / 100 ) * ( 1 - ( ashRetention / 100 ) );
+}
+
+
+/*! \brief sets the variable adjMaxCntrl using finalSulfur (percent).
+*\ detailed This is specific to sulfur emissions.
+* \author Nick Fernandez
+*/
+void SO2Emissions::setAdjMaxCntrl(){
+	if ( ( finalSulfur <= percentSulfur ) && ( finalSulfur >= 0 ) ){
+		double newMaxCntrl = ( 1 - ( finalSulfur / percentSulfur ) ) * 100;
+		adjMaxCntrl = newMaxCntrl/maxCntrl;
+	}
+	else if (finalSulfur != -1){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog <<"finalSulfur is not in Valid range, percentSulfur:"<<percentSulfur<<" finalSulfur: "<<finalSulfur<<endl;
+	}
+}
+
+/*! \brief adjusts maxCntrl (and then gdpcap0 to recalibrate emissions
+*\ detailed See Ghg::adjustMaxCntrl().
+* \author Nick Fernandez
+*/
+void SO2Emissions::adjustMaxCntrl(const double GDPcap){
+	// Set max control for final SO2 content
+	setAdjMaxCntrl();
+
+	Ghg::adjustMaxCntrl( GDPcap );
 }

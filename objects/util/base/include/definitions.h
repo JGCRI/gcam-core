@@ -86,14 +86,6 @@ namespace std {
 #  endif
 #endif
 
-#if !defined(__ROOT_PREFIX__)
-#  if defined( __MACH__ )
-#     define __ROOT_PREFIX__ "/"
-#  else
-#     define __ROOT_PREFIX__
-#  endif
-#endif
-
 #if !defined(__HAVE_DB__)
 #  if defined(_MSC_VER)
 #     define __HAVE_DB__ 1

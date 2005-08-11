@@ -30,8 +30,12 @@ class Input;
 * attributes of gas name, unit, emissions coefficients,
 * and the calculated emissions.
 *
+* Note that for non-CO2 GHGs, there are two methods of setting emissions. 
+* Through an emissions coefficient or a read-in input emissions for a base year (or years).
+* These are mutually exclusive. The last one of these read in determines the method used.
+*
 * Emissions emitted indirectly through use of technology are also calculated.
-* \author Sonny Kim and Marshall Wise
+* \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez
 */
 
 class Ghg
@@ -41,8 +45,8 @@ public:
     virtual ~Ghg();
     Ghg( const Ghg& other );
     virtual Ghg& operator=( const Ghg& other );
-    void XMLParse( const xercesc::DOMNode* tempnode );
     virtual Ghg* clone() const;
+    void XMLParse( const xercesc::DOMNode* tempnode );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
@@ -69,9 +73,6 @@ public:
     double getEmissInd() const;
     double getEmissFuel( const int aPeriod ) const;
     double getEmissCoef() const;
-    void setEmissCoef( const double emissCoefIn );
-    bool getEmissionsInputStatus() const;
-    void setEmissionsInputStatus();
     bool getEmissionsCoefInputStatus() const;
     void setEmissionsCoefInputStatus();
     double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const;
@@ -83,9 +84,8 @@ protected:
     std::string unit; //!< unit for ghg gas
     std::string storageName; //!< name of ghg gas storage 
     bool isGeologicSequestration; //!< is geologic sequestration, true or false
-    bool emissionsWereInput;  //!< toggle to indicate that emissions were input for this object
-    bool valueWasInput; //!< Flag to indicate if the emissions were input for the previous period 
-    bool fMaxWasInput;//!< Flag indicating whether fMax was input for use in calculating control function
+	bool valueWasInputAtSomePoint; //!< Flag to indicate if the emissions were input in some previous period 
+
     double rmfrac; //!< fraction of carbon removed from fuel
     double storageCost; //!< storage cost associated with the remove fraction
     double gwp; //!< global warming poential
@@ -94,27 +94,30 @@ protected:
     double sequestAmountGeologic; //!< geologic sequestered emissions (calculated)
     double sequestAmountNonEngy; //!< sequestered in non-energy form (calculated)
     double emissCoef; //!< emissions coefficient
-    double emissCoefPrev; //!< emissions coefficient passed forward from previous period
     double emissInd; //!< indirect emissions
+	double maxCntrl; //!<  final control fraction for ghg's
+    double gdpcap0; //!< User inputed variable- represents midpoint of curve for control function
+    double tau; //!< User inputed timescale parameter in control function
+	double gdpCap; //!< Saved value for GDP per capita. Needed to adjust control.
+    double techDiff; //!< technological change parameter- represents percent reduction in gdp0 per year;
+	double adjMaxCntrl; //!< multiplier to maxCntrl, keeping current emissions constant
+	double multMaxCntrl; //!< multiplier to maxCntrl -- changes current emissions
     double inputEmissions;  //!< input emissions for this object
     double emAdjust; //!< User inputed adjustment to emissions values(0 to 1)
-    double fMax; //!<  final control fraction for ghg's
-    double gdp0; //!< User inputed variable- represents midpoint of curve for control function
-    double tau; //!< User inputed timescale parameter in control function
-    double fControl; //!< value derived from control function
-    double mac;
-    double techDiff; //!< technological change parameter- represents percent reduction in gdp0 per year;
     double finalEmissCoef; //!< user input final emissions factor that is approached asymptotically
-    double emissDriver; //!< the amount of fuel that governs emissions levels for various GHGs
-    std::auto_ptr<GhgMAC> ghgMac; //!< Marginal Abatement Cost Curve Object
+
+     std::auto_ptr<GhgMAC> ghgMac; //!< Marginal Abatement Cost Curve Object
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void findControlFunction( const double gdpCap, const double emissDriver, const int period );
+	double adjustControlParameters( const double gdpCap, const double emissDrive, const double macReduction, const int period );
+	virtual void adjustMaxCntrl(const double GDPcap);
+
     virtual double emissionsDriver( const double inputIn, const double outputIn ) const;
-    double controlFunction( const double fMaxIn, const double tauIn, const double gdp0In, const double gdpCapIn );
+    double controlFunction( const double maxCntrlIn, const double tauIn, const double gdpcap0In, const double gdpCapIn );
     double calcTechChange( const int period );
+	
 private:
     void copy( const Ghg& other );
     const static std::string XML_NAME; //!< node name for toXML methods

@@ -15,6 +15,7 @@
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <memory>
+#include "emissions/include/ghg.h"
 
 class Curve;
 class Tabs;
@@ -35,13 +36,32 @@ public:
     const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
 	void XMLParse( const xercesc::DOMNode* node );
-	double findReduction( const std::string& regionName, const int period );
+	
+	double findReduction( const std::string& region, const int period );
 	void toInputXML( std::ostream& out, Tabs* tabs ) const;
 	void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-private:
-    void copy( const GhgMAC& other );
-    static const std::string XML_NAME; //!< node name for toXML methods
+
+protected:
+	std::string name; //!< name of mac
+
+	double shiftNatGas( const int period, const std::string& regionName, const double carbonPrice);
+	double adjustPhaseIn(const int period);
+	double adjustTechCh( const int period, const int finalReductionPeriod, const double maxReduction);
+
+	double natGasBasePrice; //!< natural gas price in base year
+	double phaseIn; //!< number of periods over which phase in occurs. can be a non-integer
+	double shiftRange; //!< the initial range over which carbon price changes due to the standard range of Nat. Gas price changes
+	double macCurveOff;//!< turns off the Mac Curves if the value is 1.
+	double finalReduction; //!< Increase maximum reduction to this value (due to tech change) 
+	int finalReductionYear; //!< Year in which maximum reduction should be implimented
+	bool noBelowZero;//!< turns off reductions if carbon Price is less than 0;
+	std::string curveShiftFuelName; //!< Name of fuel who's price changes cause a shift in the curve
+    
     std::auto_ptr<Curve> macCurve; //!< The underlying Curve
+
+private:
+    static const std::string XML_NAME; //!< node name for toXML methods
+    void copy( const GhgMAC& other );
 };
 
 #endif // _GHG_MAC_H_
