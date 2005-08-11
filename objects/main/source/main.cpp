@@ -71,8 +71,8 @@ int main( int argc, char *argv[] ) {
     parseArgs( argc, argv, configurationArg, loggerFactoryArg );
 
     // Add OS dependent prefixes to the arguments.
-    const string configurationFileName = string( __ROOT_PREFIX__ ) + configurationArg;
-    const string loggerFileName = string( __ROOT_PREFIX__ ) + loggerFactoryArg;
+    const string configurationFileName = configurationArg;
+    const string loggerFileName = loggerFactoryArg;
 
     // Initialize the timer.  Create an object of the Timer class.
     Timer timer;
