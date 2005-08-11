@@ -1,6 +1,6 @@
 package ModelInterface;
 
-import ModelInterface.ModelGUI2.FileChooserDemo;
+//import ModelInterface.ModelGUI2.FileChooserDemo;
 
 import java.util.*;
 import javax.swing.JFrame;
@@ -32,6 +32,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	public static int FILE_QUIT_MENUITEM_POS = 50;
 	public static int EDIT_COPY_MENUITEM_POS = 10;
 	public static int EDIT_PASTE_MENUITEM_POS = 11;
+	public static String oldControl;
 	private static InterfaceMain main;
 	private JMenuItem saveMenu;
 	private JMenuItem quitMenu;
@@ -75,6 +76,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 
 		contentPane.setLayout(new BorderLayout());
 
+		oldControl = "ModelInterface";
+
 		MenuManager menuMan = new MenuManager(null);
 
 		JMenu m = new JMenu("File");
@@ -105,8 +108,13 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		pasteMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
 				ActionEvent.CTRL_MASK));
 		menuMan.getSubMenuManager(EDIT_MENU_POS).addMenuItem(pasteMenu, EDIT_PASTE_MENUITEM_POS);
+		/* FileChooserDemo is being removed, but I will leave this here, 
+		 * This is how I envision the menuitems to be added and hopefully all 
+		 * the listeners would be set up correctly and we won't need to keep 
+		 * the pointer to the classes around
 		FileChooserDemo fcd = new FileChooserDemo(this);
 		fcd.addMenuItems(menuMan);
+		*/
 
 		copyMenu.setEnabled(false);
 		pasteMenu.setEnabled(false);
