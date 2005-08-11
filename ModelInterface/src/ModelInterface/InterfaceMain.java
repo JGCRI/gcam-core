@@ -9,6 +9,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.KeyStroke;
+
+import ModelInterface.ConfigurationEditor.configurationeditor.ConfigurationEditor;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -32,6 +35,12 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	public static int FILE_QUIT_MENUITEM_POS = 50;
 	public static int EDIT_COPY_MENUITEM_POS = 10;
 	public static int EDIT_PASTE_MENUITEM_POS = 11;
+	
+	/**
+	 * Position of the "Configuration..." item in the Edit menu.
+	 */
+	private static int EDIT_CONFIGURATION_MENUITEM_POS = 12;
+	
 	public static String oldControl;
 	private static InterfaceMain main;
 	private JMenuItem saveMenu;
@@ -108,13 +117,38 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		pasteMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
 				ActionEvent.CTRL_MASK));
 		menuMan.getSubMenuManager(EDIT_MENU_POS).addMenuItem(pasteMenu, EDIT_PASTE_MENUITEM_POS);
-		/* FileChooserDemo is being removed, but I will leave this here, 
-		 * This is how I envision the menuitems to be added and hopefully all 
-		 * the listeners would be set up correctly and we won't need to keep 
-		 * the pointer to the classes around
-		FileChooserDemo fcd = new FileChooserDemo(this);
-		fcd.addMenuItems(menuMan);
-		*/
+		
+		// Add a menu item to launch the configuration editor.
+		final JMenuItem editConfMenuItem = new JMenuItem(
+				"Configuration...");
+		editConfMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+				ActionEvent.CTRL_MASK));
+		
+		// Add an action listener which will launch the configuration editor.
+		// TODO: Using a UIAction here would save initialization time.
+		editConfMenuItem.addActionListener(new ActionListener() {
+			/**
+			 * Method called when the menu item is clicked.
+			 * @param aEvent The event received.
+			 */
+			public void actionPerformed(ActionEvent aEvent) {
+				// Create and show the configuration editor.
+				final ConfigurationEditor confEditor = new ConfigurationEditor();
+				confEditor.pack();
+				confEditor.setVisible(true);
+			}
+		});
+		menuMan.getSubMenuManager(EDIT_MENU_POS).addMenuItem(editConfMenuItem,
+				EDIT_CONFIGURATION_MENUITEM_POS);
+		
+		
+		/*
+		 * FileChooserDemo is being removed, but I will leave this here, This is
+		 * how I envision the menuitems to be added and hopefully all the
+		 * listeners would be set up correctly and we won't need to keep the
+		 * pointer to the classes around FileChooserDemo fcd = new
+		 * FileChooserDemo(this); fcd.addMenuItems(menuMan);
+		 */
 
 		copyMenu.setEnabled(false);
 		pasteMenu.setEnabled(false);
