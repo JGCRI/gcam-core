@@ -239,7 +239,7 @@ public class QuadBucketTree
      * if it remains 0 this area didnt exist in this data set
      * getDataHelp will return either 0 or a weighted value for the data which was found
      */
-    double hold = 0;
+    //double hold = 0;
     occured = 0;
     //i hope recursion works like i remember it...
     getDataHelp(root, val);
@@ -595,7 +595,6 @@ public class QuadBucketTree
       double weight; //normalizing the value for addition into entry
       double p1, p2, p3; //proportion of overlaps
       DataBlock entry; //the current data we are working with
-      DataBlock toWeight; //the intersection of entry and its containing leaf
       DataBlock p1block;
       Rectangle2D.Double holdNode;
       
@@ -802,8 +801,6 @@ public class QuadBucketTree
     if(currNode.leaf)
     {
       DataBlock entry, sourceDB;
-      TreeMap builder;
-      String newData;
       for(int i = 0; i < currNode.data.size(); i++)
       { //for each DB in the host tree, extract that size rectangle of data from source tree
         entry = (DataBlock)currNode.data.get(i);
@@ -836,7 +833,6 @@ public class QuadBucketTree
       }
     } else
     {
-      QBNode nextNode;
       //need to keep going down levels to find where the data resides
       for(int i = 0; i < 4; i++)
       {
@@ -851,7 +847,6 @@ public class QuadBucketTree
       DataBlock entry;
       Point2D.Double addPoint;
       double weight;
-      String newData;
       for(int i = 0; i < currNode.data.size(); i++)
       {
         entry = (DataBlock)currNode.data.get(i);

@@ -50,7 +50,6 @@ import org.geotools.data.shapefile.*;
 import org.geotools.data.shapefile.shp.*;
 import org.geotools.feature.*;
 
-import javax.xml.stream.XMLInputFactory;
 import com.vividsolutions.jts.geom.*;
 
 /**
@@ -234,10 +233,30 @@ public class DataBuilder
         addNetCDFData(currFile);
       } else if(currFile.getAttributeValue("type").equals("pointShapefile"))
       {
-        addPointShapeFileData(currFile);
+        Element stor = currFile.getChild("storage");
+        if(stor.getAttributeValue("type").equals("values"))
+        { //we are just storing the values in the shapefile normally
+          addPointShapeFileData(currFile);
+        } else
+        { //the values are enumerated types, each gets its own variable
+          //values are the percent coverage for each block
+          addPointShapeFileEnum(currFile);
+        }
       } else if(currFile.getAttributeValue("type").equals("polygonShapefile"))
       {
-        addPolyShapeFileData(currFile);
+        Element stor = currFile.getChild("storage");
+        if(stor.getAttributeValue("type").equals("values"))
+        { //we are just storing the values in the shapefile normally
+          addPolyShapeFileData(currFile);
+        } else
+        { //the values are enumerated types, each gets its own variable
+          //values are the percent coverage for each block
+          addPolyShapeFileEnum(currFile);
+        }
+        
+      } else if(currFile.getAttributeValue("type").equals("raster"))
+      {
+        addRasterData(currFile);
       } else
       {
         log.log(Level.WARNING, "Unsupported File Type -> "+currFile.getAttributeValue(null, "type"));
@@ -466,7 +485,7 @@ public class DataBuilder
     Element seed = root.getChild("seed");
     
     
-    XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+    //XMLInputFactory inputFactory = XMLInputFactory.newInstance();
     try
     {
       SAXBuilder builder = new SAXBuilder();
@@ -502,9 +521,8 @@ public class DataBuilder
      * how find out if elements exist??? list and search through by attribute name? (slow)
      */
     Iterator itName, itVar, itTime, itData;
-    int msizeX, msizeY;
-    double normX, normY, normW, normH; //the normalized bounds of the region (rounded to a multiple of data resolution)
-    double holdMX, holdMY, work;
+    double normX, normY, normH; //the normalized bounds of the region (rounded to a multiple of data resolution)
+    double holdMY, work;
     Map.Entry var, time, data;
     Element root = sDocument.getRootElement();
     Element currElem;
@@ -565,7 +583,7 @@ public class DataBuilder
         //calculating normalized bounds of region
         work = ((RegionMask)maskList.get(rName)).x
             +((RegionMask)maskList.get(rName)).width;
-        holdMX = Math.ceil(work/dataTree.resolution)*dataTree.resolution;
+        //holdMX = Math.ceil(work/dataTree.resolution)*dataTree.resolution;
         work = ((RegionMask)maskList.get(rName)).y
             +((RegionMask)maskList.get(rName)).height;
         holdMY = Math.ceil(work/dataTree.resolution)*dataTree.resolution;
@@ -573,10 +591,10 @@ public class DataBuilder
             *dataTree.resolution;
         normY = Math.floor(((RegionMask)maskList.get(rName)).y/dataTree.resolution)
             *dataTree.resolution;
-        normW = holdMX-normX;
+        //normW = holdMX-normX;
         normH = holdMY-normY;
-        msizeY = (int)Math.ceil(normH/dataTree.resolution);
-        msizeX = (int)Math.ceil(normW/dataTree.resolution);
+        //msizeY = (int)Math.ceil(normH/dataTree.resolution);
+        //msizeX = (int)Math.ceil(normW/dataTree.resolution);
 
         //iterate through variables
         itVar = holdToPrint.entrySet().iterator();
@@ -699,7 +717,6 @@ public class DataBuilder
      * tagged or untagged - basically using this to debug program as i build it
      */
     log.log(Level.FINER, "begin function");
-    boolean readTags = true;
     boolean tagged = true;
     boolean avg = true;
     boolean dec = true;
@@ -837,7 +854,6 @@ public class DataBuilder
      */
     log.log(Level.FINER, "begin function");
     
-    boolean readTags = true;
     boolean tagged = true;
     boolean avg = true;
     boolean dec = true;
@@ -1386,10 +1402,8 @@ public class DataBuilder
           } else //env is a Polygon
           {
             Polygon area = (Polygon)env;
-            //TODO
             double minX, maxX, minY, maxY;
             Coordinate[] coords = area.getCoordinates();
-            Coordinate currP;
             
             minX = coords[0].x;
             maxX = coords[0].x;
@@ -1407,27 +1421,493 @@ public class DataBuilder
                 minY = coords[i].y;
             }
             
+            //normalizes lower bounds (upper dont matter)
+            mult = minX/res;
+            mult = Math.floor(mult);
+            minX = mult*res;
+            
+            mult = minY/res;
+            mult = Math.floor(mult);
+            minY = mult*res;
+            
             for(double X = minX; X < maxX; X+=res)
             { // cant just += res because minX and minY arent normalized
               //normalize once before instead of every time after
               for(double Y = maxY; Y > minY; Y-=res)
               {
-                //create coordinates for 4 points of a block
-                //make polygon from that
-                //use intersets from Geometry geom to test for overlap
-                //if overlaps, create datablock at normalized coordinates
-                //add datablocks to dataset
-                /*
-                 * ISSUES:
-                 * how account for normalizing edges? what rules to use
-                 * VERY likely to have overlapping value blocks if res 
-                 * doesnt hit every edge (almost no chance of this)
-                 * always shift left?
-                 * could always 'round down' a block is only created if it is
-                 * completely covered, may get no reading for small areas
-                 * though (dependant on data res)
-                 */
+                //there should be SOMETHING to do to weight the data for sparse
+                //files this is definately a TODO
                 
+                toAdd = new DataBlock(X, Y, res, res);
+                timeValue = new TreeMap();
+                timeValue.put(new Double(time), dataValue);
+                toAdd.data.put(dataName, timeValue);
+                
+                //merging this data into the current tree
+                dataTree.addData(toAdd, avg);
+              }
+            }
+            
+          }
+        }
+      } finally
+      {
+        collection.close(iter);
+      }
+
+    } catch(ShapefileException e)
+    {
+      log.log(Level.WARNING, "That aint no ShapeFile fool! -> "+fileName);
+    } catch(IOException e)
+    {
+      log.log(Level.WARNING, "IOException dont give me none of that!! -> "+fileName);
+    }
+  }
+  
+  private void addPointShapeFileEnum(Element currFile)
+  {
+    log.log(Level.FINER, "begin function");
+    
+    List infoChildren;
+    Element currElem;
+    
+    String fileName = "init";
+    String attrName = "init";
+    String nameConvention = "natural";
+    String target = "null";
+    String prefix = "";
+    String ref = null;
+    double time = 0;
+    double res = 1;
+    double x, y, mult;
+    boolean avg = false; //avg is always false for coverage readings
+    boolean typeWarn = false;
+    TreeMap timeValue;
+    HashMap nameMap = null;
+    Double dataValue;
+    DataBlock toAdd;
+    
+  //getting file info from XML
+    infoChildren = currFile.getChildren();
+    for(int i = 0; i < infoChildren.size(); i++)
+    {
+      currElem = (Element)infoChildren.get(i);
+      if(currElem.getName().equals("data"))
+      {
+        nameConvention = currElem.getAttributeValue("type");
+        
+        if(nameConvention.equals("prefix"))
+        {//names are a prefix concatedated with the value
+          Element preElem = currElem.getChild("prefix");
+          prefix = preElem.getAttributeValue("value");
+        } else if(nameConvention.equals("manual"))
+        {//each value has a mapping to a name to use
+          nameMap = new HashMap();
+          List mapList = currElem.getChildren("map");
+          Element currMap;
+          
+          for(int k = 0; k < mapList.size(); k++)
+          {
+            currMap = (Element)mapList.get(k);
+            nameMap.put(currMap.getAttributeValue("key"), currMap.getAttributeValue("name"));
+          }
+          
+          if(!nameMap.containsKey("null"))
+          {
+            nameMap.put("null", null);
+          }
+        } //else use natual naming
+      } else if(currElem.getName().equals("date"))
+      {
+        time = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("res"))
+      {
+        res = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("reference"))
+      {
+        ref = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("attribute"))
+      {
+        attrName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("name"))
+      {
+        fileName = currElem.getAttributeValue("value");
+      } else
+      {
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
+      }
+    }
+  //done reading from XML file
+    
+    if(!init)
+    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+      dataTree.fillWorld(res);
+      init = true;
+    }
+    
+    try
+    {
+      File shapeFile = new File(fileName);
+      URL shapeURL = shapeFile.toURL();
+      ShapefileDataStore store = new ShapefileDataStore(shapeURL);
+      String name = store.getTypeNames()[0];
+      FeatureSource source = store.getFeatureSource(name);
+      FeatureResults fsShape = source.getFeatures();
+      FeatureCollection collection = fsShape.collection();
+      Iterator iter = collection.iterator();
+      
+      dataValue = new Double(1); //always sending 1 as the value, so a full overlap
+      //will give the value of one to that block
+      try
+      {
+        while(iter.hasNext())
+        {
+          Feature inFeature = (Feature)iter.next();
+          Geometry geom = inFeature.getDefaultGeometry();
+          Point cent = geom.getCentroid();
+          Object holdAttr = inFeature.getAttribute(attrName);
+          
+          
+          if(holdAttr instanceof Long)
+          {
+            target = ((Long)holdAttr).toString();
+          } else if(holdAttr instanceof Double)
+          {
+            target = ((Double)holdAttr).toString();
+          } else if(holdAttr instanceof Integer)
+          {
+            target = ((Integer)holdAttr).toString();
+          } else if(holdAttr instanceof String)
+          {
+            target = ((String)holdAttr).toString();
+          } else
+          {
+            if(!typeWarn)
+            {
+              log.log(Level.WARNING, "Unknown attribute data type");
+              typeWarn = true;
+            }
+            
+            if(nameConvention.equals("manual"))
+            {
+              target = (String)nameMap.get("null");
+            } else
+            {
+              target = null;
+            }
+          } //this is all we need with natural naming
+          
+          if(nameConvention.equals("manual"))
+          {
+            target = (String)nameMap.get(target);
+          } else if(nameConvention.equals("prefix"))
+          {
+            target = prefix+target;
+          }
+          
+          //setting whether contained data is additive or averaged
+          if(!dataAvg.containsKey(target))
+          { //i cant believe this is the only way to do this
+            //its going to take forever to test every run
+            //TODO figure out a better way
+            dataAvg.put(target, new Boolean(avg));
+            if(ref != null)
+            {
+              dataRef.put(target, ref);
+            }
+          }
+          //done settign avg/add ref and units
+          
+          x = cent.getX();
+          mult = x/res;
+          mult = Math.floor(mult);
+          x = mult*res;
+          
+          y = cent.getY();
+          mult = y/res;
+          mult = Math.floor(mult);
+          y = mult*res;
+          
+          //System.out.println(cent.getX()+" "+cent.getY()+" - "+x+" "+y);
+          
+          toAdd = new DataBlock(x, y, res, res);
+          timeValue = new TreeMap();
+          timeValue.put(new Double(time), dataValue);
+          toAdd.data.put(target, timeValue);
+
+          //System.out.println("new data");
+          //merging this data into the current tree
+          dataTree.addData(toAdd, avg);
+          //System.out.println(" - "+dataValue);
+        }
+      } finally
+      {
+        collection.close(iter);
+      }
+
+    } catch(ShapefileException e)
+    {
+      log.log(Level.WARNING, "That aint no ShapeFile fool! -> "+fileName);
+    } catch(IOException e)
+    {
+      log.log(Level.WARNING, "IOException dont give me none of that!! -> "+fileName);
+    }
+  }
+  
+  private void addPolyShapeFileEnum(Element currFile)
+  {
+log.log(Level.FINER, "begin function");
+    
+    List infoChildren;
+    Element currElem;
+    
+    String fileName = "init";
+    String attrName = "init";
+    String nameConvention = "natural";
+    String target = "null";
+    String prefix = "";
+    String ref = null;
+    double time = 0;
+    double res = 1;
+    double x, y, mult;
+    boolean avg = false; //avg is always false for coverage readings
+    boolean typeWarn = false;
+    TreeMap timeValue;
+    HashMap nameMap = null;
+    Double dataValue;
+    DataBlock toAdd;
+    
+  //getting file info from XML
+    infoChildren = currFile.getChildren();
+    for(int i = 0; i < infoChildren.size(); i++)
+    {
+      currElem = (Element)infoChildren.get(i);
+      if(currElem.getName().equals("data"))
+      {
+        nameConvention = currElem.getAttributeValue("type");
+        
+        if(nameConvention.equals("prefix"))
+        {//names are a prefix concatedated with the value
+          Element preElem = currElem.getChild("prefix");
+          prefix = preElem.getAttributeValue("value");
+        } else if(nameConvention.equals("manual"))
+        {//each value has a mapping to a name to use
+          nameMap = new HashMap();
+          List mapList = currElem.getChildren("map");
+          Element currMap;
+          
+          for(int k = 0; k < mapList.size(); k++)
+          {
+            currMap = (Element)mapList.get(k);
+            nameMap.put(currMap.getAttributeValue("key"), currMap.getAttributeValue("name"));
+          }
+          
+          if(!nameMap.containsKey("null"))
+          {
+            nameMap.put("null", null);
+          }
+        } //else use natual naming
+      } else if(currElem.getName().equals("date"))
+      {
+        time = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("res"))
+      {
+        res = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("reference"))
+      {
+        ref = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("attribute"))
+      {
+        attrName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("name"))
+      {
+        fileName = currElem.getAttributeValue("value");
+      } else
+      {
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
+      }
+    }
+  //done reading from XML file
+    
+    if(!init)
+    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+      dataTree.fillWorld(res);
+      init = true;
+    }
+    
+    try
+    {
+      File shapeFile = new File(fileName);
+      URL shapeURL = shapeFile.toURL();
+      ShapefileDataStore store = new ShapefileDataStore(shapeURL);
+      String name = store.getTypeNames()[0];
+      FeatureSource source = store.getFeatureSource(name);
+      FeatureResults fsShape = source.getFeatures();
+      FeatureCollection collection = fsShape.collection();
+      Iterator iter = collection.iterator();
+      try
+      {
+        while(iter.hasNext())
+        {
+          Feature inFeature = (Feature)iter.next();
+          Geometry geom = inFeature.getDefaultGeometry();
+          Geometry env = geom.getEnvelope();
+          Object holdAttr = inFeature.getAttribute(attrName);
+          
+          
+          if(holdAttr instanceof Long)
+          {
+            target = ((Long)holdAttr).toString();
+          } else if(holdAttr instanceof Double)
+          {
+            target = ((Double)holdAttr).toString();
+          } else if(holdAttr instanceof Integer)
+          {
+            target = ((Integer)holdAttr).toString();
+          } else if(holdAttr instanceof String)
+          {
+            target = ((String)holdAttr).toString();
+          } else
+          {
+            if(!typeWarn)
+            {
+              log.log(Level.WARNING, "Unknown attribute data type");
+              typeWarn = true;
+            }
+            
+            if(nameConvention.equals("manual"))
+            {
+              target = (String)nameMap.get("null");
+            } else
+            {
+              target = null;
+            }
+          } //this is all we need with natural naming
+          
+          if(nameConvention.equals("manual"))
+          {
+            target = (String)nameMap.get(target);
+          } else if(nameConvention.equals("prefix"))
+          {
+            target = prefix+target;
+          }
+          
+          //setting whether contained data is additive or averaged
+          if(!dataAvg.containsKey(target))
+          { //i cant believe this is the only way to do this
+            //its going to take forever to test every run
+            //TODO figure out a better way
+            dataAvg.put(target, new Boolean(avg));
+            if(ref != null)
+            {
+              dataRef.put(target, ref);
+            }
+          }
+          //done settign avg/add ref and units
+          
+          if(env instanceof Point)
+          {
+            dataValue = new Double(1); //sending 1 as the value, so a full overlap
+            //will give the value of one to that block
+            
+            Point area = (Point)env;
+            //normalizing to res grid
+            x = area.getX();
+            mult = x/res;
+            mult = Math.floor(mult);
+            x = mult*res;
+            
+            y = area.getY();
+            mult = y/res;
+            mult = Math.floor(mult);
+            y = mult*res;
+            
+            toAdd = new DataBlock(x, y, res, res);
+            timeValue = new TreeMap();
+            timeValue.put(new Double(time), dataValue);
+            toAdd.data.put(target, timeValue);
+
+            //merging this data into the current tree
+            dataTree.addData(toAdd, avg);
+          } else //env is a Polygon
+          {
+            Polygon area = (Polygon)env;
+
+            double minX, maxX, minY, maxY;
+            Coordinate[] coords = area.getCoordinates();
+            
+            minX = coords[0].x;
+            maxX = coords[0].x;
+            minY = coords[0].y;
+            maxY = coords[0].y;
+            for(int i  = 1 ; i < coords.length; i++)
+            {
+              if(coords[i].x > maxX)
+                maxX = coords[i].x;
+              if(coords[i].x < minX)
+                minX = coords[i].x;
+              if(coords[i].y > maxY)
+                maxY = coords[i].y;
+              if(coords[i].y < minY)
+                minY = coords[i].y;
+            }
+            
+            //normalizes lower bounds (upper dont matter)
+            mult = minX/res;
+            mult = Math.floor(mult);
+            minX = mult*res;
+            
+            mult = minY/res;
+            mult = Math.floor(mult);
+            minY = mult*res;
+            
+            Coordinate[] makeLR = new Coordinate[5];
+            makeLR[0] = new Coordinate();
+            makeLR[1] = new Coordinate();
+            makeLR[2] = new Coordinate();
+            makeLR[3] = new Coordinate();
+            makeLR[4] = new Coordinate();
+            for(double X = minX; X < maxX; X+=res)
+            { // cant just += res because minX and minY arent normalized
+              //normalize once before instead of every time after
+              for(double Y = maxY; Y > minY; Y-=res)
+              {
+                //getting the fraction of this block which is in the Geometry
+                //this will be the passed data value (as we are storing fractional
+                //coverages)
+                makeLR[0].x = X;
+                makeLR[0].y = Y;
+                makeLR[1].x = X;
+                makeLR[1].y = (Y+res);
+                makeLR[2].x = (X+res);
+                makeLR[2].y = (Y+res);
+                makeLR[3].x = (X+res);
+                makeLR[3].y = Y;
+                makeLR[4].x = X;
+                makeLR[4].y = Y;
+                
+                GeometryFactory gf = new GeometryFactory();
+                LinearRing lr = gf.createLinearRing(makeLR);
+                Polygon holdP = gf.createPolygon(lr, null);
+                if(holdP.intersects(geom))
+                {
+                  Geometry over = holdP.intersection(geom);
+                  
+                  dataValue = new Double(over.getArea()/(res*res));
+                  
+                  //if(dataValue.doubleValue() > 0)
+                  //{
+                    toAdd = new DataBlock(X, Y, res, res);
+                    timeValue = new TreeMap();
+                    timeValue.put(new Double(time), dataValue);
+                    toAdd.data.put(target, timeValue);
+                    
+                    //merging this data into the current tree
+                    dataTree.addData(toAdd, avg);
+                  //}
+                }
+                
+                //if this block doesnt overlap geometry dont add it at all
               }
             }
             
@@ -1458,7 +1938,6 @@ public class DataBuilder
     
     int nRegions = 0;
     int rblock;
-    boolean readTags = true;
     boolean tagged = true;
     String fileName = "it is initialized thanks";
     String holdK; //the number which corresponds to a specific region in this file
@@ -1625,9 +2104,7 @@ public class DataBuilder
      */
     log.log(Level.FINER, "begin function");
     
-    boolean getName = true;
     double res = 1;
-    int nRegions = 0;
     int rblock, NaN;
     String fileName = "init";
     String dataVar = "ctry";
@@ -1791,7 +2268,7 @@ public class DataBuilder
     
     //this function initializes all of the XML stream readers
     //i will add the code for additional readers as i need them
-    XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+    //XMLInputFactory inputFactory = XMLInputFactory.newInstance();
     try
     {
       SAXBuilder builder = new SAXBuilder();

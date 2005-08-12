@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<regions numLevels="4">
+	<superRegion name="USAcontiguous" level="1">
+		<region name="Alabama" />
+		<region name="Arizona" />
+		<region name="Arkansas" />
+		<region name="California" />
+		<region name="Colorado" />
+		<region name="Connecticut" />
+		<region name="Delaware" />
+		<region name="District of Columbia" />
+		<region name="Florida" />
+		<region name="Georgia(US)" />
+		<region name="Idaho" />
+		<region name="Illinois" />
+		<region name="Indiana" />
+		<region name="Iowa" />
+		<region name="Kansas" />
+		<region name="Kentucky" />
+		<region name="Louisiana" />
+		<region name="Maine" />
+		<region name="Maryland" />
+		<region name="Massachusetts" />
+		<region name="Michigan" />
+		<region name="Minnesota" />
+		<region name="Mississippi" />
+		<region name="Missouri" />
+		<region name="Montana" />
+		<region name="Nebraska" />
+		<region name="Nevada" />
+		<region name="New Hampshire" />
+		<region name="New Jersey" />
+		<region name="New Mexico" />
+		<region name="New York" />
+		<region name="North Carolina" />
+		<region name="North Dakota" />
+		<region name="Ohio" />
+		<region name="Oklahoma" />
+		<region name="Oregon" />
+		<region name="Pennsylvania" />
+		<region name="Rhode Island" />
+		<region name="South Carolina" />
+		<region name="South Dakota" />
+		<region name="Tennessee" />
+		<region name="Texas" />
+		<region name="Utah" />
+		<region name="Vermont" />
+		<region name="Virginia" />
+		<region name="Washington" />
+		<region name="West Virginia" />
+		<region name="Wisconsin" />
+		<region name="Wyoming" />
+	</superRegion>
+	<superRegion name="Australia" level="1">
+		<region name="New South Wales" />
+		<region name="Northern Territory" />
+		<region name="Queensland" />
+		<region name="South Australia" />
+		<region name="Tasmania" />
+		<region name="Victoria" />
+		<region name="Western Australia" />
+		<region name="Australian Capital Territory" />
+	</superRegion>
+	<superRegion name="China" level="1">
+		<region name="Anhui" />
+		<region name="Beijing" />
+		<region name="Fujian" />
+		<region name="Gansu" />
+		<region name="Guangdong" />
+		<region name="Guangxi" />
+		<region name="Guizhou" />
+		<region name="Hebei" />
+		<region name="Heilongjiang" />
+		<region name="Henan" />
+		<region name="Hubei" />
+		<region name="Hunan" />
+		<region name="Jiangsu" />
+		<region name="Jiangxi" />
+		<region name="Jilin" />
+		<region name="Liaoning" />
+		<region name="Nei Mongol" />
+		<region name="Ningxia" />
+		<region name="Qinghai" />
+		<region name="Shaanxi" />
+		<region name="Shandong" />
+		<region name="Shanghai" />
+		<region name="Shanxi" />
+		<region name="Sichuan" />
+		<region name="Tianjin" />
+		<region name="Xinjiang" />
+		<region name="Xizang" />
+		<region name="Yunnan" />
+		<region name="Zhejiang" />
+		<region name="Xinjiang" />
+		<region name="Xizang" />
+	</superRegion>
+	
+	<superRegion name="Argentina" level="2">
+		<region name="Buenos Aires" />
+		<region name="Catamarca" />
+		<region name="Chaco (A)" />
+		<region name="Chubut" />
+		<region name="Cordoba (A)" />
+		<region name="Corrientes" />
+		<region name="Entre Rios" />
+		<region name="Formosa" />
+		<region name="Jujuy" />
+		<region name="La Pampa" />
+		<region name="La Rioja" />
+		<region name="Mendoza" />
+		<region name="Misiones (A)" />
+		<region name="Neuquen" />
+		<region name="Rio Negro" />
+		<region name="Salta" />
+		<region name="San Juan" />
+		<region name="San Luis" />
+		<region name="Santa Cruz" />
+		<region name="Santa Fe" />
+		<region name="Santiago del Estero" />
+		<region name="Tierra del Fuego" />
+		<region name="Tucuman" />
+		<region name="Distrito Federal (A)" />
+	</superRegion>
+	<superRegion name="Brazil" level="2">
+		<region name="Acre" />
+		<region name="Alagoas" />
+		<region name="Amapa" />
+		<region name="Amazonas (B)" />
+		<region name="Bahia" />
+		<region name="Ceara" />
+		<region name="Espirito Santo" />
+		<region name="Goias" />
+		<region name="Maranhao" />
+		<region name="Mato Grosso" />
+		<region name="Mato Grosso do Sul" />
+		<region name="Minas Gerais" />
+		<region name="Para" />
+		<region name="Paraiba" />
+		<region name="Parana" />
+		<region name="Pernambuco" />
+		<region name="Piaui" />
+		<region name="Rio de Janeiro" />
+		<region name="Rio Grande do Norte" />
+		<region name="Rio Grande do Sul" />
+		<region name="Rondonia" />
+		<region name="Roraima" />
+		<region name="Santa Catarina" />
+		<region name="Sao Paulo" />
+		<region name="Sergipe" />
+		<region name="Tocantins" />
+		<region name="Distrito Federal (B)" />
+	</superRegion>
+	<superRegion name="Mexico" level="2">
+		<region name="Aguascalientes" />
+		<region name="Baja California" />
+		<region name="Baja California Sur" />
+		<region name="Campeche" />
+		<region name="Chiapas" />
+		<region name="Chihuahua" />
+		<region name="Coahuila" />
+		<region name="Colima" />
+		<region name="Distrito Federal (M)" />
+		<region name="Durango" />
+		<region name="Guanajuato" />
+		<region name="Guerrero" />
+		<region name="Hidalgo" />
+		<region name="Jalisco" />
+		<region name="Michoacan" />
+		<region name="Morelos" />
+		<region name="Nayarit" />
+		<region name="Nuevo Leon" />
+		<region name="Oaxaca" />
+		<region name="Puebla" />
+		<region name="Queretaro" />
+		<region name="Quintana Roo" />
+		<region name="San Luis Potosi" />
+		<region name="Sinaloa" />
+		<region name="Sonora" />
+		<region name="Tabasco" />
+		<region name="Tamaulipas" />
+		<region name="Tlaxcala" />
+		<region name="Veracruz" />
+		<region name="Yucatan" />
+		<region name="Zacatecas" />
+	</superRegion>
+	
+	
+	
+	<superRegion name="USA" level="3">
+		<region name="Alaska" />
+		<region name="Hawaii" />
+		<region name="USAcontiguous" />
+	</superRegion>
+	<superRegion name="Canada" level="3">
+		<region name="Alberta" />
+		<region name="British Columbia" />
+		<region name="Manitoba" />
+		<region name="New Brunswick" />
+		<region name="Newfoundland" />
+		<region name="Northwest Territories" />
+		<region name="Nova Scotia" />
+		<region name="Ontario" />
+		<region name="Prince Edward Island" />
+		<region name="Quebec" />
+		<region name="Saskatchewan" />
+		<region name="Yukon Territory" />
+	</superRegion>
+	<superRegion name="OECD90 Europe" level="3">
+		<region name="Andorra" />
+		<region name="Austria" />
+		<region name="Belgium" />
+		<region name="Cyprus" />
+		<region name="Denmark" />
+		<region name="Germany" />
+		<region name="Finland" />
+		<region name="France" />
+		<region name="Greece" />
+		<region name="Greenland" />
+		<region name="Iceland" />
+		<region name="Ireland" />
+		<region name="Italy" />
+		<region name="Liechtenstein" />
+		<region name="Netherlands" />
+		<region name="Norway" />
+		<region name="Portugal" />
+		<region name="San Marino" />
+		<region name="Spain" />
+		<region name="Sweden" />
+		<region name="Switzerland" />
+		<region name="Turkey" />
+		<region name="United Kingdom" />
+	</superRegion>
+	<superRegion name="Aus and NZ" level="3">
+		<region name="Australia" />
+		<region name="New Zealand" />
+	</superRegion>
+	<superRegion name="FSU" level="3">
+		<region name="Armenia" />
+		<region name="Azerbaijan" />
+		<region name="Belarus" />
+		<region name="Estonia" />
+		<region name="Georgia" />
+		<region name="Kazakhstan" />
+		<region name="Kyrgyzstan" />
+		<region name="Latvia" />
+		<region name="Lithuania" />
+		<region name="Russia" />
+		<region name="Tajikistan" />
+		<region name="Turkmenistan" />
+		<region name="Ukraine" />
+		<region name="Uzbekistan" />
+	</superRegion>
+	<superRegion name="China/CPA" level="3">
+		<region name="Cambodia" />
+		<region name="China" />
+		<region name="Laos" />
+		<region name="Mongolia" />
+		<region name="North Korea" />
+		<region name="Vietnam" />
+	</superRegion>
+	<superRegion name="Middle East" level="3">
+		<region name="Bahrain" />
+		<region name="Yemen" />
+		<region name="Gaza Strip" />
+		<region name="Iran" />
+		<region name="Iraq" />
+		<region name="Israel" />
+		<region name="Jordan" />
+		<region name="Kuwait" />
+		<region name="Lebanon" />
+		<region name="Oman" />
+		<region name="Qatar" />
+		<region name="Saudi Arabia" />
+		<region name="Syria" />
+		<region name="United Arab Emirates" />
+		<region name="West Bank" />
+	</superRegion>
+	<superRegion name="Africa" level="3">
+		<region name="Algeria" />
+		<region name="Angola" />
+		<region name="Benin" />
+		<region name="Botswana" />
+		<region name="Burkina Faso" />
+		<region name="Burundi" />
+		<region name="Cameroon" />
+		<region name="Central African Republic" />
+		<region name="Chad" />
+		<region name="Congo" />
+		<region name="Djibouti" />
+		<region name="Egypt" />
+		<region name="Equatorial Guinea" />
+		<region name="Eritrea" />
+		<region name="Ethiopia" />
+		<region name="Gabon" />
+		<region name="Gambia" />
+		<region name="Ghana" />
+		<region name="Guinea" />
+		<region name="Guinea-Bissau" />
+		<region name="Ivory Coast" />
+		<region name="Kenya" />
+		<region name="Lesotho" />
+		<region name="Liberia" />
+		<region name="Libya" />
+		<region name="Madagascar" />
+		<region name="Malawi" />
+		<region name="Mali" />
+		<region name="Mauritania" />
+		<region name="Morocco" />
+		<region name="Mozambique" />
+		<region name="Namibia" />
+		<region name="Niger" />
+		<region name="Nigeria" />
+		<region name="Rwanda" />
+		<region name="Senegal" />
+		<region name="Sierra-Leone" />
+		<region name="Somalia" />
+		<region name="South-Africa" />
+		<region name="Sudan" />
+		<region name="Swaziland" />
+		<region name="Tanzania" />
+		<region name="Togo" />
+		<region name="Tunisia" />
+		<region name="Uganda" />
+		<region name="Western-Sahara" />
+		<region name="Zaire" />
+		<region name="Zambia" />
+		<region name="Zimbabwe" />
+	</superRegion>
+	<superRegion name="Latin America" level="3">
+		<region name="Mexico" />
+		<region name="Brazil" />
+		<region name="Argentina" />
+		<region name="Belize" />
+		<region name="Bolivia" />
+		<region name="Chile" />
+		<region name="Colombia" />
+		<region name="Costa Rica" />
+		<region name="Cuba" />
+		<region name="Dominican Republic" />
+		<region name="Ecuador" />
+		<region name="El Salvador" />
+		<region name="French Guiana" />
+		<region name="Guatemala" />
+		<region name="Guyana" />
+		<region name="Haiti" />
+		<region name="Honduras" />
+		<region name="Jamaica" />
+		<region name="Nicaragua" />
+		<region name="Panama" />
+		<region name="Paraguay" />
+		<region name="Peru" />
+		<region name="Puerto Rico" />
+		<region name="Suriname" />
+		<region name="Trinidad and Tobago" />
+		<region name="Uruguay" />
+		<region name="Venezuela" />
+	</superRegion>
+	<superRegion name="S and E Asia" level="3">
+		<region name="Afghanistan" />
+		<region name="Bangladesh" />
+		<region name="Bhutan" />
+		<region name="Brunei" />
+		<region name="Pakistan" />
+		<region name="Indonesia" />
+		<region name="Malaysia (S)" />
+		<region name="Malaysia (N)" />
+		<region name="Myanmar" />
+		<region name="Nepal" />
+		<region name="Papua New Guinea" />
+		<region name="Philippines" />
+		<region name="Singapore" />
+		<region name="Sri Lanka" />
+		<region name="Taiwan" />
+		<region name="Thailand" />
+	</superRegion>
+	<superRegion name="Eastern Europe" level="3">
+		<region name="Albania" />
+		<region name="Bosnia and Herzegovina" />
+		<region name="Bulgaria" />
+		<region name="Croatia" />
+		<region name="Czech Republic" />
+		<region name="Hungary" />
+		<region name="Macedonia" />
+		<region name="Moldova" />
+		<region name="Poland" />
+		<region name="Romania" />
+		<region name="Slovakia" />
+		<region name="Slovenia" />
+		<region name="Yugoslavia" />
+	</superRegion>
+	<superRegion name="Korea" level="3">
+		<region name="North Korea" />
+		<region name="South Korea" />
+	</superRegion>
+	<superRegion name="India" level="3">
+		<region name="Andaman and Nicobar Is" />
+		<region name="Andhra Pradesh" />
+		<region name="Arunachal Pradesh" />
+		<region name="Assam" />
+		<region name="Bihar" />
+		<region name="Dadra and Nagar Haveli" />
+		<region name="Delhi" />
+		<region name="Goa" />
+		<region name="Gujarat" />
+		<region name="Haryana" />
+		<region name="Himachal Pradesh" />
+		<region name="Jammu and Kashmir" />
+		<region name="Karnataka" />
+		<region name="Kerala" />
+		<region name="Madhya Pradesh" />
+		<region name="Maharashtra" />
+		<region name="Manipur" />
+		<region name="Meghalaya" />
+		<region name="Mizoram" />
+		<region name="Nagaland" />
+		<region name="Orissa" />
+		<region name="Pondicherry" />
+		<region name="Punjab (I)" />
+		<region name="Rajasthan" />
+		<region name="Sikkim" />
+		<region name="Tamil Nadu" />
+		<region name="Tripura" />
+		<region name="Uttar Pradesh" />
+		<region name="West Bengal" />
+	</superRegion>
+	
+	
+	<superRegion name="World" level="4">
+		<region name="USA" />
+		<region name="Canada" />
+		<region name="OECD90 Europe" />
+		<region name="Japan" />
+		<region name="Aus and NZ" />
+		<region name="FSU" />
+		<region name="China/CPA" />
+		<region name="Middle East" />
+		<region name="Africa" />
+		<region name="Latin America" />
+		<region name="S and E Asia" />
+		<region name="Eastern Europe" />
+		<region name="Korea" />
+		<region name="India" />
+	</superRegion>
+</regions>

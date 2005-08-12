@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<commands>
+	<variable name="barley" type="reference">
+		<region value="World" />
+		<field value="Barley" />
+		<time value="1995.0" />
+	</variable>
+
+	<plot variable="barley" />
+</commands>

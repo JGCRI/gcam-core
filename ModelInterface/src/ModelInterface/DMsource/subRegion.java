@@ -81,12 +81,29 @@ public class subRegion extends Region
   public ReferenceWrapper[] getWorkingM(String var, String year)
   {
     ReferenceWrapper[] toReturn = new ReferenceWrapper[1];
-    double[][] holdD = (double[][])((TreeMap)data.get(var)).get(year);
-    toReturn[0] = new ReferenceWrapper(this);
     
-    for(int i = 0; i < holdD.length; i++)
-      for(int k = 0; k < holdD[0].length; k++)
-        toReturn[0].data[i][k] = holdD[i][k];
+    if(!data.containsKey(var))
+    {
+      toReturn[0] = new ReferenceWrapper(this);
+      for(int i = 0; i < toReturn[0].data.length; i++)
+        for(int k = 0; k < toReturn[0].data[0].length; k++)
+          toReturn[0].data[i][k] = java.lang.Double.NaN;
+      
+    } else if(!((TreeMap)data.get(var)).containsKey(year))
+    {
+      toReturn[0] = new ReferenceWrapper(this);
+      for(int i = 0; i < toReturn[0].data.length; i++)
+        for(int k = 0; k < toReturn[0].data[0].length; k++)
+          toReturn[0].data[i][k] = java.lang.Double.NaN;
+    } else
+    {
+      double[][] holdD = (double[][])((TreeMap)data.get(var)).get(year);
+      toReturn[0] = new ReferenceWrapper(this);
+      
+      for(int i = 0; i < holdD.length; i++)
+        for(int k = 0; k < holdD[0].length; k++)
+          toReturn[0].data[i][k] = holdD[i][k];
+    }
     return toReturn;
   }
   /**

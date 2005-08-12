@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<commands>
+	<variable name="forest" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Forest FS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="army" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Army DOD" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="barley" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Barley" />
+		<time value="1995.0" />
+	</variable>
+
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="army" />
+		<argument name="forest" />
+	</maskCombineOr>
+	<maskRemove>
+		<target name="maskBarley" />
+		<argument name="barley" />
+		<mask name="masterMask" />
+		<weight value="false" />
+	</maskRemove>
+
+	<plot variable="forest" />
+	<plot variable="army" />
+	<plot variable="masterMask" />
+</commands>

@@ -269,6 +269,18 @@ public class ManipulationDriver
       } else if(currCom.getName().equals("parseLessThan"))
       {
         parseLessThanCommand(currCom);
+      } else if(currCom.getName().equals("maskCombineOr"))
+      {
+        maskCombineOrCommand(currCom);
+      } else if(currCom.getName().equals("maskCombineAnd"))
+      {
+        maskCombineAndCommand(currCom);
+      } else if(currCom.getName().equals("maskRemain"))
+      {
+        maskRemainCommand(currCom);
+      } else if(currCom.getName().equals("maskRemove"))
+      {
+        maskRemoveCommand(currCom);
       } else if(currCom.getName().equals("countGreaterThan"))
       {
         countGreaterThanCommand(currCom);
@@ -1005,6 +1017,187 @@ public class ManipulationDriver
       variableList.put(VDname, VDest);
       
       VDest.setData(ComponentManipulator.lessThan(VSource.getData(), limit));
+    }
+  }
+  /**
+   * Combines two variables' values using mask OR rules. Rather than NaN
+   * values being thrown away outright if even one argument has a value at a
+   * particular point that point will inherit a value. OR is performed
+   * additively with a max of 1 (for full masking).
+   * @param command XML node defining the operation.
+   */
+  private void maskCombineOrCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable VD, V1, V2;
+    List infoList;
+    Element currInfo;
+    currInfo = command.getChild("target");
+    String VDname = currInfo.getAttributeValue("name");
+    infoList = command.getChildren("argument");
+    currInfo = (Element)infoList.get(0);
+    V1 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    currInfo = (Element)infoList.get(1);
+    V2 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    
+    if(V1.sameShape(V2))
+    {
+      VD = V1.getShape(VDname);
+      variableList.put(VDname, VD);
+      
+      VD.setData(ComponentManipulator.maskCombineOr(V1.getData(), V2.getData()));
+    } else
+    {
+      log.log(Level.WARNING, "Command Failed: variables of different shapes.");
+    }
+  }
+  /**
+   * Combines two variables' values using mask AND rules. AND is performed
+   * as conservatively as possible on a per cell basis. A cell will only
+   * inheret a value if its two parent cells definately overlap (their fill
+   * is more than 1 combined). This is done by adding cell values and then
+   * subtracting 1 full cell worth.
+   * @param command XML node defining the operation.
+   */
+  private void maskCombineAndCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable VD, V1, V2;
+    List infoList;
+    Element currInfo;
+    currInfo = command.getChild("target");
+    String VDname = currInfo.getAttributeValue("name");
+    infoList = command.getChildren("argument");
+    currInfo = (Element)infoList.get(0);
+    V1 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    currInfo = (Element)infoList.get(1);
+    V2 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    
+    if(V1.sameShape(V2))
+    {
+      VD = V1.getShape(VDname);
+      variableList.put(VDname, VD);
+      
+      VD.setData(ComponentManipulator.maskCombineAnd(V1.getData(), V2.getData()));
+    } else
+    {
+      log.log(Level.WARNING, "Command Failed: variables of different shapes.");
+    }
+  }
+  /**
+   * Allows only masked values to remain. If weight is selected, only
+   * the portion of mask for each cell will remain of the initial value.
+   * If weight is not selected, the full value will remain as long as there
+   * is some portion masked. If limit is used portions must additionally be
+   * greater than the given limit value.
+   * @param command XML node defining the operation.
+   */
+  private void maskRemainCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable VD, VSource, VMask;
+    boolean toWeight;
+    double limit;
+    Element currInfo;
+    
+    currInfo = command.getChild("target");
+    String VDname = currInfo.getAttributeValue("name");
+    currInfo = command.getChild("argument");
+    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    currInfo = command.getChild("mask");
+    VMask = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    currInfo = command.getChild("weight");
+    toWeight = (Boolean.valueOf(currInfo.getAttributeValue("value"))).booleanValue();
+    
+    currInfo = command.getChild("limit");
+    if(currInfo != null)
+    {
+      if(currInfo.getAttribute("value")!=null)
+      { //this is just a number, so go ahead and read it
+        limit = Double.parseDouble(currInfo.getAttributeValue("value"));
+      } else
+      { //this is a scalar variable, get the value out of it
+        Variable holdChange = (Variable)variableList
+            .get(currInfo.getAttributeValue("name"));
+        limit = holdChange.getData()[0].data[0][0];
+      }
+    } else
+    {
+      limit = 0;
+    }
+    
+    if(VSource.sameShape(VMask))
+    {
+      VD = VSource.getShape(VDname);
+      variableList.put(VDname, VD);
+      if(toWeight)
+      {
+        VD.setData(ComponentManipulator.maskRemainWeight(VSource.getData(), VMask.getData(), limit));
+      } else
+      {
+        VD.setData(ComponentManipulator.maskRemain(VSource.getData(), VMask.getData(), limit));
+      }
+    } else
+    {
+      log.log(Level.WARNING, "Command Failed: variables of different shapes.");
+    }
+  }
+  /**
+   * Allows only UNmasked values to remain. If weight is selected, only
+   * the UMmasked portion of each cell will remain of the initial value.
+   * If weight is not selected, the full value will remain as long as there
+   * is some portion UNmasked. If limit is used portions must additionally be
+   * less than the given limit value.
+   * @param command XML node defining the operation.
+   */
+  private void maskRemoveCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable VD, VSource, VMask;
+    boolean toWeight;
+    double limit;
+    Element currInfo;
+    
+    currInfo = command.getChild("target");
+    String VDname = currInfo.getAttributeValue("name");
+    currInfo = command.getChild("argument");
+    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    currInfo = command.getChild("mask");
+    VMask = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    currInfo = command.getChild("weight");
+    toWeight = (Boolean.valueOf(currInfo.getAttributeValue("value"))).booleanValue();
+    
+    currInfo = command.getChild("limit");
+    if(currInfo != null)
+    {
+      if(currInfo.getAttribute("value")!=null)
+      { //this is just a number, so go ahead and read it
+        limit = Double.parseDouble(currInfo.getAttributeValue("value"));
+      } else
+      { //this is a scalar variable, get the value out of it
+        Variable holdChange = (Variable)variableList
+            .get(currInfo.getAttributeValue("name"));
+        limit = holdChange.getData()[0].data[0][0];
+      }
+    } else
+    {
+      limit = 1;
+    }
+    
+    if(VSource.sameShape(VMask))
+    {
+      VD = VSource.getShape(VDname);
+      variableList.put(VDname, VD);
+      if(toWeight)
+      {
+        VD.setData(ComponentManipulator.maskRemoveWeight(VSource.getData(), VMask.getData(), limit));
+      } else
+      {
+        VD.setData(ComponentManipulator.maskRemove(VSource.getData(), VMask.getData(), limit));
+      }
+    } else
+    {
+      log.log(Level.WARNING, "Command Failed: variables of different shapes.");
     }
   }
   /**
@@ -1817,7 +2010,7 @@ public class ManipulationDriver
             
             min = (ComponentManipulator.smallestValue(currPrint.getData()))[0].data[0][0];
             max = (ComponentManipulator.largestValue(currPrint.getData()))[0].data[0][0];
-            graph.drawMatrix(currPrint.buildMatrix(), min, max, currPrint.x, currPrint.y, currPrint.res);
+            graph.drawMatrix(toPrint.name, currPrint.buildMatrix(), min, max, currPrint.x, currPrint.y, currPrint.res);
           }
         } else
         {
@@ -1827,7 +2020,7 @@ public class ManipulationDriver
           
           min = (ComponentManipulator.smallestValue(ref.getData()))[0].data[0][0];
           max = (ComponentManipulator.largestValue(ref.getData()))[0].data[0][0];
-          graph.drawMatrix(ref.buildMatrix(), min, max, ref.x, ref.y, ref.res);
+          graph.drawMatrix(toPrint.name, ref.buildMatrix(), min, max, ref.x, ref.y, ref.res);
         }
       } else
       { //variable is just data
@@ -2213,6 +2406,7 @@ public class ManipulationDriver
         toAddVar.put(timeName, toAddTime);
       }
       //end getting time
+      //System.out.println("just added -> '"+varName+"'");
       toAdd.data.put(varName, toAddVar);
     }
     //end getting varialbes

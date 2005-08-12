@@ -1,3 +1,10 @@
 lib
 bin
 *.properties
+*.shx
+*.sbx
+*.shp
+*.prj
+*.sbn
+*.dbf
+*.nc

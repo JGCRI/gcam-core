@@ -46,6 +46,11 @@ public class MatrixGrapher
 
   public void drawMatrix(double[][] m, double min, double max, double x, double y, double r)
   {
+    drawMatrix(new String("Generic Plot"), m, min, max, x, y, r);
+  }
+  
+  public void drawMatrix(String name, double[][] m, double min, double max, double x, double y, double r)
+  {
     toDisplay = m;
     minVal = min;
     maxVal = max;
@@ -63,7 +68,7 @@ public class MatrixGrapher
     JFrame.setDefaultLookAndFeelDecorated(true);
 
     //Create and set up the window.
-    JFrame frame = new JFrame("Matrix Plot");
+    JFrame frame = new JFrame(name);
     frame.addWindowListener(new java.awt.event.WindowAdapter()
     {
       public void windowClosing(java.awt.event.WindowEvent e)

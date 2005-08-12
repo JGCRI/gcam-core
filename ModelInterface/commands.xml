@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<commands>
+	<variable name="wind" type="reference">
+		<region value="USAcontiguous" />
+		<field value="WindClass" />
+		<time value="2005.0" />
+	</variable>
+
+	<plot variable="wind" />
+</commands>

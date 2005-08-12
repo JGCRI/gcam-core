@@ -29,12 +29,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * @author Vince
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 public final class ComponentManipulator
 {
   static Logger log = Logger.getLogger("DataManipulation");
@@ -390,6 +384,254 @@ public final class ComponentManipulator
           } else
           {
             holdMR[iY][iX] = Double.NaN;
+          }
+        }
+      }
+
+      toReturn[i] = R[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    return toReturn;
+  }
+  public static Wrapper[] maskCombineOr(Wrapper[] R1, Wrapper[] R2)
+  {
+    log.log(Level.FINER, "begin function");
+    double[][] holdM1, holdM2, holdMR;
+    Wrapper[] toReturn = new Wrapper[R1.length];
+    
+    for(int i = 0; i < R1.length; i++)
+    {
+      holdM1 = R1[i].data;
+      holdM2 = R2[i].data;
+      holdMR = new double[holdM1.length][holdM1[0].length];
+      for(int iY = 0; iY < holdM1.length; iY++)
+      {
+        for(int iX = 0; iX < holdM1[0].length; iX++)
+        {
+          if(Double.isNaN(holdM1[iY][iX]))
+          {
+            if(Double.isNaN(holdM2[iY][iX]))
+            {
+              holdMR[iY][iX] = Double.NaN;
+            } else
+            {
+              holdMR[iY][iX] = holdM2[iY][iX];
+            }
+          } else if(Double.isNaN(holdM2[iY][iX]))
+          {
+            holdMR[iY][iX] = holdM1[iY][iX];
+          } else
+          {
+            holdMR[iY][iX] = holdM1[iY][iX] + holdM2[iY][iX];
+            if(holdMR[iY][iX] > 1)
+              holdMR[iY][iX] = 1;
+          }
+        }
+      }
+      
+      toReturn[i] = R1[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    return toReturn;
+  }
+  public static Wrapper[] maskCombineAnd(Wrapper[] R1, Wrapper[] R2)
+  {
+    /*
+     * fairly conservative approximation of overlap
+     */
+    //
+    log.log(Level.FINER, "begin function");
+    double[][] holdM1, holdM2, holdMR;
+    Wrapper[] toReturn = new Wrapper[R1.length];
+    
+    for(int i = 0; i < R1.length; i++)
+    {
+      holdM1 = R1[i].data;
+      holdM2 = R2[i].data;
+      holdMR = new double[holdM1.length][holdM1[0].length];
+      for(int iY = 0; iY < holdM1.length; iY++)
+      {
+        for(int iX = 0; iX < holdM1[0].length; iX++)
+        {
+          if((Double.isNaN(holdM1[iY][iX]))||(Double.isNaN(holdM2[iY][iX])))
+          {
+            holdMR[iY][iX] = Double.NaN;
+          } else
+          {
+            if(holdM1[iY][iX] > 1)
+              holdM1[iY][iX] = 1;
+            if(holdM2[iY][iX] > 1)
+              holdM2[iY][iX] = 1;
+            
+            holdMR[iY][iX] = ((holdM1[iY][iX] + holdM2[iY][iX])-1);
+            if(holdMR[iY][iX] <= 0)
+              holdM1[iY][iX] = Double.NaN;
+          }
+        }
+      }
+      
+      toReturn[i] = R1[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    return toReturn;
+  }
+  public static Wrapper[] maskRemain(Wrapper[] R, Wrapper[] M, double limit)
+  { //0 is defined as removed, all other values stay
+    log.log(Level.FINER, "begin function");
+    double[][] holdMR;
+    double[][] holdMS;
+    double[][] holdMM; //matrix mask
+    Wrapper[] toReturn = new Wrapper[R.length];
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      holdMS = R[i].data;
+      holdMM = M[i].data;
+      holdMR = new double[holdMS.length][holdMS[0].length];
+      for(int iY = 0; iY < holdMR.length; iY++)
+      {
+        for(int iX = 0; iX < holdMR[0].length; iX++)
+        {
+          if((holdMM[iY][iX] != 0)&&(!Double.isNaN(holdMM[iY][iX])))
+          {
+            if(holdMM[iY][iX] > limit)
+            {
+              holdMR[iY][iX] = holdMS[iY][iX];
+            } else
+            {
+              holdMR[iY][iX] = Double.NaN;
+            }
+          } else
+          {
+            holdMR[iY][iX] = Double.NaN;
+          }
+        }
+      }
+
+      toReturn[i] = R[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    return toReturn;
+  }
+  public static Wrapper[] maskRemainWeight(Wrapper[] R, Wrapper[] M, double limit)
+  { //0 is defined as removed, all other values stay
+    //reamaining values weighted based on mask value
+    log.log(Level.FINER, "begin function");
+    double[][] holdMR;
+    double[][] holdMS;
+    double[][] holdMM; //matrix mask
+    Wrapper[] toReturn = new Wrapper[R.length];
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      holdMS = R[i].data;
+      holdMM = M[i].data;
+      holdMR = new double[holdMS.length][holdMS[0].length];
+      for(int iY = 0; iY < holdMR.length; iY++)
+      {
+        for(int iX = 0; iX < holdMR[0].length; iX++)
+        {
+          if((holdMM[iY][iX] != 0)&&(!Double.isNaN(holdMM[iY][iX])))
+          {
+            if(holdMM[iY][iX] > limit)
+            {
+              holdMR[iY][iX] = (holdMS[iY][iX]*holdMM[iY][iX]);
+            } else
+            {
+              holdMR[iY][iX] = Double.NaN;
+            }
+          } else
+          {
+            holdMR[iY][iX] = Double.NaN;
+          }
+        }
+      }
+
+      toReturn[i] = R[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    return toReturn;
+  }
+  public static Wrapper[] maskRemove(Wrapper[] R, Wrapper[] M, double limit)
+  { //0 is defined as remains, all other values are removed
+    log.log(Level.FINER, "begin function");
+    double[][] holdMR;
+    double[][] holdMS;
+    double[][] holdMM; //matrix mask
+    Wrapper[] toReturn = new Wrapper[R.length];
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      holdMS = R[i].data;
+      holdMM = M[i].data;
+      holdMR = new double[holdMS.length][holdMS[0].length];
+      for(int iY = 0; iY < holdMR.length; iY++)
+      {
+        for(int iX = 0; iX < holdMR[0].length; iX++)
+        {
+          if(Double.isNaN(holdMM[iY][iX]))
+          {
+            holdMR[iY][iX] = (holdMS[iY][iX]);
+          } else
+          {
+            if(holdMM[iY][iX] < 1)
+            {
+              if(holdMM[iY][iX] < limit)
+              {
+                holdMR[iY][iX] = (holdMS[iY][iX]);
+              } else
+              {
+                holdMR[iY][iX] = Double.NaN;
+              }
+            } else
+            {
+              holdMR[iY][iX] = Double.NaN;
+            }
+          }
+        }
+      }
+
+      toReturn[i] = R[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    return toReturn;
+  }
+  public static Wrapper[] maskRemoveWeight(Wrapper[] R, Wrapper[] M, double limit)
+  { //0 is defined as remains, all other values are removed
+    //remaining values weighted based on mask value
+    log.log(Level.FINER, "begin function");
+    double[][] holdMR;
+    double[][] holdMS;
+    double[][] holdMM; //matrix mask
+    Wrapper[] toReturn = new Wrapper[R.length];
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      holdMS = R[i].data;
+      holdMM = M[i].data;
+      holdMR = new double[holdMS.length][holdMS[0].length];
+      for(int iY = 0; iY < holdMR.length; iY++)
+      {
+        for(int iX = 0; iX < holdMR[0].length; iX++)
+        {
+          if(Double.isNaN(holdMM[iY][iX]))
+          {
+            holdMR[iY][iX] = (holdMS[iY][iX]);
+          } else
+          {
+            if(holdMM[iY][iX] < 1)
+            {
+              if(holdMM[iY][iX] < limit)
+              {
+                holdMR[iY][iX] = (holdMS[iY][iX]*(1-holdMM[iY][iX]));
+              } else
+              {
+                holdMR[iY][iX] = Double.NaN;
+              }
+            } else
+            {
+              holdMR[iY][iX] = Double.NaN;
+            }
           }
         }
       }

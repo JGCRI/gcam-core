@@ -92,12 +92,9 @@ public class RegionMask extends Rectangle2D.Double
     //know it intersects in some way, now find if it additionally lays over a
     //region of the mask which contains some 1's, return portion which is in region
     double toReturn = 0;
-    double portion;
-    Rectangle2D.Double thisRect, passRect;
     int lowX, highX, lowY, highY; //the range of indicies to check in the mask
     double smallX, bigX, smallY, bigY; //used for proportion finding
     double thisX, thisY; //x and y coordinates for the current place in bit mask
-    passRect = new Rectangle2D.Double(X, Y, W, H);
     lowX = (int)(Math.floor(((X-x))/resolution));
     highX = (int)(Math.ceil((((X+(W-resolution))-x))/resolution));
     lowY = (int)(Math.floor((((y+height)-(Y+(H))))/resolution));
