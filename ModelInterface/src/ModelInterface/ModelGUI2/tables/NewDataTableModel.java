@@ -135,7 +135,7 @@ public class NewDataTableModel extends BaseTableModel{
 	/**
 	 * not supported for a single table
 	 */
-	protected void filterData(JFrame ParentFrame) {
+	public void filterData(JFrame ParentFrame) {
 		throw new UnsupportedOperationException();
 	}
 
