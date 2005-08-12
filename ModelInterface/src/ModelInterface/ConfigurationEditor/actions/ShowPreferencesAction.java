@@ -100,8 +100,8 @@ public class ShowPreferencesAction extends AbstractAction {
             inputStream.close();
         } catch (FileNotFoundException e) {
             // The preferences file did not exist, this is not an
-            // error. A preferences file will be created when they
-            // are saved.
+            // error. Save an empty properties file.
+        	FileUtils.saveProperties(mProperties);
             return;
         } catch (IOException e) {
             // The preferences file exists but it can't be read.
