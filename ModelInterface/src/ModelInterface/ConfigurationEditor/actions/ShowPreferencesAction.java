@@ -3,30 +3,23 @@
  */
 package ModelInterface.ConfigurationEditor.actions;
 
-import ModelInterface.ConfigurationEditor.guicomponents.PropertiesTextField;
-
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import ModelInterface.ConfigurationEditor.utils.Messages;
-import ModelInterface.ConfigurationEditor.utils.FileUtils;
 import ModelInterface.ConfigurationEditor.configurationeditor.PropertiesInfo;
+import ModelInterface.ConfigurationEditor.guicomponents.PropertiesTextField;
+import ModelInterface.ConfigurationEditor.utils.FileUtils;
+import ModelInterface.ConfigurationEditor.utils.Messages;
 
 /**
  * Class which defines the action which occurs when the user selects edit
@@ -51,11 +44,6 @@ public class ShowPreferencesAction extends AbstractAction {
     private final transient Frame mParentFrame;
 
     /**
-     * Properties object.
-     */
-    private transient Properties mProperties = null;
-
-    /**
      * Constructor which sets the name of the Action and stores the parent
      * editor.
      * 
@@ -76,44 +64,9 @@ public class ShowPreferencesAction extends AbstractAction {
      */
     public void actionPerformed(final ActionEvent aEvent) {
         // Initialize the properties object before setting up the input fields.
-        initializeProperties();
         final JDialog preferenceDialog = createPreferencesDialog();
         preferenceDialog.pack();
         preferenceDialog.setVisible(true);
-    }
-
-    /**
-     * Initialize the internal properties object which reads and stores
-     * preferences in a file.
-     * 
-     */
-    private void initializeProperties() {
-        // Get the executable path from the properties file.
-        // Properties shouldn't already be initialized.
-        assert (mProperties == null);
-        mProperties = new Properties();
-
-        try {
-            final FileInputStream inputStream = new FileInputStream(
-                    PropertiesInfo.PROPERTY_FILE);
-            mProperties.loadFromXML(inputStream);
-            inputStream.close();
-        } catch (FileNotFoundException e) {
-            // The preferences file did not exist, this is not an
-            // error. Save an empty properties file.
-        	FileUtils.saveProperties(mProperties);
-            return;
-        } catch (IOException e) {
-            // The preferences file exists but it can't be read.
-            final String errorMessage = Messages
-                    .getString("ShowPreferencesAction.2") + e.getMessage() + "."; //$NON-NLS-1$ //$NON-NLS-2$
-            final String errorTitle = Messages
-                    .getString("ShowPreferencesAction.0"); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(mParentFrame, errorMessage,
-                    errorTitle, JOptionPane.ERROR_MESSAGE);
-            Logger.global.log(Level.SEVERE, errorMessage);
-            return;
-        }
     }
 
     /**
@@ -160,21 +113,23 @@ public class ShowPreferencesAction extends AbstractAction {
         // horizontally
         // but not vertically.
         cons.weightx = 1;
-
+        
+        // Get the properties object.
+        final Properties props = FileUtils.getInitializedProperties(prefDialog);
         // Add the fields to select the executable.
         final JPanel exeSelectFields = new PropertiesTextField(
-                "Executable File", PropertiesInfo.EXE_PATH, mProperties, "exe");
+                "Executable File", PropertiesInfo.EXE_PATH, props, "exe");
         prefDialog.add(exeSelectFields, cons);
 
         // Add the fields to select the configuration template file.
         final JPanel templateFields = new PropertiesTextField(
                 "Configuration Template", PropertiesInfo.CONF_TMPL,
-                mProperties, "xml");
+                props, "xml");
         prefDialog.add(templateFields, cons);
 
         // Add the fields to select the log configuration file.
         final JPanel logSelectFields = new PropertiesTextField(
-                "Log File Location", PropertiesInfo.LOG_CONF, mProperties,
+                "Log File Location", PropertiesInfo.LOG_CONF, props,
                 "xml");
         prefDialog.add(logSelectFields, cons);
 
@@ -187,7 +142,7 @@ public class ShowPreferencesAction extends AbstractAction {
         // window.
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent aEvent) {
-                FileUtils.saveProperties(mProperties);
+                FileUtils.saveProperties();
                 aParentDialog.dispose();
             }
         });
