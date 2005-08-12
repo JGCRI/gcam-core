@@ -10,6 +10,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
@@ -23,8 +26,13 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.*;
 
+import com.sun.org.apache.xml.internal.serialize.OutputFormat;
+import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.*;
+import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 //import org.w3c.dom.*;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -33,8 +41,6 @@ import org.jfree.report.JFreeReport;
 /*
 import org.w3c.dom.ls.*;
 import org.w3c.dom.bootstrap.*;
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
 */
 import org.apache.xpath.domapi.XPathEvaluatorImpl;
 import org.jfree.chart.JFreeChart;
@@ -66,6 +72,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 	private static String controlStr = "DbViewer";
 
 	private JTable jTable;
+		
+	static private File queryFile = new File("queries.xml");
+
+	private DOMImplementationLS implls;
 
 	public DbViewer(JFrame pf) {
 		parentFrame = pf;
@@ -73,26 +83,75 @@ public class DbViewer implements ActionListener, MenuAdder {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr)) {
-						// clean up
-						// remove hook to quit
+						xmlDB.closeDB();
+						try {
+							Document tempDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+			.getDOMImplementation().createDocument(null, "queries", null);
+							queries.getAsNode(tempDoc);
+							//writeDocument(tempDoc, queryFile);
+							writeFile(queryFile, tempDoc);
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+						parentFrame.getContentPane().removeAll();
 					}
 					if(evt.getNewValue().equals(controlStr)) {
-						// hook into quit
+						// need to do anything?
 					}
 				}
 			}
 		});
-		File queryFile = new File("queries.xml");
+
+
+
+		try {
+			System.setProperty(DOMImplementationRegistry.PROPERTY,
+					"com.sun.org.apache.xerces.internal.dom.DOMImplementationSourceImpl");
+					//"org.apache.xerces.dom.DOMImplementationSourceImpl");
+			DOMImplementationRegistry reg = DOMImplementationRegistry
+					.newInstance();
+			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");
+			if (implls == null) {
+				System.out
+						.println("Could not find a DOM3 Load-Save compliant parser.");
+				JOptionPane.showMessageDialog(parentFrame,
+						"Could not find a DOM3 Load-Save compliant parser.",
+						"Initialization Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			if(queryFile.exists()) {
+				LSInput lsInput = implls.createLSInput();
+				lsInput.setByteStream(new FileInputStream(queryFile));
+				LSParser lsParser = implls.createLSParser(
+						DOMImplementationLS.MODE_SYNCHRONOUS, null);
+				lsParser.setFilter(new ParseFilter());
+				queriesDoc = lsParser.parse(lsInput);
+			} else {
+				// create one
+			}
+		} catch (Exception e) {
+			System.err.println("Couldn't initialize DOMImplementation: " + e);
+			JOptionPane.showMessageDialog(parentFrame,
+					"Couldn't initialize DOMImplementation\n" + e,
+					"Initialization Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+
+
+
+
+		/*
 		try {
 			DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			if(queryFile.exists()) {
-				queriesDoc = parser.parse(new File("queries.xml"));
+				queriesDoc = parser.parse(queryFile);
 			} else {
 				queriesDoc = parser.getDOMImplementation().createDocument(null, "queries", null);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 
 	private JMenuItem makeMenuItem(String title) {
@@ -811,4 +870,58 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 	}
 	*/
+
+	public void writeDocument(Document doc, File where) {
+		//DOMImplementation impl = doc.getImplementation();
+		//DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS","3.0");
+		//DOMImplementationLS implls = (DOMImplementationLS)impl;
+		LSSerializer writer = implls.createLSSerializer();
+
+		// Turn on pretty print for readable output.
+		if(writer.getDomConfig().canSetParameter("format-pretty-print", "true")) {
+			writer.getDomConfig().setParameter("format-pretty-print", "true");
+		} else {
+			System.out.println("Can't pretty print");
+		}
+
+		// Serialize the document into a string.
+		final String docContent = writer.writeToString(doc);
+
+		// Now attempt to write it to a file.
+		try {
+			final FileWriter fileWriter = new FileWriter(where);
+			fileWriter.write(docContent);
+			fileWriter.close();
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+			JOptionPane.showMessageDialog(null/*parentFrame*/, "Couldn't save Queries\n"+ioe.getMessage(), 
+					"Query Save Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	public boolean writeFile(File file, Document theDoc) {
+		// specify output formating properties
+		OutputFormat format = new OutputFormat(theDoc);
+		format.setEncoding("UTF-8");
+		format.setLineSeparator("\r\n");
+		format.setIndenting(true);
+		format.setIndent(3);
+		format.setLineWidth(0);
+		format.setPreserveSpace(false);
+		format.setOmitDocumentType(true);
+
+		// create the searlizer and have it print the document
+
+		try {
+			FileWriter fw = new FileWriter(file);
+			XMLSerializer serializer = new XMLSerializer(fw, format);
+			serializer.asDOMSerializer();
+			serializer.serialize(theDoc);
+			fw.close();
+		} catch (java.io.IOException e) {
+			System.err.println("Error outputing tree: " + e);
+			return false;
+		}
+		return true;
+	}
 }

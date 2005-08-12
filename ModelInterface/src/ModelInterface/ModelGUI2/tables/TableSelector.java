@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.tree.TreePath;
 import org.w3c.dom.Document;
+import javax.swing.event.TableModelListener;
+
+import ModelInterface.ModelGUI2.InputViewer;
 
 public class TableSelector extends JDialog implements ActionListener {
 	/**
@@ -41,7 +44,7 @@ public class TableSelector extends JDialog implements ActionListener {
 	 * Initializes some of the data and creates the list of selections, and sets up
 	 * the layout.
 	 */
-	public TabelSelector(Frame frame,
+	public TableSelector(Frame frame,
 					   Component locationComp,
 					   String labelText,
 					   String title,
@@ -121,7 +124,7 @@ public class TableSelector extends JDialog implements ActionListener {
 	 * @param pf needed to create the table.
 	 * @return Returns the pane to be displayed in the right side of the splitpane
 	 */
-	public static JScrollPane createSelection(TreePath tp, Document doc, JFrame pf, FileChooserDemo fcd) {
+	public static JScrollPane createSelection(TreePath tp, Document doc, JFrame pf, InputViewer fcd) {
 		if(TableSelector.value.equals("")) {
 			return null;
 		}
@@ -145,7 +148,7 @@ public class TableSelector extends JDialog implements ActionListener {
 	  		JTable jTable = new JTable(sorter);
 
 			// Should the listener be set like so..
-	  		jTable.getModel().addTableModelListener((FileChooserDemo)fcd);
+	  		jTable.getModel().addTableModelListener((TableModelListener)fcd);
 	  		sorter.setTableHeader(jTable.getTableHeader());
 
 	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -180,7 +183,7 @@ public class TableSelector extends JDialog implements ActionListener {
 
 			BaseTableModel bt = new MultiTableModel(tp, doc, pf, "Multi Tables");
 			JTable jTable = new JTable(bt);
-	  		jTable.getModel().addTableModelListener((FileChooserDemo)fcd);
+	  		jTable.getModel().addTableModelListener((TableModelListener)fcd);
 
 			//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
 
@@ -200,7 +203,7 @@ public class TableSelector extends JDialog implements ActionListener {
 			TableSorter sorter = new TableSorter(bt);
 			JTable jTable = new JTable(sorter);
 			// Should the listener be set like so..
-			jTable.getModel().addTableModelListener((FileChooserDemo)fcd);
+			jTable.getModel().addTableModelListener((TableModelListener)fcd);
 	  		sorter.setTableHeader(jTable.getTableHeader());
 
 			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

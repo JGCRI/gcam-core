@@ -105,9 +105,10 @@ public class QueryTreeModel implements TreeModel {
 		}
 	}
 	public Node getAsNode(Document doc) {
-		Node ret = doc.createElement("queries");
-		addQueryGroup(doc, ret, root);
-		return ret;
+		//Node ret = doc.createElement("queries");
+		addQueryGroup(doc, doc.getDocumentElement(), root);
+		//return ret;
+		return doc.getDocumentElement();
 	}
 	protected void addQueryGroup(Document doc, Node currNode, QueryGroup currGroup) {
 		Node tempNode;

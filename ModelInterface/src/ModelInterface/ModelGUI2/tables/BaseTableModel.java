@@ -286,7 +286,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	 * the filterMaps to keep track of what the user has selected
 	 * @param parentFrame So that we can create a dialog
 	 */
-	protected void filterData(JFrame parentFrame) {
+	public void filterData(JFrame parentFrame) {
 		// so i can make oldNumRows final and it won't crash
 		if (activeRows == null) {
 			activeRows = new Vector();
