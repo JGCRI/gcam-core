@@ -320,6 +320,9 @@ public class ManipulationDriver
       } else if(currCom.getName().equals("weightValues"))
       {
         weightValuesCommand(currCom);
+      } else if(currCom.getName().equals("frequencyAnalysis"))
+      {
+        frequencyAnalysisCommand(currCom);
       } else if(currCom.getName().equals("extractSubRegion"))
       {
         extractSubRegionCommand(currCom);
@@ -1155,7 +1158,8 @@ public class ManipulationDriver
     log.log(Level.FINER, "begin function");
     Variable VD, VSource, VMask;
     boolean toWeight;
-    double limit;
+    boolean userLimit = false;
+    double limit = 0;
     Element currInfo;
     
     currInfo = command.getChild("target");
@@ -1179,9 +1183,7 @@ public class ManipulationDriver
             .get(currInfo.getAttributeValue("name"));
         limit = holdChange.getData()[0].data[0][0];
       }
-    } else
-    {
-      limit = 1;
+      userLimit = true;
     }
     
     if(VSource.sameShape(VMask))
@@ -1190,9 +1192,17 @@ public class ManipulationDriver
       variableList.put(VDname, VD);
       if(toWeight)
       {
+        if(!userLimit)
+        {
+          limit = 1;
+        }
         VD.setData(ComponentManipulator.maskRemoveWeight(VSource.getData(), VMask.getData(), limit));
       } else
       {
+        if(!userLimit)
+        {
+          limit = 0;
+        }
         VD.setData(ComponentManipulator.maskRemove(VSource.getData(), VMask.getData(), limit));
       }
     } else
@@ -1803,6 +1813,66 @@ public class ManipulationDriver
     } else
     {
       log.log(Level.WARNING, "Command Failed: variables of different shapes.");
+    }
+  }
+  /**
+   * Does a frequency analysis on square km of the passed variable.
+   * Can either handle splitting one variable based on it's values,
+   * or splitting one variable which contains coverage fractions based
+   * on another variables values. Both usages account for the curvature
+   * of the earth.
+   * @param command XML node defining the operation.
+   */
+  private void frequencyAnalysisCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable VDest, VSource, VSplit;
+    int buckets;
+    Element currInfo;
+
+    //output code here
+    
+    currInfo = command.getChild("argument");
+    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    currInfo = command.getChild("buckets");
+    if(currInfo.getAttribute("number")!= null)
+    { //this is just a number, so go ahead and read it
+      buckets = Integer.parseInt(currInfo.getAttributeValue("number"));
+    } else
+    { //this is a scalar variable, get the value out of it
+      Variable holdChange = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      buckets = (int)holdChange.getData()[0].data[0][0];
+    }
+    //creating new datavariable to hold result
+    VDest = new DataVariable();
+    VDest.name = "frequency analysis of "+VSource.name;
+    //variableList.put(VDname, VDest);
+    
+    currInfo = command.getChild("split");
+    if(currInfo != null)
+    { //coverage source, splitting on other variable
+      VSplit = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      
+      if(VSource.sameShape(VSplit))
+      {
+        VDest.setData(ComponentManipulator.freqAnalysis(VSource.getData(), VSplit.getData(), buckets));
+      } else
+      {
+        log.log(Level.WARNING, "Command Failed: variables of different shapes.");
+      }
+    } else
+    { //splitting on own value, not coverage
+      VDest.setData(ComponentManipulator.freqAnalysis(VSource.getData(), buckets));
+    }
+    
+    //need to output cuz this is an abnormally shaped return
+    try
+    {
+      BufferedWriter out = new BufferedWriter(new PrintWriter(System.out));
+      VDest.printVerbose(out);
+    } catch(IOException e)
+    {
+      log.log(Level.SEVERE, "IOException in -> printCommand (System.out)");
     }
   }
   /**

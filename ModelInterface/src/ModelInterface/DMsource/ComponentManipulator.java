@@ -574,18 +574,12 @@ public final class ComponentManipulator
             holdMR[iY][iX] = (holdMS[iY][iX]);
           } else
           {
-            if(holdMM[iY][iX] < 1)
-            {
-              if(holdMM[iY][iX] < limit)
-              {
-                holdMR[iY][iX] = (holdMS[iY][iX]);
-              } else
-              {
-                holdMR[iY][iX] = Double.NaN;
-              }
-            } else
+            if(holdMM[iY][iX] > limit)
             {
               holdMR[iY][iX] = Double.NaN;
+            } else
+            {
+              holdMR[iY][iX] = (holdMS[iY][iX]);
             }
           }
         }
@@ -619,18 +613,12 @@ public final class ComponentManipulator
             holdMR[iY][iX] = (holdMS[iY][iX]);
           } else
           {
-            if(holdMM[iY][iX] < 1)
-            {
-              if(holdMM[iY][iX] < limit)
-              {
-                holdMR[iY][iX] = (holdMS[iY][iX]*(1-holdMM[iY][iX]));
-              } else
-              {
-                holdMR[iY][iX] = Double.NaN;
-              }
-            } else
+            if(holdMM[iY][iX] > limit)
             {
               holdMR[iY][iX] = Double.NaN;
+            } else
+            {
+              holdMR[iY][iX] = (holdMS[iY][iX]*(1-holdMM[iY][iX]));
             }
           }
         }
@@ -1169,7 +1157,122 @@ public final class ComponentManipulator
     }
     return toReturn;
   }
-
+  public static Wrapper[] freqAnalysis(Wrapper[] R, int bnum)
+  {
+    log.log(Level.FINER, "begin function");
+    /*
+     * for each cell, get value in split, decide which bucket that goes into
+     * find out area of the cell, for coverage multiply by value in R, otherwise
+     * just add area to that bucket, return array of buckets
+     */
+    double POLAR_CIRCUM = 40008.00; //these are constand but i dont know how to make constants in java...
+    double EQUAT_CIRCUM = 40076.5;
+    double PI = 3.1415926535;
+    
+    double max = largestValue(R)[0].data[0][0];
+    double factor = (max*1.0001)/bnum; //1.001 makes sure max value goes in last bucket
+    int store; //the index this value will be added to
+    double area; //the area of the current cell we are in in km^2
+    double[][] holdMS;
+    DataWrapper[] toReturn = new DataWrapper[bnum];
+    
+    double circumAtLat; //the circumference of the earth at a specific latitude
+    double totalWidth; //width in km of the region
+    double totalHeight; //height in km of the region
+    double blockWidth; //eidth in km of a block of data
+    double blockHeight; //height in km of a block of data
+    
+    for(int i = 0; i < bnum; i++)
+    {
+      toReturn[i] = new DataWrapper();
+      toReturn[i].data = new double[1][1];
+      toReturn[i].data[0][0] = 0;
+    }
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      totalHeight = (POLAR_CIRCUM/(360/R[i].getH()));
+      blockHeight = (totalHeight/R[i].data.length);
+      
+      holdMS = R[i].data;
+      for(int iY = 0; iY < holdMS.length; iY++)
+        for(int iX = 0; iX < holdMS[0].length; iX++)
+        {
+          if(!Double.isNaN(holdMS[iY][iX]))
+          {
+            circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+((holdMS.length-iY)*R[i].getRes()))*(PI/180)));
+            totalWidth = (circumAtLat/(360/(R[i].getW())));
+            blockWidth = (totalWidth/R[i].data[iY].length);
+            area = blockWidth*blockHeight;
+            
+            store = (int)Math.floor(holdMS[iY][iX]/factor);
+            
+            toReturn[store].data[0][0] += (area);
+          }
+        }
+    }
+    
+    return toReturn;
+  }
+  public static Wrapper[] freqAnalysis(Wrapper[] R, Wrapper[] split, int bnum)
+  {
+    log.log(Level.FINER, "begin function");
+    /*
+     * for each cell, get value in split, decide which bucket that goes into
+     * find out area of the cell, for coverage multiply by value in R, otherwise
+     * just add area to that bucket, return array of buckets
+     */
+    double POLAR_CIRCUM = 40008.00; //these are constand but i dont know how to make constants in java...
+    double EQUAT_CIRCUM = 40076.5;
+    double PI = 3.1415926535;
+    
+    double max = largestValue(split)[0].data[0][0];
+    double factor = (max*1.0001)/bnum; //1.001 makes sure max value goes in last bucket
+    int store; //the index this value will be added to
+    double area; //the area of the current cell we are in in km^2
+    double[][] holdMS, holdMM;
+    DataWrapper[] toReturn = new DataWrapper[bnum];
+    
+    double circumAtLat; //the circumference of the earth at a specific latitude
+    double totalWidth; //width in km of the region
+    double totalHeight; //height in km of the region
+    double blockWidth; //eidth in km of a block of data
+    double blockHeight; //height in km of a block of data
+    
+    for(int i = 0; i < bnum; i++)
+    {
+      toReturn[i] = new DataWrapper();
+      toReturn[i].data = new double[1][1];
+      toReturn[i].data[0][0] = 0;
+    }
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      totalHeight = (POLAR_CIRCUM/(360/R[i].getH()));
+      blockHeight = (totalHeight/R[i].data.length);
+      
+      holdMS = R[i].data;
+      holdMM = split[i].data;
+      for(int iY = 0; iY < holdMS.length; iY++)
+        for(int iX = 0; iX < holdMS[0].length; iX++)
+        {
+          if(!Double.isNaN(holdMS[iY][iX]))
+          {
+            circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+((holdMS.length-iY)*R[i].getRes()))*(PI/180)));
+            totalWidth = (circumAtLat/(360/(R[i].getW())));
+            blockWidth = (totalWidth/R[i].data[iY].length);
+            area = blockWidth*blockHeight;
+            
+            store = (int)Math.floor(holdMM[iY][iX]/factor);
+            
+            toReturn[store].data[0][0] += (area*holdMS[iY][iX]);
+          }
+        }
+    }
+    
+    return toReturn;
+  }
+  
 //*****************************************************************************
 // just needed somewhere to put this... almost definately will never be used
   /**
