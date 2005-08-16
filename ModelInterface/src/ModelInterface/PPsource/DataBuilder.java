@@ -1567,6 +1567,7 @@ public class DataBuilder
           Point cent = geom.getCentroid();
           Object holdAttr = inFeature.getAttribute(attrName);
           
+          target = new String();
           
           if(holdAttr instanceof Long)
           {
@@ -1610,6 +1611,7 @@ public class DataBuilder
           { //i cant believe this is the only way to do this
             //its going to take forever to test every run
             //TODO figure out a better way
+            System.out.println("added "+target+" as a new variable");
             dataAvg.put(target, new Boolean(avg));
             if(ref != null)
             {

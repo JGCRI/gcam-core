@@ -28,6 +28,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.math.special.*;
+import org.apache.commons.math.*;
 
 public final class ComponentManipulator
 {
@@ -1170,7 +1172,7 @@ public final class ComponentManipulator
     double PI = 3.1415926535;
     
     double max = largestValue(R)[0].data[0][0];
-    double factor = (max*1.0001)/bnum; //1.001 makes sure max value goes in last bucket
+    double factor = (max*1.0001)/bnum; //makes sure max value goes in last bucket
     int store; //the index this value will be added to
     double area; //the area of the current cell we are in in km^2
     double[][] holdMS;
@@ -1263,6 +1265,11 @@ public final class ComponentManipulator
             blockWidth = (totalWidth/R[i].data[iY].length);
             area = blockWidth*blockHeight;
             
+            if(holdMM[iY][iX] > 120000)
+            {
+              System.out.println("mynumberisbig -> "+holdMM[iY][iX]);
+            }
+            
             store = (int)Math.floor(holdMM[iY][iX]/factor);
             
             toReturn[store].data[0][0] += (area*holdMS[iY][iX]);
@@ -1272,6 +1279,38 @@ public final class ComponentManipulator
     
     return toReturn;
   }
+  
+  public static Wrapper[] windPower(double height, double diam, double turbine, double avail, double loss)
+  {
+    DataWrapper[] toReturn = new DataWrapper[1];
+    toReturn[0] = new DataWrapper();
+    toReturn[0].data = new double[1][1];
+    
+    double RatedWS, powerAtHeight, multipleOfClassRated, multipleOfClassCutout;
+    double energyCaptured, captureCoeff, maxAnnual, idealized;
+    double CutoutWS = 30;
+    
+    try
+    {
+      RatedWS = Math.pow(((turbine*8000*27)/(1.225*Math.PI*Math.pow(diam, 2)*16)), (1/3));
+      powerAtHeight = Math.pow(((5.8)*(height/10)), (1/7));
+      multipleOfClassRated = (RatedWS/powerAtHeight);
+      multipleOfClassCutout = (CutoutWS/powerAtHeight);
+      energyCaptured = (Erf.erf(0.5*Math.sqrt(Math.PI)*multipleOfClassRated) - (2/3)*multipleOfClassRated*((Math.PI/4)*Math.pow(multipleOfClassRated, 2)+3/2)*Math.pow((Math.E) ,(-0.25*(Math.PI*Math.pow(multipleOfClassRated, 2)))));
+      captureCoeff = (energyCaptured+(((Math.pow((multipleOfClassRated), 3))/((3/4)*Math.sqrt(Math.PI)))*(Math.pow((Math.E), (-(Math.pow((multipleOfClassRated), 2))))-Math.pow((Math.E), (-(Math.pow((multipleOfClassCutout), 2)))))));
+      maxAnnual = (((((1.225*(Math.pow(((2/3)*(diam)), 2))*(Math.pow(powerAtHeight, 3)))/1000)*8760)/1000)/1000);
+      idealized = (maxAnnual*((avail/100)*(1-(loss/100)))*captureCoeff);
+      
+      toReturn[0].data[0][0] = idealized;
+      return toReturn;
+    } catch (MathException e)
+    {
+      log.log(Level.SEVERE, "math exception while calculating wind power generation");
+    }
+    
+    return null;
+  }
+  
   
 //*****************************************************************************
 // just needed somewhere to put this... almost definately will never be used
