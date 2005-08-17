@@ -25,19 +25,6 @@ import javax.swing.tree.TreePath;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
-import org.jfree.report.JFreeReport;
-import org.jfree.report.Group;
-import org.jfree.report.modules.gui.base.ExportPluginFactory;
-import org.jfree.report.JFreeReportBoot;
-import org.jfree.report.ElementAlignment;
-import org.jfree.report.ReportProcessingException;
-import org.jfree.report.modules.gui.base.PreviewDialog;
-//import org.jfree.report.elementfactory.TextFieldElementFactory;
-import org.jfree.report.elementfactory.DrawableFieldElementFactory;
-import org.jfree.ui.FloatDimension;
-
-import org.apache.poi.hssf.usermodel.*;
-
 import ModelInterface.InterfaceMain;
 import ModelInterface.MenuAdder;
 
@@ -98,9 +85,10 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 	CSVFilter csvFilter = new CSVFilter();
 
+	private TableSelector tableSelector;
+
 	File file;
 
-	static String[] names = { "Single Table", "Multi Tables", "Combo Tables" };
 
 	int leftWidth;
 
@@ -109,7 +97,34 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	JFileChooser globalFC;
 
 	public InputViewer(JFrame parentFrameIn) {
+		try {
+			System.setProperty(DOMImplementationRegistry.PROPERTY,
+					"com.sun.org.apache.xerces.internal.dom.DOMImplementationSourceImpl");
+					//"org.apache.xerces.dom.DOMImplementationSourceImpl");
+			DOMImplementationRegistry reg = DOMImplementationRegistry
+					.newInstance();
+			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");
+			if (implls == null) {
+				System.out
+						.println("Could not find a DOM3 Load-Save compliant parser.");
+				JOptionPane.showMessageDialog(parentFrame,
+						"Could not find a DOM3 Load-Save compliant parser.",
+						"Initialization Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			lsInput = implls.createLSInput();
+			lsParser = implls.createLSParser(
+					DOMImplementationLS.MODE_SYNCHRONOUS, null);
+			lsParser.setFilter(new ParseFilter());
+		} catch (Exception e) {
+			System.err.println("Couldn't initialize DOMImplementation: " + e);
+			JOptionPane.showMessageDialog(parentFrame,
+					"Couldn't initialize DOMImplementation\n" + e,
+					"Initialization Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 		parentFrame = parentFrameIn;
+		thisViewer = this;
 
 		// Create a window to display the chart in.
 		chartWindow = new JFrame( "Charts" );
@@ -139,24 +154,43 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				//chartWindow.getContentPane().removeAll();
 			}
 		});
+		final PropertyChangeListener savePropListener = new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent e) {
+				if(e.getPropertyName().equals("Document-Modified")) {
+					((InterfaceMain)parentFrame).getSaveMenu().setEnabled(true);
+				} else if(e.getPropertyName().equals("Document-Save")) {
+					((InterfaceMain)parentFrame).getSaveMenu().setEnabled(false);
+				}
+			}
+		};
 
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr)) {
-						//((InterfaceMain)parentFrame).getSaveMenu().removeActionListener(thisViewer);
-						//((InterfaceMain)parentFrame).getSaveMenu().removePropertyChangeListener(savePropListener);
+						((InterfaceMain)parentFrame).getSaveMenu().removeActionListener(thisViewer);
+						((InterfaceMain)parentFrame).removePropertyChangeListener(savePropListener);
 						//((InterfaceMain)parentFrame).getQuitMenu().removeActionListener(thisViewer);
+						((InterfaceMain)parentFrame).getSaveMenu().setEnabled(false);
+						parentFrame.getContentPane().removeAll();
+						parentFrame.setTitle("ModelInterface");
 					}
 					if(evt.getNewValue().equals(controlStr)) {
-						//((InterfaceMain)parentFrame).getSaveMenu().addActionListener(thisViewer);
-						//((InterfaceMain)parentFrame).getSaveMenu().addPropertyChangeListener(savePropListener);
+						System.out.println("Adding actionListener: "+((InterfaceMain)parentFrame).getSaveMenu());
+						((InterfaceMain)parentFrame).getSaveMenu().addActionListener(thisViewer);
+		ActionListener[] al = ((InterfaceMain)parentFrame).getSaveMenu().getActionListeners();
+		for(int i = 0; i < al.length; ++i) {
+			System.out.println("Listener: "+al[i]);
+		}
+		System.out.println("After listeners");
+						((InterfaceMain)parentFrame).addPropertyChangeListener(savePropListener);
 						//((InterfaceMain)parentFrame).getQuitMenu().addActionListener(thisViewer);
 						//((InterfaceMain)parentFrame).oldControl = "FileChooserDemo.File";
 					}
 				}
 			}
 		});
+		tableSelector = new TableSelector(parentFrame);
 	}
 
 	public void addMenuItems(InterfaceMain.MenuManager menuMan) {
@@ -177,18 +211,17 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		final JMenuItem menuTableFilter = makeMenuItem("Filter");
 		menuTableFilter.setEnabled(false);
 		menuMan.getSubMenuManager(addedTo).addMenuItem(menuTableFilter, 0);
-		menuTableFilter.addPropertyChangeListener(new PropertyChangeListener() {
+		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
-					if(evt.getOldValue().equals("FileChooserDemo.File")) {
+					//if(evt.getOldValue().equals(controlStr)) {
 						menuTableFilter.setEnabled(false);
-					}
+					//}
 				} else if(evt.getPropertyName().equals("Table")) {
 					menuTableFilter.setEnabled(true);
 				}
 			}
 		});
-
 	}
 
 
@@ -203,8 +236,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 */
 	public void displayJtree() {
 		Container contentPane = parentFrame.getContentPane();
-		contentPane.removeAll();
 		/*
+		contentPane.removeAll();
 		if(xmlDB != null) {
 			xmlDB.closeDB();
 			//menuManage.setEnabled(false);
@@ -216,6 +249,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		*/
 		// Set up the tree
 		jtree = new JTree(new DOMmodel(doc.getDocumentElement()));
+		System.out.println("HERE");
 		jtree.setEditable(true);
 		jtree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -316,6 +350,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	public void actionPerformed(ActionEvent e) {
 		boolean status = false;
 		String command = e.getActionCommand();
+		System.out.println("Comamnd: "+command);
 		if (command.equals("XML file")) {
 			// Open a file
 			status = openXMLFile();
@@ -331,6 +366,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			//menuSave.setEnabled(true); // now save can show up
 			//setTitle("["+file+"] - ModelGUI");
 			parentFrame.setTitle("["+file+"] - ModelInterface");
+			((InterfaceMain)parentFrame).fireControlChange(controlStr);
 
 		} else if (command.equals("CSV file")) {
 			// Open a file
@@ -345,8 +381,9 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			}
 			displayJtree();
 			//menuSave.setEnabled(true); // now save can show up
-			parentFrame.setTitle("["+file+"] - ModelGUI");
+			//parentFrame.setTitle("["+file+"] - ModelGUI");
 			parentFrame.setTitle("["+file+"] - ModelInterface");
+			((InterfaceMain)parentFrame).fireControlChange(controlStr);
 		} else if (command.equals("Save")) {
 			// Save a file
 			status = saveFile();
@@ -354,8 +391,11 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				JOptionPane.showMessageDialog(null,
 						"IO error in saving file!!", "File Save Error",
 						JOptionPane.ERROR_MESSAGE);
+				return;
 			}
+			((InterfaceMain)parentFrame).fireProperty("Document-Save", null, doc);
 		} else if (command.equals("Filter")) {
+				/*
 			try {
 				if (((JTable) ((JScrollPane) splitPane.getRightComponent())
 						.getViewport().getView()).getModel() instanceof TableSorter) {
@@ -385,16 +425,38 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 						"This table does not support filtering",
 						"Table Filter Error", JOptionPane.ERROR_MESSAGE);
 			}
-		} else if (command.equals("Quit")) {
+				*/
+			// new and old values should be??
+			((InterfaceMain)parentFrame).fireProperty("Filter", null, 1);
+		} else if(command.equals("Add Child")) {
+			jtree.setSelectionPath(selectedPath);
+
+			Node nodeClicked = ((DOMmodel.DOMNodeAdapter) jtree
+					.getLastSelectedPathComponent()).getNode();
+			if (nodeClicked.getNodeType() != Element.TEXT_NODE) { // can't
+				// add child to text node
+				showAddChildDialog();
+			}
+
+		} else if (command.equals("Delete Node")) {
+			System.out.println("Using this one");
+			jtree.setSelectionPath(selectedPath);
+			deleteNode();
+		} else if (command.equals("Display Table")) {
+			displayTable();
+		}
+		/*else if (command.equals("Quit")) {
 			//dispose();
 			updateRecentDoc();
 			//writeFile(recentFile, lastDoc); // NEWLY ADDED !!!!!!!!!!!
 		}
+		*/
 	}
 
 	/**
 	 * Updates recentDoc with most current globalFC and last Height and Widths
 	 */ 
+	/*
 	public void updateRecentDoc(){ 
 		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(lastDoc);
 		XPathResult res = (XPathResult)xpeImpl.createExpression("//recent/lastDirectory/node()", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
@@ -421,14 +483,13 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				tempNode.getFirstChild().setNodeValue( (new Integer( parentFrame.getWidth() )).toString() );
 			}
 		}
-		/*
 		if(queries != null) {
 			res = (XPathResult)xpeImpl.createExpression("/recent/queries", xpeImpl.createNSResolver(lastDoc.getDocumentElement())).evaluate(lastDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 			tempNode = res.iterateNext();
 			tempNode.getParentNode().replaceChild(queries.getAsNode(lastDoc), tempNode);
 		}
-		*/
 	}
+*/
 
 	/**
 	 * This "helper method" makes a menu item and then registers this object as
@@ -453,132 +514,16 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	private JPopupMenu makePopupTreeMenu() {
 		treeMenu = new JPopupMenu();
 		JMenuItem menuItem = new JMenuItem("Display Table");
-		menuItem.addMouseListener(new MouseListener() {
-			public void mouseReleased(MouseEvent e) {
-				if (!jtree.getModel().isLeaf(
-						jtree.getLastSelectedPathComponent())) {
-
-					// find out the type of table and create it
-					TableSelector.showDialog(/* frame */parentFrame, null, "",
-							"Choose Table Viewing Type", names, "");
-					JScrollPane tableView = TableSelector.createSelection(
-							selectedPath, doc, parentFrame, thisViewer);
-
-					if (tableView == null) {
-						return;
-					}
-					//parentFrame.firePropertyChange("Table", splitPane.getRightComponent(), tableView);
-
-					// maybe this will solve the resizing of the left component
-					//tableView.setPreferredSize(new Dimension(windowWidth - leftWidth, windowHeight));
-
-					// don't know why but it is moving the divider all of a sudden, so will
-					// force it to be where it was
-					int divLoc = splitPane.getDividerLocation();
-					splitPane.setRightComponent(tableView);
-					splitPane.setDividerLocation(divLoc);
-					tableMenu = makePopupTableMenu();
-					// add the listener for right click which currently only
-					// handles flip
-					((JTable) tableView.getViewport().getView())
-							.addMouseListener(new MouseAdapter() {
-								public void mousePressed(MouseEvent e) {
-									maybeShowPopup(e);
-								}
-
-								public void mouseReleased(MouseEvent e) {
-									maybeShowPopup(e);
-								}
-
-								private void maybeShowPopup(MouseEvent e) {
-									if (e.isPopupTrigger()) {
-										//selectedPath =
-										// jtree.getClosestPathForLocation(e.getX(),
-										// e.getY());
-										MenuElement[] me = tableMenu
-												.getSubElements();
-										for (int i = 0; i < me.length; i++) {
-											if (((JMenuItem) me[i]).getText()
-													.equals("Flip")) {
-												lastFlipX = e.getX();
-												lastFlipY = e.getY();
-											}
-										}
-										tableMenu.show(e.getComponent(), e
-												.getX(), e.getY());
-									}
-								}
-							});
-				}
-
-			}
-
-			public void mouseClicked(MouseEvent e) {
-				//shouldn't the action go here
-			}
-
-			public void mousePressed(MouseEvent e) {
-			}
-
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			public void mouseExited(MouseEvent e) {
-			}
-		});
+		menuItem.addActionListener(this);
 		treeMenu.add(menuItem);
 		treeMenu.add(new JSeparator());
 		menuItem = new JMenuItem("Add Child");
-		menuItem.addMouseListener(new MouseListener() {
-			public void mouseReleased(MouseEvent e) {
-				jtree.setSelectionPath(selectedPath);
-
-				Node nodeClicked = ((DOMmodel.DOMNodeAdapter) jtree
-						.getLastSelectedPathComponent()).getNode();
-				if (nodeClicked.getNodeType() != Element.TEXT_NODE) { // can't
-																	  // add
-																	  // child
-																	  // to text
-																	  // node
-					showAddChildDialog();
-				}
-
-			}
-
-			public void mouseClicked(MouseEvent e) {
-			}
-
-			public void mousePressed(MouseEvent e) {
-			}
-
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			public void mouseExited(MouseEvent e) {
-			}
-		});
+		menuItem.addActionListener(this);
 		treeMenu.add(menuItem);
 
 		treeMenu.add(new JSeparator());
 		menuItem = new JMenuItem("Delete Node");
-		menuItem.addMouseListener(new MouseListener() {
-			public void mouseReleased(MouseEvent e) {
-				jtree.setSelectionPath(selectedPath);
-				deleteNode();
-			}
-
-			public void mouseClicked(MouseEvent e) {
-			}
-
-			public void mousePressed(MouseEvent e) {
-			}
-
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			public void mouseExited(MouseEvent e) {
-			}
-		});
+		menuItem.addActionListener(this);
 		treeMenu.add(menuItem);
 
 		return treeMenu;
@@ -593,7 +538,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	private JPopupMenu makePopupTableMenu() {
 		tableMenu = new JPopupMenu();
 		final JMenuItem flipItem = new JMenuItem("Flip");
-		flipItem.addMouseListener(new MouseListener() {
+		flipItem.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 					// get the correct row and col which only matters for
 					// mulitablemodel
@@ -613,6 +558,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 						((BaseTableModel) jTable.getModel()).flip(row, col);
 					}
 			}
+			/*
 			public void mouseClicked(MouseEvent e) {
 				//shouldn't the action go here
 			}
@@ -625,11 +571,12 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 			public void mouseExited(MouseEvent e) {
 			}
+			*/
 		});
 		tableMenu.add(flipItem);
 		
 		final JMenuItem chartItem = new JMenuItem("Chart");
-		chartItem.addMouseListener( new MouseListener(){
+		chartItem.addMouseListener( new MouseAdapter(){
 			public void mouseReleased(MouseEvent e) {
 				final MouseEvent me = e;
 				SwingUtilities.invokeLater(new Runnable() {
@@ -668,6 +615,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 					}
 				});
 			}
+			/*
 			public void mouseClicked(MouseEvent e) {
 			}
 
@@ -679,6 +627,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 			public void mouseExited(MouseEvent e) {
 			}
+			*/
 		});
 		tableMenu.add(chartItem);
 		return tableMenu;
@@ -866,7 +815,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		public void treeNodesChanged(TreeModelEvent e) {
 			try {
 				if (e.getSource() instanceof DOMmodel) {
-					BaseTableModel bt;
+					BaseTableModel bt = getTableModelFromScrollPane((JScrollPane)splitPane.getRightComponent());
+					/*
 					if (((JTable) ((JScrollPane) splitPane.getRightComponent())
 							.getViewport().getView()).getModel() instanceof TableSorter) {
 						bt = (BaseTableModel) ((TableSorter) ((JTable) ((JScrollPane) splitPane
@@ -877,19 +827,24 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 								.getRightComponent()).getViewport().getView())
 								.getModel();
 					}
+					*/
 					bt.fireTableRowsUpdated(0, bt.getRowCount());
+					((InterfaceMain)parentFrame).fireProperty("Document-Modified", null, doc);
 				}
 			} catch (Exception ex) {
 			}
 		}
 
 		public void treeNodesInserted(TreeModelEvent e) {
+			((InterfaceMain)parentFrame).fireProperty("Document-Modified", null, doc);
 		}
 
 		public void treeNodesRemoved(TreeModelEvent e) {
+			((InterfaceMain)parentFrame).fireProperty("Document-Modified", null, doc);
 		}
 
 		public void treeStructureChanged(TreeModelEvent e) {
+			((InterfaceMain)parentFrame).fireProperty("Document-Modified", null, doc);
 		}
 	}
 
@@ -1006,7 +961,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		// Start in current directory
-		fc.setCurrentDirectory(globalFC.getCurrentDirectory());
+		//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
 
 		// Set filter for Java source files.
 		fc.setFileFilter(xmlFilter);
@@ -1018,7 +973,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			return true;
 		} else if (result == JFileChooser.APPROVE_OPTION) {
 			file = fc.getSelectedFile();
-			globalFC.setCurrentDirectory(fc.getCurrentDirectory());
+			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 			doc = readXMLFile( file);
 		} else {
 			return false;
@@ -1083,7 +1038,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		JFileChooser fc = new JFileChooser();
 
 		// Start in current directory
-		fc.setCurrentDirectory(globalFC.getCurrentDirectory());
+		//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
 
 		// Set filter for xml files.
 		fc.setFileFilter(xmlFilter); // *********************************
@@ -1113,7 +1068,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				if (response == JOptionPane.CANCEL_OPTION)
 					return true;
 			}
-			globalFC.setCurrentDirectory(fc.getCurrentDirectory());
+			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 			return writeFile(file, doc);
 		} else {
 			return false;
@@ -1364,7 +1319,81 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		return true;
 	}
 
+	private BaseTableModel getTableModelFromScrollPane(JScrollPane sp) {
+		Object ret = ((JTable)sp.getViewport().getView()).getModel();
+		if(ret instanceof TableSorter) {
+			return (BaseTableModel)((TableSorter)ret).getTableModel();
+		} else {
+			return (BaseTableModel)ret;
+		}
+	}
 
+	public void displayTable() {
+		if (!jtree.getModel().isLeaf(
+					jtree.getLastSelectedPathComponent())) {
+
+			// find out the type of table and create it
+			/*
+			TableSelector.showDialog(/* frame parentFrame, null, "",
+					"Choose Table Viewing Type", names, "");
+			JScrollPane tableView = TableSelector.createSelection(
+					selectedPath, doc, parentFrame, thisViewer);
+			*/
+			JScrollPane tableView = tableSelector.createSelection(selectedPath, doc,
+					parentFrame, thisViewer);
+
+			if (tableView == null) {
+				return;
+			}
+			Object oldVal = null;
+			if(((JScrollPane)splitPane.getRightComponent()).getViewport().getView() != null) {
+				oldVal = getTableModelFromScrollPane((JScrollPane)splitPane.getRightComponent());
+			}
+			((InterfaceMain)parentFrame).fireProperty("Table", oldVal, getTableModelFromScrollPane(tableView));
+
+			// maybe this will solve the resizing of the left component
+			//tableView.setPreferredSize(new Dimension(windowWidth - leftWidth, windowHeight));
+
+			// don't know why but it is moving the divider all of a sudden, so will
+			// force it to be where it was
+			int divLoc = splitPane.getDividerLocation();
+			splitPane.setRightComponent(tableView);
+			splitPane.setDividerLocation(divLoc);
+			tableMenu = makePopupTableMenu();
+			// add the listener for right click which currently only
+			// handles flip
+			((JTable) tableView.getViewport().getView())
+				.addMouseListener(new MouseAdapter() {
+					public void mousePressed(MouseEvent e) {
+						maybeShowPopup(e);
+					}
+
+					public void mouseReleased(MouseEvent e) {
+						maybeShowPopup(e);
+					}
+
+					private void maybeShowPopup(MouseEvent e) {
+						if (e.isPopupTrigger()) {
+							//selectedPath =
+							// jtree.getClosestPathForLocation(e.getX(),
+							// e.getY());
+							MenuElement[] me = tableMenu
+					.getSubElements();
+				for (int i = 0; i < me.length; i++) {
+					if (((JMenuItem) me[i]).getText()
+						.equals("Flip")) {
+						lastFlipX = e.getX();
+						lastFlipY = e.getY();
+						}
+				}
+				tableMenu.show(e.getComponent(), e
+						.getX(), e.getY());
+						}
+					}
+				});
+					}
+
+	}
 
 
 

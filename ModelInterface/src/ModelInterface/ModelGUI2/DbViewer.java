@@ -3,6 +3,7 @@ package ModelInterface.ModelGUI2;
 import ModelInterface.ModelGUI2.tables.BaseTableModel;
 import ModelInterface.ModelGUI2.tables.ComboTableModel;
 import ModelInterface.ModelGUI2.tables.MultiTableModel;
+import ModelInterface.ModelGUI2.tables.CopyPaste;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
 import ModelInterface.MenuAdder;
 
@@ -82,8 +83,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
-					if(evt.getOldValue().equals(controlStr)) {
+					if(evt.getOldValue().equals(controlStr) || evt.getOldValue().equals(controlStr+"Same")) {
 						xmlDB.closeDB();
+						xmlDB = null;
 						try {
 							Document tempDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
 			.getDOMImplementation().createDocument(null, "queries", null);
@@ -169,7 +171,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		final JMenuItem menuManage = makeMenuItem("Manage DB");
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuManage, 10);
 		menuManage.setEnabled(false);
-		menuManage.addPropertyChangeListener(new PropertyChangeListener() {
+		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr)) {
@@ -185,7 +187,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuExpPrn,  20);
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addSeparator(20);
 		menuExpPrn.setEnabled(false);
-		menuExpPrn.addPropertyChangeListener(new PropertyChangeListener() {
+		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr)) {
@@ -200,9 +202,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("DB Open")) {
-			System.out.println("HERE");
-			((InterfaceMain)parentFrame).fireControlChange(controlStr);
-			doOpenDB();
+			if(doOpenDB()) {
+				((InterfaceMain)parentFrame).fireControlChange(controlStr);
+			}
 		} else if(e.getActionCommand().equals("Manage DB")) {
 			manageDB();
 		} else if(e.getActionCommand().equals("Export / Print")) {
@@ -210,7 +212,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 	}
 
-	private void doOpenDB() {
+	private boolean doOpenDB() {
 		JFileChooser fc = new JFileChooser();
 		fc.setDialogTitle("Choose XML Database");
 
@@ -244,6 +246,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 			createTableSelector();
 			//setTitle("["+fc.getSelectedFile()+"] - ModelGUI");
 			parentFrame.setTitle("["+fc.getSelectedFile()+"] - ModelInterface");
+			return true;
+		} else {
+			return false;
 		}
 
 	}
@@ -404,11 +409,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 		//all.setOpaque(false);
 		//all.setBackground(new Color(200,200,200));
 		all.add(allLists, BorderLayout.PAGE_START);
-		JPanel ANGRY = new JPanel();
-		ANGRY.setLayout( new BoxLayout(ANGRY, BoxLayout.X_AXIS));
-		ANGRY.add(sp);
-		ANGRY.add(Box.createHorizontalGlue());
-		all.add(ANGRY);
+		final JPanel tablePanel = new JPanel();
+		tablePanel.setLayout( new BoxLayout(tablePanel, BoxLayout.X_AXIS));
+		//ANGRY.add(sp);
+		//ANGRY.add(Box.createHorizontalGlue());
+		all.add(tablePanel);
 
 
 		queryList.addTreeSelectionListener(new TreeSelectionListener() {
@@ -473,94 +478,19 @@ public class DbViewer implements ActionListener, MenuAdder {
 					// error
 				} else {
 					createFilteredQuery(scns, scnSel/*, regions, regionSel*/);
-					// table stuff
-					//System.out.println(queries.get(queryList.getSelectedIndex()));
-					//QueryGenerator qg = (QueryGenerator)queries.get(queryList.getSelectedIndex());
 					QueryGenerator qg = (QueryGenerator)queryList.getSelectionPath().getLastPathComponent();
-						parentFrame.getGlassPane().setVisible(true);
+					parentFrame.getGlassPane().setVisible(true);
+					tablePanel.removeAll();
 					if(qg.isGroup()) {
-						bt = new MultiTableModel(qg, regionList.getSelectedValues(), parentFrame);
-			jTable = new JTable(bt);
-	  		//jTable.getModel().addTableModelListener(thisDemo);
-
-			//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
-
-			jTable.setCellSelectionEnabled(true);
-			jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
-			jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)bt).getCellEditor(0,0));
-			int j = 1;
-			while( j < jTable.getRowCount()) {
-				jTable.setRowHeight(j,200);
-				j += 2;
-			}
-			//jTable.setRowHeight(200);
-			//CopyPaste copyPaste = new CopyPaste( jTable );
-			jsp = new JScrollPane(jTable);
-			sp.setLeftComponent(jsp);
-			sp.setDividerLocation(parentFrame.getWidth());
-			System.out.println("Should be displaying");
-				parentFrame.setVisible(true);
-				//menuSave.setEnabled(true);
-				//menuExpPrn.setEnabled(true);
-						parentFrame.getGlassPane().setVisible(false);
-						return;
+						tablePanel.add(createGroupTableContent(qg));
+					} else {
+						tablePanel.add(createSingleTableContent(qg));
 					}
-			//BaseTableModel bt = new ComboTableModel((QueryGenerator)queries.get(queryList.getSelectedIndex()), parentFrame);
-			bt = new ComboTableModel(qg, regionList.getSelectedValues(), parentFrame);
-			JFreeChart chart = bt.createChart(0,0);
-			//TableSorter sorter = new TableSorter(bt);
-			jTable = new JTable(bt);
-			// Should the listener be set like so..
-			//jTable.getModel().addTableModelListener(thisDemo);
-	  		//sorter.setTableHeader(jTable.getTableHeader());
-
-			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-	 
-			jTable.setCellSelectionEnabled(true);
-
-			javax.swing.table.TableColumn col;
-			int j = 0;
-			while(j < jTable.getColumnCount()) {
-				col = jTable.getColumnModel().getColumn(j);
-				if(jTable.getColumnName(j).equals("")) {
-					col.setPreferredWidth(75);
-				} else {
-					col.setPreferredWidth(jTable.getColumnName(j).length()*5+30);
-				}
-				j++;
-			}
-						BufferedImage chartImage = chart.createBufferedImage(
-								350, 350);
-
-						JLabel labelChart = new JLabel();
-						labelChart.setIcon(new ImageIcon(chartImage));
-			//all.add(new JScrollPane(jTable));
-			//JSplitPane sp = new JSplitPane();
-						/*
-						JSplitPane tempSP = new JSplitPane();
-			tempSP.setLeftComponent(new JScrollPane(jTable));
-			tempSP.setRightComponent(labelChart);
-						tempSP.setDividerLocation(((FileChooserDemo)thisFrame).getWidth()-350-15);
-						jsp = new JScrollPane(tempSP);
-						*/
-			sp.setLeftComponent(new JScrollPane(jTable));
-			sp.setRightComponent(labelChart);
-						sp.setDividerLocation(parentFrame.getWidth()-350-15);
-						SP = sp;
-						//jsp = new JScrollPane(sp);
-						//all.setAlignmentY(Component.LEFT_ALIGNMENT);
-						//all.add(Box.createVerticalStrut(10));
-			//thisFrame.getContentPane().remove(all);
-						//all.add(sp, BorderLayout.CENTER);
-						/*
-			thisFrame.getContentPane().add(new JScrollPane(sp), BorderLayout.PAGE_START);
-						System.out.println(""+thisFrame.getContentPane().getComponentCount());
-						System.out.println(thisFrame.getComponent(0));
-						*/
-				parentFrame.setVisible(true);
-				//menuSave.setEnabled(true);
-				//menuExpPrn.setEnabled(true);
-						parentFrame.getGlassPane().setVisible(false);
+					((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
+					//tablePanel.add(Box.createVerticalGlue());
+					parentFrame.getGlassPane().setVisible(false);
+					// need old value/new value?
+					// fire off property or something we did query
 				}
 			}
 		});
@@ -592,6 +522,96 @@ public class DbViewer implements ActionListener, MenuAdder {
 				parentFrame.setVisible(true);
 	}
 
+	private Container createGroupTableContent(QueryGenerator qg) {
+		bt = new MultiTableModel(qg, regionList.getSelectedValues(), parentFrame);
+		jTable = new JTable(bt);
+		//jTable.getModel().addTableModelListener(thisDemo);
+
+		//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
+
+		jTable.setCellSelectionEnabled(true);
+		jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
+		jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)bt).getCellEditor(0,0));
+		int j = 1;
+		while( j < jTable.getRowCount()) {
+			jTable.setRowHeight(j,200);
+			j += 2;
+		}
+		//jTable.setRowHeight(200);
+		//CopyPaste copyPaste = new CopyPaste( jTable );
+		jsp = new JScrollPane(jTable);
+		//tablePanel.add(jsp);
+		//tablePanel.add(Box.createVerticalGlue());
+		return jsp;
+		//sp.setLeftComponent(jsp);
+		//sp.setRightComponent(null);
+		//sp.setDividerLocation(parentFrame.getWidth());
+		//parentFrame.setVisible(true);
+		//menuSave.setEnabled(true);
+		//menuExpPrn.setEnabled(true);
+	}
+
+	private Container createSingleTableContent(QueryGenerator qg) {
+		//BaseTableModel bt = new ComboTableModel((QueryGenerator)queries.get(queryList.getSelectedIndex()), parentFrame);
+		bt = new ComboTableModel(qg, regionList.getSelectedValues(), parentFrame);
+		JFreeChart chart = bt.createChart(0,0);
+		//TableSorter sorter = new TableSorter(bt);
+		jTable = new JTable(bt);
+		new CopyPaste(jTable);
+		// Should the listener be set like so..
+		//jTable.getModel().addTableModelListener(thisDemo);
+		//sorter.setTableHeader(jTable.getTableHeader());
+
+		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+		jTable.setCellSelectionEnabled(true);
+
+		javax.swing.table.TableColumn col;
+		int j = 0;
+		while(j < jTable.getColumnCount()) {
+			col = jTable.getColumnModel().getColumn(j);
+			if(jTable.getColumnName(j).equals("")) {
+				col.setPreferredWidth(75);
+			} else {
+				col.setPreferredWidth(jTable.getColumnName(j).length()*5+30);
+			}
+			j++;
+		}
+		BufferedImage chartImage = chart.createBufferedImage(
+				350, 350);
+
+		JLabel labelChart = new JLabel();
+		labelChart.setIcon(new ImageIcon(chartImage));
+		//all.add(new JScrollPane(jTable));
+		//JSplitPane sp = new JSplitPane();
+		/*
+		   JSplitPane tempSP = new JSplitPane();
+		   tempSP.setLeftComponent(new JScrollPane(jTable));
+		   tempSP.setRightComponent(labelChart);
+		   tempSP.setDividerLocation(((FileChooserDemo)thisFrame).getWidth()-350-15);
+		   jsp = new JScrollPane(tempSP);
+		   */
+		JSplitPane sp = new JSplitPane();
+		sp.setLeftComponent(new JScrollPane(jTable));
+		sp.setRightComponent(labelChart);
+		sp.setDividerLocation(parentFrame.getWidth()-350-15);
+		SP = sp;
+		//tablePanel.add(sp);
+		return sp;
+		//jsp = new JScrollPane(sp);
+		//all.setAlignmentY(Component.LEFT_ALIGNMENT);
+		//all.add(Box.createVerticalStrut(10));
+		//thisFrame.getContentPane().remove(all);
+		//all.add(sp, BorderLayout.CENTER);
+		/*
+		   thisFrame.getContentPane().add(new JScrollPane(sp), BorderLayout.PAGE_START);
+		   System.out.println(""+thisFrame.getContentPane().getComponentCount());
+		   System.out.println(thisFrame.getComponent(0));
+		   */
+		//parentFrame.setVisible(true);
+		//menuSave.setEnabled(true);
+		//menuExpPrn.setEnabled(true);
+	}
 	private void manageDB() {
 		final JDialog filterDialog = new JDialog(parentFrame, "Manage Database", true);
 		JPanel listPane = new JPanel();

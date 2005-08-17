@@ -1,8 +1,5 @@
 package ModelInterface;
 
-//import ModelInterface.ModelGUI2.FileChooserDemo;
-import ModelInterface.ModelGUI2.DbViewer;
-
 import java.util.*;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -12,6 +9,8 @@ import javax.swing.JMenuBar;
 import javax.swing.KeyStroke;
 
 import ModelInterface.ConfigurationEditor.configurationeditor.ConfigurationEditor;
+import ModelInterface.ModelGUI2.DbViewer;
+import ModelInterface.ModelGUI2.InputViewer;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -57,6 +56,19 @@ public class InterfaceMain extends JFrame implements ActionListener {
 			// warn the user.. should be ok to keep going
 			System.out.println("Error setting look and feel: " + e);
 		}
+		/* does seem to work for ^C or end tasks..
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				System.out.println("IS this even running");
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						main.fireControlChange("InterfaceMain");
+					}
+				});
+			}
+		});
+		*/
+
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				createAndShowGUI();
@@ -98,7 +110,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		//m.addSeparator();
 
 		//m.add(makeMenuItem("Quit"));
-		menuMan.getSubMenuManager(FILE_MENU_POS).addMenuItem(saveMenu = makeMenuItem("Save"), FILE_SAVE_MENUITEM_POS);
+		menuMan.getSubMenuManager(FILE_MENU_POS).addMenuItem(saveMenu = new JMenuItem("Save")/*makeMenuItem("Save")*/, FILE_SAVE_MENUITEM_POS);
 		menuMan.getSubMenuManager(FILE_MENU_POS).addSeparator(FILE_SAVE_MENUITEM_POS);
 		saveMenu.setEnabled(false);
 		menuMan.getSubMenuManager(FILE_MENU_POS).addMenuItem(quitMenu = makeMenuItem("Quit"), FILE_QUIT_MENUITEM_POS);
@@ -122,6 +134,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		*/
 		final MenuAdder dbView = new DbViewer(this);
 		dbView.addMenuItems(menuMan);
+		final MenuAdder inputView = new InputViewer(this);
+		inputView.addMenuItems(menuMan);
 
 		// Create the Configuration editor and allow it to add its menu items to the
 		// menu system.
@@ -140,9 +154,11 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		// Add adapter to catch window closing event.
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
+				System.out.println("Caught the window closing");
 				System.exit(0);
 			}
 			public void windowClosed(WindowEvent e) {
+				System.out.println("Caught the window closed");
 				System.exit(0);
 			}
 		});
@@ -159,6 +175,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Quit")) {
+			firePropertyChange("Control", oldControl, "ModelInterface");
 			dispose();
 		}
 	}
@@ -178,8 +195,15 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		return pasteMenu;
 	}
 	public void fireControlChange(String newValue) {
+		System.out.println("Going to change controls");
+		if(newValue.equals(oldControl)) {
+			oldControl += "Same";
+		}
 		firePropertyChange("Control", oldControl, newValue);
 		oldControl = newValue;
+	}
+	public void fireProperty(String propertyName, Object oldValue, Object newValue) {
+		firePropertyChange(propertyName, oldValue, newValue);
 	}
 	public class MenuManager {
 		private JMenuItem menuValue;

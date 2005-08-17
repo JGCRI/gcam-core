@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.tree.TreePath;
 import java.awt.event.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 //import java.sql.Statement;
 import org.apache.poi.hssf.usermodel.*;
@@ -44,11 +46,39 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	 * 	  parentFrame Reference to the main gui so that we can create a dialog
 	 * 	  tableTypeString used to display which type of table the user is looking at
 	 */
-	public BaseTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
+	public BaseTableModel(TreePath tp, Document doc, JFrame parentFrameIn, String tableTypeString) {
 		this.doc = doc;
-		this.parentFrame = parentFrame;
+		this.parentFrame = parentFrameIn;
 		this.tableTypeString = tableTypeString;
 		this.title = ((DOMmodel.DOMNodeAdapter)tp.getLastPathComponent()).getNode().getNodeName();
+		final BaseTableModel thisTableModel = this;
+		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent e) {
+				if(e.getPropertyName().equals("Control") || (e.getPropertyName().equals("Table") &&
+						e.getNewValue() != thisTableModel)) {
+					System.out.println("New Table: "+e.getNewValue());
+					System.out.println("This Table: "+thisTableModel);
+					System.out.println("Stoped listening for filter");
+					parentFrame.removePropertyChangeListener(this);
+				} else if(e.getPropertyName().equals("Filter")) {
+					try {
+						// is there a better way than to do this..
+						if(thisTableModel instanceof NewDataTableModel) {
+							//((NewDataTableModel)thisTableModel).filterData();
+							JOptionPane.showMessageDialog(parentFrame,
+								"This table does not support filtering",
+								"Table Filter Error", JOptionPane.ERROR_MESSAGE);
+						} else {
+							thisTableModel.filterData();
+						}
+					} catch (UnsupportedOperationException uoe) {
+						JOptionPane.showMessageDialog(parentFrame,
+							"This table does not support filtering",
+							"Table Filter Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
 	}
 	
 	/** 
@@ -209,7 +239,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
    *        parentFrame so we can create a dialog associated with the parentFrame
    * @return an ArrayList of the 2 nodes selected from the dialog
    */
-  protected ArrayList chooseTableHeaders( TreePath path, JFrame parentFrame ){
+  protected ArrayList chooseTableHeaders( TreePath path/*, JFrame parentFrame*/ ){
 	final ArrayList selected = new ArrayList(2);
 
 	final Object[] itemsObjs = path.getPath();
@@ -276,7 +306,8 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	filterContent.add(listPane, BorderLayout.CENTER);
 	filterContent.add(buttonPane, BorderLayout.PAGE_END);
 	filterDialog.setContentPane(filterContent);
-	filterDialog.show();
+	//filterDialog.show();
+	filterDialog.setVisible(true);
    		
   	return selected; //arraylist with the two selected nodes
   }
@@ -286,7 +317,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	 * the filterMaps to keep track of what the user has selected
 	 * @param parentFrame So that we can create a dialog
 	 */
-	public void filterData(JFrame parentFrame) {
+	public void filterData(/*JFrame parentFrame*/) {
 		// so i can make oldNumRows final and it won't crash
 		if (activeRows == null) {
 			activeRows = new Vector();
@@ -414,7 +445,8 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		filterContent.add(listPane, BorderLayout.CENTER);
 		filterContent.add(buttonPane, BorderLayout.PAGE_END);
 		filterDialog.setContentPane(filterContent);
-		filterDialog.show();
+		//filterDialog.show();
+		filterDialog.setVisible(true);
 	}
 
 	/**

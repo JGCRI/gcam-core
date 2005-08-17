@@ -181,6 +181,7 @@ final public class FileUtils {
 					// This is an unexpected error, log the error.
 					Logger.global.log(Level.SEVERE, e.getStackTrace()
 							.toString());
+					e.printStackTrace();
 				}
 				sPropertiesInitialized = true;
 			}

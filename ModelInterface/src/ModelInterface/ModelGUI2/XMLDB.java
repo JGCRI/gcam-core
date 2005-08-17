@@ -18,7 +18,7 @@ import com.sleepycat.db.*;
 import com.sleepycat.dbxml.*;
 
 public class XMLDB {
-	static public boolean lockCheck = true;
+	static public boolean lockCheck = false;
 	Environment dbEnv;
 	XmlManager manager;
 	XmlContainer myContainer;

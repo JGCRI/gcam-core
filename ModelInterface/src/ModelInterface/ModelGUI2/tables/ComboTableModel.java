@@ -63,7 +63,7 @@ public class ComboTableModel extends BaseTableModel{
 	public ComboTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
 		super(tp, doc, parentFrame, tableTypeString);
 		leftHeaderVector = null;
-		wild = chooseTableHeaders(tp, parentFrame);
+		wild = chooseTableHeaders(tp/*, parentFrame*/);
 		wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
 		wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
 		buildTable(treePathtoXPath(tp, doc.getDocumentElement(), 0));

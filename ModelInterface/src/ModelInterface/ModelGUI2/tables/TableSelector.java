@@ -13,16 +13,21 @@ public class TableSelector extends JDialog implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static TableSelector dialog;
-	private static String value = "";
+	//private static TableSelector dialog;
+	private String value = "";
 	private JList list;
-	private static Frame parentFrame;
+	private static String[] data = { "Single Table", "Multi Tables", "Combo Tables" };
+	//private static Frame parentFrame;
 
 	/**
 	 * Creates and shows a short dialog to choose which type of table the use would
 	 * like to use.
 	 * @return the name of the table selected
 	 */
+	private void showDialog() {
+		setVisible(true);
+	}
+	/*
 	public static String showDialog(Component frameComp,
 									Component locationComp,
 									String labelText,
@@ -39,20 +44,16 @@ public class TableSelector extends JDialog implements ActionListener {
 		dialog.setVisible(true);
 		return value;
 	}
+	*/
 
 	/**
 	 * Initializes some of the data and creates the list of selections, and sets up
 	 * the layout.
 	 */
-	public TableSelector(Frame frame,
-					   Component locationComp,
-					   String labelText,
-					   String title,
-					   Object[] data,
-					   String initialValue) {
-		super(frame, title, true);
+	public TableSelector(Frame frame) {
+		super(frame, "Table Types", true);
 
-		parentFrame = frame;
+		//parentFrame = frame;
 		//Create and initialize the buttons.
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(this);
@@ -78,7 +79,7 @@ public class TableSelector extends JDialog implements ActionListener {
 
 		JPanel listPane = new JPanel();
 		listPane.setLayout(new BoxLayout(listPane, BoxLayout.Y_AXIS));
-		JLabel label = new JLabel(labelText);
+		JLabel label = new JLabel("Choose Table Viewing Type");
 		label.setLabelFor(list);
 		listPane.add(label);
 		listPane.add(Box.createRigidArea(new Dimension(0,5)));
@@ -100,7 +101,7 @@ public class TableSelector extends JDialog implements ActionListener {
 		contentPane.add(buttonPane, BorderLayout.PAGE_END);
 
 		pack();
-		setLocationRelativeTo(locationComp);
+		//setLocationRelativeTo(locationComp);
 	}
 
 	/**
@@ -110,11 +111,9 @@ public class TableSelector extends JDialog implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if ("Select".equals(e.getActionCommand())) {
-			TableSelector.value = (String)(list.getSelectedValue());
-		} else {
-			System.out.println("Got cancel");
+			value = (String)(list.getSelectedValue());
 		}
-		TableSelector.dialog.setVisible(false);
+		setVisible(false);
 	}
 	/**
 	 * Handles creating the table based on value, sets up column widths, and any 
@@ -124,8 +123,9 @@ public class TableSelector extends JDialog implements ActionListener {
 	 * @param pf needed to create the table.
 	 * @return Returns the pane to be displayed in the right side of the splitpane
 	 */
-	public static JScrollPane createSelection(TreePath tp, Document doc, JFrame pf, InputViewer fcd) {
-		if(TableSelector.value.equals("")) {
+	public JScrollPane createSelection(TreePath tp, Document doc, JFrame pf, InputViewer fcd) {
+		showDialog();
+		if(value.equals("")) {
 			return null;
 		}
 		/*
@@ -141,7 +141,7 @@ public class TableSelector extends JDialog implements ActionListener {
 			((FileChooserDemo)fcd).pasteMenu.removeActionListener(actns[0]);
 		}
 		*/
-		if(TableSelector.value.equals("Single Table")) {
+		if(value.equals("Single Table")) {
 			BaseTableModel bt = new NewDataTableModel(tp, doc, pf, "Single Table");
 			TableSorter sorter = new TableSorter(bt);
 	  		//JTable jTable = new JTable(bt);
@@ -165,13 +165,13 @@ public class TableSelector extends JDialog implements ActionListener {
 		  		col.setPreferredWidth(jTable.getColumnName(j).length()*5+30);
 		  		j++;
 	  		}
-			CopyPaste copyPaste = new CopyPaste( jTable );
+			new CopyPaste( jTable );
 			/*
 			((FileChooserDemo)fcd).copyMenu.addActionListener(copyPaste);
 			((FileChooserDemo)fcd).pasteMenu.addActionListener(copyPaste);
 			*/
 			return new JScrollPane(jTable);
-		} else if(TableSelector.value.equals("Multi Tables")) {
+		} else if(value.equals("Multi Tables")) {
 			// disable the copy paste buttons becuase they try to copy/paste from all of
 			// the tables in the multitable, need to figure out how to only do it from
 			// the table that is in focus
@@ -196,9 +196,9 @@ public class TableSelector extends JDialog implements ActionListener {
 				j += 2;
 			}
 			//jTable.setRowHeight(200);
-			CopyPaste copyPaste = new CopyPaste( jTable );
+			new CopyPaste( jTable );
 			return new JScrollPane(jTable);
-		} else if(TableSelector.value.equals("Combo Tables")){
+		} else if(value.equals("Combo Tables")){
 			BaseTableModel bt = new ComboTableModel(tp, doc, pf, "Combo Tables");
 			TableSorter sorter = new TableSorter(bt);
 			JTable jTable = new JTable(sorter);
@@ -221,7 +221,7 @@ public class TableSelector extends JDialog implements ActionListener {
 				}
 				j++;
 			}
-			CopyPaste copyPaste = new CopyPaste( jTable );
+			new CopyPaste( jTable );
 			/*
 			((FileChooserDemo)fcd).copyMenu.addActionListener(copyPaste);
 			((FileChooserDemo)fcd).pasteMenu.addActionListener(copyPaste);

@@ -88,7 +88,7 @@ public class MultiTableModel extends BaseTableModel{
 	 */
 	public MultiTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
 		super(tp, doc, parentFrame, tableTypeString);
-		wild = chooseTableHeaders(tp, parentFrame);
+		wild = chooseTableHeaders(tp/*, parentFrame*/);
 	        wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
 	        wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
 		wild.add("");
@@ -255,7 +255,7 @@ public class MultiTableModel extends BaseTableModel{
 			*/
 	  		JScrollPane tV = new JScrollPane(jTable);
 			JScrollPane tableView = tV;
-			if(me.getKey() instanceof Double) {
+			if(me.getValue() instanceof Double) {
 			JPanel tpanel = new JPanel();
 			JSplitPane sp = new JSplitPane();
 

@@ -20,8 +20,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.ls.DOMImplementationLS;
-import org.w3c.dom.ls.LSSerializer;
+import com.sun.org.apache.xml.internal.serialize.OutputFormat;
+import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
+//import org.w3c.dom.ls.DOMImplementationLS;
+//import org.w3c.dom.ls.LSSerializer;
 import org.w3c.dom.xpath.XPathResult;
 
 /**
@@ -213,59 +215,97 @@ public final class DOMUtils {
      *            dialogs.
      */
     public static boolean serialize(final Document aDocument,
-            final Container aContainer) {
-    	// Check for a null document.
-    	if(aDocument == null){
-    		Logger.global.log(Level.WARNING, "Cannot serialize a null document.");
-    		return false;
-    	}
+		    final Container aContainer) {
+	    // Check for a null document.
+	    if(aDocument == null){
+		    Logger.global.log(Level.WARNING, "Cannot serialize a null document.");
+		    return false;
+	    }
 
-        
-        // Create the serializer.
-        DOMImplementation impl = aDocument.getImplementation();
-        DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS","3.0");
-        LSSerializer writer = implLS.createLSSerializer();
-        
-        // Turn on pretty print for readable output.
-        if(writer.getDomConfig().canSetParameter("format-pretty-print", "true")) {
-            writer.getDomConfig().setParameter("format-pretty-print", "true");
-        }
-        else {
-            Logger.global.log(Level.INFO, "DOM serializer does not support pretty-print");
-        }
-        
-        // Mark that the file is no longer in need of a save so the
-        // attribute doesn't show up in output.
-        if(!aDocument.getDocumentElement().getAttribute("needs-save").equals("true")) {
-            System.out.println("Saving an unmodified document. needs-save: " + aDocument.getDocumentElement().getAttribute("needs-save"));
-        }
-        aDocument.getDocumentElement().removeAttribute("needs-save"); //$NON-NLS-1$
 
-        // Serialize the document into a string.
-        final String docContent = writer.writeToString(aDocument);
-        
-        // Now attempt to write it to a file.
-        try {
-            final File outputFile = FileUtils.getDocumentFile(aDocument);
-            assert (outputFile != null);
-            final FileWriter fileWriter = new FileWriter(outputFile);
-            fileWriter.write(docContent);
-            fileWriter.close();
-        } catch (IOException e) {
-            // Unexpected error creating writing the file. Inform the user
-            // and log the error.
-            Logger.global.throwing("DOMUtils", "serialize", e); //$NON-NLS-1$ //$NON-NLS-2$
-            final String errorMessage = Messages.getString("DOMUtils.22") //$NON-NLS-1$
-                    + e.getMessage() + "."; //$NON-NLS-1$
-            final String errorTitle = Messages.getString("DOMUtils.24"); //$NON-NLS-1$
-            JOptionPane.showMessageDialog(aContainer, errorMessage, errorTitle,
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        // Add an attribute that signals that the document has been saved
-        // successfully.
-        aDocument.getDocumentElement().setAttribute("document-saved", "true");
-        return true;
+	    if(!aDocument.getDocumentElement().getAttribute("needs-save").equals("true")) {
+		    System.out.println("Saving an unmodified document. needs-save: " + aDocument.getDocumentElement().getAttribute("needs-save"));
+	    }
+	    aDocument.getDocumentElement().removeAttribute("needs-save"); //$NON-NLS-1$
+
+	    // specify output formating properties
+	    OutputFormat format = new OutputFormat(aDocument);
+	    format.setEncoding("UTF-8");
+	    format.setLineSeparator("\r\n");
+	    format.setIndenting(true);
+	    format.setIndent(3);
+	    format.setLineWidth(0);
+	    format.setPreserveSpace(false);
+	    format.setOmitDocumentType(true);
+
+	    // create the searlizer and have it print the document
+	    try {
+		    final File outputFile = FileUtils.getDocumentFile(aDocument);
+		    assert (outputFile != null);
+		    FileWriter fw = new FileWriter(outputFile);
+		    XMLSerializer serializer = new XMLSerializer(fw, format);
+		    serializer.asDOMSerializer();
+		    serializer.serialize(aDocument);
+		    fw.close();
+	    } catch (java.io.IOException e) {
+		    // Unexpected error creating writing the file. Inform the user
+		    // and log the error.
+		    Logger.global.throwing("DOMUtils", "serialize", e); //$NON-NLS-1$ //$NON-NLS-2$
+		    final String errorMessage = Messages.getString("DOMUtils.22") //$NON-NLS-1$
+			    + e.getMessage() + "."; //$NON-NLS-1$
+		    final String errorTitle = Messages.getString("DOMUtils.24"); //$NON-NLS-1$
+		    JOptionPane.showMessageDialog(aContainer, errorMessage, errorTitle,
+				    JOptionPane.ERROR_MESSAGE);
+		    return false;
+	    }
+
+	    /*
+	    // Create the serializer.
+	    DOMImplementation impl = aDocument.getImplementation();
+	    DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS","3.0");
+	    LSSerializer writer = implLS.createLSSerializer();
+
+	    // Turn on pretty print for readable output.
+	    if(writer.getDomConfig().canSetParameter("format-pretty-print", "true")) {
+	    writer.getDomConfig().setParameter("format-pretty-print", "true");
+	    }
+	    else {
+	    Logger.global.log(Level.INFO, "DOM serializer does not support pretty-print");
+	    }
+
+	    // Mark that the file is no longer in need of a save so the
+	    // attribute doesn't show up in output.
+	    if(!aDocument.getDocumentElement().getAttribute("needs-save").equals("true")) {
+	    System.out.println("Saving an unmodified document. needs-save: " + aDocument.getDocumentElement().getAttribute("needs-save"));
+	    }
+	    aDocument.getDocumentElement().removeAttribute("needs-save"); //$NON-NLS-1$
+
+	    // Serialize the document into a string.
+	    final String docContent = writer.writeToString(aDocument);
+
+	    // Now attempt to write it to a file.
+	    try {
+	    final File outputFile = FileUtils.getDocumentFile(aDocument);
+	    assert (outputFile != null);
+	    final FileWriter fileWriter = new FileWriter(outputFile);
+	    fileWriter.write(docContent);
+	    fileWriter.close();
+	    } catch (IOException e) {
+// Unexpected error creating writing the file. Inform the user
+// and log the error.
+Logger.global.throwing("DOMUtils", "serialize", e); //$NON-NLS-1$ //$NON-NLS-2$
+final String errorMessage = Messages.getString("DOMUtils.22") //$NON-NLS-1$
++ e.getMessage() + "."; //$NON-NLS-1$
+final String errorTitle = Messages.getString("DOMUtils.24"); //$NON-NLS-1$
+JOptionPane.showMessageDialog(aContainer, errorMessage, errorTitle,
+JOptionPane.ERROR_MESSAGE);
+return false;
+	    }
+	    */
+	    // Add an attribute that signals that the document has been saved
+	    // successfully.
+	    aDocument.getDocumentElement().setAttribute("document-saved", "true");
+	    return true;
     }
     
     /**

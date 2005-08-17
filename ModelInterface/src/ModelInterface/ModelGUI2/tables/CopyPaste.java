@@ -1,9 +1,14 @@
 package ModelInterface.ModelGUI2.tables;
+
+import ModelInterface.InterfaceMain;
+
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.datatransfer.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class CopyPaste implements ActionListener{
 	private Clipboard clipboard;
@@ -24,6 +29,43 @@ public class CopyPaste implements ActionListener{
 	  myJTable.registerKeyboardAction(this,"Copy",copy,JComponent.WHEN_FOCUSED);
 	  myJTable.registerKeyboardAction(this,"Paste",paste,JComponent.WHEN_FOCUSED);
 	  clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+	  final JMenuItem copyMenu = InterfaceMain.getInstance().getCopyMenu();
+	  final JMenuItem pasteMenu = InterfaceMain.getInstance().getPasteMenu();
+	  copyMenu.addActionListener(this);
+	  copyMenu.setEnabled(true);
+	  pasteMenu.addActionListener(this);
+	  // need to make this false if it is db
+	  // only way i can think of right now
+	  // is to check the xmlDB
+	  pasteMenu.setEnabled(ModelInterface.ModelGUI2.DbViewer.xmlDB == null);
+	  final CopyPaste thisCP = this;
+	  InterfaceMain.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+		  public void propertyChange(PropertyChangeEvent e) {
+			  if(e.getPropertyName().equals("Control")) {
+				  System.out.println("Doing remove because of control");
+				  copyMenu.setEnabled(false);
+				  copyMenu.removeActionListener(thisCP);
+				  pasteMenu.setEnabled(false);
+				  pasteMenu.removeActionListener(thisCP);
+				  InterfaceMain.getInstance().removePropertyChangeListener(this);
+			  } else if(( e.getPropertyName().equals("Query") || e.getPropertyName().equals("Table")) && e.getNewValue() != myJTable.getModel()) {
+				  if((myJTable.getModel() instanceof TableSorter) && e.getNewValue() == ((TableSorter)myJTable.getModel()).getTableModel()) {
+		  return;
+				  }
+				  System.out.println("New Table: "+e.getNewValue());
+				  System.out.println("My Table: "+myJTable.getModel());
+				  System.out.println("Doing remove because of query/table");
+				  copyMenu.setEnabled(false);
+				  copyMenu.removeActionListener(thisCP);
+				  pasteMenu.setEnabled(false);
+				  pasteMenu.removeActionListener(thisCP);
+				  InterfaceMain.getInstance().removePropertyChangeListener(this);
+			  }
+		  }
+	  });
+
+
+
     }
 
         /**
@@ -49,10 +91,20 @@ public class CopyPaste implements ActionListener{
 	public void actionPerformed(ActionEvent e)
   	{
 		if (e.getActionCommand().equals("Copy")) {
-			StringBuffer stringBuffer = new StringBuffer();
+			/*
+		if(!myJTable.hasFocus()) {
+			System.out.println("Doesn't have focus");
+			return;
+		}
+		*/
 			// Make sure we have a contiguous block of cells
 			int numRows=myJTable.getSelectedRowCount();
+			if(numRows == 0) {
+				System.out.println("Doesnt' have selection");
+				return;
+			}
 			int numCols=myJTable.getSelectedColumnCount();
+			StringBuffer stringBuffer = new StringBuffer();
 			int[] rowsSelected=myJTable.getSelectedRows();
 			int[] colsSelected=myJTable.getSelectedColumns();
 			if (!((numRows-1==rowsSelected[rowsSelected.length-1]-rowsSelected[0] &&
@@ -81,6 +133,10 @@ public class CopyPaste implements ActionListener{
 		}
 		  
 		if (e.getActionCommand().equals("Paste")) {
+		if(!myJTable.hasFocus()) {
+			System.out.println("Doesn't have focus");
+			return;
+		}
 			System.out.println("Time to paste ... ");
 			String entireRow, onePiece;
 			int startRow=(myJTable.getSelectedRows())[0];
