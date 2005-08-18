@@ -1,6 +1,11 @@
 package ModelInterface;
 
 import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.JMenu;
@@ -36,12 +41,15 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	public static int EDIT_COPY_MENUITEM_POS = 10;
 	public static int EDIT_PASTE_MENUITEM_POS = 11;
 	
-	public static String oldControl;
+	private static File propertiesFile = new File("model_interface.properties");
+	private static String oldControl;
 	private static InterfaceMain main;
 	private JMenuItem saveMenu;
 	private JMenuItem quitMenu;
 	private JMenuItem copyMenu;
 	private JMenuItem pasteMenu;
+	private Properties savedProperties;
+
 	/**
 	 * Main function, creates a new thread for the gui and runs it.
 	 */
@@ -89,6 +97,21 @@ public class InterfaceMain extends JFrame implements ActionListener {
 
 	private InterfaceMain(String title) {
 		super(title);
+		savedProperties = new Properties();
+		if(propertiesFile.exists()) {
+			try {
+				savedProperties.loadFromXML(new FileInputStream(propertiesFile));
+			} catch (FileNotFoundException notFound) {
+				// well I checked if it existed before so..
+				System.out.println("Wow you made it get here, you win 1 million dollars...");
+				System.out.println("Ask James for you prize");
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+		}
+		String lastHeight = savedProperties.getProperty("lastHeight", "600");
+		String lastWidth = savedProperties.getProperty("lastWidth", "800");
+		setSize(Integer.parseInt(lastWidth), Integer.parseInt(lastHeight));
 		Container contentPane = getContentPane();
 
 		contentPane.setLayout(new BorderLayout());
@@ -149,16 +172,34 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		//mb.add(m);
 
 		setJMenuBar(mb);
-		setSize(800/*windowWidth*/, 800/*windowHeight*/);
+		//setSize(800/*windowWidth*/, 800/*windowHeight*/);
 
 		// Add adapter to catch window closing event.
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.out.println("Caught the window closing");
+				savedProperties.setProperty("lastWidth", String.valueOf(getWidth()));
+				savedProperties.setProperty("lastHeight", String.valueOf(getHeight()));
+				try {
+					savedProperties.storeToXML(new FileOutputStream(propertiesFile), "TODO: add comments");
+				} catch(FileNotFoundException notFound) {
+					notFound.printStackTrace();
+				} catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
 				System.exit(0);
 			}
 			public void windowClosed(WindowEvent e) {
 				System.out.println("Caught the window closed");
+				savedProperties.setProperty("lastWidth", String.valueOf(getWidth()));
+				savedProperties.setProperty("lastHeight", String.valueOf(getHeight()));
+				try {
+					savedProperties.storeToXML(new FileOutputStream(propertiesFile), "TODO: add comments");
+				} catch(FileNotFoundException notFound) {
+					notFound.printStackTrace();
+				} catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
 				System.exit(0);
 			}
 		});
@@ -271,5 +312,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 				return menuValue;
 			}
 		}
+	}
+	public Properties getProperties() {
+		return savedProperties;
 	}
 }

@@ -74,7 +74,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	private JTable jTable;
 		
-	static private File queryFile = new File("queries.xml");
+	//static private File queryFile = new File("queries.xml");
 
 	private DOMImplementationLS implls;
 
@@ -91,7 +91,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 			.getDOMImplementation().createDocument(null, "queries", null);
 							queries.getAsNode(tempDoc);
 							//writeDocument(tempDoc, queryFile);
-							writeFile(queryFile, tempDoc);
+							writeFile(new File(((InterfaceMain)parentFrame).getProperties().getProperty("queryFile"))
+								, tempDoc);
 						} catch(Exception e) {
 							e.printStackTrace();
 						}
@@ -121,6 +122,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 						"Initialization Error", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			String queryFileName;
+			Properties prop = ((InterfaceMain)parentFrame).getProperties();
+			// I should probably stop being lazy
+			prop.setProperty("queryFile", queryFileName = prop.getProperty("queryFile", "queries.xml"));
+			File queryFile = new File(queryFileName);
 			if(queryFile.exists()) {
 				LSInput lsInput = implls.createLSInput();
 				lsInput.setByteStream(new FileInputStream(queryFile));
@@ -129,6 +135,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 				lsParser.setFilter(new ParseFilter());
 				queriesDoc = lsParser.parse(lsInput);
 			} else {
+				//DocumentType DOCTYPE = impl.createDocumentType("recent", "", "");
+				queriesDoc = ((DOMImplementation)implls).createDocument("", "queries", null);
 				// create one
 			}
 		} catch (Exception e) {
@@ -220,6 +228,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		// Start in current directory
+		fc.setCurrentDirectory(new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")));
 		//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
 
 		fc.setFileFilter(new javax.swing.filechooser.FileFilter() {
@@ -235,6 +244,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		int result = fc.showOpenDialog(parentFrame);
 		if( result == JFileChooser.APPROVE_OPTION ) {
 			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
+			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
 			/*
 			   menuManage.setEnabled(true);
 			//menuSave.setEnabled(false);
@@ -464,18 +474,15 @@ public class DbViewer implements ActionListener, MenuAdder {
 				int[] scnSel = scnList.getSelectedIndices();
 				int[] regionSel = regionList.getSelectedIndices();
 				if(scnSel.length == 0) {
-					// error
 					JOptionPane.showMessageDialog(parentFrame, "Please select Scenarios to run the query against", 
 						"Run Query Error", JOptionPane.ERROR_MESSAGE);
 					//batchQuery(new File("bq.xml"), new File("c:\\test.xls"));
 				} else if(regionSel.length == 0) {
 					JOptionPane.showMessageDialog(parentFrame, "Please select Regions to run the query against", 
 						"Run Query Error", JOptionPane.ERROR_MESSAGE);
-					// error
 				} else if(queryList.getSelectionCount() == 0) {
 					JOptionPane.showMessageDialog(parentFrame, "Please select a query to run", 
 						"Run Query Error", JOptionPane.ERROR_MESSAGE);
-					// error
 				} else {
 					createFilteredQuery(scns, scnSel/*, regions, regionSel*/);
 					QueryGenerator qg = (QueryGenerator)queryList.getSelectionPath().getLastPathComponent();
@@ -635,6 +642,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 				// Start in current directory
 				//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
+				fc.setCurrentDirectory(new File(((InterfaceMain)parentFrame).getProperties().
+						getProperty("lastDirectory", ".")));
 
 				// Set filter for Java source files.
 				fc.setFileFilter(new XMLFilter());
@@ -644,6 +653,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 				if (result == JFileChooser.APPROVE_OPTION) {
 					//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
+					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", 
+						 fc.getCurrentDirectory().toString());
 					parentFrame.getGlassPane().setVisible(true);
 					xmlDB.addFile(fc.getSelectedFile().toString());
 					scns = getScenarios();
