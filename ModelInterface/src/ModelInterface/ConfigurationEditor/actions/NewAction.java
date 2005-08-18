@@ -11,6 +11,7 @@ import java.util.Properties;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 
 import org.w3c.dom.Document;
 
@@ -57,7 +58,7 @@ public class NewAction extends AbstractAction {
     		parentEditor = (ConfigurationEditor)aEvent.getSource();
     	}
     	else {
-    		parentEditor = (ConfigurationEditor)((JComponent)aEvent.getSource()).getTopLevelAncestor();
+    		parentEditor = (ConfigurationEditor)((JComponent)((JPopupMenu)((JComponent)aEvent.getSource()).getParent()).getInvoker()).getTopLevelAncestor();
     	}
     	
         // Check if the file should be saved before creating a new one.
