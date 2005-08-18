@@ -26,6 +26,7 @@ import org.w3c.dom.Document;
 
 import ModelInterface.ConfigurationEditor.configurationeditor.ConfigurationEditor;
 import ModelInterface.ConfigurationEditor.configurationeditor.PropertiesInfo;
+import ModelInterface.InterfaceMain;
 
 /**
  * Static utility class with helper functions.
@@ -160,50 +161,14 @@ final public class FileUtils {
 		synchronized (sProperties) {
 			// Check if the properties haven't already been initialized.
 			if (!sPropertiesInitialized) {
-				// Get the executable path from the PropertiesInfo.
-				try {
-					final FileInputStream inputStream = new FileInputStream(
-							PropertiesInfo.PROPERTY_FILE);
-					sProperties.loadFromXML(inputStream);
-					inputStream.close();
-				} catch (FileNotFoundException e) {
-					// The properties file does not exist yet, this is not an
-					// error.
-					// The properties file will be created when the properties
-					// are saved.
-				} catch (IOException e) {
-					// TODO: These strings might be wrong.
-					final String errorMessage = Messages
-							.getString("RunAction.5") + e.getMessage() + "."; //$NON-NLS-1$ //$NON-NLS-2$
-					final String errorTitle = Messages.getString("RunAction.7"); //$NON-NLS-1$
-					JOptionPane.showMessageDialog(aWindow, errorMessage,
-							errorTitle, JOptionPane.ERROR_MESSAGE);
-					// This is an unexpected error, log the error.
-					Logger.global.log(Level.SEVERE, e.getStackTrace()
-							.toString());
-				}
+				// changed to let the InterfaceMain handle properties
+				// which means that we no longer load the properties
+				// and can't fail here and the sProperties will always be
+				// initialized even if it really wasn't loaded from a file..
+				sProperties = InterfaceMain.getInstance().getProperties();
 				sPropertiesInitialized = true;
 			}
 			return sProperties;
-		}
-	}
-
-	/**
-	 * Save the properties to the file.
-	 */
-	public static void saveProperties() {
-		synchronized (sProperties) {
-			try {
-				final FileOutputStream saveStream = new FileOutputStream(
-						PropertiesInfo.PROPERTY_FILE);
-				sProperties.storeToXML(saveStream, Messages
-						.getString("ShowPreferencesAction.2")); //$NON-NLS-1$
-				saveStream.close();
-			} catch (final Exception aException) {
-				// TODO: Error dialog.
-				Logger.global
-						.throwing("saveProperties", "DOMUtils", aException);
-			}
 		}
 	}
 
@@ -283,7 +248,7 @@ final public class FileUtils {
 			// Save the file as the most recent document.
 			props.setProperty(PropertiesInfo.RECENT_FILE, selectedFile
 					.getAbsolutePath());
-			FileUtils.saveProperties();
+			//FileUtils.saveProperties();
 		}
 
 		return selectedFile;

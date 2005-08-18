@@ -15,10 +15,6 @@ public class PropertiesInfo {
         super();
         // Empty constructor
     }
-    /**
-     * The name of the properties file.
-     */
-    public static final String PROPERTY_FILE = "configuration_editor.properties"; //$NON-NLS-1$
     
     /**
      * The name of the executable path property.
@@ -38,5 +34,5 @@ public class PropertiesInfo {
     /**
      * The name of the attribute which stores the most recently opened file.
      */
-    static public final String RECENT_FILE = "most-recent-file"; //$NON-NLS-1$
+    static public final String RECENT_FILE = "lastDirectory"; //$NON-NLS-1$
 }

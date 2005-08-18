@@ -142,7 +142,6 @@ public class ShowPreferencesAction extends AbstractAction {
         // window.
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent aEvent) {
-                FileUtils.saveProperties();
                 aParentDialog.dispose();
             }
         });
