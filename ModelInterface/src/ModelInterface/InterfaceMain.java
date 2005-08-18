@@ -35,8 +35,10 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	
 	public static int FILE_MENU_POS = 0;
 	public static int EDIT_MENU_POS = 1;
-	public static int FILE_OPEN_SUBMENU_POS = 0;
-	public static int FILE_SAVE_MENUITEM_POS = 2;
+	public static int FILE_NEW_MENUITEM_POS = 0;
+	public static int FILE_OPEN_SUBMENU_POS = 5;
+	public static int FILE_SAVE_MENUITEM_POS = 10;
+	public static int FILE_SAVEAS_MENUITEM_POS = 11;
 	public static int FILE_QUIT_MENUITEM_POS = 50;
 	public static int EDIT_COPY_MENUITEM_POS = 10;
 	public static int EDIT_PASTE_MENUITEM_POS = 11;
@@ -44,7 +46,9 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	private static File propertiesFile = new File("model_interface.properties");
 	private static String oldControl;
 	private static InterfaceMain main;
+	private JMenuItem newMenu;
 	private JMenuItem saveMenu;
+	private JMenuItem saveAsMenu;
 	private JMenuItem quitMenu;
 	private JMenuItem copyMenu;
 	private JMenuItem pasteMenu;
@@ -109,6 +113,9 @@ public class InterfaceMain extends JFrame implements ActionListener {
 				ioe.printStackTrace();
 			}
 		}
+		if(Boolean.parseBoolean(savedProperties.getProperty("isMaximized", "false"))) {
+			setExtendedState(MAXIMIZED_BOTH);
+		}
 		String lastHeight = savedProperties.getProperty("lastHeight", "600");
 		String lastWidth = savedProperties.getProperty("lastWidth", "800");
 		setSize(Integer.parseInt(lastWidth), Integer.parseInt(lastHeight));
@@ -133,9 +140,14 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		//m.addSeparator();
 
 		//m.add(makeMenuItem("Quit"));
+		menuMan.getSubMenuManager(FILE_MENU_POS).addMenuItem(newMenu = new JMenuItem("New"), FILE_NEW_MENUITEM_POS);
+		menuMan.getSubMenuManager(FILE_MENU_POS).addSeparator(FILE_NEW_MENUITEM_POS);
+		newMenu.setEnabled(false);
 		menuMan.getSubMenuManager(FILE_MENU_POS).addMenuItem(saveMenu = new JMenuItem("Save")/*makeMenuItem("Save")*/, FILE_SAVE_MENUITEM_POS);
-		menuMan.getSubMenuManager(FILE_MENU_POS).addSeparator(FILE_SAVE_MENUITEM_POS);
 		saveMenu.setEnabled(false);
+		menuMan.getSubMenuManager(FILE_MENU_POS).addMenuItem(saveAsMenu = new JMenuItem("Save As"), FILE_SAVEAS_MENUITEM_POS);
+		menuMan.getSubMenuManager(FILE_MENU_POS).addSeparator(FILE_SAVEAS_MENUITEM_POS);
+		saveAsMenu.setEnabled(false);
 		menuMan.getSubMenuManager(FILE_MENU_POS).addMenuItem(quitMenu = makeMenuItem("Quit"), FILE_QUIT_MENUITEM_POS);
 
 		menuMan.addMenuItem(new JMenu("Edit"), EDIT_MENU_POS);
@@ -174,12 +186,24 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		setJMenuBar(mb);
 		//setSize(800/*windowWidth*/, 800/*windowHeight*/);
 
-		// Add adapter to catch window closing event.
-		addWindowListener(new WindowAdapter() {
+		// Add adapter to catch window events.
+		WindowAdapter myWindowAdapter = new WindowAdapter() {
+			public void windowStateChanged(WindowEvent e) {
+				System.out.println("M BOTH: "+MAXIMIZED_BOTH);
+				System.out.println("ICON: "+ICONIFIED);
+				System.out.println("Got State Change");
+				System.out.println(e);
+				System.out.println(e.paramString());
+				System.out.println("New State: "+e.getNewState());
+				System.out.println("Old State: "+e.getOldState());
+				savedProperties.setProperty("isMaximized", String.valueOf((e.getNewState() & MAXIMIZED_BOTH) != 0));
+			}
 			public void windowClosing(WindowEvent e) {
 				System.out.println("Caught the window closing");
-				savedProperties.setProperty("lastWidth", String.valueOf(getWidth()));
-				savedProperties.setProperty("lastHeight", String.valueOf(getHeight()));
+				if(!Boolean.parseBoolean(savedProperties.getProperty("isMaximized"))) {
+					savedProperties.setProperty("lastWidth", String.valueOf(getWidth()));
+					savedProperties.setProperty("lastHeight", String.valueOf(getHeight()));
+				}
 				try {
 					savedProperties.storeToXML(new FileOutputStream(propertiesFile), "TODO: add comments");
 				} catch(FileNotFoundException notFound) {
@@ -191,8 +215,10 @@ public class InterfaceMain extends JFrame implements ActionListener {
 			}
 			public void windowClosed(WindowEvent e) {
 				System.out.println("Caught the window closed");
-				savedProperties.setProperty("lastWidth", String.valueOf(getWidth()));
-				savedProperties.setProperty("lastHeight", String.valueOf(getHeight()));
+				if(!Boolean.parseBoolean(savedProperties.getProperty("isMaximized"))) {
+					savedProperties.setProperty("lastWidth", String.valueOf(getWidth()));
+					savedProperties.setProperty("lastHeight", String.valueOf(getHeight()));
+				}
 				try {
 					savedProperties.storeToXML(new FileOutputStream(propertiesFile), "TODO: add comments");
 				} catch(FileNotFoundException notFound) {
@@ -202,7 +228,9 @@ public class InterfaceMain extends JFrame implements ActionListener {
 				}
 				System.exit(0);
 			}
-		});
+		};
+		addWindowListener(myWindowAdapter);
+		addWindowStateListener(myWindowAdapter);
 
 		getGlassPane().addMouseListener( new MouseAdapter() {});
 		getGlassPane().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -223,8 +251,14 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	public static InterfaceMain getInstance() {
 		return main;
 	}
+	public JMenuItem getNewMenu() {
+		return newMenu;
+	}
 	public JMenuItem getSaveMenu() {
 		return saveMenu;
+	}
+	public JMenuItem getSaveAsMenu() {
+		return saveAsMenu;
 	}
 	public JMenuItem getQuitMenu() {
 		return quitMenu;
