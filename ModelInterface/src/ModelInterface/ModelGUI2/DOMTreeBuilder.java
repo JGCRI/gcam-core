@@ -47,7 +47,8 @@ public class DOMTreeBuilder {
 	public DOMTreeBuilder() {
 		docName = "scenario";
 		try {
-			System.setProperty(DOMImplementationRegistry.PROPERTY, "org.apache.xerces.dom.DOMImplementationSourceImpl");
+			//System.setProperty(DOMImplementationRegistry.PROPERTY, "org.apache.xerces.dom.DOMImplementationSourceImpl");
+			System.setProperty(DOMImplementationRegistry.PROPERTY, "com.sun.org.apache.xerces.internal.dom.DOMImplementationSourceImpl");
 			DOMImplementationRegistry reg = DOMImplementationRegistry.newInstance();
 			DOMImplementation impl = reg.getDOMImplementation( "XML 3.0" );
 		    	if (impl == null) {

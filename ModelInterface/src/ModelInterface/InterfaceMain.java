@@ -189,13 +189,6 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		// Add adapter to catch window events.
 		WindowAdapter myWindowAdapter = new WindowAdapter() {
 			public void windowStateChanged(WindowEvent e) {
-				System.out.println("M BOTH: "+MAXIMIZED_BOTH);
-				System.out.println("ICON: "+ICONIFIED);
-				System.out.println("Got State Change");
-				System.out.println(e);
-				System.out.println(e.paramString());
-				System.out.println("New State: "+e.getNewState());
-				System.out.println("Old State: "+e.getOldState());
 				savedProperties.setProperty("isMaximized", String.valueOf((e.getNewState() & MAXIMIZED_BOTH) != 0));
 			}
 			public void windowClosing(WindowEvent e) {

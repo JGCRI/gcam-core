@@ -169,6 +169,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr)) {
 						((InterfaceMain)parentFrame).getSaveMenu().removeActionListener(thisViewer);
+						((InterfaceMain)parentFrame).getSaveAsMenu().removeActionListener(thisViewer);
+						((InterfaceMain)parentFrame).getSaveAsMenu().setEnabled(false);
 						((InterfaceMain)parentFrame).removePropertyChangeListener(savePropListener);
 						//((InterfaceMain)parentFrame).getQuitMenu().removeActionListener(thisViewer);
 						((InterfaceMain)parentFrame).getSaveMenu().setEnabled(false);
@@ -181,6 +183,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 					}
 					if(evt.getNewValue().equals(controlStr)) {
 						((InterfaceMain)parentFrame).getSaveMenu().addActionListener(thisViewer);
+						((InterfaceMain)parentFrame).getSaveAsMenu().addActionListener(thisViewer);
+						((InterfaceMain)parentFrame).getSaveAsMenu().setEnabled(true);
 						((InterfaceMain)parentFrame).addPropertyChangeListener(savePropListener);
 						//((InterfaceMain)parentFrame).getQuitMenu().addActionListener(thisViewer);
 						//((InterfaceMain)parentFrame).oldControl = "FileChooserDemo.File";
@@ -383,6 +387,20 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			//parentFrame.setTitle("["+file+"] - ModelGUI");
 			parentFrame.setTitle("["+file+"] - ModelInterface");
 		} else if (command.equals("Save")) {
+			if (!(file.getAbsolutePath().endsWith(".xml"))) {
+				status = saveFile();
+			} else {
+				status = saveFile(file);
+			}
+			if (!status) {
+				JOptionPane.showMessageDialog(null,
+						"IO error in saving file!!", "File Save Error",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			parentFrame.setTitle("["+file+"] - ModelInterface");
+			((InterfaceMain)parentFrame).fireProperty("Document-Save", null, doc);
+		} else if (command.equals("Save As")) {
 			// Save a file
 			status = saveFile();
 			if (!status) {
@@ -391,6 +409,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			parentFrame.setTitle("["+file+"] - ModelInterface");
 			((InterfaceMain)parentFrame).fireProperty("Document-Save", null, doc);
 		} else if (command.equals("Filter")) {
 				/*
@@ -963,9 +982,14 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		return true;
 	}
 
-	boolean saveFile() {
+	boolean saveFile(File where) {
+		return writeFile(where, doc);
+	}
 
-		File file = null;
+	boolean saveFile() {
+		// save as..
+
+		//File file = null;
 		JFileChooser fc = new JFileChooser();
 
 		// Start in current directory
