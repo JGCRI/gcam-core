@@ -64,7 +64,7 @@ public class TableSelector extends JDialog implements ActionListener {
 
 		//main part of the dialog
 		list = new JList(data);
-		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {

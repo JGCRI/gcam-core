@@ -63,6 +63,9 @@ public class MultiTableModel extends BaseTableModel{
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col ) {
 			if(row % 2 == 0) {
 				Component comp = (new DefaultTableCellRenderer()).getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+				if(table.getRowHeight(row) != 16) {
+					table.setRowHeight(row, 16);
+				}
 				comp.setBackground(new Color(240,214,19));
 				return comp;
 			} else {
@@ -366,30 +369,36 @@ public class MultiTableModel extends BaseTableModel{
 	 * @param possibleFilters the vector nodeNames that had valid attributes for filtering
 	 */
 	protected void doFilter(Vector possibleFilters) {
-		String regex = "^/";
+		StringBuffer regex = new StringBuffer("^/");
 		for(int i = possibleFilters.size()-1; i >= 0; i--) {
 			Iterator it = ((HashMap)tableFilterMaps.get(possibleFilters.get(i))).entrySet().iterator();
 			if(it.hasNext()) {
-				regex += (String)possibleFilters.get(i)+":(";
+				regex.append((String)possibleFilters.get(i)).append("@(");
 				while(it.hasNext()) {
 					Map.Entry me = (Map.Entry)it.next();
 					if(((Boolean)me.getValue()).booleanValue()) {
-						regex += me.getKey()+"|";
+						regex.append(me.getKey()).append("|");
 					}
 				}
+				/*
 				if(regex.endsWith("|")) {
 					regex = regex.substring(0,regex.length()-1)+")/";
+					*/
+				if(regex.charAt(regex.length()-1) == '|') {
+					regex.deleteCharAt(regex.length()-1).append(")/");
 				} else {
-					regex += ")/";
+					regex.append(")/");
 				}
 			} else {
-				regex += (String)possibleFilters.get(i)+"/";
+				regex.append((String)possibleFilters.get(i)).append("/");
 			}
 		}
-		regex += "$";
+		regex.append("$");
+		String regexStr = regex.toString();
+		System.out.println("Regex is: "+regexStr);
 		Vector tempActive = new Vector();
 		for(int i = 0; i < tables.size(); i+=2) {
-			if(((String)tables.get(i)).matches(regex)) {
+			if(((String)tables.get(i)).matches(regexStr)) {
 				tempActive.add(new Integer(i));
 				tempActive.add(new Integer(i+1));
 			}
@@ -398,20 +407,11 @@ public class MultiTableModel extends BaseTableModel{
 	}
 	public JFreeChart createChart(int rowAt, int colAt) {
 		return ((NewDataTableModel)((JTable)((JScrollPane)getValueAt(rowAt, colAt)).getViewport().getView()).getModel()).createChart(rowAt, colAt);
-		//throw new UnsupportedOperationException();
 	}
 
 	QueryGenerator qg;
-	protected boolean isGlobal;
 	public MultiTableModel(QueryGenerator qgIn, Object[] regions, JFrame parentFrameIn) {
 		qg = qgIn;
-		/*
-		if(FileChooserDemo.xmlDB.getQueryFilter().endsWith("region/")) {
-			isGlobal = true;
-		} else {
-			isGlobal = false;
-		}
-		*/
 		parentFrame = parentFrameIn;
 		//title = qgIn.getVariable();
 		title = qgIn.toString();
@@ -427,14 +427,6 @@ public class MultiTableModel extends BaseTableModel{
 		for(int i = 0; i < tables.size(); i++) {
 			activeRows.add(new Integer(i));
 		}
-		/*
-		ind2Name = qgIn.getVariable();
-		activeRows = new Vector( leftSideVector.size() * indRow.size() );
-		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
-			activeRows.add(new Integer(i));
-		}
-		indCol.add(0, ind1Name);
-		*/
 	}
 	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues) {
 	  try {
@@ -458,7 +450,6 @@ public class MultiTableModel extends BaseTableModel{
 	  try {
 		  while(res.hasNext()) {
 			  tempNode = res.next();
-			  //regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), tableFilterMaps);
 			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
 			  if(sumAll) {
 				  //regionAndYear[1] = "All "+(String)wild.get(0);
@@ -466,7 +457,6 @@ public class MultiTableModel extends BaseTableModel{
 			  }
 			  regions.add(regionAndYear[0]);
 			  years.add(regionAndYear[1]);
-			  //Map retMap = addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
 			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
 			  DbViewer.xmlDB.printLockStats("addToDataTree");
 			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
@@ -503,76 +493,6 @@ public class MultiTableModel extends BaseTableModel{
 	  */
 	}
 
-	/*
-  	private Object[] getRegionAndYearFromNode(XmlValue n, Map filterMaps) throws Exception {
-	  Vector ret = new Vector(2,0);
-	  XmlValue nBefore;
-	  do {
-		  if(n.getNodeName().equals((String)wild.get(0))) {
-			  ret.add(XMLDB.getAttr(n));
-		  } else if(n.getNodeName().equals((String)wild.get(1))) {
-			  ret.add(0, XMLDB.getAttr(n, "year"));
-			  /*
-			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-			  if(!getOneAttrVal(n).equals("fillout=1")) {
-			  	ret.add(getOneAttrVal(n));
-			  } else {
-			        ret.add(getOneAttrVal(n, 1));
-			  }
-			  // /
-
-		  } else if(XMLDB.hasAttr(n)) {
-			  HashMap tempFilter;
-	           	  if (filterMaps.containsKey(n.getNodeName())) {
-	                          tempFilter = (HashMap)filterMaps.get(n.getNodeName());
-                          } else {
-                                  tempFilter = new HashMap();
-                          }
-			  String attr = XMLDB.getAttr(n);
-			  if (!tempFilter.containsKey(attr)) {
-                          	tempFilter.put(attr, new Boolean(true));
-                          	filterMaps.put(n.getNodeName(), tempFilter);
-			  }
-		  }
-		  nBefore = n;
-		  n = n.getParentNode();
-		  nBefore.delete();
-	  } while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
-	  n.delete();
-	  DbViewer.xmlDB.printLockStats("getRegionAndYearFromNode");
-	  return ret.toArray();
-  	}
-
-  private TreeMap addToDataTree(XmlValue currNode, TreeMap dataTree) throws Exception {
-	  if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-		  currNode.delete();
-		  return dataTree;
-	  }
-	  TreeMap tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-	  // used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-	  String w = (String)wild.get(0);
-	  //if(currNode.getNodeName().matches(".*sector") || currNode.getNodeName().equals("technology")) 
-	  if((!(w.matches(".*[Ss]ector") || w.equals("technology")) && (currNode.getNodeName().matches(".*[Ss]ector") || currNode.getNodeName().equals("technology"))) 
-				  || (isGlobal && currNode.getNodeName().equals("region")) 
-				  || (w.equals("supplysector") && currNode.getNodeName().equals("subsector")) 
-				  || (w.matches(".*sector") && currNode.getNodeName().equals("technology"))) {
-	  //if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().equals(".*[Ss]ector") ) 
-		  currNode.delete();
-		  return tempMap;
-	  }
-	  if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
-		String attr = XMLDB.getAllAttr(currNode);
-		attr = currNode.getNodeName()+"@"+attr;
-		if(!tempMap.containsKey(attr)) {
-			tempMap.put(attr, new TreeMap());
-		}
-		currNode.delete();
-		return (TreeMap)tempMap.get(attr);
-	  } 
-	  currNode.delete();
-	  return tempMap;
-  }
-  */
   public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
 	  HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
 	  row.createCell((short)0).setCellValue(getColumnName(0));
