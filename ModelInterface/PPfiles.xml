@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <files>
-	<data file="inputPoly.xml" />
+	<data file="inputBarley.xml" />
 	<region file="inputR.xml" />
-	<output file="outMaskTest.xml" />
+	<output file="outBarley.xml" />
 	<log level="INFO" />
 </files>

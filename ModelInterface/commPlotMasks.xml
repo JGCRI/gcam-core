@@ -10,10 +10,15 @@
 		<field value="Army DOD" />
 		<time value="2004.0" />
 	</variable>
-	<variable name="barley" type="reference">
+	<variable name="wind1" type="reference">
 		<region value="USAcontiguous" />
-		<field value="Barley" />
-		<time value="1995.0" />
+		<field value="Class1" />
+		<time value="2005.0" />
+	</variable>
+	<variable name="cost" type="reference">
+		<region value="USAcontiguous" />
+		<field value="DistCost" />
+		<time value="2005.0" />
 	</variable>
 
 	<maskCombineOr>
@@ -22,13 +27,19 @@
 		<argument name="forest" />
 	</maskCombineOr>
 	<maskRemove>
-		<target name="maskBarley" />
-		<argument name="barley" />
+		<target name="maskWind" />
+		<argument name="wind1" />
 		<mask name="masterMask" />
-		<weight value="false" />
+		<weight value="true" />
 	</maskRemove>
+	
+	<frequencyAnalysis>
+		<output type="text" />
+		<argument name="maskWind" />
+		<split name="cost" />
+		<buckets number="10" />
+	</frequencyAnalysis>
 
-	<plot variable="forest" />
-	<plot variable="army" />
-	<plot variable="masterMask" />
+	<print variable="maskWind" />
+	<plot variable="cost" />
 </commands>

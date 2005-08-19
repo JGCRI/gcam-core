@@ -22,24 +22,20 @@
 package ModelInterface.DMsource;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.*;
 import javax.swing.*;
-import java.text.*;
+import net.sourceforge.jiu.data.*;
+import net.sourceforge.jiu.geometry.*;
+import net.sourceforge.jiu.gui.awt.*;
 
-public class MatrixGrapher implements ActionListener
+public class Matrixpher
 {
   private static final int[] colorList = { 0x808080, 0x00006B, 0x0000CD, 0x0A32FF,
       0x2495EF, 0x24BFFF, 0x65DDFD, 0xAFEFF8, 0xFFFF4F, 0xFFE228, 0xFFC500, 0xFF6500,
       0xF40000, 0xBA0000, 0x650000 };
   final static String LOOKANDFEEL = "System";
   static int openWindows = 0;
-  
-  private JFormattedTextField zoomField;
-  private JLabel imageLabel;
-  private JLabel zoomDisp;
-  private JScrollPane sp;
  
   private double[][] toDisplay;
   private double minVal;
@@ -50,7 +46,6 @@ public class MatrixGrapher implements ActionListener
   private double toWeight;
   private int xLength;
   private int yLength;
-  private int currZoom;
 
   public void drawMatrix(double[][] m, double min, double max, double x, double y, double r)
   {
@@ -68,7 +63,6 @@ public class MatrixGrapher implements ActionListener
     toWeight = maxVal-minVal;
     xLength = toDisplay[0].length;
     yLength = toDisplay.length;
-    currZoom = 1;
 
     //Set the look and feel.
     initLookAndFeel();
@@ -95,16 +89,20 @@ public class MatrixGrapher implements ActionListener
     pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
     pane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
     pane.add(createScrollArea());
-    pane.add(createLegendArea());
-    pane.add(createZoomArea());
+    pane.add(createLabel());
+    pane.add(createLegend());
 
     //Display the window.
     frame.setContentPane(pane);
     //frame.setResizable(false);
     frame.pack();
-
-    frame.setSize(new Dimension(650, 350));
-
+    if((int)(360/res) > 156)
+    {
+      frame.setSize(new Dimension((int)((360/res)+29), (int)((180/res)+86)));
+    } else
+    {
+      frame.setSize(new Dimension(185, (int)((180/res)+86)));
+    }
     
     openWindows++;
     frame.setVisible(true);
@@ -112,22 +110,37 @@ public class MatrixGrapher implements ActionListener
 
   private Component createScrollArea()
   {
-    //Dimension dim = new Dimension(360, 180);
-    sp = new JScrollPane(createImage(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+    Dimension dim = new Dimension(360, 180);
+    JScrollPane sp = new JScrollPane(createImage(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     
     sp.setBackground(Color.white);
-    //sp.setPreferredSize(dim);
+    sp.setPreferredSize(dim);
     
     return sp;
   }
   
   private Component createImage()
   {
-    ImageIcon ii = new ImageIcon(makeImageFromMatrix());
-    imageLabel = new JLabel(ii);
+    JLabel imageLabel = new JLabel(makeImageFromMatrix());
     
     return imageLabel;
+  }
+  
+  private Component createLabel() 
+  {
+      JPanel pane = new JPanel();
+      pane.setLayout(new BoxLayout(pane, BoxLayout.LINE_AXIS));
+      JLabel label1 = new JLabel(minVal+"");
+      JLabel label3 = new JLabel(maxVal+"");
+
+      label1.setSize(new Dimension(100, 16));
+      label3.setSize(new Dimension(100, 16));
+      
+      pane.add(label1);
+      pane.add(Box.createRigidArea(new Dimension(110,5)));
+      pane.add(label3);
+      return pane;
   }
   
   private Component createLegend()
@@ -145,97 +158,7 @@ public class MatrixGrapher implements ActionListener
     return pane1;
   } 
 
-  private Component createLegendArea()
-  {
-    JPanel LegPane = new JPanel();
-    LegPane.setLayout(new BoxLayout(LegPane, BoxLayout.LINE_AXIS));
-    
-    JLabel labelMin = new JLabel(minVal+"");
-    JLabel labelMax = new JLabel(maxVal+"");
-    labelMin.setHorizontalAlignment(SwingConstants.TRAILING);
-    labelMax.setHorizontalAlignment(SwingConstants.LEADING);
-    
-    labelMin.setMinimumSize(new Dimension(120, 16));
-    labelMin.setMaximumSize(new Dimension(120, 16));
-    labelMax.setMinimumSize(new Dimension(120, 16));
-    labelMax.setMaximumSize(new Dimension(120, 16));
-    
-    LegPane.add(labelMin);
-    LegPane.add(Box.createRigidArea(new Dimension(5,18)));
-    LegPane.add(createLegend());
-    LegPane.add(Box.createRigidArea(new Dimension(5,18)));
-    LegPane.add(labelMax);
-    
-    return LegPane;
-  }
-  
-  private Component createZoomBox()
-  {
-    NumberFormat amountFormat = NumberFormat.getIntegerInstance();
-    amountFormat.setMaximumIntegerDigits(3);
-    zoomField = new JFormattedTextField(amountFormat);
-    //zoomField.setValue(new Double(1));
-    zoomField.setColumns(3);
-    zoomField.setMaximumSize(new Dimension(40, 18));
-
-    zoomField.addActionListener(this);
-    
-    return zoomField;
-  }
-  
-  private Component createZoomButton()
-  {
-    JButton zoomButton = new JButton("Zoom");
-    
-    zoomButton.addActionListener(this);
-    
-    return zoomButton;
-  }
-  
-  private Component createZoomDisplay()
-  {
-    zoomDisp = new JLabel("Current Zoom: "+currZoom+"x");
-    //zoomDisp.setSize(new Dimension(25, 16));
-    
-    return zoomDisp;
-  }
-  
-  private Component createZoomArea()
-  {
-    JPanel ZApane = new JPanel();
-    ZApane.setLayout(new BoxLayout(ZApane, BoxLayout.LINE_AXIS));
-    
-    ZApane.add(createZoomButton());
-    ZApane.add(Box.createRigidArea(new Dimension(20,5)));
-    JLabel nZ = new JLabel("New Zoom: ");
-    ZApane.add(nZ);
-    ZApane.add(createZoomBox());
-    ZApane.add(Box.createRigidArea(new Dimension(20,5)));
-    ZApane.add(createZoomDisplay());
-    
-    ZApane.setPreferredSize(new Dimension(200, 20));
-    
-    return ZApane;
-  }
-  
-  public void actionPerformed(ActionEvent e)
-  {
-    int zoom = Integer.valueOf(zoomField.getText());
-    
-    BufferedImage buff = makeImageFromMatrix();
-    Image rescaled = buff.getScaledInstance((buff.getWidth()*zoom), (buff.getHeight()*zoom), Image.SCALE_AREA_AVERAGING );
-    
-    ImageIcon newII = new ImageIcon(rescaled);
-    imageLabel.setIcon(newII);
-    
-    currZoom = zoom;
-    zoomDisp.setText("Current Zoom: "+currZoom+"x");
-    
-    imageLabel.revalidate();
-    sp.revalidate();
-  }
-  
-  private BufferedImage makeImageFromMatrix()
+  private Canvas makeImageFromMatrix()
   {
     BufferedImage bi = new BufferedImage((int)(360/res), (int)(180/res), BufferedImage.TYPE_INT_RGB);
     double proportion;
@@ -336,7 +259,58 @@ public class MatrixGrapher implements ActionListener
       }
     }
 
-    return bi;
+    Rectangle2D.Double anchor = new Rectangle2D.Double(0, 0, (360/res), (180/res));
+
+    BufferedRGB24Image image = new BufferedRGB24Image(bi);
+    
+    TexturePaint tp = new TexturePaint(bi, anchor);
+
+    class imageLabel extends JLabel
+    {
+      PixelImage i;
+      public imageLabel(PixelImage pi)
+      {
+        i = pi;
+      }
+      
+      public void paint(Graphics g)
+      {
+        // step one of the recipe; cast Graphics object as Graphics2D
+        Graphics2D g2d = (Graphics2D)g;
+
+        // step two-set the graphics context
+        //g2d.setPaint(i); //setting context
+
+        //step three-render something
+        g2d.fill(new Rectangle2D.Float(0, 0, i.getWidth(), i.getHeight()));
+      }
+    }
+    
+    
+    class matrixCanvas
+        extends Canvas
+    {
+      TexturePaint tp;
+
+      public matrixCanvas(TexturePaint t)
+      {
+        tp = t;
+      }
+
+      public void paint(Graphics g)
+      {
+        // step one of the recipe; cast Graphics object as Graphics2D
+        Graphics2D g2d = (Graphics2D)g;
+
+        // step two-set the graphics context
+        g2d.setPaint(tp); //setting context
+
+        //step three-render something
+        g2d.fill(new Rectangle2D.Float(0, 0, (int)(360/res), (int)(180/res)));
+      }
+    }
+
+    return new matrixCanvas(tp);
   }
 
   private static void initLookAndFeel()

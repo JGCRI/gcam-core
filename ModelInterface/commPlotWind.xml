@@ -2,7 +2,7 @@
 <commands>
 	<variable name="wind" type="reference">
 		<region value="USAcontiguous" />
-		<field value="WindClass" />
+		<field value="Class1" />
 		<time value="2005.0" />
 	</variable>
 

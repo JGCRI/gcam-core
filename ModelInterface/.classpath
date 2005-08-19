@@ -70,5 +70,7 @@
 	<classpathentry kind="lib" path="lib/xml.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-regexp-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jfcunit.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/ModelInterface/lib/commons-math-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/ModelInterface/lib/jiu.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
