@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
@@ -99,6 +100,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 						parentFrame.getContentPane().removeAll();
 					}
 					if(evt.getNewValue().equals(controlStr)) {
+						readQueries();
 						// need to do anything?
 					}
 				}
@@ -115,29 +117,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 					.newInstance();
 			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");
 			if (implls == null) {
-				System.out
-						.println("Could not find a DOM3 Load-Save compliant parser.");
+				System.out.println("Could not find a DOM3 Load-Save compliant parser.");
 				JOptionPane.showMessageDialog(parentFrame,
 						"Could not find a DOM3 Load-Save compliant parser.",
 						"Initialization Error", JOptionPane.ERROR_MESSAGE);
 				return;
-			}
-			String queryFileName;
-			Properties prop = ((InterfaceMain)parentFrame).getProperties();
-			// I should probably stop being lazy
-			prop.setProperty("queryFile", queryFileName = prop.getProperty("queryFile", "queries.xml"));
-			File queryFile = new File(queryFileName);
-			if(queryFile.exists()) {
-				LSInput lsInput = implls.createLSInput();
-				lsInput.setByteStream(new FileInputStream(queryFile));
-				LSParser lsParser = implls.createLSParser(
-						DOMImplementationLS.MODE_SYNCHRONOUS, null);
-				lsParser.setFilter(new ParseFilter());
-				queriesDoc = lsParser.parse(lsInput);
-			} else {
-				//DocumentType DOCTYPE = impl.createDocumentType("recent", "", "");
-				queriesDoc = ((DOMImplementation)implls).createDocument("", "queries", null);
-				// create one
 			}
 		} catch (Exception e) {
 			System.err.println("Couldn't initialize DOMImplementation: " + e);
@@ -210,8 +194,30 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("DB Open")) {
-			if(doOpenDB()) {
+			JFileChooser fc = new JFileChooser();
+			fc.setDialogTitle("Choose XML Database");
+
+			// Choose only files, not directories
+			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+			// Start in current directory
+			fc.setCurrentDirectory(new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")));
+			//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
+
+			fc.setFileFilter(new javax.swing.filechooser.FileFilter() {
+				public boolean accept(File f) {
+					return f.getName().toLowerCase().endsWith(".dbxml") || f.isDirectory();
+				}
+				public String getDescription() {
+					return "BDB XML Container (*.dbxml)";
+				}
+			});
+
+			// Now open chooser
+			//int result = fc.showOpenDialog(parentFrame);
+			if( fc.showOpenDialog(parentFrame) == JFileChooser.APPROVE_OPTION )  {
 				((InterfaceMain)parentFrame).fireControlChange(controlStr);
+				doOpenDB(fc);
 			}
 		} else if(e.getActionCommand().equals("Manage DB")) {
 			manageDB();
@@ -220,47 +226,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 	}
 
-	private boolean doOpenDB() {
-		JFileChooser fc = new JFileChooser();
-		fc.setDialogTitle("Choose XML Database");
-
-		// Choose only files, not directories
-		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-		// Start in current directory
-		fc.setCurrentDirectory(new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")));
-		//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
-
-		fc.setFileFilter(new javax.swing.filechooser.FileFilter() {
-			public boolean accept(File f) {
-				return f.getName().toLowerCase().endsWith(".dbxml") || f.isDirectory();
-			}
-			public String getDescription() {
-				return "BDB XML Container (*.dbxml)";
-			}
-		});
-
-		// Now open chooser
-		int result = fc.showOpenDialog(parentFrame);
-		if( result == JFileChooser.APPROVE_OPTION ) {
-			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
-			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
-			/*
-			   menuManage.setEnabled(true);
-			//menuSave.setEnabled(false);
-			//copyMenu.setEnabled(false);
-			//pasteMenu.setEnabled(false);
-			menuTableFilter.setEnabled(false);
-			*/
-			xmlDB = new XMLDB(fc.getSelectedFile().toString(), parentFrame);
-			createTableSelector();
-			//setTitle("["+fc.getSelectedFile()+"] - ModelGUI");
-			parentFrame.setTitle("["+fc.getSelectedFile()+"] - ModelInterface");
-			return true;
-		} else {
-			return false;
-		}
-
+	private void doOpenDB(JFileChooser fc) {
+		//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
+		((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
+		xmlDB = new XMLDB(fc.getSelectedFile().toString(), parentFrame);
+		createTableSelector();
+		parentFrame.setTitle("["+fc.getSelectedFile()+"] - ModelInterface");
 	}
 
 	private Vector getScenarios() {
@@ -902,6 +873,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 	}
 	*/
 
+	/*
 	public void writeDocument(Document doc, File where) {
 		//DOMImplementation impl = doc.getImplementation();
 		//DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS","3.0");
@@ -925,10 +897,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 			fileWriter.close();
 		} catch(IOException ioe) {
 			ioe.printStackTrace();
-			JOptionPane.showMessageDialog(null/*parentFrame*/, "Couldn't save Queries\n"+ioe.getMessage(), 
+			JOptionPane.showMessageDialog(null/*parentFrame/, "Couldn't save Queries\n"+ioe.getMessage(), 
 					"Query Save Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	*/
 
 	public boolean writeFile(File file, Document theDoc) {
 		// specify output formating properties
@@ -954,5 +927,29 @@ public class DbViewer implements ActionListener, MenuAdder {
 			return false;
 		}
 		return true;
+	}
+	public void readQueries() {
+		String queryFileName;
+		Properties prop = ((InterfaceMain)parentFrame).getProperties();
+		// I should probably stop being lazy
+		prop.setProperty("queryFile", queryFileName = prop.getProperty("queryFile", "queries.xml"));
+		File queryFile = new File(queryFileName);
+		if(queryFile.exists()) {
+			LSInput lsInput = implls.createLSInput();
+			try {
+				lsInput.setByteStream(new FileInputStream(queryFile));
+			} catch(FileNotFoundException e) {
+				// is it even possible to get here
+				e.printStackTrace();
+			}
+			LSParser lsParser = implls.createLSParser(
+					DOMImplementationLS.MODE_SYNCHRONOUS, null);
+			lsParser.setFilter(new ParseFilter());
+			queriesDoc = lsParser.parse(lsInput);
+		} else {
+			//DocumentType DOCTYPE = impl.createDocumentType("recent", "", "");
+			queriesDoc = ((DOMImplementation)implls).createDocument("", "queries", null);
+			// create one
+		}
 	}
 }

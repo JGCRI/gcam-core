@@ -55,7 +55,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent e) {
 				if(e.getPropertyName().equals("Control") || (e.getPropertyName().equals("Table") &&
-						e.getNewValue() != thisTableModel)) {
+						!thisTableModel.equals(e.getNewValue()))) {
 					System.out.println("New Table: "+e.getNewValue());
 					System.out.println("This Table: "+thisTableModel);
 					System.out.println("Stoped listening for filter");
@@ -508,4 +508,5 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	protected abstract void doFilter(Vector possibleFilters);
 
 	public abstract void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp);
+
 }

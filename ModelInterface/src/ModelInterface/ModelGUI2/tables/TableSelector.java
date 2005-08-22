@@ -14,7 +14,7 @@ public class TableSelector extends JDialog implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	//private static TableSelector dialog;
-	private String value = "";
+	private String value;
 	private JList list;
 	private static String[] data = { "Single Table", "Multi Tables", "Combo Tables" };
 	//private static Frame parentFrame;
@@ -102,6 +102,7 @@ public class TableSelector extends JDialog implements ActionListener {
 
 		pack();
 		//setLocationRelativeTo(locationComp);
+		setLocationRelativeTo(getParent());
 	}
 
 	/**
@@ -110,6 +111,7 @@ public class TableSelector extends JDialog implements ActionListener {
 	 * @param e the even that occured, only care about clicks on a button
 	 */
 	public void actionPerformed(ActionEvent e) {
+		value = null;
 		if ("Select".equals(e.getActionCommand())) {
 			value = (String)(list.getSelectedValue());
 		}
@@ -125,7 +127,7 @@ public class TableSelector extends JDialog implements ActionListener {
 	 */
 	public JScrollPane createSelection(TreePath tp, Document doc, JFrame pf, InputViewer fcd) {
 		showDialog();
-		if(value.equals("")) {
+		if(value == null) {
 			return null;
 		}
 		/*

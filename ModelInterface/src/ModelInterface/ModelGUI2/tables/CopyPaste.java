@@ -48,10 +48,12 @@ public class CopyPaste implements ActionListener{
 				  pasteMenu.setEnabled(false);
 				  pasteMenu.removeActionListener(thisCP);
 				  InterfaceMain.getInstance().removePropertyChangeListener(this);
-			  } else if(( e.getPropertyName().equals("Query") || e.getPropertyName().equals("Table")) && e.getNewValue() != myJTable.getModel()) {
+			  } else if(( e.getPropertyName().equals("Query") || e.getPropertyName().equals("Table")) && !e.getNewValue().equals(getMyModel())) {
+				  /*
 				  if((myJTable.getModel() instanceof TableSorter) && e.getNewValue() == ((TableSorter)myJTable.getModel()).getTableModel()) {
 		  return;
 				  }
+				  */
 				  System.out.println("New Table: "+e.getNewValue());
 				  System.out.println("My Table: "+myJTable.getModel());
 				  System.out.println("Doing remove because of query/table");
@@ -66,6 +68,13 @@ public class CopyPaste implements ActionListener{
 
 
 
+    }
+    private BaseTableModel getMyModel() {
+	    if(myJTable.getModel() instanceof TableSorter) {
+		    return (BaseTableModel)((TableSorter)myJTable.getModel()).getTableModel();
+	    } else {
+		    return (BaseTableModel)myJTable.getModel();
+	    }
     }
 
         /**

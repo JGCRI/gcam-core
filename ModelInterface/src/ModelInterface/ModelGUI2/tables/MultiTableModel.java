@@ -505,4 +505,19 @@ public class MultiTableModel extends BaseTableModel{
 		   	.getLeftComponent()).getViewport().getView()).getModel()).exportToExcel(sheet, wb, dp);
 	  }
   }
+	public boolean equals(Object other) {
+		if(other == this) {
+			return true;
+		} else if(!(other instanceof BaseTableModel)) {
+			return false;
+		} else if(other instanceof NewDataTableModel) {
+			for(int i = 1; i < getRowCount(); i += 2) {
+				//System.out.println("checking other against: "+((JScrollPane)getValueAt(i, 0)).getViewport().getView());
+				if(((JTable)((JScrollPane)getValueAt(i, 0)).getViewport().getView()).getModel() == other) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

@@ -21,6 +21,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
+import java.util.regex.*;
 import javax.swing.tree.TreePath;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -54,11 +55,11 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 	JLabel infoLabel;
 
-	JTextField nameField;
+	//JTextField nameField;
 
-	JTextField attribField;
+	//JTextField attribField;
 
-	JTextField valueField;
+	//JTextField valueField;
 
 	//Document lastDoc;
 
@@ -611,16 +612,12 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		infoLabel.setText("Adding child to "
 				+ selectedPath.getLastPathComponent());
 
-		nameField.setText("");
-		attribField.setText("");
-		valueField.setText("");
-
 		//display possible locations where to add node
 
 		addChildDialog.pack();
 		//center above the main window
 		addChildDialog.setLocationRelativeTo(addChildDialog.getParent());
-		addChildDialog.show();
+		addChildDialog.setVisible(true);
 	}
 
 	/**
@@ -631,11 +628,70 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		addChildDialog = new JDialog(parentFrame, "Add Child Node", true);
 		Container content = addChildDialog.getContentPane();
 		content.setLayout(new BoxLayout(addChildDialog.getContentPane(),
-				BoxLayout.X_AXIS));
+				BoxLayout.Y_AXIS));
 
-		content.add(makeAddNodePanel());
-		content.add(new JSeparator(SwingConstants.VERTICAL));
-		content.add(makeAddChildButtonPanel());
+		infoLabel = new JLabel(".");
+		final JTextField nameField = new JTextField();
+		final JTextField attribField = new JTextField();
+		final JTextField valueField = new JTextField();
+
+		JPanel childPanel = new JPanel();
+		childPanel.setLayout(new BoxLayout(childPanel, BoxLayout.Y_AXIS));
+		childPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 5, 5));
+
+		childPanel.add(infoLabel);
+		childPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		JLabel nameLabel = new JLabel("Node Name (required): ");
+		childPanel.add(nameLabel);
+		childPanel.add(Box.createRigidArea(new Dimension(0, 2)));
+		childPanel.add(nameField);
+		childPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		JLabel attribLabel = new JLabel(
+				"Node Attribute(s) (optional list in the form name=node name, year=1975)");
+		childPanel.add(attribLabel);
+		childPanel.add(Box.createRigidArea(new Dimension(0, 2)));
+		childPanel.add(attribField);
+		childPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		JLabel valueLabel = new JLabel("Node Value ");
+		childPanel.add(valueLabel);
+		childPanel.add(Box.createRigidArea(new Dimension(0, 2)));
+		childPanel.add(valueField);
+		childPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		content.add(childPanel);
+		content.add(new JSeparator(SwingConstants.HORIZONTAL));
+
+		JPanel buttonPanel = new JPanel();
+		//buttonPanel.setLayout(new GridLayout(0, 1, 5, 5));
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+
+		JButton addNodeButton = new JButton("Add Node");
+		addNodeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(addChildNode(nameField, attribField, valueField)) {
+					addChildDialog.setVisible(false);
+				}
+			}
+		});
+
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addChildDialog.setVisible(false);
+			}
+		});
+
+		buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		buttonPanel.add(Box.createHorizontalGlue());
+		buttonPanel.add(addNodeButton);
+		buttonPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+		buttonPanel.add(cancelButton);
+
+		content.add(buttonPanel);
+
 	}
 
 	/**
@@ -643,6 +699,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 * 
 	 * @return the panel which was created for the dialog layout
 	 */
+	/*
 	private JPanel makeAddNodePanel() {
 		infoLabel = new JLabel(".");
 		nameField = new JTextField();
@@ -677,12 +734,14 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 		return childPanel;
 	}
+	*/
 
 	/**
 	 * Creates the layout for the add node button part of the dialog
 	 * 
 	 * @return the panel which was created for the dialog layout
 	 */
+	/*
 	private JPanel makeAddChildButtonPanel() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(0, 1, 5, 5));
@@ -716,21 +775,71 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 		return buttonPanel;
 	}
+	*/
 
 	/**
 	 * Takes the newly created node and tells the tree model to add it to the
 	 * tree
 	 */
-	private void addChildNode() {
-		//build the new child from info entered into Add Child dialog
-		Node newChild = extractNewChild();
-
-		if (newChild != null) {
-			DOMmodel model = (DOMmodel) jtree.getModel();
-			model.addTreeModelListener(new MyTreeModelListener());
-			model.insertNodeInto(newChild, selectedPath);
-			jtree.scrollPathToVisible(new TreePath(newChild));
+	private boolean addChildNode(JTextField nameField, JTextField attrField, JTextField dataField) {
+		String name = nameField.getText();
+		String attr = attrField.getText();
+		String data = dataField.getText();
+		Element tempNode = null;
+		if(name.equals("")) {
+			JOptionPane.showMessageDialog(parentFrame, "You must supply a name", 
+					"Invalid Name", JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else {
+			try {
+				tempNode = doc.createElement(name);
+			} catch(DOMException e) {
+				if(e.code == DOMException.INVALID_CHARACTER_ERR) {
+					JOptionPane.showMessageDialog(parentFrame, "Invalid XML name, please Change your Node Name", 
+							"Invalid Name", JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(parentFrame, e, 
+							"Invalid Name", JOptionPane.ERROR_MESSAGE);
+				}
+				return false;
+			}
 		}
+		if(!attr.equals("")) {
+			boolean gotSome = false;
+			Pattern pat = Pattern.compile("\\s*(\\w+)=([^,]+)\\s*(,|\\z)");
+			Matcher mt = pat.matcher(attr);
+			while(mt.find()) {
+				try {
+					tempNode.setAttribute(mt.group(1), mt.group(2));
+					gotSome = true;
+				} catch(DOMException e) {
+					if(e.code == DOMException.INVALID_CHARACTER_ERR) {
+						JOptionPane.showMessageDialog(parentFrame, "Invalid XML attribute name, please check your attribute names", 
+								"Invalid Attribute", JOptionPane.ERROR_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(parentFrame, e, 
+								"Invalid Name", JOptionPane.ERROR_MESSAGE);
+					}
+					return false;
+				}
+			}
+			if(!gotSome) {
+				// show error
+				JOptionPane.showMessageDialog(parentFrame, "Please check the syntax of you Attributes", 
+						"Invalid Attributes", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		if(!data.equals("")) {
+			tempNode.appendChild(doc.createTextNode(data));
+		}
+
+		DOMmodel model = (DOMmodel) jtree.getModel();
+		model.insertNodeInto(tempNode, selectedPath);
+		nameField.setText("");
+		attrField.setText("");
+		dataField.setText("");
+		return true;
 	}
 
 	/**
@@ -800,6 +909,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 * 
 	 * @return new node as specified in the dialog
 	 */
+	/*
 	private Node extractNewChild() {
 		String nodeName = nameField.getText().trim();
 		String attribs = attribField.getText().trim();
@@ -890,6 +1000,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 		return newNode;
 	}
+*/
 
 	/**
 	 * Creates a JFileChooser to figure out which file to parse, then parses the

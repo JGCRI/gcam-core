@@ -639,4 +639,15 @@ public class NewDataTableModel extends BaseTableModel{
 		  ioe.printStackTrace();
 	  }
   }
+	public boolean equals(Object other) {
+		if(other == this) {
+			return true;
+		} else if(!(other instanceof BaseTableModel)) {
+			return false;
+		} else if(other instanceof MultiTableModel) {
+			return ((MultiTableModel)other).equals(this);
+		} else {
+			return false;
+		}
+	}
 }
