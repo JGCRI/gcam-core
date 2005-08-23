@@ -75,9 +75,16 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	private JTable jTable;
 		
-	//static private File queryFile = new File("queries.xml");
-
 	private DOMImplementationLS implls;
+
+
+	protected Vector scns;
+	protected JList scnList;
+	protected JList regionList;
+	protected Vector regions;
+	protected BaseTableModel bt;
+	protected JScrollPane jsp;
+	protected QueryTreeModel queries;
 
 	public DbViewer(JFrame pf) {
 		parentFrame = pf;
@@ -130,22 +137,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 					"Initialization Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
-
-
-
-
-		/*
-		try {
-			DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			if(queryFile.exists()) {
-				queriesDoc = parser.parse(queryFile);
-			} else {
-				queriesDoc = parser.getDOMImplementation().createDocument(null, "queries", null);
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		*/
 	}
 
 	private JMenuItem makeMenuItem(String title) {
@@ -227,7 +218,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 	}
 
 	private void doOpenDB(JFileChooser fc) {
-		//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 		((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
 		xmlDB = new XMLDB(fc.getSelectedFile().toString(), parentFrame);
 		createTableSelector();
@@ -297,13 +287,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 		xmlDB.setQueryFilter(ret.toString());
 	}
 
-	protected Vector scns;
-	protected JList scnList;
-	protected JList regionList;
-	protected Vector regions;
-	protected BaseTableModel bt;
-	protected JScrollPane jsp;
-	protected QueryTreeModel queries;
 	protected void createTableSelector() {
 		JPanel listPane = new JPanel();
 		JLabel listLabel;
@@ -312,46 +295,33 @@ public class DbViewer implements ActionListener, MenuAdder {
 		scns = getScenarios();
 		regions = getRegions();
 		queries = getQueries();
-		//final JList scnList = new JList(scns);
 		scnList = new JList(scns);
-		//final JList regionList = new JList(regions);
 		regionList = new JList(regions);
 		final JTree queryList = new JTree(queries);
 		queryList.setSelectionRow(0);
 		for(int i = 0; i < queryList.getRowCount(); ++i) {
 			queryList.expandRow(i);
 		}
-		//queryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		final JSplitPane sp = new JSplitPane();
 		sp.setLeftComponent(null);
 		sp.setRightComponent(null);
 
 		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
-		//listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		//listPane.add(Box.createVerticalGlue());
 		listLabel = new JLabel("Scenario");
 		listPane.add(listLabel);
-		//listPane.add(Box.createVerticalStrut(10));
 		JScrollPane listScroll = new JScrollPane(scnList);
 		listScroll.setPreferredSize(new Dimension(150, 150));
 		listPane.add(listScroll);
-		//listPane.setPreferredSize(new Dimension(150, 250));
-		//listPane.add(Box.createVerticalStrut(10));
-		//listPane.add(new JSeparator(SwingConstants.HORIZONTAL));
 
 		allLists.setLayout( new BoxLayout(allLists, BoxLayout.X_AXIS));
 		allLists.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		allLists.add(listPane);
-		//all.add(Box.createHorizontalGlue());
 		allLists.add(Box.createHorizontalStrut(10));
 
 		listPane = new JPanel();
 		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
-		//listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		//listPane.add(Box.createVerticalGlue());
 		listLabel = new JLabel("Regions");
 		listPane.add(listLabel);
-		//listPane.add(Box.createVerticalStrut(10));
 		listScroll = new JScrollPane(regionList);
 		listScroll.setPreferredSize(new Dimension(150, 150));
 		listPane.add(listScroll);
@@ -360,11 +330,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 		listPane = new JPanel();
 		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
-		//listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		//listPane.add(Box.createVerticalGlue());
 		listLabel = new JLabel("Queries");
 		listPane.add(listLabel);
-		//listPane.add(Box.createVerticalStrut(10));
 		listScroll = new JScrollPane(queryList);
 		listScroll.setPreferredSize(new Dimension(150, 100));
 		listPane.add(listScroll);
@@ -384,15 +351,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 		listPane.add(buttonPanel);
 
 		allLists.add(listPane);
-		//all.setLayout( new BoxLayout(all, BoxLayout.PAGE_AXIS));
 		all.setLayout( new BoxLayout(all, BoxLayout.Y_AXIS));
-		//all.setOpaque(false);
-		//all.setBackground(new Color(200,200,200));
 		all.add(allLists, BorderLayout.PAGE_START);
 		final JPanel tablePanel = new JPanel();
 		tablePanel.setLayout( new BoxLayout(tablePanel, BoxLayout.X_AXIS));
-		//ANGRY.add(sp);
-		//ANGRY.add(Box.createHorizontalGlue());
 		all.add(tablePanel);
 
 
@@ -430,7 +392,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() == 0) {
-					// error none selected
 					JOptionPane.showMessageDialog(parentFrame, "Please select a Query or Query Group to Remove", 
 						"Query Remove Error", JOptionPane.ERROR_MESSAGE);
 				} else {
@@ -477,7 +438,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 				if(queryList.getSelectionCount() == 0) {
 					JOptionPane.showMessageDialog(parentFrame, "Please select a query to edit", 
 						"Edit Query Error", JOptionPane.ERROR_MESSAGE);
-					// error
 				} else {
 					QueryGenerator tempQG = (QueryGenerator)queryList.getSelectionPath().getLastPathComponent();
 					String oldTitle = tempQG.editDialog();
@@ -485,61 +445,28 @@ public class DbViewer implements ActionListener, MenuAdder {
 			}
 		});
 
-
-
-
-				Container contentPane = parentFrame.getContentPane();
-				/*
-				if (splitPane != null) {
-					contentPane.remove(splitPane);
-				}
-				*/
-				contentPane.add(new JScrollPane(all), BorderLayout.PAGE_START);
-				//contentPane.add(new JScrollPane(all));
-				parentFrame.setVisible(true);
+		Container contentPane = parentFrame.getContentPane();
+		contentPane.add(new JScrollPane(all), BorderLayout.PAGE_START);
+		parentFrame.setVisible(true);
 	}
 
 	private Container createGroupTableContent(QueryGenerator qg) {
 		bt = new MultiTableModel(qg, regionList.getSelectedValues(), parentFrame);
 		jTable = new JTable(bt);
-		//jTable.getModel().addTableModelListener(thisDemo);
-
-		//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
-
 		jTable.setCellSelectionEnabled(true);
 		jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
 		jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)bt).getCellEditor(0,0));
-		/*
-		int j = 1;
-		while( j < jTable.getRowCount()) {
-			jTable.setRowHeight(j,200);
-			j += 2;
-		}
-		*/
-		//jTable.setRowHeight(200);
-		//CopyPaste copyPaste = new CopyPaste( jTable );
 		jsp = new JScrollPane(jTable);
-		//tablePanel.add(jsp);
-		//tablePanel.add(Box.createVerticalGlue());
 		return jsp;
-		//sp.setLeftComponent(jsp);
-		//sp.setRightComponent(null);
-		//sp.setDividerLocation(parentFrame.getWidth());
-		//parentFrame.setVisible(true);
-		//menuSave.setEnabled(true);
-		//menuExpPrn.setEnabled(true);
 	}
 
 	private Container createSingleTableContent(QueryGenerator qg) {
-		//BaseTableModel bt = new ComboTableModel((QueryGenerator)queries.get(queryList.getSelectedIndex()), parentFrame);
 		bt = new ComboTableModel(qg, regionList.getSelectedValues(), parentFrame);
 		JFreeChart chart = bt.createChart(0,0);
 		//TableSorter sorter = new TableSorter(bt);
 		jTable = new JTable(bt);
 		System.out.println("Adding a copy paste");
 		new CopyPaste(jTable);
-		// Should the listener be set like so..
-		//jTable.getModel().addTableModelListener(thisDemo);
 		//sorter.setTableHeader(jTable.getTableHeader());
 
 		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -562,35 +489,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 		JLabel labelChart = new JLabel();
 		labelChart.setIcon(new ImageIcon(chartImage));
-		//all.add(new JScrollPane(jTable));
-		//JSplitPane sp = new JSplitPane();
-		/*
-		   JSplitPane tempSP = new JSplitPane();
-		   tempSP.setLeftComponent(new JScrollPane(jTable));
-		   tempSP.setRightComponent(labelChart);
-		   tempSP.setDividerLocation(((FileChooserDemo)thisFrame).getWidth()-350-15);
-		   jsp = new JScrollPane(tempSP);
-		   */
 		JSplitPane sp = new JSplitPane();
 		sp.setLeftComponent(new JScrollPane(jTable));
 		sp.setRightComponent(labelChart);
 		sp.setDividerLocation(parentFrame.getWidth()-350-15);
-		//tablePanel.add(sp);
 		//return sp;
 		return jsp = new JScrollPane(sp);
-		//jsp = new JScrollPane(sp);
-		//all.setAlignmentY(Component.LEFT_ALIGNMENT);
-		//all.add(Box.createVerticalStrut(10));
-		//thisFrame.getContentPane().remove(all);
-		//all.add(sp, BorderLayout.CENTER);
-		/*
-		   thisFrame.getContentPane().add(new JScrollPane(sp), BorderLayout.PAGE_START);
-		   System.out.println(""+thisFrame.getContentPane().getComponentCount());
-		   System.out.println(thisFrame.getComponent(0));
-		   */
-		//parentFrame.setVisible(true);
-		//menuSave.setEnabled(true);
-		//menuExpPrn.setEnabled(true);
 	}
 	private void manageDB() {
 		final JDialog filterDialog = new JDialog(parentFrame, "Manage Database", true);
@@ -696,31 +600,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 		if(jTable.getModel() instanceof MultiTableModel) {
 			numRows = (int)jTable.getRowCount()/2;
 			div = (float)(jTable.getRowCount()/2);
-		} else {
-			/*
-			jsp = new JScrollPane();
-			jsp.getVerticalScrollBar().setMaximum((int)SP.getPreferredSize().getHeight());
-			jsp.getHorizontalScrollBar().setMaximum((int)SP.getPreferredSize().getWidth());
-			jsp.setViewportView(SP);
-			*/
-		}
+		} 
 		factory.setAbsolutePosition(new Point2D.Float(0, 0));
-		//factory.setMinimumSize(new FloatDimension((float)800, (float)(jTable.getPreferredSize().getHeight()/(jTable.getRowCount()/div))));
-		//factory.setMaximumSize(new FloatDimension((float)800, (float)(jTable.getPreferredSize().getHeight()/(jTable.getRowCount()/div))));
-		System.out.println("JSP MH: "+jsp.getVerticalScrollBar().getMaximum());
-		//System.out.println("SP PF: "+SP.getPreferredSize());
-		System.out.println("H: "+(float)((jsp.getVerticalScrollBar().getMaximum()) /div));
-		System.out.println("Rows: "+numRows+1);
-		/*
-		System.out.println("Total Before: "+jTable.getPreferredSize());
-		System.out.println("H before: "+(float)(jTable.getPreferredSize().getHeight()/(jTable.getRowCount()/div)));
-		*/
-		FloatDimension fdt = new FloatDimension(new FloatDimension((float)800, (float)(jsp.getVerticalScrollBar().getMaximum()/div)));
-		System.out.println("Max/Min Dim: "+fdt);
 		factory.setMinimumSize(new FloatDimension((float)800, (float)(jsp.getVerticalScrollBar().getMaximum()/div)));
-				//		/(jTable.getRowCount()/div))));
 		factory.setMaximumSize(new FloatDimension((float)800, (float)(jsp.getVerticalScrollBar().getMaximum()/div)));
-				//		/(jTable.getRowCount()/div))));
 		factory.setFieldname("0");
 		g.addField("0");
 		g.getHeader().addElement(factory.createElement());
@@ -738,23 +621,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 			report.addGroup(g);
 		}
 
-
-		/*
-		Object[] cNames = {"stuff"};
-		Object[][] rowData = new Object[1][1];
-		rowData[0][0] = (new org.jfree.ui.Drawable() {
-			public void draw(java.awt.Graphics2D graphics, java.awt.geom.Rectangle2D bounds) {
-				System.out.println("Got dims: "+bounds);
-				graphics.scale(.70,.70);
-				System.out.println("Pref size: "+jTable.getPreferredSize());
-				jTable.printAll(graphics);
-				//graphics.transform(java.awt.geom.AffineTransform.getScaleInstance(.5,1));
-				System.out.println("has dims: "+graphics.getClipBounds());
-				//graphics.clipRect((int)bounds.getMinX(), (int)bounds.getMinY(), (int)bounds.getWidth(), (int)bounds.getHeight());
-			}
-		});
-		report.setData(new javax.swing.table.DefaultTableModel(rowData, cNames)); 
-		*/
 		report.setData(new javax.swing.table.AbstractTableModel() {
 			public int findColumn(String cName) {
 				return Integer.parseInt(cName);
@@ -764,7 +630,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 			}
 			public int getColumnCount() {
 				return fieldList.size();
-				//return (int)jTable.getRowCount()/2;
 			}
 			public int getRowCount() {
 				return 1;
@@ -774,26 +639,16 @@ public class DbViewer implements ActionListener, MenuAdder {
 				return (new org.jfree.ui.Drawable() {
 					public void draw(java.awt.Graphics2D graphics, java.awt.geom.Rectangle2D bounds) {
 						double scaleFactor = bounds.getWidth() / jsp.getHorizontalScrollBar().getMaximum();
-						//double scaleFactor = bounds.getWidth() / SP.getPreferredSize().getWidth();
-						System.out.println("BNDS: "+bounds);
-						//System.out.println("SP PF: "+SP.getPreferredSize());
-						System.out.println("SF: "+scaleFactor);
 						graphics.scale(scaleFactor, scaleFactor);
-						System.out.println("COLF: "+colf);
-							graphics.translate((double)0, 0-bounds.getHeight()*colf);
+						graphics.translate((double)0, 0-bounds.getHeight()*colf);
 						if(!(jTable.getModel() instanceof MultiTableModel)) {
-							System.out.println("Printing all");
-							//graphics.translate((double)0, 0-20-bounds.getHeight()*colf);
-							//((JScrollPane)SP.getLeftComponent()).printAll(graphics);
 							jsp.printAll(graphics);
 						} else {
 							jTable.printAll(graphics);
 						}
 
-						/*
 						graphics.setColor(Color.WHITE);
 						graphics.fillRect(0, (int)bounds.getHeight()*(1+colf), (int)graphics.getClipBounds().getWidth(), (int)bounds.getHeight());
-						*/
 					}
 				});
 			}
@@ -811,16 +666,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 			epf.registerPlugin(MyExcelExportPlugin.class, "20", MyExcelExportPlugin.enableKey);
 			PreviewDialog preview = new PreviewDialog(report, parentFrame, true);
 			preview.setTitle(parentFrame.getTitle()+" - Export Preview");
-			/*
-			preview.addWindowListener(new WindowAdapter() {
-				public void windowClosing(final WindowEvent e) {
-					e.getWindow().setVisible(false);
-				}
-			});
-			*/
 			preview.pack();
 			preview.setVisible(true);
-			//preview.close();
 		} catch(ReportProcessingException e) {
 			e.printStackTrace();
 		}
@@ -885,36 +732,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 	}
 	*/
 
-	/*
-	public void writeDocument(Document doc, File where) {
-		//DOMImplementation impl = doc.getImplementation();
-		//DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS","3.0");
-		//DOMImplementationLS implls = (DOMImplementationLS)impl;
-		LSSerializer writer = implls.createLSSerializer();
-
-		// Turn on pretty print for readable output.
-		if(writer.getDomConfig().canSetParameter("format-pretty-print", "true")) {
-			writer.getDomConfig().setParameter("format-pretty-print", "true");
-		} else {
-			System.out.println("Can't pretty print");
-		}
-
-		// Serialize the document into a string.
-		final String docContent = writer.writeToString(doc);
-
-		// Now attempt to write it to a file.
-		try {
-			final FileWriter fileWriter = new FileWriter(where);
-			fileWriter.write(docContent);
-			fileWriter.close();
-		} catch(IOException ioe) {
-			ioe.printStackTrace();
-			JOptionPane.showMessageDialog(null/*parentFrame/, "Couldn't save Queries\n"+ioe.getMessage(), 
-					"Query Save Error", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-	*/
-
 	public boolean writeFile(File file, Document theDoc) {
 		// specify output formating properties
 		OutputFormat format = new OutputFormat(theDoc);
@@ -961,7 +778,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 		} else {
 			//DocumentType DOCTYPE = impl.createDocumentType("recent", "", "");
 			queriesDoc = ((DOMImplementation)implls).createDocument("", "queries", null);
-			// create one
 		}
 	}
 }
