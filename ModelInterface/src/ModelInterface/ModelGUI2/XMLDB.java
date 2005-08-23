@@ -18,7 +18,7 @@ import com.sleepycat.db.*;
 import com.sleepycat.dbxml.*;
 
 public class XMLDB {
-	static public boolean lockCheck = false;
+	static public boolean lockCheck = true;
 	Environment dbEnv;
 	XmlManager manager;
 	XmlContainer myContainer;
@@ -316,6 +316,7 @@ public class XMLDB {
 					XmlValue tempVal;
 					//int numDone = 0;
 					while(res.hasNext()) {
+						System.out.println("Getting new MetaData");
 						//System.out.println("Doesn't have metadata: "+res.next());
 						tempVal = res.next();
 						String path = "local:distinct-node-names(/scenario/world/region/supplysector/subsector/technology/*[fn:count(child::text()) = 1], ())";
@@ -334,13 +335,6 @@ public class XMLDB {
 						//tempVal.delete();
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
-						/*
-						SwingUtilities.invokeLater(new Runnable() {
-							public void run(){
-								progBar.setValue(progBar.getValue() + 1);
-							}
-						});
-						*/
 
 						path = "local:distinct-node-names(/scenario/world/region/demographics//*[fn:count(child::text()) = 1], ())";
 						tempRes = getVars(tempVal, path);
@@ -352,13 +346,6 @@ public class XMLDB {
 						docTemp.setMetaData("", "demographicsVar", new XmlValue(strBuff.toString()));
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
-						/*
-						SwingUtilities.invokeLater(new Runnable() {
-							public void run(){
-								progBar.setValue(progBar.getValue() + 1);
-							}
-						});
-						*/
 
 						XmlQueryContext qcL = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
 						XmlQueryExpression qe = manager.prepare("distinct-values(/scenario/world/region/supplysector/subsector/technology/GHG/@name)", qcL);
@@ -370,13 +357,6 @@ public class XMLDB {
 						docTemp.setMetaData("", "ghgNames", new XmlValue(strBuff.toString()));
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
-						/*
-						SwingUtilities.invokeLater(new Runnable() {
-							public void run(){
-								progBar.setValue(progBar.getValue() + 1);
-							}
-						});
-						*/
 
 						qe = manager.prepare("distinct-values(/scenario/world/region/supplysector/subsector/technology/GHG/emissions/@fuel-name)", qcL);
 						tempRes = qe.execute(tempVal, qcL);
@@ -390,17 +370,12 @@ public class XMLDB {
 						tempVal.delete();
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
-						/*
-						SwingUtilities.invokeLater(new Runnable() {
-							public void run(){
-								progBar.setValue(progBar.getValue() + 1);
-							}
-						});
-						*/
 					}
 					res.delete();
 					printLockStats("addVarMetaData1");
 					getVarMetaData();
+					waiting = false;
+					makeWait();
 					if(jd != null) {
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run(){
@@ -417,7 +392,21 @@ public class XMLDB {
 			e.printStackTrace();
 			closeDB();
 		}
+		waiting = true;
+		makeWait();
 		printLockStats("addVarMetaData2");
+	}
+
+	private boolean waiting;
+	private synchronized void makeWait() {
+		while(waiting) {
+			try {
+				wait();
+			} catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		notifyAll();
 	}
 	protected XmlResults getVars(XmlValue contextVal, String path) {
 		try {
@@ -455,30 +444,32 @@ public class XMLDB {
 			while(res.hasNext()) {
 				XmlValue vt = res.next();
 				XmlDocument docTemp = vt.asDocument();
+				System.out.println("Gathering metadata from a doc "+docTemp.getName());
+				Thread.currentThread().sleep(300);
 				XmlMetaDataIterator it = docTemp.getMetaDataIterator();
 				while((md = it.next()) != null) {
 					if(md.get_name().equals("var")) {
 						String[] vars = md.get_value().asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
-							System.out.println(vars[i]);
+							//System.out.println(vars[i]);
 							SupplyDemandQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("demographicsVar")) {
 						String[] vars = md.get_value().asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
-							System.out.println(vars[i]);
+							//System.out.println(vars[i]);
 							DemographicsQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("ghgNames")) {
 						String[] vars = md.get_value().asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
-							System.out.println(vars[i]);
+							//System.out.println(vars[i]);
 							EmissionsQueryBuilder.ghgList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("fuelNames")) {
 						String[] vars = md.get_value().asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
-							System.out.println(vars[i]);
+							//System.out.println(vars[i]);
 							EmissionsQueryBuilder.fuelList.put(vars[i], new Boolean(false));
 						}
 					}
@@ -488,6 +479,8 @@ public class XMLDB {
 				vt.delete();
 			}
 		} catch(XmlException e) {
+			e.printStackTrace();
+		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
 		res.delete();
@@ -499,7 +492,7 @@ public class XMLDB {
 		try {
 			while(res.hasNext()) {
 				QueryGenerator.sumableList.add(res.next().asString());
-				System.out.println(QueryGenerator.sumableList.toString());
+				//System.out.println(QueryGenerator.sumableList.toString());
 			}
 			res.delete();
 		} catch(XmlException e) {
