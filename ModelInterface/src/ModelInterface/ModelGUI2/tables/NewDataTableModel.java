@@ -642,7 +642,7 @@ public class NewDataTableModel extends BaseTableModel{
 	public boolean equals(Object other) {
 		if(other == this) {
 			return true;
-		} else if(!(other instanceof BaseTableModel)) {
+		} else if(!(other instanceof BaseTableModel) || other == null) {
 			return false;
 		} else if(other instanceof MultiTableModel) {
 			return ((MultiTableModel)other).equals(this);

@@ -31,6 +31,7 @@ public class CopyPaste implements ActionListener{
 	  clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 	  final JMenuItem copyMenu = InterfaceMain.getInstance().getCopyMenu();
 	  final JMenuItem pasteMenu = InterfaceMain.getInstance().getPasteMenu();
+	  System.out.println("Setting copy enabled");
 	  copyMenu.addActionListener(this);
 	  copyMenu.setEnabled(true);
 	  pasteMenu.addActionListener(this);
@@ -57,9 +58,11 @@ public class CopyPaste implements ActionListener{
 				  System.out.println("New Table: "+e.getNewValue());
 				  System.out.println("My Table: "+myJTable.getModel());
 				  System.out.println("Doing remove because of query/table");
-				  copyMenu.setEnabled(false);
+				  // don't want to disable these, since there is a new query/table which would
+				  // have already enabled them for themselves
+				  //copyMenu.setEnabled(false);
+				  //pasteMenu.setEnabled(false);
 				  copyMenu.removeActionListener(thisCP);
-				  pasteMenu.setEnabled(false);
 				  pasteMenu.removeActionListener(thisCP);
 				  InterfaceMain.getInstance().removePropertyChangeListener(this);
 			  }

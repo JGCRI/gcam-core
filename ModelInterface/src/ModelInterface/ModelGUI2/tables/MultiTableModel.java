@@ -508,16 +508,25 @@ public class MultiTableModel extends BaseTableModel{
 	public boolean equals(Object other) {
 		if(other == this) {
 			return true;
-		} else if(!(other instanceof BaseTableModel)) {
+		} else if(!(other instanceof BaseTableModel) || other == null) {
 			return false;
 		} else if(other instanceof NewDataTableModel) {
 			for(int i = 1; i < getRowCount(); i += 2) {
 				//System.out.println("checking other against: "+((JScrollPane)getValueAt(i, 0)).getViewport().getView());
-				if(((JTable)((JScrollPane)getValueAt(i, 0)).getViewport().getView()).getModel() == other) {
+				//if(((JTable)((JScrollPane)getValueAt(i, 0)).getViewport().getView()).getModel() == other) {
+				if(getModelAt(i) == other) {
 					return true;
 				}
 			}
 		}
 		return false;
+	}
+
+	private BaseTableModel getModelAt(int row) {
+		Object ret = ((JScrollPane)getValueAt(row, 0)).getViewport().getView();
+		if(ret instanceof JSplitPane) {
+			ret = ((JScrollPane)((JSplitPane)ret).getLeftComponent()).getViewport().getView();
+		}
+		return (BaseTableModel)((JTable)ret).getModel();
 	}
 }

@@ -303,7 +303,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 	protected Vector regions;
 	protected BaseTableModel bt;
 	protected JScrollPane jsp;
-	protected JSplitPane SP;
 	protected QueryTreeModel queries;
 	protected void createTableSelector() {
 		JPanel listPane = new JPanel();
@@ -510,11 +509,13 @@ public class DbViewer implements ActionListener, MenuAdder {
 		jTable.setCellSelectionEnabled(true);
 		jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
 		jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)bt).getCellEditor(0,0));
+		/*
 		int j = 1;
 		while( j < jTable.getRowCount()) {
 			jTable.setRowHeight(j,200);
 			j += 2;
 		}
+		*/
 		//jTable.setRowHeight(200);
 		//CopyPaste copyPaste = new CopyPaste( jTable );
 		jsp = new JScrollPane(jTable);
@@ -535,6 +536,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		JFreeChart chart = bt.createChart(0,0);
 		//TableSorter sorter = new TableSorter(bt);
 		jTable = new JTable(bt);
+		System.out.println("Adding a copy paste");
 		new CopyPaste(jTable);
 		// Should the listener be set like so..
 		//jTable.getModel().addTableModelListener(thisDemo);
@@ -573,9 +575,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 		sp.setLeftComponent(new JScrollPane(jTable));
 		sp.setRightComponent(labelChart);
 		sp.setDividerLocation(parentFrame.getWidth()-350-15);
-		SP = sp;
 		//tablePanel.add(sp);
-		return sp;
+		//return sp;
+		return jsp = new JScrollPane(sp);
 		//jsp = new JScrollPane(sp);
 		//all.setAlignmentY(Component.LEFT_ALIGNMENT);
 		//all.add(Box.createVerticalStrut(10));
@@ -667,7 +669,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 		JScrollPane sp = new JScrollPane(list);
 		sp.setPreferredSize(new Dimension(300, 300));
-		listPane.add(new JLabel("Scenarios is Database:"));
+		listPane.add(new JLabel("Scenarios in Database:"));
 		listPane.add(Box.createVerticalStrut(10));
 		listPane.add(sp);
 		listPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -678,7 +680,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 	}
 
 	public void createReport() {
-		if(jTable == null || jsp == null || jTable.getRowCount() == 0) {
+		if(jsp == null) {
 			// error
 			return;
 		}
@@ -690,26 +692,31 @@ public class DbViewer implements ActionListener, MenuAdder {
 		DrawableFieldElementFactory factory = new DrawableFieldElementFactory();
 		Group g = new Group();
 		float div = 1;
-		int numRows = 1;
+		int numRows = 0;
 		if(jTable.getModel() instanceof MultiTableModel) {
 			numRows = (int)jTable.getRowCount()/2;
 			div = (float)(jTable.getRowCount()/2);
 		} else {
+			/*
+			jsp = new JScrollPane();
 			jsp.getVerticalScrollBar().setMaximum((int)SP.getPreferredSize().getHeight());
 			jsp.getHorizontalScrollBar().setMaximum((int)SP.getPreferredSize().getWidth());
 			jsp.setViewportView(SP);
+			*/
 		}
 		factory.setAbsolutePosition(new Point2D.Float(0, 0));
 		//factory.setMinimumSize(new FloatDimension((float)800, (float)(jTable.getPreferredSize().getHeight()/(jTable.getRowCount()/div))));
 		//factory.setMaximumSize(new FloatDimension((float)800, (float)(jTable.getPreferredSize().getHeight()/(jTable.getRowCount()/div))));
-		//System.out.println("JSP MH: "+jsp.getVerticalScrollBar().getMaximum());
+		System.out.println("JSP MH: "+jsp.getVerticalScrollBar().getMaximum());
 		//System.out.println("SP PF: "+SP.getPreferredSize());
-		//System.out.println("H: "+(float)((jsp.getVerticalScrollBar().getMaximum()) /div));
-		//System.out.println("Rows: "+jTable.getRowCount());
+		System.out.println("H: "+(float)((jsp.getVerticalScrollBar().getMaximum()) /div));
+		System.out.println("Rows: "+numRows+1);
 		/*
 		System.out.println("Total Before: "+jTable.getPreferredSize());
 		System.out.println("H before: "+(float)(jTable.getPreferredSize().getHeight()/(jTable.getRowCount()/div)));
 		*/
+		FloatDimension fdt = new FloatDimension(new FloatDimension((float)800, (float)(jsp.getVerticalScrollBar().getMaximum()/div)));
+		System.out.println("Max/Min Dim: "+fdt);
 		factory.setMinimumSize(new FloatDimension((float)800, (float)(jsp.getVerticalScrollBar().getMaximum()/div)));
 				//		/(jTable.getRowCount()/div))));
 		factory.setMaximumSize(new FloatDimension((float)800, (float)(jsp.getVerticalScrollBar().getMaximum()/div)));
@@ -719,7 +726,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		g.getHeader().addElement(factory.createElement());
 		g.getHeader().setPagebreakBeforePrint(true);
 		report.addGroup(g);
-		Vector fieldList = new Vector(numRows+1);
+		final Vector fieldList = new Vector(numRows+1);
 		fieldList.add("0");
 		for(int i = 1; i < numRows; ++i) {
 			g = new Group();
@@ -756,7 +763,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 				return String.valueOf(col);
 			}
 			public int getColumnCount() {
-				return (int)jTable.getRowCount()/2;
+				return fieldList.size();
+				//return (int)jTable.getRowCount()/2;
 			}
 			public int getRowCount() {
 				return 1;
@@ -767,21 +775,25 @@ public class DbViewer implements ActionListener, MenuAdder {
 					public void draw(java.awt.Graphics2D graphics, java.awt.geom.Rectangle2D bounds) {
 						double scaleFactor = bounds.getWidth() / jsp.getHorizontalScrollBar().getMaximum();
 						//double scaleFactor = bounds.getWidth() / SP.getPreferredSize().getWidth();
-						//System.out.println("BNDS: "+bounds);
+						System.out.println("BNDS: "+bounds);
 						//System.out.println("SP PF: "+SP.getPreferredSize());
-						//System.out.println("SF: "+scaleFactor);
+						System.out.println("SF: "+scaleFactor);
 						graphics.scale(scaleFactor, scaleFactor);
+						System.out.println("COLF: "+colf);
 							graphics.translate((double)0, 0-bounds.getHeight()*colf);
 						if(!(jTable.getModel() instanceof MultiTableModel)) {
 							System.out.println("Printing all");
 							//graphics.translate((double)0, 0-20-bounds.getHeight()*colf);
-							((JScrollPane)SP.getLeftComponent()).printAll(graphics);
+							//((JScrollPane)SP.getLeftComponent()).printAll(graphics);
+							jsp.printAll(graphics);
 						} else {
 							jTable.printAll(graphics);
 						}
 
+						/*
 						graphics.setColor(Color.WHITE);
 						graphics.fillRect(0, (int)bounds.getHeight()*(1+colf), (int)graphics.getClipBounds().getWidth(), (int)bounds.getHeight());
+						*/
 					}
 				});
 			}
