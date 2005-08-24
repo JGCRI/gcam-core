@@ -57,8 +57,7 @@ ofstream outFile;
 // Initialize time and set some pointers to null.
 // Declared outside Main to make global.
 Scenario* scenario; // model scenario info
-auto_ptr<ErrorHandler> XMLHelper<void>::mErrHandler;
-auto_ptr<XercesDOMParser> XMLHelper<void>::mParser;
+
 void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFacArg );
 
 //! Main program. 

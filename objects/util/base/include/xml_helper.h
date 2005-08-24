@@ -93,8 +93,8 @@ public:
    static const std::string& name();
    static void cleanupParser();
 private:
-    static std::auto_ptr<xercesc::XercesDOMParser> mParser;
-    static std::auto_ptr<xercesc::ErrorHandler> mErrHandler;
+    static xercesc::XercesDOMParser** getParserPointerInternal();
+    static xercesc::ErrorHandler** getErrorHandlerPointerInternal();
     static void initParser();
     static xercesc::XercesDOMParser* getParser();
 };
@@ -565,15 +565,15 @@ void XMLHelper<T>::initParser() {
     }
     
     // Initialize the instances of the parser and error handler. 
-    mParser.reset( new xercesc::XercesDOMParser() );
-    mParser->setValidationScheme( xercesc::XercesDOMParser::Val_Always );
-    mParser->setDoNamespaces( false );
-    mParser->setDoSchema( true );
-    mParser->setCreateCommentNodes( false ); // No comment nodes
-    mParser->setIncludeIgnorableWhitespace( false ); // No text nodes
+    *getParserPointerInternal() = new xercesc::XercesDOMParser();
+    (*getParserPointerInternal())->setValidationScheme( xercesc::XercesDOMParser::Val_Always );
+    (*getParserPointerInternal())->setDoNamespaces( false );
+    (*getParserPointerInternal())->setDoSchema( true );
+    (*getParserPointerInternal())->setCreateCommentNodes( false ); // No comment nodes
+    (*getParserPointerInternal())->setIncludeIgnorableWhitespace( false ); // No text nodes
 
-    mErrHandler.reset( (xercesc::ErrorHandler*)new xercesc::HandlerBase() );
-    mParser->setErrorHandler( mErrHandler.get() );
+    *getErrorHandlerPointerInternal() = ( (xercesc::ErrorHandler*)new xercesc::HandlerBase() );
+    (*getParserPointerInternal())->setErrorHandler( *getErrorHandlerPointerInternal() );
 }
 
 /*! \brief Return the text string.
@@ -607,12 +607,12 @@ const std::string& XMLHelper<T>::name(){
 template<class T>
 xercesc::XercesDOMParser* XMLHelper<T>::getParser() {
     // If the parser has not been initialized already, initialize it.
-    if( !mParser.get() ){
+    if( !(*getParserPointerInternal()) ){
         initParser();
     }
     
     // Return a pointer to the already initialized parser. 
-    return mParser.get();
+    return *getParserPointerInternal();
 }
 
 /*! \brief Function which cleans up the memory used by the XML Parser.
@@ -623,8 +623,8 @@ xercesc::XercesDOMParser* XMLHelper<T>::getParser() {
 */
 template<class T>
 void XMLHelper<T>::cleanupParser(){
-    mErrHandler.release();
-    mParser.release();
+    delete *getErrorHandlerPointerInternal();
+    delete *getParserPointerInternal();
     xercesc::XMLPlatformUtils::Terminate();
 }
 
@@ -709,6 +709,18 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
             corrMap[ newNode->getName() ] = static_cast<int>( insertToVector.size() ) - 1;
         }
     }
+}
+
+template<class T>
+xercesc::XercesDOMParser** XMLHelper<T>::getParserPointerInternal(){
+	static xercesc::XercesDOMParser* parser;
+	return &parser;
+}
+
+template<class T>
+xercesc::ErrorHandler** XMLHelper<T>::getErrorHandlerPointerInternal(){
+	static xercesc::ErrorHandler* errorHandler;
+	return &errorHandler;
 }
 
 #endif // _XML_HELPER_H_
