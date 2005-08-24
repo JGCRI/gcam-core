@@ -193,6 +193,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 			}
 			public void windowClosing(WindowEvent e) {
 				System.out.println("Caught the window closing");
+				firePropertyChange("Control", oldControl, "ModelInterface");
 				if(!Boolean.parseBoolean(savedProperties.getProperty("isMaximized"))) {
 					savedProperties.setProperty("lastWidth", String.valueOf(getWidth()));
 					savedProperties.setProperty("lastHeight", String.valueOf(getHeight()));
@@ -208,6 +209,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 			}
 			public void windowClosed(WindowEvent e) {
 				System.out.println("Caught the window closed");
+				firePropertyChange("Control", oldControl, "ModelInterface");
 				if(!Boolean.parseBoolean(savedProperties.getProperty("isMaximized"))) {
 					savedProperties.setProperty("lastWidth", String.valueOf(getWidth()));
 					savedProperties.setProperty("lastHeight", String.valueOf(getHeight()));
@@ -237,7 +239,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Quit")) {
-			firePropertyChange("Control", oldControl, "ModelInterface");
+			//firePropertyChange("Control", oldControl, "ModelInterface");
 			dispose();
 		}
 	}

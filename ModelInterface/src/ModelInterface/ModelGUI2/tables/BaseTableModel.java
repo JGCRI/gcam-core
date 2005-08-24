@@ -110,59 +110,64 @@ public abstract class BaseTableModel extends AbstractTableModel {
  	protected XPathExpression treePathtoXPath(TreePath tp, Node currNode, int flag) {
 	   // attempts to put the tp in form /nodeName[@attributeName=attrubuteValue]/childNode
            XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(doc);
-           String pathStr = "";
+           //String pathStr = "";
+	   StringBuffer pathStr = new StringBuffer("/");
            Object[] path = tp.getPath();
            Node tempNode;
 	   currNode = ((DOMmodel.DOMNodeAdapter)path[path.length-1]).getNode();
            for (int i = 0; i < path.length-1; i++) {
 	           tempNode= ((DOMmodel.DOMNodeAdapter)path[i]).getNode();
 		   if(flag == 0) {
-                   	pathStr = pathStr + tempNode.getNodeName() + "/";
+                   	pathStr.append(tempNode.getNodeName()).append("/");
 		   } else if(flag == 1) { 
-			   pathStr = pathStr + tempNode.getNodeName(); 
+			   pathStr.append(tempNode.getNodeName()); 
 			   Vector attrs = getAttrsNoWild(tempNode);
 			   if(attrs.size() > 0) {
-				   pathStr = pathStr + "[";
+				   pathStr.append("[");
 			   }
 			   for(int j=0; j < attrs.size(); j++) {
-				   pathStr = pathStr + "(@" + ((Node)attrs.get(j)).getNodeName()+"='"+((Node)attrs.get(j)).getNodeValue()+"')";
+				   pathStr.append("(@").append(((Node)attrs.get(j)).getNodeName())
+					   .append("='").append(((Node)attrs.get(j)).getNodeValue()).append("')");
 				   if(j < attrs.size()-1) {
-					   pathStr = pathStr + " and ";
+					   pathStr.append(" and ");
 				   } else { 
-					   pathStr = pathStr + "]";
+					   pathStr.append("]");
 				   }
 			   }
-			   pathStr = pathStr + "/";
+			   pathStr.append("/");
 		   }
            }
-           pathStr = "/" + pathStr + currNode.getNodeName();
+           //pathStr = "/" + pathStr + currNode.getNodeName();
+           pathStr.append(currNode.getNodeName());
            if (flag == 1 &&currNode.hasAttributes() && !getTextData(currNode).equals("")) {
 		   if(flag == 0) {
-                   	pathStr = pathStr + "[@" + getOneAttrVal(currNode) + "]";
+                   	pathStr.append("[@").append(getOneAttrVal(currNode)).append("]");
 		   } else if(flag == 1) {
 			   Vector attrs = getAttrsNoWild(currNode);
 			   for(int j=0; j < attrs.size(); j++) {
-				   pathStr = pathStr + "[@" + ((Node)attrs.get(j)).getNodeName()+"='"+((Node)attrs.get(j)).getNodeValue()+"']";
+				   pathStr.append("[@").append(((Node)attrs.get(j)).getNodeName())
+					   .append("='").append(((Node)attrs.get(j)).getNodeValue()).append("']");
 			   }
-			   pathStr = pathStr+ "/node()";
+			   pathStr.append("/node()");
 		   }
            }
            else if (flag == 1 && currNode.hasAttributes()) {
 		   if (flag == 0) {
-                   	pathStr = pathStr + "[@" + getOneAttrVal(currNode) + "]/node()";
+                   	pathStr.append("[@").append(getOneAttrVal(currNode)).append("]/node()");
 		   } else if(flag == 1) {
 			   Vector attrs =getAttrsNoWild(currNode);
 			   for(int j=0; j < attrs.size(); j++) {
-				   pathStr = pathStr + "@" + ((Node)attrs.get(j)).getNodeName()+"='"+((Node)attrs.get(j)).getNodeValue()+"'";
+				   pathStr.append("@").append(((Node)attrs.get(j)).getNodeName()).append("='")
+					   .append(((Node)attrs.get(j)).getNodeValue()).append("'");
 			   }
-			   pathStr = pathStr+ "/node()";
+			   pathStr.append("/node()");
 		   }
            }
            else {
-                   pathStr = pathStr + "/node()";
+                   pathStr.append("/node()");
            }
-	   System.out.println(pathStr);
-           return xpeImpl.createExpression(pathStr, xpeImpl.createNSResolver(currNode));
+	   System.out.println(pathStr.toString());
+           return xpeImpl.createExpression(pathStr.toString(), xpeImpl.createNSResolver(currNode));
 	}
 
   /**

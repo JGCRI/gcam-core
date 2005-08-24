@@ -421,6 +421,7 @@ public class MultiTableModel extends BaseTableModel{
 		System.out.println("Query is "+qgIn.getCompleteXPath(regions));
 		//FileChooserDemo.xmlDB.setQueryFunction("");
 		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions)), qgIn.isSumAll(), qgIn.getLevelValues());
+		DbViewer.xmlDB.setQueryFilter("");
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
 		activeRows = new Vector(tables.size());

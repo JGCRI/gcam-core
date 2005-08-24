@@ -18,7 +18,7 @@ import com.sleepycat.db.*;
 import com.sleepycat.dbxml.*;
 
 public class XMLDB {
-	static public boolean lockCheck = true;
+	static public boolean lockCheck = false;
 	Environment dbEnv;
 	XmlManager manager;
 	XmlContainer myContainer;
@@ -125,6 +125,8 @@ public class XMLDB {
 			System.out.println("Current Lockers: "+ls.getNumLockers());
 			System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
 			System.out.println("Current Conflicts: "+ls.getNumConflicts());
+			System.out.println("Locks Requested: "+ls.getNumRequests());
+			System.out.println("Locks Released: "+ls.getNumReleases());
 		} catch (XmlException e) {
 			e.printStackTrace();
 		} catch (DatabaseException dbe) {
@@ -374,8 +376,8 @@ public class XMLDB {
 					res.delete();
 					printLockStats("addVarMetaData1");
 					getVarMetaData();
-					waiting = false;
-					makeWait();
+					//waiting = false;
+					//makeWait();
 					if(jd != null) {
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run(){
@@ -392,11 +394,12 @@ public class XMLDB {
 			e.printStackTrace();
 			closeDB();
 		}
-		waiting = true;
-		makeWait();
+		//waiting = true;
+		//makeWait();
 		printLockStats("addVarMetaData2");
 	}
 
+	/*
 	private boolean waiting;
 	private synchronized void makeWait() {
 		while(waiting) {
@@ -408,6 +411,7 @@ public class XMLDB {
 		}
 		notifyAll();
 	}
+	*/
 	protected XmlResults getVars(XmlValue contextVal, String path) {
 		try {
 			//System.out.println("Doesn't have metadata: "+contextVal.asDocument().getName());
@@ -434,6 +438,8 @@ public class XMLDB {
 		}
 	}
 	protected void getVarMetaData() {
+		System.out.println("Query filter: "+queryFilter);
+		System.out.println("Query function: "+queryFunction);
 		XmlResults res = createQuery("/*[fn:exists(dbxml:metadata('var'))]");
 		SupplyDemandQueryBuilder.varList = new LinkedHashMap();
 		DemographicsQueryBuilder.varList = new LinkedHashMap();
@@ -445,7 +451,6 @@ public class XMLDB {
 				XmlValue vt = res.next();
 				XmlDocument docTemp = vt.asDocument();
 				System.out.println("Gathering metadata from a doc "+docTemp.getName());
-				Thread.currentThread().sleep(300);
 				XmlMetaDataIterator it = docTemp.getMetaDataIterator();
 				while((md = it.next()) != null) {
 					if(md.get_name().equals("var")) {
@@ -480,8 +485,8 @@ public class XMLDB {
 			}
 		} catch(XmlException e) {
 			e.printStackTrace();
-		} catch(InterruptedException e) {
-			e.printStackTrace();
+		//} catch(InterruptedException e) {
+			//e.printStackTrace();
 		}
 		res.delete();
 		// maybe this should be somewhere else..

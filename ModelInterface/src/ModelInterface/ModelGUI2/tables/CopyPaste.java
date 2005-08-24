@@ -31,7 +31,6 @@ public class CopyPaste implements ActionListener{
 	  clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 	  final JMenuItem copyMenu = InterfaceMain.getInstance().getCopyMenu();
 	  final JMenuItem pasteMenu = InterfaceMain.getInstance().getPasteMenu();
-	  System.out.println("Setting copy enabled");
 	  copyMenu.addActionListener(this);
 	  copyMenu.setEnabled(true);
 	  pasteMenu.addActionListener(this);

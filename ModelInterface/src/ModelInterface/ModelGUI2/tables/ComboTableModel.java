@@ -619,6 +619,7 @@ public class ComboTableModel extends BaseTableModel{
 		//title = qgIn.getVariable();
 		title = qgIn.toString();
 		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions)), qgIn.isSumAll(), qgIn.getLevelValues());
+		DbViewer.xmlDB.setQueryFilter("");
 		ind2Name = qgIn.getVariable();
 		activeRows = new Vector( leftSideVector.size() * indRow.size() );
 		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {

@@ -465,7 +465,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 		JFreeChart chart = bt.createChart(0,0);
 		//TableSorter sorter = new TableSorter(bt);
 		jTable = new JTable(bt);
-		System.out.println("Adding a copy paste");
 		new CopyPaste(jTable);
 		//sorter.setTableHeader(jTable.getTableHeader());
 
