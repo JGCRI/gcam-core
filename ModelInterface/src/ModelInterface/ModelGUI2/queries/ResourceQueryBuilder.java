@@ -22,15 +22,14 @@ import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
-public class ResourceQueryBuilder implements QueryBuilder {
+public class ResourceQueryBuilder extends QueryBuilder {
 	static Map varList;
 	protected Map resourceList;
 	protected Map subresourceList;
 	protected Map gradeList;
-	protected QueryGenerator qg;
 	public static String xmlName = "resourceQuery";
 	public ResourceQueryBuilder(QueryGenerator qgIn) {
-		qg = qgIn;
+		super(qgIn);
 		varList = new LinkedHashMap();
 		varList.put("available", new Boolean(false));
 		varList.put("cost", new Boolean(false));
@@ -39,8 +38,11 @@ public class ResourceQueryBuilder implements QueryBuilder {
 		gradeList = null;
 	}
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
-		DbViewer.xmlDB.setQueryFunction("distinct-values(");
-		DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
+		queryFunctions.removeAllElements();
+		queryFunctions.add("distinct-values");
+		queryFilter = "/scenario/world/region/";
+		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
+		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedIndices();
@@ -68,8 +70,10 @@ public class ResourceQueryBuilder implements QueryBuilder {
 		--qg.currSel;
 		createXPath();
 		qg.levelValues = list.getSelectedValues();
-		DbViewer.xmlDB.setQueryFunction("");
-		DbViewer.xmlDB.setQueryFilter("");
+		queryFunctions = null;
+		queryFilter = null;
+		//DbViewer.xmlDB.setQueryFunction("");
+		//DbViewer.xmlDB.setQueryFilter("");
 	}
 	public void doBack(JList list, JLabel label) {
 		// doing this stuff after currSel has changed now..
@@ -283,7 +287,7 @@ public class ResourceQueryBuilder implements QueryBuilder {
 			query = "*/subresource/grade[child::group[@name='"+gName+"']]/@name";
 		}
 		//XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name");
-		XmlResults res = DbViewer.xmlDB.createQuery(query);
+		XmlResults res = DbViewer.xmlDB.createQuery(query, queryFilter, queryFunctions);
 		try {
 			while(res.hasNext()) {
 				ret.append("(@name='").append(res.next().asString()).append("') or ");
@@ -319,7 +323,7 @@ public class ResourceQueryBuilder implements QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(path);
+		XmlResults res = DbViewer.xmlDB.createQuery(path, queryFilter, queryFunctions);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {

@@ -22,22 +22,24 @@ import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
-public class SupplyDemandQueryBuilder implements QueryBuilder {
+public class SupplyDemandQueryBuilder extends QueryBuilder {
 	public static Map varList;
 	protected Map sectorList;
 	protected Map subsectorList;
 	protected Map techList;
-	protected QueryGenerator qg;
 	public static String xmlName = "supplyDemandQuery";
 	public SupplyDemandQueryBuilder(QueryGenerator qgIn) {
-		qg = qgIn;
+		super(qgIn);
 		sectorList = null;
 		subsectorList = null;
 		techList = null;
 	}
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
-		DbViewer.xmlDB.setQueryFunction("distinct-values(");
-		DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
+		queryFunctions.removeAllElements();
+		queryFunctions.add("distinct-values");
+		queryFilter = "scenario/world/region/";
+		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
+		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedIndices();
@@ -65,8 +67,10 @@ public class SupplyDemandQueryBuilder implements QueryBuilder {
 		--qg.currSel;
 		createXPath();
 		qg.levelValues = list.getSelectedValues();
-		DbViewer.xmlDB.setQueryFunction("");
-		DbViewer.xmlDB.setQueryFilter("");
+		queryFunctions = null;
+		queryFilter = null;
+		//DbViewer.xmlDB.setQueryFunction("");
+		//DbViewer.xmlDB.setQueryFilter("");
 	}
 	public void doBack(JList list, JLabel label) {
 		// doing this stuff after currSel has changed now..
@@ -277,7 +281,7 @@ public class SupplyDemandQueryBuilder implements QueryBuilder {
 		} else {
 			query = "supplysector/subsector/technology";
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name");
+		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name", queryFilter, queryFunctions);
 		try {
 			while(res.hasNext()) {
 				ret.append("(@name='").append(res.next().asString()).append("') or ");
@@ -311,7 +315,7 @@ public class SupplyDemandQueryBuilder implements QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(path);
+		XmlResults res = DbViewer.xmlDB.createQuery(path, queryFilter, queryFunctions);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {

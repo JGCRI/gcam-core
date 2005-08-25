@@ -22,13 +22,12 @@ import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
-public class MarketQueryBuilder implements QueryBuilder {
+public class MarketQueryBuilder extends QueryBuilder {
 	public static Map varList;
 	protected Map goodList;
-	protected QueryGenerator qg;
 	public static String xmlName = "marketQuery";
 	public MarketQueryBuilder(QueryGenerator qgIn) {
-		qg = qgIn;
+		super(qgIn);
 		varList = new LinkedHashMap();
 		varList.put("price", new Boolean(false));
 		varList.put("demand", new Boolean(false));
@@ -36,8 +35,11 @@ public class MarketQueryBuilder implements QueryBuilder {
 		goodList = null;
 	}
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
-		DbViewer.xmlDB.setQueryFilter("/scenario/world/Marketplace/");
-		DbViewer.xmlDB.setQueryFunction("distinct-values(");
+		queryFunctions.removeAllElements();
+		queryFunctions.add("distinct-values");
+		queryFilter = "/scenario/world/Marketplace/";
+		//DbViewer.xmlDB.setQueryFilter("/scenario/world/Marketplace/");
+		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedIndices();
@@ -93,8 +95,10 @@ public class MarketQueryBuilder implements QueryBuilder {
 		--qg.currSel;
 		createXPath();
 		qg.levelValues = list.getSelectedValues();
-		DbViewer.xmlDB.setQueryFilter("");
-		DbViewer.xmlDB.setQueryFunction("");
+		queryFunctions = null;
+		queryFilter = null;
+		//DbViewer.xmlDB.setQueryFilter("");
+		//DbViewer.xmlDB.setQueryFunction("");
 	}
 	public boolean isAtEnd() {
 		return qg.currSel == 3;
@@ -162,7 +166,8 @@ public class MarketQueryBuilder implements QueryBuilder {
 	}
 	private String expandGroupName(String gName) {
 		StringBuffer ret = new StringBuffer();
-		XmlResults res = DbViewer.xmlDB.createQuery("market/[child::group[@name='"+gName+"']]/@name");
+		XmlResults res = DbViewer.xmlDB.createQuery("market/[child::group[@name='"+gName+"']]/@name",
+				queryFilter, queryFunctions);
 		try {
 			while(res.hasNext()) {
 				ret.append("(child::text()='").append(res.next().asString()).append("') or ");
@@ -221,7 +226,7 @@ public class MarketQueryBuilder implements QueryBuilder {
 			ret.put("Group All", new Boolean(false));
 		}
 		*/
-		XmlResults res = DbViewer.xmlDB.createQuery(path);
+		XmlResults res = DbViewer.xmlDB.createQuery(path, queryFilter, queryFunctions);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {

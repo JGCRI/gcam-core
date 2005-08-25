@@ -6,8 +6,17 @@ import javax.swing.JLabel;
 import javax.swing.event.ListSelectionListener;
 import com.sleepycat.dbxml.XmlValue;
 import java.util.Map;
+import java.util.Vector;
 
-public interface QueryBuilder {
+public abstract class QueryBuilder {
+	protected QueryGenerator qg;
+	protected String queryFilter;
+	protected Vector<String> queryFunctions;
+	protected QueryBuilder(QueryGenerator qgIn) {
+		qg = qgIn;
+		queryFilter = "";
+		queryFunctions = new Vector<String>();
+	}
 	public abstract ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton);
 	public abstract void doFinish(JList list);
 	public abstract void doBack(JList list, JLabel label);

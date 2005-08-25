@@ -410,7 +410,7 @@ public class MultiTableModel extends BaseTableModel{
 	}
 
 	QueryGenerator qg;
-	public MultiTableModel(QueryGenerator qgIn, Object[] regions, JFrame parentFrameIn) {
+	public MultiTableModel(QueryGenerator qgIn, String queryFilter, Object[] regions, JFrame parentFrameIn) {
 		qg = qgIn;
 		parentFrame = parentFrameIn;
 		//title = qgIn.getVariable();
@@ -420,8 +420,8 @@ public class MultiTableModel extends BaseTableModel{
 		wild.add(qgIn.getYearLevel());
 		System.out.println("Query is "+qgIn.getCompleteXPath(regions));
 		//FileChooserDemo.xmlDB.setQueryFunction("");
-		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions)), qgIn.isSumAll(), qgIn.getLevelValues());
-		DbViewer.xmlDB.setQueryFilter("");
+		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions), queryFilter, null), qgIn.isSumAll(), qgIn.getLevelValues());
+		//DbViewer.xmlDB.setQueryFilter("");
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
 		activeRows = new Vector(tables.size());

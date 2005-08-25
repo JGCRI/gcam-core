@@ -22,21 +22,15 @@ import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
-public class DemographicsQueryBuilder implements QueryBuilder {
+public class DemographicsQueryBuilder extends QueryBuilder {
 	public static Map varList;
 	protected Map popList;
 	protected Map cohortList;
 	protected Map genderList;
-	protected QueryGenerator qg;
 	public static String xmlName = "demographicsQuery";
 	public DemographicsQueryBuilder(QueryGenerator qgIn) {
-		qg = qgIn;
+		super(qgIn);
 		popList = new LinkedHashMap();
-		/*
-		popList.put("populationMiniCAM", new Boolean(false));
-		popList.put("populationSGMFixed", new Boolean(false));
-		popList.put("populationSGMRate", new Boolean(false));
-		*/
 		popList = null;
 		cohortList = null;
 		genderList = new LinkedHashMap();
@@ -51,8 +45,11 @@ public class DemographicsQueryBuilder implements QueryBuilder {
 		return got != null && ((Boolean)got).booleanValue();
 	}
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
-		DbViewer.xmlDB.setQueryFilter("/scenario/world/region/demographics/");
-		DbViewer.xmlDB.setQueryFunction("distinct-values(");
+		queryFunctions.removeAllElements();
+		queryFunctions.add("distinct-values");
+		queryFilter = "/scenario/world/region/demographics/";
+		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/demographics/");
+		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedIndices();
@@ -128,8 +125,10 @@ public class DemographicsQueryBuilder implements QueryBuilder {
 			qg.levelValues = temp.toArray();
 		}
 
-		DbViewer.xmlDB.setQueryFilter("");
-		DbViewer.xmlDB.setQueryFunction("");
+		queryFunctions = null;
+		queryFilter = null;
+		//DbViewer.xmlDB.setQueryFilter("");
+		//DbViewer.xmlDB.setQueryFunction("");
 	}
 	public boolean isAtEnd() {
 		return (qg.currSel == 3 && isPopMiniCAMSelected()) || qg.currSel == 5;
@@ -146,9 +145,11 @@ public class DemographicsQueryBuilder implements QueryBuilder {
 			case 3: {
 					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					if(popList == null) {
-						DbViewer.xmlDB.setQueryFunctionAsDistinctNames();
+						Vector funcTemp = queryFunctions;
+						queryFunctions = new Vector<String>(1,0);
+						queryFunctions.add(DbViewer.xmlDB.getQueryFunctionAsDistinctNames());
 						popList = createList("*", false);
-						DbViewer.xmlDB.setQueryFunction("fn:distinct-values(");
+						queryFunctions = funcTemp;
 					}
 					temp = popList;
 					label.setText("Select Population Type:");
@@ -222,7 +223,8 @@ public class DemographicsQueryBuilder implements QueryBuilder {
 	}
 	private String expandGroupName(String gName) {
 		StringBuffer ret = new StringBuffer();
-		XmlResults res = DbViewer.xmlDB.createQuery("*/ageCohort[child::group[@name='"+gName+"']]/@ageGroup");
+		XmlResults res = DbViewer.xmlDB.createQuery("*/ageCohort[child::group[@name='"+gName+"']]/@ageGroup",
+				queryFilter, queryFunctions);
 		try {
 			while(res.hasNext()) {
 				ret.append("(child::text()='").append(res.next().asString()).append("') or ");
@@ -331,7 +333,7 @@ public class DemographicsQueryBuilder implements QueryBuilder {
 			ret.put("Group All", new Boolean(false));
 		}
 		*/
-		XmlResults res = DbViewer.xmlDB.createQuery(path);
+		XmlResults res = DbViewer.xmlDB.createQuery(path, queryFilter, queryFunctions);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {

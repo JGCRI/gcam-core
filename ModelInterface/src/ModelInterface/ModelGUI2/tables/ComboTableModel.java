@@ -613,13 +613,13 @@ public class ComboTableModel extends BaseTableModel{
 	}
 
 	protected QueryGenerator qg;
-	public ComboTableModel(QueryGenerator qgIn, Object[] regions, JFrame parentFrameIn) {
+	public ComboTableModel(QueryGenerator qgIn, String filterQuery, Object[] regions, JFrame parentFrameIn) {
 		qg = qgIn;
 		parentFrame = parentFrameIn;
 		//title = qgIn.getVariable();
 		title = qgIn.toString();
-		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions)), qgIn.isSumAll(), qgIn.getLevelValues());
-		DbViewer.xmlDB.setQueryFilter("");
+		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions), filterQuery, null), qgIn.isSumAll(), qgIn.getLevelValues());
+		//DbViewer.xmlDB.setQueryFilter("");
 		ind2Name = qgIn.getVariable();
 		activeRows = new Vector( leftSideVector.size() * indRow.size() );
 		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {

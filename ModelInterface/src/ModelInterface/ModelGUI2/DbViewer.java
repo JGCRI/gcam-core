@@ -228,7 +228,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		XmlValue temp;
 		Vector ret = new Vector();
 		try {
-			XmlResults res = xmlDB.createQuery("/scenario");
+			XmlResults res = xmlDB.createQuery("/scenario", null, null);
 			while(res.hasNext()) {
 				temp = res.next();
 				XmlDocument tempDoc = temp.asDocument();
@@ -245,10 +245,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 	}
 
 	protected Vector getRegions() {
-		xmlDB.setQueryFunction("distinct-values(");
+		Vector funcTemp = new Vector<String>(1,0);
+		funcTemp.add("distinct-values");
 		Vector ret = new Vector();
 		try {
-			XmlResults res = xmlDB.createQuery("/scenario/world/region/@name");
+			XmlResults res = xmlDB.createQuery("/scenario/world/region/@name", null, funcTemp);
 			while(res.hasNext()) {
 				ret.add(res.next().asString());
 			}
@@ -257,7 +258,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			e.printStackTrace();
 		}
 		ret.add("Global");
-		xmlDB.setQueryFunction("");
+		funcTemp = null;
 		xmlDB.printLockStats("getRegions");
 		return ret;
 	}
@@ -269,7 +270,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		return new QueryTreeModel(res.iterateNext());
 	}
 
-	protected void createFilteredQuery(Vector scns, int[] scnSel/*, Vector regions, int[]regionSel*/) {
+	protected String createFilteredQuery(Vector scns, int[] scnSel/*, Vector regions, int[]regionSel*/) {
 		StringBuffer ret = new StringBuffer("/");
 		boolean added = false;
 		for(int i = 0; i < scnSel.length; ++i) {
@@ -284,7 +285,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 		ret.append(" ]/world/");
 		System.out.println(ret);
-		xmlDB.setQueryFilter(ret.toString());
+		return ret.toString();
+		//xmlDB.setQueryFilter(ret.toString());
 	}
 
 	protected void createTableSelector() {
@@ -415,14 +417,14 @@ public class DbViewer implements ActionListener, MenuAdder {
 					JOptionPane.showMessageDialog(parentFrame, "Please select a query to run", 
 						"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					createFilteredQuery(scns, scnSel/*, regions, regionSel*/);
+					String tempFilterQuery = createFilteredQuery(scns, scnSel/*, regions, regionSel*/);
 					QueryGenerator qg = (QueryGenerator)queryList.getSelectionPath().getLastPathComponent();
 					parentFrame.getGlassPane().setVisible(true);
 					tablePanel.removeAll();
 					if(qg.isGroup()) {
-						tablePanel.add(createGroupTableContent(qg));
+						tablePanel.add(createGroupTableContent(qg, tempFilterQuery));
 					} else {
-						tablePanel.add(createSingleTableContent(qg));
+						tablePanel.add(createSingleTableContent(qg, tempFilterQuery));
 					}
 					((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
 					//tablePanel.add(Box.createVerticalGlue());
@@ -450,8 +452,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		parentFrame.setVisible(true);
 	}
 
-	private Container createGroupTableContent(QueryGenerator qg) {
-		bt = new MultiTableModel(qg, regionList.getSelectedValues(), parentFrame);
+	private Container createGroupTableContent(QueryGenerator qg, String tempFilterQuery) {
+		bt = new MultiTableModel(qg, tempFilterQuery, regionList.getSelectedValues(), parentFrame);
 		jTable = new JTable(bt);
 		jTable.setCellSelectionEnabled(true);
 		jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
@@ -460,8 +462,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		return jsp;
 	}
 
-	private Container createSingleTableContent(QueryGenerator qg) {
-		bt = new ComboTableModel(qg, regionList.getSelectedValues(), parentFrame);
+	private Container createSingleTableContent(QueryGenerator qg, String tempFilterQuery) {
+		bt = new ComboTableModel(qg, tempFilterQuery, regionList.getSelectedValues(), parentFrame);
 		JFreeChart chart = bt.createChart(0,0);
 		//TableSorter sorter = new TableSorter(bt);
 		jTable = new JTable(bt);

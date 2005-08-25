@@ -115,8 +115,8 @@ public class QueryGenerator {
 						pat = Pattern.compile("\\(@name='([\\w:[\\s]]+)'\\)");
 					}
 					Matcher mat = pat.matcher(xPath);
-					DbViewer.xmlDB.setQueryFunction("distinct-values(");
-					DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
+					//DbViewer.xmlDB.setQueryFunction("distinct-values(");
+					//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 					int skip = 0;
 					if(nodeLevel.equals("supplysector")) {
 						currSel = 3;
@@ -139,8 +139,8 @@ public class QueryGenerator {
 							--skip;
 						}
 					} 
-					DbViewer.xmlDB.setQueryFunction("");
-					DbViewer.xmlDB.setQueryFilter("");
+					//DbViewer.xmlDB.setQueryFunction("");
+					//DbViewer.xmlDB.setQueryFilter("");
 					xPath = xpTemp;
 					levelValues = temp.toArray();
 				}
@@ -370,7 +370,7 @@ public class QueryGenerator {
 		filterContent.add(buttonPane, BorderLayout.PAGE_END);
 
 		filterDialog.setContentPane(filterContent);
-		filterDialog.show();
+		filterDialog.setVisible(true);
 	}
 	private void updateList(Map typeMap, JList list, JLabel listLabel) {
 		listLabel.setText("Select type: ");
@@ -401,7 +401,11 @@ public class QueryGenerator {
 		} else {
 			query = "supplysector/subsector/technology";
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name");
+		Vector funcTemp = new Vector<String>(1,0);
+		funcTemp.add("distinct-values");
+		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name", 
+				"/scenario/world/region", funcTemp);
+		funcTemp = null;
 		try {
 			while(res.hasNext()) {
 				ret.append("(@name='").append(res.next().asString()).append("') or ");
@@ -682,7 +686,7 @@ public class QueryGenerator {
 
 		editDialog.getContentPane().add(all);
 		editDialog.pack();
-		editDialog.show();
+		editDialog.setVisible(true);
 		return oldTitle;
 	}
 }

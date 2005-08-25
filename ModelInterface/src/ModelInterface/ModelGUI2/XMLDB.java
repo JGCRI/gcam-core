@@ -24,11 +24,11 @@ public class XMLDB {
 	XmlContainer myContainer;
 	XmlUpdateContext uc;
 	String contName;
+	/*
 	String queryFilter;
 	String queryFunction;
+	*/
 	public XMLDB(String db, Frame parentFrame) {
-		queryFilter = "";
-		queryFunction = "";
 		openDB(db, parentFrame);
 	}
 	public void openDB(String dbPath, Frame parentFrame) {
@@ -176,7 +176,28 @@ public class XMLDB {
 			e.printStackTrace();
 		}
 	}
-	public XmlResults createQuery(String query) {
+	public XmlResults createQuery(String query, String queryFilter, Vector<String> queryFunctions) {
+		StringBuffer queryBuff = new StringBuffer();
+		if(queryFunctions != null) {
+			for(Iterator i = queryFunctions.iterator(); i.hasNext(); ) {
+				queryBuff.append(i.next()).append('(');
+			}
+		}
+		queryBuff.append("collection('").append(contName).append("')");
+		if(queryFilter != null) {
+			queryBuff.append(queryFilter);
+		}
+		queryBuff.append(query);
+		if(queryFunctions != null) {
+			for(int i = 0; i < queryFunctions.size(); ++i) {
+				if(queryFunctions.get(i).startsWith("declare")) {
+					queryBuff.append(", ())");
+				} else {
+					queryBuff.append(')');
+				}
+			}
+		}
+		/*
 		query = queryFunction + "collection('"+contName+"')" + queryFilter + query;
 		if(!queryFunction.equals("")) {
 			if(queryFunction.startsWith("declare")) {
@@ -185,9 +206,10 @@ public class XMLDB {
 				query += ")";
 			}
 		}
+		*/
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
-			return manager.query(query, qc);
+			return manager.query(queryBuff.toString(), qc);
 		} catch(XmlException e) {
 			e.printStackTrace();
 			return null;
@@ -273,6 +295,7 @@ public class XMLDB {
 		//printLockStats("getAllAtr"); should be lock safe, now can make it static
 		return ret.substring(1);
 	}
+	/*
 	public void setQueryFilter(String qf) {
 		queryFilter = qf;
 	}
@@ -282,8 +305,9 @@ public class XMLDB {
 	public void setQueryFunction(String func) {
 		queryFunction = func;
 	}
-	public void setQueryFunctionAsDistinctNames() {
-		queryFunction = "declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* {    for $a at $apos in $arg  let $b := fn:local-name($a), $c_before := fn:count($before_a) + $apos - $apos, $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))  where not(fn:count($before_a) = $c_before)  return $b }; local:distinct-node-names(";
+	*/
+	public String getQueryFunctionAsDistinctNames() {
+		return "declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* {    for $a at $apos in $arg  let $b := fn:local-name($a), $c_before := fn:count($before_a) + $apos - $apos, $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))  where not(fn:count($before_a) = $c_before)  return $b }; local:distinct-node-names";
 	}
 	public void setValue(XmlValue val, String content) {
 		try {
@@ -438,9 +462,7 @@ public class XMLDB {
 		}
 	}
 	protected void getVarMetaData() {
-		System.out.println("Query filter: "+queryFilter);
-		System.out.println("Query function: "+queryFunction);
-		XmlResults res = createQuery("/*[fn:exists(dbxml:metadata('var'))]");
+		XmlResults res = createQuery("/*[fn:exists(dbxml:metadata('var'))]", null, null);
 		SupplyDemandQueryBuilder.varList = new LinkedHashMap();
 		DemographicsQueryBuilder.varList = new LinkedHashMap();
 		EmissionsQueryBuilder.ghgList = new LinkedHashMap();
@@ -490,9 +512,11 @@ public class XMLDB {
 		}
 		res.delete();
 		// maybe this should be somewhere else..
-		setQueryFunction("distinct-values(");
-		res = createQuery("/scenario/output-meta-data/summable/@var");
-		setQueryFunction("");
+		//setQueryFunction("distinct-values(");
+		Vector funcTemp = new Vector<String>(1,0);
+		funcTemp.add("distinct-values");
+		res = createQuery("/scenario/output-meta-data/summable/@var", null, funcTemp);
+		funcTemp = null;
 		QueryGenerator.sumableList = new Vector();
 		try {
 			while(res.hasNext()) {
