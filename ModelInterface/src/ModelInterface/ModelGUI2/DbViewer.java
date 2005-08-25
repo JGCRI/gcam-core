@@ -420,13 +420,17 @@ public class DbViewer implements ActionListener, MenuAdder {
 					String tempFilterQuery = createFilteredQuery(scns, scnSel/*, regions, regionSel*/);
 					QueryGenerator qg = (QueryGenerator)queryList.getSelectionPath().getLastPathComponent();
 					parentFrame.getGlassPane().setVisible(true);
-					tablePanel.removeAll();
+					Container ret = null;
 					if(qg.isGroup()) {
-						tablePanel.add(createGroupTableContent(qg, tempFilterQuery));
+						ret = createGroupTableContent(qg, tempFilterQuery);
 					} else {
-						tablePanel.add(createSingleTableContent(qg, tempFilterQuery));
+						ret = createSingleTableContent(qg, tempFilterQuery);
 					}
-					((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
+					if(ret != null) {
+						tablePanel.removeAll();
+						tablePanel.add(ret);
+						((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
+					}
 					//tablePanel.add(Box.createVerticalGlue());
 					parentFrame.getGlassPane().setVisible(false);
 					// need old value/new value?
@@ -453,7 +457,16 @@ public class DbViewer implements ActionListener, MenuAdder {
 	}
 
 	private Container createGroupTableContent(QueryGenerator qg, String tempFilterQuery) {
-		bt = new MultiTableModel(qg, tempFilterQuery, regionList.getSelectedValues(), parentFrame);
+		BaseTableModel btBefore = bt;
+		try {
+			bt = new MultiTableModel(qg, tempFilterQuery, regionList.getSelectedValues(), parentFrame);
+		} catch(NullPointerException e) {
+			System.out.println("Warning null pointer while createing MultiTableModel");
+			System.out.println("Likely the query didn't get any results");
+			bt = btBefore;
+			return null;
+		}
+		btBefore = null;
 		jTable = new JTable(bt);
 		jTable.setCellSelectionEnabled(true);
 		jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
@@ -463,7 +476,16 @@ public class DbViewer implements ActionListener, MenuAdder {
 	}
 
 	private Container createSingleTableContent(QueryGenerator qg, String tempFilterQuery) {
-		bt = new ComboTableModel(qg, tempFilterQuery, regionList.getSelectedValues(), parentFrame);
+		BaseTableModel btBefore = bt;
+		try {
+			bt = new ComboTableModel(qg, tempFilterQuery, regionList.getSelectedValues(), parentFrame);
+		} catch(NullPointerException e) {
+			System.out.println("Warning null pointer while createing ComboTableModel");
+			System.out.println("Likely the query didn't get any results");
+			bt = btBefore;
+			return null;
+		}
+		btBefore = null;
 		JFreeChart chart = bt.createChart(0,0);
 		//TableSorter sorter = new TableSorter(bt);
 		jTable = new JTable(bt);
