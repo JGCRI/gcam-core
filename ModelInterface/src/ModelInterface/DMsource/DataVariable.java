@@ -142,7 +142,7 @@ public class DataVariable extends Variable
   }
   public void printVerbose(BufferedWriter out) throws IOException
   {
-    System.out.println(name+":");
+    out.write(name+":\n");
     if(comment != null)
     {
       out.write("\tDescription: "+comment);

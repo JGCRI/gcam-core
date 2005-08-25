@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<commands>
+	<variable name="allmask1" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Agricultural Research Service ARS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask2" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Air Force DOD" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask3" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Army Corps of Engineers DOD" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask4" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Army DOD" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask5" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Bureau of Reclamation BOR" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask6" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Central Intelligence Agency CIA" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask7" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Department of Defense DOD" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask8" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Department of Energy DOE" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask9" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Department of Transportation DOT" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask10" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Forest Reserve BLM" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask11" type="reference">
+		<region value="USAcontiguous" />
+		<field value="General Services Administration GSA" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask49" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Marine Corps DOD" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask12" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Metropolitan Washington Airports Authority" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask13" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Aeronautics and Space Administration NASA" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask14" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Battlefield NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask15" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Battlefield Park NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask16" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Capital Park NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask17" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Conservation Area BLM" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask18" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Fish Hatchery FWS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask19" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Game Preserve FWS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask20" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Grassland FS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask21" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Historic Park NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask22" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Historic Site NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask23" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Lakeshore NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask24" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Mall NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask25" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Memorial NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask26" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Military Park NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask27" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Monument BLM" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask28" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Monument FS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask29" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Monument NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask30" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Park NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask31" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Parkway NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask32" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Preserve NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask33" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Recreation Area FS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask34" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Recreation Area NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask35" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Reserve NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask36" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National River NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask37" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Scenic Area FS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask38" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Seashore NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask39" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Wild and Scenic River NPS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask40" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Wildlife Refuge FWS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask41" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Navy DOD" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask42" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Purchase Unit Block FS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask43" type="reference">
+		<region value="USAcontiguous" />
+		<field value="TVA" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask44" type="reference">
+		<region value="USAcontiguous" />
+		<field value="U.S. Coast Guard DOT" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask45" type="reference">
+		<region value="USAcontiguous" />
+		<field value="United States Department of Agriculture USDA" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask46" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Waterfowl Production Area FWS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask47" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Wildlife Management Area FWS" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask48" type="reference">
+		<region value="USAcontiguous" />
+		<field value="buffer" />
+		<time value="2004.0" />
+	</variable>
+	
+	
+	<variable name="halfmask1" type="reference">
+		<region value="USAcontiguous" />
+		<field value="National Forest FS" />
+		<time value="2004.0" />
+	</variable>
+
+
+	<variable name="wind3" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Class3" />
+		<time value="2005.0" />
+	</variable>
+	<variable name="wind4" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Class4" />
+		<time value="2005.0" />
+	</variable>
+	<variable name="wind5" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Class5" />
+		<time value="2005.0" />
+	</variable>
+	<variable name="wind6" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Class6" />
+		<time value="2005.0" />
+	</variable>
+	
+	
+	<variable name="cost" type="reference">
+		<region value="USAcontiguous" />
+		<field value="DistCost" />
+		<time value="2005.0" />
+	</variable>
+
+
+
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="allmask1" />
+		<argument name="allmask2" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask3" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask4" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask5" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask6" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask7" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask8" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask9" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask10" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask11" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask12" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask13" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask14" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask15" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask16" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask17" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask18" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask19" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask20" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask21" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask22" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask23" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask24" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask25" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask26" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask27" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask28" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask29" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask30" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask31" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask32" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask33" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask34" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask35" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask36" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask37" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask38" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask39" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask40" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask41" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask42" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask43" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask44" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask45" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask46" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask47" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask48" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask49" />
+	</maskCombineOr>
+	
+	
+	<removeRandomGuided>
+		<target name="halfmask1" />
+		<argument name="halfmask1" />
+		<goal value=".5" />
+	</removeRandomGuided>
+	
+	
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="halfmask1" />
+	</maskCombineOr>
+	
+	
+	<maskRemove>
+		<target name="maskWind3" />
+		<argument name="wind3" />
+		<mask name="masterMask" />
+		<weight value="true" />
+	</maskRemove>
+	<maskRemove>
+		<target name="maskWind4" />
+		<argument name="wind4" />
+		<mask name="masterMask" />
+		<weight value="true" />
+	</maskRemove>
+	<maskRemove>
+		<target name="maskWind5" />
+		<argument name="wind5" />
+		<mask name="masterMask" />
+		<weight value="true" />
+	</maskRemove>
+	<maskRemove>
+		<target name="maskWind6" />
+		<argument name="wind6" />
+		<mask name="masterMask" />
+		<weight value="true" />
+	</maskRemove>
+	
+	
+	
+	<frequencyAnalysis>
+		<output type="text" />
+		<argument name="maskWind3" />
+		<split name="cost" />
+		<buckets number="20" />
+	</frequencyAnalysis>
+	<frequencyAnalysis>
+		<output type="text" />
+		<argument name="maskWind4" />
+		<split name="cost" />
+		<buckets number="20" />
+	</frequencyAnalysis>
+	<frequencyAnalysis>
+		<output type="text" />
+		<argument name="maskWind5" />
+		<split name="cost" />
+		<buckets number="20" />
+	</frequencyAnalysis>
+	<frequencyAnalysis>
+		<output type="text" />
+		<argument name="maskWind6" />
+		<split name="cost" />
+		<buckets number="20" />
+	</frequencyAnalysis>
+</commands>

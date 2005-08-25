@@ -178,7 +178,6 @@ public class ReferenceWrapper extends Wrapper
   
   public void printStandard(BufferedWriter out) throws IOException
   { 
-    out.newLine();
     for(int i = 0; i < data.length; i++)
     {
       System.out.print("\t");

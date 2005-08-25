@@ -22,7 +22,6 @@
 /**
  * TODO: everything... get and add specifically
  */
-
 package ModelInterface.DMsource;
 
 import java.lang.ref.*;
@@ -59,6 +58,9 @@ public class ConsoleManager
   
   public static ConsoleManager getConsoleManager()
   {
+    if(consoleManager == null)
+      consoleManager = new ConsoleManager();
+    
     return consoleManager;
   }
   
@@ -82,7 +84,16 @@ public class ConsoleManager
 
     ref = (WeakReference)consoles.get(name);
     if(ref!=null)
-      return (Console)ref.get();
+    {
+      Console hold = (Console)ref.get();
+      if(hold != null)
+      {
+        return (Console)ref.get();
+      } else
+      {
+        return null;
+      }
+    }
     else
       return null;
   }
@@ -98,12 +109,24 @@ public class ConsoleManager
     if(ref == null)
     {
       consoles.put(name, new WeakReference(toAdd));
-      
-      
+
       return true;
     } else
     { //oh noes this console already exists!!!!!!!
-      return false;
+      Console hold = (Console)ref.get();
+      if(hold == null)
+      {
+        consoles.put(name, new WeakReference(toAdd));
+        return true;
+      } else
+      {
+        return false;
+      }
     }
+  }
+  
+  public void removeConsole(String toRemove)
+  {
+    consoles.remove(toRemove);
   }
 }

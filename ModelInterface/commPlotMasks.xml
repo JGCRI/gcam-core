@@ -12,7 +12,7 @@
 	</variable>
 	<variable name="wind1" type="reference">
 		<region value="USAcontiguous" />
-		<field value="Class1" />
+		<field value="Class4" />
 		<time value="2005.0" />
 	</variable>
 	<variable name="cost" type="reference">
@@ -40,6 +40,5 @@
 		<buckets number="10" />
 	</frequencyAnalysis>
 
-	<print variable="maskWind" />
 	<plot variable="cost" />
 </commands>

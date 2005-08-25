@@ -1,4 +1,3 @@
-
 /*
  * This software, which is provided in confidence, was prepared by employees
         of Pacific Northwest National Laboratory operated by Battelle Memorial
@@ -269,6 +268,12 @@ public class ManipulationDriver
       } else if(currCom.getName().equals("parseLessThan"))
       {
         parseLessThanCommand(currCom);
+      } else if(currCom.getName().equals("removeRandom"))
+      {
+        removeRandomCommand(currCom);
+      } else if(currCom.getName().equals("removeRandomGuided"))
+      {
+        removeRandomGuidedCommand(currCom);
       } else if(currCom.getName().equals("maskCombineOr"))
       {
         maskCombineOrCommand(currCom);
@@ -323,6 +328,9 @@ public class ManipulationDriver
       } else if(currCom.getName().equals("frequencyAnalysis"))
       {
         frequencyAnalysisCommand(currCom);
+      } else if(currCom.getName().equals("windPowerCalc"))
+      {
+        windPowerCalcCommand(currCom);
       } else if(currCom.getName().equals("extractSubRegion"))
       {
         extractSubRegionCommand(currCom);
@@ -1021,6 +1029,75 @@ public class ManipulationDriver
       
       VDest.setData(ComponentManipulator.lessThan(VSource.getData(), limit));
     }
+  }
+  /**
+   * Randomly removes cells not already equal to NaN from the variable.
+   * The fraction of current cells remaining after this operation is defined
+   * by the goal element. Cells are removed by pure randomization, the goal
+   * fraction is in no way assured.
+   * @param command XML node defining the operation.
+   */
+  private void removeRandomCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable VDest;
+    Variable VSource;
+    double fraction;
+    Element currInfo;
+    currInfo = command.getChild("target");
+    String VDname = currInfo.getAttributeValue("name");
+    currInfo = command.getChild("argument");
+    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    currInfo = command.getChild("goal");
+    if(currInfo.getAttribute("value")!=null)
+    { //this is just a number, so go ahead and read it
+      fraction = Double.parseDouble(currInfo.getAttributeValue("value"));
+    } else
+    { //this is a scalar variable, get the value out of it
+      Variable holdChange = (Variable)variableList
+          .get(currInfo.getAttributeValue("name"));
+      fraction = holdChange.getData()[0].data[0][0];
+    }
+    
+    VDest = VSource.getShape(VDname);
+    variableList.put(VDname, VDest);
+    
+    VDest.setData(ComponentManipulator.removeRandom(VSource.getData(), fraction));
+  }
+  /**
+   * Randomly removes cells not already equal to NaN from the variable.
+   * The fraction of current cells remaining after this operation is defined
+   * by the goal element. Cells are removed by guided randomization, if to
+   * many or to few cells are remaining the random value slowly shifts itself
+   * in an attempt to approach the goal fraction as closely as possible.
+   * @param command XML node defining the operation.
+   */
+  private void removeRandomGuidedCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable VDest;
+    Variable VSource;
+    double fraction;
+    Element currInfo;
+    currInfo = command.getChild("target");
+    String VDname = currInfo.getAttributeValue("name");
+    currInfo = command.getChild("argument");
+    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    currInfo = command.getChild("goal");
+    if(currInfo.getAttribute("value")!=null)
+    { //this is just a number, so go ahead and read it
+      fraction = Double.parseDouble(currInfo.getAttributeValue("value"));
+    } else
+    { //this is a scalar variable, get the value out of it
+      Variable holdChange = (Variable)variableList
+          .get(currInfo.getAttributeValue("name"));
+      fraction = holdChange.getData()[0].data[0][0];
+    }
+    
+    VDest = VSource.getShape(VDname);
+    variableList.put(VDname, VDest);
+    
+    VDest.setData(ComponentManipulator.removeRandomGuided(VSource.getData(), fraction));
   }
   /**
    * Combines two variables' values using mask OR rules. Rather than NaN
@@ -1868,12 +1945,89 @@ public class ManipulationDriver
     //need to output cuz this is an abnormally shaped return
     try
     {
-      BufferedWriter out = new BufferedWriter(new PrintWriter(System.out));
+      BufferedWriter out = new BufferedWriter(new ConsoleWriter(Console.getConsole("Default Out")));
       VDest.printVerbose(out);
     } catch(IOException e)
     {
       log.log(Level.SEVERE, "IOException in -> printCommand (System.out)");
     }
+  }
+  /**
+   * This command is a simple math problem, given 5 parameters it computes
+   * the idealized turbine production in GWh/yr. This uses some specific math
+   * functions which can potentially fail given abnormal inputs.
+   * @param command XML node defining the operation.
+   */
+  private void windPowerCalcCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable VDest;
+    double height, diam, turb, avail, loss;
+    Element currInfo;
+    
+    currInfo = command.getChild("target");
+    String VDname = currInfo.getAttributeValue("name");
+    currInfo = command.getChild("height");
+    if(currInfo.getAttribute("value")!=null)
+    { //this is just a number, so go ahead and read it
+      height = Double.parseDouble(currInfo.getAttributeValue("value"));
+    } else
+    { //this is a scalar variable, get the value out of it
+      Variable holdChange = (Variable)variableList
+          .get(currInfo.getAttributeValue("name"));
+      height = holdChange.getData()[0].data[0][0];
+    }
+    
+    currInfo = command.getChild("diameter");
+    if(currInfo.getAttribute("value")!=null)
+    { //this is just a number, so go ahead and read it
+      diam = Double.parseDouble(currInfo.getAttributeValue("value"));
+    } else
+    { //this is a scalar variable, get the value out of it
+      Variable holdChange = (Variable)variableList
+          .get(currInfo.getAttributeValue("name"));
+      diam = holdChange.getData()[0].data[0][0];
+    }
+    currInfo = command.getChild("turbine size");
+    if(currInfo.getAttribute("value")!=null)
+    { //this is just a number, so go ahead and read it
+      turb = Double.parseDouble(currInfo.getAttributeValue("value"));
+    } else
+    { //this is a scalar variable, get the value out of it
+      Variable holdChange = (Variable)variableList
+          .get(currInfo.getAttributeValue("name"));
+      turb = holdChange.getData()[0].data[0][0];
+    }
+    currInfo = command.getChild("availability");
+    if(currInfo.getAttribute("value")!=null)
+    { //this is just a number, so go ahead and read it
+      avail = Double.parseDouble(currInfo.getAttributeValue("value"));
+    } else
+    { //this is a scalar variable, get the value out of it
+      Variable holdChange = (Variable)variableList
+          .get(currInfo.getAttributeValue("name"));
+      avail = holdChange.getData()[0].data[0][0];
+    }
+    currInfo = command.getChild("annual loss");
+    if(currInfo.getAttribute("value")!=null)
+    { //this is just a number, so go ahead and read it
+      loss = Double.parseDouble(currInfo.getAttributeValue("value"));
+    } else
+    { //this is a scalar variable, get the value out of it
+      Variable holdChange = (Variable)variableList
+          .get(currInfo.getAttributeValue("name"));
+      loss = holdChange.getData()[0].data[0][0];
+    }
+    
+    
+    
+    //creating new datavariable to hold result
+    VDest = new DataVariable();
+    VDest.name = VDname;
+    variableList.put(VDname, VDest);
+
+    VDest.setData(ComponentManipulator.windPower(height, diam, turb, avail, loss));
+
   }
   /**
    * Extracts a subregion of the specified reference variable. The subregion
@@ -1968,13 +2122,28 @@ public class ManipulationDriver
       toPrint = (Variable)variableList.get(command.getAttributeValue("variable"));
       if(command.getAttributeValue("file") == null)
       {
-        try
-        {
-          BufferedWriter out = new BufferedWriter(new PrintWriter(System.out));
-          toPrint.printStandard(out);
-        } catch(IOException e)
-        {
-          log.log(Level.SEVERE, "IOException in -> printCommand (System.out)");
+        if(command.getAttributeValue("console") == null)
+        { //print to default console
+          try
+          {
+            //BufferedWriter out = new BufferedWriter(new PrintWriter(System.out));
+            BufferedWriter out = new BufferedWriter(new ConsoleWriter(Console.getConsole("Default Out")));
+            toPrint.printStandard(out);
+          } catch(IOException e)
+          {
+            log.log(Level.SEVERE, "IOException in -> printCommand (default console)");
+          }
+        } else
+        { //print to specified console
+          try
+          {
+            //BufferedWriter out = new BufferedWriter(new PrintWriter(System.out));
+            BufferedWriter out = new BufferedWriter(new ConsoleWriter(Console.getConsole(command.getAttributeValue("console"))));
+            toPrint.printStandard(out);
+          } catch(IOException e)
+          {
+            log.log(Level.SEVERE, "IOException in -> printCommand (console "+command.getAttributeValue("console")+")");
+          }
         }
       } else
       { //print this to the specified file
@@ -1983,13 +2152,15 @@ public class ManipulationDriver
           BufferedWriter out;
           if(writeFiles.contains(command.getAttributeValue("file")))
           {
-            out = new BufferedWriter(new FileWriter(command.getAttributeValue("file"), true));
+            out = new BufferedWriter(new FileWriter(command
+                .getAttributeValue("file"), true));
           } else
           {
-            out = new BufferedWriter(new FileWriter(command.getAttributeValue("file"), false));
+            out = new BufferedWriter(new FileWriter(command
+                .getAttributeValue("file"), false));
             writeFiles.add(command.getAttributeValue("file"));
           }
-          
+
           toPrint.printStandard(out);
         } catch(IOException e)
         {
@@ -2014,15 +2185,30 @@ public class ManipulationDriver
     if(variableList.containsKey(command.getAttributeValue("variable")))
     {
       toPrint = (Variable)variableList.get(command.getAttributeValue("variable"));
-      if(command.getAttributeValue("file")==null)
+      if(command.getAttributeValue("file") == null)
       {
-        try
-        {
-          BufferedWriter out = new BufferedWriter(new PrintWriter(System.out));
-          toPrint.printVerbose(out);
-        } catch(IOException e)
-        {
-          log.log(Level.SEVERE, "IOException in -> printCommand (System.out)");
+        if(command.getAttributeValue("console") == null)
+        { //print to default console
+          try
+          {
+            //BufferedWriter out = new BufferedWriter(new PrintWriter(System.out));
+            BufferedWriter out = new BufferedWriter(new ConsoleWriter(Console.getConsole("Default Out")));
+            toPrint.printVerbose(out);
+          } catch(IOException e)
+          {
+            log.log(Level.SEVERE, "IOException in -> printCommand (default console)");
+          }
+        } else
+        { //print to specified console
+          try
+          {
+            //BufferedWriter out = new BufferedWriter(new PrintWriter(System.out));
+            BufferedWriter out = new BufferedWriter(new ConsoleWriter(Console.getConsole(command.getAttributeValue("console"))));
+            toPrint.printVerbose(out);
+          } catch(IOException e)
+          {
+            log.log(Level.SEVERE, "IOException in -> printCommand (console "+command.getAttributeValue("console")+")");
+          }
         }
       } else
       { //print this to the specified file
@@ -2031,16 +2217,19 @@ public class ManipulationDriver
           BufferedWriter out;
           if(writeFiles.contains(command.getAttributeValue("file")))
           {
-            out = new BufferedWriter(new FileWriter(command.getAttributeValue("file"), true));
+            out = new BufferedWriter(new FileWriter(command
+                .getAttributeValue("file"), true));
           } else
           {
-            out = new BufferedWriter(new FileWriter(command.getAttributeValue("file"), false));
+            out = new BufferedWriter(new FileWriter(command
+                .getAttributeValue("file"), false));
             writeFiles.add(command.getAttributeValue("file"));
           }
+
           toPrint.printVerbose(out);
         } catch(IOException e)
         {
-          log.log(Level.SEVERE, "IOException in -> printVerboseCommand (file)");
+          log.log(Level.SEVERE, "IOException in -> printCommand (file)");
         }
       }
     } else

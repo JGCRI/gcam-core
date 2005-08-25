@@ -212,7 +212,7 @@ public class DataBuilder
     if((!init)&&(Double.parseDouble(root.getAttributeValue("resolution")) > 0))
     { //getting a user resolution if supplied
       URes = true;
-      double userRes = Double.parseDouble(root.getAttributeValue(null, "resolution"));
+      double userRes = Double.parseDouble(root.getAttributeValue("resolution"));
       dataTree.fillWorld(userRes);
       init = true;
     }
@@ -1164,6 +1164,9 @@ public class DataBuilder
       } else if(currElem.getName().equals("name"))
       {
         fileName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("storage"))
+      {
+        //do nothing but this is a known tag
       } else
       {
         log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
@@ -1262,6 +1265,8 @@ public class DataBuilder
     {
       log.log(Level.WARNING, "IOException dont give me none of that!! -> "+fileName);
     }
+    
+    log.log(Level.FINE, "Done adding new PointShapefileData");
   }
   
   private void addPolyShapeFileData(Element currFile)
@@ -1314,6 +1319,9 @@ public class DataBuilder
       } else if(currElem.getName().equals("name"))
       {
         fileName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("storage"))
+      {
+        //do nothing but this is a known tag
       } else
       {
         log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
@@ -1462,6 +1470,8 @@ public class DataBuilder
     {
       log.log(Level.WARNING, "IOException dont give me none of that!! -> "+fileName);
     }
+    
+    log.log(Level.FINE, "Done adding new PolyShapefileData");
   }
   
   private void addPointShapeFileEnum(Element currFile)
@@ -1474,6 +1484,7 @@ public class DataBuilder
     String fileName = "init";
     String attrName = "init";
     String nameConvention = "natural";
+    String dataName = "null";
     String target = "null";
     String prefix = "";
     String ref = null;
@@ -1495,28 +1506,34 @@ public class DataBuilder
       if(currElem.getName().equals("data"))
       {
         nameConvention = currElem.getAttributeValue("type");
-        
-        if(nameConvention.equals("prefix"))
-        {//names are a prefix concatedated with the value
-          Element preElem = currElem.getChild("prefix");
-          prefix = preElem.getAttributeValue("value");
-        } else if(nameConvention.equals("manual"))
-        {//each value has a mapping to a name to use
-          nameMap = new HashMap();
-          List mapList = currElem.getChildren("map");
-          Element currMap;
-          
-          for(int k = 0; k < mapList.size(); k++)
-          {
-            currMap = (Element)mapList.get(k);
-            nameMap.put(currMap.getAttributeValue("key"), currMap.getAttributeValue("name"));
-          }
-          
-          if(!nameMap.containsKey("null"))
-          {
-            nameMap.put("null", null);
-          }
-        } //else use natual naming
+        if(nameConvention != null)
+        {
+          if(nameConvention.equals("prefix"))
+          {//names are a prefix concatedated with the value
+            Element preElem = currElem.getChild("prefix");
+            prefix = preElem.getAttributeValue("value");
+          } else if(nameConvention.equals("manual"))
+          {//each value has a mapping to a name to use
+            nameMap = new HashMap();
+            List mapList = currElem.getChildren("map");
+            Element currMap;
+            
+            for(int k = 0; k < mapList.size(); k++)
+            {
+              currMap = (Element)mapList.get(k);
+              nameMap.put(currMap.getAttributeValue("key"), currMap.getAttributeValue("name"));
+            }
+            
+            if(!nameMap.containsKey("null"))
+            {
+              nameMap.put("null", null);
+            }
+          } //else use natual naming
+        } else
+        { //everything goes in one!
+          nameConvention = "single";
+          dataName = currElem.getAttributeValue("value");
+        }
       } else if(currElem.getName().equals("date"))
       {
         time = Double.parseDouble(currElem.getAttributeValue("value"));
@@ -1532,6 +1549,9 @@ public class DataBuilder
       } else if(currElem.getName().equals("name"))
       {
         fileName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("storage"))
+      {
+        //do nothing but this is a known tag
       } else
       {
         log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
@@ -1565,53 +1585,62 @@ public class DataBuilder
           Feature inFeature = (Feature)iter.next();
           Geometry geom = inFeature.getDefaultGeometry();
           Point cent = geom.getCentroid();
-          Object holdAttr = inFeature.getAttribute(attrName);
           
-          target = new String();
           
-          if(holdAttr instanceof Long)
+          if(nameConvention.equals("single"))
           {
-            target = ((Long)holdAttr).toString();
-          } else if(holdAttr instanceof Double)
-          {
-            target = ((Double)holdAttr).toString();
-          } else if(holdAttr instanceof Integer)
-          {
-            target = ((Integer)holdAttr).toString();
-          } else if(holdAttr instanceof String)
-          {
-            target = ((String)holdAttr).toString();
+            target = dataName;
           } else
           {
-            if(!typeWarn)
+            Object holdAttr = inFeature.getAttribute(attrName);
+
+            if(holdAttr instanceof Long)
             {
-              log.log(Level.WARNING, "Unknown attribute data type");
-              typeWarn = true;
-            }
-            
-            if(nameConvention.equals("manual"))
+              target = ((Long)holdAttr).toString();
+            } else if(holdAttr instanceof Double)
             {
-              target = (String)nameMap.get("null");
+              target = ((Double)holdAttr).toString();
+            } else if(holdAttr instanceof Float)
+            {
+              target = ((Float)holdAttr).toString();
+            } else if(holdAttr instanceof Integer)
+            {
+              target = ((Integer)holdAttr).toString();
+            } else if(holdAttr instanceof String)
+            {
+              target = ((String)holdAttr);
             } else
             {
-              target = null;
+              if(!typeWarn)
+              {
+                log.log(Level.WARNING, "Unknown attribute data type -> "
+                    +target.getClass());
+                typeWarn = true;
+              }
+
+              if(nameConvention.equals("manual"))
+              {
+                target = (String)nameMap.get("null");
+              } else
+              {
+                target = null;
+              }
+            } // this is all we need with natural naming
+
+            if(nameConvention.equals("manual"))
+            {
+
+              target = (String)nameMap.get(target);
+            } else if(nameConvention.equals("prefix"))
+            {
+              target = prefix+target;
             }
-          } //this is all we need with natural naming
-          
-          if(nameConvention.equals("manual"))
-          {
-            target = (String)nameMap.get(target);
-          } else if(nameConvention.equals("prefix"))
-          {
-            target = prefix+target;
-          }
+          } //target now has the data name we are storing this geometry in
           
           //setting whether contained data is additive or averaged
           if(!dataAvg.containsKey(target))
           { //i cant believe this is the only way to do this
             //its going to take forever to test every run
-            //TODO figure out a better way
-            System.out.println("added "+target+" as a new variable");
             dataAvg.put(target, new Boolean(avg));
             if(ref != null)
             {
@@ -1654,11 +1683,12 @@ public class DataBuilder
     {
       log.log(Level.WARNING, "IOException dont give me none of that!! -> "+fileName);
     }
+    log.log(Level.FINE, "Done adding new PointShapefileEnum");
   }
   
   private void addPolyShapeFileEnum(Element currFile)
   {
-log.log(Level.FINER, "begin function");
+    log.log(Level.FINER, "begin function");
     
     List infoChildren;
     Element currElem;
@@ -1666,6 +1696,7 @@ log.log(Level.FINER, "begin function");
     String fileName = "init";
     String attrName = "init";
     String nameConvention = "natural";
+    String dataName = "null";
     String target = "null";
     String prefix = "";
     String ref = null;
@@ -1687,28 +1718,34 @@ log.log(Level.FINER, "begin function");
       if(currElem.getName().equals("data"))
       {
         nameConvention = currElem.getAttributeValue("type");
-        
-        if(nameConvention.equals("prefix"))
-        {//names are a prefix concatedated with the value
-          Element preElem = currElem.getChild("prefix");
-          prefix = preElem.getAttributeValue("value");
-        } else if(nameConvention.equals("manual"))
-        {//each value has a mapping to a name to use
-          nameMap = new HashMap();
-          List mapList = currElem.getChildren("map");
-          Element currMap;
-          
-          for(int k = 0; k < mapList.size(); k++)
-          {
-            currMap = (Element)mapList.get(k);
-            nameMap.put(currMap.getAttributeValue("key"), currMap.getAttributeValue("name"));
-          }
-          
-          if(!nameMap.containsKey("null"))
-          {
-            nameMap.put("null", null);
-          }
-        } //else use natual naming
+        if(nameConvention != null)
+        {
+          if(nameConvention.equals("prefix"))
+          {//names are a prefix concatedated with the value
+            Element preElem = currElem.getChild("prefix");
+            prefix = preElem.getAttributeValue("value");
+          } else if(nameConvention.equals("manual"))
+          {//each value has a mapping to a name to use
+            nameMap = new HashMap();
+            List mapList = currElem.getChildren("map");
+            Element currMap;
+            
+            for(int k = 0; k < mapList.size(); k++)
+            {
+              currMap = (Element)mapList.get(k);
+              nameMap.put(currMap.getAttributeValue("key"), currMap.getAttributeValue("name"));
+            }
+            
+            if(!nameMap.containsKey("null"))
+            {
+              nameMap.put("null", null);
+            }
+          } //else use natual naming
+        } else
+        { //everything goes in one!
+          nameConvention = "single";
+          dataName = currElem.getAttributeValue("value");
+        }
       } else if(currElem.getName().equals("date"))
       {
         time = Double.parseDouble(currElem.getAttributeValue("value"));
@@ -1724,6 +1761,9 @@ log.log(Level.FINER, "begin function");
       } else if(currElem.getName().equals("name"))
       {
         fileName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("storage"))
+      {
+        //do nothing but this is a known tag
       } else
       {
         log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
@@ -1754,51 +1794,61 @@ log.log(Level.FINER, "begin function");
           Feature inFeature = (Feature)iter.next();
           Geometry geom = inFeature.getDefaultGeometry();
           Geometry env = geom.getEnvelope();
-          Object holdAttr = inFeature.getAttribute(attrName);
           
-          
-          if(holdAttr instanceof Long)
+          if(nameConvention.equals("single"))
           {
-            target = ((Long)holdAttr).toString();
-          } else if(holdAttr instanceof Double)
-          {
-            target = ((Double)holdAttr).toString();
-          } else if(holdAttr instanceof Integer)
-          {
-            target = ((Integer)holdAttr).toString();
-          } else if(holdAttr instanceof String)
-          {
-            target = ((String)holdAttr).toString();
+            target = dataName;
           } else
           {
-            if(!typeWarn)
+            Object holdAttr = inFeature.getAttribute(attrName);
+
+            if(holdAttr instanceof Long)
             {
-              log.log(Level.WARNING, "Unknown attribute data type");
-              typeWarn = true;
-            }
-            
-            if(nameConvention.equals("manual"))
+              target = ((Long)holdAttr).toString();
+            } else if(holdAttr instanceof Double)
             {
-              target = (String)nameMap.get("null");
+              target = ((Double)holdAttr).toString();
+            } else if(holdAttr instanceof Float)
+            {
+              target = ((Float)holdAttr).toString();
+            } else if(holdAttr instanceof Integer)
+            {
+              target = ((Integer)holdAttr).toString();
+            } else if(holdAttr instanceof String)
+            {
+              target = ((String)holdAttr);
             } else
             {
-              target = null;
+              if(!typeWarn)
+              {
+                log.log(Level.WARNING, "Unknown attribute data type -> "
+                    +target.getClass());
+                typeWarn = true;
+              }
+
+              if(nameConvention.equals("manual"))
+              {
+                target = (String)nameMap.get("null");
+              } else
+              {
+                target = null;
+              }
+            } // this is all we need with natural naming
+
+            if(nameConvention.equals("manual"))
+            {
+
+              target = (String)nameMap.get(target);
+            } else if(nameConvention.equals("prefix"))
+            {
+              target = prefix+target;
             }
-          } //this is all we need with natural naming
-          
-          if(nameConvention.equals("manual"))
-          {
-            target = (String)nameMap.get(target);
-          } else if(nameConvention.equals("prefix"))
-          {
-            target = prefix+target;
-          }
-          
+          } //target now has the data name we are storing this geometry in
+
           //setting whether contained data is additive or averaged
           if(!dataAvg.containsKey(target))
           { //i cant believe this is the only way to do this
             //its going to take forever to test every run
-            //TODO figure out a better way
             dataAvg.put(target, new Boolean(avg));
             if(ref != null)
             {
@@ -1853,7 +1903,7 @@ log.log(Level.FINER, "begin function");
               if(coords[i].y < minY)
                 minY = coords[i].y;
             }
-            
+            System.out.println("next geom -> "+minX+", "+maxX+", "+minY+", "+maxY);
             //normalizes lower bounds (upper dont matter)
             mult = minX/res;
             mult = Math.floor(mult);
@@ -1863,6 +1913,7 @@ log.log(Level.FINER, "begin function");
             mult = Math.floor(mult);
             minY = mult*res;
             
+            GeometryFactory gf = new GeometryFactory();
             Coordinate[] makeLR = new Coordinate[5];
             makeLR[0] = new Coordinate();
             makeLR[1] = new Coordinate();
@@ -1874,6 +1925,7 @@ log.log(Level.FINER, "begin function");
               //normalize once before instead of every time after
               for(double Y = maxY; Y > minY; Y-=res)
               {
+                //System.out.print(".");
                 //getting the fraction of this block which is in the Geometry
                 //this will be the passed data value (as we are storing fractional
                 //coverages)
@@ -1888,7 +1940,7 @@ log.log(Level.FINER, "begin function");
                 makeLR[4].x = X;
                 makeLR[4].y = Y;
                 
-                GeometryFactory gf = new GeometryFactory();
+                
                 LinearRing lr = gf.createLinearRing(makeLR);
                 Polygon holdP = gf.createPolygon(lr, null);
                 if(holdP.intersects(geom))
@@ -1897,8 +1949,8 @@ log.log(Level.FINER, "begin function");
                   
                   dataValue = new Double(over.getArea()/(res*res));
                   
-                  //if(dataValue.doubleValue() > 0)
-                  //{
+                  if(dataValue.doubleValue() > 0)
+                  {
                     toAdd = new DataBlock(X, Y, res, res);
                     timeValue = new TreeMap();
                     timeValue.put(new Double(time), dataValue);
@@ -1906,13 +1958,13 @@ log.log(Level.FINER, "begin function");
                     
                     //merging this data into the current tree
                     dataTree.addData(toAdd, avg);
-                  //}
+                  }
                 }
                 
                 //if this block doesnt overlap geometry dont add it at all
               }
             }
-            
+            //System.out.println("\n -> done geom");
           }
         }
       } finally
@@ -1927,6 +1979,8 @@ log.log(Level.FINER, "begin function");
     {
       log.log(Level.WARNING, "IOException dont give me none of that!! -> "+fileName);
     }
+    
+    log.log(Level.FINE, "Done adding new PolyShapefileEnum");
   }
   
   private void addRasterData(Element currFile)

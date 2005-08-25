@@ -26,8 +26,10 @@ package ModelInterface.DMsource;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.security.*;
 import org.apache.commons.math.special.*;
 import org.apache.commons.math.*;
 
@@ -266,10 +268,10 @@ public final class ComponentManipulator
           {
             if(holdMS[iY][iX] > limit)
           	{
-            	holdMR[iY][iX] = holdMS[iY][iX];
+              holdMR[iY][iX] = holdMS[iY][iX];
           	} else
           	{
-            	holdMR[iY][iX] = 0;
+          	  holdMR[iY][iX] = Double.NaN;
           	}
           } else
           {
@@ -307,7 +309,7 @@ public final class ComponentManipulator
               holdMR[iY][iX] = holdMS[iY][iX];
             } else
             {
-              holdMR[iY][iX] = 0;
+              holdMR[iY][iX] = Double.NaN;
             }
           } else
           {
@@ -343,7 +345,7 @@ public final class ComponentManipulator
             	holdMR[iY][iX] = holdMS[iY][iX];
           	} else
           	{
-            	holdMR[iY][iX] = 0;
+            	holdMR[iY][iX] = Double.NaN;
           	}
           } else
           {
@@ -381,7 +383,7 @@ public final class ComponentManipulator
               holdMR[iY][iX] = holdMS[iY][iX];
             } else
             {
-              holdMR[iY][iX] = 0;
+              holdMR[iY][iX] = Double.NaN;
             }
           } else
           {
@@ -393,6 +395,97 @@ public final class ComponentManipulator
       toReturn[i] = R[i].makeCopy();
       toReturn[i].data = holdMR;
     }
+    return toReturn;
+  }
+  public static Wrapper[] removeRandom(Wrapper[] R, double goal)
+  {
+    log.log(Level.FINER, "begin function");
+    SecureRandom rSeeder = new SecureRandom();
+    Random rGen = new Random(rSeeder.nextLong());
+    
+    double[][] holdMR;
+    double[][] holdMS;
+    double randNum;
+    Wrapper[] toReturn = new Wrapper[R.length];
+
+    for(int i = 0; i<R.length; i++)
+    {
+      holdMS = R[i].data;
+      holdMR = new double[holdMS.length][holdMS[0].length];
+      for(int iY = 0; iY<holdMR.length; iY++)
+      {
+        for(int iX = 0; iX<holdMR[0].length; iX++)
+        {
+          if(!Double.isNaN(holdMS[iY][iX]))
+          {
+            randNum = rGen.nextDouble();
+            if(randNum<goal)
+            {
+              holdMR[iY][iX] = holdMS[iY][iX];
+            } else
+            {
+              holdMR[iY][iX] = Double.NaN;
+            }
+          } else
+          {
+            holdMR[iY][iX] = Double.NaN;
+          }
+        }
+      }
+      toReturn[i] = R[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    
+    return toReturn;
+  }
+  public static Wrapper[] removeRandomGuided(Wrapper[] R, double goal)
+  {
+    log.log(Level.FINER, "begin function");
+    SecureRandom rSeeder = new SecureRandom();
+    Random rGen = new Random(rSeeder.nextLong());
+    
+    double[][] holdMR;
+    double[][] holdMS;
+    double randNum;
+    double actual = goal;
+    double effective = goal;
+    long numIn = 0;
+    long total = 0;
+    Wrapper[] toReturn = new Wrapper[R.length];
+
+    for(int i = 0; i<R.length; i++)
+    {
+      holdMS = R[i].data;
+      holdMR = new double[holdMS.length][holdMS[0].length];
+      for(int iY = 0; iY<holdMR.length; iY++)
+      {
+        for(int iX = 0; iX<holdMR[0].length; iX++)
+        {
+          if(!Double.isNaN(holdMS[iY][iX]))
+          {
+            randNum = rGen.nextDouble();
+            if(randNum < effective)
+            {
+              holdMR[iY][iX] = holdMS[iY][iX];
+              numIn++;
+              total++;
+            } else
+            {
+              holdMR[iY][iX] = Double.NaN;
+              total++;
+            }
+            actual = numIn/total;
+            effective = (((goal-actual)/2)+goal);
+          } else
+          {
+            holdMR[iY][iX] = Double.NaN;
+          }
+        }
+      }
+      toReturn[i] = R[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    
     return toReturn;
   }
   public static Wrapper[] maskCombineOr(Wrapper[] R1, Wrapper[] R2)
@@ -1167,9 +1260,9 @@ public final class ComponentManipulator
      * find out area of the cell, for coverage multiply by value in R, otherwise
      * just add area to that bucket, return array of buckets
      */
-    double POLAR_CIRCUM = 40008.00; //these are constand but i dont know how to make constants in java...
-    double EQUAT_CIRCUM = 40076.5;
-    double PI = 3.1415926535;
+    final double POLAR_CIRCUM = 40008.00;
+    final double EQUAT_CIRCUM = 40076.5;
+    final double PI = 3.1415926535;
     
     double max = largestValue(R)[0].data[0][0];
     double factor = (max*1.0001)/bnum; //makes sure max value goes in last bucket
@@ -1187,9 +1280,12 @@ public final class ComponentManipulator
     for(int i = 0; i < bnum; i++)
     {
       toReturn[i] = new DataWrapper();
-      toReturn[i].data = new double[1][1];
-      toReturn[i].data[0][0] = 0;
+      toReturn[i].data = new double[1][3];
+      toReturn[i].data[0][0] = (factor*i);
+      toReturn[i].data[0][1] = 0;
+      toReturn[i].data[0][2] = (factor*(i+1));
     }
+    toReturn[bnum-1].data[0][2] = max;
     
     for(int i = 0; i < R.length; i++)
     {
@@ -1209,7 +1305,7 @@ public final class ComponentManipulator
             
             store = (int)Math.floor(holdMS[iY][iX]/factor);
             
-            toReturn[store].data[0][0] += (area);
+            toReturn[store].data[0][1] += (area);
           }
         }
     }
@@ -1224,9 +1320,9 @@ public final class ComponentManipulator
      * find out area of the cell, for coverage multiply by value in R, otherwise
      * just add area to that bucket, return array of buckets
      */
-    double POLAR_CIRCUM = 40008.00; //these are constand but i dont know how to make constants in java...
-    double EQUAT_CIRCUM = 40076.5;
-    double PI = 3.1415926535;
+    final double POLAR_CIRCUM = 40008.00;
+    final double EQUAT_CIRCUM = 40076.5;
+    final double PI = 3.1415926535;
     
     double max = largestValue(split)[0].data[0][0];
     double factor = (max*1.0001)/bnum; //1.001 makes sure max value goes in last bucket
@@ -1244,9 +1340,12 @@ public final class ComponentManipulator
     for(int i = 0; i < bnum; i++)
     {
       toReturn[i] = new DataWrapper();
-      toReturn[i].data = new double[1][1];
-      toReturn[i].data[0][0] = 0;
+      toReturn[i].data = new double[1][3];
+      toReturn[i].data[0][0] = (factor*i);
+      toReturn[i].data[0][1] = 0;
+      toReturn[i].data[0][2] = (factor*(i+1));
     }
+    toReturn[bnum-1].data[0][2] = max;
     
     for(int i = 0; i < R.length; i++)
     {
@@ -1265,21 +1364,15 @@ public final class ComponentManipulator
             blockWidth = (totalWidth/R[i].data[iY].length);
             area = blockWidth*blockHeight;
             
-            if(holdMM[iY][iX] > 120000)
-            {
-              System.out.println("mynumberisbig -> "+holdMM[iY][iX]);
-            }
-            
             store = (int)Math.floor(holdMM[iY][iX]/factor);
             
-            toReturn[store].data[0][0] += (area*holdMS[iY][iX]);
+            toReturn[store].data[0][1] += (area*holdMS[iY][iX]);
           }
         }
     }
     
     return toReturn;
   }
-  
   public static Wrapper[] windPower(double height, double diam, double turbine, double avail, double loss)
   {
     DataWrapper[] toReturn = new DataWrapper[1];

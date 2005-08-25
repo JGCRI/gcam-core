@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <files>
-	<data file="inputBarley.xml" />
-	<region file="inputR.xml" />
-	<output file="outBarley.xml" />
-	<log level="INFO" />
+	<data file="inputWindFiles.xml" />
+	<region file="inputRegions.xml" />
+	<output file="outWindData.xml" />
+	<log level="FINE" />
 </files>
