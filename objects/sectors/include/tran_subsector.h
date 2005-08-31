@@ -40,16 +40,18 @@ public:
                    Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo,
                    const int aPeriod );
 protected:
-    std::vector<double> mServiceOutput;
     std::vector<double> speed; // Speed of Mode in Miles/hour
     std::vector<double> popDenseElasticity; // Population Density Elasticity of mode
-    std::vector<double> servicePrice; // subsector price converted to $/pass-mi or $/ton-mi
     std::vector<double> timeValue; // time value of average modal speed
-    std::vector<double> generalizedCost; // subsector price adjusted for value of time, scaled by pd.
-    std::vector<double> loadFactor; //Load factor, persons or tons per vehicle (pass./freight)
     std::vector<double> mServiceOutputs; //!< Service output by period.
-    double popDensity; // population density per land area
-    double baseScaler; // constant scaler to scale base output
+    
+	//! Population density per land area. This is currently always 1 and not
+    //! read in.
+	double popDensity;
+	
+	//! Constant calculated scaler to scale base output
+    double baseScaler;
+
     void MCDerivedClassOutput() const;
     bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

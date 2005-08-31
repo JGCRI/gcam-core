@@ -37,15 +37,12 @@ TranSubsector::TranSubsector( const string regionName, const string sectorName )
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    mServiceOutput.resize( maxper );
     speed.resize( maxper ); // average speed of mode
     popDenseElasticity.resize( maxper );
-    servicePrice.resize( maxper );
     timeValue.resize( maxper );
-    generalizedCost.resize( maxper );
     mServiceOutputs.resize( maxper );
     popDensity = 1; // initialize to 1 for now
-    baseScaler = 0;
+    baseScaler = -1;
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -142,13 +139,11 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
     XMLWriteElement( speed[ period ], "speed", out, tabs );
     XMLWriteElement( popDenseElasticity[ period ], "popDenseElasticity", out, tabs );
     XMLWriteElement( mServiceOutputs[ period ], "serviceoutput", out, tabs );
-    XMLWriteElement( servicePrice[ period ], "servicePrice", out, tabs );
     XMLWriteElement( timeValue[ period ], "timeValue", out, tabs );
-    XMLWriteElement( generalizedCost[ period ], "generalizedCost", out, tabs );
+    XMLWriteElement( subsectorprice[period] + timeValue[period], "generalizedCost", out, tabs );
     XMLWriteElement( popDensity, "popDensity", out, tabs );
     XMLWriteElement( baseScaler, "baseScaler", out, tabs );
-}	
-
+}
 
 /*! \brief Perform any initializations needed for each period.
 *
@@ -158,17 +153,18 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
 * \param period Model period
 */
 void TranSubsector::initCalc( const MarketInfo* aSectorInfo, NationalAccount& aNationalAccount,
-                              Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo,
-                              const int aPeriod )
+							 Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo,
+							 const int aPeriod )
 {
-    // Check if illegal values have been read in
-    if ( speed[ aPeriod ] == 0 ) {
-        speed[ aPeriod ] = 1;
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "ERROR: speed was zero in subsector: " << name << " in region " << regionName << "." << endl;
-    }
-    Subsector::initCalc( aSectorInfo, aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
+	// Check if illegal values have been read in
+	if ( speed[ aPeriod ] <= 0 ) {
+		speed[ aPeriod ] = 1;
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::ERROR );
+		mainLog << "Speed was zero or negative in subsector: " << name << " in region " 
+			<< regionName << ". Reset to 1." << endl;
+	}
+	Subsector::initCalc( aSectorInfo, aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
 }
 
 //! calculate subsector share numerator
@@ -176,46 +172,65 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
 {
     const double scaledGdpPerCapita = gdp->getBestScaledGDPperCap(period);
 
-    // call function to compute technology shares
+    // Call function to compute technology shares
     calcTechShares( gdp, period );
     
-    // calculate and return subsector share; uses calcPrice function
+    // Calculate and return subsector share; uses calcPrice function
     // calcPrice() uses normalized technology shares calculated above
     // Logit exponential should not be zero
     
-    //compute subsector weighted average price of technologies
+    // Compute subsector weighted average price of technologies
     calcPrice( period );
     
-    if(lexp[period]==0) cerr << "TranSubSec Logit Exponential is 0." << endl;
+    // Adjust price to consider time value 
+    const double WEEKS_PER_YEAR = 50;
+    const double HOURS_PER_WEEK = 40;
     
-    //Adjust price to consider time value 
-    const double weeksPerYear = 50.0;
-    const double hoursPerWeek = 40.0;
-    
-    // convert $/vehicle-mi into $/pass-mi or $/ton-mi NOW DONE IN TECHNOLOGY
-    servicePrice[period] = subsectorprice[period];
-    
-    // add cost of time spent on travel by converting gdp/cap into
-    // an hourly wage and multipling by average speed
-    
-    // calculate time value based on hours worked per year
- 	 // Convert GDPperCap into dollars (instead of 1000's of $'s)
-    // GDP value at this point in the code does not include energy feedback calculation for this year, so is, therefore, approximate
-    timeValue[period] = gdp->getApproxGDPperCap( period ) * 1000 /(hoursPerWeek*weeksPerYear)/speed[period];
-	 
-    generalizedCost[period] = servicePrice[period] + timeValue[period] ;
-    
-    /*  Compute calibrating scaler if first period, otherwise use computed
-    scaler in subsequent periods */
-    
-    if(period==0) {
-        baseScaler = mServiceOutput[0] / shrwts[period] * pow(generalizedCost[period], -lexp[period])
-            * pow(scaledGdpPerCapita, -fuelPrefElasticity[period])
-            * pow(popDensity, -popDenseElasticity[period]);
-    }
+	/*! \pre Speed must be greater than 0. */
+	assert( speed[ period ] > 0 );
 
-    share[period] = baseScaler * shrwts[period] * pow(generalizedCost[period], lexp[period])
-        * pow( scaledGdpPerCapita, fuelPrefElasticity[period]) * pow(popDensity, popDenseElasticity[period]);
+    // Add cost of time spent on travel by converting gdp/cap into an hourly
+    // wage and multipling by average speed calculate time value based on hours
+    // worked per year. Convert per capita GDP into dollars (instead of 1000's
+    // of $'s). GDP value at this point in the code does not include energy
+    // feedback calculation for this year, so is, therefore, approximate.
+    timeValue[period] = gdp->getApproxGDPperCap( period ) * 1000 
+		               / ( HOURS_PER_WEEK * WEEKS_PER_YEAR ) / speed[ period ];
+	
+	/*! \invariant Time value must be valid and greater than or equal to zero. */
+	assert( timeValue[ period ] >= 0 && util::isValidNumber( timeValue[ period ] ) );
+	
+    double generalizedCost = subsectorprice[period] + timeValue[period] ;
+    
+	/*! \invariant Generalized cost be valid and greater than or equal to zero. */
+	assert( generalizedCost >= 0 && util::isValidNumber( generalizedCost ) );
+	
+	// Compute calibrating scaler if first period, otherwise use computed
+	// scaler in subsequent periods.
+	if( period == 0 ) {
+		// Can only calculate a base period scaler if there is a non-zero share
+		// weight.
+		if( shrwts[ period ] > 0 ){
+			baseScaler = mServiceOutputs[0] / shrwts[ period ] 
+			             * pow( generalizedCost, -lexp[ period ] )
+				         * pow( scaledGdpPerCapita, -fuelPrefElasticity[ period ] )
+				         * pow( popDensity, -popDenseElasticity[ period ] );
+		}
+		else {
+			baseScaler = 1;
+		}
+	}
+	
+	/*! \pre The base scaler must have already been calculated. */
+	assert( baseScaler != -1 );
+
+	// Compute the share of the subsector.
+    share[period] = baseScaler * shrwts[period] * pow( generalizedCost, lexp[period])
+                    * pow( scaledGdpPerCapita, fuelPrefElasticity[period] )
+					* pow( popDensity, popDenseElasticity[period] );
+	
+	/*! \post The share must be greater than or equal to zero and valid. */
+	assert( share[ period ] >= 0 && util::isValidNumber( share[ period ] ) );
 }
 
 //! sets demand to output and output
@@ -241,9 +256,6 @@ void TranSubsector::MCDerivedClassOutput() const {
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
-    
-    // Subsector service price
-    dboutput4( regionName, "General","ServicePrice", sectorName + name, "$/pass(ton)-mi", servicePrice );
     // Subsector timeValue price
     dboutput4( regionName, "General", "TimeValue", sectorName + name, "$/pass(ton)-mi", timeValue );
     // Subsector speed
