@@ -861,14 +861,21 @@ void Subsector::calcTechShares( const GDP* gdp, const int period ) {
         techs[i][period]->calcCost( regionName, sectorName, period );
         // determine shares based on technology costs
         techs[i][period]->calcShare( regionName, gdp, period );
+		
+		/*! \invariant Technology shares must always be valid. */
+		assert( util::isValidNumber( techs[ i ][ period ]->getShare() ) );
+
+		// Sum the technology shares.
         sum += techs[i][period]->getShare();
     }
-    // normalize technology shares to total 100 %
+    // normalize technology shares to total one. Technology shares may also sum
+	// to zero if there is no output from the subsector.
     for( unsigned int i = 0; i < techs.size(); ++i ){
         techs[i][period]->normShare(sum);
+		/*! \invariant Technology shares must be valid after normalization. */
+		assert( util::isValidNumber( techs[ i ][ period ]->getShare() ) );
     }
 }	
-
 
 /*! \brief calculate Subsector unnormalized shares
 *
@@ -883,34 +890,40 @@ void Subsector::calcTechShares( const GDP* gdp, const int period ) {
 * \warning there is no difference between demand and supply technologies. Control behavior with value of parameter fuelPrefElasticity
 */
 void Subsector::calcShare(const int period, const GDP* gdp ) {
-   
-    // call function to compute technology shares
-    calcTechShares( gdp, period );
-    // calculate and return Subsector share; uses above price function
-    // calc_price() uses normalized technology shares calculated above
-    
-    // compute Subsector weighted average price of technologies
-    calcPrice( period );
-    
-    if( subsectorprice[period]==0) {
-        share[period] = 0;
-    }
-    else {
-      double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
-		share[period] = shrwts[period]*pow(subsectorprice[period],lexp[period])*pow(scaledGdpPerCapita,fuelPrefElasticity[period]);
+
+	// call function to compute technology shares
+	calcTechShares( gdp, period );
+	// calculate and return Subsector share; uses above price function
+	// calcPrice() uses normalized technology shares calculated above
+
+	// compute Subsector weighted average price of technologies
+	calcPrice( period );
+
+	// Check for unreasonable shareweights.
+	if ( shrwts[period]  > 1e4 ) {
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::WARNING );
+		mainLog << "Huge shareweight for sector " << sectorName << ", sub-sector " << name 	
+			    << " in region " << regionName << " of " << shrwts[period] << endl;
 	}
-		
-   if (shrwts[period]  > 1e4) {
-    cout << "WARNING: Huge shareweight for sector: " << sectorName << ", sub-sector " << name << " : " << shrwts[period] 
-         << " in region " << regionName <<endl;
-   }
-      
-   if (share[period] < 0) {
-     cerr << "Share is < 0 for " << name << " in " << regionName << endl;
-     cerr << "    subsectorprice[period]: " << subsectorprice[period] << endl;
-     cerr << "    shrwts[period]: " << shrwts[period] << endl;
-   }   
 	
+	// Calculate the subsector share based on its price.
+	if( subsectorprice[ period ] > 0 ){
+		double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
+		share[ period ] = shrwts[ period ] * pow( subsectorprice[ period ], lexp[ period ] )
+			                               * pow( scaledGdpPerCapita, fuelPrefElasticity[ period ] );
+	}
+	else {
+		share[ period ] = 0;
+	}
+	
+	// Check for invalid shares.
+	if( share[ period ] < 0 || !util::isValidNumber( share[ period ] ) ) {
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::ERROR );
+		mainLog << "Invalid share for " << name << " in " << regionName 
+			    << " of " << shrwts[ period ] << endl;
+	}   
 }
 
 /*! \brief normalizes Subsector shares
@@ -928,6 +941,8 @@ void Subsector::normShare( const double sum, const int period ) {
     else {
         setShare( 0, period );
     }
+	/*! \post Shares must be zero or greater and valid after normalization */
+	assert( share[ period ] >= 0 && util::isValidNumber( share[ period ] ) );
 }
 
 /*!
@@ -1662,6 +1677,8 @@ void Subsector::scaleShareWeight( const double scaleValue, const int period ) {
 * \return share value
 */
 double Subsector::getShare( const int period ) const {
+	/*! \post Shares should be zero or greater and valid. */
+	assert( share[ period ] >= 0 && util::isValidNumber( share[ period ] ) );
     return share[period];
 }
 
@@ -1674,10 +1691,16 @@ double Subsector::getShare( const int period ) const {
 * \param period Model period
 */
 void Subsector::setShare( const double shareVal, const int period ) {
-    share[ period ] = shareVal;
-    if ( shareVal > ( 1 + util::getVerySmallNumber() ) ) {
-        cout << "ERROR: Share value set > 1. Share: " << shareVal << endl;
+	/*! \pre The share value should be valid. */
+	assert( util::isValidNumber( shareVal ) );
+	
+	/*! \pre The new share value should be less than or equal to one. */
+	if ( shareVal > ( 1 + util::getVerySmallNumber() ) ) {
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Setting share to value greater than one. New share value " << shareVal << endl;
     }
+    share[ period ] = shareVal;
 }
 
 //! write Subsector output to database
