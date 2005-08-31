@@ -86,7 +86,6 @@ void technology::copy( const technology& techIn ) {
     share = techIn.share;
     input = techIn.input;
     output = techIn.output;
-    techchange = techIn.techchange;
     fixedOutput = techIn.fixedOutput;
     fixedOutputVal = techIn.fixedOutputVal;
     name = techIn.name;
@@ -143,7 +142,6 @@ void technology::initElementalMembers(){
     share = 0;
     input = 0;
     output = 0;
-    techchange = 0;
     A = 0;
     B = 0;
     resource = 0;
@@ -232,9 +230,6 @@ void technology::XMLParse( const DOMNode* node ) {
         }
         else if( nodeName == "fixedOutput" ){
             fixedOutput = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "techchange" ){
-            techchange = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "resource" ){
             resource = XMLHelper<double>::getValue( curr );
@@ -338,7 +333,6 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, LOGIT_EXP_DEFAULT );
     XMLWriteElementCheckDefault( fixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
-    XMLWriteElementCheckDefault( techchange, "techchange", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( resource, "resource", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( A, "A", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( B, "B", out, tabs, 0.0 );
@@ -378,7 +372,6 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     XMLWriteElement( share, "share", out, tabs );
     XMLWriteElement( output, "output", out, tabs );
     XMLWriteElement( input, "input", out, tabs );
-    XMLWriteElement( techchange, "techchange", out, tabs );
     XMLWriteElement( resource, "resource", out, tabs );
     XMLWriteElement( A, "A", out, tabs );
     XMLWriteElement( B, "B", out, tabs );
@@ -505,6 +498,9 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
     }
     else {
         fuelprice = marketplace->getPrice( fuelname, regionName, per );
+		
+		/*! \invariant The market price of the fuel must be valid. */
+		assert( fuelprice != Marketplace::NO_MARKET_PRICE );
     } 
 	 
 	// fMultiplier and pMultiplier are initialized to 1 for those not read in
