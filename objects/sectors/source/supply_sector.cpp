@@ -150,7 +150,11 @@ void SupplySector::completeInit( DependencyFinder* aDependencyFinder ){
 void SupplySector::setCalibratedSupplyInfo( const int aPeriod ) const {
     const double MKT_NOT_ALL_FIXED = -1;
     Marketplace* marketplace = scenario->getMarketplace();
-    if ( outputsAllFixed( aPeriod )  ) {
+    
+    double calSupplyMktPlace = marketplace->getMarketInfo( name, regionName, aPeriod, "calSupply" );
+    
+    // If this market is global, the second check is to see if some other region has flaged this as all inputs not fixed
+    if ( outputsAllFixed( aPeriod ) &&  calSupplyMktPlace != MKT_NOT_ALL_FIXED ) {
         // If supply of this good has not been elimiated from the search and output is fixed then add to fixed supply value
         double calSupply = getCalOutput( aPeriod );  // total calibrated output
         calSupply += getFixedOutput( aPeriod );  // total fixed output
