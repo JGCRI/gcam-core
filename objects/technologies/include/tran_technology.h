@@ -39,11 +39,13 @@ public:
     void initCalc( const MarketInfo* aSubsectorInfo );
 
 protected:
-    double techChangeCumm; //!< cummulative technical change
-    double loadFactor; //!< vechile load factor
-    double vehicleOutput; //!< service per vehicle
-    double serviceOutput; //!< service by technology
-	double baseScaler; //!< constant scaler to scale base output
+	//! Vehicle load factor.
+    double loadFactor;
+
+	//! Annual technical change rate.
+	double mTechnicalChange;
+	
+	double getCumulativeTechnicalChange( const int aPeriod ) const;
     bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
