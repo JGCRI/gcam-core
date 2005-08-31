@@ -64,7 +64,6 @@ protected:
     std::auto_ptr<MarketInfo> mSubsectorInfo; //!< The subsector's information store.
     std::vector<std::vector<technology*> > techs; //!< vector of technology by period
 
-    double mExpectedProfitRate; //!< Expected profit for this subsector in the current period. Should we save this? 
     std::vector<double> capLimit; //!< subsector capacity limit
     std::vector<double> fixedShare; //!< share of this sub-sector that is fixed capacity -- set in sector
     std::vector<double> shrwts; //!< subsector logit share weights
