@@ -101,7 +101,7 @@ public:
     void setCalSuppliesAndDemands( const int period );
     void initializeCalValues( const int period );
     bool setImpliedCalInputs( const int period );
-    void scaleCalInputs( const int period );
+    int scaleCalInputs( const int period );
     virtual void updateAllOutputContainers( const int period );
 	virtual void updateMarketplace( const int period );
     virtual void finalizePeriod( const int aPeriod );

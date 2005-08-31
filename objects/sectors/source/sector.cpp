@@ -832,7 +832,7 @@ double Sector::getCalAndFixedOutputs( const int period, const std::string& goodN
     return sumCalOutputValues;
 }
 
-/*! \brief Calculates the input value needed to produce the required output
+/*! \brief Sets the input value needed to produce the required output to the marketplace 
 *
 * \author Steve Smith
 * \param period Model period

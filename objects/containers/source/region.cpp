@@ -1070,7 +1070,7 @@ void Region::initCalc( const int period )
         }
         if ( TFEcalb[ period ] != 0 ) {
             double scaleFactor = totalFinalEnergy / TFEcalb[ period ];
-            if ( abs( scaleFactor - 1 ) > util::getSmallNumber() ) {
+            if ( fabs( scaleFactor - 1 ) > util::getSmallNumber() ) {
                 ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
                 calibrationLog.setLevel( ILogger::DEBUG );
                 calibrationLog << "TFE in region " << name << " scaled by: "<< scaleFactor << endl;
@@ -1123,7 +1123,7 @@ void Region::setCalSuppliesAndDemands( const int period ) {
 */
 void Region::initializeCalValues( const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
-    const double DEFAULT_CAL_VALUE = -1;  // This will get set to -1 if this market is not fixed and a value >= 0 otherwise
+    const double DEFAULT_CAL_VALUE = -2;  // This will get set to -1 if this market is not fixed and a value >= 0 otherwise
 
     updateSummary( period );	// Dummy call to final supply to setup fuel map.
 
@@ -1292,8 +1292,9 @@ bool Region::setImpliedCalInputs( const int period ) {
 * \todo Eliminate doesMarketExist function by using something other than the fuelmap (needs to be implemented) to find what fuels a region/sector uses
 * \author Steve Smith
 * \param period Model period
+* \return Number of values scaled.
 */
-void Region::scaleCalInputs( const int period ) {
+int Region::scaleCalInputs( const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
     Configuration* conf = Configuration::getInstance();
 
@@ -1319,6 +1320,8 @@ void Region::scaleCalInputs( const int period ) {
     // If supply is fixed stop.
     // Make sure all inputs are fixed demands
 
+    int numberOfScaledValues = 0;
+    
     map<string,double> fuelCons = summary[0].getfuelcons();
     typedef map<string,double>:: const_iterator CI;
 
@@ -1334,43 +1337,49 @@ void Region::scaleCalInputs( const int period ) {
                 string fuelNameSector = fuelIter->first;
                 if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
                     double scaleValue = calSupplyValue / calDemandValue;
+                    
+                    if ( abs( 1 - scaleValue ) > util::getVerySmallNumber() ) {                        
+                        ILogger& mainLog = ILogger::getLogger( "main_log" );
+                        mainLog.setLevel( ILogger::DEBUG );
+                        mainLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
+                        ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+                        calibrationLog.setLevel( ILogger::DEBUG );
+                        calibrationLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
+                    
+                        // Repeat for all fuels derived from this one
+                        vector<string> dependentFuels = (*fuelRelationshipMap)[ fuelIter->first ];
 
-                    ILogger& mainLog = ILogger::getLogger( "main_log" );
-                    mainLog.setLevel( ILogger::DEBUG );
-                    mainLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
-                    ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-                    calibrationLog.setLevel( ILogger::DEBUG );
-                    calibrationLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
+                        // Note loop goes to 1 + number of fuels so that basefuel is covered.
+                        for ( unsigned int i = 0; i <= dependentFuels.size(); ++i) {
+                            ++numberOfScaledValues; 
 
-                    // Repeat for all fuels derived from this one
-                    vector<string> dependentFuels = (*fuelRelationshipMap)[ fuelIter->first ];
+                            string fuelName;
+                            if ( i == dependentFuels.size() ) {
+                                fuelName = fuelIter->first; // Finish with base fuel in case that is used directly
+                            } else {
+                                fuelName = dependentFuels [ i ];
+                            }
 
-                    // Note loop goes to 1 + number of fuels so that basefuel is covered.
-                    for ( unsigned int i = 0; i <= dependentFuels.size(); ++i) {
-                        string fuelName;
-                        if ( i == dependentFuels.size() ) {
-                            fuelName = fuelIter->first; // Finish with base fuel in case that is used directly
-                        } else {
-                            fuelName = dependentFuels [ i ];
-                        }
-
-                        mainLog << fuelName << ", "; 
-                        calibrationLog  << fuelName <<", "; 
-                        for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-                            demandSector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
-                        }
-                        for ( unsigned int j = 0; j < supplySector.size(); j++ ) {
-                            supplySector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
-                        }
-                    } // dependentFuels loop
-                    mainLog << " in region " << name << endl ; 
-                    calibrationLog << " in region " << name << endl ; 
+                            mainLog << fuelName << ", "; 
+                            calibrationLog  << fuelName <<", "; 
+                            for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
+                                demandSector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
+                            }
+                            for ( unsigned int j = 0; j < supplySector.size(); j++ ) {
+                                supplySector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
+                            }
+                        } // dependentFuels loop
+                        mainLog << " in region " << name << endl; 
+                        calibrationLog << " in region " << name << endl;
+                    }
                 } // end scaling loop
             } // end zTotal check loop
     } // end fuelCons loop
 
     // This is not needed anymore so release this memory
     fuelRelationshipMap.release();
+    
+    return numberOfScaledValues;
 }
 
 /*! \brief Perform any sector level data consistancy checks

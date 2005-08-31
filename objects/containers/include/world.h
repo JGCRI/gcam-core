@@ -90,7 +90,7 @@ private:
     void clear();
     const std::vector<int> getRegionIndexesToCalculate( const std::vector<std::string>& regionsToSolve );
     void csvGlobalDataFile() const; 
-    void checkCalConsistancy( const int period );
+    bool checkCalConsistancy( const int period );
 };
 
 #endif // _WORLD_H_

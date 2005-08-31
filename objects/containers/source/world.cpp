@@ -226,10 +226,14 @@ const std::string& World::getXMLNameStatic() {
 */
 void World::initCalc( const int period ) {
     
-    // cal consistency check needs to be before initCalc so calInput values have already been scaled
-    // if necessary
-    checkCalConsistancy( period );
-
+    // cal consistency check needs to be before initCalc so calInput values have already been scaled if necessary
+    // If any values are scaled, then this is checked at least one more time to see if further scalings are necessary
+    const int MAX_CALCS = 6;
+    int calCheckIterations = 0;
+    while ( calCheckIterations < MAX_CALCS && checkCalConsistancy( period ) ) {
+        ++calCheckIterations;
+    }
+    
     // Reset the calc counter.
     calcCounter->startNewPeriod();
     for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ){
@@ -259,15 +263,16 @@ void World::initCalc( const int period ) {
 *
 * \author Steve Smith
 * \warning A simultaneity in the base year may or may not be handled correctly.
+* \return Whether any values were adjusted this period.
 */
-void World::checkCalConsistancy( const int period ) {
+bool World::checkCalConsistancy( const int period ) {
 
     // Don't check for this unless calibration is active
     Configuration* conf = Configuration::getInstance();
     if( conf->getBool( "CalibrationActive" ) ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Starting world calibration consistency check " << endl;
+        mainLog << "Performing world calibration consistency check " << endl;
         
         //Setup for checking by initializing fixed supplies and demands counter to null value
          for( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
@@ -295,15 +300,27 @@ void World::checkCalConsistancy( const int period ) {
             if (iteration > 50 ) {
                 mainLog.setLevel( ILogger::ERROR );
                 mainLog << "ERROR: calibration check stuck in large loop. Aborting. " << endl;
-                return;
+                return true;
             }
         }
-
+        
+        int numberOfScaledValues = 0;
+        
         // Scale calibrated input values once all supplies and demands have been counted
         for( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
-            ( *i )->scaleCalInputs( period );
+            numberOfScaledValues += ( *i )->scaleCalInputs( period );
         }
         
+        if ( numberOfScaledValues > 0 ) {
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << numberOfScaledValues << " markets had demand calibration values scaled. " << endl;
+        }
+        
+        return numberOfScaledValues > 0; // If any values were scaled, set flag to true
+    } 
+    // else branch for calibrations not active
+    else {
+        return false;
     }
 }
 
