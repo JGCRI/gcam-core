@@ -61,7 +61,6 @@ protected:
     double share; //!< technology shares
     double input; //!< total fuel input (fossil and uranium)
     double output; //!< technology output
-    double techchange;  //!< technical change in %/year
     double fixedOutput; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
     double fixedOutputVal; //!< The actual fixed output value
     double calInputValue; // Calibration value
