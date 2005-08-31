@@ -79,7 +79,7 @@ private:
         const double tolerance; //!< The tolerance within which to return that the values are equal.
         ApproxEqual( double compareValueIn, double toleranceIn ):
         compareValue( compareValueIn ), tolerance( toleranceIn ){}
-        operator()( const double value ){
+        bool operator()( const double value ){
             return fabs( value - compareValue ) < tolerance;
         }
     };

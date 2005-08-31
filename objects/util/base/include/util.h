@@ -21,6 +21,7 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <cmath>
 #include <sstream>
 #include <map>
 #include <vector>
@@ -117,7 +118,7 @@ namespace util {
     template<>
     inline bool isEqual<double>( const double firstNumber, const double secondNumber ) {
         const static double SMALL_NUM = 1E-10;
-        return ( fabs( firstNumber - secondNumber ) < SMALL_NUM );
+        return ( std::fabs( firstNumber - secondNumber ) < SMALL_NUM );
     }
 
     /*! \brief A function to check if a file was opened successfully.

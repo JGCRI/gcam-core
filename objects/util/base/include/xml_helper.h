@@ -582,7 +582,7 @@ void XMLHelper<T>::initParser() {
 */
 template<class T>
 const std::string& XMLHelper<T>::text(){
-    const static std::string& TEXT = "#text";
+    const static std::string TEXT = "#text";
     return TEXT;
 }
 
@@ -592,7 +592,7 @@ const std::string& XMLHelper<T>::text(){
 */
 template<class T>
 const std::string& XMLHelper<T>::name(){
-    const static std::string& NAME = "name";
+    const static std::string NAME = "name";
     return NAME;
 }
 
@@ -675,7 +675,7 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
         if( shouldDelete ) {
             // Perform deletion
             mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Deleting node: " << objName << endl;
+            mainLog << "Deleting node: " << objName << std::endl;
             
             // Create an iterator which points at the location which should be deleted.
             typedef typename std::vector<U>::iterator VectorIterator;
@@ -697,11 +697,11 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
     else {
         if( shouldDelete ) {
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Could not delete node " << objName << " as it does not exist." << endl;
+            mainLog << "Could not delete node " << objName << " as it does not exist." << std::endl;
         } 
         else if( XMLHelper<bool>::getAttr( node, "nocreate" ) ) {
             mainLog.setLevel( ILogger::NOTICE );
-            mainLog << "Did not create node " << objName << " as the nocreate input flag was set." << endl;
+            mainLog << "Did not create node " << objName << " as the nocreate input flag was set." << std::endl;
         }
         else {
             newNode->XMLParse( node );
