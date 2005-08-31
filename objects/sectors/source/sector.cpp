@@ -483,6 +483,8 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
 
 		// Sum shares that are not fixed
 		if ( fixedShare < util::getTinyNumber() ) {
+			/*! \invariant Variable subsector shares must always be valid. */
+			assert( util::isValidNumber( subsec[ i ]->getShare( period ) ) );
 			sum += subsec[ i ]->getShare( period );
 		}
 		
@@ -499,7 +501,6 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
 
     // Now normalize shares
     for ( unsigned int i = 0; i < subsec.size(); i++ ) {
-
 		if ( subsec[ i ]->getFixedOutput( period ) == 0 ) {
 			// normalize subsector shares that are not fixed
 			if ( fixedSum < 1 ) {
@@ -528,8 +529,8 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
         adjSharesCapLimit( period );
     }
 
-    // Check to make sure shares still equal 1
     const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
+    // Check to make sure shares equal 1
     if ( debugChecking ) {
         checkShareSum( period );
     }
@@ -639,21 +640,23 @@ void Sector::adjSharesCapLimit( const int period ) {
 * \param period Model period
 */
 void Sector::checkShareSum( const int period ) const {
-    double sumshares = 0;
-
+    
+	double sumshares = 0;
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         // Check the validity of shares.
         assert( util::isValidNumber( subsec[ i ]->getShare( period ) ) );
         sumshares += subsec[ i ]->getShare( period ) ;
     }
     if ( fabs(sumshares - 1) > util::getSmallNumber() ) {
-        cerr << "ERROR: Shares do not sum to 1. Sum = " << sumshares << " in Sector " << name;
-        cerr << ", region: " << regionName << endl;
-        cout << "Shares: ";
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Shares do not sum to 1. Sum = " << sumshares << " in Sector " << name;
+        mainLog << ", region: " << regionName << endl;
+        mainLog << "Shares: ";
         for ( unsigned int i = 0; i < subsec.size(); ++i ){
-            cout << subsec[ i ]->getShare( period ) << ", ";
+            mainLog << subsec[ i ]->getShare( period ) << ", ";
         }
-        cout << endl;
+        mainLog << endl;
     }
 }
 
