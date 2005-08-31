@@ -61,7 +61,12 @@ const string Region::XML_NAME = "region";
 
 //! Default constructor
 Region::Region() {
-    // Resize all vectors to maximum period
+	/*! \pre The modeltime object must be read-in before the Region can be
+    *        parsed. 
+    */
+	assert( scenario->getModeltime() );
+    
+	// Resize all vectors to maximum period
     const int maxper = scenario->getModeltime()->getmaxper();
     TFEcalb.resize( maxper ); // Total Final Energy calibration value
     TFEPerCapcalb.resize( maxper ); // Total Final Energy per capita calibration value. This is converted to total TFE using population.
