@@ -99,7 +99,7 @@ Marketplace* marketplace = scenario->getMarketplace();
     
     double priceRatio = ( period > 1 ) ? 
         marketplace->getPrice( fuelname, regionName, period ) / 
-        marketplace->getPrice( fuelname, regionName, period - 1 ) : 1;
+        marketplace->getPrice( fuelname, regionName, 1 ) : 1;
     
     double prefixValue =    saturation * aveInsulation * floorToSurfaceArea * 
                             coolingDegreeDays * pow( priceRatio, priceElasticity );
