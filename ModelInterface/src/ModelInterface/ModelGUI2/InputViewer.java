@@ -5,9 +5,17 @@ import org.w3c.dom.ls.*;
 import org.w3c.dom.bootstrap.*;
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
-import org.apache.xpath.domapi.*;
+//import org.apache.xpath.domapi.*;
 import org.jfree.chart.JFreeChart;
-import org.w3c.dom.xpath.*;
+//import org.w3c.dom.xpath.*;
+
+import javax.xml.xpath.*;
+
+//import org.apache.xpath.XPath;
+//import org.apache.xpath.XPathContext;
+//import org.apache.xml.utils.PrefixResolver;
+//import org.apache.xml.utils.PrefixResolverDefault;
+import javax.xml.transform.TransformerException;
 
 import javax.swing.event.*;
 import javax.swing.tree.TreeSelectionModel;
@@ -93,6 +101,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 	private int leftWidth;
 
+	private Documentation documentation;
+
 	//int windowHeight;
 	//int windowWidth;
 	//JFileChooser globalFC;
@@ -100,8 +110,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	public InputViewer(JFrame parentFrameIn) {
 		try {
 			System.setProperty(DOMImplementationRegistry.PROPERTY,
-					"com.sun.org.apache.xerces.internal.dom.DOMImplementationSourceImpl");
-					//"org.apache.xerces.dom.DOMImplementationSourceImpl");
+					//"com.sun.org.apache.xerces.internal.dom.DOMImplementationSourceImpl");
+					"org.apache.xerces.dom.DOMImplementationSourceImpl");
 			DOMImplementationRegistry reg = DOMImplementationRegistry
 					.newInstance();
 			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");
@@ -175,6 +185,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 						((InterfaceMain)parentFrame).removePropertyChangeListener(savePropListener);
 						//((InterfaceMain)parentFrame).getQuitMenu().removeActionListener(thisViewer);
 						((InterfaceMain)parentFrame).getSaveMenu().setEnabled(false);
+						doc = null;
+						documentation = null;
 						parentFrame.getContentPane().removeAll();
 						parentFrame.setTitle("ModelInterface");
 						if(splitPane != null) {
@@ -340,6 +352,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 		//create the dialog for adding new node children, but leave invisible
 		makeAddChildDialog();
+		String xpStr = "/scenario[((@date='always') and (@name='demog_rates'))]/world/region/demographics/populationSGMRate[(@year='1985')]/ageCohort/gender[(@type='male')]/population/node()" ;
+		evalDocumentationLink(xpStr);
 
 		//this.show();
 		//this.pack();
@@ -457,13 +471,139 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			}
 
 		} else if (command.equals("Delete Node")) {
-			System.out.println("Using this one");
 			jtree.setSelectionPath(selectedPath);
 			deleteNode();
 		} else if (command.equals("Display Table")) {
 			displayTable();
+		} else if(command.equals("Annotate")) {
+			jtree.setSelectionPath(selectedPath);
+
+			Node nodeClicked = ((DOMmodel.DOMNodeAdapter) jtree
+					.getLastSelectedPathComponent()).getNode();
+			documentation.getDocumentation(nodeClicked);
+			/*
+			String nodeCXPath = nodeToXPath(nodeClicked).toString();
+			System.out.println("Node clicked XPath: "+nodeCXPath);
+			//if (nodeClicked.getNodeType() != Element.TEXT_NODE) {
+				try {
+					PrefixResolver pr = new PrefixResolverDefault(doc.getDocumentElement());
+					XPath xp = new XPath(xpStr, null, pr, XPath.MATCH);
+					XPath xpCurrNode = new XPath(nodeCXPath, null, pr, XPath.MATCH);
+					if(xp.getExpression().deepEquals(xpCurrNode.getExpression())) {
+					//if(xp.getExpression().bool(new XPathContext())) {
+						System.out.println("Wow it bool'ed");
+					} else {
+						System.out.println("Yea it didn't bool");
+					}
+					System.out.println("Merged XPath: "+meregeXPaths(xpStr, nodeCXPath));
+				} catch(TransformerException te) {
+					te.printStackTrace();
+				}
+			//}
+			*/
 		}
 	}
+
+	private TreeSet doc1Nodes;
+	private void evalDocumentationLink(String xpLink) {
+		doc1Nodes = new TreeSet(new Comparator() {
+			public int compare(Object obj1, Object obj2) {
+				if(obj1.equals(obj2)) {
+					return 0;
+				} else {
+					String node1Val = ((Node)obj1).getNodeValue();
+					String node2Val = ((Node)obj2).getNodeValue();
+					int ret = String.CASE_INSENSITIVE_ORDER.compare(node1Val, node2Val);
+					if(ret == 0) {
+						return 1;
+					} else {
+						return ret;
+					}
+				}
+			}
+		});
+
+		try {
+			XPath xpImpl = XPathFactory.newInstance().newXPath();
+			XPathExpression xpe = xpImpl.compile(xpLink);
+			NodeList nl = (NodeList)xpe.evaluate(doc.getDocumentElement(), XPathConstants.NODESET);
+			for(int i = 0; i < nl.getLength(); ++i) {
+				doc1Nodes.add(nl.item(i));
+			}
+			//System.out.println("Evaluated to: "+xpe.evaluate(doc.getDocumentElement(), XPathConstants.STRING));
+		} catch(XPathExpressionException xpee) {
+			xpee.printStackTrace();
+		}
+	}
+
+	String meregeXPaths(String path1, String path2) {
+		String[] path1Arr = path1.split("/");
+		String[] path2Arr = path2.split("/");
+		StringBuffer strBuff = new StringBuffer();
+		if(path1Arr.length != path2Arr.length) {
+			System.out.println("Can't merge "+path1+" and "+path2);
+			return null;
+		}
+		for(int i = 1; i < path1Arr.length; ++i) {
+			if(path1Arr[i].equals(path2Arr[i])) {
+				strBuff.append("/").append(path1Arr[i]);
+			} else if(path1Arr[i].indexOf('[') == -1 && path2Arr[i].indexOf('[') == -1) {
+				return null;
+			} else if(path1Arr[i].indexOf('[') != -1 && path2Arr[i].indexOf('[') != -1 && !path1Arr[i].substring(0, path1Arr[i].indexOf('[')).equals(path2Arr[i].substring(0, path2Arr[i].indexOf('[')))) {
+				return null;
+			} else if(path1Arr[i].indexOf('[') == -1 && path2Arr[i].indexOf('[') != -1) {
+				strBuff.append("/").append(path2Arr[i]);
+			} else {
+				String[] attrs = path1Arr[i].substring(path1Arr[i].indexOf('[')+1, path1Arr[i].indexOf(']')).split(" or ");
+				String p2Attr = path2Arr[i].substring(path2Arr[i].indexOf('[')+1, path2Arr[i].indexOf(']'));
+				boolean found = false;
+				for(int j = 0; j < attrs.length && !found; ++j) {
+					if(attrs[j].equals(p2Attr)) {
+						strBuff.append("/").append(path1Arr[i]);
+						found = true;
+					}
+				}
+				if(!found) {
+					strBuff.append("/").append(path1Arr[i].substring(0,path1Arr[i].length()-1)).append(" or ").append(p2Attr).append("]");
+				}
+			}
+		}
+		return strBuff.toString();
+	}
+				
+	StringBuffer nodeToXPath(Node n) {
+		if(n.getNodeType() != Node.DOCUMENT_NODE) {
+			StringBuffer buf = nodeToXPath(n.getParentNode());
+			if(n.getNodeType() == Node.TEXT_NODE) {
+				return buf.append("node()");
+			}
+			buf.append(n.getNodeName());
+			NamedNodeMap nm = n.getAttributes();
+			if(nm.getLength() > 0) {
+				buf.append("[");
+			}
+			if(nm.getLength() > 1) {
+				buf.append("(");
+			}
+			for(int i = 0; i < nm.getLength(); ++i) {
+				buf.append("(@").append(nm.item(i).getNodeName()).append("='").append(nm.item(i).getNodeValue()).append("')");
+				if(i+1 != nm.getLength()) {
+					buf.append(" and ");
+				}
+			}
+			if(nm.getLength() > 1) {
+				buf.append(")");
+			}
+			if(nm.getLength() > 0) {
+				buf.append("]");
+			}
+			return buf.append("/");
+		} else {
+			return new StringBuffer("/");
+		}
+	}
+
+
 
 	/**
 	 * This "helper method" makes a menu item and then registers this object as
@@ -497,6 +637,10 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 		treeMenu.add(new JSeparator());
 		menuItem = new JMenuItem("Delete Node");
+		menuItem.addActionListener(this);
+		treeMenu.add(menuItem);
+
+		menuItem = new JMenuItem("Annotate");
 		menuItem.addActionListener(this);
 		treeMenu.add(menuItem);
 
@@ -1033,6 +1177,12 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
 			doc = readXMLFile( file);
+			String docLoc = doc.getDocumentElement().getAttribute("documentation");
+			if(docLoc == null) {
+				documentation = null;
+			} else {
+				documentation = new Documentation(doc, docLoc, lsParser, lsInput);
+			}
 		} else {
 			return false;
 		}
@@ -1154,11 +1304,12 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	public Document readXMLFile(File file) {
 		try {
 			lsInput.setByteStream(new FileInputStream(file));
+			/*
 			lsParser = implls.createLSParser(
 					DOMImplementationLS.MODE_SYNCHRONOUS, null);
 			lsParser.setFilter(new ParseFilter());
+			*/
 			return lsParser.parse(lsInput);
-			//removeEmptyTextNodes(doc.getDocumentElement());
 		} catch (Exception e) {
 			System.out.println("Got Exception while creating XML document: "
 					+ e);
