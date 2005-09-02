@@ -71,7 +71,6 @@ public class Documentation {
 		doc = docIn;
 		documentations = new Vector<DocumentationElement>();
 		xpathImpl = XPathFactory.newInstance().newXPath();
-		System.out.println("XP: "+xpathImpl);
 		nodeComparator = new Comparator() {
 			public int compare(Object obj1, Object obj2) {
 				if(obj1.equals(obj2)) {

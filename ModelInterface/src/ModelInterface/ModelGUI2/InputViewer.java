@@ -352,8 +352,6 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 		//create the dialog for adding new node children, but leave invisible
 		makeAddChildDialog();
-		String xpStr = "/scenario[((@date='always') and (@name='demog_rates'))]/world/region/demographics/populationSGMRate[(@year='1985')]/ageCohort/gender[(@type='male')]/population/node()" ;
-		evalDocumentationLink(xpStr);
 
 		//this.show();
 		//this.pack();
@@ -480,7 +478,10 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 			Node nodeClicked = ((DOMmodel.DOMNodeAdapter) jtree
 					.getLastSelectedPathComponent()).getNode();
-			documentation.getDocumentation(nodeClicked);
+			// should probably not be enabled if documentation is null
+			if(documentation != null) {
+				documentation.getDocumentation(nodeClicked);
+			}
 			/*
 			String nodeCXPath = nodeToXPath(nodeClicked).toString();
 			System.out.println("Node clicked XPath: "+nodeCXPath);
@@ -504,6 +505,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		}
 	}
 
+	/* moved to it's correct place.. delete this
 	private TreeSet doc1Nodes;
 	private void evalDocumentationLink(String xpLink) {
 		doc1Nodes = new TreeSet(new Comparator() {
@@ -535,6 +537,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			xpee.printStackTrace();
 		}
 	}
+	*/
 
 	String meregeXPaths(String path1, String path2) {
 		String[] path1Arr = path1.split("/");
