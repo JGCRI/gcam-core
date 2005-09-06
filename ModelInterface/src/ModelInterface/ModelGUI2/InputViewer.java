@@ -28,7 +28,11 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.*;
 import javax.swing.tree.TreePath;
 import java.beans.PropertyChangeListener;
@@ -1179,12 +1183,60 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			file = fc.getSelectedFile();
 			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
-			doc = readXMLFile( file);
-			String docLoc = doc.getDocumentElement().getAttribute("documentation");
-			if(docLoc == null) {
+
+			doc = readXMLFile( file );
+			
+			// Set the document URI for the file.
+			final String currURI = doc.getDocumentURI();
+			
+			// Check if the URI is blank.
+			// TODO: Should check if the URI is incorrect.
+			if (currURI == null) {
+				// Parse the URI from the file.
+				final URI newURI = file.toURI();
+				// Set the document URI to the location of the file.
+				doc.setDocumentURI(newURI.toString());
+			}
+			
+
+			String docLoc = doc.getDocumentElement().getAttribute(
+					"documentation");
+			if (docLoc == null) {
 				documentation = null;
 			} else {
-				documentation = new Documentation(doc, docLoc, lsParser, lsInput);
+				// Parse the documentation location into a URI.
+				try {
+					URI docLocationURI = new URI(docLoc);
+					System.out.println("DOCURI1: " + docLocationURI.toString());
+					// Relativize the location with respect to the main
+					// document.
+					final String docURIString = doc.getDocumentURI();
+					if (docURIString == null) {
+						Logger.global
+								.log(Level.SEVERE,
+										"Main document does not have a URI. Cannot relativize the documentation URI.");
+					} else {
+						try {
+							final URI docURI = new URI(docURIString);
+							docLocationURI = docLocationURI.resolve(docURI);
+							System.out.println("DOCURI: "
+									+ docLocationURI.toString());
+						} catch (URISyntaxException e) {
+							Logger.global
+									.log(
+											Level.SEVERE,
+											"URI parsing failed of the main document URI failed. Cannot relativize the documentation URI.");
+						}
+					}
+					documentation = new Documentation(doc, docLocationURI,
+							lsParser, lsInput);
+				} catch (URISyntaxException e) {
+					// TODO Give the user an error.
+					documentation = null;
+					Logger.global
+							.log(Level.SEVERE,
+									"URI parsing failed. Cannot open the documentation XML file.");
+				}
 			}
 		} else {
 			return false;
@@ -1193,7 +1245,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	}
 
 	/**
-	 * Creates filchoosers to get a CSV file and a header file, then processes
+	 * Creates file choosers to get a CSV file and a header file, then processes
 	 * them with the CSV to XML converter
 	 * 
 	 * @return true if processed and created a doc, false otherwise

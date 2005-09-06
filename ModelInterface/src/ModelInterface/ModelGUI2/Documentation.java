@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
+import java.net.URI;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -66,7 +67,7 @@ public class Documentation {
 		}
 	}
 
-	public Documentation(Document docIn, String documentationFileName, LSParser lsParser, LSInput lsInput) {
+	public Documentation(Document docIn, final URI aDocumentationURI, LSParser lsParser, LSInput lsInput) {
 		Document documentationDoc = null;
 		doc = docIn;
 		documentations = new Vector<DocumentationElement>();
@@ -89,11 +90,12 @@ public class Documentation {
 		};
 
 		try {
-			lsInput.setByteStream(new FileInputStream(new File(documentationFileName)));
+			lsInput.setByteStream(new FileInputStream(new File(aDocumentationURI)));
 			documentationDoc = lsParser.parse(lsInput);
 		} catch (Exception e) {
 			System.out.println("Got Exception while creating XML document: "
 					+ e);
+			return;
 		}
 		NodeList childList = documentationDoc.getDocumentElement().getChildNodes();
 		for(int i = 0; i < childList.getLength(); ++i) {
