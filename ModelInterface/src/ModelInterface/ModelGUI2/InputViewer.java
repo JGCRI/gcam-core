@@ -1217,10 +1217,9 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 										"Main document does not have a URI. Cannot relativize the documentation URI.");
 					} else {
 						try {
-							final URI docURI = new URI(docURIString);
-							docLocationURI = docLocationURI.resolve(docURI);
-							System.out.println("DOCURI: "
-									+ docLocationURI.toString());
+							final URI currentMainURI = new URI(docURIString);
+							docLocationURI = currentMainURI.resolve(docLocationURI);
+							System.out.println("DOCUMENT URI = " + docLocationURI.toString());
 						} catch (URISyntaxException e) {
 							Logger.global
 									.log(
