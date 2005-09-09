@@ -186,6 +186,12 @@ public class TableSelector extends JDialog implements ActionListener {
 			BaseTableModel bt = new MultiTableModel(tp, doc, pf, "Multi Tables");
 			JTable jTable = new JTable(bt);
 	  		jTable.getModel().addTableModelListener((TableModelListener)fcd);
+			jTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			/*
+			jTable.setCellSelectionEnabled(false);
+			jTable.setColumnSelectionAllowed(false);
+			jTable.setRowSelectionAllowed(false);
+			*/
 
 			//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
 

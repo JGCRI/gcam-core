@@ -3,6 +3,7 @@ package ModelInterface.ModelGUI2.tables;
 import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
+import ModelInterface.ModelGUI2.Documentation;
 
 import java.util.*;
 
@@ -19,6 +20,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.Color;
 
 import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.tree.TreePath;
 import org.w3c.dom.xpath.*;
 
@@ -34,16 +37,23 @@ public class MultiTableModel extends BaseTableModel{
 	// don't really know what to do here
 	// it seems to work, but obviously this isn't correct
 	private class TableEditor implements TableCellEditor {
-		public TableEditor () {}
-		public void removeCellEditorListener(javax.swing.event.CellEditorListener cE ) {
+		private Vector<CellEditorListener> editListeners;
+		public TableEditor () {
+			editListeners = new Vector<CellEditorListener>();
+		}
+		public void removeCellEditorListener(CellEditorListener cE ) {
+			editListeners.remove(cE);
 		}
 		public Object getCellEditorValue() {
+			System.out.println("Cell Editor Value");
 			return "I DON'T KNOW";
 		}
 		public boolean stopCellEditing() {
+			fireEditingStopped();
 			return true;
 		}
 		public void cancelCellEditing() {
+			fireEditingCanceled();
 		}
 		public boolean isCellEditable(EventObject eO) {
 			return true;
@@ -51,10 +61,23 @@ public class MultiTableModel extends BaseTableModel{
 		public boolean shouldSelectCell(EventObject eO) {
 			return true;
 		}
-		public void addCellEditorListener(javax.swing.event.CellEditorListener cE ) {
+		public void addCellEditorListener(CellEditorListener cE ) {
+			editListeners.add(cE);
 		}
 		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int col) {
 			return (JScrollPane)value;
+		}
+		private void fireEditingStopped() {
+			ChangeEvent ce = new ChangeEvent(this);
+			for(int i = 0; i < editListeners.size(); ++i) {
+				editListeners.get(i).editingStopped(ce);
+			}
+		}
+		private void fireEditingCanceled() {
+			ChangeEvent ce = new ChangeEvent(this);
+			for(int i = 0; i < editListeners.size(); ++i) {
+				editListeners.get(i).editingCanceled(ce);
+			}
 		}
 	}
 	// to be able to render a table inside a cell
@@ -104,7 +127,7 @@ public class MultiTableModel extends BaseTableModel{
 		}
 	}
 	/**
-	 * flipps the axis of the individual table
+	 * flips the axis of the individual table
 	 * @param row used to figure out which cell needs to be flipped
 	 *        col not really important since we only have 1 col
 	 */
@@ -530,4 +553,9 @@ public class MultiTableModel extends BaseTableModel{
 		}
 		return (BaseTableModel)((JTable)ret).getModel();
 	}
+
+  public void annotate(int[] rows, int[] cols, Documentation documentation) {
+	  JTable jTable = (JTable)((JScrollPane)getValueAt(rows[0], cols[0])).getViewport().getView();
+	  ((BaseTableModel)jTable.getModel()).annotate(jTable.getSelectedRows(), jTable.getSelectedColumns(), documentation);
+  }
 }

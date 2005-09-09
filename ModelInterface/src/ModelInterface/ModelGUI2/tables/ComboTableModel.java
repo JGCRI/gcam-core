@@ -4,6 +4,7 @@ import ModelInterface.ModelGUI2.queries.QueryGenerator;
 import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.XMLDB;
 import ModelInterface.ModelGUI2.DbViewer;
+import ModelInterface.ModelGUI2.Documentation;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -338,6 +339,24 @@ public class ComboTableModel extends BaseTableModel{
 			//return ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue();
 		}
 		return "";
+	}
+
+	/**
+	 * returns the actual Node that is contained at the position row, col in the table
+	 * @param row position in table
+	 * 	  col position in table
+	 */
+	private Node getNodeAt(int row, int col) {
+		if( col <= leftHeaderVector.size() ){
+			return null;
+		}
+		Object temp = ((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) );
+		if(temp instanceof Node) {
+			return (Node)temp;
+		} else {
+			// annotate shouldn't be enabled
+			return null;
+		}
 	}
 
 	/**
@@ -816,4 +835,13 @@ public class ComboTableModel extends BaseTableModel{
 	  }
   }
 	  */
+  public void annotate(int[] rows, int[] cols, Documentation documentation) {
+	  Vector<Node> selectedNodes = new Vector<Node>(rows.length*cols.length, 0);
+	  for(int i = 0; i < rows.length; ++i) {
+		  for(int j = 0; j < cols.length; ++j) {
+			  selectedNodes.add(getNodeAt(rows[i], cols[j]));
+		  }
+	  }
+	  documentation.getDocumentation(selectedNodes);
+  }
 }

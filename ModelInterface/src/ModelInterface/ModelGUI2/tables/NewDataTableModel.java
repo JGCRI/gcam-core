@@ -1,6 +1,7 @@
 package ModelInterface.ModelGUI2.tables;
 
 import ModelInterface.ModelGUI2.DOMmodel;
+import ModelInterface.ModelGUI2.Documentation;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -205,14 +206,12 @@ public class NewDataTableModel extends BaseTableModel{
 		return indRow.size();
 	}
 
-	/* not used anymore
 	public Node getNodeAt(int row, int col) {
 		if(col == 0) {
 			return null;
 		}
 		return ((Node)data.get(getKey(row,col)));
 	}
-	*/
 
 	/**
 	 * Returns the value to be displayed in the table at a certain position
@@ -650,4 +649,14 @@ public class NewDataTableModel extends BaseTableModel{
 			return false;
 		}
 	}
+	public void annotate(int[] rows, int[] cols, Documentation documentation) {
+		Vector<Node> selectedNodes = new Vector<Node>(rows.length*cols.length, 0);
+		for(int i = 0; i < rows.length; ++i) {
+			for(int j = 0; j < cols.length; ++j) {
+				selectedNodes.add(getNodeAt(rows[i], cols[j]));
+			}
+		}
+		documentation.getDocumentation(selectedNodes);
+	}
+
 }

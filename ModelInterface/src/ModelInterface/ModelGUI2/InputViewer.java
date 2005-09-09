@@ -324,7 +324,17 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 							} else {
 								((JMenuItem) me[i]).setEnabled(true);
 							}
+						}
+						if (((JMenuItem) me[i]).getText().equals("Annotate")) {
+							Node nodeClicked = ((DOMmodel.DOMNodeAdapter) jtree
+									.getLastSelectedPathComponent()).getNode();
 
+							if (nodeClicked.getNodeType() == Element.TEXT_NODE &&
+									documentation != null) {
+								((JMenuItem) me[i]).setEnabled(true);
+							} else {
+								((JMenuItem) me[i]).setEnabled(false);
+							}
 						}
 					}
 					treeMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -484,7 +494,9 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 					.getLastSelectedPathComponent()).getNode();
 			// should probably not be enabled if documentation is null
 			if(documentation != null) {
-				documentation.getDocumentation(nodeClicked);
+				Vector<Node> tempVec = new Vector<Node>(1,0);
+				tempVec.add(nodeClicked);
+				documentation.getDocumentation(tempVec);
 			}
 			/*
 			String nodeCXPath = nodeToXPath(nodeClicked).toString();
@@ -665,26 +677,46 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		final JMenuItem flipItem = new JMenuItem("Flip");
 		flipItem.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
-					// get the correct row and col which only matters for
-					// mulitablemodel
-					// then be sure to pass on the call to the correct table
-					// model
-					e.translatePoint(lastFlipX, lastFlipY);
-					Point p = e.getPoint();
-					JTable jTable = (JTable) ((JScrollPane) splitPane
-							.getRightComponent()).getViewport().getView();
-					int row = jTable.rowAtPoint(p);
-					int col = jTable.columnAtPoint(p);
+				// get the correct row and col which only matters for
+				// mulitablemodel
+				// then be sure to pass on the call to the correct table
+				// model
+				e.translatePoint(lastFlipX, lastFlipY);
+				Point p = e.getPoint();
+				JTable jTable = (JTable) ((JScrollPane) splitPane
+					.getRightComponent()).getViewport().getView();
+				int row = jTable.rowAtPoint(p);
+				int col = jTable.columnAtPoint(p);
 
-					if (jTable.getModel() instanceof TableSorter) {
-						((BaseTableModel) ((TableSorter) jTable.getModel())
-								.getTableModel()).flip(row, col);
-					} else {
-						((BaseTableModel) jTable.getModel()).flip(row, col);
-					}
+				if (jTable.getModel() instanceof TableSorter) {
+					((BaseTableModel) ((TableSorter) jTable.getModel())
+					 .getTableModel()).flip(row, col);
+				} else {
+					((BaseTableModel) jTable.getModel()).flip(row, col);
+				}
 			}
 		});
 		tableMenu.add(flipItem);
+
+		final JMenuItem annotateItem = new JMenuItem("Annotate");
+		annotateItem.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				//e.translatePoint(lastFlipX, lastFlipY);
+				//Point p = e.getPoint();
+				JTable jTable = (JTable) ((JScrollPane) splitPane
+					.getRightComponent()).getViewport().getView();
+				int[] rows = jTable.getSelectedRows();
+				int[] cols = jTable.getSelectedColumns();
+
+				if (jTable.getModel() instanceof TableSorter) {
+					((BaseTableModel) ((TableSorter) jTable.getModel())
+					 .getTableModel()).annotate(rows, cols, documentation);
+				} else {
+					((BaseTableModel) jTable.getModel()).annotate(rows, cols, documentation);
+				}
+			}
+		});
+		tableMenu.add(annotateItem);
 		
 		final JMenuItem chartItem = new JMenuItem("Chart");
 		chartItem.addMouseListener( new MouseAdapter(){
@@ -1201,7 +1233,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 			String docLoc = doc.getDocumentElement().getAttribute(
 					"documentation");
-			if (docLoc == null) {
+			if (docLoc.equals("")) {
 				documentation = null;
 			} else {
 				// Parse the documentation location into a URI.
@@ -1639,14 +1671,61 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 				private void maybeShowPopup(MouseEvent e) {
 					if (e.isPopupTrigger()) {
+						lastFlipX = e.getX();
+						lastFlipY = e.getY();
+						JTable jTable = (JTable)((JScrollPane)splitPane.getRightComponent()).getViewport().getView();
+						Point p = e.getPoint();
+						int row = jTable.rowAtPoint(p);
+						int col = jTable.columnAtPoint(p);
+								System.out.println("row: "+row);
+								System.out.println("col: "+col);
+								System.out.println("Point: "+p);
+						if(row != -1 && col != -1 && !jTable.isCellSelected(row, col)) {
+							jTable.setRowSelectionInterval(row, row);
+							jTable.setColumnSelectionInterval(col, col);
+						} 
+						if(row != -1 && col != -1 && (jTable.getValueAt(row, col) instanceof JScrollPane)) {
+							javax.swing.table.TableCellEditor tce = jTable.getCellEditor(row, col);
+							JTable jTableTemp = jTable;
+							if(jTable.editCellAt(row, col)) {
+								System.out.println("Yes edit");
+							} else {
+								System.out.println("Couldn't edit");
+							}
+							jTable = (JTable)((JScrollPane)jTable.getModel().getValueAt(row, col))
+								.getViewport().getView();
+							//System.out.println("LocationOS: "+jTable.getLocationOnScreen());
+							System.out.println("Mouse Loc: "+jTable.getMousePosition());
+							System.out.println("Cols: "+jTable.getColumnCount());
+							p = jTable.getMousePosition();
+							row = jTable.rowAtPoint(p);
+							col = jTable.columnAtPoint(p);
+							System.out.println("row: "+row);
+							System.out.println("col: "+col);
+							System.out.println("Point: "+p);
+							if(row != -1 && col != -1 && !jTable.isCellSelected(row, col)) {
+								jTable.setRowSelectionInterval(row, row);
+								jTable.setColumnSelectionInterval(col, col);
+							}
+							System.out.println("TableCellEditor: "+tce);
+							tce.stopCellEditing();
+							if(jTableTemp.isEditing()) {
+								System.out.println("It is Editing");
+							} else {
+								System.out.println("It isn't Editing");
+							}
+						}
+
+						/*
 						MenuElement[] me = tableMenu.getSubElements();
 						for (int i = 0; i < me.length; i++) {
 							if (((JMenuItem) me[i]).getText()
 								.equals("Flip")) {
 								lastFlipX = e.getX();
 								lastFlipY = e.getY();
-								}
+							}
 						}
+						*/
 						tableMenu.show(e.getComponent(), e.getX(), e.getY());
 					}
 				}

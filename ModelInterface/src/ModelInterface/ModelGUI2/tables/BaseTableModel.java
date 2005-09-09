@@ -1,6 +1,7 @@
 package ModelInterface.ModelGUI2.tables;
 
 import ModelInterface.ModelGUI2.DOMmodel;
+import ModelInterface.ModelGUI2.Documentation;
 
 import java.util.*;
 import javax.swing.table.AbstractTableModel;
@@ -88,11 +89,21 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	public abstract JFreeChart createChart(int rowAt, int colAt);
 	
 	/**
-	 * abstract the deriving class needs to implement this for flip functionality, params used mostly for MultiTable to know which table to pass the call on to
-	 * @param row row position in the table that the flip was requested for
-	 *        col col position in the table that the flip was requested for
+	 * abstract the deriving class needs to implement this for flip functionality, params used 
+	 * mostly for MultiTable to know which table to pass the call on to
+	 * @param row the row over which flip was called
+	 * 	  col the col over which flip was called
 	 */
 	public abstract void flip(int row, int col);
+
+	/**
+	 * The deriving class needs to implement this so that it gets the nodes at given rows/cols and gets their annotation from
+	 * the documentation
+	 * @param row rows positions of the nodes to be annotated
+	 * 	  col cols positions of the nodes to be annotated 
+	 * 	  documentation the documentation where to look up annotation information
+	 */
+	public abstract void annotate(int[] rows, int[] cols, Documentation documentation);
 
 	/**
 	 * abstract since deriving tables would most likely have diffrent method for building a table depending on what the purpose of the table is
@@ -148,23 +159,23 @@ public abstract class BaseTableModel extends AbstractTableModel {
 				   pathStr.append("[@").append(((Node)attrs.get(j)).getNodeName())
 					   .append("='").append(((Node)attrs.get(j)).getNodeValue()).append("']");
 			   }
-			   pathStr.append("/node()");
+			   pathStr.append("/text()");
 		   }
            }
            else if (flag == 1 && currNode.hasAttributes()) {
 		   if (flag == 0) {
-                   	pathStr.append("[@").append(getOneAttrVal(currNode)).append("]/node()");
+                   	pathStr.append("[@").append(getOneAttrVal(currNode)).append("]/text()");
 		   } else if(flag == 1) {
 			   Vector attrs =getAttrsNoWild(currNode);
 			   for(int j=0; j < attrs.size(); j++) {
 				   pathStr.append("@").append(((Node)attrs.get(j)).getNodeName()).append("='")
 					   .append(((Node)attrs.get(j)).getNodeValue()).append("'");
 			   }
-			   pathStr.append("/node()");
+			   pathStr.append("/text()");
 		   }
            }
            else {
-                   pathStr.append("/node()");
+                   pathStr.append("/text()");
            }
 	   System.out.println(pathStr.toString());
            return xpeImpl.createExpression(pathStr.toString(), xpeImpl.createNSResolver(currNode));

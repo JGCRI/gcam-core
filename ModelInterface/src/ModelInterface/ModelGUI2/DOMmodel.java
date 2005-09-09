@@ -37,16 +37,15 @@ public class DOMmodel implements TreeModel {
 	 * @return the number of children of the node passed in
 	 */
 	public int getChildCount(Object parent) {
-		return ((DOMNodeAdapter)parent).getNode().getChildNodes().getLength();
-		/*NodeList nl = ((DOMNodeAdapter)parent).getNode().getChildNodes();
+		//return ((DOMNodeAdapter)parent).getNode().getChildNodes().getLength();
+		NodeList nl = ((DOMNodeAdapter)parent).getNode().getChildNodes();
 		int temp = 0;
-		for (int i =0; i < nl.getLength(); i++) {
-			if (nl.item(i).getNodeType() != Node.TEXT_NODE) {
-				temp++;
+		for (int i =0; i < nl.getLength(); ++i) {
+			if (nl.item(i).getNodeType() != Node.COMMENT_NODE) {
+				++temp;
 			}
 		}
 		return temp;
-		*/
 	}
 
 	/**
@@ -56,7 +55,13 @@ public class DOMmodel implements TreeModel {
 	 * @return the child node as requested.
 	 */
 	public Object getChild(Object parent, int index) {
-		return new DOMNodeAdapter (((DOMNodeAdapter)parent).getNode().getChildNodes().item(index));
+		Node n = ((DOMNodeAdapter)parent).getNode().getChildNodes().item(index);
+		int childCount = ((DOMNodeAdapter)parent).getNode().getChildNodes().getLength();
+		while(index < childCount && n.getNodeType() == Node.COMMENT_NODE) {
+			n = ((DOMNodeAdapter)parent).getNode().getChildNodes().item(++index);
+		}
+		return new DOMNodeAdapter(n);
+		//return new DOMNodeAdapter (((DOMNodeAdapter)parent).getNode().getChildNodes().item(index));
 	}
 
 	/**
@@ -65,7 +70,8 @@ public class DOMmodel implements TreeModel {
 	 * @return true if it doesn't have any children, false otherwise
 	 */
 	public boolean isLeaf(Object node) {
-		return !( ((DOMNodeAdapter)node).getNode().hasChildNodes() );
+		return getChildCount(node) == 0;
+		//return !( ((DOMNodeAdapter)node).getNode().hasChildNodes() );
 	}
 
 	/**
