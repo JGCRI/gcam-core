@@ -245,6 +245,16 @@
 		<field value="buffer" />
 		<time value="2004.0" />
 	</variable>
+	<variable name="allmask50" type="reference">
+		<region value="USAcontiguous" />
+		<field value="water" />
+		<time value="2004.0" />
+	</variable>
+	<variable name="allmask51" type="reference">
+		<region value="USAcontiguous" />
+		<field value="waterbuff" />
+		<time value="2004.0" />
+	</variable>
 	
 	
 	<variable name="halfmask1" type="reference">
@@ -523,6 +533,16 @@
 		<target name="masterMask" />
 		<argument name="masterMask" />
 		<argument name="allmask49" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask50" />
+	</maskCombineOr>
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="masterMask" />
+		<argument name="allmask51" />
 	</maskCombineOr>
 	
 	

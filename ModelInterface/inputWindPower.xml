@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<input resolution="0">
+<input resolution=".5">
 	<file type="pointShapefile">
 		<storage type="coverage" />
 		<data type="prefix">
@@ -11,23 +11,5 @@
 		<units value="class" />
 		<attribute value="POWERCLASS" />
 		<name value="transmission_air_wind.shp" />
-	</file>
-	<file type="pointShapefile">
-		<storage type="values" />
-		<data value="DistCost" />
-		<date value="2005" />
-		<res value=".5" />
-		<average value="True" />
-		<units value="class" />
-		<attribute value="DISTANCE" />
-		<name value="transmission_air_wind.shp" />
-	</file>
-	<file type="polygonShapefile">
-		<storage type="coverage" />
-		<data type="natural" />
-		<date value="2004" />
-		<res value=".5" />
-		<attribute value="FEATURE1" />
-		<name value="Exclusions.shp" />
 	</file>
 </input>

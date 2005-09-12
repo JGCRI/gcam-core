@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <commands>
-	<variable name="wind" type="reference">
+	<variable name="wind1" type="reference">
 		<region value="USAcontiguous" />
 		<field value="Class1" />
 		<time value="2005.0" />
 	</variable>
+	<variable name="wind2" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Class2" />
+		<time value="2005.0" />
+	</variable>
+	<variable name="wind4" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Class4" />
+		<time value="2005.0" />
+	</variable>
 
-	<plot variable="wind" />
+	<plot variable="wind1" />
+	<plot variable="wind2" />
+	<plot variable="wind4" />
 </commands>

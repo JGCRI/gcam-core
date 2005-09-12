@@ -1709,6 +1709,13 @@ public class DataBuilder
     HashMap nameMap = null;
     Double dataValue;
     DataBlock toAdd;
+    GeometryFactory gf = new GeometryFactory();
+    Coordinate[] makeLR = new Coordinate[5];
+    makeLR[0] = new Coordinate();
+    makeLR[1] = new Coordinate();
+    makeLR[2] = new Coordinate();
+    makeLR[3] = new Coordinate();
+    makeLR[4] = new Coordinate();
     
   //getting file info from XML
     infoChildren = currFile.getChildren();
@@ -1787,13 +1794,16 @@ public class DataBuilder
       FeatureResults fsShape = source.getFeatures();
       FeatureCollection collection = fsShape.collection();
       Iterator iter = collection.iterator();
+      Feature inFeature;
+      Geometry geom;
+      Geometry env;
       try
       {
         while(iter.hasNext())
         {
-          Feature inFeature = (Feature)iter.next();
-          Geometry geom = inFeature.getDefaultGeometry();
-          Geometry env = geom.getEnvelope();
+          inFeature = (Feature)iter.next();
+          geom = inFeature.getDefaultGeometry();
+          env = geom.getEnvelope();
           
           if(nameConvention.equals("single"))
           {
@@ -1883,6 +1893,7 @@ public class DataBuilder
             dataTree.addData(toAdd, avg);
           } else //env is a Polygon
           {
+            //TODO- this section is where it is being incredibly slow (as far as i can tell)
             Polygon area = (Polygon)env;
 
             double minX, maxX, minY, maxY;
@@ -1903,7 +1914,7 @@ public class DataBuilder
               if(coords[i].y < minY)
                 minY = coords[i].y;
             }
-            System.out.println("next geom -> "+minX+", "+maxX+", "+minY+", "+maxY);
+            //System.out.println("next geom -> "+minX+", "+maxX+", "+minY+", "+maxY);
             //normalizes lower bounds (upper dont matter)
             mult = minX/res;
             mult = Math.floor(mult);
@@ -1913,19 +1924,13 @@ public class DataBuilder
             mult = Math.floor(mult);
             minY = mult*res;
             
-            GeometryFactory gf = new GeometryFactory();
-            Coordinate[] makeLR = new Coordinate[5];
-            makeLR[0] = new Coordinate();
-            makeLR[1] = new Coordinate();
-            makeLR[2] = new Coordinate();
-            makeLR[3] = new Coordinate();
-            makeLR[4] = new Coordinate();
+            //TODO assume the fact that this gets run 1000's of times is a big deal...
             for(double X = minX; X < maxX; X+=res)
-            { // cant just += res because minX and minY arent normalized
+            {
               //normalize once before instead of every time after
               for(double Y = maxY; Y > minY; Y-=res)
               {
-                //System.out.print(".");
+                System.out.print(".");
                 //getting the fraction of this block which is in the Geometry
                 //this will be the passed data value (as we are storing fractional
                 //coverages)
@@ -1946,6 +1951,7 @@ public class DataBuilder
                 if(holdP.intersects(geom))
                 {
                   Geometry over = holdP.intersection(geom);
+                  //TODO these three calls which are to another api could be a problem
                   
                   dataValue = new Double(over.getArea()/(res*res));
                   
@@ -1964,6 +1970,7 @@ public class DataBuilder
                 //if this block doesnt overlap geometry dont add it at all
               }
             }
+            //System.out.println("*");
             //System.out.println("\n -> done geom");
           }
         }
@@ -2332,13 +2339,13 @@ public class DataBuilder
       rDocument = builder.build(rSource);
     } catch(FileNotFoundException e)
     {
-      System.out.println("FileNotFound! oh noes! in -> makeStreams");
+      log.log(Level.SEVERE, "FileNotFound! oh noes! in -> makeStreams");
     } catch(IOException e)
     {
-      System.out.println("IOException encountered! oh noes! in -> makeStreams");
+      log.log(Level.SEVERE, "IOException encountered! oh noes! in -> makeStreams");
     } catch(JDOMException e)
     {
-      System.out.println("JDOM Exception! grarrrr! in -> makeStreams");
+      log.log(Level.SEVERE, "JDOM Exception! grarrrr! in -> makeStreams");
     }
   }
   private String readWord(BufferedReader input)

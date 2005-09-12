@@ -223,7 +223,7 @@ public class MatrixGrapher implements ActionListener
     int zoom = Integer.valueOf(zoomField.getText());
     
     BufferedImage buff = makeImageFromMatrix();
-    Image rescaled = buff.getScaledInstance((buff.getWidth()*zoom), (buff.getHeight()*zoom), Image.SCALE_AREA_AVERAGING );
+    Image rescaled = buff.getScaledInstance((buff.getWidth()*zoom), (buff.getHeight()*zoom), Image.SCALE_FAST );
     
     ImageIcon newII = new ImageIcon(rescaled);
     imageLabel.setIcon(newII);
@@ -237,8 +237,20 @@ public class MatrixGrapher implements ActionListener
   
   private BufferedImage makeImageFromMatrix()
   {
+    /*
+     * if toWeight = 0 we have a problem, throw arithmetic exception and everything is colored grey
+     * should this be a special case or dealt with procedurally?
+     * Answer: just reset toWeight to 1 if it is 0, if toWeight is 0 there is only 1 value for
+     * the entire matrix for this wont change output at all. of note: everything will be set
+     * at the lowest color, though this isnt really a problem at all.
+     */
     BufferedImage bi = new BufferedImage((int)(360/res), (int)(180/res), BufferedImage.TYPE_INT_RGB);
     double proportion;
+    
+    if(toWeight == 0)
+    { //see above
+      toWeight = 1;
+    }
     
     for(double iY = 90; iY > (-90); iY-=res)
     {
@@ -259,7 +271,7 @@ public class MatrixGrapher implements ActionListener
             
             if(Double.isNaN(proportion))
             {
-              if((iX != -180)&&(iY != 90)&&(Math.IEEEremainder((iX), 30) == 0)||(Math.IEEEremainder((iY), 30) == 0))
+              if((iX != -180)&&(iY != 90)&&((iX%30) == 0)||((iY%30) == 0))
               {
                 bi.setRGB((int)((iX+180)/res), (int)(Math.abs(iY-90)/res), 0x000000);
               } else
@@ -312,7 +324,7 @@ public class MatrixGrapher implements ActionListener
             
           } else
           {
-            if((iX != -180)&&(iY != 90)&&(Math.IEEEremainder((iX), 30) == 0)||(Math.IEEEremainder((iY), 30) == 0))
+            if((iX != -180)&&(iY != 90)&&((iX%30) == 0)||((iY%30) == 0))
             {
               bi.setRGB((int)((iX+180)/res), (int)(Math.abs(iY-90)/res), 0x000000);
             } else
@@ -325,7 +337,7 @@ public class MatrixGrapher implements ActionListener
       {
         for(double iX = -180; iX < (180); iX+=res)
         {
-          if((iX != -180)&&(iY != 90)&&(Math.IEEEremainder((iX), 30) == 0)||(Math.IEEEremainder((iY), 30) == 0))
+          if((iX != -180)&&(iY != 90)&&((iX%30) == 0)||((iY%30) == 0))
           {
             bi.setRGB((int)((iX+180)/res), (int)(Math.abs(iY-90)/res), 0x000000);
           } else
