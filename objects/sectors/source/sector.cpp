@@ -517,7 +517,7 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
             
             subsec[ i ]->setShareToFixedValue( period );
             if ( currentShare > 0 ) { 
-                subsec[ i ]->scalefixedOutput( fixedShare/currentShare, period ); 
+                subsec[ i ]->scaleFixedOutput( fixedShare/currentShare, period ); 
             }
             subsec[ i ]->setShareToFixedValue( period );
 		}

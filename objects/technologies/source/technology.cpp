@@ -99,9 +99,6 @@ void technology::copy( const technology& techIn ) {
     emindmap = techIn.emindmap; 
     totalGHGCost = techIn.totalGHGCost;
     fuelPrefElasticity = techIn.fuelPrefElasticity;
-    resource = techIn.resource;
-    A = techIn.A;
-    B = techIn.B;
     ghgNameMap = techIn.ghgNameMap; 
     
     for (vector<Ghg*>::const_iterator iter = techIn.ghg.begin(); iter != techIn.ghg.end(); iter++) {
@@ -142,11 +139,8 @@ void technology::initElementalMembers(){
     share = 0;
     input = 0;
     output = 0;
-    A = 0;
-    B = 0;
-    resource = 0;
     fixedOutput = getFixedOutputDefault(); // initialize to no fixed supply
-    fixedOutputVal = 0;
+    fixedOutputVal = getFixedOutputDefault();
     doCalibration = false;
     doCalOutput = false;
     calInputValue = 0;
@@ -230,15 +224,6 @@ void technology::XMLParse( const DOMNode* node ) {
         }
         else if( nodeName == "fixedOutput" ){
             fixedOutput = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "resource" ){
-            resource = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "A" ){
-            A = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "B" ){
-            B = XMLHelper<double>::getValue( curr );
         }
 		else if( nodeName == Ghg::getXMLNameStatic() ){
             parseContainerNode( curr, ghg, ghgNameMap, new Ghg() );
@@ -333,9 +318,6 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, LOGIT_EXP_DEFAULT );
     XMLWriteElementCheckDefault( fixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
-    XMLWriteElementCheckDefault( resource, "resource", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( A, "A", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( B, "B", out, tabs, 0.0 );
 	XMLWriteElementCheckDefault( note, "note", out, tabs );
     
     for( vector<Ghg*>::const_iterator ghgIter = ghg.begin(); ghgIter != ghg.end(); ghgIter++ ){
@@ -372,9 +354,6 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     XMLWriteElement( share, "share", out, tabs );
     XMLWriteElement( output, "output", out, tabs );
     XMLWriteElement( input, "input", out, tabs );
-    XMLWriteElement( resource, "resource", out, tabs );
-    XMLWriteElement( A, "A", out, tabs );
-    XMLWriteElement( B, "B", out, tabs );
 
     // write our ghg object, vector is of number of gases
     for( vector<Ghg*>::const_iterator i = ghg.begin(); i != ghg.end(); i++ ){
@@ -548,46 +527,13 @@ void technology::normShare(double sum)
     }
 }
 
-/*! \brief This function sets the value of fixed supply
-* This needs to be called only once per period. Sets the amount of fixed supply to either the read-in value or the "MiniCAM-style" formula used for hydro. 
-* 
-* A == Minicam HYDRO(1,L)
-* B == Minicam HYDRO(2,L) ??
-* resource == Minicam HYDRO(3,L)
-*
-* \author Sonny Kim, Steve Smith
-* \param per model period
-*/
-void technology::calcfixedOutput(int per)
-{
-    const Modeltime* modeltime = scenario->getModeltime();
-    const string FIXED_TECH = "hydro";
-    
-    // check for non zero value for coefficient so that if this is not input, this will work with fixedOutput input instead. sjs.
-    // This is support for legacy hydro technology input format.
-    // MiniCAM style hydro specification
-    if( name == FIXED_TECH && A != 0 ) {
-        const int T = per * modeltime->gettimestep( per );
-        // resource and logit function 
-        const double fact = exp( A + B * T );
-        output = fixedOutputVal = resource * fact / ( 1 + fact );
-        fixedOutput = fixedOutputVal;
-    }
-    
-    // Data-driven specification
-    if ( fixedOutput >= 0 ) {
-        fixedOutputVal = fixedOutput;
-    }
-}
-
-
 /*! \brief This function resets the value of fixed supply to the maximum value
 * See calcfixedOutput
 *
 * \author Steve Smith
 * \param per model period
 */
-void technology::resetfixedOutput( int per ) {
+void technology::resetFixedOutput( int per ) {
     if ( fixedOutput >= 0 ) {
         fixedOutputVal = fixedOutput;
     }
@@ -602,7 +548,8 @@ void technology::resetfixedOutput( int per ) {
 * \return value of fixed output for this technology
 */
 double technology::getFixedOutput() const {
-    return fixedOutputVal;
+	// Return 0 if the fixed output value is not initialized.
+	return ( fixedOutputVal == getFixedOutputDefault() ) ? 0 : fixedOutputVal;
 }
 
 /*! \brief Return fixed technology input
@@ -616,11 +563,12 @@ double technology::getFixedOutput() const {
 * \return value of fixed input for this technology
 */
 double technology::getFixedInput() const {
-    if ( eff != 0 ) {
-		return fixedOutputVal / eff;
-	} else {
+	// Return zero as the fixed input if the efficiency is impossible or the
+    // fixed output is the default value.
+    if ( eff == 0 || fixedOutputVal == getFixedOutputDefault() ) {
 		return 0;
 	}
+	return fixedOutputVal / eff;
 }
 
 /*! \brief Scale fixed technology supply
@@ -630,7 +578,7 @@ double technology::getFixedInput() const {
 * \author Steve Smith
 * \param scaleRatio multipliciative value to scale fixed supply
 */
-void technology::scalefixedOutput(const double scaleRatio)
+void technology::scaleFixedOutput(const double scaleRatio)
 {
     // dmd is total subsector demand
     if( fixedOutputVal >= 0 ) {
@@ -695,14 +643,9 @@ void technology::adjShares(double subsecdmd, double subsecfixedOutput, double va
 */
 void technology::production(const string& regionName,const string& prodName,
                             double dmd, const GDP* gdp, const int per) {
-    // dmd is total subsector demand
-    const static string HYDRO = "hydro";
-    if( name == HYDRO ) {
-        output = fixedOutputVal = dmd;
-    }
-    else {
-        output = share * dmd; // use share to get output for each technology
-    }
+    // dmd is total subsector demand. Use share to get output for each
+    // technology
+	output = share * dmd;
     	   
     if ( output < 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -741,13 +684,16 @@ void technology::production(const string& regionName,const string& prodName,
 * \author Steve Smith
 * \param subSectorDemand total demand for this subsector
 */
-void technology::adjustForCalibration( double subSectorDemand, const string& regionName, const MarketInfo*, const int period ) {
-
+void technology::adjustForCalibration( double subSectorDemand,
+									   const string& regionName,
+									   const MarketInfo*,
+									   const int period )
+{
    // total calibrated outputs for this sub-sector
-   double calOutput = getCalibrationOutput( );
+   double calOutput = getCalibrationOutput();
 
     // make sure share weights aren't zero or else can't calibrate
-    if ( shrwts == 0 && ( calOutput > 0 ) ) {
+    if ( ( shrwts == 0 ) && ( calOutput > 0 ) ) {
         shrwts  = 1;
     }
    
@@ -758,20 +704,22 @@ void technology::adjustForCalibration( double subSectorDemand, const string& reg
         shrwts  = shrwts * shareScaleValue;
     }
     
-   // Check to make sure share weights are not less than zero (and reset if they are)
-   if ( shrwts < 0 ) {
-     cerr << "Share Weight is < 0 in technology " << name << endl;
-     cerr << "    shrwts: " << shrwts << " (reset to 1)" << endl;
-     shrwts = 1;
-   }
+	// Check to make sure share weights are not less than zero (and reset if they are)
+	if ( shrwts < 0 ) {
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::WARNING );
+		mainLog << "Share weight is less than zero in technology " << name << endl;
+		mainLog << "Share weight was " << shrwts << "(reset to 1)" << endl;
+		shrwts = 1;
+	}
 
-   Configuration* conf = Configuration::getInstance();
-   const static bool debugChecking = conf->getBool( "debugChecking" );
-
-   // Report if share weight gets extremely large
-   if ( debugChecking && (shrwts > 1e4 ) ) {
-       cout << "Large share weight in calibration for technology: " << name << endl;
-   }
+	// Report if share weight gets extremely large
+	const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
+	if ( debugChecking && (shrwts > 1e4 ) ) {
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::WARNING );
+		mainLog << "Large share weight in calibration for technology: " << name << endl;
+	}
 }
 
 //! calculate GHG emissions from technology use
@@ -779,7 +727,7 @@ void technology::calcEmission( const string& aGoodName, const int aPeriod ) {
     // alternative ghg emissions calculation
     emissmap.clear(); // clear emissions map
     emfuelmap.clear(); // clear emissions map
-    for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
+    for ( unsigned int i = 0; i < ghg.size(); ++i) {
         // emissions by gas name only
         emissmap[ghg[i]->getName()] = ghg[i]->getEmission( aPeriod );
         // emissions by gas and fuel names combined

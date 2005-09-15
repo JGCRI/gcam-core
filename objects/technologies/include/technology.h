@@ -65,10 +65,6 @@ protected:
     double fixedOutputVal; //!< The actual fixed output value
     double calInputValue; // Calibration value
     double calOutputValue; // Calibration value
-    // attributes for hydroelectricity only!
-    double resource; //!< available hydro resource in energy units
-    double A; //!< logit function shape parameter
-    double B; //!< logit function shape parameter
     bool doCalibration; // Flag set if calibration value is read-in
     bool doCalOutput; // Flag set if calibration value is read-in
     std::vector<Ghg*> ghg; //!< suite of greenhouse gases
@@ -105,10 +101,9 @@ public:
     virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per ); 
     virtual void calcShare( const std::string& regionName, const GDP* gdp, const int per ); 
     void normShare(double sum); // normalize technology share
-    void calcfixedOutput(int per); // calculate fixed supply
-    void resetfixedOutput(int per); // reset fixed supply to max value
-    void adjShares(double subsecdmd, double subsecfixedOutput, double varShareTot, int per);
-    void scalefixedOutput(const double scaleRatio); // scale fixed supply
+    void resetFixedOutput(int per); // reset fixed supply to max value
+    void adjShares(double subsecdmd, double subsecFixedOutput, double varShareTot, int per);
+    void scaleFixedOutput(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
     virtual void production(const std::string& regionName,const std::string& prodName,double dmd, const GDP* gdp, const int per);
     virtual void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use

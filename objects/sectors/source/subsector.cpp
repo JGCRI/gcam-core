@@ -611,7 +611,6 @@ void Subsector::initCalc( const MarketInfo* aSectorInfo,
     // Set any fixed demands
     for ( unsigned int i = 0; i < techs.size(); ++i ){
         techs[i][ aPeriod ]->initCalc( aSectorInfo );
-        techs[i][ aPeriod ]->calcfixedOutput( aPeriod );
     }
 
     // Initialize the baseTechs. This might be better as a loop over tech types. 
@@ -1071,9 +1070,9 @@ void Subsector::setShareToFixedValue( const int period ) {
 *\author Steve Smith
 *\param period Model period
 */
-void Subsector::resetfixedOutput( const int period ) {
+void Subsector::resetFixedOutput( const int period ) {
     for( unsigned int i = 0; i < techs.size(); ++i ){
-        techs[ i ][period]->resetfixedOutput(period); // eliminate any previous down-scaleing
+        techs[ i ][period]->resetFixedOutput(period); // eliminate any previous down-scaleing
     }
 }
 
@@ -1084,10 +1083,10 @@ void Subsector::resetfixedOutput( const int period ) {
 * \param period Model period
 * \param scaleRatio multiplicative scale factor by which to scale fixed supply
 */
-void Subsector::scalefixedOutput( const double scaleRatio, const int period ) {
+void Subsector::scaleFixedOutput( const double scaleRatio, const int period ) {
     // scale fixed technology output down
     for( unsigned int i = 0; i < techs.size(); ++i ){
-        techs[ i ][ period ]->scalefixedOutput( scaleRatio );
+        techs[ i ][ period ]->scaleFixedOutput( scaleRatio );
     }
     setFixedShare( period, fixedShare[ period ] * scaleRatio ); 
 }

@@ -138,9 +138,9 @@ public:
     virtual void calcTechShares ( const GDP* gdp, const int period );
     virtual void setoutput( const double demand, const int period, const GDP* gdp ); 
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
-    void scalefixedOutput( const double scaleRatio, const int period );
+    void scaleFixedOutput( const double scaleRatio, const int period );
     double getFixedOutput( const int period ) const;
-    void resetfixedOutput( const int period );
+    void resetFixedOutput( const int period );
     double getTotalCalOutputs( const int period ) const;
     double getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const;
     double getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals ) const;

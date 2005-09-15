@@ -270,7 +270,7 @@ void SupplySector::adjustForFixedOutput( const double aMarketDemand, const int a
 
     for( unsigned int i = 0; i < subsec.size(); ++i ){
         double fixedOutput = 0;
-        subsec[ i ]->resetfixedOutput( aPeriod );
+        subsec[ i ]->resetFixedOutput( aPeriod );
         fixedOutput = subsec[ i ]->getFixedOutput( aPeriod );
 
         // initialize property to zero every time just in case fixed share property changes 
@@ -298,7 +298,7 @@ void SupplySector::adjustForFixedOutput( const double aMarketDemand, const int a
     // Scale down fixed output if its greater than actual demand
     if ( totalfixedOutput > aMarketDemand ) {
         for( unsigned int i = 0; i < subsec.size(); ++i ){
-            subsec[ i ]->scalefixedOutput( aMarketDemand / totalfixedOutput, aPeriod ); 
+            subsec[ i ]->scaleFixedOutput( aMarketDemand / totalfixedOutput, aPeriod ); 
         }
         totalfixedOutput = aMarketDemand;
     }
