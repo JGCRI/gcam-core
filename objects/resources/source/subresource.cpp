@@ -424,9 +424,16 @@ void SubResource::annualsupply( int per, const GDP* gdp, double price, double pr
     // for per = 0 use initial annual supply
     // cumulative production is 0 for per = 0
     if (per >= 1) {
-        // 2 is for the average of the annual productions
-        annualprod[per] = 2.0 * (cumulprod[per] - cumulprod[per-1])/modeltime->gettimestep(per)
-            - annualprod[per-1];
+        // Calculate the annual production given that the cumulative production
+		// for the period is known. Cumulative production for the current period
+        // is equal to the cumulative production of the previous period plus the
+		// trapezoidal area formed by the previous annual production and the
+		// current annual production.
+		// Cumulative(t) = Cumulative(t-1) + 1/2 * (Annual(t) - Annual(t-1))* timestep.
+		// Solving this for Annual(t) gives us the following equation.
+        annualprod[ per ] = 2.0 * ( cumulprod[ per ] - cumulprod[ per - 1 ] ) 
+			               / modeltime->gettimestep( per ) - annualprod[ per - 1 ];
+
         if(annualprod[per] <= 0) {
             cumulprod[per] = cumulprod[per-1];
             annualprod[per] = 0.0;
