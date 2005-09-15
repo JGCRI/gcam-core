@@ -456,12 +456,11 @@ bool World::getCalibrationSetting() const {
 * \return Boolean true if calibration is ok.
 */
 bool World::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
-    for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
-        if ( !( *i )->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
-            return false;
-        }
+    bool isAllCalibrated = true;
+	for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
+        isAllCalibrated &= ( *i )->isAllCalibrated( period, calAccuracy, printWarnings );
     }
-    return true;
+    return isAllCalibrated;
 }
 
 /*! \brief This function returns a special mapping of strings to ints for use in
