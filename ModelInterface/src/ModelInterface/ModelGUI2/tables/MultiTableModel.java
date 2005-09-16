@@ -112,8 +112,8 @@ public class MultiTableModel extends BaseTableModel{
 	 *        parentFrame needed to create dialogs
 	 *        tableTypeString to be able to display the type of table this is
 	 */
-	public MultiTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
-		super(tp, doc, parentFrame, tableTypeString);
+	public MultiTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString, Documentation documentationIn) {
+		super(tp, doc, parentFrame, tableTypeString, documentationIn);
 		wild = chooseTableHeaders(tp/*, parentFrame*/);
 	        wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
 	        wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
@@ -250,10 +250,12 @@ public class MultiTableModel extends BaseTableModel{
 			NewDataTableModel tM;
 			if(me.getValue() instanceof Double) {
 				tM = new NewDataTableModel(regions, qg.getAxis1Name()/*(String)wild.get(0)*/, years, 
-						qg.getVariable(), /*titleStr+'/'+(String)parent.getKey()*/title, (TreeMap)parent.getValue(), doc); 
+						qg.getVariable(), /*titleStr+'/'+(String)parent.getKey()*/title, (TreeMap)parent.getValue(), doc,
+						null); 
 			} else {
 				tM = new NewDataTableModel(regions, (String)wild.get(0), years, 
-						(String)wild.get(1), /*titleStr+'/'+(String)parent.getKey()*/title, (TreeMap)parent.getValue(), doc/*, (String)wild.get(2)*/); 
+						(String)wild.get(1), /*titleStr+'/'+(String)parent.getKey()*/title, (TreeMap)parent.getValue(), doc,
+						documentation /*, (String)wild.get(2)*/); 
 			}
 			//BufferedImage chartImage = tM.createChart(0,0).createBufferedImage( 350, 350);
 			//tM.createChart(0,0);
@@ -272,6 +274,9 @@ public class MultiTableModel extends BaseTableModel{
 	  		while(i.hasNext()) {
 		  		col = jTable.getColumnModel().getColumn(j);
 				col.setPreferredWidth(((String)i.next()).length()*5+30);
+				if(qg == null) { // only want to do this when values might have documentation
+					col.setCellRenderer(tM.getCellRenderer(0, j));
+				}
 		  		j++;
 	  		}
 			CopyPaste copyPaste = new CopyPaste( jTable );
@@ -552,6 +557,12 @@ public class MultiTableModel extends BaseTableModel{
 			ret = ((JScrollPane)((JSplitPane)ret).getLeftComponent()).getViewport().getView();
 		}
 		return (BaseTableModel)((JTable)ret).getModel();
+	}
+
+
+	protected Node getNodeAt(int row, int col) {
+		// this table model doesn't acctually hold any nodes
+		return null;
 	}
 
   public void annotate(int[] rows, int[] cols, Documentation documentation) {

@@ -12,6 +12,10 @@ import javax.swing.tree.TreePath;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.awt.Component;
+import java.awt.Color;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
 //import java.sql.Statement;
 import org.apache.poi.hssf.usermodel.*;
@@ -27,6 +31,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	protected Map tableFilterMaps;
 	protected Frame parentFrame;
 	protected String title;
+	protected Documentation documentation;
 
 	// stuff for filtering
 	// can i move these somewhere
@@ -47,10 +52,11 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	 * 	  parentFrame Reference to the main gui so that we can create a dialog
 	 * 	  tableTypeString used to display which type of table the user is looking at
 	 */
-	public BaseTableModel(TreePath tp, Document doc, JFrame parentFrameIn, String tableTypeString) {
+	public BaseTableModel(TreePath tp, Document doc, JFrame parentFrameIn, String tableTypeString, Documentation documentationIn) {
 		this.doc = doc;
 		this.parentFrame = parentFrameIn;
 		this.tableTypeString = tableTypeString;
+		this.documentation = documentationIn;
 		this.title = ((DOMmodel.DOMNodeAdapter)tp.getLastPathComponent()).getNode().getNodeName();
 		final BaseTableModel thisTableModel = this;
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
@@ -81,6 +87,14 @@ public abstract class BaseTableModel extends AbstractTableModel {
 			}
 		});
 	}
+
+	/**
+	 * Get the cell renderer at specified position
+	 * @param row renderer for row
+	 * @param col renderer for col
+	 * @return the renderer required to view the cell
+	 */
+	public abstract TableCellRenderer getCellRenderer(int row, int pos);
 	
 	/** 
 	 * Creates a chart from the data in the table.
@@ -525,4 +539,27 @@ public abstract class BaseTableModel extends AbstractTableModel {
 
 	public abstract void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp);
 
+	protected TableCellRenderer getDocumentationRenderer() {
+		final TableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
+		return new TableCellRenderer() {
+			public Component getTableCellRendererComponent(JTable jTable, Object value, boolean isSelected, boolean hasFocus,
+					int row, int col) {
+				Component ret = defaultRenderer.getTableCellRendererComponent(jTable, value, isSelected, hasFocus, row, col);
+				if(documentation != null && documentation.hasDocumentation(getNodeAt(row, col))) {
+					ret.setBackground(isSelected? Color.BLUE : Color.CYAN);
+				} else {
+					ret.setBackground(isSelected? Color.BLUE : Color.WHITE);
+				}
+				return ret;
+			}
+		};
+	}
+	
+	/**
+	 * Get the backing node in the cell specified
+	 * @param row which row
+	 * @param col which col
+	 * @return the node desired or null if not given a valid position
+	 */
+	protected abstract Node getNodeAt(int row, int col);
 }

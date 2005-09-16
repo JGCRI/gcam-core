@@ -157,7 +157,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 				ActionEvent.CTRL_MASK));
 		menuMan.getSubMenuManager(EDIT_MENU_POS).addMenuItem(copyMenu, EDIT_COPY_MENUITEM_POS);
 		pasteMenu = new JMenuItem("Paste");
-		pasteMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
+		pasteMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,
 				ActionEvent.CTRL_MASK));
 		menuMan.getSubMenuManager(EDIT_MENU_POS).addMenuItem(pasteMenu, EDIT_PASTE_MENUITEM_POS);
 		/* FileChooserDemo is being removed, but I will leave this here, 

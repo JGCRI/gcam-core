@@ -26,6 +26,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import javax.swing.JList;
+import javax.swing.JSeparator;
+import javax.swing.ListSelectionModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,6 +38,7 @@ import java.net.URI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.NamedNodeMap;
 
 import javax.xml.xpath.XPathFactory;
 import javax.xml.xpath.XPath;
@@ -48,7 +52,7 @@ import org.w3c.dom.ls.LSInput;
 public class Documentation {
 	private Vector<DocumentationElement> documentations;
 	private Document doc;
-	private Comparator nodeComparator;
+	private Comparator<Node> nodeComparator;
 	private XPath xpathImpl;
 	private class DocumentationElement {
 		Vector<String> xpathLinks;
@@ -86,6 +90,49 @@ public class Documentation {
 			return false;
 		}
 
+		public void addXPathLinkForNode(Node n) {
+			String xPath = nodeToXPath(n).toString();
+			xpathLinks.add(xPath);
+			TreeSet<Node> tempSet = new TreeSet<Node>(nodeComparator);
+			tempSet.add(n);
+			nodeSets.add(tempSet);
+			//nodeSets.add(evaluateXPath(xPath);
+			// maybe try to merege with existing xpaths
+		}
+
+		private StringBuffer nodeToXPath(Node n) {
+			if(n.getNodeType() != Node.DOCUMENT_NODE) {
+				StringBuffer buf = nodeToXPath(n.getParentNode());
+				if(n.getNodeType() == Node.TEXT_NODE) {
+					return buf.append("node()");
+				}
+				buf.append(n.getNodeName());
+				NamedNodeMap nm = n.getAttributes();
+				if(nm.getLength() > 0) {
+					buf.append("[");
+				}
+				if(nm.getLength() > 1) {
+					buf.append("(");
+				}
+				for(int i = 0; i < nm.getLength(); ++i) {
+					buf.append("(@").append(nm.item(i).getNodeName()).append("='")
+						.append(nm.item(i).getNodeValue()).append("')");
+					if(i+1 != nm.getLength()) {
+						buf.append(" and ");
+					}
+				}
+				if(nm.getLength() > 1) {
+					buf.append(")");
+				}
+				if(nm.getLength() > 0) {
+					buf.append("]");
+				}
+				return buf.append("/");
+			} else {
+				return new StringBuffer("/");
+			}
+		}
+
 		private TreeSet<Node> evaluateXPath(String xpLink) {
 			try {
 				TreeSet<Node> ret = new TreeSet<Node>(nodeComparator);
@@ -107,13 +154,13 @@ public class Documentation {
 		doc = docIn;
 		documentations = new Vector<DocumentationElement>();
 		xpathImpl = XPathFactory.newInstance().newXPath();
-		nodeComparator = new Comparator() {
-			public int compare(Object obj1, Object obj2) {
+		nodeComparator = new Comparator<Node> () {
+			public int compare(Node obj1, Node obj2) {
 				if(obj1.equals(obj2)) {
 					return 0;
 				} else {
-					String node1Val = ((Node)obj1).getNodeValue();
-					String node2Val = ((Node)obj2).getNodeValue();
+					String node1Val = obj1.getNodeValue();
+					String node2Val = obj2.getNodeValue();
 					int ret = String.CASE_INSENSITIVE_ORDER.compare(node1Val, node2Val);
 					if(ret == 0) {
 						return 1;
@@ -138,6 +185,17 @@ public class Documentation {
 		}
 	}
 
+	public boolean hasDocumentation(Node n) {
+		int where;
+		if(n.getNextSibling() != null && n.getNextSibling().getNodeType() == Node.COMMENT_NODE) {
+			where = Integer.parseInt(n.getNextSibling().getNodeValue());
+		} else {
+			where = contains(n);
+			n.getParentNode().appendChild(doc.createComment(String.valueOf(where)));
+		}
+		return where != -1;
+	}
+
 	public void getDocumentation(Vector<Node> selectedNodes) {
 		getDocumentation(selectedNodes, null, null);
 	}
@@ -147,25 +205,32 @@ public class Documentation {
 		int row = 0;
 		int col = 0;
 		final Map<Integer, LinkedList<String>> docMaps = new HashMap<Integer, LinkedList<String>>();
-		for(int i = 0; i < selectedNodes.size(); ++i) {
+		Vector<String> notFoundNames = new Vector<String>();
+		for(Iterator<Node> i = selectedNodes.iterator(); i.hasNext(); ) {
 			if(cols != null && col == cols.length) {
 				col = 0;
 				++row;
 			}
-			Node n = selectedNodes.get(i);
+			//Node n = selectedNodes.get(i);
+			Node n = i.next();
 			if(n.getNextSibling() != null && n.getNextSibling().getNodeType() == Node.COMMENT_NODE) {
 				where = Integer.parseInt(n.getNextSibling().getNodeValue());
+				/*
 				if(where != -1) {
 					System.out.println("Cached Has Documentation at: "+where);
 				} else {
 					System.out.println("Cached Doesn't have documentation");
 				}
+				*/
 			} else {
+				where = contains(n);
+				/*
 				if((where = contains(n)) != -1) {
 					System.out.println("Has documentation at: "+where);
 				} else {
 					System.out.println("Doesn't have documentation");
 				}
+				*/
 				n.getParentNode().appendChild(doc.createComment(String.valueOf(where)));
 			}
 			if(where != -1) {
@@ -186,13 +251,25 @@ public class Documentation {
 					}
 					docMaps.put(where, tempSet);
 				}
+				i.remove();
+			} else {
+				if(rows == null || cols == null) {
+					notFoundNames.add(n.getNodeValue());
+				} else {
+					notFoundNames.add("("+rows[row]+", "+cols[col]+")");
+				}
 			}
 			++col;
 		}
+		if(selectedNodes.size() != 0) {
+			// pop add dialog
+			addToDocumentation(selectedNodes, notFoundNames, docMaps);
+		}
 		if(docMaps.size() == 0) {
-			// error
+			/*
 			JOptionPane.showMessageDialog(ModelInterface.InterfaceMain.getInstance(), "Couldn't find any documentation", 
 					"Annotation Error", JOptionPane.WARNING_MESSAGE);
+			*/
 			return;
 		}
 		final JDialog docDialog = new JDialog(ModelInterface.InterfaceMain.getInstance(), "Annotation", false);
@@ -341,5 +418,119 @@ public class Documentation {
 			}
 		}
 		return -1;
+	}
+
+	private void addToDocumentation(final Vector<Node> selectedNodes, final Vector<String> notFoundNames, 
+			final Map<Integer, LinkedList<String>> docMaps) {
+		if(JOptionPane.showConfirmDialog(ModelInterface.InterfaceMain.getInstance(), 
+			"Warning Some of the nodes selected did not have documentation\n Would you like to add documentation now?",
+			"Missing Documentation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.NO_OPTION) {
+			return;
+		}
+		final Vector<String> docNames = new Vector<String>(documentations.size());
+		for(int i = 0; i < documentations.size(); ++i) {
+			docNames.add(documentations.get(i).source + "  Date: "+documentations.get(i).sourceDate);
+		}
+		final JDialog addDocDialog = new JDialog(ModelInterface.InterfaceMain.getInstance(), "Add Documentation", true);
+		addDocDialog.setLocation(100,100);
+		addDocDialog.setResizable(false);
+		JButton doneButton = new JButton("Done");
+		JButton updateButton = new JButton("Update");
+		JButton newButton = new JButton("New Documentation");
+		JPanel all = new JPanel();
+		final JList nodesList = new JList(notFoundNames);
+		nodesList.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		nodesList.setPreferredSize(new Dimension(100, 60));
+		final JList docsList = new JList(docNames);
+		docsList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		docsList.setPreferredSize(new Dimension(300, 60));
+		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
+		all.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		JPanel tempPanel;
+
+		updateButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Object[] nodeNamesSel = nodesList.getSelectedValues();
+				int[] nodesSel = nodesList.getSelectedIndices();
+				Vector<Node> selNodes = new Vector<Node>(nodesSel.length, 0);
+				LinkedList<String> tempSet;
+				if(nodesSel.length == 0) {
+					// error
+					System.out.println("No nodes selected");
+					return;
+				}
+				int docSel = docsList.getSelectedIndex();
+				if(docSel == -1) {
+					// error
+					System.out.println("no doc selected");
+					return;
+				}
+				if(docMaps.containsKey(docSel)) {
+					tempSet = new LinkedList<String>();
+					docMaps.put(docSel, tempSet);
+				} else {
+					tempSet = docMaps.get(docSel);
+				}
+				for(int i = 0; i < nodesSel.length; ++i) {
+					documentations.get(docSel).addXPathLinkForNode(selectedNodes.get(i));
+					selNodes.add(selectedNodes.get(i));
+					notFoundNames.remove((String)nodeNamesSel[i]);
+					tempSet.addFirst((String)nodeNamesSel[i]);
+				}
+				for(int i = 0; i < nodesSel.length; ++i) {
+					selectedNodes.remove(selNodes.get(i));
+				}
+			}
+		});
+
+		newButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// create new documentation element
+				// add it to documentations
+				// add it to docNames
+				// ??maybe let the list know to update
+			}
+		});
+
+		doneButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addDocDialog.setVisible(false);
+				return;
+			}
+		});
+
+		tempPanel = new JPanel();
+		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+		tempPanel.add(Box.createHorizontalStrut(10));
+		tempPanel.add(new JLabel("Nodes:"));
+		tempPanel.add(Box.createHorizontalStrut(95));
+		tempPanel.add(new JLabel("Documentations:"));
+		tempPanel.add(Box.createHorizontalGlue());
+		all.add(tempPanel);
+
+		tempPanel = new JPanel();
+		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		tempPanel.add(new JScrollPane(nodesList));
+		tempPanel.add(Box.createHorizontalStrut(10));
+		tempPanel.add(new JSeparator(javax.swing.SwingConstants.VERTICAL));
+		tempPanel.add(Box.createHorizontalStrut(10));
+		tempPanel.add(new JScrollPane(docsList));
+		all.add(tempPanel);
+
+		tempPanel = new JPanel();
+		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		tempPanel.add(Box.createHorizontalGlue());
+		tempPanel.add(updateButton);
+		tempPanel.add(Box.createHorizontalStrut(10));
+		tempPanel.add(newButton);
+		tempPanel.add(Box.createHorizontalStrut(10));
+		tempPanel.add(doneButton);
+		all.add(tempPanel);
+
+		addDocDialog.getContentPane().add(all);
+		addDocDialog.pack();
+		addDocDialog.setVisible(true);
 	}
 }

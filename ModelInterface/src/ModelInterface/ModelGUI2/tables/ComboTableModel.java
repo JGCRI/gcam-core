@@ -26,6 +26,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.w3c.dom.*;
 import javax.swing.*;
 import javax.swing.tree.TreePath;
+import javax.swing.table.TableCellRenderer;
 import org.w3c.dom.xpath.*;
 
 import com.sleepycat.dbxml.XmlValue;
@@ -49,6 +50,7 @@ public class ComboTableModel extends BaseTableModel{
 	String ind1Name;
 	String ind2Name;
 	boolean flipped;
+	TableCellRenderer documentationRenderer;
 
 	//Vector tables;
 
@@ -61,8 +63,8 @@ public class ComboTableModel extends BaseTableModel{
 	 *        parentFrame needed to create dialogs
 	 *        tableTypeString to be able to display the type of table this is
 	 */ 
-	public ComboTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
-		super(tp, doc, parentFrame, tableTypeString);
+	public ComboTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString, Documentation documentationIn) {
+		super(tp, doc, parentFrame, tableTypeString, documentationIn);
 		leftHeaderVector = null;
 		wild = chooseTableHeaders(tp/*, parentFrame*/);
 		wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
@@ -73,6 +75,7 @@ public class ComboTableModel extends BaseTableModel{
 			activeRows.add(new Integer(i));
 		}
 		indCol.add(0, ind1Name);
+		documentationRenderer = getDocumentationRenderer();
 	}
 
 	/**
@@ -94,6 +97,14 @@ public class ComboTableModel extends BaseTableModel{
 		// to set active rows appropriatly
 		doFilter( new Vector(tableFilterMaps.keySet()) );
 		fireTableStructureChanged();
+	}
+
+	public TableCellRenderer getCellRenderer(int row, int col) {
+		if( col <= leftHeaderVector.size() ){
+			return null;
+		} else {
+			return documentationRenderer;
+		}
 	}
 
 	/**
@@ -345,8 +356,9 @@ public class ComboTableModel extends BaseTableModel{
 	 * returns the actual Node that is contained at the position row, col in the table
 	 * @param row position in table
 	 * 	  col position in table
+	 * @return the Node is the position, or null if it was an invalid positon
 	 */
-	private Node getNodeAt(int row, int col) {
+	protected Node getNodeAt(int row, int col) {
 		if( col <= leftHeaderVector.size() ){
 			return null;
 		}

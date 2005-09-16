@@ -144,7 +144,7 @@ public class TableSelector extends JDialog implements ActionListener {
 		}
 		*/
 		if(value.equals("Single Table")) {
-			BaseTableModel bt = new NewDataTableModel(tp, doc, pf, "Single Table");
+			BaseTableModel bt = new NewDataTableModel(tp, doc, pf, "Single Table", ((InputViewer)fcd).getDocumentation());
 			TableSorter sorter = new TableSorter(bt);
 	  		//JTable jTable = new JTable(bt);
 	  		JTable jTable = new JTable(sorter);
@@ -165,6 +165,7 @@ public class TableSelector extends JDialog implements ActionListener {
 	  		while(j < jTable.getColumnCount()) {
 		  		col = jTable.getColumnModel().getColumn(j);
 		  		col.setPreferredWidth(jTable.getColumnName(j).length()*5+30);
+				col.setCellRenderer(bt.getCellRenderer(0, j));
 		  		j++;
 	  		}
 			new CopyPaste( jTable );
@@ -183,7 +184,7 @@ public class TableSelector extends JDialog implements ActionListener {
 			((FileChooserDemo)fcd).pasteMenu.setEnabled(false);
 			*/
 
-			BaseTableModel bt = new MultiTableModel(tp, doc, pf, "Multi Tables");
+			BaseTableModel bt = new MultiTableModel(tp, doc, pf, "Multi Tables", ((InputViewer)fcd).getDocumentation());
 			JTable jTable = new JTable(bt);
 	  		jTable.getModel().addTableModelListener((TableModelListener)fcd);
 			jTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -196,7 +197,7 @@ public class TableSelector extends JDialog implements ActionListener {
 			//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
 
 			jTable.setCellSelectionEnabled(true);
-			jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
+			jTable.getColumnModel().getColumn(0).setCellRenderer(bt.getCellRenderer(0,0));
 			jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)bt).getCellEditor(0,0));
 			int j = 1;
 			while( j < jTable.getRowCount()) {
@@ -207,7 +208,7 @@ public class TableSelector extends JDialog implements ActionListener {
 			new CopyPaste( jTable );
 			return new JScrollPane(jTable);
 		} else if(value.equals("Combo Tables")){
-			BaseTableModel bt = new ComboTableModel(tp, doc, pf, "Combo Tables");
+			BaseTableModel bt = new ComboTableModel(tp, doc, pf, "Combo Tables", ((InputViewer)fcd).getDocumentation());
 			TableSorter sorter = new TableSorter(bt);
 			JTable jTable = new JTable(sorter);
 			// Should the listener be set like so..
@@ -227,6 +228,7 @@ public class TableSelector extends JDialog implements ActionListener {
 				} else {
 					col.setPreferredWidth(jTable.getColumnName(j).length()*5+30);
 				}
+				col.setCellRenderer(bt.getCellRenderer(0, j));
 				j++;
 			}
 			new CopyPaste( jTable );

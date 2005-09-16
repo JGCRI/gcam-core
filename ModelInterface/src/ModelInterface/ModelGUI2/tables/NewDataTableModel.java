@@ -12,11 +12,13 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
+import javax.swing.JTable;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.tree.TreePath;
+import javax.swing.table.TableCellRenderer;
 
 import org.apache.poi.hssf.usermodel.*;
 
@@ -53,6 +55,7 @@ public class NewDataTableModel extends BaseTableModel{
 	boolean flipped;
 	String w3;
 	JFreeChart chart;
+	TableCellRenderer documentationRenderer;
 	//Document doc;
 
 	/**
@@ -62,8 +65,8 @@ public class NewDataTableModel extends BaseTableModel{
 	 *        parentFrame needed to create dialogs
 	 *        tableTypeString to be able to display the type of table this is
 	 */
-	public NewDataTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString) {
-		super(tp, doc, parentFrame, tableTypeString);
+	public NewDataTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString, Documentation documentationIn) {
+		super(tp, doc, parentFrame, tableTypeString, documentationIn);
 		indCol = new Vector();
 		indRow = new Vector();
 		data = new TreeMap();
@@ -76,6 +79,15 @@ public class NewDataTableModel extends BaseTableModel{
 		ind1Name = (String)wild.get(0);
 		ind2Name = (String)wild.get(1);
 		flipped = false;
+		documentationRenderer = getDocumentationRenderer();
+	}
+
+	public TableCellRenderer getCellRenderer(int row, int col) {
+		if(col == 0) {
+			return null;
+		} else {
+			return documentationRenderer;
+		}
 	}
 
 	/**
@@ -157,7 +169,9 @@ public class NewDataTableModel extends BaseTableModel{
 	 *        dataIn the map which defines mapping of colKey;rowKey to data
 	 *        docIn document of where the data comes from
 	 */
-	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, TreeMap dataIn, Document docIn) {
+	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, TreeMap dataIn, Document docIn,
+			Documentation documentationIn) {
+		documentation = documentationIn;
 		w3 = w3In;
 		title = w3;
 		indCol = new Vector(set1);
@@ -168,6 +182,7 @@ public class NewDataTableModel extends BaseTableModel{
 		doc = docIn;
 		ind1Name = set1Name;
 		ind2Name = set2Name;
+		documentationRenderer = getDocumentationRenderer();
 	}
 
 	/**
@@ -206,7 +221,7 @@ public class NewDataTableModel extends BaseTableModel{
 		return indRow.size();
 	}
 
-	public Node getNodeAt(int row, int col) {
+	protected Node getNodeAt(int row, int col) {
 		if(col == 0) {
 			return null;
 		}

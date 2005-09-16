@@ -590,6 +590,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		return strBuff.toString();
 	}
 				
+	/* Moved to Documentation, can remove here
 	StringBuffer nodeToXPath(Node n) {
 		if(n.getNodeType() != Node.DOCUMENT_NODE) {
 			StringBuffer buf = nodeToXPath(n.getParentNode());
@@ -621,8 +622,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			return new StringBuffer("/");
 		}
 	}
-
-
+	*/
 
 	/**
 	 * This "helper method" makes a menu item and then registers this object as
@@ -1732,5 +1732,9 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			});
 		}
 
+	}
+
+	public Documentation getDocumentation() {
+		return documentation;
 	}
 }
