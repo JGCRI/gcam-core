@@ -139,9 +139,19 @@ public class Documentation {
 	}
 
 	public void getDocumentation(Vector<Node> selectedNodes) {
+		getDocumentation(selectedNodes, null, null);
+	}
+
+	public void getDocumentation(Vector<Node> selectedNodes, int[] rows, int[] cols) {
 		int where;
-		final Map<Integer, LinkedList<Node>> docMaps = new HashMap<Integer, LinkedList<Node>>();
+		int row = 0;
+		int col = 0;
+		final Map<Integer, LinkedList<String>> docMaps = new HashMap<Integer, LinkedList<String>>();
 		for(int i = 0; i < selectedNodes.size(); ++i) {
+			if(cols != null && col == cols.length) {
+				col = 0;
+				++row;
+			}
 			Node n = selectedNodes.get(i);
 			if(n.getNextSibling() != null && n.getNextSibling().getNodeType() == Node.COMMENT_NODE) {
 				where = Integer.parseInt(n.getNextSibling().getNodeValue());
@@ -160,13 +170,24 @@ public class Documentation {
 			}
 			if(where != -1) {
 				if(docMaps.containsKey(where)) {
-					docMaps.get(where).addFirst(n);
+					if(rows == null || cols == null) {
+						//docMaps.get(where).addFirst(n);
+						docMaps.get(where).addFirst(n.getNodeValue());
+					} else {
+						docMaps.get(where).addFirst("("+rows[row]+", "+cols[col]+")");
+					}
 				} else {
-					LinkedList<Node> tempSet = new LinkedList<Node>();
-					tempSet.addFirst(n);
+					LinkedList<String> tempSet = new LinkedList<String>();
+					if(rows == null || cols == null) {
+						//tempSet.addFirst(n);
+						tempSet.addFirst(n.getNodeValue());
+					} else {
+						tempSet.addFirst("("+rows[row]+", "+cols[col]+")");
+					}
 					docMaps.put(where, tempSet);
 				}
 			}
+			++col;
 		}
 		if(docMaps.size() == 0) {
 			// error
@@ -235,6 +256,34 @@ public class Documentation {
 			tempPanel.add(tempTextComp);
 			tempPanel.add(Box.createHorizontalGlue());
 			all.add(tempPanel);
+
+			LinkedList<String> tempSet = docMaps.get(currDoc);
+			StringBuffer strBuff;
+			tempPanel = new JPanel();
+			tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+			tempPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 10));
+			if(rows == null || cols == null) {
+				tempPanel.add(new JLabel("Applies to Selected Nodes with Values:"));
+			} else {
+				tempPanel.add(new JLabel("Applies to Selected Nodes with Positions:"));
+			}
+			tempPanel.add(Box.createHorizontalGlue());
+			all.add(tempPanel);
+			int i = 0;
+			while(i < tempSet.size()) {
+				strBuff = new StringBuffer();
+				for(int j = 0; j < 10 && i < tempSet.size(); ++j) {
+					strBuff.append(tempSet.get(i)).append(", ");
+					++i;
+				}
+				strBuff.delete(strBuff.length()-2, strBuff.length()-1);
+				tempPanel = new JPanel();
+				tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+				tempPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 10, 10));
+				tempPanel.add(new JLabel(strBuff.toString()));
+				tempPanel.add(Box.createHorizontalGlue());
+				all.add(tempPanel);
+			}
 
 			/*
 			all.add(new JLabel("This documentation applies to fitting XPaths: "));

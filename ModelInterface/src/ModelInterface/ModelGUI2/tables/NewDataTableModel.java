@@ -656,7 +656,7 @@ public class NewDataTableModel extends BaseTableModel{
 				selectedNodes.add(getNodeAt(rows[i], cols[j]));
 			}
 		}
-		documentation.getDocumentation(selectedNodes);
+		documentation.getDocumentation(selectedNodes, rows, cols);
 	}
 
 }
