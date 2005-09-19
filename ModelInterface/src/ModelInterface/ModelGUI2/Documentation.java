@@ -261,6 +261,8 @@ public class Documentation {
 			}
 			++col;
 		}
+		System.out.println("Doc 1: size: "+docMaps.get(0).size());
+		System.out.println("DocMap: "+docMaps);
 		if(selectedNodes.size() != 0) {
 			// pop add dialog
 			addToDocumentation(selectedNodes, notFoundNames, docMaps);
@@ -466,13 +468,22 @@ public class Documentation {
 					return;
 				}
 				if(docMaps.containsKey(docSel)) {
+					System.out.println("Didn't contain the key");
 					tempSet = new LinkedList<String>();
 					docMaps.put(docSel, tempSet);
 				} else {
+					System.out.println("Does contain the key");
 					tempSet = docMaps.get(docSel);
 				}
 				for(int i = 0; i < nodesSel.length; ++i) {
+					System.out.println("Update node: "+selectedNodes.get(i).getNodeValue());
 					documentations.get(docSel).addXPathLinkForNode(selectedNodes.get(i));
+					Node n = selectedNodes.get(i);
+					if(n.getNextSibling() != null && n.getNextSibling().getNodeType() == Node.COMMENT_NODE) {
+						n.getNextSibling().setNodeValue(String.valueOf(docSel));
+					} else {
+						n.getParentNode().appendChild(doc.createComment(String.valueOf(docSel)));
+					}
 					selNodes.add(selectedNodes.get(i));
 					notFoundNames.remove((String)nodeNamesSel[i]);
 					tempSet.addFirst((String)nodeNamesSel[i]);
@@ -480,6 +491,8 @@ public class Documentation {
 				for(int i = 0; i < nodesSel.length; ++i) {
 					selectedNodes.remove(selNodes.get(i));
 				}
+				System.out.println("Doc 1: size: "+docMaps.get(docSel).size());
+				System.out.println("DocMap: "+docMaps);
 			}
 		});
 
