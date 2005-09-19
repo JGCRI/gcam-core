@@ -154,8 +154,12 @@ public class QuadBucketTree
   public void fillWorld(double res)
   {
     //this will create a blank slate structure, filled with blocks of the passed in resolution
-    //but containing no data. it is used when changing resolutions. and might become obsolete soon...
-    //i think fillWorld will only be necessary if the user specifies a resolution which isnt native to the data
+    //but containing no data. it is used when changing resolutions.
+    /*
+     * a standard program run begins with a fillWorld. this negates the necessity for merging trees
+     * and creating trees purely so they can later be merged. Both of those operations are time and
+     * memory intensive. this way each block of data is merged into an existing tree
+     */
     resolution = res;
     DataBlock toAdd;
     for(double i = (90-res); i >= -90; i-=res)
@@ -763,7 +767,7 @@ public class QuadBucketTree
                 builder.put(time.getKey(), iHateObjects);
               }
               //adding the treemap of time for each seperate variable after it is built
-              val.data.put(var.getKey(), builder);
+              val.data.put((String)var.getKey(), builder);
             }
           }
           else
@@ -784,7 +788,7 @@ public class QuadBucketTree
                 builder.put(time.getKey(), iHateObjects);
               }
               //adding the treemap of time for each seperate variable after it is built
-              val.data.put(var.getKey(), builder);
+              val.data.put((String)var.getKey(), builder);
             }
           }
         }
@@ -833,7 +837,7 @@ public class QuadBucketTree
               }
             } else
             { //add the variable itself
-              entry.data.put(var.getKey(), var.getValue());
+              entry.data.put((String)var.getKey(), (TreeMap)var.getValue());
             }
           }
         }
