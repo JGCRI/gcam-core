@@ -1,5 +1,7 @@
 package ModelInterface.ModelGUI2;
 
+import ModelInterface.ConfigurationEditor.guihelpers.XMLFileFilter;
+import ModelInterface.ConfigurationEditor.utils.FileUtils;
 import ModelInterface.ModelGUI2.tables.BaseTableModel;
 import ModelInterface.ModelGUI2.tables.ComboTableModel;
 import ModelInterface.ModelGUI2.tables.MultiTableModel;
@@ -519,19 +521,55 @@ public class DbViewer implements ActionListener, MenuAdder {
 		//return sp;
 		return jsp = new JScrollPane(sp);
 	}
+	
+	/**
+	 * A class which represents a dirty bit.
+	 * @author Josh Lurz
+	 *
+	 */
+	private class DirtyBit {
+		/**
+		 * Whether or not the dirty bit is set.
+		 */
+		private boolean mIsDirty;
+		/**
+		 * Constructor which initializes the dirty bit to false.
+		 */
+		public DirtyBit(){
+			mIsDirty = false;
+		}
+		
+		/**
+		 * Set the dirty bit.
+		 */
+		public void setDirty(){
+			mIsDirty = true;
+		}
+		
+		/**
+		 * Get the value of the dirty bit.
+		 * @return Whether the dirty bit is set.
+		 */
+		public boolean isDirty() {
+			return mIsDirty;
+		}
+	}
+	
 	private void manageDB() {
 		final JDialog filterDialog = new JDialog(parentFrame, "Manage Database", true);
 		JPanel listPane = new JPanel();
 		JPanel buttonPane = new JPanel();
 		JButton addButton = new JButton("Add");
 		JButton removeButton = new JButton("Remove");
+		JButton exportButton = new JButton("Export");
 		JButton doneButton = new JButton("Done");
 		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
 		Container contentPane = filterDialog.getContentPane();
 
 		//Vector scns = getScenarios();
 		final JList list = new JList(scns);
-
+		
+		final DirtyBit dirtyBit = new DirtyBit();
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
@@ -552,6 +590,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 				int result = fc.showOpenDialog(parentFrame);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
+					dirtyBit.setDirty();
 					//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", 
 						 fc.getCurrentDirectory().toString());
@@ -567,6 +606,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			public void actionPerformed(ActionEvent e) {
 				Object[] remList = list.getSelectedValues();
 				for(int i = 0; i < remList.length; ++i) {
+					dirtyBit.setDirty();
 					xmlDB.removeDoc(((String)remList[i]).substring(0, 
 							((String)remList[i]).indexOf(' ')));
 					//System.out.println(((String)remList[i]).substring(0, ((String)remList[i]).indexOf(' ')));
@@ -575,12 +615,44 @@ public class DbViewer implements ActionListener, MenuAdder {
 				list.setListData(scns);
 			}
 		});
+		exportButton.addActionListener(new ActionListener() {
+			/**
+			 * Method called when the export button is clicked which allows the
+			 * user to select a location to export the scenario to and exports
+			 * the scenario.
+			 * 
+			 * @param aEvent
+			 *            The event received.
+			 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+			 */
+			public void actionPerformed(ActionEvent aEvent) {
+				Object[] selectedList = list.getSelectedValues();
+				for (int i = 0; i < selectedList.length; ++i) {
+					File exportLocation = FileUtils.selectFile(parentFrame,
+							new XMLFileFilter(), null, true);
+					if (exportLocation != null) {
+						boolean success = xmlDB.exportDoc(((String) selectedList[i]).substring(0,
+								((String) selectedList[i]).indexOf(' ')),
+								exportLocation);
+						if(success) {
+							JOptionPane.showMessageDialog(parentFrame, "Scenario export succeeded.");
+						}
+						else {
+							JOptionPane.showMessageDialog(parentFrame, "Scenario export failed.", null, JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}
+			}
+
+		});
 		doneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				xmlDB.addVarMetaData(parentFrame);
-				scnList.setListData(scns);
-				regions = getRegions();
-				regionList.setListData(regions);
+				if(dirtyBit.isDirty()) {
+					xmlDB.addVarMetaData(parentFrame);
+					scnList.setListData(scns);
+					regions = getRegions();
+					regionList.setListData(regions);
+				}
 				filterDialog.setVisible(false);
 			}
 		});
@@ -590,6 +662,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		buttonPane.add(addButton);
 		buttonPane.add(Box.createHorizontalStrut(10));
 		buttonPane.add(removeButton);
+		buttonPane.add(Box.createHorizontalStrut(10));
+		buttonPane.add(exportButton);
 		buttonPane.add(Box.createHorizontalStrut(10));
 		buttonPane.add(doneButton);
 		buttonPane.add(Box.createHorizontalGlue());

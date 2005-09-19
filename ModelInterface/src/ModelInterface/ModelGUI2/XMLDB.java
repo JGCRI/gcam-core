@@ -176,6 +176,31 @@ public class XMLDB {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Export a document to a text file.
+	 * @param aDocName Name of the document to export.
+	 * @param aLocation Location at which to save the document.
+	 * @return Whether the scenario was saved successfully.
+	 */
+	public boolean exportDoc(final String aDocName, final File aLocation) {
+		try {
+			XmlDocument doc = myContainer.getDocument(aDocName);
+			OutputStream fileOutput = new BufferedOutputStream(new FileOutputStream(aLocation));
+			fileOutput.write(doc.getContent());
+			fileOutput.close();
+			return true;
+		}
+		catch(XmlException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public XmlResults createQuery(String query, String queryFilter, Vector<String> queryFunctions) {
 		StringBuffer queryBuff = new StringBuffer();
 		if(queryFunctions != null) {
