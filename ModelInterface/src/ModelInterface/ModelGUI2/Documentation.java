@@ -262,7 +262,7 @@ public class Documentation {
 			++col;
 		}
 		System.out.println("Doc 1: size: "+docMaps.get(0).size());
-		System.out.println("DocMap: "+docMaps);
+		System.out.println("DocMap1: "+docMaps);
 		if(selectedNodes.size() != 0) {
 			// pop add dialog
 			addToDocumentation(selectedNodes, notFoundNames, docMaps);
@@ -429,6 +429,7 @@ public class Documentation {
 			"Missing Documentation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.NO_OPTION) {
 			return;
 		}
+		System.out.println("DocMap2: "+docMaps);
 		final Vector<String> docNames = new Vector<String>(documentations.size());
 		for(int i = 0; i < documentations.size(); ++i) {
 			docNames.add(documentations.get(i).source + "  Date: "+documentations.get(i).sourceDate);
@@ -467,7 +468,9 @@ public class Documentation {
 					System.out.println("no doc selected");
 					return;
 				}
-				if(docMaps.containsKey(docSel)) {
+				System.out.println("DocMap3: "+docMaps);
+				System.out.println("Key: "+docSel);
+				if(docMaps.containsKey(new Integer(docSel))) {
 					System.out.println("Didn't contain the key");
 					tempSet = new LinkedList<String>();
 					docMaps.put(docSel, tempSet);
@@ -476,7 +479,6 @@ public class Documentation {
 					tempSet = docMaps.get(docSel);
 				}
 				for(int i = 0; i < nodesSel.length; ++i) {
-					System.out.println("Update node: "+selectedNodes.get(i).getNodeValue());
 					documentations.get(docSel).addXPathLinkForNode(selectedNodes.get(i));
 					Node n = selectedNodes.get(i);
 					if(n.getNextSibling() != null && n.getNextSibling().getNodeType() == Node.COMMENT_NODE) {
@@ -492,7 +494,9 @@ public class Documentation {
 					selectedNodes.remove(selNodes.get(i));
 				}
 				System.out.println("Doc 1: size: "+docMaps.get(docSel).size());
-				System.out.println("DocMap: "+docMaps);
+				System.out.println("DocMap4: "+docMaps);
+				//((AbstractListModel)nodesList.getModel()).fireIntervalRemoved(this, 0, nodesSel[nodesSel.length-1]);
+				nodesList.updateUI();
 			}
 		});
 
