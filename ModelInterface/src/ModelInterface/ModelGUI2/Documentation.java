@@ -470,7 +470,7 @@ public class Documentation {
 				}
 				System.out.println("DocMap3: "+docMaps);
 				System.out.println("Key: "+docSel);
-				if(docMaps.containsKey(new Integer(docSel))) {
+				if(!docMaps.containsKey(new Integer(docSel))) {
 					System.out.println("Didn't contain the key");
 					tempSet = new LinkedList<String>();
 					docMaps.put(docSel, tempSet);
