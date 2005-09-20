@@ -667,10 +667,12 @@ void Subsector::initCalc( const MarketInfo* aSectorInfo,
 		int numberOfGHGs =  techs[ i ][ aPeriod ]->getNumbGHGs();
 
 		if ( numberOfGHGs != techs[i][ aPeriod - 1 ]->getNumbGHGs() ) {
-			cerr << "WARNING: Number of GHG objects changed in period " << aPeriod;
-         cerr << " to " << numberOfGHGs <<", tech: ";
-			cerr << techs[i][ aPeriod ]->getName();
-			cerr << ", sub-s: "<< name << ", sect: " << sectorName << ", region: " << regionName << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << name << " Number of GHG objects changed in period " << aPeriod;
+            mainLog << " to " << numberOfGHGs <<", tech: ";
+			mainLog << techs[i][ aPeriod ]->getName();
+			mainLog << ", sub-s: "<< name << ", sect: " << sectorName << ", region: " << regionName << endl;
 		}
 		// If number of GHG's decreased, then copy GHG objects
 		if ( numberOfGHGs < techs[i][ aPeriod - 1 ]->getNumbGHGs() ) {
@@ -689,7 +691,7 @@ void Subsector::initCalc( const MarketInfo* aSectorInfo,
 
 /*! \brief check for fixed demands and set values to counter
 *
-* Routine flows down to technoogy and sets fixed demands to the appropriate marketplace to be counted
+* Routine flows down to technology and sets fixed demands to the appropriate marketplace to be counted
 *
 * \author Steve Smith
 * \param period Model period
@@ -915,7 +917,14 @@ void Subsector::calcShare(const int period, const GDP* gdp ) {
 	else {
 		share[ period ] = 0;
 	}
-	
+		
+   if ( shrwts[period]  > 1e4 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << " Huge shareweight for sector: " << sectorName << ", sub-sector " << name << " : shrwt " << shrwts[period];
+        mainLog << " in region " << regionName <<endl;
+   }
+      	
 	// Check for invalid shares.
 	if( share[ period ] < 0 || !util::isValidNumber( share[ period ] ) ) {
 		ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -1516,7 +1525,7 @@ double Subsector::getCalAndFixedOutputs( const int period, const std::string& go
     return sumCalOutputValues;
 }
 
-/*! \brief Calculates the input value needed to produce the required output
+/*! \brief Adds the input value needed to produce the required output to the marketplace calDemand value
 *
 * \author Steve Smith
 * \param period Model period
@@ -1548,26 +1557,25 @@ bool Subsector::setImpliedFixedInput( const int period, const std::string& goodN
 
 /*! \brief returns true if inputs are all fixed for this subsector and input good
 *
+* Note that if the good is not used, then true is returned.
+*
 * \author Steve Smith
 * \param period Model period
 * \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
 * \return boolean true if inputs of specified good are fixed
-* \bug The allInputsFixed variable isn't actually returned.
 */
 bool Subsector::inputsAllFixed( const int period, const std::string& goodName ) const {
-    bool allInputsFixed = false;
 
     // test for each method of fixing output, if none of these are true then demand is not all fixed
     for ( unsigned int i=0; i< techs.size(); i++ ) {
         if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
             if ( ( techs[ i ][ period ]->getCalibrationStatus( ) ) ) {
-                allInputsFixed = true;
+                continue;
             } 
-            else if ( techs[ i ][ period ]->outputFixed( ) != 0 ) {
-                allInputsFixed =  true;
-            } else if ( shrwts[ period ] == 0) {
-                allInputsFixed = true;
-            } else {
+            else if ( techs[ i ][ period ]->outputFixed( ) != 0 || shrwts[ period ] == 0  ) {
+                continue;
+            } 
+            else {
                 return false;
             }
         }
