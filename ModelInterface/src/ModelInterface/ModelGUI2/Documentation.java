@@ -81,6 +81,15 @@ public class Documentation {
 			}
 		}
 
+		public DocumentationElement(String sourceIn, String sourceDateIn, String infoIn, String documentationAuthorIn) {
+			nodeSets = new Vector<TreeSet<Node>>();
+			xpathLinks = new Vector<String>();
+			source = sourceIn;
+			sourceDate = sourceDateIn;
+			info = infoIn;
+			documentationAuthor = documentationAuthorIn;
+		}
+
 		public boolean contains(Node n) {
 			for(int i = 0; i < nodeSets.size(); ++i) {
 				if(nodeSets.get(i).contains(n)) {
@@ -502,6 +511,11 @@ public class Documentation {
 
 		newButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(newDocumentationDialog()) {
+					docNames.add(documentations.get(documentations.size()-1).source + 
+						"  Date: "+documentations.get(documentations.size()-1).sourceDate);
+					docsList.updateUI();
+				}
 				// create new documentation element
 				// add it to documentations
 				// add it to docNames
@@ -549,5 +563,87 @@ public class Documentation {
 		addDocDialog.getContentPane().add(all);
 		addDocDialog.pack();
 		addDocDialog.setVisible(true);
+	}
+
+	public boolean newDocumentationDialog() {
+		final JDialog newDocDialog = new JDialog(ModelInterface.InterfaceMain.getInstance(), "Add Documentation", true);
+		newDocDialog.setLocation(100,100);
+		newDocDialog.setResizable(false);
+		int prevDocSize = documentations.size();
+		JButton okButton = new JButton("  OK  ");
+		JButton cancelButton = new JButton("Cancel");
+
+		JPanel all = new JPanel();
+		JPanel tempPanel;
+		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
+		all.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+		final JTextField sourceField = new JTextField(50);
+		tempPanel = new JPanel();
+		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		tempPanel.add(new JLabel("Source: "));
+		tempPanel.add(Box.createHorizontalStrut(10));
+		tempPanel.add(sourceField);
+		tempPanel.add(Box.createHorizontalGlue());
+		all.add(tempPanel);
+
+		final JTextField sourceDateField = new JTextField(50);
+		tempPanel = new JPanel();
+		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		tempPanel.add(new JLabel("Source Date: "));
+		tempPanel.add(Box.createHorizontalStrut(10));
+		tempPanel.add(sourceDateField);
+		tempPanel.add(Box.createHorizontalGlue());
+		all.add(tempPanel);
+
+		final JTextArea infoField = new JTextArea(5, 50);
+		tempPanel = new JPanel();
+		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		tempPanel.add(new JLabel("Info: "));
+		tempPanel.add(Box.createHorizontalStrut(10));
+		tempPanel.add(new JScrollPane(infoField));
+		tempPanel.add(Box.createHorizontalGlue());
+		all.add(tempPanel);
+
+		final JTextField docAuthorField = new JTextField(50);
+		tempPanel = new JPanel();
+		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		tempPanel.add(new JLabel("Documentation Author: "));
+		tempPanel.add(Box.createHorizontalGlue());
+		tempPanel.add(docAuthorField);
+		tempPanel.add(Box.createHorizontalGlue());
+		all.add(tempPanel);
+
+		tempPanel = new JPanel();
+		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		tempPanel.add(Box.createHorizontalGlue());
+		tempPanel.add(okButton);
+		tempPanel.add(Box.createHorizontalStrut(10));
+		tempPanel.add(cancelButton);
+		all.add(tempPanel);
+
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				documentations.add(new DocumentationElement(sourceField.getText(), sourceDateField.getText(),
+						infoField.getText(), docAuthorField.getText()));
+				newDocDialog.setVisible(false);
+			}
+		});
+
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				newDocDialog.setVisible(false);
+			}
+		});
+
+		newDocDialog.getContentPane().add(all);
+		newDocDialog.pack();
+		newDocDialog.setVisible(true);
+		return prevDocSize != documentations.size();
 	}
 }
