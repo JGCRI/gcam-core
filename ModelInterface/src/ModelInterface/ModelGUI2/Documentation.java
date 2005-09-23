@@ -105,12 +105,63 @@ public class Documentation {
 
 		public void addXPathLinkForNode(Node n) {
 			String xPath = nodeToXPath(n).toString();
+			String ret;
+			for(int i = 0; i < xpathLinks.size(); ++i) {
+				System.out.println("Results of mergeing "+xpathLinks.get(i)+" with "+xPath+" is:");
+				ret = meregeXPathLinks(xpathLinks.get(i), xPath);
+				System.out.println(ret);
+				if(ret != null) {
+					xpathLinks.set(i, ret);
+					nodeSets.get(i).add(n);
+					return;
+				}
+			}
 			xpathLinks.add(xPath);
 			TreeSet<Node> tempSet = new TreeSet<Node>(nodeComparator);
 			tempSet.add(n);
 			nodeSets.add(tempSet);
 			//nodeSets.add(evaluateXPath(xPath);
 			// maybe try to merege with existing xpaths
+		}
+
+		private String meregeXPathLinks(String existingPath, String newPath) {
+			String[] path1Arr = existingPath.split("/");
+			String[] path2Arr = newPath.split("/");
+			StringBuffer strBuff = new StringBuffer();
+			boolean madeChange = false;
+			if(path1Arr.length != path2Arr.length) {
+				System.out.println("Can't merge "+existingPath+" and "+newPath);
+				return null;
+			}
+			for(int i = 1; i < path1Arr.length; ++i) {
+				if(path1Arr[i].equals(path2Arr[i])) {
+					strBuff.append("/").append(path1Arr[i]);
+				} else if(madeChange) {
+					return null;
+				} else if(path1Arr[i].indexOf('[') == -1 && path2Arr[i].indexOf('[') == -1) {
+					return null;
+				} else if(path1Arr[i].indexOf('[') != -1 && path2Arr[i].indexOf('[') != -1 && !path1Arr[i].substring(0, 
+							path1Arr[i].indexOf('[')).equals(path2Arr[i].substring(0, path2Arr[i].indexOf('[')))) {
+					return null;
+				} else if(path1Arr[i].indexOf('[') == -1 && path2Arr[i].indexOf('[') != -1) {
+					strBuff.append("/").append(path2Arr[i]);
+				} else {
+					String[] attrs = path1Arr[i].substring(path1Arr[i].indexOf('[')+1, path1Arr[i].indexOf(']')).split(" or ");
+					String p2Attr = path2Arr[i].substring(path2Arr[i].indexOf('[')+1, path2Arr[i].indexOf(']'));
+					boolean found = false;
+					for(int j = 0; j < attrs.length && !found; ++j) {
+						if(attrs[j].equals(p2Attr)) {
+							strBuff.append("/").append(path1Arr[i]);
+							found = true;
+						}
+					}
+					if(!found) {
+						strBuff.append("/").append(path1Arr[i].substring(0,path1Arr[i].length()-1)).append(" or ").append(p2Attr).append("]");
+					}
+					madeChange = true;
+				}
+			}
+			return strBuff.toString();
 		}
 
 		private StringBuffer nodeToXPath(Node n) {
