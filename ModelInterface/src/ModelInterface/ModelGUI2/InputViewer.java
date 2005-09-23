@@ -61,7 +61,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 	private JFrame parentFrame;
 
-	private static String controlStr = "InputViewer";
+	public static String controlStr = "InputViewer";
 
 	JSplitPane splitPane;
 
@@ -270,7 +270,6 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		*/
 		// Set up the tree
 		jtree = new JTree(new DOMmodel(doc.getDocumentElement()));
-		System.out.println("HERE");
 		jtree.setEditable(true);
 		jtree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);

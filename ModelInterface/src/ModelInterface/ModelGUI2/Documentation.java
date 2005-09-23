@@ -33,7 +33,11 @@ import javax.swing.ListSelectionModel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
+import java.io.PrintStream;
 import java.net.URI;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -156,6 +160,18 @@ public class Documentation {
 			}
 			return null;
 		}
+
+		void toXML(PrintStream docOutStream) {
+			docOutStream.println("\t<documentationElement>");
+			for(int i = 0; i < xpathLinks.size(); ++i) {
+				docOutStream.println("\t\t<XPathLink>"+xpathLinks.get(i)+"</XPathLink>");
+			}
+			docOutStream.println("\t\t<source>"+source+"</source>");
+			docOutStream.println("\t\t<sourceDate>"+sourceDate+"</sourceDate>");
+			docOutStream.println("\t\t<info>"+info+"</info>");
+			docOutStream.println("\t\t<documentationAuthor>"+documentationAuthor+"</documentationAuthor>");
+			docOutStream.println("\t</documentationElement>");
+		}
 	}
 
 	public Documentation(Document docIn, final URI aDocumentationURI, LSParser lsParser, LSInput lsInput) {
@@ -192,6 +208,34 @@ public class Documentation {
 		for(int i = 0; i < childList.getLength(); ++i) {
 			documentations.add(new DocumentationElement(childList.item(i)));
 		}
+
+		ModelInterface.InterfaceMain.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName().equals("Control") && evt.getOldValue().equals(
+						InputViewer.controlStr)) {
+					// maybe check old value here to make sure InputViewer is loosing control
+					System.out.println("The open xml file must be closing");
+					System.out.println("Going to write out documentation and stop listening");
+					try {
+						PrintStream docOutStream = new PrintStream(new File(aDocumentationURI));
+						toXML(docOutStream);
+						docOutStream.close();
+					} catch (FileNotFoundException fnfe) {
+						fnfe.printStackTrace();
+					}
+					ModelInterface.InterfaceMain.getInstance().removePropertyChangeListener(this);
+				}
+			}
+		});
+
+	}
+
+	private void toXML(PrintStream docOutStream) {
+		docOutStream.println("<documentation>");
+		for(int i = 0; i < documentations.size(); ++i) {
+			documentations.get(i).toXML(docOutStream);
+		}
+		docOutStream.println("</documentation>");
 	}
 
 	public boolean hasDocumentation(Node n) {
@@ -270,8 +314,6 @@ public class Documentation {
 			}
 			++col;
 		}
-		System.out.println("Doc 1: size: "+docMaps.get(0).size());
-		System.out.println("DocMap1: "+docMaps);
 		if(selectedNodes.size() != 0) {
 			// pop add dialog
 			addToDocumentation(selectedNodes, notFoundNames, docMaps);
@@ -401,12 +443,14 @@ public class Documentation {
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Set<Integer> keySet = docMaps.keySet();
+				int pos = 0;
 				for(Iterator<Integer> it = keySet.iterator(); it.hasNext(); ) {
 					int currDoc = it.next().intValue();
-					documentations.get(currDoc).source = textFields.get(currDoc).get(0).getText();
-					documentations.get(currDoc).sourceDate = textFields.get(currDoc).get(1).getText();
-					documentations.get(currDoc).info = textFields.get(currDoc).get(2).getText();
-					documentations.get(currDoc).documentationAuthor = textFields.get(currDoc).get(3).getText();
+					documentations.get(currDoc).source = textFields.get(pos).get(0).getText();
+					documentations.get(currDoc).sourceDate = textFields.get(pos).get(1).getText();
+					documentations.get(currDoc).info = textFields.get(pos).get(2).getText();
+					documentations.get(currDoc).documentationAuthor = textFields.get(pos).get(3).getText();
+					++pos;
 				}
 				docDialog.dispose();
 			}
@@ -438,7 +482,6 @@ public class Documentation {
 			"Missing Documentation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.NO_OPTION) {
 			return;
 		}
-		System.out.println("DocMap2: "+docMaps);
 		final Vector<String> docNames = new Vector<String>(documentations.size());
 		for(int i = 0; i < documentations.size(); ++i) {
 			docNames.add(documentations.get(i).source + "  Date: "+documentations.get(i).sourceDate);
@@ -477,14 +520,10 @@ public class Documentation {
 					System.out.println("no doc selected");
 					return;
 				}
-				System.out.println("DocMap3: "+docMaps);
-				System.out.println("Key: "+docSel);
 				if(!docMaps.containsKey(new Integer(docSel))) {
-					System.out.println("Didn't contain the key");
 					tempSet = new LinkedList<String>();
 					docMaps.put(docSel, tempSet);
 				} else {
-					System.out.println("Does contain the key");
 					tempSet = docMaps.get(docSel);
 				}
 				for(int i = 0; i < nodesSel.length; ++i) {
@@ -502,8 +541,6 @@ public class Documentation {
 				for(int i = 0; i < nodesSel.length; ++i) {
 					selectedNodes.remove(selNodes.get(i));
 				}
-				System.out.println("Doc 1: size: "+docMaps.get(docSel).size());
-				System.out.println("DocMap4: "+docMaps);
 				//((AbstractListModel)nodesList.getModel()).fireIntervalRemoved(this, 0, nodesSel[nodesSel.length-1]);
 				nodesList.updateUI();
 			}
@@ -526,7 +563,6 @@ public class Documentation {
 		doneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addDocDialog.setVisible(false);
-				return;
 			}
 		});
 
