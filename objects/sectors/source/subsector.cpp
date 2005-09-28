@@ -610,7 +610,7 @@ void Subsector::initCalc( const MarketInfo* aSectorInfo,
 {
     // Set any fixed demands
     for ( unsigned int i = 0; i < techs.size(); ++i ){
-        techs[i][ aPeriod ]->initCalc( aSectorInfo );
+        techs[i][ aPeriod ]->initCalc( mSubsectorInfo.get() );
     }
 
     // Initialize the baseTechs. This might be better as a loop over tech types. 
