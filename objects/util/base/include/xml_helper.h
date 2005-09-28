@@ -267,14 +267,24 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
    const bool fillout = XMLHelper<bool>::getAttr( node, "fillout" );
    
    // Check to make sure the year attribute returned non-zero.
-   // This should probably return failure, not abort.
-   assert( year != 0 );
+   if (  year == 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Year value not set for vector input tag >>" << XMLHelper<std::string>::safeTranscode( node->getNodeName() ) << "<<" << std::endl;
+        return;
+   }
    
    const int maxperiod = modeltime->getmaxper();
    int period = modeltime->getyr_to_per( year );
 
    // Check that the period returned correctly.
-   assert( ( period >= 0 ) && ( period < modeltime->getmaxper() ) );
+   // Check to make sure the year attribute returned non-zero.
+   if ( !( ( period >= 0 ) && ( period < modeltime->getmaxper() ) ) ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Period value is out of bounds for vector input tag >>" << XMLHelper<std::string>::safeTranscode( node->getNodeName() ) << "<<" << std::endl;
+        return;
+   }
    
    // Check that the period is less than the size of the vector.
    assert( period < static_cast<int>( insertToVector.size() ) );
