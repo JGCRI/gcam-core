@@ -232,6 +232,7 @@ public class XMLDB {
 			}
 		}
 		*/
+		//System.out.println("About to perform query: "+queryBuff.toString());
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
 			return manager.query(queryBuff.toString(), qc);

@@ -433,7 +433,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 						tablePanel.add(ret);
 						((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
 					}
-					tablePanel.add(Box.createVerticalGlue());
+					//tablePanel.add(Box.createVerticalGlue());
 					parentFrame.getGlassPane().setVisible(false);
 					// need old value/new value?
 					// fire off property or something we did query

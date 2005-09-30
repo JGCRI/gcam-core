@@ -37,7 +37,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
-		queryFilter = "scenario/world/region/";
+		queryFilter = "/scenario/world/region/";
 		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		return (new ListSelectionListener() {
