@@ -8,3 +8,13 @@ bin
 *.sbn
 *.dbf
 *.nc
+outWindTest.xml
+outWindFixing.xml
+outWind.xml
+outMaskTest.xml
+outMask2.xml
+outMask.xml
+outFreqFinal2.xml
+outFreqFinal.xml
+outBarley.xml
+hydrogp020.shp.xml

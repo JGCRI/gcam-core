@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<commands>
+	<variable name="wind3" type="reference">
+		<region value="USAcontiguous" />
+		<field value="Class3" />
+		<time value="2005.0" />
+	</variable>
+	
+	<addScalar>
+		<target name="US1" />
+		<argument name="US" />
+		<scalar value="1" />
+	</addScalar>	
+
+
+	<maskCombineOr>
+		<target name="masterMask" />
+		<argument name="forestMask" />
+		<argument name="waterMask" />
+	</maskCombineOr>
+	
+	
+	<plot variable="barley" />
+
+	<print variable="wind" console="windConsole" />
+
+	<frequencyAnalysis>
+		<output type="text" />
+		<argument name="windClass3" />
+		<split name="cost" />
+		<buckets number="20" />
+	</frequencyAnalysis>
+
+	<createDataSet>
+		<file name="maskedWind.xml" />
+		<source name="maskedWind" />
+		<tag value="true">
+			<fieldName value="maskedWind" />
+			<time value="2005.0" />
+		</tag>
+	</createDataSet>
+</commands>
