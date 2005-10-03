@@ -65,7 +65,7 @@ import java.io.*;
  * @author Vincent Nibali
  * @version 1.0
  */
-public class QuadBucketTree
+public class QuadBucketTree implements DataIndex
 {
   private QBNode root; //root node, might wanna hold on to this one
   public int size; //the number of DB's in the tree
@@ -144,6 +144,26 @@ public class QuadBucketTree
 //*********************************************************
 //*************Begin Functions Proper**********************
 //*********************************************************
+  //---added to correspond to DataIndex interface---
+  public double getResolution()
+  {
+    return resolution;
+  }
+  public void addData(DataBlock val)
+  {
+    QBNode nextNode;
+    //starting the recursive add function, will propagate through all blocks, adding where appropriate
+    for(int i = 0; i < 4; i++)
+    {
+      nextNode = ((QBNode)root.data.get(i));
+      if(nextNode.intersects(val.x, val.y, val.width, val.height))
+      { //DB overlaps quad, so enter it and add or look at children
+        addDataHelp(nextNode, val, true);
+      }
+    }
+  }
+  
+  
   /**
    * Create an filled QuadBucketTree with blocks of size res which contain no data.
    * Used to set up an initial tree if a user wishes to specify their own resolution.

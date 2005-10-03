@@ -54,8 +54,8 @@ public class IndexBlock extends Rectangle2D.Double
     height = H;
     width = W;
     
-    xIndex = (int)Math.floor(X/W);
-    yIndex = (int)Math.floor(Y/H);
+    xIndex = (int)Math.floor(((X/W)+(180/W)));
+    yIndex = (int)Math.floor(((Y/H)+(90/H)));
   }
   
 //*****************************************************************************

@@ -65,7 +65,7 @@ import com.vividsolutions.jts.geom.*;
  */
 public class DataBuilder
 {
-  public QuadBucketTree dataTree; //a tree of all the aggregated data to be used to create regions
+  public DataIndex dataStruct; //a tree of all the aggregated data to be used to create regions
   public TreeSet regionList; //a list of all the defined regions' names
   public TreeMap maskList; //all of the regionmasks which will be used to extract regions of data
   public TreeMap printList; //a holder of unwrapped regions before they are printed
@@ -80,7 +80,7 @@ public class DataBuilder
   private Document rDocument; //the region Document which all region files are called form
   private Document sDocument; //the seed data which will be added to
   private BufferedWriter rWriter; //the writer to the output file
-  private boolean init; //whether or not the dataTree has been initialized as of yet
+  private boolean init; //whether or not the dataStruct has been initialized as of yet
   private boolean URes; //whether or not the User wishes to use their own resolution
   Logger log = Logger.getLogger("Preprocess"); //log class to use for all logging output
 
@@ -100,7 +100,7 @@ public class DataBuilder
     rSource = "regions.xml";
     outFile = "out.xml";
     log.log(Level.CONFIG, "DataBuilder seed files: sources.xml, regions.xml, out.xml");
-    dataTree = new QuadBucketTree(-180, 180, -90, 90);
+    dataStruct = new TreeIndex(-180, 180, -90, 90);
     regionList = new TreeSet();
     maskList = new TreeMap();
     printList = new TreeMap();
@@ -124,7 +124,7 @@ public class DataBuilder
     rSource = r;
     outFile = o;
     log.log(Level.CONFIG, "DataBuilder seed files: "+i+", "+r+", "+o);
-    dataTree = new QuadBucketTree(-180, 180, -90, 90);
+    dataStruct = new TreeIndex(-180, 180, -90, 90);
     regionList = new TreeSet();
     maskList = new TreeMap();
     printList = new TreeMap();
@@ -144,12 +144,13 @@ public class DataBuilder
    */
   public void runAll()
   {
-    /*
-    System.out.println("Begin: waiting...");
-    System.in.read();
-    System.in.read();
-    System.out.println("...going");
-    */
+    try{
+      System.out.println("BEGIN: waiting...");
+      System.in.read();
+      System.in.read();
+      System.out.println("...going");
+    } catch(IOException e) {}
+    
     log.log(Level.FINE, "Calling makeStreams()");
     makeStreams();
     
@@ -163,7 +164,7 @@ public class DataBuilder
       //if we have a seed tree must use that resolution
       URes = true;
       double userRes = Double.parseDouble(sDocument.getRootElement().getAttributeValue("res"));
-      dataTree.fillWorld(userRes);
+      dataStruct.fillWorld(userRes);
       init = true;
       //done setting res
       log.log(Level.FINE, "Calling buildTree()");
@@ -195,6 +196,13 @@ public class DataBuilder
       log.log(Level.FINE, "Calling writeRegions()");
       writeRegions();
     }
+    
+    try{
+      System.out.println("END: waiting...");
+      System.in.read();
+      System.in.read();
+      System.out.println("...going");
+    } catch(IOException e) {}
   }
   
   /**
@@ -213,7 +221,7 @@ public class DataBuilder
     { //getting a user resolution if supplied
       URes = true;
       double userRes = Double.parseDouble(root.getAttributeValue("resolution"));
-      dataTree.fillWorld(userRes);
+      dataStruct.fillWorld(userRes);
       init = true;
     }
     
@@ -325,14 +333,14 @@ public class DataBuilder
   public void fillRegions()
   {
     //for each region in 'regionList' use the mask in 'maskList' to get data out of
-    //'dataTree' using the extractMask function, store this information in printList
+    //'dataStruct' using the extractMask function, store this information in printList
     TreeMap holdToPrint;
     String rName;
     Iterator it = regionList.iterator();
     while(it.hasNext())
     {
       rName = (String)it.next();
-      holdToPrint = dataTree.extractMask((RegionMask)maskList.get(rName));
+      holdToPrint = dataStruct.extractMask((RegionMask)maskList.get(rName));
       printList.put(rName, holdToPrint);
     }
     //guess what, the treeMap's in printList are really just a region without a wrapper
@@ -368,7 +376,7 @@ public class DataBuilder
     try
     {
       rWriter.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
-      rWriter.write("<input num=\""+regionList.size()+"\" res=\""+dataTree.resolution+"\">");
+      rWriter.write("<input num=\""+regionList.size()+"\" res=\""+dataStruct.getResolution()+"\">");
       rWriter.newLine();
 
       rWriter.write("\t<variableInfo>\n");
@@ -402,15 +410,15 @@ public class DataBuilder
         //BEGIN WRITING OF SPECIFIC REGION DATA
           //calculating normalized bounds of region
           work = ((RegionMask)maskList.get(rName)).x+((RegionMask)maskList.get(rName)).width;
-          holdMX = Math.ceil(work/dataTree.resolution)*dataTree.resolution;
+          holdMX = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
           work = ((RegionMask)maskList.get(rName)).y+((RegionMask)maskList.get(rName)).height;
-          holdMY = Math.ceil(work/dataTree.resolution)*dataTree.resolution;
-          normX = Math.floor(((RegionMask)maskList.get(rName)).x/dataTree.resolution)*dataTree.resolution;
-          normY = Math.floor(((RegionMask)maskList.get(rName)).y/dataTree.resolution)*dataTree.resolution;
+          holdMY = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
+          normX = Math.floor(((RegionMask)maskList.get(rName)).x/dataStruct.getResolution())*dataStruct.getResolution();
+          normY = Math.floor(((RegionMask)maskList.get(rName)).y/dataStruct.getResolution())*dataStruct.getResolution();
           normW = holdMX-normX;
           normH = holdMY-normY;
-          msizeY = (int)Math.ceil(normH/dataTree.resolution);
-          msizeX = (int)Math.ceil(normW/dataTree.resolution);
+          msizeY = (int)Math.ceil(normH/dataStruct.getResolution());
+          msizeX = (int)Math.ceil(normW/dataStruct.getResolution());
           //printing regionName x y matrixHeight matrixWidth
           holder = "<region  name=\""+rName+"\" x=\""+normX+"\" y=\""+normY+"\" sizeY=\"";
           holder += (msizeY)+"\" sizeX=\""+(msizeX)+"\">";
@@ -445,8 +453,8 @@ public class DataBuilder
                 data = (Map.Entry)itData.next();
                 //prints yIndex xIndex dataValue
                 holder = "<data y=\""
-                    +(Math.abs((int)(((((Point2D.Double)data.getKey()).y+dataTree.resolution)-(normY+normH))/dataTree.resolution)));
-                holder += "\" x=\""+(int)((((Point2D.Double)data.getKey()).x-normX)/dataTree.resolution)
+                    +(Math.abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution())));
+                holder += "\" x=\""+(int)((((Point2D.Double)data.getKey()).x-normX)/dataStruct.getResolution())
                     +"\" value=\"";
                 holder += data.getValue()+"\" />";
                 rWriter.write("\t\t\t\t"+holder);
@@ -583,18 +591,18 @@ public class DataBuilder
         //calculating normalized bounds of region
         work = ((RegionMask)maskList.get(rName)).x
             +((RegionMask)maskList.get(rName)).width;
-        //holdMX = Math.ceil(work/dataTree.resolution)*dataTree.resolution;
+        //holdMX = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
         work = ((RegionMask)maskList.get(rName)).y
             +((RegionMask)maskList.get(rName)).height;
-        holdMY = Math.ceil(work/dataTree.resolution)*dataTree.resolution;
-        normX = Math.floor(((RegionMask)maskList.get(rName)).x/dataTree.resolution)
-            *dataTree.resolution;
-        normY = Math.floor(((RegionMask)maskList.get(rName)).y/dataTree.resolution)
-            *dataTree.resolution;
+        holdMY = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
+        normX = Math.floor(((RegionMask)maskList.get(rName)).x/dataStruct.getResolution())
+            *dataStruct.getResolution();
+        normY = Math.floor(((RegionMask)maskList.get(rName)).y/dataStruct.getResolution())
+            *dataStruct.getResolution();
         //normW = holdMX-normX;
         normH = holdMY-normY;
-        //msizeY = (int)Math.ceil(normH/dataTree.resolution);
-        //msizeX = (int)Math.ceil(normW/dataTree.resolution);
+        //msizeY = (int)Math.ceil(normH/dataStruct.getResolution());
+        //msizeX = (int)Math.ceil(normW/dataStruct.getResolution());
 
         //iterate through variables
         itVar = holdToPrint.entrySet().iterator();
@@ -628,9 +636,9 @@ public class DataBuilder
                   data = (Map.Entry)itData.next();
                   toChild2 = new Element("data");
                   toChild2.setAttribute("y",String.valueOf(Math
-                      .abs((int)(((((Point2D.Double)data.getKey()).y+dataTree.resolution)-(normY+normH))/dataTree.resolution))));
+                      .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
                   toChild2.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
-                      .getKey()).x-normX)/dataTree.resolution)));
+                      .getKey()).x-normX)/dataStruct.getResolution())));
                   toChild2.setAttribute("value", ((Double)data.getValue()).toString());
                   //adding the created data to this time
                   toChild.addContent(toChild2);
@@ -660,9 +668,9 @@ public class DataBuilder
                     data = (Map.Entry)itData.next();
                     toChild = new Element("data");
                     toChild.setAttribute("y",String.valueOf(Math
-                        .abs((int)(((((Point2D.Double)data.getKey()).y+dataTree.resolution)-(normY+normH))/dataTree.resolution))));
+                        .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
                     toChild.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
-                        .getKey()).x-normX)/dataTree.resolution)));
+                        .getKey()).x-normX)/dataStruct.getResolution())));
                     toChild.setAttribute("value", ((Double)data.getValue()).toString());
                     //adding the created data to this time
                     toAdd.addContent(toChild);
@@ -806,7 +814,7 @@ public class DataBuilder
     
     if(!init)
     { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataTree.fillWorld(res);
+      dataStruct.fillWorld(res);
       init = true;
     }
     //setting whether contained data is additive or averaged and references
@@ -838,7 +846,7 @@ public class DataBuilder
         timeValue.put(new Double(time), dataValue);
         toAdd.data.put(dataName, timeValue);
       //merging this data into the current tree
-        dataTree.addData(toAdd, avg);
+        dataStruct.addData(toAdd, avg);
       }
     }
     try{
@@ -939,7 +947,7 @@ public class DataBuilder
     
     if(!init)
     { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataTree.fillWorld(res);
+      dataStruct.fillWorld(res);
       init = true;
     }
     
@@ -982,7 +990,7 @@ public class DataBuilder
         toAdd.data.put(dataName, timeValue);
         
       //merging this data into the current tree
-        dataTree.addData(toAdd, avg);
+        dataStruct.addData(toAdd, avg);
 
         //prepping for next run
         readString = input.readLine();
@@ -1055,7 +1063,7 @@ public class DataBuilder
 
     if(!init)
     { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataTree.fillWorld(res);
+      dataStruct.fillWorld(res);
       init = true;
     }
     //setting whether contained data is additive or averaged
@@ -1099,7 +1107,7 @@ public class DataBuilder
 
           //merging this data into the current tree
             //System.out.println("sending "+dataValue);
-            dataTree.addData(toAdd, avg);
+            dataStruct.addData(toAdd, avg);
           }
           //else this value SUCKS!!!!
           
@@ -1176,7 +1184,7 @@ public class DataBuilder
     
     if(!init)
     { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataTree.fillWorld(res);
+      dataStruct.fillWorld(res);
       init = true;
     }
     
@@ -1250,7 +1258,7 @@ public class DataBuilder
 
           //System.out.println("new data");
           //merging this data into the current tree
-          dataTree.addData(toAdd, avg);
+          dataStruct.addData(toAdd, avg);
           //System.out.println(" - "+dataValue);
         }
       } finally
@@ -1331,7 +1339,7 @@ public class DataBuilder
     
     if(!init)
     { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataTree.fillWorld(res);
+      dataStruct.fillWorld(res);
       init = true;
     }
     
@@ -1406,7 +1414,7 @@ public class DataBuilder
             toAdd.data.put(dataName, timeValue);
 
             //merging this data into the current tree
-            dataTree.addData(toAdd, avg);
+            dataStruct.addData(toAdd, avg);
           } else //env is a Polygon
           {
             Polygon area = (Polygon)env;
@@ -1452,7 +1460,7 @@ public class DataBuilder
                 toAdd.data.put(dataName, timeValue);
                 
                 //merging this data into the current tree
-                dataTree.addData(toAdd, avg);
+                dataStruct.addData(toAdd, avg);
               }
             }
             
@@ -1561,7 +1569,7 @@ public class DataBuilder
     
     if(!init)
     { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataTree.fillWorld(res);
+      dataStruct.fillWorld(res);
       init = true;
     }
     
@@ -1668,7 +1676,7 @@ public class DataBuilder
 
           //System.out.println("new data");
           //merging this data into the current tree
-          dataTree.addData(toAdd, avg);
+          dataStruct.addData(toAdd, avg);
           //System.out.println(" - "+dataValue);
         }
       } finally
@@ -1780,7 +1788,7 @@ public class DataBuilder
     
     if(!init)
     { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataTree.fillWorld(res);
+      dataStruct.fillWorld(res);
       init = true;
     }
     
@@ -1890,7 +1898,7 @@ public class DataBuilder
             toAdd.data.put(target, timeValue);
 
             //merging this data into the current tree
-            dataTree.addData(toAdd, avg);
+            dataStruct.addData(toAdd, avg);
           } else //env is a Polygon
           {
             //TODO- this section is where it is being incredibly slow (as far as i can tell)
@@ -1963,7 +1971,7 @@ public class DataBuilder
                     toAdd.data.put(target, timeValue);
                     
                     //merging this data into the current tree
-                    dataTree.addData(toAdd, avg);
+                    dataStruct.addData(toAdd, avg);
                   }
                 }
                 

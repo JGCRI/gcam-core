@@ -1,6 +1,6 @@
 package ModelInterface.PPsource;
 
-import java.util.TreeMap;
+import java.util.*;
 
 public class MatrixRepository implements DataRepository
 {
@@ -8,8 +8,8 @@ public class MatrixRepository implements DataRepository
    * implements as a treemap of times -> treemap of vars -> double[][]
    */
   TreeMap<Double, TreeMap<String, double[][]>> root;
-  double resolution;
   double[][] currLayer;
+  String currName;
   int xSize;
   int ySize;
   
@@ -20,16 +20,16 @@ public class MatrixRepository implements DataRepository
   public MatrixRepository()
   {
     root = new TreeMap<Double, TreeMap<String, double[][]>>();
-    resolution = 1;
     xSize = 360;
     ySize = 180;
+    currName = "";
   }
-  public MatrixRepository(double res, int x, int y)
+  public MatrixRepository(int x, int y)
   {
     root = new TreeMap<Double, TreeMap<String, double[][]>>();
-    resolution = res;
     xSize = x;
     ySize = y;
+    currName = "";
   }
   
 //*********************************************************
@@ -38,20 +38,15 @@ public class MatrixRepository implements DataRepository
   
   public void changeLayer(String varName, double time)
   {
-    if(!root.containsKey(time))
-    { //create time
-      root.put(time, new TreeMap<String, double[][]>());
+    if(!currName.equals((varName+time)))
+    {
+      double[][] thisLayer = createLayer(varName, time);
+      
+      currLayer = thisLayer;
+      currName = (varName+time);
     }
-    
-    TreeMap<String, double[][]> inTime = root.get(time);
-    if(!inTime.containsKey(varName))
-    { //create this field matrix
-      inTime.put(varName, new double[xSize][ySize]);
-    }
-    
-    currLayer = inTime.get(varName);
   }
-  public void createLayer(String varName, double time)
+  public double[][] createLayer(String varName, double time)
   {
     if(!root.containsKey(time))
     { //create time
@@ -61,8 +56,16 @@ public class MatrixRepository implements DataRepository
     TreeMap<String, double[][]> inTime = root.get(time);
     if(!inTime.containsKey(varName))
     { //create this field matrix
-      inTime.put(varName, new double[xSize][ySize]);
+      double[][] newb = new double[xSize][ySize];
+      //filling this new layer with NaN's
+      for(int i = 0; i < xSize; i ++)
+        for(int k = 0; k < ySize; k++)
+          newb[i][k] = Double.NaN;
+      
+      inTime.put(varName, newb);
     }
+    
+    return inTime.get(varName);
   }
   public double[][] getLayer(String varName, double time)
   {
@@ -84,7 +87,14 @@ public class MatrixRepository implements DataRepository
 
   public void addValue(int X, int Y, double value)
   {
-    currLayer[X][Y] += value;
+    if(Double.isNaN(currLayer[X][Y]))
+    {
+      currLayer[X][Y] = value;
+    } else
+    {
+      currLayer[X][Y] += value;
+    }
+    
     
   }
   public void addValue(String varName, double time, int X, int Y, double value)
@@ -105,5 +115,49 @@ public class MatrixRepository implements DataRepository
     return getValue(X, Y);
   }
 
+  public TreeMap<String, TreeMap<Double, Double>> getAllLayers(int X, int Y)
+  {
+    /*
+     * this function will not return NaN values, they will be completly unreported
+     * this is because a NaN represents something that was never changed
+     * aka it was not in the data.
+     */
+    TreeMap<String, TreeMap<Double, Double>> toReturn = new TreeMap<String, TreeMap<Double, Double>>();
+    TreeMap<Double, Double> holdVar;
+    
+    Map.Entry<Double, TreeMap<String, double[][]>> timeEntry;
+    Map.Entry<String, double[][]> varEntry;
+    Iterator<Map.Entry<String, double[][]>> iV;
+    Iterator<Map.Entry<Double, TreeMap<String, double[][]>>> iT = root.entrySet().iterator();
+    Double value;
+    String varName;
+    Double timeName;
+    
+    while(iT.hasNext())
+    {
+      timeEntry = iT.next();
+      timeName = timeEntry.getKey();
+      iV = timeEntry.getValue().entrySet().iterator();
+      while(iV.hasNext())
+      {
+        varEntry = iV.next();
+        varName = varEntry.getKey();
+        value = varEntry.getValue()[X][Y];
+        
+        if(!Double.isNaN(value))
+        {
+          if(!toReturn.containsKey(varName))
+          {
+            toReturn.put(varName, new TreeMap<Double, Double>());
+          }
+          holdVar = toReturn.get(varName);
+          
+          holdVar.put(timeName, value);
+        }
+      }
+    }
+    
+    return toReturn;
+  }
 
 }

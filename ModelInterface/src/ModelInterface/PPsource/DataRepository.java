@@ -1,5 +1,7 @@
 package ModelInterface.PPsource;
 
+import java.util.*;
+
 public interface DataRepository
 {
   /*
@@ -11,7 +13,7 @@ public interface DataRepository
    */
   
   public void changeLayer(String varName, double time);
-  public void createLayer(String varName, double time);
+  public double[][] createLayer(String varName, double time);
   public double[][] getLayer(String varName, double time);
   
   public void setValue(int X, int Y, double value);
@@ -22,4 +24,6 @@ public interface DataRepository
   
   public double getValue(int X, int Y);
   public double getValue(String varName, double time, int X, int Y);
+  
+  public TreeMap<String, TreeMap<Double, Double>> getAllLayers(int X, int Y);
 }

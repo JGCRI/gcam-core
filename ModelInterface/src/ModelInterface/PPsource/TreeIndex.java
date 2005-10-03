@@ -1,6 +1,6 @@
 package ModelInterface.PPsource;
 
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,16 +11,54 @@ public class TreeIndex implements DataIndex
   private DataRepository data; //this is where all data is stored and where we will get it from
   private QBNode root; //root node, might wanna hold on to this one
   private boolean init; //has this index been initialized? (if not must fillWorld)
+  private TreeMap makeRegion;
+  private double minX;
+  private double maxX;
+  private double minY;
+  private double maxY;
   
   public double resolution; //resolution of the DataBlocks stored in teh tree
   
 //*********************************************************
 //*****************Class Constructors**********************
 //*********************************************************
-  
+  public TreeIndex(double x1, double x2, double y1, double y2)
+  {
+    minX = x1;
+    maxX = x2;
+    double centerX = (x1+x2)/2;
+    minY = y1;
+    maxY = y2;
+    double centerY = (y1+y2)/2;
+    init = false;
+    
+    root = new QBNode(x1, x2, y1, y2);
+    root.leaf = false;
+    //defining the 4 initial quadrants - in an annoying way
+    QBNode toAdd = new QBNode(minX, centerX, minY, centerY);
+    toAdd.parent = root;
+    root.data.add(0, toAdd);
+    toAdd = new QBNode(minX, centerX, centerY, maxY);
+    toAdd.parent = root;
+    root.data.add(1, toAdd);
+    toAdd = new QBNode(centerX, maxX, centerY, maxY);
+    toAdd.parent = root;
+    root.data.add(2, toAdd);
+    toAdd = new QBNode(centerX, maxX, minY, centerY);
+    toAdd.parent = root;
+    root.data.add(3, toAdd);
+  }
 //*********************************************************
 //*************Begin Functions Proper**********************
 //*********************************************************
+  
+  public double getResolution()
+  {
+    if(init)
+      return resolution;
+    else
+      return -1;
+  }
   
   public void fillWorld(double res)
   {
@@ -34,31 +72,51 @@ public class TreeIndex implements DataIndex
         addBlock(toAdd);
       }
     }
+    init();
   }
 
   public void addData(DataBlock val)
   {
+    addData(val, true);
+  }
+  
+  public void addData(DataBlock val, boolean avg)
+  {
     QBNode nextNode;
+    
+    if(!init)
+    {
+      fillWorld(val.width);
+    }
+    
     //starting the recursive add function, will propagate through all blocks, adding where appropriate
     for(int i = 0; i < 4; i++)
     {
       nextNode = ((QBNode)root.data.get(i));
       if(nextNode.intersects(val.x, val.y, val.width, val.height))
       { //DB overlaps quad, so enter it and add or look at children
-        addDataHelp(nextNode, val, true); //TODO avg was never implemented... oops
+        addDataHelp(nextNode, val, avg);
       }
     }
   }
 
   public TreeMap extractMask(RegionMask m)
   {
-    // TODO Auto-generated method stub
-    return null;
+    makeRegion = new TreeMap();
+    
+    extractMaskHelp(root, m);
+    return makeRegion;
   }
 
 //*********************************************************
 //*************Begin Private Functions*********************
 //*********************************************************
+  private void init()
+  {
+    init = true;
+    data = new MatrixRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
+  }
+  
   private void addBlock(IndexBlock val)
   {
     addBlock(root, val);
@@ -122,7 +180,6 @@ public class TreeIndex implements DataIndex
       addBlock(currNode, (IndexBlock)hold.get(i));
     }
   }
-  
   private void addDataHelp(QBNode currNode, DataBlock val, boolean avg)
   {
     if(currNode.leaf)
@@ -164,10 +221,7 @@ public class TreeIndex implements DataIndex
         { 
           //then there is some overlap, add data in some way
           String varName;
-          TreeMap var, builder;
           double weightValue, addValue, timeName;
-          
-         
           
           //TODO here we get out the index from our indexBlock and use that to
           //address and add our data to the DataRespository
@@ -209,4 +263,76 @@ public class TreeIndex implements DataIndex
     }
   }
   
+  private void extractMaskHelp(QBNode currNode, RegionMask m)
+  {
+    if(currNode.leaf)
+    { //remember data in makeRegion is stored in TreeMap->TreeMap->TreeMap
+      TreeMap<String, TreeMap<Double, Double>> dataPoint;
+      IndexBlock entry;
+      Point2D.Double addPoint;
+      double weight;
+      for(int i = 0; i < currNode.data.size(); i++)
+      {
+        entry = (IndexBlock)currNode.data.get(i);
+        //making sure this block of data is not just within the regions bounding box, but also
+        //lies over a region which is marked(1) as in the region
+        weight = m.inRegion(entry.x, entry.y, entry.width, entry.height);
+        if(weight > 0)
+        {
+          if(!makeRegion.containsKey("weight"))
+          {
+            //setting up the var and time for weight of blocks if not done yet
+            TreeMap wTime = new TreeMap();
+            wTime.put("0", new TreeMap(new coordComparePoint()));
+            makeRegion.put("weight", wTime);
+          }
+          //adding a data point for the weight of this DB
+          addPoint = new Point2D.Double(entry.x, entry.y);
+          ((TreeMap)((TreeMap)makeRegion.get("weight")).get("0")).put(addPoint, new Double(weight));
+          
+          //*getting the data for this point from the data repository
+          dataPoint = data.getAllLayers(entry.getXIndex(), entry.getYIndex());
+          //*done getting data
+          
+          //add the data to the correct TreeMap (based on data name)
+          //iterate through the data in this Node, by Var, then Time, adding to makeRegion
+          Map.Entry var, time;
+          Iterator iV = dataPoint.entrySet().iterator();
+          while(iV.hasNext())
+          {
+            //iterating through variables
+            var = (Map.Entry)iV.next();
+            if(!makeRegion.containsKey(var.getKey()))
+            {//if makeRegion does not yet have a mapping for this variable, add it now
+              makeRegion.put(var.getKey(), new TreeMap());
+            }
+            Iterator iT = ((TreeMap)var.getValue()).entrySet().iterator();
+            while(iT.hasNext())
+            {
+              time = (Map.Entry)iT.next();
+              if(!((TreeMap)makeRegion.get(var.getKey())).containsKey(time.getKey()))
+              {//if makeRegion's mapping for the variable does not contain this time yet, add it now
+                ((TreeMap)makeRegion.get(var.getKey())).put(time.getKey(), new TreeMap(new coordComparePoint()));
+              }
+              //ok we can finally add the actual data as a (point, value) pair to lowest level treeMap
+              addPoint = new Point2D.Double(entry.x, entry.y);
+              ((TreeMap)((TreeMap)makeRegion.get(var.getKey())).get(time.getKey())).put(addPoint, time.getValue());
+            }
+          }
+        }
+      }
+    } else
+    {
+      QBNode nextNode;
+      //need to keep going down levels to find where the data resides
+      for(int i = 0; i < 4; i++)
+      {
+        nextNode = ((QBNode)currNode.data.get(i));
+        if(nextNode.intersects(m.x, m.y, (m.width+m.resolution), (m.height+m.resolution)))
+        { //Node overlaps boundingbox of mask in some way, so enter it and check children
+          extractMaskHelp((QBNode)currNode.data.get(i), m);
+        }
+      }
+    }
+  }
 }
