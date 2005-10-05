@@ -602,8 +602,12 @@ public class ComboTableModel extends BaseTableModel{
 				if(fullColumn.indexOf("=") != -1) {
 					fullColumn = fullColumn.split("=")[1];
 				}
+				double year = Double.parseDouble( fullColumn );
+				currSeries.add( year, yValue);
+				/*
 				int year = Integer.parseInt( fullColumn );
 				currSeries.add( year, yValue);
+				*/
 			}
 			// Add the series to the set.
 			chartData.addSeries(currSeries);
@@ -708,7 +712,7 @@ public class ComboTableModel extends BaseTableModel{
 	  }
 	  recAddTables(dataTree, null, regions, years, "");
 	  System.out.println("Level Selected: "+levelValues);
-	  if(!sumAll && years.size() != levelValues.length) {
+	  if(!sumAll && levelValues != null && years.size() != levelValues.length) {
 		  //indRow = new Vector(levelValues);
 		  indRow = new Vector(levelValues.length, 0);
 		  for(int i =0; i < levelValues.length; ++i) {

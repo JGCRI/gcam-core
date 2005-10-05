@@ -488,7 +488,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 			return null;
 		}
 		btBefore = null;
-		JFreeChart chart = bt.createChart(0,0);
 		//TableSorter sorter = new TableSorter(bt);
 		jTable = new JTable(bt);
 		new CopyPaste(jTable);
@@ -509,11 +508,16 @@ public class DbViewer implements ActionListener, MenuAdder {
 			}
 			j++;
 		}
-		BufferedImage chartImage = chart.createBufferedImage(
-				350, 350);
-
 		JLabel labelChart = new JLabel();
-		labelChart.setIcon(new ImageIcon(chartImage));
+		try {
+			JFreeChart chart = bt.createChart(0,0);
+			BufferedImage chartImage = chart.createBufferedImage(
+					350, 350);
+
+			labelChart.setIcon(new ImageIcon(chartImage));
+		} catch(Exception e) {
+			labelChart.setText("Cannot Create Chart");
+		}
 		JSplitPane sp = new JSplitPane();
 		sp.setLeftComponent(new JScrollPane(jTable));
 		sp.setRightComponent(labelChart);

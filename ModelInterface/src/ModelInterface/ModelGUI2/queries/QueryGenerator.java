@@ -74,6 +74,8 @@ public class QueryGenerator {
 			qb = new ResourceQueryBuilder(this);
 		} else if(queryIn.getNodeName().equals(EmissionsQueryBuilder.xmlName)) {
 			qb = new EmissionsQueryBuilder(this);
+		} else if(queryIn.getNodeName().equals(CostCurveQueryBuilder.xmlName)) {
+			qb = new CostCurveQueryBuilder(this);
 		} else {
 			qb = null;
 		}
@@ -102,7 +104,7 @@ public class QueryGenerator {
 					group = false;
 				}
 				xPath = nl.item(i).getFirstChild().getNodeValue();
-				if((!sumAll && !group) || (sumAll && group)) {
+				if(((!sumAll && !group) || (sumAll && group)) && !(qb instanceof CostCurveQueryBuilder)) {
 					Vector temp = new Vector();
 					String xpTemp = xPath;
 					Pattern pat;
@@ -143,6 +145,8 @@ public class QueryGenerator {
 					//DbViewer.xmlDB.setQueryFilter("");
 					xPath = xpTemp;
 					levelValues = temp.toArray();
+				} else {
+					levelValues = null;
 				}
 			}
 		}
@@ -160,6 +164,7 @@ public class QueryGenerator {
 		typeMap.put("Demographics", new Boolean(false));
 		typeMap.put("Resource", new Boolean(false));
 		typeMap.put("Emissions", new Boolean(false));
+		typeMap.put("Cost Curves", new Boolean(false));
 		typeMap.put("Query Group", new Boolean(false));
 		final Vector types = new Vector(typeMap.keySet().size(), 0);
 		for(int i = 0; i < types.capacity(); ++i) {
@@ -205,7 +210,7 @@ public class QueryGenerator {
 					return;
 				}
 				if(list.getSelectedIndices().length > 0) {
-					if(list.getSelectedIndex() == 5) {
+					if(list.getSelectedIndex() == typeMap.keySet().size()-1) {
 						nextButton.setEnabled(false);
 						cancelButton.setText("Finished");
 					} else {
@@ -306,6 +311,10 @@ public class QueryGenerator {
 							}
 							case 4: {
 									types.set(selInd, new EmissionsQueryBuilder(thisGen));
+									break;
+							}
+							case 5: {
+									types.set(selInd, new CostCurveQueryBuilder(thisGen));
 									break;
 							}
 							default: {

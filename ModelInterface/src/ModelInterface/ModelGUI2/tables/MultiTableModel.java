@@ -287,28 +287,32 @@ public class MultiTableModel extends BaseTableModel{
 	  		JScrollPane tV = new JScrollPane(jTable);
 			JScrollPane tableView = tV;
 			if(me.getValue() instanceof Double) {
-			JPanel tpanel = new JPanel();
-			JSplitPane sp = new JSplitPane();
+				JPanel tpanel = new JPanel();
+				JSplitPane sp = new JSplitPane();
 
-						JLabel labelChart = new JLabel();
-						//labelChart.setIcon(new ImageIcon(tM.getChartImage()));
-		//BufferedImage chartImage = chart.createBufferedImage( 350, 350);
-			BufferedImage chartImage = tM.createChart(0,0).createBufferedImage( 350, 350);
-						labelChart.setIcon(new ImageIcon(chartImage));
-						//labelChart.setIcon(tM.getChartImage());
-						/*
-						tpanel.add(tV);
-						tpanel.add(Box.createHorizontalStrut(10));
-						tpanel.add(labelChart);
-						*/
+				JLabel labelChart = new JLabel();
+				//labelChart.setIcon(new ImageIcon(tM.getChartImage()));
+				//BufferedImage chartImage = chart.createBufferedImage( 350, 350);
+				try {
+					BufferedImage chartImage = tM.createChart(0,0).createBufferedImage( 350, 350);
+					labelChart.setIcon(new ImageIcon(chartImage));
+				} catch(Exception e) {
+					labelChart.setText("Cannot Create Chart");
+				}
+				//labelChart.setIcon(tM.getChartImage());
+				/*
+				   tpanel.add(tV);
+				   tpanel.add(Box.createHorizontalStrut(10));
+				   tpanel.add(labelChart);
+				   */
 
-						sp.setLeftComponent(tV);
-						sp.setRightComponent(labelChart);
-						tableView = new JScrollPane(sp);
-						sp.setDividerLocation(parentFrame.getWidth()-350);
-						//tableView.setColumnHeaderView(jTable);
-			//tableView.getViewport().getView().add(Box.createHorizontalStrut(1000));
-			//tableView.getViewport().getView().add(labelChart);
+				sp.setLeftComponent(tV);
+				sp.setRightComponent(labelChart);
+				tableView = new JScrollPane(sp);
+				sp.setDividerLocation(parentFrame.getWidth()-350);
+				//tableView.setColumnHeaderView(jTable);
+				//tableView.getViewport().getView().add(Box.createHorizontalStrut(1000));
+				//tableView.getViewport().getView().add(labelChart);
 			}
 
 	  		if(tables == null) {
@@ -506,7 +510,7 @@ public class MultiTableModel extends BaseTableModel{
 	  recAddTables(dataTree, null, regions, years, "");
 	  /* Figure out what to do for level selected
 	  System.out.println("Level Selected: "+levelValues);
-	  if(!sumAll && years.size() != levelValues.length) {
+	  if(!sumAll && levelValues != null && years.size() != levelValues.length) {
 		  //indRow = new Vector(levelValues);
 		  indRow = new Vector(levelValues.length, 0);
 		  for(int i =0; i < levelValues.length; ++i) {
