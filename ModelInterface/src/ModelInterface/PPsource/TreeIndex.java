@@ -82,6 +82,16 @@ public class TreeIndex implements DataIndex
   
   public void addData(DataBlock val, boolean avg)
   {
+    /*
+     * 1. check sparse data as referenced in databuilder
+     * 2. check readdtion from new data sources into an existing data set
+     *  -will this be purely additive (i believe it currently is)
+     *  -what do we want it to be? 
+     *  -for multifile->single data set there are two cases-> additive or supplantal
+     *  -additive will just add to the old value, assumes we are completing an old dataset
+     *  -supplantal will replace the previous data, assumes later data is more correct
+     *  or more important
+     */
     QBNode nextNode;
     
     if(!init)
@@ -223,8 +233,6 @@ public class TreeIndex implements DataIndex
           String varName;
           double weightValue, addValue, timeName;
           
-          //TODO here we get out the index from our indexBlock and use that to
-          //address and add our data to the DataRespository
           //should add each var and time (could be more than one)
           i1 = val.data.entrySet().iterator();
           while(i1.hasNext())

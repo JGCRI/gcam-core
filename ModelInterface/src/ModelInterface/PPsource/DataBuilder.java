@@ -236,6 +236,9 @@ public class DataBuilder
       } else if(currFile.getAttributeValue("type").equals("1x1"))
       {
         add1x1Data(currFile);
+      } else if(currFile.getAttributeValue("type").equals("NASA"))
+      {
+        addNASAData(currFile);
       } else if(currFile.getAttributeValue("type").equals("netcdf"))
       {
         addNetCDFData(currFile);
@@ -1452,7 +1455,13 @@ public class DataBuilder
               for(double Y = maxY; Y > minY; Y-=res)
               {
                 //there should be SOMETHING to do to weight the data for sparse
-                //files this is definately a TODO
+                /*
+                 * TODO look into superhigh resolution / sparse data sets
+                 * and how they might be affected by overwrites, or at elast
+                 * how they can be accounted for.
+                 * 1. should this accounting take place here
+                 * 2. should sparceness information be sent into the data collection
+                 */
                 
                 toAdd = new DataBlock(X, Y, res, res);
                 timeValue = new TreeMap();
@@ -1998,6 +2007,174 @@ public class DataBuilder
     log.log(Level.FINE, "Done adding new PolyShapefileEnum");
   }
   
+  private void addNASAData(Element currFile)
+  {
+    log.log(Level.FINER, "begin function");
+    boolean avg = true;
+    boolean dec = true;
+    boolean byMonth = false; //should info be read in for each month or just the year
+    String dataName = "shutup,";
+    String fileName = "it is initialized thanks";
+    String ref = null;
+    String unit = null;
+    double time = 0;
+    double res = 1;
+    List infoChildren;
+    Element currElem;
+    TreeMap timeValue;
+    Double dataValue;
+    DataBlock toAdd;
+    
+  //getting file info from XML
+    infoChildren = currFile.getChildren();
+    for(int i = 0; i < infoChildren.size(); i++)
+    {
+      currElem = (Element)infoChildren.get(i);
+      if(currElem.getName().equals("data"))
+      {
+        dataName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("date"))
+      {
+        time = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("division"))
+      {
+        if(currElem.getAttributeValue("value").equals("month"))
+        { //byMonth is default to false
+          byMonth = true;;
+        }
+      } else if(currElem.getName().equals("res"))
+      {
+        res = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("average"))
+      {
+        avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
+      } else if(currElem.getName().equals("reference"))
+      {
+        ref = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("units"))
+      {
+        unit = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("format"))
+      {
+        if(currElem.getAttributeValue("value").equals("scientific"))
+        { //dec is default to true
+          dec = false;
+        }
+      } else if(currElem.getName().equals("name"))
+      {
+        fileName = currElem.getAttributeValue("value");
+      } else
+      {
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
+      }
+      
+    }
+  //done reading from XML file
+    
+  //opening NASA file for reading
+    BufferedReader input = null;
+    try {
+      input = new BufferedReader( new FileReader(fileName));
+    } catch (FileNotFoundException ex) 
+    {
+      log.log(Level.SEVERE, "FileNotFoundException!!!");
+    }
+  //txt file opened
+    
+    if(!init)
+    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+      dataStruct.fillWorld(res);
+      init = true;
+    }
+    
+    //setting whether contained data is additive or averaged and references
+    dataAvg.put(dataName, new Boolean(avg));
+    if(ref != null)
+    {
+      dataRef.put(dataName, ref);
+    }
+    if(unit != null)
+    {
+      dataUnits.put(dataName, unit);
+    }
+    //done settign avg/add and references
+    
+    
+    //reading the data from the file
+    String nextWord;
+    double X, Y;
+    while((nextWord = readWord(input)) != null)
+    {
+      //we know we have a line, so read all of this line
+      
+      if(dec)
+      { //numbers stored in decimal format
+        //get the location of this data
+        Y = Double.parseDouble(nextWord);
+        X = Double.parseDouble(readWord(input));
+        for(int i = 0; i < 12; i++)
+        {
+          nextWord = readWord(input);
+          if(byMonth)
+          { //if we are storing info for each 
+            dataValue = Double.valueOf(nextWord);
+            toAdd = new DataBlock(X, Y, res, res);
+            timeValue = new TreeMap();
+            timeValue.put(new Double((time+(i*.01))), dataValue);
+            toAdd.data.put(dataName, timeValue);
+          //merging this data into the current tree
+            dataStruct.addData(toAdd, avg);
+          }
+        }
+        nextWord = readWord(input);
+        if(!byMonth)
+        { //if we are just reading 1 value for a year then add this
+          dataValue = Double.valueOf(nextWord);
+          toAdd = new DataBlock(X, Y, res, res);
+          timeValue = new TreeMap();
+          timeValue.put(new Double(time), dataValue);
+          toAdd.data.put(dataName, timeValue);
+        //merging this data into the current tree
+          dataStruct.addData(toAdd, avg);
+        }
+      } else
+      { //numbers stored in scientific notation
+        Y = scientificToDouble(nextWord);
+        X = scientificToDouble(readWord(input));
+        for(int i = 0; i < 12; i++)
+        {
+          nextWord = readWord(input);
+          if(byMonth)
+          { //if we are storing info for each 
+            dataValue = new Double(scientificToDouble(nextWord));
+            toAdd = new DataBlock(X, Y, res, res);
+            timeValue = new TreeMap();
+            timeValue.put(new Double((time+(i*.01))), dataValue);
+            toAdd.data.put(dataName, timeValue);
+          //merging this data into the current tree
+            dataStruct.addData(toAdd, avg);
+          }
+        }
+        nextWord = readWord(input);
+        if(!byMonth)
+        { //if we are just reading 1 value for a year then add this
+          dataValue = new Double(scientificToDouble(nextWord));
+          toAdd = new DataBlock(X, Y, res, res);
+          timeValue = new TreeMap();
+          timeValue.put(new Double(time), dataValue);
+          toAdd.data.put(dataName, timeValue);
+        //merging this data into the current tree
+          dataStruct.addData(toAdd, avg);
+        }
+        dataValue = new Double(scientificToDouble(nextWord));
+      }
+    }
+    try{
+      input.close(); //im such a good programmer closing my files and whatnot
+    } catch(IOException e){}
+  //done reading data from file
+  }
+  
   private void addRasterData(Element currFile)
   { //i hope i can do this too...
     log.log(Level.SEVERE, "Function not implemented yet");
@@ -2361,6 +2538,7 @@ public class DataBuilder
     log.log(Level.FINEST, "begin function");
     //reads an entire word from an input stream rather than just a character
     //words delimited by any whitespace 'space, new line, tab'
+    //if no word exists in the stream return... null!
     String build = new String();
     int read;
     char hold;
