@@ -603,7 +603,10 @@ public class ComboTableModel extends BaseTableModel{
 					fullColumn = fullColumn.split("=")[1];
 				}
 				double year = Double.parseDouble( fullColumn );
-				currSeries.add( year, yValue);
+				if(yValue != 0 || ((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() 
+								/ (indRow.size()))).get( getKey( row, col ) ) != null) {
+					currSeries.add( year, yValue);
+				}
 				/*
 				int year = Integer.parseInt( fullColumn );
 				currSeries.add( year, yValue);
