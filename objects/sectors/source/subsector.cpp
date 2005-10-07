@@ -1609,9 +1609,7 @@ bool Subsector::techHasInput( const technology* thisTech, const std::string& goo
 void Subsector::scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue ) {
 	for ( unsigned int i=0; i< techs.size(); i++ ) {
 		if ( techHasInput( techs[ i ][ period ], goodName ) ) {
-			if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
-				techs[ i ][ period ]->scaleCalibrationInput( scaleValue );
-			} 
+            techs[ i ][ period ]->scaleCalibrationInput( scaleValue );
 		}
    }
 }

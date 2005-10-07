@@ -430,7 +430,7 @@ void technology::initCalc( const MarketInfo* aSubsectorInfo ) {
     }
 
     for( unsigned int i = 0; i < ghg.size(); i++ ){
-        ghg[i]->initCalc();
+        ghg[i]->initCalc( );
     }
 }
 
@@ -479,7 +479,14 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
         fuelprice = marketplace->getPrice( fuelname, regionName, per );
 		
 		/*! \invariant The market price of the fuel must be valid. */
-		assert( fuelprice != Marketplace::NO_MARKET_PRICE );
+		if ( fuelprice == Marketplace::NO_MARKET_PRICE ) {
+           ILogger& mainLog = ILogger::getLogger( "main_log" );
+           mainLog.setLevel( ILogger::ERROR );
+           mainLog << "Requested fuel >" << fuelname << "< with no price in technology " << name 
+                   << " in sector " << sectorName << " in region " << regionName << "." << endl;
+           // set fuelprice to a valid, although arbitrary, number
+		   fuelprice = util::getLargeNumber();
+		}
     } 
 	 
 	// fMultiplier and pMultiplier are initialized to 1 for those not read in
@@ -878,11 +885,11 @@ double technology::getCalibrationInput( ) const {
     return calInputValue;
 }
 
-//! scale technology calibration value
+//! scale technology calibration or fixed values
 void technology::scaleCalibrationInput( const double scaleFactor ) {
     if ( scaleFactor != 0 ) {
-        calInputValue = calInputValue * scaleFactor;
-        calOutputValue = calOutputValue * scaleFactor;
+        calInputValue *= scaleFactor;
+        calOutputValue *= scaleFactor;
     }
 }
 
@@ -1005,24 +1012,31 @@ int technology::getNumbGHGs()  const {
 * \param period Model period
 */
 void technology::tabulateFixedDemands( const string regionName, const int period ) {
+    const double MKT_NOT_ALL_FIXED = -1; // This should be same constant as used in region
     Marketplace* marketplace = scenario->getMarketplace();
 
     // Checking for market existence here avoids emitting a warning (which happens for fuel "renewable")
     if ( marketplace->getPrice( fuelname, regionName, period, false ) != Marketplace::NO_MARKET_PRICE ) {
         if ( outputFixed() ) {
+            double fixedOrCalInput = 0;
             double fixedInput = 0;
             // this sector has fixed output
             if ( doCalibration ) {
-                fixedInput = getCalibrationInput();
+                fixedOrCalInput = getCalibrationInput();
             } else if ( fixedOutput >= 0 ) {
-                fixedInput = getFixedInput();
+                fixedOrCalInput = getFixedInput();
+                fixedInput = fixedOrCalInput;
             }
             // set demand for fuel in marketInfo counter
             double exisitingDemand = max( marketplace->getMarketInfo( fuelname, regionName , period, "calDemand" ), 0.0 );
-            marketplace->setMarketInfo( fuelname, regionName, period, "calDemand", exisitingDemand + fixedInput );        
+            marketplace->setMarketInfo( fuelname, regionName, period, "calDemand", exisitingDemand + fixedOrCalInput );        
+            
+            // Track fixedDemand separately since this will not be scaled.
+            exisitingDemand = max( marketplace->getMarketInfo( fuelname, regionName , period, "calFixedDemand" ), 0.0 );
+            marketplace->setMarketInfo( fuelname, regionName, period, "calFixedDemand", exisitingDemand + fixedInput );        
         } else {
             // If not fixed, then set to -1 to indicate a demand that is not completely fixed
-            marketplace->setMarketInfo( fuelname, regionName, period, "calDemand", -1 );
+            marketplace->setMarketInfo( fuelname, regionName, period, "calDemand",MKT_NOT_ALL_FIXED );
         }
     }
 }

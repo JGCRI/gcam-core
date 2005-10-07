@@ -171,6 +171,7 @@ void BuildingDemandSubSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) con
 
 //! Write object to debugging xml output stream.
 void BuildingDemandSubSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
+    Marketplace* marketplace = scenario->getMarketplace();
 
     Subsector::toDebugXMLDerived( period, out, tabs );
 
@@ -178,6 +179,8 @@ void BuildingDemandSubSector::toDebugXMLDerived( const int period, ostream& out,
     XMLWriteElement( dayLighting[ period ], "dayLighting", out, tabs );
     XMLWriteElement( aveInsulation[ period ], "aveInsulation", out, tabs );
     XMLWriteElement( floorToSurfaceArea[ period ], "floorToSurfaceArea", out, tabs );
+    string intGainsMarketName = INTERNAL_GAINS_MKT + sectorName + name;
+    XMLWriteElement( marketplace->getPrice( intGainsMarketName, regionName, period ), "internalGains", out, tabs );
     
 }
 

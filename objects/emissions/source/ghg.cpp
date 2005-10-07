@@ -388,7 +388,7 @@ void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
 }
 
 //! Perform initializations that only need to be done once per period
-void Ghg::initCalc() {
+void Ghg::initCalc( ) {
 
 	maxCntrl *= multMaxCntrl;
     // Make sure control percentage never goes above 100% so there are no negative emissions!
@@ -399,6 +399,10 @@ void Ghg::initCalc() {
         valueWasInputAtSomePoint = true;
     }
 
+     // Perform any MAC initializations
+    if( ghgMac.get() ){
+        ghgMac->initCalc( name );
+    }
 }
 
 /*! \brief Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients

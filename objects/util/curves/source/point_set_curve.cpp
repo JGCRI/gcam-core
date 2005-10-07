@@ -107,7 +107,7 @@ double PointSetCurve::getY( const double xValue ) const {
         double x2 = pointSet->getNearestXAbove( xValue );
 
         // First check if both points are invalid. This means are curve has no points.
-        if( x1 == -DBL_MAX && x2 == -DBL_MAX ){
+        if( x1 == -DBL_MAX && x2 == DBL_MAX ){
             retValue = -DBL_MAX;
         }
         else {
@@ -124,7 +124,7 @@ double PointSetCurve::getY( const double xValue ) const {
             }
 
             // Check if the point above is invalid
-            if( x2 == -DBL_MAX ){
+            if( x2 == DBL_MAX ){
                 // Get the next value below x1
                 x2 = pointSet->getNearestXBelow( x1 );
 

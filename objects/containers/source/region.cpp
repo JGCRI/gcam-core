@@ -426,7 +426,7 @@ bool Region::reorderSectors( const vector<string>& aOrderList ){
     supplySectorNameMap.clear();
     
     // Get the dependency finder logger.
-    ILogger& depFinderLog = ILogger::getLogger( "dep_finder_log" );
+    ILogger& depFinderLog = ILogger::getLogger( "sector_dependencies" );
 
     // Loop through the sector order vector. 
     typedef vector<string>::const_iterator NameIterator;
@@ -469,6 +469,16 @@ bool Region::reorderSectors( const vector<string>& aOrderList ){
     }
     // This was successful if the sector name map is empty, so that all sectors
     // were ordered.
+    
+    // Print out sector ordering for debugging purposes
+    depFinderLog.setLevel( ILogger::DEBUG );
+    depFinderLog << "SECTOR ORDERING FOR REGION " << name << endl;
+    depFinderLog << "  ";
+    for( NameIterator currSectorName = aOrderList.begin(); currSectorName != aOrderList.end(); ++currSectorName ){
+        depFinderLog << *currSectorName << ", ";
+    }
+    depFinderLog << endl;
+        
     return originalNameMap.empty();
 }
 
@@ -1140,11 +1150,13 @@ void Region::initializeCalValues( const int period ) {
         // Set default values for supply sector
         marketplace->setMarketInfo( supplySector[ i ]->getName(), name, period, "calSupply", DEFAULT_CAL_VALUE );
         marketplace->setMarketInfo( supplySector[ i ]->getName(), name, period, "calDemand", DEFAULT_CAL_VALUE );
+        marketplace->setMarketInfo( supplySector[ i ]->getName(), name, period, "calFixedDemand", DEFAULT_CAL_VALUE );
         
         // then for all fuels used by this sector
         for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
             marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calSupply", DEFAULT_CAL_VALUE, false );
             marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calDemand", DEFAULT_CAL_VALUE, false );
+            marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calFixedDemand", DEFAULT_CAL_VALUE, false );
          }
     }
         
@@ -1155,6 +1167,7 @@ void Region::initializeCalValues( const int period ) {
          for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
             marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calSupply", DEFAULT_CAL_VALUE, false );
             marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calDemand", DEFAULT_CAL_VALUE, false );
+            marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calFixedDemand", DEFAULT_CAL_VALUE, false );
          }
     }
 
@@ -1162,6 +1175,7 @@ void Region::initializeCalValues( const int period ) {
        // Now prepare to loop through all the fuels used by this sector
         marketplace->setMarketInfo( resources[ i ]->getName(), name, period, "calSupply", DEFAULT_CAL_VALUE, false );
         marketplace->setMarketInfo( resources[ i ]->getName(), name, period, "calDemand", DEFAULT_CAL_VALUE, false );
+        marketplace->setMarketInfo( resources[ i ]->getName(), name, period, "calFixedDemand", DEFAULT_CAL_VALUE, false );
     }
 }
 
@@ -1180,7 +1194,7 @@ void Region::initializeCalValues( const int period ) {
 * \param period Model period
 */
 bool Region::setImpliedCalInputs( const int period ) {
-     Configuration* conf = Configuration::getInstance();
+    Configuration* conf = Configuration::getInstance();
     Marketplace* marketplace = scenario->getMarketplace();
     const double MKT_NOT_ALL_FIXED = -1;
     bool debugChecking = conf->getBool( "debugChecking" );
@@ -1335,49 +1349,73 @@ int Region::scaleCalInputs( const int period ) {
         // This check eliminates warnings 
         if ( fuelIter->first != "zTotal" && 
             marketplace->getPrice( fuelIter->first, name, period, false ) != Marketplace::NO_MARKET_PRICE ) {
-                //  Determine if inputs for this fuel need to be scaled
+                //  Determine if inputs for this fuel need to be scaled. Get total cal + fixed supply and demand values.
                 double calSupplyValue = marketplace->getMarketInfo( fuelIter->first, name , period, "calSupply" );
                 double calDemandValue = marketplace->getMarketInfo( fuelIter->first, name , period, "calDemand" );
-                // If both of these are positive then need to scale calInputs for this input
-                string fuelNameSector = fuelIter->first;
+                
+                // If these are positive then may need to scale calInputs for this input
                 if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
-                    double scaleValue = calSupplyValue / calDemandValue;
-                    
-                    if ( abs( 1 - scaleValue ) > util::getVerySmallNumber() ) {                        
+                
+                    // First, fixed values are not scaled, so adjust for this.
+                    // The reason fixed values are not scaled is that fixed values can be used in instances where
+                    // a simultaneity would otherwise occur during calibration checking (such as export markets)
+                    double calFixedDemandValue = marketplace->getMarketInfo( fuelIter->first, name , period, "calFixedDemand" );
+                    calFixedDemandValue = max( 0.0, calFixedDemandValue );
+                    calSupplyValue -= calFixedDemandValue;
+                    calDemandValue -= calFixedDemandValue;
+
+                    // If these are still positive then scale calInputValues for this input
+                    if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
+                        double scaleValue = calSupplyValue / calDemandValue;
+                        
+                        if ( abs( 1 - scaleValue ) > util::getVerySmallNumber() ) {                        
+                            ILogger& mainLog = ILogger::getLogger( "main_log" );
+                            mainLog.setLevel( ILogger::DEBUG );
+                            mainLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
+                            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+                            calibrationLog.setLevel( ILogger::DEBUG );
+                            calibrationLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
+                        
+                            // Repeat for all fuels derived from this one
+                            vector<string> dependentFuels = (*fuelRelationshipMap)[ fuelIter->first ];
+
+                            // Note loop goes to 1 + number of fuels so that basefuel is covered.
+                            for ( unsigned int i = 0; i <= dependentFuels.size(); ++i) {
+                                ++numberOfScaledValues; 
+
+                                string fuelName;
+                                if ( i == dependentFuels.size() ) {
+                                    fuelName = fuelIter->first; // Finish with base fuel in case that is used directly
+                                } else {
+                                    fuelName = dependentFuels [ i ];
+                                }
+
+                                mainLog << fuelName << ", "; 
+                                calibrationLog  << fuelName <<", "; 
+                                for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
+                                    demandSector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
+                                }
+                                for ( unsigned int j = 0; j < supplySector.size(); j++ ) {
+                                    supplySector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
+                                }
+                            } // dependentFuels loop
+                            mainLog << " in region " << name << endl; 
+                            calibrationLog << " in region " << name << endl;
+                        }
+                    } // end scaling loop
+                    // If these were less than zero, then something was wrong with the input values
+                    else if ( ( calSupplyValue < 0 ) || ( calDemandValue < 0 ) )  {
                         ILogger& mainLog = ILogger::getLogger( "main_log" );
-                        mainLog.setLevel( ILogger::DEBUG );
-                        mainLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
+                        mainLog.setLevel( ILogger::ERROR );
+                        mainLog << "Input calibration and fixed values not consistent. Adjusted value < 0 for fuel " << fuelIter->first << " in region " << name << endl ;
                         ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+                        calibrationLog.setLevel( ILogger::ERROR );
+                        calibrationLog << "Input calibration and fixed values not consistent. Adjusted value < 0 for fuel " << fuelIter->first << " in region " << name << endl ;
                         calibrationLog.setLevel( ILogger::DEBUG );
-                        calibrationLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
-                    
-                        // Repeat for all fuels derived from this one
-                        vector<string> dependentFuels = (*fuelRelationshipMap)[ fuelIter->first ];
-
-                        // Note loop goes to 1 + number of fuels so that basefuel is covered.
-                        for ( unsigned int i = 0; i <= dependentFuels.size(); ++i) {
-                            ++numberOfScaledValues; 
-
-                            string fuelName;
-                            if ( i == dependentFuels.size() ) {
-                                fuelName = fuelIter->first; // Finish with base fuel in case that is used directly
-                            } else {
-                                fuelName = dependentFuels [ i ];
-                            }
-
-                            mainLog << fuelName << ", "; 
-                            calibrationLog  << fuelName <<", "; 
-                            for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-                                demandSector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
-                            }
-                            for ( unsigned int j = 0; j < supplySector.size(); j++ ) {
-                                supplySector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
-                            }
-                        } // dependentFuels loop
-                        mainLog << " in region " << name << endl; 
-                        calibrationLog << " in region " << name << endl;
+                        calibrationLog << "    calSupplyValue - fixedDemands: " << calSupplyValue << endl ;
+                        calibrationLog << "    calSupplyValue - fixedDemands: " << calSupplyValue << endl ;
                     }
-                } // end scaling loop
+                 }
             } // end zTotal check loop
     } // end fuelCons loop
 

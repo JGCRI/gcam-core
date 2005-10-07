@@ -36,6 +36,7 @@ public:
     const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
 	void XMLParse( const xercesc::DOMNode* node );
+	void initCalc( const std::string& ghgName );
 	
 	double findReduction( const std::string& region, const int period );
 	void toInputXML( std::ostream& out, Tabs* tabs ) const;
@@ -47,12 +48,15 @@ protected:
 	double shiftNatGas( const int period, const std::string& regionName, const double carbonPrice);
 	double adjustPhaseIn(const int period);
 	double adjustTechCh( const int period, const int finalReductionPeriod, const double maxReduction);
+    double shiftCostReduction( const int period, const double costReductionRate );
+    double getMACValue( const double carbonPrice );
 
-	double natGasBasePrice; //!< natural gas price in base year
 	double phaseIn; //!< number of periods over which phase in occurs. can be a non-integer
-	double shiftRange; //!< the initial range over which carbon price changes due to the standard range of Nat. Gas price changes
-	double finalReduction; //!< Increase maximum reduction to this value (due to tech change) 
-	int finalReductionYear; //!< Year in which maximum reduction should be implimented
+	double fuelShiftRange; //!< the initial range over which carbon price changes due to the standard range of Nat. Gas price changes
+	double costReductionRate; //!< the annual rate at which carbon price is shifted due to technological change
+    double finalReduction; //!< Increase maximum reduction to this value (due to tech change) 
+	int baseCostYear; //!< Base year from which to start decreasing costs
+    int finalReductionYear; //!< Year in which maximum reduction should be implimented
 	bool noBelowZero;//!< turns off reductions if carbon Price is less than 0;
 	std::string curveShiftFuelName; //!< Name of fuel who's price changes cause a shift in the curve
     

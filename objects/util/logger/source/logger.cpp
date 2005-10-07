@@ -92,7 +92,7 @@ void Logger::printToScreenIfConfigured( const string& aMessage ){
 	// Decide whether to print the message
 	if ( mCurrentWarningLevel >= mMinToScreenWarningLevel ) {
 		// Print the warning level
-		if ( mPrintLogWarningLevel ) {
+		if ( mPrintLogWarningLevel || mCurrentWarningLevel >= ILogger::ERROR ) {
             cout << convertLevelToString( mCurrentWarningLevel ) << ":";
 		}
 		cout << aMessage << endl;
@@ -250,7 +250,7 @@ const string& Logger::convertLevelToString( WarningLevel aLevel ){
 	// Create a static array of warning level strings in the order
 	// of the enum.
 	const static string levelDescriptions[] = 
-	{ "Debug", "Notice", "Warning", "Error", "Severe Error" };
+	{ "Debug", "Notice", "Warning", "ERROR", "SEVERE ERROR" };
 
 	// Use the enum to index into the array.
 	return levelDescriptions[ aLevel ];

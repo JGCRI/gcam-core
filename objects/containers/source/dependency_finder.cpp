@@ -126,7 +126,7 @@ void DependencyFinder::createOrdering() {
         if( verticeToRemove == INT_MAX ){
             // Since there was no vertice with zero dependencies, this graph has
             // a cycle.
-            ILogger& depFinderLog = ILogger::getLogger( "dep_finder_log" );
+            ILogger& depFinderLog = ILogger::getLogger( "sector_dependencies" );
             depFinderLog.setLevel( ILogger::DEBUG );
             depFinderLog << "Graph has at least one cycle, attempting to remove." << endl;
             // should the removed vector be passed to find and break cycle?
@@ -164,7 +164,7 @@ const vector<string>& DependencyFinder::getOrdering() const {
     // Check if the ordering has been initialized. Print a warning if it has
     // not.
     if( mOrdering.empty() ){
-		ILogger& depFinderLog = ILogger::getLogger( "dep_finder_log" );
+		ILogger& depFinderLog = ILogger::getLogger( "sector_dependencies" );
         depFinderLog.setLevel( ILogger::ERROR );
         depFinderLog << "Returning an empty sector ordering for region " << mRegionName << "." << endl;
     }
@@ -220,7 +220,7 @@ DependencyFinder::SectorIndexMap::iterator DependencyFinder::addTrackedItem( con
 */
 void DependencyFinder::breakCycle( const size_t aFirstSector, const size_t aSecondSector ){
     // Notify that we are removing a cycle.
-    ILogger& depFinderLog = ILogger::getLogger( "dep_finder_log" );
+    ILogger& depFinderLog = ILogger::getLogger( "sector_dependencies" );
     depFinderLog.setLevel( ILogger::DEBUG );
     depFinderLog << "Breaking cycle between " << getNameFromIndex( aFirstSector ) << " and "
                  << getNameFromIndex( aSecondSector ) << "." << endl;
@@ -326,7 +326,7 @@ bool DependencyFinder::findAndBreakCycle() {
 
     // The loop exited without finding a cycle.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
-    ILogger& depFinderLog = ILogger::getLogger( "dep_finder_log" );
+    ILogger& depFinderLog = ILogger::getLogger( "sector_dependencies" );
     mainLog.setLevel( ILogger::ERROR );
 	depFinderLog.setLevel( ILogger::ERROR );
     mainLog << "Could not find a cycle in the dependency matrix." << endl;
@@ -341,7 +341,7 @@ bool DependencyFinder::findAndBreakCycle() {
 */
 void DependencyFinder::printPath( const list<size_t>& aPath ) const {
     // Get the main log.
-    ILogger& depFinderLog = ILogger::getLogger( "dep_finder_log" );
+    ILogger& depFinderLog = ILogger::getLogger( "sector_dependencies" );
     depFinderLog.setLevel( ILogger::DEBUG );
 
     // Make sure we didn't get an empty list.

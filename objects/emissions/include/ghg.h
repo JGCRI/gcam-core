@@ -76,7 +76,7 @@ public:
     bool getEmissionsCoefInputStatus() const;
     void setEmissionsCoefInputStatus();
     double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const;
-    void initCalc();
+    void initCalc( );
 
 protected:
     double calcInputEmissions( const std::vector<Input*>& aInputs, const std::string& aRegionName, const int aPeriod ) const;

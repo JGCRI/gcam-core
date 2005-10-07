@@ -200,24 +200,60 @@ bool ExplicitPointSet::removePointFindY( const double yValue ){
     return retValue;
 }
 
-//! Return the maximum X value in this point set.
+/*! \brief Return the maximum X value in this point set.
+*  Returns -DBL_MAX as an error code if there are no points in this curve
+* \author Josh Lurz
+*/
 double ExplicitPointSet::getMaxX() const {
-        return( *max_element( points.begin(), points.end(), DataPoint::LesserX() ) )->getX();
+DataPointConstIterator maxPoint = max_element( points.begin(), points.end(), DataPoint::LesserX() );
+if( maxPoint != points.end() ){
+    return (*maxPoint)->getX();
+}
+ 
+// There are no points, return the negative error code.
+return -DBL_MAX;
 }
 
-//! Return the maximum Y value in this point set.
+/*! \brief Return the maximum Y value in this point set.
+*  Returns -DBL_MAX as an error code if there are no points in this curve
+* \author Josh Lurz
+*/
 double ExplicitPointSet::getMaxY() const {
-    return( *max_element( points.begin(), points.end(), DataPoint::LesserX() ) )->getY();
+DataPointConstIterator maxPoint = max_element( points.begin(), points.end(), DataPoint::LesserX() );
+if( maxPoint != points.end() ){
+    return (*maxPoint)->getY();
+}
+ 
+// There are no points, return the negative error code.
+return -DBL_MAX;
 }
 
-//! Return the minimum X value in this point set.
+/*! \brief Return the minimum X value in this point set.
+*  Returns -DBL_MAX as an error code if there are no points in this curve
+* \author Josh Lurz
+*/
 double ExplicitPointSet::getMinX() const {
-    return( *min_element( points.begin(), points.end(), DataPoint::LesserX() ) )->getX();
+DataPointConstIterator minPoint = min_element( points.begin(), points.end(), DataPoint::LesserX() );
+if( minPoint != points.end() ){
+    return (*minPoint)->getX();
+}
+ 
+// There are no points, return the positive error code.
+return DBL_MAX;
 }
 
-//! Return the minimum Y value in this point set.
+/*! \brief Return the minimum Y value in this point set.
+*  Returns -DBL_MAX as an error code if there are no points in this curve
+* \author Josh Lurz
+*/
 double ExplicitPointSet::getMinY() const {
-    return( *min_element( points.begin(), points.end(), DataPoint::LesserY() ) )->getY();
+DataPointConstIterator minPoint = min_element( points.begin(), points.end(), DataPoint::LesserX() );
+if( minPoint != points.end() ){
+    return (*minPoint)->getY();
+}
+ 
+// There are no points, return the positive error code.
+return DBL_MAX;
 }
 
 //! Return a vector of pairs of x y coordinates sorted in increasing x order.

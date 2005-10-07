@@ -537,18 +537,18 @@ bool XMLHelper<T>::parseXML( const std::string& xmlFile, IParsable* aModelElemen
         parser->parse( xmlFile.c_str() );
     } catch ( const xercesc::XMLException& toCatch ) {
         std::string message = XMLHelper<std::string>::safeTranscode( toCatch.getMessage() );
-        std::cout << "Exception message is:" << std::endl << message << std::endl;
+        std::cout << "ERROR: XML Read Exception message is:" << std::endl << message << std::endl;
         return false;
     } catch ( const xercesc::DOMException& toCatch ) {
         std::string message = XMLHelper<std::string>::safeTranscode( toCatch.msg );
-        std::cout << "Exception message is:" << std::endl << message << std::endl;
+        std::cout << "ERROR: XML Read Exception message is:" << std::endl << message << std::endl;
         return false;
     } catch ( const xercesc::SAXException& toCatch ){
         std::string message = XMLHelper<std::string>::safeTranscode( toCatch.getMessage() );
-        std::cout << "Exception message is:" << std::endl << message << std::endl;
+        std::cout << "ERROR: XML Read Exception message is:" << std::endl << message << std::endl;
         return false;
     } catch (...) {
-        std::cout << "Unexpected Exception." << std::endl;
+        std::cout << "ERROR:Unexpected XML Read Exception." << std::endl;
         return false;
     }
 

@@ -45,7 +45,7 @@ void PlainTextLogger::logCompleteMessage( const string& aMessage ){
     // Decide whether to print the message
     if ( mCurrentWarningLevel >= mMinLogWarningLevel ){
         // Print the warning level
-        if ( mPrintLogWarningLevel ) {
+        if ( mPrintLogWarningLevel || mCurrentWarningLevel >= ILogger::ERROR ) {
             mLogFile << convertLevelToString( mCurrentWarningLevel ) << ":";
         }
         mLogFile << aMessage << endl;

@@ -226,12 +226,19 @@ const std::string& World::getXMLNameStatic() {
 */
 void World::initCalc( const int period ) {
     
-    // cal consistency check needs to be before initCalc so calInput values have already been scaled if necessary
-    // If any values are scaled, then this is checked at least one more time to see if further scalings are necessary
-    const int MAX_CALCS = 6;
-    int calCheckIterations = 0;
-    while ( calCheckIterations < MAX_CALCS && checkCalConsistancy( period ) ) {
-        ++calCheckIterations;
+    Configuration* conf = Configuration::getInstance();
+    if( conf->getBool( "CalibrationActive" ) ){
+        // cal consistency check needs to be before initCalc so calInput values have already been scaled if necessary
+        // If any values are scaled, then this is checked at least one more time to see if further scalings are necessary
+        const unsigned MAX_CALCHECK_CALCS = 10;
+        unsigned calCheckIterations = 0;
+        
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::DEBUG );
+        mainLog << "Performing world calibration consistency check " << endl;
+        while ( calCheckIterations < MAX_CALCHECK_CALCS && checkCalConsistancy( period ) ) {
+            ++calCheckIterations;
+        }
     }
     
     // Reset the calc counter.
@@ -271,8 +278,6 @@ bool World::checkCalConsistancy( const int period ) {
     Configuration* conf = Configuration::getInstance();
     if( conf->getBool( "CalibrationActive" ) ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Performing world calibration consistency check " << endl;
         
         //Setup for checking by initializing fixed supplies and demands counter to null value
          for( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
