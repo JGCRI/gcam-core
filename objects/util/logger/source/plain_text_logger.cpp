@@ -21,7 +21,7 @@ PlainTextLogger::PlainTextLogger( const string& aLoggerName ):Logger( aLoggerNam
 
 //! Tells the logger to begin logging.
 void PlainTextLogger::open( const char[] ){
-    if( mFileName == "" ) { // set a default value
+    if( mFileName.empty() ) { // set a default value
         cout << "Using default log file name." << endl;
         mFileName = "log.txt";
     }
@@ -29,7 +29,7 @@ void PlainTextLogger::open( const char[] ){
     mLogFile.open( mFileName.c_str(), ios::out );
 
     // Print the header message
-    if( mHeaderMessage != "" ){
+    if( !mHeaderMessage.empty() ){
         parseHeader( mHeaderMessage );
         mLogFile << mHeaderMessage << endl << endl;
     }
