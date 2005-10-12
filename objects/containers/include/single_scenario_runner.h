@@ -32,10 +32,12 @@ class SingleScenarioRunner: public ScenarioRunner {
 public:
     SingleScenarioRunner();
     virtual ~SingleScenarioRunner();
-    virtual bool setupScenario( Timer& timer, const std::string aName = "", const std::list<std::string> aScenComponents = std::list<std::string>() );
+    virtual bool setupScenario( Timer& timer, const std::string aName = "",
+		                        const std::list<std::string> aScenComponents = std::list<std::string>() );
     virtual bool runScenario( Timer& timer );
     virtual void printOutput( Timer& timer, const bool aCloseDB = true ) const;
 protected:
-    std::auto_ptr<Scenario> mScenario; //!< Autopointer to the main scenario.
+	//! The scenario which will be run.
+    std::auto_ptr<Scenario> mScenario;
     };
 #endif // _SINGLE_SCENARIO_RUNNER_H_
