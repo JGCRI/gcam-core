@@ -137,7 +137,7 @@ void GhgMAC::XMLParse( const xercesc::DOMNode* node ){
 			 fuelShiftRange = XMLHelper<double>::getValue( curr);
 		}
 		else if ( nodeName == "curveShiftFuelName"){
-			curveShiftFuelName = XMLHelper<bool>::getValue( curr);
+			curveShiftFuelName = XMLHelper<string>::getValueString( curr);
 		}
 		else if ( nodeName == "finalReduction"){
 			finalReduction = XMLHelper<double>::getValue( curr);
