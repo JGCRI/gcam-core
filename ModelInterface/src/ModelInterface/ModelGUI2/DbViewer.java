@@ -511,8 +511,13 @@ public class DbViewer implements ActionListener, MenuAdder {
 		JLabel labelChart = new JLabel();
 		try {
 			JFreeChart chart = bt.createChart(0,0);
+			Dimension chartDim = bt.getChartDimensions(chart);
+			BufferedImage chartImage = chart.createBufferedImage(
+					(int)chartDim.getWidth(), (int)chartDim.getHeight());
+			/*
 			BufferedImage chartImage = chart.createBufferedImage(
 					350, 350);
+					*/
 
 			labelChart.setIcon(new ImageIcon(chartImage));
 		} catch(Exception e) {

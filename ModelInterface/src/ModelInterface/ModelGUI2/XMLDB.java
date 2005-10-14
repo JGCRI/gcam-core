@@ -304,7 +304,7 @@ public class XMLDB {
 		temp.delete();
 		attrRes.delete();
 		//printLockStats("getAttr(XmlValue, String)2"); should be lock safe, now can make it static
-		return "";
+		return null;
 	}
 	public static String getAllAttr(XmlValue node) throws XmlException {
 		XmlResults attrRes = node.getAttributes();
@@ -354,7 +354,7 @@ public class XMLDB {
 			final XmlResults res = manager.query("collection('"+contName+"')/*[fn:empty(dbxml:metadata('var'))]", qc);
 			//final XmlUpdateContext uc = manager.createUpdateContext();
 			uc.setApplyChangesToContainers(true);
-			final JProgressBar progBar = new JProgressBar(0, res.size()*4);
+			final JProgressBar progBar = new JProgressBar(0, res.size()*5);
 			final JDialog jd = createProgressBarGUI(parentFrame, progBar);
 			(new Thread(new Runnable() {
 				public void run() {
@@ -371,7 +371,7 @@ public class XMLDB {
 						System.out.println("Getting new MetaData");
 						//System.out.println("Doesn't have metadata: "+res.next());
 						tempVal = res.next();
-						String path = "local:distinct-node-names(/scenario/world/region/supplysector/subsector/technology/*[fn:count(child::text()) = 1], ())";
+						String path = "local:distinct-node-names(/scenario/world/region/*[matches(local-name(), 'sector')]/subsector/technology/*[fn:count(child::text()) = 1], ())";
 						tempRes = getVars(tempVal, path);
 						StringBuffer strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
@@ -400,7 +400,7 @@ public class XMLDB {
 						SwingUtilities.invokeLater(incProgress);
 
 						XmlQueryContext qcL = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
-						XmlQueryExpression qe = manager.prepare("distinct-values(/scenario/world/region/supplysector/subsector/technology/GHG/@name)", qcL);
+						XmlQueryExpression qe = manager.prepare("distinct-values(/scenario/world/region/*[matches(local-name(), 'sector')]/subsector/technology/GHG/@name)", qcL);
 						tempRes = qe.execute(tempVal, qcL);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
@@ -410,13 +410,24 @@ public class XMLDB {
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
-						qe = manager.prepare("distinct-values(/scenario/world/region/supplysector/subsector/technology/GHG/emissions/@fuel-name)", qcL);
+						qe = manager.prepare("distinct-values(/scenario/world/region/*[matches(local-name(), 'sector')]/subsector/technology/GHG/emissions/@fuel-name)", qcL);
 						tempRes = qe.execute(tempVal, qcL);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
 							strBuff.append(tempRes.next().asString()).append(';');
 						}
 						docTemp.setMetaData("", "fuelNames", new XmlValue(strBuff.toString()));
+						tempRes.delete();
+						SwingUtilities.invokeLater(incProgress);
+
+						path = "local:distinct-node-names(/scenario/world/region/GDP/*[fn:count(child::text()) = 1], ())";
+						tempRes = getVars(tempVal, path);
+						strBuff = new StringBuffer();
+						while(tempRes.hasNext()) {
+							strBuff.append(tempRes.next().asString());
+							strBuff.append(';');
+						}
+						docTemp.setMetaData("", "GDPVar", new XmlValue(strBuff.toString()));
 						myContainer.updateDocument(docTemp, uc);
 						docTemp.delete();
 						tempVal.delete();
@@ -493,6 +504,7 @@ public class XMLDB {
 		DemographicsQueryBuilder.varList = new LinkedHashMap();
 		EmissionsQueryBuilder.ghgList = new LinkedHashMap();
 		EmissionsQueryBuilder.fuelList = new LinkedHashMap();
+		GDPQueryBuilder.varList = new LinkedHashMap();
 		XmlMetaData md;
 		try {
 			while(res.hasNext()) {
@@ -524,6 +536,12 @@ public class XMLDB {
 						for(int i = 0; i < vars.length; ++i) {
 							//System.out.println(vars[i]);
 							EmissionsQueryBuilder.fuelList.put(vars[i], new Boolean(false));
+						}
+					} else if(md.get_name().equals("GDPVar")) {
+						String[] vars = md.get_value().asString().split(";");
+						for(int i = 0; i < vars.length; ++i) {
+							//System.out.println(vars[i]);
+							GDPQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					}
 				}

@@ -618,7 +618,13 @@ public class ComboTableModel extends BaseTableModel{
 		// Done adding series, create the chart.
 		// Create the domain axis label.
 		// TODO: Improve naming.
-		NumberAxis xAxis = new NumberAxis("Year");
+		NumberAxis xAxis;
+		if(qg != null) {
+			xAxis = new NumberAxis(qg.getAxis2Name());
+		} else {
+			xAxis = new NumberAxis("Year");
+		}
+		//NumberAxis xAxis = new NumberAxis("Year");
 		
 		// Use the parent element name as the name of the axis.
 		NumberAxis yAxis = new NumberAxis(ind2Name);
@@ -699,7 +705,9 @@ public class ComboTableModel extends BaseTableModel{
 			  //Map retMap = addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
 			  DbViewer.xmlDB.printLockStats("addToDataTree");
 			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
+			  System.out.println("Ret: "+ret);
 			  if(ret == null) {
+				  System.out.println((String)regionAndYear[0]+";"+(String)regionAndYear[1]+", "+tempNode.asNumber());
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
 			  } else {
 				  //ret += tempNode.asNumber();
@@ -726,7 +734,8 @@ public class ComboTableModel extends BaseTableModel{
 		  indRow = new Vector( years );
 	  }
 	  indCol = new Vector( regions );
-	  ind1Name = qg.getNodeLevel();
+	  ind1Name = qg.getAxis1Name();
+	  //ind1Name = qg.getNodeLevel();
 	  //ind2Name = (String)wild.get(1);
 	}
 

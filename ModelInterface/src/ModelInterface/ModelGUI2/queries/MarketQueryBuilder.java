@@ -327,14 +327,6 @@ public class MarketQueryBuilder extends QueryBuilder {
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		/*
-		if( (isGlobal && currNode.getNodeName().equals("region")) 
-				|| (qg.nodeLevel.equals("supplysector") && currNode.getNodeName().equals("subsector")) 
-				|| (qg.nodeLevel.matches(".*sector") && currNode.getNodeName().equals("technology"))) {
-			currNode.delete();
-			return tempMap;
-		}
-		*/
 		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel) 
 				&& !currNode.getNodeName().equals(qg.yearLevel)) {
 			String attr = XMLDB.getAllAttr(currNode);

@@ -76,6 +76,8 @@ public class QueryGenerator {
 			qb = new EmissionsQueryBuilder(this);
 		} else if(queryIn.getNodeName().equals(CostCurveQueryBuilder.xmlName)) {
 			qb = new CostCurveQueryBuilder(this);
+		} else if(queryIn.getNodeName().equals(GDPQueryBuilder.xmlName)) {
+			qb = new GDPQueryBuilder(this);
 		} else {
 			qb = null;
 		}
@@ -104,7 +106,8 @@ public class QueryGenerator {
 					group = false;
 				}
 				xPath = nl.item(i).getFirstChild().getNodeValue();
-				if(((!sumAll && !group) || (sumAll && group)) && !(qb instanceof CostCurveQueryBuilder)) {
+				if(((!sumAll && !group) || (sumAll && group)) && !(qb instanceof CostCurveQueryBuilder)
+						&& !(qb instanceof GDPQueryBuilder)) {
 					Vector temp = new Vector();
 					String xpTemp = xPath;
 					Pattern pat;
@@ -165,6 +168,7 @@ public class QueryGenerator {
 		typeMap.put("Resource", new Boolean(false));
 		typeMap.put("Emissions", new Boolean(false));
 		typeMap.put("Cost Curves", new Boolean(false));
+		typeMap.put("GDP", new Boolean(false));
 		typeMap.put("Query Group", new Boolean(false));
 		final Vector types = new Vector(typeMap.keySet().size(), 0);
 		for(int i = 0; i < types.capacity(); ++i) {
@@ -317,6 +321,10 @@ public class QueryGenerator {
 									types.set(selInd, new CostCurveQueryBuilder(thisGen));
 									break;
 							}
+							case 6: {
+									types.set(selInd, new GDPQueryBuilder(thisGen));
+									break;
+							}
 							default: {
 									System.out.println("Couldn't make type, index: "+selInd);
 							}
@@ -438,6 +446,9 @@ public class QueryGenerator {
 	}
 	public String getAxis1Name() {
 		return axis1Name;
+	}
+	public String getAxis2Name() {
+		return axis2Name;
 	}
 	public boolean isSumAll() {
 		return sumAll;

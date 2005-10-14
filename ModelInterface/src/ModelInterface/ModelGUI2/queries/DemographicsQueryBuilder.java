@@ -412,14 +412,6 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		/*
-		if( (isGlobal && currNode.getNodeName().equals("region")) 
-				|| (qg.nodeLevel.equals("supplysector") && currNode.getNodeName().equals("subsector")) 
-				|| (qg.nodeLevel.matches(".*sector") && currNode.getNodeName().equals("technology"))) {
-			currNode.delete();
-			return tempMap;
-		}
-		*/
 		if(currNode.getNodeName().equals("male") || currNode.getNodeName().equals("female")) {
 			String attr = currNode.getNodeName();
 			if(!tempMap.containsKey(attr)) {

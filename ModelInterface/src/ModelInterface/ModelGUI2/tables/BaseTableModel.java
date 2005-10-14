@@ -562,4 +562,31 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	 * @return the node desired or null if not given a valid position
 	 */
 	protected abstract Node getNodeAt(int row, int col);
+
+	/**
+	 * Determine a prefered dimension size to create an image from a JFreeChart.  The problem is
+	 * when there are too many series the legend gets too big an pushes out the chart itself.
+	 * @param chart a JFreeChart with data that would be used to create an image from
+	 * @return A dimension that will be able to show all of the chart and legend
+	 */
+	public Dimension getChartDimensions(JFreeChart chart) {
+		//System.out.println("Num legend items: "+chart.getPlot().getLegendItems().getItemCount());
+		//int numItems = chart.getPlot().getLegendItems().getItemCount();
+		int legendSize = 0;
+		for(Iterator it = chart.getPlot().getLegendItems().iterator(); it.hasNext(); ) {
+			/*
+			String temp = ((org.jfree.chart.LegendItem)it.next()).getLabel();
+			System.out.println("Lengend item: "+temp);
+			*/
+			legendSize += ((org.jfree.chart.LegendItem)it.next()).getLabel().length();
+		}
+		//System.out.println("Total length: "+legendSize);
+		if(legendSize <= 500) {
+			//System.out.println("Returning: 350, "+350);
+			return new Dimension(350, 350);
+		} else {
+			//System.out.println("Returning: 350, "+(350+((legendSize-500)/2)));
+			return new Dimension(350, 350+((legendSize-500)/2));
+		}
+	}
 }

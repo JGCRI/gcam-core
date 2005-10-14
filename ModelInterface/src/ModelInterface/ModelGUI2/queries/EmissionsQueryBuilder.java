@@ -121,7 +121,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			case 2: {
 					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					if(ghgList == null) {
-						ghgList = createList("supplysector/subsector/technology/GHG/@name", false);
+						ghgList = createList("*[matches(local-name(), 'sector')]/subsector/technology/GHG/@name", false);
 					}
 					temp = ghgList;
 					//list.setListData(varList.keySet().toArray());
@@ -140,8 +140,8 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			case 4: {
 					//list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 					if(sectorList == null) {
-						sectorList = createList("supplysector/@name", false);
-						sectorList.putAll(createList("supplysector/group/@name", true));
+						sectorList = createList("*[matches(local-name(), 'sector')]/@name", false);
+						sectorList.putAll(createList("*[matches(local-name(), 'sector')]/group/@name", true));
 					}
 					temp = sectorList;
 					//list.setListData(sectorList.keySet().toArray());
@@ -235,7 +235,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		for(int i = 0; i < level-3; ++i) {
 			if(i == 0) {
 				tempMap = sectorList;
-				ret.append("supplysector");
+				ret.append("*[matches(local-name(), 'sector')");
 			} else if(i == 1){
 				tempMap = subsectorList;
 				ret.append("subsector");
@@ -267,7 +267,11 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 				Map.Entry me = (Map.Entry)it.next();
 				if(((Boolean)me.getValue()).booleanValue()) {
 					if(!added) {
-						ret.append("[ ");
+						if(i == 0) {
+							ret.append(" and ");
+						} else {
+							ret.append("[ ");
+						}
 						added = true;
 					} else {
 						ret.append(" or ");
@@ -283,7 +287,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 					}
 				}
 			}
-			if(added) {
+			if(added || i == 0) {
 				ret.append(" ]/");
 			} else {
 				ret.append("/");
@@ -312,13 +316,13 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		String query;
 		StringBuffer ret = new StringBuffer();
 		if(qg.currSel == 3) {
-			query = "supplysector/subsector/technology/GHG/emissions";
+			query = "*[matches(local-name(), 'sector')]/subsector/technology/GHG/emissions";
 		} else if(qg.currSel == 4) {
-			query = "supplysector";
+			query = "*[matches(local-name(), 'sector')]";
 		} else if(qg.currSel == 5) {
-			query = "supplysector/subsector";
+			query = "*[matches(local-name(), 'sector')]/subsector";
 		} else {
-			query = "supplysector/subsector/technology";
+			query = "*[matches(local-name(), 'sector')]/subsector/technology";
 		}
 		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name", 
 				queryFilter, queryFunctions);
@@ -403,10 +407,18 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(n.getNodeName().equals(qg.nodeLevel)) {
-				ret.add(XMLDB.getAttr(n));
+			if(n.getNodeName().equals(qg.nodeLevel) || (qg.nodeLevel.equals("supplysector") && n.getNodeName().equals("demandsector"))) {
+				String temp = XMLDB.getAttr(n, "name");
+				System.out.println("HERE IN nodeLevel: "+temp);
+				if(temp == null) {
+					ret.add(XMLDB.getAttr(n, "fuel-name"));
+				} else {
+					ret.add(temp);
+				}
+				//ret.add(XMLDB.getAttr(n));
 			} 
 			if(n.getNodeName().equals(qg.yearLevel)) {
+				System.out.println("HERE IN yearLevel: "+XMLDB.getAttr(n, "year"));
 				ret.add(0, XMLDB.getAttr(n, "year"));
 				/*
 				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
@@ -436,6 +448,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
 		DbViewer.xmlDB.printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
+		System.out.println("Returning: "+ret);
 		return ret.toArray();
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
@@ -444,12 +457,14 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			return dataTree;
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+		System.out.println("Looking at: "+currNode.getNodeName());
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
 		if((qg.nodeLevel.equals("emissions") && (currNode.getNodeName().matches(".*sector") || currNode.getNodeName().equals("technology")))
 				|| currNode.getNodeName().equals("emissions")
 				|| (isGlobal && currNode.getNodeName().equals("region")) 
 				|| (qg.nodeLevel.equals("supplysector") && currNode.getNodeName().equals("subsector")) 
 				|| (qg.nodeLevel.matches(".*sector") && currNode.getNodeName().equals("technology"))) {
+			System.out.println("Colapsing: "+currNode.getNodeName());
 			currNode.delete();
 			return tempMap;
 		}

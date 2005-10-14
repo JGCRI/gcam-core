@@ -18,6 +18,7 @@ import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.*;
 import javax.swing.event.CellEditorListener;
@@ -294,7 +295,10 @@ public class MultiTableModel extends BaseTableModel{
 				//labelChart.setIcon(new ImageIcon(tM.getChartImage()));
 				//BufferedImage chartImage = chart.createBufferedImage( 350, 350);
 				try {
-					BufferedImage chartImage = tM.createChart(0,0).createBufferedImage( 350, 350);
+					JFreeChart chart = tM.createChart(0,0);
+					Dimension chartDim = tM.getChartDimensions(chart);
+					BufferedImage chartImage = chart.createBufferedImage( (int)chartDim.getWidth(), 
+							(int)chartDim.getHeight());
 					labelChart.setIcon(new ImageIcon(chartImage));
 				} catch(Exception e) {
 					labelChart.setText("Cannot Create Chart");
