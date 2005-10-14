@@ -9,7 +9,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 #include <cassert>
 #include <vector>
 #include <map>
@@ -38,6 +37,8 @@
 #include "climate/include/iclimate_model.h"
 // Could hide with a factory method.
 #include "climate/include/magicc_model.h"
+#include "util/base/include/hash_map.h"
+#include "util/base/include/atom_registry.h"
 
 using namespace std;
 using namespace xercesc;
@@ -95,7 +96,7 @@ void World::XMLParse( const DOMNode* node ){
             const string primaryFuelName = XMLHelper<string>::getValueString( curr );
 
             // Check if it already exists.
-            if( std::find( primaryFuelList.begin(), primaryFuelList.end(), primaryFuelName ) == primaryFuelList.end() ) {
+            if( find( primaryFuelList.begin(), primaryFuelList.end(), primaryFuelName ) == primaryFuelList.end() ) {
                 primaryFuelList.push_back( primaryFuelName );
             }
         }
@@ -115,6 +116,9 @@ void World::XMLParse( const DOMNode* node ){
 */
 void World::completeInit() {
 
+	// Initialize the region lookup hashmap.
+	createFastLookupMap();
+
     // Finish initializing all the regions.
     for( RegionIterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
         ( *regionIter )->completeInit();
@@ -129,6 +133,33 @@ void World::completeInit() {
     for( RegionIterator iter = regions.begin(); iter != regions.end(); ++iter ){
         (*iter)->setupCalibrationMarkets();
     }
+}
+/*! \brief Initialize the region partial derivative calculation hash map.
+* \details Constructs a mapping of region Atom to index within the region
+*          vector. This allows for rapid lookups of region numbers during
+*          derivative calculations where not all regions are calculated at once.
+*          This must be done before markets are created since the markets will
+*          store the atoms of the regions that they contain.
+*/
+void World::createFastLookupMap(){
+	// Construct the hashmap as 20 percent full for performance.
+	mRegionLookupMap.reset( new FastRegionLookupMap( regions.size() * 5 ) );
+
+	// Add each region id to number mapping to the hashmap.
+	for( unsigned int i = 0; i < regions.size(); ++i ){
+		// An atom does not need to be created if this is the second or later run
+		// of a batch of scenarios.
+		const objects::Atom* regionID = objects::AtomRegistry::getInstance()->findAtom( regions[ i ]->getName() );
+		
+		if( !regionID ){
+			// Construct an atom for the region name. The Atom will automatically be
+			// registered.
+			regionID = new objects::Atom( regions[ i ]->getName() );
+		}
+
+		// Add an entry to the hashmap for the id.
+		mRegionLookupMap->insert( make_pair( regionID, i ) );
+	}
 }
 
 //! Initialize the AgLu model.
@@ -157,13 +188,11 @@ void World::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs );
 
     // write the xml for the class members.
-    // for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toInputXML ), out ) );
-    // won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
     for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
         XMLWriteElement( *fuelIter, "primaryFuelName", out, tabs );
     }
 
-    for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
+    for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
         ( *i )->toInputXML( out, tabs );
     }
     // finished writing xml for the class members.
@@ -182,12 +211,9 @@ void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
         XMLWriteElement( *fuelIter, "primaryFuelName", out, tabs );
     }
 
-    // for_each( region.begin(), region.end(), bind1st( mem_fun_ref( &Region::toInputXML ), out ) );
-    // won't work with VC 6.0. Forgot to implement const mem_fun_ref helper. whoops.
     scenario->getMarketplace()->toDebugXML( period, out, tabs );
 
-    for( ConstRegionIterator i = regions.begin(); i == regions.begin(); i++ ) { 
-        // for( ConstRegionIterator i = region.begin(); i != region.end(); i++ ) {
+    for( CRegionIterator i = regions.begin(); i == regions.begin(); i++ ) { 
         ( *i )->toDebugXML( period, out, tabs );
     }
     // finished writing xml for the class members.
@@ -329,23 +355,31 @@ bool World::checkCalConsistancy( const int period ) {
     }
 }
 
-//! calculate supply and demand and emissions for all regions
-/*! This is the main action loop for the model. 
-Uses "MiniCAM" style logic where primary costs are calculated, 
-then prices of refined fuels, end-use costs, end-use, etc. */
-void World::calc( const int period, const vector<string>& regionsToSolve ) {	
-    
+/*! \brief Calculate supply and demand and emissions for all regions.
+* \details This is the main action loop for the model. Uses "MiniCAM" style
+*          logic where primary costs are calculated, then prices of refined
+*          fuels, end-use costs, end-use, etc.
+* \param aPeriod Period to calculate.
+* \param aRegionsToCalc Optional subset of the regions to calculate, if excluded
+*        all regions will be calculated.
+*/
+void World::calc( const int aPeriod, const AtomVector& aRegionsToCalc ) {	
     // Get the list of valid region numbers to solve.
-    vector<int> regionNumbersToSolve = getRegionIndexesToCalculate( regionsToSolve );
-    
+    const vector<unsigned int> regionNumbersToCalc = getRegionIndexesToCalculate( aRegionsToCalc );
+
+	/*! \invariant The number of regions to calculate must be between 1 and the
+    *              number of regions inclusive. 
+    */
+	assert( regionNumbersToCalc.size() > 0 && regionNumbersToCalc.size() <= regions.size() );
+
     // Increment the world.calc count based on the number of regions to solve. 
     if( calcCounter ){
-        calcCounter->incrementCount( static_cast<double>( regionNumbersToSolve.size() ) / static_cast<double>( regions.size() ) );
+        calcCounter->incrementCount( static_cast<double>( regionNumbersToCalc.size() ) / static_cast<double>( regions.size() ) );
     }
     
     // Perform calculation loop on each region to calculate. 
-    for ( vector<int>::iterator i = regionNumbersToSolve.begin(); i != regionNumbersToSolve.end(); i++ ) {
-        regions[ *i ]->calc( period, doCalibrations );
+    for ( vector<unsigned int>::const_iterator currIndex = regionNumbersToCalc.begin(); currIndex != regionNumbersToCalc.end(); ++currIndex ) {
+        regions[ *currIndex ]->calc( aPeriod, doCalibrations );
     }
 }
 
@@ -397,7 +431,7 @@ void World::csvOutputFile() const {
     // Write global data
     csvGlobalDataFile();
     
-    for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
+    for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
         ( *i )->csvOutputFile();
     }
 }
@@ -413,7 +447,7 @@ void World::csvGlobalDataFile() const {
     // write total emissions for World
     for ( int m = 0; m < maxper; m++ ){
         // Sum emissions by period.
-        for( ConstRegionIterator iter = regions.begin(); iter != regions.end(); ++iter ) {
+        for( CRegionIterator iter = regions.begin(); iter != regions.end(); ++iter ) {
             // This interface needs to be fixed.
             temp[ m ] += ( *iter )->getSummary( m ).get_emissmap_second( "CO2" );
         }
@@ -429,7 +463,7 @@ void World::dbOutput() const {
     // Write out concentrations
     mClimateModel->printDBOutput();
     // call regional output
-    for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
+    for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
         ( *i )->dbOutput();
     }
 }
@@ -462,7 +496,7 @@ bool World::getCalibrationSetting() const {
 */
 bool World::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
     bool isAllCalibrated = true;
-	for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ){
+	for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
         isAllCalibrated &= ( *i )->isAllCalibrated( period, calAccuracy, printWarnings );
     }
     return isAllCalibrated;
@@ -488,19 +522,34 @@ const map<string,int> World::getOutputRegionMap() const {
     return regionMap;
 }
 
-/* \brief This function returns a vector of all region names which exist in the world.
-* \details This function creates a vector of region names in the same order as they exist 
-* in the world.
-* \todo There are still several functions returning region names.
-* \return A constant vector of region names.
+/*! \brief This function returns a vector of IDs for all regions that exist in
+*          the world.
+* \details This function creates a vector of region IDs in the same order in
+*          which they exist in the world.
+* \return A constant vector of region IDs.
 */
-const vector<string> World::getRegionVector() const {
-    vector<string> regionNames;
-
-    for( ConstRegionIterator i = regions.begin(); i != regions.end(); i++ ) {
-        regionNames.push_back( ( *i )->getName() );
+const World::AtomVector World::getRegionIDs() const {
+	AtomVector regionIDs;
+	
+	// Iterate over the regions and lookup the ID for each region.
+    for( CRegionIterator i = regions.begin(); i != regions.end(); ++i ) {
+		// Find the atom for the region name.
+		const objects::Atom* regionID = objects::AtomRegistry::getInstance()->findAtom( (*i)->getName() );
+		/*! \invariant The region atom has already been created, otherwise the
+        *              atom was not registered when the fast lookup map was
+        *              created. 
+        */
+		assert( regionID );
+		
+		/*! \invariant The ID of region atom found is equal to the region name. */
+		assert( regionID->getID() == (*i)->getName() );
+        regionIDs.push_back( regionID );
     }
-    return regionNames;
+	/*! \post The size of the region ID vector is equal to the size of the
+    *         region vector. 
+    */
+	assert( regionIDs.size() == regions.size() );
+    return regionIDs;
 }
 
 /*! \brief A function which print dependency graphs showing fuel usage by sector.
@@ -517,7 +566,7 @@ void World::printGraphs( ostream& outStream, const int period ) const {
     assert( outStream );
 
     // Only do the US for now.
-    for ( ConstRegionIterator regionIter = regions.begin(); regionIter == regions.begin(); regionIter++ ) {
+    for ( CRegionIterator regionIter = regions.begin(); regionIter == regions.begin(); regionIter++ ) {
         ( *regionIter )->printGraphs( outStream, period );
     }
 }
@@ -539,7 +588,7 @@ const vector<string> World::getPrimaryFuelList() const {
 void World::setFixedTaxes( const string& policyName, const string& marketName, const vector<double> taxes, const std::vector<std::string>& regionsToSet ) {
     for( unsigned int i = 0; i <regions.size(); i++ ) {
         // If the regions to set vector is empty or contains the region, set the carbon taxes.
-        if( ( static_cast<int>( regionsToSet.size() ) == 0 ) ||
+        if( ( regionsToSet.empty() ) ||
             ( find( regionsToSet.begin(), regionsToSet.end(), regions[ i ]->getName() ) != regionsToSet.end() ) ) {
                 regions[ i ]->setFixedTaxes( policyName, marketName, taxes );
             }
@@ -560,7 +609,7 @@ const map<const string,const Curve*> World::getEmissionsQuantityCurves( const st
 
     map<const string,const Curve*> emissionsQCurves;
 
-    for( ConstRegionIterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
+    for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
         emissionsQCurves[ (*rIter)->getName() ] = (*rIter)->getEmissionsQuantityCurve( ghgName );
     }
 
@@ -589,7 +638,7 @@ const map<const string,const Curve*> World::getEmissionsPriceCurves( const strin
     map<const string,const Curve*> emissionsPCurves;
     const string GLOBAL_NAME = "global";
     
-    for( ConstRegionIterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
+    for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
         emissionsPCurves[ (*rIter)->getName() ] = (*rIter)->getEmissionsPriceCurve( ghgName );
     }
 
@@ -611,40 +660,54 @@ void World::setCalcCounter( CalcCounter* calcCounter ){
     this->calcCounter = calcCounter;
 }
 
-/*! \brief Protected function which takes a listing of region names to calculate and returns a list
-* of region indexes to calculate. 
-* \details This function translates a passed in list of region names to solve to a vector of valid
-* region numbers to solve. If passed an empty list, it will return the full list of region numbers to solve,
-* this is the default. It checks whether the region name is valid, but does not check for duplicates.
-* \param regionsToSolve A vector of region names to solve.
-* \return A vector of region numbers to solve. 
+/*! \brief Protected function which takes a listing of region names to calculate
+*          and returns a list of region indexes to calculate. 
+* \details This function translates a passed in list of region names to solve to
+*          a vector of valid region numbers to solve. If passed an empty list,
+*          it will return the full list of region numbers to solve, this is the
+*          default. It checks whether the region name is valid, but does not
+*          check for duplicates.
+* \param aRegionsToCalc A vector of region names to calculate.
+* \return A vector of region numbers to solve.
 */
-const vector<int> World::getRegionIndexesToCalculate( const vector<string>& regionsToSolve ){
-    vector<int> regionNumbersToSolve;
+const vector<unsigned int> World::getRegionIndexesToCalculate( const AtomVector& aRegionsToCalc ){
+    vector<unsigned int> regionNumbersToCalc;
     // Check for the empty list of names, return the full list of region numbers.
-    if ( regionsToSolve.size() == 0 ) {
-        regionNumbersToSolve.resize( regions.size() );
-
-        for( unsigned int regionNumber = 0; regionNumber < regionNumbersToSolve.size(); regionNumber++ ) {
-            regionNumbersToSolve[ regionNumber ] = regionNumber;
+    if ( aRegionsToCalc.empty() ) {
+        for( unsigned int regionNumber = 0; regionNumber < regions.size(); ++regionNumber ) {
+			regionNumbersToCalc.push_back( regionNumber );
         }
     }
     // Check if each name is valid and add its region number to the vector if it is. 
     else {
-        for( vector<string>::const_iterator regionName = regionsToSolve.begin(); regionName != regionsToSolve.end(); regionName++ ) {
-            map<string,int>::const_iterator foundName = regionNamesToNumbers.find( *regionName );
-            if ( foundName != regionNamesToNumbers.end() ) {
-                const int regionNumber = foundName->second; 
-                regionNumbersToSolve.push_back( regionNumber );
-            }
-            else {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Region " << *regionName << " not found." << endl;
-            }
+        for( AtomVector::const_iterator regionID = aRegionsToCalc.begin();
+             regionID != aRegionsToCalc.end(); ++regionID )
+        {
+            // Lookup the region atom in the world's fast lookup map.
+            FastRegionLookupMap::const_iterator iter = mRegionLookupMap->find( *regionID );
+
+            /*! \invariant The region ID was found otherwise the solution
+            *              mechanism is instructing the world to calculate a
+            *              non-existant region. 
+            */
+            assert( iter != mRegionLookupMap->end() );
+
+            /*! \invariant The ID of the atom is equal to the region name of the
+            *              region at the index. 
+            */
+            assert( (*regionID)->getID() == regions[ iter->second ]->getName() );
+            
+            // Add the index to the list of indexes to calculate.
+            regionNumbersToCalc.push_back( iter->second );
         }
     }
-    return regionNumbersToSolve;
+
+	/*! \post The number of regions to calculate is between one and the total
+    *         number of regions inclusive.
+    */
+	assert( !regionNumbersToCalc.empty() && regionNumbersToCalc.size() <= regions.size() );
+
+    return regionNumbersToCalc;
 }
 
 /*! \brief Function to finalize objects after a period is solved.
@@ -655,19 +718,19 @@ const vector<int> World::getRegionIndexesToCalculate( const vector<string>& regi
 */
 void World::finalizePeriod( const int aPeriod ){
     // Finalize sectors.
-    for( vector<Region*>::iterator region = regions.begin(); region != regions.end(); ++region ){
+    for( RegionIterator region = regions.begin(); region != regions.end(); ++region ){
         (*region)->finalizePeriod( aPeriod );
     }
 }
 
 void World::csvSGMOutputFile( ostream& aFile, const int period ) const {
-	for( vector<Region*>::const_iterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
+	for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); ++rIter ){
 		( *rIter )->csvSGMOutputFile( aFile, period );
 	}
 }
 
 void World::csvSGMGenFile( ostream& aFile, const int aPeriod ) const {
-	for( vector<Region*>::const_iterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
+	for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); ++rIter ){
 		( *rIter )->csvSGMGenFile( aFile, aPeriod );
 	}
 }

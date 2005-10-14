@@ -18,7 +18,7 @@
 #include "technologies/include/building_generic_dmd_technology.h"
 
 // Forward declaration
-class MarketInfo;
+class IInfo;
 
 /*! 
 * \ingroup CIAM
@@ -40,8 +40,9 @@ class BuildingHeatCoolDmdTechnology : public BuildingGenericDmdTechnology
 public:
     BuildingHeatCoolDmdTechnology(); // default construtor
     virtual const std::string& getXMLName1D() const = 0;
-    virtual void initCalc( const MarketInfo* aSubsectorInfo );
-    void adjustForCalibration( double subSectorDemand, const std::string& regionName, const MarketInfo* subsectorInfo, const int period );
+    virtual void initCalc( const IInfo* aSubsectorInfo );
+    void adjustForCalibration( double subSectorDemand, const std::string& regionName,
+		                       const IInfo* subsectorInfo, const int period );
 private:
     static const std::string XML_NAME1D; //!< tag name for toInputXML
 protected:

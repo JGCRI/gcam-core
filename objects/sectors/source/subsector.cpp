@@ -28,7 +28,8 @@
 #include "emissions/include/indirect_emiss_coef.h"
 #include "containers/include/world.h"
 #include "containers/include/gdp.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/info_factory.h"
+#include "containers/include/iinfo.h"
 #include "technologies/include/base_technology.h"
 #include "consumers/include/consumer.h"
 #include "consumers/include/household_consumer.h"
@@ -370,12 +371,13 @@ bool Subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr
 /*! \brief Complete the initialization
 *
 * This routine is only called once per model run
-*
+* \param aSectorInfo The parent sector info object.
+* \param aDependencyFinder The regional dependency finder.
 * \author Josh Lurz
 * \warning markets are not necesarilly set when completeInit is called
 */
-void Subsector::completeInit( DependencyFinder* aDependencyFinder ) {
-    mSubsectorInfo.reset( new MarketInfo() );
+void Subsector::completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder ) {
+	mSubsectorInfo.reset( InfoFactory::constructInfo( aSectorInfo ) );
     
 	for( unsigned int i = 0; i < baseTechs.size(); i++) {
 		baseTechs[i]->completeInit( regionName );
@@ -600,11 +602,10 @@ const std::string& Subsector::getXMLNameStatic() {
 *
 * \warning the ghg part of this routine assumes the existance of technologies in the previous and future periods
 * \author Steve Smith, Sonny Kim
-* \param period Model period
+* \param aPeriod Model period
 */
-void Subsector::initCalc( const MarketInfo* aSectorInfo, 
-                          NationalAccount& aNationalAccount,
-                          Demographic* aDemographics,
+void Subsector::initCalc( NationalAccount& aNationalAccount,
+                          const Demographic* aDemographics,
                           const MoreSectorInfo* aMoreSectorInfo,
                           const int aPeriod )
 {
@@ -704,7 +705,7 @@ void Subsector::tabulateFixedDemands( const int period ) {
 
 /*! \brief Computes weighted cost of all technologies in Subsector.
 *
-* Called from calcShare after technology shares are determined. Calculates share-weighted total price (subsectorprice) and cost of fuel (fuelprice). 
+* Called from calcShare after technology shares are determined. Calculates share-weighted total price (subsectorprice) and cost of fuel (). 
 *
 * Price function separated to allow different weighting for Subsector price
 * changed to void return maw
@@ -1533,20 +1534,21 @@ double Subsector::getCalAndFixedOutputs( const int period, const std::string& go
 * \param requiredOutput Amount of output to produce
 */
 bool Subsector::setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput ) {
-    Marketplace* marketplace = scenario->getMarketplace();
+
     bool inputWasChanged = false;
+	IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( goodName, regionName, period, true );
     for ( unsigned int i=0; i< techs.size(); i++ ) {
         if ( techHasInput( techs[ i ][ period ], goodName ) ) {
             double inputValue = requiredOutput / techs[ i ][ period ]->getEff();
             if ( !inputWasChanged ) {
                 inputWasChanged = true;
-                double existingMarketDemand = max( marketplace->getMarketInfo( goodName, regionName , period, "calDemand" ), 0.0 );
-                marketplace->setMarketInfo( goodName, regionName, period, "calDemand", existingMarketDemand + inputValue );
+				double existingMarketDemand = max( marketInfo->getDouble( "calDemand", true ), 0.0 );
+				marketInfo->setDouble( "calDemand", existingMarketDemand + inputValue );
             } 
             else {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::WARNING );
-                mainLog << "  WARNING: More than one technology input would have been changed " 
+                mainLog << "More than one technology input would have been changed" 
                     << " in sub-sector " << name << " in sector " << sectorName
                     << " in region " << regionName << endl; 
             }

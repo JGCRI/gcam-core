@@ -20,6 +20,7 @@
 // Forward declarations
 class GDP;
 class DependencyFinder;
+class IInfo;
 
 /*! 
 * \ingroup CIAM
@@ -30,7 +31,7 @@ class DependencyFinder;
 * specific building service (heating, cooling, lighting, etc.), which is then provided by 
 * a supply sector. Therefore, this subsector does not share between technologies.
 * This subsector also mediates information flow between the supply sectors and the building demand 
-* technologies through marketInfo and other mechanisms.
+* technologies through Info and other mechanisms.
 
 * \author Steve Smith
 */
@@ -40,14 +41,19 @@ class BuildingDemandSubSector : public Subsector
 public:
     BuildingDemandSubSector( const std::string regionName, const std::string sectorName );
     static const std::string& getXMLNameStatic();
-    void initCalc( const MarketInfo* aSectorInfo, NationalAccount& aNationalAccount,
-        Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo, const int aPeriod );
-    void setCalibrationStatus( const int period );
+    
+    virtual void setCalibrationStatus( const int period );
+    
+    virtual void initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const MoreSectorInfo* aMoreSectorInfo,
+                           const int aPeriod );
+
     void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
     void calcPrice( const int period );
     double getOutput( const int period );
     void setoutput( const double demand, const int period, const GDP* gdp );
-    void completeInit( DependencyFinder* aDependencyFinder );
+    void completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder );
 protected:
     virtual const std::string& getXMLName() const;
     bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );

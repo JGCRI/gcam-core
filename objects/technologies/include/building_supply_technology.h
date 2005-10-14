@@ -23,7 +23,7 @@
 * Internal gains are added to a specifed market.
 *
 * Temporarilly, the internal gain market is specified via data, but this will eventually be passed through 
-* marketInfo
+* Info
 *
 * \author Steve Smith
 */

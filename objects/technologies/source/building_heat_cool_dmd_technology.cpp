@@ -10,7 +10,6 @@
 // Standard Library headers
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
 
@@ -19,7 +18,7 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -84,11 +83,9 @@ void BuildingHeatCoolDmdTechnology::toDebugXMLDerived( const int period, ostream
 * \author Steve Smith
 * \param aSubsectorInfo The subsectorInfo object. 
 */
-void BuildingHeatCoolDmdTechnology::initCalc( const MarketInfo* aSubsectorInfo ) {
-
-    aveInsulation = aSubsectorInfo->getItemValue( "aveInsulation", true );
-    floorToSurfaceArea = aSubsectorInfo->getItemValue( "floorToSurfaceArea", true );
- 
+void BuildingHeatCoolDmdTechnology::initCalc( const IInfo* aSubsectorInfo ) {
+    aveInsulation = aSubsectorInfo->getDouble( "aveInsulation", true );
+    floorToSurfaceArea = aSubsectorInfo->getDouble( "floorToSurfaceArea", true );
     BuildingGenericDmdTechnology::initCalc( aSubsectorInfo );    
 }
 
@@ -99,8 +96,7 @@ void BuildingHeatCoolDmdTechnology::initCalc( const MarketInfo* aSubsectorInfo )
 * \author Steve Smith
 */
 double BuildingHeatCoolDmdTechnology::getEffectiveInternalGains( const string& regionName, const int period ) {
-Marketplace* marketplace = scenario->getMarketplace();
- 
+	Marketplace* marketplace = scenario->getMarketplace();
     return getInternalGainsSign() * marketplace->getPrice( intGainsMarketName, regionName, period ) * fractionOfYearActive;
 }
 
@@ -112,10 +108,11 @@ Marketplace* marketplace = scenario->getMarketplace();
 * \author Steve Smith
 * \param unitDemand calibrated unit demand (demand per unit floorspace) for this subsector
 * \param regionName regionName
-* \param aSubsectorInfo MarketInfo object (not used for this class so name is left out) 
+* \param aSubsectorInfo Info object (not used for this class so name is left out) 
 * \param period model period
 */
-void BuildingHeatCoolDmdTechnology::adjustForCalibration( double subSectorDemand, const string& regionName, const MarketInfo* aSubsectorInfo, const int period ) {
+void BuildingHeatCoolDmdTechnology::adjustForCalibration( double subSectorDemand, const string& regionName,
+														  const IInfo* aSubsectorInfo, const int period ) {
     
     // unitDemand (demand per unit area) is passed into this routine as subSectorDemand, but not adjusted for saturation and other parameters.    
     double unitDemand = subSectorDemand;
@@ -123,7 +120,7 @@ void BuildingHeatCoolDmdTechnology::adjustForCalibration( double subSectorDemand
     // Production is equal to: unitDemand * saturation *(any other parameters) * dmd
     
     // Amount of service supplied is unitDemand times floorspace
-    double floorSpace = aSubsectorInfo->getItemValue( "floorSpace", true );
+    double floorSpace = aSubsectorInfo->getDouble( "floorSpace", true );
     double effectiveDemand = unitDemand * floorSpace;
     
     // Now adjust for internal gains
@@ -132,4 +129,3 @@ void BuildingHeatCoolDmdTechnology::adjustForCalibration( double subSectorDemand
     
     shrwts = ( effectiveDemand / floorSpace ) / getDemandFnPrefix( regionName, period );
  }
-

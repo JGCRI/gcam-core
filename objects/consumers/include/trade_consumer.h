@@ -43,10 +43,15 @@ public:
 	void copyParam( const BaseTechnology* baseTech );
 	void copyParamsInto( TradeConsumer& tradeConsumerIn ) const;
 
-    void completeInit( const std::string& regionName );
-    void initCalc( const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, 
-        const std::string& aSectorName, NationalAccount& nationalAccount, 
-        Demographic* aDemographics, const double aCapitalStock, const int aPeriod );
+    virtual void completeInit( const std::string& aRegionName );
+    
+    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
+                           const std::string& aRegionName, 
+                           const std::string& aSectorName,
+                           NationalAccount& nationalAccount, 
+                           const Demographic* aDemographics,
+                           const double aCapitalStock,
+                           const int aPeriod );
 
     void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics,
         const MoreSectorInfo* moreSectorInfo, const std::string& aRegionName, 

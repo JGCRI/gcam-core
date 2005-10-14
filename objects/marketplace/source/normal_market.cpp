@@ -18,7 +18,7 @@ NormalMarket::NormalMarket( const string& goodNameIn, const string& regionNameIn
 Market( goodNameIn, regionNameIn, periodIn ) {
 }
 
-void NormalMarket::derivedToDebugXML( ostream& out, Tabs* tabs ) const {
+void NormalMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
 }
 
 string NormalMarket::getType() const {

@@ -57,9 +57,15 @@ public:
 	void copyParamsInto( HouseholdConsumer& householdConsumerIn ) const;
 
 	virtual void completeInit( const std::string& regionName );    
-    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, 
-        const std::string& aSectorName, NationalAccount& nationalAccount , Demographic* aDemographics,
-        const double aCapitalStock, const int aPeriod );
+    
+    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
+                           const std::string& aRegionName, 
+                           const std::string& aSectorName,
+                           NationalAccount& nationalAccount, 
+                           const Demographic* aDemographics,
+                           const double aCapitalStock,
+                           const int aPeriod );
+
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
         const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, 
         const std::string& aSectorName, const bool aIsNewVintageMode, const int aPeriod );

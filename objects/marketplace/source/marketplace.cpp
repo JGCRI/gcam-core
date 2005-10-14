@@ -10,8 +10,6 @@
 #include "util/base/include/definitions.h"
 
 #include <vector>
-#include <map>
-
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/market.h"
 #include "marketplace/include/imarket_type.h"
@@ -22,6 +20,7 @@
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/price_market.h"
 #include "marketplace/include/market_locator.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 
@@ -506,61 +505,90 @@ void Marketplace::restoreinfo( const int period) {
     }
 }
 
-/*! \brief Adds an information value and an associated key to the market for the
-* specified goodName, regionName and period.
-* \details This functions adds to the Market extra information which needs to be
-* explicitally associated with a Market. 
+/*! \brief Get the information object for the specified market and period which
+*          can then be used to query for specific values.
+* \details Returns the internal IInfo object of the specified market and period
+*          which represents a set of pairings of information name to value. This
+*          specific function returns a constant pointer to the information
+*          object, so values can be queried but not added or modified.
 * \author Josh Lurz
+* \warning Null will be returned if the market does not exist.
 * \warning The function is UNRELATED to storeinfo and restoreinfo.
-* \param goodName The good of the market to add the information for.
-* \param regionName The region used to find the market to add the information to.
-* \param period The period the information is associated with. 
-* \param itemName The string to use as the key for this information value.
-* \param itemValue The value to be associated with this key.
+* \param aGoodName The good of the market for which to get the information object.
+* \param aRegionName The region used to find the market from which to get the
+*        information object.
+* \param aPeriod The period to fetch for which the information object. 
 * \param aMustExist Whether it is an error for the market not to exist.
+* \return A constant pointer to the market information object, null if the
+*         market does not exist.
+* \note This version of the function is required so that it can be called in
+*       constant functions. A second version is available which returns a
+*       mutable pointer.
 */
-void Marketplace::setMarketInfo( const string& goodName, const string& regionName, const int period,
-                                 const string& itemName, const double itemValue, bool aMustExist )
+const IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& aRegionName,
+										 const int aPeriod, const bool aMustExist ) const 
 {
-    const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
-
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, aGoodName );
+	const IInfo* info = 0;
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
-        markets[ marketNumber ][ period ]->setMarketInfo( itemName, itemValue );
+        info = markets[ marketNumber ][ aPeriod ]->getMarketInfo();
+		/*! \invariant The market is required to return an information object
+        *              that is non-null. 
+        */
+		assert( info );
     }
-    else if( aMustExist ) {
+    
+	// Report the error if requested.
+	if( !info && aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Called setMarketInfo for non-existant market " << goodName << " in " << regionName << endl;
+		mainLog << "Market info object cannot be returned because market "
+			    << aGoodName << " in " << aRegionName << " does not exist." << endl;
     }
+    return info;
 }
 
-/*! \brief Gets an information value for associated key from the market for the
-* specified goodName, regionName and period.
-* \details This functions gets extra Market information which needs to be
-* explicitally associated with a Market. 
+/*! \brief Get the information object for the specified market and period which
+*          can then be used to query, add, or modify specific values.
+* \details Returns the internal IInfo object of the specified market and period
+*          which represents a set of pairings of information name to value. This
+*          specific function returns a mutable pointer to the information
+*          object, so values can be queried, added or modified.
 * \author Josh Lurz
+* \warning Null will be returned if the market does not exist.
 * \warning The function is UNRELATED to storeinfo and restoreinfo.
-* \param goodName The good of the market to get the information for.
-* \param regionName The region used to find the market to get the information from.
-* \param period The period the information is associated with. 
-* \param itemName The string to use as the key to query the market.
+* \param aGoodName The good of the market for which to get the information
+*        object.
+* \param aRegionName The region used to find the market from which to get the
+*        information object.
+* \param aPeriod The period to fetch for which the information object. 
 * \param aMustExist Whether it is an error for the market not to exist.
-* \return The value of the item in this market associated with the item name.
+* \return A mutable pointer to the market information object, null if the market
+*         does not exist.
+* \note This function returns a mutable pointer to the information object so it
+*       cannot be called from constant function.
 */
-double Marketplace::getMarketInfo( const string& goodName, const string& regionName, const int period,
-                                   const string& itemName, bool aMustExist ) const 
+IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& aRegionName,
+								   const int aPeriod, const bool aMustExist )
 {
-    const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
-
-    if ( marketNumber != -1 ) {
-        return markets[ marketNumber ][ period ]->getMarketInfo( itemName, aMustExist );
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, aGoodName );
+	IInfo* info = 0;
+    if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
+        info = markets[ marketNumber ][ aPeriod ]->getMarketInfo();
+		/*! \invariant The market is required to return an information object
+        *              that is non-null. 
+        */
+		assert( info );
     }
-    else if( aMustExist ){
+    
+	// Report the error if requested.
+	if( !info && aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Called getMarketInfo for non-existant market " << goodName << " in " << regionName << endl;
+		mainLog << "Market info object cannot be returned because market " 
+			    << aGoodName << " in " << aRegionName << " does not exist." << endl;
     }
-    return 0;
+    return info;
 }
 
 /*! \brief Write out the market information to the database.
@@ -649,7 +677,7 @@ void Marketplace::csvSGMOutputFile( ostream& aFile, const int period ) const {
 	for ( unsigned int i = 0; i < markets.size(); i++ ) {
 		aFile << markets[ i ][ period ]->getRegionName() << ',' << markets[ i ][ period ]->getGoodName() << ','
               << markets[ i ][ period ]->getPrice() << ','
-              << markets[ i ][ period ]->getMarketInfo( "priceReceived", false ) << ','
+              << markets[ i ][ period ]->getMarketInfo()->getDouble( "priceReceived", false ) << ','
               << markets[ i ][ period ]->getDemand() - markets[ i ][ period ]->getSupply()  << ','
               << markets[ i ][ period ]->getDemand() << ',' << markets[ i ][ period ]->getSupply() << endl;
 	}

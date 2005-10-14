@@ -25,7 +25,7 @@ class technology;
 class Emcoef_ind;
 class Tabs;
 class GDP;
-class MarketInfo;
+class IInfo;
 class DependencyFinder;
 class BaseTechnology;
 class NationalAccount;
@@ -39,9 +39,10 @@ class IDistributor;
 /*! 
 * \ingroup Objects
 * \brief A class which defines a single Subsector of the model.
-
-* \details The subsector contains a group of technology objects, which produce or consume commodities in the marketplace.
-* Each sub-sector has attributes such as share, share weight, logit expoential, fixed capacity, and capacity limits. 
+* \details The subsector contains a group of technology objects, which produce
+*          or consume commodities in the marketplace. Each sub-sector has
+*          attributes such as share, share weight, logit expoential, fixed
+*          capacity, and capacity limits. 
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 
@@ -61,7 +62,7 @@ protected:
     int scaleYear; //!< year to scale share weights to after calibration
     int techScaleYear; //!< year to scale technology share weights to after calibration
     double basesharewt; //! subsector base year consumption share weight
-    std::auto_ptr<MarketInfo> mSubsectorInfo; //!< The subsector's information store.
+    std::auto_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
     std::vector<std::vector<technology*> > techs; //!< vector of technology by period
 
     std::vector<double> capLimit; //!< subsector capacity limit
@@ -107,9 +108,14 @@ public:
     virtual ~Subsector();
     static double capLimitTransform( double capLimit, double orgShare ); 
     const std::string getName() const;
-    void XMLParse( const xercesc::DOMNode* tempNode );    virtual void completeInit( DependencyFinder* aDependencyFinder );
-    virtual void initCalc( const MarketInfo* aSectorInfo, NationalAccount& aNationalAccount,
-        Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo, const int aPeriod );
+    void XMLParse( const xercesc::DOMNode* tempNode );
+	virtual void completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder );
+    
+    virtual void initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const MoreSectorInfo* aMoreSectorInfo,
+                           const int aPeriod );
+
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;

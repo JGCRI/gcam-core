@@ -226,48 +226,47 @@ void SGMGenTable::updateGovtConsumer( const GovtConsumer* govtConsumer, const in
 }
 
 void SGMGenTable::updateTradeConsumer( const TradeConsumer* tradeConsumer, const string& aRegionName,
-                                       const int aPeriod ) {
+									  const int aPeriod ) 
+{
 	// net energy trade
 	if(	mName == "ETRADE" )	{
 		// add only	current	year consumer
 		if(	tradeConsumer->getYear() == mModeltime->getper_to_yr( aPeriod ) ) {
 			// get energy inputs only
 			for( unsigned int i=0; i<tradeConsumer->input.size(); i++ ){
-				if(	scenario->getMarketplace()->getMarketInfo( tradeConsumer->input[ i	]->getName(), aRegionName, 0, "IsEnergyGood", false ) ){
+				if(	!tradeConsumer->input[ i ]->isFactorSupply() 
+                    && Input::isInputEnergyGood( tradeConsumer->input[ i ]->getName(), aRegionName ) )
+                {
 					addToType( mModeltime->getper_to_yr( aPeriod ),	tradeConsumer->input[ i	]->getName(),  
 						tradeConsumer->input[ i	]->getDemandCurrency()
-                        * tradeConsumer->input[ i ]->getConversionFactor( aRegionName ) );
+						* tradeConsumer->input[ i ]->getConversionFactor( aRegionName ) );
 				}
 			}
 		}
 	}
-    else if( mName == "EmissBySource" ){
-        // add or remove emissions only for the current consumer.
-        if( tradeConsumer->getYear() != mModeltime->getper_to_yr( aPeriod ) ){
-            return;
-        }
+	else if( mName == "EmissBySource" ){
+		// add or remove emissions only for the current consumer.
+		if( tradeConsumer->getYear() != mModeltime->getper_to_yr( aPeriod ) ){
+			return;
+		}
 
-        // Loop through the inputs and find primary goods.
-        Marketplace* marketplace = scenario->getMarketplace();
-        for( unsigned int i = 0; i < tradeConsumer->input.size(); ++i ){
-            // Skip non-primary inputs
-            if( !marketplace->getMarketInfo( tradeConsumer->input[ i ]->getName(), aRegionName, 0,
-                                             "IsPrimaryEnergyGood", false ) )
-            {
-                continue;
-            }
+		// Loop through the inputs and find primary goods.
+		Marketplace* marketplace = scenario->getMarketplace();
+		for( unsigned int i = 0; i < tradeConsumer->input.size(); ++i ){
+			// Skip non-primary inputs.
+			if( tradeConsumer->input[ i ]->isFactorSupply() 
+                || !Input::isInputPrimaryEnergyGood( tradeConsumer->input[ i ]->getName(), aRegionName ) )
+			{
+				continue;
+			}
 
-            // Calculate the amount of emissions that are being traded.
-            // Determine the output coefficient.
-            const static string COEF_STRING = "coefficient";
-            const double outputCoef = marketplace->getMarketInfo( tradeConsumer->input[ i ]->getName(),
-                aRegionName, 0, "CO2" + COEF_STRING, false ); // not sure how to handle multiple gases.
-            const double tradedEmissions = tradeConsumer->input[ i ]->getDemandPhysical( aRegionName ) 
-                * outputCoef;
-            // Add or remove the emissions to the column for the sector and year. Check that the sign is right.
-            addToType( mModeltime->getper_to_yr( aPeriod ), tradeConsumer->input[ i ]->getName(), -1 * tradedEmissions );
-        }
-    }
+			// Calculate the amount of emissions that are being traded.
+			const double tradedEmissions = tradeConsumer->input[ i ]->getDemandPhysical( aRegionName ) 
+				* tradeConsumer->input[ i ]->getGHGCoefficient( "CO2", aRegionName );
+			// Add or remove the emissions to the column for the sector and year. Check that the sign is right.
+			addToType( mModeltime->getper_to_yr( aPeriod ), tradeConsumer->input[ i ]->getName(), -1 * tradedEmissions );
+		}
+	}
 }
 
 void SGMGenTable::updateInvestConsumer( const InvestConsumer* investConsumer, const int aPeriod ) {
@@ -309,7 +308,9 @@ void SGMGenTable::updateProductionTechnology( const ProductionTechnology* prodTe
 		for( unsigned int i=0; i<prodTech->input.size(); i++ ){
 			// get primary energy input only
 			string inputName = prodTech->input[ i ]->getName();
-			if( scenario->getMarketplace()->getMarketInfo( inputName, aRegionName, 0, "IsPrimaryEnergyGood", false ) ){
+			if( !prodTech->input[ i ]->isFactorSupply() 
+                && Input::isInputPrimaryEnergyGood( inputName, aRegionName ) )
+            {
 				addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->input[ i ]->getName(),  
 					prodTech->input[ i ]->getDemandCurrency() * prodTech->input[ i ]->getConversionFactor( aRegionName ) );
 			}
@@ -321,17 +322,17 @@ void SGMGenTable::updateProductionTechnology( const ProductionTechnology* prodTe
 			if( prodTech->categoryName == "Renewable"){
 				addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->name,  
 				prodTech->getOutput( aPeriod ) * 
-				scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, "ConversionFactor", false  ) / fossilEfficiency );
+				Input::getMarketConversionFactor( aSectorName, aRegionName ) / fossilEfficiency );
 			}
 		}
 	}
 	// primary energy production
 	else if( mName == "PEP" ) {
 		// get primary energy input only
-		if( scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, "IsPrimaryEnergyGood", false ) ){
+		if( Input::isInputPrimaryEnergyGood( aSectorName, aRegionName ) ){
 			addToType( mModeltime->getper_to_yr( aPeriod ), aSectorName,  
 			prodTech->getOutput( aPeriod ) * 
-			scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, "ConversionFactor", false ) );
+			Input::getMarketConversionFactor( aSectorName, aRegionName ) );
 		}
 		// special code to add renewable, nuclear and hydro electricity to primary energy production
 		if( aSectorName == "ElectricityGeneration" ) {
@@ -340,23 +341,23 @@ void SGMGenTable::updateProductionTechnology( const ProductionTechnology* prodTe
 			if( prodTech->categoryName == "Renewable"){
 				addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->name,  
 				prodTech->getOutput( aPeriod ) * 
-				scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, "ConversionFactor", false  ) / fossilEfficiency );
+				Input::getMarketConversionFactor( aSectorName, aRegionName ) / fossilEfficiency );
 			}
 		}
 	}
 	// secondary energy production
 	else if( mName == "SEP" ) {
 		// get secondary energy goods only
-		if( scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, "IsSecondaryEnergyGood", false ) ){
+		if( Input::isInputSecondaryEnergyGood( aSectorName, aRegionName ) ){
 			addToType( mModeltime->getper_to_yr( aPeriod ), aSectorName,  
 			prodTech->getOutput( aPeriod ) * 
-			scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, "ConversionFactor", false ) );
+			Input::getMarketConversionFactor( aSectorName, aRegionName ) );
 		}
 	}
 	// non-energy sector output
 	else if( mName == "NEP" ) {
 		// get non-energy goods only
-		if( !scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, "IsEnergyGood", false ) ){
+		if( !Input::isInputEnergyGood( aSectorName, aRegionName ) ){
 			addToType( mModeltime->getper_to_yr( aPeriod ), aSectorName, prodTech->getOutput( aPeriod ) );
 		}
 	}
@@ -365,7 +366,7 @@ void SGMGenTable::updateProductionTechnology( const ProductionTechnology* prodTe
 		if( aSectorName == "ElectricityGeneration" ) {
 			addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->getName(),
 			prodTech->getOutput(aPeriod) *
-			scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, "ConversionFactor", false  ) );
+			Input::getMarketConversionFactor( aSectorName, aRegionName ) );
 		}
 	}
 	// fuel consumption for electricity generation
@@ -373,8 +374,9 @@ void SGMGenTable::updateProductionTechnology( const ProductionTechnology* prodTe
 		if( aSectorName == "ElectricityGeneration" ) {
 			for( unsigned int i=0; i<prodTech->input.size(); i++ ){
 				// get energy input only
-				string inputName = prodTech->input[ i ]->getName();
-				if( scenario->getMarketplace()->getMarketInfo( inputName, aRegionName, 0, "IsEnergyGood", false ) ){
+				if( !prodTech->input[ i ]->isFactorSupply()
+                    && Input::isInputEnergyGood( prodTech->input[ i ]->getName(), aRegionName ) )
+                {
 					addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->input[ i ]->getName(),  
 						prodTech->input[ i ]->getDemandCurrency() * prodTech->input[ i ]->getConversionFactor( aRegionName ) );
 				}
@@ -393,7 +395,7 @@ void SGMGenTable::updateProductionTechnology( const ProductionTechnology* prodTe
 	// energy investments annual
 	else if( mName == "EINV" ) {
 		// get energy technologies only
-		if( scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, "IsEnergyGood", false ) ){
+		if( Input::isInputEnergyGood( aSectorName, aRegionName ) ){
 			addToType( mModeltime->getper_to_yr( aPeriod ), aSectorName,
 				prodTech->getAnnualInvestment( aPeriod ) );
 		}
@@ -401,7 +403,7 @@ void SGMGenTable::updateProductionTechnology( const ProductionTechnology* prodTe
 	// non-energy investments annual
 	else if( mName == "NEINV" ) {
 		// get non-energy technologies only
-		if( !scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, "IsEnergyGood", false ) ){
+		if( !Input::isInputEnergyGood( aSectorName, aRegionName ) ){
 			addToType( mModeltime->getper_to_yr( aPeriod ), aSectorName,  
 				prodTech->getAnnualInvestment( aPeriod ) );
 		}
@@ -411,7 +413,7 @@ void SGMGenTable::updateProductionTechnology( const ProductionTechnology* prodTe
 		(mName == "PASSTRANFCT")  || (mName == "PASSTRANMPG") || (mName == "PASSTRANCOST") ) {
 		// get passenger transport technologies only that have non zero production
 		if( (prodTech->categoryName == "PassTransport") && (prodTech->mOutputs[ aPeriod ] != 0) ){
-			double conversionFactor = scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, "ConversionFactor", false );
+			double conversionFactor = Input::getMarketConversionFactor( aSectorName, aRegionName );
 			if( mName == "PASSTRAN" ) {
 				addToType( mModeltime->getper_to_yr( aPeriod ), aSectorName, prodTech->mOutputs[ aPeriod ] * conversionFactor );
 			}

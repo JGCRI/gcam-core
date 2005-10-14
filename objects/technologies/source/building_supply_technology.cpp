@@ -7,10 +7,8 @@
 * \version $Revision$
 */
 
-// Standard Library headers
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
 
@@ -19,8 +17,7 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
-#include "containers/include/gdp.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -124,7 +121,7 @@ void BuildingSupplyTechnology::toDebugXMLDerived( const int period, ostream& out
 * \param per Model period
 */
 void BuildingSupplyTechnology::production(const string& regionName,const string& prodName,
-                            double dmd, const GDP* gdp, const int period ) {
+                                          double dmd, const GDP* gdp, const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
 
     // Call the normal production function
@@ -139,7 +136,8 @@ void BuildingSupplyTechnology::production(const string& regionName,const string&
     
     // TEMPORARY -- add calibrated internal gains to the internal gains market
     // This should be moved to initCalc when possible since this only has to be done once per period.
-    double internalGains = marketplace->getMarketInfo( intGainsMarketName, regionName, period, "calInternalGains" );
+	IInfo* marketInfo = marketplace->getMarketInfo( intGainsMarketName, regionName, period, true );
+    double internalGains = marketInfo->getDouble( "calInternalGains", true );
     internalGains += calInputValue * internalLoadFraction;
-    marketplace->setMarketInfo( intGainsMarketName, regionName, period, "calInternalGains", internalGains );
+	marketInfo->setDouble( "calInternalGains", internalGains );
 }

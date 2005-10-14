@@ -8,8 +8,7 @@
 * \file solver_library.h
 * \ingroup Objects
 * \brief A file containing the header for the static SolverLibrary class which
-* contains helper methods used by SolverComponents.
-*
+*        contains helper methods used by SolverComponents.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$
@@ -30,11 +29,13 @@ class Marketplace;
 class World;
 class SolverInfo;
 class SolverInfoSet;
-
+namespace objects {
+	class Atom;
+}
 /*!
 * \ingroup Objects
-* \brief A class with all static functions which are used by the SolverComponents classes and 
-* contains common functionality. 
+* \brief A class with all static functions which are used by the
+*        SolverComponents classes and contains common functionality. 
 * \author Josh Lurz
 */
 
@@ -64,8 +65,7 @@ public:
                            SolverInfoSet& sol, const int period );
    
 private:
-    typedef std::map<std::string, std::vector<double> > RegionalMarketValues;
-    typedef std::vector<std::string>::const_iterator RegionIterator;
+	typedef std::map<const objects::Atom*, std::vector<double> > RegionalMarketValues;
     
     //! A simple struct to link Supplies and Demands.
     struct RegionalSDDifferences {
@@ -85,7 +85,7 @@ private:
     };
     
     static bool doRegionalValuesSum( const RegionalMarketValues& regionalValues,
-        const std::vector<double>& worldTotals, const bool doPrint = false );
+        const std::vector<double>& worldTotals );
     
     static const RegionalSDDifferences calcRegionalSDDifferences( Marketplace* marketplace, World* world,
         SolverInfoSet& sol, const int per );

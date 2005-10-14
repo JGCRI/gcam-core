@@ -34,6 +34,7 @@
 #include "investment/include/levelized_cost_calculator.h"
 #include "investment/include/rate_logit_distributor.h"
 #include "util/logger/include/ilogger.h"
+#include "functions/include/function_utils.h"
 
 using namespace std;
 extern Scenario* scenario;
@@ -237,8 +238,7 @@ double MarketBasedInvestor::calcAndDistributeInvestment( vector<IInvestable*>& a
         Marketplace* marketplace = scenario->getMarketplace();
         // Get the price received for the good from the marketInfo for the
         // sector market. We need to check to make sure this is up to date.
-        const double priceReceived = marketplace->getMarketInfo( mSectorName, mRegionName,
-                                                                 aPeriod, "priceReceived" );
+		const double priceReceived = FunctionUtils::getPriceReceived( mRegionName, mSectorName, aPeriod );
         /*! \invariant Price received should always be positive and non-zero.*/
         assert( priceReceived > 0 );
         /*! \pre The market supply is zero as this is the only place it is added

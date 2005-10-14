@@ -15,11 +15,10 @@
 #include <xercesc/dom/DOMNode.hpp>
 
 #include "util/base/include/xml_helper.h"
-#include "sectors/include/supply_sector.h"
 #include "containers/include/scenario.h"
 #include "sectors/include/interm_supply_sector.h"
 #include "sectors/include/interm_subsector.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -153,20 +152,22 @@ void IntermittentSupplySector::toDebugXMLDerived( const int period, ostream& out
 
 /*! \brief Perform any initializations needed for each period.
 *
-* Any initializations or calculations that only need to be done once per period (instead of every iteration) should be placed in this function.
+* Any initializations or calculations that only need to be done once per period
+* (instead of every iteration) should be placed in this function.
 *
 * \author Marshall Wise
 * \param period Model period
 */
-void IntermittentSupplySector::initCalc( const int period, const MarketInfo* aRegionInfo,
-                       NationalAccount& nationalAccount, Demographic* aDemographics ) {
+void IntermittentSupplySector::initCalc( NationalAccount& aNationalAccount,
+                                         const Demographic* aDemographics,
+                                         const int aPeriod )
+{
+    // add items to sectorinfo must be done before Sector:initCalc() so that
+    // information is available to subsector and technology initCalc() routines
+	mSectorInfo->setDouble( "elecReserveMargin", elecReserveMargin );
+    mSectorInfo->setDouble( "aveGridCapacityFactor", aveGridCapacityFactor );
+    mSectorInfo->setDouble( "backupCapacityFactor", backupCapacityFactor );
+    mSectorInfo->setDouble( "backupCost", backupCost );
 
-    // add items to sectorinfo 
-    // must be done before Sector:initCalc() so that information is available to subsector and technology initCalc() routines
-    mSectorInfo->addItem( "elecReserveMargin", elecReserveMargin );
-    mSectorInfo->addItem( "aveGridCapacityFactor", aveGridCapacityFactor );
-    mSectorInfo->addItem( "backupCapacityFactor", backupCapacityFactor );
-    mSectorInfo->addItem( "backupCost", backupCost );
-
-    SupplySector::initCalc( period, aRegionInfo, nationalAccount, aDemographics );
+    SupplySector::initCalc( aNationalAccount, aDemographics, aPeriod );
 }

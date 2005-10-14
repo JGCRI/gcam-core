@@ -17,7 +17,6 @@
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/market.h"
 #include "marketplace/include/imarket_type.h"
-#include "marketplace/include/market_info.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/price_market.h"
 #include "marketplace/include/demand_market.h"
@@ -25,13 +24,15 @@
 #include "marketplace/include/ghg_market.h"
 #include "marketplace/include/normal_market.h"
 #include "marketplace/include/trial_value_market.h"
+#include "containers/include/info_factory.h"
+#include "util/base/include/atom_registry.h"
+#include "util/base/include/atom.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
+using namespace objects;
 
 extern Scenario* scenario;
-
-// static initialize.
-const string Market::XML_NAME = "market";
 
 /*! \brief Constructor
 * \details This is the constructor for the market class. No default constructor
@@ -53,13 +54,14 @@ storedPrice( 0 ),
 demand( 0 ),
 storedDemand( 0 ),
 supply( 0 ),
-storedSupply( 0 )
+storedSupply( 0 ),
+mMarketInfo( InfoFactory::constructInfo( 0 ) )
 {
 	// Store the market name so that it can be returned without any allocations.
 	mName = region + good;
 }
 
-//! Destructor
+//! Destructor. This is needed because of the auto_ptr.
 Market::~Market(){
 }
 
@@ -82,11 +84,9 @@ demand( aMarket.demand ),
 storedDemand( aMarket.storedDemand ),
 supply( aMarket.supply ),
 storedSupply( aMarket.storedSupply ),
-containedRegionNames( aMarket.containedRegionNames ){
-    // Only copy the MarketInfo if it has been allocated.
-    if( aMarket.mMarketInfo.get() ){
-        mMarketInfo.reset( new MarketInfo( *aMarket.mMarketInfo.get() ) );
-    }
+mContainedRegions( aMarket.mContainedRegions ),
+mMarketInfo( InfoFactory::constructInfo( 0 ) ){
+	// TODO: Cannot currently copy the market info.
 }
 
 /*! \brief Static factory method to create a market based on its type.
@@ -99,26 +99,28 @@ containedRegionNames( aMarket.containedRegionNames ){
 *         exist. 
 */
 auto_ptr<Market> Market::createMarket( const IMarketType::Type aType, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod ) {
-    auto_ptr<Market> rNewMarket;
-    if ( aType == IMarketType::NORMAL ){
-        rNewMarket.reset( new NormalMarket( aGoodName, aRegionName, aPeriod ) );
-    }
-    else if ( aType == IMarketType::GHG ) {
-        rNewMarket.reset( new GHGMarket( aGoodName, aRegionName, aPeriod ) );
-    }
-    else if ( aType == IMarketType::CALIBRATION ) {
-        rNewMarket.reset( new CalibrationMarket( aGoodName, aRegionName, aPeriod ) );
-    }
-    else if ( aType == IMarketType::DEMAND ) {
-        rNewMarket.reset( new DemandMarket( aGoodName, aRegionName, aPeriod ) );
-    }
-    else if ( aType == IMarketType::TRIAL_VALUE ) {
-        rNewMarket.reset( new TrialValueMarket( aGoodName, aRegionName, aPeriod ) );
-    }
-    else {
-        cerr << "Invalid market type: " << aType << endl;
-    }
-    return rNewMarket;
+	auto_ptr<Market> rNewMarket;
+	if ( aType == IMarketType::NORMAL ){
+		rNewMarket.reset( new NormalMarket( aGoodName, aRegionName, aPeriod ) );
+	}
+	else if ( aType == IMarketType::GHG ) {
+		rNewMarket.reset( new GHGMarket( aGoodName, aRegionName, aPeriod ) );
+	}
+	else if ( aType == IMarketType::CALIBRATION ) {
+		rNewMarket.reset( new CalibrationMarket( aGoodName, aRegionName, aPeriod ) );
+	}
+	else if ( aType == IMarketType::DEMAND ) {
+		rNewMarket.reset( new DemandMarket( aGoodName, aRegionName, aPeriod ) );
+	}
+	else if ( aType == IMarketType::TRIAL_VALUE ) {
+		rNewMarket.reset( new TrialValueMarket( aGoodName, aRegionName, aPeriod ) );
+	}
+	else {
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::WARNING );
+		mainLog << "Invalid market type: " << aType << endl;
+	}
+	return rNewMarket;
 }
 
 /*! \brief Write out XML for debugging purposes.
@@ -131,39 +133,27 @@ auto_ptr<Market> Market::createMarket( const IMarketType::Type aType, const std:
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-   const Modeltime* modeltime = scenario->getModeltime();
-   XMLWriteOpeningTag( getXMLName(), out, tabs, getName(), modeltime->getper_to_yr( period ) , getType() );
-   XMLWriteElement( good, "MarketGoodOrFuel", out, tabs );
-   XMLWriteElement( region, "MarketRegion", out, tabs );
-   XMLWriteElement( price, "price", out, tabs );
-   XMLWriteElement( storedPrice, "storedPrice", out, tabs );
-   XMLWriteElement( demand, "demand", out, tabs );
-   XMLWriteElement( storedDemand, "storedDemand", out, tabs );
-   XMLWriteElement( supply, "supply", out, tabs );
-   XMLWriteElement( storedSupply, "storedSupply", out, tabs );
-   
-   for( vector<string>::const_iterator i = containedRegionNames.begin(); i != containedRegionNames.end(); i++ ) {
-      XMLWriteElement( *i, "ContainedRegion", out, tabs );
-   }
-   if( mMarketInfo.get() ){
-       mMarketInfo->toDebugXML( out, tabs );
-   }
-   derivedToDebugXML( out, tabs );
-   
-   // finished writing xml for the class members.
-   XMLWriteClosingTag( getXMLName(), out, tabs );
-}
+	const Modeltime* modeltime = scenario->getModeltime();
+	XMLWriteOpeningTag( getXMLNameStatic(), out, tabs, getName(), modeltime->getper_to_yr( period ) , getType() );
+	XMLWriteElement( good, "MarketGoodOrFuel", out, tabs );
+	XMLWriteElement( region, "MarketRegion", out, tabs );
+	XMLWriteElement( price, "price", out, tabs );
+	XMLWriteElement( storedPrice, "storedPrice", out, tabs );
+	XMLWriteElement( demand, "demand", out, tabs );
+	XMLWriteElement( storedDemand, "storedDemand", out, tabs );
+	XMLWriteElement( supply, "supply", out, tabs );
+	XMLWriteElement( storedSupply, "storedSupply", out, tabs );
 
-/*! \brief Get the XML node name for output to XML.
-* \details This public function accesses the private constant string, XML_NAME.
-*          This way the tag is always consistent for both read-in and output and
-*          can be easily changed. This function may be virtual to be overridden
-*          by derived class pointers.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME.
-*/
-const std::string& Market::getXMLName() const {
-	return XML_NAME;
+	for( vector<const Atom*>::const_iterator i = mContainedRegions.begin(); i != mContainedRegions.end(); ++i ) {
+		XMLWriteElement( (*i)->getID(), "ContainedRegion", out, tabs );
+	}
+
+    mMarketInfo->toDebugXML( period, tabs, out );
+
+	toDebugXMLDerived( out, tabs );
+
+	// finished writing xml for the class members.
+	XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -176,28 +166,53 @@ const std::string& Market::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& Market::getXMLNameStatic() {
+	const static string XML_NAME = "market";
 	return XML_NAME;
 }
 
 /*! \brief Add a region to the list of contained regions.
 * \details This function is used to add a region to the list of model regions
-*          which are contained in the market region. If the region already
-*          exists in the vector it is not added.
-* \param regionNameIn The name of the region to add.
+*          which are contained in the market. If the region already exists in
+*          the list it is not added and a warning is printed.
+* \param aRegion The name of the region to add.
 */
-void Market::addRegion( const string& regionNameIn ) {
-   if ( std::find( containedRegionNames.begin(), containedRegionNames.end(), regionNameIn ) == containedRegionNames.end()	) {
-      containedRegionNames.push_back( regionNameIn );
-   }
+void Market::addRegion( const string& aRegion ) {
+	// Convert the string to an atom.
+	const Atom* regionID = AtomRegistry::getInstance()->findAtom( aRegion );
+
+	/*! \invariant If the region ID is null that means that the world forgot to
+	*              create a hashmap of all the regions. 
+	*/
+	assert( regionID );
+	/*! \invariant The ID of the found atom is the same as the name of the
+	*              region, this ensures the lookup was correct.
+	*/
+	assert( regionID->getID() == aRegion );
+
+	// Check if the region ID does not already exist in the list.
+	if( find( mContainedRegions.begin(), mContainedRegions.end(), regionID ) == mContainedRegions.end() ) {
+		// Add the region ID.
+		mContainedRegions.push_back( regionID );
+	}
+	else {
+		// Warn the user that the market was not added. This may signal a bug in
+        // the calling code.
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::DEBUG );
+		mainLog << "Duplicate region " << aRegion << " was not added to market " << mName << "." << endl;
+	}
 }
 
-/*! \brief Get the vector of contained regions.
-* \details This function when called returns the containedRegions vector. This
-*          vector consists of the names of all regions within this market.
-* \return The vector of contained regions.
+/*! \brief Get the IDs of all regions contained by this market.
+* \details Return the list of contained regions implemented as a vector of
+*          constant Atoms. This vector consists of the IDs of all regions within
+*          this market.
+* \return The IDs of all regions contained by this market.
 */
-const vector<string> Market::getContainedRegions() const {
-   return containedRegionNames;
+const vector<const Atom*>& Market::getContainedRegions() const {
+	/*! \pre There is at least one contained region in the market. */
+	assert( !mContainedRegions.empty() );
+	return mContainedRegions;
 }
 
 /*! \brief Set an initial price for the market.
@@ -210,9 +225,9 @@ const vector<string> Market::getContainedRegions() const {
 *          period unless that method is overridden.
 */
 void Market::initPrice() {
-   if ( price < util::getSmallNumber() ) {
-      price = 1;	
-   }
+	if ( price < util::getSmallNumber() ) {
+		price = 1;	
+	}
 }
 
 /*! \brief Sets the price variable to the value specified.
@@ -226,7 +241,7 @@ void Market::initPrice() {
 * \sa setPriceToLast
 */
 void Market::setRawPrice( const double priceIn ) {
-   price = priceIn;
+	price = priceIn;
 }
 
 /*! \brief Set the price of the market based on the type.
@@ -237,7 +252,7 @@ void Market::setRawPrice( const double priceIn ) {
 * \sa setPriceToLast
 */
 void Market::setPrice( const double priceIn ) {
-   price = priceIn;
+	price = priceIn;
 }
 
 /*! \brief Set the market price using the price from the last period.
@@ -256,7 +271,7 @@ void Market::setPrice( const double priceIn ) {
 */
 void Market::setPriceFromLast( const double lastPrice ) {
 	// Only initialize the price from last period's price if the price is set to
-    // the default. This prevents overwriting read-in initial prices.
+	// the default. This prevents overwriting read-in initial prices.
 	if( price == 1 ){
 		price = lastPrice;
 	}
@@ -268,7 +283,7 @@ void Market::setPriceFromLast( const double lastPrice ) {
 * \sa getRawPrice
 */
 double Market::getPrice() const {
-   return price;
+	return price;
 }
 
 /*! \brief Get the raw price.
@@ -279,7 +294,7 @@ double Market::getPrice() const {
 * \sa getPrice
 */
 double Market::getRawPrice() const {
-   return price;
+	return price;
 }
 
 /*! \brief Get the stored price.
@@ -292,14 +307,14 @@ double Market::getRawPrice() const {
 * \sa getPrice
 */
 double Market::getStoredRawPrice() const {
-   return storedPrice;
+	return storedPrice;
 }
 
 /*! \brief Null the demand.
 * This function sets demand to zero. 
 */
 void Market::nullDemand() {
-   demand = 0;
+	demand = 0;
 }
 
 /*! \brief Set the Raw demand.
@@ -310,7 +325,7 @@ void Market::nullDemand() {
 * \sa setDemand
 */
 void Market::setRawDemand( const double value ) {
-   demand = value;
+	demand = value;
 }
 
 /*! \brief Add to the the Market an amount of demand in a method based on the
@@ -320,7 +335,7 @@ void Market::setRawDemand( const double value ) {
 * \sa setRawDemand
 */
 void Market::addToDemand( const double demandIn ) {
-   demand += demandIn;
+	demand += demandIn;
 }
 
 /*! \brief Remove an amount of demand from the raw demand.
@@ -330,7 +345,7 @@ void Market::addToDemand( const double demandIn ) {
 * \param demandIn Amount of demand to remove.
 */
 void Market::removeFromRawDemand( const double demandIn ) {
-   demand -= demandIn;
+	demand -= demandIn;
 }
 
 /*! \brief Get the raw demand.
@@ -341,7 +356,7 @@ void Market::removeFromRawDemand( const double demandIn ) {
 * \sa getDemand
 */
 double Market::getRawDemand() const {
-   return demand;
+	return demand;
 }
 
 /*! \brief Get the stored demand.
@@ -354,7 +369,7 @@ double Market::getRawDemand() const {
 * \sa getPrice
 */
 double Market::getStoredRawDemand() const {
-   return storedDemand;
+	return storedDemand;
 }
 
 /*! \brief Get the demand.
@@ -362,14 +377,14 @@ double Market::getStoredRawDemand() const {
 * \return Market demand.
 */
 double Market::getDemand() const {
-   return demand;
+	return demand;
 }
 
 /*! \brief Null the supply.
 * \details This function sets supply to zero. 
 */
 void Market::nullSupply() {
-   supply = 0;
+	supply = 0;
 }
 
 /*! \brief Get the raw supply.
@@ -380,7 +395,7 @@ void Market::nullSupply() {
 * \sa getSupply
 */
 double Market::getRawSupply() const {
-   return supply;
+	return supply;
 }
 
 /*! \brief Get the storedSupply.
@@ -393,7 +408,7 @@ double Market::getRawSupply() const {
 * \sa getSupply
 */
 double Market::getStoredRawSupply() const {
-   return storedSupply;
+	return storedSupply;
 }
 
 /*! \brief Set the Raw supply.
@@ -404,7 +419,7 @@ double Market::getStoredRawSupply() const {
 * \sa setSupply
 */
 void Market::setRawSupply( const double supplyIn ) {
-   supply = supplyIn;
+	supply = supplyIn;
 }
 
 /*! \brief Get the supply.
@@ -412,14 +427,14 @@ void Market::setRawSupply( const double supplyIn ) {
 * \return Market supply
 */
 double Market::getSupply() const {
-   return supply;
+	return supply;
 }
 
 /*! \brief Get the supply for use in checking solution.
 * \return The value of the supply for use in checking the solution.
 */
 double Market::getSupplyForChecking() const {
-   return supply;
+	return supply;
 }
 
 /*! \brief Add to the the Market an amount of supply in a method based on the
@@ -429,7 +444,7 @@ double Market::getSupplyForChecking() const {
 * \sa setRawSupply
 */
 void Market::addToSupply( const double supplyIn ) {
-   supply += supplyIn;
+	supply += supplyIn;
 }
 
 /*! \brief Remove an amount of supply from the raw supply.
@@ -440,7 +455,7 @@ void Market::addToSupply( const double supplyIn ) {
 * \return void
 */
 void Market::removeFromRawSupply( const double supplyIn ) {
-    supply -= supplyIn;
+	supply -= supplyIn;
 }
 
 /*! \brief Return the market name.
@@ -449,7 +464,7 @@ void Market::removeFromRawSupply( const double supplyIn ) {
 * \return The market name
 */
 const string& Market::getName() const {
-   return mName;
+	return mName;
 }
 
 /*! \brief Return the market region.
@@ -458,7 +473,7 @@ const string& Market::getName() const {
 * \return The market region.
 */
 const string& Market::getRegionName() const {
-   return region;
+	return region;
 }
 
 /*! \brief Return the market good name.
@@ -466,50 +481,41 @@ const string& Market::getRegionName() const {
 * \return The market good.
 */
 const string& Market::getGoodName() const {
-   return good;
+	return good;
 }
 
-/*! \brief Set a name and value for a piece of information related to the
-*          market.
-* \details This function will add the item and value to the MarketInfo object,
-*          which if itemName already exists will reset the current value,
-*          otherwise it will create a new key value pair. 
+/*! \brief Get the information object for this market which can then be used to
+*          query for specific values.
+* \details This function returns the internal IInfo object of this market which
+*          represents a set of pairings of information name to value. The
+*          information object is allocated in the constructor and so cannot be
+*          null. This specific function returns a constant pointer to the
+*          information object, so values can be queried but not added or
+*          modified.
+* \note This version of the function is required so that it can be called in
+*       constant functions. A second version is available which returns a
+*       mutable pointer.
+* \return A constant pointer to the market information object.
 * \author Josh Lurz
-* \param itemName The string to use as the key for this information value.
-* \param itemValue The value to be associated with this key. 
 */
-void Market::setMarketInfo( const std::string& itemName, const double itemValue ){
-    
-    // Lazily allocate the MarketInfo object.
-    if( !mMarketInfo.get() ){
-        mMarketInfo.reset( new MarketInfo() );
-    }
-    mMarketInfo->addItem( itemName, itemValue );
+const IInfo* Market::getMarketInfo() const {
+	return mMarketInfo.get();
 }
 
-/*! \brief Get the value of the information stored with itemName as the key.
-* \details This function will query the market's MarketInfo object for the value
-*          associated with the key itemName. If the itemName does not exist, it
-*          will return 0. The MarketInfo object will also emit a warning if this
-*          occurs. 
+/*! \brief Get the information object for this market which can then be used to
+*          query, add, or modify specific values.
+* \details This function returns the internal IInfo object of this market which
+*          represents a set of pairings of information name to value. The
+*          information object is allocated in the constructor and so cannot be
+*          null. This specific function returns a mutable pointer to the
+*          information object, so values can be queried, added and modified.
+* \note This function returns a mutable pointer to the information object so it
+*       cannot be called from constant function.
+* \return A mutable pointer to the market information object.
 * \author Josh Lurz
-* \param aItemName The key for the value to be queried.
-* \param aMustExist Whether it is an error if the item is missing.
-* \return The value associated with itemName if it exists, 0 otherwise.
-* \todo Is zero the best return value for a non-existant key?
 */
-double Market::getMarketInfo( const std::string& aItemName, bool aMustExist ) const {
-    if( mMarketInfo.get() ){
-        return mMarketInfo->getItemValue( aItemName, aMustExist );
-    }
-
-    // Report an error if it was supposed to exist and there is no market information object.
-    if( aMustExist ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
-        mainLog << aItemName << " was not found in the market's information store." << endl;
-    }
-    return 0;
+IInfo* Market::getMarketInfo() {
+	return mMarketInfo.get();
 }
 
 /*! \brief Store the current demand, supply, and price.
@@ -517,9 +523,9 @@ double Market::getMarketInfo( const std::string& aItemName, bool aMustExist ) co
 *          into their respective stored variables. 
 */
 void Market::storeInfo() {
-   storedDemand = demand;
-   storedSupply = supply;
-   storedPrice = price;
+	storedDemand = demand;
+	storedSupply = supply;
+	storedPrice = price;
 }
 
 /*! \brief Restore the previous demand, supply, and price.
@@ -527,9 +533,9 @@ void Market::storeInfo() {
 *          stored values of those variables. 
 */
 void Market::restoreInfo() {
-   demand = storedDemand;
-   supply = storedSupply;
-   price = storedPrice;
+	demand = storedDemand;
+	supply = storedSupply;
+	price = storedPrice;
 }
 
 /*! \brief Set that the market should be solved by the solution mechanism.
@@ -540,7 +546,7 @@ void Market::restoreInfo() {
 * \param doSolve A flag representing whether or not to solve the market.
 */
 void Market::setSolveMarket( const bool doSolve ) {
-   solveMarket = doSolve;
+	solveMarket = doSolve;
 }
 
 /*! \brief Determine if a market should be solved.
@@ -548,7 +554,7 @@ void Market::setSolveMarket( const bool doSolve ) {
 * \return Whether to attempt to solve the market. 
 */
 bool Market::shouldSolve() const {
-   return solveMarket;
+	return solveMarket;
 }
 
 /*! \brief Determine if a market should be solved for Newton-Rhapson.
@@ -565,8 +571,8 @@ bool Market::shouldSolve() const {
 * \return Whether or not to solve the market for Newton-Rhaphson.
 */
 bool Market::shouldSolveNR() const {
-    // Is this correct?
-    return ( solveMarket && price > util::getSmallNumber() && demand > util::getSmallNumber() && supply > util::getSmallNumber() );
+	// Is this correct?
+	return ( solveMarket && price > util::getSmallNumber() && demand > util::getSmallNumber() && supply > util::getSmallNumber() );
 }
 
 /*! \brief Return whether a market is solved according to market type specific
@@ -575,7 +581,7 @@ bool Market::shouldSolveNR() const {
 * \author Josh Lurz
 */
 bool Market::meetsSpecialSolutionCriteria() const {
-    // This is a normal market which should not be solved in the base period
-    // unless the solve flag is set.
-    return ( !solveMarket && period == 0 );
+	// This is a normal market which should not be solved in the base period
+	// unless the solve flag is set.
+	return ( !solveMarket && period == 0 );
 }

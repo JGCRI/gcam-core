@@ -262,7 +262,7 @@ void BaseTechnology::completeInit( const std::string& regionName ) {
 
 void BaseTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
                                const string& aSectorName, NationalAccount& nationalAccount,
-                               Demographic* aDemographics, const double aCapitalStock, const int aPeriod )
+                               const Demographic* aDemographics, const double aCapitalStock, const int aPeriod )
 {
     // Only calculate price paid if the current year is equal or less than the technologies year.
     if( scenario->getModeltime()->getper_to_yr( aPeriod ) >= year ){

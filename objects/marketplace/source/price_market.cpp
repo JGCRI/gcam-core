@@ -28,7 +28,7 @@ PriceMarket::PriceMarket( const Market& marketIn, Market* demandMarketIn ) : Mar
     demandMarketPointer = demandMarketIn;
 }
 
-void PriceMarket::derivedToDebugXML( ostream& out, Tabs* tabs ) const {
+void PriceMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( demandMarketPointer->getName(), "LinkedDemandMarket", out, tabs );
 }
 

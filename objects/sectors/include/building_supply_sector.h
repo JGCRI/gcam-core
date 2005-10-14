@@ -18,7 +18,7 @@
 
 // Forward declarations
 class GDP;
-class MarketInfo;
+class IInfo;
 class NationalAccount;
 class Demographics;
 
@@ -29,7 +29,7 @@ class Demographics;
 *  This sector is identical in operation to the regular supply sector.
 *
 *  The only addition is that additional information is supplied about the sector 
-*  characteristics through the marketInfo mechanism.
+*  characteristics through the Info mechanism.
 *
 * \author Steve Smith
 */
@@ -40,8 +40,9 @@ public:
     BuildingSupplySector( const std::string regionName );
     virtual ~BuildingSupplySector();
 	static const std::string& getXMLNameStatic();
-    void initCalc( const int period, const MarketInfo* aRegionInfo,
-                   NationalAccount& nationalAccount, Demographic* aDemographics );
+    virtual void initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
 protected:
  	virtual const std::string& getXMLName() const; 
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 

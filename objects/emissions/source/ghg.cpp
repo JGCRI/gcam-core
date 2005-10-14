@@ -23,6 +23,7 @@
 #include "containers/include/gdp.h"
 #include "emissions/include/ghg_mac.h"
 #include "functions/include/input.h"
+#include "containers/include/iinfo.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
@@ -445,9 +446,15 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
     }
 
     // units for generalized cost is in 75$/gj
-    double generalizedCost = 0; 
-    const double coefFuel = marketplace->getMarketInfo( fuelName, regionName, period, "CO2Coef", false );
-    const double coefProduct = marketplace->getMarketInfo( prodName, regionName, period, "CO2Coef", false );
+    double generalizedCost = 0;
+
+	// Fuel market may not exist.
+	const IInfo* fuelInfo = marketplace->getMarketInfo( fuelName, regionName, period, false );
+	const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ) : 0;
+	
+	// Product market may not exist if it is a demand sector.
+	const IInfo* productInfo = marketplace->getMarketInfo( prodName, regionName, period, false );
+	const double coefProduct = productInfo ? productInfo->getDouble( "CO2Coef", false ) : 0;
 
     if (name == "CO2") {
         // if remove fraction is greater than zero and storage cost is required
@@ -568,10 +575,10 @@ double Ghg::calcTechChange( const int period ){
     return pow(1 + (techDiff / 100), year );
 }
 
-/*! Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients
-*   and return the value or cost of the tax and storage for the GHG.
-*   Apply taxes only if emissions occur.  Emissions occur if there is a difference in the emissions
-*   coefficients.
+/*! Second Method: Convert GHG tax and any storage costs into energy units using
+*   GHG coefficients and return the value or cost of the tax and storage for the
+*   GHG. Apply taxes only if emissions occur. Emissions occur if there is a
+*   difference in the emissions coefficients.
 *  \param aInput Input for which to calculate the carbon tax.
 *  \param aRegionName The name of the current region.
 *  \param aGoodName The name of the output product.
@@ -579,7 +586,9 @@ double Ghg::calcTechChange( const int period ){
 *  \return Generalized cost or value of the GHG
 *  \todo Sequestration and collapsing two methods.
 */
-double Ghg::getGHGValue( const Input* aInput, const string& aRegionName, const string& aGoodName, const int aPeriod ) const {
+double Ghg::getGHGValue( const Input* aInput, const string& aRegionName,
+						 const string& aGoodName, const int aPeriod ) const
+{
     // Determine if there is a tax.
     const Marketplace* marketplace = scenario->getMarketplace();
     double ghgTax = marketplace->getPrice( name, aRegionName, aPeriod, false );
@@ -639,15 +648,21 @@ double Ghg::calcInputEmissions( const vector<Input*>& aInputs, const string& aRe
 void Ghg::calcEmission( const string& regionName, const string& fuelname, const double input, 
                         const string& prodname, const double output, const GDP* gdp, const int aPeriod )
 {
-    // for CO2 use default emissions coefficient by fuel
-    // remove fraction only applicable for CO2
-    if (name == "CO2") {
-        const Marketplace* marketplace = scenario->getMarketplace();
-        const double coefFuel = marketplace->getMarketInfo( fuelname, regionName, aPeriod, "CO2Coef", false );
-        const double coefProduct = marketplace->getMarketInfo( prodname, regionName, aPeriod, "CO2Coef", false );
+	// for CO2 use default emissions coefficient by fuel
+	// remove fraction only applicable for CO2
+	if (name == "CO2") {
+		const Marketplace* marketplace = scenario->getMarketplace();
 
-        // 100% efficiency and same coefficient, no emissions
-        if (input==output && coefFuel == coefProduct ) {
+		// Fuel market may not exist.
+		const IInfo* fuelInfo = marketplace->getMarketInfo( fuelname, regionName, aPeriod, false );
+		const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ): 0;
+
+		// Product market may not exist if the product is a demand sector.
+		const IInfo* productInfo = marketplace->getMarketInfo( prodname, regionName, aPeriod, false );
+		const double coefProduct = productInfo ? productInfo->getDouble( "CO2Coef", false ) : 0;
+
+		// 100% efficiency and same coefficient, no emissions
+		if (input==output && coefFuel == coefProduct ) {
             mEmissions[ aPeriod ] = 0;
             sequestAmountGeologic = 0;
             sequestAmountNonEngy = 0;
@@ -735,17 +750,19 @@ void Ghg::calcEmission( const vector<Input*> aInputs, const string& aRegionName,
     // Calculate the aggregate emissions of all inputs.
     double tempEmission = calcInputEmissions( aInputs, aRegionName, aPeriod );
     
-    // Determine the output coefficient.
+    // Determine the output coefficient. The output coefficent will not exist for consumers.
     const static string COEF_STRING = "coefficient";
     Marketplace* marketplace = scenario->getMarketplace();
-    const double outputCoef = marketplace->getMarketInfo( aGoodName, aRegionName, 0, name + COEF_STRING, false );
+	const IInfo* outputMarketInfo = marketplace->getMarketInfo( aGoodName, aRegionName, 0, false );
+	const double outputCoef = outputMarketInfo ? outputMarketInfo->getDouble( name + COEF_STRING, false ) : 0;
     
     // calculate the output emissions.
     const double outputEmissions = aOutput * outputCoef;
 
-    // If the good is a primary fuel, don't subtract output emissions as this is extraction of the resource,
-    // not sequestration, and store the output emissions as emissions by primary fuel.
-    if( marketplace->getMarketInfo( aGoodName, aRegionName, 0, "IsPrimaryEnergyGood", false ) ){
+    // If the good is a primary fuel, don't subtract output emissions as this is
+    // extraction of the resource, not sequestration, and store the output
+    // emissions as emissions by primary fuel.
+	if( Input::isInputPrimaryEnergyGood( aGoodName, aRegionName ) ){
 		mEmissionsByFuel[ aPeriod ] = outputEmissions;
 	}
 	else {

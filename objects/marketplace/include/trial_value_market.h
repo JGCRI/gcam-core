@@ -18,10 +18,11 @@
 /*!
 * \ingroup CIAM
 * \brief A class which defines the trail value type market.
-* This market type sets up the solution mechanism to solve for a trial value of some quantity. 
-* The quantity here need not be associated with any particular supply or demand. The object using 
-* this market must set this market to solved, and then call addToDemand to set the trial value, 
-* and call getPrice to get the trial value.
+* This market type sets up the solution mechanism to solve for a trial value of
+* some quantity. The quantity here need not be associated with any particular
+* supply or demand. The object using this market must set this market to solved,
+* and then call addToDemand to set the trial value, and call getPrice to get the
+* trial value.
 *
 * \author Steve Smith
 */
@@ -29,7 +30,6 @@
 class TrialValueMarket: public Market {
 public:
     TrialValueMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
-    virtual void derivedToDebugXML( std::ostream& out, Tabs* tabs ) const;
     virtual std::string getType() const;
 
     virtual void initPrice();
@@ -48,8 +48,8 @@ public:
     virtual bool meetsSpecialSolutionCriteria() const;
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
-
-private:
+protected:
+	virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 };
 
 #endif // _TRIALVALUE_MARKET_H_

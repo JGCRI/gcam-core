@@ -16,7 +16,7 @@
 #include "sectors/include/building_supply_subsector.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/scenario.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -95,16 +95,17 @@ bool BuildingSupplySector::XMLDerivedClassParse( const string& nodeName, const D
 * \author Steve Smith
 * \param period Model period
 */
-void BuildingSupplySector::initCalc( const int period, const MarketInfo* aRegionInfo,
-                                     NationalAccount& nationalAccount, Demographic* aDemographic )
+void BuildingSupplySector::initCalc( NationalAccount& aNationalAccount,
+                                     const Demographic* aDemographic,
+                                     const int aPeriod )
 {
     Marketplace* marketplace = scenario->getMarketplace();
 
-    double calOutput = getCalOutput( period  );
-    marketplace->setMarketInfo( name, regionName, period, "calOutput", calOutput );    
+    double calOutput = getCalOutput( aPeriod  );
+    marketplace->getMarketInfo( name, regionName, aPeriod, true )->setDouble( "calOutput", calOutput );    
 
     // Add items from regionInfo -- this needs to be done before control is passed to Sector:initCalc() so that information is available to subsector and technology initCalc() routines
 
-    SupplySector::initCalc( period, aRegionInfo, nationalAccount, aDemographic );
+    SupplySector::initCalc( aNationalAccount, aDemographic, aPeriod );
 }
 

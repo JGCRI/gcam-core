@@ -30,7 +30,7 @@
 #include "sectors/include/building_supply_sector.h"
 #include "resources/include/resource.h"
 #include "sectors/include/export_sector.h"
-#include "demographics/include/demographic.h" // changed from population
+#include "demographics/include/demographic.h"
 #include "emissions/include/ghg_policy.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
@@ -38,7 +38,6 @@
 #include "containers/include/world.h"
 #include "util/base/include/model_time.h" 
 #include "marketplace/include/marketplace.h"
-#include "marketplace/include/market_info.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
@@ -51,6 +50,8 @@
 #include "containers/include/dependency_finder.h"
 #include "reporting/include/output_container.h"
 #include "containers/include/national_account.h"
+#include "containers/include/info_factory.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -81,7 +82,8 @@ Region::Region() {
     coolingDegreeDays = 0;
 }
 
-//! Default destructor destroys sector, demsector, Resource, agSector, and population objects.
+//! Default destructor destroys sector, demsector, Resource, agSector, and
+//! population objects.
 Region::~Region() {
     clear();
 }
@@ -112,11 +114,13 @@ string Region::getName() const {
 }
 
 /*! 
-* \brief Sets the data members from the XML input.  This function parses all XML data from Region down to the lowest set of objects.
-*  As the XML data is parsed, new objects are continually added to the object container using the push_back routine.
-*
+* \brief Sets the data members from the XML input.
+* \details This function parses all XML data from Region down to the lowest set
+*          of objects. As the XML data is parsed, new objects are continually
+*          added to the object container using the push_back routine.
 * \param node XML DOM node of the region
-* \todo Change the diagnosic "assert( node );" to fail with a more informative error (file, previous node?, location?)
+* \todo Change the diagnosic "assert( node );" to fail with a more informative
+*       error (file, previous node?, location?)
 */
 void Region::XMLParse( const DOMNode* node ){
     // make sure we were passed a valid node.
@@ -279,16 +283,20 @@ bool Region::XMLDerivedClassParse( const std::string& nodeName, const xercesc::D
 }
 
 
-/*! Complete the initialization.  Get the size of vectors, initialize AGLU, create all markets, call complete initialization 
+/*! Complete the initialization. Get the size of vectors, initialize AGLU,
+*   create all markets, call complete initialization 
 *  functions for nested objects, update the fuel map, and find simultaneities.
-* \todo I think since there is one indirect ghg object for each sector, it might be better in sector. This may require deriving supply sector.
+* \todo I think since there is one indirect ghg object for each sector, it might
+*       be better in sector. This may require deriving supply sector.
 */
 void Region::completeInit() {
     // initialize demographic
     if( demographic.get() ){
         demographic->completeInit();
     }
-    mRegionInfo.reset( new MarketInfo() );
+
+	// Region info has no parent Info.
+	mRegionInfo.reset( InfoFactory::constructInfo( 0 ) );
 
     // Initialize the GDP
     if( gdp.get() ){
@@ -314,7 +322,7 @@ void Region::completeInit() {
     // This may need to move to init calc when markets change by period.
     auto_ptr<DependencyFinder> depFinder( new DependencyFinder( scenario->getMarketplace(), name ) );
     for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
-        ( *sectorIter )->completeInit( depFinder.get() );
+        ( *sectorIter )->completeInit( mRegionInfo.get(), depFinder.get() );
         Emcoef_ind temp( ( *sectorIter )->getName() );
         emcoefInd.push_back( temp );
     }
@@ -341,7 +349,7 @@ void Region::completeInit() {
         // Pass null in for the dependency finder so that the demand sector
         // technologies will not add their dependencies. This is because demand
         // sectors are not currently included in the ordering.
-        ( *demandSectorIter )->completeInit( 0 );
+        ( *demandSectorIter )->completeInit( mRegionInfo.get(), 0 );
     }
 
     for( GHGPolicyIterator ghgPolicy = mGhgPolicies.begin(); ghgPolicy != mGhgPolicies.end(); ++ghgPolicy ){
@@ -369,7 +377,7 @@ void Region::setupCalibrationMarkets() {
         if( !gdp.get() ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "GDP object has not been created before GDP calibration. Check for an region name mismatch." << endl;
+            mainLog << "GDP object has not been created before GDP calibration. Check for a region name mismatch." << endl;
             return;
         }
 
@@ -435,14 +443,16 @@ bool Region::reorderSectors( const vector<string>& aOrderList ){
     for( NameIterator currSectorName = aOrderList.begin(); currSectorName != aOrderList.end(); ++currSectorName ){
         NameMapIterator origSectorPosition = originalNameMap.find( *currSectorName );
 
-        // Check if the sector name in the sector orderling list exists currently.
+        // Check if the sector name in the sector orderling list exists
+        // currently.
         if( origSectorPosition != originalNameMap.end() ){
             // Assign the sector.
             supplySector.push_back( originalOrder[ origSectorPosition->second ] );
             supplySectorNameMap[ *currSectorName ] = static_cast<int>( supplySector.size() - 1 );
 
-            // Remove the original sector mapping. This will allow us to clean up sectors that were 
-            // not assigned a new ordering. This also is more efficient as there are less entries to search.
+            // Remove the original sector mapping. This will allow us to clean
+            // up sectors that were not assigned a new ordering. This also is
+            // more efficient as there are less entries to search.
             originalNameMap.erase( origSectorPosition );
         }
         else {
@@ -574,8 +584,8 @@ void Region::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 }
 
 /*! \brief Write datamembers to datastream in XML format for debugging purposes.  
-* Calls XMLWriteElement function from the XMLHelper class for the actual writing.
-* Calls debug functions in other contained objects. 
+* Calls XMLWriteElement function from the XMLHelper class for the actual
+* writing. Calls debug functions in other contained objects. 
 *
 * \param period Model time period
 * \param out Output file for debugging purposes in XML format
@@ -650,9 +660,10 @@ void Region::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs 
 
 /*! \brief Get the XML node name for output to XML.
 *
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overridden by derived class pointers.
+* This public function accesses the private constant string, XML_NAME. This way
+* the tag is always consistent for both read-in and output and can be easily
+* changed. This function may be virtual to be overridden by derived class
+* pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -662,9 +673,10 @@ const std::string& Region::getXMLName() const {
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
 *
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* The "==" operator that is used when parsing, required this second function to return static.
+* This public function accesses the private constant string, XML_NAME. This way
+* the tag is always consistent for both read-in and output and can be easily
+* changed. The "==" operator that is used when parsing, required this second
+* function to return static.
 * \note A function cannot be static and virtual.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
@@ -727,7 +739,7 @@ void Region::calcResourceSupply( const int period ){
     if( !gdp.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before resource calculation. Check for an region name mismatch." << endl;
+        mainLog << "GDP object has not been created before resource calculation. Check for a region name mismatch." << endl;
         return;
     }
     for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
@@ -743,7 +755,7 @@ void Region::calcFinalSupplyPrice( const int period ) {
     if( !gdp.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before final supply price calculation. Check for an region name mismatch." << endl;
+        mainLog << "GDP object has not been created before final supply price calculation. Check for a region name mismatch." << endl;
         return;
     }
 
@@ -760,7 +772,7 @@ void Region::setFinalSupply( const int period ) {
     if( !gdp.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before final supply price calculation. Check for an region name mismatch." << endl;
+        mainLog << "GDP object has not been created before final supply price calculation. Check for a region name mismatch." << endl;
         return;
     }
     // loop through all sectors in reverse once to get total output.
@@ -778,46 +790,45 @@ void Region::calcGDP( const int period ){
     if( !gdp.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before GDP calculation. Check for an region name mismatch." << endl;
+        mainLog << "GDP object has not been created before GDP calculation. Check for a region name mismatch." << endl;
         return;
     }
     if( !demographic.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Population object has not been created before GDP calculation. Check for an region name mismatch." << endl;
+        mainLog << "Population object has not been created before GDP calculation. Check for a region name mismatch." << endl;
         return;
     }
     
     gdp->initialGDPcalc( period, demographic->getTotal( period ) );
 }
 
-/*! Calculate forward-looking gdp (without feedbacks) for AgLU use
-* It is necessary to have a gdp without feedbacks so that all values are known and AgLU can calibrate
-*
-* This routine runs through each period and calculates a series of gdp values
-* without use of the energy price feedback.
-*
+/*! \brief Calculate forward-looking gdp (without feedbacks) for AgLU use.
+* \details It is necessary to have a gdp without feedbacks so that all values
+*          are known and AgLU can calibrate. This routine runs through each
+*          period and calculates a series of gdp values without use of the
+*          energy price feedback.
 * \author Steve Smith, Josh Lurz
-* \warning this will interfere with the normal gdp calculation if this is used after model calc starts
+* \warning This will interfere with the normal gdp calculation if this is used
+*          after model calc starts.
 * \todo check to see if this works with AgLU. Not sure about conversions.
 */
 const vector<double> Region::calcFutureGDP() const {
     if( !gdp.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before future GDP calculation. Check for an region name mismatch." << endl;
+        mainLog << "GDP object has not been created before future GDP calculation. Check for a region name mismatch." << endl;
         return vector<double>( 0 );
     }
     if( !demographic.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Population object has not been created before future GDP calculation. Check for an region name mismatch." << endl;
+        mainLog << "Population object has not been created before future GDP calculation. Check for a region name mismatch." << endl;
         return vector<double>( 0 );
     }
 
     const Modeltime* modeltime = scenario->getModeltime();
-    vector<double> gdps;
-    gdps.resize( modeltime->getmaxper() );
+    vector<double> gdps( modeltime->getmaxper() );
 
     for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
         gdp->initialGDPcalc( period, demographic->getTotal( period ) );
@@ -862,7 +873,7 @@ void Region::adjustGDP( const int period ){
     if( !gdp.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before GDP adjustment. Check for an region name mismatch." << endl;
+        mainLog << "GDP object has not been created before GDP adjustment. Check for a region name mismatch." << endl;
         return;
     }
     
@@ -875,19 +886,17 @@ void Region::adjustGDP( const int period ){
     gdp->adjustGDP( period, tempratio );
 }
 
-//! Do regional calibration
-/*! Must be done after demands are calculated. 
-Two levels of calibration are possible. 
-First at the sector or technology level (via. calibrateSector method),
-or, at the level of total final energy demand (via calibrateTFE)
-*
+/*! \brief Perform regional calibration.
+* \details Must be done after demands are calculated. Two levels of calibration
+*          are possible. First at the sector or technology level (via.
+*          calibrateSector method), or at the level of total final energy demand
+*          (via calibrateTFE).
 * \param doCalibrations Boolean for running or not running calibration routine
 * \param period Model time period
 */
 void Region::calibrateRegion( const bool doCalibrations, const int period ) {
     // Do subsector and technology level energy calibration
     // can only turn off calibrations that do not involve markets
-
     if ( doCalibrations ) {
         // Calibrate demand sectors
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
@@ -902,15 +911,15 @@ void Region::calibrateRegion( const bool doCalibrations, const int period ) {
         if ( !isDemandAllCalibrated( period ) ) {
             calibrateTFE( period );
         } else {
-            // do nothing now. Need to make a variant of the total cal outputs function
-            // so that can compare TFE with cal value 
+            // do nothing now. Need to make a variant of the total cal outputs
+            // function so that can compare TFE with cal value.
         }
     }
 
     if( !gdp.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before GDP calibration. Check for an region name mismatch." << endl;
+        mainLog << "GDP object has not been created before GDP calibration. Check for a region name mismatch." << endl;
         return;
     }
     // TODO: Move this into GDP object.
@@ -942,8 +951,10 @@ bool Region::isDemandAllCalibrated( const int period ) const {
 *
 * \author Steve Smith
 * \param period Model period
-* \param calAccuracy value to which calibrations must match in order to pass calibration test
-* \param printWarnings flag to turn on logging of warnings if calibrations are not accurate
+* \param calAccuracy value to which calibrations must match in order to pass
+*        calibration test.
+* \param printWarnings flag to turn on logging of warnings if calibrations are
+*        not accurate.
 * \return Boolean true if calibration is ok.
 */
 bool Region::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
@@ -1049,22 +1060,19 @@ void Region::checkData( const int period ) {
 }
 
 /*! \brief Call any initializations that are only done once per period.
-*
-* This simply calls the initcalc functions of the supply and demand sectors.
-*
 * \author Steve Smith
 * \param period Model period
 */
 void Region::initCalc( const int period ) 
 {
-    mRegionInfo->addItem( "heatingDegreeDays", heatingDegreeDays );
-    mRegionInfo->addItem( "coolingDegreeDays", coolingDegreeDays );
+    mRegionInfo->setDouble( "heatingDegreeDays", heatingDegreeDays );
+    mRegionInfo->setDouble( "coolingDegreeDays", coolingDegreeDays );
 
     for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
-        (*currSector)->initCalc( period, mRegionInfo.get(), nationalAccount[ period ], demographic.get() );
+        (*currSector)->initCalc( nationalAccount[ period ], demographic.get(), period );
     }
     for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
-        (*currSector)->initCalc( period, mRegionInfo.get(), nationalAccount[ period ], demographic.get()  ); 
+        (*currSector)->initCalc( nationalAccount[ period ], demographic.get(), period  ); 
     }
     
 	// Add CO2 coefficients to the marketplace.
@@ -1073,7 +1081,18 @@ void Region::initCalc( const int period )
     for( map<string, double>::const_iterator coef = primaryFuelCO2Coef.begin();
         coef != primaryFuelCO2Coef.end(); ++coef )
     {
-            marketplace->setMarketInfo( coef->first, name, period, CO2COEF, coef->second, false );
+		// Markets may not exist for incorrect fuel names.
+		IInfo* fuelInfo = marketplace->getMarketInfo( coef->first, name, period, false );
+		if( fuelInfo ){
+            fuelInfo->setDouble( CO2COEF, coef->second );
+		}
+		else {
+			ILogger& mainLog = ILogger::getLogger( "main_log" );
+			// Currently this error occurs frequently, this could be NOTICE.
+			mainLog.setLevel( ILogger::DEBUG );
+			mainLog << "Cannot set emissions factor for " << coef->first
+				    << " because the name does not match the name of a market." << endl;
+		}
     }
 
     // Make sure TFE is same as calibrated values
@@ -1097,10 +1116,12 @@ void Region::initCalc( const int period )
 
 /*! \brief Sets marketplace supply and demands to calibrated values
 *
-* The result of this routine, once called for all regions, is a set of calSupply and calDemand values in marketInfo.
-* The calSupply variable has a non-negative value for each supply sector that is completely calibrated. 
-* Similarly, the calDemand variable has a non-negative value for each demand good that is completely calibrated. 
-* Only those markets where all supplies or demands are calibrated will have non-zero values for these variables.
+* The result of this routine, once called for all regions, is a set of calSupply
+* and calDemand values in marketInfo. The calSupply variable has a non-negative
+* value for each supply sector that is completely calibrated. Similarly, the
+* calDemand variable has a non-negative value for each demand good that is
+* completely calibrated. Only those markets where all supplies or demands are
+* calibrated will have non-zero values for these variables.
 *
 * \author Steve Smith
 * \param period Model period
@@ -1116,12 +1137,14 @@ void Region::setCalSuppliesAndDemands( const int period ) {
         resources[i]->setCalibratedSupplyInfo( period, name );
     }
     
-    // Check for fully calibrated/fixed demands. Search through all supply technologies
+    // Check for fully calibrated/fixed demands. Search through all supply
+    // technologies
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
       supplySector[ i ]->tabulateFixedDemands( period );
     }
 
-    // Check for fully calibrated/fixed demands. Search through all demand technologies
+    // Check for fully calibrated/fixed demands. Search through all demand
+    // technologies
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
       demandSector[ i ]->tabulateFixedDemands( period );
     }
@@ -1129,66 +1152,82 @@ void Region::setCalSuppliesAndDemands( const int period ) {
 
 /*! \brief Initializes calDemand and calSupply values for all sectors
 *
-* All calSupply and calDemand values are reset to -1
-* This erases any information from a prior period 
-* and eliminates warning messages for value not found in information store
+* All calSupply and calDemand values are reset to -1 This erases any information
+* from a prior period and eliminates warning messages for value not found in
+* information store
 *
 * \author Steve Smith
 * \param period Model period
 */
 void Region::initializeCalValues( const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
-    const double DEFAULT_CAL_VALUE = -2;  // This will get set to -1 if this market is not fixed and a value >= 0 otherwise
+    // This will get set to -1 if this market is not fixed and a value >= 0
+    // otherwise.
+    const double DEFAULT_CAL_VALUE = -2;
 
-    updateSummary( period );	// Dummy call to final supply to setup fuel map.
+    updateSummary( period ); // Dummy call to final supply to setup fuel map.
 
     typedef map<string,double>:: const_iterator CI;
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-       // Now prepare to loop through all the fuels used by this sector
-        map<string, double> fuelcons = supplySector[ i ]->getfuelcons( period );	// Get fuel consumption map for sector
+		// Now prepare to loop through all the fuels used by this sector. Get
+		// fuel consumption map for sector
+        map<string, double> fuelcons = supplySector[ i ]->getfuelcons( period );
         
         // Set default values for supply sector
-        marketplace->setMarketInfo( supplySector[ i ]->getName(), name, period, "calSupply", DEFAULT_CAL_VALUE );
-        marketplace->setMarketInfo( supplySector[ i ]->getName(), name, period, "calDemand", DEFAULT_CAL_VALUE );
-        marketplace->setMarketInfo( supplySector[ i ]->getName(), name, period, "calFixedDemand", DEFAULT_CAL_VALUE );
+		IInfo* marketInfo = marketplace->getMarketInfo( supplySector[ i ]->getName(), name, period, true );
+        marketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
+        marketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
+		marketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
         
         // then for all fuels used by this sector
         for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
-            marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calSupply", DEFAULT_CAL_VALUE, false );
-            marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calDemand", DEFAULT_CAL_VALUE, false );
-            marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calFixedDemand", DEFAULT_CAL_VALUE, false );
+			IInfo* fuelMarketInfo = marketplace->getMarketInfo( fuelUsedIter->first, name, period, false );
+			// Fuel market may not exist.
+			if( fuelMarketInfo ){
+				fuelMarketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
+				fuelMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
+				fuelMarketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
+			}
          }
     }
         
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-       // Now prepare to loop through all the fuels used by this sector
-        map<string, double> fuelcons = demandSector[ i ]->getfuelcons( period );	// Get fuel consumption map for sector
+		// Now prepare to loop through all the fuels used by this sector. Get
+		// fuel consumption map for sector
+        map<string, double> fuelcons = demandSector[ i ]->getfuelcons( period ); 
 
          for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
-            marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calSupply", DEFAULT_CAL_VALUE, false );
-            marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calDemand", DEFAULT_CAL_VALUE, false );
-            marketplace->setMarketInfo( fuelUsedIter->first, name, period, "calFixedDemand", DEFAULT_CAL_VALUE, false );
+		 	IInfo* fuelMarketInfo = marketplace->getMarketInfo( fuelUsedIter->first, name, period, false );
+			// Fuel market may not exist.
+			if( fuelMarketInfo ){
+				fuelMarketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
+				fuelMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
+				fuelMarketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
+			}
          }
     }
 
     for ( unsigned int i = 0; i < resources.size(); i++ ) {
-       // Now prepare to loop through all the fuels used by this sector
-        marketplace->setMarketInfo( resources[ i ]->getName(), name, period, "calSupply", DEFAULT_CAL_VALUE, false );
-        marketplace->setMarketInfo( resources[ i ]->getName(), name, period, "calDemand", DEFAULT_CAL_VALUE, false );
-        marketplace->setMarketInfo( resources[ i ]->getName(), name, period, "calFixedDemand", DEFAULT_CAL_VALUE, false );
+		// Now prepare to loop through all the fuels used by this sector
+		IInfo* resourceMarketInfo = marketplace->getMarketInfo( resources[ i ]->getName(), name, period, true );
+		resourceMarketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
+        resourceMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
+		resourceMarketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
     }
 }
 
 /*! \brief Sets input values for transitive dependancies
 *
-* If a supply sector has a fixed demand as an output then calculate the corresponding input.
-* For every supply sector with a fixed demand (e.g. elec_T&D_bld), this routine checks each fuel used by that sector.
-* If there is only one fuel that does not have a fixed demand (e.g. electricity) then the fixed demand for the sector is
-* translated to a demand for the given fuel.
+* If a supply sector has a fixed demand as an output then calculate the
+* corresponding input. For every supply sector with a fixed demand (e.g.
+* elec_T&D_bld), this routine checks each fuel used by that sector. If there is
+* only one fuel that does not have a fixed demand (e.g. electricity) then the
+* fixed demand for the sector is translated to a demand for the given fuel.
 * 
-* Routine is repatedly called from world until all potential depndencies have been found. 
-* When any transitive dependency is found another iteration must be done (for all regions) to determine if
-* this new fixed demand feeds into another sector. 
+* Routine is repatedly called from world until all potential depndencies have
+* been found. When any transitive dependency is found another iteration must be
+* done (for all regions) to determine if this new fixed demand feeds into
+* another sector. 
 *
 * \author Steve Smith
 * \param period Model period
@@ -1202,24 +1241,31 @@ bool Region::setImpliedCalInputs( const int period ) {
 
     // Instantiate the relationship map here if it does not already exist
     if ( !fuelRelationshipMap.get() ) {
-        fuelRelationshipMap.reset( new FuelRelationshipMap() ); // Clear relationship map for this iteration
+		// Clear relationship map for this iteration
+        fuelRelationshipMap.reset( new FuelRelationshipMap() ); 
     }
     
-    // For each sector, check if a fixed demand is an output
-    // If supply is fixed stop.
-    // Make sure all inputs are fixed demands
+    // For each sector, check if a fixed demand is an output. If supply is fixed
+    // stop. Make sure all inputs are fixed demands
     for ( unsigned int jsec = 0; jsec < supplySector.size(); jsec++ ) {
-        string sectorName = supplySector[ jsec ]->getName( );
-        double sectorCalDemand = marketplace->getMarketInfo( sectorName, name , period, "calDemand" );
+        string sectorName = supplySector[ jsec ]->getName();
+		IInfo* sectorMarketInfo = marketplace->getMarketInfo( sectorName, name, period, true );
+        double sectorCalDemand = sectorMarketInfo->getDouble( "calDemand", false );
 
-        // Check to see if this sector supplies a fuel with a fixed demand. 
-        // If so, and this is not a fuel that already has a fixed supply, then calculate the cooresponding fixed supply
-        if ( sectorCalDemand >= 0  && ( marketplace->getMarketInfo( sectorName, name , period, "calSupply" ) < 0 ) ) {
+        // Check to see if this sector supplies a fuel with a fixed demand. If
+        // so, and this is not a fuel that already has a fixed supply, then
+        // calculate the cooresponding fixed supply
+		if ( sectorCalDemand >= 0  && ( sectorMarketInfo->getDouble( "calSupply", false ) < 0 ) ) {
 
-            // Now prepare to loop through all the fuels used by this sector
-            map<string, double> fuelcons = supplySector[ jsec ]->getfuelcons( period );	// Get fuel consumption map for sector
-            double totalCalOutputs = 0; // Total directly calibrated outputs (not outputs infered from market)
-            int numbFixedMktInputs = 0; // Count of number of fixed market inputs to this sector. This is to make sure there is only one.
+            // Now prepare to loop through all the fuels used by this sector.
+			// Get fuel consumption map for sector.
+            map<string, double> fuelcons = supplySector[ jsec ]->getfuelcons( period );
+			// Total directly calibrated outputs (not outputs infered from
+            // market)
+            double totalCalOutputs = 0;
+			// Count of number of fixed market inputs to this sector. This is to
+            // make sure there is only one.
+            int numbFixedMktInputs = 0;
 
             string newFixedDemandInputName;
             typedef map<string,double>:: const_iterator CI;
@@ -1236,11 +1282,14 @@ bool Region::setImpliedCalInputs( const int period ) {
                 }
             }
             
-            // If we found one, and only one, unfixed input then figure out what this should be and set things appropriately
+            // If we found one, and only one, unfixed input then figure out what
+            // this should be and set things appropriately
             if ( numbFixedMktInputs == 1 ) {
-                // Calculate required input (which will be set to the marketplace)
+                // Calculate required input (which will be set to the
+                // marketplace)
                 double requiredOutput = sectorCalDemand; 
-                // subtract other calOutputs so that we only calculate the output from the remaining fuel
+                // subtract other calOutputs so that we only calculate the
+                // output from the remaining fuel
                 requiredOutput -= totalCalOutputs;
  
                 if ( debugChecking ) {
@@ -1253,48 +1302,62 @@ bool Region::setImpliedCalInputs( const int period ) {
                 
                 supplySector[ jsec ]->setImpliedFixedInput( period, newFixedDemandInputName, requiredOutput );
  
-                // Now that transitive demand has been set, clear demand for this good so this won't be done again
-                marketplace->setMarketInfo( sectorName, name , period, "calDemand", MKT_NOT_ALL_FIXED );
+                // Now that transitive demand has been set, clear demand for
+                // this good so this won't be done again
+				sectorMarketInfo->setDouble( "calDemand", MKT_NOT_ALL_FIXED );
                 
-                // Save this relationship information
-                // First element of vector is the root, or current root of chain and second element is a vector of dependents
+                // Save this relationship information First element of vector is
+                // the root, or current root of chain and second element is a
+                // vector of dependents
                 
                 vector<string> tempDependents;
 
-                // Set up fuel relationship map
-                // For each fuel in the first (key) position, the map lists every fuel that is derived, directly or indirectly, on that fuel
-                // At this point in the routine, we have found that a sector sectorName which has a fixed input, has newFixedDemandInputName as an input
-                // So we need to add this relationship to the fuelRelationshipMap.
-                // If the current sectorName is present as a key, then it should be moved to the dependents vector with the new fuel name as the key.
+                // Set up fuel relationship map For each fuel in the first (key)
+                // position, the map lists every fuel that is derived, directly
+                // or indirectly, on that fuel At this point in the routine, we
+                // have found that a sector sectorName which has a fixed input,
+                // has newFixedDemandInputName as an input So we need to add
+                // this relationship to the fuelRelationshipMap. If the current
+                // sectorName is present as a key, then it should be moved to
+                // the dependents vector with the new fuel name as the key.
                 if ( fuelRelationshipMap->find( sectorName ) != fuelRelationshipMap->end() ) {
                     tempDependents = (*fuelRelationshipMap)[ sectorName ];
                     fuelRelationshipMap->erase( sectorName );
                 } 
-                // If proper key is already there, then copy dependent list (the new fuelname will be added to it below)
+                // If proper key is already there, then copy dependent list (the
+                // new fuelname will be added to it below)
                 else if ( fuelRelationshipMap->find( newFixedDemandInputName ) != fuelRelationshipMap->end() ) {
                     tempDependents = (*fuelRelationshipMap)[ newFixedDemandInputName ];
                 }
-                // In any event, current sector should be added as a key (this overwrites previous dependents list if it existed)
+                // In any event, current sector should be added as a key (this
+                // overwrites previous dependents list if it existed)
                 tempDependents.push_back( sectorName );
                 (*fuelRelationshipMap)[ newFixedDemandInputName ] = tempDependents;
  
-                // If this demand does not correspond to a sector with a fixed supply then we are not done with checking. 
-                // Otherwise we are done for this region if no sectors satisfy this criteria.
-                if ( marketplace->getMarketInfo( newFixedDemandInputName, name , period, "calSupply" ) < 0 ) {
+                // If this demand does not correspond to a sector with a fixed
+                // supply then we are not done with checking. Otherwise we are
+                // done for this region if no sectors satisfy this criteria.
+				const IInfo* demandMarketInfo = marketplace->getMarketInfo( newFixedDemandInputName, name, period, false );
+				if ( demandMarketInfo && demandMarketInfo->getDouble( "calSupply", true ) < 0 ) {
                     calcIsDone = false;
                 }
             } 
             else if ( numbFixedMktInputs > 1 ) {
-                // Print a warning, but only if calDemand is not zero (if calDemand is zero then this is probably not a problem)
+                // Print a warning, but only if calDemand is not zero (if
+                // calDemand is zero then this is probably not a problem)
                 if ( sectorCalDemand > 0 ) {
                     ILogger& mainLog = ILogger::getLogger( "main_log" );
                     mainLog.setLevel( ILogger::NOTICE );
                     ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
                     dependenciesLog.setLevel( ILogger::NOTICE );
-                    mainLog <<" WARNING: Couldn't calculate transitive demand for input "<< newFixedDemandInputName <<" sector: " <<  sectorName << " region: " << name << endl;
-                    dependenciesLog <<" WARNING: Couldn't calculate transitive demand for input "<< newFixedDemandInputName <<" sector: " <<  sectorName << " region: " << name << endl;
-                    // If can't calculate this demand then reset so that nothing is scaled
-                    marketplace->setMarketInfo( newFixedDemandInputName, name , period, "calDemand", MKT_NOT_ALL_FIXED );
+                    mainLog << "Couldn't calculate transitive demand for input "<< newFixedDemandInputName <<" sector: " <<  sectorName << " region: " << name << endl;
+                    dependenciesLog << "Couldn't calculate transitive demand for input "<< newFixedDemandInputName <<" sector: " <<  sectorName << " region: " << name << endl;
+                    // If can't calculate this demand then reset so that nothing
+                    // is scaled.
+					IInfo* demandMarketInfo = marketplace->getMarketInfo( newFixedDemandInputName, name, period, false );
+					if( demandMarketInfo ){
+						demandMarketInfo->setDouble( "calDemand", MKT_NOT_ALL_FIXED );
+					}
                 }
             }
         } // End of fixed demand transitive calculation loop        
@@ -1303,12 +1366,15 @@ bool Region::setImpliedCalInputs( const int period ) {
     return calcIsDone;
 }
 
-/*! \brief Scales input calibration values for fuels so that calibrated supplies and demands are equal
+/*! \brief Scales input calibration values for fuels so that calibrated supplies
+*          and demands are equal.
 *
-* Checks for all demands and scales calibration input values if necessary to assure that calibrated supplies and
-* demands are identical, including transitive dependencies.
+* Checks for all demands and scales calibration input values if necessary to
+* assure that calibrated supplies and demands are identical, including
+* transitive dependencies.
 * 
-* \todo Eliminate doesMarketExist function by using something other than the fuelmap (needs to be implemented) to find what fuels a region/sector uses
+* \todo Use something other than the fuelmap (needs to be implemented) to find
+*       what fuels a region/sector uses.
 * \author Steve Smith
 * \param period Model period
 * \return Number of values scaled.
@@ -1333,12 +1399,11 @@ int Region::scaleCalInputs( const int period ) {
         }
     }
 
-    // For each demand that needs to be scaled, loop through all supply and demand sectors and scale demand.
-    // To find this out, construct a regional fuel map and then loop through each value and check for calSupply & demand
-    // The end...
-    // If supply is fixed stop.
-    // Make sure all inputs are fixed demands
-
+    // For each demand that needs to be scaled, loop through all supply and
+    // demand sectors and scale demand. To find this out, construct a regional
+    // fuel map and then loop through each value and check for calSupply &
+    // demand The end... If supply is fixed stop. Make sure all inputs are fixed
+    // demands.
     int numberOfScaledValues = 0;
     
     map<string,double> fuelCons = summary[0].getfuelcons();
@@ -1346,12 +1411,11 @@ int Region::scaleCalInputs( const int period ) {
 
     // Loop through each fuel used in this region
     for( CI fuelIter = fuelCons.begin(); fuelIter != fuelCons.end(); ++fuelIter ){
-        // This check eliminates warnings 
-        if ( fuelIter->first != "zTotal" && 
-            marketplace->getPrice( fuelIter->first, name, period, false ) != Marketplace::NO_MARKET_PRICE ) {
+		const IInfo* fuelMarketInfo = marketplace->getMarketInfo( fuelIter->first, name, period, false );
+        if ( fuelMarketInfo ) {
                 //  Determine if inputs for this fuel need to be scaled. Get total cal + fixed supply and demand values.
-                double calSupplyValue = marketplace->getMarketInfo( fuelIter->first, name , period, "calSupply" );
-                double calDemandValue = marketplace->getMarketInfo( fuelIter->first, name , period, "calDemand" );
+                double calSupplyValue = fuelMarketInfo->getDouble( "calSupply", false );
+                double calDemandValue = fuelMarketInfo->getDouble( "calDemand", false );
                 
                 // If these are positive then may need to scale calInputs for this input
                 if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
@@ -1359,7 +1423,7 @@ int Region::scaleCalInputs( const int period ) {
                     // First, fixed values are not scaled, so adjust for this.
                     // The reason fixed values are not scaled is that fixed values can be used in instances where
                     // a simultaneity would otherwise occur during calibration checking (such as export markets)
-                    double calFixedDemandValue = marketplace->getMarketInfo( fuelIter->first, name , period, "calFixedDemand" );
+					double calFixedDemandValue = fuelMarketInfo->getDouble( "calFixedDemand", true );
                     calFixedDemandValue = max( 0.0, calFixedDemandValue );
                     calSupplyValue -= calFixedDemandValue;
                     calDemandValue -= calFixedDemandValue;
@@ -1444,7 +1508,7 @@ void Region::calcEndUseDemand( const int period ) {
     if( !gdp.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before demand calculation. Check for an region name mismatch." << endl;
+        mainLog << "GDP object has not been created before demand calculation. Check for a region name mismatch." << endl;
         return;
     }
     
@@ -1479,8 +1543,10 @@ void Region::calcEmissions( const int period ) {
     }
 }
 
-/*! \brief Calculate regional emissions by fuel for reporting
-\warning This function assumes emission has already been called, as this function cannot clear the summary emissions.-JPL */
+/*! \brief Calculate regional emissions by fuel for reporting.
+* \warning This function assumes emission has already been called, as this
+*          function cannot clear the summary emissions.
+*/
 void Region::calcEmissFuel( const int period )
 {
     map<string, double> fuelemiss; // tempory emissions by fuel
@@ -1503,7 +1569,8 @@ void Region::emissionInd( const int period ){
     }
 }
 
-//! Calculate total carbon tax paid in the region by all supply and demand sectors.
+//! Calculate total carbon tax paid in the region by all supply and demand
+//! sectors.
 void Region::calcTotalCarbonTaxPaid( const int period ) {
     carbonTaxPaid[ period ] = 0; // initialize total regional carbon taxes paid 
     // Loop through supply sectors.
@@ -1766,8 +1833,9 @@ void Region::updateSummary( const int period ) {
 
 /*! A function which print dependency graphs showing fuel usage by sector.
 *
-* This function prints the opening tag for the graph, calls Sector::addToDependencyGraph
-* on all supply and demand sectors, and then prints the closing tag.
+* This function prints the opening tag for the graph, calls
+* Sector::addToDependencyGraph on all supply and demand sectors, and then prints
+* the closing tag.
 *
 * \param outStream An output stream to write to which was previously created.
 * \param period The period to print graphs for.
@@ -1806,7 +1874,8 @@ void Region::printGraphs( ostream& outStream, const int period ) const {
 }
 
 //! Return the summary object for the given period.
-/*! \todo This is a temporary fix to get the global CO2. This should be restructured.
+/*! \todo This is a temporary fix to get the global CO2. This should be
+*         restructured.
 * \param period Model period to return the summary for.
 * \return The summary object.
 */
@@ -1814,10 +1883,12 @@ const Summary Region::getSummary( const int period ) const {
     return summary[ period ];
 }
 
-/*! \brief This function will set the tax policy with the given name to a fixed tax policy.
-* \details This function searches for a GHGPolicy with the name policyName. If it finds it, it will
-* reset it to a fixed tax policy using the taxes in the taxes vector. Otherwise, it will create a new
-* fixed tax policy with policyName.
+/*! \brief This function will set the tax policy with the given name to a fixed
+*          tax policy.
+* \details This function searches for a GHGPolicy with the name policyName. If
+*          it finds it, it will reset it to a fixed tax policy using the taxes
+*          in the taxes vector. Otherwise, it will create a new fixed tax policy
+*          with policyName.
 * \author Josh Lurz
 * \param policyName The name of the GHGPolicy to convert to a fixed tax.
 * \param marketName The name of the market the GHGPolicy applies to.
@@ -1843,10 +1914,13 @@ void Region::setFixedTaxes( const std::string& policyName, const std::string& ma
     }
 }
 
-/*! \brief A function to generate a ghg emissions quantity curve based on an already performed model run.
-* \details This function used the information stored in it to create a curve, with each datapoint 
-* containing a time period and an amount of gas emissions. These values are retrieved from the emissions.
-* \note The user is responsible for deallocating the memory in the returned Curve.
+/*! \brief A function to generate a ghg emissions quantity curve based on an
+*          already performed model run.
+* \details This function used the information stored in it to create a curve,
+*          with each datapoint containing a time period and an amount of gas
+*          emissions. These values are retrieved from the emissions.
+* \note The user is responsible for deallocating the memory in the returned
+*       Curve.
 * \author Josh Lurz
 * \param ghgName The name of the ghg to create a curve for.
 * \return A Curve object representing ghg emissions quantity by time period.
@@ -1870,10 +1944,13 @@ const Curve* Region::getEmissionsQuantityCurve( const string& ghgName ) const {
     return emissionsCurve;
 }
 
-/*! \brief A function to generate a ghg emissions price curve based on an already performed model run.
-* \details This function used the information stored in it to create a curve, with each datapoint 
-* containing a time period and the price gas emissions. These values are retrieved from the marketplace. 
-* \note The user is responsible for deallocating the memory in the returned Curve.
+/*! \brief A function to generate a ghg emissions price curve based on an
+*          already performed model run.
+* \details This function used the information stored in it to create a curve,
+*          with each datapoint containing a time period and the price gas
+*          emissions. These values are retrieved from the marketplace. 
+* \note The user is responsible for deallocating the memory in the returned
+*       Curve.
 * \author Josh Lurz
 * \param ghgName The name of the ghg to create a curve for.
 * \return A Curve object representing the price of ghg emissions by time period. 
@@ -1898,11 +1975,11 @@ const Curve* Region::getEmissionsPriceCurve( const string& ghgName ) const {
     return emissionsCurve;
 }
 
-/*! \brief Initialize the marketplaces in the base year to get initial demands through each sector
- *
- * \author Pralit Patel
- * \param period The period is usually the base period
- */
+/*! \brief Initialize the marketplaces in the base year to get initial demands
+*          through each sector.
+* \author Pralit Patel
+* \param period The period is usually the base period
+*/
 void Region::updateMarketplace( const int period ){
     for( vector<Sector*>::iterator currSec = supplySector.begin(); currSec != supplySector.end(); ++currSec ){
         (*currSec)->updateMarketplace( period );
@@ -1910,8 +1987,8 @@ void Region::updateMarketplace( const int period ){
 }
 
 /*! \brief Function to finalize objects after a period is solved.
-* \details This function is used to calculate and store variables which are only needed after the current
-* period is complete. 
+* \details This function is used to calculate and store variables which are only
+*          needed after the current period is complete. 
 * \param aPeriod The period to finalize.
 * \todo Finish this function.
 * \author Josh Lurz
@@ -1927,16 +2004,15 @@ void Region::finalizePeriod( const int aPeriod ){
 void Region::updateAllOutputContainers( const int period ) { 
 }
 
-/*! \brief For outputing SGM data to a flat csv File, wouldn't need to do anything for miniCAM
- * 
- * \author Pralit Patel
- * \param period 
- */
+/*! \brief For outputing SGM data to a flat csv File, wouldn't need to do
+*          anything for miniCAM.
+* \author Pralit Patel
+* \param period 
+*/
 void Region::csvSGMOutputFile( ostream& aFile, const int period ) const {
 }
 /*! \brief For outputing general SGM results to a flat csv File 
- * \author Sonny Kim
- */
+* \author Sonny Kim
+*/
 void Region::csvSGMGenFile( ostream& aFile, const int period ) const {
 }
-

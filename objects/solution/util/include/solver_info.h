@@ -20,6 +20,9 @@
 class Market;
 class SolverInfoSet;
 class SupplyDemandCurve;
+namespace objects {
+	class Atom;
+}
 
 /*!
 * \ingroup Solution
@@ -75,7 +78,7 @@ public:
     void setBisectedFlag();
     void unsetBisectedFlag();
     bool hasBisected() const;
-    const std::vector<std::string> getContainedRegions() const;
+	const std::vector<const objects::Atom*>& getContainedRegions() const;
     SupplyDemandCurve createSDCurve();
     void printDerivatives( std::ostream& aOut ) const;
     /*!

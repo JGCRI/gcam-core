@@ -19,7 +19,7 @@
 #include "marketplace/include/marketplace.h"
 #include "containers/include/gdp.h"
 #include "util/logger/include/ilogger.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -116,7 +116,8 @@ void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* ta
 /*! Check to see if illegal values have been read in
 * This avoids serious errors that can be hard to trace
 */
-void TranTechnology::initCalc( const MarketInfo* aSubsectorInfo ) {    
+//! 
+void TranTechnology::initCalc( const IInfo* aSubsectorInfo ) {    
     
     technology::initCalc( aSubsectorInfo );
 

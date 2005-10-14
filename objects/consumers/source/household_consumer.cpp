@@ -276,7 +276,7 @@ void HouseholdConsumer::completeInit( const string& aRegionName ) {
 // Init calc only runs in the base period, used to calculate all of the base year coefficients
 void HouseholdConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
                                   const string& aSectorName, NationalAccount& nationalAccount,
-                                  Demographic* aDemographics, const double aCapitalStock,
+                                  const Demographic* aDemographics, const double aCapitalStock,
                                   const int aPeriod )
 {
     if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
@@ -337,14 +337,14 @@ void HouseholdConsumer::calcFactorDemand( const string& regionName, int period )
     
     Marketplace* marketplace = scenario->getMarketplace();
 	marketplace->addToDemand( "Land", regionName, landDemand, period );
-	householdLandDemand = landDemand * marketplace->getMarketInfo( "Land", regionName, period, "pricePaid" ); // this was price paid in the UML
+	householdLandDemand = landDemand * FunctionUtils::getPricePaid( regionName, "Land", period );
 
 	// *******  Labor  *******
 	laborDemand = ( laborSupplyMale + laborSupplyFemale ) * baseLaborDemandPerHH;
     assert( laborDemand >= 0 );
     assert( util::isValidNumber( laborDemand ) );
 	marketplace->addToDemand( "Labor", regionName, laborDemand, period );
-	householdLaborDemand = laborDemand * marketplace->getMarketInfo( "Labor", regionName, period, "pricePaid" ); // this was price paid in the UML
+	householdLaborDemand = laborDemand * FunctionUtils::getPricePaid( regionName, "Labor", period );
     assert( util::isValidNumber( householdLaborDemand ) );
     assert( householdLaborDemand >= 0 );
 }

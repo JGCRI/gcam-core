@@ -21,6 +21,7 @@
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/imarket_type.h"
 #include "util/base/include/configuration.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -34,6 +35,19 @@ const string SupplySector::XML_NAME = "supplysector";
 * \param aRegionName The name of the region.
 */
 SupplySector::SupplySector( const string& aRegionName ) : Sector ( aRegionName ) {
+}
+
+/*! \brief Initialize the SupplySector.
+* \details Currently only calls the base class initCalc.
+* \param aNationalAccount National accounts container.
+* \param aDemographics Regional demographics object.
+* \param aPeriod Period for which to initialize the SupplySector.
+*/
+void SupplySector::initCalc( NationalAccount& aNationalAccount,
+                             const Demographic* aDemographics,
+                             const int aPeriod )
+{
+    Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
 }
 
 /*! \brief returns Sector output.
@@ -134,9 +148,12 @@ void SupplySector::supply( const int aPeriod, const GDP* aGDP ) {
     }
 }
 
-//! Complete the initialization of the supply sector.
-void SupplySector::completeInit( DependencyFinder* aDependencyFinder ){
-    Sector::completeInit( aDependencyFinder );
+/*! \brief Complete the initialization of the supply sector.
+* \param aRegionInfo Regional information object.
+* \param aDependencyFinder Regional dependency finder.
+*/
+void SupplySector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder ){
+    Sector::completeInit( aRegionInfo, aDependencyFinder );
     setMarket();
 }
 
@@ -150,21 +167,27 @@ void SupplySector::completeInit( DependencyFinder* aDependencyFinder ){
 void SupplySector::setCalibratedSupplyInfo( const int aPeriod ) const {
     const double MKT_NOT_ALL_FIXED = -1;
     Marketplace* marketplace = scenario->getMarketplace();
+	IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( name, regionName, aPeriod, true );
+	
+	/*! \invariant Supply sector should always have an associated market and
+    *              market info. 
+    */
+	assert( marketInfo );
     
-    double calSupplyMktPlace = marketplace->getMarketInfo( name, regionName, aPeriod, "calSupply" );
-    
-    // If this market is global, the second check is to see if some other region has flaged this as all inputs not fixed
-    if ( outputsAllFixed( aPeriod ) &&  calSupplyMktPlace != MKT_NOT_ALL_FIXED ) {
-        // If supply of this good has not been elimiated from the search and output is fixed then add to fixed supply value
+    // If this market is global, the second check is to see if some other region
+    // has flaged this as all inputs not fixed.
+    if ( outputsAllFixed( aPeriod ) && marketInfo->getDouble( "calSupply", false ) != MKT_NOT_ALL_FIXED ) {
+        // If supply of this good has not been elimiated from the search and
+        // output is fixed then add to fixed supply value.
         double calSupply = getCalOutput( aPeriod );  // total calibrated output
         calSupply += getFixedOutput( aPeriod );  // total fixed output
 
-        double existingCalSupply = max( marketplace->getMarketInfo( name, regionName, aPeriod, "calSupply" ), 0.0 );
-        marketplace->setMarketInfo( name, regionName, aPeriod, "calSupply", existingCalSupply + calSupply );
+		double existingCalSupply = max( marketInfo->getDouble( "calSupply", false ), 0.0 );
+		marketInfo->setDouble( "calSupply", existingCalSupply + calSupply );
     } 
     else {
         // If supply of this good is not fixed then set flag to eliminate this from other searches
-        marketplace->setMarketInfo( name, regionName, aPeriod, "calSupply", MKT_NOT_ALL_FIXED );
+        marketInfo->setDouble( "calSupply", MKT_NOT_ALL_FIXED );
     }
 }
 

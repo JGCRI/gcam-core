@@ -243,7 +243,7 @@ void RegionCGE::completeInit() {
 	for( unsigned int i = 0; i < finalDemandSector.size(); i++) {
         // Pass null for the dependency finder argument as CGE regions don't
         // have dependencies.
-		finalDemandSector[i]->completeInit( 0 );
+		finalDemandSector[i]->completeInit( mRegionInfo.get(), 0 );
 	}
 	for( unsigned int i = 0; i < factorSupply.size(); i++) {
 		factorSupply[i]->completeInit( name );
@@ -262,8 +262,7 @@ void RegionCGE::initCalc( const int period )
 
 	// SGM sequence of procedures
 	for ( unsigned int i = 0; i < finalDemandSector.size(); i++ ) {
-		finalDemandSector[i]->initCalc( period, mRegionInfo.get(), 
-                                        nationalAccount[ period ], demographic.get() );
+		finalDemandSector[i]->initCalc( nationalAccount[ period ], demographic.get(), period );
 	}
 }
 

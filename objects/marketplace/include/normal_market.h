@@ -24,7 +24,6 @@
 class NormalMarket: public Market {
 public:
     NormalMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
-    virtual void derivedToDebugXML( std::ostream& out, Tabs* tabs ) const;
     virtual std::string getType() const;
 
     virtual void initPrice();
@@ -43,8 +42,8 @@ public:
     virtual bool meetsSpecialSolutionCriteria() const;
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
-
-private:
+protected:
+    virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 };
 
 #endif // _NORMAL_MARKET_H_

@@ -23,7 +23,7 @@ class Emcoef_ind;
 class Tabs;
 class GDP;
 class DependencyFinder;
-class MarketInfo;
+class IInfo;
 /*! 
 * \ingroup Objects
 * \brief This technology class is based on the MiniCAM description of technology.
@@ -97,7 +97,7 @@ public:
     virtual const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
     static const std::string& getXMLNameStatic2D();
-    virtual void initCalc( const MarketInfo* aSubsectorInfo );
+    virtual void initCalc( const IInfo* aSubsectorIInfo );
     virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per ); 
     virtual void calcShare( const std::string& regionName, const GDP* gdp, const int per ); 
     void normShare(double sum); // normalize technology share
@@ -121,7 +121,7 @@ public:
     void setShareWeight( double shareWeightValue );
     double getCalibrationInput() const; // return calibration input value
     virtual double getCalibrationOutput() const; // return calibration output value
-    virtual void adjustForCalibration( double subSectorDemand, const std::string& regionName, const MarketInfo* aSubsectorInfo, const int period ); // Adjust share weights for calibration
+    virtual void adjustForCalibration( double subSectorDemand, const std::string& regionName, const IInfo* aSubsectorIInfo, const int period ); // Adjust share weights for calibration
     bool techAvailable( ) const; // Return available status (re: calibration)
     bool outputFixed() const; // return calibration output value
     double getInput() const; // return fuel input amount

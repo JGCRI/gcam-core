@@ -28,18 +28,29 @@
 
 #include <string>
 #include <vector>
+
 class Input;
 class IFunction;
 struct TechChange;
 
-/*! \brief A structure which contains the information neccessary for a production function.
+/*! \brief A structure which contains the information neccessary for a
+*          production function.
 */
 struct ProductionFunctionInfo {
-    const std::vector<Input*>& mInputs; //!< The vector of inputs.
-    const IFunction* mProductionFunction; //!< Pointer to the technologies production function.
-    const double mSigma; //!< The current sigma the production function is using.
-    const double mAlphaZeroScaler; //!< Alpha zero used to scale the output of the production.
-    const double mCapitalStock; //!< Amount of capital stock the vintage owns.
+    //! The vector of inputs.
+    const std::vector<Input*>& mInputs;
+
+    //! Pointer to the technology's production function.
+    const IFunction* mProductionFunction;
+
+    //! The current sigma the production function is using.
+    const double mSigma;
+
+    //! Alpha zero used to scale the output of the production.
+    const double mAlphaZeroScaler;
+
+    //! Amount of capital stock the vintage owns.
+    const double mCapitalStock;
 };
 
 /*! 
@@ -73,7 +84,24 @@ public:
     static double calcNetPresentValueMult( const double aDiscountRate,
                                            const double aLifetime );
 
-    
+	static void setPricePaid( const std::string& aRegionName,
+							  const std::string& aGoodName,
+						      const int aPeriod,
+							  const double aPricePaid );
+
+	static double getPricePaid( const std::string& aRegionName,
+								const std::string& aGoodName,
+								const int aPeriod );
+
+	static void setPriceReceived( const std::string& aRegionName,
+								  const std::string& aGoodName,
+								  const int aPeriod,
+								  const double aPriceReceived );
+
+	static double getPriceReceived( const std::string& aRegionName,
+									const std::string& aGoodName,
+									const int aPeriod );
+
     static double getExpectedPriceReceived( const std::vector<Input*>& aInputs,
                                             const std::string& aRegionName,
                                             const std::string& aGoodName,

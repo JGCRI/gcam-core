@@ -24,7 +24,6 @@
 class DemandMarket: public Market {
 public:
     DemandMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
-    virtual void derivedToDebugXML( std::ostream& out, Tabs* tabs ) const;
     virtual std::string getType() const;
 
     virtual void initPrice();
@@ -43,7 +42,8 @@ public:
     virtual bool meetsSpecialSolutionCriteria() const;
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
-
+protected:
+	virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 private:
     double demMktSupply; //!< Raw supply
 };

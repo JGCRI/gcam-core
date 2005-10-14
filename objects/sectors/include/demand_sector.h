@@ -22,6 +22,7 @@ class GDP;
 class NationalAccount;
 class Demographic;
 class DependencyFinder;
+class IInfo;
 
 /*! 
 * \ingroup Objects
@@ -49,7 +50,12 @@ public:
 	void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
 	void supply( const int aPeriod, const GDP* aGDP );
 	static const std::string& getXMLNameStatic();
-    virtual void completeInit( DependencyFinder* aDependencyFinder );
+    virtual void completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder );
+    
+    virtual void initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
+
     virtual void calcPriceElasticity( const int period );
     virtual void aggdemand( const GDP* gdp, const int period ); 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,

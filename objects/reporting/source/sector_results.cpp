@@ -18,6 +18,7 @@
 #include "sectors/include/production_sector.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
+#include "functions/include/function_utils.h"
 
 using namespace std;
 
@@ -79,14 +80,13 @@ void SectorResults::updateProductionTechnology( const ProductionTechnology* aPro
 {
       // Add to the physical output column.
     const Marketplace* marketplace = scenario->getMarketplace();
-    double convFactor = marketplace->getMarketInfo( mCurrSectorName, mRegionName, 0,
-                                                    "ConversionFactor" );
+    double convFactor = Input::getMarketConversionFactor( aSectorName, aRegionName );
     mInternalTable->addToType( "Phys. Out.", mCurrSectorName, aProdTechnology->mOutputs[ aPeriod ] * convFactor );
 
     // Add to the sales column
     mInternalTable->addToType( "Sales", mCurrSectorName, aProdTechnology->expenditure.getValue( Expenditure::SALES ) );
 
-    double priceReceived = marketplace->getMarketInfo( mCurrSectorName, mRegionName, aPeriod, "priceReceived" ); 
+	double priceReceived = FunctionUtils::getPriceReceived( mRegionName, mCurrSectorName, aPeriod ); 
     // Add to the revenue column.
     mInternalTable->addToType( "Revenue", mCurrSectorName,
                                 aProdTechnology->expenditure.getValue( Expenditure::SALES ) * priceReceived );

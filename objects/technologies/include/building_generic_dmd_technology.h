@@ -19,7 +19,7 @@
 
 // Forward declaration
 class GDP;
-class MarketInfo;
+class IInfo;
 
 /*! 
 * \ingroup CIAM
@@ -43,10 +43,12 @@ public:
     virtual const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
     virtual void calcShare( const std::string& regionName, const GDP* gdp, const int per ); 
-    virtual void production(const std::string& regionName,const std::string& prodName,double dmd, const GDP* gdp, const int per);
-    virtual void adjustForCalibration( double subSectorDemand, const std::string& regionName, const MarketInfo* subSectorInfo, const int period ); // Adjust share weights for calibration
+    virtual void production( const std::string& regionName,const std::string& prodName,
+		                     double dmd, const GDP* gdp, const int per );
+    virtual void adjustForCalibration( double subSectorDemand, const std::string& regionName,
+		                               const IInfo* subSectorInfo, const int period );
 protected:
-    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); // for derived classes
+    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;

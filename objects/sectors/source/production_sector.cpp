@@ -26,6 +26,8 @@
 #include "marketplace/include/imarket_type.h"
 #include "reporting/include/output_container.h"
 #include "util/logger/include/ilogger.h"
+#include "containers/include/iinfo.h"
+#include "functions/include/function_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -145,10 +147,12 @@ void ProductionSector::toDebugXMLDerived( const int period, std::ostream& out, T
 *          IInvestor object. The sector investor is initialized to an
 *          Accelerator if a specific investor was not read in. The sector
 *          investor is then initialized.
+* \param aRegionInfo Regional information object.
+* \param aDependencyFinder Regional dependency finder.
 */
-void ProductionSector::completeInit( DependencyFinder* aDependencyFinder ){
+void ProductionSector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder ){
     // Call parent class complete init.
-    Sector::completeInit( aDependencyFinder );
+    Sector::completeInit( aRegionInfo, aDependencyFinder );
 	// Set the market.
 	setMarket();
     // Initialize the investment object to the default if one has not been read in.
@@ -196,7 +200,7 @@ void ProductionSector::setMarket() {
                 }
 		    }
             else {
-                marketplace->setMarketInfo( name, regionName, period, "IsFixedPrice", 1.0 );
+				marketplace->getMarketInfo( name, regionName, period, true )->setBoolean( "IsFixedPrice", true );
             }
         }
     }
@@ -204,37 +208,36 @@ void ProductionSector::setMarket() {
 
 /*! \brief Initialize the ProductionSector before a period is begun.
 * \details TODO
-* \param aPeriod Period for which to initialize the ProductionSector.
-* \param aRegionInfo Regional information object.
+
 * \param aNationalAccount National accounts container.
 * \param aDemographics The demographics object.
-* \
+* \param aPeriod Period for which to initialize the ProductionSector.
 */
-void ProductionSector::initCalc( const int aPeriod, const MarketInfo* aRegionInfo,
-                                 NationalAccount& aNationalAccount,
-                                 Demographic* aDemographics )
+void ProductionSector::initCalc( NationalAccount& aNationalAccount,
+                                 const Demographic* aDemographics,
+                                 const int aPeriod )
 {
 	calcPriceReceived( aPeriod );
 
     // Setup the market information on the sector.
-    Marketplace* marketplace = scenario->getMarketplace();
+	IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( name, regionName, 0, true );
     
     // Shouldn't all this be in complete init?
     // Set whether it is an energy or material good. 
-    marketplace->setMarketInfo( name, regionName, 0, "IsEnergyGood", mIsEnergyGood ? 1 : 0 );
-    marketplace->setMarketInfo( name, regionName, 0, "IsPrimaryEnergyGood", mIsPrimaryEnergyGood ? 1 : 0 );
-    marketplace->setMarketInfo( name, regionName, 0, "IsSecondaryEnergyGood", mIsSecondaryEnergyGood ? 1 : 0 );
+	marketInfo->setBoolean( "IsEnergyGood", mIsEnergyGood );
+    marketInfo->setBoolean( "IsPrimaryEnergyGood", mIsPrimaryEnergyGood );
+    marketInfo->setBoolean( "IsSecondaryEnergyGood", mIsSecondaryEnergyGood );
     
     // Set the energy to physical conversion factor if the MoreSectorInfo
     // specifies one.
     if( moreSectorInfo.get() ){
         double newConversionFactor = moreSectorInfo->getValue( MoreSectorInfo::ENERGY_CURRENCY_CONVERSION );
-        marketplace->setMarketInfo( name, regionName, 0, "ConversionFactor", newConversionFactor );
+        marketInfo->setDouble( "ConversionFactor", newConversionFactor );
     }
 
     // add ghg gass coefficients to the market info for this sector
     for( map<string,double>::iterator i = ghgEmissCoefMap.begin(); i != ghgEmissCoefMap.end(); ++i ){
-        marketplace->setMarketInfo( name, regionName, 0, i->first + "coefficient", i->second );
+        marketInfo->setDouble( i->first + "coefficient", i->second );
     }
     
     // The ITC is being read in at the sector level but set to the national level?
@@ -243,7 +246,7 @@ void ProductionSector::initCalc( const int aPeriod, const MarketInfo* aRegionInf
 			moreSectorInfo->getValue( MoreSectorInfo::INVEST_TAX_CREDIT_RATE ) );
 	}
 
-	Sector::initCalc( aPeriod, aRegionInfo, aNationalAccount, aDemographics );
+	Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
 }
 
 /*! \brief Returns the output of the ProductionSector.
@@ -385,7 +388,7 @@ void ProductionSector::calcPriceReceived( const int period ){
 		* moreSectorInfo->getValue( MoreSectorInfo::TRAN_COST_MULT ) ) )
 		/ ( 1 + moreSectorInfo->getValue( MoreSectorInfo::IND_BUS_TAX_RATE ) );
 	// set price received in market info
-	marketplace->setMarketInfo( name, regionName, period, "priceReceived", priceReceived );
+	FunctionUtils::setPriceReceived( regionName, name, period, priceReceived );
 }
 
 /*! \brief Update an OutputContainer for reporting.

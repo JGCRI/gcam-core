@@ -27,6 +27,7 @@
 #include "marketplace/include/imarket_type.h"
 #include "resources/include/resource.h"
 #include "resources/include/renewable_subresource.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -372,7 +373,7 @@ void Resource::setCalibratedSupplyInfo( const int period, const std::string& reg
 	const double MKT_NOT_ALL_FIXED = -1;
 	Marketplace* marketplace = scenario->getMarketplace();
 
-	marketplace->setMarketInfo( name, regionName, period, "calSupply", MKT_NOT_ALL_FIXED );
+	marketplace->getMarketInfo( name, regionName, period, true )->setDouble( "calSupply", MKT_NOT_ALL_FIXED );
 }
 
 // ************************************************************
@@ -565,13 +566,9 @@ void RenewableResource::annualsupply( const std::string& regionName, int per, co
 	}
 
 	// add variance to marketinfo
-	Marketplace* marketplace = scenario->getMarketplace();
-	marketplace->setMarketInfo(name,regionName,per,"resourceVariance",resourceVariance[per]);
+	IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( name, regionName, per, true );
+	marketInfo->setDouble( "resourceVariance", resourceVariance[ per ] );
 
 	// add capacity factor to marketinfo
-	marketplace->setMarketInfo(name,regionName,per,"resourceCapacityFactor",resourceCapacityFactor[per]);
-
+	marketInfo->setDouble( "resourceCapacityFactor", resourceCapacityFactor[ per ] );
 }
-
-
-

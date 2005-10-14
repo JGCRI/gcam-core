@@ -10,7 +10,6 @@
 #include "util/base/include/definitions.h"
 #include <vector>
 #include <string>
-#include <iostream>
 #include <cassert>
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
@@ -31,13 +30,9 @@ const double GDP_SUPPLY_ELASTICITY_DEFAULT = 0;
 SubRenewableResource::SubRenewableResource(){
 	maxSubResource = 0;
 	gdpSupplyElasticity = GDP_SUPPLY_ELASTICITY_DEFAULT;
-	baseGDP = 0;
 	subResourceVariance = 0;
 	subResourceCapacityFactor = 1;
 }
-
-//! NOTE SURE ABOUT what to do with THIS
-//void SubRenewableResource::updateAvailable( const int period ){
 
 //! Performs XML read-in that is specific to this derived class
 bool SubRenewableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
@@ -140,11 +135,6 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
 	// default value
 	annualprod[ period ] = 0;
 
-	// Make sure base GDP has been stored
-	if ( period == 0 ) {
-		baseGDP = gdp->getApproxGDP( period );
-	}
-
 	// if below minimum cost
 	double prevGradeCost = 0; // Minimum cost for any production
 	if( period > 0 ){
@@ -164,7 +154,7 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
 	if ( price > grade[ nograde - 1 ]->getCost(period) ) {
 		gradeFraction = grade[ nograde - 1 ]->getAvail();
 		annualprod[ period ] = grade[ nograde - 1 ]->getAvail() 
-			* maxSubResource  * pow( currentApproxGDP / baseGDP, gdpSupplyElasticity );
+			* maxSubResource  * pow( currentApproxGDP / gdp->getApproxGDP( 0 ), gdpSupplyElasticity );
 	}
 	else {
 		bool pricePointFound = false;
@@ -183,7 +173,7 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
 					gradeFraction * ( gradeAvail - prevGradeAvail ); 
 
 				// now convert to absolute value of production
-				annualprod[ period ] *= maxSubResource * pow( currentApproxGDP/baseGDP, gdpSupplyElasticity ); 
+				annualprod[ period ] *= maxSubResource * pow( currentApproxGDP/ gdp->getApproxGDP( 0 ), gdpSupplyElasticity ); 
 
 				pricePointFound = true; // can exit loop now
 			} 
@@ -198,15 +188,17 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
 	return;
 }
 
-//! \brief get variance  maw
-/*! Return the variance for this period for this subresource
+/*! \brief Get the variance.
+* \details Return the variance for this subresource.
+* \return The variance.
 */
 double SubRenewableResource::getVariance() const {
 	return subResourceVariance;
 }
 
-//! \brief get average Capacity Factor  maw
-/*! Return the capacity factor for this period for this subresource
+/*! \brief Get the average capacity factor.
+* \details Return the capacity factor for this subresource.
+* \return The average capacity factor.
 */
 double SubRenewableResource::getAverageCapacityFactor() const {
 	return subResourceCapacityFactor;

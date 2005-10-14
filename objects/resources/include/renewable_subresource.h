@@ -31,7 +31,6 @@ class SubRenewableResource: public SubResource {
 
 protected:
     double maxSubResource;
-	double baseGDP;
 	double gdpSupplyElasticity;
 	//! subresource variance now read in rather than computed
 	double subResourceVariance;

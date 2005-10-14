@@ -26,11 +26,14 @@ use of this software.
 #include <cmath>
 
 #include "functions/include/input.h"
+#include "functions/include/function_utils.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
 #include "reporting/include/output_container.h"
 #include "util/base/include/configuration.h"
+#include "util/logger/include/ilogger.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -160,13 +163,21 @@ double Input::getConversionFactor( const string& aRegionName ) const {
     // the marketplace internally. This is much faster than searching the
     // marketplace every time.
     if( !mConversionFactor.isInited() ){
-        // Get the conversion factor from the marketplace.
-        const Marketplace* marketplace = scenario->getMarketplace();
-        const double convFactor = marketplace->getMarketInfo( mName, aRegionName, 0, "ConversionFactor", false );
-        if( convFactor == 0 && marketplace->getMarketInfo( mName, aRegionName, 0, "IsEnergyGood", false ) ){
-            cout << "Warning conversion factor of zero for energy input " << mName << "." << endl;
+        // If this is a factor supply the conversion factor must be zero.
+        if( isFactorSupply() ){
+            mConversionFactor.init( 0 );
         }
-        mConversionFactor.init( convFactor );
+        else {
+            // Get the conversion factor from the marketplace.
+		    const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, 0, true );
+		    const double convFactor = marketInfo->getDouble( "ConversionFactor", false );
+		    if( convFactor == 0 && isInputEnergyGood( mName, aRegionName ) ){
+			    ILogger& mainLog = ILogger::getLogger( "main_log" );
+			    mainLog.setLevel( ILogger::WARNING );
+			    mainLog << "Conversion factor of zero for energy input " << mName << "." << endl;
+            }
+            mConversionFactor.init( convFactor );
+        }
     }
     return mConversionFactor;
 }
@@ -195,9 +206,11 @@ double Input::getGHGCoefficient( const string& aGHGName, const string& aRegionNa
     // marketplace every time.
     if( !mGHGCoefficient.isInited() ){
         // Get the coefficient from the marketplace.
-        const Marketplace* marketplace = scenario->getMarketplace();
-        const double coef = marketplace->getMarketInfo( mName, aRegionName, 0,
-                                                        aGHGName + COEF_STRING, false );
+		const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, 0, false );
+		double coef = 0;
+		if( marketInfo ){
+			coef = marketInfo->getDouble( aGHGName + COEF_STRING, false );
+		}
         mGHGCoefficient.init( coef );
     }
     return mGHGCoefficient;
@@ -328,7 +341,7 @@ void Input::setPricePaid( double aPricePaid ) {
 * \author Josh Lurz
 */
 double Input::getPriceReceived( const string& aRegionName, const int aPeriod ) const {
-    return scenario->getMarketplace()->getMarketInfo( mName, aRegionName, aPeriod, "priceReceived" );
+	return FunctionUtils::getPriceReceived( aRegionName, mName, aPeriod );
 }
 
 /*! \brief Returns the price adjustment.
@@ -366,11 +379,79 @@ Input::Type Input::getType( const string& aRegionName ) const {
     if( mName == "Capital" ){
         return CAPITAL;
     }
-    const static string ENERGY_GOOD = "IsEnergyGood";
-    if( scenario->getMarketplace()->getMarketInfo( mName, aRegionName, 0, ENERGY_GOOD ) > 0 ){
+    if( isInputEnergyGood( mName, aRegionName ) ){
         return ENERGY;
     }
     return MATERIAL;
+}
+
+/*! \brief Static function which returns whether a given input name is an energy
+*          good.
+* \param aInputName The input name.
+* \param aRegionName The region name.
+* \return Whether the input name is of an energy good.
+*/
+bool Input::isInputEnergyGood( const string& aInputName, const string& aRegionName ){
+    assert( !aInputName.empty() && !aRegionName.empty() );
+    assert( aInputName != "USA" );
+
+	const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
+                                                                              aRegionName,
+                                                                              0, true );
+
+	// Assume that goods without markets are not energy goods.
+	return inputMarketInfo ? inputMarketInfo->getBoolean( "IsEnergyGood", true ) : false;
+}
+
+/*! \brief Static function which returns whether a given input name is a primary
+*          energy good.
+* \param aInputName The input name.
+* \param aRegionName The region name.
+* \return Whether the input name is of a primary energy good.
+*/
+bool Input::isInputPrimaryEnergyGood( const string& aInputName, const string& aRegionName ){
+    assert( !aInputName.empty() && !aRegionName.empty() );
+    assert( aInputName != "USA" );
+	// This is called by GHG to determine if the technology is a primary good producer. Since consumers
+    // also call this, and they do not have markets, this cannot ensure the market exists.
+	const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
+                                                                              aRegionName,
+                                                                              0, false );
+	// If it doesn't have a market it can't be a primary energy good.
+	return inputMarketInfo ? inputMarketInfo->getBoolean( "IsPrimaryEnergyGood", true ) : false;
+}  
+
+/*! \brief Static function which returns whether a given input name is a secondary
+*          energy good.
+* \param aInputName The input name.
+* \param aRegionName The region name.
+* \return Whether the input name is of a secondary energy good.
+*/
+bool Input::isInputSecondaryEnergyGood( const string& aInputName, const string& aRegionName ){
+    assert( !aInputName.empty() && !aRegionName.empty() );
+    assert( aInputName != "USA" );
+
+	const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
+                                                                              aRegionName,
+                                                                              0, true );
+	// If it doesn't have a market it can't be a secondary energy good.
+	return inputMarketInfo ? inputMarketInfo->getBoolean( "IsSecondaryEnergyGood", true ) : false;
+}
+
+/*! \brief Static function which returns the conversion factor for the good
+*          which is stored in the marketplace.
+* \param aInputName The input name.
+* \param aRegionName The region name.
+* \return The conversion factor for the input.
+*/
+double Input::getMarketConversionFactor( const string& aInputName, const string& aRegionName ){
+    assert( !aInputName.empty() && !aRegionName.empty() );
+    assert( aInputName != "USA" );
+
+	const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
+                                                                              aRegionName,
+                                                                              0, true );
+	return inputMarketInfo ? inputMarketInfo->getDouble( "ConversionFactor", true ) : 0;
 }
 
 /*! \brief For outputing SGM data to a flat csv File

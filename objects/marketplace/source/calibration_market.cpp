@@ -23,7 +23,7 @@ Market( goodNameIn, regionNameIn, periodIn ) {
 CalibrationMarket::~CalibrationMarket() {
 }
 
-void CalibrationMarket::derivedToDebugXML( ostream& out, Tabs* tabs ) const {
+void CalibrationMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
 }
 
 string CalibrationMarket::getType() const {

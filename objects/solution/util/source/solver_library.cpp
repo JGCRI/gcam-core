@@ -7,7 +7,6 @@
 * \version $Revision$
 */
 
-#include <mtl/matrix.h>
 #include <mtl/mtl.h>
 #include <mtl/utils.h>
 #include <mtl/lu.h>
@@ -17,7 +16,6 @@
 #include <cmath>
 #include <string>
 #include <algorithm>
-#include <iostream>
 #include "solution/util/include/solver_library.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/world.h"
@@ -26,10 +24,6 @@
 #include "solution/util/include/solver_info.h"
 #include "solution/util/include/solver_info_set.h"
 #include "util/logger/include/ilogger.h"
-
-#include <mtl/matrix.h>
-#include <mtl/mtl.h>
-#include <mtl/utils.h>
 
 using namespace std;
 using namespace mtl;
@@ -141,8 +135,8 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverI
     // This code will sum up the additive value for each market over all regions.
     // These sums are then checked against the original global supplies and demands.
     if( doDebugChecks ) {
-        doRegionalValuesSum( sdDifferences.supplies , originalSupplies, true );
-        doRegionalValuesSum( sdDifferences.demands, originalDemands, true );
+        doRegionalValuesSum( sdDifferences.supplies, originalSupplies );
+        doRegionalValuesSum( sdDifferences.demands, originalDemands );
     }
 #endif
     // Retain the original values. 
@@ -159,11 +153,21 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverI
 #else
  
         // Now remove additive supplies and demands.
+		const vector<const objects::Atom*> containedRegions = solverSet.getSolvable( j ).getContainedRegions();
+		
+		/*! \invariant There is at least one contained region. */
+		assert( !containedRegions.empty() );
+
         // Iterate over all regions within the market.
-        vector<string> containedRegions = solverSet.getSolvable( j ).getContainedRegions();
+		typedef std::vector<const objects::Atom*>::const_iterator RegionIterator;
         for ( RegionIterator regionIter = containedRegions.begin(); regionIter != containedRegions.end(); ++regionIter ) {
             // Find the vectors contains supply and demand reductions for this region.
+			/*! \invariant There is a vector of supply additions for this region. */
+			assert( util::hasValue( sdDifferences.supplies, *regionIter ) );
             const vector<double> supplyReductions = util::searchForValue( sdDifferences.supplies, *regionIter );
+
+			/*! \invariant There is a vector of demand additions for this region. */
+			assert( util::hasValue( sdDifferences.demands, *regionIter ) );
             const vector<double> demandReductions = util::searchForValue( sdDifferences.demands, *regionIter );
 
             // Iterate through each market and remove its supply and demand. 
@@ -309,17 +313,22 @@ void SolverLibrary::invertMatrix( Matrix& A ) {
 }
 
 //! Check if regional values sum to a world total.
-bool SolverLibrary::doRegionalValuesSum( const RegionalMarketValues& regionalValues, const vector<double>& worldTotals, const bool doPrint ){
-    // First check to make sure worldTotals isn't a vector of zeros.
+bool SolverLibrary::doRegionalValuesSum( const RegionalMarketValues& regionalValues, const vector<double>& worldTotals ){
+    const double ERROR_LIMIT = 1E-5;
+	// First check to make sure worldTotals isn't a vector of zeros.
     // While possible, this is likely an error and we should warn.
     SolverLibrary::ApproxEqual approxEq( 0, util::getSmallNumber() );
     if( count_if( worldTotals.begin(), worldTotals.end(), approxEq ) == worldTotals.size() ){
-        cout << "Warning: World totals vector is all zeros." << endl;
+		ILogger& solverLog = ILogger::getLogger( "solver_log" );
+		solverLog.setLevel( ILogger::WARNING );
+        solverLog << "World totals vector is all zeros." << endl;
     }
 
     // Check and make sure the worldTotals vector isn't empty.
-    if( worldTotals.size() == 0 ){
-        cout << "Warning: World totals size is zero." << endl;
+    if( worldTotals.empty() ){
+		ILogger& solverLog = ILogger::getLogger( "solver_log" );
+		solverLog.setLevel( ILogger::WARNING );
+        solverLog << "World totals size is zero." << endl;
     }
 
     // Compute the sum of the regional values. 
@@ -334,23 +343,23 @@ bool SolverLibrary::doRegionalValuesSum( const RegionalMarketValues& regionalVal
         }
     }
 
-    // Check if the sums adds up to the total. 
-    unsigned int errorCount = 0;
-    for( unsigned int marketCheckIter = 0; marketCheckIter < worldTotals.size(); ++marketCheckIter ) {
-        if( fabs( worldTotals.at( marketCheckIter ) - regionalSums.at( marketCheckIter ) ) > 1E-5 ){
-            errorCount++;
-            if( doPrint ){
-                cout << "Difference between world totals and regional sums of " << worldTotals[ marketCheckIter ] - regionalSums[ marketCheckIter ] << endl;
-            }
-        }
-    } 
-    if ( errorCount > 0 ) {
-        if( doPrint ){
-            cout << "Warning - " << errorCount << " sums not equal in derivative calc." << endl;
-        }
-        return false;
-    }
-    return true;
+	// Check if the sums adds up to the total. 
+	unsigned int errorCount = 0;
+	for( unsigned int marketCheckIter = 0; marketCheckIter < worldTotals.size(); ++marketCheckIter ) {
+		if( fabs( worldTotals.at( marketCheckIter ) - regionalSums.at( marketCheckIter ) ) > ERROR_LIMIT ){
+			errorCount++;
+			ILogger& solverLog = ILogger::getLogger( "solver_log" );
+			solverLog.setLevel( ILogger::WARNING );
+			solverLog << "Difference between world totals and regional sums of " << worldTotals[ marketCheckIter ] - regionalSums[ marketCheckIter ] << endl;
+		}
+	} 
+	if ( errorCount > 0 ) {
+		ILogger& solverLog = ILogger::getLogger( "solver_log" );
+		solverLog.setLevel( ILogger::WARNING );
+		solverLog << errorCount << " sums not equal in derivative calculation." << endl;
+		return false;
+	}
+	return true;
 }
 
 //! Calculate regional supplies and demand adders. Should this be in the solverSet or market object itself? Turn region names into map? TODO
@@ -359,8 +368,11 @@ bool SolverLibrary::doRegionalValuesSum( const RegionalMarketValues& regionalVal
 const SolverLibrary::RegionalSDDifferences SolverLibrary::calcRegionalSDDifferences( Marketplace* marketplace, World* world, SolverInfoSet& solverSet, const int per ) {
 
     // Create additive matrices.
-    // Get the region names from the world.
-    const vector<string>& regionNames = world->getRegionVector();
+    // Get the region IDs from the world.
+	const vector<const objects::Atom*>& regionNames = world->getRegionIDs();
+	
+	/*! \invariant The region IDs vector is not-empty. */
+	assert( !regionNames.empty() );
 
     // Additive matrices, indexed by region name and market number.
     RegionalSDDifferences regionalDifferences;
@@ -375,9 +387,10 @@ const SolverLibrary::RegionalSDDifferences SolverLibrary::calcRegionalSDDifferen
     // Declare vectors outside loop to avoid repetive construction.      
     vector<double> diffInSupplies( solverSet.getNumTotal() );
     vector<double> diffInDemands( solverSet.getNumTotal() );
-    vector<string> singleRegion( 1 );
+	vector<const objects::Atom*> singleRegion( 1 );
 
     // iterate over regions and calculate additional supplies and demands for each region for the current prices. 
+	typedef std::vector<const objects::Atom*>::const_iterator RegionIterator;
     for ( RegionIterator regionIter = regionNames.begin(); regionIter != regionNames.end(); ++regionIter ) {
 
         // Call world->calc() for this region only. 

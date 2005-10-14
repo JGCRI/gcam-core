@@ -89,24 +89,25 @@ void FinalDemandSector::operate( NationalAccount& aNationalAccount, const Demogr
 * Any initializations or calcuations that only need to be done once per period (instead of every iteration) should be placed in this function.
 *
 * \author Sonny Kim
-* \param aPeriod Period to initialize
-* \param aMarketInfo The MarketInfo object from the Region.
 * \param aNationalAccount NationalAccount object
 * \param aDemographics Demographics object
+* \param aPeriod Period to initialize
 */
-void FinalDemandSector::initCalc( const int period, const MarketInfo* aMarketInfo,
-                                  NationalAccount& aNationalAccount, Demographic* aDemographics )
+void FinalDemandSector::initCalc( NationalAccount& aNationalAccount,
+                                  const Demographic* aDemographics,
+                                  const int aPeriod )
 {
     // do any sub-Sector initializations
     for( SubsectorIterator currSub = subsec.begin(); currSub != subsec.end(); ++currSub ){
-        (*currSub)->initCalc( aMarketInfo, aNationalAccount, aDemographics,
-                              moreSectorInfo.get(), period );
+        (*currSub)->initCalc( aNationalAccount, aDemographics,
+                              moreSectorInfo.get(), aPeriod );
     }
 }
 
 /*! \brief Complete the initialization of the final demand sector.
+* \param aRegionInfo The regional information object.
 * \param aDependencyFinder Region's dependency finder, should be null for CGE regions.
 */
-void FinalDemandSector::completeInit( DependencyFinder* aDependencyFinder ){
-    Sector::completeInit( aDependencyFinder );
+void FinalDemandSector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder ){
+    Sector::completeInit( aRegionInfo, aDependencyFinder );
 }

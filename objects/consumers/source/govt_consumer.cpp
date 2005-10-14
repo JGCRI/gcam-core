@@ -133,7 +133,7 @@ void GovtConsumer::completeInit( const string& aRegionName ) {
 //! initialize anything that won't change during the calcuation
 void GovtConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
                              const string& aSectorName, NationalAccount& nationalAccount,
-                             Demographic* aDemographics, const double aCapitalStock, const int aPeriod )
+                             const Demographic* aDemographics, const double aCapitalStock, const int aPeriod )
 {
     if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
         // calculate Price Paid

@@ -35,6 +35,19 @@ TranSector::TranSector( const string regionName ): DemandSector( regionName ) {
     percentLicensed.resize( scenario->getModeltime()->getmaxper() );
 }
 
+/*! \brief Initialize the Tran.
+* \details Currently only calls the base class initCalc.
+* \param aNationalAccount National accounts container.
+* \param aDemographics Regional demographics object.
+* \param aPeriod Period for which to initialize the TranSector.
+*/
+void TranSector::initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const int aPeriod )
+{
+    DemandSector::initCalc( aNationalAccount, aDemographics, aPeriod );
+}
+
 /*! \brief Get the XML node name for output to XML.
 *
 * This public function accesses the private constant string, XML_NAME.

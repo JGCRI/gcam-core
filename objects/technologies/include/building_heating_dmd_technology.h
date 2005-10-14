@@ -12,16 +12,12 @@
 * \date $Date$
 * \version $Revision$
 */
-
-#include <vector>
-#include <map>
 #include <xercesc/dom/DOMNode.hpp>
 
 #include "technologies/include/building_heat_cool_dmd_technology.h"
 
 // Forward declaration
-class GDP;
-class MarketInfo;
+class IInfo;
 
 /*! 
 * \ingroup CIAM
@@ -45,7 +41,7 @@ public:
     BuildingHeatingDmdTechnology* clone() const;
     const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
-    void initCalc( const MarketInfo* aSubsectorInfo );
+    void initCalc( const IInfo* aSubsectorInfo );
 protected:
     double getInternalGainsSign() const;
     double getDemandFnPrefix( const std::string& regionName, const int period );

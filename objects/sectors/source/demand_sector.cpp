@@ -53,6 +53,19 @@ DemandSector::DemandSector( const string aRegionName ): Sector( aRegionName ){
 DemandSector::~DemandSector() {
 }
 
+/*! \brief Initialize the demand sector.
+* \details Currently only calls the base class initCalc.
+* \param aNationalAccount National accounts container.
+* \param aDemographics Regional demographics object.
+* \param aPeriod Period for which to initialize the DemandSector.
+*/
+void DemandSector::initCalc( NationalAccount& aNationalAccount,
+                             const Demographic* aDemographics,
+                             const int aPeriod )
+{
+    Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
+}
+
 /*! \brief Override the calculation of the final supply price to do nothing currently.
 * \details Does not do anything.
 * \param aGDP The regional GDP container.
@@ -336,10 +349,11 @@ void DemandSector::scaleOutput( int period, double scaleFactor ) {
 }
 
 /*! \brief Complete the initialization of a demand sector.
-* \param The region's dependency finder.
+* \param aRegionInfo Regional information object.
+* \param aDependencyFinder The region's dependency finder.
 */
-void DemandSector::completeInit( DependencyFinder* aDependencyFinder ) {
-    Sector::completeInit( aDependencyFinder );
+void DemandSector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder ) {
+    Sector::completeInit( aRegionInfo, aDependencyFinder );
     pElasticityBase = pElasticity[ 0 ]; // Store the base year price elasticity.
 }
 

@@ -18,7 +18,7 @@ TrialValueMarket::TrialValueMarket( const string& goodNameIn, const string& regi
 Market( goodNameIn, regionNameIn, periodIn ) {
 }
 
-void TrialValueMarket::derivedToDebugXML( ostream& out, Tabs* tabs ) const {
+void TrialValueMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
 }
 
 string TrialValueMarket::getType() const {

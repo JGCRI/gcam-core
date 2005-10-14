@@ -81,6 +81,10 @@ public:
     bool isFactorSupply() const;
     inline bool isCapital() const;
     inline bool isNumeraire() const;
+	static bool isInputEnergyGood( const std::string& aInputName, const std::string& aRegionName );
+	static bool isInputPrimaryEnergyGood( const std::string& aInputName, const std::string& aRegionName );
+	static bool isInputSecondaryEnergyGood( const std::string& aInputName, const std::string& aRegionName );
+	static double getMarketConversionFactor( const std::string& aInputName, const std::string& aRegionName );
 protected:
     enum Type {
         ENERGY,

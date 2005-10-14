@@ -53,10 +53,16 @@ public:
 	virtual Consumer* clone() const = 0;
     virtual ~Consumer() {};
     virtual void copyParam( const BaseTechnology* baseTech ) = 0;
-	virtual void completeInit( const std::string& regionName ) = 0;
-    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, 
-        const std::string& aSectorName, NationalAccount& nationalAccount , Demographic* aDemographics,
-        const double aCapitalStock, const int aPeriod ) = 0;
+	virtual void completeInit( const std::string& aRegionName ) = 0;
+    
+    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
+                           const std::string& aRegionName, 
+                           const std::string& aSectorName,
+                           NationalAccount& nationalAccount,
+                           const Demographic* aDemographics,
+                           const double aCapitalStock,
+                           const int aPeriod ) = 0;
+
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
         const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, 
         const std::string& aSectorName, const bool aIsNewVintageMode, const int aPeriod ) = 0;

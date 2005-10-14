@@ -13,9 +13,6 @@ use of this software.
 * \file production_demand_function.cpp
 * \ingroup Objects
 * \brief The Production Demand Function class source file.
-*
-*  Detailed description.
-*
 * \author Pralit Patel
 * \author Sonny Kim
 * \author Josh Lurz
@@ -37,6 +34,7 @@ use of this software.
 #include "util/base/include/util.h"
 #include "util/base/include/model_time.h"
 #include "functions/include/function_utils.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 
@@ -198,7 +196,9 @@ double TradeDemandFn::calcDemand( vector<Input*>& input, double consumption, con
         if( !input[ i ]->isFactorSupply() ){
 			// Open Trade
             double netExport;
-            if( marketplace->getMarketInfo( input[ i ]->getName(), regionName, period, "IsFixedPrice", false ) ){
+			const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( input[ i ]->getName(), regionName, period, true );
+			const bool isFixed = marketInfo ? marketInfo->getBoolean( "IsFixedPrice", false ) : 0;
+            if( isFixed ){
 				netExport = marketplace->getSupply( input[ i ]->getName(), regionName, period ) -
 					marketplace->getDemand( input[ i ]->getName(), regionName, period );
 			}
@@ -502,8 +502,7 @@ double CESProductionFn::calcFinalProfitScaler( const vector<Input*>& input, cons
 		}
 	}
 	// use price received for the good in the next equation
-    const Marketplace* marketplace = scenario->getMarketplace();
-	double priceReceived = marketplace->getMarketInfo( sectorName, regionName, period, "priceReceived" );
+	const double priceReceived = FunctionUtils::getPriceReceived( regionName, sectorName, period );
 	double Z = 1 - tempZ * pow( ( priceReceived * alphaZero), (rho * sigma) );
     return ( Z > 0 ) ? pow( Z, -(1/rho) ) : 0;
 }
@@ -523,8 +522,9 @@ double CESProductionFn::calcDemand( vector<Input*>& input, double personalIncome
 
 	const double Z1 = calcCapitalScaler( input, alphaZero, sigma, capitalStock );
 	const double Z2 = calcFinalProfitScaler( input, regionName, sectorName, period, alphaZero, sigma );
+	
 	const double Z = Z1 * Z2 * 
-        pow( ( marketplace->getMarketInfo( sectorName, regionName, period, "priceReceived" ) * alphaZero), sigma );
+		pow( ( FunctionUtils::getPriceReceived( regionName, sectorName, period ) * alphaZero), sigma );
     
 	
     double totalDemand = 0; // total demand used for scaling
@@ -744,9 +744,7 @@ double CESProductionFn::calcUnscaledProfits( const vector<Input*>& input, const 
     double rho = FunctionUtils::getRho( sigma );
 	double Z1 = calcCapitalScaler( input, alphaZero, sigma, capitalStock );
 	double Z2 = calcFinalProfitScaler( input, regionName, sectorName, period, alphaZero, sigma );
-    Marketplace* marketplace = scenario->getMarketplace();
-	double priceReceived = marketplace->getMarketInfo( sectorName, regionName, period, "priceReceived" );
-	return alphaZero * priceReceived * Z1 * pow( Z2, (1 - rho) );
+	return alphaZero * FunctionUtils::getPriceReceived( regionName, sectorName, period ) * Z1 * pow( Z2, (1 - rho) );
 }
 
 //! Calculate output
@@ -871,7 +869,7 @@ double LeontiefProductionFn::calcCoefficient( vector<Input*>& input, double cons
     }
     
     // use price received(psubj) for the good in the next equation
-	double priceReceived = scenario->getMarketplace()->getMarketInfo( sectorName, regionName, period, "priceReceived" );
+	double priceReceived = FunctionUtils::getPriceReceived( regionName, sectorName, period );
     assert( priceReceived > 0 );
     double qSubJ = demandCurrencySum / priceReceived;
     assert( qSubJ > 0 );
@@ -1074,8 +1072,7 @@ double LeontiefProductionFn::calcUnscaledProfits( const vector<Input*>& input, c
 {
     double qCapital = calcCapitalScaler( input, alphaZero, sigma, capitalStock );
 
-    double valQ = qCapital * 
-        scenario->getMarketplace()->getMarketInfo( sectorName, regionName, period, "priceReceived" );
+    double valQ = qCapital * FunctionUtils::getPriceReceived( regionName, sectorName, period );
     
     assert( valQ >= 0 );
     assert( util::isValidNumber( valQ ) );

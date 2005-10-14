@@ -20,8 +20,6 @@
 #include <iosfwd>
 
 #include "containers/include/national_account.h" // lets use an auto_ptr instead.
-#include "reporting/include/output_container.h"
-#include "reporting/include/sector_report.h"
 
 // Forward declarations
 class Subsector;
@@ -30,7 +28,7 @@ class Emcoef_ind;
 class ILogger;
 class GDP;
 class Tabs;
-class MarketInfo;
+class IInfo;
 class DependencyFinder;
 class Demographic;
 class NationalAccount;
@@ -57,7 +55,7 @@ protected:
     std::string name; //!< Sector name
     std::string regionName; //!< region name
     double mBaseOutput; //!< Read in base year output.
-    std::auto_ptr<MarketInfo> mSectorInfo; //!< Pointer to the sector's information store.
+    std::auto_ptr<IInfo> mSectorInfo; //!< Pointer to the sector's information store.
     std::vector<Subsector*> subsec; //!< subsector objects
     typedef std::vector<Subsector*>::iterator SubsectorIterator;
     typedef std::vector<Subsector*>::const_iterator CSubsectorIterator;
@@ -94,12 +92,15 @@ public:
     virtual ~Sector();
     const std::string& getName() const;
     virtual void XMLParse( const xercesc::DOMNode* node );
-    virtual void completeInit( DependencyFinder* aDepFinder ) = 0;
+    virtual void completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder ) = 0;
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void initCalc( const int period, const MarketInfo* aRegionInfo,
-                           NationalAccount& nationalAccount, Demographic* aDemographics );
+    
+    virtual void initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const int aPeriod ) = 0;
+
     virtual void calibrateSector( const int period ); 
     virtual void checkSectorCalData( const int period );
     virtual void setCalibratedSupplyInfo( const int aPeriod ) const = 0;
@@ -137,8 +138,6 @@ public:
     virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;	void updateMarketplace( const int period );
     virtual void finalizePeriod( const int aPeriod );
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	friend void OutputContainer::updateSector( const Sector* sector );
-	friend void SectorReport::updateSector( const Sector* sector );
 	virtual void updateOutputContainer( OutputContainer * outputContainer, const int period ) const;
 
 private:

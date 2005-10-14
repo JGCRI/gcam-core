@@ -16,7 +16,7 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 
@@ -68,9 +68,8 @@ const std::string& BuildingHeatingDmdTechnology::getXMLNameStatic1D() {
 * \author Steve Smith
 * \param aSubsectorInfo The subsectorInfo object. 
 */
-void BuildingHeatingDmdTechnology::initCalc( const MarketInfo* aSubsectorInfo ) {
-
-    heatingDegreeDays = aSubsectorInfo->getItemValue( "heatingDegreeDays", true );
+void BuildingHeatingDmdTechnology::initCalc( const IInfo* aSubsectorInfo ) {
+	heatingDegreeDays = aSubsectorInfo->getDouble( "heatingDegreeDays", true );
     BuildingHeatCoolDmdTechnology::initCalc( aSubsectorInfo );
 }
 
@@ -81,7 +80,6 @@ void BuildingHeatingDmdTechnology::initCalc( const MarketInfo* aSubsectorInfo ) 
 * \author Steve Smith
 */
 double BuildingHeatingDmdTechnology::getInternalGainsSign() const {
-
     return -1;    
 }
  
@@ -92,17 +90,15 @@ double BuildingHeatingDmdTechnology::getInternalGainsSign() const {
 * \param period Model period
 */
 double BuildingHeatingDmdTechnology::getDemandFnPrefix( const string& regionName, const int period )  {
-Marketplace* marketplace = scenario->getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 
     double priceRatio = ( period > 1 ) ? 
         marketplace->getPrice( fuelname, regionName, period ) / 
         marketplace->getPrice( fuelname, regionName, 1 ) : 1;
     
-    double prefixValue =    saturation * aveInsulation * floorToSurfaceArea * 
-                            heatingDegreeDays * pow( priceRatio, priceElasticity );
+    double prefixValue = saturation * aveInsulation * floorToSurfaceArea * 
+                         heatingDegreeDays * pow( priceRatio, priceElasticity );
     
     // Make sure and do not return zero
     return ( prefixValue > 0 ) ? prefixValue : 1;
 }
-
-

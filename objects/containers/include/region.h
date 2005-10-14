@@ -36,7 +36,7 @@ class GDP;
 class Curve;
 class Tabs;
 class DependencyFinder;
-class MarketInfo;
+class IInfo;
 /*! 
 * \ingroup Objects
 * \brief This class defines a single region of the model and contains other
@@ -118,7 +118,7 @@ protected:
 	std::auto_ptr<Demographic> demographic; //!< Population object
     std::auto_ptr<GDP> gdp; //!< GDP object.
     std::auto_ptr<AgSector> agSector; //!< Agricultural sector
-    std::auto_ptr<MarketInfo> mRegionInfo; //!< The region's information store.
+    std::auto_ptr<IInfo> mRegionInfo; //!< The region's information store.
     std::vector<Resource*> resources; //!< vector of pointers toresource objects
     std::vector<Sector*> supplySector; //!< vector of pointers to supply sector objects
     std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects

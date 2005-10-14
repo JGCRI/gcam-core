@@ -33,6 +33,7 @@ use of this software.
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "functions/include/ifunction.h" // for TechChange.
+#include "containers/include/iinfo.h"
 
 using namespace std;
 
@@ -146,9 +147,97 @@ double FunctionUtils::getNetPresentValueMult( const vector<Input*>& aInputs,
 */
 double FunctionUtils::calcNetPresentValueMult( const double aDiscountRate, const double aLifetime ) {
     double netPresentValueMult = pow( ( 1 / ( 1 + aDiscountRate ) ), 0.5 ) 
-        * ( 1 + ( 1 / aDiscountRate ) ) 
-        * ( 1 - pow( (1 / ( 1 + aDiscountRate ) ), aLifetime ) );
+                                 * ( 1 + ( 1 / aDiscountRate ) ) 
+                                 * ( 1 - pow( (1 / ( 1 + aDiscountRate ) ), aLifetime ) );
     return netPresentValueMult;
+}
+
+/*! \brief Set the price paid for a good into the marketplace.
+* \details Helper function which gets the information object from the market and
+*          sets the price paid.
+* \param aRegionName Name of the region for which to set the price paid.
+* \param aGoodName Name of the good for which to set the price paid.
+* \param aPeriod Model period in which to set the price paid.
+* \param aPricePaid The price paid.
+*/
+void FunctionUtils::setPricePaid( const string& aRegionName,
+								  const string& aGoodName,
+							      const int aPeriod,
+								  const double aPricePaid )
+{
+	assert( aGoodName != "USA" );
+	IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( aGoodName, aRegionName,
+		                                                           aPeriod, true );
+
+	/*! \invariant The market and market info must exist. */
+	assert( marketInfo );
+	marketInfo->setDouble( "pricePaid", aPricePaid );
+}
+
+/*! \brief Gets the price paid for the good by querying the marketplace.
+* \details Helper function which gets the information object from the market,
+*          and queries it for the price paid.
+* \param aRegionName Name of the region for which to get the price paid.
+* \param aGoodName Name of the good for which to get the price paid.
+* \param aPeriod Model period in which to get the price paid.
+* \return The price paid, 0 if there is not one set.
+*/
+double FunctionUtils::getPricePaid( const string& aRegionName,
+								    const string& aGoodName,
+									const int aPeriod )
+{
+	assert( aGoodName != "USA" );
+    const Marketplace* marketplace = scenario->getMarketplace();
+	const IInfo* marketInfo = marketplace->getMarketInfo( aGoodName, aRegionName,
+                                                          aPeriod, true );
+	
+    /*! \invariant The market and market info must exist. */
+	assert( marketInfo );
+	return marketInfo->getDouble( "pricePaid", true );
+}
+
+/*! \brief Set the price received for a good into the marketplace.
+* \details Helper function which gets the information object from the market and
+*          sets the price received.
+* \param aRegionName Name of the region for which to set the price received.
+* \param aGoodName Name of the good for which to set the price received.
+* \param aPeriod Model period in which to set the price received.
+* \param aPriceReceived Price received to set.
+*/
+void FunctionUtils::setPriceReceived( const string& aRegionName,
+								      const string& aGoodName,
+									  const int aPeriod,
+								      const double aPriceReceived )
+{
+	assert( aGoodName != "USA" );
+    Marketplace* marketplace = scenario->getMarketplace();
+	IInfo* marketInfo = marketplace->getMarketInfo( aGoodName, aRegionName,
+		                                            aPeriod, true );
+
+	/*! \invariant The market and market info must exist. */
+	assert( marketInfo );
+	marketInfo->setDouble( "priceReceived", aPriceReceived );
+}
+
+/*! \brief Gets the price received for the good by querying the marketplace.
+* \details Helper function which gets the information object from the market,
+*          and queries it for the price received.
+* \param aRegionName Name of the region for which to get the price received.
+* \param aGoodName Name of the good for which to get the price received.
+* \param aPeriod Model period in which to get the price received.
+* \return The price received, 0 if there is not one set.
+*/
+double FunctionUtils::getPriceReceived( const string& aRegionName,
+									    const string& aGoodName,
+										const int aPeriod )
+{
+	assert( aGoodName != "USA" );
+    const Marketplace* marketplace = scenario->getMarketplace();
+	const IInfo* marketInfo = marketplace->getMarketInfo( aGoodName, aRegionName,
+                                                          aPeriod, true );
+	/*! \invariant The market and market info must exist. */
+	assert( marketInfo );
+	return marketInfo->getDouble( "priceReceived", true );
 }
 
 /*! \brief Calculate the expected price received for the good produced by the
@@ -171,9 +260,8 @@ double FunctionUtils::getExpectedPriceReceived( const vector<Input*>& aInputs,
                                                 const int aPeriod )
 {
     // calculate expected price received for the produced good
-    const Marketplace* marketplace = scenario->getMarketplace();
-	double priceReceived = marketplace->getMarketInfo( aGoodName, aRegionName, aPeriod, "priceReceived" );
-	return priceReceived * getNetPresentValueMult( aInputs, aLifetimeYears );
+	return getPriceReceived( aRegionName, aGoodName, aPeriod )
+           * getNetPresentValueMult( aInputs, aLifetimeYears );
 }
 
 /*! \brief Apply technical change to a vector of inputs.

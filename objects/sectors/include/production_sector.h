@@ -21,7 +21,7 @@ class IInvestor;
 class Demographic;
 class NationalAccount;
 class GDP;
-class MarketInfo;
+class IInfo;
 class DependencyFinder;
 
 /*! 
@@ -39,10 +39,13 @@ public:
 	void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){};
 	void supply( const int aPeriod, const GDP* aGDP ){};
     static const std::string& getXMLNameStatic();
-    virtual void completeInit( DependencyFinder* aDependencyFinder );
+    virtual void completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder );
     double getOutput( const int aPeriod ) const;
-    virtual void initCalc( const int period, const MarketInfo* aRegionInfo, 
-                           NationalAccount& nationalAccount, Demographic* aDemographics );
+    
+    virtual void initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
+
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, const int aPeriod ); // Passing demographic here is not good.
     virtual void updateOutputContainer( OutputContainer* aOutputContainer, const int aPeriod ) const;
     virtual void setCalibratedSupplyInfo( const int aPeriod ) const {};

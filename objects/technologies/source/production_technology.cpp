@@ -225,7 +225,7 @@ void ProductionTechnology::updateMarketplace( const string& sectorName, const st
 
 void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
                                     const string& aSectorName, NationalAccount& nationalAccount,
-                                    Demographic* aDemographics, const double aCapitalStock, const int aPeriod )
+                                    const Demographic* aDemographics, const double aCapitalStock, const int aPeriod )
 {
     // Setup the cached values for the period.
     mValidCachePeriod = aPeriod;
@@ -285,7 +285,7 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
             ( year < scenario->getModeltime()->getper_to_yr(0) && (aPeriod == 1) ) ) 
         { // transform base and pre-base period vintages in period 1.
             const Marketplace* marketplace = scenario->getMarketplace();
-            double priceReceivedLastPer = marketplace->getMarketInfo( aSectorName, aRegionName, aPeriod-1, "priceReceived" );
+			double priceReceivedLastPer = FunctionUtils::getPriceReceived( aRegionName, aSectorName, aPeriod - 1 );
             currSigma = sigma2;
             double sigmaNew = sigma1;
             double sigmaOld = sigma2;
@@ -296,11 +296,13 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
                 prodDmdFnType = "Leontief";
                 prodDmdFn = FunctionManager::getFunction( "Leontief" );
                 // Transform CES coefficients to Leontief.
-                alphaZeroScaler = prodDmdFn->changeElasticity(input, priceReceivedLastPer, mProfits[ aPeriod - 1 ], capital, alphaZeroScaler, sigmaNew, sigmaOld );
+                alphaZeroScaler = prodDmdFn->changeElasticity( input, priceReceivedLastPer, mProfits[ aPeriod - 1 ],
+					                                           capital, alphaZeroScaler, sigmaNew, sigmaOld );
             }
             else if( sigma1 != sigma2 ){
                 // Transform coefficients to use short-term instead of long-term elasticity of substitution.
-                alphaZeroScaler = prodDmdFn->changeElasticity(input, priceReceivedLastPer, mProfits[ aPeriod - 1 ], capital, alphaZeroScaler, sigmaNew, sigmaOld );
+                alphaZeroScaler = prodDmdFn->changeElasticity( input, priceReceivedLastPer, mProfits[ aPeriod - 1 ],
+					                                           capital, alphaZeroScaler, sigmaNew, sigmaOld );
             }    
         }
     }
@@ -383,18 +385,11 @@ void ProductionTechnology::operate( NationalAccount& aNationalAccount, const Dem
 }
 
 void ProductionTechnology::calcEmissions( const string& aGoodName, const string& aRegionName, const int aPeriod ) {
-    // calculate the correct currency to physical conversion factor.
-    double physicalConvFactor;
-    // Use the conversion factor from the technology.
-    if( mConversionFactor != 1 ){
-        physicalConvFactor = mConversionFactor;
-    }
-    // Use the conversion factor stored in the marketplace.
-    else {
-        Marketplace* marketplace = scenario->getMarketplace();
-        physicalConvFactor = marketplace->getMarketInfo( aGoodName, aRegionName, 0, "ConversionFactor" );
-    }
-    
+    // calculate the correct currency to physical conversion factor. Use the
+    // conversion factor from the technology if one was set, otherwise use the
+    // one from the marketplace.
+	const double physicalConvFactor = mConversionFactor != 1 ? mConversionFactor : 
+	                                                           Input::getMarketConversionFactor( aGoodName, aRegionName );
     // determine physical output.
     double physicalOutput = mOutputs[ aPeriod ] * physicalConvFactor;
 
@@ -448,7 +443,7 @@ void ProductionTechnology::calcTaxes( NationalAccount& aNationalAccount, const M
 	double indBusTaxRate = aMoreSectorInfo->getValue(MoreSectorInfo::IND_BUS_TAX_RATE);
     Marketplace* marketplace = scenario->getMarketplace();
 	indBusTax = indBusTaxRate * mOutputs[ aPeriod ] 
-                * marketplace->getMarketInfo( aSectorName, aRegionName, aPeriod, "priceReceived" );
+	* FunctionUtils::getPriceReceived( aRegionName, aSectorName, aPeriod );
 	
                 // calculate profits
     if( capital <= 0 ){

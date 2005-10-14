@@ -30,6 +30,11 @@ class TranSector : public DemandSector
 {
 public:
     TranSector( const std::string regionName );
+    
+    virtual void initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
+
     virtual void aggdemand( const GDP* gdp, const int period );
     static const std::string& getXMLNameStatic();
     virtual void checkSectorCalData( const int period );

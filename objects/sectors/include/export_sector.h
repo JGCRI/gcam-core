@@ -15,6 +15,7 @@
 #include <string>
 #include "sectors/include/supply_sector.h"
 class DependencyFinder;
+class IInfo;
 
 /*! 
 * \ingroup Objects
@@ -31,7 +32,12 @@ class ExportSector: public SupplySector
 {
 public:
 	explicit ExportSector( const std::string& aRegionName );
-	void completeInit( DependencyFinder* aDependencyFinder );
+	void completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder );
+    
+    virtual void initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
+
 	void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
 	void supply( const int aPeriod, const GDP* aGDP );
     static const std::string& getXMLNameStatic();

@@ -35,6 +35,9 @@
 #include "marketplace/include/imarket_type.h"
 #include "reporting/include/output_container.h"
 #include "util/logger/include/ilogger.h"
+#include "containers/include/iinfo.h"
+#include "functions/include/function_utils.h"
+
 using namespace std;
 using namespace xercesc;
 
@@ -198,8 +201,8 @@ void FactorSupply::calcPricePaid( const string& aRegionName, const int period ) 
 		* 1 ;
 		//* moreSectorInfo->getValue(MoreSectorInfo::PRICE_ADJUST_MULT);
 		
-	// set price received in market info
-	marketplace->setMarketInfo( name, aRegionName, period, "pricePaid", pricePaid );
+	// set price paid in market info.
+	FunctionUtils::setPricePaid( aRegionName, name, period, pricePaid );
 }
 
 /*! \brief For outputing SGM data to a flat csv File

@@ -17,9 +17,12 @@
 #include <iosfwd>
 #include <string>
 #include "marketplace/include/imarket_type.h"
+
 class Tabs;
 class Market;
 class MarketLocator;
+class IInfo;
+
 /*! 
 * \ingroup Objects
 * \brief A class which describes the single global marketplace.
@@ -58,11 +61,14 @@ public:
     void unsetMarketToSolve( const std::string& goodName, const std::string& regionName, const int period );
     void storeinfo( const int period );
     void restoreinfo( const int period );
-    void setMarketInfo( const std::string& goodName, const std::string& regionName, const int period,
-                        const std::string& itemName, const double itemValue, bool aMustExist = true );
-    double getMarketInfo( const std::string& goodName, const std::string& regionName, const int period,
-                          const std::string& itemName, bool aMustExist = true ) const;
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+
+    const IInfo* getMarketInfo( const std::string& aGoodName, const std::string& aRegionName,
+		                        const int aPeriod, const bool aMustExist ) const;
+
+    IInfo* getMarketInfo( const std::string& aGoodName, const std::string& aRegionName,
+		                 const int aPeriod, const bool aMustExist );
+
+	void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     std::vector<Market*> getMarketsToSolve( const int period ) const;
     const static double NO_MARKET_PRICE; //!< The price to return if no market exists.
 private:

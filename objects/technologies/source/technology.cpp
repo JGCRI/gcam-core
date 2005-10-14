@@ -29,7 +29,7 @@
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/dependency_finder.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -266,7 +266,7 @@ bool technology::XMLDerivedClassParse( const string nodeName, const DOMNode* cur
 * \author Josh Lurz
 * \warning markets are not necesarilly set when completeInit is called
 */
-void technology::completeInit( const std::string& aSectorName, DependencyFinder* aDepFinder ) {
+void technology::completeInit( const string& aSectorName, DependencyFinder* aDepFinder ) {
     const string CO2_NAME = "CO2";
     if( !util::hasValue( ghgNameMap, CO2_NAME ) ) {
         // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
@@ -373,7 +373,7 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& technology::getXMLName1D() const {
+const string& technology::getXMLName1D() const {
 	return XML_NAME1D;
 }
 
@@ -386,7 +386,7 @@ const std::string& technology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& technology::getXMLNameStatic1D() {
+const string& technology::getXMLNameStatic1D() {
 	return XML_NAME1D;
 }
 
@@ -398,7 +398,7 @@ const std::string& technology::getXMLNameStatic1D() {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& technology::getXMLName2D() const {
+const string& technology::getXMLName2D() const {
 	return XML_NAME2D;
 }
 
@@ -411,12 +411,12 @@ const std::string& technology::getXMLName2D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& technology::getXMLNameStatic2D() {
+const string& technology::getXMLNameStatic2D() {
 	return XML_NAME2D;
 }
 
 //! Perform initializations that only need to be done once per period
-void technology::initCalc( const MarketInfo* aSubsectorInfo ) {    
+void technology::initCalc( const IInfo* aSubsectorInfo ) {    
     if ( doCalOutput ) {
         calInputValue = calOutputValue/eff;
         doCalibration = true;
@@ -693,7 +693,7 @@ void technology::production(const string& regionName,const string& prodName,
 */
 void technology::adjustForCalibration( double subSectorDemand,
 									   const string& regionName,
-									   const MarketInfo*,
+									   const IInfo*,
 									   const int period )
 {
    // total calibrated outputs for this sub-sector
@@ -950,7 +950,7 @@ void technology::copyGHGParameters( const Ghg* prevGHG ) {
 * \param ghgName Name of GHG 
 * \warning Assumes there is only one GHG object with any given name
 */
-Ghg* technology::getGHGPointer( const std::string& ghgName ) {
+Ghg* technology::getGHGPointer( const string& ghgName ) {
     const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
 
 	return ghg[ ghgIndex ];
@@ -994,8 +994,8 @@ void technology::setYear( const int yearIn ) {
 *
 * \author Steve Smith
 */
-int technology::getNumbGHGs()  const {
-    std::vector<std::string> ghgNames = getGHGNames();
+int technology::getNumbGHGs() const {
+    vector<string> ghgNames = getGHGNames();
     if ( ghgNames[0] != "" ) {
         return static_cast<int>( ghgNames.size() ); 
     } else {
@@ -1015,8 +1015,9 @@ void technology::tabulateFixedDemands( const string regionName, const int period
     const double MKT_NOT_ALL_FIXED = -1; // This should be same constant as used in region
     Marketplace* marketplace = scenario->getMarketplace();
 
-    // Checking for market existence here avoids emitting a warning (which happens for fuel "renewable")
-    if ( marketplace->getPrice( fuelname, regionName, period, false ) != Marketplace::NO_MARKET_PRICE ) {
+	IInfo* marketInfo = marketplace->getMarketInfo( fuelname, regionName, period, false );
+	// Fuel may not have a market, as is the case with renewable.
+	if( marketInfo ){
         if ( outputFixed() ) {
             double fixedOrCalInput = 0;
             double fixedInput = 0;
@@ -1028,18 +1029,22 @@ void technology::tabulateFixedDemands( const string regionName, const int period
                 fixedInput = fixedOrCalInput;
             }
             // set demand for fuel in marketInfo counter
-            double exisitingDemand = max( marketplace->getMarketInfo( fuelname, regionName , period, "calDemand" ), 0.0 );
-            marketplace->setMarketInfo( fuelname, regionName, period, "calDemand", exisitingDemand + fixedOrCalInput );        
+            double existingDemand = max( marketInfo->getDouble( "calDemand", false ), 0.0 );
+            marketInfo->setDouble( "calDemand", existingDemand + fixedOrCalInput );        
             
-            // Track fixedDemand separately since this will not be scaled.
-            exisitingDemand = max( marketplace->getMarketInfo( fuelname, regionName , period, "calFixedDemand" ), 0.0 );
-            marketplace->setMarketInfo( fuelname, regionName, period, "calFixedDemand", exisitingDemand + fixedInput );        
-        } else {
-            // If not fixed, then set to -1 to indicate a demand that is not completely fixed
-            marketplace->setMarketInfo( fuelname, regionName, period, "calDemand",MKT_NOT_ALL_FIXED );
+            // Track fixedDemand separately since this will not be scaled. Not
+            // all markets have calFixedDemand.
+            existingDemand = max( marketInfo->getDouble( "calFixedDemand", false ), 0.0 );
+            marketInfo->setDouble( "calFixedDemand", existingDemand + fixedInput );        
+        }
+		else {
+            // If not fixed, then set to -1 to indicate a demand that is not
+            // completely fixed.
+            marketInfo->setDouble( "calDemand", MKT_NOT_ALL_FIXED );
         }
     }
 }
+
 /*! \brief sets a tech share to an input amount
 *
 *

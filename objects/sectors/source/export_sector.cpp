@@ -46,18 +46,33 @@ ExportSector::ExportSector ( const string& aRegionName ) : SupplySector ( aRegio
 *          good, because the input price and demand are fixed. This also add a
 *          dependency on the input "none" so that the DependencyFinder does not
 *          remove the sector from the ordering completely.
+* \param aRegionInfo The regional information object.
 * \param aDependencyFinder The dependency finding object.
 */
-void ExportSector::completeInit( DependencyFinder* aDependencyFinder ){
+void ExportSector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder ){
 	// Add a fake dependency on the input "none" to prevent the dependency
 	// finder from completely removing the sector.
 	aDependencyFinder->addDependency( name, "none" );
 
 	// Pass null for the DependencyFinder to the SupplySector complete init so
     // it will pass null to the subsectors.
-    SupplySector::completeInit( 0 );
+    SupplySector::completeInit( aRegionInfo, 0 );
     setMarket();
 }
+
+/*! \brief Initialize the ExportSector.
+* \details Currently only calls the base class initCalc.
+* \param aNationalAccount National accounts container.
+* \param aDemographics Regional demographics object.
+* \param aPeriod Period for which to initialize the ExportSector.
+*/
+void ExportSector::initCalc( NationalAccount& aNationalAccount,
+                             const Demographic* aDemographics,
+                             const int aPeriod )
+{
+    SupplySector::initCalc( aNationalAccount, aDemographics, aPeriod );
+}
+
 /*! \brief Calculate the final supply price for the ExportSector, which will
 *          leave the international price unchanged.
 * \details Currently this function does not calculate or set a price into the

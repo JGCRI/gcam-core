@@ -218,9 +218,6 @@ void MACGeneratorScenarioRunner::createCostCurvesByPeriod() {
     const int maxPeriod = modeltime->getmaxper();
     mPeriodCostCurves.resize( maxPeriod );
     
-    // Whether to print abatement in absolute terms or percent abatement.
-    // const bool usePercentReduction = Configuration::getInstance()->getBool( "usePercentReduction", false );
-    const bool usePercentReduction = false; // Hiding this option because it makes total costs non-sensical.
     for( int per = 0; per < maxPeriod; per++ ){
         const int year = modeltime->getper_to_yr( per );
         // Iterate over each region.
@@ -229,14 +226,8 @@ void MACGeneratorScenarioRunner::createCostCurvesByPeriod() {
             const string region = rIter->first;
             // Iterate over each trial.
             for( unsigned int trial = 0; trial < mNumPoints + 1; trial++ ){
-                double reduction;
-                
-                if( usePercentReduction ){
-                    reduction = ( rIter->second->getY( year ) - mEmissionsQCurves[ trial ][ region ]->getY( year ) ) / rIter->second->getY( year );
-                }
-                else {
-                    reduction = rIter->second->getY( year ) - mEmissionsQCurves[ trial ][ region ]->getY( year );
-                }
+                double reduction = rIter->second->getY( year )
+                                   - mEmissionsQCurves[ trial ][ region ]->getY( year );
                 const double tax = mEmissionsTCurves[ trial ][ region ]->getY( year );
                 XYDataPoint* currPoint = new XYDataPoint( reduction, tax );
                 currPoints->addPoint( currPoint );
@@ -259,33 +250,35 @@ void MACGeneratorScenarioRunner::createCostCurvesByPeriod() {
 */
 void MACGeneratorScenarioRunner::createRegionalCostCurves() {
     // Iterate through the regions again to determine the cost per period.
-    const vector<string> regions = scenario->getWorld()->getRegionVector();
-    typedef vector<string>::const_iterator RNameIter;
     const Configuration* conf = Configuration::getInstance();
     const double discountRate = conf->getDouble( "discountRate", 0.05 );
 
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxPeriod = modeltime->getmaxper();
-
-    for( RNameIter rNameIter = regions.begin(); rNameIter != regions.end(); rNameIter++ ){
+	
+	for( map<const string, const Curve*>::const_iterator rNameIter = mPeriodCostCurves[ 0 ].begin(); rNameIter != mPeriodCostCurves[ 0 ].end(); ++rNameIter ){
+        // Skip the global curve which is only calculated for reporting.
+        if( rNameIter->first == "global" ){
+            continue;
+        }
         ExplicitPointSet* costPoints = new ExplicitPointSet();
 
         // Loop through the periods. 
         for( int per = 0; per < maxPeriod; per++ ){
             const int year = modeltime->getper_to_yr( per );
-            double periodCost = mPeriodCostCurves[ per ][ *rNameIter ]->getIntegral( 0, DBL_MAX ); // Integrate from zero to the reduction.
+			double periodCost = mPeriodCostCurves[ per ][ rNameIter->first ]->getIntegral( 0, DBL_MAX ); // Integrate from zero to the reduction.
             XYDataPoint* currPoint = new XYDataPoint( year, periodCost );
             costPoints->addPoint( currPoint );
         }
         Curve* regCostCurve = new PointSetCurve( costPoints );
-        regCostCurve->setTitle( *rNameIter );
+        regCostCurve->setTitle( rNameIter->first );
         const double regionalCost = regCostCurve->getIntegral( modeltime->getper_to_yr( 1 ), modeltime->getEndYear() );
 
         // Temporary hardcoding of start year.
         const double discountedRegionalCost = regCostCurve->getDiscountedValue( modeltime->getper_to_yr( 1 ), modeltime->getEndYear(), discountRate );
-        mRegionalCostCurves[ *rNameIter ] = regCostCurve;
-        mRegionalCosts[ *rNameIter ] = regionalCost;
-        mRegionalDiscountedCosts[ *rNameIter ] = discountedRegionalCost;
+        mRegionalCostCurves[ rNameIter->first ] = regCostCurve;
+        mRegionalCosts[ rNameIter->first ] = regionalCost;
+        mRegionalDiscountedCosts[ rNameIter->first ] = discountedRegionalCost;
     
         mGlobalCost += regionalCost;
         mGlobalDiscountedCost += discountedRegionalCost;

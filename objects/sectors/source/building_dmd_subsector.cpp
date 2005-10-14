@@ -26,7 +26,7 @@
 #include "marketplace/include/marketplace.h"
 #include "containers/include/gdp.h"
 #include "util/logger/include/ilogger.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -189,11 +189,12 @@ void BuildingDemandSubSector::toDebugXMLDerived( const int period, ostream& out,
 * This routine is only called once per model run
 *
 * \author Steve Smith
+* \param aSectorInfo Parent sector info object.
 * \param aDependencyFinder The regional dependency finder.
 * \warning markets are not necesarilly set when completeInit is called
 */
-void BuildingDemandSubSector::completeInit( DependencyFinder* aDependencyFinder ) {
-    Subsector::completeInit( aDependencyFinder );
+void BuildingDemandSubSector::completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder ) {
+    Subsector::completeInit( aSectorInfo, aDependencyFinder );
     setUpSubSectorMarkets();
 }
 
@@ -222,7 +223,7 @@ void BuildingDemandSubSector::setUpSubSectorMarkets() {
         for( int period = 1; period < maxPeriod; ++period ){
             marketplace->setMarketToSolve( intGainsMarketName, regionName, period );
             // Also initialize calibrated internal gains to zero for every period
-            marketplace->setMarketInfo( intGainsMarketName, regionName, period, "calInternalGains", 0.0 );
+			marketplace->getMarketInfo( intGainsMarketName, regionName, period, true )->setDouble( "calInternalGains", 0.0 );
         }
     }
     else {
@@ -269,9 +270,8 @@ void BuildingDemandSubSector::calcPrice( const int period ) {
 * \param period Model period
 * \warning Function getFuelName will need to be changed once multiple inputs are implimented
 */
-void BuildingDemandSubSector::initCalc( const MarketInfo* aSectorInfo,
-                                        NationalAccount& aNationalAccount,
-                                        Demographic* aDemographics,
+void BuildingDemandSubSector::initCalc( NationalAccount& aNationalAccount,
+                                        const Demographic* aDemographics,
                                         const MoreSectorInfo* aMoreSectorInfo,
                                         const int aPeriod )
 {
@@ -290,14 +290,10 @@ void BuildingDemandSubSector::initCalc( const MarketInfo* aSectorInfo,
         floorToSurfaceArea[ aPeriod ] = 1;
     }
 
-    // Add items from sectorInfo
-    mSubsectorInfo->addItem( "heatingDegreeDays", aSectorInfo->getItemValue( "heatingDegreeDays", true ) );
-    mSubsectorInfo->addItem( "coolingDegreeDays", aSectorInfo->getItemValue( "coolingDegreeDays", true  ));
-
     // Add subsector data items
-    mSubsectorInfo->addItem( "dayLighting", dayLighting[ aPeriod ] );
-    mSubsectorInfo->addItem( "aveInsulation", aveInsulation[ aPeriod ] );
-    mSubsectorInfo->addItem( "floorToSurfaceArea", floorToSurfaceArea[ aPeriod ] );
+    mSubsectorInfo->setDouble( "dayLighting", dayLighting[ aPeriod ] );
+    mSubsectorInfo->setDouble( "aveInsulation", aveInsulation[ aPeriod ] );
+    mSubsectorInfo->setDouble( "floorToSurfaceArea", floorToSurfaceArea[ aPeriod ] );
 
     // Pass the name of the internal gains market to each demand technology  
     // TODO -- this needs to be implimented once marketInfo can handle strings
@@ -325,7 +321,7 @@ void BuildingDemandSubSector::initCalc( const MarketInfo* aSectorInfo,
         techScaleYear = modeltime->getStartYear();
     }
 
-    Subsector::initCalc( aSectorInfo, aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
+    Subsector::initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
     
 }
 
@@ -367,12 +363,13 @@ void BuildingDemandSubSector::adjustForCalibration( double sectorDemand, double 
     // Note that "raw" unit demand, unadjusted by internal gains, is passed as the demand variable
     // this is so that those demand sectors that do not need internal gains or other information will  
     // not have to access the sectorInfo object.
-    mSubsectorInfo->addItem( "floorSpace", sectorDemand );
+    mSubsectorInfo->setDouble( "floorSpace", sectorDemand );
     
     for ( unsigned int j = 0; j < techs.size(); j++ ) {
         // calibrate buildingServiceDemands
-        string demandSectorName = techs[j][period]->getFuelName( );
-        double calOutput = marketplace->getMarketInfo( demandSectorName, regionName, period, "calOutput" );
+		const IInfo* marketInfo = marketplace->getMarketInfo( techs[j][period]->getFuelName(), regionName, period, false );
+		// Market may not exist if the fuel is a fake fuel.
+		double calOutput = marketInfo ? marketInfo->getDouble( "calOutput", true ) : 0;
         
         // Here, pass in specific demand -- equal to demand for this service per unit floor space
         // NOTE: this is not adjusted for saturation or other parameters, this is done in BuildingGenericDmdTechnology
@@ -397,9 +394,11 @@ void BuildingDemandSubSector::adjustForCalibration( double sectorDemand, double 
 void BuildingDemandSubSector::setCalibrationStatus( const int period ) {
     for ( unsigned int i=0; i < techs.size(); i++ ) {
         Marketplace* marketplace = scenario->getMarketplace();
-        
-        string inputName = techs[ i ][ period ]->getFuelName( );
-        if ( marketplace->getMarketInfo( inputName, regionName, period, "calOutput" ) > 0 ) {
+		const IInfo* marketInfo = marketplace->getMarketInfo( techs[ i ][ period ]->getFuelName(), regionName,
+			                                                  period, false );
+		// Market may not exist if the fuel is a fake fuel.
+		double calOutput = marketInfo ? marketInfo->getDouble( "calOutput", true ) : 0;
+        if ( calOutput > 0 ) {
             calibrationStatus[ period ] = true;
             return;
         }

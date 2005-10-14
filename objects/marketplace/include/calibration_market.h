@@ -25,7 +25,6 @@ class CalibrationMarket: public Market {
 public:
     CalibrationMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
     ~CalibrationMarket();
-    virtual void derivedToDebugXML( std::ostream& out, Tabs* tabs ) const;
     virtual std::string getType() const;
 
     virtual void initPrice();
@@ -45,6 +44,8 @@ public:
 
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
+protected:
+    virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 };
 
 #endif // _CALIBRATION_MARKET_H_

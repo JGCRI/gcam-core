@@ -35,7 +35,7 @@
 #include "sectors/include/sector.h"
 
 class Tabs;
-class MarketInfo;
+class IInfo;
 class DependencyFinder;
 
 class FinalDemandSector : public Sector
@@ -49,9 +49,14 @@ public:
         const int aPeriod );
     double getOutput( const int aPeriod ) const { return 0; }
 	static const std::string& getXMLNameStatic();
-    virtual void initCalc( const int period, const MarketInfo* aMarketInfo,
-                           NationalAccount& nationalAccount, Demographic* aDemographics );
-    virtual void completeInit( DependencyFinder* aDependencyFinder );
+    
+    virtual void initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
+
+    virtual void completeInit( const IInfo* aRegionInfo,
+                               DependencyFinder* aDependencyFinder );
+
     virtual void setCalibratedSupplyInfo( const int aPeriod ) const {};
 protected:
     virtual void setMarket();

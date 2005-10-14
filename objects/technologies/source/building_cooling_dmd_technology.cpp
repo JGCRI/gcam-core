@@ -10,8 +10,6 @@
 // Standard Library headers
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
-#include <cassert>
 #include <cassert>
 
 // User headers
@@ -19,7 +17,7 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 
@@ -71,9 +69,8 @@ const std::string& BuildingCoolingDmdTechnology::getXMLNameStatic1D() {
 * \author Steve Smith
 * \param aSubsectorInfo The subsectorInfo object. 
 */
-void BuildingCoolingDmdTechnology::initCalc( const MarketInfo* aSubsectorInfo ) {
-
-    coolingDegreeDays = aSubsectorInfo->getItemValue( "coolingDegreeDays", true );
+void BuildingCoolingDmdTechnology::initCalc( const IInfo* aSubsectorInfo ) {
+    coolingDegreeDays = aSubsectorInfo->getDouble( "coolingDegreeDays", true );
     BuildingHeatCoolDmdTechnology::initCalc( aSubsectorInfo );    
 }
 
@@ -84,7 +81,6 @@ void BuildingCoolingDmdTechnology::initCalc( const MarketInfo* aSubsectorInfo ) 
 * \author Steve Smith
 */
 double BuildingCoolingDmdTechnology::getInternalGainsSign() const {
-
     return +1;    
 }
  

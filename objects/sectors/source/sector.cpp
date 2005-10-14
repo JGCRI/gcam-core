@@ -33,10 +33,12 @@
 #include "containers/include/world.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/info_factory.h"
 #include "util/logger/include/logger.h"
 #include "containers/include/national_account.h"
 #include "reporting/include/output_container.h"
+#include "reporting/include/sector_report.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -149,15 +151,17 @@ void Sector::XMLParse( const DOMNode* node ){
 * This routine is only called once per model run
 *
 * \author Josh Lurz
+* \param aRegionInfo Regional information object.
+* \param aDepFinder Regional dependency finder.
 * \warning markets are not necesarilly set when completeInit is called
 */
-void Sector::completeInit( DependencyFinder* aDepFinder ) {
+void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder ) {
     // Allocate the sector info.
-    mSectorInfo.reset( new MarketInfo() );
+	mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo ) );
 
     // Complete the subsector initializations. 
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
-        ( *subSecIter )->completeInit( aDepFinder );
+        ( *subSecIter )->completeInit( mSectorInfo.get(), aDepFinder );
     }
 }
 
@@ -279,22 +283,24 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * (instead of every iteration) should be placed in this function.
 *
 * \author Steve Smith
-* \param period Model period
+* \param aPeriod Model period
 */
-void Sector::initCalc( const int period, const MarketInfo* aRegionInfo,
-                       NationalAccount& nationalAccount, Demographic* aDemographics )
+void Sector::initCalc( NationalAccount& aNationalAccount,
+                       const Demographic* aDemographics,
+                       const int aPeriod )
 {
     // normalizeShareWeights must be called before subsector initializations
-    normalizeShareWeights( period );
+    normalizeShareWeights( aPeriod );
 
     Marketplace* marketplace = scenario->getMarketplace();
    	// retained earnings parameter calculation
-	// for base year only, better in completeInit but NationalAccount not accessible
-	if ( period == 0 && moreSectorInfo.get() ) {
-		double corpIncTaxRate = nationalAccount.getAccountValue(NationalAccount::CORPORATE_INCOME_TAX_RATE);
-		double totalRetEarnings = nationalAccount.getAccountValue(NationalAccount::RETAINED_EARNINGS);
-		double totalProfits2 = nationalAccount.getAccountValue(NationalAccount::CORPORATE_PROFITS);
-		double totalProfits = marketplace->getDemand("Capital", regionName, period);
+	// for base year only, better in completeInit but NationalAccount not accessible.
+    // TODO: Move this to SGM sectors only.
+	if ( aPeriod == 0 && moreSectorInfo.get() ) {
+		double corpIncTaxRate = aNationalAccount.getAccountValue(NationalAccount::CORPORATE_INCOME_TAX_RATE);
+		double totalRetEarnings = aNationalAccount.getAccountValue(NationalAccount::RETAINED_EARNINGS);
+		double totalProfits2 = aNationalAccount.getAccountValue(NationalAccount::CORPORATE_PROFITS);
+		double totalProfits = marketplace->getDemand("Capital", regionName, aPeriod);
 		// Set retained earnings to zero by setting MAX_CORP_RET_EARNINGS_RATE
 		// to 0. This is for the technology sectors, like the transportation
         // vehicle sectors. All of the profits goes to dividends and there are
@@ -303,7 +309,7 @@ void Sector::initCalc( const int period, const MarketInfo* aRegionInfo,
 		double retEarnParam = 0;
 		if( moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE) != 0 ) {
 			retEarnParam = log( 1 - (totalRetEarnings/(totalProfits*moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE)
-				*(1 - corpIncTaxRate)))) / marketplace->getPrice("Capital", regionName, period);
+				*(1 - corpIncTaxRate)))) / marketplace->getPrice("Capital", regionName, aPeriod );
 		}
 		moreSectorInfo->setType(MoreSectorInfo::RET_EARNINGS_PARAM, retEarnParam);
 		moreSectorInfo->setType(MoreSectorInfo::CORP_INCOME_TAX_RATE, corpIncTaxRate);
@@ -311,17 +317,16 @@ void Sector::initCalc( const int period, const MarketInfo* aRegionInfo,
 
     // do any sub-Sector initializations
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        subsec[ i ]->initCalc( mSectorInfo.get(), nationalAccount,
-                                aDemographics, moreSectorInfo.get(), period );
+        subsec[ i ]->initCalc( aNationalAccount, aDemographics, moreSectorInfo.get(), aPeriod );
     }
 
     // set flag if there are any fixed supplies
-    if ( getFixedOutput( period ) > 0 ) {
+    if ( getFixedOutput( aPeriod ) > 0 ) {
         anyFixedCapacity = true;
     }
 
     // find out if this Sector has any capacity limits
-    capLimitsPresent[ period ] = isCapacityLimitsInSector( period );
+    capLimitsPresent[ aPeriod ] = isCapacityLimitsInSector( aPeriod );
 }
 
 /*! \brief Perform any sector level calibration data consistancy checks

@@ -15,22 +15,27 @@
 
 #include <string>
 #include "sectors/include/subsector.h"
-
+class IInfo;
 
 /*!
 * \ingroup Objects
-* \brief The derived Intermittent Supply SubSector.
-* Intended for wind and solar.  Takes an intermittent resource and determines the demand for
-* supply from a back-up sector, especially if needed for electricity.
+* \brief The derived Intermittent Supply Subsector.
+* \details Intended for wind and solar. Takes an intermittent resource and
+*          determines the demand for supply from a back-up sector, especially if
+*          needed for electricity.
 * \author Marshall Wise
 */
 class IntermittentSubsector: public Subsector {
 public:
     IntermittentSubsector( const std::string regionName, const std::string sectorName);
     static const std::string& getXMLNameStatic();
-    void completeInit(DependencyFinder* aDependencyFinder );
-    void initCalc(  const MarketInfo* aSectorInfo, NationalAccount& aNationalAccount,
-        Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo, const int aPeriod );
+    void completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder );
+    
+    virtual void initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const MoreSectorInfo* aMoreSectorInfo,
+                           const int aPeriod );
+
     void calcPrice( const int period );
     void calcTechShares ( const GDP* gdp, const int period );
     void MCoutputSupplySector() const;
@@ -42,17 +47,6 @@ protected:
 
     //! name of the electricity sector it will supply to
     std::string electricSectorName; 
-
-    //  block of member variables with values passed down from Sector level in Sectorinfo object
-    //! electricity reserve margin 
-    double elecReserveMargin;
-    //! resource backup cost in 1975 $/kW/yr   (value is and should be annualized)
-    double backupCost;
-    //! average capacity factor of total electric system to convert to capacity
-    double aveGridCapacityFactor;
-    //! Capacity factor for backup capacity
-    double backupCapacityFactor; 
-    //  end of block passed from Sectorinfo object
 
     //! ordering number of technology with main Resource input (typically 0)
     unsigned int resourceTechNumber;

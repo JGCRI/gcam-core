@@ -17,9 +17,11 @@
 #include <memory>
 #include "marketplace/include/imarket_type.h"
 
-class MarketInfo;
+class IInfo;
 class Tabs;
-
+namespace objects {
+	class Atom;
+}
 /*!
 * \ingroup Objects
 * \brief A class which defines a single market object.
@@ -31,22 +33,12 @@ class Market
 public:
     Market( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
     virtual ~Market();
-    static std::auto_ptr<Market> createMarket( const IMarketType::Type aMarketType, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
+    static std::auto_ptr<Market> createMarket( const IMarketType::Type aMarketType,
+		const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-
-    /*! \brief Add additional information to the debug xml stream for derived
-    *          classes.
-    * \details This method is inherited from by derived class if they which to
-    *          add any additional information to the printout of the class.
-    * \param out Output stream to print to.
-    * \param tabs A tabs object responsible for printing the correct number of
-    *        tabs. 
-    */
-    virtual void derivedToDebugXML( std::ostream& out, Tabs* tabs ) const = 0;
-	const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
-    void addRegion( const std::string& regionNameIn );
-    const std::vector<std::string> getContainedRegions() const;
+    void addRegion( const std::string& aRegion );
+	const std::vector<const objects::Atom*>& getContainedRegions() const;
 
     virtual void initPrice() = 0;
     virtual void setPrice( const double priceIn ) = 0;
@@ -72,12 +64,11 @@ public:
     virtual double getSupply() const = 0;
     virtual double getSupplyForChecking() const = 0;
     virtual void addToSupply( const double supplyIn );
-
     const std::string& getName() const;
     const std::string& getRegionName() const;
     const std::string& getGoodName() const;
-    void setMarketInfo( const std::string& itemName, const double itemValue );
-    double getMarketInfo( const std::string& aItemName, bool aMustExist ) const;
+    const IInfo* getMarketInfo() const;
+    IInfo* getMarketInfo();
     void storeInfo();
     void restoreInfo();
 
@@ -122,15 +113,21 @@ protected:
 	//! The stored supply.
     double storedSupply;
 	
-	//! Vector of names of all regions contained within this market.
-    std::vector <std::string> containedRegionNames;
+	//! Vector of atoms of all regions contained within this market.
+	std::vector <const objects::Atom*> mContainedRegions;
 	
 	//! Object containing information related to the market.
-    std::auto_ptr<MarketInfo> mMarketInfo; 
+    std::auto_ptr<IInfo> mMarketInfo;
 
-private:
-	//! Node name for toXML methods
-	const static std::string XML_NAME;
+	    /*! \brief Add additional information to the debug xml stream for derived
+    *          classes.
+    * \details This method is inherited from by derived class if they which to
+    *          add any additional information to the printout of the class.
+    * \param out Output stream to print to.
+    * \param tabs A tabs object responsible for printing the correct number of
+    *        tabs. 
+    */
+    virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
 };
 
 #endif // _MARKET_H_

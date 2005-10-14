@@ -80,10 +80,16 @@ public:
     void XMLParse( const xercesc::DOMNode* node );
 	void toInputXML( std::ostream& out, Tabs* tabs ) const;
 	void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	virtual void completeInit( const std::string& regionName );
-    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, 
-        const std::string& aSectorName, NationalAccount& nationalAccount, 
-        Demographic* aDemographics, const double aCapitalStock, const int aPeriod );
+	
+    virtual void completeInit( const std::string& aRegionName ) = 0;
+    
+    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
+                           const std::string& aRegionName, 
+                           const std::string& aSectorName,
+                           NationalAccount& nationalAccount, 
+                           const Demographic* aDemographics,
+                           const double aCapitalStock,
+                           const int aPeriod ) = 0;
 
 	const std::string& getName() const;
 	int getYear() const;

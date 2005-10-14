@@ -22,6 +22,7 @@
 class GDP;
 class MoreSectorInfo;
 class Demographic;
+class IInfo;
 
 /*! 
 * \ingroup Objects
@@ -36,9 +37,12 @@ public:
     void calcShare( const int period, const GDP* gdp ); 
     void setoutput( const double demand, const int period, const GDP* gdp );
     static const std::string& getXMLNameStatic();
-    void initCalc( const MarketInfo* aSectorInfo, NationalAccount& aNationalAccount,
-                   Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo,
-                   const int aPeriod );
+    
+    virtual void initCalc( NationalAccount& aNationalAccount,
+                           const Demographic* aDemographics,
+                           const MoreSectorInfo* aMoreSectorInfo,
+                           const int aPeriod );
+
 protected:
     std::vector<double> speed; // Speed of Mode in Miles/hour
     std::vector<double> popDenseElasticity; // Population Density Elasticity of mode

@@ -10,7 +10,6 @@
 // Standard Library headers
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
 
@@ -19,7 +18,7 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -122,7 +121,7 @@ void BuildingGenericDmdTechnology::toDebugXMLDerived( const int period, ostream&
 * \param per model period
 */
 void BuildingGenericDmdTechnology::calcShare( const string& regionName, const GDP* gdp, const int period ) {
-    share = 1;
+	share = 1;
 }
 
 /*! \brief calculate effective internal gains as they affect the demand for this technology
@@ -144,11 +143,12 @@ double BuildingGenericDmdTechnology::getEffectiveInternalGains( const string& re
 * \author Steve Smith
 * \param unitDemand calibrated unit demand (demand per unit floorspace) for this subsector
 * \param regionName regionName
-* \param aSubSectorInfo MarketInfo object (not used for this class so name is left out) 
+* \param aSubSectorInfo Info object (not used for this class so name is left out) 
 * \param period model period
 */
-void BuildingGenericDmdTechnology::adjustForCalibration( double subSectorDemand, const string& regionName, const MarketInfo* aSubSectorInfo, const int period ) {
-    
+void BuildingGenericDmdTechnology::adjustForCalibration( double subSectorDemand, const string& regionName,
+														 const IInfo* aSubSectorInfo, const int period )
+{
     // unitDemand (demand per unit area) is passed into this routine as subSectorDemand, but not adjusted for saturation and other parameters.    
     double unitDemand = subSectorDemand;
 
@@ -169,19 +169,20 @@ void BuildingGenericDmdTechnology::adjustForCalibration( double subSectorDemand,
 * \param per Model period
 */
 void BuildingGenericDmdTechnology::production(const string& regionName,const string& prodName,
-                            double dmd, const GDP* gdp, const int period ) {
-Marketplace* marketplace = scenario->getMarketplace();
-    
-    // dmd is in units of floor space
-    double floorSpace = dmd; 
-    
-    input = shrwts * getDemandFnPrefix( regionName, period ) * floorSpace + getEffectiveInternalGains( regionName, period );
+											  double dmd, const GDP* gdp, const int period )
+{
+	Marketplace* marketplace = scenario->getMarketplace();
 
-    output = input = max( input, 0.0 ); // Make sure internal gains do not drive service less than zero
-    
-    // set demand for fuel in marketplace
-    marketplace->addToDemand( fuelname, regionName, input, period );
-    
+	// dmd is in units of floor space
+	double floorSpace = dmd; 
+
+	input = shrwts * getDemandFnPrefix( regionName, period ) * floorSpace + getEffectiveInternalGains( regionName, period );
+
+	output = input = max( input, 0.0 ); // Make sure internal gains do not drive service less than zero
+
+	// set demand for fuel in marketplace
+	marketplace->addToDemand( fuelname, regionName, input, period );
+
 }
 
 //! Demand function prefix.
@@ -208,4 +209,3 @@ Marketplace* marketplace = scenario->getMarketplace();
     // Make sure and do not return zero
     return ( prefixValue > 0 ) ? prefixValue : 1;
 }
-

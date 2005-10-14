@@ -19,7 +19,7 @@
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
 #include "sectors/include/interm_subsector.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -47,18 +47,21 @@ IntermittentSubsector::IntermittentSubsector( const string regionName, const str
 /*! \brief Complete the initialization
 *
 * This routine is only called once per model run
-*
+* \param aSectorInfo Sector information object.
+* \param aDependencyFinder Regional dependency finder.
 * \author Marshall Wise
-* \warning markets are not necesarilly set when completeInit is called
-*  For the intermittent subsector, use this to make sure there is a trial market set for electricity
-*  as there might not be one set if there are no simultaneities
+* \warning markets are not necesarilly set when completeInit is called. For the
+*          intermittent subsector, use this to make sure there is a trial market
+*          set for electricity as there might not be one set if there are no
+*          simultaneities
 */
-void IntermittentSubsector::completeInit( DependencyFinder* aDependencyFinder ) {
+void IntermittentSubsector::completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder ) {
 
     // first call parent method
-    Subsector::completeInit(aDependencyFinder);
+    Subsector::completeInit( aSectorInfo, aDependencyFinder);
 
-    // now set the trial market for electricity
+    // now set the trial market for electricity.
+    // TODO: What if the electricity market hadn't been created yet?
     Marketplace* marketplace = scenario->getMarketplace();
     marketplace->resetToPriceMarket(electricSectorName, regionName);
 }
@@ -158,20 +161,13 @@ const string& IntermittentSubsector::getXMLNameStatic() {
 * \author Marshall Wise
 * \param period Model period
 */
-void IntermittentSubsector::initCalc(const MarketInfo* aSectorInfo, 
-                          NationalAccount& aNationalAccount,
-                          Demographic* aDemographics,
-                          const MoreSectorInfo* aMoreSectorInfo,
-                          const int aPeriod ) {
-
-    // this needs to be done before control is passed to Subsector:initCalc() so that information is available to technology initCalc() routines
-    // though these particular members are not needed at technology level yet.
-    elecReserveMargin = aSectorInfo->getItemValue( "elecReserveMargin" , true );
-    aveGridCapacityFactor = aSectorInfo->getItemValue( "aveGridCapacityFactor", true );
-    backupCapacityFactor = aSectorInfo->getItemValue( "backupCapacityFactor", true );
-    backupCost = aSectorInfo->getItemValue( "backupCost", true );
-    // call parent method
-    Subsector::initCalc( aSectorInfo, aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
+void IntermittentSubsector::initCalc( NationalAccount& aNationalAccount,
+                                      const Demographic* aDemographics,
+                                      const MoreSectorInfo* aMoreSectorInfo,
+                                      const int aPeriod )
+{
+    // Call parent method
+    Subsector::initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
 }
 
 /*! \brief set tech shares based on backup energy needs for an intermittent
@@ -194,10 +190,12 @@ void IntermittentSubsector::calcTechShares( const GDP* gdp, const int period ) {
     per unit of resource energy (in EJ) using backup capacity factor */
 
     double backupEnergyFraction = backupCapacityPerEnergyOutput[period] 
-                                * (HOURS_PER_YEAR * backupCapacityFactor * EJ_PER_GWH);
+                                * (HOURS_PER_YEAR
+                                * mSubsectorInfo->getDouble( "backupCapacityFactor", true )
+                                * EJ_PER_GWH);
 
     // Assert that the read-in resourceTechNumber abd backupTechNumber are within the size of the tech vector
-
+    // TODO: This should be a runtime check.
     assert(resourceTechNumber < techs.size());
     assert(backupTechNumber < techs.size());
 
@@ -226,10 +224,11 @@ void IntermittentSubsector::calcBackupFraction(const int per) {
 
     // get variance of resource from marketinfo
     Marketplace* marketplace = scenario->getMarketplace();
-    double variance = marketplace->getMarketInfo(resourceName,regionName,per,"resourceVariance");
+	const IInfo* marketInfo = marketplace->getMarketInfo( resourceName, regionName, per, true );
+	double variance = marketInfo->getDouble( "resourceVariance", true );
 
 	// get resource capacity factor from market info
-    double resourceCapacityFactor = marketplace->getMarketInfo(resourceName,regionName,per,"resourceCapacityFactor");
+	double resourceCapacityFactor = marketInfo->getDouble( "resourceCapacityFactor", true );
 
     //get trial amount of overall regional electricity supplied  (Josh, how avoid hardcode this?)
     // trial markets have a demand but not supply
@@ -254,7 +253,9 @@ void IntermittentSubsector::calcBackupFraction(const int per) {
 	/*! Compute reserve capacity as the product of electricity reserve margin and the
 	   total regional electric capacity (which is converted from electric supply in Energy units
 	   to capacity units using its average capacity factor).  */
-    double reserveTotal = elecReserveMargin * elecSupply /(EJ_PER_GWH * HOURS_PER_YEAR * aveGridCapacityFactor);//in GW
+    double reserveTotal = mSubsectorInfo->getDouble( "elecReserveMargin", true )
+                          * elecSupply /(EJ_PER_GWH * HOURS_PER_YEAR
+                          * mSubsectorInfo->getDouble( "aveGridCapacityFactor", true ) );//in GW
     double reserveTotalSquared  = pow(reserveTotal,2);
 
 
@@ -295,7 +296,8 @@ void IntermittentSubsector::calcPrice( const int period ) {
 	denominator by 1E9 to get * 1/1000) to make consistent with market price
     which is in $/GJ.  BackupCost is in $/kw/yr. */
 
-    subsectorprice[period] += backupCapacityPerEnergyOutput[period] /1000 * backupCost;
+    subsectorprice[period] += backupCapacityPerEnergyOutput[period] / 1000
+                              * mSubsectorInfo->getDouble( "backupCost", true );
 
 }
 
@@ -331,11 +333,13 @@ void IntermittentSubsector::MCoutputSupplySector() const {
         // Get resource name from fuel name of technology
 	    string resourceName = techs[resourceTechNumber][m]->getFuelName();
         // get resource capacity factor from market info
-        double resourceCapacityFactor = marketplace->getMarketInfo(resourceName,regionName,m,"resourceCapacityFactor");
+        double resourceCapacityFactor = marketplace->getMarketInfo(resourceName,regionName,m, true )
+			                                       ->getDouble( "resourceCapacityFactor", false );
         if (resourceCapacityFactor > util::getSmallNumber()) {
             capacityGW[m] = getOutput(m) / (EJ_PER_GWH * HOURS_PER_YEAR * resourceCapacityFactor);
             backupCapacityGW[m] = (getOutput(m) / (EJ_PER_GWH * HOURS_PER_YEAR * resourceCapacityFactor)) * backupCapacityFraction[m];
-            backupCostCentsPerkWh[m] = backupCapacityPerEnergyOutput[m] /1000 * backupCost * CVRT90 * 0.36;
+            backupCostCentsPerkWh[m] = backupCapacityPerEnergyOutput[m] /1000
+                                       * mSubsectorInfo->getDouble( "backupCost", true ) * CVRT90 * 0.36;
             resourceCostCentsPerkWh[m] = subsectorprice[m] * CVRT90 * 0.36 - backupCostCentsPerkWh[m];
         }
     }

@@ -36,10 +36,8 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
 			<demographics>
 				<populationMiniCAM year="1960">
@@ -5008,10 +5006,8 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
 			<demographics>
 				<populationMiniCAM year="1960">
@@ -9925,10 +9921,8 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
 			<demographics>
 				<populationMiniCAM year="1960">
@@ -14860,7 +14854,6 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
@@ -19768,10 +19761,8 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
 			<demographics>
 				<populationMiniCAM year="1960">
@@ -24685,10 +24676,8 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
 			<demographics>
 				<populationMiniCAM year="1960">
@@ -29589,7 +29578,6 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
@@ -34627,10 +34615,8 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
 			<demographics>
 				<populationMiniCAM year="1960">
@@ -39544,7 +39530,6 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
@@ -44588,7 +44573,6 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
@@ -49641,7 +49625,6 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
@@ -54676,10 +54659,8 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
 			<demographics>
 				<populationMiniCAM year="1960">
@@ -59578,10 +59559,8 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
 			<demographics>
 				<populationMiniCAM year="1960">
@@ -64458,7 +64437,6 @@
 			<PrimaryFuelCO2Coef name="regional coal">27.3</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional crude oil">19.6</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>
-			<PrimaryFuelCO2Coef name="renewable">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>

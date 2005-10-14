@@ -423,7 +423,7 @@ double SolverInfo::getDemandElasWithRespectTo( const unsigned int aMarketNumber 
 
 //! Return the list of regions contained in the linked market for this SolverInfo.
 // Probably too much linkages here, not sure how to fix.
-const vector<string> SolverInfo::getContainedRegions() const {
+const vector<const objects::Atom*>& SolverInfo::getContainedRegions() const {
     return linkedMarket->getContainedRegions();
 }
 

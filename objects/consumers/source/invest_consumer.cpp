@@ -63,7 +63,7 @@ void InvestConsumer::completeInit( const string& aRegionName ) {
 //! initialize anything that won't change during the calcuation
 void InvestConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName, 
                                const string& aSectorName, NationalAccount& aNationalAccount, 
-                               Demographic* aDemographics, const double aCapitalStock, const int aPeriod ) 
+                               const Demographic* aDemographics, const double aCapitalStock, const int aPeriod ) 
 {
     if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
         BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );

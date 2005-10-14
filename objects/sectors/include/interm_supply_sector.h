@@ -16,8 +16,8 @@
 * \version $Revision$
 */
 #include <string>
-#include "sectors/include/sector.h"
 #include "sectors/include/supply_sector.h"
+class IInfo;
 
 /*!
 * \ingroup Objects
@@ -31,8 +31,9 @@ class IntermittentSupplySector: public SupplySector
 public:
     IntermittentSupplySector ( const std::string regionNameIn );
     static const std::string& getXMLNameStatic();
-    void initCalc( const int period, const MarketInfo* aRegionInfo,
-                           NationalAccount& nationalAccount, Demographic* aDemographics );
+    virtual void initCalc( NationalAccount& nationalAccount,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
 protected:
     bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node );
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
@@ -40,7 +41,8 @@ protected:
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;
-    //! electricity reserve margin.  For regional electricity sector.
+    
+	//! electricity reserve margin.  For regional electricity sector.
     double elecReserveMargin;
     //! resource backup cost in 1975 $/kW/yr   (value is and should be annualized)
     double backupCost;

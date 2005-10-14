@@ -18,7 +18,7 @@
 #include "containers/include/scenario.h"
 #include "containers/include/gdp.h"
 #include "util/base/include/model_time.h"
-#include "marketplace/include/market_info.h"
+#include "containers/include/iinfo.h"
 
 #include "sectors/include/building_dmd_sector.h"
 #include "sectors/include/building_dmd_subsector.h"
@@ -142,23 +142,20 @@ const std::string& BuildingDemandSector::getXMLNameStatic() {
 *
 * \author Steve Smith
 */
-void BuildingDemandSector::initCalc( const int period, const MarketInfo* aRegionInfo,
-                                     NationalAccount& nationalAccount, Demographic* aDemographic )
+void BuildingDemandSector::initCalc( NationalAccount& aNationalAccount,
+                                     const Demographic* aDemographic,
+                                     const int aPeriod )
 {
-    // Add items from sectorInfo -- this needs to be done before control is passed to Sector:initCalc() so that information is available to subsector and technology initCalc() routines
-    mSectorInfo->addItem( "heatingDegreeDays", aRegionInfo->getItemValue( "heatingDegreeDays", true ) );
-    mSectorInfo->addItem( "coolingDegreeDays", aRegionInfo->getItemValue( "coolingDegreeDays", true ) );
-
     if ( baseScaler < 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "WARNING: Building sector base demand service not set in period " << period 
+        mainLog << "Building sector base demand service not set in period " << aPeriod 
                 << " sector " << name << " region " << regionName 
                 << ".  baseScaler being set to 1." << endl;
         baseScaler = 1;
     }
     
-    Sector::initCalc( period, aRegionInfo, nationalAccount, aDemographic );
+    DemandSector::initCalc( aNationalAccount, aDemographic, aPeriod );
 
 }
 

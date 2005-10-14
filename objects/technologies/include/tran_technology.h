@@ -17,7 +17,7 @@
 #include "technologies/include/technology.h"
 
 class GDP;
-class MarketInfo;
+class IInfo;
 
 /*! 
 * \ingroup Objects
@@ -33,10 +33,11 @@ public:
     const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
     void calcCost( const std::string& regionName, const std::string& sectorName, const int per );
-    void production( const std::string& regionName, const std::string& prodName,double dmd, const GDP* gdp, const int per);    
+    void production( const std::string& regionName, const std::string& prodName,double dmd,
+		             const GDP* gdp, const int per);    
     double getIntensity(const int per) const;
     double getCalibrationOutput() const;
-    void initCalc( const MarketInfo* aSubsectorInfo );
+    void initCalc( const IInfo* aSubsectorInfo );
 
 protected:
 	//! Vehicle load factor.

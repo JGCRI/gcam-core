@@ -152,9 +152,10 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
 * \author Steve Smith
 * \param period Model period
 */
-void TranSubsector::initCalc( const MarketInfo* aSectorInfo, NationalAccount& aNationalAccount,
-							 Demographic* aDemographics, const MoreSectorInfo* aMoreSectorInfo,
-							 const int aPeriod )
+void TranSubsector::initCalc( NationalAccount& aNationalAccount,
+                              const Demographic* aDemographics,
+                              const MoreSectorInfo* aMoreSectorInfo,
+                              const int aPeriod )
 {
 	// Check if illegal values have been read in
 	if ( speed[ aPeriod ] <= 0 ) {
@@ -164,7 +165,7 @@ void TranSubsector::initCalc( const MarketInfo* aSectorInfo, NationalAccount& aN
 		mainLog << "Speed was zero or negative in subsector: " << name << " in region " 
 			<< regionName << ". Reset to 1." << endl;
 	}
-	Subsector::initCalc( aSectorInfo, aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
+	Subsector::initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
 }
 
 //! calculate subsector share numerator
