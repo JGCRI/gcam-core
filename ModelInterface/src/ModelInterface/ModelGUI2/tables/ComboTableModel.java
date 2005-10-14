@@ -723,7 +723,9 @@ public class ComboTableModel extends BaseTableModel{
 	  }
 	  recAddTables(dataTree, null, regions, years, "");
 	  System.out.println("Level Selected: "+levelValues);
-	  if(!sumAll && levelValues != null && years.size() != levelValues.length) {
+	  // if we are supposed to have more values then found, add the row,
+	  // and it will be filled out with zeros
+	  if(!sumAll && levelValues != null && years.size() < levelValues.length) {
 		  //indRow = new Vector(levelValues);
 		  indRow = new Vector(levelValues.length, 0);
 		  for(int i =0; i < levelValues.length; ++i) {
