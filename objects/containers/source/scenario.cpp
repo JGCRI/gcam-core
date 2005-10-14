@@ -348,29 +348,37 @@ const map<const string,const Curve*> Scenario::getEmissionsPriceCurves( const st
 }
 
 /*! \brief Solve the marketplace using the Solver for a given period. 
-*
-* The solve method calls the solve method of the instance of the Solver object 
-* that was created in the constructor. This method then checks for any errors that occurred while solving
-* and reports the errors if it is the last period. 
+* \details The solve method calls the solve method of the instance of the Solver
+*          object that was created in the constructor. This method then checks
+*          for any errors that occurred while solving and reports the errors if
+*          it is the last period. 
 * \return Whether all model periods solved successfully.
 * \param period Period of the model to solve.
-* \todo Fix the return codes. 
 */
 
 bool Scenario::solve( const int period ){
-    // Solve the marketplace. If the retcode is zero, add it to the unsolved periods. 
+	/*! \pre The solver must be instantiated. */
+	assert( solver.get() );
+
+    // Solve the marketplace. If the return code is false than the model did not
+    // solve for the period. Add the period to the scenario list of unsolved
+    // periods. 
     if( !solver->solve( period ) ) {
         unsolvedPeriods.push_back( period );
     }
-    // TODO: This should be added to the db. Using a logger would remove the dual writes.
+    // TODO: This should be added to the db.
     // If it was the last period print the ones that did not solve.
     if( modeltime->getmaxper() - 1 == period  ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        if( static_cast<int>( unsolvedPeriods.size() ) == 0 ) {
+        mainLog.setLevel( ILogger::WARNING );
+
+		// Report if all model periods solved correctly.
+        if( unsolvedPeriods.empty() ) {
             mainLog << "All model periods solved correctly." << endl;
             return true;
         }
+
+		// Otherwise print all model periods which did not solve correctly.
         mainLog << "The following model periods did not solve: ";
         for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
             mainLog << *i << ", ";
@@ -378,7 +386,9 @@ bool Scenario::solve( const int period ){
         mainLog << endl;
         return false;
     }
-    return true; // The error will be sent after the last iteration.
+	// If this is not the last period return success. If there was an error it
+    // will be sent after the last iteration.
+    return true;
 }
 
 //! Output Scenario members to a CSV file.
