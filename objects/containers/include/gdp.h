@@ -47,7 +47,7 @@ private:
 	std::vector<bool> gdpAdjustedFlag; //!< flag to tell if GDPs have been adjusted yet
 	std::vector<double> calibrationGDPs; //!< Calibration values for GDP (constant dollars)
 	double baseGDP; //!< Base-year value (constant dollars) for regional GDP
-	double EnergyGDPElas; //!< Energy service price feedback elasticity for GDP
+	double mEnergyGDPElasticity; //!< Energy service price feedback elasticity for GDP
 	double PPPConversionFact; //!< 1990 Ratio of PPP to Market GDP
     double PPPDelta; //!< Internal exponent variable for PPP conversion
 	bool constRatio; //!< Flag to turn on dynamic ratio of PPP to Market GDP

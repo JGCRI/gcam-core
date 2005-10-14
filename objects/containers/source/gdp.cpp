@@ -48,7 +48,7 @@ GDP::GDP() {
     gdpValueNotAdjusted.resize( maxper );
     gdpPerCapitaNotAdjusted.resize( maxper );
     baseGDP = 0;
-	EnergyGDPElas = 0;
+	mEnergyGDPElasticity = 0;
 	PPPConversionFact = 1;
     PPPDelta = 0;
 	constRatio = false;
@@ -84,7 +84,7 @@ void GDP::XMLParse( const DOMNode* node ){
 		}
 		// Energy GDP elasticity. 
 		else if ( nodeName == "e_GDP_elas" ){
-			EnergyGDPElas = XMLHelper<double>::getValue( curr );
+			mEnergyGDPElasticity = XMLHelper<double>::getValue( curr );
 		}
 		// labor force participation rate
 		else if ( nodeName == "laborproductivity" ){
@@ -113,7 +113,7 @@ void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteElement( baseGDP, "baseGDP", out, tabs);
 
 	// Write out gdp energy elasticity.
-	XMLWriteElementCheckDefault( EnergyGDPElas, "e_GDP_elas", out, tabs, 0.0 );
+	XMLWriteElementCheckDefault( mEnergyGDPElasticity, "e_GDP_elas", out, tabs, 0.0 );
 
 	const Modeltime* modeltime = scenario->getModeltime();
 	for( unsigned int iter = 0; iter < laborProdGrowthRate.size(); ++iter ){
@@ -152,7 +152,7 @@ void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	XMLWriteElement( baseGDP, "baseGDP", out, tabs);
 
 	// Write out gdp energy elasticity.
-	XMLWriteElementCheckDefault( EnergyGDPElas, "e_GDP_elas", out, tabs, 0.0 );
+	XMLWriteElementCheckDefault( mEnergyGDPElasticity, "e_GDP_elas", out, tabs, 0.0 );
 
 	XMLWriteElement( laborProdGrowthRate[ period ], "laborprod", out, tabs );
 
@@ -382,7 +382,7 @@ void GDP::adjustGDP( const int period, const double priceRatio ) {
 
     if ( period > modeltime->getyr_to_per(1990) ) {
         // adjust gdp using energy cost changes and energy to gdp feedback elasticity
-        gdpValueAdjusted[ period ] = gdpValue[ period ]*pow( priceRatio, EnergyGDPElas );
+        gdpValueAdjusted[ period ] = gdpValue[ period ]*pow( priceRatio, mEnergyGDPElasticity );
         if ( !util::isValidNumber( gdpValueAdjusted[ period ] ) ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
