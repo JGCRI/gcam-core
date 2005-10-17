@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <files>
-	<data file="inputWindPower.xml" />
+	<data file="inputTestNASA.xml" />
 	<region file="inputR.xml" />
-	<output file="outWindFixing.xml" />
+	<output file="outNASA2.xml" />
 	<log level="FINE" />
 </files>

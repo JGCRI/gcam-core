@@ -25,5 +25,7 @@ public interface DataRepository
   public double getValue(int X, int Y);
   public double getValue(String varName, double time, int X, int Y);
   
+  public int mergeHoldTo(String holdName, String varName);
+  
   public TreeMap<String, TreeMap<Double, Double>> getAllLayers(int X, int Y);
 }

@@ -144,13 +144,14 @@ public class DataBuilder
    */
   public void runAll()
   {
+    /*
     try{
       System.out.println("BEGIN: waiting...");
       System.in.read();
       System.in.read();
       System.out.println("...going");
     } catch(IOException e) {}
-    
+    */
     log.log(Level.FINE, "Calling makeStreams()");
     makeStreams();
     
@@ -196,13 +197,14 @@ public class DataBuilder
       log.log(Level.FINE, "Calling writeRegions()");
       writeRegions();
     }
-    
+    /*
     try{
       System.out.println("END: waiting...");
       System.in.read();
       System.in.read();
       System.out.println("...going");
     } catch(IOException e) {}
+    */
   }
   
   /**
@@ -731,6 +733,7 @@ public class DataBuilder
     boolean tagged = true;
     boolean avg = true;
     boolean dec = true;
+    boolean overwrite = false;
     String dataName = "shutup,";
     String fileName = "it is initialized thanks";
     String ref = null;
@@ -796,6 +799,8 @@ public class DataBuilder
     }
   //txt file opened
 
+    
+    
     if(tagged)
     { //if didnt get these before in the xml file
       dataName = readWord(input);
@@ -815,22 +820,32 @@ public class DataBuilder
     	}catch(IOException e) {}
     }
     
-    if(!init)
-    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataStruct.fillWorld(res);
-      init = true;
-    }
-    //setting whether contained data is additive or averaged and references
-    dataAvg.put(dataName, new Boolean(avg));
-    if(ref != null)
+    if(dataAvg.containsKey(dataName))
     {
-      dataRef.put(dataName, ref);
-    }
-    if(unit != null)
+      //then we are overwriting this data!
+      overwrite = true;
+    } else
     {
-      dataUnits.put(dataName, unit);
+      //dont want to add all this information if we already have!!!
+      if(!init)
+      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+        dataStruct.fillWorld(res);
+        init = true;
+      }
+      //setting whether contained data is additive or averaged and references
+      dataAvg.put(dataName, new Boolean(avg));
+      if(ref != null)
+      {
+        dataRef.put(dataName, ref);
+      }
+      if(unit != null)
+      {
+        dataUnits.put(dataName, unit);
+      }
+      //done settign avg/add and references
     }
-    //done settign avg/add and references
+    
+    
     
   //reading the data from the file
     for(double i = (90-res); i >= -90; i-=res)
@@ -846,12 +861,30 @@ public class DataBuilder
         }
         toAdd = new DataBlock(k, i, res, res);
         timeValue = new TreeMap();
-        timeValue.put(new Double(time), dataValue);
-        toAdd.data.put(dataName, timeValue);
+        timeValue.put(time, dataValue);
+        
+        //check overwrite bit, if so, use hold instead of dataName
+        if(overwrite)
+        {
+          //just replace name with hold, later, we will merge hold over old data
+          toAdd.data.put("hold", timeValue);
+        } else
+        {
+          //add data as normal
+          toAdd.data.put(dataName, timeValue);
+        }
+        
       //merging this data into the current tree
         dataStruct.addData(toAdd, avg);
       }
     }
+    
+    //done adding all data, if overwrite, must merge with old data now
+    if(overwrite)
+    {
+      dataStruct.resolveOverwrite("hold", dataName);
+    } //else we are done already
+    
     try{
       input.close(); //im such a good programmer closing my files and whatnot
     } catch(IOException e){}
@@ -868,6 +901,7 @@ public class DataBuilder
     boolean tagged = true;
     boolean avg = true;
     boolean dec = true;
+    boolean overwrite = false;
     String dataName = "shutup,";
     String fileName = "it is initialized thanks";
     String ref = null;
@@ -948,23 +982,30 @@ public class DataBuilder
     	}catch(IOException e) {}
     }
     
-    if(!init)
-    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataStruct.fillWorld(res);
-      init = true;
-    }
-    
-    //setting whether contained data is additive or averaged
-    dataAvg.put(dataName, new Boolean(avg));
-    if(ref != null)
+    if(dataAvg.containsKey(dataName))
     {
-      dataRef.put(dataName, ref);
-    }
-    if(unit != null)
+      //then we are overwriting this data!
+      overwrite = true;
+    } else
     {
-      dataUnits.put(dataName, unit);
+      //dont want to add all this information if we already have!!!
+      if(!init)
+      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+        dataStruct.fillWorld(res);
+        init = true;
+      }
+      //setting whether contained data is additive or averaged and references
+      dataAvg.put(dataName, new Boolean(avg));
+      if(ref != null)
+      {
+        dataRef.put(dataName, ref);
+      }
+      if(unit != null)
+      {
+        dataUnits.put(dataName, unit);
+      }
+      //done settign avg/add and references
     }
-    //done settign avg/add
   
   //reading the data from the file
     try{
@@ -990,7 +1031,17 @@ public class DataBuilder
         toAdd = new DataBlock(mX, mY, 1, 1);
         timeValue = new TreeMap();
         timeValue.put(new Double(time), dataValue);
-        toAdd.data.put(dataName, timeValue);
+        
+        //check overwrite bit, if so, use hold instead of dataName
+        if(overwrite)
+        {
+          //just replace name with hold, later, we will merge hold over old data
+          toAdd.data.put("hold", timeValue);
+        } else
+        {
+          //add data as normal
+          toAdd.data.put(dataName, timeValue);
+        }
         
       //merging this data into the current tree
         dataStruct.addData(toAdd, avg);
@@ -998,6 +1049,13 @@ public class DataBuilder
         //prepping for next run
         readString = input.readLine();
       }
+      
+//    done adding all data, if overwrite, must merge with old data now
+      if(overwrite)
+      {
+        dataStruct.resolveOverwrite("hold", dataName);
+      } //else we are done already
+      
       input.close(); //im such a good programmer closing my files and whatnot
     } catch(IOException e){}
   //done reading data from file
@@ -1012,6 +1070,7 @@ public class DataBuilder
     log.log(Level.FINER, "begin function");
     
     boolean avg = true;
+    boolean overwrite = false;
     String dataName = "shutup,";
     String fileName = "it is initialized thanks";
     String dataVar = "farea"; //what variable in the NetCDF file to get data from
@@ -1064,22 +1123,30 @@ public class DataBuilder
   //done reading from XML file
     
 
-    if(!init)
-    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataStruct.fillWorld(res);
-      init = true;
-    }
-    //setting whether contained data is additive or averaged
-    dataAvg.put(dataName, new Boolean(avg));
-    if(ref != null)
+    if(dataAvg.containsKey(dataName))
     {
-      dataRef.put(dataName, ref);
-    }
-    if(unit != null)
+      //then we are overwriting this data!
+      overwrite = true;
+    } else
     {
-      dataUnits.put(dataName, unit);
+      //dont want to add all this information if we already have!!!
+      if(!init)
+      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+        dataStruct.fillWorld(res);
+        init = true;
+      }
+      //setting whether contained data is additive or averaged and references
+      dataAvg.put(dataName, new Boolean(avg));
+      if(ref != null)
+      {
+        dataRef.put(dataName, ref);
+      }
+      if(unit != null)
+      {
+        dataUnits.put(dataName, unit);
+      }
+      //done settign avg/add and references
     }
-    //done settign avg/add
     
   //reading the data from the file
     try 
@@ -1106,7 +1173,17 @@ public class DataBuilder
             toAdd = new DataBlock(x, y, res, res);
             timeValue = new TreeMap();
             timeValue.put(new Double(time), dataValue);
-            toAdd.data.put(dataName, timeValue);
+
+            //check overwrite bit, if so, use hold instead of dataName
+            if(overwrite)
+            {
+              //just replace name with hold, later, we will merge hold over old data
+              toAdd.data.put("hold", timeValue);
+            } else
+            {
+              //add data as normal
+              toAdd.data.put(dataName, timeValue);
+            }
 
           //merging this data into the current tree
             //System.out.println("sending "+dataValue);
@@ -1117,7 +1194,14 @@ public class DataBuilder
           k++;
         }
         i++;
-      }  
+      }
+      
+      //done adding all data, if overwrite, must merge with old data now
+      if(overwrite)
+      {
+        dataStruct.resolveOverwrite("hold", dataName);
+      } //else we are done already
+      
     } catch (java.io.IOException e) {
       log.log(Level.SEVERE, "Error reading NetCDF file -> "+fileName);
     }
@@ -1132,6 +1216,7 @@ public class DataBuilder
     List infoChildren;
     Element currElem;
     
+    boolean overwrite = false;
     String fileName = "init";
     String attrName = "init";
     String dataName = "shutup,";
@@ -1185,23 +1270,30 @@ public class DataBuilder
     }
   //done reading from XML file
     
-    if(!init)
-    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataStruct.fillWorld(res);
-      init = true;
-    }
-    
-    //setting whether contained data is additive or averaged
-    dataAvg.put(dataName, new Boolean(avg));
-    if(ref != null)
+    if(dataAvg.containsKey(dataName))
     {
-      dataRef.put(dataName, ref);
-    }
-    if(unit != null)
+      //then we are overwriting this data!
+      overwrite = true;
+    } else
     {
-      dataUnits.put(dataName, unit);
+      //dont want to add all this information if we already have!!!
+      if(!init)
+      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+        dataStruct.fillWorld(res);
+        init = true;
+      }
+      //setting whether contained data is additive or averaged and references
+      dataAvg.put(dataName, new Boolean(avg));
+      if(ref != null)
+      {
+        dataRef.put(dataName, ref);
+      }
+      if(unit != null)
+      {
+        dataUnits.put(dataName, unit);
+      }
+      //done settign avg/add and references
     }
-    //done settign avg/add
     
     try
     {
@@ -1257,13 +1349,29 @@ public class DataBuilder
           toAdd = new DataBlock(x, y, res, res);
           timeValue = new TreeMap();
           timeValue.put(new Double(time), dataValue);
-          toAdd.data.put(dataName, timeValue);
+
+          //check overwrite bit, if so, use hold instead of dataName
+          if(overwrite)
+          {
+            //just replace name with hold, later, we will merge hold over old data
+            toAdd.data.put("hold", timeValue);
+          } else
+          {
+            //add data as normal
+            toAdd.data.put(dataName, timeValue);
+          }
 
           //System.out.println("new data");
           //merging this data into the current tree
           dataStruct.addData(toAdd, avg);
           //System.out.println(" - "+dataValue);
         }
+        
+        //done adding all data, if overwrite, must merge with old data now
+        if(overwrite)
+        {
+          dataStruct.resolveOverwrite("hold", dataName);
+        } //else we are done already
       } finally
       {
         collection.close(iter);
@@ -1297,6 +1405,7 @@ public class DataBuilder
     double x, y, mult;
     boolean avg = true;
     boolean typeWarn = false;
+    boolean overwrite = false;
     TreeMap timeValue;
     Double dataValue;
     DataBlock toAdd;
@@ -1340,23 +1449,30 @@ public class DataBuilder
     }
   //done reading from XML file
     
-    if(!init)
-    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataStruct.fillWorld(res);
-      init = true;
-    }
-    
-    //setting whether contained data is additive or averaged
-    dataAvg.put(dataName, new Boolean(avg));
-    if(ref != null)
+    if(dataAvg.containsKey(dataName))
     {
-      dataRef.put(dataName, ref);
-    }
-    if(unit != null)
+      //then we are overwriting this data!
+      overwrite = true;
+    } else
     {
-      dataUnits.put(dataName, unit);
+      //dont want to add all this information if we already have!!!
+      if(!init)
+      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+        dataStruct.fillWorld(res);
+        init = true;
+      }
+      //setting whether contained data is additive or averaged and references
+      dataAvg.put(dataName, new Boolean(avg));
+      if(ref != null)
+      {
+        dataRef.put(dataName, ref);
+      }
+      if(unit != null)
+      {
+        dataUnits.put(dataName, unit);
+      }
+      //done settign avg/add and references
     }
-    //done settign avg/add
     
     try
     {
@@ -1414,7 +1530,17 @@ public class DataBuilder
             toAdd = new DataBlock(x, y, res, res);
             timeValue = new TreeMap();
             timeValue.put(new Double(time), dataValue);
-            toAdd.data.put(dataName, timeValue);
+
+            //check overwrite bit, if so, use hold instead of dataName
+            if(overwrite)
+            {
+              //just replace name with hold, later, we will merge hold over old data
+              toAdd.data.put("hold", timeValue);
+            } else
+            {
+              //add data as normal
+              toAdd.data.put(dataName, timeValue);
+            }
 
             //merging this data into the current tree
             dataStruct.addData(toAdd, avg);
@@ -1466,7 +1592,17 @@ public class DataBuilder
                 toAdd = new DataBlock(X, Y, res, res);
                 timeValue = new TreeMap();
                 timeValue.put(new Double(time), dataValue);
-                toAdd.data.put(dataName, timeValue);
+                
+                //check overwrite bit, if so, use hold instead of dataName
+                if(overwrite)
+                {
+                  //just replace name with hold, later, we will merge hold over old data
+                  toAdd.data.put("hold", timeValue);
+                } else
+                {
+                  //add data as normal
+                  toAdd.data.put(dataName, timeValue);
+                }
                 
                 //merging this data into the current tree
                 dataStruct.addData(toAdd, avg);
@@ -1475,6 +1611,12 @@ public class DataBuilder
             
           }
         }
+        
+        //done adding all data, if overwrite, must merge with old data now
+        if(overwrite)
+        {
+          dataStruct.resolveOverwrite("hold", dataName);
+        } //else we are done already
       } finally
       {
         collection.close(iter);
@@ -1511,6 +1653,7 @@ public class DataBuilder
     boolean avg = false; //avg is always false for coverage readings
     boolean typeWarn = false;
     TreeMap timeValue;
+    TreeMap<String, Boolean> overwrite = new TreeMap<String, Boolean>();
     HashMap nameMap = null;
     Double dataValue;
     DataBlock toAdd;
@@ -1654,17 +1797,31 @@ public class DataBuilder
             }
           } //target now has the data name we are storing this geometry in
           
-          //setting whether contained data is additive or averaged
-          if(!dataAvg.containsKey(target))
-          { //i cant believe this is the only way to do this
-            //its going to take forever to test every run
-            dataAvg.put(target, new Boolean(avg));
-            if(ref != null)
+          if(!overwrite.containsKey(target))
+          { //this is the first run, check for overwrite properties now
+            boolean over = false;
+            if(dataAvg.containsKey(target))
             {
-              dataRef.put(target, ref);
+              over = true;
             }
+            overwrite.put(target, over);
           }
-          //done settign avg/add ref and units
+          
+          if(!overwrite.get(target))
+          {
+            //setting whether contained data is additive or averaged
+            if(!dataAvg.containsKey(target))
+            { //i cant believe this is the only way to do this
+              //its going to take forever to test every run
+              dataAvg.put(target, new Boolean(avg));
+              if(ref != null)
+              {
+                dataRef.put(target, ref);
+              }
+            }
+            //done settign avg/add ref and units
+          }
+          
           
           x = cent.getX();
           mult = x/res;
@@ -1681,12 +1838,35 @@ public class DataBuilder
           toAdd = new DataBlock(x, y, res, res);
           timeValue = new TreeMap();
           timeValue.put(new Double(time), dataValue);
-          toAdd.data.put(target, timeValue);
+          
+          //check overwrite bit, if so, use hold instead of dataName
+          if(overwrite.get(target))
+          {
+            //just replace name with hold, later, we will merge hold over old data
+            toAdd.data.put(("hold"+target), timeValue);
+          } else
+          {
+            //add data as normal
+            toAdd.data.put(target, timeValue);
+          }
 
           //System.out.println("new data");
           //merging this data into the current tree
           dataStruct.addData(toAdd, avg);
           //System.out.println(" - "+dataValue);
+        }
+        
+        //done adding all data, if overwrite, must merge with old data now
+        Map.Entry me;
+        Iterator overIt = overwrite.entrySet().iterator();
+        while(overIt.hasNext())
+        {
+          me = (Map.Entry)overIt.next();
+          if((Boolean)me.getValue())
+          {
+            //then this particular 'target' was overwritten
+            dataStruct.resolveOverwrite(("hold"+(String)me.getKey()), (String)me.getKey());
+          }
         }
       } finally
       {
@@ -1723,6 +1903,7 @@ public class DataBuilder
     boolean avg = false; //avg is always false for coverage readings
     boolean typeWarn = false;
     TreeMap timeValue;
+    TreeMap<String, Boolean> overwrite = new TreeMap<String, Boolean>();
     HashMap nameMap = null;
     Double dataValue;
     DataBlock toAdd;
@@ -1872,17 +2053,30 @@ public class DataBuilder
             }
           } //target now has the data name we are storing this geometry in
 
-          //setting whether contained data is additive or averaged
-          if(!dataAvg.containsKey(target))
-          { //i cant believe this is the only way to do this
-            //its going to take forever to test every run
-            dataAvg.put(target, new Boolean(avg));
-            if(ref != null)
+          if(!overwrite.containsKey(target))
+          { //this is the first run, check for overwrite properties now
+            boolean over = false;
+            if(dataAvg.containsKey(target))
             {
-              dataRef.put(target, ref);
+              over = true;
             }
+            overwrite.put(target, over);
           }
-          //done settign avg/add ref and units
+          
+          if(!overwrite.get(target))
+          {
+            //setting whether contained data is additive or averaged
+            if(!dataAvg.containsKey(target))
+            { //i cant believe this is the only way to do this
+              //its going to take forever to test every run
+              dataAvg.put(target, new Boolean(avg));
+              if(ref != null)
+              {
+                dataRef.put(target, ref);
+              }
+            }
+            //done settign avg/add ref and units
+          }
           
           if(env instanceof Point)
           {
@@ -1904,7 +2098,17 @@ public class DataBuilder
             toAdd = new DataBlock(x, y, res, res);
             timeValue = new TreeMap();
             timeValue.put(new Double(time), dataValue);
-            toAdd.data.put(target, timeValue);
+            
+            //check overwrite bit, if so, use hold instead of dataName
+            if(overwrite.get(target))
+            {
+              //just replace name with hold, later, we will merge hold over old data
+              toAdd.data.put(("hold"+target), timeValue);
+            } else
+            {
+              //add data as normal
+              toAdd.data.put(target, timeValue);
+            }
 
             //merging this data into the current tree
             dataStruct.addData(toAdd, avg);
@@ -1977,7 +2181,17 @@ public class DataBuilder
                     toAdd = new DataBlock(X, Y, res, res);
                     timeValue = new TreeMap();
                     timeValue.put(new Double(time), dataValue);
-                    toAdd.data.put(target, timeValue);
+                    
+                    //check overwrite bit, if so, use hold instead of dataName
+                    if(overwrite.get(target))
+                    {
+                      //just replace name with hold, later, we will merge hold over old data
+                      toAdd.data.put(("hold"+target), timeValue);
+                    } else
+                    {
+                      //add data as normal
+                      toAdd.data.put(target, timeValue);
+                    }
                     
                     //merging this data into the current tree
                     dataStruct.addData(toAdd, avg);
@@ -1989,6 +2203,19 @@ public class DataBuilder
             }
             //System.out.println("*");
             //System.out.println("\n -> done geom");
+          }
+        }
+        
+        //done adding all data, if overwrite, must merge with old data now
+        Map.Entry me;
+        Iterator overIt = overwrite.entrySet().iterator();
+        while(overIt.hasNext())
+        {
+          me = (Map.Entry)overIt.next();
+          if((Boolean)me.getValue())
+          {
+            //then this particular 'target' was overwritten
+            dataStruct.resolveOverwrite(("hold"+(String)me.getKey()), (String)me.getKey());
           }
         }
       } finally
@@ -2009,10 +2236,19 @@ public class DataBuilder
   
   private void addNASAData(Element currFile)
   {
+    /*
+     * (there is no .tag for this data type, who knows what NASA is doing)
+     * this is the data type supplied by nasa for, initially, solar radiance
+     * data. this is essentially just a text file, broken up into columns.
+     * columns corespond to lat and lon, and then average values for each
+     * month, then year. as such, there is an option as to wether user wants a
+     * single year value or 12 month values (.01 - .12)
+     */
     log.log(Level.FINER, "begin function");
     boolean avg = true;
     boolean dec = true;
     boolean byMonth = false; //should info be read in for each month or just the year
+    boolean overwrite = false;
     String dataName = "shutup,";
     String fileName = "it is initialized thanks";
     String ref = null;
@@ -2081,23 +2317,30 @@ public class DataBuilder
     }
   //txt file opened
     
-    if(!init)
-    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-      dataStruct.fillWorld(res);
-      init = true;
-    }
-    
-    //setting whether contained data is additive or averaged and references
-    dataAvg.put(dataName, new Boolean(avg));
-    if(ref != null)
+    if(dataAvg.containsKey(dataName))
     {
-      dataRef.put(dataName, ref);
-    }
-    if(unit != null)
+      //then we are overwriting this data!
+      overwrite = true;
+    } else
     {
-      dataUnits.put(dataName, unit);
+      //dont want to add all this information if we already have!!!
+      if(!init)
+      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+        dataStruct.fillWorld(res);
+        init = true;
+      }
+      //setting whether contained data is additive or averaged and references
+      dataAvg.put(dataName, new Boolean(avg));
+      if(ref != null)
+      {
+        dataRef.put(dataName, ref);
+      }
+      if(unit != null)
+      {
+        dataUnits.put(dataName, unit);
+      }
+      //done settign avg/add and references
     }
-    //done settign avg/add and references
     
     
     //reading the data from the file
@@ -2112,7 +2355,7 @@ public class DataBuilder
         //get the location of this data
         Y = Double.parseDouble(nextWord);
         X = Double.parseDouble(readWord(input));
-        for(int i = 0; i < 12; i++)
+        for(int i = 1; i <= 12; i++)
         {
           nextWord = readWord(input);
           if(byMonth)
@@ -2121,7 +2364,17 @@ public class DataBuilder
             toAdd = new DataBlock(X, Y, res, res);
             timeValue = new TreeMap();
             timeValue.put(new Double((time+(i*.01))), dataValue);
-            toAdd.data.put(dataName, timeValue);
+            
+            //check overwrite bit, if so, use hold instead of dataName
+            if(overwrite)
+            {
+              //just replace name with hold, later, we will merge hold over old data
+              toAdd.data.put("hold", timeValue);
+            } else
+            {
+              //add data as normal
+              toAdd.data.put(dataName, timeValue);
+            }
           //merging this data into the current tree
             dataStruct.addData(toAdd, avg);
           }
@@ -2133,7 +2386,17 @@ public class DataBuilder
           toAdd = new DataBlock(X, Y, res, res);
           timeValue = new TreeMap();
           timeValue.put(new Double(time), dataValue);
-          toAdd.data.put(dataName, timeValue);
+          
+          //check overwrite bit, if so, use hold instead of dataName
+          if(overwrite)
+          {
+            //just replace name with hold, later, we will merge hold over old data
+            toAdd.data.put("hold", timeValue);
+          } else
+          {
+            //add data as normal
+            toAdd.data.put(dataName, timeValue);
+          }
         //merging this data into the current tree
           dataStruct.addData(toAdd, avg);
         }
@@ -2141,7 +2404,7 @@ public class DataBuilder
       { //numbers stored in scientific notation
         Y = scientificToDouble(nextWord);
         X = scientificToDouble(readWord(input));
-        for(int i = 0; i < 12; i++)
+        for(int i = 1; i <= 12; i++)
         {
           nextWord = readWord(input);
           if(byMonth)
@@ -2150,7 +2413,17 @@ public class DataBuilder
             toAdd = new DataBlock(X, Y, res, res);
             timeValue = new TreeMap();
             timeValue.put(new Double((time+(i*.01))), dataValue);
-            toAdd.data.put(dataName, timeValue);
+            
+            //check overwrite bit, if so, use hold instead of dataName
+            if(overwrite)
+            {
+              //just replace name with hold, later, we will merge hold over old data
+              toAdd.data.put("hold", timeValue);
+            } else
+            {
+              //add data as normal
+              toAdd.data.put(dataName, timeValue);
+            }
           //merging this data into the current tree
             dataStruct.addData(toAdd, avg);
           }
@@ -2162,13 +2435,29 @@ public class DataBuilder
           toAdd = new DataBlock(X, Y, res, res);
           timeValue = new TreeMap();
           timeValue.put(new Double(time), dataValue);
-          toAdd.data.put(dataName, timeValue);
+          
+          //check overwrite bit, if so, use hold instead of dataName
+          if(overwrite)
+          {
+            //just replace name with hold, later, we will merge hold over old data
+            toAdd.data.put("hold", timeValue);
+          } else
+          {
+            //add data as normal
+            toAdd.data.put(dataName, timeValue);
+          }
         //merging this data into the current tree
           dataStruct.addData(toAdd, avg);
         }
         dataValue = new Double(scientificToDouble(nextWord));
       }
     }
+    
+    //done adding all data, if overwrite, must merge with old data now
+    if(overwrite)
+    {
+      dataStruct.resolveOverwrite("hold", dataName);
+    } //else we are done already
     try{
       input.close(); //im such a good programmer closing my files and whatnot
     } catch(IOException e){}
@@ -2548,11 +2837,18 @@ public class DataBuilder
       {/*flushing whitespace from the input stream*/
         read = input.read();
       }
-      build = build.concat(String.valueOf((char)read));
-      while(((read = input.read()) != -1)&&((hold = (char)read) != ' ')&&(hold != '\n')&&(hold != '\t'))
+      if(read == -1)
+      { //file is done stop before content was reached
+        return null;
+      } else
       {
-        build = build.concat(String.valueOf(hold));
+        build = build.concat(String.valueOf((char)read));
+        while(((read = input.read()) != -1)&&((hold = (char)read) != ' ')&&(hold != '\n')&&(hold != '\t'))
+        {
+          build = build.concat(String.valueOf(hold));
+        }
       }
+      
     } catch (IOException ex)
     {
       System.out.println("IOException!!!");

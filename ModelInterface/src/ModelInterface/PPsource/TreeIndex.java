@@ -110,6 +110,11 @@ public class TreeIndex implements DataIndex
     }
   }
 
+  public void resolveOverwrite(String holdName, String varName)
+  {
+    data.mergeHoldTo(holdName, varName);
+  }
+  
   public TreeMap extractMask(RegionMask m)
   {
     makeRegion = new TreeMap();

@@ -245,6 +245,10 @@ public class QuadBucketTree implements DataIndex
       }
     }
   }
+  public void resolveOverwrite(String holdName, String varName)
+  {
+    //UNIMPLEMENTED
+  }
   /**
    * Gets a blocks worth of data from the supplied location and fills the passed DataBlock with it.
    * 

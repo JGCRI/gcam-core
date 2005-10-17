@@ -1,11 +1,11 @@
 #Fat Jar Configuration File
-#Tue Aug 09 16:33:34 EDT 2005
+#Mon Oct 10 13:38:44 EDT 2005
 onejar.license.required=false
 manifest.classpath=
 onejar.checkbox=true
-jarname=ModelInterface_fat.jar
+jarname=DM_manipulator.jar
 manifest.mergeall=true
-manifest.mainclass=ModelInterface.ConfigurationEditor.configurationeditor.Main
+manifest.mainclass=ModelInterface.DMsource.Main
 manifest.file=<createnew>
 jarname.isextern=false
 onejar.expand=

@@ -101,7 +101,7 @@ public class Preprocess
       log.setUseParentHandlers(false);
       
       cHand = new ConsoleHandler();
-      cHand.setLevel(Level.ALL);//TODO change back to WARNING
+      cHand.setLevel(Level.WARNING);//TODO use ALL for diagnostics, WARNING usually
       log.addHandler(cHand);
       fHand = new FileHandler("PPLog.log");
       fHand.setLevel(Level.ALL);
