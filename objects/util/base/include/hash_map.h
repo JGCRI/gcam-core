@@ -74,12 +74,34 @@ private:
     //! and it's position in the bucket vector.
     typedef std::pair<Item*,size_t> ItemPair;
 public:
+	/*! \brief Constant iterator to a HashMap. */
+	class const_iterator {
+	public:
+        const_iterator();
+		explicit const_iterator( const Item* aCurrentItem,
+                                 const size_t aBucketPosition,
+                                 const HashMap* aParent );
+
+		bool operator==( const const_iterator& aOther ) const;
+		bool operator!=( const const_iterator& aOther ) const;
+		const std::pair<Key, Value>* operator->() const;
+		const std::pair<Key, Value>& operator*() const;
+        const_iterator& operator++();    // prefix ++
+        const_iterator operator++(int); // postfix ++
+	private:
+        //! The current item at which the iterator is pointing and it's bucket
+        //! spot.
+        ConstItemPair mCurrentItem;
+
+        //! Pointer to the parent hashmap of the iterator.
+        const HashMap* mParent;
+	};
+
 	/*! \brief Mutable iterator to a HashMap.
 	*/
-	class iterator {
-		// Needed for the copy-constructor work-around.
-		friend class const_iterator;
+    class iterator: public const_iterator {
 	public:
+        iterator();
 		explicit iterator( Item* aCurrentItem,
                            const size_t aBucketPosition,
                            const HashMap* aParent );
@@ -99,45 +121,17 @@ public:
         const HashMap* mParent;
 	};
 	
-	/*! \brief Constant iterator to a HashMap. */
-	class const_iterator {
-	public:
-		explicit const_iterator( const Item* aCurrentItem,
-                                 const size_t aBucketPosition,
-                                 const HashMap* aParent );
-
-		// Visual studio tries to use the non-const version of constant
-        // functions even when the return types do not match. This copy
-		// constructor allows the non-constant version of functions returning
-        // iterators to automatically convert their return values into
-		// constant iterators.
-		const_iterator( iterator& aOther );
-		bool operator==( const const_iterator& aOther ) const;
-		bool operator!=( const const_iterator& aOther ) const;
-		const std::pair<Key, Value>* operator->() const;
-		const std::pair<Key, Value>& operator*() const;
-        const_iterator& operator++();    // prefix ++
-        const_iterator operator++(int); // postfix ++
-	private:
-        //! The current item at which the iterator is pointing and it's bucket
-        //! spot.
-        ConstItemPair mCurrentItem;
-
-        //! Pointer to the parent hashmap of the iterator.
-        const HashMap* mParent;
-	};
-
 	explicit HashMap( const size_t aSize = DEFAULT_SIZE );
 	~HashMap();
     bool empty() const;
     size_t size() const;
 	std::pair<iterator, bool> insert( const std::pair<Key, Value> aKeyValuePair );
-	iterator find( const Key& aKey );
 	const_iterator find( const Key& aKey ) const;
-	iterator begin();
+	iterator find( const Key& aKey );
 	const_iterator begin() const;
-	iterator end();
+	iterator begin();
 	const_iterator end() const;
+	iterator end();
 private:
 	void resize( const size_t aNewSize );
     
@@ -394,7 +388,7 @@ HashMap<Key, Value>::find( const Key& aKey ) const {
 	while( curr ){
 		// Check if this is the correct spot.
 		if( curr->mKeyValuePair.first == aKey ){
-			return const_iterator( curr );
+			return const_iterator( curr, bucketSpot, this );
 		}
 		// Move to the next item in the chain, which may be null.
 		curr = curr->mNext.get();
@@ -442,7 +436,7 @@ HashMap<Key, Value>::end() {
 template<class Key, class Value>
 typename HashMap<Key, Value>::const_iterator
 HashMap<Key, Value>::end() const {
-	return const_iterator( 0, 0 );
+	return const_iterator( 0, 0, 0 );
 }
 
 /*! \brief Resize the bucket vector. 
@@ -676,6 +670,13 @@ HashMap<Key, Value>::Item::Item( const std::pair<Key, Value>& aKeyValuePair ):
 mKeyValuePair( aKeyValuePair ){
 }
 
+/*! \brief iterator constructor which sets the internal pointer to null.
+*/
+template<class Key, class Value>
+HashMap<Key, Value>::iterator::iterator():
+mCurrentItem( 0, 0 ),
+mParent( 0 ){}
+
 /*! \brief iterator constructor.
 * \param aCurrentItem The current Item.
 * \param aBucketPosition The position of the Item in the bucket vector.
@@ -751,6 +752,13 @@ HashMap<Key, Value>::iterator::operator++ (int){
    return curr;
  }
 
+/*! \brief const_iterator constructor which sets the internal pointer to null.
+*/
+template<class Key, class Value>
+HashMap<Key, Value>::const_iterator::const_iterator():
+mCurrentItem( 0, 0 ),
+mParent( 0 ){}
+
 /*! \brief const_iterator constructor.
 * \param aCurrentItem The current Item.
 * \param aBucketPosition The position of the current Item within the bucket
@@ -762,20 +770,6 @@ HashMap<Key, Value>::const_iterator::const_iterator( const Item* aCurrentItem,
                                                      const HashMap* aParent )
 :mCurrentItem( aCurrentItem, aBucketPosition ),
 mParent( aParent ){
-}
-
-/*! \brief Constructor which converts from a non-const interator to a constant
-*          iterator.
-* \details Visual studio tries to use the non-const version of constant
-*          functions even when the return types do not match. This works around
-*          the problem by converting the non-constant iterator return value of
-*          the function to a constant iterator.
-* \param aOther Mutable iterator from which to create a constant iterator.
-*/
-template<class Key, class Value>
-HashMap<Key, Value>::const_iterator::const_iterator( iterator& aOther ):
-mCurrentItem( aOther.mCurrentItem ),
-mParent( aOther.mParent ){
 }
 
 /*! \brief Equals operator
