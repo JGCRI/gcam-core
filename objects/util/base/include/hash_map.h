@@ -66,10 +66,6 @@ public:
 	struct Item;
 
 private:
-    //! Typedef which defines the type of a pair containing a const pointer to
-    //! an Item and it's position in the bucket vector.
-    typedef std::pair<const Item*, size_t> ConstItemPair;
-
     //! Typedef which defines the type of a pair containing pointer to an Item
     //! and it's position in the bucket vector.
     typedef std::pair<Item*,size_t> ItemPair;
@@ -78,7 +74,7 @@ public:
 	class const_iterator {
 	public:
         const_iterator();
-		explicit const_iterator( const Item* aCurrentItem,
+		explicit const_iterator( Item* aCurrentItem,
                                  const size_t aBucketPosition,
                                  const HashMap* aParent );
 
@@ -88,10 +84,10 @@ public:
 		const std::pair<Key, Value>& operator*() const;
         const_iterator& operator++();    // prefix ++
         const_iterator operator++(int); // postfix ++
-	private:
+	protected:
         //! The current item at which the iterator is pointing and it's bucket
         //! spot.
-        ConstItemPair mCurrentItem;
+        ItemPair mCurrentItem;
 
         //! Pointer to the parent hashmap of the iterator.
         const HashMap* mParent;
@@ -112,13 +108,6 @@ public:
 		std::pair<Key, Value>& operator*();
         iterator& operator++();    // prefix ++
         iterator operator++(int); // postfix ++
-	private:
-        //! The current item at which the iterator is pointing and it's bucket
-        //! spot.
-        ItemPair mCurrentItem;
-
-        //! Pointer to the parent hashmap of the iterator.
-        const HashMap* mParent;
 	};
 	
 	explicit HashMap( const size_t aSize = DEFAULT_SIZE );
@@ -135,8 +124,8 @@ public:
 private:
 	void resize( const size_t aNewSize );
     
-    ConstItemPair getFirstItem() const;
-    ConstItemPair getNextItem( const ConstItemPair& aItemPair ) const;
+    ItemPair getFirstItem() const;
+    ItemPair getNextItem( const ItemPair& aItemPair ) const;
     
     ItemPair getFirstItem();
     ItemPair getNextItem( const ItemPair& aItemPair );
@@ -546,18 +535,18 @@ void HashMap<Key, Value>::resize( const unsigned int aNewSize ){
 *         a pair containing null and zero.
 */
 template<class Key, class Value>
-typename HashMap<Key, Value>::ConstItemPair
+typename HashMap<Key, Value>::ItemPair
 HashMap<Key, Value>::getFirstItem() const {
     // Check for empty hashmap first to avoid a slow unsuccessful search.
     if( empty() ){
-        return ConstItemPair( 0, 0 );
+        return ItemPair( 0, 0 );
     }
 
     // Search starting at the beginning of the bucket vector to find the first
     // item.
     for( unsigned int i = 0; i < mBuckets.size(); i++ ){
         if( mBuckets[ i ] ){
-            return ConstItemPair( mBuckets[ i ], i );
+            return ItemPair( mBuckets[ i ], i );
         }
     }
 
@@ -567,7 +556,7 @@ HashMap<Key, Value>::getFirstItem() const {
     assert( false );
     
     // Make the compiler happy.
-    return ConstItemPair( 0, 0 );
+    return ItemPair( 0, 0 );
 }
 
 /*! \brief Return the next item in the hashmap.
@@ -578,25 +567,25 @@ HashMap<Key, Value>::getFirstItem() const {
 *         iterator if it was the last item.
 */
 template<class Key, class Value>
-typename HashMap<Key, Value>::ConstItemPair
-HashMap<Key, Value>::getNextItem( const ConstItemPair& aItemPair ) const {
+typename HashMap<Key, Value>::ItemPair
+HashMap<Key, Value>::getNextItem( const ItemPair& aItemPair ) const {
     // First check if there is a next item in the current item's chain.
     if( aItemPair.first->mNext ){
         // Return a pair containing the next item and the current bucket spot
         // since the item is in the same chain.
-        return ConstItemPair( aItemPair.first->mNext.get(), aItemPair.second );
+        return ItemPair( aItemPair.first->mNext.get(), aItemPair.second );
     }
 
     // Otherwise search forward in the bucket vector starting at the current position.
     for( size_t i = aItemPair.second + 1; i < mBuckets.size(); ++i ){
         // If there is an item at this bucket position return it.
         if( mBuckets[ i ] ){
-            return ConstItemPair( mBuckets[ i ].get(), i );
+            return ItemPair( mBuckets[ i ].get(), i );
         }
     }
 
     // The end of the bucket vector was reached so there is not a next item.
-    return ConstItemPair( 0, 0 );
+    return ItemPair( 0, 0 );
 }
 
 /*! \brief Find the first item in the hashmap.
@@ -673,9 +662,7 @@ mKeyValuePair( aKeyValuePair ){
 /*! \brief iterator constructor which sets the internal pointer to null.
 */
 template<class Key, class Value>
-HashMap<Key, Value>::iterator::iterator():
-mCurrentItem( 0, 0 ),
-mParent( 0 ){}
+HashMap<Key, Value>::iterator::iterator(){}
 
 /*! \brief iterator constructor.
 * \param aCurrentItem The current Item.
@@ -686,8 +673,7 @@ template<class Key, class Value>
 HashMap<Key, Value>::iterator::iterator( Item* aCurrentItem,
                                          const size_t aBucketPosition,
                                          const HashMap* aParent ):
-mCurrentItem( aCurrentItem, aBucketPosition ),
-mParent( aParent ){
+const_iterator( aCurrentItem, aBucketPosition, aParent ){
 }
 
 /*! \brief Equals operator
@@ -765,7 +751,7 @@ mParent( 0 ){}
 *        vector.
 */
 template<class Key, class Value>
-HashMap<Key, Value>::const_iterator::const_iterator( const Item* aCurrentItem,
+HashMap<Key, Value>::const_iterator::const_iterator( Item* aCurrentItem,
                                                      const size_t aBucketPosition,
                                                      const HashMap* aParent )
 :mCurrentItem( aCurrentItem, aBucketPosition ),
