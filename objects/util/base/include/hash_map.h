@@ -682,7 +682,7 @@ const_iterator( aCurrentItem, aBucketPosition, aParent ){
 */
 template<class Key, class Value>
 bool HashMap<Key, Value>::iterator::operator ==( const typename HashMap<Key, Value>::iterator& aOther ) const {
-	return ( mCurrentItem == aOther.mCurrentItem );
+    return const_iterator::operator==( aOther );
 }
 
 /*! \brief Not-equals operator
