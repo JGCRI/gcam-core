@@ -61,11 +61,10 @@
 
 template <class Key, class Value>
 class HashMap {
-public:
+private:
 	// Forward declare the Item so the interface is easier to read.
 	struct Item;
 
-private:
     //! Typedef which defines the type of a pair containing pointer to an Item
     //! and it's position in the bucket vector.
     typedef std::pair<Item*,size_t> ItemPair;
@@ -177,7 +176,7 @@ private:
 *        enough entries are added.
 */
 template <class Key, class Value>
-HashMap<Key, Value>::HashMap( const unsigned int aSize ):
+HashMap<Key, Value>::HashMap( const size_t aSize ):
 mBuckets( aSize ), mSize( aSize ), mNumEntries( 0 )
 #if( TUNING_STATS )
 , mNumCollisions( 0 ),
@@ -245,8 +244,8 @@ HashMap<Key, Value>::insert( const std::pair<Key, Value> aKeyValuePair ){
 
 	// We now know which bucket to either add the value to or update. Begin the
     // search.
-	HashMap<Key, Value>::Item* curr = mBuckets[ bucketSpot ].get();
-	HashMap<Key, Value>::Item* prev = 0;   
+	Item* curr = mBuckets[ bucketSpot ].get();
+	Item* prev = 0;   
 
 	// If the head of the chain is null, avoid attempting to search. Keep
 	// searching until we find the correct Item or the end of the chain. Track
@@ -281,7 +280,7 @@ HashMap<Key, Value>::insert( const std::pair<Key, Value> aKeyValuePair ){
 	}
 
 	// We are not updating, so a new value must be added.
-	boost::shared_ptr<Item> newValue( new HashMap<Key, Value>::Item( aKeyValuePair ) );
+	boost::shared_ptr<Item> newValue( new Item( aKeyValuePair ) );
 	++mNumEntries;
 
 	// Add the entry as the first item in the bucket if there is not a previous
@@ -342,7 +341,7 @@ HashMap<Key, Value>::find( const Key& aKey ){
 	const size_t bucketSpot = mHashFunction( aKey ) % mSize;
 
 	// We now know which bucket the key resides in if it exists.
-	HashMap<Key, Value>::Item* curr = mBuckets[ bucketSpot ].get();
+	Item* curr = mBuckets[ bucketSpot ].get();
 
 	// Keep searching until we find the correct Item or the end of the chain.
 	while( curr ){
@@ -371,7 +370,7 @@ HashMap<Key, Value>::find( const Key& aKey ) const {
 	const size_t bucketSpot = mHashFunction( aKey ) % mSize;
 
 	// We now know which bucket the key resides in if it exists.
-	const HashMap<Key, Value>::Item* curr = mBuckets[ bucketSpot ].get();
+	const Item* curr = mBuckets[ bucketSpot ].get();
 
 	// Keep searching until we find the correct Item or the end of the chain.
 	while( curr ){
@@ -404,7 +403,7 @@ HashMap<Key, Value>::begin() {
 template<class Key, class Value>
 typename HashMap<Key, Value>::const_iterator
 HashMap<Key, Value>::begin() const {
-    CItemPair itemPair = getFirstItem();
+    ItemPair itemPair = getFirstItem();
 	return const_iterator( itemPair.first, itemPair.second );
 }
 
@@ -436,7 +435,7 @@ HashMap<Key, Value>::end() const {
 * \param aNewSize New size of the bucket vector.
 */
 template<class Key, class Value>
-void HashMap<Key, Value>::resize( const unsigned int aNewSize ){
+void HashMap<Key, Value>::resize( const size_t aNewSize ){
 	// Check if the new and old size are the same to avoid resizing.
 	if( aNewSize == mSize ){
 		return;
@@ -497,7 +496,7 @@ void HashMap<Key, Value>::resize( const unsigned int aNewSize ){
 		const size_t bucketSpot = mHashFunction( temporaryList[ i ]->mKeyValuePair.first ) % mSize;
 
 		// We now know which bucket the key resides in if it exists.
-		HashMap<Key, Value>::Item* curr = mBuckets[ bucketSpot ].get();
+		Item* curr = mBuckets[ bucketSpot ].get();
 
 		// If the spot is null, add this item as the head of the bucket's chain.
 		if( !curr ){
@@ -700,8 +699,8 @@ bool HashMap<Key, Value>::iterator::operator !=( const typename HashMap<Key, Val
 template<class Key, class Value>
 std::pair<Key, Value>* HashMap<Key, Value>::iterator::operator->(){
 	/*! \pre The current item pointer must be non-null. */
-	assert( mCurrentItem.first != 0 );
-	return &mCurrentItem.first->mKeyValuePair;
+	assert( const_iterator::mCurrentItem.first != 0 );
+	return &const_iterator::mCurrentItem.first->mKeyValuePair;
 }
 
 /*! \brief Dereference operator
@@ -710,8 +709,8 @@ std::pair<Key, Value>* HashMap<Key, Value>::iterator::operator->(){
 template<class Key, class Value>
 std::pair<Key, Value>& HashMap<Key, Value>::iterator::operator*() {
 	/*! \pre The current item pointer must be non-null. */
-	assert( mCurrentItem.first != 0 );
-	return mCurrentItem.first->mKeyValuePair;
+	assert( const_iterator::mCurrentItem.first != 0 );
+	return const_iterator::mCurrentItem.first->mKeyValuePair;
 }
 
 /*! \brief Prefix increment operator.
@@ -721,9 +720,9 @@ template<class Key, class Value>
 typename HashMap<Key, Value>::iterator&
 HashMap<Key, Value>::iterator::operator++(){
     /*! \pre Need a non-null parent hashmap. */
-    assert( mParent );
+    assert( const_iterator::mParent );
 
-    mCurrentItem = mParent->findNext( mCurrentItem );
+    const_iterator::mCurrentItem = const_iterator::mParent->getNextItem( const_iterator::mCurrentItem );
     return *this;
 }
 
