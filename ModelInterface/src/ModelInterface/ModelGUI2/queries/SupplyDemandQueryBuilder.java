@@ -52,6 +52,9 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 					|| ((String)list.getSelectedValues()[0]).startsWith("Group:")) {
 					nextButton.setEnabled(false);
 					cancelButton.setText("Finished");
+				} else if(qg.currSel != 5 && !qg.isSumable) {
+					nextButton.setEnabled(true);
+					cancelButton.setText("Finished");
 				} else if(qg.currSel != 5){
 					nextButton.setEnabled(true);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
@@ -238,7 +241,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 				if(((Boolean)me.getValue()).booleanValue()) {
 					if(!added) {
 						if(i == 0) {
-							ret.append(" and ");
+							ret.append(" and (");
 						} else {
 							ret.append("[ ");
 						}
@@ -255,12 +258,17 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 				}
 			}
 			if(added || i == 0) {
+				if(added && i == 0) {
+					ret.append(')');
+				}
 				ret.append(" ]/");
 			} else {
 				ret.append("/");
 			}
 		}
-		if(level == 4) {
+		if(level == 3) {
+			ret.append("*[matches(local-name(), 'sector')]/@name");
+		} else if(level == 4) {
 			ret.append("subsector/@name");
 		} else if(level == 5) {
 			ret.append("technology/@name");
@@ -299,7 +307,18 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 		return ret.toString();
 	}
 	private void createXPath() {
-		qg.xPath = createListPath(6);
+		if(qg.isSumable) {
+			qg.xPath = createListPath(6);
+			qg.yearLevel = "technology";
+		} else {
+			qg.xPath = createListPath(qg.currSel+1);
+			qg.xPath = qg.xPath.replaceFirst("/[^/]*/[^/]*$", "/" + qg.var + "/text()");
+			if(qg.currSel == 5) {
+				qg.yearLevel = "technology";
+			} else {
+				qg.yearLevel = qg.var;
+			}
+		}
 		switch(qg.currSel) {
 			case 3: qg.nodeLevel = "supplysector";
 				break;
@@ -311,7 +330,6 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 		}
 		// default axis1Name to nodeLevel
 		qg.axis1Name = qg.nodeLevel;
-		qg.yearLevel = "technology";
 		qg.axis2Name = "Year";
 	}
 	private Map createList(String path, boolean isGroupNames) {

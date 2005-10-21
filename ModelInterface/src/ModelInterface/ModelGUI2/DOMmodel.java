@@ -153,6 +153,7 @@ public class DOMmodel implements TreeModel {
 		child.setNodeValue( newValue.toString() );
         }else{
         	System.out.println("ERROR: can only change text nodes!");
+		return;
         }
         
 	TreeModelListener listener;

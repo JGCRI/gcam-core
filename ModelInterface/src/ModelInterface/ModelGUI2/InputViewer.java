@@ -257,8 +257,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 */
 	public void displayJtree() {
 		Container contentPane = parentFrame.getContentPane();
-		/*
 		contentPane.removeAll();
+		/*
 		if(xmlDB != null) {
 			xmlDB.closeDB();
 			//menuManage.setEnabled(false);

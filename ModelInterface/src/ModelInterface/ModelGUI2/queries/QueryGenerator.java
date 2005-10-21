@@ -341,10 +341,12 @@ public class QueryGenerator {
 				if (!backButton.isEnabled()) {
 					backButton.setEnabled(true);
 				}
+				/*
 				if (qb != null && qb.isAtEnd()) {
 					nextButton.setEnabled(false);
 					//cancelButton.setText("Finished");
 				}
+				*/
 			}
 		});
 
