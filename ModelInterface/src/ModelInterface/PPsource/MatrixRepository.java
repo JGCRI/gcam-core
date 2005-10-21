@@ -49,23 +49,25 @@ public class MatrixRepository implements DataRepository
   public double[][] createLayer(String varName, double time)
   {
     if(!root.containsKey(varName))
-    { //create time
+    { //create variable
       root.put(varName, new TreeMap<Double, double[][]>());
     }
     
-    TreeMap<Double, double[][]> inTime = root.get(varName);
-    if(!inTime.containsKey(time))
+    TreeMap<Double, double[][]> inVar = root.get(varName);
+    if(!inVar.containsKey(time))
     { //create this field matrix
       double[][] newb = new double[xSize][ySize];
       //filling this new layer with NaN's
       for(int i = 0; i < xSize; i ++)
         for(int k = 0; k < ySize; k++)
+        {
           newb[i][k] = Double.NaN;
+        }
       
-      inTime.put(time, newb);
+      inVar.put(time, newb);
     }
     
-    return inTime.get(varName);
+    return inVar.get(time);
   }
   public double[][] getLayer(String varName, double time)
   {

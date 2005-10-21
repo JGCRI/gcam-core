@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <files>
-	<data file="inputTestNASA.xml" />
+	<data file="inputTestOverwrite.xml" />
 	<region file="inputR.xml" />
-	<output file="outNASA2.xml" />
-	<log level="FINE" />
+	<output file="outOverwrite.xml" />
+	<log level="FINER" />
 </files>

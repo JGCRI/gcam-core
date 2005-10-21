@@ -100,7 +100,7 @@ public class DataBuilder
     rSource = "regions.xml";
     outFile = "out.xml";
     log.log(Level.CONFIG, "DataBuilder seed files: sources.xml, regions.xml, out.xml");
-    dataStruct = new TreeIndex(-180, 180, -90, 90);
+    dataStruct = new FlatIndex(-180, 180, -90, 90);
     regionList = new TreeSet();
     maskList = new TreeMap();
     printList = new TreeMap();
@@ -124,7 +124,7 @@ public class DataBuilder
     rSource = r;
     outFile = o;
     log.log(Level.CONFIG, "DataBuilder seed files: "+i+", "+r+", "+o);
-    dataStruct = new TreeIndex(-180, 180, -90, 90);
+    dataStruct = new FlatIndex(-180, 180, -90, 90);
     regionList = new TreeSet();
     maskList = new TreeMap();
     printList = new TreeMap();
@@ -223,6 +223,7 @@ public class DataBuilder
     { //getting a user resolution if supplied
       URes = true;
       double userRes = Double.parseDouble(root.getAttributeValue("resolution"));
+      log.log(Level.FINER, "calling fillWorld to create access structure");
       dataStruct.fillWorld(userRes);
       init = true;
     }
@@ -2022,7 +2023,7 @@ public class DataBuilder
             } else if(holdAttr instanceof Integer)
             {
               target = ((Integer)holdAttr).toString();
-            } else if(holdAttr instanceof String)
+            } else if(holdAttr instanceof java.lang.String)
             {
               target = ((String)holdAttr);
             } else
@@ -2114,7 +2115,6 @@ public class DataBuilder
             dataStruct.addData(toAdd, avg);
           } else //env is a Polygon
           {
-            //TODO- this section is where it is being incredibly slow (as far as i can tell)
             Polygon area = (Polygon)env;
 
             double minX, maxX, minY, maxY;
@@ -2151,7 +2151,7 @@ public class DataBuilder
               //normalize once before instead of every time after
               for(double Y = maxY; Y > minY; Y-=res)
               {
-                System.out.print(".");
+                //System.out.print(".");
                 //getting the fraction of this block which is in the Geometry
                 //this will be the passed data value (as we are storing fractional
                 //coverages)
@@ -2166,7 +2166,7 @@ public class DataBuilder
                 makeLR[4].x = X;
                 makeLR[4].y = Y;
                 
-                
+                //TODO this has got to be doing something terrible right...
                 LinearRing lr = gf.createLinearRing(makeLR);
                 Polygon holdP = gf.createPolygon(lr, null);
                 if(holdP.intersects(geom))
@@ -2851,7 +2851,7 @@ public class DataBuilder
       
     } catch (IOException ex)
     {
-      System.out.println("IOException!!!");
+      log.log(Level.SEVERE, "IOException!");
     }
 
     if(build.length() > 0)
