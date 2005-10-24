@@ -86,11 +86,9 @@ namespace util {
     */
     template <class T>
     const bool isValidNumber( const T number ) {
-        bool isValid = ( number == number );
-        if ( std::numeric_limits<double>::infinity() != 0 ) {
-            isValid &= ( number != std::numeric_limits<T>::infinity() );
-        }
-        return isValid;
+        const static T infinity = std::numeric_limits<T>::infinity();
+        const static bool infinityIsInvalid = ( infinity == 0 );
+        return ( number == number ) && ( infinityIsInvalid || number != infinity );
     }
 
     /*!\brief This is a template function which compares two values. 
