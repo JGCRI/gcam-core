@@ -1282,12 +1282,14 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 */
 	boolean openCSVFile() {
 
-		File file2;
+		//File file2;
+		File[] csvFiles;
 		JFileChooser fc = new JFileChooser();
 		fc.setDialogTitle("Open CSV File");
 
 		// Choose only files, not directories
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fc.setMultiSelectionEnabled(true);
 
 		// Start in current directory
 		//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
@@ -1302,7 +1304,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		if (result == JFileChooser.CANCEL_OPTION) {
 			return true;
 		} else if (result == JFileChooser.APPROVE_OPTION) {
-			file = fc.getSelectedFile();
+			//file = fc.getSelectedFile();
+			csvFiles = fc.getSelectedFiles();
 			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
 
@@ -1315,10 +1318,10 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			if (result2 == JFileChooser.CANCEL_OPTION) {
 				return true;
 			} else if (result2 == JFileChooser.APPROVE_OPTION) {
-				file2 = fc2.getSelectedFile();
+				file = fc2.getSelectedFile();
 				//globalFC.setCurrentDirectory(fc2.getCurrentDirectory());
 				((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
-				readCSVFile(file, file2);
+				readCSVFile(csvFiles, file);
 				// DO STUFF WITH FILE1 AND FILE2
 			}
 
@@ -1415,7 +1418,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 * @param file2
 	 *            the Headers file
 	 */
-	public void readCSVFile(File file, File file2) {
+	public void readCSVFile(File[] csvFiles, File file2) {
 		StringTokenizer st;
 		String intValueStr;
 		String strToReplace;
@@ -1514,65 +1517,67 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 			// tableIDMap should now be all set up ...
 
-			FileInputStream fis = new FileInputStream(file);
-			DataInputStream fin = new DataInputStream(fis);
-			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
-					fin));
+			for(int j = 0; j < csvFiles.length; ++j) {
+				FileInputStream fis = new FileInputStream(csvFiles[j]);
+				DataInputStream fin = new DataInputStream(fis);
+				BufferedReader stdInput = new BufferedReader(new InputStreamReader(
+							fin));
 
-			inputLine = stdInput.readLine().trim(); // read one line of input
+				inputLine = stdInput.readLine().trim(); // read one line of input
 
-			while (inputLine != null) {
-				while (inputLine != null
-						&& !inputLine.startsWith("INPUT_TABLE")) {
-					inputLine = stdInput.readLine();
-				}
-				if (inputLine == null) {
-					break;
-				}
-				stdInput.readLine(); // reads/ignores "Variable ID" line
-				inputLine = stdInput.readLine().trim(); // should have just the
-														// id number
-				st = new StringTokenizer(inputLine, ",", false);
-				intValue = Integer.parseInt(st.nextToken());
-
-				if (tableIDMap.containsKey(new Integer(intValue))) {
-					tree.setHeader(((String) tableIDMap.get(new Integer(
-							intValue))));
-					stdInput.readLine(); // ignores this line
-					stdInput.readLine(); // ignores header line
-
-					inputLine = stdInput.readLine().trim(); // start reading in
-															// data
-					while (inputLine != null && !inputLine.equals("")
-							&& inputLine.charAt(0) != ',') {
-						st = new StringTokenizer(inputLine, ",", false);
-						int NUM_COLS = st.countTokens();
-						dataArr = new ArrayList(NUM_COLS);
-						for (int i = 0; i < NUM_COLS; i++) {
-							dataArr.add(i, (st.nextToken()).trim());
-						} // one line of data stores in arraylist
-						tree.addToTree(dataArr);
-						//makeTree( rootElement, docName );
-						dataArr.clear();
-						if ((inputLine = stdInput.readLine()) != null) {
-							inputLine.trim();
-						}
+				while (inputLine != null) {
+					while (inputLine != null
+							&& !inputLine.startsWith("INPUT_TABLE")) {
+						inputLine = stdInput.readLine();
+							}
+					if (inputLine == null) {
+						break;
 					}
-				} else {
-					System.out.println("***Warning: skipping table: "
-							+ intValue + "!***");
-				}
+					stdInput.readLine(); // reads/ignores "Variable ID" line
+					inputLine = stdInput.readLine().trim(); // should have just the
+					// id number
+					st = new StringTokenizer(inputLine, ",", false);
+					intValue = Integer.parseInt(st.nextToken());
 
-				if ((inputLine = stdInput.readLine()) != null) {
-					inputLine.trim();
+					if (tableIDMap.containsKey(new Integer(intValue))) {
+						tree.setHeader(((String) tableIDMap.get(new Integer(
+											intValue))));
+						stdInput.readLine(); // ignores this line
+						stdInput.readLine(); // ignores header line
+
+						inputLine = stdInput.readLine().trim(); // start reading in
+						// data
+						while (inputLine != null && !inputLine.equals("")
+								&& inputLine.charAt(0) != ',') {
+							st = new StringTokenizer(inputLine, ",", false);
+							int NUM_COLS = st.countTokens();
+							dataArr = new ArrayList(NUM_COLS);
+							for (int i = 0; i < NUM_COLS; i++) {
+								dataArr.add(i, (st.nextToken()).trim());
+							} // one line of data stores in arraylist
+							tree.addToTree(dataArr);
+							//makeTree( rootElement, docName );
+							dataArr.clear();
+							if ((inputLine = stdInput.readLine()) != null) {
+								inputLine.trim();
+							}
+								}
+					} else {
+						System.out.println("***Warning: skipping table: "
+								+ intValue + "!***");
+					}
+
+					if ((inputLine = stdInput.readLine()) != null) {
+						inputLine.trim();
+					}
 				}
+				fin.close();
+				hashfin.close();
 			}
 
 			doc = tree.getDoc();
 			//tree.outputTree(args[2]);
 
-			fin.close();
-			hashfin.close();
 
 		} catch (Exception e) {
 			System.out
