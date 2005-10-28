@@ -232,10 +232,21 @@ public class DataBuilder
     //MAIN XML READ LOOP FOR QBTREE BUILDING
     for(int i = 0; i < fileChildren.size(); i++)
     {
+      /*
+      try{
+        System.out.println("FILE: waiting...");
+        System.in.read();
+        System.in.read();
+        System.out.println("...going");
+      } catch(IOException e) {}
+      */
       currFile = (Element)fileChildren.get(i);
       if(currFile.getAttributeValue("type").equals("txt"))
       {
         addTxtData(currFile);
+      } else if(currFile.getAttributeValue("type").equals("UNEP"))
+      {
+        addUNEPData(currFile);
       } else if(currFile.getAttributeValue("type").equals("1x1"))
       {
         add1x1Data(currFile);
@@ -797,6 +808,7 @@ public class DataBuilder
     } catch (FileNotFoundException ex) 
     {
       log.log(Level.SEVERE, "FileNotFoundException!!!");
+      System.exit(1);
     }
   //txt file opened
 
@@ -892,6 +904,166 @@ public class DataBuilder
   //done reading data from file
   }
   
+  private void addUNEPData(Element currFile)
+  {
+    log.log(Level.FINER, "begin function");
+    boolean avg = true;
+    boolean dec = true;
+    boolean overwrite = false;
+    String dataName = "shutup,";
+    String fileName = "it is initialized thanks";
+    String ref = null;
+    String unit = null;
+    int numCols, numRows;
+    double xLL, yLL;
+    double currX, currY;
+    double ignore;
+    double time = 0;
+    double res = 1;
+    List infoChildren;
+    Element currElem;
+    TreeMap timeValue;
+    Double dataValue;
+    DataBlock toAdd;
+    
+    //getting file info from XML
+    infoChildren = currFile.getChildren();
+    for(int i = 0; i < infoChildren.size(); i++)
+    {
+      currElem = (Element)infoChildren.get(i);
+      if(currElem.getName().equals("data"))
+      {
+        dataName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("date"))
+      {
+        time = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("average"))
+      {
+        avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
+      } else if(currElem.getName().equals("reference"))
+      {
+        ref = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("units"))
+      {
+        unit = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("name"))
+      {
+        fileName = currElem.getAttributeValue("value");
+      } else
+      {
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
+      }
+    }
+  //done reading from XML file
+    
+    //opening txt file for reading
+    BufferedReader input = null;
+    try {
+      input = new BufferedReader( new FileReader(fileName));
+    } catch (FileNotFoundException ex) 
+    {
+      log.log(Level.SEVERE, "FileNotFoundException!!!");
+      System.exit(0);
+    }
+  //txt file opened
+    
+    
+    /*
+     * read numcols
+     * numrows
+     * xll corner
+     * yll corner
+     * cellsize (res)
+     * NODATA_value
+     */
+    
+    readWord(input); //reading ncols
+    numCols = Integer.valueOf(readNumber(input));
+    readWord(input); //reading nrows
+    numRows = Integer.valueOf(readNumber(input));
+    readWord(input); //reading xllcorner
+    xLL = Double.valueOf(readNumber(input));
+    readWord(input); //reading yllcorner
+    yLL = Double.valueOf(readNumber(input));
+    readWord(input); //reading cellsize
+    res = Double.valueOf(readNumber(input));
+    readWord(input); //reading NODATA_value
+    ignore = Double.valueOf(readNumber(input));
+    
+    
+    if(dataAvg.containsKey(dataName))
+    {
+      //then we are overwriting this data!
+      overwrite = true;
+    } else
+    {
+      //dont want to add all this information if we already have!!!
+      if(!init)
+      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+        dataStruct.fillWorld(res);
+        init = true;
+      }
+      //setting whether contained data is additive or averaged and references
+      dataAvg.put(dataName, new Boolean(avg));
+      if(ref != null)
+      {
+        dataRef.put(dataName, ref);
+      }
+      if(unit != null)
+      {
+        dataUnits.put(dataName, unit);
+      }
+      //done settign avg/add and references
+    }
+    
+    
+    //reading the data from the file
+    currY = yLL;
+    for(int i = 0; i < numRows; i++)
+    {
+      currX = xLL;
+      for(int k = 0; k <numCols; k++)
+      {
+        dataValue = Double.valueOf(readNumber(input));
+        
+        //only add this data if it is not the ignore value
+        if(dataValue != ignore)
+        {
+          toAdd = new DataBlock(currX, currY, res, res);
+          timeValue = new TreeMap();
+          timeValue.put(time, dataValue);
+          
+          //check overwrite bit, if so, use hold instead of dataName
+          if(overwrite)
+          {
+            //just replace name with hold, later, we will merge hold over old data
+            toAdd.data.put("hold", timeValue);
+          } else
+          {
+            //add data as normal
+            toAdd.data.put(dataName, timeValue);
+          }
+          
+        //merging this data into the current tree
+          dataStruct.addData(toAdd, avg);
+        }
+        currX += res;
+      }
+      currY += res;
+    }
+    
+    //done adding all data, if overwrite, must merge with old data now
+    if(overwrite)
+    {
+      dataStruct.resolveOverwrite("hold", dataName);
+    } //else we are done already
+    
+    try{
+      input.close(); //im such a good programmer closing my files and whatnot
+    } catch(IOException e){}
+  //done reading data from file
+  }
+  
   private void add1x1Data(Element currFile)
   { /* function will add the data from the specified file of type '1x1'
      * '1x1'- defined as (180x360) lines of data values, each with its x and y
@@ -962,6 +1134,7 @@ public class DataBuilder
     } catch (FileNotFoundException ex) 
     {
       log.log(Level.SEVERE, "FileNotFoundException!!!");
+      System.exit(1);
     }
   //txt file opened
 
@@ -1205,6 +1378,7 @@ public class DataBuilder
       
     } catch (java.io.IOException e) {
       log.log(Level.SEVERE, "Error reading NetCDF file -> "+fileName);
+      System.exit(1);
     }
   //done reading data from file
     
@@ -1583,7 +1757,7 @@ public class DataBuilder
               {
                 //there should be SOMETHING to do to weight the data for sparse
                 /*
-                 * TODO look into superhigh resolution / sparse data sets
+                 * look into superhigh resolution / sparse data sets
                  * and how they might be affected by overwrites, or at elast
                  * how they can be accounted for.
                  * 1. should this accounting take place here
@@ -1876,10 +2050,10 @@ public class DataBuilder
 
     } catch(ShapefileException e)
     {
-      log.log(Level.WARNING, "That aint no ShapeFile fool! -> "+fileName);
+      log.log(Level.WARNING, "That aint no ShapeFile! -> "+fileName);
     } catch(IOException e)
     {
-      log.log(Level.WARNING, "IOException dont give me none of that!! -> "+fileName);
+      log.log(Level.WARNING, "IOException!! -> "+fileName);
     }
     log.log(Level.FINE, "Done adding new PointShapefileEnum");
   }
@@ -1996,10 +2170,14 @@ public class DataBuilder
       Feature inFeature;
       Geometry geom;
       Geometry env;
+      LinearRing lr;
+      Polygon holdP;
+      Coordinate[] coords;
       try
       {
         while(iter.hasNext())
         {
+          
           inFeature = (Feature)iter.next();
           geom = inFeature.getDefaultGeometry();
           env = geom.getEnvelope();
@@ -2115,10 +2293,37 @@ public class DataBuilder
             dataStruct.addData(toAdd, avg);
           } else //env is a Polygon
           {
+//TODO***********************check this out******************************************
+            /* WHAT THE CODE DOES (or is supposed to)
+             * in this section we have a polygon, its value, and what field it should
+             * be stored in. We get a rectangular bound on the polygon, then iterate though
+             * each resolution sized block of it. Each block is tested to see if it (or how
+             * much of it) is in the polygon, assuming this is more than 0, the data is added
+             * to our dataset. For small polygons this is a simple process which gets run few times.
+             * However, there are some very large and very detailed or oddly shaped polys.
+             * These will possibly have to test thousands of blocks, i believe this is where
+             * the program grinds to a halt.
+             */
+            
+            /* THE PROBLEM
+             * ok so... it seems like objects in this section are being created but
+             * never garbage collected. (according to my profiler) 
+             * though, when running with verbose garbage collection there is alot of
+             * memory getting picked up in this section. either way, the program significantly
+             * slows down here, and memory usage balloons. Memory usage is already very high,
+             * because there is huge double matricies being stored.
+             * Actual objects which are holding most memory are coordinants.
+             * This may be because a Polygon is defined by these quardenants, so when you have
+             * a large poly with detailed boarders there are an immence number of coords.
+             * However the behavior exhibited here does not look like it is just one
+             * large object being created at a time. If that were the case, and they were
+             * being collected normally, memory usage would fluxuate up and down, whereas
+             * in actual use it pretty consistantly increases.
+             */
             Polygon area = (Polygon)env;
 
             double minX, maxX, minY, maxY;
-            Coordinate[] coords = area.getCoordinates();
+            coords = area.getCoordinates();
             
             minX = coords[0].x;
             maxX = coords[0].x;
@@ -2167,8 +2372,8 @@ public class DataBuilder
                 makeLR[4].y = Y;
                 
                 //TODO this has got to be doing something terrible right...
-                LinearRing lr = gf.createLinearRing(makeLR);
-                Polygon holdP = gf.createPolygon(lr, null);
+                lr = gf.createLinearRing(makeLR);
+                holdP = gf.createPolygon(lr, null);
                 if(holdP.intersects(geom))
                 {
                   Geometry over = holdP.intersection(geom);
@@ -2204,6 +2409,7 @@ public class DataBuilder
             //System.out.println("*");
             //System.out.println("\n -> done geom");
           }
+//TODO***************************stop checking it out************************************
         }
         
         //done adding all data, if overwrite, must merge with old data now
@@ -2225,10 +2431,10 @@ public class DataBuilder
 
     } catch(ShapefileException e)
     {
-      log.log(Level.WARNING, "That aint no ShapeFile fool! -> "+fileName);
+      log.log(Level.WARNING, "That aint no ShapeFile! -> "+fileName);
     } catch(IOException e)
     {
-      log.log(Level.WARNING, "IOException dont give me none of that!! -> "+fileName);
+      log.log(Level.WARNING, "IOException!! -> "+fileName);
     }
     
     log.log(Level.FINE, "Done adding new PolyShapefileEnum");
@@ -2314,6 +2520,7 @@ public class DataBuilder
     } catch (FileNotFoundException ex) 
     {
       log.log(Level.SEVERE, "FileNotFoundException!!!");
+      System.exit(1);
     }
   //txt file opened
     
@@ -2852,13 +3059,66 @@ public class DataBuilder
     } catch (IOException ex)
     {
       log.log(Level.SEVERE, "IOException!");
+      System.exit(1);
     }
 
     if(build.length() > 0)
+    {
       return build.trim();
-    else
+    } else
+    {
       return null;
+    }
+      
   }
+  private String readNumber(BufferedReader input)
+  {
+    log.log(Level.FINEST, "begin function");
+    //reads an entire word from an input stream rather than just a character
+    //words delimited by any whitespace 'space, new line, tab'
+    //if no word exists in the stream return... null!
+    String build = new String();
+    int read;
+    char hold;
+    try {
+      read = input.read();
+      while((read != -1)&&(((hold = (char)read) == ' ')||(hold == '\n')||(hold == '\t')))
+      {/*flushing whitespace from the input stream*/
+        read = input.read();
+      }
+      if(read == -1)
+      { //file is done stop before content was reached
+        return null;
+      } else
+      {
+        build = build.concat(String.valueOf((char)read));
+        while(((read = input.read()) != -1)&&((hold = (char)read) != ' ')&&(hold != '\n')&&(hold != '\t'))
+        {
+          build = build.concat(String.valueOf(hold));
+        }
+      }
+      
+    } catch (IOException ex)
+    {
+      log.log(Level.SEVERE, "IOException!");
+      System.exit(1);
+    }
+
+    if(build.length() > 0)
+    {
+      if((build.indexOf('E') != -1)||(build.indexOf('e') != -1))
+      {
+        return String.valueOf(scientificToDouble(build.trim()));
+      } else
+      {
+        return build.trim();
+      }
+    } else
+    {
+      return null;
+    }
+  }
+  
   private double scientificToDouble(String sc)
   {
     log.log(Level.FINEST, "begin function");

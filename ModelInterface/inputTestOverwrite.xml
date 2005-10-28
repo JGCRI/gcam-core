@@ -21,7 +21,7 @@
 		<res value=".1" />
 		<average value="True" />
 		<units value="class" />
-		<attribute value="POWERCLASS" />
+		<attribute value="GRIDCODE" />
 		<name value="ca_50mwind.shp" />
 	</file>
 </input>

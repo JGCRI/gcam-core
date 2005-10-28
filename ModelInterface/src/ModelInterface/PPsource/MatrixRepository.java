@@ -164,7 +164,7 @@ public class MatrixRepository implements DataRepository
     //remove hold
     root.remove(holdName);
     
-    return 0; //success
+    return 1; //success
   }
   
   public TreeMap<String, TreeMap<Double, Double>> getAllLayers(int X, int Y)
