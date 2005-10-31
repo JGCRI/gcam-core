@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<input resolution="0">
+<input resolution=".25">
 	<file type="UNEP">
 		<data value="PopulationDensity" />
 		<date value="1995" />

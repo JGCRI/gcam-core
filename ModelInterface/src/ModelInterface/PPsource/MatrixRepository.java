@@ -89,13 +89,21 @@ public class MatrixRepository implements DataRepository
 
   public void addValue(int X, int Y, double value)
   {
-    if(Double.isNaN(currLayer[X][Y]))
+    try
     {
-      currLayer[X][Y] = value;
-    } else
+      if(Double.isNaN(currLayer[X][Y]))
+      {
+        currLayer[X][Y] = value;
+      } else
+      {
+        currLayer[X][Y] += value;
+      }
+    } catch(ArrayIndexOutOfBoundsException e)
     {
-      currLayer[X][Y] += value;
+      System.out.println("SEVERE: ("+X+","+Y+") out of bounds - PROGRAM TERMINATING");
+      System.exit(1);
     }
+    
     
     
   }

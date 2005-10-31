@@ -56,6 +56,7 @@ public class superRegion extends Region
     height = -1;
     width = -1;
     numSub = 0;
+    level = 1;
     data = new ArrayList();
   }
   

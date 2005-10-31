@@ -219,149 +219,7 @@ public class ManipulationDriver
     for(int i = 0; i < coms.size(); i++)
     {
       currCom = (Element)coms.get(i);
-      log.log(Level.FINER, "parsing "+currCom.getName()+" command");
-      if(currCom.getName().equals("variable"))
-      {
-        if(currCom.getAttributeValue("type").equals("data"))
-        {
-          log.log(Level.FINEST, "new data variable command");
-          newDataVariableCommand(currCom);
-        } else  if(currCom.getAttributeValue("type").equals("reference"))
-        {
-          log.log(Level.FINEST, "new reference variable command");
-          newReferenceVariableCommand(currCom);
-        } else  if(currCom.getAttributeValue("type").equals("group"))
-        {
-          log.log(Level.FINEST, "new group variable command");
-          newGroupVariableCommand(currCom);
-        } else
-        {
-          log.log(Level.WARNING, "Unknown variable type -> "+currCom.getAttributeValue("type"));
-        }
-      } else if(currCom.getName().equals("aggregateVariables"))
-      {
-        aggregateVariablesCommand(currCom);
-      } else if(currCom.getName().equals("add"))
-      {
-        addCommand(currCom);
-      } else if(currCom.getName().equals("subtract"))
-      {
-        subCommand(currCom);
-      } else if(currCom.getName().equals("addScalar"))
-      {
-        addScalarCommand(currCom);
-      } else if(currCom.getName().equals("multiply"))
-      {
-        multiplyCommand(currCom);
-      } else if(currCom.getName().equals("divide"))
-      {
-        divideCommand(currCom);
-      } else if(currCom.getName().equals("multiplyScalar"))
-      {
-        multiplyScalarCommand(currCom);
-      } else if(currCom.getName().equals("divideScalar"))
-      {
-        divideScalarCommand(currCom);
-      } else if(currCom.getName().equals("parseGreaterThan"))
-      {
-        parseGreaterThanCommand(currCom);
-      } else if(currCom.getName().equals("parseLessThan"))
-      {
-        parseLessThanCommand(currCom);
-      } else if(currCom.getName().equals("removeRandom"))
-      {
-        removeRandomCommand(currCom);
-      } else if(currCom.getName().equals("removeRandomGuided"))
-      {
-        removeRandomGuidedCommand(currCom);
-      } else if(currCom.getName().equals("maskCombineOr"))
-      {
-        maskCombineOrCommand(currCom);
-      } else if(currCom.getName().equals("maskCombineAnd"))
-      {
-        maskCombineAndCommand(currCom);
-      } else if(currCom.getName().equals("maskRemain"))
-      {
-        maskRemainCommand(currCom);
-      } else if(currCom.getName().equals("maskRemove"))
-      {
-        maskRemoveCommand(currCom);
-      } else if(currCom.getName().equals("countGreaterThan"))
-      {
-        countGreaterThanCommand(currCom);
-      } else if(currCom.getName().equals("countLessThan"))
-      {
-        countLessThanCommand(currCom);
-      } else if(currCom.getName().equals("countElements"))
-      {
-        countElementsCommand(currCom);
-      } else if(currCom.getName().equals("largestValue"))
-      {
-        largestValueCommand(currCom);
-      } else if(currCom.getName().equals("smallestValue"))
-      {
-        smallestValueCommand(currCom);
-      } else if(currCom.getName().equals("aggregateValues"))
-      {
-        aggregateValuesCommand(currCom);
-      } else if(currCom.getName().equals("sumValues"))
-      {
-        sumValuesCommand(currCom);
-      } else if(currCom.getName().equals("avgOverRegion"))
-      {
-        avgOverRegionCommand(currCom);
-      } else if(currCom.getName().equals("avgOverRegionByArea"))
-      {
-        avgOverRegionByAreaCommand(currCom);
-      } else if(currCom.getName().equals("avgVariables"))
-      {
-        avgVariablesCommand(currCom);
-      } else if(currCom.getName().equals("avgVariablesOverRegion"))
-      {
-        avgVariablesOverRegionCommand(currCom);
-      } else if(currCom.getName().equals("avgVariablesOverRegionByArea"))
-      {
-        avgVariablesOverRegionByAreaCommand(currCom);
-      } else if(currCom.getName().equals("weightValues"))
-      {
-        weightValuesCommand(currCom);
-      } else if(currCom.getName().equals("frequencyAnalysis"))
-      {
-        frequencyAnalysisCommand(currCom);
-      } else if(currCom.getName().equals("windPowerCalc"))
-      {
-        windPowerCalcCommand(currCom);
-      } else if(currCom.getName().equals("extractSubRegion"))
-      {
-        extractSubRegionCommand(currCom);
-      } else if(currCom.getName().equals("getChildVariable"))
-      {
-        getChildVariable(currCom);
-      } else if(currCom.getName().equals("print"))
-      {
-        printCommand(currCom);
-      } else if(currCom.getName().equals("printVerbose"))
-      {
-        printVerboseCommand(currCom);
-      } else if(currCom.getName().equals("plot"))
-      {
-        plotCommand(currCom);
-      } else if(currCom.getName().equals("createDataSet"))
-      {
-       createDataSetCommand(currCom);
-      } else if(currCom.getName().equals("comment"))
-      {
-        commentCommand(currCom);
-      } else if(currCom.getName().equals("setReference"))
-      {
-        setReferenceCommand(currCom);
-      } else if(currCom.getName().equals("setUnits"))
-      {
-        setUnitsCommand(currCom);
-      } else
-      {
-        log.log(Level.WARNING, "Unknown user command -> "+currCom.getName());
-      }
+      runCommand(currCom);
     }
     log.log(Level.FINER, "All user commands have been parsed");
   }
@@ -2508,7 +2366,87 @@ public class ManipulationDriver
     }
 
   }
-  
+  /**
+   * Runs a command on subregions which are extracted from the given variable.
+   * Subregions are defined on a specific level according to the regionDef.
+   * @param command XML node defining the operation.
+   */
+  private void forEachSubregionCommand(Element command)
+  {
+    //get variable
+    //get list of regions
+    //for each region
+      //extract it
+      //put new variable in command
+      //run command
+    log.log(Level.FINER, "begin function");
+    
+    Variable VSource;
+    Region VShape, currReg;
+    Element currInfo;
+    Element build;
+    Attribute attr;
+    Element subCom, extCom;
+    List<String> regionNames = new ArrayList<String>();
+    Map.Entry re;
+    Iterator it;
+    String currName;
+    int level;
+    
+    
+    
+    currInfo = command.getChild("source");
+    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    currInfo = command.getChild("level");
+    if(currInfo.getAttribute("value")!=null)
+    { //this is just a number, so go ahead and read it
+      level = Integer.parseInt(currInfo.getAttributeValue("value"));
+    } else
+    { //this is a scalar variable, get the value out of it
+      Variable holdChange = (Variable)variableList
+          .get(currInfo.getAttributeValue("name"));
+      level = (int)holdChange.getData()[0].data[0][0];
+    }
+    currInfo = command.getChild("command");
+    subCom = (Element)(currInfo.getChildren().get(0)); //getting the first (and only child)
+    
+    
+    
+    it = regionList.entrySet().iterator();
+    while(it.hasNext())
+    {
+      re = (Map.Entry)it.next();
+      currReg = (Region)re.getValue();
+      if(currReg.level == level)
+      {
+        regionNames.add(currReg.name);
+      }
+    }
+    
+    for(int i = 0; i < regionNames.size(); i++)
+    {
+      currName = regionNames.get(i);
+      
+      extCom = new Element("extractSubRegion");
+      build = new Element("target");
+      build.setAttribute("name", currName+"Extract");
+      extCom.addContent(build);
+      build = new Element("source");
+      build.setAttribute("name", VSource.name);
+      extCom.addContent(build);
+      build = new Element("shape");
+      build.setAttribute("value", currName);
+     
+      extCom.addContent(build);
+      
+      runCommand(extCom);
+      
+      build = subCom.getChild("argument");
+      build.setAttribute("name", currName+"Extract");
+      
+      runCommand(subCom);
+    }
+  }
 
 //*****************************************************************************
 //*******************Component Functions***************************************
@@ -2693,6 +2631,7 @@ public class ManipulationDriver
     
     toAdd.name = currRegion.getAttributeValue("name");
     toAdd.resolution = resolution;
+    toAdd.level = Integer.parseInt(currRegion.getAttributeValue("level"));
     
     //begin loop to add subregions to this superregion
     subRegions = currRegion.getChildren("region");
@@ -2815,6 +2754,156 @@ public class ManipulationDriver
     }
   }
 
+  private void runCommand(Element currCom)
+  {
+    log.log(Level.FINER, "parsing "+currCom.getName()+" command");
+    if(currCom.getName().equals("variable"))
+    {
+      if(currCom.getAttributeValue("type").equals("data"))
+      {
+        log.log(Level.FINEST, "new data variable command");
+        newDataVariableCommand(currCom);
+      } else  if(currCom.getAttributeValue("type").equals("reference"))
+      {
+        log.log(Level.FINEST, "new reference variable command");
+        newReferenceVariableCommand(currCom);
+      } else  if(currCom.getAttributeValue("type").equals("group"))
+      {
+        log.log(Level.FINEST, "new group variable command");
+        newGroupVariableCommand(currCom);
+      } else
+      {
+        log.log(Level.WARNING, "Unknown variable type -> "+currCom.getAttributeValue("type"));
+      }
+    } else if(currCom.getName().equals("aggregateVariables"))
+    {
+      aggregateVariablesCommand(currCom);
+    } else if(currCom.getName().equals("add"))
+    {
+      addCommand(currCom);
+    } else if(currCom.getName().equals("subtract"))
+    {
+      subCommand(currCom);
+    } else if(currCom.getName().equals("addScalar"))
+    {
+      addScalarCommand(currCom);
+    } else if(currCom.getName().equals("multiply"))
+    {
+      multiplyCommand(currCom);
+    } else if(currCom.getName().equals("divide"))
+    {
+      divideCommand(currCom);
+    } else if(currCom.getName().equals("multiplyScalar"))
+    {
+      multiplyScalarCommand(currCom);
+    } else if(currCom.getName().equals("divideScalar"))
+    {
+      divideScalarCommand(currCom);
+    } else if(currCom.getName().equals("parseGreaterThan"))
+    {
+      parseGreaterThanCommand(currCom);
+    } else if(currCom.getName().equals("parseLessThan"))
+    {
+      parseLessThanCommand(currCom);
+    } else if(currCom.getName().equals("removeRandom"))
+    {
+      removeRandomCommand(currCom);
+    } else if(currCom.getName().equals("removeRandomGuided"))
+    {
+      removeRandomGuidedCommand(currCom);
+    } else if(currCom.getName().equals("maskCombineOr"))
+    {
+      maskCombineOrCommand(currCom);
+    } else if(currCom.getName().equals("maskCombineAnd"))
+    {
+      maskCombineAndCommand(currCom);
+    } else if(currCom.getName().equals("maskRemain"))
+    {
+      maskRemainCommand(currCom);
+    } else if(currCom.getName().equals("maskRemove"))
+    {
+      maskRemoveCommand(currCom);
+    } else if(currCom.getName().equals("countGreaterThan"))
+    {
+      countGreaterThanCommand(currCom);
+    } else if(currCom.getName().equals("countLessThan"))
+    {
+      countLessThanCommand(currCom);
+    } else if(currCom.getName().equals("countElements"))
+    {
+      countElementsCommand(currCom);
+    } else if(currCom.getName().equals("largestValue"))
+    {
+      largestValueCommand(currCom);
+    } else if(currCom.getName().equals("smallestValue"))
+    {
+      smallestValueCommand(currCom);
+    } else if(currCom.getName().equals("aggregateValues"))
+    {
+      aggregateValuesCommand(currCom);
+    } else if(currCom.getName().equals("sumValues"))
+    {
+      sumValuesCommand(currCom);
+    } else if(currCom.getName().equals("avgOverRegion"))
+    {
+      avgOverRegionCommand(currCom);
+    } else if(currCom.getName().equals("avgOverRegionByArea"))
+    {
+      avgOverRegionByAreaCommand(currCom);
+    } else if(currCom.getName().equals("avgVariables"))
+    {
+      avgVariablesCommand(currCom);
+    } else if(currCom.getName().equals("avgVariablesOverRegion"))
+    {
+      avgVariablesOverRegionCommand(currCom);
+    } else if(currCom.getName().equals("avgVariablesOverRegionByArea"))
+    {
+      avgVariablesOverRegionByAreaCommand(currCom);
+    } else if(currCom.getName().equals("weightValues"))
+    {
+      weightValuesCommand(currCom);
+    } else if(currCom.getName().equals("frequencyAnalysis"))
+    {
+      frequencyAnalysisCommand(currCom);
+    } else if(currCom.getName().equals("windPowerCalc"))
+    {
+      windPowerCalcCommand(currCom);
+    } else if(currCom.getName().equals("extractSubRegion"))
+    {
+      extractSubRegionCommand(currCom);
+    } else if(currCom.getName().equals("getChildVariable"))
+    {
+      getChildVariable(currCom);
+    } else if(currCom.getName().equals("print"))
+    {
+      printCommand(currCom);
+    } else if(currCom.getName().equals("printVerbose"))
+    {
+      printVerboseCommand(currCom);
+    } else if(currCom.getName().equals("plot"))
+    {
+      plotCommand(currCom);
+    } else if(currCom.getName().equals("createDataSet"))
+    {
+     createDataSetCommand(currCom);
+    } else if(currCom.getName().equals("comment"))
+    {
+      commentCommand(currCom);
+    } else if(currCom.getName().equals("setReference"))
+    {
+      setReferenceCommand(currCom);
+    } else if(currCom.getName().equals("setUnits"))
+    {
+      setUnitsCommand(currCom);
+    } else if(currCom.getName().equals("forEachSubregion"))
+    {
+      forEachSubregionCommand(currCom);
+    } else
+    {
+      log.log(Level.WARNING, "Unknown user command -> "+currCom.getName());
+    }
+  }
+  
   private void fillGroupByExplicit(GroupVariable var, Element members)
   {
     log.log(Level.FINER, "begin function");

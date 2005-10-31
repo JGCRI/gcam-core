@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<commands>
+	<variable name="population" type="reference">
+		<region value="World" />
+		<field value="PopulationDensity" />
+		<time value="1995" />
+	</variable>
+	<variable name="irradiance" type="reference">
+		<region value="World" />
+		<field value="SolarIrradiance" />
+		<time value="1993" />
+	</variable>
+	
+	<maskRemain>
+		<target name="irradiance" />
+		<argument name="irradiance" />
+		<mask name="population" />
+		<limit value="100" />
+		<weight value="false" />
+	</maskRemain>
+
+	<forEachSubregion>
+		<source name="irradiance" />
+		<level value="3" />
+		<command>
+			<frequencyAnalysis>
+				<output type="text" />
+				<argument name="*" />
+				<buckets number="20" />
+			</frequencyAnalysis>
+		</command>
+	</forEachSubregion>
+</commands>

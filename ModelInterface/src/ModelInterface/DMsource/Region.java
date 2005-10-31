@@ -53,6 +53,7 @@ public abstract class Region extends Rectangle2D.Double
   public String name; //the name of the region ("maryland" etc.) if one exists
   public double resolution; //how large each block of the matricies are
   public int numSub; //number of sub regions this region contains will normally be 0
+  public int level; //the level of this region as defined in the early XML file
   
   public abstract boolean isSuper();
   /**

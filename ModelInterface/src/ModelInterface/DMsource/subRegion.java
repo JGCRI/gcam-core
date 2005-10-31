@@ -45,6 +45,7 @@ public class subRegion extends Region
     name = "blank";
     resolution = 1;
     numSub = 1;
+    level = 0;
     data = new TreeMap();
   }
   

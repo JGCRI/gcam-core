@@ -977,19 +977,56 @@ public class DataBuilder
      * NODATA_value
      */
     
+    double shift;
     readWord(input); //reading ncols
     numCols = Integer.valueOf(readNumber(input));
+    //System.out.println("numCols "+numCols);
     readWord(input); //reading nrows
     numRows = Integer.valueOf(readNumber(input));
+    //System.out.println("numRows "+numRows);
     readWord(input); //reading xllcorner
     xLL = Double.valueOf(readNumber(input));
+    //System.out.println("xLL "+xLL);
     readWord(input); //reading yllcorner
     yLL = Double.valueOf(readNumber(input));
+    //System.out.println("yLL "+yLL);
     readWord(input); //reading cellsize
     res = Double.valueOf(readNumber(input));
+    //System.out.println("res "+res);
     readWord(input); //reading NODATA_value
     ignore = Double.valueOf(readNumber(input));
+    //System.out.println("ignore "+ignore);
     
+    //rectifying bounds if they are out of legal values
+    if(xLL < -180)
+    {
+      shift = (xLL*-1)-180;
+      xLL = -180;
+      log.log(Level.WARNING, dataName+" shifted right by "+shift+" to "+xLL);
+    } else
+    {
+      shift = (xLL+(numCols*res))-180;
+      if(shift > 0)
+      {
+        xLL -= shift;
+        log.log(Level.WARNING, dataName+" shifted left by "+shift+" to "+xLL);
+      }
+    }
+    if(yLL < -90)
+    {
+      shift = (xLL*-1)-90;
+      yLL = -90;
+      log.log(Level.WARNING, dataName+" shifted up by "+shift+" to "+yLL);
+    } else
+    {
+      shift = (yLL+((numRows+1)*res))-90;
+      if(shift > 0)
+      {
+        yLL -= shift;
+        log.log(Level.WARNING, dataName+" shifted down by "+shift+" to "+yLL);
+      }
+    }
+    //done rectifying bounds
     
     if(dataAvg.containsKey(dataName))
     {
@@ -1018,7 +1055,7 @@ public class DataBuilder
     
     
     //reading the data from the file
-    currY = yLL;
+    currY = (yLL+(numRows*res));
     for(int i = 0; i < numRows; i++)
     {
       currX = xLL;
@@ -1049,7 +1086,7 @@ public class DataBuilder
         }
         currX += res;
       }
-      currY += res;
+      currY -= res;
     }
     
     //done adding all data, if overwrite, must merge with old data now
@@ -2482,7 +2519,7 @@ public class DataBuilder
       {
         if(currElem.getAttributeValue("value").equals("month"))
         { //byMonth is default to false
-          byMonth = true;;
+          byMonth = true;
         }
       } else if(currElem.getName().equals("res"))
       {
@@ -3039,21 +3076,22 @@ public class DataBuilder
     int read;
     char hold;
     try {
-      read = input.read();
-      while((read != -1)&&(((hold = (char)read) == ' ')||(hold == '\n')||(hold == '\t')))
-      {/*flushing whitespace from the input stream*/
+      do
+      {
+        /*flushing whitespace from the input stream*/
         read = input.read();
-      }
+        hold = (char)read;
+      } while((read != -1)&&(hold <= '\u0020'));
+      
       if(read == -1)
       { //file is done stop before content was reached
         return null;
-      } else
+      }
+        
+      build = build.concat(String.valueOf((char)read));
+      while(((read = input.read()) != -1)&&((hold = (char)read) > '\u0020'))
       {
-        build = build.concat(String.valueOf((char)read));
-        while(((read = input.read()) != -1)&&((hold = (char)read) != ' ')&&(hold != '\n')&&(hold != '\t'))
-        {
-          build = build.concat(String.valueOf(hold));
-        }
+        build = build.concat(String.valueOf(hold));
       }
       
     } catch (IOException ex)
@@ -3062,9 +3100,11 @@ public class DataBuilder
       System.exit(1);
     }
 
+    build = build.trim();
+    
     if(build.length() > 0)
     {
-      return build.trim();
+      return build;
     } else
     {
       return null;
@@ -3074,44 +3114,23 @@ public class DataBuilder
   private String readNumber(BufferedReader input)
   {
     log.log(Level.FINEST, "begin function");
-    //reads an entire word from an input stream rather than just a character
-    //words delimited by any whitespace 'space, new line, tab'
-    //if no word exists in the stream return... null!
-    String build = new String();
-    int read;
-    char hold;
-    try {
-      read = input.read();
-      while((read != -1)&&(((hold = (char)read) == ' ')||(hold == '\n')||(hold == '\t')))
-      {/*flushing whitespace from the input stream*/
-        read = input.read();
-      }
-      if(read == -1)
-      { //file is done stop before content was reached
-        return null;
-      } else
-      {
-        build = build.concat(String.valueOf((char)read));
-        while(((read = input.read()) != -1)&&((hold = (char)read) != ' ')&&(hold != '\n')&&(hold != '\t'))
-        {
-          build = build.concat(String.valueOf(hold));
-        }
-      }
-      
-    } catch (IOException ex)
+    //reads a word from teh data stream, then if necessary converts to
+    //a number (scientific->decimal)
+    String build = readWord(input);
+    
+    if(build == null)
     {
-      log.log(Level.SEVERE, "IOException!");
-      System.exit(1);
+      return null;
     }
-
+    
     if(build.length() > 0)
     {
       if((build.indexOf('E') != -1)||(build.indexOf('e') != -1))
       {
-        return String.valueOf(scientificToDouble(build.trim()));
+        return String.valueOf(scientificToDouble(build));
       } else
       {
-        return build.trim();
+        return build;
       }
     } else
     {

@@ -75,6 +75,9 @@ public class FlatIndex implements DataIndex
       init(val.width);
     }
     
+    //!!!!!!!!!!
+    //System.out.println("block x: "+val.x+"-"+(val.x+val.width));
+    //System.out.println("block y: "+val.y+"-"+(val.y+val.height));
     
     //find index bounds to work in
     min = point2index(new Point(val.x, val.y), true);
