@@ -182,7 +182,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
-					if(evt.getOldValue().equals(controlStr)) {
+					if(evt.getOldValue().equals(controlStr) || 
+						evt.getOldValue().equals(controlStr+"Same")) {
 						((InterfaceMain)parentFrame).getSaveMenu().removeActionListener(thisViewer);
 						((InterfaceMain)parentFrame).getSaveAsMenu().removeActionListener(thisViewer);
 						((InterfaceMain)parentFrame).getSaveAsMenu().setEnabled(false);
@@ -383,22 +384,27 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		if (command.equals("XML file")) {
 			// Open a file
 			status = openXMLFile();
+			/*
 			if (!status) {
 				JOptionPane.showMessageDialog(null, "Error opening file!",
 						"File Open Error", JOptionPane.ERROR_MESSAGE);
 			}
+			*/
 			if (doc == null) {
 				// probably the cancel, just return here to avoid exceptions
 				return;
 			}
-			((InterfaceMain)parentFrame).fireControlChange(controlStr);
-			displayJtree();
-			//menuSave.setEnabled(true); // now save can show up
-			//setTitle("["+file+"] - ModelGUI");
-			parentFrame.setTitle("["+file+"] - ModelInterface");
+			//((InterfaceMain)parentFrame).fireControlChange(controlStr);
+			if(status) {
+				displayJtree();
+				//menuSave.setEnabled(true); // now save can show up
+				//setTitle("["+file+"] - ModelGUI");
+				parentFrame.setTitle("["+file+"] - ModelInterface");
+			}
 		} else if (command.equals("CSV file")) {
 			// Open a file
 			status = openCSVFile();
+			/*
 			if (!status) {
 				JOptionPane.showMessageDialog(null, "Error opening file!",
 						"File Open Error", JOptionPane.ERROR_MESSAGE);
@@ -407,11 +413,14 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				//probably the cancell, just return here to avoid exceptions
 				return;
 			}
-			((InterfaceMain)parentFrame).fireControlChange(controlStr);
-			displayJtree();
-			//menuSave.setEnabled(true); // now save can show up
-			//parentFrame.setTitle("["+file+"] - ModelGUI");
-			parentFrame.setTitle("["+file+"] - ModelInterface");
+			*/
+			//((InterfaceMain)parentFrame).fireControlChange(controlStr);
+			if(status) {
+				displayJtree();
+				//menuSave.setEnabled(true); // now save can show up
+				//parentFrame.setTitle("["+file+"] - ModelGUI");
+				parentFrame.setTitle("["+file+"] - ModelInterface");
+			}
 		} else if (command.equals("Save")) {
 			if (!(file.getAbsolutePath().endsWith(".xml"))) {
 				status = saveFile();
@@ -1209,8 +1218,9 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		int result = fc.showOpenDialog(parentFrame);
 
 		if (result == JFileChooser.CANCEL_OPTION) {
-			return true;
+			return false;
 		} else if (result == JFileChooser.APPROVE_OPTION) {
+			((InterfaceMain)parentFrame).fireControlChange(controlStr);
 			file = fc.getSelectedFile();
 			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
@@ -1233,7 +1243,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			String docLoc = doc.getDocumentElement().getAttribute(
 					"documentation");
 			if (docLoc.equals("")) {
-				documentation = null;
+				documentation = new Documentation(doc, lsParser, lsInput);
 			} else {
 				// Parse the documentation location into a URI.
 				try {
@@ -1302,14 +1312,14 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		int result = fc.showOpenDialog(parentFrame);
 
 		if (result == JFileChooser.CANCEL_OPTION) {
-			return true;
+			return false;
 		} else if (result == JFileChooser.APPROVE_OPTION) {
+			((InterfaceMain)parentFrame).fireControlChange(controlStr);
 			//file = fc.getSelectedFile();
 			csvFiles = fc.getSelectedFiles();
 			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
 
-			// inserted for opening file 2
 			JFileChooser fc2 = new JFileChooser();
 			fc2.setDialogTitle("Open Headers File");
 			fc2.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -1322,7 +1332,6 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				//globalFC.setCurrentDirectory(fc2.getCurrentDirectory());
 				((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
 				readCSVFile(csvFiles, file);
-				// DO STUFF WITH FILE1 AND FILE2
 			}
 
 		} else {

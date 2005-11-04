@@ -159,7 +159,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
-					if(evt.getOldValue().equals(controlStr)) {
+					if(evt.getOldValue().equals(controlStr) || 
+						evt.getOldValue().equals(controlStr+"Same")) {
 						menuManage.setEnabled(false);
 					} 
 					if(evt.getNewValue().equals(controlStr)) {
@@ -175,7 +176,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
-					if(evt.getOldValue().equals(controlStr)) {
+					if(evt.getOldValue().equals(controlStr) || 
+						evt.getOldValue().equals(controlStr+"Same")) {
 						menuExpPrn.setEnabled(false);
 					}
 				} else if(evt.getPropertyName().equals("Query")) {

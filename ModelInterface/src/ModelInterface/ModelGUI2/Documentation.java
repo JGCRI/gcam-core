@@ -29,12 +29,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
+import javax.swing.JFileChooser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.PrintStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -58,6 +60,9 @@ public class Documentation {
 	private Document doc;
 	private Comparator<Node> nodeComparator;
 	private XPath xpathImpl;
+	private URI documentationURI;
+	private LSParser lsParser;
+	private LSInput lsInput;
 	private class DocumentationElement {
 		Vector<String> xpathLinks;
 		Vector<TreeSet<Node>> nodeSets;
@@ -225,9 +230,9 @@ public class Documentation {
 		}
 	}
 
-	public Documentation(Document docIn, final URI aDocumentationURI, LSParser lsParser, LSInput lsInput) {
-		Document documentationDoc = null;
-		doc = docIn;
+	private void init(LSParser lsParserIn, LSInput lsInputIn) {
+		lsParser = lsParserIn;
+		lsInput = lsInputIn;
 		documentations = new Vector<DocumentationElement>();
 		xpathImpl = XPathFactory.newInstance().newXPath();
 		nodeComparator = new Comparator<Node> () {
@@ -247,38 +252,68 @@ public class Documentation {
 			}
 		};
 
-		try {
-			lsInput.setByteStream(new FileInputStream(new File(aDocumentationURI)));
-			documentationDoc = lsParser.parse(lsInput);
-		} catch (Exception e) {
-			System.out.println("Got Exception while creating XML document: "
-					+ e);
-			return;
-		}
-		NodeList childList = documentationDoc.getDocumentElement().getChildNodes();
-		for(int i = 0; i < childList.getLength(); ++i) {
-			documentations.add(new DocumentationElement(childList.item(i)));
-		}
-
 		ModelInterface.InterfaceMain.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+			//boolean same = true;
 			public void propertyChange(PropertyChangeEvent evt) {
-				if(evt.getPropertyName().equals("Control") && evt.getOldValue().equals(
-						InputViewer.controlStr)) {
-					// maybe check old value here to make sure InputViewer is loosing control
-					System.out.println("The open xml file must be closing");
-					System.out.println("Going to write out documentation and stop listening");
-					try {
-						PrintStream docOutStream = new PrintStream(new File(aDocumentationURI));
-						toXML(docOutStream);
-						docOutStream.close();
-					} catch (FileNotFoundException fnfe) {
-						fnfe.printStackTrace();
+				if(evt.getPropertyName().equals("Control")) {
+					if(/*!same  &&*/ (evt.getOldValue().equals(InputViewer.controlStr) 
+							|| evt.getOldValue().equals(InputViewer.controlStr+"Same"))) {
+						System.out.println("The open xml file must be closing");
+						System.out.println("Going to write out documentation and stop listening");
+						if(documentationURI == null) {
+							return;
+						}
+						try {
+							PrintStream docOutStream = new PrintStream(new File(documentationURI));
+							toXML(docOutStream);
+							docOutStream.close();
+						} catch (FileNotFoundException fnfe) {
+							fnfe.printStackTrace();
+						}
+						ModelInterface.InterfaceMain.getInstance().removePropertyChangeListener(this);
+								}
+					/*
+					if(same) {
+						same = false;
 					}
-					ModelInterface.InterfaceMain.getInstance().removePropertyChangeListener(this);
+					*/
 				}
 			}
 		});
+	}
 
+	private void openDocumentation() {
+		if(documentationURI != null) {
+			Document documentationDoc = null;
+			try {
+				lsInput.setByteStream(new FileInputStream(new File(documentationURI)));
+				documentationDoc = lsParser.parse(lsInput);
+			} catch (Exception e) {
+				System.out.println("Got Exception while creating XML document: "
+						+ e);
+				return;
+			}
+			NodeList childList = documentationDoc.getDocumentElement().getChildNodes();
+			for(int i = 0; i < childList.getLength(); ++i) {
+				documentations.add(new DocumentationElement(childList.item(i)));
+			}
+			// only open once so don't need these hanging around
+			lsParser = null;
+			lsInput = null;
+		}
+	}
+
+	public Documentation(Document docIn, LSParser lsParserIn, LSInput lsInputIn) {
+		doc = docIn;
+		documentationURI = null;
+		init(lsParserIn, lsInputIn);
+	}
+
+	public Documentation(Document docIn, final URI aDocumentationURI, LSParser lsParserIn, LSInput lsInputIn) {
+		documentationURI = aDocumentationURI;
+		doc = docIn;
+		init(lsParserIn, lsInputIn);
+		openDocumentation();
 	}
 
 	private void toXML(PrintStream docOutStream) {
@@ -290,6 +325,9 @@ public class Documentation {
 	}
 
 	public boolean hasDocumentation(Node n) {
+		if(documentationURI == null) {
+			return false;
+		}
 		int where;
 		if(n.getNextSibling() != null && n.getNextSibling().getNodeType() == Node.COMMENT_NODE) {
 			where = Integer.parseInt(n.getNextSibling().getNodeValue());
@@ -305,6 +343,46 @@ public class Documentation {
 	}
 
 	public void getDocumentation(Vector<Node> selectedNodes, int[] rows, int[] cols) {
+		if(documentationURI == null) {
+			JOptionPane.showMessageDialog(ModelInterface.InterfaceMain.getInstance(), 
+				"Please select a documentation file, or type in the name of a\nnew documentation file to create a new one.\nYou must save the XML to save the link to the documentation file.", "Add new Documentation File", JOptionPane.INFORMATION_MESSAGE);
+			JFileChooser fc = new JFileChooser();
+			fc.setCurrentDirectory(new File(ModelInterface.InterfaceMain.getInstance().getProperties().getProperty("lastDirectory", ".")));
+			fc.setFileFilter(new XMLFilter());
+			int result = fc.showOpenDialog(ModelInterface.InterfaceMain.getInstance());
+
+			if (result == JFileChooser.CANCEL_OPTION) {
+				return;
+			} else if (result == JFileChooser.APPROVE_OPTION) {
+				URI relDocumentationURI = documentationURI = fc.getSelectedFile().toURI();
+				String docURIStr = doc.getDocumentURI();
+				if(docURIStr == null) {
+					// warn that couldn't get doc's URI going to set as full path
+				} else {
+					try {
+						//to get a relative URI need the parent path of the doc's URI
+						//then we can relativize it
+						docURIStr = docURIStr.substring(0, docURIStr.lastIndexOf("/"));
+						URI currentMainURI = new URI(docURIStr);
+						relDocumentationURI = currentMainURI.relativize(documentationURI);
+						/*
+						System.out.println("CUR MAIN URI = " + currentMainURI.toString());
+						System.out.println("DOCUMENT URI = " + documentationURI.toString());
+						System.out.println("REL DOCU URI = " + relDocumentationURI.toString());
+						*/
+					} catch (URISyntaxException e) {
+						// warn that couldn't get doc's URI going to set as full path
+					}
+				}
+				doc.getDocumentElement().setAttribute("documentation", relDocumentationURI.toString());
+				ModelInterface.InterfaceMain.getInstance().fireProperty("Document-Modified", null, doc);
+				if(fc.getSelectedFile().exists()) {
+					System.out.println("Opening existing doc");
+					openDocumentation();
+				}
+				fc = null;
+			}
+		}
 		int where;
 		int row = 0;
 		int col = 0;
