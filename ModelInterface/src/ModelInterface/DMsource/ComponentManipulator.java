@@ -1265,7 +1265,8 @@ public final class ComponentManipulator
     final double PI = 3.1415926535;
     
     double max = largestValue(R)[0].data[0][0];
-    double factor = (max*1.0001)/bnum; //makes sure max value goes in last bucket
+    double min = smallestValue(R)[0].data[0][0];
+    double factor = ((max*1.0001)-min)/bnum; //makes sure max value goes in last bucket
     int store; //the index this value will be added to
     double area; //the area of the current cell we are in in km^2
     double[][] holdMS;
@@ -1281,9 +1282,9 @@ public final class ComponentManipulator
     {
       toReturn[i] = new DataWrapper();
       toReturn[i].data = new double[1][3];
-      toReturn[i].data[0][0] = (factor*i);
+      toReturn[i].data[0][0] = ((factor*i)+min);
       toReturn[i].data[0][1] = 0;
-      toReturn[i].data[0][2] = (factor*(i+1));
+      toReturn[i].data[0][2] = ((factor*(i+1))+min);
     }
     toReturn[bnum-1].data[0][2] = max;
     
@@ -1303,7 +1304,7 @@ public final class ComponentManipulator
             blockWidth = (totalWidth/R[i].data[iY].length);
             area = blockWidth*blockHeight;
             
-            store = (int)Math.floor(holdMS[iY][iX]/factor);
+            store = (int)Math.floor((holdMS[iY][iX]-min)/factor);
             
             toReturn[store].data[0][1] += (area);
           }
@@ -1325,7 +1326,8 @@ public final class ComponentManipulator
     final double PI = 3.1415926535;
     
     double max = largestValue(split)[0].data[0][0];
-    double factor = (max*1.0001)/bnum; //1.001 makes sure max value goes in last bucket
+    double min = smallestValue(R)[0].data[0][0];
+    double factor = ((max*1.0001)-min)/bnum; //makes sure max value goes in last bucket
     int store; //the index this value will be added to
     double area; //the area of the current cell we are in in km^2
     double[][] holdMS, holdMM;
@@ -1341,9 +1343,9 @@ public final class ComponentManipulator
     {
       toReturn[i] = new DataWrapper();
       toReturn[i].data = new double[1][3];
-      toReturn[i].data[0][0] = (factor*i);
+      toReturn[i].data[0][0] = ((factor*i)+min);
       toReturn[i].data[0][1] = 0;
-      toReturn[i].data[0][2] = (factor*(i+1));
+      toReturn[i].data[0][2] = ((factor*(i+1))+min);
     }
     toReturn[bnum-1].data[0][2] = max;
     
@@ -1364,7 +1366,7 @@ public final class ComponentManipulator
             blockWidth = (totalWidth/R[i].data[iY].length);
             area = blockWidth*blockHeight;
             
-            store = (int)Math.floor(holdMM[iY][iX]/factor);
+            store = (int)Math.floor((holdMM[iY][iX]-min)/factor);
             
             toReturn[store].data[0][1] += (area*holdMS[iY][iX]);
           }

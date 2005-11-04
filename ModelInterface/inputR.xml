@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <input>
 	<file type="netcdf">
-		<res value="1" />
+		<res value="0.5" />
 		<region num="372">		 
 			<RID value="Algeria" key="30100" />	   
 			<RID value="Angola" key="30200" />	   
@@ -377,6 +377,6 @@
 			<RID value="Venezuela" key="21400" />
 		</region>
 		<variable value="ctry" />
-		<name value="glctry_1.0.nc" />
+		<name value="glctry_0.5.nc" />
 	</file>
 </input>

@@ -3,21 +3,41 @@
 	<variable name="population" type="reference">
 		<region value="World" />
 		<field value="PopulationDensity" />
-		<time value="1995" />
+		<time value="1995.0" />
 	</variable>
 	<variable name="irradiance" type="reference">
 		<region value="World" />
 		<field value="SolarIrradiance" />
-		<time value="1993" />
+		<time value="1993.0" />
 	</variable>
+	<variable name="forest" type="reference">
+		<region value="World" />
+		<field value="ForestCover" />
+		<time value="1993.0" />
+	</variable>
+	
+	<parseLessThan>
+		<target name="forest" />
+		<argument name="forest" />
+		<limit value="80" />
+	</parseLessThan>
+	
+	<plot variable="forest" />
 	
 	<maskRemain>
 		<target name="irradiance" />
 		<argument name="irradiance" />
 		<mask name="population" />
-		<limit value="100" />
+		<limit value="50" />
 		<weight value="false" />
 	</maskRemain>
+	<maskRemove>
+		<target name="irradiance" />
+		<argument name="irradiance" />
+		<mask name="forest" />
+		<limit value="25" />
+		<weight value="false" />
+	</maskRemove>
 
 	<forEachSubregion>
 		<source name="irradiance" />
