@@ -18,6 +18,7 @@
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/iinfo.h"
+#include "sectors/include/building_dmd_subsector.h"
 
 using namespace std;
 using namespace xercesc;
@@ -73,9 +74,6 @@ bool BuildingSupplyTechnology::XMLDerivedClassParse( const string nodeName, cons
     if( nodeName == "internalLoadFraction" ){
         internalLoadFraction = XMLHelper<double>::getValue( curr );
     }
-    else if( nodeName == "intGainsMarketName" ){
-        intGainsMarketName = XMLHelper<string>::getValueString( curr );
-    }
     else {
       return false;
     }
@@ -92,20 +90,17 @@ bool BuildingSupplyTechnology::XMLDerivedClassParse( const string nodeName, cons
 */
 void BuildingSupplyTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
     XMLWriteElement( internalLoadFraction, "internalLoadFraction", out, tabs);
-    XMLWriteElement( intGainsMarketName, "intGainsMarketName", out, tabs );
 }	
 
 //! XML output for viewing.
 void BuildingSupplyTechnology::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( internalLoadFraction, "internalLoadFraction", out, tabs);
-    XMLWriteElement( intGainsMarketName, "intGainsMarketName", out, tabs );
     XMLWriteElement( input * internalLoadFraction, "internalGain", out, tabs );
 }
 
 //! Write object to debugging xml output stream.
 void BuildingSupplyTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 
     XMLWriteElement( internalLoadFraction, "internalLoadFraction", out, tabs );
-    XMLWriteElement( intGainsMarketName, "intGainsMarketName", out, tabs );
     XMLWriteElement( input * internalLoadFraction, "internalGain", out, tabs );
 }	
 
@@ -123,21 +118,16 @@ void BuildingSupplyTechnology::toDebugXMLDerived( const int period, ostream& out
 void BuildingSupplyTechnology::production(const string& regionName,const string& prodName,
                                           double dmd, const GDP* gdp, const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
-
+    
     // Call the normal production function
     technology::production( regionName, prodName, dmd, gdp, period );
 
     double internalGain = 0;
-    // Now, if an internal gains market has been set, calculate internal gains and add to that market 
+    const string intGainsMarketName =  marketplace->getMarketInfo( prodName, regionName, period, true )->
+                 getString(BuildingDemandSubSector::getInternalGainsInfoName(), false ); 
+    // If an internal gains market has been set, calculate internal gains and add to that market 
     if ( internalLoadFraction > 0 && !intGainsMarketName.empty() ) {
         marketplace->addToDemand( intGainsMarketName, regionName, input * internalLoadFraction, period );
         internalGain = input * internalLoadFraction;
-    }
-    
-    // TEMPORARY -- add calibrated internal gains to the internal gains market
-    // This should be moved to initCalc when possible since this only has to be done once per period.
-	IInfo* marketInfo = marketplace->getMarketInfo( intGainsMarketName, regionName, period, true );
-    double internalGains = marketInfo->getDouble( "calInternalGains", true );
-    internalGains += calInputValue * internalLoadFraction;
-	marketInfo->setDouble( "calInternalGains", internalGains );
+    }   
 }

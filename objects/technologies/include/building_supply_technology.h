@@ -16,6 +16,10 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/technology.h"
 
+// Forward declarations
+class Demographic;
+class NationalAccount;
+
 /*! 
 * \ingroup CIAM
 * \brief This building supply technology class incorporates internal gains calcuation

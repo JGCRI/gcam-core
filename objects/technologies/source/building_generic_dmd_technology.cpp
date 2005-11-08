@@ -18,7 +18,9 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
+#include "util/logger/include/ilogger.h"
 #include "containers/include/iinfo.h"
+#include "sectors/include/building_dmd_subsector.h"
 
 using namespace std;
 using namespace xercesc;
@@ -67,6 +69,49 @@ const std::string& BuildingGenericDmdTechnology::getXMLName1D() const {
 */
 const std::string& BuildingGenericDmdTechnology::getXMLNameStatic1D() {
 	return XML_NAME1D;
+}
+
+/*! \brief Performs building demand technology initializations.
+*
+* Passes the appropriate string for the internal gains market to each supply sector.
+* \warning This may need to be adjusted for multiple inputs
+* \author Steve Smith
+* \todo Add period to technology initCalc signature once AgLU is committed and remove from below
+*/
+void BuildingGenericDmdTechnology::initCalc( const IInfo* aSubsectorIInfo ) {
+    Marketplace* marketplace = scenario->getMarketplace();
+    string existingName;
+
+    string serviceSupplySectorName = getFuelName( );
+    string internGainsMktName = aSubsectorIInfo->getString( BuildingDemandSubSector::getInternalGainsInfoName(), true );
+    assert( !internGainsMktName.empty() ); // This should have always been properly set by the building subsector
+    string regionName = aSubsectorIInfo->getString( "regionName", true );
+    int period = aSubsectorIInfo->getInteger( "period", true );
+    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( serviceSupplySectorName, regionName, period, true );
+
+    if( !marketInfo ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "There does not appear to be a market for good "<< serviceSupplySectorName 
+                <<" in region "<< regionName << "." << endl;
+        existingName = "no market";   // do not try to set an info object to this market if there has been a user input error.
+    }
+    else {
+        existingName = marketInfo->getString( BuildingDemandSubSector::getInternalGainsInfoName(), false );
+    }
+    
+    if ( existingName.empty() ) {
+        // Pass the internal gains market name to the market supplying this technology
+        marketInfo->setString( BuildingDemandSubSector::getInternalGainsInfoName(), internGainsMktName );
+    }
+    else if ( existingName != internGainsMktName ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Building service supply sector "<< serviceSupplySectorName <<" in region "<< regionName
+                    <<" appears to be pointing to two different demand sectors." << endl;
+    }
+    
+    technology::initCalc( aSubsectorIInfo );
 }
 
 //! Parses any input variables specific to derived classes

@@ -42,6 +42,7 @@ public:
     virtual ~BuildingGenericDmdTechnology();
     virtual const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
+    virtual void initCalc( const IInfo* aSubsectorIInfo );
     virtual void calcShare( const std::string& regionName, const GDP* gdp, const int per ); 
     virtual void production( const std::string& regionName,const std::string& prodName,
 		                     double dmd, const GDP* gdp, const int per );

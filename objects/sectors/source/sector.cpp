@@ -283,6 +283,8 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * (instead of every iteration) should be placed in this function.
 *
 * \author Steve Smith
+* \param aNationalAccount national accounts
+* \param aDemographics demographics object
 * \param aPeriod Model period
 */
 void Sector::initCalc( NationalAccount& aNationalAccount,

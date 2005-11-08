@@ -41,7 +41,7 @@ class BuildingDemandSubSector : public Subsector
 public:
     BuildingDemandSubSector( const std::string regionName, const std::string sectorName );
     static const std::string& getXMLNameStatic();
-    
+    static const std::string& getInternalGainsInfoName();
     virtual void setCalibrationStatus( const int period );
     
     virtual void initCalc( NationalAccount& aNationalAccount,
@@ -56,6 +56,7 @@ public:
     void completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder );
 protected:
     virtual const std::string& getXMLName() const;
+    std::string getInternalGainsMarketName( const std::string sectorName ) const;
     bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

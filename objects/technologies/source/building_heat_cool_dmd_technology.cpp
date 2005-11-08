@@ -103,7 +103,8 @@ double BuildingHeatCoolDmdTechnology::getEffectiveInternalGains( const string& r
 /*! \brief Adjusts technology parameters as necessary to be consistent with calibration value.
 *
 * For these demand "technologies" the unitDemand needs to be adjusted so that output
-* is consistant with calibrated input demand. This version is for heating demands, where internal gains subtract from demand.
+* is consistant with calibrated input demand. 
+* This version is for heating or cooling demands, where internal gains add or subtract from demand.
 *
 * \author Steve Smith
 * \param unitDemand calibrated unit demand (demand per unit floorspace) for this subsector

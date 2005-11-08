@@ -13,6 +13,7 @@
 * \version $Revision$
 */
 
+#include <string>
 #include <vector>
 #include <map>
 #include <list>

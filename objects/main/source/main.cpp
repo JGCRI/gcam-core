@@ -118,6 +118,7 @@ int main( int argc, char *argv[] ) {
 
     // Print the output.
     runner->printOutput( timer );
+    mainLog.setLevel( ILogger::WARNING ); // Increase level so that user will know that model is done
     mainLog << "Model exiting successfully." << endl;
     // Cleanup Xerces. This should be encapsulated with an initializer object to ensure against leakage.
     XMLHelper<void>::cleanupParser();

@@ -13,6 +13,7 @@
 * \version $Revision$
 */
 
+#include <string>
 #include <vector>
 #include <map>
 #include <xercesc/dom/DOMNode.hpp>

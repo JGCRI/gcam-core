@@ -34,7 +34,6 @@ using namespace xercesc;
 extern Scenario* scenario;
 // static initialize.
 const string BuildingDemandSubSector::XML_NAME = "buildingSubSector";
-const string INTERNAL_GAINS_MKT = "intGains";
 
 /*! \brief Default constructor.
 *
@@ -52,7 +51,6 @@ BuildingDemandSubSector::BuildingDemandSubSector( const string regionName, const
     nonEnergyCost.resize( maxper, 0 );
     aveInsulation.resize( maxper, 0 );
     floorToSurfaceArea.resize( maxper, 0 );
-    
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -78,6 +76,32 @@ const std::string& BuildingDemandSubSector::getXMLName() const {
 */
 const std::string& BuildingDemandSubSector::getXMLNameStatic() {
 	return XML_NAME;
+}
+
+/*! \brief Return the string used to tag the name of the proper internal gains market.
+*
+* Returns the string used to tag the name of the proper internal gains market 
+* for a supply sector supplying building energy services.
+* The name of the internal gains market is derived from this base string.
+* \author Steve Smith
+* \return The constant INTERNAL_GAINS_INFO_NAME.
+*/
+const std::string& BuildingDemandSubSector::getInternalGainsInfoName() {
+    const static string INTERNAL_GAINS_INFO_NAME = "internalGainMarketName";
+	return INTERNAL_GAINS_INFO_NAME;
+}
+
+/*! \brief Return the name to be used for the internal gains market.
+*
+* Returns the name of the internal gains market 
+* the sector name + the subsector name should always be unique.
+*
+* \author Steve Smith
+* \return name of internal gains market.
+*/
+string BuildingDemandSubSector::getInternalGainsMarketName( const string sectorName ) const {
+    const string INTERNAL_GAINS_MKT_PREFIX = "intGains";
+	return INTERNAL_GAINS_MKT_PREFIX + sectorName + name;
 }
 
 //! Virtual function which specifies the XML name of the children of this class, the type of technology.
@@ -179,8 +203,7 @@ void BuildingDemandSubSector::toDebugXMLDerived( const int period, ostream& out,
     XMLWriteElement( dayLighting[ period ], "dayLighting", out, tabs );
     XMLWriteElement( aveInsulation[ period ], "aveInsulation", out, tabs );
     XMLWriteElement( floorToSurfaceArea[ period ], "floorToSurfaceArea", out, tabs );
-    string intGainsMarketName = INTERNAL_GAINS_MKT + sectorName + name;
-    XMLWriteElement( marketplace->getPrice( intGainsMarketName, regionName, period ), "internalGains", out, tabs );
+    XMLWriteElement( marketplace->getPrice( getInternalGainsMarketName( sectorName ) , regionName, period ), "internalGains", out, tabs );
     
 }
 
@@ -212,18 +235,13 @@ void BuildingDemandSubSector::setUpSubSectorMarkets() {
 
     vector<double> initValues;
     initValues.resize( maxPeriod, 0 );
-    // name is of this market is  prefix plus sector name and subsector name.
-    // This will always be unique to a region.
-    string intGainsMarketName = INTERNAL_GAINS_MKT + sectorName + name;
+    string intGainsMarketName = getInternalGainsMarketName( sectorName );
     
     // always make internal gains trail markets regional
-    if( marketplace->createMarket( regionName, regionName, intGainsMarketName, IMarketType::TRIAL_VALUE ) ) {
-        
+    if( marketplace->createMarket( regionName, regionName, intGainsMarketName, IMarketType::TRIAL_VALUE ) ) {        
         // Set this market to solve
         for( int period = 1; period < maxPeriod; ++period ){
             marketplace->setMarketToSolve( intGainsMarketName, regionName, period );
-            // Also initialize calibrated internal gains to zero for every period
-			marketplace->getMarketInfo( intGainsMarketName, regionName, period, true )->setDouble( "calInternalGains", 0.0 );
         }
     }
     else {
@@ -280,13 +298,13 @@ void BuildingDemandSubSector::initCalc( NationalAccount& aNationalAccount,
     if ( aveInsulation[ aPeriod ] == 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "WARNING: Input variable aveInsulation = 0. Reset to 1." << endl;
+        mainLog << "Input variable aveInsulation = 0. Reset to 1." << endl;
         aveInsulation[ aPeriod ] = 1;
     }
     if ( floorToSurfaceArea[ aPeriod ] == 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "WARNING: Input variable floorToSurfaceArea = 0. Reset to 1." << endl;
+        mainLog << "Input variable floorToSurfaceArea = 0. Reset to 1." << endl;
         floorToSurfaceArea[ aPeriod ] = 1;
     }
 
@@ -295,15 +313,13 @@ void BuildingDemandSubSector::initCalc( NationalAccount& aNationalAccount,
     mSubsectorInfo->setDouble( "aveInsulation", aveInsulation[ aPeriod ] );
     mSubsectorInfo->setDouble( "floorToSurfaceArea", floorToSurfaceArea[ aPeriod ] );
 
-    // Pass the name of the internal gains market to each demand technology  
-    // TODO -- this needs to be implimented once marketInfo can handle strings
-    // TODO -- also add check in appropriate place that each supply is unique to a building subsector
-    string internGainsMktName = INTERNAL_GAINS_MKT + sectorName + name;
-    for ( unsigned int j = 0; j < techs.size(); j++ ) {
-        string demandSectorName = techs[j][aPeriod]->getFuelName( );
-    //    marketplace->setMarketInfo( demandSectorName, regionName, period, "internalGainMarketName", internGainsMktName );
-    }
-    
+    // Put the name of the internal gains market into the info object so that technologies can access this information.
+    // Note that this will only work because the derived class subsector initCalc() is called before the base class initCalc() 
+    // -- which imediately calls technology::initCalc()
+    mSubsectorInfo->setString( getInternalGainsInfoName(), getInternalGainsMarketName( sectorName ) );
+    mSubsectorInfo->setString( "regionName", regionName ); // The technology will also need the region name in order to access the marketplace
+    mSubsectorInfo->setInteger( "period", aPeriod ); // The technology will also need the period in order to access the marketplace
+
     // for building demand "technologies", share weights, unit demands, should always be carried forward
     // This needs to be set before Subsector::initCalc() is called since that is where share weights are interpolated
     
@@ -438,9 +454,8 @@ Marketplace* marketplace = scenario->getMarketplace();
 
     dboutput4( regionName, "Price", sectorName + " NE Cost", name, "75$/Ser", nonEnergyCost );
     
-    string intGainsMarketName = INTERNAL_GAINS_MKT + sectorName + name;
     for ( int m=0;m<maxper;m++) {
-            temp[m] =  marketplace->getPrice( intGainsMarketName, regionName, m );
+            temp[m] =  marketplace->getPrice( getInternalGainsMarketName( sectorName ), regionName, m );
     }
      dboutput4( regionName, "General", sectorName + " internalGains", name, "??", temp );
 }
