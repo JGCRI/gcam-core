@@ -102,8 +102,14 @@ void Sector::XMLParse( const DOMNode* node ){
     // get the name attribute.
     name = XMLHelper<string>::getAttrString( node, "name" );
 
-    // get additional attributes for derived classes
-    XMLDerivedClassParseAttr( node );
+    // Temporary code to warn about no longer read-in demand sector
+    // perCapitaBasedString. TODO: Remove this warning.
+    if( XMLHelper<bool>::getAttr( node, "perCapitaBased" ) ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "The perCapitaBased attribute is no longer supported and will not be read."
+                << " Convert the attribute to an element." << endl;
+    }
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();

@@ -86,18 +86,6 @@ bool IntermittentSubsector::XMLDerivedClassParse( const string nodeName, const D
 	return true;
 }
 
-/*! \brief Parses any attributes specific to derived classes
-*
-* Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class. Since Sector is the generic base class, there are no values here.
-*
-* \author Josh Lurz, Steve Smith
-* \param node pointer to the current node in the XML input tree
-*/
-bool IntermittentSubsector::XMLDerivedClassParseAttr( const DOMNode* node ) {
-    return false;
-    // do nothing
-}
-
 /*! \brief XML output stream for derived classes
 *
 * Function writes output due to any variables specific to derived classes to XML
@@ -237,9 +225,10 @@ void IntermittentSubsector::calcBackupFraction(const int per) {
 	//get amount of this resource supplied
     double resourceSupply = marketplace->getSupply( resourceName, regionName, per );
 
-    /*! Using average capacity factor for resource, translate resource supplied in electricity or energy terms
-    in EJ to equivalent capacity terms in GW or gigawatts.  Note that model's enery units need to be converted to
-	capacity units for use in the NREL WINDS operating reserve computation. */
+    // Using average capacity factor for resource, translate resource supplied
+    // in electricity or energy terms in EJ to equivalent capacity terms in GW
+	// or gigawatts. Note that model's enery units need to be converted to
+    // capacity units for use in the NREL WINDS operating reserve computation.
     double resourceSupplyCapacity = 0.0;  // capacity in GW
     if ( resourceSupply > util::getSmallNumber() ) {
         resourceSupplyCapacity  = resourceSupply / (EJ_PER_GWH * HOURS_PER_YEAR * resourceCapacityFactor);
@@ -250,30 +239,34 @@ void IntermittentSubsector::calcBackupFraction(const int per) {
 	// square the supply to use in the WINDS formula
     double resourceSupplySquared = pow(resourceSupplyCapacity,2);
 
-	/*! Compute reserve capacity as the product of electricity reserve margin and the
-	   total regional electric capacity (which is converted from electric supply in Energy units
-	   to capacity units using its average capacity factor).  */
+	// Compute reserve capacity as the product of electricity reserve margin and
+	// the total regional electric capacity (which is converted from electric
+    // supply in Energy units to capacity units using its average capacity
+	// factor).
     double reserveTotal = mSubsectorInfo->getDouble( "elecReserveMargin", true )
                           * elecSupply /(EJ_PER_GWH * HOURS_PER_YEAR
                           * mSubsectorInfo->getDouble( "aveGridCapacityFactor", true ) );//in GW
     double reserveTotalSquared  = pow(reserveTotal,2);
 
 
-    //! Compute operating reserve capacity based on formula from NREL WINDS model
-    /* First compute in terms of backup capacity per total intermittent capacity, then convert to backup
-    capacity as fraction of wind resource output in energy terms, since that is what the model and market
-    are based on.  */
+    // Compute operating reserve capacity based on formula from NREL WINDS model.
+    // First compute in terms of backup capacity per total intermittent capacity, then convert to backup
+    // capacity as fraction of wind resource output in energy terms, since that is what the model and market
+    // are based on.
 
     backupCapacityFraction[per] = 0;  // percent of reserve capacity per unit of intermittent capacity (e.g., GW/GW)
     backupCapacityPerEnergyOutput[per] = 0;  // reserve capacity per intermittent electricity resource output (GW/EJ)
     if ( elecSupply > util::getSmallNumber()) {
         backupCapacityFraction[per] = reserveTotal * (pow((1.0 + variance * resourceSupplySquared / reserveTotalSquared),0.5) - 1.0);
         if ( resourceSupplyCapacity > util::getSmallNumber() ) {
-            backupCapacityFraction[per] /= resourceSupplyCapacity;  // derivative per unit of intermittent resource supply
-            /*! compute backup required per resource energy output (since energy output is what the modeled market 
-			  is based on).  Convert intermittent resource output back to energy using the resource
-			  capacity factor. This is the main result of this method and is used in computing the per unit
-			  cost of operating reserve or backup capacity added to the cost of this subsector. */
+            // Derivative per unit of intermittent resource supply
+            backupCapacityFraction[per] /= resourceSupplyCapacity;
+            // compute backup required per resource energy output (since energy
+            // output is what the modeled market is based on). Convert
+            // intermittent resource output back to energy using the resource
+			// capacity factor. This is the main result of this method and is
+			// used in computing the per unit cost of operating reserve or
+            // backup capacity added to the cost of this subsector.
             backupCapacityPerEnergyOutput[per] = backupCapacityFraction[per] / 
 				  ( EJ_PER_GWH * HOURS_PER_YEAR * resourceCapacityFactor);
         }

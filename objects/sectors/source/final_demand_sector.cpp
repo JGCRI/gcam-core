@@ -65,11 +65,6 @@ const string& FinalDemandSector::getXMLNameStatic() {
 	return XML_NAME;
 }
 
-// TODO: REMOVE THIS
-bool FinalDemandSector::XMLDerivedClassParseAttr( const xercesc::DOMNode* node ) {
-	return false;
-}
-
 void FinalDemandSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
 	// do nothing
 }

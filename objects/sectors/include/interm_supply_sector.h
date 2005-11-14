@@ -35,7 +35,6 @@ public:
                            const Demographic* aDemographics,
                            const int aPeriod );
 protected:
-    bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node );
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;  
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

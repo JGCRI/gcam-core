@@ -84,7 +84,6 @@ protected:
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
-    virtual bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node ) = 0; // Remove me after fixing input files.
     virtual const std::string& getXMLName() const = 0;
     virtual void setMarket() = 0;
 public:

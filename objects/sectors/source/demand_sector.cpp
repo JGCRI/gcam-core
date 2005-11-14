@@ -83,19 +83,6 @@ void DemandSector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
 void DemandSector::supply( const int aPeriod, const GDP* aGDP ) {
 }
 
-/*! \brief Parses any child nodes specific to derived classes
-*
-* Method parses any input data from child nodes that are specific to the classes derived from this class. 
-*
-* \author Josh Lurz, Steve Smith, Sonny Kim
-* \param node pointer to the current node in the XML input tree
-*/
-bool DemandSector::XMLDerivedClassParseAttr( const DOMNode* node ) {
-    // get the perCapitaBased attribute for the demand sector
-    perCapitaBased = XMLHelper<bool>::getAttr( node, "perCapitaBased" );
-    return false;
-}
-
 /*! \brief Parses any attributes specific to derived classes
 *
 * Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class.

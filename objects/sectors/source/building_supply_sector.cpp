@@ -103,9 +103,5 @@ void BuildingSupplySector::initCalc( NationalAccount& aNationalAccount,
 
     double calOutput = getCalOutput( aPeriod  );
     marketplace->getMarketInfo( name, regionName, aPeriod, true )->setDouble( "calOutput", calOutput );    
-
-    // Add items from regionInfo -- this needs to be done before control is passed to Sector:initCalc() so that information is available to subsector and technology initCalc() routines
-
     SupplySector::initCalc( aNationalAccount, aDemographic, aPeriod );
 }
-

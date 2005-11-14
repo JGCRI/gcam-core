@@ -94,16 +94,6 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
     return true;
 }
 
-/*! \brief Parses any attributes specific to this class.
-* \author Josh Lurz, Steve Smith
-* \param node pointer to the current node in the XML input tree
-* \todo Remove this function
-*/
-bool ProductionSector::XMLDerivedClassParseAttr( const DOMNode* node ) {
-    // do nothing
-    return false;
-}
-
 /* \brief Write out ProductionSector specific data to the input XML file.
 * \param out Stream into which to write.
 * \tabs Object responsible for tabs in the output.

@@ -42,7 +42,6 @@ public:
                           const int aPeriod ){};
 protected:
     virtual void setMarket();
-    virtual bool XMLDerivedClassParseAttr( const xercesc::DOMNode* node ); 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};

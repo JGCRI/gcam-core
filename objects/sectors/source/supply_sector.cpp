@@ -228,18 +228,6 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
     return false;
 }
 
-
-/*! \brief Parses any attributes specific to derived classes
-*
-* Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class. Since Sector is the generic base class, there are no values here.
-*
-* \author Josh Lurz, Steve Smith
-* \param node pointer to the current node in the XML input tree
-*/
-bool SupplySector::XMLDerivedClassParseAttr( const DOMNode* node ) {
-    return false;
-}
-
 /*! \brief Create new market for this Sector
 *
 * Sets up the appropriate market within the marketplace for this Sector. Note that the type of market is NORMAL -- 

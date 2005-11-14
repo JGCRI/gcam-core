@@ -1950,7 +1950,7 @@ void Subsector::MCoutputAllSectors() const {
         for ( int m = 0; m < maxper; m++ ) {
             // this gives Subsector total CO2 emissions
             // get CO2 emissions for each technology
-            temp[m] = techs[i][m]->get_emissmap_second("CO2");
+            temp[m] += techs[i][m]->get_emissmap_second("CO2");
         }
     }
     dboutput4( regionName, "CO2 Emiss", sectorName, name, "MTC", temp );

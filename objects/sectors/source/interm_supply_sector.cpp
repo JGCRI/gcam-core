@@ -95,19 +95,6 @@ bool IntermittentSupplySector::XMLDerivedClassParse( const string& nodeName, con
     return true;
 }
 
-
-/*! \brief Parses any attributes specific to derived classes
-*
-* Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class. Since Sector is the generic base class, there are no values here.
-*
-* \author Marshall Wise
-* \param node pointer to the current node in the XML input tree
-*/
-bool IntermittentSupplySector::XMLDerivedClassParseAttr( const DOMNode* node ) {
-    return false;
-    // do nothing
-}
-
 /*! \brief XML output stream for derived classes
 *
 * Function writes output due to any variables specific to derived classes to XML
