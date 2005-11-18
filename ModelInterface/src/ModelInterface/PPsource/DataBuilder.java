@@ -1844,7 +1844,7 @@ public class DataBuilder
     
     log.log(Level.FINE, "Done adding new PolyShapefileData");
   }
-  
+
   private void addPointShapeFileEnum(Element currFile)
   {
     log.log(Level.FINER, "begin function");
@@ -2203,6 +2203,7 @@ public class DataBuilder
       FeatureSource source = store.getFeatureSource(name);
       FeatureResults fsShape = source.getFeatures();
       FeatureCollection collection = fsShape.collection();
+      System.out.println("features in collection: "+collection.getCount());
       Iterator iter = collection.iterator();
       Feature inFeature;
       Geometry geom;
@@ -2210,13 +2211,37 @@ public class DataBuilder
       LinearRing lr;
       Polygon holdP;
       Coordinate[] coords;
+      
+      /*
+      try{
+        System.out.println("PREFEATURE: waiting...");
+        System.in.read();
+        System.in.read();
+        System.out.println("...going");
+      } catch(IOException e) {}
+      */
+      
       try
       {
+        //int STOPIT = 0;
         while(iter.hasNext())
         {
-          
+          /*
+          STOPIT++;
+          if(STOPIT == 500)
+          {
+            try{
+              System.out.println("INFEATURE: waiting...");
+              System.in.read();
+              System.in.read();
+              System.out.println("...going");
+            } catch(IOException e) {}
+          }
+          */
           inFeature = (Feature)iter.next();
           geom = inFeature.getDefaultGeometry();
+          //System.out.println("number of points in this geometry: "+geom.getNumPoints());
+          //System.out.println("------------area of this geometry: "+geom.getArea());
           env = geom.getEnvelope();
           
           if(nameConvention.equals("single"))

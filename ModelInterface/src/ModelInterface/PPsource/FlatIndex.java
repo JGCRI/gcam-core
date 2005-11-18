@@ -162,6 +162,7 @@ public class FlatIndex implements DataIndex
   {
     resolution = res;
     init = true;
+    //data = new DiskLayerRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
     data = new MatrixRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
   }
   

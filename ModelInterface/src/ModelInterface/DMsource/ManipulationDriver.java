@@ -314,8 +314,11 @@ public class ManipulationDriver
     currInfo = command.getChild("region");
     if(regionList.containsKey(currInfo.getAttributeValue("value")))
     {
+      
       ref = (Region)regionList.get(currInfo.getAttributeValue("value"));
       currInfo = command.getChild("field");
+      //remove next line
+      //System.out.println("var: "+currInfo.getAttributeValue("value"));
       var = currInfo.getAttributeValue("value");
       currInfo = command.getChild("time");
       time = currInfo.getAttributeValue("value");
@@ -2382,10 +2385,9 @@ public class ManipulationDriver
     log.log(Level.FINER, "begin function");
     
     Variable VSource;
-    Region VShape, currReg;
+    Region currReg;
     Element currInfo;
     Element build;
-    Attribute attr;
     Element subCom, extCom;
     List<String> regionNames = new ArrayList<String>();
     Map.Entry re;

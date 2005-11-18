@@ -1,11 +1,11 @@
 #Fat Jar Configuration File
-#Fri Nov 04 11:58:14 EST 2005
+#Fri Nov 04 14:54:11 EST 2005
 onejar.license.required=false
 manifest.classpath=
 onejar.checkbox=true
-jarname=DM_preprocessor.jar
+jarname=DM_manipulator.jar
 manifest.mergeall=true
-manifest.mainclass=ModelInterface.PPsource.Preprocess
+manifest.mainclass=ModelInterface.DMsource.Main
 manifest.file=<createnew>
 jarname.isextern=false
 onejar.expand=
