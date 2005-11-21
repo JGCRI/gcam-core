@@ -14,7 +14,7 @@ public class FlatIndex implements DataIndex
   private double minY;
   private double maxY;
   private boolean init;
-  private TreeMap makeRegion;
+  private TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>> makeRegion;
   
   public double resolution; //resolution of the data this index points to
   
@@ -67,7 +67,7 @@ public class FlatIndex implements DataIndex
     Iterator i1, i2;
     Map.Entry vEntry, tEntry;
     Block indArea;
-    Point min, max;
+    Point2D.Double min, max;
     double weight;
     
     if(!init)
@@ -80,8 +80,8 @@ public class FlatIndex implements DataIndex
     //System.out.println("block y: "+val.y+"-"+(val.y+val.height));
     
     //find index bounds to work in
-    min = point2index(new Point(val.x, val.y), true);
-    max = point2index(new Point((val.x+val.width), (val.y+val.height)), false);
+    min = point2index(new Point2D.Double(val.x, val.y), true);
+    max = point2index(new Point2D.Double((val.x+val.width), (val.y+val.height)), false);
     
     //X, and Y are now indicies
     for(int Y = (int)min.y; Y < max.y; Y++)
@@ -89,7 +89,7 @@ public class FlatIndex implements DataIndex
       for(int X = (int)min.x; X < max.x; X++)
       {
         //index area given location and resolution
-        indArea = index2area(new Point(X, Y));
+        indArea = index2area(new Point2D.Double(X, Y));
         
         //find the weight value
         weight = getWeight(val, indArea, avg);
@@ -135,12 +135,16 @@ public class FlatIndex implements DataIndex
 
   public TreeMap extractMask(RegionMask m)
   {
-    makeRegion = new TreeMap(); //setting up empty data structure to add to
-    Point min, max;
+    Point2D.Double min, max;
+    double[][] toMask;
+    double weight;
+    Block entry;
 
     //identify rectangular bounds of region
-    min = point2index(new Point(m.x, m.y), true);
-    max = point2index(new Point((m.x+m.width+m.resolution), (m.y+m.height+m.resolution)), false);
+    min = point2index(new Point2D.Double(m.x, m.y), true);
+    max = point2index(new Point2D.Double((m.x+m.width+m.resolution), (m.y+m.height+m.resolution)), false);
+    
+    toMask = new double[(int)(max.y-min.y)][(int)(max.x-min.x)];
     
     //X, and Y are now indicies
     //for each block of info in the repository
@@ -148,12 +152,38 @@ public class FlatIndex implements DataIndex
     {
       for(int X = (int)min.x; X < max.x; X++)
       {
-        extractBlock(new Point(X, Y), m);
+        entry = index2area(new Point2D.Double(X, Y));
+        weight = m.inRegion(entry.x, entry.y, entry.width, entry.height);
+        toMask[Y][X] = weight;
+      }
+    }
+    
+    return data.getRegion((int)min.x, (int)max.y, toMask, m.x, (m.y+m.height+m.resolution), m.resolution); //returning data
+  }
+  
+  /*
+  public TreeMap extractMask(RegionMask m)
+  {
+    makeRegion = new TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>>(); //setting up empty data structure to add to
+    Point2D.Double min, max;
+
+    //identify rectangular bounds of region
+    min = point2index(new Point2D.Double(m.x, m.y), true);
+    max = point2index(new Point2D.Double((m.x+m.width+m.resolution), (m.y+m.height+m.resolution)), false);
+    
+    //X, and Y are now indicies
+    //for each block of info in the repository
+    for(int Y = (int)min.y; Y < max.y; Y++)
+    {
+      for(int X = (int)min.x; X < max.x; X++)
+      {
+        extractBlock(new Point2D.Double(X, Y), m);
       }
     }
     
     return makeRegion; //returning data
   }
+  */
   
 //*********************************************************
 //*************Begin Private Functions*********************
@@ -162,11 +192,13 @@ public class FlatIndex implements DataIndex
   {
     resolution = res;
     init = true;
-    //data = new DiskLayerRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
-    data = new MatrixRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
+    //TODO maybe add an auto chooser based on resolution?
+    //need to make disklayer faster first
+    data = new DiskLayerRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
+    //data = new MatrixRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
   }
   
-  private Point point2index(Point p, boolean down)
+  private Point2D.Double point2index(Point2D.Double p, boolean down)
   {
     //down is wether we should use floor or ceiling, wether we round down or up
     int x, y;//indexes are always ints
@@ -183,9 +215,9 @@ public class FlatIndex implements DataIndex
       y = (int)Math.ceil(((p.y/resolution)+(90/resolution)));
     }
     
-    return new Point(x, y);
+    return new Point2D.Double(x, y);
   }
-  private Point index2point(Point i)
+  private Point2D.Double index2point(Point2D.Double i)
   {
     double x, y;
     
@@ -196,11 +228,11 @@ public class FlatIndex implements DataIndex
     y = ((i.y-(90/resolution))*(resolution));
     
     //return this index
-    return new Point(x, y);
+    return new Point2D.Double(x, y);
   }
-  private Block index2area(Point i)
+  private Block index2area(Point2D.Double i)
   {
-    Point p;
+    Point2D.Double p;
     //build an area given an index of said area and resolution
     //first get point corresponding to index
     p = index2point(i);
@@ -224,8 +256,9 @@ public class FlatIndex implements DataIndex
     
     return weight;
   }
-  private void extractBlock(Point i, RegionMask m)
+  private void extractBlock(Point2D.Double i, RegionMask m)
   {
+    //TreeMap<String, TreeMap<String, TreeMap<Point, Double>>>
     double weight;
     Block entry;
     TreeMap<String, TreeMap<Double, Double>> dataPoint;
@@ -255,20 +288,21 @@ public class FlatIndex implements DataIndex
       
       //add the data to the correct TreeMap (based on data name)
       //iterate through the data in this Node, by Var, then Time, adding to makeRegion
-      Map.Entry var, time;
-      Iterator iV = dataPoint.entrySet().iterator();
+      Map.Entry<String, TreeMap<Double, Double>> var;
+      Map.Entry<Double, Double> time;
+      Iterator<Map.Entry<String, TreeMap<Double, Double>>> iV = dataPoint.entrySet().iterator();
       while(iV.hasNext())
       {
         //iterating through variables
-        var = (Map.Entry)iV.next();
+        var = iV.next();
         if(!makeRegion.containsKey(var.getKey()))
         {//if makeRegion does not yet have a mapping for this variable, add it now
-          makeRegion.put(var.getKey(), new TreeMap());
+          makeRegion.put(var.getKey(), new TreeMap<String, TreeMap<Point2D.Double, Double>>());
         }
-        Iterator iT = ((TreeMap)var.getValue()).entrySet().iterator();
+        Iterator<Map.Entry<Double, Double>> iT = var.getValue().entrySet().iterator();
         while(iT.hasNext())
         {
-          time = (Map.Entry)iT.next();
+          time = iT.next();
           if(!((TreeMap)makeRegion.get(var.getKey())).containsKey(time.getKey()))
           {//if makeRegion's mapping for the variable does not contain this time yet, add it now
             ((TreeMap)makeRegion.get(var.getKey())).put(time.getKey(), new TreeMap(new coordComparePoint()));
@@ -279,16 +313,5 @@ public class FlatIndex implements DataIndex
         }
       }
     }
-  }
-  
-  //this is a stupid stupid class to hold 2 numbers: for returnign and passing values
-  class Point
-  {
-      public double x, y;
-      public Point(double x, double y) 
-      {
-          this.x = x;
-          this.y = y;
-      }
   }
 }

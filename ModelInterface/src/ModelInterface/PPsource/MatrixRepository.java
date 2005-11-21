@@ -1,5 +1,6 @@
 package ModelInterface.PPsource;
 
+import java.awt.geom.Point2D;
 import java.util.*;
 
 public class MatrixRepository implements DataRepository
@@ -220,6 +221,84 @@ public class MatrixRepository implements DataRepository
     return toReturn;
   }
 
+  public TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>> getRegion(int X, int Y, double[][] weights, double xL, double yL, double res)
+  {
+    /*
+     * X and Y are the top left corner
+     */
+    TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>> toReturn = new TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>>();
+    TreeMap<String, TreeMap<Point2D.Double, Double>> holdVar;
+    TreeMap<Point2D.Double, Double> holdTime;
+    Map.Entry<String, TreeMap<Double, double[][]>> varEntry;
+    Map.Entry<Double, double[][]> timeEntry;
+    Iterator<Map.Entry<Double, double[][]>> iT;
+    Iterator<Map.Entry<String, TreeMap<Double, double[][]>>> iV = root.entrySet().iterator();
+    String varName;
+    Double timeName;
+    double currXL, currYL;
+
+    toReturn.put("time", new TreeMap<String, TreeMap<Point2D.Double, Double>>());
+    holdVar = toReturn.get("time");
+    holdVar.put("0", new TreeMap<Point2D.Double, Double>());
+    holdTime = holdVar.get("0");
+    currXL = xL;
+    for(int x = X; x < (X+weights[0].length); x++)
+    {
+      currYL = yL;
+      for(int y = Y; y > (Y-weights.length); y--)
+      {
+        if(weights[x][y] > 0)
+        {
+          //add weight
+          holdTime.put(new Point2D.Double(currXL, currYL), weights[x][y]);
+        }
+        currYL -= res;
+      }
+      currXL += res;
+    }
+    
+    while(iV.hasNext())
+    {
+      varEntry = iV.next();
+      varName = varEntry.getKey();
+      toReturn.put(varName, new TreeMap<String, TreeMap<Point2D.Double, Double>>());
+      holdVar = toReturn.get(varName);
+      iT = varEntry.getValue().entrySet().iterator();
+      while(iT.hasNext())
+      {
+        timeEntry = iT.next();
+        timeName = timeEntry.getKey();
+        holdVar.put(timeName.toString(), new TreeMap<Point2D.Double, Double>());
+        holdTime = holdVar.get(timeName.toString());
+        
+        changeLayer(varName, timeName);
+        
+        currXL = xL;
+        for(int x = X; x < (X+weights[0].length); x++)
+        {
+          currYL = yL;
+          for(int y = Y; y > (Y-weights.length); y--)
+          {
+            if(weights[x][y] > 0)
+            {
+              //get this point's value
+              //add it to toReturn
+              holdTime.put(new Point2D.Double(currXL, currYL), (currLayer[x][y]));
+            }
+            currYL -= res;
+          }
+          currXL += res;
+        }
+      }
+    }
+    
+    return toReturn;
+  }
+  
+//*********************************************************
+//*************Begin Private Functions*********************
+//*********************************************************
+  
   private double[][] overMerge(double[][] oldData, double[][] newData)
   {
     if((oldData.length != newData.length)||(oldData[0].length != newData[0].length))

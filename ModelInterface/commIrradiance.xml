@@ -23,6 +23,7 @@
 	</parseLessThan>
 	
 	<plot variable="forest" />
+	<plot variable="population" />
 	
 	<maskRemain>
 		<target name="irradiance" />

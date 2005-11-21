@@ -1,5 +1,6 @@
 package ModelInterface.PPsource;
 
+import java.awt.geom.Point2D;
 import java.util.*;
 
 public interface DataRepository
@@ -28,4 +29,6 @@ public interface DataRepository
   public int mergeHoldTo(String holdName, String varName);
   
   public TreeMap<String, TreeMap<Double, Double>> getAllLayers(int X, int Y);
+  
+  public TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>> getRegion(int X, int Y, double[][] weights, double xL, double yL, double res);
 }

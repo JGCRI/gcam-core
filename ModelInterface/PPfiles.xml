@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <files>
-	<data file="inputIrradiance.xml" />
+	<data file="inputTestNASA.xml" />
 	<region file="inputR.xml" />
-	<output file="outIrradiance.xml" />
+	<output file="outTrash.xml" />
 	<log level="FINER" />
 </files>
