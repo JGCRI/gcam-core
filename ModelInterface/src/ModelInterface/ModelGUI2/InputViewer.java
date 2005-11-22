@@ -1450,7 +1450,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 					new InputStreamReader(hashfin));
 			hashInput.readLine(); // ignores first line of file
 			inputLine = hashInput.readLine().trim();
-			while (inputLine != null && inputLine.charAt(0) == '$') { // read in
+			while (inputLine != null && inputLine.length() > 0 && inputLine.charAt(0) == '$') { // read in
 																	  // header
 																	  // nick
 																	  // names
