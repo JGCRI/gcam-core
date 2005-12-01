@@ -97,7 +97,7 @@ private:
 	typedef HashMap<std::string, boost::shared_ptr<RegionOrMarketNode> > RegionMarketList;
 
 	//! A pointer to the last region looked up.
-	mutable boost::shared_ptr<const RegionOrMarketNode> mLastRegionLookup;
+	mutable const RegionOrMarketNode* mLastRegionLookup;
 
 	//! A list of market areas each containing a list of sectors contained by
 	//! the market.
