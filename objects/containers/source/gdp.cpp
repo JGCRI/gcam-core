@@ -351,11 +351,13 @@ void GDP::initialGDPcalc( const int period, const double population ) {
 		gdpValue[ period ] = gdpValueAdjusted[ period - 1 ] * tlab * ( currentLF / lastLF );
 		gdpValueAdjusted[ period ] = gdpValue[ period ]; // Temporary value so that is never zero
 		if ( gdpValue[period] == 0 ) {
-            cerr << "Error: GDP = 0 in initial calculation.  Current Labor Force: " << currentLF
-                << "  Last Labor Force: " << lastLF << "  lab: " << tlab << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "GDP is equal to zero for period " << period << " during initial calculation." << endl;
 		}
 	}
-
+    
+    // TODO: Check for zero population.
 	// gdp period capita 
 	// gdpValue is in millions, population in 1000's, so result is in 1000's of dollars per capita
     gdpPerCapita[ period ] = gdpValue[ period ] / population;   
@@ -475,8 +477,15 @@ double GDP::getPPPMERRatio( const int period, const double marketGDPperCap ) {
 */
 double GDP::getApproxScaledGDPperCap( const int period ) const {
 	const Modeltime* modeltime = scenario->getModeltime();
-    assert( gdpPerCapita[ modeltime->getBasePeriod() ] );
-	return gdpPerCapita[ period ] / gdpPerCapita[ modeltime->getBasePeriod() ];
+    if( gdpPerCapita[ modeltime->getBasePeriod() ] > 0 ){
+	    return gdpPerCapita[ period ] / gdpPerCapita[ modeltime->getBasePeriod() ];
+    }
+
+    // Report an error that there was not a base year GDP per capita.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::ERROR );
+    mainLog << "No base year GDP per capita was available. Returning unscaled GDP per capita." << endl;
+    return gdpPerCapita[ period ];
 }
 
 /*! Return approximate PPP per capita
