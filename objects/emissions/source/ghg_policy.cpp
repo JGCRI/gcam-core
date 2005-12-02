@@ -27,20 +27,43 @@ extern Scenario* scenario;
 // static initialize.
 const string GHGPolicy::XML_NAME = "ghgpolicy";
 
-//! Default construtor.
-GHGPolicy::GHGPolicy( const string nameIn, const string unitIn, const string marketIn, const bool isFixedTaxIn )
-: name( nameIn ), unit( unitIn ), market( marketIn ), isFixedTax( isFixedTaxIn ) {
+/*! \brief Default constructor. */
+GHGPolicy::GHGPolicy(){
+    isFixedTax = false;
+    const int maxPeriod = scenario->getModeltime()->getmaxper();
+    constraint.resize( maxPeriod, -1 );
+    fixedTaxes.resize( maxPeriod, -1 );
+}
+
+/*! \brief Constructor used when explicitly constructing a fixed tax.
+*/
+GHGPolicy::GHGPolicy( const string aName,
+                      const string aMarket,
+                      const vector<double>& aTaxes )
+: name( aName ), 
+market( aMarket ),
+fixedTaxes( aTaxes ),
+isFixedTax( true )
+{
     const int maxper = scenario->getModeltime()->getmaxper();
     constraint.resize( maxper, -1 );
-    fixedTaxes.resize( maxper );
+    // Ensure that the taxes vector passed in is the right size.
+    assert( aTaxes.size() == constraint.size() );
+}
+
+/*! \brief Create a copy of the GHG policy.
+* \return An exact copy of the policy.
+*/
+GHGPolicy* GHGPolicy::clone() const {
+    return new GHGPolicy( *this );
 }
 
 //! Get the ghg policy name. 
-string GHGPolicy::getName() const {
+const string& GHGPolicy::getName() const {
     return name;
 }
 
-/*! \brief Create a market for this GHG policy.
+/*! \brief Complete the initialization of the GHG policy.
 * \details This function initializes a ghg market for the policy.
 * GHG markets are created for both constraint and fixed tax policies.
 * In the fixed tax policy, market prices are set to the fixed taxes, but
@@ -50,90 +73,41 @@ string GHGPolicy::getName() const {
 * \author Sonny Kim and Josh Lurz
 * \param regionName The name of the region the policy controls. 
 */
-void GHGPolicy::setMarket( const string& regionName ) {
+void GHGPolicy::completeInit( const string& aRegionName ) {
     Marketplace* marketplace = scenario->getMarketplace();
-    bool marketCreated = marketplace->createMarket( regionName, market, name, IMarketType::GHG );
+    marketplace->createMarket( aRegionName, market, name, IMarketType::GHG );
     
     // Put the taxes in the market as the market prices if it is a fixed tax policy.
-    // And the market has not previously been initialized.
-    // This allows the taxes to be set in a single region and used in all.
-    if( isFixedTax && marketCreated ){
-        marketplace->setPriceVector( name, regionName, fixedTaxes );
-    } 
+    if( isFixedTax ){
+        // Set any taxes that are not unset.
+        for( unsigned int i = 0; i < fixedTaxes.size(); ++i ){
+            // Make sure that the market is not solved. It could have been set
+            // to solve by an earlier run.
+            marketplace->unsetMarketToSolve( name, aRegionName, i );
+            if( fixedTaxes[ i ] != -1 ){
+                marketplace->setPrice( name, aRegionName, fixedTaxes[ i ], i );
+            }
+        }
+    }       
     // Otherwise solve the market, given the read-in constraint.
-    else if( !isFixedTax ){
+    else {
         const Modeltime* modeltime = scenario->getModeltime();
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
             if( constraint[ per ] != -1 ){
-                marketplace->setMarketToSolve( name, regionName, per );
-                marketplace->addToSupply( name, regionName, constraint[ per ], per );
+                marketplace->setMarketToSolve( name, aRegionName, per );
+                marketplace->addToSupply( name, aRegionName, constraint[ per ], per );
             }
         }
     }
 }
 
-/*! \brief Convert a policy from a constraint based policy to a fixed tax policy.
-* \details This function resets a market related to a ghg policy to a fixed tax 
-* policy market. This means the market is no longer solved, and taxes must be passed
-* into it. The tax is initialized to zero for all periods. 
-* This function is primarily used to create a carbon mitigation cost curve. 
-* \author Josh Lurz
-* \param regionName The name of the region for which the market must be modified.
+/*! \brief Determine if the tax is applicable for a given region.
+* \param aRegion Region name.
+* \return Whether the tax is applicable.
+* \todo This is not entirely correct for multiple regions within a market.
 */
-void GHGPolicy::changePolicyToFixedTax( const string& regionName ) {
-    
-    // First remove the constraints. This is not strictly neccessary but is clearer.
-    // This does not actually remove supplies, although that has no effect.
-    const int maxPeriod = scenario->getModeltime()->getmaxper();
-    constraint.clear();
-    constraint.resize( maxPeriod, -1 );
-    
-    // Now set the tax to 0 for all periods.
-    fixedTaxes.clear();
-    fixedTaxes.resize( maxPeriod );
-    
-    // Set the internal variable noting that this is a fixed tax policy.
-    isFixedTax = true;
-    
-    // Set the market not to solve.
-    Marketplace* marketplace = scenario->getMarketplace();
-    for( int per = 0; per < maxPeriod; ++per ){
-        marketplace->unsetMarketToSolve( name, regionName, per );
-    }
-    // Set the fixed tax to zero for all periods. 
-    marketplace->setPriceVector( name, regionName, fixedTaxes );
-}
-
-/*! \brief Set the tax for a fixed tax policy.
-* \details This function resets the fixed taxes for all periods to a given value.
-* \warning This will only work if the market has been set not to solve.
-* \author Josh Lurz
-* \param regionName The region name this policy applies to.
-* \param taxes A vector of taxes to set for each period.
-*/
-void GHGPolicy::setFixedTaxes( const string& regionName, const vector<double>& taxes ){
-    
-    /*! \pre This is a fixed tax policy. */
-    assert( isFixedTax );
-    
-    // Set the policy tax to the new tax value for all periods.
-    const int maxPeriod = scenario->getModeltime()->getmaxper();
-    fixedTaxes.clear();
-    fixedTaxes.resize( maxPeriod );
-    
-    // Set the value. If the fixedTaxes vector is larger than the taxes vector,
-    // use the last input tax found. 
-    double lastInputTax = 0;
-    for( unsigned int i = 0; i < fixedTaxes.size(); i++ ){
-        if( taxes.size() > i ){
-            lastInputTax = taxes[ i ];
-        }
-        fixedTaxes[ i ] = lastInputTax;
-    }
-
-    // Add the new tax into the marketplace as the tax. 
-    Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->setPriceVector( name, regionName, fixedTaxes );
+bool GHGPolicy::isApplicable( const string& aRegion ) const {
+    return market == "global" || market == aRegion;
 }
 
 //! Initializes data members from XML.
@@ -178,7 +152,6 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
 void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag( getXMLName(), out, tabs, name );
-    XMLWriteElement( unit, "unit", out, tabs );
     XMLWriteElement( market, "market", out, tabs );
     XMLWriteElement( isFixedTax, "isFixedTax", out, tabs );
     
@@ -195,9 +168,6 @@ void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
 void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
 	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
-
-    // Write the xml for the class members.
-    XMLWriteElement( unit, "unit", out, tabs );
 
     // write out the market string.
     XMLWriteElement( market, "market", out, tabs );

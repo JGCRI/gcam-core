@@ -150,7 +150,7 @@ void GhgMAC::XMLParse( const xercesc::DOMNode* node ){
 		}
 		else if ( nodeName == "reduction" ){
 			double taxVal = XMLHelper<double>::getAttr( curr, "tax" );	
-			double reductionVal = XMLHelper<double>::getValue( curr );;
+			double reductionVal = XMLHelper<double>::getValue( curr );
 			XYDataPoint* currPoint = new XYDataPoint( taxVal, reductionVal );
 			currPoints->addPoint( currPoint );
 		}
@@ -231,9 +231,6 @@ void GhgMAC::initCalc( const string& ghgName ){
 * \todo Put the CH4 shift into a separate type of MAC class
 */
 double GhgMAC::findReduction( const string& regionName, const int period ){
-    const double maxCO2Tax = macCurve->getMaxX();
-    
-	double reduction;
     const Marketplace* marketplace = scenario->getMarketplace();
     double effectiveCarbonPrice = marketplace->getPrice( "CO2", regionName, period, false );
     if ( effectiveCarbonPrice == Marketplace::NO_MARKET_PRICE ) {
@@ -247,15 +244,17 @@ double GhgMAC::findReduction( const string& regionName, const int period ){
     
     effectiveCarbonPrice *= shiftCostReduction( period, costReductionRate );
     
-    reduction = getMACValue( effectiveCarbonPrice );
+    double reduction = getMACValue( effectiveCarbonPrice );
     
     if ( noBelowZero && effectiveCarbonPrice < 0 ){
         reduction = 0;
     }
     
-    const Modeltime* modeltime = scenario->getModeltime();
+    const double maxCO2Tax = macCurve->getMaxX();
     double maxReduction = getMACValue( maxCO2Tax );
     reduction *= adjustPhaseIn( period );
+
+    const Modeltime* modeltime = scenario->getModeltime();
     int finalReductionPeriod = modeltime->getper_to_yr( finalReductionYear );
 
     if ( finalReduction > maxReduction && finalReductionPeriod > 1 ){

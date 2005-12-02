@@ -26,11 +26,14 @@ class Tabs;
 */
 class GHGPolicy {
 public:
-    GHGPolicy( const std::string nameIn = "", const std::string unitIn = "", const std::string marketIn = "", const bool isFixedTaxIn = false );
-    std::string getName() const;
-    void setMarket( const std::string& regionName );
-    void changePolicyToFixedTax( const std::string& regionName );
-    void setFixedTaxes( const std::string& regionName, const std::vector<double>& taxes );
+    GHGPolicy();
+    GHGPolicy( const std::string aName,
+               const std::string aMarket,
+               const std::vector<double>& aFixedTaxes );
+    GHGPolicy* clone() const;
+    const std::string& getName() const;
+    void completeInit( const std::string& aRegionName );
+    bool isApplicable( const std::string& aRegion ) const;
     void XMLParse( const xercesc::DOMNode* node );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
@@ -39,9 +42,8 @@ public:
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
     std::string name; //!< GHG name
-    std::string unit; //!< GHG unit
     std::string market; //!< Name of the market
-    bool isFixedTax; //!< boolean to use fixed tax or constraint
+    bool isFixedTax; //!< Boolean to use fixed tax or constraint
     std::vector<double> constraint; //!< Emissions constraint by year(tgC or MTC)
     std::vector<double> fixedTaxes; //!< Fixed tax on Emissions by year($/TC)
 };
