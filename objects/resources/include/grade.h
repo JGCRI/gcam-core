@@ -15,7 +15,7 @@
 
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
-
+class Tabs;
 /*! 
 * \ingroup Objects
 * \brief Technologies representing a Grade for each resource.
