@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
+#include <cassert>
 
 #include "climate/include/magicc_model.h"
 #include "util/base/include/model_time.h"
@@ -22,6 +23,8 @@ using namespace std;
 #if(__HAVE_FORTRAN__)
 extern "C" { void _stdcall CLIMAT(void); };
 extern "C" { double _stdcall CO2CONC(int&); };
+// extern "C" { double _stdcall GETTEMPERATURE(int&); };
+// extern "C" { double _stdcall GETFORCING(int&); };
 #endif
 
 // Setup the gas name vector.
@@ -45,7 +48,8 @@ const string MagiccModel::sGasNames[] = { "CO2",
 * \param aModeltime Pointer to the global modeltime object.
 */
 MagiccModel::MagiccModel( const Modeltime* aModeltime ):
-mModeltime( aModeltime )
+mModeltime( aModeltime ),
+mIsValid( false )
 {
 }
 
@@ -57,6 +61,9 @@ mModeltime( aModeltime )
 * \param aScenarioName Name of the current model scenario.
 */
 void MagiccModel::completeInit( const string& aScenarioName ){
+    // The climate model should not be reinitialized.
+    assert( !mIsValid );
+
     mScenarioName = aScenarioName;
     // Resize to the number of gases based on the gas name vector.
     mEmissionsByGas.resize( getNumGases() );
@@ -69,6 +76,7 @@ void MagiccModel::completeInit( const string& aScenarioName ){
     }
     // Read in the data from the file. These values may later be overridden.
     readFile();
+    mIsValid = false;
 }
 
 /*! \brief Set the level of emissions for a particular for a period.
@@ -102,6 +110,10 @@ bool MagiccModel::setEmissions( const string& aGasName, const int aPeriod, const
     // Set the gas level. Base year values are not passed to MAGICC, so remove
     // one from the model period to determine the index.
     mEmissionsByGas[ gasIndex ][ aPeriod - 1 ] = aEmission;
+
+    // Invalidate the output because an input has changed.
+    mIsValid = false;
+
     return true;
 }
 
@@ -116,7 +128,7 @@ bool MagiccModel::setEmissions( const string& aGasName, const int aPeriod, const
 bool MagiccModel::runModel(){
     // Add on extra periods MAGICC needs. 
     for ( unsigned int period = mModeltime->getmaxper() - 1; 
-        period < static_cast<unsigned int>( mModeltime->getmaxper() + 1 ); ++period ){
+          period < static_cast<unsigned int>( mModeltime->getmaxper() + 1 ); ++period ){
         // Loop through the gases and copy forward emissions.
         for( unsigned int gasNumber = 0; gasNumber < getNumGases(); ++gasNumber ){
             mEmissionsByGas[ gasNumber ][ period ] = mEmissionsByGas[ gasNumber ][ period - 1 ];
@@ -176,6 +188,7 @@ bool MagiccModel::runModel(){
     CLIMAT();
     mainLog.setLevel( ILogger::DEBUG );
     mainLog << "Finished with CLIMAT()" << endl;
+    mIsValid = true;
 #endif
     return true;
 }
@@ -187,6 +200,80 @@ unsigned int MagiccModel::getNumGases(){
 	// This is a C++ trick to find the number of elements in
 	// an array by dividing its size by the size of the first element.
 	return sizeof( sGasNames ) / sizeof( sGasNames[ 0 ] );
+}
+
+double MagiccModel::getConcentration( const string& aGasName,
+                                      const int aPeriod ) const
+{
+    /*! \pre A gas was requested. */
+    assert( !aGasName.empty() );
+
+    // Check if the climate model has been run.
+    if( !mIsValid ){
+        return -1;
+    }
+
+    if( aGasName == "CO2" ){
+#if( __HAVE_FORTRAN__ )
+	// Need to store the year locally so it can be passed by reference.
+    int year = mModeltime->getper_to_yr( aPeriod );
+	return CO2CONC( year );
+#else
+	return -1;
+#endif
+    }
+    // Unknown gas.
+    else {
+        return -1;
+    }
+}
+
+double MagiccModel::getTemperature( const int aPeriod ) const {
+    // Check if the climate model has been run.
+    if( !mIsValid ){
+        return -1;
+    }
+
+#if( __HAVE_FORTRAN__ )
+	// Need to store the year locally so it can be passed by reference.
+    int year = mModeltime->getper_to_yr( aPeriod );
+	// return TEMPERATURE( year );
+    return -1;
+#else
+	return -1;
+#endif
+}
+
+double MagiccModel::getForcing( const string& aGasName, const int aPeriod ) const {
+    // Check if the climate model has been run.
+    if( !mIsValid ){
+        return -1;
+    }
+
+#if( __HAVE_FORTRAN__ )
+	// Need to store the year locally so it can be passed by reference.
+    int year = mModeltime->getper_to_yr( aPeriod );
+	// return FORCING( year );
+    return -1;
+#else
+	return -1;
+#endif
+}
+
+double MagiccModel::getTotalForcing( const int aPeriod ) const {
+    // Check if the climate model has been run.
+    if( !mIsValid ){
+        return -1;
+    }
+
+#if( __HAVE_FORTRAN__ )
+	// Need to store the year locally so it can be passed by reference.
+    int year = mModeltime->getper_to_yr( aPeriod );
+	// return FORCING( year );
+    return -1;
+#else
+	return -1;
+#endif
 }
 
 /*! \brief Write out data from the emissions model to the main csv output file.*/

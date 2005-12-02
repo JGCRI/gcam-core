@@ -71,6 +71,53 @@ public:
     */
     virtual bool runModel() = 0;
 
+    /*! \brief Returns the concentrations for a given gas in a given period from
+    *          the climate model.
+    * \details Queries the climate model for the concentration for a given gas
+    *          and period and returns the value. If the climate model is
+    *          unavailable or the gas is unknown the value returned is -1.
+    * \param aGasName The name of the gas for which to return the concentration.
+    * \param aPeriod The period to for which to return the concentration.
+    * \return The concentration for the period, -1 if the climate model is
+    *         unavailable.
+    */
+    virtual double getConcentration( const std::string& aGasName,
+                                     const int aPeriod ) const = 0;
+
+    /*! \brief Returns the temperature in a given period from the climate model.
+    * \details Queries the climate model for the temperature for a given period
+    *          and returns the value. If the climate model is unavailable the
+    *          value returned is -1.
+    * \param aPeriod The period to for which to return the temperature.
+    * \return The temperature for the period, -1 if the climate model is
+    *         unavailable.
+    */
+    virtual double getTemperature( const int aPeriod ) const = 0;
+
+    /*! \brief Returns the forcing of a specific gas in a given period from the
+    *          climate model.
+    * \details Queries the climate model for the forcing for a given gas in a
+    *          period and returns the value. If the climate model is unavailable
+    *          the value returned is -1.
+    * \param aGasName Name of the gas for which to get the forcing.
+    * \param aPeriod The period to for which to return the forcing.
+    * \return The forcint for the period, -1 if the climate model is
+    *         unavailable.
+    */
+    virtual double getForcing( const std::string& aGasName,
+                               const int aPeriod ) const = 0;
+
+    /*! \brief Returns the total forcing of all gases in a given period from the
+    *          climate model.
+    * \details Queries the climate model for the total forcing for all gases in
+    *          a period and returns the value. If the climate model is
+    *          unavailable the value returned is -1.
+    * \param aPeriod The period to for which to return the total forcing.
+    * \return The forcint for the period, -1 if the climate model is
+    *         unavailable.
+    */
+    virtual double getTotalForcing( const int aPeriod ) const = 0;
+
 	/*! \brief Print the output of the climate model to a file.
 	* \details Writes a subset of the output of the model to a file. The path to
     *          the file is currently hardcoded due to limitations in the output

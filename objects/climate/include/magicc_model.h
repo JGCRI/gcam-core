@@ -39,11 +39,26 @@ class Modeltime;
 class MagiccModel: public IClimateModel {
 public:
     MagiccModel( const Modeltime* aModeltime );
-    void completeInit( const std::string& aScenarioName );
-    bool setEmissions( const std::string& aGasName, const int aPeriod, const double aEmission );
-    bool runModel();
-    void printFileOutput() const;
-    void printDBOutput() const;
+    virtual void completeInit( const std::string& aScenarioName );
+    
+    virtual bool setEmissions( const std::string& aGasName,
+                               const int aPeriod,
+                               const double aEmission );
+    
+    virtual bool runModel();
+
+    virtual double getConcentration( const std::string& aGasName,
+                                     const int aPeriod ) const;
+
+    virtual double getTemperature( const int aPeriod ) const;
+    
+    virtual double getForcing( const std::string& aGasName,
+                               const int aPeriod ) const;
+    
+    virtual double getTotalForcing( const int aPeriod ) const;
+
+    virtual void printFileOutput() const;
+    virtual void printDBOutput() const;
 private:
     int getGasIndex( const std::string& aGasName ) const;
 	static unsigned int getNumGases();
@@ -63,6 +78,9 @@ private:
 
 	//! A reference to the scenario's modeltime object.
     const Modeltime* mModeltime;
+
+    //! Whether the climate model output is updated.
+    bool mIsValid;
 };
 
 #endif // _MAGICC_MODEL_H_
