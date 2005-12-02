@@ -660,7 +660,7 @@ static void resetMapIndices( const std::vector<T>& aItems, std::map<std::string,
 * \param insertToVector The vector of objects of the type pointed to by node.
 * \param corrMap The map of node name attributes to locations within insertToVector.
 * \param newNode An object to use if the xml node is unique. This node is deleted if it is not needed.
-* \return A pointer to the model-node modified by the function, 0 if the node was deleted. 
+* \param attrName Name of the attribute which contains the name identifier.
 */
 template<class T, class U> 
 void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToVector, 
@@ -677,13 +677,12 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
     // Determine if we should be deleting a node. 
     bool shouldDelete = XMLHelper<bool>::getAttr( node, "delete" );
     
-    // Get the main log.
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
     // Check if the node already exists in the model tree. 
     if( iter != corrMap.end() ){     
         // Modify or delete the node based on the contents of the delete attribute.
         if( shouldDelete ) {
-            // Perform deletion
+            // Perform deletion.
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Deleting node: " << objName << std::endl;
             
@@ -706,10 +705,12 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
     // The node does not already exist.
     else {
         if( shouldDelete ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Could not delete node " << objName << " as it does not exist." << std::endl;
         } 
         else if( XMLHelper<bool>::getAttr( node, "nocreate" ) ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
             mainLog << "Did not create node " << objName << " as the nocreate input flag was set." << std::endl;
         }
@@ -717,6 +718,67 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
             newNode->XMLParse( node );
             insertToVector.push_back( newNodePtr.release() );
             corrMap[ newNode->getName() ] = static_cast<int>( insertToVector.size() ) - 1;
+        }
+    }
+}
+
+/*! \brief Parses a single container node held by an auto_ptr.
+* \details Looks at the name and delete attributes of the node to determine if
+*          the model node which corresponds to the input should be added,
+*          modified, or deleted and makes the corresponding change to the model
+*          tree.
+* \param aNode The node pointing to the container node in the XML tree. 
+* \param aContainer The auto_ptr which contains the model's corrsponding object.
+* \param aNewNode An object to insert into the model tree if the node is unique.
+*        This node is deleted if it is not needed.
+* \param aAttrName Name of the attribute which contains the name identifier.
+* \sa parseContainerNode
+*/
+template<class T, class U> 
+void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContainer, 
+                      T* aNewNode, const std::string& aAttrName = "name" )
+{
+    assert( aNode );
+    assert( aNewNode );
+
+    // Have an auto_ptr keep the new memory.
+    std::auto_ptr<T> newNodePtr( aNewNode );
+
+    // Determine if we should be deleting a node. 
+    bool shouldDelete = XMLHelper<bool>::getAttr( aNode, "delete" );
+    
+    // Check if the container has already been created.
+    if( aContainer.get() ){
+        // Modify or delete the node based on the contents of the delete attribute.
+        if( shouldDelete ) {
+            // Perform deletion.
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << "Deleting node: " << XMLHelper<string>::getAttrString( aNode, aAttrName ) << std::endl;
+            aContainer.reset( 0 );
+        }
+        // Otherwise modify node. 
+        else {
+           aContainer->XMLParse( aNode );
+        }
+    } 
+    // The node does not already exist.
+    else {
+        if( shouldDelete ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Could not delete node " << XMLHelper<string>::getAttrString( aNode, aAttrName )
+                    << " as it does not exist." << std::endl;
+        } 
+        else if( XMLHelper<bool>::getAttr( aNode, "nocreate" ) ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::NOTICE );
+            mainLog << "Did not create node " << XMLHelper<string>::getAttrString( aNode, aAttrName )
+                    << " as the nocreate input flag was set." << std::endl;
+        }
+        else {
+            aContainer = newNodePtr;
+            aContainer->XMLParse( aNode );
         }
     }
 }
