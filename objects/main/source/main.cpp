@@ -38,11 +38,8 @@
 // include custom headers
 #include "util/base/include/configuration.h"
 #include "containers/include/scenario.h"
-#include "containers/include/scenario_runner.h"
-#include "containers/include/mac_generator_scenario_runner.h"
-#include "containers/include/single_scenario_runner.h"
-#include "containers/include/merge_runner.h"
-#include "containers/include/batch_runner.h"
+#include "containers/include/iscenario_runner.h"
+#include "containers/include/scenario_runner_factory.h"
 #include "util/logger/include/ilogger.h"
 #include "util/logger/include/logger_factory.h"
 #include "util/base/include/timer.h"
@@ -82,7 +79,7 @@ int main( int argc, char *argv[] ) {
     XMLHelper<void>::parseXML( loggerFileName, loggerFactoryWrapper.get() );
     
     // Create an auto_ptr to the scenario runner. This will automatically deallocate memory.
-    auto_ptr<ScenarioRunner> runner;
+    auto_ptr<IScenarioRunner> runner;
     // Get the main log file.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
@@ -92,29 +89,38 @@ int main( int argc, char *argv[] ) {
     Configuration* conf = Configuration::getInstance();
     XMLHelper<void>::parseXML( configurationFileName, conf );
     
-    // Determine the correct type of ScenarioRunner to create.
-    // todo: Consider a factory method.
+    // Determine the correct type of ScenarioRunner to create. Note that this
+    // ordering must be preserved because certain scenario runners can contain
+    // other scenario runners.
     if( conf->getBool( "BatchMode" ) ){
-        // Create the batch runner.
-        const string batchFile = conf->getFile( "BatchFileName" );
-        runner.reset( new BatchRunner( batchFile ) );
+		runner = ScenarioRunnerFactory::create( "batch-runner" );
+    }
+    else if( conf->getBool( "find-path" ) ){
+        runner = ScenarioRunnerFactory::create( "policy-target-runner" );
     }
     else if( conf->getBool( "mergeFilesOnly" ) ) {
-        runner.reset( new MergeRunner() );
+        runner = ScenarioRunnerFactory::create( "merge-runner" );
     }
     else if( conf->getBool( "createCostCurve" ) ){
-        const string abatedGas = conf->getString( "AbatedGasForCostCurves", "CO2" );
-        const unsigned int numPoints = conf->getInt( "numPointsForCO2CostCurve", 5 );
-        runner.reset( new MACGeneratorScenarioRunner( abatedGas, numPoints ) );
+		runner = ScenarioRunnerFactory::create( "mac-generator-scenario-runner" );
     }
     else { // Run a standard scenario.
-        runner.reset( new SingleScenarioRunner() );
+        runner = ScenarioRunnerFactory::create( "single-scenario-runner" );
     }
+	
+    // Need to set the scenario pointer. This has to be done before XML parse is
+	// called because that requires the modeltime. TODO: Remove the global
+    // pointer!
+	scenario = runner->getInternalScenario();
+    
     // Setup the scenario.
     runner->setupScenario( timer );
 
+	/*! \invariant The scenario is now defined. */
+	assert( scenario );
+
     // Run the scenario.
-    bool success = runner->runScenario( timer );
+    bool success = runner->runScenario( Scenario::RUN_ALL_PERIODS, timer );
 
     // Print the output.
     runner->printOutput( timer );
