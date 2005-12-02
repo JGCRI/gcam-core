@@ -47,6 +47,8 @@ public class DiskLayerRepository implements DataRepository
   {
     if(!currName.equals((varName+time)))
     {
+      //TODO REMOVE
+      System.out.print(".");
       if(dirty)
       {
         writeLayer(currName, currLayer);

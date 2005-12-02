@@ -1340,6 +1340,35 @@ public class ManipulationDriver
       VDest.setData(ComponentManipulator.sumValues(VSource.getData()));
     }
   }
+  /**
+   * Sums the size of land represented by this variable. Assumes that the
+   * given variable containes coverage values. Number returned is in km^2.
+   * @param command XML node defining the operation.
+   */
+  private void sumAreaCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable VDest;
+    Variable VSource;
+    Element currInfo;
+    
+    currInfo = command.getChild("target");
+    String VDname = currInfo.getAttributeValue("name");
+    currInfo = command.getChild("argument");
+    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    //creating new datavariable to hold result
+    VDest = new DataVariable();
+    VDest.name = VDname;
+    variableList.put(VDname, VDest);
+    
+    if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
+    { //dont need to weight values
+      VDest.setData(ComponentManipulator.sumArea(((ReferenceVariable)VSource).getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
+    } else
+    {
+      VDest.setData(ComponentManipulator.sumArea(VSource.getData()));
+    }
+  }
    /**
    * Gets the largest single value in the passed variable.
    * @param command XML node defining the operation.
@@ -2449,7 +2478,18 @@ public class ManipulationDriver
       runCommand(subCom);
     }
   }
-
+  /**
+   * Takes two lists of regions or productions and combines them into a
+   * table of values. One list is defined as regions and one as the content
+   * of those regions for the purpose of possibly averaging content, as
+   * opposed to regularly just add land area in each combination.
+   * @param command XML node defining the operation.
+   */
+  private void zoneCombineCommand(Element command)
+  {
+    //TODO
+  }
+  
 //*****************************************************************************
 //*******************Component Functions***************************************
 //*****************************************************************************
@@ -2846,6 +2886,9 @@ public class ManipulationDriver
     } else if(currCom.getName().equals("sumValues"))
     {
       sumValuesCommand(currCom);
+    } else if(currCom.getName().equals("sumArea"))
+    {
+      sumAreaCommand(currCom);
     } else if(currCom.getName().equals("avgOverRegion"))
     {
       avgOverRegionCommand(currCom);
@@ -2900,6 +2943,9 @@ public class ManipulationDriver
     } else if(currCom.getName().equals("forEachSubregion"))
     {
       forEachSubregionCommand(currCom);
+    } else if(currCom.getName().equals("zoneCombine"))
+    {
+      zoneCombineCommand(currCom);
     } else
     {
       log.log(Level.WARNING, "Unknown user command -> "+currCom.getName());

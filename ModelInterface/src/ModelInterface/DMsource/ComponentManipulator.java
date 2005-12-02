@@ -913,6 +913,104 @@ public final class ComponentManipulator
     toReturn[0].data = holdMR;
     return toReturn;
   }
+  public static Wrapper[] sumArea(Wrapper[] R)
+  {
+    log.log(Level.FINER, "begin function");
+    final double POLAR_CIRCUM = 40008.00;
+    final double EQUAT_CIRCUM = 40076.5;
+    final double PI = 3.1415926535;
+    
+    double[][] holdMR = new double[1][1];
+    double[][] holdMS;
+    double cellSize;
+    DataWrapper[] toReturn = new DataWrapper[1];
+    
+    double circumAtLat; //the circumference of the earth at a specific latitude
+    double totalWidth; //width in km of the region
+    double totalHeight; //height in km of the region
+    double blockWidth; //width in km of a block of data
+    double blockHeight; //height in km of a block of data
+    
+    holdMR[0][0] = 0;
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      totalHeight = (POLAR_CIRCUM/(360/R[i].getH()));
+      blockHeight = (totalHeight/R[i].data.length);
+      
+      holdMS = R[i].data;
+      for(int iY = 0; iY < holdMS.length; iY++)
+      {
+        circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+(iY*R[i].getRes()))*(PI/180)));
+        totalWidth = (circumAtLat/(360/R[i].getW()));
+        blockWidth = (totalWidth/R[i].data[iY].length);
+        cellSize = (blockWidth*blockHeight);
+        
+        for(int iX = 0; iX < holdMS[0].length; iX++)
+        {
+          if(!Double.isNaN(holdMS[iY][iX]))
+          {
+            holdMR[0][0] += (holdMS[iY][iX]*cellSize);
+          }
+        }
+      }
+    }
+    
+    toReturn[0] = new DataWrapper();
+    toReturn[0].data = holdMR;
+    return toReturn;
+  }
+  public static Wrapper[] sumArea(Wrapper[] R, double[][] weight, double x, double y, double h)
+  {
+    log.log(Level.FINER, "begin function");
+    final double POLAR_CIRCUM = 40008.00;
+    final double EQUAT_CIRCUM = 40076.5;
+    final double PI = 3.1415926535;
+    
+    double[][] holdMR = new double[1][1];
+    double[][] holdMS;
+    int wX, wY; //the double indexs for weight
+    double cellSize;
+    DataWrapper[] toReturn = new DataWrapper[1];
+    
+    double circumAtLat; //the circumference of the earth at a specific latitude
+    double totalWidth; //width in km of the region
+    double totalHeight; //height in km of the region
+    double blockWidth; //width in km of a block of data
+    double blockHeight; //height in km of a block of data
+    
+    holdMR[0][0] = 0;
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      totalHeight = (POLAR_CIRCUM/(360/R[i].getH()));
+      blockHeight = (totalHeight/R[i].data.length);
+      
+      holdMS = R[i].data;
+      for(int iY = 0; iY < holdMS.length; iY++)
+      {
+        wY = (int)(((iY*R[i].getRes())+((y+h)-(R[i].getY()+R[i].getH())))/R[i].getRes());
+        circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+(iY*R[i].getRes()))*(PI/180)));
+        totalWidth = (circumAtLat/(360/R[i].getW()));
+        blockWidth = (totalWidth/R[i].data[iY].length);
+        cellSize = (blockWidth*blockHeight);
+        
+        for(int iX = 0; iX < holdMS[0].length; iX++)
+        {
+          if(!Double.isNaN(holdMS[iY][iX]))
+          {
+            wX = (int)((((iX*R[i].getRes())+R[i].getX())-x)/R[i].getRes());
+            holdMR[0][0] += (holdMS[iY][iX]*cellSize*weight[wY][wX]);
+          }
+        }
+      }
+    }
+    
+    toReturn[0] = new DataWrapper();
+    toReturn[0].data = holdMR;
+    return toReturn;
+  }
+  
   public static Wrapper[] largestValue(Wrapper[] R)
   {
     log.log(Level.FINER, "begin function");
@@ -1089,9 +1187,9 @@ public final class ComponentManipulator
   public static Wrapper[] avgOverRegionByArea(Wrapper[] R, double Rx, double Ry, double Rw, double Rh)
   { //for use by avg variables because weight has already been factored in
     log.log(Level.FINER, "begin function");
-    double POLAR_CIRCUM = 40008.00; //these are constand but i dont know how to make constants in java...
-    double EQUAT_CIRCUM = 40076.5;
-    double PI = 3.1415926535;
+    final double POLAR_CIRCUM = 40008.00;
+    final double EQUAT_CIRCUM = 40076.5;
+    final double PI = 3.1415926535;
     
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
@@ -1100,7 +1198,7 @@ public final class ComponentManipulator
     double circumAtLat; //the circumference of the earth at a specific latitude
     double totalWidth; //width in km of the region
     double totalHeight; //height in km of the region
-    double blockWidth; //eidth in km of a block of data
+    double blockWidth; //width in km of a block of data
     double blockHeight; //height in km of a block of data
     double totalArea; //the area of the ENTIRE region
     double proportion; //the proportion of the whole region a block of data is

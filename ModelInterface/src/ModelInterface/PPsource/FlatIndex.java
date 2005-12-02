@@ -21,6 +21,7 @@ public class FlatIndex implements DataIndex
 //*********************************************************
 //*****************Class Constructors**********************
 //*********************************************************
+  
   public FlatIndex()
   {
     //assumes we are using a globe
@@ -188,6 +189,7 @@ public class FlatIndex implements DataIndex
 //*********************************************************
 //*************Begin Private Functions*********************
 //*********************************************************
+  
   private void init(double res)
   {
     resolution = res;
