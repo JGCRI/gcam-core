@@ -576,23 +576,20 @@ const vector<string> World::getPrimaryFuelList() const {
     return primaryFuelList;
 }
 
-/*! \brief A function which sets a fixed tax for each specified region on a specific gas.
-* \details This function sets a fixed tax for each region in the regionsToSet vector.
-* Each region will handle resetting the market to a fixed tax market and removing previous constraints.
-* \author Josh Lurz
-* \param policyName The name of the existing policy to turn into a fixed tax, or to create if it does not exist.
-* \param marketName The name of the market the fixed tax applies to. 
-* \param taxes A vector of taxes to set into each specified region, one for each time period.
-* \param regionsToSet A vector of regions for which to set the tax. If it is empty (the default value) ALL regions will be set.
+/*! \brief Set a fixed tax for all regions.
+* \param aTax Tax.
 */
-void World::setFixedTaxes( const string& policyName, const string& marketName, const vector<double> taxes, const std::vector<std::string>& regionsToSet ) {
-    for( unsigned int i = 0; i <regions.size(); i++ ) {
-        // If the regions to set vector is empty or contains the region, set the carbon taxes.
-        if( ( regionsToSet.empty() ) ||
-            ( find( regionsToSet.begin(), regionsToSet.end(), regions[ i ]->getName() ) != regionsToSet.end() ) ) {
-                regions[ i ]->setFixedTaxes( policyName, marketName, taxes );
-            }
+void World::setTax( const GHGPolicy* aTax ){
+    for( RegionIterator iter = regions.begin(); iter != regions.end(); ++iter ){
+        (*iter)->setTax( aTax );
     }
+}
+
+/*! \brief Get the climate model.
+* \return The climate model.
+*/
+const IClimateModel* World::getClimateModel() const {
+    return mClimateModel.get();
 }
 
 /*! \brief A function to generate a series of ghg emissions quantity curves based on an already performed model run.
@@ -729,9 +726,9 @@ void World::csvSGMOutputFile( ostream& aFile, const int period ) const {
 	}
 }
 
-void World::csvSGMGenFile( ostream& aFile, const int aPeriod ) const {
+void World::csvSGMGenFile( ostream& aFile ) const {
 	for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); ++rIter ){
-		( *rIter )->csvSGMGenFile( aFile, aPeriod );
+		( *rIter )->csvSGMGenFile( aFile );
 	}
 }
 

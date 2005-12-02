@@ -92,7 +92,7 @@ public:
     virtual void updateSummary( const int period );
     void printGraphs( std::ostream& outStream, const int period ) const;
     const Summary getSummary( const int period ) const;
-    void setFixedTaxes( const std::string& policyName, const std::string& marketName, const std::vector<double>& taxes );
+    void setTax( const GHGPolicy* aTax );
     const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
     void checkData( const int period );
@@ -106,7 +106,7 @@ public:
 	virtual void updateMarketplace( const int period );
     virtual void finalizePeriod( const int aPeriod );
 	virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	virtual void csvSGMGenFile( std::ostream& aFile, const int period ) const;
+	virtual void csvSGMGenFile( std::ostream& aFile ) const;
 protected:
     virtual const std::string& getXMLName() const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
@@ -171,6 +171,8 @@ protected:
     const std::vector<double> calcFutureGDP() const;
 private:
     void clear();
+    bool ensureGDP() const;
+    bool ensureDemographics() const;
 };
 
 #endif // _REGION_H_

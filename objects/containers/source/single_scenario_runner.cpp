@@ -10,7 +10,6 @@
 #include "util/base/include/definitions.h"
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
-#include "containers/include/scenario_runner.h"
 #include "containers/include/single_scenario_runner.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
@@ -24,8 +23,6 @@
 using namespace std;
 using namespace xercesc;
 
-extern Scenario* scenario;
-
 // Function Prototypes. These need a helper class. 
 extern void createMCvarid();
 extern void closeDB();
@@ -33,7 +30,7 @@ extern void openDB();
 extern void createDBout();
 
 /*! \brief Constructor */
-SingleScenarioRunner::SingleScenarioRunner(){
+SingleScenarioRunner::SingleScenarioRunner():mScenario( new Scenario ){
 }
 
 //! Destructor.
@@ -50,16 +47,7 @@ SingleScenarioRunner::~SingleScenarioRunner(){
 * \param aScenComponents A list of additional scenario components to read in.
 * \return Whether the setup completed successfully.
 */
-bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName,
-										  const list<string> aScenComponents )
-{
-    // Use a smart pointer for scenario so that if the main program exits before
-    // the end the memory is freed correctly. 
-    mScenario.reset( new Scenario() );
-
-	// Set the global pointer.
-    scenario = mScenario.get();
-    
+bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, const list<string> aScenComponents ){
     // Parse the input file.
     const Configuration* conf = Configuration::getInstance();
     XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
@@ -103,10 +91,12 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName,
 
 /*! \brief Run a single Scenario.
 * \details This function completes the initialization and runs the Scenario.
+* \param aSinglePeriod The single period to run or Scenario::RUN_ALL_PERIODS
+*        to run all periods.
 * \param aTimer The timer used to print out the amount of time spent performing
 *        operations.
 */
-bool SingleScenarioRunner::runScenario( Timer& aTimer ){
+bool SingleScenarioRunner::runScenario( const int aSingleScenario, Timer& aTimer ){
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Starting a model run." << endl;
@@ -117,7 +107,7 @@ bool SingleScenarioRunner::runScenario( Timer& aTimer ){
 		mScenario->completeInit();
 
 		// Perform the initial run of the scenario.
-		success = mScenario->run();
+        success = mScenario->run( aSingleScenario, true );
 
 		// Compute model run time.
 		aTimer.stop();
@@ -160,7 +150,7 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
     }
     
     // Write csv file output
-    mScenario->csvOutputFile();
+    mScenario->writeOutputFiles();
 
     // Perform the database output. 
 	// Open MS Access database
@@ -181,4 +171,23 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
     aTimer.print( mainLog, "Data Readin, Model Run & Write Time:" );
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Model run completed." << endl;
+}
+
+/*! \brief Get the internal scenario of the single scenario runner.
+* \return The internal scenario.
+*/
+Scenario* SingleScenarioRunner::getInternalScenario(){
+	return mScenario.get();
+}
+
+/*! \brief Get the internal scenario of the single scenario runner.
+* \return Constant pointer to the internal scenario.
+*/
+const Scenario* SingleScenarioRunner::getInternalScenario() const {
+	return mScenario.get();
+}
+
+const string& SingleScenarioRunner::getXMLNameStatic(){
+	static const string XML_NAME = "single-scenario-runner";
+	return XML_NAME;
 }

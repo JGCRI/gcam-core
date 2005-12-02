@@ -13,54 +13,48 @@
 * \version $Revision$
 */
 
-#include <map>
 #include <memory>
-#include <list>
-#include "containers/include/scenario_runner.h"
+#include "containers/include/iscenario_runner.h"
 
 class Timer;
-class Curve;
+class TotalPolicyCostCalculator;
 
 /*! 
 * \ingroup Objects
-* \brief A derived ScenarioRunner class that runs a scenario multiple times in order to generate a 
-*  marginal abatement cost (MAC) curve for each time period.
-* \details This class runs a scenario multiple times while varying a fixed carbon price,
-* to determine the MAC curve and total cost for the scenario.
+* \brief A derived ScenarioRunner class that runs a scenario multiple times in
+*        order to generate a marginal abatement cost (MAC) curve for each time
+*        period.
+* \details This class runs a scenario multiple times while varying a fixed
+*          carbon price, to determine the MAC curve and total cost for the
+*          scenario.
 * \author Josh Lurz
 */
-class MACGeneratorScenarioRunner: public ScenarioRunner {
+class MACGeneratorScenarioRunner: public IScenarioRunner {
+    friend class ScenarioRunnerFactory;
 public:
-    MACGeneratorScenarioRunner( const std::string aGhgName, const unsigned int aNumPoints );
     virtual ~MACGeneratorScenarioRunner();
-    virtual bool setupScenario( Timer& timer, const std::string aName = "", const std::list<std::string> aScenComponents = std::list<std::string>() );
-    virtual bool runScenario( Timer& timer );
-    virtual void printOutput( Timer& timer, const bool aCloseDB = true ) const;
-private:
-    double mGlobalCost;
-    double mGlobalDiscountedCost;
-    bool mRanCosts;
-    unsigned int mNumPoints;
-    std::string mGhgName;
-    std::auto_ptr<ScenarioRunner> mSingleScenario;
-    typedef std::map<const std::string, double> RegionalCosts;
-    typedef RegionalCosts::const_iterator CRegionalCostsIterator;
-    RegionalCosts mRegionalCosts;
-    RegionalCosts mRegionalDiscountedCosts;
-    typedef std::vector<std::map<const std::string, const Curve*> > VectorRegionCurves;
-    typedef VectorRegionCurves::iterator VectorRegionCurvesIterator;
-    typedef VectorRegionCurves::const_iterator CVectorRegionCurvesIterator;
-    typedef std::map<const std::string, const Curve* > RegionCurves;
-    typedef RegionCurves::const_iterator CRegionCurvesIterator;
-    typedef RegionCurves::iterator RegionCurvesIterator;
-    VectorRegionCurves mEmissionsQCurves;
-    VectorRegionCurves mEmissionsTCurves;
-    VectorRegionCurves mPeriodCostCurves;
-    RegionCurves mRegionalCostCurves;
 
-    bool calculateAbatementCostCurve();
-    bool runTrials();
-    void createCostCurvesByPeriod();
-    void createRegionalCostCurves();
-    };
+    virtual bool setupScenario( Timer& timer,
+        const std::string aName = "",
+        const std::list<std::string> aScenComponents = std::list<std::string>() );
+    
+    virtual bool runScenario( const int aSinglePeriod,
+                              Timer& timer );
+
+    virtual void printOutput( Timer& timer,
+        const bool aCloseDB = true ) const;
+
+    virtual Scenario* getInternalScenario();
+    virtual const Scenario* getInternalScenario() const;
+private:
+    //! The scenario runner which controls running the initial scenario, and all
+    //! fixed taxed scenarios after.
+    std::auto_ptr<IScenarioRunner> mSingleScenario;
+
+    //! The delegate object which calculates total costs.
+    std::auto_ptr<TotalPolicyCostCalculator> mPolicyCostCalculator;
+
+    MACGeneratorScenarioRunner();
+    static const std::string& getXMLNameStatic();
+};
 #endif // _MAC_GENERATOR_SCENARIO_RUNNER_H_

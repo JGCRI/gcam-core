@@ -25,6 +25,8 @@ class Curve;
 class Tabs;
 class CalcCounter;
 class IClimateModel;
+class GHGPolicy;
+
 namespace objects {
 	class Atom;
 }
@@ -77,13 +79,14 @@ public:
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void printGraphs( std::ostream& outStream, const int period ) const;
     const std::vector<std::string> getPrimaryFuelList() const;
-    void setFixedTaxes( const std::string& policyName, const std::string& marketName, const std::vector<double> taxes, const std::vector<std::string>& regionsToSet = std::vector<std::string>( 0 ) );
+    void setTax( const GHGPolicy* aTax );
+    const IClimateModel* getClimateModel() const;
     const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     void setCalcCounter( CalcCounter* calcCounter );
     void finalizePeriod( const int aPeriod );	
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-    void csvSGMGenFile( std::ostream& aFile, const int aPeriod ) const;
+    void csvSGMGenFile( std::ostream& aFile ) const;
 private:
     //! The type of an iterator over the Region vector.
     typedef std::vector<Region*>::iterator RegionIterator;

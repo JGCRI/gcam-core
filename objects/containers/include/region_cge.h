@@ -51,7 +51,7 @@ public:
     void updateAllOutputContainers( const int period );
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void updateOutputContainer( OutputContainer* outputContainer, const int period ) const;
-	void csvSGMGenFile( std::ostream& aFile, const int aPeriod ) const; // general SGM output is called at end of model run and includes all periods
+	void csvSGMGenFile( std::ostream& aFile ) const;
 protected:
     const static std::string XML_NAME; //!< node name for toXML method.
 	std::vector<FinalDemandSector*> finalDemandSector; //!< vector of pointers to supply sector objects

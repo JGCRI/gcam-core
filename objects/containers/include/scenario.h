@@ -28,6 +28,8 @@ class World;
 class Curve;
 class Tabs;
 class Solver;
+class GHGPolicy;
+class IClimateModel;
 
 /*!
 * \ingroup Objects
@@ -60,29 +62,68 @@ public:
 	void completeInit();
 	void setName(std::string newName);
 	void toInputXML( std::ostream& out, Tabs* tabs ) const;
-	void toDebugXMLOpen( std::ostream& out, Tabs* tabs ) const;
-	void toDebugXMLClose( std::ostream& out, Tabs* tabs ) const;
-	std::string getName() const;
-	bool run( std::string filenameEnding = "" );
+
+	const std::string& getName() const;
+	bool run( const int aSinglePeriod, const bool aPrintDebugging, const std::string& aFilenameEnding = "" );
+    void setTax( const GHGPolicy* aTax );
 	const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
 	const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
-    void csvOutputFile() const;
+    void writeOutputFiles() const;
     void dbOutput() const;
-	void csvSGMOutputFile( std::ostream& aFile, const int aPeriod );
-	void csvSGMGenFile( std::ostream& aFile, const int aPeriod ) const;
+    const IClimateModel* getClimateModel() const;
+    static const std::string& getXMLNameStatic();
+
+    //! Constant which when passed to the run method means to run all model periods.
+    const static int RUN_ALL_PERIODS = -1;
 private:
-	const static std::string XML_NAME; //!< node name for toXML methods
+    //! A vector booleans, one per period, which denotes whether each period is valid.
+    std::vector<bool> mIsValidPeriod;
+
     std::auto_ptr<Modeltime> modeltime; //!< The modeltime for the scenario
     std::auto_ptr<World> world; //!< The world object
     std::auto_ptr<Marketplace> marketplace; //!< The goods and services marketplace.
     std::auto_ptr<Solver> solver; //!< Pointer to a solution mechanism.
 	std::string name; //!< Scenario name.
 	std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
-	bool runCompleted; //!< A boolean which can be used internally to check if a run has been completed.
 	std::vector<int> unsolvedPeriods; //!< Unsolved periods. 
-	void printGraphs( const int period ) const;
+
 	bool solve( const int period );
-    static void openDebugXMLFile( std::ofstream& xmlDebugStream, const std::string& fileNameEnding );
+
+	bool calculatePeriod( const int aPeriod,
+                          std::ostream& aXMLDebugFile,
+                          std::ostream& aSGMDebugFile,
+                          Tabs* aTabs,
+                          const bool aPrintDebugging );
+
+    void printGraphs() const;
+	void csvSGMGenFile( std::ostream& aFile ) const;
+    void csvSGMOutputFile( std::ostream& aSGMDebugFile, const int aPeriod ) const;
+    
+    void openDebugXMLFile( std::ofstream& aXMLDebugFile,
+                           Tabs* aTabs,
+                           const std::string& aFileNameEnding ) const;
+
+    void toDebugXMLOpen( std::ostream& aXMLDebugFile, Tabs* aTabs ) const;
+	void toDebugXMLClose( std::ostream& aXMLDebugFile, Tabs* aTabs ) const;
+
+    void logRunBeginning() const;
+    void logPeriodBeginning( const int aPeriod ) const;
+    void logPeriodEnding( const int aPeriod ) const;
+    void logRunEnding() const;
+
+    void openDebuggingFiles( std::ofstream& aXMLDebugFile,
+                             std::ofstream& aSGMDebugFile,
+                             Tabs* aTabs,
+                             const std::string& aFileNameEnding ) const;
+
+    void writeDebuggingFiles( std::ostream& aXMLDebugFile,
+                              std::ostream& aSGMDebugFile,
+                              Tabs* aTabs,
+                              const int aPeriod ) const;
+
+    void closeDebuggingFiles( std::ofstream& aXMLDebugFile,
+                              std::ofstream& aSGMDebugFile,
+                              Tabs* aTabs ) const;
 };
 
 #endif // _SCENARIO_H_

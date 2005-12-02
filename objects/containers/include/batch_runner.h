@@ -19,7 +19,7 @@
 #include <list>
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
-#include "containers/include/scenario_runner.h"
+#include "containers/include/iscenario_runner.h"
 #include "util/base/include/iparsable.h"
 class Timer;
 
@@ -29,13 +29,17 @@ class Timer;
 * and runs scenarios based on permutations of these files. More documentation.
 * \author Josh Lurz
 */
-class BatchRunner: public ScenarioRunner, IParsable {
+class BatchRunner: public IScenarioRunner, IParsable {
+	friend class ScenarioRunnerFactory;
 public:
-    BatchRunner( const std::string& aBatchFileName );
     virtual ~BatchRunner();
     virtual bool setupScenario( Timer& aTimer, const std::string aName = "", const std::list<std::string> aScenComponents = std::list<std::string>() );
-    virtual bool runScenario( Timer& aTimer );
+    virtual bool runScenario( const int aSinglePeriod, Timer& aTimer );
     virtual void printOutput( Timer& aTimer, const bool aCloseDB ) const;
+	virtual Scenario* getInternalScenario();
+	virtual const Scenario* getInternalScenario() const;
+
+	// IParsable Interface.
     bool XMLParse( const xercesc::DOMNode* aRoot );
 protected:
     struct File {
@@ -57,10 +61,12 @@ protected:
     typedef std::vector<Component> ComponentSet;
     ComponentSet mComponentSet; //!< Big data structure.
     std::vector<std::string> mUnsolvedNames; //!< List of scenarios that failed.
-    std::auto_ptr<ScenarioRunner> mInternalRunner;
-    const std::string mBatchFileName; //!< Name of the XML file with batch information.
-    bool runSingleScenario( const Component aCurrComponents, Timer& aTimer );
+    std::auto_ptr<IScenarioRunner> mInternalRunner;
+    
+	BatchRunner();
+	bool runSingleScenario( const Component aCurrComponents, Timer& aTimer );
     void XMLParseComponentSet( const xercesc::DOMNode* aNode );
     void XMLParseFileSet( const xercesc::DOMNode* aNode, Component& aCurrComponentSet );
+	static const std::string& getXMLNameStatic();
     };
 #endif // _BATCH_RUNNER_H_

@@ -7,7 +7,7 @@
 * \version $Revision$
 */
 #if defined(_MSC_VER)
-#pragma warning( disable : 4503 ) 
+#pragma warning( disable : 4503 )
 #endif 
 
 #include <iostream>
@@ -16,20 +16,19 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include "containers/include/batch_runner.h"
-#include "containers/include/mac_generator_scenario_runner.h"
-#include "containers/include/single_scenario_runner.h"
+#include "containers/include/scenario_runner_factory.h"
 #include "util/base/include/timer.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
+#include "containers/include/scenario.h"
+
 using namespace std;
 using namespace xercesc;
 
 /*! Constructor
-* \param aBatchFileName The filename to use as the batch information file.
 */
-BatchRunner::BatchRunner( const string& aBatchFileName ):
-mBatchFileName( aBatchFileName ){ 
+BatchRunner::BatchRunner(){ 
 }
 
 //! Destructor
@@ -44,19 +43,23 @@ BatchRunner::~BatchRunner(){
 * \return Whether setup was successful. Currently always true.
 */
 bool BatchRunner::setupScenario( Timer& aTimer, const string aName, const list<string> aScenComponents ){
-    // Parse the batch file passed in on the command line.
-    XMLHelper<void>::parseXML( mBatchFileName, this );
+	// Get the name of the batch file from the Configuration.
+	const string batchFile = Configuration::getInstance()->getFile( "BatchFileName" );
+    
+	// Parse the batch file.
+    XMLHelper<void>::parseXML( batchFile, this );
     return true;
 }
 
 /*! \brief Run the set of Scenarios as instructed by the batch configuration file.
 * \details This is the main function of the BatchRunner which determines all permutations
-* of the ComponentSets and runs a Scenario for each. 
+* of the ComponentSets and runs a Scenario for each.
+* \param aSinglePeriod This parameter is currently ignored.
 * \param aTimer The timer used to print out the amount of time spent performing operations.
 * \todo Handle duplicate names. Print a warning at least.
 * \return Whether all model runs solved successfully.
 */
-bool BatchRunner::runScenario( Timer& aTimer ){
+bool BatchRunner::runScenario( const int aSinglePeriod, Timer& aTimer ){
     // Quick error checking for empty readin.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     if( mComponentSet.empty() ){
@@ -152,20 +155,21 @@ bool BatchRunner::runSingleScenario( const Component aComponents, Timer& aTimer 
 
     // Check if cost curve creation is needed.
     const Configuration* conf = Configuration::getInstance();
-    if( conf->getBool( "createCostCurve" ) ){
-        const string abatedGas = conf->getString( "AbatedGasForCostCurves", "CO2" );
-        const unsigned int numPoints = conf->getInt( "numPointsForCO2CostCurve", 5 );
-        mInternalRunner.reset( new MACGeneratorScenarioRunner( abatedGas, numPoints ) );
+    if( conf->getBool( "find-path" ) ){
+        mInternalRunner = ScenarioRunnerFactory::create( "policy-target-runner" );
+    }
+    else if( conf->getBool( "createCostCurve" ) ){
+		mInternalRunner = ScenarioRunnerFactory::create( "mac-generator-scenario-runner" );
     }
     // Run a standard scenario.
     else {
-        mInternalRunner.reset( new SingleScenarioRunner() );
+		mInternalRunner = ScenarioRunnerFactory::create( "single-scenario-runner" );
     }
     // Setup the scenario.
     mInternalRunner->setupScenario( aTimer, aComponents.mName, components );
 
     // Run the scenario.
-    bool success = mInternalRunner->runScenario( aTimer );
+    bool success = mInternalRunner->runScenario( Scenario::RUN_ALL_PERIODS, aTimer );
     
     // Print the output.
     mInternalRunner->printOutput( aTimer );
@@ -292,4 +296,23 @@ void BatchRunner::XMLParseFileSet( const DOMNode* aNode, Component& aCurrCompone
     }
     // Add the new file set to the current component.
     aCurrComponent.mFileSets.push_back( newFileSet );
+}
+
+const string& BatchRunner::getXMLNameStatic(){
+	static const string XML_NAME = "batch-runner";
+	return XML_NAME;
+}
+
+/*! \brief Get the internal scenario.
+* \return The internal scenario.
+*/
+Scenario* BatchRunner::getInternalScenario(){
+	return mInternalRunner->getInternalScenario();
+}
+
+/*! \brief Get the internal scenario.
+* \return Constant pointer to the internal scenario.
+*/
+const Scenario* BatchRunner::getInternalScenario() const {
+	return mInternalRunner->getInternalScenario();
 }

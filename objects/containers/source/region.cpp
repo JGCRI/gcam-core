@@ -146,19 +146,15 @@ void Region::XMLParse( const DOMNode* node ){
         else if( nodeName == "PrimaryFuelCO2Coef" ) {
             primaryFuelCO2Coef[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
         }
+
 		else if( nodeName == Demographic::getXMLNameStatic() ){
-            if( !demographic.get() ){
-                demographic.reset( new Demographic() );
-            }
-            demographic->XMLParse( curr );
+            parseSingleNode( curr, demographic, new Demographic );
         }
 		else if( nodeName == GDP::getXMLNameStatic() ){
-            if( !gdp.get() ){
-                gdp.reset( new GDP() );
-            }
-            gdp->XMLParse( curr );
+            parseSingleNode( curr, gdp, new GDP );
         }
 		else if( nodeName == NationalAccount::getXMLNameStatic() ){
+            // This is not correct.
 			int per = scenario->getModeltime()->getyr_to_per( XMLHelper<int>::getAttr( curr, "year" ) );
 			// put in a check for correct year and per
 			nationalAccount[per].XMLParse( curr );
@@ -190,7 +186,7 @@ void Region::XMLParse( const DOMNode* node ){
         }
 		else if( nodeName == ExportSector::getXMLNameStatic() ){
             parseContainerNode( curr, supplySector, supplySectorNameMap, new ExportSector( name ) );
-        } 
+        }
 		else if( nodeName == DemandSector::getXMLNameStatic() ){
             parseContainerNode( curr, demandSector, demandSectorNameMap, new DemandSector( name ) );
         }
@@ -203,10 +199,7 @@ void Region::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == AgSector::getXMLNameStatic() ) {
             if( Configuration::getInstance()->getBool( "agSectorActive" ) ){
-                if( !agSector.get() ){
-                    agSector.reset( new AgSector() );
-                }
-                agSector->XMLParse( curr );
+                parseSingleNode( curr, agSector, new AgSector );
             }
         }
         else if( nodeName == GHGPolicy::getXMLNameStatic() ){
@@ -353,7 +346,7 @@ void Region::completeInit() {
     }
 
     for( GHGPolicyIterator ghgPolicy = mGhgPolicies.begin(); ghgPolicy != mGhgPolicies.end(); ++ghgPolicy ){
-        (*ghgPolicy)->setMarket( name );
+        (*ghgPolicy)->completeInit( name );
     }
     
 #if SORT_TESTING
@@ -373,32 +366,28 @@ void Region::completeInit() {
 * \todo Move GDP calibration parameters into GDP object
 */
 void Region::setupCalibrationMarkets() {
+    if( !ensureGDP() ){
+        return;
+    }
 
-        if( !gdp.get() ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "GDP object has not been created before GDP calibration. Check for a region name mismatch." << endl;
-            return;
-        }
-
-        const Modeltime* modeltime = scenario->getModeltime();
-        // Change per capita calibration values into absolute values
-        for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
-            if ( GDPcalPerCapita [ period ] != 0 && demographic.get() ) {
-                if ( calibrationGDPs[ period ] != 0 ) {
-                    ILogger& mainLog = ILogger::getLogger( "main_log" );
-                    mainLog.setLevel( ILogger::WARNING );
-                    mainLog << "Both GDPcal and GDPcalPerCapita read in region " << name << ". GDPcalPerCapita used." << endl;
-                }
-                // Convert from GDP/cap ($) to millions of dollars GDP total. Pop is in 1000's, so need an additional 1e3 scale to convert to millions
-                calibrationGDPs [ period ]  = GDPcalPerCapita [ period ] * demographic->getTotal( period )/1e3;
+    const Modeltime* modeltime = scenario->getModeltime();
+    // Change per capita calibration values into absolute values
+    for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
+        if ( GDPcalPerCapita [ period ] != 0 && demographic.get() ) {
+            if ( calibrationGDPs[ period ] != 0 ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Both GDPcal and GDPcalPerCapita read in region " << name << ". GDPcalPerCapita used." << endl;
             }
-        }
-
-        if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
-            gdp->setupCalibrationMarkets( name, calibrationGDPs );
+            // Convert from GDP/cap ($) to millions of dollars GDP total. Pop is in 1000's, so need an additional 1e3 scale to convert to millions
+            calibrationGDPs [ period ]  = GDPcalPerCapita [ period ] * demographic->getTotal( period )/1e3;
         }
     }
+
+    if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
+        gdp->setupCalibrationMarkets( name, calibrationGDPs );
+    }
+}
 
 /*! \brief Reorder the sectors based on a list of sector names.
 * \details This function is used to reorder a list of sectors using a supplied
@@ -736,12 +725,10 @@ void Region::calcAgSector( const int period ) {
 * \param period Model time period
 */
 void Region::calcResourceSupply( const int period ){
-    if( !gdp.get() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before resource calculation. Check for a region name mismatch." << endl;
+    if( !ensureGDP() ){
         return;
     }
+
     for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
         (*currResource)->calcSupply( name, gdp.get(), period );
     }
@@ -752,10 +739,7 @@ void Region::calcResourceSupply( const int period ){
 * \param period Model time period
 */
 void Region::calcFinalSupplyPrice( const int period ) {
-    if( !gdp.get() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before final supply price calculation. Check for a region name mismatch." << endl;
+    if( !ensureGDP() ){
         return;
     }
 
@@ -769,12 +753,10 @@ void Region::calcFinalSupplyPrice( const int period ) {
 * \param period Model time period
 */
 void Region::setFinalSupply( const int period ) {
-    if( !gdp.get() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before final supply price calculation. Check for a region name mismatch." << endl;
+    if( !ensureGDP() ){
         return;
     }
+
     // loop through all sectors in reverse once to get total output.
     typedef vector<Sector*>::reverse_iterator ReverseSectorIterator;
     for ( ReverseSectorIterator currSupply = supplySector.rbegin(); currSupply != supplySector.rend(); ++currSupply ) {
@@ -787,19 +769,9 @@ void Region::setFinalSupply( const int period ) {
 * \param period Model time period
 */
 void Region::calcGDP( const int period ){
-    if( !gdp.get() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before GDP calculation. Check for a region name mismatch." << endl;
+    if( !ensureGDP() || !ensureDemographics() ){
         return;
     }
-    if( !demographic.get() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Population object has not been created before GDP calculation. Check for a region name mismatch." << endl;
-        return;
-    }
-    
     gdp->initialGDPcalc( period, demographic->getTotal( period ) );
 }
 
@@ -814,16 +786,7 @@ void Region::calcGDP( const int period ){
 * \todo check to see if this works with AgLU. Not sure about conversions.
 */
 const vector<double> Region::calcFutureGDP() const {
-    if( !gdp.get() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before future GDP calculation. Check for a region name mismatch." << endl;
-        return vector<double>( 0 );
-    }
-    if( !demographic.get() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Population object has not been created before future GDP calculation. Check for a region name mismatch." << endl;
+    if( !ensureGDP() || !ensureDemographics() ){
         return vector<double>( 0 );
     }
 
@@ -870,10 +833,7 @@ void Region::calcEndUsePrice( const int period ) {
 * \todo Move this calculation down to GDP
 */
 void Region::adjustGDP( const int period ){
-    if( !gdp.get() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before GDP adjustment. Check for a region name mismatch." << endl;
+    if( !ensureGDP() ){
         return;
     }
     
@@ -915,11 +875,7 @@ void Region::calibrateRegion( const bool doCalibrations, const int period ) {
             // function so that can compare TFE with cal value.
         }
     }
-
-    if( !gdp.get() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before GDP calibration. Check for a region name mismatch." << endl;
+    if( !ensureGDP() ){
         return;
     }
     // TODO: Move this into GDP object.
@@ -978,9 +934,10 @@ bool Region::isAllCalibrated( const int period, double calAccuracy, const bool p
       if ( ( !isDemandAllCalibrated( period ) && TFEcalb[ period ]  > 0 ) && calOn ) {
          if ( fabs( calcTFEscaleFactor( period ) - 1.0 ) > calAccuracy ) {
             if ( printWarnings ) {
-               cerr << "WARNING: " << " TFE Calibration is off by: ";
-               cerr << calcTFEscaleFactor( period ) << " in yr " <<  scenario->getModeltime()->getper_to_yr( period );
-               cerr << " in region: " << name << endl;
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "TFE Calibration is off by " << calcTFEscaleFactor( period )
+                        << " in period " <<  period << " for region " << name << "." << endl;
             }
             returnVal = false;
          }
@@ -1056,7 +1013,6 @@ double Region::calcTFEscaleFactor( const int period ) const {
 */
 void Region::checkData( const int period ) {
     checkSectorCalData( period );
-
 }
 
 /*! \brief Call any initializations that are only done once per period.
@@ -1067,7 +1023,7 @@ void Region::initCalc( const int period )
 {
     mRegionInfo->setDouble( "heatingDegreeDays", heatingDegreeDays );
     mRegionInfo->setDouble( "coolingDegreeDays", coolingDegreeDays );
-
+    
     for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
         (*currSector)->initCalc( nationalAccount[ period ], demographic.get(), period );
     }
@@ -1505,10 +1461,7 @@ void Region::checkSectorCalData( const int period ) {
 
 //! Calculate regional demand for energy and other goods for all sectors.
 void Region::calcEndUseDemand( const int period ) {
-    if( !gdp.get() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created before demand calculation. Check for a region name mismatch." << endl;
+    if( !ensureGDP() ){
         return;
     }
     
@@ -1883,35 +1836,39 @@ const Summary Region::getSummary( const int period ) const {
     return summary[ period ];
 }
 
-/*! \brief This function will set the tax policy with the given name to a fixed
-*          tax policy.
-* \details This function searches for a GHGPolicy with the name policyName. If
-*          it finds it, it will reset it to a fixed tax policy using the taxes
-*          in the taxes vector. Otherwise, it will create a new fixed tax policy
-*          with policyName.
-* \author Josh Lurz
-* \param policyName The name of the GHGPolicy to convert to a fixed tax.
-* \param marketName The name of the market the GHGPolicy applies to.
-* \param taxes The taxes to use for the policy.
+/*! \brief Set a policy for the region.
+* \details Searches through the list of the region's taxes for a tax with the
+*          same name as aTax. If the tax is found, it is deleted and replaced
+*          with aTax. Otherwsie aTax is added to the end of the tax vector.
+* \param aTax Tax to add.
 */
-void Region::setFixedTaxes( const std::string& policyName, const std::string& marketName, const vector<double>& taxes ){
-    bool foundPolicy = false;
+void Region::setTax( const GHGPolicy* aTax ){
+    /*! \pre Tax is not null. */
+    assert( aTax );
+    
+    // Check if the tax is applicable.
+    if( !aTax->isApplicable( name ) ){
+        return;
+    }
 
+    GHGPolicy* insertedTax = 0;
+    // Search for an existing policy to replace.
     for( unsigned int i = 0; i < mGhgPolicies.size(); i++ ){
-        if( mGhgPolicies[ i ]->getName() == policyName ){
-            foundPolicy = true;
-            mGhgPolicies[ i ]->changePolicyToFixedTax( name );
-            mGhgPolicies[ i ]->setFixedTaxes( name, taxes );
-            break;
+        if( mGhgPolicies[ i ]->getName() == aTax->getName() ){
+            delete mGhgPolicies[ i ];
+            // Create a copy of the tax.
+            mGhgPolicies[ i ] = insertedTax = aTax->clone();
         }
     }
-    // Create a new policy since the policy did not exist.
-    if( !foundPolicy ){
-        GHGPolicy* policy = new GHGPolicy( policyName, "", marketName , true );
-        policy->setFixedTaxes( name, taxes );
-        policy->setMarket( name );
-        mGhgPolicies.push_back( policy );
+
+    // Need to insert the tax.
+    if( !insertedTax ){
+        insertedTax = aTax->clone();
+        mGhgPolicies.push_back( insertedTax );
     }
+
+    // Initialize the tax.
+    insertedTax->completeInit( name );
 }
 
 /*! \brief A function to generate a ghg emissions quantity curve based on an
@@ -2004,6 +1961,7 @@ void Region::finalizePeriod( const int aPeriod ){
 void Region::updateAllOutputContainers( const int period ) { 
 }
 
+// TODO: These should be removed.
 /*! \brief For outputing SGM data to a flat csv File, wouldn't need to do
 *          anything for miniCAM.
 * \author Pralit Patel
@@ -2014,5 +1972,35 @@ void Region::csvSGMOutputFile( ostream& aFile, const int period ) const {
 /*! \brief For outputing general SGM results to a flat csv File 
 * \author Sonny Kim
 */
-void Region::csvSGMGenFile( ostream& aFile, const int period ) const {
+void Region::csvSGMGenFile( ostream& aFile ) const {
+}
+
+/*! \brief Check whether the GDP object exists and report a warning if it does not.
+* \return Whether the GDP object exists.
+* \author Josh Lurz
+*/
+bool Region::ensureGDP() const {
+    if( !gdp.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "GDP object has not been created and is required. "
+                << "Check for a region name mismatch." << endl;
+        return false;
+    }
+    return true;
+}
+
+/*! \brief Check whether the Demographics object exists and report a warning if it does not.
+* \return Whether the Demographics object exists.
+* \author Josh Lurz
+*/
+bool Region::ensureDemographics() const {
+    if( !demographic.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Population object has not been created and is required. "
+                << "Check for a region name mismatch." << endl;
+        return false;
+    }
+    return true;
 }

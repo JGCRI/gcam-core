@@ -16,7 +16,7 @@
 #include <memory>
 #include <string>
 #include <list>
-#include "containers/include/scenario_runner.h"
+#include "containers/include/iscenario_runner.h"
 
 class Scenario;
 class Timer;
@@ -26,14 +26,21 @@ class Timer;
 * \brief A class which runs the scenario only to get the merged output.
 * \author Josh Lurz
 */
-class MergeRunner: public ScenarioRunner {
+class MergeRunner: public IScenarioRunner {
+	friend class ScenarioRunnerFactory;
 public:
-    MergeRunner();
     ~MergeRunner();
     bool setupScenario( Timer& timer, const std::string aName, const std::list<std::string> aScenComponents = std::list<std::string>() );
-    bool runScenario( Timer& timer );
+    virtual bool runScenario( const int aSinglePeriod, Timer& aTimer );
     void printOutput( Timer& timer, const bool aCloseDB = true ) const;
+	Scenario* getInternalScenario();
+	virtual const Scenario* getInternalScenario() const;
+
 protected:
-    std::auto_ptr<Scenario> mScenario;
+    MergeRunner();
+	static const std::string& getXMLNameStatic();
+    
+	//! The internal scenario.
+	std::auto_ptr<Scenario> mScenario;
     };
 #endif // _MERGE_RUNNER_H_

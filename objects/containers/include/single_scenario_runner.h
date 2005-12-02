@@ -15,7 +15,7 @@
 
 #include <memory>
 #include <list>
-#include "containers/include/scenario_runner.h"
+#include "containers/include/iscenario_runner.h"
 
 class Timer;
 class Scenario;
@@ -28,15 +28,19 @@ class Scenario;
 * or set of variables. A scenario runner must inherit the run function. 
 * \author Josh Lurz
 */
-class SingleScenarioRunner: public ScenarioRunner {
+class SingleScenarioRunner: public IScenarioRunner {
+	friend class ScenarioRunnerFactory;
 public:
-    SingleScenarioRunner();
     virtual ~SingleScenarioRunner();
     virtual bool setupScenario( Timer& timer, const std::string aName = "",
 		                        const std::list<std::string> aScenComponents = std::list<std::string>() );
-    virtual bool runScenario( Timer& timer );
+    virtual bool runScenario( const int aSinglePeriod, Timer& aTimer );
     virtual void printOutput( Timer& timer, const bool aCloseDB = true ) const;
-protected:
+	virtual Scenario* getInternalScenario();
+	virtual const Scenario* getInternalScenario() const;
+protected:    
+	SingleScenarioRunner();
+	static const std::string& getXMLNameStatic();
 	//! The scenario which will be run.
     std::auto_ptr<Scenario> mScenario;
     };

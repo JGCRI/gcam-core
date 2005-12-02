@@ -375,12 +375,11 @@ void RegionCGE::updateAllOutputContainers( const int period ) {
 	}
 }
 
-void RegionCGE::csvSGMGenFile( ostream& aFile, const int aPeriod ) const {
-/*
-	// write to SGM general output. Why isn't this part of the vector?
-	auto_ptr<OutputContainer> generalOutput( new SGMGenTable( "GENERAL", "General", modeltime ) );
-    aFile << "******** Region: " << name << " ********" << endl;
-	*/
+/*! \brief General SGM output is called at end of model run and includes all
+*          periods.
+* \param aFile Output file.
+*/
+void RegionCGE::csvSGMGenFile( ostream& aFile ) const {
 	// print out all tables
 	for( unsigned int i = 0; i < outputContainers.size(); i++) {
 		outputContainers[ i ]->output( aFile, 0 );

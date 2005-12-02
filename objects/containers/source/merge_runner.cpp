@@ -19,10 +19,8 @@
 using namespace std;
 using namespace xercesc;
 
-extern Scenario* scenario;
-
 //! Constructor
-MergeRunner::MergeRunner(){
+MergeRunner::MergeRunner(): mScenario( new Scenario ){
 }
 
 //! Destructor
@@ -31,10 +29,6 @@ MergeRunner::~MergeRunner(){
 
 //! Setup the scenario.
 bool MergeRunner::setupScenario( Timer& timer, const string aName, const list<string> aScenComponents ){
-    // Use a smart pointer for scenario so that if the main program exits before the end the memory is freed correctly. 
-    mScenario.reset( new Scenario() );
-    scenario = mScenario.get(); // Need to set the global pointer.
-    
     // Parse the input file.
     const Configuration* conf = Configuration::getInstance();
     XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
@@ -68,11 +62,13 @@ bool MergeRunner::setupScenario( Timer& timer, const string aName, const list<st
     return true;
 }
 /*! \brief Does nothing, needed for interface.
+* \param aSinglePeriod This parameter is ignored.
+* \param aTimer This parameter is ignored.
 * \return Always returns true.
 * \author Josh Lurz
 */
 
-bool MergeRunner::runScenario( Timer& timer ){
+bool MergeRunner::runScenario( const int aSinglePeriod, Timer& aTimer ){
     return true;
 }
 
@@ -89,4 +85,24 @@ void MergeRunner::printOutput( Timer& timer, const bool aCloseDB ) const {
 
     // Close the output file. 
     xmlOut.close();
+}
+
+/*! \brief Get the internal scenario.
+ \return The internal scenario.
+*/
+Scenario* MergeRunner::getInternalScenario(){
+	return mScenario.get();
+}
+
+/*! \brief Get the internal scenario.
+* \return Constant pointer to the internal scenario.
+*/
+const Scenario* MergeRunner::getInternalScenario() const {
+	return mScenario.get();
+}
+
+//! FIX FIX
+const string& MergeRunner::getXMLNameStatic(){
+	static const string XML_NAME = "merge-runner";
+	return XML_NAME;
 }
