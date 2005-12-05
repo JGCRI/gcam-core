@@ -32,6 +32,7 @@ class Curve;
 class TotalPolicyCostCalculator {
 public:
     explicit TotalPolicyCostCalculator( IScenarioRunner* aSingleScenario );
+    ~TotalPolicyCostCalculator();
     bool calculateAbatementCostCurve();
     void printOutput() const;
 private:
