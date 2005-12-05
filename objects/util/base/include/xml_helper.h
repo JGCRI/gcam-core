@@ -754,7 +754,7 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
             // Perform deletion.
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Deleting node: " << XMLHelper<string>::getAttrString( aNode, aAttrName ) << std::endl;
+            mainLog << "Deleting node: " << XMLHelper<std::string>::getAttrString( aNode, aAttrName ) << std::endl;
             aContainer.reset( 0 );
         }
         // Otherwise modify node. 
@@ -767,13 +767,13 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
         if( shouldDelete ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Could not delete node " << XMLHelper<string>::getAttrString( aNode, aAttrName )
+            mainLog << "Could not delete node " << XMLHelper<std::string>::getAttrString( aNode, aAttrName )
                     << " as it does not exist." << std::endl;
         } 
         else if( XMLHelper<bool>::getAttr( aNode, "nocreate" ) ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
-            mainLog << "Did not create node " << XMLHelper<string>::getAttrString( aNode, aAttrName )
+            mainLog << "Did not create node " << XMLHelper<std::string>::getAttrString( aNode, aAttrName )
                     << " as the nocreate input flag was set." << std::endl;
         }
         else {
