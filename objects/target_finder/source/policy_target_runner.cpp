@@ -189,33 +189,40 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
         return false;
     }
 
-    bool success = true;
+    // Run the model without a tax target once to get a baseline for the
+    // bisecter and to calculate the initial non-tax periods.
+    bool success = mSingleScenario->runScenario( Scenario::RUN_ALL_PERIODS, aTimer );
+
     const Modeltime* modeltime = getInternalScenario()->getModeltime();
     const unsigned int targetPeriod = modeltime->getyr_to_per( mTargetYear );
     // Create the bisection object. Use 0 as the initial trial value because the
-    // state of the model is unknown.
+    // state of the model is unknown. TODO: Can we do better?
     auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), aTolerance, 0, targetPeriod ) );
-    bool isFirstTime = true;
     while( bisecter->getIterations() < aLimitIterations ){
-        // Let the model run once before setting a target.
-        if( isFirstTime ){
-            isFirstTime = false;
-        }
-        else {
-            pair<double, bool> trial = bisecter->getNextValue();
+        pair<double, bool> trial = bisecter->getNextValue();
 
-            // Check for solution.
-            if( trial.second ){
-                break;
+        // Check for solution.
+        if( trial.second ){
+            break;
+        }
+
+        // Set the trial tax.
+        mCurrentTaxes = calculateHotellingPath( trial.first );
+        setTrialTaxes( mPolicyTarget->getTaxName(), mCurrentTaxes );
+
+        // Run the scenario for each period with a positive tax. These are
+        // periods which will have changed from the previous iteration of the
+        // model. Only calculating these periods ensures that initial periods
+        // are not recalculated unnecessarily. If there was a case where there
+        // was a period with a tax of zero between two periods with taxes, the
+        // scenario will ensure that it is recalculated because it would be
+        // invalid. This also assumes that a period cannot change from a
+        // positive tax to a tax of absolute zero.
+        for( int period = 0; period < modeltime->getmaxper(); ++period ){
+            if( mCurrentTaxes[ period ] > 0 ){
+                success &= mSingleScenario->runScenario( period, aTimer );
             }
-
-            // Set the trial tax.
-            mCurrentTaxes = calculateHotellingPath( trial.first );
-            setTrialTaxes( mPolicyTarget->getTaxName(), mCurrentTaxes );
         }
-
-        // Run the base scenario.
-        success = mSingleScenario->runScenario( Scenario::RUN_ALL_PERIODS, aTimer );
     }
 
     if( bisecter->getIterations() >= aLimitIterations ){
