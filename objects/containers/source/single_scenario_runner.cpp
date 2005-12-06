@@ -86,6 +86,11 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
     timer.stop();
     mainLog.setLevel( ILogger::DEBUG );
     timer.print( mainLog, "XML Readin Time:" );
+
+    // Finish initialization.
+    if( mScenario.get() ){
+        mScenario->completeInit();
+    }
     return true;
 }
 
@@ -96,18 +101,15 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
 * \param aTimer The timer used to print out the amount of time spent performing
 *        operations.
 */
-bool SingleScenarioRunner::runScenario( const int aSingleScenario, Timer& aTimer ){
+bool SingleScenarioRunner::runScenario( const int aSinglePeriod, Timer& aTimer ){
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Starting a model run." << endl;
     
 	bool success = false;
 	if( mScenario.get() ){
-		// Finish initialization.
-		mScenario->completeInit();
-
 		// Perform the initial run of the scenario.
-        success = mScenario->run( aSingleScenario, true );
+        success = mScenario->run( aSinglePeriod, true );
 
 		// Compute model run time.
 		aTimer.stop();
