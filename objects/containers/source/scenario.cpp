@@ -254,7 +254,7 @@ bool Scenario::run( const int aSinglePeriod,
     else {
         // Run all periods up to the single period which are invalid.
         for( int per = 0; per < aSinglePeriod; per++ ){
-            if( mIsValidPeriod[ per ] ){
+            if( !mIsValidPeriod[ per ] ){
                 success &= calculatePeriod( per, XMLDebugFile, SGMDebugFile, &tabs, aPrintDebugging );
             }
         }
