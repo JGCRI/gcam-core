@@ -194,13 +194,6 @@ void Market::addRegion( const string& aRegion ) {
 		// Add the region ID.
 		mContainedRegions.push_back( regionID );
 	}
-	else {
-		// Warn the user that the market was not added. This may signal a bug in
-        // the calling code.
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::DEBUG );
-		mainLog << "Duplicate region " << aRegion << " was not added to market " << mName << "." << endl;
-	}
 }
 
 /*! \brief Get the IDs of all regions contained by this market.
