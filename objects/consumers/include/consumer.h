@@ -6,7 +6,7 @@
 
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -34,7 +34,7 @@ class NationalAccount;
 class Demographic;
 class Tabs;
 class MoreSectorInfo;
-class OutputContainer;
+class IVisitor;
 class IExpectedProfitRateCalculator;
 /*! 
 * \ingroup Objects
@@ -72,8 +72,7 @@ public:
     virtual void finalizePeriod( const std::string& aRegionName, const std::string& aSectorName, 
                                  const int aPeriod ){} // do nothing for now.
     virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
-	virtual void updateOutputContainer( OutputContainer* outputContainer, 
-		const std::string& aRegionName, const std::string& aSectorName, const int aPeriod ) const;
+	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
     // Consumer should be contained directly in Subsector and then all these functions could be removed.
     double getExpectedProfitRate( const NationalAccount& aNationalAccount,

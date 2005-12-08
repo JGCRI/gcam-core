@@ -9,11 +9,12 @@
 * \ingroup Objects
 * \brief The IClimateModel interface header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
+#include "util/base/include/ivisitable.h"
+class IVisitor;
+
 /*! 
 * \ingroup Objects
 * \brief An interface to a climate calculation model.
@@ -24,11 +25,9 @@
 *        interface must be able to accept emissions by gas and print output to a
 *        database and CSV file. This output must include CO2 concentrations.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
-class IClimateModel {
+class IClimateModel: public IVisitable {
 public:
 	//! Constructor.
     inline IClimateModel();
@@ -132,6 +131,14 @@ public:
 	* \pre The model must be run before output can be written.
     */
     virtual void printDBOutput() const = 0;
+
+    /*! \brief Update a visitor with information from the climate model.
+    * \param aVisitor Vistor to update.
+    * \param aPeriod Period for which to perform the update, -1 means all
+    *        periods.
+    * \pre The model must be run before the update can occur.
+    */
+	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
 };
 
 // Inline definitions to avoid compiler warnings and errors.

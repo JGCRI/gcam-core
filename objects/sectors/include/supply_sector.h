@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The SupplySector class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 #include <string>
 #include "sectors/include/sector.h"
@@ -43,7 +41,6 @@ public:
 protected:
     virtual void setMarket();
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
-    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
 	virtual const std::string& getXMLName() const;

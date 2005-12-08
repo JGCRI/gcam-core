@@ -1,6 +1,6 @@
 /*
 This software, which is provided in confidence, was prepared by employees
-of Pacific Northwest National Labratory operated by Battelle Memorial
+of Pacific Northwest National Laboratory operated by Battelle Memorial
 Institute. Battelle has certain unperfected rights in the software
 which should not be copied or otherwise disseminated outside your
 organization without the express written authorization from Battelle. All rights to
@@ -15,8 +15,6 @@ use of this software.
 * \brief The Input class source file.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -30,7 +28,7 @@ use of this software.
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/iinfo.h"
@@ -52,39 +50,39 @@ Input::~Input() {}
 
 //! Parse the Input's XML.
 void Input::XMLParse( const xercesc::DOMNode* node ) {
-	/*! \pre make sure we were passed a valid node. */
-	assert( node );
+    /*! \pre make sure we were passed a valid node. */
+    assert( node );
 
-	// get the name attribute.
-	mName = XMLHelper<string>::getAttrString( node, "name" );
+    // get the name attribute.
+    mName = XMLHelper<string>::getAttrString( node, "name" );
 
-	// get all child nodes.
-	const DOMNodeList* nodeList = node->getChildNodes();
+    // get all child nodes.
+    const DOMNodeList* nodeList = node->getChildNodes();
 
-	// loop through the child nodes.
-	for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-		const DOMNode* curr = nodeList->item( i );
+    // loop through the child nodes.
+    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
+        const DOMNode* curr = nodeList->item( i );
         if( curr->getNodeType() == DOMNode::TEXT_NODE ){
             continue;
         }
-		const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-		if ( nodeName == "coefficient" ) {
-			mCoefficient.init( XMLHelper<double>::getValue( curr ) );
-		}
-		else if( nodeName == "demandCurrency" ) {
-			mDemandCurrency.init( XMLHelper<double>::getValue( curr ) );
-		}
-		else if( nodeName == "priceAdjustFactor" ) {
-			mPriceAdjustFactor.init( XMLHelper<double>::getValue( curr ) );
-		}
-		else if( nodeName == "technicalChange" ) {
-			mTechnicalChange.init( XMLHelper<double>::getValue( curr ) );
-		}
+        if ( nodeName == "coefficient" ) {
+            mCoefficient.init( XMLHelper<double>::getValue( curr ) );
+        }
+        else if( nodeName == "demandCurrency" ) {
+            mDemandCurrency.init( XMLHelper<double>::getValue( curr ) );
+        }
+        else if( nodeName == "priceAdjustFactor" ) {
+            mPriceAdjustFactor.init( XMLHelper<double>::getValue( curr ) );
+        }
+        else if( nodeName == "technicalChange" ) {
+            mTechnicalChange.init( XMLHelper<double>::getValue( curr ) );
+        }
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
             cout << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
-		}
-	}
+        }
+    }
 }
 
 void Input::completeInit(){
@@ -99,8 +97,8 @@ void Input::completeInit(){
 
 void Input::copyParam( const Input* aInput ){
     // Name must be already defined.
-	mCoefficient.set( aInput->mCoefficient );
-	mPricePaid.set( aInput->mPricePaid );
+    mCoefficient.set( aInput->mCoefficient );
+    mPricePaid.set( aInput->mPricePaid );
     
     // Parameters which should not get copied forward if they didn't exist.
     mDemandCurrency.init( aInput->mDemandCurrency );
@@ -110,41 +108,41 @@ void Input::copyParam( const Input* aInput ){
 
 //! Output to XML data
 void Input::toInputXML( ostream& out, Tabs* tabs ) const {
-	// write the beginning tag.
-	XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
+    // write the beginning tag.
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
 
-	XMLWriteElement( mCoefficient, "coefficient", out, tabs );
-	XMLWriteElement( mDemandCurrency, "demandCurrency", out, tabs );
-	XMLWriteElement( mConversionFactor, "conversionFactor", out, tabs );
-	XMLWriteElement( mPriceAdjustFactor, "priceAdjustFactor", out, tabs );
+    XMLWriteElement( mCoefficient, "coefficient", out, tabs );
+    XMLWriteElement( mDemandCurrency, "demandCurrency", out, tabs );
+    XMLWriteElement( mConversionFactor, "conversionFactor", out, tabs );
+    XMLWriteElement( mPriceAdjustFactor, "priceAdjustFactor", out, tabs );
 
-	toInputXMLDerived( out, tabs );
+    toInputXMLDerived( out, tabs );
 
-	// write the closing tag.
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    // write the closing tag.
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Output debug info to XML
 void Input::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-	// Same as toXML...
-	// write the beginning tag.
-	XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
+    // Same as toXML...
+    // write the beginning tag.
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
 
-	XMLWriteElement( mCoefficient, "coefficient", out, tabs );
-	XMLWriteElement( mDemandCurrency, "demandCurrency", out, tabs );
-	XMLWriteElement( mPricePaid, "pricePaid", out, tabs );
-	XMLWriteElement( mConversionFactor, "conversionFactor", out, tabs );
-	XMLWriteElement( mPriceAdjustFactor, "priceAdjustFactor", out, tabs );
+    XMLWriteElement( mCoefficient, "coefficient", out, tabs );
+    XMLWriteElement( mDemandCurrency, "demandCurrency", out, tabs );
+    XMLWriteElement( mPricePaid, "pricePaid", out, tabs );
+    XMLWriteElement( mConversionFactor, "conversionFactor", out, tabs );
+    XMLWriteElement( mPriceAdjustFactor, "priceAdjustFactor", out, tabs );
 
-	toDebugXMLDerived( period, out, tabs );
+    toDebugXMLDerived( period, out, tabs );
 
-	// write the closing tag.
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    // write the closing tag.
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Get the name of the Input
 const string& Input::getName() const {
-	return mName;
+    return mName;
 }
 
 /*! \brief Get the currency to physical conversion factor for the input.
@@ -169,12 +167,12 @@ double Input::getConversionFactor( const string& aRegionName ) const {
         }
         else {
             // Get the conversion factor from the marketplace.
-		    const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, 0, true );
-		    const double convFactor = marketInfo->getDouble( "ConversionFactor", false );
-		    if( convFactor == 0 && isInputEnergyGood( mName, aRegionName ) ){
-			    ILogger& mainLog = ILogger::getLogger( "main_log" );
-			    mainLog.setLevel( ILogger::WARNING );
-			    mainLog << "Conversion factor of zero for energy input " << mName << "." << endl;
+            const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, 0, true );
+            const double convFactor = marketInfo->getDouble( "ConversionFactor", false );
+            if( convFactor == 0 && isInputEnergyGood( mName, aRegionName ) ){
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Conversion factor of zero for energy input " << mName << "." << endl;
             }
             mConversionFactor.init( convFactor );
         }
@@ -206,11 +204,11 @@ double Input::getGHGCoefficient( const string& aGHGName, const string& aRegionNa
     // marketplace every time.
     if( !mGHGCoefficient.isInited() ){
         // Get the coefficient from the marketplace.
-		const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, 0, false );
-		double coef = 0;
-		if( marketInfo ){
-			coef = marketInfo->getDouble( aGHGName + COEF_STRING, false );
-		}
+        const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, 0, false );
+        double coef = 0;
+        if( marketInfo ){
+            coef = marketInfo->getDouble( aGHGName + COEF_STRING, false );
+        }
         mGHGCoefficient.init( coef );
     }
     return mGHGCoefficient;
@@ -231,7 +229,7 @@ double Input::getDemandPhysical( const string& aRegionName ) const {
 
 //! Get the Currency Demand
 double Input::getDemandCurrency() const {
-	return mDemandCurrency;
+    return mDemandCurrency;
 }
 
 /*! \brief Get the technical change which should be applied to the input.
@@ -257,11 +255,11 @@ double Input::getDemandCurrency() const {
 double Input::getTechChange( double aEnergyTechChange, double aMaterialTechChange,
                              const string& aRegionName ) const
 {
-	// First check if technical change was directly read in.
+    // First check if technical change was directly read in.
     if( mTechnicalChange.isInited() && mTechnicalChange > 0 ) {
-		return mTechnicalChange;
-	}
-	
+        return mTechnicalChange;
+    }
+    
     // Otherwise check if we should use an energy or material tech change.
     switch( getType( aRegionName ) ){
         case( ENERGY ):
@@ -276,7 +274,7 @@ double Input::getTechChange( double aEnergyTechChange, double aMaterialTechChang
 //! Set Currency Demand.
 void Input::setDemandCurrency( double aDemandCurrency, const string& aRegionName,
                                const string& aSectorName, int aPeriod )  {
-	mDemandCurrency.set( aDemandCurrency );
+    mDemandCurrency.set( aDemandCurrency );
     Marketplace* marketplace = scenario->getMarketplace();
     /* Removing this check becuase it is activated by trade and the government. 
     if( aDemandCurrency < 0 ){
@@ -284,18 +282,18 @@ void Input::setDemandCurrency( double aDemandCurrency, const string& aRegionName
              << " from " << aSectorName << " in " << aRegionName << "." <<endl;
     }
     */
-	marketplace->addToDemand( mName, aRegionName, mDemandCurrency, aPeriod );
+    marketplace->addToDemand( mName, aRegionName, mDemandCurrency, aPeriod );
 }
 
 //! Function to get the input-output coefficient
 double Input::getCoefficient() const {
-	return mCoefficient;
+    return mCoefficient;
 }
 
 //! Virtual function to scale the coefficient
 void Input::scaleCoefficient( double aScaleValue ) {
     assert( aScaleValue != 0 ); // cant scale coefs to zero.
-	mCoefficient.set( mCoefficient * aScaleValue );
+    mCoefficient.set( mCoefficient * aScaleValue );
 }
 
 /*! Set Coefficient
@@ -305,7 +303,7 @@ void Input::scaleCoefficient( double aScaleValue ) {
  */
 void Input::setCoefficient( double aCoef ) {
     assert( aCoef != 0 ); // Can't set coefficients to zero.
-	mCoefficient.set( aCoef );
+    mCoefficient.set( aCoef );
 }
 
 /*! \brief Return the market price, or unadjusted price, for the input.
@@ -323,7 +321,7 @@ double Input::getPrice( const string& aRegionName, const int aPeriod ) const {
 * \author Sonny Kim
 */
 double Input::getPricePaid() const{
-	return mPricePaid;
+    return mPricePaid;
 }
 /*! \brief Set the price paid for each input.
 *
@@ -331,7 +329,7 @@ double Input::getPricePaid() const{
 * \author Sonny Kim
 */
 void Input::setPricePaid( double aPricePaid ) {
-	mPricePaid.set( aPricePaid );
+    mPricePaid.set( aPricePaid );
 }
 /*! \brief Returns the price received for an input.
 * \details Queries the marketplace and get the price received from the market info.
@@ -341,7 +339,7 @@ void Input::setPricePaid( double aPricePaid ) {
 * \author Josh Lurz
 */
 double Input::getPriceReceived( const string& aRegionName, const int aPeriod ) const {
-	return FunctionUtils::getPriceReceived( aRegionName, mName, aPeriod );
+    return FunctionUtils::getPriceReceived( aRegionName, mName, aPeriod );
 }
 
 /*! \brief Returns the price adjustment.
@@ -395,12 +393,12 @@ bool Input::isInputEnergyGood( const string& aInputName, const string& aRegionNa
     assert( !aInputName.empty() && !aRegionName.empty() );
     assert( aInputName != "USA" );
 
-	const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
+    const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
                                                                               aRegionName,
                                                                               0, true );
 
-	// Assume that goods without markets are not energy goods.
-	return inputMarketInfo ? inputMarketInfo->getBoolean( "IsEnergyGood", true ) : false;
+    // Assume that goods without markets are not energy goods.
+    return inputMarketInfo ? inputMarketInfo->getBoolean( "IsEnergyGood", true ) : false;
 }
 
 /*! \brief Static function which returns whether a given input name is a primary
@@ -412,13 +410,13 @@ bool Input::isInputEnergyGood( const string& aInputName, const string& aRegionNa
 bool Input::isInputPrimaryEnergyGood( const string& aInputName, const string& aRegionName ){
     assert( !aInputName.empty() && !aRegionName.empty() );
     assert( aInputName != "USA" );
-	// This is called by GHG to determine if the technology is a primary good producer. Since consumers
+    // This is called by GHG to determine if the technology is a primary good producer. Since consumers
     // also call this, and they do not have markets, this cannot ensure the market exists.
-	const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
+    const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
                                                                               aRegionName,
                                                                               0, false );
-	// If it doesn't have a market it can't be a primary energy good.
-	return inputMarketInfo ? inputMarketInfo->getBoolean( "IsPrimaryEnergyGood", true ) : false;
+    // If it doesn't have a market it can't be a primary energy good.
+    return inputMarketInfo ? inputMarketInfo->getBoolean( "IsPrimaryEnergyGood", true ) : false;
 }  
 
 /*! \brief Static function which returns whether a given input name is a secondary
@@ -431,11 +429,11 @@ bool Input::isInputSecondaryEnergyGood( const string& aInputName, const string& 
     assert( !aInputName.empty() && !aRegionName.empty() );
     assert( aInputName != "USA" );
 
-	const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
+    const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
                                                                               aRegionName,
                                                                               0, true );
-	// If it doesn't have a market it can't be a secondary energy good.
-	return inputMarketInfo ? inputMarketInfo->getBoolean( "IsSecondaryEnergyGood", true ) : false;
+    // If it doesn't have a market it can't be a secondary energy good.
+    return inputMarketInfo ? inputMarketInfo->getBoolean( "IsSecondaryEnergyGood", true ) : false;
 }
 
 /*! \brief Static function which returns the conversion factor for the good
@@ -448,10 +446,10 @@ double Input::getMarketConversionFactor( const string& aInputName, const string&
     assert( !aInputName.empty() && !aRegionName.empty() );
     assert( aInputName != "USA" );
 
-	const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
+    const IInfo* inputMarketInfo = scenario->getMarketplace()->getMarketInfo( aInputName,
                                                                               aRegionName,
                                                                               0, true );
-	return inputMarketInfo ? inputMarketInfo->getDouble( "ConversionFactor", true ) : 0;
+    return inputMarketInfo ? inputMarketInfo->getDouble( "ConversionFactor", true ) : 0;
 }
 
 /*! \brief For outputing SGM data to a flat csv File
@@ -460,13 +458,13 @@ double Input::getMarketConversionFactor( const string& aInputName, const string&
  * \param period The period which we are outputing for
  */
 void Input::csvSGMOutputFile( ostream& aFile, const int period ) const {
-	aFile << mName << ',';
-	aFile.precision(0);
-	aFile << mDemandCurrency << ',';
-	aFile.precision(3);
-	aFile << mPricePaid << endl;
+    aFile << mName << ',';
+    aFile.precision(0);
+    aFile << mDemandCurrency << ',';
+    aFile.precision(3);
+    aFile << mPricePaid << endl;
 }
 
-void Input::updateOutputContainer( OutputContainer* outputContainer, const int period ) const {
-	outputContainer->updateInput( this );
+void Input::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->updateInput( this );
 }

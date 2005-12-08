@@ -96,13 +96,6 @@ void TranTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( mTechnicalChange, "techchange", out, tabs, 0.0 );
 }	
 
-//! XML output for viewing.
-void TranTechnology::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElementCheckDefault( intensity, "intensity", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( loadFactor, "loadFactor", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( mTechnicalChange, "techchange", out, tabs, 0.0 );
-}
-
 //! Write object to debugging xml output stream.
 void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 
     XMLWriteElement( intensity, "intensity", out, tabs );

@@ -3,20 +3,16 @@
 * \ingroup Objects
 * \brief Sector class source file.
 * \author Sonny Kim, Steve Smith, Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 #include <fstream>
 #include <cassert>
+#include <algorithm>
 
 // xml headers
-#include <iostream>
-#include <iomanip>
-#include <algorithm>
+
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
@@ -36,7 +32,7 @@
 #include "containers/include/info_factory.h"
 #include "util/logger/include/logger.h"
 #include "containers/include/national_account.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 #include "reporting/include/sector_report.h"
 #include "containers/include/iinfo.h"
 
@@ -139,7 +135,7 @@ void Sector::XMLParse( const DOMNode* node ){
             moreSectorInfo.reset( new MoreSectorInfo() );
             moreSectorInfo->XMLParse( curr );
         }
-		else if( nodeName == Subsector::getXMLNameStatic() ){
+        else if( nodeName == Subsector::getXMLNameStatic() ){
             parseContainerNode( curr, subsec, subSectorNameMap, new Subsector( regionName, name ) );
         }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
@@ -163,7 +159,7 @@ void Sector::XMLParse( const DOMNode* node ){
 */
 void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder ) {
     // Allocate the sector info.
-	mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo ) );
+    mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo ) );
 
     // Complete the subsector initializations. 
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
@@ -182,7 +178,7 @@ void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinde
 void Sector::toInputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 
-	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
 
@@ -200,50 +196,14 @@ void Sector::toInputXML( ostream& out, Tabs* tabs ) const {
     if( moreSectorInfo.get() ){
         moreSectorInfo->toInputXML( out, tabs );
     }
-	
+    
     // write out the subsector objects.
     for( CSubsectorIterator k = subsec.begin(); k != subsec.end(); k++ ){
         ( *k )->toInputXML( out, tabs );
     }
 
-	// finished writing xml for the class members.
-	XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-
-/*! \brief Write output (selected output?) from this object to XML
-*
-* I don't know how this is different from the previous method.....
-*
-* \author Josh Lurz
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs.
-* \todo josh to update documentation on this method ..
-*/
-void Sector::toOutputXML( ostream& out, Tabs* tabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-
-	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
-
-    // write the xml for the class members.
-    for( unsigned int i = 0; i < sectorprice.size(); ++i ){
-        XMLWriteElement( sectorprice[ i ], "price", out, tabs, modeltime->getper_to_yr( i ) );
-    }
-
-    for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        XMLWriteElement( getOutput( i ), "output", out, tabs, modeltime->getper_to_yr( i ) );
-    }
-
-    // write out variables for derived classes
-    toOutputXMLDerived( out, tabs );
-
-	// write out the subsector objects.
-    for( CSubsectorIterator k = subsec.begin(); k != subsec.end(); k++ ){
-        ( *k )->toInputXML( out, tabs );
-    }
-
     // finished writing xml for the class members.
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Write information useful for debugging to XML output stream
@@ -257,7 +217,7 @@ void Sector::toOutputXML( ostream& out, Tabs* tabs ) const {
 */
 void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
     // Write out the data in the vectors for the current period.
@@ -265,12 +225,12 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( getInput( period ), "input", out, tabs );
     XMLWriteElement( getOutput( period ), "output", out, tabs );
 
-	toDebugXMLDerived (period, out, tabs);
+    toDebugXMLDerived (period, out, tabs);
     
     if( moreSectorInfo.get() ){
         moreSectorInfo->toDebugXML( period, out, tabs );
     }
-	// Write out the summary
+    // Write out the summary
     // summary[ period ].toDebugXML( period, out );
 
     // write out the subsector objects.
@@ -280,7 +240,7 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     // finished writing xml for the class members.
 
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -301,27 +261,27 @@ void Sector::initCalc( NationalAccount& aNationalAccount,
     normalizeShareWeights( aPeriod );
 
     Marketplace* marketplace = scenario->getMarketplace();
-   	// retained earnings parameter calculation
-	// for base year only, better in completeInit but NationalAccount not accessible.
+    // retained earnings parameter calculation
+    // for base year only, better in completeInit but NationalAccount not accessible.
     // TODO: Move this to SGM sectors only.
-	if ( aPeriod == 0 && moreSectorInfo.get() ) {
-		double corpIncTaxRate = aNationalAccount.getAccountValue(NationalAccount::CORPORATE_INCOME_TAX_RATE);
-		double totalRetEarnings = aNationalAccount.getAccountValue(NationalAccount::RETAINED_EARNINGS);
-		double totalProfits2 = aNationalAccount.getAccountValue(NationalAccount::CORPORATE_PROFITS);
-		double totalProfits = marketplace->getDemand("Capital", regionName, aPeriod);
-		// Set retained earnings to zero by setting MAX_CORP_RET_EARNINGS_RATE
-		// to 0. This is for the technology sectors, like the transportation
+    if ( aPeriod == 0 && moreSectorInfo.get() ) {
+        double corpIncTaxRate = aNationalAccount.getAccountValue(NationalAccount::CORPORATE_INCOME_TAX_RATE);
+        double totalRetEarnings = aNationalAccount.getAccountValue(NationalAccount::RETAINED_EARNINGS);
+        double totalProfits2 = aNationalAccount.getAccountValue(NationalAccount::CORPORATE_PROFITS);
+        double totalProfits = marketplace->getDemand("Capital", regionName, aPeriod);
+        // Set retained earnings to zero by setting MAX_CORP_RET_EARNINGS_RATE
+        // to 0. This is for the technology sectors, like the transportation
         // vehicle sectors. All of the profits goes to dividends and there are
-		// no retained earnings.
-		// SHK  4/21/2005
-		double retEarnParam = 0;
-		if( moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE) != 0 ) {
-			retEarnParam = log( 1 - (totalRetEarnings/(totalProfits*moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE)
-				*(1 - corpIncTaxRate)))) / marketplace->getPrice("Capital", regionName, aPeriod );
-		}
-		moreSectorInfo->setType(MoreSectorInfo::RET_EARNINGS_PARAM, retEarnParam);
-		moreSectorInfo->setType(MoreSectorInfo::CORP_INCOME_TAX_RATE, corpIncTaxRate);
-	}
+        // no retained earnings.
+        // SHK  4/21/2005
+        double retEarnParam = 0;
+        if( moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE) != 0 ) {
+            retEarnParam = log( 1 - (totalRetEarnings/(totalProfits*moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE)
+                *(1 - corpIncTaxRate)))) / marketplace->getPrice("Capital", regionName, aPeriod );
+        }
+        moreSectorInfo->setType(MoreSectorInfo::RET_EARNINGS_PARAM, retEarnParam);
+        moreSectorInfo->setType(MoreSectorInfo::CORP_INCOME_TAX_RATE, corpIncTaxRate);
+    }
 
     // do any sub-Sector initializations
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
@@ -414,7 +374,7 @@ void Sector::normalizeShareWeights( const int period ) {
 * \param printWarnings if true prints a warning
 * \return Boolean true if calibration is ok.
 */
-bool Sector::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {	
+bool Sector::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {  
    const bool PRINT_DETAILS = false; // toggle for more detailed debugging output
         
    bool checkCalResult = true; 
@@ -479,30 +439,30 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
     
     double sum = 0;
     double fixedSum = 0;
-	 
+     
     // first loop through all subsectors to get the appropriate sums
     for ( unsigned int i = 0; i < subsec.size(); i++ ) {
-		// calculate subsector shares (based on technology shares)
-		subsec[ i ]->calcShare( period, gdp );
+        // calculate subsector shares (based on technology shares)
+        subsec[ i ]->calcShare( period, gdp );
 
-		// sum fixed capacity separately, but don't bother with the extra code if this Sector has none
-		// Calculation re-ordered to eliminate subtraction of fixed share from sum which eliminated 
-		// a share <> 1 warning when initial (non-fixed) sum was extremely small (2/04 - sjs)
-		double fixedShare = 0;
-		if ( anyFixedCapacity ) {
-			fixedShare = getFixedShare( i , period );
-			fixedSum += fixedShare; // keep track of total fixed shares
-		}
+        // sum fixed capacity separately, but don't bother with the extra code if this Sector has none
+        // Calculation re-ordered to eliminate subtraction of fixed share from sum which eliminated 
+        // a share <> 1 warning when initial (non-fixed) sum was extremely small (2/04 - sjs)
+        double fixedShare = 0;
+        if ( anyFixedCapacity ) {
+            fixedShare = getFixedShare( i , period );
+            fixedSum += fixedShare; // keep track of total fixed shares
+        }
 
-		// Sum shares that are not fixed
-		if ( fixedShare < util::getTinyNumber() ) {
-			/*! \invariant Variable subsector shares must always be valid. */
-			assert( util::isValidNumber( subsec[ i ]->getShare( period ) ) );
-			sum += subsec[ i ]->getShare( period );
-		}
-		
-		// initialize cap limit status as false for this sector (will be changed in adjSharesCapLimit if necessary)
-		subsec[ i ]->setCapLimitStatus( false , period );
+        // Sum shares that are not fixed
+        if ( fixedShare < util::getTinyNumber() ) {
+            /*! \invariant Variable subsector shares must always be valid. */
+            assert( util::isValidNumber( subsec[ i ]->getShare( period ) ) );
+            sum += subsec[ i ]->getShare( period );
+        }
+        
+        // initialize cap limit status as false for this sector (will be changed in adjSharesCapLimit if necessary)
+        subsec[ i ]->setCapLimitStatus( false , period );
     }
 
     // Take care of case where fixed share is > 1
@@ -514,17 +474,17 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
 
     // Now normalize shares
     for ( unsigned int i = 0; i < subsec.size(); i++ ) {
-		if ( subsec[ i ]->getFixedOutput( period ) == 0 ) {
-			// normalize subsector shares that are not fixed
-			if ( fixedSum < 1 ) {
-	 			subsec[ i ]->normShare( sum / ( 1 - fixedSum ) , period );	
-			} else {
-				subsec[ i ]->normShare( sum / util::getTinyNumber() , period );	// if all fixed supply, eliminate other shares
+        if ( subsec[ i ]->getFixedOutput( period ) == 0 ) {
+            // normalize subsector shares that are not fixed
+            if ( fixedSum < 1 ) {
+                subsec[ i ]->normShare( sum / ( 1 - fixedSum ) , period );  
+            } else {
+                subsec[ i ]->normShare( sum / util::getTinyNumber() , period ); // if all fixed supply, eliminate other shares
                 // Could this overflow if sum was large?-JPL
-			}
+            }
 
-		// reset share of sectors with fixed supply to their appropriate value
-		} else {
+        // reset share of sectors with fixed supply to their appropriate value
+        } else {
             double fixedShare = getFixedShare( i , period ) * scaleFixedShare;
             double currentShare = subsec[ i ]->getFixedShare( period );
             
@@ -533,7 +493,7 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
                 subsec[ i ]->scaleFixedOutput( fixedShare/currentShare, period ); 
             }
             subsec[ i ]->setShareToFixedValue( period );
-		}
+        }
     }
 
     // Now adjust for capacity limits
@@ -582,8 +542,8 @@ void Sector::adjSharesCapLimit( const int period ) {
     // Do this a maximum of times equal to number of subsectors, 
     // which is the maximum number of times could possibly need to do this
     for ( unsigned int n = 0; n < subsec.size() && capLimited; n++ ) {
-        double sumSharesOverLimit = 0.0;		// portion of shares over cap limits
-        double sumSharesNotLimited = 0.0;	// sum of shares not subject to cap limits
+        double sumSharesOverLimit = 0.0;        // portion of shares over cap limits
+        double sumSharesNotLimited = 0.0;   // sum of shares not subject to cap limits
         capLimited = false;
 
         //  Check for capacity limits and calculate sums, looping through each subsector
@@ -596,7 +556,7 @@ void Sector::adjSharesCapLimit( const int period ) {
             if ( subsec[ i ]->getCapLimitStatus( period ) ) {
                 tempCapacityLimit = subsec[ i ]->getShare( period );
             } 
-			else {
+            else {
                 tempCapacityLimit = Subsector::capLimitTransform( subsec[ i ]->getCapacityLimit( period ),
                                                                   tempSubSectShare );
             }
@@ -654,15 +614,15 @@ void Sector::adjSharesCapLimit( const int period ) {
 */
 void Sector::checkShareSum( const int period ) const {
     
-	double sumshares = 0;
+    double sumshares = 0;
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         // Check the validity of shares.
         assert( util::isValidNumber( subsec[ i ]->getShare( period ) ) );
         sumshares += subsec[ i ]->getShare( period ) ;
     }
     if ( fabs(sumshares - 1) > util::getSmallNumber() ) {
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::ERROR );
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
         mainLog << "Shares do not sum to 1. Sum = " << sumshares << " in Sector " << name;
         mainLog << ", region: " << regionName << endl;
         mainLog << "Shares: ";
@@ -682,7 +642,7 @@ void Sector::checkShareSum( const int period ) const {
 */
 void Sector::calcPrice( const int period ) {
     sectorprice[ period ]= 0;
-    for ( unsigned int i = 0; i < subsec.size(); ++i ){	
+    for ( unsigned int i = 0; i < subsec.size(); ++i ){ 
         sectorprice[ period ] += subsec[ i ]->getShare( period ) * subsec[ i ]->getPrice( period );
     }
 }
@@ -755,7 +715,7 @@ double Sector::getFixedOutput( const int period, bool printValues ) const {
     double totalfixedOutput = 0;
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         totalfixedOutput += subsec[ i ]->getFixedOutput( period );
-		  if ( printValues ) { cout << "sSubSec["<<i<<"] "<< subsec[ i ]->getFixedOutput( period ) << ", "; } 
+          if ( printValues ) { cout << "sSubSec["<<i<<"] "<< subsec[ i ]->getFixedOutput( period ) << ", "; } 
     }
     return totalfixedOutput;
 }
@@ -785,7 +745,7 @@ double Sector::getFixedShare( const unsigned int subsectorNum, const int period 
         }
         return fixedShare;
     } 
-	else {
+    else {
         cerr << "Illegal Subsector number: " << subsectorNum << endl;
         return 0;
     }
@@ -1174,7 +1134,7 @@ map<string, double> Sector::getemfuelmap( const int period ) const {
 * \param period Model period
 * \return GHG emissions map
 */
-void Sector::updateSummary( const int period ) {
+void Sector::updateSummary( const list<string>& aPrimaryFuelList, const int period ) {
     // clears Sector fuel consumption map
     summary[ period ].clearfuelcons();
 
@@ -1182,113 +1142,8 @@ void Sector::updateSummary( const int period ) {
         // call update summary for subsector
         subsec[ i ]->updateSummary( period );
         // sum subsector fuel consumption for Sector fuel consumption
-        summary[ period ].updatefuelcons(subsec[ i ]->getfuelcons( period )); 
+        summary[ period ].updatefuelcons( aPrimaryFuelList, subsec[ i ]->getfuelcons( period )); 
     }
-}
-
-/*! \brief A function to add the sectors fuel dependency information to an existing graph.
-*
-* This function prints the sectors fuel dependencies to an existing graph.
-*
-* \author Josh Lurz
-* \param outStream An output stream to write to which was previously created.
-* \param period The period to print graphs for.
-*/
-void Sector::addToDependencyGraph( ostream& outStream, const int period ) const {
-    const double DISPLAY_THRESHOLD = 0.00001; // Do not show links with values below this.
-    const int DISPLAY_PRECISION = 2; // Number of digits to print of the value on the graph.
-    
-    // Values at which to switch the type of line used to display the link.
-    const double DOTTED_LEVEL = 1.0;
-    const double DASHED_LEVEL = 5.0;
-    const double LINE_LEVEL = 10.0;
-    
-    // Make sure the outputstream is open.
-    assert( outStream );
-    
-    // Get the supply Sector name and replace spaces in it with underscores. 
-    string sectorName = getName();
-    util::replaceSpaces( sectorName );
-
-    // Print out the style for the Sector.
-    printStyle( outStream );
-    
-    // Set whether to print prices or quantities on the graph. 
-    const Configuration* conf = Configuration::getInstance();
-    const Marketplace* marketplace = 0;
-    const bool printPrices = conf->getBool( "PrintPrices", 0 );
-    if( printPrices ){
-        marketplace = scenario->getMarketplace();
-    }
-
-    // Now loop through the fuel map.
-    typedef map<string,double>:: const_iterator CI;
-    map<string, double> sectorsUsed = getfuelcons( period );
-    string fuelName;
-
-    for( CI fuelIter = sectorsUsed.begin(); fuelIter != sectorsUsed.end(); fuelIter++ ) {
-        fuelName = fuelIter->first;
-        
-        // Skip zTotal
-        if( fuelName == "zTotal" ){
-            continue;
-        }
-
-        // Initialize the value of the line to a price or quantity.
-        double graphValue = 0;
-        if( printPrices ){
-            graphValue = marketplace->getPrice( fuelIter->first, regionName, period );
-        } else {
-            graphValue = fuelIter->second;
-        }
-
-        if( ( graphValue >  DISPLAY_THRESHOLD ) || conf->getBool( "ShowNullPaths", 0 ) ) {
-            util::replaceSpaces( fuelName );
-            outStream << "\t" << fuelName << " -> " << sectorName;
-            outStream << " [style=\"";
-            if( graphValue < DOTTED_LEVEL ) {
-                outStream << "dotted";
-            }
-            else if ( graphValue < DASHED_LEVEL ) {
-                outStream << "dashed";
-            }
-            else if ( graphValue < LINE_LEVEL ) {
-                outStream << "";
-            }
-            else {
-                outStream << "bold";
-            }
-
-            outStream << "\"";
-            
-            if( conf->getBool( "PrintValuesOnGraphs" ) ) {
-                outStream << ",label=\"";
-                outStream << setiosflags( ios::fixed | ios::showpoint ) << setprecision( DISPLAY_PRECISION );
-                outStream << graphValue;
-                outStream << "\"";
-            }
-            outStream << "];" << endl;
-        }
-    }
-}
-
-/*! \brief A function to add the Sector coloring and style to the dependency graph.
-*
-* This function add the Sector specific coloring and style to the dependency graph.
-*
-* \author Josh Lurz
-* \param outStream An output stream to write to which was previously created.
-*/
-void Sector::printStyle( ostream& outStream ) const {
-
-    // Make sure the output stream is open.
-    assert( outStream );
-
-    // Get the Sector name.
-    string sectorName = getName();
-    util::replaceSpaces( sectorName );
-
-    // output Sector coloring here.
 }
 
 /*! \brief Initialize the marketplaces in the base year to get initial demands from each technology in subsector
@@ -1297,9 +1152,9 @@ void Sector::printStyle( ostream& outStream ) const {
  * \param period The period is usually the base period
  */
 void Sector::updateMarketplace( const int period ) {
-	for( unsigned int i = 0; i < subsec.size(); i++ ) {
-		subsec[ i ]->updateMarketplace( period );
-	}
+    for( unsigned int i = 0; i < subsec.size(); i++ ) {
+        subsec[ i ]->updateMarketplace( period );
+    }
 }
 
 /*! \brief Function to finalize objects after a period is solved.
@@ -1325,17 +1180,18 @@ void Sector::csvSGMOutputFile( ostream& aFile, const int period ) const {
 		
 	// when csvSGMOutputFile() is called, a new sector report is created, updated and printed
 	// this function writes a sector report for each sector
-	auto_ptr<OutputContainer> sectorReport( new SectorReport() );
-	updateOutputContainer( sectorReport.get(), period );
-	sectorReport->output( aFile, period );
+	auto_ptr<IVisitor> sectorReport( new SectorReport( aFile ) );
+	accept( sectorReport.get(), period );
+	sectorReport->finish();
 	for( unsigned int i = 0; i < subsec.size(); i++ ) {
 		subsec[ i ]->csvSGMOutputFile( aFile, period );
 	}    
 }
 
-void Sector::updateOutputContainer( OutputContainer* outputContainer, const int period ) const{
-	outputContainer->updateSector( this );
+void Sector::accept( IVisitor* aVisitor, const int aPeriod ) const{
+	aVisitor->startVisitSector( this, aPeriod );
     for( unsigned int i = 0; i < subsec.size(); i++ ) {
-		subsec[ i ]->updateOutputContainer( outputContainer, period );
-	}  
+		subsec[ i ]->accept( aVisitor, aPeriod );
+	}
+	aVisitor->endVisitSector( this, aPeriod );
 }

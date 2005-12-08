@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief DemandSector class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -21,6 +19,7 @@
 #include "sectors/include/subsector.h"
 #include "containers/include/scenario.h"
 #include "containers/include/gdp.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -107,8 +106,8 @@ bool DemandSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
     else if( nodeName == "aeei" ) {
         XMLHelper<double>::insertValueIntoVector( curr, aeei, modeltime );
     }
-	else if( nodeName == "perCapitaBased" ) {
-		perCapitaBased = XMLHelper<bool>::getValue( curr );
+    else if( nodeName == "perCapitaBased" ) {
+        perCapitaBased = XMLHelper<bool>::getValue( curr );
     }
     else {
         return false;
@@ -142,33 +141,7 @@ void DemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     for( unsigned int i = 0; i < aeei.size(); i++ ){
         XMLWriteElementCheckDefault( aeei[ i ], "aeei", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
-}	
-
-
-//! XML output for viewing.
-void DemandSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( pElasticityBase, "pElasticityBase", out, tabs );
-    const Modeltime* modeltime = scenario->getModeltime();   
-    for( unsigned int i = 0; i < service.size(); ++i ){
-        XMLWriteElement( service[ i ], "serviceoutput", out, tabs, modeltime->getper_to_yr( i ) );
-    }
-    
-    for( unsigned int i = 0; i < service.size(); ++i ){
-        XMLWriteElement( service[ i ] * techChangeCumm[ i ], "servicePreTechChange", out, tabs, modeltime->getper_to_yr( i ) );
-    }
-    
-    for( unsigned int i = 0; i < iElasticity.size(); ++i ){
-        XMLWriteElement( iElasticity[ i ], "incomeelasticity", out, tabs, modeltime->getper_to_yr( i ) );
-    }
-    
-    for( unsigned int i = 0; i < pElasticity.size(); ++i ){
-        XMLWriteElement( pElasticity[ i ], "priceelasticity", out, tabs, modeltime->getper_to_yr( i ) );
-    }
-    
-    for( unsigned int i = 0; i < aeei.size(); ++i ){
-        XMLWriteElement( aeei[ i ], "aeei", out, tabs, modeltime->getper_to_yr( i ) );
-    } 
-}
+}   
 
 //! Write object to debugging xml output stream.
 void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
@@ -176,7 +149,7 @@ void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
     // write the xml for the class members.
     // write out the market string.
     XMLWriteElement( pElasticityBase, "pElasticityBase", out, tabs );
-	XMLWriteElementCheckDefault( perCapitaBased, "perCapitaBased", out, tabs, false );
+    XMLWriteElementCheckDefault( perCapitaBased, "perCapitaBased", out, tabs, false );
     XMLWriteElement( techChangeCumm[ period ], "techChangeCumm", out, tabs );
     
     // Now write out own members.
@@ -201,7 +174,7 @@ void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
 * \return The constant XML_NAME.
 */
 const std::string& DemandSector::getXMLName() const {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -214,7 +187,7 @@ const std::string& DemandSector::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& DemandSector::getXMLNameStatic() {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Create new market for this Sector
@@ -223,7 +196,7 @@ const std::string& DemandSector::getXMLNameStatic() {
 *
 * \author Steve Smith
 */
-void DemandSector::setMarket() {	
+void DemandSector::setMarket() {    
 }
 
 //! Calibrate sector output
@@ -481,18 +454,17 @@ void DemandSector::dbOutput() const {
     // sector fuel consumption by fuel type
     typedef map<string,double>:: const_iterator CI;
     map<string,double> tfuelmap = Sector::getfuelcons(m=0);
-    CI fmap; // define fmap
-    // Write out total (zTotal) fuel consumption for each sector only
-    // sjs -- This causes a silent crash if (I think) fuelmap is empty. sjs
-    fmap = --tfuelmap.end();
-    for (m=0;m<maxper;m++) {
-        temp[m] = Sector::getConsByFuel(m,fmap->first);
+    // Write out total (zTotal) fuel consumption for each sector only.
+    if( !tfuelmap.empty() ){
+        CI fmap = --tfuelmap.end();
+        for (m=0;m<maxper;m++) {
+            temp[m] = Sector::getConsByFuel(m,fmap->first);
+        }
+        dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
+        dboutput4(regionName,"Fuel Consumption","by End-Use Sector",secname,"EJ",temp);
+        // output for zTotal gets written for each demand sector and dataviewer sums it up
+        dboutput4(regionName,"Fuel Consumption","by End-Use Sector","zTotal","EJ",temp);
     }
-    dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
-    dboutput4(regionName,"Fuel Consumption","by End-Use Sector",secname,"EJ",temp);
-    // output for zTotal gets written for each demand sector and dataviewer sums it up
-    dboutput4(regionName,"Fuel Consumption","by End-Use Sector","zTotal","EJ",temp);
-    
     
     // sector emissions for all greenhouse gases
     map<string,double> temissmap = summary[0].getemission(); // get gases for period 0
@@ -540,7 +512,7 @@ void DemandSector::dbOutput() const {
 
 //! Write out subsector results from demand Sector.
 void DemandSector::MCoutput_subsec() const {
-	// do for all subsectors in the Sector
+    // do for all subsectors in the Sector
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         // output or demand for each technology
         subsec[ i ]->MCoutputDemandSector();
@@ -584,23 +556,8 @@ double DemandSector::getServiceWoTC( const int period ) const {
     return service[ period ] * techChangeCumm[ period ];
 }
 
-/*! \brief A function to add the Sector coloring and style to the dependency graph.
-*
-* This function add the Sector specific coloring and style to the dependency graph.
-*
-* \author Josh Lurz
-* \param outStream An output stream to write to which was previously created.
-*/
-void DemandSector::printStyle( ostream& outStream ) const {
-
-    // Make sure the output stream is open.
-    assert( outStream );
-    
-    // Get the sector name.
-   string sectorName = getName();
-   util::replaceSpaces( sectorName );
-
-   // output sector coloring here.
-   outStream << "\t" << sectorName << " [style=filled, color=steelblue1 ];" << endl;
+void DemandSector::accept( IVisitor* aVisitor, const int aPeriod ) const{
+	aVisitor->startVisitDemandSector( this, aPeriod );
+	Sector::accept( aVisitor, aPeriod );
+	aVisitor->endVisitDemandSector( this, aPeriod );
 }
-

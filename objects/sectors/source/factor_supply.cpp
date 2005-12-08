@@ -1,6 +1,6 @@
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -33,7 +33,7 @@
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/imarket_type.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/iinfo.h"
 #include "functions/include/function_utils.h"
@@ -45,21 +45,21 @@ extern Scenario* scenario;
 
 //! Default Constructor
 FactorSupply::FactorSupply() {
-	// resize vectors
+    // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     mBasePrice = 0;
     mBaseSupply = 0;
-	// instantiate moreSectorInfo object here,
-	// override with data read in
-	moreSectorInfo.reset( new MoreSectorInfo() );
+    // instantiate moreSectorInfo object here,
+    // override with data read in
+    moreSectorInfo.reset( new MoreSectorInfo() );
 }
 
 //! Get the name of the factor supply
 const string& FactorSupply::getName() const{
-	return name;
+    return name;
 }
-	
+    
 //! Parses SOME xml object
 bool FactorSupply::XMLParse( const xercesc::DOMNode* node) {
     /*! \pre make sure we were passed a valid node. */
@@ -71,7 +71,7 @@ bool FactorSupply::XMLParse( const xercesc::DOMNode* node) {
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
 
-	const Modeltime* modeltime = scenario->getModeltime();
+    const Modeltime* modeltime = scenario->getModeltime();
     // loop through the child nodes.
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
         DOMNode* curr = nodeList->item( i );
@@ -83,45 +83,45 @@ bool FactorSupply::XMLParse( const xercesc::DOMNode* node) {
         else if( nodeName == "supply" ) {
             mBaseSupply = XMLHelper<double>::getValue( curr );
         }
-		else if (nodeName == "price" ) {
+        else if (nodeName == "price" ) {
             mBasePrice = XMLHelper<double>::getValue( curr );
-		}
+        }
         else if( nodeName == MoreSectorInfo::getXMLNameStatic() ) {
             moreSectorInfo->XMLParse( curr );
         }
         else {
             return false;
             // Should print an error here.
-		}
-	}
+        }
+    }
     return true;
 }
 
 //! Write to XML
 void FactorSupply::toInputXML( ostream &out, Tabs* tabs ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
+    const Modeltime* modeltime = scenario->getModeltime();
 
-	// write the beginning tag.
+    // write the beginning tag.
     XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
     
     // Write the data.
     XMLWriteElement( mBaseSupply, "supply", out, tabs );
     XMLWriteElement( mBasePrice, "price", out, tabs );
 
-	// write the closing tag.
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    // write the closing tag.
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Debug info written to XML
 void FactorSupply::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-	// write the beginning tag.
-	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
+    // write the beginning tag.
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     XMLWriteElement( mBaseSupply, "supply", out, tabs );
-	XMLWriteElement( mBasePrice, "price", out, tabs );
+    XMLWriteElement( mBasePrice, "price", out, tabs );
 
-	// write the closing tag.
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    // write the closing tag.
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 double FactorSupply::getSupply( const string& aRegionName, const int period ) const{
@@ -130,16 +130,16 @@ double FactorSupply::getSupply( const string& aRegionName, const int period ) co
 }
 
 const string& FactorSupply::getXMLName() const {
-	return getXMLNameStatic();
+    return getXMLNameStatic();
 }
 
 const string& FactorSupply::getXMLNameStatic() {
     const static string XML_NAME = "factorSupply";
-	return XML_NAME;
+    return XML_NAME;
 }
 
 void FactorSupply::completeInit( const string& aRegionName ) {
-	setMarket( aRegionName );
+    setMarket( aRegionName );
 }
 /*! \brief Perform any initializations needed for each period.
 *
@@ -150,19 +150,19 @@ void FactorSupply::completeInit( const string& aRegionName ) {
 * \param aPeriod Model period
 */
 void FactorSupply::initCalc( const string& aRegionName, const int aPeriod ) {
-	Marketplace* marketplace = scenario->getMarketplace();
-	if( aPeriod == 0 ) {
-		if( name != "Capital" ) {
+    Marketplace* marketplace = scenario->getMarketplace();
+    if( aPeriod == 0 ) {
+        if( name != "Capital" ) {
             assert( mBaseSupply != 0 );
-			mBasePrice = marketplace->getDemand( name, aRegionName, aPeriod ) / mBaseSupply;
-		}
-		if( mBasePrice == 0 ){
-			mBasePrice = 1;
-		}
-		marketplace->setPrice( name, aRegionName, mBasePrice, aPeriod );
-	}
-	// set market prices before calling calcPricePaid
-	calcPricePaid( aRegionName, aPeriod );
+            mBasePrice = marketplace->getDemand( name, aRegionName, aPeriod ) / mBaseSupply;
+        }
+        if( mBasePrice == 0 ){
+            mBasePrice = 1;
+        }
+        marketplace->setPrice( name, aRegionName, mBasePrice, aPeriod );
+    }
+    // set market prices before calling calcPricePaid
+    calcPricePaid( aRegionName, aPeriod );
 }
 
 void FactorSupply::setMarket( const string& aRegionName ) {
@@ -192,17 +192,17 @@ void FactorSupply::setMarket( const string& aRegionName ) {
 */
 void FactorSupply::calcPricePaid( const string& aRegionName, const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
-	// set price received in market info
-	double pricePaid = ( marketplace->getPrice(name, aRegionName, period) + 
-		( moreSectorInfo->getValue(MoreSectorInfo::TRANSPORTATION_COST)
-		* moreSectorInfo->getValue(MoreSectorInfo::TRAN_COST_MULT) )
-		* moreSectorInfo->getValue(MoreSectorInfo::PROPORTIONAL_TAX_RATE)
-		+ moreSectorInfo->getValue(MoreSectorInfo::ADDITIVE_TAX) ) // add carbon taxes
-		* 1 ;
-		//* moreSectorInfo->getValue(MoreSectorInfo::PRICE_ADJUST_MULT);
-		
-	// set price paid in market info.
-	FunctionUtils::setPricePaid( aRegionName, name, period, pricePaid );
+    // set price received in market info
+    double pricePaid = ( marketplace->getPrice(name, aRegionName, period) + 
+        ( moreSectorInfo->getValue(MoreSectorInfo::TRANSPORTATION_COST)
+        * moreSectorInfo->getValue(MoreSectorInfo::TRAN_COST_MULT) )
+        * moreSectorInfo->getValue(MoreSectorInfo::PROPORTIONAL_TAX_RATE)
+        + moreSectorInfo->getValue(MoreSectorInfo::ADDITIVE_TAX) ) // add carbon taxes
+        * 1 ;
+        //* moreSectorInfo->getValue(MoreSectorInfo::PRICE_ADJUST_MULT);
+        
+    // set price paid in market info.
+    FunctionUtils::setPricePaid( aRegionName, name, period, pricePaid );
 }
 
 /*! \brief For outputing SGM data to a flat csv File
@@ -211,10 +211,10 @@ void FactorSupply::calcPricePaid( const string& aRegionName, const int period ) 
  * \param period The period which we are outputing for
  */
 void FactorSupply::csvSGMOutputFile( ostream& aFile, const int period ) const {
-	// Write factor supply output
-	// aFile << "Factor Supply Results" << endl << endl;
+    // Write factor supply output
+    // aFile << "Factor Supply Results" << endl << endl;
 }
 
-void FactorSupply::updateOutputContainer( OutputContainer* outputContainer, const int period ) const{
-	outputContainer->updateFactorSupply( this, period );
+void FactorSupply::accept( IVisitor* aVisitor, const int period ) const{
+	aVisitor->updateFactorSupply( this, period );
 }

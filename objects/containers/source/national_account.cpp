@@ -1,6 +1,6 @@
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -29,7 +29,7 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 
 #include "containers/include/national_account.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/util.h"
 
@@ -245,6 +245,6 @@ const string& NationalAccount::enumToName( const AccountType aType ) const {
 }
 
 // for reporting National Account information
-void NationalAccount::updateOutputContainer( OutputContainer* outputContainer, const int aPeriod ) const{
-	outputContainer->updateNationalAccount( this, aPeriod );
+void NationalAccount::accept( IVisitor* aVisitor, const int aPeriod ) const{
+	aVisitor->updateNationalAccount( this, aPeriod );
 }

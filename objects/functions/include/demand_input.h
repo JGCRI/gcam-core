@@ -6,7 +6,7 @@
 
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -32,7 +32,7 @@
 #include "functions/include/input.h"
 
 class Tabs;
-class OutputContainer;
+class IVisitor;
 
 /*! 
 * \ingroup Objects
@@ -45,30 +45,30 @@ class OutputContainer;
 class DemandInput : public Input
 {
 public:
-	DemandInput();
-	DemandInput* clone() const;
+    DemandInput();
+    DemandInput* clone() const;
     void copyParam( const Input* aInput );
     void copyParamsInto( DemandInput& aDemandInput ) const;
     void copyParamsInto( ProductionInput& aProductionInput ) const { assert( false ); }
 
-	double getPriceElasticity() const;
-	double getIncomeElasticity() const;
+    double getPriceElasticity() const;
+    double getIncomeElasticity() const;
     
     void setExpPricePaid( double aExpPricePaid ){};
     double getExpPricePaid() const { return 0; }
 	static const std::string& getXMLNameStatic();
-    void updateOutputContainer( OutputContainer* outputContainer, const int period ) const;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-	bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-	void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-	void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-	const std::string& getXMLName() const;
+    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+    const std::string& getXMLName() const;
 private:
     //! Income Elasticity
-	Value mIncomeElasticity;
+    Value mIncomeElasticity;
 
     //! Price Elasticity
-	Value mPriceElasticity;
+    Value mPriceElasticity;
 };
 
 #endif // _DEMAND_INPUT_H_

@@ -15,6 +15,7 @@
 
 #include <map>
 #include <string>
+#include <list>
 
 /*! 
 * \ingroup Objects
@@ -47,7 +48,7 @@ public:
 	const SummaryItem& getemfuelmap() const;
 	const SummaryItem& getemindmap() const;
 	const SummaryItem& getSequesteredAmountMap() const;
-    void updatefuelcons( const SummaryItem& fuelinfo);
+	void updatefuelcons( const std::list<std::string>& aPrimaryFuelList, const SummaryItem& fuelinfo);
 	void updatepetrade();
 	void updateemiss( const SummaryItem& ghginfo );
 	void updateemfuelmap( const SummaryItem& ghginfo );

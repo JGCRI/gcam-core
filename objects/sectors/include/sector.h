@@ -9,17 +9,17 @@
 * \ingroup Objects
 * \brief The Sector class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
 #include <map>
 #include <memory>
-#include <iosfwd>
+#include <list>
 
 #include "containers/include/national_account.h" // lets use an auto_ptr instead.
+#include "util/base/include/ivisitable.h"
+#include "util/base/include/iround_trippable.h"
 
 // Forward declarations
 class Subsector;
@@ -34,7 +34,6 @@ class Demographic;
 class NationalAccount;
 class MoreSectorInfo;
 class SocialAccountingMatrix;
-class OutputContainer;
 
 /*! 
 * \ingroup Objects
@@ -45,12 +44,13 @@ class OutputContainer;
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 
-class Sector
+class Sector: public IVisitable, public IRoundTrippable
 {
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
     friend class SectorReport;
     friend class SGMGenTable;
+    friend class XMLDBOutputter;
 protected:
     std::string name; //!< Sector name
     std::string regionName; //!< region name
@@ -65,7 +65,7 @@ protected:
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
     std::vector<bool> capLimitsPresent; //!< Flag if any capacity limits are present 
     bool anyFixedCapacity; //!< flag set to true if any fixed capacity is present in this Sector
-	std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
+    std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
 
     void normalizeShareWeights( const int period );
     double getFixedShare( const unsigned int sectorNum, const int period ) const; // utility function 
@@ -77,11 +77,9 @@ protected:
     void checkShareSum( const int period ) const;
     double getFixedSupply( const int period ) const; 
     bool isCapacityLimitsInSector( const int period ) const;
-	double getCalOutput( const int period ) const;
-	double getFixedOutput( const int period, bool printValues = false ) const; 
-    virtual void printStyle( std::ostream& outStream ) const;
+    double getCalOutput( const int period ) const;
+    double getFixedOutput( const int period, bool printValues = false ) const; 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
-    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
@@ -93,7 +91,6 @@ public:
     virtual void XMLParse( const xercesc::DOMNode* node );
     virtual void completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder ) = 0;
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     
     virtual void initCalc( NationalAccount& aNationalAccount,
@@ -130,15 +127,13 @@ public:
     double getConsByFuel( const int period, const std::string& key) const;
     std::map<std::string, double> getemission( const int period ) const;
     std::map<std::string, double> getemfuelmap( const int period ) const;
-    void updateSummary( const int period );
-    void addToDependencyGraph( std::ostream& outStream, const int period ) const;
+    void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
     void tabulateFixedDemands( const int period );
 
-    virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;	void updateMarketplace( const int period );
+    virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;    void updateMarketplace( const int period );
     virtual void finalizePeriod( const int aPeriod );
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	virtual void updateOutputContainer( OutputContainer * outputContainer, const int period ) const;
-
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 private:
     void clear();
 };

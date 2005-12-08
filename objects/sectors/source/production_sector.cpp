@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief Sector class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -24,7 +22,7 @@
 #include "investment/include/investment_utils.h"
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/imarket_type.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/iinfo.h"
 #include "functions/include/function_utils.h"
@@ -389,11 +387,9 @@ void ProductionSector::calcPriceReceived( const int period ){
 * \param aOutputContainer OutputContainer to update.
 * \param aPeriod Period in which to perform the update.
 */
-void ProductionSector::updateOutputContainer( OutputContainer* aOutputContainer,
-                                              const int aPeriod ) const
-{
+void ProductionSector::accept( IVisitor* aVisitor, const int aPeriod ) const {
     // Update the base class
-    Sector::updateOutputContainer( aOutputContainer, aPeriod );
+    Sector::accept( aVisitor, aPeriod );
     // Update the output container for the derived class.
-    aOutputContainer->updateProductionSector( this, aPeriod );
+    aVisitor->updateProductionSector( this, aPeriod );
 }

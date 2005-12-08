@@ -9,36 +9,38 @@
 * \ingroup Objects
 * \brief The Market class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
 #include <memory>
 #include "marketplace/include/imarket_type.h"
+#include "util/base/include/ivisitable.h"
 
 class IInfo;
 class Tabs;
+class IVisitor;
 namespace objects {
-	class Atom;
+    class Atom;
 }
+
 /*!
 * \ingroup Objects
 * \brief A class which defines a single market object.
 * \author Sonny Kim
 */
 
-class Market
+class Market: public IVisitable
 {
+    friend class XMLDBOutputter;
 public:
     Market( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
     virtual ~Market();
     static std::auto_ptr<Market> createMarket( const IMarketType::Type aMarketType,
-		const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
+        const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	static const std::string& getXMLNameStatic();
+    static const std::string& getXMLNameStatic();
     void addRegion( const std::string& aRegion );
-	const std::vector<const objects::Atom*>& getContainedRegions() const;
+    const std::vector<const objects::Atom*>& getContainedRegions() const;
 
     virtual void initPrice() = 0;
     virtual void setPrice( const double priceIn ) = 0;
@@ -77,49 +79,50 @@ public:
     virtual bool shouldSolve() const = 0;
     virtual bool shouldSolveNR() const = 0;
     virtual std::string getType() const = 0;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     Market( const Market& aMarket );
 
-	//! The name of the market.
+    //! The name of the market.
     std::string mName;
-	
-	//! The good the market represents
+    
+    //! The good the market represents
     std::string good;
-	
-	//! The region of the market.
+    
+    //! The region of the market.
     std::string region;
-	
-	//! Whether to solve the market given other constraints are satisfied.
+    
+    //! Whether to solve the market given other constraints are satisfied.
     bool solveMarket;
-	
-	//! The period the market is valid in.
+    
+    //! The period the market is valid in.
     int period;
-	
-	//! The market price.
+    
+    //! The market price.
     double price;
-	
-	//! The stored market price.
+    
+    //! The stored market price.
     double storedPrice;
-	
-	//! The market demand.
+    
+    //! The market demand.
     double demand;
-	
-	//! The stored demand.
+    
+    //! The stored demand.
     double storedDemand;
     
-	//! The market supply.
-	double supply;
-	
-	//! The stored supply.
+    //! The market supply.
+    double supply;
+    
+    //! The stored supply.
     double storedSupply;
-	
-	//! Vector of atoms of all regions contained within this market.
-	std::vector <const objects::Atom*> mContainedRegions;
-	
-	//! Object containing information related to the market.
+    
+    //! Vector of atoms of all regions contained within this market.
+    std::vector <const objects::Atom*> mContainedRegions;
+    
+    //! Object containing information related to the market.
     std::auto_ptr<IInfo> mMarketInfo;
 
-	    /*! \brief Add additional information to the debug xml stream for derived
+        /*! \brief Add additional information to the debug xml stream for derived
     *          classes.
     * \details This method is inherited from by derived class if they which to
     *          add any additional information to the printout of the class.

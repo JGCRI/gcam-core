@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Son H. Kim (PNNL) -->
 <scenario name="TranH2MedEff" date="2003-01-11T09:30:47-05:00">
-	<summary>"SRES B2 Scenario is used for this Reference Scenario that includes a new transportation sector for the US"</summary>
+	<output-meta-data>
+		<summary>SRES B2 Scenario is used for this Reference Scenario that includes a new transportation sector for the US</summary>
+	</output-meta-data>
 	<world>
 		<region name="USA">
 			<demandsector name="transportation" delete="1"/>

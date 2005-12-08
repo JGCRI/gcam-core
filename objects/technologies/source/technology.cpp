@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief technology class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 // Standard Library headers
 #include "util/base/include/definitions.h"
@@ -29,6 +27,7 @@
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/dependency_finder.h"
+#include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
 
 using namespace std;
@@ -162,14 +161,14 @@ double technology::getFixedOutputDefault() {
 * \param node current node
 * \todo Add Warning when addin files add new containers (regions, sectors, technologies, etc.)
 */
-void technology::XMLParse( const DOMNode* node ) {	
+void technology::XMLParse( const DOMNode* node ) {  
     /*! \pre Assume we are passed a valid node. */
     assert( node );
     
     DOMNodeList* nodeList = node->getChildNodes();
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
         DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );      
         
         if( nodeName == "#text" ) {
             continue;
@@ -225,7 +224,7 @@ void technology::XMLParse( const DOMNode* node ) {
         else if( nodeName == "fixedOutput" ){
             fixedOutput = XMLHelper<double>::getValue( curr );
         }
-		else if( nodeName == Ghg::getXMLNameStatic() ){
+        else if( nodeName == Ghg::getXMLNameStatic() ){
             parseContainerNode( curr, ghg, ghgNameMap, new Ghg() );
         }
         else if( nodeName == GhgOutput::getXMLNameStatic() ){
@@ -276,9 +275,9 @@ void technology::completeInit( const string& aSectorName, DependencyFinder* aDep
         ghgNameMap[ CO2_NAME ] = static_cast<int>( ghg.size() ) - 1;
     }
 
-	// calculate effective efficiency
-	eff = effBase * (1 - effPenalty); // reduces efficiency by penalty
-	necost = neCostBase * (1 + neCostPenalty); // increases cost by penalty
+    // calculate effective efficiency
+    eff = effBase * (1 - effPenalty); // reduces efficiency by penalty
+    necost = neCostBase * (1 + neCostPenalty); // increases cost by penalty
 
     // Add the input dependency to the dependency finder if there is one. There
     // will not be one if this is a transportation technology.
@@ -295,7 +294,7 @@ void technology::completeInit( const string& aSectorName, DependencyFinder* aDep
 //! write object to xml output stream
 void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     
-	XMLWriteOpeningTag( getXMLName2D(), out, tabs, "", year );
+    XMLWriteOpeningTag( getXMLName2D(), out, tabs, "", year );
     // write the xml for the class members.
     
     XMLWriteElement( name, "name", out, tabs );
@@ -318,7 +317,7 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, LOGIT_EXP_DEFAULT );
     XMLWriteElementCheckDefault( fixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
-	XMLWriteElementCheckDefault( note, "note", out, tabs );
+    XMLWriteElementCheckDefault( note, "note", out, tabs );
     
     for( vector<Ghg*>::const_iterator ghgIter = ghg.begin(); ghgIter != ghg.end(); ghgIter++ ){
         ( *ghgIter )->toInputXML( out, tabs );
@@ -332,7 +331,7 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
 //! write object to xml debugging output stream
 void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-	XMLWriteOpeningTag( getXMLName1D(), out, tabs, name, year );
+    XMLWriteOpeningTag( getXMLName1D(), out, tabs, name, year );
     // write the xml for the class members.
     
     XMLWriteElement( fuelname, "fuelname", out, tabs );
@@ -374,7 +373,7 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
 * \return The constant XML_NAME.
 */
 const string& technology::getXMLName1D() const {
-	return XML_NAME1D;
+    return XML_NAME1D;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -387,7 +386,7 @@ const string& technology::getXMLName1D() const {
 * \return The constant XML_NAME as a static.
 */
 const string& technology::getXMLNameStatic1D() {
-	return XML_NAME1D;
+    return XML_NAME1D;
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -399,7 +398,7 @@ const string& technology::getXMLNameStatic1D() {
 * \return The constant XML_NAME.
 */
 const string& technology::getXMLName2D() const {
-	return XML_NAME2D;
+    return XML_NAME2D;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -412,7 +411,7 @@ const string& technology::getXMLName2D() const {
 * \return The constant XML_NAME as a static.
 */
 const string& technology::getXMLNameStatic2D() {
-	return XML_NAME2D;
+    return XML_NAME2D;
 }
 
 //! Perform initializations that only need to be done once per period
@@ -469,31 +468,31 @@ void technology::calcTotalGHGCost( const string& regionName, const string& secto
 void technology::calcCost( const string& regionName, const string& sectorName, const int per ) {
     Marketplace* marketplace = scenario->getMarketplace();
 
-	 // code specical case where there is no fuel input. sjs
-	 // used now to drive non-CO2 GHGs
+     // code specical case where there is no fuel input. sjs
+     // used now to drive non-CO2 GHGs
     double fuelprice;
     if ( fuelname == "none" || fuelname == "renewable" ) {
         fuelprice = 0;
     }
     else {
         fuelprice = marketplace->getPrice( fuelname, regionName, per );
-		
-		/*! \invariant The market price of the fuel must be valid. */
-		if ( fuelprice == Marketplace::NO_MARKET_PRICE ) {
+        
+        /*! \invariant The market price of the fuel must be valid. */
+        if ( fuelprice == Marketplace::NO_MARKET_PRICE ) {
            ILogger& mainLog = ILogger::getLogger( "main_log" );
            mainLog.setLevel( ILogger::ERROR );
            mainLog << "Requested fuel >" << fuelname << "< with no price in technology " << name 
                    << " in sector " << sectorName << " in region " << regionName << "." << endl;
            // set fuelprice to a valid, although arbitrary, number
-		   fuelprice = util::getLargeNumber();
-		}
+           fuelprice = util::getLargeNumber();
+        }
     } 
-	 
-	// fMultiplier and pMultiplier are initialized to 1 for those not read in
-	fuelcost = ( fuelprice * fMultiplier ) / eff;
-	techcost = ( fuelcost + necost ) * pMultiplier;
+     
+    // fMultiplier and pMultiplier are initialized to 1 for those not read in
+    fuelcost = ( fuelprice * fMultiplier ) / eff;
+    techcost = ( fuelcost + necost ) * pMultiplier;
     calcTotalGHGCost( regionName, sectorName, per );
-	techcost += totalGHGCost;
+    techcost += totalGHGCost;
     
     // techcost can drift below zero in disequalibrium.
     techcost = max( techcost, util::getSmallNumber() );
@@ -555,8 +554,8 @@ void technology::resetFixedOutput( int per ) {
 * \return value of fixed output for this technology
 */
 double technology::getFixedOutput() const {
-	// Return 0 if the fixed output value is not initialized.
-	return ( fixedOutputVal == getFixedOutputDefault() ) ? 0 : fixedOutputVal;
+    // Return 0 if the fixed output value is not initialized.
+    return ( fixedOutputVal == getFixedOutputDefault() ) ? 0 : fixedOutputVal;
 }
 
 /*! \brief Return fixed technology input
@@ -570,12 +569,12 @@ double technology::getFixedOutput() const {
 * \return value of fixed input for this technology
 */
 double technology::getFixedInput() const {
-	// Return zero as the fixed input if the efficiency is impossible or the
+    // Return zero as the fixed input if the efficiency is impossible or the
     // fixed output is the default value.
     if ( eff == 0 || fixedOutputVal == getFixedOutputDefault() ) {
-		return 0;
-	}
-	return fixedOutputVal / eff;
+        return 0;
+    }
+    return fixedOutputVal / eff;
 }
 
 /*! \brief Scale fixed technology supply
@@ -616,7 +615,7 @@ void technology::adjShares(double subsecdmd, double subsecfixedOutput, double va
             remainingDemand = 0;
         }
         
-        if ( fixedOutputVal >= 0 ) {	// This tech has a fixed supply
+        if ( fixedOutputVal >= 0 ) {    // This tech has a fixed supply
             if (subsecdmd > 0) {
                 share = fixedOutputVal/subsecdmd;
                 // Set value of fixed supply
@@ -628,7 +627,7 @@ void technology::adjShares(double subsecdmd, double subsecfixedOutput, double va
                 share = 0;
             }
         }
-        else {	// This tech does not have fixed supply
+        else {  // This tech does not have fixed supply
             if (subsecdmd > 0) {
                 share = share * (remainingDemand/subsecdmd)/varShareTot;
             }
@@ -652,8 +651,8 @@ void technology::production(const string& regionName,const string& prodName,
                             double dmd, const GDP* gdp, const int per) {
     // dmd is total subsector demand. Use share to get output for each
     // technology
-	output = share * dmd;
-    	   
+    output = share * dmd;
+           
     if ( output < 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
@@ -692,9 +691,9 @@ void technology::production(const string& regionName,const string& prodName,
 * \param subSectorDemand total demand for this subsector
 */
 void technology::adjustForCalibration( double subSectorDemand,
-									   const string& regionName,
-									   const IInfo*,
-									   const int period )
+                                       const string& regionName,
+                                       const IInfo*,
+                                       const int period )
 {
    // total calibrated outputs for this sub-sector
    double calOutput = getCalibrationOutput();
@@ -711,22 +710,22 @@ void technology::adjustForCalibration( double subSectorDemand,
         shrwts  = shrwts * shareScaleValue;
     }
     
-	// Check to make sure share weights are not less than zero (and reset if they are)
-	if ( shrwts < 0 ) {
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::WARNING );
-		mainLog << "Share weight is less than zero in technology " << name << endl;
-		mainLog << "Share weight was " << shrwts << "(reset to 1)" << endl;
-		shrwts = 1;
-	}
+    // Check to make sure share weights are not less than zero (and reset if they are)
+    if ( shrwts < 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Share weight is less than zero in technology " << name << endl;
+        mainLog << "Share weight was " << shrwts << "(reset to 1)" << endl;
+        shrwts = 1;
+    }
 
-	// Report if share weight gets extremely large
-	const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
-	if ( debugChecking && (shrwts > 1e4 ) ) {
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::WARNING );
-		mainLog << "Large share weight in calibration for technology: " << name << endl;
-	}
+    // Report if share weight gets extremely large
+    const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
+    if ( debugChecking && (shrwts > 1e4 ) ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Large share weight in calibration for technology: " << name << endl;
+    }
 }
 
 //! calculate GHG emissions from technology use
@@ -938,12 +937,12 @@ const vector<string> technology::getGHGNames() const {
 * \warning Assumes there is only one GHG object with any given name
 */
 void technology::copyGHGParameters( const Ghg* prevGHG ) {
-	const int ghgIndex = util::searchForValue( ghgNameMap, prevGHG->getName() );
+    const int ghgIndex = util::searchForValue( ghgNameMap, prevGHG->getName() );
 
-	if ( prevGHG ) {
-		ghg[ ghgIndex ]->copyGHGParameters( prevGHG );
-	}
-	 
+    if ( prevGHG ) {
+        ghg[ ghgIndex ]->copyGHGParameters( prevGHG );
+    }
+     
 }
 
 /*! \brief Returns the pointer to a specific GHG 
@@ -953,8 +952,8 @@ void technology::copyGHGParameters( const Ghg* prevGHG ) {
 Ghg* technology::getGHGPointer( const string& ghgName ) {
     const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
 
-	return ghg[ ghgIndex ];
-	 
+    return ghg[ ghgIndex ];
+     
 }
 
 //! return map of all ghg emissions
@@ -1015,9 +1014,9 @@ void technology::tabulateFixedDemands( const string regionName, const int period
     const double MKT_NOT_ALL_FIXED = -1; // This should be same constant as used in region
     Marketplace* marketplace = scenario->getMarketplace();
 
-	IInfo* marketInfo = marketplace->getMarketInfo( fuelname, regionName, period, false );
-	// Fuel may not have a market, as is the case with renewable.
-	if( marketInfo ){
+    IInfo* marketInfo = marketplace->getMarketInfo( fuelname, regionName, period, false );
+    // Fuel may not have a market, as is the case with renewable.
+    if( marketInfo ){
         if ( outputFixed() ) {
             double fixedOrCalInput = 0;
             double fixedInput = 0;
@@ -1037,7 +1036,7 @@ void technology::tabulateFixedDemands( const string regionName, const int period
             existingDemand = max( marketInfo->getDouble( "calFixedDemand", false ), 0.0 );
             marketInfo->setDouble( "calFixedDemand", existingDemand + fixedInput );        
         }
-		else {
+        else {
             // If not fixed, then set to -1 to indicate a demand that is not
             // completely fixed.
             marketInfo->setDouble( "calDemand", MKT_NOT_ALL_FIXED );
@@ -1052,5 +1051,18 @@ void technology::tabulateFixedDemands( const string regionName, const int period
 */
 
 void technology::setTechShare(const double shareIn) {
-	share = shareIn;
+    share = shareIn;
+}
+
+/*! \brief Update an output container with information from a technology for a
+*          given period.
+* \param aOutputContainer The output container to update.
+* \param aPeriod The period for which to update.
+*/
+void technology::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitTechnology( this, aPeriod );
+	for( unsigned int i = 0; i < ghg.size(); ++i ){
+		ghg[ i ]->accept( aVisitor, aPeriod );
+	}
+	aVisitor->endVisitTechnology( this, aPeriod );
 }

@@ -6,7 +6,7 @@
 
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -30,7 +30,7 @@
 #include <string>
 #include <map>
 #include <iosfwd>
-#include "reporting/include/output_container.h"
+#include "util/base/include/default_visitor.h"
 
 class Region;
 class NationalAccount;
@@ -49,22 +49,28 @@ class FactorSupply;
 class Input;
 class Modeltime;
 
-class SGMGenTable : public OutputContainer {
+class SGMGenTable : public DefaultVisitor {
 public:
-    SGMGenTable( const std::string& aName, const std::string& aHeader, const Modeltime* aModeltime );
-	void output( std::ostream& aSGMGenFile, const int aPeriod ) const;
-	void updateRegionCGE( const RegionCGE* regionCGE );
+    SGMGenTable( const std::string& aName, const std::string& aHeader,
+                 const Modeltime* aModeltime );
+	void finish() const;
+	void startVisitRegionCGE( const RegionCGE* regionCGE, const int aPeriod );
+	void endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod );
+	void startVisitSector( const Sector* aSector, const int aPeriod );
+	void endVisitSector( const Sector* aSector, const int aPeriod );
 	void updateProductionSector( const ProductionSector* aProductionSector, const int aPeriod );
-    void updateDemographic( const Demographic* aDemographic, const int aPeriod );
+    void startVisitDemographic( const Demographic* aDemographic, const int aPeriod );
     void updateConsumer( const Consumer* aConsumer, const int aPeriod );
 	void updateHouseholdConsumer( const HouseholdConsumer* householdConsumer, const int aPeriod );
 	void updateGovtConsumer( const GovtConsumer* govtConsumer, const int aPeriod );
-	void updateTradeConsumer( const TradeConsumer* tradeConsumer, const std::string& aRegionName, const int aPeriod );
+	void updateTradeConsumer( const TradeConsumer* tradeConsumer, const int aPeriod );
 	void updateInvestConsumer( const InvestConsumer* investConsumer, const int aPeriod );
-	void updateProductionTechnology( const ProductionTechnology* prodTech, 
-		const std::string& aRegionName, const std::string& aSectorName, const int aPeriod );
+	void updateProductionTechnology( const ProductionTechnology* prodTech, const int aPeriod );
     void updateFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod );
     void updateNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod );
+
+    // Non-interface function.
+    void setOutputFile( std::ostream& aOutputFile );
 private:
 
     void addToType( const int aTypeRow, const std::string aTypeCol, const double value );
@@ -73,6 +79,16 @@ private:
 
     const std::string mName;
     const std::string mHeader;
+
+	//! The current region name.
+	std::string mCurrentRegionName;
+	
+	//! The current sector name.
+	std::string mCurrentSectorName;
+    
+    //! The file to which to write.
+    std::ostream* mFile;
+
     std::map<int, std::map< std::string, double> > mTable;
     const Modeltime* mModeltime;
 };

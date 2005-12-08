@@ -300,8 +300,12 @@ bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
     return success;
 }
 
-//! Print the output.
-void PolicyTargetRunner::printOutput( Timer& timer, const bool aCloseDB ) const {
+/*! \brief Print the output.
+* \details Call the various types of printing routines.
+* \param aTimer Scenario timer.
+* \param aCloseDB Whether to close the Access database when complete.
+*/
+void PolicyTargetRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
     if( mPolicyCostCalculator.get() ){
         mPolicyCostCalculator->printOutput();
     }

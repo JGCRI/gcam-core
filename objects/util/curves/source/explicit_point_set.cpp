@@ -63,19 +63,16 @@ ExplicitPointSet* ExplicitPointSet::clone() const {
 
 //! Helper function which frees memory.
 void ExplicitPointSet::clear() {
-    for( DataPointIterator delIter = points.begin(); delIter != points.end(); delIter++ ){
+    for( DataPointIterator delIter = points.begin(); delIter != points.end(); ++delIter ){
         delete *delIter;
     }
 }
 
 //! Helper function which copies into a new object.
 void ExplicitPointSet::copy( const ExplicitPointSet& rhs ){
-     // First resize the vector.
-    points.resize( rhs.points.size() );
-    
     // Now copy all the points over, creating new objects.
-    for( int i = 0; i < static_cast<int>( rhs.points.size() ); i++ ){
-        points[ i ] = rhs.points[ i ]->clone();
+    for( unsigned int i = 0; i < rhs.points.size(); ++i ){
+        points.push_back( rhs.points[ i ]->clone() );
     }
 }
 
@@ -91,8 +88,6 @@ const string& ExplicitPointSet::getXMLName() const {
 
 //! Add a new data point to the point set. Returns true if it was added successfully, it is a unique point.
 bool ExplicitPointSet::addPoint( DataPoint* pointIn ) {
-    bool retValue;
-
     // First check if the point already exists
     bool foundPoint = false;
     for( vector<DataPoint*>::const_iterator iter = points.begin(); iter != points.end(); iter++ ){
@@ -102,102 +97,69 @@ bool ExplicitPointSet::addPoint( DataPoint* pointIn ) {
         }
     }
     
-    if( foundPoint ){
-        retValue = false;
-    } 
-    else {
+    if( !foundPoint ){
         points.push_back( pointIn );
-        retValue = true;
     }
     
-    return retValue;
+    return !foundPoint;
 }
 
 //! Return the y coordinate associated with this xValue, DBL_MAX if the point is not found.
 double ExplicitPointSet::getY( const double xValue ) const {
-    double retValue = DBL_MAX;
     const DataPoint* point = findX( xValue );
-    if( point ){
-        retValue = point->getY();
-    }
-    return retValue;
+	return ( point != 0 ) ? point->getY() : DBL_MAX;
 }
 
 //! Return the x coordinate associated with this yValue, DBL_MAX if the point is not found.
 double ExplicitPointSet::getX( const double yValue ) const {
-    double retValue = DBL_MAX;
     const DataPoint* point = findY( yValue );
-
-    // If the point was found.
-    if( point ){
-        retValue = point->getX();
-    }
-    return retValue;
+	return ( point != 0 ) ? point->getX() : DBL_MAX;
 }
 
 //! Set the y value for the point associated with the xValue. Return true if successful
 bool ExplicitPointSet::setY( const double xValue, const double yValue ){
-    bool retValue = false;
     DataPoint* point = findX( xValue );
-    
     // If the point was found.
     if( point ){
         point->setY( yValue );
-        retValue = true;
     }
-    return retValue;
+    return ( point != 0 );
 }
 
 //! Set the x value for the point associated with the yValue. Return true if successful
 bool ExplicitPointSet::setX( const double yValue, const double xValue ){
-    bool retValue = false;
     DataPoint* point = findY( yValue );
-    
     // If the point was found.
     if( point ){
         point->setX( xValue );
-        retValue = true;
     }
-    return retValue;
+    return ( point != 0 );
 }
 
 //! Remove a datapoint from the point set based on an x value.
 bool ExplicitPointSet::removePointFindX( const double xValue ){
     DataPoint* point = findX( xValue );
-    bool retValue = false;
-
-    if( point != 0 ){
+    if( point ){
         DataPointIterator delIter = find( points.begin(), points.end(), point );
-        if( delIter == points.end() ){
-            assert( false );
-        } 
-        else {
-            delete point;
-            points.erase( delIter );
-            retValue = true;
-        }
+		assert( delIter != points.end() );
+		delete point;
+		points.erase( delIter );
     }
 
-    return retValue;
+    return ( point != 0 );
 }
 
 //! Remove a datapoint from the point set based on a y value.
 bool ExplicitPointSet::removePointFindY( const double yValue ){
     DataPoint* point = findY( yValue );
-    bool retValue = false;
-
-    if( point != 0 ){
+    if( point ){
         DataPointIterator delIter = find( points.begin(), points.end(), point );
-        if( delIter == points.end() ){
-            assert( false );
-        } else {
-            delete point;
-            points.erase( delIter );
-            retValue = true;
-        }
+        assert( delIter != points.end() );
+		delete point;
+		points.erase( delIter );
     }
 
-    return retValue;
+    return ( point != 0 );
 }
 
 /*! \brief Return the maximum X value in this point set.
@@ -205,13 +167,13 @@ bool ExplicitPointSet::removePointFindY( const double yValue ){
 * \author Josh Lurz
 */
 double ExplicitPointSet::getMaxX() const {
-DataPointConstIterator maxPoint = max_element( points.begin(), points.end(), DataPoint::LesserX() );
-if( maxPoint != points.end() ){
-    return (*maxPoint)->getX();
-}
- 
-// There are no points, return the negative error code.
-return -DBL_MAX;
+	DataPointConstIterator maxPoint = max_element( points.begin(), points.end(), DataPoint::LesserX() );
+	if( maxPoint != points.end() ){
+		return (*maxPoint)->getX();
+	}
+
+	// There are no points, return the negative error code.
+	return -DBL_MAX;
 }
 
 /*! \brief Return the maximum Y value in this point set.
@@ -276,22 +238,12 @@ ExplicitPointSet::SortedPairVector ExplicitPointSet::getSortedPairs( const doubl
 
 //! Returns whether the point set contains a point with the given x value.
 bool ExplicitPointSet::containsX( const double x ) const {
-    bool retValue = false;
-    
-    if( findX( x ) ){
-        retValue = true;
-    }
-    return retValue;
+	return ( findX( x ) != 0 );
 }
 
 //! Returns whether the point set contains a point with the given y value.
 bool ExplicitPointSet::containsY( const double y ) const {
-    bool retValue = false;
-    
-    if( findY( y ) ){
-        retValue = true;
-    }
-    return retValue;
+	return ( findY( y ) != 0 );
 }
  
 //! Determines the x coordinate of the nearest point below x.
@@ -353,24 +305,19 @@ void ExplicitPointSet::toInputXML( ostream& out, Tabs* tabs ) const {
 
 //! Parse an ExplicitPointSet from a DOM tree.
 void ExplicitPointSet::XMLParse( const xercesc::DOMNode* node ) {
-    
     // First clear the existing points to prevent a memory leak.
     clear();
-
-    xercesc::DOMNode* curr = 0;
-    xercesc::DOMNodeList* nodeList; 
-    string nodeName;
 
     // assume node is valid.
     assert( node );
 
     // get all children of the node.
-    nodeList = node->getChildNodes();
+    xercesc::DOMNodeList* nodeList = node->getChildNodes();
 
     // loop through the children
     for ( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<void>::safeTranscode( curr->getNodeName() );
+        xercesc::DOMNode* curr = nodeList->item( i );
+	    string nodeName = XMLHelper<void>::safeTranscode( curr->getNodeName() );
 
         // select the type of node.
         if( nodeName == "#text" ) {

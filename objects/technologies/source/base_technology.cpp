@@ -1,6 +1,6 @@
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -18,8 +18,6 @@
 *
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -42,6 +40,7 @@
 #include "technologies/include/expenditure.h"
 #include "marketplace/include/marketplace.h"
 #include "emissions/include/ghg.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -50,49 +49,49 @@ extern Scenario* scenario;
 
 //!< Default Constructor
 BaseTechnology::BaseTechnology() {
-	const int maxper = scenario->getModeltime()->getmaxper();
-	mOutputs.resize( maxper );
+    const int maxper = scenario->getModeltime()->getmaxper();
+    mOutputs.resize( maxper );
     prodDmdFn = 0;
 }
 
 //!< Destructor
 BaseTechnology::~BaseTechnology() {
-	clear();
+    clear();
 }
 
 BaseTechnology::BaseTechnology( const BaseTechnology& baseTechIn ) {
-	const int maxper = scenario->getModeltime()->getmaxper();
-	mOutputs.resize( maxper );
+    const int maxper = scenario->getModeltime()->getmaxper();
+    mOutputs.resize( maxper );
     copy( baseTechIn );
 }
 
 BaseTechnology& BaseTechnology::operator =( const BaseTechnology& baseTechIn ) {
-	if ( this != &baseTechIn ) {
+    if ( this != &baseTechIn ) {
         clear();
-		copy( baseTechIn );
-	}
-	return *this;
+        copy( baseTechIn );
+    }
+    return *this;
 }
 
 void BaseTechnology::copy( const BaseTechnology& baseTechIn ) {
-	name = baseTechIn.name;
-	prodDmdFnType = baseTechIn.prodDmdFnType;
+    name = baseTechIn.name;
+    prodDmdFnType = baseTechIn.prodDmdFnType;
     prodDmdFn = baseTechIn.prodDmdFn;
     inputNameToNo = baseTechIn.inputNameToNo;
     mGhgNameMap = baseTechIn.mGhgNameMap;
     // year? expenditure?
 
-	for ( unsigned int i = 0; i < baseTechIn.input.size(); i++) {
-		input.push_back( baseTechIn.input[i]->clone() );
-	}
+    for ( unsigned int i = 0; i < baseTechIn.input.size(); i++) {
+        input.push_back( baseTechIn.input[i]->clone() );
+    }
     for( vector<Ghg*>::const_iterator ghg = baseTechIn.mGhgs.begin(); ghg != baseTechIn.mGhgs.end(); ++ghg ){
         mGhgs.push_back( (*ghg)->clone() );
     }
 }
 
 void BaseTechnology::copyParam( const BaseTechnology* baseTechIn ) {
-	name = baseTechIn->name;
-	prodDmdFnType = baseTechIn->prodDmdFnType;
+    name = baseTechIn->name;
+    prodDmdFnType = baseTechIn->prodDmdFnType;
     prodDmdFn = baseTechIn->prodDmdFn;
     
     // First loop through and remove any inputs that are not in the copy-from technology.
@@ -126,7 +125,7 @@ void BaseTechnology::copyParam( const BaseTechnology* baseTechIn ) {
         else {
             input[ util::searchForValue( inputNameToNo, (*iter)->getName() ) ]->copyParam( *iter );
         }
-	} // end for
+    } // end for
     
     // For each Ghg check if it exists in the current technology.
     for ( vector<Ghg*>::const_iterator ghg = baseTechIn->mGhgs.begin(); ghg != baseTechIn->mGhgs.end(); ++ghg ) {
@@ -140,13 +139,13 @@ void BaseTechnology::copyParam( const BaseTechnology* baseTechIn ) {
         else {
             // TODO: Add copy into code here.
         }
-	} // end for
+    } // end for
 }
 
 void BaseTechnology::clear() {
-	for( InputIterator iter = input.begin(); iter != input.end(); ++iter ) {
-		delete *iter;
-	}
+    for( InputIterator iter = input.begin(); iter != input.end(); ++iter ) {
+        delete *iter;
+    }
     for( GHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         delete *ghg;
     }
@@ -160,7 +159,7 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
     // get the name attribute.
     name = XMLHelper<string>::getAttrString( node, "name" );
     categoryName = XMLHelper<string>::getAttrString( node, "categoryName" );
-	year = XMLHelper<int>::getAttr( node, "year" );
+    year = XMLHelper<int>::getAttr( node, "year" );
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
@@ -173,79 +172,79 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
         if( nodeName == "#text" ) {
             continue;
         }
-		else if  ( nodeName == "name" ) {
-			name = XMLHelper<string>::getValue( curr );
-		}
-		else if ( nodeName == ProductionInput::getXMLNameStatic() ) {
+        else if  ( nodeName == "name" ) {
+            name = XMLHelper<string>::getValue( curr );
+        }
+        else if ( nodeName == ProductionInput::getXMLNameStatic() ) {
             parseContainerNode( curr, input, inputNameToNo, new ProductionInput() );
-		}
-		else if (nodeName == DemandInput::getXMLNameStatic() ) {
+        }
+        else if (nodeName == DemandInput::getXMLNameStatic() ) {
             parseContainerNode( curr, input, inputNameToNo, new DemandInput() );
-		}
-		else if ( nodeName == "prodDmdFnType" ) {
-			prodDmdFnType = XMLHelper<string>::getValue( curr );
-		}
+        }
+        else if ( nodeName == "prodDmdFnType" ) {
+            prodDmdFnType = XMLHelper<string>::getValue( curr );
+        }
         else if( nodeName == Ghg::getXMLNameStatic() ){
             parseContainerNode( curr, mGhgs, mGhgNameMap, new Ghg() );
         }
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
-			ILogger& mainLog = ILogger::getLogger( "main_log" );
-			mainLog.setLevel( ILogger::WARNING );
-			mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
-		}
-	}
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
+        }
+    }
 }
 
 //! Output to XML data
 void BaseTechnology::toInputXML( ostream& out, Tabs* tabs ) const {
 
-	// write the beginning tag.
+    // write the beginning tag.
     XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year );
 
-	//XMLWriteElement( year, "year", out, tabs );
-	XMLWriteElement( prodDmdFnType, "prodDmdFnType", out, tabs );
+    //XMLWriteElement( year, "year", out, tabs );
+    XMLWriteElement( prodDmdFnType, "prodDmdFnType", out, tabs );
     
-	for( unsigned int iter = 0; iter < input.size(); iter++ ){
-		input[ iter ]->toInputXML( out, tabs );
-	}
+    for( unsigned int iter = 0; iter < input.size(); iter++ ){
+        input[ iter ]->toInputXML( out, tabs );
+    }
     
     for( vector<Ghg*>::const_iterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         (*ghg)->toInputXML( out, tabs );
     }
-	toInputXMLDerived( out, tabs );
+    toInputXMLDerived( out, tabs );
 
-	// write the closing tag.
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    // write the closing tag.
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Output debug info to XML data
 void BaseTechnology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-	// write the beginning tag.
-	XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year );
+    // write the beginning tag.
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year );
 
-	XMLWriteElement( prodDmdFnType, "prodDmdFnType", out, tabs );
+    XMLWriteElement( prodDmdFnType, "prodDmdFnType", out, tabs );
 
-	for( unsigned int iter = 0; iter < input.size(); iter++ ){
-		input[ iter ]->toDebugXML( period, out, tabs );
-	}
-	for( vector<Ghg*>::const_iterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
-		(*ghg)->toDebugXML( period, out, tabs );
-	}
-	expenditure.toDebugXML( period, out, tabs );
+    for( unsigned int iter = 0; iter < input.size(); iter++ ){
+        input[ iter ]->toDebugXML( period, out, tabs );
+    }
+    for( vector<Ghg*>::const_iterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
+        (*ghg)->toDebugXML( period, out, tabs );
+    }
+    expenditure.toDebugXML( period, out, tabs );
 
-	XMLWriteElement( mOutputs[ period ], "output", out, tabs );
+    XMLWriteElement( mOutputs[ period ], "output", out, tabs );
 
-	toDebugXMLDerived( period, out, tabs );
+    toDebugXMLDerived( period, out, tabs );
 
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Complete the initialization of the BaseTechnology object.
 void BaseTechnology::completeInit( const std::string& regionName ) {
-	for( InputIterator anInput = input.begin(); anInput != input.end(); ++anInput ) {
+    for( InputIterator anInput = input.begin(); anInput != input.end(); ++anInput ) {
          // This does not appear to do anything, might not work if it did due to later copying.
-		(*anInput)->completeInit();
-	}
+        (*anInput)->completeInit();
+    }
 
     // Check if CO2 is missing. 
     if( !util::hasValue( mGhgNameMap, string( "CO2" ) ) ){
@@ -275,19 +274,21 @@ void BaseTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, const stri
 }
 
 /*! \brief Clear out empty inputs.
-* \details Loop through the set of inputs for a technology and remove all inputs which have a currency
-* demand of zero. Resets the name to number map to contain the correct mappings.
+* \details Loop through the set of inputs for a technology and remove all inputs
+*          which have a currency demand of zero. Resets the name to number map
+*          to contain the correct mappings.
 */
 void BaseTechnology::removeEmptyInputs(){
     for( InputIterator currInput = input.begin(); currInput != input.end(); ++currInput ){
         if( (*currInput)->getDemandCurrency() == 0 ){
             // Remove the input object.
             delete *currInput;
-            // Remove the dangling pointer and empty vector position.
-            // The erase operation invalidates any iterators at or after the position that was erased.
-            // The postfix decrement returns the current iterator to the vector delete function, then
-            // decrements the iterator. This allows the erasure of the current position without invalidating the
-            // iterator.
+            // Remove the dangling pointer and empty vector position. The erase
+            // operation invalidates any iterators at or after the position that
+            // was erased. The postfix decrement returns the current iterator to
+            // the vector delete function, then decrements the iterator. This
+            // allows the erasure of the current position without invalidating
+            // the iterator.
             input.erase( currInput-- );
         }
     }
@@ -304,16 +305,16 @@ void BaseTechnology::initProdDmdFn() {
 
 //! get technology name
 const string& BaseTechnology::getName() const {
-	return name;
+    return name;
 }
 
 //! get technology year
 int BaseTechnology::getYear() const {
-	return year;
+    return year;
 }
 
 void BaseTechnology::setYear( int newYear ) {
-	year = newYear;
+    year = newYear;
 }
 
 /*! \brief Get the output of the technology in a given period.
@@ -339,12 +340,12 @@ double BaseTechnology::getOutput( const int aPeriod ) const {
 void BaseTechnology::calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
                                     const string& aSectorName, const int aPeriod )
 {
-	// initialize so that aMoreSectorInfo does not have any impact on price 
-	// and override only if aMoreSectorInfo is not null
-	double transportationAdder = 0;
-	double transportationMult = 1;
-	double proportionalTax = 1;
-	double additiveTax = 0;
+    // initialize so that aMoreSectorInfo does not have any impact on price 
+    // and override only if aMoreSectorInfo is not null
+    double transportationAdder = 0;
+    double transportationMult = 1;
+    double proportionalTax = 1;
+    double additiveTax = 0;
 
     // if pointer is not null
     if(aMoreSectorInfo) {
@@ -380,33 +381,32 @@ void BaseTechnology::calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const
 }
 
 void BaseTechnology::updateMarketplace( const string& sectorName, const string& regionName, const int period ) {
-	Marketplace* marketplace = scenario->getMarketplace();
-	double totalDemand = 0;
-	for( InputIterator curr = input.begin(); curr != input.end(); ++curr ) {
+    Marketplace* marketplace = scenario->getMarketplace();
+    double totalDemand = 0;
+    for( InputIterator curr = input.begin(); curr != input.end(); ++curr ) {
         double tempDemand = (*curr)->getDemandCurrency();
         if( tempDemand < 0 ){
             cout << "Error trying to add negative demand currency to marketplace from BaseTechnology." << endl;
         }
-		marketplace->addToDemand( (*curr)->getName(), regionName, tempDemand, period );
-		totalDemand += tempDemand;
-	}
-	marketplace->addToSupply( sectorName, regionName, totalDemand, period );
+        marketplace->addToDemand( (*curr)->getName(), regionName, tempDemand, period );
+        totalDemand += tempDemand;
+    }
+    marketplace->addToSupply( sectorName, regionName, totalDemand, period );
 }
 
 void BaseTechnology::csvSGMOutputFile( ostream& aFile, const int period ) const {
-	aFile <<  "Commodity" << ',' << "Consumption" << ',' << "Price Paid" << endl;
-	for( CInputIterator curr = input.begin(); curr != input.end(); ++curr ) {
-		(*curr)->csvSGMOutputFile( aFile, period );
-	}
-	aFile << "Total Consumption" << ',' << mOutputs[ period ] << endl << endl;
+    aFile <<  "Commodity" << ',' << "Consumption" << ',' << "Price Paid" << endl;
+    for( CInputIterator curr = input.begin(); curr != input.end(); ++curr ) {
+        (*curr)->csvSGMOutputFile( aFile, period );
+    }
+    aFile << "Total Consumption" << ',' << mOutputs[ period ] << endl << endl;
 }
 
-void BaseTechnology::updateOutputContainer( OutputContainer* outputContainer, const string& aRegionName,
-                                            const string& aSectorName, const int period ) const
+void BaseTechnology::accept( IVisitor* aVisitor, const int period ) const
 {
-	outputContainer->updateBaseTechnology( this );
+	aVisitor->updateBaseTechnology( this );
 	for( CInputIterator cInput = input.begin(); cInput != input.end(); ++cInput ) {
-		(*cInput)->updateOutputContainer( outputContainer, period );
+		(*cInput)->accept( aVisitor, period );
 	}
 }
 

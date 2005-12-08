@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief The building demand subsector
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
@@ -38,6 +36,7 @@ class IInfo;
 
 class BuildingDemandSubSector : public Subsector
 {
+    friend class XMLDBOutputter;
 public:
     BuildingDemandSubSector( const std::string regionName, const std::string sectorName );
     static const std::string& getXMLNameStatic();
@@ -54,11 +53,12 @@ public:
     double getOutput( const int period );
     void setoutput( const double demand, const int period, const GDP* gdp );
     void completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder );
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+
 protected:
     virtual const std::string& getXMLName() const;
-    std::string getInternalGainsMarketName( const std::string sectorName ) const;
+    const std::string getInternalGainsMarketName( const std::string aSectorName ) const;
     bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
-    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     void setUpSubSectorMarkets();

@@ -3,8 +3,6 @@
 * \ingroup objects
 * \brief GHGMac source file.
 * \author Nick Fernandez
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -179,8 +177,10 @@ void GhgMAC::toInputXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteElementCheckDefault( finalReductionYear, "finalReductionYear", out, tabs, modeltime->getEndYear() );
 	const vector<pair<double,double> > pairs = macCurve->getSortedPairs();
 	typedef vector<pair<double, double> >::const_iterator PairIterator;
+	map<string, double> attrs;
 	for( PairIterator currPair = pairs.begin(); currPair != pairs.end(); ++currPair ) {
-        XMLWriteElementAndAttribute( currPair->second, "Reduction", out, tabs, currPair->first, "tax" );
+		attrs[ "tax" ] = currPair->first;
+        XMLWriteElementWithAttributes( currPair->second, "Reduction", out, tabs, attrs );
 	}
 	XMLWriteClosingTag( getXMLName(), out, tabs );
 }

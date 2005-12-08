@@ -7,6 +7,16 @@
 #pragma warning( disable:4675 )
 #endif
 
+/*
+* This software, which is provided in confidence, was prepared by employees of
+* Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
+* Battelle has certain unperfected rights in the software which should not be
+* copied or otherwise disseminated outside your organization without the express
+* written authorization from Battelle. All rights to the software are reserved
+* by Battelle. Battelle makes no warranty, express or implied, and assumes no
+* liability or responsibility for the use of this software.
+*/
+
 /*! 
 * \file atom.h  
 * \ingroup util

@@ -3,11 +3,9 @@
 * \ingroup objects
 * \brief MergeRunner class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
-#include <iostream>
-#include <xercesc/parsers/XercesDOMParser.hpp>
+
+#include "util/base/include/definitions.h"
 #include <xercesc/dom/DOMNode.hpp>
 #include "containers/include/merge_runner.h"
 #include "util/base/include/timer.h"
@@ -75,7 +73,7 @@ bool MergeRunner::runScenario( const int aSinglePeriod, Timer& aTimer ){
 void MergeRunner::printOutput( Timer& timer, const bool aCloseDB ) const {
     // Print output xml file.
     const Configuration* conf = Configuration::getInstance();
-    const string xmlOutFileName = conf->getFile( "xmlOutputFileName" );
+    const string xmlOutFileName = conf->getFile( "xmlOutputFileName", "output.xml" );
     ofstream xmlOut;
     xmlOut.open( xmlOutFileName.c_str(), ios::out );
     util::checkIsOpen( xmlOut, xmlOutFileName );
@@ -101,7 +99,9 @@ const Scenario* MergeRunner::getInternalScenario() const {
 	return mScenario.get();
 }
 
-//! FIX FIX
+/*! \brief Get the static name of the class.
+* \return The static name of the class.
+*/
 const string& MergeRunner::getXMLNameStatic(){
 	static const string XML_NAME = "merge-runner";
 	return XML_NAME;

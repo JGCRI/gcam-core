@@ -1,6 +1,6 @@
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -34,7 +34,7 @@
 #include "marketplace/include/marketplace.h"
 #include "demographics/include/demographic.h"
 #include "util/base/include/model_time.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 #include "functions/include/function_utils.h"
 
 using namespace std;
@@ -732,11 +732,11 @@ void HouseholdConsumer::csvSGMOutputFile( ostream& aFile, const int period ) con
 	}
 }
 
-void HouseholdConsumer::updateOutputContainer( OutputContainer* outputContainer,  const string& aRegionName, const string& aSectorName, const int aPeriod ) const {
+void HouseholdConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     // I don't like this here but its difficult to do in the output container because input does not
     // have a year.
     if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
-        Consumer::updateOutputContainer( outputContainer, aRegionName, aSectorName, aPeriod );
-	    outputContainer->updateHouseholdConsumer( this, aPeriod );
+        Consumer::accept( aVisitor, aPeriod );
+	    aVisitor->updateHouseholdConsumer( this, aPeriod );
     }
 }

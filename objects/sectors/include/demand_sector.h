@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The DemandSector class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
@@ -47,9 +45,9 @@ class DemandSector: public Sector
 public:
     DemandSector( const std::string aRegionName );
     virtual ~DemandSector();
-	void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
-	void supply( const int aPeriod, const GDP* aGDP );
-	static const std::string& getXMLNameStatic();
+    void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
+    void supply( const int aPeriod, const GDP* aGDP );
+    static const std::string& getXMLNameStatic();
     virtual void completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder );
     
     virtual void initCalc( NationalAccount& aNationalAccount,
@@ -68,6 +66,7 @@ public:
     double getServiceWoTC( const int period ) const;
     void scaleOutput( const int period, double scaleFactor );
     void setCalibratedSupplyInfo( const int aPeriod ) const {}
+	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     bool perCapitaBased; //!< demand equation based on per capita GNP, true or false.
     double pElasticityBase; //!< base year energy price elasticity
@@ -76,17 +75,16 @@ protected:
     std::vector<double> pElasticity; //!< price elasticity.
     std::vector<double> aeei; //!< autonomous end-use energy intensity parameter
     std::vector<double> techChangeCumm; //!< cummulative technical change on end-use service
+    
     virtual void setMarket();
-    virtual void printStyle( std::ostream& outStream ) const;
     void MCoutput_subsec() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
-    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
- 	virtual const std::string& getXMLName() const; 
+    virtual const std::string& getXMLName() const; 
     void setoutput( const double demand, const int period, const GDP* gdp );
 private:
-	static const std::string XML_NAME; //!< node name for toXML methods
+    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _DEMAND_SECTOR_H_

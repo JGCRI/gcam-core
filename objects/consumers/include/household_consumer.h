@@ -6,7 +6,7 @@
 
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -34,7 +34,7 @@ class NationalAccount;
 class Demographic;
 class Tabs;
 class MoreSectorInfo;
-class OutputContainer;
+class IVisitor;
 
 /*! 
 * \ingroup Objects
@@ -73,8 +73,7 @@ public:
 	static const std::string& getXMLNameStatic();
 
 	void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	void updateOutputContainer( OutputContainer* outputContainer,
-		const std::string& aRegionName, const std::string& aSectorName, const int aPeriod ) const;
+	void accept( IVisitor* aVisitor, const int aPeriod ) const;
 	double getLaborSupply() const;
 protected:
     bool isCoefBased() const { return true; }

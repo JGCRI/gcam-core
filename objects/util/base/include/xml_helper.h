@@ -14,8 +14,6 @@
 * It is a templated library so that it should work with any data type.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -26,14 +24,14 @@
 #include <vector>
 #include <map>
 #include <memory>
+
+#include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMAttr.hpp>
 #include <xercesc/dom/DOMElement.hpp>
 #include <xercesc/dom/DOMException.hpp>
 #include <xercesc/sax/HandlerBase.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
-
 #include "util/base/include/model_time.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
@@ -390,25 +388,19 @@ void XMLWriteElement( const T value, const std::string elementName, std::ostream
 * \param elementName Name of the element.
 * \param out Stream to print to.
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
-* \param attrValue Value to print as an attribute.
-* \param attrName Name of attribute.
+* \param aAttrs Map of attribute name to attribute value.
 */
 template<class T, class U>
-void XMLWriteElementAndAttribute( const T value, const std::string elementName, std::ostream& out, const Tabs* tabs, const U attrValue, const std::string attrName ) {
-   
-   tabs->writeTabs( out );
-   
-   out << "<" << elementName;
-   
-   if ( attrName != "" ) {
-      out << " " << attrName <<"=\"" << attrValue << "\"";		
-   }
-      
-   out << ">";
-   
-   out << value;
-   
-   out << "</" << elementName << ">" << std::endl;
+void XMLWriteElementWithAttributes( const T value, const std::string elementName,
+                                   std::ostream& out, const Tabs* tabs,
+                                   const std::map<std::string, U> aAttrs )
+{
+    tabs->writeTabs( out );
+    out << "<" << elementName;
+    for( map<string, U>::const_iterator entry = aAttrs.begin(); entry != aAttrs.end(); ++entry ){
+        out << " " << entry->first <<"=\"" << entry->second << "\"";
+    }
+    out << ">" << value << "</" << elementName << ">" << std::endl;
 }
 
 /*! \brief Write an opening XML tag.
@@ -635,7 +627,11 @@ template<class T>
 void XMLHelper<T>::cleanupParser(){
     delete *getErrorHandlerPointerInternal();
     delete *getParserPointerInternal();
+// The XML database will terminate xerces if it is compiled in. Terminating
+// twice will cause a crash.
+#if( !__USE_XML_DB__ )
     xercesc::XMLPlatformUtils::Terminate();
+#endif
 }
 
 /*! \brief Reset the name to number mapping for a vector to the current names and numbers of the map.

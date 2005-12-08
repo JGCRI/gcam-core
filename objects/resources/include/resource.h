@@ -15,24 +15,27 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <vector>
 #include <map>
+#include "util/base/include/ivisitable.h"
 
 // Forward declaration.
 class SubResource;
 class GDP;
+class IVisitor;
 
 /*! 
 * \ingroup Objects
-* \brief An abstract class which defines a Resource object, which is a container for multiple Subresource objects.
+* \brief An abstract class which defines a Resource object, which is a container
+*        for multiple Subresource objects.
 * \author Sonny Kim
 */
 
-class Resource {
+class Resource: public IVisitable {
+	friend class XMLDBOutputter;
 public:
-    Resource(); // default construtor
+    Resource();
     virtual ~Resource();
     void XMLParse( const xercesc::DOMNode* node );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream &out, Tabs* tabs ) const;
     const std::string& getName() const; 
     void completeInit( const std::string& aRegionName );
@@ -41,8 +44,8 @@ public:
     double getAnnualProd(int per);
     void dbOutput( const std::string& regname ); 
     void csvOutputFile( const std::string& regname ); 
-    void addToDependencyGraph( std::ostream& outStream, const int period ) const;
     void setCalibratedSupplyInfo( const int period, const std::string& regionName );
+	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     std::string name; //!< Resource name
     std::string market; //!< regional market
@@ -58,7 +61,6 @@ protected:
     void setMarket( const std::string& aRegionName );
 	virtual void annualsupply( const std::string& regionName, int per, const GDP* gdp, double price, double prev_price );
     void cumulsupply( double prc, int per );
-    void printStyle( std::ostream& outStream ) const;
 };
 
 /*! 
@@ -70,8 +72,9 @@ protected:
 */
 class DepletableResource: public Resource {
 public: 
-	const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
+protected:
+	const std::string& getXMLName() const;
 	bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
 private:
 	static const std::string XML_NAME; //!< node name for toXML methods
@@ -86,8 +89,10 @@ private:
 */
 class FixedResource: public Resource {
 public: 
-	const std::string& getXMLName() const;
+
 	static const std::string& getXMLNameStatic();
+protected:
+	const std::string& getXMLName() const;
 	bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
 private:
 	static const std::string XML_NAME; //!< node name for toXML methods
@@ -103,12 +108,12 @@ private:
 class RenewableResource: public Resource {
 public: 
 	RenewableResource();
-	const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
-	bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
 protected:
 	std::vector<double> resourceVariance; //!< average resource variance computed from subresources
 	std::vector<double> resourceCapacityFactor; //!< average resource capacity factor computed from subresources
+	bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
+	const std::string& getXMLName() const;
 	void annualsupply( const std::string& regionName, int per, const GDP* gdp, double price, double prev_price );
 private:
 	static const std::string XML_NAME; //!< node name for toXML methods

@@ -6,7 +6,7 @@
 
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -24,12 +24,9 @@
 *
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
-#include <iosfwd>
 #include <xercesc/dom/DOMNode.hpp>
 
 #include "sectors/include/sector.h"
@@ -64,7 +61,6 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-	virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
 };
 
 #endif // _FINAL_DEMAND_SECTOR_H_

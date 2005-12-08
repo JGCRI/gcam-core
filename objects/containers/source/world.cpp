@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief world class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -34,6 +32,7 @@
 #include "util/curves/include/xy_data_point.h"
 #include "solution/util/include/calc_counter.h"
 #include "util/logger/include/ilogger.h"
+#include "util/base/include/ivisitor.h"
 #include "climate/include/iclimate_model.h"
 // Could hide with a factory method.
 #include "climate/include/magicc_model.h"
@@ -45,8 +44,6 @@ using namespace xercesc;
 
 extern "C" { void _stdcall AG2INITC( double[14][12] ); };
 extern Scenario* scenario;
-// static initialize.
-const string World::XML_NAME = "world";
 
 //! Default constructor.
 World::World():
@@ -83,22 +80,13 @@ void World::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
-		// MiniCAM regions
+        // MiniCAM regions
         else if( nodeName == Region::getXMLNameStatic() ){
             parseContainerNode( curr, regions, regionNamesToNumbers, new Region() );
         }
-		// SGM regions
+        // SGM regions
         else if( nodeName == RegionCGE::getXMLNameStatic() ){
             parseContainerNode( curr, regions, regionNamesToNumbers, new RegionCGE() );
-        }
-        else if( nodeName == "primaryFuelName" ) {
-            // Get the fuel name.
-            const string primaryFuelName = XMLHelper<string>::getValueString( curr );
-
-            // Check if it already exists.
-            if( find( primaryFuelList.begin(), primaryFuelList.end(), primaryFuelName ) == primaryFuelList.end() ) {
-                primaryFuelList.push_back( primaryFuelName );
-            }
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -116,8 +104,8 @@ void World::XMLParse( const DOMNode* node ){
 */
 void World::completeInit() {
 
-	// Initialize the region lookup hashmap.
-	createFastLookupMap();
+    // Initialize the region lookup hashmap.
+    createFastLookupMap();
 
     // Finish initializing all the regions.
     for( RegionIterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
@@ -129,10 +117,6 @@ void World::completeInit() {
     if( conf->getBool( "agSectorActive" ) ) {
         initAgLu();
     }
-
-    for( RegionIterator iter = regions.begin(); iter != regions.end(); ++iter ){
-        (*iter)->setupCalibrationMarkets();
-    }
 }
 /*! \brief Initialize the region partial derivative calculation hash map.
 * \details Constructs a mapping of region Atom to index within the region
@@ -142,24 +126,24 @@ void World::completeInit() {
 *          store the atoms of the regions that they contain.
 */
 void World::createFastLookupMap(){
-	// Construct the hashmap as 20 percent full for performance.
-	mRegionLookupMap.reset( new FastRegionLookupMap( regions.size() * 5 ) );
+    // Construct the hashmap as 20 percent full for performance.
+    mRegionLookupMap.reset( new FastRegionLookupMap( regions.size() * 5 ) );
 
-	// Add each region id to number mapping to the hashmap.
-	for( unsigned int i = 0; i < regions.size(); ++i ){
-		// An atom does not need to be created if this is the second or later run
-		// of a batch of scenarios.
-		const objects::Atom* regionID = objects::AtomRegistry::getInstance()->findAtom( regions[ i ]->getName() );
-		
-		if( !regionID ){
-			// Construct an atom for the region name. The Atom will automatically be
-			// registered.
-			regionID = new objects::Atom( regions[ i ]->getName() );
-		}
+    // Add each region id to number mapping to the hashmap.
+    for( unsigned int i = 0; i < regions.size(); ++i ){
+        // An atom does not need to be created if this is the second or later run
+        // of a batch of scenarios.
+        const objects::Atom* regionID = objects::AtomRegistry::getInstance()->findAtom( regions[ i ]->getName() );
+        
+        if( !regionID ){
+            // Construct an atom for the region name. The Atom will automatically be
+            // registered.
+            regionID = new objects::Atom( regions[ i ]->getName() );
+        }
 
-		// Add an entry to the hashmap for the id.
-		mRegionLookupMap->insert( make_pair( regionID, i ) );
-	}
+        // Add an entry to the hashmap for the id.
+        mRegionLookupMap->insert( make_pair( regionID, i ) );
+    }
 }
 
 //! Initialize the AgLu model.
@@ -169,12 +153,11 @@ void World::initAgLu() {
     mainLog << "Initializing agLU..." << endl;
 
     double prices[ 14 ][ 12 ]; 
-    vector<double> tempVec( 12 );
-
 #if(__HAVE_FORTRAN__)
     AG2INITC( prices );
 #endif
-    for ( int j = 0; j < static_cast<int>( regions.size() ); j++ ) {
+    for ( unsigned int j = 0; j < regions.size(); j++ ) {
+        vector<double> tempVec( 12 );
         for ( int k = 0; k < AgSector::getNumAgMarkets(); k++ ) {
             tempVec[ k ] = prices[ j ][ k ];
         }
@@ -185,31 +168,22 @@ void World::initAgLu() {
 //! Write out datamembers to XML output stream.
 void World::toInputXML( ostream& out, Tabs* tabs ) const {
 
-    XMLWriteOpeningTag ( getXMLName(), out, tabs );
-
-    // write the xml for the class members.
-    for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
-        XMLWriteElement( *fuelIter, "primaryFuelName", out, tabs );
-    }
+    XMLWriteOpeningTag ( getXMLNameStatic(), out, tabs );
 
     for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
         ( *i )->toInputXML( out, tabs );
     }
-    // finished writing xml for the class members.
 
-    XMLWriteClosingTag( getXMLName(), out, tabs );
+    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
 //! Write out XML for debugging purposes.
 /*! \warning This only call Region::toInputXML for the US. */
 void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-	XMLWriteOpeningTag ( getXMLName(), out, tabs, "", period );
+    XMLWriteOpeningTag ( getXMLNameStatic(), out, tabs, "", period );
 
     // write the xml for the class members.
-    for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
-        XMLWriteElement( *fuelIter, "primaryFuelName", out, tabs );
-    }
 
     scenario->getMarketplace()->toDebugXML( period, out, tabs );
 
@@ -218,19 +192,7 @@ void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     }
     // finished writing xml for the class members.
 
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-/*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overridden by derived class pointers.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME.
-*/
-const std::string& World::getXMLName() const {
-	return XML_NAME;
+    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -243,7 +205,19 @@ const std::string& World::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& World::getXMLNameStatic() {
-	return XML_NAME;
+    const static string XML_NAME = "world";
+    return XML_NAME;
+}
+
+/*! \brief Returns the name of the World.
+* \details Although there is only one World in the model so a name is
+*          unnecessary, this is needed for compatibility with the IParsable
+*          interface. The function returns instead the XML name.
+* \note In the future World object may have read-in names.
+* \return The name of the world.
+*/
+const string& World::getName() const {
+    return getXMLNameStatic();
 }
 
 //! initialize anything that won't change during the calculation
@@ -256,8 +230,8 @@ void World::initCalc( const int period ) {
     if( conf->getBool( "CalibrationActive" ) ){
         // cal consistency check needs to be before initCalc so calInput values have already been scaled if necessary
         // If any values are scaled, then this is checked at least one more time to see if further scalings are necessary
-        const unsigned MAX_CALCHECK_CALCS = 10;
-        unsigned calCheckIterations = 0;
+        const unsigned int MAX_CALCHECK_CALCS = 10;
+        unsigned int calCheckIterations = 0;
         
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
@@ -271,14 +245,13 @@ void World::initCalc( const int period ) {
     calcCounter->startNewPeriod();
     for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ){
         // Add supplies and demands to the marketplace in the base year for checking data consistency
-	    // and for getting demand and supply totals.
-	    // Need to update markets here after markets have been null by scenario.
+        // and for getting demand and supply totals.
+        // Need to update markets here after markets have been null by scenario.
         // TODO: This should be combined with check data.
         if( period == 0 ){
             ( *i )->updateMarketplace( period );
         }
         ( *i )->initCalc( period );
-        ( *i )->checkData( period );
     }
 }
 
@@ -326,11 +299,11 @@ bool World::checkCalConsistancy( const int period ) {
                     calIsDone = false;
                 }
             }
-             iteration ++;
+            ++iteration;
             // In case user sets up infinite loop in input, break.
             if (iteration > 50 ) {
                 mainLog.setLevel( ILogger::ERROR );
-                mainLog << "ERROR: calibration check stuck in large loop. Aborting. " << endl;
+                mainLog << "Calibration check stuck in large loop. Aborting. " << endl;
                 return true;
             }
         }
@@ -356,21 +329,20 @@ bool World::checkCalConsistancy( const int period ) {
 }
 
 /*! \brief Calculate supply and demand and emissions for all regions.
-* \details This is the main action loop for the model. Uses "MiniCAM" style
-*          logic where primary costs are calculated, then prices of refined
-*          fuels, end-use costs, end-use, etc.
+* \details Loops through regions so that regions can define their own
+*          calculation ordering.
 * \param aPeriod Period to calculate.
 * \param aRegionsToCalc Optional subset of the regions to calculate, if excluded
 *        all regions will be calculated.
 */
-void World::calc( const int aPeriod, const AtomVector& aRegionsToCalc ) {	
+void World::calc( const int aPeriod, const AtomVector& aRegionsToCalc ) {   
     // Get the list of valid region numbers to solve.
     const vector<unsigned int> regionNumbersToCalc = getRegionIndexesToCalculate( aRegionsToCalc );
 
-	/*! \invariant The number of regions to calculate must be between 1 and the
+    /*! \invariant The number of regions to calculate must be between 1 and the
     *              number of regions inclusive. 
     */
-	assert( regionNumbersToCalc.size() > 0 && regionNumbersToCalc.size() <= regions.size() );
+    assert( regionNumbersToCalc.size() > 0 && regionNumbersToCalc.size() <= regions.size() );
 
     // Increment the world.calc count based on the number of regions to solve. 
     if( calcCounter ){
@@ -385,12 +357,9 @@ void World::calc( const int aPeriod, const AtomVector& aRegionsToCalc ) {
 
 //! Update all summary information for reporting
 // Orginally in world.calc, removed to call only once after solved
-void World::updateSummary( const int period ) {
+void World::updateSummary( const list<string> aPrimaryFuelList, const int period ) {
     for( RegionIterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->calcTotalCarbonTaxPaid( period );
-        ( *i )->calcEmissions( period );
-        ( *i )->updateSummary( period );
-        ( *i )->calcEmissFuel( period );
+        ( *i )->updateSummary( aPrimaryFuelList, period );
         ( *i )->updateAllOutputContainers( period );
     }
 }
@@ -459,12 +428,13 @@ void World::csvGlobalDataFile() const {
 }
 
 //! MiniCAM style output to database
-void World::dbOutput() const {
+void World::dbOutput( const list<string>& aPrimaryFuelList ) const {
     // Write out concentrations
     mClimateModel->printDBOutput();
+
     // call regional output
     for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->dbOutput();
+        ( *i )->dbOutput( aPrimaryFuelList );
     }
 }
 
@@ -496,7 +466,7 @@ bool World::getCalibrationSetting() const {
 */
 bool World::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
     bool isAllCalibrated = true;
-	for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
+    for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
         isAllCalibrated &= ( *i )->isAllCalibrated( period, calAccuracy, printWarnings );
     }
     return isAllCalibrated;
@@ -529,51 +499,27 @@ const map<string,int> World::getOutputRegionMap() const {
 * \return A constant vector of region IDs.
 */
 const World::AtomVector World::getRegionIDs() const {
-	AtomVector regionIDs;
-	
-	// Iterate over the regions and lookup the ID for each region.
+    AtomVector regionIDs;
+    
+    // Iterate over the regions and lookup the ID for each region.
     for( CRegionIterator i = regions.begin(); i != regions.end(); ++i ) {
-		// Find the atom for the region name.
-		const objects::Atom* regionID = objects::AtomRegistry::getInstance()->findAtom( (*i)->getName() );
-		/*! \invariant The region atom has already been created, otherwise the
+        // Find the atom for the region name.
+        const objects::Atom* regionID = objects::AtomRegistry::getInstance()->findAtom( (*i)->getName() );
+        /*! \invariant The region atom has already been created, otherwise the
         *              atom was not registered when the fast lookup map was
         *              created. 
         */
-		assert( regionID );
-		
-		/*! \invariant The ID of region atom found is equal to the region name. */
-		assert( regionID->getID() == (*i)->getName() );
+        assert( regionID );
+        
+        /*! \invariant The ID of region atom found is equal to the region name. */
+        assert( regionID->getID() == (*i)->getName() );
         regionIDs.push_back( regionID );
     }
-	/*! \post The size of the region ID vector is equal to the size of the
+    /*! \post The size of the region ID vector is equal to the size of the
     *         region vector. 
     */
-	assert( regionIDs.size() == regions.size() );
+    assert( regionIDs.size() == regions.size() );
     return regionIDs;
-}
-
-/*! \brief A function which print dependency graphs showing fuel usage by sector.
-*
-* This function is called by Scenario::printGraphs to iterate through the regions and call
-* Region::printGraphs, which does the actual printing.
-*
-* \param outStream An output stream to write to which was previously created.
-* \param period The period to print graphs for.
-* \return void
-* \warning Currently only the U.S. has graphs printed for it.
-*/
-void World::printGraphs( ostream& outStream, const int period ) const {
-    assert( outStream );
-
-    // Only do the US for now.
-    for ( CRegionIterator regionIter = regions.begin(); regionIter == regions.begin(); regionIter++ ) {
-        ( *regionIter )->printGraphs( outStream, period );
-    }
-}
-
-//! Return the list of primary fuels. 
-const vector<string> World::getPrimaryFuelList() const {
-    return primaryFuelList;
 }
 
 /*! \brief Set a fixed tax for all regions.
@@ -672,7 +618,7 @@ const vector<unsigned int> World::getRegionIndexesToCalculate( const AtomVector&
     // Check for the empty list of names, return the full list of region numbers.
     if ( aRegionsToCalc.empty() ) {
         for( unsigned int regionNumber = 0; regionNumber < regions.size(); ++regionNumber ) {
-			regionNumbersToCalc.push_back( regionNumber );
+            regionNumbersToCalc.push_back( regionNumber );
         }
     }
     // Check if each name is valid and add its region number to the vector if it is. 
@@ -699,10 +645,10 @@ const vector<unsigned int> World::getRegionIndexesToCalculate( const AtomVector&
         }
     }
 
-	/*! \post The number of regions to calculate is between one and the total
+    /*! \post The number of regions to calculate is between one and the total
     *         number of regions inclusive.
     */
-	assert( !regionNumbersToCalc.empty() && regionNumbersToCalc.size() <= regions.size() );
+    assert( !regionNumbersToCalc.empty() && regionNumbersToCalc.size() <= regions.size() );
 
     return regionNumbersToCalc;
 }
@@ -721,14 +667,34 @@ void World::finalizePeriod( const int aPeriod ){
 }
 
 void World::csvSGMOutputFile( ostream& aFile, const int period ) const {
-	for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); ++rIter ){
-		( *rIter )->csvSGMOutputFile( aFile, period );
-	}
+    for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); ++rIter ){
+        ( *rIter )->csvSGMOutputFile( aFile, period );
+    }
 }
 
 void World::csvSGMGenFile( ostream& aFile ) const {
-	for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); ++rIter ){
-		( *rIter )->csvSGMGenFile( aFile );
-	}
+    for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); ++rIter ){
+        ( *rIter )->csvSGMGenFile( aFile );
+    }
 }
 
+/*! \brief Update a visitor for the World.
+* \param aVisitor Visitor to update.
+* \param aPeriod Period to update.
+*/
+void World::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitWorld( this, aPeriod );
+	
+	// Visit the marketplace
+	scenario->getMarketplace()->accept( aVisitor, aPeriod );
+	
+	// Visit the climate model.
+	mClimateModel->accept( aVisitor, aPeriod );
+
+	// loop for regions
+	for( CRegionIterator currRegion = regions.begin(); currRegion != regions.end(); ++currRegion ){
+		(*currRegion)->accept( aVisitor, aPeriod );
+    }
+
+    aVisitor->endVisitWorld( this, aPeriod );
+}

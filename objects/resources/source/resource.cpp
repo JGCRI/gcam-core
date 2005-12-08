@@ -27,6 +27,7 @@
 #include "marketplace/include/imarket_type.h"
 #include "resources/include/resource.h"
 #include "resources/include/renewable_subresource.h"
+#include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
 
 using namespace std;
@@ -133,31 +134,6 @@ void Resource::toInputXML( ostream& out, Tabs* tabs ) const {
 	}
 
 	// finished writing xml for the class members.
-	XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-//! Write datamembers to datastream in XML format for outputting results.
-void Resource::toOutputXML( ostream& out, Tabs* tabs ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
-
-	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
-
-	// write the xml for the class members.
-	// write out the market string.
-	XMLWriteElement( market, "market", out, tabs );
-
-	// write out resource prices for all periods
-	for(int m = 0; m < static_cast<int>(rscprc.size()); m++ ) {
-		XMLWriteElement( rscprc[m], "price", out, tabs, modeltime->getper_to_yr(m));
-	}
-
-	// write out the depresource objects.
-	for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
-		( *i )->toInputXML( out, tabs );
-	}
-
-	// finished writing xml for the class members.
-
 	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
@@ -327,39 +303,18 @@ void Resource::dbOutput( const string& regname ) {
 	}
 }
 
-/*! \brief A function to add the resource sectors to an existing graph.
-*
-* For resource sectors only add style information.
-*
-* \author Josh Lurz, Steve Smith
-* \param outStream An output stream to write to which was previously created.
-* \param period The period to print graphs for.
+/*! \brief Update an output container for a Resource.
+* \param aOutputContainer Output container to update.
+* \param aPeriod Period to update.
 */
-void Resource::addToDependencyGraph( ostream& outStream, const int period ) const {
-
-	// Print out the style for the Sector.
-	printStyle( outStream );
-}
-
-
-/*! \brief A function to add the Sector coloring and style to the dependency graph.
-*
-* This function add the Sector specific coloring and style to the dependency graph.
-*
-* \author Josh Lurz
-* \param outStream An output stream to write to which was previously created.
-*/
-void Resource::printStyle( ostream& outStream ) const {
-
-	// Make sure the output stream is open.
-	assert( outStream );
-
-	// Get the sector name.
-	string sectorName = getName();
-	util::replaceSpaces( sectorName );
-
-	// output sector coloring here.
-	outStream << "\t" << sectorName << " [shape=box, style=filled, color=indianred1 ];" << endl;
+void Resource::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitResource( this, aPeriod );
+	
+	// Update the output container for the subresources.
+	for( unsigned int i = 0; i < subResource.size(); ++i ){
+		subResource[ i ]->accept( aVisitor, aPeriod );
+	}
+	aVisitor->endVisitResource( this, aPeriod );
 }
 
 /*! \brief Set marketInfo for fixed supplies for this resources.

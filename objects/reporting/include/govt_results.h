@@ -6,12 +6,12 @@
 
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -31,7 +31,7 @@
 #include <iosfwd>
 #include <memory>
 
-#include "reporting/include/output_container.h"
+#include "util/base/include/default_visitor.h"
 
 /*! 
 * \ingroup Objects
@@ -47,18 +47,18 @@ class GovtConsumer;
 
 class StorageTable;
 
-class GovtResults : public OutputContainer {
+class GovtResults : public DefaultVisitor {
 public:
-    GovtResults( const std::string& aRegionName );
-    void output( std::ostream& aFile, const int period ) const;
-    void updateRegionCGE( const RegionCGE* aRegionCGE );
-    void updateSector( const Sector* aSector );
-	void updateProductionTechnology( const ProductionTechnology* prodTech, 
-		const std::string& aRegionName, const std::string& aSectorName, const int period );
+    GovtResults( const std::string& aRegionName, std::ostream& aFile );
+    void finish() const;
+    void startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod );
+    void startVisitSector( const Sector* aSector, const int aPeriod );
+	void updateProductionTechnology( const ProductionTechnology* prodTech, const int period );
     void updateGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod );
-    void updateHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, 
-const int aPeriod );
+    void updateHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, const int aPeriod );
 private:
+    //! The file to which to write.
+    std::ostream& mFile;
     const std::string mRegionName; //!< The name of the region this container is reporting for.
     std::auto_ptr<StorageTable> mTaxReceipts; //!< The tax receipts storage table.
     std::auto_ptr<StorageTable> mSubsidies; //!< The subsidies storage table.

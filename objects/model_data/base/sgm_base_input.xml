@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Son H. Kim (PNNL) -->
 <scenario name="SGM">
-	<summary>"SRES B2 Scenario is used for this Reference Scenario"</summary>
+	<output-meta-data>
+		<summary>SRES B2 Scenario is used for this Reference Scenario</summary>
+	</output-meta-data>
 	<modeltime>
 		<startyear>1990</startyear>
 		<interyear1>2005</interyear1>

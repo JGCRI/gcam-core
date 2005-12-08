@@ -1,6 +1,6 @@
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -18,8 +18,6 @@
 *
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -63,10 +61,6 @@ const string& FinalDemandSector::getXMLName() const {
 const string& FinalDemandSector::getXMLNameStatic() {
     const static string XML_NAME = "finalDemandSector";
 	return XML_NAME;
-}
-
-void FinalDemandSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-	// do nothing
 }
 
 //! Operate the consumers.

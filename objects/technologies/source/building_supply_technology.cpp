@@ -3,8 +3,6 @@
 * \ingroup CIAM
 * \brief The building supply technology
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -91,12 +89,6 @@ bool BuildingSupplyTechnology::XMLDerivedClassParse( const string nodeName, cons
 void BuildingSupplyTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
     XMLWriteElement( internalLoadFraction, "internalLoadFraction", out, tabs);
 }	
-
-//! XML output for viewing.
-void BuildingSupplyTechnology::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( internalLoadFraction, "internalLoadFraction", out, tabs);
-    XMLWriteElement( input * internalLoadFraction, "internalGain", out, tabs );
-}
 
 //! Write object to debugging xml output stream.
 void BuildingSupplyTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 

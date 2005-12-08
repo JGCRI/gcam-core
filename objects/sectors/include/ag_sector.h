@@ -14,11 +14,9 @@
 */
 
 #include <xercesc/dom/DOMNode.hpp>
-#include <iosfwd>
 #include <vector>
 #include <map>
-
-class Tabs;
+#include "util/base/include/iround_trippable.h"
 
 /*! 
 * \ingroup Objects
@@ -26,7 +24,7 @@ class Tabs;
 * \author Josh Lurz
 */
 
-class AgSector {
+class AgSector: public IRoundTrippable {
 
 private:
     void setMarket( const std::string& regname );

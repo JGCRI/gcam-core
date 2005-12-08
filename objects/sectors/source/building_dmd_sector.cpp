@@ -91,18 +91,7 @@ void BuildingDemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
    
     DemandSector::toInputXMLDerived( out, tabs );
     XMLWriteVector( baseService, "baseservice", out, tabs, modeltime, 0.0 );
-}	
-
-
-//! XML output for viewing.
-void BuildingDemandSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    
-    DemandSector::toOutputXMLDerived( out, tabs );
-
-    // write the xml for the class members.
-   XMLWriteVector( baseService, "baseservice", out, tabs, modeltime, 0.0 );
-}
+}   
 
 //! Write object to debugging xml output stream.
 void BuildingDemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
@@ -121,7 +110,7 @@ void BuildingDemandSector::toDebugXMLDerived( const int period, ostream& out, Ta
 * \return The constant XML_NAME.
 */
 const std::string& BuildingDemandSector::getXMLName() const {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -134,7 +123,7 @@ const std::string& BuildingDemandSector::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& BuildingDemandSector::getXMLNameStatic() {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Complete the initialization
@@ -173,9 +162,9 @@ void BuildingDemandSector::initCalc( NationalAccount& aNationalAccount,
 void BuildingDemandSector::aggdemand( const GDP* gdp, const int period ) {
       
     double scaledGdpPerCapita = gdp->getBestScaledGDPperCap(period); 
-			 
-	double scaledTotalGDP = gdp->getApproxScaledGDP(period); //gdp->getGDP(period); 
-	
+             
+    double scaledTotalGDP = gdp->getApproxScaledGDP(period); //gdp->getGDP(period); 
+    
     double ser_dmd;
     
     // Prices are not calculated reliably until period 1 so do not use price ratio until after this
@@ -216,4 +205,3 @@ void BuildingDemandSector::aggdemand( const GDP* gdp, const int period ) {
     // sets subsector outputs, technology outputs, and market demands
     setoutput( service[ period ], period, gdp );
 }
-

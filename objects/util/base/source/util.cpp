@@ -17,19 +17,35 @@ using namespace std;
 
 namespace util {
 	/*! \brief A function to replace spaces with underscores.
-	* \details This function will replace all spaces in a string with
-	*          underscores. Each space will be replaced by exactly one
-	*          underscore, multiple spaces are not concatonated. Other
-	*          whitespace characters are not replaced.
-	* \param stringIn The string in which spaces should be replaced by
+	* \details Returns a string equivalent to the string passed into the
+	*          function but with spaces replaced with underscores. Each space
+    *          will be replaced by exactly one underscore, multiple spaces are
+    *          not concatonated. Other whitespace characters are not replaced.
+	* \param aString The string in which spaces should be replaced by
 	*        underscores.
-	*/
-	void replaceSpaces( string& stringIn ) {
-		basic_string<char>::size_type index;
-		while( stringIn.find_first_of( " " ) != basic_string<char>::npos ) {
-			index = stringIn.find_first_of( " " );
-			stringIn.replace( index, 1, "_" );
+    * \return String with spaces replaced with underscores.
+    */
+	string replaceSpaces( const string& aString ) {
+		string result = aString;
+		while( result.find_first_of( " " ) != basic_string<char>::npos ) {
+			basic_string<char>::size_type index = result.find_first_of( " " );
+			result.replace( index, 1, "_" );
 		}
+        return result;
+	}
+
+    /*! \brief Create a Minicam style run identifier.
+	* \details Creates a run identifier by combining the current date and time,
+    *          including the number of seconds so that is is always unique.
+	* \param aTime The initialized time object.
+	* \return A unique run identifier.
+    */
+	long createMinicamRunID( const time_t& aTime ){
+		tm* lt = localtime( &aTime ); // struct for time components
+		const long runID = lt->tm_sec + lt->tm_min * 100 + lt->tm_hour * 10000
+			+ lt->tm_mday * 1000000 
+			+ ( lt->tm_mon * 100000000 + 100000000);
+		return runID;
 	}
 
 	/*! \brief Function which creates an XML compliant date time string.

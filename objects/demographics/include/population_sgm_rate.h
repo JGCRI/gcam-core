@@ -10,8 +10,6 @@
 * \brief The PopulationSGMRate class header file.
 * \author Sonny Kim
 * \author Katherine Chung
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
@@ -31,33 +29,34 @@ class AgeCohort;
 class PopulationSGMRate : public Population
 {
 public:
-	PopulationSGMRate();
-	~PopulationSGMRate();
+    PopulationSGMRate();
+    virtual ~PopulationSGMRate();
 
     virtual void completeInit( const std::vector<double>& femalePopFromPrev = std::vector<double>(),
         const std::vector<double>& malePopFromPrev = std::vector<double>() );
-	
+    
     virtual void initCalc();
-	static const std::string& getXMLNameStatic();
-	
+    static const std::string& getXMLNameStatic();
+    
     const std::vector<double> getSurvMalePop() const;
     const std::vector<double> getSurvFemalePop() const;
     
-	double getWorkingAgePop() const;
-	double getWorkingAgePopMale() const;
-	double getWorkingAgePopFemale() const;
+    double getWorkingAgePop() const;
+    double getWorkingAgePopMale() const;
+    double getWorkingAgePopFemale() const;
 
-	void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     std::vector<AgeCohort*> ageCohort; //!< array of age cohorts
-	typedef std::vector<AgeCohort*>::iterator AgeCohortIterator;
+    typedef std::vector<AgeCohort*>::iterator AgeCohortIterator;
     typedef std::vector<AgeCohort*>::const_iterator CAgeCohortIterator;
-	static const std::string XML_NAME; //!< node name for toXML methods
+    static const std::string XML_NAME; //!< node name for toXML methods
 
-	virtual const std::string& getXMLName() const;
+    virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr );
-	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-	virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 private:
     void fillMalePop( const std::vector<double>& aMalePop );
     void fillFemalePop( const std::vector<double>& aFemalePop );

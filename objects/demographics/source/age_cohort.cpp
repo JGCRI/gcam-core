@@ -4,14 +4,12 @@
 * \brief AgeCohort class source file.
 * \author Sonny Kim
 * \author Katherine Chung
-* \date $Date$
-* \version $Revision$
 */
 
 #include <cassert>
 #include <string>
 
-// needed for getLowerAgeBound and getUpperAgeBound
+// Needed for int->string conversions.
 #include <sstream>
 #include <algorithm>
 
@@ -22,13 +20,13 @@
 #include "demographics/include/male.h"
 #include "demographics/include/female.h"
 #include "util/base/include/xml_helper.h"
+#include "util/logger/include/ilogger.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern ofstream outputFile;
-//static initialize
-const string AgeCohort::XML_NAME = "ageCohort";
 
 //! default constructor
 AgeCohort::AgeCohort() {
@@ -41,18 +39,6 @@ AgeCohort::AgeCohort() {
 AgeCohort::~AgeCohort(){
 }
 
-/*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME.
-*/
-const std::string& AgeCohort::getXMLName() const{
-    return XML_NAME;
-}
-
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
 *
 * This public function accesses the private constant string, XML_NAME.
@@ -63,6 +49,7 @@ const std::string& AgeCohort::getXMLName() const{
 * \return The constant XML_NAME as a static.
 */
 const std::string& AgeCohort::getXMLNameStatic(){
+    const static string XML_NAME = "ageCohort";
     return XML_NAME;
 }
 
@@ -94,7 +81,9 @@ void AgeCohort::XMLParse( const xercesc::DOMNode* node ){
             // do nothing but don't print a warning.
         }
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing ageCohort." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
         }
     }
 }
@@ -129,22 +118,23 @@ bool AgeCohort::parseGender( DOMNode* aNode ) {
 void AgeCohort::toInputXML( std::ostream& out, Tabs* tabs ) const{
     // write the beginning tag.
     tabs->writeTabs( out );
-    out << "<ageCohort ageGroup=\"" << ageGroup << "\">"<< endl;
+    out << "<" << getXMLNameStatic() << " ageGroup=\"" << ageGroup << "\">"<< endl;
 
     // increase the indent.
     tabs->increaseIndent();
 
     male->toInputXML( out, tabs );
     female->toInputXML( out, tabs );
-    XMLWriteClosingTag( "ageCohort", out, tabs );
+    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
 //! Write out XML for debugging purposes.
 void AgeCohort::toDebugXML( ostream& out, Tabs* tabs ) const {
-
+    map<string, string> attrMap;
+    attrMap[ "ageGroup" ] = ageGroup;
     // write the beginning tag.
     tabs->writeTabs( out );
-    out << "<ageCohort ageGroup=\"" << ageGroup << "\">"<< endl;
+    out << "<" << getXMLNameStatic() << " ageGroup=\"" << ageGroup << "\">"<< endl;
 
     // increase the indent.
     tabs->increaseIndent();
@@ -152,14 +142,28 @@ void AgeCohort::toDebugXML( ostream& out, Tabs* tabs ) const {
     male->toDebugXML( out, tabs );
     female->toDebugXML( out, tabs );
 
-    XMLWriteClosingTag( "ageCohort", out, tabs );
+    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
 //! Complete the initialization.
 void AgeCohort::completeInit(){
-    // TODO: Add better non-crashing error checking to this class.
-    assert( female.get() );
-    assert( male.get() );
+    // Check for a not completely initialized cohort.
+    if( !male.get() ){
+        // Warn the user and create an empty cohort.
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Creating empty male group for cohort " << getAgeGroup() << "." << endl;
+        male.reset( new Male() );
+        male->setPopulation( 0 );
+    }
+    if( !female.get() ){
+        // Warn the user and create an empty cohort.
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Creating empty female group for cohort " << getAgeGroup() << "." << endl;
+        female.reset( new Female() );
+        female->setPopulation( 0 );
+    }
 }
 
 //! initialize anything that won't change during the calcuation
@@ -240,7 +244,9 @@ int AgeCohort::getLowerAgeBound() const {
     else {
         // Check and make sure there is one and only one hyphen.
         if( count( ageGroup.begin(), ageGroup.end(), '-' ) != 1 ){
-            cout << "Invalid age range " << ageGroup << " found while calculating getLowerAgeBound " << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Invalid age range " << ageGroup << " found while calculating getLowerAgeBound " << endl;
             return -1;
         }
         // Find the hyphen we now know is there.
@@ -284,7 +290,9 @@ int AgeCohort::getUpperAgeBound() const {
 
     // Check and make sure there is one and only one hyphen.
     if( count( ageGroup.begin(), ageGroup.end(), '-' ) != 1 ){
-        cout << "Invalid age range " << ageGroup << " found while calculating getUpperAgeBound " << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Invalid age range " << ageGroup << " found while calculating getUpperAgeBound " << endl;
         return -1;
     }
     // Find the hyphen we now know is there.
@@ -299,4 +307,15 @@ int AgeCohort::getUpperAgeBound() const {
     // Cache the value since this function is slow.
     mUpperAgeBound = upperRange;
     return upperRange;
+}
+
+/*! \brief Update a visitor with information about a AgeCohort.
+* \param aVisitor Visitor to update.
+* \param aPeriod Period for which to update.
+*/
+void AgeCohort::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitAgeCohort( this, aPeriod );
+	male->accept( aVisitor, aPeriod );
+	female->accept( aVisitor, aPeriod );
+	aVisitor->endVisitAgeCohort( this, aPeriod );
 }

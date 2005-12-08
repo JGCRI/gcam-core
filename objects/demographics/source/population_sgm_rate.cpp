@@ -4,18 +4,15 @@
 * \brief PopulationSGMRate class source file.
 * \author Sonny Kim
 * \author Katherine Chung
-* \date $Date$
-* \version $Revision$
 */
 #include <vector>
-#include <fstream>
-#include <iostream>
 #include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "demographics/include/population_sgm_rate.h"
 #include "demographics/include/age_cohort.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
+#include "util/logger/include/ilogger.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -31,28 +28,27 @@ PopulationSGMRate::PopulationSGMRate() {
 
 //! PopulationSGMRate destructor. 
 PopulationSGMRate::~PopulationSGMRate() {
-	clear();
+    clear();
 }
 
 //! Helper member function for the destructor. Performs memory deallocation. 
 void PopulationSGMRate::clear(){
-	for( AgeCohortIterator acIter = ageCohort.begin(); acIter != ageCohort.end(); ++acIter ){
-		delete *acIter;
-	}
+    for( AgeCohortIterator acIter = ageCohort.begin(); acIter != ageCohort.end(); ++acIter ){
+        delete *acIter;
+    }
 }
 
 //! parses rest of PopulationSGMFixed xml object
 bool PopulationSGMRate::XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr ){
 
-	if( nodeName == AgeCohort::getXMLNameStatic() ) {
-		ageCohort.push_back( new AgeCohort() );
-		ageCohort.back()->XMLParse( curr );
-	}
+    if( nodeName == AgeCohort::getXMLNameStatic() ) {
+        ageCohort.push_back( new AgeCohort() );
+        ageCohort.back()->XMLParse( curr );
+    }
     else {
-        cout << "Unrecognized text string: " << nodeName << " found while parsing populationSGMFixed." << endl;
-		return false;
-	}
-	return true;
+        return false;
+    }
+    return true;
 }
 
 //! returns total working age population (ages 15-65)
@@ -101,7 +97,7 @@ double PopulationSGMRate::getWorkingAgePopFemale() const{ // ages 15-65
 
 //! Write out rest of datamembers to XML output stream.
 void PopulationSGMRate::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const{
-	for( CAgeCohortIterator i = ageCohort.begin(); i != ageCohort.end(); ++i ){
+    for( CAgeCohortIterator i = ageCohort.begin(); i != ageCohort.end(); ++i ){
         ( *i )->toInputXML( out, tabs );
     }
 }
@@ -121,7 +117,7 @@ void PopulationSGMRate::completeInit( const vector<double>& femalePopFromPrev, c
         fillFemalePop( femalePopFromPrev );
         fillMalePop( malePopFromPrev );
     }
-	calcPop();
+    calcPop();
 }
 
 //! initialize anything that won't change during the calcuation
@@ -137,7 +133,7 @@ void PopulationSGMRate::initCalc(){
 * \return The constant XML_NAME.
 */
 const std::string& PopulationSGMRate::getXMLName() const{
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -150,16 +146,16 @@ const std::string& PopulationSGMRate::getXMLName() const{
 * \return The constant XML_NAME as a static.
 */
 const std::string& PopulationSGMRate::getXMLNameStatic() {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 // Note: These blocks of code are repeated, we could do something different.
 // calculate male population for all age groups
 const vector<double> PopulationSGMRate::getSurvMalePop() const {    
     // Vector of values per cohort for the next periods population.
-	vector<double> survMalePop( ageCohort.size() );
+    vector<double> survMalePop( ageCohort.size() );
     
-	// loop for all age groups 
+    // loop for all age groups 
     for ( unsigned int currCohort = 0; currCohort < ageCohort.size(); currCohort++ ){
         // calc male births from all female age groups. This calculates the first new cohort.
         survMalePop[ 0 ] += ageCohort[ currCohort ]->calcMaleBirth();
@@ -179,9 +175,9 @@ const vector<double> PopulationSGMRate::getSurvMalePop() const {
 // calculate female population for all age groups
 const vector<double> PopulationSGMRate::getSurvFemalePop() const {
     // Vector of values per cohort for the next periods population.
-	vector<double> survFemalePop( ageCohort.size() );
+    vector<double> survFemalePop( ageCohort.size() );
     
-	// loop for all age groups 
+    // loop for all age groups 
     for ( unsigned int currCohort = 0; currCohort < ageCohort.size(); currCohort++ ){
         // calc male births from all female age groups. This calculates the first new cohort.
         survFemalePop[ 0 ] += ageCohort[ currCohort ]->calcFemaleBirth();
@@ -200,7 +196,7 @@ const vector<double> PopulationSGMRate::getSurvFemalePop() const {
     
 void PopulationSGMRate::fillMalePop( const vector<double>& tempMalePop ){ 
     // Check that the new population vector has the same number of elements as we have cohorts.
-	assert( tempMalePop.size() == ageCohort.size() );
+    assert( tempMalePop.size() == ageCohort.size() );
 
     // Fill out the cohorts. 
     for( unsigned int i = 0; i < tempMalePop.size(); i++ ) {
@@ -210,7 +206,7 @@ void PopulationSGMRate::fillMalePop( const vector<double>& tempMalePop ){
 
 void PopulationSGMRate::fillFemalePop( const vector<double>& tempFemalePop ){
     // Check that the new population vector has the same number of elements as we have cohorts.
-	assert( tempFemalePop.size() == ageCohort.size() );
+    assert( tempFemalePop.size() == ageCohort.size() );
 
     // Fill out the cohorts. 
     for( unsigned int i = 0; i < tempFemalePop.size(); i++ ) {
@@ -221,23 +217,38 @@ void PopulationSGMRate::fillFemalePop( const vector<double>& tempFemalePop ){
 //! Adds up the male and female populations for each cohort and gets a total
 void PopulationSGMRate::calcPop(){
     double totMalePop = 0;
-	double totFemalePop = 0;
+    double totFemalePop = 0;
     for ( CAgeCohortIterator cohort = ageCohort.begin(); cohort != ageCohort.end(); ++cohort ) {
         totMalePop += (*cohort)->getMalePop();
-		totFemalePop += (*cohort)->getFemalePop();
+        totFemalePop += (*cohort)->getFemalePop();
     }    
-	mTotalPop = totMalePop + totFemalePop;  
+    mTotalPop = totMalePop + totFemalePop;  
 }
 
 void PopulationSGMRate::csvSGMOutputFile( ostream& aFile, const int period ) const {
-	 aFile << "Population Data by Age Cohort Total" << endl << endl;
-	 aFile << "Males- " << mYear << endl;
-	 for( CAgeCohortIterator it = ageCohort.begin(); it != ageCohort.end(); it++ ) {
-		 aFile << ( *it )->getAgeGroup() << ',' << ( *it )->getMalePop() << endl;
-	 }
-	 aFile << endl << "Females- " << mYear << endl;
-	 for( CAgeCohortIterator it = ageCohort.begin(); it != ageCohort.end(); it++ ) {
-		 aFile << ( *it )->getAgeGroup() << ',' << ( *it )->getFemalePop() << endl;
-	 }
+     aFile << "Population Data by Age Cohort Total" << endl << endl;
+     aFile << "Males- " << mYear << endl;
+     for( CAgeCohortIterator it = ageCohort.begin(); it != ageCohort.end(); it++ ) {
+         aFile << ( *it )->getAgeGroup() << ',' << ( *it )->getMalePop() << endl;
+     }
+     aFile << endl << "Females- " << mYear << endl;
+     for( CAgeCohortIterator it = ageCohort.begin(); it != ageCohort.end(); it++ ) {
+         aFile << ( *it )->getAgeGroup() << ',' << ( *it )->getFemalePop() << endl;
+     }
 }
 
+/*! \brief Update a visitor with information about a SGM rate based cohort
+*          population.
+* \param aVisitor Visitor to update.
+* \param aPeriod Period for which to update.
+*/
+void PopulationSGMRate::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitPopulationSGMRate( this, aPeriod );
+	// Call the parent class visit.
+	Population::accept( aVisitor, aPeriod );
+	// Update the cohorts.
+	for( unsigned int i = 0; i < ageCohort.size(); ++i ){
+		ageCohort[ i ]->accept( aVisitor, aPeriod );
+	}
+	aVisitor->endVisitPopulationSGMRate( this, aPeriod );
+}

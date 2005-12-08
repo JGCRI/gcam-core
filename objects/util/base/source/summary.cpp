@@ -72,7 +72,7 @@ to the summary object maps fuelcons and pecons.
 
 The iterator fmap is used to traverse the fuelinfo map.
 */ 
-void Summary::updatefuelcons( const SummaryItem& fuelinfo ) {
+void Summary::updatefuelcons( const list<string>& aPrimaryFuelList, const SummaryItem& fuelinfo ) {
 	// map all primary and secondary fuel consumption
 	for (CSummaryIterator fmap=fuelinfo.begin(); fmap!=fuelinfo.end(); ++fmap) {	// iterate to one less than the end
 		fuelcons[fmap->first] += fmap->second; // Add values from the passed map to fuelcons
@@ -80,9 +80,9 @@ void Summary::updatefuelcons( const SummaryItem& fuelinfo ) {
 	}
 
 	// map primary energy consumption only.
-   const vector<string> primaryFuelList = scenario->getWorld()->getPrimaryFuelList();
-   
-   for( vector<string>::const_iterator fuelIter = primaryFuelList.begin(); fuelIter != primaryFuelList.end(); fuelIter++ ) {
+   for( list<string>::const_iterator fuelIter = aPrimaryFuelList.begin();
+	   fuelIter != aPrimaryFuelList.end(); ++fuelIter )
+   {
 	   CSummaryIterator fmap=fuelinfo.find( *fuelIter );
 	   if( fmap!=fuelinfo.end() ) {
 		   pecons[fmap->first] += fmap->second;

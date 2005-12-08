@@ -28,8 +28,20 @@
 #include "containers/include/total_policy_cost_calculator.h"
 #include "containers/include/iscenario_runner.h"
 #include "emissions/include/ghg_policy.h"
+#include "reporting/include/xml_db_outputter.h"
+
+// Only compile this code if the XML database is turned on.
+#if( __USE_XML_DB__ )
+#include "dbxml/DbXml.hpp"
+#endif
 
 using namespace std;
+using namespace xercesc;
+
+// Only compile this code if the XML database is turned on.
+#if( __USE_XML_DB__ )
+using namespace DbXml;
+#endif
 
 /*! \brief Constructor.
 * \param aSingleScenario The single scenario runner.
@@ -41,10 +53,10 @@ TotalPolicyCostCalculator::TotalPolicyCostCalculator( IScenarioRunner* aSingleSc
     mGlobalDiscountedCost = 0;
     mRanCosts = false;
 
-	// Get the variables from the configuration.
+    // Get the variables from the configuration.
     const Configuration* conf = Configuration::getInstance();
-	mGHGName = conf->getString( "AbatedGasForCostCurves", "CO2" );
-	mNumPoints = conf->getInt( "numPointsForCO2CostCurve", 5 );
+    mGHGName = conf->getString( "AbatedGasForCostCurves", "CO2" );
+    mNumPoints = conf->getInt( "numPointsForCO2CostCurve", 5 );
 }
 
 //! Destructor. Deallocated memory for all the curves created. 
@@ -153,8 +165,8 @@ bool TotalPolicyCostCalculator::runTrials(){
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Starting cost curve point run number " << currPoint << "." << endl;
 
-		// Run the scenario with the add-on extension to the output file names
-		// as the point number. This allows the output file to be named debug +
+        // Run the scenario with the add-on extension to the output file names
+        // as the point number. This allows the output file to be named debug +
         // point number.
         success &= mSingleScenario->getInternalScenario()->run( Scenario::RUN_ALL_PERIODS, true,
                                                                 util::toString( currPoint ) );
@@ -215,8 +227,8 @@ void TotalPolicyCostCalculator::createRegionalCostCurves() {
 
     const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
     const int maxPeriod = modeltime->getmaxper();
-	
-	for( map<const string, const Curve*>::const_iterator rNameIter = mPeriodCostCurves[ 0 ].begin(); rNameIter != mPeriodCostCurves[ 0 ].end(); ++rNameIter ){
+    
+    for( map<const string, const Curve*>::const_iterator rNameIter = mPeriodCostCurves[ 0 ].begin(); rNameIter != mPeriodCostCurves[ 0 ].end(); ++rNameIter ){
         // Skip the global curve which is only calculated for reporting.
         if( rNameIter->first == "global" ){
             continue;
@@ -226,7 +238,7 @@ void TotalPolicyCostCalculator::createRegionalCostCurves() {
         // Loop through the periods. 
         for( int per = 0; per < maxPeriod; per++ ){
             const int year = modeltime->getper_to_yr( per );
-			double periodCost = mPeriodCostCurves[ per ][ rNameIter->first ]->getIntegral( 0, DBL_MAX ); // Integrate from zero to the reduction.
+            double periodCost = mPeriodCostCurves[ per ][ rNameIter->first ]->getIntegral( 0, DBL_MAX ); // Integrate from zero to the reduction.
             XYDataPoint* currPoint = new XYDataPoint( year, periodCost );
             costPoints->addPoint( currPoint );
         }
@@ -246,82 +258,125 @@ void TotalPolicyCostCalculator::createRegionalCostCurves() {
     }
 }
 
-//! Print the output.
+/*! \brief Print the output.
+* \details Print the output to an XML file, the Access database, and the XML
+*          database.
+*/
 void TotalPolicyCostCalculator::printOutput() const {
     // Don't try to print output if the scenarios weren't run.
     if( !mRanCosts ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Not printing costs to database because the cost runs did not complete.";
         return;
     }
+    
+    // Create a string with the XML output.
+    const string xmlString = createXMLOutputString();
+    
+    {
+        // Open the XML output file and write to it.
+        AutoOutputFile ccOut( "costCurvesOutputFileName",
+                              "cost_curves_" + mSingleScenario->getInternalScenario()->getName() + ".xml" );
+        ccOut << xmlString;
+    }
+    
+    // Location to insert the information into the container.
+    const string UPDATE_LOCATION = "/scenario/world/region[last()]";
+    
+    // Append the data to the XML database.
+    XMLDBOutputter::appendData( xmlString, UPDATE_LOCATION );
+
+    // Write to the database.
+    writeToDB();
+}
+
+/*! \brief Write total cost output to the Access database.
+*/
+void TotalPolicyCostCalculator::writeToDB() const {
     // Database function definition. 
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
-    
-    // Open the output file.
-    AutoOutputFile ccOut( "costCurvesOutputFileName", "cost_curves_" + mSingleScenario->getInternalScenario()->getName() + ".xml" );
-    // Create a root tag.
-    Tabs tabs;
-	XMLWriteOpeningTag( "CostCurvesInfo", *ccOut, &tabs ); 
 
-    XMLWriteOpeningTag( "PeriodCostCurves", *ccOut, &tabs );
-    const Modeltime* modeltime =  mSingleScenario->getInternalScenario()->getModeltime();
+    const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
     const int maxPeriod = modeltime->getmaxper();
     const double CVRT_75_TO_90 = 2.212; //  convert '75 price to '90 price
     vector<double> tempOutVec( maxPeriod );
-
-    for( int per = 0; per < maxPeriod; per++ ){
-        const int year = modeltime->getper_to_yr( per );
-        XMLWriteOpeningTag( "CostCurves", *ccOut, &tabs, "", year );
-        for( CRegionCurvesIterator rIter = mPeriodCostCurves[ per ].begin(); rIter != mPeriodCostCurves[ per ].end(); rIter++ ){
-            rIter->second->toInputXML( *ccOut, &tabs );
-        }
-        XMLWriteClosingTag( "CostCurves", *ccOut, &tabs );
-    }
-    XMLWriteClosingTag( "PeriodCostCurves", *ccOut, &tabs );
-	
-    XMLWriteOpeningTag( "RegionalCostCurvesByPeriod", *ccOut, &tabs );
     for( CRegionCurvesIterator rIter = mRegionalCostCurves.begin(); rIter != mRegionalCostCurves.end(); ++rIter ){
-        rIter->second->toInputXML( *ccOut, &tabs );
         // Write out to the database.
         for( int per = 0; per < maxPeriod; ++per ){
             tempOutVec[ per ] = rIter->second->getY( modeltime->getper_to_yr( per ) ) * CVRT_75_TO_90;
         }
-		dboutput4(rIter->first,"General","PolicyCostUndisc","Period","(millions)90US$",tempOutVec);
+        dboutput4(rIter->first,"General","PolicyCostUndisc","Period","(millions)90US$",tempOutVec);
     }
-    XMLWriteClosingTag( "RegionalCostCurvesByPeriod", *ccOut, &tabs ); 
-	
-    XMLWriteOpeningTag( "RegionalUndiscountedCosts", *ccOut, &tabs );
+
     // Write out undiscounted costs by region.
     tempOutVec.clear();
     tempOutVec.resize( maxPeriod );
     for( CRegionalCostsIterator iter = mRegionalCosts.begin(); iter != mRegionalCosts.end(); iter++ ){
-        XMLWriteElement( iter->second, "UndiscountedCost", *ccOut, &tabs, 0, iter->first );
-	    // regional total cost of policy
-		tempOutVec[maxPeriod-1] = iter->second * CVRT_75_TO_90;
-		dboutput4(iter->first,"General","PolicyCostTotalUndisc","AllYears","(millions)90US$",tempOutVec);
+        // regional total cost of policy
+        tempOutVec[maxPeriod-1] = iter->second * CVRT_75_TO_90;
+        dboutput4(iter->first,"General","PolicyCostTotalUndisc","AllYears","(millions)90US$",tempOutVec);
     }
-	XMLWriteClosingTag( "RegionalUndiscountedCosts", *ccOut, &tabs );
-    // End of writing undiscounted costs by region.
-     
+
     // Write out discounted costs by region.
     tempOutVec.clear();
     tempOutVec.resize( maxPeriod );
-	XMLWriteOpeningTag( "RegionalDiscountedCosts", *ccOut, &tabs );
     typedef map<const string,double>::const_iterator constDoubleMapIter;
     for( constDoubleMapIter iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
-        XMLWriteElement( iter->second, "DiscountedCost", *ccOut, &tabs, 0, iter->first );
-	    // regional total cost of policy
-		tempOutVec[maxPeriod-1] = iter->second * CVRT_75_TO_90;
-		dboutput4(iter->first,"General","PolicyCostTotalDisc","AllYears","(millions)90US$",tempOutVec);
+        // regional total cost of policy
+        tempOutVec[maxPeriod-1] = iter->second * CVRT_75_TO_90;
+        dboutput4(iter->first,"General","PolicyCostTotalDisc","AllYears","(millions)90US$",tempOutVec);
     }
-	XMLWriteClosingTag( "RegionalDiscountedCosts", *ccOut, &tabs );
-    // End of writing undiscounted costs by region.
+}
+
+/*! Create a string containing the XML output.
+* \return A string containing the XML output.
+*/
+const string TotalPolicyCostCalculator::createXMLOutputString() const {
+    // Create a buffer to contain the output.
+    stringstream buffer;
+    Tabs tabs;
+
+    // Create a root tag.
+    XMLWriteOpeningTag( "CostCurvesInfo", buffer, &tabs ); 
+
+    XMLWriteOpeningTag( "PeriodCostCurves", buffer, &tabs );
+    const double CVRT_75_TO_90 = 2.212; //  convert '75 price to '90 price
+    const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
+
+    for( int per = 0; per < modeltime->getmaxper(); per++ ){
+        const int year = modeltime->getper_to_yr( per );
+        XMLWriteOpeningTag( "CostCurves", buffer, &tabs, "", year );
+        for( CRegionCurvesIterator rIter = mPeriodCostCurves[ per ].begin(); rIter != mPeriodCostCurves[ per ].end(); rIter++ ){
+            rIter->second->toInputXML( buffer, &tabs );
+        }
+        XMLWriteClosingTag( "CostCurves", buffer, &tabs );
+    }
+    XMLWriteClosingTag( "PeriodCostCurves", buffer, &tabs );
+    
+    XMLWriteOpeningTag( "RegionalCostCurvesByPeriod", buffer, &tabs );
+    for( CRegionCurvesIterator rIter = mRegionalCostCurves.begin(); rIter != mRegionalCostCurves.end(); ++rIter ){
+        rIter->second->toInputXML( buffer, &tabs );
+    }
+    XMLWriteClosingTag( "RegionalCostCurvesByPeriod", buffer, &tabs ); 
+    
+    XMLWriteOpeningTag( "RegionalUndiscountedCosts", buffer, &tabs );
+    // Write out undiscounted costs by region.
+    for( CRegionalCostsIterator iter = mRegionalCosts.begin(); iter != mRegionalCosts.end(); iter++ ){
+        XMLWriteElement( iter->second, "UndiscountedCost", buffer, &tabs, 0, iter->first );
+    }
+    XMLWriteClosingTag( "RegionalUndiscountedCosts", buffer, &tabs );
+     
+    // Write out discounted costs by region.
+    XMLWriteOpeningTag( "RegionalDiscountedCosts", buffer, &tabs );
+    typedef map<const string,double>::const_iterator constDoubleMapIter;
+    for( constDoubleMapIter iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
+        XMLWriteElement( iter->second, "DiscountedCost", buffer, &tabs, 0, iter->first );
+    }
+    XMLWriteClosingTag( "RegionalDiscountedCosts", buffer, &tabs );
 
     // Write out the total cost and discounted cost.
-    XMLWriteElement( mGlobalCost, "GlobalUndiscountedTotalCost", *ccOut, &tabs );
-    XMLWriteElement( mGlobalDiscountedCost, "GlobalDiscountedCost", *ccOut, &tabs );
+    XMLWriteElement( mGlobalCost, "GlobalUndiscountedTotalCost", buffer, &tabs );
+    XMLWriteElement( mGlobalDiscountedCost, "GlobalDiscountedCost", buffer, &tabs );
 
-	XMLWriteClosingTag( "CostCurvesInfo", *ccOut, &tabs );
+    XMLWriteClosingTag( "CostCurvesInfo", buffer, &tabs );
+    return buffer.str();
 }

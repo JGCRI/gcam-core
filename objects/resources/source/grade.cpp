@@ -18,6 +18,7 @@
 #include "resources/include/grade.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -69,22 +70,6 @@ void Grade::toInputXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     XMLWriteElementCheckDefault( available, "available", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( extractCost, "extractioncost", out, tabs, 0.0 );
-	XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-//! Write datamembers to datastream in XML format for outputting results
-void Grade::toOutputXML( ostream& out, Tabs* tabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    
-	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
-
-    XMLWriteElement( available, "available", out, tabs );
-    XMLWriteElement( extractCost, "extractioncost", out, tabs );
-    
-    for( int i = 0; i < static_cast<int>( totalCost.size() ); i++ ){
-        XMLWriteElement( totalCost[ i ], "totalcost", out, tabs, modeltime->getper_to_yr( i ) );
-    }
-    
 	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
@@ -146,8 +131,15 @@ double Grade::getExtCost() const {
 }
 
 //! Get the name.
-string Grade::getName() const {
+const string& Grade::getName() const {
     return name;
 }
 
-
+/*! \brief Update a visitor for a SubResource.
+* \param aVisitor Visitor to update.
+* \param aPeriod Period to update.
+*/
+void Grade::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitGrade( this, aPeriod );
+	aVisitor->endVisitGrade( this, aPeriod );
+}

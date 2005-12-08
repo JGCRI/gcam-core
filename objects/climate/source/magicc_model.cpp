@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief This file contains the source for the MagiccModel class.
 * \author Sonny Kim, Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include "util/base/include/definitions.h"
 #include <iomanip>
@@ -17,6 +15,7 @@
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/util.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 
@@ -295,19 +294,34 @@ void MagiccModel::printFileOutput() const {
 
 /*! \brief Write out data from the emissions model to the database. */
 void MagiccModel::printDBOutput() const {
-#if( __HAVE_FORTRAN__ )
     // Fill up a vector of concentrations.
     vector<double> data( mModeltime->getmaxper() );
     for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        // Need to store the year locally so it can be passed by reference.
-        int year = mModeltime->getper_to_yr( period );
-        data[ period ] = CO2CONC( year );
+        data[ period ] = getConcentration( "CO2", period );
     }
     // Write out the data to the database. Database function definition.
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
-    dboutput4( "global", "General", "Concentrations", "Period", "PPM", data );
-#endif
+    dboutput4( "global", "General", "CO2-Concentrations", "Period", "PPM", data );
+
+}
+
+/*! \brief Updates a visitor with information from the the climate model.
+* \param aVisitor Visitor to update.
+* \param aPeriod Period for which to perform the update, -1 means all periods.
+* \todo Add a function to the magicc library to get the temperature.
+*/
+void MagiccModel::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitMagiccModel( this, aPeriod );
+	aVisitor->endVisitMagiccModel( this, aPeriod );
+}
+
+/*! \brief Return the name of the XML node for this object.
+* \return The XML element name for the object.
+*/
+const string& MagiccModel::getXMLNameStatic(){
+	const static string XML_NAME = "MagiccModel";
+	return XML_NAME;
 }
 
 /*! \brief Return the index of a gas name within the internal matrix or

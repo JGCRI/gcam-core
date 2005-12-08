@@ -12,8 +12,6 @@
 *  add to the supply of an intermittent resource
 *
 * \author Marshall Wise
-* \date $Date$
-* \version $Revision$
 */
 #include <string>
 #include "sectors/include/supply_sector.h"
@@ -36,7 +34,6 @@ public:
                            const int aPeriod );
 protected:
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;  
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;

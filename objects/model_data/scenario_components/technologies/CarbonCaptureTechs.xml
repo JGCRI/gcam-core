@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Son H. Kim (PNNL) -->
 <scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\PNNL\CIAM\CVS\CIAM\Ciam.xsd" name="CCS H2 Elect" date="2003-7-8T15:35:46-00:00">
-	<summary>"For adding carbon capture and sequestration to H2 and Electricity Sectors"</summary>
+	<output-meta-data>
+		<summary>For adding carbon capture and sequestration to H2 and Electricity Sectors</summary>
+	</output-meta-data>
 	<world>
 		<region name="USA">
 			<supplysector name="hydrogen">

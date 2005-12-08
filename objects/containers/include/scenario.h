@@ -9,17 +9,15 @@
 * \ingroup Objects
 * \brief The Scenario class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
-
-#include <xercesc/dom/DOMNode.hpp>
-#include <iosfwd>
 #include <vector>
 #include <map>
 #include <memory>
 #include <string>
+
 #include "util/base/include/iparsable.h"
+#include "util/base/include/ivisitable.h"
+#include "util/base/include/iround_trippable.h"
 
 // Forward declarations
 class Modeltime;
@@ -30,6 +28,7 @@ class Tabs;
 class Solver;
 class GHGPolicy;
 class IClimateModel;
+class OutputMetaData;
 
 /*!
 * \ingroup Objects
@@ -48,28 +47,29 @@ class IClimateModel;
 * \author Sonny Kim
 */
 
-class Scenario: public IParsable 
+class Scenario: public IParsable, public IVisitable, public IRoundTrippable
 {
 public:
-	Scenario();
-	~Scenario();
-	const Modeltime* getModeltime() const;
-	const Marketplace* getMarketplace() const;
-	Marketplace* getMarketplace();
-	const World* getWorld() const;
-	World* getWorld();
-	bool XMLParse( const xercesc::DOMNode* node );
-	void completeInit();
-	void setName(std::string newName);
-	void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    Scenario();
+    ~Scenario();
+    const Modeltime* getModeltime() const;
+    const Marketplace* getMarketplace() const;
+    Marketplace* getMarketplace();
+    const World* getWorld() const;
+    World* getWorld();
+    bool XMLParse( const xercesc::DOMNode* node );
+    void completeInit();
+    void setName(std::string newName);
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
 
-	const std::string& getName() const;
-	bool run( const int aSinglePeriod, const bool aPrintDebugging, const std::string& aFilenameEnding = "" );
+    const std::string& getName() const;
+    bool run( const int aSinglePeriod, const bool aPrintDebugging, const std::string& aFilenameEnding = "" );
     void setTax( const GHGPolicy* aTax );
-	const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
-	const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
+    const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
+    const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     void writeOutputFiles() const;
     void dbOutput() const;
+	void accept( IVisitor* aVisitor, const int aPeriod ) const;
     const IClimateModel* getClimateModel() const;
     static const std::string& getXMLNameStatic();
 
@@ -78,33 +78,36 @@ public:
 private:
     //! A vector booleans, one per period, which denotes whether each period is valid.
     std::vector<bool> mIsValidPeriod;
-
     std::auto_ptr<Modeltime> modeltime; //!< The modeltime for the scenario
     std::auto_ptr<World> world; //!< The world object
     std::auto_ptr<Marketplace> marketplace; //!< The goods and services marketplace.
     std::auto_ptr<Solver> solver; //!< Pointer to a solution mechanism.
-	std::string name; //!< Scenario name.
-	std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
-	std::vector<int> unsolvedPeriods; //!< Unsolved periods. 
 
-	bool solve( const int period );
+    //! A container of meta-data pertinent to outputting data.
+    std::auto_ptr<OutputMetaData> mOutputMetaData;
 
-	bool calculatePeriod( const int aPeriod,
-                          std::ostream& aXMLDebugFile,
-                          std::ostream& aSGMDebugFile,
-                          Tabs* aTabs,
-                          const bool aPrintDebugging );
+    std::string name; //!< Scenario name.
+    std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
+    std::vector<int> unsolvedPeriods; //!< Unsolved periods. 
 
-    void printGraphs() const;
-	void csvSGMGenFile( std::ostream& aFile ) const;
+    bool solve( const int period );
+
+    bool calculatePeriod( const int aPeriod,
+        std::ostream& aXMLDebugFile,
+        std::ostream& aSGMDebugFile,
+        Tabs* aTabs,
+        const bool aPrintDebugging );
+
+    void printGraphs( const int aPeriod ) const;
+    void csvSGMGenFile( std::ostream& aFile ) const;
     void csvSGMOutputFile( std::ostream& aSGMDebugFile, const int aPeriod ) const;
-    
+
     void openDebugXMLFile( std::ofstream& aXMLDebugFile,
-                           Tabs* aTabs,
-                           const std::string& aFileNameEnding ) const;
+        Tabs* aTabs,
+        const std::string& aFileNameEnding ) const;
 
     void toDebugXMLOpen( std::ostream& aXMLDebugFile, Tabs* aTabs ) const;
-	void toDebugXMLClose( std::ostream& aXMLDebugFile, Tabs* aTabs ) const;
+    void toDebugXMLClose( std::ostream& aXMLDebugFile, Tabs* aTabs ) const;
 
     void logRunBeginning() const;
     void logPeriodBeginning( const int aPeriod ) const;
@@ -112,18 +115,19 @@ private:
     void logRunEnding() const;
 
     void openDebuggingFiles( std::ofstream& aXMLDebugFile,
-                             std::ofstream& aSGMDebugFile,
-                             Tabs* aTabs,
-                             const std::string& aFileNameEnding ) const;
+        std::ofstream& aSGMDebugFile,
+        Tabs* aTabs,
+        const std::string& aFileNameEnding ) const;
 
     void writeDebuggingFiles( std::ostream& aXMLDebugFile,
-                              std::ostream& aSGMDebugFile,
-                              Tabs* aTabs,
-                              const int aPeriod ) const;
+        std::ostream& aSGMDebugFile,
+        Tabs* aTabs,
+        const int aPeriod ) const;
 
     void closeDebuggingFiles( std::ofstream& aXMLDebugFile,
-                              std::ofstream& aSGMDebugFile,
-                              Tabs* aTabs ) const;
+        std::ofstream& aSGMDebugFile,
+        Tabs* aTabs ) const;
+    void printOutputXML() const;
 };
 
 #endif // _SCENARIO_H_

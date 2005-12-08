@@ -79,29 +79,17 @@ void SubRenewableResource::initializeResource( ) {
 
 //! Write out to XML variables specific to this derived class
 void SubRenewableResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
-
 	XMLWriteElementCheckDefault( maxSubResource, "maxSubResource", out, tabs, 0.0 );
 	XMLWriteElementCheckDefault( gdpSupplyElasticity, "gdpSupplyElast", out, tabs, GDP_SUPPLY_ELASTICITY_DEFAULT );
 	XMLWriteElementCheckDefault( subResourceVariance, "subResourceVariance", out, tabs, 0.0 );
 	XMLWriteElementCheckDefault( subResourceCapacityFactor, "subResourceCapacityFactor", out, tabs, 1.0 );
-}   
-
-//! Write out to XML variables specific to this derived class
-void SubRenewableResource::toOutputXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
-
-	XMLWriteElement( maxSubResource, "maxSubResource", out, tabs );
-	XMLWriteElement( gdpSupplyElasticity, "gdpSupplyElast", out, tabs );
-	XMLWriteElement( subResourceVariance, "subResourceVariance", out, tabs );
-	XMLWriteElement( subResourceCapacityFactor, "subResourceCapacityFactor", out, tabs );
-}   
-
-//! Returns the type of the Resource.
-string SubRenewableResource::getType() const {
-	return "Renewable";
 }
 
 //! Cumulative Production
-/*! Cumulative production  Is not needed for renewable resources. But still do any preliminary calculations that need to be done before calculating production */
+/*! Cumulative production Is not needed for renewable resources. But still do
+*   any preliminary calculations that need to be done before calculating
+*   production 
+*/
 void SubRenewableResource::cumulsupply( double prc, int per ) {   
 	const Modeltime* modeltime = scenario->getModeltime();
 

@@ -6,7 +6,7 @@
 
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -21,8 +21,6 @@
 * \brief ProductionInput class header file.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -43,22 +41,22 @@ class Tabs;
 class ProductionInput : public Input
 {
 public:
-	ProductionInput();
+    ProductionInput();
     ProductionInput* clone() const ;
     void copyParam( const Input* aInput );
     void copyParamsInto( ProductionInput& aProductionInput ) const;
     void copyParamsInto( DemandInput& aDemandInput ) const { assert( false ); }
-	static const std::string& getXMLNameStatic();
+    static const std::string& getXMLNameStatic();
     double getPriceElasticity() const;
     double getIncomeElasticity() const;
-    void updateOutputContainer( OutputContainer* outputContainer, const int period ) const;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     const std::string& getXMLName() const;
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:
-	void copy( const ProductionInput& prodInput );
+    void copy( const ProductionInput& prodInput );
 
 };
 

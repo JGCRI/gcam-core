@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief Sector class source file.
 * \author Marshall Wise
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -109,18 +107,6 @@ void IntermittentSupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) con
     XMLWriteElementCheckDefault( elecReserveMargin, "elecReserveMargin", out, tabs, 0.0);
     XMLWriteElementCheckDefault( aveGridCapacityFactor, "aveGridCapacityFactor", out, tabs, 1.0);
     XMLWriteElementCheckDefault( backupCapacityFactor, "backupCapacityFactor", out, tabs, 0.0);
-    XMLWriteElementCheckDefault( backupCost, "backupCost", out, tabs, 0.0);
-}	
-
-
-//! XML output for viewing.
-void IntermittentSupplySector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // Write out parent class information.
-    SupplySector::toOutputXMLDerived( out, tabs );
-
-    XMLWriteElementCheckDefault( elecReserveMargin, "elecReserveMargin", out, tabs, 0.0);
-    XMLWriteElementCheckDefault( aveGridCapacityFactor, "aveGridCapacityFactor", out, tabs, 0.0);
-    XMLWriteElementCheckDefault( backupCapacityFactor, "backupCapacityFactor", out, tabs, 1.0);
     XMLWriteElementCheckDefault( backupCost, "backupCost", out, tabs, 0.0);
 }	
 

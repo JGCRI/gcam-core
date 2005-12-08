@@ -12,6 +12,7 @@
 #include <iostream>
 #include <sstream>
 #include <cassert>
+#include <ctime>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/logger/include/logger.h"

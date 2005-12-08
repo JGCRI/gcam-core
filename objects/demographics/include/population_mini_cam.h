@@ -10,25 +10,21 @@
 * \brief The PopulationMiniCAM class header file.
 * \author Sonny Kim
 * \author Katherine Chung
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
 
 #include "demographics/include/population.h"
-// Forward declaration
-class Tabs;
+
+class IVisitor;
 
 /*! 
 * \ingroup Objects
-* \brief An object which contains the PopulationMiniCAM information for a region.
-* \details PopulationMiniCAM only holds a total that is read in. There is no 
-*  separation between gender or age.
-* 
-* Note: getWorkingAgePopMale() and getWorkingAgePopFemale() both just return 0.
-*
+* \brief An object which contains the PopulationMiniCAM information for a
+*        region.
+* \details PopulationMiniCAM only holds a total that is read in. There is no
+*          separation between gender or age.
 */
 
 class PopulationMiniCAM : public Population
@@ -47,6 +43,7 @@ public:
     double getWorkingAgePopFemale() const{ return 0; } // minicam only has total
 
     virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr );

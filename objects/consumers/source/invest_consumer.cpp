@@ -18,7 +18,7 @@
 #include "functions/include/input.h"
 #include "functions/include/ifunction.h"
 #include "containers/include/scenario.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 #include "marketplace/include/marketplace.h"
 
 using namespace std;
@@ -142,9 +142,9 @@ void InvestConsumer::csvSGMOutputFile( ostream& aFile, const int aPeriod ) const
 	}
 }
 
-void InvestConsumer::updateOutputContainer( OutputContainer* outputContainer,  const string& aRegionName, const string& aSectorName, const int aPeriod ) const {
+void InvestConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
-        Consumer::updateOutputContainer( outputContainer, aRegionName, aSectorName, aPeriod );
-	    outputContainer->updateInvestConsumer( this, aPeriod );
+        Consumer::accept( aVisitor, aPeriod );
+	    aVisitor->updateInvestConsumer( this, aPeriod );
     }
 }

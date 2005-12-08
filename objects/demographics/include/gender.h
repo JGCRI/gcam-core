@@ -10,22 +10,20 @@
 * \brief The Gender class header file.
 * \author Sonny Kim
 * \author Katherine Chung
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
-#include <iosfwd>
 #include <string>
-// forward class declaration
-class Tabs;
+#include "util/base/include/iround_trippable.h"
+#include "util/base/include/ivisitable.h"
 
 /*! 
 * \ingroup Objects
 * \brief The base class for Male and Female objects. Both have populations and survival rates.
 */
 
-class Gender {
+class Gender: public IRoundTrippable, IVisitable {
+    friend class XMLDBOutputter; // For getXMLName()
 public:
 	Gender();
 	void XMLParse( const xercesc::DOMNode* node );
@@ -33,15 +31,15 @@ public:
 	void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 	static const std::string& getXMLNameStatic();
 	double calcSurvivingPop();
-	double getPopulation();
+	double getPopulation() const;
 	void setPopulation( double aPopulation );
-
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
 protected:
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
-	static const std::string XML_NAME; //!< node name for toXML methods
+    static const std::string XML_NAME; //!< node name for toXML methods
     double mPopulation; //!< population for this gender
     double mSurvivalRate; //!< survival rate
     double mSurvivingPop; //!< surviving Population, calculated

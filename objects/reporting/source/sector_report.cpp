@@ -1,6 +1,6 @@
 /*
 This software, which is provided in confidence, was prepared by employees
-of Pacific Northwest National Labratory operated by Battelle Memorial
+of Pacific Northwest National Laboratory operated by Battelle Memorial
 Institute. Battelle has certain unperfected rights in the software
 which should not be copied or otherwise disseminated outside your
 organization without the express written authorization from Battelle. All rights to
@@ -22,7 +22,6 @@ use of this software.
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <sstream>
 
 #include "reporting/include/sector_report.h"
 #include "reporting/include/storage_table.h"
@@ -32,27 +31,30 @@ use of this software.
 #include "functions/include/input.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/scenario.h" // for modeltime
+#include "util/base/include/util.h"
 
 extern Scenario* scenario; // for modeltime.
 
 using namespace std;
 
 //! Default Constructor
-SectorReport::SectorReport(): mTable( new StorageTable ){
+SectorReport::SectorReport( ostream& aFile ):
+mFile( aFile ),
+mTable( new StorageTable )
+{
 }
 
 /*! \brief For outputing SGM data to a flat csv File
  * 
  * \author Sonny Kim
- * \param period The period which we are outputing for
  */
-void SectorReport::output( ostream& aFile, const int period ) const {
+void SectorReport::finish() const {
 	if ( !mTable->isEmpty() ){ // only print out for Production Sectors
-		aFile << "-----------------------------" << endl;
-		aFile << "Sector Report for Production Sector:   " << mSectorName << endl;
-		aFile << "-----------------------------" << endl;
-		aFile << "Vintages" ;
-		aFile << " ";
+		mFile << "-----------------------------" << endl;
+		mFile << "Sector Report for Production Sector:   " << mSectorName << endl;
+		mFile << "-----------------------------" << endl;
+		mFile << "Vintages" ;
+		mFile << " ";
 		// write out column headings (years)
         // Get the list of row names.
         const vector<string> rowNames = mTable->getRowLabels();
@@ -60,36 +62,35 @@ void SectorReport::output( ostream& aFile, const int period ) const {
         // Get the column labels
         const vector<string> colNames = mTable->getColLabels();
         for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ){
-			aFile << ',' << *col;
+			mFile << ',' << *col;
 		}	
-		aFile << endl;
+		mFile << endl;
 
 		// Note: This is structuarlly different from SAM. This goes through the rows and prints
 		// out each of the category values.
         for ( vector<string>::const_iterator row = rowNames.begin(); row != rowNames.end(); ++row ){
-			aFile << *row;
+			mFile << *row;
             // Iterate through the columns.
             for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ) {
-                aFile << ',' << mTable->getValue( *row, *col );
+                mFile << ',' << mTable->getValue( *row, *col );
 			}
-			aFile << endl;
+			mFile << endl;
 		}
-		aFile << endl;
+		mFile << endl;
 	}
 }
 
-void SectorReport::updateSector( const Sector* sector ) {
+void SectorReport::startVisitSector( const Sector* sector, const int aPeriod ) {
 	mSectorName = sector->getName();
 }
 
 //! Update the SectorReport with information from the the ProductionTechnology.
 // This function is currently hacked to get ordering right.
-void SectorReport::updateProductionTechnology( const ProductionTechnology* prodTechnology, 
-											   const string& aRegionName, const string& aSectorName,
+void SectorReport::updateProductionTechnology( const ProductionTechnology* prodTechnology,
                                                const int aPeriod )
 {
     // Create a unique name for the vintage based on the name and year.
-    const string currName = getYearString( prodTechnology->getYear() ) + prodTechnology->getName();
+    const string currName = util::toString( prodTechnology->getYear() ) + prodTechnology->getName();
     
     // Add a column for the current tech.
     mTable->addColumn( currName );
@@ -129,9 +130,3 @@ void SectorReport::updateProductionTechnology( const ProductionTechnology* prodT
     }
 }
 
-const string SectorReport::getYearString( const int year ){
-    // change this to use util::toString once the merge is done.
-	ostringstream out; 
-	out << year;   // Convert value into a string.
-	return out.str(); 
-}

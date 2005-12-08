@@ -1,6 +1,6 @@
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -32,7 +32,7 @@
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "functions/include/function_manager.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 #include "emissions/include/ghg.h"
 
 using namespace std;
@@ -71,7 +71,7 @@ void Consumer::updateMarketplace( const string& aSectorName, const string& aRegi
 			totalDemand += tempDemand;
 		}
 	}
-	marketplace->addToSupply( aSectorName, aRegionName, totalDemand, aPeriod );
+	marketplace->addToSupply( aSectorName, aRegionName, totalDemand, aPeriod, false );
 }
 
 void Consumer::calcEmissions( const string& aGoodName, const string& aRegionName, const int aPeriod ) {
@@ -83,8 +83,7 @@ void Consumer::calcEmissions( const string& aGoodName, const string& aRegionName
     }
 }
 
-void Consumer::updateOutputContainer( OutputContainer* outputContainer,  const string& aRegionName, const string& aSectorName, const int aPeriod ) const {
-    BaseTechnology::updateOutputContainer( outputContainer, aRegionName, aSectorName, aPeriod );
-    outputContainer->updateConsumer( this, aPeriod );
+void Consumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    BaseTechnology::accept( aVisitor, aPeriod );
+    aVisitor->updateConsumer( this, aPeriod );
 }
-

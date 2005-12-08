@@ -9,21 +9,21 @@
 * \ingroup Objects
 * \brief The Ghg class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <vector>
 #include <memory>
 #include <string>
+#include "util/base/include/ivisitable.h"
+#include "util/base/include/iround_trippable.h"
 
 // Forward declaration
 class Emcoef_ind;
-class Tabs;
 class GDP;
 class GhgMAC;
 class Input;
+
 /*! 
 * \ingroup Objects
 * \brief The Ghg class describes a single gas with
@@ -38,8 +38,9 @@ class Input;
 * \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez
 */
 
-class Ghg
+class Ghg: public IVisitable, public IRoundTrippable
 { 
+    friend class XMLDBOutputter;
 public:
     Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 1, const double emissCoefIn = 0 );
     virtual ~Ghg();
@@ -50,8 +51,8 @@ public:
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
-	virtual const std::string& getXMLName() const;
-	static const std::string& getXMLNameStatic();
+    virtual const std::string& getXMLName() const;
+    static const std::string& getXMLNameStatic();
     void copyGHGParameters( const Ghg* prevGHG );
     double getGHGValue( const Input* aInput, const std::string& aRegionName, const std::string& aProdName,
                         const int aPeriod ) const;
@@ -76,15 +77,15 @@ public:
     bool getEmissionsCoefInputStatus() const;
     void setEmissionsCoefInputStatus();
     double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const;
-    void initCalc( );
-
+    void initCalc();
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     double calcInputEmissions( const std::vector<Input*>& aInputs, const std::string& aRegionName, const int aPeriod ) const;
     std::string name; //!< name of ghg gas
     std::string unit; //!< unit for ghg gas
     std::string storageName; //!< name of ghg gas storage 
     bool isGeologicSequestration; //!< is geologic sequestration, true or false
-	bool valueWasInputAtSomePoint; //!< Flag to indicate if the emissions were input in some previous period 
+    bool valueWasInputAtSomePoint; //!< Flag to indicate if the emissions were input in some previous period 
 
     double rmfrac; //!< fraction of carbon removed from fuel
     double storageCost; //!< storage cost associated with the remove fraction
@@ -95,13 +96,13 @@ protected:
     double sequestAmountNonEngy; //!< sequestered in non-energy form (calculated)
     double emissCoef; //!< emissions coefficient
     double emissInd; //!< indirect emissions
-	double maxCntrl; //!<  final control fraction for ghg's
+    double maxCntrl; //!<  final control fraction for ghg's
     double gdpcap0; //!< User inputed variable- represents midpoint of curve for control function
     double tau; //!< User inputed timescale parameter in control function
-	double gdpCap; //!< Saved value for GDP per capita. Needed to adjust control.
+    double gdpCap; //!< Saved value for GDP per capita. Needed to adjust control.
     double techDiff; //!< technological change parameter- represents percent reduction in gdp0 per year;
-	double adjMaxCntrl; //!< multiplier to maxCntrl, keeping current emissions constant
-	double multMaxCntrl; //!< multiplier to maxCntrl -- changes current emissions
+    double adjMaxCntrl; //!< multiplier to maxCntrl, keeping current emissions constant
+    double multMaxCntrl; //!< multiplier to maxCntrl -- changes current emissions
     double inputEmissions;  //!< input emissions for this object
     double emAdjust; //!< User inputed adjustment to emissions values(0 to 1)
     double finalEmissCoef; //!< user input final emissions factor that is approached asymptotically
@@ -111,17 +112,16 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-	double adjustControlParameters( const double gdpCap, const double emissDrive, const double macReduction, const int period );
-	virtual void adjustMaxCntrl(const double GDPcap);
+    double adjustControlParameters( const double gdpCap, const double emissDrive, const double macReduction, const int period );
+    virtual void adjustMaxCntrl(const double GDPcap);
 
     virtual double emissionsDriver( const double inputIn, const double outputIn ) const;
     double controlFunction( const double maxCntrlIn, const double tauIn, const double gdpcap0In, const double gdpCapIn );
     double calcTechChange( const int period );
-	
+    
 private:
     void copy( const Ghg& other );
     const static std::string XML_NAME; //!< node name for toXML methods
-
 };
 
 #endif // _GHG_H_

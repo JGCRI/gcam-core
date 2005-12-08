@@ -6,12 +6,12 @@
 
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
 	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responisbility for the 
+	express or implied, and assumes no liability or responsibility for the 
 	use of this software.
 */
 
@@ -31,7 +31,7 @@
 #include <iosfwd>
 #include <memory>
 
-#include "reporting/include/output_container.h"
+#include "util/base/include/default_visitor.h"
 
 /*! 
 * \ingroup Objects
@@ -44,18 +44,24 @@ class ProductionTechnology;
 class ProductionSector;
 class StorageTable;
 
-class SectorResults : public OutputContainer {
+class SectorResults : public DefaultVisitor {
 public:
-    SectorResults( const std::string& aRegionName );
-    void output( std::ostream& aFile, const int period ) const;
-    void updateSector( const Sector* aSector );
+    SectorResults( const std::string& aRegionName, std::ostream& aFile );
+    void finish() const;
+    void startVisitSector( const Sector* aSector, const int aPeriod );
     void updateProductionSector( const ProductionSector* aProdSector, const int aPeriod );
-	void updateProductionTechnology( const ProductionTechnology* prodTech, 
-		const std::string& aRegionName, const std::string& aSectorName, const int period );
+	void updateProductionTechnology( const ProductionTechnology* prodTech, const int period );
 private:
-    const std::string mRegionName;
+    //! The current region name.
+    const std::string mCurrentRegionName;
+
+    //! The current sector name name.
+    std::string mCurrentSectorName;
+    
+    //! The file to which to write.
+    std::ostream& mFile;
+
     std::auto_ptr<StorageTable> mInternalTable; //!< The internal storage structure in row-column order.
-    std::string mCurrSectorName; //!< The cached name of the current sector we are adding values for.
 };
 
 #endif // _SECTOR_RESULTS_H_

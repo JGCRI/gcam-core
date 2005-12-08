@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Son H. Kim (PNNL) -->
 <scenario name="4350">
-   <summary>"S450 Scenario"</summary>
+	<output-meta-data>
+   		<summary>S450 Scenario</summary>
+	</output-meta-data>
    <world>
       <region name="USA">
          <constraint-policy name="CO2">

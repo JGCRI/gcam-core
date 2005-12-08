@@ -9,13 +9,12 @@
 * \ingroup Objects
 * \brief The GDP class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
+#include "util/base/include/iround_trippable.h"
+#include "util/base/include/ivisitable.h"
+
 class Demographic;
-class Tabs;
 
 /*! 
 * \ingroup Objects
@@ -29,8 +28,9 @@ class Tabs;
 * \author Josh Lurz, Sonny Kim, Steve Smith
 */
 
-class GDP
+class GDP: public IRoundTrippable, public IVisitable
 {
+    friend class XMLDBOutputter;
 private:
 	std::vector<double> laborProdGrowthRate; //!< labor productivity growth rate
 	std::vector<double> laborForceParticipationPercent; //!< labor force participation percent
@@ -56,7 +56,6 @@ private:
     double getPPPMERRatio( const int period, const double marketGDPperCap ); // function to calculate PPP/MER ratio
 	double getTotalLaborProductivity( const int period ) const;
 	double getLaborForce( const int per ) const;    
-	double getLaborProdGR( const int per ) const;
 public:
 	GDP();
 	void XMLParse( const xercesc::DOMNode* node );
@@ -82,6 +81,7 @@ public:
     double getGDPNotAdjusted( const int period ) const;
     double getGDPPerCapitaNotAdjusted( const int period ) const;
     double getApproxPPPperCap( const int period ) const;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
  };
 
 #endif // _GDP_H_

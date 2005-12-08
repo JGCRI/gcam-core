@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The subsector class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -19,12 +17,13 @@
 #include <list>
 #include <xercesc/dom/DOMNode.hpp>
 #include "investment/include/iinvestable.h"
+#include "util/base/include/ivisitable.h"
+#include "util/base/include/iround_trippable.h"
 
 // Forward declarations
 class Summary;
 class technology;
 class Emcoef_ind;
-class Tabs;
 class GDP;
 class IInfo;
 class DependencyFinder;
@@ -32,10 +31,10 @@ class BaseTechnology;
 class NationalAccount;
 class Demographic;
 class MoreSectorInfo;
-class OutputContainer;
 class IExpectedProfitRateCalculator;
 class TechnologyType;
 class IDistributor;
+class Tabs;
 
 /*! 
 * \ingroup Objects
@@ -47,12 +46,13 @@ class IDistributor;
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 
-class Subsector: public IInvestable
+class Subsector: public IInvestable, public IVisitable, public IRoundTrippable
 {
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
     friend class SectorReport;
     friend class SGMGenTable;
+    friend class XMLDBOutputter;
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
     void clear();
@@ -96,7 +96,6 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
-    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const{};
     void normalizeTechShareWeights( const int period );
     virtual void adjustTechnologyShareWeights( const int period );
@@ -110,7 +109,7 @@ public:
     static double capLimitTransform( double capLimit, double orgShare ); 
     const std::string getName() const;
     void XMLParse( const xercesc::DOMNode* tempNode );
-	virtual void completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder );
+    virtual void completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder );
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
@@ -118,7 +117,6 @@ public:
                            const int aPeriod );
 
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void calcPrice( const int period );
@@ -198,13 +196,13 @@ public:
                                   const std::string& aSectorName, 
                                   const int aPeriod ) const;
 
-	void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
+    void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                   const MoreSectorInfo* aMoreSectorInfo, const bool isNewVintageMode, const int aPeriod );
-	
+    
     void updateMarketplace( const int period );
     void finalizePeriod( const int aPeriod );
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	void updateOutputContainer( OutputContainer* outputContainer, const int period ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     double getFixedInvestment( const int aPeriod ) const;
 };
 #endif // _SUBSECTOR_H_

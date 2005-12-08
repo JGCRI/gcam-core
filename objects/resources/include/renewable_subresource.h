@@ -35,15 +35,12 @@ protected:
 	//! subresource variance now read in rather than computed
 	double subResourceVariance;
 	//! read in average capacity factor for each subresource
-	double subResourceCapacityFactor;  
- 
+	double subResourceCapacityFactor;
+	void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
+	bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
+	void initializeResource(); 
 public: 
 	SubRenewableResource();
-	virtual std::string getType() const; 
-	virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
-	virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
-	virtual void toOutputXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
-	void initializeResource(); 
 	void cumulsupply(double prc,int per);
 	void annualsupply( int per, const GDP* gdp, double price1, double price2 );
 	double getVariance() const;

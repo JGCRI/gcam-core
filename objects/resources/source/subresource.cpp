@@ -21,6 +21,7 @@
 #include "resources/include/subresource.h"
 #include "resources/include/grade.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -91,9 +92,6 @@ void SubResource::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == "priceElas" ){
             priceElas = XMLHelper<double>::getValue( curr );
-            if ( priceElas == 0 ) {
-                cerr << "WARNING: priceElas = 0 in sub-resource: " << name << endl;
-            }
         }
         else if( nodeName == "techChange" ){
             XMLHelper<double>::insertValueIntoVector( curr, techChange, modeltime );
@@ -127,6 +125,9 @@ void SubResource::XMLParse( const DOMNode* node ){
 * \warning markets are not necesarilly set when completeInit is called
 */
 void SubResource::completeInit() {
+    if ( priceElas == 0 ) {
+		cerr << "WARNING: priceElas = 0 in sub-resource: " << name << endl;
+	}
     nograde = static_cast<int>( grade.size() ); // number of grades for each subresource   
     initializeResource(); // Do any initializations needed for this resource
     // update the available resource for period 0
@@ -190,59 +191,6 @@ void SubResource::toInputXML( ostream& out, Tabs* tabs ) const {
     
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
-
-//! Write datamembers to datastream in XML format for outputting results
-void SubResource::toOutputXML( ostream& out, Tabs* tabs ) const {
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    int m = 0;
-
-	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
-    
-    // write the xml for the class members.
-    
-    // write out the grade objects.
-    for( vector<Grade*>::const_iterator i = grade.begin(); i != grade.end(); i++ ){	
-        ( *i )->toInputXML( out, tabs );
-    }
-    
-    for(m = 0; m < static_cast<int>(annualprod.size() ); m++ ) {
-        XMLWriteElement(annualprod[m],"annualprod",out, tabs, modeltime->getper_to_yr(m));
-    }
-    
-    for(m = 0; m < static_cast<int>(gdpExpans.size() ); m++ ) {
-        XMLWriteElement(gdpExpans[m],"gdpExpans",out, tabs, modeltime->getper_to_yr(m));
-    }
-    
-    for(m = 0; m < static_cast<int>(techChange.size() ); m++ ) {
-        XMLWriteElement(techChange[m],"techChange",out, tabs, modeltime->getper_to_yr(m));
-    }
-    
-    for(m = 0; m < static_cast<int>(environCost.size() ); m++ ) {
-        XMLWriteElement(environCost[m],"environCost",out, tabs, modeltime->getper_to_yr(m));
-    }
-    
-    for(m = 0; m < static_cast<int>(severanceTax.size() ); m++ ) {
-        XMLWriteElement(severanceTax[m],"severanceTax",out, tabs, modeltime->getper_to_yr(m));
-    }
-    
-    for(m = 0; m < static_cast<int>(scaleFactor.size() ); m++ ) {
-        if ( scaleFactor[m] != SCALE_FACTOR_DEFAULT ) {  
-            XMLWriteElement(scaleFactor[m],"scaleFactor",out, tabs, modeltime->getper_to_yr(m));
-        }
-    }
-    
-    XMLWriteElement(minShortTermSLimit,"minShortTermSLimit",out, tabs );
-    XMLWriteElement(priceElas,"priceElas",out, tabs );
-    
-    // finished writing xml for the class members.
-    
-    // write out anything specific to the derived classes
-    toXMLforDerivedClass( out, tabs );
-    
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 
 void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
@@ -311,10 +259,6 @@ string SubResource::getName() const {
 
 double SubResource::getPrice(int per){
     return rscprc[per] ;
-}
-
-int SubResource::getMaxGrade() { // returns total number of grades
-    return nograde;
 }
 
 void SubResource::cumulsupply(double prc,int per){	
@@ -486,6 +430,20 @@ void SubResource::annualsupply( int per, const GDP* gdp, double price, double pr
 //! return annual production for period
 double SubResource::getAnnualProd(int per){
     return annualprod[per];
+}
+
+/*! \brief Update an output container for a SubResource.
+* \param aOutputContainer Output container to update.
+* \param aPeriod Period to update.
+*/
+void SubResource::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitSubResource( this, aPeriod );
+	
+	// Update the output container for the subresources.
+	for( unsigned int i = 0; i < grade.size(); ++i ){
+		grade[ i ]->accept( aVisitor, aPeriod );
+	}
+	aVisitor->endVisitSubResource( this, aPeriod );
 }
 
 //! return available resource for period

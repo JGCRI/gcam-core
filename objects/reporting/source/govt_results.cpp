@@ -26,7 +26,8 @@ using namespace std;
 extern Scenario* scenario; // for marketplace. Remove if unneeded and includes.
 
 //! Default Constructor
-GovtResults::GovtResults( const string& aRegionName ):
+GovtResults::GovtResults( const string& aRegionName, ostream& aFile ):
+mFile( aFile ),
 mRegionName( aRegionName ),
 mTaxReceipts( new StorageTable ),
 mSubsidies( new StorageTable ),
@@ -38,71 +39,70 @@ mParsingGovt( false ){
 /*! \brief Output the Government Sector Results table to a CSV
  * 
  * \author Josh Lurz
- * \param aPeriod The aPeriod which we are outputing for
  */
-void GovtResults::output( ostream& aFile, const int aPeriod ) const {
-    aFile << "-----------------------------" << endl;
-    aFile << "Government Sector Results Table" << endl;
-    aFile << "-----------------------------" << endl << endl;
+void GovtResults::finish() const {
+    mFile << "-----------------------------" << endl;
+    mFile << "Government Sector Results Table" << endl;
+    mFile << "-----------------------------" << endl << endl;
     
     // Block out the code which writes out tax receipts.
     {
         // Write out the tax receipts table.
-        aFile << "Tax receipts by Sector" << endl;
+        mFile << "Tax receipts by Sector" << endl;
 
         // Get the column labels for the taxes table which are types of taxes.
         const vector<string> colNames = mTaxReceipts->getColLabels();
         for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ){
-            aFile << ',' << *col;
+            mFile << ',' << *col;
         }	
-        aFile << endl;
+        mFile << endl;
 
         // Write out each row of the table, representing one sector
         const vector<string> rowNames = mTaxReceipts->getRowLabels();
         for ( vector<string>::const_iterator row = rowNames.begin(); row != rowNames.end(); ++row ){
-            aFile << *row;
+            mFile << *row;
             // Iterate through the columns.
             for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ) {
-                aFile << ',' << mTaxReceipts->getValue( *row, *col );
+                mFile << ',' << mTaxReceipts->getValue( *row, *col );
             }
-            aFile << endl;
+            mFile << endl;
         }
-        aFile << endl;
+        mFile << endl;
     }
     // Block out the code which writes the subsidies table.
     {
         // Write out the subsidies table.
-        aFile << "Subsidies by Sector" << endl;
+        mFile << "Subsidies by Sector" << endl;
         
-        aFile << "Sector";
+        mFile << "Sector";
         // Get the column labels for the subsidies table.
         const vector<string> colNames = mSubsidies->getColLabels();
         for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ){
-            aFile << ',' << *col;
+            mFile << ',' << *col;
         }	
-        aFile << endl;
+        mFile << endl;
 
         // Write out each row of the table, representing one sector
         const vector<string> rowNames = mSubsidies->getRowLabels();
         for ( vector<string>::const_iterator row = rowNames.begin(); row != rowNames.end(); ++row ){
-            aFile << *row;
+            mFile << *row;
             // Iterate through the columns.
             for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ) {
-                aFile << ',' << mSubsidies->getValue( *row, *col );
+                mFile << ',' << mSubsidies->getValue( *row, *col );
             }
-            aFile << endl;
+            mFile << endl;
         }
-        aFile << endl;
+        mFile << endl;
     }
     
     // Write out total transfers.
-    aFile << "Government Transfers, " << mGovtTransfers << endl << endl;
+    mFile << "Government Transfers, " << mGovtTransfers << endl << endl;
 
     // Write out expenditures.
 }
 
 //! Update the CGE Region
-void GovtResults::updateRegionCGE( const RegionCGE* aRegionCGE ){
+void GovtResults::startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ){
     // Add the column labels to all the tables.
     mTaxReceipts->addColumn( "Proportional Tax" ); // what is the AND in Legacy? Additive taxes?
     mTaxReceipts->addColumn( "Social Security Tax" );
@@ -118,7 +118,7 @@ void GovtResults::updateRegionCGE( const RegionCGE* aRegionCGE ){
     mGovtExpenditures->addColumn( "Amount" );
 }
 
-void GovtResults::updateSector( const Sector* aSector ){    
+void GovtResults::startVisitSector( const Sector* aSector, const int aPeriod ){    
     // Store the sector name as we'll need it at the technology level.
     // This has to be done here instead of updateProductionSector because that is called
     // after all the technologies are updated.
@@ -126,7 +126,7 @@ void GovtResults::updateSector( const Sector* aSector ){
 }
 
 void GovtResults::updateProductionTechnology( const ProductionTechnology* aProdTechnology, 
-		const string& aRegionName, const string& aSectorName, const int aPeriod )
+											  const int aPeriod )
 {
     mParsingGovt = false;
     // Fill up the tax table.

@@ -29,19 +29,19 @@ class Scenario;
 * \author Josh Lurz
 */
 class SingleScenarioRunner: public IScenarioRunner {
-	friend class ScenarioRunnerFactory;
+    friend class ScenarioRunnerFactory;
 public:
     virtual ~SingleScenarioRunner();
     virtual bool setupScenario( Timer& timer, const std::string aName = "",
-		                        const std::list<std::string> aScenComponents = std::list<std::string>() );
+                                const std::list<std::string> aScenComponents = std::list<std::string>() );
     virtual bool runScenario( const int aSinglePeriod, Timer& aTimer );
     virtual void printOutput( Timer& timer, const bool aCloseDB = true ) const;
-	virtual Scenario* getInternalScenario();
-	virtual const Scenario* getInternalScenario() const;
+    virtual Scenario* getInternalScenario();
+    virtual const Scenario* getInternalScenario() const;
 protected:    
-	SingleScenarioRunner();
-	static const std::string& getXMLNameStatic();
-	//! The scenario which will be run.
+    SingleScenarioRunner();
+    static const std::string& getXMLNameStatic();
+    //! The scenario which will be run.
     std::auto_ptr<Scenario> mScenario;
     };
 #endif // _SINGLE_SCENARIO_RUNNER_H_

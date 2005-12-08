@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief Ghg class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -23,6 +21,7 @@
 #include "containers/include/gdp.h"
 #include "emissions/include/ghg_mac.h"
 #include "functions/include/input.h"
+#include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
 #include "util/logger/include/ilogger.h"
 
@@ -47,7 +46,7 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     inputEmissions = -1;
     valueWasInputAtSomePoint = false;
     emAdjust = 0;
-	gdpCap = 0;
+    gdpCap = 0;
     maxCntrl = -1000;
     techDiff = 0;
     gdpcap0 = 0;
@@ -58,8 +57,8 @@ Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, con
     // TODO: Fix this so it has one spot per active period.
     mEmissions.resize( scenario->getModeltime()->getmaxper() );
     mEmissionsByFuel.resize( scenario->getModeltime()->getmaxper() );
-	adjMaxCntrl = 1;
-	multMaxCntrl = 1;
+    adjMaxCntrl = 1;
+    multMaxCntrl = 1;
 }
 
 //! Destructor
@@ -98,8 +97,8 @@ void Ghg::copy( const Ghg& other ){
     maxCntrl = other.maxCntrl;
     techDiff = other.techDiff;
     gdpcap0 = other.gdpcap0;
-	adjMaxCntrl = other.adjMaxCntrl;
-	multMaxCntrl = other.multMaxCntrl;
+    adjMaxCntrl = other.adjMaxCntrl;
+    multMaxCntrl = other.multMaxCntrl;
     finalEmissCoef = other.finalEmissCoef;
     tau = other.tau;
     mEmissions.resize( scenario->getModeltime()->getmaxper() );
@@ -118,7 +117,7 @@ Ghg* Ghg::clone() const {
 /*! \brief initialize Ghg object with xml data
 *
 */
-void Ghg::XMLParse(const DOMNode* node) {	
+void Ghg::XMLParse(const DOMNode* node) {   
     /*! \pre Assume we are passed a valid node. */
     assert( node );
 
@@ -128,7 +127,7 @@ void Ghg::XMLParse(const DOMNode* node) {
 
     for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
         DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );      
 
         if( nodeName == "#text" ){
             continue;
@@ -162,18 +161,18 @@ void Ghg::XMLParse(const DOMNode* node) {
             emissCoef = XMLHelper<double>::getValue( curr );
             inputEmissions = -1; // Reset inputEmissions to default value
         }
-		// Adjust max Control level, leaving current emissions constant
-		else if( nodeName == "adjMaxCntrl" ){
+        // Adjust max Control level, leaving current emissions constant
+        else if( nodeName == "adjMaxCntrl" ){
             adjMaxCntrl = XMLHelper<double>::getValue( curr );
-		}
-		// Multiply maximum control level, changing current emissions
-		else if( nodeName == "multMaxCntrl" ){
+        }
+        // Multiply maximum control level, changing current emissions
+        else if( nodeName == "multMaxCntrl" ){
             multMaxCntrl = XMLHelper<double>::getValue( curr );
-		}
+        }
         else if( nodeName == "removefrac" ){
             rmfrac = XMLHelper<double>::getValue( curr );
         }
-	
+    
         // is geologic sequestration, true or false
         else if( nodeName == "isGeologicSequestration" ){
             isGeologicSequestration = XMLHelper<bool>::getValue( curr );
@@ -187,29 +186,29 @@ void Ghg::XMLParse(const DOMNode* node) {
             gwp = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == GhgMAC::getXMLNameStatic() ){
-			// Delete the MAC if requested.
-			if( XMLHelper<int>::getAttr( curr, "delete" ) ){
-				// Check if the curve exists.
-				if( ghgMac.get() ){
-					ILogger& mainLog = ILogger::getLogger( "main_log" );
-					mainLog.setLevel( ILogger::DEBUG);
-					mainLog << "Deleting GHG MAC from GHG " << name << endl;
-					ghgMac.reset( 0 );
-				}
-			}
-			// Create and parse the MAC.
-			else {
-				if( !ghgMac.get() ){
-					ghgMac.reset( new GhgMAC() );
-				}
-				ghgMac->XMLParse( curr );
-			}
+            // Delete the MAC if requested.
+            if( XMLHelper<int>::getAttr( curr, "delete" ) ){
+                // Check if the curve exists.
+                if( ghgMac.get() ){
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::DEBUG);
+                    mainLog << "Deleting GHG MAC from GHG " << name << endl;
+                    ghgMac.reset( 0 );
+                }
+            }
+            // Create and parse the MAC.
+            else {
+                if( !ghgMac.get() ){
+                    ghgMac.reset( new GhgMAC() );
+                }
+                ghgMac->XMLParse( curr );
+            }
         }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
         }
         else {
-			ILogger& mainLog = ILogger::getLogger( "main_log" );
-			mainLog.setLevel( ILogger::WARNING );
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing GHG." << endl;
         }
     }
@@ -244,8 +243,8 @@ void Ghg::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( gdpcap0, "gdpcap0", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( tau, "tau", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( finalEmissCoef, "finalEmissCoef", out, tabs, -1.0 );
-	XMLWriteElementCheckDefault( adjMaxCntrl, "adjMaxCntrl", out, tabs, 1.0 );
-	XMLWriteElementCheckDefault( multMaxCntrl, "multMaxCntrl", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( adjMaxCntrl, "adjMaxCntrl", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( multMaxCntrl, "multMaxCntrl", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( techDiff, "techDiff", out, tabs, 0.0 );
 
     // Write out the GHGMAC
@@ -286,7 +285,7 @@ void Ghg::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( gdpcap0, "gdpcap0", out, tabs );
     XMLWriteElement( tau, "tau", out, tabs );
     XMLWriteElement( finalEmissCoef, "finalEmissCoef", out, tabs );
-	XMLWriteElement( adjMaxCntrl, "adjMaxCntrl", out, tabs );
+    XMLWriteElement( adjMaxCntrl, "adjMaxCntrl", out, tabs );
     XMLWriteElement( techDiff, "techDiff", out, tabs );
 
      // Write out the GHGMAC
@@ -348,39 +347,39 @@ void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
     assert( prevGHG ); // Make sure valid pointer was passed
    
    // Copy values that always need to be the same for all periods.
-	// Note that finalEmissCoef is not copied, since maxCntrl has already been set appropriately
-	maxCntrl = prevGHG->maxCntrl;
-	gdpcap0 = prevGHG->gdpcap0;
-	tau = prevGHG->tau;
+    // Note that finalEmissCoef is not copied, since maxCntrl has already been set appropriately
+    maxCntrl = prevGHG->maxCntrl;
+    gdpcap0 = prevGHG->gdpcap0;
+    tau = prevGHG->tau;
 
     unit = prevGHG->unit;
-	
+    
     adjMaxCntrl = prevGHG->adjMaxCntrl;
 
-	// Adjust for maximum control level once GDP per capita is determined
-	// This could better be put into a post-calculation processing function if we implimented that in general
-	adjustMaxCntrl( prevGHG->gdpCap );
-	
+    // Adjust for maximum control level once GDP per capita is determined
+    // This could better be put into a post-calculation processing function if we implimented that in general
+    adjustMaxCntrl( prevGHG->gdpCap );
+    
 
-	// Copy values that could change, so only copy if these are still zero (and, thus, were never read-in)
+    // Copy values that could change, so only copy if these are still zero (and, thus, were never read-in)
    if ( !techDiff ) { 
-		techDiff = prevGHG->techDiff; // only copy if techDiff has not changed
-	}
+        techDiff = prevGHG->techDiff; // only copy if techDiff has not changed
+    }
  
    if ( !gwp ) { 
-		gwp = prevGHG->gwp; // only copy if GWP has not changed
-	}
+        gwp = prevGHG->gwp; // only copy if GWP has not changed
+    }
     
     // Default value for emissCoef is zero, so only copy if a new value was read in
     if ( !emissCoef ) {
-		emissCoef = prevGHG->emissCoef;
-	}
+        emissCoef = prevGHG->emissCoef;
+    }
 
-	// If an emissions value was input last period, and none was input this period, then copy emissions coefficient
+    // If an emissions value was input last period, and none was input this period, then copy emissions coefficient
     // This overwrites anything that was read in
-	if (  !valueWasInputAtSomePoint && prevGHG->valueWasInputAtSomePoint ) {
-		emissCoef = prevGHG->emissCoef;
-	}
+    if (  !valueWasInputAtSomePoint && prevGHG->valueWasInputAtSomePoint ) {
+        emissCoef = prevGHG->emissCoef;
+    }
 
     // If Mac curve was input then copy it, as long as one was not read in for this period
     if ( !ghgMac.get() && prevGHG->ghgMac.get() ) {
@@ -391,9 +390,9 @@ void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
 //! Perform initializations that only need to be done once per period
 void Ghg::initCalc( ) {
 
-	maxCntrl *= multMaxCntrl;
+    maxCntrl *= multMaxCntrl;
     // Make sure control percentage never goes above 100% so there are no negative emissions!
-	maxCntrl = min( maxCntrl, 100.0 );
+    maxCntrl = min( maxCntrl, 100.0 );
     
     // Set flag that an emission input value was set
     if( inputEmissions >= 0 ) {
@@ -448,13 +447,13 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
     // units for generalized cost is in 75$/gj
     double generalizedCost = 0;
 
-	// Fuel market may not exist.
-	const IInfo* fuelInfo = marketplace->getMarketInfo( fuelName, regionName, period, false );
-	const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ) : 0;
-	
-	// Product market may not exist if it is a demand sector.
-	const IInfo* productInfo = marketplace->getMarketInfo( prodName, regionName, period, false );
-	const double coefProduct = productInfo ? productInfo->getDouble( "CO2Coef", false ) : 0;
+    // Fuel market may not exist.
+    const IInfo* fuelInfo = marketplace->getMarketInfo( fuelName, regionName, period, false );
+    const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ) : 0;
+    
+    // Product market may not exist if it is a demand sector.
+    const IInfo* productInfo = marketplace->getMarketInfo( prodName, regionName, period, false );
+    const double coefProduct = productInfo ? productInfo->getDouble( "CO2Coef", false ) : 0;
 
     if (name == "CO2") {
         // if remove fraction is greater than zero and storage cost is required
@@ -517,7 +516,7 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
 * \todo let initCalc know the period so that calcTechChange calculation can be moved there and will only have to be done once per period
 */
 double Ghg::adjustControlParameters( const double gdpCap, const double emissDrive, const double macReduction, const int period ){
-	double adjustedGdpCap0 = gdpcap0; //! gdpCap0 used by the control function- adjusted for techDiffusion
+    double adjustedGdpCap0 = gdpcap0; //! gdpCap0 used by the control function- adjusted for techDiffusion
 
     if (techDiff !=0){
         adjustedGdpCap0 = gdpcap0 / calcTechChange(period);
@@ -527,13 +526,13 @@ double Ghg::adjustControlParameters( const double gdpCap, const double emissDriv
             const double multiplier = emissDrive * ( 1 - emAdjust ) * ( 1 - macReduction );
 
             const double B = (1/controlFunction(100,tau,adjustedGdpCap0,gdpCap));
-			if ( multiplier != 0){
-				//cannot divide by zero- when no driver is present
-				maxCntrl = 100 * (1 - (finalEmissCoef * ((B - 1)) / (((B * inputEmissions) / multiplier ) - finalEmissCoef)));
-			}
-			else{
-				maxCntrl = 0;
-			}
+            if ( multiplier != 0){
+                //cannot divide by zero- when no driver is present
+                maxCntrl = 100 * (1 - (finalEmissCoef * ((B - 1)) / (((B * inputEmissions) / multiplier ) - finalEmissCoef)));
+            }
+            else{
+                maxCntrl = 0;
+            }
             // method for calculating an maxCntrl when using emissions coefficients that require maxCntrl in their
             // calculation.  The formula is derived by setting up equations where maxCntrl can be eliminated through 
             // substitution, the emissions coefficient can be solved for, and that expression can be substituted back in 
@@ -548,16 +547,16 @@ double Ghg::adjustControlParameters( const double gdpCap, const double emissDriv
             }
             else {
                 maxCntrl = 0;
-				ILogger& mainLog = ILogger::getLogger( "main_log" );
-				mainLog.setLevel( ILogger::WARNING );
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
                 mainLog << " emissCoef = 0, control function set to 0"<< endl;
 
             }
         }
         // Control values should never be larger than 100%.
-		maxCntrl = min( maxCntrl, 100.0 );
-	}
-	return adjustedGdpCap0;
+        maxCntrl = min( maxCntrl, 100.0 );
+    }
+    return adjustedGdpCap0;
 }
 
 /*! \brief Returns the value by which to adjust gdpcap0, based on technological diffusion
@@ -587,7 +586,7 @@ double Ghg::calcTechChange( const int period ){
 *  \todo Sequestration and collapsing two methods.
 */
 double Ghg::getGHGValue( const Input* aInput, const string& aRegionName,
-						 const string& aGoodName, const int aPeriod ) const
+                         const string& aGoodName, const int aPeriod ) const
 {
     // Determine if there is a tax.
     const Marketplace* marketplace = scenario->getMarketplace();
@@ -648,21 +647,21 @@ double Ghg::calcInputEmissions( const vector<Input*>& aInputs, const string& aRe
 void Ghg::calcEmission( const string& regionName, const string& fuelname, const double input, 
                         const string& prodname, const double output, const GDP* gdp, const int aPeriod )
 {
-	// for CO2 use default emissions coefficient by fuel
-	// remove fraction only applicable for CO2
-	if (name == "CO2") {
-		const Marketplace* marketplace = scenario->getMarketplace();
+    // for CO2 use default emissions coefficient by fuel
+    // remove fraction only applicable for CO2
+    if (name == "CO2") {
+        const Marketplace* marketplace = scenario->getMarketplace();
 
-		// Fuel market may not exist.
-		const IInfo* fuelInfo = marketplace->getMarketInfo( fuelname, regionName, aPeriod, false );
-		const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ): 0;
+        // Fuel market may not exist.
+        const IInfo* fuelInfo = marketplace->getMarketInfo( fuelname, regionName, aPeriod, false );
+        const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ): 0;
 
-		// Product market may not exist if the product is a demand sector.
-		const IInfo* productInfo = marketplace->getMarketInfo( prodname, regionName, aPeriod, false );
-		const double coefProduct = productInfo ? productInfo->getDouble( "CO2Coef", false ) : 0;
+        // Product market may not exist if the product is a demand sector.
+        const IInfo* productInfo = marketplace->getMarketInfo( prodname, regionName, aPeriod, false );
+        const double coefProduct = productInfo ? productInfo->getDouble( "CO2Coef", false ) : 0;
 
-		// 100% efficiency and same coefficient, no emissions
-		if (input==output && coefFuel == coefProduct ) {
+        // 100% efficiency and same coefficient, no emissions
+        if (input==output && coefFuel == coefProduct ) {
             mEmissions[ aPeriod ] = 0;
             sequestAmountGeologic = 0;
             sequestAmountNonEngy = 0;
@@ -696,11 +695,11 @@ void Ghg::calcEmission( const string& regionName, const string& fuelname, const 
             macReduction = ghgMac->findReduction(regionName, aPeriod);
         }
 
-		double fControl = 0;	
-	    double adjustedGdpCap0 = adjustControlParameters( gdpCap, emissDriver, macReduction, aPeriod );
-		if ( ( finalEmissCoef > 0 ) || ( maxCntrl > -999 ) ){
-			fControl = controlFunction( maxCntrl, tau, adjustedGdpCap0, gdpCap );
-		}
+        double fControl = 0;    
+        double adjustedGdpCap0 = adjustControlParameters( gdpCap, emissDriver, macReduction, aPeriod );
+        if ( ( finalEmissCoef > 0 ) || ( maxCntrl > -999 ) ){
+            fControl = controlFunction( maxCntrl, tau, adjustedGdpCap0, gdpCap );
+        }
 
         if ( inputEmissions >= 0 ) {
             mEmissions[ aPeriod ] = inputEmissions;
@@ -753,8 +752,8 @@ void Ghg::calcEmission( const vector<Input*> aInputs, const string& aRegionName,
     // Determine the output coefficient. The output coefficent will not exist for consumers.
     const static string COEF_STRING = "coefficient";
     Marketplace* marketplace = scenario->getMarketplace();
-	const IInfo* outputMarketInfo = marketplace->getMarketInfo( aGoodName, aRegionName, 0, false );
-	const double outputCoef = outputMarketInfo ? outputMarketInfo->getDouble( name + COEF_STRING, false ) : 0;
+    const IInfo* outputMarketInfo = marketplace->getMarketInfo( aGoodName, aRegionName, 0, false );
+    const double outputCoef = outputMarketInfo ? outputMarketInfo->getDouble( name + COEF_STRING, false ) : 0;
     
     // calculate the output emissions.
     const double outputEmissions = aOutput * outputCoef;
@@ -762,12 +761,12 @@ void Ghg::calcEmission( const vector<Input*> aInputs, const string& aRegionName,
     // If the good is a primary fuel, don't subtract output emissions as this is
     // extraction of the resource, not sequestration, and store the output
     // emissions as emissions by primary fuel.
-	if( Input::isInputPrimaryEnergyGood( aGoodName, aRegionName ) ){
-		mEmissionsByFuel[ aPeriod ] = outputEmissions;
-	}
-	else {
-		// Remove emissions contained in the output from the total technology emissions.
-		tempEmission -= outputEmissions;
+    if( Input::isInputPrimaryEnergyGood( aGoodName, aRegionName ) ){
+        mEmissionsByFuel[ aPeriod ] = outputEmissions;
+    }
+    else {
+        // Remove emissions contained in the output from the total technology emissions.
+        tempEmission -= outputEmissions;
     }
 
     // Calculate emissions for the constraint market based on the global warming potential of the gas.
@@ -847,18 +846,18 @@ double Ghg::getEmissCoef() const {
 * \param gdpCapIn the gdp per capita in PPP terms for the current period
 */
 double Ghg::controlFunction( const double maxCntrlIn, const double tauIn, const double gdpcap0In, const double gdpCapIn ){
-	ILogger& mainLog = ILogger::getLogger( "main_log" );
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
     if( tauIn != 0 && gdpcap0In != 0 ){
         const double CLOGIT = 4.394; // See above for documentation.
         return (maxCntrlIn/100) / (1 + exp( -CLOGIT * (gdpCapIn - gdpcap0In) / tauIn ));
     }
     else {
         if ( tauIn == 0 ){
-			mainLog.setLevel( ILogger::WARNING );
+            mainLog.setLevel( ILogger::WARNING );
             mainLog << " control function requires an input of tau." << endl;
         }
         if ( gdpcap0In == 0 ){
-			mainLog.setLevel( ILogger::WARNING );
+            mainLog.setLevel( ILogger::WARNING );
             mainLog << " control function requires an input of gdpcap0." << endl;
         }
         return 0;
@@ -905,23 +904,30 @@ double Ghg::getCarbonTaxPaid( const string& aRegionName, const int aPeriod ) con
 * \param GDPcap the previous periods GDP per capita in PPP terms for this region
 */
 void Ghg::adjustMaxCntrl( const double GDPcap ){
-	if ( tau != 0 && gdpcap0 != 0 && adjMaxCntrl != 1 ) {
-		// Note that maxCntrl is in percentage units
-		maxCntrl *= adjMaxCntrl;
-		if ( maxCntrl > 100 ) {
-			adjMaxCntrl *= ( 100 / maxCntrl );
-			maxCntrl = 100;
-		}
+    if ( tau != 0 && gdpcap0 != 0 && adjMaxCntrl != 1 ) {
+        // Note that maxCntrl is in percentage units
+        maxCntrl *= adjMaxCntrl;
+        if ( maxCntrl > 100 ) {
+            adjMaxCntrl *= ( 100 / maxCntrl );
+            maxCntrl = 100;
+        }
 
-		const double CLOGIT = 4.394;
-		double factor1 =  1 + exp( -CLOGIT * ( GDPcap - gdpcap0 ) / tau );
-		
-		if ( adjMaxCntrl != 1 ){
-			gdpcap0 = ( tau / CLOGIT ) * log( adjMaxCntrl * factor1 - 1 ) + GDPcap;
-		}
-		// After finished adjustments, adjMaxCntrl should be set to one so is not used anymore
-		adjMaxCntrl = 1;
-	}
+        const double CLOGIT = 4.394;
+        double factor1 =  1 + exp( -CLOGIT * ( GDPcap - gdpcap0 ) / tau );
+        
+        if ( adjMaxCntrl != 1 ){
+            gdpcap0 = ( tau / CLOGIT ) * log( adjMaxCntrl * factor1 - 1 ) + GDPcap;
+        }
+        // After finished adjustments, adjMaxCntrl should be set to one so is not used anymore
+        adjMaxCntrl = 1;
+    }
 }
 
-        
+/*! \brief Update a visitor with information from a GHG for a given period.
+* \param aVisitor The visitor to update.
+* \param aPeriod The period for which to update.
+*/
+void Ghg::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitGHG( this, aPeriod );
+	aVisitor->endVisitGHG( this, aPeriod );
+}

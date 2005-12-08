@@ -32,9 +32,9 @@ void XMLLogger::open( const char[] ){
     mLogFile.open( mFileName.c_str(), ios::out );
 
 	// Print the header message
-	time_t ltime;
-	time(&ltime);
-	string dateString = util::XMLCreateDate( ltime );
+	time_t localTime;
+	time(&localTime);
+	string dateString = util::XMLCreateDate( localTime );
 	mLogFile << "<XMLLogger name=\"" << mName << "\" date=\"" << dateString << "\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"D:\\cvs\\Code\\EXE\\XMLLog.xsd\">" << endl;
 }
 

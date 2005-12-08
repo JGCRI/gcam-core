@@ -3,13 +3,12 @@
 * \ingroup Objects
 * \brief Marketplace class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
 
 #include <vector>
+
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/market.h"
 #include "marketplace/include/imarket_type.h"
@@ -20,6 +19,7 @@
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/price_market.h"
 #include "marketplace/include/market_locator.h"
+#include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
 
 using namespace std;
@@ -50,6 +50,15 @@ Marketplace::~Marketplace() {
     }
 }
 
+/*! \brief Get the XML node name in static form for outputting XML.
+* \author Josh Lurz
+* \return The constant XML element name string as a static.
+*/
+const string& Marketplace::getXMLNameStatic() {
+    const static string XML_NAME = "Marketplace";
+    return XML_NAME;
+}
+
 /*! \brief Write out XML for debugging purposes.
 *
 * This method is called hierarchically from the main loop to write out 
@@ -66,7 +75,7 @@ Marketplace::~Marketplace() {
 */
 void Marketplace::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    XMLWriteOpeningTag( "Marketplace", out, tabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
 
     // write the xml for the class members.
     XMLWriteElement( static_cast<int>( markets.size() ), "numberOfMarkets", out, tabs );
@@ -77,7 +86,7 @@ void Marketplace::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
     }
 
     // finished writing xml for the class members.
-	XMLWriteClosingTag( "Marketplace", out, tabs );
+    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
 /*! \brief This function creates a market of the specified type for a given market region and good if it does not already exist.
@@ -96,6 +105,9 @@ void Marketplace::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 * \return Whether a market was created.
 */
 bool Marketplace::createMarket( const string& regionName, const string& marketName, const string& goodName, const IMarketType::Type aType ) {
+    /*! \pre Region name, market name, and sector name must be non null. */
+    assert( !regionName.empty() && !marketName.empty() && !goodName.empty() );
+
     // Create the index within the market locator.
     const int uniqueNumber = static_cast<int>( markets.size() );
     int marketNumber = mMarketLocator->addMarket( marketName, regionName, goodName, uniqueNumber );
@@ -358,9 +370,9 @@ void Marketplace::addToDemand( const string& goodName, const string& regionName,
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-		mainLog << "Error adding to demand in markeplace for: " << goodName << ", value: " << value << endl;
+        mainLog << "Error adding to demand in markeplace for: " << goodName << ", value: " << value << endl;
         return;
-	}
+    }
 
     const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
@@ -526,24 +538,24 @@ void Marketplace::restoreinfo( const int period) {
 *       mutable pointer.
 */
 const IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& aRegionName,
-										 const int aPeriod, const bool aMustExist ) const 
+                                         const int aPeriod, const bool aMustExist ) const 
 {
     const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, aGoodName );
-	const IInfo* info = 0;
+    const IInfo* info = 0;
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
         info = markets[ marketNumber ][ aPeriod ]->getMarketInfo();
-		/*! \invariant The market is required to return an information object
+        /*! \invariant The market is required to return an information object
         *              that is non-null. 
         */
-		assert( info );
+        assert( info );
     }
     
-	// Report the error if requested.
-	if( !info && aMustExist ){
+    // Report the error if requested.
+    if( !info && aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-		mainLog << "Market info object cannot be returned because market "
-			    << aGoodName << " in " << aRegionName << " does not exist." << endl;
+        mainLog << "Market info object cannot be returned because market "
+                << aGoodName << " in " << aRegionName << " does not exist." << endl;
     }
     return info;
 }
@@ -569,24 +581,24 @@ const IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& 
 *       cannot be called from constant function.
 */
 IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& aRegionName,
-								   const int aPeriod, const bool aMustExist )
+                                   const int aPeriod, const bool aMustExist )
 {
     const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, aGoodName );
-	IInfo* info = 0;
+    IInfo* info = 0;
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
         info = markets[ marketNumber ][ aPeriod ]->getMarketInfo();
-		/*! \invariant The market is required to return an information object
+        /*! \invariant The market is required to return an information object
         *              that is non-null. 
         */
-		assert( info );
+        assert( info );
     }
     
-	// Report the error if requested.
-	if( !info && aMustExist ){
+    // Report the error if requested.
+    if( !info && aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-		mainLog << "Market info object cannot be returned because market " 
-			    << aGoodName << " in " << aRegionName << " does not exist." << endl;
+        mainLog << "Market info object cannot be returned because market " 
+                << aGoodName << " in " << aRegionName << " does not exist." << endl;
     }
     return info;
 }
@@ -609,8 +621,8 @@ void Marketplace::dbOutput() const {
     int j;
     // write market prices, supply and demand
     for (int i=0;i< static_cast<int>( markets.size() );i++) {
-		string tempRegName = markets[i][0]->getRegionName();
-		string tempGoodName = markets[i][0]->getGoodName();
+        string tempRegName = markets[i][0]->getRegionName();
+        string tempGoodName = markets[i][0]->getGoodName();
         for (j=0;j<maxPeriod;j++) {
             temp[j] = markets[i][j]->getRawPrice();
         }
@@ -670,17 +682,40 @@ void Marketplace::csvOutputFile( string marketsToPrint ) const {
  * \param period The period which we are outputing for
  */
 void Marketplace::csvSGMOutputFile( ostream& aFile, const int period ) const {
-	// come back to this
-	aFile << "Region" << ',' << "Good" << ',' << "Price" << ','<< "PriceReceived" << ',' << "ED" << ',' << "Demand" << ',' << "Supply" << endl;
-	// reset format to default
-	aFile.setf(ios_base::fixed, ios_base::floatfield);
-	for ( unsigned int i = 0; i < markets.size(); i++ ) {
-		aFile << markets[ i ][ period ]->getRegionName() << ',' << markets[ i ][ period ]->getGoodName() << ','
+    // come back to this
+    aFile << "Region" << ',' << "Good" << ',' << "Price" << ','<< "PriceReceived" << ',' << "ED" << ',' << "Demand" << ',' << "Supply" << endl;
+    // reset format to default
+    aFile.setf(ios_base::fixed, ios_base::floatfield);
+    for ( unsigned int i = 0; i < markets.size(); i++ ) {
+        aFile << markets[ i ][ period ]->getRegionName() << ',' << markets[ i ][ period ]->getGoodName() << ','
               << markets[ i ][ period ]->getPrice() << ','
               << markets[ i ][ period ]->getMarketInfo()->getDouble( "priceReceived", false ) << ','
               << markets[ i ][ period ]->getDemand() - markets[ i ][ period ]->getSupply()  << ','
               << markets[ i ][ period ]->getDemand() << ',' << markets[ i ][ period ]->getSupply() << endl;
-	}
-	aFile << endl;
+    }
+    aFile << endl;
 }
 
+/*! \brief Update an output container for the Marketplace.
+* \param aVisitor Output container to update.
+* \param aPeriod Period to update.
+*/
+void Marketplace::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitMarketplace( this, aPeriod );
+
+    // Update from the markets.
+    for( unsigned int i = 0; i < markets.size(); i++ ){
+        // If the period is -1 this means to update all periods.
+        if( aPeriod == -1 ){
+            for( unsigned int j = 0; j < markets[ i ].size(); ++j ){
+                markets[ i ][ j ]->accept( aVisitor, aPeriod );
+            }
+        }
+        // Otherwise only update for the current period.
+        else {
+            markets[ i ][ aPeriod ]->accept( aVisitor, aPeriod );
+        }
+    }
+
+    aVisitor->endVisitMarketplace( this, aPeriod );
+}

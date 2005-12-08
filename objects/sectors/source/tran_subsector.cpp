@@ -120,20 +120,6 @@ void TranSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     }	
 }
 
-//! XML output for viewing.
-void TranSubsector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( unsigned int i = 0; i < speed.size(); ++i ){
-        XMLWriteElementCheckDefault( speed[ i ], "speed", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
-    for( unsigned int i = 0; i < popDenseElasticity.size(); ++i ){
-        XMLWriteElementCheckDefault( popDenseElasticity[ i ], "popDenseElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
-    for( unsigned int i = 0; i < mServiceOutputs.size(); ++i ){
-        XMLWriteElementCheckDefault( mServiceOutputs[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
-}
-
 //! Write object to debugging xml output stream.
 void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( speed[ period ], "speed", out, tabs );

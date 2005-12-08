@@ -9,13 +9,13 @@
 * \ingroup Objects
 * \brief The Grade class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
+#include "util/base/include/ivisitable.h"
 class Tabs;
+
 /*! 
 * \ingroup Objects
 * \brief Technologies representing a Grade for each resource.
@@ -25,25 +25,24 @@ class Tabs;
 * \author Sonny Kim
 */
 
-class Grade
+class Grade: public IVisitable
 {
+	friend class XMLDBOutputter;
 public:
     Grade();
-    Grade( const std::string nameIn, const int noIn );
-    void clear();
-    void initElementalMembers();
     void XMLParse( const xercesc::DOMNode* tempnode );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	const std::string& getXMLName() const;
 	static const std::string& getXMLNameStatic();
     void calcCost( const double tax, const double cumTechChange, const double environCost, const int per );
     double getAvail() const;
     double getCost( const int per ) const;
     double getExtCost() const;
-    std::string getName() const;
+    const std::string& getName() const;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
 private:
+	const std::string& getXMLName() const;
+    void initElementalMembers();
 	static const std::string XML_NAME; //!< node name for toXML methods
     std::string name; //!< Grade name
     double available; //!< amount of Grade for each Grade

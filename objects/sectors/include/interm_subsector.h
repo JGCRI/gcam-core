@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief The intermittent supply subsector class header file.
 * \author Marshall Wise
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -56,7 +54,6 @@ protected:
     const std::string& getXMLName() const;
 	void calcBackupFraction(const int per); //compute demand for backup supply for intermittency
     virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
-    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 

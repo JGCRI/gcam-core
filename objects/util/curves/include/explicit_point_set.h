@@ -36,8 +36,6 @@ class ExplicitPointSet: public PointSet {
         return os;
     }
 public:
-    typedef std::vector<DataPoint*>::iterator DataPointIterator;
-    typedef std::vector<DataPoint*>::const_iterator DataPointConstIterator;
     ExplicitPointSet();
     ExplicitPointSet( const ExplicitPointSet& rhs );
     ~ExplicitPointSet();
@@ -45,10 +43,7 @@ public:
     bool operator==( const ExplicitPointSet& rhs ) const;
     bool operator!=( const ExplicitPointSet& rhs ) const;
     ExplicitPointSet* clone() const;
-    void copy( const ExplicitPointSet& rhs );
-    void clear();
     static const std::string& getXMLNameStatic();
-    const std::string& getXMLName() const;
     bool addPoint( DataPoint* dataPoint );
     double getY( const double xValue ) const;
     double getX( const double yValue ) const;
@@ -73,7 +68,12 @@ public:
 protected:   
     static const std::string XML_NAME; //!< The name of the XML tag associated with this object.
     std::vector<DataPoint*> points;
-    const DataPoint* findX( const double xValue ) const;
+    typedef std::vector<DataPoint*>::iterator DataPointIterator;
+    typedef std::vector<DataPoint*>::const_iterator DataPointConstIterator;
+	const std::string& getXMLName() const;
+	void copy( const ExplicitPointSet& rhs );
+    void clear();
+	const DataPoint* findX( const double xValue ) const;
     DataPoint* findX( const double xValue );
     const DataPoint* findY( const double yValue ) const;
     DataPoint* findY( const double yValue );

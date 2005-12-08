@@ -24,7 +24,7 @@
 #include "marketplace/include/marketplace.h"
 #include "functions/include/function_manager.h"
 #include "demographics/include/demographic.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 #include "functions/include/function_utils.h"
 #include "util/logger/include/ilogger.h"
 
@@ -370,9 +370,9 @@ void GovtConsumer::csvSGMOutputFile( ostream& aFile, const int period ) const {
 	}
 }
 
-void GovtConsumer::updateOutputContainer( OutputContainer* outputContainer,  const string& aRegionName, const string& aSectorName, const int aPeriod ) const {
+void GovtConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
-        Consumer::updateOutputContainer( outputContainer, aRegionName, aSectorName, aPeriod );
-	    outputContainer->updateGovtConsumer( this, aPeriod );
+        Consumer::accept( aVisitor, aPeriod );
+	    aVisitor->updateGovtConsumer( this, aPeriod );
     }
 }

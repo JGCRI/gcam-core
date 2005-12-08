@@ -1,6 +1,6 @@
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -42,44 +42,44 @@ using namespace std;
 extern Scenario* scenario;
 
 //! Default Constructor
-DemandComponentsTable::DemandComponentsTable(): mTable( new StorageTable ){
+DemandComponentsTable::DemandComponentsTable( ostream& aFile ):
+mFile( aFile ),
+mTable( new StorageTable ){
 }
 
 /*! \brief For outputing SGM data to a flat csv File
- *
- * \param period The period which we are outputing for
  */
-void DemandComponentsTable::output( ostream& aFile, const int period ) const {
+void DemandComponentsTable::finish() const {
 	
-	aFile << "Demand Components Table" << endl << "Industry" << ',';
+	mFile << "Demand Components Table" << endl << "Industry" << ',';
     // Now output the table column labels.
     const vector<string> cols = mTable->getColLabels();
     for( vector<string>::const_iterator col = cols.begin(); col != cols.end(); ++col ){
-        aFile << *col <<','; // output the label.
+        mFile << *col <<','; // output the label.
     }
-    aFile << endl;
+    mFile << endl;
 
 	// Note: This is structurly different from SAM. This goes through the rows and prints
 	// out each of the category values.
-	aFile.precision(0);
+	mFile.precision(0);
 
     // Get the row labels.
     const vector<string> rows = mTable->getRowLabels();
 
     // Loop through each row and print all the columns.
     for( vector<string>::const_iterator row = rows.begin(); row != rows.end(); ++row ){
-		aFile << *row; // output the row label.
+		mFile << *row; // output the row label.
         for( vector<string>::const_iterator col = cols.begin(); col != cols.end(); ++col ){
-            aFile << ',' << mTable->getValue( *row, *col ); // output the value.
+            mFile << ',' << mTable->getValue( *row, *col ); // output the value.
 		}
-		aFile << endl;
+		mFile << endl;
 	}
-	aFile << endl;
+	mFile << endl;
 	// reset format to default
-	aFile.precision(3);
+	mFile.precision(3);
 }
 
-void DemandComponentsTable::updateRegionCGE( const RegionCGE* regionCGE ) {
+void DemandComponentsTable::startVisitRegionCGE( const RegionCGE* regionCGE, const int aPeriod ) {
     // Add columns to the table.
     for( int i = TOTAL; i <= TRADE; ++i ){
         mTable->addColumn( getLabel( CategoryType( i ) ) );
@@ -120,12 +120,11 @@ void DemandComponentsTable::updateGovtConsumer( const GovtConsumer* govtConsumer
 	}
 }
 
-void DemandComponentsTable::updateTradeConsumer( const TradeConsumer* tradeConsumer,
-                                                 const string& aRegionName, const int aPeriod )
+void DemandComponentsTable::updateTradeConsumer( const TradeConsumer* tradeConsumer, const int aPeriod )
 {
 	// add only current year consumer
 	if( tradeConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-		for( unsigned int i=0; i<tradeConsumer->input.size(); i++ ){
+		for( unsigned int i = 0; i< tradeConsumer->input.size(); i++ ){
 			mTable->addToType( tradeConsumer->input[ i ]->getName(), getLabel( TRADE ),
                                tradeConsumer->input[ i ]->getDemandCurrency() );
 		}
@@ -144,8 +143,8 @@ void DemandComponentsTable::updateInvestConsumer( const InvestConsumer* investCo
 	}
 }
 
-void DemandComponentsTable::updateProductionTechnology( const ProductionTechnology* prodTech, 
-		const string& aRegionName, const string& aSectorName, const int aPeriod ) 
+void DemandComponentsTable::updateProductionTechnology( const ProductionTechnology* prodTech,
+													    const int aPeriod ) 
 {
     for( unsigned int i=0; i<prodTech->input.size(); i++ ){
         // if capital, add only current vintage demand

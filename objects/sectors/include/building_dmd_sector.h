@@ -39,7 +39,7 @@ class BuildingDemandSector: public DemandSector
 public:
     BuildingDemandSector( const std::string regionName );
     ~BuildingDemandSector();
-	static const std::string& getXMLNameStatic();
+    static const std::string& getXMLNameStatic();
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
@@ -47,14 +47,13 @@ public:
     void aggdemand( const GDP* gdp, const int period );
 protected:
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
-    void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const; 
     std::vector<double> baseService; //!< base service level for a given year
     double baseScaler; // scaler for determing demand for future years
 private:
-	static const std::string XML_NAME; //!< node name for toXML methods
+    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _BUILDLING_DMD_SECTOR_H_

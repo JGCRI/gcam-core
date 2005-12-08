@@ -72,12 +72,7 @@ bool Configuration::XMLParse( const DOMNode* root ) {
 			}
 			
 			else if(  sectionName == "Bools" ) {
-				if ( XMLHelper<int>::getValue( currValueNode ) ) {
-					boolMap[ valueName ] = true;
-				}
-				else {
-					boolMap[ valueName ] = false;
-				}
+				boolMap[ valueName ] = ( XMLHelper<int>::getValue( currValueNode ) != 0 );
 			}
 			
 			else if(  sectionName == "Ints" ) {

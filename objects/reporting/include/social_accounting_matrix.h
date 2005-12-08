@@ -6,7 +6,7 @@
 
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -28,7 +28,7 @@
 #include <string>
 #include <memory>
 #include <iosfwd>
-#include "reporting/include/output_container.h"
+#include "util/base/include/default_visitor.h"
 
 
 
@@ -51,16 +51,15 @@ class StorageTable;
 * \details TODO
 * \author Pralit Patel, Katherine Chung
 */
-class SocialAccountingMatrix : public OutputContainer {
+class SocialAccountingMatrix : public DefaultVisitor {
 public:
-    SocialAccountingMatrix( const std::string& aRegionName );
-    void output( std::ostream& aFile, const int period ) const;
+    SocialAccountingMatrix( const std::string& aRegionName, std::ostream& aFile );
+    void finish() const;
 	void updateHouseholdConsumer( const HouseholdConsumer* householdConsumer, const int aPeriod );
 	void updateGovtConsumer( const GovtConsumer* govtConsumer, const int aPeriod );
-	void updateTradeConsumer( const TradeConsumer* tradeConsumer, const std::string& aRegionName, const int aPeriod );
+	void updateTradeConsumer( const TradeConsumer* tradeConsumer, const int aPeriod );
 	void updateInvestConsumer( const InvestConsumer* investConsumer, const int aPeriod );
-	void updateProductionTechnology( const ProductionTechnology* prodTech, 
-		const std::string& aRegionName, const std::string& aSectorName,  const int period );
+	void updateProductionTechnology( const ProductionTechnology* prodTech, const int period );
 	void updateFactorSupply( const FactorSupply* factorSupply, const int period );
 private:
     enum CategoryType {
@@ -81,6 +80,9 @@ private:
     
     std::auto_ptr<StorageTable> mTable;
     const std::string mRegionName;
+
+    //! File to which to write.
+    std::ostream& mFile;
 };
 
 #endif // _SOCIAL_ACCOUNTING_MATRIX_H_

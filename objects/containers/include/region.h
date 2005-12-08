@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The Region class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <map>
@@ -18,8 +16,12 @@
 #include <memory>
 #include <string>
 #include <memory>
+#include <list>
+#include <xercesc/dom/DOMNode.hpp>
 
 #include "containers/include/national_account.h"
+#include "util/base/include/ivisitable.h"
+#include "util/base/include/iround_trippable.h"
 
 // Forward declarations.
 class Population;
@@ -34,7 +36,6 @@ class Emcoef_ind;
 class ILogger;
 class GDP;
 class Curve;
-class Tabs;
 class DependencyFinder;
 class IInfo;
 /*! 
@@ -61,64 +62,60 @@ class IInfo;
 */
 
 #define SORT_TESTING 0
-class Region
+class Region: public IVisitable, public IRoundTrippable
 {
     friend class InputOutputTable;
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
     friend class SectorReport;
     friend class SGMGenTable;
+    friend class XMLDBOutputter;
 public:
     Region();
     virtual ~Region(); 
-    void initElementalMembers();
     void XMLParse( const xercesc::DOMNode* node );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
-    virtual void completeInit(); // is this what we want to do, virtual?
-    std::string getName() const;
+    virtual void completeInit();
+    const std::string& getName() const;
     virtual void calc( const int period, const bool doCalibrations );
-    bool isDemandAllCalibrated( const int period ) const;
     void calibrateTFE( const int period ); 
     virtual void initCalc( const int period );
-    void calcEmissions( const int period );
-    void calcEmissFuel( const int period );
     void emissionInd( const int period );
-    void calcTotalCarbonTaxPaid( const int period );
+
     void csvOutputFile() const;
-    void dbOutput() const;
+    void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const;
     void initializeAgMarketPrices( const std::vector<double>& pricesIn );
-    virtual void updateSummary( const int period );
-    void printGraphs( std::ostream& outStream, const int period ) const;
-    const Summary getSummary( const int period ) const;
+    void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
+    const Summary& getSummary( const int period ) const;
     void setTax( const GHGPolicy* aTax );
     const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
-    void checkData( const int period );
-    void setupCalibrationMarkets();
+
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void setCalSuppliesAndDemands( const int period );
     void initializeCalValues( const int period );
     bool setImpliedCalInputs( const int period );
     int scaleCalInputs( const int period );
     virtual void updateAllOutputContainers( const int period );
-	virtual void updateMarketplace( const int period );
+    virtual void updateMarketplace( const int period );
     virtual void finalizePeriod( const int aPeriod );
-	virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	virtual void csvSGMGenFile( std::ostream& aFile ) const;
+    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual void csvSGMGenFile( std::ostream& aFile ) const;
 protected:
-    virtual const std::string& getXMLName() const;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-	std::vector<NationalAccount> nationalAccount; //!< 
+    std::vector<NationalAccount> nationalAccount; //!< National Accounts container.
     const static std::string XML_NAME; //!< node name for toXML method.
     std::string name; //!< Region name
-	std::auto_ptr<Demographic> demographic; //!< Population object
+    std::auto_ptr<Demographic> demographic; //!< Population object
     std::auto_ptr<GDP> gdp; //!< GDP object.
     std::auto_ptr<AgSector> agSector; //!< Agricultural sector
     std::auto_ptr<IInfo> mRegionInfo; //!< The region's information store.
+    
+    //! Map of fuel relationships used for calibration consistency adjustments
+    typedef std::map<std::string, std::vector<std::string> > FuelRelationshipMap;
+    std::auto_ptr<FuelRelationshipMap> fuelRelationshipMap;
     std::vector<Resource*> resources; //!< vector of pointers toresource objects
     std::vector<Sector*> supplySector; //!< vector of pointers to supply sector objects
     std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects
@@ -144,19 +141,25 @@ protected:
     double heatingDegreeDays; //!< heatingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
     double coolingDegreeDays; //!< coolingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
 
-    void checkSectorCalData( const int period );
-    double getTotFinalEnergy( const int period ) const;
     typedef std::vector<DemandSector*>::iterator DemandSectorIterator;
     typedef std::vector<DemandSector*>::const_iterator CDemandSectorIterator;
     typedef std::vector<Resource*>::iterator ResourceIterator;
     typedef std::vector<Resource*>::const_iterator CResourceIterator;
     typedef std::vector<GHGPolicy*>::iterator GHGPolicyIterator;
     typedef std::vector<GHGPolicy*>::const_iterator CGHGPolicyIterator;
-    typedef std::map<std::string, std::vector<std::string> > FuelRelationshipMap; //!< map for fuel relationships
-    std::auto_ptr<FuelRelationshipMap> fuelRelationshipMap; //!< ptr to map of fuel relationships used for calibration consistency adjustments
     typedef std::vector<Sector*>::iterator SectorIterator;
     typedef std::vector<Sector*>::reverse_iterator SectorReverseIterator;
     typedef std::vector<Sector*>::const_iterator CSectorIterator;
+    
+    virtual const std::string& getXMLName() const;
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+    bool isDemandAllCalibrated( const int period ) const;
+    void initElementalMembers();
+    void setupCalibrationMarkets();
+    void checkData( const int period );
+    double getTotFinalEnergy( const int period ) const;
     bool reorderSectors( const std::vector<std::string>& orderList );
     void calcGDP( const int period );
     void calcResourceSupply( const int period );
@@ -169,6 +172,9 @@ protected:
     void calibrateRegion( const bool doCalibrations, const int period );
     double calcTFEscaleFactor( const int period ) const;
     const std::vector<double> calcFutureGDP() const;
+    void calcEmissions( const int period );
+    void calcEmissFuel( const std::list<std::string>& aPrimaryFuelList, const int period );
+    void calcTotalCarbonTaxPaid( const int period );
 private:
     void clear();
     bool ensureGDP() const;

@@ -25,6 +25,9 @@
 #define __HAVE_DB__ 1
 // End of configuration constants.
 
+//! A flag which turns on or off the compilation of the XML database code.
+#define __USE_XML_DB__ 1
+
 // In VC 6.0 turn off warning 4786. 
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 #pragma warning( disable : 4786 )  
@@ -76,22 +79,6 @@ namespace std {
 
 #if !defined(WIN32) && !defined(_stdcall)  // Remove the _stdcall needed for WIN32 from externs
 #define _stdcall
-#endif
-
-#if !defined(__HAVE_FORTRAN__)
-#  if defined(_MSC_VER)
-#     define __HAVE_FORTRAN__ 1
-#  else
-#     define __HAVE_FORTRAN__ 0
-#  endif
-#endif
-
-#if !defined(__HAVE_DB__)
-#  if defined(_MSC_VER)
-#     define __HAVE_DB__ 1
-#  else
-#     define __HAVE_DB__ 0
-#  endif
 #endif
 
 #endif // _DEFINITIONS_H_

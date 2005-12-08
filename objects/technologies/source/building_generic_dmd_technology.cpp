@@ -3,8 +3,6 @@
 * \ingroup CIAM
 * \brief The building service demand technology.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 // Standard Library headers
@@ -141,12 +139,6 @@ void BuildingGenericDmdTechnology::toInputXMLDerived( ostream& out, Tabs* tabs )
     XMLWriteElementCheckDefault( saturation, "saturation", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( priceElasticity, "pElasticity", out, tabs, 0.0 );
 }	
-
-//! XML output for viewing.
-void BuildingGenericDmdTechnology::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElementCheckDefault( saturation, "saturation", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( priceElasticity, "pElasticity", out, tabs, 0.0 );
-}
 
 //! Write object to debugging xml output stream.
 void BuildingGenericDmdTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 

@@ -173,15 +173,6 @@ void ExportSector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mMarketName, "market", aOut, aTabs );
 }	
 
-/*! \brief Write out derived class specific class members for viewing as output.
-* \param aOut The output stream to which to write.
-* \param aTabs Object responsible for writing tabs.
-*/
-void ExportSector::toOutputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    // write out the market string.
-    XMLWriteElement( mMarketName, "market", aOut, aTabs );
-}
-
 /*! \brief Write out derived class specific class members for debugging.
 * \param aPeriod The period in which to write debugging information.
 * \param aOut The output stream to which to write.

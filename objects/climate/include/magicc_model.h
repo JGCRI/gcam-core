@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The MagiccModel header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -18,6 +16,8 @@
 #include "climate/include/iclimate_model.h"
 
 class Modeltime;
+class IVisitor;
+
 /*! 
 * \ingroup Objects
 * \brief An implementation of the IClimateModel interface using the MAGICC
@@ -32,13 +32,12 @@ class Modeltime;
 *          parameters. A subset of those output can then be written by this
 *          wrapper to the database and a CSV file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 class MagiccModel: public IClimateModel {
 public:
     MagiccModel( const Modeltime* aModeltime );
+
     virtual void completeInit( const std::string& aScenarioName );
     
     virtual bool setEmissions( const std::string& aGasName,
@@ -59,11 +58,13 @@ public:
 
     virtual void printFileOutput() const;
     virtual void printDBOutput() const;
+	void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    static const std::string& getXMLNameStatic();
 private:
     int getGasIndex( const std::string& aGasName ) const;
 	static unsigned int getNumGases();
     void readFile();
-    
+
 	//! A fixed list of the gases Magicc reads in.
 	static const std::string sGasNames[];
 	

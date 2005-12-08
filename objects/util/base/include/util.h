@@ -11,8 +11,6 @@
 * \details This is a set of functions which are frequently needed within the
 *          program.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -20,7 +18,6 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <ctime>
 #include <cmath>
 #include <sstream>
 #include <map>
@@ -149,7 +146,7 @@ namespace util {
         }
     }
 	
-	void replaceSpaces( std::string& stringIn );
+    std::string replaceSpaces( const std::string& aString );
 
     /*! \brief Static function which returns SMALL_NUM. 
     * \details This is a static function which is used to find the value of the
@@ -246,6 +243,7 @@ namespace util {
         return output;
     }
 
+   long createMinicamRunID( const time_t& aTime );
    std::string XMLCreateDate( const time_t& time );
 } // End util namespace.
 #endif // _UTIL_H_

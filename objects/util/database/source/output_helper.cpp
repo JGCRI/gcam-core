@@ -27,6 +27,7 @@
 #include "containers/include/world.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/configuration.h"
+#include "util/base/include/util.h"
 
 #if( DUPLICATE_CHECKING )
 #include "util/base/include/util.h"
@@ -35,7 +36,7 @@
 
 using namespace std;
 
-extern time_t ltime;
+extern time_t gGlobalTime;
 extern ofstream outFile;
 extern Scenario* scenario;
 
@@ -67,7 +68,7 @@ void fileoutput3( string var1name,string var2name,string var3name,
 	for (int i=0;i< static_cast<int>( dout.size() );i++) {
 		outFile << dout[i]<<",";
 	}
-	outFile <<ctime(&ltime);
+	outFile <<ctime(&gGlobalTime);
 }
 
 /*! Output single records MiniCAM style to the database. 
@@ -111,13 +112,9 @@ void dboutput4(string var1name,string var2name,string var3name,string var4name,
         try {
 	        DBoutrst.AddNew(); // now the current record is this empty new one
         
-	        tm* lt = localtime(&ltime); // struct for time components
-	        // run id MiniCAM style
-	        long RunID = lt->tm_sec + lt->tm_min * 100 + lt->tm_hour * 10000
-                   + lt->tm_mday * 1000000 
-				   + (lt->tm_mon * 100000000 + 100000000); // 0 is january
+			const long runID = util::createMinicamRunID( gGlobalTime );
 
-	        DBoutrst.SetField(0L, COleVariant(RunID,VT_I4)); // run id
+	        DBoutrst.SetField(0L, COleVariant(runID,VT_I4)); // run id
 	        DBoutrst.SetField(1L, COleVariant(short(iter->second))); // region id
 	        DBoutrst.SetField(2L, COleVariant(var2name.c_str(), VT_BSTRT)); // category
 	        DBoutrst.SetField(3L, COleVariant(var3name.c_str(), VT_BSTRT)); // subscategory

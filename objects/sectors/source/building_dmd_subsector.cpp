@@ -3,8 +3,6 @@
 * \ingroup CIAM
 * \brief The building demand subsector
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -26,6 +24,7 @@
 #include "marketplace/include/marketplace.h"
 #include "containers/include/gdp.h"
 #include "util/logger/include/ilogger.h"
+#include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
 
 using namespace std;
@@ -62,7 +61,7 @@ BuildingDemandSubSector::BuildingDemandSubSector( const string regionName, const
 * \return The constant XML_NAME.
 */
 const std::string& BuildingDemandSubSector::getXMLName() const {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -75,7 +74,7 @@ const std::string& BuildingDemandSubSector::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& BuildingDemandSubSector::getXMLNameStatic() {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Return the string used to tag the name of the proper internal gains market.
@@ -88,7 +87,7 @@ const std::string& BuildingDemandSubSector::getXMLNameStatic() {
 */
 const std::string& BuildingDemandSubSector::getInternalGainsInfoName() {
     const static string INTERNAL_GAINS_INFO_NAME = "internalGainMarketName";
-	return INTERNAL_GAINS_INFO_NAME;
+    return INTERNAL_GAINS_INFO_NAME;
 }
 
 /*! \brief Return the name to be used for the internal gains market.
@@ -97,11 +96,12 @@ const std::string& BuildingDemandSubSector::getInternalGainsInfoName() {
 * the sector name + the subsector name should always be unique.
 *
 * \author Steve Smith
-* \return name of internal gains market.
+* \param aSectorName Sector name.
+* \return Name of the internal gains market for the subsector.
 */
-string BuildingDemandSubSector::getInternalGainsMarketName( const string sectorName ) const {
+const string BuildingDemandSubSector::getInternalGainsMarketName( const string aSectorName ) const {
     const string INTERNAL_GAINS_MKT_PREFIX = "intGains";
-	return INTERNAL_GAINS_MKT_PREFIX + sectorName + name;
+    return INTERNAL_GAINS_MKT_PREFIX + sectorName + name;
 }
 
 //! Virtual function which specifies the XML name of the children of this class, the type of technology.
@@ -178,20 +178,7 @@ void BuildingDemandSubSector::toInputXMLDerived( ostream& out, Tabs* tabs ) cons
     XMLWriteVector( dayLighting, "daylighting", out, tabs, modeltime, 0.0 );
     XMLWriteVector( aveInsulation, "aveInsulation", out, tabs, modeltime, 0.0 );
     XMLWriteVector( floorToSurfaceArea, "floorToSurfaceArea", out, tabs, modeltime, 1.0 );
-}	
-
-
-//! XML output for viewing.
-void BuildingDemandSubSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    
-    Subsector::toOutputXMLDerived( out, tabs );
-
-    XMLWriteVector( nonEnergyCost, "nonenergycost", out, tabs, modeltime, 0.0 );
-    XMLWriteVector( dayLighting, "daylighting", out, tabs, modeltime, 0.0 );
-    XMLWriteVector( aveInsulation, "aveInsulation", out, tabs, modeltime, 0.0 );
-    XMLWriteVector( floorToSurfaceArea, "floorToSurfaceArea", out, tabs, modeltime, 1.0 );
-}
+}   
 
 //! Write object to debugging xml output stream.
 void BuildingDemandSubSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
@@ -203,7 +190,8 @@ void BuildingDemandSubSector::toDebugXMLDerived( const int period, ostream& out,
     XMLWriteElement( dayLighting[ period ], "dayLighting", out, tabs );
     XMLWriteElement( aveInsulation[ period ], "aveInsulation", out, tabs );
     XMLWriteElement( floorToSurfaceArea[ period ], "floorToSurfaceArea", out, tabs );
-    XMLWriteElement( marketplace->getPrice( getInternalGainsMarketName( sectorName ) , regionName, period ), "internalGains", out, tabs );
+    XMLWriteElement( marketplace->getPrice( getInternalGainsMarketName( sectorName ), regionName, period ),
+                                            "internalGains", out, tabs );
     
 }
 
@@ -235,7 +223,7 @@ void BuildingDemandSubSector::setUpSubSectorMarkets() {
 
     vector<double> initValues;
     initValues.resize( maxPeriod, 0 );
-    string intGainsMarketName = getInternalGainsMarketName( sectorName );
+    const string intGainsMarketName = getInternalGainsMarketName( sectorName );
     
     // always make internal gains trail markets regional
     if( marketplace->createMarket( regionName, regionName, intGainsMarketName, IMarketType::TRIAL_VALUE ) ) {        
@@ -383,9 +371,9 @@ void BuildingDemandSubSector::adjustForCalibration( double sectorDemand, double 
     
     for ( unsigned int j = 0; j < techs.size(); j++ ) {
         // calibrate buildingServiceDemands
-		const IInfo* marketInfo = marketplace->getMarketInfo( techs[j][period]->getFuelName(), regionName, period, false );
-		// Market may not exist if the fuel is a fake fuel.
-		double calOutput = marketInfo ? marketInfo->getDouble( "calOutput", true ) : 0;
+        const IInfo* marketInfo = marketplace->getMarketInfo( techs[j][period]->getFuelName(), regionName, period, false );
+        // Market may not exist if the fuel is a fake fuel.
+        double calOutput = marketInfo ? marketInfo->getDouble( "calOutput", true ) : 0;
         
         // Here, pass in specific demand -- equal to demand for this service per unit floor space
         // NOTE: this is not adjusted for saturation or other parameters, this is done in BuildingGenericDmdTechnology
@@ -410,10 +398,10 @@ void BuildingDemandSubSector::adjustForCalibration( double sectorDemand, double 
 void BuildingDemandSubSector::setCalibrationStatus( const int period ) {
     for ( unsigned int i=0; i < techs.size(); i++ ) {
         Marketplace* marketplace = scenario->getMarketplace();
-		const IInfo* marketInfo = marketplace->getMarketInfo( techs[ i ][ period ]->getFuelName(), regionName,
-			                                                  period, false );
-		// Market may not exist if the fuel is a fake fuel.
-		double calOutput = marketInfo ? marketInfo->getDouble( "calOutput", true ) : 0;
+        const IInfo* marketInfo = marketplace->getMarketInfo( techs[ i ][ period ]->getFuelName(), regionName,
+                                                              period, false );
+        // Market may not exist if the fuel is a fake fuel.
+        double calOutput = marketInfo ? marketInfo->getDouble( "calOutput", true ) : 0;
         if ( calOutput > 0 ) {
             calibrationStatus[ period ] = true;
             return;
@@ -455,9 +443,9 @@ Marketplace* marketplace = scenario->getMarketplace();
     dboutput4( regionName, "Price", sectorName + " NE Cost", name, "75$/Ser", nonEnergyCost );
     
     for ( int m=0;m<maxper;m++) {
-            temp[m] =  marketplace->getPrice( getInternalGainsMarketName( sectorName ), regionName, m );
+        temp[m] =  marketplace->getPrice( getInternalGainsMarketName( sectorName ), regionName, m );
     }
-     dboutput4( regionName, "General", sectorName + " internalGains", name, "??", temp );
+    dboutput4( regionName, "General", sectorName + " internalGains", name, "??", temp );
 }
 
 
@@ -470,11 +458,16 @@ Marketplace* marketplace = scenario->getMarketplace();
 * \param period Model period
 */
 void BuildingDemandSubSector::setoutput( const double demand, const int period, const GDP* gdp ) {
-   
-    output[ period ] = share[ period ]* demand; 
-    
+    output[ period ] = share[ period ] * demand; 
     Subsector::setoutput( demand, period, gdp );
-    
 }
 
-
+// Documentation is inherited.
+void BuildingDemandSubSector::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    // Derived visit first.
+    aVisitor->startVisitBuildingDemandSubsector( this, aPeriod );
+    // Base class visit.
+    Subsector::accept( aVisitor, aPeriod );
+    // End the derived class visit.
+    aVisitor->endVisitBuildingDemandSubsector( this, aPeriod );
+}

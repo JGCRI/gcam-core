@@ -1,6 +1,6 @@
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -33,7 +33,7 @@
 #include "marketplace/include/marketplace.h"
 #include "functions/include/function_manager.h"
 #include "sectors/include/more_sector_info.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 #include "investment/include/iexpected_profit_calculator.h"
 #include "emissions/include/ghg.h"
 #include "technologies/include/technology_type.h"
@@ -688,14 +688,13 @@ void ProductionTechnology::csvSGMOutputFile( ostream& aFile, const int period ) 
 	}
 }
 
-void ProductionTechnology::updateOutputContainer( OutputContainer* outputContainer, const string& aRegionName,
-                                                  const string& aSectorName, const int aPeriod ) const
+void ProductionTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
 {
 	// print for all operating vintages
     // This is not right, this decision should be made by the OutputContainer.
 	if( isAvailable( aPeriod ) && !isRetired( aPeriod ) ){
-		outputContainer->updateProductionTechnology( this, aRegionName, aSectorName, aPeriod );
-		BaseTechnology::updateOutputContainer( outputContainer, aRegionName, aSectorName, aPeriod );
+		aVisitor->updateProductionTechnology( this, aPeriod );
+		BaseTechnology::accept( aVisitor, aPeriod );
 	}
 }
 

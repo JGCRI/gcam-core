@@ -1,6 +1,6 @@
 /*
 This software, which is provided in confidence, was prepared by employees
-of Pacific Northwest National Labratory operated by Battelle Memorial
+of Pacific Northwest National Laboratory operated by Battelle Memorial
 Institute. Battelle has certain unperfected rights in the software
 which should not be copied or otherwise disseminated outside your
 organization without the express written authorization from Battelle. All rights to
@@ -28,7 +28,7 @@ use of this software.
 #include "containers/include/national_account.h"
 #include "functions/include/ifunction.h"
 #include "containers/include/scenario.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -146,9 +146,9 @@ void TradeConsumer::csvSGMOutputFile( ostream& aFile, const int aPeriod ) const 
 	}
 }
 
-void TradeConsumer::updateOutputContainer( OutputContainer* outputContainer,  const string& aRegionName, const string& aSectorName, const int aPeriod ) const {
+void TradeConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
-        Consumer::updateOutputContainer( outputContainer, aRegionName, aSectorName, aPeriod );
-        outputContainer->updateTradeConsumer( this, aRegionName, aPeriod );
+        Consumer::accept( aVisitor, aPeriod );
+        aVisitor->updateTradeConsumer( this, aPeriod );
     }
 }

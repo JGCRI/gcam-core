@@ -13,30 +13,30 @@
 * \version $Revision$
 */
 #include <xercesc/dom/DOMNode.hpp>
-// Forward declaration.
+#include "util/base/include/ivisitable.h"
+
+// Forward declarations.
 class Grade;
 class GDP;
+class IVisitor;
+
 /*! 
 * \ingroup Objects
 * \brief SubResource is a class that contains grades.
 * \author Sonny Kim
 */
 
-class SubResource
+class SubResource: public IVisitable
 {
+	friend class XMLDBOutputter;
 public:
     SubResource();
     virtual ~SubResource();
     std::string getName() const;
     void XMLParse( const xercesc::DOMNode* tempnode );
-    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node ) = 0; 
     void completeInit();
-    virtual void initializeResource(); 
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
-    void toOutputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
     virtual void cumulsupply(double prc,int per);
     double getPrice(int per);
@@ -44,14 +44,18 @@ public:
     virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
     double getAnnualProd(int per);
     double getAvailable(int per);
-    int getMaxGrade();
     void dbOutput( const std::string& regname, const std::string& secname); 
     void csvOutputFile(const std::string &regname, const std::string& sname); 
     void updateAvailable( const int period );
 	virtual double getVariance() const;
 	virtual double getAverageCapacityFactor() const;
+	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-    std::string name; //!< SubResource name
+	virtual void initializeResource();
+	virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
+	virtual const std::string& getXMLName() const;
+	virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node ) = 0; 
+	std::string name; //!< SubResource name
     int nograde; //!< number of grades of each SubResource
     double priceElas; //!< price elasticity for short-term supply limit
     double minShortTermSLimit; //!< short-term supply limit.

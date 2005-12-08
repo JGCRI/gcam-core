@@ -30,7 +30,8 @@ extern Scenario* scenario;
 using namespace std;
 
 //! Default Constructor
-InputOutputTable::InputOutputTable( const string& aRegionName ):
+InputOutputTable::InputOutputTable( const string& aRegionName, ostream& aFile ):
+mFile( aFile ),
 mRegionName( aRegionName ),
 mInternalTable( new StorageTable ),
 mParsingConsumer( false ){
@@ -39,35 +40,34 @@ mParsingConsumer( false ){
 /*! \brief Output the IOTable to a CSV
  * 
  * \author Josh Lurz
- * \param period The period which we are outputing for
  */
-void InputOutputTable::output( ostream& aFile, const int period ) const {
-    aFile << "-----------------------------" << endl;
-    aFile << "Regional Input Output Table" << endl;
-    aFile << "-----------------------------" << endl << endl;
+void InputOutputTable::finish() const {
+    mFile << "-----------------------------" << endl;
+    mFile << "Regional Input Output Table" << endl;
+    mFile << "-----------------------------" << endl << endl;
 
     // Get the column labels which are sector names.
     const vector<string> colNames = mInternalTable->getColLabels();
     for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ){
-        aFile << ',' << *col;
+        mFile << ',' << *col;
     }	
-    aFile << endl;
+    mFile << endl;
 
     // Write out each row of the IOTable.
     const vector<string> rowNames = mInternalTable->getRowLabels();
     for ( vector<string>::const_iterator row = rowNames.begin(); row != rowNames.end(); ++row ){
-        aFile << *row;
+        mFile << *row;
         // Iterate through the columns.
         for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ) {
-            aFile << ',' << mInternalTable->getValue( *row, *col );
+            mFile << ',' << mInternalTable->getValue( *row, *col );
         }
-        aFile << endl;
+        mFile << endl;
     }
-    aFile << endl;
+    mFile << endl;
 }
 
 //! Update the region. 
-void InputOutputTable::updateRegionCGE( const RegionCGE* aRegion ){
+void InputOutputTable::startVisitRegionCGE( const RegionCGE* aRegion, const int aPeriod ){
     // Loop through the sectors and add a blank item for each just to set the ordering.
     for( unsigned int i = 0; i < aRegion->supplySector.size(); ++i ){
         mInternalTable->setType( aRegion->supplySector[ i ]->getName(), aRegion->supplySector[ i ]->getName(), 0 );
@@ -78,7 +78,7 @@ void InputOutputTable::updateRegionCGE( const RegionCGE* aRegion ){
     }
 }
 
-void InputOutputTable::updateSector( const Sector* sector ) {
+void InputOutputTable::startVisitSector( const Sector* sector, const int aPeriod ) {
     // Add a column for ourselves.
     mInternalTable->addColumn( sector->getName() );
 
@@ -86,8 +86,9 @@ void InputOutputTable::updateSector( const Sector* sector ) {
     mCurrSectorName = sector->getName();
 }
 
-void InputOutputTable::updateProductionTechnology( const ProductionTechnology* prodTechnology, 
-		const string& aRegionName, const string& aSectorName, const int aPeriod ) {
+void InputOutputTable::updateProductionTechnology( const ProductionTechnology* prodTechnology,
+												   const int aPeriod )
+{
     // Add the technologies output as a negative demand on the diagonal.
     mInternalTable->addToType( mCurrSectorName, mCurrSectorName, -1 * prodTechnology->getOutput( aPeriod ) );
     mInternalTable->addToType( "Capital", mCurrSectorName, prodTechnology->getAnnualInvestment( aPeriod ) );

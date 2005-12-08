@@ -3,8 +3,6 @@
 * \ingroup CIAM
 * \brief The building heating service demand technology.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 // Standard Library headers
@@ -59,13 +57,6 @@ bool BuildingHeatCoolDmdTechnology::XMLDerivedClassParse( const string nodeName,
 void BuildingHeatCoolDmdTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const { 
     BuildingGenericDmdTechnology::toInputXMLDerived( out, tabs);
     XMLWriteElementCheckDefault( fractionOfYearActive, "fractionOfYearActive", out, tabs, 0.0 );
-    XMLWriteElement( intGainsMarketName, "intGainsMarketName", out, tabs );
-}	
-
-//! XML output for viewing.
-void BuildingHeatCoolDmdTechnology::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    BuildingGenericDmdTechnology::toOutputXMLDerived( out, tabs);
-    XMLWriteElementCheckDefault( fractionOfYearActive, "fractionOfYearActive", out, tabs, 0.0 );    
     XMLWriteElement( intGainsMarketName, "intGainsMarketName", out, tabs );
 }
 

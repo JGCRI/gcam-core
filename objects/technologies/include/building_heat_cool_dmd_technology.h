@@ -48,7 +48,6 @@ private:
 protected:
     bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-    void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual double getDemandFnPrefix( const std::string& regionName, const int period ) = 0;
     virtual double getEffectiveInternalGains( const std::string& regionName, const int period );

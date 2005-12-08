@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief MACGeneratorScenarioRunner class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -114,6 +112,9 @@ const Scenario* MACGeneratorScenarioRunner::getInternalScenario() const {
 	return mSingleScenario->getInternalScenario();
 }
 
+/*! \brief Get the static class name.
+* \return The static class name.
+*/
 const string& MACGeneratorScenarioRunner::getXMLNameStatic(){
 	static const string XML_NAME = "mac-generator-scenario-runner";
 	return XML_NAME;

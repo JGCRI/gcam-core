@@ -3,8 +3,6 @@
 * \ingroup SingleScenarioRunner
 * \brief SingleScenarioRunner class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -23,6 +21,9 @@
 using namespace std;
 using namespace xercesc;
 
+extern Scenario* scenario;
+time_t gGlobalTime;
+
 // Function Prototypes. These need a helper class. 
 extern void createMCvarid();
 extern void closeDB();
@@ -31,6 +32,8 @@ extern void createDBout();
 
 /*! \brief Constructor */
 SingleScenarioRunner::SingleScenarioRunner():mScenario( new Scenario ){
+    // Get time and date before model run.
+    time( &gGlobalTime ); 
 }
 
 //! Destructor.
@@ -75,7 +78,7 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
     
     // Override scenario name from data file with that from configuration file
     const string overrideName = conf->getString( "scenarioName" ) + aName;
-    if ( overrideName != "" ) {
+    if ( !overrideName.empty() ) {
         mScenario->setName( overrideName );
     }
 

@@ -56,8 +56,7 @@ public:
         const std::string& aSectorName, const bool isNewVintageMode, const int aPeriod );
 
 	void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	void updateOutputContainer( OutputContainer* outputContainer,
-		const std::string& aRegionName, const std::string& aSectorName, const int aPeriod ) const;
+	void accept( IVisitor* aVisitor, const int aPeriod ) const;
 	static const std::string& getXMLNameStatic();
 protected:
     virtual bool isCoefBased() const { return true; }

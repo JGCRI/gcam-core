@@ -49,7 +49,6 @@ protected:
 	double getCumulativeTechnicalChange( const int aPeriod ) const;
     bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-    void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:
     static const std::string XML_NAME; //!< The XML name of this object.

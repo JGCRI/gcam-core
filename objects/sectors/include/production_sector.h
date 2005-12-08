@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The ProductionSector class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 #include <string>
 #include <memory>
@@ -47,14 +45,13 @@ public:
                            const int aPeriod );
 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, const int aPeriod ); // Passing demographic here is not good.
-    virtual void updateOutputContainer( OutputContainer* aOutputContainer, const int aPeriod ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual void setCalibratedSupplyInfo( const int aPeriod ) const {};
 protected:
 	std::map<std::string,double> ghgEmissCoefMap; //! Map of ghg name to emission coefficent
     void setMarket();
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
-    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:

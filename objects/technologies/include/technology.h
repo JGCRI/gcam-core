@@ -9,22 +9,22 @@
 * \ingroup Objects
 * \brief The technology class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
 #include <vector>
 #include <map>
 #include <xercesc/dom/DOMNode.hpp>
+#include "util/base/include/ivisitable.h"
+#include "util/base/include/iround_trippable.h"
 
 // Forward declaration
 class Ghg;
 class Emcoef_ind;
-class Tabs;
 class GDP;
 class DependencyFinder;
 class IInfo;
+
 /*! 
 * \ingroup Objects
 * \brief This technology class is based on the MiniCAM description of technology.
@@ -33,8 +33,9 @@ class IInfo;
 *
 * \author Sonny Kim
 */
-class technology
+class technology: public IVisitable, public IRoundTrippable
 {
+    friend class XMLDBOutputter;
 private:
     static const std::string XML_NAME1D; //!< tag name for toInputXML
     static const std::string XML_NAME2D; //!< tag name for toInputXML
@@ -64,10 +65,12 @@ protected:
     double output; //!< technology output
     double fixedOutput; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
     double fixedOutputVal; //!< The actual fixed output value
+    
     double calInputValue; // Calibration value
     double calOutputValue; // Calibration value
     bool doCalibration; // Flag set if calibration value is read-in
     bool doCalOutput; // Flag set if calibration value is read-in
+
     std::vector<Ghg*> ghg; //!< suite of greenhouse gases
     std::map<std::string,double> emissmap; //!< map of ghg emissions
     std::map<std::string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
@@ -78,7 +81,6 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
-    virtual void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
     virtual void copy( const technology& techIn );
     void initElementalMembers();
@@ -147,5 +149,6 @@ public:
     void setYear( const int yearIn );
     void tabulateFixedDemands( const std::string regionName, const int period );
 	void setTechShare(const double shareIn);
+	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 };
 #endif // _TECHNOLOGY_H_

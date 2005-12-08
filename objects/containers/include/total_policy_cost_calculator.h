@@ -78,5 +78,7 @@ private:
     bool runTrials();
     void createCostCurvesByPeriod();
     void createRegionalCostCurves();
+    const std::string createXMLOutputString() const;
+    void writeToDB() const;
 };
 #endif // _TOTAL_POLICY_COST_CALCULATOR_H_

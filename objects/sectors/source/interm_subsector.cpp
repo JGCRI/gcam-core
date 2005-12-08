@@ -3,8 +3,6 @@
 * \ingroup CIAM
 * \brief Subsector class source file.
 * \author Marshall Wise
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -94,15 +92,6 @@ bool IntermittentSubsector::XMLDerivedClassParse( const string nodeName, const D
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void IntermittentSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // Write out parent class information.
-    XMLWriteElement( backupTechNumber, "backupTechNumber", out, tabs);
-    XMLWriteElement( resourceTechNumber, "resourceTechNumber", out, tabs);
-    XMLWriteElement( electricSectorName, "electricSectorName", out, tabs);
-}	
-
-
-//! XML output for viewing.
-void IntermittentSubsector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
     // Write out parent class information.
     XMLWriteElement( backupTechNumber, "backupTechNumber", out, tabs);
     XMLWriteElement( resourceTechNumber, "resourceTechNumber", out, tabs);

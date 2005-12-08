@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief The GDP class source file.
 * \author Josh Lurz, Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -21,6 +19,7 @@
 #include "marketplace/include/imarket_type.h"
 #include "util/base/include/xml_helper.h"
 #include "util/logger/include/ilogger.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -106,8 +105,10 @@ void GDP::XMLParse( const DOMNode* node ){
 void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
 
-	// GDP to PPP conversion factor
-	XMLWriteElementAndAttribute( PPPConversionFact, "PPPConvert", out, tabs, constRatio, "constRatio" );
+	// GDP to PPP conversion factor. Why isn't constRatio just seperate?
+	map<string, double> attrs;
+	attrs[ "constRatio" ] = constRatio;
+	XMLWriteElementWithAttributes( PPPConversionFact, "PPPConvert", out, tabs, attrs );
 
 	// Write out base-year GDP
 	XMLWriteElement( baseGDP, "baseGDP", out, tabs);
@@ -623,3 +624,8 @@ double GDP::getBestScaledGDPperCap( const int period ) const {
     return getScaledGDPperCap( period );
 }
 
+// Documentation is inherited.
+void GDP::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitGDP( this, aPeriod );
+    aVisitor->endVisitGDP( this, aPeriod );
+}

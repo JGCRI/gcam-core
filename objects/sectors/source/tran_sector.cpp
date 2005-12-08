@@ -105,19 +105,7 @@ void TranSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     for( unsigned int i = 0; i < percentLicensed.size(); i++ ){
         XMLWriteElementCheckDefault( percentLicensed[ i ], "percentLicensed", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
-}	
-
-
-//! XML output for viewing.
-void TranSector::toOutputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // Write out parent class information.
-    DemandSector::toOutputXMLDerived( out, tabs );
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( unsigned int i = 0; i < percentLicensed.size(); i++ ){
-        XMLWriteElementCheckDefault( percentLicensed[ i ], "percentLicensed", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
-}	
+}
 
 //! Write object to debugging xml output stream.
 void TranSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {

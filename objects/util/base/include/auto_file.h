@@ -9,8 +9,6 @@
 * \ingroup util
 * \brief Header file for the AutoOutputFile class.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <iostream>
@@ -21,7 +19,8 @@
 
 /*!
 * \ingroup util
-* \brief A class which wraps a file stream so that it is automatically opened and closed. 
+* \brief A class which wraps a file stream so that it is automatically opened
+*        and closed. 
 * \author Josh Lurz
 */
 class AutoOutputFile {

@@ -6,7 +6,7 @@
 
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -34,7 +34,7 @@
 class Tabs;
 class Demographic;
 class MoreSectorInfo;
-class OutputContainer;
+class IVisitor;
 class IExpectedProfitRateCalculator;
 class IShutdownDecider;
 /*! 
@@ -106,8 +106,7 @@ public:
     void updateMarketplace( const std::string& sectorName, const std::string& regionName, 
         const int period );
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-    void updateOutputContainer( OutputContainer* outputContainer,
-		const std::string& aRegionName, const std::string& aSectorName, const int aPeriod ) const;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
     void setTypeHelper( TechnologyType* aTechType );
     void finalizePeriod( const std::string& aRegionName, const std::string& aSectorName, const int aPeriod );
 protected:

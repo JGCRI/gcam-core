@@ -44,7 +44,6 @@ public:
 protected:
 	void setMarket();
 	bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurr ); 
-	void toOutputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
 	void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
 	void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 	const std::string& getXMLName() const;

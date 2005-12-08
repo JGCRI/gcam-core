@@ -25,49 +25,49 @@ using namespace std;
 extern Scenario* scenario; // for marketplace
 
 //! Default Constructor
-SectorResults::SectorResults( const string& aRegionName ):
-mRegionName( aRegionName ),
+SectorResults::SectorResults( const string& aRegionName, ostream& aFile ):
+mCurrentRegionName( aRegionName ),
+mFile( aFile ),
 mInternalTable( new StorageTable ){
 }
 
 /*! \brief Output the Sector Results table to a CSV
  * 
  * \author Josh Lurz
- * \param aPeriod The aPeriod which we are outputing for
  */
-void SectorResults::output( ostream& aFile, const int aPeriod ) const {
-    aFile << "-----------------------------" << endl;
-    aFile << "Regional Sector Results Table" << endl;
-    aFile << "-----------------------------" << endl << endl;
+void SectorResults::finish() const {
+    mFile << "-----------------------------" << endl;
+    mFile << "Regional Sector Results Table" << endl;
+    mFile << "-----------------------------" << endl << endl;
     
     // The table is stored inverted so that totals are easily calculated.
     // Use row labels to print the columns.
     // Get the column labels which are the types of outputs.
-    aFile << "Sector";
+    mFile << "Sector";
     const vector<string> colNames = mInternalTable->getRowLabels();
     for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ){
-        aFile << ',' << *col;
+        mFile << ',' << *col;
     }	
-    aFile << endl;
+    mFile << endl;
 
 	//aFile.precision(0);
     // Write out each row of the table, representing one sector
     const vector<string> rowNames = mInternalTable->getColLabels();
     for ( vector<string>::const_iterator row = rowNames.begin(); row != rowNames.end(); ++row ){
-        aFile << *row;
+        mFile << *row;
         // Iterate through the columns.
         for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ) {
-            aFile << ',' << mInternalTable->getValue( *col, *row );
+            mFile << ',' << mInternalTable->getValue( *col, *row );
         }
-        aFile << endl;
+        mFile << endl;
     }
-    aFile << endl;
+    mFile << endl;
 }
-void SectorResults::updateSector( const Sector* aSector ){    
+void SectorResults::startVisitSector( const Sector* aSector, const int aPeriod ){    
     // Store the sector name as we'll need it at the technology level.
     // This has to be done here instead of updateProductionSector because that is called
     // after all the technologies are updated.
-    mCurrSectorName = aSector->getName();
+    mCurrentSectorName = aSector->getName();
 }
 
 void SectorResults::updateProductionSector( const ProductionSector* aProdSector, const int aPeriod ) {
@@ -75,29 +75,30 @@ void SectorResults::updateProductionSector( const ProductionSector* aProdSector,
     mInternalTable->addColumn( aProdSector->getName() );
 }
 
-void SectorResults::updateProductionTechnology( const ProductionTechnology* aProdTechnology, 
-		const string& aRegionName, const string& aSectorName, const int aPeriod ) 
+void SectorResults::updateProductionTechnology( const ProductionTechnology* aProdTechnology,
+											    const int aPeriod ) 
 {
       // Add to the physical output column.
     const Marketplace* marketplace = scenario->getMarketplace();
-    double convFactor = Input::getMarketConversionFactor( aSectorName, aRegionName );
-    mInternalTable->addToType( "Phys. Out.", mCurrSectorName, aProdTechnology->mOutputs[ aPeriod ] * convFactor );
+    double convFactor = Input::getMarketConversionFactor( mCurrentSectorName, mCurrentRegionName );
+    mInternalTable->addToType( "Phys. Out.", mCurrentSectorName, aProdTechnology->mOutputs[ aPeriod ] * convFactor );
 
     // Add to the sales column
-    mInternalTable->addToType( "Sales", mCurrSectorName, aProdTechnology->expenditure.getValue( Expenditure::SALES ) );
+    mInternalTable->addToType( "Sales", mCurrentSectorName, aProdTechnology->expenditure.getValue( Expenditure::SALES ) );
 
-	double priceReceived = FunctionUtils::getPriceReceived( mRegionName, mCurrSectorName, aPeriod ); 
+	double priceReceived = FunctionUtils::getPriceReceived( mCurrentRegionName, mCurrentSectorName, aPeriod ); 
     // Add to the revenue column.
-    mInternalTable->addToType( "Revenue", mCurrSectorName,
+    mInternalTable->addToType( "Revenue", mCurrentSectorName,
                                 aProdTechnology->expenditure.getValue( Expenditure::SALES ) * priceReceived );
 
     // Add to the profits column.
-    mInternalTable->addToType( "Profits", mCurrSectorName, aProdTechnology->mProfits[ aPeriod ] );
+    mInternalTable->addToType( "Profits", mCurrentSectorName, aProdTechnology->mProfits[ aPeriod ] );
 
     // Add to the retained earnings column.
-    mInternalTable->addToType( "Retained Earnings", mCurrSectorName,
+    mInternalTable->addToType( "Retained Earnings", mCurrentSectorName,
                                aProdTechnology->expenditure.getValue( Expenditure::RETAINED_EARNINGS ) );
 
     // Add to the costs column.
-    mInternalTable->addToType( "Costs", mCurrSectorName, aProdTechnology->mCostsReporting[ aPeriod ] );
+    mInternalTable->addToType( "Costs", mCurrentSectorName,
+                               aProdTechnology->mCostsReporting[ aPeriod ] );
 }

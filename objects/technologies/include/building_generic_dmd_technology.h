@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief The building service demand technology.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
@@ -51,7 +49,6 @@ public:
 protected:
     virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-    void toOutputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual double getDemandFnPrefix( const std::string& regionName, const int period );
     virtual double getEffectiveInternalGains( const std::string& regionName, const int period );

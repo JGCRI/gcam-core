@@ -6,7 +6,7 @@
 
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -30,7 +30,7 @@
 #include <string>
 #include <memory>
 #include <iosfwd>
-#include "reporting/include/output_container.h"
+#include "util/base/include/default_visitor.h"
 
 class RegionCGE;
 class HouseholdConsumer;
@@ -41,17 +41,16 @@ class ProductionTechnology;
 class Input;
 class StorageTable;
 
-class DemandComponentsTable : public OutputContainer {
+class DemandComponentsTable : public DefaultVisitor {
 public:
-    DemandComponentsTable();
-    void output( std::ostream& aFile, const int period ) const;
-	void updateRegionCGE( const RegionCGE* regionCGE );
+    DemandComponentsTable( std::ostream& aFile );
+    void finish() const;
+	void startVisitRegionCGE( const RegionCGE* regionCGE, const int aPeriod );
 	void updateHouseholdConsumer( const HouseholdConsumer* householdConsumer, const int aPeriod );
 	void updateGovtConsumer( const GovtConsumer* govtConsumer, const int aPeriod );
-	void updateTradeConsumer( const TradeConsumer* tradeConsumer, const std::string& aRegionName, const int aPeriod );
+	void updateTradeConsumer( const TradeConsumer* tradeConsumer, const int aPeriod );
 	void updateInvestConsumer( const InvestConsumer* investConsumer, const int aPeriod );
-	void updateProductionTechnology( const ProductionTechnology* prodTech, 
-		const std::string& aRegionName, const std::string& aSectorName, const int aPeriod );
+	void updateProductionTechnology( const ProductionTechnology* prodTech, const int aPeriod );
 private:
     //! The type of the demand components category.
     enum CategoryType {
@@ -64,6 +63,10 @@ private:
     };
 
     const std::string& getLabel( const CategoryType aType ) const;
+
+    //! The file to which to write.
+    std::ostream& mFile;
+
     std::auto_ptr<StorageTable> mTable; //!< Internal storage table.
 };
 

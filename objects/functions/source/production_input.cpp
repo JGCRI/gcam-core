@@ -1,6 +1,6 @@
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -18,14 +18,12 @@
 *
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
 #include "functions/include/production_input.h"
 #include "util/base/include/xml_helper.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -41,7 +39,7 @@ ProductionInput::ProductionInput() {
  * \return Pointer to the new class created
  */
 ProductionInput* ProductionInput::clone() const {
-	return new ProductionInput( *this );
+    return new ProductionInput( *this );
 }
 
 void ProductionInput::copyParam( const Input* aInput ) {
@@ -54,7 +52,7 @@ void ProductionInput::copyParamsInto( ProductionInput& aProductionInput ) const 
 
 //! XML parsing for derived class
 bool ProductionInput::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-	return false;
+    return false;
 }
 
 //! Output XML for derived class
@@ -67,12 +65,12 @@ void ProductionInput::toDebugXMLDerived( const int period, ostream& out, Tabs* t
 
 //! Get Price Elasticity
 double ProductionInput::getPriceElasticity() const {
-	return 0; // makes no sense here
+    return 0; // makes no sense here
 }
 
 //! Get Income Elasticity
 double ProductionInput::getIncomeElasticity() const {
-	return 0; // makes no sense here
+    return 0; // makes no sense here
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -84,7 +82,7 @@ double ProductionInput::getIncomeElasticity() const {
 * \return The constant XML_NAME.
 */
 const string& ProductionInput::getXMLName() const {
-	return getXMLNameStatic();
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -98,10 +96,10 @@ const string& ProductionInput::getXMLName() const {
 */
 const string& ProductionInput::getXMLNameStatic() {
     const static string XML_NAME = "productionInput";
-	return XML_NAME;
+    return XML_NAME;
 }
 
-void ProductionInput::updateOutputContainer( OutputContainer* outputContainer, const int period ) const {
-    Input::updateOutputContainer( outputContainer, period );
-	outputContainer->updateProductionInput( this );
+void ProductionInput::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    Input::accept( aVisitor, aPeriod );
+	aVisitor->updateProductionInput( this );
 }

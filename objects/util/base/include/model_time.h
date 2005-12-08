@@ -16,8 +16,7 @@
 #include <vector>
 #include <map>
 #include <xercesc/dom/DOMNode.hpp>
-
-class Tabs;
+#include "util/base/include/iround_trippable.h"
 /*! 
 * \ingroup Objects
 * \brief A class which defines the time information neccessary for the model to run.
@@ -25,7 +24,7 @@ class Tabs;
 * \author Sonny Kim
 */
 
-class Modeltime
+class Modeltime: public IRoundTrippable
 {
 private:
     int startYear; //!< Model start year (read-in).

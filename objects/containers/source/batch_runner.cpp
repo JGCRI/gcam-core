@@ -10,11 +10,10 @@
 #pragma warning( disable : 4503 )
 #endif 
 
-#include <iostream>
+#include "util/base/include/definitions.h"
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
 #include "containers/include/batch_runner.h"
 #include "containers/include/scenario_runner_factory.h"
 #include "util/base/include/timer.h"

@@ -8,19 +8,18 @@
 * \ingroup Objects
 * \brief The Marketplace class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
-#include <map>
 #include <iosfwd>
 #include <string>
 #include "marketplace/include/imarket_type.h"
+#include "util/base/include/ivisitable.h"
 
 class Tabs;
 class Market;
 class MarketLocator;
+class IVisitor;
 class IInfo;
 
 /*! 
@@ -30,7 +29,7 @@ class IInfo;
 * \todo The naming of get(set)MarketInfo and the (re)storeInfo needs fixing. 
 */
 
-class Marketplace
+class Marketplace: public IVisitable
 {
 public:
     Marketplace();
@@ -63,14 +62,19 @@ public:
     void restoreinfo( const int period );
 
     const IInfo* getMarketInfo( const std::string& aGoodName, const std::string& aRegionName,
-		                        const int aPeriod, const bool aMustExist ) const;
+                                const int aPeriod, const bool aMustExist ) const;
 
     IInfo* getMarketInfo( const std::string& aGoodName, const std::string& aRegionName,
-		                 const int aPeriod, const bool aMustExist );
+                         const int aPeriod, const bool aMustExist );
 
-	void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
+
     std::vector<Market*> getMarketsToSolve( const int period ) const;
-    const static double NO_MARKET_PRICE; //!< The price to return if no market exists.
+    static const std::string& getXMLNameStatic();
+    
+    //! The price to return if no market exists.
+    const static double NO_MARKET_PRICE;
 private:
     std::vector< std::vector<Market*> > markets; //!< no of market objects by period
     std::auto_ptr<MarketLocator> mMarketLocator; //!< An object which determines the correct market number.

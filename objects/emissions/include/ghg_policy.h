@@ -9,22 +9,19 @@
 * \ingroup Objects
 * \brief The GHGPolicy class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
-
-class Tabs;
+#include "util/base/include/iround_trippable.h"
 
 /*! 
 * \ingroup Objects
 * \brief Class which defines greenhouse has mitigation policy. 
 * \author Sonny Kim
 */
-class GHGPolicy {
+class GHGPolicy: public IRoundTrippable {
 public:
     GHGPolicy();
     GHGPolicy( const std::string aName,

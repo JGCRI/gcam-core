@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The MACGeneratorScenarioRunner class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <memory>

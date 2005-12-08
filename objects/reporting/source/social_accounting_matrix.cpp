@@ -1,6 +1,6 @@
 /*
 This software, which is provided in confidence, was prepared by employees
-of Pacific Northwest National Labratory operated by Battelle Memorial
+of Pacific Northwest National Laboratory operated by Battelle Memorial
 Institute. Battelle has certain unperfected rights in the software
 which should not be copied or otherwise disseminated outside your
 organization without the express written authorization from Battelle. All rights to
@@ -42,17 +42,16 @@ use of this software.
 using namespace std;
 
 //! Default Constructor
-SocialAccountingMatrix::SocialAccountingMatrix( const string& aRegionName ):
-mRegionName( aRegionName ), mTable( new StorageTable ){
+SocialAccountingMatrix::SocialAccountingMatrix( const string& aRegionName, ostream& aFile ):
+mFile( aFile ), mRegionName( aRegionName ), mTable( new StorageTable ){
 }
 
 /*! \brief For outputing SGM data to a flat csv File
  * 
  * \author Pralit Patel
- * \param period The period which we are outputing for
  */
-void SocialAccountingMatrix::output( ostream& aFile, const int period ) const {
-	aFile << "Social Accounting Matrix" << endl
+void SocialAccountingMatrix::finish() const {
+	mFile << "Social Accounting Matrix" << endl
 	      << "Receipts" << ',' << "Activites" << ',' << "Commoditites" << ',' << "Land" << ',' 
           << "Labor" << ',' << "Capital" << ',' << "Households" << ',' << "Enterprises" << ',' 
           << "Government" << ',' << "Capital Account" << ',' << "Rest Of World" << ',' 
@@ -60,16 +59,16 @@ void SocialAccountingMatrix::output( ostream& aFile, const int period ) const {
 
 	for ( int categoryIndex = ACTIVITIES; categoryIndex <= TOTALS; categoryIndex++ ) {
         mTable->addColumn( getString( CategoryType( categoryIndex ) ) );
-		aFile << getString( CategoryType( categoryIndex ) );
+		mFile << getString( CategoryType( categoryIndex ) );
         for( int sectorIndex = ACTIVITIES; sectorIndex <= TOTALS; sectorIndex++ ) {
 			if( !( sectorIndex == TOTALS && categoryIndex == TOTALS ) ) {
-				aFile << ',' << mTable->getValue( getString( CategoryType ( sectorIndex ) ),
+				mFile << ',' << mTable->getValue( getString( CategoryType ( sectorIndex ) ),
                     getString( CategoryType( categoryIndex ) ) );
 			}
 		}
-		aFile << endl;
+		mFile << endl;
 	}
-	aFile << endl;
+	mFile << endl;
 }
 
 void SocialAccountingMatrix::updateHouseholdConsumer( const HouseholdConsumer* householdConsumer,
@@ -100,8 +99,7 @@ void SocialAccountingMatrix::updateGovtConsumer( const GovtConsumer* govtConsume
         govtConsumer->expenditure.getValue( Expenditure::SAVINGS ) );	
 }
 
-void SocialAccountingMatrix::updateTradeConsumer( const TradeConsumer* tradeConsumer,
-                                                  const string& aRegionName, const int aPeriod )
+void SocialAccountingMatrix::updateTradeConsumer( const TradeConsumer* tradeConsumer, const int aPeriod )
 {
 	// for net export or rest of world column of SAM
 	addToType( REST_OF_WORLD, ACTIVITIES,
@@ -116,8 +114,8 @@ void SocialAccountingMatrix::updateInvestConsumer( const InvestConsumer* investC
         investConsumer->expenditure.getValue( Expenditure::INVESTMENT ) );
 }
 
-void SocialAccountingMatrix::updateProductionTechnology( const ProductionTechnology* prodTech, 
-		const string& aRegionName, const string& aSectorName, const int aPeriod ) 
+void SocialAccountingMatrix::updateProductionTechnology( const ProductionTechnology* prodTech,
+														 const int aPeriod ) 
 {
 	// for activities column of SAM
 	addToType( ACTIVITIES, COMMODITIES,

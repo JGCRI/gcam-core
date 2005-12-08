@@ -1,6 +1,6 @@
 /*
 	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Labratory operated by Battelle Memorial
+	of Pacific Northwest National Laboratory operated by Battelle Memorial
 	Institute. Battelle has certain unperfected rights in the software
 	which should not be copied or otherwise disseminated outside your
 	organization without the express written authorization from Battelle. All rights to
@@ -18,14 +18,12 @@
 *
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
 #include "functions/include/demand_input.h"
 #include "util/base/include/xml_helper.h"
-#include "reporting/include/output_container.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 
@@ -40,7 +38,7 @@ DemandInput::DemandInput() {
  * \return Pointer to the new class created
  */
 DemandInput* DemandInput::clone() const {
-	return new DemandInput( *this );
+    return new DemandInput( *this );
 }
 
 void DemandInput::copyParam( const Input* aInput ) {
@@ -49,44 +47,44 @@ void DemandInput::copyParam( const Input* aInput ) {
 }
 
 void DemandInput::copyParamsInto( DemandInput& aDemandInput ) const {
-	aDemandInput.mPriceElasticity.init( mPriceElasticity );
+    aDemandInput.mPriceElasticity.init( mPriceElasticity );
     aDemandInput.mIncomeElasticity.init( mIncomeElasticity );
 }
 
 //! Get Price Elasticity
 double DemandInput::getPriceElasticity() const {
-	return mPriceElasticity;
+    return mPriceElasticity;
 }
 
 //! Get Income Elasticity
 double DemandInput::getIncomeElasticity() const {
-	return mIncomeElasticity;
+    return mIncomeElasticity;
 }
 
 //! XML parsing for derived class
 bool DemandInput::XMLDerivedClassParse( const string& nodeName, const xercesc::DOMNode* curr ) {
-	if ( nodeName == "incomeElasticity" ) {
-		mIncomeElasticity.init( XMLHelper<double>::getValue( curr ) );
-	}
-	else if ( nodeName == "priceElasticity" ) {
-		mPriceElasticity.init( XMLHelper<double>::getValue( curr ) );
-	}
-	else {
-		return false;
-	}
-	return true;
+    if ( nodeName == "incomeElasticity" ) {
+        mIncomeElasticity.init( XMLHelper<double>::getValue( curr ) );
+    }
+    else if ( nodeName == "priceElasticity" ) {
+        mPriceElasticity.init( XMLHelper<double>::getValue( curr ) );
+    }
+    else {
+        return false;
+    }
+    return true;
 }
 
 //! Output XML for derived class
 void DemandInput::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-	XMLWriteElement( mIncomeElasticity, "incomeElasticity", out, tabs );
-	XMLWriteElement( mPriceElasticity, "priceElasticity", out, tabs );
+    XMLWriteElement( mIncomeElasticity, "incomeElasticity", out, tabs );
+    XMLWriteElement( mPriceElasticity, "priceElasticity", out, tabs );
 }
 
 //! Output debug info to XML for derived class
 void DemandInput::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-	XMLWriteElement( mIncomeElasticity, "incomeElasticity", out, tabs );
-	XMLWriteElement( mPriceElasticity, "priceElasticity", out, tabs );
+    XMLWriteElement( mIncomeElasticity, "incomeElasticity", out, tabs );
+    XMLWriteElement( mPriceElasticity, "priceElasticity", out, tabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -98,7 +96,7 @@ void DemandInput::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs 
 * \return The constant XML_NAME.
 */
 const string& DemandInput::getXMLName() const {
-	return getXMLNameStatic();
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -112,10 +110,10 @@ const string& DemandInput::getXMLName() const {
 */
 const string& DemandInput::getXMLNameStatic() {
     const static string XML_NAME = "demandInput";
-	return XML_NAME;
+    return XML_NAME;
 }
 
-void DemandInput::updateOutputContainer( OutputContainer* outputContainer, const int period ) const {
-    Input::updateOutputContainer( outputContainer, period );
-	outputContainer->updateDemandInput( this );
+void DemandInput::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    Input::accept( aVisitor, aPeriod );
+	aVisitor->updateDemandInput( this );
 }

@@ -3,14 +3,13 @@
 * \ingroup Objects
 * \brief Scenario class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
-*/				
+*/              
 
 #include "util/base/include/definitions.h"
 #include <string>
 #include <fstream>
 #include <cassert>
+#include <ctime>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
@@ -24,19 +23,20 @@
 #include "util/curves/include/curve.h"
 #include "solution/solvers/include/solver.h"
 #include "util/base/include/auto_file.h"
+#include "reporting/include/graph_printer.h"
+#include "reporting/include/xml_db_outputter.h"
+#include "containers/include/output_meta_data.h"
+#include "util/base/include/auto_file.h"
 
 using namespace std;
 using namespace xercesc;
 
-time_t ltime;
 extern ofstream outFile;
+extern time_t gGlobalTime;
 
 //! Default construtor
 Scenario::Scenario() {
     marketplace.reset( new Marketplace() );
-
-    // Get time and date before model run
-    time( &ltime ); 
 }
 
 //! Destructor
@@ -88,41 +88,35 @@ bool Scenario::XMLParse( const DOMNode* node ){
     DOMNodeList* nodeList = node->getChildNodes();
 
     // loop through the children
-    for ( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
+    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
         DOMNode* curr = nodeList->item( i );
         string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
         if( nodeName == "#text" ) {
             continue;
         }
-
-        else if ( nodeName == "summary" ){
-            scenarioSummary = XMLHelper<string>::getValueString( curr );
-        }
-
-		else if ( nodeName == Modeltime::getXMLNameStatic() ){
+        else if ( nodeName == Modeltime::getXMLNameStatic() ){
             if( !modeltime.get() ) {
                 modeltime.reset( new Modeltime() );
                 modeltime->XMLParse( curr );
                 modeltime->set(); // This call cannot be delayed until completeInit() because it is needed first. 
             }
             else if ( Configuration::getInstance()->getBool( "debugChecking" ) ) { 
-				ILogger& mainLog = ILogger::getLogger( "main_log" );
-				mainLog.setLevel( ILogger::WARNING );
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
                 mainLog << "Modeltime information cannot be modified in a scenario add-on." << endl;
             }
         }
-		else if ( nodeName == World::getXMLNameStatic() ){
-            if( !world.get() ) {
-                world.reset( new World() );
-            }
-            world->XMLParse( curr );
+        else if ( nodeName == World::getXMLNameStatic() ){
+            parseSingleNode( curr, world, new World );
+        }
+        else if( nodeName == OutputMetaData::getXMLNameStatic() ) {
+            parseSingleNode( curr, mOutputMetaData, new OutputMetaData );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing scenario." << endl;
-            return false;
         }
     } // end for loop
     return true;
@@ -145,14 +139,19 @@ void Scenario::completeInit() {
     }
 
     // Complete the init of the world object.
-	if( world.get() ){
-		world->completeInit();
-	}
-	else {
+    if( world.get() ){
+        world->completeInit();
+        // Create the solver and initialize with a pointer to the Marketplace and World.
+        const string solverName = Configuration::getInstance()->getString( "SolverName" );
+        solver = Solver::getSolver( solverName, marketplace.get(), world.get() );
+        // Complete the init of the solution object.
+        solver->init();
+    }
+    else {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
         mainLog << "No world container was parsed from the input files." << endl;
-	}
+    }
 
     // Create the solver and initialize with a pointer to the Marketplace and World.
     const string solverName = Configuration::getInstance()->getString( "SolverName" );
@@ -167,24 +166,24 @@ void Scenario::completeInit() {
 
 //! Write object to xml output stream.
 void Scenario::toInputXML( ostream& out, Tabs* tabs ) const {
-    
     // write heading for XML input file
     out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
-    string dateString = util::XMLCreateDate( ltime );
-    out << "<" << getXMLNameStatic() << " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"";
-    out << " xsi:noNamespaceSchemaLocation=\"C:\\PNNL\\Objects\\CVS\\Objects\\Objects.xsd\"";
-    out << " name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
-    // increase the indent.
-    tabs->increaseIndent();
 
-    XMLWriteElement( "SRES B2 Scenario is used for this Reference Scenario", "summary", out, tabs );
+    out << "<" << getXMLNameStatic() << " name=\"" << name << "\" date=\"" 
+        << util::XMLCreateDate( gGlobalTime ) << "\">" << endl;
+    
+    tabs->increaseIndent();
 
     // write the xml for the class members.
     modeltime->toInputXML( out, tabs );
+    if( mOutputMetaData.get() ){
+        mOutputMetaData->toInputXML( out, tabs );
+    }
+
     world->toInputXML( out, tabs );
     // finished writing xml for the class members.
 
-	XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
+    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
 /*! \brief Write out object to output stream for debugging.
@@ -192,7 +191,7 @@ void Scenario::toInputXML( ostream& out, Tabs* tabs ) const {
 * \param aTabs Tabs container.
 */
 void Scenario::toDebugXMLOpen( ostream& aXMLDebugFile, Tabs* aTabs ) const {
-    string dateString = util::XMLCreateDate( ltime );
+    string dateString = util::XMLCreateDate( gGlobalTime );
     aXMLDebugFile << "<" << getXMLNameStatic() << " name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
 
     aTabs->increaseIndent();
@@ -316,7 +315,13 @@ bool Scenario::calculatePeriod( const int aPeriod,
     world->calc( aPeriod ); // call to calculate initial supply and demand
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
     world->finalizePeriod( aPeriod );
-    world->updateSummary( aPeriod ); // call to update summaries for reporting
+    
+    // Output metadata is not required to exist.
+    const list<string>& primaryFuelList = mOutputMetaData.get() ? 
+                                          mOutputMetaData->getPrimaryFuelList() 
+                                          : list<string>();
+
+    world->updateSummary( primaryFuelList, aPeriod ); // call to update summaries for reporting
     world->emiss_ind( aPeriod ); // call to calculate global emissions
 
     // Mark that the period is now valid.
@@ -422,28 +427,73 @@ void Scenario::closeDebuggingFiles( ofstream& aXMLDebugFile, ofstream& aSGMDebug
     aSGMDebugFile.close();
 }
 
-/*! \brief A function which print dependency graphs showing fuel usage by sector.
-*
-* This function creates a filename and stream for printing the graph data in the dot graphing language.
-* The filename is created from the dependencyGraphName configuration attribute concatenated with the period.
-* The function then calls the World::printDependencyGraphs function to perform the printing.
-* Once the data is printed, dot must be called to create the actual graph as follows:
-* dot -Tpng depGraphs_8.dot -o graphs.png
-* where depGraphs_8.dot is the file created by this function and graphs.png is the file you want to create.
-* The output format can be changed, see the dot documentation for further information.
+/*! \brief Update a visitor for the Scenario.
+* \param aVisitor Visitor to update.
+* \param aPeriod Period to update.
 */
-void Scenario::printGraphs() const {
-    Configuration* conf = Configuration::getInstance();
+void Scenario::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitScenario( this, aPeriod );
+	// Update the meta-data.
+	if( mOutputMetaData.get() ){
+		mOutputMetaData->accept( aVisitor, aPeriod );
+	}
+	// Update the world.
+	if( world.get() ){
+		world->accept( aVisitor, aPeriod );
+	}
+	aVisitor->endVisitScenario( this, aPeriod );
+}
 
-    // Iterate over all periods and print graphs.
-    for( int period = 0; period < modeltime->getmaxper(); ++period ){
-        // Create the filename.
-        string fileName = conf->getFile( "dependencyGraphName", "graph" ) + "_" + util::toString( period ) + ".dot";
+/*! \brief A function which writes output to an XML file so that it can be read by the XML database.
+*/
+void Scenario::printOutputXML() const {
+#if( __USE_XML_DB__ )	
+	// Create a graph printer.
+	auto_ptr<IVisitor> xmlDBOutputter( new XMLDBOutputter );
+	
+	// Update the output container with information from the model.
+	// -1 flags to update the output container for all periods at once.
+	accept( xmlDBOutputter.get(), -1 );
+	
+	
+	// Print the output.
+	xmlDBOutputter->finish();
+#endif
+}
 
-        // Create an automatically closing file.
-        AutoOutputFile graphStream( fileName );
-        world->printGraphs( *graphStream, period );
-    }
+/*! \brief A function which print dependency graphs showing fuel usage by
+*          sector. 
+* \details This function creates a filename and stream for printing the graph
+*          data in the dot graphing language. The filename is created from the
+*          dependencyGraphName configuration attribute concatenated with the
+*          period. The function then calls the World::printDependencyGraphs
+*          function to perform the printing. Once the data is printed, dot must
+*          be called to create the actual graph as follows: dot -Tpng
+*          depGraphs_8.dot -o graphs.png where depGraphs_8.dot is the file
+*          created by this function and graphs.png is the file you want to
+*          create. The output format can be changed, see the dot documentation
+*          for further information.
+* \param aPeriod The period to print graphs for.
+*/
+void Scenario::printGraphs( const int aPeriod ) const {
+	// Determine which region to print. Default to the US.
+	const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
+    
+    // Create a unique filename for the period.
+	const string fileName = Configuration::getInstance()->getFile( "dependencyGraphName", "graph" ) 
+		                    + "_" + util::toString( aPeriod ) + ".dot";
+    
+    // Open the file. It will automatically close.
+    AutoOutputFile graphStream( fileName );
+	
+    // Create a graph printer.
+	auto_ptr<IVisitor> graphPrinter( new GraphPrinter( regionToGraph, *graphStream ) );
+	
+	// Update the graph printer with information from the model.
+	accept( graphPrinter.get(), aPeriod );
+	
+	// Print the graph.
+	graphPrinter->finish();
 }
 
 /*! \brief Set a tax into all regions.
@@ -507,8 +557,8 @@ const map<const string,const Curve*> Scenario::getEmissionsPriceCurves( const st
 */
 
 bool Scenario::solve( const int period ){
-	/*! \pre The solver must be instantiated. */
-	assert( solver.get() );
+    /*! \pre The solver must be instantiated. */
+    assert( solver.get() );
 
     // Solve the marketplace. If the return code is false than the model did not
     // solve for the period. Add the period to the scenario list of unsolved
@@ -522,13 +572,13 @@ bool Scenario::solve( const int period ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
 
-		// Report if all model periods solved correctly.
+        // Report if all model periods solved correctly.
         if( unsolvedPeriods.empty() ) {
             mainLog << "All model periods solved correctly." << endl;
             return true;
         }
 
-		// Otherwise print all model periods which did not solve correctly.
+        // Otherwise print all model periods which did not solve correctly.
         mainLog << "The following model periods did not solve: ";
         for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
             mainLog << *i << ", ";
@@ -536,7 +586,7 @@ bool Scenario::solve( const int period ){
         mainLog << endl;
         return false;
     }
-	// If this is not the last period return success. If there was an error it
+    // If this is not the last period return success. If there was an error it
     // will be sent after the last iteration.
     return true;
 }
@@ -547,18 +597,20 @@ void Scenario::writeOutputFiles() const {
     // main output file for sgm, general results.
     {
         AutoOutputFile sgmGenFile( "ObjectSGMGenFileName", "ObjectSGMGen.csv" );
-	    // SGM csv general output, writes for all periods.
-   	    csvSGMGenFile( *sgmGenFile );
+        // SGM csv general output, writes for all periods.
+        csvSGMGenFile( *sgmGenFile );
     }
     
     // Print out dependency graphs.
     const Configuration* conf = Configuration::getInstance();
     if( conf->getBool( "PrintDependencyGraphs" ) ) {
-        printGraphs();
+        for( int period = 0; period  < getModeltime()->getmaxper(); ++period  ){
+            printGraphs( period );
+        }
     }
 
     // Open the output file.
-    const string outFileName = conf->getFile( "outFileName" );
+    const string outFileName = conf->getFile( "outFileName", "outfile.csv" );
     outFile.open( outFileName.c_str(), ios::out );
     util::checkIsOpen( outFile, outFileName ); 
     
@@ -581,7 +633,14 @@ void Scenario::writeOutputFiles() const {
 
 //! Output Scenario members to the database.
 void Scenario::dbOutput() const {
-    world->dbOutput();
+    // Write the main output file.
+    printOutputXML();
+
+    // Output metadata is not required to exist.
+    const list<string>& primaryFuelList = mOutputMetaData.get() ? 
+                                          mOutputMetaData->getPrimaryFuelList() 
+                                          : list<string>();
+    world->dbOutput( primaryFuelList );
     marketplace->dbOutput();
 }
 
@@ -611,19 +670,19 @@ void Scenario::openDebugXMLFile( ofstream& aXMLDebugFile, Tabs* aTabs, const str
 * \param aPeriod Model period for which to print debugging information.
 */
 void Scenario::csvSGMOutputFile( ostream& aSGMDebugFile, const int aPeriod ) const {
-	aSGMDebugFile <<  "**********************" << endl;
-	aSGMDebugFile <<  "RESULTS FOR PERIOD:  " << aPeriod << endl;
-	aSGMDebugFile <<  "**********************" << endl << endl;
-	marketplace->csvSGMOutputFile( aSGMDebugFile, aPeriod );
-	world->csvSGMOutputFile( aSGMDebugFile, aPeriod );
+    aSGMDebugFile <<  "**********************" << endl;
+    aSGMDebugFile <<  "RESULTS FOR PERIOD:  " << aPeriod << endl;
+    aSGMDebugFile <<  "**********************" << endl << endl;
+    marketplace->csvSGMOutputFile( aSGMDebugFile, aPeriod );
+    world->csvSGMOutputFile( aSGMDebugFile, aPeriod );
 }
 
 /*! \brief Write SGM general results for all periods to csv text file.
 */
 void Scenario::csvSGMGenFile( ostream& aFile ) const {
     // Write out the file header.
-	aFile << "SGM General Output " << endl;
-	aFile << "Date & Time: " << ctime( &ltime ) << endl;
+    aFile << "SGM General Output " << endl;
+    aFile << "Date & Time: " << ctime( &gGlobalTime ) << endl;
 
-	world->csvSGMGenFile( aFile );
+    world->csvSGMGenFile( aFile );
 }
