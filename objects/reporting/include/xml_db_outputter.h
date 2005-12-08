@@ -160,7 +160,7 @@ private:
 		//! Wrapper around the XML container so the memory can be dynamically
         //! allocated.
 		struct XMLContainerWrapper {
-			XMLContainerWrapper( DbXml::XmlContainer& aContainer );
+			XMLContainerWrapper( DbXml::XmlContainer aContainer );
 			//! The XML container.
 			DbXml::XmlContainer mContainer;
 		};

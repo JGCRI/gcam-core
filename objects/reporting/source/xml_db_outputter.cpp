@@ -75,7 +75,7 @@ XMLDBOutputter::DBContainer::~DBContainer() {
 /*! \brief Constructor
 * \param aContainer XmlContainer to wrap.
 */
-XMLDBOutputter::DBContainer::XMLContainerWrapper::XMLContainerWrapper( DbXml::XmlContainer& aContainer )
+XMLDBOutputter::DBContainer::XMLContainerWrapper::XMLContainerWrapper( DbXml::XmlContainer aContainer )
 :mContainer( aContainer )
 {}
 
