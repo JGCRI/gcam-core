@@ -33,7 +33,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libdb43d.lib libdbxml21d.lib ddao36D.lib xerces-c_2D.lib magiccd.lib aglud.lib"
+				AdditionalDependencies="libdb43d.lib libdbxml22d.lib ddao36D.lib xerces-c_2D.lib magiccd.lib aglud.lib"
 				OutputFile="$(OutDir)/../Objects-1_0D.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\..\libs\access;..\..\..\..\libs\dbxml\lib;&quot;..\..\..\..\libs\xerces-c-src_2_7_0\lib&quot;;..\..\..\..\libs\magicclib\lib;..\..\..\..\libs\AgLib\lib"
@@ -88,7 +88,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libdb43.lib libdbxml21.lib ddao36.lib xerces-c_2.lib magicc.lib aglu.lib"
+				AdditionalDependencies="libdb43.lib libdbxml22.lib ddao36.lib xerces-c_2.lib magicc.lib aglu.lib"
 				OutputFile="$(OutDir)/../Objects-1_0.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
