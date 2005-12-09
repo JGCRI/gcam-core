@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<input resolution="0">
+	<file type="netcdf">
+		<data value="CropLand" />
+		<date value="1995" />
+		<res value=".5" />
+		<average value="True" />
+		<variable value="farea" />
+		<name value="cropland_0.5.nc" />
+	</file>
+	<file type="netcdf">
+		<data value="PastureLand" />
+		<date value="1995" />
+		<res value=".5" />
+		<average value="True" />
+		<variable value="farea" />
+		<name value="pasture_0.5.nc" />
+	</file>
+	<file type="netcdf">
+		<data value="GAEZ" />
+		<date value="1995" />
+		<res value=".5" />
+		<average value="True" />
+		<variable value="farea" />
+		<name value="gaez_0.5.nc" />
+	</file>
+</input>

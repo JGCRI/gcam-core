@@ -1,5 +1,6 @@
 package ModelInterface.PPsource;
 
+import java.util.Map;
 import java.util.TreeMap;
 
 public interface DataIndex
@@ -9,5 +10,5 @@ public interface DataIndex
   public void addData(DataBlock val);
   public void addData(DataBlock val, boolean avg);
   public void resolveOverwrite(String holdName, String varName);
-  public TreeMap extractMask(RegionMask m);
+  public Map extractMask(RegionMask m);
 }

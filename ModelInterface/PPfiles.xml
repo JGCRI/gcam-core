@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <files>
-	<data file="inputTestNASA.xml" />
+	<data file="inputLandUse.xml" />
 	<region file="inputR.xml" />
-	<output file="outTrash.xml" />
+	<output file="outLandUse.xml" />
 	<log level="FINER" />
 </files>

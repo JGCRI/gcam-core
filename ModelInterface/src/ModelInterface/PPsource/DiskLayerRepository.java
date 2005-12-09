@@ -2,6 +2,7 @@ package ModelInterface.PPsource;
 
 import java.io.*;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.awt.geom.*;
@@ -47,8 +48,6 @@ public class DiskLayerRepository implements DataRepository
   {
     if(!currName.equals((varName+time)))
     {
-      //TODO REMOVE
-      System.out.print(".");
       if(dirty)
       {
         writeLayer(currName, currLayer);
@@ -244,14 +243,14 @@ public class DiskLayerRepository implements DataRepository
     return toReturn;
   }
   
-  public TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>> getRegion(int X, int Y, double[][] weights, double xL, double yL, double res)
+  public Map<String, Map<String, Map<Point2D.Double, Double>>> getRegion(int X, int Y, double[][] weights, double xL, double yL, double res)
   {
     /*
      * X and Y are the top left corner
      */
-    TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>> toReturn = new TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>>();
-    TreeMap<String, TreeMap<Point2D.Double, Double>> holdVar;
-    TreeMap<Point2D.Double, Double> holdTime;
+    Map<String, Map<String, Map<Point2D.Double, Double>>> toReturn = new LinkedHashMap<String, Map<String, Map<Point2D.Double, Double>>>();
+    Map<String, Map<Point2D.Double, Double>> holdVar;
+    Map<Point2D.Double, Double> holdTime;
     Map.Entry<String, TreeMap<Double, String>> varEntry;
     Map.Entry<Double, String> timeEntry;
     Iterator<Map.Entry<Double, String>> iT;
@@ -260,7 +259,7 @@ public class DiskLayerRepository implements DataRepository
     Double timeName;
     double currXL, currYL;
 
-    toReturn.put("time", new TreeMap<String, TreeMap<Point2D.Double, Double>>());
+    toReturn.put("time", new LinkedHashMap<String, Map<Point2D.Double, Double>>());
     holdVar = toReturn.get("time");
     holdVar.put("0", new TreeMap<Point2D.Double, Double>());
     holdTime = holdVar.get("0");
@@ -284,7 +283,7 @@ public class DiskLayerRepository implements DataRepository
     {
       varEntry = iV.next();
       varName = varEntry.getKey();
-      toReturn.put(varName, new TreeMap<String, TreeMap<Point2D.Double, Double>>());
+      toReturn.put(varName, new LinkedHashMap<String, Map<Point2D.Double, Double>>());
       holdVar = toReturn.get(varName);
       iT = varEntry.getValue().entrySet().iterator();
       while(iT.hasNext())

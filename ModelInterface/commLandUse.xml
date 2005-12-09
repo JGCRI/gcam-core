@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<commands>
+	<variable name="Crops" type="reference">
+		<region value="World" />
+		<field value="Cropland" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="Pasture" type="reference">
+		<region value="World" />
+		<field value="Pasture" />
+		<time value="1995.0" />
+	</variable>
+	
+	<variable name="GAEZ1" type="reference">
+		<region value="World" />
+		<field value="GAEZ1.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ2" type="reference">
+		<region value="World" />
+		<field value="GAEZ2.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ3" type="reference">
+		<region value="World" />
+		<field value="GAEZ3.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ4" type="reference">
+		<region value="World" />
+		<field value="GAEZ4.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ5" type="reference">
+		<region value="World" />
+		<field value="GAEZ5.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ6" type="reference">
+		<region value="World" />
+		<field value="GAEZ6.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ7" type="reference">
+		<region value="World" />
+		<field value="GAEZ7.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ8" type="reference">
+		<region value="World" />
+		<field value="GAEZ8.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ9" type="reference">
+		<region value="World" />
+		<field value="GAEZ9.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ10" type="reference">
+		<region value="World" />
+		<field value="GAEZ10.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ11" type="reference">
+		<region value="World" />
+		<field value="GAEZ11.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ12" type="reference">
+		<region value="World" />
+		<field value="GAEZ12.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ13" type="reference">
+		<region value="World" />
+		<field value="GAEZ13.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ14" type="reference">
+		<region value="World" />
+		<field value="GAEZ14.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ15" type="reference">
+		<region value="World" />
+		<field value="GAEZ15.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ16" type="reference">
+		<region value="World" />
+		<field value="GAEZ16.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ17" type="reference">
+		<region value="World" />
+		<field value="GAEZ17.0" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="GAEZ18" type="reference">
+		<region value="World" />
+		<field value="GAEZ18.0" />
+		<time value="1995.0" />
+	</variable>
+
+	<plot variable="Crops" />
+	<plot variable="Pasture" />
+	
+	<zoneCombine>
+		<areas>
+			<zone name="GAEZ1" />
+			<zone name="GAEZ2" />
+			<zone name="GAEZ3" />
+			<zone name="GAEZ4" />
+			<zone name="GAEZ5" />
+			<zone name="GAEZ6" />
+			<zone name="GAEZ7" />
+			<zone name="GAEZ8" />
+			<zone name="GAEZ9" />
+			<zone name="GAEZ10" />
+			<zone name="GAEZ11" />
+			<zone name="GAEZ12" />
+			<zone name="GAEZ13" />
+			<zone name="GAEZ14" />
+			<zone name="GAEZ15" />
+			<zone name="GAEZ16" />
+			<zone name="GAEZ17" />
+			<zone name="GAEZ18" />
+		</areas>
+		<content>
+			<zone name="Crops" />
+			<zone name="Pasture" />
+		</content>
+		<average value="false" />
+	</zoneCombine>
+</commands>

@@ -221,14 +221,14 @@ public class MatrixRepository implements DataRepository
     return toReturn;
   }
 
-  public TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>> getRegion(int X, int Y, double[][] weights, double xL, double yL, double res)
+  public Map<String, Map<String, Map<Point2D.Double, Double>>> getRegion(int X, int Y, double[][] weights, double xL, double yL, double res)
   {
     /*
      * X and Y are the top left corner
      */
-    TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>> toReturn = new TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>>();
-    TreeMap<String, TreeMap<Point2D.Double, Double>> holdVar;
-    TreeMap<Point2D.Double, Double> holdTime;
+    Map<String, Map<String, Map<Point2D.Double, Double>>> toReturn = new LinkedHashMap<String, Map<String, Map<Point2D.Double, Double>>>();
+    Map<String, Map<Point2D.Double, Double>> holdVar;
+    Map<Point2D.Double, Double> holdTime;
     Map.Entry<String, TreeMap<Double, double[][]>> varEntry;
     Map.Entry<Double, double[][]> timeEntry;
     Iterator<Map.Entry<Double, double[][]>> iT;
@@ -236,21 +236,22 @@ public class MatrixRepository implements DataRepository
     String varName;
     Double timeName;
     double currXL, currYL;
-
-    toReturn.put("time", new TreeMap<String, TreeMap<Point2D.Double, Double>>());
-    holdVar = toReturn.get("time");
-    holdVar.put("0", new TreeMap<Point2D.Double, Double>());
+    
+    toReturn.put("weight", new LinkedHashMap<String, Map<Point2D.Double, Double>>());
+    holdVar = toReturn.get("weight");
+    holdVar.put("0", new LinkedHashMap<Point2D.Double, Double>());
     holdTime = holdVar.get("0");
     currXL = xL;
-    for(int x = X; x < (X+weights[0].length); x++)
+    for(int x = 0; x < (weights[0].length); x++)
     {
-      currYL = yL;
-      for(int y = Y; y > (Y-weights.length); y--)
+      currYL = (yL-res);
+      for(int y = (weights.length-1); y >= 0; y--)
       {
-        if(weights[x][y] > 0)
+        if(weights[(y)][(x)] > 0)
         {
           //add weight
-          holdTime.put(new Point2D.Double(currXL, currYL), weights[x][y]);
+          Point2D.Double hold = new Point2D.Double(currXL, currYL);
+          holdTime.put(hold, Double.valueOf(weights[(y)][(x)]));
         }
         currYL -= res;
       }
@@ -261,29 +262,29 @@ public class MatrixRepository implements DataRepository
     {
       varEntry = iV.next();
       varName = varEntry.getKey();
-      toReturn.put(varName, new TreeMap<String, TreeMap<Point2D.Double, Double>>());
+      toReturn.put(varName, new LinkedHashMap<String, Map<Point2D.Double, Double>>());
       holdVar = toReturn.get(varName);
       iT = varEntry.getValue().entrySet().iterator();
       while(iT.hasNext())
       {
         timeEntry = iT.next();
         timeName = timeEntry.getKey();
-        holdVar.put(timeName.toString(), new TreeMap<Point2D.Double, Double>());
+        holdVar.put(timeName.toString(), new LinkedHashMap<Point2D.Double, Double>());
         holdTime = holdVar.get(timeName.toString());
         
         changeLayer(varName, timeName);
         
         currXL = xL;
-        for(int x = X; x < (X+weights[0].length); x++)
+        for(int x = 0; x < (weights[0].length); x++)
         {
-          currYL = yL;
-          for(int y = Y; y > (Y-weights.length); y--)
+          currYL = (yL-res);
+          for(int y = (weights.length-1); y >= 0; y--)
           {
-            if(weights[x][y] > 0)
+            if(weights[(y)][(x)] > 0)
             {
               //get this point's value
               //add it to toReturn
-              holdTime.put(new Point2D.Double(currXL, currYL), (currLayer[x][y]));
+              holdTime.put(new Point2D.Double(currXL, currYL), (currLayer[x+X][Y-((weights.length-1)-y)]));
             }
             currYL -= res;
           }

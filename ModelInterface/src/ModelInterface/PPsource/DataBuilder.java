@@ -255,7 +255,21 @@ public class DataBuilder
         addNASAData(currFile);
       } else if(currFile.getAttributeValue("type").equals("netcdf"))
       {
-        addNetCDFData(currFile);
+        Element stor = currFile.getChild("storage");
+        if(stor != null)
+        {
+          if(stor.getAttributeValue("type").equals("values"))
+          { //we are just storing the values in the shapefile normally
+            addNetCDFData(currFile);
+          } else
+          { //the values are enumerated types, each gets its own variable
+            //values are the percent coverage for each block
+            addNetCDFEnum(currFile);
+          }
+        } else
+        {
+          addNetCDFData(currFile);
+        }
       } else if(currFile.getAttributeValue("type").equals("pointShapefile"))
       {
         Element stor = currFile.getChild("storage");
@@ -351,14 +365,18 @@ public class DataBuilder
   {
     //for each region in 'regionList' use the mask in 'maskList' to get data out of
     //'dataStruct' using the extractMask function, store this information in printList
-    TreeMap holdToPrint;
+    Map holdToPrint;
     String rName;
     Iterator it = regionList.iterator();
     while(it.hasNext())
     {
       rName = (String)it.next();
+      //System.out.println("filling "+rName);
       holdToPrint = dataStruct.extractMask((RegionMask)maskList.get(rName));
-      printList.put(rName, holdToPrint);
+      if(holdToPrint != null)
+      {
+        printList.put(rName, holdToPrint);
+      }
     }
     //guess what, the treeMap's in printList are really just a region without a wrapper
     //congratulations the actual work of the proprocess stage is done once this works
@@ -383,7 +401,7 @@ public class DataBuilder
     /*
      * this function now writes its output to an xml file rather than a txt file so that it can more easily be read later
      */
-    TreeMap holdToPrint;
+    Map holdToPrint;
     String rName, holder;
     Iterator itName, itVar, itTime, itData;
     int msizeX, msizeY;
@@ -421,75 +439,80 @@ public class DataBuilder
       while(itName.hasNext())
       {
         rName = (String)itName.next();
-        holdToPrint = (TreeMap)printList.get(rName);
-        if(!holdToPrint.isEmpty())
+        holdToPrint = (Map)printList.get(rName);
+        if(holdToPrint != null)
         {
-        //BEGIN WRITING OF SPECIFIC REGION DATA
-          //calculating normalized bounds of region
-          work = ((RegionMask)maskList.get(rName)).x+((RegionMask)maskList.get(rName)).width;
-          holdMX = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
-          work = ((RegionMask)maskList.get(rName)).y+((RegionMask)maskList.get(rName)).height;
-          holdMY = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
-          normX = Math.floor(((RegionMask)maskList.get(rName)).x/dataStruct.getResolution())*dataStruct.getResolution();
-          normY = Math.floor(((RegionMask)maskList.get(rName)).y/dataStruct.getResolution())*dataStruct.getResolution();
-          normW = holdMX-normX;
-          normH = holdMY-normY;
-          msizeY = (int)Math.ceil(normH/dataStruct.getResolution());
-          msizeX = (int)Math.ceil(normW/dataStruct.getResolution());
-          //printing regionName x y matrixHeight matrixWidth
-          holder = "<region  name=\""+rName+"\" x=\""+normX+"\" y=\""+normY+"\" sizeY=\"";
-          holder += (msizeY)+"\" sizeX=\""+(msizeX)+"\">";
-          rWriter.write("\t"+holder);
-          rWriter.newLine();
-          //iterate through variables
-          itVar = holdToPrint.entrySet().iterator();
-          while(itVar.hasNext())
+          if(!holdToPrint.isEmpty())
           {
-            var = (Map.Entry)itVar.next();
-            if(var.getKey() == "weight")
-            { //weight is output not as a regular variable
-              holder = "<weight>";
-            } else
-            { //normal case
-              holder = "<variable value=\""+var.getKey()+"\">";
-            }
-            rWriter.write("\t\t"+holder);
+          //BEGIN WRITING OF SPECIFIC REGION DATA
+            //calculating normalized bounds of region
+            work = ((RegionMask)maskList.get(rName)).x+((RegionMask)maskList.get(rName)).width;
+            holdMX = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
+            work = ((RegionMask)maskList.get(rName)).y+((RegionMask)maskList.get(rName)).height;
+            holdMY = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
+            normX = Math.floor(((RegionMask)maskList.get(rName)).x/dataStruct.getResolution())*dataStruct.getResolution();
+            normY = Math.floor(((RegionMask)maskList.get(rName)).y/dataStruct.getResolution())*dataStruct.getResolution();
+            normW = holdMX-normX;
+            normH = holdMY-normY;
+            msizeY = (int)Math.ceil(normH/dataStruct.getResolution());
+            msizeX = (int)Math.ceil(normW/dataStruct.getResolution());
+            //printing regionName x y matrixHeight matrixWidth
+            holder = "<region  name=\""+rName+"\" x=\""+normX+"\" y=\""+normY+"\" sizeY=\"";
+            holder += (msizeY)+"\" sizeX=\""+(msizeX)+"\">";
+            rWriter.write("\t"+holder);
             rWriter.newLine();
-            //iterate through times
-            itTime = ((TreeMap)var.getValue()).entrySet().iterator();
-            while(itTime.hasNext())
+            //iterate through variables
+            itVar = holdToPrint.entrySet().iterator();
+            while(itVar.hasNext())
             {
-              time = (Map.Entry)itTime.next();
-              holder = "<time value=\""+time.getKey()+"\">";
-              rWriter.write("\t\t\t"+holder);
-              rWriter.newLine();
-              //iterate through data, print in array style
-              itData = ((TreeMap)time.getValue()).entrySet().iterator();
-              while(itData.hasNext())
-              {
-                data = (Map.Entry)itData.next();
-                //prints yIndex xIndex dataValue
-                holder = "<data y=\""
-                    +(Math.abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution())));
-                holder += "\" x=\""+(int)((((Point2D.Double)data.getKey()).x-normX)/dataStruct.getResolution())
-                    +"\" value=\"";
-                holder += data.getValue()+"\" />";
-                rWriter.write("\t\t\t\t"+holder);
-                rWriter.newLine();
+              var = (Map.Entry)itVar.next();
+              if(var.getKey() == "weight")
+              { //weight is output not as a regular variable
+                holder = "<weight>";
+              } else
+              { //normal case
+                holder = "<variable value=\""+var.getKey()+"\">";
               }
-              rWriter.write("\t\t\t</time>\n");
-              rWriter.flush();
+              rWriter.write("\t\t"+holder);
+              rWriter.newLine();
+              //iterate through times
+              itTime = ((Map)var.getValue()).entrySet().iterator();
+              while(itTime.hasNext())
+              {
+                time = (Map.Entry)itTime.next();
+                holder = "<time value=\""+time.getKey()+"\">";
+                rWriter.write("\t\t\t"+holder);
+                rWriter.newLine();
+                //iterate through data, print in array style
+                itData = ((Map)time.getValue()).entrySet().iterator();
+                while(itData.hasNext())
+                {
+                  data = (Map.Entry)itData.next();
+                  //prints yIndex xIndex dataValue
+                  holder = "<data y=\""
+                      +(Math.abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution())));
+                  holder += "\" x=\""+(int)((((Point2D.Double)data.getKey()).x-normX)/dataStruct.getResolution())
+                      +"\" value=\"";
+                  //holder = "<data y=\""+(int)((Point2D.Double)data.getKey()).y;
+                  //holder += "\" x=\""+(int)((Point2D.Double)data.getKey()).x+"\" value=\"";
+                  holder += data.getValue()+"\" />";
+                  rWriter.write("\t\t\t\t"+holder);
+                  rWriter.newLine();
+                }
+                rWriter.write("\t\t\t</time>\n");
+                rWriter.flush();
+              }
+              if(var.getKey() == "weight")
+              { //weight is output not as a regular variable
+                rWriter.write("\t\t</weight>\n");
+              } else
+              { //normal case
+                rWriter.write("\t\t</variable>\n");
+              }  
             }
-            if(var.getKey() == "weight")
-            { //weight is output not as a regular variable
-              rWriter.write("\t\t</weight>\n");
-            } else
-            { //normal case
-              rWriter.write("\t\t</variable>\n");
-            }  
+            rWriter.write("\t</region>\n");
+            //END WRITING REGION
           }
-          rWriter.write("\t</region>\n");
-          //END WRITING REGION
         }
       }
     //END WRITING LOOP
@@ -1378,9 +1401,23 @@ public class DataBuilder
         for(double x = -180; x < 180; x+=res)
         {
         	//System.out.println("getting "+ma2Array.getFloat(in.set(0, 0, i, k)));
-          if(ma2Array.getFloat(in.set(0, 0, i, k)) != NaN)
+          if(ma2Array.getRank() == 2)
+          {
+            dataValue = new Double((double)ma2Array.getFloat(in.set(i, k)));
+          } else if(ma2Array.getRank() == 3)
+          {
+            dataValue = new Double((double)ma2Array.getFloat(in.set(0, i, k)));
+          } else if(ma2Array.getRank() == 4)
           {
             dataValue = new Double((double)ma2Array.getFloat(in.set(0, 0, i, k)));
+          } else
+          {
+            log.log(Level.SEVERE, "Array rank of "+ma2Array.getRank()+" not supported.");
+            return;
+          }
+          
+          if(dataValue != NaN)
+          {
             toAdd = new DataBlock(x, y, res, res);
             timeValue = new TreeMap();
             timeValue.put(new Double(time), dataValue);
@@ -1845,6 +1882,235 @@ public class DataBuilder
     log.log(Level.FINE, "Done adding new PolyShapefileData");
   }
 
+  private void addNetCDFEnum(Element currFile)
+  { /* function will add the data from the specified file of type 'netcdf'
+     * 'netcdf'- defined as a .nc file associated with the NetCDF standard. Data
+     * can be at any resolution and appears in a matrix of values and NaN's. 
+     */
+    log.log(Level.FINER, "begin function");
+    
+    boolean avg = true;
+    String dataName = "shutup,";
+    String fileName = "it is initialized thanks";
+    String dataVar = "farea"; //what variable in the NetCDF file to get data from
+    String nameConvention = "natural";
+    String target = "null";
+    String prefix = "";
+    String ref = null;
+    String unit = null;
+    double time = 0;
+    double res = 1;
+    HashMap nameMap = null;
+    List infoChildren;
+    Element currElem;
+    TreeMap timeValue;
+    Double dataValue;
+    DataBlock toAdd;
+    TreeMap<String, Boolean> overwrite = new TreeMap<String, Boolean>();
+    
+    
+  //getting file info from XML
+    infoChildren = currFile.getChildren();
+    for(int i = 0; i < infoChildren.size(); i++)
+    {
+      currElem = (Element)infoChildren.get(i);
+      if(currElem.getName().equals("data"))
+      {
+        nameConvention = currElem.getAttributeValue("type");
+        if(nameConvention != null)
+        {
+          if(nameConvention.equals("prefix"))
+          {//names are a prefix concatedated with the value
+            Element preElem = currElem.getChild("prefix");
+            prefix = preElem.getAttributeValue("value");
+          } else if(nameConvention.equals("manual"))
+          {//each value has a mapping to a name to use
+            nameMap = new HashMap();
+            List mapList = currElem.getChildren("map");
+            Element currMap;
+            
+            for(int k = 0; k < mapList.size(); k++)
+            {
+              currMap = (Element)mapList.get(k);
+              nameMap.put(currMap.getAttributeValue("key"), currMap.getAttributeValue("name"));
+            }
+            
+            if(!nameMap.containsKey("null"))
+            {
+              nameMap.put("null", null);
+            }
+          } //else use natual naming
+        } else
+        { //everything goes in one!
+          nameConvention = "single";
+          dataName = currElem.getAttributeValue("value");
+        }
+      } else if(currElem.getName().equals("date"))
+      {
+        time = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("res"))
+      {
+        res = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("average"))
+      {
+        avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
+      } else if(currElem.getName().equals("reference"))
+      {
+        ref = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("units"))
+      {
+        unit = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("variable"))
+      {
+        dataVar = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("name"))
+      {
+        fileName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("storage"))
+      {
+        //do nothing but this is a known tag
+      } else
+      {
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
+      }
+      
+    }
+  //done reading from XML file
+    
+
+    if(!init)
+    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+      dataStruct.fillWorld(res);
+      init = true;
+    }
+    
+  //reading the data from the file
+    try 
+    {
+      NetcdfFile nc = NetcdfFile.open(fileName);
+      /* Read a variable named *readin* from the file, it contains the masks */
+      Variable data = nc.findVariable(dataVar);
+      Array ma2Array = data.read();
+      
+      Index in = ma2Array.getIndex();
+      //System.out.println("***RANK: "+ma2Array.getRank());
+
+      int i = 0;
+      int k = 0;
+      float NaN = data.findAttribute("missing_value").getNumericValue().floatValue();
+
+      for(double y = (90-res); y >= -90; y-=res)
+      {
+        k=0;
+        for(double x = -180; x < 180; x+=res)
+        {
+          if(ma2Array.getRank() == 2)
+          {
+            dataValue = new Double((double)ma2Array.getFloat(in.set(i, k)));
+          } else if(ma2Array.getRank() == 3)
+          {
+            dataValue = new Double((double)ma2Array.getFloat(in.set(0, i, k)));
+          } else if(ma2Array.getRank() == 4)
+          {
+            dataValue = new Double((double)ma2Array.getFloat(in.set(0, 0, i, k)));
+          } else
+          {
+            log.log(Level.SEVERE, "Array rank of "+ma2Array.getRank()+" not supported.");
+            return;
+          }
+          
+          if(dataValue != NaN)
+          {
+            
+            if(nameConvention.equals("single"))
+            {
+              target = dataName;
+            } else
+            {
+              target = dataValue.toString();
+
+              if(nameConvention.equals("manual"))
+              {
+
+                target = (String)nameMap.get(target);
+              } else if(nameConvention.equals("prefix"))
+              {
+                target = prefix+target;
+              }
+            } //target now has the data name we are storing this geometry in
+            
+            if(!overwrite.containsKey(target))
+            { //this is the first run, check for overwrite properties now
+              boolean over = false;
+              if(dataAvg.containsKey(target))
+              {
+                over = true;
+              }
+              overwrite.put(target, over);
+            }
+            
+            if(!overwrite.get(target))
+            {
+              //setting whether contained data is additive or averaged
+              if(!dataAvg.containsKey(target))
+              { //i cant believe this is the only way to do this
+                //its going to take forever to test every run
+                dataAvg.put(target, new Boolean(avg));
+                if(ref != null)
+                {
+                  dataRef.put(target, ref);
+                }
+              }
+              //done settign avg/add ref and units
+            }
+            
+            toAdd = new DataBlock(x, y, res, res);
+            timeValue = new TreeMap();
+            timeValue.put(new Double(time), new Double(1));
+
+            //check overwrite bit, if so, use hold instead of dataName
+            if(overwrite.get(target))
+            {
+              //just replace name with hold, later, we will merge hold over old data
+              toAdd.data.put(("hold"+target), timeValue);
+            } else
+            {
+              //add data as normal
+              toAdd.data.put(target, timeValue);
+            }
+
+          //merging this data into the current tree
+            //System.out.println("sending "+dataValue);
+            dataStruct.addData(toAdd, avg);
+          }
+          //else this value SUCKS!!!!
+          
+          k++;
+        }
+        i++;
+      }
+      
+      //done adding all data, if overwrite, must merge with old data now
+      Map.Entry me;
+      Iterator overIt = overwrite.entrySet().iterator();
+      while(overIt.hasNext())
+      {
+        me = (Map.Entry)overIt.next();
+        if((Boolean)me.getValue())
+        {
+          //then this particular 'target' was overwritten
+          dataStruct.resolveOverwrite(("hold"+(String)me.getKey()), (String)me.getKey());
+        }
+      }
+      
+    } catch (java.io.IOException e) {
+      log.log(Level.SEVERE, "Error reading NetCDF file -> "+fileName);
+      System.exit(1);
+    }
+  //done reading data from file
+    
+  }
+  
   private void addPointShapeFileEnum(Element currFile)
   {
     log.log(Level.FINER, "begin function");
@@ -2919,7 +3185,7 @@ public class DataBuilder
     List infoList;
     Element currInfo;
     RegionMask holdR;
-    TreeMap newRegions = new TreeMap();
+    TreeMap<String, RegionMask> newRegions = new TreeMap<String, RegionMask>();
     
   //getting file info from XML file
     infoList = currFile.getChildren();

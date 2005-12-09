@@ -1839,7 +1839,7 @@ public class ManipulationDriver
       VDest.printVerbose(out);
     } catch(IOException e)
     {
-      log.log(Level.SEVERE, "IOException in -> printCommand (System.out)");
+      log.log(Level.SEVERE, "IOException in -> freqAnalysisCommand on write");
     }
   }
   /**
@@ -2487,7 +2487,89 @@ public class ManipulationDriver
    */
   private void zoneCombineCommand(Element command)
   {
-    //TODO
+    log.log(Level.FINER, "begin function");
+    BufferedWriter out = new BufferedWriter(new ConsoleWriter(Console.getConsole("Default Out")));
+    List areas, contents;
+    Element currA, currC;
+    Element currInfo;
+    Variable varArea, varContent, varMask;
+    double sum, total = 0;
+    boolean avg;
+    
+    currInfo = command.getChild("areas");
+    areas = currInfo.getChildren();
+    currInfo = command.getChild("content");
+    contents = currInfo.getChildren();
+    currInfo = command.getChild("average");
+    avg = (Boolean.valueOf(currInfo.getAttributeValue("value"))).booleanValue();
+    
+    varMask = null;
+    
+    try
+    {
+      out.write("Combine Command Output");
+      out.newLine();
+      out.write("\t");
+      out.flush();
+      for(int c = 0; c < contents.size(); c++)
+      {
+        currC = (Element)contents.get(c);
+        out.write(currC.getAttributeValue("name")+" ");
+      }
+      out.newLine();
+      out.flush();
+      
+      for(int a = 0; a < areas.size(); a++)
+      {
+        currA = (Element)areas.get(a);
+        if(!variableList.containsKey(currA.getAttributeValue("name")))
+        {
+          out.write(currA.getAttributeValue("name")+" did not exist");
+          out.newLine();
+          return;
+        }
+        varArea = (Variable)variableList.get(currA.getAttributeValue("name"));
+        out.write(currA.getAttributeValue("name")+" ");
+        
+        if(a == 0)
+        { //need these set at some point
+          varMask = varArea.getShape("holdMask");
+          total = ComponentManipulator.sumRegionArea(varArea.getData())[0].data[0][0];
+        }
+        
+        for(int c = 0; c < contents.size(); c++)
+        {
+          currC = (Element)contents.get(c);
+          if(!variableList.containsKey(currC.getAttributeValue("name")))
+          {
+            out.write(currC.getAttributeValue("name")+" did not exist");
+            out.newLine();
+            return;
+          }
+          varContent = (Variable)variableList.get(currC.getAttributeValue("name"));
+          
+          //maskRemain weighted
+          varMask.setData(ComponentManipulator.maskRemainWeight(varContent.getData(), varArea.getData(), 0));
+          
+          //sumarea on remainder
+          sum = ComponentManipulator.sumArea(varMask.getData())[0].data[0][0];
+          
+          if(avg)
+          {
+            sum /= total;
+          }
+          
+          out.write(sum+" ");
+        }
+        out.newLine();
+        out.flush();
+      }
+      out.newLine();
+      out.close();
+    } catch(IOException e)
+    {
+      log.log(Level.SEVERE, "IOException in -> zoneCombineCommand on write");
+    }
   }
   
 //*****************************************************************************

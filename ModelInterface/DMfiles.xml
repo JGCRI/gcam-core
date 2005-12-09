@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <files>
-	<data file="outIrradiance.xml" />
+	<data file="outLandUse.xml" />
 	<region file="regionDef.xml" />
-	<command file="commIrradiance.xml" />
+	<command file="commLandUse.xml" />
 	<log level="ALL" />
 </files>

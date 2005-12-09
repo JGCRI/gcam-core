@@ -134,7 +134,7 @@ public class FlatIndex implements DataIndex
     data.mergeHoldTo(holdName, varName);
   }
 
-  public TreeMap extractMask(RegionMask m)
+  public Map extractMask(RegionMask m)
   {
     Point2D.Double min, max;
     double[][] toMask;
@@ -145,6 +145,14 @@ public class FlatIndex implements DataIndex
     min = point2index(new Point2D.Double(m.x, m.y), true);
     max = point2index(new Point2D.Double((m.x+m.width+m.resolution), (m.y+m.height+m.resolution)), false);
     
+    //System.out.println("\n"+m.name);
+    //System.out.println("min X: "+(m.x)+" Y: "+(m.y));
+    //System.out.println("size X: "+(m.width)+" Y: "+(m.height));
+    //System.out.println("matrix X: "+(max.y-min.y)+" Y: "+(max.x-min.x));
+    if(((max.y-min.y) <= 0)||((max.x-min.x) <= 0))
+    {
+      return null;
+    }
     toMask = new double[(int)(max.y-min.y)][(int)(max.x-min.x)];
     
     //X, and Y are now indicies
@@ -155,7 +163,7 @@ public class FlatIndex implements DataIndex
       {
         entry = index2area(new Point2D.Double(X, Y));
         weight = m.inRegion(entry.x, entry.y, entry.width, entry.height);
-        toMask[Y][X] = weight;
+        toMask[(Y-(int)min.y)][(X-(int)min.x)] = weight;
       }
     }
     
@@ -196,8 +204,8 @@ public class FlatIndex implements DataIndex
     init = true;
     //TODO maybe add an auto chooser based on resolution?
     //need to make disklayer faster first
-    data = new DiskLayerRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
-    //data = new MatrixRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
+    //data = new DiskLayerRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
+    data = new MatrixRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
   }
   
   private Point2D.Double point2index(Point2D.Double p, boolean down)
