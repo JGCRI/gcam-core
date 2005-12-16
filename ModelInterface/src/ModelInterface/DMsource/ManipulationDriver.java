@@ -35,6 +35,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jdom.*;
+import org.jdom.filter.ContentFilter;
 import org.jdom.input.*;
 
 
@@ -2405,6 +2406,92 @@ public class ManipulationDriver
    */
   private void forEachSubregionCommand(Element command)
   {
+    log.log(Level.FINER, "begin function");
+    
+    Element currInfo, currReplace;
+    Element addElem;
+    Element originalCom, copyCom, extCom;
+    List<String> regionNames = new ArrayList<String>();
+    List<Element> replaceElements = new ArrayList<Element>();
+    Iterator attIt;
+    String currName;
+    
+    //list of regions
+    regionNames.add("USA");
+    regionNames.add("Canada");
+    regionNames.add("OECD90 Europe");
+    regionNames.add("Japan");
+    regionNames.add("Aus and NZ");
+    regionNames.add("FSU");
+    regionNames.add("China/CPA");
+    regionNames.add("Middle East");
+    regionNames.add("Africa");
+    regionNames.add("Latin America");
+    regionNames.add("S and E Asia");
+    regionNames.add("Eastern Europe");
+    regionNames.add("Korea");
+    regionNames.add("India");
+    
+    //original command
+    currInfo = command.getChild("command");
+    originalCom = (Element)(currInfo.getChildren().get(0)); //getting the first (and only child)
+    copyCom = (Element)originalCom.clone();
+    
+    //get all tags which need extraction
+    attIt = copyCom.getDescendants(new ContentFilter(ContentFilter.ELEMENT));
+    while(attIt.hasNext())
+    {
+      currInfo = (Element)attIt.next();
+      currName = currInfo.getAttributeValue("replace");
+      if((currName != null))
+      {
+        replaceElements.add(currInfo);
+      }
+    }
+    
+    //for each region
+    for(int r = 0; r < regionNames.size(); r++)
+    {
+      //set all name tags to extractions
+      for(int e = 0; e < replaceElements.size(); e++)
+      {
+        currReplace = replaceElements.get(e);
+        currName = currReplace.getAttributeValue("replace");
+        
+        //extract region from each tag
+        extCom = new Element("extractSubRegion");
+        addElem = new Element("target");
+        addElem.setAttribute("name", currName+regionNames.get(r));
+        extCom.addContent(addElem);
+        addElem = new Element("source");
+        addElem.setAttribute("name", currName);
+        extCom.addContent(addElem);
+        addElem = new Element("shape");
+        addElem.setAttribute("value", regionNames.get(r));
+        extCom.addContent(addElem);
+        
+        //run extract command
+        runCommand(extCom);
+        
+        //add new name tag
+        currReplace.setAttribute("name", currName+regionNames.get(r));
+      }
+      //run created command
+      runCommand(copyCom);
+      //removing all the extract variables
+      for(int e = 0; e < replaceElements.size(); e++)
+      {
+        currReplace = replaceElements.get(e);
+        currName = currReplace.getAttributeValue("name");
+        
+        //delete variable with this name
+        variableList.remove(currName);
+      }
+    }
+  }
+  /*
+  private void forEachSubregionCommand(Element command)
+  {
     //get variable
     //get list of regions
     //for each region
@@ -2478,6 +2565,7 @@ public class ManipulationDriver
       runCommand(subCom);
     }
   }
+  */
   /**
    * Takes two lists of regions or productions and combines them into a
    * table of values. One list is defined as regions and one as the content
@@ -2825,14 +2913,14 @@ public class ManipulationDriver
       cDocument = builder.build(cSource);
     } catch(FileNotFoundException e)
     {
-      log.log(Level.SEVERE, "FileNotFound! oh noes! in -> makeStreams");
+      log.log(Level.SEVERE, "FileNotFound! in -> makeStreams");
     } catch(JDOMException e)
     {
-      log.log(Level.SEVERE, "JDOM Exception! grarrrr! in -> makeStreams");
+      log.log(Level.SEVERE, "JDOM Exception! in -> makeStreams");
     }
     catch(IOException e)
     {
-      log.log(Level.SEVERE, "IOException! for shame! in -> makeStreams");
+      log.log(Level.SEVERE, "IOException! in -> makeStreams");
     }
   }
   /**

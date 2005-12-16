@@ -577,7 +577,7 @@ public class DataBuilder
     Element currReg, currVar;
     Element toAdd, toChild, toChild2;
     String rName, vName, tName;
-    TreeMap holdToPrint;
+    Map holdToPrint;
     
 //adding to variableInfo*******************************************************
     currElem = root.getChild("variableInfo");
@@ -622,110 +622,112 @@ public class DataBuilder
     while(itName.hasNext())
     {
       rName = (String)itName.next();
-      holdToPrint = (TreeMap)printList.get(rName);
+      holdToPrint = (LinkedHashMap)printList.get(rName);
       currReg = attributeInChild(root, "name", rName); //getting region node in currReg
-      
-      if(!holdToPrint.isEmpty())
+      if(holdToPrint != null)
       {
-        //BEGIN ADDING OF SPECIFIC REGION DATA
-        //calculating normalized bounds of region
-        work = ((RegionMask)maskList.get(rName)).x
-            +((RegionMask)maskList.get(rName)).width;
-        //holdMX = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
-        work = ((RegionMask)maskList.get(rName)).y
-            +((RegionMask)maskList.get(rName)).height;
-        holdMY = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
-        normX = Math.floor(((RegionMask)maskList.get(rName)).x/dataStruct.getResolution())
-            *dataStruct.getResolution();
-        normY = Math.floor(((RegionMask)maskList.get(rName)).y/dataStruct.getResolution())
-            *dataStruct.getResolution();
-        //normW = holdMX-normX;
-        normH = holdMY-normY;
-        //msizeY = (int)Math.ceil(normH/dataStruct.getResolution());
-        //msizeX = (int)Math.ceil(normW/dataStruct.getResolution());
-
-        //iterate through variables
-        itVar = holdToPrint.entrySet().iterator();
-        while(itVar.hasNext())
+        if(!holdToPrint.isEmpty())
         {
-          var = (Map.Entry)itVar.next();
-          vName = (String)var.getKey();
-          if(vName!="weight")
-          { //we never want to add anything to the weight variable if it already exists
-            //test to see if variable already exists in this region
-            currVar = attributeInChild(currReg, "value", vName);
-            if(currVar==null)
-            { //there is no entry for this variable (field) create one and add
-              // the time
-              toAdd = new Element("variable");
-              toAdd.setAttribute("value", vName);
+          //BEGIN ADDING OF SPECIFIC REGION DATA
+          //calculating normalized bounds of region
+          work = ((RegionMask)maskList.get(rName)).x
+              +((RegionMask)maskList.get(rName)).width;
+          //holdMX = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
+          work = ((RegionMask)maskList.get(rName)).y
+              +((RegionMask)maskList.get(rName)).height;
+          holdMY = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
+          normX = Math.floor(((RegionMask)maskList.get(rName)).x/dataStruct.getResolution())
+              *dataStruct.getResolution();
+          normY = Math.floor(((RegionMask)maskList.get(rName)).y/dataStruct.getResolution())
+              *dataStruct.getResolution();
+          //normW = holdMX-normX;
+          normH = holdMY-normY;
+          //msizeY = (int)Math.ceil(normH/dataStruct.getResolution());
+          //msizeX = (int)Math.ceil(normW/dataStruct.getResolution());
 
-              //iterating through times
-              itTime = ((TreeMap)var.getValue()).entrySet().iterator();
-              while(itTime.hasNext())
-              {
-                time = (Map.Entry)itTime.next();
-                tName = ((Double)time.getKey()).toString();
-                toChild = new Element("time");
-                toChild.setAttribute("value", tName);
+          //iterate through variables
+          itVar = holdToPrint.entrySet().iterator();
+          while(itVar.hasNext())
+          {
+            var = (Map.Entry)itVar.next();
+            vName = (String)var.getKey();
+            if(vName!="weight")
+            { //we never want to add anything to the weight variable if it already exists
+              //test to see if variable already exists in this region
+              currVar = attributeInChild(currReg, "value", vName);
+              if(currVar==null)
+              { //there is no entry for this variable (field) create one and add
+                // the time
+                toAdd = new Element("variable");
+                toAdd.setAttribute("value", vName);
 
-                //iterate through data, print in array style
-                itData = ((TreeMap)time.getValue()).entrySet().iterator();
-                while(itData.hasNext())
+                //iterating through times
+                itTime = ((LinkedHashMap)var.getValue()).entrySet().iterator();
+                while(itTime.hasNext())
                 {
-                  data = (Map.Entry)itData.next();
-                  toChild2 = new Element("data");
-                  toChild2.setAttribute("y",String.valueOf(Math
-                      .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
-                  toChild2.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
-                      .getKey()).x-normX)/dataStruct.getResolution())));
-                  toChild2.setAttribute("value", ((Double)data.getValue()).toString());
-                  //adding the created data to this time
-                  toChild.addContent(toChild2);
-                }
-                //adding the created time to this variable
-                toAdd.addContent(toChild);
-              }
-              //adding the created variable to this region
-              currReg.addContent(toAdd);
-            } else
-            { //this variable already exists, add the time to it
-              //iterating through times
-              itTime = ((TreeMap)var.getValue()).entrySet().iterator();
-              while(itTime.hasNext())
-              {
-                time = (Map.Entry)itTime.next();
-                tName = ((Double)time.getKey()).toString();
-                if(attributeInChild(currVar, "value", tName) == null)
-                {
-                  toAdd = new Element("time");
-                  toAdd.setAttribute("value", tName);
+                  time = (Map.Entry)itTime.next();
+                  tName = ((String)time.getKey());
+                  toChild = new Element("time");
+                  toChild.setAttribute("value", tName);
 
                   //iterate through data, print in array style
-                  itData = ((TreeMap)time.getValue()).entrySet().iterator();
+                  itData = ((LinkedHashMap)time.getValue()).entrySet().iterator();
                   while(itData.hasNext())
                   {
                     data = (Map.Entry)itData.next();
-                    toChild = new Element("data");
-                    toChild.setAttribute("y",String.valueOf(Math
+                    toChild2 = new Element("data");
+                    toChild2.setAttribute("y",String.valueOf(Math
                         .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
-                    toChild.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
+                    toChild2.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
                         .getKey()).x-normX)/dataStruct.getResolution())));
-                    toChild.setAttribute("value", ((Double)data.getValue()).toString());
+                    toChild2.setAttribute("value", ((Double)data.getValue()).toString());
                     //adding the created data to this time
-                    toAdd.addContent(toChild);
+                    toChild.addContent(toChild2);
                   }
                   //adding the created time to this variable
-                  currVar.addContent(toAdd);
-                } else
-                { //this time already exists! trying to add a data set which is already present!!!
-                  log.log(Level.WARNING, "Attempted to add a data set which already existed -> "+vName+" at "+tName);
+                  toAdd.addContent(toChild);
+                }
+                //adding the created variable to this region
+                currReg.addContent(toAdd);
+              } else
+              { //this variable already exists, add the time to it
+                //iterating through times
+                itTime = ((LinkedHashMap)var.getValue()).entrySet().iterator();
+                while(itTime.hasNext())
+                {
+                  time = (Map.Entry)itTime.next();
+                  tName = ((Double)time.getKey()).toString();
+                  if(attributeInChild(currVar, "value", tName) == null)
+                  {
+                    toAdd = new Element("time");
+                    toAdd.setAttribute("value", tName);
+
+                    //iterate through data, print in array style
+                    itData = ((LinkedHashMap)time.getValue()).entrySet().iterator();
+                    while(itData.hasNext())
+                    {
+                      data = (Map.Entry)itData.next();
+                      toChild = new Element("data");
+                      toChild.setAttribute("y",String.valueOf(Math
+                          .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
+                      toChild.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
+                          .getKey()).x-normX)/dataStruct.getResolution())));
+                      toChild.setAttribute("value", ((Double)data.getValue()).toString());
+                      //adding the created data to this time
+                      toAdd.addContent(toChild);
+                    }
+                    //adding the created time to this variable
+                    currVar.addContent(toAdd);
+                  } else
+                  { //this time already exists! trying to add a data set which is already present!!!
+                    log.log(Level.WARNING, "Attempted to add a data set which already existed -> "+vName+" at "+tName);
+                  }
                 }
               }
             }
-          }
-        }//END VARIABLE ITERATE
-      }//END WRITING REGION
+          }//END VARIABLE ITERATE
+        }//END WRITING REGION
+      }
     }
 //done adding all data to regions**********************************************
   }
@@ -3348,13 +3350,13 @@ public class DataBuilder
       rDocument = builder.build(rSource);
     } catch(FileNotFoundException e)
     {
-      log.log(Level.SEVERE, "FileNotFound! oh noes! in -> makeStreams");
+      log.log(Level.SEVERE, "FileNotFound! in -> makeStreams : "+e.getMessage());
     } catch(IOException e)
     {
-      log.log(Level.SEVERE, "IOException encountered! oh noes! in -> makeStreams");
+      log.log(Level.SEVERE, "IOException encountered! in -> makeStreams : "+e.getMessage());
     } catch(JDOMException e)
     {
-      log.log(Level.SEVERE, "JDOM Exception! grarrrr! in -> makeStreams");
+      log.log(Level.SEVERE, "JDOM Exception! in -> makeStreams : "+e.getMessage());
     }
   }
   private String readWord(BufferedReader input)

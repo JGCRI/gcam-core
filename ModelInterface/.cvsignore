@@ -30,3 +30,5 @@ outIrradiance.xml
 ca_50mwind.shp.xml
 cawind50m.jpg
 *.lay
+10yr_ret_dnr_direct
+out*.xml

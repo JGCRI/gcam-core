@@ -79,7 +79,7 @@ public class Main
       log.setUseParentHandlers(false);
       
       cHand = new ConsoleHandler();
-      cHand.setLevel(Level.WARNING);
+      cHand.setLevel(Level.WARNING); //TODO WARNING usually ALL or FINER for tracing
       log.addHandler(cHand);
       fHand = new FileHandler("DMLog.log");
       fHand.setLevel(Level.ALL);

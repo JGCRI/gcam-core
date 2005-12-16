@@ -105,31 +105,35 @@
 	<plot variable="Crops" />
 	<plot variable="Pasture" />
 	
-	<zoneCombine>
-		<areas>
-			<zone name="GAEZ1" />
-			<zone name="GAEZ2" />
-			<zone name="GAEZ3" />
-			<zone name="GAEZ4" />
-			<zone name="GAEZ5" />
-			<zone name="GAEZ6" />
-			<zone name="GAEZ7" />
-			<zone name="GAEZ8" />
-			<zone name="GAEZ9" />
-			<zone name="GAEZ10" />
-			<zone name="GAEZ11" />
-			<zone name="GAEZ12" />
-			<zone name="GAEZ13" />
-			<zone name="GAEZ14" />
-			<zone name="GAEZ15" />
-			<zone name="GAEZ16" />
-			<zone name="GAEZ17" />
-			<zone name="GAEZ18" />
-		</areas>
-		<content>
-			<zone name="Crops" />
-			<zone name="Pasture" />
-		</content>
-		<average value="false" />
-	</zoneCombine>
+	<forEachSubregion>
+		<command>
+			<zoneCombine>
+				<areas>
+					<zone replace="GAEZ1" />
+					<zone replace="GAEZ2" />
+					<zone replace="GAEZ3" />
+					<zone replace="GAEZ4" />
+					<zone replace="GAEZ5" />
+					<zone replace="GAEZ6" />
+					<zone replace="GAEZ7" />
+					<zone replace="GAEZ8" />
+					<zone replace="GAEZ9" />
+					<zone replace="GAEZ10" />
+					<zone replace="GAEZ11" />
+					<zone replace="GAEZ12" />
+					<zone replace="GAEZ13" />
+					<zone replace="GAEZ14" />
+					<zone replace="GAEZ15" />
+					<zone replace="GAEZ16" />
+					<zone replace="GAEZ17" />
+					<zone replace="GAEZ18" />
+				</areas>
+				<content>
+					<zone replace="Crops" />
+					<zone replace="Pasture" />
+				</content>
+				<average value="false" />
+			</zoneCombine>
+		</command>
+	</forEachSubregion>
 </commands>
