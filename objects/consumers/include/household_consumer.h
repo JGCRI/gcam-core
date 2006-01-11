@@ -78,7 +78,7 @@ public:
 protected:
     bool isCoefBased() const { return true; }
 	virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr );
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
 	virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:

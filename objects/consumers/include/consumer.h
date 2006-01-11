@@ -130,7 +130,7 @@ protected:
     
     void calcEmissions( const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
 	virtual const std::string& getXMLName() const = 0;
-    virtual bool XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr ) = 0;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
 	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
 	virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
 };
