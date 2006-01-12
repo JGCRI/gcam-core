@@ -455,7 +455,7 @@ double Marketplace::getDemand(  const string& goodName, const string& regionName
     else {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        cerr << "Called for demand of non-existant market " << goodName << " in " << regionName << endl;
+        mainLog << "Called for demand of non-existant market " << goodName << " in " << regionName << endl;
         return 0;
     }
 }
