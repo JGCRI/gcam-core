@@ -82,6 +82,7 @@ bool DependencyFinder::addDependency( const string& aSector, const string& aDepe
 *          getOrdering to return the ordered vector.
 * \note This function removes nodes by setting the removed flag to true instead
 *       of actually removing the vertice.
+* \pre All relevant objects must have called addDependency() to add their dependencies to the matrix.
 * \todo The control flow of this function could be less confusing.
 * \sa getOrdering
 */
