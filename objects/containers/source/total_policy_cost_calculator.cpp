@@ -282,7 +282,9 @@ void TotalPolicyCostCalculator::printOutput() const {
     const string UPDATE_LOCATION = "/scenario/world/region[last()]";
     
     // Append the data to the XML database.
+#if __USE_XML_DB__
     XMLDBOutputter::appendData( xmlString, UPDATE_LOCATION );
+#endif
 
     // Write to the database.
     writeToDB();
