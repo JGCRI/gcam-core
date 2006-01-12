@@ -37,7 +37,7 @@ public:
 protected:
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
-    virtual bool XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr ) = 0;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
     static const std::string XML_NAME; //!< node name for toXML methods
     double mPopulation; //!< population for this gender

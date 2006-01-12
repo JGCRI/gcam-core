@@ -40,7 +40,7 @@ void PopulationSGMFixed::clear(){
 }
 
 //! parses rest of PopulationSGMFixed xml object
-bool PopulationSGMFixed::XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr ){
+bool PopulationSGMFixed::XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ){
 
     if( nodeName == AgeCohort::getXMLNameStatic() ) {
         ageCohort.push_back( new AgeCohort() );

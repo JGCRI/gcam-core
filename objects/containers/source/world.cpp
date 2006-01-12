@@ -225,7 +225,6 @@ const string& World::getName() const {
 * cumulative technology change, etc.
 */
 void World::initCalc( const int period ) {
-    
     Configuration* conf = Configuration::getInstance();
     if( conf->getBool( "CalibrationActive" ) ){
         // cal consistency check needs to be before initCalc so calInput values have already been scaled if necessary
@@ -240,7 +239,6 @@ void World::initCalc( const int period ) {
             ++calCheckIterations;
         }
     }
-    
     // Reset the calc counter.
     calcCounter->startNewPeriod();
     for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ){
