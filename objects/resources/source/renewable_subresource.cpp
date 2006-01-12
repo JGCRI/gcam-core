@@ -35,7 +35,7 @@ SubRenewableResource::SubRenewableResource(){
 }
 
 //! Performs XML read-in that is specific to this derived class
-bool SubRenewableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
+bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
 	bool didParse = false;
 	if( nodeName == "maxSubResource" ){
 		maxSubResource = XMLHelper<double>::getValue( node );

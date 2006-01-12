@@ -371,14 +371,15 @@ const std::string& DepletableResource::getXMLNameStatic() {
 *  this case, this read-in just instantiates the appropriate type of subResource
 *
 * \author Steve Smith
-* \param node pointer to the current node in the XML input tree
-* \param nodeName name of the current node 
+* \param aNodeName Name of the current node.
+* \param aNode Pointer to the current node in the XML input tree
 * \return Whether an element was parsed.
 * \todo In the input file, *SubResources should be read in as such, not silently converted here.
 */
-bool DepletableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
-	if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubDepletableResource::getXMLNameStatic() ){
-		parseContainerNode( node, subResource, subResourceNameMap, new SubDepletableResource() );
+bool DepletableResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
+    // TODO: Fix this.
+	if( aNodeName == SubResource::getXMLNameStatic() || aNodeName == SubDepletableResource::getXMLNameStatic() ){
+		parseContainerNode( aNode, subResource, subResourceNameMap, new SubDepletableResource() );
 		return true;
 	}
 	return false;

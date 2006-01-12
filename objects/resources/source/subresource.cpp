@@ -518,12 +518,12 @@ void SubResource::csvOutputFile( const string &regname, const string& sname) {
 // ************************************************************
 
 //! Parses any input variables specific to this derived class
-bool SubDepletableResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
+bool SubDepletableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
     return false;
 }
 
 //! Parses any input variables specific to this derived class
-bool SubFixedResource::XMLDerivedClassParse( const string nodeName, const DOMNode* node ) {
+bool SubFixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
     return false;
 }
 //! get variance

@@ -37,7 +37,7 @@ protected:
 	//! read in average capacity factor for each subresource
 	double subResourceCapacityFactor;
 	void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
-	bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
+	bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 	void initializeResource(); 
 public: 
 	SubRenewableResource();

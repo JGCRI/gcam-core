@@ -56,7 +56,8 @@ protected:
     std::vector<double> annualprod; //!< annual production rate of Resource
     std::vector<double> cummprod; //!< cummulative production of Resource
     std::map<std::string,int> subResourceNameMap; //!< Map of subResource name to integer position in vector. 
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0;
+    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
+                                       const xercesc::DOMNode* aNode ) = 0;
     virtual const std::string& getXMLName() const = 0;
     void setMarket( const std::string& aRegionName );
 	virtual void annualsupply( const std::string& regionName, int per, const GDP* gdp, double price, double prev_price );

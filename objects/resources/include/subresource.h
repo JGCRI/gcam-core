@@ -54,7 +54,7 @@ protected:
 	virtual void initializeResource();
 	virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
 	virtual const std::string& getXMLName() const;
-	virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node ) = 0; 
+	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0; 
 	std::string name; //!< SubResource name
     int nograde; //!< number of grades of each SubResource
     double priceElas; //!< price elasticity for short-term supply limit
@@ -86,7 +86,7 @@ private:
 * \version $ Revision $
 */
 class SubDepletableResource: public SubResource {
-    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 };
 
 /*! 
@@ -97,7 +97,7 @@ class SubDepletableResource: public SubResource {
 * \version $ Revision $
 */
 class SubFixedResource: public SubResource {
-    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* node );
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 };
 
 #endif // _SUBRSRC_H_
