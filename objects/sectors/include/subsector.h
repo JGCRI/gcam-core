@@ -83,7 +83,7 @@ protected:
     std::vector<Summary> summary; //!< summary for reporting
     std::vector<BaseTechnology*> baseTechs; // for the time being
     std::map<std::string, TechnologyType*> mTechTypes; //!< Mapping from technology name to group of technology vintages.
-    std::map<std::string,int> techNameMap; //!< Map of technology name to integer position in vector. 
+
     virtual void interpolateShareWeights( const int period ); // Consistantly adjust share weights
     std::map<std::string,int> baseTechNameMap; //!< Map of base technology name to integer position in vector. 
     typedef std::vector<BaseTechnology*>::const_iterator CBaseTechIterator;
@@ -103,6 +103,12 @@ protected:
     void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* newTech );
     virtual bool isNameOfChild  ( const std::string& nodename ) const;
     virtual technology* createChild( const std::string& nodename ) const;
+   
+    static bool initializeTechVector( std::vector<technology*>& aTechVector, 
+                                      const std::string& aSectorName,
+                                      DependencyFinder* aDependencyFinder );
+
+    static const std::string findTechName( const std::vector<technology*>& aTechVector );
 public:
     Subsector( const std::string regionName, const std::string sectorName );
     virtual ~Subsector();

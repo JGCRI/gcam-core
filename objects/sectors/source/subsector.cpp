@@ -196,34 +196,44 @@ void Subsector::XMLParse( const DOMNode* node ) {
         else if( nodeName == "techScaleYear" ){
             techScaleYear = XMLHelper<int>::getValue( curr );
         }
-        else if(  isNameOfChild  ( nodeName ) ){
-            map<string,int>::const_iterator techMapIter = techNameMap.find( XMLHelper<string>::getAttrString( curr, "name" ) );
+        else if( isNameOfChild( nodeName ) ){
+            typedef vector<vector<technology*> >::iterator TechVecIterator;
 
-            if( techMapIter != techNameMap.end() ) {
+            const string techName = XMLHelper<string>::getAttrString( curr, "name" );
+            if( name.empty() ){
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Ignoring technology set because it does not have a name." << endl;
+                continue;
+            }
+
+            // Search the vectors of technologies for a vector with a technology
+            // with the given name. This would be greatly helped by a wrapper.
+            for( TechVecIterator techPosition = techs.begin();
+                techPosition != techs.end(); ++techPosition )
+            {
+                // Check if this is the correct technology vector.
+                if( findTechName( *techPosition ) == techName ){
+                    break;
+                }
+            }
+
+            if( techPosition != techs.end() ) {
                 // technology already exists.
                 // Check if we should delete. This is a hack.
                 if( XMLHelper<bool>::getAttr( curr, "delete" ) ){
-                    int vecSpot = techMapIter->second;
                     // Deallocate memory.
-                    for( vector<technology*>::iterator iter = techs[ vecSpot ].begin(); iter != techs[ vecSpot ].end(); ++iter ){
+                    for( vector<technology*>::iterator iter = techPosition->begin();
+                         iter != techPosition->end(); ++iter )
+                    {
                         delete *iter;
                     }
+
                     // Wipe the vector.
-                    vector<vector<technology*> >::iterator delVecIter = techs.begin() + vecSpot;
-                    techs.erase( delVecIter );
-
-                    // Wipe out the map.
-                    techNameMap.clear();
-
-                    // Reset it.
-                    int i = 0;
-                    for( vector<vector<technology*> >::const_iterator iter = techs.begin(); iter != techs.end(); ++iter, i++ ){
-                        assert( iter->begin() != iter->end() );
-                        techNameMap[ (*iter)[ 0 ]->getName() ] = i;
-                    }
+                    techs.erase( techPosition );
                 } // end hack.
                 else {
-                    DOMNodeList*childNodeList = curr->getChildNodes();
+                    DOMNodeList* childNodeList = curr->getChildNodes();
 
                     // loop through technologies children.
                     for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
@@ -235,7 +245,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
                         }
                         else if( childNodeName == technology::getXMLNameStatic2D() ){
                             int thisPeriod = XMLHelper<void>::getNodePeriod( currChild, modeltime );
-                            techs[ techMapIter->second ][ thisPeriod ]->XMLParse( currChild );
+                            (*techPosition)[ thisPeriod ]->XMLParse( currChild );
                         }
                     }
                 }
@@ -243,7 +253,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
             else if( XMLHelper<bool>::getAttr( curr, "nocreate" ) ){
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Not creating technology " << XMLHelper<string>::getAttrString( curr, "name" ) 
+                mainLog << "Not creating technology " << techName
                     << " in subsector " << name << " because nocreate flag is set." << endl;
             }
             else {
@@ -261,6 +271,8 @@ void Subsector::XMLParse( const DOMNode* node ) {
                         continue;
                     }
 
+                    // 2nd dimension of the tech XML is "period". This is the
+                    // same for all derived technologies.
                     else if( childNodeName == technology::getXMLNameStatic2D() ){
                         auto_ptr<technology> tempTech( createChild( nodeName ) );
                         tempTech->XMLParse( currChild );
@@ -296,7 +308,6 @@ void Subsector::XMLParse( const DOMNode* node ) {
                     } // end else if
                 } // end for
                 techs.push_back( techVec );
-                techNameMap[ techVec[ 0 ]->getName() ] = static_cast<int>( techs.size() ) - 1;
             }
         }
         // parsed derived classes
@@ -311,7 +322,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
 }
 
 //! Virtual function which specifies the XML name of the children of this class, the type of technology.
-bool Subsector::isNameOfChild  ( const string& nodename ) const {
+bool Subsector::isNameOfChild( const string& nodename ) const {
     return nodename == technology::getXMLNameStatic1D();
 }
 
@@ -387,14 +398,84 @@ void Subsector::completeInit( const IInfo* aSectorInfo, DependencyFinder* aDepen
             baseTechs[ j ]->removeEmptyInputs();
         }
     }
-    for ( vector< vector< technology* > >::iterator outerIter = techs.begin(); outerIter != techs.end(); outerIter++ ) {
-        for( vector< technology* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
-            assert( *innerIter ); // Make sure the technology has been defined.
-            ( *innerIter )->completeInit( sectorName, aDependencyFinder );
+
+    typedef vector<vector<technology*> >::iterator TechVecIterator;
+    for ( TechVecIterator techIter = techs.begin(); techIter != techs.end(); ++techIter ) {
+        bool isInvalid = initializeTechVector( *techIter, sectorName, aDependencyFinder );
+        // Erase the entire vector if the technologies were invalid.
+        if( isInvalid ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Removing a technology " << findTechName( *techIter ) << " from subsector " << name 
+                    << " in sector " << sectorName << " because all periods were not filled out." << endl;
+
+            // Adjust the iterator back one position before deleting. This is
+            // because a deleted iterator cannot be incremented.
+            techs.erase( techIter-- );
         }
     }
 }
 
+/*! \brief Completes the initialization of a vector of technologies.
+* \details Static function which completes the initialization of a vector of
+*          technologies. This will first ensure that a technology has been
+*          created for each model period. The function will then call
+*          completeInit on each technology.
+* \param aTechVector Vector of technologies to initialize.
+* \param aSectorName Sector name.
+* \param aDependencyFinder Regional dependency finder.
+* \return Whether the vector should be removed.
+*/
+bool Subsector::initializeTechVector( vector<technology*>& aTechVector,
+                                     const string& aSectorName,
+                                     DependencyFinder* aDependencyFinder )
+{
+    // First check that the entire vector is filled out with technologies.
+    // Each vector is initialized to the number of periods the model will
+    // run, so this search checks whether each position is initialized. This
+    // must be done at this point instead of during parsing because the
+    // complete vector could be initialized through multiple files.
+    typedef vector<technology*>::iterator TechIterator;
+    bool isEmptyPeriod = false;
+    for( TechIterator tech = aTechVector.begin(); tech != aTechVector.end(); ++tech ) {
+        if( !*tech ){
+            isEmptyPeriod = true;
+        }
+    }
+
+    // Instruct the calling function to remove this vector.
+    if( isEmptyPeriod ){
+        return true;
+    }
+
+    // Complete the initialization of a valid vector.
+    for( TechIterator tech = aTechVector.begin(); tech != aTechVector.end(); ++tech ) {
+        ( *tech )->completeInit( aSectorName, aDependencyFinder );
+    }
+    return false;
+}
+
+/*! \brief Find a valid technology name from a vector of technologies.
+* \param aTechVector A vector of technologies.
+* \return A valid technology name, the empty string if one was not found.
+*/
+const string Subsector::findTechName( const vector<technology*>& aTechVector ){
+    // This will store the value of a technology name if it is
+    // found. Initialized to empty so that if no technology is
+    // found, the name will be empty.
+    string currTechName;
+
+    // Search for an initialized technology to get a name.
+    for( vector<technology*>::const_iterator singleTech = aTechVector.begin();
+        singleTech != aTechVector.end(); ++singleTech )
+    {
+        if( *singleTech ){
+            currTechName = (*singleTech)->getName();
+            break;
+        }
+    }
+    return currTechName;
+}
 
 //! Output the Subsector member variables in XML format.
 void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
@@ -1903,7 +1984,7 @@ void Subsector::MCoutputAllSectors() const {
         }
         dboutput4( regionName, "Emissions",  "Subsec-" + sectorName + "_" + name, gmap->first, "Tg", temp );
     }
-    
+
     // do for all technologies in the Subsector
     for( unsigned int i = 0; i < techs.size(); ++i ){
         const string subsecTechName = name + techs[i][ 0 ]->getName();
