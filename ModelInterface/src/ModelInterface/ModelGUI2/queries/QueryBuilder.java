@@ -9,6 +9,18 @@ import java.util.Map;
 import java.util.Vector;
 
 public abstract class QueryBuilder {
+
+	/* Query Fragments that will be used when generating queries.  We need to be able to 
+	 * have some method for enabaling subtypes of for example sectors. Currently done by
+	 * an attribute with type = the type that is subclassed from
+	 */
+	public static String regionQueryPortion = "*[@type = 'region']";
+	public static String sectorQueryPortion = "*[@type = 'sector']";
+	public static String subsectorQueryPortion = "*[@type = 'subsector']";
+	public static String technologyQueryPortion = "*[@type = 'technology']";
+	public static String resourceQueryPortion = "*[@type = 'resource']";
+	public static String subresourceQueryPortion = "*[@type = 'subresource']";
+
 	protected QueryGenerator qg;
 	protected String queryFilter;
 	protected Vector<String> queryFunctions;

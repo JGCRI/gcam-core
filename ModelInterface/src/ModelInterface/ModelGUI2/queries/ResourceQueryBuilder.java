@@ -40,7 +40,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
-		queryFilter = "/scenario/world/region/";
+		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
 		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		return (new ListSelectionListener() {
@@ -125,8 +125,8 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			case 3: {
 					list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 					if(resourceList == null) {
-						resourceList = createList("*[matches(local-name(), 'resource')]/@name", false);
-						resourceList.putAll(createList("*[matches(local-name(), 'resource')]/group/@name", true));
+						resourceList = createList(resourceQueryPortion+"/@name", false);
+						resourceList.putAll(createList(resourceQueryPortion+"/group/@name", true));
 					}
 					temp = resourceList;
 					//list.setListData(sectorList.keySet().toArray());
@@ -216,10 +216,10 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			added = false;
 			if(i == 0) {
 				tempMap = resourceList;
-				ret.append("*[matches(local-name(), 'resource') and (");
+				ret.append(resourceQueryPortion.substring(0,resourceQueryPortion.length()-1)+" and (");
 			} else if(i == 1){
 				tempMap = subresourceList;
-				ret.append("subresource");
+				ret.append(subresourceQueryPortion.substring(0, subresourceQueryPortion.length()-1)+" and (");
 			} else {
 				tempMap = gradeList;
 				ret.append("grade");
@@ -240,7 +240,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 				Map.Entry me = (Map.Entry)it.next();
 				if(((Boolean)me.getValue()).booleanValue()) {
 					if(!added) {
-						if(i != 0) {
+						if(i <= 1) {
 							ret.append("[( ");
 						}
 						added = true;
@@ -262,7 +262,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			}
 		}
 		if(level == 4) {
-			ret.append("subresource/@name");
+			ret.append(subresourceQueryPortion+"/@name");
 		} else if(level == 5) {
 			ret.append("grade/@name");
 		} else {
@@ -280,11 +280,11 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		String query;
 		StringBuffer ret = new StringBuffer();
 		if(qg.currSel == 3) {
-			query = "*[matches(local-name(), 'resource') and child::group[@name='"+gName+"']]/@name";
+			query = resourceQueryPortion.substring(0, resourceQueryPortion.length()-1)+" and child::group[@name='"+gName+"']]/@name";
 		} else if(qg.currSel == 4) {
-			query = "*/subresource[child::group[@name='"+gName+"']]/@name";
+			query = subresourceQueryPortion.substring(0, subresourceQueryPortion.length()-1)+" and child::group[@name='"+gName+"']]/@name";
 		} else {
-			query = "*/subresource/grade[child::group[@name='"+gName+"']]/@name";
+			query = "*/"+subresourceQueryPortion+"/grade[child::group[@name='"+gName+"']]/@name";
 		}
 		//XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name");
 		XmlResults res = DbViewer.xmlDB.createQuery(query, queryFilter, queryFunctions);
@@ -302,7 +302,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 	private void createXPath() {
 		qg.xPath = createListPath(6);
 		switch(qg.currSel) {
-			case 3: qg.nodeLevel = "[^b]resource";
+			case 3: qg.nodeLevel = "resource";
 				qg.axis1Name = "resource";
 				break;
 			case 4: qg.nodeLevel = "subresource";
@@ -344,7 +344,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
 		if(((String)regions[0]).equals("Global")) {
-			ret.append("region/");
+			ret.append(regionQueryPortion).append("/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
 			isGlobal = true;
@@ -353,7 +353,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
-				ret.append("region[ ");
+				ret.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1)+" and (");
 				added = true;
 			} else {
 				ret.append(" or ");
@@ -361,7 +361,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			ret.append("(@name='").append(regions[i]).append("')");
 		}
 		if(added) {
-			ret.append(" ]/");
+			ret.append(" )]/");
 		}
 		return ret.append(qg.getXPath()).toString();
 	}
@@ -369,7 +369,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(n.getNodeName().matches(qg.nodeLevel)) {
+			if(n.getNodeName().matches(qg.nodeLevel) || qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
 				ret.add(XMLDB.getAttr(n, "name"));
 			} 
 			if(n.getNodeName().equals(qg.yearLevel)) {
@@ -410,15 +410,19 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			return dataTree;
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+		String type = XMLDB.getAttr(currNode, "type");
+		if(type == null) {
+			type = currNode.getNodeName();
+		}
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if( (isGlobal && currNode.getNodeName().equals("region")) 
-				|| (qg.nodeLevel.matches("[^b]resource") && currNode.getNodeName().equals("subresource")) 
-				|| (qg.nodeLevel.matches(".*resource") && currNode.getNodeName().equals("grade"))) {
+		if( (isGlobal && type.equals("region")) 
+				|| (qg.nodeLevel.equals("resource") && type.equals("subresource")) 
+				|| (qg.nodeLevel.matches(".*resource") && type.equals("grade"))) {
 			currNode.delete();
 			return tempMap;
 		}
-		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().matches(qg.nodeLevel) 
-				&& !currNode.getNodeName().equals(qg.yearLevel)) {
+		if(XMLDB.hasAttr(currNode) && !type.equals(qg.nodeLevel) 
+				&& !type.equals(qg.yearLevel)) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {

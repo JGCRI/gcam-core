@@ -37,7 +37,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
-		queryFilter = "/scenario/world/region/";
+		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
 		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		return (new ListSelectionListener() {
@@ -125,8 +125,8 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 			case 3: {
 					list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 					if(sectorList == null) {
-						sectorList = createList("*[matches(local-name(), 'sector')]/@name", false);
-						sectorList.putAll(createList("*[matches(local-name(), 'sector')]/group/@name", true));
+						sectorList = createList(sectorQueryPortion+"/@name", false);
+						sectorList.putAll(createList(sectorQueryPortion+"/group/@name", true));
 					}
 					temp = sectorList;
 					//list.setListData(sectorList.keySet().toArray());
@@ -215,18 +215,18 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 		for(int i = 0; i < level-3; ++i) {
 			if(i == 0) {
 				tempMap = sectorList;
-				ret.append("*[matches(local-name(), 'sector')");
+				ret.append(sectorQueryPortion.substring(0, sectorQueryPortion.length()-1));
 			} else if(i == 1){
 				tempMap = subsectorList;
-				ret.append("subsector");
+				ret.append(subsectorQueryPortion.substring(0, subsectorQueryPortion.length()-1));
 			} else {
 				tempMap = techList;
-				ret.append("technology");
+				ret.append(technologyQueryPortion.substring(0, technologyQueryPortion.length()-1));
 				++i;
 			}
 			added = false;
 			if(tempMap == null) {
-				ret.append("/");
+				ret.append(")]/");
 				continue;
 			}
 			if(qg.isSumable && ((Boolean)tempMap.get("Sum All")).booleanValue()) {
@@ -240,11 +240,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 				Map.Entry me = (Map.Entry)it.next();
 				if(((Boolean)me.getValue()).booleanValue()) {
 					if(!added) {
-						if(i == 0) {
-							ret.append(" and (");
-						} else {
-							ret.append("[ ");
-						}
+						ret.append(" and (");
 						added = true;
 					} else {
 						ret.append(" or ");
@@ -257,21 +253,18 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 					}
 				}
 			}
-			if(added || i == 0) {
-				if(added && i == 0) {
-					ret.append(')');
-				}
-				ret.append(" ]/");
+			if(added) {
+				ret.append(" )]/");
 			} else {
-				ret.append("/");
+				ret.append("]/");
 			}
 		}
 		if(level == 3) {
-			ret.append("*[matches(local-name(), 'sector')]/@name");
+			ret.append(sectorQueryPortion+"/@name");
 		} else if(level == 4) {
-			ret.append("subsector/@name");
+			ret.append(subsectorQueryPortion+"/@name");
 		} else if(level == 5) {
-			ret.append("technology/@name");
+			ret.append(technologyQueryPortion+"/@name");
 		} else {
 			ret.append(qg.var).append("/node()");
 			//ret += "period/"+var+"/node()";
@@ -288,11 +281,11 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 		StringBuffer ret = new StringBuffer();
 		if(qg.currSel == 3) {
 			//query = "supplysector";
-			query = "*[matches(local-name(), 'sector')]";
+			query = sectorQueryPortion;
 		} else if(qg.currSel == 4) {
-			query = "*[matches(local-name(), 'sector')]/subsector";
+			query = sectorQueryPortion+"/"+subsectorQueryPortion;
 		} else {
-			query = "*[matches(local-name(), 'sector')]/subsector/technology";
+			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion;
 		}
 		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name", queryFilter, queryFunctions);
 		try {
@@ -320,7 +313,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 			}
 		}
 		switch(qg.currSel) {
-			case 3: qg.nodeLevel = "supplysector";
+			case 3: qg.nodeLevel = "sector";
 				break;
 			case 4: qg.nodeLevel = "subsector";
 				break;
@@ -359,7 +352,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
 		if(((String)regions[0]).equals("Global")) {
-			ret.append("region/");
+			ret.append(regionQueryPortion+"/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
 			isGlobal = true;
@@ -368,7 +361,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
-				ret.append("region[ ");
+				ret.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1)).append(" and (");
 				added = true;
 			} else {
 				ret.append(" or ");
@@ -376,7 +369,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 			ret.append("(@name='").append(regions[i]).append("')");
 		}
 		if(added) {
-			ret.append(" ]/");
+			ret.append(" )]/");
 		}
 		return ret.append(qg.getXPath()).toString();
 	}
@@ -384,10 +377,10 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(n.getNodeName().equals(qg.nodeLevel)) {
+			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
 				ret.add(XMLDB.getAttr(n, "name"));
 			} 
-			if(n.getNodeName().equals(qg.yearLevel)) {
+			if(qg.yearLevel.equals(XMLDB.getAttr(n, "type"))) {
 				ret.add(0, XMLDB.getAttr(n, "year"));
 				/*
 				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
@@ -425,15 +418,19 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 			return dataTree;
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+		String type = XMLDB.getAttr(currNode, "type");
+		if(type == null) {
+			type = currNode.getNodeName();
+		}
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if( (isGlobal && currNode.getNodeName().equals("region")) 
-				|| (qg.nodeLevel.equals("supplysector") && currNode.getNodeName().equals("subsector")) 
-				|| (qg.nodeLevel.matches(".*sector") && currNode.getNodeName().equals("technology"))) {
+		if( (isGlobal && type.equals("region")) 
+				|| (qg.nodeLevel.equals("sector") && type.equals("subsector")) 
+				|| (qg.nodeLevel.matches(".*sector") && type.equals("technology"))) {
 			currNode.delete();
 			return tempMap;
 		}
-		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel) 
-				&& !currNode.getNodeName().equals(qg.yearLevel)) {
+		if(XMLDB.hasAttr(currNode) && !type.equals(qg.nodeLevel) 
+				&& !type.equals(qg.yearLevel)) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {

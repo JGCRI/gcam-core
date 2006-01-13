@@ -123,7 +123,7 @@ public class QueryGenerator {
 					//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 					//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 					int skip = 0;
-					if(nodeLevel.equals("supplysector")) {
+					if(nodeLevel.equals("sector")) {
 						currSel = 3;
 					} else if(nodeLevel.equals("subsector")) {
 						currSel = 4;

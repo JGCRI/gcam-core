@@ -203,18 +203,18 @@ public class GDPQueryBuilder extends QueryBuilder {
 	public String getCompleteXPath(Object[] regions) {
 		System.out.println("Trying to complete xpath");
 		StringBuffer strBuff = new StringBuffer();
-		strBuff.append("region");
+		strBuff.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1));
 		if(((String)regions[0]).equals("Global")) {
-			strBuff.append("/").append(qg.xPath);
+			strBuff.append("]/").append(qg.xPath);
 			isGlobal = true;
 			return strBuff.toString();
 		} else {
 			isGlobal = false;
-			strBuff.append("[");
+			strBuff.append(" and (");
 			for(int i = 0; i < regions.length; ++i) {
 				strBuff.append(" (@name='").append(regions[i]).append("') or ");
 			}
-			strBuff.replace(strBuff.length()-3, strBuff.length(), "]/");
+			strBuff.replace(strBuff.length()-3, strBuff.length(), ")]/");
 			strBuff.append(qg.xPath);
 			return strBuff.toString();
 		}

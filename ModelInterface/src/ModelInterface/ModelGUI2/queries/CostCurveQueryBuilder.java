@@ -44,7 +44,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
-		queryFilter = "/scenario/world/region/";
+		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedIndices();
@@ -94,37 +94,6 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 					label.setText("Select Cost Type:");
 					break;
 			}
-			/*
-			case 3: {
-					list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-					if(sectorList == null) {
-						sectorList = createList("supplysector/@name", false);
-						sectorList.putAll(createList("supplysector/group/@name", true));
-					}
-					temp = sectorList;
-					//list.setListData(sectorList.keySet().toArray());
-					label.setText("Select Sector:");
-					break;
-			}
-			case 4: {
-					if(subsectorList == null) {
-						subsectorList = createList(createListPath(4), false);
-					}
-					temp = subsectorList;
-					//list.setListData(subsectorList.keySet().toArray());
-					label.setText("Select Subsector:");
-					break;
-			}
-			case 5: {
-					if(techList == null) {
-						techList = createList(createListPath(5), false);
-					}
-					temp = techList;
-					//list.setListData(techList.keySet().toArray());
-					label.setText("Select Technology:");
-					break;
-			}
-			*/
 			default: System.out.println("Error currSel: "+qg.currSel);
 		}
 		Vector tempVector = new Vector();
@@ -155,20 +124,6 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 					selected = varList;
 					break;
 			}
-			/*
-			case 3: {
-					selected = sectorList;
-					break;
-			}
-			case 4: {
-					selected = subsectorList;
-					break;
-			}
-			case 5: {
-					selected = techList;
-					break;
-			}
-			*/
 			default: System.out.println("Error currSel: "+qg.currSel);
 		}
 		for(Iterator it = selected.entrySet().iterator(); it.hasNext(); ) {
@@ -361,7 +316,6 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			return dataTree;
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
 		/*
 		if( (isGlobal && currNode.getNodeName().equals(qg.nodeLevel)) ) {
 			currNode.delete();

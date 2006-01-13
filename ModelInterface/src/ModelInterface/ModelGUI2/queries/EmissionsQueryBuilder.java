@@ -38,7 +38,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
-		queryFilter = "/scenario/world/region/";
+		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
 		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		return (new ListSelectionListener() {
@@ -121,7 +121,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			case 2: {
 					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					if(ghgList == null) {
-						ghgList = createList("*[matches(local-name(), 'sector')]/subsector/technology/GHG/@name", false);
+						ghgList = createList(sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/GHG/@name", false);
 					}
 					temp = ghgList;
 					//list.setListData(varList.keySet().toArray());
@@ -140,8 +140,8 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			case 4: {
 					//list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 					if(sectorList == null) {
-						sectorList = createList("*[matches(local-name(), 'sector')]/@name", false);
-						sectorList.putAll(createList("*[matches(local-name(), 'sector')]/group/@name", true));
+						sectorList = createList(sectorQueryPortion+"/@name", false);
+						sectorList.putAll(createList(sectorQueryPortion+"/group/@name", true));
 					}
 					temp = sectorList;
 					//list.setListData(sectorList.keySet().toArray());
@@ -226,7 +226,8 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		StringBuffer ret = new StringBuffer();
 		boolean added = false;
 		boolean gq = false;
-		Vector lV = null;
+		//Vector lV = null;
+		System.out.println("level is "+level);
 		if(level == -1) {
 			gq = true;
 			qg.sumAll = qg.group = false;
@@ -235,25 +236,29 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		for(int i = 0; i < level-3; ++i) {
 			if(i == 0) {
 				tempMap = sectorList;
-				ret.append("*[matches(local-name(), 'sector')");
+				ret.append(sectorQueryPortion.substring(0, sectorQueryPortion.length()-1));
 			} else if(i == 1){
 				tempMap = subsectorList;
-				ret.append("subsector");
+				ret.append(subsectorQueryPortion.substring(0, subsectorQueryPortion.length()-1));
 			} else if(i == 2){
 				tempMap = techList;
-				ret.append("technology");
+				ret.append(technologyQueryPortion.substring(0, technologyQueryPortion.length()-1));
 				//++i;
 			} else if(i == 3){
 				tempMap = ghgList;
 				ret.append("GHG");
 			} else {
-				lV = new Vector();
+				//lV = new Vector();
 				tempMap = fuelList;
 				ret.append("emissions");
 			}
 			added = false;
 			if(tempMap == null) {
-				ret.append("/");
+				if(i <= 2) {
+					ret.append("]/");
+				} else {
+					ret.append("/");
+				}
 				continue;
 			}
 			if(qg.isSumable && tempMap.get("Sum All") != null && ((Boolean)tempMap.get("Sum All")).booleanValue()) {
@@ -267,10 +272,10 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 				Map.Entry me = (Map.Entry)it.next();
 				if(((Boolean)me.getValue()).booleanValue()) {
 					if(!added) {
-						if(i == 0) {
-							ret.append(" and ");
+						if(i == 0 || i == 1 || i == 2) {
+							ret.append(" and (");
 						} else {
-							ret.append("[ ");
+							ret.append("[( ");
 						}
 						added = true;
 					} else {
@@ -283,20 +288,20 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 						ret.append("(@name='"+me.getKey()+"')");
 					} else {
 						ret.append("(@fuel-name='"+me.getKey()+"')");
-						lV.add(me.getKey());
+						//lV.add(me.getKey());
 					}
 				}
 			}
-			if(added || i == 0) {
-				ret.append(" ]/");
+			if(added || i <= 2) {
+				ret.append(" )]/");
 			} else {
 				ret.append("/");
 			}
 		}
 		if(level == 4) {
-			ret.append("subsector/@name");
+			ret.append(subsectorQueryPortion+"/@name");
 		} else if(level == 5) {
-			ret.append("technology/@name");
+			ret.append(technologyQueryPortion+"/@name");
 		} else if(level == 6) {
 			ret.append("GHG/emissions/@fuel-name");
 		} else if(level == 7) {
@@ -316,14 +321,15 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		String query;
 		StringBuffer ret = new StringBuffer();
 		if(qg.currSel == 3) {
-			query = "*[matches(local-name(), 'sector')]/subsector/technology/GHG/emissions";
+			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/GHG/emissions";
 		} else if(qg.currSel == 4) {
-			query = "*[matches(local-name(), 'sector')]";
+			query = sectorQueryPortion;
 		} else if(qg.currSel == 5) {
-			query = "*[matches(local-name(), 'sector')]/subsector";
+			query = sectorQueryPortion+"/"+subsectorQueryPortion;
 		} else {
-			query = "*[matches(local-name(), 'sector')]/subsector/technology";
+			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion;
 		}
+		// do I need to substr the ] out of query and add AND ??
 		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name", 
 				queryFilter, queryFunctions);
 		try {
@@ -342,7 +348,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		switch(qg.currSel) {
 			case 3: qg.nodeLevel = "emissions";
 				break;
-			case 4: qg.nodeLevel = "supplysector";
+			case 4: qg.nodeLevel = "sector";
 				break;
 			case 5: qg.nodeLevel = "subsector";
 				break;
@@ -382,7 +388,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
 		if(((String)regions[0]).equals("Global")) {
-			ret.append("region/");
+			ret.append(regionQueryPortion+"/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
 			isGlobal = true;
@@ -391,15 +397,15 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
-				ret.append("region[ ");
+				ret.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1) + " and (");
 				added = true;
 			} else {
 				ret.append(" or ");
 			}
 			ret.append("(@name='").append(regions[i]).append("')");
 		}
-		if(added) {
-			ret.append(" ]/");
+		if(!isGlobal) {
+			ret.append(" )]/");
 		}
 		return ret.append(qg.getXPath()).toString();
 	}
@@ -407,9 +413,9 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(n.getNodeName().equals(qg.nodeLevel) || (qg.nodeLevel.equals("supplysector") && n.getNodeName().equals("demandsector"))) {
+			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type")) || qg.nodeLevel.equals(n.getNodeName())) {
 				String temp = XMLDB.getAttr(n, "name");
-				System.out.println("HERE IN nodeLevel: "+temp);
+				//System.out.println("HERE IN nodeLevel: "+temp);
 				if(temp == null) {
 					ret.add(XMLDB.getAttr(n, "fuel-name"));
 				} else {
@@ -417,8 +423,9 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 				}
 				//ret.add(XMLDB.getAttr(n));
 			} 
-			if(n.getNodeName().equals(qg.yearLevel)) {
-				System.out.println("HERE IN yearLevel: "+XMLDB.getAttr(n, "year"));
+			//if(n.getNodeName().equals(qg.yearLevel)) {  Do I want to make this change??
+			if(qg.yearLevel.equals(XMLDB.getAttr(n, "type")) || qg.yearLevel.equals(n.getNodeName())) {
+				//System.out.println("HERE IN yearLevel: "+XMLDB.getAttr(n, "year"));
 				ret.add(0, XMLDB.getAttr(n, "year"));
 				/*
 				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
@@ -448,7 +455,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
 		DbViewer.xmlDB.printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
-		System.out.println("Returning: "+ret);
+		//System.out.println("Returning: "+ret);
 		return ret.toArray();
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
@@ -457,19 +464,29 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			return dataTree;
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		System.out.println("Looking at: "+currNode.getNodeName());
+		String type = XMLDB.getAttr(currNode, "type");
+		if(type == null) {
+			type = currNode.getNodeName();
+		}
+		//System.out.println("Looking at: "+currNode.getNodeName());
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
+		if((currNode.getNodeName().equals("emissions")) || (type != null && ((isGlobal && type.equals("region"))
+				|| (qg.nodeLevel.equals("emissions") && (type.matches(".*sector") || type.equals("technology")))
+				|| (qg.nodeLevel.equals("sector") && type.equals("subsector")) 
+				|| (qg.nodeLevel.matches(".*sector") && type.equals("technology"))))) {
+			/*
 		if((qg.nodeLevel.equals("emissions") && (currNode.getNodeName().matches(".*sector") || currNode.getNodeName().equals("technology")))
 				|| currNode.getNodeName().equals("emissions")
 				|| (isGlobal && currNode.getNodeName().equals("region")) 
 				|| (qg.nodeLevel.equals("supplysector") && currNode.getNodeName().equals("subsector")) 
 				|| (qg.nodeLevel.matches(".*sector") && currNode.getNodeName().equals("technology"))) {
-			System.out.println("Colapsing: "+currNode.getNodeName());
+				*/
+			//System.out.println("Colapsing: "+currNode.getNodeName());
 			currNode.delete();
 			return tempMap;
 		}
-		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel) 
-				&& !currNode.getNodeName().equals(qg.yearLevel)) {
+		if(XMLDB.hasAttr(currNode) && !qg.nodeLevel.equals(type)
+				&& !qg.yearLevel.equals(type)) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {

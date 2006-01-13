@@ -47,7 +47,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
-		queryFilter = "/scenario/world/region/demographics/";
+		queryFilter = "/scenario/world/"+regionQueryPortion+"/demographics/";
 		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/demographics/");
 		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 		return (new ListSelectionListener() {
@@ -354,7 +354,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
 		if(((String)regions[0]).equals("Global")) {
-			ret.append("region/");
+			ret.append(regionQueryPortion+"/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
 			isGlobal = true;
@@ -363,15 +363,15 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
-				ret.append("region[ ");
+				ret.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1) + " and (");
 				added = true;
 			} else {
 				ret.append(" or ");
 			}
 			ret.append("(@name='").append(regions[i]).append("')");
 		}
-		if(added) {
-			ret.append(" ]/");
+		if(!isGlobal) {
+			ret.append(" )]/");
 		}
 		return ret.append(qg.getXPath()).toString();
 	}
@@ -379,7 +379,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2,0);
 		XmlValue nBefore;
 		do {
-			if(n.getNodeName().equals(qg.nodeLevel)) {
+			if(n.getNodeName().equals(qg.nodeLevel) || qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
 				ret.add(XMLDB.getAttr(n));
 			} 
 			if(n.getNodeName().equals(qg.yearLevel)) {
@@ -411,7 +411,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			return dataTree;
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
+		// used to combine paths when possible to avoid large amounts of sparse tables
 		if(currNode.getNodeName().equals("male") || currNode.getNodeName().equals("female")) {
 			String attr = currNode.getNodeName();
 			if(!tempMap.containsKey(attr)) {
@@ -420,6 +420,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			currNode.delete();
 			return (Map)tempMap.get(attr);
 		} else if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel) 
+				&& !qg.nodeLevel.equals(XMLDB.getAttr(currNode, "type"))
 				&& !currNode.getNodeName().equals(qg.yearLevel)) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;
