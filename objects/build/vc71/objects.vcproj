@@ -25,6 +25,7 @@
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				RuntimeTypeInfo="FALSE"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="FALSE"
@@ -80,6 +81,7 @@
 				MinimalRebuild="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
+				RuntimeTypeInfo="FALSE"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="FALSE"
@@ -225,6 +227,9 @@
 					RelativePath="..\..\emissions\source\ghg_output.cpp">
 				</File>
 				<File
+					RelativePath="..\..\emissions\source\ghg_output_aggr.cpp">
+				</File>
+				<File
 					RelativePath="..\..\emissions\source\ghg_policy.cpp">
 				</File>
 				<File
@@ -233,12 +238,8 @@
 				<File
 					RelativePath="..\..\emissions\source\so2_emissions.cpp">
 				</File>
-			</Filter>
-			<Filter
-				Name="main"
-				Filter="">
 				<File
-					RelativePath="..\..\main\source\main.cpp">
+					RelativePath="..\..\emissions\source\total_sector_emissions.cpp">
 				</File>
 			</Filter>
 			<Filter
@@ -271,6 +272,13 @@
 				<File
 					RelativePath="..\..\marketplace\source\trial_value_market.cpp">
 				</File>
+				<Filter
+					Name="main"
+					Filter="">
+					<File
+						RelativePath="..\..\main\source\main.cpp">
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="resources"
@@ -317,6 +325,27 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\final_demand_sector.cpp">
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\food_demand_sector.cpp">
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\food_demand_subsector.cpp">
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\food_supply_sector.cpp">
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\food_supply_subsector.cpp">
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\forest_demand_sector.cpp">
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\forest_supply_sector.cpp">
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\forest_supply_subsector.cpp">
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\interm_subsector.cpp">
@@ -416,13 +445,70 @@
 					RelativePath="..\..\technologies\source\building_supply_technology.cpp">
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\cal_data_input.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\cal_data_output.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\cal_data_output_percap.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\expenditure.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\food_demand_technology.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\food_production_technology.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\forest_production_technology.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\production_technology.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\profit_shutdown_decider.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\profit_technology.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\technology.cpp">
@@ -643,6 +729,28 @@
 					RelativePath="..\..\target_finder\source\temperature_target.cpp">
 				</File>
 			</Filter>
+			<Filter
+				Name="land_allocator"
+				Filter="">
+				<File
+					RelativePath="..\..\land_allocator\source\aland_allocator_item.cpp">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\source\forest_land_leaf.cpp">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\source\land_leaf.cpp">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\source\land_node.cpp">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\source\tree_land_allocator.cpp">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\source\unmanaged_land_leaf.cpp">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -705,6 +813,9 @@
 					RelativePath="..\..\containers\include\total_policy_cost_calculator.h">
 				</File>
 				<File
+					RelativePath="..\..\containers\include\tree_item.h">
+				</File>
+				<File
 					RelativePath="..\..\containers\include\world.h">
 				</File>
 			</Filter>
@@ -755,6 +866,9 @@
 					RelativePath="..\..\emissions\include\ghg_output.h">
 				</File>
 				<File
+					RelativePath="..\..\emissions\include\ghg_output_aggr.h">
+				</File>
+				<File
 					RelativePath="..\..\emissions\include\ghg_policy.h">
 				</File>
 				<File
@@ -762,6 +876,9 @@
 				</File>
 				<File
 					RelativePath="..\..\emissions\include\so2_emissions.h">
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\total_sector_emissions.h">
 				</File>
 			</Filter>
 			<Filter
@@ -849,6 +966,27 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\include\final_demand_sector.h">
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\food_demand_sector.h">
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\food_demand_subsector.h">
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\food_supply_sector.h">
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\food_supply_subsector.h">
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\forest_demand_sector.h">
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\forest_supply_sector.h">
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\forest_supply_subsector.h">
 				</File>
 				<File
 					RelativePath="..\..\sectors\include\interm_subsector.h">
@@ -951,7 +1089,28 @@
 					RelativePath="..\..\technologies\include\building_supply_technology.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\cal_data_input.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\cal_data_output.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\cal_data_output_percap.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\expenditure.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\food_demand_technology.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\food_production_technology.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\forest_production_technology.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\ical_data.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\ishutdown_decider.h">
@@ -1067,49 +1226,6 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="investment"
-				Filter="">
-				<File
-					RelativePath="..\..\investment\include\accelerator.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\idistributor.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\iexpected_profit_calculator.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\igrowth_calculator.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\iinvestable.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\iinvestor.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\investment_growth_calculator.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\investment_utils.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\levelized_cost_calculator.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\market_based_investment.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\output_growth_calculator.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\rate_logit_distributor.h">
-				</File>
-				<File
-					RelativePath="..\..\investment\include\simple_expected_profit_calculator.h">
-				</File>
-			</Filter>
-			<Filter
 				Name="consumers"
 				Filter="">
 				<File
@@ -1173,6 +1289,49 @@
 				<File
 					RelativePath="..\..\reporting\include\xml_db_outputter.h">
 				</File>
+				<Filter
+					Name="investment"
+					Filter="">
+					<File
+						RelativePath="..\..\investment\include\accelerator.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\idistributor.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\iexpected_profit_calculator.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\igrowth_calculator.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\iinvestable.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\iinvestor.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\investment_growth_calculator.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\investment_utils.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\levelized_cost_calculator.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\market_based_investment.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\output_growth_calculator.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\rate_logit_distributor.h">
+					</File>
+					<File
+						RelativePath="..\..\investment\include\simple_expected_profit_calculator.h">
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="functions"
@@ -1232,6 +1391,31 @@
 				</File>
 				<File
 					RelativePath="..\..\target_finder\include\temperature_target.h">
+				</File>
+			</Filter>
+			<Filter
+				Name="land_allocator"
+				Filter="">
+				<File
+					RelativePath="..\..\land_allocator\include\aland_allocator_item.h">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\include\forest_land_leaf.h">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\include\iland_allocator.h">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\include\land_leaf.h">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\include\land_node.h">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\include\tree_land_allocator.h">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\include\unmanaged_land_leaf.h">
 				</File>
 			</Filter>
 		</Filter>
