@@ -41,7 +41,7 @@ public:
 	FinalDemandSector( const std::string& aRegionName );
 	virtual ~FinalDemandSector();
 	virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){};
-	virtual void supply( const int aPeriod, const GDP* aGDP ){};
+	virtual void supply( const GDP* aGDP, const int aPeriod ){};
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, 
         const int aPeriod );
     double getOutput( const int aPeriod ) const { return 0; }
@@ -52,7 +52,8 @@ public:
                            const int aPeriod );
 
     virtual void completeInit( const IInfo* aRegionInfo,
-                               DependencyFinder* aDependencyFinder );
+                               DependencyFinder* aDependencyFinder,
+                               ILandAllocator* aLandAllocator );
 
     virtual void setCalibratedSupplyInfo( const int aPeriod ) const {};
 protected:

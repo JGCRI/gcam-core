@@ -137,10 +137,14 @@ void ProductionSector::toDebugXMLDerived( const int period, std::ostream& out, T
 *          investor is then initialized.
 * \param aRegionInfo Regional information object.
 * \param aDependencyFinder Regional dependency finder.
+* \param aLandAllocator Regional land allocator.
 */
-void ProductionSector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder ){
+void ProductionSector::completeInit( const IInfo* aRegionInfo,
+                                     DependencyFinder* aDependencyFinder,
+                                     ILandAllocator* aLandAllocator )
+{
     // Call parent class complete init.
-    Sector::completeInit( aRegionInfo, aDependencyFinder );
+    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
 	// Set the market.
 	setMarket();
     // Initialize the investment object to the default if one has not been read in.
@@ -159,7 +163,7 @@ void ProductionSector::completeInit( const IInfo* aRegionInfo, DependencyFinder*
 *          market is initialized by setting the optionally read-in prices for
 *          each period into the marketplace, setting the market to solve if the
 *          ProductionSector is not a fixed-price sector, and setting the flag in
-*          the MarketInfo which tells whether the market is a fixed price
+*          the IInfo which tells whether the market is a fixed price
 *          market. Fixed price markets are sectors which do not have solved
 *          prices, the equalibrium price is always the initial price. This is
 *          for specifying price paths exogenously, usually for resource sectors.
@@ -180,7 +184,7 @@ void ProductionSector::setMarket() {
     if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
         marketplace->setPriceVector( name, regionName, sectorprice );
         for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
-            // MarketInfo needs to be set in period 0, but the market should never be set to solve 
+            // IInfo needs to be set in period 0, but the market should never be set to solve 
             // in period zero. 
             if( !mIsFixedPrice ){
                 if( period > 0 ){
@@ -363,7 +367,7 @@ const std::string& ProductionSector::getXMLNameStatic() {
 /*! \brief Calculate the price received for the sector good.
 * \details Calculates the price received for the output good of this sector by
 *          adjusting the market price for transportation costs and taxes. This
-*          price received is then set into the MarketInfo for this sector so it
+*          price received is then set into the IInfo for this sector so it
 *          can be accessed from other places in the model.
 * \param period Period for which to calculate the price received.
 */

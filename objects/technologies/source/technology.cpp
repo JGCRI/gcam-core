@@ -16,6 +16,7 @@
 #include "technologies/include/technology.h"
 #include "emissions/include/ghg.h"
 #include "emissions/include/ghg_output.h"
+#include "emissions/include/ghg_output_aggr.h"
 #include "emissions/include/so2_emissions.h"
 #include "emissions/include/ghg_input.h"
 #include "containers/include/scenario.h"
@@ -29,14 +30,18 @@
 #include "containers/include/dependency_finder.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
+#include "technologies/include/ical_data.h"
+
+// TODO: Factory for cal data objects.
+#include "technologies/include/cal_data_input.h"
+#include "technologies/include/cal_data_output.h"
+#include "technologies/include/cal_data_output_percap.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
 // static initialize.
-const string technology::XML_NAME1D = "technology";
-const string technology::XML_NAME2D = "period";
 const double LOGIT_EXP_DEFAULT = -6;
 
 // Technology class method definition
@@ -89,10 +94,7 @@ void technology::copy( const technology& techIn ) {
     fixedOutputVal = techIn.fixedOutputVal;
     name = techIn.name;
     fuelname = techIn.fuelname;
-    doCalibration = techIn.doCalibration;
-    calInputValue = techIn.calInputValue;
-    doCalOutput = techIn.doCalOutput;
-    calOutputValue = techIn.calOutputValue;
+
     emissmap = techIn.emissmap; 
     emfuelmap = techIn.emfuelmap; 
     emindmap = techIn.emindmap; 
@@ -100,6 +102,9 @@ void technology::copy( const technology& techIn ) {
     fuelPrefElasticity = techIn.fuelPrefElasticity;
     ghgNameMap = techIn.ghgNameMap; 
     
+    // Clone the existing cal data object if there is one.
+    // TODO: This may correct given the usage of clone in technology to copy forward.
+    mCalValue.reset( techIn.mCalValue.get() ? techIn.mCalValue->clone() : 0 );
     for (vector<Ghg*>::const_iterator iter = techIn.ghg.begin(); iter != techIn.ghg.end(); iter++) {
         ghg.push_back( (*iter)->clone() );
     }
@@ -140,10 +145,6 @@ void technology::initElementalMembers(){
     output = 0;
     fixedOutput = getFixedOutputDefault(); // initialize to no fixed supply
     fixedOutputVal = getFixedOutputDefault();
-    doCalibration = false;
-    doCalOutput = false;
-    calInputValue = 0;
-    calOutputValue = 0;
     totalGHGCost = 0;
     fuelPrefElasticity = 0;
 }
@@ -188,15 +189,6 @@ void technology::XMLParse( const DOMNode* node ) {
         else if( nodeName == "fuelprefElasticity" ){
             fuelPrefElasticity = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "calInputValue" ){
-            calInputValue = XMLHelper<double>::getValue( curr );
-            doCalibration = true;
-        }
-        else if( nodeName == "calOutputValue" ){
-            calOutputValue = XMLHelper<double>::getValue( curr );
-            doCalibration = true;
-            doCalOutput = true;
-        }
         else if( nodeName == "efficiency" ){
             effBase = XMLHelper<double>::getValue( curr );
         }
@@ -224,17 +216,29 @@ void technology::XMLParse( const DOMNode* node ) {
         else if( nodeName == "fixedOutput" ){
             fixedOutput = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == Ghg::getXMLNameStatic() ){
-            parseContainerNode( curr, ghg, ghgNameMap, new Ghg() );
+		else if( nodeName == CalDataInput::getXMLNameStatic() ){
+            parseSingleNode( curr, mCalValue, new CalDataInput );
+        }
+        else if( nodeName == CalDataOutput::getXMLNameStatic() ){
+            parseSingleNode( curr, mCalValue, new CalDataOutput );
+        }
+		else if( nodeName == CalDataOutputPercap::getXMLNameStatic() ){
+            parseSingleNode( curr, mCalValue, new CalDataOutputPercap );
+		}
+		else if( nodeName == Ghg::getXMLNameStatic() ){
+            parseContainerNode( curr, ghg, ghgNameMap, new Ghg );
         }
         else if( nodeName == GhgOutput::getXMLNameStatic() ){
-            parseContainerNode( curr, ghg, ghgNameMap, new GhgOutput() );
+            parseContainerNode( curr, ghg, ghgNameMap, new GhgOutput );
         }
         else if( nodeName == GhgInput::getXMLNameStatic() ){
-            parseContainerNode( curr, ghg, ghgNameMap, new GhgInput() );
+            parseContainerNode( curr, ghg, ghgNameMap, new GhgInput );
+        }
+        else if( nodeName == GhgOutputAggr::getXMLNameStatic() ){
+            parseContainerNode( curr, ghg, ghgNameMap, new GhgOutputAggr );
         }
         else if( nodeName == SO2Emissions::getXMLNameStatic() ){
-            parseContainerNode( curr, ghg, ghgNameMap, new SO2Emissions() );
+            parseContainerNode( curr, ghg, ghgNameMap, new SO2Emissions );
         }
         else if( nodeName == "note" ){
             note = XMLHelper<string>::getValue( curr );
@@ -252,25 +256,32 @@ void technology::XMLParse( const DOMNode* node ) {
 }
 
 //! Parses any input variables specific to derived classes
-bool technology::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ){
+bool technology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
     // do nothing. Defining method here even though it does nothing so that we do not
     // create an abstract class.
     return false;
 }
 
-/*! \brief Complete the initialization
-*
-* This routine is only called once per model run
-*
+/*!
+* \brief Complete the initialization of the technology.
+* \note This routine is only called once per model run
+* \param aSectorName Sector name, also the name of the product.
+* \param aDepDefinder Regional dependency finder.
+* \param aSubsectorInfo Subsector information object.
+* \param aLandAllocator Regional land allocator.
 * \author Josh Lurz
-* \warning markets are not necesarilly set when completeInit is called
+* \warning Markets are not necesarilly set when completeInit is called
 */
-void technology::completeInit( const string& aSectorName, DependencyFinder* aDepFinder ) {
+void technology::completeInit( const string& aSectorName,
+                               DependencyFinder* aDepFinder,
+                               const IInfo* aSubsectorInfo,
+                               ILandAllocator* aLandAllocator )
+{
     const string CO2_NAME = "CO2";
     if( !util::hasValue( ghgNameMap, CO2_NAME ) ) {
         // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
         // for CO2 this emissions coefficient is not used
-        Ghg* CO2 = new Ghg( CO2_NAME, "MTC", 0, 1, 0 ); // at least CO2 must be present
+        Ghg* CO2 = new Ghg( CO2_NAME, "MTC", 1 ); // at least CO2 must be present
         ghg.push_back( CO2 );
         ghgNameMap[ CO2_NAME ] = static_cast<int>( ghg.size() ) - 1;
     }
@@ -302,8 +313,8 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     
     XMLWriteElementCheckDefault( shrwts, "sharewt", out, tabs, 1.0 );
     
-    if (doCalibration) {
-        XMLWriteElement( calInputValue, "calInputValue", out, tabs );
+    if ( mCalValue.get() ){
+		mCalValue->toInputXML( out, tabs );
     }
     
     XMLWriteElement( fuelname, "fuelname", out, tabs );
@@ -336,8 +347,8 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     
     XMLWriteElement( fuelname, "fuelname", out, tabs );
     XMLWriteElement( shrwts, "sharewt", out, tabs );
-    if (doCalibration) {
-        XMLWriteElement( calInputValue, "calInputValue", out, tabs );
+	if ( mCalValue.get() ) {
+		mCalValue->toDebugXML( out, tabs );
     }
     XMLWriteElement( eff, "efficiencyEffective", out, tabs );
     XMLWriteElement( effBase, "efficiencyBase", out, tabs );
@@ -372,8 +383,8 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const string& technology::getXMLName1D() const {
-    return XML_NAME1D;
+const std::string& technology::getXMLName1D() const {
+	return getXMLNameStatic1D();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -385,8 +396,9 @@ const string& technology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& technology::getXMLNameStatic1D() {
-    return XML_NAME1D;
+const std::string& technology::getXMLNameStatic1D() {
+	const static string XML_NAME1D = "technology";
+	return XML_NAME1D;
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -397,8 +409,8 @@ const string& technology::getXMLNameStatic1D() {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const string& technology::getXMLName2D() const {
-    return XML_NAME2D;
+const std::string& technology::getXMLName2D() const {
+	return getXMLNameStatic2D();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -410,26 +422,39 @@ const string& technology::getXMLName2D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& technology::getXMLNameStatic2D() {
-    return XML_NAME2D;
+const std::string& technology::getXMLNameStatic2D() {
+	const static string XML_NAME2D = "period";
+	return XML_NAME2D;
 }
 
-//! Perform initializations that only need to be done once per period
-void technology::initCalc( const IInfo* aSubsectorInfo ) {    
-    if ( doCalOutput ) {
-        calInputValue = calOutputValue/eff;
-        doCalibration = true;
+/*! \brief Perform initializations that only need to be done once per period.
+* \param aRegionName Region name.
+* \param aSectorName Sector name, also the name of the product.
+* \param aSubsectorInfo Parent information container.
+* \param aDemographics Regional demographics container.
+* \param aPeriod Model period.
+*/
+void technology::initCalc( const string& aRegionName,
+                           const string& aSectorName,
+                           const IInfo* aSubsectorInfo,
+                           const Demographic* aDemographics,
+                           const int aPeriod )
+{
+    // initialize calDataobjects for the period.
+    if ( mCalValue.get() ){
+        mCalValue->initCalc( aDemographics, aPeriod );
     }
 
-    if ( calInputValue < 0 ) {
+	if ( mCalValue.get() && ( mCalValue->getCalInput( eff ) < 0 ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Negative calibration value for technology " << name << ". Calibration removed." << endl;
-        doCalibration = false;
+        mainLog << "Negative calibration value for technology " << name
+                << ". Calibration removed." << endl;
+		mCalValue.reset( 0 );
     }
 
     for( unsigned int i = 0; i < ghg.size(); i++ ){
-        ghg[i]->initCalc( );
+        ghg[i]->initCalc( aSubsectorInfo );
     }
 }
 
@@ -498,20 +523,24 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
     techcost = max( techcost, util::getSmallNumber() );
 }
 
-/*! \brief calculate technology unnormalized shares
-*
-* fuelPrefElasticity added 11/05/2004 sjs
-* 
+/*!
+* \brief Calculate unnormalized technology unnormalized shares.
 * \author Sonny Kim, Steve Smith
-* \param regionName region name
-* \param per model period
+* \param aRegionName Region name.
+* \param aSectorName Sector name, also the name of the product.
+* \param aGDP Regional GDP container.
+* \param aPeriod Model period.
 * \todo Check to see if power function for trival values really wastes time
 */
-void technology::calcShare( const string& regionName, const GDP* gdp, const int period ) {
-    share = shrwts * pow(techcost,lexp);
+void technology::calcShare( const string& aRegionName,
+                            const string& aSectorName,
+                            const GDP* aGDP,
+                            const int aPeriod )
+{
+    share = shrwts * pow( techcost, lexp );
     // This is rarely used, so probably worth it to not to waste cycles on the power function. sjs
     if ( fuelPrefElasticity != 0 ) {
-      double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
+      double scaledGdpPerCapita = aGDP->getBestScaledGDPperCap( aPeriod );
       share *= pow( scaledGdpPerCapita, fuelPrefElasticity );
     }
 }
@@ -639,19 +668,25 @@ void technology::adjShares(double subsecdmd, double subsecfixedOutput, double va
     }    
 }
 
-//! Calculates fuel input and technology output.
-/*! Adds demands for fuels and ghg emissions to markets in the marketplace
-* \param regionName name of the region
-* \param prodName name of the product for this sector
-* \param gdp pointer to gdp object
-* \param dmd total demand for this subsector
-* \param per Model period
+/*! \brief Calculates the amount of output from the technology.
+* \details Calculates the amount of output of the technology based on the share
+*          of the subsector demand. This is then used to determine the amount of
+*          input used, and emissions created.
+* \param aRegionName Region name.
+* \param aSectorName Sector name, also the name of the product.
+* \param aDemand Subsector demand for output.
+* \param aGDP Regional GDP container.
+* \param aPeriod Model period.
 */
-void technology::production(const string& regionName,const string& prodName,
-                            double dmd, const GDP* gdp, const int per) {
+void technology::production( const string& aRegionName,
+                             const string& aSectorName,
+                             const double aDemand,
+                             const GDP* aGDP,
+                             const int aPeriod )
+{
     // dmd is total subsector demand. Use share to get output for each
     // technology
-    output = share * dmd;
+    output = share * aDemand;
            
     if ( output < 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -665,16 +700,16 @@ void technology::production(const string& regionName,const string& prodName,
     Marketplace* marketplace = scenario->getMarketplace();
     // set demand for fuel in marketplace
     if( ( fuelname != "renewable" ) && ( fuelname != "none" ) ){ 
-        marketplace->addToDemand( fuelname, regionName, input, per );
+        marketplace->addToDemand( fuelname, aRegionName, input, aPeriod );
     }
 
     // Set the supply of the good to the marketplace.
     // Market doesn't exist for demand goods.
-    marketplace->addToSupply( prodName, regionName, output, per, false );
+    marketplace->addToSupply( aSectorName, aRegionName, output, aPeriod, false );
 
     // calculate emissions for each gas after setting input and output amounts
     for ( unsigned int i = 0; i < ghg.size(); ++i ) {
-        ghg[ i ]->calcEmission( regionName, fuelname, input, prodName, output, gdp, per );
+        ghg[ i ]->calcEmission( aRegionName, fuelname, input, aSectorName, output, aGDP, aPeriod );
     }
 }
 
@@ -842,12 +877,12 @@ void technology::setShareWeight( double shareWeightValue ) {
 * \return Boolean that is true if technoloy is calibrated
 */
 bool technology::getCalibrationStatus( ) const {
-    return doCalibration;
+    return mCalValue.get() != 0;
 }
 
 //! returns true if all output is either fixed or calibrated
 bool technology::outputFixed( ) const {
-    return ( doCalibration || ( fixedOutput >= 0 ) || ( shrwts == 0 ) );
+	return ( technology::getCalibrationStatus() || ( fixedOutput >= 0 ) || ( shrwts == 0 ) );
 }
 
 /*! \brief Returns true if this technology is available for production and not fixed
@@ -858,7 +893,7 @@ bool technology::outputFixed( ) const {
 * \return Boolean that is true if technology is available
 */
 bool technology::techAvailable( ) const {
-   if ( !doCalibration && ( fixedOutput >= 0  ||  shrwts == 0 ) ) {
+   if ( !technology::getCalibrationStatus() && ( fixedOutput >= 0  ||  shrwts == 0 ) ) {
       return false;  // this sector is not available to produce variable output
    } 
    return true;
@@ -881,20 +916,19 @@ double technology::getFuelcost( ) const {
 
 //! return technology calibration value
 double technology::getCalibrationInput( ) const {
-    return calInputValue;
+    return mCalValue.get() ? mCalValue->getCalInput( eff ) : 0;
 }
 
 //! scale technology calibration or fixed values
 void technology::scaleCalibrationInput( const double scaleFactor ) {
-    if ( scaleFactor != 0 ) {
-        calInputValue *= scaleFactor;
-        calOutputValue *= scaleFactor;
+    if ( mCalValue.get() ){
+        mCalValue->scaleValue( scaleFactor );
     }
 }
 
 //! return technology calibration value
-double technology::getCalibrationOutput( ) const {
-    return calInputValue * eff;
+double technology::getCalibrationOutput() const {
+    return mCalValue.get() ? mCalValue->getCalOutput( eff ) : 0;
 }
 
 //! return the cost of technology
@@ -993,13 +1027,9 @@ void technology::setYear( const int yearIn ) {
 *
 * \author Steve Smith
 */
-int technology::getNumbGHGs() const {
-    vector<string> ghgNames = getGHGNames();
-    if ( ghgNames[0] != "" ) {
-        return static_cast<int>( ghgNames.size() ); 
-    } else {
-        return 0;
-    }
+int technology::getNumbGHGs()  const {
+    std::vector<std::string> ghgNames = getGHGNames();
+    return static_cast<int>( ghgNames.size() ); 
 }
 
 /*! \brief check for fixed demands and set values to counter
@@ -1010,8 +1040,8 @@ int technology::getNumbGHGs() const {
 * \author Steve Smith
 * \param period Model period
 */
-void technology::tabulateFixedDemands( const string regionName, const int period ) {
-    const double MKT_NOT_ALL_FIXED = -1; // This should be same constant as used in region
+void technology::tabulateFixedDemands( const string regionName, const int period, const IInfo* aSubsectorIInfo ) {
+	const double MKT_NOT_ALL_FIXED = -1; 
     Marketplace* marketplace = scenario->getMarketplace();
 
     IInfo* marketInfo = marketplace->getMarketInfo( fuelname, regionName, period, false );
@@ -1021,7 +1051,7 @@ void technology::tabulateFixedDemands( const string regionName, const int period
             double fixedOrCalInput = 0;
             double fixedInput = 0;
             // this sector has fixed output
-            if ( doCalibration ) {
+			if ( technology::getCalibrationStatus() ) {
                 fixedOrCalInput = getCalibrationInput();
             } else if ( fixedOutput >= 0 ) {
                 fixedOrCalInput = getFixedInput();

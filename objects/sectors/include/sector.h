@@ -34,6 +34,7 @@ class Demographic;
 class NationalAccount;
 class MoreSectorInfo;
 class SocialAccountingMatrix;
+class ILandAllocator;
 
 /*! 
 * \ingroup Objects
@@ -54,6 +55,10 @@ class Sector: public IVisitable, public IRoundTrippable
 protected:
     std::string name; //!< Sector name
     std::string regionName; //!< region name
+
+    //! Type of the sector.
+	std::string mSectorType;
+
     double mBaseOutput; //!< Read in base year output.
     std::auto_ptr<IInfo> mSectorInfo; //!< Pointer to the sector's information store.
     std::vector<Subsector*> subsec; //!< subsector objects
@@ -72,7 +77,7 @@ protected:
     virtual void calcPrice( const int period );
     void production( const int period );
     void adjustForFixedSupply( const double marketDemand, const int period );
-    void setoutput( const double demand, const int period, const GDP* gdp ); 
+
     void adjSharesCapLimit( const int period ); 
     void checkShareSum( const int period ) const;
     double getFixedSupply( const int period ) const; 
@@ -84,41 +89,57 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
     virtual void setMarket() = 0;
+    static const std::string& getDefaultSectorType();
+    const std::string& getSectorType() const;
+
+    // TODO: Make this constant.
+    double getPrice( const int period );
+    bool outputsAllFixed( const int period ) const;
 public:
     explicit Sector( std::string regionName );
     virtual ~Sector();
     const std::string& getName() const;
     virtual void XMLParse( const xercesc::DOMNode* node );
-    virtual void completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder ) = 0;
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    
+    virtual void completeInit( const IInfo* aRegionInfo,
+                               DependencyFinder* aDepFinder,
+                               ILandAllocator* aLandAllocator ) = 0;
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod ) = 0;
+
+    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    
+
 
     virtual void calibrateSector( const int period ); 
     virtual void checkSectorCalData( const int period );
     virtual void setCalibratedSupplyInfo( const int aPeriod ) const = 0;
     void adjustForFixedOutput( const double marketDemand, const int period );
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
-    virtual void supply( const int aPeriod, const GDP* aGDP ) = 0;
+    
+    virtual void supply( const GDP* aGDP,
+                         const int aPeriod ) = 0;
+
     virtual double getOutput( const int period ) const = 0;
 
-    bool outputsAllFixed( const int period ) const;
+    bool isEnergyUseFixed( const int aPeriod ) const;
+
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
     double getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals = true ) const;
     double getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals = true ) const;
+	double getCalOutput( const int period, const std::string aSectorType ) const;
     void setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
-    void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
-    double getPrice( const int period );
+    virtual void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
 
     virtual void calcShare( const int period, const GDP* gdp );
     virtual void calcFinalSupplyPrice( const GDP* aGdp, const int aPeriod ) = 0;
     void emission( const int period );
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period ) const;
-    virtual double getEnergyInput( const int period );
+    virtual double getEnergyInput( const int period ) const;
     virtual void csvOutputFile() const;
     virtual void dbOutput() const;
     void subsec_outfile() const;
@@ -127,10 +148,12 @@ public:
     double getConsByFuel( const int period, const std::string& key) const;
     std::map<std::string, double> getemission( const int period ) const;
     std::map<std::string, double> getemfuelmap( const int period ) const;
+
     void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
-    void tabulateFixedDemands( const int period );
+    void tabulateFixedDemands( const int period, const GDP* gdp  );
 
     virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;    void updateMarketplace( const int period );
+
     virtual void finalizePeriod( const int aPeriod );
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;

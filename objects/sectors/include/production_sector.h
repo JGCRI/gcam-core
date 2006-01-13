@@ -35,9 +35,13 @@ public:
 	ProductionSector ( const std::string& aRegionName );
 	virtual ~ProductionSector();
 	void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){};
-	void supply( const int aPeriod, const GDP* aGDP ){};
+	void supply( const GDP* aGDP, const int aPeriod ){};
     static const std::string& getXMLNameStatic();
-    virtual void completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder );
+    
+    virtual void completeInit( const IInfo* aRegionInfo,
+                               DependencyFinder* aDepFinder,
+                               ILandAllocator* aLandAllocator );
+
     double getOutput( const int aPeriod ) const;
     
     virtual void initCalc( NationalAccount& aNationalAccount,

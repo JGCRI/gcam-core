@@ -370,7 +370,7 @@ void Subsector::parseBaseTechHelper( const DOMNode* aCurr, BaseTechnology* aNewT
 }
 
 //! Parses any input variables specific to derived classes
-bool Subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+bool Subsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     // do nothing
     // defining method here even though it does nothing so that we do not
     // create an abstract class.
@@ -382,10 +382,14 @@ bool Subsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr
 * This routine is only called once per model run
 * \param aSectorInfo The parent sector info object.
 * \param aDependencyFinder The regional dependency finder.
+* \param aLandAllocator Regional land allocator.
 * \author Josh Lurz
 * \warning markets are not necesarilly set when completeInit is called
 */
-void Subsector::completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder ) {
+void Subsector::completeInit( const IInfo* aSectorInfo,
+                              DependencyFinder* aDependencyFinder,
+                              ILandAllocator* aLandAllocator )
+{
     mSubsectorInfo.reset( InfoFactory::constructInfo( aSectorInfo ) );
     
     for( unsigned int i = 0; i < baseTechs.size(); i++) {
@@ -401,7 +405,8 @@ void Subsector::completeInit( const IInfo* aSectorInfo, DependencyFinder* aDepen
 
     typedef vector<vector<technology*> >::iterator TechVecIterator;
     for ( TechVecIterator techIter = techs.begin(); techIter != techs.end(); ++techIter ) {
-        bool isInvalid = initializeTechVector( *techIter, sectorName, aDependencyFinder );
+        bool isInvalid = initializeTechVector( *techIter, sectorName, aDependencyFinder,
+                                               mSubsectorInfo.get(), aLandAllocator );
         // Erase the entire vector if the technologies were invalid.
         if( isInvalid ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -424,11 +429,14 @@ void Subsector::completeInit( const IInfo* aSectorInfo, DependencyFinder* aDepen
 * \param aTechVector Vector of technologies to initialize.
 * \param aSectorName Sector name.
 * \param aDependencyFinder Regional dependency finder.
+* \param aLandAllocator Regional land allocator.
 * \return Whether the vector should be removed.
 */
 bool Subsector::initializeTechVector( vector<technology*>& aTechVector,
                                      const string& aSectorName,
-                                     DependencyFinder* aDependencyFinder )
+                                     DependencyFinder* aDependencyFinder,
+                                     const IInfo* aSubsecInfo,
+                                     ILandAllocator* aLandAllocator )
 {
     // First check that the entire vector is filled out with technologies.
     // Each vector is initialized to the number of periods the model will
@@ -450,7 +458,7 @@ bool Subsector::initializeTechVector( vector<technology*>& aTechVector,
 
     // Complete the initialization of a valid vector.
     for( TechIterator tech = aTechVector.begin(); tech != aTechVector.end(); ++tech ) {
-        ( *tech )->completeInit( aSectorName, aDependencyFinder );
+        ( *tech )->completeInit( aSectorName, aDependencyFinder, aSubsecInfo, aLandAllocator );
     }
     return false;
 }
@@ -617,12 +625,17 @@ const std::string& Subsector::getXMLNameStatic() {
     return XML_NAME;
 }
 
-/*! \brief Perform any initializations needed for each period.
-*
-* Any initializations or calcuations that only need to be done once per period (instead of every iteration) should be placed in this function.
-*
-* \warning the ghg part of this routine assumes the existance of technologies in the previous and future periods
+/*!
+* \brief Perform any initializations needed for each period.
+* \details Perform any initializations or calcuations that only need to be done
+*          once per period (instead of every iteration) should be placed in this
+*          function.
+* \warning The ghg part of this routine assumes the existance of technologies in
+*          the previous and future periods
 * \author Steve Smith, Sonny Kim
+* \param aNationalAccount National accounts container.
+* \param aDemographics Regional demographics container.
+* \param aMoreSectorInfo SGM sector info object.
 * \param aPeriod Model period
 */
 void Subsector::initCalc( NationalAccount& aNationalAccount,
@@ -632,7 +645,8 @@ void Subsector::initCalc( NationalAccount& aNationalAccount,
 {
     // Set any fixed demands
     for ( unsigned int i = 0; i < techs.size(); ++i ){
-        techs[i][ aPeriod ]->initCalc( mSubsectorInfo.get() );
+        techs[i][ aPeriod ]->initCalc( regionName, sectorName, mSubsectorInfo.get(),
+                                       aDemographics, aPeriod );
     }
 
     // Initialize the baseTechs. This might be better as a loop over tech types. 
@@ -688,7 +702,7 @@ void Subsector::initCalc( NationalAccount& aNationalAccount,
         
         int numberOfGHGs =  techs[ i ][ aPeriod ]->getNumbGHGs();
 
-        if ( numberOfGHGs != techs[i][ aPeriod - 1 ]->getNumbGHGs() ) {
+		if ( numberOfGHGs != techs[i][ aPeriod - 1 ]->getNumbGHGs() && aPeriod > 1 ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << name << " Number of GHG objects changed in period " << aPeriod;
@@ -718,9 +732,9 @@ void Subsector::initCalc( NationalAccount& aNationalAccount,
 * \author Steve Smith
 * \param period Model period
 */
-void Subsector::tabulateFixedDemands( const int period ) {
+void Subsector::tabulateFixedDemands( const int period, const IInfo* aSectorInfo ) {
     for( unsigned int i = 0; i < techs.size(); ++i ){        
-        techs[i][ period ]->tabulateFixedDemands( regionName, period );
+        techs[i][ period ]->tabulateFixedDemands( regionName, period, mSubsectorInfo.get() );
    }
 }
 
@@ -748,6 +762,7 @@ void Subsector::calcPrice( const int period ) {
         fuelprice[period] += techs[i][period]->getShare()*
             techs[i][period]->getFuelcost();
     }
+    
 }
 
 /*! \brief returns the sector price.
@@ -883,7 +898,7 @@ void Subsector::calcTechShares( const GDP* gdp, const int period ) {
         // calculate technology cost
         techs[i][period]->calcCost( regionName, sectorName, period );
         // determine shares based on technology costs
-        techs[i][period]->calcShare( regionName, gdp, period );
+        techs[i][period]->calcShare( regionName, sectorName, gdp, period );
         
         /*! \invariant Technology shares must always be valid. */
         assert( util::isValidNumber( techs[ i ][ period ]->getShare() ) );
@@ -913,34 +928,33 @@ void Subsector::calcTechShares( const GDP* gdp, const int period ) {
 * \warning there is no difference between demand and supply technologies. Control behavior with value of parameter fuelPrefElasticity
 */
 void Subsector::calcShare(const int period, const GDP* gdp ) {
+	// call function to compute technology shares
+	calcTechShares( gdp, period );
+	// calculate and return Subsector share; uses above price function
+	// calcPrice() uses normalized technology shares calculated above
 
-    // call function to compute technology shares
-    calcTechShares( gdp, period );
-    // calculate and return Subsector share; uses above price function
-    // calcPrice() uses normalized technology shares calculated above
+	// compute Subsector weighted average price of technologies
+	calcPrice( period );
 
-    // compute Subsector weighted average price of technologies
-    calcPrice( period );
+	// Check for unreasonable shareweights.
+	if ( shrwts[period]  > 1e4 ) {
+		ILogger& mainLog = ILogger::getLogger( "main_log" );
+		mainLog.setLevel( ILogger::WARNING );
+		mainLog << "Huge shareweight for sector " << sectorName << ", sub-sector " << name 	
+			    << " in region " << regionName << " of " << shrwts[period] << endl;
+	}
+	
+	// Calculate the subsector share based on its price.
+	if( subsectorprice[ period ] > 0 ){
+		double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
+		share[ period ] = shrwts[ period ] * pow( subsectorprice[ period ], lexp[ period ] )
+			                               * pow( scaledGdpPerCapita, fuelPrefElasticity[ period ] );
+	}
+	else {
+		share[ period ] = 0;
+	}
 
-    // Check for unreasonable shareweights.
     if ( shrwts[period]  > 1e4 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Huge shareweight for sector " << sectorName << ", sub-sector " << name  
-                << " in region " << regionName << " of " << shrwts[period] << endl;
-    }
-    
-    // Calculate the subsector share based on its price.
-    if( subsectorprice[ period ] > 0 ){
-        double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
-        share[ period ] = shrwts[ period ] * pow( subsectorprice[ period ], lexp[ period ] )
-                                           * pow( scaledGdpPerCapita, fuelPrefElasticity[ period ] );
-    }
-    else {
-        share[ period ] = 0;
-    }
-        
-   if ( shrwts[period]  > 1e4 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << " Huge shareweight for sector: " << sectorName << ", sub-sector " << name << " : shrwt " << shrwts[period];
@@ -1343,26 +1357,29 @@ void Subsector::adjShares( const double demand, double shareRatio,
     
 }
 
-/*! \brief The demand passed to this function is shared out at the technology level.
-* Demand from the "dmd" parameter (could be energy or energy service) is passed to technologies.
-*  This is then shared out at the technology level.
-*  See also sector::setoutput. 
+/*! \brief The demand passed to this function is shared out at the technology
+*          level.
+* Demand from the "dmd" parameter (could be energy or energy service) is passed
+* to technologies.
+*  This is then shared out at the technology level. See also sector::setOutput.
 *
 * \author Sonny Kim, Josh Lurz
-* \param regionName region name
-* \param prodName name of product for this sector
-* \param demand Total demand for this product
-* \param period Model period
-* \pre dmd must be the total demand for this project, so must be called after this has been determined
+* \param aDemand Total demand for this product.
+* \param aGDP Regional GDP container.
+* \param aPeriod Model period
 */
-void Subsector::setoutput( const double demand, const int period, const GDP* gdp ) {
+void Subsector::setOutput( const double aDemand,
+                           const GDP* aGDP,
+                           const int aPeriod )
+{
     // note that output is in service unit when called from demand sectors
     // multiply dmd by Subsector share go get the total demand to be supplied by this Subsector
-    double subsecdmd = share[period]* demand; 
+    double subsecdmd = share[ aPeriod ]* aDemand; 
     
     for ( unsigned int i = 0; i < techs.size(); ++i ){
         // calculate technology output and fuel input from Subsector output
-        techs[i][period]->production( regionName, sectorName, subsecdmd, gdp, period );
+        techs[ i ][ aPeriod ]->production( regionName, sectorName, subsecdmd,
+                                           aGDP, aPeriod );
     }
 }
 
@@ -1425,10 +1442,11 @@ void Subsector::adjustForCalibration( double sectorDemand, double totalfixedOutp
    }
 
    // Check to make sure share weights are not less than zero (and reset if they are)
-   if ( shrwts[ period ] < 0 ) {
-     cerr << "Share Weight is < 0 in Subsector " << name << endl;
-     cerr << "    shrwts[period]: " << shrwts[ period ] << " (reset to 1)" << endl;
-     shrwts[ period ] = 1;
+   if( shrwts[ period ] < 0 ) {
+       ILogger& mainLog = ILogger::getLogger( "main_log" );
+       mainLog.setLevel( ILogger::WARNING );
+       mainLog << "Share Weight is less than zero in Subsector " << name << ". Resetting to one." << endl;
+       shrwts[ period ] = 1;
    }
 
    int numberTechs = getNumberAvailTechs( period );
@@ -1553,11 +1571,19 @@ double Subsector::getCalAndFixedOutputs( const int period, const std::string& go
 * \param period Model period
 * \param goodName market good to determine the inputs for.
 * \param requiredOutput Amount of output to produce
+* \return Whether any input was changed.
 */
 bool Subsector::setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput ) {
 
+
+    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( goodName, regionName, period, false );
+
+    // Certain inputs may not exist.
+    if( !marketInfo ){
+        return false;
+    }
+    
     bool inputWasChanged = false;
-    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( goodName, regionName, period, true );
     for ( unsigned int i=0; i< techs.size(); i++ ) {
         if ( techHasInput( techs[ i ][ period ], goodName ) ) {
             double inputValue = requiredOutput / techs[ i ][ period ]->getEff();
@@ -2040,8 +2066,8 @@ void Subsector::MCDerivedClassOutput( ) const {
 
 //! calculate GHG emissions from annual production of each technology
 void Subsector::emission( const int period ){
-    /*! \pre period is less than or equal to max period. */
-    assert( period <= scenario->getModeltime()->getmaxper() );
+    /*! \pre period is less than max period. */
+    assert( period < scenario->getModeltime()->getmaxper() );
     summary[period].clearemiss(); // clear emissions map
     summary[period].clearemfuelmap(); // clear emissions map
     
@@ -2054,8 +2080,8 @@ void Subsector::emission( const int period ){
 
 //! calculate indirect GHG emissions from annual production of each technology
 void Subsector::indemission( const int period, const vector<Emcoef_ind>& emcoef_ind ) {
-    /*! \pre period is less than or equal to max period. */
-    assert( period <= scenario->getModeltime()->getmaxper() );
+    /*! \pre period is less than max period. */
+    assert( period < scenario->getModeltime()->getmaxper() );
     summary[period].clearemindmap(); // clear emissions map
     for( unsigned int i = 0; i < techs.size(); ++i ){
         techs[i][period]->indemission( emcoef_ind );
@@ -2071,8 +2097,8 @@ void Subsector::indemission( const int period, const vector<Emcoef_ind>& emcoef_
 * \return sector input
 */
 double Subsector::getInput( const int period ) const {
-    /*! \pre period is less than or equal to max period. */
-    assert( period <= scenario->getModeltime()->getmaxper() );
+    /*! \pre period is less than max period. */
+    assert( period < scenario->getModeltime()->getmaxper() );
     double inputSum = 0;
     for ( unsigned int i=0; i < techs.size(); i++ ) {
         inputSum += techs[i][period]->getInput();
@@ -2090,8 +2116,8 @@ double Subsector::getInput( const int period ) const {
 * \return sector output
 */
 double Subsector::getOutput( const int period ) const {
-    /*! \pre period is less than or equal to max period. */
-    assert( period <= scenario->getModeltime()->getmaxper() );
+    /*! \pre period is less than max period. */
+    assert( period < scenario->getModeltime()->getmaxper() );
     double outputSum = 0;
     for ( unsigned int i=0;i< techs.size(); i++ ) {
         outputSum += techs[i][period]->getOutput();
@@ -2175,8 +2201,8 @@ double Subsector::distributeInvestment( const IDistributor* aDistributor,
 * \return total carbon taxes paid by this sub-sector
 */
 double Subsector::getTotalCarbonTaxPaid( const int period ) const {
-    /*! \pre period is less than or equal to max period. */
-    assert( period <= scenario->getModeltime()->getmaxper() );
+    /*! \pre period is less than max period. */
+    assert( period < scenario->getModeltime()->getmaxper() );
     double sum = 0;
     for( unsigned int i = 0; i < techs.size(); ++i ){
         sum += techs[ i ][ period ]->getCarbonTaxPaid( regionName, period );
@@ -2189,12 +2215,11 @@ double Subsector::getTotalCarbonTaxPaid( const int period ) const {
 * \author Sonny Kim, Josh Lurz
 * \param period Model period
 * \pre updateSummary
-* \todo Sonny or Josh -- is this precondition correct? Please edit (I'm not sure I understand when these functions are valid) 
 * \return fuel consumption map
 */
 map<string, double> Subsector::getfuelcons( const int period ) const {
-    /*! \pre period is less than or equal to max period. */
-    assert( period <= scenario->getModeltime()->getmaxper() );
+    /*! \pre period is less than max period. */
+    assert( period < scenario->getModeltime()->getmaxper() );
     
     return summary[period].getfuelcons();
 }

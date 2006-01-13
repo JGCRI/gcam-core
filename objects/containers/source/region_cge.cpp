@@ -193,8 +193,9 @@ void RegionCGE::completeInit() {
     Region::completeInit();
     for( unsigned int i = 0; i < finalDemandSector.size(); i++) {
         // Pass null for the dependency finder argument as CGE regions don't
-        // have dependencies.
-        finalDemandSector[i]->completeInit( mRegionInfo.get(), 0 );
+        // have dependencies. Pass null for the regional land allocator 
+        // because CGE regions do not currently use one.
+        finalDemandSector[i]->completeInit( mRegionInfo.get(), 0, 0 );
     }
     for( unsigned int i = 0; i < factorSupply.size(); i++) {
         factorSupply[i]->completeInit( name );

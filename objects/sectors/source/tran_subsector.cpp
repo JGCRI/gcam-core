@@ -71,7 +71,7 @@ const std::string& TranSubsector::getXMLNameStatic() {
 }
 
 //! Parses any input variables specific to derived classes
-bool TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {    
+bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {    
     // additional read in for transportation
     const Modeltime* modeltime = scenario->getModeltime();
     if( nodeName == "speed" ){
@@ -90,12 +90,24 @@ bool TranSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* 
     return true;
 }
 
-//! Virtual function which specifies the XML name of the children of this class, the type of technology.
+/*! \brief Returns true if the nodename is a valid child for this class.
+*
+* Virtual function which specifies the XML name of the possible technology children of this class.
+* This function allows all technologies to be properly parsed using the base subsector code.
+* \author Steve Smith
+* \pre Needs cooresponding createChild() function
+* \return True if nodename is a valid child of this class.
+*/
 bool TranSubsector::isNameOfChild  ( const string& nodename ) const {
     return nodename == TranTechnology::getXMLNameStatic1D();
 }
 
-//! Virtual function to generate a child element or construct the appropriate technology.
+/*! \brief Virtual function to generate a child element or construct the appropriate technology.
+*
+* \pre Needs cooresponding isNameOfChild() function
+* \author Steve Smith
+* \return returns a new child object of appropriate type.
+*/
 technology* TranSubsector::createChild( const std::string& nodename ) const {
     return new TranTechnology();
 }
@@ -131,12 +143,26 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
     XMLWriteElement( baseScaler, "baseScaler", out, tabs );
 }
 
-/*! \brief Perform any initializations needed for each period.
-*
-* Set loadFactor in technology (see TranTechnology::setLoadFactor documentation)
-*
-* \author Steve Smith
-* \param period Model period
+void TranSubsector::completeInit( const IInfo* aSectorInfo,
+                                  DependencyFinder* aDependencyFinder,
+                                  ILandAllocator* aLandAllocator )
+{
+    // Only call base class completeInit.
+    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator );
+}
+
+/*!
+* \brief Perform any initializations needed for each period.
+* \details Perform any initializations or calcuations that only need to be done
+*          once per period (instead of every iteration) should be placed in this
+*          function.
+* \warning The ghg part of this routine assumes the existance of technologies in
+*          the previous and future periods
+* \author Steve Smith, Sonny Kim
+* \param aNationalAccount National accounts container.
+* \param aDemographics Regional demographics container.
+* \param aMoreSectorInfo SGM sector info object.
+* \param aPeriod Model period
 */
 void TranSubsector::initCalc( NationalAccount& aNationalAccount,
                               const Demographic* aDemographics,
@@ -225,13 +251,16 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
 *  This is then shared out at the technology level.
 *  See explanation for sector::setoutput. 
 */
-void TranSubsector::setoutput( const double demand, const int period, const GDP* gdp ) {
+void TranSubsector::setOutput( const double aDemand,
+                               const GDP* aGDP,
+                               const int aPeriod )
+{
     // output is in service unit when called from demand sectors
-    double subsecdmd = share[period]* demand; // share is subsector level
+    double subsecdmd = share[ aPeriod ]* aDemand; // share is subsector level
     
     for( unsigned int i = 0; i < techs.size(); ++i ){
         // calculate technology output and fuel input from subsector output
-        techs[i][period]->production( regionName, sectorName, subsecdmd, gdp, period );
+        techs[i][ aPeriod ]->production( regionName, sectorName, subsecdmd, aGDP, aPeriod );
     }
 }
 

@@ -40,13 +40,19 @@ class BuildingHeatCoolDmdTechnology : public BuildingGenericDmdTechnology
 public:
     BuildingHeatCoolDmdTechnology(); // default construtor
     virtual const std::string& getXMLName1D() const = 0;
-    virtual void initCalc( const IInfo* aSubsectorInfo );
+    
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aSectorName,
+                           const IInfo* aSubsectorIInfo,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
+
     void adjustForCalibration( double subSectorDemand, const std::string& regionName,
 		                       const IInfo* subsectorInfo, const int period );
 private:
     static const std::string XML_NAME1D; //!< tag name for toInputXML
 protected:
-    bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual double getDemandFnPrefix( const std::string& regionName, const int period ) = 0;

@@ -43,7 +43,12 @@ public:
     virtual BuildingCoolingDmdTechnology* clone() const;
     virtual const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
-    virtual void initCalc( const IInfo* aSubsectorInfo );
+    
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aSectorName,
+                           const IInfo* aSubsectorIInfo,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
 protected:
     double getInternalGainsSign() const;
     double getDemandFnPrefix( const std::string& regionName, const int period );

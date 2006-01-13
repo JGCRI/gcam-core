@@ -52,19 +52,6 @@ DemandSector::DemandSector( const string aRegionName ): Sector( aRegionName ){
 DemandSector::~DemandSector() {
 }
 
-/*! \brief Initialize the demand sector.
-* \details Currently only calls the base class initCalc.
-* \param aNationalAccount National accounts container.
-* \param aDemographics Regional demographics object.
-* \param aPeriod Period for which to initialize the DemandSector.
-*/
-void DemandSector::initCalc( NationalAccount& aNationalAccount,
-                             const Demographic* aDemographics,
-                             const int aPeriod )
-{
-    Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
-}
-
 /*! \brief Override the calculation of the final supply price to do nothing currently.
 * \details Does not do anything.
 * \param aGDP The regional GDP container.
@@ -76,10 +63,10 @@ void DemandSector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
 /*! \brief Override the setting of supply to not produce any output.
 * \details Demand sectors to do not produce any output.
 * \author Josh Lurz
-* \param aPeriod Model period
 * \param aGDP GDP object uses to calculate various types of GDPs.
+* \param aPeriod Model period.
 */
-void DemandSector::supply( const int aPeriod, const GDP* aGDP ) {
+void DemandSector::supply( const GDP* aGDP, const int aPeriod ) {
 }
 
 /*! \brief Parses any attributes specific to derived classes
@@ -153,6 +140,7 @@ void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
     XMLWriteElement( techChangeCumm[ period ], "techChangeCumm", out, tabs );
     
     // Now write out own members.
+    XMLWriteElement( getEnergyInput( period ), "TFE", out, tabs );
     XMLWriteElement( outputsAllFixed( period ), "OutputAllFixed", out, tabs );
     XMLWriteElement( service[ period ], "service", out, tabs );
     XMLWriteElement( getCalOutput( period ), "TotalCalOutput", out, tabs );
@@ -169,7 +157,7 @@ void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overridden by derived class pointers.
+* This function may be virtual to be overriden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -241,13 +229,17 @@ void DemandSector::calibrateSector( const int period ) {
         else {
             double scaleFactor = totalCalOutputs/getService( period );
             scaleOutput( period , scaleFactor );
-            if ( abs( scaleFactor - 1 ) > util::getSmallNumber() ) {
-                ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-                calibrationLog.setLevel( ILogger::DEBUG );
-                calibrationLog << "scaled demand sector output for " << regionName << ":" << name <<" by " << totalCalOutputs/service[ period ] << endl;
-            }
         }
     }
+}
+
+/*! \brief Returns the weighted energy price.
+* \details Returns the price of the sector weighted by the output in the base
+*          period.
+* \return The weighted energy price.
+*/
+double DemandSector::getWeightedEnergyPrice ( const int aPeriod ) {
+	return getOutput( 0 ) * getPrice( aPeriod );
 }
 
 //! Set output for Sector (ONLY USED FOR energy service demand at present).
@@ -264,10 +256,10 @@ to equal the total Sector output.
 * \param period Model period
 * \param gdp GDP object uses to calculate various types of GDPs.
 */
-void DemandSector::setoutput( const double demand, const int period, const GDP* gdp ) {
+void DemandSector::setOutput( const double demand, const GDP* gdp, const int period ) {
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         // set subsector output from Sector demand
-        subsec[ i ]->setoutput( demand, period, gdp );
+        subsec[ i ]->setOutput( demand, gdp, period );
     }
 }
 
@@ -280,6 +272,8 @@ void DemandSector::setoutput( const double demand, const int period, const GDP* 
 * \author Steve Smith
 * \param scaleFactor amount by which to scale output from this sector
 * \param period Model period
+* \todo need to generalize scaling and aggdemand function so that multiple periods can be calibrated if necessary
+* \todo clean-up code below after merging (left for now to ease merge)
 */
 void DemandSector::scaleOutput( int period, double scaleFactor ) {
     const Modeltime* modeltime = scenario->getModeltime();
@@ -298,6 +292,10 @@ void DemandSector::scaleOutput( int period, double scaleFactor ) {
 
         aeei[ period ]  = aeei[ period ] * aeeiScale;
 
+        ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+        calibrationLog.setLevel( ILogger::DEBUG );
+        calibrationLog << "scaled demand sector output for " << regionName << ":" << name <<" by " << scaleFactor << " using AEEI." << endl;
+
         if ( !util::isValidNumber( aeei[ period ] ) ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -306,15 +304,65 @@ void DemandSector::scaleOutput( int period, double scaleFactor ) {
             aeei[ period ]  = aeeiSave;
         }
     }
+    else if ( fabs( 1 - scaleFactor ) > 1e-6 && aeei[ period ] == 0 ) {
+        // If AEEI is zero, then must scale base output instead.
+
+        if( service[ 0 ] == 0 ) {
+            mBaseOutput *= scaleFactor;
+        }
+        else {
+            service[ 0 ] *= scaleFactor;
+        }
+
+        ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+        calibrationLog.setLevel( ILogger::DEBUG );
+        calibrationLog << "Scaled demand sector output for " << regionName << " " << name
+                       << " by " << scaleFactor << " using period 0 base output." << endl;
+    }
+}
+
+/*! \brief Perform any initializations needed for each period.
+*
+* Any initializations or calcuations that only need to be done once per period
+* (instead of every iteration) should be placed in this function.
+*
+* \author James Blackwood
+* \param aNationalAccount National accounts container.
+* \param aDemographics Regional demographics object.
+* \param aPeriod Period for which to initialize the DemandSector.
+*/
+void DemandSector::initCalc( NationalAccount& nationalAccount, const Demographic* aDemographics, const int aPeriod )
+{
+	Sector::initCalc( nationalAccount, aDemographics, aPeriod );
+	
+    // TODO: What is going on here?
+	if ( ( getCalOutput( aPeriod ) != 0 ) && ( getOutput( 0 ) == 0 ) ) {
+		mBaseOutput = getCalOutput( aPeriod );
+	}
 }
 
 /*! \brief Complete the initialization of a demand sector.
 * \param aRegionInfo Regional information object.
 * \param aDependencyFinder The region's dependency finder.
+* \param aLandAllocator Regional land allocator.
 */
-void DemandSector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder ) {
-    Sector::completeInit( aRegionInfo, aDependencyFinder );
+void DemandSector::completeInit( const IInfo* aRegionInfo,
+                                 DependencyFinder* aDependencyFinder,
+                                 ILandAllocator* aLandAllocator )
+{
+    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
     pElasticityBase = pElasticity[ 0 ]; // Store the base year price elasticity.
+
+    // Check to see if demand sector has the same name as a market.
+    // TODO: This check relies on SupplySector completeInit occurring first.
+    Marketplace* marketplace = scenario->getMarketplace();
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( marketplace->getPrice(name, regionName, modeltime->getBasePeriod(), false ) != Marketplace::NO_MARKET_PRICE ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Demand sector " << name << " in region " << regionName 
+                << " appears to have the same name as an exiting market. This may cause an error. " << endl;
+    }
 }
 
 /*! \brief Calculate end-use service price elasticity
@@ -351,20 +399,21 @@ void DemandSector::aggdemand( const GDP* gdp, const int period ) {
     double serviceDemand;
     double pelasticity = pElasticity[period];
     const double base = getOutput(0);
-    double priceRatio;
     // demand for service
     if (period == 0) {
-        priceRatio = 0;
-
         serviceDemand = base; // base output is initialized by data
         techChangeCumm[period] = 1; // base year technical change
     }
     else {
         const int normPeriod = modeltime->getyr_to_per(1990);
-        const int basePer = modeltime->getBasePeriod();
-        priceRatio = getPrice( period ) / getPrice( normPeriod );
-        // perCapitaBased is true or false
+        double priceRatio = 1;
+        if( period > normPeriod ){
+            assert( getPrice( normPeriod ) > 0 );
+            priceRatio = getPrice( period ) / getPrice( normPeriod );
+            assert( util::isValidNumber( priceRatio ) );
+        }
 
+        const int basePer = modeltime->getBasePeriod();
         double gdpRatio = gdp->getGDP( period ) / gdp->getGDP( basePer );
         // If perCapitaBased, service_demand = B * P^r * GDPperCap^r * Population.
         // All values are relative to the base year
@@ -391,9 +440,9 @@ void DemandSector::aggdemand( const GDP* gdp, const int period ) {
     // adjust demand using cummulative technical change
     assert( techChangeCumm[ period ] > 0 );
     service[ period ] = serviceDemand / techChangeCumm[ period ];
-    
+
     // sets subsector outputs, technology outputs, and market demands
-    setoutput( service[ period ], period, gdp );
+    setOutput( service[ period ], gdp, period );
 }
 
 //! Write sector output to database.
@@ -451,6 +500,12 @@ void DemandSector::dbOutput() const {
     // End-use service income elasticity
     dboutput4(regionName,"End-Use Service","Elasticity",secname + "_income"," ",iElasticity);
     
+    // TFE for this demand sector
+    for (m=0;m<maxper;m++) {
+        temp[m] = getEnergyInput( m );
+    }
+    dboutput4(regionName,"Final Energy Cons",name,"zTotal","EJ",temp);
+
     // sector fuel consumption by fuel type
     typedef map<string,double>:: const_iterator CI;
     map<string,double> tfuelmap = Sector::getfuelcons(m=0);

@@ -17,25 +17,44 @@
 
 #include "containers/include/region.h"
 #include "containers/include/gdp.h"
-#include "util/base/include/summary.h"
+#include "containers/include/scenario.h"
+#include "containers/include/national_account.h"
+#include "containers/include/info_factory.h"
+#include "containers/include/iinfo.h"
+#include "containers/include/dependency_finder.h"
+
+// TODO: This needs a factory.
 #include "sectors/include/sector.h"
 #include "sectors/include/supply_sector.h"
 #include "sectors/include/production_sector.h"
 #include "sectors/include/demand_sector.h"
+#include "sectors/include/food_demand_sector.h"
+#include "sectors/include/food_supply_sector.h"
+#include "sectors/include/forest_demand_sector.h"
+#include "sectors/include/forest_supply_sector.h"
 #include "sectors/include/tran_sector.h"
 #include "sectors/include/ag_sector.h"
 #include "sectors/include/building_dmd_sector.h"
 #include "sectors/include/building_supply_sector.h"
-#include "resources/include/resource.h"
 #include "sectors/include/export_sector.h"
+#include "sectors/include/interm_supply_sector.h"
+
+#include "resources/include/resource.h"
+
 #include "demographics/include/demographic.h"
+
 #include "emissions/include/ghg_policy.h"
-#include "util/base/include/xml_helper.h"
-#include "containers/include/scenario.h"
 #include "emissions/include/indirect_emiss_coef.h"
-#include "containers/include/world.h"
-#include "util/base/include/model_time.h" 
+#include "emissions/include/total_sector_emissions.h"
+
 #include "marketplace/include/marketplace.h"
+
+#include "land_allocator/include/tree_land_allocator.h"
+
+#include "util/base/include/summary.h"
+#include "util/base/include/ivisitor.h"
+#include "util/base/include/xml_helper.h"
+#include "util/base/include/model_time.h" 
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
@@ -44,12 +63,6 @@
 #include "util/curves/include/xy_data_point.h"
 #include "util/curves/include/point_set.h"
 #include "util/curves/include/explicit_point_set.h"
-#include "sectors/include/interm_supply_sector.h"
-#include "containers/include/dependency_finder.h"
-#include "util/base/include/ivisitor.h"
-#include "containers/include/national_account.h"
-#include "containers/include/info_factory.h"
-#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -64,12 +77,12 @@ Region::Region() {
     *        parsed. 
     */
     assert( scenario->getModeltime() );
-    
+
     // Resize all vectors to maximum period
     const int maxper = scenario->getModeltime()->getmaxper();
     TFEcalb.resize( maxper ); // Total Final Energy calibration value
     TFEPerCapcalb.resize( maxper ); // Total Final Energy per capita calibration value. This is converted to total TFE using population.
-    priceSer.resize( maxper ); // aggregate price for demand services
+    mEnergyServicePrice.resize( maxper ); // aggregate price for demand services
     carbonTaxPaid.resize( maxper ); // total regional carbon taxes paid
     summary.resize( maxper ); // summary object for reporting
     calibrationGDPs.resize( maxper ); // GDPs for calibration
@@ -78,6 +91,7 @@ Region::Region() {
 
     heatingDegreeDays = 0;
     coolingDegreeDays = 0;
+    mRotationPeriod = 0;
 }
 
 //! Default destructor destroys sector, demsector, Resource, agSector, and
@@ -129,10 +143,10 @@ void Region::XMLParse( const DOMNode* node ){
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
-    
+
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::WARNING );
-    
+
     // loop through the child nodes.
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
         DOMNode* curr = nodeList->item( i );
@@ -163,6 +177,9 @@ void Region::XMLParse( const DOMNode* node ){
         else if( nodeName == "heatingDegreeDays" ) {
             heatingDegreeDays = XMLHelper<double>::getValue( curr );
         }
+        else if( nodeName == "rotationPeriod" ) {
+            mRotationPeriod = XMLHelper<int>::getValue( curr );
+        }
         else if( nodeName == DepletableResource::getXMLNameStatic() ){
             parseContainerNode( curr, resources, resourceNameMap, new DepletableResource() );
         }
@@ -188,12 +205,30 @@ void Region::XMLParse( const DOMNode* node ){
         else if( nodeName == DemandSector::getXMLNameStatic() ){
             parseContainerNode( curr, demandSector, demandSectorNameMap, new DemandSector( name ) );
         }
+        else if( nodeName == FoodDemandSector::getXMLNameStatic() ){
+            parseContainerNode( curr, demandSector, demandSectorNameMap, new FoodDemandSector( name ) );
+        }
+        else if( nodeName == FoodSupplySector::getXMLNameStatic() ) {
+            parseContainerNode( curr, supplySector, supplySectorNameMap, new FoodSupplySector( name ) );
+        }
+        else if( nodeName == ForestDemandSector::getXMLNameStatic() ){
+            parseContainerNode( curr, demandSector, demandSectorNameMap, new ForestDemandSector( name ) );
+        }
+        else if( nodeName == ForestSupplySector::getXMLNameStatic() ) {
+            parseContainerNode( curr, supplySector, supplySectorNameMap, new ForestSupplySector( name ) );
+        }
         else if( nodeName == BuildingDemandSector::getXMLNameStatic() ){
             parseContainerNode( curr, demandSector, demandSectorNameMap, new BuildingDemandSector( name ) );
+        }
+        else if( nodeName == TotalSectorEmissions::getXMLNameStatic() ){
+            parseContainerNode( curr, mAggEmissionsCalculators, totalSectorEmissionsNameMap, new TotalSectorEmissions );
         }
         // transportation sector is contained in demandSector
         else if( nodeName == TranSector::getXMLNameStatic() ){
             parseContainerNode( curr, demandSector, demandSectorNameMap, new TranSector( name ) );
+        } 
+        else if ( nodeName == TreeLandAllocator::getXMLNameStatic() ) {
+            parseSingleNode( curr, mLandAllocator, new TreeLandAllocator );
         }
         else if( nodeName == AgSector::getXMLNameStatic() ) {
             if( Configuration::getInstance()->getBool( "agSectorActive" ) ){
@@ -281,13 +316,14 @@ bool Region::XMLDerivedClassParse( const std::string& nodeName, const xercesc::D
 *       be better in sector. This may require deriving supply sector.
 */
 void Region::completeInit() {
+    // Region info has no parent Info.
+    mRegionInfo.reset( InfoFactory::constructInfo( 0 ) );
+    mRegionInfo->setInteger( "rotationPeriod", mRotationPeriod );
+
     // initialize demographic
     if( demographic.get() ){
         demographic->completeInit();
     }
-
-    // Region info has no parent Info.
-    mRegionInfo.reset( InfoFactory::constructInfo( 0 ) );
 
     // Initialize the GDP
     if( gdp.get() ){
@@ -302,18 +338,21 @@ void Region::completeInit() {
             if ( TFEcalb[ period ] != 0 ) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Both TFEcalb and TFEPerCapcalb read in region " << name << ". TFEperCap used." << endl;
+                mainLog << "Both TFEcalb and TFEPerCapcalb read in region "
+                        << name << " for period " << period << ". TFEperCap used." << endl;
             }
-            // Convert from GJ/cap to EJ. Pop is in 1000's, so need an additional 1e6 scale to get from GJ to EJ 
-            TFEcalb [ period ]  = TFEPerCapcalb [ period ] * demographic->getTotal( period ) / 1e6;
+            // Convert from GJ/cap to EJ. Pop is in 1000's, so need an additional 1e6 scale to get from GJ to EJ
+            // TODO: This will eventually write back out, so if this input file were used again the above warning
+            // would be triggered.
+            TFEcalb[ period ] = TFEPerCapcalb[ period ] * demographic->getTotal( period ) / 1e6;
         }
     }
-    
+
     // Initialize the dependency finder.
     // This may need to move to init calc when markets change by period.
     auto_ptr<DependencyFinder> depFinder( new DependencyFinder( scenario->getMarketplace(), name ) );
     for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
-        ( *sectorIter )->completeInit( mRegionInfo.get(), depFinder.get() );
+        ( *sectorIter )->completeInit( mRegionInfo.get(), depFinder.get(), mLandAllocator.get() );
         Emcoef_ind temp( ( *sectorIter )->getName() );
         emcoefInd.push_back( temp );
     }
@@ -328,25 +367,30 @@ void Region::completeInit() {
         agSector->completeInit( name );
     }
 
-    for( ResourceIterator resourceIter = resources.begin(); resourceIter != resources.end();
-         ++resourceIter )
-    {
+    if ( mLandAllocator.get() ) {
+        // This needs to be after completeInit for supply sectors is called
+        // TODO: Because...?
+        mLandAllocator->completeInit( name, mRegionInfo.get() );
+    }
+
+    for( ResourceIterator resourceIter = resources.begin(); resourceIter != resources.end(); ++resourceIter ) {
         (*resourceIter)->completeInit( name );
     }
 
     for( DemandSectorIterator demandSectorIter = demandSector.begin();
-         demandSectorIter != demandSector.end(); ++demandSectorIter )
+        demandSectorIter != demandSector.end(); ++demandSectorIter )
     {
         // Pass null in for the dependency finder so that the demand sector
         // technologies will not add their dependencies. This is because demand
-        // sectors are not currently included in the ordering.
-        ( *demandSectorIter )->completeInit( mRegionInfo.get(), 0 );
+        // sectors are not currently included in the ordering. Pass null for the land allocator
+        // since demand sectors cannot allocate land.
+        ( *demandSectorIter )->completeInit( mRegionInfo.get(), 0, 0 );
     }
 
     for( GHGPolicyIterator ghgPolicy = mGhgPolicies.begin(); ghgPolicy != mGhgPolicies.end(); ++ghgPolicy ){
         (*ghgPolicy)->completeInit( name );
     }
-    
+
 #if SORT_TESTING
     // Reorder sectors before sorting to test it.
     if( !sectorOrderList.empty() ){
@@ -354,7 +398,10 @@ void Region::completeInit() {
     }
 #endif
     // Sort the sectors according to the order given by the dependency finder.
-    // This should be moved to RegionMiniCAM to avoid confusion.
+
+    // This needs to be at the end of completeInit so that all objects have
+    // completed their calls to aDepFinder->addDependency. This should be moved
+    // to RegionMiniCAM to avoid confusion.
     depFinder->createOrdering();
     reorderSectors( depFinder->getOrdering() );
 
@@ -380,6 +427,8 @@ void Region::setupCalibrationMarkets() {
                 mainLog << "Both GDPcal and GDPcalPerCapita read in region " << name << ". GDPcalPerCapita used." << endl;
             }
             // Convert from GDP/cap ($) to millions of dollars GDP total. Pop is in 1000's, so need an additional 1e3 scale to convert to millions
+            // TODO: This will eventually write back out, so if this input file were used again the above warning
+            // would be triggered.
             calibrationGDPs [ period ]  = GDPcalPerCapita [ period ] * demographic->getTotal( period )/1e3;
         }
     }
@@ -417,11 +466,11 @@ bool Region::reorderSectors( const vector<string>& aOrderList ){
     // Create temporary copy of the sectors and the sector name map.
     vector<Sector*> originalOrder = supplySector;
     map<string,int> originalNameMap = supplySectorNameMap;
-    
+
     // Clear the list of sectors and sectorNames. 
     supplySector.clear();
     supplySectorNameMap.clear();
-    
+
     // Get the dependency finder logger.
     ILogger& depFinderLog = ILogger::getLogger( "sector_dependencies" );
 
@@ -447,7 +496,7 @@ bool Region::reorderSectors( const vector<string>& aOrderList ){
         else {
             depFinderLog.setLevel( ILogger::DEBUG );
             depFinderLog << *currSectorName << " is not the name of an existing sector. "
-                         << "It will not be included in the sector ordering." << endl;
+                << "It will not be included in the sector ordering." << endl;
         } // end else
     } // end for.
 
@@ -456,19 +505,19 @@ bool Region::reorderSectors( const vector<string>& aOrderList ){
         ILogger& mainLog = ILogger::getLogger( "main_log");
         mainLog.setLevel( ILogger::ERROR );
         mainLog << currSecName->first << " was not assigned a position in the explicit sector ordering list." << endl
-                << "This sector will be removed from the model." << endl;
-        
+            << "This sector will be removed from the model." << endl;
+
         depFinderLog.setLevel( ILogger::ERROR );
         depFinderLog << currSecName->first << " was not assigned a position in the explicit sector ordering list." << endl
-                     << "This sector will be removed from the model." << endl;
-        
+            << "This sector will be removed from the model." << endl;
+
 
         // This sector is not in the new list, so free its memory. 
         delete originalOrder[ currSecName->second ];
     }
     // This was successful if the sector name map is empty, so that all sectors
     // were ordered.
-    
+
     // Print out sector ordering for debugging purposes
     depFinderLog.setLevel( ILogger::DEBUG );
     depFinderLog << "SECTOR ORDERING FOR REGION " << name << endl;
@@ -477,7 +526,7 @@ bool Region::reorderSectors( const vector<string>& aOrderList ){
         depFinderLog << *currSectorName << ", ";
     }
     depFinderLog << endl;
-        
+
     return originalNameMap.empty();
 }
 
@@ -502,15 +551,23 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
 
     XMLWriteElementCheckDefault( heatingDegreeDays, "heatingDegreeDays", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( coolingDegreeDays, "coolingDegreeDays", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mRotationPeriod, "rotationPeriod", out, tabs, 0 );
 
     // write the xml for the class members.
     // write out the single population object.
     if( demographic.get() ){
         demographic->toInputXML( out, tabs);
     }
+
+    // write out data for land allocator
+    if( mLandAllocator.get() ){
+        mLandAllocator->toInputXML( out, tabs);
+    }
+
     if( gdp.get() ){ // Check if gdp object exists
         gdp->toInputXML( out, tabs );
     }
+
     // write out the resources objects.
     for( CResourceIterator i = resources.begin(); i != resources.end(); i++ ){
         ( *i )->toInputXML( out, tabs );
@@ -526,6 +583,10 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
         ( *k )->toInputXML( out, tabs );
     }
 
+    for( unsigned int i = 0; i < mAggEmissionsCalculators.size(); ++i ){
+        mAggEmissionsCalculators[ i ]->toInputXML( out, tabs );
+    }
+
     if( agSector.get() ){
         agSector->toInputXML( out, tabs );
     }
@@ -537,7 +598,7 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
     for( CGHGPolicyIterator l = mGhgPolicies.begin(); l != mGhgPolicies.end(); l++ ){
         ( *l )->toInputXML( out, tabs );
     }
-    
+
     // Note: The count function is an STL algorithm that counts the number of
     // times a value occurs within the a range of a container. The first two
     // arguments to the function are the range of the container to search, the
@@ -581,22 +642,22 @@ void Region::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 * \param tabs Tabs object used to track the number of tabs to print.
 */
 void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-    
+
     XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write out basic datamembers
     XMLWriteElement( heatingDegreeDays, "heatingDegreeDays", out, tabs );
     XMLWriteElement( coolingDegreeDays, "coolingDegreeDays", out, tabs );
+    XMLWriteElement( mRotationPeriod, "rotationPeriod", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( mGhgPolicies.size() ), "noGhg", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( resources.size() ), "numResources", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( supplySector.size() ), "noSSec", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( demandSector.size() ), "noDSec", out, tabs );
     XMLWriteElement( calibrationGDPs[ period ], "calibrationGDPs", out, tabs );
-    XMLWriteElement( priceSer[ period ], "priceSer", out, tabs );
+    XMLWriteElement( mEnergyServicePrice[ period ], "mEnergyServicePrice", out, tabs );
     XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
     XMLWriteElement( TFEcalb[ period ], "TFECalb", out, tabs );
- 
-    XMLWriteElement( getTotFinalEnergy ( period ) , "TotalFinalEnergy", out, tabs );
+    XMLWriteElement( getTotFinalEnergy( period ), "TotalFinalEnergy", out, tabs );
 
     // Write out the Co2 Coefficients. 
     for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
@@ -613,6 +674,11 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     }
     if( demographic.get() ){
         demographic->toDebugXML( period, out, tabs );
+    }
+
+    // Write out the land allocator.
+    if ( mLandAllocator.get() ) {
+        mLandAllocator->toDebugXML( period, out, tabs );
     }
 
     // write out the resources objects.
@@ -637,6 +703,11 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     for( CGHGPolicyIterator currPolicy = mGhgPolicies.begin(); currPolicy != mGhgPolicies.end(); ++currPolicy ){
         (*currPolicy)->toDebugXML( period, out, tabs );
     }
+
+    for( unsigned int i = 0; i < mAggEmissionsCalculators.size(); ++i ){
+        mAggEmissionsCalculators[ i ]->toDebugXML( period, out, tabs );
+    }
+
     toDebugXMLDerived( period, out, tabs );
     // Finished writing xml for the class members.
 
@@ -680,11 +751,11 @@ void Region::calc( const int period, const bool doCalibrations ) {
     static const Configuration* conf = Configuration::getInstance();
     static const bool agSectorActive = conf->getBool( "agSectorActive" );
     static const bool calibrationActive = conf->getBool( "CalibrationActive" );
-    
+
     // Write back calibrated values to the member variables.
     // These are still trial values.
     if( calibrationActive && gdp.get() ) {
-       gdp->writeBackCalibratedValues( name, period );
+        gdp->writeBackCalibratedValues( name, period );
     }
     // calculate regional GDP
     calcGDP( period );
@@ -746,6 +817,10 @@ void Region::calcFinalSupplyPrice( const int period ) {
     for( SectorIterator currSupply = supplySector.begin(); currSupply != supplySector.end(); ++currSupply ){
         (*currSupply)->calcFinalSupplyPrice( gdp.get(), period );
     }
+
+    if ( mLandAllocator.get() ) {
+        mLandAllocator->calcFinalLandAllocation( name, period );
+    }
 }
 
 /*! Calculates supply of final energy and other goods.
@@ -760,7 +835,7 @@ void Region::setFinalSupply( const int period ) {
     // loop through all sectors in reverse once to get total output.
     typedef vector<Sector*>::reverse_iterator ReverseSectorIterator;
     for ( ReverseSectorIterator currSupply = supplySector.rbegin(); currSupply != supplySector.rend(); ++currSupply ) {
-        (*currSupply)->supply( period, gdp.get() );
+        (*currSupply)->supply( gdp.get(), period );
     }
 }
 
@@ -806,7 +881,7 @@ const vector<double> Region::calcFutureGDP() const {
 */
 void Region::calcEndUsePrice( const int period ) {
 
-    priceSer[ period ] = 0;
+    mEnergyServicePrice[ period ] = 0;
 
     for ( DemandSectorIterator currDemSector = demandSector.begin(); currDemSector != demandSector.end(); ++currDemSector ) {
         (*currDemSector)->calcShare( period, gdp.get() );       
@@ -814,7 +889,7 @@ void Region::calcEndUsePrice( const int period ) {
         // calculate service price for each demand sector
 
         // calculate aggregate service price for region
-        priceSer[ period ] += (*currDemSector)->getOutput( 0 ) * (*currDemSector)->getPrice( period );
+        mEnergyServicePrice[ period ] += (*currDemSector)->getWeightedEnergyPrice( period );
 
         // calculate service price elasticity for each demand sector
         // or use read in value, temporary code
@@ -836,12 +911,12 @@ void Region::adjustGDP( const int period ){
     if( !ensureGDP() ){
         return;
     }
-    
+
     const Modeltime* modeltime = scenario->getModeltime();
 
     double tempratio = 1;
     if ( period > modeltime->getyr_to_per(1990) ) {
-        tempratio = priceSer[period]/priceSer[period-1];
+        tempratio = mEnergyServicePrice[period]/mEnergyServicePrice[period-1];
     }
     gdp->adjustGDP( period, tempratio );
 }
@@ -868,7 +943,7 @@ void Region::calibrateRegion( const bool doCalibrations, const int period ) {
             supplySector[ i ]->calibrateSector( period );
         }
         // Calibrate Regional TFE
-        if ( !isDemandAllCalibrated( period ) ) {
+        if ( !isEnergyDemandAllCalibrated( period ) ) {
             calibrateTFE( period );
         } else {
             // do nothing now. Need to make a variant of the total cal outputs
@@ -886,16 +961,18 @@ void Region::calibrateRegion( const bool doCalibrations, const int period ) {
     }
 }
 
-/*! Returns true if all demand sectors are calibrated (or fixed)
-*
+/*! \brief Returns whether all demand sectors have calibrated energy demands.
 * \param period Model time period
+* \return Whether all demand sectors have calibrated energy demands.
 */
-bool Region::isDemandAllCalibrated( const int period ) const {
+bool Region::isEnergyDemandAllCalibrated( const int period ) const {
+    // Only check if sector has non-zero energy demand
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-        if ( !demandSector[ i ]->outputsAllFixed( period ) ) {
+        if ( !demandSector[ i ]->isEnergyUseFixed( period ) ){
             return false;
         }
     }
+
     return true;
 }
 
@@ -914,38 +991,38 @@ bool Region::isDemandAllCalibrated( const int period ) const {
 * \return Boolean true if calibration is ok.
 */
 bool Region::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
-   const static bool calOn = Configuration::getInstance()->getBool( "CalibrationActive" );
-   bool returnVal = true;
-   
-   if ( calOn || printWarnings ) {
-      for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-         if ( !demandSector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
-            returnVal = false;
-         }
-      }
+    const static bool calOn = Configuration::getInstance()->getBool( "CalibrationActive" );
+    bool returnVal = true;
 
-      for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-         if ( !supplySector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
-            returnVal = false;
-         }
-      }
-   
-      // Check Regional TFE calibration if exists
-      if ( ( !isDemandAllCalibrated( period ) && TFEcalb[ period ]  > 0 ) && calOn ) {
-         if ( fabs( calcTFEscaleFactor( period ) - 1.0 ) > calAccuracy ) {
-            if ( printWarnings ) {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "TFE Calibration is off by " << calcTFEscaleFactor( period )
-                        << " in period " <<  period << " for region " << name << "." << endl;
+    if ( calOn || printWarnings ) {
+        for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
+            if ( !demandSector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
+                returnVal = false;
             }
-            returnVal = false;
-         }
-      }
-   }
-   
-   // always return true if calibrations are not on.
-   return calOn ? returnVal : true;
+        }
+
+        for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
+            if ( !supplySector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
+                returnVal = false;
+            }
+        }
+
+        // Check Regional TFE calibration if exists
+        if ( ( !isEnergyDemandAllCalibrated( period ) && TFEcalb[ period ]  > 0 ) && calOn ) {
+            if ( fabs( calcTFEscaleFactor( period ) - 1.0 ) > calAccuracy ) {
+                if ( printWarnings ) {
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::WARNING );
+                    mainLog << "TFE Calibration is off by " << calcTFEscaleFactor( period )
+                        << " in period " <<  period << " for region " << name << "." << endl;
+                }
+                returnVal = false;
+            }
+        }
+    }
+
+    // always return true if calibrations are not on.
+    return calOn ? returnVal : true;
 }
 
 //! Calibrate total final energy Demand for this region.
@@ -959,7 +1036,7 @@ void Region::calibrateTFE( const int period ) {
     if ( scaleFactor  > 0 ) { 
         // Scale each sector's output to approach calibration value
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-            if ( !demandSector[ i ]->outputsAllFixed( period ) ) {
+            if ( !demandSector[ i ]->isEnergyUseFixed( period ) ) {
                 demandSector[ i ]->scaleOutput( period , scaleFactor );
             }
         }
@@ -980,7 +1057,7 @@ double Region::getTotFinalEnergy( const int period ) const {
         totalFinalEnergy += demandSector[ i ]->getEnergyInput( period );
     }
 
-   return totalFinalEnergy;
+    return totalFinalEnergy;
 }
 
 /*! \brief Return ratio of TFE and calibrated value
@@ -993,33 +1070,40 @@ double Region::getTotFinalEnergy( const int period ) const {
 */
 double Region::calcTFEscaleFactor( const int period ) const {
 
-   if ( TFEcalb[ period ]  > 0 ) {
-      // Calculate total final energy demand for all demand sectors
-      double totalFinalEnergy = getTotFinalEnergy( period );
+    if ( TFEcalb[ period ]  > 0 ) {
+        // Calculate total final energy demand for all demand sectors
+        double totalFinalEnergy = getTotFinalEnergy( period );
 
-      if ( totalFinalEnergy > util::getVerySmallNumber() ) {
-         return TFEcalb[ period ] / totalFinalEnergy;
-      }
-   }
-   return 0;
+        if ( totalFinalEnergy > util::getVerySmallNumber() ) {
+            return TFEcalb[ period ] / totalFinalEnergy;
+        }
+    }
+    return 0;
 }
 
 /*! \brief Call any initializations that are only done once per period.
 * \author Steve Smith
 * \param period Model period
+* \todo Once postCalc is present, add a check to verify that aggregate emissions worked properly
 */
 void Region::initCalc( const int period ) 
 {
+
+    // Set aggregate emissions factor to region info if needed
+    for ( unsigned int i = 0; i < mAggEmissionsCalculators.size(); i++ ) {
+        mAggEmissionsCalculators[ i ]->setAggregateEmissionFactor( supplySector, mRegionInfo.get(), period );
+    }
+
     mRegionInfo->setDouble( "heatingDegreeDays", heatingDegreeDays );
     mRegionInfo->setDouble( "coolingDegreeDays", coolingDegreeDays );
-    
+
     for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
         (*currSector)->initCalc( nationalAccount[ period ], demographic.get(), period );
     }
     for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
         (*currSector)->initCalc( nationalAccount[ period ], demographic.get(), period  ); 
     }
-    
+
     // Add CO2 coefficients to the marketplace.
     const static string CO2COEF = "CO2Coef";
     Marketplace* marketplace = scenario->getMarketplace();
@@ -1034,15 +1118,21 @@ void Region::initCalc( const int period )
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             // Currently this error occurs frequently, this could be NOTICE.
-            mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Cannot set emissions factor for " << coef->first
+            if ( coef->second == 0 ) {
+                mainLog.setLevel( ILogger::DEBUG );
+                mainLog << "Cannot set emissions factor of zero for fuel " << coef->first
                     << " because the name does not match the name of a market." << endl;
+            }
+            else {
+                mainLog.setLevel( ILogger::DEBUG );
+                mainLog << "Cannot set emissions factor for fuel " << coef->first
+                    << " because the name does not match the name of a market." << endl;
+            }
         }
     }
 
     // Make sure TFE is same as calibrated values
-    if ( isDemandAllCalibrated( period ) ) {
-
+    if ( isEnergyDemandAllCalibrated( period ) ) {
         double totalFinalEnergy = 0;
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
             totalFinalEnergy += demandSector[ i ]->getCalAndFixedInputs( period, "allInputs" );
@@ -1060,7 +1150,7 @@ void Region::initCalc( const int period )
     checkData( period );
 }
 
-/*! \brief Sets marketplace supply and demands to calibrated values
+/*! \brief Adjusts calibrated demands to be consistant with calibrated supply.
 *
 * The result of this routine, once called for all regions, is a set of calSupply
 * and calDemand values in marketInfo. The calSupply variable has a non-negative
@@ -1072,6 +1162,7 @@ void Region::initCalc( const int period )
 * \author Steve Smith
 * \param period Model period
 */
+
 void Region::setCalSuppliesAndDemands( const int period ) {
     // Check for fully calibrated/fixed supplies
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
@@ -1082,17 +1173,17 @@ void Region::setCalSuppliesAndDemands( const int period ) {
     for ( unsigned int i = 0; i < resources.size(); i++ ) {
         resources[i]->setCalibratedSupplyInfo( period, name );
     }
-    
+
     // Check for fully calibrated/fixed demands. Search through all supply
     // technologies
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-      supplySector[ i ]->tabulateFixedDemands( period );
+        supplySector[ i ]->tabulateFixedDemands( period, gdp.get() );
     }
 
     // Check for fully calibrated/fixed demands. Search through all demand
     // technologies
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-      demandSector[ i ]->tabulateFixedDemands( period );
+        demandSector[ i ]->tabulateFixedDemands( period, gdp.get() );
     }
 }
 
@@ -1118,13 +1209,13 @@ void Region::initializeCalValues( const int period ) {
         // Now prepare to loop through all the fuels used by this sector. Get
         // fuel consumption map for sector
         map<string, double> fuelcons = supplySector[ i ]->getfuelcons( period );
-        
+
         // Set default values for supply sector
         IInfo* marketInfo = marketplace->getMarketInfo( supplySector[ i ]->getName(), name, period, true );
         marketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
         marketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
         marketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
-        
+
         // then for all fuels used by this sector
         for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
             IInfo* fuelMarketInfo = marketplace->getMarketInfo( fuelUsedIter->first, name, period, false );
@@ -1134,15 +1225,15 @@ void Region::initializeCalValues( const int period ) {
                 fuelMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
                 fuelMarketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
             }
-         }
+        }
     }
-        
+
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
         // Now prepare to loop through all the fuels used by this sector. Get
         // fuel consumption map for sector
         map<string, double> fuelcons = demandSector[ i ]->getfuelcons( period ); 
 
-         for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
+        for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
             IInfo* fuelMarketInfo = marketplace->getMarketInfo( fuelUsedIter->first, name, period, false );
             // Fuel market may not exist.
             if( fuelMarketInfo ){
@@ -1150,7 +1241,7 @@ void Region::initializeCalValues( const int period ) {
                 fuelMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
                 fuelMarketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
             }
-         }
+        }
     }
 
     for ( unsigned int i = 0; i < resources.size(); i++ ) {
@@ -1190,7 +1281,7 @@ bool Region::setImpliedCalInputs( const int period ) {
         // Clear relationship map for this iteration
         fuelRelationshipMap.reset( new FuelRelationshipMap() ); 
     }
-    
+
     // For each sector, check if a fixed demand is an output. If supply is fixed
     // stop. Make sure all inputs are fixed demands
     for ( unsigned int jsec = 0; jsec < supplySector.size(); jsec++ ) {
@@ -1216,7 +1307,7 @@ bool Region::setImpliedCalInputs( const int period ) {
             string newFixedDemandInputName;
             typedef map<string,double>:: const_iterator CI;
             for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
-                
+
                 // If inputs are all fixed for this fuel
                 if ( supplySector[ jsec ]->inputsAllFixed( period, fuelUsedIter->first ) ) {
                     totalCalOutputs += supplySector[ jsec ]->getCalAndFixedOutputs( period, fuelUsedIter->first );
@@ -1227,7 +1318,7 @@ bool Region::setImpliedCalInputs( const int period ) {
                     newFixedDemandInputName = fuelUsedIter->first;
                 }
             }
-            
+
             // If we found one, and only one, unfixed input then figure out what
             // this should be and set things appropriately
             if ( numbFixedMktInputs == 1 ) {
@@ -1237,25 +1328,25 @@ bool Region::setImpliedCalInputs( const int period ) {
                 // subtract other calOutputs so that we only calculate the
                 // output from the remaining fuel
                 requiredOutput -= totalCalOutputs;
- 
+
                 if ( debugChecking ) {
                     ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
                     dependenciesLog.setLevel( ILogger::NOTICE );
                     dependenciesLog << "  Transitive demand for " << newFixedDemandInputName  
-                            << " in sector " << sectorName
-                            << " in region " << name << " added with value " << requiredOutput << endl; 
+                        << " in sector " << sectorName
+                        << " in region " << name << " added with value " << requiredOutput << endl; 
                 }
-                
+
                 supplySector[ jsec ]->setImpliedFixedInput( period, newFixedDemandInputName, requiredOutput );
- 
+
                 // Now that transitive demand has been set, clear demand for
                 // this good so this won't be done again
                 sectorMarketInfo->setDouble( "calDemand", MKT_NOT_ALL_FIXED );
-                
+
                 // Save this relationship information First element of vector is
                 // the root, or current root of chain and second element is a
                 // vector of dependents
-                
+
                 vector<string> tempDependents;
 
                 // Set up fuel relationship map For each fuel in the first (key)
@@ -1279,7 +1370,7 @@ bool Region::setImpliedCalInputs( const int period ) {
                 // overwrites previous dependents list if it existed)
                 tempDependents.push_back( sectorName );
                 (*fuelRelationshipMap)[ newFixedDemandInputName ] = tempDependents;
- 
+
                 // If this demand does not correspond to a sector with a fixed
                 // supply then we are not done with checking. Otherwise we are
                 // done for this region if no sectors satisfy this criteria.
@@ -1308,7 +1399,7 @@ bool Region::setImpliedCalInputs( const int period ) {
             }
         } // End of fixed demand transitive calculation loop        
     } // End of sector loop
-      
+
     return calcIsDone;
 }
 
@@ -1351,7 +1442,7 @@ int Region::scaleCalInputs( const int period ) {
     // demand The end... If supply is fixed stop. Make sure all inputs are fixed
     // demands.
     int numberOfScaledValues = 0;
-    
+
     map<string,double> fuelCons = summary[0].getfuelcons();
     typedef map<string,double>:: const_iterator CI;
 
@@ -1359,79 +1450,79 @@ int Region::scaleCalInputs( const int period ) {
     for( CI fuelIter = fuelCons.begin(); fuelIter != fuelCons.end(); ++fuelIter ){
         const IInfo* fuelMarketInfo = marketplace->getMarketInfo( fuelIter->first, name, period, false );
         if ( fuelMarketInfo ) {
-                //  Determine if inputs for this fuel need to be scaled. Get total cal + fixed supply and demand values.
-                double calSupplyValue = fuelMarketInfo->getDouble( "calSupply", false );
-                double calDemandValue = fuelMarketInfo->getDouble( "calDemand", false );
-                
-                // If these are positive then may need to scale calInputs for this input
+            //  Determine if inputs for this fuel need to be scaled. Get total cal + fixed supply and demand values.
+            double calSupplyValue = fuelMarketInfo->getDouble( "calSupply", false );
+            double calDemandValue = fuelMarketInfo->getDouble( "calDemand", false );
+
+            // If these are positive then may need to scale calInputs for this input
+            if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
+
+                // First, fixed values are not scaled, so adjust for this.
+                // The reason fixed values are not scaled is that fixed values can be used in instances where
+                // a simultaneity would otherwise occur during calibration checking (such as export markets)
+                double calFixedDemandValue = fuelMarketInfo->getDouble( "calFixedDemand", true );
+                calFixedDemandValue = max( 0.0, calFixedDemandValue );
+                calSupplyValue -= calFixedDemandValue;
+                calDemandValue -= calFixedDemandValue;
+
+                // If these are still positive then scale calInputValues for this input
                 if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
-                
-                    // First, fixed values are not scaled, so adjust for this.
-                    // The reason fixed values are not scaled is that fixed values can be used in instances where
-                    // a simultaneity would otherwise occur during calibration checking (such as export markets)
-                    double calFixedDemandValue = fuelMarketInfo->getDouble( "calFixedDemand", true );
-                    calFixedDemandValue = max( 0.0, calFixedDemandValue );
-                    calSupplyValue -= calFixedDemandValue;
-                    calDemandValue -= calFixedDemandValue;
+                    double scaleValue = calSupplyValue / calDemandValue;
 
-                    // If these are still positive then scale calInputValues for this input
-                    if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
-                        double scaleValue = calSupplyValue / calDemandValue;
-                        
-                        if ( abs( 1 - scaleValue ) > util::getVerySmallNumber() ) {                        
-                            ILogger& mainLog = ILogger::getLogger( "main_log" );
-                            mainLog.setLevel( ILogger::DEBUG );
-                            mainLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
-                            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-                            calibrationLog.setLevel( ILogger::DEBUG );
-                            calibrationLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
-                        
-                            // Repeat for all fuels derived from this one
-                            vector<string> dependentFuels = (*fuelRelationshipMap)[ fuelIter->first ];
-
-                            // Note loop goes to 1 + number of fuels so that basefuel is covered.
-                            for ( unsigned int i = 0; i <= dependentFuels.size(); ++i) {
-                                ++numberOfScaledValues; 
-
-                                string fuelName;
-                                if ( i == dependentFuels.size() ) {
-                                    fuelName = fuelIter->first; // Finish with base fuel in case that is used directly
-                                } else {
-                                    fuelName = dependentFuels [ i ];
-                                }
-
-                                mainLog << fuelName << ", "; 
-                                calibrationLog  << fuelName <<", "; 
-                                for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-                                    demandSector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
-                                }
-                                for ( unsigned int j = 0; j < supplySector.size(); j++ ) {
-                                    supplySector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
-                                }
-                            } // dependentFuels loop
-                            mainLog << " in region " << name << endl; 
-                            calibrationLog << " in region " << name << endl;
-                        }
-                    } // end scaling loop
-                    // If these were less than zero, then something was wrong with the input values
-                    else if ( ( calSupplyValue < 0 ) || ( calDemandValue < 0 ) )  {
+                    if ( abs( 1 - scaleValue ) > util::getVerySmallNumber() ) {                        
                         ILogger& mainLog = ILogger::getLogger( "main_log" );
-                        mainLog.setLevel( ILogger::ERROR );
-                        mainLog << "Input calibration and fixed values not consistent. Adjusted value < 0 for fuel " << fuelIter->first << " in region " << name << endl ;
+                        mainLog.setLevel( ILogger::DEBUG );
+                        mainLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
                         ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-                        calibrationLog.setLevel( ILogger::ERROR );
-                        calibrationLog << "Input calibration and fixed values not consistent. Adjusted value < 0 for fuel " << fuelIter->first << " in region " << name << endl ;
                         calibrationLog.setLevel( ILogger::DEBUG );
-                        calibrationLog << "    calSupplyValue - fixedDemands: " << calSupplyValue << endl ;
-                        calibrationLog << "    calSupplyValue - fixedDemands: " << calSupplyValue << endl ;
+                        calibrationLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
+
+                        // Repeat for all fuels derived from this one
+                        vector<string> dependentFuels = (*fuelRelationshipMap)[ fuelIter->first ];
+
+                        // Note loop goes to 1 + number of fuels so that basefuel is covered.
+                        for ( unsigned int i = 0; i <= dependentFuels.size(); ++i) {
+                            ++numberOfScaledValues; 
+
+                            string fuelName;
+                            if ( i == dependentFuels.size() ) {
+                                fuelName = fuelIter->first; // Finish with base fuel in case that is used directly
+                            } else {
+                                fuelName = dependentFuels [ i ];
+                            }
+
+                            mainLog << fuelName << ", "; 
+                            calibrationLog  << fuelName <<", "; 
+                            for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
+                                demandSector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
+                            }
+                            for ( unsigned int j = 0; j < supplySector.size(); j++ ) {
+                                supplySector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
+                            }
+                        } // dependentFuels loop
+                        mainLog << " in region " << name << endl; 
+                        calibrationLog << " in region " << name << endl;
                     }
-                 }
-            } // end zTotal check loop
+                } // end scaling loop
+                // If these were less than zero, then something was wrong with the input values
+                else if ( ( calSupplyValue < 0 ) || ( calDemandValue < 0 ) )  {
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::ERROR );
+                    mainLog << "Input calibration and fixed values not consistent. Adjusted value < 0 for fuel " << fuelIter->first << " in region " << name << endl ;
+                    ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+                    calibrationLog.setLevel( ILogger::ERROR );
+                    calibrationLog << "Input calibration and fixed values not consistent. Adjusted value < 0 for fuel " << fuelIter->first << " in region " << name << endl ;
+                    calibrationLog.setLevel( ILogger::DEBUG );
+                    calibrationLog << "    calSupplyValue - fixedDemands: " << calSupplyValue << endl ;
+                    calibrationLog << "    calSupplyValue - fixedDemands: " << calSupplyValue << endl ;
+                }
+            }
+        } // end zTotal check loop
     } // end fuelCons loop
 
     // This is not needed anymore so release this memory
     fuelRelationshipMap.release();
-    
+
     return numberOfScaledValues;
 }
 
@@ -1454,13 +1545,13 @@ void Region::calcEndUseDemand( const int period ) {
     if( !ensureGDP() ){
         return;
     }
-    
+
     for ( DemandSectorIterator currDemSector = demandSector.begin(); currDemSector != demandSector.end(); ++currDemSector ){
         // calculate aggregate demand for end-use sector services
         // set fuel demand from aggregate demand for services
         (*currDemSector)->aggdemand( gdp.get(), period );
     }
-    
+
 }
 
 //! Calculate regional emissions from resources.
@@ -1484,6 +1575,12 @@ void Region::calcEmissions( const int period ) {
         agEmissions[ "CO2NetLandUse" ] = agSector->getLandUseEmissions( period );
         summary[ period ].updateemiss( agEmissions );
     }
+
+    if ( mLandAllocator.get() ) {
+        mLandAllocator->calcEmission( name, gdp.get(), period );
+        mLandAllocator->updateSummary( summary[ period ], period );
+    }
+
 }
 
 /*! \brief Calculate regional emissions by fuel for reporting.
@@ -1497,7 +1594,7 @@ void Region::calcEmissFuel( const list<string>& aPrimaryFuelList, const int peri
     map<string, double> fuelemiss; // tempory emissions by fuel
 
     for( list<string>::const_iterator fuelIter = aPrimaryFuelList.begin();
-         fuelIter != aPrimaryFuelList.end(); ++fuelIter )
+        fuelIter != aPrimaryFuelList.end(); ++fuelIter )
     {
         fuelemiss[ *fuelIter ] = summary[period].get_pemap_second( *fuelIter ) * primaryFuelCO2Coef[ *fuelIter ];
     }
@@ -1545,6 +1642,7 @@ void Region::csvOutputFile() const {
     if( gdp.get() ){
         gdp->csvOutputFile( name );
     }
+
     // regional total carbon taxes paid
     fileoutput3(name," "," "," ","C tax revenue","Mil90$",carbonTaxPaid);
 
@@ -1553,19 +1651,23 @@ void Region::csvOutputFile() const {
         temp[m] = summary[m].get_emissmap_second("CO2"); 
     }
     fileoutput3(name," "," "," ","CO2 emiss","MTC",temp);
-    
+
     // write ag emissions for region
     for (int m=0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second( "CO2NetLandUse" ); 
     }
     fileoutput3(name," "," "," ","Net Land Use CO2 emiss","MTC",temp);
-    
+
     // TFE for this region
     for (int m=0;m<maxper;m++) {
         temp[m] = getTotFinalEnergy(m);
     }
     fileoutput3(name," "," "," ","TFE","EJ",temp);
-    
+
+    if ( mLandAllocator.get() ) {
+        mLandAllocator->csvOutput( name );
+    }
+
     // region primary energy consumption by fuel type
     typedef map<string,double>:: const_iterator CI;
     map<string,double> tpemap = summary[0].getpecons();
@@ -1585,15 +1687,16 @@ void Region::csvOutputFile() const {
     // write resource results to file
     for ( unsigned int i = 0; i < resources.size(); i++ ) 
         resources[i]->csvOutputFile( name );
+
     // write supply sector results to file
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
         supplySector[i]->csvOutputFile();
         supplySector[i]->subsec_outfile();
     }
-    
+
     // write end-use sector demand results to file
     for ( unsigned int i = 0; i < demandSector.size(); i++ ){
-        demandSector[i]->csvOutputFile();   
+        demandSector[i]->csvOutputFile();	
         demandSector[i]->subsec_outfile();
     }
 }
@@ -1614,6 +1717,9 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     if( gdp.get() ){
         gdp->dbOutput( name );
     }
+    if ( mLandAllocator.get() ) {
+        mLandAllocator->dbOutput( name );
+    }
     // regional total carbon taxes paid
     dboutput4(name,"General","CarbonTax","revenue","90US$",carbonTaxPaid);
 
@@ -1621,7 +1727,7 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     for( list<string>::const_iterator fuelIter = aPrimaryFuelList.begin();
         fuelIter != aPrimaryFuelList.end(); fuelIter++ )
     {
-       for ( int m=0;m<maxper;m++) {
+        for ( int m=0;m<maxper;m++) {
             temp[m] = summary[m].get_emissfuelmap_second( *fuelIter );
             temptot[m] += temp[m];
         }
@@ -1652,7 +1758,7 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     // CO2 emissions by fuel and sector totals use same value
     dboutput4(name,"CO2 Emiss","by Fuel","zTotal","MTC",temptot);
     dboutput4(name,"CO2 Emiss","by Sector","zTotal","MTC",temp);
-    
+
     // total ag sector emissions by sector for region
     for ( int m=0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second( "CO2NetLandUse" );
@@ -1692,7 +1798,7 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
         temp[m] = getTotFinalEnergy(m);
     }
     dboutput4(name,"Final Energy Cons","total","total","EJ",temp);
-    
+
     // regional fuel consumption (primary and secondary) by fuel type
     map<string,double> tfuelmap = summary[0].getfuelcons();
     for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
@@ -1801,7 +1907,7 @@ const Summary& Region::getSummary( const int period ) const {
 void Region::setTax( const GHGPolicy* aTax ){
     /*! \pre Tax is not null. */
     assert( aTax );
-    
+
     // Check if the tax is applicable.
     if( !aTax->isApplicable( name ) ){
         return;
@@ -1841,14 +1947,14 @@ void Region::setTax( const GHGPolicy* aTax ){
 const Curve* Region::getEmissionsQuantityCurve( const string& ghgName ) const {
     /*! \pre The run has been completed. */
     const Modeltime* modeltime = scenario->getModeltime();
-    
+
     auto_ptr<ExplicitPointSet> emissionsPoints( new ExplicitPointSet() );
-    
+
     for( int i = 0; i < scenario->getModeltime()->getmaxper(); i++ ) {
         XYDataPoint* currPoint = new XYDataPoint( modeltime->getper_to_yr( i ), summary[ i ].get_emissmap_second( ghgName ) );
         emissionsPoints->addPoint( currPoint );
     }
-    
+
     Curve* emissionsCurve = new PointSetCurve( emissionsPoints.release() );
     emissionsCurve->setTitle( ghgName + " emissions curve" );
     emissionsCurve->setXAxisLabel( "year" );
@@ -1874,12 +1980,12 @@ const Curve* Region::getEmissionsPriceCurve( const string& ghgName ) const {
     const Marketplace* marketplace = scenario->getMarketplace();
 
     auto_ptr<ExplicitPointSet> emissionsPoints( new ExplicitPointSet() );
-    
+
     for( int i = 0; i < modeltime->getmaxper(); i++ ) {
         XYDataPoint* currPoint = new XYDataPoint( modeltime->getper_to_yr( i ), marketplace->getPrice( ghgName, name, i ) );
         emissionsPoints->addPoint( currPoint );
     }
-    
+
     Curve* emissionsCurve = new PointSetCurve( emissionsPoints.release() );
     emissionsCurve->setTitle( ghgName + " emissions tax curve" );
     emissionsCurve->setXAxisLabel( "year" );
@@ -1940,7 +2046,7 @@ bool Region::ensureGDP() const {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "GDP object has not been created and is required. "
-                << "Check for a region name mismatch." << endl;
+            << "Check for a region name mismatch." << endl;
         return false;
     }
     return true;
@@ -1955,7 +2061,7 @@ bool Region::ensureDemographics() const {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Population object has not been created and is required. "
-                << "Check for a region name mismatch." << endl;
+            << "Check for a region name mismatch." << endl;
         return false;
     }
     return true;
@@ -1966,11 +2072,11 @@ bool Region::ensureDemographics() const {
 * \param aPeriod Period to update.
 */
 void Region::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitRegion( this, aPeriod );
-	
-	// Visit demographics object.
+    aVisitor->startVisitRegion( this, aPeriod );
+
+    // Visit demographics object.
     if( demographic.get() ){
-	    demographic->accept( aVisitor, aPeriod );
+        demographic->accept( aVisitor, aPeriod );
     }
 
     // Visit gdp object.
@@ -1978,26 +2084,26 @@ void Region::accept( IVisitor* aVisitor, const int aPeriod ) const {
         gdp->accept( aVisitor, aPeriod );
     }
 
-	// for national account
-	if( aPeriod == -1 ){
-		for( unsigned int i = 0; i < nationalAccount.size(); ++i ){
-			nationalAccount[ i ].accept( aVisitor, aPeriod );
-		}
-	}
-	else {
-		nationalAccount[ aPeriod ].accept( aVisitor, aPeriod );
-	}
-	// loop for resources.
-	for( CResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
-		(*currResource)->accept( aVisitor, aPeriod );
-	}
-	// loop for supply sectors
-	for( CSectorIterator currSec = supplySector.begin(); currSec != supplySector.end(); ++currSec ){
-		(*currSec)->accept( aVisitor, aPeriod );
+    // for national account
+    if( aPeriod == -1 ){
+        for( unsigned int i = 0; i < nationalAccount.size(); ++i ){
+            nationalAccount[ i ].accept( aVisitor, aPeriod );
+        }
     }
-	// loop for demand sectors.
-	for( CDemandSectorIterator currDem = demandSector.begin(); currDem != demandSector.end(); ++currDem ){
-		(*currDem)->accept( aVisitor, aPeriod );
-	}
-	aVisitor->endVisitRegion( this, aPeriod );
+    else {
+        nationalAccount[ aPeriod ].accept( aVisitor, aPeriod );
+    }
+    // loop for resources.
+    for( CResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
+        (*currResource)->accept( aVisitor, aPeriod );
+    }
+    // loop for supply sectors
+    for( CSectorIterator currSec = supplySector.begin(); currSec != supplySector.end(); ++currSec ){
+        (*currSec)->accept( aVisitor, aPeriod );
+    }
+    // loop for demand sectors.
+    for( CDemandSectorIterator currDem = demandSector.begin(); currDem != demandSector.end(); ++currDem ){
+        (*currDem)->accept( aVisitor, aPeriod );
+    }
+    aVisitor->endVisitRegion( this, aPeriod );
 }

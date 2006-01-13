@@ -31,7 +31,7 @@ BuildingHeatCoolDmdTechnology::BuildingHeatCoolDmdTechnology() {
 }
 
 //! Parses any input variables specific to derived classes
-bool BuildingHeatCoolDmdTechnology::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+bool BuildingHeatCoolDmdTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     if( BuildingGenericDmdTechnology::XMLDerivedClassParse( nodeName, curr ) ){
     }
     else if( nodeName == "fractionOfYearActive" ){
@@ -67,17 +67,24 @@ void BuildingHeatCoolDmdTechnology::toDebugXMLDerived( const int period, ostream
     XMLWriteElement( intGainsMarketName, "intGainsMarketName", out, tabs );
 }	
 
-/*! \brief Initialize each period
-*
-* Transfer data that does not change to the technoogy
-*
-* \author Steve Smith
-* \param aSubsectorInfo The subsectorInfo object. 
+/*! 
+* \brief Perform initializations that only need to be done once per period.
+* \param aRegionName Region name.
+* \param aSectorName Sector name, also the name of the product.
+* \param aSubsectorInfo Parent information container.
+* \param aDemographics Regional demographics container.
+* \param aPeriod Model period.
 */
-void BuildingHeatCoolDmdTechnology::initCalc( const IInfo* aSubsectorInfo ) {
+void BuildingHeatCoolDmdTechnology::initCalc( const string& aRegionName,
+                                              const string& aSectorName,
+                                              const IInfo* aSubsectorInfo,
+                                              const Demographic* aDemographics,
+                                              const int aPeriod )
+{
     aveInsulation = aSubsectorInfo->getDouble( "aveInsulation", true );
     floorToSurfaceArea = aSubsectorInfo->getDouble( "floorToSurfaceArea", true );
-    BuildingGenericDmdTechnology::initCalc( aSubsectorInfo );    
+    BuildingGenericDmdTechnology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
+                                            aDemographics, aPeriod );    
 }
 
 /*! \brief calculate effective internal gains as they affect the demand for this technology

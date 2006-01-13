@@ -46,9 +46,12 @@ public:
     DemandSector( const std::string aRegionName );
     virtual ~DemandSector();
     void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
-    void supply( const int aPeriod, const GDP* aGDP );
+    void supply( const GDP* aGDP, const int aPeriod );
     static const std::string& getXMLNameStatic();
-    virtual void completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder );
+    
+    virtual void completeInit( const IInfo* aRegionInfo,
+                               DependencyFinder* aDepFinder,
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
@@ -61,12 +64,16 @@ public:
     virtual void csvOutputFile() const;
     virtual void dbOutput() const;
     virtual void calibrateSector( const int period );
+
+    // TODO: Make this constant.
+    virtual double getWeightedEnergyPrice( const int aPeriod );
+
     double getService( const int period ) const;
-    double getOutput( const int aPeriod ) const;
+
     double getServiceWoTC( const int period ) const;
     void scaleOutput( const int period, double scaleFactor );
     void setCalibratedSupplyInfo( const int aPeriod ) const {}
-	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     bool perCapitaBased; //!< demand equation based on per capita GNP, true or false.
     double pElasticityBase; //!< base year energy price elasticity
@@ -78,11 +85,15 @@ protected:
     
     virtual void setMarket();
     void MCoutput_subsec() const;
+    double getOutput( const int aPeriod ) const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName() const; 
-    void setoutput( const double demand, const int period, const GDP* gdp );
+    
+    virtual void setOutput( const double aDemand,
+                            const GDP* aGDP,
+                            const int aPeriod );
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
 };

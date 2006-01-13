@@ -464,7 +464,8 @@ bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const do
         for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
             // Fetch the current 
             SolverInfo& currSol = solverSet.getSolvable( i );
-            // If the market is not bracketed.
+
+             // If the market is not bracketed.
             if ( !currSol.isBracketed() ) {
                 // If ED at X and L are the same sign.
                 if ( util::sign( currSol.getED() ) == util::sign( currSol.getEDLeft() ) ) {
@@ -535,6 +536,9 @@ bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const do
     solverLog.setLevel( ILogger::DEBUG );
     solverLog << "Solution Info Set before leaving bracket: " << endl;
     solverLog << solverSet << endl;
+
+    ILogger& singleLog = ILogger::getLogger( "single_market_log" );
+    solverSet.printMarketInfo( "End Bracketing Attempt", 0, singleLog );
 
     if ( calibrationStatus ) {
         world->turnCalibrationsOn();	// sjs -- turn calibration back on if it was on before

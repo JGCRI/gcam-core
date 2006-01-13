@@ -50,15 +50,15 @@ extern Scenario* scenario;
 */
 Sector::Sector( const string regionNameIn ): regionName( regionNameIn ){
     anyFixedCapacity = false;
+    mSectorType = getDefaultSectorType();
     mBaseOutput = 0;
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     sectorprice.resize( maxper );
     fixedOutput.resize( maxper );
-    summary.resize( maxper ); // object containing summaries
-    capLimitsPresent.resize( maxper, false ); // flag for presence of capacity
-                                              // limits
+    summary.resize( maxper );
+    capLimitsPresent.resize( maxper, false );
 }
 
 /*! \brief Destructor
@@ -85,6 +85,23 @@ const string& Sector::getName() const {
     return name;
 }
 
+/*! \brief Returns The default sector type.
+* \author Steve Smith
+* \return Default sector type.
+*/
+const string& Sector::getDefaultSectorType() {
+    const static string DEFAULT_SECTOR_TYPE = "Energy";
+    return DEFAULT_SECTOR_TYPE;
+}
+
+/*! \brief Return the type of the sector.
+* \author Steve Smith
+* \return The sector type.
+*/
+const string& Sector::getSectorType() const {
+    return mSectorType;
+}
+
 /*! \brief Set data members from XML input
 *
 * \author Josh Lurz
@@ -104,7 +121,7 @@ void Sector::XMLParse( const DOMNode* node ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "The perCapitaBased attribute is no longer supported and will not be read."
-                << " Convert the attribute to an element." << endl;
+            << " Convert the attribute to an element." << endl;
     }
 
     // get all child nodes.
@@ -121,6 +138,9 @@ void Sector::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == "price" ){
             XMLHelper<double>::insertValueIntoVector( curr, sectorprice, modeltime );
+        }
+        else if( nodeName == "sectorType" ){
+            mSectorType = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "output" ) {
             // Check if the output year is the base year.
@@ -155,15 +175,18 @@ void Sector::XMLParse( const DOMNode* node ){
 * \author Josh Lurz
 * \param aRegionInfo Regional information object.
 * \param aDepFinder Regional dependency finder.
+* \param aLandAllocator Regional land allocator.
 * \warning markets are not necesarilly set when completeInit is called
 */
-void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder ) {
+void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder, 
+                           ILandAllocator* aLandAllocator )
+{
     // Allocate the sector info.
     mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo ) );
 
     // Complete the subsector initializations. 
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
-        ( *subSecIter )->completeInit( mSectorInfo.get(), aDepFinder );
+        ( *subSecIter )->completeInit( mSectorInfo.get(), aDepFinder, aLandAllocator );
     }
 }
 
@@ -181,6 +204,7 @@ void Sector::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
+    XMLWriteElementCheckDefault( mSectorType, "sectorType", out, tabs, getDefaultSectorType() );
 
     for( int i = 0; modeltime->getper_to_yr( i ) <= 1975; i++ ){
         XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
@@ -192,11 +216,11 @@ void Sector::toInputXML( ostream& out, Tabs* tabs ) const {
 
     // write out variables for derived classes
     toInputXMLDerived( out, tabs );
-    
+
     if( moreSectorInfo.get() ){
         moreSectorInfo->toInputXML( out, tabs );
     }
-    
+
     // write out the subsector objects.
     for( CSubsectorIterator k = subsec.begin(); k != subsec.end(); k++ ){
         ( *k )->toInputXML( out, tabs );
@@ -226,7 +250,7 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( getOutput( period ), "output", out, tabs );
 
     toDebugXMLDerived (period, out, tabs);
-    
+
     if( moreSectorInfo.get() ){
         moreSectorInfo->toDebugXML( period, out, tabs );
     }
@@ -254,8 +278,8 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \param aPeriod Model period
 */
 void Sector::initCalc( NationalAccount& aNationalAccount,
-                       const Demographic* aDemographics,
-                       const int aPeriod )
+                      const Demographic* aDemographics,
+                      const int aPeriod )
 {
     // normalizeShareWeights must be called before subsector initializations
     normalizeShareWeights( aPeriod );
@@ -314,9 +338,9 @@ void Sector::checkSectorCalData( const int period ) {
 * \author Steve Smith
 * \param period Model period
 */
-void Sector::tabulateFixedDemands( const int period ) {
+void Sector::tabulateFixedDemands( const int period, const GDP* gdp ) {
     for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
-        ( *j )->tabulateFixedDemands( period );
+        ( *j )->tabulateFixedDemands( period, mSectorInfo.get() );
     }
 }
 
@@ -366,7 +390,7 @@ void Sector::normalizeShareWeights( const int period ) {
 * Compares the sum of calibrated + fixed values to output of sector.
 * Will optionally print warning to the screen (and eventually log file).
 * 
-* If all outputs are not calibrated then this does not check for consistancy.
+* If all outputs are not calibrated then this does not check for consistency.
 *
 * \author Steve Smith
 * \param period Model period
@@ -375,44 +399,29 @@ void Sector::normalizeShareWeights( const int period ) {
 * \return Boolean true if calibration is ok.
 */
 bool Sector::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {  
-   const bool PRINT_DETAILS = false; // toggle for more detailed debugging output
-        
-   bool checkCalResult = true; 
-   if ( period > 0 && Configuration::getInstance()->getBool( "CalibrationActive" ) ) {
-      double calOutputs = getCalOutput( period );
-      double totalFixed = calOutputs + getFixedOutput( period );
-      double calDiff =  totalFixed - getOutput( period );
-      
-      // Two cases to check for. If outputs are all fixed, then calDiff should be small in either case.
-      // Even if outputs are not all fixed, then calDiff shouldn't be > calAccuracy (i.e., totalFixedOutputs > actual output)
-      if ( calOutputs > 0 ) {
-         double diffFraction = calDiff/calOutputs;
-         if ( ( ( calDiff > calAccuracy * totalFixed ) && !outputsAllFixed( period ) ) || ( ( abs(diffFraction) > calAccuracy ) && outputsAllFixed( period ) ) ) {
-            checkCalResult = false;
-            if ( printWarnings ) {
-               ILogger& mainLog = ILogger::getLogger( "main_log" );
-               mainLog.setLevel( ILogger::WARNING );
-               mainLog << "WARNING: " << name << " " << " in " << regionName << " != cal+fixed vals (";
-               mainLog << totalFixed << " )" << " in yr " <<  scenario->getModeltime()->getper_to_yr( period );
-               mainLog << " by: " << calDiff << " (" << diffFraction*100 << "%) " << endl;
-               if ( PRINT_DETAILS) {
-                  cout << "   fixedSupplies: " << "  "; 
-                  for ( unsigned int i=0; i< subsec.size() ; i++ ) {
-                     double fixedSubSectorOut =  subsec[ i ]->getTotalCalOutputs( period ) + subsec[ i ]->getFixedOutput( period );
-                     cout << "ss["<<i<<"] "<< fixedSubSectorOut << ", ";
-                  } 
-                  cout << endl;
-                  cout << "   Production: " << "  "; 
-                  for ( unsigned int i=0; i< subsec.size(); i++ ) {
-                     cout << "ss["<<i<<"] "<< subsec[ i ]->getOutput( period ) << ", ";
-                  } 
-                  cout << endl;
-               }
-            }
-         } // calDiff > calAccuracy branch
-      }
-   }
-   return checkCalResult;
+    bool checkCalResult = true; 
+    if ( period > 0 && Configuration::getInstance()->getBool( "CalibrationActive" ) ) {
+        double calOutputs = getCalOutput( period );
+        double totalFixed = calOutputs + getFixedOutput( period );
+        double calDiff =  totalFixed - getOutput( period );
+
+        // Two cases to check for. If outputs are all fixed, then calDiff should be small in either case.
+        // Even if outputs are not all fixed, then calDiff shouldn't be > calAccuracy (i.e., totalFixedOutputs > actual output)
+        if ( calOutputs > 0 ) {
+            double diffFraction = calDiff/calOutputs;
+            if ( ( ( calDiff > calAccuracy * totalFixed ) && !outputsAllFixed( period ) ) || ( ( abs(diffFraction) > calAccuracy ) && outputsAllFixed( period ) ) ) {
+                checkCalResult = false;
+                if ( printWarnings ) {
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::WARNING );
+                    mainLog << "WARNING: " << name << " in " << regionName << " != cal+fixed vals (";
+                    mainLog << totalFixed << " )" << " in yr " <<  scenario->getModeltime()->getper_to_yr( period );
+                    mainLog << " by: " << calDiff << " (" << diffFraction*100 << "%) " << endl;
+                }
+            } // calDiff > calAccuracy branch
+        }
+    }
+    return checkCalResult;
 }
 
 /*!
@@ -436,10 +445,10 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
     // simultaneity be turned on. This would seem to be because the fixed share is lagged one period
     // and can cause an oscillation. With the demand for this Sector in the marketplace, however, the
     // fixed capacity converges as the trial value for demand converges. Region::findSimul now checks for this.
-    
+
     double sum = 0;
     double fixedSum = 0;
-     
+
     // first loop through all subsectors to get the appropriate sums
     for ( unsigned int i = 0; i < subsec.size(); i++ ) {
         // calculate subsector shares (based on technology shares)
@@ -460,7 +469,7 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
             assert( util::isValidNumber( subsec[ i ]->getShare( period ) ) );
             sum += subsec[ i ]->getShare( period );
         }
-        
+
         // initialize cap limit status as false for this sector (will be changed in adjSharesCapLimit if necessary)
         subsec[ i ]->setCapLimitStatus( false , period );
     }
@@ -483,11 +492,11 @@ void Sector::calcShare( const int period, const GDP* gdp ) {
                 // Could this overflow if sum was large?-JPL
             }
 
-        // reset share of sectors with fixed supply to their appropriate value
+            // reset share of sectors with fixed supply to their appropriate value
         } else {
             double fixedShare = getFixedShare( i , period ) * scaleFixedShare;
             double currentShare = subsec[ i ]->getFixedShare( period );
-            
+
             subsec[ i ]->setShareToFixedValue( period );
             if ( currentShare > 0 ) { 
                 subsec[ i ]->scaleFixedOutput( fixedShare/currentShare, period ); 
@@ -558,7 +567,7 @@ void Sector::adjSharesCapLimit( const int period ) {
             } 
             else {
                 tempCapacityLimit = Subsector::capLimitTransform( subsec[ i ]->getCapacityLimit( period ),
-                                                                  tempSubSectShare );
+                    tempSubSectShare );
             }
 
             // if there is a capacity limit and are over then set flag and count excess shares
@@ -613,7 +622,7 @@ void Sector::adjSharesCapLimit( const int period ) {
 * \param period Model period
 */
 void Sector::checkShareSum( const int period ) const {
-    
+
     double sumshares = 0;
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         // Check the validity of shares.
@@ -658,6 +667,15 @@ void Sector::calcPrice( const int period ) {
 double Sector::getPrice( const int period ) {
     calcPrice( period );
     return sectorprice[ period ];
+}
+
+/*! \brief Returns whether all energy usage is calibrated.
+* \details Returns if this is an energy sector with all output fixed.
+* \param aPeriod Model period.
+* \return Whether all energy usage is fixed.
+*/
+bool Sector::isEnergyUseFixed( const int aPeriod ) const {
+    return getSectorType() == "Energy" && outputsAllFixed( aPeriod );
 }
 
 /*! \brief Returns true if all sub-Sector outputs are fixed or calibrated.
@@ -715,7 +733,7 @@ double Sector::getFixedOutput( const int period, bool printValues ) const {
     double totalfixedOutput = 0;
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         totalfixedOutput += subsec[ i ]->getFixedOutput( period );
-          if ( printValues ) { cout << "sSubSec["<<i<<"] "<< subsec[ i ]->getFixedOutput( period ) << ", "; } 
+        if ( printValues ) { cout << "sSubSec["<<i<<"] "<< subsec[ i ]->getFixedOutput( period ) << ", "; } 
     }
     return totalfixedOutput;
 }
@@ -768,6 +786,21 @@ double Sector::getCalOutput( const int period  ) const {
         totalCalOutput += subsec[ i ]->getTotalCalOutputs( period );
     }
     return totalCalOutput;
+}
+
+/*! \brief Return subsector total calibrated outputs for a specified sector type
+*
+* Variant form of getCalOutput that checks that to see that this sector is of a specific type
+*
+* \author James Blackwood
+* \param period Model period
+* \return total calibrated outputs
+*/
+double Sector::getCalOutput( const int period, const string aSectorType ) const {
+    if ( aSectorType == mSectorType ) {
+        return getCalOutput( period );
+    }
+    return 0;
 }
 
 /*! \brief Return subsector total fixed or calibrated inputs.
@@ -943,9 +976,14 @@ double Sector::getInput( const int period ) const {
 * \author Steve Smith
 * \param period Model period
 * \return total input
+* \todo re-impliment this to be market based, not sector based so that this can work with multiple inputs
 */
-double Sector::getEnergyInput( const int period ) {
-    return getInput( period );
+double Sector::getEnergyInput( const int period ) const {
+    if ( getSectorType() == "Energy" ) {
+        return getInput( period );
+    }
+    
+    return 0;
 }
 
 //! Write Sector output to database.
@@ -1147,10 +1185,10 @@ void Sector::updateSummary( const list<string>& aPrimaryFuelList, const int peri
 }
 
 /*! \brief Initialize the marketplaces in the base year to get initial demands from each technology in subsector
- * 
- * \author Pralit Patel
- * \param period The period is usually the base period
- */
+* 
+* \author Pralit Patel
+* \param period The period is usually the base period
+*/
 void Sector::updateMarketplace( const int period ) {
     for( unsigned int i = 0; i < subsec.size(); i++ ) {
         subsec[ i ]->updateMarketplace( period );
@@ -1172,26 +1210,26 @@ void Sector::finalizePeriod( const int aPeriod ){
 }
 
 /*! \brief For outputing SGM data to a flat csv File
- * 
- * \author Pralit Patel
- * \param period The period which we are outputing for
- */
+* 
+* \author Pralit Patel
+* \param period The period which we are outputing for
+*/
 void Sector::csvSGMOutputFile( ostream& aFile, const int period ) const {
-		
-	// when csvSGMOutputFile() is called, a new sector report is created, updated and printed
-	// this function writes a sector report for each sector
-	auto_ptr<IVisitor> sectorReport( new SectorReport( aFile ) );
-	accept( sectorReport.get(), period );
-	sectorReport->finish();
-	for( unsigned int i = 0; i < subsec.size(); i++ ) {
-		subsec[ i ]->csvSGMOutputFile( aFile, period );
-	}    
+
+    // when csvSGMOutputFile() is called, a new sector report is created, updated and printed
+    // this function writes a sector report for each sector
+    auto_ptr<IVisitor> sectorReport( new SectorReport( aFile ) );
+    accept( sectorReport.get(), period );
+    sectorReport->finish();
+    for( unsigned int i = 0; i < subsec.size(); i++ ) {
+        subsec[ i ]->csvSGMOutputFile( aFile, period );
+    }    
 }
 
 void Sector::accept( IVisitor* aVisitor, const int aPeriod ) const{
-	aVisitor->startVisitSector( this, aPeriod );
+    aVisitor->startVisitSector( this, aPeriod );
     for( unsigned int i = 0; i < subsec.size(); i++ ) {
-		subsec[ i ]->accept( aVisitor, aPeriod );
-	}
-	aVisitor->endVisitSector( this, aPeriod );
+        subsec[ i ]->accept( aVisitor, aPeriod );
+    }
+    aVisitor->endVisitSector( this, aPeriod );
 }

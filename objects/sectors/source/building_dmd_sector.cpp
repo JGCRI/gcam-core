@@ -203,5 +203,5 @@ void BuildingDemandSector::aggdemand( const GDP* gdp, const int period ) {
     service[period] = ser_dmd;
 
     // sets subsector outputs, technology outputs, and market demands
-    setoutput( service[ period ], period, gdp );
+    setOutput( service[ period ], gdp, period );
 }

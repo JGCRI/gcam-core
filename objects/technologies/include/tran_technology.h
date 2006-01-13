@@ -33,11 +33,21 @@ public:
     const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
     void calcCost( const std::string& regionName, const std::string& sectorName, const int per );
-    void production( const std::string& regionName, const std::string& prodName,double dmd,
-		             const GDP* gdp, const int per);    
+    
+    virtual void production( const std::string& aRegionName,
+                             const std::string& aSectorName,
+                             const double aDemand,
+                             const GDP* aGDP,
+                             const int aPeriod );
+
     double getIntensity(const int per) const;
     double getCalibrationOutput() const;
-    void initCalc( const IInfo* aSubsectorInfo );
+    
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aSectorName,
+                           const IInfo* aSubsectorIInfo,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
 
 protected:
 	//! Vehicle load factor.
@@ -47,7 +57,7 @@ protected:
 	double mTechnicalChange;
 	
 	double getCumulativeTechnicalChange( const int aPeriod ) const;
-    bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:

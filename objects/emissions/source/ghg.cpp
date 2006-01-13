@@ -32,12 +32,12 @@ extern Scenario* scenario;
 // static initialize.
 const string Ghg::XML_NAME = "GHG";
 
-Ghg::Ghg( const string& nameIn, const string& unitIn, const double rmfracIn, const double gwpIn, const double emissCoefIn ){
+Ghg::Ghg( const string& nameIn, const string& unitIn,  const double gwpIn ){
     name = nameIn;
     unit = unitIn;
-    rmfrac = rmfracIn;
     gwp = gwpIn;
-    emissCoef = emissCoefIn;
+    rmfrac = 0;
+    emissCoef = 0;
     isGeologicSequestration = true;
     storageCost = util::getLargeNumber(); // default to a large cost to turn off CCS
     sequestAmountGeologic = 0;
@@ -388,7 +388,7 @@ void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
 }
 
 //! Perform initializations that only need to be done once per period
-void Ghg::initCalc( ) {
+void Ghg::initCalc( const IInfo* aSubsectorInfo ) {
 
     maxCntrl *= multMaxCntrl;
     // Make sure control percentage never goes above 100% so there are no negative emissions!

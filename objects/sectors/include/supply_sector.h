@@ -26,7 +26,11 @@ public:
 	explicit SupplySector( const std::string& aRegionName );
     virtual ~SupplySector(){};
     static const std::string& getXMLNameStatic();
-    virtual void completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder );
+    
+    virtual void completeInit( const IInfo* aRegionInfo,
+                               DependencyFinder* aDepFinder,
+                               ILandAllocator* aLandAllocator );
+
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
@@ -35,7 +39,10 @@ public:
     void setCalibratedSupplyInfo( const int aPeriod ) const;
     double getOutput( const int aPeriod ) const;
 	virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
-	virtual void supply( const int aPeriod, const GDP* aGDP );
+	
+    virtual void supply( const GDP* aGDP,
+                         const int aPeriod );
+
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                           const int aPeriod ){};
 protected:

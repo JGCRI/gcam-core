@@ -250,7 +250,7 @@ void BaseTechnology::completeInit( const std::string& regionName ) {
     if( !util::hasValue( mGhgNameMap, string( "CO2" ) ) ){
         // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
         // for CO2 this emissions coefficient is not used
-        mGhgs.push_back( new Ghg( "CO2", "MTC", 0, 1 ) ); // at least CO2 must be present
+        mGhgs.push_back( new Ghg( "CO2", "MTC", 1 ) ); // at least CO2 must be present
         mGhgNameMap[ "CO2" ] = static_cast<int>( mGhgs.size() ) - 1;
     }
     for( GHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){

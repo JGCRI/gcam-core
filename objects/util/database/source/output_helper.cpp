@@ -68,7 +68,7 @@ void fileoutput3( string var1name,string var2name,string var3name,
 	for (int i=0;i< static_cast<int>( dout.size() );i++) {
 		outFile << dout[i]<<",";
 	}
-	outFile <<ctime(&gGlobalTime);
+    outFile << endl;
 }
 
 /*! Output single records MiniCAM style to the database. 

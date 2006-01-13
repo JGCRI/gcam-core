@@ -1949,7 +1949,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.191</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.191</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.39193</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -2161,7 +2163,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>3.695</calInputValue>
+							<CalDataInput>
+								<calInputValue>3.695</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.369098</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -2365,7 +2369,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>16.54</calInputValue>
+							<CalDataInput>
+								<calInputValue>16.54</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.367324</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -2557,7 +2563,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.331461</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -2567,7 +2575,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.624073</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.624073</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.367324</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -2652,7 +2662,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>1.809</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.809</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -2662,7 +2674,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>6.556</calInputValue>
+							<CalDataInput>
+								<calInputValue>6.556</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -3369,7 +3383,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>2.1</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.1</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -3473,7 +3489,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>7.91</calInputValue>
+							<CalDataInput>
+								<calInputValue>7.91</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -3578,7 +3596,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.1738</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.1738</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -3674,7 +3694,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -3684,7 +3706,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.6209</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.6209</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -3789,7 +3813,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>6.35</calInputValue>
+							<CalDataInput>
+								<calInputValue>6.35</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -3928,7 +3954,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>2.5922</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.5922</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -4040,7 +4068,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -4050,7 +4080,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>1.2934</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.2934</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -4146,7 +4178,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>4.71</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.71</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -4251,7 +4285,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>6.05</calInputValue>
+							<CalDataInput>
+								<calInputValue>6.05</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -4356,7 +4392,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>2.4167</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.4167</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -4452,7 +4490,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -4462,7 +4502,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>4.10423</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.10423</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -4601,7 +4643,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>22.5</calInputValue>
+							<CalDataInput>
+								<calInputValue>22.5</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -4705,7 +4749,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.74</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.74</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -4818,7 +4864,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -4922,7 +4970,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.015</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.015</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -6865,7 +6915,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.147</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.147</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.397642</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -7077,7 +7129,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>0.077</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.077</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.502153</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -7281,7 +7335,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>0.84</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.84</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.35592</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -7473,7 +7529,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.301081</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -7483,7 +7541,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.0247</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0247</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.35592</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -7568,7 +7628,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0.122</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.122</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -7578,7 +7640,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>0.784</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.784</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -8285,7 +8349,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.39</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.39</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -8389,7 +8455,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>1</calInputValue>
+							<CalDataInput>
+								<calInputValue>1</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -8494,7 +8562,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0029</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0029</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -8590,7 +8660,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -8600,7 +8672,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.0839</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0839</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -8705,7 +8779,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.85</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.85</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -8842,7 +8918,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.198</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.198</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -8954,7 +9032,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -8964,7 +9044,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.2573</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.2573</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -9060,7 +9142,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.7</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.7</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -9165,7 +9249,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>1.05</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.05</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -9270,7 +9356,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.1856</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.1856</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -9366,7 +9454,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -9376,7 +9466,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.74188</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.74188</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -9515,7 +9607,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.85</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.85</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -9619,7 +9713,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.15</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.15</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -9733,7 +9829,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -9837,7 +9935,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.012</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.012</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -11798,7 +11898,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.764</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.764</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.401113</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -12010,7 +12112,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>1.37</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.37</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.412169</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -12214,7 +12318,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>7.27</calInputValue>
+							<CalDataInput>
+								<calInputValue>7.27</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.404627</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -12406,7 +12512,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.290326</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -12416,7 +12524,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.132</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.132</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.319402</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -12501,7 +12611,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>1.137</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.137</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -12511,7 +12623,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>7.987</calInputValue>
+							<CalDataInput>
+								<calInputValue>7.987</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -13218,7 +13332,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>4.24</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.24</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -13322,7 +13438,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>4.05</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.05</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -13427,7 +13545,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>1.9984</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.9984</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -13523,7 +13643,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -13533,7 +13655,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>1.1102</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.1102</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -13638,7 +13762,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>3.65</calInputValue>
+							<CalDataInput>
+								<calInputValue>3.65</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -13775,7 +13901,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.3344</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.3344</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -13887,7 +14015,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -13897,7 +14027,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.579</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.579</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -13993,7 +14125,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>5.38</calInputValue>
+							<CalDataInput>
+								<calInputValue>5.38</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -14098,7 +14232,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>4.16</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.16</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -14203,7 +14339,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>4.0589</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.0589</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -14299,7 +14437,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -14309,7 +14449,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>4.21369</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.21369</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -14448,7 +14590,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>13.88</calInputValue>
+							<CalDataInput>
+								<calInputValue>13.88</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -14552,7 +14696,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.01</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.01</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -14666,7 +14812,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0024</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0024</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -14770,7 +14918,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.183</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.183</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -16705,7 +16855,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>2.025</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.025</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.454475</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -16917,7 +17069,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>1.328</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.328</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.445443</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -17121,7 +17275,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>1.06</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.06</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.424508</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -17313,7 +17469,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.37884</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -17323,7 +17481,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.0901</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0901</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.424508</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -17408,7 +17568,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0.251</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.251</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -17418,7 +17580,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>2.179</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.179</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -18125,7 +18289,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.43</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.43</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -18229,7 +18395,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.42</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.42</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -18334,7 +18502,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0409</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0409</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -18430,7 +18600,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -18440,7 +18612,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.0041</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0041</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -18545,7 +18719,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>1.28</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.28</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -18682,7 +18858,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.4854</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.4854</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -18794,7 +18972,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -18804,7 +18984,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.1509</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.1509</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -18900,7 +19082,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>3.33</calInputValue>
+							<CalDataInput>
+								<calInputValue>3.33</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -19005,7 +19189,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.2</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.2</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -19110,7 +19296,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>1.9993</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.9993</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -19206,7 +19394,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -19216,7 +19406,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>1.58877</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.58877</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -19355,7 +19547,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>3.53</calInputValue>
+							<CalDataInput>
+								<calInputValue>3.53</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -19459,7 +19653,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -19573,7 +19769,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -19677,7 +19875,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.072</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.072</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -21620,7 +21820,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.037</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.037</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.413385</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -21832,7 +22034,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>0.19625</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.19625</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.401944</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -22036,7 +22240,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>1.21</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.21</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.356137</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -22228,7 +22434,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.353991</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -22238,7 +22446,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.0062</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0062</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.356137</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -22323,7 +22533,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -22333,7 +22545,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -23040,7 +23254,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.03</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.03</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -23144,7 +23360,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.17</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.17</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -23249,7 +23467,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0122</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0122</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -23345,7 +23565,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -23355,7 +23577,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.0824</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0824</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -23460,7 +23684,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.29</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.29</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -23597,7 +23823,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.1149</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.1149</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -23709,7 +23937,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -23719,7 +23949,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.082</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.082</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -23815,7 +24047,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.23</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.23</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -23920,7 +24154,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.41</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.41</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -24025,7 +24261,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.2849</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.2849</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -24121,7 +24359,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -24131,7 +24371,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.31887</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.31887</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -24270,7 +24512,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.14</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.14</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -24374,7 +24618,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.0004</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0004</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -24488,7 +24734,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0034</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0034</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -24592,7 +24840,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.007</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.007</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -26528,7 +26778,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.833</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.833</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.387435</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -26740,7 +26992,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>6.193</calInputValue>
+							<CalDataInput>
+								<calInputValue>6.193</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.328815</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -26944,7 +27198,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>4.14</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.14</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.362668</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -27136,7 +27392,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.298098</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -27146,7 +27404,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.362668</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -27231,7 +27491,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0.388</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.388</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -27241,7 +27503,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>2.411</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.411</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -27946,7 +28210,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.11</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.11</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -28049,7 +28315,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>6.21</calInputValue>
+							<CalDataInput>
+								<calInputValue>6.21</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -28154,7 +28422,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>3.0369</calInputValue>
+							<CalDataInput>
+								<calInputValue>3.0369</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -28250,7 +28520,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -28260,7 +28532,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>1.622</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.622</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -28365,7 +28639,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.97</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.97</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -28502,7 +28778,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.6814</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.6814</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -28613,7 +28891,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -28623,7 +28903,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -28719,7 +29001,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>6.77</calInputValue>
+							<CalDataInput>
+								<calInputValue>6.77</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -28823,7 +29107,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>10.61</calInputValue>
+							<CalDataInput>
+								<calInputValue>10.61</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -28927,7 +29213,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>4.6514</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.6514</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -29023,7 +29311,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -29033,7 +29323,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>4.21008</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.21008</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -29172,7 +29464,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>5.85</calInputValue>
+							<CalDataInput>
+								<calInputValue>5.85</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -29276,7 +29570,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.289</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.289</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -29390,7 +29686,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.1797</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.1797</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -29494,7 +29792,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.313</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.313</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -31461,7 +31761,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.476</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.476</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.323889</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -31673,7 +31975,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>0.028</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.028</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.435296</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -31877,7 +32181,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>5.57</calInputValue>
+							<CalDataInput>
+								<calInputValue>5.57</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.309115</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -32069,7 +32375,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.244716</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -32079,7 +32387,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.309115</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -32164,7 +32474,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -32174,7 +32486,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -32879,7 +33193,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.4</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.4</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -32982,7 +33298,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.12</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.12</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -33087,7 +33405,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>4.5621</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.5621</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -33183,7 +33503,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -33193,7 +33515,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -33287,7 +33611,9 @@
 						<period year="1975">
 							<name>trad biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>traditional biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>0.2</nonenergycost>
@@ -33297,7 +33623,9 @@
 						<period year="1990">
 							<name>trad biomass</name>
 							<year>1990</year>
-							<calInputValue>8.6206</calInputValue>
+							<CalDataInput>
+								<calInputValue>8.6206</calInputValue>
+							</CalDataInput>
 							<fuelname>traditional biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>0.2</nonenergycost>
@@ -33402,7 +33730,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.29</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.29</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -33539,7 +33869,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.3609</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.3609</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -33650,7 +33982,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -33660,7 +33994,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.6593</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.6593</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -33756,7 +34092,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>2.28</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.28</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -33860,7 +34198,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.41</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.41</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -33964,7 +34304,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>12.4297</calInputValue>
+							<CalDataInput>
+								<calInputValue>12.4297</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -34060,7 +34402,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -34070,7 +34414,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>1.96467</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.96467</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -34209,7 +34555,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.7</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.7</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -34313,7 +34661,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.007</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.007</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -34427,7 +34777,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.4854</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.4854</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -34531,7 +34883,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.039</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.039</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.2</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -36481,7 +36835,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.17</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.17</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.342162</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -36693,7 +37049,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>0.957</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.957</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.374147</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -36897,7 +37255,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>0.1</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.1</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.369749</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -37089,7 +37449,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.317405</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -37099,7 +37461,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.369749</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -37184,7 +37548,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -37194,7 +37560,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -37899,7 +38267,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.31</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.31</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -38002,7 +38372,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.2</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.2</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -38107,7 +38479,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -38203,7 +38577,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -38213,7 +38589,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.0501</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0501</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -38318,7 +38696,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.34</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.34</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>0.2</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -38455,7 +38835,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.2898</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.2898</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -38566,7 +38948,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -38576,7 +38960,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -38672,7 +39058,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>2.58</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.58</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -38776,7 +39164,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>2.18</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.18</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -38880,7 +39270,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0443</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0443</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -38976,7 +39368,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -38986,7 +39380,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.41341</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.41341</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -39124,7 +39520,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>2.48</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.48</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -39228,7 +39626,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -39342,7 +39742,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -39446,7 +39848,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.002</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.002</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.2</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -41418,7 +41822,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.496</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.496</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.348546</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -41630,7 +42036,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>0.425</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.425</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.287169</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -41834,7 +42242,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>1.63</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.63</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.360077</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -42027,7 +42437,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.280665</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -42037,7 +42449,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.0026</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0026</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.360077</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -42122,7 +42536,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -42132,7 +42548,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>0.091</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.091</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -42837,7 +43255,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.45</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.45</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -42940,7 +43360,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.15</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.15</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -43045,7 +43467,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.1744</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.1744</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -43141,7 +43565,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -43151,7 +43577,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -43245,7 +43673,9 @@
 						<period year="1975">
 							<name>trad biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>traditional biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>0.2</nonenergycost>
@@ -43255,7 +43685,9 @@
 						<period year="1990">
 							<name>trad biomass</name>
 							<year>1990</year>
-							<calInputValue>8.2617</calInputValue>
+							<CalDataInput>
+								<calInputValue>8.2617</calInputValue>
+							</CalDataInput>
 							<fuelname>traditional biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>0.2</nonenergycost>
@@ -43360,7 +43792,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.29</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.29</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -43497,7 +43931,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.1618</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.1618</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -43608,7 +44044,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -43618,7 +44056,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.138</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.138</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -43714,7 +44154,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.95</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.95</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -43818,7 +44260,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.76</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.76</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -43922,7 +44366,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>1.3103</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.3103</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -44018,7 +44464,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -44028,7 +44476,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.70418</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.70418</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -44167,7 +44617,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.89</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.89</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -44271,7 +44723,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -44385,7 +44839,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0127</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0127</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -44489,7 +44945,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.016</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.016</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -46471,7 +46929,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.222</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.222</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.308267</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -46683,7 +47143,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>0.698</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.698</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.287575</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -46887,7 +47349,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>0.23</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.23</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.307164</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -47079,7 +47543,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.279345</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -47089,7 +47555,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.019</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.019</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.307164</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -47174,7 +47642,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0.031</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.031</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -47184,7 +47654,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>0.163</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.163</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -47889,7 +48361,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.13</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.13</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -47992,7 +48466,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.44</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.44</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -48097,7 +48573,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0101</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0101</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -48193,7 +48671,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -48203,7 +48683,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -48297,7 +48779,9 @@
 						<period year="1975">
 							<name>trad biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>traditional biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>0.2</nonenergycost>
@@ -48307,7 +48791,9 @@
 						<period year="1990">
 							<name>trad biomass</name>
 							<year>1990</year>
-							<calInputValue>3.8127</calInputValue>
+							<CalDataInput>
+								<calInputValue>3.8127</calInputValue>
+							</CalDataInput>
 							<fuelname>traditional biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>0.2</nonenergycost>
@@ -48412,7 +48898,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.77</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.77</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -48549,7 +49037,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.463</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.463</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -48660,7 +49150,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -48670,7 +49162,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.2736</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.2736</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -48766,7 +49260,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>2.55</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.55</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -48870,7 +49366,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>1.99</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.99</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -48974,7 +49472,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.6142</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.6142</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -49070,7 +49570,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -49080,7 +49582,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>1.08942</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.08942</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -49219,7 +49723,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>5.38</calInputValue>
+							<CalDataInput>
+								<calInputValue>5.38</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -49323,7 +49829,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.009</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.009</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -49437,7 +49945,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0003</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0003</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -49541,7 +50051,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.01</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.01</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -51505,7 +52017,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.036</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.036</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.336363</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -51717,7 +52231,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>0.561</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.561</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.282956</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -51921,7 +52437,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>0.67</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.67</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.413547</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -52113,7 +52631,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.321147</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -52123,7 +52643,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.413547</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -52208,7 +52730,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0.007</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.007</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -52218,7 +52742,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>0.3</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.3</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -52923,7 +53449,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.64</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.64</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -53026,7 +53554,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.29</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.29</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -53131,7 +53661,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0109</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0109</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -53227,7 +53759,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -53237,7 +53771,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -53331,7 +53867,9 @@
 						<period year="1975">
 							<name>trad biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>traditional biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>0.2</nonenergycost>
@@ -53341,7 +53879,9 @@
 						<period year="1990">
 							<name>trad biomass</name>
 							<year>1990</year>
-							<calInputValue>3.1779</calInputValue>
+							<CalDataInput>
+								<calInputValue>3.1779</calInputValue>
+							</CalDataInput>
 							<fuelname>traditional biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>0.2</nonenergycost>
@@ -53446,7 +53986,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.44</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.44</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -53583,7 +54125,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.1636</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.1636</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -53694,7 +54238,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -53704,7 +54250,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.53</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.53</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -53800,7 +54348,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.49</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.49</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -53904,7 +54454,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>1.32</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.32</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -54008,7 +54560,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.4761</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.4761</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -54104,7 +54658,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -54114,7 +54670,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.5554</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.5554</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -54253,7 +54811,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>3.12</calInputValue>
+							<CalDataInput>
+								<calInputValue>3.12</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -54357,7 +54917,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -54471,7 +55033,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0002</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0002</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -54575,7 +55139,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.002</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.002</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -56509,7 +57075,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.254</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.254</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.422771</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -56721,7 +57289,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>0.552</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.552</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.266534</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -56925,7 +57495,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>2.56</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.56</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.399867</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -57117,7 +57689,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.337185</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -57127,7 +57701,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.0007</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0007</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.399867</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -57212,7 +57788,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0.03</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.03</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -57222,7 +57800,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>0.702</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.702</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -57927,7 +58507,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.39</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.39</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -58030,7 +58612,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.57</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.57</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -58135,7 +58719,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>1.6868</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.6868</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -58231,7 +58817,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -58241,7 +58829,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.2753</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.2753</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -58346,7 +58936,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.34</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.34</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -58483,7 +59075,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.3236</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.3236</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -58594,7 +59188,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -58604,7 +59200,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.0135</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0135</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -58700,7 +59298,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.22</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.22</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -58804,7 +59404,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>1.79</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.79</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -58908,7 +59510,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>2.5016</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.5016</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -59004,7 +59608,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -59014,7 +59620,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>1.15581</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.15581</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -59153,7 +59761,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.31</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.31</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -59257,7 +59867,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -59371,7 +59983,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0014</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0014</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -59475,7 +60089,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.061</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.061</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -61390,7 +62006,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.179</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.179</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.377796</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -61602,7 +62220,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>0.093</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.093</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.371981</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -61806,7 +62426,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>0.19</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.19</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.37588</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -61998,7 +62620,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.295034</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -62008,7 +62632,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.37588</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -62093,7 +62719,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -62103,7 +62731,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>0.569</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.569</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -62807,7 +63437,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.4</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.4</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -62910,7 +63542,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.02</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.02</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -63015,7 +63649,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.43</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.43</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -63111,7 +63747,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -63121,7 +63759,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0.0334</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0334</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -63226,7 +63866,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.12</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.12</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -63363,7 +64005,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.0378</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0378</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -63474,7 +64118,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -63484,7 +64130,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -63579,7 +64227,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.82</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.82</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -63683,7 +64333,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.007</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.007</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -63787,7 +64439,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.3976</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.3976</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -63883,7 +64537,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -63893,7 +64549,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.24101</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.24101</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -64031,7 +64689,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.69</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.69</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -64135,7 +64795,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -64249,7 +64911,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -64353,7 +65017,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.004</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.004</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>
@@ -66320,7 +66986,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.112</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.112</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.413033</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -66532,7 +67200,9 @@
 						<period year="1990">
 							<name>gasTurb</name>
 							<year>1990</year>
-							<calInputValue>0.14</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.14</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.251591</efficiency>
 							<nonenergycost>2</nonenergycost>
@@ -66736,7 +67406,9 @@
 						<period year="1990">
 							<name>Pul Coal</name>
 							<year>1990</year>
-							<calInputValue>2.37</calInputValue>
+							<CalDataInput>
+								<calInputValue>2.37</calInputValue>
+							</CalDataInput>
 							<fuelname>regional coal</fuelname>
 							<efficiency>0.281622</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -66928,7 +67600,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.25033</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -66938,7 +67612,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>regional biomass</fuelname>
 							<efficiency>0.281622</efficiency>
 							<nonenergycost>3.9</nonenergycost>
@@ -67023,7 +67699,9 @@
 						<period year="1975">
 							<name>Gen_II_LWR</name>
 							<year>1975</year>
-							<calInputValue>0.026</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.026</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -67033,7 +67711,9 @@
 						<period year="1990">
 							<name>Gen_II_LWR</name>
 							<year>1990</year>
-							<calInputValue>0.065</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.065</calInputValue>
+							</CalDataInput>
 							<fuelname>nuclearFuelGenII</fuelname>
 							<efficiency>0.333</efficiency>
 							<nonenergycost>5.8</nonenergycost>
@@ -67738,7 +68418,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.57</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.57</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.598802</efficiency>
 							<nonenergycost>4.98</nonenergycost>
@@ -67841,7 +68523,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.002</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.002</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.649351</efficiency>
 							<nonenergycost>3.24</nonenergycost>
@@ -67946,7 +68630,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.0563</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.0563</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -68042,7 +68728,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -68052,7 +68740,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>2.87</nonenergycost>
@@ -68146,7 +68836,9 @@
 						<period year="1975">
 							<name>trad biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>traditional biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>0.2</nonenergycost>
@@ -68156,7 +68848,9 @@
 						<period year="1990">
 							<name>trad biomass</name>
 							<year>1990</year>
-							<calInputValue>4.5806</calInputValue>
+							<CalDataInput>
+								<calInputValue>4.5806</calInputValue>
+							</CalDataInput>
 							<fuelname>traditional biomass</fuelname>
 							<efficiency>0.4</efficiency>
 							<nonenergycost>0.2</nonenergycost>
@@ -68261,7 +68955,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.17</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.17</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_bld</fuelname>
 							<efficiency>1.16279</efficiency>
 							<nonenergycost>3.41</nonenergycost>
@@ -68398,7 +69094,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.1603</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.1603</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.1</nonenergycost>
@@ -68509,7 +69207,9 @@
 						<period year="1975">
 							<name>biomass</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -68519,7 +69219,9 @@
 						<period year="1990">
 							<name>biomass</name>
 							<year>1990</year>
-							<calInputValue>1.1625</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.1625</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered biomass</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -68615,7 +69317,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>0.58</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.58</calInputValue>
+							</CalDataInput>
 							<fuelname>refined oil</fuelname>
 							<efficiency>0.520833</efficiency>
 							<nonenergycost>0.41</nonenergycost>
@@ -68719,7 +69423,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0.28</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.28</calInputValue>
+							</CalDataInput>
 							<fuelname>wholesale gas</fuelname>
 							<efficiency>0.526316</efficiency>
 							<nonenergycost>0.32</nonenergycost>
@@ -68823,7 +69529,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>1.8946</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.8946</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.5</efficiency>
 							<nonenergycost>0.8</nonenergycost>
@@ -68919,7 +69627,9 @@
 						<period year="1975">
 							<name>electricity</name>
 							<year>1975</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -68929,7 +69639,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.66963</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.66963</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_ind</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>1.16</nonenergycost>
@@ -69068,7 +69780,9 @@
 						<period year="1990">
 							<name>oil</name>
 							<year>1990</year>
-							<calInputValue>1.11</calInputValue>
+							<CalDataInput>
+								<calInputValue>1.11</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered pet prods</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>98.88</nonenergycost>
@@ -69172,7 +69886,9 @@
 						<period year="1990">
 							<name>gas</name>
 							<year>1990</year>
-							<calInputValue>0</calInputValue>
+							<CalDataInput>
+								<calInputValue>0</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered gas</fuelname>
 							<efficiency>0.333333</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -69286,7 +70002,9 @@
 						<period year="1990">
 							<name>coal</name>
 							<year>1990</year>
-							<calInputValue>0.118</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.118</calInputValue>
+							</CalDataInput>
 							<fuelname>delivered coal</fuelname>
 							<efficiency>0.3003</efficiency>
 							<nonenergycost>200</nonenergycost>
@@ -69390,7 +70108,9 @@
 						<period year="1990">
 							<name>electricity</name>
 							<year>1990</year>
-							<calInputValue>0.015</calInputValue>
+							<CalDataInput>
+								<calInputValue>0.015</calInputValue>
+							</CalDataInput>
 							<fuelname>elect_td_trn</fuelname>
 							<efficiency>0.952381</efficiency>
 							<nonenergycost>153.17</nonenergycost>

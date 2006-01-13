@@ -48,15 +48,19 @@ ExportSector::ExportSector ( const string& aRegionName ) : SupplySector ( aRegio
 *          remove the sector from the ordering completely.
 * \param aRegionInfo The regional information object.
 * \param aDependencyFinder The dependency finding object.
+* \param aLandAllocator Regional land allocator.
 */
-void ExportSector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder ){
+void ExportSector::completeInit( const IInfo* aRegionInfo,
+                                 DependencyFinder* aDependencyFinder,
+                                 ILandAllocator* aLandAllocator )
+{
 	// Add a fake dependency on the input "none" to prevent the dependency
 	// finder from completely removing the sector.
 	aDependencyFinder->addDependency( name, "none" );
 
 	// Pass null for the DependencyFinder to the SupplySector complete init so
     // it will pass null to the subsectors.
-    SupplySector::completeInit( aRegionInfo, 0 );
+    SupplySector::completeInit( aRegionInfo, 0, aLandAllocator );
     setMarket();
 }
 
@@ -88,10 +92,10 @@ void ExportSector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
 *          simply calculates the entire amount of fixed output and distributes
 *          that amount to the subsectors.
 * \author Josh Lurz
-* \param aPeriod Model period
 * \param aGDP GDP object uses to calculate various types of GDPs.
+* \param aPeriod Model period
 */
-void ExportSector::supply( const int aPeriod, const GDP* aGDP ) {
+void ExportSector::supply( const GDP* aGDP, const int aPeriod ) {
 	// Set the demand for the good produced by this sector to only be the level of fixed output.
     double marketDemand = getFixedOutput( aPeriod );
 
@@ -110,7 +114,7 @@ void ExportSector::supply( const int aPeriod, const GDP* aGDP ) {
     // This is where subsector and technology outputs are set
     for( unsigned int i = 0; i < subsec.size(); ++i ){
         // set subsector output from Sector demand
-        subsec[ i ]->setoutput( marketDemand, aPeriod, aGDP );
+        subsec[ i ]->setOutput( marketDemand, aGDP, aPeriod );
     }    
     
     const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );

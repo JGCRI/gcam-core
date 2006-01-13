@@ -35,8 +35,16 @@ class TranSubsector: public Subsector
 public:
     TranSubsector( std::string regionName, std::string sectorName );
     void calcShare( const int period, const GDP* gdp ); 
-    void setoutput( const double demand, const int period, const GDP* gdp );
+    
+    virtual void setOutput( const double aDemand,
+                            const GDP* aGDP,
+                            const int aPeriod );
+
     static const std::string& getXMLNameStatic();
+    
+    virtual void completeInit( const IInfo* aSectorInfo,
+                               DependencyFinder* aDependencyFinder,
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
@@ -57,7 +65,7 @@ protected:
     double baseScaler;
 
     void MCDerivedClassOutput() const;
-    bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;

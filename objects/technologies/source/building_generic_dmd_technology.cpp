@@ -69,29 +69,34 @@ const std::string& BuildingGenericDmdTechnology::getXMLNameStatic1D() {
 	return XML_NAME1D;
 }
 
-/*! \brief Performs building demand technology initializations.
-*
-* Passes the appropriate string for the internal gains market to each supply sector.
+/*
+* \brief Perform initializations that only need to be done once per period.
 * \warning This may need to be adjusted for multiple inputs
-* \author Steve Smith
-* \todo Add period to technology initCalc signature once AgLU is committed and remove from below
+* \param aRegionName Region name.
+* \param aSectorName Sector name, also the name of the product.
+* \param aSubsectorInfo Parent information container.
+* \param aDemographics Regional demographics container.
+* \param aPeriod Model period.
 */
-void BuildingGenericDmdTechnology::initCalc( const IInfo* aSubsectorIInfo ) {
+void BuildingGenericDmdTechnology::initCalc( const string& aRegionName,
+                                             const string& aSectorName,
+                                             const IInfo* aSubsectorInfo,
+                                             const Demographic* aDemographics,
+                                             const int aPeriod )
+{
     Marketplace* marketplace = scenario->getMarketplace();
     string existingName;
 
     string serviceSupplySectorName = getFuelName( );
-    string internGainsMktName = aSubsectorIInfo->getString( BuildingDemandSubSector::getInternalGainsInfoName(), true );
-    assert( !internGainsMktName.empty() ); // This should have always been properly set by the building subsector
-    string regionName = aSubsectorIInfo->getString( "regionName", true );
-    int period = aSubsectorIInfo->getInteger( "period", true );
-    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( serviceSupplySectorName, regionName, period, true );
+    string internGainsMktName = aSubsectorInfo->getString( BuildingDemandSubSector::getInternalGainsInfoName(), true );
+    assert( !internGainsMktName.empty() ); // This should have always been properly set by the building subsecto
+    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( serviceSupplySectorName, aRegionName, aPeriod, true );
 
     if( !marketInfo ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "There does not appear to be a market for good "<< serviceSupplySectorName 
-                <<" in region "<< regionName << "." << endl;
+                << " in region " << aRegionName << "." << endl;
         existingName = "no market";   // do not try to set an info object to this market if there has been a user input error.
     }
     else {
@@ -105,15 +110,15 @@ void BuildingGenericDmdTechnology::initCalc( const IInfo* aSubsectorIInfo ) {
     else if ( existingName != internGainsMktName ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Building service supply sector "<< serviceSupplySectorName <<" in region "<< regionName
+            mainLog << "Building service supply sector "<< serviceSupplySectorName <<" in region "<< aRegionName
                     <<" appears to be pointing to two different demand sectors." << endl;
     }
     
-    technology::initCalc( aSubsectorIInfo );
+    technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPeriod );
 }
 
 //! Parses any input variables specific to derived classes
-bool BuildingGenericDmdTechnology::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+bool BuildingGenericDmdTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     // additional read in for buildings
     if( nodeName == "saturation" ){
         saturation = XMLHelper<double>::getValue( curr );
@@ -146,18 +151,22 @@ void BuildingGenericDmdTechnology::toDebugXMLDerived( const int period, ostream&
     XMLWriteElement( priceElasticity, "pElasticity", out, tabs );
 }	
 
-/*! \brief calculate technology unnormalized shares
-*
-* Building technologies are really just calculating demands for specific servicies
-* so shares are always 1
-*
-* This ensures that sector price is correctly calculated.
-* 
+/*!
+* \brief calculate technology unnormalized shares
+* \details Building technologies are really just calculating demands for
+*          specific servicies so shares are always 1. This ensures that sector
+*          price is correctly calculated.
 * \author Steve Smith
-* \param regionName region name
-* \param per model period
+* \param aRegionName Region name.
+* \param aSectorName Sector name, also the name of the product.
+* \param aGDP Regional GDP container.
+* \param aPeriod Model period.
 */
-void BuildingGenericDmdTechnology::calcShare( const string& regionName, const GDP* gdp, const int period ) {
+void BuildingGenericDmdTechnology::calcShare( const string& aRegionName,
+                                              const std::string& aSectorName,
+                                              const GDP* aGDP,
+                                              const int aPeriod )
+{
 	share = 1;
 }
 
@@ -194,31 +203,36 @@ void BuildingGenericDmdTechnology::adjustForCalibration( double subSectorDemand,
      shrwts = unitDemand / getDemandFnPrefix( regionName, period );
  }
 
-//! Calculates fuel input and technology output.
-/*! Unlike normal technologies, this DOES NOT add demands for fuels and ghg emissions to markets
-*   The BuildingGenericDmdTechnology just calculates demand for a service,
-*   the actual fuel consumption and emissions take place in the corresponding supply sectors. 
+/*! \brief Calculates the amount of output from the technology.
+* \details Unlike normal technologies, this does NOT add demands for fuels and
+*          ghg emissions to markets. The BuildingGenericDmdTechnology just
+*          calculates demand for a service, the actual fuel consumption and
+*          emissions take place in the corresponding supply sectors. 
+* \param aRegionName Region name.
+* \param aSectorName Sector name, also the name of the product.
+* \param aDemand Subsector demand for output.
+* \param aGDP Regional GDP container.
+* \param aPeriod Model period.
 * \author Steve Smith
-* \param regionName name of the region
-* \param prodName name of the product for this sector
-* \param gdp pointer to gdp object
-* \param dmd total demand for this subsector
-* \param per Model period
 */
-void BuildingGenericDmdTechnology::production(const string& regionName,const string& prodName,
-											  double dmd, const GDP* gdp, const int period )
+void BuildingGenericDmdTechnology::production( const string& aRegionName,
+                                               const string& aSectorName,
+                                               const double aDemand,
+                                               const GDP* aGDP,
+                                               const int aPeriod )
 {
 	Marketplace* marketplace = scenario->getMarketplace();
 
 	// dmd is in units of floor space
-	double floorSpace = dmd; 
+	double floorSpace = aDemand; 
 
-	input = shrwts * getDemandFnPrefix( regionName, period ) * floorSpace + getEffectiveInternalGains( regionName, period );
+	input = shrwts * getDemandFnPrefix( aRegionName, aPeriod ) * floorSpace
+            + getEffectiveInternalGains( aRegionName, aPeriod );
 
 	output = input = max( input, 0.0 ); // Make sure internal gains do not drive service less than zero
 
 	// set demand for fuel in marketplace
-	marketplace->addToDemand( fuelname, regionName, input, period );
+	marketplace->addToDemand( fuelname, aRegionName, input, aPeriod );
 
 }
 

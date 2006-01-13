@@ -104,7 +104,14 @@ const string BuildingDemandSubSector::getInternalGainsMarketName( const string a
     return INTERNAL_GAINS_MKT_PREFIX + sectorName + name;
 }
 
-//! Virtual function which specifies the XML name of the children of this class, the type of technology.
+/*! \brief Returns true if the nodename is a valid child for this class.
+*
+* Virtual function which specifies the XML name of the possible technology children of this class.
+* This function allows all technologies to be properly parsed using the base subsector code.
+* \author Steve Smith
+* \pre Needs cooresponding createChild() function
+* \return True if nodename is a valid child of this class.
+*/
 bool BuildingDemandSubSector::isNameOfChild  ( const string& nodename ) const {
     if ( nodename == BuildingGenericDmdTechnology::getXMLNameStatic1D() ) {
         return true;
@@ -120,7 +127,12 @@ bool BuildingDemandSubSector::isNameOfChild  ( const string& nodename ) const {
     }
 }
 
-//! Virtual function to generate a child element or construct the appropriate technology.
+/*! \brief Virtual function to generate a child element or construct the appropriate technology.
+*
+* \pre Needs cooresponding isNameOfChild() function
+* \author Steve Smith
+* \return returns a new child object of appropriate type.
+*/
 technology* BuildingDemandSubSector::createChild( const string& nodename ) const {
     if ( nodename == BuildingGenericDmdTechnology::getXMLNameStatic1D() ) {
         return new BuildingGenericDmdTechnology();
@@ -142,20 +154,22 @@ technology* BuildingDemandSubSector::createChild( const string& nodename ) const
 /*! \brief Parses any input variables specific to derived classes
 *
 */
-bool BuildingDemandSubSector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+bool BuildingDemandSubSector::XMLDerivedClassParse( const string& aNodeName,
+                                                    const DOMNode* aCurr )
+{
     const Modeltime* modeltime = scenario->getModeltime();
 
-   if( nodeName == "daylighting" ){
-        XMLHelper<double>::insertValueIntoVector( curr, dayLighting, modeltime );
+   if( aNodeName == "daylighting" ){
+        XMLHelper<double>::insertValueIntoVector( aCurr, dayLighting, modeltime );
     } 
-    else if( nodeName == "aveInsulation" ){
-        XMLHelper<double>::insertValueIntoVector( curr, aveInsulation, modeltime );
+    else if( aNodeName == "aveInsulation" ){
+        XMLHelper<double>::insertValueIntoVector( aCurr, aveInsulation, modeltime );
     } 
-    else if( nodeName == "nonenergycost" ){
-        XMLHelper<double>::insertValueIntoVector( curr, nonEnergyCost, modeltime );
+    else if( aNodeName == "nonenergycost" ){
+        XMLHelper<double>::insertValueIntoVector( aCurr, nonEnergyCost, modeltime );
     } 
-    else if( nodeName == "floorToSurfaceArea" ){
-        XMLHelper<double>::insertValueIntoVector( curr, floorToSurfaceArea, modeltime );
+    else if( aNodeName == "floorToSurfaceArea" ){
+        XMLHelper<double>::insertValueIntoVector( aCurr, floorToSurfaceArea, modeltime );
     } else {
       return false;
     }
@@ -202,10 +216,14 @@ void BuildingDemandSubSector::toDebugXMLDerived( const int period, ostream& out,
 * \author Steve Smith
 * \param aSectorInfo Parent sector info object.
 * \param aDependencyFinder The regional dependency finder.
+* \param aLandAllocator Regional land allocator.
 * \warning markets are not necesarilly set when completeInit is called
 */
-void BuildingDemandSubSector::completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder ) {
-    Subsector::completeInit( aSectorInfo, aDependencyFinder );
+void BuildingDemandSubSector::completeInit( const IInfo* aSectorInfo,
+                                            DependencyFinder* aDependencyFinder,
+                                            ILandAllocator* aLandAllocator )
+{
+    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator );
     setUpSubSectorMarkets();
 }
 
@@ -272,7 +290,7 @@ void BuildingDemandSubSector::calcPrice( const int period ) {
 * demand technologies
 *
 * \author Steve Smith
-* \todo MarketInfo needs to be updated to handle string values so that internal gain market name can be passed and not specified in the input data
+* \todo IInfo needs to be updated to handle string values so that internal gain market name can be passed and not specified in the input data
 * \param period Model period
 * \warning Function getFuelName will need to be changed once multiple inputs are implimented
 */
@@ -305,8 +323,6 @@ void BuildingDemandSubSector::initCalc( NationalAccount& aNationalAccount,
     // Note that this will only work because the derived class subsector initCalc() is called before the base class initCalc() 
     // -- which imediately calls technology::initCalc()
     mSubsectorInfo->setString( getInternalGainsInfoName(), getInternalGainsMarketName( sectorName ) );
-    mSubsectorInfo->setString( "regionName", regionName ); // The technology will also need the region name in order to access the marketplace
-    mSubsectorInfo->setInteger( "period", aPeriod ); // The technology will also need the period in order to access the marketplace
 
     // for building demand "technologies", share weights, unit demands, should always be carried forward
     // This needs to be set before Subsector::initCalc() is called since that is where share weights are interpolated
@@ -453,13 +469,16 @@ Marketplace* marketplace = scenario->getMarketplace();
 *
 * \author Steve Smith
 * \param regionName region name
-* \param prodName name of product for this sector
-* \param demand Total demand for this product
-* \param period Model period
+* \param aDemand Total demand for this product.
+* \param aGDP Regional GDP container.
+* \param aPeriod Model period
 */
-void BuildingDemandSubSector::setoutput( const double demand, const int period, const GDP* gdp ) {
-    output[ period ] = share[ period ] * demand; 
-    Subsector::setoutput( demand, period, gdp );
+void BuildingDemandSubSector::setOutput( const double aDemand,
+                                         const GDP* aGDP,
+                                         const int aPeriod )
+{
+    output[ aPeriod ] = share[ aPeriod ] * aDemand; 
+    Subsector::setOutput( aDemand, aGDP, aPeriod );
 }
 
 // Documentation is inherited.

@@ -35,6 +35,8 @@ class IExpectedProfitRateCalculator;
 class TechnologyType;
 class IDistributor;
 class Tabs;
+class ILandAllocator;
+class Demographics;
 
 /*! 
 * \ingroup Objects
@@ -93,7 +95,7 @@ protected:
     bool techHasInput( const technology* thisTech, const std::string& goodName ) const;
     virtual void MCDerivedClassOutput() const;
     virtual void csvDerivedClassOutput() const;
-    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const{};
@@ -106,7 +108,9 @@ protected:
    
     static bool initializeTechVector( std::vector<technology*>& aTechVector, 
                                       const std::string& aSectorName,
-                                      DependencyFinder* aDependencyFinder );
+                                      DependencyFinder* aDependencyFinder,
+                                      const IInfo* aSubsecInfo,
+                                      ILandAllocator* aLandAllocator );
 
     static const std::string findTechName( const std::vector<technology*>& aTechVector );
 public:
@@ -115,7 +119,10 @@ public:
     static double capLimitTransform( double capLimit, double orgShare ); 
     const std::string getName() const;
     void XMLParse( const xercesc::DOMNode* tempNode );
-    virtual void completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder );
+
+    virtual void completeInit( const IInfo* aSectorInfo,
+                               DependencyFinder* aDependencyFinder,
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
@@ -146,13 +153,17 @@ public:
     void limitShares( const double sum, const int period );
     void setCapLimitStatus( const bool value, const int period );
     bool getCapLimitStatus( const int period ) const;
-    virtual void calcTechShares ( const GDP* gdp, const int period );
-    virtual void setoutput( const double demand, const int period, const GDP* gdp ); 
+    virtual void calcTechShares ( const GDP* aGDP, const int aPeriod );
+    
+    virtual void setOutput( const double aDemand,
+                            const GDP* aGDP,
+                            const int aPeriod );
+
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
     void scaleFixedOutput( const double scaleRatio, const int period );
     double getFixedOutput( const int period ) const;
     void resetFixedOutput( const int period );
-    double getTotalCalOutputs( const int period ) const;
+    virtual double getTotalCalOutputs( const int period ) const;
     double getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const;
     double getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals ) const;
     bool setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
@@ -184,7 +195,7 @@ public:
     virtual void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
     void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
     int getNumberAvailTechs( const int period ) const;
-    void tabulateFixedDemands( const int period );
+    virtual void tabulateFixedDemands( const int period, const IInfo* aSectorInfo);
     void adjustForCalibration( double sectorDemand, double totalFixedSupply, double totalCalOutputs, const int period );
     
     double getExpectedProfitRate( const NationalAccount& aNationalAccount,

@@ -23,6 +23,7 @@ class Emcoef_ind;
 class GDP;
 class GhgMAC;
 class Input;
+class IInfo;
 
 /*! 
 * \ingroup Objects
@@ -42,7 +43,7 @@ class Ghg: public IVisitable, public IRoundTrippable
 { 
     friend class XMLDBOutputter;
 public:
-    Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const double rmfracIn = 0, const double gwpIn = 1, const double emissCoefIn = 0 );
+Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const double gwpIn = 1 );
     virtual ~Ghg();
     Ghg( const Ghg& other );
     virtual Ghg& operator=( const Ghg& other );
@@ -77,7 +78,7 @@ public:
     bool getEmissionsCoefInputStatus() const;
     void setEmissionsCoefInputStatus();
     double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const;
-    void initCalc();
+    virtual void initCalc( const IInfo* aSubsectorInfo );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     double calcInputEmissions( const std::vector<Input*>& aInputs, const std::string& aRegionName, const int aPeriod ) const;

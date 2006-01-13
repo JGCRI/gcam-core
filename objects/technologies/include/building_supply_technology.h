@@ -38,10 +38,15 @@ public:
     ~BuildingSupplyTechnology();
     const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
-    void production(const std::string& regionName,const std::string& prodName,double dmd, const GDP* gdp, const int per);
+    
+    virtual void production( const std::string& aRegionName,
+                             const std::string& aSectorName,
+                             const double aDemand,
+                             const GDP* aGDP,
+                             const int aPeriod );
 protected:
     const std::string& getXMLName() const; 
-    bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr ); 
+    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
  

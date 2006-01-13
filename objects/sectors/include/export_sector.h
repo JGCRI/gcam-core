@@ -32,14 +32,20 @@ class ExportSector: public SupplySector
 {
 public:
 	explicit ExportSector( const std::string& aRegionName );
-	void completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder );
+
+    virtual void completeInit( const IInfo* aRegionInfo,
+                               DependencyFinder* aDepFinder,
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
 
 	void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
-	void supply( const int aPeriod, const GDP* aGDP );
+    
+    virtual void supply( const GDP* aGDP,
+                         const int aPeriod );
+
     static const std::string& getXMLNameStatic();
 protected:
 	void setMarket();

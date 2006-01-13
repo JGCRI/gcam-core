@@ -43,6 +43,10 @@ public:
     static const std::string& getInternalGainsInfoName();
     virtual void setCalibrationStatus( const int period );
     
+    virtual void completeInit( const IInfo* aSectorInfo,
+                               DependencyFinder* aDependencyFinder,
+                               ILandAllocator* aLandAllocator );
+    
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
                            const MoreSectorInfo* aMoreSectorInfo,
@@ -51,14 +55,20 @@ public:
     void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
     void calcPrice( const int period );
     double getOutput( const int period );
-    void setoutput( const double demand, const int period, const GDP* gdp );
-    void completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder );
+    
+    virtual void setOutput( const double aDemand,
+                            const GDP* aGDP,
+                            const int aPeriod );
+    
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
 protected:
     virtual const std::string& getXMLName() const;
     const std::string getInternalGainsMarketName( const std::string aSectorName ) const;
-    bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    
+    bool XMLDerivedClassParse( const std::string& aNodeName,
+                               const xercesc::DOMNode* aCurr );
+    
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     void setUpSubSectorMarkets();

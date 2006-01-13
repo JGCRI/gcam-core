@@ -67,7 +67,7 @@ const std::string& BuildingSupplyTechnology::getXMLNameStatic1D() {
 }
 
 //! Parses any input variables specific to derived classes
-bool BuildingSupplyTechnology::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+bool BuildingSupplyTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
 
     if( nodeName == "internalLoadFraction" ){
         internalLoadFraction = XMLHelper<double>::getValue( curr );
@@ -96,30 +96,34 @@ void BuildingSupplyTechnology::toDebugXMLDerived( const int period, ostream& out
     XMLWriteElement( input * internalLoadFraction, "internalGain", out, tabs );
 }	
 
-//! Calculates fuel input and technology output.
-/*! Calls the usual technology production function technology::production
-* and then adds internal gains, if any, to the appropriate market
-*
-* \author Steve Smith
-* \param regionName name of the region
-* \param prodName name of the product for this sector
-* \param gdp pointer to gdp object
-* \param dmd total demand for this subsector
-* \param per Model period
+/*! \brief Calculates the amount of output from the technology.
+* \details Calculates the amount of output of the technology based on the share
+*          of the subsector demand. This is then used to determine the amount of
+*          input used, and emissions created. Building supply technologies in
+*          addition add their secondary output, internal heating, to the
+*          marketplace.
+* \param aRegionName Region name.
+* \param aSectorName Sector name, also the name of the product.
+* \param aDemand Subsector demand for output.
+* \param aGDP Regional GDP container.
+* \param aPeriod Model period.
 */
-void BuildingSupplyTechnology::production(const string& regionName,const string& prodName,
-                                          double dmd, const GDP* gdp, const int period ) {
-    Marketplace* marketplace = scenario->getMarketplace();
-    
+void BuildingSupplyTechnology::production( const string& aRegionName,
+                                           const string& aSectorName,
+                                           const double aDemand,
+                                           const GDP* aGDP,
+                                           const int aPeriod )
+{
     // Call the normal production function
-    technology::production( regionName, prodName, dmd, gdp, period );
+    technology::production( aRegionName, aSectorName, aDemand, aGDP, aPeriod );
 
     double internalGain = 0;
-    const string intGainsMarketName =  marketplace->getMarketInfo( prodName, regionName, period, true )->
+    Marketplace* marketplace = scenario->getMarketplace();
+    const string intGainsMarketName =  marketplace->getMarketInfo( aSectorName, aRegionName, aPeriod, true )->
                  getString(BuildingDemandSubSector::getInternalGainsInfoName(), false ); 
     // If an internal gains market has been set, calculate internal gains and add to that market 
     if ( internalLoadFraction > 0 && !intGainsMarketName.empty() ) {
-        marketplace->addToDemand( intGainsMarketName, regionName, input * internalLoadFraction, period );
+        marketplace->addToDemand( intGainsMarketName, aRegionName, input * internalLoadFraction, aPeriod );
         internalGain = input * internalLoadFraction;
-    }   
+    }
 }

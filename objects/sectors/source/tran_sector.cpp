@@ -196,7 +196,7 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
         service[period] = serviceDemand / techChangeCumm[ period ];
     }
 
-    // sets subsector outputs, technology outputs, and market demands
-    setoutput( service[ period ], period, gdp );
+    // sets subsector outputs, technology outputs, and market demands.
+    setOutput( service[ period ], gdp, period );
 }
 

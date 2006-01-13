@@ -20,6 +20,7 @@
 #include "containers/include/gdp.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/iinfo.h"
+#include "technologies/include/ical_data.h"
 
 using namespace std;
 using namespace xercesc;
@@ -66,7 +67,7 @@ const std::string& TranTechnology::getXMLNameStatic1D() {
 }
 
 //! initialize TranTechnology with xml data
-bool TranTechnology::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+bool TranTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     if( nodeName == "intensity" ){
         intensity = XMLHelper<double>::getValue( curr );
     }
@@ -106,13 +107,16 @@ void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* ta
 }	
 
 //! Perform initializations that only need to be done once per period.
-/*! Check to see if illegal values have been read in
-* This avoids serious errors that can be hard to trace
+/*! Check to see if illegal values have been read in. This avoids serious errors
+*   that can be hard to trace.
 */
-//! 
-void TranTechnology::initCalc( const IInfo* aSubsectorInfo ) {    
-    
-    technology::initCalc( aSubsectorInfo );
+void TranTechnology::initCalc( const string& aRegionName,
+                               const string& aSectorName,
+                               const IInfo* aSubsectorInfo,
+                               const Demographic* aDemographics,
+                               const int aPeriod )
+{        
+    technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPeriod );
 
     // Check if illegal values have been read in
     if ( loadFactor == 0 ) {
@@ -199,7 +203,11 @@ void TranTechnology::production(const string& regionName,const string& prodName,
 double TranTechnology::getCalibrationOutput( ) const {
     const double ECONV = 1.055e-9;
 	const int period = scenario->getModeltime()->getyr_to_per( year );
-    return calInputValue * getCumulativeTechnicalChange( period ) * loadFactor / (intensity*ECONV);
+    if( mCalValue.get() ){
+	    return mCalValue->getCalInput( eff ) * getCumulativeTechnicalChange( period )
+               * loadFactor / ( intensity * ECONV );
+    }
+    return 0;
 }
 
 //! return fuel intensity

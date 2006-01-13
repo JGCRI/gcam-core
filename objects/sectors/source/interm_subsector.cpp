@@ -47,16 +47,19 @@ IntermittentSubsector::IntermittentSubsector( const string regionName, const str
 * This routine is only called once per model run
 * \param aSectorInfo Sector information object.
 * \param aDependencyFinder Regional dependency finder.
+* \param aLandAllocator Regional land allocator.
 * \author Marshall Wise
 * \warning markets are not necesarilly set when completeInit is called. For the
 *          intermittent subsector, use this to make sure there is a trial market
 *          set for electricity as there might not be one set if there are no
 *          simultaneities
 */
-void IntermittentSubsector::completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder ) {
-
+void IntermittentSubsector::completeInit( const IInfo* aSectorInfo,
+                                          DependencyFinder* aDependencyFinder,
+                                          ILandAllocator* aLandAllocator )
+{
     // first call parent method
-    Subsector::completeInit( aSectorInfo, aDependencyFinder);
+    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator );
 
     // now set the trial market for electricity.
     // TODO: What if the electricity market hadn't been created yet?
@@ -64,19 +67,18 @@ void IntermittentSubsector::completeInit( const IInfo* aSectorInfo, DependencyFi
     marketplace->resetToPriceMarket(electricSectorName, regionName);
 }
 
-
-
-
 //! Parses any input variables specific to derived classes
-bool IntermittentSubsector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
-    if( nodeName == "backupTechNumber" ){
-        backupTechNumber = XMLHelper<int>::getValue( curr );
+bool IntermittentSubsector::XMLDerivedClassParse( const string& aNodeName,
+                                                  const DOMNode* aCurr )
+{
+    if( aNodeName == "backupTechNumber" ){
+        backupTechNumber = XMLHelper<int>::getValue( aCurr );
     }
-    else if( nodeName == "resourceTechNumber" ){
-        resourceTechNumber = XMLHelper<int>::getValue( curr );
+    else if( aNodeName == "resourceTechNumber" ){
+        resourceTechNumber = XMLHelper<int>::getValue( aCurr );
     }
-    else if( nodeName == "electricSectorName" ){
-        electricSectorName = XMLHelper<string>::getValueString( curr );
+    else if( aNodeName == "electricSectorName" ){
+        electricSectorName = XMLHelper<string>::getValueString( aCurr );
     }
 	else {
         return false;

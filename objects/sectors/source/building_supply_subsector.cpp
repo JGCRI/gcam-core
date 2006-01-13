@@ -60,17 +60,29 @@ const std::string& BuildingSupplySubSector::getXMLNameStatic() {
 /*! \brief Parses any input variables specific to derived classes
 *
 */
-bool BuildingSupplySubSector::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
+bool BuildingSupplySubSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
 
     return false;
 }
 
-//! Virtual function which specifies the XML name of the children of this class, the type of technology.
+/*! \brief Returns true if the nodename is a valid child for this class.
+*
+* Virtual function which specifies the XML name of the possible technology children of this class.
+* This function allows all technologies to be properly parsed using the base subsector code.
+* \author Steve Smith
+* \pre Needs cooresponding createChild() function
+* \return True if nodename is a valid child of this class.
+*/
 bool BuildingSupplySubSector::isNameOfChild  ( const string& nodename ) const {
     return nodename == BuildingSupplyTechnology::getXMLNameStatic1D();
 }
 
-//! Virtual function to generate a child element or construct the appropriate technology.
+/*! \brief Virtual function to generate a child element or construct the appropriate technology.
+*
+* \pre Needs cooresponding isNameOfChild() function
+* \author Steve Smith
+* \return returns a new child object of appropriate type.
+*/
 technology* BuildingSupplySubSector::createChild( const string& nodename ) const {
     return new BuildingSupplyTechnology();
 }

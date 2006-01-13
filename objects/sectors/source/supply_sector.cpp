@@ -103,10 +103,10 @@ void SupplySector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
 *          Routine also calls adjustForFixedOutput which adjusts shares, if
 *          necessary, for any fixed output sub-sectors.
 * \author Sonny Kim
-* \param aPeriod Model period
 * \param aGDP GDP object uses to calculate various types of GDPs.
+* \param aPeriod Model period
 */
-void SupplySector::supply( const int aPeriod, const GDP* aGDP ) {
+void SupplySector::supply( const GDP* aGDP, const int aPeriod ) {
     Marketplace* marketplace = scenario->getMarketplace();
 
 	 // demand for the good produced by this Sector
@@ -127,7 +127,7 @@ void SupplySector::supply( const int aPeriod, const GDP* aGDP ) {
     // This is where subsector and technology outputs are set
     for( unsigned int i = 0; i < subsec.size(); ++i ){
         // set subsector output from Sector demand
-        subsec[ i ]->setoutput( marketDemand, aPeriod, aGDP );
+        subsec[ i ]->setOutput( marketDemand, aGDP, aPeriod );
     }    
     
     const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
@@ -152,8 +152,11 @@ void SupplySector::supply( const int aPeriod, const GDP* aGDP ) {
 * \param aRegionInfo Regional information object.
 * \param aDependencyFinder Regional dependency finder.
 */
-void SupplySector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDependencyFinder ){
-    Sector::completeInit( aRegionInfo, aDependencyFinder );
+void SupplySector::completeInit( const IInfo* aRegionInfo,
+                                 DependencyFinder* aDependencyFinder,
+                                 ILandAllocator* aLandAllocator )
+{
+    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
     setMarket();
 }
 

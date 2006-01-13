@@ -35,19 +35,33 @@ class IInfo;
 class BuildingGenericDmdTechnology : public technology
 {
 public:
-    BuildingGenericDmdTechnology(); // default construtor
+    BuildingGenericDmdTechnology();
     virtual BuildingGenericDmdTechnology* clone() const;
     virtual ~BuildingGenericDmdTechnology();
     virtual const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
-    virtual void initCalc( const IInfo* aSubsectorIInfo );
-    virtual void calcShare( const std::string& regionName, const GDP* gdp, const int per ); 
-    virtual void production( const std::string& regionName,const std::string& prodName,
-		                     double dmd, const GDP* gdp, const int per );
+    
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aSectorName,
+                           const IInfo* aSubsectorIInfo,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
+
+    virtual void calcShare( const std::string& aRegionName,
+                            const std::string& aSectorName,
+                            const GDP* aGDP,
+                            const int aPeriod ); 
+    
+    virtual void production( const std::string& aRegionName,
+                             const std::string& aSectorName,
+                             const double aDemand,
+                             const GDP* aGDP,
+                             const int aPeriod );
+
     virtual void adjustForCalibration( double subSectorDemand, const std::string& regionName,
 		                               const IInfo* subSectorInfo, const int period );
 protected:
-    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual double getDemandFnPrefix( const std::string& regionName, const int period );

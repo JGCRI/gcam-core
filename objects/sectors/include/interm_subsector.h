@@ -27,7 +27,10 @@ class IntermittentSubsector: public Subsector {
 public:
     IntermittentSubsector( const std::string regionName, const std::string sectorName);
     static const std::string& getXMLNameStatic();
-    void completeInit( const IInfo* aSectorInfo, DependencyFinder* aDependencyFinder );
+    
+    virtual void completeInit( const IInfo* aSectorInfo,
+                               DependencyFinder* aDependencyFinder,
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
@@ -53,7 +56,10 @@ protected:
 
     const std::string& getXMLName() const;
 	void calcBackupFraction(const int per); //compute demand for backup supply for intermittency
-    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    
+    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
+                                       const xercesc::DOMNode* aCurr );
+
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 

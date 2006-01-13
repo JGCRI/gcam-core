@@ -24,6 +24,9 @@ class Emcoef_ind;
 class GDP;
 class DependencyFinder;
 class IInfo;
+class ICalData;
+class ILandAllocator;
+class Demographic;
 
 /*! 
 * \ingroup Objects
@@ -37,8 +40,6 @@ class technology: public IVisitable, public IRoundTrippable
 {
     friend class XMLDBOutputter;
 private:
-    static const std::string XML_NAME1D; //!< tag name for toInputXML
-    static const std::string XML_NAME2D; //!< tag name for toInputXML
     void clear();
 protected:
     std::string name; //!< technology name
@@ -65,11 +66,9 @@ protected:
     double output; //!< technology output
     double fixedOutput; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
     double fixedOutputVal; //!< The actual fixed output value
-    
-    double calInputValue; // Calibration value
-    double calOutputValue; // Calibration value
-    bool doCalibration; // Flag set if calibration value is read-in
-    bool doCalOutput; // Flag set if calibration value is read-in
+	 
+    //! Calibration value
+    std::auto_ptr<ICalData> mCalValue;
 
     std::vector<Ghg*> ghg; //!< suite of greenhouse gases
     std::map<std::string,double> emissmap; //!< map of ghg emissions
@@ -78,7 +77,7 @@ protected:
     std::string note; //!< input data notation for this technology
 
     std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
-    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
@@ -93,22 +92,45 @@ public:
     virtual technology* clone() const;
     virtual ~technology();
     virtual void XMLParse( const xercesc::DOMNode* tempnode ); // initialize technology with xml data
-     // for derived classes
-    void completeInit( const std::string& aSectorName, DependencyFinder* aDepFinder );
+    
+    virtual void completeInit( const std::string& aSectorName,
+                               DependencyFinder* aDepFinder,
+                               const IInfo* aSubsectorIInfo,
+                               ILandAllocator* aLandAllocator );
+    
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aSectorName,
+                           const IInfo* aSubsectorIInfo,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
+
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
     static const std::string& getXMLNameStatic2D();
-    virtual void initCalc( const IInfo* aSubsectorIInfo );
+
+
+
     virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per ); 
-    virtual void calcShare( const std::string& regionName, const GDP* gdp, const int per ); 
+    
+    virtual void calcShare( const std::string& aRegionName,
+                            const std::string& aSectorName,
+                            const GDP* aGDP,
+                            const int aPeriod ); 
+    
+    virtual void production( const std::string& aRegionName,
+                             const std::string& aSectorName,
+                             const double aDemand,
+                             const GDP* aGDP,
+                             const int aPeriod );
+    
     void normShare(double sum); // normalize technology share
     void resetFixedOutput(int per); // reset fixed supply to max value
     void adjShares(double subsecdmd, double subsecFixedOutput, double varShareTot, int per);
     void scaleFixedOutput(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
-    virtual void production(const std::string& regionName,const std::string& prodName,double dmd, const GDP* gdp, const int per);
+
     virtual void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
     virtual void calcEmission( const std::string& aGoodName, const int aPeriod ); // calculates GHG emissions from technology
 
@@ -118,7 +140,7 @@ public:
     double getEff() const; // return fuel efficiency
     virtual double getIntensity(const int per) const; // return fuel intensity
     double getShare() const; // return normalized share
-    bool getCalibrationStatus( ) const; // return true if technology has calibration value
+    virtual bool getCalibrationStatus( ) const; // return true if technology has calibration value
     void scaleCalibrationInput( const double scaleFactor ); // scale calibration value
     void scaleShareWeight( double scaleValue );
     void setShareWeight( double shareWeightValue );
@@ -126,7 +148,7 @@ public:
     virtual double getCalibrationOutput() const; // return calibration output value
     virtual void adjustForCalibration( double subSectorDemand, const std::string& regionName, const IInfo* aSubsectorIInfo, const int period ); // Adjust share weights for calibration
     bool techAvailable( ) const; // Return available status (re: calibration)
-    bool outputFixed() const; // return calibration output value
+    virtual bool outputFixed() const; // return calibration output value
     double getInput() const; // return fuel input amount
     double getOutput() const; // return technology output
     double getFuelcost() const; // return fuel cost only
@@ -147,7 +169,7 @@ public:
     double getFixedInput() const; // return fixed input
     int getNumbGHGs()  const; // number of GHG objects in this technology
     void setYear( const int yearIn );
-    void tabulateFixedDemands( const std::string regionName, const int period );
+    virtual void tabulateFixedDemands( const std::string regionName, const int period, const IInfo* aSubsectorIInfo );
 	void setTechShare(const double shareIn);
 	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 };
