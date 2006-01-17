@@ -288,6 +288,48 @@ void TotalPolicyCostCalculator::printOutput() const {
 
     // Write to the database.
     writeToDB();
+    
+    // Write to CSV file
+    writeToCSV();
+}
+
+/*! \brief Write total cost output to the csv file.
+*/
+void TotalPolicyCostCalculator::writeToCSV() const {
+    // function protocol
+    void fileoutput3(string var1name,string var2name,string var3name,
+        string var4name,string var5name,string uname,vector<double> dout);
+
+    const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
+    const int maxPeriod = modeltime->getmaxper();
+    const double CVRT_75_TO_90 = 2.212; //  convert '75 price to '90 price
+    vector<double> tempOutVec( maxPeriod );
+    for( CRegionCurvesIterator rIter = mRegionalCostCurves.begin(); rIter != mRegionalCostCurves.end(); ++rIter ){
+        // Write out to the database.
+        for( int per = 0; per < maxPeriod; ++per ){
+            tempOutVec[ per ] = rIter->second->getY( modeltime->getper_to_yr( per ) ) * CVRT_75_TO_90;
+        }
+        fileoutput3(rIter->first,"PolicyCost","","PolicyCostUndisc","Period","(millions)90US$",tempOutVec);
+    }
+
+    // Write out undiscounted costs by region.
+    tempOutVec.clear();
+    tempOutVec.resize( maxPeriod );
+    for( CRegionalCostsIterator iter = mRegionalCosts.begin(); iter != mRegionalCosts.end(); iter++ ){
+        // regional total cost of policy
+        tempOutVec[maxPeriod-1] = iter->second * CVRT_75_TO_90;
+        fileoutput3(iter->first,"PolicyCost","","PolicyCostTotalUndisc","AllYears","(millions)90US$",tempOutVec);
+    }
+
+    // Write out discounted costs by region.
+    tempOutVec.clear();
+    tempOutVec.resize( maxPeriod );
+    typedef map<const string,double>::const_iterator constDoubleMapIter;
+    for( constDoubleMapIter iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
+        // regional total cost of policy
+        tempOutVec[maxPeriod-1] = iter->second * CVRT_75_TO_90;
+        fileoutput3(iter->first,"PolicyCost","","PolicyCostTotalDisc","AllYears","(millions)90US$",tempOutVec);
+    }
 }
 
 /*! \brief Write total cost output to the Access database.
