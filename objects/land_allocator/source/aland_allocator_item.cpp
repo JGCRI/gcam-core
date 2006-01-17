@@ -22,14 +22,14 @@ extern Scenario* scenario;
 * \author James Blackwood
 */
 ALandAllocatorItem::ALandAllocatorItem(){
-	const Modeltime* modeltime = scenario->getModeltime();
-	int maxper = modeltime->getmaxper();
-	share.resize( maxper );
-	landAllocation.resize( maxper );
-	intrinsicRate.resize( maxper );
-	mGHGs.resize( maxper );
-	ghgNameMap.resize( maxper );
-	summary.resize( maxper );
+    const Modeltime* modeltime = scenario->getModeltime();
+    int maxper = modeltime->getmaxper();
+    share.resize( maxper );
+    landAllocation.resize( maxper );
+    intrinsicRate.resize( maxper );
+    mGHGs.resize( maxper );
+    ghgNameMap.resize( maxper );
+    summary.resize( maxper );
 }
 
 //! Default destructor
@@ -45,13 +45,13 @@ void ALandAllocatorItem::XMLParse( const DOMNode* node ){
 
     // assume we are passed a valid node.
     assert( node );
-	
-	// Set the node name.
-	name = XMLHelper<string>::getAttrString( node, "name" );
+    
+    // Set the node name.
+    name = XMLHelper<string>::getAttrString( node, "name" );
 
     // get all the children.
     DOMNodeList* nodeList = node->getChildNodes();
-	
+    
     for( unsigned int i = 0;  i < nodeList->getLength(); ++i ){
         const DOMNode* curr = nodeList->item( i );
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
@@ -59,12 +59,12 @@ void ALandAllocatorItem::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
-		else if ( !XMLDerivedClassParse( nodeName, curr ) ){
-			ILogger& mainLog = ILogger::getLogger( "main_log" );
-			mainLog.setLevel( ILogger::WARNING );
-			mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
+        else if ( !XMLDerivedClassParse( nodeName, curr ) ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
                     << getXMLName() << "." << endl;
-		}
+        }
     }
 }
 
@@ -72,7 +72,7 @@ void ALandAllocatorItem::XMLParse( const DOMNode* node ){
 * \author James Blackwood
 */
 void ALandAllocatorItem::setName( const string& nameIn ) {
-	name = nameIn;
+    name = nameIn;
 }
 
 /*! \brief This method is called from the node version of calcLandShares and it
@@ -81,7 +81,7 @@ void ALandAllocatorItem::setName( const string& nameIn ) {
 * \author James Blackwood
 */
 void ALandAllocatorItem::normalizeLandAllocation( double sum, int period ) {
-	share[ period ] /= sum;
+    share[ period ] /= sum;
 }
 
 /*! \brief Returns the share of this land type at a given period.
@@ -89,7 +89,7 @@ void ALandAllocatorItem::normalizeLandAllocation( double sum, int period ) {
 * \author James Blackwood
 */
 double ALandAllocatorItem::getShare ( int period ) {
-	return share[ period ];
+    return share[ period ];
 }
 
 /*! \brief Returns the name.
@@ -127,16 +127,16 @@ void ALandAllocatorItem::toInputXML( ostream& out, Tabs* tabs ) const {
 */
 void ALandAllocatorItem::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-	XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write out basic datamembers
     XMLWriteElement( intrinsicRate[ period ], "IntrinsicRate", out, tabs );
     XMLWriteElement( landAllocation[ period ], "landAllocation", out, tabs );
 
-	toDebugXMLDerived( period, out, tabs );
-	// Finished writing xml for the class members.
+    toDebugXMLDerived( period, out, tabs );
+    // Finished writing xml for the class members.
 
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Write output to csv output file. 
@@ -156,10 +156,10 @@ void ALandAllocatorItem::csvOutput( const string& aRegionName ) const {
 }
 
 void ALandAllocatorItem::dbOutput( const string& aRegionName ) const {
-	// function protocol
-	void dboutput4(string var1name,string var2name,string var3name,string var4name,
+    // function protocol
+    void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
 
-	// write land allocations for region
-	dboutput4(aRegionName,name," ","Land Use","000Ha",landAllocation);
+    // write land allocations for region
+    dboutput4(aRegionName,name," ","Land Use","000Ha",landAllocation);
 }

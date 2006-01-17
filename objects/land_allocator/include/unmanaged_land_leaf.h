@@ -19,9 +19,9 @@
 */
 class UnmanagedLandLeaf : public LandLeaf {
 public:
-	UnmanagedLandLeaf();
-	virtual ~UnmanagedLandLeaf();
-	static const std::string& getXMLNameStatic();
+    UnmanagedLandLeaf();
+    virtual ~UnmanagedLandLeaf();
+    static const std::string& getXMLNameStatic();
 
     virtual void setUnmanagedLandAllocation( const std::string& aRegionName,
                                              const double aLandAllocation,
@@ -39,15 +39,15 @@ public:
                                const GDP* aGDP,
                                const int aPeriod );
 protected:
-	std::vector<double> baseIntrinsicRate; //!< Unadjusted intrinsic rate
-	std::vector<double> baseLandAllocation; //!< Unadjusted land value
+    std::vector<double> baseIntrinsicRate; //!< Unadjusted intrinsic rate
+    std::vector<double> baseLandAllocation; //!< Unadjusted land value
 
     virtual bool isProductionLeaf() const;
-	virtual const std::string& getXMLName() const;
+    virtual const std::string& getXMLName() const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& out, Tabs* tabs ) const;
-	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-	virtual double getBaseLandAllocation ( int period );
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    virtual double getBaseLandAllocation ( int period );
     virtual void checkCalObservedYield( const int aPeriod ) const;
     
     static int defaultHistoryYear();

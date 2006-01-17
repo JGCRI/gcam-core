@@ -22,10 +22,10 @@
 */
 class ForestLandLeaf : public LandLeaf {
 public:
-	ForestLandLeaf();
-	virtual ~ForestLandLeaf();
+    ForestLandLeaf();
+    virtual ~ForestLandLeaf();
 
-	static const std::string& getXMLNameStatic();
+    static const std::string& getXMLNameStatic();
 
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo );
@@ -35,7 +35,7 @@ public:
     virtual double getLandAllocation ( const std::string& aProductName,
                                        const int aPeriod ) const;
 
-	virtual double getTotalLandAllocation( const std::string& productName, int period );
+    virtual double getTotalLandAllocation( const std::string& productName, int period );
 
     virtual void setCalLandAllocation( const std::string& aLandType,
                                        const std::string& aProductName,
@@ -43,17 +43,17 @@ public:
                                        const int aHarvestPeriod, 
                                        const int aCurrentPeriod );
 
-	virtual void setCalObservedYield( const std::string& aLandType,
+    virtual void setCalObservedYield( const std::string& aLandType,
                                       const std::string& aProductName,
                                       const double aCalObservedYield,
                                       const int aPeriod );
 protected:
-	int rotationPeriod; //!< rotation period for forests
-	int steps; //!< number of model time steps for a rotation period
-	std::vector<double> landToBeHarvested;  //!< Land allocation set aside for future production.
-	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    int rotationPeriod; //!< rotation period for forests
+    int steps; //!< number of model time steps for a rotation period
+    std::vector<double> landToBeHarvested;  //!< Land allocation set aside for future production.
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-	virtual const std::string& getXMLName() const;
+    virtual const std::string& getXMLName() const;
 };
 
 #endif // _FOREST_LAND_LEAF_H_

@@ -27,15 +27,15 @@ class Tabs;
 */
 class LandLeaf : public ALandAllocatorItem {
 public:
-	LandLeaf();
-	virtual ~LandLeaf();
+    LandLeaf();
+    virtual ~LandLeaf();
 
     // Tree Item methods.
     virtual size_t getNumChildren() const;
     virtual const ALandAllocatorItem* getChildAt( const size_t aIndex ) const;
     virtual ALandAllocatorItem* getChildAt( const size_t aIndex );
 
-	static const std::string& getXMLNameStatic();
+    static const std::string& getXMLNameStatic();
 
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo );
@@ -43,8 +43,8 @@ public:
     virtual void addLandUsage( const std::string& aLandType,
                                const std::string& aProductName );
 
-	virtual void setInitShares( double landAllocationAbove, int period );
-	virtual void setIntrinsicYieldMode( double intrinsicRateAbove, double sigmaAbove, int period );
+    virtual void setInitShares( double landAllocationAbove, int period );
+    virtual void setIntrinsicYieldMode( double intrinsicRateAbove, double sigmaAbove, int period );
     
     virtual void setIntrinsicRate( const std::string& aRegionName,
                                    const std::string& aLandType,
@@ -62,7 +62,7 @@ public:
                                                   const int aPeriod,
                                                   const double aSigma ) const;
 
-	virtual void setCalObservedYield( const std::string& aLandType,
+    virtual void setCalObservedYield( const std::string& aLandType,
                                       const std::string& aProductName,
                                       const double aCalObservedYield, 
                                       const int aPeriod );
@@ -77,31 +77,31 @@ public:
                                  const double aTotalLandAllocated,
                                  const int aPeriod );
 
-	virtual void calcLandAllocation( double landAllocationAbove, int period );
+    virtual void calcLandAllocation( double landAllocationAbove, int period );
     
     virtual void calcYieldInternal( const std::string& aLandType,
                                     const std::string& aProductName,
                                     const double aProfitRate,
                                     const double aAvgIntrinsicRate,
                                     const int aPeriod );
-	
-	virtual double getYield( const std::string& aLandType,
+    
+    virtual double getYield( const std::string& aLandType,
                              const std::string& aProductName,
                              const int aPeriod ) const;
 
-	virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
 
-	virtual double getTotalLandAllocation ( const std::string& productName, int period );
-	virtual double getBaseLandAllocation ( int period );
+    virtual double getTotalLandAllocation ( const std::string& productName, int period );
+    virtual double getBaseLandAllocation ( int period );
 
     virtual void setUnmanagedLandAllocation( const std::string& aRegionName,
                                              const double aLandAllocation,
                                              const int aPeriod );
 
-	virtual void csvOutput( const std::string& aRegionName ) const;
-	virtual void dbOutput( const std::string& aRegionName ) const;
-	virtual bool isProductionLeaf() const;
+    virtual void csvOutput( const std::string& aRegionName ) const;
+    virtual void dbOutput( const std::string& aRegionName ) const;
+    virtual bool isProductionLeaf() const;
 
     virtual void setUnmanagedLandValues( const std::string& aRegionName,
                                          const int aPeriod );
@@ -110,25 +110,25 @@ public:
                                const GDP* aGDP,
                                const int aPeriod );
 
-	virtual void updateSummary( Summary& aSummary, const int aPeriod );
+    virtual void updateSummary( Summary& aSummary, const int aPeriod );
 protected:
-	std::vector<double> intrinsicYieldMode;
-	std::vector<double> calObservedYield;
-	std::vector<double> yield;
+    std::vector<double> intrinsicYieldMode;
+    std::vector<double> calObservedYield;
+    std::vector<double> yield;
 
-	double carbAboveGround; //!< above ground carbon content
+    double carbAboveGround; //!< above ground carbon content
     double getCarbonValue( const std::string& aRegionName, const int aPeriod ) const;
 
-	std::vector<double> carbonValue; //!< Carbon value of this land type
-	std::map<std::string,double> emissmap; //! < Emissions mapping of ghg names to values
-	std::vector<double> agProdChange;  //!< The technological change factor.
-	std::vector<double> production;  //!< The production output of this leaf.
-	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    std::vector<double> carbonValue; //!< Carbon value of this land type
+    std::map<std::string,double> emissmap; //! < Emissions mapping of ghg names to values
+    std::vector<double> agProdChange;  //!< The technological change factor.
+    std::vector<double> production;  //!< The production output of this leaf.
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
 
-	virtual const std::string& getXMLName() const;
-	virtual void addChild( ALandAllocatorItem* child );
+    virtual const std::string& getXMLName() const;
+    virtual void addChild( ALandAllocatorItem* child );
     virtual void checkCalObservedYield( const int aPeriod ) const;
 };
 

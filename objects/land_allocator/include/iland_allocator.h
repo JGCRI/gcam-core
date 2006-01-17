@@ -25,11 +25,11 @@ class GDP;
 */
 class ILandAllocator {
 public:
-	inline ILandAllocator();
-	
+    inline ILandAllocator();
+    
     inline virtual ~ILandAllocator();
 
-	virtual void XMLParse( const xercesc::DOMNode* aNode ) = 0;
+    virtual void XMLParse( const xercesc::DOMNode* aNode ) = 0;
     
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
     
@@ -45,7 +45,7 @@ public:
     virtual void addLandUsage( const std::string& aLandType,
                                const std::string& aProductName ) = 0;
 
-	virtual void setCalObservedYield( const std::string& aLandType,
+    virtual void setCalObservedYield( const std::string& aLandType,
                                       const std::string& aProductName,
                                       const double aCalObservedYield, 
                                       const int aPeriod ) = 0;
@@ -78,7 +78,7 @@ public:
     * \param aLandType The land type.
     * \param aProductName Name of the product.
     */
-	virtual void applyAgProdChange( const std::string& aLandType,
+    virtual void applyAgProdChange( const std::string& aLandType,
                                     const std::string& aProductName,
                                     const double aAgProdChange,
                                     const int aPeriod ) = 0;
@@ -92,7 +92,7 @@ public:
     * \param aHarvestPeriod Period in which the crop will be harvested.
     * \todo Should this also return the yield? That would help the technology.
     */
-	virtual void calcYield( const std::string& aLandType,
+    virtual void calcYield( const std::string& aLandType,
                             const std::string& aProductName,
                             const double aProfitRate,
                             const int aHarvestPeriod,
@@ -115,7 +115,7 @@ public:
     * \param aHarvestPeriod Period in which the land will be harvested.
     * \param aPeriod Current model period.
     */
-	virtual void setCalLandAllocation( const std::string& aLandType,
+    virtual void setCalLandAllocation( const std::string& aLandType,
                                        const std::string& aProductName,
                                        const double aCalLandUsed,
                                        const int aHarvestPeriod, 
@@ -134,17 +134,17 @@ public:
     */
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo ) = 0;
-	
+    
     /*! \brief Output information to the output CSV file.
     * \param aRegionName Name of the region.
     */
-    virtual void csvOutput( const std::string& aRegionName ) const = 0;	
-	
+    virtual void csvOutput( const std::string& aRegionName ) const = 0; 
+    
     /*! \brief Output information to the Access database.
     * \param aRegionName Name of the region.
     */
     virtual void dbOutput( const std::string& aRegionName ) const = 0;
-	
+    
     /*! \brief Calculate emissions from the land allocator.
     * \param aRegionName Region name.
     * \param aGDP Regional GDP container.
@@ -153,7 +153,7 @@ public:
     virtual void calcEmission( const std::string& aRegionName,
                                const GDP* aGDP,
                                const int aPeriod ) = 0;
-	
+    
     /*! \brief Update the summary object with information about the land
     *          allocator for reporting.
     * \param aSummary Summary container.

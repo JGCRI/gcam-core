@@ -23,11 +23,11 @@ extern Scenario* scenario;
 * \author James Blackwood
 */
 ForestLandLeaf::ForestLandLeaf(){
-	const Modeltime* modeltime = scenario->getModeltime();
-	int maxper = modeltime->getmaxper();
-	rotationPeriod = 0;
-	steps = -1;
-	landToBeHarvested.resize( maxper );
+    const Modeltime* modeltime = scenario->getModeltime();
+    int maxper = modeltime->getmaxper();
+    rotationPeriod = 0;
+    steps = -1;
+    landToBeHarvested.resize( maxper );
 }
 
 //! Default destructor
@@ -44,23 +44,23 @@ ForestLandLeaf::~ForestLandLeaf() {
 */
 bool ForestLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
     const Modeltime* modeltime = scenario->getModeltime();
-	const int maxper = modeltime->getmaxper();
+    const int maxper = modeltime->getmaxper();
 
     // TODO: This isn't right as overrides won't work and it is parsing base
     // class items. This relies on XMLDerivedClassParse being called before
     // parsing the base class item.
-	if( nodeName == "intrinsicRate" ) {
-		intrinsicRate.clear();
-		intrinsicRate.resize( maxper, XMLHelper<double>::getValue( curr ) );
+    if( nodeName == "intrinsicRate" ) {
+        intrinsicRate.clear();
+        intrinsicRate.resize( maxper, XMLHelper<double>::getValue( curr ) );
     }
-	else if( nodeName == "intrinsicYieldMode" ) {
-		intrinsicYieldMode.clear();
-		intrinsicYieldMode.resize( maxper, XMLHelper<double>::getValue( curr ) );
+    else if( nodeName == "intrinsicYieldMode" ) {
+        intrinsicYieldMode.clear();
+        intrinsicYieldMode.resize( maxper, XMLHelper<double>::getValue( curr ) );
     }
-	else {
-		return false;
-	}
-	return true;
+    else {
+        return false;
+    }
+    return true;
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -72,7 +72,7 @@ bool ForestLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMNode
 * \return The constant XML_NAME.
 */
 const std::string& ForestLandLeaf::getXMLName() const {
-	return getXMLNameStatic();
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -85,8 +85,8 @@ const std::string& ForestLandLeaf::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& ForestLandLeaf::getXMLNameStatic() {
-	const static string XML_NAME = "ForestLandAllocatorLeaf";
-	return XML_NAME;
+    const static string XML_NAME = "ForestLandAllocatorLeaf";
+    return XML_NAME;
 }
 
 /*! \brief Complete the Initialization in the LandAllocator.
@@ -97,11 +97,11 @@ const std::string& ForestLandLeaf::getXMLNameStatic() {
 void ForestLandLeaf::completeInit( const string& aRegionName, 
                                    const IInfo* aRegionInfo )
 {
-	const Modeltime* modeltime = scenario->getModeltime();
-	int maxper = modeltime->getmaxper();
+    const Modeltime* modeltime = scenario->getModeltime();
+    int maxper = modeltime->getmaxper();
 
-	rotationPeriod = aRegionInfo->getInteger( "rotationPeriod", true );
-	steps = rotationPeriod / modeltime->gettimestep(0);
+    rotationPeriod = aRegionInfo->getInteger( "rotationPeriod", true );
+    steps = rotationPeriod / modeltime->gettimestep(0);
     
     // reset yield and land variables to be larger
     yield.resize( maxper + steps );
@@ -158,7 +158,7 @@ double ForestLandLeaf::getLandAllocation( const string& aProductName,
 * \return the LandAllocation at this node
 */
 double ForestLandLeaf::getTotalLandAllocation( const string& productName, int period ) {
-	return LandLeaf::getLandAllocation( productName, period );
+    return LandLeaf::getLandAllocation( productName, period );
 }
 
 /*! \brief Set the amount of initial calibrated land allocated for this leaf.
@@ -181,14 +181,14 @@ void ForestLandLeaf::setCalLandAllocation( const string& aLandType,
                                                     const int aHarvestPeriod, 
                                                     const int aCurrentPeriod )
 {
-	const Modeltime* modeltime = scenario->getModeltime();
-	assert( aProductName == name );
-	landToBeHarvested[ aHarvestPeriod ] = aCalLandUsed;
+    const Modeltime* modeltime = scenario->getModeltime();
+    assert( aProductName == name );
+    landToBeHarvested[ aHarvestPeriod ] = aCalLandUsed;
  
    // Only add land to land allocation for future periods (current land is now free for reallocation)
-	if ( aHarvestPeriod > aCurrentPeriod ) {
-		landAllocation[ aCurrentPeriod ] += aCalLandUsed * modeltime->gettimestep( aCurrentPeriod );
-	}
+    if ( aHarvestPeriod > aCurrentPeriod ) {
+        landAllocation[ aCurrentPeriod ] += aCalLandUsed * modeltime->gettimestep( aCurrentPeriod );
+    }
     //reset land allocation if current period. KLUDGE. NEED TO FIX THIS. sjsTEMP
     // Problem occurs, for example, when this routine is called in 1975 and this value is set for 1990. 
     // In 1990 this value needs to be reset to zero. The fix below relies on this routine being called in order.
@@ -209,8 +209,8 @@ void ForestLandLeaf::setCalObservedYield( const string& aLandType,
                                                    const double aCalObservedYield,
                                                    const int aPeriod )
 {
-	assert( aProductName == name );
-	calObservedYield[ aPeriod ] = yield[ aPeriod ] = aCalObservedYield;
+    assert( aProductName == name );
+    calObservedYield[ aPeriod ] = yield[ aPeriod ] = aCalObservedYield;
 }
 
 void ForestLandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
