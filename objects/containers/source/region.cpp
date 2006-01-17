@@ -144,9 +144,6 @@ void Region::XMLParse( const DOMNode* node ){
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
 
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::WARNING );
-
     // loop through the child nodes.
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
         DOMNode* curr = nodeList->item( i );
@@ -267,6 +264,8 @@ void Region::XMLParse( const DOMNode* node ){
                     XMLHelper<double>::insertValueIntoVector( currChild, TFEPerCapcalb, modeltime );
                 }
                 else {
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::WARNING );
                     mainLog << "Unrecognized text string: " << nodeNameChild << " found while parsing region->calibrationdata." << endl;
                 }
             }
@@ -289,6 +288,8 @@ void Region::XMLParse( const DOMNode* node ){
                     sectorOrderList.push_back( XMLHelper<string>::getValueString( currChild ) );
                 }
                 else {
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::WARNING );
                     mainLog << "Unrecognized text string: " << nodeNameChild << " found while parsing region->SectorOrderList." << endl;
                 }
             }
@@ -298,6 +299,8 @@ void Region::XMLParse( const DOMNode* node ){
             // Do nothing but avoid printing the error.
         }
         else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing region." << endl;
         }
     }

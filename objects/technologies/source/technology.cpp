@@ -277,6 +277,13 @@ void technology::completeInit( const string& aSectorName,
                                const IInfo* aSubsectorInfo,
                                ILandAllocator* aLandAllocator )
 {
+    // Check for an unset or invalid year.
+    if( year == 0 ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Technology " << name << " in sector " << aSectorName
+            << " has an invalid year attribute." << endl;
+    }
     const string CO2_NAME = "CO2";
     if( !util::hasValue( ghgNameMap, CO2_NAME ) ) {
         // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
@@ -1016,8 +1023,16 @@ double technology::getlexp()  const {
 }
 
 //! Set the technology year.
-void technology::setYear( const int yearIn ) {
-    year = yearIn;
+void technology::setYear( const int aYear ) {
+    // This is called through parsing, so report an error to the user.
+    if( aYear <= 0 ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Invalid year passed to set year for technology " << name << "." << endl;
+    }
+    else {
+        year = aYear;
+    }
 }
 
 /*! \brief returns the number of ghg objects.

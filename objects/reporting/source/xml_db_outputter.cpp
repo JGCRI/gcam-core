@@ -68,8 +68,8 @@ XMLDBOutputter::DBContainer::DBContainer():mDBEnvironment( 0 ){
 *          simple class ordering.
 */
 XMLDBOutputter::DBContainer::~DBContainer() {
-	mContainerWrapper.reset();
-	mManager.reset();
+    mContainerWrapper.reset();
+    mManager.reset();
 }
 
 /*! \brief Constructor
@@ -82,7 +82,8 @@ XMLDBOutputter::DBContainer::XMLContainerWrapper::XMLContainerWrapper( DbXml::Xm
 /*! \brief Constructor
 */
 XMLDBOutputter::XMLDBOutputter(){
-	mTabs.reset( new Tabs );
+    mTabs.reset( new Tabs );
+    mCurrentTechYear = 0;
 }
 
 /*! \brief Write the output to the database.
@@ -93,34 +94,34 @@ XMLDBOutputter::XMLDBOutputter(){
 * \author Josh Lurz
 */
 void XMLDBOutputter::finish() const {
-	// Create the database container and its related structures.
-	auto_ptr<DBContainer> dbContainer( createContainer() );
+    // Create the database container and its related structures.
+    auto_ptr<DBContainer> dbContainer( createContainer() );
 
-	// Check if creating the container failed.
-	if( !dbContainer.get() ){
-		// An error message will have been printed by create container.
-		return;
-	}
+    // Check if creating the container failed.
+    if( !dbContainer.get() ){
+        // An error message will have been printed by create container.
+        return;
+    }
 
-	// Create an update context which is needed to insert the document.
-	XmlUpdateContext context = dbContainer->mManager->createUpdateContext();
+    // Create an update context which is needed to insert the document.
+    XmlUpdateContext context = dbContainer->mManager->createUpdateContext();
 
-	// Create a unique document name.
-	const string docName = createContainerName( scenario->getName() );
+    // Create a unique document name.
+    const string docName = createContainerName( scenario->getName() );
 
-	// Insert the document into the database.
-	try {
-		dbContainer->mContainerWrapper->mContainer.putDocument( docName,  // The document's name
-			                   mBuffer.str(), // This would be more efficient
-			                                  // by writing the to stream
-			                                  // automatically.
-			                   context, // The update context
-			                   0 ); // Flags
-	} catch ( const DbXml::XmlException& e ) {
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::SEVERE );
-		mainLog << "Failed to insert the document into the database. " << e.what() << endl;
-	}
+    // Insert the document into the database.
+    try {
+        dbContainer->mContainerWrapper->mContainer.putDocument( docName,  // The document's name
+                               mBuffer.str(), // This would be more efficient
+                                              // by writing the to stream
+                                              // automatically.
+                               context, // The update context
+                               0 ); // Flags
+    } catch ( const DbXml::XmlException& e ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Failed to insert the document into the database. " << e.what() << endl;
+    }
 }
 
 /*! \brief Create an intiialized XML database manager.
@@ -128,43 +129,43 @@ void XMLDBOutputter::finish() const {
 *         could not be created.
 */
 auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
-	// Create a database container.
-	auto_ptr<DBContainer> dbContainer( new DBContainer );
+    // Create a database container.
+    auto_ptr<DBContainer> dbContainer( new DBContainer );
 
-	// Create a database environment.
-	dbContainer->mDBEnvironment = new DbEnv( 0 );
+    // Create a database environment.
+    dbContainer->mDBEnvironment = new DbEnv( 0 );
 
     // Set the database cache size to 100 megabytes. This will ensure maximum
     // database performance.
     const unsigned int CACHE_SIZE = 100 * 1024 * 1024;
-	dbContainer->mDBEnvironment->set_cachesize(0, CACHE_SIZE, 1);
+    dbContainer->mDBEnvironment->set_cachesize(0, CACHE_SIZE, 1);
 
-	// Get the location to open the environment.
+    // Get the location to open the environment.
     const Configuration* conf = Configuration::getInstance();
-	const string environmentLocation = conf->getFile( "xmldb-environment", "." );
-	
-	// Open the environment.
-	dbContainer->mDBEnvironment->open( environmentLocation.c_str(),
+    const string environmentLocation = conf->getFile( "xmldb-environment", "." );
+    
+    // Open the environment.
+    dbContainer->mDBEnvironment->open( environmentLocation.c_str(),
                                        DB_INIT_MPOOL | DB_CREATE | DB_INIT_LOCK, 0 ); 
 
-	// Create a manager object from the environment.
-	dbContainer->mManager.reset( new XmlManager( dbContainer->mDBEnvironment,
+    // Create a manager object from the environment.
+    dbContainer->mManager.reset( new XmlManager( dbContainer->mDBEnvironment,
                                                  DBXML_ADOPT_DBENV ) );
-	
-	// Open the container. It will be closed automatically when the manager goes out of scope.
-	const string containerName = conf->getFile( "xmldb-location", "database.dbxml" );
-	
-	try {
-		dbContainer->mContainerWrapper.reset( new DBContainer::XMLContainerWrapper(
-			                                 dbContainer->mManager->openContainer( containerName, DB_CREATE ) ) );
-	}
-	catch ( const DbXml::XmlException& e ) {
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::SEVERE );
-		mainLog << "Failed to open the container: " << e.what() << endl;
-		return auto_ptr<DBContainer>();
-	}
-	return dbContainer;
+    
+    // Open the container. It will be closed automatically when the manager goes out of scope.
+    const string containerName = conf->getFile( "xmldb-location", "database.dbxml" );
+    
+    try {
+        dbContainer->mContainerWrapper.reset( new DBContainer::XMLContainerWrapper(
+                                             dbContainer->mManager->openContainer( containerName, DB_CREATE ) ) );
+    }
+    catch ( const DbXml::XmlException& e ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Failed to open the container: " << e.what() << endl;
+        return auto_ptr<DBContainer>();
+    }
+    return dbContainer;
 }
 
 /*! \brief Create a unique name for the container given a scenario name.
@@ -172,12 +173,12 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
 * \return A unique container name.
 */
 const string XMLDBOutputter::createContainerName( const string& aScenarioName ){
-	// Create a MiniCAM style run ID.
-	const long runID = util::createMinicamRunID( gGlobalTime );
-	
-	// Create a unique document name. Document names within a container must be
+    // Create a MiniCAM style run ID.
+    const long runID = util::createMinicamRunID( gGlobalTime );
+    
+    // Create a unique document name. Document names within a container must be
     // unique.
-	return aScenarioName + util::toString( runID );
+    return aScenarioName + util::toString( runID );
 }
 
 /*! \brief Append data at a given location to an already written database container.
@@ -187,7 +188,7 @@ const string XMLDBOutputter::createContainerName( const string& aScenarioName ){
 * \return Whether the data was added successfully.
 */
 bool XMLDBOutputter::appendData( const string& aData, const string& aLocation ) {
-	// Check that both data and a location have been set.
+    // Check that both data and a location have been set.
     if( aData.empty() || aLocation.empty() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
@@ -203,91 +204,91 @@ bool XMLDBOutputter::appendData( const string& aData, const string& aLocation ) 
     }
 
     // Create a database container to use for the update.
-	auto_ptr<DBContainer> dbContainer( createContainer() );
+    auto_ptr<DBContainer> dbContainer( createContainer() );
 
-	// Check if creating the container failed.
-	if( !dbContainer.get() ){
-		// An error message will have been printed by create container.
-		return false;
-	}
+    // Check if creating the container failed.
+    if( !dbContainer.get() ){
+        // An error message will have been printed by create container.
+        return false;
+    }
 
-	// Create a unique document name.
-	const string docName = createContainerName( scenario->getName() );
+    // Create a unique document name.
+    const string docName = createContainerName( scenario->getName() );
 
-	// Try to get the document from the database.
-	try {
-		// Get the document which will be modified.
-		const string docXPath = "doc('dbxml:"
+    // Try to get the document from the database.
+    try {
+        // Get the document which will be modified.
+        const string docXPath = "doc('dbxml:"
                                       + dbContainer->mContainerWrapper->mContainer.getName()
-			                          + "/" + docName + "')";
+                                      + "/" + docName + "')";
 
-		// Create the XPath will which locate where to insert the content.
+        // Create the XPath will which locate where to insert the content.
 
 
-		XmlQueryContext queryContext = dbContainer->mManager->createQueryContext();
-		XmlQueryExpression locationExpr = dbContainer->mManager->prepare( docXPath + aLocation,
+        XmlQueryContext queryContext = dbContainer->mManager->createQueryContext();
+        XmlQueryExpression locationExpr = dbContainer->mManager->prepare( docXPath + aLocation,
                                                                           queryContext );
 
-		// Create a modification context.
-		XmlModify modifier = dbContainer->mManager->createModify();
-		
-		// Add the insertion command.
-		modifier.addInsertAfterStep( locationExpr, XmlModify::Element, "", aData );
+        // Create a modification context.
+        XmlModify modifier = dbContainer->mManager->createModify();
+        
+        // Add the insertion command.
+        modifier.addInsertAfterStep( locationExpr, XmlModify::Element, "", aData );
 
-		// Execute the command.
-		XmlUpdateContext updateContext = dbContainer->mManager->createUpdateContext();
+        // Execute the command.
+        XmlUpdateContext updateContext = dbContainer->mManager->createUpdateContext();
 
-		XmlResults results = dbContainer->mManager->query( docXPath, queryContext );
-		modifier.execute( results, queryContext, updateContext );
-	}
-	catch ( const DbXml::XmlException& e ) {
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::SEVERE );
-		mainLog << "Failed to insert the cost information into the XML database. "
+        XmlResults results = dbContainer->mManager->query( docXPath, queryContext );
+        modifier.execute( results, queryContext, updateContext );
+    }
+    catch ( const DbXml::XmlException& e ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Failed to insert the cost information into the XML database. "
                 << e.what() << endl;
-		return false;
-	}
-	return true;
+        return false;
+    }
+    return true;
 }
 
 void XMLDBOutputter::startVisitScenario( const Scenario* aScenario, const int aPeriod ){
     // write heading for XML input file
-	mBuffer << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
+    mBuffer << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
     mBuffer << "<" << aScenario->getXMLNameStatic() << " name=\""
             << aScenario->getName() << "\" date=\"" 
-		    << util::XMLCreateDate( gGlobalTime ) << "\">" << endl;
+            << util::XMLCreateDate( gGlobalTime ) << "\">" << endl;
     mTabs->increaseIndent();
     mTabs->writeTabs( mBuffer );
 }
 
 void XMLDBOutputter::endVisitScenario( const Scenario* aScenario, const int aPeriod ){
-	// Write the closing scenario tag.
-	XMLWriteClosingTag( aScenario->getXMLNameStatic(), mBuffer, mTabs.get() );
+    // Write the closing scenario tag.
+    XMLWriteClosingTag( aScenario->getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitOutputMetaData( const OutputMetaData* aOutputMetaData,
                                                const int aPeriod )
 {
-	// Don't write opening and closing tags directly because toInputXML will do it.
-	// Write the internal data. The input XML format will work.
-	aOutputMetaData->toInputXML( mBuffer, mTabs.get() );
+    // Don't write opening and closing tags directly because toInputXML will do it.
+    // Write the internal data. The input XML format will work.
+    aOutputMetaData->toInputXML( mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::endVisitOutputMetaData( const OutputMetaData* aOutputMetaData,
                                             const int aPeriod )
 {
-	// Don't write opening and closing tags directly because toInputXML will do it.
+    // Don't write opening and closing tags directly because toInputXML will do it.
 }
 
 void XMLDBOutputter::startVisitWorld( const World* aWorld, const int aPeriod ){
-	// Write the opening world tag.
-	XMLWriteOpeningTag( aWorld->getXMLNameStatic(), mBuffer, mTabs.get(),
+    // Write the opening world tag.
+    XMLWriteOpeningTag( aWorld->getXMLNameStatic(), mBuffer, mTabs.get(),
                         aWorld->getName() );
 }
 
 void XMLDBOutputter::endVisitWorld( const World* aWorld, const int aPeriod ){
-	// Write the closing world tag.
-	XMLWriteClosingTag( aWorld->getXMLNameStatic(), mBuffer, mTabs.get() );
+    // Write the closing world tag.
+    XMLWriteClosingTag( aWorld->getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitRegion( const Region* aRegion,
@@ -296,9 +297,9 @@ void XMLDBOutputter::startVisitRegion( const Region* aRegion,
     // Store the region name.
     assert( mCurrentRegion.empty() );
     mCurrentRegion = aRegion->getName();
-    // Write the opening region tag.
-	XMLWriteOpeningTag( aRegion->getXMLName(), mBuffer, mTabs.get(),
-                        aRegion->getName() );
+    // Write the opening region tag and the type of the base class.
+    XMLWriteOpeningTag( aRegion->getXMLName(), mBuffer, mTabs.get(),
+        aRegion->getName(), 0, Region::getXMLNameStatic() );
 }
 
 void XMLDBOutputter::endVisitRegion( const Region* aRegion,
@@ -308,38 +309,38 @@ void XMLDBOutputter::endVisitRegion( const Region* aRegion,
     // Clear the region name.
     mCurrentRegion.clear();
 
-	// Write the closing region tag.
-	XMLWriteClosingTag( aRegion->getXMLName(), mBuffer, mTabs.get() );
+    // Write the closing region tag.
+    XMLWriteClosingTag( aRegion->getXMLName(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitResource( const Resource* aResource,
                                          const int aPeriod )
 {
-	// Write the opening resource tag.
-	XMLWriteOpeningTag( aResource->getXMLName(), mBuffer, mTabs.get(),
-                        aResource->getName() );
+    // Write the opening resource tag and the type of the base class.
+    XMLWriteOpeningTag( aResource->getXMLName(), mBuffer, mTabs.get(),
+        aResource->getName(), 0, "Resource" );
 }
 
 void XMLDBOutputter::endVisitResource( const Resource* aResource,
                                        const int aPeriod )
 {
-	// Write the closing resource tag.
-	XMLWriteClosingTag( aResource->getXMLName(), mBuffer, mTabs.get() );
+    // Write the closing resource tag.
+    XMLWriteClosingTag( aResource->getXMLName(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitSubResource( const SubResource* aSubResource,
                                             const int aPeriod )
 {
-	// Write the opening subresource tag.
-	XMLWriteOpeningTag( aSubResource->getXMLName(), mBuffer, mTabs.get(),
-                        aSubResource->getName() );
+    // Write the opening subresource tag and the type of the base class.
+    XMLWriteOpeningTag( aSubResource->getXMLName(), mBuffer, mTabs.get(),
+        aSubResource->getName(), 0, "SubResource" );
 }
 
 void XMLDBOutputter::endVisitSubResource( const SubResource* aSubResource,
                                           const int aPeriod )
 {
-	// Write the closing subresource tag.
-	XMLWriteClosingTag( aSubResource->getXMLName(), mBuffer, mTabs.get() );
+    // Write the closing subresource tag.
+    XMLWriteClosingTag( aSubResource->getXMLName(), mBuffer, mTabs.get() );
 }
 
 /*! \brief Write the output for a grade.
@@ -349,42 +350,42 @@ void XMLDBOutputter::endVisitSubResource( const SubResource* aSubResource,
 *       the subresource or redo grade.
 */
 void XMLDBOutputter::startVisitGrade( const Grade* aGrade, const int aPeriod ){
-	/*! \pre The function should always be called with the all period output. */
-	// Write the opening subresource tag.
-	XMLWriteOpeningTag( aGrade->getXMLName(), mBuffer, mTabs.get(),
+    /*! \pre The function should always be called with the all period output. */
+    // Write the opening subresource tag and.
+    XMLWriteOpeningTag( aGrade->getXMLName(), mBuffer, mTabs.get(),
                         aGrade->getName() );
 
-	// Write out the cost.
-	const Modeltime* modeltime = scenario->getModeltime();
-	for( int per = 0; per < modeltime->getmaxper(); ++per ){
-		XMLWriteElement( aGrade->getCost( per ), "cost", mBuffer, mTabs.get(),
+    // Write out the cost.
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int per = 0; per < modeltime->getmaxper(); ++per ){
+        XMLWriteElement( aGrade->getCost( per ), "cost", mBuffer, mTabs.get(),
                          modeltime->getper_to_yr( per ) );
-	}
-	
-	// Output the available. This doesn't currently work correctly.
-	for( int per = 0; per < modeltime->getmaxper(); ++per ){
-		XMLWriteElement( aGrade->getAvail(), "available", mBuffer, mTabs.get(),
+    }
+    
+    // Output the available. This doesn't currently work correctly.
+    for( int per = 0; per < modeltime->getmaxper(); ++per ){
+        XMLWriteElement( aGrade->getAvail(), "available", mBuffer, mTabs.get(),
                          modeltime->getper_to_yr( per ) );
-	}
+    }
 }
 
 void XMLDBOutputter::endVisitGrade( const Grade* aGrade, const int aPeriod ){
-	// Write the closing subresource tag.
-	XMLWriteClosingTag( aGrade->getXMLName(), mBuffer, mTabs.get() );
+    // Write the closing subresource tag.
+    XMLWriteClosingTag( aGrade->getXMLName(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitSector( const Sector* aSector, const int aPeriod ){
     // Store the sector name.
     mCurrentSector = aSector->getName();
 
-	// Write the opening sector tag.
-	XMLWriteOpeningTag( aSector->getXMLName(), mBuffer, mTabs.get(),
-                        aSector->getName() );
+    // Write the opening sector tag and the type of the base class.
+    XMLWriteOpeningTag( aSector->getXMLName(), mBuffer, mTabs.get(),
+        aSector->getName(), 0, "Sector" );
 }
 
 void XMLDBOutputter::endVisitSector( const Sector* aSector, const int aPeriod ){
-	// Write the closing sector tag.
-	XMLWriteClosingTag( aSector->getXMLName(), mBuffer, mTabs.get() );
+    // Write the closing sector tag.
+    XMLWriteClosingTag( aSector->getXMLName(), mBuffer, mTabs.get() );
 
     // Clear the current sector.
     mCurrentSector.clear();
@@ -393,33 +394,33 @@ void XMLDBOutputter::endVisitSector( const Sector* aSector, const int aPeriod ){
 void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
                                           const int aPeriod )
 {
-	// Write the opening subsector tag.
-	XMLWriteOpeningTag( aSubsector->getXMLName(), mBuffer, mTabs.get(),
-                        aSubsector->getName() );
-		
-	// Loop over the periods to output subsector information.
-	// The loops are separated so the types are grouped together, as is required for
-	// valid XML.
-	const Modeltime* modeltime = scenario->getModeltime();
-	for( int i = 0; i < modeltime->getmaxper(); ++i ){
-		int year = modeltime->getper_to_yr( i );
-		// Write out the share.
-		XMLWriteElement( aSubsector->share[ i ], "subsector-share", mBuffer,
+    // Write the opening subsector tag and the type of the base class.
+    XMLWriteOpeningTag( aSubsector->getXMLName(), mBuffer, mTabs.get(),
+        aSubsector->getName(), 0, Subsector::getXMLNameStatic() );
+        
+    // Loop over the periods to output subsector information.
+    // The loops are separated so the types are grouped together, as is required for
+    // valid XML.
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        int year = modeltime->getper_to_yr( i );
+        // Write out the share.
+        XMLWriteElement( aSubsector->share[ i ], "subsector-share", mBuffer,
                          mTabs.get(), year );
-	}
-	for( int i = 0; i < modeltime->getmaxper(); ++i ){
-		int year = modeltime->getper_to_yr( i );
-		// Write the cost.
-		XMLWriteElement( aSubsector->subsectorprice[ i ], "subsector-cost",
+    }
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        int year = modeltime->getper_to_yr( i );
+        // Write the cost.
+        XMLWriteElement( aSubsector->subsectorprice[ i ], "subsector-cost",
                          mBuffer, mTabs.get(), year );
-	}
+    }
 }
 
 void XMLDBOutputter::endVisitSubsector( const Subsector* aSubsector,
                                         const int aPeriod )
 {
-	// Write the closing subsector tag.
-	XMLWriteClosingTag( aSubsector->getXMLName(), mBuffer, mTabs.get() );
+    // Write the closing subsector tag.
+    XMLWriteClosingTag( aSubsector->getXMLName(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitBuildingDemandSubsector( const BuildingDemandSubSector* aSubsector,
@@ -428,16 +429,16 @@ void XMLDBOutputter::startVisitBuildingDemandSubsector( const BuildingDemandSubS
 
     const Marketplace* marketplace = scenario->getMarketplace();
     const string intGainsMarketName = aSubsector->getInternalGainsMarketName( mCurrentSector );
-	
+    
     const Modeltime* modeltime = scenario->getModeltime();
-	for( int i = 0; i < modeltime->getmaxper(); ++i ){
-		int year = modeltime->getper_to_yr( i );
-		// Write out the building internal gains.
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        int year = modeltime->getper_to_yr( i );
+        // Write out the building internal gains.
         double internalGains = marketplace->getPrice( intGainsMarketName,
                                                       mCurrentRegion, i );
-		XMLWriteElement( internalGains, "internal-gains", mBuffer,
+        XMLWriteElement( internalGains, "internal-gains", mBuffer,
                          mTabs.get(), year );
-	}
+    }
 }
 
 void XMLDBOutputter::endVisitBuildingDemandSubsector( const BuildingDemandSubSector* aSubsector,
@@ -449,103 +450,105 @@ void XMLDBOutputter::endVisitBuildingDemandSubsector( const BuildingDemandSubSec
 void XMLDBOutputter::startVisitTechnology( const technology* aTechnology,
                                            const int aPeriod )
 {
-	// Store the fuel name so the GHG can write it out with emissions.
-	mCurrentFuel = aTechnology->fuelname;
-	mCurrentTechYear = aTechnology->year;
+    // Store the fuel name so the GHG can write it out with emissions.
+    mCurrentFuel = aTechnology->fuelname;
+    mCurrentTechYear = aTechnology->year;
 
-	// Write the opening technology tag.
-	// TODO: Use functions to get techcost, necost, fuelcost.
-	XMLWriteOpeningTag( aTechnology->getXMLName1D(), mBuffer, mTabs.get(),
-                        aTechnology->getName(), aTechnology->year );
-	XMLWriteElement( aTechnology->output, "output", mBuffer, mTabs.get() );
+    // Write the opening technology tag and the type of the base class.
+    // TODO: Use functions to get techcost, necost, fuelcost.
+    XMLWriteOpeningTag( aTechnology->getXMLName1D(), mBuffer, mTabs.get(),
+        aTechnology->getName(), aTechnology->year, technology::getXMLNameStatic1D() );
+    XMLWriteElement( aTechnology->output, "output", mBuffer, mTabs.get() );
 
-	// For writing the input add an attribute which specifies the fuel.
-	{
-		map<string, string> attrs;
-		attrs[ "fuel-name" ] = aTechnology->fuelname;
-		XMLWriteElementWithAttributes( aTechnology->input, "input", mBuffer,
+    // For writing the input add an attribute which specifies the fuel.
+    {
+        map<string, string> attrs;
+        attrs[ "fuel-name" ] = aTechnology->fuelname;
+        XMLWriteElementWithAttributes( aTechnology->input, "input", mBuffer,
                                        mTabs.get(), attrs );
-	}
+    }
 
-	// Write the tech cost.
-	XMLWriteElement( aTechnology->techcost, "tech-cost", mBuffer, mTabs.get() );
+    // Write the tech cost.
+    XMLWriteElement( aTechnology->techcost, "tech-cost", mBuffer, mTabs.get() );
 
-	// Write out the non-energy cost.
-	XMLWriteElement( aTechnology->necost, "non-energy-cost", mBuffer, mTabs.get() );
+    // Write out the non-energy cost.
+    XMLWriteElement( aTechnology->necost, "non-energy-cost", mBuffer, mTabs.get() );
 
-	// Write out the fuel cost.
-	XMLWriteElement( aTechnology->fuelcost, "fuel-cost", mBuffer, mTabs.get() );
+    // Write out the fuel cost.
+    XMLWriteElement( aTechnology->fuelcost, "fuel-cost", mBuffer, mTabs.get() );
 
-	// Write out the share.
-	XMLWriteElement( aTechnology->share, "tech-share", mBuffer, mTabs.get() );
+    // Write out the share.
+    XMLWriteElement( aTechnology->share, "tech-share", mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::endVisitTechnology( const technology* aTechnology,
                                          const int aPeriod )
 {
-	// Clear the stored fuel name and technology year.
-	mCurrentFuel.clear();
-	mCurrentTechYear = -1;
+    // Clear the stored fuel name and technology year.
+    mCurrentFuel.clear();
+    mCurrentTechYear = 0;
 
-	// Write the closing technology tag.
-	XMLWriteClosingTag( aTechnology->getXMLName1D(), mBuffer, mTabs.get() );
+    // Write the closing technology tag.
+    XMLWriteClosingTag( aTechnology->getXMLName1D(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitGHG( const Ghg* aGHG, const int aPeriod ){
-	XMLWriteOpeningTag( aGHG->getXMLName(), mBuffer, mTabs.get(), aGHG->getName() );
+    // Write out the opening element tag of the GHG and the type of the base class.
+    XMLWriteOpeningTag( aGHG->getXMLName(), mBuffer, mTabs.get(), aGHG->getName(),
+                        0, Ghg::getXMLNameStatic() );
 
-	// Write out emissions.
-	map<string, string> attrs;
-	attrs[ "fuel-name" ] = mCurrentFuel;
-	attrs[ "year" ] = util::toString( mCurrentTechYear );
-	int currPeriod = scenario->getModeltime()->getyr_to_per( mCurrentTechYear );
-	XMLWriteElementWithAttributes( aGHG->getEmission( currPeriod ), "emissions",
+    // Write out emissions.
+    map<string, string> attrs;
+    attrs[ "fuel-name" ] = mCurrentFuel;
+    attrs[ "year" ] = util::toString( mCurrentTechYear );
+    int currPeriod = scenario->getModeltime()->getyr_to_per( mCurrentTechYear );
+    XMLWriteElementWithAttributes( aGHG->getEmission( currPeriod ), "emissions",
                                    mBuffer, mTabs.get(), attrs );
 }
 
 void XMLDBOutputter::endVisitGHG( const Ghg* aGHG, const int aPeriod ){
-	// Write the closing ghg tag.
-	XMLWriteClosingTag( aGHG->getXMLName(), mBuffer, mTabs.get() );
+    // Write the closing ghg tag.
+    XMLWriteClosingTag( aGHG->getXMLName(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitMarketplace( const Marketplace* aMarketplace,
                                             const int aPeriod )
 {
-	// Write the opening marketplace tag.
-	XMLWriteOpeningTag( Marketplace::getXMLNameStatic(), mBuffer, mTabs.get() );
+    // Write the opening marketplace tag.
+    XMLWriteOpeningTag( Marketplace::getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::endVisitMarketplace( const Marketplace* aMarketplace,
                                           const int aPeriod )
 {
-	// Write the closing marketplace tag.
-	XMLWriteClosingTag( Marketplace::getXMLNameStatic(), mBuffer, mTabs.get() );
+    // Write the closing marketplace tag.
+    XMLWriteClosingTag( Marketplace::getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitMarket( const Market* aMarket,
                                        const int aPeriod )
 {
-	// What should happen if period != -1 or the period of the market?
-	// Write the opening market tag.
-	const int year = scenario->getModeltime()->getper_to_yr( aMarket->period );
+    // What should happen if period != -1 or the period of the market?
+    // Write the opening market tag.
+    const int year = scenario->getModeltime()->getper_to_yr( aMarket->period );
     XMLWriteOpeningTag( Market::getXMLNameStatic(), mBuffer, mTabs.get(),
                         aMarket->getName(), year );
-	XMLWriteElement( aMarket->good, "MarketGoodOrFuel",mBuffer, mTabs.get() );
-	XMLWriteElement( aMarket->region, "MarketRegion", mBuffer, mTabs.get() );
-	XMLWriteElement( aMarket->price, "price", mBuffer, mTabs.get() );
-	XMLWriteElement( aMarket->demand, "demand", mBuffer, mTabs.get() );
-	XMLWriteElement( aMarket->supply, "supply", mBuffer, mTabs.get() );
+    XMLWriteElement( aMarket->good, "MarketGoodOrFuel",mBuffer, mTabs.get() );
+    XMLWriteElement( aMarket->region, "MarketRegion", mBuffer, mTabs.get() );
+    XMLWriteElement( aMarket->price, "price", mBuffer, mTabs.get() );
+    XMLWriteElement( aMarket->demand, "demand", mBuffer, mTabs.get() );
+    XMLWriteElement( aMarket->supply, "supply", mBuffer, mTabs.get() );
 
     for( vector<const objects::Atom*>::const_iterator i = aMarket->getContainedRegions().begin(); 
-		i != aMarket->getContainedRegions().end(); i++ )
-	{
-		XMLWriteElement( (*i)->getID(), "ContainedRegion", mBuffer, mTabs.get() );
-	}
+        i != aMarket->getContainedRegions().end(); i++ )
+    {
+        XMLWriteElement( (*i)->getID(), "ContainedRegion", mBuffer, mTabs.get() );
+    }
 }
 
 void XMLDBOutputter::endVisitMarket( const Market* aMarket, const int aPeriod ){
-	// Write the closing market tag.
-	XMLWriteClosingTag( Market::getXMLNameStatic(), mBuffer, mTabs.get() );
+    // Write the closing market tag.
+    XMLWriteClosingTag( Market::getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
 /*! \brief Visit the climate model.
@@ -556,91 +559,91 @@ void XMLDBOutputter::endVisitMarket( const Market* aMarket, const int aPeriod ){
 void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
                                              const int aPeriod )
 {
-	/*! \pre The function should always be called with the all period output. */
-	assert( aPeriod == -1 );
-	// Write the opening tag.
-	XMLWriteOpeningTag( MagiccModel::getXMLNameStatic(), mBuffer, mTabs.get() );
+    /*! \pre The function should always be called with the all period output. */
+    assert( aPeriod == -1 );
+    // Write the opening tag.
+    XMLWriteOpeningTag( MagiccModel::getXMLNameStatic(), mBuffer, mTabs.get() );
 
-	// Write the concentrations for the request period.
-	for( int per = 0; per < scenario->getModeltime()->getmaxper(); ++per ){
-		XMLWriteElement( aClimateModel->getConcentration( "CO2", per ), "co2-concentration",
+    // Write the concentrations for the request period.
+    for( int per = 0; per < scenario->getModeltime()->getmaxper(); ++per ){
+        XMLWriteElement( aClimateModel->getConcentration( "CO2", per ), "co2-concentration",
                          mBuffer, mTabs.get(), scenario->getModeltime()->getper_to_yr( per ) );
-	}
+    }
 }
 
 void XMLDBOutputter::endVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ){
-	// Write the closing tag.
-	XMLWriteClosingTag( MagiccModel::getXMLNameStatic(), mBuffer, mTabs.get() );
+    // Write the closing tag.
+    XMLWriteClosingTag( MagiccModel::getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitDemographic( const Demographic* aDemographic, const int aPeriod ){
-	XMLWriteOpeningTag( aDemographic->getXMLName(), mBuffer, mTabs.get() );
+    XMLWriteOpeningTag( aDemographic->getXMLName(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::endVisitDemographic( const Demographic* aDemographic, const int aPeriod ){
-	XMLWriteClosingTag( aDemographic->getXMLName(), mBuffer, mTabs.get() );
+    XMLWriteClosingTag( aDemographic->getXMLName(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitPopulation( const Population* aPopulation, const int aPeriod ){
-	XMLWriteOpeningTag( aPopulation->getXMLName(), mBuffer, mTabs.get(),
+    XMLWriteOpeningTag( aPopulation->getXMLName(), mBuffer, mTabs.get(),
                         "", aPopulation->getYear() );
-	// Always write out the total independent of the type. Is this the right thing to do?
-	XMLWriteElement( aPopulation->getTotal(), "total-population", mBuffer, mTabs.get() );
+    // Always write out the total independent of the type. Is this the right thing to do?
+    XMLWriteElement( aPopulation->getTotal(), "total-population", mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::endVisitPopulation( const Population* aPopulation, const int aPeriod ){
-	XMLWriteClosingTag( aPopulation->getXMLName(), mBuffer, mTabs.get() );
+    XMLWriteClosingTag( aPopulation->getXMLName(), mBuffer, mTabs.get() );
 }
-	
+    
 void XMLDBOutputter::startVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ){
-	XMLWriteOpeningTag( AgeCohort::getXMLNameStatic(), mBuffer, mTabs.get() );
+    XMLWriteOpeningTag( AgeCohort::getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::endVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ){
-	XMLWriteClosingTag( AgeCohort::getXMLNameStatic(), mBuffer, mTabs.get() );
+    XMLWriteClosingTag( AgeCohort::getXMLNameStatic(), mBuffer, mTabs.get() );
 }
-	
+    
 void XMLDBOutputter::startVisitGender( const Gender* aGender, const int aPeriod ){
-	XMLWriteOpeningTag( aGender->getXMLName(), mBuffer, mTabs.get() );
-	// Write the population.
-	XMLWriteElement( aGender->getPopulation(), "population", mBuffer, mTabs.get() );
+    XMLWriteOpeningTag( aGender->getXMLName(), mBuffer, mTabs.get() );
+    // Write the population.
+    XMLWriteElement( aGender->getPopulation(), "population", mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::endVisitGender( const Gender* aGender, const int aPeriod ){
-	XMLWriteClosingTag( aGender->getXMLName(), mBuffer, mTabs.get() );
+    XMLWriteClosingTag( aGender->getXMLName(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitGDP( const GDP* aGDP, const int aPeriod ){
-	// Write the opening gdp tag.
+    // Write the opening gdp tag.
     XMLWriteOpeningTag( GDP::getXMLNameStatic(), mBuffer, mTabs.get() );
 
-	// Loop over the periods to output GDP information.
-	// The loops are separated so the types are grouped together, as is required for
-	// valid XML.
-	const Modeltime* modeltime = scenario->getModeltime();
-	for( int i = 0; i < modeltime->getmaxper(); ++i ){
-		int year = modeltime->getper_to_yr( i );
-		// Write out the labor productivity growth rate.
+    // Loop over the periods to output GDP information.
+    // The loops are separated so the types are grouped together, as is required for
+    // valid XML.
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        int year = modeltime->getper_to_yr( i );
+        // Write out the labor productivity growth rate.
         XMLWriteElement( aGDP->getTotalLaborProductivity( i ),
                          "total-labor-productivity", mBuffer, mTabs.get(), year );
-	}
-	for( int i = 0; i < modeltime->getmaxper(); ++i ){
-		int year = modeltime->getper_to_yr( i );
-		// Write out Market GDP
+    }
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        int year = modeltime->getper_to_yr( i );
+        // Write out Market GDP
         XMLWriteElement( aGDP->getGDP( i ), "gdp-mer", mBuffer, mTabs.get(), year );
-	}
-	for( int i = 0; i < modeltime->getmaxper(); ++i ){
-		int year = modeltime->getper_to_yr( i );
-		// Write out Market GDP
+    }
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        int year = modeltime->getper_to_yr( i );
+        // Write out Market GDP
         XMLWriteElement( aGDP->getGDPperCap( i ), "gdp-per-capita-mer", mBuffer,
                          mTabs.get(), year );
-	}
-	for( int i = 0; i < modeltime->getmaxper(); ++i ){
-		int year = modeltime->getper_to_yr( i );
-		// Write out Market GDP
+    }
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        int year = modeltime->getper_to_yr( i );
+        // Write out Market GDP
         XMLWriteElement( aGDP->getPPPGDPperCap( i ), "gdp-per-capita-ppp",
                          mBuffer, mTabs.get(), year );
-	}
+    }
 }
 
 void XMLDBOutputter::endVisitGDP( const GDP* aGDP, const int aPeriod ){
