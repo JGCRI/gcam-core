@@ -397,7 +397,8 @@ void XMLWriteElementWithAttributes( const T value, const std::string elementName
 {
     tabs->writeTabs( out );
     out << "<" << elementName;
-    for( map<string, U>::const_iterator entry = aAttrs.begin(); entry != aAttrs.end(); ++entry ){
+    typedef typename std::map<std::string, U>::const_iterator MapIterator;
+    for( MapIterator entry = aAttrs.begin(); entry != aAttrs.end(); ++entry ){
         out << " " << entry->first <<"=\"" << entry->second << "\"";
     }
     out << ">" << value << "</" << elementName << ">" << std::endl;

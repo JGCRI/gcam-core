@@ -209,8 +209,8 @@ void Subsector::XMLParse( const DOMNode* node ) {
 
             // Search the vectors of technologies for a vector with a technology
             // with the given name. This would be greatly helped by a wrapper.
-            for( TechVecIterator techPosition = techs.begin();
-                techPosition != techs.end(); ++techPosition )
+            TechVecIterator techPosition = techs.begin();
+            for( ; techPosition != techs.end(); ++techPosition )
             {
                 // Check if this is the correct technology vector.
                 if( findTechName( *techPosition ) == techName ){
@@ -936,14 +936,6 @@ void Subsector::calcShare(const int period, const GDP* gdp ) {
 	// compute Subsector weighted average price of technologies
 	calcPrice( period );
 
-	// Check for unreasonable shareweights.
-	if ( shrwts[period]  > 1e4 ) {
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::WARNING );
-		mainLog << "Huge shareweight for sector " << sectorName << ", sub-sector " << name 	
-			    << " in region " << regionName << " of " << shrwts[period] << endl;
-	}
-	
 	// Calculate the subsector share based on its price.
 	if( subsectorprice[ period ] > 0 ){
 		double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
@@ -954,13 +946,6 @@ void Subsector::calcShare(const int period, const GDP* gdp ) {
 		share[ period ] = 0;
 	}
 
-    if ( shrwts[period]  > 1e4 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << " Huge shareweight for sector: " << sectorName << ", sub-sector " << name << " : shrwt " << shrwts[period];
-        mainLog << " in region " << regionName <<endl;
-   }
-        
     // Check for invalid shares.
     if( share[ period ] < 0 || !util::isValidNumber( share[ period ] ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -1449,6 +1434,14 @@ void Subsector::adjustForCalibration( double sectorDemand, double totalfixedOutp
        shrwts[ period ] = 1;
    }
 
+    // Check for unreasonable shareweights.
+    if ( shrwts[period]  > 1e4 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Huge shareweight for sector " << sectorName << ", sub-sector " << name  
+                << " in region " << regionName << " of " << shrwts[period] << endl;
+    }
+    
    int numberTechs = getNumberAvailTechs( period );
    // Now calibrate technology shares if necessary
    if ( numberTechs > 1 ) {

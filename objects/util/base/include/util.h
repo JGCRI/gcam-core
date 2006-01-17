@@ -14,6 +14,7 @@
 */
 
 #include "util/base/include/definitions.h"
+#include <boost/static_assert.hpp>
 #include <limits>
 #include <fstream>
 #include <iostream>
@@ -82,10 +83,11 @@ namespace util {
     * \return Returns whether the number is valid.
     */
     template <class T>
-    const bool isValidNumber( const T number ) {
-        const static T infinity = std::numeric_limits<T>::infinity();
-        const static bool infinityIsInvalid = ( infinity == 0 );
-        return ( number == number ) && ( infinityIsInvalid || number != infinity );
+    inline bool isValidNumber( const T aNumber ) {
+        BOOST_STATIC_ASSERT( std::numeric_limits<T>::has_quiet_NaN );
+        BOOST_STATIC_ASSERT( std::numeric_limits<T>::has_infinity );
+        return aNumber != std::numeric_limits<T>::quiet_NaN() && aNumber
+!= std::numeric_limits<T>::infinity();
     }
 
     /*!\brief This is a template function which compares two values. 

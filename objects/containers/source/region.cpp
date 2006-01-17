@@ -1030,6 +1030,7 @@ bool Region::isAllCalibrated( const int period, double calAccuracy, const bool p
 
 //! Calibrate total final energy Demand for this region.
 /*! Adjusts AEEI in each demand sector until TFE is equal to the calibration value.
+/warning assumes sectors have all energy or non-energy outputs
 */
 void Region::calibrateTFE( const int period ) {
     // Ratio of TFE in sector to cal value
@@ -1038,8 +1039,10 @@ void Region::calibrateTFE( const int period ) {
     // Don't calibrate unless non zero value of TFE
     if ( scaleFactor  > 0 ) { 
         // Scale each sector's output to approach calibration value
+        // But only do this for sectors that have energy outputs
+        // And do not scale is all outputs are calibrated (detailed calibration will take care of this)
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-            if ( !demandSector[ i ]->isEnergyUseFixed( period ) ) {
+            if ( !demandSector[ i ]-> isEnergyUseFixed( period ) ) {
                 demandSector[ i ]->scaleOutput( period , scaleFactor );
             }
         }

@@ -335,8 +335,10 @@ void DemandSector::initCalc( NationalAccount& nationalAccount, const Demographic
 {
 	Sector::initCalc( nationalAccount, aDemographics, aPeriod );
 	
-    // TODO: What is going on here?
-	if ( ( getCalOutput( aPeriod ) != 0 ) && ( getOutput( 0 ) == 0 ) ) {
+    // If no output has been specified for period zero (mBaseOutput), then can never calibrate.
+    // So set mBaseOutput to calibrated value to provide non-zero value from which to scale.
+    // Only do the initialization once
+	if ( mBaseOutput == 0 && ( getCalOutput( aPeriod ) != 0 ) && ( getOutput( 0 ) == 0 ) ) {
 		mBaseOutput = getCalOutput( aPeriod );
 	}
 }
@@ -423,7 +425,6 @@ void DemandSector::aggdemand( const GDP* gdp, const int period ) {
             // need to multiply above by population ratio (current population/base year
             // population).  This ratio provides the population ratio.
             serviceDemand *= gdpRatio/scaledGDPperCap;
-
         }
         // If not perCapitaBased, service_demand = B * P^r * GDP^r
         else { // demand based on scale of GDP    

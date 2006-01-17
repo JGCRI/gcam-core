@@ -134,6 +134,7 @@ auto_ptr<Market> Market::createMarket( const IMarketType::Type aType, const std:
 void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteOpeningTag( getXMLNameStatic(), out, tabs, getName(), modeltime->getper_to_yr( period ) , getType() );
+	XMLWriteElement( solveMarket, "solved_Market_Flag", out, tabs );
     XMLWriteElement( good, "MarketGoodOrFuel", out, tabs );
     XMLWriteElement( region, "MarketRegion", out, tabs );
     XMLWriteElement( price, "price", out, tabs );

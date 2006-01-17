@@ -24,6 +24,7 @@
 * \version $Revision$
 */
 #include <list>
+#include <string>
 
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"

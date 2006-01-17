@@ -148,7 +148,10 @@ void Sector::XMLParse( const DOMNode* node ){
                 mBaseOutput = XMLHelper<double>::getValue( curr );
             }
             else {
-                // Warning?
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Output level for years other than " << modeltime->getStartYear()
+                        << " are not read in."<< endl;
             }
         }
         else if( nodeName == MoreSectorInfo::getXMLNameStatic() ) {
@@ -671,11 +674,13 @@ double Sector::getPrice( const int period ) {
 
 /*! \brief Returns whether all energy usage is calibrated.
 * \details Returns if this is an energy sector with all output fixed.
+* If this is not an energy sector then also returns true (since energy input is always zero).
 * \param aPeriod Model period.
 * \return Whether all energy usage is fixed.
+* \warning This (and other functionality) will need to change for multiple inputs.
 */
 bool Sector::isEnergyUseFixed( const int aPeriod ) const {
-    return getSectorType() == "Energy" && outputsAllFixed( aPeriod );
+    return getSectorType() != "Energy" || outputsAllFixed( aPeriod );
 }
 
 /*! \brief Returns true if all sub-Sector outputs are fixed or calibrated.
