@@ -272,13 +272,6 @@
 				<File
 					RelativePath="..\..\marketplace\source\trial_value_market.cpp">
 				</File>
-				<Filter
-					Name="main"
-					Filter="">
-					<File
-						RelativePath="..\..\main\source\main.cpp">
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="resources"
@@ -325,12 +318,6 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\final_demand_sector.cpp">
-				</File>
-				<File
-					RelativePath="..\..\sectors\source\food_demand_sector.cpp">
-				</File>
-				<File
-					RelativePath="..\..\sectors\source\food_demand_subsector.cpp">
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\food_supply_sector.cpp">
@@ -424,7 +411,7 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="technology"
+				Name="technologies"
 				Filter="">
 				<File
 					RelativePath="..\..\technologies\source\base_technology.cpp">
@@ -493,9 +480,6 @@
 					RelativePath="..\..\technologies\source\expenditure.cpp">
 				</File>
 				<File
-					RelativePath="..\..\technologies\source\food_demand_technology.cpp">
-				</File>
-				<File
 					RelativePath="..\..\technologies\source\food_production_technology.cpp">
 				</File>
 				<File
@@ -506,9 +490,6 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\profit_shutdown_decider.cpp">
-				</File>
-				<File
-					RelativePath="..\..\technologies\source\profit_technology.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\technology.cpp">
@@ -751,6 +732,13 @@
 					RelativePath="..\..\land_allocator\source\unmanaged_land_leaf.cpp">
 				</File>
 			</Filter>
+			<Filter
+				Name="main"
+				Filter="">
+				<File
+					RelativePath="..\..\main\source\main.cpp">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -968,12 +956,6 @@
 					RelativePath="..\..\sectors\include\final_demand_sector.h">
 				</File>
 				<File
-					RelativePath="..\..\sectors\include\food_demand_sector.h">
-				</File>
-				<File
-					RelativePath="..\..\sectors\include\food_demand_subsector.h">
-				</File>
-				<File
 					RelativePath="..\..\sectors\include\food_supply_sector.h">
 				</File>
 				<File
@@ -1099,9 +1081,6 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\expenditure.h">
-				</File>
-				<File
-					RelativePath="..\..\technologies\include\food_demand_technology.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\food_production_technology.h">
