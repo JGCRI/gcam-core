@@ -41,7 +41,8 @@ public:
                                const IInfo* aRegionInfo );
     
     virtual void addLandUsage( const std::string& aLandType,
-                               const std::string& aProductName );
+                               const std::string& aProductName,
+                               const ILandAllocator::LandUsageType aLandUsageType );
 
     virtual void setInitShares( double landAllocationAbove, int period );
     virtual void setIntrinsicYieldMode( double intrinsicRateAbove, double sigmaAbove, int period );

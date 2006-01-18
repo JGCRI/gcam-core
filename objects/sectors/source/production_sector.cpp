@@ -37,6 +37,7 @@ extern Scenario* scenario;
 * \param aRegionName Name of the region containing this sector.
 */
 ProductionSector::ProductionSector ( const string& aRegionName ) : Sector ( aRegionName ) {
+    mFixedPrices.resize( scenario->getModeltime()->getmaxper() );
     mIsFixedPrice = false;
     mIsEnergyGood = false;
     mIsPrimaryEnergyGood = false;
@@ -86,6 +87,9 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
     else if( nodeName == "IsSecondaryEnergyGood" ){
         mIsSecondaryEnergyGood = XMLHelper<bool>::getValue( curr );
     }
+    else if( nodeName == "sectorprice" ){
+        XMLHelper<double>::insertValueIntoVector( curr, mFixedPrices, scenario->getModeltime() );
+    }
     else {
         return false;
     }
@@ -104,7 +108,7 @@ void ProductionSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const 
     XMLWriteElement( mMarketName, "market", out, tabs );
     XMLWriteElementCheckDefault( mIsFixedPrice, "FixedPricePath", out, tabs );
     XMLWriteElementCheckDefault( mIsEnergyGood, "IsEnergyGood", out, tabs );
-
+    XMLWriteVector( mFixedPrices, "sectorprice", out, tabs, scenario->getModeltime(), 0.0 );
     for( map<string, double>::const_iterator coef = ghgEmissCoefMap.begin(); coef != ghgEmissCoefMap.end(); ++coef ){
         XMLWriteElement( coef->second, "ghgEmissCoef", out, tabs, 0, coef->first );
     }
@@ -124,7 +128,7 @@ void ProductionSector::toDebugXMLDerived( const int period, std::ostream& out, T
     XMLWriteElement( mMarketName, "market", out, tabs );
     XMLWriteElement( mIsFixedPrice, "FixedPricePath", out, tabs, false );
     XMLWriteElement( mIsEnergyGood, "IsEnergyGood", out, tabs );
-
+    XMLWriteElement( mFixedPrices[ period ], "fixed-price", out, tabs );
     for( map<string, double>::const_iterator coef = ghgEmissCoefMap.begin(); coef != ghgEmissCoefMap.end(); ++coef ){
         XMLWriteElement( coef->second, "ghgEmissCoef", out, tabs, 0, coef->first );
     }
@@ -182,7 +186,10 @@ void ProductionSector::setMarket() {
 	// Create the market.
     Marketplace* marketplace = scenario->getMarketplace();
     if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
-        marketplace->setPriceVector( name, regionName, sectorprice );
+        // Set the base year price which the sector reads in, into the mFixedPrices vector.
+        // TODO: Seperate MiniCAM sector so this is not needed.
+        mFixedPrices[ 0 ] = mBasePrice;
+        marketplace->setPriceVector( name, regionName, mFixedPrices );
         for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
             // IInfo needs to be set in period 0, but the market should never be set to solve 
             // in period zero. 
@@ -264,6 +271,16 @@ double ProductionSector::getOutput( const int aPeriod ) const {
         output += subsecOutput;
     }
     return output;
+}
+
+/*! \brief Return the price of a production sector.
+* \details Production sectors always have markets, so the price of a production
+*          sector is the market price.
+* \param aPeriod Model period.
+* \return Price.
+*/
+double ProductionSector::getPrice( const int aPeriod ) const {
+    return scenario->getMarketplace()->getPrice( name, regionName, aPeriod, true );
 }
 
 /*! \brief Operate the capital of the sector.

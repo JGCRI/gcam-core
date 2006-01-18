@@ -55,7 +55,6 @@ Sector::Sector( const string regionNameIn ): regionName( regionNameIn ){
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    sectorprice.resize( maxper );
     fixedOutput.resize( maxper );
     summary.resize( maxper );
     capLimitsPresent.resize( maxper, false );
@@ -137,7 +136,13 @@ void Sector::XMLParse( const DOMNode* node ){
             continue;
         }
         else if( nodeName == "price" ){
-            XMLHelper<double>::insertValueIntoVector( curr, sectorprice, modeltime );
+            // Check if the output year is the base year.
+            if( XMLHelper<int>::getAttr( curr, "year" ) == modeltime->getStartYear() ){
+                mBasePrice = XMLHelper<double>::getValue( curr );
+            }
+            else {
+                // Warning?
+            }
         }
         else if( nodeName == "sectorType" ){
             mSectorType = XMLHelper<string>::getValue( curr );
@@ -208,14 +213,8 @@ void Sector::toInputXML( ostream& out, Tabs* tabs ) const {
 
     // write the xml for the class members.
     XMLWriteElementCheckDefault( mSectorType, "sectorType", out, tabs, getDefaultSectorType() );
-
-    for( int i = 0; modeltime->getper_to_yr( i ) <= 1975; i++ ){
-        XMLWriteElementCheckDefault( sectorprice[ i ], "price", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
-
-    for( int i = 0; modeltime->getper_to_yr( i ) <= 1975; i++ ){
-        XMLWriteElement( getOutput( i ), "output", out, tabs, modeltime->getper_to_yr( i ) );
-    }
+    XMLWriteElementCheckDefault( mBasePrice, "price", out, tabs, 0.0, modeltime->getper_to_yr( 0 ) );
+    XMLWriteElementCheckDefault( mBaseOutput, "output", out, tabs, 0.0, modeltime->getper_to_yr( 0 ) );
 
     // write out variables for derived classes
     toInputXMLDerived( out, tabs );
@@ -248,7 +247,7 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     // write the xml for the class members.
     // Write out the data in the vectors for the current period.
-    XMLWriteElement( sectorprice[ period ], "sectorprice", out, tabs );
+    XMLWriteElement( getPrice( period ), "sectorprice", out, tabs );
     XMLWriteElement( getInput( period ), "input", out, tabs );
     XMLWriteElement( getOutput( period ), "output", out, tabs );
 
@@ -646,30 +645,16 @@ void Sector::checkShareSum( const int period ) const {
 }
 
 /*! \brief Calculate weighted average price of subsectors.
-*
-* weighted price is put into sectorprice variable
-*
 * \author Sonny Kim, Josh Lurz, James Blackwood
 * \param period Model period
+* \return Weighted sector price.
 */
-void Sector::calcPrice( const int period ) {
-    sectorprice[ period ]= 0;
+double Sector::getPrice( const int aPeriod ) const {
+    double price = 0;
     for ( unsigned int i = 0; i < subsec.size(); ++i ){ 
-        sectorprice[ period ] += subsec[ i ]->getShare( period ) * subsec[ i ]->getPrice( period );
+        price += subsec[ i ]->getShare( aPeriod ) * subsec[ i ]->getPrice( aPeriod );
     }
-}
-
-/*! \brief returns the Sector price.
-*
-* Returns the weighted price. 
-* Calcuation of price incorporated into call to ensure that this is calculated.
-* 
-* \author Sonny Kim
-* \param period Model period
-*/
-double Sector::getPrice( const int period ) {
-    calcPrice( period );
-    return sectorprice[ period ];
+    return price;
 }
 
 /*! \brief Returns whether all energy usage is calibrated.
@@ -1013,7 +998,10 @@ void Sector::csvOutputFile() const {
     // total Sector eneryg input
     fileoutput3( regionName, name, " ", " ", "consumption", "EJ", temp );
     // Sector price
-    fileoutput3( regionName, name, " ", " ", "price", "$/GJ", sectorprice);
+    for( int per = 0; per < maxper; ++per ){
+        temp[ per ] = getPrice( per );
+    }
+    fileoutput3( regionName, name, " ", " ", "price", "$/GJ", temp );
     // Sector carbon taxes paid
     for( int per = 0; per < maxper; ++per ){
         temp[ per ] = getTotalCarbonTaxPaid( per );
@@ -1077,17 +1065,23 @@ void Sector::dbOutput() const {
     dboutput4( regionName,"CO2 Emiss(ind)",name,"zTotal","MTC",temp);
 
     // Sector price
-    dboutput4( regionName,"Price",name,"zSectorAvg","$/GJ",sectorprice);
+    for ( int m=0;m<maxper;m++) {
+        temp[m] = getPrice( m );
+    }
+    dboutput4( regionName,"Price",name,"zSectorAvg","$/GJ", temp );
     // for electricity Sector only
     if (name == "electricity") {
         for ( int m=0;m<maxper;m++) {
-            temp[m] = sectorprice[m] * 2.212 * 0.36;
+            temp[m] = getPrice( m ) * 2.212 * 0.36;
         }
         dboutput4( regionName,"Price","electricity C/kWh","zSectorAvg","90C/kWh",temp);
     }
 
     // Sector price
-    dboutput4( regionName,"Price","by Sector",name,"$/GJ",sectorprice);
+    for ( int m = 0; m < maxper; m++ ) {
+        temp[m] = getPrice( m );
+    }
+    dboutput4( regionName,"Price","by Sector",name,"$/GJ", temp );
     // Sector carbon taxes paid
     for( int per = 0; per < maxper; ++per ){
         temp[ per ] = getTotalCarbonTaxPaid( per );

@@ -176,23 +176,27 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
 * \warning This may break if timestep is not constant for each time period.
 */
 void ForestProductionTechnology::completeInit( const string& aSectorName,
-                                               DependencyFinder* aDepFinder,
-                                               const IInfo* aSubsectorInfo,
-                                               ILandAllocator* aLandAllocator )
+                                              DependencyFinder* aDepFinder,
+                                              const IInfo* aSubsectorInfo,
+                                              ILandAllocator* aLandAllocator )
 {
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;
 
-   // Set rotation period variable so this can be used throughout object
-   rotationPeriod = aSubsectorInfo->getInteger( "rotationPeriod", true );
-   
-   // Setup the land usage for this production.
-   mLandAllocator->addLandUsage( landType, name );
-   
-   setCalLandValues();
-   
-   technology::completeInit( aSectorName, aDepFinder, aSubsectorInfo,
-                             aLandAllocator );
+    // Set rotation period variable so this can be used throughout object
+    rotationPeriod = aSubsectorInfo->getInteger( "rotationPeriod", true );
+
+    // Setup the land usage for this production. Only add land usage once for
+    // all technologies, of a given type. TODO: This is error prone if
+    // technologies don't all have the same land type.
+    if( year == scenario->getModeltime()->getStartYear() ){
+        mLandAllocator->addLandUsage( landType, name, ILandAllocator::eForest );
+    }
+
+    setCalLandValues();
+
+    technology::completeInit( aSectorName, aDepFinder, aSubsectorInfo,
+        aLandAllocator );
 }
 
 /*! \brief Sets calibrated land values to land allocator.
@@ -268,24 +272,6 @@ void ForestProductionTechnology::calcShare( const string& aRegionName,
     share = 1;
 }
 
-/*! \brief Calculate technology fuel cost and total cost.
-*
-* This caculates the cost (per unit output) of this specific technology. 
-* The cost includes fuel cost, carbon value, and non-fuel costs.
-* Conversion efficiency, and optional fuelcost and total price multipliers are used if specified.
-*
-* \author James Blackwood
-* \todo The GHG cost is not feeding into the land use decision or technology cost right now. 
-*/
-void ForestProductionTechnology::calcCost( const string& regionName, const string& sectorName, const int per ) {
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    // Tech cost for forest technologies is just the market price
-    techcost = marketplace->getPrice( sectorName, regionName, per );
-    // Do something about carbon value?
-    calcTotalGHGCost( regionName, sectorName, per );
-}
-
 /*! \brief Calculates the output of the technology.
 * \details Calculates the amount of current forestry output based on the amount
 *          of planted forestry land and it's yield. Forestry production
@@ -348,6 +334,9 @@ double ForestProductionTechnology::calcProfitRate( const string& aRegionName,
                                                    const int aPeriod ) const
 {
     // Calculate the future profit rate.
+    // TODO: If a ForestProductionTechnology had emissions this would not be correct as the 
+    // emissions cost would be calculated for the present year and the emissions would be 
+    // charged in a future year.
     double profitRate = FoodProductionTechnology::calcProfitRate( aRegionName, aProductName, aPeriod );
 
     // Calculate the net present value.

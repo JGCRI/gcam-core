@@ -191,9 +191,10 @@ double TreeLandAllocator::getAvgIntrinsicRate( int period ) {
 }
 
 void TreeLandAllocator::addLandUsage( const string& aLandType,
-                                      const string& aProductName )
+                                      const string& aProductName,
+                                      const LandUsageType aLandUsageType )
 {
-    LandNode::addLandUsage( aLandType, aProductName );
+    LandNode::addLandUsage( aLandType, aProductName, aLandUsageType );
 }
 
 double TreeLandAllocator::getCalAveObservedRate( const string& aLandType, int aPeriod ) const {

@@ -25,7 +25,7 @@
 #include <vector>
 
 namespace util {
-	
+    
     /*! \brief Returns the value within this map associated with a given key. 
     * \details This function takes as its input a map and a key to search for.
     *          It will return the value associated with the key, or the default
@@ -50,16 +50,60 @@ namespace util {
         }
     }
 
-	/*! \brief Returns whether a value with the given key exists.
-	* \details This function takes as its input a map and a key for which to
-    *          search, and returns whether the key exists. 
-	* \param aCurrMap The map within which to search for the value.
-	* \param aKey The key of which to check for the existance.
-	* \return Whether the key exists. 
+    /*! \brief Returns a constant iterator to a position in the vector which
+    *          contains a pointer to an object with the given name. 
+    * \details This function searches linearly from the beginning of the vector
+    *          until it finds an object which has a getName() function which
+    *          returns the given name. If the name is not found the end iterator
+    *          will be returned.
+    * \param aVector A vector to search.
+    * \param aName A name for which to search.
+    * \return An iterator to the position in the vector with the given name, the
+    *         end iterator if that is not found.
     */
-	template <class K, class V> bool hasValue( const std::map<K,V>& aCurrMap, const K& aKey ){
-		return ( aCurrMap.find( aKey ) != aCurrMap.end() );
-	}
+    template <class U>
+    inline typename std::vector<U>::const_iterator searchForValue( const std::vector<U>& aVector, const std::string& aName ) {
+        std::vector<U>::const_iterator iter = aVector.begin();
+        for( ; iter!= aVector.end(); ++iter ){
+            if( (*iter)->getName() == aName ){
+                break;
+            }
+        }
+        return iter;
+    }
+
+    /*! \brief Returns a mutable iterator to a position in the vector which
+    *          contains a pointer to an object with the given name. 
+    * \details This function searches linearly from the beginning of the vector
+    *          until it finds an object which has a getName() function which
+    *          returns the given name. If the name is not found the end iterator
+    *          will be returned.
+    * \param aVector A vector to search.
+    * \param aName A name for which to search.
+    * \return An iterator to the position in the vector with the given name, the
+    *         end iterator if that is not found.
+    */
+    template <class U>
+    inline typename std::vector<U>::iterator searchForValue( std::vector<U>& aVector, const std::string& aName ) {
+        std::vector<U>::iterator iter = aVector.begin();
+        for( ; iter!= aVector.end(); ++iter ){
+            if( (*iter)->getName() == aName ){
+                break;
+            }
+        }
+        return iter;
+    }
+
+    /*! \brief Returns whether a value with the given key exists.
+    * \details This function takes as its input a map and a key for which to
+    *          search, and returns whether the key exists. 
+    * \param aCurrMap The map within which to search for the value.
+    * \param aKey The key of which to check for the existance.
+    * \return Whether the key exists. 
+    */
+    template <class K, class V> bool hasValue( const std::map<K,V>& aCurrMap, const K& aKey ){
+        return ( aCurrMap.find( aKey ) != aCurrMap.end() );
+    }
 
     /*! \brief A function to determine the sign of a number.
     * \param number A templated parameter which must be comparable to 0.
@@ -147,7 +191,7 @@ namespace util {
             abort();
         }
     }
-	
+    
     std::string replaceSpaces( const std::string& aString );
 
     /*! \brief Static function which returns SMALL_NUM. 
@@ -199,22 +243,22 @@ namespace util {
       return LARGE_NUM;
    }
 
-	/*! \brief Function which returns a vector of keys from a map.
-	* \detailed This function takes a map as an argument and returns a vector of
+    /*! \brief Function which returns a vector of keys from a map.
+    * \detailed This function takes a map as an argument and returns a vector of
     *           all the keys of the map. It uses the same order as the map
     *           iterator returns.
-	* \param aMap A map to return all keys for.
-	* \return A vector of all keys from the map in the same order as the map
+    * \param aMap A map to return all keys for.
+    * \return A vector of all keys from the map in the same order as the map
     *         iterator returns.
     */
-	template<class T, class U> const std::vector<T> getKeys( const std::map<T,U> aMap ) {
-		typedef typename std::map<T,U>::const_iterator ConstMapIterator;
-		std::vector<T> keys;
-		for( ConstMapIterator mapIter = aMap.begin(); mapIter != aMap.end(); mapIter++ ){
-			keys.push_back( ( *mapIter ).first );
-		}
-		return keys;
-	}
+    template<class T, class U> const std::vector<T> getKeys( const std::map<T,U> aMap ) {
+        typedef typename std::map<T,U>::const_iterator ConstMapIterator;
+        std::vector<T> keys;
+        for( ConstMapIterator mapIter = aMap.begin(); mapIter != aMap.end(); mapIter++ ){
+            keys.push_back( ( *mapIter ).first );
+        }
+        return keys;
+    }
     
    /* \brief Function which returns a vector of values from a map.
    * \details This function takes a map as an argument and returns a vector of
@@ -224,18 +268,20 @@ namespace util {
    * \return A vector of all values from the map in the same order as the map
    *         iterator returns.
    */
-	template<class T, class U>
-		const std::vector<U> getValues( const std::map<T,U> aMap )
-	{
-		typedef typename std::map<T,U>::const_iterator ConstMapIterator;
-		std::vector<U> values;
-		for( ConstMapIterator mapIter = aMap.begin(); mapIter != aMap.end(); mapIter++ ){
-			values.push_back( ( *mapIter ).second );
-		}
-		return values;
-	}
+    template<class T, class U>
+        const std::vector<U> getValues( const std::map<T,U> aMap )
+    {
+        typedef typename std::map<T,U>::const_iterator ConstMapIterator;
+        std::vector<U> values;
+        for( ConstMapIterator mapIter = aMap.begin(); mapIter != aMap.end(); mapIter++ ){
+            values.push_back( ( *mapIter ).second );
+        }
+        return values;
+    }
 
-    //! Convert a value to a string using the built in stringstream.
+    /*! \brief Convert a value to a string using the built in stringstream.
+    * \todo Remove this function and use the boost equivalent.
+    */
     template<class T> std::string toString( const T& value ){
         static std::stringstream converter;
         converter << value;

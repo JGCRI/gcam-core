@@ -238,7 +238,7 @@ void DemandSector::calibrateSector( const int period ) {
 *          period.
 * \return The weighted energy price.
 */
-double DemandSector::getWeightedEnergyPrice ( const int aPeriod ) {
+double DemandSector::getWeightedEnergyPrice ( const int aPeriod ) const {
 	return getOutput( 0 ) * getPrice( aPeriod );
 }
 
@@ -380,7 +380,7 @@ void DemandSector::calcPriceElasticity( int period ){
         for ( unsigned int i = 0; i < subsec.size(); ++i ) {
             sectorFuelCost += subsec[ i ]->getwtfuelprice( period );
         }
-        double tmpPriceRatio = sectorprice[ period ] / sectorFuelCost;
+        double tmpPriceRatio = getPrice( period ) / sectorFuelCost;
         pElasticity[ period ] = pElasticityBase * tmpPriceRatio;
     }
 }
@@ -465,7 +465,10 @@ void DemandSector::csvOutputFile() const {
     }
     fileoutput3( regionName, getName(), " ", " ", "consumption", "EJ", temp );
     // Sector price
-    fileoutput3( regionName, getName(), " ", " ", "price", "$/Service", sectorprice);
+    for( int per = 0; per < maxper; ++per ){
+        temp[ per ] = getPrice( per );
+    }
+    fileoutput3( regionName, getName(), " ", " ", "price", "$/Service", temp );
     // Sector carbon taxes paid
     for( int per = 0; per < maxper; ++per ){
         temp[ per ] = getTotalCarbonTaxPaid( per );
@@ -546,13 +549,13 @@ void DemandSector::dbOutput() const {
     
     // sector price (not normalized)
     for (m=0;m<maxper;m++) {
-        temp[m] = sectorprice[ m ];
+        temp[m] = getPrice( m );
     }
     dboutput4(regionName,"Price",secname,"zSectorAvg","75$/Ser",temp);
     
     // sector price normalized to base price
     for (m=0;m<maxper;m++) {
-        temp[m] = sectorprice[ m ] / sectorprice[ 0 ];
+        temp[m] = getPrice( m ) / getPrice( 0 );
     }
     dboutput4(regionName,"Price","by End-Use Sector",secname,"Norm75",temp);
     
@@ -598,6 +601,16 @@ double DemandSector::getOutput( int aPeriod ) const {
         return mBaseOutput;
     }
     return service[ aPeriod ];
+}
+
+/*! \brief Return the price of the DemandSector.
+* \details The price of a DemandSector is the weighted average subsector price.
+* \param aPeriod Model period.
+* \return Price.
+* \todo Remove this calculation once DemandSectors are rewritten.
+*/
+double DemandSector::getPrice( const int aPeriod ) const {
+    return Sector::getPrice( aPeriod );
 }
 
 /*! \brief returns the demand sector service before tech change is applied.

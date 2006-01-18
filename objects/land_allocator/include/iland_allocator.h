@@ -35,15 +35,30 @@ public:
     
     virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
     
+    /*!
+    * \brief An enum which represents the various types of land usages which may
+    *        be dynamically added to the land allocator by production
+    *        technologies.
+    */
+    enum LandUsageType {
+        //! The land will be used for a food crop.
+        eCrop,
+
+        //! The land will be used for managed forestry.
+        eForest 
+    };
+
     /*! \brief Add a product which will use land to the land allocator.
     * \details Informs the land allocator that a technology exists which will
     *          require a land leaf. This function must be called before any
     *          other functions are allowed to be called.
     * \param aLandType Land type the product will use.
     * \param aProductName Name of the product.
+    * \param aLandUsageType The type of the land usage.
     */
     virtual void addLandUsage( const std::string& aLandType,
-                               const std::string& aProductName ) = 0;
+                               const std::string& aProductName,
+                               const LandUsageType aLandUsageType ) = 0;
 
     virtual void setCalObservedYield( const std::string& aLandType,
                                       const std::string& aProductName,

@@ -28,7 +28,6 @@
 #include "sectors/include/supply_sector.h"
 #include "sectors/include/production_sector.h"
 #include "sectors/include/demand_sector.h"
-#include "sectors/include/food_demand_sector.h"
 #include "sectors/include/food_supply_sector.h"
 #include "sectors/include/forest_demand_sector.h"
 #include "sectors/include/forest_supply_sector.h"
@@ -201,9 +200,6 @@ void Region::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == DemandSector::getXMLNameStatic() ){
             parseContainerNode( curr, demandSector, demandSectorNameMap, new DemandSector( name ) );
-        }
-        else if( nodeName == FoodDemandSector::getXMLNameStatic() ){
-            parseContainerNode( curr, demandSector, demandSectorNameMap, new FoodDemandSector( name ) );
         }
         else if( nodeName == FoodSupplySector::getXMLNameStatic() ) {
             parseContainerNode( curr, supplySector, supplySectorNameMap, new FoodSupplySector( name ) );

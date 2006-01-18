@@ -167,11 +167,14 @@ void BuildingDemandSector::aggdemand( const GDP* gdp, const int period ) {
     
     double ser_dmd;
     
-    // Prices are not calculated reliably until period 1 so do not use price ratio until after this
-    // note normalized to previous year not base year (this is also done in detailed transportation)
-    double priceRatio = ( period > 1 ) ? 
-        sectorprice[ period ]/sectorprice[ period - 1 ] : 1;
-     
+    // Prices are not calculated reliably until period 1 so do not use price
+    // ratio until after this note normalized to previous year not base year
+    // (this is also done in detailed transportation)
+    double priceRatio = 1;
+    if( period > 1 ){
+        priceRatio = getPrice( period ) / getPrice( period - 1 );
+    }
+
     // demand for service
     // reading in period 1 data so calibrate scaler to same for both periods
     if ( baseService[ period ] >= 0 ) {

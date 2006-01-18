@@ -124,9 +124,11 @@ void LandLeaf::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 }
 
 void LandLeaf::addLandUsage( const string& aLandType,
-                                      const string& aProductName )
+                             const string& aProductName,
+                             const ILandAllocator::LandUsageType aType )
 {
-    // Doesn't need to do anything, as the leaf represents the land usage.
+    // The leaf is the land usage so this should never be called.
+    assert( false );
 }
 
 /*! \brief Returns whether this is a production leaf.

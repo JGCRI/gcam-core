@@ -65,8 +65,7 @@ public:
     virtual void dbOutput() const;
     virtual void calibrateSector( const int period );
 
-    // TODO: Make this constant.
-    virtual double getWeightedEnergyPrice( const int aPeriod );
+    virtual double getWeightedEnergyPrice( const int aPeriod ) const;
 
     double getService( const int period ) const;
 
@@ -85,7 +84,8 @@ protected:
     
     virtual void setMarket();
     void MCoutput_subsec() const;
-    double getOutput( const int aPeriod ) const;
+    virtual double getOutput( const int aPeriod ) const;
+    virtual double getPrice( const int aPeriod ) const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;

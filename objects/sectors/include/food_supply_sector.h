@@ -28,6 +28,7 @@ public:
     virtual void completeInit( const IInfo* aRegionInfo,
                                DependencyFinder* aDepFinder,
                                ILandAllocator* aLandAllocator );
+    virtual double getPrice( const int aPeriod ) const;
 protected:
 	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

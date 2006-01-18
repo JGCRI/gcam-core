@@ -205,8 +205,12 @@ void FoodProductionTechnology::completeInit( const string& aSectorName,
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;
 
-   // Setup the land usage for this production.
-   mLandAllocator->addLandUsage( landType, name );
+    // Setup the land usage for this production. Only add land usage once for
+    // all technologies, of a given type. TODO: This is error prone if
+    // technologies don't all have the same land type.
+    if( year == scenario->getModeltime()->getStartYear() ){
+        mLandAllocator->addLandUsage( landType, name, ILandAllocator::eCrop );
+    }
 
     const int period = scenario->getModeltime()->getyr_to_per( year );
     if ( ( calProduction != -1 ) && ( calLandUsed != -1 ) ) {
@@ -268,11 +272,7 @@ void FoodProductionTechnology::calcShare( const string& aRegionName,
 * \todo The GHG cost is not feeding into the land use decision or technology cost right now. 
 */
 void FoodProductionTechnology::calcCost( const string& regionName, const string& sectorName, const int per ) {
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    // Tech cost for food technologies is just the market price
-    techcost = marketplace->getPrice( sectorName, regionName, per );
-    // Do something about carbon value?
+    // Calculate the GHG cost. This will be used to adjust the profit rate.
     calcTotalGHGCost( regionName, sectorName, per );
 }
 
@@ -341,7 +341,9 @@ double FoodProductionTechnology::calcProfitRate( const string& aRegionName,
     
     // Calculate profit rate.
     const Marketplace* marketplace = scenario->getMarketplace();
-    double profitRate = marketplace->getPrice( aProductName, aRegionName, aPeriod ) * CVRT90 - variableCost;
+
+    double profitRate = ( marketplace->getPrice( aProductName, aRegionName, aPeriod ) + totalGHGCost ) 
+                         * CVRT90 - variableCost;
 
     return profitRate;
 }

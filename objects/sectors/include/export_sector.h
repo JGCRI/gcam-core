@@ -41,18 +41,34 @@ public:
                            const Demographic* aDemographics,
                            const int aPeriod );
 
-	void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
-    
+	virtual void calcFinalSupplyPrice( const GDP* aGDP,
+                                       const int aPeriod );
+
     virtual void supply( const GDP* aGDP,
                          const int aPeriod );
+
+
 
     static const std::string& getXMLNameStatic();
 protected:
 	void setMarket();
-	bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurr ); 
-	void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
-	void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
-	const std::string& getXMLName() const;
+        
+    virtual double getPrice( const int aPeriod ) const;
+
+    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
+                                       const xercesc::DOMNode* aCurr ); 
+    
+    virtual void toInputXMLDerived( std::ostream& aOut,
+                                    Tabs* aTabs ) const;
+    
+    virtual void toDebugXMLDerived( const int aPeriod,
+                                    std::ostream& aOut,
+                                    Tabs* aTabs ) const;
+	
+    const std::string& getXMLName() const;
+    
+    //! Vector of read-in fixed prices.
+    std::vector<double> mFixedPrices;
 
 	//! The market region into which the sector is exporting.
 	std::string mMarketName;

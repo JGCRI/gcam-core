@@ -19,6 +19,9 @@
 
 #include "containers/include/tree_item.h"
 
+// For LandUsageType enum.
+#include "land_allocator/include/iland_allocator.h"
+
 // Forward declarations
 class Ghg;
 class Summary;
@@ -54,7 +57,8 @@ public:
                                const IInfo* aRegionInfo ) = 0;
 
     virtual void addLandUsage( const std::string& aLandType,
-                               const std::string& aProductName ) = 0;
+                               const std::string& aProductName,
+                               const ILandAllocator::LandUsageType aLandUsageType ) = 0;
 
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const = 0;

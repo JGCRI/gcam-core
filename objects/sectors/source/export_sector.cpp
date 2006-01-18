@@ -77,6 +77,16 @@ void ExportSector::initCalc( NationalAccount& aNationalAccount,
     SupplySector::initCalc( aNationalAccount, aDemographics, aPeriod );
 }
 
+/*! \brief Return the export sector price.
+* \details Export sectors currently have fixed prices, so return the read-in
+*          fixed price.
+* \param aPeriod Model period.
+* \return Price.
+*/
+double ExportSector::getPrice( const int aPeriod ) const {
+    return mFixedPrices[ aPeriod ];
+}
+
 /*! \brief Calculate the final supply price for the ExportSector, which will
 *          leave the international price unchanged.
 * \details Currently this function does not calculate or set a price into the
@@ -162,6 +172,9 @@ bool ExportSector::XMLDerivedClassParse( const string& aNodeName, const DOMNode*
     if( aNodeName == "market" ){
 		mMarketName = XMLHelper<string>::getValueString( aCurr );
 	}
+    else if( aNodeName == "sectorprice" ){
+        XMLHelper<double>::insertValueIntoVector( aCurr, mFixedPrices, scenario->getModeltime() );
+    }
 	else {
 		return false;
 	}
@@ -175,6 +188,7 @@ bool ExportSector::XMLDerivedClassParse( const string& aNodeName, const DOMNode*
 void ExportSector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {  
     // write out the market string.
     XMLWriteElement( mMarketName, "market", aOut, aTabs );
+    XMLWriteVector( mFixedPrices, "sectorprice", aOut, aTabs, scenario->getModeltime(), 0.0 );
 }	
 
 /*! \brief Write out derived class specific class members for debugging.
@@ -185,6 +199,7 @@ void ExportSector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 void ExportSector::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     // write out the market string.
     XMLWriteElement( mMarketName, "market", aOut, aTabs );
+    XMLWriteElement( mFixedPrices[ aPeriod ], "sectorprice", aOut, aTabs );
 }
 
 /*! \brief Create new market for the ExportSector.
@@ -205,7 +220,11 @@ void ExportSector::setMarket() {
 	// Creates a regional market. MiniCAM supply sectors are not independent and 
 	// cannot be members of multi-region markets.
     if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
+        // Set the base year price which the sector reads in, into the mFixedPrices vector.
+        // TODO: Seperate SupplySector so this is not needed.
+        mFixedPrices[ 0 ] = mBasePrice;
+
 		// Initializes prices with any values that are read-in. 
-        marketplace->setPriceVector( name, regionName, sectorprice );
+        marketplace->setPriceVector( name, regionName, mFixedPrices );
     }
 }

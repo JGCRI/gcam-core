@@ -174,8 +174,7 @@ void TranSector::aggdemand( const GDP* gdp, const int period ) {
         // for non-base year
         // note normalized to previous year not base year
         // has implications for how technical change is applied
-        priceRatio = sectorprice[period]/sectorprice[period-1];
-        priceRatioNotLic = sectorprice[period]/sectorprice[period-1];
+        priceRatioNotLic = priceRatio = getPrice( period ) / getPrice( period - 1 );
         // perCapitaBased is true or false
         if (perCapitaBased) { // demand based on per capita GDP
             serviceDemand = baseScaler*pow(priceRatio,pElasticity[period])*pow(scaledGdpPerCapita,iElasticity[period])

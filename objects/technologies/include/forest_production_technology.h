@@ -63,7 +63,6 @@ public:
                              const GDP* aGDP,
                              const int aPeriod );
 
-    virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per );
 protected:
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 private:

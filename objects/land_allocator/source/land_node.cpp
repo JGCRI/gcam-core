@@ -57,24 +57,10 @@ bool LandNode::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr
     const Modeltime* modeltime = scenario->getModeltime();
 
     if ( nodeName == LandNode::getXMLNameStatic() ) {
-        LandNode* newNode = new LandNode;
-        addChild( newNode );
-        newNode->XMLParse( curr );
-    }
-    else if ( nodeName == LandLeaf::getXMLNameStatic() ) {
-        LandLeaf* newLeaf = new LandLeaf;
-        addChild( newLeaf );
-        newLeaf->XMLParse( curr );
-    }
-    else if ( nodeName == ForestLandLeaf::getXMLNameStatic() ) {
-        LandLeaf* newLeaf = new ForestLandLeaf;
-        addChild( newLeaf );
-        newLeaf->XMLParse( curr );
+        parseContainerNode( curr, children, new LandNode );
     }
     else if ( nodeName == UnmanagedLandLeaf::getXMLNameStatic() ) {
-        LandLeaf* newLeaf = new UnmanagedLandLeaf;
-        addChild( newLeaf );
-        newLeaf->XMLParse( curr );
+        parseContainerNode( curr, children, new UnmanagedLandLeaf );
     }
     else if( nodeName == "sigma" ) {
         sigma = XMLHelper<double>::getValue( curr );
@@ -154,7 +140,8 @@ void LandNode::completeInit( const string& aRegionName,
 }
 
 void LandNode::addLandUsage( const string& aLandType,
-                             const string& aProductName )
+                             const string& aProductName,
+                             ILandAllocator::LandUsageType aLandUsageType )
 {
     // Find the parent land item which should have a leaf added.
     ALandAllocatorItem* parent = findItem ( aLandType );
@@ -168,7 +155,18 @@ void LandNode::addLandUsage( const string& aLandType,
     }
     else {
         // Add a new leaf for the land usage.
-        LandLeaf* newLeaf = new LandLeaf;
+        LandLeaf* newLeaf = 0;
+        if( aLandUsageType == ILandAllocator::eCrop ){
+            newLeaf = new LandLeaf;
+        }
+        else if( aLandUsageType == ILandAllocator::eForest ){
+            newLeaf = new ForestLandLeaf;
+        }
+        // Unknown type. This can only occur if a new type is added to the enum
+        // and not here.
+        else {
+            assert( false );
+        }
         newLeaf->setName( aProductName );
         parent->addChild( newLeaf );
     }
@@ -474,14 +472,9 @@ void LandNode::addChild( ALandAllocatorItem* child ) {
     // Check if the child already exists.
     ALandAllocatorItem* existingItem = findItem( child->getName() );
     if( existingItem ){
-        // TODO: Uncomment this warning. Currently all technologies with the
-        // same type but different periods will try to add the land type and
-        // cause this warning.
-        /*
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Land type " << name << " already has a child named " << child->getName() << "." << endl;
-        */
         delete child;
         return;
     }

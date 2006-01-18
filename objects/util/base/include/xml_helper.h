@@ -649,6 +649,81 @@ static void resetMapIndices( const std::vector<T>& aItems, std::map<std::string,
     }  
 } 
 
+/*! \brief Function which positions a node containing children within a vector
+*          of its parent, and if successful parses the new node.
+* \details This function will look at the name and delete attributes of the node
+*          to determine if the model node which corresponds to the input should
+*          be added, modified, or deleted. After it determines this it will make
+*          this change to the data structure passed in.
+* \param aNode The node pointing to the container node in the XML tree. 
+* \param aContainerSet The vector of objects of the type pointed to by node.
+* \param aNewObject An object to use if the xml node is unique. This node is
+*        deleted if it is not needed.
+* \param aIDAttr Name of the attribute containing the unique identifier for the
+*        node. Defaults to "name".
+*/
+template<class T, class U>
+void parseContainerNode( const xercesc::DOMNode* aNode,
+                         std::vector<T*>& aContainerSet, 
+                         U* aNewObject,
+                         const std::string& aIDAttr = XMLHelper<std::string>::name() )
+{
+    assert( aNode );
+    // Force U* to implement IParsable. TODO: Activate this check when all
+    // elements of the model properly implement the interface. IParsable*
+    // parsable = aNewNode;
+
+    // Have an auto_ptr keep the new memory.
+    std::auto_ptr<U> newObjWrapper( aNewObject );
+
+    // First determine if the node exists. 
+    const std::string objName = XMLHelper<std::string>::getAttrString( aNode, aIDAttr );
+    
+    // Search the insert to vector for an item with the name.
+    std::vector<T*>::iterator iter = util::searchForValue( aContainerSet, objName );
+   
+    // Determine if we should be deleting a node. 
+    bool shouldDelete = XMLHelper<bool>::getAttr( aNode, "delete" );
+    
+    // Check if the node already exists in the model tree. 
+    if( iter != aContainerSet.end() ){     
+        // Modify or delete the node based on the contents of the delete attribute.
+        if( shouldDelete ) {
+            // Perform deletion.
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << "Deleting node: " << objName << std::endl;
+            
+            // Clean up the memory the vector points at.
+            delete *iter;
+
+            // Remove the pointer from the vector. 
+            aContainerSet.erase( iter );
+        }
+        // Parse the XML data into the existing node to modify it.
+        else {
+           (*iter)->XMLParse( aNode );
+        }
+    } 
+    // The node does not already exist.
+    else {
+        if( shouldDelete ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Could not delete node " << objName << " as it does not exist." << std::endl;
+        } 
+        else if( XMLHelper<bool>::getAttr( aNode, "nocreate" ) ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::NOTICE );
+            mainLog << "Did not create node " << objName << " as the nocreate input flag was set." << std::endl;
+        }
+        else {
+            aNewObject->XMLParse( aNode );
+            aContainerSet.push_back( newObjWrapper.release() );
+        }
+    }
+}
+
 /*! \brief Function which parses a node containing model-children, such as a region, and determines what to do with it.
 * \details This function will look at the name and delete attributes of the node to determine if the model node which 
 * corresponds to the input should be added, modified, or deleted. After it determines this it will make this change 
@@ -658,6 +733,7 @@ static void resetMapIndices( const std::vector<T>& aItems, std::map<std::string,
 * \param corrMap The map of node name attributes to locations within insertToVector.
 * \param newNode An object to use if the xml node is unique. This node is deleted if it is not needed.
 * \param attrName Name of the attribute which contains the name identifier.
+* \todo Remove this function and use only the above variant once the entire model is converted.
 */
 template<class T, class U> 
 void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToVector, 
@@ -668,7 +744,7 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
     std::auto_ptr<T> newNodePtr( newNode );
 
     // First determine if the node exists. 
-	const std::string objName = XMLHelper<std::string>::getAttrString( node, attrName );
+    const std::string objName = XMLHelper<std::string>::getAttrString( node, attrName );
     std::map<std::string,int>::const_iterator iter = corrMap.find( objName );
    
     // Determine if we should be deleting a node. 
@@ -782,14 +858,14 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
 
 template<class T>
 xercesc::XercesDOMParser** XMLHelper<T>::getParserPointerInternal(){
-	static xercesc::XercesDOMParser* parser;
-	return &parser;
+    static xercesc::XercesDOMParser* parser;
+    return &parser;
 }
 
 template<class T>
 xercesc::ErrorHandler** XMLHelper<T>::getErrorHandlerPointerInternal(){
-	static xercesc::ErrorHandler* errorHandler;
-	return &errorHandler;
+    static xercesc::ErrorHandler* errorHandler;
+    return &errorHandler;
 }
 
 #endif // _XML_HELPER_H_

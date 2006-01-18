@@ -64,7 +64,10 @@ protected:
     std::vector<Subsector*> subsec; //!< subsector objects
     typedef std::vector<Subsector*>::iterator SubsectorIterator;
     typedef std::vector<Subsector*>::const_iterator CSubsectorIterator;
-    std::vector<double> sectorprice; //!< Sector price in $/service
+    
+    //! Sector price in $/service
+    double mBasePrice;
+
     std::vector<double> fixedOutput; //!< total amount of fixed output from Sector
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
@@ -74,7 +77,6 @@ protected:
 
     void normalizeShareWeights( const int period );
     double getFixedShare( const unsigned int sectorNum, const int period ) const; // utility function 
-    virtual void calcPrice( const int period );
     void production( const int period );
     void adjustForFixedSupply( const double marketDemand, const int period );
 
@@ -92,8 +94,7 @@ protected:
     static const std::string& getDefaultSectorType();
     const std::string& getSectorType() const;
 
-    // TODO: Make this constant.
-    double getPrice( const int period );
+    virtual double getPrice( const int aPeriod ) const = 0;
     bool outputsAllFixed( const int period ) const;
 public:
     explicit Sector( std::string regionName );

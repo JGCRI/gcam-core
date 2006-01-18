@@ -41,7 +41,8 @@ public:
     virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     
     virtual void addLandUsage( const std::string& aLandType,
-                               const std::string& aProductName );
+                               const std::string& aProductName,
+                               const LandUsageType aLandUsageType );
 
     virtual double getCalAveObservedRate( const std::string& LandType,
                                           const int aPeriod ) const;

@@ -93,15 +93,6 @@ void FoodSupplySector::completeInit( const IInfo* aRegionInfo,
         mainLog << "LandAllocator not read in." << endl;
     }
 
-    // If there is a calprice, initialize marketplace with this
-    if ( calPrice >= 0 ) {
-        const Modeltime* modeltime = scenario->getModeltime();
-        const double CVRT90 = 2.212; // 1975 $ to 1990 $
-        for( int per = 0; per < modeltime->getmaxper(); ++per ){
-            sectorprice[ per ] = calPrice / CVRT90;
-        }
-    }
-
     if( mMarketName.empty() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
@@ -109,6 +100,16 @@ void FoodSupplySector::completeInit( const IInfo* aRegionInfo,
         mMarketName = regionName;
     }
     SupplySector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
+}
+
+/*! \brief Calculate the sector price.
+* \details FoodSupplySectors are solved markets, so this function is overridden
+*          to use the market price instead of an average subsector price.
+* \param aPeriod model period.
+* \return The sector price.
+*/
+double FoodSupplySector::getPrice( const int aPeriod ) const {
+    return scenario->getMarketplace()->getPrice( name, regionName, aPeriod, true );
 }
 
 /*! \brief Get the XML node name for output to XML.

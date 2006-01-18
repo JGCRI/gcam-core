@@ -81,6 +81,16 @@ double SupplySector::getOutput( const int aPeriod ) const {
     return output;
 }
 
+/*! \brief Return the price of the SupplySector.
+* \details The price of a SupplySector is the weighted average subsector price.
+* \param aPeriod Model period.
+* \return Price.
+* \todo Move entire calculation here once demand sectors are rewritten.
+*/
+double SupplySector::getPrice( const int aPeriod ) const {
+    return Sector::getPrice( aPeriod );
+}
+
 /*! \brief Calculate the final supply price.
 * \details Calculates shares for the sector and price for the supply sector, and then sets the price of the good
 *          into the marketplace.
@@ -89,11 +99,10 @@ double SupplySector::getOutput( const int aPeriod ) const {
 */
 void SupplySector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
     calcShare( aPeriod, aGDP );
-    calcPrice( aPeriod );
 	
 	// Set the price into the market.
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->setPrice( name, regionName, sectorprice[ aPeriod ], aPeriod, true );
+    marketplace->setPrice( name, regionName, getPrice( aPeriod ), aPeriod, true );
 }
 
 /*! \brief Set supply Sector output
@@ -243,9 +252,8 @@ void SupplySector::setMarket() {
 	// Creates a regional market. MiniCAM supply sectors are not independent and 
 	// cannot be members of multi-region markets.
     if( marketplace->createMarket( regionName, regionName, name, IMarketType::NORMAL ) ) {
-		// Initilizes prices with any values that are read-in. Since supply sectors
-		// are not solved markets, these prices will be overridden except in the base period.
-        marketplace->setPriceVector( name, regionName, sectorprice );
+		// Initilize base year price
+        marketplace->setPrice( name, regionName, mBasePrice, true );
     }
 
     // Check if this sector has any fixed capacity. If it does, add a price

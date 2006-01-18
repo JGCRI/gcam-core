@@ -44,7 +44,7 @@ public:
 	virtual void supply( const GDP* aGDP, const int aPeriod ){};
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, 
         const int aPeriod );
-    double getOutput( const int aPeriod ) const { return 0; }
+
 	static const std::string& getXMLNameStatic();
     
     virtual void initCalc( NationalAccount& aNationalAccount,
@@ -57,6 +57,8 @@ public:
 
     virtual void setCalibratedSupplyInfo( const int aPeriod ) const {};
 protected:
+    virtual double getOutput( const int aPeriod ) const { return 0; }
+    virtual double getPrice( const int aPeriod ) const;
     virtual void setMarket();
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
