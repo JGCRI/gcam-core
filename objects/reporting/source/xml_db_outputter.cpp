@@ -318,7 +318,7 @@ void XMLDBOutputter::startVisitResource( const Resource* aResource,
 {
     // Write the opening resource tag and the type of the base class.
     XMLWriteOpeningTag( aResource->getXMLName(), mBuffer, mTabs.get(),
-        aResource->getName(), 0, "Resource" );
+        aResource->getName(), 0, "resource" );
 }
 
 void XMLDBOutputter::endVisitResource( const Resource* aResource,
@@ -333,7 +333,7 @@ void XMLDBOutputter::startVisitSubResource( const SubResource* aSubResource,
 {
     // Write the opening subresource tag and the type of the base class.
     XMLWriteOpeningTag( aSubResource->getXMLName(), mBuffer, mTabs.get(),
-        aSubResource->getName(), 0, "SubResource" );
+        aSubResource->getName(), 0, "subresource" );
 }
 
 void XMLDBOutputter::endVisitSubResource( const SubResource* aSubResource,
@@ -380,7 +380,7 @@ void XMLDBOutputter::startVisitSector( const Sector* aSector, const int aPeriod 
 
     // Write the opening sector tag and the type of the base class.
     XMLWriteOpeningTag( aSector->getXMLName(), mBuffer, mTabs.get(),
-        aSector->getName(), 0, "Sector" );
+        aSector->getName(), 0, "sector" );
 }
 
 void XMLDBOutputter::endVisitSector( const Sector* aSector, const int aPeriod ){
