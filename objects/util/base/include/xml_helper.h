@@ -680,7 +680,7 @@ void parseContainerNode( const xercesc::DOMNode* aNode,
     const std::string objName = XMLHelper<std::string>::getAttrString( aNode, aIDAttr );
     
     // Search the insert to vector for an item with the name.
-    std::vector<T*>::iterator iter = util::searchForValue( aContainerSet, objName );
+    typename std::vector<T*>::iterator iter = util::searchForValue( aContainerSet, objName );
    
     // Determine if we should be deleting a node. 
     bool shouldDelete = XMLHelper<bool>::getAttr( aNode, "delete" );

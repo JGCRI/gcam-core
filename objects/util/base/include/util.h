@@ -63,7 +63,7 @@ namespace util {
     */
     template <class U>
     inline typename std::vector<U>::const_iterator searchForValue( const std::vector<U>& aVector, const std::string& aName ) {
-        std::vector<U>::const_iterator iter = aVector.begin();
+        typename std::vector<U>::const_iterator iter = aVector.begin();
         for( ; iter!= aVector.end(); ++iter ){
             if( (*iter)->getName() == aName ){
                 break;
@@ -85,7 +85,7 @@ namespace util {
     */
     template <class U>
     inline typename std::vector<U>::iterator searchForValue( std::vector<U>& aVector, const std::string& aName ) {
-        std::vector<U>::iterator iter = aVector.begin();
+        typename std::vector<U>::iterator iter = aVector.begin();
         for( ; iter!= aVector.end(); ++iter ){
             if( (*iter)->getName() == aName ){
                 break;
