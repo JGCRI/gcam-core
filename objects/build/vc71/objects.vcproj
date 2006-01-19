@@ -517,6 +517,9 @@
 						RelativePath="..\..\util\base\source\configuration.cpp">
 					</File>
 					<File
+						RelativePath="..\..\util\base\source\input_finder.cpp">
+					</File>
+					<File
 						RelativePath="..\..\util\base\source\model_time.cpp">
 					</File>
 					<File
@@ -1129,16 +1132,28 @@
 						RelativePath="..\..\util\base\include\configuration.h">
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\default_visitor.h">
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\definitions.h">
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\hash_map.h">
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\input_finder.h">
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\iparsable.h">
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\iround_trippable.h">
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\ivisitable.h">
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\ivisitor.h">
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\model_time.h">
