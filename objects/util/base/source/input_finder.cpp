@@ -38,7 +38,7 @@ InputFinder::InputFinder(){
 void InputFinder::startVisitTechnology( const technology* aTechnology, const int aPeriod ){
     // Check if the input is already known.
     const string input = aTechnology->getFuelName();
-    if( find( mInputs.begin(), mInputs.end(), input ) == mInputs.end() ){
+    if( !input.empty() && find( mInputs.begin(), mInputs.end(), input ) == mInputs.end() ){
         mInputs.push_back( input );
     }
 }

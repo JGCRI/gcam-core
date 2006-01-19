@@ -52,6 +52,8 @@ Sector::Sector( const string regionNameIn ): regionName( regionNameIn ){
     anyFixedCapacity = false;
     mSectorType = getDefaultSectorType();
     mBaseOutput = 0;
+    mBasePrice = 0;
+
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();

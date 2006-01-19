@@ -28,7 +28,7 @@ extern Scenario* scenario;
 * \author James Blackwood
 */
 FoodSupplySector::FoodSupplySector( std::string& regionName ): SupplySector( regionName ) {
-	calPrice = 0;
+    calPrice = 0;
     mSectorType = "Agriculture"; //Default sector type for ag production sectors
 }
 
@@ -42,19 +42,19 @@ FoodSupplySector::~FoodSupplySector( ) {
 * \param curr pointer to the current node in the XML input tree
 */
 bool FoodSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-	if ( nodeName == FoodSupplySubsector::getXMLNameStatic() ) {
-		parseContainerNode( curr, subsec, subSectorNameMap, new FoodSupplySubsector( regionName, name ) );
-	}
-	else if ( nodeName == "calPrice" ) {
-		calPrice = XMLHelper<double>::getValue( curr );
-	}
+    if ( nodeName == FoodSupplySubsector::getXMLNameStatic() ) {
+        parseContainerNode( curr, subsec, subSectorNameMap, new FoodSupplySubsector( regionName, name ) );
+    }
+    else if ( nodeName == "calPrice" ) {
+        calPrice = XMLHelper<double>::getValue( curr );
+    }
     else if( nodeName == "market" ){
-		mMarketName = XMLHelper<string>::getValueString( curr );
-	}
+        mMarketName = XMLHelper<string>::getValueString( curr );
+    }
     else if( !SupplySector::XMLDerivedClassParse( nodeName, curr ) ) {
-		return false;
-	}
-	return true;
+        return false;
+    }
+    return true;
 }
 
 /*! \brief XML output stream for derived classes
@@ -84,8 +84,8 @@ void FoodSupplySector::toDebugXMLDerived( const int period, std::ostream& out, T
 * \author James Blackwood
 */
 void FoodSupplySector::completeInit( const IInfo* aRegionInfo,
-                                     DependencyFinder* aDependencyFinder,
-                                     ILandAllocator* aLandAllocator )
+                                    DependencyFinder* aDependencyFinder,
+                                    ILandAllocator* aLandAllocator )
 {
     if ( !aLandAllocator ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -121,7 +121,7 @@ double FoodSupplySector::getPrice( const int aPeriod ) const {
 * \return The constant XML_NAME.
 */
 const string& FoodSupplySector::getXMLName() const {
-	return getXMLNameStatic();
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -134,25 +134,34 @@ const string& FoodSupplySector::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const string& FoodSupplySector::getXMLNameStatic() {
-	const static string XML_NAME = "FoodSupplySector";
-	return XML_NAME;
+    const static string XML_NAME = "FoodSupplySector";
+    return XML_NAME;
+}
+
+void FoodSupplySector::supply( const GDP* aGDP, const int aPeriod ) {
+    // The demand value passed to setOutput does not matter as the 
+    // supply and demand will be made equal by the market.
+    for( unsigned int i = 0; i < subsec.size(); ++i ){
+        // set subsector output from Sector demand
+        subsec[ i ]->setOutput( 1, aGDP, aPeriod );
+    }  
 }
 
 //! Create markets
 void FoodSupplySector::setMarket() {
-	Marketplace* marketplace = scenario->getMarketplace();
-	const Modeltime* modeltime = scenario->getModeltime();
-	const int maxper = modeltime->getmaxper();
-	const double CVRT90 = 2.212; // 1975 $ to 1990 $
-	// name is resource name
-	if ( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
-		vector <double> tempCalPrice( maxper, calPrice / CVRT90 ); // market prices are in $1975
-		marketplace->setPriceVector( name, regionName, tempCalPrice );
-		for( int per = 1; per < modeltime->getmaxper(); ++per ){
-			marketplace->setMarketToSolve( name, regionName, per );
-		}
-		for( int per = 0; per < modeltime->getmaxper(); ++per ){
-			marketplace->getMarketInfo( name, regionName, per, true )->setDouble( "calPrice", calPrice );
-		}
-	}
+    Marketplace* marketplace = scenario->getMarketplace();
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    const double CVRT90 = 2.212; // 1975 $ to 1990 $
+    // name is resource name
+    if ( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
+        vector <double> tempCalPrice( maxper, calPrice / CVRT90 ); // market prices are in $1975
+        marketplace->setPriceVector( name, regionName, tempCalPrice );
+        for( int per = 1; per < modeltime->getmaxper(); ++per ){
+            marketplace->setMarketToSolve( name, regionName, per );
+        }
+        for( int per = 0; per < modeltime->getmaxper(); ++per ){
+            marketplace->getMarketInfo( name, regionName, per, true )->setDouble( "calPrice", calPrice );
+        }
+    }
 }

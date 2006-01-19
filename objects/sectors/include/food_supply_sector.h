@@ -22,20 +22,21 @@ class ILandAllocator;
 
 class FoodSupplySector : public SupplySector {
 public:
-	FoodSupplySector( std::string& aRegionName );
-	virtual ~FoodSupplySector();
-	static const std::string& getXMLNameStatic();
+    FoodSupplySector( std::string& aRegionName );
+    virtual ~FoodSupplySector();
+    static const std::string& getXMLNameStatic();
     virtual void completeInit( const IInfo* aRegionInfo,
                                DependencyFinder* aDepFinder,
                                ILandAllocator* aLandAllocator );
     virtual double getPrice( const int aPeriod ) const;
+    virtual void supply( const GDP* aGDP, const int aPeriod );
 protected:
-	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-	virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-	virtual const std::string& getXMLName() const;
-	virtual void setMarket();
-	double calPrice;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+    virtual const std::string& getXMLName() const;
+    virtual void setMarket();
+    double calPrice;
 
     //! Name of the market for this good.
     std::string mMarketName;

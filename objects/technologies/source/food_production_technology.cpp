@@ -274,6 +274,10 @@ void FoodProductionTechnology::calcShare( const string& aRegionName,
 void FoodProductionTechnology::calcCost( const string& regionName, const string& sectorName, const int per ) {
     // Calculate the GHG cost. This will be used to adjust the profit rate.
     calcTotalGHGCost( regionName, sectorName, per );
+
+    // Set the techcost to 1 to avoid zero shares.
+    // TODO: Fix share calculation to avoid this.
+    techcost = 1;
 }
 
 /*! \brief Calculates the output of the technology.
