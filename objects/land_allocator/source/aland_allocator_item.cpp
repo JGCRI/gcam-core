@@ -27,8 +27,6 @@ ALandAllocatorItem::ALandAllocatorItem(){
     share.resize( maxper );
     landAllocation.resize( maxper );
     intrinsicRate.resize( maxper );
-    mGHGs.resize( maxper );
-    ghgNameMap.resize( maxper );
     summary.resize( maxper );
 }
 

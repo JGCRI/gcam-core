@@ -446,14 +446,9 @@ void LandLeaf::calcEmission( const string& aRegionName,
 }
 
 void LandLeaf::updateSummary( Summary& aSummary, const int period ) {
-    //check that there are the same number of ghg's in each period
-    for ( unsigned i = 1; i < mGHGs.size(); i++ ) {
-        assert (mGHGs[ i ].size() == mGHGs[ i - 1 ].size());
-    }
-
     //map each ghg emission to its corresponding value
-    for ( unsigned i = 0; i < mGHGs[ period ].size(); i++ ) {
-        emissmap[ mGHGs[ period ][ i ]->getName( ) ] = mGHGs[ period ][ i ]->getEmission( period ) ;
+    for ( unsigned i = 0; i < mGHGs.size(); i++ ) {
+        emissmap[ mGHGs[ i ]->getName( ) ] = mGHGs[ i ]->getEmission( period ) ;
     }
 
     //update the summary object with this mapping
@@ -483,17 +478,12 @@ void LandLeaf::csvOutput( const string& aRegionName ) const {
     fileoutput3(aRegionName,name," "," ","carbonValue","000Ha",carbonValue);
     fileoutput3(aRegionName,name," "," ","Ag Productivity Change","none",agProdChange);
 
-    //check that there are the same number of ghg's in each period.
-    for ( unsigned int i = 1; i < mGHGs.size(); i++ ) {
-        assert (mGHGs[ i ].size() == mGHGs[ i - 1 ].size());
-    }
-
     //print out each ghg emission
-    for ( unsigned int i = 0; i < mGHGs[0].size(); i++ ) {
+    for ( unsigned int i = 0; i < mGHGs.size(); i++ ) {
         for ( int j = 0; j < maxper; j++) {
-            temp[j] = mGHGs[j][i]->getEmission( j );
+            temp[j] = mGHGs[i]->getEmission( j );
         }
-        fileoutput3(aRegionName,name," "," ",mGHGs[0][i]->getName(), mGHGs[0][i]->getUnit(),temp);
+        fileoutput3(aRegionName,name," "," ",mGHGs[i]->getName()+" emiss", mGHGs[i]->getUnit(),temp);
     }
 }
 
@@ -515,16 +505,11 @@ void LandLeaf::dbOutput( const string& aRegionName ) const {
     dboutput4(aRegionName,name," ","carbonValue","000Ha",carbonValue);
     dboutput4(aRegionName,name," ","Ag Productivity Change","none",agProdChange);
 
-    //check that there are the same number of ghg's in each period
-    for ( unsigned int i = 1; i < mGHGs.size(); i++ ) {
-        assert (mGHGs[ i ].size() == mGHGs[ i - 1 ].size());
-    }
-
     //print out each ghg emission
-    for ( unsigned int i = 0; i < mGHGs[0].size(); i++ ) {
+    for ( unsigned int i = 0; i < mGHGs.size(); i++ ) {
         for ( int j = 0; j < maxper; j++) {
-            temp[j] = mGHGs[j][i]->getEmission( j );
+            temp[j] = mGHGs[i]->getEmission( j );
         }
-        dboutput4( aRegionName,name," ",mGHGs[0][i]->getName(),mGHGs[0][i]->getUnit(),temp);
+        dboutput4( aRegionName,name," ",mGHGs[i]->getName()+" emiss",mGHGs[i]->getUnit(),temp);
     }
 }

@@ -40,8 +40,7 @@ bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMN
     const Modeltime* modeltime = scenario->getModeltime();
 
     if( nodeName == GhgInput::getXMLNameStatic() ){
-        int thisPeriod = XMLHelper<void>::getNodePeriod( curr, modeltime );
-        parseContainerNode( curr, mGHGs[ thisPeriod ], ghgNameMap[ thisPeriod ], new GhgInput() );
+        parseContainerNode( curr, mGHGs, new GhgInput() );
     }
     else if( nodeName == "historyYear" ) {
         historyYear = XMLHelper<int>::getValue( curr );
@@ -79,11 +78,9 @@ void UnmanagedLandLeaf::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     }
     XMLWriteVector( tempLandAllocation, "landAllocation", out, tabs, modeltime, 0.0 );
 
-    /* // sjsTODO --  fix this
-    for( vector<Ghg*>::const_iterator ghgIter = ghg.begin(); ghgIter != ghg.end(); ghgIter++ ){
-    ( *ghgIter )->toInputXML( out, tabs );
+    for ( unsigned int j = 0; j < mGHGs.size(); j++ ) {
+        mGHGs[ j ]->toInputXML( out, tabs );
     }
-    */
     // finished writing xml for the class members.
 }
 
@@ -196,11 +193,11 @@ double UnmanagedLandLeaf::getBaseLandAllocation ( int period ) {
 void UnmanagedLandLeaf::calcEmission( const string& aRegionName,
                                       const GDP* aGDP, 
                                       const int aPeriod )
-{
-    for ( unsigned int j = 0; j < mGHGs[ aPeriod ].size(); j++ ) {
+{    
+    for ( unsigned int j = 0; j < mGHGs.size(); j++ ) {
         double input = landAllocation[ aPeriod ];
         double output = 0;
-        mGHGs[ aPeriod ][ j ]->calcEmission( aRegionName, name, input, name, output, aGDP, aPeriod );
+        mGHGs[ j ]->calcEmission( aRegionName, name, input, name, output, aGDP, aPeriod );
     }
 }
 

@@ -138,8 +138,6 @@ protected:
     //! land allocated in 1000's of hectars
     std::vector<double> landAllocation;
 
-    std::vector< std::vector <Ghg*> > mGHGs; //!< vector of suites of greenhouse gases
-    std::vector< std::map<std::string,int> > ghgNameMap; //!< vector of Maps of ghg name to integer position in vector. 
     std::vector<Summary> summary; //!< summary for reporting
     std::string name; //!< name of the product for leafs. name of the type of land for nodes.
 
