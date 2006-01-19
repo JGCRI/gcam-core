@@ -29,11 +29,16 @@ MergeRunner::~MergeRunner(){
 bool MergeRunner::setupScenario( Timer& timer, const string aName, const list<string> aScenComponents ){
     // Parse the input file.
     const Configuration* conf = Configuration::getInstance();
-    XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
-    
+    bool success = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
+
+    // Parsing failed.
+    if( !success ){
+        return false;
+    }
+
     // Override scenario name from data file with that from configuration file
     const string overrideName = conf->getString( "scenarioName" ) + aName;
-    if ( overrideName != "" ) {
+    if ( !overrideName.empty() ) {
         mScenario->setName( overrideName );
     }
 
@@ -48,7 +53,10 @@ bool MergeRunner::setupScenario( Timer& timer, const string aName, const list<st
     typedef list<string>::const_iterator ScenCompIter;
     for( ScenCompIter currComp = scenComponents.begin(); currComp != scenComponents.end(); ++currComp ) {
         mainLog << "Parsing " << *currComp << " scenario component." << endl;
-        XMLHelper<void>::parseXML( *currComp, mScenario.get() );
+        if( !XMLHelper<void>::parseXML( *currComp, mScenario.get() ) ){
+            // Parsing failed.
+            return false;
+        }
     }
     
     mainLog << "XML parsing complete." << endl;

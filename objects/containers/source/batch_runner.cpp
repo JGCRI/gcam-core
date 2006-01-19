@@ -25,6 +25,8 @@
 using namespace std;
 using namespace xercesc;
 
+extern Scenario* scenario;
+
 /*! Constructor
 */
 BatchRunner::BatchRunner(){ 
@@ -42,12 +44,11 @@ BatchRunner::~BatchRunner(){
 * \return Whether setup was successful. Currently always true.
 */
 bool BatchRunner::setupScenario( Timer& aTimer, const string aName, const list<string> aScenComponents ){
-	// Get the name of the batch file from the Configuration.
-	const string batchFile = Configuration::getInstance()->getFile( "BatchFileName" );
+    // Get the name of the batch file from the Configuration.
+    const string batchFile = Configuration::getInstance()->getFile( "BatchFileName" );
     
-	// Parse the batch file.
-    XMLHelper<void>::parseXML( batchFile, this );
-    return true;
+    // Parse the batch file.
+    return XMLHelper<void>::parseXML( batchFile, this );
 }
 
 /*! \brief Run the set of Scenarios as instructed by the batch configuration file.
@@ -158,17 +159,28 @@ bool BatchRunner::runSingleScenario( const Component aComponents, Timer& aTimer 
         mInternalRunner = ScenarioRunnerFactory::create( "policy-target-runner" );
     }
     else if( conf->getBool( "createCostCurve" ) ){
-		mInternalRunner = ScenarioRunnerFactory::create( "mac-generator-scenario-runner" );
+        mInternalRunner = ScenarioRunnerFactory::create( "mac-generator-scenario-runner" );
     }
     // Run a standard scenario.
     else {
-		mInternalRunner = ScenarioRunnerFactory::create( "single-scenario-runner" );
+        mInternalRunner = ScenarioRunnerFactory::create( "single-scenario-runner" );
     }
+
+    // Set the global scenario pointer, as the internal runner was null when
+    // main tried to set it.
+    scenario = mInternalRunner->getInternalScenario();
+    assert( scenario );
+
     // Setup the scenario.
-    mInternalRunner->setupScenario( aTimer, aComponents.mName, components );
+    bool success = mInternalRunner->setupScenario( aTimer, aComponents.mName, components );
+    // Check if setting up the scenario, which often includes parsing,
+    // succeeded.
+    if( !success ){
+        return false;
+    }
 
     // Run the scenario.
-    bool success = mInternalRunner->runScenario( Scenario::RUN_ALL_PERIODS, aTimer );
+    success = mInternalRunner->runScenario( Scenario::RUN_ALL_PERIODS, aTimer );
     
     // Print the output.
     mInternalRunner->printOutput( aTimer );
@@ -201,7 +213,7 @@ bool BatchRunner::XMLParse( const DOMNode* aRoot ){
             continue;
         }
         // This is a three level XMLParse. Breaking up for now.
-		else if ( nodeName == "ComponentSet" ){
+        else if ( nodeName == "ComponentSet" ){
             XMLParseComponentSet( curr );
         }
         else {
@@ -298,20 +310,20 @@ void BatchRunner::XMLParseFileSet( const DOMNode* aNode, Component& aCurrCompone
 }
 
 const string& BatchRunner::getXMLNameStatic(){
-	static const string XML_NAME = "batch-runner";
-	return XML_NAME;
+    static const string XML_NAME = "batch-runner";
+    return XML_NAME;
 }
 
 /*! \brief Get the internal scenario.
 * \return The internal scenario.
 */
 Scenario* BatchRunner::getInternalScenario(){
-	return mInternalRunner->getInternalScenario();
+    return mInternalRunner->getInternalScenario();
 }
 
 /*! \brief Get the internal scenario.
 * \return Constant pointer to the internal scenario.
 */
 const Scenario* BatchRunner::getInternalScenario() const {
-	return mInternalRunner->getInternalScenario();
+    return mInternalRunner->getInternalScenario();
 }

@@ -76,9 +76,16 @@ int main( int argc, char *argv[] ) {
 
     // Initialize the LoggerFactory
     auto_ptr<LoggerFactoryWrapper> loggerFactoryWrapper( new LoggerFactoryWrapper() );
-    XMLHelper<void>::parseXML( loggerFileName, loggerFactoryWrapper.get() );
+    bool success = XMLHelper<void>::parseXML( loggerFileName, loggerFactoryWrapper.get() );
     
-    // Create an auto_ptr to the scenario runner. This will automatically deallocate memory.
+    // Check if parsing succeeded. Non-zero return codes from main indicate
+    // failure.
+    if( !success ){
+        return 1;
+    }
+
+    // Create an auto_ptr to the scenario runner. This will automatically
+    // deallocate memory.
     auto_ptr<IScenarioRunner> runner;
     // Get the main log file.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -87,8 +94,13 @@ int main( int argc, char *argv[] ) {
     // Parse configuration file.
     mainLog << "Parsing input files..." << endl;
     Configuration* conf = Configuration::getInstance();
-    XMLHelper<void>::parseXML( configurationFileName, conf );
-    
+    success = XMLHelper<void>::parseXML( configurationFileName, conf );
+    // Check if parsing succeeded. Non-zero return codes from main indicate
+    // failure.
+    if( !success ){
+        return 1;
+    }
+
     // Determine the correct type of ScenarioRunner to create. Note that this
     // ordering must be preserved because certain scenario runners can contain
     // other scenario runners.
@@ -111,16 +123,20 @@ int main( int argc, char *argv[] ) {
     // Need to set the scenario pointer. This has to be done before XML parse is
 	// called because that requires the modeltime. TODO: Remove the global
     // pointer!
+    // TODO: This may fail set the global scenario pointer for the batchrunner.
+    // The batch runner adjusts the pointer later.
 	scenario = runner->getInternalScenario();
     
     // Setup the scenario.
-    runner->setupScenario( timer );
-
-	/*! \invariant The scenario is now defined. */
-	assert( scenario );
+    success = runner->setupScenario( timer );
+    // Check if setting up the scenario, which often includes parsing,
+    // succeeded.
+    if( !success ){
+        return 1;
+    }
 
     // Run the scenario.
-    bool success = runner->runScenario( Scenario::RUN_ALL_PERIODS, timer );
+    success = runner->runScenario( Scenario::RUN_ALL_PERIODS, timer );
 
     // Print the output.
     runner->printOutput( timer );
@@ -130,7 +146,7 @@ int main( int argc, char *argv[] ) {
     XMLHelper<void>::cleanupParser();
 	
     // Return exit code based on whether the model succeeded(Non-zero is failure by convention).
-    return 0 ? 1 : success; 
+    return success ? 0 : 1; 
 }
 
 //! Function to parse the arguments.

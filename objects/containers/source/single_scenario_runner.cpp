@@ -53,7 +53,12 @@ SingleScenarioRunner::~SingleScenarioRunner(){
 bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, const list<string> aScenComponents ){
     // Parse the input file.
     const Configuration* conf = Configuration::getInstance();
-    XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
+    bool success = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
+    
+    // Check if parsing succeeded.
+    if( !success ){
+        return false;
+    }
 
     // Fetch the listing of Scenario Components.
     list<string> scenComponents = conf->getScenarioComponents();
@@ -73,7 +78,12 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
 	{
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Parsing " << *currComp << " scenario component." << endl;
-        XMLHelper<void>::parseXML( *currComp, mScenario.get() );
+        success = XMLHelper<void>::parseXML( *currComp, mScenario.get() );
+        
+        // Check if parsing succeeded.
+        if( !success ){
+            return false;
+        }
     }
     
     // Override scenario name from data file with that from configuration file

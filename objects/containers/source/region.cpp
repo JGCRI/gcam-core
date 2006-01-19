@@ -50,6 +50,7 @@
 
 #include "land_allocator/include/tree_land_allocator.h"
 
+#include "util/base/include/input_finder.h"
 #include "util/base/include/summary.h"
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/xml_helper.h"
@@ -1204,46 +1205,46 @@ void Region::initializeCalValues( const int period ) {
     // otherwise.
     const double DEFAULT_CAL_VALUE = -2;
 
-    updateSummary( list<string>(), period );    // Dummy call to final supply to setup fuel map.
-
-    typedef map<string,double>:: const_iterator CI;
+    typedef list<string>::const_iterator CI;
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        // Now prepare to loop through all the fuels used by this sector. Get
-        // fuel consumption map for sector
-        map<string, double> fuelcons = supplySector[ i ]->getfuelcons( period );
-
+       // Now prepare to loop through all the fuels used by this sector.
+        auto_ptr<InputFinder> inputFinder( new InputFinder );
+        supplySector[ i ]->accept( inputFinder.get(), period );
+        const list<string>& sectorInputs = inputFinder->getInputs();
+        
         // Set default values for supply sector
         IInfo* marketInfo = marketplace->getMarketInfo( supplySector[ i ]->getName(), name, period, true );
         marketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
         marketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
         marketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
-
+        
         // then for all fuels used by this sector
-        for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
-            IInfo* fuelMarketInfo = marketplace->getMarketInfo( fuelUsedIter->first, name, period, false );
+        for( CI currInput = sectorInputs.begin(); currInput != sectorInputs.end(); ++currInput ){
+            IInfo* fuelMarketInfo = marketplace->getMarketInfo( *currInput, name, period, false );
             // Fuel market may not exist.
             if( fuelMarketInfo ){
                 fuelMarketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
                 fuelMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
                 fuelMarketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
             }
-        }
+         }
     }
-
+        
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-        // Now prepare to loop through all the fuels used by this sector. Get
-        // fuel consumption map for sector
-        map<string, double> fuelcons = demandSector[ i ]->getfuelcons( period ); 
+       // Now prepare to loop through all the fuels used by this sector
+        auto_ptr<InputFinder> inputFinder( new InputFinder );
+        demandSector[ i ]->accept( inputFinder.get(), period );
+        const list<string>& sectorInputs = inputFinder->getInputs();
 
-        for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
-            IInfo* fuelMarketInfo = marketplace->getMarketInfo( fuelUsedIter->first, name, period, false );
+         for( CI currInput = sectorInputs.begin(); currInput != sectorInputs.end(); ++currInput ){
+            IInfo* fuelMarketInfo = marketplace->getMarketInfo( *currInput, name, period, false );
             // Fuel market may not exist.
             if( fuelMarketInfo ){
                 fuelMarketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
                 fuelMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
                 fuelMarketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
             }
-        }
+         }
     }
 
     for ( unsigned int i = 0; i < resources.size(); i++ ) {
@@ -1283,7 +1284,7 @@ bool Region::setImpliedCalInputs( const int period ) {
         // Clear relationship map for this iteration
         fuelRelationshipMap.reset( new FuelRelationshipMap() ); 
     }
-
+    
     // For each sector, check if a fixed demand is an output. If supply is fixed
     // stop. Make sure all inputs are fixed demands
     for ( unsigned int jsec = 0; jsec < supplySector.size(); jsec++ ) {
@@ -1298,7 +1299,9 @@ bool Region::setImpliedCalInputs( const int period ) {
 
             // Now prepare to loop through all the fuels used by this sector.
             // Get fuel consumption map for sector.
-            map<string, double> fuelcons = supplySector[ jsec ]->getfuelcons( period );
+            auto_ptr<InputFinder> inputFinder( new InputFinder );
+            supplySector[ jsec ]->accept( inputFinder.get(), period );
+            const list<string>& inputsUsed = inputFinder->getInputs();
             // Total directly calibrated outputs (not outputs infered from
             // market)
             double totalCalOutputs = 0;
@@ -1307,20 +1310,20 @@ bool Region::setImpliedCalInputs( const int period ) {
             int numbFixedMktInputs = 0;
 
             string newFixedDemandInputName;
-            typedef map<string,double>:: const_iterator CI;
-            for( CI fuelUsedIter = fuelcons.begin(); fuelUsedIter != fuelcons.end(); ++fuelUsedIter ){
-
+            typedef list<string>::const_iterator CI;
+            for( CI currInput = inputsUsed.begin(); currInput != inputsUsed.end(); ++currInput ){
+                
                 // If inputs are all fixed for this fuel
-                if ( supplySector[ jsec ]->inputsAllFixed( period, fuelUsedIter->first ) ) {
-                    totalCalOutputs += supplySector[ jsec ]->getCalAndFixedOutputs( period, fuelUsedIter->first );
+                if ( supplySector[ jsec ]->inputsAllFixed( period, *currInput ) ) {
+                    totalCalOutputs += supplySector[ jsec ]->getCalAndFixedOutputs( period, *currInput );
                 } 
                 // else have an input that can be adjusted
                 else {
                     numbFixedMktInputs ++;
-                    newFixedDemandInputName = fuelUsedIter->first;
+                    newFixedDemandInputName = *currInput;
                 }
             }
-
+            
             // If we found one, and only one, unfixed input then figure out what
             // this should be and set things appropriately
             if ( numbFixedMktInputs == 1 ) {
@@ -1330,25 +1333,25 @@ bool Region::setImpliedCalInputs( const int period ) {
                 // subtract other calOutputs so that we only calculate the
                 // output from the remaining fuel
                 requiredOutput -= totalCalOutputs;
-
+ 
                 if ( debugChecking ) {
                     ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
                     dependenciesLog.setLevel( ILogger::NOTICE );
                     dependenciesLog << "  Transitive demand for " << newFixedDemandInputName  
-                        << " in sector " << sectorName
-                        << " in region " << name << " added with value " << requiredOutput << endl; 
+                            << " in sector " << sectorName
+                            << " in region " << name << " added with value " << requiredOutput << endl; 
                 }
-
+                
                 supplySector[ jsec ]->setImpliedFixedInput( period, newFixedDemandInputName, requiredOutput );
-
+ 
                 // Now that transitive demand has been set, clear demand for
                 // this good so this won't be done again
                 sectorMarketInfo->setDouble( "calDemand", MKT_NOT_ALL_FIXED );
-
+                
                 // Save this relationship information First element of vector is
                 // the root, or current root of chain and second element is a
                 // vector of dependents
-
+                
                 vector<string> tempDependents;
 
                 // Set up fuel relationship map For each fuel in the first (key)
@@ -1372,7 +1375,7 @@ bool Region::setImpliedCalInputs( const int period ) {
                 // overwrites previous dependents list if it existed)
                 tempDependents.push_back( sectorName );
                 (*fuelRelationshipMap)[ newFixedDemandInputName ] = tempDependents;
-
+ 
                 // If this demand does not correspond to a sector with a fixed
                 // supply then we are not done with checking. Otherwise we are
                 // done for this region if no sectors satisfy this criteria.
@@ -1401,7 +1404,7 @@ bool Region::setImpliedCalInputs( const int period ) {
             }
         } // End of fixed demand transitive calculation loop        
     } // End of sector loop
-
+      
     return calcIsDone;
 }
 
@@ -1444,87 +1447,89 @@ int Region::scaleCalInputs( const int period ) {
     // demand The end... If supply is fixed stop. Make sure all inputs are fixed
     // demands.
     int numberOfScaledValues = 0;
-
-    map<string,double> fuelCons = summary[0].getfuelcons();
-    typedef map<string,double>:: const_iterator CI;
+    
+    auto_ptr<InputFinder> inputFinder( new InputFinder );
+    accept( inputFinder.get(), 0 );
+    const list<string>& inputsUsed = inputFinder->getInputs();
+    typedef list<string>::const_iterator CI;
 
     // Loop through each fuel used in this region
-    for( CI fuelIter = fuelCons.begin(); fuelIter != fuelCons.end(); ++fuelIter ){
-        const IInfo* fuelMarketInfo = marketplace->getMarketInfo( fuelIter->first, name, period, false );
+    for( CI currInput = inputsUsed.begin(); currInput != inputsUsed.end(); ++currInput ){
+        const IInfo* fuelMarketInfo = marketplace->getMarketInfo( *currInput, name, period, false );
         if ( fuelMarketInfo ) {
-            //  Determine if inputs for this fuel need to be scaled. Get total cal + fixed supply and demand values.
-            double calSupplyValue = fuelMarketInfo->getDouble( "calSupply", false );
-            double calDemandValue = fuelMarketInfo->getDouble( "calDemand", false );
-
-            // If these are positive then may need to scale calInputs for this input
-            if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
-
-                // First, fixed values are not scaled, so adjust for this.
-                // The reason fixed values are not scaled is that fixed values can be used in instances where
-                // a simultaneity would otherwise occur during calibration checking (such as export markets)
-                double calFixedDemandValue = fuelMarketInfo->getDouble( "calFixedDemand", true );
-                calFixedDemandValue = max( 0.0, calFixedDemandValue );
-                calSupplyValue -= calFixedDemandValue;
-                calDemandValue -= calFixedDemandValue;
-
-                // If these are still positive then scale calInputValues for this input
+                //  Determine if inputs for this fuel need to be scaled. Get total cal + fixed supply and demand values.
+                double calSupplyValue = fuelMarketInfo->getDouble( "calSupply", false );
+                double calDemandValue = fuelMarketInfo->getDouble( "calDemand", false );
+                
+                // If these are positive then may need to scale calInputs for this input
                 if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
-                    double scaleValue = calSupplyValue / calDemandValue;
+                
+                    // First, fixed values are not scaled, so adjust for this.
+                    // The reason fixed values are not scaled is that fixed values can be used in instances where
+                    // a simultaneity would otherwise occur during calibration checking (such as export markets)
+                    double calFixedDemandValue = fuelMarketInfo->getDouble( "calFixedDemand", true );
+                    calFixedDemandValue = max( 0.0, calFixedDemandValue );
+                    calSupplyValue -= calFixedDemandValue;
+                    calDemandValue -= calFixedDemandValue;
 
-                    if ( abs( 1 - scaleValue ) > util::getVerySmallNumber() ) {                        
+                    // If these are still positive then scale calInputValues for this input
+                    if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
+                        double scaleValue = calSupplyValue / calDemandValue;
+                        
+                        if ( abs( 1 - scaleValue ) > util::getVerySmallNumber() ) {                        
+                            ILogger& mainLog = ILogger::getLogger( "main_log" );
+                            mainLog.setLevel( ILogger::DEBUG );
+                            mainLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
+                            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+                            calibrationLog.setLevel( ILogger::DEBUG );
+                            calibrationLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
+                        
+                            // Repeat for all fuels derived from this one
+                            vector<string> dependentFuels = (*fuelRelationshipMap)[ *currInput ];
+
+                            // Note loop goes to 1 + number of fuels so that basefuel is covered.
+                            for ( unsigned int i = 0; i <= dependentFuels.size(); ++i) {
+                                ++numberOfScaledValues; 
+
+                                string fuelName;
+                                if ( i == dependentFuels.size() ) {
+                                    fuelName = *currInput; // Finish with base fuel in case that is used directly
+                                } else {
+                                    fuelName = dependentFuels [ i ];
+                                }
+
+                                mainLog << fuelName << ", "; 
+                                calibrationLog  << fuelName <<", "; 
+                                for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
+                                    demandSector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
+                                }
+                                for ( unsigned int j = 0; j < supplySector.size(); j++ ) {
+                                    supplySector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
+                                }
+                            } // dependentFuels loop
+                            mainLog << " in region " << name << endl; 
+                            calibrationLog << " in region " << name << endl;
+                        }
+                    } // end scaling loop
+                    // If these were less than zero, then something was wrong with the input values
+                    else if ( ( calSupplyValue < 0 ) || ( calDemandValue < 0 ) )  {
                         ILogger& mainLog = ILogger::getLogger( "main_log" );
-                        mainLog.setLevel( ILogger::DEBUG );
-                        mainLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
+                        mainLog.setLevel( ILogger::ERROR );
+                        mainLog << "Input calibration and fixed values not consistent. Adjusted value < 0 for fuel " << *currInput << " in region " << name << endl ;
                         ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+                        calibrationLog.setLevel( ILogger::ERROR );
+                        calibrationLog << "Input calibration and fixed values not consistent. Adjusted value < 0 for fuel " << *currInput << " in region " << name << endl ;
                         calibrationLog.setLevel( ILogger::DEBUG );
-                        calibrationLog << "Scaling cal values by " <<  scaleValue << " for fuels "; 
-
-                        // Repeat for all fuels derived from this one
-                        vector<string> dependentFuels = (*fuelRelationshipMap)[ fuelIter->first ];
-
-                        // Note loop goes to 1 + number of fuels so that basefuel is covered.
-                        for ( unsigned int i = 0; i <= dependentFuels.size(); ++i) {
-                            ++numberOfScaledValues; 
-
-                            string fuelName;
-                            if ( i == dependentFuels.size() ) {
-                                fuelName = fuelIter->first; // Finish with base fuel in case that is used directly
-                            } else {
-                                fuelName = dependentFuels [ i ];
-                            }
-
-                            mainLog << fuelName << ", "; 
-                            calibrationLog  << fuelName <<", "; 
-                            for ( unsigned int j = 0; j < demandSector.size(); j++ ) {
-                                demandSector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
-                            }
-                            for ( unsigned int j = 0; j < supplySector.size(); j++ ) {
-                                supplySector[ j ]->scaleCalibratedValues( period, fuelName, scaleValue ); 
-                            }
-                        } // dependentFuels loop
-                        mainLog << " in region " << name << endl; 
-                        calibrationLog << " in region " << name << endl;
+                        calibrationLog << "    calSupplyValue - fixedDemands: " << calSupplyValue << endl ;
+                        calibrationLog << "    calSupplyValue - fixedDemands: " << calSupplyValue << endl ;
                     }
-                } // end scaling loop
-                // If these were less than zero, then something was wrong with the input values
-                else if ( ( calSupplyValue < 0 ) || ( calDemandValue < 0 ) )  {
-                    ILogger& mainLog = ILogger::getLogger( "main_log" );
-                    mainLog.setLevel( ILogger::ERROR );
-                    mainLog << "Input calibration and fixed values not consistent. Adjusted value < 0 for fuel " << fuelIter->first << " in region " << name << endl ;
-                    ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-                    calibrationLog.setLevel( ILogger::ERROR );
-                    calibrationLog << "Input calibration and fixed values not consistent. Adjusted value < 0 for fuel " << fuelIter->first << " in region " << name << endl ;
-                    calibrationLog.setLevel( ILogger::DEBUG );
-                    calibrationLog << "    calSupplyValue - fixedDemands: " << calSupplyValue << endl ;
-                    calibrationLog << "    calSupplyValue - fixedDemands: " << calSupplyValue << endl ;
-                }
-            }
-        } // end zTotal check loop
+                 }
+            } // end zTotal check loop
     } // end fuelCons loop
 
     // This is not needed anymore so release this memory
     fuelRelationshipMap.release();
-
+    
     return numberOfScaledValues;
 }
 
@@ -1698,7 +1703,7 @@ void Region::csvOutputFile() const {
 
     // write end-use sector demand results to file
     for ( unsigned int i = 0; i < demandSector.size(); i++ ){
-        demandSector[i]->csvOutputFile();	
+        demandSector[i]->csvOutputFile();   
         demandSector[i]->subsec_outfile();
     }
 }

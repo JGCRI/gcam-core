@@ -515,16 +515,21 @@ void RenewableResource::annualsupply( const std::string& regionName, int per, co
 		resourceCapacityFactor[per] += subResource[i]->getAnnualProd(per) * subResource[i]->getAverageCapacityFactor();
 	}
 
-	// check for annual production = 0  util::getsmallnumber
-	if (annualprod[per] > util::getSmallNumber()) {
-		resourceVariance[per] /= annualprod[per];
-		resourceCapacityFactor[per] /= annualprod[per];
-	}
+    // This may be a global market and the resource may only exist to add the
+    // region into the market. In this case the resource will not have any
+    // subresources, and should not adjust the market info values.
+    if( !subResource.empty() ){
+        // check for annual production = 0  util::getsmallnumber
+        if (annualprod[per] > util::getSmallNumber()) {
+            resourceVariance[per] /= annualprod[per];
+            resourceCapacityFactor[per] /= annualprod[per];
+        }
 
-	// add variance to marketinfo
-	IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( name, regionName, per, true );
-	marketInfo->setDouble( "resourceVariance", resourceVariance[ per ] );
+        // add variance to marketinfo
+        IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( name, regionName, per, true );
+        marketInfo->setDouble( "resourceVariance", resourceVariance[ per ] );
 
-	// add capacity factor to marketinfo
-	marketInfo->setDouble( "resourceCapacityFactor", resourceCapacityFactor[ per ] );
+        // add capacity factor to marketinfo
+        marketInfo->setDouble( "resourceCapacityFactor", resourceCapacityFactor[ per ] );
+    }
 }
