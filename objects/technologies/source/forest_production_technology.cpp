@@ -324,6 +324,7 @@ void ForestProductionTechnology::production( const string& aRegionName,
 /*! \brief Calculate the profit rate for the technology.
 * \details Calculates the profit rate for the forestry technology. This is equal
 *          to the net present value of the market price minus the variable cost 
+*          Profit rate can be negative.
 * \param aRegionName Region name.
 * \param aProductName Name of the product for which to calculate the profit
 *        rate. Must be an output of the technology.
@@ -342,8 +343,6 @@ double ForestProductionTechnology::calcProfitRate( const string& aRegionName,
     // Calculate the net present value.
     double netPresentValue = profitRate * calcDiscountFactor();
 
-    /*! \post Net present value of the profit rate should always be positive. */
-    assert( netPresentValue >= 0 );
     return netPresentValue;
 }
 

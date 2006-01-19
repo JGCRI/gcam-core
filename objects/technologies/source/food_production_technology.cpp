@@ -331,6 +331,7 @@ void FoodProductionTechnology::production( const string& aRegionName,
 /*! \brief Calculate the profit rate for the technology.
 * \details Calculates the profit rate which is equal to the market price minus
 *          the variable cost.
+*          Profit rate can be negative.
 * \param aRegionName Region name.
 * \param aProductName Name of the product for which to calculate the profit
 *        rate. Must be an output of the technology.
