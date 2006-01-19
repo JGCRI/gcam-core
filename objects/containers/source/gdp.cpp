@@ -448,8 +448,10 @@ double GDP::getPPPMERRatio( const int period, const double marketGDPperCap ) {
 			try { 
 				PPPDelta = log( PPPConversionFact ) / log( marketGDPperCap / CROSSOVER_POINT );
 			} catch(...) {
-				cerr << "Error calculating PPPDelta. "<< "PPPConversionFact = "<< PPPConversionFact;
-				cerr << "; marketGDPperCap = "<< marketGDPperCap << endl;
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Error calculating PPPDelta. "<< "PPPConversionFact = "<< PPPConversionFact;
+				mainLog << "; marketGDPperCap = "<< marketGDPperCap << endl;
 			}
 		}
 
@@ -461,8 +463,10 @@ double GDP::getPPPMERRatio( const int period, const double marketGDPperCap ) {
             conversionFactor =  pow( marketGDPperCap / CROSSOVER_POINT , PPPDelta );
          } catch(...) {
             conversionFactor = 1.0;
-            cerr << "Error calculating PPP basis GDP in gdp.calculatePPPPerCap()" << endl;
-         }
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Error calculating PPP basis GDP in gdp.calculatePPPPerCap()" << endl;
+     }
       }
 	}
     
@@ -534,7 +538,9 @@ double GDP::getApproxGDPperCap( const int period ) const {
 */
 double GDP::getScaledGDPperCap( const int period ) const {
 	if ( !gdpAdjustedFlag[ period ] ) {
-		cerr << "ERROR - Request for adjusted GDP -- not calculated yet" << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Request for adjusted GDP -- not calculated yet." << endl;
 	}
 	const Modeltime* modeltime = scenario->getModeltime();
     assert( gdpPerCapitaAdjusted[ modeltime->getBasePeriod() ] > 0 );
@@ -548,7 +554,9 @@ double GDP::getScaledGDPperCap( const int period ) const {
 */
 double GDP::getGDPperCap( const int period ) const {
 	if ( !gdpAdjustedFlag[ period ] ) {
-		cerr << "ERROR - Request for adjusted GDP -- not calculated yet" << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Request for adjusted GDP -- not calculated yet." << endl;
 	}
 	return gdpPerCapitaAdjusted[ period ];
 }
@@ -591,7 +599,9 @@ double GDP::getGDPPerCapitaNotAdjusted( const int period ) const {
 */
 double GDP::getPPPGDPperCap( const int period ) const {
     if ( !gdpAdjustedFlag[ period ] ) {
-        cerr << "ERROR - Request for adjusted GDP -- not calculated yet" << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Request for adjusted GDP -- not calculated yet." << endl;
     }
     return gdpPerCapitaAdjustedPPP[ period ] ;
 }
@@ -603,7 +613,9 @@ double GDP::getPPPGDPperCap( const int period ) const {
 */
 double GDP::getGDP( const int period ) const {
 	if ( !gdpAdjustedFlag[ period ] ) {
-		cerr << "ERROR - Request for adjusted GDP -- not calculated yet" << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Request for adjusted GDP -- not calculated yet." << endl;
 	}
 	return gdpValueAdjusted[ period ] ;
 }
