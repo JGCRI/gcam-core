@@ -56,9 +56,18 @@ public final class ComponentManipulator
       {
         for(int iX = 0; iX < holdM1[0].length; iX++)
         {
-          if((Double.isNaN(holdM1[iY][iX]))||(Double.isNaN(holdM2[iY][iX])))
+          if(Double.isNaN(holdM1[iY][iX]))
           {
-            holdMR[iY][iX] = Double.NaN;
+            if(Double.isNaN(holdM2[iY][iX]))
+            {
+              holdMR[iY][iX] = Double.NaN;
+            } else
+            {
+              holdMR[iY][iX] = holdM2[iY][iX];
+            }
+          } else if(Double.isNaN(holdM2[iY][iX]))
+          {
+            holdMR[iY][iX] = holdM1[iY][iX];
           } else
           {
             holdMR[iY][iX] = holdM1[iY][iX] + holdM2[iY][iX];

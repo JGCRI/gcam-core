@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<input resolution=".5">
+	<file type="UNEP">
+		<data value="ForestCover" />
+		<date value="1993" />
+		<average value="True" />
+		<name value="tree_umd.txt" />
+	</file>
+	<file type="UNEP">
+		<data value="PopulationDensity" />
+		<date value="1995" />
+		<average value="True" />
+		<name value="popd_95.txt" />
+	</file>
+</input>

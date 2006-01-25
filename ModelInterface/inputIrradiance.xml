@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <input resolution=".5">
-	<file type="UNEP">
-		<data value="ForestCover" />
-		<date value="1993" />
-		<average value="True" />
-		<name value="tree_umd.txt" />
-	</file>
+	<seed name="outPopFor.xml" />
 	<file type="NASA">
 		<data value="SolarIrradiance" />
 		<date value="1993" />
@@ -16,10 +11,14 @@
 		<format value="decimal" />
 		<name value="10yr_swv_dwn_alt" />
 	</file>
-	<file type="UNEP">
-		<data value="PopulationDensity" />
-		<date value="1995" />
+	<file type="NASA">
+		<data value="SolarIrradiance(direct)" />
+		<date value="1993" />
+		<division value="year" />
+		<res value="1" />
 		<average value="True" />
-		<name value="popd_95.txt" />
+		<units value="kWh/m^2/day" />
+		<format value="decimal" />
+		<name value="10yr_ret_dnr_direct" />
 	</file>
 </input>

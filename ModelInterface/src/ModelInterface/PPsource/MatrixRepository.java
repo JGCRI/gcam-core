@@ -101,7 +101,7 @@ public class MatrixRepository implements DataRepository
       }
     } catch(ArrayIndexOutOfBoundsException e)
     {
-      System.out.println("SEVERE: ("+X+","+Y+") out of bounds - PROGRAM TERMINATING");
+      System.out.println("SEVERE: ("+X+","+Y+") out of bounds("+xSize+","+ySize+") - PROGRAM TERMINATING");
       System.exit(1);
     }
     

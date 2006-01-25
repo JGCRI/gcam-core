@@ -15,40 +15,104 @@
 		<field value="ForestCover" />
 		<time value="1993.0" />
 	</variable>
-	
+	<divideScalar>
+		<target name="forest"/>
+		<argument name="forest"/>
+		<scalar value="100"/>
+	</divideScalar>
+	<variable name="Cropland" type="reference">
+		<region value="World" />
+		<field value="Cropland" />
+		<time value="1995.0" />
+	</variable>
+	<variable name="DirectIrradiance" type="reference">
+		<region value="World" />
+		<field value="SolarIrradiance(direct)" />
+		<time value="1993.0" />
+	</variable>
 	<parseLessThan>
 		<target name="forest" />
 		<argument name="forest" />
-		<limit value="80" />
+		<limit value="0.5" />
 	</parseLessThan>
-	
-	<plot variable="forest" />
-	<plot variable="population" />
-	
+	<parseLessThan>
+		<target name="Cropland" />
+		<argument name="Cropland" />
+		<limit value="0.5" />
+	</parseLessThan>
+	<parseLessThan>
+		<target name="population" />
+		<argument name="population" />
+		<limit value="1000" />
+	</parseLessThan>
+	<parseGreaterThan>
+		<target name="population" />
+		<argument name="population" />
+		<limit value="5" />
+	</parseGreaterThan>
 	<maskRemain>
 		<target name="irradiance" />
 		<argument name="irradiance" />
+		<!--<target name="DirectIrradiance" />
+		<argument name="DirectIrradiance" />-->
 		<mask name="population" />
-		<limit value="50" />
+		<limit value="5" />
 		<weight value="false" />
 	</maskRemain>
 	<maskRemove>
 		<target name="irradiance" />
 		<argument name="irradiance" />
+		<!--<target name="DirectIrradiance" />
+		<argument name="DirectIrradiance" />-->
 		<mask name="forest" />
-		<limit value="25" />
+		<limit value="0.5" />
 		<weight value="false" />
 	</maskRemove>
+	<maskRemove>
+		<target name="irradiance" />
+		<argument name="irradiance" />
+		<!--<target name="DirectIrradiance" />
+		<argument name="DirectIrradiance" />-->
+		<mask name="Cropland" />
+		<limit value="0.5" />
+		<weight value="false" />
+	</maskRemove>
+	<add>
+		<target name="forestandcrop"/>
+		<argument name="forest"/>
+		<argument name="Cropland"/>
+	</add>
+ 	<addScalar>
+		<target name="forestandcrop"/>
+		<argument name="forestandcrop"/>
+		<scalar value="-1"/>
+	</addScalar>
+	<multiplyScalar>
+		<target name="forestandcrop"/>
+		<argument name="forestandcrop"/>
+		<scalar value="-1"/>
+	</multiplyScalar>
+	<multiplyScalar>
+		<target name="suitabilityfactor"/>
+		<argument name="forestandcrop"/>
+		<scalar value="0.1"/>
+	</multiplyScalar>
+<!--<source name="DirectIrradiance" />-->
 
 	<forEachSubregion>
 		<source name="irradiance" />
-		<level value="3" />
 		<command>
 			<frequencyAnalysis>
 				<output type="text" />
-				<argument name="*" />
+				<argument replace="suitabilityfactor"/>
+				<split replace="irradiance" />
 				<buckets number="20" />
 			</frequencyAnalysis>
 		</command>
 	</forEachSubregion>
+	<plot variable="population" console="population"/>
+	<plot variable="forest" console="forest coverage"/>
+	<plot variable="irradiance" console="irradiance"/>
+	<plot variable="Cropland" console="Cropland"/>
+	<!--<plot variable="DirectIrradiance" console="DirectIrradiance"/>-->
 </commands>

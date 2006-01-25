@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<commands>
+	<variable name="IrrJan" type="reference">
+		<region value="World" />
+		<field value="PotVeg1.0" />
+		<time value="1990.0" />
+	</variable>
+	<variable name="IrrMar" type="reference">
+		<region value="World" />
+		<field value="PotVeg5.0" />
+		<time value="1990.0" />
+	</variable>
+	<variable name="IrrJun" type="reference">
+		<region value="World" />
+		<field value="PotVeg12.0" />
+		<time value="1990.0" />
+	</variable>
+	<variable name="IrrSep" type="reference">
+		<region value="World" />
+		<field value="PotVeg9.0" />
+		<time value="1990.0" />
+	</variable>
+
+	<plot variable="IrrJan" />
+	<plot variable="IrrMar" />
+	<plot variable="IrrJun" />
+	<plot variable="IrrSep" />
+</commands>

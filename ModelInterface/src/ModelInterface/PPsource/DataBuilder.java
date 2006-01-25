@@ -243,7 +243,21 @@ public class DataBuilder
       currFile = (Element)fileChildren.get(i);
       if(currFile.getAttributeValue("type").equals("txt"))
       {
-        addTxtData(currFile);
+        Element stor = currFile.getChild("storage");
+        if(stor != null)
+        {
+          if(stor.getAttributeValue("type").equals("values"))
+          { //we are just storing the values in the shapefile normally
+            addTxtData(currFile);
+          } else
+          { //the values are enumerated types, each gets its own variable
+            //values are the percent coverage for each block
+            addTxtEnum(currFile);
+          }
+        } else
+        {
+          addTxtData(currFile);
+        }
       } else if(currFile.getAttributeValue("type").equals("UNEP"))
       {
         addUNEPData(currFile);
@@ -888,8 +902,9 @@ public class DataBuilder
   //reading the data from the file
     for(double i = (90-res); i >= -90; i-=res)
     {
-      for(double k = -180; k < 180; k+=res)
+      for(double k = -180; k < 179.9999; k+=res)
       {
+        //System.out.println(k);
         if(dec)
         { //numbers stored in decimal format
           dataValue = Double.valueOf(readWord(input));
@@ -1087,6 +1102,20 @@ public class DataBuilder
       for(int k = 0; k <numCols; k++)
       {
         dataValue = Double.valueOf(readNumber(input));
+        
+        /**
+         * SPECIAL CASE-- for the tree data, this will take out values 255 and 254
+         * which correspond essentially to 0
+         */
+        if(dataName.equals("ForestCover"))
+        {
+          if((dataValue == 255)||(dataValue == 254))
+          {
+            dataValue = new Double(0);
+          }
+        }
+        
+        
         
         //only add this data if it is not the ignore value
         if(dataValue != ignore)
@@ -1350,6 +1379,9 @@ public class DataBuilder
       } else if(currElem.getName().equals("name"))
       {
         fileName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("storage"))
+      {
+        //do nothing but this is a known tag
       } else
       {
         log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
@@ -1884,6 +1916,246 @@ public class DataBuilder
     log.log(Level.FINE, "Done adding new PolyShapefileData");
   }
 
+  private void addTxtEnum(Element currFile)
+  { /* function will add the data from the specified file of type 'txt'
+     * 'txt'- defined as 180/resolution lines of 360/resolution data elements
+     * tagged or untagged - basically using this to debug program as i build it
+     */
+    log.log(Level.FINER, "begin function");
+    boolean tagged = true;
+    boolean avg = true;
+    boolean dec = true;
+    String dataName = "shutup,";
+    String fileName = "it is initialized thanks";
+    String nameConvention = "natural";
+    String target = "null";
+    String prefix = "";
+    String ref = null;
+    String unit = null;
+    double time = 0;
+    double res = 1;
+    double NaN = -9999;
+    HashMap nameMap = null;
+    List infoChildren;
+    Element currElem;
+    TreeMap timeValue;
+    Double dataValue;
+    DataBlock toAdd;
+    TreeMap<String, Boolean> overwrite = new TreeMap<String, Boolean>();
+    
+    //check if tags are contained in the xml file, dont get them later
+    tagged = (Boolean.valueOf(currFile.getAttributeValue("tagged"))).booleanValue();
+    
+  //getting file info from XML
+    infoChildren = currFile.getChildren();
+    for(int i = 0; i < infoChildren.size(); i++)
+    {
+      currElem = (Element)infoChildren.get(i);
+      if(currElem.getName().equals("data"))
+      {
+        nameConvention = currElem.getAttributeValue("type");
+        if(nameConvention != null)
+        {
+          if(nameConvention.equals("prefix"))
+          {//names are a prefix concatedated with the value
+            Element preElem = currElem.getChild("prefix");
+            prefix = preElem.getAttributeValue("value");
+          } else if(nameConvention.equals("manual"))
+          {//each value has a mapping to a name to use
+            nameMap = new HashMap();
+            List mapList = currElem.getChildren("map");
+            Element currMap;
+            
+            for(int k = 0; k < mapList.size(); k++)
+            {
+              currMap = (Element)mapList.get(k);
+              nameMap.put(currMap.getAttributeValue("key"), currMap.getAttributeValue("name"));
+            }
+            
+            if(!nameMap.containsKey("null"))
+            {
+              nameMap.put("null", null);
+            }
+          } //else use natual naming
+        } else
+        { //everything goes in one!
+          nameConvention = "single";
+          dataName = currElem.getAttributeValue("value");
+        }
+      } else if(currElem.getName().equals("date"))
+      {
+        time = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("res"))
+      {
+        res = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("average"))
+      {
+        avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
+      } else if(currElem.getName().equals("reference"))
+      {
+        ref = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("units"))
+      {
+        unit = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("format"))
+      {
+        if(currElem.getAttributeValue("value").equals("scientific"))
+        { //dec is default to true
+          dec = false;
+        }
+      } else if(currElem.getName().equals("NaN"))
+      {
+        NaN = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("name"))
+      {
+        fileName = currElem.getAttributeValue("value");
+      } else
+      {
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
+      }
+      
+    }
+  //done reading from XML file
+    
+  //opening txt file for reading
+    BufferedReader input = null;
+    try {
+      input = new BufferedReader( new FileReader(fileName));
+    } catch (FileNotFoundException ex) 
+    {
+      log.log(Level.SEVERE, "FileNotFoundException!!!");
+      System.exit(1);
+    }
+  //txt file opened
+
+    
+    
+    if(tagged)
+    { //if didnt get these before in the xml file
+      dataName = readWord(input);
+      time = Double.parseDouble(readWord(input));
+        res = Double.parseDouble(readWord(input));
+        if(readWord(input).equals("false"))
+        {
+          avg = false;
+        }
+        if(readWord(input).equals("scientific"))
+        {
+          dec = false;
+        }
+        unit = readWord(input);
+        try{
+          ref = input.readLine();
+        }catch(IOException e) {}
+    }
+    
+    if(!init)
+    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+      dataStruct.fillWorld(res);
+      init = true;
+    }
+
+    
+    
+    
+  //reading the data from the file
+    for(double i = (90-res); i >= -90; i-=res)
+    {
+      for(double k = -180; k < 179.9999; k+=res)
+      {
+        //System.out.println(k);
+        if(dec)
+        { //numbers stored in decimal format
+          dataValue = Double.valueOf(readWord(input));
+        } else
+        { //numbers stored in scientific notation
+          dataValue = new Double(scientificToDouble(readWord(input)));
+        }
+        
+        if(dataValue != NaN)
+        {
+          if(nameConvention.equals("single"))
+          {
+            target = dataName;
+          } else
+          {
+            target = dataValue.toString();
+
+            if(nameConvention.equals("manual"))
+            {
+
+              target = (String)nameMap.get(target);
+            } else if(nameConvention.equals("prefix"))
+            {
+              target = prefix+target;
+            }
+          } //target now has the data name we are storing this geometry in
+          
+          if(!overwrite.containsKey(target))
+          { //this is the first run, check for overwrite properties now
+            boolean over = false;
+            if(dataAvg.containsKey(target))
+            {
+              over = true;
+            }
+            overwrite.put(target, over);
+          }
+          
+          if(!overwrite.get(target))
+          {
+            //setting whether contained data is additive or averaged
+            if(!dataAvg.containsKey(target))
+            { //i cant believe this is the only way to do this
+              //its going to take forever to test every run
+              dataAvg.put(target, new Boolean(avg));
+              if(ref != null)
+              {
+                dataRef.put(target, ref);
+              }
+            }
+            //done settign avg/add ref and units
+          }
+          
+          toAdd = new DataBlock(k, i, res, res);
+          timeValue = new TreeMap();
+          timeValue.put(new Double(time), new Double(1));
+          
+          //check overwrite bit, if so, use hold instead of dataName
+          if(overwrite.get(target))
+          {
+            //just replace name with hold, later, we will merge hold over old data
+            toAdd.data.put(("hold"+target), timeValue);
+          } else
+          {
+            //add data as normal
+            toAdd.data.put(target, timeValue);
+          }
+          
+        //merging this data into the current tree
+          dataStruct.addData(toAdd, avg);
+        }
+      }
+    }
+    
+    //done adding all data, if overwrite, must merge with old data now
+    Map.Entry me;
+    Iterator overIt = overwrite.entrySet().iterator();
+    while(overIt.hasNext())
+    {
+      me = (Map.Entry)overIt.next();
+      if((Boolean)me.getValue())
+      {
+        //then this particular 'target' was overwritten
+        dataStruct.resolveOverwrite(("hold"+(String)me.getKey()), (String)me.getKey());
+      }
+    }
+    
+    try{
+      input.close(); //im such a good programmer closing my files and whatnot
+    } catch(IOException e){}
+  //done reading data from file
+  }
+  
   private void addNetCDFEnum(Element currFile)
   { /* function will add the data from the specified file of type 'netcdf'
      * 'netcdf'- defined as a .nc file associated with the NetCDF standard. Data
@@ -2471,7 +2743,7 @@ public class DataBuilder
       FeatureSource source = store.getFeatureSource(name);
       FeatureResults fsShape = source.getFeatures();
       FeatureCollection collection = fsShape.collection();
-      System.out.println("features in collection: "+collection.getCount());
+      //System.out.println("features in collection: "+collection.getCount());
       Iterator iter = collection.iterator();
       Feature inFeature;
       Geometry geom;

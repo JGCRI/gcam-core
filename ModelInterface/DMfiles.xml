@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <files>
-	<data file="outLandUse.xml" />
+	<data file="outPotForest2.xml" />
 	<region file="regionDef.xml" />
-	<command file="commLandUse.xml" />
+	<command file="commReforestTest.xml" />
 	<log level="ALL" />
 </files>

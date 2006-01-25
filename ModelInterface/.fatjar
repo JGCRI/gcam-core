@@ -1,5 +1,5 @@
 #Fat Jar Configuration File
-#Fri Dec 09 15:50:08 EST 2005
+#Wed Jan 25 10:32:27 EST 2006
 onejar.license.required=false
 manifest.classpath=
 onejar.checkbox=true

@@ -121,7 +121,6 @@ public class FlatIndex implements DataIndex
               
               data.addValue(varName, timeName, X, Y, weightValue);
             }
-            
           }
         }
         //done adding data

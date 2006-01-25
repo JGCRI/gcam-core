@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<input resolution=".5">
+	<seed name="outPopFor.xml" />
+	<file type="txt">
+		<storage type="coverage" />
+		<data type="prefix">
+			<prefix value="PotVeg" />
+		</data>
+		<date value="1990" />
+		<res value="0.0833333333333" />
+		<average value="True" />
+		<format value="decimal" />
+		<name value="glpotveg_5min.asc" />
+	</file>
+	<file type="netcdf">
+		<storage type="values" />
+		<data value="Pasture" />
+		<date value="1995" />
+		<res value=".5" />
+		<average value="True" />
+		<variable value="farea" />
+		<name value="pasture_0.5.nc" />
+	</file>
+	<file type="netcdf">
+		<storage type="values" />
+		<data value="Cropland" />
+		<date value="1995" />
+		<res value=".5" />
+		<average value="True" />
+		<variable value="farea" />
+		<name value="cropland_0.5.nc" />
+	</file>
+</input>

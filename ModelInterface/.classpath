@@ -57,7 +57,6 @@
 	<classpathentry kind="lib" path="lib/jsr173_api.jar"/>
 	<classpathentry kind="lib" path="lib/JTS-1.6.jar"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
-	<classpathentry kind="lib" path="lib/netcdf-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/pixie-0.8.4.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.0-alpha1.jar"/>
 	<classpathentry kind="lib" path="lib/poi-contrib-3.0-alpha1.jar"/>
@@ -72,5 +71,6 @@
 	<classpathentry kind="lib" path="lib/jfcunit.jar"/>
 	<classpathentry kind="lib" path="C:/Workspace/ModelInterface/lib/commons-math-1.0.jar"/>
 	<classpathentry kind="lib" path="C:/Workspace/ModelInterface/lib/jiu.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/ModelInterface/lib/netcdf-2.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
