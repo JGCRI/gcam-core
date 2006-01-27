@@ -58,6 +58,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	 * Main function, creates a new thread for the gui and runs it.
 	 */
 	public static void main(String[] args) {
+		System.out.prinltn("This line will that will test the post commit");
 
 		//Schedule a job for the event-dispatching thread:
 		//creating and showing this application's GUI.
