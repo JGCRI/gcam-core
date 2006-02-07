@@ -59,7 +59,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		System.out.println("It's aasdok I am going to diff this");
-		System.out.prinltn("This line will that will test post commit");
+		System.out.prinltn("This line will that will test them post commit");
 
 		//Schedule a job for the event-dispatching thread:
 		//creating and showing this application's GUI.
