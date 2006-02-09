@@ -95,8 +95,8 @@ void BuildingDemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 
 //! Write object to debugging xml output stream.
 void BuildingDemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-    
     XMLWriteElement( baseService[ period ], "baseservice", out, tabs );
+    XMLWriteElement( baseScaler, "base-scaler", out, tabs );
     DemandSector::toDebugXMLDerived( period, out, tabs );
 
 }

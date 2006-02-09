@@ -435,13 +435,12 @@ void BuildingDemandSubSector::setCalibrationStatus( const int period ) {
 * \param period Model period
 * \return sector output
 */
-double BuildingDemandSubSector::getOutput( const int period ) {
+double BuildingDemandSubSector::getOutput( const int period ) const {
     /*! \pre period is less than or equal to max period. */
    assert( period <= scenario->getModeltime()->getmaxper() );
    return output[period];
 }
 
-//! 
 /*! \brief Output variables specific to building demand sub-sector.
 *
 * \author Steve Smith
@@ -480,6 +479,27 @@ void BuildingDemandSubSector::setOutput( const double aDemand,
     output[ aPeriod ] = share[ aPeriod ] * aDemand; 
     Subsector::setOutput( aDemand, aGDP, aPeriod );
 }
+
+
+/*! \brief Calculate the building demand technology shares.
+* \details Building demands are not substitutive, so the shares of all
+*          technologies should be one.
+* \author Josh Lurz
+* \param aGDP GDP container.
+* \param aPeriod Model period.
+*/
+void BuildingDemandSubSector::calcTechShares( const GDP* aGDP, const int aPeriod ) {
+    double sum = 0;
+    for( unsigned int i = 0; i < techs.size(); ++i ){
+        // calculate technology cost
+        techs[i][aPeriod]->calcCost( regionName, sectorName, aPeriod );
+        // determine shares based on technology costs
+        techs[i][aPeriod]->calcShare( regionName, sectorName, aGDP, aPeriod );
+        
+        /*! \invariant Technology shares must always be valid. */
+        assert( util::isValidNumber( techs[ i ][ aPeriod ]->getShare() ) );
+    }
+}   
 
 // Documentation is inherited.
 void BuildingDemandSubSector::accept( IVisitor* aVisitor, const int aPeriod ) const {

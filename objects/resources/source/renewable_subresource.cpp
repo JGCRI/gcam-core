@@ -114,23 +114,14 @@ void SubRenewableResource::cumulsupply( double prc, int per ) {
 */
 void SubRenewableResource::annualsupply( int period, const GDP* gdp, double price, double prev_price ) {
 
-	double gradeAvail;
-	double gradeCost;
-
 	double prevGradeAvail = grade[ 0 ]->getAvail(); // Lowest fraction available
-	double gradeFraction;
 
-	// default value
+    // Minimum cost for any production
+	double prevGradeCost = grade[ 0 ]->getCost( period );
+	
+    // default value
 	annualprod[ period ] = 0;
-
-	// if below minimum cost
-	double prevGradeCost = 0; // Minimum cost for any production
-	if( period > 0 ){
-		prevGradeCost = grade[ 0 ]->getCost(period - 1);
-	}
-
 	if ( price < prevGradeCost ) {
-		annualprod[ period ] = 0;
 		return;
 	}
 
@@ -139,22 +130,21 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
 	double currentApproxGDP = gdp->getApproxGDP( period );
 
 	// To save time without doing the loop, check first to see if price is above max price point
-	if ( price > grade[ nograde - 1 ]->getCost(period) ) {
-		gradeFraction = grade[ nograde - 1 ]->getAvail();
-		annualprod[ period ] = grade[ nograde - 1 ]->getAvail() 
+	if ( price > grade[ grade.size() - 1 ]->getCost(period) ) {
+		annualprod[ period ] = grade[ grade.size() - 1 ]->getAvail() 
 			* maxSubResource  * pow( currentApproxGDP / gdp->getApproxGDP( 0 ), gdpSupplyElasticity );
 	}
 	else {
 		bool pricePointFound = false;
 		// Move up cost curve until reach price
-		for ( int increment = 1; increment < nograde && !pricePointFound; increment++ ) {
-			gradeAvail = grade[ increment ]->getAvail();
-			gradeCost = grade[ increment ]->getCost(period);
+		for ( unsigned int increment = 1; increment < grade.size() && !pricePointFound; increment++ ) {
+			double gradeAvail = grade[ increment ]->getAvail();
+			double gradeCost = grade[ increment ]->getCost(period);
 
 			// if have reached the appropriate point in cost curve, calculate production
 			if ( price <= gradeCost && price > prevGradeCost ) {
 				// how far up this segement
-				gradeFraction = ( price - prevGradeCost ) /  ( gradeCost - prevGradeCost ); 
+				double gradeFraction = ( price - prevGradeCost ) /  ( gradeCost - prevGradeCost ); 
 
 				// compute production as fraction of total possible
 				annualprod[ period ] = prevGradeAvail + 
@@ -171,9 +161,6 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
 			} // end price if-else block
 		} // end loop
 	} // end else block
-
-
-	return;
 }
 
 /*! \brief Get the variance.

@@ -54,7 +54,7 @@ public:
 
     void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
     void calcPrice( const int period );
-    double getOutput( const int period );
+    virtual double getOutput( const int period ) const;
     
     virtual void setOutput( const double aDemand,
                             const GDP* aGDP,
@@ -63,6 +63,7 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
 protected:
+    virtual void calcTechShares( const GDP* aGDP, const int aPeriod );
     virtual const std::string& getXMLName() const;
     const std::string getInternalGainsMarketName( const std::string aSectorName ) const;
     

@@ -51,7 +51,6 @@ protected:
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
  
     double internalLoadFraction; //!< fraction of losses from this subsector that contribute to internal loads
-    std::string intGainsMarketName; //!< Name of internal gains market that this sector should use
 private:
     static const std::string XML_NAME1D; //!< tag name for toInputXML
 };

@@ -174,7 +174,7 @@ public:
     void emission( const int period );
     void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period ) const;
-    double getOutput( const int period ) const;
+    virtual double getOutput( const int period ) const;
     double getAnnualInvestment( const int aPeriod ) const;
 
     double distributeInvestment( const IDistributor* aDistributor,

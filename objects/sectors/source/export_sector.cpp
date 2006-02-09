@@ -33,6 +33,7 @@ extern Scenario* scenario; // for marketplace
 * \param aRegionName The region name.
 */
 ExportSector::ExportSector ( const string& aRegionName ) : SupplySector ( aRegionName ) {
+    mFixedPrices.resize( scenario->getModeltime()->getmaxper() );
 }
 
 /*! \brief Complete the initialization of the ExportSector.
