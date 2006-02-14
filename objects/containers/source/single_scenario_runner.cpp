@@ -22,6 +22,7 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+extern ofstream outFile;
 time_t gGlobalTime;
 
 // Function Prototypes. These need a helper class. 
@@ -178,7 +179,8 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
         createMCvarid(); // create MC variable id's     
         // close MS Access database
         closeDB();
-    }
+        outFile.close();
+   }
 
      // Print the timestamps.
     aTimer.stop();

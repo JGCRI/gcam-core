@@ -316,7 +316,7 @@ DO WHILE(INDIC.EQ.1)
 ! 1990 percentage of Rice in food grains
   CASE (302)
 	DO L=1,NLP
-      READ(1,*) IDUM,(PCTRICE(L))
+      READ(1,*) IDUM, PCTRICE(L)
     END DO
 
 ! All other input blocks are ignored                                

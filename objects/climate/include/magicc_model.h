@@ -11,6 +11,7 @@
 * \author Josh Lurz
 */
 
+#include <map>
 #include <string>
 #include <vector>
 #include "climate/include/iclimate_model.h"
@@ -40,6 +41,11 @@ public:
 
     virtual void completeInit( const std::string& aScenarioName );
     
+    static const std::string& getXMLNameStatic();
+    virtual void XMLParse( const xercesc::DOMNode* node );
+    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    
     virtual bool setEmissions( const std::string& aGasName,
                                const int aPeriod,
                                const double aEmission );
@@ -47,41 +53,71 @@ public:
     virtual bool runModel();
 
     virtual double getConcentration( const std::string& aGasName,
-                                     const int aPeriod ) const;
+                                     const int aYear ) const;
 
-    virtual double getTemperature( const int aPeriod ) const;
+    virtual double getConcentration( const int aYear, 
+                                     const std::string& aGasName ) const;
+
+    virtual double getTemperature( const int aYear ) const;
     
     virtual double getForcing( const std::string& aGasName,
-                               const int aPeriod ) const;
+                               const int aYear ) const;
     
-    virtual double getTotalForcing( const int aPeriod ) const;
+    virtual double getTotalForcing( const int aYear ) const;
+
+    double getNetTerrestrialUptake( const int aYear ) const;
+    double getNetOceanUptake( const int aYear ) const;
 
     virtual void printFileOutput() const;
     virtual void printDBOutput() const;
-	void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    static const std::string& getXMLNameStatic();
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
 private:
-    int getGasIndex( const std::string& aGasName ) const;
-	static unsigned int getNumGases();
-    void readFile();
 
-	//! A fixed list of the gases Magicc reads in.
-	static const std::string sGasNames[];
-	
-	//! Return value of getGasIndex if it cannot find the gas.
+    bool isValidClimateModelYear( const int aYear ) const;
+
+    int getGasIndex( const std::string& aGasName ) const;
+    static unsigned int getNumGases();
+    void readFile();
+    void overwriteMAGICCParameters( );
+
+    //! A fixed list of the gases Magicc reads in.
+    static const std::string sGasNames[];
+
+    //! A map of the gases Magicc can report out.
+    std::map<std::string,int> mOutputGasNameMap; 
+
+    //! Return value of getGasIndex if it cannot find the gas.
     static const int INVALID_GAS_NAME = -1;
-	
-	//! Emissions levels by gas and period.
+
+    //! Emissions levels by gas and period.
     std::vector<std::vector<double> > mEmissionsByGas;
 
-	//! Name of the scenario.
+    //! Name of the scenario.
     std::string mScenarioName;
 
-	//! A reference to the scenario's modeltime object.
+    //! A reference to the scenario's modeltime object.
     const Modeltime* mModeltime;
 
     //! Whether the climate model output is updated.
     bool mIsValid;
+
+    //! Climate Sensitivity.
+    double mClimateSensitivity;
+
+    //! Soil Feedback Factor (MAGICC Parameter btSoil)
+    double mSoilTempFeedback;
+
+    //! Humus Feedback Factor (MAGICC Parameter btHumus)
+    double mHumusTempFeedback;
+
+    //! GPP Feedback Factor (MAGICC Parameter btGPP)
+    double mGPPTempFeedback;
+
+    //! 1980s Ocean Uptake (MAGICC Parameter FUSER)
+    double mOceanCarbFlux80s;
+
+    //! 1980s net terrestrial Deforestation (MAGICC Parameter DUSER)
+    double mNetDeforestCarbFlux80s;
 };
 
 #endif // _MAGICC_MODEL_H_

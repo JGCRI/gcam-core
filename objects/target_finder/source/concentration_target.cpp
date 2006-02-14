@@ -61,7 +61,7 @@ ITarget::TrialStatus ConcentrationTarget::getStatus( const double aTolerance,
     const double currTarget = calcTarget( aPeriod );
 
     // Check if we are above or below the target.
-    const double currConcentration = mClimateModel->getConcentration( mTargetGas, aPeriod );
+    const double currConcentration = mClimateModel->getConcentration( aPeriod, mTargetGas );
 
     // Determine how how far away from the target the current estimate is.
     double percentOff = ( currConcentration - currTarget ) / currTarget * 100;

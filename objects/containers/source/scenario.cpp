@@ -628,7 +628,6 @@ void Scenario::writeOutputFiles() const {
 
     // Write world and regional info
     world->csvOutputFile();
-    outFile.close();
 }
 
 //! Output Scenario members to the database.

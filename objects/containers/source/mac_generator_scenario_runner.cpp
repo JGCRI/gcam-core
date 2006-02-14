@@ -14,12 +14,14 @@
 #include "util/logger/include/ilogger.h"
 #include "containers/include/total_policy_cost_calculator.h"
 #include "containers/include/scenario.h"
+#include "util/base/include/auto_file.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern void closeDB();
 extern void createMCvarid();
+extern ofstream outFile;
 
 /*! \brief Constructor.
 */
@@ -95,6 +97,7 @@ void MACGeneratorScenarioRunner::printOutput( Timer& timer, const bool aCloseDB 
     if( aCloseDB ){
         createMCvarid();
         closeDB();
+        outFile.close();
     }
 }
 

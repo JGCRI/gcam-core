@@ -9,21 +9,30 @@
 #include <fstream>
 #include <string>
 #include <cassert>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "climate/include/magicc_model.h"
+#include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/util.h"
+#include "util/base/include/xml_helper.h"
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
+using namespace xercesc;
+
+extern Scenario* scenario;
 
 #if(__HAVE_FORTRAN__)
 extern "C" { void _stdcall CLIMAT(void); };
-extern "C" { double _stdcall CO2CONC(int&); };
-// extern "C" { double _stdcall GETTEMPERATURE(int&); };
-// extern "C" { double _stdcall GETFORCING(int&); };
+extern "C" { double _stdcall GETGHGCONC(int&, int&); };
+extern "C" { double _stdcall GETGMTEMP(int&); };
+extern "C" { double _stdcall GETFORCING(int&, int&); };
+extern "C" { double _stdcall GETCARBONRESULTS(int&, int&); };
+extern "C" { double _stdcall SETPARAMETERVALUES(int&, double&); }
 #endif
 
 // Setup the gas name vector.
@@ -41,7 +50,11 @@ const string MagiccModel::sGasNames[] = { "CO2",
 									   "HFC143a",
 									   "HFC227ea",
 									   "HFC245ca",
-									   "SF6" };
+									   "SF6",
+									   "NOx",
+									   "NMVOCs",
+									   "CO" };
+
 
 /*! \brief Constructor
 * \param aModeltime Pointer to the global modeltime object.
@@ -50,6 +63,12 @@ MagiccModel::MagiccModel( const Modeltime* aModeltime ):
 mModeltime( aModeltime ),
 mIsValid( false )
 {
+    mSoilTempFeedback = -1;
+    mHumusTempFeedback = -1;
+    mGPPTempFeedback = -1;
+    mClimateSensitivity = -1;
+    mNetDeforestCarbFlux80s = -1;
+    mOceanCarbFlux80s = -1;
 }
 
 /*! \brief Complete the initialization of the MagiccModel.
@@ -76,6 +95,163 @@ void MagiccModel::completeInit( const string& aScenarioName ){
     // Read in the data from the file. These values may later be overridden.
     readFile();
     mIsValid = false;
+    
+    // Set up coorespondence for output gas names
+    // Setup the gas name vector.
+    mOutputGasNameMap[ "total" ] = 0;
+    mOutputGasNameMap[ "CO2" ] = 1;
+    mOutputGasNameMap[ "CH4" ] = 2;
+    mOutputGasNameMap[ "N2O" ] = 3;
+    mOutputGasNameMap[ "C2F6" ] = 4;
+    mOutputGasNameMap[ "HCFC125" ] = 5;
+    mOutputGasNameMap[ "HCFC134A" ] = 6;
+    mOutputGasNameMap[ "HCFC143A" ] = 7;
+    mOutputGasNameMap[ "HCFC245fa" ] = 8;
+    mOutputGasNameMap[ "SF6" ] = 9;
+    mOutputGasNameMap[ "CF4" ] = 10;
+    mOutputGasNameMap[ "SO2" ] = 11;
+    mOutputGasNameMap[ "TropO3" ] = 12;
+    mOutputGasNameMap[ "BioBurn" ] = 13;
+    
+    overwriteMAGICCParameters( );
+}
+
+/*! \brief Overwrite MAGICC default parameters with new values.
+*/
+void MagiccModel::overwriteMAGICCParameters( ){
+#if(__HAVE_FORTRAN__)    
+    // Override parameters in MAGICC if necessary
+    int varIndex = 1;
+    SETPARAMETERVALUES( varIndex, mClimateSensitivity );
+    varIndex = 2;
+    SETPARAMETERVALUES( varIndex, mSoilTempFeedback );
+    varIndex = 3;
+    SETPARAMETERVALUES( varIndex, mHumusTempFeedback );
+    varIndex = 4;
+    SETPARAMETERVALUES( varIndex, mGPPTempFeedback );
+    varIndex = 5;
+    SETPARAMETERVALUES( varIndex, mNetDeforestCarbFlux80s );
+    varIndex = 6;
+    SETPARAMETERVALUES( varIndex, mOceanCarbFlux80s );
+#endif
+}
+
+//! parse MAGICC xml object
+void MagiccModel::XMLParse( const DOMNode* node ){
+	// make sure we were passed a valid node.
+	assert( node );
+
+	DOMNodeList* nodeList = node->getChildNodes();
+    const Modeltime* modeltime = scenario->getModeltime();
+
+	for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
+		DOMNode* curr = nodeList->item( i );
+
+		// get the name of the node.
+		string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+
+		if( nodeName == "#text" ) {
+			continue;
+		}
+		// Climate Sensitivity
+		else if ( nodeName == "climateSensitivity" ){
+			mClimateSensitivity = XMLHelper<double>::getValue( curr );
+		}
+		// Soil Feedback Factor. 
+		else if ( nodeName == "soilTempFeedback" ){
+			mSoilTempFeedback = XMLHelper<double>::getValue( curr );
+		}
+		// Humus Feedback Factor. 
+		else if ( nodeName == "humusTempFeedback" ){
+			mHumusTempFeedback = XMLHelper<double>::getValue( curr );
+		}
+		// GPP Feedback Factor. 
+		else if ( nodeName == "GPPTempFeedback" ){
+			mGPPTempFeedback = XMLHelper<double>::getValue( curr );
+		}
+		// 1980s Ocean Uptake 
+		else if ( nodeName == "oceanFlux80s" ){
+			mOceanCarbFlux80s = XMLHelper<double>::getValue( curr );
+		}
+		// 1980s net terrestrial Deforestation 
+		else if ( nodeName == "deforestFlux80s" ){
+			mNetDeforestCarbFlux80s = XMLHelper<double>::getValue( curr );
+		}
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+			mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << endl;
+		}
+	}
+}
+
+//! Writes datamembers to datastream in XML format.
+void MagiccModel::toInputXML( ostream& out, Tabs* tabs ) const {
+	XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
+
+	// Write out mClimateSensitivity
+	XMLWriteElementCheckDefault( mClimateSensitivity, "climateSensitivity", out, tabs, -1.0 );
+
+	// Write out Soil Feedback Factor.
+	XMLWriteElementCheckDefault( mSoilTempFeedback, "soilTempFeedback", out, tabs, -1.0 );
+
+	// Write out Humus Feedback Factor.
+	XMLWriteElementCheckDefault( mHumusTempFeedback, "humusTempFeedback", out, tabs, -1.0 );
+
+	// Write out GPP Feedback Factor.
+	XMLWriteElementCheckDefault( mGPPTempFeedback, "GPPTempFeedback", out, tabs, -1.0 );
+
+	// Write out 1980s Ocean Uptake.
+	XMLWriteElementCheckDefault( mOceanCarbFlux80s, "oceanFlux80s", out, tabs, -1.0 );
+
+	// Write out 1980s net terrestrial Deforestation.
+	XMLWriteElementCheckDefault( mNetDeforestCarbFlux80s, "deforestFlux80s", out, tabs, -1.0 );
+
+	XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
+}
+
+//! Writes datamembers to debugging datastream in XML format.
+void MagiccModel::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
+
+	XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
+
+	// Write out mClimateSensitivity
+	XMLWriteElement( mClimateSensitivity, "climateSensitivity", out, tabs );
+
+	// Write out Soil Feedback Factor.
+	XMLWriteElement( mSoilTempFeedback, "soilTempFeedback", out, tabs );
+
+	// Write out Humus Feedback Factor.
+	XMLWriteElement( mHumusTempFeedback, "humusTempFeedback", out, tabs );
+
+	// Write out GPP Feedback Factor.
+	XMLWriteElement( mGPPTempFeedback, "GPPTempFeedback", out, tabs );
+
+	// Write out 1980s Ocean Uptake.
+	XMLWriteElement( mOceanCarbFlux80s, "oceanFlux80s", out, tabs );
+
+	// Write out 1980s net terrestrial Deforestation.
+	XMLWriteElement( mNetDeforestCarbFlux80s, "deforestFlux80s", out, tabs );
+    
+	XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
+}
+
+/*! \brief Checks that the year is a valid value for this climate model
+* \details For the MAGICC model valid years range from 1765 to 2500
+* \param aYear year
+*/
+bool MagiccModel::isValidClimateModelYear( const int aYear ) const {
+const int MIN_YEAR = 1765;
+const int MAX_YEAR = 2500;
+    
+    if ( aYear < MIN_YEAR || aYear > MAX_YEAR ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Invalid year " << aYear << " for MAGICC climate model." << endl;
+        return false;    
+    }
+    
+    return true;
 }
 
 /*! \brief Set the level of emissions for a particular for a period.
@@ -179,8 +355,12 @@ bool MagiccModel::runModel(){
         }
     }
     gasFile.close();
+
+    // First overwrite parameters
+    overwriteMAGICCParameters( );
+
     // now actually run the model.
-#if(__HAVE_FORTRAN__)
+#if(__HAVE_FORTRAN__)    
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Calling the climate model..."<< endl;
@@ -201,75 +381,105 @@ unsigned int MagiccModel::getNumGases(){
 	return sizeof( sGasNames ) / sizeof( sGasNames[ 0 ] );
 }
 
+double MagiccModel::getConcentration( const int aPeriod,
+                                      const string& aGasName) const
+{
+    return getConcentration( aGasName, mModeltime->getper_to_yr( aPeriod ) );
+}
+
 double MagiccModel::getConcentration( const string& aGasName,
-                                      const int aPeriod ) const
+                                      const int aYear ) const
 {
     /*! \pre A gas was requested. */
     assert( !aGasName.empty() );
 
-    // Check if the climate model has been run.
-    if( !mIsValid ){
+    // Check if the climate model has been run and that valid year is passed in.
+    if( !mIsValid || !isValidClimateModelYear( aYear ) ){
         return -1;
     }
 
-    if( aGasName == "CO2" ){
 #if( __HAVE_FORTRAN__ )
-	// Need to store the year locally so it can be passed by reference.
-    int year = mModeltime->getper_to_yr( aPeriod );
-	return CO2CONC( year );
-#else
-	return -1;
+    int year = aYear;
+    int gasNumber = util::searchForValue( mOutputGasNameMap, aGasName );
+    if ( gasNumber != 0 ) {
+        return GETGHGCONC( gasNumber, year );
+    }
 #endif
-    }
-    // Unknown gas.
-    else {
-        return -1;
-    }
+	return -1;
 }
 
-double MagiccModel::getTemperature( const int aPeriod ) const {
-    // Check if the climate model has been run.
-    if( !mIsValid ){
+double MagiccModel::getTemperature( const int aYear ) const {
+    // Check if the climate model has been run and that valid year is passed in.
+    if( !mIsValid || !isValidClimateModelYear( aYear ) ){
         return -1;
     }
 
 #if( __HAVE_FORTRAN__ )
 	// Need to store the year locally so it can be passed by reference.
-    int year = mModeltime->getper_to_yr( aPeriod );
-	// return TEMPERATURE( year );
-    return -1;
+    int year = aYear;
+    return GETGMTEMP( year );
 #else
 	return -1;
 #endif
 }
 
-double MagiccModel::getForcing( const string& aGasName, const int aPeriod ) const {
-    // Check if the climate model has been run.
-    if( !mIsValid ){
+double MagiccModel::getForcing( const string& aGasName, const int aYear ) const {
+    // Check if the climate model has been run and that valid year is passed in.
+    if( !mIsValid || !isValidClimateModelYear( aYear ) ){
         return -1;
     }
 
 #if( __HAVE_FORTRAN__ )
-	// Need to store the year locally so it can be passed by reference.
-    int year = mModeltime->getper_to_yr( aPeriod );
-	// return FORCING( year );
-    return -1;
+    int year = aYear;
+    int gasNumber = util::searchForValue( mOutputGasNameMap, aGasName );
+    if ( gasNumber != 0 ) {
+        return GETFORCING( gasNumber, year );
+    }
+#endif
+	return -1;
+}
+
+double MagiccModel::getNetTerrestrialUptake( const int aYear ) const {
+    // Check if the climate model has been run and that valid year is passed in.
+    if( !mIsValid || !isValidClimateModelYear( aYear ) ){
+        return -1;
+    }
+
+#if( __HAVE_FORTRAN__ )
+    int year = aYear;
+    int itemNumber = 10;
+    return GETCARBONRESULTS( itemNumber, year );
 #else
 	return -1;
 #endif
 }
 
-double MagiccModel::getTotalForcing( const int aPeriod ) const {
-    // Check if the climate model has been run.
-    if( !mIsValid ){
+double MagiccModel::getNetOceanUptake( const int aYear ) const {
+    // Check if the climate model has been run and that valid year is passed in.
+    if( !mIsValid || !isValidClimateModelYear( aYear ) ){
         return -1;
     }
 
 #if( __HAVE_FORTRAN__ )
-	// Need to store the year locally so it can be passed by reference.
-    int year = mModeltime->getper_to_yr( aPeriod );
-	// return FORCING( year );
-    return -1;
+    int year = aYear;
+    int itemNumber = 4;
+    return GETCARBONRESULTS( itemNumber, year );
+#else
+	return -1;
+#endif
+}
+
+double MagiccModel::getTotalForcing( const int aYear ) const {
+    // Check if the climate model has been run and that valid year is passed in.
+    if( !mIsValid || !isValidClimateModelYear( aYear ) ){
+        return -1;
+    }
+
+#if( __HAVE_FORTRAN__ )
+	// Need to store the year and gas number locally so it can be passed by reference.
+    int year = aYear;
+    int gasNumber = 0; // global forcing
+    return GETFORCING( gasNumber, year );
 #else
 	return -1;
 #endif
@@ -278,32 +488,78 @@ double MagiccModel::getTotalForcing( const int aPeriod ) const {
 /*! \brief Write out data from the emissions model to the main csv output file.*/
 void MagiccModel::printFileOutput() const {
 #if( __HAVE_FORTRAN__ )
-    // Fill up a vector of concentrations.
-    vector<double> data( mModeltime->getmaxper() );
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        // Need to store the year locally so it can be passed by reference.
-        int year = mModeltime->getper_to_yr( period );
-        data[ period ] = CO2CONC( year );
-    }
-    // Write out the data to the text output function protocol
     void fileoutput3(string var1name,string var2name,string var3name,
         string var4name,string var5name,string uname,vector<double> dout);
-    fileoutput3( "global"," "," "," ","Concentration","PPM", data );
+
+    // Fill up a vector of CO2 concentrations.
+    vector<double> data( mModeltime->getmaxper() );
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getConcentration( "CO2", mModeltime->getper_to_yr( period ) );
+    }
+    // Write out the data to the text output function protocol
+    fileoutput3( "global","MAGICC"," "," ","Concentration","PPM", data );
+
+    // Fill up a vector of total forcing.
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getTotalForcing( mModeltime->getper_to_yr( period ) );
+    }
+    // Write out the data to the text output function protocol
+    fileoutput3( "global","MAGICC"," "," ","Forcing","W/m^2", data );
+
+    // Fill up a vector of Global Mean Temperature.
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getTemperature( mModeltime->getper_to_yr( period ) );
+    }
+    // Write out the data to the text output function protocol
+    fileoutput3( "global","MAGICC"," "," ","Temperature","degC", data );
+
+    // Fill up a vector of Net Terrestrial Uptake.
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getNetTerrestrialUptake( mModeltime->getper_to_yr( period ) );
+    }
+    // Write out the data to the text output function protocol
+    fileoutput3( "global","MAGICC"," "," ","NetTerUptake","GtC", data );
+
+    // Fill up a vector of Ocean Uptake.
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getNetOceanUptake( mModeltime->getper_to_yr( period ) );
+    }
+    // Write out the data to the text output function protocol
+    fileoutput3( "global","MAGICC"," "," ","OceanUptake","GtC", data );
+    
+    // Fill up a vector of Net Land-Use Emissions.
+    int itemNumber = 2;
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        int year = mModeltime->getper_to_yr( period );
+        data[ period ] = GETCARBONRESULTS( itemNumber, year );
+    }
+    // Write out the data to the text output function protocol
+    fileoutput3( "global","MAGICC"," "," ","netLUEm","GtC", data );
+
 #endif
 }
 
 /*! \brief Write out data from the emissions model to the database. */
 void MagiccModel::printDBOutput() const {
+#if( __HAVE_DB__ )
+   void dboutput4(string var1name,string var2name,string var3name,string var4name,
+        string uname,vector<double> dout);
+
     // Fill up a vector of concentrations.
     vector<double> data( mModeltime->getmaxper() );
     for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getConcentration( "CO2", period );
+        data[ period ] = getConcentration( "CO2", mModeltime->getper_to_yr( period ) );
     }
     // Write out the data to the database. Database function definition.
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-    dboutput4( "global", "General", "CO2-Concentrations", "Period", "PPM", data );
-
+     dboutput4( "global", "General", "Concentrations", "Period", "PPM", data );
+ 
+    // Fill up a vector of total forcing.
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getTotalForcing( mModeltime->getper_to_yr( period ) );
+    }
+    // Write out the data to the database. Database function definition.
+     dboutput4( "global", "General", "Forcing", "Period","W/m^2", data );
+#endif
 }
 
 /*! \brief Updates a visitor with information from the the climate model.
@@ -343,6 +599,7 @@ int MagiccModel::getGasIndex( const string& aGasName ) const {
 /*! \brief Read initial emissions data from a file.
 * \details This function reads in the initial values for each gas from an input
 *          file specified by the configuration file.
+* \warning input file data lines must end in a ","
 */
 void MagiccModel::readFile(){
     // Open up the file with all the gas data and read it in.
@@ -355,7 +612,7 @@ void MagiccModel::readFile(){
     // file.
     const int SKIP_LINES = 5;
     for ( unsigned int i = 0; i < SKIP_LINES; ++i ){
-        inputGasFile.ignore( 80, '\n' );
+        inputGasFile.ignore( 200, '\n' );
     }
     
     // Now read in all the gases. 

@@ -28,6 +28,7 @@ using namespace std;
 using namespace xercesc;
 
 extern void closeDB();
+extern ofstream outFile;
 extern void createMCvarid();
 
 /*! \brief Constructor.
@@ -123,7 +124,7 @@ bool PolicyTargetRunner::runScenario( const int aSinglePeriod, Timer& aTimer ) {
     const unsigned int LIMIT_ITERATIONS = 100;
 
     // Tolerance as a percent.
-    const double TOLERANCE = 0.5;
+    const double TOLERANCE = 0.005;
     
     // Solve the initial target.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -259,8 +260,11 @@ bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
         return false;
     }
 
-    // Create the bisection object.
-    bool success = true;
+    // Run the base scenario. This is required in single period mode because the
+    // current period concentration may not be accurate and reflect the effect
+    // of this tax in the current period, since this period was not run while
+    // solving the previous period.
+    bool success = mSingleScenario->runScenario( aPeriod, aTimer );
 
     // Construct a bisecter which has an initial trial equal to the current tax.
     auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), aTolerance,
@@ -314,6 +318,7 @@ void PolicyTargetRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const
     if( aCloseDB ){
         createMCvarid();
         closeDB();
+        outFile.close();
     }
 }
 

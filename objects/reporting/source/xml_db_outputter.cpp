@@ -566,7 +566,7 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
 
     // Write the concentrations for the request period.
     for( int per = 0; per < scenario->getModeltime()->getmaxper(); ++per ){
-        XMLWriteElement( aClimateModel->getConcentration( "CO2", per ), "co2-concentration",
+        XMLWriteElement( aClimateModel->getConcentration( "CO2", scenario->getModeltime()->getper_to_yr( per ) ), "co2-concentration",
                          mBuffer, mTabs.get(), scenario->getModeltime()->getper_to_yr( per ) );
     }
 }

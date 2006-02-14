@@ -48,8 +48,7 @@ extern Scenario* scenario;
 //! Default constructor.
 World::World():
 doCalibrations( true ),
-calcCounter( 0 ),
-mClimateModel( new MagiccModel( scenario->getModeltime() ) )
+calcCounter( 0 )
 {
 }
 
@@ -84,7 +83,11 @@ void World::XMLParse( const DOMNode* node ){
         else if( nodeName == Region::getXMLNameStatic() ){
             parseContainerNode( curr, regions, regionNamesToNumbers, new Region() );
         }
-        // SGM regions
+		// Read in parameters for climate model
+        else if( nodeName == MagiccModel::getXMLNameStatic() ){
+            parseSingleNode( curr, mClimateModel , new MagiccModel( scenario->getModeltime() ) );
+        }
+		// SGM regions
         else if( nodeName == RegionCGE::getXMLNameStatic() ){
             parseContainerNode( curr, regions, regionNamesToNumbers, new RegionCGE() );
         }
@@ -117,6 +120,14 @@ void World::completeInit() {
     if( conf->getBool( "agSectorActive" ) ) {
         initAgLu();
     }
+
+    //If none has been read in, instantiate the default climate model
+    if ( !mClimateModel.get() ) {
+        mClimateModel.reset( new MagiccModel( scenario->getModeltime() ) );
+    }
+    
+    //Inititalize Climate Model
+    mClimateModel->completeInit( scenario->getName() );
 }
 /*! \brief Initialize the region partial derivative calculation hash map.
 * \details Constructs a mapping of region Atom to index within the region
@@ -173,7 +184,13 @@ void World::toInputXML( ostream& out, Tabs* tabs ) const {
     for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
         ( *i )->toInputXML( out, tabs );
     }
+    
+    // Climate model parameters
+    if ( !mClimateModel.get() ) {
+        mClimateModel->toInputXML( out, tabs );
+    }
 
+    // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
@@ -190,8 +207,12 @@ void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     for( CRegionIterator i = regions.begin(); i == regions.begin(); i++ ) { 
         ( *i )->toDebugXML( period, out, tabs );
     }
-    // finished writing xml for the class members.
+    // Climate model parameters
+    if ( !mClimateModel.get() ) {
+        mClimateModel->toDebugXML( period, out, tabs );
+    }
 
+    // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
@@ -372,7 +393,6 @@ void World::emiss_ind( const int period ) {
 /*! Calculates the global emissions.
 */
 void World::runClimateModel() {
-    mClimateModel->completeInit( scenario->getName() );
     // The Climate model reads in data for the base period, so skip passing it in.
     for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period){
         // Sum emissions by period.
@@ -386,7 +406,11 @@ void World::runClimateModel() {
         // Set the emissions for the period.
         const double MMT_TO_TG = 1000;
         mClimateModel->setEmissions( "CO2", period, industrialCO2EmissionsSum / MMT_TO_TG );
-        mClimateModel->setEmissions( "CO2NetLandUse", period, netLandUseCO2EmSum / MMT_TO_TG );
+        // Only write land-use CO2 emissions if ag sector is active
+        Configuration* conf = Configuration::getInstance();
+        if( conf->getBool( "agSectorActive" ) ) {
+            mClimateModel->setEmissions( "CO2NetLandUse", period, netLandUseCO2EmSum / MMT_TO_TG );
+        }
     }
     // Run the model.
     mClimateModel->runModel();
