@@ -61,6 +61,8 @@ bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const D
 \todo The extra elements in the vector should be removed. 
 Also remove any grades with zero available by resetting the parameter nograde. */
 void SubRenewableResource::initializeResource( ) {   
+   SubResource::initializeResource( );
+   
 	int tempNumGrades = 1; 
 	// Start with at least one grade. Then see if others are in order above it.
 	bool badGradeFound = false;

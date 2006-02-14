@@ -141,6 +141,11 @@ void SubResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
 
 //! Do any initializations needed for this resource
 void SubResource::initializeResource( ) {   
+   if ( nograde == 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "No Grades present in resource: " << name << "." << endl;
+   }
 }	
 
 //! Write datamembers to datastream in XML format for replicating input file.
