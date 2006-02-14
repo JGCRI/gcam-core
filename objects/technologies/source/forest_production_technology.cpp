@@ -55,12 +55,14 @@ bool ForestProductionTechnology::XMLDerivedClassParse( const string& nodeName, c
 
 //! write object to xml output stream
 void ForestProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
+    FoodProductionTechnology::toInputXMLDerived( out, tabs);
     XMLWriteElementCheckDefault( futureProduction, "futureProduction", out, tabs, -1.0 );
     XMLWriteElementCheckDefault( interestRate, "interestRate", out, tabs, 0.02 );
 }
 
 //! write object to xml output stream
 void ForestProductionTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
+    FoodProductionTechnology::toDebugXMLDerived( period, out, tabs);
     XMLWriteElement( futureProduction, "futureProduction", out, tabs );
     XMLWriteElement( interestRate, "interestRate", out, tabs );
 }
@@ -287,7 +289,6 @@ void ForestProductionTechnology::calcShare( const string& aRegionName,
 * \param aDemand Subsector demand for output.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
-* \todo Does profitRate need the discount factor?
 */
 void ForestProductionTechnology::production( const string& aRegionName,
                                              const string& aSectorName,

@@ -180,9 +180,16 @@ void ForestDemandSector::aggdemand( const GDP* gdp, const int period ) {
         forestDemand = calcForestDemand ( gdp, period, normPeriod, priceRatio );
 
         // Here, the priceRatio needs the prices from the future market of this product, not this market.
-        assert( marketplace->getPrice( prefix + demandedGoodName, regionName, normPeriod ) > 0 );
-        priceRatio = marketplace->getPrice( prefix + demandedGoodName, regionName, period )\
-                     / marketplace->getPrice( prefix + demandedGoodName, regionName, normPeriod );
+        double basePrice = marketplace->getPrice( prefix + demandedGoodName, regionName, normPeriod );
+        if ( basePrice == 0 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Invalid Future Forest Price of " << basePrice << " in region " << regionName << "." << endl;
+            priceRatio = 1;
+        }
+        else {
+         priceRatio = marketplace->getPrice( prefix + demandedGoodName, regionName, period ) / basePrice;
+        }
         // The priceRatio is then passed in to calculate demand.
         forestDemandFuture = calcForestDemand ( gdp, (period + future), normPeriod, priceRatio );
 

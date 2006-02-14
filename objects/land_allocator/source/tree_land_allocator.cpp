@@ -289,36 +289,9 @@ void TreeLandAllocator::calcLandShares( const string& aRegionName,
                                         const double aTotalLandAllocated,
                                         const int aPeriod )
 {
-    // First adjust value of unmanaged land nodes
-    setUnmanagedLandValues( aRegionName, aPeriod );
-
-    //Calculate the temporary unnormalized shares and sum them
-    double unnormalizedSum = 0;
-    // double excessShares = 0; (ignore this for now)
-    double totalBaseLandAllocation = getBaseLandAllocation( aPeriod );
-    for ( unsigned int i = 0; i < children.size(); i++ ) {
-        // If this is managed land, or if unmanaged land and no base land allocation is specified then use standard method
-        if ( isProductionLeaf() ||  totalBaseLandAllocation == 0 ) {
-            children[ i ]->calcLandShares( aRegionName, sigma, 0, aPeriod );
-        } else {
-            // If this is unmanaged land then use initial land allocation to weight land use.
-            children[ i ]->calcLandShares( aRegionName, sigma, totalBaseLandAllocation, aPeriod );
-        }
-        
-        // Get temporary unnomalized share
-        unnormalizedSum += children[ i ]->getShare( aPeriod );                  
-    }
-
-    //Normalizing the temporary unnormalized shares
-    for ( unsigned int i = 0; i < children.size(); i++ ) {
-        children[ i ]->normalizeLandAllocation( unnormalizedSum, aPeriod );
-    }
-
-    // The unnormalizedSum is actually the 1/sigma weighted intrinsic rates of the children
-    // Therefore, the equation below gives the intrinsic rate of this node
-    intrinsicRate[ aPeriod ] = pow( unnormalizedSum, sigma );
-    
-    // This is the root node so its share should be 100%   
+   LandNode::calcLandShares( aRegionName, aSigmaAbove, aTotalLandAllocated, aPeriod);
+ 
+   // This is the root node so its share should be 100%   
     share[ aPeriod ] = 1;                                        
 }
 
