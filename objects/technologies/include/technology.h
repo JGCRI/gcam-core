@@ -78,6 +78,7 @@ protected:
 
     std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    bool hasNoInputOrOutput() const; // return if tech is fixed for no output
     void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};

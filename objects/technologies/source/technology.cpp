@@ -300,7 +300,12 @@ void technology::completeInit( const string& aSectorName,
     // Add the input dependency to the dependency finder if there is one. There
     // will not be one if this is a transportation technology.
     if( aDepFinder ){
-        aDepFinder->addDependency( aSectorName, fuelname );
+        // Don't add dependency if technology does not ever function.
+        // If this is the case, the technology can never have an effect on the markets.
+        // This is necessary for export sectors to operate correctly, but will be true in general.
+        if (  !hasNoInputOrOutput() ) { // note the NOT operator
+            aDepFinder->addDependency( aSectorName, fuelname );
+        }
     }
 
     // initialize fixedOutputVal
@@ -579,6 +584,19 @@ void technology::resetFixedOutput( int per ) {
     if ( fixedOutput >= 0 ) {
         fixedOutputVal = fixedOutput;
     }
+}
+
+/*! \brief Return true if technology is fixed for no output or input
+* 
+* returns true if this technology is set to never produce output or input
+* At present, this can only be guaranteed by assigning a fixedOutput value of zero.
+*
+* \author Steve Smith
+* \return Returns wether this technology will always have no output or input
+*/
+bool technology::hasNoInputOrOutput() const {
+    // if zero value was read in and is zero
+    return ( fixedOutput == 0 );
 }
 
 /*! \brief Return fixed technology output

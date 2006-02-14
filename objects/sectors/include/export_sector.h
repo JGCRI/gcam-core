@@ -33,14 +33,6 @@ class ExportSector: public SupplySector
 public:
 	explicit ExportSector( const std::string& aRegionName );
 
-    virtual void completeInit( const IInfo* aRegionInfo,
-                               DependencyFinder* aDepFinder,
-                               ILandAllocator* aLandAllocator );
-    
-    virtual void initCalc( NationalAccount& aNationalAccount,
-                           const Demographic* aDemographics,
-                           const int aPeriod );
-
 	virtual void calcFinalSupplyPrice( const GDP* aGDP,
                                        const int aPeriod );
 

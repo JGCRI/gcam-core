@@ -36,48 +36,6 @@ ExportSector::ExportSector ( const string& aRegionName ) : SupplySector ( aRegio
     mFixedPrices.resize( scenario->getModeltime()->getmaxper() );
 }
 
-/*! \brief Complete the initialization of the ExportSector.
-* \details The SupplySector completeInit is overridden so that the ExportSector
-*          can pass a null DependencyFinder to its subsectors. This will prevent
-*          the subsectors from adding their dependencies, which will prevent the
-*          DependencyFinder from creating extra markets to resolve potential
-*          simultaenaties. These extra markets would be created incorrectly
-*          since they would be assumed to be regional, not international, and
-*          there is not a true dependency on the demand or price for the input
-*          good, because the input price and demand are fixed. This also add a
-*          dependency on the input "none" so that the DependencyFinder does not
-*          remove the sector from the ordering completely.
-* \param aRegionInfo The regional information object.
-* \param aDependencyFinder The dependency finding object.
-* \param aLandAllocator Regional land allocator.
-*/
-void ExportSector::completeInit( const IInfo* aRegionInfo,
-                                 DependencyFinder* aDependencyFinder,
-                                 ILandAllocator* aLandAllocator )
-{
-	// Add a fake dependency on the input "none" to prevent the dependency
-	// finder from completely removing the sector.
-	aDependencyFinder->addDependency( name, "none" );
-
-	// Pass null for the DependencyFinder to the SupplySector complete init so
-    // it will pass null to the subsectors.
-    SupplySector::completeInit( aRegionInfo, 0, aLandAllocator );
-    setMarket();
-}
-
-/*! \brief Initialize the ExportSector.
-* \details Currently only calls the base class initCalc.
-* \param aNationalAccount National accounts container.
-* \param aDemographics Regional demographics object.
-* \param aPeriod Period for which to initialize the ExportSector.
-*/
-void ExportSector::initCalc( NationalAccount& aNationalAccount,
-                             const Demographic* aDemographics,
-                             const int aPeriod )
-{
-    SupplySector::initCalc( aNationalAccount, aDemographics, aPeriod );
-}
-
 /*! \brief Return the export sector price.
 * \details Export sectors currently have fixed prices, so return the read-in
 *          fixed price.
