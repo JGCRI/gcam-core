@@ -45,7 +45,7 @@ void ALandAllocatorItem::XMLParse( const DOMNode* node ){
     assert( node );
     
     // Set the node name.
-    name = XMLHelper<string>::getAttrString( node, "name" );
+    name = XMLHelper<string>::getAttr( node, "name" );
 
     // get all the children.
     DOMNodeList* nodeList = node->getChildNodes();

@@ -238,7 +238,7 @@ void BatchRunner::XMLParseComponentSet( const DOMNode* aNode ){
     Component newComponent;
 
     // Get the name of the component set. 
-    newComponent.mName = XMLHelper<string>::getAttrString( aNode, XMLHelper<void>::name() );
+    newComponent.mName = XMLHelper<string>::getAttr( aNode, XMLHelper<void>::name() );
 
     // get the children of the node.
     DOMNodeList* nodeList = aNode->getChildNodes();
@@ -276,7 +276,7 @@ void BatchRunner::XMLParseFileSet( const DOMNode* aNode, Component& aCurrCompone
     
     // Create the new file set and set the name.
     FileSet newFileSet;
-    newFileSet.mName = XMLHelper<string>::getAttrString( aNode, XMLHelper<void>::name() );
+    newFileSet.mName = XMLHelper<string>::getAttr( aNode, XMLHelper<void>::name() );
 
     // get the children of the node.
     DOMNodeList* nodeList = aNode->getChildNodes();
@@ -293,9 +293,9 @@ void BatchRunner::XMLParseFileSet( const DOMNode* aNode, Component& aCurrCompone
             // Create the new File
             File newFile;
             // Get the name of the file.
-            newFile.mName = XMLHelper<string>::getAttrString( curr, XMLHelper<void>::name() );
+            newFile.mName = XMLHelper<string>::getAttr( curr, XMLHelper<void>::name() );
             // Get the full path of the file.
-            newFile.mPath = XMLHelper<string>::getValueString( curr );
+            newFile.mPath = XMLHelper<string>::getValue( curr );
             // Add the file to the current new file set.
             newFileSet.mFiles.push_back( newFile );
         }

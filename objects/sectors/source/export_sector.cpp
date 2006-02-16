@@ -129,7 +129,7 @@ const std::string& ExportSector::getXMLNameStatic() {
 */
 bool ExportSector::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ) {
     if( aNodeName == "market" ){
-		mMarketName = XMLHelper<string>::getValueString( aCurr );
+		mMarketName = XMLHelper<string>::getValue( aCurr );
 	}
     else if( aNodeName == "sectorprice" ){
         XMLHelper<double>::insertValueIntoVector( aCurr, mFixedPrices, scenario->getModeltime() );

@@ -157,8 +157,8 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
     assert( node );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttrString( node, "name" );
-    categoryName = XMLHelper<string>::getAttrString( node, "categoryName" );
+    name = XMLHelper<string>::getAttr( node, "name" );
+    categoryName = XMLHelper<string>::getAttr( node, "categoryName" );
     year = XMLHelper<int>::getAttr( node, "year" );
 
     // get all child nodes.

@@ -36,7 +36,7 @@ void TotalSectorEmissions::XMLParse( const DOMNode* aNode ){
     assert( aNode );
 
     // get the name attribute.
-    mName = XMLHelper<string>::getAttrString( aNode, "name" );
+    mName = XMLHelper<string>::getAttr( aNode, "name" );
 
     // get all child nodes.
     const DOMNodeList* nodeList = aNode->getChildNodes();

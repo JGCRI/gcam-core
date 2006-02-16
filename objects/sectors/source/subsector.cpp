@@ -127,7 +127,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
     assert( node );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttrString( node, "name" );
+    name = XMLHelper<string>::getAttr( node, "name" );
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
@@ -199,7 +199,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
         else if( isNameOfChild( nodeName ) ){
             typedef vector<vector<technology*> >::iterator TechVecIterator;
 
-            const string techName = XMLHelper<string>::getAttrString( curr, "name" );
+            const string techName = XMLHelper<string>::getAttr( curr, "name" );
             if( name.empty() ){
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::WARNING );
@@ -337,7 +337,7 @@ void Subsector::parseBaseTechHelper( const DOMNode* aCurr, BaseTechnology* aNewT
     auto_ptr<BaseTechnology> newTech( aNewTech );
     
     // Check if the base technology already exists.
-    const string id = BaseTechnology::createIdentifier( XMLHelper<string>::getAttrString( aCurr, "name" ),
+    const string id = BaseTechnology::createIdentifier( XMLHelper<string>::getAttr( aCurr, "name" ),
                       XMLHelper<int>::getAttr( aCurr, "year" ) );
 
     map<string,int>::const_iterator baseTechMapIter = baseTechNameMap.find( id );

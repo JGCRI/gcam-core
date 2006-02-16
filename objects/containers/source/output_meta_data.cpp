@@ -89,13 +89,13 @@ void OutputMetaData::XMLParse( const DOMNode* aNode ) {
         }
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         if( nodeName == "primary-fuel" ){
-            mPrimaryFuels.push_back( XMLHelper<string>::getAttrString( curr, "var" ) );
+            mPrimaryFuels.push_back( XMLHelper<string>::getAttr( curr, "var" ) );
         }
         else if( nodeName == "summable" ){
-            mSummableVariables.push_back( XMLHelper<string>::getAttrString( curr, "var" ) );
+            mSummableVariables.push_back( XMLHelper<string>::getAttr( curr, "var" ) );
         }
         else if ( nodeName == "summary" ){
-            mScenarioSummary = XMLHelper<string>::getValueString( curr );
+            mScenarioSummary = XMLHelper<string>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );

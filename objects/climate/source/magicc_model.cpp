@@ -381,12 +381,6 @@ unsigned int MagiccModel::getNumGases(){
 	return sizeof( sGasNames ) / sizeof( sGasNames[ 0 ] );
 }
 
-double MagiccModel::getConcentration( const int aPeriod,
-                                      const string& aGasName) const
-{
-    return getConcentration( aGasName, mModeltime->getper_to_yr( aPeriod ) );
-}
-
 double MagiccModel::getConcentration( const string& aGasName,
                                       const int aYear ) const
 {
@@ -550,15 +544,40 @@ void MagiccModel::printDBOutput() const {
     for( int period = 0; period < mModeltime->getmaxper(); ++period ){
         data[ period ] = getConcentration( "CO2", mModeltime->getper_to_yr( period ) );
     }
-    // Write out the data to the database. Database function definition.
+    // Write out the data to the database.
      dboutput4( "global", "General", "Concentrations", "Period", "PPM", data );
  
     // Fill up a vector of total forcing.
     for( int period = 0; period < mModeltime->getmaxper(); ++period ){
         data[ period ] = getTotalForcing( mModeltime->getper_to_yr( period ) );
     }
-    // Write out the data to the database. Database function definition.
+
      dboutput4( "global", "General", "Forcing", "Period","W/m^2", data );
+
+     // Fill up a vector of Global Mean Temperature.
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getTemperature( mModeltime->getper_to_yr( period ) );
+    }
+
+    // Write out the data to the database.
+    dboutput4( "global", "General", "Temperature", "Period", "degC", data );
+
+    // Fill up a vector of Net Terrestrial Uptake.
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getNetTerrestrialUptake( mModeltime->getper_to_yr( period ) );
+    }
+
+    // Write out the data to the database.
+    dboutput4( "global", "General", "NetTerUptake", "Period", "GtC", data );
+
+    // Fill up a vector of Ocean Uptake.
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getNetOceanUptake( mModeltime->getper_to_yr( period ) );
+    }
+
+    // Write out the data to the text output function protocol
+    dboutput4( "global", "General", "OceanUptake", "Period", "GtC", data );
+
 #endif
 }
 

@@ -66,7 +66,7 @@ bool FactorSupply::XMLParse( const xercesc::DOMNode* node) {
     assert( node );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttrString( node, "name" );
+    name = XMLHelper<string>::getAttr( node, "name" );
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();

@@ -26,6 +26,11 @@
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 
+#include "containers/include/scenario.h" // TODO: Remove, for modeltime only.
+#include "util/base/include/model_time.h"
+
+extern Scenario* scenario; // TODO: Remove, for modeltime only.
+
 using namespace std;
 
 /*! \brief Constructor
@@ -61,7 +66,9 @@ ITarget::TrialStatus ConcentrationTarget::getStatus( const double aTolerance,
     const double currTarget = calcTarget( aPeriod );
 
     // Check if we are above or below the target.
-    const double currConcentration = mClimateModel->getConcentration( aPeriod, mTargetGas );
+    const Modeltime* modeltime = scenario->getModeltime();
+    const double currConcentration = mClimateModel->getConcentration( mTargetGas,
+                                                                      modeltime->getper_to_yr( aPeriod ) );
 
     // Determine how how far away from the target the current estimate is.
     double percentOff = ( currConcentration - currTarget ) / currTarget * 100;

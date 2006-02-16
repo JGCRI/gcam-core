@@ -38,7 +38,7 @@ bool BuildingHeatCoolDmdTechnology::XMLDerivedClassParse( const string& nodeName
         fractionOfYearActive = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == "intGainsMarketName" ){
-        intGainsMarketName = XMLHelper<string>::getValueString( curr );
+        intGainsMarketName = XMLHelper<string>::getValue( curr );
     }
     else {
         return false;

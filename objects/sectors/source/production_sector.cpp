@@ -69,14 +69,14 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
         mInvestor->XMLParse( curr );
     }
 	else if( nodeName == "market" ){
-		mMarketName = XMLHelper<string>::getValueString( curr );
+		mMarketName = XMLHelper<string>::getValue( curr );
 	}
     // Note: This behavior is either on or off, not by period currently.
     else if( nodeName == "FixedPricePath" ){
         mIsFixedPrice = XMLHelper<bool>::getValue( curr );
 	} 
     else if( nodeName == "ghgEmissCoef" ){
-		ghgEmissCoefMap[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
+		ghgEmissCoefMap[ XMLHelper<string>::getAttr( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
     } 
     else if( nodeName == "IsEnergyGood" ){
         mIsEnergyGood = XMLHelper<bool>::getValue( curr );

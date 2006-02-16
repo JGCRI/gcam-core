@@ -190,6 +190,7 @@ void ForestDemandSector::aggdemand( const GDP* gdp, const int period ) {
         else {
          priceRatio = marketplace->getPrice( prefix + demandedGoodName, regionName, period ) / basePrice;
         }
+
         // The priceRatio is then passed in to calculate demand.
         forestDemandFuture = calcForestDemand ( gdp, (period + future), normPeriod, priceRatio );
 

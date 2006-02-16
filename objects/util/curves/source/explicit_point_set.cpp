@@ -324,7 +324,7 @@ void ExplicitPointSet::XMLParse( const xercesc::DOMNode* node ) {
             continue;
         }
         else if ( nodeName == DataPoint::getXMLNameStatic() ){
-            DataPoint* currPoint = DataPoint::getDataPoint( XMLHelper<string>::getAttrString( curr, "type" ) );
+            DataPoint* currPoint = DataPoint::getDataPoint( XMLHelper<string>::getAttr( curr, "type" ) );
             currPoint->XMLParse( curr );
             addPoint( currPoint );
         } 

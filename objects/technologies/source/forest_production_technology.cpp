@@ -312,7 +312,7 @@ void ForestProductionTechnology::production( const string& aRegionName,
     // periods ago).
     output = calcSupply( aRegionName, aSectorName, aPeriod );
     marketplace->addToSupply( name, aRegionName, output, aPeriod );
-
+   
     // Set the input to be the land used.
     input = mLandAllocator->getLandAllocation( aSectorName, aPeriod );
 

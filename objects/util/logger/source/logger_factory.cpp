@@ -41,7 +41,7 @@ void LoggerFactory::XMLParse( const DOMNode* aRoot ){
 		
 		if( nodeName == "Logger" ) {
 			// get the Logger type.
-			string loggerType = XMLHelper<string>::getAttrString( curr, "type" );
+			string loggerType = XMLHelper<string>::getAttr( curr, "type" );
 			
 			// Add additional types here.
             Logger* newLogger = 0;

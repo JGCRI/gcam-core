@@ -139,7 +139,7 @@ void Region::XMLParse( const DOMNode* node ){
     assert( node );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttrString( node, "name" );
+    name = XMLHelper<string>::getAttr( node, "name" );
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
@@ -153,7 +153,7 @@ void Region::XMLParse( const DOMNode* node ){
             continue;
         }
         else if( nodeName == "PrimaryFuelCO2Coef" ) {
-            primaryFuelCO2Coef[ XMLHelper<string>::getAttrString( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
+            primaryFuelCO2Coef[ XMLHelper<string>::getAttr( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
         }
 
         else if( nodeName == Demographic::getXMLNameStatic() ){
@@ -282,7 +282,7 @@ void Region::XMLParse( const DOMNode* node ){
                     continue;
                 }
                 else if( nodeNameChild == "SectorName" ){
-                    sectorOrderList.push_back( XMLHelper<string>::getValueString( currChild ) );
+                    sectorOrderList.push_back( XMLHelper<string>::getValue( currChild ) );
                 }
                 else {
                     ILogger& mainLog = ILogger::getLogger( "main_log" );

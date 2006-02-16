@@ -117,7 +117,7 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
     assert( node );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttrString( node, "name" );
+    name = XMLHelper<string>::getAttr( node, "name" );
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
@@ -131,7 +131,7 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
             continue;
         }
 		else if( nodeName == "market" ){
-            market = XMLHelper<string>::getValueString( curr ); // should be only one market
+            market = XMLHelper<string>::getValue( curr ); // should be only one market
         }
         else if( nodeName == "isFixedTax" ) {
             isFixedTax = XMLHelper<bool>::getValue( curr );

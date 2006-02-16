@@ -104,8 +104,8 @@ void Logger::XMLParse( const DOMNode* aNode ){
 	// assume we were passed a valid node.
 	assert( aNode );
 	
-	mName = XMLHelper<string>::getAttrString( aNode, "name" );
-	mType = XMLHelper<string>::getAttrString( aNode, "type" );
+	mName = XMLHelper<string>::getAttr( aNode, "name" );
+	mType = XMLHelper<string>::getAttr( aNode, "type" );
 	// get the children of the node.
 	DOMNodeList* nodeList = aNode->getChildNodes();
 
@@ -115,7 +115,7 @@ void Logger::XMLParse( const DOMNode* aNode ){
 		string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 		
 		if ( nodeName == "FileName" ){
-			mFileName = XMLHelper<string>::getValueString( curr );
+			mFileName = XMLHelper<string>::getValue( curr );
 		}
 		else if ( nodeName == "printLogWarningLevel" ) {
 			mPrintLogWarningLevel = XMLHelper<bool>::getValue( curr );
@@ -128,7 +128,7 @@ void Logger::XMLParse( const DOMNode* aNode ){
 			mMinToScreenWarningLevel = static_cast<WarningLevel>( XMLHelper<int>::getValue( curr ) );
 		}
 		else if ( nodeName == "headerMessage" ) {
-			mHeaderMessage = XMLHelper<string>::getValueString( curr );
+			mHeaderMessage = XMLHelper<string>::getValue( curr );
 		}
 	}
 }

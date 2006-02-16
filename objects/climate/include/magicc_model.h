@@ -55,9 +55,6 @@ public:
     virtual double getConcentration( const std::string& aGasName,
                                      const int aYear ) const;
 
-    virtual double getConcentration( const int aYear, 
-                                     const std::string& aGasName ) const;
-
     virtual double getTemperature( const int aYear ) const;
     
     virtual double getForcing( const std::string& aGasName,
@@ -66,6 +63,7 @@ public:
     virtual double getTotalForcing( const int aYear ) const;
 
     double getNetTerrestrialUptake( const int aYear ) const;
+
     double getNetOceanUptake( const int aYear ) const;
 
     virtual void printFileOutput() const;

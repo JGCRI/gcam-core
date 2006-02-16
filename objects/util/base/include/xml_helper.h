@@ -32,6 +32,9 @@
 #include <xercesc/dom/DOMException.hpp>
 #include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
+
+#include "boost/lexical_cast.hpp"
+
 #include "util/base/include/model_time.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
@@ -79,9 +82,7 @@ template<class T>
 class XMLHelper {
 public:
    static T getValue( const xercesc::DOMNode* node );
-   static std::string getValueString( const xercesc::DOMNode* node );
    static T getAttr( const xercesc::DOMNode* node, const std::string attrName );
-   static std::string getAttrString( const xercesc::DOMNode* node, const std::string attrName );
    static std::string safeTranscode( const XMLCh* toTranscode );
    static void insertValueIntoVector( const xercesc::DOMNode* node, std::vector<T>& insertToVector,
                                       const Modeltime* modeltime );
@@ -102,12 +103,9 @@ private:
 * It then converts the data using the stringstream library into the requested data type and returns the value.
 * The function will throw an error if the input node is not an element, but will return the default value if the element has no data value. 
 * \warning Since this function has a templated type only for the return argument, it must be called as getXMLValue<type>.
-* \warning If the value is a string and there might be spaces in it getXMLValueString must be used. 
 * \param node A pointer to a node for which to return the value.
 * \return Value of type T from child of node.
-* \sa getValueString
 * \sa getAttr
-* \sa getAttrString
 */
 template<class T>
 T XMLHelper<T>::getValue( const xercesc::DOMNode* node ){
@@ -122,42 +120,21 @@ T XMLHelper<T>::getValue( const xercesc::DOMNode* node ){
    if ( !curr || curr->getNodeType() != xercesc::DOMNode::TEXT_NODE ){
       return T();
    }
-   else {
-      // convert the returned string to the return type.
-      std::istringstream target( safeTranscode( curr->getNodeValue() ) );
-      T retValue;
-      target >> retValue; // Variable of requested type which will hold the return value.
-      return retValue;
-   }
-}
 
-/*! \brief Returns the string value associated with the element node.
-* \details This function first finds the child node of this element, a text node which contains the data value.
-* It then returns the string associated with the data value
-* The function will throw an error if the input node is not an element, but will return the default value if the element has no data value. 
-* \warning This function must be used for strings which might contain a space instead of the templated version becuase of conversion problems.
-* \param node A pointer to a node for which to return the value.
-* \return string from child of node.
-* \sa getValue
-* \sa getAttr
-* \sa getAttrString
-*/
-template<class T>
-std::string XMLHelper<T>::getValueString( const xercesc::DOMNode* node ) {
-   // make sure we were passed a valid node reference which is an element.
-   assert( node ); 
-   assert( node->getNodeType() == xercesc::DOMNode::ELEMENT_NODE );
-   
-   // get the first child, which should contain the value.
-   xercesc::DOMNode* curr = node->getFirstChild();
-   
-   // make sure that the above returned a TEXT_NODE, otherwise value will not be correct.
-   if ( !curr || curr->getNodeType() != xercesc::DOMNode::TEXT_NODE ){
-      return "";
+   // Attempt to convert the XML string to the appropriate type. This uses the
+   // boost library lexical_cast operation, which is similar to the C++
+   // static_cast, but allows conversion from a string into its numerical value.
+   // This operation will fail if the string cannot be converted into the
+   // expected type, in which case this function will return the default value
+   // of the type.
+   T returnValue;
+   try {
+       returnValue = boost::lexical_cast<T>( safeTranscode( curr->getNodeValue() ) );
    }
-   else {
-      return safeTranscode( curr->getNodeValue() );
+   catch( boost::bad_lexical_cast& ) {
+       std::cout << "Cast of node value to return type failed." << std::endl;
    }
+   return returnValue;
 }
 
 /*! Returns the requested attribute of the element node passed to the function.
@@ -166,13 +143,10 @@ std::string XMLHelper<T>::getValueString( const xercesc::DOMNode* node ) {
 * it will throw an error. If the requested attribute is not present, the function will return the default
 * constructor for type T. (zero for doubles, or false for boolean)
 * \warning It must be called as getXMLValue<type> because it is templated only on the return type.
-* \warning If the attribute is a string and there might be spaces in it getXMLAttrString must be used.
 * \param node A pointer to a node for which to fetch the attribute.
 * \param attrName The name of the attribute to fetch.
 * \return Value of type T from the attribute with name attrName of the node.
-* \sa getAttrString
 * \sa getValue
-* \sa getValueString
 */
 template<class T>
 T XMLHelper<T>::getAttr( const xercesc::DOMNode* node, const std::string attrName ) {
@@ -190,53 +164,26 @@ T XMLHelper<T>::getAttr( const xercesc::DOMNode* node, const std::string attrNam
    XMLCh* nameChars = xercesc::XMLString::transcode( attrName.c_str() );
    xercesc::DOMAttr* nameAttr = element->getAttributeNode( nameChars );
    xercesc::XMLString::release( &nameChars );
+  
+   // Check if the name attribute exists.
    if( !nameAttr ){
       return T();
    }
-   else {
-      // convert the returned string to the return type
-      std::istringstream target( safeTranscode( nameAttr->getValue() ) );
-      T retValue; // Variable of requested type which will hold the return value.
-      target >> retValue;
-      return retValue;
-   }
-}
 
-/*! \brief Returns the requested attribute of the element node passed to the function.
-* \details This function searches for the attribute with name attrName of the argument node.
-* It will then return the string interpretation of the value. If the function is not passed an element
-* it will throw an error. If the requested attribute is not present, the function will return the empty string. 
-* \warning This function must be used instead of getXMLAttr<string> if there are spaces in the string.
-* \param node A pointer to a node for which to fetch the attribute.
-* \param attrName The name of the attribute to fetch.
-* \return String from the attribute with name attrName of the node.
-* \sa getAttr
-* \sa getValue
-* \sa getValueString
-*/
-template<class T>
-std::string XMLHelper<T>::getAttrString( const xercesc::DOMNode* node, const std::string attrName ) {
-   
-   /*! \pre Make sure we were passed a valid node reference. */
-   assert( node );
-   
-   /*! \pre Make sure it is an element before we cast, if function is used correctly it will be. */
-   assert( node->getNodeType() == xercesc::DOMNode::ELEMENT_NODE );
-   
-   // need to cast node to an element.
-   const xercesc::DOMElement* element = static_cast<const xercesc::DOMElement*>( node );
-   
-   // get the attribute with the name which was passed in.
-   XMLCh* tempChars = xercesc::XMLString::transcode( attrName.c_str() ); 
-   xercesc::DOMAttr* nameAttr = element->getAttributeNode( tempChars );
-   xercesc::XMLString::release( &tempChars );
-   
-   if( !nameAttr ){
-      return "";
+   // Attempt to convert the XML string to the appropriate type. This uses the
+   // boost library lexical_cast operation, which is similar to the C++
+   // static_cast, but allows conversion from a string into its numerical value.
+   // This operation will fail if the string cannot be converted into the
+   // expected type, in which case this function will return the default value
+   // of the type.
+   T returnValue;
+   try {
+       returnValue = boost::lexical_cast<T>( safeTranscode( nameAttr->getValue() ) );
    }
-   else {
-      return safeTranscode( nameAttr->getValue() );
+   catch( boost::bad_lexical_cast& ) {
+       std::cout << "Cast of attribute " << attrName << " to return type failed." << std::endl;
    }
+   return returnValue;
 }
 
 /*! 
@@ -286,7 +233,7 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
    
    // Check that the period is less than the size of the vector.
    assert( period < static_cast<int>( insertToVector.size() ) );
-   insertToVector[ period ] =  XMLHelper<double>::getValue( node );
+   insertToVector[ period ] =  XMLHelper<T>::getValue( node );
    
    if (fillout) {
       // Check that the max period is equal to the size of the vector.
@@ -677,7 +624,7 @@ void parseContainerNode( const xercesc::DOMNode* aNode,
     std::auto_ptr<U> newObjWrapper( aNewObject );
 
     // First determine if the node exists. 
-    const std::string objName = XMLHelper<std::string>::getAttrString( aNode, aIDAttr );
+    const std::string objName = XMLHelper<std::string>::getAttr( aNode, aIDAttr );
     
     // Search the insert to vector for an item with the name.
     typename std::vector<T*>::iterator iter = util::searchForValue( aContainerSet, objName );
@@ -744,7 +691,7 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
     std::auto_ptr<T> newNodePtr( newNode );
 
     // First determine if the node exists. 
-    const std::string objName = XMLHelper<std::string>::getAttrString( node, attrName );
+    const std::string objName = XMLHelper<std::string>::getAttr( node, attrName );
     std::map<std::string,int>::const_iterator iter = corrMap.find( objName );
    
     // Determine if we should be deleting a node. 
@@ -827,7 +774,7 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
             // Perform deletion.
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Deleting node: " << XMLHelper<std::string>::getAttrString( aNode, aAttrName ) << std::endl;
+            mainLog << "Deleting node: " << XMLHelper<std::string>::getAttr( aNode, aAttrName ) << std::endl;
             aContainer.reset( 0 );
         }
         // Otherwise modify node. 
@@ -840,13 +787,13 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
         if( shouldDelete ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Could not delete node " << XMLHelper<std::string>::getAttrString( aNode, aAttrName )
+            mainLog << "Could not delete node " << XMLHelper<std::string>::getAttr( aNode, aAttrName )
                     << " as it does not exist." << std::endl;
         } 
         else if( XMLHelper<bool>::getAttr( aNode, "nocreate" ) ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
-            mainLog << "Did not create node " << XMLHelper<std::string>::getAttrString( aNode, aAttrName )
+            mainLog << "Did not create node " << XMLHelper<std::string>::getAttr( aNode, aAttrName )
                     << " as the nocreate input flag was set." << std::endl;
         }
         else {

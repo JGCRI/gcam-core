@@ -122,7 +122,7 @@ void Ghg::XMLParse(const DOMNode* node) {
     assert( node );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttrString( node, "name" );
+    name = XMLHelper<string>::getAttr( node, "name" );
     DOMNodeList* nodeList = node->getChildNodes();
 
     for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
@@ -133,7 +133,7 @@ void Ghg::XMLParse(const DOMNode* node) {
             continue;
         }
         else if( nodeName == "unit"){
-            unit = XMLHelper<string>::getValueString( curr );
+            unit = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "inputEmissions" ){
             inputEmissions = XMLHelper<double>::getValue( curr );
@@ -179,7 +179,7 @@ void Ghg::XMLParse(const DOMNode* node) {
         }
         // fixed storage cost read in from data
         else if( nodeName == "storageCost" ){
-            storageName = XMLHelper<string>::getAttrString( curr, "name" );
+            storageName = XMLHelper<string>::getAttr( curr, "name" );
             storageCost = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "GWP" ){

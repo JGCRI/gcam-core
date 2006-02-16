@@ -42,7 +42,7 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
     assert( tempNode );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttrString( tempNode, "name" );
+    name = XMLHelper<string>::getAttr( tempNode, "name" );
     DOMNodeList* tempNodeLst = tempNode->getChildNodes();
 
     for( unsigned int i = 0; i < tempNodeLst->getLength(); ++i ) {

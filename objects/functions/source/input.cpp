@@ -54,7 +54,7 @@ void Input::XMLParse( const xercesc::DOMNode* node ) {
     assert( node );
 
     // get the name attribute.
-    mName = XMLHelper<string>::getAttrString( node, "name" );
+    mName = XMLHelper<string>::getAttr( node, "name" );
 
     // get all child nodes.
     const DOMNodeList* nodeList = node->getChildNodes();

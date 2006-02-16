@@ -58,7 +58,7 @@ void AgeCohort::XMLParse( const xercesc::DOMNode* node ){
     // make sure we were passed a valid node.
     assert( node );
 
-    ageGroup = XMLHelper<string>::getAttrString( node, "ageGroup" );
+    ageGroup = XMLHelper<string>::getAttr( node, "ageGroup" );
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
@@ -92,7 +92,7 @@ void AgeCohort::XMLParse( const xercesc::DOMNode* node ){
 bool AgeCohort::parseGender( DOMNode* aNode ) {
     // We could either be parsing out of the "type" attribute
     // or the element name itself.
-    string type = XMLHelper<string>::getAttrString( aNode, "type" );
+    string type = XMLHelper<string>::getAttr( aNode, "type" );
     if( type == "" ){
         type = XMLHelper<string>::safeTranscode( aNode->getNodeName() );
     }

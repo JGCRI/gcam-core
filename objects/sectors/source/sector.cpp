@@ -114,7 +114,7 @@ void Sector::XMLParse( const DOMNode* node ){
     assert( node );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttrString( node, "name" );
+    name = XMLHelper<string>::getAttr( node, "name" );
 
     // Temporary code to warn about no longer read-in demand sector
     // perCapitaBasedString. TODO: Remove this warning.

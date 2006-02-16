@@ -70,7 +70,7 @@ void Resource::XMLParse( const DOMNode* node ){
 	assert( node );
 
 	// get the name attribute.
-	name = XMLHelper<string>::getAttrString( node, "name" );
+	name = XMLHelper<string>::getAttr( node, "name" );
 
 	// get all child nodes.
 	nodeList = node->getChildNodes();
@@ -85,7 +85,7 @@ void Resource::XMLParse( const DOMNode* node ){
 		}
 
 		else if( nodeName == "market" ){
-			market = XMLHelper<string>::getValueString( curr ); // only one market element.
+			market = XMLHelper<string>::getValue( curr ); // only one market element.
 		}
 		else if( nodeName == "price" ){
 			XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );

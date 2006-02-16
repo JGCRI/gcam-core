@@ -41,15 +41,17 @@ public:
 	/*! \brief Read in any data needed for this climate model.
 	* \details Climate model is not required to read in data
     */
-    virtual void XMLParse( const xercesc::DOMNode* node ) {}
+    virtual void XMLParse( const xercesc::DOMNode* node ) = 0;
     
 	/*! \brief Write out any data needed for this climate model.
     */
-	virtual void toInputXML( std::ostream& out, Tabs* tabs ) const {}
+	virtual void toInputXML( std::ostream& out,
+                             Tabs* tabs ) const = 0;
     
 	/*! \brief Write out debugging info for this climate model.
     */
-	virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const {}
+	virtual void toDebugXML( const int period, std::ostream& out,
+                             Tabs* tabs ) const = 0;
 
 	/*! \brief Complete the initialization of the climate model.
 	* \details Completes the initialization of the climate model, which must be
@@ -73,7 +75,8 @@ public:
 	* \param aEmission The level of emissions to set.
 	* \return Whether the value was set correctly.
     */
-    virtual bool setEmissions( const std::string& aGasName, const int aPeriod,
+    virtual bool setEmissions( const std::string& aGasName,
+                               const int aPeriod,
 		                       const double aEmission ) = 0;
 
 	/*! \brief Run the climate model.
@@ -98,18 +101,6 @@ public:
     */
     virtual double getConcentration( const std::string& aGasName,
                                      const int aYear ) const = 0;
-
-    /*! \brief Version of getConcentration that operates only on model year
-    * \details Queries the climate model for the concentration for a given gas
-    *          and period and returns the value. If the climate model is
-    *          unavailable or the gas is unknown the value returned is -1.
-    * \param aGasName The name of the gas for which to return the concentration.
-    * \param aYear The year for which to return the concentration.
-    * \return The concentration for the period, -1 if the climate model is
-    *         unavailable.
-    */
-    virtual double getConcentration( const int aPeriod,
-                                     const std::string& aGasName ) const = 0;
 
     /*! \brief Returns the temperature in a given period from the climate model.
     * \details Queries the climate model for the temperature for a given period
@@ -140,7 +131,7 @@ public:
     *          a period and returns the value. If the climate model is
     *          unavailable the value returned is -1.
     * \param aYear The year for which to return the total forcing.
-    * \return The forcint for the period, -1 if the climate model is
+    * \return The forcing for the period, -1 if the climate model is
     *         unavailable.
     */
     virtual double getTotalForcing( const int aYear ) const = 0;
@@ -166,7 +157,8 @@ public:
     *        periods.
     * \pre The model must be run before the update can occur.
     */
-	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
+	virtual void accept( IVisitor* aVisitor,
+                         const int aPeriod ) const = 0;
 };
 
 // Inline definitions to avoid compiler warnings and errors.

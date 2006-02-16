@@ -82,7 +82,7 @@ bool Scenario::XMLParse( const DOMNode* node ){
     assert( node );
 
     // set the scenario name.
-    name = XMLHelper<string>::getAttrString( node, "name" );
+    name = XMLHelper<string>::getAttr( node, "name" );
 
     // get the children of the node.
     DOMNodeList* nodeList = node->getChildNodes();

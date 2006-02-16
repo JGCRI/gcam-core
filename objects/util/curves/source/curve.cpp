@@ -81,7 +81,7 @@ void Curve::toInputXML( ostream& out, Tabs* tabs ) const {
 //! Parse a curve from a DOM tree.
 void Curve::XMLParse( const xercesc::DOMNode* node ) {
     
-    name = XMLHelper<string>::getAttrString( node, "name" );
+    name = XMLHelper<string>::getAttr( node, "name" );
     xercesc::DOMNode* curr = 0;
     xercesc::DOMNodeList* nodeList; 
     string nodeName;
@@ -102,22 +102,22 @@ void Curve::XMLParse( const xercesc::DOMNode* node ) {
             continue;
         }
         else if ( nodeName == "title" ){
-            title = XMLHelper<string>::getValueString( curr );
+            title = XMLHelper<string>::getValue( curr );
         } 
         else if ( nodeName == "numericalLabel" ){
             numericalLabel = XMLHelper<double>::getValue( curr );
         } 
         else if ( nodeName == "xAxisLabel" ){
-            xAxisLabel = XMLHelper<string>::getValueString( curr );
+            xAxisLabel = XMLHelper<string>::getValue( curr );
         } 
         else if ( nodeName == "yAxisLabel" ){
-            yAxisLabel = XMLHelper<string>::getValueString( curr );
+            yAxisLabel = XMLHelper<string>::getValue( curr );
         } 
         else if ( nodeName == "xAxisUnits" ){
-            xAxisUnits = XMLHelper<string>::getValueString( curr );
+            xAxisUnits = XMLHelper<string>::getValue( curr );
         } 
         else if ( nodeName == "yAxisUnits" ){
-            yAxisUnits = XMLHelper<string>::getValueString( curr );
+            yAxisUnits = XMLHelper<string>::getValue( curr );
         } 
         else if ( XMLParseDerived( curr ) ){
             // Do nothing, action was taken care of in the derived parse. 

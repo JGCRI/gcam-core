@@ -175,13 +175,13 @@ void technology::XMLParse( const DOMNode* node ) {
             continue;
         }
         else if( nodeName == "name" ) {
-            name = XMLHelper<string>::getValueString( curr );
+            name = XMLHelper<string>::getValue( curr );
         } 
         else if( nodeName == "year" ){
             year = XMLHelper<int>::getValue( curr );
         }
         else if( nodeName == "fuelname" ){
-            fuelname = XMLHelper<string>::getValueString( curr );
+            fuelname = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "sharewt" ){
             shrwts = XMLHelper<double>::getValue( curr );

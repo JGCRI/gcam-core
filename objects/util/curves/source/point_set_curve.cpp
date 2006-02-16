@@ -319,7 +319,7 @@ bool PointSetCurve::XMLParseDerived( const xercesc::DOMNode* node ) {
         nodeParsed = true;
         // First clear the existing pointset to prevent a memory leak.
         delete pointSet;
-        pointSet = PointSet::getPointSet( XMLHelper<string>::getAttrString( node, "type" ) );
+        pointSet = PointSet::getPointSet( XMLHelper<string>::getAttr( node, "type" ) );
         pointSet->XMLParse( node );
     }
     return nodeParsed;

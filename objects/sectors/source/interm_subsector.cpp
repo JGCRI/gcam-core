@@ -78,7 +78,7 @@ bool IntermittentSubsector::XMLDerivedClassParse( const string& aNodeName,
         resourceTechNumber = XMLHelper<int>::getValue( aCurr );
     }
     else if( aNodeName == "electricSectorName" ){
-        electricSectorName = XMLHelper<string>::getValueString( aCurr );
+        electricSectorName = XMLHelper<string>::getValue( aCurr );
     }
 	else {
         return false;

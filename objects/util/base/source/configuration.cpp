@@ -61,14 +61,14 @@ bool Configuration::XMLParse( const DOMNode* root ) {
 				continue;
 			}
 
-			const string valueName = XMLHelper<string>::getAttrString( currValueNode, XMLHelper<void>::name() );
+			const string valueName = XMLHelper<string>::getAttr( currValueNode, XMLHelper<void>::name() );
 			
 			if( sectionName == "Files" ){
-				fileMap[ valueName ] = XMLHelper<string>::getValueString( currValueNode );
+				fileMap[ valueName ] = XMLHelper<string>::getValue( currValueNode );
 			}
 			
 			else if(  sectionName == "Strings" ) {
-				stringMap[ valueName ] = XMLHelper<string>::getValueString( currValueNode );
+				stringMap[ valueName ] = XMLHelper<string>::getValue( currValueNode );
 			}
 			
 			else if(  sectionName == "Bools" ) {
@@ -83,7 +83,7 @@ bool Configuration::XMLParse( const DOMNode* root ) {
 				doubleMap[ valueName ] = XMLHelper<double>::getValue( currValueNode );
 			}
             else if( sectionName == "ScenarioComponents" ){
-                scenarioComponents.push_back( XMLHelper<string>::getValueString( currValueNode ) );
+                scenarioComponents.push_back( XMLHelper<string>::getValue( currValueNode ) );
             }
 			else {
                 cout << "Unrecognized text string: " << sectionName << " found while parsing configuration." << endl;

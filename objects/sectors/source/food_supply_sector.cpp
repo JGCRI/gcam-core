@@ -49,7 +49,7 @@ bool FoodSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNo
         calPrice = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == "market" ){
-        mMarketName = XMLHelper<string>::getValueString( curr );
+        mMarketName = XMLHelper<string>::getValue( curr );
     }
     else if( !SupplySector::XMLDerivedClassParse( nodeName, curr ) ) {
         return false;
