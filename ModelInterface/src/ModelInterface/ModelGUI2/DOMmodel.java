@@ -55,9 +55,14 @@ public class DOMmodel implements TreeModel {
 	 * @return the child node as requested.
 	 */
 	public Object getChild(Object parent, int index) {
-		Node n = ((DOMNodeAdapter)parent).getNode().getChildNodes().item(index);
 		int childCount = ((DOMNodeAdapter)parent).getNode().getChildNodes().getLength();
-		while(index < childCount && n.getNodeType() == Node.COMMENT_NODE) {
+		if(index < 0 || index >= childCount) {
+			return null;
+		}
+		Node n = ((DOMNodeAdapter)parent).getNode().getChildNodes().item(index);
+		Object nPrev = getChild(parent, index -1);
+		while(index < childCount && n.getNodeType() == Node.COMMENT_NODE || n == nPrev) {
+			//nPrev = n;
 			n = ((DOMNodeAdapter)parent).getNode().getChildNodes().item(++index);
 		}
 		return new DOMNodeAdapter(n);
