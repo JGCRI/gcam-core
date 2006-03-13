@@ -245,6 +245,13 @@ void Subsector::XMLParse( const DOMNode* node ) {
                         }
                         else if( childNodeName == technology::getXMLNameStatic2D() ){
                             int thisPeriod = XMLHelper<void>::getNodePeriod( currChild, modeltime );
+                            // While the vector for this technology has already
+                            // been created, this particular time period may not
+                            // have been initialized. Create the technology for
+                            // the given year if it does not exist.
+                            if( !(*techPosition)[ thisPeriod ] ){
+                                (*techPosition)[ thisPeriod ] = createChild( nodeName );
+                            }
                             (*techPosition)[ thisPeriod ]->XMLParse( currChild );
                         }
                     }
