@@ -318,13 +318,6 @@ const string& BatchRunner::getXMLNameStatic(){
 * \return The internal scenario.
 */
 Scenario* BatchRunner::getInternalScenario(){
-    return mInternalRunner->getInternalScenario();
-}
-
-/*! \brief Get the internal scenario.
-* \return The internal scenario.
-*/
-Scenario* BatchRunner::getInternalScenario(){
     // The internal scenario runner is not set up until setupScenario is called.
     if( mInternalRunner.get() ){
         return mInternalRunner->getInternalScenario();
