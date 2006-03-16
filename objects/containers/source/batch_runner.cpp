@@ -322,8 +322,12 @@ Scenario* BatchRunner::getInternalScenario(){
 }
 
 /*! \brief Get the internal scenario.
-* \return Constant pointer to the internal scenario.
+* \return The internal scenario.
 */
-const Scenario* BatchRunner::getInternalScenario() const {
-    return mInternalRunner->getInternalScenario();
+Scenario* BatchRunner::getInternalScenario(){
+    // The internal scenario runner is not set up until setupScenario is called.
+    if( mInternalRunner.get() ){
+        return mInternalRunner->getInternalScenario();
+    }
+    return 0;
 }
