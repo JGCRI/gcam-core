@@ -324,3 +324,14 @@ Scenario* BatchRunner::getInternalScenario(){
     }
     return 0;
 }
+
+/*! \brief Get the internal scenario.
+* \return The internal scenario.
+*/
+const Scenario* BatchRunner::getInternalScenario() const {
+    // The internal scenario runner is not set up until setupScenario is called.
+    if( mInternalRunner.get() ){
+        return mInternalRunner->getInternalScenario();
+    }
+    return 0;
+}
