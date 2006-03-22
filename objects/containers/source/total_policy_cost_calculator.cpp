@@ -317,7 +317,7 @@ void TotalPolicyCostCalculator::writeToCSV() const {
     tempOutVec.resize( maxPeriod );
     for( CRegionalCostsIterator iter = mRegionalCosts.begin(); iter != mRegionalCosts.end(); iter++ ){
         // regional total cost of policy
-        tempOutVec[maxPeriod-1] = iter->second * CVRT_75_TO_90;
+        tempOutVec[maxPeriod-1] = iter->second;
         fileoutput3(iter->first,"PolicyCost","","PolicyCostTotalUndisc","AllYears","(millions)90US$",tempOutVec);
     }
 
@@ -327,7 +327,7 @@ void TotalPolicyCostCalculator::writeToCSV() const {
     typedef map<const string,double>::const_iterator constDoubleMapIter;
     for( constDoubleMapIter iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
         // regional total cost of policy
-        tempOutVec[maxPeriod-1] = iter->second * CVRT_75_TO_90;
+        tempOutVec[maxPeriod-1] = iter->second;
         fileoutput3(iter->first,"PolicyCost","","PolicyCostTotalDisc","AllYears","(millions)90US$",tempOutVec);
     }
 }
