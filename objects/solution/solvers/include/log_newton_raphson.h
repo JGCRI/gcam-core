@@ -12,6 +12,15 @@
 * \author Josh Lurz
 */
 #include <string>
+
+// Turn off MTL warnings.
+#if defined(_MSC_VER)          
+#pragma warning( push )
+#pragma warning( disable: 4275 )
+#pragma warning( disable: 4267 )
+#pragma warning( disable: 4244 )
+#endif
+
 #include <mtl/matrix.h>
 typedef mtl::matrix<double, mtl::rectangle<>, mtl::dense<>, mtl::row_major>::type Matrix;
 
@@ -42,5 +51,10 @@ protected:
 
     double mDeltaPrice; //!< The amount to adjust prices by when calculation derivatives.
 };
+
+// Restore normal compiler warnings.
+#if defined(_MSC_VER)
+#pragma warning( pop )
+#endif
 
 #endif // _NEWTON_RAPHSON_H_

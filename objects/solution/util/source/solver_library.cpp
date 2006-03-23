@@ -5,7 +5,15 @@
 * \author Josh Lurz
 */
 #include "util/base/include/definitions.h"
-__IGNORE_MTL_WARNINGS__
+
+// Turn off MTL warnings.
+#if defined(_MSC_VER)          
+#pragma warning( push )
+#pragma warning( disable: 4275 )
+#pragma warning( disable: 4267 )
+#pragma warning( disable: 4244 )
+#endif
+
 #include <mtl/mtl.h>
 #include <mtl/utils.h>
 #include <mtl/lu.h>
@@ -685,4 +693,7 @@ void SolverLibrary::restorePrices( SolverInfoSet& aSolverSet, const vector<doubl
     }
 }
 
-
+// Restore normal compiler warnings.
+#if defined(_MSC_VER)
+#pragma warning( pop )
+#endif

@@ -26,15 +26,6 @@
 //! A flag which turns on or off the compilation of the XML database code.
 #define __USE_XML_DB__ 1
 
-// Turn off MTL warnings.
-#undef __IGNORE_MTL_WARNINGS__
-#define __IGNORE_MTL_WARNINGS__
-#if defined(_MSC_VER)
-#pragma warning( disable: 4275 )
-#pragma warning( disable: 4267 )
-#pragma warning( disable: 4244 )
-#endif
-
 // This allows for memory leak debugging.
 #if defined(_MSC_VER)
 #   ifdef _DEBUG
