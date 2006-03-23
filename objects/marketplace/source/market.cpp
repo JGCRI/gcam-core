@@ -616,7 +616,7 @@ const string& Market::convertTypeToString( const IMarketType::Type aType ) {
                                     "GHG", "Trial-Value", "Demand", "Price" };
 
     // Check that the types array is up to date.
-    assert( sizeof( types ) == IMarketType::END );
+    assert( sizeof( types ) / sizeof( types[ 0 ] ) == IMarketType::END );
 
     return types[ aType ];
 }
