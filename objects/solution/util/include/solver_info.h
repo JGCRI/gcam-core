@@ -9,8 +9,6 @@
 * \ingroup Solution
 * \brief The header file for the SolverInfo class.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -21,7 +19,7 @@ class Market;
 class SolverInfoSet;
 class SupplyDemandCurve;
 namespace objects {
-	class Atom;
+    class Atom;
 }
 
 /*!
@@ -78,7 +76,7 @@ public:
     void setBisectedFlag();
     void unsetBisectedFlag();
     bool hasBisected() const;
-	const std::vector<const objects::Atom*>& getContainedRegions() const;
+    const std::vector<const objects::Atom*>& getContainedRegions() const;
     SupplyDemandCurve createSDCurve();
     void printDerivatives( std::ostream& aOut ) const;
     /*!
@@ -98,19 +96,19 @@ public:
         }
     };
 private:
-    bool bracketed;	//!< Bracketed or unbracketed.
+    bool bracketed; //!< Bracketed or unbracketed.
     bool mBisected;
     Market* linkedMarket; //!< Linked market. 
-    double X;		//!< unknown, price.
+    double X;       //!< unknown, price.
     double storedX;      //!< previous unknown.
     double demand;  //!< demand for X.
     double storedDemand; //!< previous demand for X.
     double supply; //!< supply for X
     double storedSupply; //!< previous supply for X.
-    double XL;		//!< left bracket
-    double XR;		//!< right bracket
-    double EDL;		//!< excess demand for left bracket
-    double EDR;		//!< excess demand for right bracket
+    double XL;      //!< left bracket
+    double XR;      //!< right bracket
+    double EDL;     //!< excess demand for left bracket
+    double EDR;     //!< excess demand for right bracket
     std::vector<double> demandElasticities; //!< demand elasticities
     std::vector<double> supplyElasticities; //!< supply elasticities
     void print( std::ostream& out ) const;

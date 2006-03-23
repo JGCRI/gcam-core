@@ -9,8 +9,6 @@
 * \ingroup Solution
 * \brief The header file for the SolverInfoSet class.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include <vector>
 #include "solution/util/include/solver_info.h" // Maybe use pointer instead.

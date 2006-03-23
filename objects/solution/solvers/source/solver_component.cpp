@@ -3,8 +3,6 @@
 * \ingroup objects
 * \brief SolverComponent class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"

@@ -10,8 +10,6 @@
 * \brief This is the header file for the BisectOne solver component class.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include <string>
 

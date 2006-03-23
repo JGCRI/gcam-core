@@ -9,8 +9,6 @@
 * \ingroup Solution
 * \brief The header file for the CalcCounter class.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>

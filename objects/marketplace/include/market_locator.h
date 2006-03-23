@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The MarketLocator class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -45,67 +43,67 @@ template <class T, class U> class HashMap;
 class MarketLocator
 {
 public:
-	MarketLocator();
-	~MarketLocator();
-	int addMarket( const std::string& aMarket, const std::string& aRegion, const std::string& aGoodName,
-		const int aUniqueNumber );
-	int getMarketNumber( const std::string& aRegion, const std::string& aGoodName ) const;
+    MarketLocator();
+    ~MarketLocator();
+    int addMarket( const std::string& aMarket, const std::string& aRegion, const std::string& aGoodName,
+        const int aUniqueNumber );
+    int getMarketNumber( const std::string& aRegion, const std::string& aGoodName ) const;
 
-	//! An identifier returned by the various functions if the market does not
-	//! exist.
-	static const int MARKET_NOT_FOUND = -1;
+    //! An identifier returned by the various functions if the market does not
+    //! exist.
+    static const int MARKET_NOT_FOUND = -1;
 private:
-	int getMarketNumberInternal( const std::string& aRegion, const std::string& aGoodName ) const;
+    int getMarketNumberInternal( const std::string& aRegion, const std::string& aGoodName ) const;
 
-	/*! \brief A single node in a list of goods which contains the name of the
-	*          good and its market location.
-	*/
-	class GoodNode {
-	public:
-		GoodNode( const std::string& aName, int aMarketNumber );
+    /*! \brief A single node in a list of goods which contains the name of the
+    *          good and its market location.
+    */
+    class GoodNode {
+    public:
+        GoodNode( const std::string& aName, int aMarketNumber );
 
-		//! The good name.
-		const std::string mName;
+        //! The good name.
+        const std::string mName;
 
-		//! The market number.
-		const int mNumber;
-	};
+        //! The market number.
+        const int mNumber;
+    };
 
-	/*! \brief A single node in a list of Regions or Markets which contains the
-	*          name of the Region or Market and a list of good names and market
-	*          locations. 
-	*/
-	class RegionOrMarketNode {
-	public:
-		RegionOrMarketNode( const std::string& aName );
-		~RegionOrMarketNode();
-		inline const std::string& getName() const;
-		int addGood( const std::string& aGoodName, const int aMarketNumber );
-		int getMarketNumber( const std::string& aGoodName ) const;
-	private:
-		//! The type of the list that contains the goods.
-		typedef HashMap<std::string, boost::shared_ptr<GoodNode> > SectorNodeList;
+    /*! \brief A single node in a list of Regions or Markets which contains the
+    *          name of the Region or Market and a list of good names and market
+    *          locations. 
+    */
+    class RegionOrMarketNode {
+    public:
+        RegionOrMarketNode( const std::string& aName );
+        ~RegionOrMarketNode();
+        inline const std::string& getName() const;
+        int addGood( const std::string& aGoodName, const int aMarketNumber );
+        int getMarketNumber( const std::string& aGoodName ) const;
+    private:
+        //! The type of the list that contains the goods.
+        typedef HashMap<std::string, boost::shared_ptr<GoodNode> > SectorNodeList;
 
-		//! A list of sectors contained by this market or region.
-		std::auto_ptr<SectorNodeList> mSectorNodeList;
-		
-		//! The region or market area name.
-		const std::string mName;
-	};
+        //! A list of sectors contained by this market or region.
+        std::auto_ptr<SectorNodeList> mSectorNodeList;
+        
+        //! The region or market area name.
+        const std::string mName;
+    };
 
-	//! The type of the lists of regions or markets.
-	typedef HashMap<std::string, boost::shared_ptr<RegionOrMarketNode> > RegionMarketList;
+    //! The type of the lists of regions or markets.
+    typedef HashMap<std::string, boost::shared_ptr<RegionOrMarketNode> > RegionMarketList;
 
-	//! A pointer to the last region looked up.
-	mutable const RegionOrMarketNode* mLastRegionLookup;
+    //! A pointer to the last region looked up.
+    mutable const RegionOrMarketNode* mLastRegionLookup;
 
-	//! A list of market areas each containing a list of sectors contained by
-	//! the market.
-	std::auto_ptr<RegionMarketList> mMarketList;
+    //! A list of market areas each containing a list of sectors contained by
+    //! the market.
+    std::auto_ptr<RegionMarketList> mMarketList;
 
-	//! A list of regions each containing a list of of sectors contained by the
-	//! region.
-	std::auto_ptr<RegionMarketList> mRegionList;
+    //! A list of regions each containing a list of of sectors contained by the
+    //! region.
+    std::auto_ptr<RegionMarketList> mRegionList;
 };
 
 // Inline definitions.
@@ -113,7 +111,7 @@ private:
 * \return The name of the RegionOrMarketNode.
 */
 const std::string& MarketLocator::RegionOrMarketNode::getName() const {
-	return mName;
+    return mName;
 }
 
 #endif // _MARKET_LOCATOR_H_

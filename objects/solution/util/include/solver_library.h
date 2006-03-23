@@ -10,8 +10,6 @@
 * \brief A file containing the header for the static SolverLibrary class which
 *        contains helper methods used by SolverComponents.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #if defined(_MSC_VER)
 #pragma warning( disable: 4275 )
@@ -30,7 +28,7 @@ class World;
 class SolverInfo;
 class SolverInfoSet;
 namespace objects {
-	class Atom;
+    class Atom;
 }
 /*!
 * \ingroup Objects
@@ -58,14 +56,14 @@ public:
    
    static void updateMatrices( SolverInfoSet& sol, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
    
-   static void calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
+   static bool calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
    
    static bool bracketAll( Marketplace* marketplace, World* world, const double bracketInterval,
                            const double aSolutionTolerance, const double aSolutionFloor,
                            SolverInfoSet& sol, const int period );
    
 private:
-	typedef std::map<const objects::Atom*, std::vector<double> > RegionalMarketValues;
+    typedef std::map<const objects::Atom*, std::vector<double> > RegionalMarketValues;
     
     //! A simple struct to link Supplies and Demands.
     struct RegionalSDDifferences {
@@ -89,6 +87,9 @@ private:
     
     static const RegionalSDDifferences calcRegionalSDDifferences( Marketplace* marketplace, World* world,
         SolverInfoSet& sol, const int per );
+
+    static std::vector<double> storePrices( const SolverInfoSet& aSolverSet );
+    static void restorePrices( SolverInfoSet& aSolverSet, const std::vector<double>& aPrices );
 };
 
 #endif // _SOLVER_LIBRARY_H_

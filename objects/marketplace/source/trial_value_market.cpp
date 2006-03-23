@@ -3,8 +3,6 @@
 * \ingroup CIAM
 * \brief The trial_value_market class header file.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -21,8 +19,8 @@ Market( goodNameIn, regionNameIn, periodIn ) {
 void TrialValueMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
 }
 
-string TrialValueMarket::getType() const {
-   return "TrialValueMarket";
+IMarketType::Type TrialValueMarket::getType() const {
+    return IMarketType::TRIAL_VALUE;
 }
 
 void TrialValueMarket::initPrice() {

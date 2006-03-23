@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief PriceMarket class source file.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -32,8 +30,8 @@ void PriceMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( demandMarketPointer->getName(), "LinkedDemandMarket", out, tabs );
 }
 
-string PriceMarket::getType() const {
-    return "PriceMarket";
+IMarketType::Type PriceMarket::getType() const {
+    return IMarketType::PRICE;
 }
 
 void PriceMarket::initPrice() {

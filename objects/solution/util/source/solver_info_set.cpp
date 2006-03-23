@@ -3,8 +3,6 @@
 * \ingroup Solution
 * \brief SolverInfoSet class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include <cassert>
 #include <algorithm>
@@ -20,13 +18,12 @@
 using namespace std;
 
 //! Constructor
-SolverInfoSet::SolverInfoSet( Marketplace* marketplace ){
+SolverInfoSet::SolverInfoSet( Marketplace* aMarketplace ):
+marketplace( aMarketplace ),
+period( 0 )
+{
     /*!\pre Marketplace is not null. */
-    assert( marketplace );
-
-    // Init the data members.
-    this->marketplace = marketplace;
-    period = 0;
+    assert( aMarketplace );
 }
 
 //! Initialize the SolverInfoSet and its SolverInfo's.
@@ -401,23 +398,36 @@ bool SolverInfoSet::isAllSolved( const double SOLUTION_TOLERANCE, const double E
     return true;
 }
 
-//! Print all unsolved markets.
-void SolverInfoSet::printUnsolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR, ostream& out ) {
-    out << "Currently unsolved markets: " << endl;
+/*! \brief Print all unsolved markets.
+* \details Searches through the lists of solvable and unsolvable markets and
+*          determines if any are not solved given aSolutionTolerance and
+*          aEDSolutionFloor. For all markets that are unsolved a set of
+*          information is printed.
+* \param aSolutionTolerance Solution tolerance to check against.
+* \param aEDSolutionFloor Excess demand solution floor to check against.
+* \param aOut Output stream to which to write warnings.
+*/
+void SolverInfoSet::printUnsolved( const double aSolutionTolerance,
+                                   const double aEDSolutionFloor,
+                                   ostream& aOut )
+{
+    aOut << "Currently unsolved markets: " << endl;
+    aOut << "Market, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand" << endl;
     // Check solvable first
     for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
-        if( !curr->isSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
-            out << *curr << endl;
+        if( !curr->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+            aOut << *curr << endl;
         }
     }
     
-    // Check unsolvable as well, they should have cleared
+    // Unsolvable markets must clear as well.
     for( SetIterator curr = unsolvable.begin(); curr != unsolvable.end(); ++curr ){
-        if( !curr->isSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
-            out << *curr << endl;
+        if( !curr->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+            aOut << *curr << endl;
         }
     }
 }
+
 void SolverInfoSet::unsetBisectedFlag(){
    for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
         curr->unsetBisectedFlag();
@@ -431,18 +441,10 @@ void SolverInfoSet::unsetBisectedFlag(){
 
 //! Print out all the SolutionInfo objects' information.
 void SolverInfoSet::print( ostream& out ) const {
-    // out << "Markets currently in the solvable set: " << endl;
-    out << endl << "Market, X, XL, XR, ED, EDL, EDR, bracketed,demand,supply" << endl;
+    out << endl << "Market, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand" << endl;
     for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         out << *iter << endl;
     }
-    /*
-    out << "Markets currently in the unsolvable set: " << endl;
-    out << endl << "Market, X, XL, XR, ED, EDL, EDR" << endl; 
-    for( ConstSetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
-        out << *iter << endl;
-    }
-    */
 }
 
 /*! \brief Utility function to print out market information for a specified market.
@@ -451,26 +453,35 @@ void SolverInfoSet::print( ostream& out ) const {
 * can be turned on from the configuration file
 *
 * \author Steve Smith
-* \param comment string to print after information
-* \param worldCalcCount iteration count
+* \param aLocation String describing from where the market is being printed.
+* \param aCalcCount Iteration count.
+* \param aOut Output stream.
 */
-void SolverInfoSet::printMarketInfo( const string& comment, const double worldCalcCount, ostream& out ) const {
+void SolverInfoSet::printMarketInfo( const string& aLocation,
+                                     const double aCalcCount,
+                                     ostream& aOut ) const
+{
     // Use statics here to avoid reinitialization.
     const static Configuration* conf = Configuration::getInstance();
     const static string monitorMarketGoodName = conf->getString( "monitorMktGood" );
 
-    if( monitorMarketGoodName != "" ){
-        const static string monitorMktGood = conf->getString( "monitorMktName" ) + monitorMarketGoodName;
+    if( !monitorMarketGoodName.empty() ){
+        const static string monitorMktGood = conf->getString( "monitorMktName" )
+                                             + monitorMarketGoodName;
+        
+        // TODO: Use find_if.
         for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
             if ( iter->getName() == monitorMktGood ) {
-                out << "Iter: " << worldCalcCount << ". " << *iter << " at " << comment << endl;
+                aOut << "Iter: " << aCalcCount << ". " << *iter << " at "
+                     << aLocation << endl;
                 return;
             }
         } // end for loop
 
         for( ConstSetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
             if ( iter->getName() == monitorMktGood ) {
-                out << "Iter: " << worldCalcCount << ". " << *iter << " at " << comment << endl;
+                aOut << "Iter: " << aCalcCount << ". " << *iter << " at "
+                     << aLocation << endl;
                 return;
             }
         } // end for loop

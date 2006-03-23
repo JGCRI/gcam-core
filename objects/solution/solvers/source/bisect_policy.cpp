@@ -3,8 +3,6 @@
 * \ingroup objects
 * \brief BisectPolicy class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -109,7 +107,7 @@ SolverComponent::ReturnCode BisectPolicy::solve( const double solutionTolerance,
                 solverSet.updateSolvable( false );
                 addIteration( worstSol->getName(), worstSol->getRelativeED( edSolutionFloor ) );
                 worstMarketLog << "BisectPolicy-MaxRelED: "  << *worstSol << endl;
-            } // end do loop		
+            } // end do loop        
             while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) &&
                 ( ++numIterations < maxIterations ) &&
                 !worstSol->isWithinTolerance( solutionTolerance, edSolutionFloor ) );

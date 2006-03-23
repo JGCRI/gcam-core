@@ -3,8 +3,6 @@
 * \ingroup objects
 * \brief BisectOne class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -118,7 +116,7 @@ SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, co
         solverSet.updateSolvable( false );
         addIteration( worstSol->getName(), worstSol->getRelativeED( edSolutionFloor ) );
         worstMarketLog << "BisectOne-MaxRelED: "  << *worstSol << endl;
-    } // end do loop		
+    } // end do loop        
     while ( isImproving( MAX_ITER_NO_IMPROVEMENT )
             && ++numIterations < maxIterations 
             && !worstSol->isSolved( solutionTolerance, edSolutionFloor ) );

@@ -1207,44 +1207,11 @@ void Region::initializeCalValues( const int period ) {
 
     typedef list<string>::const_iterator CI;
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-       // Now prepare to loop through all the fuels used by this sector.
-        auto_ptr<InputFinder> inputFinder( new InputFinder );
-        supplySector[ i ]->accept( inputFinder.get(), period );
-        const list<string>& sectorInputs = inputFinder->getInputs();
-        
         // Set default values for supply sector
         IInfo* marketInfo = marketplace->getMarketInfo( supplySector[ i ]->getName(), name, period, true );
         marketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
         marketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
         marketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
-        
-        // then for all fuels used by this sector
-        for( CI currInput = sectorInputs.begin(); currInput != sectorInputs.end(); ++currInput ){
-            IInfo* fuelMarketInfo = marketplace->getMarketInfo( *currInput, name, period, false );
-            // Fuel market may not exist.
-            if( fuelMarketInfo ){
-                fuelMarketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
-                fuelMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
-                fuelMarketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
-            }
-         }
-    }
-        
-    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-       // Now prepare to loop through all the fuels used by this sector
-        auto_ptr<InputFinder> inputFinder( new InputFinder );
-        demandSector[ i ]->accept( inputFinder.get(), period );
-        const list<string>& sectorInputs = inputFinder->getInputs();
-
-         for( CI currInput = sectorInputs.begin(); currInput != sectorInputs.end(); ++currInput ){
-            IInfo* fuelMarketInfo = marketplace->getMarketInfo( *currInput, name, period, false );
-            // Fuel market may not exist.
-            if( fuelMarketInfo ){
-                fuelMarketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
-                fuelMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
-                fuelMarketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
-            }
-         }
     }
 
     for ( unsigned int i = 0; i < resources.size(); i++ ) {

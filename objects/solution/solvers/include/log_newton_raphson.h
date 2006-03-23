@@ -10,8 +10,6 @@
 * \brief This is the header file for the LogNewtonRaphson solver component class.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include <string>
 #include <mtl/matrix.h>

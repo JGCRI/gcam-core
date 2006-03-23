@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief DemandMarket class source file.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -24,8 +22,8 @@ void DemandMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
    XMLWriteElement( demMktSupply, "DemandMarketSupply", out, tabs );
 }
 
-string DemandMarket::getType() const {
-   return "DemandMarket";
+IMarketType::Type DemandMarket::getType() const {
+    return IMarketType::DEMAND;
 }
 
 void DemandMarket::initPrice() {

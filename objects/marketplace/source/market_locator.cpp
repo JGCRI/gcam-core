@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief MarketLocator class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -39,8 +37,8 @@ MarketLocator::MarketLocator(){
 //! Destructor
 MarketLocator::~MarketLocator(){
 #if PERFORM_TIMING
-	cout << "Total time spent in lookups: " << gTotalLookupTime << " seconds." << endl
-	     << "Average time per lookup: " << gTotalLookupTime / static_cast<double>( gNumLookups )
+    cout << "Total time spent in lookups: " << gTotalLookupTime << " seconds." << endl
+         << "Average time per lookup: " << gTotalLookupTime / static_cast<double>( gNumLookups )
          << " seconds." << endl;
 #endif
 }
@@ -58,45 +56,45 @@ MarketLocator::~MarketLocator(){
 int MarketLocator::addMarket( const string& aMarket,
                               const string& aRegion,
                               const string& aGoodName,
-							  const int aUniqueNumber )
+                              const int aUniqueNumber )
 {
-	// Check if the market area exists in the market area list.
-	RegionMarketList::iterator iter = mMarketList->find( aMarket );
+    // Check if the market area exists in the market area list.
+    RegionMarketList::iterator iter = mMarketList->find( aMarket );
     
     int goodNumber;
     // The market area does not exist. Create a new entry.
     if( iter == mMarketList->end() ){
         boost::shared_ptr<RegionOrMarketNode> newMarketNode( new RegionOrMarketNode( aMarket ) );
-		// Add the node to the hashmap.
-		mMarketList->insert( make_pair( aMarket, newMarketNode ) );
+        // Add the node to the hashmap.
+        mMarketList->insert( make_pair( aMarket, newMarketNode ) );
 
         // Add the item to it.
         goodNumber = newMarketNode->addGood( aGoodName, aUniqueNumber );
-	}
+    }
     else {
         // The market area already exists. Add the item to it.
         goodNumber = iter->second->addGood( aGoodName, aUniqueNumber );
     }
 
-	// Check if the region exists in the region list.
-	iter = mRegionList->find( aRegion );
+    // Check if the region exists in the region list.
+    iter = mRegionList->find( aRegion );
 
     // The region does not exist. Create a new entry.
     if( iter == mRegionList->end() ){
         boost::shared_ptr<RegionOrMarketNode> newRegionNode( new RegionOrMarketNode( aRegion ) );
-		// Add the new region to the region list.
-		mRegionList->insert( make_pair( aRegion, newRegionNode ) );
-    	
+        // Add the new region to the region list.
+        mRegionList->insert( make_pair( aRegion, newRegionNode ) );
+        
         // Add the item to the region list.
-	    newRegionNode->addGood( aGoodName, goodNumber );
-	}
+        newRegionNode->addGood( aGoodName, goodNumber );
+    }
     else {
         // The region already exists. Add the item to it.
         iter->second->addGood( aGoodName, goodNumber );
     }
 
-	// Return the good number used.
-	return goodNumber;
+    // Return the good number used.
+    return goodNumber;
 }
 
 /*! \brief Find the market number for a given region and good.
@@ -105,21 +103,21 @@ int MarketLocator::addMarket( const string& aMarket,
 * \return The market number or MARKET_NOT_FOUND if it is not present.
 */
 int MarketLocator::getMarketNumber( const string& aRegion, const string& aGoodName ) const {
-	// Compile in extra timing. Note that timing causes signifigant overhead, so
-	// timed runs will take longer. The result is useful to compare across timed
+    // Compile in extra timing. Note that timing causes signifigant overhead, so
+    // timed runs will take longer. The result is useful to compare across timed
     // runs, not vs untimed runs.
 #if PERFORM_TIMING
-	Timer timer;
-	timer.start();
+    Timer timer;
+    timer.start();
 
-	// Lookup the market in the marketList.
-	int marketNumber = getMarketNumberInternal( aRegion, aGoodName );
-	timer.stop();
-	gTotalLookupTime += timer.getTimeDifference();
-	++gNumLookups;
-	return marketNumber;
+    // Lookup the market in the marketList.
+    int marketNumber = getMarketNumberInternal( aRegion, aGoodName );
+    timer.stop();
+    gTotalLookupTime += timer.getTimeDifference();
+    ++gNumLookups;
+    return marketNumber;
 #else
-	return getMarketNumberInternal( aRegion, aGoodName );
+    return getMarketNumberInternal( aRegion, aGoodName );
 #endif
 }
 
@@ -137,28 +135,28 @@ int MarketLocator::getMarketNumberInternal( const string& aRegion,
 {
     // First check if the cached market number matched the region.
     const RegionOrMarketNode* region;
-	if( mLastRegionLookup && mLastRegionLookup->getName() == aRegion ){
-		region = mLastRegionLookup;
-	}
-	else {
-		RegionMarketList::const_iterator iter = mRegionList->find( aRegion );
+    if( mLastRegionLookup && mLastRegionLookup->getName() == aRegion ){
+        region = mLastRegionLookup;
+    }
+    else {
+        RegionMarketList::const_iterator iter = mRegionList->find( aRegion );
         // Check if the region was found.
         if( iter != mRegionList->end() ){
             /*! \invariant If the key is in the list the node must be non-null. */
             assert( iter->second.get() );
 
             // Cache the region found.
-		    mLastRegionLookup = region = iter->second.get();
+            mLastRegionLookup = region = iter->second.get();
         }
         // Search failed.
         else {
             region = 0;
         }
-	}
+    }
 
     // If the region lookup succeeded search for the good, otherwise return
     // market not found.
-	return region ? region->getMarketNumber( aGoodName ) : MARKET_NOT_FOUND;
+    return region ? region->getMarketNumber( aGoodName ) : MARKET_NOT_FOUND;
 }
 
 //! Constructor
@@ -209,8 +207,8 @@ int MarketLocator::RegionOrMarketNode::addGood( const string& aGoodName,
 * \return The market number for the Good, MARKET_NOT_FOUND otherwise.
 */
 int MarketLocator::RegionOrMarketNode::getMarketNumber( const string& aGoodName ) const {
-	// Check if it exists in the good list.
-	SectorNodeList::const_iterator iter = mSectorNodeList->find( aGoodName );
+    // Check if it exists in the good list.
+    SectorNodeList::const_iterator iter = mSectorNodeList->find( aGoodName );
     if( iter != mSectorNodeList->end() ){
         return iter->second->mNumber;
     }

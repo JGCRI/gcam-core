@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The CalibrationMarket class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "marketplace/include/market.h"
@@ -25,7 +23,7 @@ class CalibrationMarket: public Market {
 public:
     CalibrationMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
     ~CalibrationMarket();
-    virtual std::string getType() const;
+    virtual IMarketType::Type getType() const;
 
     virtual void initPrice();
     virtual void setPrice( const double priceIn );

@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief CalibrationMarket class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -26,8 +24,8 @@ CalibrationMarket::~CalibrationMarket() {
 void CalibrationMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
 }
 
-string CalibrationMarket::getType() const {
-   return "CalibrationMarket";
+IMarketType::Type CalibrationMarket::getType() const {
+    return IMarketType::CALIBRATION;
 }
 
 void CalibrationMarket::initPrice() {

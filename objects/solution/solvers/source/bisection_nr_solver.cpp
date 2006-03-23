@@ -3,8 +3,6 @@
 * \ingroup objects
 * \brief BisectionNRSolver class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -217,19 +215,19 @@ bool BisectionNRSolver::solve( const int period ) {
               && mCalcCounter->getPeriodCount() < maxTotalCalcs );
     
     if ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, true ) ) {
-		mainLog.setLevel( ILogger::ERROR );
+        mainLog.setLevel( ILogger::ERROR );
         solverLog << "Model did not calibrate successfully in period " << period << endl;
         mainLog << "Model did not calibrate successfully in period " << period << endl;
     }
 
     // Determine whether the model was successful.
     if( sol.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
-		mainLog.setLevel( ILogger::NOTICE );
+        mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Model solved normally. Iterations period "<< period << ": " << mCalcCounter->getPeriodCount() << ". Total iterations: "<< mCalcCounter->getTotalCount() << endl;
         return true;
     }
-	
-	mainLog.setLevel( ILogger::ERROR );
+    
+    mainLog.setLevel( ILogger::ERROR );
     mainLog << "Model did not solve within set iteration " << mCalcCounter->getPeriodCount() << endl;
     solverLog << "Printing solution information after failed attempt to solve." << endl;
     solverLog << sol << endl;

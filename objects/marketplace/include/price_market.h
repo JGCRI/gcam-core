@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The PriceMarket class header file.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include "marketplace/include/market.h"
@@ -27,7 +25,7 @@ public:
     PriceMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn, Market* demandMarketIn );
     PriceMarket( const Market& marketIn, Market* demandMarketIn );
 
-    virtual std::string getType() const;
+    virtual IMarketType::Type getType() const;
 
     virtual void initPrice();
     virtual void setPrice( const double priceIn );

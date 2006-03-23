@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief NormalMarket class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -21,8 +19,8 @@ Market( goodNameIn, regionNameIn, periodIn ) {
 void NormalMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
 }
 
-string NormalMarket::getType() const {
-   return "NormalMarket";
+IMarketType::Type NormalMarket::getType() const {
+    return IMarketType::NORMAL;
 }
 
 void NormalMarket::initPrice() {

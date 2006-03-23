@@ -10,11 +10,9 @@
 /*! 
 * \file bisect_policy_nr_solver.h
 * \ingroup Objects
-* \brief The BisectPolicyNRSolver class header file. 
+* \brief The BisectPolicyNRSolver class header file.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 class SolverComponent;
@@ -22,7 +20,8 @@ class Marketplace;
 class World;
 /*!
 * \ingroup Objects
-* \brief A class which defines an An instance of the Solver class which uses bisection first and then Newton-Rhaphson.
+* \brief A class which defines an An instance of the Solver class which uses
+*        bisection first and then Newton-Rhaphson.
 * \author Josh Lurz
 */
 

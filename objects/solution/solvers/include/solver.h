@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief This is the header file for the solver class.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include <memory>
 #include <string>

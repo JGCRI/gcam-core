@@ -10,8 +10,6 @@
 * \brief This is the header file for the LogNewtonRaphsonSaveDeriv solver component class.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "solution/solvers/include/log_newton_raphson.h"

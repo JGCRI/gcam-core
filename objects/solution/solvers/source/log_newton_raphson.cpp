@@ -3,8 +3,6 @@
 * \ingroup objects
 * \brief LogNewtonRaphson class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -96,6 +94,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     const bool calibrationStatus = world->getCalibrationSetting();
     world->turnCalibrationsOff();
 
+    bool success = true;
 
     do {
         singleLog.setLevel( ILogger::DEBUG );
@@ -117,8 +116,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
         }
         
         // Calculate new prices
-        SolverLibrary::calculateNewPricesLogNR( solverSet, JFSM, JFDM, JF );        
-       
+        if( SolverLibrary::calculateNewPricesLogNR( solverSet, JFSM, JFDM, JF ) ){   
          // Call world.calc and update supplies and demands. 
         solverSet.updateToMarkets();
         marketplace->nullSuppliesAndDemands( period );
@@ -138,8 +136,13 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
         solverSet.updateSolvable( true );
 
         solverSet.printMarketInfo( "NR routine ", calcCounter->getPeriodCount(), singleLog );
-    } // end do loop	
-    while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) && 
+        }
+        else {
+            success = false;
+        }
+    } // end do loop    
+    while ( success &&
+            isImproving( MAX_ITER_NO_IMPROVEMENT ) && 
         calcCounter->getMethodCount( SOLVER_NAME ) - nrCalcsStart < maxIterations && 
         solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) >= solutionTolerance );
 

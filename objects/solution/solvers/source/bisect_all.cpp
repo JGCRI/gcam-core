@@ -3,8 +3,6 @@
 * \ingroup objects
 * \brief BisectAll class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -112,7 +110,7 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
                 }
                 // Set new trial value to center
                 currSol.setPriceToCenter();
-            }	
+            }   
             // price=0 and supply>demand. only true for constraint case
             // other markets cannot have supply>demand as price->0
             // Another condition that should be moved. 
@@ -136,7 +134,7 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
         const SolverInfo* maxSol = solverSet.getWorstSolverInfo( edSolutionFloor );
         addIteration( maxSol->getName(), maxSol->getRelativeED( edSolutionFloor ) );
         worstMarketLog << "BisectAll-maxRelED: " << *maxSol << endl;
-    } // end do loop		
+    } // end do loop        
     while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) 
             && ++numIterations < maxIterations 
             && !solverSet.isAllSolved( solutionTolerance, edSolutionFloor ) );

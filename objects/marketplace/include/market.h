@@ -78,7 +78,14 @@ public:
     virtual bool meetsSpecialSolutionCriteria() const = 0;
     virtual bool shouldSolve() const = 0;
     virtual bool shouldSolveNR() const = 0;
-    virtual std::string getType() const = 0;
+
+    /*!
+    * \brief Return the type of the market as defined by the IMarketTypeEnum
+    *        which is unique for each derived market class.
+    * \return The type of the market.
+    */
+    virtual IMarketType::Type getType() const = 0;
+
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     Market( const Market& aMarket );
@@ -131,6 +138,8 @@ protected:
     *        tabs. 
     */
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
+
+    static const std::string& convertTypeToString( const IMarketType::Type aType );
 };
 
 #endif // _MARKET_H_

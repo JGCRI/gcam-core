@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The GHGMarket class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "marketplace/include/market.h"
@@ -24,7 +22,7 @@
 class GHGMarket: public Market {
 public:
     GHGMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
-    virtual std::string getType() const;
+    virtual IMarketType::Type getType() const;
 
     virtual void initPrice();
     virtual void setPrice( const double priceIn );
@@ -42,7 +40,7 @@ public:
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
 protected:
-	virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 };
 
 #endif // _GHG_MARKET_H_

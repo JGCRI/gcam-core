@@ -97,7 +97,12 @@ mMarketInfo( InfoFactory::constructInfo( 0 ) ){
 * \return A pointer to the newly allocated market, null if the type did not
 *         exist. 
 */
-auto_ptr<Market> Market::createMarket( const IMarketType::Type aType, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod ) {
+auto_ptr<Market> Market::createMarket( const IMarketType::Type aType,
+                                       const string& aGoodName,
+                                       const string& aRegionName,
+                                       const int aPeriod )
+{
+    assert( aType < IMarketType::END );
     auto_ptr<Market> rNewMarket;
     if ( aType == IMarketType::NORMAL ){
         rNewMarket.reset( new NormalMarket( aGoodName, aRegionName, aPeriod ) );
@@ -113,6 +118,11 @@ auto_ptr<Market> Market::createMarket( const IMarketType::Type aType, const std:
     }
     else if ( aType == IMarketType::TRIAL_VALUE ) {
         rNewMarket.reset( new TrialValueMarket( aGoodName, aRegionName, aPeriod ) );
+    }
+    else if ( aType == IMarketType::PRICE ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Price markets are only created internally in the marketplace." << endl;
     }
     else {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -133,8 +143,8 @@ auto_ptr<Market> Market::createMarket( const IMarketType::Type aType, const std:
 */
 void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs, getName(), modeltime->getper_to_yr( period ) , getType() );
-	XMLWriteElement( solveMarket, "solved_Market_Flag", out, tabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs, getName(), modeltime->getper_to_yr( period ) , convertTypeToString( getType() ) );
+    XMLWriteElement( solveMarket, "solved_Market_Flag", out, tabs );
     XMLWriteElement( good, "MarketGoodOrFuel", out, tabs );
     XMLWriteElement( region, "MarketRegion", out, tabs );
     XMLWriteElement( price, "price", out, tabs );
@@ -585,6 +595,28 @@ bool Market::meetsSpecialSolutionCriteria() const {
 * \param aPeriod The period for which to update.
 */
 void Market::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitMarket( this, aPeriod );
-	aVisitor->endVisitMarket( this, aPeriod );
+    aVisitor->startVisitMarket( this, aPeriod );
+    aVisitor->endVisitMarket( this, aPeriod );
+}
+
+/*!
+ * \brief Helper method to convert a type into a string for output.
+ * \param aType Market type to convert to a string.
+ * \return Market type as a string.
+ * \todo Move this to a MarketUtils class.
+ */
+const string& Market::convertTypeToString( const IMarketType::Type aType ) {
+    // Check that the type is legal.
+    assert( aType < IMarketType::END );
+
+    // Setup a static array of the types of markets. If you add a type to the
+    // IMarketType array make sure to add to this array as well and keep this in
+    // the same order as the IMarketType enum.
+    static const string types[] = { "Normal", "Calibration", "Inverse-Calibration",
+                                    "GHG", "Trial-Value", "Demand", "Price" };
+
+    // Check that the types array is up to date.
+    assert( sizeof( types ) == IMarketType::END );
+
+    return types[ aType ];
 }

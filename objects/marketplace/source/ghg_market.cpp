@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief GHGMarket class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -22,8 +20,8 @@ Market( goodNameIn, regionNameIn, periodIn ) {
 void GHGMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
 }
 
-string GHGMarket::getType() const {
-   return "GHGMarket";
+IMarketType::Type GHGMarket::getType() const {
+    return IMarketType::GHG;
 }
 
 /* \brief Initialize the GHGMarket price.

@@ -157,7 +157,7 @@ void Marketplace::resetToPriceMarket( const string& goodName, const string& regi
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Cannot reset Market "<< goodName << " to a price market because it does not exist."  << endl;
     }
-    else if( markets[ marketNumber][ 0 ]->getType() != "NormalMarket" ){
+    else if( markets[ marketNumber][ 0 ]->getType() != IMarketType::NORMAL ){
         ILogger& mainLog = ILogger::getLogger( "mainLog" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Cannot reset market type other than normal to a price market." << endl;

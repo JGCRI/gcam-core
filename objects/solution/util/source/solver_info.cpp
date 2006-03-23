@@ -3,8 +3,6 @@
 * \ingroup Solution
 * \brief SolverInfo class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include "util/base/include/definitions.h"
 #include "util/base/include/util.h"
@@ -183,8 +181,9 @@ void SolverInfo::adjustBracket() {
     const static double ADJUSTMENT_FACTOR = 1.5;
 
     // Adjust the brackets if it is a price or demand market. 
-    const string marketType = linkedMarket->getType();
-    if( marketType == "PriceMarket" || marketType == "DemandMarket" ){
+    if( linkedMarket->getType() == IMarketType::PRICE
+        || linkedMarket->getType() == IMarketType::DEMAND )
+    {
         double rawDemand = linkedMarket->getRawDemand();
 
         if( XL < rawDemand ) {
@@ -224,7 +223,7 @@ bool SolverInfo::isWithinTolerance( const double SOLUTION_TOLERANCE, const doubl
 
 //! Determine whether a SolverInfo is solvable for the current method.
 bool SolverInfo::shouldSolve( const bool isNR ) const {
-	return isNR ? linkedMarket->shouldSolveNR() : linkedMarket->shouldSolve();
+    return isNR ? linkedMarket->shouldSolveNR() : linkedMarket->shouldSolve();
 }
 
 /*! \brief Calculate the log change in raw price.
@@ -406,7 +405,7 @@ bool SolverInfo::isSolved( const double SOLUTION_TOLERANCE, const double ED_SOLU
     // Check if either the market is within tolerance or for a special market
     // type dependent solution condition.
     return ( isWithinTolerance( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR )
-		     || linkedMarket->meetsSpecialSolutionCriteria() );
+             || linkedMarket->meetsSpecialSolutionCriteria() );
 }
 
 //! Get the demand elasticity of this market with respect to another market.
@@ -456,9 +455,11 @@ void SolverInfo::unsetBisectedFlag(){
 bool SolverInfo::hasBisected() const {
     return mBisected;
 }
-//! Print out information from the SolverInfo to a file.
-void SolverInfo::print( ostream& out ) const {
-    out << getName() << " X: " << X << " XL: " << XL << " XR: " << XR << " ED: " << getED() << " EDR: " << EDR << " EDL: " << EDL << " RED: " << getRelativeED( 0 ) << " S: " << supply << " D: " << demand;
+//! Print out information from the SolverInfo to an output stream.
+void SolverInfo::print( ostream& aOut ) const {
+    aOut << getName() << "," << X << "," << XL << "," << XR << "," << getED() << "," 
+         << EDR << "," << EDL << "," << getRelativeED( 0 ) << "," << isBracketed()
+         << "," << supply << "," << demand << ",";
 }
 
 SupplyDemandCurve SolverInfo::createSDCurve(){

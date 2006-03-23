@@ -1257,12 +1257,6 @@
 					RelativePath="..\..\reporting\include\input_output_table.h">
 				</File>
 				<File
-					RelativePath="..\..\reporting\include\ivisitable.h">
-				</File>
-				<File
-					RelativePath="..\..\reporting\include\ivisitor.h">
-				</File>
-				<File
 					RelativePath="..\..\reporting\include\output_container.h">
 				</File>
 				<File
@@ -1282,74 +1276,6 @@
 				</File>
 				<File
 					RelativePath="..\..\reporting\include\xml_db_outputter.h">
-				</File>
-				<Filter
-					Name="investment"
-					Filter="">
-					<File
-						RelativePath="..\..\investment\include\accelerator.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\idistributor.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\iexpected_profit_calculator.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\igrowth_calculator.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\iinvestable.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\iinvestor.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\investment_growth_calculator.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\investment_utils.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\levelized_cost_calculator.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\market_based_investment.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\output_growth_calculator.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\rate_logit_distributor.h">
-					</File>
-					<File
-						RelativePath="..\..\investment\include\simple_expected_profit_calculator.h">
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
-				Name="functions"
-				Filter="">
-				<File
-					RelativePath="..\..\functions\include\demand_input.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\function_manager.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\function_utils.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\ifunction.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\input.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\production_demand_function.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\production_input.h">
 				</File>
 			</Filter>
 			<Filter
@@ -1410,6 +1336,74 @@
 				</File>
 				<File
 					RelativePath="..\..\land_allocator\include\unmanaged_land_leaf.h">
+				</File>
+			</Filter>
+			<Filter
+				Name="investment"
+				Filter="">
+				<File
+					RelativePath="..\..\investment\include\accelerator.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\idistributor.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\iexpected_profit_calculator.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\igrowth_calculator.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\iinvestable.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\iinvestor.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\investment_growth_calculator.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\investment_utils.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\levelized_cost_calculator.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\market_based_investment.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\output_growth_calculator.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\rate_logit_distributor.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\simple_expected_profit_calculator.h">
+				</File>
+			</Filter>
+			<Filter
+				Name="functions"
+				Filter="">
+				<File
+					RelativePath="..\..\functions\include\demand_input.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\function_manager.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\function_utils.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\ifunction.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\input.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\production_demand_function.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\production_input.h">
 				</File>
 			</Filter>
 		</Filter>

@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The NormalMarket class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "marketplace/include/market.h"
@@ -24,7 +22,7 @@
 class NormalMarket: public Market {
 public:
     NormalMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
-    virtual std::string getType() const;
+    virtual IMarketType::Type getType() const;
 
     virtual void initPrice();
     virtual void setPrice( const double priceIn );
