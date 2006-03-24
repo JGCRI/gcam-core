@@ -226,7 +226,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 			}
 			added = false;
 			if(tempMap == null) {
-				ret.append(")]/");
+				ret.append("]/");
 				continue;
 			}
 			if(qg.isSumable && ((Boolean)tempMap.get("Sum All")).booleanValue()) {

@@ -459,19 +459,21 @@ public class ComboTableModel extends BaseTableModel{
 			n.setNodeValue(val.toString());
 		}else{
 			n = doc.createTextNode( val.toString() );
-			Node updown = null;
+			//Node updown = null;
 			Node side = null;
 
 			// Try to look in table for value in this column
-			for(int i = 0; i < getRowCount() && ( updown = ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( i )).intValue() / (indRow.size()))).get( getKey( i, col ) ))) /*(Node)data.get(getKey(i, col))*/ == null; ++i) {
+			/*
+			for(int i = 0; i < getRowCount() && ( updown = ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( i )).intValue() / (indRow.size()))).get( getKey( i, col ) ))) /*(Node)data.get(getKey(i, col))/ == null; ++i) {
 			}
+			*/
 			// Try to look in this row to see if there is a value
 			for(int i = leftHeaderVector.size()+1; i < getColumnCount() && 
 					( side = (Node)data.get(getKey(row, i))) == null; ++i) {
 			}
 			// If there weren't values in the same column and row won't be 
 			// able to figure out the path down the tree to put the data
-			if( updown == null || side == null ) {
+			if(/* updown == null ||*/ side == null ) {
 				// throw some exception
 				System.out.println("Couldn't gather enough info to create Node");
 				JOptionPane.showMessageDialog(parentFrame, 
@@ -705,9 +707,7 @@ public class ComboTableModel extends BaseTableModel{
 			  //Map retMap = addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
 			  DbViewer.xmlDB.printLockStats("addToDataTree");
 			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
-			  System.out.println("Ret: "+ret);
 			  if(ret == null) {
-				  System.out.println((String)regionAndYear[0]+";"+(String)regionAndYear[1]+", "+tempNode.asNumber());
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
 			  } else {
 				  //ret += tempNode.asNumber();

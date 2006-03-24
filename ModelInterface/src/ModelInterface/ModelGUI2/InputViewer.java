@@ -397,6 +397,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			//((InterfaceMain)parentFrame).fireControlChange(controlStr);
 			if(status) {
 				displayJtree();
+				//ADDING CP HERE
+				DOMPasteboard pd = new DOMPasteboard(doc, jtree, implls);
 				//menuSave.setEnabled(true); // now save can show up
 				//setTitle("["+file+"] - ModelGUI");
 				parentFrame.setTitle("["+file+"] - ModelInterface");
@@ -1201,6 +1203,19 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 */
 	boolean openXMLFile() {
 
+		/*
+		java.awt.FileDialog fd = new java.awt.FileDialog(parentFrame, "Open XML File");
+		fd.setMode(java.awt.FileDialog.LOAD);
+		fd.setFilenameFilter(new java.io.FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".xml");
+			}
+		});
+		fd.setDirectory(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", "."));
+		fd.setVisible(true);
+		String result = fd.getFile();
+		*/
+
 		JFileChooser fc = new JFileChooser();
 		fc.setDialogTitle("Open XML File");
 
@@ -1218,12 +1233,15 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		int result = fc.showOpenDialog(parentFrame);
 
 		if (result == JFileChooser.CANCEL_OPTION) {
+		//if (result == null) {
 			return false;
 		} else if (result == JFileChooser.APPROVE_OPTION) {
 			((InterfaceMain)parentFrame).fireControlChange(controlStr);
 			file = fc.getSelectedFile();
+			//file = new File(result);
 			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
+			//((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fd.getDirectory());
 
 			doc = readXMLFile( file );
 			

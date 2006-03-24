@@ -92,8 +92,31 @@ public class XMLDB {
 			XmlContainerConfig cconfig = new XmlContainerConfig();
 			cconfig.setAllowCreate(true);
 			contName = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
-			myContainer = manager.openContainer(contName, cconfig);
 			uc = manager.createUpdateContext();
+			try {
+				myContainer = manager.openContainer(contName, cconfig);
+			} catch(XmlException ve) {
+				if(ve.getErrorCode() == XmlException.VERSION_MISMATCH) {
+					int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					if(ans == JOptionPane.YES_OPTION) {
+						JOptionPane.showMessageDialog(parentFrame, "Couldn't Upgrade the database.", 
+								"DB Upgrade Error", JOptionPane.ERROR_MESSAGE);
+						/*
+						System.out.println("Do upgrade");
+						manager.upgradeContainer(contName, uc);
+						System.out.println("Done upgrade");
+						myContainer = manager.openContainer(contName, cconfig);
+						System.out.println("Done open");
+						*/
+					} else {
+						return;
+					}
+				} else {
+					// print error db not open with exepction
+					ve.printStackTrace();
+					return;
+				}
+			}
 			//int rejected = manager.getEnvironment().detectDeadlocks(LockDetectMode.OLDEST);
 			//System.out.println("Deadlock Detection found "+rejected+" rejected locks");
 			printLockStats("openDB");
@@ -107,6 +130,7 @@ public class XMLDB {
 			addVarMetaData(parentFrame);
 			//getVarMetaData(); moved because of threading issues
 		} catch (XmlException e) {
+			// TODO: Tell the user that the database wasn't opened
 			e.printStackTrace();
 		} catch (DatabaseException dbe) {
 			dbe.printStackTrace();
@@ -246,14 +270,14 @@ public class XMLDB {
 		try {
 			System.out.println("Closing DB");
 			printLockStats("closeDB");
+			if(myContainer == null) {
+				// didn't open sucessfully
+				return;
+			}
 			myContainer.close();
 			manager.close();
 		} catch (XmlException e) {
 			e.printStackTrace();
-			/*
-		} catch (DatabaseException dbe) {
-			dbe.printStackTrace();
-			*/
 		}
 	}
 
@@ -301,7 +325,7 @@ public class XMLDB {
 			}
 			temp.delete();
 		}
-		temp.delete();
+		//temp.delete();
 		attrRes.delete();
 		//printLockStats("getAttr(XmlValue, String)2"); should be lock safe, now can make it static
 		return null;
@@ -371,7 +395,7 @@ public class XMLDB {
 						System.out.println("Getting new MetaData");
 						//System.out.println("Doesn't have metadata: "+res.next());
 						tempVal = res.next();
-						String path = "local:distinct-node-names(/scenario/world/region/*[matches(local-name(), 'sector')]/subsector/technology/*[fn:count(child::text()) = 1], ())";
+						String path = "local:distinct-node-names(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[fn:count(child::text()) = 1], ())";
 						tempRes = getVars(tempVal, path);
 						StringBuffer strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
@@ -388,7 +412,7 @@ public class XMLDB {
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
-						path = "local:distinct-node-names(/scenario/world/region/demographics//*[fn:count(child::text()) = 1], ())";
+						path = "local:distinct-node-names(/scenario/world/*[@type='region']/demographics//*[fn:count(child::text()) = 1], ())";
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
@@ -400,7 +424,7 @@ public class XMLDB {
 						SwingUtilities.invokeLater(incProgress);
 
 						XmlQueryContext qcL = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
-						XmlQueryExpression qe = manager.prepare("distinct-values(/scenario/world/region/*[matches(local-name(), 'sector')]/subsector/technology/GHG/@name)", qcL);
+						XmlQueryExpression qe = manager.prepare("distinct-values(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/GHG/@name)", qcL);
 						tempRes = qe.execute(tempVal, qcL);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
@@ -410,7 +434,7 @@ public class XMLDB {
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
-						qe = manager.prepare("distinct-values(/scenario/world/region/*[matches(local-name(), 'sector')]/subsector/technology/GHG/emissions/@fuel-name)", qcL);
+						qe = manager.prepare("distinct-values(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/GHG/emissions/@fuel-name)", qcL);
 						tempRes = qe.execute(tempVal, qcL);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
@@ -420,7 +444,7 @@ public class XMLDB {
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
-						path = "local:distinct-node-names(/scenario/world/region/GDP/*[fn:count(child::text()) = 1], ())";
+						path = "local:distinct-node-names(/scenario/world/*[@type='region']/GDP/*[fn:count(child::text()) = 1], ())";
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {

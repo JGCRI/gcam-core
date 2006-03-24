@@ -607,8 +607,8 @@ public class QueryGenerator {
 	}
 	public String editDialog() {
 		String oldTitle = title;
-		final JDialog editDialog = new JDialog(parentFrame, "Edit Query", true);
-		editDialog.setLocation(100,100);
+		final JDialog editDialog = new JDialog(parentFrame, "Edit Query", false);
+		//editDialog.setLocation(100,100);
 		editDialog.setResizable(false);
 		JButton cancelButton = new JButton("Cancel");
 		JButton okButton = new JButton("  OK  ");

@@ -206,8 +206,8 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	  if(nodeMap.item(0).getNodeName().equals("fillout")) {
 		  return getOneAttrVal(node, 1);
 	  }
-	  //return nodeMap.item(0).getNodeName() +"="+ nodeMap.item(0).getNodeValue();
-	  return /*((Element)node).getAttribute(*/nodeMap.item(0).getNodeValue()/*)*/;
+	  return nodeMap.item(0).getNodeName() +"="+ nodeMap.item(0).getNodeValue();
+	  //return /*((Element)node).getAttribute(*/nodeMap.item(0).getNodeValue()/*)*/;
   }
 
   /**

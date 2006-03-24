@@ -223,7 +223,7 @@ public class GDPQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(n.getNodeName().equals(qg.nodeLevel)) {
+			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
 				if(!isGlobal) {
 					ret.add(XMLDB.getAttr(n, "name"));
 				} else {
@@ -266,7 +266,7 @@ public class GDPQueryBuilder extends QueryBuilder {
 			return tempMap;
 		}
 		*/
-		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel) 
+		if(XMLDB.hasAttr(currNode) && !qg.nodeLevel.equals(XMLDB.getAttr(currNode, "type"))
 				&& !currNode.getNodeName().equals(qg.yearLevel)) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;

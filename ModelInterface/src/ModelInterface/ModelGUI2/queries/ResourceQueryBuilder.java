@@ -216,17 +216,21 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			added = false;
 			if(i == 0) {
 				tempMap = resourceList;
-				ret.append(resourceQueryPortion.substring(0,resourceQueryPortion.length()-1)+" and (");
+				ret.append(resourceQueryPortion.substring(0,resourceQueryPortion.length()-1));
 			} else if(i == 1){
 				tempMap = subresourceList;
-				ret.append(subresourceQueryPortion.substring(0, subresourceQueryPortion.length()-1)+" and (");
+				ret.append(subresourceQueryPortion.substring(0, subresourceQueryPortion.length()-1));
 			} else {
 				tempMap = gradeList;
 				ret.append("grade");
 				++i;
 			}
 			if(tempMap == null) {
-				ret.append("/");
+				if(i <= 1) {
+					ret.append("]/");
+				} else {
+					ret.append("/");
+				}
 				continue;
 			}
 			if(qg.isSumable && ((Boolean)tempMap.get("Sum All")).booleanValue()) {
@@ -241,7 +245,9 @@ public class ResourceQueryBuilder extends QueryBuilder {
 				if(((Boolean)me.getValue()).booleanValue()) {
 					if(!added) {
 						if(i <= 1) {
-							ret.append("[( ");
+							ret.append(" and ( ");
+						} else { 
+							ret.append("[(");
 						}
 						added = true;
 					} else {
@@ -258,6 +264,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			if(added) {
 				ret.append(" )]/");
 			} else {
+				System.out.println("Ends up here!!!");
 				ret.append("/");
 			}
 		}

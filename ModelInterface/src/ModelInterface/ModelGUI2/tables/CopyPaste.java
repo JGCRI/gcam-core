@@ -48,7 +48,8 @@ public class CopyPaste implements ActionListener{
 				  pasteMenu.setEnabled(false);
 				  pasteMenu.removeActionListener(thisCP);
 				  InterfaceMain.getInstance().removePropertyChangeListener(this);
-			  } else if(( e.getPropertyName().equals("Query") || e.getPropertyName().equals("Table")) && !e.getNewValue().equals(getMyModel())) {
+			  } else if(( e.getPropertyName().equals("Query") && e.getOldValue() != null && e.getOldValue().equals(getMyModel())) 
+					  || (e.getPropertyName().equals("Table") && !e.getNewValue().equals(getMyModel()))) {
 				  /*
 				  if((myJTable.getModel() instanceof TableSorter) && e.getNewValue() == ((TableSorter)myJTable.getModel()).getTableModel()) {
 		  return;
@@ -144,10 +145,12 @@ public class CopyPaste implements ActionListener{
 		}
 		  
 		if (e.getActionCommand().equals("Paste")) {
+			/*
 		if(!myJTable.hasFocus()) {
 			System.out.println("Doesn't have focus");
 			return;
 		}
+		*/
 			System.out.println("Time to paste ... ");
 			String entireRow, onePiece;
 			int startRow=(myJTable.getSelectedRows())[0];

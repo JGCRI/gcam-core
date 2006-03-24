@@ -312,14 +312,9 @@ public class NewDataTableModel extends BaseTableModel{
 	 * @param col the col of the cell being edited
 	 */
 	public void setValueAt(Object val, int row, int col) {
-		if(!isCellEditable(row, col)) {
-			return;
-		}
-		/*
-		Object nO = data.get(getKey(row,col));
-		if(nO instanceof Node) {
-			Node n = (Node)nO;
-			*/
+		
+		//TreeMap data = ((TreeMap)TreeMapVector.get( row / (indRow.size())));
+
 		Node n = (Node)data.get(getKey(row,col));
 		if( n != null ){
 			n.setNodeValue(val.toString());
@@ -327,211 +322,141 @@ public class NewDataTableModel extends BaseTableModel{
 			n = doc.createTextNode( val.toString() );
 			Node updown = null;
 			Node side = null;
-			
-			// time to search for 'updown' and 'side'
-			int theRow = -1;
-			int theCol = -1;
-			for(int r=0; r< getRowCount(); r++ ){
-				if( r != row && ( (Node)data.get(getKey(r, col)) != null )){
-					theRow = r;
-					break;
-				}
+
+			// Try to look in table for value in this column
+			for(int i = 0; i < getRowCount() && ( updown =  (Node)data.get(getKey(i, col))) == null; ++i) {
 			}
-			for(int c=1; c< getColumnCount(); c++ ){
-				if( c != col && ( (Node)data.get(getKey(row, c)) != null )){
-					theCol = c;
-					break;
-				}
+			// Try to look in this row to see if there is a value
+			for(int i = 1; i < getColumnCount() && 
+					( side = (Node)data.get(getKey(row, i))) == null; ++i) {
 			}
-			if( theRow == -1 || theCol == -1 ){
-				System.out.println("not enough info to do the null replacement thing");
-				JOptionPane.showMessageDialog(parentFrame, "Not enough information to create node on the fly", "Rewrite nonexistent node Warning", JOptionPane.WARNING_MESSAGE);
+			// If there weren't values in the same column and row won't be 
+			// able to figure out the path down the tree to put the data
+			if( updown == null || side == null ) {
+				// throw some exception
+				System.out.println("Couldn't gather enough info to create Node");
+				JOptionPane.showMessageDialog(parentFrame, 
+						"Couldn't gather enough information to \ncreate the data",
+						"Set Value Error", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			updown = (Node)data.get(getKey(theRow, col));
-			side = (Node)data.get(getKey(row, theCol));
-			if( updown == null || side == null){
-				System.out.println("BIG TROUBLE NOW! THESE SHOULD NOTTTT BE NULL");
-			}
+			ArrayList nodePath = new ArrayList();
+			Node parent = ((Node)side.getParentNode());
 			
-			/*
-			if( row > 0 ){
-				updown = (Node)data.get(getKey(row-1, col));
-				if ( col > 0 ){
-					side = (Node)data.get(getKey(row, col-1));
-				}else{ // col == 0
-					side = (Node)data.get(getKey(row, col+1));
-				}
-			}else{ // row == 0
-				updown = (Node)data.get(getKey(row+1, col));
-				if ( col > 0 ){
-					side = (Node)data.get(getKey(row, col-1));
-				}else{ // col == 0
-					side = (Node)data.get(getKey(row, col+1));
-				}
-			}*/
-			
-			ArrayList nodepath = new ArrayList();
-			Node parent = ((Node)updown.getParentNode());
-			
-
 			
 			String headerone = ind1Name; // ex. region
 			String headertwo = ind2Name; // ex. populationSGM
-			
+
 			String attributesLine = getKey( row, col );
 			String[] attributesLineArray = attributesLine.split(";", 2);
 			if(flipped) {
-				String temp = attributesLineArray[0];
+				String temp; //= attributesLineArray[0];
+				/*
 				attributesLineArray[0] = attributesLineArray[1];
 				attributesLineArray[1] = temp;
+				*/
+				temp = headerone;
+				headerone = headertwo;
+				headertwo = temp;
 			}
 
-			StringTokenizer st = new StringTokenizer( attributesLineArray[ 0 ], "=", false);
+			/*
+			StringTokenizer st = new StringTokenizer( attributesLineArray[ 1 ], "=", false);
 			
 			String attrFrom1 = st.nextToken();
 			String attrTo1 = st.nextToken();
 			
-			st = new StringTokenizer( attributesLineArray[1], "=", false);
+			st = new StringTokenizer( attributesLineArray[0], "=", false);
 			String attrFrom2 = st.nextToken();
 			String attrTo2 = st.nextToken();
-			
-			int index = 0;
-			boolean stoplooking = false;
-			while( parent != null ){
-				nodepath.add( parent );
-				if ( !stoplooking && (parent.getNodeName().equals( headerone ) )){ // or headertwo
-					//System.out.println("found headtwo! parent is " + parent.getNodeName());
-					index = nodepath.indexOf( parent ); // gives me '5'
-					//System.out.println("index is ... " + index + " found it!");
-						
-				}
-				parent = ((Node)parent.getParentNode());
-				//System.out.println("looking for parent");
-			}
-			
-			// index is 5, i want to split on 5+1 = 6
-			
-			Node parentOfSplit = ((Node)nodepath.get( index + 1 ));
-			Node curr = parentOfSplit; // set to default for now..
-			
-			// locate precise child... of 'world', looking for region name = USA
-			
-			NodeList splitlist = parentOfSplit.getChildNodes();
-			int splitcount = 0;
-			boolean stopsplitcount = false;
-			while( splitcount < splitlist.getLength() && !stopsplitcount ){
-				Node onechild = ((Node)splitlist.item( splitcount ));
-				if (onechild.getNodeName().equals( headerone )){
-						
-					Element elemChild = (Element)onechild;
-					NamedNodeMap attrSplit = elemChild.getAttributes();
-					String temporary;
-
-					for (int i = 0; i < attrSplit.getLength(); i++) {
-						if( attrSplit.item(i).getNodeName().equals( attrFrom2 )){
-							if( attrSplit.item(i).getNodeValue().equals( attrTo2 )){
-								curr = onechild; // move down the list
-								//System.out.println("FOUND IT!");
-								//System.out.println("curr is " + curr.getNodeName() );
-								stopsplitcount = true;
-							}	
-						}
-					}
-				}
-				splitcount++;
-			}
-			
-			/*
-			System.out.println("node path is ");
-			for(int i=0; i< nodepath.size(); i++){
-				System.out.println(i + " " + ((Node)nodepath.get(i)).getNodeName());	
-			}
 			*/
-			
-			index--;
-			//System.out.println("index is " + index);
-			
-			//curr = (Node)nodepath.get( index );
-			//System.out.println("curr is " + curr.getNodeName());
-			if ( index >= 0 ){
-				//System.out.println("in loop, index it " + index);
-				for(int theRest = index; theRest >= 0; theRest-- ){
-					//System.out.println("in for loop, theRest is " + theRest);
-					Node pathNext = ((Node)nodepath.get( theRest ));
-					//System.out.println("pathnext's is " + pathNext.getNodeName() );
-					
-					NodeList children = curr.getChildNodes(); // either find it or create it
-					int counter = 0;					
-					boolean getOutOfLoop = false;
-					while( counter < children.getLength() && !getOutOfLoop ){
-						Node child = ((Node)children.item( counter ));
-						if( child.getNodeName().equals( pathNext.getNodeName() ) ){
 
-							Element eChild = (Element)child;
-							Element ePathNext = (Element)pathNext;
-							// go through all the attributes, make sure have the same ammount and the have the same values
-							NamedNodeMap attrs1 = eChild.getAttributes();
-							NamedNodeMap attrs2 = ePathNext.getAttributes();
-							String temp;
-							//System.out.println("are they not the right size? " + attrs1.getLength() + " " + attrs2.getLength());
-							if (attrs1.getLength() == attrs2.getLength()) {
-								if ( attrs1.getLength() == 0 ){
-									curr = child;
-									//System.out.println("found inside the node!");	
-									getOutOfLoop = true;
-								}else{
+			// attr names are not available here, but we can figure them out
+			// when we reach the headone or headertwo(warning I am assuming the
+			// first attr name is the correct one)
+			String attrFrom1 = null;
+			String attrTo1 = attributesLineArray[1];
+			String attrFrom2 = null;
+			String attrTo2 = attributesLineArray[0];
 
-									for (int i = 0; i < attrs1.getLength(); i++) {
-										temp = attrs1.item(i).getNodeName();
-										if (eChild.getAttribute(temp).equals(ePathNext.getAttribute(temp))) {
-											// found the node!
-											curr = child; // move down the list
-											//System.out.println("inside found the node!");
-											//System.out.println("curr is " + curr.getNodeName()+ " moving down the list!");
-											getOutOfLoop = true;
-										}
-									}
-								}
-							}
-						}					
-						counter++;	
+			// Work our way up the until we find the tag for corrent
+			// column header which by the way the axis are chosen should 
+			// always be higher in the path
+			while( !parent.getNodeName().equals( headerone ) ) {
+				nodePath.add(parent);
+				parent = parent.getParentNode();
+			}
+
+			// figure out attrFrom1 by looking at parent
+			NamedNodeMap nnm = parent.getAttributes();
+			if(nnm.getLength() >0) {
+				attrFrom1 = nnm.item(0).getNodeName();
+			} else {
+				attrFrom1 = null;
+			}
+
+			// Go down the path back to where the value should be
+			// if there needs to be nodes created they will be using info 
+			// from the row header, or the path info from the same row
+			parent = parent.getParentNode();
+			parent = checkPath(parent, headerone, attrFrom1, attrTo1);
+			for(int i = nodePath.size()-1; i >= 0; --i) {
+				Element temp = (Element)nodePath.get(i);
+				if(temp.getNodeName().equals(headertwo)) {
+					// figure out attrFrom2 by looking at parent
+					nnm = temp.getAttributes();
+					if(nnm.getLength() >0) {
+						attrFrom2 = nnm.item(0).getNodeName();
+					} else {
+						attrFrom2 = null;
 					}
-					if( getOutOfLoop == false ){ // didn't find it, create it
-						Node createdNode = pathNext.cloneNode( false ); // clone the node and add it
-						curr.appendChild( createdNode );
-						curr = createdNode;
-						//System.out.println("didn't find it, moving curr");
-						//System.out.println("createdNode's name is " + createdNode.getNodeName());
+					parent = checkPath(parent, headertwo, attrFrom2, attrTo2);
+				} else {
+					Node attrTemp = temp.getAttributes().item(0);
+					if(attrTemp == null) {
+						parent = checkPath(parent, temp.getNodeName(), null, null);
+					} else {
+						parent = checkPath(parent, temp.getNodeName(), attrTemp.getNodeName(), 
+								attrTemp.getNodeValue());
 					}
 				}
-			}// now index should == nodepath.size() - 1
-			
-			//System.out.println("end, curr is ... " + curr.getNodeName());
-			
-			curr.appendChild( n );
+			}
+
+			parent.appendChild( n );
 			data.put( getKey(row,col), n );
-			//System.out.println("just appended the child");
-			//System.out.println("curr is " + curr.getNodeName());
-			//System.out.println(" n is " + n.getNodeName());
 		}
-		/*
-		} else if( nO instanceof XmlValue ) {
-			XmlValue n = (XmlValue)nO;
-			if(n != null) {
-				FileChooserDemo.xmlDB.setValue(n, (String)val);
-				createChart(0,0);
-				/*
-				   System.out.println(XmlValue.TEXT_NODE+"");
-				   XmlValue temp = new XmlValue(XmlValue.TEXT_NODE, (String)val);
-				   System.out.println(temp.getType()+" type");
-				   XmlValue.setValue(n, temp);
-				//data.put(getKey(row,col), temp);
-				System.out.println("Tried to set it's value");
+		
+		fireTableCellUpdated(row, col);
+
+		// fireOffSomeListeners?
+
+	}
+
+	/** 
+	 * Used to follow the path down a tree where parent is the current parent and want to 
+	 * go under the node with the passed in node name and attributes will create the node
+	 * if it does not exsit
+	 * @param parent current node were are at in the path
+	 * @param nodeName name of the node that we want to follow
+	 * @param attrVal attribute value of the node that we want to follow
+	 * @return the pointer to the node we wanted to follow
+	 */
+	private Node checkPath(Node parent, String nodeName, String attrKey, String attrVal) {
+		NodeList nl = parent.getChildNodes();
+		for(int i = 0; i < nl.getLength(); ++i) {
+			Element temp = (Element)nl.item(i);
+			if(temp.getNodeName().equals(nodeName) && attrVal == null) {
+				return temp;
+			} else if(temp.getNodeName().equals(nodeName) && temp.getAttribute(attrKey).equals(attrVal)) {
+				return temp;
 			}
 		}
-		*/
-		fireTableCellUpdated(row, col);
+		Element newElement = doc.createElement(nodeName);
+		if(attrKey != null) {
+			newElement.setAttribute(attrKey, attrVal);
+		}
+		parent.appendChild(newElement);
+		return newElement;
 	}
 
 	public JFreeChart createChart(int rowAt, int colAt) {
