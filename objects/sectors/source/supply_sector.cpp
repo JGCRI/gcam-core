@@ -253,7 +253,7 @@ void SupplySector::setMarket() {
 	// cannot be members of multi-region markets.
     if( marketplace->createMarket( regionName, regionName, name, IMarketType::NORMAL ) ) {
 		// Initilize base year price
-        marketplace->setPrice( name, regionName, mBasePrice, true );
+        marketplace->setPrice( name, regionName, mBasePrice, 0, true );
     }
 
     // Check if this sector has any fixed capacity. If it does, add a price
