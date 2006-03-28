@@ -43,7 +43,11 @@
 #include "demographics/include/gender.h"
 #include "util/base/include/configuration.h"
 #include "containers/include/gdp.h"
+#include "land_allocator/include/land_leaf.h"
+#include "emissions/include/icarbon_calc.h"
 #include "util/base/include/atom.h"
+#include "land_allocator/include/land_node.h"
+
 #include <ctime>
 #include "dbxml/DbXml.hpp"
 
@@ -493,17 +497,37 @@ void XMLDBOutputter::endVisitTechnology( const technology* aTechnology,
 }
 
 void XMLDBOutputter::startVisitGHG( const Ghg* aGHG, const int aPeriod ){
+    // XML DB outputter should always be called on all periods at once.
+    assert( aPeriod == -1 );
+
     // Write out the opening element tag of the GHG and the type of the base class.
     XMLWriteOpeningTag( aGHG->getXMLName(), mBuffer, mTabs.get(), aGHG->getName(),
                         0, Ghg::getXMLNameStatic() );
 
     // Write out emissions.
     map<string, string> attrs;
-    attrs[ "fuel-name" ] = mCurrentFuel;
-    attrs[ "year" ] = util::toString( mCurrentTechYear );
-    int currPeriod = scenario->getModeltime()->getyr_to_per( mCurrentTechYear );
-    XMLWriteElementWithAttributes( aGHG->getEmission( currPeriod ), "emissions",
-                                   mBuffer, mTabs.get(), attrs );
+
+    // If there is no fuel name than the GHG is a land use GHG.
+    attrs[ "fuel-name" ] = mCurrentFuel.empty() ? "land-use" : mCurrentFuel;
+
+    // If the current tech year is zero than this is a land use GHG and 
+    // all periods should be written to the database.
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( mCurrentTechYear == 0 ){
+        for( int i = 0; i < modeltime->getmaxper(); ++i ){
+            attrs[ "year" ] = util::toString( modeltime->getper_to_yr( i ) );
+            XMLWriteElementWithAttributes( aGHG->getEmission( i ), "emissions",
+                                           mBuffer, mTabs.get(), attrs );
+        }
+    }
+    // Otherwise write emissions for the technology. TODO: This must be fixed
+    // for vintaging because technology may have emissions in multiple periods.
+    else {
+        attrs[ "year" ] = util::toString( mCurrentTechYear );
+        int currPeriod = scenario->getModeltime()->getyr_to_per( mCurrentTechYear );
+        XMLWriteElementWithAttributes( aGHG->getEmission( currPeriod ), "emissions",
+                                       mBuffer, mTabs.get(), attrs );
+    }
 }
 
 void XMLDBOutputter::endVisitGHG( const Ghg* aGHG, const int aPeriod ){
@@ -648,6 +672,55 @@ void XMLDBOutputter::startVisitGDP( const GDP* aGDP, const int aPeriod ){
 
 void XMLDBOutputter::endVisitGDP( const GDP* aGDP, const int aPeriod ){
     XMLWriteClosingTag( GDP::getXMLNameStatic(), mBuffer, mTabs.get() );
+}
+
+void XMLDBOutputter::startVisitLandNode( const LandNode* aLandNode, const int aPeriod ){
+    XMLWriteOpeningTag( LandNode::getXMLNameStatic(), mBuffer, mTabs.get(), aLandNode->getName() );
+}
+
+void XMLDBOutputter::endVisitLandNode( const LandNode* aLandNode, const int aPeriod ){
+    XMLWriteClosingTag( LandNode::getXMLNameStatic(), mBuffer, mTabs.get() );
+}
+
+void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){
+	// Write the opening gdp tag.
+    XMLWriteOpeningTag( LandLeaf::getXMLNameStatic(), mBuffer, mTabs.get(), aLandLeaf->getName() );
+
+    // Loop over the periods to output LandLeaf information.
+    // The loops are separated so the types are grouped together, as is required for
+    // valid XML.
+    const Modeltime* modeltime = scenario->getModeltime();
+	for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        int year = modeltime->getper_to_yr( i );
+        // Write out the labor productivity growth rate.
+		XMLWriteElement( aLandLeaf->getLandAllocation( aLandLeaf->getName(), i ),
+                         "land-allocation", mBuffer, mTabs.get(), year );
+    }
+}
+
+void XMLDBOutputter::endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){
+	XMLWriteClosingTag( LandLeaf::getXMLNameStatic(), mBuffer, mTabs.get() );
+}
+
+void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod ){
+	// Write the opening gdp tag.
+    XMLWriteOpeningTag( "carbon-calc", mBuffer, mTabs.get() );
+
+    // Loop over the periods to output Carbon information.
+    // The loops are separated so the types are grouped together, as is required for
+    // valid XML.
+
+    // Printing yearly values would be too much data.
+    const Modeltime* modeltime = scenario->getModeltime();
+	for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        int year = modeltime->getper_to_yr( i );
+        // Write out the carbon emissions.
+        XMLWriteElement( aCarbon->getNetLandUseChangeEmission( year ),
+                         "land-use-change-emission", mBuffer, mTabs.get(), year );
+    }
+}
+void XMLDBOutputter::endVisitCarbonCalc( const ICarbonCalc* aCarbonP, const int aPeriod ){
+	XMLWriteClosingTag( "carbon-calc", mBuffer, mTabs.get() );
 }
 
 #endif

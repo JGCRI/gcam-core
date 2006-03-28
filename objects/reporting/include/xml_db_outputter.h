@@ -19,8 +19,6 @@
 * \ingroup Objects
 * \brief XMLDBOutputter class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <iosfwd>
@@ -29,21 +27,6 @@
 #include "util/base/include/default_visitor.h"
 
 #include "dbxml/DbXml.hpp"
-
-class Scenario;
-class World;
-class Region;
-class Resource;
-class Sector;
-class Subsector;
-class technology;
-class Ghg;
-class Tabs;
-class Demographic;
-class Population;
-class AgeCohort;
-class Gender;
-class GDP;
 
 /*! 
 * \ingroup Objects
@@ -119,6 +102,15 @@ public:
     
     void startVisitGDP( const GDP* aGDP, const int aPeriod );
     void endVisitGDP( const GDP* aGDP, const int aPeriod );
+
+	void startVisitLandNode( const LandNode* aLandNode, const int aPeriod );
+    void endVisitLandNode( const LandNode* aLandNode, const int aPeriod );
+
+	void startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod );
+    void endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod );
+
+	void startVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod );
+    void endVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod );
 
 	static bool appendData( const std::string& aData, const std::string& aLocation );
 private:
