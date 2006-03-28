@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The FoodProductionTechnology class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
@@ -70,6 +68,13 @@ protected:
     double calProduction; //!< input calibrationvalue for land production
     double calObservedYield; //!< the calibrated observed yield
     double agProdChange;  //!< the technological change factor
+
+    //! Amount of above ground carbon(unit?).
+    double mAboveGroundCarbon;
+
+    //! Amount of below ground carbon(unit?).
+    double mBelowGroundCarbon;
+
     ILandAllocator* mLandAllocator;
     
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

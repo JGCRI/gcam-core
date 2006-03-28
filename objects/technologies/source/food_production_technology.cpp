@@ -31,7 +31,9 @@ FoodProductionTechnology::FoodProductionTechnology(){
     calProduction = -1;
     calYield = -1;
     calObservedYield = -1;
-    agProdChange = 0;        
+    agProdChange = 0;
+    mAboveGroundCarbon = 0;
+    mBelowGroundCarbon = 0;
 }
 
 // ! Destructor
@@ -60,6 +62,12 @@ bool FoodProductionTechnology::XMLDerivedClassParse( const string& nodeName, con
     else if( nodeName == "agProdChange" ) {
         agProdChange = XMLHelper<double>::getValue( curr );
     }
+    else if( nodeName == "above-ground-carbon" ){
+        mAboveGroundCarbon = XMLHelper<double>::getValue( curr );
+    }
+    else if( nodeName == "below-ground-carbon" ){
+        mBelowGroundCarbon = XMLHelper<double>::getValue( curr );
+    }
     else {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
@@ -76,7 +84,9 @@ void FoodProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) con
     XMLWriteElementCheckDefault( calYield, "calYield", out, tabs, -1.0 );
     XMLWriteElementCheckDefault( calLandUsed, "calLandUsed", out, tabs, -1.0 );
     XMLWriteElementCheckDefault( calProduction, "calProduction", out, tabs, -1.0 );
-    XMLWriteElement( agProdChange, "agProdChange", out, tabs );
+    XMLWriteElementCheckDefault( agProdChange, "agProdChange", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mAboveGroundCarbon, "above-ground-carbon", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mBelowGroundCarbon, "below-ground-carbon", out, tabs, 0.0 );
 }
 
 //! write object to xml output stream
@@ -87,6 +97,8 @@ void FoodProductionTechnology::toDebugXMLDerived( const int period, ostream& out
     XMLWriteElement( calLandUsed, "calLandUsed", out, tabs );
     XMLWriteElement( calProduction, "calProduction", out, tabs );
     XMLWriteElement( agProdChange, "agProdChange", out, tabs );
+    XMLWriteElement( mAboveGroundCarbon, "above-ground-carbon", out, tabs );
+    XMLWriteElement( mBelowGroundCarbon, "below-ground-carbon", out, tabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -97,7 +109,7 @@ void FoodProductionTechnology::toDebugXMLDerived( const int period, ostream& out
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& FoodProductionTechnology::getXMLName1D() const {
+const string& FoodProductionTechnology::getXMLName1D() const {
     return getXMLNameStatic1D();
 }
 
@@ -110,7 +122,7 @@ const std::string& FoodProductionTechnology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& FoodProductionTechnology::getXMLNameStatic1D() {
+const string& FoodProductionTechnology::getXMLNameStatic1D() {
     const static string XML_NAME1D = "FoodProductionTechnology";
     return XML_NAME1D;
 }
@@ -183,6 +195,10 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
             variableCost = calVarCost;
         }
     }
+
+    // Set the above and below ground carbon for this technology.
+    // TODO: This may need to be moved if the carbon content is calculated dynamically.
+    mLandAllocator->setCarbonContent( landType, name, mAboveGroundCarbon, mBelowGroundCarbon, aPeriod );
 
     technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPeriod );
 }
