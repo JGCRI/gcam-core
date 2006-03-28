@@ -11,6 +11,7 @@
 * \author Josh Lurz
 */
 #include <xercesc/dom/DOMNode.hpp>
+#include "util/base/include/ivisitable.h"
 
 // Forward declarations
 class Summary;
@@ -23,7 +24,7 @@ class GDP;
 *          technologies to interact with a system for distributing land between
 *          usages.
 */
-class ILandAllocator {
+class ILandAllocator : public IVisitable {
 public:
     inline ILandAllocator();
     
@@ -150,6 +151,22 @@ public:
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo ) = 0;
     
+    /*! \brief Set the above and below ground carbon for the land type.
+    * \details Agricultural technologies determine the above and below ground
+    *          carbon content for the land they use. This function allows the
+    *          agricultural technologies to set those values.
+    * \param aLandType Land type.
+    * \param aProductName Product name.
+    * \param aAboveGroundCarbon Above ground carbon per unit of land.
+    * \param aBelowGroundCarbon Below ground carbon per unit of land.
+    * \param aPeriod Period.
+    */
+    virtual void setCarbonContent( const std::string& aLandType,
+                                   const std::string& aProductName,
+                                   const double aAboveGroundCarbon,
+                                   const double aBelowGroundCarbon,
+                                   const int aPeriod ) = 0;
+
     /*! \brief Output information to the output CSV file.
     * \param aRegionName Name of the region.
     */
@@ -175,6 +192,8 @@ public:
     * \param aPeriod Period for which to update information.
     */
     virtual void updateSummary( Summary& aSummary, const int aPeriod ) = 0;
+
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
 };
 
 // Inline function definitions.
@@ -188,4 +207,3 @@ ILandAllocator::~ILandAllocator(){
 }
 
 #endif // _ILANDALLOCATOR_H_
-

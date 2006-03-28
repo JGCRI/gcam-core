@@ -3,8 +3,6 @@
 * \ingroup CIAM
 * \brief ForestLandLeaf class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
@@ -106,6 +104,8 @@ void ForestLandLeaf::completeInit( const string& aRegionName,
     // reset yield and land variables to be larger
     yield.resize( maxper + steps );
     landToBeHarvested.resize( maxper + steps );
+
+    LandLeaf::completeInit( aRegionName, aRegionInfo );
 }
 
 void ForestLandLeaf::calcLandAllocation( double aLandAllocationAbove, int aPeriod ){
@@ -161,25 +161,25 @@ double ForestLandLeaf::getTotalLandAllocation( const string& productName, int pe
     return LandLeaf::getLandAllocation( productName, period );
 }
 
-/*! \brief Set the amount of initial calibrated land allocated for this leaf.
-*
-* Sets the land allocated for this land in through a passed in value.
-*
-* \author James Blackwood
-* \param calLandUsed annual amount of land harvested in harvestYear
-* \param landType the landtype (node) where this land is located
-* \param productName product produced by this land (name of this land leaf)
-* \param harvestYear the year this product will be harvested
-* \param currentYear the current year in which these values are being set
-* \warning This method assumes that it will only be called once for each land type. 
-* \todo Need to move summation to another method.
-* \todo Need fix to reset land allocation when calibrations are overwritten.
-*/
+/*! 
+ * \brief Set amount of land allocated for this leaf.
+ * \details Sets the amount of land allocated for this leaf in through a passed
+ *          in value.
+ * \author James Blackwood
+ * \param calLandUsed annual amount of land harvested in harvestYear
+ * \param landType the landtype (node) where this land is located
+ * \param productName product produced by this land (name of this land leaf)
+ * \param harvestYear the year this product will be harvested
+ * \param currentYear the current year in which these values are being set
+ * \warning This method assumes that it will only be called once for each land type. 
+ * \todo Need to move summation to another method.
+ * \todo Need fix to reset land allocation when calibrations are overwritten.
+ */
 void ForestLandLeaf::setCalLandAllocation( const string& aLandType,
-                                                    const string& aProductName,
-                                                    const double aCalLandUsed,
-                                                    const int aHarvestPeriod, 
-                                                    const int aCurrentPeriod )
+                                           const string& aProductName,
+                                           const double aCalLandUsed,
+                                           const int aHarvestPeriod, 
+                                           const int aCurrentPeriod )
 {
     const Modeltime* modeltime = scenario->getModeltime();
     assert( aProductName == name );

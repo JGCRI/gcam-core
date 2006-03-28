@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief ALandAllocatorItem class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNodeList.hpp>

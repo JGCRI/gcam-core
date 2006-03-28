@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief TreeLandAllocator class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/xml_helper.h"
@@ -49,7 +47,7 @@ const std::string& TreeLandAllocator::getXMLName() const {
 * \author James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& TreeLandAllocator::getXMLNameStatic() {
+const string& TreeLandAllocator::getXMLNameStatic() {
     const static string XML_NAME = "LandAllocatorRoot";
     return XML_NAME;
 }
@@ -315,6 +313,16 @@ void TreeLandAllocator::calcFinalLandAllocation( const string& aRegionName, cons
     calcLandAllocation( 0, aPeriod );
 }
 
+void TreeLandAllocator::setCarbonContent( const string& aLandType,
+                                          const string& aProductName,
+                                          const double aAboveGroundCarbon,
+                                          const double aBelowGroundCarbon,
+                                          const int aPeriod )
+{
+    LandNode::setCarbonContent( aLandType, aProductName, aAboveGroundCarbon,
+                                aBelowGroundCarbon, aPeriod );
+}
+
 void TreeLandAllocator::csvOutput( const string& aRegionName ) const {
     LandNode::csvOutput( aRegionName );
 }
@@ -333,4 +341,10 @@ void TreeLandAllocator::calcEmission( const string& aRegionName,
 
 void TreeLandAllocator::updateSummary( Summary& aSummary, const int aPeriod ){
     LandNode::updateSummary( aSummary, aPeriod );
+}
+
+void TreeLandAllocator::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	for ( unsigned int i = 0; i < children.size(); i++ ) {
+		children[i]->accept( aVisitor, aPeriod );
+    }
 }

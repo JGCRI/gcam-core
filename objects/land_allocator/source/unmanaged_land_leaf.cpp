@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief UnmanagedLandLeaf class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "land_allocator/include/unmanaged_land_leaf.h"
@@ -12,16 +10,14 @@
 #include "marketplace/include/marketplace.h"
 #include "containers/include/scenario.h"
 #include "emissions/include/ghg_input.h"
+#include "emissions/include/unmanaged_carbon_calc.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
 
-/*! \brief DefUnmanagedLandLeafault constructor.
-*
-* Constructor initializes member variables with default values, sets vector sizes, and sets value of debug flag.
-*
+/*! \brief UnmanagedLandLeafault constructor.
 * \author James Blackwood
 */
 UnmanagedLandLeaf::UnmanagedLandLeaf(){
@@ -44,6 +40,9 @@ bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMN
     }
     else if( nodeName == "historyYear" ) {
         historyYear = XMLHelper<int>::getValue( curr );
+    }
+    else if( nodeName == UnmanagedCarbonCalc::getXMLNameStatic() ) {
+        parseSingleNode( curr, mCarbonContentCalc, new UnmanagedCarbonCalc );
     }
     else if( !LandLeaf::XMLDerivedClassParse( nodeName, curr ) ) {
         return false;
@@ -111,9 +110,18 @@ const std::string& UnmanagedLandLeaf::getXMLName() const {
 * \author James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& UnmanagedLandLeaf::getXMLNameStatic() {
+const string& UnmanagedLandLeaf::getXMLNameStatic() {
     const static string XML_NAME = "UnmanagedLandLeaf";
     return XML_NAME;
+}
+
+/*! \brief Initialize the carbon cycle object.
+* \details Instantiate a carbon cycle for an unmanaged land leaf.
+*/
+void UnmanagedLandLeaf::initCarbonCycle(){
+    if( !mCarbonContentCalc.get() ){
+        mCarbonContentCalc.reset( new UnmanagedCarbonCalc );
+    }
 }
 
 /*! \brief Returns whether this is a production leaf.
@@ -155,8 +163,8 @@ void UnmanagedLandLeaf::setUnmanagedLandAllocation( const string& aRegionName,
 void UnmanagedLandLeaf::setUnmanagedLandValues( const string& aRegionName,
                                                 const int aPeriod )
 {
-    carbonValue[ aPeriod ] = getCarbonValue( aRegionName, aPeriod ); // IN $/Ha
-    intrinsicRate[ aPeriod ] = baseIntrinsicRate[ aPeriod ] + carbonValue[ aPeriod ] * 1000 / 20;   
+    intrinsicRate[ aPeriod ] = baseIntrinsicRate[ aPeriod ]
+                              + getCarbonValue( aRegionName, aPeriod ) * 1000 / 20;   
 }
 
 /*! \brief This calculates a temporary share, later a normalized share is

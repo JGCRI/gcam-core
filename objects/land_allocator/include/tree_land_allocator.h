@@ -9,11 +9,10 @@
 * \ingroup Objects
 * \brief The TreeLandAllocator class header file.
 * \author James Blackwood, Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include "land_allocator/include/iland_allocator.h"
 #include "land_allocator/include/land_node.h"
+#include "util/base/include/ivisitable.h"
 
 class IInfo;
 class GDP;
@@ -88,6 +87,12 @@ public:
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo );
     
+    virtual void setCarbonContent( const std::string& aLandType,
+                                   const std::string& aProductName,
+                                   const double aAboveGroundCarbon,
+                                   const double aBelowGroundCarbon,
+                                   const int aPeriod );
+
     virtual void csvOutput( const std::string& aRegionName ) const; 
     
     virtual void dbOutput( const std::string& aRegionName ) const;
@@ -97,6 +102,8 @@ public:
                                const int aPeriod );
     
     virtual void updateSummary( Summary& aSummary, const int aPeriod );
+
+	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
     // Land allocator node methods.
     double getAvgIntrinsicRate( int year );

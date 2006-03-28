@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief The ForestLandLeaf class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "land_allocator/include/land_leaf.h"

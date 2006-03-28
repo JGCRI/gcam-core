@@ -1,10 +1,8 @@
 /*! 
 * \file land_allocator_leaf.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief LandLeaf class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -20,6 +18,9 @@
 #include "util/base/include/configuration.h"
 #include "emissions/include/ghg.h"
 #include "land_allocator/include/land_leaf.h"
+#include "util/base/include/ivisitor.h"
+#include "emissions/include/production_carbon_calc.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -35,10 +36,9 @@ LandLeaf::LandLeaf() {
     intrinsicYieldMode.resize( maxper );
     yield.resize( maxper, -1 );
     calObservedYield.resize( maxper );
-    carbonValue.resize( maxper );
     agProdChange.resize( maxper, 1 );
     production.resize( maxper );
-    carbAboveGround = 0;
+    mInterestRate = 0;
 }
 
 //! Default destructor
@@ -82,8 +82,8 @@ bool LandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr
     else if( nodeName == "intrinsicYieldMode" ) {
         XMLHelper<double>::insertValueIntoVector( curr, intrinsicYieldMode, modeltime );
     } 
-    else if( nodeName == "carbAboveGround" ) {
-        carbAboveGround = XMLHelper<double>::getValue( curr );
+	else if( nodeName == ProductionCarbonCalc::getXMLNameStatic() ) {
+        parseSingleNode( curr, mCarbonContentCalc, new ProductionCarbonCalc );
     }
     else {
         return false;
@@ -99,7 +99,7 @@ bool LandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& LandLeaf::getXMLName() const {
+const string& LandLeaf::getXMLName() const {
     return getXMLNameStatic();
 }
 
@@ -112,7 +112,7 @@ const std::string& LandLeaf::getXMLName() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& LandLeaf::getXMLNameStatic() {
+const string& LandLeaf::getXMLNameStatic() {
     const static string XML_NAME = "LandAllocatorLeaf";
     return XML_NAME;
 }
@@ -121,6 +121,24 @@ const std::string& LandLeaf::getXMLNameStatic() {
 * \author James Blackwood
 */
 void LandLeaf::completeInit( const string& aRegionName, const IInfo* aRegionInfo ) {
+    // Store the interest rate from the region.
+    mInterestRate = aRegionInfo->getDouble( "interest-rate", true );
+
+    // Set the carbon cycle object if it has not already been initialized. Use a
+    // virtual function so that derived leaves may use a different default type.
+    initCarbonCycle();
+
+    // Ensure that a carbon cycle object has been setup.
+    assert( mCarbonContentCalc.get() );
+}
+
+/*! \brief Initialize the carbon cycle object.
+* \details Instantiate a carbon cycle for a production leaf.
+*/
+void LandLeaf::initCarbonCycle(){
+    if( !mCarbonContentCalc.get() ){
+        mCarbonContentCalc.reset( new ProductionCarbonCalc );
+    }
 }
 
 void LandLeaf::addLandUsage( const string& aLandType,
@@ -210,8 +228,8 @@ void LandLeaf::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tab
     XMLWriteElement( yield[ period ], "yield", out, tabs );
     XMLWriteElement( agProdChange[ period ], "agProdChange", out, tabs );
     XMLWriteElement( production[ period ], "production", out, tabs );
-    XMLWriteElement( carbonValue[ period ], "carbonValue", out, tabs );
-    XMLWriteElement( carbAboveGround, "carbAboveGround", out, tabs );
+    XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
+    mCarbonContentCalc->toDebugXML( period, out, tabs );
 }
 
 /*! \brief Overwrites the intrinsicRate for this leaf node.
@@ -231,40 +249,56 @@ void LandLeaf::setIntrinsicRate( const string& aRegionName,
     //the intrinsicRate that is passed in is $/Gcal. 
     //It is multiplied by intrinsicYieldMode (GCal/kHa) to convert it to $/kHa.   
 
-    // Add carbon value to intrinsic rate (optional)
-    // TODO: Magic number!
+    // Add carbon value to intrinsic rate.
     intrinsicRate[ aPeriod ] = aIntrinsicRate * intrinsicYieldMode[ aPeriod ] 
-                               + getCarbonValue( aRegionName, aPeriod ) * 1000/20;
+                               + getCarbonValue( aRegionName, aPeriod );
 }
 
 /*! \brief Calculates the carbon value per hectare for this land type.
 * \author James Blackwood
 */
 double LandLeaf::getCarbonValue( const string& aRegionName, const int aPeriod ) const {
-    // TODO: This should be done through the input files.
-    const static bool doCarbValue = Configuration::getInstance()->getBool( "landCarbValue" );
-    if( doCarbValue ){
-        const Marketplace* marketplace = scenario->getMarketplace();
-        double carbonPrice = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
-        if( carbonPrice != Marketplace::NO_MARKET_PRICE ){
-            // With carbon content in Mg C/Ha == TC/Ha, to TC/Ha * $/TC = $/Ha.
-            return carbAboveGround * carbonPrice;
-        }
+    const Marketplace* marketplace = scenario->getMarketplace();
+    double carbonPrice = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
+    if( carbonPrice != Marketplace::NO_MARKET_PRICE ){
+        assert( mCarbonContentCalc.get() );
+
+        // With carbon content in Mg C/Ha == TC/Ha, to TC/Ha * $/TC = $/Ha.
+        const int year = scenario->getModeltime()->getper_to_yr( aPeriod );
+
+        // Calculate the carbon value as the total carbon content of the land
+        // multiplied by the carbon price and the interest rate.
+        return ( mCarbonContentCalc->getPotentialAboveGroundCarbon( year )
+            + mCarbonContentCalc->getPotentialBelowGroundCarbon( year ) )
+                * carbonPrice * mInterestRate;
     }
     return 0;
 }
 
-/*! \brief Set land allocated for this land.
-*
-* Sets the land allocated for this land in through a passed in value.
-*
-* \author James Blackwood
-*/
+void LandLeaf::setCarbonContent( const string& aLandType,
+                                 const string& aProductName,
+                                 const double aAboveGroundCarbon,
+                                 const double aBelowGroundCarbon,
+                                 const int aPeriod )
+{
+    assert( aProductName == name );
+    assert( mCarbonContentCalc.get() );
+
+    mCarbonContentCalc->setUnitAboveGroundCarbon( aAboveGroundCarbon, aPeriod );
+    mCarbonContentCalc->setUnitBelowGroundCarbon( aAboveGroundCarbon, aPeriod );
+}
+
+/*!
+ * \brief Set amount of land allocated for this leaf.
+ * \details Sets the amount of land allocated for this leaf in through a passed
+ *          in value.
+ * \author James Blackwood
+ */
 void LandLeaf::setCalLandAllocation( const string& aLandType,
-                                              const string& aProductName,
-                                              const double aCalLandUsed,
-                                              const int aHarvestPeriod, 
-                                              const int aCurrentPeriod )
+                                     const string& aProductName,
+                                     const double aCalLandUsed,
+                                     const int aHarvestPeriod, 
+                                     const int aCurrentPeriod )
 {
     assert( aProductName == name );
     landAllocation[ aHarvestPeriod ] = aCalLandUsed;
@@ -341,10 +375,12 @@ void LandLeaf::applyAgProdChange( const string& aLandType,
     intrinsicYieldMode[ aPeriod ] *= agProdChange[ aPeriod ];
 }
 
-/*! \brief This calculates a temporary share, later a normalized share is assigned in the node version of this method.
-* Added capability to share out unmanaged land proportionately with the land allocated to that level originally.
+/*! \brief This calculates a temporary share, later a normalized share is
+*          assigned in the node version of this method. Unmanaged land is shared
+*          out proportionately with the land allocated to that level originally.
 * \param sigmaAbove the sigma value from the node above this level.
-* \param totalBaseLandAllocation total base unmanaged land allocation for this level.
+* \param totalBaseLandAllocation total base unmanaged land allocation for this
+*        level.
 * \author James Blackwood, Steve Smith
 */
 void LandLeaf::calcLandShares( const string& aRegionName,
@@ -376,6 +412,13 @@ void LandLeaf::calcLandShares( const string& aRegionName,
 */
 void LandLeaf::calcLandAllocation ( double landAllocationAbove, int period ) {
     landAllocation[period] = landAllocationAbove * share[period];
+
+    // Set the amount of land use change into the carbon content calculator.
+    mCarbonContentCalc->setTotalLandUse( landAllocation[ period ], period );
+
+    // Calculate carbon emissions.
+    // TODO: Better location.
+    mCarbonContentCalc->calc( period );
 }
 
 void LandLeaf::calcYieldInternal( const string& aLandType,
@@ -475,7 +518,12 @@ void LandLeaf::csvOutput( const string& aRegionName ) const {
     fileoutput3(aRegionName,name," "," ","Intr Rate","$/kHa",intrinsicRate);
     fileoutput3(aRegionName,name," "," ","Intr Yield Mode","GCal/kHa",intrinsicYieldMode);
     fileoutput3(aRegionName,name," "," ","calObsYield","GCal/kHa",calObservedYield);
-    fileoutput3(aRegionName,name," "," ","carbonValue","000Ha",carbonValue);
+    
+    for( int i = 0; i < maxper; ++i ){
+        temp[ i ] = getCarbonValue( aRegionName, i );
+    }
+
+    fileoutput3(aRegionName,name," "," ","carbonValue","000Ha", temp);
     fileoutput3(aRegionName,name," "," ","Ag Productivity Change","none",agProdChange);
 
     //print out each ghg emission
@@ -502,7 +550,11 @@ void LandLeaf::dbOutput( const string& aRegionName ) const {
     dboutput4(aRegionName,name," ","Intr Rate","$/kHa",intrinsicRate);
     dboutput4(aRegionName,name," ","Intr Yield Mode","GCal/kHa",intrinsicYieldMode);
     dboutput4(aRegionName,name," ","calObsYield","GCal/kHa",calObservedYield);
-    dboutput4(aRegionName,name," ","carbonValue","000Ha",carbonValue);
+
+    for( int i = 0; i < maxper; ++i ){
+        temp[ i ] = getCarbonValue( aRegionName, i );
+    }
+    dboutput4(aRegionName,name," ","carbonValue","000Ha", temp );
     dboutput4(aRegionName,name," ","Ag Productivity Change","none",agProdChange);
 
     //print out each ghg emission
@@ -512,4 +564,22 @@ void LandLeaf::dbOutput( const string& aRegionName ) const {
         }
         dboutput4( aRegionName,name," ",mGHGs[i]->getName()+" emiss",mGHGs[i]->getUnit(),temp);
     }
+}
+
+/*! \brief Update a visitor for a LandLeaf.
+* \param aVisitor Visitor to update.
+* \param aPeriod Period to update.
+*/
+void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitLandLeaf( this, aPeriod );
+
+    // All land leaves have carbon content calculators, but it may not have been
+    // instantiated yet.
+    if( mCarbonContentCalc.get() ){
+        mCarbonContentCalc->accept( aVisitor, aPeriod );
+    }
+    for( unsigned int i = 0; i < mGHGs.size(); ++i ){
+        mGHGs[ i ]->accept( aVisitor, aPeriod );
+    }
+	aVisitor->endVisitLandLeaf( this, aPeriod );
 }

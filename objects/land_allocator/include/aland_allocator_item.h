@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief The ALandAllocatorItem class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
@@ -18,6 +16,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 
 #include "containers/include/tree_item.h"
+#include "util/base/include/ivisitable.h"
 
 // For LandUsageType enum.
 #include "land_allocator/include/iland_allocator.h"
@@ -34,7 +33,8 @@ class GDP;
 *          allocation tree, including the root. It inherits from the TreeItem
 *          class so that it can make use of the tree library functions.
 */
-class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>
+class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
+                           public IVisitable
 {
 public:
     ALandAllocatorItem();
@@ -131,7 +131,16 @@ public:
                                const GDP* aGDP,
                                const int aPeriod ) = 0;
 
+    virtual void setCarbonContent( const std::string& aLandType,
+                                   const std::string& aProductName,
+                                   const double aAboveGroundCarbon,
+                                   const double aBelowGroundCarbon,
+                                   const int aPeriod ) = 0;
+
     virtual void updateSummary ( Summary& aSummary, const int aPeriod ) = 0;
+
+	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
+
 protected:
     std::vector<double> share; //!< percent of land
     std::vector<double> intrinsicRate; //!< rate in dollars to rent the land

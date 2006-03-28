@@ -9,14 +9,14 @@
 * \ingroup Objects
 * \brief The LandLeaf class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
+#include "util/base/include/ivisitable.h"
 
 class Tabs;
+class ICarbonCalc;
 
 /*! \brief A LandLeaf is the leaf of a land allocation tree.
 * \details A leaf in the land allocator which represents the land used to
@@ -106,21 +106,33 @@ public:
 
     virtual void setUnmanagedLandValues( const std::string& aRegionName,
                                          const int aPeriod );
-    
+ 
+    virtual void setCarbonContent( const std::string& aLandType,
+                                   const std::string& aProductName,
+                                   const double aAboveGroundCarbon,
+                                   const double aBelowGroundCarbon,
+                                   const int aPeriod );
+
     virtual void calcEmission( const std::string& aRegionName,
                                const GDP* aGDP,
                                const int aPeriod );
 
     virtual void updateSummary( Summary& aSummary, const int aPeriod );
+
+	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     std::vector<double> intrinsicYieldMode;
     std::vector<double> calObservedYield;
     std::vector<double> yield;
 
-    double carbAboveGround; //!< above ground carbon content
-    double getCarbonValue( const std::string& aRegionName, const int aPeriod ) const;
+	std::auto_ptr<ICarbonCalc> mCarbonContentCalc;
 
-    std::vector<double> carbonValue; //!< Carbon value of this land type
+    //! Interest rate stored from the region info.
+    double mInterestRate;
+
+    double getCarbonValue( const std::string& aRegionName, const int aPeriod ) const;
+    virtual void initCarbonCycle();
+
     std::map<std::string,double> emissmap; //! < Emissions mapping of ghg names to values
     std::vector<double> agProdChange;  //!< The technological change factor.
     std::vector<double> production;  //!< The production output of this leaf.

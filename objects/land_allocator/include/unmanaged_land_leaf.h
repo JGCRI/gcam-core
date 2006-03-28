@@ -41,7 +41,8 @@ public:
 protected:
     std::vector<double> baseIntrinsicRate; //!< Unadjusted intrinsic rate
     std::vector<double> baseLandAllocation; //!< Unadjusted land value
-
+    
+    virtual void initCarbonCycle();
     virtual bool isProductionLeaf() const;
     virtual const std::string& getXMLName() const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

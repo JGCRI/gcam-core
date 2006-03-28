@@ -110,10 +110,19 @@ public:
     virtual void setUnmanagedLandValues( const std::string& aRegionName,
                                          const int aPeriod );
 
+    virtual void setCarbonContent( const std::string& aLandType,
+                                   const std::string& aProductName,
+                                   const double aAboveGroundCarbon,
+                                   const double aBelowGroundCarbon,
+                                   const int aPeriod );
+
     virtual void calcEmission( const std::string& aRegionName,
                                const GDP* aGDP,
                                const int aPeriod );
     virtual void updateSummary ( Summary& aSummary, const int aPeriod );
+
+	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

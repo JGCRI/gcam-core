@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief LandNode class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/xml_helper.h"
@@ -123,7 +121,7 @@ const string& LandNode::getXMLName() const {
 * \author James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& LandNode::getXMLNameStatic() {
+const string& LandNode::getXMLNameStatic() {
     const static string XML_NAME = "LandAllocatorNode";
     return XML_NAME;
 }
@@ -430,6 +428,20 @@ void LandNode::calcLandAllocation( double landAllocationAbove, int period ) {
     }
 }
 
+void LandNode::setCarbonContent( const string& aLandType,
+                                 const string& aProductName,
+                                 const double aAboveGroundCarbon,
+                                 const double aBelowGroundCarbon,
+                                 const int aPeriod )
+{
+    ALandAllocatorItem* curr = findItem( aProductName );
+    
+    if( curr ){
+        curr->setCarbonContent( aLandType, aProductName, aAboveGroundCarbon,
+                                aAboveGroundCarbon, aPeriod );
+    }
+}
+
 /*! \brief Finds the location to calculate the yield using the leaf's version of this method.
 * If the location is not found it creates it as a leaf from the landType which should be a node.
 * \author James Blackwood
@@ -590,3 +602,10 @@ void LandNode::updateSummary( Summary& aSummary, const int aPeriod ) {
         children[ i ]->updateSummary( aSummary, aPeriod );
     }
 }
+
+void LandNode::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	for ( unsigned int i = 0; i < children.size(); i++ ) {
+		children[i]->accept( aVisitor, aPeriod );
+    }
+}
+
