@@ -39,6 +39,7 @@
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/iparsable.h"
+#include "util/base/include/time_vector.h"
 
 /*!
 * \ingroup Objects
@@ -86,6 +87,10 @@ public:
    static std::string safeTranscode( const XMLCh* toTranscode );
    static void insertValueIntoVector( const xercesc::DOMNode* node, std::vector<T>& insertToVector,
                                       const Modeltime* modeltime );
+   
+   static void insertValueIntoVector( const xercesc::DOMNode* aNode,
+                                      objects::YearVector<T>& aYearVector );
+
    static int getNodePeriod ( const xercesc::DOMNode* node, const Modeltime* modeltime );
    static bool parseXML( const std::string& aXMLFile, IParsable* aModelElement );
    static const std::string& text();
@@ -127,14 +132,25 @@ T XMLHelper<T>::getValue( const xercesc::DOMNode* node ){
    // This operation will fail if the string cannot be converted into the
    // expected type, in which case this function will return the default value
    // of the type.
-   T returnValue;
    try {
-       returnValue = boost::lexical_cast<T>( safeTranscode( curr->getNodeValue() ) );
+       T returnValue = boost::lexical_cast<T>( safeTranscode( curr->getNodeValue() ) );
+       return returnValue;
    }
    catch( boost::bad_lexical_cast& ) {
-       std::cout << "Cast of node value to return type failed." << std::endl;
+       try {
+           // Cast the value to a string to print a more useful error message.
+           // This cast should not fail because the value is read as a string.
+           const std::string valueAsString = boost::lexical_cast<std::string>( safeTranscode( curr->getNodeValue() ) );
+           std::cout << "Cast of node with value " << valueAsString << " to return type failed." << std::endl;
+       }
+       catch( boost::bad_lexical_cast& ){
+           // The cast to a string should never fail because a string is read
+           // in.
+           assert( false );
+       }
+       // Set the return value to the default value.
+       return T();
    }
-   return returnValue;
 }
 
 /*! Returns the requested attribute of the element node passed to the function.
@@ -176,14 +192,25 @@ T XMLHelper<T>::getAttr( const xercesc::DOMNode* node, const std::string attrNam
    // This operation will fail if the string cannot be converted into the
    // expected type, in which case this function will return the default value
    // of the type.
-   T returnValue;
    try {
-       returnValue = boost::lexical_cast<T>( safeTranscode( nameAttr->getValue() ) );
+       T returnValue = boost::lexical_cast<T>( safeTranscode( nameAttr->getValue() ) );
+       return returnValue;
    }
    catch( boost::bad_lexical_cast& ) {
-       std::cout << "Cast of attribute " << attrName << " to return type failed." << std::endl;
+       try {
+           // Cast the value to a string to print a more useful error message.
+           // This cast should not fail because the value is read as a string.
+           const std::string valueAsString = boost::lexical_cast<std::string>( safeTranscode( nameAttr->getValue() ) );
+           std::cout << "Cast of node with value " << valueAsString << " to return type failed." << std::endl;
+       }
+       catch( boost::bad_lexical_cast& ){
+           // The cast to a string should never fail because a string is read
+           // in.
+           assert( false );
+       }
+       // Set the return value to the default value.
+       return T();
    }
-   return returnValue;
 }
 
 /*! 
@@ -198,7 +225,6 @@ T XMLHelper<T>::getAttr( const xercesc::DOMNode* node, const std::string attrNam
 * \param node A pointer to a node from which to extract the data.
 * \param insertToVector A vector passed by reference in which to insert the value.
 * \param modeltime A pointer to the modeltime object to use to determine the correct period.
-* \param isPopulationData A flag which tells the function the vector is a Populations vector.
 */
 
 template<class T>
@@ -246,12 +272,74 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
 }
 
 /*! 
+* \brief Function which takes a node and inserts its value into the correct
+*        position in a YearVector based on the year XML attribute. If the XML
+*        attribute "fillout" is set the data will be copied to the end of the
+*        vector.
+*
+* This function when passed a node, YearVector and modeltime object will first
+* extract the year attribute and will then insert the item in that position in
+* the vector.
+*
+* \warning Make sure the node passed as an argument has a year attribute.
+* \param aNode A pointer to a node from which to extract the data.
+* \param aYearVector A YearVector passed by reference in which to insert the
+*        value.
+*/
+
+template<class T>
+void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
+                                         objects::YearVector<T>& aYearVector )
+{
+   /*! \pre Make sure we were passed a valid node reference. */
+   assert( aNode );
+   
+   const int year = XMLHelper<int>::getAttr( aNode, "year" );
+
+   // boolean to fill out the readin value to all the periods
+   const bool fillout = XMLHelper<bool>::getAttr( aNode, "fillout" );
+   
+   // Check to make sure the year attribute returned non-zero.
+   if( year == 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Year value not set for vector input tag: "
+                 << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
+                 << "." << std::endl;
+        return;
+   }
+   // Ensure that the year is legal.
+   objects::YearVector<T>::iterator pos = aYearVector.find( year );
+   if( pos == aYearVector.end() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Year value is out of bounds for input tag:" 
+                << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
+                << "." << std::endl;
+        return;
+   }
+
+   // Get the value for the node.
+   double value = XMLHelper<T>::getValue( aNode );
+
+   // Assign the value into the vector.
+   *pos = value;
+   
+   if( fillout ) {
+       // Set the value for all years after the current point.
+       ++pos;
+       for( ; pos != aYearVector.end(); ++pos ){
+           *pos = value;
+       }
+   }
+}
+
+/*! 
 * \brief Return the period cooresponding to the year in the node,
 * works analogous to insertValueIntoVector, returning the appropriate period
 * \warning Make sure the node passed as an argument as a year attribute.
 * \param node A pointer to a node from which to extract the data.
 * \param modeltime A pointer to the modeltime object to use to determine the correct period.
-* \param isPopulationData A boolean which denotes whether the data will be inserted into a population vector.
 */
 
 template<class T>
@@ -422,18 +510,16 @@ void XMLWriteElementCheckDefault( const T value, const std::string elementName, 
 * \brief Function which writes out the values contained in a vector. 
 * \details This function is used to write out the values of a vector in XML format, along with their year tag.
 * The function will also avoid writing out elements if they have default values, and will collapse consecutive 
-* equal values into one element with a fillout attribute. The function also correctly determines the year for 
-* population data, assuming the flag is passed in. 
+* equal values into one element with a fillout attribute.
 * \param outputVector The vector of values to write out.
 * \param elementName The elementName to write out for each value.
 * \param out Stream to print to.
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 * \param modeltime A pointer to the global modeltime object. 
 * \param defaultValue Default value for items in this vector. 
-* \param isPopulationData A flag which tells the function the vector is a Populations vector.
 */
 template<class T>
-void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elementName, std::ostream& out, Tabs* tabs, const Modeltime* modeltime, const T defaultValue = T(), const bool isPopulationData = false ) {
+void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elementName, std::ostream& out, Tabs* tabs, const Modeltime* modeltime, const T defaultValue = T() ) {
 
     for( unsigned int i = 0; i < outputVector.size(); i++ ){
         // Determine the correct year. 
@@ -455,6 +541,51 @@ void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elem
         } else {
             // Can't skip any. write normally.
             XMLWriteElementCheckDefault( outputVector.at( i ), elementName, out, tabs, defaultValue, year );
+        }
+    }
+}
+
+/*! 
+* \brief Function which writes out the values contained in a YearVector. 
+* \details This function is used to write out the values of a YearVector in XML
+*          format, along with their year tag. The function will also avoid
+*          writing out elements if they have default values, and will collapse
+*          consecutive equal values into one element with a fillout attribute.
+* \param aOutputVector The YearVector of values to write out.
+* \param aElementName The elementName to write out for each value.
+* \param aOut Stream to print to.
+* \param aTabs A tabs object responsible for printing the correct number of
+*        tabs. 
+* \param aFirstYear The year of the first element in the vector.
+* \param aDefaultValue Default value for items in this vector. 
+*/
+template<class T>
+void XMLWriteVector( const objects::YearVector<T>& aOutputVector,
+                     const std::string& aElementName,
+                     std::ostream& aOut,
+                     Tabs* aTabs,
+                     const unsigned int aFirstYear,
+                     const T aDefaultValue = T() )
+{
+    unsigned int currentYear = aFirstYear;
+    for( unsigned int i = 0; i < aOutputVector.size(); ++i, ++currentYear ){
+        // Determine if we can use fillout.
+        unsigned int canSkip = 0;
+        for( unsigned int j = i + 1; j < aOutputVector.size(); j++ ){
+            if( util::isEqual( aOutputVector[ i ], aOutputVector[ j ] ) ){
+                canSkip++;
+            }
+            else {
+                break;
+            }
+        }
+        if( canSkip > 0 ){
+            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, currentYear, "", true );
+            i += canSkip;
+            currentYear += canSkip;
+        } else {
+            // Can't skip any. write normally.
+            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, currentYear );
         }
     }
 }

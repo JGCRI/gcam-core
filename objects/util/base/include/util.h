@@ -23,6 +23,7 @@
 #include <sstream>
 #include <map>
 #include <vector>
+#include <cassert>
 
 namespace util {
     
@@ -166,6 +167,29 @@ namespace util {
     inline bool isEqual<double>( const double firstNumber, const double secondNumber ) {
         const static double SMALL_NUM = 1E-10;
         return ( std::fabs( firstNumber - secondNumber ) < SMALL_NUM );
+    }
+
+    /*
+    * \brief Interpolate a Y value based on two points and an X value.
+    * \param aX X value for which to find an X value.
+    * \param aX1 First X value.
+    * \param aX2 Second X value.
+    * \param aY1 First Y value.
+    * \param aY2 Second Y value.
+    * \return Linearly interpolated Y value for aX.
+    */
+    static double linearInterpolateY( const double aX,
+                                      const double aX1,
+                                      const double aX2,
+                                      const double aY1,
+                                      const double aY2 )
+    {
+        if( util::isEqual( aX1, aX2 ) ){
+            assert( isEqual( aX, aX1 ) );
+            assert( isEqual( aY1, aY2 ) );
+            return aY1;
+        }
+        return ( aX - aX1 ) * ( aY2 - aY1 ) / ( aX2 - aX1 ) + aY1;
     }
 
     /*! \brief A function to check if a file was opened successfully.

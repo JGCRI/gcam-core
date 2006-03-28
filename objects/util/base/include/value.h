@@ -21,8 +21,6 @@
 * \brief Value class header file.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 // Should only include these in debug.
 #include <cassert>
@@ -47,10 +45,13 @@ public:
     };
 
     inline Value();
+    inline Value( const double aValue, const Unit aUnit = DEFAULT );
     inline void init( const double aNewValue, const Unit aUnit = DEFAULT );
     inline void set( const double aNewValue, const Unit aUnit = DEFAULT );
     inline operator double() const;
     inline bool isInited() const;
+    inline Value& operator+=( const Value& aValue );
+    inline Value& operator-=( const Value& aValue );
     // XML Function here.
 private:
     double mValue;
@@ -59,6 +60,18 @@ private:
 };
 
 Value::Value(): mValue( 0 ), mIsInit( false ), mUnit( DEFAULT ){}
+
+/*! 
+ * \brief Create a value from a double and a unit.
+ * \param aValue Initial value.
+ * \param aUnit Unit.
+ */
+Value::Value( const double aValue, const Unit aUnit ):
+mValue( aValue ),
+mIsInit( true ),
+mUnit( aUnit )
+{
+}
 
 //! Initialize the value, can only be done once.
 void Value::init( const double aNewValue, const Unit aUnit ){
@@ -81,6 +94,38 @@ void Value::set( const double aNewValue, const Unit aUnit ){
 //! Get the value.
 Value::operator double() const {
     return mValue;
+}
+
+/*! 
+ * \brief Increment the value by the amount contained in another value.
+ * \param aValue Value containing the amount to add.
+ * \return This value by reference for chaining.
+ */
+Value& Value::operator+=( const Value& aValue ){
+    // Assume that if this value is not initialized that adding to zero is
+    // correct and the new value is valid.
+    mIsInit = true;
+
+    // Make sure the units match up.
+    assert( mUnit == aValue.mUnit );
+    mValue += aValue.mValue;
+    return *this;
+}
+
+/*! 
+ * \brief Decrement the value by the amount contained in another value.
+ * \param aValue Value containing the amount to subtract.
+ * \return This value by reference for chaining.
+ */
+Value& Value::operator-=( const Value& aValue ){
+    // Assume that if this value is not initialized that subtracting from zero
+    // is correct and the new value is valid.
+    mIsInit = true;
+
+    // Make sure the units match up.
+    assert( mUnit == aValue.mUnit );
+    mValue -= aValue.mValue;
+    return *this;
 }
 
 //! Check if the value has been initialized.
