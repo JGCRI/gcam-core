@@ -44,6 +44,7 @@
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>180738</totalPop>
@@ -5064,6 +5065,7 @@
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>17909</totalPop>
@@ -10029,6 +10031,7 @@
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>353779</totalPop>
@@ -15013,6 +15016,7 @@
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>94096</totalPop>
@@ -19969,6 +19973,7 @@
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>12727</totalPop>
@@ -24934,6 +24939,7 @@
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>214652</totalPop>
@@ -29887,6 +29893,7 @@
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>721340</totalPop>
@@ -34977,6 +34984,7 @@
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>48224</totalPop>
@@ -39943,6 +39951,7 @@
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>280399</totalPop>
@@ -45040,6 +45049,7 @@
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>216846</totalPop>
@@ -50146,6 +50156,7 @@
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>319184</totalPop>
@@ -55233,6 +55244,7 @@
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>99374</totalPop>
@@ -60183,6 +60195,7 @@
 			<PrimaryFuelCO2Coef name="shale oil">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>25003</totalPop>
@@ -65112,6 +65125,7 @@
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="traditional biomass">0</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
+			<interest-rate>0.05</interest-rate>
 			<demographics>
 				<populationMiniCAM year="1960">
 					<totalPop>442344</totalPop>
