@@ -19,8 +19,6 @@
 * \ingroup Objects
 * \brief IVisitor class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -65,7 +63,25 @@ class Male;
 class Female;
 class MagiccModel;
 class GDP;
+class LandLeaf;
+class LandNode;
+class ICarbonCalc;
+class AgSector;
 
+/*!
+ * \brief An interface to a class which visits every node in the tree and
+ *        optionally performs an operation on each.
+ * \details Any class which implements the IVisitor interface may be passed to
+ *          the accept method of any class that implements the Visitable
+ *          interface. Once the Visitable class accepts the visitor, it will
+ *          call startVisit for itself, call accept on all its children with the
+ *          visitor, and then call endVisit with itself. The visitor may perform
+ *          any desired work in the start and end visit methods, or it may
+ *          choose to do nothing. The visitor will always perform a depth first
+ *          traversal, which means it will visit all children of an item before
+ *          visiting the next sibling of an item.
+ *
+ */
 class IVisitor {
 public:
     inline virtual ~IVisitor();
@@ -167,6 +183,18 @@ public:
 
     virtual void startVisitGDP( const GDP* aGDP, const int aPeriod ) = 0;
     virtual void endVisitGDP( const GDP* aGDP, const int aPeriod ) = 0;
+	
+    virtual void startVisitLandNode( const LandNode* aLandNode, const int aPeriod ) = 0;
+    virtual void endVisitLandNode( const LandNode* aLandNode, const int aPeriod ) = 0;
+
+	virtual void startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ) = 0;
+    virtual void endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ) = 0;
+
+	virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) = 0;
+    virtual void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) = 0;
+
+    virtual void startVisitAgSector( const AgSector* aAgSector, const int aPeriod ) = 0;
+    virtual void endVisitAgSector( const AgSector* aAgSector, const int aPeriod ) = 0;
 };
 
 IVisitor::~IVisitor(){

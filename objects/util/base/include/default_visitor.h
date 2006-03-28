@@ -19,51 +19,10 @@
 * \ingroup Objects
 * \brief DefaultVisitor class header file.
 * \author Pralit Patel, Katherine Chung, Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/ivisitor.h"
 #include <string>
-
-class World;
-class Region;
-class RegionCGE;
-class NationalAccount;
-class Demographic;
-class Sector;
-class Subsector;
-class BaseTechnology;
-class Consumer;
-class HouseholdConsumer;
-class GovtConsumer;
-class InvestConsumer;
-class TradeConsumer;
-class ProductionTechnology;
-class DemandInput;
-class ProductionInput;
-class Input;
-class FactorSupply;
-class ProductionSector;
-class Resource;
-class technology;
-class DemandSector;
-class Scenario;
-class Ghg;
-class OutputMetaData;
-class Marketplace;
-class Market;
-class SubResource;
-class Grade;
-class Population;
-class PopulationMiniCAM;
-class PopulationSGMFixed;
-class PopulationSGMRate;
-class AgeCohort;
-class Gender;
-class Male;
-class Female;
-class MagiccModel;
 
 /*! \brief DefaultVisitor is an implementation of IVisitor which defines all
 *          methods as empty.
@@ -72,8 +31,8 @@ class MagiccModel;
 */
 class DefaultVisitor : public IVisitor {
 public:
-    virtual ~DefaultVisitor(){};
-	virtual void finish() const {};
+    virtual ~DefaultVisitor(){}
+	virtual void finish() const {}
 	virtual void startVisitScenario( const Scenario* aScenario, const int aPeriod ){}
 	virtual void endVisitScenario( const Scenario* aScenario, const int aPeriod ){}
 	virtual void startVisitWorld( const World* aWorld, const int aPeriod ){}
@@ -147,8 +106,8 @@ public:
     virtual void updateInput( const Input* aInput ){}
     virtual void updateProductionInput( const ProductionInput* aProdInput ){}
     virtual void updateDemandInput( const DemandInput* aDemandInput ){}
-	virtual void startVisitGHG( const Ghg* aGHG, const int aPeriod ){};
-	virtual void endVisitGHG( const Ghg* aGHG, const int aPeriod ){};
+	virtual void startVisitGHG( const Ghg* aGHG, const int aPeriod ){}
+	virtual void endVisitGHG( const Ghg* aGHG, const int aPeriod ){}
 	virtual void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
 	virtual void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
 	virtual void startVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ){}
@@ -159,8 +118,20 @@ public:
 	virtual void startVisitMagiccModel( const MagiccModel* aMagiccModel, const int aPeriod ){}
 	virtual void endVisitMagiccModel( const MagiccModel* aMagiccModel, const int aPeriod ){}
 
-    virtual void startVisitGDP( const GDP* aGDP, const int aPeriod ){};
-    virtual void endVisitGDP( const GDP* aGDP, const int aPeriod ){};
+    virtual void startVisitGDP( const GDP* aGDP, const int aPeriod ){}
+    virtual void endVisitGDP( const GDP* aGDP, const int aPeriod ){}
+
+    virtual void startVisitLandNode( const LandNode* aLandNode, const int aPeriod ){}
+    virtual void endVisitLandNode( const LandNode* aLandNode, const int aPeriod ){}
+
+	virtual void startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){}
+    virtual void endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){}
+
+    virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){}
+    virtual void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){}
+
+    virtual void startVisitAgSector( const AgSector* aAgSector, const int aPeriod ){}
+    virtual void endVisitAgSector( const AgSector* aAgSector, const int aPeriod ){}
 };
 
 #endif // _DEFAULT_VISITOR_H_
