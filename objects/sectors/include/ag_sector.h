@@ -9,14 +9,13 @@
 * \ingroup Objects
 * \brief The AgSector class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <vector>
 #include <map>
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/ivisitable.h"
 
 /*! 
 * \ingroup Objects
@@ -24,8 +23,9 @@
 * \author Josh Lurz
 */
 
-class AgSector: public IRoundTrippable {
-
+class AgSector: public IRoundTrippable,
+                public IVisitable 
+{
 private:
     void setMarket( const std::string& regname );
 
@@ -64,6 +64,7 @@ public:
     double getLandUseEmissions( const int aPeriod ) const;
     void runModel( const int period, const std::string& regionName );
     void initMarketPrices( const std::string& regionName, const std::vector<double>& pricesIn );
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     static void internalOutput();
 };
 #endif // _AG_SECTOR_H_

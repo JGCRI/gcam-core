@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief AgSector class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -17,6 +15,7 @@
 #include "util/base/include/model_time.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/configuration.h"
+#include "util/base/include/ivisitor.h"
 
 // Fortran calls.
 #if(__HAVE_FORTRAN__)
@@ -364,3 +363,9 @@ void AgSector::initMarketPrices( const string& regionName, const vector<double>&
         marketplace->setPrice( *i, regionName, pricesIn[ nameToIndiceMap[ *i ] ], 0, false );
    }
 }
+
+void AgSector::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitAgSector( this, aPeriod );
+    aVisitor->endVisitAgSector( this, aPeriod );
+}
+
