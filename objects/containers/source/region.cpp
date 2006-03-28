@@ -92,6 +92,7 @@ Region::Region() {
     heatingDegreeDays = 0;
     coolingDegreeDays = 0;
     mRotationPeriod = 0;
+    mInterestRate = 0;
 }
 
 //! Default destructor destroys sector, demsector, Resource, agSector, and
@@ -176,6 +177,9 @@ void Region::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == "rotationPeriod" ) {
             mRotationPeriod = XMLHelper<int>::getValue( curr );
+        }
+        else if( nodeName == "interest-rate" ){
+            mInterestRate = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == DepletableResource::getXMLNameStatic() ){
             parseContainerNode( curr, resources, resourceNameMap, new DepletableResource() );
@@ -319,6 +323,15 @@ void Region::completeInit() {
     // Region info has no parent Info.
     mRegionInfo.reset( InfoFactory::constructInfo( 0 ) );
     mRegionInfo->setInteger( "rotationPeriod", mRotationPeriod );
+
+    if( mInterestRate == 0 ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "No interest rate was read-in for region " << name << "." << endl;
+    }
+
+    // Add the interest rate to the region info.
+    mRegionInfo->setDouble( "interest-rate", mInterestRate );
 
     // initialize demographic
     if( demographic.get() ){
@@ -552,6 +565,7 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( heatingDegreeDays, "heatingDegreeDays", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( coolingDegreeDays, "coolingDegreeDays", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mRotationPeriod, "rotationPeriod", out, tabs, 0 );
+    XMLWriteElementCheckDefault( mInterestRate, "interest-rate", out, tabs, 0.0 );
 
     // write the xml for the class members.
     // write out the single population object.
@@ -649,6 +663,7 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( heatingDegreeDays, "heatingDegreeDays", out, tabs );
     XMLWriteElement( coolingDegreeDays, "coolingDegreeDays", out, tabs );
     XMLWriteElement( mRotationPeriod, "rotationPeriod", out, tabs );
+    XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( mGhgPolicies.size() ), "noGhg", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( resources.size() ), "numResources", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( supplySector.size() ), "noSSec", out, tabs );
@@ -2048,6 +2063,11 @@ bool Region::ensureDemographics() const {
 void Region::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitRegion( this, aPeriod );
 
+	// Visit LandAllocator object
+	if ( mLandAllocator.get() ){
+		mLandAllocator->accept( aVisitor, aPeriod );
+	}
+
     // Visit demographics object.
     if( demographic.get() ){
         demographic->accept( aVisitor, aPeriod );
@@ -2078,6 +2098,10 @@ void Region::accept( IVisitor* aVisitor, const int aPeriod ) const {
     // loop for demand sectors.
     for( CDemandSectorIterator currDem = demandSector.begin(); currDem != demandSector.end(); ++currDem ){
         (*currDem)->accept( aVisitor, aPeriod );
+    }
+
+    if( agSector.get() ){
+        agSector->accept( aVisitor, aPeriod );
     }
     aVisitor->endVisitRegion( this, aPeriod );
 }
