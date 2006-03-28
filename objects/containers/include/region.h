@@ -161,6 +161,9 @@ protected:
     // TODO: If this is in years it shouldn't be called rotation period.
     int mRotationPeriod;
 
+    //! Interest rate for the region.
+    double mInterestRate;
+
     typedef std::vector<DemandSector*>::iterator DemandSectorIterator;
     typedef std::vector<DemandSector*>::const_iterator CDemandSectorIterator;
     typedef std::vector<Resource*>::iterator ResourceIterator;
