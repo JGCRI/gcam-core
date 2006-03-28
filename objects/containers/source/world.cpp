@@ -38,6 +38,7 @@
 #include "climate/include/magicc_model.h"
 #include "util/base/include/hash_map.h"
 #include "util/base/include/atom_registry.h"
+#include "emissions/include/emissions_summer.h"
 
 using namespace std;
 using namespace xercesc;
@@ -393,24 +394,24 @@ void World::emiss_ind( const int period ) {
 /*! Calculates the global emissions.
 */
 void World::runClimateModel() {
+    // Declare visitors which will aggregate emissions by period.
+    EmissionsSummer co2Summer( "CO2" );
+    EmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
+
     // The Climate model reads in data for the base period, so skip passing it in.
     for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period){
-        // Sum emissions by period.
-        double industrialCO2EmissionsSum = 0;
-        double netLandUseCO2EmSum = 0;
-        for( RegionIterator iter = regions.begin(); iter != regions.end(); ++iter ) {
-            // This interface needs to be fixed.
-            industrialCO2EmissionsSum += ( *iter )->getSummary( period ).get_emissmap_second( "CO2" );
-            netLandUseCO2EmSum += (*iter )->getSummary( period ).get_emissmap_second( "CO2NetLandUse" );
-        }
-        // Set the emissions for the period.
+
         const double MMT_TO_TG = 1000;
-        mClimateModel->setEmissions( "CO2", period, industrialCO2EmissionsSum / MMT_TO_TG );
-        // Only write land-use CO2 emissions if ag sector is active
-        Configuration* conf = Configuration::getInstance();
-        if( conf->getBool( "agSectorActive" ) ) {
-            mClimateModel->setEmissions( "CO2NetLandUse", period, netLandUseCO2EmSum / MMT_TO_TG );
-        }
+        
+        // Sum the emissions for the period.
+        accept( &co2Summer, period );
+        accept( &co2LandUseSummer, period );
+
+        mClimateModel->setEmissions( "CO2", period,
+            co2Summer.getEmissions( period ) / MMT_TO_TG );
+
+        mClimateModel->setEmissions( "CO2NetLandUse", period,
+            co2LandUseSummer.getEmissions( period ) / MMT_TO_TG );
     }
     // Run the model.
     mClimateModel->runModel();
