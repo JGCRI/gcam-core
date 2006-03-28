@@ -4,7 +4,7 @@
 #pragma once
 #endif
 
-/*! 
+/*!  
 * \file xml_helper.h
 * \ingroup Objects
 * \brief A set of helper function for reading xml data.
