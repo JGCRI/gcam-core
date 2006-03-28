@@ -215,6 +215,12 @@
 				Name="emissions"
 				Filter="">
 				<File
+					RelativePath="..\..\emissions\source\asimple_carbon_calc.cpp">
+				</File>
+				<File
+					RelativePath="..\..\emissions\source\emissions_summer.cpp">
+				</File>
+				<File
 					RelativePath="..\..\emissions\source\ghg.cpp">
 				</File>
 				<File
@@ -236,10 +242,16 @@
 					RelativePath="..\..\emissions\source\indirect_emiss_coef.cpp">
 				</File>
 				<File
+					RelativePath="..\..\emissions\source\production_carbon_calc.cpp">
+				</File>
+				<File
 					RelativePath="..\..\emissions\source\so2_emissions.cpp">
 				</File>
 				<File
 					RelativePath="..\..\emissions\source\total_sector_emissions.cpp">
+				</File>
+				<File
+					RelativePath="..\..\emissions\source\unmanaged_carbon_calc.cpp">
 				</File>
 			</Filter>
 			<Filter
@@ -845,6 +857,12 @@
 				Name="emissions"
 				Filter="">
 				<File
+					RelativePath="..\..\emissions\include\asimple_carbon_calc.h">
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\emissions_summer.h">
+				</File>
+				<File
 					RelativePath="..\..\emissions\include\ghg.h">
 				</File>
 				<File
@@ -863,13 +881,22 @@
 					RelativePath="..\..\emissions\include\ghg_policy.h">
 				</File>
 				<File
+					RelativePath="..\..\emissions\include\icarbon_calc.h">
+				</File>
+				<File
 					RelativePath="..\..\emissions\include\indirect_emiss_coef.h">
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\production_carbon_calc.h">
 				</File>
 				<File
 					RelativePath="..\..\emissions\include\so2_emissions.h">
 				</File>
 				<File
 					RelativePath="..\..\emissions\include\total_sector_emissions.h">
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\unmanaged_carbon_calc.h">
 				</File>
 			</Filter>
 			<Filter
@@ -1002,57 +1029,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="solution"
-				Filter="">
-				<Filter
-					Name="solvers"
-					Filter="">
-					<File
-						RelativePath="..\..\solution\solvers\include\bisect_all.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\bisect_one.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\bisect_policy.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\bisect_policy_nr_solver.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\bisection_nr_solver.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\log_newton_raphson.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\log_newton_raphson_sd.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\solver.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\solver_component.h">
-					</File>
-				</Filter>
-				<Filter
-					Name="util"
-					Filter="">
-					<File
-						RelativePath="..\..\solution\util\include\calc_counter.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\util\include\solver_info.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\util\include\solver_info_set.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\util\include\solver_library.h">
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
 				Name="technologies"
 				Filter="">
 				<File
@@ -1165,6 +1141,9 @@
 						RelativePath="..\..\util\base\include\supply_demand_curve.h">
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\time_vector.h">
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\timer.h">
 					</File>
 					<File
@@ -1241,9 +1220,6 @@
 			<Filter
 				Name="reporting"
 				Filter="">
-				<File
-					RelativePath="..\..\reporting\include\default_visitor.h">
-				</File>
 				<File
 					RelativePath="..\..\reporting\include\demand_components_table.h">
 				</File>
@@ -1405,6 +1381,57 @@
 				<File
 					RelativePath="..\..\functions\include\production_input.h">
 				</File>
+			</Filter>
+			<Filter
+				Name="solution"
+				Filter="">
+				<Filter
+					Name="solvers"
+					Filter="">
+					<File
+						RelativePath="..\..\solution\solvers\include\bisect_all.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\bisect_one.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\bisect_policy.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\bisect_policy_nr_solver.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\bisection_nr_solver.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\log_newton_raphson.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\log_newton_raphson_sd.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\solver.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\solver_component.h">
+					</File>
+				</Filter>
+				<Filter
+					Name="util"
+					Filter="">
+					<File
+						RelativePath="..\..\solution\util\include\calc_counter.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solver_info.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solver_info_set.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solver_library.h">
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
