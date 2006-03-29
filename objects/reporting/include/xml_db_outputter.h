@@ -21,6 +21,7 @@
 * \author Josh Lurz
 */
 
+#if( __USE_XML_DB__ )
 #include <iosfwd>
 #include <sstream>
 #include <memory>
@@ -165,5 +166,5 @@ private:
 	static std::auto_ptr<DBContainer> createContainer();
 	static const std::string createContainerName( const std::string& aScenarioName );
 };
-
+#endif //  __USE_XML_DB__
 #endif // _XML_DB_OUTPUTTER_H_
