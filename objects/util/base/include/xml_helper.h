@@ -309,7 +309,7 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
         return;
    }
    // Ensure that the year is legal.
-   objects::YearVector<T>::iterator pos = aYearVector.find( year );
+   typename objects::YearVector<T>::iterator pos = aYearVector.find( year );
    if( pos == aYearVector.end() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
