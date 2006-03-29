@@ -65,11 +65,11 @@ protected:
     //! calculated.
     objects::YearVector<bool> mCalculated;
 
-    //! Whether this is the first time the period has been calculated.
-    objects::PeriodVector<bool> mIsFirstTime;
-
     //! Total emissions by year.
     objects::YearVector<double> mTotalEmissions;
+    
+    //! Whether this is the first time the period has been calculated.
+    objects::PeriodVector<bool> mIsFirstTime;
 
     /*!
      * \brief Return the above ground carbon per land area.

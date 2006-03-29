@@ -8,6 +8,7 @@
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/util.h"
 #include <cassert>
+#include <cfloat>
 
 using namespace std;
 using namespace xercesc;
@@ -17,9 +18,9 @@ using namespace xercesc;
 */
 ASimpleCarbonCalc::ASimpleCarbonCalc() : mCurrentEmissions( getStartYear(), getEndYear() ),
                                          mCalculated( getStartYear(), getEndYear() ),
-                                         mTotalEmissions( getStartYear(), getEndYear() )
+                                         mTotalEmissions( getStartYear(), getEndYear() ),
+                                         mIsFirstTime( false )
 {
-    mIsFirstTime.assign( mIsFirstTime.size(), true );
 }
 
 //! Default destructor
