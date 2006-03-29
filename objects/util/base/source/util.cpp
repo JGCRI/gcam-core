@@ -16,6 +16,20 @@
 using namespace std;
 
 namespace util {
+    double linearInterpolateY( const double aX,
+                               const double aX1,
+                               const double aX2,
+                               const double aY1,
+                               const double aY2 )
+    {
+        if( util::isEqual( aX1, aX2 ) ){
+            assert( isEqual( aX, aX1 ) );
+            assert( isEqual( aY1, aY2 ) );
+            return aY1;
+        }
+        return ( aX - aX1 ) * ( aY2 - aY1 ) / ( aX2 - aX1 ) + aY1;
+    }
+    
 	/*! \brief A function to replace spaces with underscores.
 	* \details Returns a string equivalent to the string passed into the
 	*          function but with spaces replaced with underscores. Each space

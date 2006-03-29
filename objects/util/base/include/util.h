@@ -178,19 +178,11 @@ namespace util {
     * \param aY2 Second Y value.
     * \return Linearly interpolated Y value for aX.
     */
-    static double linearInterpolateY( const double aX,
-                                      const double aX1,
-                                      const double aX2,
-                                      const double aY1,
-                                      const double aY2 )
-    {
-        if( util::isEqual( aX1, aX2 ) ){
-            assert( isEqual( aX, aX1 ) );
-            assert( isEqual( aY1, aY2 ) );
-            return aY1;
-        }
-        return ( aX - aX1 ) * ( aY2 - aY1 ) / ( aX2 - aX1 ) + aY1;
-    }
+    double linearInterpolateY( const double aX,
+                               const double aX1,
+                               const double aX2,
+                               const double aY1,
+                               const double aY2 );
 
     /*! \brief A function to check if a file was opened successfully.
     *
