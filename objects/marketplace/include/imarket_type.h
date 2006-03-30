@@ -40,23 +40,37 @@ public:
       NORMAL,
 
       /*!
-       * \brief A market used to calibrate a parameter to a target value.
-       * \details The price parameter of the market should be used as the trial
-       *          value to calculate the result for the iteration, which is
-       *          stored in the supply variable. The demand variable should be
-       *          set to the known value. The calculated value must increase as
-       *          price increases.
+       * \brief A market used to calibrate variable that is determined
+       *        parametrically.
+       * \details This type of market facilitates the calibration of a value
+       *          that is determined indirectly through an independent
+       *          parameter. For a variable V that is a function of y, V = F(y),
+       *          y is varied until the trial value of V matches the target
+       *          value. The function F(y) needs to be implemented appropriately
+       *          in the code. The price in the market is the parameter y, which
+       *          is used as a trial variable to calculate the result F(y) for
+       *          each iteration, which is stored as the market supply. The
+       *          market demand should be set to the target value. The
+       *          calculated value must increase as the price variable
+       *          increases.
        */
       CALIBRATION,
 
       /*!
-       * \brief A market used to calibrate a parameter to a target value in
-       *        which the calculated value has an inverse response to price.
-       * \details The price parameter of the market should be used as the trial
-       *          value to calculate the result for the iteration, which is
-       *          stored in the demand variable. The supply variable should be
-       *          set to the known value. The calculated value must decrease
-       *          price increases.
+       * \brief A market used to calibrate variable that is determined
+       *        parametrically, in which the calculated value has an inverse
+       *        response to the trial value.
+       * \details This type of market facilitates the calibration of a value
+       *          that is determined indirectly through an independent
+       *          parameter. For a variable V that is a function of y, V = F(y),
+       *          y is varied until the trial value of V matches the target
+       *          value. The function F(y) needs to be implemented appropriately
+       *          in the code. The price in the market is the parameter y, which
+       *          is used as a trial variable to calculate the result F(y) for
+       *          each iteration, which is stored as the market demand. The
+       *          market supply should be set to the target value. The
+       *          calculated value must decrease as the price variable
+       *          increases.
        */
       INVERSE_CALIBRATION,
 
