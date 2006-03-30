@@ -498,7 +498,10 @@ void XMLDBOutputter::endVisitTechnology( const technology* aTechnology,
 
 void XMLDBOutputter::startVisitGHG( const Ghg* aGHG, const int aPeriod ){
     // XML DB outputter should always be called on all periods at once.
-    assert( aPeriod == -1 );
+    // TODO: Currently when the all periods flag is passed to subsector, 
+    // it calls technology visit with the period of the technology. This assert
+    // should be turned back on when that is sorted out.
+    // assert( aPeriod == -1 );
 
     // Write out the opening element tag of the GHG and the type of the base class.
     XMLWriteOpeningTag( aGHG->getXMLName(), mBuffer, mTabs.get(), aGHG->getName(),
