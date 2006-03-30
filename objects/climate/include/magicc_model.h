@@ -62,13 +62,16 @@ public:
     
     virtual double getTotalForcing( const int aYear ) const;
 
+    // TODO: Add these methods to the IClimateModel interface.
     double getNetTerrestrialUptake( const int aYear ) const;
 
     double getNetOceanUptake( const int aYear ) const;
 
+    double getNetLandUseChangeEmission( const int aYear ) const;
+
     virtual void printFileOutput() const;
     virtual void printDBOutput() const;
-    void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 private:
 
     bool isValidClimateModelYear( const int aYear ) const;
