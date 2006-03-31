@@ -60,6 +60,8 @@ public:
                              const int aPeriod );
 
     virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per );
+
+    virtual double getFuelcost() const;
 protected:
     std::string landType; //!< Type of land that will be used for this product
     double variableCost;
@@ -89,8 +91,6 @@ protected:
     double calcSupply( const std::string& aRegionName,
                        const std::string& aProductName,
                        const int aPeriod ) const;
-private:
-
 };
 
 #endif // _FOOD_PRODUCTION_TECHNOLOGY_H_

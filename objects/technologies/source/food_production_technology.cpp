@@ -69,9 +69,6 @@ bool FoodProductionTechnology::XMLDerivedClassParse( const string& nodeName, con
         mBelowGroundCarbon = XMLHelper<double>::getValue( curr );
     }
     else {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName1D() << "." << endl;
         return false;
     }
     return true;
@@ -167,40 +164,66 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
                                          const Demographic* aDemographics,
                                          const int aPeriod )
 {
+    technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPeriod );
     const Modeltime* modeltime = scenario->getModeltime();
-    mLandAllocator->applyAgProdChange( landType, name, agProdChange, aPeriod );
-    
-    Marketplace* marketplace = scenario->getMarketplace();
-    if (( calObservedYield != -1 ) && ( year != modeltime->getEndYear() )){
 
-        double calPrice = marketplace->getMarketInfo( aSectorName, aRegionName, modeltime->getyr_to_per( year ), true )->getDouble ( "calPrice", true );
-        double calVarCost = calPrice - mLandAllocator->getCalAveObservedRate( "UnmanagedLand", modeltime->getyr_to_per( year ) ) / calObservedYield;
+    // Only setup calibration information if this is the initial year of the
+    // technology.
+    if( aPeriod != modeltime->getyr_to_per( year ) ){
+        return;
+    }
+
+    mLandAllocator->applyAgProdChange( landType, name, agProdChange, aPeriod );
+
+    // TODO: Use a better method of passing forward calibration information.
+    // Since the market may be global, create a unique regional string for the
+    // calibrated variable cost.
+    const string calVarCostName = "calVarCost" + aRegionName;
+    double calVarCost;
+
+    // Get the information object for this market.
+    Marketplace* marketplace = scenario->getMarketplace();
+    IInfo* marketInfo = marketplace->getMarketInfo( aSectorName, aRegionName, aPeriod, true );
+    assert( marketInfo );
+    if( calObservedYield != -1 ) {
+        double calPrice = marketInfo->getDouble( "calPrice", true );
+
+        // Calculate the calibrated variable cost.
+        calVarCost = calPrice - mLandAllocator->getCalAveObservedRate( "UnmanagedLand", aPeriod )
+                                       / calObservedYield;
+        
+        // Set the variable cost for the technology to the calibrated variable cost.
         if ( calVarCost > 0 ) {
+            // TODO: Add warning if there was a read-in variable cost.
             variableCost = calVarCost;
-             marketplace->getMarketInfo( aSectorName, aRegionName, ( modeltime->getyr_to_per( year ) + 1 ), true )->setDouble( "calVarCost", calVarCost );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Read in value for calPrice in " << aRegionName << " " << name << " is too low by:" << 0 - calVarCost << endl;
-            marketplace->getMarketInfo( aSectorName, aRegionName, ( modeltime->getyr_to_per( year ) + 1 ), true )->setDouble( "calVarCost", calVarCost );
+            mainLog << "Read in value for calPrice in " << aRegionName << " "
+                    << name << " is too low by " << fabs( calVarCost ) << endl;
         }
     }
     else {
-        double calVarCost = marketplace->getMarketInfo( name, aRegionName, ( modeltime->getyr_to_per( year ) ), true )->getDouble( "calVarCost", false );
-        if ( year  != modeltime->getEndYear( ) ) {
-            marketplace->getMarketInfo( aSectorName, aRegionName, ( modeltime->getyr_to_per( year ) + 1 ), true )->setDouble( "calVarCost" , calVarCost );
-        }
+        // Get the calibrated variable cost from the market info.
+        calVarCost = marketInfo->getDouble( calVarCostName, true );
         if ( calVarCost > 0 ) {
+            // TODO: Add warning if there was a read-in variable cost.
             variableCost = calVarCost;
         }
+    }
+
+    // If this is not the end period of the model, set the market info
+    // variable for the next period.
+    if( aPeriod + 1 < modeltime->getmaxper() ){
+        IInfo* nextPerMarketInfo = marketplace->getMarketInfo( aSectorName, aRegionName, aPeriod + 1, true );
+        assert( nextPerMarketInfo );
+        nextPerMarketInfo->setDouble( calVarCostName, calVarCost );
     }
 
     // Set the above and below ground carbon for this technology.
     // TODO: This may need to be moved if the carbon content is calculated dynamically.
     mLandAllocator->setCarbonContent( landType, name, mAboveGroundCarbon, mBelowGroundCarbon, aPeriod );
-
-    technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPeriod );
 }
 
 /*!
@@ -231,8 +254,16 @@ void FoodProductionTechnology::completeInit( const string& aSectorName,
     const int period = scenario->getModeltime()->getyr_to_per( year );
     if ( ( calProduction != -1 ) && ( calLandUsed != -1 ) ) {
         calObservedYield = calProduction / calLandUsed;
-        // Want to pass in yied in units of GCal/kHa
 
+        // Warn the user that the calibrated yield will not be used since an
+        // observed yield can be calculated.
+        if( calYield != -1 ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::NOTICE );
+            mainLog << "Calibrated yield will be overridden by the observied yield." << endl;
+        }
+
+        // Want to pass in yied in units of GCal/kHa
         mLandAllocator->setCalLandAllocation( landType, name, calLandUsed, period, period );
         mLandAllocator->setCalObservedYield( landType, name, calObservedYield, period );
     } 
@@ -384,4 +415,8 @@ double FoodProductionTechnology::calcSupply( const string& aRegionName,
 
     // Set output to yield times amount of land.
     return yield * mLandAllocator->getLandAllocation( aProductName, aPeriod );
+}
+
+double FoodProductionTechnology::getFuelcost() const {
+    return variableCost;
 }

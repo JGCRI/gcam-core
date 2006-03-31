@@ -152,7 +152,7 @@ public:
     virtual bool outputFixed() const; // return calibration output value
     double getInput() const; // return fuel input amount
     double getOutput() const; // return technology output
-    double getFuelcost() const; // return fuel cost only
+    virtual double getFuelcost() const; // return fuel cost only
     double getTechcost() const; // return total technology cost
     double getNecost() const; // return non-fuel cost
     double getTotalGHGCost() const; // return carbon tax and storage cost added to tech in $/TC
