@@ -180,7 +180,7 @@ void GhgMAC::toInputXML( ostream& out, Tabs* tabs ) const {
 	map<string, double> attrs;
 	for( PairIterator currPair = pairs.begin(); currPair != pairs.end(); ++currPair ) {
 		attrs[ "tax" ] = currPair->first;
-        XMLWriteElementWithAttributes( currPair->second, "Reduction", out, tabs, attrs );
+        XMLWriteElementWithAttributes( currPair->second, "reduction", out, tabs, attrs );
 	}
 	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
