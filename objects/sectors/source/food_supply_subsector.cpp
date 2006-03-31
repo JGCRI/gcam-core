@@ -78,3 +78,22 @@ const string& FoodSupplySubsector::getXMLNameStatic() {
 	const static string XML_NAME = "FoodSupplySubsector";
 	return XML_NAME;
 }
+
+//! Outputs any variables specific to derived classes
+void FoodSupplySubsector::MCDerivedClassOutput() const {
+    // function protocol
+    void dboutput4(string var1name,string var2name,string var3name,string var4name,
+        string uname,vector<double> dout);
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    vector<double> temp(maxper);
+
+    // do for all technologies in the Subsector
+    for( unsigned int i = 0; i < techs.size(); ++i ){
+        // technology fuel cost
+        for ( int m=0;m< maxper;m++) {
+            temp[m] = techs[i][m]->getFuelcost();
+        }
+        dboutput4( regionName,"Price",sectorName+" "+name+" Variable Cost",techs[i][ 0 ]->getName(),"75$/Ser",temp);
+    }
+}
