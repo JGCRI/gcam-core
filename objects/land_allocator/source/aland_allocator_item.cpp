@@ -157,5 +157,5 @@ void ALandAllocatorItem::dbOutput( const string& aRegionName ) const {
         string uname,vector<double> dout);
 
     // write land allocations for region
-    dboutput4(aRegionName,name," ","Land Use","000Ha",landAllocation);
+    dboutput4(aRegionName, "Land Allocation", name,"Land Use","000Ha",landAllocation);
 }

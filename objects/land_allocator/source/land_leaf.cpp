@@ -37,7 +37,6 @@ LandLeaf::LandLeaf() {
     yield.resize( maxper, -1 );
     calObservedYield.resize( maxper );
     agProdChange.resize( maxper, 1 );
-    production.resize( maxper );
     mInterestRate = 0;
 }
 
@@ -227,7 +226,6 @@ void LandLeaf::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tab
     XMLWriteElement( calObservedYield[ period ], "calObservedYield", out, tabs );
     XMLWriteElement( yield[ period ], "yield", out, tabs );
     XMLWriteElement( agProdChange[ period ], "agProdChange", out, tabs );
-    XMLWriteElement( production[ period ], "production", out, tabs );
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
     mCarbonContentCalc->toDebugXML( period, out, tabs );
 }
@@ -285,7 +283,7 @@ void LandLeaf::setCarbonContent( const string& aLandType,
     assert( mCarbonContentCalc.get() );
 
     mCarbonContentCalc->setUnitAboveGroundCarbon( aAboveGroundCarbon, aPeriod );
-    mCarbonContentCalc->setUnitBelowGroundCarbon( aAboveGroundCarbon, aPeriod );
+    mCarbonContentCalc->setUnitBelowGroundCarbon( aBelowGroundCarbon, aPeriod );
 }
 
 /*!
@@ -547,22 +545,23 @@ void LandLeaf::dbOutput( const string& aRegionName ) const {
         string uname,vector<double> dout);
 
     // write land allocations for region
-    dboutput4(aRegionName,name," ","Intr Rate","$/kHa",intrinsicRate);
-    dboutput4(aRegionName,name," ","Intr Yield Mode","GCal/kHa",intrinsicYieldMode);
-    dboutput4(aRegionName,name," ","calObsYield","GCal/kHa",calObservedYield);
+    dboutput4(aRegionName, "Land Allocation", name,"Intr Rate","$/kHa",intrinsicRate);
+    dboutput4(aRegionName, "Land Allocation", name,"Intr Yield Mode","GCal/kHa",intrinsicYieldMode);
+    dboutput4(aRegionName, "Land Allocation", name,"calObsYield","GCal/kHa",calObservedYield);
 
     for( int i = 0; i < maxper; ++i ){
         temp[ i ] = getCarbonValue( aRegionName, i );
     }
-    dboutput4(aRegionName,name," ","carbonValue","000Ha", temp );
-    dboutput4(aRegionName,name," ","Ag Productivity Change","none",agProdChange);
+    dboutput4(aRegionName, "Land Allocation", name,"carbonValue","000Ha", temp );
+    dboutput4(aRegionName, "Land Allocation", name,"Ag Productivity Change","none",agProdChange);
 
     //print out each ghg emission
     for ( unsigned int i = 0; i < mGHGs.size(); i++ ) {
         for ( int j = 0; j < maxper; j++) {
             temp[j] = mGHGs[i]->getEmission( j );
         }
-        dboutput4( aRegionName,name," ",mGHGs[i]->getName()+" emiss",mGHGs[i]->getUnit(),temp);
+        // TODO: Does this match emissions for Technology GHGs?
+        dboutput4( aRegionName, "Land Allocation",name,mGHGs[i]->getName()+" emiss",mGHGs[i]->getUnit(),temp);
     }
 }
 

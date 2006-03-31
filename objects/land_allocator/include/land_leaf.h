@@ -135,7 +135,7 @@ protected:
 
     std::map<std::string,double> emissmap; //! < Emissions mapping of ghg names to values
     std::vector<double> agProdChange;  //!< The technological change factor.
-    std::vector<double> production;  //!< The production output of this leaf.
+
     std::vector <Ghg*> mGHGs; //!< vector of suites of greenhouse gases
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
