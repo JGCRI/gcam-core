@@ -175,6 +175,8 @@ void GhgMAC::toInputXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteElementCheckDefault( phaseIn, "phaseIn", out, tabs, 1.0 );
 	XMLWriteElementCheckDefault( finalReduction, "finalReduction", out, tabs, 0.0 );
 	XMLWriteElementCheckDefault( finalReductionYear, "finalReductionYear", out, tabs, modeltime->getEndYear() );
+    XMLWriteElementCheckDefault( curveShiftFuelName, "curveShiftFuelName", out, tabs, string() );
+
 	const vector<pair<double,double> > pairs = macCurve->getSortedPairs();
 	typedef vector<pair<double, double> >::const_iterator PairIterator;
 	map<string, double> attrs;
@@ -191,10 +193,11 @@ void GhgMAC::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
 	XMLWriteElement( noBelowZero, "noBelowZero", out, tabs);
 	XMLWriteElement( fuelShiftRange, "fuelShiftRange", out, tabs );
-	XMLWriteElementCheckDefault( costReductionRate, "costReductionRate", out, tabs );
-	XMLWriteElementCheckDefault( baseCostYear, "baseCostYear", out, tabs );
+	XMLWriteElement( costReductionRate, "costReductionRate", out, tabs );
+	XMLWriteElement( baseCostYear, "baseCostYear", out, tabs );
 	XMLWriteElement( phaseIn, "phaseIn", out, tabs);
 	XMLWriteElement( finalReduction, "finalReduction", out, tabs);
+    XMLWriteElement( curveShiftFuelName, "curveShiftFuelName", out, tabs );
 
 	const vector<pair<double,double> > pairs = macCurve->getSortedPairs();
 	typedef vector<pair<double, double> >::const_iterator PairIterator;
