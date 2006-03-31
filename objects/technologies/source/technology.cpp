@@ -300,10 +300,11 @@ void technology::completeInit( const string& aSectorName,
     // Add the input dependency to the dependency finder if there is one. There
     // will not be one if this is a transportation technology.
     if( aDepFinder ){
-        // Don't add dependency if technology does not ever function.
-        // If this is the case, the technology can never have an effect on the markets.
-        // This is necessary for export sectors to operate correctly, but will be true in general.
-        if (  !hasNoInputOrOutput() ) { // note the NOT operator
+        // Don't add dependency if technology does not ever function. If this is
+        // the case, the technology can never have an effect on the markets.
+        // This is necessary for export sectors to operate correctly, but will
+        // be true in general.
+        if ( !hasNoInputOrOutput() ) { // note the NOT operator
             aDepFinder->addDependency( aSectorName, fuelname );
         }
     }
@@ -376,6 +377,7 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     XMLWriteElement( share, "share", out, tabs );
     XMLWriteElement( output, "output", out, tabs );
     XMLWriteElement( input, "input", out, tabs );
+    XMLWriteElement( fixedOutput, "fixedOutput", out, tabs );
 
     // write our ghg object, vector is of number of gases
     for( vector<Ghg*>::const_iterator i = ghg.begin(); i != ghg.end(); i++ ){
@@ -595,8 +597,8 @@ void technology::resetFixedOutput( int per ) {
 * \return Returns wether this technology will always have no output or input
 */
 bool technology::hasNoInputOrOutput() const {
-    // if zero value was read in and is zero
-    return ( fixedOutput == 0 );
+    // Technology has zero fixed output if fixed output was read-in as zero.
+    return( util::isEqual( fixedOutput, 0.0 ) );
 }
 
 /*! \brief Return fixed technology output
@@ -781,7 +783,7 @@ void technology::adjustForCalibration( double subSectorDemand,
 
     // Report if share weight gets extremely large
     const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
-    if ( debugChecking && (shrwts > 1e4 ) ) {
+    if ( debugChecking && shrwts > 1e6 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Large share weight in calibration for technology: " << name << endl;
@@ -935,7 +937,7 @@ double technology::getOutput() const {
 }
 
 //! return technology fuel cost only
-double technology::getFuelcost( ) const {
+double technology::getFuelcost() const {
     return fuelcost;
 }
 
