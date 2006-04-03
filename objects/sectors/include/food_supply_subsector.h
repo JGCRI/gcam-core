@@ -33,5 +33,6 @@ protected:
 	virtual const std::string& getXMLName() const;
     bool isNameOfChild( const std::string& nodename ) const;
     virtual technology* createChild( const std::string& nodename ) const;
+    virtual void MCDerivedClassOutput() const;
 };
 #endif // _FOOD_SUPPLY_SUBSECTOR_H_
