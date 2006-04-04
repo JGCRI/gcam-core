@@ -31,11 +31,11 @@ const string GhgMAC::XML_NAME = "MAC";
 GhgMAC::GhgMAC(){
     const Modeltime* modeltime = scenario->getModeltime();
 
-	phaseIn = 1;
-	finalReduction = 0;
-	finalReductionYear = modeltime->getEndYear();
-	fuelShiftRange = 0;
-	noBelowZero = false;
+    phaseIn = 1;
+    finalReduction = 0;
+    finalReductionYear = modeltime->getEndYear();
+    fuelShiftRange = 0;
+    noBelowZero = false;
     baseCostYear = modeltime->getper_to_yr( modeltime->getBasePeriod() );
     costReductionRate = 0;
 }
@@ -85,9 +85,10 @@ GhgMAC* GhgMAC::clone() const {
 * This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
+* \todo This function is currently unneeded because there are no derived classes.
 */
-const std::string& GhgMAC::getXMLName() const {
-	return XML_NAME;
+const string& GhgMAC::getXMLName() const {
+    return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -99,8 +100,8 @@ const std::string& GhgMAC::getXMLName() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& GhgMAC::getXMLNameStatic() {
-	return XML_NAME;
+const string& GhgMAC::getXMLNameStatic() {
+    return XML_NAME;
 }
 /*! \brief Reads in a series of data points and creates a MAC curve from those points
 * \detailed The x value of the data points is the carbon price.  The y- value is the amount of 
@@ -111,103 +112,103 @@ const std::string& GhgMAC::getXMLNameStatic() {
 * \param node Current node in the DOM tree. 
 */
 void GhgMAC::XMLParse( const xercesc::DOMNode* node ){
-	/*! \pre Assume we are passed a valid node. */
-	assert( node );
+    /*! \pre Assume we are passed a valid node. */
+    assert( node );
 
-	DOMNodeList* nodeList = node->getChildNodes();
-	ExplicitPointSet* currPoints = new ExplicitPointSet();
-	for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-		DOMNode* curr = nodeList->item( i );
-		const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );		
+    DOMNodeList* nodeList = node->getChildNodes();
+    ExplicitPointSet* currPoints = new ExplicitPointSet();
+    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
+        DOMNode* curr = nodeList->item( i );
+        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );        
         if( nodeName == "#text" ){
             continue;
         }
-		else if ( nodeName == "phaseIn" ){
-			 phaseIn = XMLHelper<double>::getValue( curr);
-		}
-		else if ( nodeName == "costReductionRate" ){
-			 costReductionRate = XMLHelper<double>::getValue( curr);
-		}
-		else if ( nodeName == "baseCostYear"){
-			baseCostYear = XMLHelper<int>::getValue( curr);
- 		}
-		else if ( nodeName == "fuelShiftRange" ){
-			 fuelShiftRange = XMLHelper<double>::getValue( curr);
-		}
-		else if ( nodeName == "curveShiftFuelName"){
-			curveShiftFuelName = XMLHelper<string>::getValue( curr);
-		}
-		else if ( nodeName == "finalReduction"){
-			finalReduction = XMLHelper<double>::getValue( curr);
-		}
-		else if ( nodeName == "finalReductionYear"){
-			finalReductionYear = XMLHelper<int>::getValue( curr);
- 		}
-		else if ( nodeName == "noBelowZero"){
-			noBelowZero = XMLHelper<bool>::getValue( curr);
-		}
-		else if ( nodeName == "reduction" ){
-			double taxVal = XMLHelper<double>::getAttr( curr, "tax" );	
-			double reductionVal = XMLHelper<double>::getValue( curr );
-			XYDataPoint* currPoint = new XYDataPoint( taxVal, reductionVal );
-			currPoints->addPoint( currPoint );
-		}
+        else if ( nodeName == "phaseIn" ){
+             phaseIn = XMLHelper<double>::getValue( curr);
+        }
+        else if ( nodeName == "costReductionRate" ){
+             costReductionRate = XMLHelper<double>::getValue( curr);
+        }
+        else if ( nodeName == "baseCostYear"){
+            baseCostYear = XMLHelper<int>::getValue( curr);
+        }
+        else if ( nodeName == "fuelShiftRange" ){
+             fuelShiftRange = XMLHelper<double>::getValue( curr);
+        }
+        else if ( nodeName == "curveShiftFuelName"){
+            curveShiftFuelName = XMLHelper<string>::getValue( curr);
+        }
+        else if ( nodeName == "finalReduction"){
+            finalReduction = XMLHelper<double>::getValue( curr);
+        }
+        else if ( nodeName == "finalReductionYear"){
+            finalReductionYear = XMLHelper<int>::getValue( curr);
+        }
+        else if ( nodeName == "noBelowZero"){
+            noBelowZero = XMLHelper<bool>::getValue( curr);
+        }
+        else if ( nodeName == "reduction" ){
+            double taxVal = XMLHelper<double>::getAttr( curr, "tax" );  
+            double reductionVal = XMLHelper<double>::getValue( curr );
+            XYDataPoint* currPoint = new XYDataPoint( taxVal, reductionVal );
+            currPoints->addPoint( currPoint );
+        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << GhgMAC::XML_NAME << "." << endl;
         }
-	}
-    // Can't override a MAC curve currently.
-	macCurve.reset( new PointSetCurve( currPoints ) );
+    }
+    // TODO: Can't override a MAC curve currently.
+    macCurve.reset( new PointSetCurve( currPoints ) );
 }
 
 //! Write out the datamembers of the GHGMac in an XML format.
 void GhgMAC::toInputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 
-	XMLWriteOpeningTag(getXMLName(), out, tabs, name );
-	
-	XMLWriteElementCheckDefault( noBelowZero, "noBelowZero", out, tabs, false);
-	XMLWriteElementCheckDefault( fuelShiftRange, "fuelShiftRange", out, tabs, 0.0 );
-	XMLWriteElementCheckDefault( costReductionRate, "costReductionRate", out, tabs, 0.0 );
-	XMLWriteElementCheckDefault( baseCostYear, "baseCostYear", out, tabs, modeltime->getper_to_yr( modeltime->getBasePeriod() ) );
-	XMLWriteElementCheckDefault( phaseIn, "phaseIn", out, tabs, 1.0 );
-	XMLWriteElementCheckDefault( finalReduction, "finalReduction", out, tabs, 0.0 );
-	XMLWriteElementCheckDefault( finalReductionYear, "finalReductionYear", out, tabs, modeltime->getEndYear() );
+    XMLWriteOpeningTag(getXMLName(), out, tabs, name );
+    
+    XMLWriteElementCheckDefault( noBelowZero, "noBelowZero", out, tabs, false);
+    XMLWriteElementCheckDefault( fuelShiftRange, "fuelShiftRange", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( costReductionRate, "costReductionRate", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( baseCostYear, "baseCostYear", out, tabs, modeltime->getper_to_yr( modeltime->getBasePeriod() ) );
+    XMLWriteElementCheckDefault( phaseIn, "phaseIn", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( finalReduction, "finalReduction", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( finalReductionYear, "finalReductionYear", out, tabs, modeltime->getEndYear() );
     XMLWriteElementCheckDefault( curveShiftFuelName, "curveShiftFuelName", out, tabs, string() );
 
-	const vector<pair<double,double> > pairs = macCurve->getSortedPairs();
-	typedef vector<pair<double, double> >::const_iterator PairIterator;
-	map<string, double> attrs;
-	for( PairIterator currPair = pairs.begin(); currPair != pairs.end(); ++currPair ) {
-		attrs[ "tax" ] = currPair->first;
+    const vector<pair<double,double> > pairs = macCurve->getSortedPairs();
+    typedef vector<pair<double, double> >::const_iterator PairIterator;
+    map<string, double> attrs;
+    for( PairIterator currPair = pairs.begin(); currPair != pairs.end(); ++currPair ) {
+        attrs[ "tax" ] = currPair->first;
         XMLWriteElementWithAttributes( currPair->second, "reduction", out, tabs, attrs );
-	}
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    }
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write out datamembers for debugging in an XML format.
 void GhgMAC::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
-	XMLWriteElement( noBelowZero, "noBelowZero", out, tabs);
-	XMLWriteElement( fuelShiftRange, "fuelShiftRange", out, tabs );
-	XMLWriteElement( costReductionRate, "costReductionRate", out, tabs );
-	XMLWriteElement( baseCostYear, "baseCostYear", out, tabs );
-	XMLWriteElement( phaseIn, "phaseIn", out, tabs);
-	XMLWriteElement( finalReduction, "finalReduction", out, tabs);
+    XMLWriteElement( noBelowZero, "noBelowZero", out, tabs);
+    XMLWriteElement( fuelShiftRange, "fuelShiftRange", out, tabs );
+    XMLWriteElement( costReductionRate, "costReductionRate", out, tabs );
+    XMLWriteElement( baseCostYear, "baseCostYear", out, tabs );
+    XMLWriteElement( phaseIn, "phaseIn", out, tabs);
+    XMLWriteElement( finalReduction, "finalReduction", out, tabs);
     XMLWriteElement( curveShiftFuelName, "curveShiftFuelName", out, tabs );
 
-	const vector<pair<double,double> > pairs = macCurve->getSortedPairs();
-	typedef vector<pair<double, double> >::const_iterator PairIterator;
-	for( PairIterator currPair = pairs.begin(); currPair != pairs.end(); ++currPair ) {
-		double taxVal= currPair->first;
-		double reductionVal= currPair->second;
-		XMLWriteElement( taxVal, "taxVal", out, tabs);
-		XMLWriteElement( reductionVal, "reductionVal", out, tabs);
-	}
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    const vector<pair<double,double> > pairs = macCurve->getSortedPairs();
+    typedef vector<pair<double, double> >::const_iterator PairIterator;
+    for( PairIterator currPair = pairs.begin(); currPair != pairs.end(); ++currPair ) {
+        double taxVal= currPair->first;
+        double reductionVal= currPair->second;
+        XMLWriteElement( taxVal, "taxVal", out, tabs);
+        XMLWriteElement( reductionVal, "reductionVal", out, tabs);
+    }
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Perform error checking
@@ -216,7 +217,7 @@ void GhgMAC::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 void GhgMAC::initCalc( const string& ghgName ){
 
     if ( macCurve->getMaxX() == -DBL_MAX ) {
-    	ILogger& mainLog = ILogger::getLogger( "main_log" );
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << " MAC for gas "<< ghgName <<" appears to have no data. " << endl;
     }
@@ -233,15 +234,15 @@ void GhgMAC::initCalc( const string& ghgName ){
 * \todo make the good name more general instead of hard coding CO2?
 * \todo Put the CH4 shift into a separate type of MAC class
 */
-double GhgMAC::findReduction( const string& regionName, const int period ){
+double GhgMAC::findReduction( const string& regionName, const int period ) const {
     const Marketplace* marketplace = scenario->getMarketplace();
     double effectiveCarbonPrice = marketplace->getPrice( "CO2", regionName, period, false );
-    if ( effectiveCarbonPrice == Marketplace::NO_MARKET_PRICE ) {
+    if( effectiveCarbonPrice == Marketplace::NO_MARKET_PRICE ) {
         effectiveCarbonPrice = 0;
     }
     
-	// Avoid this calculation if there is no shift to perform
-    if ( fuelShiftRange != 0 ) {
+    // Avoid this calculation if there is no shift to perform
+    if( fuelShiftRange > util::getSmallNumber() ) {
         effectiveCarbonPrice = shiftNatGas( period, regionName, effectiveCarbonPrice );
     }
     
@@ -249,7 +250,7 @@ double GhgMAC::findReduction( const string& regionName, const int period ){
     
     double reduction = getMACValue( effectiveCarbonPrice );
     
-    if ( noBelowZero && effectiveCarbonPrice < 0 ){
+    if( noBelowZero && effectiveCarbonPrice < 0 ){
         reduction = 0;
     }
     
@@ -260,10 +261,10 @@ double GhgMAC::findReduction( const string& regionName, const int period ){
     const Modeltime* modeltime = scenario->getModeltime();
     int finalReductionPeriod = modeltime->getper_to_yr( finalReductionYear );
 
-    if ( finalReduction > maxReduction && finalReductionPeriod > 1 ){
+    if( finalReduction > maxReduction && finalReductionPeriod > 1 ){
         reduction *= adjustTechCh( period, finalReductionPeriod, maxReduction );
     }
-	return reduction;
+    return reduction;
 }
 
 /*! \brief returns a multiplier that phases in the Mac Curve.
@@ -273,12 +274,12 @@ double GhgMAC::findReduction( const string& regionName, const int period ){
 * \author Nick Fernandez
 * \param period the current period
 */
-double GhgMAC::adjustPhaseIn( const int period ){
-	double mult=1;
-	if ((( period - 1 ) < phaseIn) && ( phaseIn >= 1 )){
-		 mult = ( period - 1 ) / phaseIn;
-	}
-	return mult;
+double GhgMAC::adjustPhaseIn( const int period ) const {
+    double mult = 1;
+    if( ( period - 1 < phaseIn ) && ( phaseIn >= 1 ) ){
+         mult = ( period - 1 ) / phaseIn;
+    }
+    return mult;
 }
 
 /*! \brief returns a multiplier that shifts the MAC curve upwards due to technological change.
@@ -287,15 +288,23 @@ double GhgMAC::adjustPhaseIn( const int period ){
 * \author Nick Fernandez
 * \param period
 */
-double GhgMAC::adjustTechCh( const int period, const int finalReductionPeriod, const double maxReduction ){
-	double multiplier;
-	double change = maxReduction/finalReduction;
-	if ( period <= finalReductionPeriod ){
-		multiplier = change * ( 1 / ( finalReductionPeriod - 2 ) ) * ( period - 2 );
-	}
-	else {
-        multiplier = change;
-	}
+double GhgMAC::adjustTechCh( const int period, const int finalReductionPeriod, const double maxReduction ) const {
+    
+    const int basePeriod = scenario->getModeltime()->getyr_to_per( 1990 );
+    double multiplier;
+
+    if( finalReductionPeriod <= basePeriod ){
+        multiplier = 1;
+    }
+    else {
+        double maxChange = maxReduction / finalReduction;
+        if ( period <= finalReductionPeriod ){
+            multiplier =  maxChange * ( 1 / ( finalReductionPeriod - basePeriod ) ) * ( period - basePeriod );
+        }
+        else {
+            multiplier = maxChange;
+        }
+    }
     return multiplier;
 }
 
@@ -313,30 +322,30 @@ double GhgMAC::adjustTechCh( const int period, const int finalReductionPeriod, c
 * \param regionName the region
 * \param carbonPrice the current carbon price
 */
-double GhgMAC::shiftNatGas( const int period, const string& regionName, const double carbonPrice ){
-	const Marketplace* marketplace = scenario->getMarketplace();
-	double natGasPrice = marketplace->getPrice( curveShiftFuelName, regionName, period );
-	double natGasBasePrice = marketplace->getPrice( curveShiftFuelName, regionName, 1 ); // change prices relative to the period 1
+double GhgMAC::shiftNatGas( const int period, const string& regionName, const double carbonPrice ) const {
+    const Marketplace* marketplace = scenario->getMarketplace();
+    double natGasPrice = marketplace->getPrice( curveShiftFuelName, regionName, period );
+    double natGasBasePrice = marketplace->getPrice( curveShiftFuelName, regionName, 1 ); // change prices relative to the period 1
 
-	double priceChangeRatio = 1;
-	if ( natGasPrice != 0 ) { 
-		priceChangeRatio = natGasBasePrice / natGasPrice;
-	}
-	
-	// The formula below was determined by fitting MAC curves with the parameters in the constants below
-	// If this changes due to new MAC curves with price shifts some parameters may need to be read in.
-	const double NORM_FACTOR = 3 / 5; // This value was adjusted to fit the EPA-EMF data.
-	const double minCarbonPrice = macCurve->getMinX();	// Minimum carbon price used in this MAC curve
-	const double maxCarbonPrice = macCurve->getMaxX(); // Maximum carbon price used in this MAC curve
+    double priceChangeRatio = 1;
+    if ( natGasPrice > util::getSmallNumber() ) { 
+        priceChangeRatio = natGasBasePrice / natGasPrice;
+    }
+    
+    // The formula below was determined by fitting MAC curves with the parameters in the constants below
+    // If this changes due to new MAC curves with price shifts some parameters may need to be read in.
+    const double NORM_FACTOR = 0.6; // This value was adjusted to fit the EPA-EMF data.
+    const double minCarbonPrice = macCurve->getMinX();  // Minimum carbon price used in this MAC curve
+    const double maxCarbonPrice = macCurve->getMaxX(); // Maximum carbon price used in this MAC curve
 
-	double convergenceFactor = ( 1 / 2 ) + ( 1 / 2 )*( ( maxCarbonPrice - carbonPrice ) / ( maxCarbonPrice - minCarbonPrice ) );
-    double newCarbonPrice = carbonPrice + ( NORM_FACTOR*( 1 - priceChangeRatio ) * fuelShiftRange * convergenceFactor );
+    double convergenceFactor = 0.5 + 0.5 *( ( maxCarbonPrice - carbonPrice ) / ( maxCarbonPrice - minCarbonPrice ) );
+    double newCarbonPrice = carbonPrice + ( NORM_FACTOR * ( 1 - priceChangeRatio ) * fuelShiftRange * convergenceFactor );
 
     // Reset carbon price if beyond MAC curve values (is this necessary? sjs)
-	newCarbonPrice = max( newCarbonPrice, minCarbonPrice );
-	newCarbonPrice = min( newCarbonPrice, maxCarbonPrice );
+    newCarbonPrice = max( newCarbonPrice, minCarbonPrice );
+    newCarbonPrice = min( newCarbonPrice, maxCarbonPrice );
 
-	return newCarbonPrice;
+    return newCarbonPrice;
 }
 
 /*! \brief returns a multiplier for the carbon price shifted due to technological change
@@ -345,16 +354,16 @@ double GhgMAC::shiftNatGas( const int period, const string& regionName, const do
 * \param costReductionRate annual rate of cost reduction for all points on the curve
 * \param period model period
 */
-double GhgMAC::shiftCostReduction( const int period, const double costReductionRate ){
+double GhgMAC::shiftCostReduction( const int period, const double costReductionRate ) const {
 
-    if ( costReductionRate != 0 ) {
+    if( costReductionRate > util::getSmallNumber() ) {
         const Modeltime* modeltime = scenario->getModeltime();
         int numberYears = modeltime->getper_to_yr( period ) - baseCostYear;
         // Only adjust if after baseCostYear
-        if ( numberYears > 0 ) {
+        if( numberYears > 0 ) {
             return  1 / pow( 1 + costReductionRate, numberYears );
         }
-	}
+    }
     return 1;
 }
 
@@ -364,21 +373,21 @@ double GhgMAC::shiftCostReduction( const int period, const double costReductionR
 *  Errors can happen if no MAC curve values are read in, although perhaps other error situations can occur.
 * \param carbonPrice carbon price
 */
-double GhgMAC::getMACValue( const double carbonPrice ){
+double GhgMAC::getMACValue( const double carbonPrice ) const {
     const double maxCO2Tax = macCurve->getMaxX();
     
     // so that getY function won't interpolate beyond last value
     double effectiveCarbonPrice = min( carbonPrice, maxCO2Tax );
     
-	double reduction = macCurve->getY( effectiveCarbonPrice );
+    double reduction = macCurve->getY( effectiveCarbonPrice );
    
      // Check to see if an error has occurred.
     if ( reduction == -DBL_MAX ) {
-    	ILogger& mainLog = ILogger::getLogger( "main_log" );
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << " An error occured when evaluating MAC curve for a GHG." << endl;
         reduction = 0;
     }
     
-	return reduction;
+    return reduction;
 }

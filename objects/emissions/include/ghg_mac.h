@@ -28,37 +28,38 @@ class Tabs;
 */
 class GhgMAC {
 public:
-	GhgMAC();
-	~GhgMAC();
+    GhgMAC();
+    ~GhgMAC();
     GhgMAC( const GhgMAC& other );
     GhgMAC& operator=( const GhgMAC& other );
     GhgMAC* clone() const;
-    const std::string& getXMLName() const;
-	static const std::string& getXMLNameStatic();
-	void XMLParse( const xercesc::DOMNode* node );
-	void initCalc( const std::string& ghgName );
-	
-	double findReduction( const std::string& region, const int period );
-	void toInputXML( std::ostream& out, Tabs* tabs ) const;
-	void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+
+    static const std::string& getXMLNameStatic();
+    void XMLParse( const xercesc::DOMNode* node );
+    void initCalc( const std::string& ghgName );
+    
+    double findReduction( const std::string& region, const int period ) const;
+    void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
 protected:
-	std::string name; //!< name of mac
+    std::string name; //!< name of mac
 
-	double shiftNatGas( const int period, const std::string& regionName, const double carbonPrice);
-	double adjustPhaseIn(const int period);
-	double adjustTechCh( const int period, const int finalReductionPeriod, const double maxReduction);
-    double shiftCostReduction( const int period, const double costReductionRate );
-    double getMACValue( const double carbonPrice );
+    const std::string& getXMLName() const;
+    double shiftNatGas( const int period, const std::string& regionName, const double carbonPrice) const;
+    double adjustPhaseIn( const int period ) const;
+    double adjustTechCh( const int period, const int finalReductionPeriod, const double maxReduction ) const;
+    double shiftCostReduction( const int period, const double costReductionRate ) const;
+    double getMACValue( const double carbonPrice ) const;
 
-	double phaseIn; //!< number of periods over which phase in occurs. can be a non-integer
-	double fuelShiftRange; //!< the initial range over which carbon price changes due to the standard range of Nat. Gas price changes
-	double costReductionRate; //!< the annual rate at which carbon price is shifted due to technological change
+    double phaseIn; //!< number of periods over which phase in occurs. can be a non-integer
+    double fuelShiftRange; //!< the initial range over which carbon price changes due to the standard range of Nat. Gas price changes
+    double costReductionRate; //!< the annual rate at which carbon price is shifted due to technological change
     double finalReduction; //!< Increase maximum reduction to this value (due to tech change) 
-	int baseCostYear; //!< Base year from which to start decreasing costs
+    int baseCostYear; //!< Base year from which to start decreasing costs
     int finalReductionYear; //!< Year in which maximum reduction should be implimented
-	bool noBelowZero;//!< turns off reductions if carbon Price is less than 0;
-	std::string curveShiftFuelName; //!< Name of fuel who's price changes cause a shift in the curve
+    bool noBelowZero;//!< turns off reductions if carbon Price is less than 0;
+    std::string curveShiftFuelName; //!< Name of fuel who's price changes cause a shift in the curve
     
     std::auto_ptr<Curve> macCurve; //!< The underlying Curve
 
