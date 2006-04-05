@@ -132,7 +132,14 @@ const string Info::getString( const string& aStringKey, const bool aMustExist ) 
 }
 
 bool Info::hasValue( const string& aStringKey ) const {
-    return ( mInfoMap->find( aStringKey ) != mInfoMap->end() );
+    // Check the local store.
+    bool currHasValue = mInfoMap->find( aStringKey ) != mInfoMap->end();
+
+    // If the value was not found, check the parent.
+    if( !currHasValue ){
+        currHasValue = mParentInfo->hasValue( aStringKey );
+    }
+    return currHasValue;
 }
 
 void Info::toDebugXML( const int aperiod, Tabs* aTabs, ostream& aOut ) const {
