@@ -57,21 +57,6 @@ void TreeLandAllocator::XMLParse( const DOMNode* aNode ){
     ALandAllocatorItem::XMLParse( aNode );
 }
 
-/*! \brief Parses any attributes specific to derived classes
-* \author James Blackwood
-* \param nodeName The name of the curr node. 
-* \param curr pointer to the current node in the XML input tree
-*/
-bool TreeLandAllocator::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-    if( nodeName == "landAllocation" ) {
-        XMLHelper<double>::insertValueIntoVector( curr, landAllocation, scenario->getModeltime() ); 
-    }
-    else if( !LandNode::XMLDerivedClassParse( nodeName, curr ) ){
-        return false;
-    }
-    return true;
-}
-
 void TreeLandAllocator::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
     // Call the node toDebugXML
     ALandAllocatorItem::toDebugXML( aPeriod, aOut, aTabs );
@@ -79,26 +64,7 @@ void TreeLandAllocator::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs*
 
 void TreeLandAllocator::toInputXML( std::ostream& aOut, Tabs* aTabs ) const {
     // Call the node toInputXML
-    ALandAllocatorItem::toInputXML( aOut, aTabs );
-}
-
-/*! \brief Write XML values specific to derived objects
-*
-* \author Steve Smith
-*/
-void TreeLandAllocator::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteVector( landAllocation, "landAllocation", out, tabs, scenario->getModeltime(), 0.0 );
-    LandNode::toInputXMLDerived( out, tabs );
-}
-
-/*! \brief Write XML values specific to derived objects
-*
-* \author Steve Smith
-*/
-void TreeLandAllocator::toDebugXMLDerived( int aPeriod, ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( landAllocation[ aPeriod ], "landAllocation", out, tabs,
-                     scenario->getModeltime()->getper_to_yr( aPeriod ) );
-    LandNode::toDebugXMLDerived( aPeriod, out, tabs );
+    LandNode::toInputXML( aOut, aTabs );
 }
 
 /*! \brief Complete the Initialization in the LandAllocator.
@@ -298,9 +264,12 @@ void TreeLandAllocator::calcLandShares( const string& aRegionName,
 *  so the value in landAllocation at the root will not be changed and be passed down recursively.
 * \author Steve Smith, James Blackwood
 */
-void TreeLandAllocator::calcLandAllocation( double landAllocationAbove, int period ) {
+void TreeLandAllocator::calcLandAllocation( const string& aRegionName,
+                                            const double aLandAllocationAbove,
+                                            const int aPeriod )
+{
     for ( unsigned int i = 0; i < children.size(); i++ ) {
-        children[ i ]->calcLandAllocation ( landAllocation[ period ], period );
+        children[ i ]->calcLandAllocation( aRegionName, landAllocation[ aPeriod ], aPeriod );
     }
 }
 
@@ -310,7 +279,7 @@ void TreeLandAllocator::calcLandAllocation( double landAllocationAbove, int peri
 */
 void TreeLandAllocator::calcFinalLandAllocation( const string& aRegionName, const int aPeriod ){
     calcLandShares( aRegionName, 0, 0, aPeriod );
-    calcLandAllocation( 0, aPeriod );
+    calcLandAllocation( aRegionName, 0, aPeriod );
 }
 
 void TreeLandAllocator::setCarbonContent( const string& aLandType,

@@ -23,12 +23,12 @@ public:
     ForestLandLeaf();
     virtual ~ForestLandLeaf();
 
-    static const std::string& getXMLNameStatic();
-
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo );
 
-    virtual void calcLandAllocation( double landAllocationAbove, int period );
+    virtual void calcLandAllocation( const std::string& aRegionName,
+                                     const double aLandAllocationAbove,
+                                     const int aPeriod );
 
     virtual double getLandAllocation ( const std::string& aProductName,
                                        const int aPeriod ) const;
@@ -49,7 +49,6 @@ protected:
     int rotationPeriod; //!< rotation period for forests
     int steps; //!< number of model time steps for a rotation period
     std::vector<double> landToBeHarvested;  //!< Land allocation set aside for future production.
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName() const;
 };

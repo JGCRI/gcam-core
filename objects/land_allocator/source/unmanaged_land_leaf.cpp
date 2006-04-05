@@ -33,13 +33,14 @@ UnmanagedLandLeaf::~UnmanagedLandLeaf() {
 }
 
 bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-    const Modeltime* modeltime = scenario->getModeltime();
-
     if( nodeName == GhgInput::getXMLNameStatic() ){
         parseContainerNode( curr, mGHGs, new GhgInput() );
     }
     else if( nodeName == "historyYear" ) {
         historyYear = XMLHelper<int>::getValue( curr );
+    }
+    else if( nodeName == "intrinsicRate" ){
+        XMLHelper<double>::insertValueIntoVector( curr, intrinsicRate, scenario->getModeltime() );
     }
     else if( nodeName == UnmanagedCarbonCalc::getXMLNameStatic() ) {
         parseSingleNode( curr, mCarbonContentCalc, new UnmanagedCarbonCalc );
@@ -56,11 +57,11 @@ bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMN
 * \param tabs Tabs object used to track the number of tabs to print.
 * \ref faqitem1 
 */
-void UnmanagedLandLeaf::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    LandLeaf::toInputXMLDerived( out, tabs );
-
+void UnmanagedLandLeaf::toInputXML( ostream& out, Tabs* tabs ) const {
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteVector( intrinsicRate, "intrinsicRate", out, tabs, modeltime, 0.0 );
+
     XMLWriteElementCheckDefault( historyYear, "historyYear", out, tabs, defaultHistoryYear() );
 
     // Only write out land allocation values for historical years. Leave constant after last historical year
@@ -77,10 +78,13 @@ void UnmanagedLandLeaf::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     }
     XMLWriteVector( tempLandAllocation, "landAllocation", out, tabs, modeltime, 0.0 );
 
+    mCarbonContentCalc->toInputXML( out, tabs );
+
     for ( unsigned int j = 0; j < mGHGs.size(); j++ ) {
         mGHGs[ j ]->toInputXML( out, tabs );
     }
     // finished writing xml for the class members.
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 void UnmanagedLandLeaf::toDebugXMLDerived( const int aPeriod, std::ostream& out, Tabs* tabs ) const {
@@ -97,7 +101,7 @@ void UnmanagedLandLeaf::toDebugXMLDerived( const int aPeriod, std::ostream& out,
 * \author James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& UnmanagedLandLeaf::getXMLName() const {
+const string& UnmanagedLandLeaf::getXMLName() const {
     return getXMLNameStatic();
 }
 

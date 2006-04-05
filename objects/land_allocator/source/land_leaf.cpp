@@ -69,25 +69,7 @@ ALandAllocatorItem* LandLeaf::getChildAt( const size_t aIndex ) {
 * \param curr pointer to the current node in the XML input tree
 */
 bool LandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-
-    if( nodeName == "intrinsicRate" ) {
-        XMLHelper<double>::insertValueIntoVector( curr, intrinsicRate, modeltime );
-    }
-    else if( nodeName == "landAllocation" ) {
-        XMLHelper<double>::insertValueIntoVector( curr, landAllocation, modeltime );
-    }
-    else if( nodeName == "intrinsicYieldMode" ) {
-        XMLHelper<double>::insertValueIntoVector( curr, intrinsicYieldMode, modeltime );
-    } 
-	else if( nodeName == ProductionCarbonCalc::getXMLNameStatic() ) {
-        parseSingleNode( curr, mCarbonContentCalc, new ProductionCarbonCalc );
-    }
-    else {
-        return false;
-    }
-    return true;
+    return false;
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -99,19 +81,6 @@ bool LandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr
 * \return The constant XML_NAME.
 */
 const string& LandLeaf::getXMLName() const {
-    return getXMLNameStatic();
-}
-
-/*! \brief Get the XML node name in static form for comparison when parsing XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* The "==" operator that is used when parsing, required this second function to return static.
-* \note A function cannot be static and virtual.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME as a static.
-*/
-const string& LandLeaf::getXMLNameStatic() {
     const static string XML_NAME = "LandAllocatorLeaf";
     return XML_NAME;
 }
@@ -211,13 +180,8 @@ void LandLeaf::checkCalObservedYield( const int aPeriod ) const {
     }
 }
 
-/*! 
-* \brief Write out input stream.
-* \param out Output file in XML format.
-* \param tabs Tabs object used to track the number of tabs to print.
-*/
-void LandLeaf::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // do nothing since leaves are created dynamicaly
+void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
+    // Do nothing because land leaves are dynamically created.
 }
 
 void LandLeaf::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
@@ -259,16 +223,15 @@ double LandLeaf::getCarbonValue( const string& aRegionName, const int aPeriod ) 
     const Marketplace* marketplace = scenario->getMarketplace();
     double carbonPrice = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
     if( carbonPrice != Marketplace::NO_MARKET_PRICE ){
-        assert( mCarbonContentCalc.get() );
-
         // With carbon content in Mg C/Ha == TC/Ha, to TC/Ha * $/TC = $/Ha.
         const int year = scenario->getModeltime()->getper_to_yr( aPeriod );
-
+        double carbonSubsidy = ( mCarbonContentCalc->getPotentialAboveGroundCarbon( year )
+                                 + mCarbonContentCalc->getPotentialBelowGroundCarbon( year ) )
+                               * carbonPrice * mInterestRate;
+      
         // Calculate the carbon value as the total carbon content of the land
         // multiplied by the carbon price and the interest rate.
-        return ( mCarbonContentCalc->getPotentialAboveGroundCarbon( year )
-            + mCarbonContentCalc->getPotentialBelowGroundCarbon( year ) )
-                * carbonPrice * mInterestRate;
+        return carbonSubsidy;
     }
     return 0;
 }
@@ -408,22 +371,33 @@ void LandLeaf::calcLandShares( const string& aRegionName,
 *
 * \author James Blackwood
 */
-void LandLeaf::calcLandAllocation ( double landAllocationAbove, int period ) {
-    landAllocation[period] = landAllocationAbove * share[period];
+void LandLeaf::calcLandAllocation( const string& aRegionName,
+                                   const double aLandAllocationAbove,
+                                   const int aPeriod )
+{
+    landAllocation[ aPeriod ] = aLandAllocationAbove * share[ aPeriod ];
 
     // Set the amount of land use change into the carbon content calculator.
-    mCarbonContentCalc->setTotalLandUse( landAllocation[ period ], period );
+    mCarbonContentCalc->setTotalLandUse( landAllocation[ aPeriod ], aPeriod );
 
     // Calculate carbon emissions.
     // TODO: Better location.
-    mCarbonContentCalc->calc( period );
+    mCarbonContentCalc->calc( aPeriod );
+
+    // Add emissions to the carbon market.
+    // TODO: Determine how to handle this correctly.
+    // Marketplace* marketplace = scenario->getMarketplace();
+    // const int year = scenario->getModeltime()->getper_to_yr( aPeriod );
+    // double emissions = mCarbonContentCalc->getNetLandUseChangeEmission( year );
+    // 
+    // marketplace->addToDemand( "CO2", aRegionName, emissions, aPeriod, false );
 }
 
 void LandLeaf::calcYieldInternal( const string& aLandType,
-                                           const string& aProductName,
-                                           const double aProfitRate,
-                                           const double aAvgIntrinsicRate,
-                                           const int aPeriod )
+                                  const string& aProductName,
+                                  const double aProfitRate,
+                                  const double aAvgIntrinsicRate,
+                                  const int aPeriod )
 {
     if ( aProfitRate >= util::getSmallNumber() ) {
         // AveRate $/kHa / ($/GCal) = GCal/kHa)

@@ -114,12 +114,11 @@ public:
                                  const double aTotalLandAllocated,
                                  const int aPeriod );
 
-    virtual void calcLandAllocation( double landAllocationAbove, int period );
+     virtual void calcLandAllocation( const std::string& aRegionName,
+                                     const double aLandAllocationAbove,
+                                     const int aPeriod );
 protected:
     virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 };
 
 #endif // _LAND_ALLOCATOR_ROOT_H_

@@ -32,35 +32,6 @@ ForestLandLeaf::ForestLandLeaf(){
 ForestLandLeaf::~ForestLandLeaf() {
 }
 
-/*! \brief Parses any attributes specific to derived classes
-*
-* Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class.
-*
-* \author James Blackwood
-* \param nodeName The name of the curr node. 
-* \param curr pointer to the current node in the XML input tree
-*/
-bool ForestLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-
-    // TODO: This isn't right as overrides won't work and it is parsing base
-    // class items. This relies on XMLDerivedClassParse being called before
-    // parsing the base class item.
-    if( nodeName == "intrinsicRate" ) {
-        intrinsicRate.clear();
-        intrinsicRate.resize( maxper, XMLHelper<double>::getValue( curr ) );
-    }
-    else if( nodeName == "intrinsicYieldMode" ) {
-        intrinsicYieldMode.clear();
-        intrinsicYieldMode.resize( maxper, XMLHelper<double>::getValue( curr ) );
-    }
-    else {
-        return false;
-    }
-    return true;
-}
-
 /*! \brief Get the XML node name for output to XML.
 *
 * This public function accesses the private constant string, XML_NAME.
@@ -69,20 +40,7 @@ bool ForestLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMNode
 * \author James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& ForestLandLeaf::getXMLName() const {
-    return getXMLNameStatic();
-}
-
-/*! \brief Get the XML node name in static form for comparison when parsing XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* The "==" operator that is used when parsing, required this second function to return static.
-* \note A function cannot be static and virtual.
-* \author James Blackwood
-* \return The constant XML_NAME as a static.
-*/
-const std::string& ForestLandLeaf::getXMLNameStatic() {
+const string& ForestLandLeaf::getXMLName() const {
     const static string XML_NAME = "ForestLandAllocatorLeaf";
     return XML_NAME;
 }
@@ -108,9 +66,12 @@ void ForestLandLeaf::completeInit( const string& aRegionName,
     LandLeaf::completeInit( aRegionName, aRegionInfo );
 }
 
-void ForestLandLeaf::calcLandAllocation( double aLandAllocationAbove, int aPeriod ){
+void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
+                                         const double aLandAllocationAbove,
+                                         const int aPeriod )
+{
     // Call standard land allocation.
-    LandLeaf::calcLandAllocation( aLandAllocationAbove, aPeriod );
+    LandLeaf::calcLandAllocation( aRegionName, aLandAllocationAbove, aPeriod );
 
     // Calculate the land allocation for the harvest period defined by this
     // period and the constant rotation period. First calculate land already

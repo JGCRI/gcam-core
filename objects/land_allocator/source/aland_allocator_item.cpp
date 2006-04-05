@@ -55,6 +55,9 @@ void ALandAllocatorItem::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
+        else if( nodeName == "landAllocation" ) {
+            XMLHelper<double>::insertValueIntoVector( curr, landAllocation, scenario->getModeltime() ); 
+        }
         else if ( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -94,23 +97,6 @@ double ALandAllocatorItem::getShare ( int period ) {
 */
 const string& ALandAllocatorItem::getName() const {
     return name;
-}
-
-/*! 
-* \brief Write datamembers to datastream in XML format. Calls XMLWriteElement
-*        function from the XMLHelper class for the actual writing.
-* \param out Output file in XML format.
-* \param tabs Tabs object used to track the number of tabs to print.
-* \ref faqitem1 
-*/
-void ALandAllocatorItem::toInputXML( ostream& out, Tabs* tabs ) const {
-
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
-
-    toInputXMLDerived( out, tabs );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Write datamembers to datastream in XML format for debugging purposes.  

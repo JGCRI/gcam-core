@@ -98,7 +98,12 @@ protected:
 	const unsigned int getEndYear() const;
 
     static double interpYearHelper( const objects::PeriodVector<double>& aPeriodVector,
-                                    const int aYear );
+                                    const unsigned int aYear );
+
+    static double interpYearHelper( const objects::YearVector<double>& aYearVector,
+                                    const unsigned int aStartYear,
+                                    const unsigned int aEndYear,
+                                    const unsigned int aYear );
 };
 
 #endif // _ASIMPLE_CARBON_CALC_H_

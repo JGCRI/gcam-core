@@ -81,7 +81,9 @@ public:
                                  const double aTotalLandAllocated,
                                  const int aPeriod );
 
-    virtual void calcLandAllocation ( double landAllocationAbove, int period );
+    virtual void calcLandAllocation( const std::string& aRegionName,
+                                     const double aLandAllocationAbove,
+                                     const int aPeriod );
     
     virtual void calcYieldInternal( const std::string& aLandType,
                                     const std::string& aProductName,
@@ -122,11 +124,11 @@ public:
     virtual void updateSummary ( Summary& aSummary, const int aPeriod );
 
 	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
-
+    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+
     virtual const std::string& getXMLName() const;
     virtual void addChild( ALandAllocatorItem* child );
 

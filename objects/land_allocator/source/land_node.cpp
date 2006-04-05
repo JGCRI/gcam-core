@@ -63,9 +63,6 @@ bool LandNode::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr
     else if( nodeName == "sigma" ) {
         sigma = XMLHelper<double>::getValue( curr );
     }
-    else if( nodeName == "landAllocation" ) {
-        XMLHelper<double>::insertValueIntoVector( curr, landAllocation, modeltime ); 
-    }
     else {
         return false;
     }
@@ -76,15 +73,18 @@ bool LandNode::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr
 *
 * \author Steve Smith
 */
-void LandNode::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    
+void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
+
+    // finished writing xml for the class members.
+
     XMLWriteElement( sigma, "sigma", out, tabs );
-    
+    XMLWriteVector( landAllocation, "landAllocation", out, tabs, scenario->getModeltime(), 0.0 );
     // write out for children
     for ( unsigned int i = 0; i < children.size(); i++ ) {
         children[i]->toInputXML( out, tabs );
     }
-
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Write XML values to debug stream for this object.
@@ -93,6 +93,7 @@ void LandNode::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 */
 void LandNode::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     XMLWriteElement( sigma, "sigma", out, tabs );
+    XMLWriteElement( landAllocation[ period ], "landAllocation", out, tabs );
 
     // write out for children
     for ( unsigned int i = 0; i < children.size(); i++ ) {
@@ -421,10 +422,13 @@ void LandNode::setUnmanagedLandValues( const string& aRegionName, const int aPer
 *          root will not be changed and be passed down recursively.
 * \author Steve Smith, James Blackwood
 */
-void LandNode::calcLandAllocation( double landAllocationAbove, int period ) {
-    landAllocation[ period ] = landAllocationAbove * share[ period ];
+void LandNode::calcLandAllocation( const string& aRegionName,
+                                   const double aLandAllocationAbove,
+                                   const int aPeriod )
+{
+    landAllocation[ aPeriod ] = aLandAllocationAbove * share[ aPeriod ];
     for ( unsigned int i = 0; i < children.size(); i++ ) {
-        children[ i ]->calcLandAllocation( landAllocation[ period ], period );
+        children[ i ]->calcLandAllocation( aRegionName, landAllocation[ aPeriod ], aPeriod );
     }
 }
 

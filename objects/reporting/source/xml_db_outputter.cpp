@@ -687,7 +687,7 @@ void XMLDBOutputter::endVisitLandNode( const LandNode* aLandNode, const int aPer
 
 void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){
 	// Write the opening gdp tag.
-    XMLWriteOpeningTag( LandLeaf::getXMLNameStatic(), mBuffer, mTabs.get(), aLandLeaf->getName() );
+    XMLWriteOpeningTag( "LandLeaf", mBuffer, mTabs.get(), aLandLeaf->getName() );
 
     // Loop over the periods to output LandLeaf information.
     // The loops are separated so the types are grouped together, as is required for
@@ -702,7 +702,7 @@ void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aP
 }
 
 void XMLDBOutputter::endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){
-	XMLWriteClosingTag( LandLeaf::getXMLNameStatic(), mBuffer, mTabs.get() );
+	XMLWriteClosingTag( "LandLeaf", mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod ){

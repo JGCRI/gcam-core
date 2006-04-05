@@ -121,9 +121,10 @@ void UnmanagedCarbonCalc::setUnitBelowGroundCarbon( const double aBelowGroundCar
 }
 
 double UnmanagedCarbonCalc::getPotentialAboveGroundCarbonPerLandArea( const int aYear ) const {
-    return mAboveGroundCarbon[ aYear ];
+
+    return interpYearHelper( mAboveGroundCarbon, getStartYear(), getEndYear(), aYear );
 }
 
 double UnmanagedCarbonCalc::getPotentialBelowGroundCarbonPerLandArea( const int aYear ) const {
-    return mBelowGroundCarbon[ aYear ];
+    return interpYearHelper( mBelowGroundCarbon, getStartYear(), getEndYear(), aYear );
 }

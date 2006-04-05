@@ -47,7 +47,7 @@ public:
     
     void XMLParse( const xercesc::DOMNode* node );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const = 0;
     
     const std::string& getName() const;
     void setName( const std::string& nameIn );
@@ -104,7 +104,9 @@ public:
                                  const double aTotalLandAllocated,
                                  const int aPeriod ) = 0;
 
-    virtual void calcLandAllocation( double sigmaAbove, int period ) = 0;
+    virtual void calcLandAllocation( const std::string& aRegionName,
+                                     const double aLandAllocationAbove,
+                                     const int aPeriod ) = 0;
     
     virtual void calcYieldInternal( const std::string& aLandType,
                                     const std::string& aProductName,
@@ -152,7 +154,6 @@ protected:
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual const std::string& getXMLName() const = 0;
 };
 

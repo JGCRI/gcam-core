@@ -38,6 +38,7 @@ public:
     virtual void calcEmission( const std::string& aRegionName,
                                const GDP* aGDP,
                                const int aPeriod );
+    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
 protected:
     std::vector<double> baseIntrinsicRate; //!< Unadjusted intrinsic rate
     std::vector<double> baseLandAllocation; //!< Unadjusted land value
@@ -45,7 +46,7 @@ protected:
     virtual void initCarbonCycle();
     virtual bool isProductionLeaf() const;
     virtual const std::string& getXMLName() const;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& out, Tabs* tabs ) const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual double getBaseLandAllocation ( int period );

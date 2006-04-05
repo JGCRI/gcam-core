@@ -567,25 +567,23 @@ void XMLWriteVector( const objects::YearVector<T>& aOutputVector,
                      const unsigned int aFirstYear,
                      const T aDefaultValue = T() )
 {
-    unsigned int currentYear = aFirstYear;
-    for( unsigned int i = 0; i < aOutputVector.size(); ++i, ++currentYear ){
+    for( unsigned int i = aFirstYear; i < aFirstYear + aOutputVector.size(); ++i ){
         // Determine if we can use fillout.
         unsigned int canSkip = 0;
-        for( unsigned int j = i + 1; j < aOutputVector.size(); j++ ){
+        for( unsigned int j = i + 1; j < aFirstYear + aOutputVector.size(); ++j ){
             if( util::isEqual( aOutputVector[ i ], aOutputVector[ j ] ) ){
-                canSkip++;
+                ++canSkip;
             }
             else {
                 break;
             }
         }
         if( canSkip > 0 ){
-            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, currentYear, "", true );
+            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, i, "", true );
             i += canSkip;
-            currentYear += canSkip;
         } else {
             // Can't skip any. write normally.
-            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, currentYear );
+            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, i );
         }
     }
 }
