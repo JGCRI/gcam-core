@@ -136,11 +136,11 @@ public class subRegion extends Region
     return ((Matrix)((TreeMap)data.get(var)).get(String.valueOf(year))).get(X, Y);
   }
   
-  public String[] getTimeList(String var)
+  public ArrayList<String> getTimeList(String var)
   {
     Map.Entry e;
-    ArrayList toRet = new ArrayList();
-    TreeMap times = (TreeMap)data.get(data.firstKey());
+    ArrayList<String> toRet = new ArrayList<String>();
+    TreeMap times = (TreeMap)data.get(var);
     Iterator it = times.entrySet().iterator();
     
     while(it.hasNext())
@@ -149,7 +149,7 @@ public class subRegion extends Region
       toRet.add((String)e.getKey());
     }
     
-    return (String[])toRet.toArray(new String[0]);
+    return toRet;
   }
   
   public Wrapper[] extractRegion(ReferenceVariable ref)

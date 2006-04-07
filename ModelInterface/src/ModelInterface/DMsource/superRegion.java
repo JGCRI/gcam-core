@@ -175,7 +175,7 @@ public class superRegion extends Region
     return toReturn;
   }
   
-  public String[] getTimeList(String var)
+  public ArrayList<String> getTimeList(String var)
   {
     return ((Region)data.get(0)).getTimeList(var);
   }

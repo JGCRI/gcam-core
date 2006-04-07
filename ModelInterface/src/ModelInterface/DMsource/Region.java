@@ -38,6 +38,7 @@ package ModelInterface.DMsource;
 
 
 import java.awt.geom.*;
+import java.util.ArrayList;
 
 
 
@@ -91,7 +92,7 @@ public abstract class Region extends Rectangle2D.Double
    * @param var Field for which to get all time entries.
    * @return Array of strings each of which correspond to a time which has an entry.
    */
-  public abstract String[] getTimeList(String var);
+  public abstract ArrayList<String> getTimeList(String var);
   /**
    * Gets a region's datalist from the supplied variable. This is used to
    * get a sub region of data from a variable which spans a containing region.

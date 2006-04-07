@@ -38,6 +38,12 @@ import org.jdom.*;
 import org.jdom.filter.ContentFilter;
 import org.jdom.input.*;
 
+import ucar.ma2.DataType;
+import ucar.nc2.Dimension;
+import ucar.nc2.NetcdfFileWriteable;
+import ucar.ma2.*;
+
+
 
 
 
@@ -309,54 +315,53 @@ public class ManipulationDriver
     Element currInfo;
     String newName = command.getAttributeValue("name");
     Region ref;
-    String var, time;
+    String var, time, reg;
     boolean avg;
-    
+
     currInfo = command.getChild("region");
-    if(regionList.containsKey(currInfo.getAttributeValue("value")))
-    {
-      
-      ref = (Region)regionList.get(currInfo.getAttributeValue("value"));
-      currInfo = command.getChild("field");
-      //remove next line
-      //System.out.println("var: "+currInfo.getAttributeValue("value"));
-      var = currInfo.getAttributeValue("value");
-      currInfo = command.getChild("time");
-      time = currInfo.getAttributeValue("value");
-      avg = ((Boolean)dataAvgAdd.get(var)).booleanValue();
-      
-      //creating the reference variable (fills with data also)
-      toAdd = new ReferenceVariable(newName, ref, var, time, avg);
-      
-      //setting optional information
-      if(dataRef.containsKey(var))
-      {
-        toAdd.reference = (String)dataRef.get(var);
-      }
-      if(dataUnits.containsKey(var))
-      {
-        toAdd.units = (String)dataUnits.get(var);
-      }
-      currInfo = command.getChild("comment");
-      if(currInfo != null)
-      {
-       toAdd.comment = currInfo.getAttributeValue("value"); 
-      }
-      
-      variableList.put(newName, toAdd);
-      log.log(Level.FINEST, "added "+newName+" to variable list");
-    } else
-    {
-      log.log(Level.WARNING, "Command Failed: region "+currInfo.getAttributeValue("value")+" does not exist.");
-    }
+    reg = currInfo.getAttributeValue("value");
+    currInfo = command.getChild("field");
+    var = currInfo.getAttributeValue("value");
+    currInfo = command.getChild("time");
+    time = currInfo.getAttributeValue("value");
     
+    //!remove below line
+    //System.out.println(command.toString());
+    checkRegionFieldTime(reg, var, time);
+    
+    ref = (Region)regionList.get(reg);
+    avg = ((Boolean)dataAvgAdd.get(var)).booleanValue();
+
+    // creating the reference variable (fills with data also)
+    toAdd = new ReferenceVariable(newName, ref, var, time, avg);
+
+    // setting optional information
+    if(dataRef.containsKey(var))
+    {
+      toAdd.reference = (String)dataRef.get(var);
+    }
+    if(dataUnits.containsKey(var))
+    {
+      toAdd.units = (String)dataUnits.get(var);
+    }
+    currInfo = command.getChild("comment");
+    if(currInfo!=null)
+    {
+      toAdd.comment = currInfo.getAttributeValue("value");
+    }
+
+    variableList.put(newName, toAdd);
+    log.log(Level.FINEST, "added "+newName+" to variable list");
+
   }
   /**
    * Creates a new variable which holds a group of other variables. Child
    * variables can be of any type. Defined uses are for holding all time
-   * occurances of a field in a region, or holding all first level sub-
-   * regions of a variable.
-   * @param command XML command the variable will be filled based on.
+   * occurances of a field in a region, or holding all first level sub- regions
+   * of a variable.
+   * 
+   * @param command
+   *          XML command the variable will be filled based on.
    */
   private void newGroupVariableCommand(Element command)
   {
@@ -557,9 +562,9 @@ public class ManipulationDriver
     String VDname = currInfo.getAttributeValue("name");
     infoList = command.getChildren("argument");
     currInfo = (Element)infoList.get(0);
-    V1 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V1 = getVariable(currInfo.getAttributeValue("name"));
     currInfo = (Element)infoList.get(1);
-    V2 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V2 = getVariable(currInfo.getAttributeValue("name"));
     
     if(V1.sameShape(V2))
     {
@@ -587,9 +592,9 @@ public class ManipulationDriver
     String VDname = currInfo.getAttributeValue("name");
     infoList = command.getChildren("argument");
     currInfo = (Element)infoList.get(0);
-    V1 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V1 = getVariable(currInfo.getAttributeValue("name"));
     currInfo = (Element)infoList.get(1);
-    V2 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V2 = getVariable(currInfo.getAttributeValue("name"));
     
     if(V1.sameShape(V2))
     {
@@ -618,7 +623,7 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("scalar");
     if(currInfo.getAttribute("value")!=null)
     { //this is just a number, so go ahead and read it
@@ -650,9 +655,9 @@ public class ManipulationDriver
     String VDname = currInfo.getAttributeValue("name");
     infoList = command.getChildren("argument");
     currInfo = (Element)infoList.get(0);
-    V1 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V1 = getVariable(currInfo.getAttributeValue("name"));
     currInfo = (Element)infoList.get(1);
-    V2 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V2 = getVariable(currInfo.getAttributeValue("name"));
 
     if(V1.sameShape(V2))
     {
@@ -680,9 +685,9 @@ public class ManipulationDriver
     String VDname = currInfo.getAttributeValue("name");
     infoList = command.getChildren("argument");
     currInfo = (Element)infoList.get(0);
-    V1 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V1 = getVariable(currInfo.getAttributeValue("name"));
     currInfo = (Element)infoList.get(1);
-    V2 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V2 = getVariable(currInfo.getAttributeValue("name"));
     
     if(V1.sameShape(V2))
     {
@@ -709,16 +714,16 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
     {
-      VDest = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VDest = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("scalar");
       if(currInfo.getAttribute("value") != null)
       { //this is just a number, so go ahead and read it
         change = Double.parseDouble(currInfo.getAttributeValue("value"));
       } else
       { //this is a scalar variable, get the value out of it
-        Variable holdChange = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+        Variable holdChange = getVariable(currInfo.getAttributeValue("name"));
         change = holdChange.getData()[0].data[0][0];
       }
     }
@@ -726,14 +731,14 @@ public class ManipulationDriver
     {
       String VDname = currInfo.getAttributeValue("name");
       currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("scalar");
       if(currInfo.getAttribute("value") != null)
       { //this is just a number, so go ahead and read it
         change = Double.parseDouble(currInfo.getAttributeValue("value"));
       } else
       { //this is a scalar variable, get the value out of it
-        Variable holdChange = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+        Variable holdChange = getVariable(currInfo.getAttributeValue("name"));
         change = holdChange.getData()[0].data[0][0];
       }
       VDest = VSource.getShape(VDname);
@@ -756,16 +761,16 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
     {
-      VDest = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VDest = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("scalar");
       if(currInfo.getAttribute("value") != null)
       { //this is just a number, so go ahead and read it
         change = Double.parseDouble(currInfo.getAttributeValue("value"));
       } else
       { //this is a scalar variable, get the value out of it
-        Variable holdChange = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+        Variable holdChange = getVariable(currInfo.getAttributeValue("name"));
         change = holdChange.getData()[0].data[0][0];
       }
     }
@@ -773,14 +778,14 @@ public class ManipulationDriver
     {
       String VDname = currInfo.getAttributeValue("name");
       currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("scalar");
       if(currInfo.getAttribute("value") != null)
       { //this is just a number, so go ahead and read it
         change = Double.parseDouble(currInfo.getAttributeValue("value"));
       } else
       { //this is a scalar variable, get the value out of it
-        Variable holdChange = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+        Variable holdChange = getVariable(currInfo.getAttributeValue("name"));
         change = holdChange.getData()[0].data[0][0];
       }
       VDest = VSource.getShape(VDname);
@@ -804,22 +809,29 @@ public class ManipulationDriver
     Variable VSource;
     Variable VMask = null;
     Element currInfo;
+    String snapVal;
     double limit = 0;
     boolean reg = false;
+    boolean snap = false;
     
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("limit");
     if(currInfo!=null)
     { //this command gives a limit
       limit = Double.parseDouble(currInfo.getAttributeValue("value"));
+      snapVal = currInfo.getAttributeValue("snaptolimit");
+      if((snapVal != null)&&(snapVal.equals("true")))
+      {
+        snap = true;
+      }
     } else
     { // this command gives a corresponding region
       reg = true;
       currInfo = command.getChild("mask");
-      VMask = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VMask = getVariable(currInfo.getAttributeValue("name"));
     }
     
     if(reg)
@@ -839,7 +851,7 @@ public class ManipulationDriver
       VDest = VSource.getShape(VDname);
       variableList.put(VDname, VDest);
       
-      VDest.setData(ComponentManipulator.greaterThan(VSource.getData(), limit));
+      VDest.setData(ComponentManipulator.greaterThan(VSource.getData(), limit, snap));
     }
   }
   /**
@@ -854,22 +866,29 @@ public class ManipulationDriver
     Variable VSource;
     Variable VMask = null;
     Element currInfo;
+    String snapVal;
     double limit = 0;
     boolean reg = false;
+    boolean snap = false;
     
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("limit");
     if(currInfo!=null)
     { //this command gives a limit
       limit = Double.parseDouble(currInfo.getAttributeValue("value"));
+      snapVal = currInfo.getAttributeValue("snaptolimit");
+      if((snapVal != null)&&(snapVal.equals("true")))
+      {
+        snap = true;
+      }
     } else
     { // this command gives a corresponding region
       reg = true;
       currInfo = command.getChild("mask");
-      VMask = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VMask = getVariable(currInfo.getAttributeValue("name"));
     }
 
     if(reg)
@@ -889,7 +908,7 @@ public class ManipulationDriver
       VDest = VSource.getShape(VDname);
       variableList.put(VDname, VDest);
       
-      VDest.setData(ComponentManipulator.lessThan(VSource.getData(), limit));
+      VDest.setData(ComponentManipulator.lessThan(VSource.getData(), limit, snap));
     }
   }
   /**
@@ -909,7 +928,7 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("goal");
     if(currInfo.getAttribute("value")!=null)
     { //this is just a number, so go ahead and read it
@@ -944,7 +963,7 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("goal");
     if(currInfo.getAttribute("value")!=null)
     { //this is just a number, so go ahead and read it
@@ -978,9 +997,9 @@ public class ManipulationDriver
     String VDname = currInfo.getAttributeValue("name");
     infoList = command.getChildren("argument");
     currInfo = (Element)infoList.get(0);
-    V1 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V1 = getVariable(currInfo.getAttributeValue("name"));
     currInfo = (Element)infoList.get(1);
-    V2 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V2 = getVariable(currInfo.getAttributeValue("name"));
     
     if(V1.sameShape(V2))
     {
@@ -1011,9 +1030,9 @@ public class ManipulationDriver
     String VDname = currInfo.getAttributeValue("name");
     infoList = command.getChildren("argument");
     currInfo = (Element)infoList.get(0);
-    V1 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V1 = getVariable(currInfo.getAttributeValue("name"));
     currInfo = (Element)infoList.get(1);
-    V2 = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    V2 = getVariable(currInfo.getAttributeValue("name"));
     
     if(V1.sameShape(V2))
     {
@@ -1045,9 +1064,9 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("mask");
-    VMask = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VMask = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("weight");
     toWeight = (Boolean.valueOf(currInfo.getAttributeValue("value"))).booleanValue();
     
@@ -1104,9 +1123,9 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("mask");
-    VMask = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VMask = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("weight");
     toWeight = (Boolean.valueOf(currInfo.getAttributeValue("value"))).booleanValue();
     
@@ -1167,7 +1186,7 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("limit");
     if(currInfo!=null)
     { //this command gives a limit
@@ -1176,7 +1195,7 @@ public class ManipulationDriver
     { // this command gives a corresponding region
       reg = true;
       currInfo = command.getChild("mask");
-      VMask = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VMask = getVariable(currInfo.getAttributeValue("name"));
     }
 
     if(reg)
@@ -1217,7 +1236,7 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("limit");
     if(currInfo!=null)
     { //this command gives a limit
@@ -1226,7 +1245,7 @@ public class ManipulationDriver
     { // this command gives a corresponding region
       reg = true;
       currInfo = command.getChild("mask");
-      VMask = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VMask = getVariable(currInfo.getAttributeValue("name"));
     }
     
     if(reg)
@@ -1264,15 +1283,15 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
     {
-      VDest = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VDest = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
     }
     else
     {
       String VDname = currInfo.getAttributeValue("name");
       currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
       //creating new datavariable to hold result
       VDest = new DataVariable();
       VDest.name = VDname;
@@ -1327,7 +1346,7 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     //creating new datavariable to hold result
     VDest = new DataVariable();
     VDest.name = VDname;
@@ -1356,7 +1375,7 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     //creating new datavariable to hold result
     VDest = new DataVariable();
     VDest.name = VDname;
@@ -1384,15 +1403,15 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
     {
-      VDest = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VDest = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
     }
     else
     {
       String VDname = currInfo.getAttributeValue("name");
       currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
       //creating new datavariable to hold result
       VDest = new DataVariable();
       VDest.name = VDname;
@@ -1415,15 +1434,15 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
     {
-      VDest = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VDest = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
     }
     else
     {
       String VDname = currInfo.getAttributeValue("name");
       currInfo = command.getChild("argument");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
       //creating new datavariable to hold result
       VDest = new DataVariable();
       VDest.name = VDname;
@@ -1449,7 +1468,7 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     //creating new datavariable to hold result
     if(VSource.isGroup())
     { //dealing with a group, average each member
@@ -1507,7 +1526,7 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     //creating new datavariable to hold result
     if(VSource.isGroup())
     { //dealing with a group, average each member
@@ -1566,13 +1585,13 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
     {
-      VDest = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VDest = getVariable(currInfo.getAttributeValue("name"));
       args = command.getChildren("argument");
       sendData = new Wrapper[args.size()][];
       for(int i = 0; i < args.size(); i++)
       {
         currInfo = (Element)args.get(i);
-        VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+        VSource = getVariable(currInfo.getAttributeValue("name"));
         sendData[i] = VSource.getData();
       }
     }
@@ -1584,7 +1603,7 @@ public class ManipulationDriver
       for(int i = 0; i < args.size(); i++)
       {
         currInfo = (Element)args.get(i);
-        VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+        VSource = getVariable(currInfo.getAttributeValue("name"));
         sendData[i] = VSource.getData();
       }
       //creating new datavariable to hold result
@@ -1613,13 +1632,13 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
     {
-      VDest = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VDest = getVariable(currInfo.getAttributeValue("name"));
       args = command.getChildren("argument");
       sendData = new Wrapper[args.size()][];
       for(int i = 0; i < args.size(); i++)
       {
         currInfo = (Element)args.get(i);
-        VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+        VSource = getVariable(currInfo.getAttributeValue("name"));
         sendData[i] = VSource.getData();
       }
     }
@@ -1631,7 +1650,7 @@ public class ManipulationDriver
       for(int i = 0; i < args.size(); i++)
       {
         currInfo = (Element)args.get(i);
-        VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+        VSource = getVariable(currInfo.getAttributeValue("name"));
         sendData[i] = VSource.getData();
       }
       //creating new datavariable to hold result
@@ -1669,13 +1688,13 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
     {
-      VDest = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VDest = getVariable(currInfo.getAttributeValue("name"));
       args = command.getChildren("argument");
       sendData = new Wrapper[args.size()][];
       for(int i = 0; i < args.size(); i++)
       {
         currInfo = (Element)args.get(i);
-        VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+        VSource = getVariable(currInfo.getAttributeValue("name"));
         sendData[i] = VSource.getData();
       }
     }
@@ -1687,7 +1706,7 @@ public class ManipulationDriver
       for(int i = 0; i < args.size(); i++)
       {
         currInfo = (Element)args.get(i);
-        VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+        VSource = getVariable(currInfo.getAttributeValue("name"));
         sendData[i] = VSource.getData();
       }
       //creating new datavariable to hold result
@@ -1726,9 +1745,9 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("scale");
-    VScale = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VScale = getVariable(currInfo.getAttributeValue("name"));
     //this makes sure a scalar variable can be used anywhere a typed scalar can
     minMax = currInfo.getChild("minimum");
     if(minMax.getAttribute("value")!=null)
@@ -1736,7 +1755,7 @@ public class ManipulationDriver
       minVal = Double.parseDouble(minMax.getAttributeValue("value"));
     } else
     { //this is a scalar variable, get the value out of it
-      Variable holdChange = (Variable)variableList.get(minMax.getAttributeValue("name"));
+      Variable holdChange = getVariable(minMax.getAttributeValue("name"));
       minVal = holdChange.getData()[0].data[0][0];
     }
 
@@ -1746,7 +1765,7 @@ public class ManipulationDriver
       maxVal = Double.parseDouble(minMax.getAttributeValue("value"));
     } else
     { //this is a scalar variable, get the value out of it
-      Variable holdChange = (Variable)variableList.get(minMax.getAttributeValue("name"));
+      Variable holdChange = getVariable(minMax.getAttributeValue("name"));
       maxVal = holdChange.getData()[0].data[0][0];
     }
 
@@ -1801,14 +1820,14 @@ public class ManipulationDriver
     //output code here
     
     currInfo = command.getChild("argument");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("buckets");
     if(currInfo.getAttribute("number")!= null)
     { //this is just a number, so go ahead and read it
       buckets = Integer.parseInt(currInfo.getAttributeValue("number"));
     } else
     { //this is a scalar variable, get the value out of it
-      Variable holdChange = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      Variable holdChange = getVariable(currInfo.getAttributeValue("name"));
       buckets = (int)holdChange.getData()[0].data[0][0];
     }
     //creating new datavariable to hold result
@@ -1819,7 +1838,7 @@ public class ManipulationDriver
     currInfo = command.getChild("split");
     if(currInfo != null)
     { //coverage source, splitting on other variable
-      VSplit = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSplit = getVariable(currInfo.getAttributeValue("name"));
       
       if(VSource.sameShape(VSplit))
       {
@@ -1937,9 +1956,9 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
     {
-      VDest = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VDest = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("source");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("shape");
       VShape = (Region)regionList.get(currInfo.getAttributeValue("value"));
     }
@@ -1947,7 +1966,7 @@ public class ManipulationDriver
     {
       String VDname = currInfo.getAttributeValue("name");
       currInfo = command.getChild("source");
-      VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+      VSource = getVariable(currInfo.getAttributeValue("name"));
       currInfo = command.getChild("shape");
       VShape = (Region)regionList.get(currInfo.getAttributeValue("value"));
       
@@ -1978,7 +1997,7 @@ public class ManipulationDriver
     currInfo = command.getChild("target");
     String VDname = currInfo.getAttributeValue("name");
     currInfo = command.getChild("source");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
+    VSource = getVariable(currInfo.getAttributeValue("name"));
     currInfo = command.getChild("child");
     cName = currInfo.getAttributeValue("value");
     
@@ -2010,7 +2029,7 @@ public class ManipulationDriver
     
     if(variableList.containsKey(command.getAttributeValue("variable")))
     {
-      toPrint = (Variable)variableList.get(command.getAttributeValue("variable"));
+      toPrint = getVariable(command.getAttributeValue("variable"));
       if(command.getAttributeValue("file") == null)
       {
         if(command.getAttributeValue("console") == null)
@@ -2075,7 +2094,7 @@ public class ManipulationDriver
     
     if(variableList.containsKey(command.getAttributeValue("variable")))
     {
-      toPrint = (Variable)variableList.get(command.getAttributeValue("variable"));
+      toPrint = getVariable(command.getAttributeValue("variable"));
       if(command.getAttributeValue("file") == null)
       {
         if(command.getAttributeValue("console") == null)
@@ -2140,7 +2159,7 @@ public class ManipulationDriver
     
     if(variableList.containsKey(command.getAttributeValue("variable")))
     {
-      toPrint = (Variable)variableList.get(command.getAttributeValue("variable"));
+      toPrint = getVariable(command.getAttributeValue("variable"));
       if(toPrint.isReference())
       {
         if(toPrint.isGroup())
@@ -2202,7 +2221,7 @@ public class ManipulationDriver
     if(variableList.containsKey(currInfo.getAttributeValue("name")))
     {
       varName = currInfo.getAttributeValue("name");
-      var = (Variable)variableList.get(varName);
+      var = getVariable(varName);
       if((var.isReference())&&(!var.isGroup()))
       {//this exists and is a reference variable, now make me a file!
 //getting information and printin to file
@@ -2319,6 +2338,153 @@ public class ManipulationDriver
     }
   }
   /**
+   * Creates a new netCDF file containing the specified variable's data.
+   * NetCDF files can then be opened in Panopoly or read back into the
+   * data manipulation tool at a later date.
+   * @param command XML node defining the operation.
+   */
+  private void createNetCDFFileCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable var;
+    ReferenceVariable varR;
+    String fileName;
+    double res;
+    double[][] myData;
+    float degHold;
+    Element currInfo;
+    NetcdfFileWriteable ncfile;
+    
+    currInfo = command.getChild("source");
+    var = getVariable(currInfo.getAttributeValue("name"));
+    if((var.isReference())&&(!var.isGroup()))
+    {//this exists and is a reference variable, now make me a file!
+      varR = (ReferenceVariable)var;
+      res = varR.res;
+      currInfo = command.getChild("file");
+      fileName = currInfo.getAttributeValue("name")+".nc"; //storing netcdf file name
+      
+//**************************DEFINING FILE*********************************
+      ncfile = NetcdfFileWriteable.createNew(fileName, true);
+      //define dimensions
+      Dimension latDim = ncfile.addDimension("latitude", (int)Math.round(180/res));
+      Dimension lonDim = ncfile.addDimension("longitude", (int)Math.round(360/res));
+      Dimension timeDim = ncfile.addDimension("time", 1);
+      Dimension lvlDim = ncfile.addDimension("level", 1);
+   
+      //define Variables
+      ArrayList<Dimension> dim4 = new ArrayList<Dimension>(4);
+      dim4.add(timeDim);
+      dim4.add(lvlDim);
+      dim4.add(latDim);
+      dim4.add(lonDim);
+
+      //float lat(lat) ;
+      ncfile.addVariable("latitude", DataType.FLOAT, new Dimension[] {latDim});
+      ncfile.addVariableAttribute("latitude", "units", "latitude");
+
+      //float lon(lon) ;
+      ncfile.addVariable("longitude", DataType.FLOAT, new Dimension[] {lonDim});
+      ncfile.addVariableAttribute("longitude", "units", "longitude");
+   
+      //float time(time) ;
+      ncfile.addVariable("time", DataType.FLOAT, new Dimension[] {timeDim});
+      ncfile.addVariableAttribute("time", "units", "year");
+      
+      //float level(level) ;
+      ncfile.addVariable("level", DataType.FLOAT, new Dimension[] {lvlDim});
+      ncfile.addVariableAttribute("level", "units", "level/index");
+
+      //double data(time, lat, lon)
+      ncfile.addVariable("data", DataType.FLOAT, dim4);
+      //ncfile.addVariableAttribute("data", "long_name", "input");
+      //ncfile.addVariableAttribute("data", "units", "input");
+      
+      ncfile.addGlobalAttribute("title", "Data Manipulator Output");
+      
+      //create the file
+      try {
+        ncfile.create();
+      }  catch (IOException e) {
+        log.log(Level.SEVERE, "NetCDF file failed to create -> aborting");
+        System.exit(0);
+      }
+      log.log(Level.FINE, "NetCDF file '"+fileName+"' created");
+
+      myData = varR.buildWorldMatrix();
+      ArrayFloat dataArr = new ArrayFloat.D4(1, 1, latDim.getLength(), lonDim.getLength());
+      ArrayFloat latArr = new ArrayFloat.D1(latDim.getLength());
+      ArrayFloat lonArr = new ArrayFloat.D1(lonDim.getLength());
+      ArrayFloat timeArr = new ArrayFloat.D1(1);
+      ArrayFloat lvlArr = new ArrayFloat.D1(1);
+      
+      Index ima = dataArr.getIndex();
+      // write
+      //System.out.println("lat: "+latDim.getLength());
+      //System.out.println("lon: "+lonDim.getLength());
+      //System.out.println("y: "+myData.length);
+      //System.out.println("x: "+myData[0].length);
+      for(int i = 0; i < latDim.getLength(); i++)
+      {
+        for(int j = 0; j < lonDim.getLength(); j++)
+        {
+          dataArr.setFloat(ima.set(0,0,i,j), (float)myData[i][j]);
+        }
+      }
+      Index iml = latArr.getIndex();
+      degHold = 89.75f;
+      for(int i = 0; i < latDim.getLength(); i++)
+      {
+        latArr.setFloat(iml.set(i), degHold);
+        degHold -= res;
+      }
+      iml = lonArr.getIndex();
+      degHold = -179.75f;
+      for(int i = 0; i < lonDim.getLength(); i++)
+      {
+        lonArr.setFloat(iml.set(i), degHold);
+        degHold += res;
+      }
+      iml = timeArr.getIndex();
+      timeArr.setFloat(iml.set(0), 1);
+      iml = lvlArr.getIndex();
+      lvlArr.setFloat(iml.set(0), 1);
+      
+      // write data out to disk
+      try {
+        ncfile.write("data", dataArr);
+        ncfile.flush();
+        ncfile.write("latitude", latArr);
+        ncfile.flush();
+        ncfile.write("longitude", lonArr);
+        ncfile.flush();
+        ncfile.write("time", timeArr);
+        ncfile.write("level", lvlArr);
+      } catch (IOException e) {
+        log.log(Level.SEVERE, "NetCDF file failed to write data values -> aborting");
+        System.exit(0);
+      } catch (InvalidRangeException e) {
+        log.log(Level.SEVERE, "NetCDF file failed to write data values -> aborting");
+        System.exit(0);
+      }
+      
+      //all done
+      try {
+        ncfile.close();
+      } catch (IOException e) {
+        log.log(Level.WARNING, "NetCDF file failed to close -> continuing");
+      }
+    
+      
+      
+//***************************END FILE DEF*********************************
+    } else
+    {
+      log.log(Level.WARNING, "Variable: "+currInfo.getAttributeValue("name")+" is not a reference variable.");
+    }
+    
+  }
+  /**
    * Adds a descriptive comment to a variable which will be printed with
    * that variable if the verbose option is selected.
    * @param command XML node defining the operation.
@@ -2332,7 +2498,7 @@ public class ManipulationDriver
     currInfo = command.getChild("variable");
     if(variableList.containsKey(currInfo.getAttributeValue("value")))
     {
-      var = (Variable)variableList.get(currInfo.getAttributeValue("value"));
+      var = getVariable(currInfo.getAttributeValue("value"));
       currInfo = command.getChild("text");
       var.comment = currInfo.getAttributeValue("value");
     } else
@@ -2355,7 +2521,7 @@ public class ManipulationDriver
     currInfo = command.getChild("variable");
     if(variableList.containsKey(currInfo.getAttributeValue("value")))
     {
-      var = (Variable)variableList.get(currInfo.getAttributeValue("value"));
+      var = getVariable(currInfo.getAttributeValue("value"));
       currInfo = command.getChild("text");
       if((var.isReference())&&(!var.isGroup()))
       {
@@ -2384,7 +2550,7 @@ public class ManipulationDriver
     currInfo = command.getChild("variable");
     if(variableList.containsKey(currInfo.getAttributeValue("value")))
     {
-      var = (Variable)variableList.get(currInfo.getAttributeValue("value"));
+      var = getVariable(currInfo.getAttributeValue("value"));
       currInfo = command.getChild("text");
       if((var.isReference())&&(!var.isGroup()))
       {
@@ -2435,6 +2601,10 @@ public class ManipulationDriver
     //original command
     currInfo = command.getChild("command");
     originalCom = (Element)(currInfo.getChildren().get(0)); //getting the first (and only child)
+    /*
+     * TODO this will be extended so multiple commands can be run in one loop
+     * this will approximate the functionality of a for loop in, say, c++ or java
+     */
     copyCom = (Element)originalCom.clone();
     
     //get all tags which need extraction
@@ -2489,83 +2659,6 @@ public class ManipulationDriver
       }
     }
   }
-  /*
-  private void forEachSubregionCommand(Element command)
-  {
-    //get variable
-    //get list of regions
-    //for each region
-      //extract it
-      //put new variable in command
-      //run command
-    log.log(Level.FINER, "begin function");
-    
-    Variable VSource;
-    Region currReg;
-    Element currInfo;
-    Element build;
-    Element subCom, extCom;
-    List<String> regionNames = new ArrayList<String>();
-    Map.Entry re;
-    Iterator it;
-    String currName;
-    int level;
-    
-    
-    
-    currInfo = command.getChild("source");
-    VSource = (Variable)variableList.get(currInfo.getAttributeValue("name"));
-    currInfo = command.getChild("level");
-    if(currInfo.getAttribute("value")!=null)
-    { //this is just a number, so go ahead and read it
-      level = Integer.parseInt(currInfo.getAttributeValue("value"));
-    } else
-    { //this is a scalar variable, get the value out of it
-      Variable holdChange = (Variable)variableList
-          .get(currInfo.getAttributeValue("name"));
-      level = (int)holdChange.getData()[0].data[0][0];
-    }
-    currInfo = command.getChild("command");
-    subCom = (Element)(currInfo.getChildren().get(0)); //getting the first (and only child)
-    
-    
-    
-    it = regionList.entrySet().iterator();
-    while(it.hasNext())
-    {
-      re = (Map.Entry)it.next();
-      currReg = (Region)re.getValue();
-      if(currReg.level == level)
-      {
-        regionNames.add(currReg.name);
-      }
-    }
-    
-    for(int i = 0; i < regionNames.size(); i++)
-    {
-      currName = regionNames.get(i);
-      
-      extCom = new Element("extractSubRegion");
-      build = new Element("target");
-      build.setAttribute("name", currName+"Extract");
-      extCom.addContent(build);
-      build = new Element("source");
-      build.setAttribute("name", VSource.name);
-      extCom.addContent(build);
-      build = new Element("shape");
-      build.setAttribute("value", currName);
-     
-      extCom.addContent(build);
-      
-      runCommand(extCom);
-      
-      build = subCom.getChild("argument");
-      build.setAttribute("name", currName+"Extract");
-      
-      runCommand(subCom);
-    }
-  }
-  */
   /**
    * Takes two lists of regions or productions and combines them into a
    * table of values. One list is defined as regions and one as the content
@@ -2616,7 +2709,7 @@ public class ManipulationDriver
           out.newLine();
           return;
         }
-        varArea = (Variable)variableList.get(currA.getAttributeValue("name"));
+        varArea = getVariable(currA.getAttributeValue("name"));
         out.write(currA.getAttributeValue("name")+" ");
         
         if(a == 0)
@@ -2634,7 +2727,7 @@ public class ManipulationDriver
             out.newLine();
             return;
           }
-          varContent = (Variable)variableList.get(currC.getAttributeValue("name"));
+          varContent = getVariable(currC.getAttributeValue("name"));
           
           //maskRemain weighted
           varMask.setData(ComponentManipulator.maskRemainWeight(varContent.getData(), varArea.getData(), 0));
@@ -3101,6 +3194,9 @@ public class ManipulationDriver
     } else if(currCom.getName().equals("createDataSet"))
     {
      createDataSetCommand(currCom);
+    } else if(currCom.getName().equals("createNetCDFFile"))
+    {
+      createNetCDFFileCommand(currCom);
     } else if(currCom.getName().equals("comment"))
     {
       commentCommand(currCom);
@@ -3136,7 +3232,7 @@ public class ManipulationDriver
       currName = currMem.getAttributeValue("value");
       if(variableList.containsKey(currName))
       {
-        currVar = (Variable)variableList.get(currName);
+        currVar = getVariable(currName);
         var.addData(currVar.getCopy());
       } else
       { //this variable doesnt actualyl exist, kick to null
@@ -3152,7 +3248,7 @@ public class ManipulationDriver
     Element currInfo;
     String reg, field;
     Region R;
-    String[] timeList;
+    ArrayList<String> timeList;
     Variable currVar;
     
     currInfo = members.getChild("region");
@@ -3168,9 +3264,9 @@ public class ManipulationDriver
       R = (Region)regionList.get(reg);
       timeList = R.getTimeList(field);
       
-      for(int i = 0; i < timeList.length; i ++)
+      for(int i = 0; i < timeList.size(); i ++)
       { //add each time entry as a seperate variable
-        currVar = new ReferenceVariable(timeList[i], R, field, timeList[i], avg);
+        currVar = new ReferenceVariable(timeList.get(i), R, field, timeList.get(i), avg);
         var.addData(currVar);
       }
     } else
@@ -3193,7 +3289,7 @@ public class ManipulationDriver
    
     if(variableList.containsKey(Vname))
     {
-      VSource = (Variable)variableList.get(Vname);
+      VSource = getVariable(Vname);
       if(VSource.isReference())
       {
         Rname = ((ReferenceVariable)VSource).region;
@@ -3273,7 +3369,54 @@ public class ManipulationDriver
       return;
     }
   }
-  
+  /**
+   * Checks to make sure a variable referenced in some command currently exists.
+   * @param name the name of the Variable
+   * @return the Variable, if Variable does not exist will kill program
+   */
+  private Variable getVariable(String name)
+  {
+    Variable toReturn = (Variable)variableList.get(name);
+    
+    if(toReturn == null)
+    {
+      log.log(Level.SEVERE, "referenced variable '"+name+"' does not exist -> terminating");
+      System.exit(0);
+    }
+    
+    return toReturn;
+  }
+  /**
+   * Checks all input arguments for creation of a new Variable. Region, field, and time.
+   * If any of these do not exist will kill program.
+   * @param region The region to get data from.
+   * @param field The specific field of data.
+   * @param time The desired time within that field.
+   */
+  private void checkRegionFieldTime(String region, String field, String time)
+  {
+    Region holdRegion = (Region)regionList.get(region);
+    
+    if(holdRegion == null)
+    {
+      log.log(Level.SEVERE, "referenced region '"+region+"' does not exist -> terminating");
+      System.exit(0);
+    }
+    
+    if(dataAvgAdd.get(field) == null)
+    {
+      log.log(Level.SEVERE, "referenced field '"+field+"' does not exist -> terminating");
+      System.exit(0);
+    }
+    
+    if(!holdRegion.getTimeList(field).contains(time))
+    {
+      log.log(Level.SEVERE, "referenced time '"+time+"' in field '"+field+"' does not exist\n" +
+            "valid times are: '"+holdRegion.getTimeList(field).toString()+"' -> terminating");
+      
+      System.exit(0);
+    }
+  }
   
 //*****************************************************************************
 }

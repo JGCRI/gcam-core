@@ -124,9 +124,12 @@ public final class ComponentManipulator
       {
         for(int iX = 0; iX < holdM1[0].length; iX++)
         {
-          if((Double.isNaN(holdM1[iY][iX]))||(Double.isNaN(holdM2[iY][iX])))
+          if(Double.isNaN(holdM1[iY][iX]))
           {
             holdMR[iY][iX] = Double.NaN;
+          } else if(Double.isNaN(holdM2[iY][iX]))
+          {
+            holdMR[iY][iX] = holdM1[iY][iX];
           } else
           {
             holdMR[iY][iX] = holdM1[iY][iX] - holdM2[iY][iX];
@@ -258,12 +261,17 @@ public final class ComponentManipulator
     }
     return toReturn;
   }
-  public static Wrapper[] greaterThan(Wrapper[] R, double limit)
+  public static Wrapper[] greaterThan(Wrapper[] R, double limit, boolean snap)
   {
     log.log(Level.FINER, "begin function");
     double[][] holdMR;
     double[][] holdMS;
     Wrapper[] toReturn = new Wrapper[R.length];
+    double fail = Double.NaN;
+    if(snap)
+    { //failing values will always be set to this, which will be either limit of NaN
+      fail = limit;
+    }
     
     for(int i = 0; i < R.length; i++)
     {
@@ -280,7 +288,7 @@ public final class ComponentManipulator
               holdMR[iY][iX] = holdMS[iY][iX];
           	} else
           	{
-          	  holdMR[iY][iX] = Double.NaN;
+          	  holdMR[iY][iX] = fail;
           	}
           } else
           {
@@ -332,12 +340,17 @@ public final class ComponentManipulator
     }
     return toReturn;
   }
-  public static Wrapper[] lessThan(Wrapper[] R, double limit)
+  public static Wrapper[] lessThan(Wrapper[] R, double limit, boolean snap)
   {
     log.log(Level.FINER, "begin function");
     double[][] holdMR;
     double[][] holdMS;
     Wrapper[] toReturn = new Wrapper[R.length];
+    double fail = Double.NaN;
+    if(snap)
+    { //failing values will always be set to this, which will be either limit of NaN
+      fail = limit;
+    }
     
     for(int i = 0; i < R.length; i++)
     {
@@ -354,7 +367,7 @@ public final class ComponentManipulator
             	holdMR[iY][iX] = holdMS[iY][iX];
           	} else
           	{
-            	holdMR[iY][iX] = Double.NaN;
+            	holdMR[iY][iX] = fail;
           	}
           } else
           {
@@ -1479,7 +1492,7 @@ public final class ComponentManipulator
     final double PI = 3.1415926535;
     
     double max = largestValue(split)[0].data[0][0];
-    double min = smallestValue(R)[0].data[0][0];
+    double min = smallestValue(split)[0].data[0][0];
     double factor = ((max*1.0001)-min)/bnum; //makes sure max value goes in last bucket
     int store; //the index this value will be added to
     double area; //the area of the current cell we are in in km^2

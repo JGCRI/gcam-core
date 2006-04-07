@@ -126,10 +126,11 @@ public class DataWrapper extends Wrapper
     for(int i = 0; i < data.length; i++)
     {
       System.out.print("\t");
-      for(int k = 0; k < data[0].length; k++)
+      for(int k = 0; k < (data[0].length-1); k++)
       {
-        out.write(data[i][k]+" ");
+        out.write(data[i][k]+",");
       }
+      out.write(data[i][data[0].length-1]+"");
       out.newLine();
     }
   }

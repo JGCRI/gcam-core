@@ -147,25 +147,25 @@ public class ReferenceVariable extends Variable
 
   public void printStandard(BufferedWriter out) throws IOException
   {
-    DecimalFormat form = new DecimalFormat("0.0");
     double[][] toPrint;
     
     //building a complete matrix of values to print from sub regions
     toPrint = buildMatrix();
     
     out.newLine();
-    out.write(name+":");
-    out.newLine();
     for(int i = 0; i < toPrint.length; i++)
     {
-      out.write("\t");
-      for(int k = 0; k < toPrint[i].length; k++)
+      for(int k = 0; k < (toPrint[i].length-1); k++)
       {
         if(Double.isNaN(toPrint[i][k]))
-          out.write("NaN ");
+          out.write("NaN,");
         else
-          out.write(form.format(toPrint[i][k])+" ");
+          out.write(toPrint[i][k]+",");
       }
+      if(Double.isNaN(toPrint[i][toPrint[i].length-1]))
+        out.write("NaN");
+      else
+        out.write(toPrint[i][toPrint[i].length-1]+"");
       out.newLine();
       out.flush();
     }
@@ -203,13 +203,17 @@ public class ReferenceVariable extends Variable
     for(int i = 0; i < toPrint.length; i++)
     {
       out.write("\t");
-      for(int k = 0; k < toPrint[i].length; k++)
+      for(int k = 0; k < (toPrint[i].length-1); k++)
       {
         if(Double.isNaN(toPrint[i][k]))
-          out.write("NaN ");
+          out.write("NaN,");
         else
-          out.write(form.format(toPrint[i][k])+" ");
+          out.write(form.format(toPrint[i][k])+",");
       }
+      if(Double.isNaN(toPrint[i][toPrint[i].length-1]))
+        out.write("NaN");
+      else
+        out.write(form.format(toPrint[i][toPrint[i].length-1]));
       out.newLine();
       out.flush();
     }
@@ -298,6 +302,52 @@ public class ReferenceVariable extends Variable
     }
     
     return toPrint;
+  }
+  public double[][] buildWorldMatrix()
+  {
+    //System.out.println(x+", "+y+", "+w+", "+h);
+    int offsetY, offsetX;
+    double[][] holdM;
+    ReferenceWrapper holdD;
+    double[][] toPrint = new double[(int)(180/res)][(int)(360/res)];
+    
+    for(int i = 0; i < toPrint.length; i++)
+    {
+      for(int k = 0; k < toPrint[i].length; k++)
+      {
+        toPrint[i][k] = Double.NaN;
+      }
+    }
+    
+    //building a complete matrix of values to print from sub regions
+    for(int i = 0; i < data.length; i++)
+    {
+      holdD = (ReferenceWrapper)data[i];
+      holdM = holdD.data;
+      offsetY = (int)(((90)-(holdD.y+holdD.height))/res);
+      offsetX = (int)((holdD.x+180)/res);
+      //System.out.println(offsetX+", "+offsetY);
+      
+      for(int iY = 0; iY < holdM.length; iY++)
+      {
+        for(int iX = 0; iX < holdM[iY].length; iX++)
+        {
+          if(!Double.isNaN(holdM[iY][iX]))
+          {
+            if(Double.isNaN(toPrint[(offsetY+iY)][(offsetX+iX)]))
+            {
+              toPrint[(offsetY+iY)][(offsetX+iX)] = (holdM[iY][iX]);
+            } else
+            {
+              toPrint[(offsetY+iY)][(offsetX+iX)] += (holdM[iY][iX]);
+            }
+          }
+        }
+      }
+    }
+    
+    return toPrint;
+    
   }
   
   //***************************************************************************
