@@ -123,7 +123,7 @@ public class Preprocess
     }
     catch(IOException e)
     {
-      log.log(Level.SEVERE, "IOException! for shame! in main function");
+      log.log(Level.SEVERE, "IOException! in main function");
     }
     //this is gunna be silly....
     //****************testing stuff**************************

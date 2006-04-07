@@ -264,6 +264,9 @@ public class DataBuilder
       } else if(currFile.getAttributeValue("type").equals("1x1"))
       {
         add1x1Data(currFile);
+      } else if(currFile.getAttributeValue("type").equals("ASC"))
+      {
+        addASCData(currFile);
       } else if(currFile.getAttributeValue("type").equals("NASA"))
       {
         addNASAData(currFile);
@@ -543,25 +546,40 @@ public class DataBuilder
    */
   public void readCurrentData()
   {
+    Document docMerge;
+    List nodeMerge;
     Element root = iDocument.getRootElement();
+    List seeds = root.getChildren("seed");
     Element seed = root.getChild("seed");
-    
     
     //XMLInputFactory inputFactory = XMLInputFactory.newInstance();
     try
     {
       SAXBuilder builder = new SAXBuilder();
+      
       sSource = seed.getAttributeValue("name");
       sDocument = builder.build(sSource);
+      for(int i = 1; i < seeds.size(); i++)
+      {
+        //reading any additional seed files and merging into the first seed
+        //this currently performs an insanely simple merge
+        //alot more work is needed to make this work in all cases
+        //TODO: different resolutions, make sure regions go in existing regions, etc.
+        seed = (Element)seeds.get(i);
+        sSource = seed.getAttributeValue("name");
+        docMerge = builder.build(sSource);
+        nodeMerge = docMerge.cloneContent();
+        sDocument.addContent(nodeMerge);
+      }
     } catch(FileNotFoundException e)
     {
-      log.log(Level.SEVERE, "FileNotFound! oh noes! in -> readCurrentData");
+      log.log(Level.SEVERE, "FileNotFound! in -> readCurrentData");
     } catch(IOException e)
     {
-      log.log(Level.SEVERE, "IOException encountered! oh noes! in -> readCurrentData");
+      log.log(Level.SEVERE, "IOException encountered! in -> readCurrentData");
     } catch(JDOMException e)
     {
-      log.log(Level.SEVERE, "JDOM Exception! grarrrr! in -> readCurrentData");
+      log.log(Level.SEVERE, "JDOM Exception! in -> readCurrentData");
     }
   }
   /**
@@ -1325,6 +1343,148 @@ public class DataBuilder
     } catch(IOException e){}
   //done reading data from file
     
+  }
+  
+  private void addASCData(Element currFile)
+  {
+    /* function will add the data from the specified file of type 'asc'
+     * 'asc'- defined as 180/resolution lines of 360/resolution data elements
+     * values are coma seperated,
+     * first line of values corresponds to -90 degreens latitude, no 90 degrees
+     */
+    
+    log.log(Level.FINER, "begin function");
+    boolean avg = true;
+    boolean overwrite = false;
+    String dataName = "shutup,";
+    String fileName = "it is initialized thanks";
+    String ref = null;
+    String unit = null;
+    double time = 0;
+    double res = 1;
+    double nan = Double.NaN;
+    List infoChildren;
+    Element currElem;
+    TreeMap timeValue;
+    Double dataValue;
+    DataBlock toAdd;
+    
+  //getting file info from XML
+    infoChildren = currFile.getChildren();
+    for(int i = 0; i < infoChildren.size(); i++)
+    {
+      currElem = (Element)infoChildren.get(i);
+      if(currElem.getName().equals("data"))
+      {
+        dataName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("date"))
+      {
+        time = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("res"))
+      {
+        res = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("average"))
+      {
+        avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
+      } else if(currElem.getName().equals("reference"))
+      {
+        ref = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("units"))
+      {
+        unit = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("NaN"))
+      {
+        nan = scientificToDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("name"))
+      {
+        fileName = currElem.getAttributeValue("value");
+      } else
+      {
+        log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
+      }
+    }
+  //done reading from XML file
+    
+  //opening asc file for reading
+    BufferedReader input = null;
+    try {
+      input = new BufferedReader( new FileReader(fileName));
+    } catch (FileNotFoundException ex) 
+    {
+      log.log(Level.SEVERE, "FileNotFoundException -> "+fileName+" -> exiting.");
+      System.exit(1);
+    }
+  //asc file opened
+    
+    if(dataAvg.containsKey(dataName))
+    {
+      //then we are overwriting this data!
+      overwrite = true;
+    } else
+    {
+      //dont want to add all this information if we already have!!!
+      if(!init)
+      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+        dataStruct.fillWorld(res);
+        init = true;
+      }
+      //setting whether contained data is additive or averaged and references
+      dataAvg.put(dataName, new Boolean(avg));
+      if(ref != null)
+      {
+        dataRef.put(dataName, ref);
+      }
+      if(unit != null)
+      {
+        dataUnits.put(dataName, unit);
+      }
+      //done settign avg/add and references
+    }
+    
+    //reading the data from the file
+    for(double i = (-90); i <= 89.9999; i+=res)
+    {
+      for(double k = -180; k < 179.9999; k+=res)
+      {
+        //System.out.println(k);
+        //numbers stored in scientific notation
+        dataValue = new Double(scientificToDouble(readComma(input)));
+        
+        if(dataValue == nan)
+        {
+          dataValue = Double.NaN;
+        }
+        
+        toAdd = new DataBlock(k, i, res, res);
+        timeValue = new TreeMap();
+        timeValue.put(time, dataValue);
+        
+        //check overwrite bit, if so, use hold instead of dataName
+        if(overwrite)
+        {
+          //just replace name with hold, later, we will merge hold over old data
+          toAdd.data.put("hold", timeValue);
+        } else
+        {
+          //add data as normal
+          toAdd.data.put(dataName, timeValue);
+        }
+        
+      //merging this data into the current tree
+        dataStruct.addData(toAdd, avg);
+      }
+    }
+    
+    //done adding all data, if overwrite, must merge with old data now
+    if(overwrite)
+    {
+      dataStruct.resolveOverwrite("hold", dataName);
+    } //else we are done already
+    
+    try{
+      input.close(); //im such a good programmer closing my files and whatnot
+    } catch(IOException e){}
+  //done reading data from file
   }
   
   private void addNetCDFData(Element currFile)
@@ -3697,6 +3857,50 @@ public class DataBuilder
       {
         return build;
       }
+    } else
+    {
+      return null;
+    }
+  }
+  private String readComma(BufferedReader input)
+  {
+    log.log(Level.FINEST, "begin function");
+    //reads an entire word from an input stream rather than just a character
+    //words delimited by any whitespace 'space, new line, tab' OR A COMMA
+    //if no word exists in the stream return... null!
+    String build = new String();
+    int read;
+    char hold;
+    try {
+      do
+      {
+        /*flushing whitespace from the input stream*/
+        read = input.read();
+        hold = (char)read;
+      } while((read != -1)&&(hold <= '\u0020')&&(hold != ','));
+      
+      if(read == -1)
+      { //file is done stop before content was reached
+        return null;
+      }
+        
+      build = build.concat(String.valueOf((char)read));
+      while(((read = input.read()) != -1)&&((hold = (char)read) > '\u0020')&&(hold != ','))
+      {
+        build = build.concat(String.valueOf(hold));
+      }
+      
+    } catch (IOException ex)
+    {
+      log.log(Level.SEVERE, "IOException!");
+      System.exit(1);
+    }
+    
+    build = build.trim();
+    
+    if(build.length() > 0)
+    {
+      return build;
     } else
     {
       return null;
