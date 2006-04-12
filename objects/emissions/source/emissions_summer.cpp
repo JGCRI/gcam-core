@@ -70,7 +70,17 @@ void EmissionsSummer::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
 * \return The emissions sum.
 */
 double EmissionsSummer::getEmissions( const int aPeriod ) const {
-    assert( mEmissionsByPeriod[ aPeriod ].isInited() );
+    // The value may not be initialized if there were no GHGs, or no AgLU for
+    // net land use change emissions. The default zero will be correct though.
+
     // The emissions sum may be negative if uptake is occurring.
     return mEmissionsByPeriod[ aPeriod ];
+}
+
+/*! \brief Return whether any emissions were set for the period.
+* \param aPeriod Model period.
+* \return Whether any emissions were set.
+*/
+double EmissionsSummer::areEmissionsSet( const int aPeriod ) const {
+    return mEmissionsByPeriod[ aPeriod ].isInited();
 }

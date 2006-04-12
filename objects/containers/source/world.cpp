@@ -407,11 +407,19 @@ void World::runClimateModel() {
         accept( &co2Summer, period );
         accept( &co2LandUseSummer, period );
 
-        mClimateModel->setEmissions( "CO2", period,
-            co2Summer.getEmissions( period ) / MMT_TO_TG );
+        // Only set emissions if they are valid. If these are not set
+        // MAGICC will use the default values.
+        if( co2Summer.areEmissionsSet( period ) ){
+            mClimateModel->setEmissions( "CO2", period,
+                                          co2Summer.getEmissions( period )
+                                          / MMT_TO_TG );
+        }
 
-        mClimateModel->setEmissions( "CO2NetLandUse", period,
-            co2LandUseSummer.getEmissions( period ) / MMT_TO_TG );
+        if( co2LandUseSummer.areEmissionsSet( period ) ){
+            mClimateModel->setEmissions( "CO2NetLandUse", period,
+                                          co2LandUseSummer.getEmissions( period )
+                                          / MMT_TO_TG );
+        }
     }
     // Run the model.
     mClimateModel->runModel();

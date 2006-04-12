@@ -37,7 +37,7 @@ class AgSector;
 class EmissionsSummer : public DefaultVisitor {
 public:
     explicit EmissionsSummer( const std::string& aGHGName );
-    
+
     virtual void startVisitGHG( const Ghg* aGHG,
                                 const int aPeriod );
     
@@ -48,8 +48,10 @@ public:
     virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
                                        const int aPeriod );
 
-    // Non-IVisitor interface method.
+    // Non-IVisitor interface methods.
     double getEmissions( const int aPeriod ) const;
+
+    double areEmissionsSet( const int aPeriod ) const;
 private:
     //! The name of the GHG being summed.
     const std::string mGHGName;
