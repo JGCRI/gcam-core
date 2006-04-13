@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief TotalSectorEmissions class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
@@ -27,7 +25,6 @@ extern Scenario* scenario;
 */
 TotalSectorEmissions::TotalSectorEmissions(){
 	mType = "none";
-	mAggregateEmissions = 0;
 	mApplicableYear = 0;
 }
 
@@ -71,7 +68,11 @@ void TotalSectorEmissions::XMLParse( const DOMNode* aNode ){
 void TotalSectorEmissions::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElementCheckDefault( mType, "type", aOut, aTabs, string( "none" ) );
-    XMLWriteElementCheckDefault( mAggregateEmissions, "value", aOut, aTabs );
+
+    if( mAggregateEmissions.isInited() ){
+        XMLWriteElement( mAggregateEmissions, "value", aOut, aTabs );
+    }
+
     XMLWriteElementCheckDefault( mApplicableYear, "year", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -93,7 +94,7 @@ void TotalSectorEmissions::toDebugXML( const int aPeriod, ostream& aOut, Tabs* a
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& TotalSectorEmissions::getXMLNameStatic() {
+const string& TotalSectorEmissions::getXMLNameStatic() {
     const static string XML_NAME = "TotalSectorEmissions";
 	return XML_NAME;
 }
@@ -138,6 +139,13 @@ void TotalSectorEmissions::setAggregateEmissionFactor( const std::vector<Sector*
         return;
     }
 
+    if( !mAggregateEmissions.isInited() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "No aggregate emissions were read-in for " << mName << "." << endl;
+        return;
+    }
+
     typedef vector<Sector*>::const_iterator SectorIterator;
 
     double summedOutput = 0;
@@ -146,8 +154,14 @@ void TotalSectorEmissions::setAggregateEmissionFactor( const std::vector<Sector*
     for( SectorIterator currSector = aSectors.begin(); currSector != aSectors.end(); ++currSector ){
         summedOutput += (*currSector)->getCalOutput( aPeriod, mType );
     }
-
-    // TODO: What if summed output is zero?
+    
+    if( summedOutput < util::getSmallNumber() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Cannot set aggregate emissions factor for GHG " << mName
+                << " because calibrated sector output is zero." << endl;
+        return;
+    }
     double emissionFactor = mAggregateEmissions / summedOutput;
     
     // Store aggregate emissions factor in region info object

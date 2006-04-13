@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The GhgOutputAggr class header file.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>

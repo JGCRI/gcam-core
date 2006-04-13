@@ -15,6 +15,7 @@
 
 #include <string>
 #include <vector>
+#include "util/base/include/value.h"
 
 class Sector;
 class Tabs;
@@ -59,8 +60,8 @@ private:
     //! Name of ghg
 	std::string mName;
 
-    //!< Aggregate emissions of the ghg
-	double mAggregateEmissions;
+    //! Aggregate emissions of the ghg
+	Value mAggregateEmissions;
     
     //! Year in which to set aggregate emissions
 	int mApplicableYear;

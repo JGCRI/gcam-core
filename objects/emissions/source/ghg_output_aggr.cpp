@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief GhgOutputAggr class source file.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -34,7 +32,7 @@ GhgOutputAggr* GhgOutputAggr::clone() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& GhgOutputAggr::getXMLName() const {
+const string& GhgOutputAggr::getXMLName() const {
     return getXMLNameStatic();
 }
 
@@ -47,7 +45,7 @@ const std::string& GhgOutputAggr::getXMLName() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& GhgOutputAggr::getXMLNameStatic() {
+const string& GhgOutputAggr::getXMLNameStatic() {
     const static string XML_NAME = "GHG_OUTPUT_AGGR"; // All caps is non-standard.
     return XML_NAME;
 }
@@ -56,10 +54,11 @@ const std::string& GhgOutputAggr::getXMLNameStatic() {
 void GhgOutputAggr::initCalc( const IInfo* aLocalInfo ) {
 
     // Check for aggregate emissions factor.
-    double tempCoef = aLocalInfo->getDouble( TotalSectorEmissions::aggrEmissionsPrefix() + name, false );
-	if ( tempCoef != 0 ) {
-        emissCoef = tempCoef;
-        if ( inputEmissions >= 0 ) {
+    if( aLocalInfo->hasValue( TotalSectorEmissions::aggrEmissionsPrefix() + name ) ){
+        emissCoef = aLocalInfo->getDouble( TotalSectorEmissions::aggrEmissionsPrefix() + name, true );
+
+        // -1 is the default value for input emissions.
+        if( inputEmissions != -1 ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING);
             mainLog << "Aggregate GHG object " << name << " also had an input emissions read in. " 
@@ -69,7 +68,7 @@ void GhgOutputAggr::initCalc( const IInfo* aLocalInfo ) {
     }
     else {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING);
+        mainLog.setLevel( ILogger::WARNING );
         mainLog << "Aggregate GHG object " << name << " has no emissions data supplied." << endl;
     }
 
