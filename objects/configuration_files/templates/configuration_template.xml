@@ -8,14 +8,18 @@
 		<Value name="BatchFileName">BatchFile.xml</Value>
 		<!--END User Modifiable variables-->
 		<!--START Developer Only Modifiable Variables-->
-		<Value name="outFileName">outFile.csv</Value>
+		<Value name="outFileName">../output/outFile.csv</Value>
 		<Value name="climatFileName">gas.emk</Value>
-		<Value name="xmlDebugFileName">debug.xml</Value>
+		<Value name="xmlDebugFileName">../output/debug.xml</Value>
+		<Value name="ObjectSGMFileName">../output/ObjectSGMout.csv</Value>
+		<Value name="ObjectSGMGenFileName">../output/ObjectSGMGen.csv</Value>
+		<Value name="xmldb-location">../output/database.dbxml</Value>
+		<Value name="xmldb-environment">.</Value>
 		<Value name="dbFileName">../output/output.mdb</Value>
-		<Value name="supplyDemandOutputFileName">SDCurves.csv</Value>
+		<Value name="supplyDemandOutputFileName">../output/SDCurves.csv</Value>
 		<Value name="GHGInputFileName">../cvs/objects/magicc/inputs/input_gases.emk</Value>
-		<Value name="dependencyGraphName">DependencyGraph</Value>
-		<Value name="costCurvesOutputFileName">cost_curves.xml</Value>
+		<Value name="dependencyGraphName">../output/DependencyGraph</Value>
+		<Value name="costCurvesOutputFileName">../output/cost_curves.xml</Value>
 		<!--END Developer Only Modifiable Variables-->
 	</Files>
 	<ScenarioComponents>
@@ -26,6 +30,7 @@
 	<Strings>
 		<!--START User Modifiable Variables-->
 		<Value name="scenarioName"></Value>
+		<Value name="region-to-graph">USA</Value>
 		<!--END User Modifiable variables-->
 		<!--START Developer Only Modifiable Variables-->
 		<Value name="AbatedGasForCostCurves">CO2</Value>
@@ -38,19 +43,19 @@
 		<Value name="CalibrationActive">1</Value>
 		<Value name="createCostCurve">0</Value>
 		<Value name="BatchMode">0</Value>
+		<Value name="find-path">0</Value>
+		<Value name="PrintDependencyGraphs">0</Value>
+		<Value name="PrintValuesOnGraphs">0</Value>
+		<Value name="PrintPrices">1</Value>
 		<!--END User Modifiable variables-->
 		<!--START Developer Only Modifiable Variables-->
 		<Value name="debugChecking">0</Value>
-		<Value name="timestamp">0</Value>
 		<Value name="agSectorActive">1</Value>
 		<Value name="agBioMarketSet">0</Value>
 		<Value name="simulActive">1</Value>
-		<Value name="PrintDependencyGraphs">0</Value>
-		<Value name="PrintValuesOnGraphs">0</Value>
 		<Value name="debugFindSD">0</Value>
 		<Value name="PrintSectorDependencies">0</Value>
 		<Value name="ShowNullPaths">0</Value>
-		<Value name="PrintPrices">1</Value>
 		<Value name="mergeFilesOnly">0</Value>
 		<!--END Developer Only Modifiable Variables-->
 	</Bools>
@@ -67,5 +72,7 @@
 		<Value name="SolutionTolerance">0.001</Value>
 		<Value name="SolutionFloor">0.01</Value>
 		<!--END User Modifiable variables-->
+		<Value name="bracket-interval">0.5</Value>
+		<Value name="DeltaPrice">0.00001</Value>
 	</Doubles>
 </Configuration>

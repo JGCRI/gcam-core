@@ -1207,8 +1207,8 @@ void Subsector::shareWeightLinearInterpFn( const int beginPeriod,  const int end
 
     ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
     calibrationLog.setLevel( ILogger::DEBUG );
-    calibrationLog << "Shareweights interpolated for subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
-
+    calibrationLog << "Shareweights interpolated with increment " << shareIncrement 
+                   << " for subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
 }
 
 /*! \brief Linearly interpolate technology share weights between specified endpoints 

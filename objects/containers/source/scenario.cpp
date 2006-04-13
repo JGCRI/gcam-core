@@ -393,7 +393,7 @@ void Scenario::openDebuggingFiles( ofstream& aXMLDebugFile,
     toDebugXMLOpen( aXMLDebugFile, aTabs );
 
     // Sgm output file for debugging.
-    const string sgmDebugName = Configuration::getInstance()->getString( "ObjectSGMFileName", "ObjectSGMout.csv" );
+    const string sgmDebugName = Configuration::getInstance()->getFile( "ObjectSGMFileName", "ObjectSGMout.csv" );
     aSGMDebugFile.open( sgmDebugName.c_str(), std::ios::out );
     util::checkIsOpen( aSGMDebugFile, sgmDebugName );
 }
