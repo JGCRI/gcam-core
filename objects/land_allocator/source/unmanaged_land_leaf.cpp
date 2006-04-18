@@ -10,6 +10,7 @@
 #include "marketplace/include/marketplace.h"
 #include "containers/include/scenario.h"
 #include "emissions/include/ghg_input.h"
+#include "technologies/include/primary_output.h"
 #include "emissions/include/unmanaged_carbon_calc.h"
 
 using namespace std;
@@ -208,8 +209,13 @@ void UnmanagedLandLeaf::calcEmission( const string& aRegionName,
 {    
     for ( unsigned int j = 0; j < mGHGs.size(); j++ ) {
         double input = landAllocation[ aPeriod ];
-        double output = 0;
-        mGHGs[ j ]->calcEmission( aRegionName, name, input, name, output, aGDP, aPeriod );
+        
+        // Create a temporary primary output. This is rather hackish to get
+        // around the GHG interface being designed for Technologies.
+        PrimaryOutput landOutput( name );
+        vector<IOutput*> outputs;
+        outputs.push_back( &landOutput ); 
+        mGHGs[ j ]->calcEmission( aRegionName, name, input, outputs, aGDP, aPeriod );
     }
 }
 

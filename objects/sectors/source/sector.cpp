@@ -681,9 +681,7 @@ bool Sector::isEnergyUseFixed( const int aPeriod ) const {
 * \return Boolean that is true if entire Sector is calibrated or has fixed output
 */
 bool Sector::outputsAllFixed( const int period ) const {
-    if ( period < 0 ) {
-        return false;
-    } 
+    assert( period >= 0 );
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         if ( !(subsec[ i ]->allOutputFixed( period )) ) {
             return false;

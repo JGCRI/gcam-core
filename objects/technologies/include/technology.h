@@ -27,6 +27,7 @@ class IInfo;
 class ICalData;
 class ILandAllocator;
 class Demographic;
+class IOutput;
 
 /*! 
 * \ingroup Objects
@@ -58,17 +59,17 @@ protected:
     double tax; //!< utility tax
     double fMultiplier; //!< multiplier on fuel cost or price
     double pMultiplier; //!< multiplier on total cost or price
-    double totalGHGCost; //!< the value of GHG tax + any storage cost, in $/GJ
     double fuelPrefElasticity; //!< Fuel preference elasticity
     double lexp; //!< logit exponential
     double share; //!< technology shares
     double input; //!< total fuel input (fossil and uranium)
-    double output; //!< technology output
     double fixedOutput; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
-    double fixedOutputVal; //!< The actual fixed output value
-	 
+	double fixedOutputVal;
     //! Calibration value
     std::auto_ptr<ICalData> mCalValue;
+
+    //! Vector of output objects representing the outputs of the technology.
+    std::vector<IOutput*> mOutputs;
 
     std::vector<Ghg*> ghg; //!< suite of greenhouse gases
     std::map<std::string,double> emissmap; //!< map of ghg emissions
@@ -76,16 +77,22 @@ protected:
     std::map<std::string,double> emindmap; //!< map of indirect ghg emissions
     std::string note; //!< input data notation for this technology
 
-    std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector. 
+    std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector.
+
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     bool hasNoInputOrOutput() const; // return if tech is fixed for no output
-    void calcTotalGHGCost( const std::string& regionName, const std::string& sectorName, const int per );
+    double calcSecondaryValue( const std::string& aRegionName, const int aPeriod ) const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
     virtual void copy( const technology& techIn );
     void initElementalMembers();
     static double getFixedOutputDefault();
     virtual const std::string& getXMLName2D() const;
+    void calcEmissionsAndOutputs( const std::string& aRegionName,
+                                  const double aInput,
+                                  const double aPrimaryOutput,
+                                  const GDP* aGDP,
+                                  const int aPeriod );
 public:
     technology(); // default construtor
     technology( const technology& techIn ); // copy constructor.
@@ -132,12 +139,12 @@ public:
     void scaleFixedOutput(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
 
-    virtual void indemission( const std::vector<Emcoef_ind>& emcoef_ind ); // calculates indirect GHG emissions from technology use
-    virtual void calcEmission( const std::string& aGoodName, const int aPeriod ); // calculates GHG emissions from technology
+    void indemission( const std::vector<Emcoef_ind>& emcoef_ind );
+    void calcEmission( const std::string& aGoodName, const int aPeriod );
 
     // ****** return names and values ******
-    std::string getName() const; // return technology name
-    std::string getFuelName() const; // return fuel name
+    const std::string& getName() const; // return technology name
+    const std::string& getFuelName() const; // return fuel name
     double getEff() const; // return fuel efficiency
     virtual double getIntensity(const int per) const; // return fuel intensity
     double getShare() const; // return normalized share
@@ -151,11 +158,11 @@ public:
     bool techAvailable( ) const; // Return available status (re: calibration)
     virtual bool outputFixed() const; // return calibration output value
     double getInput() const; // return fuel input amount
-    double getOutput() const; // return technology output
+    double getOutput( const int aPeriod ) const;
     virtual double getFuelcost() const; // return fuel cost only
     double getTechcost() const; // return total technology cost
     double getNecost() const; // return non-fuel cost
-    double getTotalGHGCost() const; // return carbon tax and storage cost added to tech in $/TC
+    double getTotalGHGCost( const std::string& aRegionName, const int aPeriod ) const;
     double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const;
     double getShareWeight() const;
     void technology::copyGHGParameters( const Ghg* prevGHG );

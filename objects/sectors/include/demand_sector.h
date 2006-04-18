@@ -71,7 +71,6 @@ public:
 
     double getServiceWoTC( const int period ) const;
     void scaleOutput( const int period, double scaleFactor );
-    void setCalibratedSupplyInfo( const int aPeriod ) const {}
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     bool perCapitaBased; //!< demand equation based on per capita GNP, true or false.

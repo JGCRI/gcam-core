@@ -117,7 +117,6 @@ public:
 
     virtual void calibrateSector( const int period ); 
     virtual void checkSectorCalData( const int period );
-    virtual void setCalibratedSupplyInfo( const int aPeriod ) const = 0;
     void adjustForFixedOutput( const double marketDemand, const int period );
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     

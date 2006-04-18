@@ -229,7 +229,9 @@ void BuildingGenericDmdTechnology::production( const string& aRegionName,
 	input = shrwts * getDemandFnPrefix( aRegionName, aPeriod ) * floorSpace
             + getEffectiveInternalGains( aRegionName, aPeriod );
 
-	output = input = max( input, 0.0 ); // Make sure internal gains do not drive service less than zero
+    double primaryOutput = input = max( input, 0.0 ); // Make sure internal gains do not drive service less than zero
+
+    calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 
 	// set demand for fuel in marketplace
 	marketplace->addToDemand( fuelname, aRegionName, input, aPeriod );

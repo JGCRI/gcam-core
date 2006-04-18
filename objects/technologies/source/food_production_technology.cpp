@@ -319,9 +319,6 @@ void FoodProductionTechnology::calcShare( const string& aRegionName,
 * \todo The GHG cost is not feeding into the land use decision or technology cost right now. 
 */
 void FoodProductionTechnology::calcCost( const string& regionName, const string& sectorName, const int per ) {
-    // Calculate the GHG cost. This will be used to adjust the profit rate.
-    calcTotalGHGCost( regionName, sectorName, per );
-
     // Set the techcost to 1 to avoid zero shares.
     // TODO: Fix share calculation to avoid this.
     techcost = 1;
@@ -355,24 +352,16 @@ void FoodProductionTechnology::production( const string& aRegionName,
     mLandAllocator->calcYield( landType, name, profitRate, aPeriod, aPeriod );
 
     // Calculate the output of the technology.
-    output = calcSupply( aRegionName, aSectorName, aPeriod );
+    double primaryOutput = calcSupply( aRegionName, aSectorName, aPeriod );
 
     // This output needs to be in EJ instead of GJ.
     if( name == "biomass" ) {
-        output = output / 1e9;
+        primaryOutput /= 1e9;
     }
 
     // Set the input to be the land used.
     input = mLandAllocator->getLandAllocation( aSectorName, aPeriod );
-
-    // Add the output to the marketplace.
-    Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToSupply( aSectorName, aRegionName, output, aPeriod, true );
-
-    // calculate emissions for each gas after setting input and output amounts
-    for ( unsigned int i = 0; i < ghg.size(); ++i ) {
-        ghg[ i ]->calcEmission( aRegionName, fuelname, input, aSectorName, output, aGDP, aPeriod );
-    }
+    calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 }
 
 /*! \brief Calculate the profit rate for the technology.
@@ -394,7 +383,8 @@ double FoodProductionTechnology::calcProfitRate( const string& aRegionName,
     // Calculate profit rate.
     const Marketplace* marketplace = scenario->getMarketplace();
 
-    double profitRate = ( marketplace->getPrice( aProductName, aRegionName, aPeriod ) + totalGHGCost ) 
+    double secondaryValue = calcSecondaryValue( aRegionName, aPeriod );
+    double profitRate = ( marketplace->getPrice( aProductName, aRegionName, aPeriod ) + secondaryValue ) 
                          * CVRT90 - variableCost;
 
     return profitRate;

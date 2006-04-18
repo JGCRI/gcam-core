@@ -169,40 +169,6 @@ void SupplySector::completeInit( const IInfo* aRegionInfo,
     setMarket();
 }
 
-/*! \brief Set the calibrated supply info into the marketplace.
-* \details This routine adds calibrated supply and demand values to the
-*          associated marketInfo variables. Values are added only if all outputs
-*          for that variable are fixed or calibrated.
-* \todo -- Steve to fix potential inconsistency with global markets.
-* \param aPeriod Period to add the information for.
-*/
-void SupplySector::setCalibratedSupplyInfo( const int aPeriod ) const {
-    const double MKT_NOT_ALL_FIXED = -1;
-    Marketplace* marketplace = scenario->getMarketplace();
-	IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( name, regionName, aPeriod, true );
-	
-	/*! \invariant Supply sector should always have an associated market and
-    *              market info. 
-    */
-	assert( marketInfo );
-    
-    // If this market is global, the second check is to see if some other region
-    // has flaged this as all inputs not fixed.
-    if ( outputsAllFixed( aPeriod ) && marketInfo->getDouble( "calSupply", false ) != MKT_NOT_ALL_FIXED ) {
-        // If supply of this good has not been elimiated from the search and
-        // output is fixed then add to fixed supply value.
-        double calSupply = getCalOutput( aPeriod );  // total calibrated output
-        calSupply += getFixedOutput( aPeriod );  // total fixed output
-
-		double existingCalSupply = max( marketInfo->getDouble( "calSupply", false ), 0.0 );
-		marketInfo->setDouble( "calSupply", existingCalSupply + calSupply );
-    } 
-    else {
-        // If supply of this good is not fixed then set flag to eliminate this from other searches
-        marketInfo->setDouble( "calSupply", MKT_NOT_ALL_FIXED );
-    }
-}
-
 /*! \brief Get the XML node name for output to XML.
 *
 * This public function accesses the private constant string, XML_NAME.

@@ -24,6 +24,7 @@ class GDP;
 class GhgMAC;
 class Input;
 class IInfo;
+class IOutput;
 
 /*! 
 * \ingroup Objects
@@ -59,10 +60,20 @@ Ghg( const std::string& nameIn = "", const std::string& unitIn = "", const doubl
                         const int aPeriod ) const;
     virtual void calcEmission( const std::vector<Input*> aInputs, const std::string& aRegionName,
                                const std::string& aGoodName, const double aOutput, const int aPeriod );
-    double getGHGValue( const std::string& regionName, const std::string& fuelName, const std::string& prodName,
-                        const double efficiency, const int period) const;
-    virtual void calcEmission( const std::string& regionName, const std::string& fuelname, const double input,
-                               const std::string& prodname, const double output, const GDP* aGDP, const int aPeriod );
+    
+    double getGHGValue( const std::string& regionName,
+                        const std::string& fuelName,
+                        const std::vector<IOutput*>& aOutputs,
+                        const double efficiency,
+                        const int period) const;
+
+    virtual void calcEmission( const std::string& regionName,
+                               const std::string& fuelname,
+                               const double input,
+                               const std::vector<IOutput*>& aOutputs,
+                               const GDP* aGDP,
+                               const int aPeriod );
+
     void calcIndirectEmission( const double input, const std::string& fuelname,
                                const std::vector<Emcoef_ind>& emcoef_ind  );
     const std::string& getName() const;
@@ -119,6 +130,7 @@ protected:
     virtual double emissionsDriver( const double inputIn, const double outputIn ) const;
     double controlFunction( const double maxCntrlIn, const double tauIn, const double gdpcap0In, const double gdpCapIn );
     double calcTechChange( const int period );
+    double calcOutputCoef( const std::vector<IOutput*>& aOutputs, const int aPeriod ) const;
     
 private:
     void copy( const Ghg& other );

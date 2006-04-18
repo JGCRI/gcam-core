@@ -24,6 +24,7 @@
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
 #include "util/logger/include/ilogger.h"
+#include "technologies/include/ioutput.h"
 
 using namespace std;
 using namespace xercesc;
@@ -405,20 +406,26 @@ void Ghg::initCalc( const IInfo* aSubsectorInfo ) {
     }
 }
 
-/*! \brief Second Method: Convert GHG tax and any storage costs into energy units using GHG coefficients
-*   and return the value or cost of the tax and storage for the GHG.
-*   Apply taxes only if emissions occur.  Emissions occur if there is a difference in the emissions
-*   coefficients.
-*  \author Sonny Kim
-*  \param regionName Name of the region for GHG
-*  \param fuelName Name of the fuel
-*  \param prodName The name of the output product.
-*  \param efficiency The efficiency of the technology this ghg emitted by.
-*  \param period The period in which this calculation is occurring. 
-*  \return Generalized cost or value of the GHG
-*/
-double Ghg::getGHGValue( const string& regionName, const string& fuelName, const string& prodName, const double efficiency, const int period ) const {
-
+/*! 
+ * \brief Convert GHG tax and any storage costs into energy units using GHG
+ *        coefficients and return the value or cost of the tax and storage for
+ *        the GHG.
+ * \details Applies taxes only if emissions occur. Emissions occur if there is a
+ *          difference in the emissions coefficients.
+ *  \author Sonny Kim
+ *  \param regionName Name of the region for GHG
+ *  \param fuelName Name of the fuel
+ *  \param aOutputs Vector of Technology outputs.
+ *  \param efficiency The efficiency of the technology this ghg emitted by.
+ *  \param period The period in which this calculation is occurring. 
+ *  \return Generalized cost or value of the GHG
+ */
+double Ghg::getGHGValue( const string& regionName,
+                         const string& fuelName,
+                         const vector<IOutput*>& aOutputs,
+                         const double efficiency,
+                         const int period ) const
+{
     const Marketplace* marketplace = scenario->getMarketplace();
     
     // Constants
@@ -450,12 +457,9 @@ double Ghg::getGHGValue( const string& regionName, const string& fuelName, const
     // Fuel market may not exist.
     const IInfo* fuelInfo = marketplace->getMarketInfo( fuelName, regionName, period, false );
     const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ) : 0;
-    
-    // Product market may not exist if it is a demand sector.
-    const IInfo* productInfo = marketplace->getMarketInfo( prodName, regionName, period, false );
-    const double coefProduct = productInfo ? productInfo->getDouble( "CO2Coef", false ) : 0;
 
     if (name == "CO2") {
+        double coefProduct = calcOutputCoef( aOutputs, period );
         // if remove fraction is greater than zero and storage cost is required
         if (rmfrac > 0) {
             // add geologic sequestration cost
@@ -574,6 +578,23 @@ double Ghg::calcTechChange( const int period ){
     return pow(1 + (techDiff / 100), year );
 }
 
+/*!
+ * \brief Calculate the aggregate output emissions coefficient for the gas.
+ * \details The output coefficient is the sum of all output coefficients of all
+ *          the outputs.
+ * \param aOutputs Vector of Technology outputs.
+ * \param aPeriod Period.
+ * \return Aggregate output coefficient.
+ */
+double Ghg::calcOutputCoef( const vector<IOutput*>& aOutputs, const int aPeriod ) const {
+    // The output coefficient is the sum of the output coefficients of all outputs.
+    double outputCoef = 0;
+    for( unsigned int i = 0; i < aOutputs.size(); ++i ){
+        outputCoef += aOutputs[ i ]->getEmissionsPerOutput( name, aPeriod );
+    }
+    return outputCoef;
+}
+
 /*! Second Method: Convert GHG tax and any storage costs into energy units using
 *   GHG coefficients and return the value or cost of the tax and storage for the
 *   GHG. Apply taxes only if emissions occur. Emissions occur if there is a
@@ -638,59 +659,50 @@ double Ghg::calcInputEmissions( const vector<Input*>& aInputs, const string& aRe
 * \param regionName Name of the region for GHG
 * \param fuelname The name of the fuel
 * \param input The amount of fuel sent out
-* \param prodname The name of the output product
-* \param output The amount of fuel consumed
+* \param aOutputs Vector of Technology outputs.
 * \param period The period in which this calculation is occurring.
 * \todo PRIORITY - separate out CO2 from non-CO2 GHGs since CO2 is much simpler.
 * \todo Emissions calc will not work properly with vintaging (base-year emissions will not work, and some thought needs to be given to how emissions controls should work)
 */
 void Ghg::calcEmission( const string& regionName, const string& fuelname, const double input, 
-                        const string& prodname, const double output, const GDP* gdp, const int aPeriod )
+                        const vector<IOutput*>& aOutputs, const GDP* gdp, const int aPeriod )
 {
     // for CO2 use default emissions coefficient by fuel
-    // remove fraction only applicable for CO2
+    // remove fraction only applicable for CO2.
+    
+    // Primary output is always stored at position zero and used to drive
+    // emissions.
+    assert( aOutputs[ 0 ] );
+    double primaryOutput = aOutputs[ 0 ]->getPhysicalOutput( aPeriod );
     if (name == "CO2") {
         const Marketplace* marketplace = scenario->getMarketplace();
 
         // Fuel market may not exist.
         const IInfo* fuelInfo = marketplace->getMarketInfo( fuelname, regionName, aPeriod, false );
         const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ): 0;
+        double coefProduct = calcOutputCoef( aOutputs, aPeriod );
 
-        // Product market may not exist if the product is a demand sector.
-        const IInfo* productInfo = marketplace->getMarketInfo( prodname, regionName, aPeriod, false );
-        const double coefProduct = productInfo ? productInfo->getDouble( "CO2Coef", false ) : 0;
-
-        // 100% efficiency and same coefficient, no emissions
-        if (input==output && coefFuel == coefProduct ) {
-            mEmissions[ aPeriod ] = 0;
-            sequestAmountGeologic = 0;
-            sequestAmountNonEngy = 0;
-            mEmissionsByFuel[ aPeriod ] = (1.0-rmfrac)*input* coefFuel;
-            // Note: The primary fuel emissions will not be correct if sequestered emissions occur down the line.
-        }
-        else {
-            // sequestered emissions
-            if (rmfrac > 0) {
-                // geologic sequestration
-                if(isGeologicSequestration) {
-                    sequestAmountGeologic = rmfrac * ( (input * coefFuel ) - ( output * coefProduct ) );
-                }
-                // non-energy use of fuel, ie petrochemicals
-                else {
-                    sequestAmountNonEngy = rmfrac * ( (input * coefFuel ) - ( output * coefProduct ) );
-                }
+        // sequestered emissions
+        if (rmfrac > 0) {
+            // geologic sequestration
+            if(isGeologicSequestration) {
+                sequestAmountGeologic = rmfrac * ( (input * coefFuel ) - ( primaryOutput * coefProduct ) );
             }
-            // Note that negative emissions can occur here since biomass has a coef of 0. 
-            mEmissions[ aPeriod ] = ( 1.0 - rmfrac ) * ( ( input* coefFuel ) - ( output* coefProduct ) );
-            mEmissionsByFuel[ aPeriod ] = ( 1.0 - rmfrac ) * input* coefFuel;
+            // non-energy use of fuel, ie petrochemicals
+            else {
+                sequestAmountNonEngy = rmfrac * ( (input * coefFuel ) - ( primaryOutput * coefProduct ) );
+            }
         }
+        // Note that negative emissions can occur here since biomass has a coef of 0. 
+        mEmissions[ aPeriod ] = ( 1.0 - rmfrac ) * ( ( input* coefFuel ) - ( primaryOutput* coefProduct ) );
+        mEmissionsByFuel[ aPeriod ] = ( 1.0 - rmfrac ) * input* coefFuel;
     }
     // for all other gases used read-in emissions coefficient or base-year emissions
     else {
         double macReduction = 0;
         gdpCap = gdp->getPPPGDPperCap( aPeriod );
 
-        const double emissDriver = emissionsDriver(input, output);
+        const double emissDriver = emissionsDriver(input, primaryOutput);
         if ( ghgMac.get() ){
             macReduction = ghgMac->findReduction(regionName, aPeriod);
         }

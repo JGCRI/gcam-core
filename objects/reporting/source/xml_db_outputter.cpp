@@ -462,7 +462,9 @@ void XMLDBOutputter::startVisitTechnology( const technology* aTechnology,
     // TODO: Use functions to get techcost, necost, fuelcost.
     XMLWriteOpeningTag( aTechnology->getXMLName1D(), mBuffer, mTabs.get(),
         aTechnology->getName(), aTechnology->year, technology::getXMLNameStatic1D() );
-    XMLWriteElement( aTechnology->output, "output", mBuffer, mTabs.get() );
+
+    XMLWriteElement( aTechnology->getOutput( aPeriod ), "output", mBuffer, mTabs.get() );
+    // TODO: Write out secondary outputs.
 
     // For writing the input add an attribute which specifies the fuel.
     {

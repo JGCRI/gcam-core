@@ -76,11 +76,9 @@ protected:
     std::vector<double> subsectorprice; //!< subsector price for all periods
     std::vector<double> fuelprice; //! subsector fuel price only for all periods
     std::vector<double> fuelPrefElasticity; //!< Fuel preference elasticity
-    std::vector<double> calOutputValue; //!< Calibration value
     std::vector<double> mInvestments; //!< Investment by period.
     std::vector<double> mFixedInvestments; //!< Input fixed subsector level investment by period.
     std::vector<bool> capLimited; //!< true if subsector has hit its capacity limit
-    std::vector<bool> doCalibration; // Flag set if calibration value is read-in
     std::vector<bool> calibrationStatus; // Set true if sector or any tech is calibrated
     std::vector<Summary> summary; //!< summary for reporting
     std::vector<BaseTechnology*> baseTechs; // for the time being

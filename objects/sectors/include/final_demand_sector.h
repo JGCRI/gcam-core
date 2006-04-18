@@ -54,8 +54,6 @@ public:
     virtual void completeInit( const IInfo* aRegionInfo,
                                DependencyFinder* aDependencyFinder,
                                ILandAllocator* aLandAllocator );
-
-    virtual void setCalibratedSupplyInfo( const int aPeriod ) const {};
 protected:
     virtual double getOutput( const int aPeriod ) const { return 0; }
     virtual double getPrice( const int aPeriod ) const;

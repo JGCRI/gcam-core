@@ -30,6 +30,9 @@
 #include "containers/include/dependency_finder.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
+#include "technologies/include/ioutput.h"
+#include "technologies/include/secondary_output.h"
+#include "technologies/include/primary_output.h"
 #include "technologies/include/ical_data.h"
 
 // TODO: Factory for cal data objects.
@@ -44,6 +47,8 @@ extern Scenario* scenario;
 // static initialize.
 const double LOGIT_EXP_DEFAULT = -6;
 
+typedef vector<IOutput*>::const_iterator COutputIterator;
+typedef vector<Ghg*>::const_iterator CGHGIterator;
 // Technology class method definition
 
 //! Default constructor.
@@ -89,7 +94,6 @@ void technology::copy( const technology& techIn ) {
     lexp = techIn.lexp;
     share = techIn.share;
     input = techIn.input;
-    output = techIn.output;
     fixedOutput = techIn.fixedOutput;
     fixedOutputVal = techIn.fixedOutputVal;
     name = techIn.name;
@@ -98,15 +102,17 @@ void technology::copy( const technology& techIn ) {
     emissmap = techIn.emissmap; 
     emfuelmap = techIn.emfuelmap; 
     emindmap = techIn.emindmap; 
-    totalGHGCost = techIn.totalGHGCost;
     fuelPrefElasticity = techIn.fuelPrefElasticity;
     ghgNameMap = techIn.ghgNameMap; 
     
     // Clone the existing cal data object if there is one.
     // TODO: This may correct given the usage of clone in technology to copy forward.
     mCalValue.reset( techIn.mCalValue.get() ? techIn.mCalValue->clone() : 0 );
-    for (vector<Ghg*>::const_iterator iter = techIn.ghg.begin(); iter != techIn.ghg.end(); iter++) {
+    for (CGHGIterator iter = techIn.ghg.begin(); iter != techIn.ghg.end(); ++iter) {
         ghg.push_back( (*iter)->clone() );
+    }
+    for ( COutputIterator iter = techIn.mOutputs.begin(); iter != techIn.mOutputs.end(); ++iter) {
+        mOutputs.push_back( (*iter)->clone() );
     }
 }
 
@@ -118,7 +124,10 @@ technology* technology::clone() const {
 //! Clear member variables.
 void technology::clear(){
     // Delete the GHGs to avoid a memory leak.
-    for( vector<Ghg*>::iterator iter = ghg.begin(); iter != ghg.end(); iter++ ) {
+    for( vector<Ghg*>::iterator iter = ghg.begin(); iter != ghg.end(); ++iter ) {
+        delete *iter;
+    }
+    for( vector<IOutput*>::iterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
         delete *iter;
     }
 }
@@ -142,10 +151,8 @@ void technology::initElementalMembers(){
     lexp = LOGIT_EXP_DEFAULT; 
     share = 0;
     input = 0;
-    output = 0;
     fixedOutput = getFixedOutputDefault(); // initialize to no fixed supply
     fixedOutputVal = getFixedOutputDefault();
-    totalGHGCost = 0;
     fuelPrefElasticity = 0;
 }
 
@@ -240,6 +247,10 @@ void technology::XMLParse( const DOMNode* node ) {
         else if( nodeName == SO2Emissions::getXMLNameStatic() ){
             parseContainerNode( curr, ghg, ghgNameMap, new SO2Emissions );
         }
+        else if( nodeName == SecondaryOutput::getXMLNameStatic() ){
+            parseContainerNode( curr, mOutputs, new SecondaryOutput );
+        }
+
         else if( nodeName == "note" ){
             note = XMLHelper<string>::getValue( curr );
         }
@@ -297,6 +308,14 @@ void technology::completeInit( const string& aSectorName,
     eff = effBase * (1 - effPenalty); // reduces efficiency by penalty
     necost = neCostBase * (1 + neCostPenalty); // increases cost by penalty
 
+    // Create the primary output for this technology. All technologies will have
+    // a primary output. Always insert the primary output at position 0.
+    mOutputs.insert( mOutputs.begin(), new PrimaryOutput( aSectorName ) );
+
+    for( unsigned int i = 0; i < mOutputs.size(); ++i ){
+        mOutputs[ i ]->completeInit( aSectorName, aDepFinder, !hasNoInputOrOutput() );
+    }
+
     // Add the input dependency to the dependency finder if there is one. There
     // will not be one if this is a transportation technology.
     if( aDepFinder ){
@@ -343,8 +362,11 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( fixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
     XMLWriteElementCheckDefault( note, "note", out, tabs );
     
-    for( vector<Ghg*>::const_iterator ghgIter = ghg.begin(); ghgIter != ghg.end(); ghgIter++ ){
-        ( *ghgIter )->toInputXML( out, tabs );
+    for( COutputIterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ){
+        ( *iter )->toInputXML( out, tabs );
+    }
+    for( CGHGIterator iter = ghg.begin(); iter != ghg.end(); ++iter ){
+        ( *iter )->toInputXML( out, tabs );
     }
     
     // finished writing xml for the class members.
@@ -375,12 +397,15 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     XMLWriteElement( pMultiplier, "pMultiplier", out, tabs );
     XMLWriteElement( lexp, "logitexp", out, tabs );
     XMLWriteElement( share, "share", out, tabs );
-    XMLWriteElement( output, "output", out, tabs );
     XMLWriteElement( input, "input", out, tabs );
     XMLWriteElement( fixedOutput, "fixedOutput", out, tabs );
 
+    for( COutputIterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ){
+        ( *iter )->toDebugXML( period, out, tabs );
+    }
+
     // write our ghg object, vector is of number of gases
-    for( vector<Ghg*>::const_iterator i = ghg.begin(); i != ghg.end(); i++ ){
+    for( CGHGIterator i = ghg.begin(); i != ghg.end(); i++ ){
         ( *i )->toDebugXML( period, out, tabs );
     }
     
@@ -397,7 +422,7 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& technology::getXMLName1D() const {
+const string& technology::getXMLName1D() const {
 	return getXMLNameStatic1D();
 }
 
@@ -410,7 +435,7 @@ const std::string& technology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& technology::getXMLNameStatic1D() {
+const string& technology::getXMLNameStatic1D() {
 	const static string XML_NAME1D = "technology";
 	return XML_NAME1D;
 }
@@ -423,7 +448,7 @@ const std::string& technology::getXMLNameStatic1D() {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& technology::getXMLName2D() const {
+const string& technology::getXMLName2D() const {
 	return getXMLNameStatic2D();
 }
 
@@ -436,7 +461,7 @@ const std::string& technology::getXMLName2D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& technology::getXMLNameStatic2D() {
+const string& technology::getXMLNameStatic2D() {
 	const static string XML_NAME2D = "period";
 	return XML_NAME2D;
 }
@@ -470,25 +495,38 @@ void technology::initCalc( const string& aRegionName,
     for( unsigned int i = 0; i < ghg.size(); i++ ){
         ghg[i]->initCalc( aSubsectorInfo );
     }
+
+    for( unsigned int i = 0; i < mOutputs.size(); ++i ){
+        mOutputs[ i ]->initCalc( aRegionName, aPeriod );
+    }
 }
 
-/*! \brief This function calculates the sum of the Carbon Values for all GHG's in this technology.
-* \details The function first checks if a carbon tax exists for the technology, and 
-* if it does loops through all GHGs to calculate a sum carbon value. The GHG function which
-* it calls, getGHGValue() calculates the carbon equivalent of all GHG's contained in this technology.
-* The totalGHGCost attribute of the technology is then set to this new value.
-* \author Sonny Kim, Josh Lurz
-* \param regionName The region containing this technology.
-* \param sectorName The sector containing this technology.
-* \param per The period to calculate this value for.
-* \note At one time this code may have worked for multiple GHG markets. This is not currently the case.
-*/
-void technology::calcTotalGHGCost( const string& regionName, const string& sectorName, const int period ) {
-    totalGHGCost = 0; // initialize
-    // totalGHGCost and carbontax must be in same unit as fuel price
-    for( unsigned int i = 0; i < ghg.size(); i++ ){
-        totalGHGCost += ghg[i]->getGHGValue( regionName, fuelname, sectorName, eff, period );
+/*!
+ * \brief Calculates all technology benefits and costs not accounted for by the
+ *        primary output.
+ * \details Technologies may contain greenhouse gases and secondary output,
+ *          which incur both costs and benefits to the technology. Costs can be
+ *          incurred if the emissions are taxed, or if the secondary output has
+ *          a cost. Benefits may accrue if a the emissions are negative or if
+ *          the secondary output is has a positive value.
+ * \author Sonny Kim, Josh Lurz
+ * \param aRegionName The region containing this technology.
+ * \param aPeriod The period to calculate this value for.
+ * \return Total secondary value.
+ */
+double technology::calcSecondaryValue( const string& aRegionName, const int aPeriod ) const {
+    double totalValue = 0;
+    // Add all costs from the GHGs.
+    for( unsigned int i = 0; i < ghg.size(); ++i ){
+        totalValue -= ghg[i]->getGHGValue( aRegionName, fuelname, mOutputs, eff, aPeriod );
     }
+
+    // Add all values from the outputs. The primary output is included in this
+    // loop but will have a value of zero.
+    for( unsigned int i = 0; i < mOutputs.size(); ++i ){
+        totalValue += mOutputs[ i ]->getValue( aRegionName, aPeriod );
+    }
+    return totalValue;
 }
 
 /*! \brief Calculate technology fuel cost and total cost.
@@ -530,8 +568,7 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
     // fMultiplier and pMultiplier are initialized to 1 for those not read in
     fuelcost = ( fuelprice * fMultiplier ) / eff;
     techcost = ( fuelcost + necost ) * pMultiplier;
-    calcTotalGHGCost( regionName, sectorName, per );
-    techcost += totalGHGCost;
+    techcost -= calcSecondaryValue( regionName, per );
     
     // techcost can drift below zero in disequalibrium.
     techcost = max( techcost, util::getSmallNumber() );
@@ -640,11 +677,10 @@ double technology::getFixedInput() const {
 * \author Steve Smith
 * \param scaleRatio multipliciative value to scale fixed supply
 */
-void technology::scaleFixedOutput(const double scaleRatio)
+void technology::scaleFixedOutput( const double scaleRatio)
 {
     // dmd is total subsector demand
     if( fixedOutputVal >= 0 ) {
-        output *= scaleRatio;
         fixedOutputVal *= scaleRatio;
     }
 }
@@ -713,16 +749,16 @@ void technology::production( const string& aRegionName,
 {
     // dmd is total subsector demand. Use share to get output for each
     // technology
-    output = share * aDemand;
+    double primaryOutput = share * aDemand;
            
-    if ( output < 0 ) {
+    if ( primaryOutput < 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Output value less than zero for technology " << name << endl;
+        mainLog << "Primary output value less than zero for technology " << name << endl;
     }
     
     // Calculate input demand.
-    input = output / eff;
+    input = primaryOutput / eff;
 
     Marketplace* marketplace = scenario->getMarketplace();
     // set demand for fuel in marketplace
@@ -730,13 +766,34 @@ void technology::production( const string& aRegionName,
         marketplace->addToDemand( fuelname, aRegionName, input, aPeriod );
     }
 
-    // Set the supply of the good to the marketplace.
-    // Market doesn't exist for demand goods.
-    marketplace->addToSupply( aSectorName, aRegionName, output, aPeriod, false );
+    calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
+}
+
+/*!
+ * \brief Calculate the emissions, primary and secondary outputs for the
+ *        Technology.
+ * \details Determines the output levels and emissions for the Technology once
+ *          the primary output and input quantities are known. Emissions and
+ *          outputs are added to the marketplace by the Output and GHG objects.
+ * \param aRegionName Region name.
+ * \param aInput Input quantity.
+ * \param aPrimaryOutput Primary output quantity.
+ * \param aGDP Regional GDP container.
+ * \param aPeriod Period.
+ */
+void technology::calcEmissionsAndOutputs( const string& aRegionName,
+                                          const double aInput,
+                                          const double aPrimaryOutput,
+                                          const GDP* aGDP,
+                                          const int aPeriod )
+{
+    for( unsigned int i = 0; i < mOutputs.size(); ++i ){
+        mOutputs[ i ]->setPhysicalOutput( aPrimaryOutput, aRegionName, aPeriod );
+    }
 
     // calculate emissions for each gas after setting input and output amounts
     for ( unsigned int i = 0; i < ghg.size(); ++i ) {
-        ghg[ i ]->calcEmission( aRegionName, fuelname, input, aSectorName, output, aGDP, aPeriod );
+        ghg[ i ]->calcEmission( aRegionName, fuelname, aInput, mOutputs, aGDP, aPeriod );
     }
 }
 
@@ -827,7 +884,7 @@ void technology::indemission( const vector<Emcoef_ind>& emcoef_ind )
 * \author Sonny Kim
 * \return sector name as a string
 */
-string technology::getName() const {
+const string& technology::getName() const {
     return name;
 }
 
@@ -836,7 +893,7 @@ string technology::getName() const {
 * \author Sonny Kim
 * \return fuel name as a string
 */
-string technology::getFuelName() const {
+const string& technology::getFuelName() const {
     return fuelname;
 }
 
@@ -932,8 +989,9 @@ double technology::getInput() const {
 }
 
 //! return output of technology
-double technology::getOutput() const {
-    return output;
+double technology::getOutput( const int aPeriod ) const {
+    // Primary output is at position zero.
+    return mOutputs[ 0 ]->getPhysicalOutput( aPeriod );
 }
 
 //! return technology fuel cost only
@@ -969,15 +1027,19 @@ double technology::getNecost() const {
 }
 
 //! return any carbon tax and storage cost applied to technology
-double technology::getTotalGHGCost() const {
-    // (75$/GJ)
-    return totalGHGCost;
+double technology::getTotalGHGCost( const string& aRegionName, const int aPeriod ) const {
+    double totalValue = 0;
+    // Add all value from the GHGs.
+    for( unsigned int i = 0; i < ghg.size(); ++i ){
+        totalValue += ghg[i]->getGHGValue( aRegionName, fuelname, mOutputs, eff, aPeriod );
+    }
+    return totalValue;
 }
 
 //! return carbon taxes paid by technology
 double technology::getCarbonTaxPaid( const string& aRegionName, int aPeriod ) const {
     double sum = 0;
-    for( vector<Ghg*>::const_iterator currGhg = ghg.begin(); currGhg != ghg.end(); ++currGhg ){
+    for( CGHGIterator currGhg = ghg.begin(); currGhg != ghg.end(); ++currGhg ){
         sum += (*currGhg)->getCarbonTaxPaid( aRegionName, aPeriod );
     }
     return sum;
@@ -1126,6 +1188,11 @@ void technology::setTechShare(const double shareIn) {
 */
 void technology::accept( IVisitor* aVisitor, const int aPeriod ) const {
 	aVisitor->startVisitTechnology( this, aPeriod );
+
+    for( unsigned int i = 0; i < mOutputs.size(); ++i ){
+        mOutputs[ i ]->accept( aVisitor, aPeriod );
+    }
+
 	for( unsigned int i = 0; i < ghg.size(); ++i ){
 		ghg[ i ]->accept( aVisitor, aPeriod );
 	}

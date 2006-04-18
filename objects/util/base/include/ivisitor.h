@@ -63,6 +63,7 @@ class Male;
 class Female;
 class MagiccModel;
 class GDP;
+class IOutput;
 class LandLeaf;
 class LandNode;
 class ICarbonCalc;
@@ -166,6 +167,9 @@ public:
     virtual void updateProductionInput( const ProductionInput* aProdInput ) = 0;
     virtual void updateDemandInput( const DemandInput* aDemandInput ) = 0;
 	
+    virtual void startVisitOutput( const IOutput* aOutput, const int aPeriod ) = 0;
+    virtual void endVisitOutput( const IOutput* aOutput, const int aPeriod ) = 0;
+
 	virtual void startVisitGHG( const Ghg* aGHG, const int aPeriod ) = 0;;
 	virtual void endVisitGHG( const Ghg* aGHG, const int aPeriod ) = 0;;
 	

@@ -50,7 +50,6 @@ public:
 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, const int aPeriod ); // Passing demographic here is not good.
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    virtual void setCalibratedSupplyInfo( const int aPeriod ) const {};
 protected:
 	std::map<std::string,double> ghgEmissCoefMap; //! Map of ghg name to emission coefficent
     void setMarket();

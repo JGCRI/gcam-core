@@ -22,6 +22,7 @@
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
 #include "containers/include/dependency_finder.h"
+#include "sectors/include/cal_quantity_tabulator.h"
 
 // TODO: This needs a factory.
 #include "sectors/include/sector.h"
@@ -1115,38 +1116,15 @@ void Region::initCalc( const int period )
     mRegionInfo->setDouble( "heatingDegreeDays", heatingDegreeDays );
     mRegionInfo->setDouble( "coolingDegreeDays", coolingDegreeDays );
 
+    // Set the CO2 coefficients into the Marketplace before the Technologies and
+    // GHGs are initialized so they can be accessed.
+    setCO2CoefsIntoMarketplace( period );
+
     for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
         (*currSector)->initCalc( nationalAccount[ period ], demographic.get(), period );
     }
     for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
         (*currSector)->initCalc( nationalAccount[ period ], demographic.get(), period  ); 
-    }
-
-    // Add CO2 coefficients to the marketplace.
-    const static string CO2COEF = "CO2Coef";
-    Marketplace* marketplace = scenario->getMarketplace();
-    for( map<string, double>::const_iterator coef = primaryFuelCO2Coef.begin();
-        coef != primaryFuelCO2Coef.end(); ++coef )
-    {
-        // Markets may not exist for incorrect fuel names.
-        IInfo* fuelInfo = marketplace->getMarketInfo( coef->first, name, period, false );
-        if( fuelInfo ){
-            fuelInfo->setDouble( CO2COEF, coef->second );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            // Currently this error occurs frequently, this could be NOTICE.
-            if ( coef->second == 0 ) {
-                mainLog.setLevel( ILogger::DEBUG );
-                mainLog << "Cannot set emissions factor of zero for fuel " << coef->first
-                    << " because the name does not match the name of a market." << endl;
-            }
-            else {
-                mainLog.setLevel( ILogger::DEBUG );
-                mainLog << "Cannot set emissions factor for fuel " << coef->first
-                    << " because the name does not match the name of a market." << endl;
-            }
-        }
     }
 
     // Make sure TFE is same as calibrated values
@@ -1168,6 +1146,41 @@ void Region::initCalc( const int period )
     checkData( period );
 }
 
+/*
+* \brief Initialize the CO2 coefficients read in by the Region into the
+*        marketplace.
+* \details In each period the Region must set the CO2 coefficients for all goods
+*          into the Marketplace, so that Technologies and GHGs can access them.
+* \param aPeriod Period.
+*/
+void Region::setCO2CoefsIntoMarketplace( const int aPeriod ){
+    const static string CO2COEF = "CO2Coef";
+    Marketplace* marketplace = scenario->getMarketplace();
+    for( map<string, double>::const_iterator coef = primaryFuelCO2Coef.begin();
+        coef != primaryFuelCO2Coef.end(); ++coef )
+    {
+        // Markets may not exist for incorrect fuel names.
+        IInfo* fuelInfo = marketplace->getMarketInfo( coef->first, name, aPeriod, false );
+        if( fuelInfo ){
+            fuelInfo->setDouble( CO2COEF, coef->second );
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            // Currently this error occurs frequently, this could be NOTICE.
+            if ( coef->second == 0 ) {
+                mainLog.setLevel( ILogger::DEBUG );
+                mainLog << "Cannot set emissions factor of zero for fuel " << coef->first
+                    << " because the name does not match the name of a market." << endl;
+            }
+            else {
+                mainLog.setLevel( ILogger::DEBUG );
+                mainLog << "Cannot set emissions factor for fuel " << coef->first
+                    << " because the name does not match the name of a market." << endl;
+            }
+        }
+    }
+}
+
 /*! \brief Adjusts calibrated demands to be consistant with calibrated supply.
 *
 * The result of this routine, once called for all regions, is a set of calSupply
@@ -1182,14 +1195,49 @@ void Region::initCalc( const int period )
 */
 
 void Region::setCalSuppliesAndDemands( const int period ) {
-    // Check for fully calibrated/fixed supplies
-    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        supplySector[ i ]->setCalibratedSupplyInfo( period );
-    }
+    // Check for fully calibrated/fixed supplies. This will search sectors and
+    // resources for calibrated and fixed supples.
+    CalQuantityTabulator calSupplyTabulator;
+    accept( &calSupplyTabulator, period );
 
-    // Check for fully calibrated/fixed resources
-    for ( unsigned int i = 0; i < resources.size(); i++ ) {
-        resources[i]->setCalibratedSupplyInfo( period, name );
+    Marketplace* marketplace = scenario->getMarketplace();
+
+    // Flag that the market is not all fixed.
+    const double MARKET_NOT_ALL_FIXED = -1;
+
+    // Name of the cal supply info string.
+    const string CAL_SUPPLY_NAME = "calSupply";
+
+    // Iterate over the entire map of goods.
+    const CalQuantityTabulator::CalInfoMap& calSupplies = calSupplyTabulator.getSupplyInfo();
+
+    for( CalQuantityTabulator::CalInfoMap::const_iterator iter = calSupplies.begin();
+         iter != calSupplies.end(); ++iter )
+    {
+        // Get the market info for the good.
+        // TODO: Require market info to exist once demand sectors are separated.
+        IInfo* marketInfo = marketplace->getMarketInfo( iter->first, name, period, false );
+
+        // Incorrect input files may cause the market to not exist. This will be
+        // flagged elsewhere.
+        if( !marketInfo ){
+            continue;
+        }
+    
+        double existingCalSupply = marketInfo->getDouble( CAL_SUPPLY_NAME, false );
+        // Check is to see if some other region has flagged this as having all
+        // inputs not fixed.
+        if ( existingCalSupply != MARKET_NOT_ALL_FIXED && iter->second.mAllFixed ) {
+            // If supply of this good has not been elimiated from the search and
+            // output is fixed then add to fixed supply value.
+            marketInfo->setDouble( CAL_SUPPLY_NAME, max( existingCalSupply, 0.0 )
+                                   + iter->second.mCalQuantity + iter->second.mFixedQuantity );
+        }
+        else {
+            // If supply of this good is not fixed then set flag to eliminate
+            // this from other searches
+            marketInfo->setDouble( CAL_SUPPLY_NAME, MARKET_NOT_ALL_FIXED );
+        }
     }
 
     // Check for fully calibrated/fixed demands. Search through all supply

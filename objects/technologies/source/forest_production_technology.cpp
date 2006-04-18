@@ -310,16 +310,12 @@ void ForestProductionTechnology::production( const string& aRegionName,
 
     // now calculate the amount to be consumed this period (ie. planted steps
     // periods ago).
-    output = calcSupply( aRegionName, aSectorName, aPeriod );
-    marketplace->addToSupply( name, aRegionName, output, aPeriod );
+    double primaryOutput = calcSupply( aRegionName, aSectorName, aPeriod );
    
     // Set the input to be the land used.
     input = mLandAllocator->getLandAllocation( aSectorName, aPeriod );
 
-    // calculate emissions for each gas after setting input and output amounts
-    for ( unsigned int i = 0; i < ghg.size(); ++i ) {
-        ghg[ i ]->calcEmission( aRegionName, fuelname, input, aSectorName, output, aGDP, aPeriod );
-    }
+    calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 }
 
 /*! \brief Calculate the profit rate for the technology.

@@ -198,6 +198,7 @@ protected:
     void calcEmissions( const int period );
     void calcEmissFuel( const std::list<std::string>& aPrimaryFuelList, const int period );
     void calcTotalCarbonTaxPaid( const int period );
+    void setCO2CoefsIntoMarketplace( const int aPeriod );
 private:
     void clear();
     bool ensureGDP() const;

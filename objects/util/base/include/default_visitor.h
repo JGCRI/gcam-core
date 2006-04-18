@@ -106,8 +106,13 @@ public:
     virtual void updateInput( const Input* aInput ){}
     virtual void updateProductionInput( const ProductionInput* aProdInput ){}
     virtual void updateDemandInput( const DemandInput* aDemandInput ){}
+
+    virtual void startVisitOutput( const IOutput* aOutput, const int aPeriod ){}
+    virtual void endVisitOutput( const IOutput* aOutput, const int aPeriod ){}
+
 	virtual void startVisitGHG( const Ghg* aGHG, const int aPeriod ){}
 	virtual void endVisitGHG( const Ghg* aGHG, const int aPeriod ){}
+
 	virtual void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
 	virtual void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
 	virtual void startVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ){}

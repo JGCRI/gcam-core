@@ -267,6 +267,9 @@
 					RelativePath="..\..\marketplace\source\ghg_market.cpp">
 				</File>
 				<File
+					RelativePath="..\..\marketplace\source\inverse_calibration_market.cpp">
+				</File>
+				<File
 					RelativePath="..\..\marketplace\source\market.cpp">
 				</File>
 				<File
@@ -318,6 +321,9 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\building_supply_subsector.cpp">
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\cal_quantity_tabulator.cpp">
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\demand_sector.cpp">
@@ -498,10 +504,16 @@
 					RelativePath="..\..\technologies\source\forest_production_technology.cpp">
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\primary_output.cpp">
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\production_technology.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\profit_shutdown_decider.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\secondary_output.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\technology.cpp">
@@ -915,6 +927,9 @@
 					RelativePath="..\..\marketplace\include\imarket_type.h">
 				</File>
 				<File
+					RelativePath="..\..\marketplace\include\inverse_calibration_market.h">
+				</File>
+				<File
 					RelativePath="..\..\marketplace\include\market.h">
 				</File>
 				<File
@@ -972,6 +987,9 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\include\building_supply_subsector.h">
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\cal_quantity_tabulator.h">
 				</File>
 				<File
 					RelativePath="..\..\sectors\include\demand_sector.h">
@@ -1071,13 +1089,22 @@
 					RelativePath="..\..\technologies\include\ical_data.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\ioutput.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\ishutdown_decider.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\primary_output.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\production_technology.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\profit_shutdown_decider.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\secondary_output.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\technology.h">

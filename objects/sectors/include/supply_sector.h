@@ -35,8 +35,6 @@ public:
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
-    
-    virtual void setCalibratedSupplyInfo( const int aPeriod ) const;
 
 	virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
 	

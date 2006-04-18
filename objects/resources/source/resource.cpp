@@ -317,20 +317,6 @@ void Resource::accept( IVisitor* aVisitor, const int aPeriod ) const {
 	aVisitor->endVisitResource( this, aPeriod );
 }
 
-/*! \brief Set marketInfo for fixed supplies for this resources.
-*
-* For now this sets -1 to flag that supplies are not fixed.
-* This will need to change once resource supply are calibrated.
-* \author Steve Smith
-* \param period model period.
-*/
-void Resource::setCalibratedSupplyInfo( const int period, const std::string& regionName ) {
-	const double MKT_NOT_ALL_FIXED = -1;
-	Marketplace* marketplace = scenario->getMarketplace();
-
-	marketplace->getMarketInfo( name, regionName, period, true )->setDouble( "calSupply", MKT_NOT_ALL_FIXED );
-}
-
 // ************************************************************
 // Definitions for the derived classes below.
 // Since these are very small changes, keep in same file for simplicity

@@ -102,7 +102,7 @@ void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* ta
     XMLWriteElement( intensity, "intensity", out, tabs );
     XMLWriteElement( loadFactor, "loadFactor", out, tabs );
     XMLWriteElement( getCumulativeTechnicalChange( period ), "techChangeCumm", out, tabs );
-    XMLWriteElement( output / loadFactor, "vehicleOutput", out, tabs );
+    XMLWriteElement( getOutput( period ) / loadFactor, "vehicleOutput", out, tabs );
     XMLWriteElement( mTechnicalChange, "techchange", out, tabs );
 }	
 
@@ -140,7 +140,6 @@ void TranTechnology::calcCost( const string& regionName, const string& sectorNam
     // 75$/GJ 
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const double JPERBTU = 1055; // 1055 Joules per BTU
-    calcTotalGHGCost( regionName, sectorName, per );
 
     Marketplace* marketplace = scenario->getMarketplace();
     double fuelprice = marketplace->getPrice(fuelname,regionName,per);
@@ -148,7 +147,8 @@ void TranTechnology::calcCost( const string& regionName, const string& sectorNam
 	/*! \invariant The market price of the fuel must be valid. */
 	assert( fuelprice != Marketplace::NO_MARKET_PRICE );
     
-	fuelcost = ( (fuelprice * fMultiplier) + totalGHGCost ) * intensity/ getCumulativeTechnicalChange( per )
+    double secondaryValue = calcSecondaryValue( regionName, per );
+	fuelcost = ( (fuelprice * fMultiplier) - secondaryValue ) * intensity/ getCumulativeTechnicalChange( per )
              * JPERBTU/(1.0E9)*CVRT90;
     techcost = ( fuelcost + necost ) * pMultiplier;
     
@@ -170,10 +170,10 @@ void TranTechnology::calcCost( const string& regionName, const string& sectorNam
 */
 void TranTechnology::production(const string& regionName,const string& prodName,
                                 double dmd, const GDP* gdp, const int per ) {
-    output = share * dmd;
+    double primaryOutput = share * dmd;
 
     // Convert from service (pas-km) to vehicle demand (vehicle-km)
-    double vehicleOutput = output/loadFactor;
+    double vehicleOutput = primaryOutput / loadFactor;
         
     // for transportation technology use intensity instead of efficiency
     // convert from million Btu to EJ
@@ -192,11 +192,8 @@ void TranTechnology::production(const string& regionName,const string& prodName,
     Marketplace* marketplace = scenario->getMarketplace();    
     // set demand for fuel in marketplace
     marketplace->addToDemand(fuelname,regionName,input,per);
-    // Don't need to add to supply because this is a service good.
-    // calculate emissions for each gas after setting input and output amounts
-    for ( unsigned int i = 0; i < ghg.size(); ++i ) {
-        ghg[i]->calcEmission(regionName, fuelname,input,prodName,output, gdp, per );
-    }    
+
+    calcEmissionsAndOutputs( regionName, input, primaryOutput, gdp, per );  
 }
 
 //! return technology calibration value

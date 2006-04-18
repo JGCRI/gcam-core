@@ -44,7 +44,6 @@ public:
     double getAnnualProd(int per);
     void dbOutput( const std::string& regname ); 
     void csvOutputFile( const std::string& regname ); 
-    void setCalibratedSupplyInfo( const int period, const std::string& regionName );
 	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     std::string name; //!< Resource name

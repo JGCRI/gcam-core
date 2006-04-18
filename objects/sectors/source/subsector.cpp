@@ -73,8 +73,6 @@ sectorName( aSectorName ){
     summary.resize(maxper); // object containing summaries
     fuelPrefElasticity.resize( maxper );
     summary.resize( maxper );
-    calOutputValue.resize( maxper );
-    doCalibration.resize( maxper, false );
     calibrationStatus.resize( maxper, false );
     fixedShare.resize( maxper );
     capLimited.resize( maxper, false );
@@ -147,11 +145,6 @@ void Subsector::XMLParse( const DOMNode* node ) {
         }
         else if( nodeName == "sharewt" ){
             XMLHelper<double>::insertValueIntoVector( curr, shrwts, modeltime );
-        }
-        else if( nodeName == "calOutputValue" ){
-            XMLHelper<double>::insertValueIntoVector( curr, calOutputValue, modeltime );
-            int thisPeriod = XMLHelper<double>::getNodePeriod( curr, modeltime );
-            doCalibration[ thisPeriod ] = true;
         }
         else if( nodeName == "logitexp" ){
             XMLHelper<double>::insertValueIntoVector( curr, lexp, modeltime );
@@ -504,12 +497,6 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
 
     XMLWriteElementCheckDefault( scaleYear, "scaleYear", out, tabs, modeltime->getEndYear() );
     XMLWriteElementCheckDefault( techScaleYear, "techScaleYear", out, tabs, modeltime->getEndYear() );
-
-    for( unsigned i = 0; i < calOutputValue.size(); i++ ){
-        if ( doCalibration[ i ] ) {
-            XMLWriteElementCheckDefault( calOutputValue[ i ], "calOutputValue", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-        }
-    }
     
     for( unsigned i = 0; i < shrwts.size(); i++ ){
         XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
@@ -806,15 +793,10 @@ bool Subsector::getCalibrationStatus( const int period ) const {
 * \param period Model period
 */
 void Subsector::setCalibrationStatus( const int period ) {
-    if ( doCalibration[ period ] ) {
-        calibrationStatus[ period ] = true;
-    } 
-    else {
-        for( unsigned int i = 0; i < techs.size(); ++i ){
-            if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
-                calibrationStatus[ period ] = true;
-                return;
-            }
+    for( unsigned int i = 0; i < techs.size(); ++i ){
+        if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
+            calibrationStatus[ period ] = true;
+            return;
         }
     }
 }
@@ -1492,21 +1474,15 @@ int Subsector::getNumberAvailTechs( const int period ) const {
 */
 double Subsector::getTotalCalOutputs( const int period ) const {
     double sumCalValues = 0;
-
-    if ( doCalibration[ period ] ) {
-        sumCalValues += calOutputValue[ period ];
-    } 
-    else {
-        for( unsigned int i = 0; i < techs.size(); ++i ){
-            if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
-                if ( techs[ i ][ period ]->getCalibrationOutput( ) < 0 ) {
-                    ILogger& mainLog = ILogger::getLogger( "main_log" );
-                    mainLog.setLevel( ILogger::DEBUG );
-                    mainLog << "calibration < 0 for tech " << techs[ i ][ period ]->getName() 
-                        << " in Subsector " << name << endl;
-                }
-                sumCalValues += techs[ i ][ period ]->getCalibrationOutput( );
+    for( unsigned int i = 0; i < techs.size(); ++i ){
+        if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
+            if ( techs[ i ][ period ]->getCalibrationOutput( ) < 0 ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::DEBUG );
+                mainLog << "calibration < 0 for tech " << techs[ i ][ period ]->getName() 
+                    << " in Subsector " << name << endl;
             }
+            sumCalValues += techs[ i ][ period ]->getCalibrationOutput( );
         }
     }
     return sumCalValues;
@@ -1672,13 +1648,15 @@ void Subsector::scaleCalibratedValues( const int period, const std::string& good
 * \return Total calibrated output for this Subsector
 */
 bool Subsector::allOutputFixed( const int period ) const {
-    // Check if subsector level output is fixed.
-    if ( doCalibration[ period ] || shrwts[ period ] == 0 ) {
+    // If there is no shareweight for this subsector than it cannot produce any
+    // output, and so the output must be fixed.
+    if( util::isEqual( shrwts[ period ], 0.0 ) ){
         return true;
-    } 
+    }
+
     // if not fixed at sub-sector level, then check at the technology level
     for( unsigned int i = 0; i < techs.size(); ++i ){
-        if ( !( techs[ i ][ period ]->outputFixed( ) ) ) {
+        if ( !( techs[ i ][ period ]->outputFixed() ) ) {
             return false;
         }
     }
@@ -1804,7 +1782,7 @@ void Subsector::csvOutputFile() const {
 
         // output or demand for each technology
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getOutput();
+            temp[m] = techs[i][m]->getOutput( m );
         }
         fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"production","EJ",temp);
         // technology share
@@ -1901,7 +1879,7 @@ void Subsector::MCoutputSupplySector() const {
         // secondary energy and price output by tech
         // output or demand for each technology
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getOutput();
+            temp[m] = techs[i][m]->getOutput( m );
         }
         dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech", techs[i][ 0 ]->getName(), "EJ", temp );
         // technology cost
@@ -1941,7 +1919,7 @@ void Subsector::MCoutputDemandSector() const {
         if( techs.size() > 1 ) {  // write out if more than one technology
             // output or demand for each technology
             for ( int m=0;m<maxper;m++) {
-                temp[m] = techs[i][m]->getOutput();
+                temp[m] = techs[i][m]->getOutput( m );
             }
             dboutput4(regionName,"End-Use Service",sectorName+" "+name,techs[i][ 0 ]->getName(),"Ser Unit",temp);
             // total technology cost
@@ -2027,7 +2005,7 @@ void Subsector::MCoutputAllSectors() const {
 
         // ghg tax and storage cost applied to technology if any
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getTotalGHGCost();
+            temp[m] = techs[i][m]->getTotalGHGCost( regionName, m );
         }
         dboutput4(regionName,"Total GHG Cost",sectorName, subsecTechName,"$/gj",temp);
 
@@ -2120,7 +2098,7 @@ double Subsector::getOutput( const int period ) const {
     assert( period < scenario->getModeltime()->getmaxper() );
     double outputSum = 0;
     for ( unsigned int i=0;i< techs.size(); i++ ) {
-        outputSum += techs[i][period]->getOutput();
+        outputSum += techs[i][period]->getOutput( period );
     }
 
     // Add on the base techs output too.

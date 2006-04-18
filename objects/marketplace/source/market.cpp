@@ -19,6 +19,7 @@
 #include "marketplace/include/price_market.h"
 #include "marketplace/include/demand_market.h"
 #include "marketplace/include/calibration_market.h"
+#include "marketplace/include/inverse_calibration_market.h"
 #include "marketplace/include/ghg_market.h"
 #include "marketplace/include/normal_market.h"
 #include "marketplace/include/trial_value_market.h"
@@ -112,6 +113,9 @@ auto_ptr<Market> Market::createMarket( const IMarketType::Type aType,
     }
     else if ( aType == IMarketType::CALIBRATION ) {
         rNewMarket.reset( new CalibrationMarket( aGoodName, aRegionName, aPeriod ) );
+    }
+    else if ( aType == IMarketType::INVERSE_CALIBRATION ) {
+        rNewMarket.reset( new InverseCalibrationMarket( aGoodName, aRegionName, aPeriod ) );
     }
     else if ( aType == IMarketType::DEMAND ) {
         rNewMarket.reset( new DemandMarket( aGoodName, aRegionName, aPeriod ) );
