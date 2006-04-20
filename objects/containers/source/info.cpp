@@ -136,7 +136,7 @@ bool Info::hasValue( const string& aStringKey ) const {
     bool currHasValue = mInfoMap->find( aStringKey ) != mInfoMap->end();
 
     // If the value was not found, check the parent.
-    if( !currHasValue ){
+    if( !currHasValue && mParentInfo ){
         currHasValue = mParentInfo->hasValue( aStringKey );
     }
     return currHasValue;
