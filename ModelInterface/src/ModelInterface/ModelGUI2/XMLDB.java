@@ -95,19 +95,29 @@ public class XMLDB {
 			uc = manager.createUpdateContext();
 			try {
 				myContainer = manager.openContainer(contName, cconfig);
+				// testing index code here should be REMOVED
+				System.out.println("Default Index: "+myContainer.getIndexSpecification().getDefaultIndex());
+				XmlIndexSpecification is = myContainer.getIndexSpecification();
+				is.addIndex("", "name", "edge-attribute-equality-string");
+				myContainer.setIndexSpecification(is, uc);
+				XmlIndexDeclaration dec;
+				while((dec = is.next()) != null) {
+					System.out.println("Index Name: "+dec.uri+":"+dec.name+" Index: "+dec.index);
+				}
+				System.out.println("After loop");
+				//System.out.println("The Index: "+myContainer.getIndexSpecification().find("", "type").index);
+				// end code to be REMOVED
 			} catch(XmlException ve) {
 				if(ve.getErrorCode() == XmlException.VERSION_MISMATCH) {
 					int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if(ans == JOptionPane.YES_OPTION) {
 						JOptionPane.showMessageDialog(parentFrame, "Couldn't Upgrade the database.", 
 								"DB Upgrade Error", JOptionPane.ERROR_MESSAGE);
-						/*
 						System.out.println("Do upgrade");
 						manager.upgradeContainer(contName, uc);
 						System.out.println("Done upgrade");
 						myContainer = manager.openContainer(contName, cconfig);
 						System.out.println("Done open");
-						*/
 					} else {
 						return;
 					}

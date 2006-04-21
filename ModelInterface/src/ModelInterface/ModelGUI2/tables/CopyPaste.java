@@ -136,8 +136,8 @@ public class CopyPaste implements ActionListener{
 				    	stringBuffer.append("\t"); 
 				    }
 				}
-				stringBuffer.append("\n");
-				//stringBuffer.append(System.getProperty("line.separator"));
+				//stringBuffer.append("\n");
+				stringBuffer.append(System.getProperty("line.separator"));
 			}
 			stringSelection  = new StringSelection(stringBuffer.toString());
 			clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -158,9 +158,10 @@ public class CopyPaste implements ActionListener{
 			try
 			{
 				String stringToPaste = (String)(clipboard.getContents(this).getTransferData(DataFlavor.stringFlavor));
+				stringToPaste = stringToPaste.replace('\r', '\n');
 				System.out.println("String is:" + stringToPaste);
-				StringTokenizer stRow = new StringTokenizer(stringToPaste, "\n"); //divide into rows
-				//StringTokenizer stRow = new StringTokenizer(stringToPaste, System.getProperty("line.separator")); //divide into rows
+				//StringTokenizer stRow = new StringTokenizer(stringToPaste, "\n"); //divide into rows
+				StringTokenizer stRow = new StringTokenizer(stringToPaste, System.getProperty("line.separator")); //divide into rows
 				for(int i=0; stRow.hasMoreTokens(); i++){	
 					entireRow = stRow.nextToken();
 					StringTokenizer stCol = new StringTokenizer(entireRow,"\t");

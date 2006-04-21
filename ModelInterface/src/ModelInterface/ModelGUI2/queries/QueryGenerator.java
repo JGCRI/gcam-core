@@ -621,6 +621,8 @@ public class QueryGenerator {
 		final JTextField a2TextF = new JTextField(yearLevel, 20);
 		final JTextField dataNameTextF = new JTextField(var, 30);
 		final JTextField xPathTextF = new JTextField(xPath, 50);
+		final JCheckBox sumAllCheckBox = new JCheckBox("Sum All", sumAll);
+		final JCheckBox groupCheckBox = new JCheckBox("Group", group);
 		Component seperator = Box.createRigidArea(new Dimension(20, 10));
 		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
 		all.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -632,6 +634,10 @@ public class QueryGenerator {
 		tempPanel.add(new JLabel("Title: "));
 		tempPanel.add(seperator);
 		tempPanel.add(titleTextF);
+		tempPanel.add(seperator);
+		tempPanel.add(sumAllCheckBox);
+		tempPanel.add(seperator);
+		tempPanel.add(groupCheckBox);
 		tempPanel.add(Box.createHorizontalGlue());
 		all.add(tempPanel);
 
@@ -697,6 +703,8 @@ public class QueryGenerator {
 				yearLevel = a2TextF.getText();
 				var = dataNameTextF.getText();
 				xPath = xPathTextF.getText();
+				sumAll = sumAllCheckBox.isSelected();
+				group = groupCheckBox.isSelected();
 				editDialog.dispose();
 			}
 		});

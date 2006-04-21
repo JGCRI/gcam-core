@@ -425,7 +425,12 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
 		if( (isGlobal && type.equals("region")) 
 				|| (qg.nodeLevel.equals("sector") && type.equals("subsector")) 
-				|| (qg.nodeLevel.matches(".*sector") && type.equals("technology"))) {
+				|| ((qg.nodeLevel.equals("sector") || qg.nodeLevel.equals("subsector")) && type.equals("technology"))) {
+				/* || (qg.nodeLevel.matches(".*sector") && type.equals("technology"))) {
+				 * This used to be the query, but matches seems to be dominating time
+				 * in the recursiveness, so going to remove, if something break, this 
+				 * could be the source of the regression
+				 */
 			currNode.delete();
 			return tempMap;
 		}

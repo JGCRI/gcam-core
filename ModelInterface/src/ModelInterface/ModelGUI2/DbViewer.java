@@ -79,7 +79,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	private static String controlStr = "DbViewer";
 
-	private JTable jTable;
+	private JTable jTable; // does this still need to be a field?
 		
 	private DOMImplementationLS implls;
 
@@ -88,10 +88,13 @@ public class DbViewer implements ActionListener, MenuAdder {
 	protected JList scnList;
 	protected JList regionList;
 	protected Vector regions;
-	protected BaseTableModel bt;
-	protected JScrollPane jsp;
+	protected BaseTableModel bt; // does this still need to be a field?
+	protected JScrollPane jsp; // does this still need to be a field?
 	protected QueryTreeModel queries;
 	private JTabbedPane tablesTabs = new JTabbedPane();
+	private JSplitPane scenarioRegionSplit;
+	private JSplitPane queriesSplit;
+	private JSplitPane tableCreatorSplit;
 
 	public DbViewer(JFrame pf) {
 		parentFrame = pf;
@@ -111,6 +114,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 						} catch(Exception e) {
 							e.printStackTrace();
 						}
+						Properties prop = ((InterfaceMain)parentFrame).getProperties();
+						prop.setProperty("scenarioRegionSplit", String.valueOf(scenarioRegionSplit.getDividerLocation()));
+						prop.setProperty("queriesSplit", String.valueOf(queriesSplit.getDividerLocation()));
+						prop.setProperty("tableCreatorSplit", String.valueOf(tableCreatorSplit.getDividerLocation()));
 						parentFrame.getContentPane().removeAll();
 					}
 					if(evt.getNewValue().equals(controlStr)) {
@@ -118,8 +125,28 @@ public class DbViewer implements ActionListener, MenuAdder {
 						Properties prop = ((InterfaceMain)parentFrame).getProperties();
 						// I should probably stop being lazy
 						prop.setProperty("queryFile", queryFileName = prop.getProperty("queryFile", "queries.xml"));
+						// TODO: move to load preferences
+						scenarioRegionSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
+						scenarioRegionSplit.setResizeWeight(.5);
+						queriesSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
+						//queriesSplit.setLeftComponent(scenarioRegionSplit);
+						queriesSplit.setResizeWeight(.5);
+						tableCreatorSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false);
+						String tempInt;
+						try {
+							if((tempInt = prop.getProperty("scenarioRegionSplit")) != null) {
+								scenarioRegionSplit.setDividerLocation(Integer.valueOf(tempInt));
+							}
+							if((tempInt = prop.getProperty("queriesSplit")) != null) {
+								queriesSplit.setDividerLocation(Integer.valueOf(tempInt));
+							}
+							if((tempInt = prop.getProperty("tableCreatorSplit")) != null) {
+								tableCreatorSplit.setDividerLocation(Integer.valueOf(tempInt));
+							}
+						} catch(NumberFormatException nfe) {
+							System.out.println("Invalid split location preference: "+nfe);
+						}
 						queriesDoc = readQueries(new File(queryFileName));
-						// need to do anything?
 					}
 				}
 			}
@@ -297,7 +324,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 			while(res.hasNext()) {
 				temp = res.next();
 				XmlDocument tempDoc = temp.asDocument();
-				ret.add(tempDoc.getName()+" "+XMLDB.getAttr(temp, "name")+ " "+XMLDB.getAttr(temp, "date"));
+				//ret.add(tempDoc.getName().replace(' ', '_')+" "+XMLDB.getAttr(temp, "name")+ " "+XMLDB.getAttr(temp, "date"));
+				ret.add(new ScenarioListItem(tempDoc.getName(), XMLDB.getAttr(temp, "name"), XMLDB.getAttr(temp, "date")));
 				tempDoc.delete();
 				temp.delete();
 			}
@@ -307,6 +335,27 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 		xmlDB.printLockStats("getScenarios");
 		return ret;
+	}
+
+	// A simple class to hold scenario info that will be displayed in a JList
+	// don't want to display the document name becuase it adds too much clutter
+	// do I just ovrride the toString to only display what we want, and I will
+	// still have the docName for use when managing the database.
+	// I am leaveing the fields open to direct access as this is merely a struct
+	// and there is no point in create getter/setters
+	private class ScenarioListItem {
+		String docName;
+		String scnName;
+		String scnDate;
+		public ScenarioListItem(String docName, String scnName, String scnDate) {
+			this.docName = docName;
+			this.scnName = scnName;
+			this.scnDate = scnDate;
+		}
+		public String toString() {
+			// do not display docName to avoid clutter
+			return scnName+' '+scnDate;
+		}
 	}
 
 	protected Vector getRegions() {
@@ -340,14 +389,16 @@ public class DbViewer implements ActionListener, MenuAdder {
 		StringBuffer ret = new StringBuffer("/");
 		boolean added = false;
 		for(int i = 0; i < scnSel.length; ++i) {
-			String[] attrs = ((String)scns.get(scnSel[i])).split("\\s");
+			//String[] attrs = ((String)scns.get(scnSel[i])).split("\\s");
+			ScenarioListItem temp = (ScenarioListItem)scns.get(scnSel[i]);
 			if(!added) {
 				ret.append("scenario[ ");
 				added = true;
 			} else {
 				ret.append(" or ");
 			}
-			ret.append("(@name='").append(attrs[1]).append("' and @date='").append(attrs[2]).append("')");
+			//ret.append("(@name='").append(attrs[1]).append("' and @date='").append(attrs[2]).append("')");
+			ret.append("(@name='").append(temp.scnName).append("' and @date='").append(temp.scnDate).append("')");
 		}
 		ret.append(" ]/world/");
 		System.out.println(ret);
@@ -359,7 +410,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		JPanel listPane = new JPanel();
 		JLabel listLabel;
 		JPanel allLists = new JPanel();
-		final JSplitPane all = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		//final JSplitPane all = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		scns = getScenarios();
 		regions = getRegions();
 		queries = getQueries();
@@ -386,8 +437,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 		allLists.setLayout( new BoxLayout(allLists, BoxLayout.X_AXIS));
 		allLists.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		allLists.add(listPane);
-		allLists.add(Box.createHorizontalStrut(10));
+		scenarioRegionSplit.setLeftComponent(listPane);
+		//allLists.add(listPane);
+		//allLists.add(Box.createHorizontalStrut(10));
 
 		listPane = new JPanel();
 		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
@@ -396,8 +448,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 		listScroll = new JScrollPane(regionList);
 		listScroll.setPreferredSize(new Dimension(150, 150));
 		listPane.add(listScroll);
-		allLists.add(listPane);
-		allLists.add(Box.createHorizontalStrut(10));
+		scenarioRegionSplit.setRightComponent(listPane);
+		allLists.add(scenarioRegionSplit);
+		//allLists.add(listPane);
+		//allLists.add(Box.createHorizontalStrut(10));
 
 		listPane = new JPanel();
 		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
@@ -421,16 +475,19 @@ public class DbViewer implements ActionListener, MenuAdder {
 		buttonPanel.add(runQueryButton);
 		listPane.add(buttonPanel);
 
-		allLists.add(listPane);
+		queriesSplit.setLeftComponent(scenarioRegionSplit);
+		queriesSplit.setRightComponent(listPane);
+		allLists.add(queriesSplit);
+		//allLists.add(listPane);
 		//all.setLayout( new BoxLayout(all, BoxLayout.Y_AXIS));
 		//all.add(allLists, BorderLayout.PAGE_START);
-		all.setLeftComponent(allLists);
+		tableCreatorSplit.setLeftComponent(allLists);
 		/*
 		final JPanel tablePanel = new JPanel();
 		tablePanel.setLayout( new BoxLayout(tablePanel, BoxLayout.X_AXIS));
 		*/
 		//final JTabbedPane tablesTabs = new JTabbedPane();
-		all.setRightComponent(tablesTabs);
+		tableCreatorSplit.setRightComponent(tablesTabs);
 
 
 		queryList.addTreeSelectionListener(new TreeSelectionListener() {
@@ -535,7 +592,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		});
 
 		Container contentPane = parentFrame.getContentPane();
-		contentPane.add(all/*, BorderLayout.PAGE_START*/);
+		contentPane.add(tableCreatorSplit/*, BorderLayout.PAGE_START*/);
 		//contentPane.add(new JScrollPane(all), BorderLayout.PAGE_START);
 		parentFrame.setVisible(true);
 	}
@@ -698,8 +755,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 				Object[] remList = list.getSelectedValues();
 				for(int i = 0; i < remList.length; ++i) {
 					dirtyBit.setDirty();
+					/*
 					xmlDB.removeDoc(((String)remList[i]).substring(0, 
 							((String)remList[i]).indexOf(' ')));
+							*/
+					xmlDB.removeDoc(((ScenarioListItem)remList[i]).docName);
 					//System.out.println(((String)remList[i]).substring(0, ((String)remList[i]).indexOf(' ')));
 				}
 				scns = getScenarios();
@@ -722,10 +782,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 					File exportLocation = FileUtils.selectFile(parentFrame,
 							new XMLFileFilter(), null, true);
 					if (exportLocation != null) {
+						boolean success = xmlDB.exportDoc(((ScenarioListItem)selectedList[i]).docName, 
+							exportLocation);
+						/*
 						boolean success = xmlDB.exportDoc(((String) selectedList[i]).substring(0,
 								((String) selectedList[i]).indexOf(' ')),
 								exportLocation);
-						/*
 						boolean success = xmlDB.exportDoc((String)selectedList[i],
 								exportLocation);
 								*/
@@ -777,7 +839,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	public void createReport() {
 		if(tablesTabs.getTabCount() == 0) {
-			// error
+			// error?
 			return;
 		}
 		jsp = (JScrollPane)tablesTabs.getSelectedComponent();
