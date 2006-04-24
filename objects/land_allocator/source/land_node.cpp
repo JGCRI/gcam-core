@@ -11,6 +11,7 @@
 #include "land_allocator/include/unmanaged_land_leaf.h"
 #include "land_allocator/include/forest_land_leaf.h"
 #include "containers/include/scenario.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -52,8 +53,6 @@ ALandAllocatorItem* LandNode::getChildAt( const size_t aIndex ) {
 * \param curr pointer to the current node in the XML input tree
 */
 bool LandNode::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-    const Modeltime* modeltime = scenario->getModeltime();
-
     if ( nodeName == LandNode::getXMLNameStatic() ) {
         parseContainerNode( curr, children, new LandNode );
     }
@@ -608,8 +607,10 @@ void LandNode::updateSummary( Summary& aSummary, const int aPeriod ) {
 }
 
 void LandNode::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitLandNode( this, aPeriod );
 	for ( unsigned int i = 0; i < children.size(); i++ ) {
 		children[i]->accept( aVisitor, aPeriod );
     }
+    aVisitor->endVisitLandNode( this, aPeriod );
 }
 
