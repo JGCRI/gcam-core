@@ -120,9 +120,6 @@ public:
 	virtual void startVisitMarket( const Market* aMarket, const int aPeriod ){}
 	virtual void endVisitMarket( const Market* aMarket, const int aPeriod ){}
 
-	virtual void startVisitMagiccModel( const MagiccModel* aMagiccModel, const int aPeriod ){}
-	virtual void endVisitMagiccModel( const MagiccModel* aMagiccModel, const int aPeriod ){}
-
     virtual void startVisitGDP( const GDP* aGDP, const int aPeriod ){}
     virtual void endVisitGDP( const GDP* aGDP, const int aPeriod ){}
 
@@ -137,6 +134,9 @@ public:
 
     virtual void startVisitAgSector( const AgSector* aAgSector, const int aPeriod ){}
     virtual void endVisitAgSector( const AgSector* aAgSector, const int aPeriod ){}
+
+    virtual void startVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ){}
+    virtual void endVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ){}
 };
 
 #endif // _DEFAULT_VISITOR_H_

@@ -61,13 +61,13 @@ class AgeCohort;
 class Gender;
 class Male;
 class Female;
-class MagiccModel;
 class GDP;
 class IOutput;
 class LandLeaf;
 class LandNode;
 class ICarbonCalc;
 class AgSector;
+class IClimateModel;
 
 /*!
  * \brief An interface to a class which visits every node in the tree and
@@ -182,9 +182,6 @@ public:
 	virtual void startVisitMarket( const Market* aMarket, const int aPeriod ) = 0;
 	virtual void endVisitMarket( const Market* aMarket, const int aPeriod ) = 0;
 
-	virtual void startVisitMagiccModel( const MagiccModel* aMagiccModel, const int aPeriod ) = 0;
-	virtual void endVisitMagiccModel( const MagiccModel* aMagiccModel, const int aPeriod ) = 0;
-
     virtual void startVisitGDP( const GDP* aGDP, const int aPeriod ) = 0;
     virtual void endVisitGDP( const GDP* aGDP, const int aPeriod ) = 0;
 	
@@ -199,6 +196,9 @@ public:
 
     virtual void startVisitAgSector( const AgSector* aAgSector, const int aPeriod ) = 0;
     virtual void endVisitAgSector( const AgSector* aAgSector, const int aPeriod ) = 0;
+
+    virtual void startVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ) = 0;
+    virtual void endVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ) = 0;
 };
 
 IVisitor::~IVisitor(){

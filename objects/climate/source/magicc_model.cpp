@@ -602,8 +602,8 @@ void MagiccModel::printDBOutput() const {
 * \todo Add a function to the magicc library to get the temperature.
 */
 void MagiccModel::accept( IVisitor* aVisitor, const int aPeriod ) const {
-    aVisitor->startVisitMagiccModel( this, aPeriod );
-    aVisitor->endVisitMagiccModel( this, aPeriod );
+    aVisitor->startVisitClimateModel( this, aPeriod );
+    aVisitor->endVisitClimateModel( this, aPeriod );
 }
 
 /*! \brief Return the name of the XML node for this object.

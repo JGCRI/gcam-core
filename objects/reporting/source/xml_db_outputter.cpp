@@ -591,7 +591,7 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     /*! \pre The function should always be called with the all period output. */
     assert( aPeriod == -1 );
     // Write the opening tag.
-    XMLWriteOpeningTag( MagiccModel::getXMLNameStatic(), mBuffer, mTabs.get() );
+    XMLWriteOpeningTag( "climate-model", mBuffer, mTabs.get() );
 
     // Write the concentrations for the request period.
     for( int per = 0; per < scenario->getModeltime()->getmaxper(); ++per ){
@@ -602,7 +602,7 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
 
 void XMLDBOutputter::endVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ){
     // Write the closing tag.
-    XMLWriteClosingTag( MagiccModel::getXMLNameStatic(), mBuffer, mTabs.get() );
+    XMLWriteClosingTag( "climate-model", mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitDemographic( const Demographic* aDemographic, const int aPeriod ){
