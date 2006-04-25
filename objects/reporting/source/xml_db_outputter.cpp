@@ -338,6 +338,13 @@ void XMLDBOutputter::startVisitSubResource( const SubResource* aSubResource,
     // Write the opening subresource tag and the type of the base class.
     XMLWriteOpeningTag( aSubResource->getXMLName(), mBuffer, mTabs.get(),
         aSubResource->getName(), 0, "subresource" );
+
+    // Write out annual production.
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int per = 0; per < modeltime->getmaxper(); ++per ){
+        XMLWriteElement( aSubResource->getAnnualProd( per ), "production", mBuffer, mTabs.get(),
+                         modeltime->getper_to_yr( per ) );
+    }
 }
 
 void XMLDBOutputter::endVisitSubResource( const SubResource* aSubResource,
