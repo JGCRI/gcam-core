@@ -78,6 +78,8 @@ public class QueryGenerator {
 			qb = new CostCurveQueryBuilder(this);
 		} else if(queryIn.getNodeName().equals(GDPQueryBuilder.xmlName)) {
 			qb = new GDPQueryBuilder(this);
+		} else if(queryIn.getNodeName().equals(ClimateQueryBuilder.xmlName)) {
+			qb = new ClimateQueryBuilder(this);
 		} else {
 			qb = null;
 		}
@@ -169,6 +171,7 @@ public class QueryGenerator {
 		typeMap.put("Emissions", new Boolean(false));
 		typeMap.put("Cost Curves", new Boolean(false));
 		typeMap.put("GDP", new Boolean(false));
+		typeMap.put("Climate", new Boolean(false));
 		typeMap.put("Query Group", new Boolean(false));
 		final Vector types = new Vector(typeMap.keySet().size(), 0);
 		for(int i = 0; i < types.capacity(); ++i) {
@@ -323,6 +326,10 @@ public class QueryGenerator {
 							}
 							case 6: {
 									types.set(selInd, new GDPQueryBuilder(thisGen));
+									break;
+							}
+							case 7: {
+									types.set(selInd, new ClimateQueryBuilder(thisGen));
 									break;
 							}
 							default: {
