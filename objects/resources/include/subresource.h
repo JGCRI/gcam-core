@@ -39,11 +39,11 @@ public:
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void cumulsupply(double prc,int per);
-    double getPrice(int per);
-    double getCumulProd(int per);
+    double getPrice(int per) const;
+    double getCumulProd(int per) const;
     virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
-    double getAnnualProd(int per);
-    double getAvailable(int per);
+    double getAnnualProd(int per) const;
+    double getAvailable(int per) const;
     void dbOutput( const std::string& regname, const std::string& secname); 
     void csvOutputFile(const std::string &regname, const std::string& sname); 
     void updateAvailable( const int period );

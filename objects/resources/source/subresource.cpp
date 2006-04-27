@@ -262,7 +262,7 @@ string SubResource::getName() const {
     return name;
 }
 
-double SubResource::getPrice(int per){
+double SubResource::getPrice(int per) const {
     return rscprc[per] ;
 }
 
@@ -348,7 +348,7 @@ void SubResource::cumulsupply(double prc,int per){
     //available[per]=available[0]-cumulprod[per];
 }
 
-double SubResource::getCumulProd(int per){
+double SubResource::getCumulProd(int per) const {
     return cumulprod[per];
 }
 
@@ -433,7 +433,7 @@ void SubResource::annualsupply( int per, const GDP* gdp, double price, double pr
 }
 
 //! return annual production for period
-double SubResource::getAnnualProd(int per){
+double SubResource::getAnnualProd(int per) const {
     return annualprod[per];
 }
 
@@ -452,7 +452,7 @@ void SubResource::accept( IVisitor* aVisitor, const int aPeriod ) const {
 }
 
 //! return available resource for period
-double SubResource::getAvailable(int per){
+double SubResource::getAvailable(int per) const {
     return available[per];
 }
 
