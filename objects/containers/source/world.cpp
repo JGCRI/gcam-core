@@ -205,9 +205,15 @@ void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     scenario->getMarketplace()->toDebugXML( period, out, tabs );
 
-    for( CRegionIterator i = regions.begin(); i == regions.begin(); i++ ) { 
-        ( *i )->toDebugXML( period, out, tabs );
+    // Only print debug XML information for the specified region to avoid
+    // unmanagably large XML files.
+    const static string debugRegion = Configuration::getInstance()->getString( "debug-region", "USA" );
+    for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ) {
+        if( ( *i )->getName() == debugRegion ){
+            ( *i )->toDebugXML( period, out, tabs );
+        }
     }
+
     // Climate model parameters
     if ( !mClimateModel.get() ) {
         mClimateModel->toDebugXML( period, out, tabs );
@@ -359,10 +365,10 @@ void World::calc( const int aPeriod, const AtomVector& aRegionsToCalc ) {
     // Get the list of valid region numbers to solve.
     const vector<unsigned int> regionNumbersToCalc = getRegionIndexesToCalculate( aRegionsToCalc );
 
-    /*! \invariant The number of regions to calculate must be between 1 and the
+    /*! \invariant The number of regions to calculate must be between 0 and the
     *              number of regions inclusive. 
     */
-    assert( regionNumbersToCalc.size() > 0 && regionNumbersToCalc.size() <= regions.size() );
+    assert( regionNumbersToCalc.size() <= regions.size() );
 
     // Increment the world.calc count based on the number of regions to solve. 
     if( calcCounter ){
@@ -676,10 +682,10 @@ const vector<unsigned int> World::getRegionIndexesToCalculate( const AtomVector&
         }
     }
 
-    /*! \post The number of regions to calculate is between one and the total
+    /*! \post The number of regions to calculate is between 0 and the total
     *         number of regions inclusive.
     */
-    assert( !regionNumbersToCalc.empty() && regionNumbersToCalc.size() <= regions.size() );
+    assert( regionNumbersToCalc.size() <= regions.size() );
 
     return regionNumbersToCalc;
 }
