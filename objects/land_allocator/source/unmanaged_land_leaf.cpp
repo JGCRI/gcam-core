@@ -213,6 +213,8 @@ void UnmanagedLandLeaf::calcEmission( const string& aRegionName,
         // Create a temporary primary output. This is rather hackish to get
         // around the GHG interface being designed for Technologies.
         PrimaryOutput landOutput( name );
+        landOutput.initCalc( aRegionName, aPeriod );
+        landOutput.setPhysicalOutput( 0, aRegionName, aPeriod );
         vector<IOutput*> outputs;
         outputs.push_back( &landOutput ); 
         mGHGs[ j ]->calcEmission( aRegionName, name, input, outputs, aGDP, aPeriod );
