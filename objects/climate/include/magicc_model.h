@@ -32,6 +32,10 @@ class IVisitor;
 *          those values to a file and calls MAGICC to calculate climate
 *          parameters. A subset of those output can then be written by this
 *          wrapper to the database and a CSV file.
+* \note It is possible to run MAGICC using the Objects framework without running
+*       the economic model. This is done by reading in a scenario container with
+*       only a modeltime object and an empty world object. It will run off the
+*       values in the input_gases.emk file.
 * \author Josh Lurz
 */
 
