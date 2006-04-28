@@ -4,7 +4,7 @@
 #pragma once
 #endif
 
-/*! 
+/*!
 * \file util.h  
 * \ingroup Objects
 * \brief A set of commonly used functions.
@@ -24,6 +24,14 @@
 #include <map>
 #include <vector>
 #include <cassert>
+#include "util/base/include/time_vector.h"
+
+// Boost static asserts do not work when included from multiple namespaces.
+// Seperate them into their own unique namespace.
+namespace conditionsCheck {
+    BOOST_STATIC_ASSERT( std::numeric_limits<double>::has_quiet_NaN );
+    BOOST_STATIC_ASSERT( std::numeric_limits<double>::has_infinity );
+}
 
 namespace util {
     
@@ -129,10 +137,9 @@ namespace util {
     */
     template <class T>
     inline bool isValidNumber( const T aNumber ) {
-        BOOST_STATIC_ASSERT( std::numeric_limits<T>::has_quiet_NaN );
-        BOOST_STATIC_ASSERT( std::numeric_limits<T>::has_infinity );
-        return aNumber != std::numeric_limits<T>::quiet_NaN() && aNumber
-!= std::numeric_limits<T>::infinity();
+        // Need to check whether the type supports not-a-number and infinity.
+        return ( !std::numeric_limits<T>::has_quiet_NaN || aNumber != std::numeric_limits<T>::quiet_NaN() )
+            && ( !std::numeric_limits<T>::has_infinity || aNumber != std::numeric_limits<T>::infinity() );
     }
 
     /*!\brief This is a template function which compares two values. 
@@ -306,6 +313,21 @@ namespace util {
         converter.clear();
         return output;
     }
+
+    /*!
+     * \brief Convert a PeriodVector into a std::vector.
+     * \param aPeriodVector Period vector to convert.
+     * \return Vector equivalent to the period vector.
+     */
+    template<class T>
+        std::vector<T> convertToVector( const objects::PeriodVector<T>& aPeriodVector ){
+            std::vector<T> convVector( aPeriodVector.size() );
+            for( unsigned int i = 0; i < aPeriodVector.size(); ++i ){
+                convVector[ i ] = aPeriodVector[ i ];
+            }
+            return convVector;
+        }
+
 
    long createMinicamRunID( const time_t& aTime );
    std::string XMLCreateDate( const time_t& time );
