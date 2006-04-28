@@ -175,24 +175,27 @@ void ForestDemandSector::aggdemand( const GDP* gdp, const int period ) {
     if ( period > 0 ) {
         // Here, the priceRatio is calculated from the price this period over the the price in 1990
         const int normPeriod = modeltime->getyr_to_per( 1990 );
-        double priceRatio = getPrice( period ) / getPrice( normPeriod );
+        double currPriceRatio = getPrice( period ) / getPrice( normPeriod );
+        // TODO: Should this have error checking as below?
+
         // The priceRatio is then passed in to calculate demand.
-        forestDemand = calcForestDemand ( gdp, period, normPeriod, priceRatio );
+        forestDemand = calcForestDemand ( gdp, period, normPeriod, currPriceRatio );
 
         // Here, the priceRatio needs the prices from the future market of this product, not this market.
         double basePrice = marketplace->getPrice( prefix + demandedGoodName, regionName, normPeriod );
-        if ( basePrice == 0 ) {
+        double futurePriceRatio;
+        if ( basePrice < util::getSmallNumber() ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Invalid Future Forest Price of " << basePrice << " in region " << regionName << "." << endl;
-            priceRatio = 1;
+            mainLog << "Invalid future forest price of " << basePrice << " in region " << regionName << "." << endl;
+            futurePriceRatio = 1;
         }
         else {
-         priceRatio = marketplace->getPrice( prefix + demandedGoodName, regionName, period ) / basePrice;
+            futurePriceRatio = marketplace->getPrice( prefix + demandedGoodName, regionName, period ) / basePrice;
         }
 
         // The priceRatio is then passed in to calculate demand.
-        forestDemandFuture = calcForestDemand ( gdp, (period + future), normPeriod, priceRatio );
+        forestDemandFuture = calcForestDemand ( gdp, (period + future), normPeriod, futurePriceRatio );
 
         // calculate cummulative technical change using AEEI, autonomous end-use energy intensity
         techChangeCumm[period] = techChangeCumm[period-1]*pow(1+aeei[period],modeltime->gettimestep(period));
@@ -214,6 +217,11 @@ void ForestDemandSector::aggdemand( const GDP* gdp, const int period ) {
 }
 
 double ForestDemandSector::calcForestDemand ( const GDP* gdp, const int period, const int normPeriod, double priceRatio ) {
+    
+    // If the current trial market price is zero the price ratio will be zero.
+    // Set this to a small number to prevent invalid numbers.
+    priceRatio = max( priceRatio, util::getSmallNumber() );
+
 	// TODO -- pass in proper price ratio (for future forest, or today's forest)    
     int modelPeriod = period;
 	const Modeltime* modeltime = scenario->getModeltime();
@@ -233,6 +241,8 @@ double ForestDemandSector::calcForestDemand ( const GDP* gdp, const int period, 
 	double forestDemand = perCapitaBaseOutput * pow(priceRatio, pElasticity[ modelPeriod ] )
                           *pow(scaledGDPperCap,iElasticity[ modelPeriod ])
                           * population;
+
+    assert( util::isValidNumber( forestDemand ) );
 
 	return forestDemand;
 }
