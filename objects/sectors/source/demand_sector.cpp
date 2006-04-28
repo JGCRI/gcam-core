@@ -257,6 +257,8 @@ to equal the total Sector output.
 * \param gdp GDP object uses to calculate various types of GDPs.
 */
 void DemandSector::setOutput( const double demand, const GDP* gdp, const int period ) {
+    assert( util::isValidNumber( demand ) && demand >= 0 );
+
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         // set subsector output from Sector demand
         subsec[ i ]->setOutput( demand, gdp, period );
@@ -440,6 +442,7 @@ void DemandSector::aggdemand( const GDP* gdp, const int period ) {
     // demand sector output is total end-use sector demand for service
     // adjust demand using cummulative technical change
     assert( techChangeCumm[ period ] > 0 );
+    assert( util::isValidNumber( serviceDemand ) && serviceDemand >= 0 );
     service[ period ] = serviceDemand / techChangeCumm[ period ];
 
     // sets subsector outputs, technology outputs, and market demands
