@@ -634,6 +634,8 @@ int MagiccModel::getGasIndex( const string& aGasName ) const {
 * \details This function reads in the initial values for each gas from an input
 *          file specified by the configuration file.
 * \warning input file data lines must end in a ","
+* \warning The model currently assumes that all input files are in terms of model periods.
+* \todo make routine more general to interpolate between read-in periods if necessary to get model data
 */
 void MagiccModel::readFile(){
     // Open up the file with all the gas data and read it in.
@@ -650,8 +652,16 @@ void MagiccModel::readFile(){
     }
     
     // Now read in all the gases. 
+    int year;
     for ( unsigned int period = 0; period < static_cast<unsigned int>( mModeltime->getmaxper() - 1 ); ++period ) {
-        inputGasFile.ignore( 80, ',' ); // skip year column
+        inputGasFile >> year;
+        inputGasFile.ignore( 80, ',' ); // skip comma
+        if ( year != mModeltime->getper_to_yr( period + 1 ) && year < mModeltime->getEndYear() ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Invalid Year: " << year << " found while parsing MAGICC input file " << gasFileName.c_str() << endl;
+        }
+        
         // Loop through all the gases.
         for( unsigned int gasNumber = 0; gasNumber < getNumGases(); ++gasNumber ){
             inputGasFile >> mEmissionsByGas[ gasNumber ][ period ];
