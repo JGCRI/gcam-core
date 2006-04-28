@@ -4,32 +4,26 @@
 #pragma once
 #endif
 
-/*! 
+/*!
 * \file forest_production_technology.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The ForestProductionTechnology class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */  
 
 #include <xercesc/dom/DOMNode.hpp>
 
 #include "technologies/include/food_production_technology.h"
+#include "util/base/include/value.h"
 
 // Forward declaration
 class Tabs;
 class DependencyFinder;
 
 /*! 
-* \ingroup CIAM
-* \brief This technology class is based on the MiniCAM description of technology.
-*
-* The technology class is where all fuels are either consumed or transformed. The default technology class is 
-* based on a MiniCAM-style logit representation. This class has options for capacity limits, calibration, 
-* and fixed output technologies (for supply sectors) -- although these capabilities depend on interaction with 
-* the sub-sector and sector classes. 
-*
+* \ingroup Objects
+* \brief Forest production technology.
+* \details TODO
 * \author James Blackwood
 */
 
@@ -67,10 +61,14 @@ protected:
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 private:
     double interestRate;
-    int rotationPeriod; //!< rotation period for forests
-    double futureProduction;
-    double forestLandAside;
-    static const std::string prefix;
+
+    // TODO: Rename this to years.
+    //! Cached rotation period for forests.
+    unsigned int mRotationPeriod;
+
+    //! Specified calibrated value for future production of the technology.
+    Value mFutureProduction;
+
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     void setCalLandValues( );
@@ -79,7 +77,7 @@ private:
                                    const std::string& aProductName,
                                    const int aPeriod ) const;
 
-    double calcDiscountFactor() const;
+    virtual double calcDiscountFactor() const;
 
     int getHarvestPeriod( const int aCurrentPeriod ) const;
 

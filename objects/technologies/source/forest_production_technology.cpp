@@ -1,10 +1,8 @@
-/*! 
+/*!
 * \file forest_production_technology.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief ForestProductionTechnology class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "technologies/include/forest_production_technology.h"
@@ -19,18 +17,12 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const string ForestProductionTechnology::prefix = "Future";
-
-// Technology class method definition
 
 //! Constructor.
 ForestProductionTechnology::ForestProductionTechnology(){
     // TODO: 0.02 should not be a default value.
     interestRate = 0.02;
-    forestLandAside = 0;
-    rotationPeriod = 0;
-    futureProduction = -1;
+    mRotationPeriod = 0;
 }
 
 // ! Destructor
@@ -39,13 +31,11 @@ ForestProductionTechnology::~ForestProductionTechnology() {
 
 //! Parses any input variables specific to derived classes
 bool ForestProductionTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    const Modeltime* modeltime = scenario->getModeltime();
-    
     if( nodeName == "interestRate" ) {
         interestRate = XMLHelper<int>::getValue( curr );
     }
     else if( nodeName == "futureProduction" ) {
-        futureProduction = XMLHelper<double>::getValue( curr );
+        mFutureProduction = XMLHelper<double>::getValue( curr );
     }
     else if( !FoodProductionTechnology::XMLDerivedClassParse(nodeName, curr)) {
         return false;
@@ -56,14 +46,16 @@ bool ForestProductionTechnology::XMLDerivedClassParse( const string& nodeName, c
 //! write object to xml output stream
 void ForestProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     FoodProductionTechnology::toInputXMLDerived( out, tabs);
-    XMLWriteElementCheckDefault( futureProduction, "futureProduction", out, tabs, -1.0 );
+    if( mFutureProduction.isInited() ){
+        XMLWriteElement( mFutureProduction, "futureProduction", out, tabs );
+    }
     XMLWriteElementCheckDefault( interestRate, "interestRate", out, tabs, 0.02 );
 }
 
 //! write object to xml output stream
 void ForestProductionTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     FoodProductionTechnology::toDebugXMLDerived( period, out, tabs);
-    XMLWriteElement( futureProduction, "futureProduction", out, tabs );
+    XMLWriteElement( mFutureProduction, "futureProduction", out, tabs );
     XMLWriteElement( interestRate, "interestRate", out, tabs );
 }
 
@@ -75,7 +67,7 @@ void ForestProductionTechnology::toDebugXMLDerived( const int period, ostream& o
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& ForestProductionTechnology::getXMLName1D() const {
+const string& ForestProductionTechnology::getXMLName1D() const {
     return getXMLNameStatic1D();
 }
 
@@ -88,7 +80,7 @@ const std::string& ForestProductionTechnology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& ForestProductionTechnology::getXMLNameStatic1D() {
+const string& ForestProductionTechnology::getXMLNameStatic1D() {
     const static string XML_NAME = "ForestProductionTechnology";
     return XML_NAME;
 }
@@ -112,57 +104,23 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
                                            const Demographic* aDemographics,
                                            const int aPeriod )
 {
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // Only apply productivity change after 1990 since 1990 is calibrated year
-    // At present, however, it is necessary that the 1990 productivity change is
-    // equal to that for years between 1990 and the rotation period
-    if ( year > 1990 ) {
-        mLandAllocator->applyAgProdChange( landType, name, agProdChange, modeltime->getyr_to_per( year ) );
-    }
-
     // Set calibrated values to land allocator in case these were disrupted in previous period
     setCalLandValues();
 
-    Marketplace* marketplace = scenario->getMarketplace();
-    // TODO - The yield here should probably be the future yield, not the current year calibrationed yield.
-    if (( calObservedYield != -1 ) && ( year != modeltime->getEndYear() )){
-        double calPrice = marketplace->getMarketInfo( name, aRegionName, modeltime->getyr_to_per( year ), true )->getDouble( "calPrice", true );
-        double profitFactor = mLandAllocator->getCalAveObservedRate( "UnmanagedLand", modeltime->getyr_to_per( year ) ) / calcDiscountFactor();
-        double calVarCost = calPrice - profitFactor / calObservedYield;
-        if ( calVarCost > 0 ) {
-            variableCost = calVarCost;
-            marketplace->getMarketInfo( name, aRegionName, ( modeltime->getyr_to_per( year ) + 1 ), true )->setDouble( "calVarCost", calVarCost );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Read in value for calPrice in " << aRegionName << " " << name << " is too low by:" << 0 - calVarCost << endl;
-            marketplace->getMarketInfo( name, aRegionName, ( modeltime->getyr_to_per( year ) + 1 ), true )->setDouble( "calVarCost", calVarCost );
-        }
+    FoodProductionTechnology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
+                                        aDemographics, aPeriod );
 
-        if ( calProduction != -1 ) {
-            // Set calibration information to marketplace for reporting purposes
-            IInfo* marketInfo = marketplace->getMarketInfo( aSectorName, aRegionName, modeltime->getyr_to_per( year ) , true );
+    if ( calObservedYield != -1 && calProduction != -1 && mFutureProduction.isInited() ) {
+        Marketplace* marketplace = scenario->getMarketplace();
 
-            // Also set value to marketplace for future forest demand if there are no price effects
-            marketInfo = marketplace->getMarketInfo( prefix + aSectorName, aRegionName, modeltime->getyr_to_per( year ) , true );
-            double existingDemand = max( marketInfo->getDouble( "calSupply", false ), 0.0 );
-            marketInfo->setDouble( "calSupply", existingDemand + futureProduction );
-        }
+        // Also set value to marketplace for future forest demand if there are no price effects
+        IInfo* futureMarketInfo = marketplace->getMarketInfo( getFutureMarket( aSectorName ),
+                                                              aRegionName, aPeriod , true );
+
+        double existingSupply = max( futureMarketInfo->getDouble( "calSupply", false ), 0.0 );
+
+        futureMarketInfo->setDouble( "calSupply", existingSupply + mFutureProduction );
     }
-    else {
-        double calVarCost = marketplace->getMarketInfo( name, aRegionName, ( modeltime->getyr_to_per( year ) ), true )->getDouble( "calVarCost", false );
-        if ( year  != modeltime->getEndYear( ) ) {
-            marketplace->getMarketInfo( name, aRegionName, ( modeltime->getyr_to_per( year ) + 1 ), true )->setDouble( "calVarCost", calVarCost );
-        }
-        if ( calVarCost > 0 ) {
-            variableCost = calVarCost;
-        }
-    }
-
-    technology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
-                          aDemographics, aPeriod );
 }
 
 /*!
@@ -186,7 +144,7 @@ void ForestProductionTechnology::completeInit( const string& aSectorName,
     mLandAllocator = aLandAllocator;
 
     // Set rotation period variable so this can be used throughout object
-    rotationPeriod = aSubsectorInfo->getInteger( "rotationPeriod", true );
+    mRotationPeriod = aSubsectorInfo->getInteger( "rotationPeriod", true );
 
     // Setup the land usage for this production. Only add land usage once for
     // all technologies, of a given type. TODO: This is error prone if
@@ -213,7 +171,7 @@ void ForestProductionTechnology::completeInit( const string& aSectorName,
 void ForestProductionTechnology::setCalLandValues() {
     const Modeltime* modeltime = scenario->getModeltime();
     int timestep = modeltime->gettimestep( modeltime->getyr_to_per(year));
-    int nRotPeriodSteps = rotationPeriod / timestep;
+    int nRotPeriodSteps = mRotationPeriod / timestep;
 
     // -1 means not read in
     if (( calProduction != -1 ) && ( calYield != -1 )) {
@@ -222,7 +180,7 @@ void ForestProductionTechnology::setCalLandValues() {
         double calProductionTemp = calProduction;
         double calYieldTemp = calYield;
         int period = modeltime->getyr_to_per(year);
-        if ( futureProduction == -1 ) {
+        if ( !mFutureProduction.isInited() ) {
             nRotPeriodSteps = 0;
         }
 
@@ -231,7 +189,7 @@ void ForestProductionTechnology::setCalLandValues() {
             // periods. Or demand that productivity change is the same for all
             // calibration periods (could test in applyAgProdChange)
             if ( i > period ) {
-                calProductionTemp += ( futureProduction - calProduction ) / nRotPeriodSteps;
+                calProductionTemp += ( mFutureProduction - calProduction ) / nRotPeriodSteps;
                 calYieldTemp = calYield * pow( 1 + agProdChange, double( timestep * ( i - 1 ) ) );
             }
 
@@ -264,9 +222,6 @@ void ForestProductionTechnology::calcShare( const string& aRegionName,
                                             const int aPeriod )
 {
     double profitRate = calcProfitRate( aRegionName, getFutureMarket( aSectorName ), aPeriod );
-
-    profitRate = max( profitRate, 0.0 );
-
     mLandAllocator->setIntrinsicRate( aRegionName, landType, name, profitRate, aPeriod );
     
     // Forest production technologies are profit based, so the amount of output
@@ -301,7 +256,8 @@ void ForestProductionTechnology::production( const string& aRegionName,
 
     // Calculating the yield for future forest.
     const int harvestPeriod = getHarvestPeriod( aPeriod );
-    mLandAllocator->calcYield( landType, name, profitRate, harvestPeriod, aPeriod );
+    mLandAllocator->calcYield( landType, name, aRegionName,
+                               profitRate, harvestPeriod, aPeriod );
     
     // Add the supply of future forestry to the future market.
     double futureSupply = calcSupply( aRegionName, aSectorName, harvestPeriod );
@@ -312,9 +268,11 @@ void ForestProductionTechnology::production( const string& aRegionName,
     // periods ago).
     double primaryOutput = calcSupply( aRegionName, aSectorName, aPeriod );
    
-    // Set the input to be the land used.
+    // Set the input to be the land used. TODO: Determine a way to improve this.
+    // This would be wrong if the fuelname had an emissions coefficient, or if
+    // there were a fuel or other input. When multiple inputs are complete there
+    // should be a specific land input.
     input = mLandAllocator->getLandAllocation( aSectorName, aPeriod );
-
     calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 }
 
@@ -343,11 +301,13 @@ double ForestProductionTechnology::calcProfitRate( const string& aRegionName,
     return netPresentValue;
 }
 
-/*! \brief Calculate the factor to discount between the present period and the harvest period.
+/*! \brief Calculate the factor to discount between the present period and the
+*          harvest period.
 * \return The discount factor.
 */
 double ForestProductionTechnology::calcDiscountFactor() const {
-    return interestRate / ( pow( 1 + interestRate, rotationPeriod ) - 1 );
+    assert( mRotationPeriod > 0 );
+    return interestRate / ( pow( 1 + interestRate, static_cast<int>( mRotationPeriod ) ) - 1 );
 }
 
 /*! \brief Get the period in which the crop will be harvested if planted in the
@@ -357,7 +317,7 @@ double ForestProductionTechnology::calcDiscountFactor() const {
 */
 int ForestProductionTechnology::getHarvestPeriod( const int aCurrentPeriod ) const {
     const Modeltime* modeltime = scenario->getModeltime();
-    return aCurrentPeriod + rotationPeriod / modeltime->gettimestep( modeltime->getyr_to_per( year ) );
+    return aCurrentPeriod + mRotationPeriod / modeltime->gettimestep( modeltime->getyr_to_per( year ) );
 }
 
 /*! \brief Get the future market for a given product name.
@@ -365,5 +325,5 @@ int ForestProductionTechnology::getHarvestPeriod( const int aCurrentPeriod ) con
 * \return Name of the future market.
 */
 const string ForestProductionTechnology::getFutureMarket( const string& aProductName ) const {
-    return prefix + aProductName;
+    return "Future" + aProductName;
 }
