@@ -1,10 +1,8 @@
 /*! 
 * \file forest_supply_subsector.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief ForestSupplySubsector class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
