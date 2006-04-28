@@ -606,8 +606,6 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     for( int year = scenario->getModeltime()->getStartYear(); year <= endingYear; year += outputInterval ){
         XMLWriteElement( aClimateModel->getConcentration( "CO2", year ), "co2-concentration",
                          mBuffer, mTabs.get(), year );
-                         
-                         cout << "CO2 conc year: " << year << endl;
     }
 
     // Write total radiative forcing
