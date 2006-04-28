@@ -1,10 +1,8 @@
-/*! 
+/*!
 * \file forest_supply_sector.cpp
 * \ingroup Objects
 * \brief ForestSupplySector class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -23,13 +21,11 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const string ForestSupplySector::prefix = "Future"; 
 
 /*! \brief Constructor.
 * \author James Blackwood
 */
-ForestSupplySector::ForestSupplySector( std::string& aRegionName )
+ForestSupplySector::ForestSupplySector( string& aRegionName )
 : FoodSupplySector( aRegionName ) {
 }
 
@@ -84,10 +80,15 @@ void ForestSupplySector::setMarket() {
     const Modeltime* modeltime = scenario->getModeltime();
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
 
-    vector <double> tempCalPrice;
-    tempCalPrice.resize( modeltime->getmaxper(), calPrice / CVRT90 ); // market prices are in $1975
+    // TODO: With units framework we can allow prices to be in $1990.
+    vector<double> tempCalPrice( modeltime->getmaxper(), calPrice / CVRT90 ); // market prices are in $1975
+
+    // Create the current forest market.
     if ( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
-        marketplace->setPriceVector( name, regionName, tempCalPrice  );
+        marketplace->setPriceVector( name, regionName, tempCalPrice );
+        // Do not solve the period 1 market in forestry because supply is
+        // inelastic due to predetermined stock and demand is inelastic because
+        // there is no price elasticity.
         for( int per = 2; per < modeltime->getmaxper(); ++per ){
             marketplace->setMarketToSolve( name, regionName, per );
         }
@@ -95,11 +96,22 @@ void ForestSupplySector::setMarket() {
             marketplace->getMarketInfo( name, regionName, per, true )->setDouble( "calPrice", calPrice );
         }
     }
-    if ( marketplace->createMarket( regionName, mMarketName, prefix + name, IMarketType::NORMAL ) ) {
-        marketplace->setPriceVector( prefix + name, regionName, tempCalPrice );
+
+    // Create the future forest market.
+    const string futureMarket = getFutureMarket();
+    if ( marketplace->createMarket( regionName, mMarketName, futureMarket, IMarketType::NORMAL ) ) {
+        marketplace->setPriceVector( futureMarket, regionName, tempCalPrice );
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
-            marketplace->getMarketInfo( prefix + name, regionName, per, true )->setDouble( "calPrice", calPrice );
-            marketplace->setMarketToSolve( prefix + name, regionName, per );
+            marketplace->setMarketToSolve( futureMarket, regionName, per );
         }
     }
 }
+
+/*!
+ * \brief Get the name of the future market for forestry.
+ * \return The name of the future market.
+ */
+const string ForestSupplySector::getFutureMarket() const {
+    return "Future" + name;
+}
+

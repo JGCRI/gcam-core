@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The ForestSupplySector class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
@@ -28,10 +26,10 @@ protected:
 	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 	virtual const std::string& getXMLName() const;
 private:
-	static const std::string prefix;
-
     //! Name of the market for the good.
     std::string mMarket;
+
+    const std::string getFutureMarket() const;
 };
 
 #endif // _FOREST_SUPPLY_SECTOR_H_
