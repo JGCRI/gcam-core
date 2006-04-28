@@ -1,14 +1,13 @@
 /*! 
-* \file aland_allocator_item.cpp
-* \ingroup Objects
-* \brief ALandAllocatorItem class source file.
-* \author James Blackwood
-*/
+ * \file aland_allocator_item.cpp
+ * \ingroup Objects
+ * \brief ALandAllocatorItem class source file.
+ * \author James Blackwood
+ */
 
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "land_allocator/include/aland_allocator_item.h"
-#include "util/base/include/summary.h"
 #include "containers/include/scenario.h"
 
 using namespace std;
@@ -19,17 +18,12 @@ extern Scenario* scenario;
 /*! \brief Constructor.
 * \author James Blackwood
 */
-ALandAllocatorItem::ALandAllocatorItem(){
-    const Modeltime* modeltime = scenario->getModeltime();
-    int maxper = modeltime->getmaxper();
-    share.resize( maxper );
-    landAllocation.resize( maxper );
-    intrinsicRate.resize( maxper );
-    summary.resize( maxper );
+ALandAllocatorItem::ALandAllocatorItem()
+{
 }
 
 //! Default destructor
-ALandAllocatorItem::~ALandAllocatorItem( ) {
+ALandAllocatorItem::~ALandAllocatorItem() {
 }
 
 /*! \brief Set data members from XML input
@@ -37,18 +31,18 @@ ALandAllocatorItem::~ALandAllocatorItem( ) {
 * \author James Blackwood
 * \param node pointer to the current node in the XML input tree
 */
-void ALandAllocatorItem::XMLParse( const DOMNode* node ){
+void ALandAllocatorItem::XMLParse( const DOMNode* aNode ){
 
     // assume we are passed a valid node.
-    assert( node );
+    assert( aNode );
     
     // Set the node name.
-    name = XMLHelper<string>::getAttr( node, "name" );
+    mName = XMLHelper<string>::getAttr( aNode, "name" );
 
     // get all the children.
-    DOMNodeList* nodeList = node->getChildNodes();
+    DOMNodeList* nodeList = aNode->getChildNodes();
     
-    for( unsigned int i = 0;  i < nodeList->getLength(); ++i ){
+    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
         const DOMNode* curr = nodeList->item( i );
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
@@ -56,7 +50,7 @@ void ALandAllocatorItem::XMLParse( const DOMNode* node ){
             continue;
         }
         else if( nodeName == "landAllocation" ) {
-            XMLHelper<double>::insertValueIntoVector( curr, landAllocation, scenario->getModeltime() ); 
+            XMLHelper<double>::insertValueIntoVector( curr, mLandAllocation, scenario->getModeltime() ); 
         }
         else if ( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -70,25 +64,29 @@ void ALandAllocatorItem::XMLParse( const DOMNode* node ){
 /*! \brief Sets the name of this ALandAllocatorItem.
 * \author James Blackwood
 */
-void ALandAllocatorItem::setName( const string& nameIn ) {
-    name = nameIn;
+void ALandAllocatorItem::setName( const string& aName ) {
+    mName = aName;
 }
 
 /*! \brief This method is called from the node version of calcLandShares and it
 *          normalizes each share.
-* \param sum The sum of all the children's shares before normalization.
+* \param aSum The sum of all the children's shares before normalization.
 * \author James Blackwood
 */
-void ALandAllocatorItem::normalizeLandAllocation( double sum, int period ) {
-    share[ period ] /= sum;
+void ALandAllocatorItem::normalizeLandAllocation( const double aSum,
+                                                  const int aPeriod )
+{
+    assert( aSum >= util::getSmallNumber() );
+    mShare[ aPeriod ] /= aSum;
+    assert( util::isValidNumber( mShare[ aPeriod ] ) );
 }
 
 /*! \brief Returns the share of this land type at a given period.
 * \param period the time period.
 * \author James Blackwood
 */
-double ALandAllocatorItem::getShare ( int period ) {
-    return share[ period ];
+double ALandAllocatorItem::getShare( const int aPeriod ) const {
+    return mShare[ aPeriod ];
 }
 
 /*! \brief Returns the name.
@@ -96,29 +94,29 @@ double ALandAllocatorItem::getShare ( int period ) {
 * \return the name of this ALandAllocatorItem
 */
 const string& ALandAllocatorItem::getName() const {
-    return name;
+    return mName;
 }
 
 /*! \brief Write datamembers to datastream in XML format for debugging purposes.  
 * Calls XMLWriteElement function from the XMLHelper class for the actual
 * writing. Calls debug functions in other contained objects. 
 *
-* \param period Model time period
-* \param out Output file for debugging purposes in XML format
-* \param tabs Tabs object used to track the number of tabs to print.
+* \param aPeriod Model time period
+* \param aOut Output file for debugging purposes in XML format
+* \param aTabs Tabs object used to track the number of tabs to print.
 */
-void ALandAllocatorItem::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
+void ALandAllocatorItem::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     // write out basic datamembers
-    XMLWriteElement( intrinsicRate[ period ], "IntrinsicRate", out, tabs );
-    XMLWriteElement( landAllocation[ period ], "landAllocation", out, tabs );
+    XMLWriteElement( mIntrinsicRate[ aPeriod ], "IntrinsicRate", aOut, aTabs );
+    XMLWriteElement( mLandAllocation[ aPeriod ], "landAllocation", aOut, aTabs );
 
-    toDebugXMLDerived( period, out, tabs );
+    toDebugXMLDerived( aPeriod, aOut, aTabs );
     // Finished writing xml for the class members.
 
-    XMLWriteClosingTag( getXMLName(), out, tabs );
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 /*! \brief Write output to csv output file. 
@@ -133,7 +131,7 @@ void ALandAllocatorItem::csvOutput( const string& aRegionName ) const {
         string var4name,string var5name,string uname,vector<double> dout);
 
     // write land allocations for region
-    fileoutput3(aRegionName,name," "," ","Land Use","000Ha",landAllocation);
+    fileoutput3(aRegionName, mName," "," ","Land Use","000Ha", util::convertToVector( mLandAllocation ) );
 
 }
 
@@ -143,5 +141,5 @@ void ALandAllocatorItem::dbOutput( const string& aRegionName ) const {
         string uname,vector<double> dout);
 
     // write land allocations for region
-    dboutput4(aRegionName, "Land Allocation", name,"Land Use","000Ha",landAllocation);
+    dboutput4(aRegionName, "Land Allocation", mName,"Land Use","000Ha", util::convertToVector( mLandAllocation ) );
 }

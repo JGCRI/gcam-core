@@ -1,9 +1,9 @@
-/*! 
-* \file forest_land_leaf.cpp
-* \ingroup CIAM
-* \brief ForestLandLeaf class source file.
-* \author James Blackwood
-*/
+/*!
+ * \file forest_land_leaf.cpp
+ * \ingroup Objects
+ * \brief ForestLandLeaf class source file.
+ * \author James Blackwood
+ */
 
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/xml_helper.h"
@@ -20,12 +20,12 @@ extern Scenario* scenario;
 /*! \brief Default constructor.
 * \author James Blackwood
 */
-ForestLandLeaf::ForestLandLeaf(){
-    const Modeltime* modeltime = scenario->getModeltime();
-    int maxper = modeltime->getmaxper();
-    rotationPeriod = 0;
-    steps = -1;
-    landToBeHarvested.resize( maxper );
+ForestLandLeaf::ForestLandLeaf():
+mSteps( -1 ),
+// TODO: This needs improvement. This vector is resized again later, but values
+// are set before the resize.
+mLandToBeHarvested( scenario->getModeltime()->getmaxper() )
+{
 }
 
 //! Default destructor
@@ -54,14 +54,15 @@ void ForestLandLeaf::completeInit( const string& aRegionName,
                                    const IInfo* aRegionInfo )
 {
     const Modeltime* modeltime = scenario->getModeltime();
-    int maxper = modeltime->getmaxper();
 
-    rotationPeriod = aRegionInfo->getInteger( "rotationPeriod", true );
-    steps = rotationPeriod / modeltime->gettimestep(0);
+
+    int rotationPeriod = aRegionInfo->getInteger( "rotationPeriod", true );
+    mSteps = rotationPeriod / modeltime->gettimestep( 0 );
     
     // reset yield and land variables to be larger
-    yield.resize( maxper + steps );
-    landToBeHarvested.resize( maxper + steps );
+    int maxper = modeltime->getmaxper();
+    mYield.resize( maxper + mSteps );
+    mLandToBeHarvested.resize( maxper + mSteps );
 
     LandLeaf::completeInit( aRegionName, aRegionInfo );
 }
@@ -70,6 +71,9 @@ void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
                                          const double aLandAllocationAbove,
                                          const int aPeriod )
 {
+    // Check that the number of time steps is initializes.
+    assert( mSteps != -1 );
+
     // Call standard land allocation.
     LandLeaf::calcLandAllocation( aRegionName, aLandAllocationAbove, aPeriod );
 
@@ -77,16 +81,16 @@ void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
     // period and the constant rotation period. First calculate land already
     // allocated to be harvested in the future.
     double forestLandAside = 0;
-    for( int i = aPeriod + 1; i < aPeriod + steps; ++i ){
-        forestLandAside += landToBeHarvested[ i ];
+    for( int i = aPeriod + 1; i < aPeriod + mSteps; ++i ){
+        forestLandAside += mLandToBeHarvested[ i ];
     }
     
     // Calculate the amount of land to be harvested per year.
     const Modeltime* modeltime = scenario->getModeltime();
-    double annualizedLand = landAllocation[ aPeriod ] / modeltime->gettimestep( aPeriod );
+    double annualizedLand = mLandAllocation[ aPeriod ] / modeltime->gettimestep( aPeriod );
 
     // Store the land to be harvested in the future.
-    landToBeHarvested[ aPeriod + steps ] = max( annualizedLand - forestLandAside, 0.0 );
+    mLandToBeHarvested[ aPeriod + mSteps ] = max( annualizedLand - forestLandAside, 0.0 );
 }
 
 /*! \brief Return annual amount of land allocated to forest production
@@ -102,10 +106,10 @@ void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
 * \return annual amount of land allocated to forest production
 */
 double ForestLandLeaf::getLandAllocation( const string& aProductName,
-                                                   const int aPeriod ) const
+                                          const int aPeriod ) const
 {
-    if ( aProductName == name ) {
-        return landToBeHarvested[ aPeriod ];
+    if ( aProductName == mName ) {
+        return mLandToBeHarvested[ aPeriod ];
     }
     return 0;
 }
@@ -118,8 +122,10 @@ double ForestLandLeaf::getLandAllocation( const string& aProductName,
 * \author Steve Smith
 * \return the LandAllocation at this node
 */
-double ForestLandLeaf::getTotalLandAllocation( const string& productName, int period ) {
-    return LandLeaf::getLandAllocation( productName, period );
+double ForestLandLeaf::getTotalLandAllocation( const string& aProductName,
+                                               const int aPeriod ) const
+{
+    return LandLeaf::getLandAllocation( aProductName, aPeriod );
 }
 
 /*! 
@@ -143,42 +149,44 @@ void ForestLandLeaf::setCalLandAllocation( const string& aLandType,
                                            const int aCurrentPeriod )
 {
     const Modeltime* modeltime = scenario->getModeltime();
-    assert( aProductName == name );
-    landToBeHarvested[ aHarvestPeriod ] = aCalLandUsed;
+    assert( aProductName == mName );
+    mLandToBeHarvested[ aHarvestPeriod ] = aCalLandUsed;
  
    // Only add land to land allocation for future periods (current land is now free for reallocation)
     if ( aHarvestPeriod > aCurrentPeriod ) {
-        landAllocation[ aCurrentPeriod ] += aCalLandUsed * modeltime->gettimestep( aCurrentPeriod );
+        mLandAllocation[ aCurrentPeriod ] += aCalLandUsed * modeltime->gettimestep( aCurrentPeriod );
     }
     //reset land allocation if current period. KLUDGE. NEED TO FIX THIS. sjsTEMP
     // Problem occurs, for example, when this routine is called in 1975 and this value is set for 1990. 
     // In 1990 this value needs to be reset to zero. The fix below relies on this routine being called in order.
     // Need a better solution.
     else {
-        landAllocation[ aCurrentPeriod ] = 0;
+        mLandAllocation[ aCurrentPeriod ] = 0;
     }
 }
 
 /*! \brief Set calibrated observed yield for this land.
 *
 * Sets the calibrated observed yield for this land in through a passed in value.
-*
+* \todo Does this actually get called?
 * \author James Blackwood
 */
 void ForestLandLeaf::setCalObservedYield( const string& aLandType,
-                                                   const string& aProductName,
-                                                   const double aCalObservedYield,
-                                                   const int aPeriod )
+                                          const string& aProductName,
+                                          const double aCalObservedYield,
+                                          const int aPeriod )
 {
-    assert( aProductName == name );
-    calObservedYield[ aPeriod ] = yield[ aPeriod ] = aCalObservedYield;
+    assert( aProductName == mName );
+    mCalObservedYield[ aPeriod ] = mYield[ aPeriod ] = aCalObservedYield;
 }
 
-void ForestLandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-    LandLeaf::toDebugXMLDerived( period, out, tabs );
+void ForestLandLeaf::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
+    LandLeaf::toDebugXMLDerived( aPeriod, aOut, aTabs );
     // Write out land to be harvested into the future as well as it may change.
+    // This cannot use XMLWriteVector because this vector has more periods than
+    // the max.
     const Modeltime* modeltime = scenario->getModeltime();
-    for( int i = period; i < modeltime->getmaxper(); ++i ){
-        XMLWriteElement( landToBeHarvested[ i ], "landToBeHarvested", out, tabs, modeltime->getper_to_yr( i ) );
+    for( int i = aPeriod; i < modeltime->getmaxper(); ++i ){
+        XMLWriteElement( mLandToBeHarvested[ i ], "landToBeHarvested", aOut, aTabs, modeltime->getper_to_yr( i ) );
     }
 }

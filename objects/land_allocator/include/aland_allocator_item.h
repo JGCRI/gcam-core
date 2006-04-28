@@ -4,12 +4,12 @@
 #pragma once
 #endif
 
-/*! 
-* \file aland_allocator_item.h
-* \ingroup CIAM
-* \brief The ALandAllocatorItem class header file.
-* \author James Blackwood
-*/
+/*!
+ * \file aland_allocator_item.h
+ * \ingroup Objects
+ * \brief The ALandAllocatorItem class header file.
+ * \author James Blackwood
+ */
 
 #include <vector>
 #include <map>
@@ -17,6 +17,7 @@
 
 #include "containers/include/tree_item.h"
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/time_vector.h"
 
 // For LandUsageType enum.
 #include "land_allocator/include/iland_allocator.h"
@@ -28,30 +29,49 @@ class IInfo;
 class Tabs;
 class GDP;
 
-/*! \brief A single item in the land allocator tree.
-* \details This is the abstract base class of all nodes and leaves in the land
-*          allocation tree, including the root. It inherits from the TreeItem
-*          class so that it can make use of the tree library functions.
-*/
+/*!
+ * \brief A single item in the land allocator tree.
+ * \details This is the abstract base class of all nodes and leaves in the land
+ *          allocation tree, including the root. It inherits from the TreeItem
+ *          class so that it can make use of the tree library functions.
+ *
+ *          <b>XML specification for ALandAllocatorItem</b>
+ *          - XML name: \c None, derived classes have names.
+ *          - Contained by: TreeLandAllocator
+ *          - Parsing inherited from class: None
+ *          - Attributes: \c name ALandAllocator::mName
+ *          - Elements:
+ *              - \c landAllocation ALandAllocator::mLandAllocation
+ */
 class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
                            public IVisitable
 {
 public:
     ALandAllocatorItem();
+   
     virtual ~ALandAllocatorItem();
 
     // Tree Item methods.
     virtual size_t getNumChildren() const = 0;
+    
     virtual const ALandAllocatorItem* getChildAt( const size_t aIndex ) const = 0;
+    
     virtual ALandAllocatorItem* getChildAt( const size_t aIndex ) = 0;
     
-    void XMLParse( const xercesc::DOMNode* node );
-    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const = 0;
+    void XMLParse( const xercesc::DOMNode* aNode );
+    
+    void toDebugXML( const int aPeriod,
+                     std::ostream& aOut,
+                     Tabs* aTabs ) const;
+    
+    virtual void toInputXML( std::ostream& aOut,
+                             Tabs* aTabs ) const = 0;
     
     const std::string& getName() const;
-    void setName( const std::string& nameIn );
-    double getShare( int period );
+
+    void setName( const std::string& aName );
+
+    double getShare( const int aPeriod ) const;
 
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo ) = 0;
@@ -63,18 +83,25 @@ public:
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const = 0;
 
-    virtual double getTotalLandAllocation ( const std::string& productName, int period ) = 0;
-    virtual double getBaseLandAllocation ( int period ) = 0;
+    virtual double getTotalLandAllocation( const std::string& aProductName,
+                                           const int aPeriod ) const = 0;
 
-    void normalizeLandAllocation( double sum, int period );
+    virtual double getBaseLandAllocation( const int aPeriod ) const = 0;
 
-    virtual void setInitShares( double landAllocationAbove, int period ) = 0;
-    virtual void setIntrinsicYieldMode( double intrinsicRateAbove, double sigmaAbove, int period ) = 0;
+    void normalizeLandAllocation( const double aSum,
+                                  const int aPeriod );
+
+    virtual void setInitShares( const double aLandAllocationAbove,
+                                const int aPeriod ) = 0;
+
+    virtual void setIntrinsicYieldMode( const double aIntrinsicRateAbove,
+                                        const double aSigmaAbove,
+                                        const int aPeriod ) = 0;
 
     virtual void setIntrinsicRate( const std::string& aRegionName,
                                    const std::string& aLandType,
                                    const std::string& aProductName,
-                                   const double aIntrinsicRate, 
+                                   const double aIntrinsicRate,
                                    const int aPeriod ) = 0;
     
     virtual double getCalAveObservedRateInternal( const std::string& aLandType,
@@ -97,7 +124,7 @@ public:
                                     const double aAgProdChange,
                                     const int aPeriod ) = 0;
 
-    virtual void addChild( ALandAllocatorItem* child ) = 0;
+    virtual void addChild( ALandAllocatorItem* aChild ) = 0;
     
     virtual void calcLandShares( const std::string& aRegionName,
                                  const double aSigmaAbove,
@@ -110,16 +137,20 @@ public:
     
     virtual void calcYieldInternal( const std::string& aLandType,
                                     const std::string& aProductName,
+                                    const std::string& aRegionName,
                                     const double aProfitRate,
                                     const double aAvgIntrinsicRate,
-                                    const int aPeriod ) = 0;
+                                    const int aHarvestPeriod,
+                                    const int aCurrentPeriod ) = 0;
 
     virtual double getYield( const std::string& aLandType,
                              const std::string& aProductName,
                              const int aPeriod ) const = 0;
 
-    virtual void csvOutput( const std::string& aRegionName ) const = 0; 
+    virtual void csvOutput( const std::string& aRegionName ) const = 0;
+
     virtual void dbOutput( const std::string& aRegionName ) const = 0;
+
     virtual bool isProductionLeaf() const = 0;
     
     virtual void setUnmanagedLandAllocation( const std::string& aRegionName,
@@ -139,21 +170,33 @@ public:
                                    const double aBelowGroundCarbon,
                                    const int aPeriod ) = 0;
 
-    virtual void updateSummary ( Summary& aSummary, const int aPeriod ) = 0;
+    virtual void updateSummary ( Summary& aSummary,
+                                 const int aPeriod ) = 0;
 
-	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
+	virtual void accept( IVisitor* aVisitor,
+                         const int aPeriod ) const = 0;
 
 protected:
-    std::vector<double> share; //!< percent of land
-    std::vector<double> intrinsicRate; //!< rate in dollars to rent the land
-    //! land allocated in 1000's of hectars
-    std::vector<double> landAllocation;
+    //! Percent of land
+    objects::PeriodVector<double> mShare;
+    
+    //! Rate in dollars to rent the land
+    objects::PeriodVector<double> mIntrinsicRate;
+    
+    //! Land allocated in 1000's of hectars
+    objects::PeriodVector<double> mLandAllocation;
+    
+    //! Name of the land allocator item. This is the name of the product for
+    //! leafs and name of the type of land for nodes.
+    std::string mName;
 
-    std::vector<Summary> summary; //!< summary for reporting
-    std::string name; //!< name of the product for leafs. name of the type of land for nodes.
+    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
+                                       const xercesc::DOMNode* aCurr ) = 0;
 
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
-    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
+    virtual void toDebugXMLDerived( const int aPeriod,
+                                    std::ostream& aOut,
+                                    Tabs* aTabs ) const = 0;
+
     virtual const std::string& getXMLName() const = 0;
 };
 

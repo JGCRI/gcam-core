@@ -5,19 +5,27 @@
 #endif
 
 /*! 
-* \file forest_land_leaf.h
-* \ingroup CIAM
-* \brief The ForestLandLeaf class header file.
-* \author James Blackwood
-*/
+ * \file forest_land_leaf.h
+ * \ingroup Objects
+ * \brief The ForestLandLeaf class header file.
+ * \author James Blackwood
+ */
 
 #include "land_allocator/include/land_leaf.h"
 
-/*! \brief A type of leaf which contains land used for managed forestry.
-* \details This is a special type of production leaf which produces the managed
-*          forestry crop. It is unique it because it contains multiple vintages
-*          of a crop.
-*/
+/*!
+ * \brief A type of leaf which contains land used for managed forestry.
+ * \details This is a special type of production leaf which produces the managed
+ *          forestry crop. It is unique it because it contains multiple vintages
+ *          of a crop.
+ *
+ *          <b>XML specification for ForestLandLeaf</b>
+ *          - XML name: \c Not parsed
+ *          - Contained by: LandNode
+ *          - Parsing inherited from class: None
+ *          - Attributes: None
+ *          - Elements: None
+ */
 class ForestLandLeaf : public LandLeaf {
 public:
     ForestLandLeaf();
@@ -33,7 +41,8 @@ public:
     virtual double getLandAllocation ( const std::string& aProductName,
                                        const int aPeriod ) const;
 
-    virtual double getTotalLandAllocation( const std::string& productName, int period );
+    virtual double getTotalLandAllocation( const std::string& aProductName,
+                                           const int aPeriod ) const;
 
     virtual void setCalLandAllocation( const std::string& aLandType,
                                        const std::string& aProductName,
@@ -46,10 +55,17 @@ public:
                                       const double aCalObservedYield,
                                       const int aPeriod );
 protected:
-    int rotationPeriod; //!< rotation period for forests
-    int steps; //!< number of model time steps for a rotation period
-    std::vector<double> landToBeHarvested;  //!< Land allocation set aside for future production.
-    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+    // TODO: Create a Value class for ints and use it here.
+    int mSteps; //!< number of model time steps for a rotation period
+
+    //! Land allocation set aside for future production.
+    std::vector<double> mLandToBeHarvested;  
+
+
+    virtual void toDebugXMLDerived( const int aPeriod,
+                                    std::ostream& aOut,
+                                    Tabs* aTabs ) const;
+
     virtual const std::string& getXMLName() const;
 };
 

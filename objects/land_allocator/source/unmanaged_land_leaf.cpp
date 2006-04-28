@@ -1,9 +1,9 @@
 /*! 
-* \file unmanaged_land_leaf.cpp
-* \ingroup Objects
-* \brief UnmanagedLandLeaf class source file.
-* \author James Blackwood
-*/
+ * \file unmanaged_land_leaf.cpp
+ * \ingroup Objects
+ * \brief UnmanagedLandLeaf class source file.
+ * \author James Blackwood
+ */
 
 #include "land_allocator/include/unmanaged_land_leaf.h"
 #include "util/base/include/xml_helper.h"
@@ -12,6 +12,9 @@
 #include "emissions/include/ghg_input.h"
 #include "technologies/include/primary_output.h"
 #include "emissions/include/unmanaged_carbon_calc.h"
+#include "emissions/include/ghg.h"
+#include "util/base/include/summary.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -21,13 +24,9 @@ extern Scenario* scenario;
 /*! \brief UnmanagedLandLeafault constructor.
 * \author James Blackwood
 */
-UnmanagedLandLeaf::UnmanagedLandLeaf(){
-    const Modeltime* modeltime = scenario->getModeltime();
-    int maxper = modeltime->getmaxper();
-    baseIntrinsicRate.resize( maxper );
-    baseLandAllocation.resize( maxper );
-    historyYear = defaultHistoryYear();
-}
+UnmanagedLandLeaf::UnmanagedLandLeaf():
+mHistoryYear( defaultHistoryYear() )
+{}
 
 //! Default destructor
 UnmanagedLandLeaf::~UnmanagedLandLeaf() {
@@ -38,16 +37,13 @@ bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMN
         parseContainerNode( curr, mGHGs, new GhgInput() );
     }
     else if( nodeName == "historyYear" ) {
-        historyYear = XMLHelper<int>::getValue( curr );
+        mHistoryYear = XMLHelper<int>::getValue( curr );
     }
     else if( nodeName == "intrinsicRate" ){
-        XMLHelper<double>::insertValueIntoVector( curr, intrinsicRate, scenario->getModeltime() );
+        XMLHelper<double>::insertValueIntoVector( curr, mBaseIntrinsicRate, scenario->getModeltime() );
     }
     else if( nodeName == UnmanagedCarbonCalc::getXMLNameStatic() ) {
         parseSingleNode( curr, mCarbonContentCalc, new UnmanagedCarbonCalc );
-    }
-    else if( !LandLeaf::XMLDerivedClassParse( nodeName, curr ) ) {
-        return false;
     }
     return true;
 }
@@ -59,22 +55,22 @@ bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMN
 * \ref faqitem1 
 */
 void UnmanagedLandLeaf::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
     const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( intrinsicRate, "intrinsicRate", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( mBaseIntrinsicRate, "intrinsicRate", out, tabs, modeltime, 0.0 );
 
-    XMLWriteElementCheckDefault( historyYear, "historyYear", out, tabs, defaultHistoryYear() );
+    XMLWriteElementCheckDefault( mHistoryYear, "historyYear", out, tabs, defaultHistoryYear() );
 
     // Only write out land allocation values for historical years. Leave constant after last historical year
-    vector <double> tempLandAllocation( modeltime->getmaxper() );
+    objects::PeriodVector<double> tempLandAllocation;
     int lastHistoryPeriod = 0;
     for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        if ( modeltime->getper_to_yr( per ) <= historyYear ) {
-            tempLandAllocation[ per ] = landAllocation[ per ];
+        if ( modeltime->getper_to_yr( per ) <= static_cast<int>( mHistoryYear ) ) {
+            tempLandAllocation[ per ] = mLandAllocation[ per ];
             lastHistoryPeriod = per;
         }
         else {
-            tempLandAllocation[ per ] = landAllocation[ lastHistoryPeriod ];
+            tempLandAllocation[ per ] = mLandAllocation[ lastHistoryPeriod ];
         }
     }
     XMLWriteVector( tempLandAllocation, "landAllocation", out, tabs, modeltime, 0.0 );
@@ -90,8 +86,8 @@ void UnmanagedLandLeaf::toInputXML( ostream& out, Tabs* tabs ) const {
 
 void UnmanagedLandLeaf::toDebugXMLDerived( const int aPeriod, std::ostream& out, Tabs* tabs ) const {
     LandLeaf::toDebugXMLDerived( aPeriod, out, tabs );
-    XMLWriteElement( baseIntrinsicRate[ aPeriod ], "baseIntrinsicRate", out, tabs );
-    XMLWriteElement( baseLandAllocation[ aPeriod ], "baseLandAllocation", out, tabs );
+    XMLWriteElement( mBaseIntrinsicRate[ aPeriod ], "baseIntrinsicRate", out, tabs );
+    XMLWriteElement( mBaseLandAllocation[ aPeriod ], "baseLandAllocation", out, tabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -152,15 +148,13 @@ void UnmanagedLandLeaf::setUnmanagedLandAllocation( const string& aRegionName,
                                                     const double aLandAllocation,
                                                     const int aPeriod )
 {
-    landAllocation[ aPeriod ] = baseLandAllocation[ aPeriod ] =  aLandAllocation;  
-    baseIntrinsicRate[ aPeriod ] =  intrinsicRate[ aPeriod ];
+    mLandAllocation[ aPeriod ] = mBaseLandAllocation[ aPeriod ] = aLandAllocation;
 }
 
 /*! \brief Adjust land values for unmanaged land nodes as necessary
 *
 * Need this because unmanaged land nodes do not get their rates set by a supply sector
 *
-* \todo carbon value simply spread over 20 years, need to have a more grounded method for this
 * \param aRegionName Region name.
 * \param aPeriod Period index
 * \author Steve Smith
@@ -168,8 +162,8 @@ void UnmanagedLandLeaf::setUnmanagedLandAllocation( const string& aRegionName,
 void UnmanagedLandLeaf::setUnmanagedLandValues( const string& aRegionName,
                                                 const int aPeriod )
 {
-    intrinsicRate[ aPeriod ] = baseIntrinsicRate[ aPeriod ]
-                              + getCarbonValue( aRegionName, aPeriod ) * 1000 / 20;   
+    mIntrinsicRate[ aPeriod ] = mBaseIntrinsicRate[ aPeriod ]
+                                + getCarbonValue( aRegionName, aPeriod );   
 }
 
 /*! \brief This calculates a temporary share, later a normalized share is
@@ -189,8 +183,9 @@ void UnmanagedLandLeaf::calcLandShares( const string& aRegionName,
     // This is an unmanaged land leaf, so adjust the share proportional to the
     // base land allocated to this leaf (relative to the total land in this
     // unmanaged land node)
-    if ( aTotalLandAllocated > 0 ) {
-        share[ aPeriod ] *= baseLandAllocation[ aPeriod ] / aTotalLandAllocated; 
+    if ( aTotalLandAllocated > util::getSmallNumber() ) {
+        mShare[ aPeriod ] *= mBaseLandAllocation[ aPeriod ] / aTotalLandAllocated;
+        assert( util::isValidNumber( mShare[ aPeriod ] ) );
     }
 }
 
@@ -199,25 +194,28 @@ void UnmanagedLandLeaf::calcLandShares( const string& aRegionName,
 * \author Steve Smith
 * \return the baseLandAllocation of this landType
 */
-double UnmanagedLandLeaf::getBaseLandAllocation ( int period ) {
-    return baseLandAllocation[ period ];
+double UnmanagedLandLeaf::getBaseLandAllocation( const int aPeriod ) const {
+    return mBaseLandAllocation[ aPeriod ];
 }
 
+// TODO: This gets called too late if land GHGs are included in policies.
 void UnmanagedLandLeaf::calcEmission( const string& aRegionName,
                                       const GDP* aGDP, 
                                       const int aPeriod )
 {    
     for ( unsigned int j = 0; j < mGHGs.size(); j++ ) {
-        double input = landAllocation[ aPeriod ];
+        double input = mLandAllocation[ aPeriod ];
         
         // Create a temporary primary output. This is rather hackish to get
         // around the GHG interface being designed for Technologies.
-        PrimaryOutput landOutput( name );
+        PrimaryOutput landOutput( mName );
+        landOutput.initCalc( aRegionName, aPeriod );
+        landOutput.setPhysicalOutput( 0, aRegionName, aPeriod );
         landOutput.initCalc( aRegionName, aPeriod );
         landOutput.setPhysicalOutput( 0, aRegionName, aPeriod );
         vector<IOutput*> outputs;
         outputs.push_back( &landOutput ); 
-        mGHGs[ j ]->calcEmission( aRegionName, name, input, outputs, aGDP, aPeriod );
+        mGHGs[ j ]->calcEmission( aRegionName, mName, input, outputs, aGDP, aPeriod );
     }
 }
 
@@ -229,9 +227,81 @@ void UnmanagedLandLeaf::calcEmission( const string& aRegionName,
 void UnmanagedLandLeaf::checkCalObservedYield( const int aPeriod ) const {
 }
 
+/*! \brief Update a visitor for a LandLeaf.
+* \param aVisitor Visitor to update.
+* \param aPeriod Period to update.
+*/
+void UnmanagedLandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
+	aVisitor->startVisitUnmanagedLandLeaf( this, aPeriod );
+    LandLeaf::accept( aVisitor, aPeriod );
+
+    for( unsigned int i = 0; i < mGHGs.size(); ++i ){
+        mGHGs[ i ]->accept( aVisitor, aPeriod );
+    }
+	aVisitor->endVisitUnmanagedLandLeaf( this, aPeriod );
+}
+
 /*! \brief Returns the default for the history year.
 * \return Default for the history year.
 */
-int UnmanagedLandLeaf::defaultHistoryYear(){
+unsigned int UnmanagedLandLeaf::defaultHistoryYear(){
     return 1990;
 }
+
+void UnmanagedLandLeaf::updateSummary( Summary& aSummary, const int period ) {
+    // Map each ghg emission to its corresponding value.
+    map<string, double> emissMap;
+    for ( unsigned i = 0; i < mGHGs.size(); i++ ) {
+        emissMap[ mGHGs[ i ]->getName( ) ] = mGHGs[ i ]->getEmission( period ) ;
+    }
+
+    //update the summary object with this mapping
+    aSummary.updateemiss( emissMap );
+}
+
+/*! \brief Write output to csv output file. 
+*
+*
+* \author Steve Smith
+*/
+void UnmanagedLandLeaf::csvOutput( const string& aRegionName ) const {
+     LandLeaf::csvOutput( aRegionName );
+    
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    vector<double> temp(maxper);
+
+    // function protocol
+    void fileoutput3(string var1name,string var2name,string var3name,
+        string var4name,string var5name,string uname,vector<double> dout);
+
+    //print out each ghg emission
+    for ( unsigned int i = 0; i < mGHGs.size(); i++ ) {
+        for ( int j = 0; j < maxper; j++) {
+            temp[j] = mGHGs[i]->getEmission( j );
+        }
+        fileoutput3(aRegionName, mName," "," ",mGHGs[i]->getName()+" emiss", mGHGs[i]->getUnit(),temp);
+    }
+}
+
+void UnmanagedLandLeaf::dbOutput( const string& aRegionName ) const {
+    LandLeaf::dbOutput( aRegionName );
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    vector<double> temp(maxper);
+
+    // function protocol
+    void dboutput4(string var1name,string var2name,string var3name,string var4name,
+        string uname,vector<double> dout);
+
+    //print out each ghg emission
+    for ( unsigned int i = 0; i < mGHGs.size(); i++ ) {
+        for ( int j = 0; j < maxper; j++) {
+            temp[j] = mGHGs[i]->getEmission( j );
+        }
+        // TODO: Does this match emissions for Technology GHGs?
+        dboutput4( aRegionName, "Land Allocation", mName, mGHGs[i]->getName()+" emiss", "MTC",temp);
+    }
+}
+

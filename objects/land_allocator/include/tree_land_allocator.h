@@ -5,11 +5,11 @@
 #endif
 
 /*! 
-* \file tree_land_allocator.h
-* \ingroup Objects
-* \brief The TreeLandAllocator class header file.
-* \author James Blackwood, Josh Lurz
-*/
+ * \file tree_land_allocator.h
+ * \ingroup Objects
+ * \brief The TreeLandAllocator class header file.
+ * \author James Blackwood, Josh Lurz
+ */
 #include "land_allocator/include/iland_allocator.h"
 #include "land_allocator/include/land_node.h"
 #include "util/base/include/ivisitable.h"
@@ -17,14 +17,22 @@
 class IInfo;
 class GDP;
 
-/*! \brief Root of a single land allocation tree.
-* \details The land allocator root contains the root of the land allocation tree
-*          and controls all access from the model into the land allocation
-*          system. This is accomplished by implementing the ILandAllocator
-*          interface, which is the only interface to which Regions have access.
-*          Many methods on this interface are implemented by directly calling
-*          the LandAllocatorNode functions.
-*/
+/*! 
+ * \brief Root of a single land allocation tree.
+ * \details The land allocator root contains the root of the land allocation
+ *          tree and controls all access from the model into the land allocation
+ *          system. This is accomplished by implementing the ILandAllocator
+ *          interface, which is the only interface to which Regions have access.
+ *          Many methods on this interface are implemented by directly calling
+ *          the LandAllocatorNode functions.
+ *
+ *          <b>XML specification for TreeLandAllocator</b>
+ *          - XML name: -c LandAllocatorRoot
+ *          - Contained by: Region
+ *          - Parsing inherited from class: ALandAllocatorItem
+ *          - Attributes: Derived only.
+ *          - Elements: None
+ */
 class TreeLandAllocator : public ILandAllocator,
                           public LandNode {
 public:
@@ -35,9 +43,12 @@ public:
     // ILandAllocator methods.
     virtual void XMLParse( const xercesc::DOMNode* aNode );
     
-    virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
+    virtual void toDebugXML( const int aPeriod,
+                             std::ostream& aOut,
+                             Tabs* aTabs ) const;
     
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+    virtual void toInputXML( std::ostream& aOut,
+                             Tabs* aTabs ) const;
     
     virtual void addLandUsage( const std::string& aLandType,
                                const std::string& aProductName,
@@ -56,6 +67,7 @@ public:
 
     virtual void calcYield( const std::string& aLandType,
                             const std::string& aProductName,
+                            const std::string& aRegionName,
                             const double aProfitRate,
                             const int aHarvestPeriod, 
                             const int aCurrentPeriod );
@@ -78,7 +90,7 @@ public:
     virtual void setIntrinsicRate( const std::string& aRegionName,
                                    const std::string& aLandType,
                                    const std::string& aProductName,
-                                   const double aIntrinsicRate, 
+                                   const double aIntrinsicRate,
                                    const int aPeriod );
    
     virtual void calcFinalLandAllocation( const std::string& aRegionName, 
@@ -101,13 +113,17 @@ public:
                                const GDP* aGDP,
                                const int aPeriod );
     
-    virtual void updateSummary( Summary& aSummary, const int aPeriod );
+    virtual void updateSummary( Summary& aSummary,
+                                const int aPeriod );
 
-	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+	virtual void accept( IVisitor* aVisitor,
+                         const int aPeriod ) const;
 
     // Land allocator node methods.
-    double getAvgIntrinsicRate( int year );
-    virtual void setInitShares( double landAllocationAbove, int period );
+    double getAvgIntrinsicRate( const int aPeriod ) const;
+
+    virtual void setInitShares( const double aLandAllocationAbove,
+                                const int aPeriod );
 
     virtual void calcLandShares( const std::string& aRegionName,
                                  const double aSigmaAbove,

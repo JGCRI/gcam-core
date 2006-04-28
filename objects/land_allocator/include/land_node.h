@@ -5,29 +5,39 @@
 #endif
 
 /*! 
-* \file land_node.h
-* \ingroup Objects
-* \brief The LandAllocatorNode class header file.
-* \author James Blackwood
-* \date $Date$
-* \version $Revision$
-*/
+ * \file land_node.h
+ * \ingroup Objects
+ * \brief The LandAllocatorNode class header file.
+ * \author James Blackwood
+ */
 
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
+#include "util/base/include/value.h"
 
 // Forward declarations
 class GDP;
 class Ghg;
 
-/*! \brief A node in the land allocation tree.
-* \details A land allocator node represents a type of land available for
-*          producing crops. It does not itself produce anything, but may have
-*          leaves below it which produce products. The land node may also
-*          contain other land nodes, or land types. Land nodes are always
-*          read-in and are never created dynamically.
-*/
+/*!
+ * \brief A node in the land allocation tree.
+ * \details A land allocator node represents a type of land available for
+ *          producing crops. It does not itself produce anything, but may have
+ *          leaves below it which produce products. The land node may also
+ *          contain other land nodes, or land types. Land nodes are always
+ *          read-in and are never created dynamically.
+ *
+ *          <b>XML specification for LandNode</b>
+ *          - XML name: -c LandAllocatorNode
+ *          - Contained by: LandAllocatorRoot
+ *          - Parsing inherited from class: ALandAllocatorItem
+ *          - Attributes: Derived only.
+ *          - Elements:
+ *              - \c LandNode LandNode::children
+ *              - \c UnmanagedLandLeaf LandNode::children
+ *              - \c sigma LandNode::mSigma
+ */
 class LandNode : public ALandAllocatorItem {
 public:
     LandNode();
@@ -47,13 +57,17 @@ public:
                                const std::string& aProductName,
                                const ILandAllocator::LandUsageType aLandUsageType );
 
-    virtual void setInitShares( double landAllocationAbove, int period );
-    virtual void setIntrinsicYieldMode( double intrinsicRateAbove, double sigmaAbove, int period );
+    virtual void setInitShares( const double aLandAllocationAbove,
+                                const int aPeriod );
+
+    virtual void setIntrinsicYieldMode( const double aIntrinsicRateAbove,
+                                        const double aSigmaAbove,
+                                        const int aPeriod );
     
     virtual void setIntrinsicRate( const std::string& aRegionName,
                                    const std::string& aLandType,
                                    const std::string& aProductName,
-                                   const double aIntrinsicRate, 
+                                   const double aIntrinsicRate,
                                    const int aPeriod );
     
     virtual void setCalLandAllocation( const std::string& aLandType,
@@ -87,9 +101,11 @@ public:
     
     virtual void calcYieldInternal( const std::string& aLandType,
                                     const std::string& aProductName,
+                                    const std::string& aRegionName,
                                     const double aProfitRate,
                                     const double aAvgIntrinsicRate,
-                                    const int aPeriod );
+                                    const int aHarvestPeriod,
+                                    const int aCurrentPeriod );
 
     virtual double getYield( const std::string& aLandType,
                              const std::string& aProductName,
@@ -98,8 +114,10 @@ public:
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
 
-    virtual double getTotalLandAllocation ( const std::string& productName, int period );
-    virtual double getBaseLandAllocation ( int period );
+    virtual double getTotalLandAllocation( const std::string& aProductName,
+                                           const int aPeriod ) const;
+
+    virtual double getBaseLandAllocation( const int aPeriod ) const;
     
     virtual void setUnmanagedLandAllocation( const std::string& aRegionName,
                                              const double aLandAllocation,
@@ -133,11 +151,11 @@ protected:
     virtual void addChild( ALandAllocatorItem* child );
 
     //! Exponential constant used to distribute land shares.
-    double sigma;
+    Value mSigma;
 
     //! List of the children of this land node located below it in the land
     //! allocation tree.
-    std::vector<ALandAllocatorItem*> children;
+    std::vector<ALandAllocatorItem*> mChildren;
 };
 
 #endif // _LAND_NODE_H_

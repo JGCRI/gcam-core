@@ -1,9 +1,9 @@
-/*! 
-* \file tree_land_allocator.cpp
-* \ingroup Objects
-* \brief TreeLandAllocator class source file.
-* \author James Blackwood
-*/
+/*!
+ * \file tree_land_allocator.cpp
+ * \ingroup Objects
+ * \brief TreeLandAllocator class source file.
+ * \author James Blackwood
+ */
 
 #include "util/base/include/xml_helper.h"
 
@@ -34,7 +34,7 @@ TreeLandAllocator::~TreeLandAllocator() {
 * \author James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& TreeLandAllocator::getXMLName() const {
+const string& TreeLandAllocator::getXMLName() const {
     return getXMLNameStatic();
 }
 
@@ -98,60 +98,66 @@ void TreeLandAllocator::completeInit( const string& aRegionName,
         }
     }
 
-    for ( unsigned int i = 0; i < children.size(); i++ ) {
-        children[ i ]->completeInit( name, aRegionInfo );
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->completeInit( mName, aRegionInfo );
     }
     for( int period = 0; period < modeltime->getmaxper(); period++ ) {
         // Send any unmanaged land nodes the amount of land not already allocated
         double totalManagedLand = 0;
         // First determine total managed land allocated
-        for ( unsigned int i = 0; i < children.size(); i++ ) {
-            if ( children[ i ]->isProductionLeaf() ) {
-                totalManagedLand += getTotalLandAllocation( children[ i ]->getName() , period );
+        for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+            if ( mChildren[ i ]->isProductionLeaf() ) {
+                totalManagedLand += getTotalLandAllocation( mChildren[ i ]->getName() , period );
             }
         }
 
         //check that the total calLandUsed is not greater than the total available
-        if ( totalManagedLand >= landAllocation[ period ]) {
+        if ( totalManagedLand >= mLandAllocation[ period ]) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            if (totalManagedLand > landAllocation[ period ]) {
-                mainLog << "The total managed land allocated is greater than the total land in " << name
+            if( totalManagedLand > mLandAllocation[ period ] ){
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::DEBUG );
+                mainLog << "The total managed land allocated is greater than the total land in " << mName
                         << " in " << modeltime->getper_to_yr( period )
-                        << " by " << totalManagedLand - landAllocation[ period ] 
-                        << "(" << 100*( totalManagedLand - landAllocation[ period ] ) / landAllocation[ period ] << "%)" << endl;
+                        << " by " << totalManagedLand - mLandAllocation[ period ] 
+                        << "(" << 100*( totalManagedLand - mLandAllocation[ period ] ) / mLandAllocation[ period ] << "%)" << endl;
             }
-            else if (totalManagedLand == landAllocation[ period ]) {
-                mainLog << "The total managed land is equal to the total land value in " << name << endl;
+            else if( util::isEqual( totalManagedLand, mLandAllocation[ period ] ) ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::DEBUG );
+                mainLog << "The total managed land is equal to the total land value in " << mName << endl;
             }
 
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Total land value set to total managed land plus 20% " << endl;
-            for ( unsigned int i = period; i < landAllocation.size(); i++ ) {
-                landAllocation[ i ] = totalManagedLand * 1.2;
+            for ( unsigned int i = period; i < mLandAllocation.size(); i++ ) {
+                mLandAllocation[ i ] = totalManagedLand * 1.2;
             }
         }
 
         // Now re-allocate unmanaged land. Read-in land allocations are used as
         // weights with total unmanaged land set to be equal to total land minus
         // land allocation.
-        for ( unsigned int i = 0; i < children.size(); i++ ) {
+        for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
             // This will not work for more than one unmanaged land node under the root
-            double landToBePassed = landAllocation[ period ] - totalManagedLand;
-            children[i]->setUnmanagedLandAllocation( aRegionName, landToBePassed, period );
+            double landToBePassed = mLandAllocation[ period ] - totalManagedLand;
+            mChildren[i]->setUnmanagedLandAllocation( aRegionName, landToBePassed, period );
         }
         setInitShares( 0, period );
-        setIntrinsicYieldMode( 1, sigma, period );
+        setIntrinsicYieldMode( 1, mSigma, period );
     }
 }
 
-/*! \brief Returns the intrinsicRate.
-*
+/*!
+* \brief Returns the intrinsicRate.
 * \author James Blackwood
-* \return the intrinsicRate of this LandAllocator which should only be called by the root node.
+* \param aPeriod Period
+* \return the intrinsicRate of this LandAllocator which should only be called by
+*         the root node.
 */
-double TreeLandAllocator::getAvgIntrinsicRate( int period ) {
-    return intrinsicRate[ period ];
+double TreeLandAllocator::getAvgIntrinsicRate( const int aPeriod ) const {
+    return mIntrinsicRate[ aPeriod ];
 }
 
 void TreeLandAllocator::addLandUsage( const string& aLandType,
@@ -162,7 +168,7 @@ void TreeLandAllocator::addLandUsage( const string& aLandType,
 }
 
 double TreeLandAllocator::getCalAveObservedRate( const string& aLandType, int aPeriod ) const {
-    return getCalAveObservedRateInternal( aLandType, aPeriod, sigma );
+    return getCalAveObservedRateInternal( aLandType, aPeriod, mSigma );
 }
 
 double TreeLandAllocator::getLandAllocation( const string& aProductName,
@@ -181,12 +187,13 @@ void TreeLandAllocator::applyAgProdChange( const string& aLandType,
 
 void TreeLandAllocator::calcYield( const string& aLandType,
                                    const string& aProductName,
+                                   const string& aRegionName,
                                    const double aProfitRate,
                                    const int aHarvestPeriod,
                                    const int aCurrentPeriod )
 {
-    LandNode::calcYieldInternal( aLandType, aProductName, aProfitRate,
-                                 intrinsicRate[ aCurrentPeriod ], aHarvestPeriod );
+    LandNode::calcYieldInternal( aLandType, aProductName, aRegionName, aProfitRate,
+                                 mIntrinsicRate[ aCurrentPeriod ], aHarvestPeriod, aCurrentPeriod );
 }
 
 double TreeLandAllocator::getYield( const string& aLandType,
@@ -217,35 +224,38 @@ void TreeLandAllocator::setCalObservedYield( const string& aLandType,
 void TreeLandAllocator::setIntrinsicRate( const string& aRegionName,
                                           const string& aLandType,
                                           const string& aProductName,
-                                          const double aIntrinsicRate, 
+                                          const double aIntrinsicRate,
                                           const int aPeriod )
 {
-    LandNode::setIntrinsicRate( aRegionName, aLandType, aProductName, aIntrinsicRate, aPeriod );
+    LandNode::setIntrinsicRate( aRegionName, aLandType, aProductName,
+                                aIntrinsicRate, aPeriod );
 }
 
-void TreeLandAllocator::setInitShares( double landAllocationAbove, int period ) {
+void TreeLandAllocator::setInitShares( const double aLandAllocationAbove,
+                                       const int aPeriod )
+{
     //Check that land allocations are valid
     double totalLandAllocated = 0;
-    for ( unsigned int i = 0; i < children.size(); i++ ) {
-        totalLandAllocated += children[ i ]->getTotalLandAllocation( children[ i ]->getName(), period );
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        totalLandAllocated += mChildren[ i ]->getTotalLandAllocation( mChildren[ i ]->getName(), aPeriod );
     }
     
-    if ( totalLandAllocated - landAllocation[ period ] > util::getSmallNumber() ) {
+    if ( totalLandAllocated - mLandAllocation[ aPeriod ] > util::getSmallNumber() ) {
         const Modeltime* modeltime = scenario->getModeltime();
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Sum of land allocated is greater than the total land in " << name << " in "
-                << modeltime->getper_to_yr( period ) << " by "
-                << ( totalLandAllocated - landAllocation[ period ] ) / landAllocation[ period ] * 100
+        mainLog << "Sum of land allocated is greater than the total land in " << mName << " in "
+                << modeltime->getper_to_yr( aPeriod ) << " by "
+                << ( totalLandAllocated - mLandAllocation[ aPeriod ] ) / mLandAllocation[ aPeriod ] * 100
                 << " %" << endl;
     }
     
     //Calculating the shares
-    for ( unsigned int i = 0; i < children.size(); i++ ) {
-        children[ i ]->setInitShares( landAllocation[ period ], period );
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->setInitShares( mLandAllocation[ aPeriod ], aPeriod );
     }
 
-    share[ period ] = 1;
+    mShare[ aPeriod ] = 1;
 }
 
 void TreeLandAllocator::calcLandShares( const string& aRegionName,
@@ -253,10 +263,10 @@ void TreeLandAllocator::calcLandShares( const string& aRegionName,
                                         const double aTotalLandAllocated,
                                         const int aPeriod )
 {
-   LandNode::calcLandShares( aRegionName, aSigmaAbove, aTotalLandAllocated, aPeriod);
+    LandNode::calcLandShares( aRegionName, aSigmaAbove, aTotalLandAllocated, aPeriod);
  
-   // This is the root node so its share should be 100%   
-    share[ aPeriod ] = 1;                                        
+    // This is the root node so its share should be 100%   
+    mShare[ aPeriod ] = 1;                                        
 }
 
 /*! \brief Recursively calculates the landAllocation at each leaf and node using the shares.
@@ -268,8 +278,8 @@ void TreeLandAllocator::calcLandAllocation( const string& aRegionName,
                                             const double aLandAllocationAbove,
                                             const int aPeriod )
 {
-    for ( unsigned int i = 0; i < children.size(); i++ ) {
-        children[ i ]->calcLandAllocation( aRegionName, landAllocation[ aPeriod ], aPeriod );
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->calcLandAllocation( aRegionName, mLandAllocation[ aPeriod ], aPeriod );
     }
 }
 
@@ -313,7 +323,7 @@ void TreeLandAllocator::updateSummary( Summary& aSummary, const int aPeriod ){
 }
 
 void TreeLandAllocator::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	for ( unsigned int i = 0; i < children.size(); i++ ) {
-		children[i]->accept( aVisitor, aPeriod );
+	for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+		mChildren[i]->accept( aVisitor, aPeriod );
     }
 }
