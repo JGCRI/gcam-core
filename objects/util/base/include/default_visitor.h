@@ -32,56 +32,56 @@
 class DefaultVisitor : public IVisitor {
 public:
     virtual ~DefaultVisitor(){}
-	virtual void finish() const {}
-	virtual void startVisitScenario( const Scenario* aScenario, const int aPeriod ){}
-	virtual void endVisitScenario( const Scenario* aScenario, const int aPeriod ){}
-	virtual void startVisitWorld( const World* aWorld, const int aPeriod ){}
-	virtual void endVisitWorld( const World* aWorld, const int aPeriod ){}
-	virtual void startVisitRegion( const Region* aRegion, const int aPeriod ){}
-	virtual void endVisitRegion( const Region* aRegion, const int aPeriod ){}
-	virtual void startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ){}
-	virtual void endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ){}
+    virtual void finish() const {}
+    virtual void startVisitScenario( const Scenario* aScenario, const int aPeriod ){}
+    virtual void endVisitScenario( const Scenario* aScenario, const int aPeriod ){}
+    virtual void startVisitWorld( const World* aWorld, const int aPeriod ){}
+    virtual void endVisitWorld( const World* aWorld, const int aPeriod ){}
+    virtual void startVisitRegion( const Region* aRegion, const int aPeriod ){}
+    virtual void endVisitRegion( const Region* aRegion, const int aPeriod ){}
+    virtual void startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ){}
+    virtual void endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ){}
     
-	virtual void startVisitDemographic( const Demographic* aDemographic, const int aPeriod ){}
-	virtual void endVisitDemographic( const Demographic* aDemographic, const int aPeriod ){}
+    virtual void startVisitDemographic( const Demographic* aDemographic, const int aPeriod ){}
+    virtual void endVisitDemographic( const Demographic* aDemographic, const int aPeriod ){}
 
-	virtual void startVisitPopulation( const Population* aPopulation, const int aPeriod ){}
-	virtual void endVisitPopulation( const Population* aPopulation, const int aPeriod ){}
+    virtual void startVisitPopulation( const Population* aPopulation, const int aPeriod ){}
+    virtual void endVisitPopulation( const Population* aPopulation, const int aPeriod ){}
 
-	virtual void startVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod ){}
-	virtual void endVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod ){}
+    virtual void startVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod ){}
+    virtual void endVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod ){}
 
-	virtual void startVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ){}
-	virtual void endVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ){}
+    virtual void startVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ){}
+    virtual void endVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ){}
 
-	virtual void startVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ){}
-	virtual void endVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ){}
+    virtual void startVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ){}
+    virtual void endVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ){}
 
-	virtual void startVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ){}
-	virtual void endVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ){}
-	
-	virtual void startVisitGender( const Gender* aGender, const int aPeriod ){}
-	virtual void endVisitGender( const Gender* aGender, const int aPeriod ){}
-
-	virtual void startVisitFemale( const Female* aFemale, const int aPeriod ){}
-	virtual void endVisitFemale( const Female* aFemale, const int aPeriod ){}
-
-	virtual void startVisitMale( const Male* aMale, const int aPeriod ){}
-	virtual void endVisitMale( const Male* aMale, const int aPeriod ){}
-
-	virtual void startVisitResource( const Resource* aResource, const int aPeriod ){}
-	virtual void endVisitResource( const Resource* aResource, const int aPeriod ){}
+    virtual void startVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ){}
+    virtual void endVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ){}
     
-	virtual void startVisitSubResource( const SubResource* aSubResource, const int aPeriod ){}
-	virtual void endVisitSubResource( const SubResource* aSubResource, const int aPeriod ){}
+    virtual void startVisitGender( const Gender* aGender, const int aPeriod ){}
+    virtual void endVisitGender( const Gender* aGender, const int aPeriod ){}
 
-	virtual void startVisitGrade( const Grade* aGrade, const int aPeriod ){}
-	virtual void endVisitGrade( const Grade* aGrade, const int aPeriod ){}
+    virtual void startVisitFemale( const Female* aFemale, const int aPeriod ){}
+    virtual void endVisitFemale( const Female* aFemale, const int aPeriod ){}
 
-	virtual void startVisitSector( const Sector* aSector, const int aPeriod ){}
-	virtual void endVisitSector( const Sector* aSector, const int aPeriod ){}
-	virtual void startVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod ){}
-	virtual void endVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod ){}
+    virtual void startVisitMale( const Male* aMale, const int aPeriod ){}
+    virtual void endVisitMale( const Male* aMale, const int aPeriod ){}
+
+    virtual void startVisitResource( const Resource* aResource, const int aPeriod ){}
+    virtual void endVisitResource( const Resource* aResource, const int aPeriod ){}
+    
+    virtual void startVisitSubResource( const SubResource* aSubResource, const int aPeriod ){}
+    virtual void endVisitSubResource( const SubResource* aSubResource, const int aPeriod ){}
+
+    virtual void startVisitGrade( const Grade* aGrade, const int aPeriod ){}
+    virtual void endVisitGrade( const Grade* aGrade, const int aPeriod ){}
+
+    virtual void startVisitSector( const Sector* aSector, const int aPeriod ){}
+    virtual void endVisitSector( const Sector* aSector, const int aPeriod ){}
+    virtual void startVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod ){}
+    virtual void endVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod ){}
     virtual void updateProductionSector( const ProductionSector* aProdSector, const int aPeriod ){}
     virtual void startVisitSubsector( const Subsector* aSubsector, const int aPeriod ){}
     virtual void endVisitSubsector( const Subsector* aSubsector, const int aPeriod ){}
@@ -93,14 +93,14 @@ public:
 
     virtual void updateBaseTechnology( const BaseTechnology* aBaseTechnology ){}
     virtual void updateConsumer( const Consumer* aConsumer, const int aPeriod ){}
-	virtual void updateHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer,
+    virtual void updateHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer,
         const int aPeriod ){}
     virtual void updateGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ){}
     virtual void updateInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ){}
     virtual void updateTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ){}
-	virtual void updateProductionTechnology( const ProductionTechnology* aProductionTechnology, const int aPeriod ){}
-	virtual void startVisitTechnology( const technology* aTechnology, const int aPeriod ){}
-	virtual void endVisitTechnology( const technology* aTechnology, const int aPeriod ){}
+    virtual void updateProductionTechnology( const ProductionTechnology* aProductionTechnology, const int aPeriod ){}
+    virtual void startVisitTechnology( const technology* aTechnology, const int aPeriod ){}
+    virtual void endVisitTechnology( const technology* aTechnology, const int aPeriod ){}
     virtual void updateFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ){}
     virtual void updateNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ){}
     virtual void updateInput( const Input* aInput ){}
@@ -126,8 +126,11 @@ public:
     virtual void startVisitLandNode( const LandNode* aLandNode, const int aPeriod ){}
     virtual void endVisitLandNode( const LandNode* aLandNode, const int aPeriod ){}
 
-	virtual void startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){}
+    virtual void startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){}
     virtual void endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){}
+
+    virtual void startVisitUnmanagedLandLeaf( const UnmanagedLandLeaf* aUnmanagedLandLeaf, const int aPeriod ){}
+    virtual void endVisitUnmanagedLandLeaf( const UnmanagedLandLeaf* aUnmanagedLandLeaf, const int aPeriod ){}
 
     virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){}
     virtual void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){}
