@@ -599,11 +599,33 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     assert( aPeriod == -1 );
     // Write the opening tag.
     XMLWriteOpeningTag( "climate-model", mBuffer, mTabs.get() );
-
+    int outputInterval = Configuration::getInstance()->getInt( "climateOutputInterval", scenario->getModeltime()->gettimestep( 0 ) );
+    int endingYear = max( scenario->getModeltime()->getEndYear(), 2100 ); // print at least to 2100 if interval is set appropriately
+    
     // Write the concentrations for the request period.
-    for( int per = 0; per < scenario->getModeltime()->getmaxper(); ++per ){
-        XMLWriteElement( aClimateModel->getConcentration( "CO2", scenario->getModeltime()->getper_to_yr( per ) ), "co2-concentration",
-                         mBuffer, mTabs.get(), scenario->getModeltime()->getper_to_yr( per ) );
+    for( int year = scenario->getModeltime()->getStartYear(); year <= endingYear; year += outputInterval ){
+        XMLWriteElement( aClimateModel->getConcentration( "CO2", year ), "co2-concentration",
+                         mBuffer, mTabs.get(), year );
+                         
+                         cout << "CO2 conc year: " << year << endl;
+    }
+
+    // Write total radiative forcing
+    for( int year = scenario->getModeltime()->getStartYear(); year <= endingYear; year += outputInterval ){
+        XMLWriteElement( aClimateModel->getTotalForcing( year ), "forcing-total",
+                         mBuffer, mTabs.get(), year );
+    }
+
+    // Write net terrestrial uptake
+    for( int year = scenario->getModeltime()->getStartYear(); year <= endingYear; year += outputInterval ){
+        XMLWriteElement( aClimateModel->getNetTerrestrialUptake( year ), "net-terrestrial-uptake",
+                         mBuffer, mTabs.get(), year );
+    }
+
+    // Write net ocean uptake
+    for( int year = scenario->getModeltime()->getStartYear(); year <= endingYear; year += outputInterval ){
+        XMLWriteElement( aClimateModel->getNetOceanUptake( year ), "net-ocean-uptake",
+                         mBuffer, mTabs.get(), year );
     }
 }
 

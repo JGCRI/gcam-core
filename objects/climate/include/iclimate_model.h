@@ -145,6 +145,26 @@ public:
     */
     virtual void printFileOutput() const = 0;
 
+    /*! \brief Returns the net terrestrial uptake in a given period from the climate model.
+    * \details Queries the climate model for the net terrestrial uptake for a given period
+    *          and returns the value. If the climate model is unavailable the
+    *          value returned is -1.
+    * \param aYear The year for which to return the net terrestrial uptake.
+    * \return The net terrestrial uptake for the period, -1 if the climate model is
+    *         unavailable.
+    */
+    virtual double getNetTerrestrialUptake( const int aYear ) const = 0;
+
+    /*! \brief Returns the net ocean uptake in a given period from the climate model.
+    * \details Queries the climate model for the net ocean uptake for a given period
+    *          and returns the value. If the climate model is unavailable the
+    *          value returned is -1.
+    * \param aYear The year for which to return the net ocean uptake.
+    * \return The net ocean uptake for the period, -1 if the climate model is
+    *         unavailable.
+    */
+    virtual double getNetOceanUptake( const int aYear ) const = 0;
+
 	/*! \brief Print the output of the climate model to a database
 	* \details Writes a subset of the output of the model to a database.
 	* \pre The model must be run before output can be written.

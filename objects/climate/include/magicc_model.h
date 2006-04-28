@@ -66,7 +66,6 @@ public:
     
     virtual double getTotalForcing( const int aYear ) const;
 
-    // TODO: Add these methods to the IClimateModel interface.
     double getNetTerrestrialUptake( const int aYear ) const;
 
     double getNetOceanUptake( const int aYear ) const;
