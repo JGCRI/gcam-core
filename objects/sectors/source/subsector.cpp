@@ -1346,6 +1346,8 @@ void Subsector::setOutput( const double aDemand,
                            const GDP* aGDP,
                            const int aPeriod )
 {
+    assert( util::isValidNumber( aDemand ) && aDemand >= 0 );
+
     // note that output is in service unit when called from demand sectors
     // multiply dmd by Subsector share go get the total demand to be supplied by this Subsector
     double subsecdmd = share[ aPeriod ]* aDemand; 
