@@ -41,14 +41,14 @@ namespace objects {
         * \brief Constant input iterator.
         */
         class const_iterator {
+            friend class TimeVectorBase;
+            template<class T> friend class YearVector;
+            template<class T> friend class PeriodVector;
         public:
 
             const_iterator();
 
             virtual ~const_iterator();
-            
-            const_iterator( const unsigned int aPos, 
-                            const TimeVectorBase* aParent );
 
             const T& operator*() const;
 
@@ -64,7 +64,14 @@ namespace objects {
 
             const_iterator operator--(int);
 
+            const_iterator operator+( const size_t aIncrement ) const;
+
+            const_iterator operator-( const size_t aDecrement ) const;
+        
         protected:
+            const_iterator( const unsigned int aPos, 
+                            const TimeVectorBase* aParent );
+
             //! Current index into the array.
             unsigned int mPos;
 
@@ -76,11 +83,11 @@ namespace objects {
         * \brief Mutable input iterator.
         */
         class iterator: public const_iterator {
+            friend class TimeVectorBase;
+            template<class T> friend class YearVector;
+            template<class T> friend class PeriodVector;
         public:
             iterator();
-
-            iterator( const unsigned int aPos,
-                      TimeVectorBase* aParent );
 
             T& operator*();
 
@@ -95,7 +102,14 @@ namespace objects {
             iterator& operator--();
 
             iterator operator--(int);
+
+            iterator operator+( const size_t aIncrement ) const;
+
+            iterator operator-( const size_t aDecrement ) const;
         protected:
+            iterator( const unsigned int aPos,
+                      TimeVectorBase* aParent );
+
         	// Need to inform the compiler that this derived class will be
         	// using base class members.
             using const_iterator::mParent;
@@ -106,6 +120,10 @@ namespace objects {
         virtual ~TimeVectorBase();
         TimeVectorBase( const TimeVectorBase& aOther );
         const TimeVectorBase& operator=( const TimeVectorBase& aOther );
+
+        bool operator==( TimeVectorBase& aOther ) const;
+        
+        bool operator!=( TimeVectorBase& aOther ) const;
 
         virtual T& operator[]( const size_t aIndex ) = 0;
         virtual const T& operator[]( const size_t aIndex ) const = 0;
@@ -183,31 +201,73 @@ namespace objects {
     template<class T>
     typename TimeVectorBase<T>::const_iterator& TimeVectorBase<T>::const_iterator::operator++(){
         ++mPos;
+        // If the end iterator is incremented it should remain at the end.
+        mPos = min( mPos, mParent->size() );
         return *this;
     }
 
     //! Postfix increment.
     template<class T>
     typename TimeVectorBase<T>::const_iterator TimeVectorBase<T>::const_iterator::operator++(int){
-        typename TimeVectorBase<T>::const_iterator prev = this;
+        typename TimeVectorBase<T>::const_iterator prev = *this;
         ++mPos;
+        // If the end iterator is incremented it should remain at the end.
+        mPos = min( mPos, mParent->size() );
         return prev;
     }
 
     //! Prefix decrement.
     template<class T>
     typename TimeVectorBase<T>::const_iterator& TimeVectorBase<T>::const_iterator::operator--(){
-        --mPos;
+        // If the decrement causes the iterator to move before the first element
+        // of the array set the iterator to the end element.
+        if( --mPos < 0 ){
+            mPos = mParent->size();
+        }
         return *this;
     }
 
     //! Postfix decrement.
     template<class T>
     typename TimeVectorBase<T>::const_iterator TimeVectorBase<T>::const_iterator::operator--(int){
-        typename TimeVectorBase<T>::const_iterator prev = this;
-        --mPos;
+        typename TimeVectorBase<T>::const_iterator prev = *this;
+        // If the decrement causes the iterator to move before the first element
+        // of the array set the iterator to the end element.
+        if( --mPos < 0 ){
+            mPos = mParent->size();
+        }
         return prev;
     }
+    
+    /*!
+     * \brief Return an iterator incremented a specific number of positions from
+     *        the current iterator.
+     * \param aIncrement Amount by which to increment the iterator.
+     */
+    template<class T>
+        typename TimeVectorBase<T>::const_iterator
+        TimeVectorBase<T>::const_iterator::operator+( const size_t aIncrement ) const {
+            // Check that this does not exceed the bounds of the iterator.
+            if( mPos + aIncrement >= mParent->mSize ){
+                return mParent->end();
+            }
+            return typename TimeVectorBase<T>::const_iterator( mPos + aIncrement, mParent );
+        }
+
+    /*!
+     * \brief Return an iterator decremented a specific number of positions from
+     *        the current iterator.
+     * \param aDecrement Amount by which to increment the iterator.
+     */
+    template<class T>
+        typename TimeVectorBase<T>::const_iterator
+        TimeVectorBase<T>::const_iterator::operator-( const size_t aDecrement ) const {
+            // Check that this does not exceed the bounds of the iterator.
+            if( mPos - aDecrement < 0 ){
+                return mParent->end();
+            }
+            return typename TimeVectorBase<T>::const_iterator( mPos - aDecrement, mParent );
+        }
 
     /*!
      * \brief Required default constructor.
@@ -250,31 +310,75 @@ namespace objects {
     template<class T>
     typename TimeVectorBase<T>::iterator& TimeVectorBase<T>::iterator::operator++(){
         ++mPos;
+        // If the end iterator is incremented it should remain at the end.
+        mPos = min( mPos, mParent->size() );
         return *this;
     }
 
     //! Postfix increment.
     template<class T>
     typename TimeVectorBase<T>::iterator TimeVectorBase<T>::iterator::operator++(int){
-        typename TimeVectorBase<T>::iterator prev = this;
+        typename TimeVectorBase<T>::iterator prev = *this;
         ++mPos;
+        // If the end iterator is incremented it should remain at the end.
+        mPos = min( mPos, mParent->size() );
         return prev;
     }
 
     //! Prefix decrement.
     template<class T>
     typename TimeVectorBase<T>::iterator& TimeVectorBase<T>::iterator::operator--(){
-        --mPos;
+        // If the decrement causes the iterator to move before the first element
+        // of the array set the iterator to the end element.
+        if( --mPos < 0 ){
+            mPos = mParent->size();
+        }
         return *this;
     }
 
     //! Postfix decrement.
     template<class T>
     typename TimeVectorBase<T>::iterator TimeVectorBase<T>::iterator::operator--(int){
-        typename TimeVectorBase<T>::iterator prev = this;
-        --mPos;
+        typename TimeVectorBase<T>::iterator prev = *this;
+        // If the decrement causes the iterator to move before the first element
+        // of the array set the iterator to the end element.
+        if( --mPos < 0 ){
+            mPos = mParent->size();
+        }
          return prev;
     }
+
+    /*!
+     * \brief Return an iterator incremented a specific number of positions from
+     *        the current iterator.
+     * \param aIncrement Amount by which to increment the iterator.
+     */
+    template<class T>
+        typename TimeVectorBase<T>::iterator
+        TimeVectorBase<T>::iterator::operator+( const size_t aIncrement ) const {
+            // Check that this does not exceed the bounds of the iterator.
+            if( mPos + aIncrement >= mParent->mSize ){
+                return const_cast<typename TimeVectorBase<T>*>( mParent )->end();
+            }
+            return typename TimeVectorBase<T>::iterator( mPos + aIncrement,
+                                                         const_cast<typename TimeVectorBase<T>*>( mParent ) );
+        }
+
+    /*!
+     * \brief Return an iterator decremented a specific number of positions from
+     *        the current iterator.
+     * \param aDecrement Amount by which to increment the iterator.
+     */
+    template<class T>
+        typename TimeVectorBase<T>::iterator
+        TimeVectorBase<T>::iterator::operator-( const size_t aDecrement ) const {
+            // Check that this does not exceed the bounds of the iterator.
+            if( mPos - aDecrement < 0 ){
+                return const_cast<typename TimeVectorBase<T>*>( mParent )->end();
+            }
+            return typename TimeVectorBase<T>::iterator( mPos - aDecrement,
+                                                         const_cast<typename TimeVectorBase<T>*>( mParent ) );
+        }
 
     /*!
      * \brief Constructor.
@@ -319,9 +423,7 @@ namespace objects {
            mData = new T[ mSize ];
 
            // Initialize the data to the default value.
-           for( unsigned int i = 0; i < mSize; ++i ){
-               mData[ i ] = aDefaultValue;
-           }
+           std::uninitialized_fill( &mData[ 0 ], &mData[ 0 ] + mSize, aDefaultValue );
     }
 
     /*!
@@ -331,7 +433,7 @@ namespace objects {
     template<class T>
         TimeVectorBase<T>::TimeVectorBase( const TimeVectorBase<T>& aOther ){
             init( aOther.mSize, T() );
-            copy( aOther );
+            copy( aOther.begin(), aOther.end(), begin() );
         }
 
     /*!
@@ -341,14 +443,38 @@ namespace objects {
      *         assignment).
      */
     template<class T>
-        const TimeVectorBase<T>& TimeVectorBase<T>::operator =( const TimeVectorBase<T>& aOther ){
+        const TimeVectorBase<T>& TimeVectorBase<T>::operator=( const TimeVectorBase<T>& aOther ){
             // Check for self-assignment.
             if( this != &aOther ){
                 clear();
-                init( aOther.mSize(), T() );
-                copy( aOther );
+                init( aOther.size(), T() );
+                copy( aOther.begin(), aOther.end(), begin() );
             }
             return *this;
+        }
+
+    /*!
+     * \brief Equals operator.
+     * \param aOther TimeVectorBase to check for equivalence.
+     * \details TimeVectorBases are equivalent if they have the same size and
+     *          all elements at respective positions are equal.
+     * \return Whether the two vectors are equal.
+     */
+    template<class T>
+        bool  TimeVectorBase<T>::operator==( TimeVectorBase& aOther ) const {
+            return size() == aOther.size() && equal( begin(), end(), aOther.begin() );
+        }
+
+    /*!
+     * \brief Not-equals operator.
+     * \param aOther TimeVectorBase to check for dis-equivalence.
+     * \details TimeVectorBases are not equivalent if they have the different
+     *          sizes or all elements at respective positions are not equal.
+     * \return Whether the two vectors are equal.
+     */      
+    template<class T>
+        bool  TimeVectorBase<T>::operator!=( TimeVectorBase& aOther ) const {
+            return !( *this == aOther );
         }
 
    /*!
@@ -447,32 +573,35 @@ namespace objects {
    template<class T>
    class YearVector: public TimeVectorBase<T> {
    public:
-        using TimeVectorBase<T>::const_iterator;
+        using TimeVectorBase<T>::begin;
+        using TimeVectorBase<T>::end;
+        using TimeVectorBase<T>::last;
+        using TimeVectorBase<T>::size;
+        using TimeVectorBase<T>::assign;
+        using typename TimeVectorBase<T>::const_iterator;
         using typename TimeVectorBase<T>::iterator;
-        
+
         YearVector( const unsigned int aStartYear,
                     const unsigned int aEndYear,
                     const T aDefaultValue = T() );
+
+        const YearVector& operator=( const YearVector& aOther );
 
         virtual T& operator[]( const size_t aIndex );
         virtual const T& operator[]( const size_t aIndex ) const;
         typename TimeVectorBase<T>::const_iterator find( const unsigned int aIndex ) const;
         typename TimeVectorBase<T>::iterator find( const unsigned int aIndex );
-        using TimeVectorBase<T>::begin;
-        using TimeVectorBase<T>::end;
-        using TimeVectorBase<T>::size;
-        using TimeVectorBase<T>::assign;
+
    protected:
         //! First year of the array. This year is included in the array.
-        const unsigned int mStartYear;
+        unsigned int mStartYear;
 
         //! End year of the array. This year is included in the array.
-        const unsigned int mEndYear;
+        unsigned int mEndYear;
         
         // Declare that this class is using several base class members.
         using TimeVectorBase<T>::mData;
         using TimeVectorBase<T>::mSize;
-
    };
 
     /*!
@@ -495,6 +624,23 @@ namespace objects {
     }
 
     /*!
+     * \brief Assignment operator.
+     * \param aOther YearVector to copy.
+     * \return The newly constructed YearVector by reference(for chaining
+     *         assignment).
+     */
+    template<class T>
+        typename const YearVector<T>& YearVector<T>::operator=( const typename YearVector<T>& aOther ){
+            // Check for self-assignment.
+            if( this != &aOther ){
+                mStartYear = aOther.mStartYear;
+                mEndYear = aOther.mEndYear;
+                YearVector<T>::operator=( aOther );
+            }
+            return *this;
+        }
+
+    /*!
      * \brief Operator which references data in the array.
      * \param aYear Year of the value to return.
      * \return Mutable value at the year by reference.
@@ -505,6 +651,7 @@ namespace objects {
             *        inclusive. 
             */
             assert( aYear >= mStartYear && aYear <= mEndYear );
+            assert( util::isValidNumber( mData[ aYear - mStartYear ] ) );
             return mData[ aYear - mStartYear ];
         }
     
@@ -519,6 +666,7 @@ namespace objects {
             *        inclusive. 
             */
             assert( aYear >= mStartYear && aYear <= mEndYear );
+            assert( util::isValidNumber( mData[ aYear - mStartYear ] ) );
             return mData[ aYear - mStartYear ];
         }
 
@@ -567,6 +715,14 @@ namespace objects {
     template<class T>
     class PeriodVector: public TimeVectorBase<T> {
     public:
+        using typename TimeVectorBase<T>::const_iterator;
+        using typename TimeVectorBase<T>::iterator;
+        using TimeVectorBase<T>::begin;
+        using TimeVectorBase<T>::end;
+        using TimeVectorBase<T>::last;
+        using TimeVectorBase<T>::size;
+        using TimeVectorBase<T>::assign;
+
         PeriodVector( const T aDefaultValue = T() );
         virtual T& operator[]( const size_t aIndex );
         virtual const T& operator[]( const size_t aIndex ) const;
@@ -574,7 +730,6 @@ namespace objects {
         // Declare that this class is using the base class data and size.
         using TimeVectorBase<T>::mData;
         using TimeVectorBase<T>::mSize;
-        using TimeVectorBase<T>::size;
     };
 
     /*!
@@ -599,6 +754,7 @@ namespace objects {
     template<class T>
         T& PeriodVector<T>::operator[]( const size_t aIndex ){
             assert( aIndex < size() );
+            assert( util::isValidNumber( mData[ aIndex ] ) );
             return mData[ aIndex ];
         }
     
@@ -610,6 +766,7 @@ namespace objects {
     template<class T>
         const T& PeriodVector<T>::operator[]( const size_t aIndex ) const {
             assert( aIndex < size() );
+            assert( util::isValidNumber( mData[ aIndex ] ) );
             return mData[ aIndex ];
         }
    }
