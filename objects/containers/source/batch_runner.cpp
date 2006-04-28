@@ -45,10 +45,15 @@ BatchRunner::~BatchRunner(){
 */
 bool BatchRunner::setupScenario( Timer& aTimer, const string aName, const list<string> aScenComponents ){
     // Get the name of the batch file from the Configuration.
-    const string batchFile = Configuration::getInstance()->getFile( "BatchFileName" );
-    
+    const string batchFileName = Configuration::getInstance()->getFile( "BatchFileName" );
+
+    // Add note so that if XML read fails here user knows what happened
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Reading Batch File " << batchFileName << endl;
+
     // Parse the batch file.
-    return XMLHelper<void>::parseXML( batchFile, this );
+    return XMLHelper<void>::parseXML( batchFileName, this );
 }
 
 /*! \brief Run the set of Scenarios as instructed by the batch configuration file.
