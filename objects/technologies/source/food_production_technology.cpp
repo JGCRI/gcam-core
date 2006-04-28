@@ -1,10 +1,8 @@
-/*! 
+/*!
 * \file food_production_technology.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief FoodProductionTechnology class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "technologies/include/food_production_technology.h"
@@ -173,7 +171,10 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
         return;
     }
 
-    mLandAllocator->applyAgProdChange( landType, name, agProdChange, aPeriod );
+    // Only apply technical change if the year is past the base year.
+    if( year > modeltime->getper_to_yr( 1 ) ){
+        mLandAllocator->applyAgProdChange( landType, name, agProdChange, aPeriod );
+    }
 
     // TODO: Use a better method of passing forward calibration information.
     // Since the market may be global, create a unique regional string for the
@@ -189,11 +190,14 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
         double calPrice = marketInfo->getDouble( "calPrice", true );
 
         // Calculate the calibrated variable cost.
+        // TODO: This is the only access of this variable from outside the AgLU. Change this function
+        // to getCalNumeraireAveObservedRate.
         calVarCost = calPrice - mLandAllocator->getCalAveObservedRate( "UnmanagedLand", aPeriod )
-                                       / calObservedYield;
+                                / calcDiscountFactor()
+                                / calObservedYield;
         
         // Set the variable cost for the technology to the calibrated variable cost.
-        if ( calVarCost > 0 ) {
+        if ( calVarCost > util::getSmallNumber() ) {
             // TODO: Add warning if there was a read-in variable cost.
             variableCost = calVarCost;
         }
@@ -207,7 +211,7 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
     else {
         // Get the calibrated variable cost from the market info.
         calVarCost = marketInfo->getDouble( calVarCostName, true );
-        if ( calVarCost > 0 ) {
+        if ( calVarCost > util::getSmallNumber() ) {
             // TODO: Add warning if there was a read-in variable cost.
             variableCost = calVarCost;
         }
@@ -296,12 +300,7 @@ void FoodProductionTechnology::calcShare( const string& aRegionName,
     // If yield is GCal/Ha and prices are $/GCal, then rental rate is $/Ha
     // Passing in rate as $/GCal and setIntrinsicRate will set it to  $/Ha.
     double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
-    
-    // Don't allow negative intrinsic rates. 
-    // TODO: Move this to the land allocator.
-    profitRate = max( profitRate, 0.0 );
 
-    // TODO: Does this need to be done here?
     mLandAllocator->setIntrinsicRate( aRegionName, landType, name, profitRate, aPeriod );
     
     // Food production technologies are profit based, so the amount of output
@@ -349,17 +348,22 @@ void FoodProductionTechnology::production( const string& aRegionName,
     double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
 
     // Calculate the yield.
-    mLandAllocator->calcYield( landType, name, profitRate, aPeriod, aPeriod );
+    mLandAllocator->calcYield( landType, name, aRegionName, 
+                               profitRate, aPeriod, aPeriod );
 
     // Calculate the output of the technology.
     double primaryOutput = calcSupply( aRegionName, aSectorName, aPeriod );
 
     // This output needs to be in EJ instead of GJ.
+    // TODO: Fix this once units framework is complete.
     if( name == "biomass" ) {
         primaryOutput /= 1e9;
     }
 
-    // Set the input to be the land used.
+    // Set the input to be the land used. TODO: Determine a way to improve this.
+    // This would be wrong if the fuelname had an emissions coefficient, or if
+    // there were a fuel or other input. When multiple inputs are complete there
+    // should be a specific land input.
     input = mLandAllocator->getLandAllocation( aSectorName, aPeriod );
     calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 }
@@ -378,16 +382,28 @@ double FoodProductionTechnology::calcProfitRate( const string& aRegionName,
                                                  const int aPeriod ) const
 {
     // Conversion from 1990 to 1975 dollars
-    const double CVRT90 = 2.212;
+    const double CVRT_75_TO_90 = 2.212;
     
     // Calculate profit rate.
     const Marketplace* marketplace = scenario->getMarketplace();
 
+    // TODO: Units here will be wrong for anything other than biomass because prices will be in $/Gcal
+    // as GHG costs/profits are always in $/GJ.
     double secondaryValue = calcSecondaryValue( aRegionName, aPeriod );
     double profitRate = ( marketplace->getPrice( aProductName, aRegionName, aPeriod ) + secondaryValue ) 
-                         * CVRT90 - variableCost;
+                         * CVRT_75_TO_90 - variableCost;
 
     return profitRate;
+}
+
+/*! \brief Calculate the factor to discount between the present period and the
+*          harvest period.
+* \return The discount factor.
+*/
+double FoodProductionTechnology::calcDiscountFactor() const {
+    // Food products are produced in a single year, so they do not have a
+    // discount factor.
+    return 1;
 }
 
 /*! \brief Calculate the supply for the technology.
@@ -402,9 +418,19 @@ double FoodProductionTechnology::calcSupply( const string& aRegionName,
                                              const int aPeriod ) const
 {
     double yield = mLandAllocator->getYield( landType, name, aPeriod ); 
+    double landAllocation = mLandAllocator->getLandAllocation( aProductName, aPeriod );
+    // Check that if yield is zero the land allocation is zero.
+    // TODO: Determine why a small number is too large.
+    if( yield < util::getSmallNumber() && landAllocation > 0.1 ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Zero production of " << aProductName << " by technology " << name
+                << " in region " << aRegionName << " with a positive land allocation of "
+                << landAllocation << "." << endl;
+    }
 
     // Set output to yield times amount of land.
-    return yield * mLandAllocator->getLandAllocation( aProductName, aPeriod );
+    return yield * landAllocation;
 }
 
 double FoodProductionTechnology::getFuelcost() const {

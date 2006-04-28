@@ -87,7 +87,9 @@ protected:
     virtual double calcProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,
                                    const int aPeriod ) const;
-    
+
+    virtual double calcDiscountFactor() const;
+
     double calcSupply( const std::string& aRegionName,
                        const std::string& aProductName,
                        const int aPeriod ) const;
