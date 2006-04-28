@@ -13,9 +13,10 @@
 using namespace std;
 using namespace xercesc;
 
-/*! \brief Constructor.
-* \author James Blackwood
-*/
+/*!
+ * \brief Constructor.
+ * \author James Blackwood
+ */
 ASimpleCarbonCalc::ASimpleCarbonCalc() : mCurrentEmissions( getStartYear(), getEndYear() ),
                                          mCalculated( getStartYear(), getEndYear() ),
                                          mTotalEmissions( getStartYear(), getEndYear() ),
@@ -81,14 +82,6 @@ void ASimpleCarbonCalc::setTotalLandUse( const double aLandUse, const int aPerio
     mLandUse[ aPeriod ] = aLandUse;
 }
 
-double ASimpleCarbonCalc::getPotentialAboveGroundCarbon( const int aYear ) const {
-    return getPotentialAboveGroundCarbonPerLandArea( aYear ) * getLandUse( aYear );
-}
-
-double ASimpleCarbonCalc::getPotentialBelowGroundCarbon( const int aYear ) const {
-    return getPotentialBelowGroundCarbonPerLandArea( aYear ) * getLandUse( aYear );
-}
-
 void ASimpleCarbonCalc::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitCarbonCalc( this, aPeriod );
     aVisitor->endVisitCarbonCalc( this, aPeriod );
@@ -115,10 +108,10 @@ void ASimpleCarbonCalc::calcAboveGroundCarbonEmission( const unsigned int aYear,
     // Above ground carbon currently always contains the maximum potential
     // amount of carbon.
     double prevCarbon = getLandUse( aYear - 1 )
-                        * getPotentialAboveGroundCarbonPerLandArea( aYear - 1 );
+                        * getPotentialAboveGroundCarbon( aYear - 1 );
     
     double currCarbon = getLandUse( aYear )
-                        * getPotentialAboveGroundCarbonPerLandArea( aYear );
+                        * getPotentialAboveGroundCarbon( aYear );
     
     // Add a positive emission if the previous year contained more carbon
     // than the current year. If the previous year contains less carbon than the
@@ -146,15 +139,18 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
     // emission time.
     
     double soilCarbonPrev = getLandUse( aYear - 1 )
-                            * getPotentialBelowGroundCarbonPerLandArea( aYear - 1 );
+                            * getPotentialBelowGroundCarbon( aYear - 1 );
 
     double soilCarbonCurr = getLandUse( aYear )
-                            * getPotentialBelowGroundCarbonPerLandArea( aYear );
+                            * getPotentialBelowGroundCarbon( aYear );
 
-    double carbonDifference = soilCarbonCurr - soilCarbonPrev;
+    // Calculate the difference in carbon between the previous period and the
+    // current period. If this is negative, an uptake has occurred. If this is
+    // positive an emissions has occurred.
+    double carbonDifference = soilCarbonPrev - soilCarbonCurr;
 
-    // If the carbon content is equivalent than there is no carbon difference in
-    // the current year.
+    // If the carbon content is equivalent than there are no emissions to
+    // distribute.
     if( util::isEqual( carbonDifference, 0.0 ) ){
         return;
     }
@@ -194,11 +190,11 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
     }
 }
 
-/*! \brief A static function to return the starting year to index the arrays.
-*
-* \todo This is not the best approach because it is hard coded.
-* \author James Blackwood
-* \return The startYear.
+/*!
+ * \brief A static function to return the starting year to index the arrays.
+ * \todo Use a read-in value for the start year.
+ * \author James Blackwood
+ * \return The startYear.
 */
 const unsigned int ASimpleCarbonCalc::getStartYear() const {
     // First model period ends in 1975 and starts in 1961.

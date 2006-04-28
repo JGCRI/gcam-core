@@ -104,9 +104,9 @@ public:
                                   const int aPeriod ) = 0;
 
     /*!
-     * \brief Get the total amount of carbon which would be contained by the
+     * \brief Get the amount of carbon which would be contained by a unit of
      *        land above ground at steady state.
-     * \details Returns the total carbon contained by the land area above ground
+     * \details Returns the carbon contained by a unit of land area above ground
      *          if the land area were to remain constant and reach steady state.
      *          Since carbon uptake and emissions may have a long timescale,
      *          this potential carbon contained may not equal the actual carbon
@@ -129,14 +129,13 @@ public:
                                            const int aPeriod ) = 0;
 
     /*!
-     * \brief Get the total amount of carbon which would be contained by the
+     * \brief Get the amount of carbon which would be contained by a unit of
      *        land below ground at steady state.
-     * \details Returns the total carbon contained by the land area below ground
+     * \details Returns the carbon contained by a unit of land area below ground
      *          if the land area were to remain constant and reach steady state.
      *          Since carbon uptake and emissions may have a long timescale,
      *          this potential carbon contained may not equal the actual carbon
-     *          contained. Below ground carbon is the carbon content of
-     *          soils.
+     *          contained. Below ground carbon is the carbon content of soils.
      * \param aYear Year.
      * \return Total potential below ground carbon.
      */

@@ -20,6 +20,15 @@
  *          below ground carbon for all years. These read-in values are then
  *          used to calculate the carbon value of the land and the net land use
  *          change emissions.
+ *
+ *          <b>XML specification for UnmanagedCarbonCalc</b>
+ *          - XML name: \c unmanaged-carbon-calc
+ *          - Contained by: UnmanagedLandLeaf
+ *          - Parsing inherited from class: None
+ *          - Attributes: None
+ *          - Elements:
+ *              - \c above-ground-carbon UnmanagedCarbonCalc::mAboveGroundCarbon
+ *              - \c below-ground-carbon UnmanagedCarbonCalc::mBelowGroundCarbon
  */
 class UnmanagedCarbonCalc : public ASimpleCarbonCalc {
 public:
@@ -34,8 +43,12 @@ public:
 
 	virtual void completeInit();
 
-	virtual void setUnitAboveGroundCarbon( const double aAboveGroundCarbon,
+	virtual double getPotentialAboveGroundCarbon( const int aYear ) const;
+	
+    virtual void setUnitAboveGroundCarbon( const double aAboveGroundCarbon,
                                            const int aPeriod );
+
+	virtual double getPotentialBelowGroundCarbon( const int aYear ) const;
 
 	virtual void setUnitBelowGroundCarbon( const double aBelowGroundCarbon,
                                            const int aPeriod );
@@ -45,9 +58,6 @@ protected:
 
     //! Read in below ground carbon content by year.
     objects::YearVector<double> mBelowGroundCarbon;
-
-    virtual double getPotentialAboveGroundCarbonPerLandArea( const int aYear ) const;
-    virtual double getPotentialBelowGroundCarbonPerLandArea( const int aYear ) const;
 };
 
 #endif // _UNMANAGED_CARBON_CALC_H_

@@ -41,12 +41,12 @@ public:
 	virtual void setTotalLandUse( const double aLandUse,
                                   const int aPeriod );
 
-	virtual double getPotentialAboveGroundCarbon( const int aYear ) const;
+	virtual double getPotentialAboveGroundCarbon( const int aYear ) const = 0;
 	
     virtual void setUnitAboveGroundCarbon( const double aAboveGroundCarbon,
                                            const int aPeriod ) = 0;
 
-	virtual double getPotentialBelowGroundCarbon( const int aYear ) const;
+	virtual double getPotentialBelowGroundCarbon( const int aYear ) const = 0;
 
 	virtual void setUnitBelowGroundCarbon( const double aBelowGroundCarbon,
                                            const int aPeriod ) = 0;
@@ -70,20 +70,6 @@ protected:
     
     //! Whether this is the first time the period has been calculated.
     objects::PeriodVector<bool> mIsFirstTime;
-
-    /*!
-     * \brief Return the above ground carbon per land area.
-     * \param aYear Year
-     * \return Above ground carbon per land area.
-     */
-    virtual double getPotentialAboveGroundCarbonPerLandArea( const int aYear ) const = 0;
-
-    /*!
-     * \brief Return the above ground carbon per land area.
-     * \param aYear Year
-     * \return Above ground carbon per land area.
-     */
-    virtual double getPotentialBelowGroundCarbonPerLandArea( const int aYear ) const = 0;
 
     double getLandUse( const int aYear ) const;
 

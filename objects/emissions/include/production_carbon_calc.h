@@ -22,6 +22,13 @@
  *          production carbon calculator is responsible for determining annual
  *          values. These annual values are then used to calculate the carbon
  *          value of the land and the net land use change emissions.
+ *
+ *          <b>XML specification for ProductionCarbonCalc</b>
+ *          - XML name: Not parsed
+ *          - Contained by: LandLeaf
+ *          - Parsing inherited from class: None
+ *          - Attributes: None
+ *          - Elements: None
  */
 class ProductionCarbonCalc : public ASimpleCarbonCalc {
 public:
@@ -36,8 +43,12 @@ public:
 
 	virtual void completeInit();
 
-	virtual void setUnitAboveGroundCarbon( const double aAboveGroundCarbon,
+	virtual double getPotentialAboveGroundCarbon( const int aYear ) const;
+	
+    virtual void setUnitAboveGroundCarbon( const double aAboveGroundCarbon,
                                            const int aPeriod );
+
+	virtual double getPotentialBelowGroundCarbon( const int aYear ) const;
 
 	virtual void setUnitBelowGroundCarbon( const double aBelowGroundCarbon,
                                            const int aPeriod );
@@ -47,10 +58,6 @@ protected:
 
     //! Potential below ground carbon content set by the Technology by period.
     objects::PeriodVector<double> mPotentialBelowGroundCarbon;
-
-    virtual double getPotentialAboveGroundCarbonPerLandArea( const int aYear ) const;
-
-    virtual double getPotentialBelowGroundCarbonPerLandArea( const int aYear ) const;
 };
 
 #endif // _PRODUCTION_CARBON_CALC_H_

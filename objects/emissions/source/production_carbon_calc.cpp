@@ -99,11 +99,11 @@ void ProductionCarbonCalc::setUnitBelowGroundCarbon( const double aBelowGroundCa
     mPotentialBelowGroundCarbon[ aPeriod ] = aBelowGroundCarbon;
 }
 
-double ProductionCarbonCalc::getPotentialAboveGroundCarbonPerLandArea( const int aYear ) const {
+double ProductionCarbonCalc::getPotentialAboveGroundCarbon( const int aYear ) const {
     return interpYearHelper( mPotentialAboveGroundCarbon, aYear );
 }
 
-double ProductionCarbonCalc::getPotentialBelowGroundCarbonPerLandArea( const int aYear ) const {
+double ProductionCarbonCalc::getPotentialBelowGroundCarbon( const int aYear ) const {
     // Use an exponential decay function to determine emissions.
     return interpYearHelper( mPotentialBelowGroundCarbon, aYear );
 }
