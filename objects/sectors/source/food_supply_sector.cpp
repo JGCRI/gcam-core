@@ -1,10 +1,8 @@
 /*! 
 * \file food_supply_sector.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief FoodSupplySector class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -67,8 +65,8 @@ bool FoodSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNo
 */
 void FoodSupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     SupplySector::toInputXMLDerived( out, tabs );
-    XMLWriteElement( calPrice, "calPrice", out, tabs );
-    XMLWriteElement( mMarketName, "market", out, tabs );
+    XMLWriteElementCheckDefault( calPrice, "calPrice", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mMarketName, "market", out, tabs, string( "" ) );
 }	
 
 void FoodSupplySector::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
