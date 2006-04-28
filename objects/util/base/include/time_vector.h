@@ -78,7 +78,7 @@ namespace objects {
 
 
             //! Current index into the array.
-            unsigned int mPos;
+            size_t mPos;
 
             //! Parent container.
             const TimeVectorBase* mParent;
