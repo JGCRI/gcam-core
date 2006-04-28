@@ -4,7 +4,7 @@
 #pragma once
 #endif
 
-/*!  
+/*!
 * \file xml_helper.h
 * \ingroup Objects
 * \brief A set of helper function for reading xml data.
@@ -85,11 +85,17 @@ public:
    static T getValue( const xercesc::DOMNode* node );
    static T getAttr( const xercesc::DOMNode* node, const std::string attrName );
    static std::string safeTranscode( const XMLCh* toTranscode );
-   static void insertValueIntoVector( const xercesc::DOMNode* node, std::vector<T>& insertToVector,
+
+   static void insertValueIntoVector( const xercesc::DOMNode* node,
+                                      std::vector<T>& insertToVector,
                                       const Modeltime* modeltime );
    
    static void insertValueIntoVector( const xercesc::DOMNode* aNode,
                                       objects::YearVector<T>& aYearVector );
+   
+   static void insertValueIntoVector( const xercesc::DOMNode* aNode,
+                                      objects::PeriodVector<T>& aPeriodVector,
+                                      const Modeltime* aModeltime );
 
    static int getNodePeriod ( const xercesc::DOMNode* node, const Modeltime* modeltime );
    static bool parseXML( const std::string& aXMLFile, IParsable* aModelElement );
@@ -277,19 +283,17 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
 *        attribute "fillout" is set the data will be copied to the end of the
 *        vector.
 *
-* This function when passed a node, YearVector and modeltime object will first
-* extract the year attribute and will then insert the item in that position in
-* the vector.
+* This function when passed a node and YearVector will first extract the year
+* attribute and will then insert the item in that position in the vector.
 *
 * \warning Make sure the node passed as an argument has a year attribute.
 * \param aNode A pointer to a node from which to extract the data.
 * \param aYearVector A YearVector passed by reference in which to insert the
 *        value.
 */
-
 template<class T>
 void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
-                                         objects::YearVector<T>& aYearVector )
+                                          objects::YearVector<T>& aYearVector )
 {
    /*! \pre Make sure we were passed a valid node reference. */
    assert( aNode );
@@ -331,6 +335,66 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
        for( ; pos != aYearVector.end(); ++pos ){
            *pos = value;
        }
+   }
+}
+
+/*! 
+* \brief Function which takes a node and inserts its value into the correct
+*        position in a PeriodVector based on the year XML attribute. If the XML
+*        attribute "fillout" is set the data will be copied to the end of the
+*        vector.
+* \details This function when passed a node and PeriodVector will first extract
+*          the year attribute and will then insert the item in that position in
+*          the vector.
+* \warning Make sure the node passed as an argument has a year attribute.
+* \param aNode A pointer to a node from which to extract the data.
+* \param aPeriod A PeriodVector passed by reference in which to insert the
+*        value.
+* \param aModeltime Modeltime object.
+*/
+template<class T>
+void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
+                                          objects::PeriodVector<T>& aPeriodVector,
+                                          const Modeltime* aModeltime )
+{
+   
+   /*! \pre Make sure we were passed a valid node reference. */
+   assert( aNode );
+   
+   const int year = XMLHelper<int>::getAttr( aNode, "year" );
+   // boolean to fill out the readin value to all the periods
+   const bool fillout = XMLHelper<bool>::getAttr( aNode, "fillout" );
+   
+   // Check to make sure the year attribute returned non-zero.
+   if( year == 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Year value not set for vector input tag >>"
+                << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
+                << "<<" << std::endl;
+        return;
+   }
+   
+   int period = aModeltime->getyr_to_per( year );
+
+   // Check that the period returned correctly.
+   // Check to make sure the year attribute returned non-zero.
+   if ( !( ( period >= 0 ) && ( period < static_cast<int>( aPeriodVector.size() ) ) ) ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Period value is out of bounds for vector input tag >>"
+                << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
+                << "<<" << std::endl;
+        return;
+   }
+   
+   aPeriodVector[ period ] =  XMLHelper<T>::getValue( aNode );
+   
+   if( fillout ) {
+      // will not do if period is already last period or maxperiod
+      for ( unsigned int i = period + 1; i < aPeriodVector.size(); ++i ) {
+         aPeriodVector[ i ] =  aPeriodVector[ period ];
+      }
    }
 }
 
@@ -584,6 +648,52 @@ void XMLWriteVector( const objects::YearVector<T>& aOutputVector,
         } else {
             // Can't skip any. write normally.
             XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, i );
+        }
+    }
+}
+
+/*! 
+* \brief Function which writes out the values contained in a PeriodVector. 
+* \details This function is used to write out the values of a PeriodVector in XML
+*          format, along with their year tag. The function will also avoid
+*          writing out elements if they have default values, and will collapse
+*          consecutive equal values into one element with a fillout attribute.
+* \param aOutputVector The PeriodVector of values to write out.
+* \param aElementName The elementName to write out for each value.
+* \param aOut Stream to print to.
+* \param aTabs A tabs object responsible for printing the correct number of
+*        tabs. 
+* \param aModeltime The Modeltime object.
+* \param aDefaultValue Default value for items in this vector. 
+*/
+template<class T>
+void XMLWriteVector( const objects::PeriodVector<T>& aOutputVector,
+                     const std::string& aElementName,
+                     std::ostream& aOut,
+                     Tabs* aTabs,
+                     const Modeltime* aModeltime,
+                     const T aDefaultValue = T() )
+{
+    for( unsigned int i = 0; i < aOutputVector.size(); i++ ){
+        // Determine the correct year. 
+        unsigned int year = aModeltime->getper_to_yr( i );
+
+        // Determine if we can use fillout.
+        unsigned int canSkip = 0;
+        for( unsigned int j = i + 1; j < aOutputVector.size(); j++ ){
+            if( util::isEqual( aOutputVector[ i ], aOutputVector[ j ] ) ){
+                canSkip++;
+            }
+            else {
+                break;
+            }
+        }
+        if( canSkip > 0 ){
+            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, year, "", true );
+            i += canSkip;
+        } else {
+            // Can't skip any. write normally.
+            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, year );
         }
     }
 }
