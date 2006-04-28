@@ -60,6 +60,7 @@
 		<!--END Developer Only Modifiable Variables-->
 	</Bools>
 	<Ints>
+		<Value name="discount-start-year">2005</Value>
 		<Value name="climateOutputInterval">15</Value>
 		<!--START Developer Only Modifiable Variables-->
 		<Value name="numMarketsToFindSD">10</Value>
