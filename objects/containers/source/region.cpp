@@ -50,6 +50,7 @@
 #include "marketplace/include/marketplace.h"
 
 #include "land_allocator/include/tree_land_allocator.h"
+#include "emissions/include/emissions_summer.h"
 
 #include "util/base/include/input_finder.h"
 #include "util/base/include/summary.h"
@@ -1606,12 +1607,13 @@ void Region::calcEmissions( const int period ) {
         demandSector[i]->emission(period);
         summary[period].updateemiss(demandSector[i]->getemission(period));
     }
-    // Add CO2 emissions from the agsector.
-    if( agSector.get() ){
-        map<string,double> agEmissions;
-        agEmissions[ "CO2NetLandUse" ] = agSector->getLandUseEmissions( period );
-        summary[ period ].updateemiss( agEmissions );
-    }
+
+    // Determine land use change emissions and add to the summary.
+    EmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
+    accept( &co2LandUseSummer, period );
+    map<string,double> agEmissions;
+    agEmissions[ "CO2NetLandUse" ] = co2LandUseSummer.getEmissions( period );
+    summary[ period ].updateemiss( agEmissions );
 
     if ( mLandAllocator.get() ) {
         mLandAllocator->calcEmission( name, gdp.get(), period );
