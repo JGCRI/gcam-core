@@ -338,7 +338,15 @@ void Marketplace::setPrice( const string& goodName, const string& regionName, co
 * \param aMustExist Whether it is an error for the market not to exist.
 */
 void Marketplace::addToSupply( const string& goodName, const string& regionName, const double value,
-                               const int per, bool aMustExist ){
+                               const int per, bool aMustExist )
+{
+    // Print a warning message when adding infinity values to the supply.
+    if ( !util::isValidNumber( value ) ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Error adding to supply in markeplace for: " << goodName << ", value: " << value << endl;
+        return;
+    }
 
     const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
 
@@ -366,7 +374,7 @@ void Marketplace::addToSupply( const string& goodName, const string& regionName,
 void Marketplace::addToDemand( const string& goodName, const string& regionName, const double value,
                                const int per, bool aMustExist )
 {
-    // print a warning message when adding infinity values to the demand
+    // Print a warning message when adding infinity values to the demand
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
@@ -391,7 +399,6 @@ void Marketplace::addToDemand( const string& goodName, const string& regionName,
 * This price is not always the raw or true price. For non-existant markets, this function returns a near infinite price, except for renewable
 * markets that do not exist, for which it returns 0.
 *
-* \todo do something else about "renewable"
 * \param goodName The good for which a price is needed.
 * \param regionName The region for which a price is needed.
 * \param per The period to return the market price for.
@@ -428,12 +435,11 @@ double Marketplace::getSupply( const string& goodName, const string& regionName,
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
         return markets[ marketNumber ][ per ]->getSupply();
     }
-    else {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Called for supply of non-existant market " << goodName << " in " << regionName << endl;
-        return 0;
-    }
+
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Called for supply of non-existant market " << goodName << " in " << regionName << endl;
+    return 0;
 }
 
 /*! \brief Return the market demand. 
@@ -452,12 +458,11 @@ double Marketplace::getDemand(  const string& goodName, const string& regionName
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
         return markets[ marketNumber ][ per ]->getDemand();
     }
-    else {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Called for demand of non-existant market " << goodName << " in " << regionName << endl;
-        return 0;
-    }
+
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Called for demand of non-existant market " << goodName << " in " << regionName << endl;
+    return 0;
 }
 
 //! Returns a set of pointers to each market for the period.
