@@ -24,7 +24,6 @@
 #include <map>
 #include <vector>
 #include <cassert>
-#include "util/base/include/time_vector.h"
 
 // Boost static asserts do not work when included from multiple namespaces.
 // Seperate them into their own unique namespace.
@@ -33,7 +32,7 @@ namespace conditionsCheck {
     BOOST_STATIC_ASSERT( std::numeric_limits<double>::has_infinity );
 }
 
-namespace util {
+namespace objects {
     
     /*! \brief Returns the value within this map associated with a given key. 
     * \details This function takes as its input a map and a key to search for.
@@ -314,22 +313,10 @@ namespace util {
         return output;
     }
 
-    /*!
-     * \brief Convert a PeriodVector into a std::vector.
-     * \param aPeriodVector Period vector to convert.
-     * \return Vector equivalent to the period vector.
-     */
-    template<class T>
-        std::vector<T> convertToVector( const objects::PeriodVector<T>& aPeriodVector ){
-            std::vector<T> convVector( aPeriodVector.size() );
-            for( unsigned int i = 0; i < aPeriodVector.size(); ++i ){
-                convVector[ i ] = aPeriodVector[ i ];
-            }
-            return convVector;
-        }
-
-
    long createMinicamRunID( const time_t& aTime );
    std::string XMLCreateDate( const time_t& time );
 } // End util namespace.
+
+namespace util = objects;
+
 #endif // _UTIL_H_

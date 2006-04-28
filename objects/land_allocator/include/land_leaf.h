@@ -149,13 +149,13 @@ protected:
     // TODO: Comment this.
     objects::PeriodVector<double> mIntrinsicYieldMode;
 
-    //! The calibrated observed yield.
-    objects::PeriodVector<double> mCalObservedYield;
-
     // TODO: Convert this to a PeriodVector. Currently can't because the forest
     // leaf is adding extra periods.
     //! Actual yield.
     std::vector<double> mYield;
+    
+    //! The calibrated observed yield.
+    objects::PeriodVector<double> mCalObservedYield;
 
     //! Calculated cumulative technical change.
     objects::PeriodVector<double> mAgProdChange;

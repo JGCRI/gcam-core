@@ -494,16 +494,16 @@ void LandLeaf::csvOutput( const string& aRegionName ) const {
         string var4name,string var5name,string uname,vector<double> dout);
 
     // write land allocations for region
-    fileoutput3(aRegionName, mName," "," ","Intr Rate","$/kHa", util::convertToVector( mIntrinsicRate ) );
-    fileoutput3(aRegionName, mName," "," ","Intr Yield Mode","GCal/kHa", util::convertToVector( mIntrinsicYieldMode ) );
-    fileoutput3(aRegionName, mName," "," ","calObsYield","GCal/kHa", util::convertToVector( mCalObservedYield ) );
+    fileoutput3(aRegionName, mName," "," ","Intr Rate","$/kHa", mIntrinsicRate.convertToVector() );
+    fileoutput3(aRegionName, mName," "," ","Intr Yield Mode","GCal/kHa", mIntrinsicYieldMode.convertToVector() );
+    fileoutput3(aRegionName, mName," "," ","calObsYield","GCal/kHa", mCalObservedYield.convertToVector() );
     
     for( int i = 0; i < maxper; ++i ){
         temp[ i ] = getCarbonValue( aRegionName, i );
     }
 
     fileoutput3(aRegionName, mName," "," ","carbonValue","000Ha", temp);
-    fileoutput3(aRegionName, mName," "," ","Ag Productivity Change","none", util::convertToVector( mAgProdChange ) );
+    fileoutput3(aRegionName, mName," "," ","Ag Productivity Change","none", mAgProdChange.convertToVector() );
 }
 
 void LandLeaf::dbOutput( const string& aRegionName ) const {
@@ -518,9 +518,9 @@ void LandLeaf::dbOutput( const string& aRegionName ) const {
         string uname,vector<double> dout);
 
     // write land allocations for region
-    dboutput4(aRegionName, "Land Allocation", mName,"Intr Rate","$/kHa", util::convertToVector( mIntrinsicRate ) );
-    dboutput4(aRegionName, "Land Allocation", mName,"Intr Yield Mode","GCal/kHa", util::convertToVector( mIntrinsicYieldMode ) );
-    dboutput4(aRegionName, "Land Allocation", mName,"calObsYield","GCal/kHa", util::convertToVector( mCalObservedYield ) );
+    dboutput4(aRegionName, "Land Allocation", mName,"Intr Rate","$/kHa", mIntrinsicRate.convertToVector() );
+    dboutput4(aRegionName, "Land Allocation", mName,"Intr Yield Mode","GCal/kHa", mIntrinsicYieldMode.convertToVector() );
+    dboutput4(aRegionName, "Land Allocation", mName,"calObsYield","GCal/kHa", mCalObservedYield.convertToVector() );
 
     for( int i = 0; i < maxper; ++i ){
         temp[ i ] = getCarbonValue( aRegionName, i );
@@ -532,7 +532,7 @@ void LandLeaf::dbOutput( const string& aRegionName ) const {
     }
     dboutput4(aRegionName, "Land Allocation", mName,"land-use-change-emission","000Ha", temp );
 
-    dboutput4(aRegionName, "Land Allocation", mName,"Ag Productivity Change","none", util::convertToVector( mAgProdChange ) );
+    dboutput4(aRegionName, "Land Allocation", mName,"Ag Productivity Change","none", mAgProdChange.convertToVector() );
 }
 
 /*! \brief Update a visitor for a LandLeaf.

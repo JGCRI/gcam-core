@@ -15,7 +15,7 @@
 
 using namespace std;
 
-namespace util {
+namespace objects {
     double linearInterpolateY( const double aX,
                                const double aX1,
                                const double aX2,

@@ -131,7 +131,7 @@ void ALandAllocatorItem::csvOutput( const string& aRegionName ) const {
         string var4name,string var5name,string uname,vector<double> dout);
 
     // write land allocations for region
-    fileoutput3(aRegionName, mName," "," ","Land Use","000Ha", util::convertToVector( mLandAllocation ) );
+    fileoutput3(aRegionName, mName," "," ","Land Use","000Ha", mLandAllocation.convertToVector() );
 
 }
 
@@ -141,5 +141,5 @@ void ALandAllocatorItem::dbOutput( const string& aRegionName ) const {
         string uname,vector<double> dout);
 
     // write land allocations for region
-    dboutput4(aRegionName, "Land Allocation", mName,"Land Use","000Ha", util::convertToVector( mLandAllocation ) );
+    dboutput4(aRegionName, "Land Allocation", mName,"Land Use","000Ha", mLandAllocation.convertToVector() );
 }

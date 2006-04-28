@@ -16,10 +16,12 @@
 
 #include <cassert>
 #include <algorithm>
+#include <vector>
 
 // TODO: Reduce these includes
 #include "util/base/include/model_time.h"
 #include "containers/include/scenario.h"
+#include "util/base/include/util.h"
 
 extern Scenario* scenario;
 
@@ -30,6 +32,8 @@ extern Scenario* scenario;
 * \author Josh Lurz
 */
 namespace objects {
+    // Need to inject the util namespace into the objects namespace.
+    
     /*!
      * \brief Base class of vectors indexed by year or period.
      * \details Provides common code for year and period vectors.
@@ -41,9 +45,6 @@ namespace objects {
         * \brief Constant input iterator.
         */
         class const_iterator {
-            friend class TimeVectorBase;
-            template<class T> friend class YearVector;
-            template<class T> friend class PeriodVector;
         public:
 
             const_iterator();
@@ -67,10 +68,14 @@ namespace objects {
             const_iterator operator+( const size_t aIncrement ) const;
 
             const_iterator operator-( const size_t aDecrement ) const;
-        
-        protected:
+    
+            // TODO: This constructor should be protected, but that
+            // is very difficult to get right due to friend declarations
+            // with derived classes.
             const_iterator( const unsigned int aPos, 
                             const TimeVectorBase* aParent );
+        protected:
+
 
             //! Current index into the array.
             unsigned int mPos;
@@ -83,9 +88,6 @@ namespace objects {
         * \brief Mutable input iterator.
         */
         class iterator: public const_iterator {
-            friend class TimeVectorBase;
-            template<class T> friend class YearVector;
-            template<class T> friend class PeriodVector;
         public:
             iterator();
 
@@ -106,10 +108,13 @@ namespace objects {
             iterator operator+( const size_t aIncrement ) const;
 
             iterator operator-( const size_t aDecrement ) const;
-        protected:
+            
+            // TODO: This constructor should be protected, but that
+            // is very difficult to get right due to friend declarations
+            // with derived classes.
             iterator( const unsigned int aPos,
                       TimeVectorBase* aParent );
-
+        protected:
         	// Need to inform the compiler that this derived class will be
         	// using base class members.
             using const_iterator::mParent;
@@ -358,10 +363,10 @@ namespace objects {
         TimeVectorBase<T>::iterator::operator+( const size_t aIncrement ) const {
             // Check that this does not exceed the bounds of the iterator.
             if( mPos + aIncrement >= mParent->mSize ){
-                return const_cast<typename TimeVectorBase<T>*>( mParent )->end();
+                return const_cast<TimeVectorBase<T>*>( mParent )->end();
             }
             return typename TimeVectorBase<T>::iterator( mPos + aIncrement,
-                                                         const_cast<typename TimeVectorBase<T>*>( mParent ) );
+                                                         const_cast<TimeVectorBase<T>*>( mParent ) );
         }
 
     /*!
@@ -374,10 +379,10 @@ namespace objects {
         TimeVectorBase<T>::iterator::operator-( const size_t aDecrement ) const {
             // Check that this does not exceed the bounds of the iterator.
             if( mPos - aDecrement < 0 ){
-                return const_cast<typename TimeVectorBase<T>*>( mParent )->end();
+                return const_cast<TimeVectorBase<T>*>( mParent )->end();
             }
             return typename TimeVectorBase<T>::iterator( mPos - aDecrement,
-                                                         const_cast<typename TimeVectorBase<T>*>( mParent ) );
+                                                         const_cast<TimeVectorBase<T>*>( mParent ) );
         }
 
     /*!
@@ -630,7 +635,7 @@ namespace objects {
      *         assignment).
      */
     template<class T>
-        typename const YearVector<T>& YearVector<T>::operator=( const typename YearVector<T>& aOther ){
+    const YearVector<T>& YearVector<T>::operator=( const YearVector<T>& aOther ){
             // Check for self-assignment.
             if( this != &aOther ){
                 mStartYear = aOther.mStartYear;
@@ -651,7 +656,7 @@ namespace objects {
             *        inclusive. 
             */
             assert( aYear >= mStartYear && aYear <= mEndYear );
-            assert( util::isValidNumber( mData[ aYear - mStartYear ] ) );
+            assert( isValidNumber( mData[ aYear - mStartYear ] ) );
             return mData[ aYear - mStartYear ];
         }
     
@@ -666,7 +671,7 @@ namespace objects {
             *        inclusive. 
             */
             assert( aYear >= mStartYear && aYear <= mEndYear );
-            assert( util::isValidNumber( mData[ aYear - mStartYear ] ) );
+            assert( isValidNumber( mData[ aYear - mStartYear ] ) );
             return mData[ aYear - mStartYear ];
         }
 
@@ -726,6 +731,9 @@ namespace objects {
         PeriodVector( const T aDefaultValue = T() );
         virtual T& operator[]( const size_t aIndex );
         virtual const T& operator[]( const size_t aIndex ) const;
+        
+        // PeriodVector only function.
+        std::vector<T> convertToVector() const;
     protected:
         // Declare that this class is using the base class data and size.
         using TimeVectorBase<T>::mData;
@@ -754,7 +762,7 @@ namespace objects {
     template<class T>
         T& PeriodVector<T>::operator[]( const size_t aIndex ){
             assert( aIndex < size() );
-            assert( util::isValidNumber( mData[ aIndex ] ) );
+            assert( isValidNumber( mData[ aIndex ] ) );
             return mData[ aIndex ];
         }
     
@@ -766,8 +774,24 @@ namespace objects {
     template<class T>
         const T& PeriodVector<T>::operator[]( const size_t aIndex ) const {
             assert( aIndex < size() );
-            assert( util::isValidNumber( mData[ aIndex ] ) );
+            assert( isValidNumber( mData[ aIndex ] ) );
             return mData[ aIndex ];
+        }
+       /*!
+     * \brief Convert a PeriodVector into a std::vector.
+     * \param aPeriodVector Period vector to convert.
+     * \return Vector equivalent to the period vector.
+     */
+    template<class T>
+        std::vector<T> PeriodVector<T>::convertToVector() const {
+            std::vector<T> convVector( size() );
+            // TODO: It'd be convenient to use a copy constructor
+            // of the vector or the copy() function to do this, 
+            // but GCC requires iterator_traits defined.
+            for( unsigned int i = 0; i < convVector.size(); ++i ){
+                convVector[ i ] = (*this)[ i ];
+            }
+            return convVector;
         }
    }
 
