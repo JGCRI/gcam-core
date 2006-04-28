@@ -49,6 +49,7 @@ public:
     inline void init( const double aNewValue, const Unit aUnit = DEFAULT );
     inline void set( const double aNewValue, const Unit aUnit = DEFAULT );
     inline operator double() const;
+    inline double get() const;
     inline bool isInited() const;
     inline Value& operator+=( const Value& aValue );
     inline Value& operator-=( const Value& aValue );
@@ -93,6 +94,11 @@ void Value::set( const double aNewValue, const Unit aUnit ){
 
 //! Get the value.
 Value::operator double() const {
+    return mValue;
+}
+
+//! Get the value. Only use this function to resolve ambiguities.
+double Value::get() const {
     return mValue;
 }
 
