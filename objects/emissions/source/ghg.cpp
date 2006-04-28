@@ -240,7 +240,7 @@ void Ghg::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( storageCost, "storageCost", out, tabs, util::getLargeNumber() );
     XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( emAdjust, "emAdjust", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( maxCntrl, "maxCntrl", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( maxCntrl, "maxCntrl", out, tabs, -1000.0 );
     XMLWriteElementCheckDefault( gdpcap0, "gdpcap0", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( tau, "tau", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( finalEmissCoef, "finalEmissCoef", out, tabs, -1.0 );
